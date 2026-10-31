@@ -58,8 +58,16 @@ export {
   HSI_MARKERS,
   HSI_T2D_IMMUNO_SEED_CLAIMS,
   HSI_T2D_IMMUNO_SEED_EDGES,
+  hasEvidenceLocator,
   listBridgeCandidates,
 } from "./seed/t2dImmunoMetabolic";
+
+export {
+  hsiEvidenceHandoff,
+  type HsiEvidenceHandoff,
+  type HsiEvidenceLinkStatus,
+  type HsiGateCHandoffStatus,
+} from "./evidenceHandoff";
 
 export {
   linkClaimToMarker,

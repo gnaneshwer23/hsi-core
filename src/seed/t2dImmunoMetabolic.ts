@@ -28,6 +28,12 @@ function prov(
   };
 }
 
+/** True when seed has a durable literature locator (PMID/DOI/label) — not Gate C. */
+export function hasEvidenceLocator(edge: Pick<HsiEdge, "provenance">): boolean {
+  const p = edge.provenance;
+  return Boolean(p?.pmid?.trim() || p?.doi?.trim() || p?.citationLabel?.trim());
+}
+
 type SeedSpec = {
   id: string;
   edgeType: HsiEdge["edgeType"];
@@ -42,7 +48,9 @@ type SeedSpec = {
   domain: HsiEdge["domain"];
   bridgeCandidate?: boolean;
   pmid?: string | null;
+  doi?: string | null;
   citationLabel?: string | null;
+  sourceUrl?: string | null;
   notes?: string | null;
 };
 
@@ -340,10 +348,17 @@ const SPECS: SeedSpec[] = [
     objectLabel: "T-cell exhaustion",
     claimId: "HSI-C-IO-001",
     assertion: "PD-1 signalling contributes to T-cell exhaustion phenotypes (educational graph).",
-    review: "draft",
-    teaching: "hypothesized",
+    // Real PubMed locator (Barber 2006 Nature). HSI source-verified only —
+    // NOT Gate C approved, NOT live-KG auto-approve, NOT CDS.
+    review: "source-verified",
+    teaching: "associative",
     domain: "io",
-    notes: "Align with ISI honesty overrides; placeholder for HSI mapping.",
+    pmid: "16382236",
+    doi: "10.1038/nature04444",
+    citationLabel: "Barber DL et al. Nature 2006 — Restoring function in exhausted CD8 T cells during chronic viral infection.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/16382236/",
+    notes:
+      "PMID 16382236 verified via PubMed/E-utilities. Maps to ISI REL-R011-drives-P015 for Gate C handoff. Same paper is also cited on REL-C015-expresses-R011 (expression axis) — curator must re-assess claim_support=supports for drives→P015 S-P-O before approve. Do not treat HSI source-verified as Neon Gate C pass.",
   },
   {
     id: "HSI-E-IO-002",
@@ -419,7 +434,9 @@ function toEdge(spec: SeedSpec): HsiEdge {
     domain: spec.domain,
     provenance: prov({
       pmid: spec.pmid ?? null,
+      doi: spec.doi ?? null,
       citationLabel: spec.citationLabel ?? null,
+      sourceUrl: spec.sourceUrl ?? null,
       notes: spec.notes ?? null,
     }),
     bridgeCandidate: Boolean(spec.bridgeCandidate),

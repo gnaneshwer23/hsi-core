@@ -52,9 +52,9 @@ export const ISI_REL_SUGGESTIONS: readonly IsiRelSuggestion[] = [
     edgeId: "HSI-E-IO-001",
     suggestedIsiRelationshipId: "REL-R011-drives-P015",
     matchKind: "exact_concept_pair",
-    status: "suggested",
+    status: "accepted_for_curation",
     rationale:
-      "ISI already has PD-1 → T-cell exhaustion programme (REL-R011-drives-P015). Strongest Gate C handoff for the IO wedge seed.",
+      "Exact ISI map REL-R011-drives-P015. HSI seed now carries real PMID 16382236 (Barber 2006 Nature) as source-verified provenance — accepted for Gate C curation handoff. Still autoApprove=false; Neon approve+supports on this relId is the human Gate C pass. Re-check S-P-O (paper also used on expresses-R011).",
     autoApprove: false,
     isiNodeIds: ["R011", "P015"],
   },

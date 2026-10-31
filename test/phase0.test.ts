@@ -13,6 +13,7 @@ import {
   buildIsiExportBundle,
   buildSchemaGapReport,
   claimsWithIsiMappings,
+  hsiEvidenceHandoff,
   hsiGradeFromCuration,
   isCdsSurfacable,
   linkClaimToMarker,
@@ -153,5 +154,22 @@ describe("ISI REL-* suggestion map", () => {
     const pd1 = suggestionForClaim("HSI-C-IO-001");
     expect(pd1?.suggestedIsiRelationshipId).toBe("REL-R011-drives-P015");
     expect(pd1?.matchKind).toBe("exact_concept_pair");
+    expect(pd1?.status).toBe("accepted_for_curation");
+    expect(pd1?.autoApprove).toBe(false);
+
+    const ioEdge = HSI_T2D_IMMUNO_SEED_EDGES.find((e) => e.id === "HSI-E-IO-001");
+    expect(ioEdge?.provenance.pmid).toBe("16382236");
+    expect(ioEdge?.curationReview).toBe("source-verified");
+    expect(ioEdge?.hsiGrade).toBe("uncertain");
+    expect(ioEdge?.teachingStatus).toBe("associative");
+    // Axes stay separate — source-verified ≠ approved ≠ CDS.
+    expect(ioEdge?.curationReview).not.toBe("approved");
+    expect(isCdsSurfacable(ioEdge!)).toBe(false);
+
+    const handoff = hsiEvidenceHandoff(ioEdge!);
+    expect(handoff.evidenceLink).toBe("evidence_linked");
+    expect(handoff.gateC).toBe("pending");
+    expect(handoff.label).toContain("Gate C pending");
+    expect(handoff.pmid).toBe("16382236");
   });
 });
