@@ -8,6 +8,11 @@ import { summarizeGradeCounts } from "./validate";
 import { HSI_T2D_IMMUNO_SEED_CLAIMS, HSI_T2D_IMMUNO_SEED_EDGES, HSI_MARKERS } from "./seed/t2dImmunoMetabolic";
 import { seedClaimLoincMap, loincCoverageSummary } from "./markers";
 import { HSI_SAFETY_RELEASE_CRITERIA_V0 } from "./releaseCriteria";
+import {
+  claimsWithIsiMappings,
+  summarizeIsiRelMappings,
+  type IsiRelMappingSummary,
+} from "./mappings/isiRelSuggestions";
 
 export type IsiHsiExportBundle = {
   schemaVersion: "hsi-isi-export-1";
@@ -22,6 +27,8 @@ export type IsiHsiExportBundle = {
   markers: HsiMarker[];
   claimLoincLinks: ReturnType<typeof seedClaimLoincMap>;
   safetyCriteriaIds: string[];
+  /** Suggested REL-* pointers only — never Gate C approval. */
+  isiRelMapping: IsiRelMappingSummary;
 };
 
 export function buildIsiExportBundle(opts?: {
@@ -31,7 +38,7 @@ export function buildIsiExportBundle(opts?: {
   generatedAt?: string;
 }): IsiHsiExportBundle {
   const edges = [...(opts?.edges ?? HSI_T2D_IMMUNO_SEED_EDGES)];
-  const claims = [...(opts?.claims ?? HSI_T2D_IMMUNO_SEED_CLAIMS)];
+  const claims = [...(opts?.claims ?? claimsWithIsiMappings(HSI_T2D_IMMUNO_SEED_CLAIMS))];
   const markers = [...(opts?.markers ?? HSI_MARKERS)];
 
   return {
@@ -47,6 +54,7 @@ export function buildIsiExportBundle(opts?: {
     markers,
     claimLoincLinks: seedClaimLoincMap(),
     safetyCriteriaIds: HSI_SAFETY_RELEASE_CRITERIA_V0.map((c) => c.id),
+    isiRelMapping: summarizeIsiRelMappings(),
   };
 }
 

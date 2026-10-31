@@ -12,6 +12,13 @@ import {
   listBridgeCandidates,
 } from "./seed/t2dImmunoMetabolic";
 import { linkClaimToMarker, loincCoverageSummary } from "./markers";
+import {
+  claimsWithIsiMappings,
+  suggestionForClaim,
+  summarizeIsiRelMappings,
+  type IsiRelMatchKind,
+  type IsiRelMappingSummary,
+} from "./mappings/isiRelSuggestions";
 
 export type HsiMappingGap = {
   claimId: string;
@@ -45,14 +52,17 @@ export type HsiSchemaGapReport = {
     unusedDomains: string[];
   };
   gaps: HsiMappingGap[];
-  /** Highest-leverage unmapped bridge candidates for P1 shortlist work. */
+  /** Highest-leverage bridge candidates for P1 shortlist / Gate C handoff. */
   bridgeShortlist: Array<{
     edgeId: string;
     claimId: string;
     assertion: string;
     subjectLabel: string;
     objectLabel: string;
+    suggestedIsiRelationshipId: string | null;
+    matchKind: IsiRelMatchKind | "unspecified";
   }>;
+  isiRelMapping: IsiRelMappingSummary;
   nextActions: string[];
 };
 
@@ -81,7 +91,7 @@ export function buildSchemaGapReport(opts?: {
   generatedAt?: string;
 }): HsiSchemaGapReport {
   const edges = opts?.edges ?? HSI_T2D_IMMUNO_SEED_EDGES;
-  const claims = opts?.claims ?? HSI_T2D_IMMUNO_SEED_CLAIMS;
+  const claims = opts?.claims ?? claimsWithIsiMappings(HSI_T2D_IMMUNO_SEED_CLAIMS);
   const claimById = new Map(claims.map((c) => [c.id, c]));
 
   const domainsInUse = [...new Set(edges.map((e) => e.domain))];
@@ -114,17 +124,24 @@ export function buildSchemaGapReport(opts?: {
 
   const bridges = listBridgeCandidates().map((e) => {
     const claim = claimById.get(e.claimId);
+    const suggestion = suggestionForClaim(e.claimId);
+    const matchKind: IsiRelMatchKind | "unspecified" = suggestion?.matchKind ?? "unspecified";
     return {
       edgeId: e.id,
       claimId: e.claimId,
       assertion: claim?.assertion ?? "",
       subjectLabel: e.subjectLabel,
       objectLabel: e.objectLabel,
+      suggestedIsiRelationshipId: suggestion?.suggestedIsiRelationshipId ?? null,
+      matchKind,
     };
   });
 
+  const isiRelMapping = summarizeIsiRelMappings();
+
   const nextActions = [
-    "Map ISI REL-* ids into claim.isiRelationshipId for discovery edges already in Immune City.",
+    "Curate suggested ISI REL-* pointers in the immunecity HSI bridge queue — never auto-approve into KG.",
+    "Fill remaining unmapped immuno-metabolic bridges (inflammation↔IR, T2D infection, LADA, irAE hyperglycemia).",
     "Map Aksh clinical KG node / rule ids into claim.akshNodeId for T2D HITL CDS candidates.",
     "Evidence sprint: replace citationLabel placeholders with PMID/DOI and Gate C review.",
     "Extend LOINC coverage beyond HbA1c / FPG / hs-CRP / IL-6 for bridge markers.",
@@ -149,6 +166,7 @@ export function buildSchemaGapReport(opts?: {
     },
     gaps,
     bridgeShortlist: bridges,
+    isiRelMapping,
     nextActions,
   };
 }

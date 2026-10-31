@@ -17,6 +17,7 @@ bun install
 bun test
 bun run validate
 bun run export:isi
+bun run export:isi-map
 bun run gap-report
 ```
 
@@ -33,6 +34,8 @@ import {
   validateHsiEdge,
   linkClaimToMarker,
   buildIsiExportBundle,
+  listIsiRelSuggestions,
+  claimsWithIsiMappings,
 } from "hsi-core";
 ```
 
@@ -59,8 +62,10 @@ import {
 - Validation helpers + `bun run validate` CLI
 - ISI JSON export (`hsi-isi-export-1`)
 - Schema gap report (`bun run gap-report`) — ISI/Aksh mapping slots + bridge shortlist
+- ISI REL-* suggestion map (`bun run export:isi-map`) — curation pointers only; never auto-approve
 - Safety release criteria v0
 
 ## Out of scope
 
-Agent sprawl, AF3/Boltz, clinic write-back, live PHI, inventing PMIDs, treating ISI as CDS.
+Agent sprawl, AF3/Boltz, clinic write-back, live PHI, inventing PMIDs, treating ISI as CDS,
+collapsing `teachingStatus` / `hsiGrade` / Gate C into one score.

@@ -12,11 +12,14 @@ import {
   HSI_T2D_IMMUNO_SEED_EDGES,
   buildIsiExportBundle,
   buildSchemaGapReport,
+  claimsWithIsiMappings,
   hsiGradeFromCuration,
   isCdsSurfacable,
   linkClaimToMarker,
   listBridgeCandidates,
+  listIsiRelSuggestions,
   seedClaimLoincMap,
+  suggestionForClaim,
   summarizeGradeCounts,
   validateHsiEdge,
   validateTranslationCard,
@@ -107,15 +110,48 @@ describe("ISI export bundle", () => {
 });
 
 describe("schema gap report (backlog b2)", () => {
-  it("flags unmapped ISI/Aksh ids and lists bridge shortlist", () => {
+  it("flags remaining gaps and lists bridge shortlist with REL suggestions", () => {
     const report = buildSchemaGapReport({ generatedAt: "2026-10-31T00:00:00.000Z" });
     expect(report.schemaVersion).toBe("hsi-gap-report-1");
     expect(report.summary.seedEdges).toBe(HSI_T2D_IMMUNO_SEED_EDGES.length);
-    expect(report.summary.claimsMappedToIsi).toBe(0);
+    expect(report.summary.claimsMappedToIsi).toBeGreaterThanOrEqual(8);
     expect(report.summary.claimsMappedToAksh).toBe(0);
     expect(report.summary.bridgeCandidates).toBeGreaterThanOrEqual(8);
-    expect(report.gaps.length).toBe(HSI_T2D_IMMUNO_SEED_EDGES.length);
-    expect(report.gaps.every((g) => g.missing.includes("isi_relationship_id"))).toBe(true);
+    expect(report.isiRelMapping.autoApproveIntoKg).toBe(false);
+    expect(report.isiRelMapping.withRelId).toBeGreaterThanOrEqual(8);
+    expect(report.bridgeShortlist.some((b) => b.suggestedIsiRelationshipId?.startsWith("REL-"))).toBe(
+      true,
+    );
+    expect(report.bridgeShortlist.some((b) => b.matchKind === "none")).toBe(true);
+    expect(report.gaps.every((g) => g.missing.includes("gate_c_approved"))).toBe(true);
     expect(report.nextActions.length).toBeGreaterThanOrEqual(3);
+  });
+});
+
+describe("ISI REL-* suggestion map", () => {
+  it("points at real REL-* ids without auto-approve or grade collapse", () => {
+    const suggestions = listIsiRelSuggestions();
+    expect(suggestions.length).toBeGreaterThanOrEqual(12);
+    expect(suggestions.every((s) => s.autoApprove === false)).toBe(true);
+    for (const s of suggestions) {
+      if (s.suggestedIsiRelationshipId) {
+        expect(s.suggestedIsiRelationshipId.startsWith("REL-")).toBe(true);
+        expect(s.matchKind).not.toBe("none");
+      } else {
+        expect(s.matchKind).toBe("none");
+        expect(s.status).toBe("unmapped");
+      }
+    }
+    const mapped = claimsWithIsiMappings();
+    expect(mapped.filter((c) => c.isiRelationshipId).length).toBeGreaterThanOrEqual(8);
+    // Axes stay separate: mapping does not approve or establish.
+    for (const edge of HSI_T2D_IMMUNO_SEED_EDGES) {
+      expect(edge.curationReview).not.toBe("approved");
+      expect(edge.hsiGrade).not.toBe("established");
+      expect(isCdsSurfacable(edge)).toBe(false);
+    }
+    const pd1 = suggestionForClaim("HSI-C-IO-001");
+    expect(pd1?.suggestedIsiRelationshipId).toBe("REL-R011-drives-P015");
+    expect(pd1?.matchKind).toBe("exact_concept_pair");
   });
 });

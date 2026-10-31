@@ -82,3 +82,16 @@ export {
   type HsiMappingGap,
   type HsiSchemaGapReport,
 } from "./gapReport";
+
+export {
+  ISI_REL_SUGGESTIONS,
+  claimsWithIsiMappings,
+  listIsiRelSuggestions,
+  suggestionForClaim,
+  suggestionForEdge,
+  summarizeIsiRelMappings,
+  type IsiRelMatchKind,
+  type IsiRelMappingSummary,
+  type IsiRelSuggestion,
+  type IsiRelSuggestionStatus,
+} from "./mappings/isiRelSuggestions";

@@ -20,8 +20,9 @@
     "test": "bun test",
     "validate": "bun run src/cli/validate.ts",
     "export:isi": "bun run src/cli/export-isi.ts",
+    "export:isi-map": "bun run src/cli/export-isi-map.ts",
     "gap-report": "bun run src/cli/gap-report.ts",
-    "check": "bun test && bun run validate"
+    "check": "bun test && bun run validate && bun run export:isi && bun run export:isi-map && bun run gap-report"
   },
   "engines": {
     "node": ">=20"
