@@ -11,6 +11,7 @@ import {
   HSI_SAFETY_RELEASE_CRITERIA_V0,
   HSI_T2D_IMMUNO_SEED_EDGES,
   buildIsiExportBundle,
+  buildSchemaGapReport,
   hsiGradeFromCuration,
   isCdsSurfacable,
   linkClaimToMarker,
@@ -102,5 +103,19 @@ describe("ISI export bundle", () => {
     expect(bundle.edges.length).toBe(HSI_T2D_IMMUNO_SEED_EDGES.length);
     expect(bundle.claimLoincLinks.length).toBeGreaterThanOrEqual(4);
     expect(bundle.safetyCriteriaIds).toContain("HSI-SAFE-001");
+  });
+});
+
+describe("schema gap report (backlog b2)", () => {
+  it("flags unmapped ISI/Aksh ids and lists bridge shortlist", () => {
+    const report = buildSchemaGapReport({ generatedAt: "2026-10-31T00:00:00.000Z" });
+    expect(report.schemaVersion).toBe("hsi-gap-report-1");
+    expect(report.summary.seedEdges).toBe(HSI_T2D_IMMUNO_SEED_EDGES.length);
+    expect(report.summary.claimsMappedToIsi).toBe(0);
+    expect(report.summary.claimsMappedToAksh).toBe(0);
+    expect(report.summary.bridgeCandidates).toBeGreaterThanOrEqual(8);
+    expect(report.gaps.length).toBe(HSI_T2D_IMMUNO_SEED_EDGES.length);
+    expect(report.gaps.every((g) => g.missing.includes("isi_relationship_id"))).toBe(true);
+    expect(report.nextActions.length).toBeGreaterThanOrEqual(3);
   });
 });

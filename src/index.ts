@@ -75,3 +75,10 @@ export {
   serializeIsiExport,
   type IsiHsiExportBundle,
 } from "./exportIsi";
+
+export {
+  buildSchemaGapReport,
+  serializeGapReport,
+  type HsiMappingGap,
+  type HsiSchemaGapReport,
+} from "./gapReport";

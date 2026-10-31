@@ -17,6 +17,7 @@ bun install
 bun test
 bun run validate
 bun run export:isi
+bun run gap-report
 ```
 
 Requires [Bun](https://bun.sh) (tests + CLI). `bun run build` emits `dist/` for TypeScript consumers.
@@ -57,6 +58,7 @@ import {
 - Claim → LOINC marker links (`linkClaimToMarker`, `seedClaimLoincMap`)
 - Validation helpers + `bun run validate` CLI
 - ISI JSON export (`hsi-isi-export-1`)
+- Schema gap report (`bun run gap-report`) — ISI/Aksh mapping slots + bridge shortlist
 - Safety release criteria v0
 
 ## Out of scope
