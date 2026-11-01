@@ -17,7 +17,7 @@ Immune Super Intelligence (ISI) is an immune-science and translational intellige
 
 | Module | Target-state role | Stage posture |
 |--------|-------------------|---------------|
-| **ISI Discovery Centre** | Question → evidence graph → mechanisms → hypotheses → research briefs | Stage 1: four pilot outputs via hsi-core packs + consumer walkthrough; full workspace UX elsewhere later |
+| **ISI Discovery Centre** | Question → evidence graph → mechanisms → hypotheses → research briefs | Stage 1: four pilot outputs via hsi-core packs + consumer walkthrough; full workspace UX elsewhere later. Concept marketing page catalogued in [`ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md`](./ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md) (reference-only — do not treat as Stage 1 build) |
 | **HSI Core Evidence Backbone** | Canonical entities, claims, grades, provenance, review, versioned exports | Stage 1: **active edit target** — substrate + `bun run outputs` |
 | **Akeno Clinical Intelligence** | Cohort feasibility, HCP-reviewed screening, trial-site workflows | Stage 3 only — deferred until partner data + HCP eval + governance |
 | **Lab / molecular integrations** | Omics, assay, chemistry, structure, simulation adapters | Stage 2+ (selected adapters after use-case justification); not Stage 1 breadth |
@@ -120,5 +120,6 @@ R4/R5 are **possibilities with gates**, not committed launch dates. The platform
 - Pilot brief: [`ISI_PILOT_BRIEF.md`](./ISI_PILOT_BRIEF.md)  
 - Pilot PRD map: [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md)  
 - Business proposal stages: [`ISI_BUSINESS_PROPOSAL_ALIGNMENT.md`](./ISI_BUSINESS_PROPOSAL_ALIGNMENT.md)  
+- Discovery Centre concept site: [`ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md`](./ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md)  
 - Vision / repo map: [`VISION_REPO_ALIGNMENT.md`](./VISION_REPO_ALIGNMENT.md)  
 - Outputs: [`OUTPUTS.md`](./OUTPUTS.md)

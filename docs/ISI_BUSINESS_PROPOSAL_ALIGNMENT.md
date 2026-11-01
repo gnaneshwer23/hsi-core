@@ -1,7 +1,7 @@
 # ISI business proposal ↔ pilot alignment
 
 **Source (external):** *Immune Disease Discovery and Clinical Intelligence — Business proposal for a partner-led pilot* (Dr Gnaneshwer Jadav, November 2026).  
-**Repo anchors:** [`ISI_PILOT_BRIEF.md`](./ISI_PILOT_BRIEF.md), [`ISI_PILOT_PARTNER_SHORTLIST.md`](./ISI_PILOT_PARTNER_SHORTLIST.md), [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md), [`ISI_TARGET_STATE_PRD_ALIGNMENT.md`](./ISI_TARGET_STATE_PRD_ALIGNMENT.md), [`VISION_REPO_ALIGNMENT.md`](./VISION_REPO_ALIGNMENT.md).
+**Repo anchors:** [`ISI_PILOT_BRIEF.md`](./ISI_PILOT_BRIEF.md), [`ISI_PILOT_PARTNER_SHORTLIST.md`](./ISI_PILOT_PARTNER_SHORTLIST.md), [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md), [`ISI_TARGET_STATE_PRD_ALIGNMENT.md`](./ISI_TARGET_STATE_PRD_ALIGNMENT.md), [`ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md`](./ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md), [`VISION_REPO_ALIGNMENT.md`](./VISION_REPO_ALIGNMENT.md).
 
 This note maps proposal claims to what **hsi-core builds now** vs what is **deferred**. Stage labels here (1 research / 2 expand / 3 clinical) match the [target-state capability map](./ISI_TARGET_STATE_PRD_ALIGNMENT.md). It does not edit immunecity or invent partners.
 
@@ -30,6 +30,10 @@ The proposal, the pilot docs, and the [target-state PRD map](./ISI_TARGET_STATE_
 | Platform roles: ISI research / HSI Core substrate / Akeno later | Matches vision: ISI discovery consumer, hsi-core hub, Aksh HITL closed until gates | Wiring Akeno Health AI surfaces without live verification |
 
 ---
+
+## ISI Discovery Centre concept surface (catalogued — not Stage 1 UX)
+
+Partner-facing concept page (HTML export; live chatgpt.site host was auth-walled). Research-first disclaimers are strong; still **target-state vision**, not the four-pack pilot deliverable. Full map: [`ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md`](./ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md).
 
 ## Akeno Stage 3 surfaces (catalogued — do not build in Stage 1)
 
