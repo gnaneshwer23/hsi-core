@@ -27,6 +27,7 @@ import {
   listBridgeCandidates,
   listIsiRelSuggestions,
   buildGateCChecklist,
+  buildPilotAcceptancePack,
   buildPilotEvidencePack,
   buildPilotReviewRubric,
   getPartnerLock,
@@ -429,6 +430,37 @@ describe("Gate C checklist + publish outputs", () => {
     expect(rubric.autoApproveIntoKg).toBe(false);
   });
 
+  it("ships Phase 5 acceptance pack with honest pending for partnerSigned", () => {
+    const acceptance = buildPilotAcceptancePack({ generatedAt: "2026-11-01T14:45:00.000Z" });
+    expect(acceptance.schemaVersion).toBe("hsi-pilot-acceptance-1");
+    expect(acceptance.phase).toBe("5");
+    expect(acceptance.notCds).toBe(true);
+    expect(acceptance.autoApproveIntoKg).toBe(false);
+    expect(acceptance.scope.scopeLocked).toBe(true);
+    expect(acceptance.scope.partnerSigned).toBe(false);
+    expect(acceptance.scope.lockedPilot).toBe(false);
+    expect(acceptance.summary.fail).toBe(0);
+    expect(acceptance.summary.stage1FourOutputsGreen).toBe(true);
+    expect(acceptance.summary.partnerReadyWalkthrough).toBe(true);
+    expect(acceptance.summary.overallStage1Acceptance).toBe("green_with_pending");
+    expect(acceptance.criteria.find((c) => c.id === "ac-em")?.status).toBe("pass");
+    expect(acceptance.criteria.find((c) => c.id === "ac-es")?.status).toBe("pass");
+    expect(acceptance.criteria.find((c) => c.id === "ac-ce")?.status).toBe("pass");
+    expect(acceptance.criteria.find((c) => c.id === "ac-ex")?.status).toBe("pass");
+    expect(acceptance.criteria.find((c) => c.id === "ac-manifest")?.status).toBe("pass");
+    expect(acceptance.criteria.find((c) => c.id === "ac-gap")?.status).toBe("pass");
+    expect(acceptance.criteria.find((c) => c.id === "ac-gate-c")?.status).toBe("pass");
+    expect(acceptance.criteria.find((c) => c.id === "ac-scope-lock")?.status).toBe("pass");
+    expect(acceptance.criteria.find((c) => c.id === "ac-rubric")?.status).toBe("pass");
+    expect(acceptance.criteria.find((c) => c.id === "ac-partner-signed")?.status).toBe("pending");
+    expect(acceptance.criteria.find((c) => c.id === "ac-licensing")?.status).toBe("pending");
+    expect(acceptance.criteria.find((c) => c.id === "ac-thresholds")?.status).toBe("pending");
+    expect(acceptance.walkthroughSteps.length).toBeGreaterThanOrEqual(5);
+    expect(acceptance.deferredExplicitAsk.some((d) => d.toLowerCase().includes("discovery"))).toBe(
+      true,
+    );
+  });
+
   it("embeds Discovery Centre metadata in ISI export without interactive UI claims", () => {
     const bundle = buildIsiExportBundle({ generatedAt: "2026-11-01T13:00:00.000Z" });
     expect(bundle.discoveryCentre.notInteractiveUi).toBe(true);
@@ -466,6 +498,9 @@ describe("Gate C checklist + publish outputs", () => {
     expect(result.files).toContain("hsi-pilot-evidence-pack.md");
     expect(result.files).toContain("hsi-pilot-review-rubric.json");
     expect(result.files).toContain("hsi-pilot-review-rubric.md");
+    expect(result.files).toContain("hsi-pilot-acceptance.json");
+    expect(result.files).toContain("hsi-pilot-acceptance.md");
+    expect(result.files).toContain("hsi-pilot-walkthrough.md");
     expect(result.files).toContain("hsi-partner-lock.json");
     expect(result.files).toContain("MANIFEST.json");
 
@@ -487,7 +522,19 @@ describe("Gate C checklist + publish outputs", () => {
         provisionalLock: boolean;
         status: string;
       };
-      counts: { gateCPending: number; partnerScopedEvidenceRows: number };
+      acceptance: {
+        overallStage1Acceptance: string;
+        stage1FourOutputsGreen: boolean;
+        partnerReadyWalkthrough: boolean;
+        partnerSigned: boolean;
+      };
+      counts: {
+        gateCPending: number;
+        partnerScopedEvidenceRows: number;
+        acceptancePass: number;
+        acceptancePending: number;
+        stage1FourOutputsGreen: boolean;
+      };
     };
     expect(manifest.notCds).toBe(true);
     expect(manifest.autoApproveIntoKg).toBe(false);
@@ -499,6 +546,13 @@ describe("Gate C checklist + publish outputs", () => {
     expect(manifest.partnerLock.status).toBe("scope_locked");
     expect(manifest.counts.gateCPending).toBeGreaterThanOrEqual(9);
     expect(manifest.counts.partnerScopedEvidenceRows).toBeGreaterThanOrEqual(12);
+    expect(manifest.acceptance.overallStage1Acceptance).toBe("green_with_pending");
+    expect(manifest.acceptance.stage1FourOutputsGreen).toBe(true);
+    expect(manifest.acceptance.partnerReadyWalkthrough).toBe(true);
+    expect(manifest.acceptance.partnerSigned).toBe(false);
+    expect(manifest.counts.stage1FourOutputsGreen).toBe(true);
+    expect(manifest.counts.acceptancePass).toBeGreaterThanOrEqual(9);
+    expect(manifest.counts.acceptancePending).toBeGreaterThanOrEqual(3);
 
     const hitl = JSON.parse(
       readFileSync(join(result.outDir, "hsi-aksh-hitl-cards.json"), "utf8"),

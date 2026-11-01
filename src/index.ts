@@ -148,6 +148,17 @@ export {
 } from "./pilotReviewRubric";
 
 export {
+  PILOT_ACCEPTANCE_SCHEMA,
+  buildPilotAcceptancePack,
+  serializePilotAcceptance,
+  serializePilotAcceptanceMarkdown,
+  serializePilotWalkthroughMarkdown,
+  type AcceptanceCriterion,
+  type AcceptanceStatus,
+  type PilotAcceptancePack,
+} from "./pilotAcceptance";
+
+export {
   HSI_DISCOVERY_LOOP_STEPS,
   HSI_ILLUSTRATIVE_DISEASE_CONTEXTS,
   buildDiscoveryCentreMeta,

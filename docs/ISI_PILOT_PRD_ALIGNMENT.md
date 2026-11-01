@@ -102,13 +102,13 @@ Substrate includes T2D / immuno-metabolic seeds **plus** a **scope-locked** RA/T
 4. Success-metric **numeric thresholds** with partner (rubric checklist exported; thresholds TBD)  
 5. Trial-registry context in first release vs P1  
 
-Critical path remains **outreach** to flip `partnerSigned` — Phase 4 HSI Neon red-wave readiness is done; Phase 5 = pilot acceptance pack.
+Critical path remains **outreach** to flip `partnerSigned` — Phase 4 HSI Neon red-wave readiness and Phase 5 pilot acceptance pack are done. Phase 6+ (Discovery Centre product UI / clinical R2–R5) needs an **explicit user ask**.
 
 ---
 
 ## What to say / do next
 
-1. Use the pilot brief + this PRD map + scope-locked pack in partner discovery.  
-2. Run `bun run outputs` and share `hsi-pilot-evidence-pack.md` + `hsi-pilot-review-rubric.md`.  
+1. Use the pilot brief + this PRD map + scope-locked pack + **acceptance / walkthrough** in partner discovery.  
+2. Run `bun run outputs` and share `hsi-pilot-walkthrough.md` + `hsi-pilot-acceptance.md` + `hsi-pilot-evidence-pack.md` + `hsi-pilot-review-rubric.md`.  
 3. Do **not** start patient-level or immunecity feature work from this PRD.  
-4. When a partner signs disease + question, flip `hsi-partner-lock.json` (`partnerSigned=true`, `lockedPilot=true`), refresh seeds if needed — still no fake partners or PHI. Phase 3 = evidence depth on this scope.
+4. When a partner signs disease + question, flip `hsi-partner-lock.json` (`partnerSigned=true`, `lockedPilot=true`), refresh seeds if needed — still no fake partners or PHI. Phase 3 = evidence depth on this scope; Phase 5 = acceptance honesty (`partnerSigned` still pending until then).

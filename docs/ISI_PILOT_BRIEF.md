@@ -2,11 +2,12 @@
 
 > **ISI helps immune-disease research teams investigate a defined question by connecting traceable evidence across cells, pathways, biomarkers, treatments and studies—and showing what is established, uncertain and worth testing.**
 
-**Status:** Phase 4 HSI Neon readiness complete · Phase 3 evidence depth on Phase 2 scope lock · outreach still open for named partner.  
+**Status:** Phase 5 pilot acceptance pack complete · Phase 4 HSI Neon readiness · Phase 3 evidence depth on Phase 2 scope lock · outreach still open for named partner.  
 **Working Stage 1 scope (scopeLocked):** rheumatoid arthritis · anti-TNF response heterogeneity — see `hsi-partner-lock.json` (`scopeLocked=true`, `partnerSigned=false`, `lockedPilot=false`).  
 **Named partner (`partnerSigned`):** still **TBD after conversations** — do not treat scope lock as a MoU.  
-**Immediate deliverable:** this brief + [`ISI_PILOT_PARTNER_SHORTLIST.md`](./ISI_PILOT_PARTNER_SHORTLIST.md) + published pack / review rubric. Not another general-purpose AI feature.  
-**Next (Phase 5):** Pilot acceptance pack (walkthrough / acceptance criteria on scope-locked RA/TNF).  
+**Immediate deliverable:** this brief + [`ISI_PILOT_PARTNER_SHORTLIST.md`](./ISI_PILOT_PARTNER_SHORTLIST.md) + published pack / review rubric / **acceptance + walkthrough**. Not another general-purpose AI feature.  
+**Phase 5 done:** Stage 1 acceptance checklist + partner walkthrough on scope-locked RA/TNF (`hsi-pilot-acceptance.*`, `hsi-pilot-walkthrough.md`).  
+**Later (Phase 6+):** Target R1 Discovery Centre product UI / clinical R2–R5 — **requires explicit user ask**.  
 **Neon:** HSI `red-wave` schema stub — [`HSI_NEON_MIGRATIONS.md`](./HSI_NEON_MIGRATIONS.md).  
 **PRD map:** [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md) (pilot PRD → build now vs defer). **Target state:** [`ISI_TARGET_STATE_PRD_ALIGNMENT.md`](./ISI_TARGET_STATE_PRD_ALIGNMENT.md) (full vision → Stage 1/2/3 — do not pull breadth into this pilot).
 
@@ -72,7 +73,7 @@ No requirement for a new product surface beyond what is needed to walk a partner
 
 - Store **evidence**, **provenance**, and **uncertainty** (graded edges, claims, Gate C human curation).
 - Publish artifacts with `bun run outputs` (alias `bun run publish`) → versioned `dist/outputs/` bundles (ISI export, REL map, gap report, Gate C checklist, **pilot evidence pack**, etc.). See [`OUTPUTS.md`](./OUTPUTS.md).
-- Partner walkthrough shape: `hsi-pilot-evidence-pack.md` + `hsi-pilot-review-rubric.md` (scope-locked RA/TNF; `partnerSigned=false`; no patient-level CDS).
+- Partner walkthrough shape: `hsi-pilot-walkthrough.md` + `hsi-pilot-evidence-pack.md` + `hsi-pilot-review-rubric.md` + `hsi-pilot-acceptance.md` (scope-locked RA/TNF; `partnerSigned=false`; no patient-level CDS).
 - Durable lock record: `hsi-partner-lock.json` (Phase 2 = `scopeLocked`; flip `partnerSigned` with a real partner).
 - Product UIs (immunecity / ISI site) **consume** published exports; they are not edit targets for this pilot work.
 

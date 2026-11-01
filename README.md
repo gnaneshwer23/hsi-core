@@ -104,7 +104,7 @@ import {
 - Schema gap report (`bun run gap-report`) — ISI/Aksh mapping slots + bridge shortlist
 - ISI REL-* suggestion map (`bun run export:isi-map`) — curation pointers only; never auto-approve
 - Aksh node-id map (`bun run export:aksh-map`) — HITL pointers; CDS stays closed on seeds
-- **Publish bundle** (`bun run outputs`) — ISI export + REL map + Aksh map/HITL cards + gap report + Gate C checklist + pilot pack-2 + review rubric + partner lock
+- **Publish bundle** (`bun run outputs`) — ISI export + REL map + Aksh map/HITL cards + gap report + Gate C checklist + pilot pack-2 + review rubric + Phase 5 acceptance/walkthrough + partner lock
 - **HSI Neon (Phase 4)** — `db/migrations` + `bun run db:migrate` / `db:gate-c-local` (red-wave only; human-pending Gate C; never ISI Neon)
 - Safety release criteria v0
 

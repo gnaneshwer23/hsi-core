@@ -35,6 +35,9 @@ dist/outputs/
     hsi-pilot-evidence-pack.md        # human walkthrough / brief shell
     hsi-pilot-review-rubric.json      # Stage 1 four-output review checklist
     hsi-pilot-review-rubric.md
+    hsi-pilot-acceptance.json         # Phase 5 Stage 1 acceptance (pass/fail/pending)
+    hsi-pilot-acceptance.md
+    hsi-pilot-walkthrough.md          # partner walkthrough script (RA/anti-TNF)
     hsi-partner-lock.json             # durable scope / partner-signed lock
 ```
 
@@ -42,9 +45,9 @@ dist/outputs/
 
 | Consumer | Files | Rules |
 |----------|-------|--------|
-| **ISI** | `hsi-isi-export.json`, `hsi-isi-rel-map.json`, `gate-c-checklist.*`, `hsi-pilot-evidence-pack.*`, `hsi-pilot-review-rubric.*`, `hsi-partner-lock.json` | Discovery / Ask / Radar only. REL map never auto-approves into KG. Gate C approve (if any) is human-only in **ISI Neon `autumn-snow`**, not HSI `red-wave`. Pack shows **Phase 3 evidence depth** on Phase 2 scope-locked RA/TNF (`scopeLocked=true`, `partnerSigned=false`, `lockedPilot=false`) — not a MoU. **Phase 4:** HSI Neon schema stub + `bun run db:gate-c-local` pending placeholders on `red-wave` only. Discovery Centre vocabulary is **metadata only**. |
+| **ISI** | `hsi-isi-export.json`, `hsi-isi-rel-map.json`, `gate-c-checklist.*`, `hsi-pilot-evidence-pack.*`, `hsi-pilot-review-rubric.*`, `hsi-pilot-acceptance.*`, `hsi-pilot-walkthrough.md`, `hsi-partner-lock.json` | Discovery / Ask / Radar only. REL map never auto-approves into KG. Gate C approve (if any) is human-only in **ISI Neon `autumn-snow`**, not HSI `red-wave`. Pack shows **Phase 3 evidence depth** on Phase 2 scope-locked RA/TNF (`scopeLocked=true`, `partnerSigned=false`, `lockedPilot=false`) — not a MoU. **Phase 4:** HSI Neon schema stub + `bun run db:gate-c-local` pending placeholders on `red-wave` only. **Phase 5:** Stage 1 acceptance checklist + partner walkthrough (honest pending for `partnerSigned` / licensing). Discovery Centre vocabulary is **metadata only**. |
 | **Aksh** | `hsi-aksh-node-map.json`, `hsi-aksh-hitl-cards.json` | HITL map pointers. `akshNodeId` ≠ CDS. Seeds stay `cdsSurfacable=false`. |
-| **Curators** | `gate-c-checklist.md`, `hsi-gap-report.md`, `hsi-pilot-evidence-pack.md`, `hsi-pilot-review-rubric.md` | Pending REL list + gap backlog + scope-locked brief + human review checklist. |
+| **Curators** | `gate-c-checklist.md`, `hsi-gap-report.md`, `hsi-pilot-evidence-pack.md`, `hsi-pilot-review-rubric.md`, `hsi-pilot-acceptance.md`, `hsi-pilot-walkthrough.md` | Pending REL list + gap backlog + scope-locked brief + human review checklist + Phase 5 acceptance / walkthrough. |
 
 PRD / brief four outputs (evidence map, entity slice, competing explanations, expert shortlist) are assembled in `hsi-pilot-evidence-pack.*`. See [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md).
 
@@ -89,11 +92,12 @@ PRD / brief four outputs (evidence map, entity slice, competing explanations, ex
 | Named `partnerSigned=true` / `lockedPilot=true` | **Remaining** (outreach — named partner confirms disease + question) |
 | **Phase 3** — Partner-scoped evidence depth for the locked question | **Done** (ADA / immunogenicity, serology tension, RF LOINC, MTX combo; competing explanations filled) |
 | **Phase 4** — HSI Neon `red-wave` readiness | **Done** (HSI-owned schema stub + migrate/gate-c-local guards; never ISI/Akeno/DeliverX) |
-| **Phase 5** — Pilot acceptance pack | **Next** (partner walkthrough / acceptance criteria pack on scope-locked RA/TNF) |
+| **Phase 5** — Pilot acceptance pack | **Done** (`hsi-pilot-acceptance.*` + `hsi-pilot-walkthrough.md`; Stage 1 four outputs + MANIFEST + gap + Gate C + rubric green; `partnerSigned` / licensing / thresholds **pending**) |
 | Source licensing / attribution for agreed partner corpus | **Remaining** (after partnerSigned) |
 | Success-metric numeric thresholds with partner | **Remaining** |
-| Interactive Discovery Centre / graph UI | **Deferred** (ISI product — not hsi-core Stage 1) |
-| PDF/DOCX brief renderer | **Deferred** (ISI product P1) |
+| Interactive Discovery Centre / graph UI | **Deferred** (ISI product — not hsi-core Stage 1; **Phase 6+ needs explicit user ask**) |
+| PDF/DOCX brief renderer | **Deferred** (ISI product P1; Phase 6+ needs explicit ask) |
+| Target R1 Discovery Centre product / clinical R2–R5 | **Later** — requires explicit user ask; not implied by Phase 5 |
 | Stage 2 molecular adapters / Stage 3 Akeno clinical | **Out of Stage 1** |
 
 ## Individual CLIs (still available)

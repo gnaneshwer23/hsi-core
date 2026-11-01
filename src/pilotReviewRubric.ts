@@ -260,7 +260,8 @@ export function buildPilotReviewRubric(opts?: {
       "Human-review checklist items marked ready_for_human against hsi-pilot-evidence-pack.md.",
       "Keep partnerSigned=false / lockedPilot=false until a named partner confirms disease + question.",
       "Agree success-metric thresholds before formal pilot user testing.",
-      "Phase 4 complete = HSI Neon red-wave schema stub + guarded migrate / Gate C local pending path; Phase 5 next = pilot acceptance pack.",
+      "Phase 5 complete = hsi-pilot-acceptance.* + hsi-pilot-walkthrough.md (partner-ready Stage 1 pack; partnerSigned still pending).",
+      "Phases 6+ (Discovery Centre product UI / clinical R2–R5) need an explicit user ask.",
       "Do not treat scopeLocked as a signed commercial partner / MoU.",
     ],
   };

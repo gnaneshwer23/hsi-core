@@ -170,6 +170,9 @@ export type PilotEvidencePack = {
     gateCChecklistMd: string;
     reviewRubricJson: string;
     reviewRubricMd: string;
+    acceptanceJson: string;
+    acceptanceMd: string;
+    walkthroughMd: string;
   };
   summary: {
     evidenceMapRows: number;
@@ -644,6 +647,9 @@ export function buildPilotEvidencePack(opts?: {
       gateCChecklistMd: "gate-c-checklist.md",
       reviewRubricJson: "hsi-pilot-review-rubric.json",
       reviewRubricMd: "hsi-pilot-review-rubric.md",
+      acceptanceJson: "hsi-pilot-acceptance.json",
+      acceptanceMd: "hsi-pilot-acceptance.md",
+      walkthroughMd: "hsi-pilot-walkthrough.md",
     },
     summary: {
       evidenceMapRows: evidenceMap.length,
@@ -659,9 +665,11 @@ export function buildPilotEvidencePack(opts?: {
       scopedPilot
         ? "Phase 3 evidence depth complete for scope-locked RA/anti-TNF. Keep partnerSigned=false / lockedPilot=false until a named partner confirms disease + question (see partnerLock.flipRequirements)."
         : "Lock disease + research question as working Stage 1 scope (Phase 2).",
-      "Phase 4 done: HSI Neon red-wave schema stub + db:migrate / db:gate-c-local (pending only). Phase 5 next: pilot acceptance pack — no ISI autumn-snow writes from this workspace.",
+      "Phase 4 done: HSI Neon red-wave schema stub + db:migrate / db:gate-c-local (pending only) — no ISI autumn-snow writes from this workspace.",
+      "Phase 5 done: use hsi-pilot-acceptance.* + hsi-pilot-walkthrough.md for partner-ready Stage 1 acceptance (partnerSigned still pending).",
       "Human-review the deepened RA pathway against hsi-pilot-review-rubric.* and the four pack outputs.",
       "Agree source licensing + success thresholds with the named partner before user testing.",
+      "Phases 6+ (Discovery Centre product UI / clinical R2–R5) require an explicit user ask.",
       "Keep Akeno/Aksh patient-level pathways behind M4 / governance gates.",
       "Do not treat SLE/PsO/IBD illustrative stubs as the selected pilot indication.",
     ],

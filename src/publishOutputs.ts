@@ -37,6 +37,12 @@ import {
   serializePilotReviewRubric,
   serializePilotReviewRubricMarkdown,
 } from "./pilotReviewRubric";
+import {
+  buildPilotAcceptancePack,
+  serializePilotAcceptance,
+  serializePilotAcceptanceMarkdown,
+  serializePilotWalkthroughMarkdown,
+} from "./pilotAcceptance";
 import { getPartnerLock, partnerLockExportPointer } from "./partnerLock";
 import { validateHsiEdge } from "./validate";
 
@@ -212,6 +218,14 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     lock: partnerLock,
     pack: pilotPack,
   });
+  const acceptance = buildPilotAcceptancePack({
+    generatedAt,
+    lock: partnerLock,
+    pack: pilotPack,
+    rubric: reviewRubric,
+    gateC,
+    gap: gapReport,
+  });
 
   const fileMap: Record<string, string> = {
     "hsi-isi-export.json": serializeIsiExport(isiBundle),
@@ -226,6 +240,9 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     "hsi-pilot-evidence-pack.md": serializePilotEvidencePackMarkdown(pilotPack),
     "hsi-pilot-review-rubric.json": serializePilotReviewRubric(reviewRubric),
     "hsi-pilot-review-rubric.md": serializePilotReviewRubricMarkdown(reviewRubric),
+    "hsi-pilot-acceptance.json": serializePilotAcceptance(acceptance),
+    "hsi-pilot-acceptance.md": serializePilotAcceptanceMarkdown(acceptance),
+    "hsi-pilot-walkthrough.md": serializePilotWalkthroughMarkdown(acceptance),
     "hsi-partner-lock.json": `${JSON.stringify(partnerLock, null, 2)}\n`,
   };
 
@@ -259,6 +276,9 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       pilotEvidencePackMd: "hsi-pilot-evidence-pack.md",
       pilotReviewRubricJson: "hsi-pilot-review-rubric.json",
       pilotReviewRubricMd: "hsi-pilot-review-rubric.md",
+      pilotAcceptanceJson: "hsi-pilot-acceptance.json",
+      pilotAcceptanceMd: "hsi-pilot-acceptance.md",
+      pilotWalkthroughMd: "hsi-pilot-walkthrough.md",
       partnerLockJson: "hsi-partner-lock.json",
     },
     counts: {
@@ -274,14 +294,27 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       illustrativeDiseaseContexts: pilotPack.summary.illustrativeDiseaseContexts,
       reviewRubricReadyForHuman: reviewRubric.summary.readyForHuman,
       reviewRubricBlockedOnPartner: reviewRubric.summary.blockedOnPartner,
+      acceptancePass: acceptance.summary.pass,
+      acceptanceFail: acceptance.summary.fail,
+      acceptancePending: acceptance.summary.pending,
+      stage1FourOutputsGreen: acceptance.summary.stage1FourOutputsGreen,
+      partnerReadyWalkthrough: acceptance.summary.partnerReadyWalkthrough,
     },
     discoveryLoop: isiBundle.discoveryCentre.discoveryLoop.framing,
     partnerLock: partnerLockExportPointer(partnerLock),
+    acceptance: {
+      schemaVersion: acceptance.schemaVersion,
+      phase: acceptance.phase,
+      overallStage1Acceptance: acceptance.summary.overallStage1Acceptance,
+      stage1FourOutputsGreen: acceptance.summary.stage1FourOutputsGreen,
+      partnerReadyWalkthrough: acceptance.summary.partnerReadyWalkthrough,
+      partnerSigned: acceptance.scope.partnerSigned,
+    },
     consumerNotes: [
       "ISI: discovery / Ask / Radar only — use hsi-isi-export.json + hsi-isi-rel-map.json.",
-      "ISI pilot walkthrough: hsi-pilot-evidence-pack.* + hsi-pilot-review-rubric.* (Phase 3 evidence depth on scope-locked RA/TNF; partnerSigned=false; lockedPilot=false; no patient CDS).",
-      "Partner lock honesty: hsi-partner-lock.json — Phase 2 = scopeLocked; Phase 3 = evidence depth; named partner still flips partnerSigned (then lockedPilot).",
-      "Discovery Centre vocabulary is metadata only (ASK→MAP→REVIEW… + disease contexts) — not an interactive UI.",
+      "ISI pilot walkthrough: hsi-pilot-walkthrough.md + hsi-pilot-evidence-pack.* + hsi-pilot-review-rubric.* + hsi-pilot-acceptance.* (Phase 5 acceptance on scope-locked RA/TNF; partnerSigned=false; lockedPilot=false; no patient CDS).",
+      "Partner lock honesty: hsi-partner-lock.json — Phase 2 = scopeLocked; Phase 3 = evidence depth; Phase 5 = acceptance pack; named partner still flips partnerSigned (then lockedPilot).",
+      "Discovery Centre vocabulary is metadata only (ASK→MAP→REVIEW… + disease contexts) — not an interactive UI. Phase 6+ product UI needs explicit ask.",
       "Aksh: HITL map pointers only — use hsi-aksh-node-map.json + hsi-aksh-hitl-cards.json; CDS stays closed on seeds.",
       "Gate C: human checklist in gate-c-checklist.*; optional HSI red-wave placeholders via bun run db:gate-c-local (pending only). ISI product approve stays autumn-snow — never from this workspace.",
       "Phase 4: HSI Neon schema stub — bun run db:migrate (guards refuse ISI/Akeno/DeliverX).",

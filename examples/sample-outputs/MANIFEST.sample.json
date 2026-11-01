@@ -20,6 +20,9 @@
     "pilotEvidencePackMd": "hsi-pilot-evidence-pack.md",
     "pilotReviewRubricJson": "hsi-pilot-review-rubric.json",
     "pilotReviewRubricMd": "hsi-pilot-review-rubric.md",
+    "pilotAcceptanceJson": "hsi-pilot-acceptance.json",
+    "pilotAcceptanceMd": "hsi-pilot-acceptance.md",
+    "pilotWalkthroughMd": "hsi-pilot-walkthrough.md",
     "partnerLockJson": "hsi-partner-lock.json"
   },
   "discoveryLoop": "ASK → MAP → REVIEW → TEST → LEARN",
@@ -35,10 +38,23 @@
     "partner": "outreach:uk-versus-arthritis-ndorms-category",
     "seedPathwayId": "ra-tnf-response-heterogeneity"
   },
+  "acceptance": {
+    "schemaVersion": "hsi-pilot-acceptance-1",
+    "phase": "5",
+    "overallStage1Acceptance": "green_with_pending",
+    "stage1FourOutputsGreen": true,
+    "partnerReadyWalkthrough": true,
+    "partnerSigned": false
+  },
   "counts": {
     "partnerScopedEvidenceRows": 14,
     "claimsWithLoinc": 8,
-    "illustrativeDiseaseContexts": 4
+    "illustrativeDiseaseContexts": 4,
+    "acceptancePass": 9,
+    "acceptanceFail": 0,
+    "acceptancePending": 4,
+    "stage1FourOutputsGreen": true,
+    "partnerReadyWalkthrough": true
   },
-  "note": "Sample only (Phase 3 depth) — run bun run outputs for a real bundle under dist/outputs/"
+  "note": "Sample only (Phase 5 acceptance) — run bun run outputs for a real bundle under dist/outputs/"
 }
