@@ -1,7 +1,7 @@
 # HSI build status and next
 
 **Audit date:** 1 November 2026  
-**HEAD at write:** (pending P1.3 commit) — gut–immune SCFA ↔ mucosal Treg/Th17  
+**HEAD at write:** `974533a` (main) — P1.3 gut–immune SCFA ↔ mucosal Treg/Th17  
 **Edit target:** `hsi-core` only · Neon **`red-wave` only** · no immunecity / Akeno product / DeliverX edits  
 **Prior audit:** [`PRD_IMPLEMENTATION_AUDIT.md`](./PRD_IMPLEMENTATION_AUDIT.md) (phases 0–8 vs Pilot + Target PRDs)
 
@@ -143,7 +143,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | AI / neural position | `566005c` |
 | Dual-track A + SSc first slice | `e68e8bf` |
 | P1 SSc deepen + model→Gate C | `c2fd6f3` |
-| P1.3 gut–immune SCFA ↔ Treg/Th17 | (this ship) |
+| P1.3 gut–immune SCFA ↔ Treg/Th17 | `974533a` |
 
 Reproduce: `bun test && bun run outputs && bun run site:dev` → `/discovery`, `/akeno`, `/aksh-agents`.
 
