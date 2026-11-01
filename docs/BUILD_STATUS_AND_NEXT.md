@@ -1,7 +1,7 @@
 # HSI build status and next
 
 **Audit date:** 1 November 2026  
-**HEAD at write:** _(pending commit)_ — P3.2 REINVENT4 thin adapter spike (proposal-only)  
+**HEAD at write:** `14f8412` (main) — P3.2 REINVENT4 thin adapter spike (proposal-only)  
 
 
 
@@ -156,7 +156,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | P2.5 P3 adapter RFC + license matrix | `6aee2ea` |
 | P3.0 RDKit thin adapter spike | `81ec446` |
 | P3.1 OpenMM thin adapter spike | `2233af1` |
-| P3.2 REINVENT4 thin adapter spike | _(this commit)_ |
+| P3.2 REINVENT4 thin adapter spike | `14f8412` |
 
 Reproduce: `bun test && bun run outputs && bun run site:dev` → `/discovery`, `/akeno`, `/aksh-agents`.
 
