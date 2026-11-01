@@ -339,6 +339,44 @@ export {
 } from "./adapters/esmAdapter";
 
 export {
+  ISI_CONSUME_CONTRACT_SCHEMA,
+  ISI_CONSUME_CONTRACT_VERSION,
+  ISI_CONSUME_OUTPUTS_MANIFEST_SCHEMA,
+  buildIsiConsumeContractBundle,
+  serializeIsiConsumeContract,
+  serializeIsiConsumeContractMarkdown,
+  type IsiArtifactContractRow,
+  type IsiArtifactConsumerSurface,
+  type IsiArtifactLoadPriority,
+  type IsiConsumeContractBundle,
+  type IsiDiscoveryJsonPath,
+  type IsiGateCRules,
+  type IsiGradeSemantics,
+} from "./isiConsumeContract";
+
+export {
+  PARTNER_FLIP_READINESS_SCHEMA,
+  buildPartnerFlipReadinessBundle,
+  serializePartnerFlipReadiness,
+  serializePartnerFlipReadinessMarkdown,
+  type FlipRequirementId,
+  type FlipRequirementRow,
+  type FlipRequirementStatus,
+  type PartnerFlipReadinessBundle,
+} from "./partnerFlipReadiness";
+
+export {
+  SOURCE_LICENSING_STUB_SCHEMA,
+  buildSourceLicensingStubBundle,
+  serializeSourceLicensingStub,
+  serializeSourceLicensingStubMarkdown,
+  type SourceLicenseStatus,
+  type SourceLicensingRow,
+  type SourceLicensingStubBundle,
+  type SourcePackId,
+} from "./sourceLicensingStub";
+
+export {
   SSC_CELL_CARD_SCHEMA,
   SSC_NEIGHBOURHOOD_CARDS,
   listSscNeighbourhoodCards,

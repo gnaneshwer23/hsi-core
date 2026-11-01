@@ -1,7 +1,7 @@
 # HSI build status and next
 
 **Audit date:** 1 November 2026  
-**HEAD at write:** `1c22662` (main) — P3.3 FAIR ESM-2 thin embedding stub (proposal + sidecar refs)
+**HEAD at write:** *(pending push)* — P0.2-HSI ISI consume contract + partner flip-readiness pack
 
 
 **Edit target:** `hsi-core` only · Neon **`red-wave` only** · no immunecity / Akeno product / DeliverX edits  
@@ -13,16 +13,17 @@
 
 ## Executive verdict
 
-hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance, Gate C checklists, versioned publish, RA/anti-TNF scope lock + depth, Discovery Centre, R2 validation, translation/Akeno HITL scaffolding, Aksh agent catalog, Neon isolation, systems-vision + AI position stubs). **Vertical decision A (dual-track) is recorded:** RA stays Stage 1 `activeScope`; SSc Tfh–B–IL-21 is the PRD MVP target with a **deepened** literature slice (cell cards + CL·MONDO hints + extra PMIDs). **P1.3 gut–immune** SCFA/butyrate ↔ mucosal Treg/Th17 + **P2.1 neuroimmune** vagus / cholinergic anti-inflammatory reflex thin seeds + packs landed (`deepSeedsPresent=true`; honest `uncertain`/`hypothesized`; human VNS–RA not a clinical cure). **Model-proposal artifacts are wired into Gate C** as typed pending drafts (`autoApprove=false`). **P2.2 embedding sidecars** land as hash/ref metadata on sample edges (`hsi-embedding-sidecars.json`; `doesNotSetHsiGrade=true`; no model weights / PHI). **P2.3 offline eval harness** scores proposals/sidecars against frozen public pack fixtures (`hsi-model-eval-harness.*`; `mayUseLivePhi=false`; fail-closed clinical/PHI; no training). **P2.4 ClinVar / TCGA pointer metadata** lands as citation/ref shelf (`hsi-external-genome-pointers.json`; `reviewRequired=true`; no bulk genome dump / PHI; does not set `hsiGrade`). **P2.5 P3 adapter RFC + license matrix** lands as durable RFC + regenerable shelf (`docs/P3_ADAPTER_RFC.md`; `hsi-p3-adapter-license-matrix.*`; honest `signOffStatus`; no weight vendoring; proposals only). **P3.0 RDKit** + **P3.1 OpenMM** + **P3.2 REINVENT4** + **P3.3 FAIR ESM-2** thin adapter spikes emit ModelProposalArtifacts (+ ESM embedding sidecar refs) (`hsi-rdkit-adapter-proposals.*` / `hsi-openmm-adapter-proposals.*` / `hsi-reinvent4-adapter-proposals.*` / `hsi-esm-adapter-proposals.*`; `runtime: stub|rdkit` / `stub|openmm` / `stub|reinvent` / `stub|esm`; license gate refuses `blockedUntilSignOff`; Gate C pending; `autoApprove=false`; MD ≠ Gate C evidence alone; generative designs never clinic path; ESM hash/ref only — no weight vendoring). **Unblocked shelf adapter spikes are largely covered**; AF3/TDC/ISI agents remain blocked; Boltz stays deferred. What remains for a **real partner pilot** is mostly **outreach + rights + thresholds + ISI product consumption** (**backlog pivot: partner P0.2**). Agent runtime and live CDS stay gated.
+hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance, Gate C checklists, versioned publish, RA/anti-TNF scope lock + depth, Discovery Centre, R2 validation, translation/Akeno HITL scaffolding, Aksh agent catalog, Neon isolation, systems-vision + AI position stubs). **Vertical decision A (dual-track) is recorded:** RA stays Stage 1 `activeScope`; SSc Tfh–B–IL-21 is the PRD MVP target with a **deepened** literature slice (cell cards + CL·MONDO hints + extra PMIDs). **P1.3 gut–immune** SCFA/butyrate ↔ mucosal Treg/Th17 + **P2.1 neuroimmune** vagus / cholinergic anti-inflammatory reflex thin seeds + packs landed (`deepSeedsPresent=true`; honest `uncertain`/`hypothesized`; human VNS–RA not a clinical cure). **Model-proposal artifacts are wired into Gate C** as typed pending drafts (`autoApprove=false`). **P2.2–P3.3** embedding sidecars, offline eval, genome pointers, P3 RFC/matrix, and RDKit/OpenMM/REINVENT4/ESM thin adapter spikes are done (proposal-only; Gate C pending; no weight vendoring / PHI / CDS). **Technical adapter track is paused** (unblocked shelf covered; AF3/TDC/ISI agents still blocked; Boltz deferred). **P0.2-HSI done on the HSI side:** machine-readable ISI consume contract (`hsi-isi-consume-contract.*`) + partner flip-readiness pack (`hsi-partner-flip-readiness.*`; honest fail/pending; **`partnerSigned=false`**) + P0.3 source licensing stub (`hsi-source-licensing-stub.*`; all `licenseStatus=needs_review`). **Next is human:** supply a **named partner** OR do **out-of-repo ISI product wiring** — further BUILD NEXT must not invent more adapter spikes. Agent runtime and live CDS stay gated.
 
 | Plane | Light | One line |
 |-------|-------|----------|
 | R0–R1 substrate + `/discovery` | **GREEN** | Four outputs + ASK→MAP→REVIEW on regenerable packs |
 | R2 workbench (HSI) | **GREEN / YELLOW** | Hypothesis + gaps + VALIDATE; partner thresholds open |
 | R3 translation / `/akeno` | **YELLOW** | HITL scaffolding only (`clinicalActive=false`) |
-| Partner pilot readiness (M3) | **YELLOW** | Walkthrough ready; `partnerSigned=false` |
+| Partner pilot readiness (M3) | **YELLOW** | Walkthrough + flip-readiness pack ready; `partnerSigned=false`; named org still fail |
 | Live CDS / PHI / shared Neon | **RED (correct)** | Explicitly not built |
-| Vision axes / AI stubs | **GREEN** | Map + schema stubs; SSc deepened; **gut P1.3 + neuro P2.1 deep seeds**; model→Gate C; **P2.2 embedding sidecars**; **P2.3 offline eval harness**; **P2.4 ClinVar/TCGA pointers**; **P2.5 P3 RFC + license matrix**; **P3.0–P3.3 RDKit + OpenMM + REINVENT4 + FAIR ESM-2 spikes** |
+| Vision axes / AI stubs | **GREEN** | Map + schema stubs; SSc/gut/neuro deep seeds; model→Gate C; P2.2–P3.3 shelf; **adapter track paused** |
+| ISI consume handoff (HSI side) | **GREEN** | **P0.2-HSI** `hsi-isi-consume-contract.*` — immunecity wiring still OUT OF REPO |
 | Vertical strategy | **GREEN** | **A dual-track** written — `verticalStrategy=dual_track` |
 
 ---
@@ -42,7 +43,9 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | Versioned `bun run outputs` + MANIFEST + site refresh | **DONE** | `src/publishOutputs.ts`, [`OUTPUTS.md`](./OUTPUTS.md) |
 | Immune-cell spine vocabulary + PRD relation types | **DONE** (vocab) | `src/immuneCellSpine.ts` |
 | Systems multi-axis stubs (gut / neuro / DTB / patient plane / P3) | **DONE** (vocab) | `src/systemsAxes.ts` → `hsi-systems-vision.json` |
-| AI / NN position + model-proposal / embedding / eval / genome-pointer / P3 license / RDKit + OpenMM + REINVENT4 + ESM spikes | **DONE** | [`HSI_AI_NEURAL_FUTURE_HEALTHCARE.md`](./HSI_AI_NEURAL_FUTURE_HEALTHCARE.md); `aiFutureTech`; **P1.5** `modelProposals`; **P2.2** `hsi-embedding-sidecars.json`; **P2.3** `hsi-model-eval-harness.*`; **P2.4** `hsi-external-genome-pointers.json`; **P2.5** [`P3_ADAPTER_RFC.md`](./P3_ADAPTER_RFC.md) + `hsi-p3-adapter-license-matrix.*`; **P3.0** `hsi-rdkit-adapter-proposals.*`; **P3.1** `hsi-openmm-adapter-proposals.*`; **P3.2** `hsi-reinvent4-adapter-proposals.*`; **P3.3** `hsi-esm-adapter-proposals.*` |
+| AI / NN position + model-proposal / embedding / eval / genome-pointer / P3 license / RDKit + OpenMM + REINVENT4 + ESM spikes | **DONE** (adapter track **paused**) | [`HSI_AI_NEURAL_FUTURE_HEALTHCARE.md`](./HSI_AI_NEURAL_FUTURE_HEALTHCARE.md); `aiFutureTech`; P1.5–P3.3 artifacts as before |
+| ISI consume contract + partner flip-readiness (P0.2-HSI) | **DONE** | `src/isiConsumeContract.ts` → `hsi-isi-consume-contract.*`; `src/partnerFlipReadiness.ts` → `hsi-partner-flip-readiness.*`; **`partnerSigned=false`** |
+| Source licensing stub (P0.3) | **PARTIAL** | `src/sourceLicensingStub.ts` → `hsi-source-licensing-stub.*`; all rows `needs_review` until partner |
 | Package scripts | **DONE** | `test`, `outputs`, `db:migrate`, `db:gate-c-local`, `site:dev` / `site:build` |
 
 ### 1.2 Stage 1 packs (pilot R0–R1)
@@ -55,8 +58,8 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | Four workflow outputs (evidence map, entity slice, competing explanations, expert shortlist) | **DONE** | `src/pilotEvidencePack.ts` → `hsi-pilot-evidence-pack.*` |
 | Phase 3 RA/TNF evidence depth (ADA, serology, RF LOINC, MTX combo) | **DONE** | Pack + seeds; commit `e2612dc` |
 | Review rubric + acceptance + walkthrough | **DONE** | `hsi-pilot-review-rubric.*`, `hsi-pilot-acceptance.*`, `hsi-pilot-walkthrough.md` |
-| `partnerSigned` / `lockedPilot` | **PARTIAL** | Flags exist; both **false**; partner = `outreach_category` |
-| Source licensing table for agreed corpus | **NOT STARTED** | Blocked on named partner |
+| `partnerSigned` / `lockedPilot` | **PARTIAL** | Flags exist; both **false**; partner = `outreach_category`; flip-readiness pack lists fail/pending |
+| Source licensing table for agreed corpus | **PARTIAL** | Stub exported (`needs_review`); partner clearance still open |
 | Numeric evaluation thresholds | **NOT STARTED** | Rubric shell only |
 | PDF/DOCX brief | **OUT OF SCOPE** | ISI product P1 |
 
@@ -155,6 +158,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | P3.1 OpenMM thin adapter spike | `2233af1` |
 | P3.2 REINVENT4 thin adapter spike | `14f8412` |
 | P3.3 FAIR ESM-2 thin embedding stub | `1c22662` |
+| P0.2-HSI ISI consume + partner flip-readiness (+ P0.3 licensing stub) | *(this commit)* |
 
 Reproduce: `bun test && bun run outputs && bun run site:dev` → `/discovery`, `/akeno`, `/aksh-agents`.
 
@@ -167,7 +171,7 @@ Reproduce: `bun test && bun run outputs && bun run site:dev` → `/discovery`, `
 | **`partnerSigned=false` / `lockedPilot=false`** | Blocks Pilot M0 exit + M3 partner run; scope lock ≠ MoU | Outreach (user) + flip in `partnerLock.ts` |
 | **SSc-vs-RA vertical conflict** | Resolved as **A dual-track** | Recorded in `verticalDecision.ts` / partner lock / systems vision |
 | **Named partner not chosen** | Shortlist is categories only; no invented contacts | Outreach |
-| **Licensing / rights pack** | Pilot data-rights gate | Partner + curator table in-repo after sign |
+| **Licensing / rights pack** | Pilot data-rights gate | Stub landed (`hsi-source-licensing-stub.*`); promote beyond `needs_review` with partner |
 | **Numeric success thresholds** | Evaluation plan incomplete | Partner + rubric update |
 | **Neuroimmune claim seeds** | **DONE (P2.1)** vagus / cholinergic anti-inflammatory reflex pack | Optional further neighbourhood (microglia/BBB) later; VNS–RA stays hypothesized |
 | **Gut–immune claim seeds** | **DONE (P1.3)** SCFA ↔ mucosal Treg/Th17 pack | Optional further depth later; Th17 frames stay hypothesized |
@@ -200,10 +204,10 @@ One-sprint-sized items. Mark **[DECISION]** where the user must choose before co
 | # | Item | Notes |
 |---|------|-------|
 | P0.1 | **[DONE]** Vertical **A dual-track** recorded | `verticalStrategy=dual_track`, `activeScope=ra-tnf`, `prdMvpTarget=ssc-tfh-b-il21`; SSc first slice + pack published |
-| P0.2 | **[NEXT / DECISION]** Named partner from shortlist (or rewrite disease/question with them) | **Primary backlog after P3.3.** Flip `partnerSigned` / `lockedPilot` / `partner.type=named_partner` only after written confirm — never invent org/email |
-| P0.3 | Rights / licensing table for the RA/TNF (or partner-rewritten) PMID set | Small markdown + pack field; public PMIDs already used |
+| P0.2 | **[DONE on HSI side / WAITING HUMAN]** Named partner + flip-readiness pack | **P0.2-HSI done:** `hsi-partner-flip-readiness.*` (fail/pending honest). Flip `partnerSigned` / `lockedPilot` / `partner.type=named_partner` only after written confirm — **never invent org/email**. **Next = user supplies partnerNamed** |
+| P0.3 | **[PARTIAL]** Rights / licensing stub for RA/SSc/gut/neuro PMID set | `hsi-source-licensing-stub.*` — all `licenseStatus=needs_review`; promote after partner agree |
 | P0.4 | Agree numeric thresholds on existing review rubric; refresh `hsi-pilot-review-rubric.*` | Export-only change after partner agrees |
-| P0.5 | **[NEXT / OUT-OF-REPO]** ISI consume checklist — which `dist/outputs/` files power which immunecity screens | **Partner with P0.2.** Document mapping in hsi-core if useful; **do not** edit immunecity from this workspace |
+| P0.5 | **[DONE on HSI side / OUT-OF-REPO for product]** ISI consume contract | `hsi-isi-consume-contract.*` maps MANIFEST keys, packs, grades, Gate C, Discovery paths. **Immunecity screen wiring = OUT OF REPO** — do not edit immunecity from this workspace |
 | P0.6 | Keep exports stable; refresh walkthrough after partner wording changes | `bun run outputs` discipline |
 
 ### P1 — deepen evidence / spine (after P0.1 clarity)
@@ -230,7 +234,8 @@ One-sprint-sized items. Mark **[DECISION]** where the user must choose before co
 | P3.1 | **DONE:** OpenMM thin adapter spike (proposal-only) | `src/adapters/openmmAdapter.ts` → `hsi-openmm-adapter-proposals.*`; `runtime: stub|openmm`; cites `HSI-E-NI-003` / `HSI-E-GUT-003`; Gate C pending; eval `EVAL-PASS-OPENMM-ACH-001`; partner P0.2 parallel |
 | P3.2 | **DONE:** REINVENT4 thin adapter spike (proposal-only) | `src/adapters/reinvent4Adapter.ts` → `hsi-reinvent4-adapter-proposals.*`; `runtime: stub|reinvent`; cites `HSI-E-RA-012` / `HSI-E-GUT-003`; Gate C pending; eval `EVAL-PASS-REINVENT4-MTX-001`; never clinic path; Boltz deferred |
 | P3.3 | **DONE:** FAIR ESM-2 thin embedding stub (proposal + sidecar refs) | `src/adapters/esmAdapter.ts` → `hsi-esm-adapter-proposals.*`; `runtime: stub|esm`; cites `HSI-E-RA-001` / `HSI-E-GUT-003`; overlays `hsi-embedding-sidecars.json`; Gate C pending; eval `EVAL-PASS-ESM2-TNF-001`; no weight vendoring; Boltz deferred |
-| **NEXT** | **Backlog pivot: partner P0.2 / ISI consume** | Adapter spikes for unblocked shelf largely covered (RDKit/OpenMM/REINVENT4/ESM). AF3/TDC/ISI agents still blocked. Prefer partner outreach + ISI product consumption over more adapter spikes. |
+| P0.2-HSI | **DONE:** ISI consume contract + partner flip-readiness (+ P0.3 licensing stub) | `hsi-isi-consume-contract.*` · `hsi-partner-flip-readiness.*` · `hsi-source-licensing-stub.*`; **`partnerSigned=false`**; adapter track **paused** |
+| **NEXT** | **Human partnerNamed OR out-of-repo ISI product wiring** | Do **not** invent more adapter spikes on BUILD NEXT without a named partner. Ask user for partner org name, or work immunecity outside this workspace. |
 
 ### Out-of-repo (track; do not implement here)
 
@@ -280,6 +285,7 @@ One-sprint-sized items. Mark **[DECISION]** where the user must choose before co
 | P3.1 OpenMM honesty | Proposal-only; `runtime: stub|openmm`; Gate C pending; MD ≠ Gate C evidence alone; `autoApprove=false`; does not set `hsiGrade`; no PHI / CDS / fake `partnerSigned` |
 | P3.2 REINVENT4 honesty | Proposal-only; `runtime: stub|reinvent`; Gate C pending; never clinic recommendation path; `autoApprove=false`; does not set `hsiGrade`; no PHI / CDS / multi-GB weights / fake `partnerSigned` |
 | P3.3 FAIR ESM-2 honesty | Proposal + embedding sidecar refs; `runtime: stub|esm`; Gate C pending; hash/ref only; `autoApprove=false`; does not set `hsiGrade`; no PHI sequences / CDS / weight vendoring / fake `partnerSigned`; Boltz deferred |
+| P0.2-HSI honesty | Consume contract + flip-readiness exported; `partnerSigned=false`; `readyToFlipPartnerSigned=false`; no invented org; licensing stub all `needs_review`; adapter track paused |
 | Safety | MANIFEST still `notCds`; `/akeno` still `clinicalActive=false`; Neon still red-wave-only |
 
 ---

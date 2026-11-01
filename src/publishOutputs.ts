@@ -97,6 +97,21 @@ import {
   serializeEsmAdapterMarkdown,
 } from "./adapters/esmAdapter";
 import {
+  buildIsiConsumeContractBundle,
+  serializeIsiConsumeContract,
+  serializeIsiConsumeContractMarkdown,
+} from "./isiConsumeContract";
+import {
+  buildPartnerFlipReadinessBundle,
+  serializePartnerFlipReadiness,
+  serializePartnerFlipReadinessMarkdown,
+} from "./partnerFlipReadiness";
+import {
+  buildSourceLicensingStubBundle,
+  serializeSourceLicensingStub,
+  serializeSourceLicensingStubMarkdown,
+} from "./sourceLicensingStub";
+import {
   getVerticalDecision,
   verticalDecisionExportPointer,
 } from "./verticalDecision";
@@ -343,6 +358,13 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     generatedAt,
     overlayByEdgeId: esmAdapter.sidecarsByEdgeId,
   });
+  // P0.2-HSI: ISI consume contract + partner flip-readiness + P0.3 licensing stub.
+  const isiConsumeContract = buildIsiConsumeContractBundle({ generatedAt });
+  const partnerFlipReadiness = buildPartnerFlipReadinessBundle({
+    generatedAt,
+    lock: partnerLock,
+  });
+  const sourceLicensingStub = buildSourceLicensingStubBundle({ generatedAt });
 
   const fileMap: Record<string, string> = {
     "hsi-isi-export.json": serializeIsiExport(isiBundle),
@@ -403,6 +425,24 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     ),
     "hsi-esm-adapter-proposals.json": serializeEsmAdapterBundle(esmAdapter),
     "hsi-esm-adapter-proposals.md": serializeEsmAdapterMarkdown(esmAdapter),
+    "hsi-isi-consume-contract.json": serializeIsiConsumeContract(
+      isiConsumeContract,
+    ),
+    "hsi-isi-consume-contract.md": serializeIsiConsumeContractMarkdown(
+      isiConsumeContract,
+    ),
+    "hsi-partner-flip-readiness.json": serializePartnerFlipReadiness(
+      partnerFlipReadiness,
+    ),
+    "hsi-partner-flip-readiness.md": serializePartnerFlipReadinessMarkdown(
+      partnerFlipReadiness,
+    ),
+    "hsi-source-licensing-stub.json": serializeSourceLicensingStub(
+      sourceLicensingStub,
+    ),
+    "hsi-source-licensing-stub.md": serializeSourceLicensingStubMarkdown(
+      sourceLicensingStub,
+    ),
   };
 
   const files: string[] = [];
@@ -465,6 +505,12 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       reinvent4AdapterProposalsMd: "hsi-reinvent4-adapter-proposals.md",
       esmAdapterProposalsJson: "hsi-esm-adapter-proposals.json",
       esmAdapterProposalsMd: "hsi-esm-adapter-proposals.md",
+      isiConsumeContractJson: "hsi-isi-consume-contract.json",
+      isiConsumeContractMd: "hsi-isi-consume-contract.md",
+      partnerFlipReadinessJson: "hsi-partner-flip-readiness.json",
+      partnerFlipReadinessMd: "hsi-partner-flip-readiness.md",
+      sourceLicensingStubJson: "hsi-source-licensing-stub.json",
+      sourceLicensingStubMd: "hsi-source-licensing-stub.md",
     },
     counts: {
       isiEdges: isiBundle.edges.length,
@@ -544,6 +590,16 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       esmAdapterAutoApprove: esmAdapter.autoApprove,
       esmAdapterSidecarEdges: Object.keys(esmAdapter.sidecarsByEdgeId).length,
       esmAdapterBoltzDeferred: esmAdapter.boltzDeferred,
+      isiConsumeArtifacts: isiConsumeContract.summary.artifactCount,
+      isiConsumeRequiredCore: isiConsumeContract.summary.requiredCoreCount,
+      isiConsumeRequiredPilot: isiConsumeContract.summary.requiredPilotCount,
+      partnerFlipPass: partnerFlipReadiness.summary.pass,
+      partnerFlipFail: partnerFlipReadiness.summary.fail,
+      partnerFlipPending: partnerFlipReadiness.summary.pending,
+      partnerFlipReadyToFlip:
+        partnerFlipReadiness.summary.readyToFlipPartnerSigned,
+      sourceLicensingPmidCount: sourceLicensingStub.summary.pmidCount,
+      sourceLicensingNeedsReview: sourceLicensingStub.summary.needsReviewCount,
     },
     discoveryLoop: isiBundle.discoveryCentre.discoveryLoop.framing,
     partnerLock: partnerLockExportPointer(partnerLock),
@@ -609,6 +665,10 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       "P3.1 OpenMM thin adapter spike: hsi-openmm-adapter-proposals.* — adapter-openmm; runtime stub|openmm; ModelProposalArtifacts only → Gate C pending; autoApprove=false; does not set hsiGrade; MD ≠ Gate C evidence alone; no weights / PHI / CDS / fake partnerSigned.",
       "P3.2 REINVENT4 thin adapter spike: hsi-reinvent4-adapter-proposals.* — adapter-reinvent4; runtime stub|reinvent; ModelProposalArtifacts only → Gate C pending; autoApprove=false; does not set hsiGrade; never clinic recommendation path; no multi-GB weights / PHI / CDS / fake partnerSigned; Boltz deferred.",
       "P3.3 FAIR ESM-2 thin embedding stub: hsi-esm-adapter-proposals.* — adapter-esm; runtime stub|esm; ModelProposalArtifacts + embedding sidecar refs → Gate C pending; overlays hsi-embedding-sidecars.json; autoApprove=false; does not set hsiGrade; no weight vendoring / PHI sequences / CDS / fake partnerSigned; Boltz deferred.",
+      "P0.2-HSI ISI consume contract: hsi-isi-consume-contract.* — MANIFEST keys, pack schemas, grades semantics, Gate C rules, Discovery JSON paths; immunecity edits OUT OF REPO.",
+      "P0.2-HSI partner flip-readiness: hsi-partner-flip-readiness.* — flipRequirements with honest fail/pending; partnerSigned=false; readyToFlipPartnerSigned=false.",
+      "P0.3 source licensing stub: hsi-source-licensing-stub.* — RA/SSc/gut/neuro PMIDs with licenseStatus=needs_review; no invented clearance.",
+      "Technical adapter track paused — further BUILD NEXT without partnerNamed should not invent more adapter spikes; ask for partner name or out-of-repo ISI wiring.",
       "Regenerate with: bun run outputs (also refreshes site/public/discovery).",
     ],
   };
@@ -672,6 +732,9 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     "hsi-openmm-adapter-proposals.json",
     "hsi-reinvent4-adapter-proposals.json",
     "hsi-esm-adapter-proposals.json",
+    "hsi-isi-consume-contract.json",
+    "hsi-partner-flip-readiness.json",
+    "hsi-source-licensing-stub.json",
   ] as const;
   for (const name of discoveryFiles) {
     const dest = join(discoveryPublicDir, name);
@@ -712,7 +775,9 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       "P3.0 RDKit spike: hsi-rdkit-adapter-proposals.json — proposal-only; runtime stub|rdkit; Gate C pending; no grade flips.",
       "P3.1 OpenMM spike: hsi-openmm-adapter-proposals.json — proposal-only; runtime stub|openmm; Gate C pending; MD ≠ Gate C evidence alone.",
       "P3.2 REINVENT4 spike: hsi-reinvent4-adapter-proposals.json — proposal-only; runtime stub|reinvent; Gate C pending; never clinic path; Boltz deferred.",
-      "P3.3 FAIR ESM-2 stub: hsi-esm-adapter-proposals.json — proposal + sidecar refs; runtime stub|esm; Gate C pending; no weight vendoring; Boltz deferred. Next backlog: partner P0.2 / ISI consume.",
+      "P3.3 FAIR ESM-2 stub: hsi-esm-adapter-proposals.json — proposal + sidecar refs; runtime stub|esm; Gate C pending; no weight vendoring; Boltz deferred. Adapter track paused.",
+      "P0.2-HSI: hsi-isi-consume-contract.json + hsi-partner-flip-readiness.json — ISI load map + flip checklist; partnerSigned=false.",
+      "P0.3 stub: hsi-source-licensing-stub.json — pack PMIDs licenseStatus=needs_review.",
       "Phase 7 done = R2 validation (hsi-r2-validation.json) on VALIDATE tab.",
       "Phase 8 done = HSI translation substrate (hsi-translation-handoff.json) on TRANSLATE tab + in-repo Akeno HITL consumer at /akeno (not CDS).",
     ],

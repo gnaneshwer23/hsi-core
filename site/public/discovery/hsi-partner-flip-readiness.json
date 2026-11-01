@@ -1,0 +1,105 @@
+{
+  "schemaVersion": "hsi-partner-flip-readiness-1",
+  "phase": "P0.2-HSI",
+  "notCds": true,
+  "containsPhi": false,
+  "generatedAt": "2026-11-01T19:45:14.232Z",
+  "partnerSigned": false,
+  "lockedPilot": false,
+  "scopeLocked": true,
+  "partner": {
+    "id": "outreach:uk-versus-arthritis-ndorms-category",
+    "label": "UK disease-focused / academic rheum outreach category (Versus Arthritis network · Oxford NDORMS / Kennedy Institute — illustrative targets only)",
+    "type": "outreach_category",
+    "outreachStatus": "awaiting_named_partner"
+  },
+  "disease": "Rheumatoid arthritis",
+  "researchQuestion": "Why do some patients with rheumatoid arthritis respond differently to anti-TNF therapy, and which biomarkers or immune mechanisms are best supported for defining those subgroups?",
+  "flipRequirements": [
+    {
+      "id": "named_org",
+      "label": "Named partner organisation",
+      "requirement": "Named partner confirms disease = rheumatoid arthritis (or explicitly chooses a different disease — then re-lock scope).",
+      "status": "fail",
+      "evidence": "Current partner is outreach category only (outreach:uk-versus-arthritis-ndorms-category); type=outreach_category; outreachStatus=awaiting_named_partner.",
+      "blocksPartnerSigned": true
+    },
+    {
+      "id": "question_confirm",
+      "label": "Research question confirmation",
+      "requirement": "Named partner confirms or rewrites the research question in their words.",
+      "status": "fail",
+      "evidence": "Working Stage 1 question is scope-locked engineering text only — no written partner confirmation recorded.",
+      "blocksPartnerSigned": true
+    },
+    {
+      "id": "licensing",
+      "label": "Source licensing / attribution",
+      "requirement": "Agree source licensing / attribution for the partner source set.",
+      "status": "pending",
+      "evidence": "hsi-source-licensing-stub.json lists pack PMIDs with licenseStatus=needs_review — partner agreement still open.",
+      "blocksPartnerSigned": true
+    },
+    {
+      "id": "thresholds",
+      "label": "Numeric review thresholds",
+      "requirement": "Agree scientific review rubric thresholds (time saved, usefulness, rejections) with the partner.",
+      "status": "pending",
+      "evidence": "hsi-pilot-review-rubric.* framing exists; cut-offs TBD with partner (blockedOnPartner).",
+      "blocksPartnerSigned": true
+    },
+    {
+      "id": "shortlist_row",
+      "label": "Shortlist tracking row",
+      "requirement": "Record real outreach row in ISI_PILOT_PARTNER_SHORTLIST.md (org, type, region, status) — still no invented emails.",
+      "status": "fail",
+      "evidence": "docs/ISI_PILOT_PARTNER_SHORTLIST.md still shows category row awaiting_named_partner; no confirmed named org row.",
+      "blocksPartnerSigned": true
+    },
+    {
+      "id": "partner_signed_flip",
+      "label": "Flip partnerSigned / lockedPilot",
+      "requirement": "Set partnerSigned=true, lockedPilot=true (scopeLocked already true), status=scoping|active, partner.type=named_partner, partner.outreachStatus=confirmed.",
+      "status": "fail",
+      "evidence": "partnerSigned=false; lockedPilot=false; status=scope_locked — correctly false until named confirm.",
+      "blocksPartnerSigned": true
+    },
+    {
+      "id": "outputs_refresh",
+      "label": "Refresh outputs after sign",
+      "requirement": "Re-run bun run outputs and refresh the pilot evidence pack + review rubric against the signed question.",
+      "status": "pending",
+      "evidence": "Blocked until partnerSigned flip; regenerable publish path already green for unsigned scope.",
+      "blocksPartnerSigned": false
+    }
+  ],
+  "summary": {
+    "total": 7,
+    "pass": 0,
+    "fail": 4,
+    "pending": 3,
+    "readyToFlipPartnerSigned": false,
+    "blockingIds": [
+      "named_org",
+      "question_confirm",
+      "licensing",
+      "thresholds",
+      "shortlist_row",
+      "partner_signed_flip"
+    ]
+  },
+  "nextHumanActions": [
+    "Name a real partner organisation (or rewrite disease/question with them) — do not invent org/email in code.",
+    "Record outreach row in docs/ISI_PILOT_PARTNER_SHORTLIST.md when interest is real.",
+    "Agree licensing for the PMID corpus (promote rows in hsi-source-licensing-stub beyond needs_review).",
+    "Agree numeric rubric thresholds; refresh hsi-pilot-review-rubric.*.",
+    "Only then flip partnerSigned=true / lockedPilot=true in partnerLock.ts and re-run bun run outputs.",
+    "ISI product wiring (immunecity consume of this contract) remains OUT OF REPO."
+  ],
+  "honesty": [
+    "readyToFlipPartnerSigned is always false until named_org + question_confirm + shortlist_row pass.",
+    "This pack must never set partnerSigned=true by itself.",
+    "scopeLocked=true is engineering lock only — not a MoU.",
+    "Technical adapter spikes do not satisfy flipRequirements."
+  ]
+}
