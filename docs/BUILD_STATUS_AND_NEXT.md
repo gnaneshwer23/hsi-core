@@ -1,7 +1,7 @@
 # HSI build status and next
 
 **Audit date:** 1 November 2026  
-**HEAD at write:** (pending push) — P0.5 ISI/immunecity **wiring playbook** shipped inside hsi-core (apply wires = immunecity session)
+**HEAD at write:** `6fa6fae` (main) — P0.5 ISI/immunecity **wiring playbook** shipped inside hsi-core (apply wires = immunecity session)
 
 
 **Edit target:** `hsi-core` only · Neon **`red-wave` only** · no immunecity / Akeno product / DeliverX edits  
