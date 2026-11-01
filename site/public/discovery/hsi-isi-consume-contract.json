@@ -15,7 +15,7 @@
   "testPilotMode": false,
   "testFixtureBanner": null,
   "allowHypotheticalPartnerEnv": "ALLOW_HYPOTHETICAL_PARTNER",
-  "generatedAt": "2026-11-01T20:52:43.828Z",
+  "generatedAt": "2026-11-01T20:58:00.457Z",
   "package": "hsi-core",
   "outputsManifestSchema": "hsi-outputs-manifest-1",
   "compatibility": {
