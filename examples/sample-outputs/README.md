@@ -16,4 +16,4 @@ Full layout and consumer rules: [`docs/OUTPUTS.md`](../../docs/OUTPUTS.md).
 | `pilot-evidence-pack.sample.md` | `hsi-pilot-evidence-pack.md` (pack-2; Phase 3 depth on scope-locked RA/TNF; partnerSigned=false; Discovery Loop metadata) |
 | `pilot-acceptance.sample.md` | `hsi-pilot-acceptance.md` (Phase 5 Stage 1 pass/fail/pending; Phase 6 Discovery Centre surface = pass; partnerSigned pending) |
 
-Phase 6 site copies (full JSON, refreshed by `bun run outputs`): [`site/public/discovery/`](../../site/public/discovery/).
+Phase 6–7 site copies (full JSON, refreshed by `bun run outputs`): [`site/public/discovery/`](../../site/public/discovery/) — includes `hsi-r2-validation.json`.

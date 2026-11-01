@@ -7,15 +7,22 @@ import {
   type DiscoveryBundle,
   type EvidenceRow,
   type ExpertItem,
+  type R2HypothesisCard,
 } from "../lib/discoveryData";
 
-type LoopTab = "ask" | "map" | "review";
+type LoopTab = "ask" | "map" | "review" | "validate";
 
 const TABS: { id: LoopTab; label: string; n: string }[] = [
   { id: "ask", label: "ASK", n: "01" },
   { id: "map", label: "MAP", n: "02" },
   { id: "review", label: "REVIEW", n: "03" },
+  { id: "validate", label: "VALIDATE", n: "04" },
 ];
+
+function StatusChip({ status }: { status: string }) {
+  const s = status.toLowerCase();
+  return <span className={`dc-status dc-status-${s}`}>{s}</span>;
+}
 
 function GradeChip({ grade }: { grade: string }) {
   const g = grade.toLowerCase();
@@ -105,6 +112,47 @@ function EvidenceTable({ rows }: { rows: EvidenceRow[] }) {
           ))}
         </tbody>
       </table>
+    </div>
+  );
+}
+
+function HypothesisCards({ cards }: { cards: R2HypothesisCard[] }) {
+  return (
+    <div className="dc-explain-grid">
+      {cards.map((card) => (
+        <article key={card.id} className="dc-card">
+          <div className="dc-panel-head">
+            <StatusChip status={card.validationStatus} />
+            <span className="dc-pill">autoApproved={String(card.autoApproved)}</span>
+          </div>
+          <h3>{card.label}</h3>
+          <p className="muted" style={{ marginTop: "0.55rem" }}>
+            {card.statusRationale}
+          </p>
+          <div className="dc-meta-row" style={{ marginTop: "0.75rem" }}>
+            <code className="dc-mono">{card.id}</code>
+            <code className="dc-mono">{card.sourceExplanationId}</code>
+            {card.groundingPmids.slice(0, 4).map((pmid) => (
+              <a
+                key={pmid}
+                className="dc-pill"
+                href={`https://pubmed.ncbi.nlm.nih.gov/${pmid}/`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                PMID {pmid}
+              </a>
+            ))}
+          </div>
+          <ul className="dc-compact-list" style={{ marginTop: "0.85rem" }}>
+            {card.literatureTests.map((t) => (
+              <li key={t.id}>
+                <strong>{t.kind.replace(/_/g, " ")}</strong> — {t.prompt}
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))}
     </div>
   );
 }
@@ -219,16 +267,16 @@ export function DiscoveryCentre() {
               intelligence = later / gated.
             </p>
           </div>
-          <span className="eyebrow">ISI · Discovery Centre · Phase 6</span>
+          <span className="eyebrow">ISI · Discovery Centre · Phase 7</span>
           <h1 className="display display-lg">
-            ASK → MAP → REVIEW
+            ASK → MAP → REVIEW → VALIDATE
             <br />
             <span className="accent">on real HSI packs.</span>
           </h1>
           <p className="lede">
-            Target R1 surface for the scope-locked RA / anti-TNF question.
-            Loads regenerable Stage 1 outputs — evidence map, entity slice,
-            competing explanations, expert shortlist, grades, partner lock, gaps.
+            Target R1–R2 research surface for the scope-locked RA / anti-TNF
+            question. Loads regenerable outputs — evidence map, competing
+            explanations, expert shortlist, R2 hypothesis cards, ranked gaps.
           </p>
           <div className="dc-hero-actions">
             <a href="#workspace" className="btn btn-primary">
@@ -298,14 +346,15 @@ export function DiscoveryCentre() {
                         ? "Frame the question"
                         : t.id === "map"
                           ? "Traceable evidence"
-                          : "Challenge & shortlist"}
+                          : t.id === "review"
+                            ? "Challenge & shortlist"
+                            : "Hypothesis & gaps"}
                     </strong>
                   </button>
                 ))}
                 <div className="dc-loop-later" aria-hidden>
-                  <span>04 TEST</span>
                   <span>05 LEARN</span>
-                  <small>later / Phase 7+</small>
+                  <small>later / Phase 8+</small>
                 </div>
               </div>
 
@@ -560,6 +609,103 @@ export function DiscoveryCentre() {
                   </div>
                 </div>
               ) : null}
+
+              {tab === "validate" ? (
+                <div className="dc-panel" role="tabpanel">
+                  <div className="section-head">
+                    <span className="section-num">VALIDATE</span>
+                    <h2 className="display display-md">
+                      R2 hypothesis cards · ranked gaps
+                    </h2>
+                    <p className="lede">
+                      Phase 7 research validation from{" "}
+                      <code>hsi-r2-validation.json</code>. Statuses are
+                      literature-grounded — not clinical protocols, not Akeno.
+                    </p>
+                  </div>
+
+                  <div className="grade-row dc-grade-summary">
+                    {(
+                      [
+                        ["supported", data.r2.summary.byStatus.supported ?? 0],
+                        ["gap", data.r2.summary.byStatus.gap ?? 0],
+                        ["refuted", data.r2.summary.byStatus.refuted ?? 0],
+                        ["untested", data.r2.summary.byStatus.untested ?? 0],
+                      ] as const
+                    ).map(([label, n]) => (
+                      <div key={label} className={`grade-cell dc-status-cell dc-status-${label}`}>
+                        <div className="label">{label}</div>
+                        <h3>{n}</h3>
+                        <p>hypothesis cards</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="dc-card" style={{ marginTop: "1.5rem" }}>
+                    <div className="dc-panel-head">
+                      <h3>Hypothesis cards</h3>
+                      <span className="dc-pill">
+                        {data.r2.summary.hypothesisCards} cards ·{" "}
+                        {data.r2.summary.literatureTests} literature tests ·{" "}
+                        {data.r2.summary.groundingPmidCount} PMIDs
+                      </span>
+                    </div>
+                    <HypothesisCards cards={data.r2.hypothesisCards} />
+                  </div>
+
+                  <div className="dc-card" style={{ marginTop: "1.25rem" }}>
+                    <div className="dc-panel-head">
+                      <h3>Ranked gaps · next experiments</h3>
+                      <span className="dc-pill">
+                        {data.r2.summary.rankedGaps} ranked
+                      </span>
+                    </div>
+                    <ol className="dc-ranked-gaps">
+                      {data.r2.rankedGaps.map((g) => (
+                        <li key={g.id}>
+                          <div className="dc-panel-head">
+                            <span className="dc-pill">#{g.rank}</span>
+                            <span className="dc-pill">{g.priority}</span>
+                            <span className="dc-pill">{g.source.replace(/_/g, " ")}</span>
+                          </div>
+                          <h4>{g.title}</h4>
+                          <p className="muted">{g.why}</p>
+                          <p style={{ marginTop: "0.55rem" }}>
+                            <strong>Next:</strong> {g.nextExperimentPrompt}
+                          </p>
+                          <div className="dc-meta-row" style={{ marginTop: "0.65rem" }}>
+                            {g.relatedPmids.map((pmid) => (
+                              <a
+                                key={pmid}
+                                className="dc-pill"
+                                href={`https://pubmed.ncbi.nlm.nih.gov/${pmid}/`}
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                PMID {pmid}
+                              </a>
+                            ))}
+                            {g.relatedClaimIds.slice(0, 4).map((id) => (
+                              <code key={id} className="dc-mono">
+                                {id}
+                              </code>
+                            ))}
+                          </div>
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+
+                  <div className="dc-card" style={{ marginTop: "1.25rem" }}>
+                    <span className="panel-label">Boundary</span>
+                    <ul className="checklist" style={{ marginTop: "0.85rem" }}>
+                      {data.r2.boundary.map((b) => (
+                        <li key={b}>{b}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ) : null}
             </>
           ) : null}
         </div>
@@ -571,26 +717,26 @@ export function DiscoveryCentre() {
             <span className="section-num">BOUNDARY</span>
             <h2 className="display display-md">Research now. Clinical later.</h2>
             <p className="lede">
-              NOW = Discovery Centre research intelligence on published packs.
-              NEXT = Phase 7 R2 validation (explicit ask). LATER = gated
-              translation / Akeno — never implied by this surface.
+              NOW = Discovery + R2 validation on published packs. NEXT = Phase 8
+              clinical R3–R5 / Akeno — explicit ask + Stage 3 gates only. Never
+              implied by this surface.
             </p>
           </div>
           <div className="dc-horizon">
             <div>
               <span className="dc-pill">NOW</span>
-              <strong>Discovery</strong>
-              <p>ASK → MAP → REVIEW on RA / anti-TNF packs</p>
+              <strong>Discovery + Validate</strong>
+              <p>ASK → MAP → REVIEW → VALIDATE on RA / anti-TNF</p>
             </div>
             <div>
               <span className="dc-pill">NEXT</span>
-              <strong>Validation</strong>
-              <p>Phase 7 · R2 — explicit ask only</p>
+              <strong>Translation</strong>
+              <p>Phase 8 · R3–R5 / Akeno — explicit ask</p>
             </div>
             <div>
-              <span className="dc-pill">LATER</span>
-              <strong>Translation</strong>
-              <p>Akeno clinical intelligence — gated</p>
+              <span className="dc-pill">GATED</span>
+              <strong>Clinical</strong>
+              <p>Stage 3 gates · never from research packs alone</p>
             </div>
           </div>
         </div>

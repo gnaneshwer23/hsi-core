@@ -44,6 +44,11 @@ import {
   serializePilotWalkthroughMarkdown,
 } from "./pilotAcceptance";
 import { getPartnerLock, partnerLockExportPointer } from "./partnerLock";
+import {
+  buildR2ValidationBundle,
+  serializeR2Validation,
+  serializeR2ValidationMarkdown,
+} from "./r2Validation";
 import { validateHsiEdge } from "./validate";
 
 function packageVersion(cwd: string): string {
@@ -228,6 +233,12 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     gateC,
     gap: gapReport,
   });
+  const r2Validation = buildR2ValidationBundle({
+    generatedAt,
+    lock: partnerLock,
+    pack: pilotPack,
+    gap: gapReport,
+  });
 
   const fileMap: Record<string, string> = {
     "hsi-isi-export.json": serializeIsiExport(isiBundle),
@@ -246,6 +257,8 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     "hsi-pilot-acceptance.md": serializePilotAcceptanceMarkdown(acceptance),
     "hsi-pilot-walkthrough.md": serializePilotWalkthroughMarkdown(acceptance),
     "hsi-partner-lock.json": `${JSON.stringify(partnerLock, null, 2)}\n`,
+    "hsi-r2-validation.json": serializeR2Validation(r2Validation),
+    "hsi-r2-validation.md": serializeR2ValidationMarkdown(r2Validation),
   };
 
   const files: string[] = [];
@@ -282,6 +295,8 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       pilotAcceptanceMd: "hsi-pilot-acceptance.md",
       pilotWalkthroughMd: "hsi-pilot-walkthrough.md",
       partnerLockJson: "hsi-partner-lock.json",
+      r2ValidationJson: "hsi-r2-validation.json",
+      r2ValidationMd: "hsi-r2-validation.md",
     },
     counts: {
       isiEdges: isiBundle.edges.length,
@@ -301,6 +316,9 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       acceptancePending: acceptance.summary.pending,
       stage1FourOutputsGreen: acceptance.summary.stage1FourOutputsGreen,
       partnerReadyWalkthrough: acceptance.summary.partnerReadyWalkthrough,
+      r2HypothesisCards: r2Validation.summary.hypothesisCards,
+      r2RankedGaps: r2Validation.summary.rankedGaps,
+      r2LiteratureTests: r2Validation.summary.literatureTests,
     },
     discoveryLoop: isiBundle.discoveryCentre.discoveryLoop.framing,
     partnerLock: partnerLockExportPointer(partnerLock),
@@ -312,15 +330,24 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       partnerReadyWalkthrough: acceptance.summary.partnerReadyWalkthrough,
       partnerSigned: acceptance.scope.partnerSigned,
     },
+    r2Validation: {
+      schemaVersion: r2Validation.schemaVersion,
+      phase: r2Validation.phase,
+      targetRelease: r2Validation.targetRelease,
+      hypothesisCards: r2Validation.summary.hypothesisCards,
+      rankedGaps: r2Validation.summary.rankedGaps,
+      byStatus: r2Validation.summary.byStatus,
+    },
     consumerNotes: [
       "ISI: discovery / Ask / Radar only — use hsi-isi-export.json + hsi-isi-rel-map.json.",
       "ISI pilot walkthrough: hsi-pilot-walkthrough.md + hsi-pilot-evidence-pack.* + hsi-pilot-review-rubric.* + hsi-pilot-acceptance.* (Phase 5 acceptance on scope-locked RA/TNF; partnerSigned=false; lockedPilot=false; no patient CDS).",
       "Partner lock honesty: hsi-partner-lock.json — Phase 2 = scopeLocked; Phase 3 = evidence depth; Phase 5 = acceptance pack; named partner still flips partnerSigned (then lockedPilot).",
-      "Phase 6: Discovery Centre product surface at site `/discovery` loads site/public/discovery/*.json (ASK→MAP→REVIEW; notCds; not Akeno).",
+      "Phase 6: Discovery Centre product surface at site `/discovery` loads site/public/discovery/*.json (ASK→MAP→REVIEW→VALIDATE; notCds; not Akeno).",
+      "Phase 7: R2 validation — hsi-r2-validation.* (hypothesis cards, ranked gaps, literature tests; research only).",
       "Aksh: HITL map pointers only — use hsi-aksh-node-map.json + hsi-aksh-hitl-cards.json; CDS stays closed on seeds.",
       "Gate C: human checklist in gate-c-checklist.*; optional HSI red-wave placeholders via bun run db:gate-c-local (pending only). ISI product approve stays autumn-snow — never from this workspace.",
       "Phase 4: HSI Neon schema stub — bun run db:migrate (guards refuse ISI/Akeno/DeliverX).",
-      "Phase 7 = R2 validation — requires an explicit user ask.",
+      "Phase 8 = R3–R5 / Akeno translation — explicit ask + Stage 3 gates only.",
       "Regenerate with: bun run outputs (also refreshes site/public/discovery).",
     ],
   };
@@ -370,6 +397,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     "hsi-partner-lock.json",
     "hsi-gap-report.json",
     "gate-c-checklist.json",
+    "hsi-r2-validation.json",
   ] as const;
   for (const name of discoveryFiles) {
     const dest = join(discoveryPublicDir, name);
@@ -383,8 +411,8 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     autoApproveIntoKg: false as const,
     surfaceRole: "site_product_surface" as const,
     productSurfacePath: "/discovery",
-    framing: "ASK → MAP → REVIEW",
-    phase: "6",
+    framing: "ASK → MAP → REVIEW → VALIDATE",
+    phase: "7",
     generatedAt,
     bundleId,
     disease: partnerLock.disease?.label ?? null,
@@ -396,7 +424,8 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     notes: [
       "Regenerate with bun run outputs — copies land here for the Vite site.",
       "Not diagnostic / not for clinical use. Akeno = later.",
-      "Phase 7 = R2 validation — explicit ask only.",
+      "Phase 7 done = R2 validation (hsi-r2-validation.json) on VALIDATE tab.",
+      "Phase 8 = R3–R5 / Akeno translation — explicit ask + Stage 3 gates only.",
     ],
   };
   writeJson(join(discoveryPublicDir, "index.json"), discoveryIndex);

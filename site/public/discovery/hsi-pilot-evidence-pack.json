@@ -3,7 +3,7 @@
   "notCds": true,
   "noPatientLevelActions": true,
   "autoApproveIntoKg": false,
-  "generatedAt": "2026-11-01T14:48:01.698Z",
+  "generatedAt": "2026-11-01T15:01:00.025Z",
   "disease": "Rheumatoid arthritis",
   "researchQuestion": "Why do some patients with rheumatoid arthritis respond differently to anti-TNF therapy, and which biomarkers or immune mechanisms are best supported for defining those subgroups?",
   "lockedPilot": false,
@@ -102,13 +102,14 @@
       "Phase 4 done = HSI Neon red-wave readiness (schema stub + guarded migrate; Gate C local pending only).",
       "Phase 5 done = pilot acceptance pack (checklist + walkthrough; partnerSigned still pending).",
       "Phase 6 done = Discovery Centre product surface at site `/discovery` (research intelligence; notCds).",
+      "Phase 7 done = R2 validation depth (hsi-r2-validation.*; hypothesis cards + ranked gaps; research only).",
       "scopeLocked does NOT mean a commercial partner signed or locked a MoU.",
       "partnerSigned / lockedPilot stay false until flipRequirements are met with a named partner.",
       "Outreach category partners are not MoUs; do not invent personal contacts.",
       "Exports must surface status=scope_locked + partnerSigned=false so consumers cannot mistake this for a live pilot contract.",
-      "Phase 7 = R2 validation — requires an explicit user ask; clinical R3–R5 / Akeno stay gated."
+      "Phase 8 = R3–R5 / Akeno translation — explicit ask + Stage 3 gates only; do not start unless asked."
     ],
-    "updatedAt": "2026-11-01T14:45:00.000Z"
+    "updatedAt": "2026-11-01T15:00:00.000Z"
   },
   "substrateNote": "Phase 3 evidence depth on Phase 2 scope lock: rheumatoid arthritis + anti-TNF response heterogeneity. scopeLocked=true; partnerSigned=false; lockedPilot=false. Partner-scoped slice adds ADA/immunogenicity, RF/ACPA serology tension, RF LOINC, and MTX+anti-TNF combo literature. Full evidenceMap still includes T2D / immuno-metabolic + SLE/PsO/IBD stubs.",
   "discoveryCentre": {
@@ -291,13 +292,14 @@
         "Phase 4 done = HSI Neon red-wave readiness (schema stub + guarded migrate; Gate C local pending only).",
         "Phase 5 done = pilot acceptance pack (checklist + walkthrough; partnerSigned still pending).",
         "Phase 6 done = Discovery Centre product surface at site `/discovery` (research intelligence; notCds).",
+        "Phase 7 done = R2 validation depth (hsi-r2-validation.*; hypothesis cards + ranked gaps; research only).",
         "scopeLocked does NOT mean a commercial partner signed or locked a MoU.",
         "partnerSigned / lockedPilot stay false until flipRequirements are met with a named partner.",
         "Outreach category partners are not MoUs; do not invent personal contacts.",
         "Exports must surface status=scope_locked + partnerSigned=false so consumers cannot mistake this for a live pilot contract.",
-        "Phase 7 = R2 validation — requires an explicit user ask; clinical R3–R5 / Akeno stay gated."
+        "Phase 8 = R3–R5 / Akeno translation — explicit ask + Stage 3 gates only; do not start unless asked."
       ],
-      "updatedAt": "2026-11-01T14:45:00.000Z"
+      "updatedAt": "2026-11-01T15:00:00.000Z"
     },
     "gradeVocabulary": [
       "established",
@@ -306,10 +308,11 @@
     ],
     "notes": [
       "Phase 6 done: Target R1 Discovery Centre product surface at site `/discovery` (consumes bun run outputs).",
+      "Phase 7 done: R2 VALIDATE tab loads hsi-r2-validation.json (hypothesis cards / ranked gaps; research only).",
       "RA is the Phase 2 working Stage 1 scope (scopeLocked=true; partnerSigned=false; lockedPilot=false).",
       "Do not treat SLE/PsO/IBD as selected pilot indications — illustrative conversation contexts only.",
       "Not diagnostic / not for clinical use. Akeno clinical intelligence remains gated later.",
-      "Phase 7 = R2 validation — requires an explicit user ask."
+      "Phase 8 = R3–R5 / Akeno translation — explicit ask + Stage 3 gates only."
     ]
   },
   "gradeDefinitions": {
@@ -351,9 +354,9 @@
     "scopeLocked": true,
     "partnerSigned": false,
     "provisionalLock": false,
-    "evidenceSnapshotRef": "dist/outputs/hsi-core-0.1.0-20261101T144801698Z/hsi-isi-export.json",
-    "createdAt": "2026-11-01T14:48:01.698Z",
-    "updatedAt": "2026-11-01T14:48:01.698Z"
+    "evidenceSnapshotRef": "dist/outputs/hsi-core-0.1.0-20261101T150100025Z/hsi-isi-export.json",
+    "createdAt": "2026-11-01T15:01:00.025Z",
+    "updatedAt": "2026-11-01T15:01:00.025Z"
   },
   "evidenceMap": [
     {
@@ -2549,7 +2552,8 @@
     "Phase 5 done: use hsi-pilot-acceptance.* + hsi-pilot-walkthrough.md for partner-ready Stage 1 acceptance (partnerSigned still pending).",
     "Human-review the deepened RA pathway against hsi-pilot-review-rubric.* and the four pack outputs.",
     "Agree source licensing + success thresholds with the named partner before user testing.",
-    "Phases 6+ (Discovery Centre product UI / clinical R2–R5) require an explicit user ask.",
+    "Phase 6–7 done: Discovery Centre ASK→MAP→REVIEW→VALIDATE (hsi-r2-validation.*).",
+    "Phase 8 (clinical R3–R5 / Akeno) requires an explicit user ask + Stage 3 gates — do not start unless asked.",
     "Keep Akeno/Aksh patient-level pathways behind M4 / governance gates.",
     "Do not treat SLE/PsO/IBD illustrative stubs as the selected pilot indication."
   ]

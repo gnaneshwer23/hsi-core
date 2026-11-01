@@ -2479,7 +2479,7 @@ p {
 
 @media (min-width: 820px) {
   .dc-loop {
-    grid-template-columns: repeat(3, 1fr) auto;
+    grid-template-columns: repeat(4, 1fr) auto;
     align-items: stretch;
   }
 }
@@ -2892,6 +2892,77 @@ p {
   border-radius: var(--radius-lg);
   border: 1px solid rgba(228, 166, 90, 0.4);
   background: rgba(228, 166, 90, 0.08);
+}
+
+.dc-status {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.28rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+}
+
+.dc-status-supported {
+  color: #9fd6b8;
+  border-color: rgba(159, 214, 184, 0.35);
+  background: rgba(159, 214, 184, 0.1);
+}
+
+.dc-status-gap {
+  color: #e4a65a;
+  border-color: rgba(228, 166, 90, 0.4);
+  background: rgba(228, 166, 90, 0.1);
+}
+
+.dc-status-refuted {
+  color: #e8a0a0;
+  border-color: rgba(232, 160, 160, 0.4);
+  background: rgba(232, 160, 160, 0.1);
+}
+
+.dc-status-untested {
+  color: var(--slate);
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.dc-status-cell.dc-status-supported h3 {
+  color: #9fd6b8;
+}
+.dc-status-cell.dc-status-gap h3 {
+  color: #e4a65a;
+}
+.dc-status-cell.dc-status-refuted h3 {
+  color: #e8a0a0;
+}
+
+.dc-ranked-gaps {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.dc-ranked-gaps > li {
+  padding: 1rem 0 0;
+  border-top: 1px solid var(--line);
+}
+
+.dc-ranked-gaps > li:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.dc-ranked-gaps h4 {
+  margin: 0.45rem 0 0.35rem;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 500;
 }
 
 @media (max-width: 700px) {

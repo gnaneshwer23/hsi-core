@@ -11,7 +11,7 @@ This note **catalogues** the Discovery Centre marketing / concept surface the wa
 
 The ChatGPT/Unkapped HTML export remains a **reference-only** concept page (IA / labels). **Do not vendor or pixel-copy** that markup into hsi-core.
 
-**Phase 6 (done):** hsi-core ships an original **Target R1 Discovery Centre product surface** at `site/` route **`/discovery`**. It loads regenerable Stage 1 packs from `site/public/discovery/` (refreshed by `bun run outputs`): evidence map, entity slice, competing explanations, expert shortlist, grades, partner lock / scope, gaps — for the RA/anti-TNF locked question. Framing is **ASK → MAP → REVIEW**; hard banners: not diagnostic; concept → now product for **research intelligence only**; Akeno = later. **Not clinical.** **Phase 7 = R2 validation** (explicit ask only).
+**Phase 6–7 (done):** hsi-core ships an original **Target R1–R2 Discovery Centre product surface** at `site/` route **`/discovery`**. It loads regenerable packs from `site/public/discovery/` (refreshed by `bun run outputs`): evidence map, entity slice, competing explanations, expert shortlist, grades, partner lock / scope, gaps, **R2 validation** (`hsi-r2-validation.json`) — for the RA/anti-TNF locked question. Framing is **ASK → MAP → REVIEW → VALIDATE**; hard banners: not diagnostic; concept → now product for **research intelligence only**; Akeno = later. **Not clinical.** **Phase 8 = R3–R5 / Akeno** (explicit ask + Stage 3 gates only).
 
 ---
 
@@ -64,7 +64,7 @@ Additional disclaimers in-body: no patient records; no disease-risk / diagnosis 
 | Four pack outputs | Implied via map / evidence / test / learn; not named as pack | Evidence map · entity slice · competing explanations · expert shortlist | **Gap** — publish packs from hsi-core; do not treat the HTML graph as the pilot artifact |
 | Evidence grades | Established / Uncertain / Unexplored | Same vocabulary in substrate + pack | **Fit** |
 | HSI Core role | Evidence + provenance backbone | Sole edit target; exports via `bun run outputs` | **Fit** — site consumes narrative; core ships data |
-| Interactive map / disease switcher | Illustrative RA-centric concept graph | **Phase 6:** `/discovery` ASK→MAP→REVIEW on real packs (no ChatGPT markup vendored; no clinical disease switcher) | **Done** for R1 research surface; full graph UX / R2 still deferred |
+| Interactive map / disease switcher | Illustrative RA-centric concept graph | **Phase 6–7:** `/discovery` ASK→MAP→REVIEW→VALIDATE on real packs (no ChatGPT markup vendored; no clinical disease switcher) | **Done** for R1–R2 research surface; full interactive graph UX still deferred |
 | Translation / Akeno | Explicit **LATER · gated**; Akeno “after partner data, HCP workflows and validation” | Stage 3 only; Akeno Lovable catalogued separately | **Fit** — do not pull R2–R5 into Stage 1 |
 | Disease list (RA, SLE, psoriasis, IBD) | Conversation / illustration | Proposal candidates; brief says TBD | **Risk** if read as selected indications — label as illustrative only |
 | “SEE THE PLATFORM” / “working environment” | Product-vision tone | Pilot = four outputs + walkthrough, not platform breadth | Prefer “concept / vision” language in live partner decks |
@@ -90,9 +90,9 @@ Compared to Akeno Lovable marketing (digital twins / quantum / RWE / CDS), this 
 |----|--------|
 | Keep this catalog doc as the binding posture for concept HTML + Phase 6 site surface | Edit immunecity / chatgpt.site HTML from this workspace; do not vendor Unkapped/ChatGPT markup |
 | Point partners to `site/` `/discovery` + pilot brief + packs from `bun run outputs` | Promise clinical / Akeno / trial matching from the Discovery Centre |
-| Refresh `site/public/discovery/` via `bun run outputs`; keep ASK→MAP→REVIEW honest | Pixel-copy the concept HTML disease switcher / graph as “validated” product |
+| Refresh `site/public/discovery/` via `bun run outputs`; keep ASK→MAP→REVIEW→VALIDATE honest | Pixel-copy the concept HTML disease switcher / graph as “validated” product |
 | Use site language that matches grades + “not diagnostic” when drafting outreach | Claim SLE/PsO/IBD as locked pilots; treat scope-locked RA as partner-signed (`lockedPilot` stays false until outreach confirms) |
-| Keep Akeno / clinical / trial matching behind Stage 3 gates; Phase 7 R2 = explicit ask | Mutate Neon (HSI **red-wave** only if/when HSI-owned schema exists; never autumn-snow / Akeno / DeliverX for HSI) |
+| Keep Akeno / clinical / trial matching behind Stage 3 gates; Phase 8 = explicit ask | Mutate Neon (HSI **red-wave** only if/when HSI-owned schema exists; never autumn-snow / Akeno / DeliverX for HSI) |
 | Cross-link from vision / proposal / target-state docs | Treat the concept HTML export as evidence truth or a validated map |
 
 ---

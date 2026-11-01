@@ -261,7 +261,7 @@ export function buildPilotReviewRubric(opts?: {
       "Keep partnerSigned=false / lockedPilot=false until a named partner confirms disease + question.",
       "Agree success-metric thresholds before formal pilot user testing.",
       "Phase 5 complete = hsi-pilot-acceptance.* + hsi-pilot-walkthrough.md (partner-ready Stage 1 pack; partnerSigned still pending).",
-      "Phases 6+ (Discovery Centre product UI / clinical R2–R5) need an explicit user ask.",
+      "Phase 8 (clinical R3–R5 / Akeno) needs an explicit user ask + Stage 3 gates.",
       "Do not treat scopeLocked as a signed commercial partner / MoU.",
     ],
   };

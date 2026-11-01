@@ -1,4 +1,4 @@
-/** Types + loaders for Phase 6 Discovery Centre static artifacts. */
+/** Types + loaders for Discovery Centre static artifacts (Phase 6–7). */
 
 export type DiscoveryIndex = {
   schemaVersion: string;
@@ -158,11 +158,74 @@ export type GapReport = {
   nextActions: string[];
 };
 
+export type R2ValidationStatus =
+  | "untested"
+  | "supported"
+  | "refuted"
+  | "gap";
+
+export type R2LiteratureTest = {
+  id: string;
+  kind: string;
+  prompt: string;
+  relatedClaimIds: string[];
+  relatedPmids: string[];
+  notClinicalProtocol: boolean;
+};
+
+export type R2HypothesisCard = {
+  id: string;
+  label: string;
+  sourceExplanationId: string;
+  validationStatus: R2ValidationStatus | string;
+  statusRationale: string;
+  relatedClaimIds: string[];
+  relatedEdgeIds: string[];
+  groundingPmids: string[];
+  literatureTests: R2LiteratureTest[];
+  autoApproved: boolean;
+};
+
+export type R2RankedGap = {
+  id: string;
+  rank: number;
+  priority: "high" | "medium" | "low" | string;
+  title: string;
+  why: string;
+  nextExperimentPrompt: string;
+  relatedClaimIds: string[];
+  relatedPmids: string[];
+  source: string;
+};
+
+export type R2Validation = {
+  schemaVersion: string;
+  phase: string;
+  targetRelease: string;
+  notCds: boolean;
+  framing: string;
+  generatedAt: string;
+  disease: string;
+  researchQuestion: string;
+  hypothesisCards: R2HypothesisCard[];
+  rankedGaps: R2RankedGap[];
+  summary: {
+    hypothesisCards: number;
+    byStatus: Record<string, number>;
+    rankedGaps: number;
+    literatureTests: number;
+    groundingPmidCount: number;
+  };
+  boundary: string[];
+  nextActions: string[];
+};
+
 export type DiscoveryBundle = {
   index: DiscoveryIndex;
   lock: PartnerLock;
   pack: PilotPack;
   gap: GapReport;
+  r2: R2Validation;
 };
 
 const BASE = "/discovery";
@@ -176,13 +239,14 @@ async function fetchJson<T>(name: string): Promise<T> {
 }
 
 export async function loadDiscoveryBundle(): Promise<DiscoveryBundle> {
-  const [index, lock, pack, gap] = await Promise.all([
+  const [index, lock, pack, gap, r2] = await Promise.all([
     fetchJson<DiscoveryIndex>("index.json"),
     fetchJson<PartnerLock>("hsi-partner-lock.json"),
     fetchJson<PilotPack>("hsi-pilot-evidence-pack.json"),
     fetchJson<GapReport>("hsi-gap-report.json"),
+    fetchJson<R2Validation>("hsi-r2-validation.json"),
   ]);
-  return { index, lock, pack, gap };
+  return { index, lock, pack, gap, r2 };
 }
 
 /** Prefer pathway claim IDs from the partner lock; fall back to RA/TNF heuristics. */

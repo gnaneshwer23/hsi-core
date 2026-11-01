@@ -30,6 +30,7 @@ import {
   buildPilotAcceptancePack,
   buildPilotEvidencePack,
   buildPilotReviewRubric,
+  buildR2ValidationBundle,
   getPartnerLock,
   loadAkshHitlStubFromExport,
   migrateAkshNodeId,
@@ -457,9 +458,37 @@ describe("Gate C checklist + publish outputs", () => {
     expect(acceptance.criteria.find((c) => c.id === "ac-thresholds")?.status).toBe("pending");
     expect(acceptance.walkthroughSteps.length).toBeGreaterThanOrEqual(5);
     expect(acceptance.criteria.find((c) => c.id === "ac-discovery-ui")?.status).toBe("pass");
-    expect(acceptance.deferredExplicitAsk.some((d) => d.toLowerCase().includes("phase 7"))).toBe(
+    expect(acceptance.deferredExplicitAsk.some((d) => d.toLowerCase().includes("phase 8"))).toBe(
       true,
     );
+  });
+
+  it("ships Phase 7 R2 validation with grounded hypothesis cards and ranked gaps", () => {
+    const r2 = buildR2ValidationBundle({ generatedAt: "2026-11-01T15:00:00.000Z" });
+    expect(r2.schemaVersion).toBe("hsi-r2-validation-1");
+    expect(r2.phase).toBe("7");
+    expect(r2.targetRelease).toBe("R2");
+    expect(r2.notCds).toBe(true);
+    expect(r2.autoApproveIntoKg).toBe(false);
+    expect(r2.scopeLocked).toBe(true);
+    expect(r2.partnerSigned).toBe(false);
+    expect(r2.hypothesisCards.length).toBeGreaterThanOrEqual(5);
+    expect(r2.hypothesisCards.every((c) => c.autoApproved === false)).toBe(true);
+    expect(r2.hypothesisCards.every((c) => c.literatureTests.every((t) => t.notClinicalProtocol))).toBe(
+      true,
+    );
+    expect(r2.summary.byStatus.supported).toBeGreaterThanOrEqual(2);
+    expect(r2.summary.byStatus.gap).toBeGreaterThanOrEqual(1);
+    expect(r2.summary.byStatus.refuted).toBeGreaterThanOrEqual(1);
+    expect(r2.rankedGaps.length).toBeGreaterThanOrEqual(3);
+    expect(r2.rankedGaps[0]?.rank).toBe(1);
+    expect(r2.hypothesisCards.some((c) => c.id === "hyp-card-serology-predictor" && c.validationStatus === "refuted")).toBe(
+      true,
+    );
+    expect(r2.boundary.some((b) => b.toLowerCase().includes("phase 8"))).toBe(true);
+    const allPmids = r2.hypothesisCards.flatMap((c) => c.groundingPmids);
+    expect(allPmids).toContain("18625622");
+    expect(allPmids).toContain("24586782");
   });
 
   it("embeds Discovery Centre metadata pointing at the Phase 6 site surface", () => {
@@ -505,7 +534,13 @@ describe("Gate C checklist + publish outputs", () => {
     expect(result.files).toContain("hsi-pilot-acceptance.md");
     expect(result.files).toContain("hsi-pilot-walkthrough.md");
     expect(result.files).toContain("hsi-partner-lock.json");
+    expect(result.files).toContain("hsi-r2-validation.json");
+    expect(result.files).toContain("hsi-r2-validation.md");
     expect(result.files).toContain("MANIFEST.json");
+    expect(result.discoverySynced).toContain("site/public/discovery/hsi-r2-validation.json");
+    expect(existsSync(join(process.cwd(), "site/public/discovery/hsi-r2-validation.json"))).toBe(
+      true,
+    );
 
     for (const name of result.files) {
       expect(existsSync(join(result.outDir, name)), name).toBe(true);
@@ -537,6 +572,13 @@ describe("Gate C checklist + publish outputs", () => {
         acceptancePass: number;
         acceptancePending: number;
         stage1FourOutputsGreen: boolean;
+        r2HypothesisCards: number;
+        r2RankedGaps: number;
+      };
+      r2Validation: {
+        phase: string;
+        targetRelease: string;
+        hypothesisCards: number;
       };
     };
     expect(manifest.notCds).toBe(true);
@@ -556,6 +598,10 @@ describe("Gate C checklist + publish outputs", () => {
     expect(manifest.counts.stage1FourOutputsGreen).toBe(true);
     expect(manifest.counts.acceptancePass).toBeGreaterThanOrEqual(9);
     expect(manifest.counts.acceptancePending).toBeGreaterThanOrEqual(3);
+    expect(manifest.counts.r2HypothesisCards).toBeGreaterThanOrEqual(5);
+    expect(manifest.counts.r2RankedGaps).toBeGreaterThanOrEqual(3);
+    expect(manifest.r2Validation.phase).toBe("7");
+    expect(manifest.r2Validation.targetRelease).toBe("R2");
 
     const hitl = JSON.parse(
       readFileSync(join(result.outDir, "hsi-aksh-hitl-cards.json"), "utf8"),

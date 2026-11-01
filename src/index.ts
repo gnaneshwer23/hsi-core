@@ -159,6 +159,19 @@ export {
 } from "./pilotAcceptance";
 
 export {
+  R2_VALIDATION_SCHEMA,
+  buildR2ValidationBundle,
+  serializeR2Validation,
+  serializeR2ValidationMarkdown,
+  type R2HypothesisCard,
+  type R2LiteratureTest,
+  type R2LiteratureTestKind,
+  type R2RankedGap,
+  type R2ValidationBundle,
+  type R2ValidationStatus,
+} from "./r2Validation";
+
+export {
   HSI_DISCOVERY_LOOP_STEPS,
   HSI_ILLUSTRATIVE_DISEASE_CONTEXTS,
   buildDiscoveryCentreMeta,

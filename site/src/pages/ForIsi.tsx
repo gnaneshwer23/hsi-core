@@ -25,7 +25,7 @@ export function ForIsi() {
               <h2 className="display display-md">
                 Discovery Centre,
                 <br />
-                <span className="accent">Phase 6 live.</span>
+                <span className="accent">Phase 7 live.</span>
               </h2>
               <p className="lede" style={{ marginTop: "0.85rem" }}>
                 ASK → MAP → REVIEW on regenerable RA / anti-TNF packs — research

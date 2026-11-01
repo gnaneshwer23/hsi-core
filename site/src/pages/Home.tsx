@@ -20,7 +20,7 @@ import {
 const pillars = [
   { to: "/systems", label: "Human Systems", sub: "Intelligence", icon: "◎" },
   { to: "/evidence", label: "Evidence grades", sub: "& Gate C", icon: "▣" },
-  { to: "/discovery", label: "Discovery Centre", sub: "ASK→MAP→REVIEW", icon: "◇" },
+  { to: "/discovery", label: "Discovery Centre", sub: "ASK→MAP→REVIEW→VALIDATE", icon: "◇" },
   { to: "/for-aksh", label: "Aksh clinician", sub: "safe HITL", icon: "⬡" },
 ];
 

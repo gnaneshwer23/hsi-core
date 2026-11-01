@@ -17,7 +17,7 @@ Immune Super Intelligence (ISI) is an immune-science and translational intellige
 
 | Module | Target-state role | Stage posture |
 |--------|-------------------|---------------|
-| **ISI Discovery Centre** | Question → evidence graph → mechanisms → hypotheses → research briefs | **Phase 6 done:** Target R1 research surface at hsi-core `site/` `/discovery` (consumes packs; ASK→MAP→REVIEW; not clinical). Concept HTML remains reference-only ([`ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md`](./ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md)). Phase 7 = R2 validation (explicit ask). |
+| **ISI Discovery Centre** | Question → evidence graph → mechanisms → hypotheses → research briefs | **Phase 6–7 done:** Target R1–R2 research surface at hsi-core `site/` `/discovery` (consumes packs; ASK→MAP→REVIEW→VALIDATE; not clinical). Concept HTML remains reference-only ([`ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md`](./ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md)). Phase 8 = R3–R5 / Akeno (explicit ask + Stage 3 gates). |
 | **HSI Core Evidence Backbone** | Canonical entities, claims, grades, provenance, review, versioned exports | Stage 1: **active edit target** — substrate + `bun run outputs` |
 | **Akeno Clinical Intelligence** | Cohort feasibility, HCP-reviewed screening, trial-site workflows | Stage 3 only — deferred until partner data + HCP eval + governance |
 | **Lab / molecular integrations** | Omics, assay, chemistry, structure, simulation adapters | Stage 2+ (selected adapters after use-case justification); not Stage 1 breadth |
@@ -104,9 +104,9 @@ R4/R5 are **possibilities with gates**, not committed launch dates. The platform
 3. Keep disease + question **TBD** until a real partner locks them.  
 4. Use this map + pilot PRD alignment in discovery conversations.
 
-**Do not pull into the current build (post–Phase 6):**
+**Do not pull into the current build (post–Phase 7):**
 
-- Phase 7 R2 validation / hypothesis workbench depth without an **explicit user ask**  
+- Phase 8 clinical R3–R5 / Akeno translation without an **explicit user ask** + Stage 3 gates  
 - Lab/molecular adapter breadth  
 - Cohort / longitudinal / subgroup analytics  
 - Trial matching or Akeno site workflows  

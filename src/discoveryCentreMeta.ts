@@ -135,10 +135,11 @@ export function buildDiscoveryCentreMeta(
     gradeVocabulary: ["established", "uncertain", "unexplored"],
     notes: [
       "Phase 6 done: Target R1 Discovery Centre product surface at site `/discovery` (consumes bun run outputs).",
+      "Phase 7 done: R2 VALIDATE tab loads hsi-r2-validation.json (hypothesis cards / ranked gaps; research only).",
       "RA is the Phase 2 working Stage 1 scope (scopeLocked=true; partnerSigned=false; lockedPilot=false).",
       "Do not treat SLE/PsO/IBD as selected pilot indications — illustrative conversation contexts only.",
       "Not diagnostic / not for clinical use. Akeno clinical intelligence remains gated later.",
-      "Phase 7 = R2 validation — requires an explicit user ask.",
+      "Phase 8 = R3–R5 / Akeno translation — explicit ask + Stage 3 gates only.",
     ],
   };
 }
