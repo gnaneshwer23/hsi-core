@@ -69,7 +69,7 @@ export type HsiSchemaGapReport = {
   isiRelMapping: IsiRelMappingSummary;
   akshNodeMapping: AkshNodeMappingSummary;
   nextActions: string[];
-}
+};
 
 function hasDurableLocator(edge: HsiEdge): boolean {
   return Boolean(
@@ -148,10 +148,10 @@ export function buildSchemaGapReport(opts?: {
   const nextActions = [
     "Curate suggested ISI REL-* pointers in the immunecity HSI bridge queue — never auto-approve into KG.",
     "Fill remaining unmapped immuno-metabolic bridges (inflammation↔IR, T2D infection, LADA, irAE hyperglycemia).",
-    "Replace provisional AKSH-N-* / AKSH-RULE-* ids with Aksh clinic KG canonical ids when published.",
+    "Replace provisional AKSH-N-* ids with Aksh clinic KG canonical ids when published.",
     "P0 leftovers → P1: more real PMIDs on mapped RELs; Neon human Gate C approve (never auto).",
     "Extend LOINC coverage beyond HbA1c / FPG / hs-CRP / IL-6 for bridge markers.",
-    "Do not mark CDS-surfacable until curationReview=approved and hsiGrade=established (isCdsSurfacable).",
+    "Do not mark CDS-surfacable until curationReview=approved and hsiGrade=established (akshNodeId alone never unlocks CDS).",
   ];
 
   return {
