@@ -17,14 +17,13 @@ git clone git@github.com:gnaneshwer23/hsi-core.git
 cd hsi-core
 bun install
 bun test
-bun run validate
-bun run export:isi
-bun run export:isi-map
-bun run export:aksh-map
-bun run gap-report
+bun run outputs    # alias: bun run publish — versioned dist/outputs/ bundle
+bun run build      # TypeScript library under dist/
 ```
 
-Requires [Bun](https://bun.sh) (tests + CLI). `bun run build` emits `dist/` for TypeScript consumers.
+Requires [Bun](https://bun.sh) (tests + CLI). **`bun run outputs`** (alias `publish`) writes a versioned consumer bundle to regenerable `dist/outputs/` (gitignored) and refreshes legacy `exports/*.json`. Small committed samples: [`examples/sample-outputs/`](examples/sample-outputs/). Consumer guide: [`docs/OUTPUTS.md`](docs/OUTPUTS.md).
+
+Individual CLIs still available: `validate`, `export:isi`, `export:isi-map`, `export:aksh-map`, `gap-report`.
 
 ## Vision site
 
@@ -78,7 +77,7 @@ import {
 
 `hsiGrade=established` **requires** `curationReview=approved`. Never promote from PMID alone.
 
-## Phase 0 contents
+## Phase 0 / P1 contents
 
 - Evidence grades + edge/claim schema + translation card types
 - ~25 T2D / immuno-metabolic / IO–autoimmunity placeholder seed edges
@@ -88,6 +87,7 @@ import {
 - Schema gap report (`bun run gap-report`) — ISI/Aksh mapping slots + bridge shortlist
 - ISI REL-* suggestion map (`bun run export:isi-map`) — curation pointers only; never auto-approve
 - Aksh node-id map (`bun run export:aksh-map`) — HITL pointers; CDS stays closed on seeds
+- **Publish bundle** (`bun run outputs`) — ISI export + REL map + Aksh map/HITL cards + gap report + Gate C checklist
 - Safety release criteria v0
 
 ## Active codebase (sole edit target)

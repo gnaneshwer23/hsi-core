@@ -1,4 +1,5 @@
 node_modules/
+# Compiled library + regenerable publish bundles (bun run outputs → dist/outputs/)
 dist/
 site/dist/
 site/node_modules/
@@ -9,5 +10,6 @@ site/node_modules/
 !.env.example
 coverage/
 out/
+# Legacy local CLI paths — refreshed by bun run outputs; committed samples live in examples/sample-outputs/
 exports/*.json
 !exports/.gitkeep

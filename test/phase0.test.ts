@@ -26,9 +26,11 @@ import {
   listAkshNodeSuggestions,
   listBridgeCandidates,
   listIsiRelSuggestions,
+  buildGateCChecklist,
   loadAkshHitlStubFromExport,
   migrateAkshNodeId,
   parseAkshNodeMapExport,
+  publishOutputs,
   seedClaimLoincMap,
   suggestionForClaim,
   summarizeGradeCounts,
@@ -36,6 +38,8 @@ import {
   validateHsiEdge,
   validateTranslationCard,
 } from "../src/index";
+import { existsSync, readFileSync } from "node:fs";
+import { join } from "node:path";
 
 describe("HSI Phase 0 grades", () => {
   it("maps ISI curation reviews onto coarse HSI grades without silent promotion", () => {
@@ -294,7 +298,11 @@ describe("Aksh HITL read-only stub (P1)", () => {
   });
 
   it("loads export:aksh-map and keeps cdsSurfacable false", () => {
-    const fromExport = loadAkshHitlStubFromExport("exports/hsi-aksh-node-map.json");
+    // Ensure legacy export exists on clean checkouts (gitignores exports/*.json).
+    publishOutputs({ generatedAt: "2026-11-01T12:00:00.000Z" });
+    const fromExport = loadAkshHitlStubFromExport("exports/hsi-aksh-node-map.json", {
+      fallbackInMemory: false,
+    });
     expect(fromExport.source).toBe("export");
     expect(fromExport.autoSurfaceCds).toBe(false);
     expect(fromExport.cdsSurfacableCount).toBe(0);
@@ -321,5 +329,65 @@ describe("Aksh HITL read-only stub (P1)", () => {
     expect(claimsWithAkshMappings().find((c) => c.id === "HSI-C-T2D-001")?.akshNodeId).toBe(
       "aksh:finding:hba1c",
     );
+  });
+});
+
+describe("Gate C checklist + publish outputs", () => {
+  it("lists curated REL rows as pending with PMID and S-P-O note", () => {
+    const checklist = buildGateCChecklist({ generatedAt: "2026-11-01T12:00:00.000Z" });
+    expect(checklist.schemaVersion).toBe("hsi-gate-c-checklist-1");
+    expect(checklist.autoApproveIntoKg).toBe(false);
+    expect(checklist.notCds).toBe(true);
+    expect(checklist.summary.pendingGateC).toBeGreaterThanOrEqual(9);
+    expect(checklist.summary.unmapped).toBeGreaterThanOrEqual(7);
+
+    const pd1 = checklist.rows.find((r) => r.edgeId === "HSI-E-IO-001");
+    expect(pd1?.isiRelationshipId).toBe("REL-R011-drives-P015");
+    expect(pd1?.pmid).toBe("16382236");
+    expect(pd1?.gateCStatus).toBe("pending");
+    expect(pd1?.spoNote).toContain("—");
+    expect(pd1?.autoApprove).toBe(false);
+
+    expect(checklist.rows.every((r) => r.gateCStatus !== "pending" || Boolean(r.isiRelationshipId))).toBe(
+      true,
+    );
+  });
+
+  it("writes versioned dist/outputs bundle with required artifacts", () => {
+    const result = publishOutputs({ generatedAt: "2026-11-01T12:00:00.000Z" });
+    expect(result.bundleId).toContain("hsi-core-0.1.0-");
+    expect(result.files).toContain("hsi-isi-export.json");
+    expect(result.files).toContain("hsi-isi-rel-map.json");
+    expect(result.files).toContain("hsi-aksh-node-map.json");
+    expect(result.files).toContain("hsi-aksh-hitl-cards.json");
+    expect(result.files).toContain("hsi-gap-report.json");
+    expect(result.files).toContain("hsi-gap-report.md");
+    expect(result.files).toContain("gate-c-checklist.json");
+    expect(result.files).toContain("gate-c-checklist.md");
+    expect(result.files).toContain("MANIFEST.json");
+
+    for (const name of result.files) {
+      expect(existsSync(join(result.outDir, name)), name).toBe(true);
+    }
+    expect(existsSync(join(process.cwd(), "dist/outputs/latest/MANIFEST.json"))).toBe(true);
+    expect(existsSync(join(process.cwd(), "dist/outputs/LATEST.json"))).toBe(true);
+    expect(existsSync(join(process.cwd(), "exports/hsi-isi-export.json"))).toBe(true);
+
+    const manifest = JSON.parse(readFileSync(join(result.outDir, "MANIFEST.json"), "utf8")) as {
+      notCds: boolean;
+      autoApproveIntoKg: boolean;
+      autoSurfaceCds: boolean;
+      counts: { gateCPending: number };
+    };
+    expect(manifest.notCds).toBe(true);
+    expect(manifest.autoApproveIntoKg).toBe(false);
+    expect(manifest.autoSurfaceCds).toBe(false);
+    expect(manifest.counts.gateCPending).toBeGreaterThanOrEqual(9);
+
+    const hitl = JSON.parse(
+      readFileSync(join(result.outDir, "hsi-aksh-hitl-cards.json"), "utf8"),
+    ) as { cdsSurfacableCount: number; autoApplyToEhr: boolean };
+    expect(hitl.cdsSurfacableCount).toBe(0);
+    expect(hitl.autoApplyToEhr).toBe(false);
   });
 });

@@ -9,13 +9,10 @@ This doc is the durable curator checklist: verified PMID ↔ REL maps for Gate C
 ```bash
 cd ~/Projects/hsi-core
 bun test
-bun run validate
-bun run export:isi
-bun run export:isi-map
-bun run gap-report
+bun run outputs    # dist/outputs/ + gate-c-checklist.*; alias: bun run publish
 ```
 
-Publish / sync via hsi-core commits. Consumers pull `exports/` (or a published package), not ad-hoc edits in other repos.
+Publish / sync via hsi-core commits. Consumers pull `dist/outputs/` (or legacy `exports/`), not ad-hoc edits in other repos. See [`OUTPUTS.md`](OUTPUTS.md).
 
 ## What this checklist covers — 9 evidence-linked maps
 

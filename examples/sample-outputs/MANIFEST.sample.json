@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "hsi-outputs-manifest-1",
+  "bundleId": "hsi-core-0.1.0-20261101T000000000Z",
+  "package": "hsi-core",
+  "version": "0.1.0",
+  "generatedAt": "2026-11-01T00:00:00.000Z",
+  "notCds": true,
+  "autoApproveIntoKg": false,
+  "autoSurfaceCds": false,
+  "artifacts": {
+    "isiExport": "hsi-isi-export.json",
+    "isiRelMap": "hsi-isi-rel-map.json",
+    "akshNodeMap": "hsi-aksh-node-map.json",
+    "akshHitlCards": "hsi-aksh-hitl-cards.json",
+    "gapReportJson": "hsi-gap-report.json",
+    "gapReportMd": "hsi-gap-report.md",
+    "gateCChecklistJson": "gate-c-checklist.json",
+    "gateCChecklistMd": "gate-c-checklist.md"
+  },
+  "note": "Sample only — run bun run outputs for a real bundle under dist/outputs/"
+}

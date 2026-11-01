@@ -92,6 +92,23 @@ export {
 } from "./gapReport";
 
 export {
+  GATE_C_CHECKLIST_SCHEMA,
+  buildGateCChecklist,
+  serializeGateCChecklist,
+  serializeGateCChecklistMarkdown,
+  type GateCChecklistBundle,
+  type GateCChecklistRow,
+} from "./gateCChecklist";
+
+export {
+  OUTPUTS_MANIFEST_SCHEMA,
+  publishOutputs,
+  serializeGapReportMarkdown,
+  type PublishOutputsOptions,
+  type PublishOutputsResult,
+} from "./publishOutputs";
+
+export {
   ISI_REL_SUGGESTIONS,
   claimsWithIsiMappings,
   listIsiRelSuggestions,
