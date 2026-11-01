@@ -1,7 +1,7 @@
 # HSI build status and next
 
 **Audit date:** 1 November 2026  
-**HEAD at write:** _(pending P2.3 commit)_ — P2.3 offline eval harness stubs  
+**HEAD at write:** `35c05fe` (main) — P2.3 offline eval harness stubs  
 **Edit target:** `hsi-core` only · Neon **`red-wave` only** · no immunecity / Akeno product / DeliverX edits  
 **Prior audit:** [`PRD_IMPLEMENTATION_AUDIT.md`](./PRD_IMPLEMENTATION_AUDIT.md) (phases 0–8 vs Pilot + Target PRDs)
 
@@ -146,7 +146,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | P1.3 gut–immune SCFA ↔ Treg/Th17 | `974533a` |
 | P2.1 neuroimmune vagus / cholinergic | `7e1baf8` |
 | P2.2 embedding sidecars (hash/ref) | `3f8c4aa` |
-| P2.3 offline eval harness stubs | _(this commit)_ |
+| P2.3 offline eval harness stubs | `35c05fe` |
 
 Reproduce: `bun test && bun run outputs && bun run site:dev` → `/discovery`, `/akeno`, `/aksh-agents`.
 
