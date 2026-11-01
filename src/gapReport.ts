@@ -148,7 +148,7 @@ export function buildSchemaGapReport(opts?: {
   const nextActions = [
     "Curate suggested ISI REL-* pointers in the immunecity HSI bridge queue — never auto-approve into KG.",
     "Fill remaining unmapped immuno-metabolic bridges (inflammation↔IR, T2D infection, LADA, irAE hyperglycemia).",
-    "Aksh durable `aksh:` ids shipped (hsi-aksh-node-map-2); bind to live clinic KG when Aksh publishes canonical nodes.",
+    "Aksh durable `aksh:` ids + HITL read-only stub shipped (hsi-aksh-node-map-2 / hsi-aksh-hitl-stub-1); bind live clinic KG when Aksh publishes canonical nodes.",
     "Human Neon Gate C on curated REL maps (Check → claim_support=supports → Approve); never auto.",
     "Extend LOINC coverage beyond HbA1c / FPG / hs-CRP / IL-6 for bridge markers.",
     "Do not mark CDS-surfacable until curationReview=approved and hsiGrade=established (akshNodeId alone never unlocks CDS).",

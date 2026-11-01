@@ -13,7 +13,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { HsiCurationReview, HsiGrade, HsiTeachingStatus } from "./grades";
 import {
-  AKSH_CLINIC_BY_ID,
+  AKSH_CLINIC_CONCEPTS,
   PROVISIONAL_AKSH_TO_DURABLE,
   akshClinicConcept,
   migrateAkshNodeId,
@@ -39,8 +39,11 @@ import {
 import type { HsiClaim, HsiDomain, HsiEdge } from "./schema";
 import { isCdsSurfacable } from "./validate";
 
-/** Schema written by `bun run export:aksh-map`. */
+/** Export schema written by `bun run export:aksh-map`. */
 export const AKSH_HITL_MAP_SCHEMA = "hsi-aksh-node-map-2" as const;
+
+/** Stub bundle schema for HITL card projection. */
+export const AKSH_HITL_STUB_SCHEMA = "hsi-aksh-hitl-stub-1" as const;
 
 export type AkshHitlMapPayload = {
   schemaVersion: typeof AKSH_HITL_MAP_SCHEMA | string;
@@ -56,8 +59,8 @@ export type AkshHitlMapPayload = {
   suggestions?: readonly AkshNodeSuggestion[];
 };
 
-/** Loaded map ready for card projection (always fail-closed on CDS). */
-export type AkshHitlLoadedMap = {
+/** Parsed / fail-closed map used to join claim → akshNodeId. */
+export type ParsedAkshNodeMap = {
   schemaVersion: string;
   idNamespace: "aksh:";
   notCds: true;
@@ -67,7 +70,6 @@ export type AkshHitlLoadedMap = {
   provisionalMigration: Record<string, string>;
   clinicConcepts: readonly AkshClinicConcept[];
   suggestions: readonly AkshNodeSuggestion[];
-  source: "in_memory" | "export_file" | "export_object";
 };
 
 /**
@@ -101,22 +103,28 @@ export type AkshHitlCardViewModel = {
     label: string;
     rationale: string;
     requiresHitl: true;
+    autoApplyToEhr: false;
+    /** Mirrors cdsSurfacable — false on seeds. */
+    cdsEligibleHint: boolean;
   };
-  /** map_pointer_readonly until cdsSurfacable; then cds_hitl_eligible. */
-  displayMode: "map_pointer_readonly" | "cds_hitl_eligible";
+  /** map_pointer_only until cdsSurfacable; then cds_hitl_eligible. */
+  displayMode: "map_pointer_only" | "cds_hitl_eligible";
   mapStatus: AkshNodeSuggestionStatus | "unknown";
   matchKind: AkshNodeMatchKind;
 };
 
-export type AkshHitlCardSummary = {
-  total: number;
-  withAkshNodeId: number;
-  withLoinc: number;
-  cdsSurfacableCount: number;
-  mapPointerOnly: number;
+export type AkshHitlStubBundle = {
+  schemaVersion: typeof AKSH_HITL_STUB_SCHEMA;
+  notCds: true;
+  autoSurfaceCds: false;
   autoApplyToEhr: false;
-  /** Reminder for consumers. */
   cdsRequiresApprovedEstablished: true;
+  source: "in_memory" | "export";
+  claimToAkshNodeId: Record<string, string>;
+  cards: AkshHitlCardViewModel[];
+  cdsSurfacableCount: number;
+  mappedCardCount: number;
+  withLoincCount: number;
 };
 
 const DEFAULT_EXPORT_PATH = "exports/hsi-aksh-node-map.json";
@@ -134,102 +142,56 @@ function asStringRecord(value: unknown): Record<string, string> {
   return out;
 }
 
-/**
- * Normalize export JSON or in-memory modules into a fail-closed loaded map.
- * Always sets autoSurfaceCds=false / notCds=true regardless of file contents.
- */
-export function normalizeAkshHitlMap(
-  payload: AkshHitlMapPayload | null | undefined,
-  source: AkshHitlLoadedMap["source"],
-): AkshHitlLoadedMap {
-  const claimToAkshNodeId = payload?.claimToAkshNodeId
-    ? Object.fromEntries(
-        Object.entries(payload.claimToAkshNodeId).map(([claimId, id]) => [
-          claimId,
-          migrateAkshNodeId(id) ?? id,
-        ]),
-      )
-    : akshNodeIdMap();
+/** Migrate provisional ids in a claim→node map; drop empties. */
+function durableClaimMap(raw: Record<string, string>): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const [claimId, id] of Object.entries(raw)) {
+    const durable = migrateAkshNodeId(id) ?? (id.startsWith("aksh:") ? id : null);
+    if (durable) out[claimId] = durable;
+  }
+  return out;
+}
 
+/**
+ * Parse `export:aksh-map` JSON (or a partial object). Always fail-closes CDS flags
+ * and migrates provisional `AKSH-N-*` → durable `aksh:` ids.
+ */
+export function parseAkshNodeMapExport(payload: unknown): ParsedAkshNodeMap {
+  if (!isRecord(payload)) {
+    throw new Error("Aksh HITL map payload must be an object");
+  }
+  const claimToAkshNodeId = durableClaimMap(asStringRecord(payload.claimToAkshNodeId));
   return {
-    schemaVersion: payload?.schemaVersion ?? AKSH_HITL_MAP_SCHEMA,
+    schemaVersion: String(payload.schemaVersion ?? AKSH_HITL_MAP_SCHEMA),
     idNamespace: "aksh:",
     notCds: true,
     autoSurfaceCds: false,
     cdsRequiresApprovedEstablished: true,
     claimToAkshNodeId,
-    provisionalMigration: payload?.provisionalMigration
+    provisionalMigration: payload.provisionalMigration
       ? asStringRecord(payload.provisionalMigration)
       : { ...PROVISIONAL_AKSH_TO_DURABLE },
-    clinicConcepts: payload?.clinicConcepts?.length
-      ? payload.clinicConcepts
-      : [...AKSH_CLINIC_BY_ID.values()],
-    suggestions: payload?.suggestions?.length
-      ? payload.suggestions
+    clinicConcepts: Array.isArray(payload.clinicConcepts)
+      ? (payload.clinicConcepts as AkshClinicConcept[])
+      : AKSH_CLINIC_CONCEPTS,
+    suggestions: Array.isArray(payload.suggestions)
+      ? (payload.suggestions as AkshNodeSuggestion[])
       : listAkshNodeSuggestions(),
-    source,
   };
 }
 
-/** In-memory map from live hsi-core modules (no filesystem). */
-export function loadAkshHitlMapInMemory(): AkshHitlLoadedMap {
-  return normalizeAkshHitlMap(
-    {
-      schemaVersion: AKSH_HITL_MAP_SCHEMA,
-      notCds: true,
-      autoSurfaceCds: false,
-      cdsRequiresApprovedEstablished: true,
-      claimToAkshNodeId: akshNodeIdMap(),
-      provisionalMigration: PROVISIONAL_AKSH_TO_DURABLE,
-      clinicConcepts: [...AKSH_CLINIC_BY_ID.values()],
-      suggestions: AKSH_NODE_SUGGESTIONS,
-    },
-    "in_memory",
-  );
-}
-
-/** Parse an already-loaded export object (e.g. immunecity sync copy). */
-export function loadAkshHitlMapFromObject(payload: unknown): AkshHitlLoadedMap {
-  if (!isRecord(payload)) {
-    throw new Error("Aksh HITL map payload must be an object");
-  }
-  const claimToAkshNodeId = asStringRecord(payload.claimToAkshNodeId);
-  return normalizeAkshHitlMap(
-    {
-      schemaVersion: String(payload.schemaVersion ?? AKSH_HITL_MAP_SCHEMA),
-      notCds: true,
-      autoSurfaceCds: false,
-      claimToAkshNodeId,
-      provisionalMigration: asStringRecord(payload.provisionalMigration),
-      clinicConcepts: Array.isArray(payload.clinicConcepts)
-        ? (payload.clinicConcepts as AkshClinicConcept[])
-        : undefined,
-      suggestions: Array.isArray(payload.suggestions)
-        ? (payload.suggestions as AkshNodeSuggestion[])
-        : undefined,
-    },
-    "export_object",
-  );
-}
-
-/**
- * Load `exports/hsi-aksh-node-map.json` (or custom path) produced by
- * `bun run export:aksh-map`. Falls back to in-memory if path missing and
- * `fallbackInMemory` is true (default).
- */
-export function loadAkshHitlMapFromExport(
-  path: string = DEFAULT_EXPORT_PATH,
-  opts?: { fallbackInMemory?: boolean; cwd?: string },
-): AkshHitlLoadedMap {
-  const fallback = opts?.fallbackInMemory !== false;
-  const absolute = resolve(opts?.cwd ?? process.cwd(), path);
-  try {
-    const raw = JSON.parse(readFileSync(absolute, "utf8")) as unknown;
-    return loadAkshHitlMapFromObject(raw);
-  } catch (err) {
-    if (!fallback) throw err;
-    return loadAkshHitlMapInMemory();
-  }
+function inMemoryParsedMap(): ParsedAkshNodeMap {
+  return {
+    schemaVersion: AKSH_HITL_MAP_SCHEMA,
+    idNamespace: "aksh:",
+    notCds: true,
+    autoSurfaceCds: false,
+    cdsRequiresApprovedEstablished: true,
+    claimToAkshNodeId: akshNodeIdMap(),
+    provisionalMigration: { ...PROVISIONAL_AKSH_TO_DURABLE },
+    clinicConcepts: AKSH_CLINIC_CONCEPTS,
+    suggestions: AKSH_NODE_SUGGESTIONS,
+  };
 }
 
 function edgeForClaim(
@@ -246,10 +208,7 @@ function claimById(
   return claims.find((c) => c.id === claimId);
 }
 
-function resolveAkshNodeId(
-  claimId: string,
-  map: AkshHitlLoadedMap,
-): string | null {
+function resolveAkshNodeId(claimId: string, map: ParsedAkshNodeMap): string | null {
   const fromMap = migrateAkshNodeId(map.claimToAkshNodeId[claimId] ?? null);
   if (fromMap) return fromMap;
   const suggestion = map.suggestions.find((s) => s.claimId === claimId);
@@ -268,6 +227,8 @@ function requiredActionFor(
       label: card.action.label,
       rationale: card.action.rationale,
       requiresHitl: true,
+      autoApplyToEhr: false,
+      cdsEligibleHint: cdsSurfacable && card.action.cdsEligibleHint,
     };
   }
 
@@ -276,6 +237,8 @@ function requiredActionFor(
       label: `Review ${clinic.label} (HITL)`,
       rationale: `Safety criteria met for graded claim — clinician confirms before any chart action. Concept ${clinic.id}.`,
       requiresHitl: true,
+      autoApplyToEhr: false,
+      cdsEligibleHint: true,
     };
   }
 
@@ -284,6 +247,8 @@ function requiredActionFor(
     label: "Review mapped clinic concept (HITL — map pointer only)",
     rationale: `${assertion.slice(0, 160)}${assertion.length > 160 ? "…" : ""}.${conceptBit} akshNodeId is a curation pointer; CDS stays closed until approved + established.`,
     requiresHitl: true,
+    autoApplyToEhr: false,
+    cdsEligibleHint: false,
   };
 }
 
@@ -291,15 +256,15 @@ function requiredActionFor(
  * Build one read-only HITL card view-model for a claim.
  * Returns null when claim/edge is unknown.
  */
-export function buildAkshHitlCard(
+export function buildAkshHitlCardViewModel(
   claimId: string,
   opts?: {
-    map?: AkshHitlLoadedMap;
+    map?: ParsedAkshNodeMap;
     claims?: readonly HsiClaim[];
     edges?: readonly HsiEdge[];
   },
 ): AkshHitlCardViewModel | null {
-  const map = opts?.map ?? loadAkshHitlMapInMemory();
+  const map = opts?.map ?? inMemoryParsedMap();
   const claims = opts?.claims ?? HSI_T2D_IMMUNO_SEED_CLAIMS;
   const edges = opts?.edges ?? HSI_T2D_IMMUNO_SEED_EDGES;
 
@@ -317,10 +282,7 @@ export function buildAkshHitlCard(
     : null;
 
   const markerLink = linkClaimToMarker(claimId, edges);
-  const loinc =
-    markerLink?.marker.loinc?.trim() ||
-    clinic?.loinc?.trim() ||
-    null;
+  const loinc = markerLink?.marker.loinc?.trim() || clinic?.loinc?.trim() || null;
 
   // Safety gate — map presence must never force true.
   const cdsSurfacable = isCdsSurfacable(edge);
@@ -347,14 +309,17 @@ export function buildAkshHitlCard(
       clinic,
       cdsSurfacable,
     ),
-    displayMode: cdsSurfacable ? "cds_hitl_eligible" : "map_pointer_readonly",
+    displayMode: cdsSurfacable ? "cds_hitl_eligible" : "map_pointer_only",
     mapStatus: suggestion?.status ?? "unknown",
     matchKind: suggestion?.matchKind ?? "none",
   };
 }
 
+/** @deprecated Alias — prefer buildAkshHitlCardViewModel. */
+export const buildAkshHitlCard = buildAkshHitlCardViewModel;
+
 export type ListAkshHitlCardsOptions = {
-  map?: AkshHitlLoadedMap;
+  map?: ParsedAkshNodeMap;
   /** Default true — only cards with an akshNodeId. */
   mappedOnly?: boolean;
   claims?: readonly HsiClaim[];
@@ -362,17 +327,17 @@ export type ListAkshHitlCardsOptions = {
 };
 
 /** Project HITL cards for Aksh UI stubs / tests. */
-export function listAkshHitlCards(
+export function listAkshHitlReadOnlyCards(
   opts?: ListAkshHitlCardsOptions,
 ): AkshHitlCardViewModel[] {
-  const map = opts?.map ?? loadAkshHitlMapInMemory();
+  const map = opts?.map ?? inMemoryParsedMap();
   const mappedOnly = opts?.mappedOnly !== false;
   const claims = opts?.claims ?? HSI_T2D_IMMUNO_SEED_CLAIMS;
   const edges = opts?.edges ?? HSI_T2D_IMMUNO_SEED_EDGES;
 
   const out: AkshHitlCardViewModel[] = [];
   for (const claim of claims) {
-    const card = buildAkshHitlCard(claim.id, { map, claims, edges });
+    const card = buildAkshHitlCardViewModel(claim.id, { map, claims, edges });
     if (!card) continue;
     if (mappedOnly && !card.akshNodeId) continue;
     out.push(card);
@@ -380,18 +345,98 @@ export function listAkshHitlCards(
   return out;
 }
 
-export function summarizeAkshHitlCards(
-  cards: readonly AkshHitlCardViewModel[],
-): AkshHitlCardSummary {
+/** @deprecated Alias — prefer listAkshHitlReadOnlyCards. */
+export const listAkshHitlCards = listAkshHitlReadOnlyCards;
+
+function toStubBundle(
+  map: ParsedAkshNodeMap,
+  source: "in_memory" | "export",
+  opts?: { mappedOnly?: boolean },
+): AkshHitlStubBundle {
+  const cards = listAkshHitlReadOnlyCards({
+    map,
+    mappedOnly: opts?.mappedOnly !== false,
+  });
   return {
-    total: cards.length,
-    withAkshNodeId: cards.filter((c) => Boolean(c.akshNodeId)).length,
-    withLoinc: cards.filter((c) => Boolean(c.loinc)).length,
-    cdsSurfacableCount: cards.filter((c) => c.cdsSurfacable).length,
-    mapPointerOnly: cards.filter((c) => c.displayMode === "map_pointer_readonly").length,
+    schemaVersion: AKSH_HITL_STUB_SCHEMA,
+    notCds: true,
+    autoSurfaceCds: false,
     autoApplyToEhr: false,
     cdsRequiresApprovedEstablished: true,
+    source,
+    claimToAkshNodeId: { ...map.claimToAkshNodeId },
+    cards,
+    cdsSurfacableCount: cards.filter((c) => c.cdsSurfacable).length,
+    mappedCardCount: cards.filter((c) => Boolean(c.akshNodeId)).length,
+    withLoincCount: cards.filter((c) => Boolean(c.loinc)).length,
   };
+}
+
+/** In-memory HITL stub from live hsi-core modules (no filesystem). */
+export function buildAkshHitlStubBundle(opts?: {
+  mappedOnly?: boolean;
+}): AkshHitlStubBundle {
+  return toStubBundle(inMemoryParsedMap(), "in_memory", opts);
+}
+
+/**
+ * Load `exports/hsi-aksh-node-map.json` (or custom path) and project HITL cards.
+ * Falls back to in-memory modules if the file is missing (unless fallback disabled).
+ */
+export function loadAkshHitlStubFromExport(
+  path: string = DEFAULT_EXPORT_PATH,
+  opts?: { fallbackInMemory?: boolean; cwd?: string; mappedOnly?: boolean },
+): AkshHitlStubBundle {
+  const fallback = opts?.fallbackInMemory !== false;
+  const absolute = resolve(opts?.cwd ?? process.cwd(), path);
+  try {
+    const raw = JSON.parse(readFileSync(absolute, "utf8")) as unknown;
+    const map = parseAkshNodeMapExport(raw);
+    return toStubBundle(map, "export", opts);
+  } catch (err) {
+    if (!fallback) throw err;
+    return toStubBundle(inMemoryParsedMap(), "in_memory", opts);
+  }
+}
+
+/** Load and parse `export:aksh-map` JSON into a fail-closed map (no card projection). */
+export function loadAkshHitlMapFromExport(
+  path: string = DEFAULT_EXPORT_PATH,
+  opts?: { fallbackInMemory?: boolean; cwd?: string },
+): ParsedAkshNodeMap & { source: "export" | "in_memory" } {
+  const fallback = opts?.fallbackInMemory !== false;
+  const absolute = resolve(opts?.cwd ?? process.cwd(), path);
+  try {
+    const raw = JSON.parse(readFileSync(absolute, "utf8")) as unknown;
+    return { ...parseAkshNodeMapExport(raw), source: "export" };
+  } catch (err) {
+    if (!fallback) throw err;
+    return { ...inMemoryParsedMap(), source: "in_memory" };
+  }
+}
+
+/** Parse an already-loaded export object. */
+export function loadAkshHitlMapFromObject(
+  payload: unknown,
+): ParsedAkshNodeMap {
+  return parseAkshNodeMapExport(payload);
+}
+
+/** In-memory map from live modules. */
+export function loadAkshHitlMapInMemory(): ParsedAkshNodeMap & { source: "in_memory" } {
+  return { ...inMemoryParsedMap(), source: "in_memory" };
+}
+
+/** Normalize payload → fail-closed map (alias of parseAkshNodeMapExport). */
+export function normalizeAkshHitlMap(payload: unknown): ParsedAkshNodeMap {
+  return parseAkshNodeMapExport(payload);
+}
+
+/** True when every card has cdsSurfacable=false and autoApplyToEhr=false. */
+export function assertHitlStubCdsClosed(
+  cards: readonly AkshHitlCardViewModel[],
+): boolean {
+  return cards.every((c) => c.cdsSurfacable === false && c.autoApplyToEhr === false);
 }
 
 /**
@@ -401,5 +446,27 @@ export function summarizeAkshHitlCards(
 export function listCdsEligibleAkshHitlCards(
   opts?: ListAkshHitlCardsOptions,
 ): AkshHitlCardViewModel[] {
-  return listAkshHitlCards({ ...opts, mappedOnly: false }).filter((c) => c.cdsSurfacable);
+  return listAkshHitlReadOnlyCards({ ...opts, mappedOnly: false }).filter(
+    (c) => c.cdsSurfacable,
+  );
+}
+
+export function summarizeAkshHitlCards(cards: readonly AkshHitlCardViewModel[]): {
+  total: number;
+  withAkshNodeId: number;
+  withLoinc: number;
+  cdsSurfacableCount: number;
+  mapPointerOnly: number;
+  autoApplyToEhr: false;
+  cdsRequiresApprovedEstablished: true;
+} {
+  return {
+    total: cards.length,
+    withAkshNodeId: cards.filter((c) => Boolean(c.akshNodeId)).length,
+    withLoinc: cards.filter((c) => Boolean(c.loinc)).length,
+    cdsSurfacableCount: cards.filter((c) => c.cdsSurfacable).length,
+    mapPointerOnly: cards.filter((c) => c.displayMode === "map_pointer_only").length,
+    autoApplyToEhr: false,
+    cdsRequiresApprovedEstablished: true,
+  };
 }

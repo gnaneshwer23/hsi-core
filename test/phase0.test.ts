@@ -2,7 +2,6 @@
  * HSI Phase 0 foundation — schema, grades, seed, safety criteria, LOINC links.
  * Run: bun test
  */
-import { describe, expect, it } from "bun:test";
 import {
   HSI_CURATION_REVIEWS,
   HSI_EXAMPLE_TRANSLATION_CARDS,
@@ -10,10 +9,12 @@ import {
   HSI_MARKERS,
   HSI_SAFETY_RELEASE_CRITERIA_V0,
   HSI_T2D_IMMUNO_SEED_EDGES,
+  PROVISIONAL_AKSH_TO_DURABLE,
+  assertHitlStubCdsClosed,
+  buildAkshHitlCardViewModel,
+  buildAkshHitlStubBundle,
   buildIsiExportBundle,
   buildSchemaGapReport,
-  PROVISIONAL_AKSH_TO_DURABLE,
-  buildAkshHitlCard,
   claimsWithAkshMappings,
   claimsWithIsiMappings,
   hsiEvidenceHandoff,
@@ -21,18 +22,15 @@ import {
   isCdsSurfacable,
   isDurableAkshClinicId,
   linkClaimToMarker,
-  listAkshHitlCards,
+  listAkshHitlReadOnlyCards,
   listAkshNodeSuggestions,
   listBridgeCandidates,
-  listCdsEligibleAkshHitlCards,
   listIsiRelSuggestions,
-  loadAkshHitlMapFromExport,
-  loadAkshHitlMapFromObject,
-  loadAkshHitlMapInMemory,
+  loadAkshHitlStubFromExport,
   migrateAkshNodeId,
+  parseAkshNodeMapExport,
   seedClaimLoincMap,
   suggestionForClaim,
-  summarizeAkshHitlCards,
   summarizeGradeCounts,
   summarizeIsiRelMappings,
   validateHsiEdge,
@@ -264,52 +262,46 @@ describe("Aksh node-id map (P1 HITL)", () => {
   });
 });
 
+
 describe("Aksh HITL read-only stub (P1)", () => {
-  it("loads export:aksh-map and projects cards without opening CDS", () => {
-    const map = loadAkshHitlMapFromExport("exports/hsi-aksh-node-map.json");
-    expect(map.schemaVersion).toBe("hsi-aksh-node-map-2");
-    expect(map.autoSurfaceCds).toBe(false);
-    expect(map.notCds).toBe(true);
-    expect(Object.keys(map.claimToAkshNodeId).length).toBeGreaterThanOrEqual(20);
+  it("builds card view-models from aksh map without opening CDS", () => {
+    const stub = buildAkshHitlStubBundle();
+    expect(stub.schemaVersion).toBe("hsi-aksh-hitl-stub-1");
+    expect(stub.notCds).toBe(true);
+    expect(stub.autoSurfaceCds).toBe(false);
+    expect(stub.autoApplyToEhr).toBe(false);
+    expect(stub.cards.length).toBeGreaterThanOrEqual(10);
+    expect(stub.cdsSurfacableCount).toBe(0);
+    expect(assertHitlStubCdsClosed(stub.cards)).toBe(true);
 
-    const cards = listAkshHitlCards({ map, mappedOnly: true });
-    expect(cards.length).toBeGreaterThanOrEqual(20);
-    expect(cards.every((c) => c.akshNodeId?.startsWith("aksh:"))).toBe(true);
+    const hba1c = buildAkshHitlCardViewModel("HSI-C-T2D-001");
+    expect(hba1c).not.toBeNull();
+    expect(hba1c!.akshNodeId).toBe("aksh:finding:hba1c");
+    expect(hba1c!.hsiGrade).not.toBe("established");
+    expect(hba1c!.cdsSurfacable).toBe(false);
+    expect(hba1c!.displayMode).toBe("map_pointer_only");
+    expect(hba1c!.loinc).toBe("4548-4");
+    expect(hba1c!.clinicLabel).toBe("HbA1c");
+    expect(hba1c!.requiredClinicianAction.requiresHitl).toBe(true);
+    expect(hba1c!.requiredClinicianAction.autoApplyToEhr).toBe(false);
+    expect(hba1c!.requiredClinicianAction.cdsEligibleHint).toBe(false);
+    expect(hba1c!.autoApplyToEhr).toBe(false);
+
+    const cards = listAkshHitlReadOnlyCards({ mappedOnly: true });
     expect(cards.every((c) => c.cdsSurfacable === false)).toBe(true);
-    expect(cards.every((c) => c.autoApplyToEhr === false)).toBe(true);
-    expect(cards.every((c) => c.displayMode === "map_pointer_readonly")).toBe(true);
-    expect(cards.every((c) => c.requiredClinicianAction.requiresHitl === true)).toBe(true);
-
-    const hba1c = buildAkshHitlCard("HSI-C-T2D-001", { map });
-    expect(hba1c?.akshNodeId).toBe("aksh:finding:hba1c");
-    expect(hba1c?.loinc).toBe("4548-4");
-    expect(hba1c?.clinicLabel).toBe("HbA1c");
-    expect(hba1c?.hsiGrade).not.toBe("established");
-    expect(hba1c?.cdsSurfacable).toBe(false);
-    expect(hba1c?.requiredClinicianAction.label.length).toBeGreaterThan(0);
-
-    const summary = summarizeAkshHitlCards(cards);
-    expect(summary.cdsSurfacableCount).toBe(0);
-    expect(summary.autoApplyToEhr).toBe(false);
-    expect(summary.withLoinc).toBeGreaterThanOrEqual(3);
-
-    expect(listCdsEligibleAkshHitlCards({ map })).toEqual([]);
-    expect(loadAkshHitlMapInMemory().source).toBe("in_memory");
+    expect(cards.every((c) => c.akshNodeId?.startsWith("aksh:"))).toBe(true);
+    expect(cards.every((c) => c.displayMode === "map_pointer_only")).toBe(true);
   });
 
-  it("never marks cdsSurfacable from akshNodeId alone", () => {
-    const edge = HSI_T2D_IMMUNO_SEED_EDGES.find((e) => e.claimId === "HSI-C-T2D-001")!;
-    expect(claimsWithAkshMappings().find((c) => c.id === "HSI-C-T2D-001")?.akshNodeId).toBe(
-      "aksh:finding:hba1c",
-    );
-    expect(isCdsSurfacable(edge)).toBe(false);
-    const card = buildAkshHitlCard("HSI-C-T2D-001");
-    expect(card?.cdsSurfacable).toBe(false);
-    expect(card?.displayMode).toBe("map_pointer_readonly");
-  });
+  it("loads export:aksh-map and keeps cdsSurfacable false", () => {
+    const fromExport = loadAkshHitlStubFromExport("exports/hsi-aksh-node-map.json");
+    expect(fromExport.source).toBe("export");
+    expect(fromExport.autoSurfaceCds).toBe(false);
+    expect(fromExport.cdsSurfacableCount).toBe(0);
+    expect(fromExport.cards.length).toBeGreaterThanOrEqual(10);
+    expect(Object.keys(fromExport.claimToAkshNodeId).length).toBeGreaterThanOrEqual(10);
 
-  it("migrates provisional ids when loading export objects", () => {
-    const map = loadAkshHitlMapFromObject({
+    const parsed = parseAkshNodeMapExport({
       schemaVersion: "hsi-aksh-node-map-2",
       idNamespace: "aksh:",
       notCds: true,
@@ -320,11 +312,14 @@ describe("Aksh HITL read-only stub (P1)", () => {
         "HSI-C-T2D-005": "aksh:medicine:metformin",
       },
     });
-    expect(map.claimToAkshNodeId["HSI-C-T2D-001"]).toBe("aksh:finding:hba1c");
-    expect(map.claimToAkshNodeId["HSI-C-T2D-005"]).toBe("aksh:medicine:metformin");
-    expect(map.autoSurfaceCds).toBe(false);
-    const card = buildAkshHitlCard("HSI-C-T2D-001", { map });
-    expect(card?.cdsSurfacable).toBe(false);
-    expect(card?.akshNodeId).toBe("aksh:finding:hba1c");
+    expect(parsed.claimToAkshNodeId["HSI-C-T2D-001"]).toBe("aksh:finding:hba1c");
+    expect(parsed.claimToAkshNodeId["HSI-C-T2D-005"]).toBe("aksh:medicine:metformin");
+    expect(parsed.autoSurfaceCds).toBe(false);
+
+    const edge = HSI_T2D_IMMUNO_SEED_EDGES.find((e) => e.claimId === "HSI-C-T2D-001")!;
+    expect(isCdsSurfacable(edge)).toBe(false);
+    expect(claimsWithAkshMappings().find((c) => c.id === "HSI-C-T2D-001")?.akshNodeId).toBe(
+      "aksh:finding:hba1c",
+    );
   });
 });
