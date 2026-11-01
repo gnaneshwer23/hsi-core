@@ -18,11 +18,11 @@
 | Rubric checklist vs clearance | **works** | `x-4` → `ready_for_human`; `blockedOnPartner=0` |
 | immunecity tip + tests | **works** | catalogue.json fallback; 11/11 discovery tests |
 | ISI Vercel production | **works** | Prior READY on `309c6eb` (consume pin compatible) |
-| hsi-core Vercel production | **pending deploy** | Fix landed locally; push triggers SPA `/discovery` |
+| hsi-core Vercel production | **works** | READY after `c657746` — `/discovery` serves HTML SPA |
 | Live ISI `/hsi/discovery` | **works** | HTTP 200, ASK→MAP→REVIEW UI shell |
 | Live ISI `/hsi-consume` | **works** | HTTP 200, diagnostics UI |
 | Live hsi-core `/` | **works** | HTTP 200, titled shell |
-| Live hsi-core `/discovery` | **fixed (ship)** | Product loop UI primary; JSON at `/discovery.json` + `/discovery/*.json` |
+| Live hsi-core `/discovery` | **works** | HTTP 200 `text/html` SPA; machine JSON at `/discovery.json` + `/discovery/*.json` |
 
 ---
 
@@ -99,16 +99,12 @@ Unchanged green from prior audit: Apolo lock, 79-row evidenceMap, `partnerCleare
 - No live CDS, no PHI→LLM, no Gate C auto-approve, no shared HSI↔ISI Neon.
 - Gate C review rows remain mapped-REL-only (~13) by design.
 
-### Pending after push
-
-- Vercel hsi-core production must redeploy for live `/discovery` HTML (was JSON until this ship).
-
 ---
 
 ## 4. Commits referenced
 
-| Repo | Note |
-| --- | --- |
-| hsi-core | This fix set (Neon seed sync + rubric + Discovery SPA) — see git log after push |
-| immunecity | Consume catalogue fallback (freeze-lift scope) |
-| Prior tips | hsi-core `7d733a0` · immunecity `309c6eb` (pre-fix production) |
+| Repo | SHA | Note |
+| --- | --- | --- |
+| hsi-core | `c657746` | Neon pack sync + rubric x-4 + Discovery SPA (prod) |
+| immunecity | `884261d` | catalogue.json consume fallback |
+| Prior tips | `7d733a0` / `309c6eb` | Pre-fix production baselines |
