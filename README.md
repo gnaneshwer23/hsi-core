@@ -4,7 +4,18 @@ Shared **Human Systems Intelligence** substrate for **Aksh Health** (clinic HITL
 
 Evidence-graded edges (`established` / `uncertain` / `unexplored`) plus claim → marker (LOINC) → observation → action stubs. No PHI. No auto diagnosis. No EHR write-back.
 
-**Vision alignment:** full portfolio map (Aksh / ISI consumers, bio-stack P3 plugins; DeliverX ignored) lives in [`docs/VISION_REPO_ALIGNMENT.md`](docs/VISION_REPO_ALIGNMENT.md). **P0 DONE / P1 ACTIVE.**
+**Vision alignment:** full portfolio map (Aksh / ISI consumers, bio-stack P3 plugins; DeliverX ignored) lives in [`docs/VISION_REPO_ALIGNMENT.md`](docs/VISION_REPO_ALIGNMENT.md). **P0 DONE / P1 ACTIVE — pilot-first** (one research workflow before more platform).
+
+## Pilot
+
+Immediate next move: prove ISI helps one immune-disease **research intelligence** workflow — not another broad AI feature.
+
+| Doc | Purpose |
+|-----|---------|
+| [`docs/ISI_PILOT_BRIEF.md`](docs/ISI_PILOT_BRIEF.md) | One-page pilot brief (purpose, non-goals, scope, outputs, metrics, decision gate) |
+| [`docs/ISI_PILOT_PARTNER_SHORTLIST.md`](docs/ISI_PILOT_PARTNER_SHORTLIST.md) | Outreach shortlist — partner types + UK/EU/US institution categories (candidates only) |
+
+Disease + question lock **after** partner conversations. `bun run outputs` artifacts from this repo feed the pilot evidence layer.
 
 ## Why this name
 

@@ -115,24 +115,34 @@ bun run gap-report`}
             <h2 className="display display-md">Read next</h2>
           </div>
           <div className="link-strip">
-            <a href="https://github.com/gnaneshwer23/hsi-core/blob/main/docs/VISION_REPO_ALIGNMENT.md">
+            <a href="https://github.com/gnaneshwer23/hsi-core/blob/main/docs/ISI_PILOT_BRIEF.md">
               <span className="idx">01</span>
+              <span className="title">ISI_PILOT_BRIEF.md</span>
+              <span className="arrow">↗</span>
+            </a>
+            <a href="https://github.com/gnaneshwer23/hsi-core/blob/main/docs/ISI_PILOT_PARTNER_SHORTLIST.md">
+              <span className="idx">02</span>
+              <span className="title">ISI_PILOT_PARTNER_SHORTLIST.md</span>
+              <span className="arrow">↗</span>
+            </a>
+            <a href="https://github.com/gnaneshwer23/hsi-core/blob/main/docs/VISION_REPO_ALIGNMENT.md">
+              <span className="idx">03</span>
               <span className="title">VISION_REPO_ALIGNMENT.md</span>
               <span className="arrow">↗</span>
             </a>
             <a href="https://github.com/gnaneshwer23/hsi-core/blob/main/docs/AKSH_HITL_CONSUMPTION.md">
-              <span className="idx">02</span>
+              <span className="idx">04</span>
               <span className="title">AKSH_HITL_CONSUMPTION.md</span>
               <span className="arrow">↗</span>
             </a>
             <a href="https://github.com/gnaneshwer23/hsi-core/blob/main/docs/IMMUNECITY_GATE_C_COMMIT_MANUAL.md">
-              <span className="idx">03</span>
+              <span className="idx">05</span>
               <span className="title">Gate C curator checklist</span>
               <span className="arrow">↗</span>
             </a>
             <a href="https://github.com/gnaneshwer23/hsi-core">
-              <span className="idx">04</span>
-              <span className="title">README · active codebase rules</span>
+              <span className="idx">06</span>
+              <span className="title">README · Pilot + active codebase</span>
               <span className="arrow">↗</span>
             </a>
           </div>

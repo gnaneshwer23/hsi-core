@@ -6,11 +6,18 @@ action stubs, Gate C human-only curation, graph before agents, T2D / immuno-meta
 bridge first. **Aksh** = clinician-safe half (HITL CDS). **ISI** = discovery half
 (Ask / Radar). No unsupported diagnosis. No PHI → LLM in production.
 
+**Pilot-first (now):** do **not** broaden the platform before proving one immune-disease
+**research intelligence** workflow with a real partner. See
+[`ISI_PILOT_BRIEF.md`](./ISI_PILOT_BRIEF.md) and
+[`ISI_PILOT_PARTNER_SHORTLIST.md`](./ISI_PILOT_PARTNER_SHORTLIST.md). Disease + question
+are TBD until outreach; keep Aksh/Akeno out of patient-level decisions until data access +
+HCP eval + governance.
+
 | Phase | Status | Focus |
 |-------|--------|--------|
 | **P0** | **DONE** | Schema, seeds, grades, ISI/Aksh exports, validation, gap report |
-| **P1** | **ACTIVE** | Durable `aksh:` maps, HITL read-only stubs, Gate C checklists, bridge shortlist |
-| **P2** | Planned | Richer exports / curator UX inside hsi-core; product apps bind published artifacts |
+| **P1** | **ACTIVE** | **ISI research pilot** (one disease + one question) + durable `aksh:` maps, HITL stubs, Gate C checklists — pilot before more platform |
+| **P2** | Planned | Richer exports / curator UX inside hsi-core *after* pilot learning; product apps bind published artifacts |
 | **P3** | Deferred | Optional bio-stack plugins (structure, docking, generative chem) behind explicit licenses |
 
 **Hard edit rule:** only [`gnaneshwer23/hsi-core`](https://github.com/gnaneshwer23/hsi-core)
@@ -124,11 +131,12 @@ hsi-core owns the graded graph and publishes read-only exports. Aksh and ISI (im
 
 ## Next actions (stay inside hsi-core)
 
-1. Keep P1: expand T2D / immuno-metabolic bridge seeds + verified PMID Gate C checklists under `docs/`.
-2. Harden Aksh HITL stub + `exports/hsi-aksh-node-map.json` without opening CDS on seeds.
-3. Grow ISI export / REL suggestion maps; never auto-approve into a product KG.
-4. Document any future ClinVar/TCGA **pointer** fields as optional claim metadata — still Gate C.
-5. Do **not** vendor AF3/Boltz/etc. until a written P3 plugin RFC + license sign-off lands in this repo.
-6. Leave immunecity, Aksh apps, and hsi-sources untouched from this workspace. **Ignore** DeliverX / swift-deliveries (not a next step, not a wire-up).
+1. **Pilot-first:** run outreach from [`ISI_PILOT_PARTNER_SHORTLIST.md`](./ISI_PILOT_PARTNER_SHORTLIST.md); lock one disease + one question with a partner; feed evidence via `bun run outputs` per [`ISI_PILOT_BRIEF.md`](./ISI_PILOT_BRIEF.md).
+2. Keep substrate honest: expand seeds + verified PMID Gate C checklists only as the pilot needs them — not platform sprawl.
+3. Harden Aksh HITL stub + maps without opening CDS on seeds (Aksh/Akeno stay out of patient-level decisions this phase).
+4. Grow ISI export / REL suggestion maps for the pilot question; never auto-approve into a product KG.
+5. Document any future ClinVar/TCGA **pointer** fields as optional claim metadata — still Gate C.
+6. Do **not** vendor AF3/Boltz/etc. until a written P3 plugin RFC + license sign-off lands in this repo.
+7. Leave immunecity, Aksh apps, and hsi-sources untouched from this workspace. **Ignore** DeliverX / swift-deliveries (not a next step, not a wire-up).
 
-See also: [AKSH_HITL_CONSUMPTION.md](./AKSH_HITL_CONSUMPTION.md), [IMMUNECITY_GATE_C_COMMIT_MANUAL.md](./IMMUNECITY_GATE_C_COMMIT_MANUAL.md), README “Active codebase (sole edit target)”.
+See also: [ISI_PILOT_BRIEF.md](./ISI_PILOT_BRIEF.md), [ISI_PILOT_PARTNER_SHORTLIST.md](./ISI_PILOT_PARTNER_SHORTLIST.md), [AKSH_HITL_CONSUMPTION.md](./AKSH_HITL_CONSUMPTION.md), [IMMUNECITY_GATE_C_COMMIT_MANUAL.md](./IMMUNECITY_GATE_C_COMMIT_MANUAL.md), README “Pilot” + “Active codebase”.

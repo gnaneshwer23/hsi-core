@@ -12,15 +12,15 @@ const phases = [
     id: "P1",
     status: "ACTIVE",
     active: true,
-    title: "Durable maps & Gate C",
-    body: "Durable aksh: ids, HITL read-only stubs, Gate C checklists, bridge shortlist, ISI REL suggestions without auto-approve.",
+    title: "Research pilot first",
+    body: "One disease + one question with a partner (research intelligence). Durable aksh: maps, HITL stubs, Gate C — no broad platform before the pilot proves value.",
   },
   {
     id: "P2",
     status: "PLANNED",
     active: false,
     title: "Richer exports / curator UX",
-    body: "Deeper artifacts and curator ergonomics inside hsi-core. Product apps bind published packages — they stay consumers.",
+    body: "Deeper artifacts after pilot learning. Product apps bind published packages — they stay consumers.",
   },
   {
     id: "P3",
@@ -43,7 +43,7 @@ export function Roadmap() {
             <span className="accent">Clear altitudes.</span>
           </>
         }
-        lede="P0 is done. P1 is active. Everything later still ships from hsi-core — never by editing consumer repos."
+        lede="P0 is done. P1 is pilot-first: prove one research workflow before more platform. Everything still ships from hsi-core — never by editing consumer repos."
       />
 
       <section className="section section-ink">
@@ -78,10 +78,10 @@ export function Roadmap() {
             <h2 className="display display-md">Stay inside hsi-core</h2>
           </div>
           <ul className="checklist">
-            <li>Expand T2D / immuno-metabolic bridge seeds + verified PMID Gate C checklists</li>
-            <li>Harden Aksh HITL stub + exports/hsi-aksh-node-map.json without opening CDS on seeds</li>
-            <li>Grow ISI export / REL suggestion maps; never auto-approve into a product KG</li>
-            <li>Document future ClinVar/TCGA pointer fields as optional metadata — still Gate C</li>
+            <li>Outreach + lock one disease/question per docs/ISI_PILOT_BRIEF.md</li>
+            <li>Feed the pilot from bun run outputs — evidence, provenance, uncertainty</li>
+            <li>Harden Aksh HITL stub without opening CDS; keep Akeno out of patient-level decisions</li>
+            <li>Grow ISI REL maps for the pilot question; never auto-approve into a product KG</li>
             <li>Do not vendor AF3/Boltz until a written P3 plugin RFC lands here</li>
           </ul>
         </div>
