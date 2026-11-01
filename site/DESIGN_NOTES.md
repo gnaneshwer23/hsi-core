@@ -1,95 +1,49 @@
 # Design notes — structure + style tokens
 
 Read-only reference: local Unkapped.ai saveweb2zip dump
-(`/Users/gnaneshwerjadav/Downloads/saveweb2zip-com-unkapped-ai/`).
+(`/Users/gnaneshwerjadav/Downloads/saveweb2zip-com-unkapped-ai/`) plus 15
+screenshot references used for cadence (hero → climb → light grid → steps →
+dark band → workflows → stacked pipeline → co-worker cards → agent flows).
 
 **Do not vendor.** No Unkapped CSS, JS, HTML, logos, photos, font files, workflow
 WebPs, cert badges, or minified Webflow/vendor bundles ship in hsi-core. This
 file records *information architecture* and *recreated style tokens* so HSI can
 ship an equivalent look & feel with original content.
 
-## Dump layout (index.html / index_1.html)
+## Screenshot cadence → HSI Home
 
-Same page shell (~18 landmarks):
-
-| Landmark | Role (structural) |
+| Beat | HSI implementation |
 | --- | --- |
-| Sticky `nav_bar` | Logo · mega-menu groups · primary CTA |
-| `hero2_section` | Full-viewport hero, split headline, 3–4 light cards into deep links |
-| `logos_section` | Horizontal trust/logo marquee |
-| `section_terrain` | Stage / altitude strip (company size → offer altitude) |
-| `why` | Problem statement · split headline · supporting copy |
-| `help` | Numbered process (audit → build → run → optimise) with tags |
-| `platforms` | Tool/platform marquee |
-| `deployed` | Capability grid (“four systems”) |
-| `workflows` | Large diagram/map cards (click/hover to emphasize) |
-| `stack` / `departments` / `agents-flow` | Layered product visuals / flow strip |
-| `depth` | Domain tabs + detail panel |
-| `partners` / `certs` / `team` | Social proof |
-| `faq` | Accordion “in plain terms” |
-| Footer | Multi-column links + CTA band |
+| Cobalt→light hero + arrow pattern + glass deep-links | `.hero` / `.hero-grid` / `.hero-deep-card` |
+| Wireframe mountain climb | `TerrainClimb` SVG · P0–P3 waypoints |
+| Light grid + isometric process | `.section-grid-light` + `IsometricProcess` |
+| STEP 0N + blue-framed mocks | `.step-block` + `Mocks.tsx` (Gate C, grades, HITL, claim→marker) |
+| Dark band · four system cards | `.section-dark-band` + `MiniSystemDiagram` |
+| Dark workflow carousel | `.flow-carousel` · Agent / Triggers / DualConsumer |
+| Stacked pipeline on grid | `.stack-rail` · outcomes → act → build → foundations |
+| Co-worker dashboard cards | `IsiCoworkerMock` / `AkshCoworkerMock` (illustrative) |
+| Agent / triggers glow diagrams | `AgentWorkflowDiagram` / `TriggersFlowDiagram` |
 
-## Image / asset roles in the dump (names only — not copied)
-
-| Role | Examples in dump |
-| --- | --- |
-| Nav / footer marks | `v2-nav-logo.svg`, `footer-logo-*.svg`, `footer-wordmark.svg` |
-| Atmosphere | `hero-image-bg.png`, `wf-dot-grid.svg`, `footer-cta-bg.webp`, mascot photos |
-| Workflow diagrams | `workflow-*-engine.webp`, `workflow-*-pipeline.webp`, `workflow-technographic-tam.webp` |
-| Platform monos | `v2-mono-*.svg`, partner/cert PNGs |
-| Press logos | publication wordmarks |
-| Team portraits | `v2-team-*.webp` |
-| JS/CSS (forbidden) | Webflow shared `.min.css`, `webflow.*.js`, `three.min.js`, `jquery`, radar |
-
-HSI replacements: **original inline SVG** (network graph, evidence pipeline, dual
-consumer, Gate C gates) drawn in brand tokens — never raster dumps.
-
-## Recreated style tokens (from dump CSS — not pasted)
+## Recreated style tokens
 
 | Token | Value | Role |
 | --- | --- | --- |
-| Cobalt | `#3965fa` | Primary accent / active chips |
+| Cobalt | `#3965fa` | Primary accent / frames / active chips |
 | Navy | `#131930` / `#141c37` / `#0b0f24` | Ink surfaces, CTA |
 | Soft blue | `#8fa8ff` / `#cfdaff` | Labels, glass chip text |
 | Cream | `#f0ece9` / `#f7f3f0` | Light section bands |
-| Pale | `#eceef3` | Alternate light band |
+| Live green | `#2fcb86` | Status pills |
 | Glass blur | `blur(14–22px) saturate(140–150%)` | Nav, chips, stage panel |
-| Radii | `12px` controls · `999px` pills · `18px` cards | Buttons / chips / panels |
+| Radii | `12px` controls · `999px` pills · `18–22px` cards | Buttons / chips / panels |
 | Type | Host Grotesk + JetBrains Mono (Google Fonts) | Bold grotesk + mono energy |
 | Hero wash | `#07208a → #1646c4 → #2f6fe0 → #8fb6f2 → cream` | Full-bleed atmosphere |
-| Letter-spacing | `0.08–0.14em` uppercase mono labels | Section tags / chips |
+| Arrow motif | 12px repeating SVG ↗ | Hero + dark band texture |
 
-## Patterns to emulate (not clone)
-
-1. **Floating glass nav** + one primary navy CTA; secondary IA in links.
-2. **Hero as one composition**: brand-forward wordmark, one display line, short
-   lede, CTA pair, glass deep-link chips — blue gradient atmosphere + light
-   pattern overlay, not inset cards.
-3. **Section cadence**: navy ↔ cream ↔ cobalt-gradient bands; numbered mono
-   section tags; split headline (display left / lede right).
-4. **Altitude / phase strip**: tab or stage chips driving one glass detail panel.
-5. **Process as four steps**: short title, one sentence, tag chips.
-6. **Diagram section**: large illustration plane + caption strip — original SVG.
-7. **FAQ accordion** closing the page before a dense footer.
-8. **Motion budget**: subtle rise / hover lift; respect `prefers-reduced-motion`.
-
-## HSI brand lock (content stays ours)
+## HSI brand lock
 
 - Voice: evidence honesty, Gate C human, ISI ≠ CDS, edit only `hsi-core`.
 - Name / messaging / routes / diagrams remain HSI — only visual energy matches
   the cobalt/glass category above.
+- Mock dashboards use **illustrative** demo data, labeled as such.
 
-## Mapping dump cadence → HSI pages
-
-| Dump beat | HSI home / IA |
-| --- | --- |
-| Hero + chips | Home hero + pillar pills |
-| Terrain | “The climb” P0–P3 tabs |
-| Why | Grades without collapsing axes |
-| Help / four steps | Evidence pipeline SVG + four publish steps |
-| Workflows / agents-flow | Original network + dual-consumer diagrams |
-| Depth tabs | Consumer / grade depth on Systems & Evidence |
-| FAQ | “What HSI is — and is not” |
-| Footer | Existing multi-column footer |
-
-Last reviewed against dump structure + CSS tokens; no binary assets imported.
+Last reviewed against dump structure + screenshot cadence; no binary assets imported.

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { PageHero } from "../components/PageHero";
 import { DualConsumerDiagram, GateCDiagram } from "../components/Diagrams";
+import { AkshCoworkerMock, AkshHitlMock } from "../components/Mocks";
 
 export function ForAksh() {
   return (
@@ -16,6 +17,43 @@ export function ForAksh() {
         }
         lede="Aksh Health is the clinician-safe half of HSI: human-in-the-loop cards only when edges clear established + approved. Mapping never opens CDS by itself."
       />
+
+      <section className="section section-ink-dots">
+        <div className="container">
+          <div className="split-headline">
+            <div>
+              <h2 className="display display-md">
+                HITL co-worker,
+                <br />
+                <span className="accent">illustrative.</span>
+              </h2>
+              <p className="lede" style={{ marginTop: "0.85rem" }}>
+                Demo metrics only. Real path still requires Gate C + established
+                before any suggestion card.
+              </p>
+            </div>
+            <AkshCoworkerMock />
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-grid-light">
+        <div className="container">
+          <div className="split-headline">
+            <div>
+              <span className="section-num">STEP 03</span>
+              <h2 className="display display-md" style={{ marginTop: "0.75rem" }}>
+                <span className="text-cobalt">Deployment</span> stub
+              </h2>
+              <p className="lede" style={{ marginTop: "0.85rem" }}>
+                Weekly ships leave map ids, gates, and read-only stubs — never
+                write-back from map presence alone.
+              </p>
+            </div>
+            <AkshHitlMock />
+          </div>
+        </div>
+      </section>
 
       <section className="section section-ink">
         <div className="container">

@@ -1,5 +1,11 @@
 import { PageHero } from "../components/PageHero";
-import { GateCDiagram, NetworkGraphDiagram } from "../components/Diagrams";
+import {
+  AgentWorkflowDiagram,
+  GateCDiagram,
+  NetworkGraphDiagram,
+  TriggersFlowDiagram,
+} from "../components/Diagrams";
+import { EvidenceGradesMock, GateCQueueMock } from "../components/Mocks";
 
 export function Evidence() {
   return (
@@ -50,6 +56,59 @@ export function Evidence() {
           </div>
           <div className="diagram-plane" style={{ marginTop: "2.5rem" }}>
             <NetworkGraphDiagram title="Graded edges stay explicit on the graph" />
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-grid-light">
+        <div className="container">
+          <div className="split-headline">
+            <div>
+              <span className="section-num">STEP 01</span>
+              <h2 className="display display-md" style={{ marginTop: "0.75rem" }}>
+                Gate C <span className="text-cobalt">queue</span>
+              </h2>
+              <p className="lede" style={{ marginTop: "0.85rem" }}>
+                Illustrative curator register — evidence-linked RELs still pending
+                human approve.
+              </p>
+              <div className="tag-row">
+                {["PMID linked", "human only", "no auto-approve", "checklists"].map((t) => (
+                  <span key={t} className="tag tag-light">
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <GateCQueueMock />
+          </div>
+          <div className="split-headline" style={{ marginTop: "3rem" }}>
+            <EvidenceGradesMock />
+            <div>
+              <span className="section-num">STEP 02</span>
+              <h2 className="display display-md" style={{ marginTop: "0.75rem" }}>
+                Evidence <span className="text-cobalt">grades</span>
+              </h2>
+              <p className="lede" style={{ marginTop: "0.85rem" }}>
+                Architecture on paper before anything is clinic-adjacent — axes
+                stay separate.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-ink">
+        <div className="container">
+          <div className="section-head">
+            <span className="section-num">FLOWS</span>
+            <h2 className="display display-md">Claim · evidence · Gate C</h2>
+          </div>
+          <div className="diagram-plane">
+            <AgentWorkflowDiagram />
+          </div>
+          <div className="diagram-plane" style={{ marginTop: "1.5rem" }}>
+            <TriggersFlowDiagram />
           </div>
         </div>
       </section>

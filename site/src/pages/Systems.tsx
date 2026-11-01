@@ -1,8 +1,41 @@
 import { Link } from "react-router-dom";
 import { PageHero } from "../components/PageHero";
-import { PipelineDiagram, SystemsLayersDiagram } from "../components/Diagrams";
+import {
+  IsometricProcess,
+  MiniSystemDiagram,
+  PipelineDiagram,
+  SystemsLayersDiagram,
+} from "../components/Diagrams";
+import { ClaimMarkerMock } from "../components/Mocks";
 
 export function Systems() {
+  const systems = [
+    {
+      n: "01",
+      title: "Outcomes, published",
+      body: "What ISI and Aksh see after Gate C — honest grades, maps, and gap reports.",
+      kind: "outcomes" as const,
+    },
+    {
+      n: "02",
+      title: "Act, inside the graph",
+      body: "Score confidence, route to discovery or HITL, write only through published exports.",
+      kind: "act" as const,
+    },
+    {
+      n: "03",
+      title: "Build and prove",
+      body: "Context, evaluation, and governance before anything is clinic-adjacent.",
+      kind: "build" as const,
+    },
+    {
+      n: "04",
+      title: "Foundations",
+      body: "Identity, permissions, and the data layer — one substrate, separate axes.",
+      kind: "foundations" as const,
+    },
+  ];
+
   return (
     <>
       <PageHero
@@ -16,6 +49,58 @@ export function Systems() {
         }
         lede="HSI is the hub: graded edges, claim→marker→observation→action stubs, and published exports. Aksh and ISI are faces of the same graph — never separate invention engines."
       />
+
+      <section className="section section-dark-band">
+        <div className="container">
+          <div className="section-head">
+            <span className="section-num" style={{ color: "rgba(255,255,255,0.65)" }}>
+              HOW IT&apos;S DEPLOYED
+            </span>
+            <h2 className="display display-md" style={{ color: "#fff" }}>
+              Four systems on one substrate.
+            </h2>
+          </div>
+          <div className="sys-grid">
+            {systems.map((s) => (
+              <article key={s.n} className="sys-card">
+                <div className="sys-card-visual">
+                  <MiniSystemDiagram kind={s.kind} />
+                  <div className="sys-card-meta">
+                    <span>{s.n}</span>
+                    <span aria-hidden>↗</span>
+                  </div>
+                </div>
+                <h3>{s.title}</h3>
+                <p>{s.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-grid-light">
+        <div className="container">
+          <div className="split-headline">
+            <div>
+              <span className="section-num">PROCESS</span>
+              <h2 className="display display-md" style={{ marginTop: "0.75rem" }}>
+                Software doesn&apos;t{" "}
+                <span className="text-cobalt">grade itself.</span>
+              </h2>
+            </div>
+            <p className="lede">
+              Schema → seed → Gate C → export. Curators stay in the loop until
+              the artifact is publishable.
+            </p>
+          </div>
+          <div className="iso-shell">
+            <IsometricProcess />
+          </div>
+          <div style={{ marginTop: "2rem", maxWidth: "28rem" }}>
+            <ClaimMarkerMock />
+          </div>
+        </div>
+      </section>
 
       <section className="section section-ink">
         <div className="container">

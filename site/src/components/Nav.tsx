@@ -46,7 +46,7 @@ export function Nav() {
           ))}
         </nav>
 
-        <Link to="/docs" className="btn btn-primary nav-cta">
+        <Link to="/docs" className="btn nav-cta">
           How to use <span className="arrow">↗</span>
         </Link>
 

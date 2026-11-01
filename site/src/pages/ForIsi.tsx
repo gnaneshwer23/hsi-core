@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { PageHero } from "../components/PageHero";
-import { DualConsumerDiagram, NetworkGraphDiagram } from "../components/Diagrams";
+import { DualConsumerDiagram, NetworkGraphDiagram, TriggersFlowDiagram } from "../components/Diagrams";
+import { IsiCoworkerMock } from "../components/Mocks";
 
 export function ForIsi() {
   return (
@@ -16,6 +17,25 @@ export function ForIsi() {
         }
         lede="Immune Super Intelligence consumes published HSI exports for Ask, Radar, and REL suggestions. Discovery never becomes diagnosis support."
       />
+
+      <section className="section section-ink-dots">
+        <div className="container">
+          <div className="split-headline">
+            <div>
+              <h2 className="display display-md">
+                Discovery surface,
+                <br />
+                <span className="accent">illustrative.</span>
+              </h2>
+              <p className="lede" style={{ marginTop: "0.85rem" }}>
+                Fake demo metrics on a co-worker-style card — not live telemetry.
+                ISI stays Ask / Radar / REL suggestions only.
+              </p>
+            </div>
+            <IsiCoworkerMock />
+          </div>
+        </div>
+      </section>
 
       <section className="section section-ink">
         <div className="container">
@@ -33,6 +53,9 @@ export function ForIsi() {
           </div>
           <div className="diagram-plane" style={{ marginTop: "2rem" }}>
             <DualConsumerDiagram title="ISI pulls discovery faces only" />
+          </div>
+          <div className="diagram-plane" style={{ marginTop: "1.5rem" }}>
+            <TriggersFlowDiagram title="Discovery triggers still end at Gate C" />
           </div>
           <ul className="checklist" style={{ marginTop: "2rem" }}>
             <li>Discovery / Ask / Radar only</li>

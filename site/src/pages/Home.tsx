@@ -1,16 +1,27 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
+  AgentWorkflowDiagram,
   DualConsumerDiagram,
-  NetworkGraphDiagram,
-  PipelineDiagram,
+  IsometricProcess,
+  MiniSystemDiagram,
+  TerrainClimb,
+  TriggersFlowDiagram,
 } from "../components/Diagrams";
+import {
+  AkshCoworkerMock,
+  AkshHitlMock,
+  ClaimMarkerMock,
+  EvidenceGradesMock,
+  GateCQueueMock,
+  IsiCoworkerMock,
+} from "../components/Mocks";
 
 const pillars = [
-  { to: "/systems", label: "Human Systems Intelligence" },
-  { to: "/evidence", label: "Evidence grades & Gate C" },
-  { to: "/for-isi", label: "ISI discovery surface" },
-  { to: "/for-aksh", label: "Aksh clinician-safe HITL" },
+  { to: "/systems", label: "Human Systems", sub: "Intelligence", icon: "◎" },
+  { to: "/evidence", label: "Evidence grades", sub: "& Gate C", icon: "▣" },
+  { to: "/for-isi", label: "ISI discovery", sub: "surface", icon: "◇" },
+  { to: "/for-aksh", label: "Aksh clinician", sub: "safe HITL", icon: "⬡" },
 ];
 
 const altitudes = [
@@ -44,36 +55,141 @@ const altitudes = [
   },
 ];
 
-const publishSteps = [
+const steps = [
   {
     n: "01",
-    title: "Schema & axes",
-    body: "Lock grades, curation lifecycle, and teaching status as independent axes.",
-    tags: ["hsiGrade", "curationReview", "teachingStatus"],
+    title: "Gate C queue",
+    accent: "queue",
+    body: "Evidence-linked RELs with verified PMIDs — still pending until a human approves.",
+    tags: ["PMID linked", "human only", "no auto-approve", "checklists", "S-P-O re-read"],
+    mock: "gatec" as const,
   },
   {
     n: "02",
-    title: "Seed honestly",
-    body: "Ship evidence-linked edges with verified PMIDs — still pending Gate C until a human approves.",
-    tags: ["T2D bridge", "no invented PMIDs", "gaps stay gaps"],
+    title: "Evidence grades",
+    accent: "grades",
+    body: "Three axes stay independent. Established never arrives from citation alone.",
+    tags: ["hsiGrade", "curationReview", "teachingStatus", "risk tier", "export only"],
+    mock: "grades" as const,
+    flip: true,
   },
   {
     n: "03",
-    title: "Gate C",
-    body: "Curator checklists in docs/. Approve is human. Established never arrives from citation alone.",
-    tags: ["human only", "ISI ≠ CDS", "checklists"],
+    title: "Aksh HITL stub",
+    accent: "HITL",
+    body: "Weekly ships leave something running — map ids, gates, suggestion stubs. No write-back.",
+    tags: ["isCdsSurfacable", "aksh: ids", "no PHI", "no write-back", "HITL required"],
+    mock: "aksh" as const,
   },
   {
     n: "04",
-    title: "Publish exports",
-    body: "ISI bundles, Aksh node maps, gap reports. Products consume; they do not edit the substrate.",
-    tags: ["export:isi", "export:aksh-map", "read-only"],
+    title: "Claim → marker",
+    accent: "marker",
+    body: "Claim to LOINC marker to observation stub — grounded language without inventing clinic truth.",
+    tags: ["LOINC", "obs stub", "gap report", "export:isi", "export:aksh-map"],
+    mock: "claim" as const,
+    flip: true,
   },
 ];
+
+const systems = [
+  {
+    n: "01",
+    title: "Outcomes, published",
+    body: "What ISI and Aksh see after Gate C — honest grades, maps, and gap reports.",
+    kind: "outcomes" as const,
+  },
+  {
+    n: "02",
+    title: "Act, inside the graph",
+    body: "Score confidence, route to discovery or HITL, write only through published exports.",
+    kind: "act" as const,
+  },
+  {
+    n: "03",
+    title: "Build and prove",
+    body: "Context, evaluation, and governance before anything is clinic-adjacent.",
+    kind: "build" as const,
+  },
+  {
+    n: "04",
+    title: "Foundations",
+    body: "Identity, permissions, and the data layer — one substrate, separate axes.",
+    kind: "foundations" as const,
+  },
+];
+
+const stackLayers = [
+  {
+    id: "05",
+    tone: "light" as const,
+    eyebrow: "05 OUTCOMES · WHAT SURFACES SEE",
+    title: "Honest grades on every face",
+    body: "Pipeline exports, hours of curator clarity, decisions with evidence, and a team that runs Gate C.",
+    pills: [
+      { t: "ISI Ask / Radar", s: "discovery only" },
+      { t: "Aksh HITL cards", s: "established + approved" },
+      { t: "Gap reports", s: "named unknowns" },
+      { t: "Curator docs", s: "in hsi-core" },
+    ],
+  },
+  {
+    id: "04",
+    tone: "dark" as const,
+    eyebrow: "04 APPLIED · ACT",
+    title: "Agents and workflows, inside the substrate",
+    body: "Plan → typed tools → score confidence → route to a human below threshold → write back only via exports.",
+    flow: ["Plan", "Typed tools", "Score", "Human below θ", "Export"],
+  },
+  {
+    id: "03",
+    tone: "light" as const,
+    eyebrow: "03 BUILD AND PROVE",
+    badge: "FORWARD-CURATED",
+    title: "Context, evaluation and governance",
+    body: "Retrieval with citations, test sets of real RELs, risk tiers and release gates, audit log.",
+    tags: [
+      "Retrieval with PMIDs",
+      "Gate C checklists",
+      "Risk tiers",
+      "Cost per task",
+      "Audit log",
+      "Model-change playbook",
+    ],
+  },
+  {
+    id: "02",
+    tone: "light" as const,
+    eyebrow: "02 FOUNDATIONS",
+    badge: "FORWARD-CURATED",
+    title: "Identity, permissions and the data layer",
+    body: "Consumers inherit published access. One definition per grade. Lineage. Error queues stay explicit.",
+    tags: [
+      "Consumers pull",
+      "One ID scheme",
+      "One grade definition",
+      "Lineage",
+      "Error queues",
+    ],
+  },
+];
+
+function StepMock({ kind }: { kind: "gatec" | "grades" | "aksh" | "claim" }) {
+  if (kind === "gatec") return <GateCQueueMock />;
+  if (kind === "grades") return <EvidenceGradesMock />;
+  if (kind === "aksh") return <AkshHitlMock />;
+  return <ClaimMarkerMock />;
+}
 
 export function Home() {
   const [active, setActive] = useState(altitudes[1].id);
   const panel = altitudes.find((a) => a.id === active) ?? altitudes[0];
+  const [flowIdx, setFlowIdx] = useState(0);
+  const flows = [
+    { title: "Gate C release path", node: <AgentWorkflowDiagram /> },
+    { title: "Triggers → grades", node: <TriggersFlowDiagram /> },
+    { title: "Two consumers", node: <DualConsumerDiagram /> },
+  ];
 
   return (
     <>
@@ -82,22 +198,21 @@ export function Home() {
         <div className="hero-grid" aria-hidden />
         <div className="hero-content container">
           <span className="eyebrow">Shared substrate · Aksh + ISI</span>
-          <div className="hero-brand" aria-hidden>
-            HSI
-          </div>
           <h1 className="display display-xl">
-            Human Systems
+            Evidence-graded edges,
             <br />
-            <span className="line-soft">Intelligence.</span>
+            engineered for clinic and discovery.
           </h1>
-          <p className="lede" style={{ textAlign: "center" }}>
-            Evidence-graded edges for clinic-safe HITL and honest discovery.
-            Graph before agents. No PHI. No invented PMIDs.
-          </p>
-          <div className="hero-pills">
+          <div className="hero-deep">
             {pillars.map((p) => (
-              <Link key={p.to} to={p.to} className="hero-pill">
-                {p.label}
+              <Link key={p.to} to={p.to} className="hero-deep-card">
+                <span className="hero-deep-icon" aria-hidden>
+                  {p.icon}
+                </span>
+                <span>
+                  <strong>{p.label}</strong>
+                  <em>{p.sub}</em>
+                </span>
               </Link>
             ))}
           </div>
@@ -105,95 +220,21 @@ export function Home() {
             <Link to="/docs" className="btn btn-primary">
               Use hsi-core <span className="arrow">↗</span>
             </Link>
-            <Link to="/alignment" className="btn btn-ghost">
-              Repo alignment
-            </Link>
-          </div>
-        </div>
-        <div className="hero-corners">
-          <span>Evidence · Gate C · Exports</span>
-          <span>P1 active</span>
-        </div>
-      </section>
-
-      <section className="section section-ink section-tight">
-        <div className="container">
-          <div className="marquee-label">Non-negotiables running through every export</div>
-          <div className="chip-marquee" aria-label="Principles">
-            {[
-              "Graph before agents",
-              "Gate C is human",
-              "ISI ≠ CDS",
-              "No PHI in seeds",
-              "Edit only hsi-core",
-              "No invented grades",
-              "Consumers pull",
-              "Axes stay separate",
-            ].map((t) => (
-              <span key={t} className="chip">
-                {t}
-              </span>
-            ))}
           </div>
         </div>
       </section>
 
-      <section className="section section-bone">
+      <section className="section section-climb">
         <div className="container">
-          <div className="split-headline">
+          <div className="climb-head">
+            <span className="eyebrow eyebrow-on-blue">THE CLIMB</span>
             <h2 className="display display-lg">
-              Grades without
+              We know the terrain
               <br />
-              collapsing axes.
+              at every altitude.
             </h2>
-            <p className="lede">
-              HSI keeps curation lifecycle, evidence grade, and teaching status
-              as separate axes. Established never arrives from a PMID alone —
-              Gate C is human.
-            </p>
           </div>
-          <div className="grade-row" style={{ marginTop: "2.5rem" }}>
-            <div className="grade-cell grade-established">
-              <div className="label" style={{ color: "var(--cobalt)" }}>
-                established
-              </div>
-              <h3>Surfacable path</h3>
-              <p>
-                Requires curationReview=approved. Only then can Aksh consider HITL CDS cards.
-              </p>
-            </div>
-            <div className="grade-cell grade-uncertain">
-              <div className="label" style={{ color: "var(--amber)" }}>
-                uncertain
-              </div>
-              <h3>Honest gap</h3>
-              <p>
-                Visible to discovery. Never auto-promoted. Never silently treated as clinic truth.
-              </p>
-            </div>
-            <div className="grade-cell grade-unexplored">
-              <div className="label" style={{ color: "var(--slate)" }}>
-                unexplored
-              </div>
-              <h3>Frontier label</h3>
-              <p>
-                Named unknown. Useful for ISI radar — forbidden as diagnosis support.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="section section-ink">
-        <div className="container">
-          <div className="section-head">
-            <span className="section-num">THE CLIMB</span>
-            <h2 className="display display-lg">We know the phase at every altitude.</h2>
-            <p className="lede">
-              Same method from schema to optional bio plugins: publish from
-              hsi-core, let products consume, keep humans on Gate C.
-            </p>
-          </div>
+          <TerrainClimb active={active} onSelect={setActive} />
           <div className="stage-tabs" role="tablist" aria-label="Roadmap phases">
             {altitudes.map((a) => (
               <button
@@ -223,38 +264,118 @@ export function Home() {
         </div>
       </section>
 
-      <section className="section section-elevated">
+      <section className="section section-grid-light">
         <div className="container">
-          <div className="section-head">
-            <span className="section-num">FROM SEED TO PUBLISH</span>
-            <h2 className="display display-lg">
-              Four steps.
-              <br />
-              Something running at each one.
-            </h2>
+          <div className="split-headline">
+            <div>
+              <span className="section-num">WHY GRADES STAY SEPARATE</span>
+              <h2 className="display display-lg" style={{ marginTop: "0.75rem" }}>
+                Axes don&apos;t{" "}
+                <span className="text-cobalt">collapse themselves.</span>
+              </h2>
+            </div>
             <p className="lede">
-              Schema → honest seeds → Gate C → exports. Each step leaves an
-              artifact in this repository that consumers can pull.
+              HSI keeps curation lifecycle, evidence grade, and teaching status
+              as separate axes. Established never arrives from a PMID alone —
+              Gate C is human.
             </p>
           </div>
-          <div className="process-grid">
-            {publishSteps.map((s) => (
-              <article key={s.n} className="process-card">
-                <span className="process-n">{s.n}</span>
-                <h3>{s.title}</h3>
+          <div className="iso-shell">
+            <IsometricProcess />
+          </div>
+          <div className="grade-row" style={{ marginTop: "2rem" }}>
+            <div className="grade-cell grade-established">
+              <div className="label" style={{ color: "var(--cobalt)" }}>
+                established
+              </div>
+              <h3>Surfacable path</h3>
+              <p>Requires curationReview=approved. Only then can Aksh consider HITL CDS cards.</p>
+            </div>
+            <div className="grade-cell grade-uncertain">
+              <div className="label" style={{ color: "var(--amber)" }}>
+                uncertain
+              </div>
+              <h3>Honest gap</h3>
+              <p>Visible to discovery. Never auto-promoted. Never silently treated as clinic truth.</p>
+            </div>
+            <div className="grade-cell grade-unexplored">
+              <div className="label" style={{ color: "var(--slate)" }}>
+                unexplored
+              </div>
+              <h3>Frontier label</h3>
+              <p>Named unknown. Useful for ISI radar — forbidden as diagnosis support.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-grid-light section-tight-top">
+        <div className="container">
+          <div className="split-headline">
+            <h2 className="display display-lg">
+              From audit to a system{" "}
+              <span className="text-cobalt">your team runs.</span>
+            </h2>
+            <p className="lede">Four steps. Each one leaves something running in hsi-core.</p>
+          </div>
+        </div>
+        {steps.map((s) => (
+          <div key={s.n} className={`step-block${s.flip ? " flip" : ""}`}>
+            <div className="container step-inner">
+              <div className="step-copy">
+                <span className="step-n">STEP {s.n}</span>
+                <h3 className="display display-md">
+                  {s.title.split(s.accent)[0]}
+                  <span className="text-cobalt">{s.accent}</span>
+                  {s.title.split(s.accent)[1] ?? ""}
+                </h3>
                 <p>{s.body}</p>
                 <div className="tag-row">
                   {s.tags.map((t) => (
-                    <span key={t} className="tag">
+                    <span key={t} className="tag tag-light">
                       {t}
                     </span>
                   ))}
                 </div>
+              </div>
+              <div className="step-visual">
+                <StepMock kind={s.mock} />
+              </div>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <section className="section section-dark-band">
+        <div className="container">
+          <div className="split-headline">
+            <div>
+              <span className="section-num" style={{ color: "rgba(255,255,255,0.65)" }}>
+                HOW IT&apos;S DEPLOYED
+              </span>
+              <h2 className="display display-lg" style={{ marginTop: "0.75rem", color: "#fff" }}>
+                Four systems. Engineered, not invented.
+              </h2>
+            </div>
+            <p className="lede" style={{ color: "rgba(255,255,255,0.72)" }}>
+              Outcomes, act, build, foundations — mapped to HSI layers. Mini
+              diagrams are original SVGs for this substrate.
+            </p>
+          </div>
+          <div className="sys-grid">
+            {systems.map((s) => (
+              <article key={s.n} className="sys-card">
+                <div className="sys-card-visual">
+                  <MiniSystemDiagram kind={s.kind} />
+                  <div className="sys-card-meta">
+                    <span>{s.n}</span>
+                    <span aria-hidden>↗</span>
+                  </div>
+                </div>
+                <h3>{s.title}</h3>
+                <p>{s.body}</p>
               </article>
             ))}
-          </div>
-          <div className="diagram-plane" style={{ marginTop: "2.75rem" }}>
-            <PipelineDiagram />
           </div>
         </div>
       </section>
@@ -263,55 +384,136 @@ export function Home() {
         <div className="container">
           <div className="split-headline">
             <div>
-              <span className="section-num">SYSTEMS MAP</span>
+              <span className="section-num">ENGINEERING WORKFLOWS</span>
               <h2 className="display display-lg" style={{ marginTop: "0.75rem" }}>
-                The graph is the product.
+                The engines we publish,{" "}
+                <span className="accent">end to end.</span>
               </h2>
             </div>
             <p className="lede">
-              Original schematic of claims, edges, citations, and markers —
-              drawn for HSI, not lifted from any third-party marketing dump.
+              Real workflow maps for claim/evidence/Gate C — original HSI
+              schematics, not third-party dumps.
             </p>
           </div>
-          <div className="diagram-plane" style={{ marginTop: "2rem" }}>
-            <NetworkGraphDiagram title="Evidence network · schematic" />
+          <div className="flow-carousel">
+            <button
+              type="button"
+              className="flow-nav"
+              aria-label="Previous workflow"
+              onClick={() => setFlowIdx((i) => (i + flows.length - 1) % flows.length)}
+            >
+              ‹
+            </button>
+            <div className="flow-stage">
+              <div className="flow-label">{flows[flowIdx].title}</div>
+              {flows[flowIdx].node}
+            </div>
+            <button
+              type="button"
+              className="flow-nav"
+              aria-label="Next workflow"
+              onClick={() => setFlowIdx((i) => (i + 1) % flows.length)}
+            >
+              ›
+            </button>
+          </div>
+          <div className="flow-dots" role="tablist" aria-label="Workflow maps">
+            {flows.map((f, i) => (
+              <button
+                key={f.title}
+                type="button"
+                className={i === flowIdx ? "active" : undefined}
+                aria-label={f.title}
+                onClick={() => setFlowIdx(i)}
+              />
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="section section-teal">
+      <section className="section section-grid-light">
         <div className="container">
-          <div className="section-head center">
-            <span className="section-num">TWO CONSUMERS</span>
+          <h2 className="display display-lg" style={{ marginBottom: "2rem" }}>
+            The HSI stack
+          </h2>
+          <div className="stack-rail">
+            {stackLayers.map((layer, idx) => (
+              <div key={layer.id}>
+                {idx > 0 && (
+                  <div className="stack-connector">
+                    <span>
+                      {idx === 1
+                        ? "MEASURED OUTCOMES"
+                        : idx === 2
+                          ? "EVALUATED, GATED RELEASES"
+                          : "PERMISSIONED CONTEXT"}
+                    </span>
+                  </div>
+                )}
+                <article className={`stack-card stack-${layer.tone}`}>
+                  <div className="stack-card-top">
+                    <span className="stack-eyebrow">{layer.eyebrow}</span>
+                    {"badge" in layer && layer.badge ? (
+                      <span className="stack-badge">{layer.badge}</span>
+                    ) : null}
+                  </div>
+                  <div className="stack-card-body">
+                    <div>
+                      <h3 className="display display-md">{layer.title}</h3>
+                      <p>{layer.body}</p>
+                    </div>
+                    {"pills" in layer && layer.pills ? (
+                      <div className="stack-outcome-grid">
+                        {layer.pills.map((p) => (
+                          <div key={p.t}>
+                            <strong>{p.t}</strong>
+                            <span>{p.s}</span>
+                          </div>
+                        ))}
+                      </div>
+                    ) : null}
+                    {"flow" in layer && layer.flow ? (
+                      <div className="stack-flow">
+                        {layer.flow.map((f, i) => (
+                          <span key={f}>
+                            {f}
+                            {i < layer.flow!.length - 1 ? <i>→</i> : null}
+                          </span>
+                        ))}
+                      </div>
+                    ) : null}
+                    {"tags" in layer && layer.tags ? (
+                      <div className="tag-row">
+                        {layer.tags.map((t) => (
+                          <span key={t} className="tag tag-light">
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                </article>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-ink-dots">
+        <div className="container">
+          <div className="split-headline">
             <h2 className="display display-lg">
-              One graph.
-              <br />
-              Two safe faces.
+              Discovery and HITL,{" "}
+              <span className="accent">side by side.</span>
             </h2>
-            <p className="lede" style={{ textAlign: "center" }}>
-              ISI explores with honest grades. Aksh surfaces HITL suggestions only
-              when edges clear Gate C and established. Neither invents evidence.
+            <p className="lede">
+              Illustrative co-worker cards — fake demo metrics labeled clearly.
+              Not live product telemetry.
             </p>
           </div>
-          <div className="diagram-plane" style={{ marginBottom: "2rem" }}>
-            <DualConsumerDiagram />
-          </div>
-          <div className="link-strip">
-            <Link to="/for-isi">
-              <span className="idx">01</span>
-              <span className="title">For ISI — discovery, Ask, Radar</span>
-              <span className="arrow">↗</span>
-            </Link>
-            <Link to="/for-aksh">
-              <span className="idx">02</span>
-              <span className="title">For Aksh — clinician-safe HITL</span>
-              <span className="arrow">↗</span>
-            </Link>
-            <Link to="/alignment">
-              <span className="idx">03</span>
-              <span className="title">Hub and spokes — edit only hsi-core</span>
-              <span className="arrow">↗</span>
-            </Link>
+          <div className="coworker-grid">
+            <IsiCoworkerMock />
+            <AkshCoworkerMock />
           </div>
         </div>
       </section>
