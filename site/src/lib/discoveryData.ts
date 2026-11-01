@@ -259,6 +259,7 @@ export type TranslationHandoff = {
   clinicalUse: string;
   intendedConsumer: string;
   akenoProductIntegration: string;
+  akenoConsumerPath?: string;
   framing: string;
   generatedAt: string;
   disease: string;

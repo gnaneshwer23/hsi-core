@@ -2989,6 +2989,52 @@ p {
   font-weight: 500;
 }
 
+/* Akeno HITL consumer */
+.akeno-card .akeno-hitl {
+  margin-top: 1rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--line-ink);
+}
+
+.akeno-hitl-label {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--slate);
+  margin-bottom: 0.4rem;
+}
+
+.akeno-hitl-input {
+  width: 100%;
+  resize: vertical;
+  border: 1px solid var(--line-ink);
+  border-radius: var(--radius);
+  background: var(--cream-2);
+  color: var(--ink);
+  font: inherit;
+  padding: 0.65rem 0.75rem;
+}
+
+.akeno-hitl-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.65rem;
+}
+
+.akeno-hitl-err {
+  margin: 0.45rem 0 0;
+  color: #b33;
+  font-size: 0.9rem;
+}
+
+.akeno-hitl-recorded {
+  margin: 0.65rem 0 0;
+  font-size: 0.9rem;
+  color: var(--slate);
+}
+
 @media (max-width: 700px) {
   .dc-hero {
     padding-top: calc(var(--nav-h) + 2.25rem);

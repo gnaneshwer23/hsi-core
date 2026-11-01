@@ -58,7 +58,7 @@ export type GateCTranslationCandidateRow = {
   clinicalUse: "not_for_clinical_use";
   hitlRequired: true;
   autoApprove: false;
-  intendedConsumer: "akeno_future";
+  intendedConsumer: "akeno_hsi_core";
   pmid: string | null;
   spoNote: string;
   assertion: string;
@@ -106,7 +106,7 @@ function toTranslationChecklistRow(
     clinicalUse: "not_for_clinical_use",
     hitlRequired: true,
     autoApprove: false,
-    intendedConsumer: "akeno_future",
+    intendedConsumer: "akeno_hsi_core",
     pmid: c.pmid,
     spoNote: c.spoNote,
     assertion: c.assertion,

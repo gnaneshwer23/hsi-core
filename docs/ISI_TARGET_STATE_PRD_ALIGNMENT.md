@@ -17,7 +17,7 @@ Immune Super Intelligence (ISI) is an immune-science and translational intellige
 
 | Module | Target-state role | Stage posture |
 |--------|-------------------|---------------|
-| **ISI Discovery Centre** | Question → evidence graph → mechanisms → hypotheses → research briefs | **Phase 6–8 done (HSI):** Target R1–R2 research surface + Stage 3 translation scaffolding at hsi-core `site/` `/discovery` (ASK→MAP→REVIEW→VALIDATE→TRANSLATE; `clinicalActive=false`). Concept HTML remains reference-only ([`ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md`](./ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md)). Akeno clinical **product** integration remains external/deferred. |
+| **ISI Discovery Centre** | Question → evidence graph → mechanisms → hypotheses → research briefs | **Phase 6–8 done (HSI):** Target R1–R2 research surface + Stage 3 translation scaffolding at hsi-core `site/` `/discovery` + `/akeno` HITL (ASK→MAP→REVIEW→VALIDATE→TRANSLATE; `clinicalActive=false`). Concept HTML remains reference-only ([`ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md`](./ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md)). Partner CDS remains gated ([`AKENO_IN_HSI.md`](./AKENO_IN_HSI.md)). |
 | **HSI Core Evidence Backbone** | Canonical entities, claims, grades, provenance, review, versioned exports | Stage 1: **active edit target** — substrate + `bun run outputs` |
 | **Akeno Clinical Intelligence** | Cohort feasibility, HCP-reviewed screening, trial-site workflows | Stage 3 only — deferred until partner data + HCP eval + governance |
 | **Lab / molecular integrations** | Omics, assay, chemistry, structure, simulation adapters | Stage 2+ (selected adapters after use-case justification); not Stage 1 breadth |

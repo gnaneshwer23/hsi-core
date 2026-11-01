@@ -9,7 +9,7 @@
 **Phase 5 done:** Stage 1 acceptance checklist + partner walkthrough on scope-locked RA/TNF (`hsi-pilot-acceptance.*`, `hsi-pilot-walkthrough.md`).  
 **Phase 6 done:** Target R1 Discovery Centre product surface (`/discovery`) — research intelligence only; not clinical.
 **Phase 7 done:** R2 validation (`hsi-r2-validation.*` + VALIDATE tab) — hypothesis / gap depth; research only.
-**Phase 8 done (HSI substrate):** R3–R5 / Akeno translation scaffolding (`hsi-translation-handoff.*` + TRANSLATE tab) — `deferred_until_hitl` / `not_for_clinical_use`; Akeno clinical **product** remains external/deferred.
+**Phase 8 done (HSI substrate):** R3–R5 / Akeno translation scaffolding (`hsi-translation-handoff.*` + TRANSLATE tab + `/akeno` HITL) — `deferred_until_hitl` / `not_for_clinical_use`; not live CDS; no Akeno Neon.
 **Neon:** HSI `red-wave` schema stub — [`HSI_NEON_MIGRATIONS.md`](./HSI_NEON_MIGRATIONS.md).  
 **PRD map:** [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md) (pilot PRD → build now vs defer). **Target state:** [`ISI_TARGET_STATE_PRD_ALIGNMENT.md`](./ISI_TARGET_STATE_PRD_ALIGNMENT.md) (full vision → Stage 1/2/3 — do not pull breadth into this pilot).
 

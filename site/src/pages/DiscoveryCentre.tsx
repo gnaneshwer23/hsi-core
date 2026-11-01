@@ -305,12 +305,12 @@ export function DiscoveryCentre() {
               Not diagnostic · not for clinical use · research intelligence only
             </p>
             <p className="dc-banner dc-banner-danger">
-              Clinical translation is NOT ACTIVE · clinicalActive=false · Akeno =
-              future consumer only
+              Clinical translation is NOT ACTIVE · clinicalActive=false · Akeno
+              HITL at /akeno is not CDS
             </p>
             <p className="dc-banner dc-banner-info">
-              Phase 8 = HSI translation substrate. Live Akeno clinical product
-              remains external / deferred.
+              Phase 8 = HSI translation substrate. Akeno HITL consumer at{" "}
+              <Link to="/akeno">/akeno</Link> — not live CDS.
             </p>
           </div>
           <span className="eyebrow">ISI · Discovery Centre · Phase 8</span>
@@ -760,8 +760,8 @@ export function DiscoveryCentre() {
                     </p>
                     <p className="dc-banner dc-banner-warn">
                       status=deferred_until_hitl · hitlRequired=true ·
-                      autoApprove=false · cdsSurfacable=0 · Akeno = future
-                      consumer only
+                      autoApprove=false · cdsSurfacable=0 · Akeno consumer =
+                      /akeno HITL (not live CDS)
                     </p>
                   </div>
 
@@ -773,8 +773,10 @@ export function DiscoveryCentre() {
                     <p className="lede">
                       Phase 8 HSI translation substrate from{" "}
                       <code>hsi-translation-handoff.json</code>. Research edges →
-                      clinic-facing pointers. teachingStatus ≠ hsiGrade ≠ CDS.
-                      Live Akeno product integration remains outside hsi-core.
+                      clinic-facing pointers. teachingStatus ≠ hsiGrade ≠ CDS.{" "}
+                      <Link to="/akeno" className="btn" style={{ marginLeft: "0.35rem" }}>
+                        Open Akeno HITL consumer →
+                      </Link>
                     </p>
                   </div>
 
@@ -812,9 +814,14 @@ export function DiscoveryCentre() {
                   </div>
 
                   <div className="dc-card" style={{ marginTop: "1.25rem" }}>
-                    <span className="panel-label">
-                      Outside hsi-core (Akeno product)
-                    </span>
+                    <div className="dc-panel-head">
+                      <span className="panel-label">
+                        Outside hsi-core (still gated)
+                      </span>
+                      <Link to="/akeno" className="dc-pill">
+                        Akeno consumer →
+                      </Link>
+                    </div>
                     <ul className="checklist" style={{ marginTop: "0.85rem" }}>
                       {data.translation.whatRemainsOutsideHsiCore.map((w) => (
                         <li key={w}>{w}</li>
@@ -845,10 +852,10 @@ export function DiscoveryCentre() {
               Research + translation scaffolding. Clinical product later.
             </h2>
             <p className="lede">
-              NOW = Discovery + R2 validation + HSI translation substrate
-              (clinicalActive=false). NEXT = Akeno clinical product outside
-              hsi-core — partner data, HCP eval, governance. Never implied by
-              map presence alone.
+              NOW = Discovery + R2 validation + translation substrate + in-repo
+              Akeno HITL consumer (clinicalActive=false). GATED = partner
+              cohorts, HCP eval, regulatory CDS. Never implied by map presence
+              alone.
             </p>
           </div>
           <div className="dc-horizon">
@@ -863,9 +870,11 @@ export function DiscoveryCentre() {
               <p>Phase 8 · deferred_until_hitl · not clinical</p>
             </div>
             <div>
-              <span className="dc-pill">GATED</span>
-              <strong>Akeno product</strong>
-              <p>External · Stage 3 gates · never from packs alone</p>
+              <span className="dc-pill">NOW</span>
+              <strong>Akeno HITL</strong>
+              <p>
+                <Link to="/akeno">/akeno</Link> · not CDS · no Akeno Neon
+              </p>
             </div>
           </div>
         </div>

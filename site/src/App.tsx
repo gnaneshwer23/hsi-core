@@ -9,6 +9,7 @@ import { Roadmap } from "./pages/Roadmap";
 import { Alignment } from "./pages/Alignment";
 import { Docs } from "./pages/Docs";
 import { DiscoveryCentre } from "./pages/DiscoveryCentre";
+import { AkenoConsumer } from "./pages/AkenoConsumer";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="systems" element={<Systems />} />
         <Route path="evidence" element={<Evidence />} />
         <Route path="discovery" element={<DiscoveryCentre />} />
+        <Route path="akeno" element={<AkenoConsumer />} />
         <Route path="for-isi" element={<ForIsi />} />
         <Route path="for-aksh" element={<ForAksh />} />
         <Route path="roadmap" element={<Roadmap />} />

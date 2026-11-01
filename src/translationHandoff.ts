@@ -1,15 +1,15 @@
 /**
  * Phase 8 — R3–R5 / Akeno translation substrate (Stage 3 scaffolding).
  *
- * Maps research edges → clinic-facing handoff candidates for a *future* Akeno
- * consumer. Honest scaffolding only:
+ * Maps research edges → clinic-facing handoff candidates for the in-repo
+ * Akeno HITL consumer (`/akeno`, `src/akenoConsumer.ts`). Honest scaffolding:
  * - HITL required on every candidate; autoApprove=false
  * - teachingStatus, hsiGrade, and CDS stay orthogonal (never collapsed)
  * - claim → marker → LOINC when present
  * - status=deferred_until_hitl; clinicalUse=not_for_clinical_use
  *
  * Does NOT ship live CDS, diagnosis, treatment recommendations, PHI,
- * patient-identifying workflows, or Akeno product integration.
+ * patient-identifying workflows, or Akeno Neon writes.
  */
 import { listAkshHitlReadOnlyCards, type AkshHitlCardViewModel } from "./akshHitl";
 import { hsiEvidenceHandoff } from "./evidenceHandoff";
@@ -57,7 +57,7 @@ export type TranslationHandoffCandidate = {
   autoApprove: false;
   status: TranslationHandoffStatus;
   clinicalUse: TranslationClinicalUse;
-  intendedConsumer: "akeno_future";
+  intendedConsumer: "akeno_hsi_core";
   displayMode: "map_pointer_only";
   requiredClinicianAction: {
     label: string;
@@ -81,8 +81,10 @@ export type TranslationHandoffPack = {
   autoApplyToEhr: false;
   clinicalUse: TranslationClinicalUse;
   clinicalActive: false;
-  intendedConsumer: "akeno_future";
-  akenoProductIntegration: "external_deferred";
+  intendedConsumer: "akeno_hsi_core";
+  /** In-repo HITL consumer at /akeno — still not live CDS. */
+  akenoProductIntegration: "in_repo_hitl_consumer";
+  akenoConsumerPath: "/akeno";
   generatedAt: string;
   disease: string;
   researchQuestion: string;
@@ -144,7 +146,7 @@ function toCandidate(card: AkshHitlCardViewModel): TranslationHandoffCandidate {
     autoApprove: false,
     status: "deferred_until_hitl",
     clinicalUse: "not_for_clinical_use",
-    intendedConsumer: "akeno_future",
+    intendedConsumer: "akeno_hsi_core",
     displayMode: "map_pointer_only",
     requiredClinicianAction: {
       label: card.requiredClinicianAction.label,
@@ -185,8 +187,9 @@ export function buildTranslationHandoffPack(opts?: {
     autoApplyToEhr: false,
     clinicalUse: "not_for_clinical_use",
     clinicalActive: false,
-    intendedConsumer: "akeno_future",
-    akenoProductIntegration: "external_deferred",
+    intendedConsumer: "akeno_hsi_core",
+    akenoProductIntegration: "in_repo_hitl_consumer",
+    akenoConsumerPath: "/akeno",
     generatedAt,
     disease: lock.disease?.label ?? "Rheumatoid arthritis",
     researchQuestion:
@@ -216,25 +219,25 @@ export function buildTranslationHandoffPack(opts?: {
       r2ValidationJson: "hsi-r2-validation.json",
     },
     boundary: [
-      "Phase 8 = HSI-side Stage 3 translation substrate only — not live clinical CDS",
+      "Phase 8 = HSI-side Stage 3 translation substrate — not live clinical CDS",
       "clinicalUse=not_for_clinical_use · clinicalActive=false on every candidate",
       "status=deferred_until_hitl · hitlRequired=true · autoApprove=false",
       "teachingStatus ≠ hsiGrade ≠ CDS — axes stay orthogonal; map presence never opens CDS",
       "No diagnosis, treatment recommendations, PHI, or patient-identifying workflows",
-      "Akeno product integration remains external / deferred (outside hsi-core)",
-      "Do not write ISI / Akeno / DeliverX Neon from this workspace",
+      "Akeno in-repo consumer = /akeno HITL review over this handoff (not Neon-backed product)",
+      "Do not write ISI / Akeno / DeliverX Neon from this workspace — HSI red-wave only",
     ],
     nextActions: [
       "Review translation candidates on site `/discovery` TRANSLATE tab (human-only).",
-      "Extend Gate C / HITL checklist rows for translation candidates before any Akeno consume.",
+      "Open the in-repo Akeno consumer at `/akeno` for HITL acknowledge / escalate / defer.",
       "Keep cdsSurfacable=false until curationReview=approved AND hsiGrade=established AND Stage 3 gates.",
-      "Akeno clinical product wire-up stays outside hsi-core — partner data + HCP eval + governance.",
+      "Partner cohorts + HCP eval + regulatory remain outside — never from packs alone.",
     ],
     whatRemainsOutsideHsiCore: [
-      "Akeno clinical intelligence product UI / site workflows (feasibility, protocol screening)",
       "Partner-governed cohort datasets + independent evaluation (R3)",
       "Intended-use determination, site access, HCP evaluation, regulatory/privacy (R4)",
       "Prospective CDS validation + regulatory determination (R5) — not committed",
+      "Full akenohealth Neon dashboard / ingestion services (PHI-class) — stay in source repos",
       "EHR write-back, patient outreach, eligibility automation — forever gated / out of scope here",
       "Live writes to Akeno / ISI autumn-snow / DeliverX Neon — never from hsi-core",
     ],
@@ -255,7 +258,7 @@ export function serializeTranslationHandoffMarkdown(
     "",
     `Schema: \`${pack.schemaVersion}\` · generated ${pack.generatedAt}`,
     "",
-    "> **Not for clinical use.** clinicalActive=false. No diagnosis / treatment / PHI. Akeno = future consumer only. hitlRequired=true · autoApprove=false · cdsSurfacable=0.",
+    "> **Not for clinical use.** clinicalActive=false. No diagnosis / treatment / PHI. Akeno in-repo consumer = `/akeno` HITL only. hitlRequired=true · autoApprove=false · cdsSurfacable=0.",
     "",
     "## Scope",
     "",

@@ -184,6 +184,18 @@ export {
 } from "./translationHandoff";
 
 export {
+  AKENO_CONSUMER_SCHEMA,
+  buildAkenoConsumerBundle,
+  evaluateAkenoConsumerSafety,
+  recordAkenoHitlReview,
+  serializeAkenoConsumer,
+  type AkenoConsumerBundle,
+  type AkenoHitlAction,
+  type AkenoHitlReviewDecision,
+  type AkenoSafetyEvaluation,
+} from "./akenoConsumer";
+
+export {
   HSI_DISCOVERY_LOOP_STEPS,
   HSI_ILLUSTRATIVE_DISEASE_CONTEXTS,
   buildDiscoveryCentreMeta,

@@ -219,7 +219,7 @@ export const HSI_SCOPE_LOCKED_PARTNER_LOCK: HsiPartnerLock = {
     "Phase 5 done = pilot acceptance pack (checklist + walkthrough; partnerSigned still pending).",
     "Phase 6 done = Discovery Centre product surface at site `/discovery` (research intelligence; notCds).",
     "Phase 7 done = R2 validation depth (hsi-r2-validation.*; hypothesis cards + ranked gaps; research only).",
-    "Phase 8 done = HSI translation substrate (hsi-translation-handoff.*; TRANSLATE tab; deferred_until_hitl; not_for_clinical_use). Akeno clinical product integration remains external/deferred.",
+    "Phase 8 done = HSI translation substrate (hsi-translation-handoff.*; TRANSLATE tab + /akeno HITL consumer; deferred_until_hitl; not_for_clinical_use). Not live CDS; no Akeno Neon.",
     "scopeLocked does NOT mean a commercial partner signed or locked a MoU.",
     "partnerSigned / lockedPilot stay false until flipRequirements are met with a named partner.",
     "Outreach category partners are not MoUs; do not invent personal contacts.",

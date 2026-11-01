@@ -15,8 +15,9 @@
   "autoApplyToEhr": false,
   "clinicalUse": "not_for_clinical_use",
   "clinicalActive": false,
-  "intendedConsumer": "akeno_future",
-  "akenoProductIntegration": "external_deferred",
+  "intendedConsumer": "akeno_hsi_core",
+  "akenoProductIntegration": "in_repo_hitl_consumer",
+  "akenoConsumerPath": "/akeno",
   "generatedAt": "2026-11-01T12:00:00.000Z",
   "disease": "Rheumatoid arthritis",
   "researchQuestion": "Why do some patients with rheumatoid arthritis respond differently to anti-TNF therapy, and which biomarkers or immune mechanisms are best supported for defining those subgroups?",
@@ -48,7 +49,7 @@
       "autoApprove": false,
       "status": "deferred_until_hitl",
       "clinicalUse": "not_for_clinical_use",
-      "intendedConsumer": "akeno_future",
+      "intendedConsumer": "akeno_hsi_core",
       "displayMode": "map_pointer_only",
       "requiredClinicianAction": {
         "label": "Review glycemic regimen (HITL)",
@@ -81,7 +82,7 @@
       "autoApprove": false,
       "status": "deferred_until_hitl",
       "clinicalUse": "not_for_clinical_use",
-      "intendedConsumer": "akeno_future",
+      "intendedConsumer": "akeno_hsi_core",
       "displayMode": "map_pointer_only",
       "requiredClinicianAction": {
         "label": "Review mapped clinic concept (HITL — map pointer only)",
@@ -114,7 +115,7 @@
       "autoApprove": false,
       "status": "deferred_until_hitl",
       "clinicalUse": "not_for_clinical_use",
-      "intendedConsumer": "akeno_future",
+      "intendedConsumer": "akeno_hsi_core",
       "displayMode": "map_pointer_only",
       "requiredClinicianAction": {
         "label": "Review mapped clinic concept (HITL — map pointer only)",
@@ -147,7 +148,7 @@
       "autoApprove": false,
       "status": "deferred_until_hitl",
       "clinicalUse": "not_for_clinical_use",
-      "intendedConsumer": "akeno_future",
+      "intendedConsumer": "akeno_hsi_core",
       "displayMode": "map_pointer_only",
       "requiredClinicianAction": {
         "label": "Review mapped clinic concept (HITL — map pointer only)",
@@ -180,7 +181,7 @@
       "autoApprove": false,
       "status": "deferred_until_hitl",
       "clinicalUse": "not_for_clinical_use",
-      "intendedConsumer": "akeno_future",
+      "intendedConsumer": "akeno_hsi_core",
       "displayMode": "map_pointer_only",
       "requiredClinicianAction": {
         "label": "Review mapped clinic concept (HITL — map pointer only)",
@@ -213,7 +214,7 @@
       "autoApprove": false,
       "status": "deferred_until_hitl",
       "clinicalUse": "not_for_clinical_use",
-      "intendedConsumer": "akeno_future",
+      "intendedConsumer": "akeno_hsi_core",
       "displayMode": "map_pointer_only",
       "requiredClinicianAction": {
         "label": "Review mapped clinic concept (HITL — map pointer only)",
@@ -246,7 +247,7 @@
       "autoApprove": false,
       "status": "deferred_until_hitl",
       "clinicalUse": "not_for_clinical_use",
-      "intendedConsumer": "akeno_future",
+      "intendedConsumer": "akeno_hsi_core",
       "displayMode": "map_pointer_only",
       "requiredClinicianAction": {
         "label": "Review mapped clinic concept (HITL — map pointer only)",
@@ -279,7 +280,7 @@
       "autoApprove": false,
       "status": "deferred_until_hitl",
       "clinicalUse": "not_for_clinical_use",
-      "intendedConsumer": "akeno_future",
+      "intendedConsumer": "akeno_hsi_core",
       "displayMode": "map_pointer_only",
       "requiredClinicianAction": {
         "label": "Review mapped clinic concept (HITL — map pointer only)",
@@ -312,7 +313,7 @@
       "autoApprove": false,
       "status": "deferred_until_hitl",
       "clinicalUse": "not_for_clinical_use",
-      "intendedConsumer": "akeno_future",
+      "intendedConsumer": "akeno_hsi_core",
       "displayMode": "map_pointer_only",
       "requiredClinicianAction": {
         "label": "Review mapped clinic concept (HITL — map pointer only)",
@@ -345,7 +346,7 @@
       "autoApprove": false,
       "status": "deferred_until_hitl",
       "clinicalUse": "not_for_clinical_use",
-      "intendedConsumer": "akeno_future",
+      "intendedConsumer": "akeno_hsi_core",
       "displayMode": "map_pointer_only",
       "requiredClinicianAction": {
         "label": "Review mapped clinic concept (HITL — map pointer only)",
@@ -378,7 +379,7 @@
       "autoApprove": false,
       "status": "deferred_until_hitl",
       "clinicalUse": "not_for_clinical_use",
-      "intendedConsumer": "akeno_future",
+      "intendedConsumer": "akeno_hsi_core",
       "displayMode": "map_pointer_only",
       "requiredClinicianAction": {
         "label": "Review mapped clinic concept (HITL — map pointer only)",
@@ -411,7 +412,7 @@
       "autoApprove": false,
       "status": "deferred_until_hitl",
       "clinicalUse": "not_for_clinical_use",
-      "intendedConsumer": "akeno_future",
+      "intendedConsumer": "akeno_hsi_core",
       "displayMode": "map_pointer_only",
       "requiredClinicianAction": {
         "label": "Review mapped clinic concept (HITL — map pointer only)",
@@ -444,7 +445,7 @@
       "autoApprove": false,
       "status": "deferred_until_hitl",
       "clinicalUse": "not_for_clinical_use",
-      "intendedConsumer": "akeno_future",
+      "intendedConsumer": "akeno_hsi_core",
       "displayMode": "map_pointer_only",
       "requiredClinicianAction": {
         "label": "Review mapped clinic concept (HITL — map pointer only)",
@@ -477,7 +478,7 @@
       "autoApprove": false,
       "status": "deferred_until_hitl",
       "clinicalUse": "not_for_clinical_use",
-      "intendedConsumer": "akeno_future",
+      "intendedConsumer": "akeno_hsi_core",
       "displayMode": "map_pointer_only",
       "requiredClinicianAction": {
         "label": "Flag immuno-metabolic context for review (discovery / HITL)",
@@ -510,7 +511,7 @@
       "autoApprove": false,
       "status": "deferred_until_hitl",
       "clinicalUse": "not_for_clinical_use",
-      "intendedConsumer": "akeno_future",
+      "intendedConsumer": "akeno_hsi_core",
       "displayMode": "map_pointer_only",
       "requiredClinicianAction": {
         "label": "Review mapped clinic concept (HITL — map pointer only)",
@@ -543,7 +544,7 @@
       "autoApprove": false,
       "status": "deferred_until_hitl",
       "clinicalUse": "not_for_clinical_use",
-      "intendedConsumer": "akeno_future",
+      "intendedConsumer": "akeno_hsi_core",
       "displayMode": "map_pointer_only",
       "requiredClinicianAction": {
         "label": "Review mapped clinic concept (HITL — map pointer only)",
@@ -576,7 +577,7 @@
       "autoApprove": false,
       "status": "deferred_until_hitl",
       "clinicalUse": "not_for_clinical_use",
-      "intendedConsumer": "akeno_future",
+      "intendedConsumer": "akeno_hsi_core",
       "displayMode": "map_pointer_only",
       "requiredClinicianAction": {
         "label": "Review mapped clinic concept (HITL — map pointer only)",
@@ -609,7 +610,7 @@
       "autoApprove": false,
       "status": "deferred_until_hitl",
       "clinicalUse": "not_for_clinical_use",
-      "intendedConsumer": "akeno_future",
+      "intendedConsumer": "akeno_hsi_core",
       "displayMode": "map_pointer_only",
       "requiredClinicianAction": {
         "label": "Review mapped clinic concept (HITL — map pointer only)",
@@ -642,7 +643,7 @@
       "autoApprove": false,
       "status": "deferred_until_hitl",
       "clinicalUse": "not_for_clinical_use",
-      "intendedConsumer": "akeno_future",
+      "intendedConsumer": "akeno_hsi_core",
       "displayMode": "map_pointer_only",
       "requiredClinicianAction": {
         "label": "Review mapped clinic concept (HITL — map pointer only)",
@@ -675,7 +676,7 @@
       "autoApprove": false,
       "status": "deferred_until_hitl",
       "clinicalUse": "not_for_clinical_use",
-      "intendedConsumer": "akeno_future",
+      "intendedConsumer": "akeno_hsi_core",
       "displayMode": "map_pointer_only",
       "requiredClinicianAction": {
         "label": "Review mapped clinic concept (HITL — map pointer only)",
@@ -708,7 +709,7 @@
       "autoApprove": false,
       "status": "deferred_until_hitl",
       "clinicalUse": "not_for_clinical_use",
-      "intendedConsumer": "akeno_future",
+      "intendedConsumer": "akeno_hsi_core",
       "displayMode": "map_pointer_only",
       "requiredClinicianAction": {
         "label": "Review mapped clinic concept (HITL — map pointer only)",
@@ -741,7 +742,7 @@
       "autoApprove": false,
       "status": "deferred_until_hitl",
       "clinicalUse": "not_for_clinical_use",
-      "intendedConsumer": "akeno_future",
+      "intendedConsumer": "akeno_hsi_core",
       "displayMode": "map_pointer_only",
       "requiredClinicianAction": {
         "label": "Review mapped clinic concept (HITL — map pointer only)",
@@ -770,25 +771,25 @@
     "r2ValidationJson": "hsi-r2-validation.json"
   },
   "boundary": [
-    "Phase 8 = HSI-side Stage 3 translation substrate only — not live clinical CDS",
+    "Phase 8 = HSI-side Stage 3 translation substrate — not live clinical CDS",
     "clinicalUse=not_for_clinical_use · clinicalActive=false on every candidate",
     "status=deferred_until_hitl · hitlRequired=true · autoApprove=false",
     "teachingStatus ≠ hsiGrade ≠ CDS — axes stay orthogonal; map presence never opens CDS",
     "No diagnosis, treatment recommendations, PHI, or patient-identifying workflows",
-    "Akeno product integration remains external / deferred (outside hsi-core)",
-    "Do not write ISI / Akeno / DeliverX Neon from this workspace"
+    "Akeno in-repo consumer = /akeno HITL review over this handoff (not Neon-backed product)",
+    "Do not write ISI / Akeno / DeliverX Neon from this workspace — HSI red-wave only"
   ],
   "nextActions": [
     "Review translation candidates on site `/discovery` TRANSLATE tab (human-only).",
-    "Extend Gate C / HITL checklist rows for translation candidates before any Akeno consume.",
+    "Open the in-repo Akeno consumer at `/akeno` for HITL acknowledge / escalate / defer.",
     "Keep cdsSurfacable=false until curationReview=approved AND hsiGrade=established AND Stage 3 gates.",
-    "Akeno clinical product wire-up stays outside hsi-core — partner data + HCP eval + governance."
+    "Partner cohorts + HCP eval + regulatory remain outside — never from packs alone."
   ],
   "whatRemainsOutsideHsiCore": [
-    "Akeno clinical intelligence product UI / site workflows (feasibility, protocol screening)",
     "Partner-governed cohort datasets + independent evaluation (R3)",
     "Intended-use determination, site access, HCP evaluation, regulatory/privacy (R4)",
     "Prospective CDS validation + regulatory determination (R5) — not committed",
+    "Full akenohealth Neon dashboard / ingestion services (PHI-class) — stay in source repos",
     "EHR write-back, patient outreach, eligibility automation — forever gated / out of scope here",
     "Live writes to Akeno / ISI autumn-snow / DeliverX Neon — never from hsi-core"
   ]

@@ -11,7 +11,7 @@ This note **catalogues** the Discovery Centre marketing / concept surface the wa
 
 The ChatGPT/Unkapped HTML export remains a **reference-only** concept page (IA / labels). **Do not vendor or pixel-copy** that markup into hsi-core.
 
-**Phase 6–8 (done on HSI substrate):** hsi-core ships an original **Target R1–R2 Discovery Centre product surface** plus **Stage 3 translation scaffolding** at `site/` route **`/discovery`**. It loads regenerable packs from `site/public/discovery/` (refreshed by `bun run outputs`): evidence map, entity slice, competing explanations, expert shortlist, grades, partner lock / scope, gaps, **R2 validation** (`hsi-r2-validation.json`), **translation handoff** (`hsi-translation-handoff.json`) — for the RA/anti-TNF locked question. Framing is **ASK → MAP → REVIEW → VALIDATE → TRANSLATE**; hard banners: not diagnostic; **clinical not active**; teachingStatus ≠ hsiGrade ≠ CDS. Akeno clinical **product** remains external/deferred.
+**Phase 6–8 (done on HSI substrate):** hsi-core ships an original **Target R1–R2 Discovery Centre product surface** plus **Stage 3 translation scaffolding** at `site/` route **`/discovery`**, plus an in-repo **Akeno HITL consumer** at **`/akeno`**. It loads regenerable packs from `site/public/discovery/` (refreshed by `bun run outputs`): evidence map, entity slice, competing explanations, expert shortlist, grades, partner lock / scope, gaps, **R2 validation** (`hsi-r2-validation.json`), **translation handoff** (`hsi-translation-handoff.json`) — for the RA/anti-TNF locked question. Framing is **ASK → MAP → REVIEW → VALIDATE → TRANSLATE**; hard banners: not diagnostic; **clinical not active**; teachingStatus ≠ hsiGrade ≠ CDS. Akeno **live CDS / partner product** remains gated; HITL consumer is in-repo ([`AKENO_IN_HSI.md`](./AKENO_IN_HSI.md)).
 
 ---
 
@@ -65,7 +65,7 @@ Additional disclaimers in-body: no patient records; no disease-risk / diagnosis 
 | Evidence grades | Established / Uncertain / Unexplored | Same vocabulary in substrate + pack | **Fit** |
 | HSI Core role | Evidence + provenance backbone | Sole edit target; exports via `bun run outputs` | **Fit** — site consumes narrative; core ships data |
 | Interactive map / disease switcher | Illustrative RA-centric concept graph | **Phase 6–8:** `/discovery` ASK→MAP→REVIEW→VALIDATE→TRANSLATE on real packs (no ChatGPT markup vendored; no clinical disease switcher) | **Done** for R1–R2 research + HSI translation substrate; full interactive graph UX still deferred |
-| Translation / Akeno | Explicit **LATER · gated**; Akeno “after partner data, HCP workflows and validation” | **Phase 8 done (HSI):** TRANSLATE tab + `hsi-translation-handoff.*` (`deferred_until_hitl`; `clinicalActive=false`). Akeno product still external | **Fit** — substrate ≠ live clinical product |
+| Translation / Akeno | Explicit **LATER · gated**; Akeno “after partner data, HCP workflows and validation” | **Phase 8 done (HSI):** TRANSLATE tab + `hsi-translation-handoff.*` + `/akeno` HITL (`deferred_until_hitl`; `clinicalActive=false`). Partner CDS still gated | **Fit** — substrate + HITL ≠ live clinical CDS |
 | Disease list (RA, SLE, psoriasis, IBD) | Conversation / illustration | Proposal candidates; brief says TBD | **Risk** if read as selected indications — label as illustrative only |
 | “SEE THE PLATFORM” / “working environment” | Product-vision tone | Pilot = four outputs + walkthrough, not platform breadth | Prefer “concept / vision” language in live partner decks |
 | Confirmed partners | **PARTNER WITH ISI** CTA | Shortlist = outreach candidates only; no fake MoUs | CTA is invitation, not proof of partners |
@@ -92,7 +92,7 @@ Compared to Akeno Lovable marketing (digital twins / quantum / RWE / CDS), this 
 | Point partners to `site/` `/discovery` + pilot brief + packs from `bun run outputs` | Promise clinical / Akeno / trial matching from the Discovery Centre |
 | Refresh `site/public/discovery/` via `bun run outputs`; keep ASK→MAP→REVIEW→VALIDATE honest | Pixel-copy the concept HTML disease switcher / graph as “validated” product |
 | Use site language that matches grades + “not diagnostic” when drafting outreach | Claim SLE/PsO/IBD as locked pilots; treat scope-locked RA as partner-signed (`lockedPilot` stays false until outreach confirms) |
-| Keep live Akeno clinical / trial matching outside hsi-core; Phase 8 HSI substrate is scaffolding only | Mutate Neon (HSI **red-wave** only if/when HSI-owned schema exists; never autumn-snow / Akeno / DeliverX for HSI) |
+| Keep live Akeno CDS / trial matching gated; Phase 8 substrate + `/akeno` HITL are scaffolding only | Mutate Neon (HSI **red-wave** only; never autumn-snow / Akeno / DeliverX for HSI) |
 | Cross-link from vision / proposal / target-state docs | Treat the concept HTML export as evidence truth or a validated map |
 
 ---

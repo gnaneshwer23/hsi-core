@@ -371,7 +371,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       "Partner lock honesty: hsi-partner-lock.json — Phase 2 = scopeLocked; Phase 3 = evidence depth; Phase 5 = acceptance pack; named partner still flips partnerSigned (then lockedPilot).",
       "Phase 6–8: Discovery Centre at site `/discovery` loads site/public/discovery/*.json (ASK→MAP→REVIEW→VALIDATE→TRANSLATE; notCds; clinicalActive=false).",
       "Phase 7: R2 validation — hsi-r2-validation.* (hypothesis cards, ranked gaps, literature tests; research only).",
-      "Phase 8 done (HSI substrate): hsi-translation-handoff.* — Stage 3 scaffolding; deferred_until_hitl; Akeno product integration still external/deferred.",
+      "Phase 8 done (HSI substrate): hsi-translation-handoff.* — Stage 3 scaffolding; deferred_until_hitl; Akeno in-repo HITL consumer at /akeno (not live CDS; no Akeno Neon).",
       "Aksh: HITL map pointers only — use hsi-aksh-node-map.json + hsi-aksh-hitl-cards.json; CDS stays closed on seeds.",
       "Gate C: human checklist in gate-c-checklist.* (+ translationCandidates); optional HSI red-wave placeholders via bun run db:gate-c-local (pending only). ISI product approve stays autumn-snow — never from this workspace.",
       "Phase 4: HSI Neon schema stub — bun run db:migrate (guards refuse ISI/Akeno/DeliverX).",
@@ -455,7 +455,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       "Regenerate with bun run outputs — copies land here for the Vite site.",
       "Not diagnostic / not for clinical use. clinicalActive=false.",
       "Phase 7 done = R2 validation (hsi-r2-validation.json) on VALIDATE tab.",
-      "Phase 8 done = HSI translation substrate (hsi-translation-handoff.json) on TRANSLATE tab — Akeno product still external/deferred.",
+      "Phase 8 done = HSI translation substrate (hsi-translation-handoff.json) on TRANSLATE tab + in-repo Akeno HITL consumer at /akeno (not CDS).",
     ],
   };
   writeJson(join(discoveryPublicDir, "index.json"), discoveryIndex);

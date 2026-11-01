@@ -261,7 +261,7 @@ function buildCriteria(opts: {
       evidence:
         "ASK→MAP→REVIEW→VALIDATE→TRANSLATE surface loads regenerable packs from site/public/discovery (notCds; clinicalActive=false; partnerSigned=false)",
       notes:
-        "Phase 6–8 done on HSI substrate. TRANSLATE tab shows deferred_until_hitl candidates only — Akeno clinical product remains external/deferred.",
+        "Phase 6–8 done on HSI substrate. TRANSLATE tab + /akeno HITL show deferred_until_hitl candidates only — not live CDS.",
     }),
   ];
 }
@@ -384,10 +384,10 @@ export function buildPilotAcceptancePack(opts?: {
       "Share hsi-pilot-walkthrough.md + hsi-pilot-acceptance.md + site `/discovery` with the outreach category / future named partner.",
       "Keep partnerSigned=false / lockedPilot=false until flipRequirements in hsi-partner-lock.json are met.",
       "Agree licensing + numeric success thresholds before formal user testing.",
-      "Phase 6–8 Discovery Centre (ASK→MAP→REVIEW→VALIDATE→TRANSLATE) is live. Phase 8 = HSI translation substrate only; Akeno clinical product remains external/deferred.",
+      "Phase 6–8 Discovery Centre (ASK→MAP→REVIEW→VALIDATE→TRANSLATE) is live. Phase 8 = translation substrate + in-repo Akeno HITL at /akeno (not CDS).",
     ],
     deferredExplicitAsk: [
-      "Akeno clinical product integration (site workflows, feasibility, protocol screening) — outside hsi-core",
+      "Akeno clinical product — partner cohorts / feasibility / protocol screening beyond in-repo /akeno HITL",
       "Clinical R3–R5 / Akeno patient-level pathways + prospective CDS (R5) — gated / not committed",
       "PDF/DOCX brief renderer (ISI product P1)",
       "Stage 2 molecular adapters / live Stage 3 clinical workflows",

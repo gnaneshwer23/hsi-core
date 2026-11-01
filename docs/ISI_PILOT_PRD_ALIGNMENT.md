@@ -71,7 +71,7 @@ PRD / brief four outputs mapped to what `bun run outputs` produces:
 | **4. Expert shortlist** (gaps / hypotheses) | Pack `expertShortlist` + gap report + Gate C pending + **review rubric** | Numeric success thresholds with partner |
 | **Research brief shell** | Pack markdown with citations/caveats + Discovery Loop framing | PDF/DOCX + in-app assembly (ISI) |
 | **Question / scope** | Pack `questionProject` + `hsi-partner-lock.json` (**Phase 2** RA/TNF; `scopeLocked=true`; `partnerSigned=false`) | Live workspace after partnerSigned |
-| **Discovery Centre vocabulary** | Pack + ISI export `discoveryCentre` + Phase 6–8 site `/discovery` (ASK→MAP→REVIEW→VALIDATE→TRANSLATE on real packs + `hsi-r2-validation.*` + `hsi-translation-handoff.*`; RA scope-locked + SLE/PsO/IBD illustrative) | Akeno clinical **product** integration — outside hsi-core |
+| **Discovery Centre vocabulary** | Pack + ISI export `discoveryCentre` + Phase 6–8 site `/discovery` + `/akeno` HITL (ASK→MAP→REVIEW→VALIDATE→TRANSLATE on real packs + `hsi-r2-validation.*` + `hsi-translation-handoff.*`; RA scope-locked + SLE/PsO/IBD illustrative) | Akeno partner / regulatory CDS — still gated outside packs |
 
 Substrate includes T2D / immuno-metabolic seeds **plus** a **scope-locked** RA/TNF response-heterogeneity slice and illustrative SLE/PsO/IBD stubs. Exports must keep `partnerSigned=false` / `lockedPilot=false` until a named partner confirms.
 

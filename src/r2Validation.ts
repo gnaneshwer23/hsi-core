@@ -485,7 +485,7 @@ export function buildR2ValidationBundle(opts?: {
       "Literature tests and next-experiment prompts are evidence-mapping / reconciliation tasks — not fabricated clinical protocols",
       "No patient CDS, eligibility automation, trial matching, or Akeno workflows",
       "autoApproveIntoKg=false — hypothesis cards never enter product KG without human Gate C",
-      "Phase 8 HSI translation substrate ships separately (hsi-translation-handoff.*) — clinicalActive=false; Akeno product still external",
+      "Phase 8 HSI translation substrate ships separately (hsi-translation-handoff.*) — clinicalActive=false; Akeno HITL consumer at /akeno (not CDS)",
     ],
     nextActions: [
       "Review hypothesis cards on site `/discovery` VALIDATE tab against competing explanations.",

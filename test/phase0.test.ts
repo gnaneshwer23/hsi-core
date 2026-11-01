@@ -32,6 +32,9 @@ import {
   buildPilotReviewRubric,
   buildR2ValidationBundle,
   buildTranslationHandoffPack,
+  buildAkenoConsumerBundle,
+  evaluateAkenoConsumerSafety,
+  recordAkenoHitlReview,
   getPartnerLock,
   loadAkshHitlStubFromExport,
   migrateAkshNodeId,
@@ -502,14 +505,15 @@ describe("Gate C checklist + publish outputs", () => {
     expect(xlat.clinicalUse).toBe("not_for_clinical_use");
     expect(xlat.autoApprove).toBe(false);
     expect(xlat.autoSurfaceCds).toBe(false);
-    expect(xlat.akenoProductIntegration).toBe("external_deferred");
+    expect(xlat.akenoProductIntegration).toBe("in_repo_hitl_consumer");
+    expect(xlat.akenoConsumerPath).toBe("/akeno");
     expect(xlat.candidates.length).toBeGreaterThanOrEqual(3);
     expect(xlat.candidates.every((c) => c.hitlRequired === true)).toBe(true);
     expect(xlat.candidates.every((c) => c.autoApprove === false)).toBe(true);
     expect(xlat.candidates.every((c) => c.cdsSurfacable === false)).toBe(true);
     expect(xlat.candidates.every((c) => c.status === "deferred_until_hitl")).toBe(true);
     expect(xlat.candidates.every((c) => c.clinicalUse === "not_for_clinical_use")).toBe(true);
-    expect(xlat.candidates.every((c) => c.intendedConsumer === "akeno_future")).toBe(true);
+    expect(xlat.candidates.every((c) => c.intendedConsumer === "akeno_hsi_core")).toBe(true);
     expect(xlat.summary.cdsSurfacableCount).toBe(0);
     expect(xlat.candidates.some((c) => Boolean(c.akshNodeId))).toBe(true);
     expect(xlat.candidates.some((c) => Boolean(c.loinc))).toBe(true);
@@ -522,9 +526,10 @@ describe("Gate C checklist + publish outputs", () => {
           c.cdsSurfacable === false,
       ),
     ).toBe(true);
-    expect(xlat.whatRemainsOutsideHsiCore.some((w) => w.toLowerCase().includes("akeno"))).toBe(
-      true,
-    );
+    expect(xlat.boundary.some((b) => b.toLowerCase().includes("/akeno"))).toBe(true);
+    expect(
+      xlat.whatRemainsOutsideHsiCore.some((w) => w.toLowerCase().includes("neon")),
+    ).toBe(true);
 
     const checklist = buildGateCChecklist({ generatedAt: "2026-11-01T16:00:00.000Z" });
     expect(checklist.translationCandidates.length).toBeGreaterThanOrEqual(3);
@@ -668,7 +673,7 @@ describe("Gate C checklist + publish outputs", () => {
     expect(manifest.translationHandoff.phase).toBe("8");
     expect(manifest.translationHandoff.clinicalActive).toBe(false);
     expect(manifest.translationHandoff.clinicalUse).toBe("not_for_clinical_use");
-    expect(manifest.translationHandoff.akenoProductIntegration).toBe("external_deferred");
+    expect(manifest.translationHandoff.akenoProductIntegration).toBe("in_repo_hitl_consumer");
     expect(manifest.translationHandoff.cdsSurfacableCount).toBe(0);
 
     const hitl = JSON.parse(
@@ -691,9 +696,49 @@ describe("Gate C checklist + publish outputs", () => {
 
     const discoveryIndex = JSON.parse(
       readFileSync(join(process.cwd(), "site/public/discovery/index.json"), "utf8"),
-    ) as { phase: string; clinicalActive: boolean; framing: string };
+    ) as { phase: string; clinicalActive: boolean; framing: string; notes: string[] };
     expect(discoveryIndex.phase).toBe("8");
     expect(discoveryIndex.clinicalActive).toBe(false);
     expect(discoveryIndex.framing).toContain("TRANSLATE");
+    expect(discoveryIndex.notes.some((n) => n.includes("/akeno"))).toBe(true);
+  });
+
+  it("ships in-repo Akeno HITL consumer over translation handoff (not CDS, no Neon)", () => {
+    const pack = buildTranslationHandoffPack({ generatedAt: "2026-11-01T17:00:00.000Z" });
+    const consumer = buildAkenoConsumerBundle({
+      generatedAt: "2026-11-01T17:00:00.000Z",
+      pack,
+    });
+    expect(consumer.schemaVersion).toBe("hsi-akeno-consumer-1");
+    expect(consumer.akenoProductIntegration).toBe("in_repo_hitl_consumer");
+    expect(consumer.consumerPath).toBe("/akeno");
+    expect(consumer.clinicalActive).toBe(false);
+    expect(consumer.notCds).toBe(true);
+    expect(consumer.autoSurfaceCds).toBe(false);
+    expect(consumer.candidates.length).toBe(pack.candidates.length);
+    expect(consumer.neonIsolation.hsiSubstrateOnly).toBe("red-wave-06625195");
+    expect(consumer.neonIsolation.akenoDbEnvPrefix).toBe("AKENO_");
+    expect(consumer.provenance.akenohealth.commit.length).toBe(40);
+    expect(consumer.provenance.akenoHealthAi.lovableUrl).toContain("lovable.dev");
+
+    const safety = evaluateAkenoConsumerSafety();
+    expect(safety.blocked).toBe(true);
+    expect(safety.nextAction).toBe("route_to_clinician_hitl");
+    expect(safety.autoSurfaceCds).toBe(false);
+
+    const first = pack.candidates[0];
+    expect(first).toBeDefined();
+    const decision = recordAkenoHitlReview({
+      candidate: first!,
+      action: "acknowledge",
+      reason: "Map pointer reviewed — not clinical use",
+      reviewedAt: "2026-11-01T17:01:00.000Z",
+    });
+    expect(decision.cdsSurfacable).toBe(false);
+    expect(decision.autoApplyToEhr).toBe(false);
+    expect(decision.auditEventType).toBe("AKENO_HITL_REVIEW_DECISION");
+    expect(() =>
+      recordAkenoHitlReview({ candidate: first!, action: "defer", reason: "   " }),
+    ).toThrow();
   });
 });

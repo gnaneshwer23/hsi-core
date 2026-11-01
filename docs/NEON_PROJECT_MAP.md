@@ -44,6 +44,7 @@ See [`.env.example`](../.env.example).
 - HSI publishes graded exports from this repo; ISI (immunecity) may **consume** those artifacts in **its own** Neon. That is not a shared database.
 - Gate C **checklist** lives in hsi-core; Gate C **approve+supports** (if any) is a human action in the **ISI product Neon** (`autumn-snow` / `ep-blue-salad…`) — never an HSI write path into ISI Neon from this workspace.
 - Akeno / DeliverX Neons: do not inspect for HSI work unless the user explicitly asks; never mutate for HSI.
+- In-repo Akeno HITL consumer (`/akeno`, `akeno/.env.example` `AKENO_*`) does **not** connect to Akeno Neon — documentation prefix only.
 
 ## Other projects on the same Neon login (context only — not HSI)
 

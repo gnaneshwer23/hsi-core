@@ -52,7 +52,7 @@ dist/outputs/
 |----------|-------|--------|
 | **ISI** | `hsi-isi-export.json`, `hsi-isi-rel-map.json`, `gate-c-checklist.*`, `hsi-pilot-evidence-pack.*`, `hsi-pilot-review-rubric.*`, `hsi-pilot-acceptance.*`, `hsi-pilot-walkthrough.md`, `hsi-partner-lock.json`, `hsi-r2-validation.*`, `hsi-translation-handoff.*` | Discovery / Ask / Radar only. REL map never auto-approves into KG. Gate C approve (if any) is human-only in **ISI Neon `autumn-snow`**, not HSI `red-wave`. Pack shows **Phase 3 evidence depth** on Phase 2 scope-locked RA/TNF (`scopeLocked=true`, `partnerSigned=false`, `lockedPilot=false`) — not a MoU. **Phase 4:** HSI Neon schema stub + `bun run db:gate-c-local` pending placeholders on `red-wave` only. **Phase 5:** Stage 1 acceptance checklist + partner walkthrough (honest pending for `partnerSigned` / licensing). **Phase 6:** site `/discovery` product surface. **Phase 7:** R2 validation (`hsi-r2-validation.*` + VALIDATE tab). **Phase 8:** translation handoff scaffolding (`hsi-translation-handoff.*` + TRANSLATE tab; `clinicalActive=false`). |
 | **Aksh** | `hsi-aksh-node-map.json`, `hsi-aksh-hitl-cards.json` | HITL map pointers. `akshNodeId` ≠ CDS. Seeds stay `cdsSurfacable=false`. |
-| **Akeno (future)** | `hsi-translation-handoff.*` (+ Gate C `translationCandidates`) | Stage 3 scaffolding only. `status=deferred_until_hitl` · `clinicalUse=not_for_clinical_use` · `hitlRequired=true` · `autoApprove=false`. Product integration stays **outside hsi-core**. |
+| **Akeno (in-repo HITL)** | `hsi-translation-handoff.*` (+ Gate C `translationCandidates`) + site `/akeno` | Stage 3 scaffolding + HITL consumer. `status=deferred_until_hitl` · `clinicalUse=not_for_clinical_use` · `hitlRequired=true` · `autoApprove=false` · `akenoProductIntegration=in_repo_hitl_consumer`. **Not** live CDS; **never** Akeno Neon. See [`AKENO_IN_HSI.md`](./AKENO_IN_HSI.md). |
 | **Curators** | `gate-c-checklist.md`, `hsi-gap-report.md`, `hsi-pilot-evidence-pack.md`, `hsi-pilot-review-rubric.md`, `hsi-pilot-acceptance.md`, `hsi-pilot-walkthrough.md`, `hsi-r2-validation.md`, `hsi-translation-handoff.md` | Pending REL list + gap backlog + scope-locked brief + human review checklist + Phase 5 acceptance / walkthrough + Phase 7 R2 cards + Phase 8 translation HITL candidates. |
 
 PRD / brief four outputs (evidence map, entity slice, competing explanations, expert shortlist) are assembled in `hsi-pilot-evidence-pack.*`. See [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md).
@@ -105,7 +105,8 @@ PRD / brief four outputs (evidence map, entity slice, competing explanations, ex
 | PDF/DOCX brief renderer | **Deferred** (ISI product P1; needs explicit ask) |
 | **Phase 7** — R2 validation | **Done** (`hsi-r2-validation.*`; hypothesis cards with untested/supported/refuted/gap; ranked gaps + literature tests; Discovery Centre **VALIDATE** tab; research only — not clinical protocols) |
 | **Phase 8** — R3–R5 / Akeno translation (HSI substrate) | **Done** (`hsi-translation-handoff.*` + Gate C `translationCandidates` + Discovery Centre **TRANSLATE** tab; `deferred_until_hitl` / `not_for_clinical_use`; no live CDS) |
-| Akeno clinical product integration | **Remaining outside hsi-core** — site workflows, partner cohorts, HCP eval, regulatory; never from research packs alone |
+| Akeno in-repo HITL consumer | **Done** (`/akeno` + `src/akenoConsumer.ts`; consumes handoff; hard not-CDS; no Akeno Neon) |
+| Akeno partner / regulatory product | **Remaining gated** — partner cohorts, HCP eval, prospective CDS; never from research packs alone |
 | Stage 2 molecular adapters / live Stage 3 clinical CDS | **Out of Stage 1 / gated** |
 
 ## Individual CLIs (still available)
