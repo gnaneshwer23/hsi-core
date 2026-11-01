@@ -88,7 +88,8 @@ Compared to Akeno Lovable marketing (digital twins / quantum / RWE / CDS), this 
 |----|--------|
 | Keep this catalog doc as the binding posture for the Discovery Centre concept surface | Edit immunecity / chatgpt.site HTML from this workspace as HSI substrate work |
 | Point partners to pilot brief + `hsi-pilot-evidence-pack` from `bun run outputs` | Promise the interactive Discovery Loop / graph as a Stage 1 product |
-| Use site language that matches grades + “not diagnostic” when drafting outreach | Pre-assign RA/SLE/psoriasis/IBD as the pilot indication |
+| Emit ASK→MAP→REVIEW… + illustrative disease list as **export metadata** (`discoveryCentre` on ISI export + pack-2) | Build the interactive Discovery Loop / disease switcher in hsi-core |
+| Use site language that matches grades + “not diagnostic” when drafting outreach | Pre-assign RA/SLE/psoriasis/IBD as the pilot indication (`lockedPilot=false`) |
 | Keep Akeno / clinical / trial matching behind Stage 3 gates | Mutate Neon (HSI **red-wave** only if/when HSI-owned schema exists; never autumn-snow / Akeno / DeliverX for HSI) |
 | Cross-link from vision / proposal / target-state docs | Treat the export as evidence truth or a validated map |
 

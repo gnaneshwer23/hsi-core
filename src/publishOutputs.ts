@@ -250,12 +250,17 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       gapRows: gapReport.gaps.length,
       gateCPending: gateC.summary.pendingGateC,
       pilotEvidenceMapRows: pilotPack.summary.evidenceMapRows,
+      claimsWithLoinc: pilotPack.summary.claimsWithLoinc,
+      illustrativeDiseaseContexts: pilotPack.summary.illustrativeDiseaseContexts,
     },
+    discoveryLoop: isiBundle.discoveryCentre.discoveryLoop.framing,
+    partnerLock: isiBundle.discoveryCentre.partnerLock,
     consumerNotes: [
       "ISI: discovery / Ask / Radar only — use hsi-isi-export.json + hsi-isi-rel-map.json.",
       "ISI pilot walkthrough: hsi-pilot-evidence-pack.* (disease/question TBD; no patient CDS).",
+      "Discovery Centre vocabulary is metadata only (ASK→MAP→REVIEW… + illustrative RA/SLE/PsO/IBD) — not an interactive UI.",
       "Aksh: HITL map pointers only — use hsi-aksh-node-map.json + hsi-aksh-hitl-cards.json; CDS stays closed on seeds.",
-      "Gate C: human checklist in gate-c-checklist.*; Neon approve is outside this repo.",
+      "Gate C: human checklist in gate-c-checklist.*; Neon approve is outside this repo (ISI autumn-snow only — never HSI red-wave).",
       "Regenerate with: bun run outputs",
     ],
   };

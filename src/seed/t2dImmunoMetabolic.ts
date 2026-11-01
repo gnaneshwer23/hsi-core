@@ -473,6 +473,112 @@ const SPECS: SeedSpec[] = [
     domain: "autoimmunity",
     bridgeCandidate: true,
   },
+
+  // —— Illustrative immune pathways (Discovery Centre disease picker contexts) ——
+  // RA / SLE / psoriasis / IBD — NOT locked pilot indications. Placeholder until partner lock.
+  {
+    id: "HSI-E-RA-001",
+    edgeType: "contributes_to",
+    subjectId: "HSI-N-tnf-alpha",
+    subjectLabel: "TNF-α",
+    objectId: "HSI-N-ra",
+    objectLabel: "Rheumatoid arthritis",
+    claimId: "HSI-C-RA-001",
+    assertion:
+      "TNF-α contributes to synovial inflammation in rheumatoid arthritis (illustrative pathway — not a locked pilot).",
+    review: "source-verified",
+    teaching: "associative",
+    domain: "autoimmunity",
+    pmid: "11244034",
+    doi: "10.1146/annurev.immunol.19.1.163",
+    citationLabel:
+      "Feldmann M, Maini RN. Annu Rev Immunol 2001 — Anti-TNF-α therapy of rheumatoid arthritis: what have we learned?",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/11244034/",
+    notes:
+      "Illustrative RA pathway seed. PMID 11244034 verified. Maps toward ISI REL-M001-contributes_to-D001. Disease lock remains TBD with partner. Gate C = human Neon approve only.",
+  },
+  {
+    id: "HSI-E-RA-002",
+    edgeType: "biomarker_of",
+    subjectId: "HSI-N-anti-ccp",
+    subjectLabel: "Anti-CCP antibodies",
+    objectId: "HSI-N-ra",
+    objectLabel: "Rheumatoid arthritis",
+    claimId: "HSI-C-RA-002",
+    assertion:
+      "Anti-CCP antibodies are used as a serologic biomarker in rheumatoid arthritis (illustrative — not locked pilot).",
+    review: "source-verified",
+    teaching: "associative",
+    domain: "autoimmunity",
+    citationLabel: "ACPA / anti-CCP clinical biomarker reviews (placeholder locator)",
+    notes:
+      "Illustrative RA biomarker seed with LOINC-capable marker. Replace with partner-scoped source set after lock. Not CDS.",
+  },
+  {
+    id: "HSI-E-SLE-001",
+    edgeType: "associated_with",
+    subjectId: "HSI-N-type1-ifn",
+    subjectLabel: "Type I interferon pathway",
+    objectId: "HSI-N-sle",
+    objectLabel: "Systemic lupus erythematosus",
+    claimId: "HSI-C-SLE-001",
+    assertion:
+      "Type I interferon pathway activation associates with SLE pathophysiology (illustrative — not locked pilot).",
+    review: "unreviewed",
+    teaching: "hypothesized",
+    domain: "autoimmunity",
+    notes:
+      "Illustrative SLE pathway stub for Discovery Centre vocabulary. No invented PMID. Partner lock TBD.",
+  },
+  {
+    id: "HSI-E-SLE-002",
+    edgeType: "biomarker_of",
+    subjectId: "HSI-N-ana",
+    subjectLabel: "Antinuclear antibodies (ANA)",
+    objectId: "HSI-N-sle",
+    objectLabel: "Systemic lupus erythematosus",
+    claimId: "HSI-C-SLE-002",
+    assertion:
+      "ANA testing is used in the serologic workup of SLE (illustrative biomarker — not locked pilot / not CDS).",
+    review: "source-verified",
+    teaching: "associative",
+    domain: "autoimmunity",
+    citationLabel: "ANA clinical laboratory guidance (placeholder locator)",
+    notes:
+      "Illustrative SLE biomarker seed with LOINC-capable marker. Not a diagnosis claim. Gate C deferred.",
+  },
+  {
+    id: "HSI-E-PSO-001",
+    edgeType: "drives",
+    subjectId: "HSI-N-il17",
+    subjectLabel: "IL-17 pathway",
+    objectId: "HSI-N-psoriasis",
+    objectLabel: "Psoriasis / psoriatic disease",
+    claimId: "HSI-C-PSO-001",
+    assertion:
+      "IL-17 pathway signalling drives psoriatic skin inflammation (illustrative — not locked pilot).",
+    review: "unreviewed",
+    teaching: "hypothesized",
+    domain: "autoimmunity",
+    notes:
+      "Illustrative psoriasis pathway stub aligned to Discovery Centre disease picker. No invented PMID.",
+  },
+  {
+    id: "HSI-E-IBD-001",
+    edgeType: "associated_with",
+    subjectId: "HSI-N-il23",
+    subjectLabel: "IL-23 pathway",
+    objectId: "HSI-N-ibd",
+    objectLabel: "Inflammatory bowel disease",
+    claimId: "HSI-C-IBD-001",
+    assertion:
+      "IL-23 pathway biology associates with IBD inflammatory tone (illustrative — not locked pilot).",
+    review: "unreviewed",
+    teaching: "hypothesized",
+    domain: "autoimmunity",
+    notes:
+      "Illustrative IBD pathway stub aligned to Discovery Centre disease picker. No invented PMID.",
+  },
 ];
 
 function toEdge(spec: SeedSpec): HsiEdge {
@@ -549,6 +655,22 @@ export const HSI_MARKERS: HsiMarker[] = [
     loinc: null,
     unit: "%",
     description: "Proportion of CGM readings in target range (LOINC TBD).",
+  },
+  {
+    id: "HSI-N-anti-ccp",
+    name: "Cyclic citrullinated peptide Ab (anti-CCP)",
+    loinc: "53031-9",
+    unit: null,
+    description:
+      "Serologic marker used in RA workup (illustrative pathway seed — not locked pilot / not CDS).",
+  },
+  {
+    id: "HSI-N-ana",
+    name: "Antinuclear antibodies (ANA)",
+    loinc: "42254-3",
+    unit: null,
+    description:
+      "ANA pattern / titer used in SLE and related autoimmune workup (illustrative — not CDS).",
   },
 ];
 

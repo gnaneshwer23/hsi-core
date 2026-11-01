@@ -4,17 +4,25 @@
  * Covers the four pilot workflow outputs (evidence map, entity slice,
  * competing explanations, expert shortlist) plus a research-brief shell.
  * Disease + question stay TBD. No fake partner data. No patient-level CDS.
+ *
+ * Pack-2 adds Discovery Centre vocabulary (ASK→MAP→REVIEW loop + illustrative
+ * disease contexts) and claim→LOINC fields on evidence rows — still no UI.
  */
+import {
+  buildDiscoveryCentreMeta,
+  type HsiDiscoveryCentreMeta,
+} from "./discoveryCentreMeta";
 import { HSI_GRADE_INFO, type HsiGrade } from "./grades";
 import { buildSchemaGapReport } from "./gapReport";
 import { buildGateCChecklist } from "./gateCChecklist";
+import { linkClaimToMarker } from "./markers";
 import {
   HSI_T2D_IMMUNO_SEED_CLAIMS,
   HSI_T2D_IMMUNO_SEED_EDGES,
 } from "./seed/t2dImmunoMetabolic";
 import type { HsiEdge, HsiEdgeType } from "./schema";
 
-export const PILOT_EVIDENCE_PACK_SCHEMA = "hsi-pilot-evidence-pack-1" as const;
+export const PILOT_EVIDENCE_PACK_SCHEMA = "hsi-pilot-evidence-pack-2" as const;
 
 /** Explicit unknown — never invent scope for an unlocked partner question. */
 export type PilotScopeField = "unknown" | string;
@@ -55,10 +63,23 @@ export type PilotEvidenceMapRow = {
     sourceUrl: string | null;
     missing: string[];
   };
+  /** Claim → marker → LOINC when seed wiring exists. */
+  marker: {
+    markerId: string | null;
+    markerName: string | null;
+    loinc: string | null;
+    linkKind: "subject_node" | "object_node" | "explicit_card" | null;
+  };
   studyOrModelContext: string | null;
   limitations: string | null;
   /** Edges are navigational; not proof of causality. */
   graphEdgeMeans: "navigational_link_not_causality";
+};
+
+export type PilotEntityRef = {
+  id: string;
+  label: string;
+  kind: "disease" | "cell" | "pathway" | "biomarker" | "treatment" | "study" | "other";
 };
 
 export type PilotEntitySlice = {
@@ -68,13 +89,19 @@ export type PilotEntitySlice = {
   biomarkers: string[];
   treatments: string[];
   studies: string[];
+  /** Typed refs for consumers that want id/kind (strings above stay for brief readability). */
+  typed: PilotEntityRef[];
   note: string;
 };
 
 export type PilotExplanationSlot = {
   id: string;
   label: string;
-  status: "template" | "from_uncertain_grade" | "from_conflicting_review";
+  status:
+    | "template"
+    | "from_uncertain_grade"
+    | "from_conflicting_review"
+    | "from_illustrative_pathway";
   relatedClaimIds: string[];
   note: string;
 };
@@ -97,6 +124,8 @@ export type PilotEvidencePack = {
   disease: "TBD";
   researchQuestion: "TBD — lock with partner";
   substrateNote: string;
+  /** Discovery Centre framing as export metadata — not an interactive UI. */
+  discoveryCentre: HsiDiscoveryCentreMeta;
   gradeDefinitions: typeof HSI_GRADE_INFO;
   clinicalBoundary: string[];
   questionProject: PilotQuestionProject;
@@ -122,8 +151,10 @@ export type PilotEvidencePack = {
     evidenceMapRows: number;
     gradeCounts: Record<HsiGrade, number>;
     missingSourceLabels: number;
+    claimsWithLoinc: number;
     expertShortlistItems: number;
     gateCPending: number;
+    illustrativeDiseaseContexts: number;
   };
   nextActions: string[];
 };
@@ -143,6 +174,7 @@ function claimText(claimId: string): string {
 
 function toEvidenceRow(edge: HsiEdge): PilotEvidenceMapRow {
   const missing = missingSourceLabels(edge);
+  const link = linkClaimToMarker(edge.claimId);
   return {
     claimId: edge.claimId,
     edgeId: edge.id,
@@ -160,6 +192,12 @@ function toEvidenceRow(edge: HsiEdge): PilotEvidenceMapRow {
       sourceUrl: edge.provenance.sourceUrl,
       missing,
     },
+    marker: {
+      markerId: link?.marker.id ?? null,
+      markerName: link?.marker.name ?? null,
+      loinc: link?.marker.loinc ?? null,
+      linkKind: link?.linkKind ?? null,
+    },
     studyOrModelContext: edge.provenance.notes,
     limitations:
       missing.length > 0
@@ -169,6 +207,97 @@ function toEvidenceRow(edge: HsiEdge): PilotEvidenceMapRow {
   };
 }
 
+function classifyLabel(
+  label: string,
+  edge: HsiEdge,
+): PilotEntityRef["kind"] {
+  const lower = label.toLowerCase();
+  if (
+    lower.includes("cell") ||
+    lower.includes("treg") ||
+    lower.includes("macrophage") ||
+    lower.includes("cd8") ||
+    lower.includes("th17")
+  ) {
+    return "cell";
+  }
+  if (
+    edge.edgeType === "biomarker_of" ||
+    lower.includes("biomarker") ||
+    lower.includes("hba1c") ||
+    lower.includes("crp") ||
+    lower.includes("anti-ccp") ||
+    lower.includes("antinuclear") ||
+    lower.includes("autoantibody")
+  ) {
+    return "biomarker";
+  }
+  if (
+    edge.edgeType === "treats" ||
+    lower.includes("metformin") ||
+    lower.includes("therapy") ||
+    lower.includes("inhibitor") ||
+    lower.includes("antibody") ||
+    lower.includes("blockade")
+  ) {
+    return "treatment";
+  }
+  if (
+    lower.includes("diabetes") ||
+    lower.includes("rheumatoid") ||
+    lower.includes("lupus") ||
+    lower.includes("psoriasis") ||
+    lower.includes("bowel") ||
+    lower.includes("arthritis") ||
+    lower.includes("autoimmune") ||
+    edge.domain === "autoimmunity" ||
+    edge.domain === "t2d"
+  ) {
+    // Prefer disease when the label is a disease name; pathways/cytokines fall through.
+    if (
+      lower.includes("rheumatoid arthritis") ||
+      lower.includes("systemic lupus") ||
+      lower.includes("psoriasis") ||
+      lower.includes("inflammatory bowel") ||
+      lower.includes("type 2 diabetes") ||
+      lower.includes("type 1 diabetes") ||
+      label === "Rheumatoid arthritis" ||
+      label === "Systemic lupus erythematosus" ||
+      label === "Psoriasis / psoriatic disease" ||
+      label === "Inflammatory bowel disease" ||
+      label === "Type 2 diabetes mellitus"
+    ) {
+      return "disease";
+    }
+  }
+  if (
+    lower.includes("pathway") ||
+    lower.includes("signaling") ||
+    lower.includes("signalling") ||
+    lower.includes("inflammation") ||
+    lower.includes("cytokine") ||
+    lower.includes("interferon") ||
+    lower.includes("il-") ||
+    lower.includes("tnf") ||
+    edge.edgeType === "drives" ||
+    edge.edgeType === "upregulates" ||
+    edge.edgeType === "downregulates"
+  ) {
+    return "pathway";
+  }
+  if (
+    lower.includes("diabetes") ||
+    lower.includes("rheumatoid") ||
+    lower.includes("lupus") ||
+    lower.includes("psoriasis") ||
+    lower.includes("bowel") ||
+    lower.includes("arthritis")
+  ) {
+    return "disease";
+  }
+  return "other";
+}
+
 function bucketEntities(edges: readonly HsiEdge[]): PilotEntitySlice {
   const diseases = new Set<string>();
   const cells = new Set<string>();
@@ -176,37 +305,50 @@ function bucketEntities(edges: readonly HsiEdge[]): PilotEntitySlice {
   const biomarkers = new Set<string>();
   const treatments = new Set<string>();
   const studies = new Set<string>();
+  const typedByKey = new Map<string, PilotEntityRef>();
+
+  function addTyped(id: string, label: string, kind: PilotEntityRef["kind"]) {
+    const key = `${kind}:${id}`;
+    if (!typedByKey.has(key)) {
+      typedByKey.set(key, { id, label, kind });
+    }
+  }
 
   for (const e of edges) {
-    const labels = [e.subjectLabel, e.objectLabel];
-    for (const label of labels) {
-      const lower = label.toLowerCase();
-      if (lower.includes("cell") || lower.includes("treg") || lower.includes("macrophage") || lower.includes("cd8") || lower.includes("th17")) {
-        cells.add(label);
-      } else if (
-        lower.includes("pathway") ||
-        lower.includes("signaling") ||
-        lower.includes("inflammation") ||
-        lower.includes("cytokine") ||
-        e.edgeType === "drives" ||
-        e.edgeType === "upregulates" ||
-        e.edgeType === "downregulates"
-      ) {
-        pathwaysOrMechanisms.add(label);
-      } else if (e.edgeType === "biomarker_of" || lower.includes("biomarker") || lower.includes("hba1c") || lower.includes("crp")) {
-        biomarkers.add(label);
-      } else if (e.edgeType === "treats" || lower.includes("metformin") || lower.includes("therapy") || lower.includes("inhibitor") || lower.includes("antibody")) {
-        treatments.add(label);
-      } else if (lower.includes("diabetes") || lower.includes("autoimmune") || lower.includes("lupus") || lower.includes("arthritis") || e.domain === "autoimmunity" || e.domain === "t2d") {
-        diseases.add(label);
-      } else {
-        pathwaysOrMechanisms.add(label);
+    const ends: Array<{ id: string; label: string }> = [
+      { id: e.subjectId, label: e.subjectLabel },
+      { id: e.objectId, label: e.objectLabel },
+    ];
+    for (const { id, label } of ends) {
+      const kind = classifyLabel(label, e);
+      addTyped(id, label, kind === "other" ? "pathway" : kind);
+      switch (kind) {
+        case "cell":
+          cells.add(label);
+          break;
+        case "biomarker":
+          biomarkers.add(label);
+          break;
+        case "treatment":
+          treatments.add(label);
+          break;
+        case "disease":
+          diseases.add(label);
+          break;
+        case "pathway":
+        case "other":
+        default:
+          pathwaysOrMechanisms.add(label);
+          break;
       }
     }
     if (e.provenance.pmid) {
-      studies.add(`PMID:${e.provenance.pmid}`);
+      const studyLabel = `PMID:${e.provenance.pmid}`;
+      studies.add(studyLabel);
+      addTyped(`pmid:${e.provenance.pmid}`, studyLabel, "study");
     } else if (e.provenance.citationLabel) {
       studies.add(e.provenance.citationLabel);
+      addTyped(`cite:${e.id}`, e.provenance.citationLabel, "study");
     }
   }
 
@@ -217,7 +359,10 @@ function bucketEntities(edges: readonly HsiEdge[]): PilotEntitySlice {
     biomarkers: [...biomarkers].sort(),
     treatments: [...treatments].sort(),
     studies: [...studies].sort(),
-    note: "Buckets are heuristic from illustrative seed labels. Re-slice after the partner locks disease + question. Empty buckets mean unknown, not 'no biology'.",
+    typed: [...typedByKey.values()].sort((a, b) =>
+      a.kind === b.kind ? a.label.localeCompare(b.label) : a.kind.localeCompare(b.kind),
+    ),
+    note: "Buckets are heuristic from illustrative seed labels (T2D + RA/SLE/PsO/IBD pathway stubs). Re-slice after the partner locks disease + question. Empty buckets mean unknown, not 'no biology'. Illustrative disease contexts are not locked pilot indications.",
   };
 }
 
@@ -245,6 +390,7 @@ export function buildPilotEvidencePack(opts?: {
 
   const gap = buildSchemaGapReport({ generatedAt });
   const gateC = buildGateCChecklist({ generatedAt });
+  const discoveryCentre = buildDiscoveryCentreMeta();
 
   const competingExplanations: PilotExplanationSlot[] = [
     {
@@ -260,6 +406,20 @@ export function buildPilotEvidencePack(opts?: {
       status: "template",
       relatedClaimIds: [],
       note: "Preserve disagreement; do not collapse into a single confident narrative.",
+    },
+    {
+      id: "expl-ra-tnf-axis",
+      label: "TNF-centric vs multi-cytokine framing in RA (illustrative)",
+      status: "from_illustrative_pathway",
+      relatedClaimIds: ["HSI-C-RA-001", "HSI-C-IM-002", "HSI-C-IM-003"],
+      note: "Illustrative competing frame from Discovery Centre RA context — not a partner-scoped conclusion. Attach partner claim IDs after lock.",
+    },
+    {
+      id: "expl-sle-ifn-axis",
+      label: "Type I IFN–high vs alternate SLE endotypes (illustrative)",
+      status: "from_illustrative_pathway",
+      relatedClaimIds: ["HSI-C-SLE-001", "HSI-C-SLE-002"],
+      note: "Illustrative SLE uncertainty slot — substrate scaffolding only until a named partner locks the question.",
     },
   ];
 
@@ -297,6 +457,13 @@ export function buildPilotEvidencePack(opts?: {
       relatedClaimIds: [],
       autoApproved: false,
     },
+    {
+      id: "hyp-illustrative-ra",
+      kind: "hypothesis",
+      text: "Illustrative RA hypothesis slot (TNF / ACPA axis) — replace with partner-scoped gap after disease lock; autoApproved=false.",
+      relatedClaimIds: ["HSI-C-RA-001", "HSI-C-RA-002"],
+      autoApproved: false,
+    },
   ];
 
   return {
@@ -308,7 +475,8 @@ export function buildPilotEvidencePack(opts?: {
     disease: "TBD",
     researchQuestion: "TBD — lock with partner",
     substrateNote:
-      "Evidence rows below come from illustrative T2D / immuno-metabolic placeholder seeds. They are not a locked pilot indication and are not partner data.",
+      "Evidence rows include illustrative T2D / immuno-metabolic seeds plus Discovery Centre disease-context pathway stubs (RA/SLE/PsO/IBD). None are a locked pilot indication or partner data.",
+    discoveryCentre,
     gradeDefinitions: HSI_GRADE_INFO,
     clinicalBoundary: [
       "No individual risk prediction",
@@ -343,6 +511,7 @@ export function buildPilotEvidencePack(opts?: {
     researchBriefShell: {
       sections: [
         "question_and_scope",
+        "discovery_loop_framing",
         "findings",
         "supporting_evidence",
         "conflicting_evidence",
@@ -368,14 +537,17 @@ export function buildPilotEvidencePack(opts?: {
       evidenceMapRows: evidenceMap.length,
       gradeCounts,
       missingSourceLabels: evidenceMap.filter((r) => r.source.missing.length > 0).length,
+      claimsWithLoinc: evidenceMap.filter((r) => Boolean(r.marker.loinc)).length,
       expertShortlistItems: expertShortlist.length,
       gateCPending: gateC.summary.pendingGateC,
+      illustrativeDiseaseContexts: discoveryCentre.illustrativeDiseaseContexts.length,
     },
     nextActions: [
       "Lock disease + research question with a named partner (outreach — not more substrate).",
       "Replace illustrative seed slice with partner-scoped literature once rights are clear.",
       "Agree review rubric and success thresholds before user testing.",
       "Keep Akeno/Aksh patient-level pathways behind M4 / governance gates.",
+      "Do not treat RA/SLE/PsO/IBD illustrative contexts as the selected pilot indication.",
     ],
   };
 }
@@ -400,9 +572,26 @@ export function serializePilotEvidencePackMarkdown(
     "",
     `> ${pack.substrateNote}`,
     "",
-    "## Clinical boundary",
+    "## Discovery loop (metadata only)",
+    "",
+    `Framing: **${pack.discoveryCentre.discoveryLoop.framing}** — labels for partner decks; not an interactive Discovery Centre UI.`,
     "",
   ];
+  for (const step of pack.discoveryCentre.discoveryLoop.steps) {
+    lines.push(`- **${step.label}** — ${step.desc}`);
+  }
+  lines.push(
+    "",
+    "### Illustrative disease contexts (not locked)",
+    "",
+  );
+  for (const d of pack.discoveryCentre.illustrativeDiseaseContexts) {
+    lines.push(
+      `- ${d.label} (\`${d.id}\`) — ${d.status}; lockedPilot=${d.lockedPilot}`,
+    );
+  }
+
+  lines.push("", "## Clinical boundary", "");
   for (const b of pack.clinicalBoundary) {
     lines.push(`- ${b}`);
   }
@@ -435,7 +624,7 @@ export function serializePilotEvidencePackMarkdown(
     "",
     "## 1. Evidence map (sample)",
     "",
-    `Rows: ${pack.summary.evidenceMapRows} · established=${pack.summary.gradeCounts.established}, uncertain=${pack.summary.gradeCounts.uncertain}, unexplored=${pack.summary.gradeCounts.unexplored} · rows with missing source fields: ${pack.summary.missingSourceLabels}`,
+    `Rows: ${pack.summary.evidenceMapRows} · established=${pack.summary.gradeCounts.established}, uncertain=${pack.summary.gradeCounts.uncertain}, unexplored=${pack.summary.gradeCounts.unexplored} · rows with missing source fields: ${pack.summary.missingSourceLabels} · claims with LOINC: ${pack.summary.claimsWithLoinc}`,
     "",
     "Graph edges are navigational links, not proof of causality. Conflicting / uncertain grades stay visible.",
     "",
@@ -448,8 +637,9 @@ export function serializePilotEvidencePackMarkdown(
         : row.source.citationLabel ?? "(source missing)";
     const miss =
       row.source.missing.length > 0 ? ` · missing: ${row.source.missing.join(", ")}` : "";
+    const loinc = row.marker.loinc ? ` · LOINC:${row.marker.loinc}` : "";
     lines.push(
-      `- \`${row.claimId}\` [${row.evidenceGrade}/${row.reviewStatus}] ${row.subject} — ${row.relationship} — ${row.object} · ${src}${miss}`,
+      `- \`${row.claimId}\` [${row.evidenceGrade}/${row.reviewStatus}] ${row.subject} — ${row.relationship} — ${row.object} · ${src}${loinc}${miss}`,
     );
   }
   if (pack.evidenceMap.length > 12) {
@@ -479,7 +669,7 @@ export function serializePilotEvidencePackMarkdown(
   }
 
   lines.push("## 3. Competing explanations & uncertainties", "");
-  for (const slot of [...pack.competingExplanations, ...pack.uncertainties].slice(0, 10)) {
+  for (const slot of [...pack.competingExplanations, ...pack.uncertainties].slice(0, 12)) {
     lines.push(`- **${slot.label}** (${slot.status}): ${slot.note}`);
   }
 

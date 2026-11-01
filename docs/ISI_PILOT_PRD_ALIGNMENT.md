@@ -65,14 +65,15 @@ PRD / brief four outputs mapped to what `bun run outputs` produces:
 
 | Workflow output | Covered by | Gap / next implementation task |
 |-----------------|------------|--------------------------------|
-| **1. Evidence map** (sources + grades) | `hsi-isi-export.json`, `hsi-pilot-evidence-pack.json` evidenceMap, `gate-c-checklist.*` | Partner-disease seed slice once disease locks; search UI elsewhere |
-| **2. Entity slice** (cells, pathways, biomarkers, treatments, studies) | Pack `entitySlice` buckets (template; filled from seed labels where present) | Richer entity typing / external IDs when partner source set known |
-| **3. Competing explanations + uncertainties** | Pack `competingExplanations` + `uncertainties` (template slots + conflicting/uncertain grades) | Partner-question-specific narratives after scoping |
+| **1. Evidence map** (sources + grades) | `hsi-isi-export.json`, `hsi-pilot-evidence-pack.json` evidenceMap (+ LOINC), `gate-c-checklist.*` | Partner-disease seed slice once disease locks; search UI elsewhere |
+| **2. Entity slice** (cells, pathways, biomarkers, treatments, studies) | Pack `entitySlice` string buckets + typed `{id,label,kind}` refs | External ontology IDs when partner source set known |
+| **3. Competing explanations + uncertainties** | Pack `competingExplanations` + `uncertainties` (templates + illustrative RA/SLE frames + uncertain grades) | Partner-question-specific narratives after scoping |
 | **4. Expert shortlist** (gaps / hypotheses) | Pack `expertShortlist` + `hsi-gap-report.*` + Gate C pending rows | Rubric + partner thresholds before user testing |
-| **Research brief shell** | Pack markdown (`hsi-pilot-evidence-pack.md`) with citations/caveats | PDF/DOCX + in-app assembly (ISI) |
+| **Research brief shell** | Pack markdown (`hsi-pilot-evidence-pack.md`) with citations/caveats + Discovery Loop framing | PDF/DOCX + in-app assembly (ISI) |
 | **Question / scope** | Pack `questionProject` (disease/question **TBD**, unknowns explicit) | Live workspace after partner |
+| **Discovery Centre vocabulary** | Pack + ISI export `discoveryCentre` (ASK→MAP→REVIEW…; illustrative RA/SLE/PsO/IBD) | Interactive UI deferred — metadata only in Stage 1 |
 
-Illustrative seed edges today are T2D / immuno-metabolic placeholders — **not** a locked pilot indication. The pack labels disease as `TBD` and marks substrate as illustrative.
+Illustrative seed edges include T2D / immuno-metabolic placeholders **plus** Discovery Centre disease-context pathway stubs (RA/SLE/PsO/IBD) — **not** a locked pilot indication. The pack labels disease as `TBD` and marks substrate as illustrative (`hsi-pilot-evidence-pack-2`).
 
 ---
 

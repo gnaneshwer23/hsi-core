@@ -3,6 +3,10 @@
  * Discovery-only; not CDS. No PHI.
  */
 import type { HsiEdge, HsiClaim, HsiMarker } from "./schema";
+import {
+  buildDiscoveryCentreMeta,
+  type HsiDiscoveryCentreMeta,
+} from "./discoveryCentreMeta";
 import { HSI_GRADES } from "./grades";
 import { summarizeGradeCounts } from "./validate";
 import { HSI_T2D_IMMUNO_SEED_CLAIMS, HSI_T2D_IMMUNO_SEED_EDGES, HSI_MARKERS } from "./seed/t2dImmunoMetabolic";
@@ -35,6 +39,11 @@ export type IsiHsiExportBundle = {
   isiRelMapping: IsiRelMappingSummary;
   /** Suggested Aksh node pointers — never CDS / EHR write-back. */
   akshNodeMapping: AkshNodeMappingSummary;
+  /**
+   * Discovery Centre vocabulary (ASK→MAP→REVIEW + illustrative diseases).
+   * Metadata for consumers — not an interactive map UI.
+   */
+  discoveryCentre: HsiDiscoveryCentreMeta;
 };
 
 export function buildIsiExportBundle(opts?: {
@@ -62,6 +71,7 @@ export function buildIsiExportBundle(opts?: {
     safetyCriteriaIds: HSI_SAFETY_RELEASE_CRITERIA_V0.map((c) => c.id),
     isiRelMapping: summarizeIsiRelMappings(),
     akshNodeMapping: summarizeAkshNodeMappings(),
+    discoveryCentre: buildDiscoveryCentreMeta(),
   };
 }
 

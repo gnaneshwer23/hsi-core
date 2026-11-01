@@ -19,5 +19,16 @@
     "pilotEvidencePackJson": "hsi-pilot-evidence-pack.json",
     "pilotEvidencePackMd": "hsi-pilot-evidence-pack.md"
   },
+  "discoveryLoop": "ASK → MAP → REVIEW → TEST → LEARN",
+  "partnerLock": {
+    "disease": "TBD",
+    "researchQuestion": "TBD — lock with partner",
+    "partner": "TBD"
+  },
+  "counts": {
+    "pilotEvidenceMapRows": 31,
+    "claimsWithLoinc": 6,
+    "illustrativeDiseaseContexts": 4
+  },
   "note": "Sample only — run bun run outputs for a real bundle under dist/outputs/"
 }

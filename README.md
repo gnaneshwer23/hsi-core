@@ -95,15 +95,18 @@ import {
 ## Phase 0 / P1 contents
 
 - Evidence grades + edge/claim schema + translation card types
-- ~25 T2D / immuno-metabolic / IO–autoimmunity placeholder seed edges
-- Claim → LOINC marker links (`linkClaimToMarker`, `seedClaimLoincMap`)
+- T2D / immuno-metabolic / IO–autoimmunity seeds **plus** illustrative RA/SLE/PsO/IBD pathway stubs (not locked pilot)
+- Claim → LOINC marker links (`linkClaimToMarker`, `seedClaimLoincMap`) including anti-CCP / ANA
+- Discovery Centre metadata in exports (`ASK → MAP → REVIEW → TEST → LEARN` + illustrative disease list) — not interactive UI
 - Validation helpers + `bun run validate` CLI
 - ISI JSON export (`hsi-isi-export-1`)
 - Schema gap report (`bun run gap-report`) — ISI/Aksh mapping slots + bridge shortlist
 - ISI REL-* suggestion map (`bun run export:isi-map`) — curation pointers only; never auto-approve
 - Aksh node-id map (`bun run export:aksh-map`) — HITL pointers; CDS stays closed on seeds
-- **Publish bundle** (`bun run outputs`) — ISI export + REL map + Aksh map/HITL cards + gap report + Gate C checklist
+- **Publish bundle** (`bun run outputs`) — ISI export + REL map + Aksh map/HITL cards + gap report + Gate C checklist + pilot pack-2
 - Safety release criteria v0
+
+Stage 1 done vs remaining: [`docs/OUTPUTS.md`](docs/OUTPUTS.md) checklist.
 
 ## Active codebase (sole edit target)
 

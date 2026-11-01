@@ -226,6 +226,70 @@ export const ISI_REL_SUGGESTIONS: readonly IsiRelSuggestion[] = [
     autoApprove: false,
     isiNodeIds: [],
   },
+  // —— Illustrative immune pathway seeds (Discovery Centre contexts; not locked pilot) ——
+  {
+    claimId: "HSI-C-RA-001",
+    edgeId: "HSI-E-RA-001",
+    suggestedIsiRelationshipId: "REL-M001-contributes_to-D001",
+    matchKind: "exact_concept_pair",
+    status: "curated",
+    rationale:
+      "Exact ISI map REL-M001-contributes_to-D001 (TNF → RA). Illustrative disease-context seed; PMID 11244034; autoApprove=false; partner disease lock still TBD.",
+    autoApprove: false,
+    isiNodeIds: ["M001", "D001"],
+  },
+  {
+    claimId: "HSI-C-RA-002",
+    edgeId: "HSI-E-RA-002",
+    suggestedIsiRelationshipId: null,
+    matchKind: "marker_only",
+    status: "unmapped",
+    rationale:
+      "Anti-CCP → RA illustrative biomarker — LOINC-linked in HSI; no durable ISI REL-* for this pair yet. Do not invent.",
+    autoApprove: false,
+    isiNodeIds: [],
+  },
+  {
+    claimId: "HSI-C-SLE-001",
+    edgeId: "HSI-E-SLE-001",
+    suggestedIsiRelationshipId: null,
+    matchKind: "none",
+    status: "unmapped",
+    rationale: "Type I IFN → SLE illustrative pathway — no curated ISI REL-* yet.",
+    autoApprove: false,
+    isiNodeIds: [],
+  },
+  {
+    claimId: "HSI-C-SLE-002",
+    edgeId: "HSI-E-SLE-002",
+    suggestedIsiRelationshipId: null,
+    matchKind: "marker_only",
+    status: "unmapped",
+    rationale:
+      "ANA → SLE illustrative biomarker — LOINC-linked in HSI; no durable ISI REL-* yet.",
+    autoApprove: false,
+    isiNodeIds: [],
+  },
+  {
+    claimId: "HSI-C-PSO-001",
+    edgeId: "HSI-E-PSO-001",
+    suggestedIsiRelationshipId: null,
+    matchKind: "none",
+    status: "unmapped",
+    rationale: "IL-17 → psoriasis illustrative pathway — no curated ISI REL-* yet.",
+    autoApprove: false,
+    isiNodeIds: [],
+  },
+  {
+    claimId: "HSI-C-IBD-001",
+    edgeId: "HSI-E-IBD-001",
+    suggestedIsiRelationshipId: null,
+    matchKind: "none",
+    status: "unmapped",
+    rationale: "IL-23 → IBD illustrative pathway — no curated ISI REL-* yet.",
+    autoApprove: false,
+    isiNodeIds: [],
+  },
 ] as const;
 
 export function listIsiRelSuggestions(): IsiRelSuggestion[] {

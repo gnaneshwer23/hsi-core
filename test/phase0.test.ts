@@ -158,7 +158,8 @@ describe("ISI REL-* suggestion map", () => {
         expect(s.suggestedIsiRelationshipId.startsWith("REL-")).toBe(true);
         expect(s.matchKind).not.toBe("none");
       } else {
-        expect(s.matchKind).toBe("none");
+        // Honest gaps: none (no ISI analogue) or marker_only (LOINC-linked, no REL yet).
+        expect(["none", "marker_only"]).toContain(s.matchKind);
         expect(s.status).toBe("unmapped");
       }
     }
@@ -356,7 +357,7 @@ describe("Gate C checklist + publish outputs", () => {
 
   it("builds a disease-agnostic pilot evidence pack without patient CDS", () => {
     const pack = buildPilotEvidencePack({ generatedAt: "2026-11-01T12:00:00.000Z" });
-    expect(pack.schemaVersion).toBe("hsi-pilot-evidence-pack-1");
+    expect(pack.schemaVersion).toBe("hsi-pilot-evidence-pack-2");
     expect(pack.disease).toBe("TBD");
     expect(pack.researchQuestion).toContain("TBD");
     expect(pack.notCds).toBe(true);
@@ -367,6 +368,30 @@ describe("Gate C checklist + publish outputs", () => {
     expect(pack.summary.evidenceMapRows).toBe(pack.evidenceMap.length);
     expect(pack.expertShortlist.every((i) => i.autoApproved === false)).toBe(true);
     expect(pack.clinicalBoundary.some((b) => b.toLowerCase().includes("ehr"))).toBe(true);
+    expect(pack.discoveryCentre.discoveryLoop.framing).toContain("ASK");
+    expect(pack.discoveryCentre.illustrativeDiseaseContexts.every((d) => d.lockedPilot === false)).toBe(
+      true,
+    );
+    expect(pack.summary.claimsWithLoinc).toBeGreaterThanOrEqual(5);
+    expect(pack.entitySlice.typed.length).toBeGreaterThan(0);
+    expect(pack.evidenceMap.some((r) => r.claimId === "HSI-C-RA-001")).toBe(true);
+    expect(pack.evidenceMap.some((r) => r.marker.loinc === "53031-9")).toBe(true);
+  });
+
+  it("embeds Discovery Centre metadata in ISI export without interactive UI claims", () => {
+    const bundle = buildIsiExportBundle({ generatedAt: "2026-11-01T12:00:00.000Z" });
+    expect(bundle.discoveryCentre.notInteractiveUi).toBe(true);
+    expect(bundle.discoveryCentre.notLockedPilotIndications).toBe(true);
+    expect(bundle.discoveryCentre.partnerLock.disease).toBe("TBD");
+    expect(bundle.discoveryCentre.discoveryLoop.steps.map((s) => s.id)).toEqual([
+      "ask",
+      "map",
+      "review",
+      "test",
+      "learn",
+    ]);
+    expect(bundle.edges.some((e) => e.id === "HSI-E-SLE-001")).toBe(true);
+    expect(bundle.claimLoincLinks.some((l) => l.loinc === "42254-3")).toBe(true);
   });
 
   it("writes versioned dist/outputs bundle with required artifacts", () => {

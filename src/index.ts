@@ -115,12 +115,22 @@ export {
   serializePilotEvidencePackMarkdown,
   type PilotEvidenceMapRow,
   type PilotEvidencePack,
+  type PilotEntityRef,
   type PilotEntitySlice,
   type PilotExpertItem,
   type PilotExplanationSlot,
   type PilotQuestionProject,
   type PilotScopeField,
 } from "./pilotEvidencePack";
+
+export {
+  HSI_DISCOVERY_LOOP_STEPS,
+  HSI_ILLUSTRATIVE_DISEASE_CONTEXTS,
+  buildDiscoveryCentreMeta,
+  type HsiDiscoveryCentreMeta,
+  type HsiDiscoveryLoopStepId,
+  type HsiIllustrativeDiseaseId,
+} from "./discoveryCentreMeta";
 
 export {
   ISI_REL_SUGGESTIONS,
