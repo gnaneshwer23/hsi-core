@@ -98,6 +98,7 @@ Unchanged green from prior audit: Apolo lock, 79-row evidenceMap, `partnerCleare
 
 - No live CDS, no PHI→LLM, no Gate C auto-approve, no shared HSI↔ISI Neon.
 - Gate C review rows remain mapped-REL-only (~13) by design.
+- Aksh health-live / clinic CDS+PHI product code stays **out of HSI**; boundary + reject helpers only (`docs/CDS_PHI_BOUNDARY.md`).
 
 ---
 
@@ -108,3 +109,4 @@ Unchanged green from prior audit: Apolo lock, 79-row evidenceMap, `partnerCleare
 | hsi-core | `c657746` | Neon pack sync + rubric x-4 + Discovery SPA (prod) |
 | immunecity | `884261d` | catalogue.json consume fallback |
 | Prior tips | `7d733a0` / `309c6eb` | Pre-fix production baselines |
+| Pending | _(this change)_ | CDS/PHI boundary lift from aksh-health-redesign — SHAs filled after push |

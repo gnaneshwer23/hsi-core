@@ -32,3 +32,7 @@ DeliverX is ignored entirely.
 ## Stay focused
 
 Substrate, seeds, maps, exports, docs, and curator checklists (markdown under `docs/`) land here. Immunecity product code only under the freeze-lift scope above. See README “Active codebase”.
+
+## CDS / PHI (binding non-goal)
+
+**No live CDS and no PHI in HSI.** Do not wire Aksh/Akeno clinic engines, patient stores, EHR write-back, or PHI→LLM into this repo. Lift only governance / reject helpers / honesty asserts — see [`docs/CDS_PHI_BOUNDARY.md`](docs/CDS_PHI_BOUNDARY.md) and `src/cdsPhiBoundary.ts`. Aksh product CDS/PHI stays out-of-scope on purpose.

@@ -52,6 +52,7 @@ VOICE CARE · Causal AI · NUTRITION · SLEEP · EXERCISE · MENTAL_HEALTH · Gu
 - Agents draft; clinicians decide (Aksh CONDUCTOR + SHIELD posture).
 - HSI [`/akeno`](../docs/AKENO_IN_HSI.md) is the translation-handoff HITL consumer — fail-closed, `clinicalActive=false`, no Akeno Neon.
 - This catalog is **reference inventory** for mapping HITL surfaces to Aksh names; it does **not** enable clinic CDS in hsi-core.
+- CDS/PHI refuse rules (Aksh redesign → HSI): [`CDS_PHI_BOUNDARY.md`](./CDS_PHI_BOUNDARY.md).
 
 ## How to view
 

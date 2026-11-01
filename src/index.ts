@@ -666,6 +666,24 @@ export {
 } from "./akshAgents";
 
 export {
+  CDS_PHI_AGENT_CHECKLIST,
+  CDS_PHI_BOUNDARY_PROVENANCE,
+  CDS_PHI_BOUNDARY_SCHEMA,
+  CDS_PHI_OUT_OF_SCOPE_FOR_HSI,
+  HSI_CDS_PHI_INVARIANTS,
+  assertHsiCdsPhiBoundary,
+  buildCdsPhiBoundaryBundle,
+  rejectLiveCdsClaim,
+  rejectPhiPayload,
+  serializeCdsPhiBoundary,
+  type CdsPhiBoundaryBundle,
+  type CdsPhiPayloadFlags,
+  type CdsPhiRejectReason,
+  type CdsPhiRejectResult,
+  type HsiCdsPhiInvariants,
+} from "./cdsPhiBoundary";
+
+export {
   HSI_DISCOVERY_LOOP_STEPS,
   HSI_ILLUSTRATIVE_DISEASE_CONTEXTS,
   HSI_SYSTEMS_SECONDARY_AXES,

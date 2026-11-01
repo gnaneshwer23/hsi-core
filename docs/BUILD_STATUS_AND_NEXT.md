@@ -102,6 +102,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 |------|--------|----------|
 | Durable `aksh:` node map + HITL cards | **DONE** | Exports + `src/akshHitl.ts` |
 | Agent directory / register catalog (12 + 14) | **DONE** | `src/akshAgents.ts`, `aksh/agent-catalog.json`, `/aksh-agents` |
+| CDS/PHI boundary lift (governance only) | **DONE** | `src/cdsPhiBoundary.ts`, [`CDS_PHI_BOUNDARY.md`](./CDS_PHI_BOUNDARY.md) — reject PHI / reject live CDS; Aksh clinic engines **OUT OF SCOPE** |
 | Executable care-agent runtime / live CDS | **NOT STARTED** / **OUT OF SCOPE** | Catalog only; seeds `cdsSurfacable=false` |
 
 ### 1.7 Neon

@@ -25,6 +25,14 @@ Local clones used for read: `~/Projects/aksh-health-redesign`, `~/Projects/aksh-
 | `akshhealth-*` UK/India/shared | Product slices; no fuller roster than redesign |
 | [gnaneshwer23/akenohealth](https://github.com/gnaneshwer23/akenohealth) | Already integrated as HITL consumer (`/akeno`) — not the agent name catalog |
 
+## CDS / PHI boundary lift (governance only)
+
+| Source | Commit | What landed in hsi-core |
+|--------|--------|-------------------------|
+| [gnaneshwer23/aksh-health-redesign](https://github.com/gnaneshwer23/aksh-health-redesign) | `e552f7c1a155ac2196ad8acbd8f6ea2d5afbe76d` | Boundary contract + reject helpers → `src/cdsPhiBoundary.ts`, [`docs/CDS_PHI_BOUNDARY.md`](../docs/CDS_PHI_BOUNDARY.md) |
+
+Lifted from Aksh docs/contracts (not executable clinic code): research-evaluation boundary, `system-contracts` syntheticOnly flags, whole-loop `liveEmis:false` / not-MHRA-CDS honesty, PHI chat deny notes, EMIS env ≠ live write-back. The script var `healthLive` (ops `/api/health` probe) is **not** a PHI surface and was not ported as product code.
+
 ## Intentionally not copied
 
 - LLM runners (`llm-*.ts`), API routes, Neon/Medplum wiring, PHI fixtures
