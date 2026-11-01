@@ -168,7 +168,7 @@ Living status + prioritized backlog: [`BUILD_STATUS_AND_NEXT.md`](./BUILD_STATUS
 | **Phase 4** — HSI Neon `red-wave` readiness | **Done** (HSI-owned schema stub + migrate/gate-c-local guards; never ISI/Akeno/DeliverX) |
 | **Phase 5** — Pilot acceptance pack | **Done** (`hsi-pilot-acceptance.*` + `hsi-pilot-walkthrough.md`; Stage 1 four outputs + MANIFEST + gap + Gate C + rubric green; Apolo Pharma `partnerSigned` / KPIs **`partner_agreed`**; Stage 1 corpus licensing clearance applied) |
 | **Phase 6** — Target R1 Discovery Centre product surface | **Done** (`site/` route `/discovery`; loads `site/public/discovery/*.json` refreshed by `bun run outputs`; ASK→MAP→REVIEW; notCds; Akeno = later) |
-| Source licensing / attribution for agreed partner corpus | **Done** (Stage 1 — `oa_reuse` + `cite_metadata_pilot`; unknown uncleared) |
+| Source licensing / attribution for agreed partner corpus | **Done** (Stage 1 — `oa_reuse` + `cite_metadata_pilot`; uncleared=0) |
 | Success-metric numeric thresholds with partner | **Done** — Apolo Pharma operator-agreed 2026-11-01 in `src/stage1RubricThresholds.ts` (`thresholdSource=partner_agreed`, `partnerId=partner:apolo-pharma`, `replaceWithPartnerAgreedThresholds=false`; min edges 12 / competing 4 / LOINC 6; Gate C pending allowed; `green_with_pending`) |
 | PDF/DOCX brief renderer | **Deferred** (ISI product P1; needs explicit ask) |
 | **Phase 7** — R2 validation | **Done** (`hsi-r2-validation.*`; hypothesis cards with untested/supported/refuted/gap; ranked gaps + literature tests; Discovery Centre **VALIDATE** tab; research only — not clinical protocols) |

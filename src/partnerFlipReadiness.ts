@@ -146,7 +146,7 @@ function buildRows(lock: HsiPartnerLock): FlipRequirementRow[] {
           "Agree source licensing / attribution for the partner source set.",
         status: (licensingPass ? "pass" : "pending") as FlipRequirementStatus,
         evidence: licensingPass
-          ? `Apolo Pharma Stage 1 corpus clearance (operator-asserted 2026-11-01): partnerClearedCount=${cleared} (oa_reuse=${scopes.oa_reuse}, cite_metadata_pilot=${scopes.cite_metadata_pilot}, uncleared=${scopes.uncleared}). Cite-metadata pilot ≠ FT redistribution; unknown left needs_confirm.`
+          ? `Apolo Pharma Stage 1 corpus clearance (operator-asserted 2026-11-01): partnerClearedCount=${cleared} (oa_reuse=${scopes.oa_reuse}, cite_metadata_pilot=${scopes.cite_metadata_pilot}, uncleared=${scopes.uncleared}). Cite-metadata pilot ≠ FT redistribution${scopes.uncleared === 0 ? "; pack PMIDs fully cleared for Stage 1 cite/OA scopes (no invented CC)." : "; remaining unknown left needs_confirm."}`
           : isFixture
             ? "hsi-source-licensing-stub.json curator-reviewed; fixture does not clear partner corpus attribution (partnerClearedCount stays 0 on hypothetical path)."
             : `hsi-source-licensing-stub.json curator-reviewed; partnerClearedCount=${cleared} — named partner attribution still open.`,
@@ -346,7 +346,7 @@ export function buildPartnerFlipReadinessBundle(opts?: {
         ]
       : [
           `Named partner active: ${lock.partner?.label ?? "unknown"} (${lock.partner?.id ?? "unknown"}) — MoU paperwork operator-asserted; still not CDS.`,
-          "Apolo Pharma Stage 1 corpus licensing clearance applied (oa_reuse + cite_metadata_pilot; unknown uncleared/needs_confirm). See docs/HOW_TO_SOURCE_LICENSING.md.",
+          "Apolo Pharma Stage 1 corpus licensing clearance applied (oa_reuse + cite_metadata_pilot; pack PMIDs cleared — uncleared=0). See docs/HOW_TO_SOURCE_LICENSING.md.",
           "Stage 1 numeric rubric thresholds are partner_agreed with Apolo Pharma (2026-11-01) — keep pack depth ≥ 12/4/6.",
           "Keep Gate C human-only — never auto-approve into ISI product KG.",
           "Refresh bun run outputs + re-sync immunecity public/hsi-discovery after pack depth changes.",
@@ -359,7 +359,7 @@ export function buildPartnerFlipReadinessBundle(opts?: {
       "satisfied_by_fixture ≠ pass for production MoU claims.",
       lock.isHypothetical
         ? "set_for_test / pending thresholds ≠ partner-agreed KPIs — replaceWithPartnerAgreedThresholds=true until re-agreed."
-        : "Apolo Pharma Stage 1 KPIs are partner_agreed; licensing clearanceScope=oa_reuse|cite_metadata_pilot applied (unknown uncleared).",
+        : "Apolo Pharma Stage 1 KPIs are partner_agreed; licensing clearanceScope=oa_reuse|cite_metadata_pilot applied (uncleared=0).",
       lock.isHypothetical
         ? "partnerSigned may be true under hypothetical_test_only; lockedPilot stays false while legalBinding=false."
         : "Named partner: partnerSigned=true + legalBinding=true → lockedPilot=true; MoU operator-asserted — still not CDS / no auto Gate C.",

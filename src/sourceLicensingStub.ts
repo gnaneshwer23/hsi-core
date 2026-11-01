@@ -5,7 +5,7 @@
  * Apolo Pharma Stage 1 partner corpus clearance (2026-11-01 operator-asserted):
  *   ok_oa → partnerCleared + clearanceScope=oa_reuse (cite + OA FT as license permits)
  *   restricted / ok_cite → partnerCleared + cite_metadata_pilot (cite-only; no FT redistribution)
- *   unknown → uncleared (needs_confirm)
+ *   unknown → uncleared (needs_confirm) — pack corpus recheck cleared former unknowns to ok_cite
  * Does not invent commercial publisher licenses or flip legalBinding.
  * Bibliographic citation of PMIDs remains standard scholarly practice;
  * licenseStatus governs full-text / figure / commercial redistribution claims.
@@ -219,11 +219,11 @@ const PMID_REVIEW: Record<string, ReviewEntry> = {
     note: "J Pers Med (MDPI); Europe PMC license=cc by — OA under CC BY.",
   },
   "34031030": {
-    status: "unknown",
+    status: "ok_cite",
     doi: "10.1136/annrheumdis-2021-220209",
     pmcid: "PMC8516708",
     publisherLicense: null,
-    note: "Ann Rheum Dis 2021; PMC author manuscript — cite + link; no invented CC-BY.",
+    note: "Ann Rheum Dis 2021; recheck EPMC license null + Crossref TDM-only (no CC) — Apolo cite_metadata_pilot; PMC author MS link-out OK; no FT republication.",
   },
   "16385515": {
     status: "restricted",
@@ -238,25 +238,25 @@ const PMID_REVIEW: Record<string, ReviewEntry> = {
 
   // Gut SCFA / mucosal
   "19625695": {
-    status: "unknown",
+    status: "ok_cite",
     doi: "10.3945/jn.109.104638",
     pmcid: "PMC2728689",
     publisherLicense: null,
-    note: "J Nutr; free in PMC but Europe PMC license null; Crossref lists Elsevier OA userlicense (not CC) — do not invent CC-BY.",
+    note: "J Nutr; recheck EPMC license null + Crossref Elsevier OA userlicense (not CC) — Apolo cite_metadata_pilot; PMC free link-out OK; no FT republication / no invented CC-BY.",
   },
   "21205640": {
-    status: "unknown",
+    status: "ok_cite",
     doi: "10.1126/science.1198469",
     pmcid: "PMC3969237",
     publisherLicense: null,
-    note: "Science; author manuscript in PMC (green); publisher HTML still subscription; no clear CC on VoR — cite + link PMC; no FT republication claim.",
+    note: "Science; recheck EPMC isOA=N + Crossref no license URL — Apolo cite_metadata_pilot; green PMC MS link-out OK; VoR subscription; no FT republication.",
   },
   "23828891": {
-    status: "unknown",
+    status: "ok_cite",
     doi: "10.1126/science.1241165",
     pmcid: "PMC3807819",
     publisherLicense: null,
-    note: "Science; PMC free author manuscript; no Europe PMC CC — unknown reuse beyond citation/link.",
+    note: "Science; recheck EPMC license null + Crossref empty licenses — Apolo cite_metadata_pilot; PMC MS link-out OK; no invented CC / no FT republication.",
   },
   "23842501": {
     status: "restricted",
@@ -269,25 +269,25 @@ const PMID_REVIEW: Record<string, ReviewEntry> = {
     note: "Nature 2013; no OA/PMC — cite metadata only.",
   },
   "24917457": {
-    status: "unknown",
+    status: "ok_cite",
     doi: "10.1038/mi.2014.44",
     pmcid: "PMC4263689",
     publisherLicense: null,
-    note: "Mucosal Immunol; EPMC isOpenAccess=Y + PMC but license null; Crossref Elsevier OA userlicense (not CC) — unknown for CC-style reuse.",
+    note: "Mucosal Immunol; recheck EPMC isOA=Y + license null; Crossref Elsevier OA userlicense (not CC) — Apolo cite_metadata_pilot; no invented CC-BY / no FT republication.",
   },
   "30918945": {
-    status: "unknown",
+    status: "ok_cite",
     doi: "10.1093/ibd/izz046",
     pmcid: "PMC6701512",
     publisherLicense: null,
-    note: "Inflamm Bowel Dis; free in PMC; Crossref CHORUS/standard OUP model (not CC) — unknown for redistribution.",
+    note: "Inflamm Bowel Dis; recheck EPMC license null + Crossref CHORUS/standard OUP model (not CC) — Apolo cite_metadata_pilot; PMC free link-out OK; no FT republication.",
   },
   "24412617": {
-    status: "unknown",
+    status: "ok_cite",
     doi: "10.1016/j.immuni.2013.12.007",
     pmcid: "PMC4305274",
     publisherLicense: null,
-    note: "Immunity 2014; NIHMS/PMC manuscript — cite + link; no invented CC-BY.",
+    note: "Immunity 2014; recheck EPMC license null + Crossref Elsevier OA userlicense (not CC) — Apolo cite_metadata_pilot; NIHMS/PMC MS link-out OK; no invented CC-BY.",
   },
   "29163504": {
     status: "ok_oa",
@@ -333,18 +333,18 @@ const PMID_REVIEW: Record<string, ReviewEntry> = {
     note: "PNAS 2008; PMC free author manuscript — cite + link; no invented CC-BY.",
   },
   "21921156": {
-    status: "unknown",
+    status: "ok_cite",
     doi: "10.1126/science.1209985",
     pmcid: "PMC4548937",
     publisherLicense: null,
-    note: "Science; PMC author manuscript free; no clear CC on VoR — unknown beyond citation/link.",
+    note: "Science; recheck EPMC license null + Crossref empty licenses — Apolo cite_metadata_pilot; PMC MS link-out OK; no invented CC / no FT republication.",
   },
   "27382171": {
-    status: "unknown",
+    status: "ok_cite",
     doi: "10.1073/pnas.1605635113",
     pmcid: "PMC4961187",
     publisherLicense: null,
-    note: "PNAS 2016; free in PMC; Europe PMC license null / Crossref no CC URL — unknown (do not invent CC-BY).",
+    note: "PNAS 2016; recheck EPMC isOA=N + license null; Crossref no CC URL — Apolo cite_metadata_pilot; PMC free link-out OK; no invented CC-BY.",
   },
 
   // SSc deepen (CXCL4 / IL-6 / rituximab)
@@ -378,11 +378,11 @@ const PMID_REVIEW: Record<string, ReviewEntry> = {
     note: "PNAS 2014 Chang butyrate/macrophage HDAC; PMC free author manuscript — cite + link; no invented CC-BY.",
   },
   "25865369": {
-    status: "unknown",
+    status: "ok_cite",
     doi: "10.1016/j.chom.2015.03.005",
-    pmcid: "PMC4430144",
+    pmcid: "PMC4433427",
     publisherLicense: null,
-    note: "Cell Host Microbe 2015 Kelly SCFA/HIF; PMC manuscript — cite + link; no invented CC-BY.",
+    note: "Cell Host Microbe 2015 Kelly SCFA/HIF; recheck EPMC license null + Crossref Elsevier OA userlicense (not CC) — Apolo cite_metadata_pilot; PMC MS link-out OK; no invented CC-BY.",
   },
 
   // Neuro deepen (pharmacologic / trafficking / IR)

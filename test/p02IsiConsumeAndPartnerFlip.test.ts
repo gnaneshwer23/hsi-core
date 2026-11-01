@@ -190,8 +190,13 @@ describe("P0.2-HSI ISI consume contract + partner flip-readiness", () => {
     expect(byPmid.get("24586782")?.licenseStatus).toBe("ok_oa"); // PLOS CC BY
     expect(byPmid.get("24586782")?.clearanceScope).toBe("oa_reuse");
     expect(byPmid.get("37763102")?.licenseStatus).toBe("ok_oa"); // MDPI CC BY
-    expect(byPmid.get("27382171")?.licenseStatus).toBe("unknown"); // PNAS free unclear
-    expect(byPmid.get("27382171")?.clearanceScope).toBe("uncleared");
+    expect(byPmid.get("27382171")?.licenseStatus).toBe("ok_cite"); // PNAS free, no CC → cite pilot
+    expect(byPmid.get("27382171")?.clearanceScope).toBe("cite_metadata_pilot");
+    expect(byPmid.get("19625695")?.licenseStatus).toBe("ok_cite"); // J Nutr Elsevier userlicense ≠ CC
+    expect(byPmid.get("19625695")?.clearanceScope).toBe("cite_metadata_pilot");
+    expect(byPmid.get("34031030")?.clearanceScope).toBe("cite_metadata_pilot");
+    expect(bundle.summary.clearanceScopeCounts.uncleared).toBe(0);
+    expect(bundle.summary.partnerClearedCount).toBe(bundle.summary.pmidCount);
     expect(byPmid.get("24350901")?.licenseStatus).toBe("restricted"); // CXCL4 NEJM
     expect(byPmid.get("24226773")?.licenseStatus).toBe("restricted"); // Arpaia Nature
     expect(byPmid.get("11901203")?.licenseStatus).toBe("ok_oa"); // Bernik JEM

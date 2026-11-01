@@ -296,7 +296,7 @@ function buildCriteria(opts: {
           ? `Apolo Pharma Stage 1 clearance: partnerClearedCount=${cleared} (oa_reuse=${scopes.oa_reuse}, cite_metadata_pilot=${scopes.cite_metadata_pilot}, uncleared=${scopes.uncleared}); cite-metadata ≠ FT redistribution`
           : `Scope-locked PMIDs are public PubMed locators; curator statuses in licensing stub; partnerClearedCount=${cleared}`,
         notes: licensingPass
-          ? "Stage 1 pilot clearance only — do not invent commercial publisher licenses; unknown remains needs_confirm."
+          ? "Stage 1 pilot clearance only — do not invent commercial publisher licenses; cite_metadata_pilot ≠ FT redistribution."
           : "Pending after partnerSigned — do not claim licensed corpora.",
       });
     })(),
@@ -361,7 +361,7 @@ function buildWalkthroughSteps(lock: HsiPartnerLock): PilotAcceptancePack["walkt
       step: 4,
       title: "Run the review rubric",
       open: "hsi-pilot-review-rubric.md",
-      say: "Mark ready_for_human items live with the partner. Apolo Pharma Stage 1 numeric KPIs are partner_agreed (2026-11-01). Corpus licensing clearance applied (oa_reuse + cite_metadata_pilot; unknown uncleared).",
+      say: "Mark ready_for_human items live with the partner. Apolo Pharma Stage 1 numeric KPIs are partner_agreed (2026-11-01). Corpus licensing clearance applied (oa_reuse + cite_metadata_pilot; uncleared=0).",
       doNot: "Do not invent CDS, auto-approve Gate C, or claim full-text redistribution from cite_metadata_pilot.",
     },
     {
@@ -613,7 +613,7 @@ export function serializePilotWalkthroughMarkdown(
     `- overall: \`${pack.summary.overallStage1Acceptance}\``,
     `- four outputs green: \`${pack.summary.stage1FourOutputsGreen}\``,
     `- partner-ready walkthrough: \`${pack.summary.partnerReadyWalkthrough}\``,
-    `- licensing: Apolo Pharma Stage 1 corpus clearance (oa_reuse + cite_metadata_pilot; unknown uncleared/needs_confirm)`,
+    `- licensing: Apolo Pharma Stage 1 corpus clearance (oa_reuse + cite_metadata_pilot; uncleared=0)`,
     `- partner_agreed: Apolo Pharma Stage 1 numeric KPIs (2026-11-01)`,
     "",
     "## After the meeting",

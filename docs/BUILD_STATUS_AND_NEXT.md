@@ -1,7 +1,7 @@
 # HSI build status and next
 
 **Audit date:** 1 November 2026  
-**HEAD at write:** (post Apolo Pharma corpus clearance) — named partner **Apolo Pharma** (`partner:apolo-pharma`); `partnerSigned=true` + `legalBinding=true` → `lockedPilot=true`; MoU paperwork **operator-asserted**; Stage 1 numeric thresholds **`partner_agreed`** (2026-11-01); Stage 1 corpus licensing clearance applied (`oa_reuse` + `cite_metadata_pilot`; `unknown` uncleared); not CDS
+**HEAD at write:** (post Apolo Pharma corpus clearance complete) — named partner **Apolo Pharma** (`partner:apolo-pharma`); `partnerSigned=true` + `legalBinding=true` → `lockedPilot=true`; MoU paperwork **operator-asserted**; Stage 1 numeric thresholds **`partner_agreed`** (2026-11-01); Stage 1 corpus licensing clearance applied (`oa_reuse` + `cite_metadata_pilot`; uncleared=0); not CDS
 
 
 **Edit target:** `hsi-core` primary · immunecity HSI-consume wiring allowed under freeze lift · Neon **`red-wave` only** for HSI · no DeliverX  
@@ -20,7 +20,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | R0–R1 substrate + `/discovery` | **GREEN** | Four outputs + ASK→MAP→REVIEW on regenerable packs |
 | R2 workbench (HSI) | **GREEN** | Hypothesis + gaps + VALIDATE; Apolo Pharma Stage 1 KPIs `partner_agreed` (2026-11-01) |
 | R3 translation / `/akeno` | **YELLOW** | HITL scaffolding only (`clinicalActive=false`) |
-| Partner pilot readiness (M3) | **GREEN** | **Apolo Pharma** named lock (`lockedPilot=true`); KPIs `partner_agreed`; Stage 1 corpus clearance (`oa_reuse` + `cite_metadata_pilot`; unknown uncleared) |
+| Partner pilot readiness (M3) | **GREEN** | **Apolo Pharma** named lock (`lockedPilot=true`); KPIs `partner_agreed`; Stage 1 corpus clearance (`oa_reuse` + `cite_metadata_pilot`; uncleared=0) |
 | Live CDS / PHI / shared Neon | **RED (correct)** | Explicitly not built |
 | Vision axes / AI stubs | **GREEN** | SSc/gut/neuro depth; graph explorer; AF3/TDC/ISI fixtures + Boltz weights policy; all adapters proposal-only |
 | ISI consume handoff (HSI side) | **GREEN** | **P0.2-HSI** contract + **P0.5** playbook/wiring-spec/example client — product apply still OUT OF REPO |
@@ -47,7 +47,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | Discovery interactive graph explorer | **DONE** | `/discovery` MAP — nodes/edges from pack JSON; grade coloring; click → evidence card; not-diagnostic banners |
 | ISI consume contract + partner flip-readiness (P0.2-HSI) | **DONE** | `src/isiConsumeContract.ts` → `hsi-isi-consume-contract.*`; `src/partnerFlipReadiness.ts` → `hsi-partner-flip-readiness.*`; fixture may set `partnerSigned` under `hypothetical_test_only` |
 | ISI/immunecity wiring playbook (P0.5 HSI-side) | **DONE** | [`ISI_IMMUNICITY_WIRING_PLAYBOOK.md`](./ISI_IMMUNICITY_WIRING_PLAYBOOK.md); [`hsi-isi-wiring-spec.json`](./hsi-isi-wiring-spec.json) (+ discovery copy); [`examples/isi-consumer/`](../examples/isi-consumer/); **immunecity freeze lifted 2026-11-01 for HSI-consume wiring only** |
-| Source licensing stub (P0.3) | **DONE** (curator + Apolo clearance) | `src/sourceLicensingStub.ts` → reviewed statuses + `partnerCleared` / `clearanceScope` (2026-11-01); unknown left `uncleared` |
+| Source licensing stub (P0.3) | **DONE** (curator + Apolo clearance) | `src/sourceLicensingStub.ts` → reviewed statuses + `partnerCleared` / `clearanceScope` (2026-11-01); pack uncleared=0 (`ok_cite` for former unknowns) |
 | Package scripts | **DONE** | `test`, `outputs`, `db:migrate`, `db:gate-c-local`, `site:dev` / `site:build` |
 
 ### 1.2 Stage 1 packs (pilot R0–R1)
@@ -61,7 +61,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | Phase 3 RA/TNF evidence depth (ADA, serology, RF LOINC, MTX combo) | **DONE** | Pack + seeds; commit `e2612dc` |
 | Review rubric + acceptance + walkthrough | **DONE** | `hsi-pilot-review-rubric.*`, `hsi-pilot-acceptance.*`, `hsi-pilot-walkthrough.md` |
 | `partnerSigned` / `lockedPilot` | **DONE** (named) | Apolo Pharma: `partnerSigned=true` + `agreementKind=legal_mou` + `legalBinding=true` → `lockedPilot=true`; MoU operator-asserted; still not CDS |
-| Source licensing table for agreed corpus | **DONE** (Stage 1) | Apolo clearance: `ok_oa`→`oa_reuse`, `restricted`→`cite_metadata_pilot`, `unknown`→`uncleared`/`needs_confirm`; cite-metadata ≠ FT rights |
+| Source licensing table for agreed corpus | **DONE** (Stage 1) | Apolo clearance: `ok_oa`→`oa_reuse`, `restricted`/`ok_cite`→`cite_metadata_pilot`; pack uncleared=0; cite-metadata ≠ FT rights |
 | Numeric evaluation thresholds | **DONE** | Apolo Pharma `partner_agreed` in `src/stage1RubricThresholds.ts` (min edges 12 / competing 4 / LOINC 6; Gate C pending allowed; `green_with_pending` OK; `replaceWithPartnerAgreedThresholds=false`; operator-agreed 2026-11-01) |
 | PDF/DOCX brief | **OUT OF SCOPE** | ISI product P1 |
 
