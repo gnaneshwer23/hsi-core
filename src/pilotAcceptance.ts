@@ -277,7 +277,7 @@ function buildCriteria(opts: {
       artifact:
         "hsi-source-licensing-stub.json · docs/HOW_TO_SOURCE_LICENSING.md · hsi-partner-lock.json#flipRequirements",
       status: "pending",
-      evidence: "Scope-locked PMIDs are public PubMed locators only; stub rows remain needs_review",
+      evidence: "Scope-locked PMIDs are public PubMed locators; curator statuses in licensing stub; partnerClearedCount=0",
       notes: "Pending after partnerSigned — do not claim licensed corpora.",
     }),
     criterion({

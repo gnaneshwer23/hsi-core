@@ -15,7 +15,7 @@
   "testPilotMode": true,
   "testFixtureBanner": "TEST FIXTURE — replace before real pilot",
   "allowHypotheticalPartnerEnv": "ALLOW_HYPOTHETICAL_PARTNER",
-  "generatedAt": "2026-11-01T20:12:41.390Z",
+  "generatedAt": "2026-11-01T20:21:39.173Z",
   "package": "hsi-core",
   "outputsManifestSchema": "hsi-outputs-manifest-1",
   "compatibility": {
@@ -349,7 +349,7 @@
         "partner_readiness"
       ],
       "autoApproveIntoKg": false,
-      "notes": "P0.3 stub: PMIDs from RA/SSc/gut/neuro packs; licenseStatus=needs_review."
+      "notes": "P0.3 reviewed: PMIDs from RA/SSc/gut/neuro packs; licenseStatus ok_cite|ok_oa|restricted|unknown (2026-11-01 Europe PMC/Crossref)."
     },
     {
       "manifestKey": "embeddingSidecarsJson",

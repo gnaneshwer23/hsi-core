@@ -60,6 +60,6 @@ See [`.env.example`](../.env.example).
 
 1. Prefer **read-only** inspection (`branches list`, `databases list`, schema `SELECT` via `neonctl psql`) unless the user asked to mutate **HSI Neon**.
 2. **Never** print API keys, passwords, or full connection strings in docs or chat.
-3. Stay out of immunecity / akeno / swift-deliveries **code** edits; hsi-core is the sole HSI edit target ([`AGENTS.md`](../AGENTS.md), [`VISION_REPO_ALIGNMENT.md`](./VISION_REPO_ALIGNMENT.md)).
+3. **Immunecity freeze lifted 2026-11-01** for **ISI HSI-consume wiring only** (user auth; see [`AGENTS.md`](../AGENTS.md)). Still no DeliverX edits. Still **no shared Neon**. HSI substrate stays `red-wave`; ISI product DB stays `autumn-snow` for the ISI app only.
 4. **Never** point HSI `DATABASE_URL` / migrations / Gate C substrate writes at `autumn-snow`, `ep-blue-salad…`, Akeno, or DeliverX.
 5. Gate C curation artifacts live in this repo (`docs/IMMUNECITY_GATE_C_COMMIT_MANUAL.md`, exports). Product Gate C approve (ISI) stays in immunecity’s Neon — separate DB, separate technology surface.

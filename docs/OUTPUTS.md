@@ -144,7 +144,7 @@ Living status + prioritized backlog: [`BUILD_STATUS_AND_NEXT.md`](./BUILD_STATUS
 | Next unblocked thin adapter spike (P3.2 REINVENT4) | **Done** (`hsi-reinvent4-adapter-proposals.*`; `runtime: stub|reinvent`; cites RA-012 / GUT-003; Gate C pending; eval harness case; never clinic path; Boltz deferred) |
 | FAIR ESM-2 thin embedding stub (P3.3) | **Done** (`hsi-esm-adapter-proposals.*`; `runtime: stub|esm`; cites RA-001 / GUT-003; ModelProposalArtifacts + sidecar refs; Gate C pending; eval harness case; no weight vendoring; Boltz deferred) |
 | ISI consume contract + partner flip-readiness (P0.2-HSI) | **Done** (`hsi-isi-consume-contract.*` + `hsi-partner-flip-readiness.*`; `partnerSigned=false`; adapter track paused) |
-| Source licensing stub (P0.3) | **Partial** (`hsi-source-licensing-stub.*`; all `needs_review` until partner) |
+| Source licensing stub (P0.3) | **Reviewed** (`hsi-source-licensing-stub.*`; ok_oa/restricted/unknown; partnerCleared=0) |
 | **Next** — named partner OR out-of-repo ISI product wiring | **Waiting human** — do not invent more adapter spikes without partnerNamed |
 | Typed entity slice + LOINC on pack evidence rows | **Done** |
 | **Phase 1b** — Partner disease + question **provisional** scaffold | **Done** (superseded by Phase 2) |

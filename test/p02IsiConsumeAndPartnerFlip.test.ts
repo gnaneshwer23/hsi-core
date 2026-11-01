@@ -114,16 +114,27 @@ describe("P0.2-HSI ISI consume contract + partner flip-readiness", () => {
     expect(json.lockedPilot).toBe(false);
   });
 
-  test("source licensing stub lists RA/SSc/gut/neuro PMIDs as needs_review", () => {
+  test("source licensing stub lists RA/SSc/gut/neuro PMIDs with curator statuses", () => {
     const bundle = buildSourceLicensingStubBundle({
       generatedAt: "2026-11-01T19:00:00.000Z",
     });
 
     expect(bundle.schemaVersion).toBe(SOURCE_LICENSING_STUB_SCHEMA);
+    expect(bundle.phase).toBe("P0.3-reviewed");
     expect(bundle.partnerSigned).toBe(false);
+    expect(bundle.reviewDate).toBe("2026-11-01");
+    expect(bundle.reviewMethod.length).toBeGreaterThan(40);
     expect(bundle.summary.pmidCount).toBeGreaterThan(20);
-    expect(bundle.summary.needsReviewCount).toBe(bundle.summary.pmidCount);
+    expect(bundle.summary.needsReviewCount).toBe(0);
     expect(bundle.summary.partnerClearedCount).toBe(0);
+    expect(bundle.summary.okOaCount).toBeGreaterThan(0);
+    expect(bundle.summary.restrictedCount).toBeGreaterThan(0);
+    expect(
+      bundle.summary.okCiteCount +
+        bundle.summary.okOaCount +
+        bundle.summary.restrictedCount +
+        bundle.summary.unknownCount,
+    ).toBe(bundle.summary.pmidCount);
 
     const packs = new Set(bundle.rows.flatMap((r) => r.packs));
     expect(packs.has("ra_tnf")).toBe(true);
@@ -131,20 +142,25 @@ describe("P0.2-HSI ISI consume contract + partner flip-readiness", () => {
     expect(packs.has("gut_scfa")).toBe(true);
     expect(packs.has("neuro_vagus")).toBe(true);
 
+    const allowed = new Set(["ok_cite", "ok_oa", "restricted", "unknown"]);
     for (const r of bundle.rows) {
-      expect(r.licenseStatus).toBe("needs_review");
+      expect(allowed.has(r.licenseStatus)).toBe(true);
       expect(r.pmid).toMatch(/^\d+$/);
       expect(r.europePmcUrl).toContain(r.pmid);
     }
 
-    // Known primary PMIDs from each pack
-    const pmids = new Set(bundle.rows.map((r) => r.pmid));
-    expect(pmids.has("11244034")).toBe(true); // RA TNF
-    expect(pmids.has("30760472")).toBe(true); // SSc
-    expect(pmids.has("24226770")).toBe(true); // gut butyrate
-    expect(pmids.has("10839541")).toBe(true); // neuro vagus
+    // Known primary PMIDs from each pack + license spot checks
+    const byPmid = new Map(bundle.rows.map((r) => [r.pmid, r]));
+    expect(byPmid.get("11244034")?.licenseStatus).toBe("restricted"); // RA TNF
+    expect(byPmid.get("30760472")?.licenseStatus).toBe("restricted"); // SSc
+    expect(byPmid.get("24226770")?.licenseStatus).toBe("restricted"); // gut butyrate
+    expect(byPmid.get("10839541")?.licenseStatus).toBe("restricted"); // neuro vagus
+    expect(byPmid.get("24586782")?.licenseStatus).toBe("ok_oa"); // PLOS CC BY
+    expect(byPmid.get("37763102")?.licenseStatus).toBe("ok_oa"); // MDPI CC BY
+    expect(byPmid.get("27382171")?.licenseStatus).toBe("unknown"); // PNAS free unclear
 
     const json = JSON.parse(serializeSourceLicensingStub(bundle));
     expect(json.summary.partnerClearedCount).toBe(0);
+    expect(json.summary.needsReviewCount).toBe(0);
   });
 });

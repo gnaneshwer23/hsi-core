@@ -1,11 +1,11 @@
 # ISI / immunecity wiring playbook (out of hsi-core)
 
-**Purpose:** Maximum useful **handoff package** so a human or agent can wire immunecity / ISI product screens to HSI published artifacts — **without editing immunecity from this workspace**.
+**Purpose:** Maximum useful **handoff package** so a human or agent can wire immunecity / ISI product screens to HSI published artifacts.
 
 | Binding | Rule |
 |---------|------|
-| Write target | **`~/Projects/hsi-core` only** ([`AGENTS.md`](../AGENTS.md)) |
-| Immunecity | **Do not edit** `~/Desktop/immune-city` or `github.com/gnaneshwer23/immunecity` from an hsi-core session |
+| HSI substrate write target | **`~/Projects/hsi-core`** ([`AGENTS.md`](../AGENTS.md)) |
+| Immunecity | **Freeze lifted 2026-11-01** (user auth) for **ISI HSI-consume wiring only** — `~/Desktop/immune-city` / `github.com/gnaneshwer23/immunecity`. Still no DeliverX. |
 | HSI Neon | **`red-wave-06625195` only** |
 | ISI Neon | **`autumn-snow-67879321`** — product DB; Gate C approve+supports only; **never** HSI migrations / Gate C local from hsi-core |
 | Shared evidence DB | **Forbidden** |
@@ -36,13 +36,13 @@ bun run examples/isi-consumer/demo.ts
 | Rubric thresholds | `hsi-pilot-review-rubric.*` — `thresholdStatus=set_for_test`; real partner must re-agree numbers |
 | Licensing review | Follow [`HOW_TO_SOURCE_LICENSING.md`](./HOW_TO_SOURCE_LICENSING.md) against `hsi-source-licensing-stub.*` |
 | Swap to a real partner | Edit `src/hypotheticalPartnerFixture.ts` (`USE_HYPOTHETICAL_PARTNER_FIXTURE=false` + `REAL_PARTNER_REPLACEMENT`); never invent email/MoU |
-| Wire immunecity | Use a **separate immunecity session** + §8 below — freeze still applies here |
+| Wire immunecity | Apply §8 in immunecity checkout (`~/Desktop/immune-city`); freeze lifted 2026-11-01 for consume wiring only |
 
 ---
 
-## 0. Freeze reminder
+## 0. Freeze status
 
-Applying wires means opening an **immunecity repo session** (or an explicit user override of the freeze). This playbook + wiring spec + example client are the HSI-side deliverable. **Nothing here mutates immunecity or ISI Neon.**
+**Lifted 2026-11-01** for HSI Discovery consume wiring in immunecity only. This playbook + wiring spec + `examples/isi-consumer/` remain the HSI-side contract. Do **not** share Neon; do **not** touch DeliverX; do **not** auto-approve Gate C.
 
 ---
 
@@ -79,7 +79,7 @@ Start here:
 | `hsi-vertical-decision.json` | Dual-track A (ASK stays RA) |
 | `hsi-ssc-pathway-pack.json` / `hsi-gut-immune-pack.json` / `hsi-neuroimmune-pack.json` | Secondary axes |
 | `hsi-partner-flip-readiness.json` | Flip checklist; never invent MoU |
-| `hsi-source-licensing-stub.json` | PMID license stub (`needs_review`) |
+| `hsi-source-licensing-stub.json` | PMID license stub (curator-reviewed statuses) |
 
 Full priority list: consume contract `artifacts[]` + wiring spec `fetch.discoveryFiles`.
 

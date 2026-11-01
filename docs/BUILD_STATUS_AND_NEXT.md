@@ -45,8 +45,8 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | Systems multi-axis stubs (gut / neuro / DTB / patient plane / P3) | **DONE** (vocab) | `src/systemsAxes.ts` → `hsi-systems-vision.json` |
 | AI / NN position + model-proposal / embedding / eval / genome-pointer / P3 license / RDKit + OpenMM + REINVENT4 + ESM spikes | **DONE** (adapter track **paused**) | [`HSI_AI_NEURAL_FUTURE_HEALTHCARE.md`](./HSI_AI_NEURAL_FUTURE_HEALTHCARE.md); `aiFutureTech`; P1.5–P3.3 artifacts as before |
 | ISI consume contract + partner flip-readiness (P0.2-HSI) | **DONE** | `src/isiConsumeContract.ts` → `hsi-isi-consume-contract.*`; `src/partnerFlipReadiness.ts` → `hsi-partner-flip-readiness.*`; fixture may set `partnerSigned` under `hypothetical_test_only` |
-| ISI/immunecity wiring playbook (P0.5 HSI-side) | **DONE** | [`ISI_IMMUNICITY_WIRING_PLAYBOOK.md`](./ISI_IMMUNICITY_WIRING_PLAYBOOK.md); [`hsi-isi-wiring-spec.json`](./hsi-isi-wiring-spec.json) (+ discovery copy); [`examples/isi-consumer/`](../examples/isi-consumer/); **product wiring = OUT OF REPO** |
-| Source licensing stub (P0.3) | **PARTIAL** | `src/sourceLicensingStub.ts` → `hsi-source-licensing-stub.*`; all rows `needs_review` until partner |
+| ISI/immunecity wiring playbook (P0.5 HSI-side) | **DONE** | [`ISI_IMMUNICITY_WIRING_PLAYBOOK.md`](./ISI_IMMUNICITY_WIRING_PLAYBOOK.md); [`hsi-isi-wiring-spec.json`](./hsi-isi-wiring-spec.json) (+ discovery copy); [`examples/isi-consumer/`](../examples/isi-consumer/); **immunecity freeze lifted 2026-11-01 for HSI-consume wiring only** |
+| Source licensing stub (P0.3) | **DONE** (curator pass) | `src/sourceLicensingStub.ts` → reviewed `ok_oa` / `restricted` / `unknown` (2026-11-01); `partnerClearedCount=0` until named partner |
 | Package scripts | **DONE** | `test`, `outputs`, `db:migrate`, `db:gate-c-local`, `site:dev` / `site:build` |
 
 ### 1.2 Stage 1 packs (pilot R0–R1)
@@ -60,7 +60,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | Phase 3 RA/TNF evidence depth (ADA, serology, RF LOINC, MTX combo) | **DONE** | Pack + seeds; commit `e2612dc` |
 | Review rubric + acceptance + walkthrough | **DONE** | `hsi-pilot-review-rubric.*`, `hsi-pilot-acceptance.*`, `hsi-pilot-walkthrough.md` |
 | `partnerSigned` / `lockedPilot` | **PARTIAL** | Fixture: `partnerSigned=true` + `agreementKind=hypothetical_test_only` + `legalBinding=false` → `lockedPilot=false`; swap via `src/hypotheticalPartnerFixture.ts` |
-| Source licensing table for agreed corpus | **PARTIAL** | Stub exported (`needs_review`); partner clearance still open |
+| Source licensing table for agreed corpus | **PARTIAL** | Curator statuses exported; partner corpus clearance still open (`partnerClearedCount=0`) |
 | Numeric evaluation thresholds | **PARTIAL** | Fixture `set_for_test` in `src/stage1RubricThresholds.ts` (min edges 12 / competing 4 / LOINC 6; Gate C pending allowed; `green_with_pending` OK). **Real partner must re-agree** (`replaceWithPartnerAgreedThresholds=true`) |
 | PDF/DOCX brief | **OUT OF SCOPE** | ISI product P1 |
 

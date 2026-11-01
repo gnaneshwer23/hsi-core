@@ -140,7 +140,7 @@ function buildRows(lock: HsiPartnerLock): FlipRequirementRow[] {
         "Agree source licensing / attribution for the partner source set.",
       status: "pending",
       evidence:
-        "hsi-source-licensing-stub.json lists pack PMIDs with licenseStatus=needs_review — partner agreement still open (fixture does not clear licensing).",
+        "hsi-source-licensing-stub.json curator-reviewed (ok_oa/restricted/unknown); partnerClearedCount=0 — named partner attribution still open (fixture does not clear licensing).",
       blocksPartnerSigned: true,
     },
     {
@@ -312,7 +312,7 @@ export function buildPartnerFlipReadinessBundle(opts?: {
         "TEST FIXTURE — replace before real pilot (src/hypotheticalPartnerFixture.ts).",
       "Name a real partner organisation (or rewrite disease/question with them) — do not invent org/email in code.",
       "Record outreach row in docs/ISI_PILOT_PARTNER_SHORTLIST.md when interest is real.",
-      "Agree licensing for the PMID corpus (promote rows in hsi-source-licensing-stub beyond needs_review). See docs/HOW_TO_SOURCE_LICENSING.md.",
+      "Agree partner attribution for the PMID corpus (ok_oa ≠ partner clearance; partnerClearedCount still 0). See docs/HOW_TO_SOURCE_LICENSING.md.",
       "Numeric Stage 1 thresholds are set_for_test under the hypothetical fixture — real partner must re-agree numbers before formal user testing; then refresh hsi-pilot-review-rubric.*.",
       "Only then set legalBinding=true / lockedPilot=true via REAL_PARTNER_REPLACEMENT and re-run bun run outputs.",
       "Production ISI must ignore fixture partnerSigned unless ALLOW_HYPOTHETICAL_PARTNER=true.",

@@ -330,7 +330,7 @@ const ARTIFACTS: IsiArtifactContractRow[] = [
     consumerSurfaces: ["partner_readiness"],
     autoApproveIntoKg: false,
     notes:
-      "P0.3 stub: PMIDs from RA/SSc/gut/neuro packs; licenseStatus=needs_review.",
+      "P0.3 reviewed: PMIDs from RA/SSc/gut/neuro packs; licenseStatus ok_cite|ok_oa|restricted|unknown (2026-11-01 Europe PMC/Crossref).",
   },
   {
     manifestKey: "embeddingSidecarsJson",
