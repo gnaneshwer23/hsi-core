@@ -1,7 +1,7 @@
 # HSI build status and next
 
 **Audit date:** 1 November 2026  
-**HEAD at write:** `b62b7dc` (main) — P2.2 embedding sidecar slots (hash/ref)  
+**HEAD at write:** `3f8c4aa` (main) — P2.2 embedding sidecar slots (hash/ref)  
 **Edit target:** `hsi-core` only · Neon **`red-wave` only** · no immunecity / Akeno product / DeliverX edits  
 **Prior audit:** [`PRD_IMPLEMENTATION_AUDIT.md`](./PRD_IMPLEMENTATION_AUDIT.md) (phases 0–8 vs Pilot + Target PRDs)
 
@@ -145,7 +145,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | P1 SSc deepen + model→Gate C | `c2fd6f3` |
 | P1.3 gut–immune SCFA ↔ Treg/Th17 | `974533a` |
 | P2.1 neuroimmune vagus / cholinergic | `7e1baf8` |
-| P2.2 embedding sidecars (hash/ref) | `b62b7dc` |
+| P2.2 embedding sidecars (hash/ref) | `3f8c4aa` |
 
 Reproduce: `bun test && bun run outputs && bun run site:dev` → `/discovery`, `/akeno`, `/aksh-agents`.
 
