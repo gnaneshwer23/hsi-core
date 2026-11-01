@@ -49,10 +49,10 @@ import {
 
 ### Aksh consumption (`akshNodeId`)
 
-- `claimsWithAkshMappings()` fills provisional `AKSH-N-*` / `AKSH-RULE-*` ids for T2D / bridge seeds.
+- `claimsWithAkshMappings()` fills durable `aksh:<kind>:<slug>` clinic ids (LOINC-linked findings where known).
 - Having an `akshNodeId` does **not** open CDS. Use `isCdsSurfacable(edge)` (`approved` + `established`) before any HITL CDS card.
-- `bun run export:aksh-map` writes `exports/hsi-aksh-node-map.json` for Aksh / immunecity readers.
-- Replace provisional ids with Aksh clinic KG canonical ids when published.
+- `bun run export:aksh-map` writes `exports/hsi-aksh-node-map.json` (`hsi-aksh-node-map-2`) with migration table from provisional `AKSH-N-*`.
+- See `docs/AKSH_HITL_CONSUMPTION.md` for the id scheme and provisional → durable map.
 
 ## Axes (do not collapse)
 

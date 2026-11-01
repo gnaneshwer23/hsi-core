@@ -1,18 +1,21 @@
 /**
- * T2D / immuno-metabolic → Aksh HITL node-id map (P1 first slice).
+ * T2D / immuno-metabolic → Aksh HITL node-id map (P1).
  *
  * Rules (fail closed):
  * - `akshNodeId` is a curation / HITL pointer only — never EHR write-back.
  * - Mapping does **not** change curationReview, hsiGrade, teachingStatus, or seedKind.
  * - `isCdsSurfacable(edge)` stays false until curationReview=approved AND hsiGrade=established.
- * - Provisional `AKSH-*` ids are stable substrate stubs for the future clinic KG;
- *   they are not live pilot-org rule ids and do not invent PMIDs or approve Gate C.
+ * - Durable ids use the `aksh:` namespace (see akshClinicIds.ts), migrated from provisional AKSH-N-*.
  */
 import type { HsiClaim } from "../schema";
 import {
   HSI_T2D_IMMUNO_SEED_CLAIMS,
   HSI_T2D_IMMUNO_SEED_EDGES,
 } from "../seed/t2dImmunoMetabolic";
+import {
+  isDurableAkshClinicId,
+  PROVISIONAL_AKSH_TO_DURABLE,
+} from "./akshClinicIds";
 
 /** How closely the HSI claim matches a planned Aksh clinic concept. */
 export type AkshNodeMatchKind =
@@ -31,7 +34,7 @@ export type AkshNodeSuggestionStatus =
 export type AkshNodeSuggestion = {
   claimId: string;
   edgeId: string;
-  /** Stable provisional Aksh clinic node / rule id; null when no HITL surface yet. */
+  /** Durable `aksh:` clinic concept id; null when no HITL surface yet. */
   suggestedAkshNodeId: string | null;
   matchKind: AkshNodeMatchKind;
   status: AkshNodeSuggestionStatus;
@@ -56,11 +59,11 @@ export const AKSH_NODE_SUGGESTIONS: readonly AkshNodeSuggestion[] = [
   {
     claimId: "HSI-C-T2D-001",
     edgeId: "HSI-E-T2D-001",
-    suggestedAkshNodeId: "AKSH-N-hba1c",
+    suggestedAkshNodeId: "aksh:finding:hba1c",
     matchKind: "exact_clinic_concept",
     status: "accepted_for_hitl_map",
     rationale:
-      "HbA1c ↔ T2D monitoring/diagnosis — primary Aksh glycemic marker. Map fills claim.akshNodeId only; isCdsSurfacable stays false until Gate C approved + established.",
+      "HbA1c ↔ T2D monitoring/diagnosis — primary Aksh glycemic marker (LOINC 4548-4). Map fills claim.akshNodeId only; isCdsSurfacable stays false until Gate C approved + established.",
     autoSurfaceCds: false,
     cdsSurfacableHint: false,
     autoApplyToEhr: false,
@@ -69,11 +72,11 @@ export const AKSH_NODE_SUGGESTIONS: readonly AkshNodeSuggestion[] = [
   {
     claimId: "HSI-C-T2D-002",
     edgeId: "HSI-E-T2D-002",
-    suggestedAkshNodeId: "AKSH-N-fpg",
+    suggestedAkshNodeId: "aksh:finding:fpg",
     matchKind: "exact_clinic_concept",
     status: "accepted_for_hitl_map",
     rationale:
-      "Fasting plasma glucose diagnostic threshold — clinic lab concept. Pointer only; no CDS auto-surface.",
+      "Fasting plasma glucose diagnostic threshold — clinic lab concept (LOINC 1558-6). Pointer only; no CDS auto-surface.",
     autoSurfaceCds: false,
     cdsSurfacableHint: false,
     autoApplyToEhr: false,
@@ -82,7 +85,7 @@ export const AKSH_NODE_SUGGESTIONS: readonly AkshNodeSuggestion[] = [
   {
     claimId: "HSI-C-T2D-003",
     edgeId: "HSI-E-T2D-003",
-    suggestedAkshNodeId: "AKSH-N-insulin-resistance",
+    suggestedAkshNodeId: "aksh:pathway:insulin-resistance",
     matchKind: "pathway_template",
     status: "accepted_for_hitl_map",
     rationale:
@@ -95,7 +98,7 @@ export const AKSH_NODE_SUGGESTIONS: readonly AkshNodeSuggestion[] = [
   {
     claimId: "HSI-C-T2D-004",
     edgeId: "HSI-E-T2D-004",
-    suggestedAkshNodeId: "AKSH-N-beta-cell-dysfunction",
+    suggestedAkshNodeId: "aksh:pathway:beta-cell-dysfunction",
     matchKind: "pathway_template",
     status: "accepted_for_hitl_map",
     rationale:
@@ -108,7 +111,7 @@ export const AKSH_NODE_SUGGESTIONS: readonly AkshNodeSuggestion[] = [
   {
     claimId: "HSI-C-T2D-005",
     edgeId: "HSI-E-T2D-005",
-    suggestedAkshNodeId: "AKSH-N-metformin",
+    suggestedAkshNodeId: "aksh:medicine:metformin",
     matchKind: "exact_clinic_concept",
     status: "accepted_for_hitl_map",
     rationale:
@@ -121,7 +124,7 @@ export const AKSH_NODE_SUGGESTIONS: readonly AkshNodeSuggestion[] = [
   {
     claimId: "HSI-C-T2D-006",
     edgeId: "HSI-E-T2D-006",
-    suggestedAkshNodeId: "AKSH-N-sglt2i",
+    suggestedAkshNodeId: "aksh:medicine:sglt2i",
     matchKind: "exact_clinic_concept",
     status: "accepted_for_hitl_map",
     rationale:
@@ -134,7 +137,7 @@ export const AKSH_NODE_SUGGESTIONS: readonly AkshNodeSuggestion[] = [
   {
     claimId: "HSI-C-T2D-007",
     edgeId: "HSI-E-T2D-007",
-    suggestedAkshNodeId: "AKSH-N-glp1ra",
+    suggestedAkshNodeId: "aksh:medicine:glp1ra",
     matchKind: "exact_clinic_concept",
     status: "accepted_for_hitl_map",
     rationale:
@@ -147,7 +150,7 @@ export const AKSH_NODE_SUGGESTIONS: readonly AkshNodeSuggestion[] = [
   {
     claimId: "HSI-C-T2D-008",
     edgeId: "HSI-E-T2D-008",
-    suggestedAkshNodeId: "AKSH-N-obesity",
+    suggestedAkshNodeId: "aksh:condition:obesity",
     matchKind: "exact_clinic_concept",
     status: "accepted_for_hitl_map",
     rationale:
@@ -160,7 +163,7 @@ export const AKSH_NODE_SUGGESTIONS: readonly AkshNodeSuggestion[] = [
   {
     claimId: "HSI-C-T2D-009",
     edgeId: "HSI-E-T2D-009",
-    suggestedAkshNodeId: "AKSH-N-cgm-tir",
+    suggestedAkshNodeId: "aksh:finding:cgm-tir",
     matchKind: "pathway_template",
     status: "accepted_for_hitl_map",
     rationale:
@@ -173,7 +176,7 @@ export const AKSH_NODE_SUGGESTIONS: readonly AkshNodeSuggestion[] = [
   {
     claimId: "HSI-C-T2D-010",
     edgeId: "HSI-E-T2D-010",
-    suggestedAkshNodeId: "AKSH-N-glucocorticoid-hyperglycemia",
+    suggestedAkshNodeId: "aksh:interaction:glucocorticoid-hyperglycemia",
     matchKind: "pathway_template",
     status: "accepted_for_hitl_map",
     rationale:
@@ -188,7 +191,7 @@ export const AKSH_NODE_SUGGESTIONS: readonly AkshNodeSuggestion[] = [
   {
     claimId: "HSI-C-IM-001",
     edgeId: "HSI-E-IM-001",
-    suggestedAkshNodeId: "AKSH-N-inflammation-insulin-resistance",
+    suggestedAkshNodeId: "aksh:interaction:inflammation-insulin-resistance",
     matchKind: "bridge_watch",
     status: "accepted_for_hitl_map",
     rationale:
@@ -201,7 +204,7 @@ export const AKSH_NODE_SUGGESTIONS: readonly AkshNodeSuggestion[] = [
   {
     claimId: "HSI-C-IM-002",
     edgeId: "HSI-E-IM-002",
-    suggestedAkshNodeId: "AKSH-N-tnf-insulin-resistance",
+    suggestedAkshNodeId: "aksh:interaction:tnf-insulin-resistance",
     matchKind: "bridge_watch",
     status: "accepted_for_hitl_map",
     rationale:
@@ -214,7 +217,7 @@ export const AKSH_NODE_SUGGESTIONS: readonly AkshNodeSuggestion[] = [
   {
     claimId: "HSI-C-IM-003",
     edgeId: "HSI-E-IM-003",
-    suggestedAkshNodeId: "AKSH-N-il6-t2d",
+    suggestedAkshNodeId: "aksh:interaction:il6-t2dm",
     matchKind: "bridge_watch",
     status: "accepted_for_hitl_map",
     rationale:
@@ -227,11 +230,11 @@ export const AKSH_NODE_SUGGESTIONS: readonly AkshNodeSuggestion[] = [
   {
     claimId: "HSI-C-IM-004",
     edgeId: "HSI-E-IM-004",
-    suggestedAkshNodeId: "AKSH-N-hscrp",
+    suggestedAkshNodeId: "aksh:finding:hscrp",
     matchKind: "exact_clinic_concept",
     status: "accepted_for_hitl_map",
     rationale:
-      "hs-CRP inflammatory marker — clinic lab concept for immuno-metabolic context cards. autoSurfaceCds=false.",
+      "hs-CRP inflammatory marker — clinic lab concept (LOINC 30522-7) for immuno-metabolic context cards. autoSurfaceCds=false.",
     autoSurfaceCds: false,
     cdsSurfacableHint: false,
     autoApplyToEhr: false,
@@ -240,7 +243,7 @@ export const AKSH_NODE_SUGGESTIONS: readonly AkshNodeSuggestion[] = [
   {
     claimId: "HSI-C-IM-005",
     edgeId: "HSI-E-IM-005",
-    suggestedAkshNodeId: "AKSH-N-adipose-macrophage-ir",
+    suggestedAkshNodeId: "aksh:interaction:adipose-macrophage-ir",
     matchKind: "bridge_watch",
     status: "accepted_for_hitl_map",
     rationale:
@@ -253,7 +256,7 @@ export const AKSH_NODE_SUGGESTIONS: readonly AkshNodeSuggestion[] = [
   {
     claimId: "HSI-C-IM-006",
     edgeId: "HSI-E-IM-006",
-    suggestedAkshNodeId: "AKSH-N-nlrp3-metabolic-inflammation",
+    suggestedAkshNodeId: "aksh:interaction:nlrp3-metabolic-inflammation",
     matchKind: "bridge_watch",
     status: "accepted_for_hitl_map",
     rationale:
@@ -266,7 +269,7 @@ export const AKSH_NODE_SUGGESTIONS: readonly AkshNodeSuggestion[] = [
   {
     claimId: "HSI-C-IM-007",
     edgeId: "HSI-E-IM-007",
-    suggestedAkshNodeId: "AKSH-N-t2d-infection-risk",
+    suggestedAkshNodeId: "aksh:risk:infection-susceptibility",
     matchKind: "bridge_watch",
     status: "accepted_for_hitl_map",
     rationale:
@@ -279,7 +282,7 @@ export const AKSH_NODE_SUGGESTIONS: readonly AkshNodeSuggestion[] = [
   {
     claimId: "HSI-C-IM-008",
     edgeId: "HSI-E-IM-008",
-    suggestedAkshNodeId: "AKSH-N-hyperglycemia-innate",
+    suggestedAkshNodeId: "aksh:interaction:hyperglycemia-innate",
     matchKind: "bridge_watch",
     status: "accepted_for_hitl_map",
     rationale:
@@ -292,7 +295,7 @@ export const AKSH_NODE_SUGGESTIONS: readonly AkshNodeSuggestion[] = [
   {
     claimId: "HSI-C-IM-009",
     edgeId: "HSI-E-IM-009",
-    suggestedAkshNodeId: "AKSH-N-autoimmune-metabolic-comorbidity",
+    suggestedAkshNodeId: "aksh:interaction:autoimmune-metabolic-comorbidity",
     matchKind: "bridge_watch",
     status: "accepted_for_hitl_map",
     rationale:
@@ -345,7 +348,7 @@ export const AKSH_NODE_SUGGESTIONS: readonly AkshNodeSuggestion[] = [
   {
     claimId: "HSI-C-IO-003",
     edgeId: "HSI-E-IO-003",
-    suggestedAkshNodeId: "AKSH-N-irae-hyperglycemia",
+    suggestedAkshNodeId: "aksh:watch:irae-hyperglycemia",
     matchKind: "bridge_watch",
     status: "accepted_for_hitl_map",
     rationale:
@@ -358,7 +361,7 @@ export const AKSH_NODE_SUGGESTIONS: readonly AkshNodeSuggestion[] = [
   {
     claimId: "HSI-C-AU-001",
     edgeId: "HSI-E-AU-001",
-    suggestedAkshNodeId: "AKSH-N-islet-autoantibodies",
+    suggestedAkshNodeId: "aksh:finding:islet-autoantibodies",
     matchKind: "pathway_template",
     status: "accepted_for_hitl_map",
     rationale:
@@ -371,7 +374,7 @@ export const AKSH_NODE_SUGGESTIONS: readonly AkshNodeSuggestion[] = [
   {
     claimId: "HSI-C-AU-002",
     edgeId: "HSI-E-AU-002",
-    suggestedAkshNodeId: "AKSH-N-lada",
+    suggestedAkshNodeId: "aksh:condition:lada",
     matchKind: "pathway_template",
     status: "accepted_for_hitl_map",
     rationale:
@@ -428,6 +431,12 @@ export type AkshNodeMappingSummary = {
   bridgeWatch: number;
   t2dSeedsTotal: number;
   t2dSeedsMapped: number;
+  /** Durable `aksh:` ids in suggestions (excludes null). */
+  durableAkshIds: number;
+  /** Legacy provisional stubs remaining (should be 0 after migration). */
+  provisionalAkshIdsRemaining: number;
+  /** Migration table size. */
+  provisionalMigrationEntries: number;
   /** Always false — documentation invariant for consumers. */
   autoSurfaceCds: false;
   /** Always false — map never writes EHR / patient record. */
@@ -458,6 +467,11 @@ export function summarizeAkshNodeMappings(
     bridgeWatch: suggestions.filter((s) => s.matchKind === "bridge_watch").length,
     t2dSeedsTotal: t2dEdges.length,
     t2dSeedsMapped: t2dMapped,
+    durableAkshIds: withId.filter((s) => isDurableAkshClinicId(s.suggestedAkshNodeId)).length,
+    provisionalAkshIdsRemaining: withId.filter(
+      (s) => s.suggestedAkshNodeId?.startsWith("AKSH-"),
+    ).length,
+    provisionalMigrationEntries: Object.keys(PROVISIONAL_AKSH_TO_DURABLE).length,
     autoSurfaceCds: false,
     autoApplyToEhr: false,
     cdsRequiresApprovedEstablished: true,

@@ -20,10 +20,18 @@ export type IsiRelMatchKind =
   | "marker_only"
   | "none";
 
-/** Lifecycle of a mapping suggestion — never equals Gate C approval. */
+/**
+ * Lifecycle of a mapping suggestion — never equals Neon Gate C approval.
+ *
+ * suggested → accepted_for_curation → curated
+ *   curated = HSI-side accepted + real PMID/DOI evidence link; still autoApprove=false.
+ *   Human Neon path remains: Check → claim_support=supports → Approve on the REL.
+ * unmapped / rejected stay honest gaps (no invented REL-*).
+ */
 export type IsiRelSuggestionStatus =
   | "suggested"
   | "accepted_for_curation"
+  | "curated"
   | "rejected"
   | "unmapped";
 
@@ -52,9 +60,9 @@ export const ISI_REL_SUGGESTIONS: readonly IsiRelSuggestion[] = [
     edgeId: "HSI-E-IO-001",
     suggestedIsiRelationshipId: "REL-R011-drives-P015",
     matchKind: "exact_concept_pair",
-    status: "accepted_for_curation",
+    status: "curated",
     rationale:
-      "Exact ISI map REL-R011-drives-P015. HSI seed now carries real PMID 16382236 (Barber 2006 Nature) as source-verified provenance — accepted for Gate C curation handoff. Still autoApprove=false; Neon approve+supports on this relId is the human Gate C pass. Re-check S-P-O (paper also used on expresses-R011).",
+      "Exact ISI map REL-R011-drives-P015. HSI seed carries real PMID 16382236 (Barber 2006 Nature) — curated for human Neon Gate C (Check→claim_support=supports→Approve). Still autoApprove=false. Re-check S-P-O (paper also used on expresses-R011).",
     autoApprove: false,
     isiNodeIds: ["R011", "P015"],
   },
@@ -63,9 +71,9 @@ export const ISI_REL_SUGGESTIONS: readonly IsiRelSuggestion[] = [
     edgeId: "HSI-E-IM-006",
     suggestedIsiRelationshipId: "REL-R004-activates-P003",
     matchKind: "related_axis",
-    status: "accepted_for_curation",
+    status: "curated",
     rationale:
-      "Related-axis ISI map REL-R004-activates-P003. HSI seed carries PMID 15030775 (Agostini 2004 Immunity, NALP3 inflammasome) — accepted for Gate C handoff. Metabolic-inflammation object is not a KG node; autoApprove=false; Neon approve+supports is human-only.",
+      "Related-axis ISI map REL-R004-activates-P003. PMID 15030775 (Agostini 2004 Immunity) — curated bridge; metabolic-inflammation object is not a KG node; autoApprove=false; Neon approve+supports is human-only.",
     autoApprove: false,
     isiNodeIds: ["R004", "P003"],
   },
@@ -74,9 +82,9 @@ export const ISI_REL_SUGGESTIONS: readonly IsiRelSuggestion[] = [
     edgeId: "HSI-E-IM-004",
     suggestedIsiRelationshipId: "REL-P021-produces-B001",
     matchKind: "related_axis",
-    status: "accepted_for_curation",
+    status: "curated",
     rationale:
-      "Related-axis ISI map REL-P021-produces-B001. HSI seed carries PMID 12813013 (Pepys & Hirschfield 2003 JCI, CRP) — accepted for Gate C handoff. Marker-axis only; not a T2D edge; autoApprove=false.",
+      "Related-axis ISI map REL-P021-produces-B001. PMID 12813013 (Pepys & Hirschfield 2003 JCI) — curated marker-axis bridge; not a T2D edge; autoApprove=false.",
     autoApprove: false,
     isiNodeIds: ["P021", "B001"],
   },
@@ -85,9 +93,9 @@ export const ISI_REL_SUGGESTIONS: readonly IsiRelSuggestion[] = [
     edgeId: "HSI-E-IM-010",
     suggestedIsiRelationshipId: "REL-I023-targets-M002",
     matchKind: "related_axis",
-    status: "accepted_for_curation",
+    status: "curated",
     rationale:
-      "Related-axis ISI map REL-I023-targets-M002. HSI seed carries PMID 28845751 (Ridker CANTOS 2017 NEJM, canakinumab→IL-1β) — accepted for Gate C handoff. Discovery only; not CDS; autoApprove=false.",
+      "Related-axis ISI map REL-I023-targets-M002. PMID 28845751 (Ridker CANTOS 2017 NEJM) — curated discovery bridge; not CDS; autoApprove=false.",
     autoApprove: false,
     isiNodeIds: ["I023", "M002"],
   },
@@ -96,9 +104,9 @@ export const ISI_REL_SUGGESTIONS: readonly IsiRelSuggestion[] = [
     edgeId: "HSI-E-AU-001",
     suggestedIsiRelationshipId: "REL-B015-predicts_eligibility_for-I013",
     matchKind: "related_axis",
-    status: "accepted_for_curation",
+    status: "curated",
     rationale:
-      "Related-axis ISI map REL-B015-predicts_eligibility_for-I013. HSI seed carries PMID 31180194 (Herold 2019 NEJM, teplizumab eligibility) — accepted for Gate C handoff. T1D contrast with T2D; autoApprove=false.",
+      "Related-axis ISI map REL-B015-predicts_eligibility_for-I013. PMID 31180194 (Herold 2019 NEJM) — curated; T1D contrast with T2D; autoApprove=false.",
     autoApprove: false,
     isiNodeIds: ["B015", "I013"],
   },
@@ -107,9 +115,9 @@ export const ISI_REL_SUGGESTIONS: readonly IsiRelSuggestion[] = [
     edgeId: "HSI-E-IM-002",
     suggestedIsiRelationshipId: "REL-M001-contributes_to-D001",
     matchKind: "related_axis",
-    status: "accepted_for_curation",
+    status: "curated",
     rationale:
-      "Related-axis ISI map REL-M001-contributes_to-D001. HSI seed carries PMID 11244034 (Feldmann & Maini 2001, TNF→RA) — accepted for Gate C handoff. Insulin-resistance object absent from ISI; not T2D proof; autoApprove=false.",
+      "Related-axis ISI map REL-M001-contributes_to-D001. PMID 11244034 (Feldmann & Maini 2001) — curated; insulin-resistance object absent from ISI; not T2D proof; autoApprove=false.",
     autoApprove: false,
     isiNodeIds: ["M001", "D001"],
   },
@@ -118,9 +126,9 @@ export const ISI_REL_SUGGESTIONS: readonly IsiRelSuggestion[] = [
     edgeId: "HSI-E-IM-003",
     suggestedIsiRelationshipId: "REL-M003-contributes_to-D001",
     matchKind: "related_axis",
-    status: "accepted_for_curation",
+    status: "curated",
     rationale:
-      "Related-axis ISI map REL-M003-contributes_to-D001. HSI seed carries PMID 18625622 (Emery 2008, IL-6R/tocilizumab in RA) — accepted for Gate C handoff. No T2D node in ISI; autoApprove=false.",
+      "Related-axis ISI map REL-M003-contributes_to-D001. PMID 18625622 (Emery 2008) — curated; no T2D node in ISI; autoApprove=false.",
     autoApprove: false,
     isiNodeIds: ["M003", "D001"],
   },
@@ -129,9 +137,9 @@ export const ISI_REL_SUGGESTIONS: readonly IsiRelSuggestion[] = [
     edgeId: "HSI-E-IM-005",
     suggestedIsiRelationshipId: "REL-C003-produces-M001",
     matchKind: "related_axis",
-    status: "accepted_for_curation",
+    status: "curated",
     rationale:
-      "Related-axis ISI map REL-C003-produces-M001. HSI seed carries PMID 2993897 (Beutler 1985 Nature, macrophage→TNF/cachectin) — accepted for Gate C handoff. Adipose/IR pair not in ISI; autoApprove=false.",
+      "Related-axis ISI map REL-C003-produces-M001. PMID 2993897 (Beutler 1985 Nature) — curated; adipose/IR pair not in ISI; autoApprove=false.",
     autoApprove: false,
     isiNodeIds: ["C003", "M001"],
   },
@@ -140,9 +148,9 @@ export const ISI_REL_SUGGESTIONS: readonly IsiRelSuggestion[] = [
     edgeId: "HSI-E-T2D-010",
     suggestedIsiRelationshipId: "REL-I010-suppresses-P001",
     matchKind: "related_axis",
-    status: "accepted_for_curation",
+    status: "curated",
     rationale:
-      "Related-axis ISI map REL-I010-suppresses-P001. HSI seed carries PMID 7569976 (Auphan 1995 Science, GC→NF-κB) — accepted for Gate C handoff. Hyperglycemia consequence not this paper; Aksh HITL later; autoApprove=false.",
+      "Related-axis ISI map REL-I010-suppresses-P001. PMID 7569976 (Auphan 1995 Science) — curated; hyperglycemia consequence not this paper; Aksh HITL later; autoApprove=false.",
     autoApprove: false,
     isiNodeIds: ["I010", "P001"],
   },
@@ -235,7 +243,9 @@ export function suggestionForEdge(edgeId: string): IsiRelSuggestion | undefined 
 function shouldApply(s: IsiRelSuggestion): boolean {
   return (
     Boolean(s.suggestedIsiRelationshipId) &&
-    (s.status === "suggested" || s.status === "accepted_for_curation") &&
+    (s.status === "suggested" ||
+      s.status === "accepted_for_curation" ||
+      s.status === "curated") &&
     s.autoApprove === false
   );
 }
@@ -260,6 +270,9 @@ export type IsiRelMappingSummary = {
   unmapped: number;
   exactConceptPair: number;
   relatedAxis: number;
+  /** HSI-side curated (evidence-linked) — still awaiting human Neon Gate C. */
+  curated: number;
+  acceptedForCuration: number;
   bridgeCandidatesCovered: number;
   bridgeCandidatesTotal: number;
   /** Always false — documentation invariant for consumers. */
@@ -278,6 +291,8 @@ export function summarizeIsiRelMappings(
     unmapped: suggestions.filter((s) => s.matchKind === "none" || !s.suggestedIsiRelationshipId).length,
     exactConceptPair: suggestions.filter((s) => s.matchKind === "exact_concept_pair").length,
     relatedAxis: suggestions.filter((s) => s.matchKind === "related_axis").length,
+    curated: suggestions.filter((s) => s.status === "curated").length,
+    acceptedForCuration: suggestions.filter((s) => s.status === "accepted_for_curation").length,
     bridgeCandidatesCovered: withRel.filter((s) => bridgeIds.has(s.edgeId)).length,
     bridgeCandidatesTotal: bridges.length,
     autoApproveIntoKg: false,

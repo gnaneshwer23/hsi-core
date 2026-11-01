@@ -105,6 +105,19 @@ export {
 } from "./mappings/isiRelSuggestions";
 
 export {
+  AKSH_CLINIC_BY_ID,
+  AKSH_CLINIC_CONCEPTS,
+  PROVISIONAL_AKSH_TO_DURABLE,
+  akshClinicConcept,
+  isDurableAkshClinicId,
+  isProvisionalAkshId,
+  listAkshClinicConcepts,
+  migrateAkshNodeId,
+  type AkshClinicConcept,
+  type AkshClinicKind,
+} from "./mappings/akshClinicIds";
+
+export {
   AKSH_NODE_SUGGESTIONS,
   akshMapImpliesCds,
   akshNodeIdMap,

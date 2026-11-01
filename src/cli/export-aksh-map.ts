@@ -6,6 +6,10 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import {
+  AKSH_CLINIC_CONCEPTS,
+  PROVISIONAL_AKSH_TO_DURABLE,
+} from "../mappings/akshClinicIds";
+import {
   AKSH_NODE_SUGGESTIONS,
   akshNodeIdMap,
   summarizeAkshNodeMappings,
@@ -15,13 +19,16 @@ const outArg = process.argv[2] ?? "exports/hsi-aksh-node-map.json";
 const outPath = resolve(process.cwd(), outArg);
 
 const payload = {
-  schemaVersion: "hsi-aksh-node-map-1" as const,
+  schemaVersion: "hsi-aksh-node-map-2" as const,
+  idNamespace: "aksh:" as const,
   notCds: true as const,
   autoSurfaceCds: false as const,
   cdsRequiresApprovedEstablished: true as const,
   generatedAt: new Date().toISOString(),
   summary: summarizeAkshNodeMappings(),
   claimToAkshNodeId: akshNodeIdMap(),
+  provisionalMigration: PROVISIONAL_AKSH_TO_DURABLE,
+  clinicConcepts: AKSH_CLINIC_CONCEPTS,
   suggestions: AKSH_NODE_SUGGESTIONS,
 };
 

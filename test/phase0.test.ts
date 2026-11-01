@@ -12,18 +12,22 @@ import {
   HSI_T2D_IMMUNO_SEED_EDGES,
   buildIsiExportBundle,
   buildSchemaGapReport,
+  PROVISIONAL_AKSH_TO_DURABLE,
   claimsWithAkshMappings,
   claimsWithIsiMappings,
   hsiEvidenceHandoff,
   hsiGradeFromCuration,
   isCdsSurfacable,
+  isDurableAkshClinicId,
   linkClaimToMarker,
   listAkshNodeSuggestions,
   listBridgeCandidates,
   listIsiRelSuggestions,
+  migrateAkshNodeId,
   seedClaimLoincMap,
   suggestionForClaim,
   summarizeGradeCounts,
+  summarizeIsiRelMappings,
   validateHsiEdge,
   validateTranslationCard,
 } from "../src/index";
@@ -159,7 +163,7 @@ describe("ISI REL-* suggestion map", () => {
     const pd1 = suggestionForClaim("HSI-C-IO-001");
     expect(pd1?.suggestedIsiRelationshipId).toBe("REL-R011-drives-P015");
     expect(pd1?.matchKind).toBe("exact_concept_pair");
-    expect(pd1?.status).toBe("accepted_for_curation");
+    expect(pd1?.status).toBe("curated");
     expect(pd1?.autoApprove).toBe(false);
 
     const ioEdge = HSI_T2D_IMMUNO_SEED_EDGES.find((e) => e.id === "HSI-E-IO-001");
@@ -177,7 +181,7 @@ describe("ISI REL-* suggestion map", () => {
     expect(handoff.label).toContain("Gate C pending");
     expect(handoff.pmid).toBe("16382236");
 
-    // Evidence sprint: related-axis maps with real PMIDs → accepted_for_curation, Gate C pending.
+    // Evidence sprint: related-axis maps with real PMIDs → curated (HSI-side), Gate C still pending.
     const evidenceSprint: Array<{ claimId: string; edgeId: string; rel: string; pmid: string }> = [
       { claimId: "HSI-C-IM-010", edgeId: "HSI-E-IM-010", rel: "REL-I023-targets-M002", pmid: "28845751" },
       { claimId: "HSI-C-IM-006", edgeId: "HSI-E-IM-006", rel: "REL-R004-activates-P003", pmid: "15030775" },
@@ -188,12 +192,12 @@ describe("ISI REL-* suggestion map", () => {
       { claimId: "HSI-C-T2D-010", edgeId: "HSI-E-T2D-010", rel: "REL-I010-suppresses-P001", pmid: "7569976" },
       { claimId: "HSI-C-AU-001", edgeId: "HSI-E-AU-001", rel: "REL-B015-predicts_eligibility_for-I013", pmid: "31180194" },
     ];
-    expect(suggestions.filter((s) => s.status === "accepted_for_curation").length).toBeGreaterThanOrEqual(9);
+    expect(suggestions.filter((s) => s.status === "curated").length).toBeGreaterThanOrEqual(9);
     for (const row of evidenceSprint) {
       const sug = suggestionForClaim(row.claimId);
       expect(sug?.suggestedIsiRelationshipId).toBe(row.rel);
       expect(sug?.matchKind).toBe("related_axis");
-      expect(sug?.status).toBe("accepted_for_curation");
+      expect(sug?.status).toBe("curated");
       expect(sug?.autoApprove).toBe(false);
       const edge = HSI_T2D_IMMUNO_SEED_EDGES.find((e) => e.id === row.edgeId)!;
       expect(edge.provenance.pmid).toBe(row.pmid);
@@ -212,7 +216,7 @@ describe("ISI REL-* suggestion map", () => {
 });
 
 describe("Aksh node-id map (P1 HITL)", () => {
-  it("maps T2D seeds to provisional AKSH-* ids without opening CDS", () => {
+  it("maps T2D seeds to durable aksh: ids without opening CDS", () => {
     const suggestions = listAkshNodeSuggestions();
     expect(suggestions.length).toBeGreaterThanOrEqual(20);
     expect(suggestions.every((s) => s.autoApplyToEhr === false)).toBe(true);
@@ -221,10 +225,11 @@ describe("Aksh node-id map (P1 HITL)", () => {
     const mapped = claimsWithAkshMappings();
     const withAksh = mapped.filter((c) => c.akshNodeId);
     expect(withAksh.length).toBeGreaterThanOrEqual(10);
-    expect(withAksh.every((c) => c.akshNodeId!.startsWith("AKSH-"))).toBe(true);
+    expect(withAksh.every((c) => c.akshNodeId!.startsWith("aksh:"))).toBe(true);
+    expect(withAksh.every((c) => !c.akshNodeId!.startsWith("AKSH-"))).toBe(true);
 
     const hba1c = mapped.find((c) => c.id === "HSI-C-T2D-001");
-    expect(hba1c?.akshNodeId).toBe("AKSH-N-hba1c");
+    expect(hba1c?.akshNodeId).toBe("aksh:finding:hba1c");
 
     // Mapping never promotes CDS: seeds stay closed.
     for (const edge of HSI_T2D_IMMUNO_SEED_EDGES) {
@@ -237,6 +242,17 @@ describe("Aksh node-id map (P1 HITL)", () => {
     expect(bundle.akshNodeMapping.t2dSeedsMapped).toBe(bundle.akshNodeMapping.t2dSeedsTotal);
     expect(bundle.akshNodeMapping.autoApplyToEhr).toBe(false);
     expect(bundle.akshNodeMapping.anyCdsSurfacableOnSeedEdges).toBe(false);
+    expect(bundle.akshNodeMapping.provisionalAkshIdsRemaining).toBe(0);
+    expect(bundle.akshNodeMapping.durableAkshIds).toBeGreaterThanOrEqual(20);
     expect(bundle.notCds).toBe(true);
+
+    expect(migrateAkshNodeId("AKSH-N-hba1c")).toBe("aksh:finding:hba1c");
+    expect(migrateAkshNodeId("aksh:medicine:metformin")).toBe("aksh:medicine:metformin");
+    expect(isDurableAkshClinicId("aksh:finding:hba1c")).toBe(true);
+    expect(Object.keys(PROVISIONAL_AKSH_TO_DURABLE).length).toBe(22);
+
+    const isiMap = summarizeIsiRelMappings();
+    expect(isiMap.curated).toBeGreaterThanOrEqual(9);
+    expect(isiMap.autoApproveIntoKg).toBe(false);
   });
 });
