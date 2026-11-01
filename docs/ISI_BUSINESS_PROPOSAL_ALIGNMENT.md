@@ -1,15 +1,15 @@
 # ISI business proposal ↔ pilot alignment
 
 **Source (external):** *Immune Disease Discovery and Clinical Intelligence — Business proposal for a partner-led pilot* (Dr Gnaneshwer Jadav, November 2026).  
-**Repo anchors:** [`ISI_PILOT_BRIEF.md`](./ISI_PILOT_BRIEF.md), [`ISI_PILOT_PARTNER_SHORTLIST.md`](./ISI_PILOT_PARTNER_SHORTLIST.md), [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md), [`VISION_REPO_ALIGNMENT.md`](./VISION_REPO_ALIGNMENT.md).
+**Repo anchors:** [`ISI_PILOT_BRIEF.md`](./ISI_PILOT_BRIEF.md), [`ISI_PILOT_PARTNER_SHORTLIST.md`](./ISI_PILOT_PARTNER_SHORTLIST.md), [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md), [`ISI_TARGET_STATE_PRD_ALIGNMENT.md`](./ISI_TARGET_STATE_PRD_ALIGNMENT.md), [`VISION_REPO_ALIGNMENT.md`](./VISION_REPO_ALIGNMENT.md).
 
-This note maps proposal claims to what **hsi-core builds now** vs what is **deferred**. It does not edit immunecity or invent partners.
+This note maps proposal claims to what **hsi-core builds now** vs what is **deferred**. Stage labels here (1 research / 2 expand / 3 clinical) match the [target-state capability map](./ISI_TARGET_STATE_PRD_ALIGNMENT.md). It does not edit immunecity or invent partners.
 
 ---
 
 ## Verdict
 
-The proposal and the pilot docs are **aligned on sequencing**: Stage 1 = research intelligence only; disease/question TBD with a partner; Akeno/Aksh clinical pathways only after data access, HCP evaluation, and governance. No patient-level prediction or trial matching in the pilot.
+The proposal, the pilot docs, and the [target-state PRD map](./ISI_TARGET_STATE_PRD_ALIGNMENT.md) are **aligned on sequencing**: Stage 1 = research intelligence only (≈ R0/R1); Stage 2 = expand (≈ R2/R3); Stage 3 = clinical (≈ R4/R5 gated). Disease/question TBD with a partner; Akeno/Aksh clinical pathways only after data access, HCP evaluation, and governance. No patient-level prediction or trial matching in the pilot — do not pull target-state breadth into Stage 1.
 
 ---
 

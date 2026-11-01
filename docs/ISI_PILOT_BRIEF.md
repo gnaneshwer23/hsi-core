@@ -4,7 +4,7 @@
 
 **Status:** outreach / partner-selection. Disease and question are **TBD after partner conversations** — not pre-assigned.  
 **Immediate deliverable:** this brief + [`ISI_PILOT_PARTNER_SHORTLIST.md`](./ISI_PILOT_PARTNER_SHORTLIST.md). Not another general-purpose AI feature.  
-**PRD map:** [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md) (external PRD v1.0 → build now vs defer).
+**PRD map:** [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md) (pilot PRD → build now vs defer). **Target state:** [`ISI_TARGET_STATE_PRD_ALIGNMENT.md`](./ISI_TARGET_STATE_PRD_ALIGNMENT.md) (full vision → Stage 1/2/3 — do not pull breadth into this pilot).
 
 ---
 

@@ -1,9 +1,9 @@
 # ISI Pilot PRD ↔ hsi-core alignment
 
 **Source (external):** *ISI Immune Disease Discovery Pilot — Product Requirements Document* v1.0 (1 November 2026), local file `ISI_Immune_Discovery_Pilot_PRD.docx`.  
-**Repo anchors:** [`ISI_PILOT_BRIEF.md`](./ISI_PILOT_BRIEF.md), [`ISI_BUSINESS_PROPOSAL_ALIGNMENT.md`](./ISI_BUSINESS_PROPOSAL_ALIGNMENT.md), [`ISI_PILOT_PARTNER_SHORTLIST.md`](./ISI_PILOT_PARTNER_SHORTLIST.md), [`OUTPUTS.md`](./OUTPUTS.md).
+**Repo anchors:** [`ISI_PILOT_BRIEF.md`](./ISI_PILOT_BRIEF.md), [`ISI_BUSINESS_PROPOSAL_ALIGNMENT.md`](./ISI_BUSINESS_PROPOSAL_ALIGNMENT.md), [`ISI_TARGET_STATE_PRD_ALIGNMENT.md`](./ISI_TARGET_STATE_PRD_ALIGNMENT.md), [`ISI_PILOT_PARTNER_SHORTLIST.md`](./ISI_PILOT_PARTNER_SHORTLIST.md), [`OUTPUTS.md`](./OUTPUTS.md).
 
-This note maps PRD requirements to what **hsi-core builds now** vs what is **deferred** (ISI product UI / M1–M3 app work / M4 clinical). It does not edit immunecity, Akeno, or invent partners. Disease + question remain **TBD**.
+This note maps **pilot** PRD requirements to what **hsi-core builds now** vs what is **deferred** (ISI product UI / M1–M3 app work / M4 clinical). For the full product destination (R0–R5), see [`ISI_TARGET_STATE_PRD_ALIGNMENT.md`](./ISI_TARGET_STATE_PRD_ALIGNMENT.md) — do **not** pull that breadth into Stage 1. It does not edit immunecity, Akeno, or invent partners. Disease + question remain **TBD**.
 
 ---
 
@@ -31,7 +31,7 @@ This note maps PRD requirements to what **hsi-core builds now** vs what is **def
 
 ## Verdict
 
-The PRD, pilot brief, and business-proposal alignment are **consistent**: Stage 1 / M0–M3 = research intelligence only; hsi-core is the evidence backbone; ISI product UI lives elsewhere and **consumes** published exports; disease/question lock with a real partner; no patient-level Akeno/Aksh CDS in this release.
+The pilot PRD, pilot brief, business-proposal alignment, and [target-state stage map](./ISI_TARGET_STATE_PRD_ALIGNMENT.md) are **consistent**: Stage 1 / M0–M3 / R0–R1 = research intelligence only; hsi-core is the evidence backbone; ISI product UI lives elsewhere and **consumes** published exports; disease/question lock with a real partner; no patient-level Akeno/Aksh CDS in this release.
 
 **hsi-core M0 job:** ship a stable, versioned output contract + pilot evidence-pack template that covers the four brief outputs and PRD data-model minimums for claims/sources/review — not the full researcher UI (FR-01…FR-14 product surfaces).
 
