@@ -117,9 +117,10 @@ export type HsiPartnerLock = {
  * shortlist — Versus Arthritis / NDORMS–Kennedy — not a signed MoU.
  *
  * Why this pathway (not SLE/PsO/IBD): densest durable literature in seeds —
- * TNF→RA (PMID 11244034), anti-CCP LOINC marker, IL-6 / anti-TNF-refractory
- * (PMID 18625622), macrophage→TNF (PMID 2993897), plus Gate C handoff patterns
- * already used for PMID 16382236-style provenance.
+ * TNF→RA (PMID 11244034), anti-CCP + RF LOINC markers, IL-6 / anti-TNF-refractory
+ * (PMID 18625622), ADA/immunogenicity (PMID 16508927 / 17133559), serology
+ * tension (PMID 18375541 vs 24586782), macrophage→TNF (PMID 2993897), plus Gate C
+ * handoff patterns already used for PMID 16382236-style provenance.
  */
 export const HSI_SCOPE_LOCKED_PARTNER_LOCK: HsiPartnerLock = {
   schemaVersion: PARTNER_LOCK_SCHEMA,
@@ -149,13 +150,13 @@ export const HSI_SCOPE_LOCKED_PARTNER_LOCK: HsiPartnerLock = {
     contactChannel: "public_institute_channel",
     outreachStatus: "awaiting_named_partner",
     notes:
-      "From ISI_PILOT_PARTNER_SHORTLIST.md — outreach target category only. Not a confirmed partner, MoU, or named PI. Contact via public programme / institute channels. Phase 2 locked disease+question scope; partnerSigned still false.",
+      "From ISI_PILOT_PARTNER_SHORTLIST.md — outreach target category only. Not a confirmed partner, MoU, or named PI. Contact via public programme / institute channels. Phase 2 locked disease+question scope; Phase 3 deepened evidence; partnerSigned still false.",
   },
   seedPathway: {
     id: "ra-tnf-response-heterogeneity",
-    label: "RA · TNF / ACPA · anti-TNF response heterogeneity",
+    label: "RA · TNF / ACPA / ADA · anti-TNF response heterogeneity",
     rationale:
-      "Strongest existing immune-disease seed slice: TNF→RA + anti-CCP (LOINC) + IL-6 / anti-TNF-refractory literature already wired for Gate C handoff. Matches pilot-brief example questions on therapy response and subgroup biomarkers. Promoted to working Stage 1 scope (scopeLocked) in Phase 2.",
+      "Phase 3 deepened partner-scoped slice: TNF→RA + anti-CCP/RF (LOINC) + IL-6 / anti-TNF-refractory + ADA/immunogenicity + serology competing frames + MTX+anti-TNF combo background. Matches pilot-brief questions on therapy response and subgroup biomarkers. Working Stage 1 scope (scopeLocked); not partnerSigned.",
     primaryClaimIds: [
       "HSI-C-RA-001",
       "HSI-C-RA-002",
@@ -163,6 +164,12 @@ export const HSI_SCOPE_LOCKED_PARTNER_LOCK: HsiPartnerLock = {
       "HSI-C-RA-004",
       "HSI-C-RA-005",
       "HSI-C-RA-006",
+      "HSI-C-RA-007",
+      "HSI-C-RA-008",
+      "HSI-C-RA-009",
+      "HSI-C-RA-010",
+      "HSI-C-RA-011",
+      "HSI-C-RA-012",
       "HSI-C-IM-002",
       "HSI-C-IM-003",
     ],
@@ -173,10 +180,28 @@ export const HSI_SCOPE_LOCKED_PARTNER_LOCK: HsiPartnerLock = {
       "HSI-E-RA-004",
       "HSI-E-RA-005",
       "HSI-E-RA-006",
+      "HSI-E-RA-007",
+      "HSI-E-RA-008",
+      "HSI-E-RA-009",
+      "HSI-E-RA-010",
+      "HSI-E-RA-011",
+      "HSI-E-RA-012",
       "HSI-E-IM-002",
       "HSI-E-IM-003",
     ],
-    primaryPmids: ["11244034", "10662881", "11087881", "18625622", "2993897"],
+    primaryPmids: [
+      "11244034",
+      "10662881",
+      "11087881",
+      "18625622",
+      "2993897",
+      "16508927",
+      "17133559",
+      "18375541",
+      "24586782",
+      "20699241",
+      "10622295",
+    ],
   },
   flipRequirements: [
     "Named partner confirms disease = rheumatoid arthritis (or explicitly chooses a different disease — then re-lock scope).",
@@ -189,12 +214,13 @@ export const HSI_SCOPE_LOCKED_PARTNER_LOCK: HsiPartnerLock = {
   ],
   honesty: [
     "Phase 2 done = scopeLocked=true (disease + researchQuestion are working Stage 1 scope).",
+    "Phase 3 done = partner-scoped evidence depth for this locked RA/anti-TNF question (ADA, serology tension, RF LOINC, MTX combo).",
     "scopeLocked does NOT mean a commercial partner signed or locked a MoU.",
     "partnerSigned / lockedPilot stay false until flipRequirements are met with a named partner.",
     "Outreach category partners are not MoUs; do not invent personal contacts.",
     "Exports must surface status=scope_locked + partnerSigned=false so consumers cannot mistake this for a live pilot contract.",
   ],
-  updatedAt: "2026-11-01T13:00:00.000Z",
+  updatedAt: "2026-11-01T14:00:00.000Z",
 };
 
 /** @deprecated Use HSI_SCOPE_LOCKED_PARTNER_LOCK — alias kept for import stability. */

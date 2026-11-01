@@ -474,8 +474,8 @@ const SPECS: SeedSpec[] = [
     bridgeCandidate: true,
   },
 
-  // —— RA / TNF pathway (provisional partner lock scaffold — lockedPilot=false) ——
-  // Anchored for partner-scoped literature slice under provisionalLock (see partnerLock.ts).
+  // —— RA / TNF pathway (Phase 2 scope-locked; Phase 3 evidence depth; partnerSigned=false) ——
+  // Partner-scoped literature slice for anti-TNF response heterogeneity (see partnerLock.ts).
   // SLE / psoriasis / IBD below remain illustrative-only stubs.
   {
     id: "HSI-E-RA-001",
@@ -486,7 +486,7 @@ const SPECS: SeedSpec[] = [
     objectLabel: "Rheumatoid arthritis",
     claimId: "HSI-C-RA-001",
     assertion:
-      "TNF-α contributes to synovial inflammation in rheumatoid arthritis (provisional pathway seed — not a partner-signed lock).",
+      "TNF-α contributes to synovial inflammation in rheumatoid arthritis (scope-locked pathway seed — not a partner-signed lock).",
     review: "source-verified",
     teaching: "associative",
     domain: "autoimmunity",
@@ -496,7 +496,7 @@ const SPECS: SeedSpec[] = [
       "Feldmann M, Maini RN. Annu Rev Immunol 2001 — Anti-TNF-α therapy of rheumatoid arthritis: what have we learned?",
     sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/11244034/",
     notes:
-      "Provisional RA pathway seed (partnerLock.provisionalLock=true; lockedPilot=false). PMID 11244034 verified. Maps toward ISI REL-M001-contributes_to-D001. Gate C handoff pattern mirrors PMID 16382236 (evidence-linked · pending human Neon approve). Not partner-signed.",
+      "Scope-locked RA pathway seed (scopeLocked=true; partnerSigned=false; lockedPilot=false). PMID 11244034 verified. Maps toward ISI REL-M001-contributes_to-D001. Gate C handoff pattern mirrors PMID 16382236 (evidence-linked · pending human Neon approve). Not partner-signed.",
   },
   {
     id: "HSI-E-RA-002",
@@ -507,7 +507,7 @@ const SPECS: SeedSpec[] = [
     objectLabel: "Rheumatoid arthritis",
     claimId: "HSI-C-RA-002",
     assertion:
-      "Anti-CCP (ACPA) antibodies are a serologic biomarker used in rheumatoid arthritis workup (provisional — not partner-signed / not CDS).",
+      "Anti-CCP (ACPA) antibodies are a serologic biomarker used in rheumatoid arthritis workup (scope-locked — not partner-signed / not CDS).",
     review: "source-verified",
     teaching: "associative",
     domain: "autoimmunity",
@@ -517,7 +517,7 @@ const SPECS: SeedSpec[] = [
       "Schellekens GA et al. Arthritis Rheum 2000 — The diagnostic properties of rheumatoid arthritis antibodies recognizing a cyclic citrullinated peptide.",
     sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/10662881/",
     notes:
-      "Provisional RA biomarker seed with LOINC 53031-9. PMID 10662881 verified via PubMed. No durable ISI REL-* for anti-CCP→RA yet — marker_only map. Gate C = human Neon approve only. Not CDS.",
+      "Scope-locked RA biomarker seed with LOINC 53031-9. PMID 10662881 verified via PubMed. No durable ISI REL-* for anti-CCP→RA yet — marker_only map. Gate C = human Neon approve only. Not CDS.",
   },
   {
     id: "HSI-E-RA-003",
@@ -528,7 +528,7 @@ const SPECS: SeedSpec[] = [
     objectLabel: "Rheumatoid arthritis",
     claimId: "HSI-C-RA-003",
     assertion:
-      "Anti-TNF therapy (e.g. infliximab class) improves clinical outcomes in rheumatoid arthritis when combined with methotrexate in established trials (provisional — response heterogeneity remains open).",
+      "Anti-TNF therapy (e.g. infliximab class) improves clinical outcomes in rheumatoid arthritis when combined with methotrexate in established trials (scope-locked — response heterogeneity remains open).",
     review: "source-verified",
     teaching: "associative",
     domain: "autoimmunity",
@@ -538,7 +538,7 @@ const SPECS: SeedSpec[] = [
       "Lipsky PE et al. N Engl J Med 2000 — Infliximab and methotrexate in the treatment of rheumatoid arthritis.",
     sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/11087881/",
     notes:
-      "Provisional RA treatment seed for anti-TNF response question. PMID 11087881 verified. Does not prove uniform response — pairs with RA-004/005 for heterogeneity. No invented ISI REL; Gate C = human Neon approve only. Not CDS.",
+      "Scope-locked RA treatment seed for anti-TNF response question. PMID 11087881 verified. Does not prove uniform response — pairs with RA-004/005 and Phase 3 ADA/serology edges. No invented ISI REL; Gate C = human Neon approve only. Not CDS.",
   },
   {
     id: "HSI-E-RA-004",
@@ -549,7 +549,7 @@ const SPECS: SeedSpec[] = [
     objectLabel: "Rheumatoid arthritis",
     claimId: "HSI-C-RA-004",
     assertion:
-      "IL-6 pathway signalling contributes to rheumatoid arthritis inflammatory tone (provisional competing axis vs TNF-centric framing).",
+      "IL-6 pathway signalling contributes to rheumatoid arthritis inflammatory tone (competing axis vs TNF-centric framing).",
     review: "source-verified",
     teaching: "associative",
     domain: "autoimmunity",
@@ -559,7 +559,7 @@ const SPECS: SeedSpec[] = [
       "Emery P et al. Ann Rheum Dis 2008 — Tocilizumab (IL-6R inhibition) improves outcomes in RA refractory to anti-TNF.",
     sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/18625622/",
     notes:
-      "Provisional RA multi-cytokine seed. PMID 18625622 verified. Supports ISI related_axis REL-M003-contributes_to-D001. Same paper underpins anti-TNF-refractory framing (RA-005). Gate C = human Neon approve only.",
+      "Scope-locked RA multi-cytokine seed. PMID 18625622 verified. Supports ISI related_axis REL-M003-contributes_to-D001. Same paper underpins anti-TNF-refractory framing (RA-005). Gate C = human Neon approve only.",
   },
   {
     id: "HSI-E-RA-005",
@@ -570,7 +570,7 @@ const SPECS: SeedSpec[] = [
     objectLabel: "IL-6 pathway axis",
     claimId: "HSI-C-RA-005",
     assertion:
-      "Some patients with inadequate anti-TNF response still show benefit from IL-6 pathway inhibition — supporting competing mechanisms for response heterogeneity (provisional; uncertain grade).",
+      "Some patients with inadequate anti-TNF response still show benefit from IL-6 pathway inhibition — supporting competing mechanisms for response heterogeneity (uncertain grade).",
     review: "source-verified",
     teaching: "hypothesized",
     domain: "autoimmunity",
@@ -580,7 +580,7 @@ const SPECS: SeedSpec[] = [
       "Emery P et al. Ann Rheum Dis 2008 — Tocilizumab improves outcomes in RA refractory to anti-TNF.",
     sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/18625622/",
     notes:
-      "Provisional response-heterogeneity seed for the pilot question. PMID 18625622 verified. S-P-O is related_axis (trial population = anti-TNF inadequate responders → IL-6R blockade), not a universal causal map. Curator must re-assess claim_support before Neon Gate C approve — same honesty pattern as PMID 16382236 handoff. Not CDS.",
+      "Scope-locked response-heterogeneity seed for the pilot question. PMID 18625622 verified. S-P-O is related_axis (trial population = anti-TNF inadequate responders → IL-6R blockade), not a universal causal map. Curator must re-assess claim_support before Neon Gate C approve — same honesty pattern as PMID 16382236 handoff. Not CDS.",
   },
   {
     id: "HSI-E-RA-006",
@@ -591,7 +591,7 @@ const SPECS: SeedSpec[] = [
     objectLabel: "TNF-α",
     claimId: "HSI-C-RA-006",
     assertion:
-      "Macrophages are a cellular source of TNF-α — relevant to synovial TNF biology in rheumatoid arthritis (provisional entity-slice seed).",
+      "Macrophages are a cellular source of TNF-α — relevant to synovial TNF biology in rheumatoid arthritis (entity-slice seed).",
     review: "source-verified",
     teaching: "associative",
     domain: "autoimmunity",
@@ -601,7 +601,134 @@ const SPECS: SeedSpec[] = [
       "Beutler B et al. Nature 1985 — Identity of tumour necrosis factor and the macrophage-secreted factor cachectin.",
     sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/2993897/",
     notes:
-      "Provisional cell→cytokine seed. PMID 2993897 verified. Supports ISI related_axis REL-C003-produces-M001 (macrophage → TNF); HSI edgeType=upregulates (no produces predicate in Phase 0). Paper is foundational identity, not RA synovial histology — curator must not overclaim tissue specificity at Gate C. Not CDS.",
+      "Scope-locked cell→cytokine seed. PMID 2993897 verified. Supports ISI related_axis REL-C003-produces-M001 (macrophage → TNF); HSI edgeType=upregulates (no produces predicate in Phase 0). Paper is foundational identity, not RA synovial histology — curator must not overclaim tissue specificity at Gate C. Not CDS.",
+  },
+  // —— Phase 3 depth: ADA/immunogenicity, serology tension, RF LOINC, MTX combo ——
+  {
+    id: "HSI-E-RA-007",
+    edgeType: "associated_with",
+    subjectId: "HSI-N-anti-tnf-ada",
+    subjectLabel: "Anti-drug antibodies to anti-TNF (ADA)",
+    objectId: "HSI-N-anti-tnf-refractory",
+    objectLabel: "Anti-TNF refractory RA phenotype",
+    claimId: "HSI-C-RA-007",
+    assertion:
+      "Development of anti-infliximab antibodies is associated with reduced clinical response to infliximab in rheumatoid arthritis (immunogenicity competing frame for anti-TNF response heterogeneity).",
+    review: "source-verified",
+    teaching: "associative",
+    domain: "autoimmunity",
+    pmid: "16508927",
+    doi: "10.1002/art.21671",
+    citationLabel:
+      "Wolbink GJ et al. Arthritis Rheum 2006 — Development of antiinfliximab antibodies and relationship to clinical response in RA.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/16508927/",
+    notes:
+      "Phase 3 partner-scoped depth. PMID 16508927 verified via PubMed/E-utilities. Competing explanation vs cytokine-axis-only narratives — ADA/immunogenicity as a response-heterogeneity mechanism. Infliximab-specific cohort; do not over-generalise to all anti-TNF agents at Gate C. Not CDS; partnerSigned=false.",
+  },
+  {
+    id: "HSI-E-RA-008",
+    edgeType: "associated_with",
+    subjectId: "HSI-N-anti-tnf-ada",
+    subjectLabel: "Anti-drug antibodies to anti-TNF (ADA)",
+    objectId: "HSI-N-anti-tnf-immunogenicity",
+    objectLabel: "Anti-TNF immunogenicity / bioavailability monitoring",
+    claimId: "HSI-C-RA-008",
+    assertion:
+      "Low early trough infliximab levels and subsequent anti-infliximab antibodies associate with infusion reactions and treatment failure — supporting immunogenicity monitoring as a response-heterogeneity axis (not CDS).",
+    review: "source-verified",
+    teaching: "hypothesized",
+    domain: "autoimmunity",
+    pmid: "17133559",
+    doi: "10.1002/art.22214",
+    citationLabel:
+      "Bendtzen K et al. Arthritis Rheum 2006 — Individualized monitoring of drug bioavailability and immunogenicity in infliximab-treated RA.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/17133559/",
+    notes:
+      "Phase 3 partner-scoped depth. PMID 17133559 verified via PubMed/E-utilities. Deepens ADA frame (pairs with RA-007); teaching=hypothesized because assay/threshold generalisation to all anti-TNF remains open. No invented ISI REL-*. Gate C = human Neon approve only. Not CDS.",
+  },
+  {
+    id: "HSI-E-RA-009",
+    edgeType: "associated_with",
+    subjectId: "HSI-N-ra-seropositive",
+    subjectLabel: "RF/ACPA seropositive RA phenotype",
+    objectId: "HSI-N-anti-tnf-response-het",
+    objectLabel: "Anti-TNF response heterogeneity",
+    claimId: "HSI-C-RA-009",
+    assertion:
+      "RF and/or anti-CCP positivity has been associated with differential mean DAS28 improvement on anti-TNF therapy in observational cohorts (serology competing frame — direction and magnitude remain contested).",
+    review: "source-verified",
+    teaching: "hypothesized",
+    domain: "autoimmunity",
+    pmid: "18375541",
+    doi: "10.1136/ard.2007.084715",
+    citationLabel:
+      "Potter C et al. Ann Rheum Dis 2009 — Association of RF and anti-CCP positivity with anti-TNF response in RA.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/18375541/",
+    notes:
+      "Phase 3 partner-scoped depth. PMID 18375541 verified via PubMed/E-utilities. Seropositive patients showed smaller mean DAS28 improvement in this cohort — do not invent predictive CDS rules. Competes with RA-010 meta-analysis finding no association. Gate C = human Neon approve only.",
+  },
+  {
+    id: "HSI-E-RA-010",
+    edgeType: "associated_with",
+    subjectId: "HSI-N-ra-seropositive",
+    subjectLabel: "RF/ACPA seropositive RA phenotype",
+    objectId: "HSI-N-anti-tnf",
+    objectLabel: "Anti-TNF therapy",
+    claimId: "HSI-C-RA-010",
+    assertion:
+      "Pooled evidence does not support RF or anti-CCP status as a reliable predictor of clinical response to anti-TNFα agents (competing with single-cohort serology associations).",
+    review: "source-verified",
+    teaching: "associative",
+    domain: "autoimmunity",
+    pmid: "24586782",
+    doi: "10.1371/journal.pone.0089442",
+    citationLabel:
+      "Lv Q et al. PLoS One 2014 — RF and anti-CCP status are not associated with anti-TNFα treatment effect (meta-analysis).",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/24586782/",
+    notes:
+      "Phase 3 partner-scoped depth. PMID 24586782 verified via PubMed/E-utilities. Explicit competing frame vs RA-009 — keep both visible; do not collapse serology into a confident response predictor. Meta-analysis heterogeneity noted in paper. Gate C = human Neon approve only. Not CDS.",
+  },
+  {
+    id: "HSI-E-RA-011",
+    edgeType: "biomarker_of",
+    subjectId: "HSI-N-rf",
+    subjectLabel: "Rheumatoid factor (RF)",
+    objectId: "HSI-N-ra",
+    objectLabel: "Rheumatoid arthritis",
+    claimId: "HSI-C-RA-011",
+    assertion:
+      "Rheumatoid factor is a serologic biomarker used in rheumatoid arthritis classification and workup alongside ACPA (scope-locked LOINC marker — not an anti-TNF response predictor by itself).",
+    review: "source-verified",
+    teaching: "associative",
+    domain: "autoimmunity",
+    pmid: "20699241",
+    doi: "10.1136/ard.2010.138461",
+    citationLabel:
+      "Aletaha D et al. Ann Rheum Dis 2010 — 2010 ACR/EULAR rheumatoid arthritis classification criteria.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/20699241/",
+    notes:
+      "Phase 3 partner-scoped depth. PMID 20699241 verified via PubMed/E-utilities. LOINC 11572-5 on RF marker. Classification/workup context only — do not equate RF positivity with anti-TNF response prediction (see RA-009/010 tension). No invented ISI REL-*. Gate C = human Neon approve only. Not CDS.",
+  },
+  {
+    id: "HSI-E-RA-012",
+    edgeType: "treats",
+    subjectId: "HSI-N-mtx-anti-tnf-combo",
+    subjectLabel: "Methotrexate + anti-TNF combination therapy",
+    objectId: "HSI-N-ra",
+    objectLabel: "Rheumatoid arthritis",
+    claimId: "HSI-C-RA-012",
+    assertion:
+      "Infliximab plus methotrexate improves clinical and radiographic outcomes versus methotrexate alone in RA — relevant background for interpreting anti-TNF response and immunogenicity in combination regimens.",
+    review: "source-verified",
+    teaching: "associative",
+    domain: "autoimmunity",
+    pmid: "10622295",
+    doi: "10.1016/s0140-6736(99)05246-0",
+    citationLabel:
+      "Maini R et al. Lancet 1999 — ATTRACT: infliximab vs placebo in RA patients receiving concomitant methotrexate.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/10622295/",
+    notes:
+      "Phase 3 partner-scoped depth. PMID 10622295 verified via PubMed/E-utilities. Complements Lipsky 2000 (RA-003) with the earlier ATTRACT combination-therapy frame; not a duplicate of ADA edges. No invented ISI REL-*. Gate C = human Neon approve only. Not CDS.",
   },
   {
     id: "HSI-E-SLE-001",
@@ -751,7 +878,15 @@ export const HSI_MARKERS: HsiMarker[] = [
     loinc: "53031-9",
     unit: null,
     description:
-      "Serologic marker used in RA workup (provisional partner pathway — lockedPilot=false / not CDS).",
+      "Serologic marker used in RA workup (scope-locked partner pathway — partnerSigned=false / not CDS).",
+  },
+  {
+    id: "HSI-N-rf",
+    name: "Rheumatoid factor (RF)",
+    loinc: "11572-5",
+    unit: null,
+    description:
+      "Serologic marker used in RA classification / workup (Phase 3 LOINC coverage — not an anti-TNF response predictor / not CDS).",
   },
   {
     id: "HSI-N-ana",

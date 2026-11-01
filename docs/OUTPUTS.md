@@ -42,7 +42,7 @@ dist/outputs/
 
 | Consumer | Files | Rules |
 |----------|-------|--------|
-| **ISI** | `hsi-isi-export.json`, `hsi-isi-rel-map.json`, `gate-c-checklist.*`, `hsi-pilot-evidence-pack.*`, `hsi-pilot-review-rubric.*`, `hsi-partner-lock.json` | Discovery / Ask / Radar only. REL map never auto-approves into KG. Gate C approve (if any) is human-only in **ISI Neon `autumn-snow`**, not HSI `red-wave`. Pack shows **Phase 2 scope-locked** RA/TNF disease+question (`scopeLocked=true`, `partnerSigned=false`, `lockedPilot=false`) — not a MoU. Discovery Centre vocabulary is **metadata only**. |
+| **ISI** | `hsi-isi-export.json`, `hsi-isi-rel-map.json`, `gate-c-checklist.*`, `hsi-pilot-evidence-pack.*`, `hsi-pilot-review-rubric.*`, `hsi-partner-lock.json` | Discovery / Ask / Radar only. REL map never auto-approves into KG. Gate C approve (if any) is human-only in **ISI Neon `autumn-snow`**, not HSI `red-wave`. Pack shows **Phase 3 evidence depth** on Phase 2 scope-locked RA/TNF (`scopeLocked=true`, `partnerSigned=false`, `lockedPilot=false`) — not a MoU. Discovery Centre vocabulary is **metadata only**. |
 | **Aksh** | `hsi-aksh-node-map.json`, `hsi-aksh-hitl-cards.json` | HITL map pointers. `akshNodeId` ≠ CDS. Seeds stay `cdsSurfacable=false`. |
 | **Curators** | `gate-c-checklist.md`, `hsi-gap-report.md`, `hsi-pilot-evidence-pack.md`, `hsi-pilot-review-rubric.md` | Pending REL list + gap backlog + scope-locked brief + human review checklist. |
 
@@ -87,12 +87,12 @@ PRD / brief four outputs (evidence map, entity slice, competing explanations, ex
 | Partner-scoped literature seed slice (RA/TNF pathway) | **Done** (public PMIDs; licensing still open with partner) |
 | Scientific review rubric export (Stage 1 four outputs) | **Done** (thresholds TBD with partner) |
 | Named `partnerSigned=true` / `lockedPilot=true` | **Remaining** (outreach — named partner confirms disease + question) |
-| **Phase 3** — Partner-scoped evidence depth for the locked question | **Next** |
+| **Phase 3** — Partner-scoped evidence depth for the locked question | **Done** (ADA / immunogenicity, serology tension, RF LOINC, MTX combo; competing explanations filled) |
+| **Phase 4** — HSI Neon `red-wave` readiness | **Next** (empty `neondb` migrations; no ISI/Akeno/DeliverX Neon writes) |
 | Source licensing / attribution for agreed partner corpus | **Remaining** (after partnerSigned) |
 | Success-metric numeric thresholds with partner | **Remaining** |
 | Interactive Discovery Centre / graph UI | **Deferred** (ISI product — not hsi-core Stage 1) |
 | PDF/DOCX brief renderer | **Deferred** (ISI product P1) |
-| HSI Neon `red-wave` schema migrations | **Deferred** (local JSON/exports suffice for Stage 1) |
 | Stage 2 molecular adapters / Stage 3 Akeno clinical | **Out of Stage 1** |
 
 ## Individual CLIs (still available)

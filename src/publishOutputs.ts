@@ -279,8 +279,8 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     partnerLock: partnerLockExportPointer(partnerLock),
     consumerNotes: [
       "ISI: discovery / Ask / Radar only — use hsi-isi-export.json + hsi-isi-rel-map.json.",
-      "ISI pilot walkthrough: hsi-pilot-evidence-pack.* + hsi-pilot-review-rubric.* (Phase 2 scope-locked RA/TNF; partnerSigned=false; lockedPilot=false; no patient CDS).",
-      "Partner lock honesty: hsi-partner-lock.json — Phase 2 done = scopeLocked; named partner still flips partnerSigned (then lockedPilot).",
+      "ISI pilot walkthrough: hsi-pilot-evidence-pack.* + hsi-pilot-review-rubric.* (Phase 3 evidence depth on scope-locked RA/TNF; partnerSigned=false; lockedPilot=false; no patient CDS).",
+      "Partner lock honesty: hsi-partner-lock.json — Phase 2 = scopeLocked; Phase 3 = evidence depth; named partner still flips partnerSigned (then lockedPilot).",
       "Discovery Centre vocabulary is metadata only (ASK→MAP→REVIEW… + disease contexts) — not an interactive UI.",
       "Aksh: HITL map pointers only — use hsi-aksh-node-map.json + hsi-aksh-hitl-cards.json; CDS stays closed on seeds.",
       "Gate C: human checklist in gate-c-checklist.*; Neon approve is outside this repo (ISI autumn-snow only — never HSI red-wave).",

@@ -102,7 +102,7 @@ Substrate includes T2D / immuno-metabolic seeds **plus** a **scope-locked** RA/T
 4. Success-metric **numeric thresholds** with partner (rubric checklist exported; thresholds TBD)  
 5. Trial-registry context in first release vs P1  
 
-Critical path remains **outreach** to flip `partnerSigned` — Phase 3 deepens evidence for the already scope-locked RA/TNF question.
+Critical path remains **outreach** to flip `partnerSigned` — Phase 3 evidence depth for the scope-locked RA/TNF question is done; Phase 4 = HSI Neon red-wave readiness.
 
 ---
 

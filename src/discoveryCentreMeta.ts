@@ -58,7 +58,8 @@ export const HSI_ILLUSTRATIVE_DISEASE_CONTEXTS = [
     shortLabel: "RA",
     status: "scope_locked_working_pilot" as const,
     lockedPilot: false as const,
-    seedHint: "TNF / IL-6 / anti-CCP / anti-TNF response-heterogeneity — Phase 2 working Stage 1 scope",
+    seedHint:
+      "TNF / IL-6 / ADA / RF·ACPA / anti-TNF response-heterogeneity — Phase 3 depth on Phase 2 scope lock",
   },
   {
     id: "sle",

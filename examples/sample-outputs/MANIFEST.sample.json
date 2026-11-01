@@ -36,9 +36,9 @@
     "seedPathwayId": "ra-tnf-response-heterogeneity"
   },
   "counts": {
-    "partnerScopedEvidenceRows": 8,
-    "claimsWithLoinc": 6,
+    "partnerScopedEvidenceRows": 14,
+    "claimsWithLoinc": 8,
     "illustrativeDiseaseContexts": 4
   },
-  "note": "Sample only — run bun run outputs for a real bundle under dist/outputs/"
+  "note": "Sample only (Phase 3 depth) — run bun run outputs for a real bundle under dist/outputs/"
 }

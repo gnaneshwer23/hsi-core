@@ -252,8 +252,12 @@ function classifyLabel(
     lower.includes("hba1c") ||
     lower.includes("crp") ||
     lower.includes("anti-ccp") ||
+    lower.includes("rheumatoid factor") ||
+    lower.includes("(rf)") ||
     lower.includes("antinuclear") ||
-    lower.includes("autoantibody")
+    lower.includes("autoantibody") ||
+    lower.includes("anti-drug antibodies") ||
+    lower.includes("(ada)")
   ) {
     return "biomarker";
   }
@@ -263,6 +267,7 @@ function classifyLabel(
     lower.includes("therapy") ||
     lower.includes("inhibitor") ||
     lower.includes("anti-tnf") ||
+    lower.includes("methotrexate") ||
     lower.includes("blockade")
   ) {
     return "treatment";
@@ -440,9 +445,15 @@ export function buildPilotEvidencePack(opts?: {
       id: "expl-ra-tnf-centric",
       label: "TNF-centric framing of RA synovial inflammation and anti-TNF benefit",
       status: scopedPilot ? "from_illustrative_pathway" : "template",
-      relatedClaimIds: ["HSI-C-RA-001", "HSI-C-RA-003", "HSI-C-RA-006", "HSI-C-IM-002"],
+      relatedClaimIds: [
+        "HSI-C-RA-001",
+        "HSI-C-RA-003",
+        "HSI-C-RA-006",
+        "HSI-C-RA-012",
+        "HSI-C-IM-002",
+      ],
       note: scopedPilot
-        ? "Working competing frame for the anti-TNF response question (scopeLocked) — not partnerSigned. Keep as hypothesis until claim IDs survive expert review."
+        ? "Working competing frame for the anti-TNF response question (scopeLocked; Phase 3 depth) — not partnerSigned. Keep as hypothesis until claim IDs survive expert review."
         : "Fill after partner lock.",
     },
     {
@@ -455,11 +466,22 @@ export function buildPilotEvidencePack(opts?: {
         : "Preserve disagreement; do not collapse into a single confident narrative.",
     },
     {
-      id: "expl-ra-acpa-subgroup",
-      label: "Serologic subgroup framing (ACPA / anti-CCP) vs cytokine-axis response",
+      id: "expl-ra-ada-immunogenicity",
+      label: "ADA / immunogenicity framing (anti-drug antibodies and bioavailability)",
       status: scopedPilot ? "from_illustrative_pathway" : "template",
-      relatedClaimIds: ["HSI-C-RA-002"],
-      note: "ACPA is a workup biomarker (LOINC 53031-9); do not equate seropositivity with anti-TNF response prediction without partner-scoped evidence.",
+      relatedClaimIds: ["HSI-C-RA-007", "HSI-C-RA-008"],
+      note: scopedPilot
+        ? "Phase 3 competing frame: secondary non-response via immunogenicity (PMID 16508927 / 17133559). Infliximab-weighted evidence — do not over-generalise to all anti-TNF agents."
+        : "Fill after partner lock.",
+    },
+    {
+      id: "expl-ra-acpa-subgroup",
+      label: "Serologic subgroup framing (RF / ACPA) — association claimed vs not supported",
+      status: scopedPilot ? "from_illustrative_pathway" : "template",
+      relatedClaimIds: ["HSI-C-RA-002", "HSI-C-RA-009", "HSI-C-RA-010", "HSI-C-RA-011"],
+      note: scopedPilot
+        ? "Phase 3 tension: Potter cohort association (PMID 18375541) vs Lv meta-analysis no association (PMID 24586782). ACPA/RF remain workup biomarkers (LOINC 53031-9 / 11572-5) — not CDS response predictors."
+        : "ACPA/RF are workup biomarkers; do not equate seropositivity with anti-TNF response prediction.",
     },
     {
       id: "expl-sle-ifn-axis",
@@ -506,7 +528,7 @@ export function buildPilotEvidencePack(opts?: {
       id: "hyp-ra-response-het",
       kind: "hypothesis",
       text: scopedPilot
-        ? "Working hypothesis (scopeLocked): anti-TNF inadequate responders enrich for IL-6-axis biology that warrants separate evidence mapping before next-line study design — expert must reject or refine; autoApproved=false."
+        ? "Working hypothesis (scopeLocked; Phase 3): anti-TNF inadequate responders enrich for IL-6-axis biology that warrants separate evidence mapping before next-line study design — expert must reject or refine; autoApproved=false."
         : "Candidate hypothesis slot — attach claim IDs after partner question is locked; never auto-approve into product KG.",
       relatedClaimIds: scopedPilot ? ["HSI-C-RA-003", "HSI-C-RA-005", "HSI-C-RA-004"] : [],
       autoApproved: false,
@@ -514,8 +536,15 @@ export function buildPilotEvidencePack(opts?: {
     {
       id: "hyp-ra-acpa-scope",
       kind: "hypothesis",
-      text: "Gap: clarify whether ACPA status should be an inclusion axis for the partner question or only a background serology context — do not invent predictive claims.",
-      relatedClaimIds: ["HSI-C-RA-002"],
+      text: "Gap: clarify whether ACPA/RF status should be an inclusion axis for the partner question or only a background serology context — keep RA-009 vs RA-010 disagreement visible; do not invent predictive claims.",
+      relatedClaimIds: ["HSI-C-RA-002", "HSI-C-RA-009", "HSI-C-RA-010", "HSI-C-RA-011"],
+      autoApproved: false,
+    },
+    {
+      id: "hyp-ra-ada-scope",
+      kind: "hypothesis",
+      text: "Gap: decide with partner whether ADA / trough-level monitoring is in-scope for the Stage 1 question or deferred — Phase 3 seeds RA-007/008 are literature anchors only; autoApproved=false.",
+      relatedClaimIds: ["HSI-C-RA-007", "HSI-C-RA-008"],
       autoApproved: false,
     },
   ];
@@ -523,7 +552,7 @@ export function buildPilotEvidencePack(opts?: {
   const partnerScopedSlice = bucketEntities(scoped.length > 0 ? scoped : []);
   if (scoped.length > 0) {
     partnerScopedSlice.note =
-      "Partner-scoped slice for the scope-locked RA / anti-TNF response pathway (scopeLocked=true; partnerSigned=false; lockedPilot=false). Not a signed partner corpus.";
+      "Phase 3 partner-scoped slice for the scope-locked RA / anti-TNF response pathway (scopeLocked=true; partnerSigned=false; lockedPilot=false). Includes ADA, serology tension, RF LOINC, MTX combo — not a signed partner corpus.";
   }
 
   return {
@@ -540,7 +569,7 @@ export function buildPilotEvidencePack(opts?: {
     provisionalLock: lock.provisionalLock,
     partnerLock: lock,
     substrateNote: scopedPilot
-      ? "Phase 2 scope lock: rheumatoid arthritis + anti-TNF response heterogeneity are the working Stage 1 pilot question. scopeLocked=true; partnerSigned=false; lockedPilot=false. Full evidenceMap still includes T2D / immuno-metabolic + SLE/PsO/IBD stubs; use partnerScopedEntitySlice for the RA pathway walkthrough."
+      ? "Phase 3 evidence depth on Phase 2 scope lock: rheumatoid arthritis + anti-TNF response heterogeneity. scopeLocked=true; partnerSigned=false; lockedPilot=false. Partner-scoped slice adds ADA/immunogenicity, RF/ACPA serology tension, RF LOINC, and MTX+anti-TNF combo literature. Full evidenceMap still includes T2D / immuno-metabolic + SLE/PsO/IBD stubs."
       : "Evidence rows include substrate seeds. Disease/question TBD until scope is locked.",
     discoveryCentre,
     gradeDefinitions: HSI_GRADE_INFO,
@@ -561,7 +590,7 @@ export function buildPilotEvidencePack(opts?: {
             tissue: "synovium / systemic inflammatory tone (TBD with partner)",
             cellType: "synovial macrophages / cytokine-producing myeloid cells (TBD with partner)",
             mechanismOrBiomarkerOrTreatmentFocus:
-              "anti-TNF response heterogeneity; TNF vs IL-6 axes; ACPA serology context",
+              "anti-TNF response heterogeneity; TNF vs IL-6 vs ADA/immunogenicity; RF/ACPA serology tension",
             timeWindow: "unknown",
           }
         : {
@@ -628,9 +657,10 @@ export function buildPilotEvidencePack(opts?: {
     },
     nextActions: [
       scopedPilot
-        ? "Keep partnerSigned=false / lockedPilot=false until a named partner confirms disease + question (see partnerLock.flipRequirements). Phase 3 = deepen partner-scoped evidence."
+        ? "Phase 3 evidence depth complete for scope-locked RA/anti-TNF. Keep partnerSigned=false / lockedPilot=false until a named partner confirms disease + question (see partnerLock.flipRequirements)."
         : "Lock disease + research question as working Stage 1 scope (Phase 2).",
-      "Human-review the scope-locked RA pathway against hsi-pilot-review-rubric.* and the four pack outputs.",
+      "Phase 4 next: HSI Neon red-wave readiness (schema migrations / empty neondb prep) — no ISI autumn-snow writes from this workspace.",
+      "Human-review the deepened RA pathway against hsi-pilot-review-rubric.* and the four pack outputs.",
       "Agree source licensing + success thresholds with the named partner before user testing.",
       "Keep Akeno/Aksh patient-level pathways behind M4 / governance gates.",
       "Do not treat SLE/PsO/IBD illustrative stubs as the selected pilot indication.",
@@ -672,7 +702,7 @@ export function serializePilotEvidencePackMarkdown(
     `| outreachStatus | \`${pack.partnerLock.partner?.outreachStatus ?? "none"}\` |`,
     `| seed pathway | ${pack.partnerLock.seedPathway?.label ?? "—"} |`,
     "",
-    "> Phase 2 = scopeLocked. scopeLocked ≠ partnerSigned. Do not claim a live pilot contract from this pack alone.",
+    "> Phase 3 = evidence depth on scopeLocked RA/anti-TNF. scopeLocked ≠ partnerSigned. Do not claim a live pilot contract from this pack alone.",
     "",
     "## Discovery loop (metadata only)",
     "",

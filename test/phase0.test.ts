@@ -375,7 +375,7 @@ describe("Gate C checklist + publish outputs", () => {
     expect(pack.questionProject.partnerSigned).toBe(false);
     expect(pack.questionProject.lockedPilot).toBe(false);
     expect(pack.evidenceMap.length).toBe(HSI_T2D_IMMUNO_SEED_EDGES.length);
-    expect(pack.summary.partnerScopedEvidenceRows).toBeGreaterThanOrEqual(6);
+    expect(pack.summary.partnerScopedEvidenceRows).toBeGreaterThanOrEqual(12);
     expect(pack.summary.evidenceMapRows).toBe(pack.evidenceMap.length);
     expect(pack.expertShortlist.every((i) => i.autoApproved === false)).toBe(true);
     expect(pack.clinicalBoundary.some((b) => b.toLowerCase().includes("ehr"))).toBe(true);
@@ -383,14 +383,23 @@ describe("Gate C checklist + publish outputs", () => {
     expect(pack.discoveryCentre.illustrativeDiseaseContexts.every((d) => d.lockedPilot === false)).toBe(
       true,
     );
-    expect(pack.summary.claimsWithLoinc).toBeGreaterThanOrEqual(5);
+    expect(pack.summary.claimsWithLoinc).toBeGreaterThanOrEqual(6);
     expect(pack.entitySlice.typed.length).toBeGreaterThan(0);
     expect(pack.partnerScopedEntitySlice.diseases.some((d) => d.includes("Rheumatoid"))).toBe(true);
     expect(pack.evidenceMap.some((r) => r.claimId === "HSI-C-RA-001")).toBe(true);
     expect(pack.evidenceMap.some((r) => r.claimId === "HSI-C-RA-005")).toBe(true);
+    expect(pack.evidenceMap.some((r) => r.claimId === "HSI-C-RA-007")).toBe(true);
+    expect(pack.evidenceMap.some((r) => r.claimId === "HSI-C-RA-010")).toBe(true);
     expect(pack.evidenceMap.some((r) => r.marker.loinc === "53031-9")).toBe(true);
+    expect(pack.evidenceMap.some((r) => r.marker.loinc === "11572-5")).toBe(true);
+    expect(pack.competingExplanations.some((c) => c.id === "expl-ra-ada-immunogenicity")).toBe(true);
+    expect(
+      pack.competingExplanations.some((c) => c.id === "expl-ra-acpa-subgroup" && c.relatedClaimIds.includes("HSI-C-RA-010")),
+    ).toBe(true);
     const antiCcp = HSI_T2D_IMMUNO_SEED_EDGES.find((e) => e.id === "HSI-E-RA-002");
     expect(antiCcp?.provenance.pmid).toBe("10662881");
+    const ada = HSI_T2D_IMMUNO_SEED_EDGES.find((e) => e.id === "HSI-E-RA-007");
+    expect(ada?.provenance.pmid).toBe("16508927");
   });
 
   it("ships a review rubric with ready_for_human + blocked_on_partner items", () => {
@@ -489,7 +498,7 @@ describe("Gate C checklist + publish outputs", () => {
     expect(manifest.partnerLock.provisionalLock).toBe(false);
     expect(manifest.partnerLock.status).toBe("scope_locked");
     expect(manifest.counts.gateCPending).toBeGreaterThanOrEqual(9);
-    expect(manifest.counts.partnerScopedEvidenceRows).toBeGreaterThanOrEqual(6);
+    expect(manifest.counts.partnerScopedEvidenceRows).toBeGreaterThanOrEqual(12);
 
     const hitl = JSON.parse(
       readFileSync(join(result.outDir, "hsi-aksh-hitl-cards.json"), "utf8"),

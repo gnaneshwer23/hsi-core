@@ -86,15 +86,16 @@ function buildChecklist(lock: HsiPartnerLock, pack: PilotEvidencePack): RubricCh
       id: "em-3",
       output: "evidence_map",
       criterion: "Claim → marker → LOINC visible where applicable (e.g. anti-CCP)",
-      howToJudge: `Pack reports claimsWithLoinc=${pack.summary.claimsWithLoinc}; anti-CCP LOINC 53031-9 expected on RA biomarker row.`,
+      howToJudge: `Pack reports claimsWithLoinc=${pack.summary.claimsWithLoinc}; anti-CCP LOINC 53031-9 and RF LOINC 11572-5 expected on RA biomarker rows.`,
       status: "ready_for_human",
-      relatedClaimIds: ["HSI-C-RA-002"],
+      relatedClaimIds: ["HSI-C-RA-002", "HSI-C-RA-011"],
     },
     {
       id: "es-1",
       output: "entity_slice",
       criterion: "Entity slice covers cells, pathways, biomarkers, treatments, studies for the scope-locked question",
-      howToJudge: "Expect TNF, IL-6, anti-CCP, anti-TNF therapy, synovial macrophages, RA disease node in typed slice.",
+      howToJudge:
+        "Expect TNF, IL-6, anti-CCP, RF, ADA, anti-TNF therapy, synovial macrophages, RA disease node in partnerScopedEntitySlice.",
       status: "ready_for_human",
       relatedClaimIds: pathwayClaims,
     },
@@ -109,18 +110,28 @@ function buildChecklist(lock: HsiPartnerLock, pack: PilotEvidencePack): RubricCh
     {
       id: "ce-1",
       output: "competing_explanations",
-      criterion: "At least two competing frames (e.g. TNF-centric vs multi-cytokine / IL-6) stay visible",
-      howToJudge: "Pack competingExplanations should include TNF vs IL-6 RA frames with claim IDs attached.",
+      criterion:
+        "Competing frames stay visible: TNF-centric, IL-6 / multi-cytokine, ADA/immunogenicity, and RF/ACPA serology tension",
+      howToJudge:
+        "Pack competingExplanations should include expl-ra-tnf-centric, expl-ra-multi-cytokine, expl-ra-ada-immunogenicity, expl-ra-acpa-subgroup with claim IDs attached.",
       status: "ready_for_human",
-      relatedClaimIds: ["HSI-C-RA-001", "HSI-C-RA-004", "HSI-C-RA-005"],
+      relatedClaimIds: [
+        "HSI-C-RA-001",
+        "HSI-C-RA-004",
+        "HSI-C-RA-005",
+        "HSI-C-RA-007",
+        "HSI-C-RA-009",
+        "HSI-C-RA-010",
+      ],
     },
     {
       id: "ce-2",
       output: "competing_explanations",
       criterion: "Uncertainties from uncertain-grade edges are listed without forced narrative collapse",
-      howToJudge: "Review pack.uncertainties; response-heterogeneity edge must remain hypothesized/uncertain.",
+      howToJudge:
+        "Review pack.uncertainties; response-heterogeneity and ADA monitoring edges must remain hypothesized/uncertain where graded that way.",
       status: "ready_for_human",
-      relatedClaimIds: ["HSI-C-RA-005"],
+      relatedClaimIds: ["HSI-C-RA-005", "HSI-C-RA-008", "HSI-C-RA-009"],
     },
     {
       id: "ex-1",
@@ -249,7 +260,7 @@ export function buildPilotReviewRubric(opts?: {
       "Human-review checklist items marked ready_for_human against hsi-pilot-evidence-pack.md.",
       "Keep partnerSigned=false / lockedPilot=false until a named partner confirms disease + question.",
       "Agree success-metric thresholds before formal pilot user testing.",
-      "Phase 2 complete = scopeLocked; Phase 3 = deepen partner-scoped evidence for this RA/TNF question.",
+      "Phase 3 complete = partner-scoped evidence depth for scope-locked RA/anti-TNF; Phase 4 next = HSI Neon red-wave readiness.",
       "Do not treat scopeLocked as a signed commercial partner / MoU.",
     ],
   };

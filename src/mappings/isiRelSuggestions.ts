@@ -226,7 +226,7 @@ export const ISI_REL_SUGGESTIONS: readonly IsiRelSuggestion[] = [
     autoApprove: false,
     isiNodeIds: [],
   },
-  // —— Provisional RA / TNF pathway (partnerLock.provisionalLock; lockedPilot=false) ——
+  // —— Scope-locked RA / TNF pathway (Phase 3 depth; partnerSigned=false) ——
   {
     claimId: "HSI-C-RA-001",
     edgeId: "HSI-E-RA-001",
@@ -234,7 +234,7 @@ export const ISI_REL_SUGGESTIONS: readonly IsiRelSuggestion[] = [
     matchKind: "exact_concept_pair",
     status: "curated",
     rationale:
-      "Exact ISI map REL-M001-contributes_to-D001 (TNF → RA). Provisional pathway seed; PMID 11244034; autoApprove=false; lockedPilot=false until named partner confirms.",
+      "Exact ISI map REL-M001-contributes_to-D001 (TNF → RA). Scope-locked pathway seed; PMID 11244034; autoApprove=false; partnerSigned=false.",
     autoApprove: false,
     isiNodeIds: ["M001", "D001"],
   },
@@ -245,7 +245,7 @@ export const ISI_REL_SUGGESTIONS: readonly IsiRelSuggestion[] = [
     matchKind: "marker_only",
     status: "unmapped",
     rationale:
-      "Anti-CCP → RA provisional biomarker — LOINC-linked (53031-9); PMID 10662881; no durable ISI REL-* yet. Do not invent.",
+      "Anti-CCP → RA biomarker — LOINC-linked (53031-9); PMID 10662881; no durable ISI REL-* yet. Do not invent.",
     autoApprove: false,
     isiNodeIds: [],
   },
@@ -267,7 +267,7 @@ export const ISI_REL_SUGGESTIONS: readonly IsiRelSuggestion[] = [
     matchKind: "related_axis",
     status: "curated",
     rationale:
-      "IL-6 → RA provisional competing axis. PMID 18625622; related_axis REL-M003-contributes_to-D001; autoApprove=false.",
+      "IL-6 → RA competing axis. PMID 18625622; related_axis REL-M003-contributes_to-D001; autoApprove=false.",
     autoApprove: false,
     isiNodeIds: ["M003", "D001"],
   },
@@ -292,6 +292,72 @@ export const ISI_REL_SUGGESTIONS: readonly IsiRelSuggestion[] = [
       "Synovial macrophages → TNF. PMID 2993897; related_axis REL-C003-produces-M001. Foundational macrophage/TNF identity paper — do not overclaim RA histology at Gate C.",
     autoApprove: false,
     isiNodeIds: ["C003", "M001"],
+  },
+  {
+    claimId: "HSI-C-RA-007",
+    edgeId: "HSI-E-RA-007",
+    suggestedIsiRelationshipId: null,
+    matchKind: "none",
+    status: "unmapped",
+    rationale:
+      "Phase 3 ADA → anti-TNF refractory (PMID 16508927). No durable ISI REL-* invented for immunogenicity; keep as competing explanation until partner maps.",
+    autoApprove: false,
+    isiNodeIds: [],
+  },
+  {
+    claimId: "HSI-C-RA-008",
+    edgeId: "HSI-E-RA-008",
+    suggestedIsiRelationshipId: null,
+    matchKind: "none",
+    status: "unmapped",
+    rationale:
+      "Phase 3 ADA ↔ immunogenicity/bioavailability monitoring (PMID 17133559). No invented ISI REL-*; hypothesized teaching status.",
+    autoApprove: false,
+    isiNodeIds: [],
+  },
+  {
+    claimId: "HSI-C-RA-009",
+    edgeId: "HSI-E-RA-009",
+    suggestedIsiRelationshipId: null,
+    matchKind: "none",
+    status: "unmapped",
+    rationale:
+      "Phase 3 seropositive phenotype ↔ anti-TNF response heterogeneity (PMID 18375541). Competes with RA-010; no invented REL-*.",
+    autoApprove: false,
+    isiNodeIds: [],
+  },
+  {
+    claimId: "HSI-C-RA-010",
+    edgeId: "HSI-E-RA-010",
+    suggestedIsiRelationshipId: null,
+    matchKind: "none",
+    status: "unmapped",
+    rationale:
+      "Phase 3 meta-analysis: RF/ACPA not associated with anti-TNF effect (PMID 24586782). Competing frame vs RA-009; no invented REL-*.",
+    autoApprove: false,
+    isiNodeIds: [],
+  },
+  {
+    claimId: "HSI-C-RA-011",
+    edgeId: "HSI-E-RA-011",
+    suggestedIsiRelationshipId: null,
+    matchKind: "marker_only",
+    status: "unmapped",
+    rationale:
+      "Phase 3 RF → RA biomarker — LOINC-linked (11572-5); PMID 20699241; no durable ISI REL-* yet. Do not invent.",
+    autoApprove: false,
+    isiNodeIds: [],
+  },
+  {
+    claimId: "HSI-C-RA-012",
+    edgeId: "HSI-E-RA-012",
+    suggestedIsiRelationshipId: null,
+    matchKind: "none",
+    status: "unmapped",
+    rationale:
+      "Phase 3 MTX + anti-TNF combination treats RA (PMID 10622295 ATTRACT). No durable ISI REL-* invented; background for immunogenicity/response interpretation.",
+    autoApprove: false,
+    isiNodeIds: [],
   },
   {
     claimId: "HSI-C-SLE-001",

@@ -2,11 +2,11 @@
 
 > **ISI helps immune-disease research teams investigate a defined question by connecting traceable evidence across cells, pathways, biomarkers, treatments and studies—and showing what is established, uncertain and worth testing.**
 
-**Status:** Phase 2 scope lock complete · outreach still open for named partner.  
+**Status:** Phase 3 evidence depth complete on Phase 2 scope lock · outreach still open for named partner.  
 **Working Stage 1 scope (scopeLocked):** rheumatoid arthritis · anti-TNF response heterogeneity — see `hsi-partner-lock.json` (`scopeLocked=true`, `partnerSigned=false`, `lockedPilot=false`).  
 **Named partner (`partnerSigned`):** still **TBD after conversations** — do not treat scope lock as a MoU.  
 **Immediate deliverable:** this brief + [`ISI_PILOT_PARTNER_SHORTLIST.md`](./ISI_PILOT_PARTNER_SHORTLIST.md) + published pack / review rubric. Not another general-purpose AI feature.  
-**Next (Phase 3):** partner-scoped evidence depth for this locked question.  
+**Next (Phase 4):** HSI Neon `red-wave` readiness (empty `neondb` migrations).  
 **PRD map:** [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md) (pilot PRD → build now vs defer). **Target state:** [`ISI_TARGET_STATE_PRD_ALIGNMENT.md`](./ISI_TARGET_STATE_PRD_ALIGNMENT.md) (full vision → Stage 1/2/3 — do not pull breadth into this pilot).
 
 ---
