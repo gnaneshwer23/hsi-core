@@ -91,7 +91,7 @@ export const SYSTEMS_DOMAIN_OWNERSHIP: readonly SystemsDomainOwnership[] = [
     earliestStage: "stage2",
     deepSeedsPresent: true,
     notes:
-      "P1.3 SCFA/butyrate ↔ mucosal Treg/Th17 thin seeds present (hsi-gut-immune-pack); neuro still stub-only",
+      "P1.3 SCFA/butyrate ↔ mucosal Treg/Th17 thin seeds present (hsi-gut-immune-pack); neuro P2.1 also deepened",
   },
   {
     domain: "neuroimmune_brain_immune",
@@ -101,8 +101,9 @@ export const SYSTEMS_DOMAIN_OWNERSHIP: readonly SystemsDomainOwnership[] = [
     isiOwns: "Discovery UX for neuroimmune pathways",
     akshAkenoOwns: "No neurological CDS from research packs",
     earliestStage: "stage2",
-    deepSeedsPresent: false,
-    notes: "Stubs only; every edge still needs context + evidence",
+    deepSeedsPresent: true,
+    notes:
+      "P2.1 vagus / cholinergic anti-inflammatory reflex thin seeds present (hsi-neuroimmune-pack); human VNS–RA hypothesized only — not clinical cure",
   },
   {
     domain: "disease_tissue_biomarker",
@@ -287,23 +288,53 @@ export const NEUROIMMUNE_ENTITY_STUBS: readonly NeuroimmuneEntityStub[] = [
   {
     id: "HSI-NI-axis-vagus",
     entityType: "neuroimmune_axis",
-    label: "Vagus / cholinergic anti-inflammatory path (stub)",
+    label: "Vagus / cholinergic anti-inflammatory path",
     ontologyHint: null,
-    notes: "Hypothesis-capable neighbourhood — not established claim edges",
+    notes:
+      "P2.1 deep seeds — inflammatory reflex neighbourhood (hsi-neuroimmune-pack); not CDS",
+  },
+  {
+    id: "HSI-NI-axis-inflammatory-reflex",
+    entityType: "neuroimmune_axis",
+    label: "Inflammatory reflex (cholinergic)",
+    ontologyHint: null,
+    notes: "P2.1 — Tracey 2002 framing node; conceptual axis",
   },
   {
     id: "HSI-NI-cell-microglia",
     entityType: "glial_or_barrier_cell",
     label: "Microglia",
     ontologyHint: "CL",
-    notes: "CNS-resident myeloid — linkable later to immune-cell spine myeloid class",
+    notes:
+      "CNS-resident myeloid stub — not the P2.1 neighbourhood; linkable later to immune-cell spine",
+  },
+  {
+    id: "HSI-NI-cell-chat-memory-t",
+    entityType: "glial_or_barrier_cell",
+    label: "Acetylcholine-synthesizing memory T cells",
+    ontologyHint: "CL",
+    notes: "P2.1 — Rosas-Ballina 2011 relay hop; CL hint only",
+  },
+  {
+    id: "HSI-NI-mediator-alpha7-nachr",
+    entityType: "neuro_mediator",
+    label: "Nicotinic ACh receptor α7 (macrophage)",
+    ontologyHint: null,
+    notes: "P2.1 — Wang 2003 essential receptor node",
   },
   {
     id: "HSI-NI-mediator-cytokine-cns",
     entityType: "neuro_mediator",
     label: "CNS cytokine / chemokine (class stub)",
     ontologyHint: null,
-    notes: null,
+    notes: "Stub — not the P2.1 vagus neighbourhood",
+  },
+  {
+    id: "HSI-NI-mediator-peripheral-tnf",
+    entityType: "neuro_mediator",
+    label: "Peripheral / macrophage TNF tone",
+    ontologyHint: null,
+    notes: "P2.1 object neighbourhood — Borovikova / Wang / Koopman edges",
   },
 ] as const;
 
@@ -790,6 +821,9 @@ export type SystemsVisionBundle = {
   neuroimmune: {
     entityTypes: readonly NeuroimmuneEntityType[];
     entities: readonly NeuroimmuneEntityStub[];
+    deepSeedsPresent: boolean;
+    neighbourhoodPack: "hsi-neuroimmune-pack";
+    neighbourhoodId: "neuro-vagus-cholinergic-reflex";
   };
   diseaseTissueBiomarker: {
     layers: readonly DiseaseTissueBiomarkerLayer[];
@@ -856,6 +890,9 @@ export function buildSystemsVisionBundle(opts?: {
     neuroimmune: {
       entityTypes: NEUROIMMUNE_ENTITY_TYPES,
       entities: NEUROIMMUNE_ENTITY_STUBS,
+      deepSeedsPresent: true,
+      neighbourhoodPack: "hsi-neuroimmune-pack",
+      neighbourhoodId: "neuro-vagus-cholinergic-reflex",
     },
     diseaseTissueBiomarker: {
       layers: DISEASE_TISSUE_BIOMARKER_LAYERS,
@@ -881,7 +918,8 @@ export function buildSystemsVisionBundle(opts?: {
       "Every claim edge needs context + evidence + dual grade axes.",
       "RA Stage 1 scopeLocked remains authoritative; do not invent partnerSigned.",
       "Dual-track A: activeScope=ra-tnf; prdMvpTarget=ssc-tfh-b-il21 with thin seeds; RA comparison = Release 2; no wipe.",
-      "P1.3: gut–immune SCFA ↔ mucosal Treg/Th17 deepSeedsPresent=true (hsi-gut-immune-pack); neuroimmune remains stub-only.",
+      "P1.3: gut–immune SCFA ↔ mucosal Treg/Th17 deepSeedsPresent=true (hsi-gut-immune-pack).",
+      "P2.1: neuroimmune vagus / cholinergic anti-inflammatory reflex deepSeedsPresent=true (hsi-neuroimmune-pack); human VNS–RA hypothesized only — no clinical cure claim.",
       "Patient data: HSI stores shapes/fixtures/handoff only — never raw PHI.",
       "P3 bio adapters never auto-promote hsiGrade or Gate C.",
       "NN/agent proposals are model-proposal artifacts only — never autoApproveIntoKg.",

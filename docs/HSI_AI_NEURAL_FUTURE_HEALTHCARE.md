@@ -238,7 +238,7 @@ Curator Gate C · ISI product approve · Aksh clinician action · partner govern
 - Any path that auto-flips grades.  
 - SSc deep seed pivot that wipes RA lock.
 
-**P1.5 landed:** typed `ModelProposalArtifact` (`src/modelProposal.ts`) wires into Gate C checklist `modelProposals` (pending only; `autoApprove=false`; unit tests refuse forbidden `hsiGrade` / `mayFlipEvidenceGrade`). **P1.3 landed:** gut–immune SCFA ↔ mucosal Treg/Th17 pack. **Recommended next science slice:** neuroimmune thin-evidence curation (P2.1) per [`HSI_SYSTEMS_VISION_MAP.md`](./HSI_SYSTEMS_VISION_MAP.md) / [`BUILD_STATUS_AND_NEXT.md`](./BUILD_STATUS_AND_NEXT.md).
+**P1.5 landed:** typed `ModelProposalArtifact` (`src/modelProposal.ts`) wires into Gate C checklist `modelProposals` (pending only; `autoApprove=false`; unit tests refuse forbidden `hsiGrade` / `mayFlipEvidenceGrade`). **P1.3 landed:** gut–immune SCFA ↔ mucosal Treg/Th17 pack. **P2.1 landed:** neuroimmune vagus / cholinergic anti-inflammatory reflex pack (human VNS–RA hypothesized only). **Recommended next science slice:** P2.2 embedding sidecar slots per [`HSI_SYSTEMS_VISION_MAP.md`](./HSI_SYSTEMS_VISION_MAP.md) / [`BUILD_STATUS_AND_NEXT.md`](./BUILD_STATUS_AND_NEXT.md).
 
 ---
 

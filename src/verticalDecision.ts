@@ -58,7 +58,8 @@ export const HSI_VERTICAL_DECISION: HsiVerticalDecision = {
   nextBacklogAfterDecision: [
     "DONE (P1.1/P1.5): SSc cell-card / CL·MONDO hints + extra public PMIDs; model-proposal → Gate C pending.",
     "DONE (P1.3): gut–immune SCFA ↔ mucosal Treg/Th17 thin seeds + hsi-gut-immune-pack (uncertain/hypothesized grades).",
-    "NEXT science: deepen one neuroimmune neighbourhood (P2.1) — or promote gut systems predicates onto HSI_EDGE_TYPES (P1.4).",
+    "DONE (P2.1): neuroimmune vagus / cholinergic anti-inflammatory reflex + hsi-neuroimmune-pack (uncertain/hypothesized; no clinical cure claim).",
+    "NEXT science: P2.2 embedding sidecar slots on edges — or P1.4 promote gut/neuro systems predicates onto HSI_EDGE_TYPES — or optional further neuro neighbourhood (microglia/BBB).",
     "Partner outreach / partnerSigned / rights table (unchanged P0.2) — parallel critical path.",
   ],
 };

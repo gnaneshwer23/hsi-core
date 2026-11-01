@@ -118,12 +118,18 @@ export function buildExampleModelProposals(opts?: {
     {
       proposalId: "HSI-MP-NEURO-STUB-001",
       sourceAdapterOrAgent: "hsi-stub-nn-proposer/systems-vision-neuro",
-      proposedSubject: "Vagus / HPA axis stub",
+      proposedSubject: "Vagus / cholinergic anti-inflammatory reflex",
       proposedPredicate: "associated_with",
-      proposedObject: "peripheral inflammatory tone (hypothesized)",
+      proposedObject: "peripheral TNF inflammatory tone",
       contextNote:
-        "Vision-axis draft only — neuroimmune deepSeedsPresent=false. Queued for P2.1; curator must reject or seed honestly later.",
-      evidenceHints: ["vision:hsi-systems-vision", "axis:neuroimmune"],
+        "Historical demo draft — P2.1 seeds now land in hsi-neuroimmune-pack (HSI-E-NI-*). Curator should prefer seeded edges over this stub; never flip hsiGrade from model output; never overclaim clinical VNS cure.",
+      evidenceHints: [
+        "pack:hsi-neuroimmune-pack",
+        "PMID:10839541",
+        "PMID:12508119",
+        "PMID:27382171",
+        "axis:neuroimmune",
+      ],
       suggestedTeachingStatus: "hypothesized",
       createdAt,
     },

@@ -72,6 +72,11 @@ import {
   serializeGutImmunePack,
   serializeGutImmunePackMarkdown,
 } from "./gutImmunePack";
+import {
+  buildNeuroImmunePack,
+  serializeNeuroImmunePack,
+  serializeNeuroImmunePackMarkdown,
+} from "./neuroImmunePack";
 import { validateHsiEdge } from "./validate";
 
 function packageVersion(cwd: string): string {
@@ -270,6 +275,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
   const verticalDecision = getVerticalDecision();
   const sscPathwayPack = buildSscPathwayPack({ generatedAt });
   const gutImmunePack = buildGutImmunePack({ generatedAt });
+  const neuroImmunePack = buildNeuroImmunePack({ generatedAt });
 
   const fileMap: Record<string, string> = {
     "hsi-isi-export.json": serializeIsiExport(isiBundle),
@@ -293,6 +299,8 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     "hsi-ssc-pathway-pack.md": serializeSscPathwayPackMarkdown(sscPathwayPack),
     "hsi-gut-immune-pack.json": serializeGutImmunePack(gutImmunePack),
     "hsi-gut-immune-pack.md": serializeGutImmunePackMarkdown(gutImmunePack),
+    "hsi-neuroimmune-pack.json": serializeNeuroImmunePack(neuroImmunePack),
+    "hsi-neuroimmune-pack.md": serializeNeuroImmunePackMarkdown(neuroImmunePack),
     "hsi-r2-validation.json": serializeR2Validation(r2Validation),
     "hsi-r2-validation.md": serializeR2ValidationMarkdown(r2Validation),
     "hsi-translation-handoff.json": serializeTranslationHandoff(translationHandoff),
@@ -339,6 +347,8 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       sscPathwayPackMd: "hsi-ssc-pathway-pack.md",
       gutImmunePackJson: "hsi-gut-immune-pack.json",
       gutImmunePackMd: "hsi-gut-immune-pack.md",
+      neuroImmunePackJson: "hsi-neuroimmune-pack.json",
+      neuroImmunePackMd: "hsi-neuroimmune-pack.md",
       r2ValidationJson: "hsi-r2-validation.json",
       r2ValidationMd: "hsi-r2-validation.md",
       translationHandoffJson: "hsi-translation-handoff.json",
@@ -385,6 +395,10 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       gutDeepSeedsPresent: gutImmunePack.deepSeedsPresent,
       systemsVisionGutDeepSeedsPresent:
         systemsVision.gutMicrobiome.deepSeedsPresent,
+      neuroImmuneEdges: neuroImmunePack.edges.length,
+      neuroDeepSeedsPresent: neuroImmunePack.deepSeedsPresent,
+      systemsVisionNeuroDeepSeedsPresent:
+        systemsVision.neuroimmune.deepSeedsPresent,
     },
     discoveryLoop: isiBundle.discoveryCentre.discoveryLoop.framing,
     partnerLock: partnerLockExportPointer(partnerLock),
@@ -434,6 +448,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       "Vertical decision A (dual_track): hsi-vertical-decision.json + lock/systems-vision fields — activeScope=ra-tnf; prdMvpTarget=ssc-tfh-b-il21; RA packs untouched.",
       "SSc PRD MVP pack: hsi-ssc-pathway-pack.* — thin Tfh–B–IL-21 literature slice; EBV hypothesized only; does not replace ASK.",
       "Gut–immune systems secondary pack: hsi-gut-immune-pack.* — SCFA/butyrate ↔ mucosal Treg/Th17 (P1.3); uncertain grades; does not replace RA ASK.",
+      "Neuroimmune systems secondary pack: hsi-neuroimmune-pack.* — vagus / cholinergic anti-inflammatory reflex (P2.1); human VNS–RA hypothesized only; does not replace RA ASK.",
       "Phase 6–8: Discovery Centre at site `/discovery` loads site/public/discovery/*.json (ASK→MAP→REVIEW→VALIDATE→TRANSLATE; notCds; clinicalActive=false).",
       "Phase 7: R2 validation — hsi-r2-validation.* (hypothesis cards, ranked gaps, literature tests; research only).",
       "Phase 8 done (HSI substrate): hsi-translation-handoff.* — Stage 3 scaffolding; deferred_until_hitl; Akeno in-repo HITL consumer at /akeno (not live CDS; no Akeno Neon).",
@@ -491,6 +506,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     "hsi-vertical-decision.json",
     "hsi-ssc-pathway-pack.json",
     "hsi-gut-immune-pack.json",
+    "hsi-neuroimmune-pack.json",
     "hsi-gap-report.json",
     "gate-c-checklist.json",
     "hsi-r2-validation.json",
@@ -527,7 +543,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       "Regenerate with bun run outputs — copies land here for the Vite site.",
       "Not diagnostic / not for clinical use. clinicalActive=false.",
       "ASK question stays RA / anti-TNF; SSc is dual-track secondary PRD target (hsi-ssc-pathway-pack.json).",
-      "Systems secondary axis: gut–immune SCFA ↔ mucosal Treg/Th17 (hsi-gut-immune-pack.json) — does not replace ASK.",
+      "Systems secondary axes: gut–immune (hsi-gut-immune-pack.json) + neuroimmune vagus/cholinergic (hsi-neuroimmune-pack.json) — do not replace ASK.",
       "Phase 7 done = R2 validation (hsi-r2-validation.json) on VALIDATE tab.",
       "Phase 8 done = HSI translation substrate (hsi-translation-handoff.json) on TRANSLATE tab + in-repo Akeno HITL consumer at /akeno (not CDS).",
     ],

@@ -508,6 +508,45 @@ export function DiscoveryCentre() {
                       </ul>
                     </div>
                   ) : null}
+
+                  {data.neuroImmune?.deepSeedsPresent ? (
+                    <div className="dc-card" style={{ marginTop: "1.25rem" }}>
+                      <span className="panel-label">
+                        Systems secondary axis · does not replace ASK
+                      </span>
+                      <h3 style={{ fontSize: "1.15rem", marginTop: "0.4rem" }}>
+                        {data.neuroImmune.pathway.label}
+                      </h3>
+                      <p className="muted" style={{ marginTop: "0.55rem" }}>
+                        Pack{" "}
+                        <code>hsi-neuroimmune-pack.json</code> ·{" "}
+                        {data.neuroImmune.evidenceMap.length} edges · grades stay
+                        uncertain / hypothesized · human VNS–RA not a clinical
+                        cure · role=
+                        {data.neuroImmune.discoveryRole ??
+                          "systems_secondary_axis"}
+                      </p>
+                      <div className="dc-chip-row" style={{ marginTop: "0.75rem" }}>
+                        {(data.neuroImmune.pathway.primaryPmids ?? [])
+                          .slice(0, 6)
+                          .map((pmid) => (
+                            <span key={pmid} className="dc-pill">
+                              PMID {pmid}
+                            </span>
+                          ))}
+                      </div>
+                      <ul className="dc-compact-list" style={{ marginTop: "0.85rem" }}>
+                        {data.neuroImmune.competingExplanations
+                          .slice(0, 4)
+                          .map((e) => (
+                            <li key={e.id}>
+                              <strong>{e.label}</strong>{" "}
+                              <span className="muted">({e.status})</span>
+                            </li>
+                          ))}
+                      </ul>
+                    </div>
+                  ) : null}
                 </div>
               ) : null}
 

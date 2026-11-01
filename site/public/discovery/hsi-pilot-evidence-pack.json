@@ -3,7 +3,7 @@
   "notCds": true,
   "noPatientLevelActions": true,
   "autoApproveIntoKg": false,
-  "generatedAt": "2026-11-01T12:00:00.000Z",
+  "generatedAt": "2026-11-01T18:39:16.278Z",
   "disease": "Rheumatoid arthritis",
   "researchQuestion": "Why do some patients with rheumatoid arthritis respond differently to anti-TNF therapy, and which biomarkers or immune mechanisms are best supported for defining those subgroups?",
   "lockedPilot": false,
@@ -225,6 +225,14 @@
         "deepSeedsPresent": true,
         "packFile": "hsi-ssc-pathway-pack.json",
         "seedHint": "Dual-track A PRD target — does not replace RA ASK; EBV hypothesized only"
+      },
+      {
+        "id": "neuro-vagus-cholinergic-reflex",
+        "label": "Neuroimmune · vagus / cholinergic anti-inflammatory reflex",
+        "status": "systems_secondary_axis",
+        "deepSeedsPresent": true,
+        "packFile": "hsi-neuroimmune-pack.json",
+        "seedHint": "P2.1 thin literature slice — uncertain/hypothesized grades; human VNS–RA hypothesized only; not clinical cure; not CDS"
       }
     ],
     "partnerLock": {
@@ -377,6 +385,7 @@
       "RA is the Phase 2 working Stage 1 scope (scopeLocked=true; partnerSigned=false; lockedPilot=false).",
       "Dual-track A: SSc surfaces as prd_mvp_secondary_target only — ASK research question stays RA / anti-TNF.",
       "P1.3: gut–immune SCFA ↔ mucosal Treg/Th17 is a systems secondary axis (hsi-gut-immune-pack) — does not replace ASK.",
+      "P2.1: neuroimmune vagus / cholinergic anti-inflammatory reflex is a systems secondary axis (hsi-neuroimmune-pack) — human VNS–RA hypothesized only; not a clinical cure; does not replace ASK.",
       "Do not treat SLE/PsO/IBD as selected pilot indications — illustrative conversation contexts only.",
       "Not diagnostic / not for clinical use. teachingStatus ≠ hsiGrade ≠ CDS."
     ]
@@ -420,9 +429,9 @@
     "scopeLocked": true,
     "partnerSigned": false,
     "provisionalLock": false,
-    "evidenceSnapshotRef": "dist/outputs/hsi-core-0.1.0-20261101T120000000Z/hsi-isi-export.json",
-    "createdAt": "2026-11-01T12:00:00.000Z",
-    "updatedAt": "2026-11-01T12:00:00.000Z"
+    "evidenceSnapshotRef": "dist/outputs/hsi-core-0.1.0-20261101T183916278Z/hsi-isi-export.json",
+    "createdAt": "2026-11-01T18:39:16.278Z",
+    "updatedAt": "2026-11-01T18:39:16.278Z"
   },
   "evidenceMap": [
     {
@@ -2056,6 +2065,168 @@
       "studyOrModelContext": "P1.3 barrier context. PMID 19625695 verified. In vitro Caco-2 — not in-vivo human barrier claim; teaching=associative. Dose-paradox papers exist elsewhere — do not overclaim. Gate C = human only. Not CDS.",
       "limitations": null,
       "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
+      "claimId": "HSI-C-NI-001",
+      "edgeId": "HSI-E-NI-001",
+      "claimText": "Electrical stimulation of the peripheral vagus nerve attenuates systemic inflammatory responses to endotoxin, including hepatic and serum TNF, in rodent endotoxaemia models (cholinergic anti-inflammatory neighbourhood — not CDS).",
+      "subject": "Efferent vagus nerve stimulation",
+      "relationship": "inhibits",
+      "object": "Peripheral / systemic TNF inflammatory tone",
+      "conditionContext": "immuno_metabolic",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "10839541",
+        "doi": "10.1038/35013070",
+        "citationLabel": "Borovikova LV et al. Nature 2000 — Vagus nerve stimulation attenuates the systemic inflammatory response to endotoxin.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/10839541/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "P2.1 primary vagus→TNF suppression edge. PMID 10839541 verified. Rodent endotoxaemia + macrophage culture — teaching=associative; hsiGrade uncertain. Do not overclaim human therapeutic cure. Gate C = human only. Not CDS.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
+      "claimId": "HSI-C-NI-002",
+      "edgeId": "HSI-E-NI-002",
+      "claimText": "The inflammatory reflex frames a hard-wired autonomic (vagal cholinergic) pathway that reflexively monitors and adjusts acute inflammatory cytokine responses in real time (conceptual neighbourhood frame — not a disease cure claim).",
+      "subject": "Inflammatory reflex (cholinergic axis)",
+      "relationship": "bridges_domain",
+      "object": "Peripheral / systemic TNF inflammatory tone",
+      "conditionContext": "immuno_metabolic",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "12490958",
+        "doi": "10.1038/nature01321",
+        "citationLabel": "Tracey KJ. Nature 2002 — The inflammatory reflex.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/12490958/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "P2.1 conceptual axis frame. PMID 12490958 verified (review). Maps signals_via_axis → bridges_domain. Teaching=associative; not clinical protocol. Gate C = human only. Not CDS.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
+      "claimId": "HSI-C-NI-003",
+      "edgeId": "HSI-E-NI-003",
+      "claimText": "The nicotinic acetylcholine receptor α7 subunit is required for acetylcholine- and vagus-mediated inhibition of macrophage TNF synthesis (essential receptor node of the cholinergic anti-inflammatory pathway).",
+      "subject": "Nicotinic ACh receptor α7 subunit (macrophage)",
+      "relationship": "inhibits",
+      "object": "Macrophage TNF synthesis / release",
+      "conditionContext": "immuno_metabolic",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "12508119",
+        "doi": "10.1038/nature01339",
+        "citationLabel": "Wang H et al. Nature 2003 — Nicotinic acetylcholine receptor alpha7 subunit is an essential regulator of inflammation.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/12508119/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "P2.1 α7 receptor node. PMID 12508119 verified. Mouse genetics + macrophage assays — keep uncertain grades; not human dosing. Gate C = human only. Not CDS.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
+      "claimId": "HSI-C-NI-004",
+      "edgeId": "HSI-E-NI-004",
+      "claimText": "Vagus / nicotinic α7 signalling attenuates macrophage activation via Jak2–STAT3 phosphorylation in experimental inflammation (mechanism companion to α7 TNF inhibition).",
+      "subject": "Efferent vagus nerve stimulation",
+      "relationship": "associated_with",
+      "object": "α7 nAChR–Jak2–STAT3 macrophage programme",
+      "conditionContext": "immuno_metabolic",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "16025117",
+        "doi": "10.1038/ni1229",
+        "citationLabel": "de Jonge WJ et al. Nat Immunol 2005 — Stimulation of the vagus nerve attenuates macrophage activation by activating the Jak2-STAT3 signaling pathway.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/16025117/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "P2.1 mechanism companion. PMID 16025117 verified. Mouse postoperative ileus / macrophage STAT3 — teaching=associative. Gate C = human only. Not CDS.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
+      "claimId": "HSI-C-NI-005",
+      "edgeId": "HSI-E-NI-005",
+      "claimText": "Acetylcholine-producing memory-phenotype T cells relay vagus nerve signals required for inflammatory-reflex inhibition of macrophage TNF (neural → lymphoid → innate immune hop).",
+      "subject": "Acetylcholine-synthesizing memory T cells",
+      "relationship": "bridges_domain",
+      "object": "Macrophage TNF synthesis / release",
+      "conditionContext": "immuno_metabolic",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "21921156",
+        "doi": "10.1126/science.1209985",
+        "citationLabel": "Rosas-Ballina M et al. Science 2011 — Acetylcholine-synthesizing T cells relay neural signals in a vagus nerve circuit.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/21921156/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "P2.1 T-cell relay hop. PMID 21921156 verified. Mouse circuit — teaching=associative; do not invent human CDS. Gate C = human only. Not CDS.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
+      "claimId": "HSI-C-NI-006",
+      "edgeId": "HSI-E-NI-006",
+      "claimText": "Implantable vagus nerve stimulation can modulate peripheral blood TNF production and RA clinical composite scores in small human pilot cohorts (hypothesized translational frame — not a settled clinical cure; not CDS).",
+      "subject": "Implantable vagus nerve stimulator (experimental)",
+      "relationship": "associated_with",
+      "object": "Peripheral / systemic TNF inflammatory tone",
+      "conditionContext": "immuno_metabolic",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "27382171",
+        "doi": "10.1073/pnas.1605635113",
+        "citationLabel": "Koopman FA et al. PNAS 2016 — Vagus nerve stimulation inhibits cytokine production and attenuates disease severity in rheumatoid arthritis.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/27382171/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "P2.1 human translational pilot ONLY. PMID 27382171 verified. teaching=hypothesized — small open-label / pilot; NEVER overclaim clinical brain–immune cure, dosing, or EHR CDS. Does not flip partnerSigned or replace RA ASK evidence map. Gate C = human only. Not CDS. No PHI.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
     }
   ],
   "entitySlice": {
@@ -2069,21 +2240,26 @@
       "Type 2 diabetes mellitus"
     ],
     "cells": [
+      "Acetylcholine-synthesizing memory T cells",
       "Adipose tissue macrophages",
       "B cell",
       "Colonic / mucosal Foxp3+ Treg",
+      "Macrophage TNF synthesis / release",
       "Mucosal Th17 cells",
+      "Nicotinic ACh receptor α7 subunit (macrophage)",
       "Pancreatic β-cell dysfunction",
       "Synovial macrophages",
       "T follicular helper (Tfh) cells",
       "T-cell exhaustion",
-      "Tfh1-skewed follicular helper cells"
+      "Tfh1-skewed follicular helper cells",
+      "α7 nAChR–Jak2–STAT3 macrophage programme"
     ],
     "pathwaysOrMechanisms": [
       "Autoimmune–metabolic comorbidity",
       "Butyrate (SCFA)",
       "CGM time-in-range",
       "Clostridium clusters IV / XIVa (gut)",
+      "Efferent vagus nerve stimulation",
       "Epstein-Barr virus (EBV)",
       "Human microbiota Clostridia mix (17-strain class)",
       "Hyperglycemia",
@@ -2093,7 +2269,9 @@
       "IL-6",
       "IL-6 pathway axis",
       "Immune-related adverse events",
+      "Implantable vagus nerve stimulator (experimental)",
       "Infection susceptibility",
+      "Inflammatory reflex (cholinergic axis)",
       "Innate immune dysfunction",
       "Insulin resistance",
       "Intestinal epithelial barrier / tight junctions",
@@ -2103,6 +2281,7 @@
       "NLRP3 inflammasome",
       "Obesity",
       "PD-1",
+      "Peripheral / systemic TNF inflammatory tone",
       "Plasmablast",
       "RF/ACPA seropositive RA phenotype",
       "Short-chain fatty acids (class)",
@@ -2147,10 +2326,14 @@
       "Epidemiologic risk literature (placeholder)",
       "PMID:10622295",
       "PMID:10662881",
+      "PMID:10839541",
       "PMID:11087881",
       "PMID:11244034",
+      "PMID:12490958",
+      "PMID:12508119",
       "PMID:12813013",
       "PMID:15030775",
+      "PMID:16025117",
       "PMID:16339522",
       "PMID:16382236",
       "PMID:16508927",
@@ -2161,12 +2344,14 @@
       "PMID:20699241",
       "PMID:21205640",
       "PMID:21314428",
+      "PMID:21921156",
       "PMID:23828891",
       "PMID:23842501",
       "PMID:24129067",
       "PMID:24226770",
       "PMID:24586782",
       "PMID:24917457",
+      "PMID:27382171",
       "PMID:28845751",
       "PMID:29514998",
       "PMID:29626172",
@@ -2237,6 +2422,11 @@
         "kind": "biomarker"
       },
       {
+        "id": "HSI-N-chat-memory-tcell",
+        "label": "Acetylcholine-synthesizing memory T cells",
+        "kind": "cell"
+      },
+      {
         "id": "HSI-N-adipose-macrophages",
         "label": "Adipose tissue macrophages",
         "kind": "cell"
@@ -2252,8 +2442,18 @@
         "kind": "cell"
       },
       {
+        "id": "HSI-N-macrophage-tnf-release",
+        "label": "Macrophage TNF synthesis / release",
+        "kind": "cell"
+      },
+      {
         "id": "HSI-N-mucosal-th17",
         "label": "Mucosal Th17 cells",
+        "kind": "cell"
+      },
+      {
+        "id": "HSI-N-alpha7-nachr",
+        "label": "Nicotinic ACh receptor α7 subunit (macrophage)",
         "kind": "cell"
       },
       {
@@ -2279,6 +2479,11 @@
       {
         "id": "HSI-N-tfh1",
         "label": "Tfh1-skewed follicular helper cells",
+        "kind": "cell"
+      },
+      {
+        "id": "HSI-N-alpha7-jak2-stat3",
+        "label": "α7 nAChR–Jak2–STAT3 macrophage programme",
         "kind": "cell"
       },
       {
@@ -2337,6 +2542,11 @@
         "kind": "pathway"
       },
       {
+        "id": "HSI-N-vagus-efferent",
+        "label": "Efferent vagus nerve stimulation",
+        "kind": "pathway"
+      },
+      {
         "id": "HSI-N-ebv",
         "label": "Epstein-Barr virus (EBV)",
         "kind": "pathway"
@@ -2382,8 +2592,18 @@
         "kind": "pathway"
       },
       {
+        "id": "HSI-N-implantable-vns",
+        "label": "Implantable vagus nerve stimulator (experimental)",
+        "kind": "pathway"
+      },
+      {
         "id": "HSI-N-infection-risk",
         "label": "Infection susceptibility",
+        "kind": "pathway"
+      },
+      {
+        "id": "HSI-N-inflammatory-reflex",
+        "label": "Inflammatory reflex (cholinergic axis)",
         "kind": "pathway"
       },
       {
@@ -2429,6 +2649,11 @@
       {
         "id": "HSI-N-pd1",
         "label": "PD-1",
+        "kind": "pathway"
+      },
+      {
+        "id": "HSI-N-peripheral-tnf-tone",
+        "label": "Peripheral / systemic TNF inflammatory tone",
         "kind": "pathway"
       },
       {
@@ -2512,6 +2737,11 @@
         "kind": "study"
       },
       {
+        "id": "pmid:10839541",
+        "label": "PMID:10839541",
+        "kind": "study"
+      },
+      {
         "id": "pmid:11087881",
         "label": "PMID:11087881",
         "kind": "study"
@@ -2522,6 +2752,16 @@
         "kind": "study"
       },
       {
+        "id": "pmid:12490958",
+        "label": "PMID:12490958",
+        "kind": "study"
+      },
+      {
+        "id": "pmid:12508119",
+        "label": "PMID:12508119",
+        "kind": "study"
+      },
+      {
         "id": "pmid:12813013",
         "label": "PMID:12813013",
         "kind": "study"
@@ -2529,6 +2769,11 @@
       {
         "id": "pmid:15030775",
         "label": "PMID:15030775",
+        "kind": "study"
+      },
+      {
+        "id": "pmid:16025117",
+        "label": "PMID:16025117",
         "kind": "study"
       },
       {
@@ -2582,6 +2827,11 @@
         "kind": "study"
       },
       {
+        "id": "pmid:21921156",
+        "label": "PMID:21921156",
+        "kind": "study"
+      },
+      {
         "id": "pmid:23828891",
         "label": "PMID:23828891",
         "kind": "study"
@@ -2609,6 +2859,11 @@
       {
         "id": "pmid:24917457",
         "label": "PMID:24917457",
+        "kind": "study"
+      },
+      {
+        "id": "pmid:27382171",
+        "label": "PMID:27382171",
         "kind": "study"
       },
       {
@@ -3211,11 +3466,11 @@
     "walkthroughMd": "hsi-pilot-walkthrough.md"
   },
   "summary": {
-    "evidenceMapRows": 57,
+    "evidenceMapRows": 63,
     "partnerScopedEvidenceRows": 14,
     "gradeCounts": {
       "established": 0,
-      "uncertain": 46,
+      "uncertain": 52,
       "unexplored": 11
     },
     "missingSourceLabels": 20,

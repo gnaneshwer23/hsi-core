@@ -132,6 +132,8 @@ describe("systems vision axes stubs", () => {
     expect(
       bundle.domains.find((d) => d.domain === "neuroimmune_brain_immune")
         ?.deepSeedsPresent,
-    ).toBe(false);
+    ).toBe(true);
+    expect(bundle.neuroimmune.deepSeedsPresent).toBe(true);
+    expect(bundle.neuroimmune.neighbourhoodPack).toBe("hsi-neuroimmune-pack");
   });
 });

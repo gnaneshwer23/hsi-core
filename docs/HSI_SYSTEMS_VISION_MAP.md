@@ -90,10 +90,11 @@ Regenerable detail: `buildSystemsVisionBundle()` → publish artifact `hsi-syste
 
 ### 3. Neuroimmune / brain ↔ immune
 
-- **Entity types (stubs):** brain_region, cns_compartment, neuroimmune_axis, glial_or_barrier_cell, neuro_mediator.
-- **Examples:** hypothalamus, BBB, CSF, HPA axis, vagus path stub, microglia.
+- **Entity types:** brain_region, cns_compartment, neuroimmune_axis, glial_or_barrier_cell, neuro_mediator.
+- **Examples:** hypothalamus, BBB, CSF, HPA axis, vagus / inflammatory reflex, α7 nAChR, ChAT+ memory T cells, microglia (stub).
 - **Predicates:** `signals_via_axis`, `crosses_bbb`, `activates_glia`, `suppresses_peripheral_inflammation`, `associates_neuroimmune`, `hypothesized_brain_immune`, …
-- **Not yet:** disease-curated neuroimmune edges (MS, neurodegeneration, etc.).
+- **P2.1 deep seeds:** `hsi-neuroimmune-pack` — vagus / cholinergic anti-inflammatory reflex (chosen for clearest landmark PMID chain vs microglia or BBB atlases); verified public PMIDs; `uncertain`/`hypothesized` grades; human VNS–RA (Koopman) hypothesized only — **not** a clinical brain–immune cure. Discovery secondary axis only.
+- **Not yet:** MS / neurodegeneration disease atlases; microglia–cytokine or BBB cytokine neighbourhood deepen.
 
 ### 4. Diseases, tissues, biomarkers / LOINC
 
@@ -150,7 +151,7 @@ bun run outputs   # writes dist/outputs/.../hsi-systems-vision.json (+ MANIFEST 
 
 ## Recommended next build slice (one axis)
 
-**SSc deepen (P1.1) + model→Gate C (P1.5) + gut–immune P1.3 landed.** **Next recommended science slice:** deepen one neuroimmune neighbourhood (P2.1) with honest `uncertain` grades; leave RA lock untouched. Partner outreach (P0.2) remains the parallel critical path.
+**SSc deepen (P1.1) + model→Gate C (P1.5) + gut–immune P1.3 + neuroimmune P2.1 landed.** **Next recommended science slice:** P2.2 embedding sidecar slots on edges (hash/ref only); leave RA lock untouched. Partner outreach (P0.2) remains the parallel critical path.
 
 ---
 

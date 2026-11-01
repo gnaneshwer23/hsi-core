@@ -252,6 +252,15 @@ export {
 } from "./seed/gutScfaMucosal";
 
 export {
+  NI_PATHWAY_ID,
+  NI_PATHWAY_META,
+  HSI_NI_SEED_CLAIMS,
+  HSI_NI_SEED_EDGES,
+  HSI_NI_SEED_SYSTEMS_PREDICATES,
+  neuroDeepSeedsLanded,
+} from "./seed/neuroVagusCholinergic";
+
+export {
   SSC_PATHWAY_PACK_SCHEMA,
   buildSscPathwayPack,
   serializeSscPathwayPack,
@@ -268,6 +277,15 @@ export {
   type GutImmunePack,
   type GutPathwayExplanation,
 } from "./gutImmunePack";
+
+export {
+  NEURO_IMMUNE_PACK_SCHEMA,
+  buildNeuroImmunePack,
+  serializeNeuroImmunePack,
+  serializeNeuroImmunePackMarkdown,
+  type NeuroImmunePack,
+  type NeuroPathwayExplanation,
+} from "./neuroImmunePack";
 
 export {
   PILOT_REVIEW_RUBRIC_SCHEMA,

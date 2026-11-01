@@ -68,7 +68,8 @@ describe("P1.3 gut–immune SCFA ↔ mucosal Treg/Th17", () => {
     const neuro = vision.domains.find(
       (d) => d.domain === "neuroimmune_brain_immune",
     );
-    expect(neuro?.deepSeedsPresent).toBe(false);
+    // P2.1 may land in parallel; gut test only asserts gut deep seeds + RA lock.
+    expect(typeof neuro?.deepSeedsPresent).toBe("boolean");
 
     const lock = getPartnerLock();
     expect(lock.scopeLocked).toBe(true);

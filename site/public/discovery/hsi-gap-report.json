@@ -1,19 +1,19 @@
 {
   "schemaVersion": "hsi-gap-report-1",
-  "generatedAt": "2026-11-01T12:00:00.000Z",
+  "generatedAt": "2026-11-01T18:39:16.278Z",
   "summary": {
-    "seedEdges": 57,
-    "bridgeCandidates": 14,
+    "seedEdges": 63,
+    "bridgeCandidates": 18,
     "gradeCounts": {
       "established": 0,
-      "uncertain": 46,
+      "uncertain": 52,
       "unexplored": 11
     },
     "claimsMappedToIsi": 13,
     "claimsMappedToAksh": 22,
-    "claimsWithDurableLocator": 44,
+    "claimsWithDurableLocator": 50,
     "loinc": {
-      "edgeCount": 57,
+      "edgeCount": 63,
       "claimsWithLoincMarker": 8,
       "markersWithLoinc": 7,
       "markersMissingLoinc": 1
@@ -754,6 +754,84 @@
         "loinc_marker",
         "gate_c_approved"
       ]
+    },
+    {
+      "claimId": "HSI-C-NI-001",
+      "edgeId": "HSI-E-NI-001",
+      "assertion": "Electrical stimulation of the peripheral vagus nerve attenuates systemic inflammatory responses to endotoxin, including hepatic and serum TNF, in rodent endotoxaemia models (cholinergic anti-inflammatory neighbourhood — not CDS).",
+      "domain": "immuno_metabolic",
+      "hsiGrade": "uncertain",
+      "missing": [
+        "isi_relationship_id",
+        "aksh_node_id",
+        "loinc_marker",
+        "gate_c_approved"
+      ]
+    },
+    {
+      "claimId": "HSI-C-NI-002",
+      "edgeId": "HSI-E-NI-002",
+      "assertion": "The inflammatory reflex frames a hard-wired autonomic (vagal cholinergic) pathway that reflexively monitors and adjusts acute inflammatory cytokine responses in real time (conceptual neighbourhood frame — not a disease cure claim).",
+      "domain": "immuno_metabolic",
+      "hsiGrade": "uncertain",
+      "missing": [
+        "isi_relationship_id",
+        "aksh_node_id",
+        "loinc_marker",
+        "gate_c_approved"
+      ]
+    },
+    {
+      "claimId": "HSI-C-NI-003",
+      "edgeId": "HSI-E-NI-003",
+      "assertion": "The nicotinic acetylcholine receptor α7 subunit is required for acetylcholine- and vagus-mediated inhibition of macrophage TNF synthesis (essential receptor node of the cholinergic anti-inflammatory pathway).",
+      "domain": "immuno_metabolic",
+      "hsiGrade": "uncertain",
+      "missing": [
+        "isi_relationship_id",
+        "aksh_node_id",
+        "loinc_marker",
+        "gate_c_approved"
+      ]
+    },
+    {
+      "claimId": "HSI-C-NI-004",
+      "edgeId": "HSI-E-NI-004",
+      "assertion": "Vagus / nicotinic α7 signalling attenuates macrophage activation via Jak2–STAT3 phosphorylation in experimental inflammation (mechanism companion to α7 TNF inhibition).",
+      "domain": "immuno_metabolic",
+      "hsiGrade": "uncertain",
+      "missing": [
+        "isi_relationship_id",
+        "aksh_node_id",
+        "loinc_marker",
+        "gate_c_approved"
+      ]
+    },
+    {
+      "claimId": "HSI-C-NI-005",
+      "edgeId": "HSI-E-NI-005",
+      "assertion": "Acetylcholine-producing memory-phenotype T cells relay vagus nerve signals required for inflammatory-reflex inhibition of macrophage TNF (neural → lymphoid → innate immune hop).",
+      "domain": "immuno_metabolic",
+      "hsiGrade": "uncertain",
+      "missing": [
+        "isi_relationship_id",
+        "aksh_node_id",
+        "loinc_marker",
+        "gate_c_approved"
+      ]
+    },
+    {
+      "claimId": "HSI-C-NI-006",
+      "edgeId": "HSI-E-NI-006",
+      "assertion": "Implantable vagus nerve stimulation can modulate peripheral blood TNF production and RA clinical composite scores in small human pilot cohorts (hypothesized translational frame — not a settled clinical cure; not CDS).",
+      "domain": "immuno_metabolic",
+      "hsiGrade": "uncertain",
+      "missing": [
+        "isi_relationship_id",
+        "aksh_node_id",
+        "loinc_marker",
+        "gate_c_approved"
+      ]
     }
   ],
   "bridgeShortlist": [
@@ -882,6 +960,42 @@
       "objectLabel": "Colonic / mucosal Foxp3+ Treg",
       "suggestedIsiRelationshipId": null,
       "matchKind": "unspecified"
+    },
+    {
+      "edgeId": "HSI-E-NI-001",
+      "claimId": "HSI-C-NI-001",
+      "assertion": "Electrical stimulation of the peripheral vagus nerve attenuates systemic inflammatory responses to endotoxin, including hepatic and serum TNF, in rodent endotoxaemia models (cholinergic anti-inflammatory neighbourhood — not CDS).",
+      "subjectLabel": "Efferent vagus nerve stimulation",
+      "objectLabel": "Peripheral / systemic TNF inflammatory tone",
+      "suggestedIsiRelationshipId": null,
+      "matchKind": "unspecified"
+    },
+    {
+      "edgeId": "HSI-E-NI-002",
+      "claimId": "HSI-C-NI-002",
+      "assertion": "The inflammatory reflex frames a hard-wired autonomic (vagal cholinergic) pathway that reflexively monitors and adjusts acute inflammatory cytokine responses in real time (conceptual neighbourhood frame — not a disease cure claim).",
+      "subjectLabel": "Inflammatory reflex (cholinergic axis)",
+      "objectLabel": "Peripheral / systemic TNF inflammatory tone",
+      "suggestedIsiRelationshipId": null,
+      "matchKind": "unspecified"
+    },
+    {
+      "edgeId": "HSI-E-NI-003",
+      "claimId": "HSI-C-NI-003",
+      "assertion": "The nicotinic acetylcholine receptor α7 subunit is required for acetylcholine- and vagus-mediated inhibition of macrophage TNF synthesis (essential receptor node of the cholinergic anti-inflammatory pathway).",
+      "subjectLabel": "Nicotinic ACh receptor α7 subunit (macrophage)",
+      "objectLabel": "Macrophage TNF synthesis / release",
+      "suggestedIsiRelationshipId": null,
+      "matchKind": "unspecified"
+    },
+    {
+      "edgeId": "HSI-E-NI-005",
+      "claimId": "HSI-C-NI-005",
+      "assertion": "Acetylcholine-producing memory-phenotype T cells relay vagus nerve signals required for inflammatory-reflex inhibition of macrophage TNF (neural → lymphoid → innate immune hop).",
+      "subjectLabel": "Acetylcholine-synthesizing memory T cells",
+      "objectLabel": "Macrophage TNF synthesis / release",
+      "suggestedIsiRelationshipId": null,
+      "matchKind": "unspecified"
     }
   ],
   "isiRelMapping": {
@@ -893,7 +1007,7 @@
     "curated": 13,
     "acceptedForCuration": 0,
     "bridgeCandidatesCovered": 6,
-    "bridgeCandidatesTotal": 14,
+    "bridgeCandidatesTotal": 18,
     "autoApproveIntoKg": false
   },
   "akshNodeMapping": {

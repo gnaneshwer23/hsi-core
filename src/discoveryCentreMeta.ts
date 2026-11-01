@@ -122,6 +122,15 @@ export const HSI_SYSTEMS_SECONDARY_AXES = [
     seedHint:
       "Dual-track A PRD target — does not replace RA ASK; EBV hypothesized only",
   },
+  {
+    id: "neuro-vagus-cholinergic-reflex",
+    label: "Neuroimmune · vagus / cholinergic anti-inflammatory reflex",
+    status: "systems_secondary_axis" as const,
+    deepSeedsPresent: true as const,
+    packFile: "hsi-neuroimmune-pack.json",
+    seedHint:
+      "P2.1 thin literature slice — uncertain/hypothesized grades; human VNS–RA hypothesized only; not clinical cure; not CDS",
+  },
 ] as const;
 
 export type HsiIllustrativeDiseaseId =
@@ -182,6 +191,7 @@ export function buildDiscoveryCentreMeta(
       "RA is the Phase 2 working Stage 1 scope (scopeLocked=true; partnerSigned=false; lockedPilot=false).",
       "Dual-track A: SSc surfaces as prd_mvp_secondary_target only — ASK research question stays RA / anti-TNF.",
       "P1.3: gut–immune SCFA ↔ mucosal Treg/Th17 is a systems secondary axis (hsi-gut-immune-pack) — does not replace ASK.",
+      "P2.1: neuroimmune vagus / cholinergic anti-inflammatory reflex is a systems secondary axis (hsi-neuroimmune-pack) — human VNS–RA hypothesized only; not a clinical cure; does not replace ASK.",
       "Do not treat SLE/PsO/IBD as selected pilot indications — illustrative conversation contexts only.",
       "Not diagnostic / not for clinical use. teachingStatus ≠ hsiGrade ≠ CDS.",
     ],
