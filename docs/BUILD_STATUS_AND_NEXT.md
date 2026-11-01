@@ -116,7 +116,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | Schema stub + migrate CLI | **DONE** | `db/migrations/001_hsi_substrate.sql`, `bun run db:migrate` |
 | Host guards refuse ISI/Akeno/DeliverX | **DONE** | `src/db/neonGuard.ts` |
 | Gate C local pending upsert | **DONE** | `bun run db:gate-c-local` |
-| Gate C **approve** into ISI product Neon | **OUT OF SCOPE** | Human-only in `autumn-snow` |
+| Gate C **approve** into ISI product Neon | **DONE (product)** | immunecity `090d7ea` — `/hsi/discovery` REVIEW human approve/reject/defer → `hsi_gate_c_decisions` on `autumn-snow` only; `autoApprove=false`; never flips `hsiGrade` |
 | Shared evidence DB with immunecity | **OUT OF SCOPE** / forbidden | AGENTS.md + Neon map |
 
 ### 1.8 Vision / AI docs (program of work landed)

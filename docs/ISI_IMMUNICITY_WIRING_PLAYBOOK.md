@@ -240,6 +240,8 @@ Run these in an **immunecity** checkout / agent session (not hsi-core):
 7. **Acceptance** — run immunecity tests against the checklist in §9 / wiring spec `acceptanceTests`.
 8. **Do not** invent `partnerSigned=true`, MoUs, PHI, or CDS from these packs.
 
+**Product apply (immunecity, 2026-11-01):** human Gate C queue at `/hsi/discovery` → REVIEW (`HsiGateCQueuePanel`); server functions `listHsiGateCQueue` / `recordHsiGateCDecision`; table `hsi_gate_c_decisions` (migration `0028`, `bun run db:hsi-gate-c-decisions`); roles = Neon Auth + reviewer/admin (`assertCanReview`); SHA **`090d7ea`**. Evidence Check→supports→Approve on mapped RELs remains a separate `/curation` step. Still no red-wave writes from immunecity; still no invent of CDS/PHI.
+
 ---
 
 ## 9. Acceptance tests (consumer-side)
