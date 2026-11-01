@@ -6,6 +6,7 @@
  * Never invents commercial signed; never flips grades.
  */
 import {
+  assertSafeP3AdapterLicenseRow,
   buildP3AdapterLicenseRows,
   type P3AdapterLicenseRow,
 } from "./p3AdapterLicenseMatrix";
@@ -106,28 +107,13 @@ export function assertP3AdapterRunnable(
   if (row.blockedUntilSignOff) {
     throw new P3AdapterLicenseBlockedError(row);
   }
-  if (row.mayFlipEvidenceGrade !== false) {
-    throw new Error(
-      `Refusing adapter "${adapterId}" — mayFlipEvidenceGrade must be false`,
-    );
-  }
-  if (row.emitsModelProposalOnly !== true) {
-    throw new Error(
-      `Refusing adapter "${adapterId}" — emitsModelProposalOnly must be true`,
-    );
-  }
-  if (row.vendorsModelWeights !== false) {
-    throw new Error(
-      `Refusing adapter "${adapterId}" — vendorsModelWeights must be false`,
-    );
-  }
-  if (row.autoApproveIntoKg !== false) {
-    throw new Error(
-      `Refusing adapter "${adapterId}" — autoApproveIntoKg must be false`,
-    );
-  }
-  if (row.containsPhi === true) {
-    throw new Error(`Refusing adapter "${adapterId}" — containsPhi must be false`);
+  // Literal false/true fields on P3AdapterLicenseRow are compile-time guarantees;
+  // re-check via Record so mutated / cast rows still fail closed (and tsc stays green).
+  const safety = assertSafeP3AdapterLicenseRow(
+    row as unknown as Record<string, unknown>,
+  );
+  if (!safety.ok) {
+    throw new Error(`Refusing adapter "${adapterId}" — ${safety.reason}`);
   }
   return row;
 }
