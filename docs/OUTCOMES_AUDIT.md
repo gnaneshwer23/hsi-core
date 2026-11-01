@@ -162,4 +162,4 @@ Vercel production tips: **hsi-core** `7d733a0` READY; **immunecity** `309c6eb` R
 | --- | --- | --- |
 | hsi-core | `7d733a0` | origin/main + Vercel production (Boltz ack) |
 | immunecity | `309c6eb` | origin/main + Vercel production (Discovery UI) |
-| hsi-core (this audit) | *(commit after write)* | `docs/OUTCOMES_AUDIT.md` only |
+| hsi-core (this audit) | `b7ec7b6` | `docs/OUTCOMES_AUDIT.md` only |
