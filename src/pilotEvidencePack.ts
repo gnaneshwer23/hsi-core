@@ -554,8 +554,9 @@ export function buildPilotEvidencePack(opts?: {
 
   const partnerScopedSlice = bucketEntities(scoped.length > 0 ? scoped : []);
   if (scoped.length > 0) {
-    partnerScopedSlice.note =
-      "Phase 3 partner-scoped slice for the scope-locked RA / anti-TNF response pathway (scopeLocked=true; lockedPilot=false until legalBinding). Includes ADA, serology tension, RF LOINC, MTX combo — fixture partnerSigned is path-testing only, not a signed partner corpus.";
+    partnerScopedSlice.note = lock.lockedPilot
+      ? `Phase 3 partner-scoped slice for the locked RA / anti-TNF response pathway (scopeLocked=true; lockedPilot=true; partner=${lock.partner?.id ?? "named"}). Includes ADA, serology tension, RF LOINC, MTX combo — Apolo Stage 1 clearance + partner_agreed KPIs; still not CDS.`
+      : "Phase 3 partner-scoped slice for the scope-locked RA / anti-TNF response pathway (scopeLocked=true; lockedPilot=false until legalBinding). Includes ADA, serology tension, RF LOINC, MTX combo — fixture partnerSigned is path-testing only, not a signed partner corpus.";
   }
 
   return {
@@ -572,7 +573,9 @@ export function buildPilotEvidencePack(opts?: {
     provisionalLock: lock.provisionalLock,
     partnerLock: lock,
     substrateNote: scopedPilot
-      ? "Phase 3 evidence depth on Phase 2 scope lock: rheumatoid arthritis + anti-TNF response heterogeneity. scopeLocked=true; lockedPilot=false until legalBinding; fixture may set partnerSigned under hypothetical_test_only. Partner-scoped slice adds ADA/immunogenicity, RF/ACPA serology tension, RF LOINC, and MTX+anti-TNF combo literature. Full evidenceMap still includes T2D / immuno-metabolic + SLE/PsO/IBD stubs."
+      ? lock.lockedPilot
+        ? `Phase 3 evidence depth on Phase 2 scope lock: rheumatoid arthritis + anti-TNF response heterogeneity. Named partner ${lock.partner?.label ?? "Apolo Pharma"} (${lock.partner?.id ?? "partner:apolo-pharma"}): scopeLocked=true; partnerSigned=true; legalBinding=true → lockedPilot=true. Partner-scoped slice adds ADA/immunogenicity, RF/ACPA serology tension, RF LOINC, and MTX+anti-TNF combo literature. Full evidenceMap still includes T2D / immuno-metabolic + SLE/PsO/IBD stubs. Still not CDS.`
+        : "Phase 3 evidence depth on Phase 2 scope lock: rheumatoid arthritis + anti-TNF response heterogeneity. scopeLocked=true; lockedPilot=false until legalBinding; fixture may set partnerSigned under hypothetical_test_only. Partner-scoped slice adds ADA/immunogenicity, RF/ACPA serology tension, RF LOINC, and MTX+anti-TNF combo literature. Full evidenceMap still includes T2D / immuno-metabolic + SLE/PsO/IBD stubs."
       : "Evidence rows include substrate seeds. Disease/question TBD until scope is locked.",
     discoveryCentre,
     gradeDefinitions: HSI_GRADE_INFO,
@@ -663,12 +666,18 @@ export function buildPilotEvidencePack(opts?: {
     },
     nextActions: [
       scopedPilot
-        ? "Phase 3 evidence depth complete for scope-locked RA/anti-TNF. Keep lockedPilot=false until legalBinding; replace hypothetical fixture via src/hypotheticalPartnerFixture.ts (see partnerLock.flipRequirements)."
+        ? lock.lockedPilot
+          ? `Phase 3 evidence depth complete for locked RA/anti-TNF. Named partner ${lock.partner?.label ?? "Apolo Pharma"} active (lockedPilot=true); MoU operator-asserted — still not CDS / no auto Gate C.`
+          : "Phase 3 evidence depth complete for scope-locked RA/anti-TNF. Keep lockedPilot=false until legalBinding; replace hypothetical fixture via src/hypotheticalPartnerFixture.ts (see partnerLock.flipRequirements)."
         : "Lock disease + research question as working Stage 1 scope (Phase 2).",
       "Phase 4 done: HSI Neon red-wave schema stub + db:migrate / db:gate-c-local (pending only) — no ISI autumn-snow writes from this workspace.",
-      "Phase 5 done: use hsi-pilot-acceptance.* + hsi-pilot-walkthrough.md for partner-ready Stage 1 acceptance (partnerSigned still pending).",
+      lock.lockedPilot
+        ? "Phase 5 / P0.6: use hsi-pilot-acceptance.* + hsi-pilot-walkthrough.md for Apolo Pharma Stage 1 acceptance (lockedPilot=true; licensing cleared 48/48; KPIs partner_agreed)."
+        : "Phase 5 done: use hsi-pilot-acceptance.* + hsi-pilot-walkthrough.md for partner-ready Stage 1 acceptance (partnerSigned still pending).",
       "Human-review the deepened RA pathway against hsi-pilot-review-rubric.* and the four pack outputs.",
-      "Agree source licensing + success thresholds with the named partner before user testing.",
+      lock.lockedPilot
+        ? "Stage 1 licensing clearance + partner_agreed thresholds landed — keep pack depth ≥ 12/4/6; cite_metadata_pilot ≠ FT redistribution."
+        : "Agree source licensing + success thresholds with the named partner before user testing.",
       "Phase 6–7 done: Discovery Centre ASK→MAP→REVIEW→VALIDATE (hsi-r2-validation.*).",
       "Phase 8 (clinical R3–R5 / Akeno) requires an explicit user ask + Stage 3 gates — do not start unless asked.",
       "Keep Akeno/Aksh patient-level pathways behind M4 / governance gates.",

@@ -97,7 +97,7 @@ export type IsiConsumeContractBundle = {
    * Production ISI must ignore unless ALLOW_HYPOTHETICAL_PARTNER=true.
    */
   partnerSigned: boolean;
-  /** Always false until legalBinding real partner. */
+  /** True when scopeLocked && partnerSigned && legalBinding (Apolo named path). */
   lockedPilot: boolean;
   /** Trusted production signal — false for fixture; true for named legalBinding partner. */
   productionPartnerSigned: boolean;
@@ -185,7 +185,7 @@ const ARTIFACTS: IsiArtifactContractRow[] = [
     consumerSurfaces: ["ask_map_review", "partner_readiness"],
     autoApproveIntoKg: false,
     notes:
-      "scopeLocked=true; fixture may set partnerSigned under hypothetical_test_only; lockedPilot requires legalBinding. Do not invent MoU.",
+      "scopeLocked=true; named Apolo Pharma may set partnerSigned=true + legalBinding=true → lockedPilot=true; fixture path uses hypothetical_test_only. Do not invent MoU contacts.",
   },
   {
     manifestKey: "verticalDecisionJson",
@@ -231,7 +231,8 @@ const ARTIFACTS: IsiArtifactContractRow[] = [
     loadPriority: "required_pilot",
     consumerSurfaces: ["partner_readiness"],
     autoApproveIntoKg: false,
-    notes: "Stage 1 acceptance pass/fail/pending — fixture partnerSigned is path-testing; lockedPilot still false until legalBinding.",
+    notes:
+      "Stage 1 acceptance pass/fail/pending — Apolo named path may show lockedPilot=true + licensing pass; fixture path keeps lockedPilot=false until legalBinding.",
   },
   {
     manifestKey: "pilotWalkthroughMd",
@@ -240,7 +241,8 @@ const ARTIFACTS: IsiArtifactContractRow[] = [
     loadPriority: "required_pilot",
     consumerSurfaces: ["partner_readiness", "ask_map_review"],
     autoApproveIntoKg: false,
-    notes: "Partner session script for RA/anti-TNF scope.",
+    notes:
+      "Partner session script for RA/anti-TNF scope (P0.6 Apolo hygiene: named lock + 48/48 clearance + lockedPilot).",
   },
   {
     manifestKey: "gapReportJson",
@@ -557,7 +559,7 @@ export function buildIsiConsumeContractBundle(opts?: {
           : "No hypothetical fixture active.",
         `Vertical: ${vertical.verticalStrategy} · activeScope=${vertical.activeScope} · prdMvpTarget=${vertical.prdMvpTarget}.`,
         "Technical adapter spikes (RDKit/OpenMM/REINVENT4/ESM) are optional_proposal — do not block ISI Discovery core load.",
-        "Further hsi-core BUILD NEXT without a real named partner should not invent more adapter spikes — prefer real partnerNamed or out-of-repo ISI wiring.",
+        "P0.6 walkthrough/export hygiene landed for Apolo named lock; next substrate depth is P1.4 systems/ISI predicates (not more adapter spikes).",
       ],
     },
     vertical: {

@@ -4,7 +4,7 @@
  * Labels match the Discovery Loop and illustrative disease picker
  * (see docs/ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md). Phase 6 ships a usable
  * research-intelligence surface at `site/` `/discovery` that consumes published
- * packs — not clinical CDS, not a partner-signed lock, not Akeno.
+ * packs — not clinical CDS, not Akeno. Named partner Apolo Pharma may set lockedPilot=true.
  */
 import {
   getPartnerLock,
@@ -22,7 +22,7 @@ export const HSI_DISCOVERY_LOOP_STEPS = [
     id: "ask",
     label: "ASK",
     order: 1,
-    desc: "Scoped research question for one immune-mediated disease (RA/TNF working scope; partnerSigned still open). SSc is secondary PRD target only — does not replace this ASK.",
+    desc: "Scoped research question for one immune-mediated disease (RA/TNF Stage 1 scope; Apolo Pharma lockedPilot=true). SSc is secondary PRD target only — does not replace this ASK.",
   },
   {
     id: "map",
@@ -188,7 +188,9 @@ export function buildDiscoveryCentreMeta(
       "Phase 6 done: Target R1 Discovery Centre product surface at site `/discovery` (consumes bun run outputs).",
       "Phase 7 done: R2 VALIDATE tab loads hsi-r2-validation.json (hypothesis cards / ranked gaps; research only).",
       "Phase 8 done (HSI substrate): TRANSLATE tab + /akeno HITL consumer load hsi-translation-handoff.json — Stage 3 scaffolding; clinicalActive=false; not live CDS.",
-      "RA is the Phase 2 working Stage 1 scope (scopeLocked=true; lockedPilot=false until legalBinding; fixture may set partnerSigned under hypothetical_test_only).",
+      lock.lockedPilot
+        ? `RA is the Phase 2 working Stage 1 scope (scopeLocked=true; partnerSigned=true; legalBinding=true → lockedPilot=true; partner=${lock.partner?.id ?? "partner:apolo-pharma"}; MoU operator-asserted — still not CDS).`
+        : "RA is the Phase 2 working Stage 1 scope (scopeLocked=true; lockedPilot=false until legalBinding; fixture may set partnerSigned under hypothetical_test_only).",
       "Dual-track A: SSc surfaces as prd_mvp_secondary_target only — ASK research question stays RA / anti-TNF.",
       "P1.3: gut–immune SCFA ↔ mucosal Treg/Th17 is a systems secondary axis (hsi-gut-immune-pack) — does not replace ASK.",
       "P2.1: neuroimmune vagus / cholinergic anti-inflammatory reflex is a systems secondary axis (hsi-neuroimmune-pack) — human VNS–RA hypothesized only; not a clinical cure; does not replace ASK.",

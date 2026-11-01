@@ -170,7 +170,7 @@ const SCOPE_BASE = {
     id: "ra-tnf-response-heterogeneity",
     label: "RA · TNF / ACPA / ADA · anti-TNF response heterogeneity",
     rationale:
-      "Phase 3 deepened partner-scoped slice: TNF→RA + anti-CCP/RF (LOINC) + IL-6 / anti-TNF-refractory + ADA/immunogenicity + serology competing frames + MTX+anti-TNF combo background. Matches pilot-brief questions on therapy response and subgroup biomarkers. Working Stage 1 scope (scopeLocked); fixture partnerSigned is path-testing only.",
+      "Phase 3 deepened partner-scoped slice: TNF→RA + anti-CCP/RF (LOINC) + IL-6 / anti-TNF-refractory + ADA/immunogenicity + serology competing frames + MTX+anti-TNF combo background. Matches pilot-brief questions on therapy response and subgroup biomarkers. Working Stage 1 scope (scopeLocked); named Apolo Pharma may set lockedPilot=true when legalBinding.",
     primaryClaimIds: [
       "HSI-C-RA-001",
       "HSI-C-RA-002",
@@ -321,9 +321,9 @@ function buildRealPartnerLock(): HsiPartnerLock {
 /**
  * Working Stage 1 scope lock: RA / anti-TNF response heterogeneity.
  *
- * Default: hypothetical test fixture partner for path testing
- * (`src/hypotheticalPartnerFixture.ts`). Flip USE_HYPOTHETICAL_PARTNER_FIXTURE
- * and fill REAL_PARTNER_REPLACEMENT when a real org signs.
+ * Active: named Apolo Pharma (`USE_HYPOTHETICAL_PARTNER_FIXTURE=false` →
+ * `REAL_PARTNER_REPLACEMENT` → `lockedPilot=true`). Hypothetical fixture
+ * template remains recoverable in `src/hypotheticalPartnerFixture.ts`.
  */
 export const HSI_SCOPE_LOCKED_PARTNER_LOCK: HsiPartnerLock =
   USE_HYPOTHETICAL_PARTNER_FIXTURE

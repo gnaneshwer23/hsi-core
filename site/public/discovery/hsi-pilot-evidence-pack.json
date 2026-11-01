@@ -3,7 +3,7 @@
   "notCds": true,
   "noPatientLevelActions": true,
   "autoApproveIntoKg": false,
-  "generatedAt": "2026-11-01T22:16:58.254Z",
+  "generatedAt": "2026-11-01T23:43:03.919Z",
   "disease": "Rheumatoid arthritis",
   "researchQuestion": "Why do some patients with rheumatoid arthritis respond differently to anti-TNF therapy, and which biomarkers or immune mechanisms are best supported for defining those subgroups?",
   "lockedPilot": true,
@@ -28,7 +28,7 @@
     "seedPathway": {
       "id": "ra-tnf-response-heterogeneity",
       "label": "RA · TNF / ACPA / ADA · anti-TNF response heterogeneity",
-      "rationale": "Phase 3 deepened partner-scoped slice: TNF→RA + anti-CCP/RF (LOINC) + IL-6 / anti-TNF-refractory + ADA/immunogenicity + serology competing frames + MTX+anti-TNF combo background. Matches pilot-brief questions on therapy response and subgroup biomarkers. Working Stage 1 scope (scopeLocked); fixture partnerSigned is path-testing only.",
+      "rationale": "Phase 3 deepened partner-scoped slice: TNF→RA + anti-CCP/RF (LOINC) + IL-6 / anti-TNF-refractory + ADA/immunogenicity + serology competing frames + MTX+anti-TNF combo background. Matches pilot-brief questions on therapy response and subgroup biomarkers. Working Stage 1 scope (scopeLocked); named Apolo Pharma may set lockedPilot=true when legalBinding.",
       "primaryClaimIds": [
         "HSI-C-RA-001",
         "HSI-C-RA-002",
@@ -124,7 +124,7 @@
       "Apolo Pharma Stage 1 corpus licensing clearance applied (oa_reuse + cite_metadata_pilot; uncleared=0). Stage 1 numeric KPIs are partner_agreed."
     ]
   },
-  "substrateNote": "Phase 3 evidence depth on Phase 2 scope lock: rheumatoid arthritis + anti-TNF response heterogeneity. scopeLocked=true; lockedPilot=false until legalBinding; fixture may set partnerSigned under hypothetical_test_only. Partner-scoped slice adds ADA/immunogenicity, RF/ACPA serology tension, RF LOINC, and MTX+anti-TNF combo literature. Full evidenceMap still includes T2D / immuno-metabolic + SLE/PsO/IBD stubs.",
+  "substrateNote": "Phase 3 evidence depth on Phase 2 scope lock: rheumatoid arthritis + anti-TNF response heterogeneity. Named partner Apolo Pharma (partner:apolo-pharma): scopeLocked=true; partnerSigned=true; legalBinding=true → lockedPilot=true. Partner-scoped slice adds ADA/immunogenicity, RF/ACPA serology tension, RF LOINC, and MTX+anti-TNF combo literature. Full evidenceMap still includes T2D / immuno-metabolic + SLE/PsO/IBD stubs. Still not CDS.",
   "discoveryCentre": {
     "schemaVersion": "hsi-discovery-centre-meta-1",
     "surfaceRole": "site_product_surface",
@@ -139,7 +139,7 @@
           "id": "ask",
           "label": "ASK",
           "order": 1,
-          "desc": "Scoped research question for one immune-mediated disease (RA/TNF working scope; partnerSigned still open). SSc is secondary PRD target only — does not replace this ASK."
+          "desc": "Scoped research question for one immune-mediated disease (RA/TNF Stage 1 scope; Apolo Pharma lockedPilot=true). SSc is secondary PRD target only — does not replace this ASK."
         },
         {
           "id": "map",
@@ -277,7 +277,7 @@
       "seedPathway": {
         "id": "ra-tnf-response-heterogeneity",
         "label": "RA · TNF / ACPA / ADA · anti-TNF response heterogeneity",
-        "rationale": "Phase 3 deepened partner-scoped slice: TNF→RA + anti-CCP/RF (LOINC) + IL-6 / anti-TNF-refractory + ADA/immunogenicity + serology competing frames + MTX+anti-TNF combo background. Matches pilot-brief questions on therapy response and subgroup biomarkers. Working Stage 1 scope (scopeLocked); fixture partnerSigned is path-testing only.",
+        "rationale": "Phase 3 deepened partner-scoped slice: TNF→RA + anti-CCP/RF (LOINC) + IL-6 / anti-TNF-refractory + ADA/immunogenicity + serology competing frames + MTX+anti-TNF combo background. Matches pilot-brief questions on therapy response and subgroup biomarkers. Working Stage 1 scope (scopeLocked); named Apolo Pharma may set lockedPilot=true when legalBinding.",
         "primaryClaimIds": [
           "HSI-C-RA-001",
           "HSI-C-RA-002",
@@ -391,7 +391,7 @@
       "Phase 6 done: Target R1 Discovery Centre product surface at site `/discovery` (consumes bun run outputs).",
       "Phase 7 done: R2 VALIDATE tab loads hsi-r2-validation.json (hypothesis cards / ranked gaps; research only).",
       "Phase 8 done (HSI substrate): TRANSLATE tab + /akeno HITL consumer load hsi-translation-handoff.json — Stage 3 scaffolding; clinicalActive=false; not live CDS.",
-      "RA is the Phase 2 working Stage 1 scope (scopeLocked=true; lockedPilot=false until legalBinding; fixture may set partnerSigned under hypothetical_test_only).",
+      "RA is the Phase 2 working Stage 1 scope (scopeLocked=true; partnerSigned=true; legalBinding=true → lockedPilot=true; partner=partner:apolo-pharma; MoU operator-asserted — still not CDS).",
       "Dual-track A: SSc surfaces as prd_mvp_secondary_target only — ASK research question stays RA / anti-TNF.",
       "P1.3: gut–immune SCFA ↔ mucosal Treg/Th17 is a systems secondary axis (hsi-gut-immune-pack) — does not replace ASK.",
       "P2.1: neuroimmune vagus / cholinergic anti-inflammatory reflex is a systems secondary axis (hsi-neuroimmune-pack) — human VNS–RA hypothesized only; not a clinical cure; does not replace ASK.",
@@ -438,9 +438,9 @@
     "scopeLocked": true,
     "partnerSigned": true,
     "provisionalLock": false,
-    "evidenceSnapshotRef": "dist/outputs/hsi-core-0.1.0-20261101T221658254Z/hsi-isi-export.json",
-    "createdAt": "2026-11-01T22:16:58.254Z",
-    "updatedAt": "2026-11-01T22:16:58.254Z"
+    "evidenceSnapshotRef": "dist/outputs/hsi-core-0.1.0-20261101T234303919Z/hsi-isi-export.json",
+    "createdAt": "2026-11-01T23:43:03.919Z",
+    "updatedAt": "2026-11-01T23:43:03.919Z"
   },
   "evidenceMap": [
     {
@@ -3839,7 +3839,7 @@
         "kind": "treatment"
       }
     ],
-    "note": "Phase 3 partner-scoped slice for the scope-locked RA / anti-TNF response pathway (scopeLocked=true; lockedPilot=false until legalBinding). Includes ADA, serology tension, RF LOINC, MTX combo — fixture partnerSigned is path-testing only, not a signed partner corpus."
+    "note": "Phase 3 partner-scoped slice for the locked RA / anti-TNF response pathway (scopeLocked=true; lockedPilot=true; partner=partner:apolo-pharma). Includes ADA, serology tension, RF LOINC, MTX combo — Apolo Stage 1 clearance + partner_agreed KPIs; still not CDS."
   },
   "competingExplanations": [
     {
@@ -4146,11 +4146,11 @@
     "illustrativeDiseaseContexts": 5
   },
   "nextActions": [
-    "Phase 3 evidence depth complete for scope-locked RA/anti-TNF. Keep lockedPilot=false until legalBinding; replace hypothetical fixture via src/hypotheticalPartnerFixture.ts (see partnerLock.flipRequirements).",
+    "Phase 3 evidence depth complete for locked RA/anti-TNF. Named partner Apolo Pharma active (lockedPilot=true); MoU operator-asserted — still not CDS / no auto Gate C.",
     "Phase 4 done: HSI Neon red-wave schema stub + db:migrate / db:gate-c-local (pending only) — no ISI autumn-snow writes from this workspace.",
-    "Phase 5 done: use hsi-pilot-acceptance.* + hsi-pilot-walkthrough.md for partner-ready Stage 1 acceptance (partnerSigned still pending).",
+    "Phase 5 / P0.6: use hsi-pilot-acceptance.* + hsi-pilot-walkthrough.md for Apolo Pharma Stage 1 acceptance (lockedPilot=true; licensing cleared 48/48; KPIs partner_agreed).",
     "Human-review the deepened RA pathway against hsi-pilot-review-rubric.* and the four pack outputs.",
-    "Agree source licensing + success thresholds with the named partner before user testing.",
+    "Stage 1 licensing clearance + partner_agreed thresholds landed — keep pack depth ≥ 12/4/6; cite_metadata_pilot ≠ FT redistribution.",
     "Phase 6–7 done: Discovery Centre ASK→MAP→REVIEW→VALIDATE (hsi-r2-validation.*).",
     "Phase 8 (clinical R3–R5 / Akeno) requires an explicit user ask + Stage 3 gates — do not start unless asked.",
     "Keep Akeno/Aksh patient-level pathways behind M4 / governance gates.",

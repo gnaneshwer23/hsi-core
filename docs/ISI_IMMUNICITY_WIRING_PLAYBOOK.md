@@ -32,7 +32,7 @@ bun run examples/isi-consumer/demo.ts
 | Goal | Do this |
 |------|---------|
 | Verify Stage 1 packs | Open `/discovery` → ASK / MAP / REVIEW; check `hsi-pilot-acceptance.md` is `green_with_pending` |
-| Fixture partner path | Confirm `hsi-partner-lock.json` shows `agreementKind=hypothetical_test_only`, `lockedPilot=false` |
+| Named Apolo partner path | Confirm `hsi-partner-lock.json` shows `partner:apolo-pharma`, `agreementKind=legal_mou`, `lockedPilot=true` (fixture template remains recoverable) |
 | Rubric thresholds | `hsi-pilot-review-rubric.*` — Apolo Pharma `thresholdStatus=partner_agreed` (2026-11-01); min edges 12 / competing 4 / LOINC 6 |
 | Licensing review | Follow [`HOW_TO_SOURCE_LICENSING.md`](./HOW_TO_SOURCE_LICENSING.md) against `hsi-source-licensing-stub.*` |
 | Swap to a real partner | Edit `src/hypotheticalPartnerFixture.ts` (`USE_HYPOTHETICAL_PARTNER_FIXTURE=false` + `REAL_PARTNER_REPLACEMENT`); never invent email/MoU |

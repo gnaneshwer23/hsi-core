@@ -16,7 +16,7 @@
   "seedPathway": {
     "id": "ra-tnf-response-heterogeneity",
     "label": "RA · TNF / ACPA / ADA · anti-TNF response heterogeneity",
-    "rationale": "Phase 3 deepened partner-scoped slice: TNF→RA + anti-CCP/RF (LOINC) + IL-6 / anti-TNF-refractory + ADA/immunogenicity + serology competing frames + MTX+anti-TNF combo background. Matches pilot-brief questions on therapy response and subgroup biomarkers. Working Stage 1 scope (scopeLocked); fixture partnerSigned is path-testing only.",
+    "rationale": "Phase 3 deepened partner-scoped slice: TNF→RA + anti-CCP/RF (LOINC) + IL-6 / anti-TNF-refractory + ADA/immunogenicity + serology competing frames + MTX+anti-TNF combo background. Matches pilot-brief questions on therapy response and subgroup biomarkers. Working Stage 1 scope (scopeLocked); named Apolo Pharma may set lockedPilot=true when legalBinding.",
     "primaryClaimIds": [
       "HSI-C-RA-001",
       "HSI-C-RA-002",

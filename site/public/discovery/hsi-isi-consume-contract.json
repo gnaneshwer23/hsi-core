@@ -15,7 +15,7 @@
   "testPilotMode": false,
   "testFixtureBanner": null,
   "allowHypotheticalPartnerEnv": "ALLOW_HYPOTHETICAL_PARTNER",
-  "generatedAt": "2026-11-01T22:16:58.254Z",
+  "generatedAt": "2026-11-01T23:43:03.919Z",
   "package": "hsi-core",
   "outputsManifestSchema": "hsi-outputs-manifest-1",
   "compatibility": {
@@ -31,7 +31,7 @@
       "No hypothetical fixture active.",
       "Vertical: dual_track · activeScope=ra-tnf · prdMvpTarget=ssc-tfh-b-il21.",
       "Technical adapter spikes (RDKit/OpenMM/REINVENT4/ESM) are optional_proposal — do not block ISI Discovery core load.",
-      "Further hsi-core BUILD NEXT without a real named partner should not invent more adapter spikes — prefer real partnerNamed or out-of-repo ISI wiring."
+      "P0.6 walkthrough/export hygiene landed for Apolo named lock; next substrate depth is P1.4 systems/ISI predicates (not more adapter spikes)."
     ]
   },
   "vertical": {
@@ -168,7 +168,7 @@
         "partner_readiness"
       ],
       "autoApproveIntoKg": false,
-      "notes": "scopeLocked=true; fixture may set partnerSigned under hypothetical_test_only; lockedPilot requires legalBinding. Do not invent MoU."
+      "notes": "scopeLocked=true; named Apolo Pharma may set partnerSigned=true + legalBinding=true → lockedPilot=true; fixture path uses hypothetical_test_only. Do not invent MoU contacts."
     },
     {
       "manifestKey": "verticalDecisionJson",
@@ -224,7 +224,7 @@
         "partner_readiness"
       ],
       "autoApproveIntoKg": false,
-      "notes": "Stage 1 acceptance pass/fail/pending — fixture partnerSigned is path-testing; lockedPilot still false until legalBinding."
+      "notes": "Stage 1 acceptance pass/fail/pending — Apolo named path may show lockedPilot=true + licensing pass; fixture path keeps lockedPilot=false until legalBinding."
     },
     {
       "manifestKey": "pilotWalkthroughMd",
@@ -236,7 +236,7 @@
         "ask_map_review"
       ],
       "autoApproveIntoKg": false,
-      "notes": "Partner session script for RA/anti-TNF scope."
+      "notes": "Partner session script for RA/anti-TNF scope (P0.6 Apolo hygiene: named lock + 48/48 clearance + lockedPilot)."
     },
     {
       "manifestKey": "gapReportJson",

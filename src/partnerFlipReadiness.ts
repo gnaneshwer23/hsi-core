@@ -1,9 +1,10 @@
 /**
  * P0.2-HSI — Partner flip-readiness pack.
  *
- * Honest checklist of flipRequirements with status pass|fail|pending|satisfied_by_fixture.
- * Hypothetical fixture can satisfy named_org for path testing; real replacement still pending.
- * Never claims a legal MoU; lockedPilot stays false until legalBinding.
+ * Honest checklist of flipRequirements with status pass|fail|pending|satisfied_by_fixture|set_for_test.
+ * Active path: named Apolo Pharma (`legalBinding` → `lockedPilot=true`).
+ * Hypothetical fixture template remains recoverable for path testing only.
+ * MoU paperwork is operator-asserted — never invent emails / PI contacts; still not CDS.
  */
 
 import {

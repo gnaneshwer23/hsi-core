@@ -490,7 +490,7 @@ export function buildR2ValidationBundle(opts?: {
     nextActions: [
       "Review hypothesis cards on site `/discovery` VALIDATE tab against competing explanations.",
       "Run high-priority ranked-gap literature reconciliations before collapsing frames.",
-      "Keep lockedPilot=false until legalBinding; fixture partnerSigned is path-testing only — replace via src/hypotheticalPartnerFixture.ts.",
+      "Named Apolo Pharma lock may show lockedPilot=true (legalBinding); fixture path keeps lockedPilot=false — inspect src/hypotheticalPartnerFixture.ts.",
       "Review Phase 8 TRANSLATE tab candidates as HITL-only scaffolding — not live CDS.",
     ],
   };

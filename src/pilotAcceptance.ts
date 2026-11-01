@@ -281,8 +281,9 @@ function buildCriteria(opts: {
       artifact: "hsi-pilot-review-rubric.md",
       status: rubricPass ? "pass" : "fail",
       evidence: `ready_for_human=${rubric.summary.readyForHuman}; blocked_on_partner=${rubric.summary.blockedOnPartner}; set_for_test=${rubric.summary.setForTest}; thresholdStatus=${rubric.summary.thresholdStatus}; numericThresholdsMet=${rubric.summary.numericThresholdsMet}`,
-      notes:
-        "Checklist for human walkthrough; Apolo Pharma KPIs are partner_agreed (fixture path may still be set_for_test).",
+      notes: lock.isHypothetical
+        ? "Checklist for human walkthrough; fixture path may still be set_for_test."
+        : "Checklist for human walkthrough; Apolo Pharma KPIs are partner_agreed; blockedOnPartner=0 after Stage 1 clearance.",
     }),
     (() => {
       const licensing = buildSourceLicensingStubBundle();
@@ -330,8 +331,9 @@ function buildCriteria(opts: {
       label: "Discovery Centre product surface (Phase 6 / Target R1)",
       artifact: "site/src/pages/DiscoveryCentre.tsx · site/public/discovery/",
       status: "pass",
-      evidence:
-        "ASK→MAP→REVIEW→VALIDATE→TRANSLATE surface loads regenerable packs from site/public/discovery (notCds; clinicalActive=false; partnerSigned=false)",
+      evidence: lock.partnerSigned
+        ? `ASK→MAP→REVIEW→VALIDATE→TRANSLATE surface loads regenerable packs from site/public/discovery (notCds; clinicalActive=false; partnerSigned=${lock.partnerSigned}; lockedPilot=${lock.lockedPilot}; partner=${lock.partner?.id ?? "none"})`
+        : "ASK→MAP→REVIEW→VALIDATE→TRANSLATE surface loads regenerable packs from site/public/discovery (notCds; clinicalActive=false; partnerSigned=false)",
       notes:
         "Phase 6–8 done on HSI substrate. TRANSLATE tab + /akeno HITL show deferred_until_hitl candidates only — not live CDS.",
     }),
@@ -339,16 +341,23 @@ function buildCriteria(opts: {
 }
 
 function buildWalkthroughSteps(lock: HsiPartnerLock): PilotAcceptancePack["walkthroughSteps"] {
+  const named = !isHypotheticalTestFixturePartner(lock) && !lock.isHypothetical;
+  const partnerLabel = lock.partner?.label ?? "named partner";
+  const partnerId = lock.partner?.id ?? "unknown";
   const fixtureNote = isHypotheticalTestFixturePartner(lock)
-    ? ` TEST FIXTURE partner=${lock.partner?.id} (partnerSigned=${lock.partnerSigned} under agreementKind=hypothetical_test_only; legalBinding=false; lockedPilot=false) — replace before real pilot.`
-    : ` partnerSigned=${lock.partnerSigned}; lockedPilot=${lock.lockedPilot}.`;
+    ? ` TEST FIXTURE partner=${partnerId} (partnerSigned=${lock.partnerSigned} under agreementKind=hypothetical_test_only; legalBinding=false; lockedPilot=false) — replace before real pilot.`
+    : ` Named partner ${partnerLabel} (${partnerId}): partnerSigned=${lock.partnerSigned}; legalBinding=${lock.legalBinding}; lockedPilot=${lock.lockedPilot}; agreementKind=${lock.agreementKind}. MoU operator-asserted — still not CDS.`;
   return [
     {
       step: 1,
       title: "Frame the pilot (non-CDS)",
-      open: "docs/ISI_PILOT_BRIEF.md · hsi-partner-lock.json · src/hypotheticalPartnerFixture.ts",
-      say: `Working Stage 1 scope is ${lock.disease?.label ?? "RA"} + the anti-TNF response-heterogeneity question. scopeLocked=true.${fixtureNote} Not a MoU.`,
-      doNot: "Do not present patient risk scores, eligibility automation, EHR write-back, or treat the hypothetical fixture as a legal partner.",
+      open: named
+        ? "docs/ISI_PILOT_BRIEF.md · hsi-partner-lock.json · hsi-partner-flip-readiness.json"
+        : "docs/ISI_PILOT_BRIEF.md · hsi-partner-lock.json · src/hypotheticalPartnerFixture.ts",
+      say: `Working Stage 1 scope is ${lock.disease?.label ?? "RA"} + the anti-TNF response-heterogeneity question. scopeLocked=true.${fixtureNote}`,
+      doNot: named
+        ? "Do not present patient risk scores, eligibility automation, EHR write-back, or invent emails / PI contacts beyond the operator-asserted MoU."
+        : "Do not present patient risk scores, eligibility automation, EHR write-back, or treat the hypothetical fixture as a legal partner.",
     },
     {
       step: 2,
@@ -361,21 +370,25 @@ function buildWalkthroughSteps(lock: HsiPartnerLock): PilotAcceptancePack["walkt
       step: 3,
       title: "Show honest gaps + Gate C pending",
       open: "hsi-gap-report.md · gate-c-checklist.md",
-      say: "Gap report and Gate C pending rows are features: experts can reject without KG pollution. Auto-approve is false everywhere.",
-      doNot: "Do not approve Gate C from this workspace into ISI Neon autumn-snow.",
+      say: "Gap report and Gate C pending rows are features: experts can reject without KG pollution. Auto-approve is false everywhere. ISI Gate C human queue is live on immunecity `/hsi/discovery` REVIEW — never auto-approve.",
+      doNot: "Do not approve Gate C from this workspace into ISI Neon autumn-snow; keep human-only decisions.",
     },
     {
       step: 4,
       title: "Run the review rubric",
-      open: "hsi-pilot-review-rubric.md",
-      say: "Mark ready_for_human items live with the partner. Apolo Pharma Stage 1 numeric KPIs are partner_agreed (2026-11-01). Corpus licensing clearance applied (oa_reuse + cite_metadata_pilot; uncleared=0).",
+      open: "hsi-pilot-review-rubric.md · hsi-source-licensing-stub.json",
+      say: named
+        ? `Mark ready_for_human items live with ${partnerLabel}. Stage 1 numeric KPIs are partner_agreed (2026-11-01). Corpus licensing clearance applied (oa_reuse + cite_metadata_pilot; partnerClearedCount=48; uncleared=0). blockedOnPartner=0.`
+        : "Mark ready_for_human items live with the partner. Fixture path may still show set_for_test thresholds and blocked_on_partner licensing.",
       doNot: "Do not invent CDS, auto-approve Gate C, or claim full-text redistribution from cite_metadata_pilot.",
     },
     {
       step: 5,
       title: "Confirm regenerable bundle",
-      open: "MANIFEST.json · hsi-pilot-acceptance.md",
-      say: "Artifacts regenerate with bun run outputs. Acceptance pack records pass vs pending honestly.",
+      open: "MANIFEST.json · hsi-pilot-acceptance.md · hsi-pilot-walkthrough.md",
+      say: named
+        ? `Artifacts regenerate with bun run outputs. Acceptance records lockedPilot=${lock.lockedPilot} + Stage 1 clearance honestly; overall remains green_with_pending while Gate C rows stay human-pending.`
+        : "Artifacts regenerate with bun run outputs. Acceptance pack records pass vs pending honestly.",
       doNot: "Do not claim live Akeno clinical CDS / patient pathways from HSI translation scaffolding (clinicalActive=false).",
     },
   ];
@@ -471,16 +484,19 @@ export function buildPilotAcceptancePack(opts?: {
     nextActions: [
       lock.testFixtureBanner
         ? `${lock.testFixtureBanner} Swap via src/hypotheticalPartnerFixture.ts when a real org confirms.`
-        : "Share walkthrough with Apolo Pharma (named partner locked).",
-      "Share hsi-pilot-walkthrough.md + hsi-pilot-acceptance.md + site `/discovery` with the named partner.",
+        : "Share hsi-pilot-walkthrough.md + hsi-pilot-acceptance.md + site `/discovery` with Apolo Pharma (named lock; lockedPilot=true).",
       lock.isHypothetical
         ? "Keep lockedPilot=false / legalBinding=false until a real named partner meets flipRequirements (fixture partnerSigned is path-testing only)."
-        : "Named partner path active (lockedPilot=true); still not CDS / no auto Gate C.",
+        : "Named partner path active (Apolo Pharma · lockedPilot=true · legalBinding=true); still not CDS / Gate C never auto-approves.",
       thresholds.thresholdStatus === "partner_agreed"
         ? "Numeric Stage 1 thresholds are partner_agreed with Apolo Pharma (2026-11-01); keep pack depth ≥ 12/4/6."
         : "Numeric Stage 1 thresholds are set_for_test under the hypothetical fixture — real partner must re-agree numbers before formal user testing.",
-      "Confirm remaining uncleared/unknown PMIDs before claiming OA or FT rights (docs/HOW_TO_SOURCE_LICENSING.md).",
-      "Production ISI must ignore fixture partnerSigned unless ALLOW_HYPOTHETICAL_PARTNER=true.",
+      lock.isHypothetical
+        ? "Confirm remaining uncleared/unknown PMIDs before claiming OA or FT rights (docs/HOW_TO_SOURCE_LICENSING.md)."
+        : "Stage 1 corpus licensing clearance applied (oa_reuse + cite_metadata_pilot; partnerClearedCount=48; uncleared=0) — cite_metadata_pilot ≠ FT redistribution.",
+      lock.isHypothetical
+        ? "Production ISI must ignore fixture partnerSigned unless ALLOW_HYPOTHETICAL_PARTNER=true."
+        : "Refresh bun run outputs after pack depth changes; re-sync immunecity public/hsi-discovery when publishing.",
       "Phase 6–8 Discovery Centre (ASK→MAP→REVIEW→VALIDATE→TRANSLATE) is live. Phase 8 = translation substrate + in-repo Akeno HITL at /akeno (not CDS).",
     ],
     deferredExplicitAsk: [
@@ -508,7 +524,9 @@ export function serializePilotAcceptanceMarkdown(
     "",
     pack.scope.testFixtureBanner
       ? `> **${pack.scope.testFixtureBanner}** Not CDS. Not auto-approval into product KG. Fixture \`partnerSigned\` ≠ MoU. Production ISI requires \`ALLOW_HYPOTHETICAL_PARTNER=true\` to trust fixture.`
-      : "> Not CDS. Not auto-approval into product KG. Pass ≠ MoU. partnerSigned stays pending until a named partner confirms.",
+      : pack.scope.lockedPilot
+        ? `> Not CDS. Not auto-approval into product KG. Named partner \`${pack.scope.partnerId ?? "named"}\` locked (\`lockedPilot=true\`; MoU operator-asserted). Stage 1 licensing cleared (oa_reuse + cite_metadata_pilot; uncleared=0). Gate C stays human-only.`
+        : "> Not CDS. Not auto-approval into product KG. Pass ≠ MoU. partnerSigned stays pending until a named partner confirms.",
     "",
     "## Scope",
     "",
@@ -574,22 +592,27 @@ export function serializePilotWalkthroughMarkdown(
   pack: PilotAcceptancePack = buildPilotAcceptancePack(),
 ): string {
   const lines: string[] = [
-    "# ISI pilot — partner walkthrough (Phase 5)",
+    "# ISI pilot — partner walkthrough (Phase 5 · P0.6 Apolo hygiene)",
     "",
     `Schema: \`${pack.schemaVersion}\` · generated ${pack.generatedAt}`,
     "",
     `**Disease:** ${pack.scope.disease}  `,
     `**Question:** ${pack.scope.researchQuestion}`,
     "",
+    `**Partner:** \`${pack.scope.partnerId ?? "none"}\` (${pack.scope.partnerType ?? "n/a"})  `,
     `**Honesty:** scopeLocked=\`${pack.scope.scopeLocked}\` · partnerSigned=\`${pack.scope.partnerSigned}\` · lockedPilot=\`${pack.scope.lockedPilot}\` · legalBinding=\`${pack.scope.legalBinding}\` · agreementKind=\`${pack.scope.agreementKind}\` · isHypothetical=\`${pack.scope.isHypothetical}\` · status=\`${pack.scope.status}\``,
     "",
     pack.scope.testFixtureBanner
       ? `> **${pack.scope.testFixtureBanner}** Research intelligence only. No patient-level CDS. Fixture ≠ MoU. Regenerable via \`bun run outputs\`.`
-      : "> Research intelligence only. No patient-level CDS. No invented MoU. Regenerable via `bun run outputs`.",
+      : pack.scope.lockedPilot
+        ? "> Research intelligence only. No patient-level CDS. **Apolo Pharma** named lock (`lockedPilot=true`; MoU operator-asserted). Stage 1 corpus clearance 48/48. Regenerable via `bun run outputs`."
+        : "> Research intelligence only. No patient-level CDS. No invented MoU. Regenerable via `bun run outputs`.",
     "",
     "## Goal",
     "",
-    "Walk a partner through Stage 1 four outputs on the scope-locked RA / anti-TNF question, show gaps and Gate C pending rows, and leave with an honest acceptance checklist (`hsi-pilot-acceptance.md`).",
+    pack.scope.lockedPilot
+      ? "Walk **Apolo Pharma** through Stage 1 four outputs on the locked RA / anti-TNF question, show gaps and Gate C pending rows, confirm licensing + partner_agreed KPIs, and leave with an honest acceptance checklist (`hsi-pilot-acceptance.md`)."
+      : "Walk a partner through Stage 1 four outputs on the scope-locked RA / anti-TNF question, show gaps and Gate C pending rows, and leave with an honest acceptance checklist (`hsi-pilot-acceptance.md`).",
     "",
     "## Steps",
     "",

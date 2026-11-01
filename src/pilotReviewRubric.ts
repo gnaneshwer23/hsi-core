@@ -193,8 +193,12 @@ function buildChecklist(
     {
       id: "x-1",
       output: "cross_cutting",
-      criterion: "Exports clearly label scopeLocked=true; lockedPilot=false until legalBinding; fixture partnerSigned must carry isHypothetical / TEST FIXTURE banner (no fake MoU)",
-      howToJudge: "MANIFEST + pack + Discovery Centre meta must show status=scope_locked, scopeLocked=true, lockedPilot=false; if partnerSigned=true require agreementKind=hypothetical_test_only.",
+      criterion: namedPartnerConfirmed
+        ? "Exports clearly label named partner lock: scopeLocked=true; partnerSigned=true; legalBinding=true; lockedPilot=true; isHypothetical=false (no fixture banner)"
+        : "Exports clearly label scopeLocked=true; lockedPilot=false until legalBinding; fixture partnerSigned must carry isHypothetical / TEST FIXTURE banner (no fake MoU)",
+      howToJudge: namedPartnerConfirmed
+        ? `MANIFEST + pack + Discovery Centre meta must show partner=${lock.partner?.id}; status=${lock.status}; scopeLocked=true; partnerSigned=true; legalBinding=true; lockedPilot=true; agreementKind=${lock.agreementKind}; isHypothetical=false. Still not CDS.`
+        : "MANIFEST + pack + Discovery Centre meta must show status=scope_locked, scopeLocked=true, lockedPilot=false; if partnerSigned=true require agreementKind=hypothetical_test_only.",
       status: "ready_for_human",
       relatedClaimIds: [],
     },
