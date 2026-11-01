@@ -155,7 +155,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | P2.4 ClinVar / TCGA pointers | `13c8a5b` |
 | P2.5 P3 adapter RFC + license matrix | `6aee2ea` |
 | P3.0 RDKit thin adapter spike | `81ec446` |
-| P3.1 OpenMM thin adapter spike | (this commit) |
+| P3.1 OpenMM thin adapter spike | `2233af1` |
 
 Reproduce: `bun test && bun run outputs && bun run site:dev` → `/discovery`, `/akeno`, `/aksh-agents`.
 
