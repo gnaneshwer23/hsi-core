@@ -1,7 +1,7 @@
 # HSI build status and next
 
 **Audit date:** 1 November 2026  
-**HEAD at write:** `6fa6fae` (main) — P0.5 ISI/immunecity **wiring playbook** shipped inside hsi-core (apply wires = immunecity session)
+**HEAD at write:** `efa64ac` (main) — hypothetical **TEST FIXTURE** partner (`test:hypothetical-isi-pilot-partner`) for path testing; real named partner still TBD
 
 
 **Edit target:** `hsi-core` only · Neon **`red-wave` only** · no immunecity / Akeno product / DeliverX edits  
