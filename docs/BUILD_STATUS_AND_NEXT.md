@@ -1,7 +1,7 @@
 # HSI build status and next
 
 **Audit date:** 1 November 2026  
-**HEAD at write:** *(pending commit)* — P3.0 RDKit thin adapter spike (proposal-only)  
+**HEAD at write:** `81ec446` (main) — P3.0 RDKit thin adapter spike (proposal-only)  
 
 
 
@@ -152,7 +152,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | P2.3 offline eval harness stubs | `35c05fe` |
 | P2.4 ClinVar / TCGA pointers | `13c8a5b` |
 | P2.5 P3 adapter RFC + license matrix | `6aee2ea` |
-| P3.0 RDKit thin adapter spike | *(this commit)* |
+| P3.0 RDKit thin adapter spike | `81ec446` |
 
 Reproduce: `bun test && bun run outputs && bun run site:dev` → `/discovery`, `/akeno`, `/aksh-agents`.
 
