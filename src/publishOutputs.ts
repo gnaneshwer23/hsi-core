@@ -283,7 +283,8 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       "Partner lock honesty: hsi-partner-lock.json — Phase 2 = scopeLocked; Phase 3 = evidence depth; named partner still flips partnerSigned (then lockedPilot).",
       "Discovery Centre vocabulary is metadata only (ASK→MAP→REVIEW… + disease contexts) — not an interactive UI.",
       "Aksh: HITL map pointers only — use hsi-aksh-node-map.json + hsi-aksh-hitl-cards.json; CDS stays closed on seeds.",
-      "Gate C: human checklist in gate-c-checklist.*; Neon approve is outside this repo (ISI autumn-snow only — never HSI red-wave).",
+      "Gate C: human checklist in gate-c-checklist.*; optional HSI red-wave placeholders via bun run db:gate-c-local (pending only). ISI product approve stays autumn-snow — never from this workspace.",
+      "Phase 4: HSI Neon schema stub — bun run db:migrate (guards refuse ISI/Akeno/DeliverX).",
       "Regenerate with: bun run outputs",
     ],
   };

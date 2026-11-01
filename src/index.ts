@@ -201,6 +201,31 @@ export {
 export { claimsWithProductMappings } from "./mappings/productMappings";
 
 export {
+  FORBIDDEN_NEON_MARKERS,
+  HSI_NEON_BRANCH_ID,
+  HSI_NEON_DATABASE,
+  HSI_NEON_HOST_PREFIX,
+  HSI_NEON_PROJECT_ID,
+  assertHsiNeonDatabaseUrl,
+  isForbiddenNeonTarget,
+  isHsiNeonHost,
+  maskDatabaseUrl,
+  type NeonUrlCheck,
+} from "./db/neonGuard";
+
+export {
+  applyHsiMigrations,
+  type MigrateOptions,
+  type MigrateResult,
+} from "./db/migrate";
+
+export {
+  syncGateCChecklistToHsiNeon,
+  type GateCLocalSyncOptions,
+  type GateCLocalSyncResult,
+} from "./db/gateCLocal";
+
+export {
   AKSH_HITL_MAP_SCHEMA,
   AKSH_HITL_STUB_SCHEMA,
   assertHitlStubCdsClosed,

@@ -25,6 +25,8 @@
     "gap-report": "bun run src/cli/gap-report.ts",
     "outputs": "bun run src/cli/publish.ts",
     "publish": "bun run outputs",
+    "db:migrate": "bun run src/cli/migrate.ts",
+    "db:gate-c-local": "bun run src/cli/gate-c-local.ts",
     "check": "bun test && bun run validate && bun run outputs && bun run build",
     "site:dev": "bun run --cwd site dev",
     "site:build": "bun run --cwd site build",

@@ -105,9 +105,10 @@ import {
 - ISI REL-* suggestion map (`bun run export:isi-map`) — curation pointers only; never auto-approve
 - Aksh node-id map (`bun run export:aksh-map`) — HITL pointers; CDS stays closed on seeds
 - **Publish bundle** (`bun run outputs`) — ISI export + REL map + Aksh map/HITL cards + gap report + Gate C checklist + pilot pack-2 + review rubric + partner lock
+- **HSI Neon (Phase 4)** — `db/migrations` + `bun run db:migrate` / `db:gate-c-local` (red-wave only; human-pending Gate C; never ISI Neon)
 - Safety release criteria v0
 
-Stage 1 done vs remaining: [`docs/OUTPUTS.md`](docs/OUTPUTS.md) checklist.
+Stage 1 done vs remaining: [`docs/OUTPUTS.md`](docs/OUTPUTS.md) checklist. Neon: [`docs/HSI_NEON_MIGRATIONS.md`](docs/HSI_NEON_MIGRATIONS.md).
 
 ## Active codebase (sole edit target)
 

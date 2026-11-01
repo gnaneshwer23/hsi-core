@@ -659,7 +659,7 @@ export function buildPilotEvidencePack(opts?: {
       scopedPilot
         ? "Phase 3 evidence depth complete for scope-locked RA/anti-TNF. Keep partnerSigned=false / lockedPilot=false until a named partner confirms disease + question (see partnerLock.flipRequirements)."
         : "Lock disease + research question as working Stage 1 scope (Phase 2).",
-      "Phase 4 next: HSI Neon red-wave readiness (schema migrations / empty neondb prep) — no ISI autumn-snow writes from this workspace.",
+      "Phase 4 done: HSI Neon red-wave schema stub + db:migrate / db:gate-c-local (pending only). Phase 5 next: pilot acceptance pack — no ISI autumn-snow writes from this workspace.",
       "Human-review the deepened RA pathway against hsi-pilot-review-rubric.* and the four pack outputs.",
       "Agree source licensing + success thresholds with the named partner before user testing.",
       "Keep Akeno/Aksh patient-level pathways behind M4 / governance gates.",

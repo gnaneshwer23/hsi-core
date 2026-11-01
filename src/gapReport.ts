@@ -147,7 +147,7 @@ export function buildSchemaGapReport(opts?: {
 
   const nextActions = [
     "Keep ISI REL-* curator checklists as markdown in hsi-core (`docs/`); never auto-approve into a product KG.",
-    "Phase 3 RA/anti-TNF depth shipped (ADA, serology tension, RF LOINC, MTX combo); Phase 4 next = HSI Neon red-wave readiness (empty neondb migrations) — never write ISI autumn-snow / Akeno / DeliverX from this workspace.",
+    "Phase 4 HSI Neon red-wave readiness shipped (db/migrations + bun run db:migrate / db:gate-c-local); Phase 5 next = pilot acceptance pack — never write ISI autumn-snow / Akeno / DeliverX from this workspace.",
     "Fill remaining unmapped immuno-metabolic bridges (inflammation↔IR, T2D infection, LADA, irAE hyperglycemia) in hsi-core seeds/maps.",
     "Aksh durable `aksh:` ids + HITL read-only stub shipped (hsi-aksh-node-map-2 / hsi-aksh-hitl-stub-1); bind live clinic KG when Aksh publishes canonical nodes.",
     "Document human Gate C approve+supports checklist in hsi-core docs; product apps consume published export only — never edit immunecity for HSI; ignore DeliverX/swift-deliveries.",

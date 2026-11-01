@@ -42,7 +42,7 @@ dist/outputs/
 
 | Consumer | Files | Rules |
 |----------|-------|--------|
-| **ISI** | `hsi-isi-export.json`, `hsi-isi-rel-map.json`, `gate-c-checklist.*`, `hsi-pilot-evidence-pack.*`, `hsi-pilot-review-rubric.*`, `hsi-partner-lock.json` | Discovery / Ask / Radar only. REL map never auto-approves into KG. Gate C approve (if any) is human-only in **ISI Neon `autumn-snow`**, not HSI `red-wave`. Pack shows **Phase 3 evidence depth** on Phase 2 scope-locked RA/TNF (`scopeLocked=true`, `partnerSigned=false`, `lockedPilot=false`) — not a MoU. Discovery Centre vocabulary is **metadata only**. |
+| **ISI** | `hsi-isi-export.json`, `hsi-isi-rel-map.json`, `gate-c-checklist.*`, `hsi-pilot-evidence-pack.*`, `hsi-pilot-review-rubric.*`, `hsi-partner-lock.json` | Discovery / Ask / Radar only. REL map never auto-approves into KG. Gate C approve (if any) is human-only in **ISI Neon `autumn-snow`**, not HSI `red-wave`. Pack shows **Phase 3 evidence depth** on Phase 2 scope-locked RA/TNF (`scopeLocked=true`, `partnerSigned=false`, `lockedPilot=false`) — not a MoU. **Phase 4:** HSI Neon schema stub + `bun run db:gate-c-local` pending placeholders on `red-wave` only. Discovery Centre vocabulary is **metadata only**. |
 | **Aksh** | `hsi-aksh-node-map.json`, `hsi-aksh-hitl-cards.json` | HITL map pointers. `akshNodeId` ≠ CDS. Seeds stay `cdsSurfacable=false`. |
 | **Curators** | `gate-c-checklist.md`, `hsi-gap-report.md`, `hsi-pilot-evidence-pack.md`, `hsi-pilot-review-rubric.md` | Pending REL list + gap backlog + scope-locked brief + human review checklist. |
 
@@ -88,7 +88,8 @@ PRD / brief four outputs (evidence map, entity slice, competing explanations, ex
 | Scientific review rubric export (Stage 1 four outputs) | **Done** (thresholds TBD with partner) |
 | Named `partnerSigned=true` / `lockedPilot=true` | **Remaining** (outreach — named partner confirms disease + question) |
 | **Phase 3** — Partner-scoped evidence depth for the locked question | **Done** (ADA / immunogenicity, serology tension, RF LOINC, MTX combo; competing explanations filled) |
-| **Phase 4** — HSI Neon `red-wave` readiness | **Next** (empty `neondb` migrations; no ISI/Akeno/DeliverX Neon writes) |
+| **Phase 4** — HSI Neon `red-wave` readiness | **Done** (HSI-owned schema stub + migrate/gate-c-local guards; never ISI/Akeno/DeliverX) |
+| **Phase 5** — Pilot acceptance pack | **Next** (partner walkthrough / acceptance criteria pack on scope-locked RA/TNF) |
 | Source licensing / attribution for agreed partner corpus | **Remaining** (after partnerSigned) |
 | Success-metric numeric thresholds with partner | **Remaining** |
 | Interactive Discovery Centre / graph UI | **Deferred** (ISI product — not hsi-core Stage 1) |
@@ -107,3 +108,13 @@ bun run build
 ```
 
 Prefer `bun run outputs` when handing artifacts to product teams.
+
+## HSI Neon (Phase 4)
+
+```bash
+bun run db:migrate              # requires DATABASE_URL → red-wave only
+bun run db:gate-c-local         # upsert checklist as pending (auto_approve=false)
+# or: bun run db:migrate -- --from-neonctl
+```
+
+Docs: [`HSI_NEON_MIGRATIONS.md`](./HSI_NEON_MIGRATIONS.md), [`db/README.md`](../db/README.md).
