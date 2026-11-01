@@ -51,6 +51,7 @@ import {
 
 - `claimsWithAkshMappings()` fills durable `aksh:<kind>:<slug>` clinic ids (LOINC-linked findings where known).
 - Having an `akshNodeId` does **not** open CDS. Use `isCdsSurfacable(edge)` (`approved` + `established`) before any HITL CDS card.
+- P1 read-only stub: `loadAkshHitlMapFromExport()` / `listAkshHitlCards()` / `buildAkshHitlCard()` — claim, grade, LOINC, `akshNodeId`, required clinician action; `cdsSurfacable` stays false on seeds.
 - `bun run export:aksh-map` writes `exports/hsi-aksh-node-map.json` (`hsi-aksh-node-map-2`) with migration table from provisional `AKSH-N-*`.
 - See `docs/AKSH_HITL_CONSUMPTION.md` for the id scheme and provisional → durable map.
 

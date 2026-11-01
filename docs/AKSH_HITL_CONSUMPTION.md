@@ -76,16 +76,25 @@ import {
   listAkshNodeSuggestions,
   migrateAkshNodeId,
   isCdsSurfacable,
+  loadAkshHitlMapFromExport,
+  listAkshHitlCards,
+  buildAkshHitlCard,
   HSI_T2D_IMMUNO_SEED_EDGES,
 } from "hsi-core";
 
 const claims = claimsWithAkshMappings();
 const byClaim = akshNodeIdMap(); // Record<claimId, aksh:…>
 
+// P1 read-only stub: claim, grade, LOINC/marker, akshNodeId, required action.
+// cdsSurfacable stays false on seeds (map ≠ CDS).
+const map = loadAkshHitlMapFromExport(); // or loadAkshHitlMapInMemory()
+const cards = listAkshHitlCards({ map, mappedOnly: true });
+const hba1c = buildAkshHitlCard("HSI-C-T2D-001", { map });
+
 for (const edge of HSI_T2D_IMMUNO_SEED_EDGES) {
   // Still false for every Phase-0/P1 seed until Gate C + established.
   if (!isCdsSurfacable(edge)) continue;
-  // …render HITL card only here…
+  // …render live CDS HITL card only here…
 }
 ```
 

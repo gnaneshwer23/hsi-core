@@ -134,3 +134,20 @@ export {
 } from "./mappings/akshNodeSuggestions";
 
 export { claimsWithProductMappings } from "./mappings/productMappings";
+
+export {
+  AKSH_HITL_MAP_SCHEMA,
+  buildAkshHitlCard,
+  listAkshHitlCards,
+  listCdsEligibleAkshHitlCards,
+  loadAkshHitlMapFromExport,
+  loadAkshHitlMapFromObject,
+  loadAkshHitlMapInMemory,
+  normalizeAkshHitlMap,
+  summarizeAkshHitlCards,
+  type AkshHitlCardSummary,
+  type AkshHitlCardViewModel,
+  type AkshHitlLoadedMap,
+  type AkshHitlMapPayload,
+  type ListAkshHitlCardsOptions,
+} from "./akshHitl";
