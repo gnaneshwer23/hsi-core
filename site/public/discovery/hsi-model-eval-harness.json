@@ -12,7 +12,7 @@
   "autoApproveIntoKg": false,
   "containsPhi": false,
   "packsRemainAuthority": true,
-  "generatedAt": "2026-11-01T20:21:39.173Z",
+  "generatedAt": "2026-11-01T20:31:43.025Z",
   "fixtureSummary": {
     "packIds": [
       "hsi-gut-immune-pack",
@@ -20,12 +20,12 @@
       "hsi-pilot-ra-tnf",
       "hsi-ssc-pathway-pack"
     ],
-    "edgeCount": 34,
+    "edgeCount": 41,
     "byPack": {
       "hsi-pilot-ra-tnf": 12,
-      "hsi-ssc-pathway-pack": 9,
-      "hsi-gut-immune-pack": 7,
-      "hsi-neuroimmune-pack": 6
+      "hsi-ssc-pathway-pack": 12,
+      "hsi-gut-immune-pack": 9,
+      "hsi-neuroimmune-pack": 8
     }
   },
   "checks": [
@@ -271,6 +271,170 @@
         }
       ],
       "notes": "adapter-esm proposal cites HSI-E-RA-001; hash/ref sidecar; no grade/PHI/clinical claims; no weight vendoring"
+    },
+    {
+      "caseId": "EVAL-PASS-AF3-TNF-001",
+      "kind": "model_proposal",
+      "label": "AF3 research-test stub TNF structure proposal",
+      "expectPass": true,
+      "passed": true,
+      "failClosed": false,
+      "checks": [
+        {
+          "checkId": "cited_edge_ids_exist",
+          "passed": true,
+          "detail": "All 1 cited edge id(s) resolve in frozen packs"
+        },
+        {
+          "checkId": "grade_not_flipped",
+          "passed": true,
+          "detail": "No grade / curation flip fields present"
+        },
+        {
+          "checkId": "required_fields_present",
+          "passed": true,
+          "detail": "All model-proposal required fields present"
+        },
+        {
+          "checkId": "fail_closed_clinical_phi",
+          "passed": true,
+          "detail": "No detectable clinical/PHI claims"
+        },
+        {
+          "checkId": "sidecar_locators_present",
+          "passed": true,
+          "detail": "N/A for model_proposal"
+        },
+        {
+          "checkId": "pack_authority_unchanged",
+          "passed": true,
+          "detail": "Packs remain authority; no auto-approve"
+        }
+      ],
+      "notes": "adapter-af3 stub cites HSI-E-RA-001; notCommercial; NOT commercial AF3 rights; no weight vendoring"
+    },
+    {
+      "caseId": "EVAL-PASS-TDC-ADMET-001",
+      "kind": "model_proposal",
+      "label": "TDC research-test stub ADMET proposal",
+      "expectPass": true,
+      "passed": true,
+      "failClosed": false,
+      "checks": [
+        {
+          "checkId": "cited_edge_ids_exist",
+          "passed": true,
+          "detail": "All 1 cited edge id(s) resolve in frozen packs"
+        },
+        {
+          "checkId": "grade_not_flipped",
+          "passed": true,
+          "detail": "No grade / curation flip fields present"
+        },
+        {
+          "checkId": "required_fields_present",
+          "passed": true,
+          "detail": "All model-proposal required fields present"
+        },
+        {
+          "checkId": "fail_closed_clinical_phi",
+          "passed": true,
+          "detail": "No detectable clinical/PHI claims"
+        },
+        {
+          "checkId": "sidecar_locators_present",
+          "passed": true,
+          "detail": "N/A for model_proposal"
+        },
+        {
+          "checkId": "pack_authority_unchanged",
+          "passed": true,
+          "detail": "Packs remain authority; no auto-approve"
+        }
+      ],
+      "notes": "adapter-tdc stub cites HSI-E-RA-012; no dataset download; no grade/PHI claims"
+    },
+    {
+      "caseId": "EVAL-PASS-BOLTZ-TNF-001",
+      "kind": "model_proposal",
+      "label": "Boltz weights-policy-gated stub TNF proposal",
+      "expectPass": true,
+      "passed": true,
+      "failClosed": false,
+      "checks": [
+        {
+          "checkId": "cited_edge_ids_exist",
+          "passed": true,
+          "detail": "All 1 cited edge id(s) resolve in frozen packs"
+        },
+        {
+          "checkId": "grade_not_flipped",
+          "passed": true,
+          "detail": "No grade / curation flip fields present"
+        },
+        {
+          "checkId": "required_fields_present",
+          "passed": true,
+          "detail": "All model-proposal required fields present"
+        },
+        {
+          "checkId": "fail_closed_clinical_phi",
+          "passed": true,
+          "detail": "No detectable clinical/PHI claims"
+        },
+        {
+          "checkId": "sidecar_locators_present",
+          "passed": true,
+          "detail": "N/A for model_proposal"
+        },
+        {
+          "checkId": "pack_authority_unchanged",
+          "passed": true,
+          "detail": "Packs remain authority; no auto-approve"
+        }
+      ],
+      "notes": "adapter-boltz stub cites HSI-E-RA-001; WEIGHTS_POLICY_ACK; vendorsModelWeights=false"
+    },
+    {
+      "caseId": "EVAL-PASS-ISI-AGENTS-LIT-001",
+      "kind": "model_proposal",
+      "label": "ISI agents research-test stub literature proposal",
+      "expectPass": true,
+      "passed": true,
+      "failClosed": false,
+      "checks": [
+        {
+          "checkId": "cited_edge_ids_exist",
+          "passed": true,
+          "detail": "All 1 cited edge id(s) resolve in frozen packs"
+        },
+        {
+          "checkId": "grade_not_flipped",
+          "passed": true,
+          "detail": "No grade / curation flip fields present"
+        },
+        {
+          "checkId": "required_fields_present",
+          "passed": true,
+          "detail": "All model-proposal required fields present"
+        },
+        {
+          "checkId": "fail_closed_clinical_phi",
+          "passed": true,
+          "detail": "No detectable clinical/PHI claims"
+        },
+        {
+          "checkId": "sidecar_locators_present",
+          "passed": true,
+          "detail": "N/A for model_proposal"
+        },
+        {
+          "checkId": "pack_authority_unchanged",
+          "passed": true,
+          "detail": "Packs remain authority; no auto-approve"
+        }
+      ],
+      "notes": "adapter-isi-agents stub cites HSI-E-RA-001; runtime out of repo; no grade flips"
     },
     {
       "caseId": "EVAL-PASS-SIDECAR-RA-001",
@@ -520,8 +684,8 @@
     }
   ],
   "summary": {
-    "caseCount": 11,
-    "passed": 6,
+    "caseCount": 15,
+    "passed": 10,
     "failed": 5,
     "failClosedHits": 5,
     "intentionalFailCorrect": 5,

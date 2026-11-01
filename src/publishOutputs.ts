@@ -97,6 +97,26 @@ import {
   serializeEsmAdapterMarkdown,
 } from "./adapters/esmAdapter";
 import {
+  runAf3Adapter,
+  serializeAf3AdapterBundle,
+  serializeAf3AdapterMarkdown,
+} from "./adapters/af3Adapter";
+import {
+  runTdcAdapter,
+  serializeTdcAdapterBundle,
+  serializeTdcAdapterMarkdown,
+} from "./adapters/tdcAdapter";
+import {
+  runBoltzAdapter,
+  serializeBoltzAdapterBundle,
+  serializeBoltzAdapterMarkdown,
+} from "./adapters/boltzAdapter";
+import {
+  runIsiAgentsAdapter,
+  serializeIsiAgentsAdapterBundle,
+  serializeIsiAgentsAdapterMarkdown,
+} from "./adapters/isiAgentsAdapter";
+import {
   buildIsiConsumeContractBundle,
   serializeIsiConsumeContract,
   serializeIsiConsumeContractMarkdown,
@@ -353,6 +373,14 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     generatedAt,
     forceStub: true,
   });
+  const af3Adapter = runAf3Adapter({ generatedAt });
+  const tdcAdapter = runTdcAdapter({ generatedAt });
+  // Boltz publish uses WEIGHTS_POLICY_ACK=true for deterministic CI (policy documented).
+  const boltzAdapter = runBoltzAdapter({
+    generatedAt,
+    env: { ...process.env, WEIGHTS_POLICY_ACK: "true" },
+  });
+  const isiAgentsAdapter = runIsiAgentsAdapter({ generatedAt });
   // P2.2 demo sidecars + P3.3 FAIR ESM-2 hash/ref overlays (ESM wins on colliding edgeIds).
   const embeddingSidecars = buildEmbeddingSidecarsBundle({
     generatedAt,
@@ -425,6 +453,22 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     ),
     "hsi-esm-adapter-proposals.json": serializeEsmAdapterBundle(esmAdapter),
     "hsi-esm-adapter-proposals.md": serializeEsmAdapterMarkdown(esmAdapter),
+    "hsi-af3-adapter-proposals.json": serializeAf3AdapterBundle(af3Adapter),
+    "hsi-af3-adapter-proposals.md": serializeAf3AdapterMarkdown(af3Adapter),
+    "hsi-tdc-adapter-proposals.json": serializeTdcAdapterBundle(tdcAdapter),
+    "hsi-tdc-adapter-proposals.md": serializeTdcAdapterMarkdown(tdcAdapter),
+    "hsi-boltz-adapter-proposals.json": serializeBoltzAdapterBundle(
+      boltzAdapter,
+    ),
+    "hsi-boltz-adapter-proposals.md": serializeBoltzAdapterMarkdown(
+      boltzAdapter,
+    ),
+    "hsi-isi-agents-adapter-proposals.json": serializeIsiAgentsAdapterBundle(
+      isiAgentsAdapter,
+    ),
+    "hsi-isi-agents-adapter-proposals.md": serializeIsiAgentsAdapterMarkdown(
+      isiAgentsAdapter,
+    ),
     "hsi-isi-consume-contract.json": serializeIsiConsumeContract(
       isiConsumeContract,
     ),
@@ -505,6 +549,14 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       reinvent4AdapterProposalsMd: "hsi-reinvent4-adapter-proposals.md",
       esmAdapterProposalsJson: "hsi-esm-adapter-proposals.json",
       esmAdapterProposalsMd: "hsi-esm-adapter-proposals.md",
+      af3AdapterProposalsJson: "hsi-af3-adapter-proposals.json",
+      af3AdapterProposalsMd: "hsi-af3-adapter-proposals.md",
+      tdcAdapterProposalsJson: "hsi-tdc-adapter-proposals.json",
+      tdcAdapterProposalsMd: "hsi-tdc-adapter-proposals.md",
+      boltzAdapterProposalsJson: "hsi-boltz-adapter-proposals.json",
+      boltzAdapterProposalsMd: "hsi-boltz-adapter-proposals.md",
+      isiAgentsAdapterProposalsJson: "hsi-isi-agents-adapter-proposals.json",
+      isiAgentsAdapterProposalsMd: "hsi-isi-agents-adapter-proposals.md",
       isiConsumeContractJson: "hsi-isi-consume-contract.json",
       isiConsumeContractMd: "hsi-isi-consume-contract.md",
       partnerFlipReadinessJson: "hsi-partner-flip-readiness.json",
@@ -592,7 +644,18 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       esmAdapterMayFlipEvidenceGrade: esmAdapter.mayFlipEvidenceGrade,
       esmAdapterAutoApprove: esmAdapter.autoApprove,
       esmAdapterSidecarEdges: Object.keys(esmAdapter.sidecarsByEdgeId).length,
-      esmAdapterBoltzDeferred: esmAdapter.boltzDeferred,
+      af3AdapterProposals: af3Adapter.proposals.length,
+      af3AdapterNotCommercial: af3Adapter.notCommercial,
+      af3AdapterCommercialRightsClaimed: af3Adapter.commercialAf3RightsClaimed,
+      tdcAdapterProposals: tdcAdapter.proposals.length,
+      boltzAdapterProposals: boltzAdapter.proposals.length,
+      boltzAdapterWeightsPolicyAck: boltzAdapter.weightsPolicyAck,
+      boltzAdapterVendorsModelWeights: boltzAdapter.vendorsModelWeights,
+      isiAgentsAdapterProposals: isiAgentsAdapter.proposals.length,
+      p3AdaptersSignedResearchTestOnly:
+        p3AdapterLicenseMatrix.summary.signedResearchTestOnlyCount,
+      researchSignOffFixtureActive:
+        p3AdapterLicenseMatrix.summary.researchSignOffFixtureActive,
       isiConsumeArtifacts: isiConsumeContract.summary.artifactCount,
       isiConsumeRequiredCore: isiConsumeContract.summary.requiredCoreCount,
       isiConsumeRequiredPilot: isiConsumeContract.summary.requiredPilotCount,
@@ -735,6 +798,10 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     "hsi-openmm-adapter-proposals.json",
     "hsi-reinvent4-adapter-proposals.json",
     "hsi-esm-adapter-proposals.json",
+    "hsi-af3-adapter-proposals.json",
+    "hsi-tdc-adapter-proposals.json",
+    "hsi-boltz-adapter-proposals.json",
+    "hsi-isi-agents-adapter-proposals.json",
     "hsi-isi-consume-contract.json",
     "hsi-partner-flip-readiness.json",
     "hsi-source-licensing-stub.json",
@@ -788,8 +855,9 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       "P2.5 P3 adapter license matrix: hsi-p3-adapter-license-matrix.json — RFC + honest sign-off; no weight vendoring; proposals only.",
       "P3.0 RDKit spike: hsi-rdkit-adapter-proposals.json — proposal-only; runtime stub|rdkit; Gate C pending; no grade flips.",
       "P3.1 OpenMM spike: hsi-openmm-adapter-proposals.json — proposal-only; runtime stub|openmm; Gate C pending; MD ≠ Gate C evidence alone.",
-      "P3.2 REINVENT4 spike: hsi-reinvent4-adapter-proposals.json — proposal-only; runtime stub|reinvent; Gate C pending; never clinic path; Boltz deferred.",
-      "P3.3 FAIR ESM-2 stub: hsi-esm-adapter-proposals.json — proposal + sidecar refs; runtime stub|esm; Gate C pending; no weight vendoring; Boltz deferred. Adapter track paused.",
+      "P3.2 REINVENT4 spike: hsi-reinvent4-adapter-proposals.json — proposal-only; runtime stub|reinvent; Gate C pending; never clinic path.",
+      "P3.3 FAIR ESM-2 stub: hsi-esm-adapter-proposals.json — proposal + sidecar refs; runtime stub|esm; Gate C pending; no weight vendoring.",
+      "AF3/TDC/ISI research sign-off fixtures + Boltz weights policy: hsi-af3|tdc|boltz|isi-agents-adapter-proposals.json — stub proposals; AF3 notCommercial; Boltz WEIGHTS_POLICY_ACK; no weight vendoring.",
       "P0.2-HSI: hsi-isi-consume-contract.json + hsi-partner-flip-readiness.json — ISI load map + flip checklist; fixture may set partnerSigned under hypothetical_test_only; lockedPilot=false until legalBinding.",
       "P0.3 stub: hsi-source-licensing-stub.json — pack PMIDs licenseStatus=needs_review.",
       "Phase 7 done = R2 validation (hsi-r2-validation.json) on VALIDATE tab.",

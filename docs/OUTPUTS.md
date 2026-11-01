@@ -66,6 +66,14 @@ dist/outputs/
     hsi-reinvent4-adapter-proposals.md
     hsi-esm-adapter-proposals.json       # P3.3 FAIR ESM-2 thin embedding stub (stub|esm)
     hsi-esm-adapter-proposals.md
+    hsi-af3-adapter-proposals.json       # AF3 research-test stub (notCommercial; NOT commercial rights)
+    hsi-af3-adapter-proposals.md
+    hsi-tdc-adapter-proposals.json       # TDC research-test stub
+    hsi-tdc-adapter-proposals.md
+    hsi-boltz-adapter-proposals.json     # Boltz stub (WEIGHTS_POLICY_ACK; no weight vendoring)
+    hsi-boltz-adapter-proposals.md
+    hsi-isi-agents-adapter-proposals.json # ISI agents catalog/stub proposals
+    hsi-isi-agents-adapter-proposals.md
     hsi-isi-consume-contract.json        # P0.2-HSI ISI consume contract (MANIFEST/packs/grades/Gate C)
     hsi-isi-consume-contract.md
     hsi-partner-flip-readiness.json      # P0.2-HSI flipRequirements (pass/fail/pending/satisfied_by_fixture)
@@ -141,8 +149,12 @@ Living status + prioritized backlog: [`BUILD_STATUS_AND_NEXT.md`](./BUILD_STATUS
 | P3 adapter RFC + license matrix (P2.5) | **Done** ([`P3_ADAPTER_RFC.md`](./P3_ADAPTER_RFC.md); `hsi-p3-adapter-license-matrix.*`; honest sign-off; no weight vendoring; blocked adapters refused) |
 | First unblocked thin adapter spike (P3.0 RDKit) | **Done** (`hsi-rdkit-adapter-proposals.*`; `runtime: stub|rdkit`; Gate C pending; eval harness case) |
 | Next unblocked thin adapter spike (P3.1 OpenMM) | **Done** (`hsi-openmm-adapter-proposals.*`; `runtime: stub|openmm`; cites NI-003 / GUT-003; Gate C pending; eval harness case) |
-| Next unblocked thin adapter spike (P3.2 REINVENT4) | **Done** (`hsi-reinvent4-adapter-proposals.*`; `runtime: stub|reinvent`; cites RA-012 / GUT-003; Gate C pending; eval harness case; never clinic path; Boltz deferred) |
-| FAIR ESM-2 thin embedding stub (P3.3) | **Done** (`hsi-esm-adapter-proposals.*`; `runtime: stub|esm`; cites RA-001 / GUT-003; ModelProposalArtifacts + sidecar refs; Gate C pending; eval harness case; no weight vendoring; Boltz deferred) |
+| Next unblocked thin adapter spike (P3.2 REINVENT4) | **Done** |
+| FAIR ESM-2 thin embedding stub (P3.3) | **Done** |
+| AF3 / TDC / ISI research sign-off fixtures + stubs | **Done** (`hsi-af3|tdc|isi-agents-adapter-proposals.*`; notCommercial; replaceWithLegalSignOff; NOT commercial AF3) |
+| Boltz weights policy + stub | **Done** ([`P3_WEIGHTS_AND_LICENSE_POLICY.md`](./P3_WEIGHTS_AND_LICENSE_POLICY.md); `WEIGHTS_POLICY_ACK`; `hsi-boltz-adapter-proposals.*`) |
+| Discovery graph explorer | **Done** (`/discovery` MAP; RA + SSc/gut/neuro toggles; click → evidence card) |
+| SSc / gut / neuro depth PMIDs | **Done** (+3 / +2 / +2 verified edges; RA untouched) |
 | ISI consume contract + partner flip-readiness (P0.2-HSI) | **Done** (`hsi-isi-consume-contract.*` + `hsi-partner-flip-readiness.*`; `partnerSigned=false`; adapter track paused) |
 | Source licensing stub (P0.3) | **Reviewed** (`hsi-source-licensing-stub.*`; ok_oa/restricted/unknown; partnerCleared=0) |
 | **Next** — named partner OR out-of-repo ISI product wiring | **Waiting human** — do not invent more adapter spikes without partnerNamed |

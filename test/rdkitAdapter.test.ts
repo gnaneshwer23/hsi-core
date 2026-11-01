@@ -16,21 +16,26 @@ import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 describe("P3.0 RDKit thin adapter spike", () => {
-  test("license gate refuses blockedUntilSignOff adapters", () => {
-    expect(() => assertP3AdapterRunnable("adapter-tdc")).toThrow(
-      P3AdapterLicenseBlockedError,
-    );
-    expect(() => assertP3AdapterRunnable("adapter-af3")).toThrow(
-      P3AdapterLicenseBlockedError,
-    );
-    expect(() => assertP3AdapterRunnable("adapter-isi-agents")).toThrow(
-      P3AdapterLicenseBlockedError,
-    );
+  test("license gate opens research-fixture adapters; RDKit stays research_ok", () => {
+    const tdc = assertP3AdapterRunnable("adapter-tdc");
+    expect(tdc.blockedUntilSignOff).toBe(false);
+    expect(tdc.signOffStatus).toBe("research_ok_documented");
+    const af3 = assertP3AdapterRunnable("adapter-af3");
+    expect(af3.blockedUntilSignOff).toBe(false);
+    expect(af3.signOffStatus).toBe("signed_research_test_only");
+    expect(af3.notCommercial).toBe(true);
+    const isi = assertP3AdapterRunnable("adapter-isi-agents");
+    expect(isi.blockedUntilSignOff).toBe(false);
+    expect(isi.signOffStatus).toBe("signed_research_test_only");
     const rdkit = assertP3AdapterRunnable("adapter-rdkit");
     expect(rdkit.blockedUntilSignOff).toBe(false);
     expect(rdkit.signOffStatus).toBe("research_ok_documented");
     expect(rdkit.mayFlipEvidenceGrade).toBe(false);
     expect(rdkit.vendorsModelWeights).toBe(false);
+    // P3AdapterLicenseBlockedError retained for honesty when blocked rows exist.
+    expect(P3AdapterLicenseBlockedError.name).toBe(
+      "P3AdapterLicenseBlockedError",
+    );
   });
 
   test("stub runtime emits safe ModelProposalArtifacts only", () => {

@@ -1,19 +1,19 @@
 {
   "schemaVersion": "hsi-gap-report-1",
-  "generatedAt": "2026-11-01T20:21:39.173Z",
+  "generatedAt": "2026-11-01T20:31:43.025Z",
   "summary": {
-    "seedEdges": 63,
+    "seedEdges": 70,
     "bridgeCandidates": 18,
     "gradeCounts": {
       "established": 0,
-      "uncertain": 52,
+      "uncertain": 59,
       "unexplored": 11
     },
     "claimsMappedToIsi": 13,
     "claimsMappedToAksh": 22,
-    "claimsWithDurableLocator": 50,
+    "claimsWithDurableLocator": 57,
     "loinc": {
-      "edgeCount": 63,
+      "edgeCount": 70,
       "claimsWithLoincMarker": 8,
       "markersWithLoinc": 7,
       "markersMissingLoinc": 1
@@ -665,6 +665,45 @@
       ]
     },
     {
+      "claimId": "HSI-C-SSC-010",
+      "edgeId": "HSI-E-SSC-010",
+      "assertion": "Single-cell analysis of SSc skin identifies a CXCL13+ Tfh-like T-cell cluster adjacent to B cells and poised to promote local B-cell responses (neighbourhood deepen; not Stage 1 RA lock).",
+      "domain": "autoimmunity",
+      "hsiGrade": "uncertain",
+      "missing": [
+        "isi_relationship_id",
+        "aksh_node_id",
+        "loinc_marker",
+        "gate_c_approved"
+      ]
+    },
+    {
+      "claimId": "HSI-C-SSC-011",
+      "edgeId": "HSI-E-SSC-011",
+      "assertion": "Serum BAFF is elevated in systemic sclerosis with enhanced BAFF signalling reported in SSc B lymphocytes (B-survival neighbourhood deepen; not a therapeutic claim).",
+      "domain": "autoimmunity",
+      "hsiGrade": "uncertain",
+      "missing": [
+        "isi_relationship_id",
+        "aksh_node_id",
+        "loinc_marker",
+        "gate_c_approved"
+      ]
+    },
+    {
+      "claimId": "HSI-C-SSC-012",
+      "edgeId": "HSI-E-SSC-012",
+      "assertion": "BAFF antagonism attenuates skin fibrosis in the tight-skin mouse model (hypothesized translational frame — not human dosing, not CDS, not partnerSigned).",
+      "domain": "autoimmunity",
+      "hsiGrade": "uncertain",
+      "missing": [
+        "isi_relationship_id",
+        "aksh_node_id",
+        "loinc_marker",
+        "gate_c_approved"
+      ]
+    },
+    {
       "claimId": "HSI-C-GUT-001",
       "edgeId": "HSI-E-GUT-001",
       "assertion": "Indigenous Clostridium clusters IV and XIVa promote accumulation of colonic Foxp3+ regulatory T cells (mouse gut–immune neighbourhood seed — not CDS; not Stage 1 RA lock).",
@@ -756,6 +795,32 @@
       ]
     },
     {
+      "claimId": "HSI-C-GUT-008",
+      "edgeId": "HSI-E-GUT-008",
+      "assertion": "Activation of Gpr109a, receptor for niacin and the commensal metabolite butyrate, suppresses colonic inflammation (and carcinogenesis) in mouse models — receptor hop for SCFA mucosal neighbourhood.",
+      "domain": "immuno_metabolic",
+      "hsiGrade": "uncertain",
+      "missing": [
+        "isi_relationship_id",
+        "aksh_node_id",
+        "loinc_marker",
+        "gate_c_approved"
+      ]
+    },
+    {
+      "claimId": "HSI-C-GUT-009",
+      "edgeId": "HSI-E-GUT-009",
+      "assertion": "Butyrate conditions human dendritic cells to prime IL-10-producing type-1 regulatory T cells via both HDAC inhibition and GPR109A signalling (human DC frame — hypothesized for therapeutic generalisation).",
+      "domain": "immuno_metabolic",
+      "hsiGrade": "uncertain",
+      "missing": [
+        "isi_relationship_id",
+        "aksh_node_id",
+        "loinc_marker",
+        "gate_c_approved"
+      ]
+    },
+    {
       "claimId": "HSI-C-NI-001",
       "edgeId": "HSI-E-NI-001",
       "assertion": "Electrical stimulation of the peripheral vagus nerve attenuates systemic inflammatory responses to endotoxin, including hepatic and serum TNF, in rodent endotoxaemia models (cholinergic anti-inflammatory neighbourhood — not CDS).",
@@ -824,6 +889,32 @@
       "claimId": "HSI-C-NI-006",
       "edgeId": "HSI-E-NI-006",
       "assertion": "Implantable vagus nerve stimulation can modulate peripheral blood TNF production and RA clinical composite scores in small human pilot cohorts (hypothesized translational frame — not a settled clinical cure; not CDS).",
+      "domain": "immuno_metabolic",
+      "hsiGrade": "uncertain",
+      "missing": [
+        "isi_relationship_id",
+        "aksh_node_id",
+        "loinc_marker",
+        "gate_c_approved"
+      ]
+    },
+    {
+      "claimId": "HSI-C-NI-007",
+      "edgeId": "HSI-E-NI-007",
+      "assertion": "Splenectomy inactivates the cholinergic anti-inflammatory pathway during lethal endotoxemia and polymicrobial sepsis — spleen as required effector organ for vagus-mediated TNF brake (rodent).",
+      "domain": "immuno_metabolic",
+      "hsiGrade": "uncertain",
+      "missing": [
+        "isi_relationship_id",
+        "aksh_node_id",
+        "loinc_marker",
+        "gate_c_approved"
+      ]
+    },
+    {
+      "claimId": "HSI-C-NI-008",
+      "edgeId": "HSI-E-NI-008",
+      "assertion": "The splenic nerve is required for cholinergic anti-inflammatory pathway control of TNF in endotoxemia (vagus → celiac/superior mesenteric → splenic nerve → spleen macrophage TNF brake).",
       "domain": "immuno_metabolic",
       "hsiGrade": "uncertain",
       "missing": [

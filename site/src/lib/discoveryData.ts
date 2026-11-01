@@ -301,12 +301,15 @@ export type GutImmunePackSummary = {
   };
   evidenceMap: {
     edgeId: string;
+    claimId?: string;
     subject: string;
     predicate: string;
     object: string;
     evidenceGrade: string;
     teachingStatus: string;
     pmid: string | null;
+    citationLabel?: string | null;
+    sourceUrl?: string | null;
   }[];
   competingExplanations: ExplanationSlot[];
   honesty: string[];
@@ -315,6 +318,11 @@ export type GutImmunePackSummary = {
 /** Same shape as gut pack — systems secondary neuroimmune slice. */
 export type NeuroImmunePackSummary = GutImmunePackSummary;
 
+/** Dual-track SSc pathway pack (does not replace RA ASK). */
+export type SscPathwayPackSummary = GutImmunePackSummary & {
+  cellCards?: unknown[];
+};
+
 export type DiscoveryBundle = {
   index: DiscoveryIndex;
   lock: PartnerLock;
@@ -322,6 +330,8 @@ export type DiscoveryBundle = {
   gap: GapReport;
   r2: R2Validation;
   translation: TranslationHandoff;
+  /** Dual-track SSc secondary pack; never replaces RA ASK. */
+  sscPathway: SscPathwayPackSummary | null;
   /** Optional systems secondary axis pack (gut–immune); never replaces RA ASK. */
   gutImmune: GutImmunePackSummary | null;
   /** Optional systems secondary axis pack (neuroimmune); never replaces RA ASK. */
@@ -339,22 +349,44 @@ async function fetchJson<T>(name: string): Promise<T> {
 }
 
 export async function loadDiscoveryBundle(): Promise<DiscoveryBundle> {
-  const [index, lock, pack, gap, r2, translation, gutImmune, neuroImmune] =
-    await Promise.all([
-      fetchJson<DiscoveryIndex>("index.json"),
-      fetchJson<PartnerLock>("hsi-partner-lock.json"),
-      fetchJson<PilotPack>("hsi-pilot-evidence-pack.json"),
-      fetchJson<GapReport>("hsi-gap-report.json"),
-      fetchJson<R2Validation>("hsi-r2-validation.json"),
-      fetchJson<TranslationHandoff>("hsi-translation-handoff.json"),
-      fetchJson<GutImmunePackSummary>("hsi-gut-immune-pack.json").catch(
-        () => null,
-      ),
-      fetchJson<NeuroImmunePackSummary>("hsi-neuroimmune-pack.json").catch(
-        () => null,
-      ),
-    ]);
-  return { index, lock, pack, gap, r2, translation, gutImmune, neuroImmune };
+  const [
+    index,
+    lock,
+    pack,
+    gap,
+    r2,
+    translation,
+    sscPathway,
+    gutImmune,
+    neuroImmune,
+  ] = await Promise.all([
+    fetchJson<DiscoveryIndex>("index.json"),
+    fetchJson<PartnerLock>("hsi-partner-lock.json"),
+    fetchJson<PilotPack>("hsi-pilot-evidence-pack.json"),
+    fetchJson<GapReport>("hsi-gap-report.json"),
+    fetchJson<R2Validation>("hsi-r2-validation.json"),
+    fetchJson<TranslationHandoff>("hsi-translation-handoff.json"),
+    fetchJson<SscPathwayPackSummary>("hsi-ssc-pathway-pack.json").catch(
+      () => null,
+    ),
+    fetchJson<GutImmunePackSummary>("hsi-gut-immune-pack.json").catch(
+      () => null,
+    ),
+    fetchJson<NeuroImmunePackSummary>("hsi-neuroimmune-pack.json").catch(
+      () => null,
+    ),
+  ]);
+  return {
+    index,
+    lock,
+    pack,
+    gap,
+    r2,
+    translation,
+    sscPathway,
+    gutImmune,
+    neuroImmune,
+  };
 }
 
 /** Prefer pathway claim IDs from the partner lock; fall back to RA/TNF heuristics. */

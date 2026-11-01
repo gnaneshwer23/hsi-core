@@ -258,6 +258,70 @@ const SPECS: SeedSpec[] = [
     notes:
       "P1.1 deepen: PMID 37763102 verified. teaching=hypothesized for joint-involvement generalisation. Keep EBV branch separate. Gate C = human only. Not CDS.",
   },
+  {
+    id: "HSI-E-SSC-010",
+    edgeType: "associated_with",
+    subjectId: "HSI-N-cxcl13-tfh-like",
+    subjectLabel: "CXCL13+ Tfh-like T cells (SSc skin)",
+    objectId: "HSI-N-b-cell",
+    objectLabel: "B cell",
+    claimId: "HSI-C-SSC-010",
+    assertion:
+      "Single-cell analysis of SSc skin identifies a CXCL13+ Tfh-like T-cell cluster adjacent to B cells and poised to promote local B-cell responses (neighbourhood deepen; not Stage 1 RA lock).",
+    review: "source-verified",
+    teaching: "associative",
+    domain: "autoimmunity",
+    pmid: "34031030",
+    doi: "10.1136/annrheumdis-2021-220209",
+    citationLabel:
+      "Gaydosik AM et al. Ann Rheum Dis 2021 — Single-cell transcriptome analysis identifies skin-specific T-cell responses in systemic sclerosis.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/34031030/",
+    notes:
+      "Depth deepen: PMID 34031030 verified. CXCL13+ skin Tfh-like frame complements circulating Tfh–IL-21; teaching=associative. Gate C = human only. Not CDS.",
+  },
+  {
+    id: "HSI-E-SSC-011",
+    edgeType: "associated_with",
+    subjectId: "HSI-N-baff",
+    subjectLabel: "BAFF (B-cell activating factor)",
+    objectId: "HSI-N-ssc",
+    objectLabel: "Systemic sclerosis",
+    claimId: "HSI-C-SSC-011",
+    assertion:
+      "Serum BAFF is elevated in systemic sclerosis with enhanced BAFF signalling reported in SSc B lymphocytes (B-survival neighbourhood deepen; not a therapeutic claim).",
+    review: "source-verified",
+    teaching: "associative",
+    domain: "autoimmunity",
+    pmid: "16385515",
+    doi: "10.1002/art.21526",
+    citationLabel:
+      "Matsushita T et al. Arthritis Rheum 2006 — Elevated serum BAFF levels in patients with systemic sclerosis: enhanced BAFF signaling in systemic sclerosis B lymphocytes.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/16385515/",
+    notes:
+      "Depth deepen: PMID 16385515 verified. BAFF↔SSc association only; keep separate from EBV. Gate C = human only. Not CDS.",
+  },
+  {
+    id: "HSI-E-SSC-012",
+    edgeType: "inhibits",
+    subjectId: "HSI-N-baff-antagonist",
+    subjectLabel: "BAFF antagonist (experimental)",
+    objectId: "HSI-N-skin-fibrosis",
+    objectLabel: "Skin fibrosis",
+    claimId: "HSI-C-SSC-012",
+    assertion:
+      "BAFF antagonism attenuates skin fibrosis in the tight-skin mouse model (hypothesized translational frame — not human dosing, not CDS, not partnerSigned).",
+    review: "source-verified",
+    teaching: "hypothesized",
+    domain: "autoimmunity",
+    pmid: "17581616",
+    doi: "10.1038/sj.jid.5700919",
+    citationLabel:
+      "Matsushita T et al. J Invest Dermatol 2007 — BAFF antagonist attenuates the development of skin fibrosis in tight-skin mice.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/17581616/",
+    notes:
+      "Depth deepen: PMID 17581616 verified. Mouse model only — teaching=hypothesized; never invent human BAFF-drug CDS. Gate C = human only. Not CDS.",
+  },
+
 ];
 
 function toEdge(spec: SeedSpec): HsiEdge {
@@ -317,18 +381,24 @@ export const SSC_PATHWAY_META = {
     "29626172",
     "33175976",
     "37763102",
+    "34031030",
+    "16385515",
+    "17581616",
     "21314428",
     "16339522",
     "24129067",
   ],
-  deepenPhase: "p1_ssc_cell_cards_and_pmids" as const,
+  deepenPhase: "p1_ssc_depth_baff_cxcl13" as const,
   entities: [
     { id: "HSI-N-ssc", label: "Systemic sclerosis", kind: "disease" },
     { id: "HSI-N-tfh", label: "Tfh", kind: "cell_subset" },
     { id: "HSI-N-tfh1", label: "Tfh1-skewed Tfh", kind: "cell_subset" },
+    { id: "HSI-N-cxcl13-tfh-like", label: "CXCL13+ Tfh-like (skin)", kind: "cell_subset" },
     { id: "HSI-N-b-cell", label: "B cell", kind: "cell" },
     { id: "HSI-N-plasmablast", label: "Plasmablast", kind: "cell_subset" },
     { id: "HSI-N-il21", label: "IL-21", kind: "cytokine" },
+    { id: "HSI-N-baff", label: "BAFF", kind: "cytokine" },
+    { id: "HSI-N-baff-antagonist", label: "BAFF antagonist (experimental)", kind: "intervention_hypothesis" },
     { id: "HSI-N-skin-fibrosis", label: "Skin fibrosis", kind: "phenotype" },
     { id: "HSI-N-ebv", label: "EBV", kind: "pathogen_hypothesis" },
   ],

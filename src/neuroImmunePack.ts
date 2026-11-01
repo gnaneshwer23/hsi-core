@@ -143,6 +143,22 @@ export function buildNeuroImmunePack(opts?: {
       note:
         "Koopman 2016 PNAS pilot — teaching=hypothesized. NEVER overclaim clinical brain–immune cure or CDS.",
     },
+    {
+      id: "expl-ni-spleen-required",
+      label: "Spleen required for cholinergic anti-inflammatory pathway",
+      status: "from_literature_slice",
+      relatedClaimIds: ["HSI-C-NI-007"],
+      note:
+        "Depth deepen (Huston 2006). Splenectomy abolishes VNS TNF brake — rodent organ hop.",
+    },
+    {
+      id: "expl-ni-splenic-nerve-tnf",
+      label: "Splenic nerve required for cholinergic TNF control",
+      status: "from_literature_slice",
+      relatedClaimIds: ["HSI-C-NI-008"],
+      note:
+        "Depth deepen (Rosas-Ballina 2008). Catecholaminergic splenic nerve wiring — not human CDS.",
+    },
   ];
 
   return {

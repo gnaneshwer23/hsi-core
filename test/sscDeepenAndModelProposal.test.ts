@@ -53,6 +53,10 @@ describe("P1.1 SSc deepen — cell cards + CL·MONDO hints + PMIDs", () => {
   test("additional verified PMIDs land; EBV stays hypothesized; RA untouched", () => {
     expect(HSI_SSC_SEED_EDGES.some((e) => e.id === "HSI-E-SSC-008")).toBe(true);
     expect(HSI_SSC_SEED_EDGES.some((e) => e.id === "HSI-E-SSC-009")).toBe(true);
+    expect(HSI_SSC_SEED_EDGES.some((e) => e.id === "HSI-E-SSC-010")).toBe(true);
+    expect(HSI_SSC_SEED_EDGES.some((e) => e.id === "HSI-E-SSC-011")).toBe(true);
+    expect(HSI_SSC_SEED_EDGES.some((e) => e.id === "HSI-E-SSC-012")).toBe(true);
+    expect(HSI_SSC_SEED_EDGES.length).toBe(12);
 
     const fibrosisComment = HSI_SSC_SEED_EDGES.find((e) => e.id === "HSI-E-SSC-008");
     expect(fibrosisComment?.provenance?.pmid).toBe("29626172");
@@ -60,6 +64,16 @@ describe("P1.1 SSc deepen — cell cards + CL·MONDO hints + PMIDs", () => {
     const il21Joint = HSI_SSC_SEED_EDGES.find((e) => e.id === "HSI-E-SSC-009");
     expect(il21Joint?.provenance?.pmid).toBe("37763102");
     expect(il21Joint?.teachingStatus).toBe("hypothesized");
+
+    expect(HSI_SSC_SEED_EDGES.find((e) => e.id === "HSI-E-SSC-010")?.provenance?.pmid).toBe(
+      "34031030",
+    );
+    expect(HSI_SSC_SEED_EDGES.find((e) => e.id === "HSI-E-SSC-011")?.provenance?.pmid).toBe(
+      "16385515",
+    );
+    expect(HSI_SSC_SEED_EDGES.find((e) => e.id === "HSI-E-SSC-012")?.teachingStatus).toBe(
+      "hypothesized",
+    );
 
     const ebv = HSI_SSC_SEED_EDGES.find((e) => e.id === "HSI-E-SSC-007");
     expect(ebv?.teachingStatus).toBe("hypothesized");

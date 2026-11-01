@@ -229,6 +229,51 @@ const SPECS: SeedSpec[] = [
     notes:
       "P1.3 barrier context. PMID 19625695 verified. In vitro Caco-2 — not in-vivo human barrier claim; teaching=associative. Dose-paradox papers exist elsewhere — do not overclaim. Gate C = human only. Not CDS.",
   },
+  {
+    id: "HSI-E-GUT-008",
+    edgeType: "inhibits",
+    systemsPredicate: "modulates_immune",
+    subjectId: "HSI-N-gpr109a",
+    subjectLabel: "GPR109A (HCAR2) — butyrate / niacin receptor",
+    objectId: "HSI-N-colonic-inflammation",
+    objectLabel: "Colonic inflammation tone",
+    claimId: "HSI-C-GUT-008",
+    assertion:
+      "Activation of Gpr109a, receptor for niacin and the commensal metabolite butyrate, suppresses colonic inflammation (and carcinogenesis) in mouse models — receptor hop for SCFA mucosal neighbourhood.",
+    review: "source-verified",
+    teaching: "associative",
+    domain: "immuno_metabolic",
+    pmid: "24412617",
+    doi: "10.1016/j.immuni.2013.12.007",
+    citationLabel:
+      "Singh N et al. Immunity 2014 — Activation of Gpr109a, receptor for niacin and the commensal metabolite butyrate, suppresses colonic inflammation and carcinogenesis.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/24412617/",
+    notes:
+      "Depth deepen: PMID 24412617 verified. Mouse — teaching=associative; not human therapeutic claim. Gate C = human only. Not CDS.",
+  },
+  {
+    id: "HSI-E-GUT-009",
+    edgeType: "upregulates",
+    systemsPredicate: "modulates_immune",
+    subjectId: "HSI-N-butyrate",
+    subjectLabel: "Butyrate (SCFA)",
+    objectId: "HSI-N-tr1-like",
+    objectLabel: "IL-10+ type-1 regulatory T cells (Tr1-like)",
+    claimId: "HSI-C-GUT-009",
+    assertion:
+      "Butyrate conditions human dendritic cells to prime IL-10-producing type-1 regulatory T cells via both HDAC inhibition and GPR109A signalling (human DC frame — hypothesized for therapeutic generalisation).",
+    review: "source-verified",
+    teaching: "hypothesized",
+    domain: "immuno_metabolic",
+    pmid: "29163504",
+    doi: "10.3389/fimmu.2017.01429",
+    citationLabel:
+      "Kaisar MMM et al. Front Immunol 2017 — Butyrate Conditions Human Dendritic Cells to Prime Type 1 Regulatory T Cells via both Histone Deacetylase Inhibition and G Protein-Coupled Receptor 109A Signaling.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/29163504/",
+    notes:
+      "Depth deepen: PMID 29163504 verified. In-vitro human DC/Tr1 — teaching=hypothesized; do not invent dosing/CDS. Gate C = human only. Not CDS.",
+  },
+
 ];
 
 function toEdge(spec: SeedSpec): HsiEdge {
@@ -299,14 +344,23 @@ export const GUT_PATHWAY_META = {
     "24917457",
     "30918945",
     "19625695",
+    "24412617",
+    "29163504",
   ],
-  deepenPhase: "p1_3_gut_scfa_mucosal" as const,
+  deepenPhase: "p1_3_gut_gpr109a_tr1_depth" as const,
   entities: [
     { id: "HSI-N-scfa", label: "SCFA (class)", kind: "metabolite" },
     { id: "HSI-N-butyrate", label: "Butyrate", kind: "metabolite" },
+    { id: "HSI-N-gpr109a", label: "GPR109A (HCAR2)", kind: "receptor" },
     { id: "HSI-N-mucosal-treg", label: "Mucosal / colonic Treg", kind: "cell_subset" },
+    { id: "HSI-N-tr1-like", label: "Tr1-like (IL-10+)", kind: "cell_subset" },
     { id: "HSI-N-mucosal-th17", label: "Mucosal Th17", kind: "cell_subset" },
     { id: "HSI-N-gut-barrier", label: "Intestinal epithelial barrier", kind: "barrier_compartment" },
+    {
+      id: "HSI-N-colonic-inflammation",
+      label: "Colonic inflammation tone",
+      kind: "phenotype",
+    },
     {
       id: "HSI-N-clostridia-iv-xiva",
       label: "Clostridia IV / XIVa",

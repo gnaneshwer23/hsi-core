@@ -10,6 +10,11 @@ import {
   type R2HypothesisCard,
   type TranslationCandidate,
 } from "../lib/discoveryData";
+import {
+  DiscoveryGraphExplorer,
+  packMapToGraphEdges,
+  raRowsToGraphEdges,
+} from "../components/DiscoveryGraphExplorer";
 
 type LoopTab = "ask" | "map" | "review" | "validate" | "translate";
 
@@ -554,11 +559,13 @@ export function DiscoveryCentre() {
                 <div className="dc-panel" role="tabpanel">
                   <div className="section-head">
                     <span className="section-num">MAP</span>
-                    <h2 className="display display-md">Evidence + entities</h2>
+                    <h2 className="display display-md">Evidence + graph</h2>
                     <p className="lede">
-                      Partner-scoped evidence map from{" "}
-                      <code>hsi-pilot-evidence-pack.json</code>. Grades stay
-                      honest — established / uncertain / unexplored.
+                      Partner-scoped RA evidence from{" "}
+                      <code>hsi-pilot-evidence-pack.json</code>, plus optional
+                      SSc / gut / neuro pack toggles on the interactive graph.
+                      Grades stay honest — established / uncertain / unexplored.
+                      Not diagnostic.
                     </p>
                   </div>
 
@@ -583,6 +590,33 @@ export function DiscoveryCentre() {
                         <p>scoped rows · click to filter</p>
                       </button>
                     ))}
+                  </div>
+
+                  <div className="dc-card" style={{ marginTop: "1.5rem" }}>
+                    <DiscoveryGraphExplorer
+                      defaultPacks={["ra"]}
+                      edges={[
+                        ...raRowsToGraphEdges(scopedRows),
+                        ...(data.sscPathway?.evidenceMap
+                          ? packMapToGraphEdges(
+                              "ssc",
+                              data.sscPathway.evidenceMap,
+                            )
+                          : []),
+                        ...(data.gutImmune?.evidenceMap
+                          ? packMapToGraphEdges(
+                              "gut",
+                              data.gutImmune.evidenceMap,
+                            )
+                          : []),
+                        ...(data.neuroImmune?.evidenceMap
+                          ? packMapToGraphEdges(
+                              "neuro",
+                              data.neuroImmune.evidenceMap,
+                            )
+                          : []),
+                      ]}
+                    />
                   </div>
 
                   <div className="dc-card" style={{ marginTop: "1.5rem" }}>

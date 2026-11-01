@@ -111,7 +111,7 @@ export const HSI_SYSTEMS_SECONDARY_AXES = [
     deepSeedsPresent: true as const,
     packFile: "hsi-gut-immune-pack.json",
     seedHint:
-      "P1.3 thin literature slice — uncertain/hypothesized grades; Th17 promote vs inhibit competing; not CDS",
+      "Depth: SCFA↔Treg/Th17 + GPR109A + human DC→Tr1 PMIDs — uncertain/hypothesized; Th17 promote vs inhibit competing; not CDS",
   },
   {
     id: "ssc-tfh-b-il21",
@@ -120,7 +120,7 @@ export const HSI_SYSTEMS_SECONDARY_AXES = [
     deepSeedsPresent: true as const,
     packFile: "hsi-ssc-pathway-pack.json",
     seedHint:
-      "Dual-track A PRD target — does not replace RA ASK; EBV hypothesized only",
+      "Depth: Tfh–B–IL-21 + CXCL13 skin Tfh-like + BAFF neighbourhood — dual-track A; EBV/BAFF-antagonist hypothesized; does not replace RA ASK",
   },
   {
     id: "neuro-vagus-cholinergic-reflex",
@@ -129,7 +129,7 @@ export const HSI_SYSTEMS_SECONDARY_AXES = [
     deepSeedsPresent: true as const,
     packFile: "hsi-neuroimmune-pack.json",
     seedHint:
-      "P2.1 thin literature slice — uncertain/hypothesized grades; human VNS–RA hypothesized only; not clinical cure; not CDS",
+      "Depth: vagus/α7/ChAT-T + spleen/splenic-nerve circuit PMIDs — uncertain/hypothesized; human VNS–RA hypothesized only; not clinical cure; not CDS",
   },
 ] as const;
 

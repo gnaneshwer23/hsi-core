@@ -4,15 +4,15 @@
   "notCds": true,
   "containsPhi": false,
   "partnerSigned": false,
-  "generatedAt": "2026-11-01T20:21:39.173Z",
+  "generatedAt": "2026-11-01T20:31:43.025Z",
   "reviewDate": "2026-11-01",
   "reviewMethod": "Europe PMC REST search resultType=core (isOpenAccess, inPMC, license, pmcid) + Crossref /works license URLs for ambiguous OA; conservative — no invented CC-BY; free PMC without clear CC → unknown; paywall/no OA → restricted; explicit CC → ok_oa. Bibliographic PMID citation always OK regardless of status.",
   "summary": {
-    "pmidCount": 32,
+    "pmidCount": 39,
     "okCiteCount": 0,
-    "okOaCount": 5,
-    "restrictedCount": 20,
-    "unknownCount": 7,
+    "okOaCount": 8,
+    "restrictedCount": 22,
+    "unknownCount": 9,
     "needsReviewCount": 0,
     "partnerClearedCount": 0,
     "blockedCount": 0
@@ -139,6 +139,18 @@
       "reviewNotes": "J Immunol 2005; no OA/PMC — cite metadata only."
     },
     {
+      "pmid": "16385515",
+      "packs": [
+        "ssc_tfh_b_il21"
+      ],
+      "licenseStatus": "restricted",
+      "attributionNote": "Bibliographic PMID citation / Discovery locator OK. Do not paste paywalled full text into this repo. Paywall / all-rights signal — cite metadata only; no FT/figure reuse.",
+      "europePmcUrl": "https://europepmc.org/article/MED/16385515",
+      "doi": "10.1002/art.21526",
+      "publisherLicense": null,
+      "reviewNotes": "Arthritis Rheum 2006; no OA/PMC — cite metadata only."
+    },
+    {
       "pmid": "16508927",
       "packs": [
         "ra_tnf"
@@ -151,6 +163,19 @@
       "reviewNotes": "Arthritis Rheum 2006; no OA/PMC — cite metadata only."
     },
     {
+      "pmid": "16785311",
+      "packs": [
+        "neuro_vagus"
+      ],
+      "licenseStatus": "ok_oa",
+      "attributionNote": "Bibliographic PMID citation / Discovery locator OK. Do not paste paywalled full text into this repo. Open access with publisher license cc by-nc-sa; verify attribution and any NC/SA terms before redistribution of PDF/figures.",
+      "europePmcUrl": "https://europepmc.org/article/MED/16785311",
+      "doi": "10.1084/jem.20052362",
+      "pmcid": "PMC2118357",
+      "publisherLicense": "cc by-nc-sa",
+      "reviewNotes": "J Exp Med 2006; PMC free — check Rockefeller reuse terms; cite metadata + PMC."
+    },
+    {
       "pmid": "17133559",
       "packs": [
         "ra_tnf"
@@ -161,6 +186,18 @@
       "doi": "10.1002/art.22214",
       "publisherLicense": null,
       "reviewNotes": "Arthritis Rheum 2006; no OA/PMC — cite metadata only."
+    },
+    {
+      "pmid": "17581616",
+      "packs": [
+        "ssc_tfh_b_il21"
+      ],
+      "licenseStatus": "restricted",
+      "attributionNote": "Bibliographic PMID citation / Discovery locator OK. Do not paste paywalled full text into this repo. Paywall / all-rights signal — cite metadata only; no FT/figure reuse.",
+      "europePmcUrl": "https://europepmc.org/article/MED/17581616",
+      "doi": "10.1038/sj.jid.5700919",
+      "publisherLicense": null,
+      "reviewNotes": "J Invest Dermatol 2007; no OA/PMC — cite metadata only."
     },
     {
       "pmid": "18375541",
@@ -187,6 +224,19 @@
       "pmcid": "PMC3811149",
       "publisherLicense": "cc by-nc",
       "reviewNotes": "ARD; Europe PMC license=cc by-nc — non-commercial OA; commercial redistribution still restricted."
+    },
+    {
+      "pmid": "18669662",
+      "packs": [
+        "neuro_vagus"
+      ],
+      "licenseStatus": "ok_oa",
+      "attributionNote": "Bibliographic PMID citation / Discovery locator OK. Do not paste paywalled full text into this repo. Open access with publisher license CC; verify attribution and any NC/SA terms before redistribution of PDF/figures.",
+      "europePmcUrl": "https://europepmc.org/article/MED/18669662",
+      "doi": "10.1073/pnas.0803237105",
+      "pmcid": "PMC2504833",
+      "publisherLicense": null,
+      "reviewNotes": "PNAS 2008; PMC free author manuscript — cite + link; no invented CC-BY."
     },
     {
       "pmid": "19625695",
@@ -302,6 +352,19 @@
       "reviewNotes": "Nature 2013; no OA/PMC — cite metadata only."
     },
     {
+      "pmid": "24412617",
+      "packs": [
+        "gut_scfa"
+      ],
+      "licenseStatus": "unknown",
+      "attributionNote": "Bibliographic PMID citation / Discovery locator OK. Do not paste paywalled full text into this repo. License unclear after Europe PMC/Crossref check — no CC claimed; prefer link-out.",
+      "europePmcUrl": "https://europepmc.org/article/MED/24412617",
+      "doi": "10.1016/j.immuni.2013.12.007",
+      "pmcid": "PMC4305274",
+      "publisherLicense": null,
+      "reviewNotes": "Immunity 2014; NIHMS/PMC manuscript — cite + link; no invented CC-BY."
+    },
+    {
       "pmid": "24586782",
       "packs": [
         "ra_tnf"
@@ -339,6 +402,19 @@
       "pmcid": "PMC4961187",
       "publisherLicense": null,
       "reviewNotes": "PNAS 2016; free in PMC; Europe PMC license null / Crossref no CC URL — unknown (do not invent CC-BY)."
+    },
+    {
+      "pmid": "29163504",
+      "packs": [
+        "gut_scfa"
+      ],
+      "licenseStatus": "ok_oa",
+      "attributionNote": "Bibliographic PMID citation / Discovery locator OK. Do not paste paywalled full text into this repo. Open access with publisher license cc by; verify attribution and any NC/SA terms before redistribution of PDF/figures.",
+      "europePmcUrl": "https://europepmc.org/article/MED/29163504",
+      "doi": "10.3389/fimmu.2017.01429",
+      "pmcid": "PMC5670331",
+      "publisherLicense": "cc by",
+      "reviewNotes": "Front Immunol 2017; OA under CC BY."
     },
     {
       "pmid": "29514998",
@@ -400,6 +476,19 @@
       "doi": "10.1093/rheumatology/keaa669",
       "publisherLicense": null,
       "reviewNotes": "Rheumatology (OUP) 2021; no OA/PMC — cite metadata only."
+    },
+    {
+      "pmid": "34031030",
+      "packs": [
+        "ssc_tfh_b_il21"
+      ],
+      "licenseStatus": "unknown",
+      "attributionNote": "Bibliographic PMID citation / Discovery locator OK. Do not paste paywalled full text into this repo. License unclear after Europe PMC/Crossref check — no CC claimed; prefer link-out.",
+      "europePmcUrl": "https://europepmc.org/article/MED/34031030",
+      "doi": "10.1136/annrheumdis-2021-220209",
+      "pmcid": "PMC8516708",
+      "publisherLicense": null,
+      "reviewNotes": "Ann Rheum Dis 2021; PMC author manuscript — cite + link; no invented CC-BY."
     },
     {
       "pmid": "37763102",

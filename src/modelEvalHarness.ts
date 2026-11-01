@@ -24,6 +24,10 @@ import { buildRdkitAdapterProposals } from "./adapters/rdkitAdapter";
 import { buildOpenmmAdapterProposals } from "./adapters/openmmAdapter";
 import { buildReinvent4AdapterProposals } from "./adapters/reinvent4Adapter";
 import { buildEsmAdapterProposals } from "./adapters/esmAdapter";
+import { buildAf3AdapterProposals } from "./adapters/af3Adapter";
+import { buildTdcAdapterProposals } from "./adapters/tdcAdapter";
+import { buildBoltzAdapterProposals } from "./adapters/boltzAdapter";
+import { buildIsiAgentsAdapterProposals } from "./adapters/isiAgentsAdapter";
 import type { HsiEdge } from "./schema";
 import type { HsiGrade, HsiTeachingStatus } from "./grades";
 
@@ -639,6 +643,18 @@ export function buildDemoModelEvalCases(opts?: {
   const goodEsm = esmProposals.find(
     (p) => p.proposalId === "HSI-MP-ESM2-TNF-001",
   )!;
+  const goodAf3 = buildAf3AdapterProposals({ createdAt }).find(
+    (p) => p.proposalId === "HSI-MP-AF3-TNF-001",
+  )!;
+  const goodTdc = buildTdcAdapterProposals({ createdAt }).find(
+    (p) => p.proposalId === "HSI-MP-TDC-ADMET-001",
+  )!;
+  const goodBoltz = buildBoltzAdapterProposals({ createdAt }).find(
+    (p) => p.proposalId === "HSI-MP-BOLTZ-TNF-001",
+  )!;
+  const goodIsiAgents = buildIsiAgentsAdapterProposals({ createdAt }).find(
+    (p) => p.proposalId === "HSI-MP-ISI-AGENTS-LITERATURE-001",
+  )!;
 
   return [
     {
@@ -689,6 +705,42 @@ export function buildDemoModelEvalCases(opts?: {
       subject: proposalAsRecord(goodEsm),
       notes:
         "adapter-esm proposal cites HSI-E-RA-001; hash/ref sidecar; no grade/PHI/clinical claims; no weight vendoring",
+    },
+    {
+      caseId: "EVAL-PASS-AF3-TNF-001",
+      kind: "model_proposal",
+      label: "AF3 research-test stub TNF structure proposal",
+      expectPass: true,
+      subject: proposalAsRecord(goodAf3),
+      notes:
+        "adapter-af3 stub cites HSI-E-RA-001; notCommercial; NOT commercial AF3 rights; no weight vendoring",
+    },
+    {
+      caseId: "EVAL-PASS-TDC-ADMET-001",
+      kind: "model_proposal",
+      label: "TDC research-test stub ADMET proposal",
+      expectPass: true,
+      subject: proposalAsRecord(goodTdc),
+      notes:
+        "adapter-tdc stub cites HSI-E-RA-012; no dataset download; no grade/PHI claims",
+    },
+    {
+      caseId: "EVAL-PASS-BOLTZ-TNF-001",
+      kind: "model_proposal",
+      label: "Boltz weights-policy-gated stub TNF proposal",
+      expectPass: true,
+      subject: proposalAsRecord(goodBoltz),
+      notes:
+        "adapter-boltz stub cites HSI-E-RA-001; WEIGHTS_POLICY_ACK; vendorsModelWeights=false",
+    },
+    {
+      caseId: "EVAL-PASS-ISI-AGENTS-LIT-001",
+      kind: "model_proposal",
+      label: "ISI agents research-test stub literature proposal",
+      expectPass: true,
+      subject: proposalAsRecord(goodIsiAgents),
+      notes:
+        "adapter-isi-agents stub cites HSI-E-RA-001; runtime out of repo; no grade flips",
     },
     {
       caseId: "EVAL-PASS-SIDECAR-RA-001",

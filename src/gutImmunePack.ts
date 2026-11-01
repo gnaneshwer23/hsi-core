@@ -140,6 +140,22 @@ export function buildGutImmunePack(opts?: {
       note:
         "Barrier context (Peng 2009 Caco-2). In vitro only; dose-paradox literature exists — do not overclaim.",
     },
+    {
+      id: "expl-gut-gpr109a-inflammation",
+      label: "GPR109A / butyrate suppresses colonic inflammation",
+      status: "from_literature_slice",
+      relatedClaimIds: ["HSI-C-GUT-008"],
+      note:
+        "Depth deepen (Singh 2014). Receptor hop for SCFA mucosal neighbourhood — mouse; keep grades uncertain.",
+    },
+    {
+      id: "expl-gut-butyrate-tr1-dc",
+      label: "Butyrate conditions human DCs to prime Tr1 via HDAC + GPR109A",
+      status: "hypothesized_branch",
+      relatedClaimIds: ["HSI-C-GUT-009"],
+      note:
+        "Depth deepen (Kaisar 2017). teaching=hypothesized for therapeutic generalisation — not CDS.",
+    },
   ];
 
   return {

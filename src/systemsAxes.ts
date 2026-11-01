@@ -793,6 +793,7 @@ export const P3_ADAPTER_LICENSE_MATRIX_SCHEMA = {
     "needs_review",
     "non_commercial_only",
     "research_ok_documented",
+    "signed_research_test_only",
   ] as const,
   mayFlipEvidenceGrade: false as const,
   vendorsModelWeights: false as const,
@@ -802,9 +803,10 @@ export const P3_ADAPTER_LICENSE_MATRIX_SCHEMA = {
   exportArtifact: "hsi-p3-adapter-license-matrix.json" as const,
   runtimeModule: "src/p3AdapterLicenseMatrix.ts" as const,
   rfcDoc: "docs/P3_ADAPTER_RFC.md" as const,
+  weightsPolicyDoc: "docs/P3_WEIGHTS_AND_LICENSE_POLICY.md" as const,
   visionDocRef: "docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md",
   notes:
-    "License gate before any adapter run; ModelProposalArtifacts only; never claim commercial signed without evidence; never vendor multi-GB weights; P3.0 RDKit + P3.1 OpenMM + P3.2 REINVENT4 + P3.3 FAIR ESM-2 spike_wired (hsi-rdkit-adapter-proposals.*; hsi-openmm-adapter-proposals.*; hsi-reinvent4-adapter-proposals.*; hsi-esm-adapter-proposals.*)",
+    "License gate before any adapter run; ModelProposalArtifacts only; never claim commercial signed without evidence; never vendor multi-GB weights; research sign-off fixture unblocks AF3/TDC/ISI stubs; Boltz requires WEIGHTS_POLICY_ACK; RDKit/OpenMM/REINVENT4/ESM/AF3/TDC/Boltz/ISI-agents spike_wired",
 };
 
 export type P3AdapterLicenseMatrixSchema =
@@ -833,30 +835,30 @@ export const FUTURE_TECH_ADAPTER_STUBS: readonly FutureTechAdapterStub[] = [
     id: "adapter-tdc",
     label: "Therapeutics Data Commons (TDC)",
     role: "Offline ML eval benchmarks against graded claims",
-    status: "rfc_matrix_ready",
+    status: "spike_wired",
     mayFlipEvidenceGrade: false,
     licenseNote:
-      "Code MIT; per-task dataset licenses — needs_review; blockedUntilSignOff=true (see hsi-p3-adapter-license-matrix.json)",
+      "Research sign-off fixture → research_ok_documented; stub proposals; per-dataset licenses still need review before download; never vendor weights",
     visionDocRef: "docs/P3_ADAPTER_RFC.md",
   },
   {
     id: "adapter-af3",
     label: "AlphaFold3",
     role: "Structure prediction for mechanism hypotheses",
-    status: "rfc_matrix_ready",
+    status: "spike_wired",
     mayFlipEvidenceGrade: false,
     licenseNote:
-      "Code Apache-2.0; weights Terms of Use → non_commercial_only; blockedUntilSignOff=true; never vendor weights",
+      "Research sign-off fixture → signed_research_test_only; notCommercial=true; NOT commercial AF3 rights; stub proposals; never vendor weights",
     visionDocRef: "docs/P3_ADAPTER_RFC.md",
   },
   {
     id: "adapter-boltz",
     label: "Boltz",
     role: "Open structure / complex prediction alternative",
-    status: "rfc_matrix_ready",
+    status: "spike_wired",
     mayFlipEvidenceGrade: false,
     licenseNote:
-      "MIT code+weights documented (research_ok_documented); still no weight vendoring; proposals only",
+      "MIT research_ok_documented; WEIGHTS_POLICY_ACK=true required before stub proposals; no weight vendoring; optional BOLTZ_WEIGHTS_CACHE external only",
     visionDocRef: "docs/P3_ADAPTER_RFC.md",
   },
   {
@@ -903,10 +905,10 @@ export const FUTURE_TECH_ADAPTER_STUBS: readonly FutureTechAdapterStub[] = [
     id: "adapter-isi-agents",
     label: "ISI 12-agent research workbench",
     role: "Supervised research agents (orchestrator + specialists)",
-    status: "out_of_scope_stage1",
+    status: "spike_wired",
     mayFlipEvidenceGrade: false,
     licenseNote:
-      "Runtime = ISI product; not_signed / blockedUntilSignOff=true in matrix; HSI holds catalog patterns only",
+      "Research sign-off fixture → signed_research_test_only; stub proposals in hsi-core; executable runtime remains ISI product",
     visionDocRef: "docs/P3_ADAPTER_RFC.md",
   },
 ] as const;

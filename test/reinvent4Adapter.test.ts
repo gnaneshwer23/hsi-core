@@ -16,18 +16,21 @@ import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 describe("P3.2 REINVENT4 thin adapter spike", () => {
-  test("license gate allows reinvent4 and refuses blocked adapters", () => {
-    expect(() => assertP3AdapterRunnable("adapter-tdc")).toThrow(
-      P3AdapterLicenseBlockedError,
+  test("license gate allows reinvent4 (and research-fixture AF3/TDC)", () => {
+    expect(assertP3AdapterRunnable("adapter-tdc").blockedUntilSignOff).toBe(
+      false,
     );
-    expect(() => assertP3AdapterRunnable("adapter-af3")).toThrow(
-      P3AdapterLicenseBlockedError,
+    expect(assertP3AdapterRunnable("adapter-af3").blockedUntilSignOff).toBe(
+      false,
     );
     const reinvent = assertP3AdapterRunnable("adapter-reinvent4");
     expect(reinvent.blockedUntilSignOff).toBe(false);
     expect(reinvent.signOffStatus).toBe("research_ok_documented");
     expect(reinvent.mayFlipEvidenceGrade).toBe(false);
     expect(reinvent.vendorsModelWeights).toBe(false);
+    expect(P3AdapterLicenseBlockedError.name).toBe(
+      "P3AdapterLicenseBlockedError",
+    );
   });
 
   test("stub runtime emits safe ModelProposalArtifacts only", () => {

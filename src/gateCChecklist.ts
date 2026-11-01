@@ -31,6 +31,10 @@ import { buildRdkitAdapterProposals } from "./adapters/rdkitAdapter";
 import { buildOpenmmAdapterProposals } from "./adapters/openmmAdapter";
 import { buildReinvent4AdapterProposals } from "./adapters/reinvent4Adapter";
 import { buildEsmAdapterProposals } from "./adapters/esmAdapter";
+import { buildAf3AdapterProposals } from "./adapters/af3Adapter";
+import { buildTdcAdapterProposals } from "./adapters/tdcAdapter";
+import { buildBoltzAdapterProposals } from "./adapters/boltzAdapter";
+import { buildIsiAgentsAdapterProposals } from "./adapters/isiAgentsAdapter";
 
 export const GATE_C_CHECKLIST_SCHEMA = "hsi-gate-c-checklist-1" as const;
 
@@ -209,12 +213,28 @@ export function buildGateCChecklist(opts?: {
     createdAt: generatedAt,
     forceStub: true,
   }).map(toGateCModelProposalRow);
+  const af3Proposals = buildAf3AdapterProposals({
+    createdAt: generatedAt,
+  }).map(toGateCModelProposalRow);
+  const tdcProposals = buildTdcAdapterProposals({
+    createdAt: generatedAt,
+  }).map(toGateCModelProposalRow);
+  const boltzProposals = buildBoltzAdapterProposals({
+    createdAt: generatedAt,
+  }).map(toGateCModelProposalRow);
+  const isiAgentsProposals = buildIsiAgentsAdapterProposals({
+    createdAt: generatedAt,
+  }).map(toGateCModelProposalRow);
   const modelProposals = [
     ...exampleProposals,
     ...rdkitProposals,
     ...openmmProposals,
     ...reinvent4Proposals,
     ...esmProposals,
+    ...af3Proposals,
+    ...tdcProposals,
+    ...boltzProposals,
+    ...isiAgentsProposals,
   ];
 
   return {
@@ -255,7 +275,8 @@ export function buildGateCChecklist(opts?: {
       "P3.0 RDKit thin adapter spike (hsi-rdkit-adapter-proposals.*): sourceAdapterOrAgent=adapter-rdkit; runtime stub|rdkit; ModelProposalArtifacts only → pending; autoApprove=false; does not set hsiGrade; refuse blockedUntilSignOff adapters.",
       "P3.1 OpenMM thin adapter spike (hsi-openmm-adapter-proposals.*): sourceAdapterOrAgent=adapter-openmm; runtime stub|openmm; ModelProposalArtifacts only → pending; autoApprove=false; does not set hsiGrade; MD ≠ Gate C evidence alone; refuse blockedUntilSignOff adapters.",
       "P3.2 REINVENT4 thin adapter spike (hsi-reinvent4-adapter-proposals.*): sourceAdapterOrAgent=adapter-reinvent4; runtime stub|reinvent; ModelProposalArtifacts only → pending; autoApprove=false; does not set hsiGrade; never clinic recommendation path; no multi-GB weights; refuse blockedUntilSignOff adapters.",
-      "P3.3 FAIR ESM-2 thin embedding stub (hsi-esm-adapter-proposals.*): sourceAdapterOrAgent=adapter-esm; runtime stub|esm; ModelProposalArtifacts + embedding sidecar refs → pending; autoApprove=false; does not set hsiGrade; no weight vendoring / PHI sequences; Boltz deferred; refuse blockedUntilSignOff adapters.",
+      "P3.3 FAIR ESM-2 thin embedding stub (hsi-esm-adapter-proposals.*): sourceAdapterOrAgent=adapter-esm; runtime stub|esm; ModelProposalArtifacts + embedding sidecar refs → pending; autoApprove=false; does not set hsiGrade; no weight vendoring / PHI sequences.",
+      "AF3/TDC/ISI research sign-off fixtures + Boltz weights policy: stub proposals → pending; AF3 notCommercial / NOT commercial rights; Boltz requires WEIGHTS_POLICY_ACK; never vendor multi-GB weights (docs/P3_WEIGHTS_AND_LICENSE_POLICY.md).",
     ],
   };
 }

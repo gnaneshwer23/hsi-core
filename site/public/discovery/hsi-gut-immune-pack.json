@@ -2,7 +2,7 @@
   "schemaVersion": "hsi-gut-immune-pack-1",
   "notCds": true,
   "autoApproveIntoKg": false,
-  "generatedAt": "2026-11-01T20:21:39.173Z",
+  "generatedAt": "2026-11-01T20:31:43.025Z",
   "pathway": {
     "id": "gut-scfa-mucosal-treg-th17",
     "label": "Gut–immune · SCFA / butyrate ↔ mucosal Treg / Th17",
@@ -17,7 +17,9 @@
       "HSI-C-GUT-004",
       "HSI-C-GUT-005",
       "HSI-C-GUT-006",
-      "HSI-C-GUT-007"
+      "HSI-C-GUT-007",
+      "HSI-C-GUT-008",
+      "HSI-C-GUT-009"
     ],
     "primaryEdgeIds": [
       "HSI-E-GUT-001",
@@ -26,7 +28,9 @@
       "HSI-E-GUT-004",
       "HSI-E-GUT-005",
       "HSI-E-GUT-006",
-      "HSI-E-GUT-007"
+      "HSI-E-GUT-007",
+      "HSI-E-GUT-008",
+      "HSI-E-GUT-009"
     ],
     "primaryPmids": [
       "21205640",
@@ -35,9 +39,11 @@
       "23828891",
       "24917457",
       "30918945",
-      "19625695"
+      "19625695",
+      "24412617",
+      "29163504"
     ],
-    "deepenPhase": "p1_3_gut_scfa_mucosal",
+    "deepenPhase": "p1_3_gut_gpr109a_tr1_depth",
     "entities": [
       {
         "id": "HSI-N-scfa",
@@ -50,8 +56,18 @@
         "kind": "metabolite"
       },
       {
+        "id": "HSI-N-gpr109a",
+        "label": "GPR109A (HCAR2)",
+        "kind": "receptor"
+      },
+      {
         "id": "HSI-N-mucosal-treg",
         "label": "Mucosal / colonic Treg",
+        "kind": "cell_subset"
+      },
+      {
+        "id": "HSI-N-tr1-like",
+        "label": "Tr1-like (IL-10+)",
         "kind": "cell_subset"
       },
       {
@@ -63,6 +79,11 @@
         "id": "HSI-N-gut-barrier",
         "label": "Intestinal epithelial barrier",
         "kind": "barrier_compartment"
+      },
+      {
+        "id": "HSI-N-colonic-inflammation",
+        "label": "Colonic inflammation tone",
+        "kind": "phenotype"
       },
       {
         "id": "HSI-N-clostridia-iv-xiva",
@@ -191,6 +212,34 @@
       "pmid": "19625695",
       "citationLabel": "Peng L et al. J Nutr 2009 — Butyrate enhances the intestinal barrier by facilitating tight junction assembly via activation of AMP-activated protein kinase in Caco-2 cell monolayers.",
       "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/19625695/"
+    },
+    {
+      "edgeId": "HSI-E-GUT-008",
+      "claimId": "HSI-C-GUT-008",
+      "subject": "GPR109A (HCAR2) — butyrate / niacin receptor",
+      "predicate": "inhibits",
+      "systemsPredicate": "modulates_immune",
+      "systemsPredicateMapsToHsi": "associated_with",
+      "object": "Colonic inflammation tone",
+      "evidenceGrade": "uncertain",
+      "teachingStatus": "associative",
+      "pmid": "24412617",
+      "citationLabel": "Singh N et al. Immunity 2014 — Activation of Gpr109a, receptor for niacin and the commensal metabolite butyrate, suppresses colonic inflammation and carcinogenesis.",
+      "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/24412617/"
+    },
+    {
+      "edgeId": "HSI-E-GUT-009",
+      "claimId": "HSI-C-GUT-009",
+      "subject": "Butyrate (SCFA)",
+      "predicate": "upregulates",
+      "systemsPredicate": "modulates_immune",
+      "systemsPredicateMapsToHsi": "associated_with",
+      "object": "IL-10+ type-1 regulatory T cells (Tr1-like)",
+      "evidenceGrade": "uncertain",
+      "teachingStatus": "hypothesized",
+      "pmid": "29163504",
+      "citationLabel": "Kaisar MMM et al. Front Immunol 2017 — Butyrate Conditions Human Dendritic Cells to Prime Type 1 Regulatory T Cells via both Histone Deacetylase Inhibition and G Protein-Coupled Receptor 109A Signaling.",
+      "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/29163504/"
     }
   ],
   "competingExplanations": [
@@ -248,6 +297,24 @@
         "HSI-C-GUT-007"
       ],
       "note": "Barrier context (Peng 2009 Caco-2). In vitro only; dose-paradox literature exists — do not overclaim."
+    },
+    {
+      "id": "expl-gut-gpr109a-inflammation",
+      "label": "GPR109A / butyrate suppresses colonic inflammation",
+      "status": "from_literature_slice",
+      "relatedClaimIds": [
+        "HSI-C-GUT-008"
+      ],
+      "note": "Depth deepen (Singh 2014). Receptor hop for SCFA mucosal neighbourhood — mouse; keep grades uncertain."
+    },
+    {
+      "id": "expl-gut-butyrate-tr1-dc",
+      "label": "Butyrate conditions human DCs to prime Tr1 via HDAC + GPR109A",
+      "status": "hypothesized_branch",
+      "relatedClaimIds": [
+        "HSI-C-GUT-009"
+      ],
+      "note": "Depth deepen (Kaisar 2017). teaching=hypothesized for therapeutic generalisation — not CDS."
     }
   ],
   "claims": [
@@ -296,6 +363,20 @@
     {
       "id": "HSI-C-GUT-007",
       "assertion": "Butyrate enhances intestinal barrier function by facilitating tight-junction assembly via AMPK activation in Caco-2 monolayers (barrier context for mucosal immune neighbourhood).",
+      "domain": "immuno_metabolic",
+      "isiRelationshipId": null,
+      "akshNodeId": null
+    },
+    {
+      "id": "HSI-C-GUT-008",
+      "assertion": "Activation of Gpr109a, receptor for niacin and the commensal metabolite butyrate, suppresses colonic inflammation (and carcinogenesis) in mouse models — receptor hop for SCFA mucosal neighbourhood.",
+      "domain": "immuno_metabolic",
+      "isiRelationshipId": null,
+      "akshNodeId": null
+    },
+    {
+      "id": "HSI-C-GUT-009",
+      "assertion": "Butyrate conditions human dendritic cells to prime IL-10-producing type-1 regulatory T cells via both HDAC inhibition and GPR109A signalling (human DC frame — hypothesized for therapeutic generalisation).",
       "domain": "immuno_metabolic",
       "isiRelationshipId": null,
       "akshNodeId": null
@@ -462,6 +543,52 @@
       },
       "bridgeCandidate": false,
       "seedKind": "placeholder"
+    },
+    {
+      "id": "HSI-E-GUT-008",
+      "edgeType": "inhibits",
+      "subjectId": "HSI-N-gpr109a",
+      "subjectLabel": "GPR109A (HCAR2) — butyrate / niacin receptor",
+      "objectId": "HSI-N-colonic-inflammation",
+      "objectLabel": "Colonic inflammation tone",
+      "claimId": "HSI-C-GUT-008",
+      "curationReview": "source-verified",
+      "hsiGrade": "uncertain",
+      "teachingStatus": "associative",
+      "domain": "immuno_metabolic",
+      "provenance": {
+        "pmid": "24412617",
+        "doi": "10.1016/j.immuni.2013.12.007",
+        "citationLabel": "Singh N et al. Immunity 2014 — Activation of Gpr109a, receptor for niacin and the commensal metabolite butyrate, suppresses colonic inflammation and carcinogenesis.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/24412617/",
+        "notes": "Depth deepen: PMID 24412617 verified. Mouse — teaching=associative; not human therapeutic claim. Gate C = human only. Not CDS.",
+        "recordedAt": "2026-11-01T18:30:00.000Z"
+      },
+      "bridgeCandidate": false,
+      "seedKind": "placeholder"
+    },
+    {
+      "id": "HSI-E-GUT-009",
+      "edgeType": "upregulates",
+      "subjectId": "HSI-N-butyrate",
+      "subjectLabel": "Butyrate (SCFA)",
+      "objectId": "HSI-N-tr1-like",
+      "objectLabel": "IL-10+ type-1 regulatory T cells (Tr1-like)",
+      "claimId": "HSI-C-GUT-009",
+      "curationReview": "source-verified",
+      "hsiGrade": "uncertain",
+      "teachingStatus": "hypothesized",
+      "domain": "immuno_metabolic",
+      "provenance": {
+        "pmid": "29163504",
+        "doi": "10.3389/fimmu.2017.01429",
+        "citationLabel": "Kaisar MMM et al. Front Immunol 2017 — Butyrate Conditions Human Dendritic Cells to Prime Type 1 Regulatory T Cells via both Histone Deacetylase Inhibition and G Protein-Coupled Receptor 109A Signaling.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/29163504/",
+        "notes": "Depth deepen: PMID 29163504 verified. In-vitro human DC/Tr1 — teaching=hypothesized; do not invent dosing/CDS. Gate C = human only. Not CDS.",
+        "recordedAt": "2026-11-01T18:30:00.000Z"
+      },
+      "bridgeCandidate": false,
+      "seedKind": "placeholder"
     }
   ],
   "honesty": [
@@ -472,6 +599,6 @@
     "Most PMIDs are mouse or Caco-2 — hsiGrade stays uncertain (source-verified); not human therapeutic claims.",
     "Not clinical decision support. autoApproveIntoKg=false.",
     "deepSeedsPresent=true because verified PMID edges landed.",
-    "P1.3 slice: 7 edges · 7 PMIDs."
+    "P1.3 slice: 9 edges · 9 PMIDs."
   ]
 }

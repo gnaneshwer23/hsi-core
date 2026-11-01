@@ -1,13 +1,19 @@
 /**
  * P3 adapter license gate — refuse run while blockedUntilSignOff=true.
  *
- * Binding: docs/P3_ADAPTER_RFC.md · src/p3AdapterLicenseMatrix.ts.
+ * Binding: docs/P3_ADAPTER_RFC.md · docs/P3_WEIGHTS_AND_LICENSE_POLICY.md ·
+ * src/p3AdapterLicenseMatrix.ts.
  * Never invents commercial signed; never flips grades.
  */
 import {
   buildP3AdapterLicenseRows,
   type P3AdapterLicenseRow,
 } from "./p3AdapterLicenseMatrix";
+
+/** Env ack required before Boltz stub proposals (weights policy). */
+export const WEIGHTS_POLICY_ACK_ENV = "WEIGHTS_POLICY_ACK" as const;
+/** Optional external Boltz weights cache — never vendored into hsi-core. */
+export const BOLTZ_WEIGHTS_CACHE_ENV = "BOLTZ_WEIGHTS_CACHE" as const;
 
 export class P3AdapterLicenseBlockedError extends Error {
   readonly adapterId: string;
@@ -20,6 +26,18 @@ export class P3AdapterLicenseBlockedError extends Error {
     this.name = "P3AdapterLicenseBlockedError";
     this.adapterId = row.adapterId;
     this.signOffStatus = row.signOffStatus;
+  }
+}
+
+export class WeightsPolicyNotAckedError extends Error {
+  readonly adapterId: string;
+
+  constructor(adapterId: string) {
+    super(
+      `Refusing adapter "${adapterId}" — WEIGHTS_POLICY_ACK must be "true" (see docs/P3_WEIGHTS_AND_LICENSE_POLICY.md). No multi-GB weight vendoring.`,
+    );
+    this.name = "WeightsPolicyNotAckedError";
+    this.adapterId = adapterId;
   }
 }
 
@@ -45,6 +63,35 @@ export function getP3AdapterLicenseRow(
     throw new P3AdapterUnknownError(adapterId);
   }
   return row;
+}
+
+export function isWeightsPolicyAcked(
+  env: NodeJS.ProcessEnv = process.env,
+): boolean {
+  const raw = env[WEIGHTS_POLICY_ACK_ENV];
+  if (!raw) return false;
+  const v = raw.trim().toLowerCase();
+  return v === "1" || v === "true" || v === "yes";
+}
+
+/**
+ * Boltz (and any weights-gated adapter): require WEIGHTS_POLICY_ACK=true.
+ * Does not download or vendor weights.
+ */
+export function assertWeightsPolicyAcked(
+  adapterId: string,
+  env: NodeJS.ProcessEnv = process.env,
+): void {
+  if (!isWeightsPolicyAcked(env)) {
+    throw new WeightsPolicyNotAckedError(adapterId);
+  }
+}
+
+export function getOptionalBoltzWeightsCache(
+  env: NodeJS.ProcessEnv = process.env,
+): string | null {
+  const raw = env[BOLTZ_WEIGHTS_CACHE_ENV]?.trim();
+  return raw && raw.length > 0 ? raw : null;
 }
 
 /**
@@ -82,5 +129,17 @@ export function assertP3AdapterRunnable(
   if (row.containsPhi === true) {
     throw new Error(`Refusing adapter "${adapterId}" — containsPhi must be false`);
   }
+  return row;
+}
+
+/**
+ * Boltz gate: license row + WEIGHTS_POLICY_ACK.
+ */
+export function assertBoltzAdapterRunnable(
+  rows: P3AdapterLicenseRow[] = buildP3AdapterLicenseRows(),
+  env: NodeJS.ProcessEnv = process.env,
+): P3AdapterLicenseRow {
+  const row = assertP3AdapterRunnable("adapter-boltz", rows);
+  assertWeightsPolicyAcked("adapter-boltz", env);
   return row;
 }

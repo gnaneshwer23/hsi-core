@@ -17,18 +17,21 @@ import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 describe("P3.3 FAIR ESM-2 thin embedding stub", () => {
-  test("license gate allows esm and refuses blocked adapters", () => {
-    expect(() => assertP3AdapterRunnable("adapter-tdc")).toThrow(
-      P3AdapterLicenseBlockedError,
+  test("license gate allows esm (and research-fixture AF3/TDC)", () => {
+    expect(assertP3AdapterRunnable("adapter-tdc").blockedUntilSignOff).toBe(
+      false,
     );
-    expect(() => assertP3AdapterRunnable("adapter-af3")).toThrow(
-      P3AdapterLicenseBlockedError,
+    expect(assertP3AdapterRunnable("adapter-af3").blockedUntilSignOff).toBe(
+      false,
     );
     const esm = assertP3AdapterRunnable("adapter-esm");
     expect(esm.blockedUntilSignOff).toBe(false);
     expect(esm.signOffStatus).toBe("research_ok_documented");
     expect(esm.mayFlipEvidenceGrade).toBe(false);
     expect(esm.vendorsModelWeights).toBe(false);
+    expect(P3AdapterLicenseBlockedError.name).toBe(
+      "P3AdapterLicenseBlockedError",
+    );
   });
 
   test("stub runtime emits safe proposals + embedding sidecar refs", () => {

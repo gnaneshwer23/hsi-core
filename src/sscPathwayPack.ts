@@ -126,6 +126,30 @@ export function buildSscPathwayPack(opts?: {
       note:
         "Uncertainty branch only — never hard-merge EBV with Tfh→B→IL-21 as established causation.",
     },
+    {
+      id: "expl-ssc-cxcl13-skin-tfh",
+      label: "Skin CXCL13+ Tfh-like cells adjacent to B cells",
+      status: "from_literature_slice",
+      relatedClaimIds: ["HSI-C-SSC-010"],
+      note:
+        "Depth deepen (Gaydosik 2021). Tissue Tfh-like frame complements circulating Tfh–IL-21.",
+    },
+    {
+      id: "expl-ssc-baff-b-survival",
+      label: "Elevated BAFF / enhanced BAFF signalling in SSc B cells",
+      status: "from_literature_slice",
+      relatedClaimIds: ["HSI-C-SSC-011"],
+      note:
+        "Depth deepen (Matsushita 2006). B-survival neighbourhood — not a BAFF-drug CDS claim.",
+    },
+    {
+      id: "expl-ssc-baff-antagonist-fibrosis",
+      label: "BAFF antagonism attenuates skin fibrosis (mouse)",
+      status: "hypothesized_branch",
+      relatedClaimIds: ["HSI-C-SSC-012"],
+      note:
+        "Depth deepen (Matsushita 2007). teaching=hypothesized — never invent human dosing/CDS.",
+    },
   ];
 
   return {

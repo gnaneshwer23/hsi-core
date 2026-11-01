@@ -16,18 +16,21 @@ import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 describe("P3.1 OpenMM thin adapter spike", () => {
-  test("license gate allows openmm and refuses blocked adapters", () => {
-    expect(() => assertP3AdapterRunnable("adapter-tdc")).toThrow(
-      P3AdapterLicenseBlockedError,
+  test("license gate allows openmm (and research-fixture AF3/TDC)", () => {
+    expect(assertP3AdapterRunnable("adapter-tdc").blockedUntilSignOff).toBe(
+      false,
     );
-    expect(() => assertP3AdapterRunnable("adapter-af3")).toThrow(
-      P3AdapterLicenseBlockedError,
+    expect(assertP3AdapterRunnable("adapter-af3").blockedUntilSignOff).toBe(
+      false,
     );
     const openmm = assertP3AdapterRunnable("adapter-openmm");
     expect(openmm.blockedUntilSignOff).toBe(false);
     expect(openmm.signOffStatus).toBe("research_ok_documented");
     expect(openmm.mayFlipEvidenceGrade).toBe(false);
     expect(openmm.vendorsModelWeights).toBe(false);
+    expect(P3AdapterLicenseBlockedError.name).toBe(
+      "P3AdapterLicenseBlockedError",
+    );
   });
 
   test("stub runtime emits safe ModelProposalArtifacts only", () => {

@@ -213,6 +213,51 @@ const SPECS: SeedSpec[] = [
     notes:
       "P2.1 human translational pilot ONLY. PMID 27382171 verified. teaching=hypothesized — small open-label / pilot; NEVER overclaim clinical brain–immune cure, dosing, or EHR CDS. Does not flip partnerSigned or replace RA ASK evidence map. Gate C = human only. Not CDS. No PHI.",
   },
+  {
+    id: "HSI-E-NI-007",
+    edgeType: "associated_with",
+    systemsPredicate: "hypothesized_brain_immune",
+    subjectId: "HSI-N-spleen-innate",
+    subjectLabel: "Spleen (innate cytokine reservoir)",
+    objectId: "HSI-N-inflammatory-reflex",
+    objectLabel: "Inflammatory reflex",
+    claimId: "HSI-C-NI-007",
+    assertion:
+      "Splenectomy inactivates the cholinergic anti-inflammatory pathway during lethal endotoxemia and polymicrobial sepsis — spleen as required effector organ for vagus-mediated TNF brake (rodent).",
+    review: "source-verified",
+    teaching: "associative",
+    domain: "immuno_metabolic",
+    pmid: "16785311",
+    doi: "10.1084/jem.20052362",
+    citationLabel:
+      "Huston JM et al. J Exp Med 2006 — Splenectomy inactivates the cholinergic antiinflammatory pathway during lethal endotoxemia and polymicrobial sepsis.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/16785311/",
+    notes:
+      "Depth deepen: PMID 16785311 verified. Rodent circuit organ — teaching=associative; not human CDS. Gate C = human only. Not CDS. No PHI.",
+  },
+  {
+    id: "HSI-E-NI-008",
+    edgeType: "inhibits",
+    systemsPredicate: "suppresses_peripheral_inflammation",
+    subjectId: "HSI-N-splenic-nerve",
+    subjectLabel: "Splenic nerve (catecholaminergic)",
+    objectId: "HSI-N-macrophage-tnf-release",
+    objectLabel: "Macrophage TNF release",
+    claimId: "HSI-C-NI-008",
+    assertion:
+      "The splenic nerve is required for cholinergic anti-inflammatory pathway control of TNF in endotoxemia (vagus → celiac/superior mesenteric → splenic nerve → spleen macrophage TNF brake).",
+    review: "source-verified",
+    teaching: "associative",
+    domain: "immuno_metabolic",
+    pmid: "18669662",
+    doi: "10.1073/pnas.0803237105",
+    citationLabel:
+      "Rosas-Ballina M et al. PNAS 2008 — Splenic nerve is required for cholinergic antiinflammatory pathway control of TNF in endotoxemia.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/18669662/",
+    notes:
+      "Depth deepen: PMID 18669662 verified. Rodent wiring — teaching=associative; do not invent human nerve-stimulation CDS. Gate C = human only. Not CDS. No PHI.",
+  },
+
 ];
 
 function toEdge(spec: SeedSpec): HsiEdge {
@@ -284,8 +329,10 @@ export const NI_PATHWAY_META = {
     "16025117",
     "21921156",
     "27382171",
+    "16785311",
+    "18669662",
   ],
-  deepenPhase: "p2_1_neuro_vagus_cholinergic" as const,
+  deepenPhase: "p2_1_neuro_spleen_circuit_depth" as const,
   entities: [
     {
       id: "HSI-N-vagus-efferent",
@@ -325,6 +372,16 @@ export const NI_PATHWAY_META = {
     {
       id: "HSI-N-implantable-vns",
       label: "Implantable VNS (experimental)",
+      kind: "neuroimmune_axis",
+    },
+    {
+      id: "HSI-N-spleen-innate",
+      label: "Spleen (innate cytokine reservoir)",
+      kind: "neuroimmune_axis",
+    },
+    {
+      id: "HSI-N-splenic-nerve",
+      label: "Splenic nerve (catecholaminergic)",
       kind: "neuroimmune_axis",
     },
   ],

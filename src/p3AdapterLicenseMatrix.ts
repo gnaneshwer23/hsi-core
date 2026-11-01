@@ -12,6 +12,11 @@ import {
   FUTURE_TECH_ADAPTER_STUBS,
   P3_ADAPTER_LICENSE_MATRIX_SCHEMA,
 } from "./systemsAxes";
+import {
+  USE_RESEARCH_SIGN_OFF_FIXTURE,
+  getResearchSignOffFixture,
+  researchSignOffFixtureExportPointer,
+} from "./researchSignOffFixture";
 
 export const P3_ADAPTER_LICENSE_MATRIX_EXPORT_SCHEMA =
   "hsi-p3-adapter-license-matrix-1" as const;
@@ -25,6 +30,7 @@ export const P3_ADAPTER_SIGN_OFF_STATUSES = [
   "needs_review",
   "non_commercial_only",
   "research_ok_documented",
+  "signed_research_test_only",
 ] as const;
 export type P3AdapterSignOffStatus =
   (typeof P3_ADAPTER_SIGN_OFF_STATUSES)[number];
@@ -69,6 +75,10 @@ export type P3AdapterLicenseRow = {
   autoApproveIntoKg: false;
   containsPhi: false;
   notes: string;
+  notCommercial?: boolean;
+  replaceWithLegalSignOff?: boolean;
+  researchSignOffFixture?: boolean;
+  banner?: string | null;
 };
 
 export type P3AdapterLicenseMatrixBundle = {
@@ -88,10 +98,14 @@ export type P3AdapterLicenseMatrixBundle = {
     adapterCount: number;
     blockedUntilSignOffCount: number;
     researchOkDocumentedCount: number;
+    signedResearchTestOnlyCount: number;
     needsReviewCount: number;
     nonCommercialOnlyCount: number;
     notSignedCount: number;
+    researchSignOffFixtureActive: boolean;
   };
+  researchSignOffFixture: ReturnType<typeof researchSignOffFixtureExportPointer>;
+  weightsPolicyDoc: "docs/P3_WEIGHTS_AND_LICENSE_POLICY.md";
   adapters: P3AdapterLicenseRow[];
   signOffVocabulary: typeof P3_ADAPTER_SIGN_OFF_STATUSES;
   instructions: string[];
@@ -151,7 +165,7 @@ export function assertSafeP3AdapterLicenseRow(
     return {
       ok: false,
       reason:
-        "signOffStatus must be not_signed | needs_review | non_commercial_only | research_ok_documented",
+        "signOffStatus must be not_signed | needs_review | non_commercial_only | research_ok_documented | signed_research_test_only",
     };
   }
   if (typeof value.blockedUntilSignOff !== "boolean") {
@@ -174,7 +188,7 @@ export function assertSafeP3AdapterLicenseRow(
     return {
       ok: false,
       reason:
-        "non_commercial_only stays blockedUntilSignOff=true until a separate commercial review lands",
+        "non_commercial_only stays blockedUntilSignOff=true until a separate commercial review or research fixture lands",
     };
   }
   if (
@@ -186,6 +200,28 @@ export function assertSafeP3AdapterLicenseRow(
       reason:
         "research_ok_documented implies license gate open for research (blockedUntilSignOff=false); runtime still proposal-only",
     };
+  }
+  if (status === "signed_research_test_only") {
+    if (value.blockedUntilSignOff !== false) {
+      return {
+        ok: false,
+        reason:
+          "signed_research_test_only implies gate open for research-test stubs (blockedUntilSignOff=false)",
+      };
+    }
+    if (value.notCommercial !== true) {
+      return {
+        ok: false,
+        reason: "signed_research_test_only requires notCommercial=true",
+      };
+    }
+    if (value.replaceWithLegalSignOff !== true) {
+      return {
+        ok: false,
+        reason:
+          "signed_research_test_only requires replaceWithLegalSignOff=true",
+      };
+    }
   }
   const risk = value.commercialRisk;
   if (
@@ -236,6 +272,10 @@ function row(
  * Do not invent commercial signed; do not vendor weights.
  */
 export function buildP3AdapterLicenseRows(): P3AdapterLicenseRow[] {
+  const tdcFixture = getResearchSignOffFixture("adapter-tdc");
+  const af3Fixture = getResearchSignOffFixture("adapter-af3");
+  const isiFixture = getResearchSignOffFixture("adapter-isi-agents");
+
   return [
     row({
       adapterId: "adapter-tdc",
@@ -244,15 +284,20 @@ export function buildP3AdapterLicenseRows(): P3AdapterLicenseRow[] {
         "Offline ML eval / benchmarks against graded claims; not seed authority",
       licenseClass: "mixed_per_dataset",
       commercialRisk: "medium",
-      signOffStatus: "needs_review",
-      blockedUntilSignOff: true,
+      signOffStatus: tdcFixture ? tdcFixture.signOffStatus : "needs_review",
+      blockedUntilSignOff: tdcFixture ? tdcFixture.blockedUntilSignOff : true,
       docsUrl: "https://github.com/mims-harvard/TDC/blob/main/LICENSE",
       secondaryDocsUrls: [
         "https://github.com/mims-harvard/TDC",
         "https://tdcommons.ai",
       ],
-      notes:
-        "Codebase MIT; each dataset has its own license — review task page + provider terms before any download/run. Cite TDC + underlying sets.",
+      notes: tdcFixture
+        ? `${tdcFixture.notes} Fixture banner: ${tdcFixture.banner}`
+        : "Codebase MIT; each dataset has its own license — review task page + provider terms before any download/run. Cite TDC + underlying sets.",
+      notCommercial: tdcFixture?.notCommercial,
+      replaceWithLegalSignOff: tdcFixture?.replaceWithLegalSignOff,
+      researchSignOffFixture: Boolean(tdcFixture),
+      banner: tdcFixture?.banner ?? null,
     }),
     row({
       adapterId: "adapter-af3",
@@ -260,16 +305,23 @@ export function buildP3AdapterLicenseRows(): P3AdapterLicenseRow[] {
       purpose: "Structure prediction for mechanism hypotheses (discovery-only)",
       licenseClass: "weights_restricted",
       commercialRisk: "high",
-      signOffStatus: "non_commercial_only",
-      blockedUntilSignOff: true,
+      signOffStatus: af3Fixture
+        ? af3Fixture.signOffStatus
+        : "non_commercial_only",
+      blockedUntilSignOff: af3Fixture ? af3Fixture.blockedUntilSignOff : true,
       docsUrl:
         "https://github.com/google-deepmind/alphafold3/blob/main/WEIGHTS_TERMS_OF_USE.md",
       secondaryDocsUrls: [
         "https://github.com/google-deepmind/alphafold3",
         "https://github.com/google-deepmind/alphafold3/blob/main/LICENSE",
       ],
-      notes:
-        "Source code Apache-2.0 (post-2026 relicense); model parameters remain under AlphaFold 3 Model Parameters Terms of Use — non-commercial / restricted. No commercial signed claim; never vendor weights into hsi-core.",
+      notes: af3Fixture
+        ? `${af3Fixture.notes} NEVER claim commercial AF3 rights. Stub proposals only.`
+        : "Source code Apache-2.0 (post-2026 relicense); model parameters remain under AlphaFold 3 Model Parameters Terms of Use — non-commercial / restricted. No commercial signed claim; never vendor weights into hsi-core.",
+      notCommercial: true,
+      replaceWithLegalSignOff: af3Fixture?.replaceWithLegalSignOff,
+      researchSignOffFixture: Boolean(af3Fixture),
+      banner: af3Fixture?.banner ?? null,
     }),
     row({
       adapterId: "adapter-boltz",
@@ -283,7 +335,11 @@ export function buildP3AdapterLicenseRows(): P3AdapterLicenseRow[] {
       docsUrl: "https://github.com/jwohlwend/boltz/blob/main/LICENSE",
       secondaryDocsUrls: ["https://github.com/jwohlwend/boltz"],
       notes:
-        "Upstream documents MIT for code and weights (academic + commercial). Still: no weight vendoring in hsi-core; proposals only; Boltz-2.1 closed API / third-party hosting has separate terms — re-check before those paths.",
+        "Upstream documents MIT for code and weights (academic + commercial). Still: no weight vendoring in hsi-core; proposals only; require WEIGHTS_POLICY_ACK=true before stub proposals (docs/P3_WEIGHTS_AND_LICENSE_POLICY.md); optional BOLTZ_WEIGHTS_CACHE external path only.",
+      notCommercial: false,
+      replaceWithLegalSignOff: false,
+      researchSignOffFixture: false,
+      banner: null,
     }),
     row({
       adapterId: "adapter-esm",
@@ -348,15 +404,22 @@ export function buildP3AdapterLicenseRows(): P3AdapterLicenseRow[] {
         "Supervised research agents (orchestrator + specialists) — runtime out of hsi-core",
       licenseClass: "out_of_repo_runtime",
       commercialRisk: "medium",
-      signOffStatus: "not_signed",
-      blockedUntilSignOff: true,
+      signOffStatus: isiFixture
+        ? isiFixture.signOffStatus
+        : "not_signed",
+      blockedUntilSignOff: isiFixture ? isiFixture.blockedUntilSignOff : true,
       docsUrl:
         "https://github.com/gnaneshwer23/hsi-core/blob/main/docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md",
       secondaryDocsUrls: [
         "https://github.com/gnaneshwer23/hsi-core/blob/main/docs/ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md",
       ],
-      notes:
-        "Catalog/schema pattern only in hsi-core. Executable runtime = ISI product (out of repo). No agent runtime sign-off claimed here.",
+      notes: isiFixture
+        ? `${isiFixture.notes} Fixture banner: ${isiFixture.banner}`
+        : "Catalog/schema pattern only in hsi-core. Executable runtime = ISI product (out of repo). No agent runtime sign-off claimed here.",
+      notCommercial: isiFixture?.notCommercial,
+      replaceWithLegalSignOff: isiFixture?.replaceWithLegalSignOff,
+      researchSignOffFixture: Boolean(isiFixture),
+      banner: isiFixture?.banner ?? null,
     }),
   ];
 }
@@ -406,6 +469,9 @@ export function buildP3AdapterLicenseMatrixBundle(opts?: {
       researchOkDocumentedCount: adapters.filter(
         (a) => a.signOffStatus === "research_ok_documented",
       ).length,
+      signedResearchTestOnlyCount: adapters.filter(
+        (a) => a.signOffStatus === "signed_research_test_only",
+      ).length,
       needsReviewCount: adapters.filter((a) => a.signOffStatus === "needs_review")
         .length,
       nonCommercialOnlyCount: adapters.filter(
@@ -413,17 +479,22 @@ export function buildP3AdapterLicenseMatrixBundle(opts?: {
       ).length,
       notSignedCount: adapters.filter((a) => a.signOffStatus === "not_signed")
         .length,
+      researchSignOffFixtureActive: USE_RESEARCH_SIGN_OFF_FIXTURE,
     },
+    researchSignOffFixture: researchSignOffFixtureExportPointer(),
+    weightsPolicyDoc: "docs/P3_WEIGHTS_AND_LICENSE_POLICY.md",
     adapters,
     signOffVocabulary: P3_ADAPTER_SIGN_OFF_STATUSES,
     instructions: [
-      "Read docs/P3_ADAPTER_RFC.md before wiring any adapter.",
+      "Read docs/P3_ADAPTER_RFC.md + docs/P3_WEIGHTS_AND_LICENSE_POLICY.md before wiring any adapter.",
       "Refuse to run / download / vendor when blockedUntilSignOff=true.",
       "Emit ModelProposalArtifact only → Gate C pending (autoApprove=false).",
       "Never flip hsiGrade / curationReview; never autoApproveIntoKg.",
       "Never vendor multi-GB model weights into hsi-core.",
       "Never claim commercialLicenseSigned without written evidence in-repo.",
-      "signOffStatus vocabulary: not_signed | needs_review | non_commercial_only | research_ok_documented.",
+      "Boltz: require WEIGHTS_POLICY_ACK=true before stub proposals; optional BOLTZ_WEIGHTS_CACHE only.",
+      "AF3 research fixture ≠ commercial AF3 rights (notCommercial=true; replaceWithLegalSignOff=true).",
+      "signOffStatus vocabulary: not_signed | needs_review | non_commercial_only | research_ok_documented | signed_research_test_only.",
     ],
   };
 }
@@ -449,9 +520,12 @@ export function serializeP3AdapterLicenseMatrixMarkdown(
     `- Adapters: ${bundle.summary.adapterCount}`,
     `- Blocked until sign-off: ${bundle.summary.blockedUntilSignOffCount}`,
     `- research_ok_documented: ${bundle.summary.researchOkDocumentedCount}`,
+    `- signed_research_test_only: ${bundle.summary.signedResearchTestOnlyCount}`,
     `- needs_review: ${bundle.summary.needsReviewCount}`,
     `- non_commercial_only: ${bundle.summary.nonCommercialOnlyCount}`,
     `- not_signed: ${bundle.summary.notSignedCount}`,
+    `- researchSignOffFixtureActive: ${bundle.summary.researchSignOffFixtureActive}`,
+    `- weights policy: [\`${bundle.weightsPolicyDoc}\`](../${bundle.weightsPolicyDoc})`,
     "",
     "## Rows",
     "",

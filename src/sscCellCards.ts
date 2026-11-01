@@ -210,6 +210,50 @@ export const SSC_NEIGHBOURHOOD_CARDS: readonly SscNeighbourhoodCard[] = [
     notes:
       "teaching=hypothesized only. No CL/MONDO cell bind. Optional future taxon locator: NCBITaxon:10376 (not wired as ontologyHint type).",
   },
+  {
+    id: "HSI-CARD-SSC-CXCL13-TFH",
+    kind: "cell_subset",
+    nodeId: "HSI-N-cxcl13-tfh-like",
+    label: "CXCL13+ Tfh-like T cells (SSc skin)",
+    definition:
+      "Recirculating CXCL13+ T-cell cluster in SSc skin with Tfh-like gene programme, often adjacent to B cells — tissue complement to circulating Tfh.",
+    ontologyHints: [
+      {
+        ontology: "CL",
+        id: "CL:0002038",
+        label: "T follicular helper cell (parent class hint)",
+        bindStatus: "hint_only",
+      },
+    ],
+    markers: ["CXCL13", "ICOS", "TIGIT", "IL-21 (context)", "IFNγ (context)"],
+    subsetsOrRelated: ["circulating Tfh", "skin-resident helpers"],
+    tissues: ["SSc lesional skin"],
+    citationPmids: ["34031030"],
+    spineNodeId: "HSI-IC-sub-tfh",
+    notes: "Depth deepen card. CL parent hint only — not full ontology bind.",
+  },
+  {
+    id: "HSI-CARD-SSC-BAFF",
+    kind: "cytokine",
+    nodeId: "HSI-N-baff",
+    label: "BAFF (B-cell activating factor)",
+    definition:
+      "TNF-family cytokine supporting B-cell survival/proliferation; elevated serum BAFF and enhanced BAFF signalling reported in SSc B lymphocytes.",
+    ontologyHints: [
+      {
+        ontology: "NCBIGene",
+        id: "NCBIGene:10673",
+        label: "TNFSF13B (BAFF)",
+        bindStatus: "hint_only",
+      },
+    ],
+    markers: ["BAFF / BLyS", "BAFF-R / BR3 (receptor context)"],
+    subsetsOrRelated: ["APRIL (related TNF family)"],
+    tissues: ["circulation (serum)", "lymphoid"],
+    citationPmids: ["16385515", "17581616"],
+    spineNodeId: null,
+    notes: "Depth deepen. Not a BAFF-drug dosing or CDS claim.",
+  },
 ];
 
 export function listSscNeighbourhoodCards(): SscNeighbourhoodCard[] {

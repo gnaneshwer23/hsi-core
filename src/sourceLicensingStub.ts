@@ -187,6 +187,23 @@ const PMID_REVIEW: Record<string, ReviewEntry> = {
     publisherLicense: "cc by",
     note: "J Pers Med (MDPI); Europe PMC license=cc by — OA under CC BY.",
   },
+  "34031030": {
+    status: "unknown",
+    doi: "10.1136/annrheumdis-2021-220209",
+    pmcid: "PMC8516708",
+    publisherLicense: null,
+    note: "Ann Rheum Dis 2021; PMC author manuscript — cite + link; no invented CC-BY.",
+  },
+  "16385515": {
+    status: "restricted",
+    doi: "10.1002/art.21526",
+    note: "Arthritis Rheum 2006; no OA/PMC — cite metadata only.",
+  },
+  "17581616": {
+    status: "restricted",
+    doi: "10.1038/sj.jid.5700919",
+    note: "J Invest Dermatol 2007; no OA/PMC — cite metadata only.",
+  },
 
   // Gut SCFA / mucosal
   "19625695": {
@@ -234,6 +251,20 @@ const PMID_REVIEW: Record<string, ReviewEntry> = {
     publisherLicense: null,
     note: "Inflamm Bowel Dis; free in PMC; Crossref CHORUS/standard OUP model (not CC) — unknown for redistribution.",
   },
+  "24412617": {
+    status: "unknown",
+    doi: "10.1016/j.immuni.2013.12.007",
+    pmcid: "PMC4305274",
+    publisherLicense: null,
+    note: "Immunity 2014; NIHMS/PMC manuscript — cite + link; no invented CC-BY.",
+  },
+  "29163504": {
+    status: "ok_oa",
+    doi: "10.3389/fimmu.2017.01429",
+    pmcid: "PMC5670331",
+    publisherLicense: "cc by",
+    note: "Front Immunol 2017; OA under CC BY.",
+  },
 
   // Neuro / vagus
   "10839541": {
@@ -255,6 +286,20 @@ const PMID_REVIEW: Record<string, ReviewEntry> = {
     status: "restricted",
     doi: "10.1038/ni1229",
     note: "Nat Immunol 2005; no OA/PMC — cite metadata only.",
+  },
+  "16785311": {
+    status: "ok_oa",
+    doi: "10.1084/jem.20052362",
+    pmcid: "PMC2118357",
+    publisherLicense: "cc by-nc-sa",
+    note: "J Exp Med 2006; PMC free — check Rockefeller reuse terms; cite metadata + PMC.",
+  },
+  "18669662": {
+    status: "ok_oa",
+    doi: "10.1073/pnas.0803237105",
+    pmcid: "PMC2504833",
+    publisherLicense: null,
+    note: "PNAS 2008; PMC free author manuscript — cite + link; no invented CC-BY.",
   },
   "21921156": {
     status: "unknown",

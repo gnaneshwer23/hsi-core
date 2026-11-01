@@ -253,11 +253,29 @@ export {
 } from "./p3AdapterLicenseMatrix";
 
 export {
+  BOLTZ_WEIGHTS_CACHE_ENV,
   P3AdapterLicenseBlockedError,
   P3AdapterUnknownError,
+  WEIGHTS_POLICY_ACK_ENV,
+  WeightsPolicyNotAckedError,
+  assertBoltzAdapterRunnable,
   assertP3AdapterRunnable,
+  assertWeightsPolicyAcked,
+  getOptionalBoltzWeightsCache,
   getP3AdapterLicenseRow,
+  isWeightsPolicyAcked,
 } from "./p3AdapterGate";
+
+export {
+  RESEARCH_SIGN_OFF_BANNER,
+  RESEARCH_SIGN_OFF_FIXTURES,
+  USE_RESEARCH_SIGN_OFF_FIXTURE,
+  getResearchSignOffFixture,
+  listActiveResearchSignOffFixtures,
+  researchSignOffFixtureExportPointer,
+  type ResearchSignOffFixtureRecord,
+  type ResearchSignOffStatus,
+} from "./researchSignOffFixture";
 
 export {
   RDKIT_ADAPTER_EXPORT_SCHEMA,
@@ -337,6 +355,62 @@ export {
   type EsmRuntime,
   type EsmSequenceFixture,
 } from "./adapters/esmAdapter";
+
+export {
+  AF3_ADAPTER_EXPORT_SCHEMA,
+  AF3_ADAPTER_ID,
+  AF3_ADAPTER_RUNTIME_SCHEMA,
+  AF3_PUBLIC_STRUCTURE_FIXTURES,
+  buildAf3AdapterProposals,
+  runAf3Adapter,
+  serializeAf3AdapterBundle,
+  serializeAf3AdapterMarkdown,
+  type Af3AdapterBundle,
+  type Af3Runtime,
+  type Af3StructureFixture,
+} from "./adapters/af3Adapter";
+
+export {
+  TDC_ADAPTER_EXPORT_SCHEMA,
+  TDC_ADAPTER_ID,
+  TDC_ADAPTER_RUNTIME_SCHEMA,
+  TDC_PUBLIC_BENCHMARK_FIXTURES,
+  buildTdcAdapterProposals,
+  runTdcAdapter,
+  serializeTdcAdapterBundle,
+  serializeTdcAdapterMarkdown,
+  type TdcAdapterBundle,
+  type TdcBenchmarkFixture,
+  type TdcRuntime,
+} from "./adapters/tdcAdapter";
+
+export {
+  BOLTZ_ADAPTER_EXPORT_SCHEMA,
+  BOLTZ_ADAPTER_ID,
+  BOLTZ_ADAPTER_RUNTIME_SCHEMA,
+  BOLTZ_PUBLIC_STRUCTURE_FIXTURES,
+  buildBoltzAdapterProposals,
+  runBoltzAdapter,
+  serializeBoltzAdapterBundle,
+  serializeBoltzAdapterMarkdown,
+  type BoltzAdapterBundle,
+  type BoltzRuntime,
+  type BoltzStructureFixture,
+} from "./adapters/boltzAdapter";
+
+export {
+  ISI_AGENTS_ADAPTER_EXPORT_SCHEMA,
+  ISI_AGENTS_ADAPTER_ID,
+  ISI_AGENTS_ADAPTER_RUNTIME_SCHEMA,
+  ISI_AGENT_PUBLIC_FIXTURES,
+  buildIsiAgentsAdapterProposals,
+  runIsiAgentsAdapter,
+  serializeIsiAgentsAdapterBundle,
+  serializeIsiAgentsAdapterMarkdown,
+  type IsiAgentFixture,
+  type IsiAgentsAdapterBundle,
+  type IsiAgentsRuntime,
+} from "./adapters/isiAgentsAdapter";
 
 export {
   ISI_CONSUME_CONTRACT_SCHEMA,

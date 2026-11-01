@@ -13,7 +13,7 @@ import {
 describe("P1.3 gut–immune SCFA ↔ mucosal Treg/Th17", () => {
   test("deep seeds land with verified PMIDs and honest uncertain grades", () => {
     expect(gutDeepSeedsLanded()).toBe(true);
-    expect(HSI_GUT_SEED_EDGES.length).toBe(7);
+    expect(HSI_GUT_SEED_EDGES.length).toBe(9);
     expect(GUT_PATHWAY_META.primaryPmids).toEqual([
       "21205640",
       "23842501",
@@ -22,6 +22,8 @@ describe("P1.3 gut–immune SCFA ↔ mucosal Treg/Th17", () => {
       "24917457",
       "30918945",
       "19625695",
+      "24412617",
+      "29163504",
     ]);
 
     for (const edge of HSI_GUT_SEED_EDGES) {

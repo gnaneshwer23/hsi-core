@@ -27,9 +27,10 @@ describe("P2.5 P3 adapter RFC + license matrix", () => {
     expect(P3_ADAPTER_LICENSE_MATRIX_SCHEMA.rfcDoc).toBe(
       "docs/P3_ADAPTER_RFC.md",
     );
-    expect(P3_ADAPTER_LICENSE_MATRIX_SCHEMA.signOffStatuses).toEqual([
+    expect([...P3_ADAPTER_LICENSE_MATRIX_SCHEMA.signOffStatuses]).toEqual([
       ...P3_ADAPTER_SIGN_OFF_STATUSES,
     ]);
+    expect(P3_ADAPTER_SIGN_OFF_STATUSES).toContain("signed_research_test_only");
   });
 
   test("matrix covers every FUTURE_TECH_ADAPTER_STUBS id with honest statuses", () => {
@@ -49,10 +50,13 @@ describe("P2.5 P3 adapter RFC + license matrix", () => {
       expect(stub.mayFlipEvidenceGrade).toBe(false);
     }
 
-    expect(byId["adapter-tdc"]!.signOffStatus).toBe("needs_review");
-    expect(byId["adapter-tdc"]!.blockedUntilSignOff).toBe(true);
-    expect(byId["adapter-af3"]!.signOffStatus).toBe("non_commercial_only");
-    expect(byId["adapter-af3"]!.blockedUntilSignOff).toBe(true);
+    expect(byId["adapter-tdc"]!.signOffStatus).toBe("research_ok_documented");
+    expect(byId["adapter-tdc"]!.blockedUntilSignOff).toBe(false);
+    expect(byId["adapter-tdc"]!.researchSignOffFixture).toBe(true);
+    expect(byId["adapter-af3"]!.signOffStatus).toBe("signed_research_test_only");
+    expect(byId["adapter-af3"]!.blockedUntilSignOff).toBe(false);
+    expect(byId["adapter-af3"]!.notCommercial).toBe(true);
+    expect(byId["adapter-af3"]!.replaceWithLegalSignOff).toBe(true);
     expect(byId["adapter-boltz"]!.signOffStatus).toBe("research_ok_documented");
     expect(byId["adapter-boltz"]!.blockedUntilSignOff).toBe(false);
     expect(byId["adapter-esm"]!.signOffStatus).toBe("research_ok_documented");
@@ -63,8 +67,10 @@ describe("P2.5 P3 adapter RFC + license matrix", () => {
     expect(byId["adapter-reinvent4"]!.signOffStatus).toBe(
       "research_ok_documented",
     );
-    expect(byId["adapter-isi-agents"]!.signOffStatus).toBe("not_signed");
-    expect(byId["adapter-isi-agents"]!.blockedUntilSignOff).toBe(true);
+    expect(byId["adapter-isi-agents"]!.signOffStatus).toBe(
+      "signed_research_test_only",
+    );
+    expect(byId["adapter-isi-agents"]!.blockedUntilSignOff).toBe(false);
 
     // Honesty: no invented commercial signed field anywhere.
     for (const r of rows) {
@@ -86,8 +92,11 @@ describe("P2.5 P3 adapter RFC + license matrix", () => {
     expect(bundle.vendorsModelWeights).toBe(false);
     expect(bundle.emitsModelProposalOnly).toBe(true);
     expect(bundle.summary.adapterCount).toBe(8);
-    expect(bundle.summary.blockedUntilSignOffCount).toBeGreaterThanOrEqual(3);
-    expect(bundle.summary.researchOkDocumentedCount).toBeGreaterThanOrEqual(4);
+    expect(bundle.summary.blockedUntilSignOffCount).toBe(0);
+    expect(bundle.summary.researchOkDocumentedCount).toBeGreaterThanOrEqual(5);
+    expect(bundle.summary.signedResearchTestOnlyCount).toBeGreaterThanOrEqual(2);
+    expect(bundle.summary.researchSignOffFixtureActive).toBe(true);
+    expect(bundle.weightsPolicyDoc).toBe("docs/P3_WEIGHTS_AND_LICENSE_POLICY.md");
 
     const json = JSON.parse(serializeP3AdapterLicenseMatrix(bundle)) as {
       adapters: Array<{ adapterId: string }>;

@@ -2,7 +2,7 @@
   "schemaVersion": "hsi-ssc-pathway-pack-1",
   "notCds": true,
   "autoApproveIntoKg": false,
-  "generatedAt": "2026-11-01T20:21:39.173Z",
+  "generatedAt": "2026-11-01T20:31:43.025Z",
   "pathway": {
     "id": "ssc-tfh-b-il21",
     "label": "SSc · CD4/Tfh–B-cell–IL-21",
@@ -19,7 +19,10 @@
       "HSI-C-SSC-006",
       "HSI-C-SSC-007",
       "HSI-C-SSC-008",
-      "HSI-C-SSC-009"
+      "HSI-C-SSC-009",
+      "HSI-C-SSC-010",
+      "HSI-C-SSC-011",
+      "HSI-C-SSC-012"
     ],
     "primaryEdgeIds": [
       "HSI-E-SSC-001",
@@ -30,7 +33,10 @@
       "HSI-E-SSC-006",
       "HSI-E-SSC-007",
       "HSI-E-SSC-008",
-      "HSI-E-SSC-009"
+      "HSI-E-SSC-009",
+      "HSI-E-SSC-010",
+      "HSI-E-SSC-011",
+      "HSI-E-SSC-012"
     ],
     "primaryPmids": [
       "30760472",
@@ -38,11 +44,14 @@
       "29626172",
       "33175976",
       "37763102",
+      "34031030",
+      "16385515",
+      "17581616",
       "21314428",
       "16339522",
       "24129067"
     ],
-    "deepenPhase": "p1_ssc_cell_cards_and_pmids",
+    "deepenPhase": "p1_ssc_depth_baff_cxcl13",
     "entities": [
       {
         "id": "HSI-N-ssc",
@@ -60,6 +69,11 @@
         "kind": "cell_subset"
       },
       {
+        "id": "HSI-N-cxcl13-tfh-like",
+        "label": "CXCL13+ Tfh-like (skin)",
+        "kind": "cell_subset"
+      },
+      {
         "id": "HSI-N-b-cell",
         "label": "B cell",
         "kind": "cell"
@@ -73,6 +87,16 @@
         "id": "HSI-N-il21",
         "label": "IL-21",
         "kind": "cytokine"
+      },
+      {
+        "id": "HSI-N-baff",
+        "label": "BAFF",
+        "kind": "cytokine"
+      },
+      {
+        "id": "HSI-N-baff-antagonist",
+        "label": "BAFF antagonist (experimental)",
+        "kind": "intervention_hypothesis"
       },
       {
         "id": "HSI-N-skin-fibrosis",
@@ -355,6 +379,72 @@
       ],
       "spineNodeId": null,
       "notes": "teaching=hypothesized only. No CL/MONDO cell bind. Optional future taxon locator: NCBITaxon:10376 (not wired as ontologyHint type)."
+    },
+    {
+      "id": "HSI-CARD-SSC-CXCL13-TFH",
+      "kind": "cell_subset",
+      "nodeId": "HSI-N-cxcl13-tfh-like",
+      "label": "CXCL13+ Tfh-like T cells (SSc skin)",
+      "definition": "Recirculating CXCL13+ T-cell cluster in SSc skin with Tfh-like gene programme, often adjacent to B cells — tissue complement to circulating Tfh.",
+      "ontologyHints": [
+        {
+          "ontology": "CL",
+          "id": "CL:0002038",
+          "label": "T follicular helper cell (parent class hint)",
+          "bindStatus": "hint_only"
+        }
+      ],
+      "markers": [
+        "CXCL13",
+        "ICOS",
+        "TIGIT",
+        "IL-21 (context)",
+        "IFNγ (context)"
+      ],
+      "subsetsOrRelated": [
+        "circulating Tfh",
+        "skin-resident helpers"
+      ],
+      "tissues": [
+        "SSc lesional skin"
+      ],
+      "citationPmids": [
+        "34031030"
+      ],
+      "spineNodeId": "HSI-IC-sub-tfh",
+      "notes": "Depth deepen card. CL parent hint only — not full ontology bind."
+    },
+    {
+      "id": "HSI-CARD-SSC-BAFF",
+      "kind": "cytokine",
+      "nodeId": "HSI-N-baff",
+      "label": "BAFF (B-cell activating factor)",
+      "definition": "TNF-family cytokine supporting B-cell survival/proliferation; elevated serum BAFF and enhanced BAFF signalling reported in SSc B lymphocytes.",
+      "ontologyHints": [
+        {
+          "ontology": "NCBIGene",
+          "id": "NCBIGene:10673",
+          "label": "TNFSF13B (BAFF)",
+          "bindStatus": "hint_only"
+        }
+      ],
+      "markers": [
+        "BAFF / BLyS",
+        "BAFF-R / BR3 (receptor context)"
+      ],
+      "subsetsOrRelated": [
+        "APRIL (related TNF family)"
+      ],
+      "tissues": [
+        "circulation (serum)",
+        "lymphoid"
+      ],
+      "citationPmids": [
+        "16385515",
+        "17581616"
+      ],
+      "spineNodeId": null,
+      "notes": "Depth deepen. Not a BAFF-drug dosing or CDS claim."
     }
   ],
   "evidenceMap": [
@@ -465,6 +555,42 @@
       "pmid": "37763102",
       "citationLabel": "Pellicano C et al. J Pers Med 2023 — In Systemic Sclerosis Patients, Peripheral Blood CD21(low) B Cells and Serum IL-4 and IL-21 Influence Joint Involvement.",
       "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/37763102/"
+    },
+    {
+      "edgeId": "HSI-E-SSC-010",
+      "claimId": "HSI-C-SSC-010",
+      "subject": "CXCL13+ Tfh-like T cells (SSc skin)",
+      "predicate": "associated_with",
+      "object": "B cell",
+      "evidenceGrade": "uncertain",
+      "teachingStatus": "associative",
+      "pmid": "34031030",
+      "citationLabel": "Gaydosik AM et al. Ann Rheum Dis 2021 — Single-cell transcriptome analysis identifies skin-specific T-cell responses in systemic sclerosis.",
+      "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/34031030/"
+    },
+    {
+      "edgeId": "HSI-E-SSC-011",
+      "claimId": "HSI-C-SSC-011",
+      "subject": "BAFF (B-cell activating factor)",
+      "predicate": "associated_with",
+      "object": "Systemic sclerosis",
+      "evidenceGrade": "uncertain",
+      "teachingStatus": "associative",
+      "pmid": "16385515",
+      "citationLabel": "Matsushita T et al. Arthritis Rheum 2006 — Elevated serum BAFF levels in patients with systemic sclerosis: enhanced BAFF signaling in systemic sclerosis B lymphocytes.",
+      "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/16385515/"
+    },
+    {
+      "edgeId": "HSI-E-SSC-012",
+      "claimId": "HSI-C-SSC-012",
+      "subject": "BAFF antagonist (experimental)",
+      "predicate": "inhibits",
+      "object": "Skin fibrosis",
+      "evidenceGrade": "uncertain",
+      "teachingStatus": "hypothesized",
+      "pmid": "17581616",
+      "citationLabel": "Matsushita T et al. J Invest Dermatol 2007 — BAFF antagonist attenuates the development of skin fibrosis in tight-skin mice.",
+      "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/17581616/"
     }
   ],
   "competingExplanations": [
@@ -516,6 +642,33 @@
         "HSI-C-SSC-007"
       ],
       "note": "Uncertainty branch only — never hard-merge EBV with Tfh→B→IL-21 as established causation."
+    },
+    {
+      "id": "expl-ssc-cxcl13-skin-tfh",
+      "label": "Skin CXCL13+ Tfh-like cells adjacent to B cells",
+      "status": "from_literature_slice",
+      "relatedClaimIds": [
+        "HSI-C-SSC-010"
+      ],
+      "note": "Depth deepen (Gaydosik 2021). Tissue Tfh-like frame complements circulating Tfh–IL-21."
+    },
+    {
+      "id": "expl-ssc-baff-b-survival",
+      "label": "Elevated BAFF / enhanced BAFF signalling in SSc B cells",
+      "status": "from_literature_slice",
+      "relatedClaimIds": [
+        "HSI-C-SSC-011"
+      ],
+      "note": "Depth deepen (Matsushita 2006). B-survival neighbourhood — not a BAFF-drug CDS claim."
+    },
+    {
+      "id": "expl-ssc-baff-antagonist-fibrosis",
+      "label": "BAFF antagonism attenuates skin fibrosis (mouse)",
+      "status": "hypothesized_branch",
+      "relatedClaimIds": [
+        "HSI-C-SSC-012"
+      ],
+      "note": "Depth deepen (Matsushita 2007). teaching=hypothesized — never invent human dosing/CDS."
     }
   ],
   "claims": [
@@ -578,6 +731,27 @@
     {
       "id": "HSI-C-SSC-009",
       "assertion": "In systemic sclerosis, peripheral CD21low B cells and serum IL-4 / IL-21 are reported to influence joint involvement (B-cell–IL-21 neighbourhood deepen; not Stage 1 RA lock).",
+      "domain": "autoimmunity",
+      "isiRelationshipId": null,
+      "akshNodeId": null
+    },
+    {
+      "id": "HSI-C-SSC-010",
+      "assertion": "Single-cell analysis of SSc skin identifies a CXCL13+ Tfh-like T-cell cluster adjacent to B cells and poised to promote local B-cell responses (neighbourhood deepen; not Stage 1 RA lock).",
+      "domain": "autoimmunity",
+      "isiRelationshipId": null,
+      "akshNodeId": null
+    },
+    {
+      "id": "HSI-C-SSC-011",
+      "assertion": "Serum BAFF is elevated in systemic sclerosis with enhanced BAFF signalling reported in SSc B lymphocytes (B-survival neighbourhood deepen; not a therapeutic claim).",
+      "domain": "autoimmunity",
+      "isiRelationshipId": null,
+      "akshNodeId": null
+    },
+    {
+      "id": "HSI-C-SSC-012",
+      "assertion": "BAFF antagonism attenuates skin fibrosis in the tight-skin mouse model (hypothesized translational frame — not human dosing, not CDS, not partnerSigned).",
       "domain": "autoimmunity",
       "isiRelationshipId": null,
       "akshNodeId": null
@@ -790,6 +964,75 @@
       },
       "bridgeCandidate": false,
       "seedKind": "placeholder"
+    },
+    {
+      "id": "HSI-E-SSC-010",
+      "edgeType": "associated_with",
+      "subjectId": "HSI-N-cxcl13-tfh-like",
+      "subjectLabel": "CXCL13+ Tfh-like T cells (SSc skin)",
+      "objectId": "HSI-N-b-cell",
+      "objectLabel": "B cell",
+      "claimId": "HSI-C-SSC-010",
+      "curationReview": "source-verified",
+      "hsiGrade": "uncertain",
+      "teachingStatus": "associative",
+      "domain": "autoimmunity",
+      "provenance": {
+        "pmid": "34031030",
+        "doi": "10.1136/annrheumdis-2021-220209",
+        "citationLabel": "Gaydosik AM et al. Ann Rheum Dis 2021 — Single-cell transcriptome analysis identifies skin-specific T-cell responses in systemic sclerosis.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/34031030/",
+        "notes": "Depth deepen: PMID 34031030 verified. CXCL13+ skin Tfh-like frame complements circulating Tfh–IL-21; teaching=associative. Gate C = human only. Not CDS.",
+        "recordedAt": "2026-11-01T17:00:00.000Z"
+      },
+      "bridgeCandidate": false,
+      "seedKind": "placeholder"
+    },
+    {
+      "id": "HSI-E-SSC-011",
+      "edgeType": "associated_with",
+      "subjectId": "HSI-N-baff",
+      "subjectLabel": "BAFF (B-cell activating factor)",
+      "objectId": "HSI-N-ssc",
+      "objectLabel": "Systemic sclerosis",
+      "claimId": "HSI-C-SSC-011",
+      "curationReview": "source-verified",
+      "hsiGrade": "uncertain",
+      "teachingStatus": "associative",
+      "domain": "autoimmunity",
+      "provenance": {
+        "pmid": "16385515",
+        "doi": "10.1002/art.21526",
+        "citationLabel": "Matsushita T et al. Arthritis Rheum 2006 — Elevated serum BAFF levels in patients with systemic sclerosis: enhanced BAFF signaling in systemic sclerosis B lymphocytes.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/16385515/",
+        "notes": "Depth deepen: PMID 16385515 verified. BAFF↔SSc association only; keep separate from EBV. Gate C = human only. Not CDS.",
+        "recordedAt": "2026-11-01T17:00:00.000Z"
+      },
+      "bridgeCandidate": false,
+      "seedKind": "placeholder"
+    },
+    {
+      "id": "HSI-E-SSC-012",
+      "edgeType": "inhibits",
+      "subjectId": "HSI-N-baff-antagonist",
+      "subjectLabel": "BAFF antagonist (experimental)",
+      "objectId": "HSI-N-skin-fibrosis",
+      "objectLabel": "Skin fibrosis",
+      "claimId": "HSI-C-SSC-012",
+      "curationReview": "source-verified",
+      "hsiGrade": "uncertain",
+      "teachingStatus": "hypothesized",
+      "domain": "autoimmunity",
+      "provenance": {
+        "pmid": "17581616",
+        "doi": "10.1038/sj.jid.5700919",
+        "citationLabel": "Matsushita T et al. J Invest Dermatol 2007 — BAFF antagonist attenuates the development of skin fibrosis in tight-skin mice.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/17581616/",
+        "notes": "Depth deepen: PMID 17581616 verified. Mouse model only — teaching=hypothesized; never invent human BAFF-drug CDS. Gate C = human only. Not CDS.",
+        "recordedAt": "2026-11-01T17:00:00.000Z"
+      },
+      "bridgeCandidate": false,
+      "seedKind": "placeholder"
     }
   ],
   "honesty": [
@@ -800,6 +1043,6 @@
     "Cell cards carry CL·MONDO (and related) hints with bindStatus=hint_only — not full ontology bind.",
     "Not clinical decision support. autoApproveIntoKg=false.",
     "deepSeedsPresent=true because verified PMID edges landed.",
-    "P1.1 deepen: 8 neighbourhood cards · 9 edges."
+    "P1.1 deepen: 10 neighbourhood cards · 12 edges."
   ]
 }
