@@ -1,7 +1,7 @@
 # HSI build status and next
 
 **Audit date:** 1 November 2026  
-**HEAD at write:** _(pending P3.3 commit)_ — P3.3 FAIR ESM-2 thin embedding stub (proposal + sidecar refs)
+**HEAD at write:** `1c22662` (main) — P3.3 FAIR ESM-2 thin embedding stub (proposal + sidecar refs)
 
 
 **Edit target:** `hsi-core` only · Neon **`red-wave` only** · no immunecity / Akeno product / DeliverX edits  
@@ -154,7 +154,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | P3.0 RDKit thin adapter spike | `81ec446` |
 | P3.1 OpenMM thin adapter spike | `2233af1` |
 | P3.2 REINVENT4 thin adapter spike | `14f8412` |
-| P3.3 FAIR ESM-2 thin embedding stub | _(this commit)_ |
+| P3.3 FAIR ESM-2 thin embedding stub | `1c22662` |
 
 Reproduce: `bun test && bun run outputs && bun run site:dev` → `/discovery`, `/akeno`, `/aksh-agents`.
 
