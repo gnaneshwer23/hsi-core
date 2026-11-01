@@ -28,6 +28,7 @@ import {
   type GateCModelProposalRow,
 } from "./modelProposal";
 import { buildRdkitAdapterProposals } from "./adapters/rdkitAdapter";
+import { buildOpenmmAdapterProposals } from "./adapters/openmmAdapter";
 
 export const GATE_C_CHECKLIST_SCHEMA = "hsi-gate-c-checklist-1" as const;
 
@@ -189,12 +190,20 @@ export function buildGateCChecklist(opts?: {
   const translationPack = buildTranslationHandoffPack({ generatedAt });
   const translationCandidates = translationPack.candidates.map(toTranslationChecklistRow);
   const exampleProposals = buildGateCModelProposalRows({ createdAt: generatedAt });
-  // P3.0 RDKit spike proposals (forceStub for deterministic Gate C / publish).
+  // P3.0 RDKit + P3.1 OpenMM spike proposals (forceStub for deterministic Gate C / publish).
   const rdkitProposals = buildRdkitAdapterProposals({
     createdAt: generatedAt,
     forceStub: true,
   }).map(toGateCModelProposalRow);
-  const modelProposals = [...exampleProposals, ...rdkitProposals];
+  const openmmProposals = buildOpenmmAdapterProposals({
+    createdAt: generatedAt,
+    forceStub: true,
+  }).map(toGateCModelProposalRow);
+  const modelProposals = [
+    ...exampleProposals,
+    ...rdkitProposals,
+    ...openmmProposals,
+  ];
 
   return {
     schemaVersion: GATE_C_CHECKLIST_SCHEMA,
@@ -232,6 +241,7 @@ export function buildGateCChecklist(opts?: {
       "P2.4 ClinVar/TCGA pointers (hsi-external-genome-pointers.json): citation/ref only (accession + URL + disease/gene context + optional edgeIds); reviewRequired=true; doesNotSetHsiGrade; no bulk genome dump / PHI — Gate C still required.",
       "P2.5 P3 adapters (docs/P3_ADAPTER_RFC.md + hsi-p3-adapter-license-matrix.json): emit ModelProposalArtifacts only; license gate before run (blockedUntilSignOff); mayFlipEvidenceGrade=false; vendorsModelWeights=false; never claim commercial signed without evidence.",
       "P3.0 RDKit thin adapter spike (hsi-rdkit-adapter-proposals.*): sourceAdapterOrAgent=adapter-rdkit; runtime stub|rdkit; ModelProposalArtifacts only → pending; autoApprove=false; does not set hsiGrade; refuse blockedUntilSignOff adapters.",
+      "P3.1 OpenMM thin adapter spike (hsi-openmm-adapter-proposals.*): sourceAdapterOrAgent=adapter-openmm; runtime stub|openmm; ModelProposalArtifacts only → pending; autoApprove=false; does not set hsiGrade; MD ≠ Gate C evidence alone; refuse blockedUntilSignOff adapters.",
     ],
   };
 }

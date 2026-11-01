@@ -804,7 +804,7 @@ export const P3_ADAPTER_LICENSE_MATRIX_SCHEMA = {
   rfcDoc: "docs/P3_ADAPTER_RFC.md" as const,
   visionDocRef: "docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md",
   notes:
-    "License gate before any adapter run; ModelProposalArtifacts only; never claim commercial signed without evidence; never vendor multi-GB weights; P3.0 RDKit spike_wired (hsi-rdkit-adapter-proposals.*)",
+    "License gate before any adapter run; ModelProposalArtifacts only; never claim commercial signed without evidence; never vendor multi-GB weights; P3.0 RDKit + P3.1 OpenMM spike_wired (hsi-rdkit-adapter-proposals.*; hsi-openmm-adapter-proposals.*)",
 };
 
 export type P3AdapterLicenseMatrixSchema =
@@ -873,10 +873,10 @@ export const FUTURE_TECH_ADAPTER_STUBS: readonly FutureTechAdapterStub[] = [
     id: "adapter-openmm",
     label: "OpenMM",
     role: "Molecular dynamics simulation plugin",
-    status: "rfc_matrix_ready",
+    status: "spike_wired",
     mayFlipEvidenceGrade: false,
     licenseNote:
-      "OpenMM license family documented (research_ok_documented); MD ≠ Gate C evidence",
+      "OpenMM license family documented (research_ok_documented); P3.1 thin spike → ModelProposalArtifacts only (runtime stub|openmm); MD ≠ Gate C evidence alone",
     visionDocRef: "docs/P3_ADAPTER_RFC.md",
   },
   {
@@ -1062,6 +1062,7 @@ export function buildSystemsVisionBundle(opts?: {
       "P2.4: ClinVar/TCGA pointer metadata wired (hsi-external-genome-pointers.json); reviewRequired=true; citation/ref only; no bulk genome dump / PHI; doesNotSetHsiGrade.",
       "P2.5: P3 adapter RFC + license matrix wired (docs/P3_ADAPTER_RFC.md; hsi-p3-adapter-license-matrix.json); license gate before run; vendorsModelWeights=false; honest signOffStatus only; no commercial signed without evidence.",
       "P3.0: RDKit thin adapter spike wired (adapter-rdkit; hsi-rdkit-adapter-proposals.*; runtime stub|rdkit; ModelProposalArtifacts → Gate C pending; autoApprove=false; does not set hsiGrade).",
+      "P3.1: OpenMM thin adapter spike wired (adapter-openmm; hsi-openmm-adapter-proposals.*; runtime stub|openmm; ModelProposalArtifacts → Gate C pending; autoApprove=false; does not set hsiGrade; MD ≠ Gate C evidence alone).",
       "notCds / autoApproveIntoKg=false on this export.",
       "Neon: red-wave only from this workspace.",
     ],

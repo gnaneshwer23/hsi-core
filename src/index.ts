@@ -278,6 +278,25 @@ export {
 } from "./adapters/rdkitAdapter";
 
 export {
+  OPENMM_ADAPTER_EXPORT_SCHEMA,
+  OPENMM_ADAPTER_ID,
+  OPENMM_ADAPTER_RUNTIME_SCHEMA,
+  OPENMM_PUBLIC_SYSTEM_FIXTURES,
+  OPENMM_STUB_METRICS,
+  buildOpenmmAdapterProposals,
+  resolveOpenmmSimulation,
+  runOpenmmAdapter,
+  serializeOpenmmAdapterBundle,
+  serializeOpenmmAdapterMarkdown,
+  simulationToModelProposal,
+  tryComputeOpenmmMetrics,
+  type OpenmmAdapterBundle,
+  type OpenmmRuntime,
+  type OpenmmSimulationSnapshot,
+  type OpenmmSystemFixture,
+} from "./adapters/openmmAdapter";
+
+export {
   SSC_CELL_CARD_SCHEMA,
   SSC_NEIGHBOURHOOD_CARDS,
   listSscNeighbourhoodCards,

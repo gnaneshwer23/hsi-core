@@ -12,7 +12,7 @@
   "autoApproveIntoKg": false,
   "containsPhi": false,
   "packsRemainAuthority": true,
-  "generatedAt": "2026-11-01T19:17:44.693Z",
+  "generatedAt": "2026-11-01T19:26:09.943Z",
   "fixtureSummary": {
     "packIds": [
       "hsi-gut-immune-pack",
@@ -148,6 +148,47 @@
         }
       ],
       "notes": "adapter-rdkit proposal cites HSI-E-RA-012; no grade/PHI/clinical/dosing claims"
+    },
+    {
+      "caseId": "EVAL-PASS-OPENMM-ACH-001",
+      "kind": "model_proposal",
+      "label": "P3.1 OpenMM ACh MD proposal (stub runtime)",
+      "expectPass": true,
+      "passed": true,
+      "failClosed": false,
+      "checks": [
+        {
+          "checkId": "cited_edge_ids_exist",
+          "passed": true,
+          "detail": "All 1 cited edge id(s) resolve in frozen packs"
+        },
+        {
+          "checkId": "grade_not_flipped",
+          "passed": true,
+          "detail": "No grade / curation flip fields present"
+        },
+        {
+          "checkId": "required_fields_present",
+          "passed": true,
+          "detail": "All model-proposal required fields present"
+        },
+        {
+          "checkId": "fail_closed_clinical_phi",
+          "passed": true,
+          "detail": "No detectable clinical/PHI claims"
+        },
+        {
+          "checkId": "sidecar_locators_present",
+          "passed": true,
+          "detail": "N/A for model_proposal"
+        },
+        {
+          "checkId": "pack_authority_unchanged",
+          "passed": true,
+          "detail": "Packs remain authority; no auto-approve"
+        }
+      ],
+      "notes": "adapter-openmm proposal cites HSI-E-NI-003; no grade/PHI/clinical/dosing claims; MD ≠ Gate C evidence alone"
     },
     {
       "caseId": "EVAL-PASS-SIDECAR-RA-001",
@@ -397,8 +438,8 @@
     }
   ],
   "summary": {
-    "caseCount": 8,
-    "passed": 3,
+    "caseCount": 9,
+    "passed": 4,
     "failed": 5,
     "failClosedHits": 5,
     "intentionalFailCorrect": 5,
@@ -410,7 +451,7 @@
     "Checks: cited edge ids exist · grade not flipped · required fields · fail-closed clinical/PHI · sidecar locators · pack authority.",
     "RA / SSc / gut / neuro evidence packs stay the graded truth store; harness never writes KG or Gate C approve.",
     "Intentional fail cases document fail-closed behavior; stubBehaviorGreen means demos matched expectPass.",
-    "TDC-style retrieval metrics deferred until broader P3 adapters — P3.0 RDKit proposals are scored as ModelProposalArtifacts here.",
+    "TDC-style retrieval metrics deferred until broader P3 adapters — P3.0 RDKit + P3.1 OpenMM proposals are scored as ModelProposalArtifacts here.",
     "See docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md · MODEL_EVAL_HARNESS_STUB · src/modelEvalHarness.ts."
   ]
 }

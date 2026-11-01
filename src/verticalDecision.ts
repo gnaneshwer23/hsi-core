@@ -64,7 +64,8 @@ export const HSI_VERTICAL_DECISION: HsiVerticalDecision = {
     "DONE (P2.4): ClinVar/TCGA pointer metadata (hsi-external-genome-pointers.json; citation/ref; reviewRequired; no bulk dump / PHI).",
     "DONE (P2.5): P3 adapter RFC + license matrix (docs/P3_ADAPTER_RFC.md; hsi-p3-adapter-license-matrix.*; honest signOffStatus; no weight vendoring).",
     "DONE (P3.0): RDKit thin adapter spike (hsi-rdkit-adapter-proposals.*; runtime stub|rdkit; ModelProposalArtifacts → Gate C pending; license gate refuses blockedUntilSignOff).",
-    "NEXT science: P3.1 next unblocked adapter spike (OpenMM or REINVENT4 proposal-only; still no weight vendoring) — or P1.4 promote gut/neuro systems predicates onto HSI_EDGE_TYPES.",
+    "DONE (P3.1): OpenMM thin adapter spike (hsi-openmm-adapter-proposals.*; runtime stub|openmm; ModelProposalArtifacts → Gate C pending; cites HSI-E-NI-003 / HSI-E-GUT-003; MD ≠ Gate C evidence alone).",
+    "NEXT science: P3.2 REINVENT4 thin adapter spike (proposal-only; still no weight vendoring; defer Boltz weights path) — or P1.4 promote gut/neuro systems predicates onto HSI_EDGE_TYPES.",
     "Partner outreach / partnerSigned / rights table (unchanged P0.2) — parallel critical path.",
   ],
 };
