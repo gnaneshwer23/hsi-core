@@ -23,7 +23,10 @@
     "export:isi-map": "bun run src/cli/export-isi-map.ts",
     "export:aksh-map": "bun run src/cli/export-aksh-map.ts",
     "gap-report": "bun run src/cli/gap-report.ts",
-    "check": "bun test && bun run validate && bun run export:isi && bun run export:isi-map && bun run export:aksh-map && bun run gap-report"
+    "check": "bun test && bun run validate && bun run export:isi && bun run export:isi-map && bun run export:aksh-map && bun run gap-report",
+    "site:dev": "bun run --cwd site dev",
+    "site:build": "bun run --cwd site build",
+    "site:preview": "bun run --cwd site preview"
   },
   "engines": {
     "node": ">=20"

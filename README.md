@@ -26,6 +26,17 @@ bun run gap-report
 
 Requires [Bun](https://bun.sh) (tests + CLI). `bun run build` emits `dist/` for TypeScript consumers.
 
+## Vision site
+
+Marketing / IA site for HSI concepts (Vite + React) lives in [`site/`](site/).
+
+```bash
+bun run site:dev      # http://localhost:5173
+bun run site:build    # site/dist
+```
+
+Pages: Home, Systems, Evidence & Gate C, For ISI, For Aksh, Roadmap, Repo alignment, Docs.
+
 ## Consume
 
 ```ts
