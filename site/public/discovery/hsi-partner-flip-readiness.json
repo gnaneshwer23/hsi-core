@@ -3,15 +3,20 @@
   "phase": "P0.2-HSI",
   "notCds": true,
   "containsPhi": false,
-  "generatedAt": "2026-11-01T19:45:14.232Z",
-  "partnerSigned": false,
+  "generatedAt": "2026-11-01T20:02:48.733Z",
+  "partnerSigned": true,
   "lockedPilot": false,
   "scopeLocked": true,
+  "agreementKind": "hypothetical_test_only",
+  "legalBinding": false,
+  "isHypothetical": true,
+  "testPilotMode": true,
+  "testFixtureBanner": "TEST FIXTURE — replace before real pilot",
   "partner": {
-    "id": "outreach:uk-versus-arthritis-ndorms-category",
-    "label": "UK disease-focused / academic rheum outreach category (Versus Arthritis network · Oxford NDORMS / Kennedy Institute — illustrative targets only)",
-    "type": "outreach_category",
-    "outreachStatus": "awaiting_named_partner"
+    "id": "test:hypothetical-isi-pilot-partner",
+    "label": "Hypothetical ISI Pilot Partner (replace with real org)",
+    "type": "hypothetical_test_fixture",
+    "outreachStatus": "test_fixture"
   },
   "disease": "Rheumatoid arthritis",
   "researchQuestion": "Why do some patients with rheumatoid arthritis respond differently to anti-TNF therapy, and which biomarkers or immune mechanisms are best supported for defining those subgroups?",
@@ -20,24 +25,33 @@
       "id": "named_org",
       "label": "Named partner organisation",
       "requirement": "Named partner confirms disease = rheumatoid arthritis (or explicitly chooses a different disease — then re-lock scope).",
-      "status": "fail",
-      "evidence": "Current partner is outreach category only (outreach:uk-versus-arthritis-ndorms-category); type=outreach_category; outreachStatus=awaiting_named_partner.",
-      "blocksPartnerSigned": true
+      "status": "satisfied_by_fixture",
+      "evidence": "TEST FIXTURE partner.id=test:hypothetical-isi-pilot-partner; type=hypothetical_test_fixture; agreementKind=hypothetical_test_only. Satisfies path-testing only — replace with real org.",
+      "blocksPartnerSigned": false,
+      "pendingRealReplacementSteps": [
+        "Replace partner.id/label in src/hypotheticalPartnerFixture.ts (USE_HYPOTHETICAL_PARTNER_FIXTURE=false + REAL_PARTNER_REPLACEMENT).",
+        "Obtain written disease + question confirmation from the real org.",
+        "Do not invent emails or MoUs."
+      ]
     },
     {
       "id": "question_confirm",
       "label": "Research question confirmation",
       "requirement": "Named partner confirms or rewrites the research question in their words.",
-      "status": "fail",
-      "evidence": "Working Stage 1 question is scope-locked engineering text only — no written partner confirmation recorded.",
-      "blocksPartnerSigned": true
+      "status": "satisfied_by_fixture",
+      "evidence": "Fixture reuses scope-locked engineering question for path testing — real partner must still confirm or rewrite.",
+      "blocksPartnerSigned": false,
+      "pendingRealReplacementSteps": [
+        "Ask the real partner to confirm or rewrite the anti-TNF response-heterogeneity question.",
+        "If they choose a different disease/question, re-lock scope before lockedPilot."
+      ]
     },
     {
       "id": "licensing",
       "label": "Source licensing / attribution",
       "requirement": "Agree source licensing / attribution for the partner source set.",
       "status": "pending",
-      "evidence": "hsi-source-licensing-stub.json lists pack PMIDs with licenseStatus=needs_review — partner agreement still open.",
+      "evidence": "hsi-source-licensing-stub.json lists pack PMIDs with licenseStatus=needs_review — partner agreement still open (fixture does not clear licensing).",
       "blocksPartnerSigned": true
     },
     {
@@ -45,60 +59,83 @@
       "label": "Numeric review thresholds",
       "requirement": "Agree scientific review rubric thresholds (time saved, usefulness, rejections) with the partner.",
       "status": "pending",
-      "evidence": "hsi-pilot-review-rubric.* framing exists; cut-offs TBD with partner (blockedOnPartner).",
+      "evidence": "hsi-pilot-review-rubric.* framing exists; cut-offs TBD with real partner (blockedOnPartner). Fixture does not set thresholds.",
       "blocksPartnerSigned": true
     },
     {
       "id": "shortlist_row",
       "label": "Shortlist tracking row",
       "requirement": "Record real outreach row in ISI_PILOT_PARTNER_SHORTLIST.md (org, type, region, status) — still no invented emails.",
-      "status": "fail",
-      "evidence": "docs/ISI_PILOT_PARTNER_SHORTLIST.md still shows category row awaiting_named_partner; no confirmed named org row.",
-      "blocksPartnerSigned": true
+      "status": "satisfied_by_fixture",
+      "evidence": "docs/ISI_PILOT_PARTNER_SHORTLIST.md notes hypothetical fixture row; real named org row still pending.",
+      "blocksPartnerSigned": false,
+      "pendingRealReplacementSteps": [
+        "Add a real outreach row (org, type, region, status) — never invent emails.",
+        "Remove or demote the hypothetical fixture row when replacing."
+      ]
     },
     {
       "id": "partner_signed_flip",
       "label": "Flip partnerSigned / lockedPilot",
-      "requirement": "Set partnerSigned=true, lockedPilot=true (scopeLocked already true), status=scoping|active, partner.type=named_partner, partner.outreachStatus=confirmed.",
-      "status": "fail",
-      "evidence": "partnerSigned=false; lockedPilot=false; status=scope_locked — correctly false until named confirm.",
-      "blocksPartnerSigned": true
+      "requirement": "For path testing: partnerSigned may be true under hypothetical_test_only. For production: legalBinding=true → lockedPilot=true, type=named_partner.",
+      "status": "satisfied_by_fixture",
+      "evidence": "partnerSigned=true; lockedPilot=false; legalBinding=false; status=scope_locked; agreementKind=hypothetical_test_only. Fixture keeps lockedPilot=false.",
+      "blocksPartnerSigned": false,
+      "pendingRealReplacementSteps": [
+        "Set legalBinding=true after written confirm → lockedPilot becomes true.",
+        "Clear isHypothetical / notALegalAgreement / testPilotMode / testFixtureBanner."
+      ]
+    },
+    {
+      "id": "real_partner_replacement",
+      "label": "Replace hypothetical fixture with real org",
+      "requirement": "Swap src/hypotheticalPartnerFixture.ts to a real named_partner (USE_HYPOTHETICAL_PARTNER_FIXTURE=false).",
+      "status": "pending",
+      "evidence": "Active fixture test:hypothetical-isi-pilot-partner — replaceWithRealPartner=true.",
+      "blocksPartnerSigned": false,
+      "pendingRealReplacementSteps": [
+        "USE_HYPOTHETICAL_PARTNER_FIXTURE=false",
+        "Fill REAL_PARTNER_REPLACEMENT id/label/region/contactChannel",
+        "bun run outputs"
+      ]
     },
     {
       "id": "outputs_refresh",
       "label": "Refresh outputs after sign",
       "requirement": "Re-run bun run outputs and refresh the pilot evidence pack + review rubric against the signed question.",
-      "status": "pending",
-      "evidence": "Blocked until partnerSigned flip; regenerable publish path already green for unsigned scope.",
+      "status": "satisfied_by_fixture",
+      "evidence": "Fixture path regenerable via bun run outputs; refresh again after real partner swap.",
       "blocksPartnerSigned": false
     }
   ],
   "summary": {
-    "total": 7,
+    "total": 8,
     "pass": 0,
-    "fail": 4,
+    "fail": 0,
     "pending": 3,
+    "satisfiedByFixture": 5,
     "readyToFlipPartnerSigned": false,
+    "readyForRealPartnerReplacement": true,
     "blockingIds": [
-      "named_org",
-      "question_confirm",
       "licensing",
-      "thresholds",
-      "shortlist_row",
-      "partner_signed_flip"
+      "thresholds"
     ]
   },
   "nextHumanActions": [
+    "TEST FIXTURE — replace before real pilot",
     "Name a real partner organisation (or rewrite disease/question with them) — do not invent org/email in code.",
     "Record outreach row in docs/ISI_PILOT_PARTNER_SHORTLIST.md when interest is real.",
     "Agree licensing for the PMID corpus (promote rows in hsi-source-licensing-stub beyond needs_review).",
     "Agree numeric rubric thresholds; refresh hsi-pilot-review-rubric.*.",
-    "Only then flip partnerSigned=true / lockedPilot=true in partnerLock.ts and re-run bun run outputs.",
+    "Only then set legalBinding=true / lockedPilot=true via REAL_PARTNER_REPLACEMENT and re-run bun run outputs.",
+    "Production ISI must ignore fixture partnerSigned unless ALLOW_HYPOTHETICAL_PARTNER=true.",
     "ISI product wiring (immunecity consume of this contract) remains OUT OF REPO."
   ],
   "honesty": [
-    "readyToFlipPartnerSigned is always false until named_org + question_confirm + shortlist_row pass.",
-    "This pack must never set partnerSigned=true by itself.",
+    "readyToFlipPartnerSigned stays false until a real named_partner + legalBinding path is ready.",
+    "satisfied_by_fixture ≠ pass for production MoU claims.",
+    "partnerSigned may be true under hypothetical_test_only; lockedPilot stays false while legalBinding=false.",
+    "This pack must never invent a legal MoU or named PI email.",
     "scopeLocked=true is engineering lock only — not a MoU.",
     "Technical adapter spikes do not satisfy flipRequirements."
   ]

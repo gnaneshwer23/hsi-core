@@ -152,8 +152,8 @@ function buildChecklist(lock: HsiPartnerLock, pack: PilotEvidencePack): RubricCh
     {
       id: "x-1",
       output: "cross_cutting",
-      criterion: "Exports clearly label scopeLocked=true with partnerSigned=false / lockedPilot=false (no fake MoU)",
-      howToJudge: "MANIFEST + pack + Discovery Centre meta must show status=scope_locked, scopeLocked=true, partnerSigned=false.",
+      criterion: "Exports clearly label scopeLocked=true; lockedPilot=false until legalBinding; fixture partnerSigned must carry isHypothetical / TEST FIXTURE banner (no fake MoU)",
+      howToJudge: "MANIFEST + pack + Discovery Centre meta must show status=scope_locked, scopeLocked=true, lockedPilot=false; if partnerSigned=true require agreementKind=hypothetical_test_only.",
       status: "ready_for_human",
       relatedClaimIds: [],
     },
@@ -258,7 +258,7 @@ export function buildPilotReviewRubric(opts?: {
     },
     nextActions: [
       "Human-review checklist items marked ready_for_human against hsi-pilot-evidence-pack.md.",
-      "Keep partnerSigned=false / lockedPilot=false until a named partner confirms disease + question.",
+      "Keep lockedPilot=false / legalBinding=false until a real named partner confirms disease + question. Fixture partnerSigned is path-testing only (src/hypotheticalPartnerFixture.ts).",
       "Agree success-metric thresholds before formal pilot user testing.",
       "Phase 5 complete = hsi-pilot-acceptance.* + hsi-pilot-walkthrough.md (partner-ready Stage 1 pack; partnerSigned still pending).",
       "Phase 8 (clinical R3–R5 / Akeno) needs an explicit user ask + Stage 3 gates.",

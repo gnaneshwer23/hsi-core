@@ -9,6 +9,7 @@ import { buildGateCChecklist, type GateCChecklistBundle } from "./gateCChecklist
 import { buildSchemaGapReport, type HsiSchemaGapReport } from "./gapReport";
 import {
   getPartnerLock,
+  isHypotheticalTestFixturePartner,
   type HsiPartnerLock,
 } from "./partnerLock";
 import {
@@ -57,6 +58,14 @@ export type PilotAcceptancePack = {
     partnerSigned: boolean;
     lockedPilot: boolean;
     status: HsiPartnerLock["status"];
+    agreementKind: HsiPartnerLock["agreementKind"];
+    legalBinding: boolean;
+    isHypothetical: boolean;
+    notALegalAgreement: boolean;
+    testPilotMode: boolean;
+    testFixtureBanner: string | null;
+    partnerId: string | null;
+    partnerType: string | null;
   };
   /** Stage 1 four outputs + MANIFEST + gap + Gate C + lock + rubric. */
   criteria: AcceptanceCriterion[];
@@ -217,11 +226,20 @@ function buildCriteria(opts: {
     criterion({
       id: "ac-partner-signed",
       category: "partner_lock",
-      label: "Named partnerSigned / lockedPilot",
-      artifact: "hsi-partner-lock.json · docs/ISI_PILOT_PARTNER_SHORTLIST.md",
-      status: lock.partnerSigned && lock.lockedPilot ? "pass" : "pending",
-      evidence: `partnerSigned=${lock.partnerSigned}; lockedPilot=${lock.lockedPilot}; partner.type=${lock.partner?.type ?? "null"}; outreachStatus=${lock.partner?.outreachStatus ?? "null"}`,
-      notes: "Honest pending until a named partner confirms disease + question in writing.",
+      label: isHypotheticalTestFixturePartner(lock)
+        ? "TEST FIXTURE partnerSigned (path-testing) — replace before real pilot"
+        : "Named partnerSigned / lockedPilot",
+      artifact: "hsi-partner-lock.json · src/hypotheticalPartnerFixture.ts · docs/ISI_PILOT_PARTNER_SHORTLIST.md",
+      status:
+        lock.partnerSigned && lock.lockedPilot && lock.legalBinding
+          ? "pass"
+          : isHypotheticalTestFixturePartner(lock) && lock.partnerSigned
+            ? "pending"
+            : "pending",
+      evidence: `partnerSigned=${lock.partnerSigned}; lockedPilot=${lock.lockedPilot}; legalBinding=${lock.legalBinding}; agreementKind=${lock.agreementKind}; partner.type=${lock.partner?.type ?? "null"}; outreachStatus=${lock.partner?.outreachStatus ?? "null"}; isHypothetical=${lock.isHypothetical}`,
+      notes: isHypotheticalTestFixturePartner(lock)
+        ? "TEST FIXTURE — partnerSigned=true under hypothetical_test_only only. lockedPilot stays false until legalBinding. Replace via src/hypotheticalPartnerFixture.ts."
+        : "Honest pending until a named partner confirms disease + question in writing.",
     }),
     criterion({
       id: "ac-rubric",
@@ -267,13 +285,16 @@ function buildCriteria(opts: {
 }
 
 function buildWalkthroughSteps(lock: HsiPartnerLock): PilotAcceptancePack["walkthroughSteps"] {
+  const fixtureNote = isHypotheticalTestFixturePartner(lock)
+    ? ` TEST FIXTURE partner=${lock.partner?.id} (partnerSigned=${lock.partnerSigned} under agreementKind=hypothetical_test_only; legalBinding=false; lockedPilot=false) — replace before real pilot.`
+    : ` partnerSigned=${lock.partnerSigned}; lockedPilot=${lock.lockedPilot}.`;
   return [
     {
       step: 1,
       title: "Frame the pilot (non-CDS)",
-      open: "docs/ISI_PILOT_BRIEF.md · hsi-partner-lock.json",
-      say: `Working Stage 1 scope is ${lock.disease?.label ?? "RA"} + the anti-TNF response-heterogeneity question. scopeLocked=true; partnerSigned=false — this is not a MoU.`,
-      doNot: "Do not present patient risk scores, eligibility automation, or EHR write-back.",
+      open: "docs/ISI_PILOT_BRIEF.md · hsi-partner-lock.json · src/hypotheticalPartnerFixture.ts",
+      say: `Working Stage 1 scope is ${lock.disease?.label ?? "RA"} + the anti-TNF response-heterogeneity question. scopeLocked=true.${fixtureNote} Not a MoU.`,
+      doNot: "Do not present patient risk scores, eligibility automation, EHR write-back, or treat the hypothetical fixture as a legal partner.",
     },
     {
       step: 2,
@@ -369,6 +390,14 @@ export function buildPilotAcceptancePack(opts?: {
       partnerSigned: lock.partnerSigned,
       lockedPilot: lock.lockedPilot,
       status: lock.status,
+      agreementKind: lock.agreementKind,
+      legalBinding: lock.legalBinding,
+      isHypothetical: lock.isHypothetical,
+      notALegalAgreement: lock.notALegalAgreement,
+      testPilotMode: lock.testPilotMode,
+      testFixtureBanner: lock.testFixtureBanner,
+      partnerId: lock.partner?.id ?? null,
+      partnerType: lock.partner?.type ?? null,
     },
     criteria,
     summary: {
@@ -381,9 +410,13 @@ export function buildPilotAcceptancePack(opts?: {
     },
     walkthroughSteps: buildWalkthroughSteps(lock),
     nextActions: [
-      "Share hsi-pilot-walkthrough.md + hsi-pilot-acceptance.md + site `/discovery` with the outreach category / future named partner.",
-      "Keep partnerSigned=false / lockedPilot=false until flipRequirements in hsi-partner-lock.json are met.",
+      lock.testFixtureBanner
+        ? `${lock.testFixtureBanner} Swap via src/hypotheticalPartnerFixture.ts when a real org confirms.`
+        : "Share walkthrough with the named partner.",
+      "Share hsi-pilot-walkthrough.md + hsi-pilot-acceptance.md + site `/discovery` with outreach / future named partner.",
+      "Keep lockedPilot=false / legalBinding=false until a real named partner meets flipRequirements (fixture partnerSigned is path-testing only).",
       "Agree licensing + numeric success thresholds before formal user testing.",
+      "Production ISI must ignore fixture partnerSigned unless ALLOW_HYPOTHETICAL_PARTNER=true.",
       "Phase 6–8 Discovery Centre (ASK→MAP→REVIEW→VALIDATE→TRANSLATE) is live. Phase 8 = translation substrate + in-repo Akeno HITL at /akeno (not CDS).",
     ],
     deferredExplicitAsk: [
@@ -409,7 +442,9 @@ export function serializePilotAcceptanceMarkdown(
     "",
     `Schema: \`${pack.schemaVersion}\` · generated ${pack.generatedAt}`,
     "",
-    "> Not CDS. Not auto-approval into product KG. Pass ≠ MoU. partnerSigned stays pending until a named partner confirms.",
+    pack.scope.testFixtureBanner
+      ? `> **${pack.scope.testFixtureBanner}** Not CDS. Not auto-approval into product KG. Fixture \`partnerSigned\` ≠ MoU. Production ISI requires \`ALLOW_HYPOTHETICAL_PARTNER=true\` to trust fixture.`
+      : "> Not CDS. Not auto-approval into product KG. Pass ≠ MoU. partnerSigned stays pending until a named partner confirms.",
     "",
     "## Scope",
     "",
@@ -420,6 +455,10 @@ export function serializePilotAcceptanceMarkdown(
     `| scopeLocked | \`${pack.scope.scopeLocked}\` |`,
     `| partnerSigned | \`${pack.scope.partnerSigned}\` |`,
     `| lockedPilot | \`${pack.scope.lockedPilot}\` |`,
+    `| legalBinding | \`${pack.scope.legalBinding}\` |`,
+    `| agreementKind | \`${pack.scope.agreementKind}\` |`,
+    `| isHypothetical | \`${pack.scope.isHypothetical}\` |`,
+    `| partner | \`${pack.scope.partnerId ?? "none"}\` (${pack.scope.partnerType ?? "n/a"}) |`,
     `| status | \`${pack.scope.status}\` |`,
     "",
     "## Verdict",
@@ -478,9 +517,11 @@ export function serializePilotWalkthroughMarkdown(
     `**Disease:** ${pack.scope.disease}  `,
     `**Question:** ${pack.scope.researchQuestion}`,
     "",
-    `**Honesty:** scopeLocked=\`${pack.scope.scopeLocked}\` · partnerSigned=\`${pack.scope.partnerSigned}\` · lockedPilot=\`${pack.scope.lockedPilot}\` · status=\`${pack.scope.status}\``,
+    `**Honesty:** scopeLocked=\`${pack.scope.scopeLocked}\` · partnerSigned=\`${pack.scope.partnerSigned}\` · lockedPilot=\`${pack.scope.lockedPilot}\` · legalBinding=\`${pack.scope.legalBinding}\` · agreementKind=\`${pack.scope.agreementKind}\` · isHypothetical=\`${pack.scope.isHypothetical}\` · status=\`${pack.scope.status}\``,
     "",
-    "> Research intelligence only. No patient-level CDS. No invented MoU. Regenerable via `bun run outputs`.",
+    pack.scope.testFixtureBanner
+      ? `> **${pack.scope.testFixtureBanner}** Research intelligence only. No patient-level CDS. Fixture ≠ MoU. Regenerable via \`bun run outputs\`.`
+      : "> Research intelligence only. No patient-level CDS. No invented MoU. Regenerable via `bun run outputs`.",
     "",
     "## Goal",
     "",

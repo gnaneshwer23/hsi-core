@@ -26,7 +26,9 @@ describe("dual-track vertical decision A", () => {
     const lock = getPartnerLock();
     expect(lock.scopeLocked).toBe(true);
     expect(lock.disease?.id).toBe("ra");
-    expect(lock.partnerSigned).toBe(false);
+    expect(lock.partnerSigned).toBe(true); // fixture path-testing
+    expect(lock.lockedPilot).toBe(false);
+    expect(lock.isHypothetical).toBe(true);
     expect(lock.lockedPilot).toBe(false);
     expect(lock.verticalStrategy).toBe("dual_track");
     expect(lock.activeScope).toBe("ra-tnf");

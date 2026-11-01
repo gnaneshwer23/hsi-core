@@ -1,26 +1,35 @@
 /**
  * Partner disease / question lock for the ISI Stage 1 pilot.
  *
- * Honesty model (Phase 2):
+ * Honesty model (Phase 2 + test fixture):
  * - `scopeLocked=true` — disease + researchQuestion are the **working Stage 1
  *   pilot scope** (engineering lock). Phase 2 complete = this flag.
- * - `partnerSigned=false` until a **named** partner confirms in writing.
- * - `lockedPilot` is the AND of both (`scopeLocked && partnerSigned`). It stays
- *   false without inventing a commercial / MoU partner. Named partner flips
- *   `partnerSigned` (then `lockedPilot` follows).
+ * - `partnerSigned` may be `true` under a **hypothetical test fixture**
+ *   (`agreementKind=hypothetical_test_only`, `legalBinding=false`) for path
+ *   testing only. That is **not** a MoU. Production ISI must ignore unless
+ *   `ALLOW_HYPOTHETICAL_PARTNER=true`.
+ * - `lockedPilot` = `scopeLocked && partnerSigned && legalBinding`. Stays
+ *   false for the fixture (legalBinding=false). Real partner sets legalBinding.
  * - `provisionalLock` is cleared once scope is promoted out of scaffold.
  *
  * Vertical strategy (option A dual-track, 2026-11-01):
  * - `verticalStrategy=dual_track` — RA remains `activeScope`; SSc is `prdMvpTarget`.
- * - Does **not** flip partnerSigned or wipe RA packs. See `verticalDecision.ts`.
+ * - Does **not** wipe RA packs. See `verticalDecision.ts`.
  *
- * Flip path for partnerSigned (requires a real partner — not code alone):
+ * Flip path for a **real** partner (requires outreach — not inventable):
  * 1. Named partner confirms disease + research question in writing (or rewrites).
- * 2. Set partnerSigned → true, lockedPilot → true, status → scoping|active.
- * 3. Replace partner.id/label with the real org (still no invented emails).
- * 4. Agree licensing + rubric thresholds; refresh seeds; re-run bun run outputs.
+ * 2. Edit `src/hypotheticalPartnerFixture.ts`: set USE_HYPOTHETICAL_PARTNER_FIXTURE=false,
+ *    fill REAL_PARTNER_REPLACEMENT; legalBinding=true; type=named_partner.
+ * 3. Record shortlist row; agree licensing + rubric thresholds.
+ * 4. Re-run bun run outputs.
  */
 
+import {
+  HYPOTHETICAL_PARTNER_FIXTURE,
+  REAL_PARTNER_REPLACEMENT,
+  USE_HYPOTHETICAL_PARTNER_FIXTURE,
+  type PartnerAgreementKind,
+} from "./hypotheticalPartnerFixture";
 import {
   getVerticalDecision,
   verticalDecisionExportPointer,
@@ -40,17 +49,18 @@ export type PartnerLockStatus =
   | "archived";
 
 export type HsiPartnerRef = {
-  /** Stable id — outreach category or named partner when real. */
+  /** Stable id — outreach category, test fixture, or named partner when real. */
   id: string;
   label: string;
-  /** Shortlist type from ISI_PILOT_PARTNER_SHORTLIST.md */
+  /** Shortlist type from ISI_PILOT_PARTNER_SHORTLIST.md (+ test fixture). */
   type:
     | "immunology_researcher"
     | "translational_scientist"
     | "clinician_scientist"
     | "disease_foundation"
     | "outreach_category"
-    | "named_partner";
+    | "named_partner"
+    | "hypothetical_test_fixture";
   region: "UK" | "EU" | "US" | "other" | "unspecified";
   /** Never invent emails or MoUs. */
   contactChannel: "public_institute_channel" | "programme_introduction" | "named_contact" | "none";
@@ -62,15 +72,17 @@ export type HsiPartnerRef = {
     | "scoping"
     | "confirmed"
     | "declined"
-    | "none";
+    | "none"
+    | "test_fixture";
   notes: string;
 };
 
 /**
  * Durable lock fields consumed by pack, Discovery Centre meta, MANIFEST, rubric.
  *
- * Phase 2 (scope lock): disease/question canonical; partner still outreach category.
- * Partner-true (partnerSigned): requires named confirmation — not inventable in code.
+ * Phase 2 (scope lock): disease/question canonical.
+ * Fixture (path testing): partnerSigned may be true under hypothetical_test_only.
+ * Real partner: legalBinding=true → lockedPilot can become true.
  */
 export type HsiPartnerLock = {
   schemaVersion: typeof PARTNER_LOCK_SCHEMA;
@@ -80,13 +92,14 @@ export type HsiPartnerLock = {
    */
   scopeLocked: boolean;
   /**
-   * True only after a named partner confirms disease + question in writing.
-   * User / outreach flips this — never invent an org or MoU in code.
+   * True after named partner confirm — OR under hypothetical test fixture for
+   * path testing (`agreementKind=hypothetical_test_only`). Not a MoU when
+   * `legalBinding=false` / `isHypothetical=true`.
    */
   partnerSigned: boolean;
   /**
-   * Compat / full pilot lock: `scopeLocked && partnerSigned`.
-   * Stays false until partnerSigned; do not set true from substrate alone.
+   * Full pilot lock: `scopeLocked && partnerSigned && legalBinding`.
+   * Fixture keeps this false (legalBinding=false).
    */
   lockedPilot: boolean;
   /**
@@ -113,7 +126,16 @@ export type HsiPartnerLock = {
     primaryEdgeIds: string[];
     primaryPmids: string[];
   } | null;
-  /** What a real partner must still supply to flip partnerSigned / lockedPilot. */
+  /** Agreement / honesty flags for fixture vs real partner. */
+  agreementKind: PartnerAgreementKind;
+  replaceWithRealPartner: boolean;
+  legalBinding: boolean;
+  isHypothetical: boolean;
+  notALegalAgreement: boolean;
+  testPilotMode: boolean;
+  /** Loud banner when fixture is active. */
+  testFixtureBanner: string | null;
+  /** What a real partner must still supply to replace the fixture / flip lockedPilot. */
   flipRequirements: string[];
   honesty: string[];
   /**
@@ -128,26 +150,10 @@ export type HsiPartnerLock = {
   updatedAt: string;
 };
 
-/**
- * Working Stage 1 scope lock: RA / anti-TNF response heterogeneity.
- *
- * Phase 2: disease + researchQuestion are canonical engineering scope
- * (`scopeLocked=true`). Partner remains an outreach *category* from the
- * shortlist — Versus Arthritis / NDORMS–Kennedy — not a signed MoU.
- *
- * Why this pathway (not SLE/PsO/IBD): densest durable literature in seeds —
- * TNF→RA (PMID 11244034), anti-CCP + RF LOINC markers, IL-6 / anti-TNF-refractory
- * (PMID 18625622), ADA/immunogenicity (PMID 16508927 / 17133559), serology
- * tension (PMID 18375541 vs 24586782), macrophage→TNF (PMID 2993897), plus Gate C
- * handoff patterns already used for PMID 16382236-style provenance.
- */
-export const HSI_SCOPE_LOCKED_PARTNER_LOCK: HsiPartnerLock = {
+const SCOPE_BASE = {
   schemaVersion: PARTNER_LOCK_SCHEMA,
   scopeLocked: true,
-  partnerSigned: false,
-  lockedPilot: false,
   provisionalLock: false,
-  status: "scope_locked",
   disease: {
     id: "ra",
     label: "Rheumatoid arthritis",
@@ -160,22 +166,11 @@ export const HSI_SCOPE_LOCKED_PARTNER_LOCK: HsiPartnerLock = {
     "Which biomarkers or immune mechanisms are supported by evidence for a defined subgroup?",
     "What evidence gaps should inform the next experiment or study?",
   ],
-  partner: {
-    id: "outreach:uk-versus-arthritis-ndorms-category",
-    label:
-      "UK disease-focused / academic rheum outreach category (Versus Arthritis network · Oxford NDORMS / Kennedy Institute — illustrative targets only)",
-    type: "outreach_category",
-    region: "UK",
-    contactChannel: "public_institute_channel",
-    outreachStatus: "awaiting_named_partner",
-    notes:
-      "From ISI_PILOT_PARTNER_SHORTLIST.md — outreach target category only. Not a confirmed partner, MoU, or named PI. Contact via public programme / institute channels. Phase 2 locked disease+question scope; Phase 3 deepened evidence; partnerSigned still false.",
-  },
   seedPathway: {
     id: "ra-tnf-response-heterogeneity",
     label: "RA · TNF / ACPA / ADA · anti-TNF response heterogeneity",
     rationale:
-      "Phase 3 deepened partner-scoped slice: TNF→RA + anti-CCP/RF (LOINC) + IL-6 / anti-TNF-refractory + ADA/immunogenicity + serology competing frames + MTX+anti-TNF combo background. Matches pilot-brief questions on therapy response and subgroup biomarkers. Working Stage 1 scope (scopeLocked); not partnerSigned.",
+      "Phase 3 deepened partner-scoped slice: TNF→RA + anti-CCP/RF (LOINC) + IL-6 / anti-TNF-refractory + ADA/immunogenicity + serology competing frames + MTX+anti-TNF combo background. Matches pilot-brief questions on therapy response and subgroup biomarkers. Working Stage 1 scope (scopeLocked); fixture partnerSigned is path-testing only.",
     primaryClaimIds: [
       "HSI-C-RA-001",
       "HSI-C-RA-002",
@@ -222,35 +217,116 @@ export const HSI_SCOPE_LOCKED_PARTNER_LOCK: HsiPartnerLock = {
       "10622295",
     ],
   },
-  flipRequirements: [
-    "Named partner confirms disease = rheumatoid arthritis (or explicitly chooses a different disease — then re-lock scope).",
-    "Named partner confirms or rewrites the research question in their words.",
-    "Record real outreach row in ISI_PILOT_PARTNER_SHORTLIST.md (org, type, region, status) — still no invented emails.",
-    "Agree source licensing / attribution for the partner source set.",
-    "Agree scientific review rubric thresholds (time saved, usefulness, rejections) with the partner.",
-    "Set partnerSigned=true, lockedPilot=true (scopeLocked already true), status=scoping|active, partner.type=named_partner, partner.outreachStatus=confirmed.",
-    "Re-run bun run outputs and refresh the pilot evidence pack + review rubric against the signed question.",
-  ],
-  honesty: [
-    "Phase 2 done = scopeLocked=true (disease + researchQuestion are working Stage 1 scope).",
-    "Phase 3 done = partner-scoped evidence depth for this locked RA/anti-TNF question (ADA, serology tension, RF LOINC, MTX combo).",
-    "Phase 4 done = HSI Neon red-wave readiness (schema stub + guarded migrate; Gate C local pending only).",
-    "Phase 5 done = pilot acceptance pack (checklist + walkthrough; partnerSigned still pending).",
-    "Phase 6 done = Discovery Centre product surface at site `/discovery` (research intelligence; notCds).",
-    "Phase 7 done = R2 validation depth (hsi-r2-validation.*; hypothesis cards + ranked gaps; research only).",
-    "Phase 8 done = HSI translation substrate (hsi-translation-handoff.*; TRANSLATE tab + /akeno HITL consumer; deferred_until_hitl; not_for_clinical_use). Not live CDS; no Akeno Neon.",
-    "Vertical decision A (dual_track): activeScope=ra-tnf remains ASK/pilot lock; prdMvpTarget=ssc-tfh-b-il21 is a parallel pack — RA comparison = Release 2 framing.",
-    "scopeLocked does NOT mean a commercial partner signed or locked a MoU.",
-    "partnerSigned / lockedPilot stay false until flipRequirements are met with a named partner.",
-    "Outreach category partners are not MoUs; do not invent personal contacts.",
-    "Exports must surface status=scope_locked + partnerSigned=false so consumers cannot mistake this for a live pilot contract.",
-  ],
-  verticalStrategy: "dual_track",
-  activeScope: "ra-tnf",
-  prdMvpTarget: "ssc-tfh-b-il21",
+  verticalStrategy: "dual_track" as const,
+  activeScope: "ra-tnf" as const,
+  prdMvpTarget: "ssc-tfh-b-il21" as const,
   verticalDecision: verticalDecisionExportPointer(getVerticalDecision()),
-  updatedAt: "2026-11-01T17:00:00.000Z",
+  updatedAt: "2026-11-01T20:00:00.000Z",
 };
+
+function computeLockedPilot(opts: {
+  scopeLocked: boolean;
+  partnerSigned: boolean;
+  legalBinding: boolean;
+}): boolean {
+  return opts.scopeLocked && opts.partnerSigned && opts.legalBinding;
+}
+
+function buildFixturePartnerLock(): HsiPartnerLock {
+  const fx = HYPOTHETICAL_PARTNER_FIXTURE;
+  const partnerSigned = fx.partnerSigned;
+  const legalBinding = fx.legalBinding;
+  return {
+    ...SCOPE_BASE,
+    partnerSigned,
+    lockedPilot: computeLockedPilot({
+      scopeLocked: true,
+      partnerSigned,
+      legalBinding,
+    }),
+    status: "scope_locked",
+    partner: fx.partner,
+    agreementKind: fx.agreementKind,
+    replaceWithRealPartner: fx.replaceWithRealPartner,
+    legalBinding,
+    isHypothetical: fx.isHypothetical,
+    notALegalAgreement: fx.notALegalAgreement,
+    testPilotMode: fx.testPilotMode,
+    testFixtureBanner: fx.banner,
+    flipRequirements: [
+      "REPLACE FIXTURE: set USE_HYPOTHETICAL_PARTNER_FIXTURE=false in src/hypotheticalPartnerFixture.ts and fill REAL_PARTNER_REPLACEMENT with a real named org (never invent).",
+      "Named partner confirms disease = rheumatoid arthritis (or explicitly chooses a different disease — then re-lock scope).",
+      "Named partner confirms or rewrites the research question in their words.",
+      "Record real outreach row in ISI_PILOT_PARTNER_SHORTLIST.md (org, type, region, status) — still no invented emails.",
+      "Agree source licensing / attribution for the partner source set.",
+      "Agree scientific review rubric thresholds (time saved, usefulness, rejections) with the partner.",
+      "Set legalBinding=true, agreementKind=written_confirm|legal_mou, partner.type=named_partner, outreachStatus=confirmed, replaceWithRealPartner=false, isHypothetical=false → lockedPilot becomes true.",
+      "Re-run bun run outputs and refresh the pilot evidence pack + review rubric against the signed question.",
+    ],
+    honesty: [
+      "TEST FIXTURE — replace before real pilot. Banner must stay visible in packs / MANIFEST / walkthrough.",
+      "partnerSigned=true under agreementKind=hypothetical_test_only is PATH-TESTING ONLY — not a MoU.",
+      "legalBinding=false → lockedPilot=false even when partnerSigned=true.",
+      "Production ISI must ignore fixture partnerSigned unless ALLOW_HYPOTHETICAL_PARTNER=true.",
+      "Phase 2 done = scopeLocked=true (disease + researchQuestion are working Stage 1 scope).",
+      "Phase 3 done = partner-scoped evidence depth for this locked RA/anti-TNF question (ADA, serology tension, RF LOINC, MTX combo).",
+      "Phase 5 done = pilot acceptance pack (checklist + walkthrough; real named partner still pending).",
+      "scopeLocked does NOT mean a commercial partner signed or locked a MoU.",
+      "Hypothetical fixture partners are not MoUs; do not invent personal contacts.",
+      "Exports must surface isHypothetical=true + notALegalAgreement=true + testFixtureBanner.",
+    ],
+  };
+}
+
+function buildRealPartnerLock(): HsiPartnerLock {
+  const real = REAL_PARTNER_REPLACEMENT;
+  const partnerSigned = real.partnerSigned;
+  const legalBinding = real.legalBinding;
+  return {
+    ...SCOPE_BASE,
+    partnerSigned,
+    lockedPilot: computeLockedPilot({
+      scopeLocked: true,
+      partnerSigned,
+      legalBinding,
+    }),
+    status: legalBinding && partnerSigned ? "scoping" : "scope_locked",
+    partner: real.partner,
+    agreementKind: real.agreementKind,
+    replaceWithRealPartner: real.replaceWithRealPartner,
+    legalBinding,
+    isHypothetical: real.isHypothetical,
+    notALegalAgreement: real.notALegalAgreement,
+    testPilotMode: real.testPilotMode,
+    testFixtureBanner: real.banner,
+    flipRequirements: [
+      "Named partner confirms disease = rheumatoid arthritis (or explicitly chooses a different disease — then re-lock scope).",
+      "Named partner confirms or rewrites the research question in their words.",
+      "Record real outreach row in ISI_PILOT_PARTNER_SHORTLIST.md (org, type, region, status) — still no invented emails.",
+      "Agree source licensing / attribution for the partner source set.",
+      "Agree scientific review rubric thresholds (time saved, usefulness, rejections) with the partner.",
+      "Keep partnerSigned=true, lockedPilot=true (scopeLocked + legalBinding), status=scoping|active, partner.type=named_partner, partner.outreachStatus=confirmed.",
+      "Re-run bun run outputs and refresh the pilot evidence pack + review rubric against the signed question.",
+    ],
+    honesty: [
+      "Real named partner path — legalBinding must stay true only after written confirm.",
+      "Never invent emails or MoUs in code.",
+      "Phase 2 done = scopeLocked=true (disease + researchQuestion are working Stage 1 scope).",
+    ],
+  };
+}
+
+/**
+ * Working Stage 1 scope lock: RA / anti-TNF response heterogeneity.
+ *
+ * Default: hypothetical test fixture partner for path testing
+ * (`src/hypotheticalPartnerFixture.ts`). Flip USE_HYPOTHETICAL_PARTNER_FIXTURE
+ * and fill REAL_PARTNER_REPLACEMENT when a real org signs.
+ */
+export const HSI_SCOPE_LOCKED_PARTNER_LOCK: HsiPartnerLock =
+  USE_HYPOTHETICAL_PARTNER_FIXTURE
+    ? buildFixturePartnerLock()
+    : buildRealPartnerLock();
 
 /** @deprecated Use HSI_SCOPE_LOCKED_PARTNER_LOCK — alias kept for import stability. */
 export const HSI_PROVISIONAL_PARTNER_LOCK = HSI_SCOPE_LOCKED_PARTNER_LOCK;
@@ -273,7 +349,16 @@ export function partnerLockExportPointer(
   disease: string;
   researchQuestion: string;
   partner: string;
+  partnerType: string | null;
+  partnerLabel: string | null;
   seedPathwayId: string | null;
+  agreementKind: PartnerAgreementKind;
+  replaceWithRealPartner: boolean;
+  legalBinding: boolean;
+  isHypothetical: boolean;
+  notALegalAgreement: boolean;
+  testPilotMode: boolean;
+  testFixtureBanner: string | null;
   verticalStrategy: VerticalStrategy;
   activeScope: "ra-tnf";
   prdMvpTarget: "ssc-tfh-b-il21";
@@ -288,7 +373,16 @@ export function partnerLockExportPointer(
     disease: lock.disease?.label ?? "TBD",
     researchQuestion: lock.researchQuestion ?? "TBD — lock with partner",
     partner: lock.partner?.id ?? "TBD",
+    partnerType: lock.partner?.type ?? null,
+    partnerLabel: lock.partner?.label ?? null,
     seedPathwayId: lock.seedPathway?.id ?? null,
+    agreementKind: lock.agreementKind,
+    replaceWithRealPartner: lock.replaceWithRealPartner,
+    legalBinding: lock.legalBinding,
+    isHypothetical: lock.isHypothetical,
+    notALegalAgreement: lock.notALegalAgreement,
+    testPilotMode: lock.testPilotMode,
+    testFixtureBanner: lock.testFixtureBanner,
     verticalStrategy: lock.verticalStrategy,
     activeScope: lock.activeScope,
     prdMvpTarget: lock.prdMvpTarget,
@@ -307,8 +401,37 @@ export function isScopeLockedPartnerLock(lock: HsiPartnerLock = getPartnerLock()
 
 /**
  * True when pack/rubric should surface the RA pathway as the active pilot question
- * (scope-locked or still-provisional scaffold) without claiming partnerSigned.
+ * (scope-locked or still-provisional scaffold) without claiming a legal MoU.
  */
 export function hasWorkingPilotScope(lock: HsiPartnerLock = getPartnerLock()): boolean {
   return lock.scopeLocked === true || lock.provisionalLock === true;
+}
+
+/** True when current partner is the hypothetical path-testing fixture. */
+export function isHypotheticalTestFixturePartner(
+  lock: HsiPartnerLock = getPartnerLock(),
+): boolean {
+  return (
+    lock.isHypothetical === true &&
+    lock.partner?.type === "hypothetical_test_fixture"
+  );
+}
+
+/**
+ * Whether production ISI may treat partnerSigned as a real pilot signal.
+ * Fixture requires ALLOW_HYPOTHETICAL_PARTNER=true; real legalBinding partners pass.
+ */
+export function isProductionPartnerSignedTrusted(
+  lock: HsiPartnerLock = getPartnerLock(),
+  env: NodeJS.ProcessEnv = process.env,
+): boolean {
+  if (!lock.partnerSigned) return false;
+  if (lock.legalBinding && !lock.isHypothetical) return true;
+  if (lock.isHypothetical) {
+    const raw = env.ALLOW_HYPOTHETICAL_PARTNER;
+    if (!raw) return false;
+    const v = raw.trim().toLowerCase();
+    return v === "1" || v === "true" || v === "yes";
+  }
+  return false;
 }

@@ -63,7 +63,18 @@ export function assertHonestyFlags(
     throw new Error(`${label}: expected autoApproveIntoKg=false`);
   }
   if (doc.partnerSigned === true) {
-    throw new Error(`${label}: partnerSigned must not be true without named partner`);
+    const fixtureOk =
+      doc.isHypothetical === true &&
+      doc.legalBinding === false &&
+      (doc.notALegalAgreement === true ||
+        doc.agreementKind === "hypothetical_test_only") &&
+      doc.productionPartnerSigned !== true &&
+      doc.lockedPilot !== true;
+    if (!fixtureOk) {
+      throw new Error(
+        `${label}: partnerSigned=true only allowed for hypothetical_test_only fixture (isHypothetical + legalBinding=false); production requires real legalBinding partner or ALLOW_HYPOTHETICAL_PARTNER`,
+      );
+    }
   }
   if (doc.containsPhi === true) {
     throw new Error(`${label}: containsPhi must not be true`);

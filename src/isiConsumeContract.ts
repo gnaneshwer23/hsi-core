@@ -89,8 +89,22 @@ export type IsiConsumeContractBundle = {
   notCds: true;
   autoApproveIntoKg: false;
   containsPhi: false;
-  partnerSigned: false;
-  lockedPilot: false;
+  /**
+   * May be true under hypothetical_test_only fixture for path testing.
+   * Production ISI must ignore unless ALLOW_HYPOTHETICAL_PARTNER=true.
+   */
+  partnerSigned: boolean;
+  /** Always false until legalBinding real partner. */
+  lockedPilot: boolean;
+  /** Trusted production signal — false for fixture even when partnerSigned=true. */
+  productionPartnerSigned: false;
+  agreementKind: string;
+  legalBinding: boolean;
+  isHypothetical: boolean;
+  notALegalAgreement: boolean;
+  testPilotMode: boolean;
+  testFixtureBanner: string | null;
+  allowHypotheticalPartnerEnv: "ALLOW_HYPOTHETICAL_PARTNER";
   generatedAt: string;
   package: "hsi-core";
   outputsManifestSchema: typeof ISI_CONSUME_OUTPUTS_MANIFEST_SCHEMA;
@@ -168,7 +182,7 @@ const ARTIFACTS: IsiArtifactContractRow[] = [
     consumerSurfaces: ["ask_map_review", "partner_readiness"],
     autoApproveIntoKg: false,
     notes:
-      "scopeLocked=true; partnerSigned=false until named partner. Do not invent MoU.",
+      "scopeLocked=true; fixture may set partnerSigned under hypothetical_test_only; lockedPilot requires legalBinding. Do not invent MoU.",
   },
   {
     manifestKey: "verticalDecisionJson",
@@ -213,7 +227,7 @@ const ARTIFACTS: IsiArtifactContractRow[] = [
     loadPriority: "required_pilot",
     consumerSurfaces: ["partner_readiness"],
     autoApproveIntoKg: false,
-    notes: "Stage 1 acceptance pass/fail/pending — partnerSigned still false.",
+    notes: "Stage 1 acceptance pass/fail/pending — fixture partnerSigned is path-testing; lockedPilot still false until legalBinding.",
   },
   {
     manifestKey: "pilotWalkthroughMd",
@@ -296,7 +310,7 @@ const ARTIFACTS: IsiArtifactContractRow[] = [
     consumerSurfaces: ["partner_readiness"],
     autoApproveIntoKg: false,
     notes:
-      "P0.2-HSI flip checklist with honest fail/pending statuses; partnerSigned=false.",
+      "P0.2-HSI flip checklist with pass/fail/pending/satisfied_by_fixture; fixture path-testing; readyToFlipPartnerSigned=false for real MoU.",
   },
   {
     manifestKey: "isiConsumeContractJson",
@@ -511,8 +525,16 @@ export function buildIsiConsumeContractBundle(opts?: {
     notCds: true,
     autoApproveIntoKg: false,
     containsPhi: false,
-    partnerSigned: false,
-    lockedPilot: false,
+    partnerSigned: lock.partnerSigned,
+    lockedPilot: lock.lockedPilot,
+    productionPartnerSigned: false,
+    agreementKind: lock.agreementKind,
+    legalBinding: lock.legalBinding,
+    isHypothetical: lock.isHypothetical,
+    notALegalAgreement: lock.notALegalAgreement,
+    testPilotMode: lock.testPilotMode,
+    testFixtureBanner: lock.testFixtureBanner,
+    allowHypotheticalPartnerEnv: "ALLOW_HYPOTHETICAL_PARTNER",
     generatedAt,
     package: "hsi-core",
     outputsManifestSchema: ISI_CONSUME_OUTPUTS_MANIFEST_SCHEMA,
@@ -525,10 +547,13 @@ export function buildIsiConsumeContractBundle(opts?: {
         "Do not edit immunecity from the hsi-core workspace — consume published exports only.",
         "HSI Neon is red-wave only; Gate C approve+supports stays in ISI Neon autumn-snow (out of repo).",
         "Manifest invariants: notCds=true, autoApproveIntoKg=false, autoSurfaceCds=false.",
-        `Partner lock at publish: scopeLocked=${lock.scopeLocked}, partnerSigned=${lock.partnerSigned}, lockedPilot=${lock.lockedPilot}.`,
+        `Partner lock at publish: scopeLocked=${lock.scopeLocked}, partnerSigned=${lock.partnerSigned}, lockedPilot=${lock.lockedPilot}, agreementKind=${lock.agreementKind}, legalBinding=${lock.legalBinding}, isHypothetical=${lock.isHypothetical}.`,
+        lock.testFixtureBanner
+          ? `${lock.testFixtureBanner} Production ISI must ignore partnerSigned unless ALLOW_HYPOTHETICAL_PARTNER=true. Swap via src/hypotheticalPartnerFixture.ts.`
+          : "No hypothetical fixture active.",
         `Vertical: ${vertical.verticalStrategy} · activeScope=${vertical.activeScope} · prdMvpTarget=${vertical.prdMvpTarget}.`,
         "Technical adapter spikes (RDKit/OpenMM/REINVENT4/ESM) are optional_proposal — do not block ISI Discovery core load.",
-        "Further hsi-core BUILD NEXT without a named partner should not invent more adapter spikes — prefer partnerNamed or out-of-repo ISI wiring.",
+        "Further hsi-core BUILD NEXT without a real named partner should not invent more adapter spikes — prefer real partnerNamed or out-of-repo ISI wiring.",
       ],
     },
     vertical: {
@@ -581,7 +606,7 @@ export function buildIsiConsumeContractBundle(opts?: {
     artifacts: ARTIFACTS,
     discoveryJsonPaths: DISCOVERY_PATHS,
     loadOrderHint: [
-      "1. MANIFEST.json — verify notCds / autoApproveIntoKg=false / partnerSigned=false.",
+      "1. MANIFEST.json — verify notCds / autoApproveIntoKg=false / lockedPilot=false; if partnerSigned=true require isHypothetical + ALLOW_HYPOTHETICAL_PARTNER for prod use.",
       "2. required_core: hsi-isi-export.json + hsi-isi-rel-map.json + gate-c-checklist.*",
       "3. required_pilot: partner lock + vertical decision + pilot pack/rubric/acceptance/walkthrough + flip-readiness + this contract",
       "4. recommended_secondary: gap / R2 / SSc / gut / neuro / translation / systems vision / licensing stub",
@@ -597,9 +622,11 @@ export function buildIsiConsumeContractBundle(opts?: {
       discoveryPathCount: DISCOVERY_PATHS.length,
     },
     honesty: [
-      "P0.2-HSI documents ISI consume + partner flip-readiness — does not invent a named partner.",
-      "partnerSigned remains false; lockedPilot remains false.",
-      "Technical adapter track paused for further spikes without partnerNamed.",
+      "P0.2-HSI documents ISI consume + partner flip-readiness — does not invent a named legal partner.",
+      "Hypothetical fixture may set partnerSigned=true under agreementKind=hypothetical_test_only; productionPartnerSigned=false; lockedPilot=false while legalBinding=false.",
+      "Production ISI must ignore fixture partnerSigned unless ALLOW_HYPOTHETICAL_PARTNER=true.",
+      "Replace fixture via src/hypotheticalPartnerFixture.ts before a real pilot.",
+      "Technical adapter track paused for further spikes without real partnerNamed.",
       "No CDS / PHI / shared Neon.",
       "immunecity wiring is OUT OF REPO — this contract is the hsi-core-side handoff.",
     ],
@@ -620,8 +647,12 @@ export function serializeIsiConsumeContractMarkdown(
     "",
     `Schema: \`${bundle.schemaVersion}\` · contract \`${bundle.contractVersion}\` · generated ${bundle.generatedAt}`,
     "",
-    "**notCds** · **autoApproveIntoKg=false** · **partnerSigned=false** · **containsPhi=false**",
+    `**notCds** · **autoApproveIntoKg=false** · **partnerSigned=${bundle.partnerSigned}** · **productionPartnerSigned=false** · **lockedPilot=${bundle.lockedPilot}** · **containsPhi=false**`,
     "",
+    bundle.testFixtureBanner
+      ? `> **${bundle.testFixtureBanner}** agreementKind=\`${bundle.agreementKind}\` · legalBinding=\`${bundle.legalBinding}\` · isHypothetical=\`${bundle.isHypothetical}\``
+      : "",
+    bundle.testFixtureBanner ? "" : "",
     "## Compatibility",
     "",
   ];

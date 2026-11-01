@@ -1,6 +1,7 @@
 # ISI pilot — research partner shortlist
 
 **Status:** outreach candidates only — **not** confirmed partners.  
+**Test fixture (path-testing only):** `test:hypothetical-isi-pilot-partner` via [`src/hypotheticalPartnerFixture.ts`](../src/hypotheticalPartnerFixture.ts) — **TEST FIXTURE — replace before real pilot.** Not a MoU.  
 **Use with:** [`ISI_PILOT_BRIEF.md`](./ISI_PILOT_BRIEF.md).  
 **Do not invent** personal emails, named PIs as “committed,” or fake MoUs. Contact via public department / institute channels unless a real introduction exists.
 
@@ -65,7 +66,8 @@ Approach **categories** first; example orgs below are **illustrative outreach ta
 
 | Org / group | Type | Region | Status | Notes |
 |-------------|------|--------|--------|-------|
-| Versus Arthritis research network / Oxford NDORMS–Kennedy Institute (category) | disease_foundation / immunology | UK | awaiting_named_partner | **Illustrative outreach category** for Phase 2 scope-locked RA/TNF question — not a MoU or named PI. Aligns with `hsi-partner-lock.json` partner id `outreach:uk-versus-arthritis-ndorms-category`. |
-| *(add real outreach rows here)* | | | candidate | No confirmed partners yet |
+| **Hypothetical ISI Pilot Partner** (`test:hypothetical-isi-pilot-partner`) | `hypothetical_test_fixture` | unspecified | test_fixture | **TEST FIXTURE — replace before real pilot.** `agreementKind=hypothetical_test_only`; `legalBinding=false`; `partnerSigned=true` for path testing only. Swap in `src/hypotheticalPartnerFixture.ts`. Production ISI ignores unless `ALLOW_HYPOTHETICAL_PARTNER=true`. |
+| Versus Arthritis research network / Oxford NDORMS–Kennedy Institute (category) | disease_foundation / immunology | UK | awaiting_named_partner | **Illustrative outreach category** for Phase 2 scope-locked RA/TNF question — not a MoU or named PI. Kept as outreach target while fixture is active. |
+| *(add real outreach rows here)* | | | candidate | No confirmed legal partners yet |
 
-When a partner confirms interest, update status to `interested` / `scoping` and record the named org in `hsi-partner-lock.json` / the pilot brief — still without fabricating emails or agreements. Flip `partnerSigned=true` (and then `lockedPilot=true`) only after named confirmation. Phase 2 already set `scopeLocked=true` for the RA/anti-TNF working question.
+When a **real** partner confirms interest, set `USE_HYPOTHETICAL_PARTNER_FIXTURE=false` in `src/hypotheticalPartnerFixture.ts`, fill `REAL_PARTNER_REPLACEMENT`, update status to `interested` / `scoping` / `confirmed`, and set `legalBinding=true` so `lockedPilot` can become true — still without fabricating emails or agreements. Phase 2 already set `scopeLocked=true` for the RA/anti-TNF working question.

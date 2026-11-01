@@ -5,11 +5,11 @@
   "notCds": true,
   "noPatientLevelActions": true,
   "autoApproveIntoKg": false,
-  "generatedAt": "2026-11-01T19:45:14.232Z",
+  "generatedAt": "2026-11-01T20:02:48.733Z",
   "disease": "Rheumatoid arthritis",
   "researchQuestion": "Why do some patients with rheumatoid arthritis respond differently to anti-TNF therapy, and which biomarkers or immune mechanisms are best supported for defining those subgroups?",
   "scopeLocked": true,
-  "partnerSigned": false,
+  "partnerSigned": true,
   "lockedPilot": false,
   "framing": "ASK → MAP → REVIEW → VALIDATE",
   "hypothesisCards": [
@@ -469,7 +469,7 @@
   "nextActions": [
     "Review hypothesis cards on site `/discovery` VALIDATE tab against competing explanations.",
     "Run high-priority ranked-gap literature reconciliations before collapsing frames.",
-    "Keep partnerSigned=false until flipRequirements are met.",
+    "Keep lockedPilot=false until legalBinding; fixture partnerSigned is path-testing only — replace via src/hypotheticalPartnerFixture.ts.",
     "Review Phase 8 TRANSLATE tab candidates as HITL-only scaffolding — not live CDS."
   ]
 }

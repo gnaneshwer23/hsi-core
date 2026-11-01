@@ -50,7 +50,7 @@ describe("P1.3 gut–immune SCFA ↔ mucosal Treg/Th17", () => {
     expect(pack.notCds).toBe(true);
     expect(pack.autoApproveIntoKg).toBe(false);
     expect(pack.stage1ActiveScope.diseaseId).toBe("ra");
-    expect(pack.stage1ActiveScope.partnerSigned).toBe(false);
+    expect(pack.stage1ActiveScope.partnerSigned).toBe(true); // fixture
     expect(
       pack.competingExplanations.some((c) => c.id.includes("th17-promote")),
     ).toBe(true);
@@ -74,7 +74,9 @@ describe("P1.3 gut–immune SCFA ↔ mucosal Treg/Th17", () => {
     const lock = getPartnerLock();
     expect(lock.scopeLocked).toBe(true);
     expect(lock.disease?.id).toBe("ra");
-    expect(lock.partnerSigned).toBe(false);
+    expect(lock.partnerSigned).toBe(true); // fixture
+    expect(lock.lockedPilot).toBe(false);
+    expect(lock.isHypothetical).toBe(true);
     expect(lock.verticalStrategy).toBe("dual_track");
 
     const decision = getVerticalDecision();

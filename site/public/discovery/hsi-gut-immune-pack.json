@@ -2,7 +2,7 @@
   "schemaVersion": "hsi-gut-immune-pack-1",
   "notCds": true,
   "autoApproveIntoKg": false,
-  "generatedAt": "2026-11-01T19:45:14.232Z",
+  "generatedAt": "2026-11-01T20:02:48.733Z",
   "pathway": {
     "id": "gut-scfa-mucosal-treg-th17",
     "label": "Gut–immune · SCFA / butyrate ↔ mucosal Treg / Th17",
@@ -89,7 +89,7 @@
     "diseaseId": "ra",
     "researchQuestion": "Why do some patients with rheumatoid arthritis respond differently to anti-TNF therapy, and which biomarkers or immune mechanisms are best supported for defining those subgroups?",
     "scopeLocked": true,
-    "partnerSigned": false
+    "partnerSigned": true
   },
   "discoveryRole": "systems_secondary_axis",
   "deepSeedsPresent": true,
@@ -467,7 +467,7 @@
   "honesty": [
     "Systems secondary axis only — Discovery ASK question remains the RA / anti-TNF research question.",
     "SSc dual-track A pack untouched; RA Stage 1 scopeLocked packs untouched.",
-    "partnerSigned=false; lockedPilot=false — no MoU invented.",
+    "partnerSigned=true (fixture path-testing only if isHypothetical); lockedPilot=false until legalBinding — no MoU invented.",
     "Th17 promote (Park) vs inhibit (Chen) are hypothesized competing frames — never collapse.",
     "Most PMIDs are mouse or Caco-2 — hsiGrade stays uncertain (source-verified); not human therapeutic claims.",
     "Not clinical decision support. autoApproveIntoKg=false.",

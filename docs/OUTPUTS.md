@@ -68,7 +68,7 @@ dist/outputs/
     hsi-esm-adapter-proposals.md
     hsi-isi-consume-contract.json        # P0.2-HSI ISI consume contract (MANIFEST/packs/grades/Gate C)
     hsi-isi-consume-contract.md
-    hsi-partner-flip-readiness.json      # P0.2-HSI flipRequirements status (partnerSigned=false)
+    hsi-partner-flip-readiness.json      # P0.2-HSI flipRequirements (pass/fail/pending/satisfied_by_fixture)
     hsi-partner-flip-readiness.md
     hsi-source-licensing-stub.json       # P0.3 PMID licensing stub (needs_review)
     hsi-source-licensing-stub.md
@@ -96,8 +96,8 @@ PRD / brief four outputs (evidence map, entity slice, competing explanations, ex
 | Field | Meaning |
 |-------|---------|
 | `scopeLocked` | Disease + researchQuestion are the **working Stage 1 pilot scope** (engineering). **Phase 2 done = this.** |
-| `partnerSigned` | Named partner confirmed disease + question in writing. Stays false until outreach supplies a real org — never invent. |
-| `lockedPilot` | Compat AND: `scopeLocked && partnerSigned`. Stays false without a named partner. |
+| `partnerSigned` | May be `true` under **TEST FIXTURE** (`agreementKind=hypothetical_test_only`) for path testing — not a MoU. Real org: set via `src/hypotheticalPartnerFixture.ts`. Production ISI requires `ALLOW_HYPOTHETICAL_PARTNER=true` to trust fixture. |
+| `lockedPilot` | `scopeLocked && partnerSigned && legalBinding`. Stays false while fixture `legalBinding=false`. |
 | `provisionalLock` | Legacy Phase 1b scaffold. Cleared once scope is promoted (`false` after Phase 2). |
 | `status` | `scope_locked` after Phase 2; `scoping` / `active` only after `partnerSigned`. |
 

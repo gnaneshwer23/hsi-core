@@ -555,7 +555,7 @@ export function buildPilotEvidencePack(opts?: {
   const partnerScopedSlice = bucketEntities(scoped.length > 0 ? scoped : []);
   if (scoped.length > 0) {
     partnerScopedSlice.note =
-      "Phase 3 partner-scoped slice for the scope-locked RA / anti-TNF response pathway (scopeLocked=true; partnerSigned=false; lockedPilot=false). Includes ADA, serology tension, RF LOINC, MTX combo — not a signed partner corpus.";
+      "Phase 3 partner-scoped slice for the scope-locked RA / anti-TNF response pathway (scopeLocked=true; lockedPilot=false until legalBinding). Includes ADA, serology tension, RF LOINC, MTX combo — fixture partnerSigned is path-testing only, not a signed partner corpus.";
   }
 
   return {
@@ -572,7 +572,7 @@ export function buildPilotEvidencePack(opts?: {
     provisionalLock: lock.provisionalLock,
     partnerLock: lock,
     substrateNote: scopedPilot
-      ? "Phase 3 evidence depth on Phase 2 scope lock: rheumatoid arthritis + anti-TNF response heterogeneity. scopeLocked=true; partnerSigned=false; lockedPilot=false. Partner-scoped slice adds ADA/immunogenicity, RF/ACPA serology tension, RF LOINC, and MTX+anti-TNF combo literature. Full evidenceMap still includes T2D / immuno-metabolic + SLE/PsO/IBD stubs."
+      ? "Phase 3 evidence depth on Phase 2 scope lock: rheumatoid arthritis + anti-TNF response heterogeneity. scopeLocked=true; lockedPilot=false until legalBinding; fixture may set partnerSigned under hypothetical_test_only. Partner-scoped slice adds ADA/immunogenicity, RF/ACPA serology tension, RF LOINC, and MTX+anti-TNF combo literature. Full evidenceMap still includes T2D / immuno-metabolic + SLE/PsO/IBD stubs."
       : "Evidence rows include substrate seeds. Disease/question TBD until scope is locked.",
     discoveryCentre,
     gradeDefinitions: HSI_GRADE_INFO,
@@ -663,7 +663,7 @@ export function buildPilotEvidencePack(opts?: {
     },
     nextActions: [
       scopedPilot
-        ? "Phase 3 evidence depth complete for scope-locked RA/anti-TNF. Keep partnerSigned=false / lockedPilot=false until a named partner confirms disease + question (see partnerLock.flipRequirements)."
+        ? "Phase 3 evidence depth complete for scope-locked RA/anti-TNF. Keep lockedPilot=false until legalBinding; replace hypothetical fixture via src/hypotheticalPartnerFixture.ts (see partnerLock.flipRequirements)."
         : "Lock disease + research question as working Stage 1 scope (Phase 2).",
       "Phase 4 done: HSI Neon red-wave schema stub + db:migrate / db:gate-c-local (pending only) — no ISI autumn-snow writes from this workspace.",
       "Phase 5 done: use hsi-pilot-acceptance.* + hsi-pilot-walkthrough.md for partner-ready Stage 1 acceptance (partnerSigned still pending).",

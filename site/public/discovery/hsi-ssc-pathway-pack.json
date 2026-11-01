@@ -2,7 +2,7 @@
   "schemaVersion": "hsi-ssc-pathway-pack-1",
   "notCds": true,
   "autoApproveIntoKg": false,
-  "generatedAt": "2026-11-01T19:45:14.232Z",
+  "generatedAt": "2026-11-01T20:02:48.733Z",
   "pathway": {
     "id": "ssc-tfh-b-il21",
     "label": "SSc · CD4/Tfh–B-cell–IL-21",
@@ -99,7 +99,7 @@
     "diseaseId": "ra",
     "researchQuestion": "Why do some patients with rheumatoid arthritis respond differently to anti-TNF therapy, and which biomarkers or immune mechanisms are best supported for defining those subgroups?",
     "scopeLocked": true,
-    "partnerSigned": false
+    "partnerSigned": true
   },
   "deepSeedsPresent": true,
   "cellCardSchema": "hsi-ssc-cell-card-1",
@@ -795,7 +795,7 @@
   "honesty": [
     "Dual-track option A: RA Stage 1 scopeLocked packs untouched; this pack is parallel PRD MVP depth.",
     "Discovery ASK question remains the RA / anti-TNF research question.",
-    "partnerSigned=false; lockedPilot=false — no MoU invented.",
+    "partnerSigned=true (fixture path-testing only if isHypothetical); lockedPilot=false until legalBinding — no MoU invented.",
     "EBV edge is hypothesized/uncertain only — do not overclaim.",
     "Cell cards carry CL·MONDO (and related) hints with bindStatus=hint_only — not full ontology bind.",
     "Not clinical decision support. autoApproveIntoKg=false.",

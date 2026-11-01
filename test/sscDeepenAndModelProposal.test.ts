@@ -67,7 +67,9 @@ describe("P1.1 SSc deepen — cell cards + CL·MONDO hints + PMIDs", () => {
     expect(HSI_T2D_IMMUNO_SEED_EDGES.some((e) => e.id === "HSI-E-RA-001")).toBe(true);
     const lock = getPartnerLock();
     expect(lock.disease?.id).toBe("ra");
-    expect(lock.partnerSigned).toBe(false);
+    expect(lock.partnerSigned).toBe(true); // fixture path-testing
+    expect(lock.lockedPilot).toBe(false);
+    expect(lock.isHypothetical).toBe(true);
     expect(lock.scopeLocked).toBe(true);
   });
 });

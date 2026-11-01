@@ -409,6 +409,16 @@ export {
 } from "./pilotEvidencePack";
 
 export {
+  ALLOW_HYPOTHETICAL_PARTNER_ENV,
+  HYPOTHETICAL_PARTNER_FIXTURE,
+  REAL_PARTNER_REPLACEMENT,
+  USE_HYPOTHETICAL_PARTNER_FIXTURE,
+  isAllowHypotheticalPartnerEnabled,
+  type HypotheticalPartnerFixtureFields,
+  type PartnerAgreementKind,
+} from "./hypotheticalPartnerFixture";
+
+export {
   PARTNER_LOCK_SCHEMA,
   HSI_SCOPE_LOCKED_PARTNER_LOCK,
   HSI_PROVISIONAL_PARTNER_LOCK,
@@ -416,6 +426,8 @@ export {
   isProvisionalPartnerLock,
   isScopeLockedPartnerLock,
   hasWorkingPilotScope,
+  isHypotheticalTestFixturePartner,
+  isProductionPartnerSignedTrusted,
   partnerLockExportPointer,
   type HsiPartnerLock,
   type HsiPartnerRef,

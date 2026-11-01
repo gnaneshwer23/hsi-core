@@ -11,6 +11,13 @@ export type HonestyFlags = {
   autoApproveIntoKg?: boolean;
   partnerSigned?: boolean;
   containsPhi?: boolean;
+  /** When true with legalBinding=false, partnerSigned may be path-testing only. */
+  isHypothetical?: boolean;
+  legalBinding?: boolean;
+  notALegalAgreement?: boolean;
+  agreementKind?: string;
+  productionPartnerSigned?: boolean;
+  lockedPilot?: boolean;
 };
 
 export type IsiConsumeContractArtifact = {
@@ -33,7 +40,7 @@ export type IsiConsumeContract = HonestyFlags & {
   contractVersion?: string;
   autoApproveIntoKg: false;
   notCds: true;
-  partnerSigned: false;
+  partnerSigned: boolean;
   artifacts: IsiConsumeContractArtifact[];
   loadOrderHint: string[];
   grades: {

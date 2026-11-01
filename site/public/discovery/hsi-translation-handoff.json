@@ -18,11 +18,11 @@
   "intendedConsumer": "akeno_hsi_core",
   "akenoProductIntegration": "in_repo_hitl_consumer",
   "akenoConsumerPath": "/akeno",
-  "generatedAt": "2026-11-01T19:45:14.232Z",
+  "generatedAt": "2026-11-01T20:02:48.733Z",
   "disease": "Rheumatoid arthritis",
   "researchQuestion": "Why do some patients with rheumatoid arthritis respond differently to anti-TNF therapy, and which biomarkers or immune mechanisms are best supported for defining those subgroups?",
   "scopeLocked": true,
-  "partnerSigned": false,
+  "partnerSigned": true,
   "lockedPilot": false,
   "framing": "ASK → MAP → REVIEW → VALIDATE → TRANSLATE",
   "candidates": [

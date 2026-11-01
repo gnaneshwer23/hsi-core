@@ -363,13 +363,13 @@ describe("Gate C checklist + publish outputs", () => {
     );
   });
 
-  it("builds a scope-locked RA pilot evidence pack without claiming partnerSigned", () => {
+  it("builds a scope-locked RA pilot evidence pack with fixture partnerSigned (not MoU)", () => {
     const pack = buildPilotEvidencePack({ generatedAt: "2026-11-01T13:00:00.000Z" });
     expect(pack.schemaVersion).toBe("hsi-pilot-evidence-pack-2");
     expect(pack.disease).toBe("Rheumatoid arthritis");
     expect(pack.researchQuestion.toLowerCase()).toContain("anti-tnf");
     expect(pack.scopeLocked).toBe(true);
-    expect(pack.partnerSigned).toBe(false);
+    expect(pack.partnerSigned).toBe(true); // hypothetical fixture path-testing
     expect(pack.lockedPilot).toBe(false);
     expect(pack.provisionalLock).toBe(false);
     expect(pack.partnerLock.status).toBe("scope_locked");
@@ -378,7 +378,7 @@ describe("Gate C checklist + publish outputs", () => {
     expect(pack.autoApproveIntoKg).toBe(false);
     expect(pack.questionProject.status).toBe("scope_locked");
     expect(pack.questionProject.scopeLocked).toBe(true);
-    expect(pack.questionProject.partnerSigned).toBe(false);
+    expect(pack.questionProject.partnerSigned).toBe(true);
     expect(pack.questionProject.lockedPilot).toBe(false);
     expect(pack.evidenceMap.length).toBe(HSI_T2D_IMMUNO_SEED_EDGES.length);
     expect(pack.summary.partnerScopedEvidenceRows).toBeGreaterThanOrEqual(12);
@@ -411,18 +411,21 @@ describe("Gate C checklist + publish outputs", () => {
   it("ships a review rubric with ready_for_human + blocked_on_partner items", () => {
     const lock = getPartnerLock();
     expect(lock.scopeLocked).toBe(true);
-    expect(lock.partnerSigned).toBe(false);
+    expect(lock.partnerSigned).toBe(true); // hypothetical fixture
     expect(lock.lockedPilot).toBe(false);
+    expect(lock.legalBinding).toBe(false);
+    expect(lock.isHypothetical).toBe(true);
     expect(lock.provisionalLock).toBe(false);
     expect(lock.status).toBe("scope_locked");
     expect(lock.disease?.id).toBe("ra");
-    expect(lock.partner?.outreachStatus).toBe("awaiting_named_partner");
+    expect(lock.partner?.type).toBe("hypothetical_test_fixture");
+    expect(lock.partner?.outreachStatus).toBe("test_fixture");
     expect(lock.flipRequirements.length).toBeGreaterThanOrEqual(5);
 
     const rubric = buildPilotReviewRubric({ generatedAt: "2026-11-01T13:00:00.000Z" });
     expect(rubric.schemaVersion).toBe("hsi-pilot-review-rubric-1");
     expect(rubric.partnerLock.scopeLocked).toBe(true);
-    expect(rubric.partnerLock.partnerSigned).toBe(false);
+    expect(rubric.partnerLock.partnerSigned).toBe(true);
     expect(rubric.partnerLock.lockedPilot).toBe(false);
     expect(rubric.partnerLock.provisionalLock).toBe(false);
     expect(rubric.partnerLock.status).toBe("scope_locked");
@@ -435,15 +438,18 @@ describe("Gate C checklist + publish outputs", () => {
     expect(rubric.autoApproveIntoKg).toBe(false);
   });
 
-  it("ships Phase 5 acceptance pack with honest pending for partnerSigned", () => {
+  it("ships Phase 5 acceptance pack with honest pending for real partner (fixture signed)", () => {
     const acceptance = buildPilotAcceptancePack({ generatedAt: "2026-11-01T14:45:00.000Z" });
     expect(acceptance.schemaVersion).toBe("hsi-pilot-acceptance-1");
     expect(acceptance.phase).toBe("5");
     expect(acceptance.notCds).toBe(true);
     expect(acceptance.autoApproveIntoKg).toBe(false);
     expect(acceptance.scope.scopeLocked).toBe(true);
-    expect(acceptance.scope.partnerSigned).toBe(false);
+    expect(acceptance.scope.partnerSigned).toBe(true);
     expect(acceptance.scope.lockedPilot).toBe(false);
+    expect(acceptance.scope.isHypothetical).toBe(true);
+    expect(acceptance.scope.agreementKind).toBe("hypothetical_test_only");
+    expect(acceptance.scope.testFixtureBanner).toContain("TEST FIXTURE");
     expect(acceptance.summary.fail).toBe(0);
     expect(acceptance.summary.stage1FourOutputsGreen).toBe(true);
     expect(acceptance.summary.partnerReadyWalkthrough).toBe(true);
@@ -475,7 +481,8 @@ describe("Gate C checklist + publish outputs", () => {
     expect(r2.notCds).toBe(true);
     expect(r2.autoApproveIntoKg).toBe(false);
     expect(r2.scopeLocked).toBe(true);
-    expect(r2.partnerSigned).toBe(false);
+    expect(r2.partnerSigned).toBe(true); // fixture path-testing
+    expect(r2.lockedPilot).toBe(false);
     expect(r2.hypothesisCards.length).toBeGreaterThanOrEqual(5);
     expect(r2.hypothesisCards.every((c) => c.autoApproved === false)).toBe(true);
     expect(r2.hypothesisCards.every((c) => c.literatureTests.every((t) => t.notClinicalProtocol))).toBe(
@@ -547,8 +554,9 @@ describe("Gate C checklist + publish outputs", () => {
     expect(bundle.discoveryCentre.notLockedPilotIndications).toBe(true);
     expect(bundle.discoveryCentre.partnerLock.disease).toBe("Rheumatoid arthritis");
     expect(bundle.discoveryCentre.partnerLock.scopeLocked).toBe(true);
-    expect(bundle.discoveryCentre.partnerLock.partnerSigned).toBe(false);
+    expect(bundle.discoveryCentre.partnerLock.partnerSigned).toBe(true);
     expect(bundle.discoveryCentre.partnerLock.lockedPilot).toBe(false);
+    expect(bundle.discoveryCentre.partnerLock.isHypothetical).toBe(true);
     expect(bundle.discoveryCentre.partnerLock.provisionalLock).toBe(false);
     expect(bundle.discoveryCentre.partnerLock.status).toBe("scope_locked");
     expect(bundle.discoveryCentre.discoveryLoop.steps.map((s) => s.id)).toEqual([
@@ -658,7 +666,7 @@ describe("Gate C checklist + publish outputs", () => {
     expect(manifest.autoApproveIntoKg).toBe(false);
     expect(manifest.autoSurfaceCds).toBe(false);
     expect(manifest.partnerLock.scopeLocked).toBe(true);
-    expect(manifest.partnerLock.partnerSigned).toBe(false);
+    expect(manifest.partnerLock.partnerSigned).toBe(true);
     expect(manifest.partnerLock.lockedPilot).toBe(false);
     expect(manifest.partnerLock.provisionalLock).toBe(false);
     expect(manifest.partnerLock.status).toBe("scope_locked");
@@ -667,7 +675,7 @@ describe("Gate C checklist + publish outputs", () => {
     expect(manifest.acceptance.overallStage1Acceptance).toBe("green_with_pending");
     expect(manifest.acceptance.stage1FourOutputsGreen).toBe(true);
     expect(manifest.acceptance.partnerReadyWalkthrough).toBe(true);
-    expect(manifest.acceptance.partnerSigned).toBe(false);
+    expect(manifest.acceptance.partnerSigned).toBe(true);
     expect(manifest.counts.stage1FourOutputsGreen).toBe(true);
     expect(manifest.counts.acceptancePass).toBeGreaterThanOrEqual(9);
     expect(manifest.counts.acceptancePending).toBeGreaterThanOrEqual(3);

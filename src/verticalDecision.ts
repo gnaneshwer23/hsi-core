@@ -49,7 +49,7 @@ export const HSI_VERTICAL_DECISION: HsiVerticalDecision = {
     "Dual-track: keep RA / anti-TNF scopeLocked packs untouched; curate SSc Tfh–B–IL-21 as a parallel PRD MVP pathway pack. RA comparison = Release 2 framing. EBV only as hypothesized/uncertain branch. No partnerSigned flip. No clinical CDS. No RA wipe.",
   constraints: [
     "Do not delete or demote HSI-C-RA-* / HSI-E-RA-* claim or edge ids.",
-    "partnerSigned / lockedPilot stay false until named partner flipRequirements are met.",
+    "lockedPilot stays false until legalBinding real partner; fixture may set partnerSigned under hypothetical_test_only.",
     "EBV edges must use teaching=hypothesized (or uncertain grades) — never overclaim causal merge with Tfh→B→IL-21.",
     "SSc deepSeedsPresent=true only when real literature-backed edges land.",
     "Discovery ASK question stays the RA / anti-TNF research question; SSc may surface as secondary PRD target only.",

@@ -25,8 +25,11 @@ describe("P0.2-HSI ISI consume contract + partner flip-readiness", () => {
     expect(bundle.notCds).toBe(true);
     expect(bundle.autoApproveIntoKg).toBe(false);
     expect(bundle.containsPhi).toBe(false);
-    expect(bundle.partnerSigned).toBe(false);
+    expect(bundle.partnerSigned).toBe(true); // hypothetical fixture path-testing
     expect(bundle.lockedPilot).toBe(false);
+    expect(bundle.productionPartnerSigned).toBe(false);
+    expect(bundle.isHypothetical).toBe(true);
+    expect(bundle.agreementKind).toBe("hypothetical_test_only");
     expect(bundle.vertical.askStaysRa).toBe(true);
     expect(bundle.gateC.statusOnPublish).toBe("pending");
     expect(bundle.gateC.autoApprove).toBe(false);
@@ -58,13 +61,16 @@ describe("P0.2-HSI ISI consume contract + partner flip-readiness", () => {
     }
 
     const json = JSON.parse(serializeIsiConsumeContract(bundle));
-    expect(json.partnerSigned).toBe(false);
+    expect(json.partnerSigned).toBe(true);
+    expect(json.productionPartnerSigned).toBe(false);
+    expect(json.lockedPilot).toBe(false);
   });
 
-  test("partner flip-readiness stays honest: partnerSigned=false; fail/pending only", () => {
+  test("partner flip-readiness stays honest: fixture satisfied_by_fixture; lockedPilot=false", () => {
     const lock = getPartnerLock();
-    expect(lock.partnerSigned).toBe(false);
+    expect(lock.partnerSigned).toBe(true);
     expect(lock.lockedPilot).toBe(false);
+    expect(lock.isHypothetical).toBe(true);
 
     const bundle = buildPartnerFlipReadinessBundle({
       generatedAt: "2026-11-01T19:00:00.000Z",
@@ -72,31 +78,33 @@ describe("P0.2-HSI ISI consume contract + partner flip-readiness", () => {
     });
 
     expect(bundle.schemaVersion).toBe(PARTNER_FLIP_READINESS_SCHEMA);
-    expect(bundle.partnerSigned).toBe(false);
+    expect(bundle.partnerSigned).toBe(true);
     expect(bundle.lockedPilot).toBe(false);
     expect(bundle.summary.readyToFlipPartnerSigned).toBe(false);
-    expect(bundle.summary.pass).toBe(0);
-    expect(bundle.summary.fail).toBeGreaterThanOrEqual(3);
+    expect(bundle.summary.satisfiedByFixture).toBeGreaterThanOrEqual(3);
     expect(bundle.summary.pending).toBeGreaterThanOrEqual(2);
 
     const byId = Object.fromEntries(
       bundle.flipRequirements.map((r) => [r.id, r]),
     );
-    expect(byId.named_org.status).toBe("fail");
-    expect(byId.question_confirm.status).toBe("fail");
-    expect(byId.shortlist_row.status).toBe("fail");
-    expect(byId.partner_signed_flip.status).toBe("fail");
+    expect(byId.named_org.status).toBe("satisfied_by_fixture");
+    expect(byId.question_confirm.status).toBe("satisfied_by_fixture");
+    expect(byId.shortlist_row.status).toBe("satisfied_by_fixture");
+    expect(byId.partner_signed_flip.status).toBe("satisfied_by_fixture");
+    expect(byId.real_partner_replacement.status).toBe("pending");
     expect(byId.licensing.status).toBe("pending");
     expect(byId.thresholds.status).toBe("pending");
-    expect(byId.outputs_refresh.status).toBe("pending");
 
     for (const r of bundle.flipRequirements) {
-      expect(["pass", "fail", "pending"]).toContain(r.status);
+      expect(["pass", "fail", "pending", "satisfied_by_fixture"]).toContain(
+        r.status,
+      );
     }
 
     const json = JSON.parse(serializePartnerFlipReadiness(bundle));
     expect(json.summary.readyToFlipPartnerSigned).toBe(false);
-    expect(json.partnerSigned).toBe(false);
+    expect(json.partnerSigned).toBe(true);
+    expect(json.lockedPilot).toBe(false);
   });
 
   test("source licensing stub lists RA/SSc/gut/neuro PMIDs as needs_review", () => {
