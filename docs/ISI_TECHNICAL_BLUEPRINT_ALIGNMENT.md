@@ -1,7 +1,7 @@
 # ISI Product Technical Blueprint ↔ hsi-core alignment
 
 **Source (external):** *Immune Super Intelligence — Product and Technical Blueprint* (1 November 2026), local file `~/Downloads/ISI_Product_Technical_Blueprint.docx`.  
-**Repo anchors:** [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md), [`ISI_TARGET_STATE_PRD_ALIGNMENT.md`](./ISI_TARGET_STATE_PRD_ALIGNMENT.md), [`ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md`](./ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md), [`PRD_IMPLEMENTATION_AUDIT.md`](./PRD_IMPLEMENTATION_AUDIT.md), [`OUTPUTS.md`](./OUTPUTS.md), [`AKENO_IN_HSI.md`](./AKENO_IN_HSI.md), [`AKSH_AGENTS_IN_HSI.md`](./AKSH_AGENTS_IN_HSI.md), [`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md), [`VISION_REPO_ALIGNMENT.md`](./VISION_REPO_ALIGNMENT.md).
+**Repo anchors:** [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md), [`ISI_TARGET_STATE_PRD_ALIGNMENT.md`](./ISI_TARGET_STATE_PRD_ALIGNMENT.md), [`ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md`](./ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md), [`HSI_SYSTEMS_VISION_MAP.md`](./HSI_SYSTEMS_VISION_MAP.md) (gut / neuroimmune / patient-plane / P3 adapters — expanded vision without Stage 1 pivot), [`PRD_IMPLEMENTATION_AUDIT.md`](./PRD_IMPLEMENTATION_AUDIT.md), [`OUTPUTS.md`](./OUTPUTS.md), [`AKENO_IN_HSI.md`](./AKENO_IN_HSI.md), [`AKSH_AGENTS_IN_HSI.md`](./AKSH_AGENTS_IN_HSI.md), [`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md), [`VISION_REPO_ALIGNMENT.md`](./VISION_REPO_ALIGNMENT.md).
 
 **Edit target:** hsi-core only. Do **not** edit immunecity. Neon: HSI = **`red-wave` only**.
 
@@ -109,7 +109,7 @@ Build **ISI** as an immune-science discovery product on **HSI Core** (shared evi
 | HSI Core + existing ISI curated graph | Backbone | **DONE** (HSI) / ISI consumes |
 | ImmPort, GEO, CELLxGENE/HCA, Reactome | Pathway enrich after audit | **NOT STARTED** / Stage 2+ |
 | ClinicalTrials.gov | Read-only landscape | **OUT OF SCOPE** Stage 1 |
-| TDC, AF3, Boltz, ESM, RDKit, OpenMM, REINVENT4 | Specialist plugins | **OUT OF SCOPE** (P3 deferred) — [`VISION_REPO_ALIGNMENT.md`](./VISION_REPO_ALIGNMENT.md) |
+| TDC, AF3, Boltz, ESM, RDKit, OpenMM, REINVENT4 | Specialist plugins | **OUT OF SCOPE** (P3 deferred) — catalogued in [`VISION_REPO_ALIGNMENT.md`](./VISION_REPO_ALIGNMENT.md) + regenerable `FUTURE_TECH_ADAPTER_STUBS` / `hsi-systems-vision.json` ([`HSI_SYSTEMS_VISION_MAP.md`](./HSI_SYSTEMS_VISION_MAP.md)) |
 | ClinVar / awesome-TCGA | Optional genetics / IO | **OUT OF SCOPE** now |
 
 ### §8 Repository assessment
@@ -224,6 +224,7 @@ Prefer **docs + partner process**. No large new implementation phase from this b
 
 ## Cross-links
 
+- Systems vision (multi-axis; no forced SSc/RA pivot): [`HSI_SYSTEMS_VISION_MAP.md`](./HSI_SYSTEMS_VISION_MAP.md)  
 - Pilot PRD: [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md)  
 - Target-state: [`ISI_TARGET_STATE_PRD_ALIGNMENT.md`](./ISI_TARGET_STATE_PRD_ALIGNMENT.md)  
 - Whole-immune-cell PRD: [`ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md`](./ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md)  

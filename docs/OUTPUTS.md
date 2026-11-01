@@ -44,20 +44,23 @@ dist/outputs/
     hsi-r2-validation.md
     hsi-translation-handoff.json      # Phase 8 Stage 3 translation candidates
     hsi-translation-handoff.md
+    hsi-systems-vision.json           # Multi-axis systems vision stubs (regenerable)
 ```
 
 ## Who uses what
 
 | Consumer | Files | Rules |
 |----------|-------|--------|
-| **ISI** | `hsi-isi-export.json`, `hsi-isi-rel-map.json`, `gate-c-checklist.*`, `hsi-pilot-evidence-pack.*`, `hsi-pilot-review-rubric.*`, `hsi-pilot-acceptance.*`, `hsi-pilot-walkthrough.md`, `hsi-partner-lock.json`, `hsi-r2-validation.*`, `hsi-translation-handoff.*` | Discovery / Ask / Radar only. REL map never auto-approves into KG. Gate C approve (if any) is human-only in **ISI Neon `autumn-snow`**, not HSI `red-wave`. Pack shows **Phase 3 evidence depth** on Phase 2 scope-locked RA/TNF (`scopeLocked=true`, `partnerSigned=false`, `lockedPilot=false`) — not a MoU. **Phase 4:** HSI Neon schema stub + `bun run db:gate-c-local` pending placeholders on `red-wave` only. **Phase 5:** Stage 1 acceptance checklist + partner walkthrough (honest pending for `partnerSigned` / licensing). **Phase 6:** site `/discovery` product surface. **Phase 7:** R2 validation (`hsi-r2-validation.*` + VALIDATE tab). **Phase 8:** translation handoff scaffolding (`hsi-translation-handoff.*` + TRANSLATE tab; `clinicalActive=false`). |
+| **ISI** | `hsi-isi-export.json`, `hsi-isi-rel-map.json`, `gate-c-checklist.*`, `hsi-pilot-evidence-pack.*`, `hsi-pilot-review-rubric.*`, `hsi-pilot-acceptance.*`, `hsi-pilot-walkthrough.md`, `hsi-partner-lock.json`, `hsi-r2-validation.*`, `hsi-translation-handoff.*`, `hsi-systems-vision.json` | Discovery / Ask / Radar only. REL map never auto-approves into KG. Gate C approve (if any) is human-only in **ISI Neon `autumn-snow`**, not HSI `red-wave`. Pack shows **Phase 3 evidence depth** on Phase 2 scope-locked RA/TNF (`scopeLocked=true`, `partnerSigned=false`, `lockedPilot=false`) — not a MoU. **Phase 4:** HSI Neon schema stub + `bun run db:gate-c-local` pending placeholders on `red-wave` only. **Phase 5:** Stage 1 acceptance checklist + partner walkthrough (honest pending for `partnerSigned` / licensing). **Phase 6:** site `/discovery` product surface. **Phase 7:** R2 validation (`hsi-r2-validation.*` + VALIDATE tab). **Phase 8:** translation handoff scaffolding (`hsi-translation-handoff.*` + TRANSLATE tab; `clinicalActive=false`). **Systems vision:** `hsi-systems-vision.json` = multi-axis target graph stubs (not claim seeds) — [`HSI_SYSTEMS_VISION_MAP.md`](./HSI_SYSTEMS_VISION_MAP.md). |
 | **Aksh** | `hsi-aksh-node-map.json`, `hsi-aksh-hitl-cards.json` | HITL map pointers. `akshNodeId` ≠ CDS. Seeds stay `cdsSurfacable=false`. |
 | **Akeno (in-repo HITL)** | `hsi-translation-handoff.*` (+ Gate C `translationCandidates`) + site `/akeno` | Stage 3 scaffolding + HITL consumer. `status=deferred_until_hitl` · `clinicalUse=not_for_clinical_use` · `hitlRequired=true` · `autoApprove=false` · `akenoProductIntegration=in_repo_hitl_consumer`. **Not** live CDS; **never** Akeno Neon. See [`AKENO_IN_HSI.md`](./AKENO_IN_HSI.md). |
 | **Curators** | `gate-c-checklist.md`, `hsi-gap-report.md`, `hsi-pilot-evidence-pack.md`, `hsi-pilot-review-rubric.md`, `hsi-pilot-acceptance.md`, `hsi-pilot-walkthrough.md`, `hsi-r2-validation.md`, `hsi-translation-handoff.md` | Pending REL list + gap backlog + scope-locked brief + human review checklist + Phase 5 acceptance / walkthrough + Phase 7 R2 cards + Phase 8 translation HITL candidates. |
 
 PRD / brief four outputs (evidence map, entity slice, competing explanations, expert shortlist) are assembled in `hsi-pilot-evidence-pack.*`. See [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md).
 
-**Whole-immune-cell PRD (v0.1):** spine vocabulary + controlled relationship types live in package API `buildImmuneCellSpineBundle()` / `src/immuneCellSpine.ts` (not a separate publish file yet). Dual-track verticals: RA = Stage 1 `scopeLocked`; SSc = PRD MVP target without deep seeds. Alignment: [`ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md`](./ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md). Blueprint conflict context: [`ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md`](./ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md).
+**Whole-immune-cell PRD (v0.1):** spine vocabulary + controlled relationship types live in package API `buildImmuneCellSpineBundle()` / `src/immuneCellSpine.ts`. Dual-track verticals: RA = Stage 1 `scopeLocked`; SSc = PRD MVP target without deep seeds. Alignment: [`ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md`](./ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md). Blueprint conflict context: [`ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md`](./ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md).
+
+**Expanded systems vision (binding intent):** whole immune + gut–immune + brain–immune + disease/tissue/biomarker + patient-data plane + AI/P3 adapters. Durable map: [`HSI_SYSTEMS_VISION_MAP.md`](./HSI_SYSTEMS_VISION_MAP.md). Regenerable: `buildSystemsVisionBundle()` / `src/systemsAxes.ts` → publish `hsi-systems-vision.json`. Does **not** force an SSc/RA pivot; “all” is the target graph, not one sprint; patient data stays Stage 3+ gated.
 
 ## Partner lock honesty (Phase 2 schema)
 
@@ -93,7 +96,9 @@ PRD / brief four outputs (evidence map, entity slice, competing explanations, ex
 | Discovery Centre vocabulary in exports (ASK→MAP→REVIEW + illustrative diseases) | **Done** (metadata only) |
 | Illustrative RA/SLE/PsO/IBD pathway seed stubs | **Done** (RA elevated to working scope) |
 | Whole-immune-cell spine stubs + PRD relationship vocabulary (RA lock intact; SSc = PRD target) | **Done** (`src/immuneCellSpine.ts`; see [`ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md`](./ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md)) |
+| Systems vision multi-axis stubs (gut–immune, neuroimmune, disease/tissue/biomarker, patient plane, P3 adapters) | **Done** (`src/systemsAxes.ts` + `hsi-systems-vision.json`; see [`HSI_SYSTEMS_VISION_MAP.md`](./HSI_SYSTEMS_VISION_MAP.md)) — vocabulary only, not deep claim seeds |
 | SSc CD4/Tfh–B–IL-21 deep seed vertical | **Not started** (await dual-track / pivot decision — do not wipe RA) |
+| Gut–immune / neuroimmune curated claim edges | **Not started** (Stage 2; deepen one axis after vision stubs) |
 | Typed entity slice + LOINC on pack evidence rows | **Done** |
 | **Phase 1b** — Partner disease + question **provisional** scaffold | **Done** (superseded by Phase 2) |
 | **Phase 2** — Scope lock (`scopeLocked=true`; RA / anti-TNF question canonical; outreach category only) | **Done** |

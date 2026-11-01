@@ -54,6 +54,10 @@ import {
   serializeTranslationHandoff,
   serializeTranslationHandoffMarkdown,
 } from "./translationHandoff";
+import {
+  buildSystemsVisionBundle,
+  serializeSystemsVision,
+} from "./systemsAxes";
 import { validateHsiEdge } from "./validate";
 
 function packageVersion(cwd: string): string {
@@ -248,6 +252,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     generatedAt,
     lock: partnerLock,
   });
+  const systemsVision = buildSystemsVisionBundle({ generatedAt });
 
   const fileMap: Record<string, string> = {
     "hsi-isi-export.json": serializeIsiExport(isiBundle),
@@ -270,6 +275,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     "hsi-r2-validation.md": serializeR2ValidationMarkdown(r2Validation),
     "hsi-translation-handoff.json": serializeTranslationHandoff(translationHandoff),
     "hsi-translation-handoff.md": serializeTranslationHandoffMarkdown(translationHandoff),
+    "hsi-systems-vision.json": serializeSystemsVision(systemsVision),
   };
 
   const files: string[] = [];
@@ -310,6 +316,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       r2ValidationMd: "hsi-r2-validation.md",
       translationHandoffJson: "hsi-translation-handoff.json",
       translationHandoffMd: "hsi-translation-handoff.md",
+      systemsVisionJson: "hsi-systems-vision.json",
     },
     counts: {
       isiEdges: isiBundle.edges.length,
@@ -336,6 +343,12 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       translationCandidates: translationHandoff.summary.candidates,
       translationWithLoinc: translationHandoff.summary.withLoinc,
       translationCdsSurfacable: translationHandoff.summary.cdsSurfacableCount,
+      systemsVisionDomains: systemsVision.domains.length,
+      systemsVisionGutEntities: systemsVision.gutMicrobiome.entities.length,
+      systemsVisionNeuroEntities: systemsVision.neuroimmune.entities.length,
+      systemsVisionCrossPredicates:
+        systemsVision.crossAxisPredicates.predicates.length,
+      systemsVisionAdapters: systemsVision.futureTechAdapters.length,
     },
     discoveryLoop: isiBundle.discoveryCentre.discoveryLoop.framing,
     partnerLock: partnerLockExportPointer(partnerLock),
@@ -365,6 +378,15 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       candidates: translationHandoff.summary.candidates,
       cdsSurfacableCount: translationHandoff.summary.cdsSurfacableCount,
     },
+    systemsVision: {
+      schemaVersion: systemsVision.schemaVersion,
+      notCds: systemsVision.notCds,
+      domains: systemsVision.domains.length,
+      bindingIntent: systemsVision.bindingIntent,
+      stage1: systemsVision.stageGates.stage1,
+      stage2: systemsVision.stageGates.stage2,
+      stage3: systemsVision.stageGates.stage3,
+    },
     consumerNotes: [
       "ISI: discovery / Ask / Radar only — use hsi-isi-export.json + hsi-isi-rel-map.json.",
       "ISI pilot walkthrough: hsi-pilot-walkthrough.md + hsi-pilot-evidence-pack.* + hsi-pilot-review-rubric.* + hsi-pilot-acceptance.* (Phase 5 acceptance on scope-locked RA/TNF; partnerSigned=false; lockedPilot=false; no patient CDS).",
@@ -375,6 +397,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       "Aksh: HITL map pointers only — use hsi-aksh-node-map.json + hsi-aksh-hitl-cards.json; CDS stays closed on seeds.",
       "Gate C: human checklist in gate-c-checklist.* (+ translationCandidates); optional HSI red-wave placeholders via bun run db:gate-c-local (pending only). ISI product approve stays autumn-snow — never from this workspace.",
       "Phase 4: HSI Neon schema stub — bun run db:migrate (guards refuse ISI/Akeno/DeliverX).",
+      "Systems vision: hsi-systems-vision.json — multi-axis target graph stubs (immune + gut–immune + neuroimmune + disease/tissue/biomarker + patient-plane rules + P3 adapters); not claim seeds; see docs/HSI_SYSTEMS_VISION_MAP.md.",
       "Regenerate with: bun run outputs (also refreshes site/public/discovery).",
     ],
   };

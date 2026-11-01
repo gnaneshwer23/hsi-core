@@ -21,8 +21,7 @@ HCP eval + governance. Do not pull target-state R2–R5 breadth into Stage 1.
 | **P0** | **DONE** | Schema, seeds, grades, ISI/Aksh exports, validation, gap report |
 | **P1** | **ACTIVE** | **ISI research pilot** (one disease + one question) + durable `aksh:` maps, HITL stubs, Gate C checklists — pilot before more platform |
 | **P2** | Planned | Richer exports / curator UX inside hsi-core *after* pilot learning; product apps bind published artifacts |
-| **P3** | Deferred | Optional bio-stack plugins (structure, docking, generative chem) behind explicit licenses |
-
+| **P3** | Deferred | Optional bio-stack plugins (structure, docking, generative chem) behind explicit licenses — registry stubs in `src/systemsAxes.ts` / `hsi-systems-vision.json`; map: [`HSI_SYSTEMS_VISION_MAP.md`](./HSI_SYSTEMS_VISION_MAP.md) |
 **Hard edit rule:** only [`gnaneshwer23/hsi-core`](https://github.com/gnaneshwer23/hsi-core)
 (`~/Projects/hsi-core`) is edited for HSI. Product and bio repos **consume** or stay
 reference-only — they are never HSI edit targets.

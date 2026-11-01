@@ -4,7 +4,7 @@
 **Extracted via:** `textutil -convert txt` (do **not** fetch or commit any S3 URLs from the download package — they may embed temporary AWS credentials).  
 **Document:** Immune Super Intelligence (ISI) — Product Requirements Document — Whole-Immune-Cell Discovery Platform · Version 0.1 Draft · 1 November 2026 · Owner Dr Gnaneshwer Jadav · Status: For review and approval.
 
-**Repo anchors:** [`ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md`](./ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md) (commit `357a8e9`), [`PRD_IMPLEMENTATION_AUDIT.md`](./PRD_IMPLEMENTATION_AUDIT.md), [`OUTPUTS.md`](./OUTPUTS.md), [`AKSH_AGENTS_IN_HSI.md`](./AKSH_AGENTS_IN_HSI.md), [`AKENO_IN_HSI.md`](./AKENO_IN_HSI.md), [`VISION_REPO_ALIGNMENT.md`](./VISION_REPO_ALIGNMENT.md), [`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md).
+**Repo anchors:** [`ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md`](./ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md) (commit `357a8e9`), [`PRD_IMPLEMENTATION_AUDIT.md`](./PRD_IMPLEMENTATION_AUDIT.md), [`OUTPUTS.md`](./OUTPUTS.md), [`HSI_SYSTEMS_VISION_MAP.md`](./HSI_SYSTEMS_VISION_MAP.md) (expanded multi-axis target graph — does not force SSc/RA pivot), [`AKSH_AGENTS_IN_HSI.md`](./AKSH_AGENTS_IN_HSI.md), [`AKENO_IN_HSI.md`](./AKENO_IN_HSI.md), [`VISION_REPO_ALIGNMENT.md`](./VISION_REPO_ALIGNMENT.md), [`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md).
 
 **Edit target:** hsi-core only. Neon: HSI **`red-wave` only**. No immunecity edits. No secrets.
 
@@ -33,6 +33,8 @@ ISI is a research-first **whole-immune-cell** discovery platform: major immune c
 | Neon | HSI as SoT after schema/licence review | Separate `red-wave` vs ISI `autumn-snow` | **Isolation must win** |
 
 **Bottom line:** This PRD extends the Technical Blueprint (`357a8e9`) with a clearer whole-immune-cell spine and an explicit SSc-first / RA-R2 release split. hsi-core already owns the evidence backbone. Do **not** silently replace RA seeds with SSc. Resolve the vertical decision; then build spine depth + authorised SSc curation on HSI exports.
+
+**Expanded systems vision (orthogonal):** User binding intent adds gut–immune, neuroimmune, disease/tissue/biomarker axes, patient-data plane rules, and P3 AI adapters as the **target connected graph** — see [`HSI_SYSTEMS_VISION_MAP.md`](./HSI_SYSTEMS_VISION_MAP.md) + `hsi-systems-vision.json`. That expansion does **not** override the RA Stage 1 lock or invent SSc deep seeds; “all” is multi-sprint, every edge still needs context+evidence.
 
 ---
 
@@ -256,6 +258,7 @@ Registry: `DISEASE_VERTICAL_STUBS` in `src/immuneCellSpine.ts`.
 
 ## Cross-links
 
+- Systems vision (multi-axis target graph): [`HSI_SYSTEMS_VISION_MAP.md`](./HSI_SYSTEMS_VISION_MAP.md)  
 - Technical blueprint alignment: [`ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md`](./ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md) (`357a8e9`)  
 - Implementation audit: [`PRD_IMPLEMENTATION_AUDIT.md`](./PRD_IMPLEMENTATION_AUDIT.md)  
 - Outputs: [`OUTPUTS.md`](./OUTPUTS.md)  

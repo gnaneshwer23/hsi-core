@@ -17,6 +17,7 @@ Immediate next move: prove ISI helps one immune-disease **research intelligence*
 | [`docs/ISI_TARGET_STATE_PRD_ALIGNMENT.md`](docs/ISI_TARGET_STATE_PRD_ALIGNMENT.md) | Full target-state vision → Stage 1 / 2 / 3 / out of scope (do not pull breadth into Stage 1) |
 | [`docs/ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md`](docs/ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md) | Product/technical blueprint → HSI vs ISI/Akeno ownership, status, Neon isolation + SSc-vs-RA conflict |
 | [`docs/ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md`](docs/ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md) | Whole-immune-cell PRD (v0.1) → spine + controlled relations + SSc MVP / RA R2 dual-track vs Stage 1 RA lock |
+| [`docs/HSI_SYSTEMS_VISION_MAP.md`](docs/HSI_SYSTEMS_VISION_MAP.md) | Expanded target graph: immune + gut–immune + neuroimmune + disease/tissue/biomarker + patient plane + AI/P3 — regenerable `hsi-systems-vision.json`; no forced SSc/RA pivot |
 | [`docs/ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md`](docs/ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md) | Discovery Centre concept site (HTML export) → Stage 1 posture; reference-only, not the pilot deliverable |
 | [`docs/ISI_PILOT_PARTNER_SHORTLIST.md`](docs/ISI_PILOT_PARTNER_SHORTLIST.md) | Outreach shortlist — partner types + UK/EU/US institution categories (candidates only) |
 | [`docs/NEON_PROJECT_MAP.md`](docs/NEON_PROJECT_MAP.md) | **HSI Neon = `red-wave` only**; ISI `autumn-snow` / Akeno / DeliverX never for HSI substrate — IDs + host prefixes, no secrets |
