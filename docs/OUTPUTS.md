@@ -35,25 +35,37 @@ dist/outputs/
     hsi-pilot-evidence-pack.md        # human walkthrough / brief shell
     hsi-pilot-review-rubric.json      # Stage 1 four-output review checklist
     hsi-pilot-review-rubric.md
-    hsi-partner-lock.json             # durable provisional / future signed lock
+    hsi-partner-lock.json             # durable scope / partner-signed lock
 ```
 
 ## Who uses what
 
 | Consumer | Files | Rules |
 |----------|-------|--------|
-| **ISI** | `hsi-isi-export.json`, `hsi-isi-rel-map.json`, `gate-c-checklist.*`, `hsi-pilot-evidence-pack.*`, `hsi-pilot-review-rubric.*`, `hsi-partner-lock.json` | Discovery / Ask / Radar only. REL map never auto-approves into KG. Gate C approve (if any) is human-only in **ISI Neon `autumn-snow`**, not HSI `red-wave`. Pack may show a **provisional** RA/TNF disease+question (`provisionalLock=true`, `lockedPilot=false`) — not partner-signed. Discovery Centre vocabulary is **metadata only**. |
+| **ISI** | `hsi-isi-export.json`, `hsi-isi-rel-map.json`, `gate-c-checklist.*`, `hsi-pilot-evidence-pack.*`, `hsi-pilot-review-rubric.*`, `hsi-partner-lock.json` | Discovery / Ask / Radar only. REL map never auto-approves into KG. Gate C approve (if any) is human-only in **ISI Neon `autumn-snow`**, not HSI `red-wave`. Pack shows **Phase 2 scope-locked** RA/TNF disease+question (`scopeLocked=true`, `partnerSigned=false`, `lockedPilot=false`) — not a MoU. Discovery Centre vocabulary is **metadata only**. |
 | **Aksh** | `hsi-aksh-node-map.json`, `hsi-aksh-hitl-cards.json` | HITL map pointers. `akshNodeId` ≠ CDS. Seeds stay `cdsSurfacable=false`. |
-| **Curators** | `gate-c-checklist.md`, `hsi-gap-report.md`, `hsi-pilot-evidence-pack.md`, `hsi-pilot-review-rubric.md` | Pending REL list + gap backlog + provisional brief + human review checklist. |
+| **Curators** | `gate-c-checklist.md`, `hsi-gap-report.md`, `hsi-pilot-evidence-pack.md`, `hsi-pilot-review-rubric.md` | Pending REL list + gap backlog + scope-locked brief + human review checklist. |
 
 PRD / brief four outputs (evidence map, entity slice, competing explanations, expert shortlist) are assembled in `hsi-pilot-evidence-pack.*`. See [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md).
+
+## Partner lock honesty (Phase 2 schema)
+
+| Field | Meaning |
+|-------|---------|
+| `scopeLocked` | Disease + researchQuestion are the **working Stage 1 pilot scope** (engineering). **Phase 2 done = this.** |
+| `partnerSigned` | Named partner confirmed disease + question in writing. Stays false until outreach supplies a real org — never invent. |
+| `lockedPilot` | Compat AND: `scopeLocked && partnerSigned`. Stays false without a named partner. |
+| `provisionalLock` | Legacy Phase 1b scaffold. Cleared once scope is promoted (`false` after Phase 2). |
+| `status` | `scope_locked` after Phase 2; `scoping` / `active` only after `partnerSigned`. |
+
+**Phase 2 done = scope lock; named partner still flips `partnerSigned` (then `lockedPilot`).**
 
 ## Invariants
 
 - `notCds` / `autoApproveIntoKg=false` / `autoSurfaceCds=false` on publish manifests
 - Gate C checklist rows with evidence are **`pending`** until a human approve+supports in the **ISI product Neon** (`autumn-snow` / `ep-blue-salad…`) — that DB is **not** HSI’s; HSI Neon is `red-wave` only ([`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md))
 - No PHI; no EHR write-back; no invented PMIDs / REL ids; no HSI writes into ISI/Akeno/DeliverX Neon
-- `provisionalLock=true` **never** implies a signed partner; `lockedPilot` stays false until flip requirements in `hsi-partner-lock.json` are met
+- `scopeLocked=true` **never** implies a signed commercial partner; `partnerSigned` / `lockedPilot` stay false until flip requirements in `hsi-partner-lock.json` are met
 - SLE/PsO/IBD contexts remain **illustrative only**
 
 ## Stage 1 / R0–R1 implementation checklist
@@ -68,13 +80,15 @@ PRD / brief four outputs (evidence map, entity slice, competing explanations, ex
 | Pilot evidence pack — four workflow outputs + brief shell | **Done** (`hsi-pilot-evidence-pack-2`) |
 | Versioned `bun run outputs` bundle + MANIFEST | **Done** |
 | Discovery Centre vocabulary in exports (ASK→MAP→REVIEW + illustrative diseases) | **Done** (metadata only) |
-| Illustrative RA/SLE/PsO/IBD pathway seed stubs | **Done** (RA elevated to provisional scaffold) |
+| Illustrative RA/SLE/PsO/IBD pathway seed stubs | **Done** (RA elevated to working scope) |
 | Typed entity slice + LOINC on pack evidence rows | **Done** |
-| Partner disease + question **provisional** lock scaffold (`lockedPilot=false`) | **Done** (RA / anti-TNF response heterogeneity) |
-| Partner-scoped literature seed slice (provisional RA/TNF pathway) | **Done** (public PMIDs; licensing still open with partner) |
+| **Phase 1b** — Partner disease + question **provisional** scaffold | **Done** (superseded by Phase 2) |
+| **Phase 2** — Scope lock (`scopeLocked=true`; RA / anti-TNF question canonical; outreach category only) | **Done** |
+| Partner-scoped literature seed slice (RA/TNF pathway) | **Done** (public PMIDs; licensing still open with partner) |
 | Scientific review rubric export (Stage 1 four outputs) | **Done** (thresholds TBD with partner) |
-| Partner-signed `lockedPilot=true` | **Remaining** (outreach — named partner confirms disease + question) |
-| Source licensing / attribution for agreed partner corpus | **Remaining** (after signed lock) |
+| Named `partnerSigned=true` / `lockedPilot=true` | **Remaining** (outreach — named partner confirms disease + question) |
+| **Phase 3** — Partner-scoped evidence depth for the locked question | **Next** |
+| Source licensing / attribution for agreed partner corpus | **Remaining** (after partnerSigned) |
 | Success-metric numeric thresholds with partner | **Remaining** |
 | Interactive Discovery Centre / graph UI | **Deferred** (ISI product — not hsi-core Stage 1) |
 | PDF/DOCX brief renderer | **Deferred** (ISI product P1) |

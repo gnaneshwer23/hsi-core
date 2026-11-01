@@ -25,9 +25,11 @@
   "discoveryLoop": "ASK → MAP → REVIEW → TEST → LEARN",
   "partnerLock": {
     "schemaVersion": "hsi-partner-lock-1",
+    "scopeLocked": true,
+    "partnerSigned": false,
     "lockedPilot": false,
-    "provisionalLock": true,
-    "status": "provisional",
+    "provisionalLock": false,
+    "status": "scope_locked",
     "disease": "Rheumatoid arthritis",
     "researchQuestion": "Why do some patients with rheumatoid arthritis respond differently to anti-TNF therapy…",
     "partner": "outreach:uk-versus-arthritis-ndorms-category",

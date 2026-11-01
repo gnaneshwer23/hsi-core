@@ -357,18 +357,22 @@ describe("Gate C checklist + publish outputs", () => {
     );
   });
 
-  it("builds a provisional RA pilot evidence pack without claiming partner-signed lock", () => {
-    const pack = buildPilotEvidencePack({ generatedAt: "2026-11-01T12:00:00.000Z" });
+  it("builds a scope-locked RA pilot evidence pack without claiming partnerSigned", () => {
+    const pack = buildPilotEvidencePack({ generatedAt: "2026-11-01T13:00:00.000Z" });
     expect(pack.schemaVersion).toBe("hsi-pilot-evidence-pack-2");
     expect(pack.disease).toBe("Rheumatoid arthritis");
     expect(pack.researchQuestion.toLowerCase()).toContain("anti-tnf");
+    expect(pack.scopeLocked).toBe(true);
+    expect(pack.partnerSigned).toBe(false);
     expect(pack.lockedPilot).toBe(false);
-    expect(pack.provisionalLock).toBe(true);
-    expect(pack.partnerLock.status).toBe("provisional");
+    expect(pack.provisionalLock).toBe(false);
+    expect(pack.partnerLock.status).toBe("scope_locked");
     expect(pack.notCds).toBe(true);
     expect(pack.noPatientLevelActions).toBe(true);
     expect(pack.autoApproveIntoKg).toBe(false);
-    expect(pack.questionProject.status).toBe("provisional");
+    expect(pack.questionProject.status).toBe("scope_locked");
+    expect(pack.questionProject.scopeLocked).toBe(true);
+    expect(pack.questionProject.partnerSigned).toBe(false);
     expect(pack.questionProject.lockedPilot).toBe(false);
     expect(pack.evidenceMap.length).toBe(HSI_T2D_IMMUNO_SEED_EDGES.length);
     expect(pack.summary.partnerScopedEvidenceRows).toBeGreaterThanOrEqual(6);
@@ -391,15 +395,22 @@ describe("Gate C checklist + publish outputs", () => {
 
   it("ships a review rubric with ready_for_human + blocked_on_partner items", () => {
     const lock = getPartnerLock();
+    expect(lock.scopeLocked).toBe(true);
+    expect(lock.partnerSigned).toBe(false);
     expect(lock.lockedPilot).toBe(false);
-    expect(lock.provisionalLock).toBe(true);
+    expect(lock.provisionalLock).toBe(false);
+    expect(lock.status).toBe("scope_locked");
     expect(lock.disease?.id).toBe("ra");
+    expect(lock.partner?.outreachStatus).toBe("awaiting_named_partner");
     expect(lock.flipRequirements.length).toBeGreaterThanOrEqual(5);
 
-    const rubric = buildPilotReviewRubric({ generatedAt: "2026-11-01T12:00:00.000Z" });
+    const rubric = buildPilotReviewRubric({ generatedAt: "2026-11-01T13:00:00.000Z" });
     expect(rubric.schemaVersion).toBe("hsi-pilot-review-rubric-1");
+    expect(rubric.partnerLock.scopeLocked).toBe(true);
+    expect(rubric.partnerLock.partnerSigned).toBe(false);
     expect(rubric.partnerLock.lockedPilot).toBe(false);
-    expect(rubric.partnerLock.provisionalLock).toBe(true);
+    expect(rubric.partnerLock.provisionalLock).toBe(false);
+    expect(rubric.partnerLock.status).toBe("scope_locked");
     expect(rubric.summary.readyForHuman).toBeGreaterThanOrEqual(8);
     expect(rubric.summary.blockedOnPartner).toBeGreaterThanOrEqual(3);
     expect(rubric.checklist.every((c) => c.status !== "ready_for_human" || c.criterion.length > 0)).toBe(
@@ -410,12 +421,15 @@ describe("Gate C checklist + publish outputs", () => {
   });
 
   it("embeds Discovery Centre metadata in ISI export without interactive UI claims", () => {
-    const bundle = buildIsiExportBundle({ generatedAt: "2026-11-01T12:00:00.000Z" });
+    const bundle = buildIsiExportBundle({ generatedAt: "2026-11-01T13:00:00.000Z" });
     expect(bundle.discoveryCentre.notInteractiveUi).toBe(true);
     expect(bundle.discoveryCentre.notLockedPilotIndications).toBe(true);
     expect(bundle.discoveryCentre.partnerLock.disease).toBe("Rheumatoid arthritis");
+    expect(bundle.discoveryCentre.partnerLock.scopeLocked).toBe(true);
+    expect(bundle.discoveryCentre.partnerLock.partnerSigned).toBe(false);
     expect(bundle.discoveryCentre.partnerLock.lockedPilot).toBe(false);
-    expect(bundle.discoveryCentre.partnerLock.provisionalLock).toBe(true);
+    expect(bundle.discoveryCentre.partnerLock.provisionalLock).toBe(false);
+    expect(bundle.discoveryCentre.partnerLock.status).toBe("scope_locked");
     expect(bundle.discoveryCentre.discoveryLoop.steps.map((s) => s.id)).toEqual([
       "ask",
       "map",
@@ -457,15 +471,23 @@ describe("Gate C checklist + publish outputs", () => {
       notCds: boolean;
       autoApproveIntoKg: boolean;
       autoSurfaceCds: boolean;
-      partnerLock: { lockedPilot: boolean; provisionalLock: boolean; status: string };
+      partnerLock: {
+        scopeLocked: boolean;
+        partnerSigned: boolean;
+        lockedPilot: boolean;
+        provisionalLock: boolean;
+        status: string;
+      };
       counts: { gateCPending: number; partnerScopedEvidenceRows: number };
     };
     expect(manifest.notCds).toBe(true);
     expect(manifest.autoApproveIntoKg).toBe(false);
     expect(manifest.autoSurfaceCds).toBe(false);
+    expect(manifest.partnerLock.scopeLocked).toBe(true);
+    expect(manifest.partnerLock.partnerSigned).toBe(false);
     expect(manifest.partnerLock.lockedPilot).toBe(false);
-    expect(manifest.partnerLock.provisionalLock).toBe(true);
-    expect(manifest.partnerLock.status).toBe("provisional");
+    expect(manifest.partnerLock.provisionalLock).toBe(false);
+    expect(manifest.partnerLock.status).toBe("scope_locked");
     expect(manifest.counts.gateCPending).toBeGreaterThanOrEqual(9);
     expect(manifest.counts.partnerScopedEvidenceRows).toBeGreaterThanOrEqual(6);
 

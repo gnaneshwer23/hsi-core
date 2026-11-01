@@ -2,10 +2,11 @@
 
 > **ISI helps immune-disease research teams investigate a defined question by connecting traceable evidence across cells, pathways, biomarkers, treatments and studies—and showing what is established, uncertain and worth testing.**
 
-**Status:** outreach / partner-selection.  
-**Provisional scaffold (not partner-signed):** rheumatoid arthritis · anti-TNF response heterogeneity — see `hsi-partner-lock.json` (`provisionalLock=true`, `lockedPilot=false`).  
-**Partner-signed disease + question:** still **TBD after conversations** — do not treat the provisional scaffold as a MoU.  
+**Status:** Phase 2 scope lock complete · outreach still open for named partner.  
+**Working Stage 1 scope (scopeLocked):** rheumatoid arthritis · anti-TNF response heterogeneity — see `hsi-partner-lock.json` (`scopeLocked=true`, `partnerSigned=false`, `lockedPilot=false`).  
+**Named partner (`partnerSigned`):** still **TBD after conversations** — do not treat scope lock as a MoU.  
 **Immediate deliverable:** this brief + [`ISI_PILOT_PARTNER_SHORTLIST.md`](./ISI_PILOT_PARTNER_SHORTLIST.md) + published pack / review rubric. Not another general-purpose AI feature.  
+**Next (Phase 3):** partner-scoped evidence depth for this locked question.  
 **PRD map:** [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md) (pilot PRD → build now vs defer). **Target state:** [`ISI_TARGET_STATE_PRD_ALIGNMENT.md`](./ISI_TARGET_STATE_PRD_ALIGNMENT.md) (full vision → Stage 1/2/3 — do not pull breadth into this pilot).
 
 ---
@@ -29,13 +30,13 @@ Prove that ISI improves **one** immune-disease **research intelligence** workflo
 
 ## Pilot scope
 
-**One disease + one question**, chosen with a partner.
+**One disease + one question** — engineering scope locked in Phase 2; named partner still confirms wording.
 
 | Decision | Rule |
 |----------|------|
-| Disease | **Provisional:** rheumatoid arthritis (strongest seed pathway). **Signed lock:** only after partner conversations |
-| Question | **Provisional:** why anti-TNF response differs + which biomarkers/mechanisms define subgroups. **Signed lock:** partner’s wording |
-| Fake partners | Do not invent confirmed partners or personal contacts; provisional outreach category ≠ MoU |
+| Disease | **Scope-locked (Phase 2):** rheumatoid arthritis. **partnerSigned:** only after named partner conversations |
+| Question | **Scope-locked (Phase 2):** why anti-TNF response differs + which biomarkers/mechanisms define subgroups. Partner may rewrite when signing |
+| Fake partners | Do not invent confirmed partners or personal contacts; Versus Arthritis / NDORMS–Kennedy = outreach targets only ≠ MoU |
 
 Ask partners: what recurring question costs them time or blocks decisions, and what data they could actually share?
 
@@ -70,8 +71,8 @@ No requirement for a new product surface beyond what is needed to walk a partner
 
 - Store **evidence**, **provenance**, and **uncertainty** (graded edges, claims, Gate C human curation).
 - Publish artifacts with `bun run outputs` (alias `bun run publish`) → versioned `dist/outputs/` bundles (ISI export, REL map, gap report, Gate C checklist, **pilot evidence pack**, etc.). See [`OUTPUTS.md`](./OUTPUTS.md).
-- Partner walkthrough shape: `hsi-pilot-evidence-pack.md` + `hsi-pilot-review-rubric.md` (provisional RA/TNF; `lockedPilot=false`; no patient-level CDS).
-- Durable lock record: `hsi-partner-lock.json` (flip requirements listed for a real partner).
+- Partner walkthrough shape: `hsi-pilot-evidence-pack.md` + `hsi-pilot-review-rubric.md` (scope-locked RA/TNF; `partnerSigned=false`; no patient-level CDS).
+- Durable lock record: `hsi-partner-lock.json` (Phase 2 = `scopeLocked`; flip `partnerSigned` with a real partner).
 - Product UIs (immunecity / ISI site) **consume** published exports; they are not edit targets for this pilot work.
 
 ---

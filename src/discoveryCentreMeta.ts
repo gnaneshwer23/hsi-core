@@ -17,7 +17,7 @@ export const HSI_DISCOVERY_LOOP_STEPS = [
     id: "ask",
     label: "ASK",
     order: 1,
-    desc: "Scoped research question for one immune-mediated disease (provisional scaffold until partner-signed lock).",
+    desc: "Scoped research question for one immune-mediated disease (RA/TNF working scope; partnerSigned still open).",
   },
   {
     id: "map",
@@ -49,16 +49,16 @@ export type HsiDiscoveryLoopStepId = (typeof HSI_DISCOVERY_LOOP_STEPS)[number]["
 
 /**
  * Illustrative disease contexts from the Discovery Centre concept picker.
- * Conversation starters — only RA carries a provisionalLock scaffold; none are partner-signed.
+ * RA is the working Stage 1 scope (scopeLocked); none are partnerSigned.
  */
 export const HSI_ILLUSTRATIVE_DISEASE_CONTEXTS = [
   {
     id: "ra",
     label: "Rheumatoid arthritis",
     shortLabel: "RA",
-    status: "provisional_scaffold" as const,
+    status: "scope_locked_working_pilot" as const,
     lockedPilot: false as const,
-    seedHint: "TNF / IL-6 / anti-CCP / anti-TNF response-heterogeneity provisional pathway",
+    seedHint: "TNF / IL-6 / anti-CCP / anti-TNF response-heterogeneity — Phase 2 working Stage 1 scope",
   },
   {
     id: "sle",
@@ -101,7 +101,7 @@ export type HsiDiscoveryCentreMeta = {
     steps: typeof HSI_DISCOVERY_LOOP_STEPS;
   };
   illustrativeDiseaseContexts: typeof HSI_ILLUSTRATIVE_DISEASE_CONTEXTS;
-  /** Compact lock pointer — provisional until named partner flips lockedPilot. */
+  /** Compact lock pointer — scopeLocked until named partner flips partnerSigned. */
   partnerLock: ReturnType<typeof partnerLockExportPointer>;
   /** Full durable lock record for consumers that want flipRequirements / honesty. */
   partnerLockDetail: HsiPartnerLock;
@@ -128,7 +128,7 @@ export function buildDiscoveryCentreMeta(
     partnerLockDetail: lock,
     gradeVocabulary: ["established", "uncertain", "unexplored"],
     notes: [
-      "RA carries a provisionalLock scaffold (lockedPilot=false) — not a partner-signed indication.",
+      "RA is the Phase 2 working Stage 1 scope (scopeLocked=true; partnerSigned=false; lockedPilot=false).",
       "Do not treat SLE/PsO/IBD as selected pilot indications — illustrative conversation contexts only.",
       "Do not build the interactive Discovery Loop / disease switcher in hsi-core for Stage 1.",
       "Ship four pilot outputs via bun run outputs; product UI consumes published artifacts.",

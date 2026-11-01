@@ -95,7 +95,7 @@ import {
 ## Phase 0 / P1 contents
 
 - Evidence grades + edge/claim schema + translation card types
-- T2D / immuno-metabolic / IO–autoimmunity seeds **plus** provisional RA/TNF pathway slice + illustrative SLE/PsO/IBD stubs (`lockedPilot=false`)
+- T2D / immuno-metabolic / IO–autoimmunity seeds **plus** Phase 2 scope-locked RA/TNF pathway slice + illustrative SLE/PsO/IBD stubs (`scopeLocked=true`; `partnerSigned=false`)
 - Claim → LOINC marker links (`linkClaimToMarker`, `seedClaimLoincMap`) including anti-CCP / ANA
 - Discovery Centre metadata in exports (`ASK → MAP → REVIEW → TEST → LEARN` + disease contexts) — not interactive UI
 - Provisional partner lock scaffold (`hsi-partner-lock.json`) + Stage 1 review rubric

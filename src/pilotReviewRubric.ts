@@ -1,6 +1,6 @@
 /**
- * Human review rubric for the provisional (or future partner-signed) pilot question
- * against Stage 1 four workflow outputs.
+ * Human review rubric for the scope-locked (Phase 2) / future partner-signed pilot
+ * question against Stage 1 four workflow outputs.
  *
  * Checklist + export artifact — thresholds stay TBD until a named partner agrees them.
  * Not CDS. Not auto-approval into product KG.
@@ -32,6 +32,8 @@ export type PilotReviewRubric = {
   autoApproveIntoKg: false;
   generatedAt: string;
   partnerLock: {
+    scopeLocked: boolean;
+    partnerSigned: boolean;
     lockedPilot: boolean;
     provisionalLock: boolean;
     status: HsiPartnerLock["status"];
@@ -91,7 +93,7 @@ function buildChecklist(lock: HsiPartnerLock, pack: PilotEvidencePack): RubricCh
     {
       id: "es-1",
       output: "entity_slice",
-      criterion: "Entity slice covers cells, pathways, biomarkers, treatments, studies for the provisional question",
+      criterion: "Entity slice covers cells, pathways, biomarkers, treatments, studies for the scope-locked question",
       howToJudge: "Expect TNF, IL-6, anti-CCP, anti-TNF therapy, synovial macrophages, RA disease node in typed slice.",
       status: "ready_for_human",
       relatedClaimIds: pathwayClaims,
@@ -139,16 +141,16 @@ function buildChecklist(lock: HsiPartnerLock, pack: PilotEvidencePack): RubricCh
     {
       id: "x-1",
       output: "cross_cutting",
-      criterion: "Exports clearly label provisionalLock / lockedPilot=false (no fake partner-signed claim)",
-      howToJudge: "MANIFEST + pack + Discovery Centre meta must show status=provisional and lockedPilot=false.",
+      criterion: "Exports clearly label scopeLocked=true with partnerSigned=false / lockedPilot=false (no fake MoU)",
+      howToJudge: "MANIFEST + pack + Discovery Centre meta must show status=scope_locked, scopeLocked=true, partnerSigned=false.",
       status: "ready_for_human",
       relatedClaimIds: [],
     },
     {
       id: "x-2",
       output: "cross_cutting",
-      criterion: "Named partner confirms disease + question wording",
-      howToJudge: "Blocked until outreach produces a confirmed row in ISI_PILOT_PARTNER_SHORTLIST.md.",
+      criterion: "Named partner confirms disease + question wording (flip partnerSigned)",
+      howToJudge: "Blocked until outreach produces a confirmed row in ISI_PILOT_PARTNER_SHORTLIST.md and partnerSigned flips.",
       status: "blocked_on_partner",
       relatedClaimIds: [],
     },
@@ -164,7 +166,7 @@ function buildChecklist(lock: HsiPartnerLock, pack: PilotEvidencePack): RubricCh
       id: "x-4",
       output: "cross_cutting",
       criterion: "Source licensing / attribution for the agreed literature set",
-      howToJudge: "Provisional PMIDs are public PubMed locators; partner may require additional licensed corpora.",
+      howToJudge: "Scope-locked PMIDs are public PubMed locators; partner may require additional licensed corpora.",
       status: "blocked_on_partner",
       relatedClaimIds: pathwayClaims,
     },
@@ -194,6 +196,8 @@ export function buildPilotReviewRubric(opts?: {
     autoApproveIntoKg: false,
     generatedAt,
     partnerLock: {
+      scopeLocked: lock.scopeLocked,
+      partnerSigned: lock.partnerSigned,
       lockedPilot: lock.lockedPilot,
       provisionalLock: lock.provisionalLock,
       status: lock.status,
@@ -243,9 +247,10 @@ export function buildPilotReviewRubric(opts?: {
     },
     nextActions: [
       "Human-review checklist items marked ready_for_human against hsi-pilot-evidence-pack.md.",
-      "Keep lockedPilot=false until a named partner confirms disease + question.",
+      "Keep partnerSigned=false / lockedPilot=false until a named partner confirms disease + question.",
       "Agree success-metric thresholds before formal pilot user testing.",
-      "Do not treat provisional RA/TNF scaffold as a signed pilot contract.",
+      "Phase 2 complete = scopeLocked; Phase 3 = deepen partner-scoped evidence for this RA/TNF question.",
+      "Do not treat scopeLocked as a signed commercial partner / MoU.",
     ],
   };
 }
@@ -264,12 +269,14 @@ export function serializePilotReviewRubricMarkdown(
     "",
     `Schema: \`${rubric.schemaVersion}\` · generated ${rubric.generatedAt}`,
     "",
-    "> Not CDS. Not auto-approval into product KG. Provisional lock ≠ partner-signed lock.",
+    "> Not CDS. Not auto-approval into product KG. scopeLocked ≠ partnerSigned / lockedPilot.",
     "",
     "## Partner lock",
     "",
     `| Field | Value |`,
     `|-------|-------|`,
+    `| scopeLocked | \`${rubric.partnerLock.scopeLocked}\` |`,
+    `| partnerSigned | \`${rubric.partnerLock.partnerSigned}\` |`,
     `| lockedPilot | \`${rubric.partnerLock.lockedPilot}\` |`,
     `| provisionalLock | \`${rubric.partnerLock.provisionalLock}\` |`,
     `| status | \`${rubric.partnerLock.status}\` |`,
@@ -297,7 +304,7 @@ export function serializePilotReviewRubricMarkdown(
     lines.push(`- **${m.metric}** — ${m.recordWhat} · threshold: ${m.thresholdWithPartner}`);
   }
 
-  lines.push("", "## Flip to lockedPilot (needs real partner)", "");
+  lines.push("", "## Flip to partnerSigned / lockedPilot (needs real partner)", "");
   for (const f of rubric.flipToLockedPilot) {
     lines.push(`- ${f}`);
   }

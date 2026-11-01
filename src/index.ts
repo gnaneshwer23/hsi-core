@@ -125,9 +125,12 @@ export {
 
 export {
   PARTNER_LOCK_SCHEMA,
+  HSI_SCOPE_LOCKED_PARTNER_LOCK,
   HSI_PROVISIONAL_PARTNER_LOCK,
   getPartnerLock,
   isProvisionalPartnerLock,
+  isScopeLockedPartnerLock,
+  hasWorkingPilotScope,
   partnerLockExportPointer,
   type HsiPartnerLock,
   type HsiPartnerRef,

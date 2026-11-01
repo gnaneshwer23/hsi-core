@@ -4,9 +4,10 @@
  * Covers the four pilot workflow outputs (evidence map, entity slice,
  * competing explanations, expert shortlist) plus a research-brief shell.
  *
- * Pack-2 + provisional partner lock: may surface a provisional disease/question
- * from the strongest seed pathway while lockedPilot stays false. No fake
- * partner-signed claims. No patient-level CDS. No interactive Discovery UI.
+ * Pack-2 + Phase 2 scope lock: surfaces the working Stage 1 disease/question
+ * (RA / anti-TNF) when scopeLocked. lockedPilot / partnerSigned stay false
+ * until a named partner confirms. No fake MoUs. No patient-level CDS.
+ * No interactive Discovery UI.
  */
 import {
   buildDiscoveryCentreMeta,
@@ -18,7 +19,7 @@ import { buildGateCChecklist } from "./gateCChecklist";
 import { linkClaimToMarker } from "./markers";
 import {
   getPartnerLock,
-  isProvisionalPartnerLock,
+  hasWorkingPilotScope,
   type HsiPartnerLock,
 } from "./partnerLock";
 import {
@@ -45,9 +46,11 @@ export type PilotQuestionProject = {
   };
   owner: string;
   workspace: string;
-  status: "template" | "provisional" | "scoping" | "active" | "archived";
+  status: "template" | "provisional" | "scope_locked" | "scoping" | "active" | "archived";
   /** Mirrors partner lock honesty flags. */
   lockedPilot: boolean;
+  scopeLocked: boolean;
+  partnerSigned: boolean;
   provisionalLock: boolean;
   evidenceSnapshotRef: string;
   createdAt: string;
@@ -129,12 +132,14 @@ export type PilotEvidencePack = {
   autoApproveIntoKg: false;
   generatedAt: string;
   /**
-   * Disease / question may be provisional scaffold values.
-   * Read lockedPilot / provisionalLock — never treat as partner-signed alone.
+   * Disease / question are working Stage 1 scope when scopeLocked.
+   * Read scopeLocked / partnerSigned / lockedPilot — never treat as MoU alone.
    */
   disease: string;
   researchQuestion: string;
   lockedPilot: boolean;
+  scopeLocked: boolean;
+  partnerSigned: boolean;
   provisionalLock: boolean;
   partnerLock: HsiPartnerLock;
   substrateNote: string;
@@ -146,7 +151,7 @@ export type PilotEvidencePack = {
   evidenceMap: PilotEvidenceMapRow[];
   /** Full seed map (includes T2D + illustrative stubs). */
   entitySlice: PilotEntitySlice;
-  /** Partner-pathway slice when provisional/locked (RA/TNF focus). */
+  /** Partner-pathway slice when scope-locked (RA/TNF focus). */
   partnerScopedEntitySlice: PilotEntitySlice;
   competingExplanations: PilotExplanationSlot[];
   uncertainties: PilotExplanationSlot[];
@@ -382,7 +387,7 @@ function bucketEntities(edges: readonly HsiEdge[]): PilotEntitySlice {
     typed: [...typedByKey.values()].sort((a, b) =>
       a.kind === b.kind ? a.label.localeCompare(b.label) : a.kind.localeCompare(b.kind),
     ),
-    note: "Buckets are heuristic from seed labels (T2D + provisional RA pathway + illustrative SLE/PsO/IBD stubs). Empty buckets mean unknown, not 'no biology'. provisionalLock ≠ partner-signed lockedPilot.",
+    note: "Buckets are heuristic from seed labels (T2D + scope-locked RA pathway + illustrative SLE/PsO/IBD stubs). Empty buckets mean unknown, not 'no biology'. scopeLocked ≠ partnerSigned / lockedPilot.",
   };
 }
 
@@ -397,7 +402,7 @@ function partnerScopedEdges(
 
 /**
  * Build a pilot evidence pack from current seeds.
- * Surfaces provisional disease/question when provisionalLock is set; never claims partner-signed.
+ * Surfaces working disease/question when scopeLocked (Phase 2); never claims partnerSigned.
  */
 export function buildPilotEvidencePack(opts?: {
   generatedAt?: string;
@@ -424,7 +429,7 @@ export function buildPilotEvidencePack(opts?: {
   const gap = buildSchemaGapReport({ generatedAt });
   const gateC = buildGateCChecklist({ generatedAt });
   const discoveryCentre = buildDiscoveryCentreMeta(lock);
-  const provisional = isProvisionalPartnerLock(lock);
+  const scopedPilot = hasWorkingPilotScope(lock);
 
   const disease = lock.disease?.label ?? "TBD";
   const researchQuestion =
@@ -434,25 +439,25 @@ export function buildPilotEvidencePack(opts?: {
     {
       id: "expl-ra-tnf-centric",
       label: "TNF-centric framing of RA synovial inflammation and anti-TNF benefit",
-      status: provisional ? "from_illustrative_pathway" : "template",
+      status: scopedPilot ? "from_illustrative_pathway" : "template",
       relatedClaimIds: ["HSI-C-RA-001", "HSI-C-RA-003", "HSI-C-RA-006", "HSI-C-IM-002"],
-      note: provisional
-        ? "Provisional competing frame for the anti-TNF response question — not partner-signed. Keep as hypothesis until claim IDs survive expert review."
+      note: scopedPilot
+        ? "Working competing frame for the anti-TNF response question (scopeLocked) — not partnerSigned. Keep as hypothesis until claim IDs survive expert review."
         : "Fill after partner lock.",
     },
     {
       id: "expl-ra-multi-cytokine",
       label: "Multi-cytokine / IL-6 axis framing (including anti-TNF inadequate responders)",
-      status: provisional ? "from_illustrative_pathway" : "template",
+      status: scopedPilot ? "from_illustrative_pathway" : "template",
       relatedClaimIds: ["HSI-C-RA-004", "HSI-C-RA-005", "HSI-C-IM-003"],
-      note: provisional
+      note: scopedPilot
         ? "Preserves disagreement with TNF-only narratives. PMID 18625622 is related_axis evidence — curator must re-check S-P-O before Gate C."
         : "Preserve disagreement; do not collapse into a single confident narrative.",
     },
     {
       id: "expl-ra-acpa-subgroup",
       label: "Serologic subgroup framing (ACPA / anti-CCP) vs cytokine-axis response",
-      status: provisional ? "from_illustrative_pathway" : "template",
+      status: scopedPilot ? "from_illustrative_pathway" : "template",
       relatedClaimIds: ["HSI-C-RA-002"],
       note: "ACPA is a workup biomarker (LOINC 53031-9); do not equate seropositivity with anti-TNF response prediction without partner-scoped evidence.",
     },
@@ -461,7 +466,7 @@ export function buildPilotEvidencePack(opts?: {
       label: "Type I IFN–high vs alternate SLE endotypes (illustrative only)",
       status: "from_illustrative_pathway",
       relatedClaimIds: ["HSI-C-SLE-001", "HSI-C-SLE-002"],
-      note: "Not the provisional pilot pathway — retained as Discovery Centre conversation stub only.",
+      note: "Not the working Stage 1 pilot pathway — retained as Discovery Centre conversation stub only.",
     },
   ];
 
@@ -500,10 +505,10 @@ export function buildPilotEvidencePack(opts?: {
     {
       id: "hyp-ra-response-het",
       kind: "hypothesis",
-      text: provisional
-        ? "Provisional hypothesis: anti-TNF inadequate responders enrich for IL-6-axis biology that warrants separate evidence mapping before next-line study design — expert must reject or refine; autoApproved=false."
+      text: scopedPilot
+        ? "Working hypothesis (scopeLocked): anti-TNF inadequate responders enrich for IL-6-axis biology that warrants separate evidence mapping before next-line study design — expert must reject or refine; autoApproved=false."
         : "Candidate hypothesis slot — attach claim IDs after partner question is locked; never auto-approve into product KG.",
-      relatedClaimIds: provisional ? ["HSI-C-RA-003", "HSI-C-RA-005", "HSI-C-RA-004"] : [],
+      relatedClaimIds: scopedPilot ? ["HSI-C-RA-003", "HSI-C-RA-005", "HSI-C-RA-004"] : [],
       autoApproved: false,
     },
     {
@@ -518,7 +523,7 @@ export function buildPilotEvidencePack(opts?: {
   const partnerScopedSlice = bucketEntities(scoped.length > 0 ? scoped : []);
   if (scoped.length > 0) {
     partnerScopedSlice.note =
-      "Partner-scoped slice for the provisional RA / anti-TNF response pathway (lockedPilot=false). Not a signed partner corpus.";
+      "Partner-scoped slice for the scope-locked RA / anti-TNF response pathway (scopeLocked=true; partnerSigned=false; lockedPilot=false). Not a signed partner corpus.";
   }
 
   return {
@@ -530,11 +535,13 @@ export function buildPilotEvidencePack(opts?: {
     disease,
     researchQuestion,
     lockedPilot: lock.lockedPilot,
+    scopeLocked: lock.scopeLocked,
+    partnerSigned: lock.partnerSigned,
     provisionalLock: lock.provisionalLock,
     partnerLock: lock,
-    substrateNote: provisional
-      ? "Provisional partner lock: rheumatoid arthritis + anti-TNF response heterogeneity. lockedPilot=false — not partner-signed. Full evidenceMap still includes T2D / immuno-metabolic + SLE/PsO/IBD stubs; use partnerScopedEntitySlice for the RA pathway walkthrough."
-      : "Evidence rows include substrate seeds. Disease/question TBD until a named partner locks them.",
+    substrateNote: scopedPilot
+      ? "Phase 2 scope lock: rheumatoid arthritis + anti-TNF response heterogeneity are the working Stage 1 pilot question. scopeLocked=true; partnerSigned=false; lockedPilot=false. Full evidenceMap still includes T2D / immuno-metabolic + SLE/PsO/IBD stubs; use partnerScopedEntitySlice for the RA pathway walkthrough."
+      : "Evidence rows include substrate seeds. Disease/question TBD until scope is locked.",
     discoveryCentre,
     gradeDefinitions: HSI_GRADE_INFO,
     clinicalBoundary: [
@@ -545,14 +552,14 @@ export function buildPilotEvidencePack(opts?: {
       "No Akeno/Aksh patient-level CDS in this pack",
     ],
     questionProject: {
-      projectId: provisional ? "pilot-q-provisional-ra-tnf" : "pilot-q-template",
+      projectId: scopedPilot ? "pilot-q-scope-locked-ra-tnf" : "pilot-q-template",
       question: researchQuestion,
       disease,
-      scope: provisional
+      scope: scopedPilot
         ? {
-            population: "adults with rheumatoid arthritis (scope TBD with partner)",
-            tissue: "synovium / systemic inflammatory tone (TBD)",
-            cellType: "synovial macrophages / cytokine-producing myeloid cells (TBD)",
+            population: "adults with rheumatoid arthritis (population detail TBD with named partner)",
+            tissue: "synovium / systemic inflammatory tone (TBD with partner)",
+            cellType: "synovial macrophages / cytokine-producing myeloid cells (TBD with partner)",
             mechanismOrBiomarkerOrTreatmentFocus:
               "anti-TNF response heterogeneity; TNF vs IL-6 axes; ACPA serology context",
             timeWindow: "unknown",
@@ -565,9 +572,11 @@ export function buildPilotEvidencePack(opts?: {
             timeWindow: "unknown",
           },
       owner: lock.partner?.label ?? "TBD",
-      workspace: provisional ? "pilot-provisional-ra" : "pilot-template",
-      status: provisional ? "provisional" : "template",
+      workspace: scopedPilot ? "pilot-scope-locked-ra" : "pilot-template",
+      status: lock.scopeLocked ? "scope_locked" : lock.provisionalLock ? "provisional" : "template",
       lockedPilot: lock.lockedPilot,
+      scopeLocked: lock.scopeLocked,
+      partnerSigned: lock.partnerSigned,
       provisionalLock: lock.provisionalLock,
       evidenceSnapshotRef,
       createdAt: generatedAt,
@@ -618,11 +627,11 @@ export function buildPilotEvidencePack(opts?: {
       illustrativeDiseaseContexts: discoveryCentre.illustrativeDiseaseContexts.length,
     },
     nextActions: [
-      provisional
-        ? "Keep lockedPilot=false until a named partner confirms disease + question (see partnerLock.flipRequirements)."
-        : "Lock disease + research question with a named partner (outreach — not more substrate).",
-      "Human-review the provisional RA pathway against hsi-pilot-review-rubric.* and the four pack outputs.",
-      "Agree source licensing + success thresholds with the partner before user testing.",
+      scopedPilot
+        ? "Keep partnerSigned=false / lockedPilot=false until a named partner confirms disease + question (see partnerLock.flipRequirements). Phase 3 = deepen partner-scoped evidence."
+        : "Lock disease + research question as working Stage 1 scope (Phase 2).",
+      "Human-review the scope-locked RA pathway against hsi-pilot-review-rubric.* and the four pack outputs.",
+      "Agree source licensing + success thresholds with the named partner before user testing.",
       "Keep Akeno/Aksh patient-level pathways behind M4 / governance gates.",
       "Do not treat SLE/PsO/IBD illustrative stubs as the selected pilot indication.",
     ],
@@ -647,7 +656,7 @@ export function serializePilotEvidencePackMarkdown(
     `**Disease:** ${pack.disease}  `,
     `**Research question:** ${pack.researchQuestion}`,
     "",
-    `**lockedPilot:** \`${pack.lockedPilot}\` · **provisionalLock:** \`${pack.provisionalLock}\` · **status:** \`${pack.partnerLock.status}\``,
+    `**scopeLocked:** \`${pack.scopeLocked}\` · **partnerSigned:** \`${pack.partnerSigned}\` · **lockedPilot:** \`${pack.lockedPilot}\` · **provisionalLock:** \`${pack.provisionalLock}\` · **status:** \`${pack.partnerLock.status}\``,
     "",
     `> ${pack.substrateNote}`,
     "",
@@ -655,12 +664,15 @@ export function serializePilotEvidencePackMarkdown(
     "",
     `| Field | Value |`,
     `|-------|-------|`,
+    `| scopeLocked | \`${pack.scopeLocked}\` |`,
+    `| partnerSigned | \`${pack.partnerSigned}\` |`,
+    `| lockedPilot | \`${pack.lockedPilot}\` |`,
     `| partner id | \`${pack.partnerLock.partner?.id ?? "TBD"}\` |`,
     `| partner | ${pack.partnerLock.partner?.label ?? "TBD"} |`,
     `| outreachStatus | \`${pack.partnerLock.partner?.outreachStatus ?? "none"}\` |`,
     `| seed pathway | ${pack.partnerLock.seedPathway?.label ?? "—"} |`,
     "",
-    "> provisionalLock ≠ partner-signed. Do not claim a live pilot contract from this pack alone.",
+    "> Phase 2 = scopeLocked. scopeLocked ≠ partnerSigned. Do not claim a live pilot contract from this pack alone.",
     "",
     "## Discovery loop (metadata only)",
     "",
@@ -672,7 +684,7 @@ export function serializePilotEvidencePackMarkdown(
   }
   lines.push(
     "",
-    "### Disease contexts (RA = provisional scaffold; others illustrative)",
+    "### Disease contexts (RA = working Stage 1 scope; others illustrative)",
     "",
   );
   for (const d of pack.discoveryCentre.illustrativeDiseaseContexts) {
@@ -701,6 +713,8 @@ export function serializePilotEvidencePackMarkdown(
     `| focus | ${pack.questionProject.scope.mechanismOrBiomarkerOrTreatmentFocus} |`,
     `| timeWindow | ${pack.questionProject.scope.timeWindow} |`,
     `| status | ${pack.questionProject.status} |`,
+    `| scopeLocked | ${pack.questionProject.scopeLocked} |`,
+    `| partnerSigned | ${pack.questionProject.partnerSigned} |`,
     `| lockedPilot | ${pack.questionProject.lockedPilot} |`,
     `| provisionalLock | ${pack.questionProject.provisionalLock} |`,
     `| evidence snapshot | ${pack.questionProject.evidenceSnapshotRef} |`,

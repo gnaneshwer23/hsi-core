@@ -1,17 +1,20 @@
 /**
- * Partner disease / question lock scaffold for the ISI Stage 1 pilot.
+ * Partner disease / question lock for the ISI Stage 1 pilot.
  *
- * Honesty rules:
- * - No fake signed partners or MoUs.
- * - `lockedPilot` stays false until a named partner confirms disease + question.
- * - `provisionalLock` may point at the strongest existing seed pathway so
- *   substrate + review rubric can advance before outreach closes.
+ * Honesty model (Phase 2):
+ * - `scopeLocked=true` — disease + researchQuestion are the **working Stage 1
+ *   pilot scope** (engineering lock). Phase 2 complete = this flag.
+ * - `partnerSigned=false` until a **named** partner confirms in writing.
+ * - `lockedPilot` is the AND of both (`scopeLocked && partnerSigned`). It stays
+ *   false without inventing a commercial / MoU partner. Named partner flips
+ *   `partnerSigned` (then `lockedPilot` follows).
+ * - `provisionalLock` is cleared once scope is promoted out of scaffold.
  *
- * Flip path (requires a real partner — not code alone):
- * 1. Named partner confirms disease + research question in writing.
- * 2. Set status → scoping|active, lockedPilot → true, clear provisional flags.
+ * Flip path for partnerSigned (requires a real partner — not code alone):
+ * 1. Named partner confirms disease + research question in writing (or rewrites).
+ * 2. Set partnerSigned → true, lockedPilot → true, status → scoping|active.
  * 3. Replace partner.id/label with the real org (still no invented emails).
- * 4. Refresh partner-scoped seeds + source licensing; re-run bun run outputs.
+ * 4. Agree licensing + rubric thresholds; refresh seeds; re-run bun run outputs.
  */
 
 export const PARTNER_LOCK_SCHEMA = "hsi-partner-lock-1" as const;
@@ -19,6 +22,7 @@ export const PARTNER_LOCK_SCHEMA = "hsi-partner-lock-1" as const;
 export type PartnerLockStatus =
   | "unlocked"
   | "provisional"
+  | "scope_locked"
   | "outreach"
   | "interested"
   | "scoping"
@@ -41,21 +45,43 @@ export type HsiPartnerRef = {
   /** Never invent emails or MoUs. */
   contactChannel: "public_institute_channel" | "programme_introduction" | "named_contact" | "none";
   /** Tracking status from shortlist — candidates only until confirmed. */
-  outreachStatus: "candidate" | "interested" | "scoping" | "confirmed" | "declined" | "none";
+  outreachStatus:
+    | "candidate"
+    | "awaiting_named_partner"
+    | "interested"
+    | "scoping"
+    | "confirmed"
+    | "declined"
+    | "none";
   notes: string;
 };
 
 /**
  * Durable lock fields consumed by pack, Discovery Centre meta, MANIFEST, rubric.
- * When provisional: disease/question are filled but must not be read as partner-signed.
+ *
+ * Phase 2 (scope lock): disease/question canonical; partner still outreach category.
+ * Partner-true (partnerSigned): requires named confirmation — not inventable in code.
  */
 export type HsiPartnerLock = {
   schemaVersion: typeof PARTNER_LOCK_SCHEMA;
-  /** True only after a named partner confirms — never set from substrate alone. */
+  /**
+   * Engineering lock: disease + researchQuestion are the working Stage 1 scope.
+   * Phase 2 deliverable. Does **not** imply a signed commercial partner.
+   */
+  scopeLocked: boolean;
+  /**
+   * True only after a named partner confirms disease + question in writing.
+   * User / outreach flips this — never invent an org or MoU in code.
+   */
+  partnerSigned: boolean;
+  /**
+   * Compat / full pilot lock: `scopeLocked && partnerSigned`.
+   * Stays false until partnerSigned; do not set true from substrate alone.
+   */
   lockedPilot: boolean;
   /**
-   * Explicit provisional scaffold from shortlist + strongest seed pathway.
-   * Mutual honesty: provisionalLock=true implies lockedPilot=false.
+   * Legacy scaffold flag. Mutual honesty: provisionalLock=true implies
+   * scopeLocked=false and lockedPilot=false. Cleared when scope is promoted.
    */
   provisionalLock: boolean;
   status: PartnerLockStatus;
@@ -68,7 +94,7 @@ export type HsiPartnerLock = {
   /** Candidate example questions from the pilot brief (conversation starters). */
   candidateQuestions: string[];
   partner: HsiPartnerRef | null;
-  /** Seed pathway this provisional lock is anchored to. */
+  /** Seed pathway this scope lock is anchored to. */
   seedPathway: {
     id: string;
     label: string;
@@ -77,27 +103,31 @@ export type HsiPartnerLock = {
     primaryEdgeIds: string[];
     primaryPmids: string[];
   } | null;
-  /** What a real partner must still supply to flip lockedPilot. */
+  /** What a real partner must still supply to flip partnerSigned / lockedPilot. */
   flipRequirements: string[];
   honesty: string[];
   updatedAt: string;
 };
 
 /**
- * Provisional RA / anti-TNF response lock.
+ * Working Stage 1 scope lock: RA / anti-TNF response heterogeneity.
+ *
+ * Phase 2: disease + researchQuestion are canonical engineering scope
+ * (`scopeLocked=true`). Partner remains an outreach *category* from the
+ * shortlist — Versus Arthritis / NDORMS–Kennedy — not a signed MoU.
  *
  * Why this pathway (not SLE/PsO/IBD): densest durable literature in seeds —
  * TNF→RA (PMID 11244034), anti-CCP LOINC marker, IL-6 / anti-TNF-refractory
  * (PMID 18625622), macrophage→TNF (PMID 2993897), plus Gate C handoff patterns
  * already used for PMID 16382236-style provenance.
- *
- * Partner remains an outreach *category* from the shortlist — not a signed MoU.
  */
-export const HSI_PROVISIONAL_PARTNER_LOCK: HsiPartnerLock = {
+export const HSI_SCOPE_LOCKED_PARTNER_LOCK: HsiPartnerLock = {
   schemaVersion: PARTNER_LOCK_SCHEMA,
+  scopeLocked: true,
+  partnerSigned: false,
   lockedPilot: false,
-  provisionalLock: true,
-  status: "provisional",
+  provisionalLock: false,
+  status: "scope_locked",
   disease: {
     id: "ra",
     label: "Rheumatoid arthritis",
@@ -117,15 +147,15 @@ export const HSI_PROVISIONAL_PARTNER_LOCK: HsiPartnerLock = {
     type: "outreach_category",
     region: "UK",
     contactChannel: "public_institute_channel",
-    outreachStatus: "candidate",
+    outreachStatus: "awaiting_named_partner",
     notes:
-      "From ISI_PILOT_PARTNER_SHORTLIST.md — not a confirmed partner, MoU, or named PI commitment. Contact via public programme / institute channels only.",
+      "From ISI_PILOT_PARTNER_SHORTLIST.md — outreach target category only. Not a confirmed partner, MoU, or named PI. Contact via public programme / institute channels. Phase 2 locked disease+question scope; partnerSigned still false.",
   },
   seedPathway: {
     id: "ra-tnf-response-heterogeneity",
     label: "RA · TNF / ACPA · anti-TNF response heterogeneity",
     rationale:
-      "Strongest existing immune-disease seed slice: TNF→RA + anti-CCP (LOINC) + IL-6 / anti-TNF-refractory literature already wired for Gate C handoff. Matches pilot-brief example questions on therapy response and subgroup biomarkers.",
+      "Strongest existing immune-disease seed slice: TNF→RA + anti-CCP (LOINC) + IL-6 / anti-TNF-refractory literature already wired for Gate C handoff. Matches pilot-brief example questions on therapy response and subgroup biomarkers. Promoted to working Stage 1 scope (scopeLocked) in Phase 2.",
     primaryClaimIds: [
       "HSI-C-RA-001",
       "HSI-C-RA-002",
@@ -149,33 +179,39 @@ export const HSI_PROVISIONAL_PARTNER_LOCK: HsiPartnerLock = {
     primaryPmids: ["11244034", "10662881", "11087881", "18625622", "2993897"],
   },
   flipRequirements: [
-    "Named partner confirms disease = rheumatoid arthritis (or explicitly chooses a different disease).",
+    "Named partner confirms disease = rheumatoid arthritis (or explicitly chooses a different disease — then re-lock scope).",
     "Named partner confirms or rewrites the research question in their words.",
     "Record real outreach row in ISI_PILOT_PARTNER_SHORTLIST.md (org, type, region, status) — still no invented emails.",
     "Agree source licensing / attribution for the partner source set.",
     "Agree scientific review rubric thresholds (time saved, usefulness, rejections) with the partner.",
-    "Set lockedPilot=true, provisionalLock=false, status=scoping|active, partner.type=named_partner.",
+    "Set partnerSigned=true, lockedPilot=true (scopeLocked already true), status=scoping|active, partner.type=named_partner, partner.outreachStatus=confirmed.",
     "Re-run bun run outputs and refresh the pilot evidence pack + review rubric against the signed question.",
   ],
   honesty: [
-    "provisionalLock=true does NOT mean a partner signed or locked the pilot.",
-    "lockedPilot remains false until flipRequirements are met.",
+    "Phase 2 done = scopeLocked=true (disease + researchQuestion are working Stage 1 scope).",
+    "scopeLocked does NOT mean a commercial partner signed or locked a MoU.",
+    "partnerSigned / lockedPilot stay false until flipRequirements are met with a named partner.",
     "Outreach category partners are not MoUs; do not invent personal contacts.",
-    "Exports must surface status=provisional so consumers cannot mistake this for a live pilot contract.",
+    "Exports must surface status=scope_locked + partnerSigned=false so consumers cannot mistake this for a live pilot contract.",
   ],
-  updatedAt: "2026-11-01T12:00:00.000Z",
+  updatedAt: "2026-11-01T13:00:00.000Z",
 };
 
-/** Active lock used by pack / export builders (provisional until a real flip). */
+/** @deprecated Use HSI_SCOPE_LOCKED_PARTNER_LOCK — alias kept for import stability. */
+export const HSI_PROVISIONAL_PARTNER_LOCK = HSI_SCOPE_LOCKED_PARTNER_LOCK;
+
+/** Active lock used by pack / export builders. */
 export function getPartnerLock(): HsiPartnerLock {
-  return HSI_PROVISIONAL_PARTNER_LOCK;
+  return HSI_SCOPE_LOCKED_PARTNER_LOCK;
 }
 
-/** Compact pointer for MANIFEST / discoveryCentre (never claims lockedPilot from provisional). */
+/** Compact pointer for MANIFEST / discoveryCentre. */
 export function partnerLockExportPointer(
   lock: HsiPartnerLock = getPartnerLock(),
 ): {
   schemaVersion: typeof PARTNER_LOCK_SCHEMA;
+  scopeLocked: boolean;
+  partnerSigned: boolean;
   lockedPilot: boolean;
   provisionalLock: boolean;
   status: PartnerLockStatus;
@@ -186,6 +222,8 @@ export function partnerLockExportPointer(
 } {
   return {
     schemaVersion: PARTNER_LOCK_SCHEMA,
+    scopeLocked: lock.scopeLocked,
+    partnerSigned: lock.partnerSigned,
     lockedPilot: lock.lockedPilot,
     provisionalLock: lock.provisionalLock,
     status: lock.status,
@@ -196,7 +234,20 @@ export function partnerLockExportPointer(
   };
 }
 
-/** True when pack disease/question may show provisional values (still not partner-signed). */
+/** True when pack may show scaffold-only values (legacy Phase 1b). */
 export function isProvisionalPartnerLock(lock: HsiPartnerLock = getPartnerLock()): boolean {
   return lock.provisionalLock === true && lock.lockedPilot === false;
+}
+
+/** True when disease + question are the working Stage 1 scope (Phase 2+). */
+export function isScopeLockedPartnerLock(lock: HsiPartnerLock = getPartnerLock()): boolean {
+  return lock.scopeLocked === true;
+}
+
+/**
+ * True when pack/rubric should surface the RA pathway as the active pilot question
+ * (scope-locked or still-provisional scaffold) without claiming partnerSigned.
+ */
+export function hasWorkingPilotScope(lock: HsiPartnerLock = getPartnerLock()): boolean {
+  return lock.scopeLocked === true || lock.provisionalLock === true;
 }
