@@ -59,6 +59,7 @@ export {
   DISEASE_TISSUE_BIOMARKER_LAYERS,
   DISEASE_TISSUE_BIOMARKER_STUBS,
   EDGE_EMBEDDING_SLOT_SCHEMA,
+  EXTERNAL_GENOME_POINTER_SCHEMA,
   FUTURE_TECH_ADAPTER_STUBS,
   GUT_MICROBIOME_ENTITY_CLASSES,
   GUT_MICROBIOME_ENTITY_STUBS,
@@ -84,6 +85,7 @@ export {
   type DiseaseTissueBiomarkerLayer,
   type DiseaseTissueBiomarkerStub,
   type EdgeEmbeddingSlotSchema,
+  type ExternalGenomePointerSchema,
   type FutureTechAdapterStatus,
   type FutureTechAdapterStub,
   type GutMicrobiomeEntityClass,
@@ -215,6 +217,19 @@ export {
   type ModelEvalSubjectKind,
   type ScoreModelEvalSubjectInput,
 } from "./modelEvalHarness";
+
+export {
+  EXTERNAL_GENOME_POINTERS_EXPORT_SCHEMA,
+  EXTERNAL_GENOME_POINTER_RUNTIME_SCHEMA,
+  assertSafeExternalGenomePointer,
+  buildExampleExternalGenomePointers,
+  buildExternalGenomePointersBundle,
+  resolveGenomePointerUrl,
+  serializeExternalGenomePointers,
+  type ExternalGenomePointer,
+  type ExternalGenomePointersBundle,
+  type GenomePointerSource,
+} from "./externalGenomePointers";
 
 export {
   SSC_CELL_CARD_SCHEMA,

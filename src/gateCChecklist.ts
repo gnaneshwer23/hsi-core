@@ -221,6 +221,7 @@ export function buildGateCChecklist(opts?: {
       "P1.5 modelProposals: typed ModelProposalArtifact drafts only (autoApprove=false; mayFlipEvidenceGrade=false). Never write hsiGrade/curationReview from a model. Not Neon auto-approve — human Gate C only.",
       "P2.2 embedding sidecars (hsi-embedding-sidecars.json): hash/ref metadata only; doesNotSetHsiGrade=true; autoApprove=false — never treat similarity as Gate C pass or grade flip.",
       "P2.3 offline eval harness (hsi-model-eval-harness.*): scores proposals/sidecars against frozen packs only; mayUseLivePhi=false; never flips grades; never auto-approves into KG.",
+      "P2.4 ClinVar/TCGA pointers (hsi-external-genome-pointers.json): citation/ref only (accession + URL + disease/gene context + optional edgeIds); reviewRequired=true; doesNotSetHsiGrade; no bulk genome dump / PHI — Gate C still required.",
     ],
   };
 }

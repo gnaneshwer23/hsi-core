@@ -149,8 +149,8 @@ hsi-core owns the graded graph and publishes read-only exports. Aksh and ISI (im
 2. Keep substrate honest: expand seeds + verified PMID Gate C checklists only as the pilot needs them — not platform sprawl.
 3. Harden Aksh HITL stub + maps without opening CDS on seeds (Aksh/Akeno stay out of patient-level decisions this phase).
 4. Grow ISI export / REL suggestion maps for the pilot question; never auto-approve into a product KG.
-5. Document any future ClinVar/TCGA **pointer** fields as optional claim metadata — still Gate C.
-6. Do **not** vendor AF3/Boltz/etc. until a written P3 plugin RFC + license sign-off lands in this repo.
+5. **DONE (P2.4):** ClinVar/TCGA **pointer** fields as optional claim metadata (`hsi-external-genome-pointers.json`) — still Gate C / `reviewRequired`.
+6. Do **not** vendor AF3/Boltz/etc. until a written P3 plugin RFC + license sign-off lands in this repo (**next:** P2.5).
 7. Leave immunecity, Aksh apps, Akeno repos (`akenohealth`, `akeno-health-ai`), and hsi-sources untouched from this workspace. **Ignore** DeliverX / swift-deliveries (not a next step, not a wire-up).
 
 See also: [ISI_PILOT_BRIEF.md](./ISI_PILOT_BRIEF.md), [ISI_PILOT_PARTNER_SHORTLIST.md](./ISI_PILOT_PARTNER_SHORTLIST.md), [ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md](./ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md), [AKSH_HITL_CONSUMPTION.md](./AKSH_HITL_CONSUMPTION.md), [IMMUNECITY_GATE_C_COMMIT_MANUAL.md](./IMMUNECITY_GATE_C_COMMIT_MANUAL.md), [NEON_PROJECT_MAP.md](./NEON_PROJECT_MAP.md) (Neon IDs / host→role, no secrets), README “Pilot” + “Active codebase”.

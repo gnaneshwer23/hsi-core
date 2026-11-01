@@ -61,7 +61,8 @@ export const HSI_VERTICAL_DECISION: HsiVerticalDecision = {
     "DONE (P2.1): neuroimmune vagus / cholinergic anti-inflammatory reflex + hsi-neuroimmune-pack (uncertain/hypothesized; no clinical cure claim).",
     "DONE (P2.2): embedding sidecar slots (hash/ref; hsi-embedding-sidecars.json; doesNotSetHsiGrade).",
     "DONE (P2.3): offline eval harness stubs against public packs (hsi-model-eval-harness.*; no PHI / no training).",
-    "NEXT science: P2.4 ClinVar/TCGA pointer metadata — or P1.4 promote gut/neuro systems predicates onto HSI_EDGE_TYPES — or P2.5 P3 adapter RFC.",
+    "DONE (P2.4): ClinVar/TCGA pointer metadata (hsi-external-genome-pointers.json; citation/ref; reviewRequired; no bulk dump / PHI).",
+    "NEXT science: P2.5 P3 adapter RFC + license sign-off — or P1.4 promote gut/neuro systems predicates onto HSI_EDGE_TYPES.",
     "Partner outreach / partnerSigned / rights table (unchanged P0.2) — parallel critical path.",
   ],
 };

@@ -3,6 +3,7 @@ import {
   AI_FUTURE_TECH_CAPABILITIES,
   AI_FUTURE_TECH_HARD_BANS,
   EDGE_EMBEDDING_SLOT_SCHEMA,
+  EXTERNAL_GENOME_POINTER_SCHEMA,
   FUTURE_TECH_ADAPTER_STUBS,
   GUT_MICROBIOME_ENTITY_STUBS,
   MODEL_EVAL_HARNESS_STUB,
@@ -105,6 +106,14 @@ describe("systems vision axes stubs", () => {
     expect(MODEL_EVAL_HARNESS_STUB.exportArtifact).toBe(
       "hsi-model-eval-harness.json",
     );
+    expect(EXTERNAL_GENOME_POINTER_SCHEMA.status).toBe(
+      "wired_citation_pointers",
+    );
+    expect(EXTERNAL_GENOME_POINTER_SCHEMA.exportArtifact).toBe(
+      "hsi-external-genome-pointers.json",
+    );
+    expect(EXTERNAL_GENOME_POINTER_SCHEMA.reviewRequired).toBe(true);
+    expect(EXTERNAL_GENOME_POINTER_SCHEMA.doesNotSetHsiGrade).toBe(true);
 
     const bundle = buildSystemsVisionBundle();
     expect(bundle.aiFutureTech.positionDoc).toContain("HSI_AI_NEURAL_FUTURE_HEALTHCARE");
@@ -113,7 +122,13 @@ describe("systems vision axes stubs", () => {
       false,
     );
     expect(
+      bundle.aiFutureTech.externalGenomePointerSchema.containsBulkGenomeDump,
+    ).toBe(false);
+    expect(
       bundle.invariants.some((s) => s.includes("model-proposal")),
+    ).toBe(true);
+    expect(
+      bundle.invariants.some((s) => s.includes("P2.4")),
     ).toBe(true);
   });
 

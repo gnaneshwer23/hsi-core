@@ -68,6 +68,10 @@ import {
   serializeModelEvalHarnessMarkdown,
 } from "./modelEvalHarness";
 import {
+  buildExternalGenomePointersBundle,
+  serializeExternalGenomePointers,
+} from "./externalGenomePointers";
+import {
   getVerticalDecision,
   verticalDecisionExportPointer,
 } from "./verticalDecision";
@@ -287,6 +291,9 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
   const neuroImmunePack = buildNeuroImmunePack({ generatedAt });
   const embeddingSidecars = buildEmbeddingSidecarsBundle({ generatedAt });
   const modelEvalHarness = buildModelEvalHarnessBundle({ generatedAt });
+  const externalGenomePointers = buildExternalGenomePointersBundle({
+    generatedAt,
+  });
 
   const fileMap: Record<string, string> = {
     "hsi-isi-export.json": serializeIsiExport(isiBundle),
@@ -321,6 +328,9 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     "hsi-model-eval-harness.json": serializeModelEvalHarness(modelEvalHarness),
     "hsi-model-eval-harness.md": serializeModelEvalHarnessMarkdown(
       modelEvalHarness,
+    ),
+    "hsi-external-genome-pointers.json": serializeExternalGenomePointers(
+      externalGenomePointers,
     ),
   };
 
@@ -373,6 +383,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       embeddingSidecarsJson: "hsi-embedding-sidecars.json",
       modelEvalHarnessJson: "hsi-model-eval-harness.json",
       modelEvalHarnessMd: "hsi-model-eval-harness.md",
+      externalGenomePointersJson: "hsi-external-genome-pointers.json",
     },
     counts: {
       isiEdges: isiBundle.edges.length,
@@ -487,6 +498,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       "Systems vision: hsi-systems-vision.json — multi-axis target graph stubs (immune + gut–immune + neuroimmune + disease/tissue/biomarker + patient-plane rules + P3 adapters + aiFutureTech capabilities/hard bans/schema stubs); dual-track vertical fields; see docs/HSI_SYSTEMS_VISION_MAP.md + docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md.",
       "P2.2 embedding sidecars: hsi-embedding-sidecars.json — edgeId→modelId/dim/vectorRef|contentHash (+ optional tiny demo); doesNotSetHsiGrade=true; autoApprove=false; no PHI / no model weights; packs remain evidence authority.",
       "P2.3 offline eval harness: hsi-model-eval-harness.* — scores proposals/sidecars against frozen RA/SSc/gut/neuro fixtures; mayUseLivePhi=false; mayTrainModels=false; fail-closed clinical/PHI; never flips grades.",
+      "P2.4 ClinVar/TCGA pointers: hsi-external-genome-pointers.json — accession + URL template + disease/gene context + optional edgeIds; reviewRequired=true; citation/ref only; no bulk genome dump / PHI; doesNotSetHsiGrade.",
       "Regenerate with: bun run outputs (also refreshes site/public/discovery).",
     ],
   };
@@ -544,6 +556,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     "hsi-translation-handoff.json",
     "hsi-embedding-sidecars.json",
     "hsi-model-eval-harness.json",
+    "hsi-external-genome-pointers.json",
   ] as const;
   for (const name of discoveryFiles) {
     const dest = join(discoveryPublicDir, name);
@@ -579,6 +592,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       "Systems secondary axes: gut–immune (hsi-gut-immune-pack.json) + neuroimmune vagus/cholinergic (hsi-neuroimmune-pack.json) — do not replace ASK.",
       "P2.2 embedding sidecars: hsi-embedding-sidecars.json — hash/ref only; doesNotSetHsiGrade; never auto-approve into KG.",
       "P2.3 offline eval harness: hsi-model-eval-harness.json — frozen-pack checks only; no PHI / no training / no grade flips.",
+      "P2.4 ClinVar/TCGA pointers: hsi-external-genome-pointers.json — citation/ref only; reviewRequired; Gate C still required; no bulk dump / PHI.",
       "Phase 7 done = R2 validation (hsi-r2-validation.json) on VALIDATE tab.",
       "Phase 8 done = HSI translation substrate (hsi-translation-handoff.json) on TRANSLATE tab + in-repo Akeno HITL consumer at /akeno (not CDS).",
     ],

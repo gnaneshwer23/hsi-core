@@ -210,6 +210,7 @@ See `PATIENT_DATA_PLANE_RULES` and [`AKENO_IN_HSI.md`](./AKENO_IN_HSI.md).
 - **Not:** embedding tables as a parallel truth store that bypasses grades; no multi-GB weights; no PHI.  
 - **Versioning:** model id + weights hash + dim + createdAt; invalidate on model bump.  
 - **Eval (P2.3 landed):** offline harness (`MODEL_EVAL_HARNESS_STUB` + `src/modelEvalHarness.ts` → `hsi-model-eval-harness.*`) scores proposals/sidecars against frozen RA/SSc/gut/neuro fixtures (cited edges exist; grade not flipped; required fields; fail-closed clinical/PHI; sidecar locators; pack authority). No training / PHI. TDC-style retrieval metrics still deferred to P3.
+- **Genome pointers (P2.4 landed):** ClinVar / TCGA citation metadata (`EXTERNAL_GENOME_POINTER_SCHEMA` + `src/externalGenomePointers.ts` → `hsi-external-genome-pointers.json`) — accession, URL template, disease/gene context, optional `edgeIds`, `reviewRequired=true`, `doesNotSetHsiGrade=true`. No bulk genome dump / PHI.
 
 ### Human gates
 
@@ -238,7 +239,7 @@ Curator Gate C · ISI product approve · Aksh clinician action · partner govern
 - Any path that auto-flips grades.  
 - SSc deep seed pivot that wipes RA lock.
 
-**P1.5 landed:** typed `ModelProposalArtifact` (`src/modelProposal.ts`) wires into Gate C checklist `modelProposals` (pending only; `autoApprove=false`; unit tests refuse forbidden `hsiGrade` / `mayFlipEvidenceGrade`). **P1.3 landed:** gut–immune SCFA ↔ mucosal Treg/Th17 pack. **P2.1 landed:** neuroimmune vagus / cholinergic anti-inflammatory reflex pack (human VNS–RA hypothesized only). **P2.2 landed:** embedding sidecars (`hsi-embedding-sidecars.json`; hash/ref; `doesNotSetHsiGrade`). **P2.3 landed:** offline eval harness (`hsi-model-eval-harness.*`; fail-closed clinical/PHI; packs remain authority). **Recommended next science slice:** P2.4 ClinVar/TCGA pointer metadata per [`HSI_SYSTEMS_VISION_MAP.md`](./HSI_SYSTEMS_VISION_MAP.md) / [`BUILD_STATUS_AND_NEXT.md`](./BUILD_STATUS_AND_NEXT.md).
+**P1.5 landed:** typed `ModelProposalArtifact` (`src/modelProposal.ts`) wires into Gate C checklist `modelProposals` (pending only; `autoApprove=false`; unit tests refuse forbidden `hsiGrade` / `mayFlipEvidenceGrade`). **P1.3 landed:** gut–immune SCFA ↔ mucosal Treg/Th17 pack. **P2.1 landed:** neuroimmune vagus / cholinergic anti-inflammatory reflex pack (human VNS–RA hypothesized only). **P2.2 landed:** embedding sidecars (`hsi-embedding-sidecars.json`; hash/ref; `doesNotSetHsiGrade`). **P2.3 landed:** offline eval harness (`hsi-model-eval-harness.*`; fail-closed clinical/PHI; packs remain authority). **P2.4 landed:** ClinVar/TCGA pointer metadata (`hsi-external-genome-pointers.json`; citation/ref; `reviewRequired`; no bulk dump / PHI). **Recommended next science slice:** P2.5 P3 adapter RFC + license sign-off per [`HSI_SYSTEMS_VISION_MAP.md`](./HSI_SYSTEMS_VISION_MAP.md) / [`BUILD_STATUS_AND_NEXT.md`](./BUILD_STATUS_AND_NEXT.md).
 
 ---
 

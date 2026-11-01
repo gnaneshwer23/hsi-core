@@ -727,6 +727,45 @@ export const MODEL_EVAL_HARNESS_STUB = {
 
 export type ModelEvalHarnessStub = typeof MODEL_EVAL_HARNESS_STUB;
 
+/**
+ * ClinVar / TCGA external genome pointer metadata (P2.4 wired).
+ * Citation/ref only — accession + URL template + disease/gene context;
+ * optional edgeIds; reviewRequired; never bulk dumps / PHI / hsiGrade.
+ */
+export const EXTERNAL_GENOME_POINTER_SCHEMA = {
+  schemaVersion: "hsi-external-genome-pointer-1",
+  /** Wired: typed pointers + hsi-external-genome-pointers.json export (P2.4). */
+  status: "wired_citation_pointers" as const,
+  fields: [
+    "pointerId",
+    "source",
+    "accession",
+    "urlTemplate",
+    "url",
+    "geneSymbol",
+    "diseaseContext",
+    "edgeIds",
+    "reviewRequired",
+    "doesNotSetHsiGrade",
+    "createdAt",
+  ] as const,
+  sources: ["clinvar", "tcga", "tcga_index"] as const,
+  mayFlipEvidenceGrade: false as const,
+  doesNotSetHsiGrade: true as const,
+  reviewRequired: true as const,
+  autoApprove: false as const,
+  autoApproveIntoKg: false as const,
+  containsPhi: false as const,
+  containsBulkGenomeDump: false as const,
+  exportArtifact: "hsi-external-genome-pointers.json" as const,
+  runtimeModule: "src/externalGenomePointers.ts" as const,
+  visionDocRef: "docs/VISION_REPO_ALIGNMENT.md",
+  notes:
+    "Citation/ref shelf only — ClinVar gene terms + TCGA/GDC/awesome-TCGA portal indexes; Gate C still required; packs remain authority; no VCF/BAM/FASTQ/PHI",
+};
+
+export type ExternalGenomePointerSchema = typeof EXTERNAL_GENOME_POINTER_SCHEMA;
+
 export type FutureTechAdapterStatus =
   | "deferred_p3"
   | "catalog_only"
@@ -877,6 +916,7 @@ export type SystemsVisionBundle = {
     embeddingSlotSchema: EdgeEmbeddingSlotSchema;
     modelProposalArtifactSchema: ModelProposalArtifactSchema;
     evalHarnessStub: ModelEvalHarnessStub;
+    externalGenomePointerSchema: ExternalGenomePointerSchema;
   };
   invariants: string[];
 };
@@ -946,6 +986,7 @@ export function buildSystemsVisionBundle(opts?: {
       embeddingSlotSchema: EDGE_EMBEDDING_SLOT_SCHEMA,
       modelProposalArtifactSchema: MODEL_PROPOSAL_ARTIFACT_SCHEMA,
       evalHarnessStub: MODEL_EVAL_HARNESS_STUB,
+      externalGenomePointerSchema: EXTERNAL_GENOME_POINTER_SCHEMA,
     },
     invariants: [
       "Target graph ≠ one sprint — stubs are navigation vocabulary only.",
@@ -960,6 +1001,7 @@ export function buildSystemsVisionBundle(opts?: {
       "Embeddings are sidecar retrieval slots — not a substitute for typed predicates.",
       "P2.2: edge embedding sidecars wired (hash/ref; hsi-embedding-sidecars.json); doesNotSetHsiGrade=true; no model weights / PHI.",
       "P2.3: offline eval harness wired (hsi-model-eval-harness.json); mayUseLivePhi=false; mayTrainModels=false; fail-closed clinical/PHI; packs remain authority.",
+      "P2.4: ClinVar/TCGA pointer metadata wired (hsi-external-genome-pointers.json); reviewRequired=true; citation/ref only; no bulk genome dump / PHI; doesNotSetHsiGrade.",
       "notCds / autoApproveIntoKg=false on this export.",
       "Neon: red-wave only from this workspace.",
     ],
