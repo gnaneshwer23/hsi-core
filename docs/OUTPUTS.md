@@ -12,7 +12,7 @@ bun run outputs    # alias: bun run publish
 bun run site:dev   # Discovery Centre at http://localhost:5173/discovery
 ```
 
-Writes regenerable bundles under **`dist/outputs/`** (gitignored). Also refreshes legacy `exports/*.json` and **Phase 6–7** static copies under **`site/public/discovery/`** (committed so the vision site can load real packs without a local `dist/`).
+Writes regenerable bundles under **`dist/outputs/`** (gitignored). Also refreshes legacy `exports/*.json` and **Phase 6–8** static copies under **`site/public/discovery/`** (committed so the vision site can load real packs without a local `dist/`).
 
 Committed **small samples** (not full dumps): [`examples/sample-outputs/`](../examples/sample-outputs/).
 
@@ -42,15 +42,18 @@ dist/outputs/
     hsi-partner-lock.json             # durable scope / partner-signed lock
     hsi-r2-validation.json            # Phase 7 R2 hypothesis cards / ranked gaps
     hsi-r2-validation.md
+    hsi-translation-handoff.json      # Phase 8 Stage 3 translation candidates
+    hsi-translation-handoff.md
 ```
 
 ## Who uses what
 
 | Consumer | Files | Rules |
 |----------|-------|--------|
-| **ISI** | `hsi-isi-export.json`, `hsi-isi-rel-map.json`, `gate-c-checklist.*`, `hsi-pilot-evidence-pack.*`, `hsi-pilot-review-rubric.*`, `hsi-pilot-acceptance.*`, `hsi-pilot-walkthrough.md`, `hsi-partner-lock.json`, `hsi-r2-validation.*` | Discovery / Ask / Radar only. REL map never auto-approves into KG. Gate C approve (if any) is human-only in **ISI Neon `autumn-snow`**, not HSI `red-wave`. Pack shows **Phase 3 evidence depth** on Phase 2 scope-locked RA/TNF (`scopeLocked=true`, `partnerSigned=false`, `lockedPilot=false`) — not a MoU. **Phase 4:** HSI Neon schema stub + `bun run db:gate-c-local` pending placeholders on `red-wave` only. **Phase 5:** Stage 1 acceptance checklist + partner walkthrough (honest pending for `partnerSigned` / licensing). **Phase 6:** site `/discovery` product surface. **Phase 7:** R2 validation (`hsi-r2-validation.*` + VALIDATE tab). |
+| **ISI** | `hsi-isi-export.json`, `hsi-isi-rel-map.json`, `gate-c-checklist.*`, `hsi-pilot-evidence-pack.*`, `hsi-pilot-review-rubric.*`, `hsi-pilot-acceptance.*`, `hsi-pilot-walkthrough.md`, `hsi-partner-lock.json`, `hsi-r2-validation.*`, `hsi-translation-handoff.*` | Discovery / Ask / Radar only. REL map never auto-approves into KG. Gate C approve (if any) is human-only in **ISI Neon `autumn-snow`**, not HSI `red-wave`. Pack shows **Phase 3 evidence depth** on Phase 2 scope-locked RA/TNF (`scopeLocked=true`, `partnerSigned=false`, `lockedPilot=false`) — not a MoU. **Phase 4:** HSI Neon schema stub + `bun run db:gate-c-local` pending placeholders on `red-wave` only. **Phase 5:** Stage 1 acceptance checklist + partner walkthrough (honest pending for `partnerSigned` / licensing). **Phase 6:** site `/discovery` product surface. **Phase 7:** R2 validation (`hsi-r2-validation.*` + VALIDATE tab). **Phase 8:** translation handoff scaffolding (`hsi-translation-handoff.*` + TRANSLATE tab; `clinicalActive=false`). |
 | **Aksh** | `hsi-aksh-node-map.json`, `hsi-aksh-hitl-cards.json` | HITL map pointers. `akshNodeId` ≠ CDS. Seeds stay `cdsSurfacable=false`. |
-| **Curators** | `gate-c-checklist.md`, `hsi-gap-report.md`, `hsi-pilot-evidence-pack.md`, `hsi-pilot-review-rubric.md`, `hsi-pilot-acceptance.md`, `hsi-pilot-walkthrough.md`, `hsi-r2-validation.md` | Pending REL list + gap backlog + scope-locked brief + human review checklist + Phase 5 acceptance / walkthrough + Phase 7 R2 cards. |
+| **Akeno (future)** | `hsi-translation-handoff.*` (+ Gate C `translationCandidates`) | Stage 3 scaffolding only. `status=deferred_until_hitl` · `clinicalUse=not_for_clinical_use` · `hitlRequired=true` · `autoApprove=false`. Product integration stays **outside hsi-core**. |
+| **Curators** | `gate-c-checklist.md`, `hsi-gap-report.md`, `hsi-pilot-evidence-pack.md`, `hsi-pilot-review-rubric.md`, `hsi-pilot-acceptance.md`, `hsi-pilot-walkthrough.md`, `hsi-r2-validation.md`, `hsi-translation-handoff.md` | Pending REL list + gap backlog + scope-locked brief + human review checklist + Phase 5 acceptance / walkthrough + Phase 7 R2 cards + Phase 8 translation HITL candidates. |
 
 PRD / brief four outputs (evidence map, entity slice, competing explanations, expert shortlist) are assembled in `hsi-pilot-evidence-pack.*`. See [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md).
 
@@ -101,9 +104,9 @@ PRD / brief four outputs (evidence map, entity slice, competing explanations, ex
 | Success-metric numeric thresholds with partner | **Remaining** |
 | PDF/DOCX brief renderer | **Deferred** (ISI product P1; needs explicit ask) |
 | **Phase 7** — R2 validation | **Done** (`hsi-r2-validation.*`; hypothesis cards with untested/supported/refuted/gap; ranked gaps + literature tests; Discovery Centre **VALIDATE** tab; research only — not clinical protocols) |
-| **Phase 8** — R3–R5 / Akeno translation | **Later** — requires **explicit user ask** + Stage 3 gates only (clinical; do not start unless asked) |
-| Clinical R3–R5 / Akeno | **Out of Stage 1** — gated; explicit ask only (= Phase 8) |
-| Stage 2 molecular adapters / Stage 3 Akeno clinical | **Out of Stage 1** |
+| **Phase 8** — R3–R5 / Akeno translation (HSI substrate) | **Done** (`hsi-translation-handoff.*` + Gate C `translationCandidates` + Discovery Centre **TRANSLATE** tab; `deferred_until_hitl` / `not_for_clinical_use`; no live CDS) |
+| Akeno clinical product integration | **Remaining outside hsi-core** — site workflows, partner cohorts, HCP eval, regulatory; never from research packs alone |
+| Stage 2 molecular adapters / live Stage 3 clinical CDS | **Out of Stage 1 / gated** |
 
 ## Individual CLIs (still available)
 

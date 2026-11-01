@@ -15,7 +15,8 @@ import {
   type PilotExpertItem,
 } from "./pilotEvidencePack";
 import { buildSchemaGapReport, type HsiSchemaGapReport } from "./gapReport";
-import type { HsiEdge, HsiGrade } from "./schema";
+import type { HsiGrade } from "./grades";
+import type { HsiEdge } from "./schema";
 
 export const R2_VALIDATION_SCHEMA = "hsi-r2-validation-1" as const;
 
@@ -484,13 +485,13 @@ export function buildR2ValidationBundle(opts?: {
       "Literature tests and next-experiment prompts are evidence-mapping / reconciliation tasks — not fabricated clinical protocols",
       "No patient CDS, eligibility automation, trial matching, or Akeno workflows",
       "autoApproveIntoKg=false — hypothesis cards never enter product KG without human Gate C",
-      "Phase 8 = R3–R5 / Akeno translation — explicit ask + Stage 3 gates only",
+      "Phase 8 HSI translation substrate ships separately (hsi-translation-handoff.*) — clinicalActive=false; Akeno product still external",
     ],
     nextActions: [
       "Review hypothesis cards on site `/discovery` VALIDATE tab against competing explanations.",
       "Run high-priority ranked-gap literature reconciliations before collapsing frames.",
       "Keep partnerSigned=false until flipRequirements are met.",
-      "Phase 8 (clinical R3–R5 / Akeno) — do not start unless explicitly asked; Stage 3 gates apply.",
+      "Review Phase 8 TRANSLATE tab candidates as HITL-only scaffolding — not live CDS.",
     ],
   };
 }

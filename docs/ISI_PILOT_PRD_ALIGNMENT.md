@@ -71,7 +71,7 @@ PRD / brief four outputs mapped to what `bun run outputs` produces:
 | **4. Expert shortlist** (gaps / hypotheses) | Pack `expertShortlist` + gap report + Gate C pending + **review rubric** | Numeric success thresholds with partner |
 | **Research brief shell** | Pack markdown with citations/caveats + Discovery Loop framing | PDF/DOCX + in-app assembly (ISI) |
 | **Question / scope** | Pack `questionProject` + `hsi-partner-lock.json` (**Phase 2** RA/TNF; `scopeLocked=true`; `partnerSigned=false`) | Live workspace after partnerSigned |
-| **Discovery Centre vocabulary** | Pack + ISI export `discoveryCentre` + Phase 6–7 site `/discovery` (ASK→MAP→REVIEW→VALIDATE on real packs + `hsi-r2-validation.*`; RA scope-locked + SLE/PsO/IBD illustrative) | Phase 8 R3–R5 / Akeno — explicit ask + Stage 3 gates |
+| **Discovery Centre vocabulary** | Pack + ISI export `discoveryCentre` + Phase 6–8 site `/discovery` (ASK→MAP→REVIEW→VALIDATE→TRANSLATE on real packs + `hsi-r2-validation.*` + `hsi-translation-handoff.*`; RA scope-locked + SLE/PsO/IBD illustrative) | Akeno clinical **product** integration — outside hsi-core |
 
 Substrate includes T2D / immuno-metabolic seeds **plus** a **scope-locked** RA/TNF response-heterogeneity slice and illustrative SLE/PsO/IBD stubs. Exports must keep `partnerSigned=false` / `lockedPilot=false` until a named partner confirms.
 
@@ -102,7 +102,7 @@ Substrate includes T2D / immuno-metabolic seeds **plus** a **scope-locked** RA/T
 4. Success-metric **numeric thresholds** with partner (rubric checklist exported; thresholds TBD)  
 5. Trial-registry context in first release vs P1  
 
-Critical path remains **outreach** to flip `partnerSigned` — Phase 4–7 are done (Neon readiness, acceptance pack, Discovery Centre `/discovery`, R2 validation). Phase 8 clinical R3–R5 / Akeno needs an **explicit user ask** + Stage 3 gates.
+Critical path remains **outreach** to flip `partnerSigned` — Phase 4–8 HSI substrate are done (Neon readiness, acceptance pack, Discovery Centre `/discovery`, R2 validation, translation handoff scaffolding). Live Akeno clinical product integration remains **outside hsi-core**.
 
 ---
 

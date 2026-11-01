@@ -31,6 +31,7 @@ import {
   buildPilotEvidencePack,
   buildPilotReviewRubric,
   buildR2ValidationBundle,
+  buildTranslationHandoffPack,
   getPartnerLock,
   loadAkshHitlStubFromExport,
   migrateAkshNodeId,
@@ -458,9 +459,9 @@ describe("Gate C checklist + publish outputs", () => {
     expect(acceptance.criteria.find((c) => c.id === "ac-thresholds")?.status).toBe("pending");
     expect(acceptance.walkthroughSteps.length).toBeGreaterThanOrEqual(5);
     expect(acceptance.criteria.find((c) => c.id === "ac-discovery-ui")?.status).toBe("pass");
-    expect(acceptance.deferredExplicitAsk.some((d) => d.toLowerCase().includes("phase 8"))).toBe(
-      true,
-    );
+    expect(
+      acceptance.deferredExplicitAsk.some((d) => d.toLowerCase().includes("akeno clinical product")),
+    ).toBe(true);
   });
 
   it("ships Phase 7 R2 validation with grounded hypothesis cards and ranked gaps", () => {
@@ -489,6 +490,48 @@ describe("Gate C checklist + publish outputs", () => {
     const allPmids = r2.hypothesisCards.flatMap((c) => c.groundingPmids);
     expect(allPmids).toContain("18625622");
     expect(allPmids).toContain("24586782");
+  });
+
+  it("ships Phase 8 translation handoff with HITL-only deferred candidates", () => {
+    const xlat = buildTranslationHandoffPack({ generatedAt: "2026-11-01T16:00:00.000Z" });
+    expect(xlat.schemaVersion).toBe("hsi-translation-handoff-1");
+    expect(xlat.phase).toBe("8");
+    expect(xlat.targetReleases).toEqual(["R3", "R4", "R5"]);
+    expect(xlat.notCds).toBe(true);
+    expect(xlat.clinicalActive).toBe(false);
+    expect(xlat.clinicalUse).toBe("not_for_clinical_use");
+    expect(xlat.autoApprove).toBe(false);
+    expect(xlat.autoSurfaceCds).toBe(false);
+    expect(xlat.akenoProductIntegration).toBe("external_deferred");
+    expect(xlat.candidates.length).toBeGreaterThanOrEqual(3);
+    expect(xlat.candidates.every((c) => c.hitlRequired === true)).toBe(true);
+    expect(xlat.candidates.every((c) => c.autoApprove === false)).toBe(true);
+    expect(xlat.candidates.every((c) => c.cdsSurfacable === false)).toBe(true);
+    expect(xlat.candidates.every((c) => c.status === "deferred_until_hitl")).toBe(true);
+    expect(xlat.candidates.every((c) => c.clinicalUse === "not_for_clinical_use")).toBe(true);
+    expect(xlat.candidates.every((c) => c.intendedConsumer === "akeno_future")).toBe(true);
+    expect(xlat.summary.cdsSurfacableCount).toBe(0);
+    expect(xlat.candidates.some((c) => Boolean(c.akshNodeId))).toBe(true);
+    expect(xlat.candidates.some((c) => Boolean(c.loinc))).toBe(true);
+    // Orthogonal axes present and distinct fields on each candidate.
+    expect(
+      xlat.candidates.every(
+        (c) =>
+          typeof c.teachingStatus === "string" &&
+          typeof c.hsiGrade === "string" &&
+          c.cdsSurfacable === false,
+      ),
+    ).toBe(true);
+    expect(xlat.whatRemainsOutsideHsiCore.some((w) => w.toLowerCase().includes("akeno"))).toBe(
+      true,
+    );
+
+    const checklist = buildGateCChecklist({ generatedAt: "2026-11-01T16:00:00.000Z" });
+    expect(checklist.translationCandidates.length).toBeGreaterThanOrEqual(3);
+    expect(checklist.translationCandidates.every((t) => t.autoApprove === false)).toBe(true);
+    expect(checklist.translationCandidates.every((t) => t.hitlRequired === true)).toBe(true);
+    expect(checklist.summary.translationCdsSurfacable).toBe(0);
+    expect(checklist.instructions.some((i) => i.toLowerCase().includes("translation"))).toBe(true);
   });
 
   it("embeds Discovery Centre metadata pointing at the Phase 6 site surface", () => {
@@ -536,11 +579,17 @@ describe("Gate C checklist + publish outputs", () => {
     expect(result.files).toContain("hsi-partner-lock.json");
     expect(result.files).toContain("hsi-r2-validation.json");
     expect(result.files).toContain("hsi-r2-validation.md");
+    expect(result.files).toContain("hsi-translation-handoff.json");
+    expect(result.files).toContain("hsi-translation-handoff.md");
     expect(result.files).toContain("MANIFEST.json");
     expect(result.discoverySynced).toContain("site/public/discovery/hsi-r2-validation.json");
+    expect(result.discoverySynced).toContain("site/public/discovery/hsi-translation-handoff.json");
     expect(existsSync(join(process.cwd(), "site/public/discovery/hsi-r2-validation.json"))).toBe(
       true,
     );
+    expect(
+      existsSync(join(process.cwd(), "site/public/discovery/hsi-translation-handoff.json")),
+    ).toBe(true);
 
     for (const name of result.files) {
       expect(existsSync(join(result.outDir, name)), name).toBe(true);
@@ -574,11 +623,22 @@ describe("Gate C checklist + publish outputs", () => {
         stage1FourOutputsGreen: boolean;
         r2HypothesisCards: number;
         r2RankedGaps: number;
+        translationCandidates: number;
+        translationCdsSurfacable: number;
+        gateCTranslationCandidates: number;
       };
       r2Validation: {
         phase: string;
         targetRelease: string;
         hypothesisCards: number;
+      };
+      translationHandoff: {
+        phase: string;
+        clinicalActive: boolean;
+        clinicalUse: string;
+        akenoProductIntegration: string;
+        candidates: number;
+        cdsSurfacableCount: number;
       };
     };
     expect(manifest.notCds).toBe(true);
@@ -602,11 +662,38 @@ describe("Gate C checklist + publish outputs", () => {
     expect(manifest.counts.r2RankedGaps).toBeGreaterThanOrEqual(3);
     expect(manifest.r2Validation.phase).toBe("7");
     expect(manifest.r2Validation.targetRelease).toBe("R2");
+    expect(manifest.counts.translationCandidates).toBeGreaterThanOrEqual(3);
+    expect(manifest.counts.translationCdsSurfacable).toBe(0);
+    expect(manifest.counts.gateCTranslationCandidates).toBeGreaterThanOrEqual(3);
+    expect(manifest.translationHandoff.phase).toBe("8");
+    expect(manifest.translationHandoff.clinicalActive).toBe(false);
+    expect(manifest.translationHandoff.clinicalUse).toBe("not_for_clinical_use");
+    expect(manifest.translationHandoff.akenoProductIntegration).toBe("external_deferred");
+    expect(manifest.translationHandoff.cdsSurfacableCount).toBe(0);
 
     const hitl = JSON.parse(
       readFileSync(join(result.outDir, "hsi-aksh-hitl-cards.json"), "utf8"),
     ) as { cdsSurfacableCount: number; autoApplyToEhr: boolean };
     expect(hitl.cdsSurfacableCount).toBe(0);
     expect(hitl.autoApplyToEhr).toBe(false);
+
+    const xlat = JSON.parse(
+      readFileSync(join(result.outDir, "hsi-translation-handoff.json"), "utf8"),
+    ) as {
+      clinicalActive: boolean;
+      summary: { cdsSurfacableCount: number };
+      candidates: { cdsSurfacable: boolean; status: string }[];
+    };
+    expect(xlat.clinicalActive).toBe(false);
+    expect(xlat.summary.cdsSurfacableCount).toBe(0);
+    expect(xlat.candidates.every((c) => c.cdsSurfacable === false)).toBe(true);
+    expect(xlat.candidates.every((c) => c.status === "deferred_until_hitl")).toBe(true);
+
+    const discoveryIndex = JSON.parse(
+      readFileSync(join(process.cwd(), "site/public/discovery/index.json"), "utf8"),
+    ) as { phase: string; clinicalActive: boolean; framing: string };
+    expect(discoveryIndex.phase).toBe("8");
+    expect(discoveryIndex.clinicalActive).toBe(false);
+    expect(discoveryIndex.framing).toContain("TRANSLATE");
   });
 });

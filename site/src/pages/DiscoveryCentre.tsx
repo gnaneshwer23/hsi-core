@@ -8,20 +8,62 @@ import {
   type EvidenceRow,
   type ExpertItem,
   type R2HypothesisCard,
+  type TranslationCandidate,
 } from "../lib/discoveryData";
 
-type LoopTab = "ask" | "map" | "review" | "validate";
+type LoopTab = "ask" | "map" | "review" | "validate" | "translate";
 
 const TABS: { id: LoopTab; label: string; n: string }[] = [
   { id: "ask", label: "ASK", n: "01" },
   { id: "map", label: "MAP", n: "02" },
   { id: "review", label: "REVIEW", n: "03" },
   { id: "validate", label: "VALIDATE", n: "04" },
+  { id: "translate", label: "TRANSLATE", n: "05" },
 ];
 
 function StatusChip({ status }: { status: string }) {
-  const s = status.toLowerCase();
-  return <span className={`dc-status dc-status-${s}`}>{s}</span>;
+  const s = status.toLowerCase().replace(/_/g, "-");
+  return <span className={`dc-status dc-status-${s}`}>{status}</span>;
+}
+
+function TranslationCandidates({
+  candidates,
+}: {
+  candidates: TranslationCandidate[];
+}) {
+  return (
+    <ul className="dc-hyp-list">
+      {candidates.map((c) => (
+        <li key={c.id} className="dc-hyp-card">
+          <div className="dc-panel-head">
+            <StatusChip status={c.status} />
+            <span className="dc-pill">HITL required</span>
+            <span className="dc-pill dc-pill-danger">{c.clinicalUse}</span>
+            <span className="dc-pill">cds={String(c.cdsSurfacable)}</span>
+          </div>
+          <h4>{c.clinicLabel ?? "Unmapped clinic concept"}</h4>
+          <p className="muted">{c.assertion}</p>
+          <div className="dc-meta-row" style={{ marginTop: "0.65rem" }}>
+            <code className="dc-mono">{c.claimId}</code>
+            {c.akshNodeId ? (
+              <code className="dc-mono">{c.akshNodeId}</code>
+            ) : null}
+            {c.loinc ? <span className="dc-pill">LOINC {c.loinc}</span> : null}
+            {c.markerName ? (
+              <span className="dc-pill">{c.markerName}</span>
+            ) : null}
+            <GradeChip grade={c.hsiGrade} />
+            <span className="dc-pill">teaching={c.teachingStatus}</span>
+          </div>
+          <p style={{ marginTop: "0.55rem" }}>
+            <strong>{c.requiredClinicianAction.label}</strong>
+            <span className="muted"> — {c.requiredClinicianAction.rationale}</span>
+          </p>
+          <p className="dc-axes-note">{c.axesNote}</p>
+        </li>
+      ))}
+    </ul>
+  );
 }
 
 function GradeChip({ grade }: { grade: string }) {
@@ -262,21 +304,25 @@ export function DiscoveryCentre() {
             <p className="dc-banner dc-banner-warn">
               Not diagnostic · not for clinical use · research intelligence only
             </p>
+            <p className="dc-banner dc-banner-danger">
+              Clinical translation is NOT ACTIVE · clinicalActive=false · Akeno =
+              future consumer only
+            </p>
             <p className="dc-banner dc-banner-info">
-              Concept → now product for research intelligence. Akeno clinical
-              intelligence = later / gated.
+              Phase 8 = HSI translation substrate. Live Akeno clinical product
+              remains external / deferred.
             </p>
           </div>
-          <span className="eyebrow">ISI · Discovery Centre · Phase 7</span>
+          <span className="eyebrow">ISI · Discovery Centre · Phase 8</span>
           <h1 className="display display-lg">
-            ASK → MAP → REVIEW → VALIDATE
+            ASK → MAP → REVIEW → VALIDATE → TRANSLATE
             <br />
             <span className="accent">on real HSI packs.</span>
           </h1>
           <p className="lede">
-            Target R1–R2 research surface for the scope-locked RA / anti-TNF
-            question. Loads regenerable outputs — evidence map, competing
-            explanations, expert shortlist, R2 hypothesis cards, ranked gaps.
+            Target R1–R2 research surface plus Stage 3 translation scaffolding
+            for the scope-locked RA / anti-TNF question. TRANSLATE candidates
+            stay deferred_until_hitl — never live CDS.
           </p>
           <div className="dc-hero-actions">
             <a href="#workspace" className="btn btn-primary">
@@ -348,14 +394,12 @@ export function DiscoveryCentre() {
                           ? "Traceable evidence"
                           : t.id === "review"
                             ? "Challenge & shortlist"
-                            : "Hypothesis & gaps"}
+                            : t.id === "validate"
+                              ? "Hypothesis & gaps"
+                              : "HITL handoff (not clinical)"}
                     </strong>
                   </button>
                 ))}
-                <div className="dc-loop-later" aria-hidden>
-                  <span>05 LEARN</span>
-                  <small>later / Phase 8+</small>
-                </div>
               </div>
 
               {tab === "ask" ? (
@@ -706,6 +750,88 @@ export function DiscoveryCentre() {
                   </div>
                 </div>
               ) : null}
+
+              {tab === "translate" ? (
+                <div className="dc-panel" role="tabpanel">
+                  <div className="dc-banner-stack" role="alert">
+                    <p className="dc-banner dc-banner-danger">
+                      CLINICAL NOT ACTIVE · not for clinical use · no diagnosis /
+                      treatment · no PHI
+                    </p>
+                    <p className="dc-banner dc-banner-warn">
+                      status=deferred_until_hitl · hitlRequired=true ·
+                      autoApprove=false · cdsSurfacable=0 · Akeno = future
+                      consumer only
+                    </p>
+                  </div>
+
+                  <div className="section-head">
+                    <span className="section-num">TRANSLATE</span>
+                    <h2 className="display display-md">
+                      Stage 3 handoff candidates
+                    </h2>
+                    <p className="lede">
+                      Phase 8 HSI translation substrate from{" "}
+                      <code>hsi-translation-handoff.json</code>. Research edges →
+                      clinic-facing pointers. teachingStatus ≠ hsiGrade ≠ CDS.
+                      Live Akeno product integration remains outside hsi-core.
+                    </p>
+                  </div>
+
+                  <div className="grade-row dc-grade-summary">
+                    {(
+                      [
+                        ["candidates", data.translation.summary.candidates],
+                        ["with LOINC", data.translation.summary.withLoinc],
+                        ["HITL required", data.translation.summary.hitlRequired],
+                        [
+                          "CDS surfacable",
+                          data.translation.summary.cdsSurfacableCount,
+                        ],
+                      ] as const
+                    ).map(([label, n]) => (
+                      <div key={label} className="grade-cell">
+                        <div className="label">{label}</div>
+                        <h3>{n}</h3>
+                        <p>handoff</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="dc-card" style={{ marginTop: "1.5rem" }}>
+                    <div className="dc-panel-head">
+                      <h3>Handoff candidates</h3>
+                      <span className="dc-pill">
+                        {data.translation.summary.deferredUntilHitl} deferred ·{" "}
+                        {data.translation.summary.notForClinicalUse} not clinical
+                      </span>
+                    </div>
+                    <TranslationCandidates
+                      candidates={data.translation.candidates}
+                    />
+                  </div>
+
+                  <div className="dc-card" style={{ marginTop: "1.25rem" }}>
+                    <span className="panel-label">
+                      Outside hsi-core (Akeno product)
+                    </span>
+                    <ul className="checklist" style={{ marginTop: "0.85rem" }}>
+                      {data.translation.whatRemainsOutsideHsiCore.map((w) => (
+                        <li key={w}>{w}</li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="dc-card" style={{ marginTop: "1.25rem" }}>
+                    <span className="panel-label">Boundary</span>
+                    <ul className="checklist" style={{ marginTop: "0.85rem" }}>
+                      {data.translation.boundary.map((b) => (
+                        <li key={b}>{b}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ) : null}
             </>
           ) : null}
         </div>
@@ -715,11 +841,14 @@ export function DiscoveryCentre() {
         <div className="container container-narrow">
           <div className="section-head">
             <span className="section-num">BOUNDARY</span>
-            <h2 className="display display-md">Research now. Clinical later.</h2>
+            <h2 className="display display-md">
+              Research + translation scaffolding. Clinical product later.
+            </h2>
             <p className="lede">
-              NOW = Discovery + R2 validation on published packs. NEXT = Phase 8
-              clinical R3–R5 / Akeno — explicit ask + Stage 3 gates only. Never
-              implied by this surface.
+              NOW = Discovery + R2 validation + HSI translation substrate
+              (clinicalActive=false). NEXT = Akeno clinical product outside
+              hsi-core — partner data, HCP eval, governance. Never implied by
+              map presence alone.
             </p>
           </div>
           <div className="dc-horizon">
@@ -729,14 +858,14 @@ export function DiscoveryCentre() {
               <p>ASK → MAP → REVIEW → VALIDATE on RA / anti-TNF</p>
             </div>
             <div>
-              <span className="dc-pill">NEXT</span>
-              <strong>Translation</strong>
-              <p>Phase 8 · R3–R5 / Akeno — explicit ask</p>
+              <span className="dc-pill">NOW</span>
+              <strong>Translate substrate</strong>
+              <p>Phase 8 · deferred_until_hitl · not clinical</p>
             </div>
             <div>
               <span className="dc-pill">GATED</span>
-              <strong>Clinical</strong>
-              <p>Stage 3 gates · never from research packs alone</p>
+              <strong>Akeno product</strong>
+              <p>External · Stage 3 gates · never from packs alone</p>
             </div>
           </div>
         </div>

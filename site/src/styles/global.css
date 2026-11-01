@@ -2432,6 +2432,30 @@ p {
   color: #d7e3ff;
 }
 
+.dc-banner-danger {
+  background: rgba(220, 80, 80, 0.18);
+  border: 1px solid rgba(220, 80, 80, 0.5);
+  color: #f5c4c4;
+}
+
+.dc-pill-danger {
+  border-color: rgba(220, 80, 80, 0.45);
+  color: #f0b4b4;
+}
+
+.dc-axes-note {
+  margin-top: 0.45rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  color: rgba(215, 227, 255, 0.72);
+}
+
+.dc-status-deferred-until-hitl {
+  background: rgba(228, 166, 90, 0.2);
+  border: 1px solid rgba(228, 166, 90, 0.4);
+  color: #f3d7a8;
+}
+
 .dc-hero-actions {
   display: flex;
   flex-wrap: wrap;

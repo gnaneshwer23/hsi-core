@@ -49,6 +49,11 @@ import {
   serializeR2Validation,
   serializeR2ValidationMarkdown,
 } from "./r2Validation";
+import {
+  buildTranslationHandoffPack,
+  serializeTranslationHandoff,
+  serializeTranslationHandoffMarkdown,
+} from "./translationHandoff";
 import { validateHsiEdge } from "./validate";
 
 function packageVersion(cwd: string): string {
@@ -239,6 +244,10 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     pack: pilotPack,
     gap: gapReport,
   });
+  const translationHandoff = buildTranslationHandoffPack({
+    generatedAt,
+    lock: partnerLock,
+  });
 
   const fileMap: Record<string, string> = {
     "hsi-isi-export.json": serializeIsiExport(isiBundle),
@@ -259,6 +268,8 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     "hsi-partner-lock.json": `${JSON.stringify(partnerLock, null, 2)}\n`,
     "hsi-r2-validation.json": serializeR2Validation(r2Validation),
     "hsi-r2-validation.md": serializeR2ValidationMarkdown(r2Validation),
+    "hsi-translation-handoff.json": serializeTranslationHandoff(translationHandoff),
+    "hsi-translation-handoff.md": serializeTranslationHandoffMarkdown(translationHandoff),
   };
 
   const files: string[] = [];
@@ -297,6 +308,8 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       partnerLockJson: "hsi-partner-lock.json",
       r2ValidationJson: "hsi-r2-validation.json",
       r2ValidationMd: "hsi-r2-validation.md",
+      translationHandoffJson: "hsi-translation-handoff.json",
+      translationHandoffMd: "hsi-translation-handoff.md",
     },
     counts: {
       isiEdges: isiBundle.edges.length,
@@ -305,6 +318,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       hitlCards: hitlStub.cards.length,
       gapRows: gapReport.gaps.length,
       gateCPending: gateC.summary.pendingGateC,
+      gateCTranslationCandidates: gateC.summary.translationCandidates,
       pilotEvidenceMapRows: pilotPack.summary.evidenceMapRows,
       partnerScopedEvidenceRows: pilotPack.summary.partnerScopedEvidenceRows,
       claimsWithLoinc: pilotPack.summary.claimsWithLoinc,
@@ -319,6 +333,9 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       r2HypothesisCards: r2Validation.summary.hypothesisCards,
       r2RankedGaps: r2Validation.summary.rankedGaps,
       r2LiteratureTests: r2Validation.summary.literatureTests,
+      translationCandidates: translationHandoff.summary.candidates,
+      translationWithLoinc: translationHandoff.summary.withLoinc,
+      translationCdsSurfacable: translationHandoff.summary.cdsSurfacableCount,
     },
     discoveryLoop: isiBundle.discoveryCentre.discoveryLoop.framing,
     partnerLock: partnerLockExportPointer(partnerLock),
@@ -338,16 +355,26 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       rankedGaps: r2Validation.summary.rankedGaps,
       byStatus: r2Validation.summary.byStatus,
     },
+    translationHandoff: {
+      schemaVersion: translationHandoff.schemaVersion,
+      phase: translationHandoff.phase,
+      targetReleases: translationHandoff.targetReleases,
+      clinicalActive: translationHandoff.clinicalActive,
+      clinicalUse: translationHandoff.clinicalUse,
+      akenoProductIntegration: translationHandoff.akenoProductIntegration,
+      candidates: translationHandoff.summary.candidates,
+      cdsSurfacableCount: translationHandoff.summary.cdsSurfacableCount,
+    },
     consumerNotes: [
       "ISI: discovery / Ask / Radar only — use hsi-isi-export.json + hsi-isi-rel-map.json.",
       "ISI pilot walkthrough: hsi-pilot-walkthrough.md + hsi-pilot-evidence-pack.* + hsi-pilot-review-rubric.* + hsi-pilot-acceptance.* (Phase 5 acceptance on scope-locked RA/TNF; partnerSigned=false; lockedPilot=false; no patient CDS).",
       "Partner lock honesty: hsi-partner-lock.json — Phase 2 = scopeLocked; Phase 3 = evidence depth; Phase 5 = acceptance pack; named partner still flips partnerSigned (then lockedPilot).",
-      "Phase 6: Discovery Centre product surface at site `/discovery` loads site/public/discovery/*.json (ASK→MAP→REVIEW→VALIDATE; notCds; not Akeno).",
+      "Phase 6–8: Discovery Centre at site `/discovery` loads site/public/discovery/*.json (ASK→MAP→REVIEW→VALIDATE→TRANSLATE; notCds; clinicalActive=false).",
       "Phase 7: R2 validation — hsi-r2-validation.* (hypothesis cards, ranked gaps, literature tests; research only).",
+      "Phase 8 done (HSI substrate): hsi-translation-handoff.* — Stage 3 scaffolding; deferred_until_hitl; Akeno product integration still external/deferred.",
       "Aksh: HITL map pointers only — use hsi-aksh-node-map.json + hsi-aksh-hitl-cards.json; CDS stays closed on seeds.",
-      "Gate C: human checklist in gate-c-checklist.*; optional HSI red-wave placeholders via bun run db:gate-c-local (pending only). ISI product approve stays autumn-snow — never from this workspace.",
+      "Gate C: human checklist in gate-c-checklist.* (+ translationCandidates); optional HSI red-wave placeholders via bun run db:gate-c-local (pending only). ISI product approve stays autumn-snow — never from this workspace.",
       "Phase 4: HSI Neon schema stub — bun run db:migrate (guards refuse ISI/Akeno/DeliverX).",
-      "Phase 8 = R3–R5 / Akeno translation — explicit ask + Stage 3 gates only.",
       "Regenerate with: bun run outputs (also refreshes site/public/discovery).",
     ],
   };
@@ -398,6 +425,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     "hsi-gap-report.json",
     "gate-c-checklist.json",
     "hsi-r2-validation.json",
+    "hsi-translation-handoff.json",
   ] as const;
   for (const name of discoveryFiles) {
     const dest = join(discoveryPublicDir, name);
@@ -409,10 +437,12 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     notCds: true as const,
     noPatientLevelActions: true as const,
     autoApproveIntoKg: false as const,
+    clinicalActive: false as const,
+    clinicalUse: "not_for_clinical_use" as const,
     surfaceRole: "site_product_surface" as const,
     productSurfacePath: "/discovery",
-    framing: "ASK → MAP → REVIEW → VALIDATE",
-    phase: "7",
+    framing: "ASK → MAP → REVIEW → VALIDATE → TRANSLATE",
+    phase: "8",
     generatedAt,
     bundleId,
     disease: partnerLock.disease?.label ?? null,
@@ -423,9 +453,9 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     files: [...discoveryFiles],
     notes: [
       "Regenerate with bun run outputs — copies land here for the Vite site.",
-      "Not diagnostic / not for clinical use. Akeno = later.",
+      "Not diagnostic / not for clinical use. clinicalActive=false.",
       "Phase 7 done = R2 validation (hsi-r2-validation.json) on VALIDATE tab.",
-      "Phase 8 = R3–R5 / Akeno translation — explicit ask + Stage 3 gates only.",
+      "Phase 8 done = HSI translation substrate (hsi-translation-handoff.json) on TRANSLATE tab — Akeno product still external/deferred.",
     ],
   };
   writeJson(join(discoveryPublicDir, "index.json"), discoveryIndex);

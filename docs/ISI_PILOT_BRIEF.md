@@ -2,14 +2,14 @@
 
 > **ISI helps immune-disease research teams investigate a defined question by connecting traceable evidence across cells, pathways, biomarkers, treatments and studies—and showing what is established, uncertain and worth testing.**
 
-**Status:** Phase 7 R2 validation live · Phase 6 Discovery Centre · Phase 5 acceptance pack · Phase 4 HSI Neon readiness · Phase 3 evidence depth on Phase 2 scope lock · outreach still open for named partner.  
+**Status:** Phase 8 HSI translation substrate live · Phase 7 R2 validation · Phase 6 Discovery Centre · Phase 5 acceptance pack · Phase 4 HSI Neon readiness · Phase 3 evidence depth on Phase 2 scope lock · outreach still open for named partner.  
 **Working Stage 1 scope (scopeLocked):** rheumatoid arthritis · anti-TNF response heterogeneity — see `hsi-partner-lock.json` (`scopeLocked=true`, `partnerSigned=false`, `lockedPilot=false`).  
 **Named partner (`partnerSigned`):** still **TBD after conversations** — do not treat scope lock as a MoU.  
 **Immediate deliverable:** this brief + [`ISI_PILOT_PARTNER_SHORTLIST.md`](./ISI_PILOT_PARTNER_SHORTLIST.md) + published pack / review rubric / acceptance + walkthrough + **`site/` `/discovery`**. Not another general-purpose AI feature.  
 **Phase 5 done:** Stage 1 acceptance checklist + partner walkthrough on scope-locked RA/TNF (`hsi-pilot-acceptance.*`, `hsi-pilot-walkthrough.md`).  
 **Phase 6 done:** Target R1 Discovery Centre product surface (`/discovery`) — research intelligence only; not clinical.
 **Phase 7 done:** R2 validation (`hsi-r2-validation.*` + VALIDATE tab) — hypothesis / gap depth; research only.
-**Later (Phase 8):** R3–R5 / Akeno translation — **requires explicit user ask** + Stage 3 gates. Do not start unless asked.
+**Phase 8 done (HSI substrate):** R3–R5 / Akeno translation scaffolding (`hsi-translation-handoff.*` + TRANSLATE tab) — `deferred_until_hitl` / `not_for_clinical_use`; Akeno clinical **product** remains external/deferred.
 **Neon:** HSI `red-wave` schema stub — [`HSI_NEON_MIGRATIONS.md`](./HSI_NEON_MIGRATIONS.md).  
 **PRD map:** [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md) (pilot PRD → build now vs defer). **Target state:** [`ISI_TARGET_STATE_PRD_ALIGNMENT.md`](./ISI_TARGET_STATE_PRD_ALIGNMENT.md) (full vision → Stage 1/2/3 — do not pull breadth into this pilot).
 

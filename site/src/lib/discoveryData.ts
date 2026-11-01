@@ -1,8 +1,10 @@
-/** Types + loaders for Discovery Centre static artifacts (Phase 6–7). */
+/** Types + loaders for Discovery Centre static artifacts (Phase 6–8). */
 
 export type DiscoveryIndex = {
   schemaVersion: string;
   notCds: boolean;
+  clinicalActive?: boolean;
+  clinicalUse?: string;
   framing: string;
   phase: string;
   generatedAt: string;
@@ -220,12 +222,70 @@ export type R2Validation = {
   nextActions: string[];
 };
 
+export type TranslationCandidate = {
+  id: string;
+  claimId: string;
+  edgeId: string;
+  assertion: string;
+  spoNote: string;
+  teachingStatus: string;
+  hsiGrade: string;
+  curationReview: string;
+  cdsSurfacable: boolean;
+  akshNodeId: string | null;
+  clinicLabel: string | null;
+  markerId: string | null;
+  markerName: string | null;
+  loinc: string | null;
+  pmid: string | null;
+  hitlRequired: boolean;
+  autoApprove: boolean;
+  status: string;
+  clinicalUse: string;
+  intendedConsumer: string;
+  requiredClinicianAction: {
+    label: string;
+    rationale: string;
+  };
+  axesNote: string;
+};
+
+export type TranslationHandoff = {
+  schemaVersion: string;
+  phase: string;
+  targetReleases: string[];
+  notCds: boolean;
+  clinicalActive: boolean;
+  clinicalUse: string;
+  intendedConsumer: string;
+  akenoProductIntegration: string;
+  framing: string;
+  generatedAt: string;
+  disease: string;
+  researchQuestion: string;
+  candidates: TranslationCandidate[];
+  summary: {
+    candidates: number;
+    withAkshNodeId: number;
+    withLoinc: number;
+    withPmid: number;
+    hitlRequired: number;
+    cdsSurfacableCount: number;
+    deferredUntilHitl: number;
+    notForClinicalUse: number;
+  };
+  boundary: string[];
+  nextActions: string[];
+  whatRemainsOutsideHsiCore: string[];
+};
+
 export type DiscoveryBundle = {
   index: DiscoveryIndex;
   lock: PartnerLock;
   pack: PilotPack;
   gap: GapReport;
   r2: R2Validation;
+  translation: TranslationHandoff;
 };
 
 const BASE = "/discovery";
@@ -239,14 +299,15 @@ async function fetchJson<T>(name: string): Promise<T> {
 }
 
 export async function loadDiscoveryBundle(): Promise<DiscoveryBundle> {
-  const [index, lock, pack, gap, r2] = await Promise.all([
+  const [index, lock, pack, gap, r2, translation] = await Promise.all([
     fetchJson<DiscoveryIndex>("index.json"),
     fetchJson<PartnerLock>("hsi-partner-lock.json"),
     fetchJson<PilotPack>("hsi-pilot-evidence-pack.json"),
     fetchJson<GapReport>("hsi-gap-report.json"),
     fetchJson<R2Validation>("hsi-r2-validation.json"),
+    fetchJson<TranslationHandoff>("hsi-translation-handoff.json"),
   ]);
-  return { index, lock, pack, gap, r2 };
+  return { index, lock, pack, gap, r2, translation };
 }
 
 /** Prefer pathway claim IDs from the partner lock; fall back to RA/TNF heuristics. */

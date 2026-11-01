@@ -98,6 +98,7 @@ export {
   serializeGateCChecklistMarkdown,
   type GateCChecklistBundle,
   type GateCChecklistRow,
+  type GateCTranslationCandidateRow,
 } from "./gateCChecklist";
 
 export {
@@ -170,6 +171,17 @@ export {
   type R2ValidationBundle,
   type R2ValidationStatus,
 } from "./r2Validation";
+
+export {
+  TRANSLATION_HANDOFF_SCHEMA,
+  buildTranslationHandoffPack,
+  serializeTranslationHandoff,
+  serializeTranslationHandoffMarkdown,
+  type TranslationClinicalUse,
+  type TranslationHandoffCandidate,
+  type TranslationHandoffPack,
+  type TranslationHandoffStatus,
+} from "./translationHandoff";
 
 export {
   HSI_DISCOVERY_LOOP_STEPS,

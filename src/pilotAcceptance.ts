@@ -259,9 +259,9 @@ function buildCriteria(opts: {
       artifact: "site/src/pages/DiscoveryCentre.tsx · site/public/discovery/",
       status: "pass",
       evidence:
-        "ASK→MAP→REVIEW surface loads regenerable packs from site/public/discovery (notCds; partnerSigned=false)",
+        "ASK→MAP→REVIEW→VALIDATE→TRANSLATE surface loads regenerable packs from site/public/discovery (notCds; clinicalActive=false; partnerSigned=false)",
       notes:
-        "Phase 6 done. Phase 7 R2 validation surface ships via hsi-r2-validation.* + VALIDATE tab. Still not clinical / not Akeno. Phase 8 = explicit ask + Stage 3 gates.",
+        "Phase 6–8 done on HSI substrate. TRANSLATE tab shows deferred_until_hitl candidates only — Akeno clinical product remains external/deferred.",
     }),
   ];
 }
@@ -301,7 +301,7 @@ function buildWalkthroughSteps(lock: HsiPartnerLock): PilotAcceptancePack["walkt
       title: "Confirm regenerable bundle",
       open: "MANIFEST.json · hsi-pilot-acceptance.md",
       say: "Artifacts regenerate with bun run outputs. Acceptance pack records pass vs pending honestly.",
-      doNot: "Do not claim Phase 8 clinical R3–R5 / Akeno from this pack without an explicit ask + Stage 3 gates.",
+      doNot: "Do not claim live Akeno clinical CDS / patient pathways from HSI translation scaffolding (clinicalActive=false).",
     },
   ];
 }
@@ -384,13 +384,13 @@ export function buildPilotAcceptancePack(opts?: {
       "Share hsi-pilot-walkthrough.md + hsi-pilot-acceptance.md + site `/discovery` with the outreach category / future named partner.",
       "Keep partnerSigned=false / lockedPilot=false until flipRequirements in hsi-partner-lock.json are met.",
       "Agree licensing + numeric success thresholds before formal user testing.",
-      "Phase 6–7 Discovery Centre (ASK→MAP→REVIEW→VALIDATE) is live. Phase 8 clinical R3–R5 / Akeno requires an explicit user ask + Stage 3 gates.",
+      "Phase 6–8 Discovery Centre (ASK→MAP→REVIEW→VALIDATE→TRANSLATE) is live. Phase 8 = HSI translation substrate only; Akeno clinical product remains external/deferred.",
     ],
     deferredExplicitAsk: [
-      "Phase 8 — R3–R5 / Akeno translation (clinical; explicit ask + Stage 3 gates only)",
-      "Clinical R3–R5 / Akeno patient-level pathways",
+      "Akeno clinical product integration (site workflows, feasibility, protocol screening) — outside hsi-core",
+      "Clinical R3–R5 / Akeno patient-level pathways + prospective CDS (R5) — gated / not committed",
       "PDF/DOCX brief renderer (ISI product P1)",
-      "Stage 2 molecular adapters / Stage 3 clinical",
+      "Stage 2 molecular adapters / live Stage 3 clinical workflows",
     ],
   };
 }
