@@ -804,7 +804,7 @@ export const P3_ADAPTER_LICENSE_MATRIX_SCHEMA = {
   rfcDoc: "docs/P3_ADAPTER_RFC.md" as const,
   visionDocRef: "docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md",
   notes:
-    "License gate before any adapter run; ModelProposalArtifacts only; never claim commercial signed without evidence; never vendor multi-GB weights",
+    "License gate before any adapter run; ModelProposalArtifacts only; never claim commercial signed without evidence; never vendor multi-GB weights; P3.0 RDKit spike_wired (hsi-rdkit-adapter-proposals.*)",
 };
 
 export type P3AdapterLicenseMatrixSchema =
@@ -813,6 +813,7 @@ export type P3AdapterLicenseMatrixSchema =
 export type FutureTechAdapterStatus =
   | "deferred_p3"
   | "rfc_matrix_ready"
+  | "spike_wired"
   | "catalog_only"
   | "out_of_scope_stage1";
 
@@ -882,10 +883,10 @@ export const FUTURE_TECH_ADAPTER_STUBS: readonly FutureTechAdapterStub[] = [
     id: "adapter-rdkit",
     label: "RDKit",
     role: "Cheminformatics descriptors for research claims",
-    status: "rfc_matrix_ready",
+    status: "spike_wired",
     mayFlipEvidenceGrade: false,
     licenseNote:
-      "BSD-style (research_ok_documented); never invents clinical edges",
+      "BSD-style (research_ok_documented); P3.0 thin spike → ModelProposalArtifacts only (runtime stub|rdkit); never invents clinical edges",
     visionDocRef: "docs/P3_ADAPTER_RFC.md",
   },
   {
@@ -1060,6 +1061,7 @@ export function buildSystemsVisionBundle(opts?: {
       "P2.3: offline eval harness wired (hsi-model-eval-harness.json); mayUseLivePhi=false; mayTrainModels=false; fail-closed clinical/PHI; packs remain authority.",
       "P2.4: ClinVar/TCGA pointer metadata wired (hsi-external-genome-pointers.json); reviewRequired=true; citation/ref only; no bulk genome dump / PHI; doesNotSetHsiGrade.",
       "P2.5: P3 adapter RFC + license matrix wired (docs/P3_ADAPTER_RFC.md; hsi-p3-adapter-license-matrix.json); license gate before run; vendorsModelWeights=false; honest signOffStatus only; no commercial signed without evidence.",
+      "P3.0: RDKit thin adapter spike wired (adapter-rdkit; hsi-rdkit-adapter-proposals.*; runtime stub|rdkit; ModelProposalArtifacts → Gate C pending; autoApprove=false; does not set hsiGrade).",
       "notCds / autoApproveIntoKg=false on this export.",
       "Neon: red-wave only from this workspace.",
     ],

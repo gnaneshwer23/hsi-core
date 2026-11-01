@@ -252,6 +252,32 @@ export {
 } from "./p3AdapterLicenseMatrix";
 
 export {
+  P3AdapterLicenseBlockedError,
+  P3AdapterUnknownError,
+  assertP3AdapterRunnable,
+  getP3AdapterLicenseRow,
+} from "./p3AdapterGate";
+
+export {
+  RDKIT_ADAPTER_EXPORT_SCHEMA,
+  RDKIT_ADAPTER_ID,
+  RDKIT_ADAPTER_RUNTIME_SCHEMA,
+  RDKIT_PUBLIC_MOLECULE_FIXTURES,
+  RDKIT_STUB_DESCRIPTORS,
+  buildRdkitAdapterProposals,
+  descriptorToModelProposal,
+  resolveRdkitDescriptors,
+  runRdkitAdapter,
+  serializeRdkitAdapterBundle,
+  serializeRdkitAdapterMarkdown,
+  tryComputeRdkitDescriptors,
+  type RdkitAdapterBundle,
+  type RdkitDescriptorSnapshot,
+  type RdkitMoleculeFixture,
+  type RdkitRuntime,
+} from "./adapters/rdkitAdapter";
+
+export {
   SSC_CELL_CARD_SCHEMA,
   SSC_NEIGHBOURHOOD_CARDS,
   listSscNeighbourhoodCards,

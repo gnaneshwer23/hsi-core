@@ -77,6 +77,11 @@ import {
   serializeP3AdapterLicenseMatrixMarkdown,
 } from "./p3AdapterLicenseMatrix";
 import {
+  runRdkitAdapter,
+  serializeRdkitAdapterBundle,
+  serializeRdkitAdapterMarkdown,
+} from "./adapters/rdkitAdapter";
+import {
   getVerticalDecision,
   verticalDecisionExportPointer,
 } from "./verticalDecision";
@@ -302,6 +307,11 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
   const p3AdapterLicenseMatrix = buildP3AdapterLicenseMatrixBundle({
     generatedAt,
   });
+  // Deterministic stub for publish/CI; live RDKit optional via CLI force path.
+  const rdkitAdapter = runRdkitAdapter({
+    generatedAt,
+    forceStub: true,
+  });
 
   const fileMap: Record<string, string> = {
     "hsi-isi-export.json": serializeIsiExport(isiBundle),
@@ -346,6 +356,8 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     "hsi-p3-adapter-license-matrix.md": serializeP3AdapterLicenseMatrixMarkdown(
       p3AdapterLicenseMatrix,
     ),
+    "hsi-rdkit-adapter-proposals.json": serializeRdkitAdapterBundle(rdkitAdapter),
+    "hsi-rdkit-adapter-proposals.md": serializeRdkitAdapterMarkdown(rdkitAdapter),
   };
 
   const files: string[] = [];
@@ -400,6 +412,8 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       externalGenomePointersJson: "hsi-external-genome-pointers.json",
       p3AdapterLicenseMatrixJson: "hsi-p3-adapter-license-matrix.json",
       p3AdapterLicenseMatrixMd: "hsi-p3-adapter-license-matrix.md",
+      rdkitAdapterProposalsJson: "hsi-rdkit-adapter-proposals.json",
+      rdkitAdapterProposalsMd: "hsi-rdkit-adapter-proposals.md",
     },
     counts: {
       isiEdges: isiBundle.edges.length,
@@ -460,6 +474,10 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
         p3AdapterLicenseMatrix.summary.blockedUntilSignOffCount,
       p3AdaptersResearchOkDocumented:
         p3AdapterLicenseMatrix.summary.researchOkDocumentedCount,
+      rdkitAdapterProposals: rdkitAdapter.proposals.length,
+      rdkitAdapterRuntimeStub: rdkitAdapter.runtime === "stub",
+      rdkitAdapterMayFlipEvidenceGrade: rdkitAdapter.mayFlipEvidenceGrade,
+      rdkitAdapterAutoApprove: rdkitAdapter.autoApprove,
     },
     discoveryLoop: isiBundle.discoveryCentre.discoveryLoop.framing,
     partnerLock: partnerLockExportPointer(partnerLock),
@@ -521,6 +539,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       "P2.3 offline eval harness: hsi-model-eval-harness.* — scores proposals/sidecars against frozen RA/SSc/gut/neuro fixtures; mayUseLivePhi=false; mayTrainModels=false; fail-closed clinical/PHI; never flips grades.",
       "P2.4 ClinVar/TCGA pointers: hsi-external-genome-pointers.json — accession + URL template + disease/gene context + optional edgeIds; reviewRequired=true; citation/ref only; no bulk genome dump / PHI; doesNotSetHsiGrade.",
       "P2.5 P3 adapter RFC + license matrix: docs/P3_ADAPTER_RFC.md + hsi-p3-adapter-license-matrix.* — ModelProposalArtifacts only; license gate before run; vendorsModelWeights=false; honest signOffStatus (not_signed|needs_review|non_commercial_only|research_ok_documented); no commercial signed without evidence.",
+      "P3.0 RDKit thin adapter spike: hsi-rdkit-adapter-proposals.* — adapter-rdkit; runtime stub|rdkit; ModelProposalArtifacts only → Gate C pending; autoApprove=false; does not set hsiGrade; no weights / PHI / CDS / fake partnerSigned.",
       "Regenerate with: bun run outputs (also refreshes site/public/discovery).",
     ],
   };
@@ -580,6 +599,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     "hsi-model-eval-harness.json",
     "hsi-external-genome-pointers.json",
     "hsi-p3-adapter-license-matrix.json",
+    "hsi-rdkit-adapter-proposals.json",
   ] as const;
   for (const name of discoveryFiles) {
     const dest = join(discoveryPublicDir, name);
@@ -617,6 +637,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       "P2.3 offline eval harness: hsi-model-eval-harness.json — frozen-pack checks only; no PHI / no training / no grade flips.",
       "P2.4 ClinVar/TCGA pointers: hsi-external-genome-pointers.json — citation/ref only; reviewRequired; Gate C still required; no bulk dump / PHI.",
       "P2.5 P3 adapter license matrix: hsi-p3-adapter-license-matrix.json — RFC + honest sign-off; no weight vendoring; proposals only.",
+      "P3.0 RDKit spike: hsi-rdkit-adapter-proposals.json — proposal-only; runtime stub|rdkit; Gate C pending; no grade flips.",
       "Phase 7 done = R2 validation (hsi-r2-validation.json) on VALIDATE tab.",
       "Phase 8 done = HSI translation substrate (hsi-translation-handoff.json) on TRANSLATE tab + in-repo Akeno HITL consumer at /akeno (not CDS).",
     ],

@@ -99,11 +99,17 @@ describe("P1.5 model-proposal → Gate C pending", () => {
     const checklist = buildGateCChecklist({
       generatedAt: "2026-11-01T18:00:00.000Z",
     });
-    expect(checklist.summary.modelProposals).toBe(rows.length);
-    expect(checklist.summary.modelProposalsPending).toBe(rows.length);
+    // Example stubs + P3.0 RDKit spike proposals both land on Gate C as pending.
+    expect(checklist.summary.modelProposals).toBeGreaterThanOrEqual(rows.length);
+    expect(checklist.summary.modelProposalsPending).toBe(
+      checklist.summary.modelProposals,
+    );
     expect(checklist.summary.modelProposalsAutoApprove).toBe(0);
     expect(checklist.modelProposals.every((p) => p.autoApprove === false)).toBe(true);
     expect(checklist.autoApproveIntoKg).toBe(false);
+    expect(
+      checklist.modelProposals.some((p) => p.sourceAdapterOrAgent === "adapter-rdkit"),
+    ).toBe(true);
   });
 
   test("rejects proposals that try to set forbidden grade fields", () => {

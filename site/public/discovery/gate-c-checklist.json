@@ -2,7 +2,7 @@
   "schemaVersion": "hsi-gate-c-checklist-1",
   "notCds": true,
   "autoApproveIntoKg": false,
-  "generatedAt": "2026-11-01T19:11:38.762Z",
+  "generatedAt": "2026-11-01T19:17:44.693Z",
   "summary": {
     "totalRows": 32,
     "curatedWithRel": 13,
@@ -12,8 +12,8 @@
     "translationCandidates": 22,
     "translationHitlRequired": 22,
     "translationCdsSurfacable": 0,
-    "modelProposals": 4,
-    "modelProposalsPending": 4,
+    "modelProposals": 6,
+    "modelProposalsPending": 6,
     "modelProposalsAutoApprove": 0
   },
   "rows": [
@@ -943,7 +943,7 @@
         "pack:hsi-ssc-pathway-pack"
       ],
       "suggestedTeachingStatus": "associative",
-      "createdAt": "2026-11-01T19:11:38.762Z",
+      "createdAt": "2026-11-01T19:17:44.693Z",
       "proposalKind": "model_draft",
       "gateCStatus": "pending",
       "autoApprove": false,
@@ -965,7 +965,7 @@
         "card:HSI-CARD-SSC-IL21"
       ],
       "suggestedTeachingStatus": "hypothesized",
-      "createdAt": "2026-11-01T19:11:38.762Z",
+      "createdAt": "2026-11-01T19:17:44.693Z",
       "proposalKind": "model_draft",
       "gateCStatus": "pending",
       "autoApprove": false,
@@ -988,7 +988,7 @@
         "axis:gut_microbiome"
       ],
       "suggestedTeachingStatus": "hypothesized",
-      "createdAt": "2026-11-01T19:11:38.762Z",
+      "createdAt": "2026-11-01T19:17:44.693Z",
       "proposalKind": "model_draft",
       "gateCStatus": "pending",
       "autoApprove": false,
@@ -1012,7 +1012,57 @@
         "axis:neuroimmune"
       ],
       "suggestedTeachingStatus": "hypothesized",
-      "createdAt": "2026-11-01T19:11:38.762Z",
+      "createdAt": "2026-11-01T19:17:44.693Z",
+      "proposalKind": "model_draft",
+      "gateCStatus": "pending",
+      "autoApprove": false,
+      "autoApproveIntoKg": false,
+      "mayFlipEvidenceGrade": false,
+      "isGradedKgEdge": false,
+      "schemaRef": "hsi-model-proposal-1"
+    },
+    {
+      "proposalId": "HSI-MP-RDKIT-MTX-001",
+      "sourceAdapterOrAgent": "adapter-rdkit",
+      "proposedSubject": "Methotrexate (public SMILES)",
+      "proposedPredicate": "associated_with",
+      "proposedObject": "research cheminformatics property profile (MW/LogP/TPSA) in anti-TNF + MTX neighbourhood",
+      "contextNote": "P3.0 RDKit spike — descriptor draft for public MTX SMILES tied to seeded ATTRACT/MTX combo edge. Not dosing, not CDS, not partnerSigned. runtime=stub descriptors: MW=454.44; LogP=-1.85; TPSA=210.54; HBD=5; HBA=12 ModelProposalArtifact only → Gate C pending; autoApprove=false; does not set hsiGrade.",
+      "evidenceHints": [
+        "pack:hsi-pilot-evidence-pack",
+        "edge:HSI-E-RA-012",
+        "smiles:CN(Cc1cnc2nc(N)nc(N)c2n1)c1ccc(C(=O)N[C@@H](CCC(=O)O)C(=O)O)cc1",
+        "runtime:stub",
+        "adapter:adapter-rdkit",
+        "axis:cheminformatics"
+      ],
+      "suggestedTeachingStatus": "hypothesized",
+      "createdAt": "2026-11-01T19:17:44.693Z",
+      "proposalKind": "model_draft",
+      "gateCStatus": "pending",
+      "autoApprove": false,
+      "autoApproveIntoKg": false,
+      "mayFlipEvidenceGrade": false,
+      "isGradedKgEdge": false,
+      "schemaRef": "hsi-model-proposal-1"
+    },
+    {
+      "proposalId": "HSI-MP-RDKIT-BUTYRATE-001",
+      "sourceAdapterOrAgent": "adapter-rdkit",
+      "proposedSubject": "Butyrate (butyric acid) (public SMILES)",
+      "proposedPredicate": "associated_with",
+      "proposedObject": "SCFA chemotype descriptor profile for mucosal SCFA↔Treg research framing",
+      "contextNote": "P3.0 RDKit spike — descriptor draft for public butyrate SMILES tied to gut–immune pack. Not a therapeutic claim; hypothesized only. runtime=stub descriptors: MW=88.11; LogP=0.79; TPSA=37.3; HBD=1; HBA=2 ModelProposalArtifact only → Gate C pending; autoApprove=false; does not set hsiGrade.",
+      "evidenceHints": [
+        "pack:hsi-gut-immune-pack",
+        "edge:HSI-E-GUT-003",
+        "smiles:CCCC(=O)O",
+        "runtime:stub",
+        "adapter:adapter-rdkit",
+        "axis:cheminformatics"
+      ],
+      "suggestedTeachingStatus": "hypothesized",
+      "createdAt": "2026-11-01T19:17:44.693Z",
       "proposalKind": "model_draft",
       "gateCStatus": "pending",
       "autoApprove": false,
@@ -1034,6 +1084,7 @@
     "P2.2 embedding sidecars (hsi-embedding-sidecars.json): hash/ref metadata only; doesNotSetHsiGrade=true; autoApprove=false — never treat similarity as Gate C pass or grade flip.",
     "P2.3 offline eval harness (hsi-model-eval-harness.*): scores proposals/sidecars against frozen packs only; mayUseLivePhi=false; never flips grades; never auto-approves into KG.",
     "P2.4 ClinVar/TCGA pointers (hsi-external-genome-pointers.json): citation/ref only (accession + URL + disease/gene context + optional edgeIds); reviewRequired=true; doesNotSetHsiGrade; no bulk genome dump / PHI — Gate C still required.",
-    "P2.5 P3 adapters (docs/P3_ADAPTER_RFC.md + hsi-p3-adapter-license-matrix.json): emit ModelProposalArtifacts only; license gate before run (blockedUntilSignOff); mayFlipEvidenceGrade=false; vendorsModelWeights=false; never claim commercial signed without evidence."
+    "P2.5 P3 adapters (docs/P3_ADAPTER_RFC.md + hsi-p3-adapter-license-matrix.json): emit ModelProposalArtifacts only; license gate before run (blockedUntilSignOff); mayFlipEvidenceGrade=false; vendorsModelWeights=false; never claim commercial signed without evidence.",
+    "P3.0 RDKit thin adapter spike (hsi-rdkit-adapter-proposals.*): sourceAdapterOrAgent=adapter-rdkit; runtime stub|rdkit; ModelProposalArtifacts only → pending; autoApprove=false; does not set hsiGrade; refuse blockedUntilSignOff adapters."
   ]
 }

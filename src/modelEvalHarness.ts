@@ -20,6 +20,7 @@ import {
   buildExampleEmbeddingSidecars,
   type EdgeEmbeddingSidecar,
 } from "./embeddingSidecar";
+import { buildRdkitAdapterProposals } from "./adapters/rdkitAdapter";
 import type { HsiEdge } from "./schema";
 import type { HsiGrade, HsiTeachingStatus } from "./grades";
 
@@ -607,6 +608,13 @@ export function buildDemoModelEvalCases(opts?: {
   const goodProposal = proposals.find((p) => p.proposalId === "HSI-MP-SSC-001")!;
   const sidecars = buildExampleEmbeddingSidecars({ createdAt });
   const goodSidecar = sidecars["HSI-E-RA-001"]!;
+  const rdkitProposals = buildRdkitAdapterProposals({
+    createdAt,
+    forceStub: true,
+  });
+  const goodRdkit = rdkitProposals.find(
+    (p) => p.proposalId === "HSI-MP-RDKIT-MTX-001",
+  )!;
 
   return [
     {
@@ -621,6 +629,15 @@ export function buildDemoModelEvalCases(opts?: {
         ],
       }),
       notes: "Cites existing SSc pack edge; no grade/PHI/clinical claims",
+    },
+    {
+      caseId: "EVAL-PASS-RDKIT-MTX-001",
+      kind: "model_proposal",
+      label: "P3.0 RDKit MTX descriptor proposal (stub runtime)",
+      expectPass: true,
+      subject: proposalAsRecord(goodRdkit),
+      notes:
+        "adapter-rdkit proposal cites HSI-E-RA-012; no grade/PHI/clinical/dosing claims",
     },
     {
       caseId: "EVAL-PASS-SIDECAR-RA-001",
@@ -776,7 +793,7 @@ export function buildModelEvalHarnessBundle(opts?: {
       "Checks: cited edge ids exist · grade not flipped · required fields · fail-closed clinical/PHI · sidecar locators · pack authority.",
       "RA / SSc / gut / neuro evidence packs stay the graded truth store; harness never writes KG or Gate C approve.",
       "Intentional fail cases document fail-closed behavior; stubBehaviorGreen means demos matched expectPass.",
-      "TDC-style retrieval metrics deferred to P3 adapters — this export is the contract stub + smoke runner.",
+      "TDC-style retrieval metrics deferred until broader P3 adapters — P3.0 RDKit proposals are scored as ModelProposalArtifacts here.",
       "See docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md · MODEL_EVAL_HARNESS_STUB · src/modelEvalHarness.ts.",
     ],
   };

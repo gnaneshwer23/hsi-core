@@ -9,8 +9,8 @@
   "productSurfacePath": "/discovery",
   "framing": "ASK → MAP → REVIEW → VALIDATE → TRANSLATE",
   "phase": "8",
-  "generatedAt": "2026-11-01T19:11:38.762Z",
-  "bundleId": "hsi-core-0.1.0-20261101T191138762Z",
+  "generatedAt": "2026-11-01T19:17:44.693Z",
+  "bundleId": "hsi-core-0.1.0-20261101T191744693Z",
   "disease": "Rheumatoid arthritis",
   "researchQuestion": "Why do some patients with rheumatoid arthritis respond differently to anti-TNF therapy, and which biomarkers or immune mechanisms are best supported for defining those subgroups?",
   "scopeLocked": true,
@@ -33,7 +33,8 @@
     "hsi-embedding-sidecars.json",
     "hsi-model-eval-harness.json",
     "hsi-external-genome-pointers.json",
-    "hsi-p3-adapter-license-matrix.json"
+    "hsi-p3-adapter-license-matrix.json",
+    "hsi-rdkit-adapter-proposals.json"
   ],
   "notes": [
     "Regenerate with bun run outputs — copies land here for the Vite site.",
@@ -44,6 +45,7 @@
     "P2.3 offline eval harness: hsi-model-eval-harness.json — frozen-pack checks only; no PHI / no training / no grade flips.",
     "P2.4 ClinVar/TCGA pointers: hsi-external-genome-pointers.json — citation/ref only; reviewRequired; Gate C still required; no bulk dump / PHI.",
     "P2.5 P3 adapter license matrix: hsi-p3-adapter-license-matrix.json — RFC + honest sign-off; no weight vendoring; proposals only.",
+    "P3.0 RDKit spike: hsi-rdkit-adapter-proposals.json — proposal-only; runtime stub|rdkit; Gate C pending; no grade flips.",
     "Phase 7 done = R2 validation (hsi-r2-validation.json) on VALIDATE tab.",
     "Phase 8 done = HSI translation substrate (hsi-translation-handoff.json) on TRANSLATE tab + in-repo Akeno HITL consumer at /akeno (not CDS)."
   ]

@@ -1,8 +1,9 @@
 # P3 adapter RFC — ModelProposalArtifacts only
 
-**Status:** Written RFC + license matrix (P2.5). **No adapters vendored. No model weights in-repo.**  
+**Status:** Written RFC + license matrix (P2.5) + **P3.0 RDKit thin spike** (proposal-only). **No model weights in-repo.**  
 **Schema:** `hsi-p3-adapter-license-matrix-1` → regenerable `hsi-p3-adapter-license-matrix.json`  
-**Code:** `src/p3AdapterLicenseMatrix.ts` · stubs in `src/systemsAxes.ts` (`FUTURE_TECH_ADAPTER_STUBS`)  
+**Code:** `src/p3AdapterLicenseMatrix.ts` · `src/p3AdapterGate.ts` · `src/adapters/rdkitAdapter.ts` · stubs in `src/systemsAxes.ts` (`FUTURE_TECH_ADAPTER_STUBS`)  
+**Export:** `hsi-rdkit-adapter-proposals.*` (`runtime: stub|rdkit`)  
 **Position:** [`HSI_AI_NEURAL_FUTURE_HEALTHCARE.md`](./HSI_AI_NEURAL_FUTURE_HEALTHCARE.md) · portfolio: [`VISION_REPO_ALIGNMENT.md`](./VISION_REPO_ALIGNMENT.md)
 
 ---
@@ -11,12 +12,14 @@
 
 Define how optional bio / ML shelf adapters (TDC, AlphaFold3, Boltz, ESM, OpenMM, RDKit, REINVENT4, …) may eventually plug into the HSI stack **without** becoming evidence authority, flipping grades, vendoring multi-GB weights, or claiming commercial licenses that have not been signed.
 
-This RFC is the **gate document**. Implementation of runnable adapters is **out of scope** until:
+This RFC is the **gate document**. Thin adapter spikes may land only when:
 
 1. This RFC stays binding.  
 2. The machine-readable license matrix entry for that adapter has an honest `signOffStatus`.  
 3. `blockedUntilSignOff=false` **or** a written human sign-off is recorded in-repo (never invented).  
 4. Outputs still emit **ModelProposalArtifacts** only → Gate C pending.
+
+**P3.0 landed:** `adapter-rdkit` thin spike (`src/adapters/rdkitAdapter.ts`) — BSD / `research_ok_documented` / `blockedUntilSignOff=false`; optional live RDKit via `python3` subprocess else deterministic stub; export `hsi-rdkit-adapter-proposals.*`.
 
 ---
 
@@ -60,7 +63,7 @@ Offline eval (P2.3) may later score adapter proposals against frozen packs; TDC-
 
 ## 4. Adapter contract
 
-Each future adapter module (ISI lab lane or thin hsi-core CLI — **not shipped yet**) MUST:
+Each adapter module (ISI lab lane or thin hsi-core CLI) MUST:
 
 1. Read its row from `hsi-p3-adapter-license-matrix.json`.  
 2. Refuse to run if `blockedUntilSignOff=true` or `mayFlipEvidenceGrade` would be true.  
@@ -125,13 +128,15 @@ Flipping `blockedUntilSignOff` from `true` → `false` requires a PR that cites 
 | Every adapter `mayFlipEvidenceGrade=false`, `vendorsModelWeights=false` | Yes (invariants) |
 | No commercial “signed” claim without evidence | Yes |
 | MANIFEST / OUTPUTS / BUILD_STATUS updated; next phase named | Yes |
-| Runnable adapter code / weight download | **Not** in scope — later P3 implementation after unblock |
+| Runnable adapter code / weight download | **P3.0:** RDKit thin spike only (no weights). Other adapters still gated |
 
 ---
 
-## 9. Recommended next phase
+## 9. P3.0 RDKit spike (done) + recommended next
 
-**P3.0 — first unblocked thin adapter spike (docs + dry-run only preferred):** pick one `blockedUntilSignOff=false` adapter (likely RDKit or Boltz **without** vendoring weights) and specify a **proposal-only** CLI contract + offline eval case — still no grade flips. Partner P0.2 remains the parallel critical path.
+**P3.0 DONE — `adapter-rdkit`:** thin proposal-only CLI (`bun run adapter:rdkit`); license gate via `assertP3AdapterRunnable`; deterministic stub descriptors when RDKit absent; optional live RDKit subprocess; proposals on Gate C + offline eval case `EVAL-PASS-RDKIT-MTX-001`; export `hsi-rdkit-adapter-proposals.*`. Still no grade flips / PHI / CDS / fake `partnerSigned`.
+
+**P3.1 — next unblocked thin adapter spike:** pick another `blockedUntilSignOff=false` adapter (prefer **OpenMM** or **REINVENT4**; avoid Boltz weights path) — still ModelProposalArtifacts → Gate C only. Partner P0.2 remains the parallel critical path.
 
 ---
 

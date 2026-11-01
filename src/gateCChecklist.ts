@@ -24,8 +24,10 @@ import {
 } from "./translationHandoff";
 import {
   buildGateCModelProposalRows,
+  toGateCModelProposalRow,
   type GateCModelProposalRow,
 } from "./modelProposal";
+import { buildRdkitAdapterProposals } from "./adapters/rdkitAdapter";
 
 export const GATE_C_CHECKLIST_SCHEMA = "hsi-gate-c-checklist-1" as const;
 
@@ -186,7 +188,13 @@ export function buildGateCChecklist(opts?: {
 
   const translationPack = buildTranslationHandoffPack({ generatedAt });
   const translationCandidates = translationPack.candidates.map(toTranslationChecklistRow);
-  const modelProposals = buildGateCModelProposalRows({ createdAt: generatedAt });
+  const exampleProposals = buildGateCModelProposalRows({ createdAt: generatedAt });
+  // P3.0 RDKit spike proposals (forceStub for deterministic Gate C / publish).
+  const rdkitProposals = buildRdkitAdapterProposals({
+    createdAt: generatedAt,
+    forceStub: true,
+  }).map(toGateCModelProposalRow);
+  const modelProposals = [...exampleProposals, ...rdkitProposals];
 
   return {
     schemaVersion: GATE_C_CHECKLIST_SCHEMA,
@@ -223,6 +231,7 @@ export function buildGateCChecklist(opts?: {
       "P2.3 offline eval harness (hsi-model-eval-harness.*): scores proposals/sidecars against frozen packs only; mayUseLivePhi=false; never flips grades; never auto-approves into KG.",
       "P2.4 ClinVar/TCGA pointers (hsi-external-genome-pointers.json): citation/ref only (accession + URL + disease/gene context + optional edgeIds); reviewRequired=true; doesNotSetHsiGrade; no bulk genome dump / PHI — Gate C still required.",
       "P2.5 P3 adapters (docs/P3_ADAPTER_RFC.md + hsi-p3-adapter-license-matrix.json): emit ModelProposalArtifacts only; license gate before run (blockedUntilSignOff); mayFlipEvidenceGrade=false; vendorsModelWeights=false; never claim commercial signed without evidence.",
+      "P3.0 RDKit thin adapter spike (hsi-rdkit-adapter-proposals.*): sourceAdapterOrAgent=adapter-rdkit; runtime stub|rdkit; ModelProposalArtifacts only → pending; autoApprove=false; does not set hsiGrade; refuse blockedUntilSignOff adapters.",
     ],
   };
 }
