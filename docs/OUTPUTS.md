@@ -104,19 +104,19 @@ PRD / brief four outputs (evidence map, entity slice, competing explanations, ex
 | Field | Meaning |
 |-------|---------|
 | `scopeLocked` | Disease + researchQuestion are the **working Stage 1 pilot scope** (engineering). **Phase 2 done = this.** |
-| `partnerSigned` | May be `true` under **TEST FIXTURE** (`agreementKind=hypothetical_test_only`) for path testing — not a MoU. Real org: set via `src/hypotheticalPartnerFixture.ts`. Production ISI requires `ALLOW_HYPOTHETICAL_PARTNER=true` to trust fixture. |
-| `lockedPilot` | `scopeLocked && partnerSigned && legalBinding`. Stays false while fixture `legalBinding=false`. |
+| `partnerSigned` | **Apolo Pharma** named path: `true` under `agreementKind=legal_mou` (MoU operator-asserted). Fixture template may still set `true` under `hypothetical_test_only` for path testing — production ISI requires `ALLOW_HYPOTHETICAL_PARTNER=true` to trust fixture only. Swap via `src/hypotheticalPartnerFixture.ts`. |
+| `lockedPilot` | `scopeLocked && partnerSigned && legalBinding`. **Apolo path:** `true`. Fixture path stays `false` while `legalBinding=false`. |
 | `provisionalLock` | Legacy Phase 1b scaffold. Cleared once scope is promoted (`false` after Phase 2). |
-| `status` | `scope_locked` after Phase 2; `scoping` / `active` only after `partnerSigned`. |
+| `status` | `scope_locked` after Phase 2; named Apolo lock uses `scoping` with `partnerSigned` + `legalBinding`. |
 
-**Phase 2 done = scope lock; named partner still flips `partnerSigned` (then `lockedPilot`).**
+**Phase 2 done = scope lock. P0.6 done = Apolo named lock + walkthrough/export hygiene (`lockedPilot=true`; Stage 1 clearance 48/48).**
 
 ## Invariants
 
 - `notCds` / `autoApproveIntoKg=false` / `autoSurfaceCds=false` on publish manifests
 - Gate C checklist rows with evidence are **`pending`** until a human approve+supports in the **ISI product Neon** (`autumn-snow` / `ep-blue-salad…`) — that DB is **not** HSI’s; HSI Neon is `red-wave` only ([`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md))
 - No PHI; no EHR write-back; no invented PMIDs / REL ids; no HSI writes into ISI/Akeno/DeliverX Neon
-- `scopeLocked=true` **never** implies a signed commercial partner; `partnerSigned` / `lockedPilot` stay false until flip requirements in `hsi-partner-lock.json` are met
+- `scopeLocked=true` alone **never** implies a MoU; named Apolo path sets `partnerSigned` + `legalBinding` → `lockedPilot=true` (still not CDS; Gate C never auto-approves)
 - SLE/PsO/IBD contexts remain **illustrative only**
 
 Living status + prioritized backlog: [`BUILD_STATUS_AND_NEXT.md`](./BUILD_STATUS_AND_NEXT.md).
