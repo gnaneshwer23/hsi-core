@@ -1,5 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import {
+  DualConsumerDiagram,
+  NetworkGraphDiagram,
+  PipelineDiagram,
+} from "../components/Diagrams";
 
 const pillars = [
   { to: "/systems", label: "Human Systems Intelligence" },
@@ -36,6 +41,33 @@ const altitudes = [
     title: "Optional bio plugins",
     body: "Structure, docking, and generative chem stay deferred behind licenses. They never flip Gate C or clinical grades.",
     build: ["Plugin RFCs first", "License sign-off", "Discovery-only adapters"],
+  },
+];
+
+const publishSteps = [
+  {
+    n: "01",
+    title: "Schema & axes",
+    body: "Lock grades, curation lifecycle, and teaching status as independent axes.",
+    tags: ["hsiGrade", "curationReview", "teachingStatus"],
+  },
+  {
+    n: "02",
+    title: "Seed honestly",
+    body: "Ship evidence-linked edges with verified PMIDs — still pending Gate C until a human approves.",
+    tags: ["T2D bridge", "no invented PMIDs", "gaps stay gaps"],
+  },
+  {
+    n: "03",
+    title: "Gate C",
+    body: "Curator checklists in docs/. Approve is human. Established never arrives from citation alone.",
+    tags: ["human only", "ISI ≠ CDS", "checklists"],
+  },
+  {
+    n: "04",
+    title: "Publish exports",
+    body: "ISI bundles, Aksh node maps, gap reports. Products consume; they do not edit the substrate.",
+    tags: ["export:isi", "export:aksh-map", "read-only"],
   },
 ];
 
@@ -81,6 +113,28 @@ export function Home() {
         <div className="hero-corners">
           <span>Evidence · Gate C · Exports</span>
           <span>P1 active</span>
+        </div>
+      </section>
+
+      <section className="section section-ink section-tight">
+        <div className="container">
+          <div className="marquee-label">Non-negotiables running through every export</div>
+          <div className="chip-marquee" aria-label="Principles">
+            {[
+              "Graph before agents",
+              "Gate C is human",
+              "ISI ≠ CDS",
+              "No PHI in seeds",
+              "Edit only hsi-core",
+              "No invented grades",
+              "Consumers pull",
+              "Axes stay separate",
+            ].map((t) => (
+              <span key={t} className="chip">
+                {t}
+              </span>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -163,6 +217,62 @@ export function Home() {
         </div>
       </section>
 
+      <section className="section section-elevated">
+        <div className="container">
+          <div className="section-head">
+            <span className="section-num">FROM SEED TO PUBLISH</span>
+            <h2 className="display display-lg">
+              Four steps.
+              <br />
+              Something running at each one.
+            </h2>
+            <p className="lede">
+              Schema → honest seeds → Gate C → exports. Each step leaves an
+              artifact in this repository that consumers can pull.
+            </p>
+          </div>
+          <div className="process-grid">
+            {publishSteps.map((s) => (
+              <article key={s.n} className="process-card">
+                <span className="process-n">{s.n}</span>
+                <h3>{s.title}</h3>
+                <p>{s.body}</p>
+                <div className="tag-row">
+                  {s.tags.map((t) => (
+                    <span key={t} className="tag">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+          <div className="diagram-plane" style={{ marginTop: "2.75rem" }}>
+            <PipelineDiagram />
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-ink">
+        <div className="container">
+          <div className="split-headline">
+            <div>
+              <span className="section-num">SYSTEMS MAP</span>
+              <h2 className="display display-lg" style={{ marginTop: "0.75rem" }}>
+                The graph is the product.
+              </h2>
+            </div>
+            <p className="lede">
+              Original schematic of claims, edges, citations, and markers —
+              drawn for HSI, not lifted from any third-party marketing dump.
+            </p>
+          </div>
+          <div className="diagram-plane" style={{ marginTop: "2rem" }}>
+            <NetworkGraphDiagram title="Evidence network · schematic" />
+          </div>
+        </div>
+      </section>
+
       <section className="section section-teal">
         <div className="container">
           <div className="section-head center">
@@ -176,6 +286,9 @@ export function Home() {
               ISI explores with honest grades. Aksh surfaces HITL suggestions only
               when edges clear Gate C and established. Neither invents evidence.
             </p>
+          </div>
+          <div className="diagram-plane" style={{ marginBottom: "2rem" }}>
+            <DualConsumerDiagram />
           </div>
           <div className="link-strip">
             <Link to="/for-isi">
@@ -234,6 +347,25 @@ export function Home() {
                 hsiGrade or Gate C. Discovery sandbox — never clinic path.
               </p>
             </details>
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-bone cta-band">
+        <div className="container cta-band-inner">
+          <div>
+            <h2 className="display display-md">Start from the substrate.</h2>
+            <p className="lede">
+              Validate seeds, export maps, read Gate C docs — all inside hsi-core.
+            </p>
+          </div>
+          <div className="hero-actions">
+            <Link to="/docs" className="btn btn-ink">
+              How to use <span className="arrow">↗</span>
+            </Link>
+            <Link to="/systems" className="btn btn-ghost" style={{ borderColor: "rgba(4,18,16,0.2)", color: "var(--ink)" }}>
+              Systems overview
+            </Link>
           </div>
         </div>
       </section>

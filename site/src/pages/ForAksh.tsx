@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { PageHero } from "../components/PageHero";
+import { DualConsumerDiagram, GateCDiagram } from "../components/Diagrams";
 
 export function ForAksh() {
   return (
@@ -22,6 +23,9 @@ export function ForAksh() {
             <span className="section-num">RULES</span>
             <h2 className="display display-md">isCdsSurfacable is the door.</h2>
           </div>
+          <div className="diagram-plane" style={{ marginBottom: "2rem" }}>
+            <GateCDiagram title="Every HITL card passes these gates" />
+          </div>
           <ul className="checklist">
             <li>
               Surfacable only when curationReview === approved and hsiGrade ===
@@ -32,6 +36,9 @@ export function ForAksh() {
             <li>No PHI in seeds or exports</li>
             <li>IO discovery seeds stay unmapped unless a clinic pathway needs them</li>
           </ul>
+          <div className="diagram-plane" style={{ marginTop: "2.5rem" }}>
+            <DualConsumerDiagram title="Aksh is the clinic-safe face of the same graph" />
+          </div>
         </div>
       </section>
 

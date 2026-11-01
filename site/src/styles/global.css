@@ -980,3 +980,133 @@ p {
 .spoke-item.deferred .kind {
   color: #9aa8b5;
 }
+
+/* ——— Diagrams (original SVG schematics) ——— */
+.diagram {
+  margin: 0;
+  width: 100%;
+}
+
+.diagram-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 1.25rem;
+  border: 1px solid var(--line);
+  background: #061816;
+}
+
+.diagram-cap {
+  margin-top: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--slate);
+}
+
+.section-bone .diagram-cap {
+  color: rgba(4, 18, 16, 0.5);
+}
+
+.diagram-plane {
+  animation: rise 0.7s var(--ease) both;
+}
+
+/* ——— Process / four-step cadence ——— */
+.process-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 900px) {
+  .process-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.process-card {
+  padding: 1.35rem 1.25rem 1.5rem;
+  border-radius: 1.15rem;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  min-height: 100%;
+}
+
+.process-n {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  color: var(--phosphor);
+}
+
+.process-card h3 {
+  font-size: 1.2rem;
+}
+
+.process-card p {
+  color: var(--bone-dim);
+  font-size: 0.98rem;
+  flex: 1;
+}
+
+.section-tight {
+  padding-block: 2.25rem;
+}
+
+.marquee-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--slate);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.chip-marquee {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.chip {
+  padding: 0.5rem 0.95rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line-strong);
+  background: rgba(255, 255, 255, 0.03);
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--bone-dim);
+}
+
+.cta-band {
+  padding-block: 4rem;
+}
+
+.cta-band-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.75rem;
+}
+
+.cta-band .lede {
+  margin-top: 0.75rem;
+  color: rgba(4, 18, 16, 0.62);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-content,
+  .page-hero-inner,
+  .stage-panel,
+  .diagram-plane {
+    animation: none;
+  }
+}

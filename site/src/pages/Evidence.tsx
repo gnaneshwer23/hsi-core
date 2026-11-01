@@ -1,4 +1,5 @@
 import { PageHero } from "../components/PageHero";
+import { GateCDiagram, NetworkGraphDiagram } from "../components/Diagrams";
 
 export function Evidence() {
   return (
@@ -47,6 +48,9 @@ export function Evidence() {
               </p>
             </div>
           </div>
+          <div className="diagram-plane" style={{ marginTop: "2.5rem" }}>
+            <NetworkGraphDiagram title="Graded edges stay explicit on the graph" />
+          </div>
         </div>
       </section>
 
@@ -62,6 +66,9 @@ export function Evidence() {
               Neon approve+supports remains a human product-app action outside
               this repository.
             </p>
+          </div>
+          <div className="diagram-plane" style={{ marginBottom: "2rem" }}>
+            <GateCDiagram />
           </div>
           <ul className="checklist">
             <li>Nine evidence-linked maps with verified PMIDs (Barber, CANTOS, Herold, …)</li>

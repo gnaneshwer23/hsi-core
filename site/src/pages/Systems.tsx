@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { PageHero } from "../components/PageHero";
+import { PipelineDiagram, SystemsLayersDiagram } from "../components/Diagrams";
 
 export function Systems() {
   return (
@@ -28,6 +29,10 @@ export function Systems() {
               Agents do not invent grades. Bio plugins do not promote edges.
               Humans curate Gate C. Products consume what hsi-core publishes.
             </p>
+          </div>
+
+          <div className="diagram-plane" style={{ marginTop: "2.25rem" }}>
+            <SystemsLayersDiagram />
           </div>
 
           <div className="grade-row" style={{ marginTop: "2.75rem" }}>
@@ -61,6 +66,10 @@ export function Systems() {
                 read-only artifacts for consumers.
               </p>
             </div>
+          </div>
+
+          <div className="diagram-plane" style={{ marginTop: "2.5rem" }}>
+            <PipelineDiagram />
           </div>
         </div>
       </section>

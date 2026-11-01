@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { PageHero } from "../components/PageHero";
+import { DualConsumerDiagram, NetworkGraphDiagram } from "../components/Diagrams";
 
 export function ForIsi() {
   return (
@@ -30,12 +31,18 @@ export function ForIsi() {
               checklists, not silent promotions.
             </p>
           </div>
+          <div className="diagram-plane" style={{ marginTop: "2rem" }}>
+            <DualConsumerDiagram title="ISI pulls discovery faces only" />
+          </div>
           <ul className="checklist" style={{ marginTop: "2rem" }}>
             <li>Discovery / Ask / Radar only</li>
             <li>Honest established / uncertain / unexplored labels</li>
             <li>REL-* suggestion map — curation pointers, never auto-approve</li>
             <li>Do not edit immunecity for HSI substrate work</li>
           </ul>
+          <div className="diagram-plane" style={{ marginTop: "2.5rem" }}>
+            <NetworkGraphDiagram title="Radar sees uncertain and unexplored edges" />
+          </div>
         </div>
       </section>
 
