@@ -1,7 +1,7 @@
 # HSI build status and next
 
 **Audit date:** 1 November 2026  
-**HEAD at write:** (this commit) — Stage 1 numeric rubric thresholds **`set_for_test`** under hypothetical fixture; real partner must re-agree; `legalBinding` still false
+**HEAD at write:** `a9823e1` (main) — Stage 1 numeric rubric thresholds **`set_for_test`** under hypothetical fixture; real partner must re-agree; `legalBinding` still false
 
 
 **Edit target:** `hsi-core` only · Neon **`red-wave` only** · no immunecity / Akeno product / DeliverX edits  
