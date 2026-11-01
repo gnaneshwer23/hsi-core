@@ -95,7 +95,7 @@ const SPECS: SeedSpec[] = [
   },
   {
     id: "HSI-E-SSC-002",
-    edgeType: "upregulates",
+    edgeType: "produces",
     subjectId: "HSI-N-tfh",
     subjectLabel: "T follicular helper (Tfh) cells",
     objectId: "HSI-N-il21",
@@ -112,7 +112,7 @@ const SPECS: SeedSpec[] = [
       "Crotty S. Annu Rev Immunol 2011 — Follicular helper CD4 T cells (TFH).",
     sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/21314428/",
     notes:
-      "Foundational Tfh→IL-21 axis (not SSc-specific). PMID 21314428 verified. Maps via ISI produces→HSI upregulates until HSI_EDGE_TYPES expands. Pairs with Ricard 2019 SSc IL-21 pathway. Gate C = human only. Not CDS.",
+      "Foundational Tfh→IL-21 axis (not SSc-specific). PMID 21314428 verified. P1.4 first-class edgeType produces (was alias ISI produces→upregulates). Pairs with Ricard 2019 SSc IL-21 pathway. Gate C = human only. Not CDS.",
   },
   {
     id: "HSI-E-SSC-003",

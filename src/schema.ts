@@ -4,8 +4,16 @@
  */
 import type { HsiCurationReview, HsiGrade, HsiTeachingStatus } from "./grades";
 
-/** Canonical edge predicates for the shared substrate (extensible; keep snake_case). */
+/**
+ * Canonical edge predicates for the shared substrate (extensible; keep snake_case).
+ *
+ * Phase 0 core types stay stable for RA/TNF seeds. P1.4 adds selected systems /
+ * ISI predicates as first-class labels (additive — do not rewrite RA edgeTypes).
+ * Non-promoted systems/ISI predicates still alias via SYSTEMS_PREDICATE_TO_HSI_EDGE
+ * / ISI_RELATIONSHIP_TO_HSI_EDGE.
+ */
 export const HSI_EDGE_TYPES = [
+  // ── Phase 0 core (RA / immuno-metabolic / biomarker) ─────────────────────
   "associated_with",
   "contributes_to",
   "drives",
@@ -17,6 +25,49 @@ export const HSI_EDGE_TYPES = [
   "treats",
   "worsens",
   "bridges_domain",
+  // ── P1.4 systems (gut / neuro) — were alias-only; now first-class ────────
+  /** Gut–immune modulation (Clostridia/SCFA ↔ mucosal Treg neighbourhood). */
+  "modulates_immune",
+  /** Metabolite production / sensing hop (e.g. butyrate → colonic Treg). */
+  "produces_metabolite_sensed_by",
+  /** Cholinergic / vagal brake on peripheral inflammatory tone. */
+  "suppresses_peripheral_inflammation",
+  /** Cross-axis neural↔immune signalling frame (inflammatory reflex). */
+  "signals_via_axis",
+  /** Neuroimmune association without stronger causal claim. */
+  "associates_neuroimmune",
+  // ── P1.4 ISI controlled relations — selected cell-spine predicates ───────
+  /** Cell / cytokine production (e.g. Tfh → IL-21). */
+  "produces",
+  /** Activation / induction without overclaiming causation. */
+  "activates",
+  /** Suppression distinct from generic inhibits (cell–cell / pathway). */
+  "suppresses",
+  /** Lineage / state transition (e.g. naive B → plasmablast context). */
+  "differentiates_into",
+] as const;
+
+/**
+ * Systems cross-axis predicates promoted onto HSI_EDGE_TYPES in P1.4.
+ * Identity-mapped in SYSTEMS_PREDICATE_TO_HSI_EDGE; remaining systems preds stay aliased.
+ */
+export const HSI_PROMOTED_SYSTEMS_PREDICATES = [
+  "modulates_immune",
+  "produces_metabolite_sensed_by",
+  "suppresses_peripheral_inflammation",
+  "signals_via_axis",
+  "associates_neuroimmune",
+] as const;
+
+/**
+ * ISI controlled relationship types promoted onto HSI_EDGE_TYPES in P1.4.
+ * Identity-mapped in ISI_RELATIONSHIP_TO_HSI_EDGE; remaining ISI preds stay aliased.
+ */
+export const HSI_PROMOTED_ISI_RELATIONSHIPS = [
+  "produces",
+  "activates",
+  "suppresses",
+  "differentiates_into",
 ] as const;
 
 export type HsiEdgeType = (typeof HSI_EDGE_TYPES)[number];

@@ -51,8 +51,13 @@ function prov(
 
 type SeedSpec = {
   id: string;
+  /**
+   * P1.4: prefer first-class systems predicates on HSI_EDGE_TYPES when the
+   * systemsPredicate was promoted; else keep Phase 0 directional types
+   * (e.g. hypothesized Th17 promote/inhibit frames).
+   */
   edgeType: HsiEdge["edgeType"];
-  /** Systems-vision cross-axis predicate (mapped onto Phase 0 HSI_EDGE_TYPES). */
+  /** Systems-vision cross-axis predicate (identity-maps when first-class). */
   systemsPredicate: SystemsCrossAxisPredicate;
   subjectId: string;
   subjectLabel: string;
@@ -78,7 +83,7 @@ type SeedSpec = {
 const SPECS: SeedSpec[] = [
   {
     id: "HSI-E-GUT-001",
-    edgeType: "associated_with",
+    edgeType: "modulates_immune",
     systemsPredicate: "modulates_immune",
     subjectId: "HSI-N-clostridia-iv-xiva",
     subjectLabel: "Clostridium clusters IV / XIVa (gut)",
@@ -100,7 +105,7 @@ const SPECS: SeedSpec[] = [
   },
   {
     id: "HSI-E-GUT-002",
-    edgeType: "associated_with",
+    edgeType: "modulates_immune",
     systemsPredicate: "modulates_immune",
     subjectId: "HSI-N-clostridia-human-mix",
     subjectLabel: "Human microbiota Clostridia mix (17-strain class)",
@@ -122,7 +127,7 @@ const SPECS: SeedSpec[] = [
   },
   {
     id: "HSI-E-GUT-003",
-    edgeType: "upregulates",
+    edgeType: "produces_metabolite_sensed_by",
     systemsPredicate: "produces_metabolite_sensed_by",
     subjectId: "HSI-N-butyrate",
     subjectLabel: "Butyrate (SCFA)",
@@ -141,11 +146,11 @@ const SPECS: SeedSpec[] = [
       "Furusawa Y et al. Nature 2013 — Commensal microbe-derived butyrate induces the differentiation of colonic regulatory T cells.",
     sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/24226770/",
     notes:
-      "P1.3 primary SCFA→Treg edge. PMID 24226770 verified. Maps systemsPredicate produces_metabolite_sensed_by → HSI upregulates. Mouse / HDAC–Foxp3 mechanism — not human disease claim. Gate C = human only. Not CDS.",
+      "P1.3 primary SCFA→Treg edge. PMID 24226770 verified. P1.4 first-class edgeType produces_metabolite_sensed_by (was alias→upregulates). Mouse / HDAC–Foxp3 mechanism — not human disease claim. Gate C = human only. Not CDS.",
   },
   {
     id: "HSI-E-GUT-004",
-    edgeType: "associated_with",
+    edgeType: "modulates_immune",
     systemsPredicate: "modulates_immune",
     subjectId: "HSI-N-scfa",
     subjectLabel: "Short-chain fatty acids (class)",
@@ -212,7 +217,7 @@ const SPECS: SeedSpec[] = [
   },
   {
     id: "HSI-E-GUT-007",
-    edgeType: "upregulates",
+    edgeType: "modulates_immune",
     systemsPredicate: "modulates_immune",
     subjectId: "HSI-N-butyrate",
     subjectLabel: "Butyrate (SCFA)",
@@ -234,7 +239,7 @@ const SPECS: SeedSpec[] = [
   },
   {
     id: "HSI-E-GUT-008",
-    edgeType: "inhibits",
+    edgeType: "modulates_immune",
     systemsPredicate: "modulates_immune",
     subjectId: "HSI-N-gpr109a",
     subjectLabel: "GPR109A (HCAR2) — butyrate / niacin receptor",
@@ -256,7 +261,7 @@ const SPECS: SeedSpec[] = [
   },
   {
     id: "HSI-E-GUT-009",
-    edgeType: "upregulates",
+    edgeType: "modulates_immune",
     systemsPredicate: "modulates_immune",
     subjectId: "HSI-N-butyrate",
     subjectLabel: "Butyrate (SCFA)",
@@ -278,7 +283,7 @@ const SPECS: SeedSpec[] = [
   },
   {
     id: "HSI-E-GUT-010",
-    edgeType: "associated_with",
+    edgeType: "modulates_immune",
     systemsPredicate: "modulates_immune",
     subjectId: "HSI-N-commensal-metabolites",
     subjectLabel: "Commensal bacterial metabolites (SCFA neighbourhood)",
@@ -300,7 +305,7 @@ const SPECS: SeedSpec[] = [
   },
   {
     id: "HSI-E-GUT-011",
-    edgeType: "inhibits",
+    edgeType: "modulates_immune",
     systemsPredicate: "modulates_immune",
     subjectId: "HSI-N-butyrate",
     subjectLabel: "Butyrate (SCFA)",
@@ -322,7 +327,7 @@ const SPECS: SeedSpec[] = [
   },
   {
     id: "HSI-E-GUT-012",
-    edgeType: "upregulates",
+    edgeType: "modulates_immune",
     systemsPredicate: "modulates_immune",
     subjectId: "HSI-N-scfa",
     subjectLabel: "SCFA (class)",
@@ -384,7 +389,7 @@ function toClaim(spec: SeedSpec): HsiClaim {
 export const HSI_GUT_SEED_EDGES: HsiEdge[] = SPECS.map(toEdge);
 export const HSI_GUT_SEED_CLAIMS: HsiClaim[] = SPECS.map(toClaim);
 
-/** Systems-predicate annotations parallel to edges (not on HsiEdge schema yet — P1.4). */
+/** Systems-predicate annotations parallel to edges (P1.4: often identity with edgeType). */
 export const HSI_GUT_SEED_SYSTEMS_PREDICATES: ReadonlyArray<{
   edgeId: string;
   systemsPredicate: SystemsCrossAxisPredicate;

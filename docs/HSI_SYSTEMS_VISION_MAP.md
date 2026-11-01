@@ -86,7 +86,8 @@ Regenerable detail: `buildSystemsVisionBundle()` → publish artifact `hsi-syste
 - **Entity classes:** taxon, community, metabolite, barrier_compartment, mucosal_immune_interface (expanded for SCFA/butyrate / mucosal Treg·Th17 / Clostridia class).
 - **Predicates (hypothesis-capable where noted):** `modulates_immune`, `produces_metabolite_sensed_by`, `compromises_barrier`, `recruits_to_mucosa`, `cross_reacts_with`, `hypothesized_gut_immune`, …
 - **P1.3 deep seeds:** `hsi-gut-immune-pack` — SCFA/butyrate ↔ mucosal Treg/Th17 (+ barrier); verified public PMIDs; `uncertain`/`hypothesized` grades; Th17 promote vs inhibit kept as competing frames. Discovery secondary axis only (does not replace RA ASK).
-- **Not yet:** species-level disease claims, microbiome cohort data, first-class `HSI_EDGE_TYPES` promotion for gut predicates (P1.4 optional).
+- **P1.4 first-class predicates:** `modulates_immune`, `produces_metabolite_sensed_by` on `HSI_EDGE_TYPES` (gut seeds use them directly); remaining systems preds (`compromises_barrier`, `hypothesized_gut_immune`, …) still alias via `SYSTEMS_PREDICATE_TO_HSI_EDGE`.
+- **Not yet:** species-level disease claims, microbiome cohort data.
 
 ### 3. Neuroimmune / brain ↔ immune
 
@@ -94,6 +95,7 @@ Regenerable detail: `buildSystemsVisionBundle()` → publish artifact `hsi-syste
 - **Examples:** hypothalamus, BBB, CSF, HPA axis, vagus / inflammatory reflex, α7 nAChR, ChAT+ memory T cells, microglia (stub).
 - **Predicates:** `signals_via_axis`, `crosses_bbb`, `activates_glia`, `suppresses_peripheral_inflammation`, `associates_neuroimmune`, `hypothesized_brain_immune`, …
 - **P2.1 deep seeds:** `hsi-neuroimmune-pack` — vagus / cholinergic anti-inflammatory reflex (chosen for clearest landmark PMID chain vs microglia or BBB atlases); verified public PMIDs; `uncertain`/`hypothesized` grades; human VNS–RA (Koopman) hypothesized only — **not** a clinical brain–immune cure. Discovery secondary axis only.
+- **P1.4 first-class predicates:** `suppresses_peripheral_inflammation`, `signals_via_axis`, `associates_neuroimmune` on `HSI_EDGE_TYPES`; hypothesized human VNS keeps Phase 0 `associated_with`.
 - **Not yet:** MS / neurodegeneration disease atlases; microglia–cytokine or BBB cytokine neighbourhood deepen.
 
 ### 4. Diseases, tissues, biomarkers / LOINC

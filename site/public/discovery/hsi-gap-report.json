@@ -1,6 +1,6 @@
 {
   "schemaVersion": "hsi-gap-report-1",
-  "generatedAt": "2026-11-01T23:43:03.919Z",
+  "generatedAt": "2026-11-01T23:55:09.602Z",
   "summary": {
     "seedEdges": 79,
     "bridgeCandidates": 18,
@@ -20,12 +20,18 @@
     },
     "edgeTypesInUse": [
       "associated_with",
+      "associates_neuroimmune",
       "biomarker_of",
       "bridges_domain",
       "contributes_to",
       "drives",
       "inhibits",
+      "modulates_immune",
+      "produces",
+      "produces_metabolite_sensed_by",
       "risk_factor_for",
+      "signals_via_axis",
+      "suppresses_peripheral_inflammation",
       "treats",
       "upregulates",
       "worsens"
@@ -37,7 +43,10 @@
       "t2d"
     ],
     "unusedEdgeTypes": [
-      "downregulates"
+      "downregulates",
+      "activates",
+      "suppresses",
+      "differentiates_into"
     ],
     "unusedDomains": [
       "general"

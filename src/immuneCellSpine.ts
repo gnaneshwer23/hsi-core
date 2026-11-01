@@ -212,8 +212,9 @@ export const IMMUNE_CELL_SPINE_NODES: readonly ImmuneCellSpineNode[] = [
 
 /**
  * PRD §7.3 controlled relationship types.
- * Stored separately from Phase 0 `HSI_EDGE_TYPES` so existing RA/TNF seeds stay valid.
- * Prefer these predicates for new whole-immune-cell / SSc curation when authorised.
+ * P1.4 promotes selected types onto `HSI_EDGE_TYPES` (produces / activates /
+ * suppresses / differentiates_into). Remaining stay vocabulary + alias map so
+ * existing RA/TNF seeds stay valid.
  */
 export const ISI_CONTROLLED_RELATIONSHIP_TYPES = [
   "differentiates_into",
@@ -232,17 +233,22 @@ export const ISI_CONTROLLED_RELATIONSHIP_TYPES = [
 export type IsiControlledRelationshipType =
   (typeof ISI_CONTROLLED_RELATIONSHIP_TYPES)[number];
 
-/** Nearest Phase 0 HSI edgeType when a PRD predicate is not yet on HsiEdge. */
+/**
+ * Map ISI controlled relations → HsiEdgeType.
+ * Promoted (P1.4) predicates identity-map; others keep nearest Phase 0 aliases.
+ */
 export const ISI_RELATIONSHIP_TO_HSI_EDGE: Record<
   IsiControlledRelationshipType,
   HsiEdgeType
 > = {
-  differentiates_into: "contributes_to",
-  activates: "upregulates",
-  suppresses: "inhibits",
+  // First-class (P1.4)
+  differentiates_into: "differentiates_into",
+  activates: "activates",
+  suppresses: "suppresses",
+  produces: "produces",
+  // Still alias-only
   presents_antigen_to: "associated_with",
   kills: "drives",
-  produces: "upregulates",
   responds_to: "associated_with",
   recruits: "associated_with",
   associates_with: "associated_with",
@@ -323,7 +329,7 @@ export function buildImmuneCellSpineBundle(): ImmuneCellSpineBundle {
       "Vocabulary stubs only — not Gate C claims and not CDS.",
       "RA Stage 1 scopeLocked remains authoritative in partnerLock (dual-track activeScope=ra-tnf).",
       "SSc is prd_mvp_target / blueprint Gate 3 — dual-track thin seeds present; EBV hypothesized only.",
-      "Prefer ISI_CONTROLLED_RELATIONSHIP_TYPES for new immune-cell curation; map via ISI_RELATIONSHIP_TO_HSI_EDGE until HSI_EDGE_TYPES expands.",
+      "Prefer ISI_CONTROLLED_RELATIONSHIP_TYPES for new immune-cell curation; P1.4 promotes produces/activates/suppresses/differentiates_into onto HSI_EDGE_TYPES (identity map); remaining types still alias via ISI_RELATIONSHIP_TO_HSI_EDGE.",
       "Context + evidence mandatory on every future claim edge (PRD §6 / §7.4).",
     ],
   };

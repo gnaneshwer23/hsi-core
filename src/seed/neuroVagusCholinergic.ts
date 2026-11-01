@@ -55,8 +55,12 @@ function prov(
 
 type SeedSpec = {
   id: string;
+  /**
+   * P1.4: prefer first-class systems predicates on HSI_EDGE_TYPES when promoted;
+   * hypothesized human VNS–RA keeps Phase 0 associated_with.
+   */
   edgeType: HsiEdge["edgeType"];
-  /** Systems-vision cross-axis predicate (mapped onto Phase 0 HSI_EDGE_TYPES). */
+  /** Systems-vision cross-axis predicate (identity-maps when first-class). */
   systemsPredicate: SystemsCrossAxisPredicate;
   subjectId: string;
   subjectLabel: string;
@@ -82,7 +86,7 @@ type SeedSpec = {
 const SPECS: SeedSpec[] = [
   {
     id: "HSI-E-NI-001",
-    edgeType: "inhibits",
+    edgeType: "suppresses_peripheral_inflammation",
     systemsPredicate: "suppresses_peripheral_inflammation",
     subjectId: "HSI-N-vagus-efferent",
     subjectLabel: "Efferent vagus nerve stimulation",
@@ -105,7 +109,7 @@ const SPECS: SeedSpec[] = [
   },
   {
     id: "HSI-E-NI-002",
-    edgeType: "bridges_domain",
+    edgeType: "signals_via_axis",
     systemsPredicate: "signals_via_axis",
     subjectId: "HSI-N-inflammatory-reflex",
     subjectLabel: "Inflammatory reflex (cholinergic axis)",
@@ -124,11 +128,11 @@ const SPECS: SeedSpec[] = [
       "Tracey KJ. Nature 2002 — The inflammatory reflex.",
     sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/12490958/",
     notes:
-      "P2.1 conceptual axis frame. PMID 12490958 verified (review). Maps signals_via_axis → bridges_domain. Teaching=associative; not clinical protocol. Gate C = human only. Not CDS.",
+      "P2.1 conceptual axis frame. PMID 12490958 verified (review). P1.4 first-class edgeType signals_via_axis (was alias→bridges_domain). Teaching=associative; not clinical protocol. Gate C = human only. Not CDS.",
   },
   {
     id: "HSI-E-NI-003",
-    edgeType: "inhibits",
+    edgeType: "suppresses_peripheral_inflammation",
     systemsPredicate: "suppresses_peripheral_inflammation",
     subjectId: "HSI-N-alpha7-nachr",
     subjectLabel: "Nicotinic ACh receptor α7 subunit (macrophage)",
@@ -151,7 +155,7 @@ const SPECS: SeedSpec[] = [
   },
   {
     id: "HSI-E-NI-004",
-    edgeType: "associated_with",
+    edgeType: "associates_neuroimmune",
     systemsPredicate: "associates_neuroimmune",
     subjectId: "HSI-N-vagus-efferent",
     subjectLabel: "Efferent vagus nerve stimulation",
@@ -173,7 +177,7 @@ const SPECS: SeedSpec[] = [
   },
   {
     id: "HSI-E-NI-005",
-    edgeType: "bridges_domain",
+    edgeType: "signals_via_axis",
     systemsPredicate: "signals_via_axis",
     subjectId: "HSI-N-chat-memory-tcell",
     subjectLabel: "Acetylcholine-synthesizing memory T cells",
@@ -240,7 +244,7 @@ const SPECS: SeedSpec[] = [
   },
   {
     id: "HSI-E-NI-008",
-    edgeType: "inhibits",
+    edgeType: "suppresses_peripheral_inflammation",
     systemsPredicate: "suppresses_peripheral_inflammation",
     subjectId: "HSI-N-splenic-nerve",
     subjectLabel: "Splenic nerve (catecholaminergic)",
@@ -262,7 +266,7 @@ const SPECS: SeedSpec[] = [
   },
   {
     id: "HSI-E-NI-009",
-    edgeType: "inhibits",
+    edgeType: "suppresses_peripheral_inflammation",
     systemsPredicate: "suppresses_peripheral_inflammation",
     subjectId: "HSI-N-cholinergic-agonist",
     subjectLabel: "Pharmacologic cholinergic anti-inflammatory stimulation",
@@ -284,7 +288,7 @@ const SPECS: SeedSpec[] = [
   },
   {
     id: "HSI-E-NI-010",
-    edgeType: "inhibits",
+    edgeType: "suppresses_peripheral_inflammation",
     systemsPredicate: "suppresses_peripheral_inflammation",
     subjectId: "HSI-N-splenic-cholinergic-signal",
     subjectLabel: "Cholinergic neural signals to the spleen",
@@ -306,7 +310,7 @@ const SPECS: SeedSpec[] = [
   },
   {
     id: "HSI-E-NI-011",
-    edgeType: "inhibits",
+    edgeType: "suppresses_peripheral_inflammation",
     systemsPredicate: "suppresses_peripheral_inflammation",
     subjectId: "HSI-N-cholinergic-antiinflam-pathway",
     subjectLabel: "Cholinergic anti-inflammatory pathway",

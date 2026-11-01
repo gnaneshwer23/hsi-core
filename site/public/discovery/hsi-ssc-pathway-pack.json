@@ -2,7 +2,7 @@
   "schemaVersion": "hsi-ssc-pathway-pack-1",
   "notCds": true,
   "autoApproveIntoKg": false,
-  "generatedAt": "2026-11-01T23:43:03.919Z",
+  "generatedAt": "2026-11-01T23:55:09.602Z",
   "pathway": {
     "id": "ssc-tfh-b-il21",
     "label": "SSc · CD4/Tfh–B-cell–IL-21",
@@ -493,7 +493,7 @@
       "edgeId": "HSI-E-SSC-002",
       "claimId": "HSI-C-SSC-002",
       "subject": "T follicular helper (Tfh) cells",
-      "predicate": "upregulates",
+      "predicate": "produces",
       "object": "IL-21",
       "evidenceGrade": "uncertain",
       "teachingStatus": "associative",
@@ -869,7 +869,7 @@
     },
     {
       "id": "HSI-E-SSC-002",
-      "edgeType": "upregulates",
+      "edgeType": "produces",
       "subjectId": "HSI-N-tfh",
       "subjectLabel": "T follicular helper (Tfh) cells",
       "objectId": "HSI-N-il21",
@@ -884,7 +884,7 @@
         "doi": "10.1146/annurev-immunol-031210-101400",
         "citationLabel": "Crotty S. Annu Rev Immunol 2011 — Follicular helper CD4 T cells (TFH).",
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/21314428/",
-        "notes": "Foundational Tfh→IL-21 axis (not SSc-specific). PMID 21314428 verified. Maps via ISI produces→HSI upregulates until HSI_EDGE_TYPES expands. Pairs with Ricard 2019 SSc IL-21 pathway. Gate C = human only. Not CDS.",
+        "notes": "Foundational Tfh→IL-21 axis (not SSc-specific). PMID 21314428 verified. P1.4 first-class edgeType produces (was alias ISI produces→upregulates). Pairs with Ricard 2019 SSc IL-21 pathway. Gate C = human only. Not CDS.",
         "recordedAt": "2026-11-01T17:00:00.000Z"
       },
       "bridgeCandidate": false,

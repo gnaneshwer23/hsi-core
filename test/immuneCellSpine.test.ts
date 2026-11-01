@@ -1,6 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import {
   DISEASE_VERTICAL_STUBS,
+  HSI_PROMOTED_ISI_RELATIONSHIPS,
   IMMUNE_CELL_SPINE_NODES,
   ISI_CONTROLLED_RELATIONSHIP_TYPES,
   ISI_RELATIONSHIP_TO_HSI_EDGE,
@@ -44,11 +45,20 @@ describe("immune-cell spine stubs (PRD vocabulary)", () => {
     ).toBe(true);
   });
 
-  test("PRD relationship types map to valid Phase 0 HSI edge types", () => {
+  test("PRD relationship types map to valid HSI edge types; P1.4 promoted identity-map", () => {
     for (const rel of ISI_CONTROLLED_RELATIONSHIP_TYPES) {
       expect(isIsiControlledRelationshipType(rel)).toBe(true);
       expect(isHsiEdgeType(ISI_RELATIONSHIP_TO_HSI_EDGE[rel])).toBe(true);
     }
+    for (const rel of HSI_PROMOTED_ISI_RELATIONSHIPS) {
+      expect(isHsiEdgeType(rel)).toBe(true);
+      expect(ISI_RELATIONSHIP_TO_HSI_EDGE[rel]).toBe(rel);
+    }
+    // Still alias-only
+    expect(ISI_RELATIONSHIP_TO_HSI_EDGE.presents_antigen_to).toBe(
+      "associated_with",
+    );
+    expect(ISI_RELATIONSHIP_TO_HSI_EDGE.kills).toBe("drives");
   });
 
   test("dual-track verticals: RA locked; SSc PRD target with thin deep seeds", () => {

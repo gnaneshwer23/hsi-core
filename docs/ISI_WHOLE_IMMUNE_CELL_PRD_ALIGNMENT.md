@@ -121,7 +121,7 @@ ISI is a research-first **whole-immune-cell** discovery platform: major immune c
 
 | Predicate | Status | Notes |
 |-----------|--------|-------|
-| differentiates_into, activates, suppresses, presents_antigen_to, kills, produces, responds_to, recruits, associates_with, measured_by, hypothesized_to | **PARTIAL** | Declared in `ISI_CONTROLLED_RELATIONSHIP_TYPES`; mapped to nearest `HSI_EDGE_TYPES` — not yet primary on seed edges |
+| differentiates_into, activates, suppresses, presents_antigen_to, kills, produces, responds_to, recruits, associates_with, measured_by, hypothesized_to | **PARTIAL** | Declared in `ISI_CONTROLLED_RELATIONSHIP_TYPES`; **P1.4** promotes `produces` / `activates` / `suppresses` / `differentiates_into` onto `HSI_EDGE_TYPES` (SSc-002 uses `produces`); remainder still aliased |
 | Context + evidence mandatory | **PARTIAL** | Provenance required on edges; full context object deferred |
 
 #### §7.4 Evidence and provenance
@@ -248,17 +248,17 @@ Registry: `DISEASE_VERTICAL_STUBS` in `src/immuneCellSpine.ts` (`ssc.deepSeedsPr
 | `test/immuneCellSpine.test.ts` / `test/verticalDualTrack.test.ts` | Asserts CD4-among-many, RA lock intact, SSc `prd_mvp_target` + deep seeds |
 | Package exports via `src/index.ts` | Consumers can read vocabulary / SSc pack without implying Gate C claims |
 
-**Not done:** full cell-card content, expanding `HSI_EDGE_TYPES` (map-through for now), ImmPort connectors, agent runtime, immunecity UI, deeper SSc neighbourhood.
+**Not done:** full cell-card content, ImmPort connectors, agent runtime, immunecity UI, deeper SSc neighbourhood. **P1.4 done** for selected predicates (`produces` et al. first-class; alias map kept for remainder).
 
 ---
 
 ## Recommended next asks (hsi-core)
 
 1. ~~**Decide A / B / C**~~ — **A dual-track done.**  
-2. **Next after A:** deepen SSc pack — cell-card / CL·MONDO hints on Tfh–B–IL-21; optional more public PMIDs; keep EBV hypothesized. RA packs regenerable.  
-3. Promote selected `ISI_CONTROLLED_RELATIONSHIP_TYPES` onto `HSI_EDGE_TYPES` when SSc edges need them (additive; do not rewrite RA edgeTypes wholesale).  
-4. Partner outreach / `partnerSigned` / rights pack (unchanged from implementation audit).  
-5. **Hold the line:** no 12-agent runtime, no Neon merge, no immunecity edits, no Akeno live CDS, no S3 credential files in git.
+2. ~~Deepen SSc pack~~ — cell-card / CL·MONDO hints + extra PMIDs landed (P1.1).  
+3. ~~Promote selected ISI predicates onto `HSI_EDGE_TYPES`~~ — **P1.4 done** (additive; RA edgeTypes untouched).  
+4. **Next:** P1.6 curator UX after partner session; partner rights/FT licenses remain gated.  
+5. **Hold the line:** no 12-agent runtime, no Neon merge, no Akeno live CDS, no S3 credential files in git.
 
 ---
 

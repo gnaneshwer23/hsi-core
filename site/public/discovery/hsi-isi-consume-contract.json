@@ -15,7 +15,7 @@
   "testPilotMode": false,
   "testFixtureBanner": null,
   "allowHypotheticalPartnerEnv": "ALLOW_HYPOTHETICAL_PARTNER",
-  "generatedAt": "2026-11-01T23:43:03.919Z",
+  "generatedAt": "2026-11-01T23:55:09.602Z",
   "package": "hsi-core",
   "outputsManifestSchema": "hsi-outputs-manifest-1",
   "compatibility": {
@@ -31,7 +31,7 @@
       "No hypothetical fixture active.",
       "Vertical: dual_track · activeScope=ra-tnf · prdMvpTarget=ssc-tfh-b-il21.",
       "Technical adapter spikes (RDKit/OpenMM/REINVENT4/ESM) are optional_proposal — do not block ISI Discovery core load.",
-      "P0.6 walkthrough/export hygiene landed for Apolo named lock; next substrate depth is P1.4 systems/ISI predicates (not more adapter spikes)."
+      "P1.4 systems/ISI predicates first-class on HSI_EDGE_TYPES (additive); remaining preds stay aliased. Next substrate depth is P1.6 curator UX after partner session (not more adapter spikes)."
     ]
   },
   "vertical": {

@@ -21,6 +21,8 @@ export {
 export {
   HSI_DOMAINS,
   HSI_EDGE_TYPES,
+  HSI_PROMOTED_ISI_RELATIONSHIPS,
+  HSI_PROMOTED_SYSTEMS_PREDICATES,
   isHsiDomain,
   isHsiEdgeType,
   type HsiActionStub,

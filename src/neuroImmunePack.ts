@@ -190,6 +190,7 @@ export function buildNeuroImmunePack(opts?: {
       "Not clinical decision support. autoApproveIntoKg=false. No PHI.",
       `deepSeedsPresent=${deepSeedsPresent} because verified PMID edges landed.`,
       `P2.1 slice: ${HSI_NI_SEED_EDGES.length} edges · ${NI_PATHWAY_META.primaryPmids.length} PMIDs.`,
+      "P1.4: suppresses_peripheral_inflammation / signals_via_axis / associates_neuroimmune are first-class HSI_EDGE_TYPES; hypothesized human VNS keeps associated_with.",
     ],
   };
 }

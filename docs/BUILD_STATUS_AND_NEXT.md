@@ -1,7 +1,7 @@
 # HSI build status and next
 
 **Audit date:** 1 November 2026  
-**HEAD at write:** (post P0.6 Apolo walkthrough / export hygiene) — named partner **Apolo Pharma** (`partner:apolo-pharma`); `partnerSigned=true` + `legalBinding=true` → `lockedPilot=true`; MoU paperwork **operator-asserted**; Stage 1 numeric thresholds **`partner_agreed`** (2026-11-01); Stage 1 corpus licensing clearance **48/48** (`oa_reuse` + `cite_metadata_pilot`; uncleared=0); walkthrough + acceptance refreshed; not CDS
+**HEAD at write:** (post P1.4 edge promotion) — selected systems/ISI predicates first-class on `HSI_EDGE_TYPES`; named partner **Apolo Pharma** (`partner:apolo-pharma`); `lockedPilot=true`; Stage 1 clearance 48/48; not CDS
 
 
 **Edit target:** `hsi-core` primary · immunecity HSI-consume wiring allowed under freeze lift · Neon **`red-wave` only** for HSI · no DeliverX  
@@ -13,7 +13,7 @@
 
 ## Executive verdict
 
-hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance, Gate C checklists, versioned publish, RA/anti-TNF scope lock + depth, Discovery Centre, R2 validation, translation/Akeno HITL scaffolding, Aksh agent catalog, Neon isolation, systems-vision + AI position stubs). **Vertical decision A (dual-track) is recorded:** RA stays Stage 1 `activeScope`; SSc / gut / neuro packs have **depth PMIDs** (honest `uncertain`/`hypothesized`; RA untouched). **Named partner Apolo Pharma** is locked (`lockedPilot=true`; MoU operator-asserted; Stage 1 clearance 48/48; KPIs `partner_agreed`; **P0.6** walkthrough/export hygiene landed; still not CDS; Gate C never auto-approves). **P2.2–P3.3** plus **AF3/TDC/ISI research sign-off fixtures** and **Boltz weights-policy gate** (`WEIGHTS_POLICY_ACK`; no weight vendoring) land as proposal-only stubs → Gate C pending. **Discovery `/discovery` MAP** ships an interactive evidence **graph explorer**. **P0.5** immunecity Gate C human queue shipped (`090d7ea`). **Next = P1.4** systems/ISI predicates. Live CDS / PHI / commercial AF3 rights stay gated.
+hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance, Gate C checklists, versioned publish, RA/anti-TNF scope lock + depth, Discovery Centre, R2 validation, translation/Akeno HITL scaffolding, Aksh agent catalog, Neon isolation, systems-vision + AI position stubs). **Vertical decision A (dual-track) is recorded:** RA stays Stage 1 `activeScope`; SSc / gut / neuro packs have **depth PMIDs** (honest `uncertain`/`hypothesized`; RA untouched). **Named partner Apolo Pharma** is locked (`lockedPilot=true`; MoU operator-asserted; Stage 1 clearance 48/48; KPIs `partner_agreed`; **P0.6** walkthrough/export hygiene landed; still not CDS; Gate C never auto-approves). **P1.4** promotes selected gut/neuro/ISI predicates onto `HSI_EDGE_TYPES` (additive; alias maps kept for remainder). **P2.2–P3.3** plus **AF3/TDC/ISI research sign-off fixtures** and **Boltz weights-policy gate** (`WEIGHTS_POLICY_ACK`; no weight vendoring) land as proposal-only stubs → Gate C pending. **Discovery `/discovery` MAP** ships an interactive evidence **graph explorer**. **P0.5** immunecity Gate C human queue shipped (`090d7ea`). **Next = P1.6** curator UX (after partner session). Live CDS / PHI / commercial AF3 rights stay gated.
 
 | Plane | Light | One line |
 |-------|-------|----------|
@@ -224,9 +224,9 @@ One-sprint-sized items. Mark **[DECISION]** where the user must choose before co
 | P1.1 | **DONE:** deepen SSc pack — cell-card / CL·MONDO *hints* on Tfh–B–IL-21 neighbourhood; additional public PMIDs (29626172, 37763102) | `sscCellCards.ts` + pack; RA packs regenerable; EBV hypothesized |
 | P1.2 | **DONE (first slice):** thin SSc Tfh–B–IL-21 pack (verified PMIDs; EBV `hypothesized`); RA intact | `hsi-ssc-pathway-pack.*`; do not delete RA claim ids |
 | P1.3 | **DONE:** Deepen one **gut–immune** neighbourhood (SCFA/butyrate ↔ mucosal Treg/Th17 + barrier) with honest `uncertain`/`hypothesized` grades | `seed/gutScfaMucosal.ts` + `hsi-gut-immune-pack.*`; Discovery secondary axis; RA/SSc untouched |
-| P1.4 | **NEXT:** Promote selected systems / ISI predicates onto `HSI_EDGE_TYPES` when first-class gut predicates are needed | Additive map; gut pack currently maps via `SYSTEMS_PREDICATE_TO_HSI_EDGE` |
+| P1.4 | **DONE:** Promote selected systems / ISI predicates onto `HSI_EDGE_TYPES` | Additive: `modulates_immune`, `produces_metabolite_sensed_by`, `suppresses_peripheral_inflammation`, `signals_via_axis`, `associates_neuroimmune`, `produces`, `activates`, `suppresses`, `differentiates_into`; alias maps kept for remainder; gut/neuro/SSc-002 seeds use first-class labels; RA Stage 1 untouched |
 | P1.5 | **DONE:** wire **ModelProposalArtifact** → Gate C checklist *draft rows* (`modelProposals`; `autoApprove=false`) | `src/modelProposal.ts`; never flips `hsiGrade` |
-| P1.6 | Curator UX inside hsi-core after pilot learning (richer gap/Gate C markdown) | P2 in vision doc; only after partner session |
+| P1.6 | **NEXT:** Curator UX inside hsi-core after partner learning (richer gap/Gate C markdown) | P2 in vision doc; only after partner session |
 
 ### P2 — later / gated substrate
 
@@ -248,7 +248,8 @@ One-sprint-sized items. Mark **[DECISION]** where the user must choose before co
 | P0.2-HSI | **DONE:** ISI consume contract + partner flip-readiness (+ Apolo named lock) | `lockedPilot=true`; MoU operator-asserted; still not CDS |
 | P0.5-WIRING | **DONE:** playbook + immunecity Gate C human queue (`090d7ea`) | Human-only approve/reject/defer; never flips `hsiGrade` |
 | P0.6 | **DONE:** Apolo walkthrough / export hygiene | Acceptance + walkthrough + pack notes; `bun run outputs` regenerable |
-| **NEXT** | **P1.4 systems / ISI predicates** | Promote selected gut/systems predicates onto `HSI_EDGE_TYPES` (additive); no commercial AF3 claim |
+| P1.4 | **DONE:** systems / ISI predicates first-class | `HSI_EDGE_TYPES` + identity maps; gut/neuro/SSc-002 updated; RA untouched |
+| **NEXT** | **P1.6 curator UX** | Richer gap/Gate C markdown after partner session; no commercial AF3 claim |
 
 ### Out-of-repo (track; do not implement here)
 

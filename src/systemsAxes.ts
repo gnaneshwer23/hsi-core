@@ -13,7 +13,10 @@
  *
  * See docs/HSI_SYSTEMS_VISION_MAP.md.
  */
-import type { HsiEdgeType } from "./schema";
+import {
+  HSI_PROMOTED_SYSTEMS_PREDICATES,
+  type HsiEdgeType,
+} from "./schema";
 import {
   DISEASE_VERTICAL_STUBS,
   IMMUNE_CELL_SPINE_NODES,
@@ -417,7 +420,9 @@ export const DISEASE_TISSUE_BIOMARKER_STUBS: readonly DiseaseTissueBiomarkerStub
 /**
  * Gut–immune and brain–immune predicates.
  * Prefer hypothesized_to / associates_with grades until evidence is curated.
- * Mapped to nearest Phase 0 HSI_EDGE_TYPES (same pattern as ISI_CONTROLLED_RELATIONSHIP_TYPES).
+ *
+ * P1.4: selected predicates are first-class on HSI_EDGE_TYPES (identity map).
+ * Remaining stay aliased to nearest Phase 0 / core types for back-compat.
  */
 export const SYSTEMS_CROSS_AXIS_PREDICATES = [
   // Gut ↔ immune
@@ -441,20 +446,28 @@ export const SYSTEMS_CROSS_AXIS_PREDICATES = [
 export type SystemsCrossAxisPredicate =
   (typeof SYSTEMS_CROSS_AXIS_PREDICATES)[number];
 
+/**
+ * Map systems predicates → HsiEdgeType.
+ * Promoted (P1.4) predicates identity-map; others keep Phase 0 aliases.
+ * Do not delete alias entries — packs/exports and Discovery still read this table.
+ */
 export const SYSTEMS_PREDICATE_TO_HSI_EDGE: Record<
   SystemsCrossAxisPredicate,
   HsiEdgeType
 > = {
-  modulates_immune: "associated_with",
-  produces_metabolite_sensed_by: "upregulates",
+  // First-class (P1.4)
+  modulates_immune: "modulates_immune",
+  produces_metabolite_sensed_by: "produces_metabolite_sensed_by",
+  signals_via_axis: "signals_via_axis",
+  suppresses_peripheral_inflammation: "suppresses_peripheral_inflammation",
+  associates_neuroimmune: "associates_neuroimmune",
+  // Still alias-only (not yet needed as seed edgeType)
   compromises_barrier: "worsens",
   recruits_to_mucosa: "associated_with",
   cross_reacts_with: "associated_with",
-  signals_via_axis: "bridges_domain",
   crosses_bbb: "associated_with",
   activates_glia: "upregulates",
-  suppresses_peripheral_inflammation: "inhibits",
-  associates_neuroimmune: "associated_with",
+  // Epistemic / measurement — keep aliased (teachingStatus carries hypothesis)
   hypothesized_gut_immune: "associated_with",
   hypothesized_brain_immune: "associated_with",
   measured_in_compartment: "biomarker_of",
@@ -961,6 +974,8 @@ export type SystemsVisionBundle = {
   crossAxisPredicates: {
     predicates: readonly SystemsCrossAxisPredicate[];
     toHsiEdge: typeof SYSTEMS_PREDICATE_TO_HSI_EDGE;
+    /** P1.4 — systems predicates that are first-class HsiEdgeType (identity map). */
+    firstClassOnHsi: typeof HSI_PROMOTED_SYSTEMS_PREDICATES;
     hypothesisCapable: readonly SystemsCrossAxisPredicate[];
   };
   patientDataPlane: readonly PatientDataPlaneRule[];
@@ -1033,6 +1048,7 @@ export function buildSystemsVisionBundle(opts?: {
     crossAxisPredicates: {
       predicates: SYSTEMS_CROSS_AXIS_PREDICATES,
       toHsiEdge: SYSTEMS_PREDICATE_TO_HSI_EDGE,
+      firstClassOnHsi: HSI_PROMOTED_SYSTEMS_PREDICATES,
       hypothesisCapable: SYSTEMS_HYPOTHESIS_CAPABLE_PREDICATES,
     },
     patientDataPlane: PATIENT_DATA_PLANE_RULES,
@@ -1054,6 +1070,7 @@ export function buildSystemsVisionBundle(opts?: {
       "RA Stage 1 scopeLocked remains authoritative; do not invent partnerSigned.",
       "Dual-track A: activeScope=ra-tnf; prdMvpTarget=ssc-tfh-b-il21 with thin seeds; RA comparison = Release 2; no wipe.",
       "P1.3: gut–immune SCFA ↔ mucosal Treg/Th17 deepSeedsPresent=true (hsi-gut-immune-pack).",
+      "P1.4: selected systems/ISI predicates first-class on HSI_EDGE_TYPES (modulates_immune, produces_metabolite_sensed_by, suppresses_peripheral_inflammation, signals_via_axis, associates_neuroimmune, produces, activates, suppresses, differentiates_into); remaining stay aliased; RA Stage 1 edgeTypes untouched.",
       "P2.1: neuroimmune vagus / cholinergic anti-inflammatory reflex deepSeedsPresent=true (hsi-neuroimmune-pack); human VNS–RA hypothesized only — no clinical cure claim.",
       "Patient data: HSI stores shapes/fixtures/handoff only — never raw PHI.",
       "P3 bio adapters never auto-promote hsiGrade or Gate C.",

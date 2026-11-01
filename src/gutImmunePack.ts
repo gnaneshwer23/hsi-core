@@ -186,6 +186,7 @@ export function buildGutImmunePack(opts?: {
       "Not clinical decision support. autoApproveIntoKg=false.",
       `deepSeedsPresent=${deepSeedsPresent} because verified PMID edges landed.`,
       `P1.3 slice: ${HSI_GUT_SEED_EDGES.length} edges · ${GUT_PATHWAY_META.primaryPmids.length} PMIDs.`,
+      "P1.4: modulates_immune / produces_metabolite_sensed_by are first-class HSI_EDGE_TYPES (identity map); hypothesized Th17 frames keep Phase 0 directional types.",
     ],
   };
 }

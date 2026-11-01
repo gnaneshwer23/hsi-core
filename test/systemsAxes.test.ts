@@ -6,6 +6,7 @@ import {
   EXTERNAL_GENOME_POINTER_SCHEMA,
   FUTURE_TECH_ADAPTER_STUBS,
   GUT_MICROBIOME_ENTITY_STUBS,
+  HSI_PROMOTED_SYSTEMS_PREDICATES,
   MODEL_EVAL_HARNESS_STUB,
   MODEL_PROPOSAL_ARTIFACT_SCHEMA,
   NEUROIMMUNE_ENTITY_STUBS,
@@ -62,11 +63,20 @@ describe("systems vision axes stubs", () => {
     ).toBe(true);
   });
 
-  test("cross-axis predicates map to Phase 0 HSI edges; hypothesis set non-empty", () => {
+  test("cross-axis predicates map to HSI edges; P1.4 promoted identity-map", () => {
     for (const p of SYSTEMS_CROSS_AXIS_PREDICATES) {
       expect(isSystemsCrossAxisPredicate(p)).toBe(true);
       expect(isHsiEdgeType(SYSTEMS_PREDICATE_TO_HSI_EDGE[p])).toBe(true);
     }
+    for (const p of HSI_PROMOTED_SYSTEMS_PREDICATES) {
+      expect(isHsiEdgeType(p)).toBe(true);
+      expect(SYSTEMS_PREDICATE_TO_HSI_EDGE[p]).toBe(p);
+    }
+    // Still alias-only (not first-class)
+    expect(SYSTEMS_PREDICATE_TO_HSI_EDGE.compromises_barrier).toBe("worsens");
+    expect(SYSTEMS_PREDICATE_TO_HSI_EDGE.hypothesized_gut_immune).toBe(
+      "associated_with",
+    );
     expect(SYSTEMS_HYPOTHESIS_CAPABLE_PREDICATES.length).toBeGreaterThanOrEqual(4);
     expect(SYSTEMS_HYPOTHESIS_CAPABLE_PREDICATES).toContain(
       "hypothesized_gut_immune",
@@ -74,6 +84,12 @@ describe("systems vision axes stubs", () => {
     expect(SYSTEMS_HYPOTHESIS_CAPABLE_PREDICATES).toContain(
       "hypothesized_brain_immune",
     );
+
+    const bundle = buildSystemsVisionBundle();
+    expect(bundle.crossAxisPredicates.firstClassOnHsi).toEqual([
+      ...HSI_PROMOTED_SYSTEMS_PREDICATES,
+    ]);
+    expect(bundle.invariants.some((s) => s.includes("P1.4"))).toBe(true);
   });
 
   test("patient plane never-stores PHI; adapters never flip grades", () => {

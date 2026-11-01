@@ -42,6 +42,15 @@ describe("P2.1 neuroimmune vagus / cholinergic anti-inflammatory reflex", () => 
     const humanVns = HSI_NI_SEED_EDGES.find((e) => e.id === "HSI-E-NI-006");
     expect(humanVns?.teachingStatus).toBe("hypothesized");
     expect(humanVns?.provenance?.pmid).toBe("27382171");
+    // Hypothesized human VNS–RA keeps Phase 0 associated_with
+    expect(humanVns?.edgeType).toBe("associated_with");
+
+    const vagusTnf = HSI_NI_SEED_EDGES.find((e) => e.id === "HSI-E-NI-001");
+    expect(vagusTnf?.edgeType).toBe("suppresses_peripheral_inflammation");
+    const reflex = HSI_NI_SEED_EDGES.find((e) => e.id === "HSI-E-NI-002");
+    expect(reflex?.edgeType).toBe("signals_via_axis");
+    const jakStat = HSI_NI_SEED_EDGES.find((e) => e.id === "HSI-E-NI-004");
+    expect(jakStat?.edgeType).toBe("associates_neuroimmune");
   });
 
   test("pack + systems vision deepSeedsPresent; RA/SSc/gut + partnerSigned untouched", () => {

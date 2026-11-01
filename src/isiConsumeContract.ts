@@ -559,7 +559,7 @@ export function buildIsiConsumeContractBundle(opts?: {
           : "No hypothetical fixture active.",
         `Vertical: ${vertical.verticalStrategy} · activeScope=${vertical.activeScope} · prdMvpTarget=${vertical.prdMvpTarget}.`,
         "Technical adapter spikes (RDKit/OpenMM/REINVENT4/ESM) are optional_proposal — do not block ISI Discovery core load.",
-        "P0.6 walkthrough/export hygiene landed for Apolo named lock; next substrate depth is P1.4 systems/ISI predicates (not more adapter spikes).",
+        "P1.4 systems/ISI predicates first-class on HSI_EDGE_TYPES (additive); remaining preds stay aliased. Next substrate depth is P1.6 curator UX after partner session (not more adapter spikes).",
       ],
     },
     vertical: {

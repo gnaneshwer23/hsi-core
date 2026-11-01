@@ -41,8 +41,14 @@ describe("P1.3 gut–immune SCFA ↔ mucosal Treg/Th17", () => {
     const th17Inhibit = HSI_GUT_SEED_EDGES.find((e) => e.id === "HSI-E-GUT-006");
     expect(th17Promote?.teachingStatus).toBe("hypothesized");
     expect(th17Inhibit?.teachingStatus).toBe("hypothesized");
+    // Hypothesized frames keep Phase 0 directional types (systems pred still aliased)
     expect(th17Promote?.edgeType).toBe("upregulates");
     expect(th17Inhibit?.edgeType).toBe("inhibits");
+
+    const butyrateTreg = HSI_GUT_SEED_EDGES.find((e) => e.id === "HSI-E-GUT-003");
+    expect(butyrateTreg?.edgeType).toBe("produces_metabolite_sensed_by");
+    const clostridia = HSI_GUT_SEED_EDGES.find((e) => e.id === "HSI-E-GUT-001");
+    expect(clostridia?.edgeType).toBe("modulates_immune");
   });
 
   test("pack + systems vision deepSeedsPresent; RA lock + partnerSigned untouched", () => {
