@@ -310,7 +310,8 @@ export function DiscoveryCentre() {
             </p>
             <p className="dc-banner dc-banner-info">
               Phase 8 = HSI translation substrate. Akeno HITL consumer at{" "}
-              <Link to="/akeno">/akeno</Link> — not live CDS.
+              <Link to="/akeno">/akeno</Link> — not live CDS. Aksh agent
+              names: <Link to="/aksh-agents">/aksh-agents</Link>.
             </p>
           </div>
           <span className="eyebrow">ISI · Discovery Centre · Phase 8</span>
@@ -873,7 +874,8 @@ export function DiscoveryCentre() {
               <span className="dc-pill">NOW</span>
               <strong>Akeno HITL</strong>
               <p>
-                <Link to="/akeno">/akeno</Link> · not CDS · no Akeno Neon
+                <Link to="/akeno">/akeno</Link> · not CDS · no Akeno Neon ·{" "}
+                <Link to="/aksh-agents">agent catalog</Link>
               </p>
             </div>
           </div>

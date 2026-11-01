@@ -196,6 +196,26 @@ export {
 } from "./akenoConsumer";
 
 export {
+  AKSH_AGENT_ALIASES,
+  AKSH_AGENT_CATALOG_SCHEMA,
+  AKSH_AGENT_DIRECTORY,
+  AKSH_AGENT_PROVENANCE,
+  AKSH_AGENT_REGISTER,
+  AKSH_OUT_OF_REGISTRY,
+  buildAkshAgentCatalog,
+  canonicalAkshAgentId,
+  listAkshDirectoryNames,
+  listAkshRegisterIds,
+  listAllAkshAgentNames,
+  serializeAkshAgentCatalog,
+  type AkshAgentCatalog,
+  type AkshDirectoryAgentName,
+  type AkshDirectoryEntry,
+  type AkshRegisterAgentId,
+  type AkshRegisterEntry,
+} from "./akshAgents";
+
+export {
   HSI_DISCOVERY_LOOP_STEPS,
   HSI_ILLUSTRATIVE_DISEASE_CONTEXTS,
   buildDiscoveryCentreMeta,

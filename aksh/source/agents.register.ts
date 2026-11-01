@@ -1,0 +1,475 @@
+/**
+ * READ-ONLY provenance snapshot — not compiled by hsi-core.
+ * Source: https://github.com/gnaneshwer23/aksh-health-redesign
+ * Commit: 404026eaada304f732226a51b9434b32fb6c6d47
+ * Relative path under packages/platform-uk/ — imports will not resolve here.
+ * Canonical catalog for HSI: aksh/agent-catalog.json + src/akshAgents.ts
+ */
+/**
+ * The agent register: one contract per agent, and the loop they form with the clinician in it. Source: Volume I PRD
+ * Ch.5 (human review) and Ch.7 (agent platform, FR-AGT-001…038), journey FLOW-JRN-1, and the July 2026 naming
+ * reference. CONDUCTOR reads its review order from here (lib/clinical-proof/agent-orchestration.ts), and
+ * tests/agent-register.test.ts fails when a contract is incomplete, evidence is missing, or the code and the register
+ * disagree. Product names are for the app and sales material; the public website describes functions, not names.
+ *
+ * Status follows lib/status/capabilities.ts: no agent runs on real patients in production. Agents run in simulation
+ * (the clinical-proof site) until their release criteria are met.
+ */
+import type { CapabilityStatus } from "../status/capabilities";
+import type { HumanGateId, ReviewQueueItemType } from "../types";
+
+export type AgentId =
+  | "CONDUCTOR"
+  | "VOICE"
+  | "CANVAS"
+  | "SYNTHESIS"
+  | "DrASSIST"
+  | "GUARDIAN"
+  | "HORIZON"
+  | "NEXUS"
+  | "PATHWAY"
+  | "BRIDGE"
+  | "SHIELD"
+  | "COMPASS"
+  | "PRISM"
+  | "ATLAS";
+
+/** Where an agent sits in the loop (FLOW-JRN-1): intake → drafts → clinician → coordination → staging → audit → learning. */
+export type LoopStage = "orchestrate" | "intake" | "draft" | "safety" | "risk" | "correlate" | "code" | "coordinate" | "stage" | "audit" | "population" | "imaging" | "research";
+
+/** When an agent runs. */
+export type Trigger =
+  | "case_run" // CONDUCTOR starts a case run
+  | "conductor_parallel" // run by CONDUCTOR, in parallel, against one shared patient context
+  | "conductor_after" // run by CONDUCTOR after the parallel set
+  | "intake_session" // a clinician starts dictated or typed intake
+  | "after_note_and_codes_accepted" // PATHWAY: only once the note and codes are accepted (FR-AGT-024)
+  | "after_case_accepted" // BRIDGE: only after the case is accepted (FR-AGT-030)
+  | "every_event" // SHIELD: every agent run and every decision (FR-AGT-032)
+  | "on_request" // COMPASS brief; P4 PRISM/ATLAS synthetic eval harness
+  | "never"; // reserved for truly unbuilt agents (FR-AGT-033)
+
+/** Actions no agent may take (lib/agents/contracts/types.ts PROHIBITED_ACTION_PATTERNS uses the same list). */
+export const PROHIBITED_FOR_ALL = ["prescribe or change a dose", "finalise a diagnosis", "modify a source record", "send a message to a patient", "write to a live clinical record"] as const;
+
+export type AgentContract = {
+  id: AgentId;
+  /** Product name (app and sales material). */
+  productName: string;
+  /** Identifiers still used in code and APIs (FR-AGT-003 keeps them as aliases). */
+  legacyIds: string[];
+  role: string;
+  stage: LoopStage;
+  trigger: Trigger;
+  /** Sub-capability of another agent (FR-AGT-004), not a peer. */
+  partOf?: AgentId;
+  inputs: string[];
+  outputs: string[];
+  /** The review-queue item a clinician decides, when the agent produces one. */
+  reviewItem?: ReviewQueueItemType;
+  /** Gate beyond item-level accept/edit/reject, when one applies. */
+  humanGate?: HumanGateId;
+  /** Who reviews the output. */
+  reviewer: string;
+  /** ENABLE_LLM_<flag> lets it call a model in simulation only (lib/ai/llm-gate.ts); null = rules only. */
+  modelFlag: "SYNTHESIS" | "GUARDIAN" | "ORACLE" | "DR_ASSIST" | "NEXUS" | "EQUITY" | null;
+  /** Data it may read. */
+  reads: string[];
+  /** What it must never do, beyond PROHIBITED_FOR_ALL. */
+  prohibited: string[];
+  /** What happens when it fails. */
+  onFailure: string;
+  /** Requirement ids in the Volume I PRD. */
+  requirements: string[];
+  /** Tests that verify the contract. Empty only for planned agents. */
+  evidence: string[];
+  status: CapabilityStatus;
+  environment: "simulation" | "none";
+  /** What must be true before the agent may run for real patients (lib/agents/readiness.ts evaluates it). */
+  release?: ReleaseCriteria;
+};
+
+/**
+ * Release criteria. Numeric targets are measured on decided drafts in the agent loop (synthetic validation) and are
+ * PROPOSED: the clinical safety officer confirms or changes them; `targetsConfirmedBy` records who and when.
+ */
+export type ReleaseCriteria = {
+  /** Name the loop records against (review item metadata.agent). */
+  tallyName?: string;
+  minDecided?: number;
+  maxRejectionRate?: number;
+  minAcceptedUneditedRate?: number;
+  /** PATHWAY: share of drafted referrals a clinician confirmed. */
+  minConfirmationRate?: number;
+  signOffs: string[];
+  targetsConfirmedBy: null | { name: string; role: string; date: string };
+};
+
+const SIGN_OFFS = [
+  "Clinical safety case and hazard log signed by the clinical safety officer",
+  "Data protection impact assessment and regulatory opinion",
+  "Approved go-live for the organisation",
+];
+
+const THROWS = "The whole run stops and no partial result is shown (FR-AGT-036/037); the clinician sees an explicit failure.";
+
+export const AGENTS: AgentContract[] = [
+  {
+    id: "CONDUCTOR",
+    productName: "Aksh Orchestrator",
+    legacyIds: [],
+    role: "Supervisor: runs the agents in a fixed order against one shared patient context, sets priority, review order and safety route, hands drafts to the clinician",
+    stage: "orchestrate",
+    trigger: "case_run",
+    inputs: ["patientId", "transcript (optional)", "proposed drug (optional)", "agent inclusion flags", "timeouts"],
+    outputs: ["OrchestrationResult (independent slots per agent)", "queue priority", "review order", "safety route", "one SHIELD event"],
+    reviewer: "none of its own; every output is reviewed as a draft",
+    modelFlag: null,
+    reads: ["patient view (care network: CGM, HbA1c, laboratory results, medicines)", "agent outputs"],
+    prohibited: ["decide at runtime which agents to skip on clinical grounds (fixed, deterministic order, FR-AGT-002)", "accept anything on a clinician's behalf"],
+    onFailure: THROWS,
+    requirements: ["FR-AGT-001", "FR-AGT-002", "FR-AGT-006", "FR-AGT-007", "FR-AGT-008", "FR-AGT-009", "FR-AGT-010", "FR-AGT-011"],
+    evidence: ["tests/clinical-proof-orchestration.test.ts", "tests/clinical-spine-phase-c.test.ts", "tests/patient-spine-db.test.ts"],
+    status: "in_validation",
+    environment: "simulation",
+    release: { signOffs: [...SIGN_OFFS, "Orchestration failure drills recorded (timeouts, evidence failures)"], targetsConfirmedBy: null },
+  },
+  {
+    id: "VOICE",
+    productName: "Aksh Voice",
+    legacyIds: [],
+    partOf: "CANVAS",
+    role: "Consultation capture: dictation to a transcript with a confidence score",
+    stage: "intake",
+    trigger: "intake_session",
+    inputs: ["dictated consultation (simulated transcription unless a speech service is configured)"],
+    outputs: ["transcript with transcriptConfidence"],
+    reviewItem: "voice_transcript",
+    reviewer: "the consulting clinician listens back and checks the transcript",
+    modelFlag: null,
+    reads: ["the consultation audio of the current session only"],
+    prohibited: ["present a transcript as ground truth without its confidence (FR-AGT-014)", "send patient audio to a cloud speech service without a governed processor decision"],
+    onFailure: "Intake continues as typed input; no transcript is invented.",
+    requirements: ["FR-AGT-004", "FR-AGT-014"],
+    evidence: ["tests/workflow-scenarios.test.ts"],
+    status: "in_validation",
+    environment: "simulation",
+    release: { signOffs: [...SIGN_OFFS, "Governed decision on speech processing (on-premise or processor agreement)"], targetsConfirmedBy: null },
+  },
+  {
+    id: "CANVAS",
+    productName: "Aksh Canvas",
+    legacyIds: [],
+    role: "Clinical intake: structures the consultation into draft resources with a trace from each value to its source",
+    stage: "intake",
+    trigger: "intake_session",
+    inputs: ["ConsultationInput (transcript, pathway hint, confidence mode)"],
+    outputs: ["draft resources", "GenerationTraceItem per inferred field"],
+    reviewer: "the consulting clinician",
+    modelFlag: null,
+    reads: ["the consultation input", "the patient view"],
+    prohibited: ["emit an inferred value without its source snippet (FR-AGT-015)"],
+    onFailure: "No draft is created; the clinician is told intake failed.",
+    requirements: ["FR-AGT-015"],
+    evidence: ["tests/export-mapping.test.ts", "tests/workflow-scenarios.test.ts"],
+    status: "in_validation",
+    environment: "simulation",
+    release: { signOffs: SIGN_OFFS, targetsConfirmedBy: null },
+  },
+  {
+    id: "SYNTHESIS",
+    productName: "Aksh Synthesis",
+    legacyIds: [],
+    role: "Clinical documentation: structured consultation note (SOAP) draft",
+    stage: "draft",
+    trigger: "conductor_parallel",
+    inputs: ["transcript", "patient label", "shared patient context"],
+    outputs: ["SynthesisDraft (mode llm or deterministic, SOAP fields, safety notes, confidence)"],
+    reviewItem: "soap_note",
+    reviewer: "clinician: accept, edit or reject",
+    modelFlag: "SYNTHESIS",
+    reads: ["shared patient context"],
+    prohibited: ["claim a note was filed to a record (FR-AGT-012)"],
+    onFailure: THROWS,
+    requirements: ["FR-AGT-012", "FR-AGT-013"],
+    evidence: ["tests/clinical-proof-orchestration.test.ts", "tests/review-decision-db.test.ts"],
+    status: "in_validation",
+    environment: "simulation",
+    release: { tallyName: "SYNTHESIS", minDecided: 50, maxRejectionRate: 0.1, minAcceptedUneditedRate: 0.6, signOffs: SIGN_OFFS, targetsConfirmedBy: null },
+  },
+  {
+    id: "DrASSIST",
+    productName: "DrAssist AI",
+    legacyIds: ["DR_ASSIST"],
+    partOf: "SYNTHESIS",
+    role: "Coding support and context: SNOMED CT / ICD-10 suggestions with confidence",
+    stage: "code",
+    trigger: "conductor_after",
+    inputs: ["patientId", "known conditions and medicines"],
+    outputs: ["DrAssistDraft (codes with system and confidence)"],
+    reviewItem: "diagnosis_codes",
+    reviewer: "clinician: accept, edit or reject",
+    modelFlag: "DR_ASSIST",
+    reads: ["shared patient context"],
+    prohibited: ["present a suggestion as a terminology-server-confirmed code (FR-AGT-026)", "invent a condition (FR-AGT-027)"],
+    onFailure: THROWS,
+    requirements: ["FR-AGT-004", "FR-AGT-026", "FR-AGT-027"],
+    evidence: ["tests/clinical-proof-orchestration.test.ts"],
+    status: "in_validation",
+    environment: "simulation",
+    release: { tallyName: "Dr.Assist", minDecided: 50, maxRejectionRate: 0.1, minAcceptedUneditedRate: 0.7, signOffs: SIGN_OFFS, targetsConfirmedBy: null },
+  },
+  {
+    id: "GUARDIAN",
+    productName: "Aksh Guardian",
+    legacyIds: [],
+    role: "Medication safety: interactions, allergies and low-glucose risk; the only source of safety urgency",
+    stage: "safety",
+    trigger: "conductor_parallel",
+    inputs: ["patientId", "proposed drug (optional)", "Aksh Diabetes safety notes"],
+    outputs: ["GuardianDraft (data source, overall status red/amber/green, interactions, actions)"],
+    reviewItem: "guardian_alert",
+    humanGate: "medication_decision",
+    reviewer: "prescriber (pharmacist or GP) confirms the medication decision",
+    modelFlag: "GUARDIAN",
+    reads: ["medicines list", "allergies", "knowledge graph or its labelled stand-in"],
+    prohibited: ["hide its data source (FR-AGT-016)", "claim an alert was filed (FR-AGT-018)"],
+    onFailure: THROWS,
+    requirements: ["FR-AGT-016", "FR-AGT-017", "FR-AGT-018"],
+    evidence: ["tests/clinical-proof-hitl.test.ts", "tests/clinical-proof-hazard-trace.test.ts", "tests/review-case-decision-db.test.ts"],
+    status: "in_validation",
+    environment: "simulation",
+    release: { tallyName: "GUARDIAN", minDecided: 50, maxRejectionRate: 0.2, signOffs: [...SIGN_OFFS, "Hazard test set: every known red interaction flagged"], targetsConfirmedBy: null },
+  },
+  {
+    id: "HORIZON",
+    productName: "Aksh Horizon",
+    legacyIds: ["ORACLE"],
+    role: "Risk and trajectory: the single composite risk score, with contributing factors (diabetes analysers add factors only)",
+    stage: "risk",
+    trigger: "conductor_parallel",
+    inputs: ["patientId", "Aksh Diabetes contributing factors (glucose, HbA1c, complications from laboratory results)"],
+    outputs: ["risk score and band with contributing factors"],
+    reviewItem: "oracle_update",
+    reviewer: "clinician: accept, edit or reject",
+    modelFlag: "ORACLE",
+    reads: ["patient view including laboratory results", "knowledge graph or its labelled stand-in"],
+    prohibited: ["invent a score, condition or medicine (FR-AGT-019)", "let another agent set a competing composite score (FR-AGT-020)"],
+    onFailure: THROWS,
+    requirements: ["FR-AGT-019", "FR-AGT-020", "FR-AGT-021"],
+    evidence: ["tests/clinical-proof-orchestration.test.ts", "tests/clinical-spine-diabetes.test.ts", "tests/lab-agents.test.ts"],
+    status: "in_validation",
+    environment: "simulation",
+    release: { tallyName: "HORIZON", minDecided: 50, maxRejectionRate: 0.15, signOffs: SIGN_OFFS, targetsConfirmedBy: null },
+  },
+  {
+    id: "NEXUS",
+    productName: "Aksh Nexus",
+    legacyIds: [],
+    role: "Clinical correlation: two or three cross-signal links worth considering, always a draft",
+    stage: "correlate",
+    trigger: "conductor_parallel",
+    inputs: ["patientId", "authorised context package"],
+    outputs: ["NexusDraft (status draft, correlations)"],
+    reviewer: "clinician, as input to their assessment; cannot trigger an action",
+    modelFlag: "NEXUS",
+    reads: ["supplied conditions, medicines and risk signals only"],
+    prohibited: ["return anything but a draft (FR-AGT-022)", "correlate data it was not supplied (FR-AGT-023)"],
+    onFailure: THROWS,
+    requirements: ["FR-AGT-022", "FR-AGT-023"],
+    evidence: ["tests/clinical-proof-orchestration.test.ts", "tests/clinical-spine-phase-c.test.ts"],
+    status: "in_validation",
+    environment: "simulation",
+    release: { signOffs: SIGN_OFFS, targetsConfirmedBy: null },
+  },
+  {
+    id: "PATHWAY",
+    productName: "Aksh Pathway",
+    legacyIds: ["REFERRAL"],
+    role: "Care coordination: referral package once the assessment is accepted",
+    stage: "coordinate",
+    trigger: "after_note_and_codes_accepted",
+    inputs: ["accepted review case (note and codes accepted)", "complication flags"],
+    outputs: ["referral package draft", "ServiceRequest in draft status"],
+    reviewItem: "referral_package",
+    humanGate: "referral_pathway",
+    reviewer: "responsible clinician confirms the referral",
+    modelFlag: null,
+    reads: ["the accepted case"],
+    prohibited: ["draft a referral from an unreviewed assessment (FR-AGT-024)", "treat its ServiceRequest as ready without a further accept (FR-AGT-025)"],
+    onFailure: "No referral draft is created; the accepted note and codes are unaffected.",
+    requirements: ["FR-AGT-024", "FR-AGT-025"],
+    evidence: ["tests/intervention-draft-shape.test.ts", "tests/diabetes-decision-escalation.test.ts"],
+    status: "in_validation",
+    environment: "simulation",
+    release: { tallyName: "PATHWAY", minDecided: 20, minConfirmationRate: 0.8, signOffs: [...SIGN_OFFS, "Referral thresholds in the rule registry signed off"], targetsConfirmedBy: null },
+  },
+  {
+    id: "BRIDGE",
+    productName: "Aksh Bridge",
+    legacyIds: [],
+    role: "Interoperability: stages the accepted case as FHIR R4; never writes to a live record",
+    stage: "stage",
+    trigger: "after_case_accepted",
+    inputs: ["accepted review case"],
+    outputs: ["FHIR R4 staging record (liveEmis false, ehrWriteAttempted false)"],
+    reviewer: "none; runs only after the clinician's accept",
+    modelFlag: null,
+    reads: ["the accepted case and its frozen evidence"],
+    prohibited: ["stage a draft or rejected case (FR-AGT-030)"],
+    onFailure: "The case stays accepted; the staging failure is shown to the reviewer.",
+    requirements: ["FR-AGT-030", "FR-AGT-031"],
+    evidence: ["tests/demo-launch-d1.test.ts"],
+    status: "in_validation",
+    environment: "simulation",
+    release: { signOffs: [...SIGN_OFFS, "Integration with the organisation's record system agreed and tested"], targetsConfirmedBy: null },
+  },
+  {
+    id: "SHIELD",
+    productName: "Aksh Shield",
+    legacyIds: [],
+    role: "Governance and audit: append-only, hash-chained record of every agent run and every decision",
+    stage: "audit",
+    trigger: "every_event",
+    inputs: ["events from every agent and every decision"],
+    outputs: ["audit row (who, what, when, version)"],
+    reviewer: "clinical safety officer (periodic review)",
+    modelFlag: null,
+    reads: ["event metadata"],
+    prohibited: ["allow an audit row to be edited or deleted"],
+    onFailure: "A decision whose audit row cannot be written is rolled back and not recorded.",
+    requirements: ["FR-AGT-032"],
+    evidence: ["tests/clinical-proof-shield.test.ts", "tests/review-decision-db.test.ts", "tests/review-case-decision-db.test.ts"],
+    status: "in_validation",
+    environment: "simulation",
+    release: { signOffs: [...SIGN_OFFS, "Audit integrity check (hash chain) passes on the organisation's data"], targetsConfirmedBy: null },
+  },
+  {
+    id: "COMPASS",
+    productName: "Aksh Compass",
+    legacyIds: ["EQUITY"],
+    role: "Population health: aggregate disparity brief; never names a patient",
+    stage: "population",
+    trigger: "on_request",
+    inputs: ["organisation or region", "aggregate flags (small cells suppressed)"],
+    outputs: ["population brief (summary, priorities, actions)"],
+    reviewer: "the requesting population lead",
+    modelFlag: "EQUITY",
+    reads: ["aggregates only"],
+    prohibited: ["include a named or identifiable patient (FR-AGT-028)", "claim write-back to any system (FR-AGT-029)"],
+    onFailure: "No brief is produced; nothing is inferred.",
+    requirements: ["FR-AGT-028", "FR-AGT-029"],
+    evidence: ["tests/api-contracts.test.ts"],
+    status: "in_validation",
+    environment: "simulation",
+    release: { signOffs: [...SIGN_OFFS, "Small-cell suppression reviewed by the data protection lead"], targetsConfirmedBy: null },
+  },
+  {
+    id: "PRISM",
+    productName: "Aksh Prism",
+    legacyIds: [],
+    role: "Imaging intelligence: synthetic DICOM-metadata eval scaffold (Phase 2 / P4)",
+    stage: "imaging",
+    trigger: "on_request",
+    inputs: ["synthetic imaging meta fixture", "optional authorised context package"],
+    outputs: ["imaging-adjacent findings draft", "Guardian escalation", "human-review hook"],
+    reviewer: "the requesting clinician (HITL; not auto-accepted)",
+    modelFlag: null,
+    reads: ["synthetic imaging metadata fixtures only"],
+    prohibited: [
+      "claim live imaging deployment or PACS pixel access",
+      "write to a live clinical record",
+      "run inside CONDUCTOR REVIEW_ORDER / LOOP as an auto actor",
+    ],
+    onFailure: "No imaging draft is offered; Guardian BLOCK fails closed.",
+    requirements: ["FR-AGT-033"],
+    evidence: ["tests/p4-prism-atlas-scaffold.test.ts", "tests/phase2-capability-status.test.ts"],
+    status: "in_validation",
+    environment: "simulation",
+    release: {
+      signOffs: [...SIGN_OFFS, "Imaging use-case funding and safety case confirmed"],
+      targetsConfirmedBy: null,
+    },
+  },
+  {
+    id: "ATLAS",
+    productName: "Aksh Trials Agent",
+    legacyIds: [],
+    role: "Clinical research: protocol eligibility eval on controlled synthetic data (Phase 2 / P4)",
+    stage: "research",
+    trigger: "on_request",
+    inputs: ["synthetic protocol fixture", "synthetic cohort aggregate"],
+    outputs: ["eligibility draft", "Guardian escalation", "human-review hook"],
+    reviewer: "the requesting researcher or clinician (HITL; no clinical enablement)",
+    modelFlag: null,
+    reads: ["controlled synthetic research fixtures only"],
+    prohibited: [
+      "approve clinical recruitment or patient-level research export",
+      "write to a live clinical record",
+      "run inside CONDUCTOR REVIEW_ORDER / LOOP as an auto actor",
+    ],
+    onFailure: "No research draft is offered; Guardian BLOCK fails closed.",
+    requirements: ["FR-AGT-033"],
+    evidence: ["tests/p4-prism-atlas-scaffold.test.ts", "tests/phase2-capability-status.test.ts"],
+    status: "in_validation",
+    environment: "simulation",
+    release: {
+      signOffs: [...SIGN_OFFS, "Research use-case funding, ethics, and safety case confirmed"],
+      targetsConfirmedBy: null,
+    },
+  },
+];
+
+/**
+ * CONDUCTOR's review order (Volume I §7.3 step 4), in **canonical** register ids.
+ * P1-ALIAS-01: HORIZON replaces legacy ORACLE in this list; orchestration maps to
+ * ClinicalAgentId / output slots via `toOrchestrationAgentId` (legacy accept).
+ * GUARDIAN leads when the case is urgent.
+ */
+export const REVIEW_ORDER = {
+  normal: ["SYNTHESIS", "GUARDIAN", "HORIZON", "NEXUS", "DrASSIST"],
+  urgent: ["GUARDIAN", "HORIZON", "SYNTHESIS", "NEXUS", "DrASSIST"],
+} as const;
+
+/** Map product / legacy id → register canonical id (HORIZON, PATHWAY, COMPASS, DrASSIST). */
+export function canonicalAgentId(id: string): string {
+  const upper = id.trim();
+  for (const a of AGENTS) {
+    if (a.id === upper || a.legacyIds.includes(upper)) return a.id;
+  }
+  return upper;
+}
+
+/**
+ * Map register / product id → orchestration / ClinicalAgentId key still used in
+ * output slots and queue items (ORACLE, REFERRAL, EQUITY, DR_ASSIST→DrASSIST).
+ */
+export function toOrchestrationAgentId(id: string): string {
+  const canonical = canonicalAgentId(id);
+  if (canonical === "HORIZON") return "ORACLE";
+  if (canonical === "PATHWAY") return "REFERRAL";
+  if (canonical === "COMPASS") return "EQUITY";
+  if (canonical === "DrASSIST" || id === "DR_ASSIST") return "DrASSIST";
+  return canonical;
+}
+
+/** The loop, in order (FLOW-JRN-1). Each step names who acts; the clinician sits in the middle. */
+export const LOOP: { step: string; actor: AgentId | "CLINICIAN" | "AKSH_DIABETES"; detail: string }[] = [
+  { step: "Capture", actor: "VOICE", detail: "Dictation to a transcript with its confidence" },
+  { step: "Structure", actor: "CANVAS", detail: "Draft resources, each value traced to its source" },
+  { step: "Analyse", actor: "AKSH_DIABETES", detail: "Glucose, HbA1c, laboratory results and complications become factors and safety notes" },
+  { step: "Draft", actor: "CONDUCTOR", detail: "SYNTHESIS, GUARDIAN, HORIZON and NEXUS in parallel, then DrAssist; priority, review order and safety route set" },
+  { step: "Audit the run", actor: "SHIELD", detail: "One record of the run" },
+  { step: "Decide", actor: "CLINICIAN", detail: "Accept, edit or reject each draft; clear the gates; accept or reject the case" },
+  { step: "Coordinate", actor: "PATHWAY", detail: "Referral draft once the note and codes are accepted; a clinician confirms it" },
+  { step: "Stage", actor: "BRIDGE", detail: "Accepted content staged as FHIR R4; nothing written to a live record" },
+  { step: "Audit the decision", actor: "SHIELD", detail: "Every decision recorded with who and when" },
+  { step: "Learn", actor: "CLINICIAN", detail: "Outcome linked later; learning is reviewed and released by people, never automatic" },
+  { step: "Population", actor: "COMPASS", detail: "Aggregate briefs for population leads, on request" },
+];
+
+export function agent(id: AgentId): AgentContract {
+  const a = AGENTS.find((x) => x.id === id);
+  if (!a) throw new Error(`Unknown agent ${id}`);
+  return a;
+}

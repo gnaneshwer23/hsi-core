@@ -81,6 +81,7 @@ import {
 - P1 read-only stub: `loadAkshHitlMapFromExport()` / `listAkshHitlCards()` / `buildAkshHitlCard()` — claim, grade, LOINC, `akshNodeId`, required clinician action; `cdsSurfacable` stays false on seeds.
 - `bun run export:aksh-map` writes `exports/hsi-aksh-node-map.json` (`hsi-aksh-node-map-2`) with migration table from provisional `AKSH-N-*`.
 - See `docs/AKSH_HITL_CONSUMPTION.md` for the id scheme and provisional → durable map.
+- Aksh agent name catalog (12 directory / 14 register): `aksh/agent-catalog.json`, `src/akshAgents.ts`, site `/aksh-agents` — see [`docs/AKSH_AGENTS_IN_HSI.md`](docs/AKSH_AGENTS_IN_HSI.md).
 
 ## Axes (do not collapse)
 

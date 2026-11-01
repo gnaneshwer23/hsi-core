@@ -124,6 +124,12 @@ aksh:watch:irae-hyperglycemia`}
 // → exports/hsi-aksh-node-map.json`}
           </div>
           <p style={{ marginTop: "1.5rem" }}>
+            <Link to="/aksh-agents" className="btn">
+              Aksh agent catalog <span className="arrow">↗</span>
+            </Link>{" "}
+            <Link to="/akeno" className="btn btn-ghost">
+              Akeno HITL
+            </Link>{" "}
             <Link to="/docs" className="btn btn-ghost">
               Full install path <span className="arrow">↗</span>
             </Link>

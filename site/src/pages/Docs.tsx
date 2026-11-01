@@ -134,6 +134,11 @@ bun run site:dev
               <span className="title">AKSH_HITL_CONSUMPTION.md</span>
               <span className="arrow">↗</span>
             </a>
+            <a href="https://github.com/gnaneshwer23/hsi-core/blob/main/docs/AKSH_AGENTS_IN_HSI.md">
+              <span className="idx">04b</span>
+              <span className="title">AKSH_AGENTS_IN_HSI.md</span>
+              <span className="arrow">↗</span>
+            </a>
             <a href="https://github.com/gnaneshwer23/hsi-core/blob/main/docs/IMMUNECITY_GATE_C_COMMIT_MANUAL.md">
               <span className="idx">05</span>
               <span className="title">Gate C curator checklist</span>

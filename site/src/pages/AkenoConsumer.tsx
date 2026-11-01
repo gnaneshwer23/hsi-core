@@ -169,6 +169,8 @@ export function AkenoConsumer() {
               shapes — not the Neon patient dashboard, not Lovable marketing CDS
               claims.{" "}
               <Link to="/discovery">← Discovery TRANSLATE</Link>
+              {" · "}
+              <Link to="/aksh-agents">Aksh agent catalog</Link>
             </p>
           </div>
 
