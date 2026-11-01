@@ -10,7 +10,8 @@ bridge first. **Aksh** = clinician-safe half (HITL CDS). **ISI** = discovery hal
 **research intelligence** workflow with a real partner. See
 [`ISI_PILOT_BRIEF.md`](./ISI_PILOT_BRIEF.md),
 [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md),
-[`ISI_TARGET_STATE_PRD_ALIGNMENT.md`](./ISI_TARGET_STATE_PRD_ALIGNMENT.md), and
+[`ISI_TARGET_STATE_PRD_ALIGNMENT.md`](./ISI_TARGET_STATE_PRD_ALIGNMENT.md),
+[`ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md`](./ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md), and
 [`ISI_PILOT_PARTNER_SHORTLIST.md`](./ISI_PILOT_PARTNER_SHORTLIST.md). Disease + question
 are TBD until outreach; keep Aksh/Akeno out of patient-level decisions until data access +
 HCP eval + governance. Do not pull target-state R2–R5 breadth into Stage 1.
