@@ -1,7 +1,8 @@
 # HSI build status and next
 
 **Audit date:** 1 November 2026  
-**HEAD at write:** (pending commit) — P3.1 OpenMM thin adapter spike (proposal-only)  
+**HEAD at write:** `2233af1` (main) — P3.1 OpenMM thin adapter spike (proposal-only)  
+
 
 
 
