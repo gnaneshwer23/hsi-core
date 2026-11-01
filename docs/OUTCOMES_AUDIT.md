@@ -109,4 +109,4 @@ Unchanged green from prior audit: Apolo lock, 79-row evidenceMap, `partnerCleare
 | hsi-core | `c657746` | Neon pack sync + rubric x-4 + Discovery SPA (prod) |
 | immunecity | `884261d` | catalogue.json consume fallback |
 | Prior tips | `7d733a0` / `309c6eb` | Pre-fix production baselines |
-| Pending | _(this change)_ | CDS/PHI boundary lift from aksh-health-redesign — SHAs filled after push |
+| hsi-core | `d92aef9` | CDS/PHI boundary lift from aksh-health-redesign (governance only) |
