@@ -78,7 +78,7 @@ Regenerable detail: `buildSystemsVisionBundle()` → publish artifact `hsi-syste
 ### 1. Immune cell spine (started)
 
 - **Code:** `src/immuneCellSpine.ts` — major classes / lineages / subsets; `ISI_CONTROLLED_RELATIONSHIP_TYPES`.
-- **Vertical honesty:** RA = Stage 1 `scopeLocked`; SSc = PRD/blueprint **target** (`deepSeedsPresent=false`). Do not wipe RA or invent partner.
+- **Vertical honesty:** **Decision A dual-track** — RA = Stage 1 `scopeLocked` / `activeScope=ra-tnf`; SSc = PRD MVP `prdMvpTarget` with thin seeds (`deepSeedsPresent=true`). Do not wipe RA or invent partner.
 - **Alignment:** [`ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md`](./ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md).
 
 ### 2. Gut microbiome ↔ immune
@@ -149,7 +149,7 @@ bun run outputs   # writes dist/outputs/.../hsi-systems-vision.json (+ MANIFEST 
 
 ## Recommended next build slice (one axis)
 
-**Deepen gut–immune first (Stage 2 vocabulary → thin evidence):** pick one metabolite–immune neighbourhood (e.g. SCFA class ↔ mucosal Treg/Th17 via `hypothesized_gut_immune` / `modulates_immune`), attach **public PMIDs only**, keep grades honest (`uncertain` / teaching `hypothesized`), leave RA lock untouched. Neuroimmune and SSc deep verticals stay queued behind product/vertical decisions.
+**Next recommended slice (after dual-track A):** deepen SSc Tfh–B–IL-21 pack (cell-card / CL·MONDO hints; more public PMIDs; EBV stays hypothesized). Then optionally deepen one gut–immune neighbourhood (e.g. SCFA ↔ mucosal Treg/Th17) with honest `uncertain` grades; leave RA lock untouched. Neuroimmune stays queued.
 
 ---
 

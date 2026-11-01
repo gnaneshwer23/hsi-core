@@ -10,12 +10,22 @@
  *   `partnerSigned` (then `lockedPilot` follows).
  * - `provisionalLock` is cleared once scope is promoted out of scaffold.
  *
+ * Vertical strategy (option A dual-track, 2026-11-01):
+ * - `verticalStrategy=dual_track` — RA remains `activeScope`; SSc is `prdMvpTarget`.
+ * - Does **not** flip partnerSigned or wipe RA packs. See `verticalDecision.ts`.
+ *
  * Flip path for partnerSigned (requires a real partner — not code alone):
  * 1. Named partner confirms disease + research question in writing (or rewrites).
  * 2. Set partnerSigned → true, lockedPilot → true, status → scoping|active.
  * 3. Replace partner.id/label with the real org (still no invented emails).
  * 4. Agree licensing + rubric thresholds; refresh seeds; re-run bun run outputs.
  */
+
+import {
+  getVerticalDecision,
+  verticalDecisionExportPointer,
+  type VerticalStrategy,
+} from "./verticalDecision";
 
 export const PARTNER_LOCK_SCHEMA = "hsi-partner-lock-1" as const;
 
@@ -106,6 +116,15 @@ export type HsiPartnerLock = {
   /** What a real partner must still supply to flip partnerSigned / lockedPilot. */
   flipRequirements: string[];
   honesty: string[];
+  /**
+   * Dual-track vertical strategy (option A). RA stays Stage 1 activeScope;
+   * SSc is PRD MVP target. See `verticalDecision.ts` / `hsi-vertical-decision.json`.
+   */
+  verticalStrategy: VerticalStrategy;
+  activeScope: "ra-tnf";
+  prdMvpTarget: "ssc-tfh-b-il21";
+  /** Compact pointer to the written A/B/C decision record. */
+  verticalDecision: ReturnType<typeof verticalDecisionExportPointer>;
   updatedAt: string;
 };
 
@@ -220,12 +239,17 @@ export const HSI_SCOPE_LOCKED_PARTNER_LOCK: HsiPartnerLock = {
     "Phase 6 done = Discovery Centre product surface at site `/discovery` (research intelligence; notCds).",
     "Phase 7 done = R2 validation depth (hsi-r2-validation.*; hypothesis cards + ranked gaps; research only).",
     "Phase 8 done = HSI translation substrate (hsi-translation-handoff.*; TRANSLATE tab + /akeno HITL consumer; deferred_until_hitl; not_for_clinical_use). Not live CDS; no Akeno Neon.",
+    "Vertical decision A (dual_track): activeScope=ra-tnf remains ASK/pilot lock; prdMvpTarget=ssc-tfh-b-il21 is a parallel pack — RA comparison = Release 2 framing.",
     "scopeLocked does NOT mean a commercial partner signed or locked a MoU.",
     "partnerSigned / lockedPilot stay false until flipRequirements are met with a named partner.",
     "Outreach category partners are not MoUs; do not invent personal contacts.",
     "Exports must surface status=scope_locked + partnerSigned=false so consumers cannot mistake this for a live pilot contract.",
   ],
-  updatedAt: "2026-11-01T16:00:00.000Z",
+  verticalStrategy: "dual_track",
+  activeScope: "ra-tnf",
+  prdMvpTarget: "ssc-tfh-b-il21",
+  verticalDecision: verticalDecisionExportPointer(getVerticalDecision()),
+  updatedAt: "2026-11-01T17:00:00.000Z",
 };
 
 /** @deprecated Use HSI_SCOPE_LOCKED_PARTNER_LOCK — alias kept for import stability. */
@@ -250,6 +274,9 @@ export function partnerLockExportPointer(
   researchQuestion: string;
   partner: string;
   seedPathwayId: string | null;
+  verticalStrategy: VerticalStrategy;
+  activeScope: "ra-tnf";
+  prdMvpTarget: "ssc-tfh-b-il21";
 } {
   return {
     schemaVersion: PARTNER_LOCK_SCHEMA,
@@ -262,6 +289,9 @@ export function partnerLockExportPointer(
     researchQuestion: lock.researchQuestion ?? "TBD — lock with partner",
     partner: lock.partner?.id ?? "TBD",
     seedPathwayId: lock.seedPathway?.id ?? null,
+    verticalStrategy: lock.verticalStrategy,
+    activeScope: lock.activeScope,
+    prdMvpTarget: lock.prdMvpTarget,
   };
 }
 

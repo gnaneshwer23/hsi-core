@@ -11,6 +11,10 @@ import {
   partnerLockExportPointer,
   type HsiPartnerLock,
 } from "./partnerLock";
+import {
+  getVerticalDecision,
+  verticalDecisionExportPointer,
+} from "./verticalDecision";
 
 /** ASK → MAP → REVIEW → TEST → LEARN — research workflow framing. */
 export const HSI_DISCOVERY_LOOP_STEPS = [
@@ -18,7 +22,7 @@ export const HSI_DISCOVERY_LOOP_STEPS = [
     id: "ask",
     label: "ASK",
     order: 1,
-    desc: "Scoped research question for one immune-mediated disease (RA/TNF working scope; partnerSigned still open).",
+    desc: "Scoped research question for one immune-mediated disease (RA/TNF working scope; partnerSigned still open). SSc is secondary PRD target only — does not replace this ASK.",
   },
   {
     id: "map",
@@ -61,6 +65,15 @@ export const HSI_ILLUSTRATIVE_DISEASE_CONTEXTS = [
     lockedPilot: false as const,
     seedHint:
       "TNF / IL-6 / ADA / RF·ACPA / anti-TNF response-heterogeneity — Phase 3 depth on Phase 2 scope lock",
+  },
+  {
+    id: "ssc",
+    label: "Systemic sclerosis",
+    shortLabel: "SSc",
+    status: "prd_mvp_secondary_target" as const,
+    lockedPilot: false as const,
+    seedHint:
+      "Dual-track PRD MVP: CD4/Tfh–B–IL-21 thin literature slice (hsi-ssc-pathway-pack); EBV hypothesized only — does not replace RA ASK",
   },
   {
     id: "sle",
@@ -110,6 +123,8 @@ export type HsiDiscoveryCentreMeta = {
   partnerLock: ReturnType<typeof partnerLockExportPointer>;
   /** Full durable lock record for consumers that want flipRequirements / honesty. */
   partnerLockDetail: HsiPartnerLock;
+  /** Dual-track vertical decision — SSc secondary; ASK stays RA. */
+  verticalDecision: ReturnType<typeof verticalDecisionExportPointer>;
   gradeVocabulary: ["established", "uncertain", "unexplored"];
   notes: string[];
 };
@@ -132,12 +147,14 @@ export function buildDiscoveryCentreMeta(
     illustrativeDiseaseContexts: HSI_ILLUSTRATIVE_DISEASE_CONTEXTS,
     partnerLock: partnerLockExportPointer(lock),
     partnerLockDetail: lock,
+    verticalDecision: verticalDecisionExportPointer(getVerticalDecision()),
     gradeVocabulary: ["established", "uncertain", "unexplored"],
     notes: [
       "Phase 6 done: Target R1 Discovery Centre product surface at site `/discovery` (consumes bun run outputs).",
       "Phase 7 done: R2 VALIDATE tab loads hsi-r2-validation.json (hypothesis cards / ranked gaps; research only).",
       "Phase 8 done (HSI substrate): TRANSLATE tab + /akeno HITL consumer load hsi-translation-handoff.json — Stage 3 scaffolding; clinicalActive=false; not live CDS.",
       "RA is the Phase 2 working Stage 1 scope (scopeLocked=true; partnerSigned=false; lockedPilot=false).",
+      "Dual-track A: SSc surfaces as prd_mvp_secondary_target only — ASK research question stays RA / anti-TNF.",
       "Do not treat SLE/PsO/IBD as selected pilot indications — illustrative conversation contexts only.",
       "Not diagnostic / not for clinical use. teachingStatus ≠ hsiGrade ≠ CDS.",
     ],

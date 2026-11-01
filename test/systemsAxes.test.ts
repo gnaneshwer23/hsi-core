@@ -120,6 +120,9 @@ describe("systems vision axes stubs", () => {
     const ra = bundle.immuneCellSpine.diseaseVerticals.find((d) => d.id === "ra");
     const ssc = bundle.immuneCellSpine.diseaseVerticals.find((d) => d.id === "ssc");
     expect(ra?.role).toBe("stage1_scope_locked");
-    expect(ssc?.deepSeedsPresent).toBe(false);
+    expect(ssc?.deepSeedsPresent).toBe(true);
+    expect(bundle.verticalStrategy).toBe("dual_track");
+    expect(bundle.activeScope).toBe("ra-tnf");
+    expect(bundle.prdMvpTarget).toBe("ssc-tfh-b-il21");
   });
 });

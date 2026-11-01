@@ -4,9 +4,9 @@
  * Source: ISI PRD — Whole-Immune-Cell Discovery Platform (v0.1 draft, 1 Nov 2026).
  * HSI-owned vocabulary only. Does **not** pivot Stage 1 seeds or wipe the RA lock.
  *
- * Vertical honesty:
+ * Vertical honesty (option A dual-track):
  * - RA / anti-TNF = working Stage 1 scope (`scopeLocked=true` in partnerLock)
- * - SSc CD4/Tfh–B–IL-21 = PRD MVP / blueprint Gate 3 **target** vertical (no deep seeds yet)
+ * - SSc CD4/Tfh–B–IL-21 = PRD MVP / blueprint Gate 3 target — thin literature slice present
  */
 import type { HsiEdgeType } from "./schema";
 
@@ -157,7 +157,7 @@ export const IMMUNE_CELL_SPINE_NODES: readonly ImmuneCellSpineNode[] = [
     label: "Tfh",
     parentId: "HSI-IC-lin-cd4",
     cellOntologyId: null,
-    notes: "PRD SSc vertical target subset — no SSc claim edges in Stage 1 seeds",
+    notes: "PRD SSc vertical subset — dual-track thin seeds in seed/sscTfhBIl21.ts",
   },
   {
     id: "HSI-IC-sub-th1",
@@ -286,9 +286,9 @@ export const DISEASE_VERTICAL_STUBS: readonly DiseaseVerticalStub[] = [
     shortLabel: "SSc",
     role: "prd_mvp_target",
     pathwayHint: "CD4/Tfh–B-cell–IL-21 (+ EBV as separate hypothesized_to branch)",
-    deepSeedsPresent: false,
+    deepSeedsPresent: true,
     notes:
-      "Whole-Immune-Cell PRD MVP + Technical Blueprint Gate 3 target. No deep SSc claim edges in hsi-core yet. RA remains Stage 1 lock until dual-track or pivot is authorised.",
+      "Whole-Immune-Cell PRD MVP + Technical Blueprint Gate 3. Dual-track A authorised: thin literature slice in seed/sscTfhBIl21.ts + hsi-ssc-pathway-pack (verified PMIDs). RA remains Stage 1 activeScope — do not wipe.",
   },
   {
     id: "ra-r2",
@@ -320,8 +320,8 @@ export function buildImmuneCellSpineBundle(): ImmuneCellSpineBundle {
     diseaseVerticals: DISEASE_VERTICAL_STUBS,
     invariants: [
       "Vocabulary stubs only — not Gate C claims and not CDS.",
-      "RA Stage 1 scopeLocked remains authoritative in partnerLock.",
-      "SSc is prd_mvp_target / blueprint Gate 3 — deepSeedsPresent=false until authorised.",
+      "RA Stage 1 scopeLocked remains authoritative in partnerLock (dual-track activeScope=ra-tnf).",
+      "SSc is prd_mvp_target / blueprint Gate 3 — dual-track thin seeds present; EBV hypothesized only.",
       "Prefer ISI_CONTROLLED_RELATIONSHIP_TYPES for new immune-cell curation; map via ISI_RELATIONSHIP_TO_HSI_EDGE until HSI_EDGE_TYPES expands.",
       "Context + evidence mandatory on every future claim edge (PRD §6 / §7.4).",
     ],

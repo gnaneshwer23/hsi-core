@@ -136,7 +136,7 @@ ISI is a research-first **whole-immune-cell** discovery platform: major immune c
 | Ask | Owner | Status | Evidence |
 |-----|-------|--------|----------|
 | Side-by-side disease compare; no context collapse | ISI UX + HSI packs | **NOT STARTED** (product) / seeds **PARTIAL** | Illustrative SLE/PsO/IBD; RA locked; SSc absent |
-| SSc deep + RA comparison; EBV as hypothesis only | Product | **NOT STARTED** (SSc) | Vertical stubs only |
+| SSc deep + RA comparison; EBV as hypothesis only | Product | **PARTIAL** (SSc) | Dual-track thin slice + pack; deepen next; RA = R2 framing |
 
 #### §7.6 Research brief and gap workflow
 
@@ -183,7 +183,7 @@ ISI is a research-first **whole-immune-cell** discovery platform: major immune c
 
 | Release | PRD scope | hsi-core |
 |---------|-----------|----------|
-| **MVP** | Spine + SSc vertical + evidence + graph + brief | Spine vocab **PARTIAL**; SSc deep **NOT STARTED**; evidence/exports **DONE**; graph UX = ISI |
+| **MVP** | Spine + SSc vertical + evidence + graph + brief | Spine vocab **PARTIAL**; SSc thin slice **DONE**; deepen next; evidence/exports **DONE**; graph UX = ISI |
 | **R2** | RA comparison + datasets + agent workbench | RA seeds exist (Stage 1 lock); datasets/agents **OUT OF SCOPE** |
 | **Later** | LIMS, cohort feasibility, clinical DS | **OUT OF SCOPE** |
 
@@ -194,7 +194,7 @@ ISI is a research-first **whole-immune-cell** discovery platform: major immune c
 | **0** Baseline / design | Truth map, rights, no-patient rule | **PARTIAL** — audits done; rights / SSc-vs-RA decision open |
 | **1** Immune-cell spine | Browse major cells with ids/defs/markers | **PARTIAL** — vocabulary stubs; cards **NOT STARTED** |
 | **2** Connected mechanism graph | Traverse cell→context→mechanism→evidence | **PARTIAL** — edges exist; PRD predicates not primary |
-| **3** SSc deep vertical | Every SSc edge provenanced | **NOT STARTED** |
+| **3** SSc deep vertical | Every SSc edge provenanced | **PARTIAL** — first PMID slice landed; deepen neighbourhood |
 | **4** RA comparison + datasets | Reproduce pinned datasets | RA arm **PARTIAL** (existing seeds); datasets **NOT STARTED** |
 | **5** Agent workbench | Offline eval; no unsupervised publish | **OUT OF SCOPE** Stage 1 |
 | **6–7** Partner / cohort | DPIA etc. | **OUT OF SCOPE** |
@@ -228,9 +228,13 @@ ISI is a research-first **whole-immune-cell** discovery platform: major immune c
 | **B. Explicit pivot to SSc** | Founder/partner re-scopes Stage 1: new partnerLock disease=SSc, new seeds, RA demoted to illustrative or R2. **Requires written product decision.** | Matches PRD MVP literally | Throws away RA lock messaging; outreach materials need rewrite |
 | **C. Hold RA-only until partnerSigned** | Ignore SSc build until RA pilot signed; treat PRD SSc as backlog | Least churn | Diverges from PRD/blueprint Gate 1–3 sequencing |
 
-**Resolution rule for agents/curators:** Until A/B/C is chosen in writing, **RA `scopeLocked` remains authoritative** for pilot packs, walkthrough, and acceptance. SSc appears only as spine/PRD **target** stubs (`deepSeedsPresent=false`). Never delete RA claim/edge ids to “make room” for SSc.
+**Decision recorded (2026-11-01):** **Option A — Dual-track.**  
+`verticalStrategy=dual_track` · `activeScope=ra-tnf` · `prdMvpTarget=ssc-tfh-b-il21` · RA comparison = Release 2 framing.  
+Source: `src/verticalDecision.ts` → `hsi-vertical-decision.json` (also mirrored on `hsi-partner-lock.json` + `hsi-systems-vision.json`).
 
-Registry: `DISEASE_VERTICAL_STUBS` in `src/immuneCellSpine.ts`.
+**Still binding:** RA `scopeLocked` remains authoritative for pilot packs, walkthrough, acceptance, and Discovery **ASK**. Never delete RA claim/edge ids. EBV only as hypothesized/uncertain branch.
+
+Registry: `DISEASE_VERTICAL_STUBS` in `src/immuneCellSpine.ts` (`ssc.deepSeedsPresent=true` after first slice).
 
 ---
 
@@ -239,18 +243,20 @@ Registry: `DISEASE_VERTICAL_STUBS` in `src/immuneCellSpine.ts`.
 | Artifact | Purpose |
 |----------|---------|
 | `src/immuneCellSpine.ts` | Cell class/lineage/subset stubs; PRD relationship vocabulary; dual-track vertical registry |
-| `test/immuneCellSpine.test.ts` | Asserts CD4-among-many, relation→HSI map, RA lock intact, SSc `prd_mvp_target` |
-| Package exports via `src/index.ts` | Consumers can read vocabulary without implying Gate C claims |
+| `src/verticalDecision.ts` | Written A dual-track decision |
+| `src/seed/sscTfhBIl21.ts` + `src/sscPathwayPack.ts` | First SSc Tfh–B–IL-21 literature slice + `hsi-ssc-pathway-pack.*` |
+| `test/immuneCellSpine.test.ts` / `test/verticalDualTrack.test.ts` | Asserts CD4-among-many, RA lock intact, SSc `prd_mvp_target` + deep seeds |
+| Package exports via `src/index.ts` | Consumers can read vocabulary / SSc pack without implying Gate C claims |
 
-**Not done:** SSc claim edges, cell-card content, expanding `HSI_EDGE_TYPES` (map-through for now), ImmPort connectors, agent runtime, immunecity UI.
+**Not done:** full cell-card content, expanding `HSI_EDGE_TYPES` (map-through for now), ImmPort connectors, agent runtime, immunecity UI, deeper SSc neighbourhood.
 
 ---
 
 ## Recommended next asks (hsi-core)
 
-1. **Decide A / B / C** (dual-track vs SSc pivot vs RA-hold) — product owner.  
-2. If **A** (default): deepen spine → cell-card fields + CL/MONDO hints; then curate SSc Tfh–B–IL-21 as a **separate** pack with EBV only as `hypothesized_to`. Keep RA packs regenerable.  
-3. Promote selected `ISI_CONTROLLED_RELATIONSHIP_TYPES` onto `HSI_EDGE_TYPES` when first SSc/canonical immune edges need them (additive; do not rewrite RA edgeTypes wholesale).  
+1. ~~**Decide A / B / C**~~ — **A dual-track done.**  
+2. **Next after A:** deepen SSc pack — cell-card / CL·MONDO hints on Tfh–B–IL-21; optional more public PMIDs; keep EBV hypothesized. RA packs regenerable.  
+3. Promote selected `ISI_CONTROLLED_RELATIONSHIP_TYPES` onto `HSI_EDGE_TYPES` when SSc edges need them (additive; do not rewrite RA edgeTypes wholesale).  
 4. Partner outreach / `partnerSigned` / rights pack (unchanged from implementation audit).  
 5. **Hold the line:** no 12-agent runtime, no Neon merge, no immunecity edits, no Akeno live CDS, no S3 credential files in git.
 

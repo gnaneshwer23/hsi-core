@@ -6,6 +6,10 @@
 import { gradeForSeed } from "../validate";
 import type { HsiClaim, HsiEdge, HsiMarker, HsiTranslationCard } from "../schema";
 import type { HsiCurationReview, HsiTeachingStatus } from "../grades";
+import {
+  HSI_SSC_SEED_CLAIMS,
+  HSI_SSC_SEED_EDGES,
+} from "./sscTfhBIl21";
 
 const RECORDED = "2026-10-31T00:00:00.000Z";
 
@@ -833,8 +837,15 @@ function toClaim(spec: SeedSpec): HsiClaim {
   };
 }
 
-export const HSI_T2D_IMMUNO_SEED_EDGES: HsiEdge[] = SPECS.map(toEdge);
-export const HSI_T2D_IMMUNO_SEED_CLAIMS: HsiClaim[] = SPECS.map(toClaim);
+/** Core T2D / immuno / RA / illustrative stubs — SSc dual-track slice appended (no RA wipe). */
+export const HSI_T2D_IMMUNO_SEED_EDGES: HsiEdge[] = [
+  ...SPECS.map(toEdge),
+  ...HSI_SSC_SEED_EDGES,
+];
+export const HSI_T2D_IMMUNO_SEED_CLAIMS: HsiClaim[] = [
+  ...SPECS.map(toClaim),
+  ...HSI_SSC_SEED_CLAIMS,
+];
 
 export const HSI_MARKERS: HsiMarker[] = [
   {

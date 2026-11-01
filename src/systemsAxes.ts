@@ -24,6 +24,11 @@ import {
   type ImmuneCellSpineNode,
   type IsiControlledRelationshipType,
 } from "./immuneCellSpine";
+import {
+  getVerticalDecision,
+  verticalDecisionExportPointer,
+  type HsiVerticalDecision,
+} from "./verticalDecision";
 
 export const SYSTEMS_VISION_SCHEMA = "hsi-systems-vision-1" as const;
 
@@ -303,7 +308,7 @@ export const DISEASE_TISSUE_BIOMARKER_STUBS: readonly DiseaseTissueBiomarkerStub
       label: "Systemic sclerosis",
       ontologyHint: "MONDO",
       verticalId: "ssc",
-      notes: "PRD MVP target — deepSeedsPresent=false; do not wipe RA",
+      notes: "PRD MVP target — dual-track thin seeds present; do not wipe RA",
     },
     {
       id: "HSI-DTB-tissue-synovium",
@@ -717,6 +722,11 @@ export type SystemsVisionBundle = {
   autoApproveIntoKg: false;
   generatedAt: string | null;
   bindingIntent: string;
+  /** Dual-track vertical decision (option A) — RA activeScope; SSc prdMvpTarget. */
+  verticalStrategy: HsiVerticalDecision["verticalStrategy"];
+  activeScope: HsiVerticalDecision["activeScope"];
+  prdMvpTarget: HsiVerticalDecision["prdMvpTarget"];
+  verticalDecision: ReturnType<typeof verticalDecisionExportPointer>;
   stageGates: {
     stage1: string;
     stage2: string;
@@ -765,6 +775,7 @@ export function buildSystemsVisionBundle(opts?: {
   generatedAt?: string;
 }): SystemsVisionBundle {
   const spine = buildImmuneCellSpineBundle();
+  const vertical = getVerticalDecision();
   return {
     schemaVersion: SYSTEMS_VISION_SCHEMA,
     notCds: true,
@@ -772,6 +783,10 @@ export function buildSystemsVisionBundle(opts?: {
     generatedAt: opts?.generatedAt ?? null,
     bindingIntent:
       "Whole immune + gut–immune + brain–immune + diseases/cells/tissues/biomarkers + patient-data connections + AI/future tech — target connected graph, not a narrow single-pathway product forever",
+    verticalStrategy: vertical.verticalStrategy,
+    activeScope: vertical.activeScope,
+    prdMvpTarget: vertical.prdMvpTarget,
+    verticalDecision: verticalDecisionExportPointer(vertical),
     stageGates: {
       stage1:
         "Research evidence backbone — graded edges, RA/TNF working scope, immune spine vocabulary, LOINC markers; no PHI; no CDS",
@@ -820,7 +835,7 @@ export function buildSystemsVisionBundle(opts?: {
       "Target graph ≠ one sprint — stubs are navigation vocabulary only.",
       "Every claim edge needs context + evidence + dual grade axes.",
       "RA Stage 1 scopeLocked remains authoritative; do not invent partnerSigned.",
-      "SSc stays prd_mvp_target without deep seeds until authorised (no wipe).",
+      "Dual-track A: activeScope=ra-tnf; prdMvpTarget=ssc-tfh-b-il21 with thin seeds; RA comparison = Release 2; no wipe.",
       "Patient data: HSI stores shapes/fixtures/handoff only — never raw PHI.",
       "P3 bio adapters never auto-promote hsiGrade or Gate C.",
       "NN/agent proposals are model-proposal artifacts only — never autoApproveIntoKg.",

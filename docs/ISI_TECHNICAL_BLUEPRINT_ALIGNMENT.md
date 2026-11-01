@@ -190,9 +190,9 @@ See [`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md), `src/db/neonGuard.ts`.
 | Whole-Immune-Cell PRD §12 / Gates 3–4 | **SSc** MVP vertical; **RA** Release 2 comparison — [`ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md`](./ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md) |
 | Pilot PRD + `hsi-partner-lock.json` | **RA / anti-TNF response heterogeneity** (`scopeLocked=true`, `partnerSigned=false`) |
 | Target-state PRD | One disease + question with partner; do not expand surface early |
-| Spine stubs | `DISEASE_VERTICAL_STUBS`: RA = `stage1_scope_locked`; SSc = `prd_mvp_target` (`deepSeedsPresent=false`) |
+| Spine stubs | `DISEASE_VERTICAL_STUBS`: RA = `stage1_scope_locked`; SSc = `prd_mvp_target` (`deepSeedsPresent=true` after dual-track slice) |
 
-**Resolution rule:** Do **not** replace the RA lock with SSc seeds unless outreach / founder explicitly re-scopes Stage 1. Prefer **dual-track**: keep RA packs; mark SSc as PRD/blueprint target; reuse RA seeds as R2 comparison when SSc curation is authorised. Full option table in the Whole-Immune-Cell alignment doc.
+**Resolution (2026-11-01):** **Option A dual-track recorded.** Keep RA packs as Stage 1 `activeScope`; SSc Tfh–B–IL-21 is `prdMvpTarget` with a first literature slice (`hsi-ssc-pathway-pack.*`); RA seeds serve as Release 2 comparison framing. Full option table in the Whole-Immune-Cell alignment doc.
 
 ### 3. Stage 1 vs target-state breadth
 

@@ -1,19 +1,19 @@
 {
   "schemaVersion": "hsi-gap-report-1",
-  "generatedAt": "2026-11-01T12:00:00.000Z",
+  "generatedAt": "2026-11-01T17:30:45.581Z",
   "summary": {
-    "seedEdges": 41,
+    "seedEdges": 48,
     "bridgeCandidates": 12,
     "gradeCounts": {
       "established": 0,
-      "uncertain": 30,
+      "uncertain": 37,
       "unexplored": 11
     },
     "claimsMappedToIsi": 13,
     "claimsMappedToAksh": 22,
-    "claimsWithDurableLocator": 28,
+    "claimsWithDurableLocator": 35,
     "loinc": {
-      "edgeCount": 41,
+      "edgeCount": 48,
       "claimsWithLoincMarker": 8,
       "markersWithLoinc": 7,
       "markersMissingLoinc": 1
@@ -543,6 +543,97 @@
         "isi_relationship_id",
         "aksh_node_id",
         "durable_locator",
+        "loinc_marker",
+        "gate_c_approved"
+      ]
+    },
+    {
+      "claimId": "HSI-C-SSC-001",
+      "edgeId": "HSI-E-SSC-001",
+      "assertion": "Circulating follicular helper T cells are increased in systemic sclerosis (dual-track PRD MVP seed — not Stage 1 partner lock; not CDS).",
+      "domain": "autoimmunity",
+      "hsiGrade": "uncertain",
+      "missing": [
+        "isi_relationship_id",
+        "aksh_node_id",
+        "loinc_marker",
+        "gate_c_approved"
+      ]
+    },
+    {
+      "claimId": "HSI-C-SSC-002",
+      "edgeId": "HSI-E-SSC-002",
+      "assertion": "Tfh cells produce / drive IL-21 as a defining helper cytokine for B-cell help (foundational Tfh biology; used as SSc pathway axis context).",
+      "domain": "autoimmunity",
+      "hsiGrade": "uncertain",
+      "missing": [
+        "isi_relationship_id",
+        "aksh_node_id",
+        "loinc_marker",
+        "gate_c_approved"
+      ]
+    },
+    {
+      "claimId": "HSI-C-SSC-003",
+      "edgeId": "HSI-E-SSC-003",
+      "assertion": "IL-21 induces differentiation of human naive and memory B cells into antibody-secreting plasma cells (B-help axis underpinning SSc Tfh–IL-21 framing).",
+      "domain": "autoimmunity",
+      "hsiGrade": "uncertain",
+      "missing": [
+        "isi_relationship_id",
+        "aksh_node_id",
+        "loinc_marker",
+        "gate_c_approved"
+      ]
+    },
+    {
+      "claimId": "HSI-C-SSC-004",
+      "edgeId": "HSI-E-SSC-004",
+      "assertion": "In systemic sclerosis, circulating Tfh promote plasmablast differentiation through the IL-21 pathway (SSc-specific pathway seed).",
+      "domain": "autoimmunity",
+      "hsiGrade": "uncertain",
+      "missing": [
+        "isi_relationship_id",
+        "aksh_node_id",
+        "loinc_marker",
+        "gate_c_approved"
+      ]
+    },
+    {
+      "claimId": "HSI-C-SSC-005",
+      "edgeId": "HSI-E-SSC-005",
+      "assertion": "T follicular helper-like cells contribute to skin fibrosis (fibrosis-facing competing / complementary frame for SSc pathway exploration).",
+      "domain": "autoimmunity",
+      "hsiGrade": "uncertain",
+      "missing": [
+        "isi_relationship_id",
+        "aksh_node_id",
+        "loinc_marker",
+        "gate_c_approved"
+      ]
+    },
+    {
+      "claimId": "HSI-C-SSC-006",
+      "edgeId": "HSI-E-SSC-006",
+      "assertion": "Imbalance toward Tfh1 cells is associated with aberrant B-cell differentiation in systemic sclerosis (competing Tfh-subset explanation).",
+      "domain": "autoimmunity",
+      "hsiGrade": "uncertain",
+      "missing": [
+        "isi_relationship_id",
+        "aksh_node_id",
+        "loinc_marker",
+        "gate_c_approved"
+      ]
+    },
+    {
+      "claimId": "HSI-C-SSC-007",
+      "edgeId": "HSI-E-SSC-007",
+      "assertion": "EBV infection has been hypothesized to contribute to scleroderma fibroblast / TLR pathway dysregulation — separate uncertainty branch; not a proven Tfh→B→IL-21 causal merge.",
+      "domain": "autoimmunity",
+      "hsiGrade": "uncertain",
+      "missing": [
+        "isi_relationship_id",
+        "aksh_node_id",
         "loinc_marker",
         "gate_c_approved"
       ]

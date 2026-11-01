@@ -51,18 +51,19 @@ describe("immune-cell spine stubs (PRD vocabulary)", () => {
     }
   });
 
-  test("dual-track verticals: RA locked; SSc PRD target without deep seeds", () => {
+  test("dual-track verticals: RA locked; SSc PRD target with thin deep seeds", () => {
     const ra = getDiseaseVertical("ra");
     const ssc = getDiseaseVertical("ssc");
     expect(ra?.role).toBe("stage1_scope_locked");
     expect(ra?.deepSeedsPresent).toBe(true);
     expect(ssc?.role).toBe("prd_mvp_target");
-    expect(ssc?.deepSeedsPresent).toBe(false);
+    expect(ssc?.deepSeedsPresent).toBe(true);
     expect(ssc?.pathwayHint).toContain("Tfh");
 
     const lock = getPartnerLock();
     expect(lock.scopeLocked).toBe(true);
     expect(lock.disease?.id).toBe("ra");
+    expect(lock.verticalStrategy).toBe("dual_track");
     expect(DISEASE_VERTICAL_STUBS.some((d) => d.id === "ssc")).toBe(true);
   });
 });

@@ -206,6 +206,33 @@ export {
 } from "./partnerLock";
 
 export {
+  VERTICAL_DECISION_SCHEMA,
+  HSI_VERTICAL_DECISION,
+  getVerticalDecision,
+  verticalDecisionExportPointer,
+  type HsiVerticalDecision,
+  type VerticalDecisionOption,
+  type VerticalStrategy,
+} from "./verticalDecision";
+
+export {
+  HSI_SSC_SEED_CLAIMS,
+  HSI_SSC_SEED_EDGES,
+  SSC_PATHWAY_ID,
+  SSC_PATHWAY_META,
+  sscDeepSeedsLanded,
+} from "./seed/sscTfhBIl21";
+
+export {
+  SSC_PATHWAY_PACK_SCHEMA,
+  buildSscPathwayPack,
+  serializeSscPathwayPack,
+  serializeSscPathwayPackMarkdown,
+  type SscPathwayExplanation,
+  type SscPathwayPack,
+} from "./sscPathwayPack";
+
+export {
   PILOT_REVIEW_RUBRIC_SCHEMA,
   buildPilotReviewRubric,
   serializePilotReviewRubric,

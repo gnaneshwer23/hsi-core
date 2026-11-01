@@ -11,7 +11,7 @@
 
 ## Executive verdict
 
-hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance, Gate C checklists, versioned publish, RA/anti-TNF scope lock + depth, Discovery Centre, R2 validation, translation/Akeno HITL scaffolding, Aksh agent catalog, Neon isolation, systems-vision + AI position stubs). What remains for a **real partner pilot** is mostly **outreach + rights + thresholds + ISI product consumption** — not missing four-output substrate. What remains for the **expanded vision** (SSc deep vertical, gut/neuro claim seeds, agent runtime, model→Gate C proposals, live CDS) is correctly **gated** and must not be pulled into Stage 1 build pressure without product decisions.
+hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance, Gate C checklists, versioned publish, RA/anti-TNF scope lock + depth, Discovery Centre, R2 validation, translation/Akeno HITL scaffolding, Aksh agent catalog, Neon isolation, systems-vision + AI position stubs). **Vertical decision A (dual-track) is recorded:** RA stays Stage 1 `activeScope`; SSc Tfh–B–IL-21 is the PRD MVP target with a first honest literature slice (`hsi-ssc-pathway-pack.*`). What remains for a **real partner pilot** is mostly **outreach + rights + thresholds + ISI product consumption**. Gut/neuro claim seeds, agent runtime, model→Gate C proposals, and live CDS stay gated.
 
 | Plane | Light | One line |
 |-------|-------|----------|
@@ -20,7 +20,8 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | R3 translation / `/akeno` | **YELLOW** | HITL scaffolding only (`clinicalActive=false`) |
 | Partner pilot readiness (M3) | **YELLOW** | Walkthrough ready; `partnerSigned=false` |
 | Live CDS / PHI / shared Neon | **RED (correct)** | Explicitly not built |
-| Vision axes / AI stubs | **GREEN (vocab)** | Map + schema stubs; claim depth empty on gut/neuro/SSc |
+| Vision axes / AI stubs | **GREEN (vocab)** | Map + schema stubs; SSc thin seeds landed; gut/neuro claim depth empty |
+| Vertical strategy | **GREEN** | **A dual-track** written — `verticalStrategy=dual_track` |
 
 ---
 
@@ -47,6 +48,8 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | Item | Status | Evidence |
 |------|--------|----------|
 | Partner lock schema + RA/anti-TNF `scopeLocked=true` | **DONE** | `src/partnerLock.ts` → `hsi-partner-lock.json` |
+| Vertical decision A dual-track | **DONE** | `src/verticalDecision.ts` → `hsi-vertical-decision.json`; lock + systems vision fields |
+| SSc Tfh–B–IL-21 thin literature slice | **DONE** (first slice) | `src/seed/sscTfhBIl21.ts` → `hsi-ssc-pathway-pack.*`; `deepSeedsPresent=true`; RA untouched |
 | Four workflow outputs (evidence map, entity slice, competing explanations, expert shortlist) | **DONE** | `src/pilotEvidencePack.ts` → `hsi-pilot-evidence-pack.*` |
 | Phase 3 RA/TNF evidence depth (ADA, serology, RF LOINC, MTX combo) | **DONE** | Pack + seeds; commit `e2612dc` |
 | Review rubric + acceptance + walkthrough | **DONE** | `hsi-pilot-review-rubric.*`, `hsi-pilot-acceptance.*`, `hsi-pilot-walkthrough.md` |
@@ -148,12 +151,12 @@ Reproduce: `bun test && bun run outputs && bun run site:dev` → `/discovery`, `
 | Gap | Why it matters | Owner |
 |-----|----------------|-------|
 | **`partnerSigned=false` / `lockedPilot=false`** | Blocks Pilot M0 exit + M3 partner run; scope lock ≠ MoU | Outreach (user) + flip in `partnerLock.ts` |
-| **SSc-vs-RA vertical conflict** | Blueprint / Whole-Immune PRD want SSc MVP; Stage 1 lock is RA/TNF | **User decision A/B/C** — see §3 |
+| **SSc-vs-RA vertical conflict** | Resolved as **A dual-track** | Recorded in `verticalDecision.ts` / partner lock / systems vision |
 | **Named partner not chosen** | Shortlist is categories only; no invented contacts | Outreach |
 | **Licensing / rights pack** | Pilot data-rights gate | Partner + curator table in-repo after sign |
 | **Numeric success thresholds** | Evaluation plan incomplete | Partner + rubric update |
 | **Gut–immune / neuroimmune claim seeds empty** | Vision stubs only (`deepSeedsPresent=false`) | Stage 2 curation after one-axis pick |
-| **SSc deep seeds empty** | `prd_mvp_target`, `deepSeedsPresent=false` | After A/B/C; do not wipe RA |
+| **SSc pack depth still thin** | First PMID slice landed; cell cards / more neighbourhood edges open | Next backlog after A — deepen SSc pack |
 | **Immune spine = vocabulary only** | No full cell cards / CL·MONDO bind | Stage 2 depth |
 | **Model-proposal schema not wired to Gate C** | Stubs in `systemsAxes` / systems vision; no proposal→checklist pipeline | Later Stage 2; never auto-approve |
 | **No agent runtime** | Aksh catalog + ISI 12-agent blueprint ≠ executable loop | ISI product **out of repo**; HSI holds shapes only |
@@ -173,7 +176,7 @@ One-sprint-sized items. Mark **[DECISION]** where the user must choose before co
 
 | # | Item | Notes |
 |---|------|-------|
-| P0.1 | **[DECISION]** Vertical: **A dual-track** (keep RA + mark SSc target) / **B pivot to SSc** / **C hold RA-only** | Default recommend **A**. Until written: RA `scopeLocked` stays authoritative. See [`ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md`](./ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md) §Decision |
+| P0.1 | **[DONE]** Vertical **A dual-track** recorded | `verticalStrategy=dual_track`, `activeScope=ra-tnf`, `prdMvpTarget=ssc-tfh-b-il21`; SSc first slice + pack published |
 | P0.2 | **[DECISION]** Named partner from shortlist (or rewrite disease/question with them) | Flip `partnerSigned` / `lockedPilot` / `partner.type=named_partner` only after written confirm — never invent org/email |
 | P0.3 | Rights / licensing table for the RA/TNF (or partner-rewritten) PMID set | Small markdown + pack field; public PMIDs already used |
 | P0.4 | Agree numeric thresholds on existing review rubric; refresh `hsi-pilot-review-rubric.*` | Export-only change after partner agrees |
@@ -184,9 +187,9 @@ One-sprint-sized items. Mark **[DECISION]** where the user must choose before co
 
 | # | Item | Notes |
 |---|------|-------|
-| P1.1 | If **A**: deepen spine → cell-card fields + CL/MONDO *hints* (no mega ontology import) | Additive; RA packs stay regenerable |
-| P1.2 | If **A** authorised: thin SSc Tfh–B–IL-21 pack (public PMIDs; EBV only `hypothesized`); keep RA intact | Separate pack id; do not delete RA claim ids |
-| P1.3 | If **C** or hold: deepen one **gut–immune** neighbourhood (e.g. SCFA ↔ mucosal Treg/Th17) with honest `uncertain` grades | Per [`HSI_SYSTEMS_VISION_MAP.md`](./HSI_SYSTEMS_VISION_MAP.md) recommended slice; leave neuro queued |
+| P1.1 | **Next after A:** deepen SSc pack — cell-card / CL·MONDO *hints* on Tfh–B–IL-21 neighbourhood; optional more public PMIDs | Additive; RA packs stay regenerable |
+| P1.2 | **DONE (first slice):** thin SSc Tfh–B–IL-21 pack (verified PMIDs; EBV `hypothesized`); RA intact | `hsi-ssc-pathway-pack.*`; do not delete RA claim ids |
+| P1.3 | Deepen one **gut–immune** neighbourhood (e.g. SCFA ↔ mucosal Treg/Th17) with honest `uncertain` grades | After SSc deepen; per [`HSI_SYSTEMS_VISION_MAP.md`](./HSI_SYSTEMS_VISION_MAP.md); leave neuro queued |
 | P1.4 | Promote selected `ISI_CONTROLLED_RELATIONSHIP_TYPES` onto `HSI_EDGE_TYPES` when first new edges need them | Additive map; no wholesale RA rewrite |
 | P1.5 | Optional: wire **model-proposal artifact shape** → Gate C checklist *draft rows* (human pending only) | Schema already stubbed; still `autoApproveIntoKg=false` |
 | P1.6 | Curator UX inside hsi-core after pilot learning (richer gap/Gate C markdown) | P2 in vision doc; only after partner session |
@@ -238,7 +241,7 @@ One-sprint-sized items. Mark **[DECISION]** where the user must choose before co
 | Goal | Done when |
 |------|-----------|
 | Partner pilot ready (HSI side) | `partnerSigned=true` + rights table + numeric thresholds + walkthrough refreshed + four outputs still green |
-| Dual-track honesty | A/B/C recorded; if A, SSc pack optional without deleting RA |
+| Dual-track honesty | **A recorded**; SSc pack present without deleting RA; ASK stays RA |
 | Systems vision honesty | Gut/neuro remain stubs until a thin curated slice lands with grades |
 | Safety | MANIFEST still `notCds`; `/akeno` still `clinicalActive=false`; Neon still red-wave-only |
 

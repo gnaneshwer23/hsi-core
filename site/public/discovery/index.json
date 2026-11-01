@@ -9,16 +9,21 @@
   "productSurfacePath": "/discovery",
   "framing": "ASK → MAP → REVIEW → VALIDATE → TRANSLATE",
   "phase": "8",
-  "generatedAt": "2026-11-01T12:00:00.000Z",
-  "bundleId": "hsi-core-0.1.0-20261101T120000000Z",
+  "generatedAt": "2026-11-01T17:30:45.581Z",
+  "bundleId": "hsi-core-0.1.0-20261101T173045581Z",
   "disease": "Rheumatoid arthritis",
   "researchQuestion": "Why do some patients with rheumatoid arthritis respond differently to anti-TNF therapy, and which biomarkers or immune mechanisms are best supported for defining those subgroups?",
   "scopeLocked": true,
   "partnerSigned": false,
   "lockedPilot": false,
+  "verticalStrategy": "dual_track",
+  "activeScope": "ra-tnf",
+  "prdMvpTarget": "ssc-tfh-b-il21",
   "files": [
     "hsi-pilot-evidence-pack.json",
     "hsi-partner-lock.json",
+    "hsi-vertical-decision.json",
+    "hsi-ssc-pathway-pack.json",
     "hsi-gap-report.json",
     "gate-c-checklist.json",
     "hsi-r2-validation.json",
@@ -27,6 +32,7 @@
   "notes": [
     "Regenerate with bun run outputs — copies land here for the Vite site.",
     "Not diagnostic / not for clinical use. clinicalActive=false.",
+    "ASK question stays RA / anti-TNF; SSc is dual-track secondary PRD target (hsi-ssc-pathway-pack.json).",
     "Phase 7 done = R2 validation (hsi-r2-validation.json) on VALIDATE tab.",
     "Phase 8 done = HSI translation substrate (hsi-translation-handoff.json) on TRANSLATE tab + in-repo Akeno HITL consumer at /akeno (not CDS)."
   ]

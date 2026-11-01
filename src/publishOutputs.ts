@@ -58,6 +58,15 @@ import {
   buildSystemsVisionBundle,
   serializeSystemsVision,
 } from "./systemsAxes";
+import {
+  getVerticalDecision,
+  verticalDecisionExportPointer,
+} from "./verticalDecision";
+import {
+  buildSscPathwayPack,
+  serializeSscPathwayPack,
+  serializeSscPathwayPackMarkdown,
+} from "./sscPathwayPack";
 import { validateHsiEdge } from "./validate";
 
 function packageVersion(cwd: string): string {
@@ -253,6 +262,8 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     lock: partnerLock,
   });
   const systemsVision = buildSystemsVisionBundle({ generatedAt });
+  const verticalDecision = getVerticalDecision();
+  const sscPathwayPack = buildSscPathwayPack({ generatedAt });
 
   const fileMap: Record<string, string> = {
     "hsi-isi-export.json": serializeIsiExport(isiBundle),
@@ -271,6 +282,9 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     "hsi-pilot-acceptance.md": serializePilotAcceptanceMarkdown(acceptance),
     "hsi-pilot-walkthrough.md": serializePilotWalkthroughMarkdown(acceptance),
     "hsi-partner-lock.json": `${JSON.stringify(partnerLock, null, 2)}\n`,
+    "hsi-vertical-decision.json": `${JSON.stringify(verticalDecision, null, 2)}\n`,
+    "hsi-ssc-pathway-pack.json": serializeSscPathwayPack(sscPathwayPack),
+    "hsi-ssc-pathway-pack.md": serializeSscPathwayPackMarkdown(sscPathwayPack),
     "hsi-r2-validation.json": serializeR2Validation(r2Validation),
     "hsi-r2-validation.md": serializeR2ValidationMarkdown(r2Validation),
     "hsi-translation-handoff.json": serializeTranslationHandoff(translationHandoff),
@@ -312,6 +326,9 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       pilotAcceptanceMd: "hsi-pilot-acceptance.md",
       pilotWalkthroughMd: "hsi-pilot-walkthrough.md",
       partnerLockJson: "hsi-partner-lock.json",
+      verticalDecisionJson: "hsi-vertical-decision.json",
+      sscPathwayPackJson: "hsi-ssc-pathway-pack.json",
+      sscPathwayPackMd: "hsi-ssc-pathway-pack.md",
       r2ValidationJson: "hsi-r2-validation.json",
       r2ValidationMd: "hsi-r2-validation.md",
       translationHandoffJson: "hsi-translation-handoff.json",
@@ -349,9 +366,12 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       systemsVisionCrossPredicates:
         systemsVision.crossAxisPredicates.predicates.length,
       systemsVisionAdapters: systemsVision.futureTechAdapters.length,
+      sscPathwayEdges: sscPathwayPack.edges.length,
+      sscDeepSeedsPresent: sscPathwayPack.deepSeedsPresent,
     },
     discoveryLoop: isiBundle.discoveryCentre.discoveryLoop.framing,
     partnerLock: partnerLockExportPointer(partnerLock),
+    verticalDecision: verticalDecisionExportPointer(verticalDecision),
     acceptance: {
       schemaVersion: acceptance.schemaVersion,
       phase: acceptance.phase,
@@ -383,6 +403,9 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       notCds: systemsVision.notCds,
       domains: systemsVision.domains.length,
       bindingIntent: systemsVision.bindingIntent,
+      verticalStrategy: systemsVision.verticalStrategy,
+      activeScope: systemsVision.activeScope,
+      prdMvpTarget: systemsVision.prdMvpTarget,
       stage1: systemsVision.stageGates.stage1,
       stage2: systemsVision.stageGates.stage2,
       stage3: systemsVision.stageGates.stage3,
@@ -391,13 +414,15 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       "ISI: discovery / Ask / Radar only — use hsi-isi-export.json + hsi-isi-rel-map.json.",
       "ISI pilot walkthrough: hsi-pilot-walkthrough.md + hsi-pilot-evidence-pack.* + hsi-pilot-review-rubric.* + hsi-pilot-acceptance.* (Phase 5 acceptance on scope-locked RA/TNF; partnerSigned=false; lockedPilot=false; no patient CDS).",
       "Partner lock honesty: hsi-partner-lock.json — Phase 2 = scopeLocked; Phase 3 = evidence depth; Phase 5 = acceptance pack; named partner still flips partnerSigned (then lockedPilot).",
+      "Vertical decision A (dual_track): hsi-vertical-decision.json + lock/systems-vision fields — activeScope=ra-tnf; prdMvpTarget=ssc-tfh-b-il21; RA packs untouched.",
+      "SSc PRD MVP pack: hsi-ssc-pathway-pack.* — thin Tfh–B–IL-21 literature slice; EBV hypothesized only; does not replace ASK.",
       "Phase 6–8: Discovery Centre at site `/discovery` loads site/public/discovery/*.json (ASK→MAP→REVIEW→VALIDATE→TRANSLATE; notCds; clinicalActive=false).",
       "Phase 7: R2 validation — hsi-r2-validation.* (hypothesis cards, ranked gaps, literature tests; research only).",
       "Phase 8 done (HSI substrate): hsi-translation-handoff.* — Stage 3 scaffolding; deferred_until_hitl; Akeno in-repo HITL consumer at /akeno (not live CDS; no Akeno Neon).",
       "Aksh: HITL map pointers only — use hsi-aksh-node-map.json + hsi-aksh-hitl-cards.json; CDS stays closed on seeds.",
       "Gate C: human checklist in gate-c-checklist.* (+ translationCandidates); optional HSI red-wave placeholders via bun run db:gate-c-local (pending only). ISI product approve stays autumn-snow — never from this workspace.",
       "Phase 4: HSI Neon schema stub — bun run db:migrate (guards refuse ISI/Akeno/DeliverX).",
-      "Systems vision: hsi-systems-vision.json — multi-axis target graph stubs (immune + gut–immune + neuroimmune + disease/tissue/biomarker + patient-plane rules + P3 adapters + aiFutureTech capabilities/hard bans/schema stubs); not claim seeds; see docs/HSI_SYSTEMS_VISION_MAP.md + docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md.",
+      "Systems vision: hsi-systems-vision.json — multi-axis target graph stubs (immune + gut–immune + neuroimmune + disease/tissue/biomarker + patient-plane rules + P3 adapters + aiFutureTech capabilities/hard bans/schema stubs); dual-track vertical fields; see docs/HSI_SYSTEMS_VISION_MAP.md + docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md.",
       "Regenerate with: bun run outputs (also refreshes site/public/discovery).",
     ],
   };
@@ -445,6 +470,8 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
   const discoveryFiles = [
     "hsi-pilot-evidence-pack.json",
     "hsi-partner-lock.json",
+    "hsi-vertical-decision.json",
+    "hsi-ssc-pathway-pack.json",
     "hsi-gap-report.json",
     "gate-c-checklist.json",
     "hsi-r2-validation.json",
@@ -473,10 +500,14 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     scopeLocked: partnerLock.scopeLocked,
     partnerSigned: partnerLock.partnerSigned,
     lockedPilot: partnerLock.lockedPilot,
+    verticalStrategy: partnerLock.verticalStrategy,
+    activeScope: partnerLock.activeScope,
+    prdMvpTarget: partnerLock.prdMvpTarget,
     files: [...discoveryFiles],
     notes: [
       "Regenerate with bun run outputs — copies land here for the Vite site.",
       "Not diagnostic / not for clinical use. clinicalActive=false.",
+      "ASK question stays RA / anti-TNF; SSc is dual-track secondary PRD target (hsi-ssc-pathway-pack.json).",
       "Phase 7 done = R2 validation (hsi-r2-validation.json) on VALIDATE tab.",
       "Phase 8 done = HSI translation substrate (hsi-translation-handoff.json) on TRANSLATE tab + in-repo Akeno HITL consumer at /akeno (not CDS).",
     ],

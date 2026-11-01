@@ -1,0 +1,447 @@
+{
+  "schemaVersion": "hsi-ssc-pathway-pack-1",
+  "notCds": true,
+  "autoApproveIntoKg": false,
+  "generatedAt": "2026-11-01T17:30:45.581Z",
+  "pathway": {
+    "id": "ssc-tfh-b-il21",
+    "label": "SSc · CD4/Tfh–B-cell–IL-21",
+    "role": "prd_mvp_target",
+    "verticalStrategy": "dual_track",
+    "deepSeedsPresent": true,
+    "rationale": "First honest literature slice for Whole-Immune-Cell PRD MVP vertical under dual-track A. Parallel to RA Stage 1 lock; does not replace ASK question. EBV hypothesized only.",
+    "primaryClaimIds": [
+      "HSI-C-SSC-001",
+      "HSI-C-SSC-002",
+      "HSI-C-SSC-003",
+      "HSI-C-SSC-004",
+      "HSI-C-SSC-005",
+      "HSI-C-SSC-006",
+      "HSI-C-SSC-007"
+    ],
+    "primaryEdgeIds": [
+      "HSI-E-SSC-001",
+      "HSI-E-SSC-002",
+      "HSI-E-SSC-003",
+      "HSI-E-SSC-004",
+      "HSI-E-SSC-005",
+      "HSI-E-SSC-006",
+      "HSI-E-SSC-007"
+    ],
+    "primaryPmids": [
+      "30760472",
+      "29514998",
+      "33175976",
+      "21314428",
+      "16339522",
+      "24129067"
+    ],
+    "entities": [
+      {
+        "id": "HSI-N-ssc",
+        "label": "Systemic sclerosis",
+        "kind": "disease"
+      },
+      {
+        "id": "HSI-N-tfh",
+        "label": "Tfh",
+        "kind": "cell_subset"
+      },
+      {
+        "id": "HSI-N-tfh1",
+        "label": "Tfh1-skewed Tfh",
+        "kind": "cell_subset"
+      },
+      {
+        "id": "HSI-N-b-cell",
+        "label": "B cell",
+        "kind": "cell"
+      },
+      {
+        "id": "HSI-N-plasmablast",
+        "label": "Plasmablast",
+        "kind": "cell_subset"
+      },
+      {
+        "id": "HSI-N-il21",
+        "label": "IL-21",
+        "kind": "cytokine"
+      },
+      {
+        "id": "HSI-N-skin-fibrosis",
+        "label": "Skin fibrosis",
+        "kind": "phenotype"
+      },
+      {
+        "id": "HSI-N-ebv",
+        "label": "EBV",
+        "kind": "pathogen_hypothesis"
+      }
+    ]
+  },
+  "verticalDecision": {
+    "schemaVersion": "hsi-vertical-decision-1",
+    "option": "A",
+    "verticalStrategy": "dual_track",
+    "activeScope": "ra-tnf",
+    "prdMvpTarget": "ssc-tfh-b-il21",
+    "raComparisonFraming": "release2",
+    "decidedAt": "2026-11-01T17:00:00.000Z"
+  },
+  "stage1ActiveScope": {
+    "diseaseId": "ra",
+    "researchQuestion": "Why do some patients with rheumatoid arthritis respond differently to anti-TNF therapy, and which biomarkers or immune mechanisms are best supported for defining those subgroups?",
+    "scopeLocked": true,
+    "partnerSigned": false
+  },
+  "deepSeedsPresent": true,
+  "evidenceMap": [
+    {
+      "edgeId": "HSI-E-SSC-001",
+      "claimId": "HSI-C-SSC-001",
+      "subject": "T follicular helper (Tfh) cells",
+      "predicate": "associated_with",
+      "object": "Systemic sclerosis",
+      "evidenceGrade": "uncertain",
+      "teachingStatus": "associative",
+      "pmid": "30760472",
+      "citationLabel": "Ricard L et al. Ann Rheum Dis 2019 — Circulating follicular helper T cells are increased in systemic sclerosis and promote plasmablast differentiation through the IL-21 pathway.",
+      "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/30760472/"
+    },
+    {
+      "edgeId": "HSI-E-SSC-002",
+      "claimId": "HSI-C-SSC-002",
+      "subject": "T follicular helper (Tfh) cells",
+      "predicate": "upregulates",
+      "object": "IL-21",
+      "evidenceGrade": "uncertain",
+      "teachingStatus": "associative",
+      "pmid": "21314428",
+      "citationLabel": "Crotty S. Annu Rev Immunol 2011 — Follicular helper CD4 T cells (TFH).",
+      "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/21314428/"
+    },
+    {
+      "edgeId": "HSI-E-SSC-003",
+      "claimId": "HSI-C-SSC-003",
+      "subject": "IL-21",
+      "predicate": "upregulates",
+      "object": "B cell",
+      "evidenceGrade": "uncertain",
+      "teachingStatus": "associative",
+      "pmid": "16339522",
+      "citationLabel": "Ettinger R et al. J Immunol 2005 — IL-21 induces differentiation of human naive and memory B cells into antibody-secreting plasma cells.",
+      "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/16339522/"
+    },
+    {
+      "edgeId": "HSI-E-SSC-004",
+      "claimId": "HSI-C-SSC-004",
+      "subject": "IL-21",
+      "predicate": "associated_with",
+      "object": "Plasmablast",
+      "evidenceGrade": "uncertain",
+      "teachingStatus": "associative",
+      "pmid": "30760472",
+      "citationLabel": "Ricard L et al. Ann Rheum Dis 2019 — Circulating Tfh promote plasmablast differentiation through the IL-21 pathway in SSc.",
+      "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/30760472/"
+    },
+    {
+      "edgeId": "HSI-E-SSC-005",
+      "claimId": "HSI-C-SSC-005",
+      "subject": "T follicular helper (Tfh) cells",
+      "predicate": "contributes_to",
+      "object": "Skin fibrosis",
+      "evidenceGrade": "uncertain",
+      "teachingStatus": "associative",
+      "pmid": "29514998",
+      "citationLabel": "Taylor DK et al. Sci Transl Med 2018 — T follicular helper-like cells contribute to skin fibrosis.",
+      "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/29514998/"
+    },
+    {
+      "edgeId": "HSI-E-SSC-006",
+      "claimId": "HSI-C-SSC-006",
+      "subject": "Tfh1-skewed follicular helper cells",
+      "predicate": "associated_with",
+      "object": "Systemic sclerosis",
+      "evidenceGrade": "uncertain",
+      "teachingStatus": "hypothesized",
+      "pmid": "33175976",
+      "citationLabel": "Ly NTM et al. Rheumatology (Oxford) 2021 — Imbalance toward TFH1 cells playing a role in aberrant B cell differentiation in systemic sclerosis.",
+      "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/33175976/"
+    },
+    {
+      "edgeId": "HSI-E-SSC-007",
+      "claimId": "HSI-C-SSC-007",
+      "subject": "Epstein-Barr virus (EBV)",
+      "predicate": "associated_with",
+      "object": "Systemic sclerosis",
+      "evidenceGrade": "uncertain",
+      "teachingStatus": "hypothesized",
+      "pmid": "24129067",
+      "citationLabel": "Farina A et al. J Invest Dermatol 2014 — Epstein-Barr virus infection induces aberrant TLR activation pathway and fibroblast-myofibroblast conversion in scleroderma.",
+      "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/24129067/"
+    }
+  ],
+  "competingExplanations": [
+    {
+      "id": "expl-ssc-tfh-il21-plasmablast",
+      "label": "Circulating Tfh ↑ → IL-21 → plasmablast differentiation in SSc",
+      "status": "from_literature_slice",
+      "relatedClaimIds": [
+        "HSI-C-SSC-001",
+        "HSI-C-SSC-002",
+        "HSI-C-SSC-003",
+        "HSI-C-SSC-004"
+      ],
+      "note": "Primary PRD MVP frame (Ricard 2019 + foundational Tfh/IL-21/B papers). Keep grades honest; Gate C pending."
+    },
+    {
+      "id": "expl-ssc-tfh-fibrosis",
+      "label": "Tfh-like cells contribute to skin fibrosis",
+      "status": "from_literature_slice",
+      "relatedClaimIds": [
+        "HSI-C-SSC-005"
+      ],
+      "note": "Fibrosis-facing complementary frame (Taylor 2018). Do not collapse with autoantibody-only narrative."
+    },
+    {
+      "id": "expl-ssc-tfh1-subset",
+      "label": "Tfh1-skewed imbalance and aberrant B differentiation",
+      "status": "from_literature_slice",
+      "relatedClaimIds": [
+        "HSI-C-SSC-006"
+      ],
+      "note": "Competing Tfh-subset explanation (Ly 2021). teaching=hypothesized for subset generalisation."
+    },
+    {
+      "id": "expl-ssc-ebv-uncertain",
+      "label": "EBV as separate hypothesized pathogen / fibroblast axis",
+      "status": "hypothesized_branch",
+      "relatedClaimIds": [
+        "HSI-C-SSC-007"
+      ],
+      "note": "Uncertainty branch only — never hard-merge EBV with Tfh→B→IL-21 as established causation."
+    }
+  ],
+  "claims": [
+    {
+      "id": "HSI-C-SSC-001",
+      "assertion": "Circulating follicular helper T cells are increased in systemic sclerosis (dual-track PRD MVP seed — not Stage 1 partner lock; not CDS).",
+      "domain": "autoimmunity",
+      "isiRelationshipId": null,
+      "akshNodeId": null
+    },
+    {
+      "id": "HSI-C-SSC-002",
+      "assertion": "Tfh cells produce / drive IL-21 as a defining helper cytokine for B-cell help (foundational Tfh biology; used as SSc pathway axis context).",
+      "domain": "autoimmunity",
+      "isiRelationshipId": null,
+      "akshNodeId": null
+    },
+    {
+      "id": "HSI-C-SSC-003",
+      "assertion": "IL-21 induces differentiation of human naive and memory B cells into antibody-secreting plasma cells (B-help axis underpinning SSc Tfh–IL-21 framing).",
+      "domain": "autoimmunity",
+      "isiRelationshipId": null,
+      "akshNodeId": null
+    },
+    {
+      "id": "HSI-C-SSC-004",
+      "assertion": "In systemic sclerosis, circulating Tfh promote plasmablast differentiation through the IL-21 pathway (SSc-specific pathway seed).",
+      "domain": "autoimmunity",
+      "isiRelationshipId": null,
+      "akshNodeId": null
+    },
+    {
+      "id": "HSI-C-SSC-005",
+      "assertion": "T follicular helper-like cells contribute to skin fibrosis (fibrosis-facing competing / complementary frame for SSc pathway exploration).",
+      "domain": "autoimmunity",
+      "isiRelationshipId": null,
+      "akshNodeId": null
+    },
+    {
+      "id": "HSI-C-SSC-006",
+      "assertion": "Imbalance toward Tfh1 cells is associated with aberrant B-cell differentiation in systemic sclerosis (competing Tfh-subset explanation).",
+      "domain": "autoimmunity",
+      "isiRelationshipId": null,
+      "akshNodeId": null
+    },
+    {
+      "id": "HSI-C-SSC-007",
+      "assertion": "EBV infection has been hypothesized to contribute to scleroderma fibroblast / TLR pathway dysregulation — separate uncertainty branch; not a proven Tfh→B→IL-21 causal merge.",
+      "domain": "autoimmunity",
+      "isiRelationshipId": null,
+      "akshNodeId": null
+    }
+  ],
+  "edges": [
+    {
+      "id": "HSI-E-SSC-001",
+      "edgeType": "associated_with",
+      "subjectId": "HSI-N-tfh",
+      "subjectLabel": "T follicular helper (Tfh) cells",
+      "objectId": "HSI-N-ssc",
+      "objectLabel": "Systemic sclerosis",
+      "claimId": "HSI-C-SSC-001",
+      "curationReview": "source-verified",
+      "hsiGrade": "uncertain",
+      "teachingStatus": "associative",
+      "domain": "autoimmunity",
+      "provenance": {
+        "pmid": "30760472",
+        "doi": "10.1136/annrheumdis-2018-214382",
+        "citationLabel": "Ricard L et al. Ann Rheum Dis 2019 — Circulating follicular helper T cells are increased in systemic sclerosis and promote plasmablast differentiation through the IL-21 pathway.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/30760472/",
+        "notes": "Dual-track SSc pathway seed (prd_mvp_target). PMID 30760472 verified via PubMed. Does not replace RA scopeLocked question. Gate C = human Neon approve only. Not CDS.",
+        "recordedAt": "2026-11-01T17:00:00.000Z"
+      },
+      "bridgeCandidate": false,
+      "seedKind": "placeholder"
+    },
+    {
+      "id": "HSI-E-SSC-002",
+      "edgeType": "upregulates",
+      "subjectId": "HSI-N-tfh",
+      "subjectLabel": "T follicular helper (Tfh) cells",
+      "objectId": "HSI-N-il21",
+      "objectLabel": "IL-21",
+      "claimId": "HSI-C-SSC-002",
+      "curationReview": "source-verified",
+      "hsiGrade": "uncertain",
+      "teachingStatus": "associative",
+      "domain": "autoimmunity",
+      "provenance": {
+        "pmid": "21314428",
+        "doi": "10.1146/annurev-immunol-031210-101400",
+        "citationLabel": "Crotty S. Annu Rev Immunol 2011 — Follicular helper CD4 T cells (TFH).",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/21314428/",
+        "notes": "Foundational Tfh→IL-21 axis (not SSc-specific). PMID 21314428 verified. Maps via ISI produces→HSI upregulates until HSI_EDGE_TYPES expands. Pairs with Ricard 2019 SSc IL-21 pathway. Gate C = human only. Not CDS.",
+        "recordedAt": "2026-11-01T17:00:00.000Z"
+      },
+      "bridgeCandidate": false,
+      "seedKind": "placeholder"
+    },
+    {
+      "id": "HSI-E-SSC-003",
+      "edgeType": "upregulates",
+      "subjectId": "HSI-N-il21",
+      "subjectLabel": "IL-21",
+      "objectId": "HSI-N-b-cell",
+      "objectLabel": "B cell",
+      "claimId": "HSI-C-SSC-003",
+      "curationReview": "source-verified",
+      "hsiGrade": "uncertain",
+      "teachingStatus": "associative",
+      "domain": "autoimmunity",
+      "provenance": {
+        "pmid": "16339522",
+        "doi": "10.4049/jimmunol.175.12.7867",
+        "citationLabel": "Ettinger R et al. J Immunol 2005 — IL-21 induces differentiation of human naive and memory B cells into antibody-secreting plasma cells.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/16339522/",
+        "notes": "Foundational IL-21→B/plasma differentiation. PMID 16339522 verified. Not SSc-specific; underpins Ricard 2019 SSc plasmablast frame. Gate C = human only. Not CDS.",
+        "recordedAt": "2026-11-01T17:00:00.000Z"
+      },
+      "bridgeCandidate": false,
+      "seedKind": "placeholder"
+    },
+    {
+      "id": "HSI-E-SSC-004",
+      "edgeType": "associated_with",
+      "subjectId": "HSI-N-il21",
+      "subjectLabel": "IL-21",
+      "objectId": "HSI-N-plasmablast",
+      "objectLabel": "Plasmablast",
+      "claimId": "HSI-C-SSC-004",
+      "curationReview": "source-verified",
+      "hsiGrade": "uncertain",
+      "teachingStatus": "associative",
+      "domain": "autoimmunity",
+      "provenance": {
+        "pmid": "30760472",
+        "doi": "10.1136/annrheumdis-2018-214382",
+        "citationLabel": "Ricard L et al. Ann Rheum Dis 2019 — Circulating Tfh promote plasmablast differentiation through the IL-21 pathway in SSc.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/30760472/",
+        "notes": "Core dual-track SSc edge (Tfh–IL-21–plasmablast). PMID 30760472 verified. Paper also reports ruxolitinib inhibition — do not invent treatment CDS claims. Gate C = human only.",
+        "recordedAt": "2026-11-01T17:00:00.000Z"
+      },
+      "bridgeCandidate": false,
+      "seedKind": "placeholder"
+    },
+    {
+      "id": "HSI-E-SSC-005",
+      "edgeType": "contributes_to",
+      "subjectId": "HSI-N-tfh",
+      "subjectLabel": "T follicular helper (Tfh) cells",
+      "objectId": "HSI-N-skin-fibrosis",
+      "objectLabel": "Skin fibrosis",
+      "claimId": "HSI-C-SSC-005",
+      "curationReview": "source-verified",
+      "hsiGrade": "uncertain",
+      "teachingStatus": "associative",
+      "domain": "autoimmunity",
+      "provenance": {
+        "pmid": "29514998",
+        "doi": "10.1126/scitranslmed.aaf5307",
+        "citationLabel": "Taylor DK et al. Sci Transl Med 2018 — T follicular helper-like cells contribute to skin fibrosis.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/29514998/",
+        "notes": "Fibrosis-facing SSc-relevant frame (PMID 29514998 verified). Competing/complementary vs pure autoantibody–plasmablast narrative — keep both explanations. Not CDS.",
+        "recordedAt": "2026-11-01T17:00:00.000Z"
+      },
+      "bridgeCandidate": false,
+      "seedKind": "placeholder"
+    },
+    {
+      "id": "HSI-E-SSC-006",
+      "edgeType": "associated_with",
+      "subjectId": "HSI-N-tfh1",
+      "subjectLabel": "Tfh1-skewed follicular helper cells",
+      "objectId": "HSI-N-ssc",
+      "objectLabel": "Systemic sclerosis",
+      "claimId": "HSI-C-SSC-006",
+      "curationReview": "source-verified",
+      "hsiGrade": "uncertain",
+      "teachingStatus": "hypothesized",
+      "domain": "autoimmunity",
+      "provenance": {
+        "pmid": "33175976",
+        "doi": "10.1093/rheumatology/keaa669",
+        "citationLabel": "Ly NTM et al. Rheumatology (Oxford) 2021 — Imbalance toward TFH1 cells playing a role in aberrant B cell differentiation in systemic sclerosis.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/33175976/",
+        "notes": "Competing Tfh-subset frame vs bulk circulating-Tfh↑ narrative. PMID 33175976 verified. teaching=hypothesized for subset generalisation. Keep disagreement visible. Not CDS.",
+        "recordedAt": "2026-11-01T17:00:00.000Z"
+      },
+      "bridgeCandidate": false,
+      "seedKind": "placeholder"
+    },
+    {
+      "id": "HSI-E-SSC-007",
+      "edgeType": "associated_with",
+      "subjectId": "HSI-N-ebv",
+      "subjectLabel": "Epstein-Barr virus (EBV)",
+      "objectId": "HSI-N-ssc",
+      "objectLabel": "Systemic sclerosis",
+      "claimId": "HSI-C-SSC-007",
+      "curationReview": "source-verified",
+      "hsiGrade": "uncertain",
+      "teachingStatus": "hypothesized",
+      "domain": "autoimmunity",
+      "provenance": {
+        "pmid": "24129067",
+        "doi": "10.1038/jid.2013.423",
+        "citationLabel": "Farina A et al. J Invest Dermatol 2014 — Epstein-Barr virus infection induces aberrant TLR activation pathway and fibroblast-myofibroblast conversion in scleroderma.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/24129067/",
+        "notes": "EBV = hypothesized/uncertain branch only (PRD rule). PMID 24129067 verified. Do NOT hard-merge with Tfh–B–IL-21 as established causation. teaching=hypothesized. Gate C = human only. Not CDS.",
+        "recordedAt": "2026-11-01T17:00:00.000Z"
+      },
+      "bridgeCandidate": false,
+      "seedKind": "placeholder"
+    }
+  ],
+  "honesty": [
+    "Dual-track option A: RA Stage 1 scopeLocked packs untouched; this pack is parallel PRD MVP depth.",
+    "Discovery ASK question remains the RA / anti-TNF research question.",
+    "partnerSigned=false; lockedPilot=false — no MoU invented.",
+    "EBV edge is hypothesized/uncertain only — do not overclaim.",
+    "Not clinical decision support. autoApproveIntoKg=false.",
+    "deepSeedsPresent=true because verified PMID edges landed."
+  ]
+}

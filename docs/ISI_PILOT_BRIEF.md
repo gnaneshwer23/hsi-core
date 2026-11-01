@@ -4,6 +4,7 @@
 
 **Status:** Phase 8 HSI translation substrate live · Phase 7 R2 validation · Phase 6 Discovery Centre · Phase 5 acceptance pack · Phase 4 HSI Neon readiness · Phase 3 evidence depth on Phase 2 scope lock · outreach still open for named partner.  
 **Working Stage 1 scope (scopeLocked):** rheumatoid arthritis · anti-TNF response heterogeneity — see `hsi-partner-lock.json` (`scopeLocked=true`, `partnerSigned=false`, `lockedPilot=false`).  
+**Vertical strategy (decision A):** **dual-track** — `activeScope=ra-tnf` (ASK / pilot lock unchanged); `prdMvpTarget=ssc-tfh-b-il21` parallel pack (`hsi-ssc-pathway-pack.*`). RA comparison = Release 2 framing. See [`ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md`](./ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md).  
 **Named partner (`partnerSigned`):** still **TBD after conversations** — do not treat scope lock as a MoU.  
 **Immediate deliverable:** this brief + [`ISI_PILOT_PARTNER_SHORTLIST.md`](./ISI_PILOT_PARTNER_SHORTLIST.md) + published pack / review rubric / acceptance + walkthrough + **`site/` `/discovery`**. Not another general-purpose AI feature.  
 **Phase 5 done:** Stage 1 acceptance checklist + partner walkthrough on scope-locked RA/TNF (`hsi-pilot-acceptance.*`, `hsi-pilot-walkthrough.md`).  
@@ -40,6 +41,7 @@ Prove that ISI improves **one** immune-disease **research intelligence** workflo
 |----------|------|
 | Disease | **Scope-locked (Phase 2):** rheumatoid arthritis. **partnerSigned:** only after named partner conversations |
 | Question | **Scope-locked (Phase 2):** why anti-TNF response differs + which biomarkers/mechanisms define subgroups. Partner may rewrite when signing |
+| Dual-track SSc | **Secondary PRD MVP only** — Discovery may surface SSc Tfh–B–IL-21; **does not replace** the RA ASK question or wipe RA packs |
 | Fake partners | Do not invent confirmed partners or personal contacts; Versus Arthritis / NDORMS–Kennedy = outreach targets only ≠ MoU |
 
 Ask partners: what recurring question costs them time or blocks decisions, and what data they could actually share?

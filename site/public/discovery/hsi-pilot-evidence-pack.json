@@ -3,7 +3,7 @@
   "notCds": true,
   "noPatientLevelActions": true,
   "autoApproveIntoKg": false,
-  "generatedAt": "2026-11-01T12:00:00.000Z",
+  "generatedAt": "2026-11-01T17:30:45.581Z",
   "disease": "Rheumatoid arthritis",
   "researchQuestion": "Why do some patients with rheumatoid arthritis respond differently to anti-TNF therapy, and which biomarkers or immune mechanisms are best supported for defining those subgroups?",
   "lockedPilot": false,
@@ -104,12 +104,25 @@
       "Phase 6 done = Discovery Centre product surface at site `/discovery` (research intelligence; notCds).",
       "Phase 7 done = R2 validation depth (hsi-r2-validation.*; hypothesis cards + ranked gaps; research only).",
       "Phase 8 done = HSI translation substrate (hsi-translation-handoff.*; TRANSLATE tab + /akeno HITL consumer; deferred_until_hitl; not_for_clinical_use). Not live CDS; no Akeno Neon.",
+      "Vertical decision A (dual_track): activeScope=ra-tnf remains ASK/pilot lock; prdMvpTarget=ssc-tfh-b-il21 is a parallel pack — RA comparison = Release 2 framing.",
       "scopeLocked does NOT mean a commercial partner signed or locked a MoU.",
       "partnerSigned / lockedPilot stay false until flipRequirements are met with a named partner.",
       "Outreach category partners are not MoUs; do not invent personal contacts.",
       "Exports must surface status=scope_locked + partnerSigned=false so consumers cannot mistake this for a live pilot contract."
     ],
-    "updatedAt": "2026-11-01T16:00:00.000Z"
+    "verticalStrategy": "dual_track",
+    "activeScope": "ra-tnf",
+    "prdMvpTarget": "ssc-tfh-b-il21",
+    "verticalDecision": {
+      "schemaVersion": "hsi-vertical-decision-1",
+      "option": "A",
+      "verticalStrategy": "dual_track",
+      "activeScope": "ra-tnf",
+      "prdMvpTarget": "ssc-tfh-b-il21",
+      "raComparisonFraming": "release2",
+      "decidedAt": "2026-11-01T17:00:00.000Z"
+    },
+    "updatedAt": "2026-11-01T17:00:00.000Z"
   },
   "substrateNote": "Phase 3 evidence depth on Phase 2 scope lock: rheumatoid arthritis + anti-TNF response heterogeneity. scopeLocked=true; partnerSigned=false; lockedPilot=false. Partner-scoped slice adds ADA/immunogenicity, RF/ACPA serology tension, RF LOINC, and MTX+anti-TNF combo literature. Full evidenceMap still includes T2D / immuno-metabolic + SLE/PsO/IBD stubs.",
   "discoveryCentre": {
@@ -126,7 +139,7 @@
           "id": "ask",
           "label": "ASK",
           "order": 1,
-          "desc": "Scoped research question for one immune-mediated disease (RA/TNF working scope; partnerSigned still open)."
+          "desc": "Scoped research question for one immune-mediated disease (RA/TNF working scope; partnerSigned still open). SSc is secondary PRD target only — does not replace this ASK."
         },
         {
           "id": "map",
@@ -164,6 +177,14 @@
         "seedHint": "TNF / IL-6 / ADA / RF·ACPA / anti-TNF response-heterogeneity — Phase 3 depth on Phase 2 scope lock"
       },
       {
+        "id": "ssc",
+        "label": "Systemic sclerosis",
+        "shortLabel": "SSc",
+        "status": "prd_mvp_secondary_target",
+        "lockedPilot": false,
+        "seedHint": "Dual-track PRD MVP: CD4/Tfh–B–IL-21 thin literature slice (hsi-ssc-pathway-pack); EBV hypothesized only — does not replace RA ASK"
+      },
+      {
         "id": "sle",
         "label": "Systemic lupus erythematosus",
         "shortLabel": "SLE",
@@ -198,7 +219,10 @@
       "disease": "Rheumatoid arthritis",
       "researchQuestion": "Why do some patients with rheumatoid arthritis respond differently to anti-TNF therapy, and which biomarkers or immune mechanisms are best supported for defining those subgroups?",
       "partner": "outreach:uk-versus-arthritis-ndorms-category",
-      "seedPathwayId": "ra-tnf-response-heterogeneity"
+      "seedPathwayId": "ra-tnf-response-heterogeneity",
+      "verticalStrategy": "dual_track",
+      "activeScope": "ra-tnf",
+      "prdMvpTarget": "ssc-tfh-b-il21"
     },
     "partnerLockDetail": {
       "schemaVersion": "hsi-partner-lock-1",
@@ -294,12 +318,34 @@
         "Phase 6 done = Discovery Centre product surface at site `/discovery` (research intelligence; notCds).",
         "Phase 7 done = R2 validation depth (hsi-r2-validation.*; hypothesis cards + ranked gaps; research only).",
         "Phase 8 done = HSI translation substrate (hsi-translation-handoff.*; TRANSLATE tab + /akeno HITL consumer; deferred_until_hitl; not_for_clinical_use). Not live CDS; no Akeno Neon.",
+        "Vertical decision A (dual_track): activeScope=ra-tnf remains ASK/pilot lock; prdMvpTarget=ssc-tfh-b-il21 is a parallel pack — RA comparison = Release 2 framing.",
         "scopeLocked does NOT mean a commercial partner signed or locked a MoU.",
         "partnerSigned / lockedPilot stay false until flipRequirements are met with a named partner.",
         "Outreach category partners are not MoUs; do not invent personal contacts.",
         "Exports must surface status=scope_locked + partnerSigned=false so consumers cannot mistake this for a live pilot contract."
       ],
-      "updatedAt": "2026-11-01T16:00:00.000Z"
+      "verticalStrategy": "dual_track",
+      "activeScope": "ra-tnf",
+      "prdMvpTarget": "ssc-tfh-b-il21",
+      "verticalDecision": {
+        "schemaVersion": "hsi-vertical-decision-1",
+        "option": "A",
+        "verticalStrategy": "dual_track",
+        "activeScope": "ra-tnf",
+        "prdMvpTarget": "ssc-tfh-b-il21",
+        "raComparisonFraming": "release2",
+        "decidedAt": "2026-11-01T17:00:00.000Z"
+      },
+      "updatedAt": "2026-11-01T17:00:00.000Z"
+    },
+    "verticalDecision": {
+      "schemaVersion": "hsi-vertical-decision-1",
+      "option": "A",
+      "verticalStrategy": "dual_track",
+      "activeScope": "ra-tnf",
+      "prdMvpTarget": "ssc-tfh-b-il21",
+      "raComparisonFraming": "release2",
+      "decidedAt": "2026-11-01T17:00:00.000Z"
     },
     "gradeVocabulary": [
       "established",
@@ -311,6 +357,7 @@
       "Phase 7 done: R2 VALIDATE tab loads hsi-r2-validation.json (hypothesis cards / ranked gaps; research only).",
       "Phase 8 done (HSI substrate): TRANSLATE tab + /akeno HITL consumer load hsi-translation-handoff.json — Stage 3 scaffolding; clinicalActive=false; not live CDS.",
       "RA is the Phase 2 working Stage 1 scope (scopeLocked=true; partnerSigned=false; lockedPilot=false).",
+      "Dual-track A: SSc surfaces as prd_mvp_secondary_target only — ASK research question stays RA / anti-TNF.",
       "Do not treat SLE/PsO/IBD as selected pilot indications — illustrative conversation contexts only.",
       "Not diagnostic / not for clinical use. teachingStatus ≠ hsiGrade ≠ CDS."
     ]
@@ -354,9 +401,9 @@
     "scopeLocked": true,
     "partnerSigned": false,
     "provisionalLock": false,
-    "evidenceSnapshotRef": "dist/outputs/hsi-core-0.1.0-20261101T120000000Z/hsi-isi-export.json",
-    "createdAt": "2026-11-01T12:00:00.000Z",
-    "updatedAt": "2026-11-01T12:00:00.000Z"
+    "evidenceSnapshotRef": "dist/outputs/hsi-core-0.1.0-20261101T173045581Z/hsi-isi-export.json",
+    "createdAt": "2026-11-01T17:30:45.581Z",
+    "updatedAt": "2026-11-01T17:30:45.581Z"
   },
   "evidenceMap": [
     {
@@ -1558,6 +1605,195 @@
       "studyOrModelContext": "Illustrative IBD pathway stub aligned to Discovery Centre disease picker. No invented PMID.",
       "limitations": "Missing metadata: pmid, doi, citationLabel, sourceUrl. Do not treat as strong evidence.",
       "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
+      "claimId": "HSI-C-SSC-001",
+      "edgeId": "HSI-E-SSC-001",
+      "claimText": "Circulating follicular helper T cells are increased in systemic sclerosis (dual-track PRD MVP seed — not Stage 1 partner lock; not CDS).",
+      "subject": "T follicular helper (Tfh) cells",
+      "relationship": "associated_with",
+      "object": "Systemic sclerosis",
+      "conditionContext": "autoimmunity",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "30760472",
+        "doi": "10.1136/annrheumdis-2018-214382",
+        "citationLabel": "Ricard L et al. Ann Rheum Dis 2019 — Circulating follicular helper T cells are increased in systemic sclerosis and promote plasmablast differentiation through the IL-21 pathway.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/30760472/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "Dual-track SSc pathway seed (prd_mvp_target). PMID 30760472 verified via PubMed. Does not replace RA scopeLocked question. Gate C = human Neon approve only. Not CDS.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
+      "claimId": "HSI-C-SSC-002",
+      "edgeId": "HSI-E-SSC-002",
+      "claimText": "Tfh cells produce / drive IL-21 as a defining helper cytokine for B-cell help (foundational Tfh biology; used as SSc pathway axis context).",
+      "subject": "T follicular helper (Tfh) cells",
+      "relationship": "upregulates",
+      "object": "IL-21",
+      "conditionContext": "autoimmunity",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "21314428",
+        "doi": "10.1146/annurev-immunol-031210-101400",
+        "citationLabel": "Crotty S. Annu Rev Immunol 2011 — Follicular helper CD4 T cells (TFH).",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/21314428/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "Foundational Tfh→IL-21 axis (not SSc-specific). PMID 21314428 verified. Maps via ISI produces→HSI upregulates until HSI_EDGE_TYPES expands. Pairs with Ricard 2019 SSc IL-21 pathway. Gate C = human only. Not CDS.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
+      "claimId": "HSI-C-SSC-003",
+      "edgeId": "HSI-E-SSC-003",
+      "claimText": "IL-21 induces differentiation of human naive and memory B cells into antibody-secreting plasma cells (B-help axis underpinning SSc Tfh–IL-21 framing).",
+      "subject": "IL-21",
+      "relationship": "upregulates",
+      "object": "B cell",
+      "conditionContext": "autoimmunity",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "16339522",
+        "doi": "10.4049/jimmunol.175.12.7867",
+        "citationLabel": "Ettinger R et al. J Immunol 2005 — IL-21 induces differentiation of human naive and memory B cells into antibody-secreting plasma cells.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/16339522/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "Foundational IL-21→B/plasma differentiation. PMID 16339522 verified. Not SSc-specific; underpins Ricard 2019 SSc plasmablast frame. Gate C = human only. Not CDS.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
+      "claimId": "HSI-C-SSC-004",
+      "edgeId": "HSI-E-SSC-004",
+      "claimText": "In systemic sclerosis, circulating Tfh promote plasmablast differentiation through the IL-21 pathway (SSc-specific pathway seed).",
+      "subject": "IL-21",
+      "relationship": "associated_with",
+      "object": "Plasmablast",
+      "conditionContext": "autoimmunity",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "30760472",
+        "doi": "10.1136/annrheumdis-2018-214382",
+        "citationLabel": "Ricard L et al. Ann Rheum Dis 2019 — Circulating Tfh promote plasmablast differentiation through the IL-21 pathway in SSc.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/30760472/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "Core dual-track SSc edge (Tfh–IL-21–plasmablast). PMID 30760472 verified. Paper also reports ruxolitinib inhibition — do not invent treatment CDS claims. Gate C = human only.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
+      "claimId": "HSI-C-SSC-005",
+      "edgeId": "HSI-E-SSC-005",
+      "claimText": "T follicular helper-like cells contribute to skin fibrosis (fibrosis-facing competing / complementary frame for SSc pathway exploration).",
+      "subject": "T follicular helper (Tfh) cells",
+      "relationship": "contributes_to",
+      "object": "Skin fibrosis",
+      "conditionContext": "autoimmunity",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "29514998",
+        "doi": "10.1126/scitranslmed.aaf5307",
+        "citationLabel": "Taylor DK et al. Sci Transl Med 2018 — T follicular helper-like cells contribute to skin fibrosis.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/29514998/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "Fibrosis-facing SSc-relevant frame (PMID 29514998 verified). Competing/complementary vs pure autoantibody–plasmablast narrative — keep both explanations. Not CDS.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
+      "claimId": "HSI-C-SSC-006",
+      "edgeId": "HSI-E-SSC-006",
+      "claimText": "Imbalance toward Tfh1 cells is associated with aberrant B-cell differentiation in systemic sclerosis (competing Tfh-subset explanation).",
+      "subject": "Tfh1-skewed follicular helper cells",
+      "relationship": "associated_with",
+      "object": "Systemic sclerosis",
+      "conditionContext": "autoimmunity",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "33175976",
+        "doi": "10.1093/rheumatology/keaa669",
+        "citationLabel": "Ly NTM et al. Rheumatology (Oxford) 2021 — Imbalance toward TFH1 cells playing a role in aberrant B cell differentiation in systemic sclerosis.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/33175976/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "Competing Tfh-subset frame vs bulk circulating-Tfh↑ narrative. PMID 33175976 verified. teaching=hypothesized for subset generalisation. Keep disagreement visible. Not CDS.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
+      "claimId": "HSI-C-SSC-007",
+      "edgeId": "HSI-E-SSC-007",
+      "claimText": "EBV infection has been hypothesized to contribute to scleroderma fibroblast / TLR pathway dysregulation — separate uncertainty branch; not a proven Tfh→B→IL-21 causal merge.",
+      "subject": "Epstein-Barr virus (EBV)",
+      "relationship": "associated_with",
+      "object": "Systemic sclerosis",
+      "conditionContext": "autoimmunity",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "24129067",
+        "doi": "10.1038/jid.2013.423",
+        "citationLabel": "Farina A et al. J Invest Dermatol 2014 — Epstein-Barr virus infection induces aberrant TLR activation pathway and fibroblast-myofibroblast conversion in scleroderma.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/24129067/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "EBV = hypothesized/uncertain branch only (PRD rule). PMID 24129067 verified. Do NOT hard-merge with Tfh–B–IL-21 as established causation. teaching=hypothesized. Gate C = human only. Not CDS.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
     }
   ],
   "entitySlice": {
@@ -1572,15 +1808,20 @@
     ],
     "cells": [
       "Adipose tissue macrophages",
+      "B cell",
       "Pancreatic β-cell dysfunction",
       "Synovial macrophages",
-      "T-cell exhaustion"
+      "T follicular helper (Tfh) cells",
+      "T-cell exhaustion",
+      "Tfh1-skewed follicular helper cells"
     ],
     "pathwaysOrMechanisms": [
       "Autoimmune–metabolic comorbidity",
       "CGM time-in-range",
+      "Epstein-Barr virus (EBV)",
       "Hyperglycemia",
       "IL-17 pathway",
+      "IL-21",
       "IL-23 pathway",
       "IL-6",
       "IL-6 pathway axis",
@@ -1594,8 +1835,11 @@
       "NLRP3 inflammasome",
       "Obesity",
       "PD-1",
+      "Plasmablast",
       "RF/ACPA seropositive RA phenotype",
+      "Skin fibrosis",
       "Systemic glucocorticoids",
+      "Systemic sclerosis",
       "TNF-α",
       "Type I interferon pathway"
     ],
@@ -1638,16 +1882,22 @@
       "PMID:11244034",
       "PMID:12813013",
       "PMID:15030775",
+      "PMID:16339522",
       "PMID:16382236",
       "PMID:16508927",
       "PMID:17133559",
       "PMID:18375541",
       "PMID:18625622",
       "PMID:20699241",
+      "PMID:21314428",
+      "PMID:24129067",
       "PMID:24586782",
       "PMID:28845751",
+      "PMID:29514998",
       "PMID:2993897",
+      "PMID:30760472",
       "PMID:31180194",
+      "PMID:33175976",
       "PMID:7569976",
       "WHO / ADA diagnostic criteria (placeholder)",
       "irAE clinical reviews (placeholder)"
@@ -1714,6 +1964,11 @@
         "kind": "cell"
       },
       {
+        "id": "HSI-N-b-cell",
+        "label": "B cell",
+        "kind": "cell"
+      },
+      {
         "id": "HSI-N-beta-cell-dysfunction",
         "label": "Pancreatic β-cell dysfunction",
         "kind": "cell"
@@ -1724,8 +1979,18 @@
         "kind": "cell"
       },
       {
+        "id": "HSI-N-tfh",
+        "label": "T follicular helper (Tfh) cells",
+        "kind": "cell"
+      },
+      {
         "id": "HSI-N-tcell-exhaustion",
         "label": "T-cell exhaustion",
+        "kind": "cell"
+      },
+      {
+        "id": "HSI-N-tfh1",
+        "label": "Tfh1-skewed follicular helper cells",
         "kind": "cell"
       },
       {
@@ -1774,6 +2039,11 @@
         "kind": "pathway"
       },
       {
+        "id": "HSI-N-ebv",
+        "label": "Epstein-Barr virus (EBV)",
+        "kind": "pathway"
+      },
+      {
         "id": "HSI-N-hyperglycemia",
         "label": "Hyperglycemia",
         "kind": "pathway"
@@ -1781,6 +2051,11 @@
       {
         "id": "HSI-N-il17",
         "label": "IL-17 pathway",
+        "kind": "pathway"
+      },
+      {
+        "id": "HSI-N-il21",
+        "label": "IL-21",
         "kind": "pathway"
       },
       {
@@ -1849,13 +2124,28 @@
         "kind": "pathway"
       },
       {
+        "id": "HSI-N-plasmablast",
+        "label": "Plasmablast",
+        "kind": "pathway"
+      },
+      {
         "id": "HSI-N-ra-seropositive",
         "label": "RF/ACPA seropositive RA phenotype",
         "kind": "pathway"
       },
       {
+        "id": "HSI-N-skin-fibrosis",
+        "label": "Skin fibrosis",
+        "kind": "pathway"
+      },
+      {
         "id": "HSI-N-glucocorticoids",
         "label": "Systemic glucocorticoids",
+        "kind": "pathway"
+      },
+      {
+        "id": "HSI-N-ssc",
+        "label": "Systemic sclerosis",
         "kind": "pathway"
       },
       {
@@ -1929,6 +2219,11 @@
         "kind": "study"
       },
       {
+        "id": "pmid:16339522",
+        "label": "PMID:16339522",
+        "kind": "study"
+      },
+      {
         "id": "pmid:16382236",
         "label": "PMID:16382236",
         "kind": "study"
@@ -1959,6 +2254,16 @@
         "kind": "study"
       },
       {
+        "id": "pmid:21314428",
+        "label": "PMID:21314428",
+        "kind": "study"
+      },
+      {
+        "id": "pmid:24129067",
+        "label": "PMID:24129067",
+        "kind": "study"
+      },
+      {
         "id": "pmid:24586782",
         "label": "PMID:24586782",
         "kind": "study"
@@ -1969,13 +2274,28 @@
         "kind": "study"
       },
       {
+        "id": "pmid:29514998",
+        "label": "PMID:29514998",
+        "kind": "study"
+      },
+      {
         "id": "pmid:2993897",
         "label": "PMID:2993897",
         "kind": "study"
       },
       {
+        "id": "pmid:30760472",
+        "label": "PMID:30760472",
+        "kind": "study"
+      },
+      {
         "id": "pmid:31180194",
         "label": "PMID:31180194",
+        "kind": "study"
+      },
+      {
+        "id": "pmid:33175976",
+        "label": "PMID:33175976",
         "kind": "study"
       },
       {
@@ -2533,18 +2853,18 @@
     "walkthroughMd": "hsi-pilot-walkthrough.md"
   },
   "summary": {
-    "evidenceMapRows": 41,
+    "evidenceMapRows": 48,
     "partnerScopedEvidenceRows": 14,
     "gradeCounts": {
       "established": 0,
-      "uncertain": 30,
+      "uncertain": 37,
       "unexplored": 11
     },
     "missingSourceLabels": 20,
     "claimsWithLoinc": 8,
     "expertShortlistItems": 16,
     "gateCPending": 13,
-    "illustrativeDiseaseContexts": 4
+    "illustrativeDiseaseContexts": 5
   },
   "nextActions": [
     "Phase 3 evidence depth complete for scope-locked RA/anti-TNF. Keep partnerSigned=false / lockedPilot=false until a named partner confirms disease + question (see partnerLock.flipRequirements).",
