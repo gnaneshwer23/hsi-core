@@ -38,7 +38,7 @@ describe("Stage 1 rubric thresholds (Apolo Pharma partner_agreed)", () => {
     expect(ev.gateCPending).toBeGreaterThan(0);
   });
 
-  test("rubric + acceptance surface partner_agreed thresholds (licensing still open)", () => {
+  test("rubric + acceptance surface partner_agreed thresholds (licensing cleared)", () => {
     const rubric = buildPilotReviewRubric({
       generatedAt: "2026-11-01T21:00:00.000Z",
     });

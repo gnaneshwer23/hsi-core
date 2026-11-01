@@ -52,7 +52,7 @@ describe("named partner Apolo Pharma lock", () => {
     ).toBe(true);
   });
 
-  test("flip-readiness marks named_org pass; KPIs partner_agreed; licensing pending", () => {
+  test("flip-readiness marks named_org pass; KPIs partner_agreed; licensing cleared", () => {
     const bundle = buildPartnerFlipReadinessBundle({
       generatedAt: "2026-11-01T20:00:00.000Z",
     });
@@ -62,7 +62,7 @@ describe("named partner Apolo Pharma lock", () => {
     expect(bundle.isHypothetical).toBe(false);
     expect(bundle.summary.readyToFlipPartnerSigned).toBe(true);
     expect(bundle.summary.readyForRealPartnerReplacement).toBe(false);
-    expect(bundle.summary.pass).toBeGreaterThanOrEqual(4);
+    expect(bundle.summary.pass).toBeGreaterThanOrEqual(6);
 
     const byId = Object.fromEntries(
       bundle.flipRequirements.map((r) => [r.id, r]),
@@ -72,9 +72,9 @@ describe("named partner Apolo Pharma lock", () => {
     expect(byId.partner_signed_flip.status).toBe("pass");
     expect(byId.real_partner_replacement.status).toBe("pass");
     expect(byId.shortlist_row.status).toBe("pass");
-    expect(byId.licensing.status).toBe("pending");
+    expect(byId.licensing.status).toBe("pass");
     expect(byId.thresholds.status).toBe("pass");
-    expect(bundle.summary.pending).toBeGreaterThanOrEqual(1);
+    expect(bundle.summary.blockingIds).not.toContain("licensing");
 
     expect(REAL_PARTNER_REPLACEMENT.partner.id).toBe("partner:apolo-pharma");
     expect(REAL_PARTNER_REPLACEMENT.partner.label).toBe("Apolo Pharma");

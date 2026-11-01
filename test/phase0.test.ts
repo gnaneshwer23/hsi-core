@@ -457,7 +457,7 @@ describe("Gate C checklist + publish outputs", () => {
     expect(rubric.autoApproveIntoKg).toBe(false);
   });
 
-  it("ships Phase 5 acceptance pack with Apolo Pharma named partner (thresholds partner_agreed; licensing pending)", () => {
+  it("ships Phase 5 acceptance pack with Apolo Pharma named partner (thresholds partner_agreed; licensing cleared)", () => {
     const acceptance = buildPilotAcceptancePack({ generatedAt: "2026-11-01T14:45:00.000Z" });
     expect(acceptance.schemaVersion).toBe("hsi-pilot-acceptance-1");
     expect(acceptance.phase).toBe("5");
@@ -483,7 +483,7 @@ describe("Gate C checklist + publish outputs", () => {
     expect(acceptance.criteria.find((c) => c.id === "ac-scope-lock")?.status).toBe("pass");
     expect(acceptance.criteria.find((c) => c.id === "ac-rubric")?.status).toBe("pass");
     expect(acceptance.criteria.find((c) => c.id === "ac-partner-signed")?.status).toBe("pass");
-    expect(acceptance.criteria.find((c) => c.id === "ac-licensing")?.status).toBe("pending");
+    expect(acceptance.criteria.find((c) => c.id === "ac-licensing")?.status).toBe("pass");
     expect(acceptance.criteria.find((c) => c.id === "ac-thresholds")?.status).toBe("pass");
     expect(acceptance.walkthroughSteps.length).toBeGreaterThanOrEqual(5);
     expect(acceptance.criteria.find((c) => c.id === "ac-discovery-ui")?.status).toBe("pass");
@@ -699,8 +699,8 @@ describe("Gate C checklist + publish outputs", () => {
     expect(manifest.acceptance.partnerReadyWalkthrough).toBe(true);
     expect(manifest.acceptance.partnerSigned).toBe(true);
     expect(manifest.counts.stage1FourOutputsGreen).toBe(true);
-    expect(manifest.counts.acceptancePass).toBeGreaterThanOrEqual(10);
-    expect(manifest.counts.acceptancePending).toBeGreaterThanOrEqual(1);
+    expect(manifest.counts.acceptancePass).toBeGreaterThanOrEqual(11);
+    expect(manifest.counts.acceptancePending).toBe(0);
     expect(manifest.counts.reviewRubricThresholdStatus).toBe("partner_agreed");
     expect(manifest.counts.r2HypothesisCards).toBeGreaterThanOrEqual(5);
     expect(manifest.counts.r2RankedGaps).toBeGreaterThanOrEqual(3);

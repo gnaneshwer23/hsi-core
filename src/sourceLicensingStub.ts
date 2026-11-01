@@ -2,7 +2,11 @@
  * P0.3 — rights / licensing table for PMIDs used in RA / SSc / gut / neuro packs.
  *
  * Curator review (2026-11-01): Europe PMC core + Crossref license URLs.
- * Does not invent commercial clearance or flip partnerSigned.
+ * Apolo Pharma Stage 1 partner corpus clearance (2026-11-01 operator-asserted):
+ *   ok_oa → partnerCleared + clearanceScope=oa_reuse (cite + OA FT as license permits)
+ *   restricted / ok_cite → partnerCleared + cite_metadata_pilot (cite-only; no FT redistribution)
+ *   unknown → uncleared (needs_confirm)
+ * Does not invent commercial publisher licenses or flip legalBinding.
  * Bibliographic citation of PMIDs remains standard scholarly practice;
  * licenseStatus governs full-text / figure / commercial redistribution claims.
  */
@@ -24,6 +28,12 @@ export type SourceLicenseStatus =
   /** @deprecated Pre-review placeholder; no longer emitted after 2026-11-01 review. */
   | "needs_review";
 
+/** Partner corpus clearance scope for Stage 1 pilot (Apolo Pharma). */
+export type PartnerClearanceScope =
+  | "cite_metadata_pilot"
+  | "oa_reuse"
+  | "uncleared";
+
 export type SourcePackId = "ra_tnf" | "ssc_tfh_b_il21" | "gut_scfa" | "neuro_vagus";
 
 export type SourceLicensingRow = {
@@ -36,6 +46,12 @@ export type SourceLicensingRow = {
   pmcid?: string;
   publisherLicense?: string | null;
   reviewNotes?: string;
+  /** True when named partner cleared this PMID for Stage 1 pilot scope. */
+  partnerCleared: boolean;
+  clearanceScope: PartnerClearanceScope;
+  partnerClearanceNote: string;
+  partnerId: string | null;
+  partnerClearedAt: string | null;
 };
 
 export type SourceLicensingStubBundle = {
@@ -43,10 +59,19 @@ export type SourceLicensingStubBundle = {
   phase: "P0.3-reviewed";
   notCds: true;
   containsPhi: false;
+  /** Stub field: not a publisher MoU; corpus clearance uses partnerCleared*. */
   partnerSigned: false;
   generatedAt: string;
   reviewDate: string;
   reviewMethod: string;
+  partnerClearance: {
+    partnerId: string;
+    partnerLabel: string;
+    clearedAt: string;
+    policy:
+      | "apolo_stage1_cite_metadata_and_oa_reuse";
+    note: string;
+  } | null;
   summary: {
     pmidCount: number;
     okCiteCount: number;
@@ -56,6 +81,11 @@ export type SourceLicensingStubBundle = {
     /** Always 0 after curator review; retained for older consumers. */
     needsReviewCount: number;
     partnerClearedCount: number;
+    clearanceScopeCounts: {
+      oa_reuse: number;
+      cite_metadata_pilot: number;
+      uncleared: number;
+    };
     blockedCount: number;
   };
   rows: SourceLicensingRow[];
@@ -63,9 +93,10 @@ export type SourceLicensingStubBundle = {
 };
 
 const REVIEW_DATE = "2026-11-01";
+const PARTNER_CLEARANCE_DATE = "2026-11-01";
+const APOLO_PARTNER_ID = "partner:apolo-pharma";
 const REVIEW_METHOD =
   "Europe PMC REST search resultType=core (isOpenAccess, inPMC, license, pmcid) + Crossref /works license URLs for ambiguous OA; conservative — no invented CC-BY; free PMC without clear CC → unknown; paywall/no OA → restricted; explicit CC → ok_oa. Bibliographic PMID citation always OK regardless of status.";
-
 type ReviewEntry = {
   status: Exclude<SourceLicenseStatus, "needs_review">;
   doi?: string;
@@ -390,12 +421,76 @@ function addPmid(
   map.set(pmid, set);
 }
 
+type PartnerClearanceFields = Pick<
+  SourceLicensingRow,
+  | "partnerCleared"
+  | "clearanceScope"
+  | "partnerClearanceNote"
+  | "partnerId"
+  | "partnerClearedAt"
+>;
+
+/**
+ * Apolo Pharma Stage 1 pilot clearance (operator-asserted 2026-11-01).
+ * Applies only for named partner:apolo-pharma (not hypothetical fixture).
+ * Never invents commercial publisher redistribution rights.
+ */
+function partnerClearanceForStatus(
+  status: SourceLicenseStatus,
+  applyApoloClearance: boolean,
+): PartnerClearanceFields {
+  if (!applyApoloClearance) {
+    return {
+      partnerCleared: false,
+      clearanceScope: "uncleared",
+      partnerClearanceNote:
+        "No named-partner corpus clearance applied (hypothetical fixture or non-Apolo lock).",
+      partnerId: null,
+      partnerClearedAt: null,
+    };
+  }
+
+  switch (status) {
+    case "ok_oa":
+      return {
+        partnerCleared: true,
+        clearanceScope: "oa_reuse",
+        partnerClearanceNote:
+          "Apolo Pharma Stage 1 (partner:apolo-pharma, operator-asserted 2026-11-01): OA reuse under publisher CC/OA terms — cite + OA full text as license permits; respect NC/SA; no invented commercial publisher license.",
+        partnerId: APOLO_PARTNER_ID,
+        partnerClearedAt: PARTNER_CLEARANCE_DATE,
+      };
+    case "restricted":
+    case "ok_cite":
+      return {
+        partnerCleared: true,
+        clearanceScope: "cite_metadata_pilot",
+        partnerClearanceNote:
+          "Apolo Pharma Stage 1 cite-metadata-only pilot (partner:apolo-pharma, operator-asserted 2026-11-01): bibliographic PMID/metadata citation OK for pilot Discovery; does NOT grant full-text redistribution or figure republication rights.",
+        partnerId: APOLO_PARTNER_ID,
+        partnerClearedAt: PARTNER_CLEARANCE_DATE,
+      };
+    case "unknown":
+    case "needs_review":
+      return {
+        partnerCleared: false,
+        clearanceScope: "uncleared",
+        partnerClearanceNote:
+          "needs_confirm — license unclear after curator pass; left uncleared (cite-only optional after confirm; no OA/FT claim).",
+        partnerId: null,
+        partnerClearedAt: null,
+      };
+  }
+}
+
 function rowForPmid(
   pmid: string,
   packs: SourcePackId[],
+  applyApoloClearance: boolean,
 ): SourceLicensingRow {
   const review = PMID_REVIEW[pmid];
   if (!review) {
+    const clearance = partnerClearanceForStatus("unknown", applyApoloClearance);
     return {
       pmid,
       packs: [...packs].sort(),
@@ -404,6 +499,7 @@ function rowForPmid(
         "PMID in pack inventory but absent from curator PMID_REVIEW table — treat as unknown; citation of locator OK; no FT reuse claim.",
       europePmcUrl: pubmedUrl(pmid),
       reviewNotes: "Missing from PMID_REVIEW — add on next licensing pass.",
+      ...clearance,
     };
   }
 
@@ -436,6 +532,7 @@ function rowForPmid(
     pmcid: review.pmcid,
     publisherLicense: review.publisherLicense ?? null,
     reviewNotes: review.note,
+    ...partnerClearanceForStatus(review.status, applyApoloClearance),
   };
 }
 
@@ -444,6 +541,10 @@ export function buildSourceLicensingStubBundle(opts?: {
 }): SourceLicensingStubBundle {
   const generatedAt = opts?.generatedAt ?? new Date().toISOString();
   const lock = getPartnerLock();
+  const applyApoloClearance =
+    !lock.isHypothetical &&
+    lock.partner?.id === APOLO_PARTNER_ID &&
+    lock.partnerSigned === true;
   const byPmid = new Map<string, Set<SourcePackId>>();
 
   for (const pmid of lock.seedPathway?.primaryPmids ?? []) {
@@ -461,7 +562,9 @@ export function buildSourceLicensingStubBundle(opts?: {
 
   const rows: SourceLicensingRow[] = [...byPmid.entries()]
     .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
-    .map(([pmid, packs]) => rowForPmid(pmid, [...packs]));
+    .map(([pmid, packs]) =>
+      rowForPmid(pmid, [...packs], applyApoloClearance),
+    );
 
   const okCiteCount = rows.filter((r) => r.licenseStatus === "ok_cite").length;
   const okOaCount = rows.filter((r) => r.licenseStatus === "ok_oa").length;
@@ -472,6 +575,14 @@ export function buildSourceLicensingStubBundle(opts?: {
   const needsReviewCount = rows.filter(
     (r) => r.licenseStatus === "needs_review",
   ).length;
+  const partnerClearedCount = rows.filter((r) => r.partnerCleared).length;
+  const clearanceScopeCounts = {
+    oa_reuse: rows.filter((r) => r.clearanceScope === "oa_reuse").length,
+    cite_metadata_pilot: rows.filter(
+      (r) => r.clearanceScope === "cite_metadata_pilot",
+    ).length,
+    uncleared: rows.filter((r) => r.clearanceScope === "uncleared").length,
+  };
 
   return {
     schemaVersion: SOURCE_LICENSING_STUB_SCHEMA,
@@ -482,6 +593,15 @@ export function buildSourceLicensingStubBundle(opts?: {
     generatedAt,
     reviewDate: REVIEW_DATE,
     reviewMethod: REVIEW_METHOD,
+    partnerClearance: applyApoloClearance
+      ? {
+          partnerId: APOLO_PARTNER_ID,
+          partnerLabel: lock.partner?.label ?? "Apolo Pharma",
+          clearedAt: PARTNER_CLEARANCE_DATE,
+          policy: "apolo_stage1_cite_metadata_and_oa_reuse",
+          note: "ok_oa → oa_reuse; restricted/ok_cite → cite_metadata_pilot; unknown → uncleared (needs_confirm). Cite-metadata pilot does not grant FT redistribution. No invented commercial publisher licenses.",
+        }
+      : null,
     summary: {
       pmidCount: rows.length,
       okCiteCount,
@@ -489,15 +609,20 @@ export function buildSourceLicensingStubBundle(opts?: {
       restrictedCount,
       unknownCount,
       needsReviewCount,
-      partnerClearedCount: 0,
-      blockedCount: 0,
+      partnerClearedCount,
+      clearanceScopeCounts,
+      blockedCount: clearanceScopeCounts.uncleared,
     },
     rows,
     honesty: [
       `Curator reviewDate=${REVIEW_DATE}; method recorded on bundle.reviewMethod.`,
       "Statuses: ok_cite (citation-only cleared) · ok_oa (CC / clear reuse) · restricted (paywall ARR — metadata cite only) · unknown (unclear — no invented CC).",
-      "ok_oa ≠ partner commercial corpus clearance; partnerSigned stays false until named partner agrees attribution for the pilot lock.",
-      "PMID presence ≠ republication rights for PDFs or figures beyond what the row license allows.",
+      applyApoloClearance
+        ? `Apolo Pharma Stage 1 partner clearance (${PARTNER_CLEARANCE_DATE}): partnerClearedCount=${partnerClearedCount} (oa_reuse=${clearanceScopeCounts.oa_reuse}, cite_metadata_pilot=${clearanceScopeCounts.cite_metadata_pilot}, uncleared=${clearanceScopeCounts.uncleared}).`
+        : "Named-partner corpus clearance not applied on this lock path.",
+      "clearanceScope=cite_metadata_pilot ≠ full-text redistribution rights; oa_reuse still bound by publisher CC/OA terms (NC/SA).",
+      "Stub partnerSigned stays false (not a publisher MoU); partnerCleared* records Stage 1 pilot attribution scope only.",
+      "PMID presence ≠ republication rights for PDFs or figures beyond what the row license + clearanceScope allow.",
       "Does not contain PHI; does not auto-approve Gate C.",
     ],
   };
@@ -512,23 +637,30 @@ export function serializeSourceLicensingStub(
 export function serializeSourceLicensingStubMarkdown(
   bundle: SourceLicensingStubBundle,
 ): string {
+  const sc = bundle.summary.clearanceScopeCounts;
   const lines = [
     "# Source licensing stub (P0.3 reviewed)",
     "",
     `Schema: \`${bundle.schemaVersion}\` · generated ${bundle.generatedAt}`,
     "",
-    `**reviewDate=${bundle.reviewDate}** · **partnerSigned=${bundle.partnerSigned}**`,
+    `**reviewDate=${bundle.reviewDate}** · **partnerSigned=${bundle.partnerSigned}** · **partnerClearedCount=${bundle.summary.partnerClearedCount}**`,
     "",
     `PMIDs=${bundle.summary.pmidCount} · ok_oa=${bundle.summary.okOaCount} · ok_cite=${bundle.summary.okCiteCount} · restricted=${bundle.summary.restrictedCount} · unknown=${bundle.summary.unknownCount}`,
     "",
+    `Clearance scopes: oa_reuse=${sc.oa_reuse} · cite_metadata_pilot=${sc.cite_metadata_pilot} · uncleared=${sc.uncleared}`,
+    "",
+    bundle.partnerClearance
+      ? `Partner clearance: ${bundle.partnerClearance.partnerLabel} (\`${bundle.partnerClearance.partnerId}\`) · clearedAt=${bundle.partnerClearance.clearedAt} · policy=${bundle.partnerClearance.policy}`
+      : "Partner clearance: none on this lock path",
+    "",
     `Method: ${bundle.reviewMethod}`,
     "",
-    "| PMID | Packs | Status | License | DOI | Europe PMC |",
-    "|------|-------|--------|---------|-----|------------|",
+    "| PMID | Packs | Status | Clearance | Cleared | License | DOI | Europe PMC |",
+    "|------|-------|--------|-----------|---------|---------|-----|------------|",
   ];
   for (const r of bundle.rows) {
     lines.push(
-      `| ${r.pmid} | ${r.packs.join(", ")} | ${r.licenseStatus} | ${r.publisherLicense ?? "—"} | ${r.doi ?? "—"} | ${r.europePmcUrl} |`,
+      `| ${r.pmid} | ${r.packs.join(", ")} | ${r.licenseStatus} | ${r.clearanceScope} | ${r.partnerCleared} | ${r.publisherLicense ?? "—"} | ${r.doi ?? "—"} | ${r.europePmcUrl} |`,
     );
   }
   lines.push("", "## Honesty", "");

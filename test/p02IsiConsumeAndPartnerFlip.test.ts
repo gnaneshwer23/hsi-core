@@ -67,7 +67,7 @@ describe("P0.2-HSI ISI consume contract + partner flip-readiness", () => {
     expect(json.lockedPilot).toBe(true);
   });
 
-  test("partner flip-readiness: Apolo Pharma named path; KPIs partner_agreed; licensing pending", () => {
+  test("partner flip-readiness: Apolo Pharma named path; KPIs partner_agreed; licensing cleared", () => {
     const lock = getPartnerLock();
     expect(lock.partnerSigned).toBe(true);
     expect(lock.lockedPilot).toBe(true);
@@ -84,8 +84,8 @@ describe("P0.2-HSI ISI consume contract + partner flip-readiness", () => {
     expect(bundle.lockedPilot).toBe(true);
     expect(bundle.summary.readyToFlipPartnerSigned).toBe(true);
     expect(bundle.summary.readyForRealPartnerReplacement).toBe(false);
-    expect(bundle.summary.pass).toBeGreaterThanOrEqual(4);
-    expect(bundle.summary.pending).toBeGreaterThanOrEqual(1);
+    expect(bundle.summary.pass).toBeGreaterThanOrEqual(6);
+    expect(bundle.summary.blockingIds).not.toContain("licensing");
 
     const byId = Object.fromEntries(
       bundle.flipRequirements.map((r) => [r.id, r]),
@@ -95,7 +95,7 @@ describe("P0.2-HSI ISI consume contract + partner flip-readiness", () => {
     expect(byId.shortlist_row.status).toBe("pass");
     expect(byId.partner_signed_flip.status).toBe("pass");
     expect(byId.real_partner_replacement.status).toBe("pass");
-    expect(byId.licensing.status).toBe("pending");
+    expect(byId.licensing.status).toBe("pass");
     expect(byId.thresholds.status).toBe("pass");
 
     for (const r of bundle.flipRequirements) {
@@ -114,7 +114,7 @@ describe("P0.2-HSI ISI consume contract + partner flip-readiness", () => {
     expect(json.lockedPilot).toBe(true);
   });
 
-  test("source licensing stub lists RA/SSc/gut/neuro PMIDs with curator statuses", () => {
+  test("source licensing stub lists RA/SSc/gut/neuro PMIDs with Apolo Stage 1 clearance", () => {
     const bundle = buildSourceLicensingStubBundle({
       generatedAt: "2026-11-01T19:00:00.000Z",
     });
@@ -126,9 +126,23 @@ describe("P0.2-HSI ISI consume contract + partner flip-readiness", () => {
     expect(bundle.reviewMethod.length).toBeGreaterThan(40);
     expect(bundle.summary.pmidCount).toBeGreaterThan(20);
     expect(bundle.summary.needsReviewCount).toBe(0);
-    expect(bundle.summary.partnerClearedCount).toBe(0);
     expect(bundle.summary.okOaCount).toBeGreaterThan(0);
     expect(bundle.summary.restrictedCount).toBeGreaterThan(0);
+    expect(bundle.partnerClearance?.partnerId).toBe("partner:apolo-pharma");
+    expect(bundle.summary.partnerClearedCount).toBe(
+      bundle.summary.clearanceScopeCounts.oa_reuse +
+        bundle.summary.clearanceScopeCounts.cite_metadata_pilot,
+    );
+    expect(bundle.summary.partnerClearedCount).toBeGreaterThan(0);
+    expect(bundle.summary.clearanceScopeCounts.oa_reuse).toBe(
+      bundle.summary.okOaCount,
+    );
+    expect(bundle.summary.clearanceScopeCounts.cite_metadata_pilot).toBe(
+      bundle.summary.restrictedCount + bundle.summary.okCiteCount,
+    );
+    expect(bundle.summary.clearanceScopeCounts.uncleared).toBe(
+      bundle.summary.unknownCount,
+    );
     expect(
       bundle.summary.okCiteCount +
         bundle.summary.okOaCount +
@@ -143,26 +157,50 @@ describe("P0.2-HSI ISI consume contract + partner flip-readiness", () => {
     expect(packs.has("neuro_vagus")).toBe(true);
 
     const allowed = new Set(["ok_cite", "ok_oa", "restricted", "unknown"]);
+    const scopes = new Set([
+      "oa_reuse",
+      "cite_metadata_pilot",
+      "uncleared",
+    ]);
     for (const r of bundle.rows) {
       expect(allowed.has(r.licenseStatus)).toBe(true);
+      expect(scopes.has(r.clearanceScope)).toBe(true);
       expect(r.pmid).toMatch(/^\d+$/);
       expect(r.europePmcUrl).toContain(r.pmid);
+      if (r.licenseStatus === "ok_oa") {
+        expect(r.partnerCleared).toBe(true);
+        expect(r.clearanceScope).toBe("oa_reuse");
+      } else if (r.licenseStatus === "restricted" || r.licenseStatus === "ok_cite") {
+        expect(r.partnerCleared).toBe(true);
+        expect(r.clearanceScope).toBe("cite_metadata_pilot");
+        expect(r.partnerClearanceNote).toContain("does NOT grant full-text");
+      } else {
+        expect(r.partnerCleared).toBe(false);
+        expect(r.clearanceScope).toBe("uncleared");
+        expect(r.partnerClearanceNote).toContain("needs_confirm");
+      }
     }
 
     const byPmid = new Map(bundle.rows.map((r) => [r.pmid, r]));
     expect(byPmid.get("11244034")?.licenseStatus).toBe("restricted"); // RA TNF
+    expect(byPmid.get("11244034")?.clearanceScope).toBe("cite_metadata_pilot");
     expect(byPmid.get("30760472")?.licenseStatus).toBe("restricted"); // SSc
     expect(byPmid.get("24226770")?.licenseStatus).toBe("restricted"); // gut butyrate
     expect(byPmid.get("10839541")?.licenseStatus).toBe("restricted"); // neuro vagus
     expect(byPmid.get("24586782")?.licenseStatus).toBe("ok_oa"); // PLOS CC BY
+    expect(byPmid.get("24586782")?.clearanceScope).toBe("oa_reuse");
     expect(byPmid.get("37763102")?.licenseStatus).toBe("ok_oa"); // MDPI CC BY
     expect(byPmid.get("27382171")?.licenseStatus).toBe("unknown"); // PNAS free unclear
+    expect(byPmid.get("27382171")?.clearanceScope).toBe("uncleared");
     expect(byPmid.get("24350901")?.licenseStatus).toBe("restricted"); // CXCL4 NEJM
     expect(byPmid.get("24226773")?.licenseStatus).toBe("restricted"); // Arpaia Nature
     expect(byPmid.get("11901203")?.licenseStatus).toBe("ok_oa"); // Bernik JEM
 
     const json = JSON.parse(serializeSourceLicensingStub(bundle));
-    expect(json.summary.partnerClearedCount).toBe(0);
+    expect(json.summary.partnerClearedCount).toBeGreaterThan(0);
+    expect(json.summary.clearanceScopeCounts.uncleared).toBe(
+      bundle.summary.unknownCount,
+    );
     expect(json.summary.needsReviewCount).toBe(0);
   });
 });

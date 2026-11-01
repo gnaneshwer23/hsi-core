@@ -156,19 +156,19 @@ Living status + prioritized backlog: [`BUILD_STATUS_AND_NEXT.md`](./BUILD_STATUS
 | Discovery graph explorer | **Done** (`/discovery` MAP; RA + SSc/gut/neuro toggles; click → evidence card) |
 | SSc / gut / neuro depth PMIDs | **Done** (+3 / +2 / +2 verified edges; RA untouched) |
 | ISI consume contract + partner flip-readiness (P0.2-HSI) | **Done** (`hsi-isi-consume-contract.*` + `hsi-partner-flip-readiness.*`; `partnerSigned=false`; adapter track paused) |
-| Source licensing stub (P0.3) | **Reviewed** (`hsi-source-licensing-stub.*`; ok_oa/restricted/unknown; partnerCleared=0) |
+| Source licensing stub (P0.3) | **Reviewed + Apolo Stage 1 clearance** (`hsi-source-licensing-stub.*`; ok_oa/restricted/unknown + clearanceScope; partnerClearedCount > 0) |
 | **Next** — named partner OR out-of-repo ISI product wiring | **Waiting human** — do not invent more adapter spikes without partnerNamed |
 | Typed entity slice + LOINC on pack evidence rows | **Done** |
 | **Phase 1b** — Partner disease + question **provisional** scaffold | **Done** (superseded by Phase 2) |
 | **Phase 2** — Scope lock (`scopeLocked=true`; RA / anti-TNF question canonical; outreach category only) | **Done** |
-| Partner-scoped literature seed slice (RA/TNF pathway) | **Done** (public PMIDs; licensing still open with partner) |
+| Partner-scoped literature seed slice (RA/TNF pathway) | **Done** (public PMIDs; Apolo Stage 1 clearance scopes on stub) |
 | Scientific review rubric export (Stage 1 four outputs) | **Done** (Apolo Pharma numeric thresholds `partner_agreed` 2026-11-01) |
 | Named `partnerSigned=true` / `lockedPilot=true` | **Done** (Apolo Pharma — MoU operator-asserted; still not CDS) |
 | **Phase 3** — Partner-scoped evidence depth for the locked question | **Done** (ADA / immunogenicity, serology tension, RF LOINC, MTX combo; competing explanations filled) |
 | **Phase 4** — HSI Neon `red-wave` readiness | **Done** (HSI-owned schema stub + migrate/gate-c-local guards; never ISI/Akeno/DeliverX) |
-| **Phase 5** — Pilot acceptance pack | **Done** (`hsi-pilot-acceptance.*` + `hsi-pilot-walkthrough.md`; Stage 1 four outputs + MANIFEST + gap + Gate C + rubric green; Apolo Pharma `partnerSigned` / KPIs **`partner_agreed`**; licensing **pending**) |
+| **Phase 5** — Pilot acceptance pack | **Done** (`hsi-pilot-acceptance.*` + `hsi-pilot-walkthrough.md`; Stage 1 four outputs + MANIFEST + gap + Gate C + rubric green; Apolo Pharma `partnerSigned` / KPIs **`partner_agreed`**; Stage 1 corpus licensing clearance applied) |
 | **Phase 6** — Target R1 Discovery Centre product surface | **Done** (`site/` route `/discovery`; loads `site/public/discovery/*.json` refreshed by `bun run outputs`; ASK→MAP→REVIEW; notCds; Akeno = later) |
-| Source licensing / attribution for agreed partner corpus | **Remaining** (after partnerSigned) |
+| Source licensing / attribution for agreed partner corpus | **Done** (Stage 1 — `oa_reuse` + `cite_metadata_pilot`; unknown uncleared) |
 | Success-metric numeric thresholds with partner | **Done** — Apolo Pharma operator-agreed 2026-11-01 in `src/stage1RubricThresholds.ts` (`thresholdSource=partner_agreed`, `partnerId=partner:apolo-pharma`, `replaceWithPartnerAgreedThresholds=false`; min edges 12 / competing 4 / LOINC 6; Gate C pending allowed; `green_with_pending`) |
 | PDF/DOCX brief renderer | **Deferred** (ISI product P1; needs explicit ask) |
 | **Phase 7** — R2 validation | **Done** (`hsi-r2-validation.*`; hypothesis cards with untested/supported/refuted/gap; ranked gaps + literature tests; Discovery Centre **VALIDATE** tab; research only — not clinical protocols) |

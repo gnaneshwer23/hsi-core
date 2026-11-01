@@ -22,6 +22,7 @@ import {
   buildPilotReviewRubric,
   type PilotReviewRubric,
 } from "./pilotReviewRubric";
+import { buildSourceLicensingStubBundle } from "./sourceLicensingStub";
 import {
   evalPackAgainstStage1NumericThresholds,
   getStage1RubricThresholds,
@@ -276,16 +277,29 @@ function buildCriteria(opts: {
       notes:
         "Checklist for human walkthrough; Apolo Pharma KPIs are partner_agreed (fixture path may still be set_for_test).",
     }),
-    criterion({
-      id: "ac-licensing",
-      category: "licensing",
-      label: "Source licensing / attribution for partner corpus",
-      artifact:
-        "hsi-source-licensing-stub.json · docs/HOW_TO_SOURCE_LICENSING.md · hsi-partner-lock.json#flipRequirements",
-      status: "pending",
-      evidence: "Scope-locked PMIDs are public PubMed locators; curator statuses in licensing stub; partnerClearedCount=0",
-      notes: "Pending after partnerSigned — do not claim licensed corpora.",
-    }),
+    (() => {
+      const licensing = buildSourceLicensingStubBundle();
+      const cleared = licensing.summary.partnerClearedCount;
+      const scopes = licensing.summary.clearanceScopeCounts;
+      const licensingPass =
+        !lock.isHypothetical &&
+        lock.partner?.id === "partner:apolo-pharma" &&
+        cleared > 0;
+      return criterion({
+        id: "ac-licensing",
+        category: "licensing",
+        label: "Source licensing / attribution for partner corpus",
+        artifact:
+          "hsi-source-licensing-stub.json · docs/HOW_TO_SOURCE_LICENSING.md · hsi-partner-lock.json#flipRequirements",
+        status: licensingPass ? "pass" : "pending",
+        evidence: licensingPass
+          ? `Apolo Pharma Stage 1 clearance: partnerClearedCount=${cleared} (oa_reuse=${scopes.oa_reuse}, cite_metadata_pilot=${scopes.cite_metadata_pilot}, uncleared=${scopes.uncleared}); cite-metadata ≠ FT redistribution`
+          : `Scope-locked PMIDs are public PubMed locators; curator statuses in licensing stub; partnerClearedCount=${cleared}`,
+        notes: licensingPass
+          ? "Stage 1 pilot clearance only — do not invent commercial publisher licenses; unknown remains needs_confirm."
+          : "Pending after partnerSigned — do not claim licensed corpora.",
+      });
+    })(),
     criterion({
       id: "ac-thresholds",
       category: "review",
@@ -347,8 +361,8 @@ function buildWalkthroughSteps(lock: HsiPartnerLock): PilotAcceptancePack["walkt
       step: 4,
       title: "Run the review rubric",
       open: "hsi-pilot-review-rubric.md",
-      say: "Mark ready_for_human items live with the partner. Apolo Pharma Stage 1 numeric KPIs are partner_agreed (2026-11-01). Leave licensing (partnerClearedCount) blocked until corpus clearance.",
-      doNot: "Do not invent CDS or auto-approve Gate C from partner_agreed KPIs.",
+      say: "Mark ready_for_human items live with the partner. Apolo Pharma Stage 1 numeric KPIs are partner_agreed (2026-11-01). Corpus licensing clearance applied (oa_reuse + cite_metadata_pilot; unknown uncleared).",
+      doNot: "Do not invent CDS, auto-approve Gate C, or claim full-text redistribution from cite_metadata_pilot.",
     },
     {
       step: 5,
@@ -458,7 +472,7 @@ export function buildPilotAcceptancePack(opts?: {
       thresholds.thresholdStatus === "partner_agreed"
         ? "Numeric Stage 1 thresholds are partner_agreed with Apolo Pharma (2026-11-01); keep pack depth ≥ 12/4/6."
         : "Numeric Stage 1 thresholds are set_for_test under the hypothetical fixture — real partner must re-agree numbers before formal user testing.",
-      "Agree source licensing (docs/HOW_TO_SOURCE_LICENSING.md) before claiming a licensed corpus.",
+      "Confirm remaining uncleared/unknown PMIDs before claiming OA or FT rights (docs/HOW_TO_SOURCE_LICENSING.md).",
       "Production ISI must ignore fixture partnerSigned unless ALLOW_HYPOTHETICAL_PARTNER=true.",
       "Phase 6–8 Discovery Centre (ASK→MAP→REVIEW→VALIDATE→TRANSLATE) is live. Phase 8 = translation substrate + in-repo Akeno HITL at /akeno (not CDS).",
     ],
@@ -599,7 +613,7 @@ export function serializePilotWalkthroughMarkdown(
     `- overall: \`${pack.summary.overallStage1Acceptance}\``,
     `- four outputs green: \`${pack.summary.stage1FourOutputsGreen}\``,
     `- partner-ready walkthrough: \`${pack.summary.partnerReadyWalkthrough}\``,
-    `- pending (expected): partner corpus licensing (partnerClearedCount)`,
+    `- licensing: Apolo Pharma Stage 1 corpus clearance (oa_reuse + cite_metadata_pilot; unknown uncleared/needs_confirm)`,
     `- partner_agreed: Apolo Pharma Stage 1 numeric KPIs (2026-11-01)`,
     "",
     "## After the meeting",

@@ -313,7 +313,7 @@ function buildRealPartnerLock(): HsiPartnerLock {
       "MoU / written-confirm paperwork is operator-asserted by HSI workspace instruction (2026-11-01) — never invent emails, phones, or named PI contacts in code.",
       "Still not CDS; Gate C never auto-approves; no PHI; HSI Neon remains red-wave only.",
       "Phase 2 done = scopeLocked=true (disease + researchQuestion are working Stage 1 scope). RA activeScope unchanged; dual-track SSc/gut/neuro continues.",
-      "Licensing partnerClearedCount and rubric numeric re-agree remain open until partner formally clears attribution / KPIs.",
+      "Apolo Pharma Stage 1 corpus licensing clearance applied (oa_reuse + cite_metadata_pilot; unknown uncleared/needs_confirm). Stage 1 numeric KPIs are partner_agreed.",
     ],
   };
 }

@@ -444,6 +444,7 @@ export {
   buildSourceLicensingStubBundle,
   serializeSourceLicensingStub,
   serializeSourceLicensingStubMarkdown,
+  type PartnerClearanceScope,
   type SourceLicenseStatus,
   type SourceLicensingRow,
   type SourceLicensingStubBundle,

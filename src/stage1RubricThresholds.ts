@@ -132,7 +132,7 @@ export function getStage1RubricThresholds(): Stage1RubricThresholdsBundle {
       "thresholdSource=partner_agreed — Apolo Pharma operator-agreed Stage 1 KPIs (2026-11-01).",
       "partnerId=partner:apolo-pharma; replaceWithPartnerAgreedThresholds=false (already agreed).",
       "Numeric baseline kept honest: minPartnerScopedEdges=12, minCompetingExplanations=4, minLoincLinkedClaims=6 (pack ≈14/5/8).",
-      "gateCPendingAllowed=true; acceptanceOverallAllowed=green_with_pending while partnerClearedCount licensing remains open.",
+      "gateCPendingAllowed=true; acceptanceOverallAllowed=green_with_pending (honest while Gate C / uncleared PMIDs remain).",
       "Does not invent CDS or auto Gate C from these cut-offs.",
     ],
   };

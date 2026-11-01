@@ -385,7 +385,7 @@ export function buildPilotReviewRubric(opts?: {
         : thresholds.thresholdStatus === "partner_agreed"
           ? "Numeric Stage 1 thresholds are partner_agreed with Apolo Pharma (2026-11-01); keep pack depth ≥ 12/4/6."
           : "Agree success-metric thresholds before formal pilot user testing.",
-      "Phase 5 complete = hsi-pilot-acceptance.* + hsi-pilot-walkthrough.md (partner-ready Stage 1 pack; licensing partnerClearedCount still open).",
+      "Phase 5 complete = hsi-pilot-acceptance.* + hsi-pilot-walkthrough.md (partner-ready Stage 1 pack; Apolo corpus clearance oa_reuse + cite_metadata_pilot).",
       "Phase 8 (clinical R3–R5 / Akeno) needs an explicit user ask + Stage 3 gates.",
       "Do not invent CDS or auto-approve Gate C from scopeLocked / partner_agreed KPIs.",
     ],

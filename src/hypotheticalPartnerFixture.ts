@@ -88,7 +88,7 @@ export const REAL_PARTNER_REPLACEMENT = {
     contactChannel: "programme_introduction" as const,
     outreachStatus: "confirmed" as const,
     notes:
-      "Named pilot partner Apolo Pharma (id partner:apolo-pharma). MoU / written-confirm paperwork is operator-asserted by HSI workspace instruction (2026-11-01) — no invented emails, phones, or named PI contacts in code. Still not CDS; Gate C never auto-approves. RA Stage 1 activeScope unchanged; dual-track SSc/gut/neuro continues. Stage 1 numeric KPIs partner_agreed (2026-11-01); partnerClearedCount licensing remains open.",
+      "Named pilot partner Apolo Pharma (id partner:apolo-pharma). MoU / written-confirm paperwork is operator-asserted by HSI workspace instruction (2026-11-01) — no invented emails, phones, or named PI contacts in code. Still not CDS; Gate C never auto-approves. RA Stage 1 activeScope unchanged; dual-track SSc/gut/neuro continues. Stage 1 numeric KPIs partner_agreed (2026-11-01); Stage 1 corpus licensing clearance applied (oa_reuse + cite_metadata_pilot; unknown uncleared).",
   },
   agreementKind: "legal_mou" as PartnerAgreementKind,
   replaceWithRealPartner: false,
