@@ -631,6 +631,10 @@ describe("Gate C checklist + publish outputs", () => {
         translationCandidates: number;
         translationCdsSurfacable: number;
         gateCTranslationCandidates: number;
+        gateCModelProposals: number;
+        gateCModelProposalsPending: number;
+        sscCellCards: number;
+        sscPathwayEdges: number;
       };
       r2Validation: {
         phase: string;
@@ -670,6 +674,12 @@ describe("Gate C checklist + publish outputs", () => {
     expect(manifest.counts.translationCandidates).toBeGreaterThanOrEqual(3);
     expect(manifest.counts.translationCdsSurfacable).toBe(0);
     expect(manifest.counts.gateCTranslationCandidates).toBeGreaterThanOrEqual(3);
+    expect(manifest.counts.gateCModelProposals).toBeGreaterThanOrEqual(2);
+    expect(manifest.counts.gateCModelProposalsPending).toBe(
+      manifest.counts.gateCModelProposals,
+    );
+    expect(manifest.counts.sscCellCards).toBeGreaterThanOrEqual(7);
+    expect(manifest.counts.sscPathwayEdges).toBeGreaterThanOrEqual(8);
     expect(manifest.translationHandoff.phase).toBe("8");
     expect(manifest.translationHandoff.clinicalActive).toBe(false);
     expect(manifest.translationHandoff.clinicalUse).toBe("not_for_clinical_use");

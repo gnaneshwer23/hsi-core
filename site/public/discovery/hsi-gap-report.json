@@ -1,19 +1,19 @@
 {
   "schemaVersion": "hsi-gap-report-1",
-  "generatedAt": "2026-11-01T17:30:45.581Z",
+  "generatedAt": "2026-11-01T18:24:10.173Z",
   "summary": {
-    "seedEdges": 48,
+    "seedEdges": 50,
     "bridgeCandidates": 12,
     "gradeCounts": {
       "established": 0,
-      "uncertain": 37,
+      "uncertain": 39,
       "unexplored": 11
     },
     "claimsMappedToIsi": 13,
     "claimsMappedToAksh": 22,
-    "claimsWithDurableLocator": 35,
+    "claimsWithDurableLocator": 37,
     "loinc": {
-      "edgeCount": 48,
+      "edgeCount": 50,
       "claimsWithLoincMarker": 8,
       "markersWithLoinc": 7,
       "markersMissingLoinc": 1
@@ -629,6 +629,32 @@
       "claimId": "HSI-C-SSC-007",
       "edgeId": "HSI-E-SSC-007",
       "assertion": "EBV infection has been hypothesized to contribute to scleroderma fibroblast / TLR pathway dysregulation — separate uncertainty branch; not a proven Tfh→B→IL-21 causal merge.",
+      "domain": "autoimmunity",
+      "hsiGrade": "uncertain",
+      "missing": [
+        "isi_relationship_id",
+        "aksh_node_id",
+        "loinc_marker",
+        "gate_c_approved"
+      ]
+    },
+    {
+      "claimId": "HSI-C-SSC-008",
+      "edgeId": "HSI-E-SSC-008",
+      "assertion": "Commentary frame: T follicular helper cells are discussed as drivers of skin fibrosis (neighbourhood support for the Taylor 2018 fibrosis-facing explanation).",
+      "domain": "autoimmunity",
+      "hsiGrade": "uncertain",
+      "missing": [
+        "isi_relationship_id",
+        "aksh_node_id",
+        "loinc_marker",
+        "gate_c_approved"
+      ]
+    },
+    {
+      "claimId": "HSI-C-SSC-009",
+      "edgeId": "HSI-E-SSC-009",
+      "assertion": "In systemic sclerosis, peripheral CD21low B cells and serum IL-4 / IL-21 are reported to influence joint involvement (B-cell–IL-21 neighbourhood deepen; not Stage 1 RA lock).",
       "domain": "autoimmunity",
       "hsiGrade": "uncertain",
       "missing": [

@@ -3,7 +3,7 @@
   "notCds": true,
   "noPatientLevelActions": true,
   "autoApproveIntoKg": false,
-  "generatedAt": "2026-11-01T17:30:45.581Z",
+  "generatedAt": "2026-11-01T18:24:10.173Z",
   "disease": "Rheumatoid arthritis",
   "researchQuestion": "Why do some patients with rheumatoid arthritis respond differently to anti-TNF therapy, and which biomarkers or immune mechanisms are best supported for defining those subgroups?",
   "lockedPilot": false,
@@ -401,9 +401,9 @@
     "scopeLocked": true,
     "partnerSigned": false,
     "provisionalLock": false,
-    "evidenceSnapshotRef": "dist/outputs/hsi-core-0.1.0-20261101T173045581Z/hsi-isi-export.json",
-    "createdAt": "2026-11-01T17:30:45.581Z",
-    "updatedAt": "2026-11-01T17:30:45.581Z"
+    "evidenceSnapshotRef": "dist/outputs/hsi-core-0.1.0-20261101T182410173Z/hsi-isi-export.json",
+    "createdAt": "2026-11-01T18:24:10.173Z",
+    "updatedAt": "2026-11-01T18:24:10.173Z"
   },
   "evidenceMap": [
     {
@@ -1794,6 +1794,60 @@
       "studyOrModelContext": "EBV = hypothesized/uncertain branch only (PRD rule). PMID 24129067 verified. Do NOT hard-merge with Tfh–B–IL-21 as established causation. teaching=hypothesized. Gate C = human only. Not CDS.",
       "limitations": null,
       "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
+      "claimId": "HSI-C-SSC-008",
+      "edgeId": "HSI-E-SSC-008",
+      "claimText": "Commentary frame: T follicular helper cells are discussed as drivers of skin fibrosis (neighbourhood support for the Taylor 2018 fibrosis-facing explanation).",
+      "subject": "T follicular helper (Tfh) cells",
+      "relationship": "contributes_to",
+      "object": "Skin fibrosis",
+      "conditionContext": "autoimmunity",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "29626172",
+        "doi": "10.1126/sciimmunol.aat6417",
+        "citationLabel": "Clark RA. Sci Immunol 2018 — \"That's not helping—T follicular helper cells drive skin fibrosis\" (commentary on Taylor et al.).",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/29626172/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "P1.1 deepen: commentary PMID 29626172 verified. Complements HSI-E-SSC-005; not a treatment claim. Gate C = human only. Not CDS.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
+      "claimId": "HSI-C-SSC-009",
+      "edgeId": "HSI-E-SSC-009",
+      "claimText": "In systemic sclerosis, peripheral CD21low B cells and serum IL-4 / IL-21 are reported to influence joint involvement (B-cell–IL-21 neighbourhood deepen; not Stage 1 RA lock).",
+      "subject": "IL-21",
+      "relationship": "associated_with",
+      "object": "Systemic sclerosis",
+      "conditionContext": "autoimmunity",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "37763102",
+        "doi": "10.3390/jpm13091334",
+        "citationLabel": "Pellicano C et al. J Pers Med 2023 — In Systemic Sclerosis Patients, Peripheral Blood CD21(low) B Cells and Serum IL-4 and IL-21 Influence Joint Involvement.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/37763102/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "P1.1 deepen: PMID 37763102 verified. teaching=hypothesized for joint-involvement generalisation. Keep EBV branch separate. Gate C = human only. Not CDS.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
     }
   ],
   "entitySlice": {
@@ -1894,10 +1948,12 @@
       "PMID:24586782",
       "PMID:28845751",
       "PMID:29514998",
+      "PMID:29626172",
       "PMID:2993897",
       "PMID:30760472",
       "PMID:31180194",
       "PMID:33175976",
+      "PMID:37763102",
       "PMID:7569976",
       "WHO / ADA diagnostic criteria (placeholder)",
       "irAE clinical reviews (placeholder)"
@@ -2279,6 +2335,11 @@
         "kind": "study"
       },
       {
+        "id": "pmid:29626172",
+        "label": "PMID:29626172",
+        "kind": "study"
+      },
+      {
         "id": "pmid:2993897",
         "label": "PMID:2993897",
         "kind": "study"
@@ -2296,6 +2357,11 @@
       {
         "id": "pmid:33175976",
         "label": "PMID:33175976",
+        "kind": "study"
+      },
+      {
+        "id": "pmid:37763102",
+        "label": "PMID:37763102",
         "kind": "study"
       },
       {
@@ -2853,11 +2919,11 @@
     "walkthroughMd": "hsi-pilot-walkthrough.md"
   },
   "summary": {
-    "evidenceMapRows": 48,
+    "evidenceMapRows": 50,
     "partnerScopedEvidenceRows": 14,
     "gradeCounts": {
       "established": 0,
-      "uncertain": 37,
+      "uncertain": 39,
       "unexplored": 11
     },
     "missingSourceLabels": 20,

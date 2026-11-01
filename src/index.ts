@@ -169,6 +169,25 @@ export {
 } from "./gateCChecklist";
 
 export {
+  MODEL_PROPOSAL_RUNTIME_SCHEMA,
+  assertSafeModelProposal,
+  buildExampleModelProposals,
+  buildGateCModelProposalRows,
+  toGateCModelProposalRow,
+  type GateCModelProposalRow,
+  type ModelProposalArtifact,
+} from "./modelProposal";
+
+export {
+  SSC_CELL_CARD_SCHEMA,
+  SSC_NEIGHBOURHOOD_CARDS,
+  listSscNeighbourhoodCards,
+  sscCellCardByNodeId,
+  type SscNeighbourhoodCard,
+  type SscOntologyHint,
+} from "./sscCellCards";
+
+export {
   OUTPUTS_MANIFEST_SCHEMA,
   publishOutputs,
   serializeGapReportMarkdown,

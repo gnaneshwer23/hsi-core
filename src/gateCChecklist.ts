@@ -22,6 +22,10 @@ import {
   buildTranslationHandoffPack,
   type TranslationHandoffCandidate,
 } from "./translationHandoff";
+import {
+  buildGateCModelProposalRows,
+  type GateCModelProposalRow,
+} from "./modelProposal";
 
 export const GATE_C_CHECKLIST_SCHEMA = "hsi-gate-c-checklist-1" as const;
 
@@ -80,11 +84,20 @@ export type GateCChecklistBundle = {
     translationCandidates: number;
     translationHitlRequired: number;
     translationCdsSurfacable: 0;
+    /** P1.5 model-proposal drafts → Gate C pending only. */
+    modelProposals: number;
+    modelProposalsPending: number;
+    modelProposalsAutoApprove: 0;
   };
   /** Curated / suggested REL rows awaiting human Neon Gate C. */
   rows: GateCChecklistRow[];
   /** Phase 8 clinic-facing handoff candidates (Akeno = future; not clinical). */
   translationCandidates: GateCTranslationCandidateRow[];
+  /**
+   * Typed ModelProposalArtifact drafts (autoApprove=false).
+   * Never graded KG edges; never Neon auto-approve; mayFlipEvidenceGrade=false.
+   */
+  modelProposals: GateCModelProposalRow[];
   instructions: string[];
 };
 
@@ -128,6 +141,7 @@ function assertionForClaim(claimId: string): string {
  * Build Gate C human checklist from ISI REL suggestions + seed provenance.
  * Curated rows with PMIDs are listed as `gateCStatus: pending`.
  * Phase 8 adds translationCandidates (HITL-required; autoApprove=false).
+ * P1.5 adds modelProposals (typed ModelProposalArtifact; autoApprove=false).
  */
 export function buildGateCChecklist(opts?: {
   generatedAt?: string;
@@ -172,6 +186,7 @@ export function buildGateCChecklist(opts?: {
 
   const translationPack = buildTranslationHandoffPack({ generatedAt });
   const translationCandidates = translationPack.candidates.map(toTranslationChecklistRow);
+  const modelProposals = buildGateCModelProposalRows({ createdAt: generatedAt });
 
   return {
     schemaVersion: GATE_C_CHECKLIST_SCHEMA,
@@ -187,9 +202,14 @@ export function buildGateCChecklist(opts?: {
       translationCandidates: translationCandidates.length,
       translationHitlRequired: translationCandidates.filter((t) => t.hitlRequired).length,
       translationCdsSurfacable: 0,
+      modelProposals: modelProposals.length,
+      modelProposalsPending: modelProposals.filter((p) => p.gateCStatus === "pending")
+        .length,
+      modelProposalsAutoApprove: 0,
     },
     rows,
     translationCandidates,
+    modelProposals,
     instructions: [
       "Human-only Neon path: Check → claim_support=supports → Approve on the REL.",
       "Do not auto-approve from this checklist into any product KG.",
@@ -198,6 +218,7 @@ export function buildGateCChecklist(opts?: {
       "CDS stays closed until curationReview=approved AND hsiGrade=established.",
       "Phase 8 translationCandidates: human HITL only (autoApprove=false); clinicalUse=not_for_clinical_use; Akeno = future consumer — not live CDS.",
       "teachingStatus ≠ hsiGrade ≠ CDS — never collapse axes when reviewing translation candidates.",
+      "P1.5 modelProposals: typed ModelProposalArtifact drafts only (autoApprove=false; mayFlipEvidenceGrade=false). Never write hsiGrade/curationReview from a model. Not Neon auto-approve — human Gate C only.",
     ],
   };
 }
@@ -253,6 +274,22 @@ export function serializeGateCChecklistMarkdown(
   for (const t of checklist.translationCandidates) {
     lines.push(
       `| \`${t.candidateId}\` | ${t.clinicLabel ?? "—"} (\`${t.akshNodeId ?? "—"}\`) | ${t.loinc ?? "—"} | ${t.hsiGrade} | ${t.teachingStatus} | **${t.status}** | \`${t.autoApprove}\` |`,
+    );
+  }
+
+  lines.push(
+    "",
+    "## P1.5 model proposals (pending · never auto-approve)",
+    "",
+    `Proposals: ${checklist.summary.modelProposals} · pending=${checklist.summary.modelProposalsPending} · autoApprove=${checklist.summary.modelProposalsAutoApprove}`,
+    "",
+    "| Proposal | S — P — O | Teaching (suggested) | Evidence hints | Status | autoApprove |",
+    "|----------|-----------|----------------------|----------------|--------|-------------|",
+  );
+  for (const p of checklist.modelProposals) {
+    const hints = p.evidenceHints.slice(0, 3).join("; ");
+    lines.push(
+      `| \`${p.proposalId}\` | ${p.proposedSubject} — ${p.proposedPredicate} — ${p.proposedObject} | ${p.suggestedTeachingStatus} | ${hints} | **${p.gateCStatus}** | \`${p.autoApprove}\` |`,
     );
   }
 

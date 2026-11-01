@@ -238,7 +238,7 @@ Curator Gate C · ISI product approve · Aksh clinician action · partner govern
 - Any path that auto-flips grades.  
 - SSc deep seed pivot that wipes RA lock.
 
-**Recommended next technical slice after this doc:** land `ModelProposalArtifact` + optional `embeddingSlot` types in package exports, one unit test that proposals cannot set `mayFlipEvidenceGrade`, and keep gut–immune thin-evidence curation as the parallel Stage 2 science slice ([`HSI_SYSTEMS_VISION_MAP.md`](./HSI_SYSTEMS_VISION_MAP.md)).
+**P1.5 landed:** typed `ModelProposalArtifact` (`src/modelProposal.ts`) wires into Gate C checklist `modelProposals` (pending only; `autoApprove=false`; unit tests refuse forbidden `hsiGrade` / `mayFlipEvidenceGrade`). **Recommended next science slice:** gut–immune thin-evidence curation (P1.3) per [`HSI_SYSTEMS_VISION_MAP.md`](./HSI_SYSTEMS_VISION_MAP.md) / [`BUILD_STATUS_AND_NEXT.md`](./BUILD_STATUS_AND_NEXT.md).
 
 ---
 

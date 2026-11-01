@@ -2,7 +2,7 @@
   "schemaVersion": "hsi-gate-c-checklist-1",
   "notCds": true,
   "autoApproveIntoKg": false,
-  "generatedAt": "2026-11-01T17:30:45.581Z",
+  "generatedAt": "2026-11-01T18:24:10.173Z",
   "summary": {
     "totalRows": 32,
     "curatedWithRel": 13,
@@ -11,7 +11,10 @@
     "withPmid": 21,
     "translationCandidates": 22,
     "translationHitlRequired": 22,
-    "translationCdsSurfacable": 0
+    "translationCdsSurfacable": 0,
+    "modelProposals": 3,
+    "modelProposalsPending": 3,
+    "modelProposalsAutoApprove": 0
   },
   "rows": [
     {
@@ -927,6 +930,72 @@
       "axesNote": "teachingStatus ≠ hsiGrade ≠ CDS — never collapse"
     }
   ],
+  "modelProposals": [
+    {
+      "proposalId": "HSI-MP-SSC-001",
+      "sourceAdapterOrAgent": "hsi-stub-nn-proposer/ssc-tfh-b-il21",
+      "proposedSubject": "T follicular helper (Tfh) cells",
+      "proposedPredicate": "associated_with",
+      "proposedObject": "Systemic sclerosis",
+      "contextNote": "Draft restatement of dual-track SSc seed HSI-E-SSC-001 for Gate C queue demo. Human must re-check S-P-O + PMID before any ISI Neon approve.",
+      "evidenceHints": [
+        "PMID:30760472",
+        "pack:hsi-ssc-pathway-pack"
+      ],
+      "suggestedTeachingStatus": "associative",
+      "createdAt": "2026-11-01T18:24:10.173Z",
+      "proposalKind": "model_draft",
+      "gateCStatus": "pending",
+      "autoApprove": false,
+      "autoApproveIntoKg": false,
+      "mayFlipEvidenceGrade": false,
+      "isGradedKgEdge": false,
+      "schemaRef": "hsi-model-proposal-1"
+    },
+    {
+      "proposalId": "HSI-MP-SSC-002",
+      "sourceAdapterOrAgent": "hsi-stub-nn-proposer/ssc-tfh-b-il21",
+      "proposedSubject": "IL-21",
+      "proposedPredicate": "associated_with",
+      "proposedObject": "joint involvement in systemic sclerosis (B-cell neighbourhood)",
+      "contextNote": "Draft from public PMID 37763102 (serum IL-21 / CD21low B / joint involvement). Suggested teaching=hypothesized — do not promote hsiGrade.",
+      "evidenceHints": [
+        "PMID:37763102",
+        "card:HSI-CARD-SSC-B",
+        "card:HSI-CARD-SSC-IL21"
+      ],
+      "suggestedTeachingStatus": "hypothesized",
+      "createdAt": "2026-11-01T18:24:10.173Z",
+      "proposalKind": "model_draft",
+      "gateCStatus": "pending",
+      "autoApprove": false,
+      "autoApproveIntoKg": false,
+      "mayFlipEvidenceGrade": false,
+      "isGradedKgEdge": false,
+      "schemaRef": "hsi-model-proposal-1"
+    },
+    {
+      "proposalId": "HSI-MP-GUT-STUB-001",
+      "sourceAdapterOrAgent": "hsi-stub-nn-proposer/systems-vision-gut",
+      "proposedSubject": "SCFA (butyrate neighbourhood)",
+      "proposedPredicate": "associated_with",
+      "proposedObject": "mucosal Treg / Th17 balance",
+      "contextNote": "Vision-axis draft only — gut–immune deepSeedsPresent=false. Queued to show model→Gate C path; curator must reject or seed honestly later (P1.3).",
+      "evidenceHints": [
+        "vision:hsi-systems-vision",
+        "axis:gut_microbiome"
+      ],
+      "suggestedTeachingStatus": "hypothesized",
+      "createdAt": "2026-11-01T18:24:10.173Z",
+      "proposalKind": "model_draft",
+      "gateCStatus": "pending",
+      "autoApprove": false,
+      "autoApproveIntoKg": false,
+      "mayFlipEvidenceGrade": false,
+      "isGradedKgEdge": false,
+      "schemaRef": "hsi-model-proposal-1"
+    }
+  ],
   "instructions": [
     "Human-only Neon path: Check → claim_support=supports → Approve on the REL.",
     "Do not auto-approve from this checklist into any product KG.",
@@ -934,6 +1003,7 @@
     "Unmapped rows must not receive invented REL-* ids.",
     "CDS stays closed until curationReview=approved AND hsiGrade=established.",
     "Phase 8 translationCandidates: human HITL only (autoApprove=false); clinicalUse=not_for_clinical_use; Akeno = future consumer — not live CDS.",
-    "teachingStatus ≠ hsiGrade ≠ CDS — never collapse axes when reviewing translation candidates."
+    "teachingStatus ≠ hsiGrade ≠ CDS — never collapse axes when reviewing translation candidates.",
+    "P1.5 modelProposals: typed ModelProposalArtifact drafts only (autoApprove=false; mayFlipEvidenceGrade=false). Never write hsiGrade/curationReview from a model. Not Neon auto-approve — human Gate C only."
   ]
 }

@@ -99,8 +99,8 @@ export const IMMUNE_CELL_SPINE_NODES: readonly ImmuneCellSpineNode[] = [
     layer: "lineage",
     label: "B cell",
     parentId: "HSI-IC-class-b",
-    cellOntologyId: null,
-    notes: null,
+    cellOntologyId: "CL:0000236",
+    notes: "CL hint for SSc Tfh–B–IL-21 neighbourhood (bindStatus=hint_only on pack cards)",
   },
   {
     id: "HSI-IC-lin-nk",
@@ -156,8 +156,9 @@ export const IMMUNE_CELL_SPINE_NODES: readonly ImmuneCellSpineNode[] = [
     layer: "subset_state",
     label: "Tfh",
     parentId: "HSI-IC-lin-cd4",
-    cellOntologyId: null,
-    notes: "PRD SSc vertical subset — dual-track thin seeds in seed/sscTfhBIl21.ts",
+    cellOntologyId: "CL:0002038",
+    notes:
+      "PRD SSc vertical subset — dual-track seeds in seed/sscTfhBIl21.ts; CL:0002038 hint only",
   },
   {
     id: "HSI-IC-sub-th1",
@@ -204,8 +205,8 @@ export const IMMUNE_CELL_SPINE_NODES: readonly ImmuneCellSpineNode[] = [
     layer: "subset_state",
     label: "Plasmablast",
     parentId: "HSI-IC-lin-b",
-    cellOntologyId: null,
-    notes: null,
+    cellOntologyId: "CL:0000980",
+    notes: "CL hint for SSc IL-21→plasmablast frame (bindStatus=hint_only on pack cards)",
   },
 ] as const;
 

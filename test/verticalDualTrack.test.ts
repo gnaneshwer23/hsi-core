@@ -36,7 +36,7 @@ describe("dual-track vertical decision A", () => {
 
   test("SSc thin seeds land with verified PMIDs; RA edges untouched", () => {
     expect(sscDeepSeedsLanded()).toBe(true);
-    expect(HSI_SSC_SEED_EDGES.length).toBeGreaterThanOrEqual(6);
+    expect(HSI_SSC_SEED_EDGES.length).toBeGreaterThanOrEqual(8);
     for (const edge of HSI_SSC_SEED_EDGES) {
       expect(edge.provenance?.pmid?.trim()).toBeTruthy();
       expect(edge.id.startsWith("HSI-E-SSC-")).toBe(true);

@@ -11,6 +11,11 @@ import {
   SSC_PATHWAY_META,
   sscDeepSeedsLanded,
 } from "./seed/sscTfhBIl21";
+import {
+  SSC_CELL_CARD_SCHEMA,
+  SSC_NEIGHBOURHOOD_CARDS,
+  type SscNeighbourhoodCard,
+} from "./sscCellCards";
 import { getPartnerLock } from "./partnerLock";
 
 export const SSC_PATHWAY_PACK_SCHEMA = "hsi-ssc-pathway-pack-1" as const;
@@ -38,6 +43,9 @@ export type SscPathwayPack = {
     partnerSigned: boolean;
   };
   deepSeedsPresent: boolean;
+  /** P1.1 — cell / disease cards with CL·MONDO (and related) hints. */
+  cellCardSchema: typeof SSC_CELL_CARD_SCHEMA;
+  cellCards: readonly SscNeighbourhoodCard[];
   evidenceMap: Array<{
     edgeId: string;
     claimId: string;
@@ -90,9 +98,9 @@ export function buildSscPathwayPack(opts?: {
       id: "expl-ssc-tfh-fibrosis",
       label: "Tfh-like cells contribute to skin fibrosis",
       status: "from_literature_slice",
-      relatedClaimIds: ["HSI-C-SSC-005"],
+      relatedClaimIds: ["HSI-C-SSC-005", "HSI-C-SSC-008"],
       note:
-        "Fibrosis-facing complementary frame (Taylor 2018). Do not collapse with autoantibody-only narrative.",
+        "Fibrosis-facing complementary frame (Taylor 2018 + Clark 2018 commentary). Do not collapse with autoantibody-only narrative.",
     },
     {
       id: "expl-ssc-tfh1-subset",
@@ -101,6 +109,14 @@ export function buildSscPathwayPack(opts?: {
       relatedClaimIds: ["HSI-C-SSC-006"],
       note:
         "Competing Tfh-subset explanation (Ly 2021). teaching=hypothesized for subset generalisation.",
+    },
+    {
+      id: "expl-ssc-il21-b-joint",
+      label: "Serum IL-21 / CD21low B cells and joint involvement in SSc",
+      status: "from_literature_slice",
+      relatedClaimIds: ["HSI-C-SSC-009"],
+      note:
+        "P1.1 neighbourhood deepen (Pellicano 2023). teaching=hypothesized; not Stage 1 RA lock.",
     },
     {
       id: "expl-ssc-ebv-uncertain",
@@ -126,6 +142,8 @@ export function buildSscPathwayPack(opts?: {
       partnerSigned: lock.partnerSigned,
     },
     deepSeedsPresent,
+    cellCardSchema: SSC_CELL_CARD_SCHEMA,
+    cellCards: SSC_NEIGHBOURHOOD_CARDS,
     evidenceMap,
     competingExplanations,
     claims: HSI_SSC_SEED_CLAIMS,
@@ -135,8 +153,10 @@ export function buildSscPathwayPack(opts?: {
       "Discovery ASK question remains the RA / anti-TNF research question.",
       "partnerSigned=false; lockedPilot=false — no MoU invented.",
       "EBV edge is hypothesized/uncertain only — do not overclaim.",
+      "Cell cards carry CL·MONDO (and related) hints with bindStatus=hint_only — not full ontology bind.",
       "Not clinical decision support. autoApproveIntoKg=false.",
       `deepSeedsPresent=${deepSeedsPresent} because verified PMID edges landed.`,
+      `P1.1 deepen: ${SSC_NEIGHBOURHOOD_CARDS.length} neighbourhood cards · ${HSI_SSC_SEED_EDGES.length} edges.`,
     ],
   };
 }
@@ -170,9 +190,21 @@ export function serializeSscPathwayPackMarkdown(
     `- scopeLocked: ${pack.stage1ActiveScope.scopeLocked}`,
     `- partnerSigned: ${pack.stage1ActiveScope.partnerSigned}`,
     "",
-    "## Evidence map",
+    "## Neighbourhood cell cards (CL·MONDO hints)",
+    "",
+    `Schema: \`${pack.cellCardSchema}\` · cards: ${pack.cellCards.length}`,
     "",
   ];
+  for (const card of pack.cellCards) {
+    const ont =
+      card.ontologyHints.length > 0
+        ? card.ontologyHints.map((h) => `${h.id} (${h.bindStatus})`).join(", ")
+        : "none";
+    lines.push(
+      `- **${card.id}** ${card.label} (\`${card.nodeId}\`) · ontology: ${ont}`,
+    );
+  }
+  lines.push("", "## Evidence map", "");
   for (const row of pack.evidenceMap) {
     lines.push(
       `- **${row.edgeId}** ${row.subject} —[${row.predicate}]→ ${row.object} · grade=${row.evidenceGrade} · teaching=${row.teachingStatus} · PMID ${row.pmid ?? "none"}`,

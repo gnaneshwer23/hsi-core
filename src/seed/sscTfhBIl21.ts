@@ -1,13 +1,16 @@
 /**
- * SSc CD4/Tfh–B-cell–IL-21 pathway — first honest literature slice (dual-track A).
+ * SSc CD4/Tfh–B-cell–IL-21 pathway — deepened literature slice (dual-track A / P1.1).
  *
  * Parallel to RA/TNF Stage 1 lock. Does **not** replace partnerLock disease/question.
  * EBV is a separate hypothesized/uncertain branch — never merged as proven causation.
+ * Cell-card / CL·MONDO hints live in `src/sscCellCards.ts` (pack-exported).
  *
  * Verified public PMIDs (PubMed E-utilities, 2026-11-01):
  * - 30760472 Ricard 2019 Ann Rheum Dis — circulating Tfh↑ in SSc; IL-21 → plasmablast
  * - 29514998 Taylor 2018 Sci Transl Med — Tfh-like cells contribute to skin fibrosis
+ * - 29626172 Clark 2018 Sci Immunol — commentary: Tfh drive skin fibrosis (neighbourhood)
  * - 33175976 Ly 2021 Rheumatology — Tfh1 imbalance / aberrant B differentiation in SSc
+ * - 37763102 Pellicano 2023 J Pers Med — SSc CD21low B + serum IL-21 / joint involvement
  * - 21314428 Crotty 2011 Annu Rev Immunol — Tfh biology (IL-21 axis; not SSc-specific)
  * - 16339522 Ettinger 2005 J Immunol — IL-21 → human B → plasma cells
  * - 24129067 Farina 2014 J Invest Dermatol — EBV / scleroderma fibroblast axis (hypothesized only)
@@ -213,6 +216,48 @@ const SPECS: SeedSpec[] = [
     notes:
       "EBV = hypothesized/uncertain branch only (PRD rule). PMID 24129067 verified. Do NOT hard-merge with Tfh–B–IL-21 as established causation. teaching=hypothesized. Gate C = human only. Not CDS.",
   },
+  {
+    id: "HSI-E-SSC-008",
+    edgeType: "contributes_to",
+    subjectId: "HSI-N-tfh",
+    subjectLabel: "T follicular helper (Tfh) cells",
+    objectId: "HSI-N-skin-fibrosis",
+    objectLabel: "Skin fibrosis",
+    claimId: "HSI-C-SSC-008",
+    assertion:
+      "Commentary frame: T follicular helper cells are discussed as drivers of skin fibrosis (neighbourhood support for the Taylor 2018 fibrosis-facing explanation).",
+    review: "source-verified",
+    teaching: "associative",
+    domain: "autoimmunity",
+    pmid: "29626172",
+    doi: "10.1126/sciimmunol.aat6417",
+    citationLabel:
+      "Clark RA. Sci Immunol 2018 — \"That's not helping—T follicular helper cells drive skin fibrosis\" (commentary on Taylor et al.).",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/29626172/",
+    notes:
+      "P1.1 deepen: commentary PMID 29626172 verified. Complements HSI-E-SSC-005; not a treatment claim. Gate C = human only. Not CDS.",
+  },
+  {
+    id: "HSI-E-SSC-009",
+    edgeType: "associated_with",
+    subjectId: "HSI-N-il21",
+    subjectLabel: "IL-21",
+    objectId: "HSI-N-ssc",
+    objectLabel: "Systemic sclerosis",
+    claimId: "HSI-C-SSC-009",
+    assertion:
+      "In systemic sclerosis, peripheral CD21low B cells and serum IL-4 / IL-21 are reported to influence joint involvement (B-cell–IL-21 neighbourhood deepen; not Stage 1 RA lock).",
+    review: "source-verified",
+    teaching: "hypothesized",
+    domain: "autoimmunity",
+    pmid: "37763102",
+    doi: "10.3390/jpm13091334",
+    citationLabel:
+      "Pellicano C et al. J Pers Med 2023 — In Systemic Sclerosis Patients, Peripheral Blood CD21(low) B Cells and Serum IL-4 and IL-21 Influence Joint Involvement.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/37763102/",
+    notes:
+      "P1.1 deepen: PMID 37763102 verified. teaching=hypothesized for joint-involvement generalisation. Keep EBV branch separate. Gate C = human only. Not CDS.",
+  },
 ];
 
 function toEdge(spec: SeedSpec): HsiEdge {
@@ -269,11 +314,14 @@ export const SSC_PATHWAY_META = {
   primaryPmids: [
     "30760472",
     "29514998",
+    "29626172",
     "33175976",
+    "37763102",
     "21314428",
     "16339522",
     "24129067",
   ],
+  deepenPhase: "p1_ssc_cell_cards_and_pmids" as const,
   entities: [
     { id: "HSI-N-ssc", label: "Systemic sclerosis", kind: "disease" },
     { id: "HSI-N-tfh", label: "Tfh", kind: "cell_subset" },

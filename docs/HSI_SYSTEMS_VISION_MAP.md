@@ -149,7 +149,7 @@ bun run outputs   # writes dist/outputs/.../hsi-systems-vision.json (+ MANIFEST 
 
 ## Recommended next build slice (one axis)
 
-**Next recommended slice (after dual-track A):** deepen SSc Tfh–B–IL-21 pack (cell-card / CL·MONDO hints; more public PMIDs; EBV stays hypothesized). Then optionally deepen one gut–immune neighbourhood (e.g. SCFA ↔ mucosal Treg/Th17) with honest `uncertain` grades; leave RA lock untouched. Neuroimmune stays queued.
+**SSc deepen (P1.1) + model→Gate C (P1.5) landed.** **Next recommended slice:** deepen one gut–immune neighbourhood (e.g. SCFA ↔ mucosal Treg/Th17) with honest `uncertain` grades (P1.3); leave RA lock untouched. Neuroimmune stays queued.
 
 ---
 

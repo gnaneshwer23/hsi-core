@@ -588,7 +588,8 @@ export type EdgeEmbeddingSlotSchema = typeof EDGE_EMBEDDING_SLOT_SCHEMA;
  */
 export const MODEL_PROPOSAL_ARTIFACT_SCHEMA = {
   schemaVersion: "hsi-model-proposal-1",
-  status: "schema_stub" as const,
+  /** Wired into Gate C checklist as pending modelProposals (P1.5). */
+  status: "wired_to_gate_c_pending" as const,
   requiredFields: [
     "proposalId",
     "sourceAdapterOrAgent",
@@ -604,8 +605,10 @@ export const MODEL_PROPOSAL_ARTIFACT_SCHEMA = {
   defaultSuggestedTeachingStatus: "hypothesized" as const,
   mayFlipEvidenceGrade: false as const,
   autoApproveIntoKg: false as const,
+  gateCChecklistField: "modelProposals" as const,
+  runtimeModule: "src/modelProposal.ts" as const,
   notes:
-    "Proposers/scorers emit this artifact → human Gate C; never writes graded KG edges directly",
+    "Proposers/scorers emit this artifact → human Gate C pending rows; never writes graded KG edges directly; autoApprove always false",
 };
 
 export type ModelProposalArtifactSchema = typeof MODEL_PROPOSAL_ARTIFACT_SCHEMA;
