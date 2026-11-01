@@ -1,7 +1,7 @@
 # ISI Product Technical Blueprint ↔ hsi-core alignment
 
 **Source (external):** *Immune Super Intelligence — Product and Technical Blueprint* (1 November 2026), local file `~/Downloads/ISI_Product_Technical_Blueprint.docx`.  
-**Repo anchors:** [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md), [`ISI_TARGET_STATE_PRD_ALIGNMENT.md`](./ISI_TARGET_STATE_PRD_ALIGNMENT.md), [`PRD_IMPLEMENTATION_AUDIT.md`](./PRD_IMPLEMENTATION_AUDIT.md), [`OUTPUTS.md`](./OUTPUTS.md), [`AKENO_IN_HSI.md`](./AKENO_IN_HSI.md), [`AKSH_AGENTS_IN_HSI.md`](./AKSH_AGENTS_IN_HSI.md), [`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md), [`VISION_REPO_ALIGNMENT.md`](./VISION_REPO_ALIGNMENT.md).
+**Repo anchors:** [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md), [`ISI_TARGET_STATE_PRD_ALIGNMENT.md`](./ISI_TARGET_STATE_PRD_ALIGNMENT.md), [`ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md`](./ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md), [`PRD_IMPLEMENTATION_AUDIT.md`](./PRD_IMPLEMENTATION_AUDIT.md), [`OUTPUTS.md`](./OUTPUTS.md), [`AKENO_IN_HSI.md`](./AKENO_IN_HSI.md), [`AKSH_AGENTS_IN_HSI.md`](./AKSH_AGENTS_IN_HSI.md), [`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md), [`VISION_REPO_ALIGNMENT.md`](./VISION_REPO_ALIGNMENT.md).
 
 **Edit target:** hsi-core only. Do **not** edit immunecity. Neon: HSI = **`red-wave` only**.
 
@@ -182,15 +182,17 @@ Blueprint §9 casually places “PostgreSQL/Neon” under KG projection and §8 
 See [`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md), `src/db/neonGuard.ts`.  
 **Resolution:** Keep export-based consumption. Joint “discovery sprint” = docs + contract mapping, not schema merge.
 
-### 2. First vertical: SSc (blueprint) vs RA/TNF (Stage 1 lock)
+### 2. First vertical: SSc (blueprint + Whole-Immune-Cell PRD) vs RA/TNF (Stage 1 lock)
 
 | Source | First pathway |
 |--------|----------------|
 | This blueprint §2 / §10 Gate 1 / §13 | **SSc** Tfh/CD4–B-cell–IL-21; EBV separate; RA as Gate 2 comparison |
+| Whole-Immune-Cell PRD §12 / Gates 3–4 | **SSc** MVP vertical; **RA** Release 2 comparison — [`ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md`](./ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md) |
 | Pilot PRD + `hsi-partner-lock.json` | **RA / anti-TNF response heterogeneity** (`scopeLocked=true`, `partnerSigned=false`) |
 | Target-state PRD | One disease + question with partner; do not expand surface early |
+| Spine stubs | `DISEASE_VERTICAL_STUBS`: RA = `stage1_scope_locked`; SSc = `prd_mvp_target` (`deepSeedsPresent=false`) |
 
-**Resolution rule:** Do **not** replace the RA lock with SSc seeds unless outreach / founder explicitly re-scopes Stage 1. Treat blueprint SSc narrative as a **candidate alternate vertical** or Stage 2 comparison slice — same honesty bar as SLE/PsO/IBD stubs.
+**Resolution rule:** Do **not** replace the RA lock with SSc seeds unless outreach / founder explicitly re-scopes Stage 1. Prefer **dual-track**: keep RA packs; mark SSc as PRD/blueprint target; reuse RA seeds as R2 comparison when SSc curation is authorised. Full option table in the Whole-Immune-Cell alignment doc.
 
 ### 3. Stage 1 vs target-state breadth
 
@@ -224,6 +226,7 @@ Prefer **docs + partner process**. No large new implementation phase from this b
 
 - Pilot PRD: [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md)  
 - Target-state: [`ISI_TARGET_STATE_PRD_ALIGNMENT.md`](./ISI_TARGET_STATE_PRD_ALIGNMENT.md)  
+- Whole-immune-cell PRD: [`ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md`](./ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md)  
 - Implementation audit: [`PRD_IMPLEMENTATION_AUDIT.md`](./PRD_IMPLEMENTATION_AUDIT.md)  
 - Outputs: [`OUTPUTS.md`](./OUTPUTS.md)  
 - Neon: [`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md)  

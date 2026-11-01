@@ -57,6 +57,8 @@ dist/outputs/
 
 PRD / brief four outputs (evidence map, entity slice, competing explanations, expert shortlist) are assembled in `hsi-pilot-evidence-pack.*`. See [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md).
 
+**Whole-immune-cell PRD (v0.1):** spine vocabulary + controlled relationship types live in package API `buildImmuneCellSpineBundle()` / `src/immuneCellSpine.ts` (not a separate publish file yet). Dual-track verticals: RA = Stage 1 `scopeLocked`; SSc = PRD MVP target without deep seeds. Alignment: [`ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md`](./ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md). Blueprint conflict context: [`ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md`](./ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md).
+
 ## Partner lock honesty (Phase 2 schema)
 
 | Field | Meaning |
@@ -90,6 +92,8 @@ PRD / brief four outputs (evidence map, entity slice, competing explanations, ex
 | Versioned `bun run outputs` bundle + MANIFEST | **Done** |
 | Discovery Centre vocabulary in exports (ASK→MAP→REVIEW + illustrative diseases) | **Done** (metadata only) |
 | Illustrative RA/SLE/PsO/IBD pathway seed stubs | **Done** (RA elevated to working scope) |
+| Whole-immune-cell spine stubs + PRD relationship vocabulary (RA lock intact; SSc = PRD target) | **Done** (`src/immuneCellSpine.ts`; see [`ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md`](./ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md)) |
+| SSc CD4/Tfh–B–IL-21 deep seed vertical | **Not started** (await dual-track / pivot decision — do not wipe RA) |
 | Typed entity slice + LOINC on pack evidence rows | **Done** |
 | **Phase 1b** — Partner disease + question **provisional** scaffold | **Done** (superseded by Phase 2) |
 | **Phase 2** — Scope lock (`scopeLocked=true`; RA / anti-TNF question canonical; outreach category only) | **Done** |

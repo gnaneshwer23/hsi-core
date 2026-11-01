@@ -6,7 +6,7 @@
 **Sources (external):**  
 - `~/Downloads/ISI_Immune_Discovery_Pilot_PRD.docx` (v1.0, 1 Nov 2026)  
 - `~/Downloads/ISI_Target_State_End_to_End_PRD.docx` / `.pdf` (v1.0, 1 Nov 2026)  
-**Repo anchors:** [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md), [`ISI_TARGET_STATE_PRD_ALIGNMENT.md`](./ISI_TARGET_STATE_PRD_ALIGNMENT.md), [`ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md`](./ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md), [`ISI_BUSINESS_PROPOSAL_ALIGNMENT.md`](./ISI_BUSINESS_PROPOSAL_ALIGNMENT.md), [`ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md`](./ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md), [`ISI_PILOT_BRIEF.md`](./ISI_PILOT_BRIEF.md), [`OUTPUTS.md`](./OUTPUTS.md), [`AKENO_IN_HSI.md`](./AKENO_IN_HSI.md), [`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md)
+**Repo anchors:** [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md), [`ISI_TARGET_STATE_PRD_ALIGNMENT.md`](./ISI_TARGET_STATE_PRD_ALIGNMENT.md), [`ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md`](./ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md), [`ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md`](./ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md), [`ISI_BUSINESS_PROPOSAL_ALIGNMENT.md`](./ISI_BUSINESS_PROPOSAL_ALIGNMENT.md), [`ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md`](./ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md), [`ISI_PILOT_BRIEF.md`](./ISI_PILOT_BRIEF.md), [`OUTPUTS.md`](./OUTPUTS.md), [`AKENO_IN_HSI.md`](./AKENO_IN_HSI.md), [`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md)
 
 **Status vocabulary:** `DONE` · `PARTIAL` · `NOT STARTED` · `OUT OF SCOPE` (deferred / gated)
 
@@ -217,11 +217,12 @@ Reproduce: `bun test && bun run outputs && bun run site:dev` → `/discovery`, `
 
 ## 9. Recommended next asks (ordered)
 
-1. **Partner outreach** — flip `partnerSigned` with a real org; refresh shortlist row; never invent contacts.  
-2. **Rights pack** — licensing table for the RA/TNF PMID set + any partner-supplied sources.  
-3. **Evaluation contract** — numeric thresholds on the existing review rubric.  
-4. **ISI consume checklist** — which export files power which product screens (immunecity team; hsi-core stays export-stable).  
-5. **Hold the line** — no R3–R5 feature work, no Neon mutations for “demo CDS,” no immunecity edits from this workspace until #1–4 land.
+1. **SSc-vs-RA vertical decision** — Whole-Immune-Cell PRD wants SSc MVP / RA R2; Stage 1 lock is RA/TNF. Prefer dual-track (keep RA seeds; mark SSc as PRD target) — see [`ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md`](./ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md). Do not wipe RA.  
+2. **Partner outreach** — flip `partnerSigned` with a real org; refresh shortlist row; never invent contacts.  
+3. **Rights pack** — licensing table for the RA/TNF PMID set + any partner-supplied sources.  
+4. **Evaluation contract** — numeric thresholds on the existing review rubric.  
+5. **ISI consume checklist** — which export files power which product screens (immunecity team; hsi-core stays export-stable).  
+6. **Hold the line** — no R3–R5 feature work, no Neon mutations for “demo CDS,” no immunecity edits from this workspace until vertical decision + outreach land.
 
 ---
 
@@ -242,6 +243,8 @@ Reproduce: `bun test && bun run outputs && bun run site:dev` → `/discovery`, `
 
 - Pilot PRD map: [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md)  
 - Target-state map: [`ISI_TARGET_STATE_PRD_ALIGNMENT.md`](./ISI_TARGET_STATE_PRD_ALIGNMENT.md)  
+- Technical blueprint: [`ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md`](./ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md)  
+- Whole-immune-cell PRD: [`ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md`](./ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md)  
 - Outputs contract: [`OUTPUTS.md`](./OUTPUTS.md)  
 - Akeno-in-HSI: [`AKENO_IN_HSI.md`](./AKENO_IN_HSI.md)  
 - Neon isolation: [`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md)

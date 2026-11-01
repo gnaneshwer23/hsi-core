@@ -35,6 +35,25 @@ export {
 } from "./schema";
 
 export {
+  DISEASE_VERTICAL_STUBS,
+  IMMUNE_CELL_LAYERS,
+  IMMUNE_CELL_SPINE_NODES,
+  IMMUNE_CELL_SPINE_SCHEMA,
+  ISI_CONTROLLED_RELATIONSHIP_TYPES,
+  ISI_RELATIONSHIP_TO_HSI_EDGE,
+  buildImmuneCellSpineBundle,
+  getDiseaseVertical,
+  isIsiControlledRelationshipType,
+  listImmuneCellLineages,
+  type DiseaseVerticalRole,
+  type DiseaseVerticalStub,
+  type ImmuneCellLayer,
+  type ImmuneCellSpineBundle,
+  type ImmuneCellSpineNode,
+  type IsiControlledRelationshipType,
+} from "./immuneCellSpine";
+
+export {
   gradeForSeed,
   isCdsSurfacable,
   isDiscoverySurfacable,
