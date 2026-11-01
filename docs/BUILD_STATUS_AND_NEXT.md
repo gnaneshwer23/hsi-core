@@ -1,7 +1,7 @@
 # HSI build status and next
 
 **Audit date:** 1 November 2026  
-**HEAD at write:** `7e1baf8` (main) — P2.1 neuroimmune vagus / cholinergic anti-inflammatory reflex  
+**HEAD at write:** `b62b7dc` (main) — P2.2 embedding sidecar slots (hash/ref)  
 **Edit target:** `hsi-core` only · Neon **`red-wave` only** · no immunecity / Akeno product / DeliverX edits  
 **Prior audit:** [`PRD_IMPLEMENTATION_AUDIT.md`](./PRD_IMPLEMENTATION_AUDIT.md) (phases 0–8 vs Pilot + Target PRDs)
 
@@ -11,7 +11,7 @@
 
 ## Executive verdict
 
-hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance, Gate C checklists, versioned publish, RA/anti-TNF scope lock + depth, Discovery Centre, R2 validation, translation/Akeno HITL scaffolding, Aksh agent catalog, Neon isolation, systems-vision + AI position stubs). **Vertical decision A (dual-track) is recorded:** RA stays Stage 1 `activeScope`; SSc Tfh–B–IL-21 is the PRD MVP target with a **deepened** literature slice (cell cards + CL·MONDO hints + extra PMIDs). **P1.3 gut–immune** SCFA/butyrate ↔ mucosal Treg/Th17 + **P2.1 neuroimmune** vagus / cholinergic anti-inflammatory reflex thin seeds + packs landed (`deepSeedsPresent=true`; honest `uncertain`/`hypothesized`; human VNS–RA not a clinical cure). **Model-proposal artifacts are wired into Gate C** as typed pending drafts (`autoApprove=false`). What remains for a **real partner pilot** is mostly **outreach + rights + thresholds + ISI product consumption**. Agent runtime and live CDS stay gated.
+hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance, Gate C checklists, versioned publish, RA/anti-TNF scope lock + depth, Discovery Centre, R2 validation, translation/Akeno HITL scaffolding, Aksh agent catalog, Neon isolation, systems-vision + AI position stubs). **Vertical decision A (dual-track) is recorded:** RA stays Stage 1 `activeScope`; SSc Tfh–B–IL-21 is the PRD MVP target with a **deepened** literature slice (cell cards + CL·MONDO hints + extra PMIDs). **P1.3 gut–immune** SCFA/butyrate ↔ mucosal Treg/Th17 + **P2.1 neuroimmune** vagus / cholinergic anti-inflammatory reflex thin seeds + packs landed (`deepSeedsPresent=true`; honest `uncertain`/`hypothesized`; human VNS–RA not a clinical cure). **Model-proposal artifacts are wired into Gate C** as typed pending drafts (`autoApprove=false`). **P2.2 embedding sidecars** land as hash/ref metadata on sample edges (`hsi-embedding-sidecars.json`; `doesNotSetHsiGrade=true`; no model weights / PHI). What remains for a **real partner pilot** is mostly **outreach + rights + thresholds + ISI product consumption**. Agent runtime and live CDS stay gated.
 
 | Plane | Light | One line |
 |-------|-------|----------|
@@ -20,7 +20,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | R3 translation / `/akeno` | **YELLOW** | HITL scaffolding only (`clinicalActive=false`) |
 | Partner pilot readiness (M3) | **YELLOW** | Walkthrough ready; `partnerSigned=false` |
 | Live CDS / PHI / shared Neon | **RED (correct)** | Explicitly not built |
-| Vision axes / AI stubs | **GREEN** | Map + schema stubs; SSc deepened; **gut P1.3 + neuro P2.1 deep seeds**; model→Gate C pending drafts |
+| Vision axes / AI stubs | **GREEN** | Map + schema stubs; SSc deepened; **gut P1.3 + neuro P2.1 deep seeds**; model→Gate C; **P2.2 embedding sidecars** |
 | Vertical strategy | **GREEN** | **A dual-track** written — `verticalStrategy=dual_track` |
 
 ---
@@ -40,7 +40,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | Versioned `bun run outputs` + MANIFEST + site refresh | **DONE** | `src/publishOutputs.ts`, [`OUTPUTS.md`](./OUTPUTS.md) |
 | Immune-cell spine vocabulary + PRD relation types | **DONE** (vocab) | `src/immuneCellSpine.ts` |
 | Systems multi-axis stubs (gut / neuro / DTB / patient plane / P3) | **DONE** (vocab) | `src/systemsAxes.ts` → `hsi-systems-vision.json` |
-| AI / NN position + model-proposal / embedding / eval schema stubs | **DONE** | [`HSI_AI_NEURAL_FUTURE_HEALTHCARE.md`](./HSI_AI_NEURAL_FUTURE_HEALTHCARE.md); `aiFutureTech`; **P1.5** `modelProposals` on Gate C |
+| AI / NN position + model-proposal / embedding / eval schema stubs | **DONE** | [`HSI_AI_NEURAL_FUTURE_HEALTHCARE.md`](./HSI_AI_NEURAL_FUTURE_HEALTHCARE.md); `aiFutureTech`; **P1.5** `modelProposals`; **P2.2** `hsi-embedding-sidecars.json` |
 | Package scripts | **DONE** | `test`, `outputs`, `db:migrate`, `db:gate-c-local`, `site:dev` / `site:build` |
 
 ### 1.2 Stage 1 packs (pilot R0–R1)
@@ -145,6 +145,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | P1 SSc deepen + model→Gate C | `c2fd6f3` |
 | P1.3 gut–immune SCFA ↔ Treg/Th17 | `974533a` |
 | P2.1 neuroimmune vagus / cholinergic | `7e1baf8` |
+| P2.2 embedding sidecars (hash/ref) | `b62b7dc` |
 
 Reproduce: `bun test && bun run outputs && bun run site:dev` → `/discovery`, `/akeno`, `/aksh-agents`.
 
@@ -164,6 +165,7 @@ Reproduce: `bun test && bun run outputs && bun run site:dev` → `/discovery`, `
 | **SSc pack depth** | P1.1 cell cards + extra PMIDs landed; still not a full atlas | Optional further neighbourhood edges later |
 | **Immune spine = vocabulary + SSc hints** | Full atlas / confirmed ontology bind still open; SSc neighbourhood has `hint_only` CL·MONDO | Stage 2 depth beyond SSc |
 | **Model→Gate C** | **DONE (P1.5)** pending drafts only; no agent runtime | Never auto-approve; ISI runtime out of repo |
+| **Embedding sidecars** | **DONE (P2.2)** hash/ref slots on sample edges | Never set grades; no weights / PHI; packs remain authority |
 | **No agent runtime** | Aksh catalog + ISI 12-agent blueprint ≠ executable loop | ISI product **out of repo**; HSI holds shapes only |
 | **No PHI / no live CDS** | Correct non-goal — do not “close” by building clinic features | Policy |
 | **ISI product still thin** | `/discovery` is HSI demo; immunecity RBAC/search/graph UX not built here | **Out of repo** (immunecity) |
@@ -204,8 +206,8 @@ One-sprint-sized items. Mark **[DECISION]** where the user must choose before co
 | # | Item | Notes |
 |---|------|-------|
 | P2.1 | **DONE:** Neuroimmune thin seed slice — vagus / cholinergic anti-inflammatory reflex | `seed/neuroVagusCholinergic.ts` + `hsi-neuroimmune-pack.*`; Discovery secondary; RA/SSc/gut untouched; no clinical cure claim |
-| P2.2 | **NEXT science:** Embedding sidecar slots on edges (hash/ref only; no model stack) | `EDGE_EMBEDDING_SLOT_SCHEMA` |
-| P2.3 | Offline eval harness stubs against public packs | `MODEL_EVAL_HARNESS_STUB`; no PHI |
+| P2.2 | **DONE:** Embedding sidecar slots on edges (hash/ref only; no model stack) | `src/embeddingSidecar.ts` → `hsi-embedding-sidecars.json`; `doesNotSetHsiGrade=true`; Gate C note; packs remain authority |
+| P2.3 | **NEXT science:** Offline eval harness stubs against public packs | `MODEL_EVAL_HARNESS_STUB`; no PHI |
 | P2.4 | ClinVar / TCGA **pointer** metadata fields | Citation only; Gate C still required |
 | P2.5 | P3 adapter RFC + license sign-off (TDC / Boltz / ESM / …) | Docs first; no vendoring until written RFC |
 
@@ -249,6 +251,7 @@ One-sprint-sized items. Mark **[DECISION]** where the user must choose before co
 | Dual-track honesty | **A recorded**; SSc pack present without deleting RA; ASK stays RA |
 | Systems vision honesty | Gut P1.3 + neuro P2.1 deep seeds present; human VNS–RA hypothesized only |
 | SSc deepen + model→Gate C | Cell cards + CL·MONDO hints + extra PMIDs; Gate C `modelProposals` pending only |
+| Embedding sidecars honesty | P2.2 hash/ref only; `doesNotSetHsiGrade`; no weights/PHI; RA/SSc/gut/neuro packs remain evidence authority |
 | Safety | MANIFEST still `notCds`; `/akeno` still `clinicalActive=false`; Neon still red-wave-only |
 
 ---

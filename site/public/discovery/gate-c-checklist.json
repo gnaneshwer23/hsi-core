@@ -2,7 +2,7 @@
   "schemaVersion": "hsi-gate-c-checklist-1",
   "notCds": true,
   "autoApproveIntoKg": false,
-  "generatedAt": "2026-11-01T18:39:16.278Z",
+  "generatedAt": "2026-11-01T18:42:57.148Z",
   "summary": {
     "totalRows": 32,
     "curatedWithRel": 13,
@@ -943,7 +943,7 @@
         "pack:hsi-ssc-pathway-pack"
       ],
       "suggestedTeachingStatus": "associative",
-      "createdAt": "2026-11-01T18:39:16.278Z",
+      "createdAt": "2026-11-01T18:42:57.148Z",
       "proposalKind": "model_draft",
       "gateCStatus": "pending",
       "autoApprove": false,
@@ -965,7 +965,7 @@
         "card:HSI-CARD-SSC-IL21"
       ],
       "suggestedTeachingStatus": "hypothesized",
-      "createdAt": "2026-11-01T18:39:16.278Z",
+      "createdAt": "2026-11-01T18:42:57.148Z",
       "proposalKind": "model_draft",
       "gateCStatus": "pending",
       "autoApprove": false,
@@ -988,7 +988,7 @@
         "axis:gut_microbiome"
       ],
       "suggestedTeachingStatus": "hypothesized",
-      "createdAt": "2026-11-01T18:39:16.278Z",
+      "createdAt": "2026-11-01T18:42:57.148Z",
       "proposalKind": "model_draft",
       "gateCStatus": "pending",
       "autoApprove": false,
@@ -1012,7 +1012,7 @@
         "axis:neuroimmune"
       ],
       "suggestedTeachingStatus": "hypothesized",
-      "createdAt": "2026-11-01T18:39:16.278Z",
+      "createdAt": "2026-11-01T18:42:57.148Z",
       "proposalKind": "model_draft",
       "gateCStatus": "pending",
       "autoApprove": false,
@@ -1030,6 +1030,7 @@
     "CDS stays closed until curationReview=approved AND hsiGrade=established.",
     "Phase 8 translationCandidates: human HITL only (autoApprove=false); clinicalUse=not_for_clinical_use; Akeno = future consumer — not live CDS.",
     "teachingStatus ≠ hsiGrade ≠ CDS — never collapse axes when reviewing translation candidates.",
-    "P1.5 modelProposals: typed ModelProposalArtifact drafts only (autoApprove=false; mayFlipEvidenceGrade=false). Never write hsiGrade/curationReview from a model. Not Neon auto-approve — human Gate C only."
+    "P1.5 modelProposals: typed ModelProposalArtifact drafts only (autoApprove=false; mayFlipEvidenceGrade=false). Never write hsiGrade/curationReview from a model. Not Neon auto-approve — human Gate C only.",
+    "P2.2 embedding sidecars (hsi-embedding-sidecars.json): hash/ref metadata only; doesNotSetHsiGrade=true; autoApprove=false — never treat similarity as Gate C pass or grade flip."
   ]
 }

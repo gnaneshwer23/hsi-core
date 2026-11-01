@@ -179,6 +179,19 @@ export {
 } from "./modelProposal";
 
 export {
+  EMBEDDING_SIDECARS_EXPORT_SCHEMA,
+  EMBEDDING_SIDECAR_RUNTIME_SCHEMA,
+  assertSafeEmbeddingSidecar,
+  buildEmbeddingSidecarsBundle,
+  buildExampleEmbeddingSidecars,
+  contentHashOfPayload,
+  serializeEmbeddingSidecars,
+  type EdgeEmbeddingSidecar,
+  type EmbeddingSidecarMapping,
+  type EmbeddingSidecarsBundle,
+} from "./embeddingSidecar";
+
+export {
   SSC_CELL_CARD_SCHEMA,
   SSC_NEIGHBOURHOOD_CARDS,
   listSscNeighbourhoodCards,

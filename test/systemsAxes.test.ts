@@ -95,6 +95,8 @@ describe("systems vision axes stubs", () => {
       true,
     );
     expect(EDGE_EMBEDDING_SLOT_SCHEMA.mayFlipEvidenceGrade).toBe(false);
+    expect(EDGE_EMBEDDING_SLOT_SCHEMA.status).toBe("wired_hash_ref_sidecars");
+    expect(EDGE_EMBEDDING_SLOT_SCHEMA.doesNotSetHsiGrade).toBe(true);
     expect(MODEL_PROPOSAL_ARTIFACT_SCHEMA.autoApproveIntoKg).toBe(false);
     expect(MODEL_PROPOSAL_ARTIFACT_SCHEMA.forbiddenFields).toContain("hsiGrade");
     expect(MODEL_EVAL_HARNESS_STUB.mayUseLivePhi).toBe(false);

@@ -129,9 +129,9 @@ Catalogued in `FUTURE_TECH_ADAPTER_STUBS`, `AI_FUTURE_TECH_CAPABILITIES` / `AI_F
 | REINVENT4 | Generative design sandbox | Never clinic recommendation path |
 | ISI 12-agent workbench | Supervised research agents | Runtime = ISI product; Stage 1 out of scope |
 
-**Schema stubs (not a model stack):** `MODEL_PROPOSAL_ARTIFACT_SCHEMA` · `EDGE_EMBEDDING_SLOT_SCHEMA` · `MODEL_EVAL_HARNESS_STUB`.
+**Schema / wired AI contracts (not a model stack):** `MODEL_PROPOSAL_ARTIFACT_SCHEMA` (P1.5 Gate C) · `EDGE_EMBEDDING_SLOT_SCHEMA` + `hsi-embedding-sidecars.json` (P2.2 hash/ref) · `MODEL_EVAL_HARNESS_STUB` (P2.3 next).
 
-**Invariant:** model output **never** auto-flips `hsiGrade` or Gate C (`autoApproveIntoKg=false`).
+**Invariant:** model output **never** auto-flips `hsiGrade` or Gate C (`autoApproveIntoKg=false`; embedding `doesNotSetHsiGrade=true`).
 
 ---
 
@@ -151,7 +151,7 @@ bun run outputs   # writes dist/outputs/.../hsi-systems-vision.json (+ MANIFEST 
 
 ## Recommended next build slice (one axis)
 
-**SSc deepen (P1.1) + model→Gate C (P1.5) + gut–immune P1.3 + neuroimmune P2.1 landed.** **Next recommended science slice:** P2.2 embedding sidecar slots on edges (hash/ref only); leave RA lock untouched. Partner outreach (P0.2) remains the parallel critical path.
+**SSc deepen (P1.1) + model→Gate C (P1.5) + gut–immune P1.3 + neuroimmune P2.1 + embedding sidecars P2.2 landed.** **Next recommended science slice:** P2.3 offline eval harness stubs against public packs (no PHI); leave RA lock untouched. Partner outreach (P0.2) remains the parallel critical path.
 
 ---
 

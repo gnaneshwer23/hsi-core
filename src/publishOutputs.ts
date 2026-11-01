@@ -59,6 +59,10 @@ import {
   serializeSystemsVision,
 } from "./systemsAxes";
 import {
+  buildEmbeddingSidecarsBundle,
+  serializeEmbeddingSidecars,
+} from "./embeddingSidecar";
+import {
   getVerticalDecision,
   verticalDecisionExportPointer,
 } from "./verticalDecision";
@@ -276,6 +280,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
   const sscPathwayPack = buildSscPathwayPack({ generatedAt });
   const gutImmunePack = buildGutImmunePack({ generatedAt });
   const neuroImmunePack = buildNeuroImmunePack({ generatedAt });
+  const embeddingSidecars = buildEmbeddingSidecarsBundle({ generatedAt });
 
   const fileMap: Record<string, string> = {
     "hsi-isi-export.json": serializeIsiExport(isiBundle),
@@ -306,6 +311,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     "hsi-translation-handoff.json": serializeTranslationHandoff(translationHandoff),
     "hsi-translation-handoff.md": serializeTranslationHandoffMarkdown(translationHandoff),
     "hsi-systems-vision.json": serializeSystemsVision(systemsVision),
+    "hsi-embedding-sidecars.json": serializeEmbeddingSidecars(embeddingSidecars),
   };
 
   const files: string[] = [];
@@ -354,6 +360,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       translationHandoffJson: "hsi-translation-handoff.json",
       translationHandoffMd: "hsi-translation-handoff.md",
       systemsVisionJson: "hsi-systems-vision.json",
+      embeddingSidecarsJson: "hsi-embedding-sidecars.json",
     },
     counts: {
       isiEdges: isiBundle.edges.length,
@@ -399,6 +406,10 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       neuroDeepSeedsPresent: neuroImmunePack.deepSeedsPresent,
       systemsVisionNeuroDeepSeedsPresent:
         systemsVision.neuroimmune.deepSeedsPresent,
+      embeddingSidecarEdges: embeddingSidecars.summary.edgeCount,
+      embeddingSidecarsWithHash: embeddingSidecars.summary.withContentHash,
+      embeddingSidecarsWithRef: embeddingSidecars.summary.withVectorRef,
+      embeddingSidecarsTinyDemo: embeddingSidecars.summary.withTinyDemo,
     },
     discoveryLoop: isiBundle.discoveryCentre.discoveryLoop.framing,
     partnerLock: partnerLockExportPointer(partnerLock),
@@ -456,6 +467,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       "Gate C: human checklist in gate-c-checklist.* (+ translationCandidates); optional HSI red-wave placeholders via bun run db:gate-c-local (pending only). ISI product approve stays autumn-snow — never from this workspace.",
       "Phase 4: HSI Neon schema stub — bun run db:migrate (guards refuse ISI/Akeno/DeliverX).",
       "Systems vision: hsi-systems-vision.json — multi-axis target graph stubs (immune + gut–immune + neuroimmune + disease/tissue/biomarker + patient-plane rules + P3 adapters + aiFutureTech capabilities/hard bans/schema stubs); dual-track vertical fields; see docs/HSI_SYSTEMS_VISION_MAP.md + docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md.",
+      "P2.2 embedding sidecars: hsi-embedding-sidecars.json — edgeId→modelId/dim/vectorRef|contentHash (+ optional tiny demo); doesNotSetHsiGrade=true; autoApprove=false; no PHI / no model weights; packs remain evidence authority.",
       "Regenerate with: bun run outputs (also refreshes site/public/discovery).",
     ],
   };
@@ -511,6 +523,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     "gate-c-checklist.json",
     "hsi-r2-validation.json",
     "hsi-translation-handoff.json",
+    "hsi-embedding-sidecars.json",
   ] as const;
   for (const name of discoveryFiles) {
     const dest = join(discoveryPublicDir, name);
@@ -544,6 +557,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       "Not diagnostic / not for clinical use. clinicalActive=false.",
       "ASK question stays RA / anti-TNF; SSc is dual-track secondary PRD target (hsi-ssc-pathway-pack.json).",
       "Systems secondary axes: gut–immune (hsi-gut-immune-pack.json) + neuroimmune vagus/cholinergic (hsi-neuroimmune-pack.json) — do not replace ASK.",
+      "P2.2 embedding sidecars: hsi-embedding-sidecars.json — hash/ref only; doesNotSetHsiGrade; never auto-approve into KG.",
       "Phase 7 done = R2 validation (hsi-r2-validation.json) on VALIDATE tab.",
       "Phase 8 done = HSI translation substrate (hsi-translation-handoff.json) on TRANSLATE tab + in-repo Akeno HITL consumer at /akeno (not CDS).",
     ],

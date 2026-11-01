@@ -627,24 +627,36 @@ export const AI_FUTURE_TECH_HARD_BANS = [
 export type AiFutureTechHardBan = (typeof AI_FUTURE_TECH_HARD_BANS)[number];
 
 /**
- * Optional sidecar embedding metadata for nodes/edges — schema only.
- * Vectors are external refs or omitted until an eval harness exists.
- * Never a substitute for typed predicates or grades.
+ * Optional sidecar embedding metadata for edges (P2.2 wired).
+ * Prefer vectorRef / contentHash — not full float arrays in git.
+ * Never a substitute for typed predicates or grades; never PHI / model weights.
  */
 export const EDGE_EMBEDDING_SLOT_SCHEMA = {
   schemaVersion: "hsi-edge-embedding-slot-1",
-  status: "schema_stub" as const,
+  /** Wired: typed sidecars + hsi-embedding-sidecars.json export (P2.2). */
+  status: "wired_hash_ref_sidecars" as const,
   fields: [
     "modelId",
     "weightsHash",
-    "dimensions",
-    "vectorRefOrOmit",
+    "dim",
+    "vectorRef",
+    "contentHash",
     "createdAt",
+    "doesNotSetHsiGrade",
     "invalidatesOnModelBump",
   ] as const,
+  requiredLocator: "vectorRef_or_contentHash" as const,
   mayFlipEvidenceGrade: false as const,
+  doesNotSetHsiGrade: true as const,
+  autoApprove: false as const,
+  autoApproveIntoKg: false as const,
+  containsPhi: false as const,
+  vendorsModelWeights: false as const,
+  maxTinyDemoDim: 16 as const,
+  exportArtifact: "hsi-embedding-sidecars.json" as const,
+  runtimeModule: "src/embeddingSidecar.ts" as const,
   notes:
-    "Sidecar retrieval index only — cosine similarity ≠ mechanism; see HSI_AI_NEURAL_FUTURE_HEALTHCARE.md",
+    "Sidecar retrieval index only — cosine similarity ≠ mechanism; hash/ref preferred; see HSI_AI_NEURAL_FUTURE_HEALTHCARE.md",
 };
 
 export type EdgeEmbeddingSlotSchema = typeof EDGE_EMBEDDING_SLOT_SCHEMA;
@@ -924,6 +936,7 @@ export function buildSystemsVisionBundle(opts?: {
       "P3 bio adapters never auto-promote hsiGrade or Gate C.",
       "NN/agent proposals are model-proposal artifacts only — never autoApproveIntoKg.",
       "Embeddings are sidecar retrieval slots — not a substitute for typed predicates.",
+      "P2.2: edge embedding sidecars wired (hash/ref; hsi-embedding-sidecars.json); doesNotSetHsiGrade=true; no model weights / PHI.",
       "notCds / autoApproveIntoKg=false on this export.",
       "Neon: red-wave only from this workspace.",
     ],
