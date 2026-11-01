@@ -1,19 +1,19 @@
 {
   "schemaVersion": "hsi-gap-report-1",
-  "generatedAt": "2026-11-01T18:24:10.173Z",
+  "generatedAt": "2026-11-01T12:00:00.000Z",
   "summary": {
-    "seedEdges": 50,
-    "bridgeCandidates": 12,
+    "seedEdges": 57,
+    "bridgeCandidates": 14,
     "gradeCounts": {
       "established": 0,
-      "uncertain": 39,
+      "uncertain": 46,
       "unexplored": 11
     },
     "claimsMappedToIsi": 13,
     "claimsMappedToAksh": 22,
-    "claimsWithDurableLocator": 37,
+    "claimsWithDurableLocator": 44,
     "loinc": {
-      "edgeCount": 50,
+      "edgeCount": 57,
       "claimsWithLoincMarker": 8,
       "markersWithLoinc": 7,
       "markersMissingLoinc": 1
@@ -663,6 +663,97 @@
         "loinc_marker",
         "gate_c_approved"
       ]
+    },
+    {
+      "claimId": "HSI-C-GUT-001",
+      "edgeId": "HSI-E-GUT-001",
+      "assertion": "Indigenous Clostridium clusters IV and XIVa promote accumulation of colonic Foxp3+ regulatory T cells (mouse gut–immune neighbourhood seed — not CDS; not Stage 1 RA lock).",
+      "domain": "immuno_metabolic",
+      "hsiGrade": "uncertain",
+      "missing": [
+        "isi_relationship_id",
+        "aksh_node_id",
+        "loinc_marker",
+        "gate_c_approved"
+      ]
+    },
+    {
+      "claimId": "HSI-C-GUT-002",
+      "edgeId": "HSI-E-GUT-002",
+      "assertion": "A rationally selected mixture of human microbiota Clostridia strains induces Treg abundance and anti-inflammatory programs in germ-free mouse models (gut–immune neighbourhood; not human CDS).",
+      "domain": "immuno_metabolic",
+      "hsiGrade": "uncertain",
+      "missing": [
+        "isi_relationship_id",
+        "aksh_node_id",
+        "loinc_marker",
+        "gate_c_approved"
+      ]
+    },
+    {
+      "claimId": "HSI-C-GUT-003",
+      "edgeId": "HSI-E-GUT-003",
+      "assertion": "Commensal microbe-derived butyrate induces differentiation of colonic regulatory T cells (core SCFA ↔ mucosal Treg axis; mouse Nature 2013 evidence).",
+      "domain": "immuno_metabolic",
+      "hsiGrade": "uncertain",
+      "missing": [
+        "isi_relationship_id",
+        "aksh_node_id",
+        "loinc_marker",
+        "gate_c_approved"
+      ]
+    },
+    {
+      "claimId": "HSI-C-GUT-004",
+      "edgeId": "HSI-E-GUT-004",
+      "assertion": "Microbiota-derived short-chain fatty acids regulate size and function of the colonic Treg pool in an Ffar2 (GPR43)-dependent manner in mice (SCFA class ↔ mucosal Treg).",
+      "domain": "immuno_metabolic",
+      "hsiGrade": "uncertain",
+      "missing": [
+        "isi_relationship_id",
+        "aksh_node_id",
+        "loinc_marker",
+        "gate_c_approved"
+      ]
+    },
+    {
+      "claimId": "HSI-C-GUT-005",
+      "edgeId": "HSI-E-GUT-005",
+      "assertion": "SCFAs can promote T-cell differentiation into IL-17-producing (Th17) cells depending on cytokine milieu via HDAC inhibition / mTOR–S6K (competing frame vs Th17 inhibition — hypothesized only).",
+      "domain": "immuno_metabolic",
+      "hsiGrade": "uncertain",
+      "missing": [
+        "isi_relationship_id",
+        "aksh_node_id",
+        "loinc_marker",
+        "gate_c_approved"
+      ]
+    },
+    {
+      "claimId": "HSI-C-GUT-006",
+      "edgeId": "HSI-E-GUT-006",
+      "assertion": "Butyrate can inhibit Th17 differentiation (IL-17 / RORγt axis) while upregulating IL-10 in T-cell models of colitis induction (competing frame vs SCFA→Th17 promotion — hypothesized only).",
+      "domain": "immuno_metabolic",
+      "hsiGrade": "uncertain",
+      "missing": [
+        "isi_relationship_id",
+        "aksh_node_id",
+        "loinc_marker",
+        "gate_c_approved"
+      ]
+    },
+    {
+      "claimId": "HSI-C-GUT-007",
+      "edgeId": "HSI-E-GUT-007",
+      "assertion": "Butyrate enhances intestinal barrier function by facilitating tight-junction assembly via AMPK activation in Caco-2 monolayers (barrier context for mucosal immune neighbourhood).",
+      "domain": "immuno_metabolic",
+      "hsiGrade": "uncertain",
+      "missing": [
+        "isi_relationship_id",
+        "aksh_node_id",
+        "loinc_marker",
+        "gate_c_approved"
+      ]
     }
   ],
   "bridgeShortlist": [
@@ -773,6 +864,24 @@
       "objectLabel": "Type 2 diabetes mellitus",
       "suggestedIsiRelationshipId": null,
       "matchKind": "none"
+    },
+    {
+      "edgeId": "HSI-E-GUT-003",
+      "claimId": "HSI-C-GUT-003",
+      "assertion": "Commensal microbe-derived butyrate induces differentiation of colonic regulatory T cells (core SCFA ↔ mucosal Treg axis; mouse Nature 2013 evidence).",
+      "subjectLabel": "Butyrate (SCFA)",
+      "objectLabel": "Colonic / mucosal Foxp3+ Treg",
+      "suggestedIsiRelationshipId": null,
+      "matchKind": "unspecified"
+    },
+    {
+      "edgeId": "HSI-E-GUT-004",
+      "claimId": "HSI-C-GUT-004",
+      "assertion": "Microbiota-derived short-chain fatty acids regulate size and function of the colonic Treg pool in an Ffar2 (GPR43)-dependent manner in mice (SCFA class ↔ mucosal Treg).",
+      "subjectLabel": "Short-chain fatty acids (class)",
+      "objectLabel": "Colonic / mucosal Foxp3+ Treg",
+      "suggestedIsiRelationshipId": null,
+      "matchKind": "unspecified"
     }
   ],
   "isiRelMapping": {
@@ -784,7 +893,7 @@
     "curated": 13,
     "acceptedForCuration": 0,
     "bridgeCandidatesCovered": 6,
-    "bridgeCandidatesTotal": 12,
+    "bridgeCandidatesTotal": 14,
     "autoApproveIntoKg": false
   },
   "akshNodeMapping": {

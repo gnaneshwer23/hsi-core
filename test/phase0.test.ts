@@ -582,12 +582,16 @@ describe("Gate C checklist + publish outputs", () => {
     expect(result.files).toContain("hsi-pilot-acceptance.md");
     expect(result.files).toContain("hsi-pilot-walkthrough.md");
     expect(result.files).toContain("hsi-partner-lock.json");
+    expect(result.files).toContain("hsi-ssc-pathway-pack.json");
+    expect(result.files).toContain("hsi-gut-immune-pack.json");
+    expect(result.files).toContain("hsi-gut-immune-pack.md");
     expect(result.files).toContain("hsi-r2-validation.json");
     expect(result.files).toContain("hsi-r2-validation.md");
     expect(result.files).toContain("hsi-translation-handoff.json");
     expect(result.files).toContain("hsi-translation-handoff.md");
     expect(result.files).toContain("MANIFEST.json");
     expect(result.discoverySynced).toContain("site/public/discovery/hsi-r2-validation.json");
+    expect(result.discoverySynced).toContain("site/public/discovery/hsi-gut-immune-pack.json");
     expect(result.discoverySynced).toContain("site/public/discovery/hsi-translation-handoff.json");
     expect(existsSync(join(process.cwd(), "site/public/discovery/hsi-r2-validation.json"))).toBe(
       true,

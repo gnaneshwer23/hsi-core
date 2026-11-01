@@ -243,6 +243,15 @@ export {
 } from "./seed/sscTfhBIl21";
 
 export {
+  GUT_PATHWAY_ID,
+  GUT_PATHWAY_META,
+  HSI_GUT_SEED_CLAIMS,
+  HSI_GUT_SEED_EDGES,
+  HSI_GUT_SEED_SYSTEMS_PREDICATES,
+  gutDeepSeedsLanded,
+} from "./seed/gutScfaMucosal";
+
+export {
   SSC_PATHWAY_PACK_SCHEMA,
   buildSscPathwayPack,
   serializeSscPathwayPack,
@@ -250,6 +259,15 @@ export {
   type SscPathwayExplanation,
   type SscPathwayPack,
 } from "./sscPathwayPack";
+
+export {
+  GUT_IMMUNE_PACK_SCHEMA,
+  buildGutImmunePack,
+  serializeGutImmunePack,
+  serializeGutImmunePackMarkdown,
+  type GutImmunePack,
+  type GutPathwayExplanation,
+} from "./gutImmunePack";
 
 export {
   PILOT_REVIEW_RUBRIC_SCHEMA,
@@ -331,6 +349,7 @@ export {
 export {
   HSI_DISCOVERY_LOOP_STEPS,
   HSI_ILLUSTRATIVE_DISEASE_CONTEXTS,
+  HSI_SYSTEMS_SECONDARY_AXES,
   buildDiscoveryCentreMeta,
   type HsiDiscoveryCentreMeta,
   type HsiDiscoveryLoopStepId,

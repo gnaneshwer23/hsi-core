@@ -105,8 +105,25 @@ export function buildExampleModelProposals(opts?: {
       proposedPredicate: "associated_with",
       proposedObject: "mucosal Treg / Th17 balance",
       contextNote:
-        "Vision-axis draft only — gut–immune deepSeedsPresent=false. Queued to show model→Gate C path; curator must reject or seed honestly later (P1.3).",
-      evidenceHints: ["vision:hsi-systems-vision", "axis:gut_microbiome"],
+        "Historical demo draft — P1.3 seeds now land in hsi-gut-immune-pack (HSI-E-GUT-*). Curator should prefer seeded edges over this stub; never flip hsiGrade from model output.",
+      evidenceHints: [
+        "pack:hsi-gut-immune-pack",
+        "PMID:24226770",
+        "PMID:23828891",
+        "axis:gut_microbiome",
+      ],
+      suggestedTeachingStatus: "hypothesized",
+      createdAt,
+    },
+    {
+      proposalId: "HSI-MP-NEURO-STUB-001",
+      sourceAdapterOrAgent: "hsi-stub-nn-proposer/systems-vision-neuro",
+      proposedSubject: "Vagus / HPA axis stub",
+      proposedPredicate: "associated_with",
+      proposedObject: "peripheral inflammatory tone (hypothesized)",
+      contextNote:
+        "Vision-axis draft only — neuroimmune deepSeedsPresent=false. Queued for P2.1; curator must reject or seed honestly later.",
+      evidenceHints: ["vision:hsi-systems-vision", "axis:neuroimmune"],
       suggestedTeachingStatus: "hypothesized",
       createdAt,
     },

@@ -89,8 +89,9 @@ export const SYSTEMS_DOMAIN_OWNERSHIP: readonly SystemsDomainOwnership[] = [
     isiOwns: "Discovery overlays / Ask–Radar for gut–immune neighbourhoods",
     akshAkenoOwns: "No live microbiome PHI; clinical translation only Stage 3+ HITL",
     earliestStage: "stage2",
-    deepSeedsPresent: false,
-    notes: "Entity + predicate stubs only — no curated claim edges yet",
+    deepSeedsPresent: true,
+    notes:
+      "P1.3 SCFA/butyrate ↔ mucosal Treg/Th17 thin seeds present (hsi-gut-immune-pack); neuro still stub-only",
   },
   {
     domain: "neuroimmune_brain_immune",
@@ -171,6 +172,13 @@ export const GUT_MICROBIOME_ENTITY_STUBS: readonly GutMicrobiomeEntityStub[] = [
     notes: "Navigation stub — not a species claim",
   },
   {
+    id: "HSI-GM-taxon-clostridia-iv-xiva",
+    entityClass: "taxon",
+    label: "Clostridium clusters IV / XIVa",
+    ontologyHint: "NCBITaxon",
+    notes: "P1.3 neighbourhood — Atarashi colonic Treg context; not a species claim edge alone",
+  },
+  {
     id: "HSI-GM-community-placeholder",
     entityClass: "community",
     label: "Gut microbial community (placeholder)",
@@ -178,18 +186,32 @@ export const GUT_MICROBIOME_ENTITY_STUBS: readonly GutMicrobiomeEntityStub[] = [
     notes: "Dysbiosis / diversity frames need context + evidence per edge",
   },
   {
+    id: "HSI-GM-community-clostridia-human-mix",
+    entityClass: "community",
+    label: "Human microbiota Clostridia mix (Treg-inducing class)",
+    ontologyHint: null,
+    notes: "P1.3 — Atarashi 2013 17-strain class context",
+  },
+  {
     id: "HSI-GM-metabolite-scfa",
     entityClass: "metabolite",
-    label: "Short-chain fatty acid (class stub)",
+    label: "Short-chain fatty acid (class)",
     ontologyHint: "ChEBI",
-    notes: "Common gut–immune mediator class — no disease claim edges yet",
+    notes: "P1.3 deep seeds — SCFA ↔ mucosal Treg/Th17 pack present",
+  },
+  {
+    id: "HSI-GM-metabolite-butyrate",
+    entityClass: "metabolite",
+    label: "Butyrate",
+    ontologyHint: "ChEBI:16189",
+    notes: "P1.3 primary SCFA neighbourhood metabolite",
   },
   {
     id: "HSI-GM-barrier-epithelium",
     entityClass: "barrier_compartment",
     label: "Intestinal epithelial barrier",
     ontologyHint: "UBERON",
-    notes: null,
+    notes: "P1.3 barrier context edge present (Peng 2009)",
   },
   {
     id: "HSI-GM-interface-galt",
@@ -197,6 +219,20 @@ export const GUT_MICROBIOME_ENTITY_STUBS: readonly GutMicrobiomeEntityStub[] = [
     label: "Gut-associated lymphoid tissue (GALT)",
     ontologyHint: "UBERON",
     notes: "Bridge toward immune-cell spine (Peyer’s / MLN neighbourhood later)",
+  },
+  {
+    id: "HSI-GM-interface-mucosal-treg",
+    entityClass: "mucosal_immune_interface",
+    label: "Colonic / mucosal Foxp3+ Treg niche",
+    ontologyHint: "CL",
+    notes: "P1.3 — CL hint only; bindStatus remains hint_only until fuller ontology work",
+  },
+  {
+    id: "HSI-GM-interface-mucosal-th17",
+    entityClass: "mucosal_immune_interface",
+    label: "Mucosal Th17 niche",
+    ontologyHint: "CL",
+    notes: "P1.3 — competing promote/inhibit frames; hypothesized grades",
   },
 ] as const;
 
@@ -747,6 +783,9 @@ export type SystemsVisionBundle = {
   gutMicrobiome: {
     entityClasses: readonly GutMicrobiomeEntityClass[];
     entities: readonly GutMicrobiomeEntityStub[];
+    deepSeedsPresent: boolean;
+    neighbourhoodPack: "hsi-gut-immune-pack";
+    neighbourhoodId: "gut-scfa-mucosal-treg-th17";
   };
   neuroimmune: {
     entityTypes: readonly NeuroimmuneEntityType[];
@@ -810,6 +849,9 @@ export function buildSystemsVisionBundle(opts?: {
     gutMicrobiome: {
       entityClasses: GUT_MICROBIOME_ENTITY_CLASSES,
       entities: GUT_MICROBIOME_ENTITY_STUBS,
+      deepSeedsPresent: true,
+      neighbourhoodPack: "hsi-gut-immune-pack",
+      neighbourhoodId: "gut-scfa-mucosal-treg-th17",
     },
     neuroimmune: {
       entityTypes: NEUROIMMUNE_ENTITY_TYPES,
@@ -839,6 +881,7 @@ export function buildSystemsVisionBundle(opts?: {
       "Every claim edge needs context + evidence + dual grade axes.",
       "RA Stage 1 scopeLocked remains authoritative; do not invent partnerSigned.",
       "Dual-track A: activeScope=ra-tnf; prdMvpTarget=ssc-tfh-b-il21 with thin seeds; RA comparison = Release 2; no wipe.",
+      "P1.3: gut–immune SCFA ↔ mucosal Treg/Th17 deepSeedsPresent=true (hsi-gut-immune-pack); neuroimmune remains stub-only.",
       "Patient data: HSI stores shapes/fixtures/handoff only — never raw PHI.",
       "P3 bio adapters never auto-promote hsiGrade or Gate C.",
       "NN/agent proposals are model-proposal artifacts only — never autoApproveIntoKg.",

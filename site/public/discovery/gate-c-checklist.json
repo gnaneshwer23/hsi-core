@@ -2,7 +2,7 @@
   "schemaVersion": "hsi-gate-c-checklist-1",
   "notCds": true,
   "autoApproveIntoKg": false,
-  "generatedAt": "2026-11-01T18:24:10.173Z",
+  "generatedAt": "2026-11-01T12:00:00.000Z",
   "summary": {
     "totalRows": 32,
     "curatedWithRel": 13,
@@ -12,8 +12,8 @@
     "translationCandidates": 22,
     "translationHitlRequired": 22,
     "translationCdsSurfacable": 0,
-    "modelProposals": 3,
-    "modelProposalsPending": 3,
+    "modelProposals": 4,
+    "modelProposalsPending": 4,
     "modelProposalsAutoApprove": 0
   },
   "rows": [
@@ -943,7 +943,7 @@
         "pack:hsi-ssc-pathway-pack"
       ],
       "suggestedTeachingStatus": "associative",
-      "createdAt": "2026-11-01T18:24:10.173Z",
+      "createdAt": "2026-11-01T12:00:00.000Z",
       "proposalKind": "model_draft",
       "gateCStatus": "pending",
       "autoApprove": false,
@@ -965,7 +965,7 @@
         "card:HSI-CARD-SSC-IL21"
       ],
       "suggestedTeachingStatus": "hypothesized",
-      "createdAt": "2026-11-01T18:24:10.173Z",
+      "createdAt": "2026-11-01T12:00:00.000Z",
       "proposalKind": "model_draft",
       "gateCStatus": "pending",
       "autoApprove": false,
@@ -980,13 +980,36 @@
       "proposedSubject": "SCFA (butyrate neighbourhood)",
       "proposedPredicate": "associated_with",
       "proposedObject": "mucosal Treg / Th17 balance",
-      "contextNote": "Vision-axis draft only — gut–immune deepSeedsPresent=false. Queued to show model→Gate C path; curator must reject or seed honestly later (P1.3).",
+      "contextNote": "Historical demo draft — P1.3 seeds now land in hsi-gut-immune-pack (HSI-E-GUT-*). Curator should prefer seeded edges over this stub; never flip hsiGrade from model output.",
       "evidenceHints": [
-        "vision:hsi-systems-vision",
+        "pack:hsi-gut-immune-pack",
+        "PMID:24226770",
+        "PMID:23828891",
         "axis:gut_microbiome"
       ],
       "suggestedTeachingStatus": "hypothesized",
-      "createdAt": "2026-11-01T18:24:10.173Z",
+      "createdAt": "2026-11-01T12:00:00.000Z",
+      "proposalKind": "model_draft",
+      "gateCStatus": "pending",
+      "autoApprove": false,
+      "autoApproveIntoKg": false,
+      "mayFlipEvidenceGrade": false,
+      "isGradedKgEdge": false,
+      "schemaRef": "hsi-model-proposal-1"
+    },
+    {
+      "proposalId": "HSI-MP-NEURO-STUB-001",
+      "sourceAdapterOrAgent": "hsi-stub-nn-proposer/systems-vision-neuro",
+      "proposedSubject": "Vagus / HPA axis stub",
+      "proposedPredicate": "associated_with",
+      "proposedObject": "peripheral inflammatory tone (hypothesized)",
+      "contextNote": "Vision-axis draft only — neuroimmune deepSeedsPresent=false. Queued for P2.1; curator must reject or seed honestly later.",
+      "evidenceHints": [
+        "vision:hsi-systems-vision",
+        "axis:neuroimmune"
+      ],
+      "suggestedTeachingStatus": "hypothesized",
+      "createdAt": "2026-11-01T12:00:00.000Z",
       "proposalKind": "model_draft",
       "gateCStatus": "pending",
       "autoApprove": false,

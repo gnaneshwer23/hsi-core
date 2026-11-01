@@ -1,7 +1,7 @@
 # HSI build status and next
 
 **Audit date:** 1 November 2026  
-**HEAD at write:** `c2fd6f3` (main) — P1 SSc deepen + model→Gate C  
+**HEAD at write:** (pending P1.3 commit) — gut–immune SCFA ↔ mucosal Treg/Th17  
 **Edit target:** `hsi-core` only · Neon **`red-wave` only** · no immunecity / Akeno product / DeliverX edits  
 **Prior audit:** [`PRD_IMPLEMENTATION_AUDIT.md`](./PRD_IMPLEMENTATION_AUDIT.md) (phases 0–8 vs Pilot + Target PRDs)
 
@@ -11,7 +11,7 @@
 
 ## Executive verdict
 
-hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance, Gate C checklists, versioned publish, RA/anti-TNF scope lock + depth, Discovery Centre, R2 validation, translation/Akeno HITL scaffolding, Aksh agent catalog, Neon isolation, systems-vision + AI position stubs). **Vertical decision A (dual-track) is recorded:** RA stays Stage 1 `activeScope`; SSc Tfh–B–IL-21 is the PRD MVP target with a **deepened** literature slice (cell cards + CL·MONDO hints + extra PMIDs). **Model-proposal artifacts are wired into Gate C** as typed pending drafts (`autoApprove=false`). What remains for a **real partner pilot** is mostly **outreach + rights + thresholds + ISI product consumption**. Gut/neuro claim seeds, agent runtime, and live CDS stay gated.
+hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance, Gate C checklists, versioned publish, RA/anti-TNF scope lock + depth, Discovery Centre, R2 validation, translation/Akeno HITL scaffolding, Aksh agent catalog, Neon isolation, systems-vision + AI position stubs). **Vertical decision A (dual-track) is recorded:** RA stays Stage 1 `activeScope`; SSc Tfh–B–IL-21 is the PRD MVP target with a **deepened** literature slice (cell cards + CL·MONDO hints + extra PMIDs). **P1.3 gut–immune** SCFA/butyrate ↔ mucosal Treg/Th17 thin seeds + `hsi-gut-immune-pack` landed (`deepSeedsPresent=true`; honest `uncertain`/`hypothesized`). **Model-proposal artifacts are wired into Gate C** as typed pending drafts (`autoApprove=false`). What remains for a **real partner pilot** is mostly **outreach + rights + thresholds + ISI product consumption**. Neuro claim seeds, agent runtime, and live CDS stay gated.
 
 | Plane | Light | One line |
 |-------|-------|----------|
@@ -20,7 +20,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | R3 translation / `/akeno` | **YELLOW** | HITL scaffolding only (`clinicalActive=false`) |
 | Partner pilot readiness (M3) | **YELLOW** | Walkthrough ready; `partnerSigned=false` |
 | Live CDS / PHI / shared Neon | **RED (correct)** | Explicitly not built |
-| Vision axes / AI stubs | **GREEN (vocab)** | Map + schema stubs; SSc deepened (cards + PMIDs); model→Gate C pending; gut/neuro claim depth empty |
+| Vision axes / AI stubs | **GREEN** | Map + schema stubs; SSc deepened; **gut P1.3 deep seeds**; neuro still stub; model→Gate C pending |
 | Vertical strategy | **GREEN** | **A dual-track** written — `verticalStrategy=dual_track` |
 
 ---
@@ -143,6 +143,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | AI / neural position | `566005c` |
 | Dual-track A + SSc first slice | `e68e8bf` |
 | P1 SSc deepen + model→Gate C | `c2fd6f3` |
+| P1.3 gut–immune SCFA ↔ Treg/Th17 | (this ship) |
 
 Reproduce: `bun test && bun run outputs && bun run site:dev` → `/discovery`, `/akeno`, `/aksh-agents`.
 
@@ -157,7 +158,8 @@ Reproduce: `bun test && bun run outputs && bun run site:dev` → `/discovery`, `
 | **Named partner not chosen** | Shortlist is categories only; no invented contacts | Outreach |
 | **Licensing / rights pack** | Pilot data-rights gate | Partner + curator table in-repo after sign |
 | **Numeric success thresholds** | Evaluation plan incomplete | Partner + rubric update |
-| **Gut–immune / neuroimmune claim seeds empty** | Vision stubs only (`deepSeedsPresent=false`) | Stage 2 curation after one-axis pick |
+| **Neuroimmune claim seeds empty** | Vision stubs only (`deepSeedsPresent=false`) | **NEXT science** = P2.1 neuroimmune thin slice |
+| **Gut–immune claim seeds** | **DONE (P1.3)** SCFA ↔ mucosal Treg/Th17 pack | Optional further depth later; Th17 frames stay hypothesized |
 | **SSc pack depth** | P1.1 cell cards + extra PMIDs landed; still not a full atlas | Optional further neighbourhood edges later |
 | **Immune spine = vocabulary + SSc hints** | Full atlas / confirmed ontology bind still open; SSc neighbourhood has `hint_only` CL·MONDO | Stage 2 depth beyond SSc |
 | **Model→Gate C** | **DONE (P1.5)** pending drafts only; no agent runtime | Never auto-approve; ISI runtime out of repo |
@@ -191,8 +193,8 @@ One-sprint-sized items. Mark **[DECISION]** where the user must choose before co
 |---|------|-------|
 | P1.1 | **DONE:** deepen SSc pack — cell-card / CL·MONDO *hints* on Tfh–B–IL-21 neighbourhood; additional public PMIDs (29626172, 37763102) | `sscCellCards.ts` + pack; RA packs regenerable; EBV hypothesized |
 | P1.2 | **DONE (first slice):** thin SSc Tfh–B–IL-21 pack (verified PMIDs; EBV `hypothesized`); RA intact | `hsi-ssc-pathway-pack.*`; do not delete RA claim ids |
-| P1.3 | **NEXT:** Deepen one **gut–immune** neighbourhood (e.g. SCFA ↔ mucosal Treg/Th17) with honest `uncertain` grades | Per [`HSI_SYSTEMS_VISION_MAP.md`](./HSI_SYSTEMS_VISION_MAP.md); leave neuro queued |
-| P1.4 | Promote selected `ISI_CONTROLLED_RELATIONSHIP_TYPES` onto `HSI_EDGE_TYPES` when first new edges need them | Additive map; no wholesale RA rewrite |
+| P1.3 | **DONE:** Deepen one **gut–immune** neighbourhood (SCFA/butyrate ↔ mucosal Treg/Th17 + barrier) with honest `uncertain`/`hypothesized` grades | `seed/gutScfaMucosal.ts` + `hsi-gut-immune-pack.*`; Discovery secondary axis; RA/SSc untouched |
+| P1.4 | Promote selected systems / ISI predicates onto `HSI_EDGE_TYPES` when first-class gut predicates are needed | Additive map; gut pack currently maps via `SYSTEMS_PREDICATE_TO_HSI_EDGE` |
 | P1.5 | **DONE:** wire **ModelProposalArtifact** → Gate C checklist *draft rows* (`modelProposals`; `autoApprove=false`) | `src/modelProposal.ts`; never flips `hsiGrade` |
 | P1.6 | Curator UX inside hsi-core after pilot learning (richer gap/Gate C markdown) | P2 in vision doc; only after partner session |
 
@@ -200,7 +202,7 @@ One-sprint-sized items. Mark **[DECISION]** where the user must choose before co
 
 | # | Item | Notes |
 |---|------|-------|
-| P2.1 | Neuroimmune thin seed slice (one axis) | After gut slice proves curation pattern |
+| P2.1 | **NEXT science:** Neuroimmune thin seed slice (one axis) | Pattern proven by P1.3 gut; leave partner P0.2 parallel |
 | P2.2 | Embedding sidecar slots on edges (hash/ref only; no model stack) | `EDGE_EMBEDDING_SLOT_SCHEMA` |
 | P2.3 | Offline eval harness stubs against public packs | `MODEL_EVAL_HARNESS_STUB`; no PHI |
 | P2.4 | ClinVar / TCGA **pointer** metadata fields | Citation only; Gate C still required |
@@ -244,7 +246,7 @@ One-sprint-sized items. Mark **[DECISION]** where the user must choose before co
 |------|-----------|
 | Partner pilot ready (HSI side) | `partnerSigned=true` + rights table + numeric thresholds + walkthrough refreshed + four outputs still green |
 | Dual-track honesty | **A recorded**; SSc pack present without deleting RA; ASK stays RA |
-| Systems vision honesty | Gut/neuro remain stubs until a thin curated slice lands with grades (next = P1.3 gut) |
+| Systems vision honesty | Gut P1.3 deep seeds present; neuro remains stub until P2.1 |
 | SSc deepen + model→Gate C | Cell cards + CL·MONDO hints + extra PMIDs; Gate C `modelProposals` pending only |
 | Safety | MANIFEST still `notCds`; `/akeno` still `clinicalActive=false`; Neon still red-wave-only |
 

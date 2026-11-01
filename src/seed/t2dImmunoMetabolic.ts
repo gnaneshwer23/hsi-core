@@ -10,6 +10,10 @@ import {
   HSI_SSC_SEED_CLAIMS,
   HSI_SSC_SEED_EDGES,
 } from "./sscTfhBIl21";
+import {
+  HSI_GUT_SEED_CLAIMS,
+  HSI_GUT_SEED_EDGES,
+} from "./gutScfaMucosal";
 
 const RECORDED = "2026-10-31T00:00:00.000Z";
 
@@ -837,14 +841,16 @@ function toClaim(spec: SeedSpec): HsiClaim {
   };
 }
 
-/** Core T2D / immuno / RA / illustrative stubs — SSc dual-track slice appended (no RA wipe). */
+/** Core T2D / immuno / RA / illustrative stubs — SSc + gut–immune slices appended (no RA wipe). */
 export const HSI_T2D_IMMUNO_SEED_EDGES: HsiEdge[] = [
   ...SPECS.map(toEdge),
   ...HSI_SSC_SEED_EDGES,
+  ...HSI_GUT_SEED_EDGES,
 ];
 export const HSI_T2D_IMMUNO_SEED_CLAIMS: HsiClaim[] = [
   ...SPECS.map(toClaim),
   ...HSI_SSC_SEED_CLAIMS,
+  ...HSI_GUT_SEED_CLAIMS,
 ];
 
 export const HSI_MARKERS: HsiMarker[] = [

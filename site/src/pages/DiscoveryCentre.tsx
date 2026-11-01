@@ -470,6 +470,44 @@ export function DiscoveryCentre() {
                       )}
                     </div>
                   </div>
+
+                  {data.gutImmune?.deepSeedsPresent ? (
+                    <div className="dc-card" style={{ marginTop: "1.25rem" }}>
+                      <span className="panel-label">
+                        Systems secondary axis · does not replace ASK
+                      </span>
+                      <h3 style={{ fontSize: "1.15rem", marginTop: "0.4rem" }}>
+                        {data.gutImmune.pathway.label}
+                      </h3>
+                      <p className="muted" style={{ marginTop: "0.55rem" }}>
+                        Pack{" "}
+                        <code>hsi-gut-immune-pack.json</code> ·{" "}
+                        {data.gutImmune.evidenceMap.length} edges · grades stay
+                        uncertain / hypothesized · role=
+                        {data.gutImmune.discoveryRole ??
+                          "systems_secondary_axis"}
+                      </p>
+                      <div className="dc-chip-row" style={{ marginTop: "0.75rem" }}>
+                        {(data.gutImmune.pathway.primaryPmids ?? [])
+                          .slice(0, 7)
+                          .map((pmid) => (
+                            <span key={pmid} className="dc-pill">
+                              PMID {pmid}
+                            </span>
+                          ))}
+                      </div>
+                      <ul className="dc-compact-list" style={{ marginTop: "0.85rem" }}>
+                        {data.gutImmune.competingExplanations
+                          .slice(0, 4)
+                          .map((e) => (
+                            <li key={e.id}>
+                              <strong>{e.label}</strong>{" "}
+                              <span className="muted">({e.status})</span>
+                            </li>
+                          ))}
+                      </ul>
+                    </div>
+                  ) : null}
                 </div>
               ) : null}
 

@@ -124,5 +124,14 @@ describe("systems vision axes stubs", () => {
     expect(bundle.verticalStrategy).toBe("dual_track");
     expect(bundle.activeScope).toBe("ra-tnf");
     expect(bundle.prdMvpTarget).toBe("ssc-tfh-b-il21");
+    expect(bundle.gutMicrobiome.deepSeedsPresent).toBe(true);
+    expect(
+      bundle.domains.find((d) => d.domain === "gut_microbiome_immune")
+        ?.deepSeedsPresent,
+    ).toBe(true);
+    expect(
+      bundle.domains.find((d) => d.domain === "neuroimmune_brain_immune")
+        ?.deepSeedsPresent,
+    ).toBe(false);
   });
 });

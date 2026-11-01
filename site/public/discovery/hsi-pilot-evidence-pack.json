@@ -3,7 +3,7 @@
   "notCds": true,
   "noPatientLevelActions": true,
   "autoApproveIntoKg": false,
-  "generatedAt": "2026-11-01T18:24:10.173Z",
+  "generatedAt": "2026-11-01T12:00:00.000Z",
   "disease": "Rheumatoid arthritis",
   "researchQuestion": "Why do some patients with rheumatoid arthritis respond differently to anti-TNF therapy, and which biomarkers or immune mechanisms are best supported for defining those subgroups?",
   "lockedPilot": false,
@@ -206,7 +206,25 @@
         "shortLabel": "IBD",
         "status": "illustrative_only",
         "lockedPilot": false,
-        "seedHint": "IL-23 / mucosal barrier illustrative edges when present in seeds"
+        "seedHint": "IL-23 / mucosal barrier illustrative edges; systems secondary gut–immune pack (SCFA ↔ Treg/Th17) is separate — does not replace RA ASK"
+      }
+    ],
+    "systemsSecondaryAxes": [
+      {
+        "id": "gut-scfa-mucosal-treg-th17",
+        "label": "Gut–immune · SCFA ↔ mucosal Treg / Th17",
+        "status": "systems_secondary_axis",
+        "deepSeedsPresent": true,
+        "packFile": "hsi-gut-immune-pack.json",
+        "seedHint": "P1.3 thin literature slice — uncertain/hypothesized grades; Th17 promote vs inhibit competing; not CDS"
+      },
+      {
+        "id": "ssc-tfh-b-il21",
+        "label": "SSc · Tfh–B–IL-21 (PRD MVP)",
+        "status": "prd_mvp_secondary_target",
+        "deepSeedsPresent": true,
+        "packFile": "hsi-ssc-pathway-pack.json",
+        "seedHint": "Dual-track A PRD target — does not replace RA ASK; EBV hypothesized only"
       }
     ],
     "partnerLock": {
@@ -358,6 +376,7 @@
       "Phase 8 done (HSI substrate): TRANSLATE tab + /akeno HITL consumer load hsi-translation-handoff.json — Stage 3 scaffolding; clinicalActive=false; not live CDS.",
       "RA is the Phase 2 working Stage 1 scope (scopeLocked=true; partnerSigned=false; lockedPilot=false).",
       "Dual-track A: SSc surfaces as prd_mvp_secondary_target only — ASK research question stays RA / anti-TNF.",
+      "P1.3: gut–immune SCFA ↔ mucosal Treg/Th17 is a systems secondary axis (hsi-gut-immune-pack) — does not replace ASK.",
       "Do not treat SLE/PsO/IBD as selected pilot indications — illustrative conversation contexts only.",
       "Not diagnostic / not for clinical use. teachingStatus ≠ hsiGrade ≠ CDS."
     ]
@@ -401,9 +420,9 @@
     "scopeLocked": true,
     "partnerSigned": false,
     "provisionalLock": false,
-    "evidenceSnapshotRef": "dist/outputs/hsi-core-0.1.0-20261101T182410173Z/hsi-isi-export.json",
-    "createdAt": "2026-11-01T18:24:10.173Z",
-    "updatedAt": "2026-11-01T18:24:10.173Z"
+    "evidenceSnapshotRef": "dist/outputs/hsi-core-0.1.0-20261101T120000000Z/hsi-isi-export.json",
+    "createdAt": "2026-11-01T12:00:00.000Z",
+    "updatedAt": "2026-11-01T12:00:00.000Z"
   },
   "evidenceMap": [
     {
@@ -1848,6 +1867,195 @@
       "studyOrModelContext": "P1.1 deepen: PMID 37763102 verified. teaching=hypothesized for joint-involvement generalisation. Keep EBV branch separate. Gate C = human only. Not CDS.",
       "limitations": null,
       "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
+      "claimId": "HSI-C-GUT-001",
+      "edgeId": "HSI-E-GUT-001",
+      "claimText": "Indigenous Clostridium clusters IV and XIVa promote accumulation of colonic Foxp3+ regulatory T cells (mouse gut–immune neighbourhood seed — not CDS; not Stage 1 RA lock).",
+      "subject": "Clostridium clusters IV / XIVa (gut)",
+      "relationship": "associated_with",
+      "object": "Colonic / mucosal Foxp3+ Treg",
+      "conditionContext": "immuno_metabolic",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "21205640",
+        "doi": "10.1126/science.1198469",
+        "citationLabel": "Atarashi K et al. Science 2011 — Induction of colonic regulatory T cells by indigenous Clostridium species.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/21205640/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "P1.3 gut–immune context edge. PMID 21205640 verified. Mouse colonization evidence; teaching=associative. Do not overclaim human therapeutic causation. Gate C = human only. Not CDS.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
+      "claimId": "HSI-C-GUT-002",
+      "edgeId": "HSI-E-GUT-002",
+      "claimText": "A rationally selected mixture of human microbiota Clostridia strains induces Treg abundance and anti-inflammatory programs in germ-free mouse models (gut–immune neighbourhood; not human CDS).",
+      "subject": "Human microbiota Clostridia mix (17-strain class)",
+      "relationship": "associated_with",
+      "object": "Colonic / mucosal Foxp3+ Treg",
+      "conditionContext": "immuno_metabolic",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "23842501",
+        "doi": "10.1038/nature12331",
+        "citationLabel": "Atarashi K et al. Nature 2013 — Treg induction by a rationally selected mixture of Clostridia strains from the human microbiota.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/23842501/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "P1.3. PMID 23842501 verified. Human-derived strains tested in mice — keep uncertain grades; no partnerSigned / no CDS. Gate C = human only.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
+      "claimId": "HSI-C-GUT-003",
+      "edgeId": "HSI-E-GUT-003",
+      "claimText": "Commensal microbe-derived butyrate induces differentiation of colonic regulatory T cells (core SCFA ↔ mucosal Treg axis; mouse Nature 2013 evidence).",
+      "subject": "Butyrate (SCFA)",
+      "relationship": "upregulates",
+      "object": "Colonic / mucosal Foxp3+ Treg",
+      "conditionContext": "immuno_metabolic",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "24226770",
+        "doi": "10.1038/nature12721",
+        "citationLabel": "Furusawa Y et al. Nature 2013 — Commensal microbe-derived butyrate induces the differentiation of colonic regulatory T cells.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/24226770/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "P1.3 primary SCFA→Treg edge. PMID 24226770 verified. Maps systemsPredicate produces_metabolite_sensed_by → HSI upregulates. Mouse / HDAC–Foxp3 mechanism — not human disease claim. Gate C = human only. Not CDS.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
+      "claimId": "HSI-C-GUT-004",
+      "edgeId": "HSI-E-GUT-004",
+      "claimText": "Microbiota-derived short-chain fatty acids regulate size and function of the colonic Treg pool in an Ffar2 (GPR43)-dependent manner in mice (SCFA class ↔ mucosal Treg).",
+      "subject": "Short-chain fatty acids (class)",
+      "relationship": "associated_with",
+      "object": "Colonic / mucosal Foxp3+ Treg",
+      "conditionContext": "immuno_metabolic",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "23828891",
+        "doi": "10.1126/science.1241165",
+        "citationLabel": "Smith PM et al. Science 2013 — The microbial metabolites, short-chain fatty acids, regulate colonic Treg cell homeostasis.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/23828891/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "P1.3 SCFA-class companion to butyrate edge. PMID 23828891 verified. Mouse Ffar2 dependency — teaching=associative; hsiGrade uncertain. Gate C = human only. Not CDS.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
+      "claimId": "HSI-C-GUT-005",
+      "edgeId": "HSI-E-GUT-005",
+      "claimText": "SCFAs can promote T-cell differentiation into IL-17-producing (Th17) cells depending on cytokine milieu via HDAC inhibition / mTOR–S6K (competing frame vs Th17 inhibition — hypothesized only).",
+      "subject": "Short-chain fatty acids (class)",
+      "relationship": "upregulates",
+      "object": "Mucosal Th17 cells",
+      "conditionContext": "immuno_metabolic",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "24917457",
+        "doi": "10.1038/mi.2014.44",
+        "citationLabel": "Park J et al. Mucosal Immunol 2015 — Short-chain fatty acids induce both effector and regulatory T cells by suppression of histone deacetylases and regulation of the mTOR-S6K pathway.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/24917457/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "P1.3 competing Th17-promote frame. PMID 24917457 verified. teaching=hypothesized — milieu-dependent; NEVER hard-merge with butyrate→Th17 inhibition or Treg edges as settled causation (EBV-style overclaim ban). Gate C = human only. Not CDS.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
+      "claimId": "HSI-C-GUT-006",
+      "edgeId": "HSI-E-GUT-006",
+      "claimText": "Butyrate can inhibit Th17 differentiation (IL-17 / RORγt axis) while upregulating IL-10 in T-cell models of colitis induction (competing frame vs SCFA→Th17 promotion — hypothesized only).",
+      "subject": "Butyrate (SCFA)",
+      "relationship": "inhibits",
+      "object": "Mucosal Th17 cells",
+      "conditionContext": "immuno_metabolic",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "30918945",
+        "doi": "10.1093/ibd/izz046",
+        "citationLabel": "Chen L et al. Inflamm Bowel Dis 2019 — Microbiota metabolite butyrate differentially regulates Th1 and Th17 cells’ differentiation and function in induction of colitis.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/30918945/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "P1.3 competing Th17-inhibit frame. PMID 30918945 verified. Keep separate from HSI-E-GUT-005 — do not collapse promote vs inhibit. teaching=hypothesized. Gate C = human only. Not CDS.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
+      "claimId": "HSI-C-GUT-007",
+      "edgeId": "HSI-E-GUT-007",
+      "claimText": "Butyrate enhances intestinal barrier function by facilitating tight-junction assembly via AMPK activation in Caco-2 monolayers (barrier context for mucosal immune neighbourhood).",
+      "subject": "Butyrate (SCFA)",
+      "relationship": "upregulates",
+      "object": "Intestinal epithelial barrier / tight junctions",
+      "conditionContext": "immuno_metabolic",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "19625695",
+        "doi": "10.3945/jn.109.104638",
+        "citationLabel": "Peng L et al. J Nutr 2009 — Butyrate enhances the intestinal barrier by facilitating tight junction assembly via activation of AMP-activated protein kinase in Caco-2 cell monolayers.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/19625695/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "P1.3 barrier context. PMID 19625695 verified. In vitro Caco-2 — not in-vivo human barrier claim; teaching=associative. Dose-paradox papers exist elsewhere — do not overclaim. Gate C = human only. Not CDS.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
     }
   ],
   "entitySlice": {
@@ -1863,6 +2071,8 @@
     "cells": [
       "Adipose tissue macrophages",
       "B cell",
+      "Colonic / mucosal Foxp3+ Treg",
+      "Mucosal Th17 cells",
       "Pancreatic β-cell dysfunction",
       "Synovial macrophages",
       "T follicular helper (Tfh) cells",
@@ -1871,8 +2081,11 @@
     ],
     "pathwaysOrMechanisms": [
       "Autoimmune–metabolic comorbidity",
+      "Butyrate (SCFA)",
       "CGM time-in-range",
+      "Clostridium clusters IV / XIVa (gut)",
       "Epstein-Barr virus (EBV)",
+      "Human microbiota Clostridia mix (17-strain class)",
       "Hyperglycemia",
       "IL-17 pathway",
       "IL-21",
@@ -1883,6 +2096,7 @@
       "Infection susceptibility",
       "Innate immune dysfunction",
       "Insulin resistance",
+      "Intestinal epithelial barrier / tight junctions",
       "Islet autoantibodies",
       "Low-grade chronic inflammation",
       "Metabolic inflammation",
@@ -1891,6 +2105,7 @@
       "PD-1",
       "Plasmablast",
       "RF/ACPA seropositive RA phenotype",
+      "Short-chain fatty acids (class)",
       "Skin fibrosis",
       "Systemic glucocorticoids",
       "Systemic sclerosis",
@@ -1942,15 +2157,22 @@
       "PMID:17133559",
       "PMID:18375541",
       "PMID:18625622",
+      "PMID:19625695",
       "PMID:20699241",
+      "PMID:21205640",
       "PMID:21314428",
+      "PMID:23828891",
+      "PMID:23842501",
       "PMID:24129067",
+      "PMID:24226770",
       "PMID:24586782",
+      "PMID:24917457",
       "PMID:28845751",
       "PMID:29514998",
       "PMID:29626172",
       "PMID:2993897",
       "PMID:30760472",
+      "PMID:30918945",
       "PMID:31180194",
       "PMID:33175976",
       "PMID:37763102",
@@ -2025,6 +2247,16 @@
         "kind": "cell"
       },
       {
+        "id": "HSI-N-mucosal-treg",
+        "label": "Colonic / mucosal Foxp3+ Treg",
+        "kind": "cell"
+      },
+      {
+        "id": "HSI-N-mucosal-th17",
+        "label": "Mucosal Th17 cells",
+        "kind": "cell"
+      },
+      {
         "id": "HSI-N-beta-cell-dysfunction",
         "label": "Pancreatic β-cell dysfunction",
         "kind": "cell"
@@ -2090,13 +2322,28 @@
         "kind": "pathway"
       },
       {
+        "id": "HSI-N-butyrate",
+        "label": "Butyrate (SCFA)",
+        "kind": "pathway"
+      },
+      {
         "id": "HSI-N-cgm-tir",
         "label": "CGM time-in-range",
         "kind": "pathway"
       },
       {
+        "id": "HSI-N-clostridia-iv-xiva",
+        "label": "Clostridium clusters IV / XIVa (gut)",
+        "kind": "pathway"
+      },
+      {
         "id": "HSI-N-ebv",
         "label": "Epstein-Barr virus (EBV)",
+        "kind": "pathway"
+      },
+      {
+        "id": "HSI-N-clostridia-human-mix",
+        "label": "Human microbiota Clostridia mix (17-strain class)",
         "kind": "pathway"
       },
       {
@@ -2150,6 +2397,11 @@
         "kind": "pathway"
       },
       {
+        "id": "HSI-N-gut-barrier",
+        "label": "Intestinal epithelial barrier / tight junctions",
+        "kind": "pathway"
+      },
+      {
         "id": "HSI-N-islet-autoantibodies",
         "label": "Islet autoantibodies",
         "kind": "pathway"
@@ -2187,6 +2439,11 @@
       {
         "id": "HSI-N-ra-seropositive",
         "label": "RF/ACPA seropositive RA phenotype",
+        "kind": "pathway"
+      },
+      {
+        "id": "HSI-N-scfa",
+        "label": "Short-chain fatty acids (class)",
         "kind": "pathway"
       },
       {
@@ -2305,8 +2562,18 @@
         "kind": "study"
       },
       {
+        "id": "pmid:19625695",
+        "label": "PMID:19625695",
+        "kind": "study"
+      },
+      {
         "id": "pmid:20699241",
         "label": "PMID:20699241",
+        "kind": "study"
+      },
+      {
+        "id": "pmid:21205640",
+        "label": "PMID:21205640",
         "kind": "study"
       },
       {
@@ -2315,13 +2582,33 @@
         "kind": "study"
       },
       {
+        "id": "pmid:23828891",
+        "label": "PMID:23828891",
+        "kind": "study"
+      },
+      {
+        "id": "pmid:23842501",
+        "label": "PMID:23842501",
+        "kind": "study"
+      },
+      {
         "id": "pmid:24129067",
         "label": "PMID:24129067",
         "kind": "study"
       },
       {
+        "id": "pmid:24226770",
+        "label": "PMID:24226770",
+        "kind": "study"
+      },
+      {
         "id": "pmid:24586782",
         "label": "PMID:24586782",
+        "kind": "study"
+      },
+      {
+        "id": "pmid:24917457",
+        "label": "PMID:24917457",
         "kind": "study"
       },
       {
@@ -2347,6 +2634,11 @@
       {
         "id": "pmid:30760472",
         "label": "PMID:30760472",
+        "kind": "study"
+      },
+      {
+        "id": "pmid:30918945",
+        "label": "PMID:30918945",
         "kind": "study"
       },
       {
@@ -2919,11 +3211,11 @@
     "walkthroughMd": "hsi-pilot-walkthrough.md"
   },
   "summary": {
-    "evidenceMapRows": 50,
+    "evidenceMapRows": 57,
     "partnerScopedEvidenceRows": 14,
     "gradeCounts": {
       "established": 0,
-      "uncertain": 39,
+      "uncertain": 46,
       "unexplored": 11
     },
     "missingSourceLabels": 20,

@@ -280,6 +280,38 @@ export type TranslationHandoff = {
   whatRemainsOutsideHsiCore: string[];
 };
 
+export type SystemsSecondaryAxis = {
+  id: string;
+  label: string;
+  status: string;
+  deepSeedsPresent: boolean;
+  packFile: string;
+  seedHint: string;
+};
+
+export type GutImmunePackSummary = {
+  schemaVersion: string;
+  notCds: boolean;
+  deepSeedsPresent: boolean;
+  discoveryRole?: string;
+  pathway: {
+    id: string;
+    label: string;
+    primaryPmids?: string[];
+  };
+  evidenceMap: {
+    edgeId: string;
+    subject: string;
+    predicate: string;
+    object: string;
+    evidenceGrade: string;
+    teachingStatus: string;
+    pmid: string | null;
+  }[];
+  competingExplanations: ExplanationSlot[];
+  honesty: string[];
+};
+
 export type DiscoveryBundle = {
   index: DiscoveryIndex;
   lock: PartnerLock;
@@ -287,6 +319,8 @@ export type DiscoveryBundle = {
   gap: GapReport;
   r2: R2Validation;
   translation: TranslationHandoff;
+  /** Optional systems secondary axis pack (gut–immune); never replaces RA ASK. */
+  gutImmune: GutImmunePackSummary | null;
 };
 
 const BASE = "/discovery";
@@ -300,15 +334,19 @@ async function fetchJson<T>(name: string): Promise<T> {
 }
 
 export async function loadDiscoveryBundle(): Promise<DiscoveryBundle> {
-  const [index, lock, pack, gap, r2, translation] = await Promise.all([
-    fetchJson<DiscoveryIndex>("index.json"),
-    fetchJson<PartnerLock>("hsi-partner-lock.json"),
-    fetchJson<PilotPack>("hsi-pilot-evidence-pack.json"),
-    fetchJson<GapReport>("hsi-gap-report.json"),
-    fetchJson<R2Validation>("hsi-r2-validation.json"),
-    fetchJson<TranslationHandoff>("hsi-translation-handoff.json"),
-  ]);
-  return { index, lock, pack, gap, r2, translation };
+  const [index, lock, pack, gap, r2, translation, gutImmune] =
+    await Promise.all([
+      fetchJson<DiscoveryIndex>("index.json"),
+      fetchJson<PartnerLock>("hsi-partner-lock.json"),
+      fetchJson<PilotPack>("hsi-pilot-evidence-pack.json"),
+      fetchJson<GapReport>("hsi-gap-report.json"),
+      fetchJson<R2Validation>("hsi-r2-validation.json"),
+      fetchJson<TranslationHandoff>("hsi-translation-handoff.json"),
+      fetchJson<GutImmunePackSummary>("hsi-gut-immune-pack.json").catch(
+        () => null,
+      ),
+    ]);
+  return { index, lock, pack, gap, r2, translation, gutImmune };
 }
 
 /** Prefer pathway claim IDs from the partner lock; fall back to RA/TNF heuristics. */

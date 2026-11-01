@@ -97,7 +97,30 @@ export const HSI_ILLUSTRATIVE_DISEASE_CONTEXTS = [
     shortLabel: "IBD",
     status: "illustrative_only" as const,
     lockedPilot: false as const,
-    seedHint: "IL-23 / mucosal barrier illustrative edges when present in seeds",
+    seedHint:
+      "IL-23 / mucosal barrier illustrative edges; systems secondary gut–immune pack (SCFA ↔ Treg/Th17) is separate — does not replace RA ASK",
+  },
+] as const;
+
+/** Systems secondary axes surfaced beside RA ASK (never replace scope lock). */
+export const HSI_SYSTEMS_SECONDARY_AXES = [
+  {
+    id: "gut-scfa-mucosal-treg-th17",
+    label: "Gut–immune · SCFA ↔ mucosal Treg / Th17",
+    status: "systems_secondary_axis" as const,
+    deepSeedsPresent: true as const,
+    packFile: "hsi-gut-immune-pack.json",
+    seedHint:
+      "P1.3 thin literature slice — uncertain/hypothesized grades; Th17 promote vs inhibit competing; not CDS",
+  },
+  {
+    id: "ssc-tfh-b-il21",
+    label: "SSc · Tfh–B–IL-21 (PRD MVP)",
+    status: "prd_mvp_secondary_target" as const,
+    deepSeedsPresent: true as const,
+    packFile: "hsi-ssc-pathway-pack.json",
+    seedHint:
+      "Dual-track A PRD target — does not replace RA ASK; EBV hypothesized only",
   },
 ] as const;
 
@@ -119,6 +142,8 @@ export type HsiDiscoveryCentreMeta = {
     steps: typeof HSI_DISCOVERY_LOOP_STEPS;
   };
   illustrativeDiseaseContexts: typeof HSI_ILLUSTRATIVE_DISEASE_CONTEXTS;
+  /** Systems secondary axes (gut / SSc) — never replace RA ASK. */
+  systemsSecondaryAxes: typeof HSI_SYSTEMS_SECONDARY_AXES;
   /** Compact lock pointer — scopeLocked until named partner flips partnerSigned. */
   partnerLock: ReturnType<typeof partnerLockExportPointer>;
   /** Full durable lock record for consumers that want flipRequirements / honesty. */
@@ -145,6 +170,7 @@ export function buildDiscoveryCentreMeta(
       steps: HSI_DISCOVERY_LOOP_STEPS,
     },
     illustrativeDiseaseContexts: HSI_ILLUSTRATIVE_DISEASE_CONTEXTS,
+    systemsSecondaryAxes: HSI_SYSTEMS_SECONDARY_AXES,
     partnerLock: partnerLockExportPointer(lock),
     partnerLockDetail: lock,
     verticalDecision: verticalDecisionExportPointer(getVerticalDecision()),
@@ -155,6 +181,7 @@ export function buildDiscoveryCentreMeta(
       "Phase 8 done (HSI substrate): TRANSLATE tab + /akeno HITL consumer load hsi-translation-handoff.json — Stage 3 scaffolding; clinicalActive=false; not live CDS.",
       "RA is the Phase 2 working Stage 1 scope (scopeLocked=true; partnerSigned=false; lockedPilot=false).",
       "Dual-track A: SSc surfaces as prd_mvp_secondary_target only — ASK research question stays RA / anti-TNF.",
+      "P1.3: gut–immune SCFA ↔ mucosal Treg/Th17 is a systems secondary axis (hsi-gut-immune-pack) — does not replace ASK.",
       "Do not treat SLE/PsO/IBD as selected pilot indications — illustrative conversation contexts only.",
       "Not diagnostic / not for clinical use. teachingStatus ≠ hsiGrade ≠ CDS.",
     ],

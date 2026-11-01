@@ -83,9 +83,10 @@ Regenerable detail: `buildSystemsVisionBundle()` → publish artifact `hsi-syste
 
 ### 2. Gut microbiome ↔ immune
 
-- **Entity classes (stubs):** taxon, community, metabolite, barrier_compartment, mucosal_immune_interface.
+- **Entity classes:** taxon, community, metabolite, barrier_compartment, mucosal_immune_interface (expanded for SCFA/butyrate / mucosal Treg·Th17 / Clostridia class).
 - **Predicates (hypothesis-capable where noted):** `modulates_immune`, `produces_metabolite_sensed_by`, `compromises_barrier`, `recruits_to_mucosa`, `cross_reacts_with`, `hypothesized_gut_immune`, …
-- **Not yet:** species-level claim edges, curated SCFA→Treg/Th17 packs, microbiome cohort data.
+- **P1.3 deep seeds:** `hsi-gut-immune-pack` — SCFA/butyrate ↔ mucosal Treg/Th17 (+ barrier); verified public PMIDs; `uncertain`/`hypothesized` grades; Th17 promote vs inhibit kept as competing frames. Discovery secondary axis only (does not replace RA ASK).
+- **Not yet:** species-level disease claims, microbiome cohort data, first-class `HSI_EDGE_TYPES` promotion for gut predicates (P1.4 optional).
 
 ### 3. Neuroimmune / brain ↔ immune
 
@@ -149,7 +150,7 @@ bun run outputs   # writes dist/outputs/.../hsi-systems-vision.json (+ MANIFEST 
 
 ## Recommended next build slice (one axis)
 
-**SSc deepen (P1.1) + model→Gate C (P1.5) landed.** **Next recommended slice:** deepen one gut–immune neighbourhood (e.g. SCFA ↔ mucosal Treg/Th17) with honest `uncertain` grades (P1.3); leave RA lock untouched. Neuroimmune stays queued.
+**SSc deepen (P1.1) + model→Gate C (P1.5) + gut–immune P1.3 landed.** **Next recommended science slice:** deepen one neuroimmune neighbourhood (P2.1) with honest `uncertain` grades; leave RA lock untouched. Partner outreach (P0.2) remains the parallel critical path.
 
 ---
 
