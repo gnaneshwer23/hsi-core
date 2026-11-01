@@ -84,6 +84,8 @@ PRD / brief four outputs (evidence map, entity slice, competing explanations, ex
 - `scopeLocked=true` **never** implies a signed commercial partner; `partnerSigned` / `lockedPilot` stay false until flip requirements in `hsi-partner-lock.json` are met
 - SLE/PsO/IBD contexts remain **illustrative only**
 
+Living status + prioritized backlog: [`BUILD_STATUS_AND_NEXT.md`](./BUILD_STATUS_AND_NEXT.md).
+
 ## Stage 1 / R0–R1 implementation checklist
 
 | Item | Status |

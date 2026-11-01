@@ -241,6 +241,7 @@ Reproduce: `bun test && bun run outputs && bun run site:dev` → `/discovery`, `
 
 ## Cross-links
 
+- **Current status + next backlog:** [`BUILD_STATUS_AND_NEXT.md`](./BUILD_STATUS_AND_NEXT.md)  
 - Pilot PRD map: [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md)  
 - Target-state map: [`ISI_TARGET_STATE_PRD_ALIGNMENT.md`](./ISI_TARGET_STATE_PRD_ALIGNMENT.md)  
 - Technical blueprint: [`ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md`](./ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md)  

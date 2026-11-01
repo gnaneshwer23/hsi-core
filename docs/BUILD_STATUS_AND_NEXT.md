@@ -1,0 +1,258 @@
+# HSI build status and next
+
+**Audit date:** 1 November 2026  
+**HEAD at write:** `566005c` (main) — AI/neural future-healthcare position  
+**Edit target:** `hsi-core` only · Neon **`red-wave` only** · no immunecity / Akeno product / DeliverX edits  
+**Prior audit:** [`PRD_IMPLEMENTATION_AUDIT.md`](./PRD_IMPLEMENTATION_AUDIT.md) (phases 0–8 vs Pilot + Target PRDs)
+
+**Status vocabulary:** `DONE` · `PARTIAL` · `NOT STARTED` · `OUT OF SCOPE` / deferred
+
+---
+
+## Executive verdict
+
+hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance, Gate C checklists, versioned publish, RA/anti-TNF scope lock + depth, Discovery Centre, R2 validation, translation/Akeno HITL scaffolding, Aksh agent catalog, Neon isolation, systems-vision + AI position stubs). What remains for a **real partner pilot** is mostly **outreach + rights + thresholds + ISI product consumption** — not missing four-output substrate. What remains for the **expanded vision** (SSc deep vertical, gut/neuro claim seeds, agent runtime, model→Gate C proposals, live CDS) is correctly **gated** and must not be pulled into Stage 1 build pressure without product decisions.
+
+| Plane | Light | One line |
+|-------|-------|----------|
+| R0–R1 substrate + `/discovery` | **GREEN** | Four outputs + ASK→MAP→REVIEW on regenerable packs |
+| R2 workbench (HSI) | **GREEN / YELLOW** | Hypothesis + gaps + VALIDATE; partner thresholds open |
+| R3 translation / `/akeno` | **YELLOW** | HITL scaffolding only (`clinicalActive=false`) |
+| Partner pilot readiness (M3) | **YELLOW** | Walkthrough ready; `partnerSigned=false` |
+| Live CDS / PHI / shared Neon | **RED (correct)** | Explicitly not built |
+| Vision axes / AI stubs | **GREEN (vocab)** | Map + schema stubs; claim depth empty on gut/neuro/SSc |
+
+---
+
+## 1. Built now
+
+### 1.1 Substrate (evidence core)
+
+| Item | Status | Evidence |
+|------|--------|----------|
+| Schema + grades (`established` / `uncertain` / `unexplored`) + dual axes | **DONE** | `src/schema.ts`, `src/grades.ts` |
+| T2D / immuno-metabolic seeds + LOINC markers | **DONE** | `src/seed/t2dImmunoMetabolic.ts`, `src/markers.ts` |
+| Validation + gap report | **DONE** | `src/validate.ts`, `src/gapReport.ts`; `bun run validate` / `gap-report` |
+| ISI export + REL suggestion map (`autoApproveIntoKg=false`) | **DONE** | `src/exportIsi.ts`, `src/mappings/isiRelSuggestions.ts` |
+| Aksh node map + HITL stubs (`cdsSurfacable=false`) | **DONE** | `src/akshHitl.ts`, `src/mappings/aksh*.ts` |
+| Gate C checklist (pending only) | **DONE** | `src/gateCChecklist.ts` → `gate-c-checklist.*` |
+| Versioned `bun run outputs` + MANIFEST + site refresh | **DONE** | `src/publishOutputs.ts`, [`OUTPUTS.md`](./OUTPUTS.md) |
+| Immune-cell spine vocabulary + PRD relation types | **DONE** (vocab) | `src/immuneCellSpine.ts` |
+| Systems multi-axis stubs (gut / neuro / DTB / patient plane / P3) | **DONE** (vocab) | `src/systemsAxes.ts` → `hsi-systems-vision.json` |
+| AI / NN position + model-proposal / embedding / eval schema stubs | **DONE** (docs + stubs) | [`HSI_AI_NEURAL_FUTURE_HEALTHCARE.md`](./HSI_AI_NEURAL_FUTURE_HEALTHCARE.md); `aiFutureTech` in systems vision |
+| Package scripts | **DONE** | `test`, `outputs`, `db:migrate`, `db:gate-c-local`, `site:dev` / `site:build` |
+
+### 1.2 Stage 1 packs (pilot R0–R1)
+
+| Item | Status | Evidence |
+|------|--------|----------|
+| Partner lock schema + RA/anti-TNF `scopeLocked=true` | **DONE** | `src/partnerLock.ts` → `hsi-partner-lock.json` |
+| Four workflow outputs (evidence map, entity slice, competing explanations, expert shortlist) | **DONE** | `src/pilotEvidencePack.ts` → `hsi-pilot-evidence-pack.*` |
+| Phase 3 RA/TNF evidence depth (ADA, serology, RF LOINC, MTX combo) | **DONE** | Pack + seeds; commit `e2612dc` |
+| Review rubric + acceptance + walkthrough | **DONE** | `hsi-pilot-review-rubric.*`, `hsi-pilot-acceptance.*`, `hsi-pilot-walkthrough.md` |
+| `partnerSigned` / `lockedPilot` | **PARTIAL** | Flags exist; both **false**; partner = `outreach_category` |
+| Source licensing table for agreed corpus | **NOT STARTED** | Blocked on named partner |
+| Numeric evaluation thresholds | **NOT STARTED** | Rubric shell only |
+| PDF/DOCX brief | **OUT OF SCOPE** | ISI product P1 |
+
+### 1.3 Discovery Centre (site)
+
+| Item | Status | Evidence |
+|------|--------|----------|
+| `/discovery` ASK → MAP → REVIEW → VALIDATE → TRANSLATE | **DONE** | `site/src/pages/DiscoveryCentre.tsx` |
+| Loads regenerable packs from `site/public/discovery/` | **DONE** | Refreshed by `bun run outputs` |
+| `notCds` / research-only banners | **DONE** | Hard copy in UI + MANIFEST |
+| Vision / marketing site routes | **DONE** | `/`, `/systems`, `/evidence`, `/for-isi`, `/for-aksh`, `/roadmap`, `/alignment`, `/docs` |
+| Full ISI product Discovery (immunecity) | **OUT OF SCOPE** | Consumer only |
+| Interactive multi-TA disease switcher as validated | **NOT STARTED** | SLE/PsO/IBD illustrative only |
+
+### 1.4 R2 validation
+
+| Item | Status | Evidence |
+|------|--------|----------|
+| Hypothesis cards + ranked gaps + literature tests | **DONE** | `src/r2Validation.ts` → `hsi-r2-validation.*` |
+| Discovery **VALIDATE** tab | **DONE** | DiscoveryCentre |
+| Partner-agreed numeric thresholds | **PARTIAL** | Framing done; cut-offs TBD |
+| Molecular / omics adapters | **OUT OF SCOPE** | Stage 2+ / P3 |
+
+### 1.5 Translation / Akeno
+
+| Item | Status | Evidence |
+|------|--------|----------|
+| Translation handoff pack + Gate C `translationCandidates` | **DONE** | `src/translationHandoff.ts` → `hsi-translation-handoff.*` |
+| Discovery **TRANSLATE** tab | **DONE** | DiscoveryCentre |
+| In-repo `/akeno` HITL consumer | **DONE** | `src/akenoConsumer.ts`, `site/src/pages/AkenoConsumer.tsx`, `akeno/` |
+| Fail-closed flags | **DONE** | `clinicalActive=false`, `clinicalUse=not_for_clinical_use`, `hitlRequired=true`, `autoApprove=false` |
+| Never Akeno Neon | **DONE** | Policy + unused `AKENO_*` docs only |
+| Live CDS / PHI / EHR / partner cohorts | **OUT OF SCOPE** | Correctly gated |
+
+### 1.6 Aksh catalog + HITL maps
+
+| Item | Status | Evidence |
+|------|--------|----------|
+| Durable `aksh:` node map + HITL cards | **DONE** | Exports + `src/akshHitl.ts` |
+| Agent directory / register catalog (12 + 14) | **DONE** | `src/akshAgents.ts`, `aksh/agent-catalog.json`, `/aksh-agents` |
+| Executable care-agent runtime / live CDS | **NOT STARTED** / **OUT OF SCOPE** | Catalog only; seeds `cdsSurfacable=false` |
+
+### 1.7 Neon
+
+| Item | Status | Evidence |
+|------|--------|----------|
+| Canonical HSI Neon documented | **DONE** | `red-wave-06625195` / `ep-restless-dew…` — [`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md) |
+| Schema stub + migrate CLI | **DONE** | `db/migrations/001_hsi_substrate.sql`, `bun run db:migrate` |
+| Host guards refuse ISI/Akeno/DeliverX | **DONE** | `src/db/neonGuard.ts` |
+| Gate C local pending upsert | **DONE** | `bun run db:gate-c-local` |
+| Gate C **approve** into ISI product Neon | **OUT OF SCOPE** | Human-only in `autumn-snow` |
+| Shared evidence DB with immunecity | **OUT OF SCOPE** / forbidden | AGENTS.md + Neon map |
+
+### 1.8 Vision / AI docs (program of work landed)
+
+| Doc / artifact | Status | Role |
+|----------------|--------|------|
+| [`VISION_REPO_ALIGNMENT.md`](./VISION_REPO_ALIGNMENT.md) | **DONE** | Hub/spoke portfolio; DeliverX ignore |
+| [`OUTPUTS.md`](./OUTPUTS.md) | **DONE** | Publish contract + Stage 1 checklist |
+| [`PRD_IMPLEMENTATION_AUDIT.md`](./PRD_IMPLEMENTATION_AUDIT.md) | **DONE** | Phases 0–8 vs Pilot/Target |
+| Pilot / Target / Blueprint / Whole-immune / Business / Discovery-site alignments | **DONE** | Under `docs/ISI_*` |
+| [`HSI_SYSTEMS_VISION_MAP.md`](./HSI_SYSTEMS_VISION_MAP.md) + `hsi-systems-vision.json` | **DONE** | Multi-axis target graph |
+| [`HSI_AI_NEURAL_FUTURE_HEALTHCARE.md`](./HSI_AI_NEURAL_FUTURE_HEALTHCARE.md) | **DONE** | NN proposers vs KG; hard bans |
+| [`AKENO_IN_HSI.md`](./AKENO_IN_HSI.md) / [`AKSH_AGENTS_IN_HSI.md`](./AKSH_AGENTS_IN_HSI.md) | **DONE** | Consumer / catalog honesty |
+| This file | **DONE** | Current status + next backlog |
+
+### Phase ↔ commit trail (program of work)
+
+| Phase / slice | Commit (short) |
+|---------------|----------------|
+| Substrate + publish | `712e2f3` … `27a6177` era |
+| Neon isolation | `53e2aee`, `edad4b4` |
+| Pilot PRD pack | `b4776bc` |
+| 1b → 2 scope lock RA/TNF | `3cc80af`, `5c2dc15` |
+| 3 Evidence depth | `e2612dc` |
+| 4 Neon migrations | `e8c1c9d` |
+| 5 Acceptance + walkthrough | `7cd08a8` |
+| 6 `/discovery` | `3c1106b` |
+| 7 R2 validation | `60877d2` |
+| 8 Translation handoff | `f3d43a3` |
+| Akeno HITL consumer | `84d8496` |
+| PRD implementation audit | `02d8ba1` |
+| Aksh agent catalog | `e46b3de` |
+| Blueprint + whole-immune alignments | `357a8e9`, `d537b8b` |
+| Systems vision stubs | `0ccfb01` |
+| AI / neural position | `566005c` |
+
+Reproduce: `bun test && bun run outputs && bun run site:dev` → `/discovery`, `/akeno`, `/aksh-agents`.
+
+---
+
+## 2. Honest gaps
+
+| Gap | Why it matters | Owner |
+|-----|----------------|-------|
+| **`partnerSigned=false` / `lockedPilot=false`** | Blocks Pilot M0 exit + M3 partner run; scope lock ≠ MoU | Outreach (user) + flip in `partnerLock.ts` |
+| **SSc-vs-RA vertical conflict** | Blueprint / Whole-Immune PRD want SSc MVP; Stage 1 lock is RA/TNF | **User decision A/B/C** — see §3 |
+| **Named partner not chosen** | Shortlist is categories only; no invented contacts | Outreach |
+| **Licensing / rights pack** | Pilot data-rights gate | Partner + curator table in-repo after sign |
+| **Numeric success thresholds** | Evaluation plan incomplete | Partner + rubric update |
+| **Gut–immune / neuroimmune claim seeds empty** | Vision stubs only (`deepSeedsPresent=false`) | Stage 2 curation after one-axis pick |
+| **SSc deep seeds empty** | `prd_mvp_target`, `deepSeedsPresent=false` | After A/B/C; do not wipe RA |
+| **Immune spine = vocabulary only** | No full cell cards / CL·MONDO bind | Stage 2 depth |
+| **Model-proposal schema not wired to Gate C** | Stubs in `systemsAxes` / systems vision; no proposal→checklist pipeline | Later Stage 2; never auto-approve |
+| **No agent runtime** | Aksh catalog + ISI 12-agent blueprint ≠ executable loop | ISI product **out of repo**; HSI holds shapes only |
+| **No PHI / no live CDS** | Correct non-goal — do not “close” by building clinic features | Policy |
+| **ISI product still thin** | `/discovery` is HSI demo; immunecity RBAC/search/graph UX not built here | **Out of repo** (immunecity) |
+| **Akeno clinical product** | In-repo HITL ≠ akenohealth Neon dashboard / prospective CDS | **Out of repo** |
+| **FR/AC product gaps** | Full-text search, interactive KG, PDF, feedback, trial browser | Mostly ISI product / P1 |
+| **Ontology bind** | LOINC on markers only | Later |
+
+---
+
+## 3. Build next (hsi-core only)
+
+One-sprint-sized items. Mark **[DECISION]** where the user must choose before code. Mark **[OUT-OF-REPO]** where work belongs elsewhere (track only).
+
+### P0 — unblock partner pilot (this quarter)
+
+| # | Item | Notes |
+|---|------|-------|
+| P0.1 | **[DECISION]** Vertical: **A dual-track** (keep RA + mark SSc target) / **B pivot to SSc** / **C hold RA-only** | Default recommend **A**. Until written: RA `scopeLocked` stays authoritative. See [`ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md`](./ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md) §Decision |
+| P0.2 | **[DECISION]** Named partner from shortlist (or rewrite disease/question with them) | Flip `partnerSigned` / `lockedPilot` / `partner.type=named_partner` only after written confirm — never invent org/email |
+| P0.3 | Rights / licensing table for the RA/TNF (or partner-rewritten) PMID set | Small markdown + pack field; public PMIDs already used |
+| P0.4 | Agree numeric thresholds on existing review rubric; refresh `hsi-pilot-review-rubric.*` | Export-only change after partner agrees |
+| P0.5 | **[OUT-OF-REPO]** ISI consume checklist — which `dist/outputs/` files power which immunecity screens | Document mapping in hsi-core if useful; **do not** edit immunecity from this workspace |
+| P0.6 | Keep exports stable; refresh walkthrough after partner wording changes | `bun run outputs` discipline |
+
+### P1 — deepen evidence / spine (after P0.1 clarity)
+
+| # | Item | Notes |
+|---|------|-------|
+| P1.1 | If **A**: deepen spine → cell-card fields + CL/MONDO *hints* (no mega ontology import) | Additive; RA packs stay regenerable |
+| P1.2 | If **A** authorised: thin SSc Tfh–B–IL-21 pack (public PMIDs; EBV only `hypothesized`); keep RA intact | Separate pack id; do not delete RA claim ids |
+| P1.3 | If **C** or hold: deepen one **gut–immune** neighbourhood (e.g. SCFA ↔ mucosal Treg/Th17) with honest `uncertain` grades | Per [`HSI_SYSTEMS_VISION_MAP.md`](./HSI_SYSTEMS_VISION_MAP.md) recommended slice; leave neuro queued |
+| P1.4 | Promote selected `ISI_CONTROLLED_RELATIONSHIP_TYPES` onto `HSI_EDGE_TYPES` when first new edges need them | Additive map; no wholesale RA rewrite |
+| P1.5 | Optional: wire **model-proposal artifact shape** → Gate C checklist *draft rows* (human pending only) | Schema already stubbed; still `autoApproveIntoKg=false` |
+| P1.6 | Curator UX inside hsi-core after pilot learning (richer gap/Gate C markdown) | P2 in vision doc; only after partner session |
+
+### P2 — later / gated substrate
+
+| # | Item | Notes |
+|---|------|-------|
+| P2.1 | Neuroimmune thin seed slice (one axis) | After gut slice proves curation pattern |
+| P2.2 | Embedding sidecar slots on edges (hash/ref only; no model stack) | `EDGE_EMBEDDING_SLOT_SCHEMA` |
+| P2.3 | Offline eval harness stubs against public packs | `MODEL_EVAL_HARNESS_STUB`; no PHI |
+| P2.4 | ClinVar / TCGA **pointer** metadata fields | Citation only; Gate C still required |
+| P2.5 | P3 adapter RFC + license sign-off (TDC / Boltz / ESM / …) | Docs first; no vendoring until written RFC |
+
+### Out-of-repo (track; do not implement here)
+
+| Item | Where |
+|------|--------|
+| ISI product UI (search, interactive KG, RBAC, Ask/Radar deploy) | immunecity — **[OUT-OF-REPO]** |
+| ISI 12-agent research workbench runtime | ISI product — **[OUT-OF-REPO]** |
+| Gate C approve+supports writes | ISI Neon `autumn-snow` — **[OUT-OF-REPO]** |
+| Akeno clinical / PHI / prospective CDS / multi-AMC | akenohealth etc. — **[OUT-OF-REPO]** |
+| Live Aksh care-agent loop / EHR | Aksh apps — **[OUT-OF-REPO]** |
+| PDF/DOCX brief renderer | ISI P1 if partner asks — **[OUT-OF-REPO]** |
+
+---
+
+## 4. Do not build yet
+
+| Do not | Why |
+|--------|-----|
+| **Live CDS / diagnosis / dosing / EHR write-back** | Pilot + Target non-goals; Akeno flags forbid |
+| **Shared Neon** between HSI and immunecity / Akeno / DeliverX | Isolation binding — [`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md) |
+| **DeliverX / swift-deliveries** sync or HITL pattern reuse | **Ignore** entirely |
+| **Molecular adapters mega-stack** (AF3, Boltz, ESM, OpenMM, RDKit, REINVENT4, TDC) | P3 + license RFC only |
+| **Silent SSc pivot** that wipes RA seeds | Needs A/B/C decision |
+| **Invent `partnerSigned` / fake MoU / invented PMIDs** | Honesty invariants |
+| **Agent runtime / orchestrator in hsi-core** | Catalog + shapes only; runtime = ISI |
+| **Auto Gate C / model flips `hsiGrade`** | Hard ban in AI position paper |
+| **PHI / identifiable sequences in `red-wave`** | Patient plane Stage 3+ elsewhere |
+| **Vendor ChatGPT Discovery HTML / Lovable Akeno marketing as product** | Reference-only |
+| **ImmPort / GEO / HCA / CT.gov connectors as Stage 1 code** | Blueprint later; not Stage 1 |
+| **Digital twins / quantum / federated / closed-loop dosing claims** | Marketing ≠ substrate |
+
+---
+
+## 5. Definition of done (near-term)
+
+| Goal | Done when |
+|------|-----------|
+| Partner pilot ready (HSI side) | `partnerSigned=true` + rights table + numeric thresholds + walkthrough refreshed + four outputs still green |
+| Dual-track honesty | A/B/C recorded; if A, SSc pack optional without deleting RA |
+| Systems vision honesty | Gut/neuro remain stubs until a thin curated slice lands with grades |
+| Safety | MANIFEST still `notCds`; `/akeno` still `clinicalActive=false`; Neon still red-wave-only |
+
+---
+
+## Cross-links
+
+- Implementation audit (phases 0–8): [`PRD_IMPLEMENTATION_AUDIT.md`](./PRD_IMPLEMENTATION_AUDIT.md)  
+- Outputs checklist: [`OUTPUTS.md`](./OUTPUTS.md)  
+- Systems vision: [`HSI_SYSTEMS_VISION_MAP.md`](./HSI_SYSTEMS_VISION_MAP.md)  
+- AI position: [`HSI_AI_NEURAL_FUTURE_HEALTHCARE.md`](./HSI_AI_NEURAL_FUTURE_HEALTHCARE.md)  
+- Whole-immune / SSc-vs-RA: [`ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md`](./ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md)  
+- Blueprint: [`ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md`](./ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md)  
+- Pilot brief / PRD / shortlist: [`ISI_PILOT_BRIEF.md`](./ISI_PILOT_BRIEF.md), [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md), [`ISI_PILOT_PARTNER_SHORTLIST.md`](./ISI_PILOT_PARTNER_SHORTLIST.md)  
+- Akeno / Aksh: [`AKENO_IN_HSI.md`](./AKENO_IN_HSI.md), [`AKSH_AGENTS_IN_HSI.md`](./AKSH_AGENTS_IN_HSI.md)  
+- Neon: [`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md)  
+- Portfolio: [`VISION_REPO_ALIGNMENT.md`](./VISION_REPO_ALIGNMENT.md)

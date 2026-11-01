@@ -22,6 +22,8 @@ Immediate next move: prove ISI helps one immune-disease **research intelligence*
 | [`docs/ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md`](docs/ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md) | Discovery Centre concept site (HTML export) → Stage 1 posture; reference-only, not the pilot deliverable |
 | [`docs/ISI_PILOT_PARTNER_SHORTLIST.md`](docs/ISI_PILOT_PARTNER_SHORTLIST.md) | Outreach shortlist — partner types + UK/EU/US institution categories (candidates only) |
 | [`docs/NEON_PROJECT_MAP.md`](docs/NEON_PROJECT_MAP.md) | **HSI Neon = `red-wave` only**; ISI `autumn-snow` / Akeno / DeliverX never for HSI substrate — IDs + host prefixes, no secrets |
+| [`docs/PRD_IMPLEMENTATION_AUDIT.md`](docs/PRD_IMPLEMENTATION_AUDIT.md) | Phases 0–8 vs Pilot + Target PRDs (what landed) |
+| [`docs/BUILD_STATUS_AND_NEXT.md`](docs/BUILD_STATUS_AND_NEXT.md) | **Current-state audit + prioritized next build** (P0/P1/P2; do-not-build list) |
 
 Disease + question lock **after** partner conversations. `bun run outputs` artifacts from this repo feed the pilot evidence layer. Target-state breadth (lab adapters, cohorts, Akeno clinical) stays deferred.
 
