@@ -19,6 +19,9 @@
  * - 16025117 de Jonge 2005 Nat Immunol — vagus / α7 → Jak2–STAT3 macrophage attenuation
  * - 21921156 Rosas-Ballina 2011 Science — ACh-synthesizing T cells relay vagus circuit
  * - 27382171 Koopman 2016 PNAS — implantable VNS modulates TNF / RA scores (pilot; hypothesized)
+ * - 11901203 Bernik 2002 J Exp Med — pharmacological cholinergic anti-inflammatory stimulation
+ * - 19542466 Huston 2009 J Immunol — cholinergic spleen signals ↓ leukocyte trafficking (CD11b)
+ * - 12469056 Bernik 2002 J Vasc Surg — cholinergic pathway inhibits TNF in ischemia–reperfusion
  *
  * Not Gate C approved. Not CDS. No PHI.
  */
@@ -257,6 +260,72 @@ const SPECS: SeedSpec[] = [
     notes:
       "Depth deepen: PMID 18669662 verified. Rodent wiring — teaching=associative; do not invent human nerve-stimulation CDS. Gate C = human only. Not CDS. No PHI.",
   },
+  {
+    id: "HSI-E-NI-009",
+    edgeType: "inhibits",
+    systemsPredicate: "suppresses_peripheral_inflammation",
+    subjectId: "HSI-N-cholinergic-agonist",
+    subjectLabel: "Pharmacologic cholinergic anti-inflammatory stimulation",
+    objectId: "HSI-N-peripheral-tnf-tone",
+    objectLabel: "Peripheral / systemic TNF inflammatory tone",
+    claimId: "HSI-C-NI-009",
+    assertion:
+      "Pharmacological stimulation of the cholinergic anti-inflammatory pathway attenuates systemic TNF responses (drug-pathway hop parallel to electrical VNS — rodent; not CDS).",
+    review: "source-verified",
+    teaching: "associative",
+    domain: "immuno_metabolic",
+    pmid: "11901203",
+    doi: "10.1084/jem.20011714",
+    citationLabel:
+      "Bernik TR et al. J Exp Med 2002 — Pharmacological stimulation of the cholinergic antiinflammatory pathway.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/11901203/",
+    notes:
+      "Depth deepen: PMID 11901203 verified. Rodent pharmacologic frame — teaching=associative; never invent human cholinergic-drug CDS. Gate C = human only. Not CDS. No PHI.",
+  },
+  {
+    id: "HSI-E-NI-010",
+    edgeType: "inhibits",
+    systemsPredicate: "suppresses_peripheral_inflammation",
+    subjectId: "HSI-N-splenic-cholinergic-signal",
+    subjectLabel: "Cholinergic neural signals to the spleen",
+    objectId: "HSI-N-leukocyte-trafficking-cd11b",
+    objectLabel: "Leukocyte trafficking via CD11b",
+    claimId: "HSI-C-NI-010",
+    assertion:
+      "Cholinergic neural signals to the spleen down-regulate leukocyte trafficking via CD11b (trafficking hop beyond TNF-only frames — rodent).",
+    review: "source-verified",
+    teaching: "associative",
+    domain: "immuno_metabolic",
+    pmid: "19542466",
+    doi: "10.4049/jimmunol.0802684",
+    citationLabel:
+      "Huston JM et al. J Immunol 2009 — Cholinergic neural signals to the spleen down-regulate leukocyte trafficking via CD11b.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/19542466/",
+    notes:
+      "Depth deepen: PMID 19542466 verified. Rodent trafficking — teaching=associative; not human CDS. Gate C = human only. Not CDS. No PHI.",
+  },
+  {
+    id: "HSI-E-NI-011",
+    edgeType: "inhibits",
+    systemsPredicate: "suppresses_peripheral_inflammation",
+    subjectId: "HSI-N-cholinergic-antiinflam-pathway",
+    subjectLabel: "Cholinergic anti-inflammatory pathway",
+    objectId: "HSI-N-ischemia-reperfusion-tnf",
+    objectLabel: "Ischemia–reperfusion TNF response",
+    claimId: "HSI-C-NI-011",
+    assertion:
+      "The cholinergic anti-inflammatory pathway can inhibit tumor necrosis factor during ischemia–reperfusion injury (context expand beyond endotoxin — rodent; not clinical cure).",
+    review: "source-verified",
+    teaching: "associative",
+    domain: "immuno_metabolic",
+    pmid: "12469056",
+    doi: "10.1067/mva.2002.129643",
+    citationLabel:
+      "Bernik TR et al. J Vasc Surg 2002 — Cholinergic antiinflammatory pathway inhibition of tumor necrosis factor during ischemia reperfusion.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/12469056/",
+    notes:
+      "Depth deepen: PMID 12469056 verified. Rodent IR context — teaching=associative; never invent perioperative VNS CDS. Gate C = human only. Not CDS. No PHI.",
+  },
 
 ];
 
@@ -331,8 +400,11 @@ export const NI_PATHWAY_META = {
     "27382171",
     "16785311",
     "18669662",
+    "11901203",
+    "19542466",
+    "12469056",
   ],
-  deepenPhase: "p2_1_neuro_spleen_circuit_depth" as const,
+  deepenPhase: "p2_1_neuro_pharmacologic_trafficking_ir_depth" as const,
   entities: [
     {
       id: "HSI-N-vagus-efferent",
@@ -343,6 +415,16 @@ export const NI_PATHWAY_META = {
       id: "HSI-N-inflammatory-reflex",
       label: "Inflammatory reflex",
       kind: "neuroimmune_axis",
+    },
+    {
+      id: "HSI-N-cholinergic-antiinflam-pathway",
+      label: "Cholinergic anti-inflammatory pathway",
+      kind: "neuroimmune_axis",
+    },
+    {
+      id: "HSI-N-cholinergic-agonist",
+      label: "Pharmacologic cholinergic stimulation",
+      kind: "neuro_mediator",
     },
     {
       id: "HSI-N-alpha7-nachr",
@@ -370,6 +452,16 @@ export const NI_PATHWAY_META = {
       kind: "neuro_mediator",
     },
     {
+      id: "HSI-N-ischemia-reperfusion-tnf",
+      label: "Ischemia–reperfusion TNF response",
+      kind: "neuro_mediator",
+    },
+    {
+      id: "HSI-N-leukocyte-trafficking-cd11b",
+      label: "Leukocyte trafficking (CD11b)",
+      kind: "neuro_mediator",
+    },
+    {
       id: "HSI-N-implantable-vns",
       label: "Implantable VNS (experimental)",
       kind: "neuroimmune_axis",
@@ -382,6 +474,11 @@ export const NI_PATHWAY_META = {
     {
       id: "HSI-N-splenic-nerve",
       label: "Splenic nerve (catecholaminergic)",
+      kind: "neuroimmune_axis",
+    },
+    {
+      id: "HSI-N-splenic-cholinergic-signal",
+      label: "Cholinergic neural signals to spleen",
       kind: "neuroimmune_axis",
     },
   ],

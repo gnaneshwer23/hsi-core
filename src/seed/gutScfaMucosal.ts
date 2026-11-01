@@ -14,6 +14,9 @@
  * - 24917457 Park 2015 Mucosal Immunol — SCFA can promote Th17 (milieu-dependent)
  * - 30918945 Chen 2019 Inflamm Bowel Dis — butyrate can inhibit Th17 (competing)
  * - 19625695 Peng 2009 J Nutr — butyrate → epithelial tight-junction / barrier
+ * - 24226773 Arpaia 2013 Nature — commensal metabolites → peripheral Treg
+ * - 24390544 Chang 2014 PNAS — butyrate → macrophage HDAC inhibition
+ * - 25865369 Kelly 2015 Cell Host Microbe — SCFA ↔ epithelial HIF / barrier
  *
  * Not Gate C approved. Not CDS. Most evidence is mouse / in vitro — grades stay
  * honest (`source-verified` → hsiGrade `uncertain`; teaching associative/hypothesized).
@@ -273,6 +276,72 @@ const SPECS: SeedSpec[] = [
     notes:
       "Depth deepen: PMID 29163504 verified. In-vitro human DC/Tr1 — teaching=hypothesized; do not invent dosing/CDS. Gate C = human only. Not CDS.",
   },
+  {
+    id: "HSI-E-GUT-010",
+    edgeType: "associated_with",
+    systemsPredicate: "modulates_immune",
+    subjectId: "HSI-N-commensal-metabolites",
+    subjectLabel: "Commensal bacterial metabolites (SCFA neighbourhood)",
+    objectId: "HSI-N-peripheral-treg",
+    objectLabel: "Peripheral Foxp3+ regulatory T cells",
+    claimId: "HSI-C-GUT-010",
+    assertion:
+      "Metabolites produced by commensal bacteria promote peripheral regulatory T-cell generation (independent peripheral-Treg hop alongside colonic Treg seeds — mouse; not CDS).",
+    review: "source-verified",
+    teaching: "associative",
+    domain: "immuno_metabolic",
+    pmid: "24226773",
+    doi: "10.1038/nature12726",
+    citationLabel:
+      "Arpaia N et al. Nature 2013 — Metabolites produced by commensal bacteria promote peripheral regulatory T-cell generation.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/24226773/",
+    notes:
+      "Depth deepen: PMID 24226773 verified. Mouse — teaching=associative; complements Atarashi/Furusawa colonic Treg without collapsing frames. Gate C = human only. Not CDS.",
+  },
+  {
+    id: "HSI-E-GUT-011",
+    edgeType: "inhibits",
+    systemsPredicate: "modulates_immune",
+    subjectId: "HSI-N-butyrate",
+    subjectLabel: "Butyrate (SCFA)",
+    objectId: "HSI-N-intestinal-macrophage-hdac",
+    objectLabel: "Intestinal macrophage HDAC activity / inflammatory tone",
+    claimId: "HSI-C-GUT-011",
+    assertion:
+      "The microbial metabolite butyrate regulates intestinal macrophage function via histone deacetylase inhibition (innate hop for SCFA mucosal neighbourhood — mouse).",
+    review: "source-verified",
+    teaching: "associative",
+    domain: "immuno_metabolic",
+    pmid: "24390544",
+    doi: "10.1073/pnas.1322269111",
+    citationLabel:
+      "Chang PV et al. Proc Natl Acad Sci U S A 2014 — The microbial metabolite butyrate regulates intestinal macrophage function via histone deacetylase inhibition.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/24390544/",
+    notes:
+      "Depth deepen: PMID 24390544 verified. Mouse macrophage HDAC frame — teaching=associative; not human dosing. Gate C = human only. Not CDS.",
+  },
+  {
+    id: "HSI-E-GUT-012",
+    edgeType: "upregulates",
+    systemsPredicate: "modulates_immune",
+    subjectId: "HSI-N-scfa",
+    subjectLabel: "SCFA (class)",
+    objectId: "HSI-N-epithelial-hif-barrier",
+    objectLabel: "Intestinal epithelial HIF-supported barrier function",
+    claimId: "HSI-C-GUT-012",
+    assertion:
+      "Microbiota-derived short-chain fatty acids crosstalk with intestinal epithelial HIF programmes that augment tissue barrier function (barrier deepen — mouse/mechanistic).",
+    review: "source-verified",
+    teaching: "associative",
+    domain: "immuno_metabolic",
+    pmid: "25865369",
+    doi: "10.1016/j.chom.2015.03.005",
+    citationLabel:
+      "Kelly CJ et al. Cell Host Microbe 2015 — Crosstalk between Microbiota-Derived Short-Chain Fatty Acids and Intestinal Epithelial HIF Augments Tissue Barrier Function.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/25865369/",
+    notes:
+      "Depth deepen: PMID 25865369 verified. Complements Peng tight-junction edge; teaching=associative; do not invent human barrier therapy CDS. Gate C = human only. Not CDS.",
+  },
 
 ];
 
@@ -346,16 +415,23 @@ export const GUT_PATHWAY_META = {
     "19625695",
     "24412617",
     "29163504",
+    "24226773",
+    "24390544",
+    "25865369",
   ],
-  deepenPhase: "p1_3_gut_gpr109a_tr1_depth" as const,
+  deepenPhase: "p1_3_gut_arpaia_macrophage_hif_depth" as const,
   entities: [
     { id: "HSI-N-scfa", label: "SCFA (class)", kind: "metabolite" },
     { id: "HSI-N-butyrate", label: "Butyrate", kind: "metabolite" },
+    { id: "HSI-N-commensal-metabolites", label: "Commensal metabolites", kind: "metabolite" },
     { id: "HSI-N-gpr109a", label: "GPR109A (HCAR2)", kind: "receptor" },
     { id: "HSI-N-mucosal-treg", label: "Mucosal / colonic Treg", kind: "cell_subset" },
+    { id: "HSI-N-peripheral-treg", label: "Peripheral Foxp3+ Treg", kind: "cell_subset" },
     { id: "HSI-N-tr1-like", label: "Tr1-like (IL-10+)", kind: "cell_subset" },
     { id: "HSI-N-mucosal-th17", label: "Mucosal Th17", kind: "cell_subset" },
+    { id: "HSI-N-intestinal-macrophage-hdac", label: "Intestinal macrophage HDAC tone", kind: "cell_programme" },
     { id: "HSI-N-gut-barrier", label: "Intestinal epithelial barrier", kind: "barrier_compartment" },
+    { id: "HSI-N-epithelial-hif-barrier", label: "Epithelial HIF barrier programme", kind: "barrier_compartment" },
     {
       id: "HSI-N-colonic-inflammation",
       label: "Colonic inflammation tone",

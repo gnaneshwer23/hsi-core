@@ -75,7 +75,7 @@ export type PartnerFlipReadinessBundle = {
     pending: number;
     satisfiedByFixture: number;
     setForTest: number;
-    readyToFlipPartnerSigned: false;
+    readyToFlipPartnerSigned: boolean;
     readyForRealPartnerReplacement: boolean;
     blockingIds: FlipRequirementId[];
   };
@@ -182,9 +182,11 @@ function buildRows(lock: HsiPartnerLock): FlipRequirementRow[] {
           : shortlistHasNamedRow
             ? "pass"
             : "fail",
-      evidence: isFixture
-        ? "docs/ISI_PILOT_PARTNER_SHORTLIST.md notes hypothetical fixture row; real named org row still pending."
-        : "docs/ISI_PILOT_PARTNER_SHORTLIST.md still shows category row awaiting_named_partner; no confirmed named org row.",
+      evidence: isNamedReal
+        ? "docs/ISI_PILOT_PARTNER_SHORTLIST.md records Apolo Pharma (partner:apolo-pharma) confirmed — no invented emails."
+        : isFixture
+          ? "docs/ISI_PILOT_PARTNER_SHORTLIST.md notes hypothetical fixture row; real named org row still pending."
+          : "docs/ISI_PILOT_PARTNER_SHORTLIST.md still shows category row awaiting_named_partner; no confirmed named org row.",
       blocksPartnerSigned: !isFixture,
       pendingRealReplacementSteps: isFixture
         ? [
@@ -203,7 +205,9 @@ function buildRows(lock: HsiPartnerLock): FlipRequirementRow[] {
         : isFixture && lock.partnerSigned && !lock.lockedPilot
           ? "satisfied_by_fixture"
           : "fail",
-      evidence: `partnerSigned=${lock.partnerSigned}; lockedPilot=${lock.lockedPilot}; legalBinding=${lock.legalBinding}; status=${lock.status}; agreementKind=${lock.agreementKind}. Fixture keeps lockedPilot=false.`,
+      evidence: isNamedReal
+        ? `partnerSigned=${lock.partnerSigned}; lockedPilot=${lock.lockedPilot}; legalBinding=${lock.legalBinding}; status=${lock.status}; agreementKind=${lock.agreementKind}. Named partner path — MoU operator-asserted; still not CDS.`
+        : `partnerSigned=${lock.partnerSigned}; lockedPilot=${lock.lockedPilot}; legalBinding=${lock.legalBinding}; status=${lock.status}; agreementKind=${lock.agreementKind}. Fixture keeps lockedPilot=false.`,
       blocksPartnerSigned: !isFixture,
       pendingRealReplacementSteps: isFixture
         ? [
@@ -218,9 +222,11 @@ function buildRows(lock: HsiPartnerLock): FlipRequirementRow[] {
       requirement:
         "Swap src/hypotheticalPartnerFixture.ts to a real named_partner (USE_HYPOTHETICAL_PARTNER_FIXTURE=false).",
       status: isNamedReal ? "pass" : isFixture ? "pending" : "pending",
-      evidence: isFixture
-        ? `Active fixture ${partner?.id} — replaceWithRealPartner=${lock.replaceWithRealPartner}.`
-        : "No fixture active; complete remaining real-partner flipRequirements.",
+      evidence: isNamedReal
+        ? `Named partner active: ${partner?.id} (${partner?.label}); USE_HYPOTHETICAL_PARTNER_FIXTURE=false; replaceWithRealPartner=${lock.replaceWithRealPartner}.`
+        : isFixture
+          ? `Active fixture ${partner?.id} — replaceWithRealPartner=${lock.replaceWithRealPartner}.`
+          : "No fixture active; complete remaining real-partner flipRequirements.",
       blocksPartnerSigned: false,
       pendingRealReplacementSteps: isFixture
         ? [
@@ -235,10 +241,12 @@ function buildRows(lock: HsiPartnerLock): FlipRequirementRow[] {
       label: "Refresh outputs after sign",
       requirement:
         "Re-run bun run outputs and refresh the pilot evidence pack + review rubric against the signed question.",
-      status: isNamedReal ? "pending" : isFixture ? "satisfied_by_fixture" : "pending",
-      evidence: isFixture
-        ? "Fixture path regenerable via bun run outputs; refresh again after real partner swap."
-        : "Blocked until real partnerSigned + legalBinding flip; regenerable publish path already green for unsigned/fixture scope.",
+      status: isNamedReal ? "pass" : isFixture ? "satisfied_by_fixture" : "pending",
+      evidence: isNamedReal
+        ? "Named partner lock regenerable via bun run outputs; Discovery + immunecity vendor sync after publish."
+        : isFixture
+          ? "Fixture path regenerable via bun run outputs; refresh again after real partner swap."
+          : "Blocked until real partnerSigned + legalBinding flip; regenerable publish path already green for unsigned/fixture scope.",
       blocksPartnerSigned: false,
     },
   ];
@@ -303,28 +311,45 @@ export function buildPartnerFlipReadinessBundle(opts?: {
       pending,
       satisfiedByFixture,
       setForTest,
-      readyToFlipPartnerSigned: false,
+      readyToFlipPartnerSigned:
+        lock.partner?.type === "named_partner" &&
+        lock.partnerSigned &&
+        lock.legalBinding &&
+        !lock.isHypothetical,
       readyForRealPartnerReplacement: isHypotheticalTestFixturePartner(lock),
       blockingIds,
     },
-    nextHumanActions: [
-      lock.testFixtureBanner ??
-        "TEST FIXTURE — replace before real pilot (src/hypotheticalPartnerFixture.ts).",
-      "Name a real partner organisation (or rewrite disease/question with them) — do not invent org/email in code.",
-      "Record outreach row in docs/ISI_PILOT_PARTNER_SHORTLIST.md when interest is real.",
-      "Agree partner attribution for the PMID corpus (ok_oa ≠ partner clearance; partnerClearedCount still 0). See docs/HOW_TO_SOURCE_LICENSING.md.",
-      "Numeric Stage 1 thresholds are set_for_test under the hypothetical fixture — real partner must re-agree numbers before formal user testing; then refresh hsi-pilot-review-rubric.*.",
-      "Only then set legalBinding=true / lockedPilot=true via REAL_PARTNER_REPLACEMENT and re-run bun run outputs.",
-      "Production ISI must ignore fixture partnerSigned unless ALLOW_HYPOTHETICAL_PARTNER=true.",
-      "ISI product wiring (immunecity consume of this contract) remains OUT OF REPO.",
-    ],
+    nextHumanActions: isHypotheticalTestFixturePartner(lock)
+      ? [
+          lock.testFixtureBanner ??
+            "TEST FIXTURE — replace before real pilot (src/hypotheticalPartnerFixture.ts).",
+          "Name a real partner organisation (or rewrite disease/question with them) — do not invent org/email in code.",
+          "Record outreach row in docs/ISI_PILOT_PARTNER_SHORTLIST.md when interest is real.",
+          "Agree partner attribution for the PMID corpus (ok_oa ≠ partner clearance; partnerClearedCount still 0). See docs/HOW_TO_SOURCE_LICENSING.md.",
+          "Numeric Stage 1 thresholds are set_for_test under the hypothetical fixture — real partner must re-agree numbers before formal user testing; then refresh hsi-pilot-review-rubric.*.",
+          "Only then set legalBinding=true / lockedPilot=true via REAL_PARTNER_REPLACEMENT and re-run bun run outputs.",
+          "Production ISI must ignore fixture partnerSigned unless ALLOW_HYPOTHETICAL_PARTNER=true.",
+          "ISI product wiring (immunecity consume of this contract) remains OUT OF REPO.",
+        ]
+      : [
+          `Named partner active: ${lock.partner?.label ?? "unknown"} (${lock.partner?.id ?? "unknown"}) — MoU paperwork operator-asserted; still not CDS.`,
+          "Agree partner attribution for the PMID corpus (ok_oa ≠ partner clearance; partnerClearedCount still 0). See docs/HOW_TO_SOURCE_LICENSING.md.",
+          "Re-agree Stage 1 numeric rubric thresholds with Apolo Pharma (engineering defaults / pending until partner_agreed).",
+          "Keep Gate C human-only — never auto-approve into ISI product KG.",
+          "Refresh bun run outputs + re-sync immunecity public/hsi-discovery after pack depth changes.",
+          "Never invent emails, phones, or named PI contacts in code.",
+        ],
     honesty: [
-      "readyToFlipPartnerSigned stays false until a real named_partner + legalBinding path is ready.",
+      lock.isHypothetical
+        ? "readyToFlipPartnerSigned stays false until a real named_partner + legalBinding path is ready."
+        : "readyToFlipPartnerSigned=true once named_partner + legalBinding + partnerSigned (Apolo Pharma path).",
       "satisfied_by_fixture ≠ pass for production MoU claims.",
-      "set_for_test thresholds ≠ partner-agreed KPIs — replaceWithPartnerAgreedThresholds=true.",
-      "partnerSigned may be true under hypothetical_test_only; lockedPilot stays false while legalBinding=false.",
-      "This pack must never invent a legal MoU or named PI email.",
-      "scopeLocked=true is engineering lock only — not a MoU.",
+      "set_for_test / pending thresholds ≠ partner-agreed KPIs — replaceWithPartnerAgreedThresholds=true until re-agreed.",
+      lock.isHypothetical
+        ? "partnerSigned may be true under hypothetical_test_only; lockedPilot stays false while legalBinding=false."
+        : "Named partner: partnerSigned=true + legalBinding=true → lockedPilot=true; MoU operator-asserted — still not CDS / no auto Gate C.",
+      "This pack must never invent emails, phones, or named PI contacts.",
+      "scopeLocked=true is engineering lock for RA/anti-TNF; dual-track secondary packs continue.",
       "Technical adapter spikes do not satisfy flipRequirements.",
     ],
   };

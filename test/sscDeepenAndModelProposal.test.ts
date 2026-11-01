@@ -56,7 +56,10 @@ describe("P1.1 SSc deepen — cell cards + CL·MONDO hints + PMIDs", () => {
     expect(HSI_SSC_SEED_EDGES.some((e) => e.id === "HSI-E-SSC-010")).toBe(true);
     expect(HSI_SSC_SEED_EDGES.some((e) => e.id === "HSI-E-SSC-011")).toBe(true);
     expect(HSI_SSC_SEED_EDGES.some((e) => e.id === "HSI-E-SSC-012")).toBe(true);
-    expect(HSI_SSC_SEED_EDGES.length).toBe(12);
+    expect(HSI_SSC_SEED_EDGES.some((e) => e.id === "HSI-E-SSC-013")).toBe(true);
+    expect(HSI_SSC_SEED_EDGES.some((e) => e.id === "HSI-E-SSC-014")).toBe(true);
+    expect(HSI_SSC_SEED_EDGES.some((e) => e.id === "HSI-E-SSC-015")).toBe(true);
+    expect(HSI_SSC_SEED_EDGES.length).toBe(15);
 
     const fibrosisComment = HSI_SSC_SEED_EDGES.find((e) => e.id === "HSI-E-SSC-008");
     expect(fibrosisComment?.provenance?.pmid).toBe("29626172");
@@ -81,9 +84,10 @@ describe("P1.1 SSc deepen — cell cards + CL·MONDO hints + PMIDs", () => {
     expect(HSI_T2D_IMMUNO_SEED_EDGES.some((e) => e.id === "HSI-E-RA-001")).toBe(true);
     const lock = getPartnerLock();
     expect(lock.disease?.id).toBe("ra");
-    expect(lock.partnerSigned).toBe(true); // fixture path-testing
-    expect(lock.lockedPilot).toBe(false);
-    expect(lock.isHypothetical).toBe(true);
+    expect(lock.partnerSigned).toBe(true);
+    expect(lock.lockedPilot).toBe(true);
+    expect(lock.isHypothetical).toBe(false);
+    expect(lock.partner?.id).toBe("partner:apolo-pharma");
     expect(lock.scopeLocked).toBe(true);
   });
 });

@@ -70,9 +70,19 @@ export function assertHonestyFlags(
         doc.agreementKind === "hypothetical_test_only") &&
       doc.productionPartnerSigned !== true &&
       doc.lockedPilot !== true;
-    if (!fixtureOk) {
+    const namedOk =
+      doc.isHypothetical === false &&
+      doc.legalBinding === true &&
+      (doc.agreementKind === "written_confirm" ||
+        doc.agreementKind === "legal_mou");
+    if (!fixtureOk && !namedOk) {
       throw new Error(
-        `${label}: partnerSigned=true only allowed for hypothetical_test_only fixture (isHypothetical + legalBinding=false); production requires real legalBinding partner or ALLOW_HYPOTHETICAL_PARTNER`,
+        `${label}: partnerSigned=true requires hypothetical_test_only fixture or named legalBinding (written_confirm|legal_mou); still not CDS / no auto Gate C`,
+      );
+    }
+    if (doc.legalBinding === true && doc.isHypothetical === true) {
+      throw new Error(
+        `${label}: legalBinding=true with isHypothetical=true is not accepted (no fake MoU)`,
       );
     }
   }

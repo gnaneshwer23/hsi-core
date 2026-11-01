@@ -1,11 +1,11 @@
 # ISI pilot — research partner shortlist
 
-**Status:** outreach candidates only — **not** confirmed partners.  
-**Test fixture (path-testing only):** `test:hypothetical-isi-pilot-partner` via [`src/hypotheticalPartnerFixture.ts`](../src/hypotheticalPartnerFixture.ts) — **TEST FIXTURE — replace before real pilot.** Not a MoU.  
-**Use with:** [`ISI_PILOT_BRIEF.md`](./ISI_PILOT_BRIEF.md).  
-**Do not invent** personal emails, named PIs as “committed,” or fake MoUs. Contact via public department / institute channels unless a real introduction exists.
+**Status:** **Apolo Pharma** is the active named pilot partner (`partner:apolo-pharma`).  
+**Active lock:** [`src/hypotheticalPartnerFixture.ts`](../src/hypotheticalPartnerFixture.ts) — `USE_HYPOTHETICAL_PARTNER_FIXTURE=false`; `type=named_partner`; `partnerSigned=true`; `legalBinding=true` → `lockedPilot=true`.  
+**Honesty:** MoU / written-confirm paperwork is **operator-asserted** by workspace instruction (2026-11-01). **Do not invent** personal emails, phone numbers, or named PIs. Still **not CDS**; Gate C never auto-approves.  
+**Use with:** [`ISI_PILOT_BRIEF.md`](./ISI_PILOT_BRIEF.md).
 
-Goal of outreach: find **one** immunology / translational / clinical research team with a recurring question, accessible data (or public-literature-only willingness), and appetite to critique an evidence-map pilot.
+Goal of outreach / partnership: one immunology / translational / clinical research team with a recurring question, accessible data (or public-literature-only willingness), and appetite to critique an evidence-map pilot.
 
 ---
 
@@ -66,8 +66,9 @@ Approach **categories** first; example orgs below are **illustrative outreach ta
 
 | Org / group | Type | Region | Status | Notes |
 |-------------|------|--------|--------|-------|
-| **Hypothetical ISI Pilot Partner** (`test:hypothetical-isi-pilot-partner`) | `hypothetical_test_fixture` | unspecified | test_fixture | **TEST FIXTURE — replace before real pilot.** `agreementKind=hypothetical_test_only`; `legalBinding=false`; `partnerSigned=true` for path testing only. Swap in `src/hypotheticalPartnerFixture.ts`. Production ISI ignores unless `ALLOW_HYPOTHETICAL_PARTNER=true`. |
-| Versus Arthritis research network / Oxford NDORMS–Kennedy Institute (category) | disease_foundation / immunology | UK | awaiting_named_partner | **Illustrative outreach category** for Phase 2 scope-locked RA/TNF question — not a MoU or named PI. Kept as outreach target while fixture is active. |
-| *(add real outreach rows here)* | | | candidate | No confirmed legal partners yet |
+| **Apolo Pharma** (`partner:apolo-pharma`) | `named_partner` | unspecified | confirmed | **Active Stage 1 named partner.** `agreementKind=legal_mou`; `legalBinding=true`; `partnerSigned=true` → `lockedPilot=true`. MoU paperwork **operator-asserted** (2026-11-01 instruction) — no invented emails/phones. Still not CDS; Gate C human-only. RA `activeScope` unchanged; dual-track SSc/gut/neuro continues. Licensing `partnerClearedCount` + rubric re-agree still open. |
+| Versus Arthritis research network / Oxford NDORMS–Kennedy Institute (category) | disease_foundation / immunology | UK | awaiting_named_partner | **Illustrative outreach category** for RA/TNF question — not a MoU. Kept as secondary outreach target. |
+| Hypothetical ISI Pilot Partner (`test:hypothetical-isi-pilot-partner`) | `hypothetical_test_fixture` | unspecified | archived | Inactive template in `src/hypotheticalPartnerFixture.ts` (`USE_HYPOTHETICAL_PARTNER_FIXTURE=false`). |
+| *(add further outreach rows here)* | | | candidate | No invented contacts |
 
-When a **real** partner confirms interest, set `USE_HYPOTHETICAL_PARTNER_FIXTURE=false` in `src/hypotheticalPartnerFixture.ts`, fill `REAL_PARTNER_REPLACEMENT`, update status to `interested` / `scoping` / `confirmed`, and set `legalBinding=true` so `lockedPilot` can become true — still without fabricating emails or agreements. Phase 2 already set `scopeLocked=true` for the RA/anti-TNF working question.
+When swapping partners again, edit `REAL_PARTNER_REPLACEMENT` in `src/hypotheticalPartnerFixture.ts`, update this table, and re-run `bun run outputs` — still without fabricating emails or agreements. Phase 2 already set `scopeLocked=true` for the RA/anti-TNF working question.

@@ -14,7 +14,10 @@ import {
   HSI_GRADES,
   HSI_TEACHING_STATUSES,
 } from "./grades";
-import { getPartnerLock } from "./partnerLock";
+import {
+  getPartnerLock,
+  isProductionPartnerSignedTrusted,
+} from "./partnerLock";
 import { getVerticalDecision } from "./verticalDecision";
 
 export const ISI_CONSUME_CONTRACT_SCHEMA =
@@ -96,8 +99,8 @@ export type IsiConsumeContractBundle = {
   partnerSigned: boolean;
   /** Always false until legalBinding real partner. */
   lockedPilot: boolean;
-  /** Trusted production signal — false for fixture even when partnerSigned=true. */
-  productionPartnerSigned: false;
+  /** Trusted production signal — false for fixture; true for named legalBinding partner. */
+  productionPartnerSigned: boolean;
   agreementKind: string;
   legalBinding: boolean;
   isHypothetical: boolean;
@@ -528,7 +531,7 @@ export function buildIsiConsumeContractBundle(opts?: {
     containsPhi: false,
     partnerSigned: lock.partnerSigned,
     lockedPilot: lock.lockedPilot,
-    productionPartnerSigned: false,
+    productionPartnerSigned: isProductionPartnerSignedTrusted(lock),
     agreementKind: lock.agreementKind,
     legalBinding: lock.legalBinding,
     isHypothetical: lock.isHypothetical,
@@ -607,7 +610,7 @@ export function buildIsiConsumeContractBundle(opts?: {
     artifacts: ARTIFACTS,
     discoveryJsonPaths: DISCOVERY_PATHS,
     loadOrderHint: [
-      "1. MANIFEST.json — verify notCds / autoApproveIntoKg=false / lockedPilot=false; if partnerSigned=true require isHypothetical + ALLOW_HYPOTHETICAL_PARTNER for prod use.",
+      "1. MANIFEST.json — verify notCds / autoApproveIntoKg=false; if partnerSigned=true under hypothetical_test_only require ALLOW_HYPOTHETICAL_PARTNER; named legalBinding partners may set lockedPilot=true (still not CDS / no auto Gate C).",
       "2. required_core: hsi-isi-export.json + hsi-isi-rel-map.json + gate-c-checklist.*",
       "3. required_pilot: partner lock + vertical decision + pilot pack/rubric/acceptance/walkthrough + flip-readiness + this contract",
       "4. recommended_secondary: gap / R2 / SSc / gut / neuro / translation / systems vision / licensing stub",
@@ -623,13 +626,14 @@ export function buildIsiConsumeContractBundle(opts?: {
       discoveryPathCount: DISCOVERY_PATHS.length,
     },
     honesty: [
-      "P0.2-HSI documents ISI consume + partner flip-readiness — does not invent a named legal partner.",
-      "Hypothetical fixture may set partnerSigned=true under agreementKind=hypothetical_test_only; productionPartnerSigned=false; lockedPilot=false while legalBinding=false.",
+      "P0.2-HSI documents ISI consume + partner flip-readiness — MoU paperwork for named partners is operator-asserted; never invent emails/phones.",
+      lock.isHypothetical
+        ? "Hypothetical fixture may set partnerSigned=true under agreementKind=hypothetical_test_only; productionPartnerSigned=false; lockedPilot=false while legalBinding=false."
+        : `Named partner ${lock.partner?.id ?? "unknown"}: partnerSigned=${lock.partnerSigned}; legalBinding=${lock.legalBinding}; lockedPilot=${lock.lockedPilot}; productionPartnerSigned=${isProductionPartnerSignedTrusted(lock)}. Still not CDS; Gate C never auto-approves.`,
       "Production ISI must ignore fixture partnerSigned unless ALLOW_HYPOTHETICAL_PARTNER=true.",
-      "Replace fixture via src/hypotheticalPartnerFixture.ts before a real pilot.",
-      "Technical adapter track paused for further spikes without real partnerNamed.",
-      "No CDS / PHI / shared Neon.",
-      "immunecity wiring is OUT OF REPO — this contract is the hsi-core-side handoff.",
+      "Swap / inspect partner via src/hypotheticalPartnerFixture.ts.",
+      "No CDS / PHI / shared Neon (HSI = red-wave only).",
+      "immunecity may vendor Discovery JSON under freeze-lift HSI-consume scope only — Gate C stays human.",
     ],
   };
 }

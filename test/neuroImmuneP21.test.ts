@@ -13,7 +13,7 @@ import {
 describe("P2.1 neuroimmune vagus / cholinergic anti-inflammatory reflex", () => {
   test("deep seeds land with verified PMIDs and honest uncertain grades", () => {
     expect(neuroDeepSeedsLanded()).toBe(true);
-    expect(HSI_NI_SEED_EDGES.length).toBe(8);
+    expect(HSI_NI_SEED_EDGES.length).toBe(11);
     expect(NI_PATHWAY_META.primaryPmids).toEqual([
       "10839541",
       "12490958",
@@ -23,6 +23,9 @@ describe("P2.1 neuroimmune vagus / cholinergic anti-inflammatory reflex", () => 
       "27382171",
       "16785311",
       "18669662",
+      "11901203",
+      "19542466",
+      "12469056",
     ]);
     expect(NI_PATHWAY_META.neighbourhoodChoiceRationale.toLowerCase()).toContain(
       "clearest",
@@ -51,7 +54,7 @@ describe("P2.1 neuroimmune vagus / cholinergic anti-inflammatory reflex", () => 
     expect(pack.notCds).toBe(true);
     expect(pack.autoApproveIntoKg).toBe(false);
     expect(pack.stage1ActiveScope.diseaseId).toBe("ra");
-    expect(pack.stage1ActiveScope.partnerSigned).toBe(true); // fixture
+    expect(pack.stage1ActiveScope.partnerSigned).toBe(true);
     expect(
       pack.competingExplanations.some((c) => c.id.includes("vns-ra-human")),
     ).toBe(true);
@@ -74,9 +77,10 @@ describe("P2.1 neuroimmune vagus / cholinergic anti-inflammatory reflex", () => 
     const lock = getPartnerLock();
     expect(lock.scopeLocked).toBe(true);
     expect(lock.disease?.id).toBe("ra");
-    expect(lock.partnerSigned).toBe(true); // fixture
-    expect(lock.lockedPilot).toBe(false);
-    expect(lock.isHypothetical).toBe(true);
+    expect(lock.partnerSigned).toBe(true);
+    expect(lock.lockedPilot).toBe(true);
+    expect(lock.isHypothetical).toBe(false);
+    expect(lock.partner?.id).toBe("partner:apolo-pharma");
     expect(lock.verticalStrategy).toBe("dual_track");
 
     const decision = getVerticalDecision();

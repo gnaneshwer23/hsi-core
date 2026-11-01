@@ -180,7 +180,7 @@ export function buildGutImmunePack(opts?: {
     honesty: [
       "Systems secondary axis only — Discovery ASK question remains the RA / anti-TNF research question.",
       "SSc dual-track A pack untouched; RA Stage 1 scopeLocked packs untouched.",
-      `partnerSigned=${lock.partnerSigned} (fixture path-testing only if isHypothetical); lockedPilot=false until legalBinding — no MoU invented.`,
+      `partnerSigned=${lock.partnerSigned}; lockedPilot=${lock.lockedPilot}; legalBinding=${lock.legalBinding}; isHypothetical=${lock.isHypothetical} — MoU operator-asserted when named; still not CDS.`,
       "Th17 promote (Park) vs inhibit (Chen) are hypothesized competing frames — never collapse.",
       "Most PMIDs are mouse or Caco-2 — hsiGrade stays uncertain (source-verified); not human therapeutic claims.",
       "Not clinical decision support. autoApproveIntoKg=false.",

@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import {
   ALLOW_HYPOTHETICAL_PARTNER_ENV,
-  HYPOTHETICAL_PARTNER_FIXTURE,
+  REAL_PARTNER_REPLACEMENT,
   USE_HYPOTHETICAL_PARTNER_FIXTURE,
   buildPartnerFlipReadinessBundle,
   getPartnerLock,
@@ -11,42 +11,39 @@ import {
   partnerLockExportPointer,
 } from "../src/index";
 
-describe("hypothetical test-fixture partner", () => {
-  test("fixture is active with honest path-testing flags", () => {
-    expect(USE_HYPOTHETICAL_PARTNER_FIXTURE).toBe(true);
+describe("named partner Apolo Pharma lock", () => {
+  test("fixture off; Apolo Pharma drives lockedPilot", () => {
+    expect(USE_HYPOTHETICAL_PARTNER_FIXTURE).toBe(false);
 
     const lock = getPartnerLock();
-    expect(isHypotheticalTestFixturePartner(lock)).toBe(true);
-    expect(lock.partner?.id).toBe("test:hypothetical-isi-pilot-partner");
-    expect(lock.partner?.type).toBe("hypothetical_test_fixture");
-    expect(lock.partner?.label).toContain("Hypothetical ISI Pilot Partner");
+    expect(isHypotheticalTestFixturePartner(lock)).toBe(false);
+    expect(lock.partner?.id).toBe("partner:apolo-pharma");
+    expect(lock.partner?.label).toBe("Apolo Pharma");
+    expect(lock.partner?.type).toBe("named_partner");
     expect(lock.partnerSigned).toBe(true);
-    expect(lock.lockedPilot).toBe(false);
-    expect(lock.legalBinding).toBe(false);
-    expect(lock.agreementKind).toBe("hypothetical_test_only");
-    expect(lock.isHypothetical).toBe(true);
-    expect(lock.notALegalAgreement).toBe(true);
-    expect(lock.testPilotMode).toBe(true);
-    expect(lock.replaceWithRealPartner).toBe(true);
-    expect(lock.testFixtureBanner).toContain("TEST FIXTURE");
+    expect(lock.lockedPilot).toBe(true);
+    expect(lock.legalBinding).toBe(true);
+    expect(lock.agreementKind).toBe("legal_mou");
+    expect(lock.isHypothetical).toBe(false);
+    expect(lock.notALegalAgreement).toBe(false);
+    expect(lock.testPilotMode).toBe(false);
+    expect(lock.replaceWithRealPartner).toBe(false);
+    expect(lock.testFixtureBanner).toBeNull();
     expect(lock.scopeLocked).toBe(true);
-    expect(lock.status).toBe("scope_locked");
+    expect(lock.disease?.id).toBe("ra");
+    expect(lock.honesty.some((h) => /operator-asserted/i.test(h))).toBe(true);
 
     const pointer = partnerLockExportPointer(lock);
     expect(pointer.partnerSigned).toBe(true);
-    expect(pointer.lockedPilot).toBe(false);
-    expect(pointer.isHypothetical).toBe(true);
-    expect(pointer.agreementKind).toBe("hypothetical_test_only");
+    expect(pointer.lockedPilot).toBe(true);
+    expect(pointer.isHypothetical).toBe(false);
+    expect(pointer.agreementKind).toBe("legal_mou");
+    expect(pointer.partner).toBe("partner:apolo-pharma");
   });
 
-  test("production trust requires ALLOW_HYPOTHETICAL_PARTNER", () => {
+  test("production trust does not need ALLOW_HYPOTHETICAL_PARTNER for named legalBinding", () => {
     const lock = getPartnerLock();
-    expect(isProductionPartnerSignedTrusted(lock, {})).toBe(false);
-    expect(
-      isProductionPartnerSignedTrusted(lock, {
-        [ALLOW_HYPOTHETICAL_PARTNER_ENV]: "true",
-      }),
-    ).toBe(true);
+    expect(isProductionPartnerSignedTrusted(lock, {})).toBe(true);
     expect(isAllowHypotheticalPartnerEnabled({})).toBe(false);
     expect(
       isAllowHypotheticalPartnerEnabled({
@@ -55,34 +52,31 @@ describe("hypothetical test-fixture partner", () => {
     ).toBe(true);
   });
 
-  test("flip-readiness marks named_org satisfied_by_fixture with real replacement pending", () => {
+  test("flip-readiness marks named_org pass; licensing/thresholds still open", () => {
     const bundle = buildPartnerFlipReadinessBundle({
       generatedAt: "2026-11-01T20:00:00.000Z",
     });
 
     expect(bundle.partnerSigned).toBe(true);
-    expect(bundle.lockedPilot).toBe(false);
-    expect(bundle.isHypothetical).toBe(true);
-    expect(bundle.summary.readyToFlipPartnerSigned).toBe(false);
-    expect(bundle.summary.readyForRealPartnerReplacement).toBe(true);
-    expect(bundle.summary.satisfiedByFixture).toBeGreaterThanOrEqual(3);
+    expect(bundle.lockedPilot).toBe(true);
+    expect(bundle.isHypothetical).toBe(false);
+    expect(bundle.summary.readyToFlipPartnerSigned).toBe(true);
+    expect(bundle.summary.readyForRealPartnerReplacement).toBe(false);
+    expect(bundle.summary.pass).toBeGreaterThanOrEqual(4);
 
     const byId = Object.fromEntries(
       bundle.flipRequirements.map((r) => [r.id, r]),
     );
-    expect(byId.named_org.status).toBe("satisfied_by_fixture");
-    expect(byId.named_org.pendingRealReplacementSteps?.length).toBeGreaterThan(
-      0,
-    );
-    expect(byId.question_confirm.status).toBe("satisfied_by_fixture");
-    expect(byId.partner_signed_flip.status).toBe("satisfied_by_fixture");
-    expect(byId.real_partner_replacement.status).toBe("pending");
+    expect(byId.named_org.status).toBe("pass");
+    expect(byId.question_confirm.status).toBe("pass");
+    expect(byId.partner_signed_flip.status).toBe("pass");
+    expect(byId.real_partner_replacement.status).toBe("pass");
+    expect(byId.shortlist_row.status).toBe("pass");
     expect(byId.licensing.status).toBe("pending");
-    expect(byId.thresholds.status).toBe("set_for_test");
-    expect(bundle.summary.setForTest).toBeGreaterThanOrEqual(1);
+    expect(byId.thresholds.status).toBe("pending");
+    expect(bundle.summary.pending).toBeGreaterThanOrEqual(1);
 
-    expect(HYPOTHETICAL_PARTNER_FIXTURE.partner.id).toBe(
-      "test:hypothetical-isi-pilot-partner",
-    );
+    expect(REAL_PARTNER_REPLACEMENT.partner.id).toBe("partner:apolo-pharma");
+    expect(REAL_PARTNER_REPLACEMENT.partner.label).toBe("Apolo Pharma");
   });
 });

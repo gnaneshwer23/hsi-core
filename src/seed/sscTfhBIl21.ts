@@ -14,8 +14,11 @@
  * - 21314428 Crotty 2011 Annu Rev Immunol — Tfh biology (IL-21 axis; not SSc-specific)
  * - 16339522 Ettinger 2005 J Immunol — IL-21 → human B → plasma cells
  * - 24129067 Farina 2014 J Invest Dermatol — EBV / scleroderma fibroblast axis (hypothesized only)
+ * - 24350901 van Bon 2014 NEJM — CXCL4 / pDC biomarker in SSc
+ * - 29853453 Denton 2018 Ann Rheum Dis — IL-6 blockade reverses TGF-β pathway (faSScinate insight)
+ * - 19180481 Lafyatis 2009 Arthritis Rheum — rituximab B depletion in dcSSc (pilot; hypothesized)
  *
- * Not Gate C approved. Not CDS. partnerSigned remains false.
+ * Not Gate C approved. Not CDS. Dual-track only — does not replace RA ASK.
  */
 import { gradeForSeed } from "../validate";
 import type { HsiClaim, HsiEdge } from "../schema";
@@ -321,6 +324,69 @@ const SPECS: SeedSpec[] = [
     notes:
       "Depth deepen: PMID 17581616 verified. Mouse model only — teaching=hypothesized; never invent human BAFF-drug CDS. Gate C = human only. Not CDS.",
   },
+  {
+    id: "HSI-E-SSC-013",
+    edgeType: "associated_with",
+    subjectId: "HSI-N-cxcl4",
+    subjectLabel: "CXCL4 (PF4)",
+    objectId: "HSI-N-ssc",
+    objectLabel: "Systemic sclerosis",
+    claimId: "HSI-C-SSC-013",
+    assertion:
+      "CXCL4 is a predominant protein secreted by plasmacytoid dendritic cells in systemic sclerosis and circulating levels associate with fibrosis phenotypes (biomarker neighbourhood — not a therapeutic claim).",
+    review: "source-verified",
+    teaching: "associative",
+    domain: "autoimmunity",
+    pmid: "24350901",
+    doi: "10.1056/NEJMoa1114576",
+    citationLabel:
+      "van Bon L et al. N Engl J Med 2014 — Proteome-wide analysis and CXCL4 as a biomarker in systemic sclerosis.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/24350901/",
+    notes:
+      "Depth deepen: PMID 24350901 verified via PubMed. Association/biomarker frame only; teaching=associative. Does not replace RA ASK. Gate C = human only. Not CDS.",
+  },
+  {
+    id: "HSI-E-SSC-014",
+    edgeType: "inhibits",
+    subjectId: "HSI-N-il6-blockade",
+    subjectLabel: "IL-6 pathway blockade (tocilizumab class)",
+    objectId: "HSI-N-tgfb-dermal-fibroblast",
+    objectLabel: "TGF-β pathway activation in dermal fibroblasts",
+    claimId: "HSI-C-SSC-014",
+    assertion:
+      "Therapeutic IL-6 blockade can reverse TGF-β pathway activation signatures in dermal fibroblasts in SSc clinical-trial biospecimens (faSScinate insight — hypothesized translational frame; not dosing CDS).",
+    review: "source-verified",
+    teaching: "hypothesized",
+    domain: "autoimmunity",
+    pmid: "29853453",
+    doi: "10.1136/annrheumdis-2018-213031",
+    citationLabel:
+      "Denton CP et al. Ann Rheum Dis 2018 — Therapeutic interleukin-6 blockade reverses transforming growth factor-beta pathway activation in dermal fibroblasts: insights from the faSScinate clinical trial in systemic sclerosis.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/29853453/",
+    notes:
+      "Depth deepen: PMID 29853453 verified. Trial-biospecimen mechanistic insight — teaching=hypothesized; never invent patient dosing/CDS. Gate C = human only. Not CDS.",
+  },
+  {
+    id: "HSI-E-SSC-015",
+    edgeType: "associated_with",
+    subjectId: "HSI-N-rituximab-b-depletion",
+    subjectLabel: "Rituximab B-cell depletion (experimental in SSc)",
+    objectId: "HSI-N-ssc",
+    objectLabel: "Systemic sclerosis",
+    claimId: "HSI-C-SSC-015",
+    assertion:
+      "B-cell depletion with rituximab has been studied in diffuse cutaneous systemic sclerosis with exploratory clinical and skin signals (small open-label / pilot neighbourhood — hypothesized only; not approved SSc CDS).",
+    review: "source-verified",
+    teaching: "hypothesized",
+    domain: "autoimmunity",
+    pmid: "19180481",
+    doi: "10.1002/art.24249",
+    citationLabel:
+      "Lafyatis R et al. Arthritis Rheum 2009 — B cell depletion with rituximab in patients with diffuse cutaneous systemic sclerosis.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/19180481/",
+    notes:
+      "Depth deepen: PMID 19180481 verified. Small pilot — teaching=hypothesized; never invent on-label SSc rituximab CDS. Complements B/Tfh axis; keep separate from EBV. Gate C = human only. Not CDS.",
+  },
 
 ];
 
@@ -387,8 +453,11 @@ export const SSC_PATHWAY_META = {
     "21314428",
     "16339522",
     "24129067",
+    "24350901",
+    "29853453",
+    "19180481",
   ],
-  deepenPhase: "p1_ssc_depth_baff_cxcl13" as const,
+  deepenPhase: "p1_ssc_depth_cxcl4_il6_ritux" as const,
   entities: [
     { id: "HSI-N-ssc", label: "Systemic sclerosis", kind: "disease" },
     { id: "HSI-N-tfh", label: "Tfh", kind: "cell_subset" },
@@ -399,6 +468,10 @@ export const SSC_PATHWAY_META = {
     { id: "HSI-N-il21", label: "IL-21", kind: "cytokine" },
     { id: "HSI-N-baff", label: "BAFF", kind: "cytokine" },
     { id: "HSI-N-baff-antagonist", label: "BAFF antagonist (experimental)", kind: "intervention_hypothesis" },
+    { id: "HSI-N-cxcl4", label: "CXCL4 (PF4)", kind: "chemokine" },
+    { id: "HSI-N-il6-blockade", label: "IL-6 pathway blockade", kind: "intervention_hypothesis" },
+    { id: "HSI-N-tgfb-dermal-fibroblast", label: "TGF-β pathway (dermal fibroblast)", kind: "pathway" },
+    { id: "HSI-N-rituximab-b-depletion", label: "Rituximab B depletion (experimental)", kind: "intervention_hypothesis" },
     { id: "HSI-N-skin-fibrosis", label: "Skin fibrosis", kind: "phenotype" },
     { id: "HSI-N-ebv", label: "EBV", kind: "pathogen_hypothesis" },
   ],

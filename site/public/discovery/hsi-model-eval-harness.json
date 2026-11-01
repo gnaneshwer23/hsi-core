@@ -12,7 +12,7 @@
   "autoApproveIntoKg": false,
   "containsPhi": false,
   "packsRemainAuthority": true,
-  "generatedAt": "2026-11-01T20:31:43.025Z",
+  "generatedAt": "2026-11-01T20:52:43.828Z",
   "fixtureSummary": {
     "packIds": [
       "hsi-gut-immune-pack",
@@ -20,12 +20,12 @@
       "hsi-pilot-ra-tnf",
       "hsi-ssc-pathway-pack"
     ],
-    "edgeCount": 41,
+    "edgeCount": 50,
     "byPack": {
       "hsi-pilot-ra-tnf": 12,
-      "hsi-ssc-pathway-pack": 12,
-      "hsi-gut-immune-pack": 9,
-      "hsi-neuroimmune-pack": 8
+      "hsi-ssc-pathway-pack": 15,
+      "hsi-gut-immune-pack": 12,
+      "hsi-neuroimmune-pack": 11
     }
   },
   "checks": [

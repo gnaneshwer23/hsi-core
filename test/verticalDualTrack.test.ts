@@ -26,10 +26,10 @@ describe("dual-track vertical decision A", () => {
     const lock = getPartnerLock();
     expect(lock.scopeLocked).toBe(true);
     expect(lock.disease?.id).toBe("ra");
-    expect(lock.partnerSigned).toBe(true); // fixture path-testing
-    expect(lock.lockedPilot).toBe(false);
-    expect(lock.isHypothetical).toBe(true);
-    expect(lock.lockedPilot).toBe(false);
+    expect(lock.partnerSigned).toBe(true);
+    expect(lock.lockedPilot).toBe(true);
+    expect(lock.isHypothetical).toBe(false);
+    expect(lock.partner?.id).toBe("partner:apolo-pharma");
     expect(lock.verticalStrategy).toBe("dual_track");
     expect(lock.activeScope).toBe("ra-tnf");
     expect(lock.prdMvpTarget).toBe("ssc-tfh-b-il21");

@@ -309,9 +309,11 @@ function buildRealPartnerLock(): HsiPartnerLock {
       "Re-run bun run outputs and refresh the pilot evidence pack + review rubric against the signed question.",
     ],
     honesty: [
-      "Real named partner path — legalBinding must stay true only after written confirm.",
-      "Never invent emails or MoUs in code.",
-      "Phase 2 done = scopeLocked=true (disease + researchQuestion are working Stage 1 scope).",
+      "Named partner Apolo Pharma (partner:apolo-pharma) — type=named_partner; partnerSigned=true; legalBinding=true → lockedPilot=true when scopeLocked.",
+      "MoU / written-confirm paperwork is operator-asserted by HSI workspace instruction (2026-11-01) — never invent emails, phones, or named PI contacts in code.",
+      "Still not CDS; Gate C never auto-approves; no PHI; HSI Neon remains red-wave only.",
+      "Phase 2 done = scopeLocked=true (disease + researchQuestion are working Stage 1 scope). RA activeScope unchanged; dual-track SSc/gut/neuro continues.",
+      "Licensing partnerClearedCount and rubric numeric re-agree remain open until partner formally clears attribution / KPIs.",
     ],
   };
 }

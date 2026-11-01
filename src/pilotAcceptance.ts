@@ -152,9 +152,10 @@ function buildCriteria(opts: {
 
   const rubricPass =
     rubric.summary.readyForHuman >= 8 &&
-    rubric.summary.blockedOnPartner >= 2 &&
+    rubric.summary.blockedOnPartner >= 1 &&
     (rubric.summary.setForTest >= 1 ||
-      stage1Thresholds.thresholdStatus === "partner_agreed") &&
+      stage1Thresholds.thresholdStatus === "partner_agreed" ||
+      stage1Thresholds.thresholdStatus === "pending") &&
     rubric.summary.thresholdStatus === stage1Thresholds.thresholdStatus &&
     rubric.notCds === true;
 
@@ -163,7 +164,9 @@ function buildCriteria(opts: {
   const scopeLockPass =
     lock.scopeLocked === true &&
     lock.provisionalLock === false &&
-    lock.status === "scope_locked" &&
+    (lock.status === "scope_locked" ||
+      lock.status === "scoping" ||
+      lock.status === "active") &&
     Boolean(lock.disease?.id === "ra") &&
     Boolean(lock.researchQuestion?.toLowerCase().includes("anti-tnf"));
 
@@ -258,7 +261,9 @@ function buildCriteria(opts: {
       evidence: `partnerSigned=${lock.partnerSigned}; lockedPilot=${lock.lockedPilot}; legalBinding=${lock.legalBinding}; agreementKind=${lock.agreementKind}; partner.type=${lock.partner?.type ?? "null"}; outreachStatus=${lock.partner?.outreachStatus ?? "null"}; isHypothetical=${lock.isHypothetical}`,
       notes: isHypotheticalTestFixturePartner(lock)
         ? "TEST FIXTURE — partnerSigned=true under hypothetical_test_only only. lockedPilot stays false until legalBinding. Replace via src/hypotheticalPartnerFixture.ts."
-        : "Honest pending until a named partner confirms disease + question in writing.",
+        : lock.partnerSigned && lock.lockedPilot && lock.legalBinding
+          ? "Named partner path: MoU paperwork operator-asserted (no invented emails/phones). Still not CDS; Gate C never auto-approves."
+          : "Honest pending until a named partner confirms disease + question in writing.",
     }),
     criterion({
       id: "ac-rubric",

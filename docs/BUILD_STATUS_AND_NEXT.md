@@ -1,10 +1,10 @@
 # HSI build status and next
 
 **Audit date:** 1 November 2026  
-**HEAD at write:** `a9823e1` (main) — Stage 1 numeric rubric thresholds **`set_for_test`** under hypothetical fixture; real partner must re-agree; `legalBinding` still false
+**HEAD at write:** (post Apolo Pharma lock) — named partner **Apolo Pharma** (`partner:apolo-pharma`); `partnerSigned=true` + `legalBinding=true` → `lockedPilot=true`; MoU paperwork **operator-asserted**; rubric thresholds still **pending re-agree**; not CDS
 
 
-**Edit target:** `hsi-core` only · Neon **`red-wave` only** · no immunecity / Akeno product / DeliverX edits  
+**Edit target:** `hsi-core` primary · immunecity HSI-consume wiring allowed under freeze lift · Neon **`red-wave` only** for HSI · no DeliverX  
 **Prior audit:** [`PRD_IMPLEMENTATION_AUDIT.md`](./PRD_IMPLEMENTATION_AUDIT.md) (phases 0–8 vs Pilot + Target PRDs)
 
 **Status vocabulary:** `DONE` · `PARTIAL` · `NOT STARTED` · `OUT OF SCOPE` / deferred
@@ -13,14 +13,14 @@
 
 ## Executive verdict
 
-hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance, Gate C checklists, versioned publish, RA/anti-TNF scope lock + depth, Discovery Centre, R2 validation, translation/Akeno HITL scaffolding, Aksh agent catalog, Neon isolation, systems-vision + AI position stubs). **Vertical decision A (dual-track) is recorded:** RA stays Stage 1 `activeScope`; SSc / gut / neuro packs have **depth PMIDs** (honest `uncertain`/`hypothesized`; RA untouched). **P2.2–P3.3** plus **AF3/TDC/ISI research sign-off fixtures** and **Boltz weights-policy gate** (`WEIGHTS_POLICY_ACK`; no weight vendoring) land as proposal-only stubs → Gate C pending. **Discovery `/discovery` MAP** ships an interactive evidence **graph explorer** (RA + optional SSc/gut/neuro toggles). **P0.2-HSI / P0.5** consume contract + immunecity wiring playbook remain HSI-side (immunecity product apply is separate). Hypothetical partner fixture OK (`legalBinding=false`). Live CDS / PHI / commercial AF3 rights stay gated.
+hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance, Gate C checklists, versioned publish, RA/anti-TNF scope lock + depth, Discovery Centre, R2 validation, translation/Akeno HITL scaffolding, Aksh agent catalog, Neon isolation, systems-vision + AI position stubs). **Vertical decision A (dual-track) is recorded:** RA stays Stage 1 `activeScope`; SSc / gut / neuro packs have **depth PMIDs** (honest `uncertain`/`hypothesized`; RA untouched). **Named partner Apolo Pharma** is locked (`lockedPilot=true`; MoU operator-asserted; still not CDS; Gate C never auto-approves). **P2.2–P3.3** plus **AF3/TDC/ISI research sign-off fixtures** and **Boltz weights-policy gate** (`WEIGHTS_POLICY_ACK`; no weight vendoring) land as proposal-only stubs → Gate C pending. **Discovery `/discovery` MAP** ships an interactive evidence **graph explorer**. **P0.2-HSI / P0.5** consume contract + immunecity HSI-consume wiring (freeze lifted) remain in play. Live CDS / PHI / commercial AF3 rights stay gated.
 
 | Plane | Light | One line |
 |-------|-------|----------|
 | R0–R1 substrate + `/discovery` | **GREEN** | Four outputs + ASK→MAP→REVIEW on regenerable packs |
 | R2 workbench (HSI) | **GREEN / YELLOW** | Hypothesis + gaps + VALIDATE; fixture thresholds `set_for_test` (partner re-agree still required) |
 | R3 translation / `/akeno` | **YELLOW** | HITL scaffolding only (`clinicalActive=false`) |
-| Partner pilot readiness (M3) | **YELLOW** | Hypothetical **TEST FIXTURE** partner for path testing; `lockedPilot=false`; real named org still pending |
+| Partner pilot readiness (M3) | **GREEN / YELLOW** | **Apolo Pharma** named lock (`lockedPilot=true`); licensing `partnerClearedCount=0` + rubric re-agree still pending |
 | Live CDS / PHI / shared Neon | **RED (correct)** | Explicitly not built |
 | Vision axes / AI stubs | **GREEN** | SSc/gut/neuro depth; graph explorer; AF3/TDC/ISI fixtures + Boltz weights policy; all adapters proposal-only |
 | ISI consume handoff (HSI side) | **GREEN** | **P0.2-HSI** contract + **P0.5** playbook/wiring-spec/example client — product apply still OUT OF REPO |
@@ -60,7 +60,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | Four workflow outputs (evidence map, entity slice, competing explanations, expert shortlist) | **DONE** | `src/pilotEvidencePack.ts` → `hsi-pilot-evidence-pack.*` |
 | Phase 3 RA/TNF evidence depth (ADA, serology, RF LOINC, MTX combo) | **DONE** | Pack + seeds; commit `e2612dc` |
 | Review rubric + acceptance + walkthrough | **DONE** | `hsi-pilot-review-rubric.*`, `hsi-pilot-acceptance.*`, `hsi-pilot-walkthrough.md` |
-| `partnerSigned` / `lockedPilot` | **PARTIAL** | Fixture: `partnerSigned=true` + `agreementKind=hypothetical_test_only` + `legalBinding=false` → `lockedPilot=false`; swap via `src/hypotheticalPartnerFixture.ts` |
+| `partnerSigned` / `lockedPilot` | **DONE** (named) | Apolo Pharma: `partnerSigned=true` + `agreementKind=legal_mou` + `legalBinding=true` → `lockedPilot=true`; MoU operator-asserted; still not CDS |
 | Source licensing table for agreed corpus | **PARTIAL** | Curator statuses exported; partner corpus clearance still open (`partnerClearedCount=0`) |
 | Numeric evaluation thresholds | **PARTIAL** | Fixture `set_for_test` in `src/stage1RubricThresholds.ts` (min edges 12 / competing 4 / LOINC 6; Gate C pending allowed; `green_with_pending` OK). **Real partner must re-agree** (`replaceWithPartnerAgreedThresholds=true`) |
 | PDF/DOCX brief | **OUT OF SCOPE** | ISI product P1 |

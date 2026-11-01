@@ -363,23 +363,23 @@ describe("Gate C checklist + publish outputs", () => {
     );
   });
 
-  it("builds a scope-locked RA pilot evidence pack with fixture partnerSigned (not MoU)", () => {
+  it("builds a scope-locked RA pilot evidence pack with Apolo Pharma named partner", () => {
     const pack = buildPilotEvidencePack({ generatedAt: "2026-11-01T13:00:00.000Z" });
     expect(pack.schemaVersion).toBe("hsi-pilot-evidence-pack-2");
     expect(pack.disease).toBe("Rheumatoid arthritis");
     expect(pack.researchQuestion.toLowerCase()).toContain("anti-tnf");
     expect(pack.scopeLocked).toBe(true);
-    expect(pack.partnerSigned).toBe(true); // hypothetical fixture path-testing
-    expect(pack.lockedPilot).toBe(false);
+    expect(pack.partnerSigned).toBe(true);
+    expect(pack.lockedPilot).toBe(true);
     expect(pack.provisionalLock).toBe(false);
-    expect(pack.partnerLock.status).toBe("scope_locked");
+    expect(pack.partnerLock.status).toBe("scoping");
     expect(pack.notCds).toBe(true);
     expect(pack.noPatientLevelActions).toBe(true);
     expect(pack.autoApproveIntoKg).toBe(false);
     expect(pack.questionProject.status).toBe("scope_locked");
     expect(pack.questionProject.scopeLocked).toBe(true);
     expect(pack.questionProject.partnerSigned).toBe(true);
-    expect(pack.questionProject.lockedPilot).toBe(false);
+    expect(pack.questionProject.lockedPilot).toBe(true);
     expect(pack.evidenceMap.length).toBe(HSI_T2D_IMMUNO_SEED_EDGES.length);
     expect(pack.summary.partnerScopedEvidenceRows).toBeGreaterThanOrEqual(12);
     expect(pack.summary.evidenceMapRows).toBe(pack.evidenceMap.length);
@@ -411,29 +411,29 @@ describe("Gate C checklist + publish outputs", () => {
   it("ships a review rubric with ready_for_human + blocked_on_partner items", () => {
     const lock = getPartnerLock();
     expect(lock.scopeLocked).toBe(true);
-    expect(lock.partnerSigned).toBe(true); // hypothetical fixture
-    expect(lock.lockedPilot).toBe(false);
-    expect(lock.legalBinding).toBe(false);
-    expect(lock.isHypothetical).toBe(true);
+    expect(lock.partnerSigned).toBe(true);
+    expect(lock.lockedPilot).toBe(true);
+    expect(lock.legalBinding).toBe(true);
+    expect(lock.isHypothetical).toBe(false);
     expect(lock.provisionalLock).toBe(false);
-    expect(lock.status).toBe("scope_locked");
+    expect(lock.status).toBe("scoping");
     expect(lock.disease?.id).toBe("ra");
-    expect(lock.partner?.type).toBe("hypothetical_test_fixture");
-    expect(lock.partner?.outreachStatus).toBe("test_fixture");
+    expect(lock.partner?.type).toBe("named_partner");
+    expect(lock.partner?.id).toBe("partner:apolo-pharma");
+    expect(lock.partner?.outreachStatus).toBe("confirmed");
     expect(lock.flipRequirements.length).toBeGreaterThanOrEqual(5);
 
     const rubric = buildPilotReviewRubric({ generatedAt: "2026-11-01T13:00:00.000Z" });
     expect(rubric.schemaVersion).toBe("hsi-pilot-review-rubric-1");
     expect(rubric.partnerLock.scopeLocked).toBe(true);
     expect(rubric.partnerLock.partnerSigned).toBe(true);
-    expect(rubric.partnerLock.lockedPilot).toBe(false);
+    expect(rubric.partnerLock.lockedPilot).toBe(true);
     expect(rubric.partnerLock.provisionalLock).toBe(false);
-    expect(rubric.partnerLock.status).toBe("scope_locked");
+    expect(rubric.partnerLock.status).toBe("scoping");
     expect(rubric.summary.readyForHuman).toBeGreaterThanOrEqual(8);
-    expect(rubric.summary.blockedOnPartner).toBeGreaterThanOrEqual(2);
-    expect(rubric.summary.setForTest).toBeGreaterThanOrEqual(1);
-    expect(rubric.summary.thresholdStatus).toBe("set_for_test");
-    expect(rubric.summary.thresholdSource).toBe("hypothetical_test_fixture");
+    expect(rubric.summary.blockedOnPartner).toBeGreaterThanOrEqual(1);
+    expect(rubric.summary.thresholdStatus).toBe("pending");
+    expect(rubric.summary.thresholdSource).toBe("unset");
     expect(rubric.summary.numericThresholdsMet).toBe(true);
     expect(rubric.stage1Thresholds.replaceWithPartnerAgreedThresholds).toBe(true);
     expect(rubric.stage1Thresholds.numeric.minPartnerScopedEdges).toBe(12);
@@ -443,8 +443,10 @@ describe("Gate C checklist + publish outputs", () => {
     expect(rubric.stage1Thresholds.numeric.acceptanceOverallAllowed).toBe(
       "green_with_pending",
     );
-    expect(rubric.checklist.find((c) => c.id === "x-3")?.status).toBe("set_for_test");
-    expect(rubric.successMetrics.every((m) => m.thresholdStatus === "set_for_test")).toBe(
+    expect(rubric.checklist.find((c) => c.id === "x-3")?.status).toBe(
+      "blocked_on_partner",
+    );
+    expect(rubric.successMetrics.every((m) => m.thresholdStatus === "pending")).toBe(
       true,
     );
     expect(rubric.checklist.every((c) => c.status !== "ready_for_human" || c.criterion.length > 0)).toBe(
@@ -454,7 +456,7 @@ describe("Gate C checklist + publish outputs", () => {
     expect(rubric.autoApproveIntoKg).toBe(false);
   });
 
-  it("ships Phase 5 acceptance pack with honest pending for real partner (fixture signed)", () => {
+  it("ships Phase 5 acceptance pack with Apolo Pharma named partner (licensing/thresholds still pending)", () => {
     const acceptance = buildPilotAcceptancePack({ generatedAt: "2026-11-01T14:45:00.000Z" });
     expect(acceptance.schemaVersion).toBe("hsi-pilot-acceptance-1");
     expect(acceptance.phase).toBe("5");
@@ -462,10 +464,10 @@ describe("Gate C checklist + publish outputs", () => {
     expect(acceptance.autoApproveIntoKg).toBe(false);
     expect(acceptance.scope.scopeLocked).toBe(true);
     expect(acceptance.scope.partnerSigned).toBe(true);
-    expect(acceptance.scope.lockedPilot).toBe(false);
-    expect(acceptance.scope.isHypothetical).toBe(true);
-    expect(acceptance.scope.agreementKind).toBe("hypothetical_test_only");
-    expect(acceptance.scope.testFixtureBanner).toContain("TEST FIXTURE");
+    expect(acceptance.scope.lockedPilot).toBe(true);
+    expect(acceptance.scope.isHypothetical).toBe(false);
+    expect(acceptance.scope.agreementKind).toBe("legal_mou");
+    expect(acceptance.scope.testFixtureBanner).toBeNull();
     expect(acceptance.summary.fail).toBe(0);
     expect(acceptance.summary.stage1FourOutputsGreen).toBe(true);
     expect(acceptance.summary.partnerReadyWalkthrough).toBe(true);
@@ -479,10 +481,9 @@ describe("Gate C checklist + publish outputs", () => {
     expect(acceptance.criteria.find((c) => c.id === "ac-gate-c")?.status).toBe("pass");
     expect(acceptance.criteria.find((c) => c.id === "ac-scope-lock")?.status).toBe("pass");
     expect(acceptance.criteria.find((c) => c.id === "ac-rubric")?.status).toBe("pass");
-    expect(acceptance.criteria.find((c) => c.id === "ac-partner-signed")?.status).toBe("pending");
+    expect(acceptance.criteria.find((c) => c.id === "ac-partner-signed")?.status).toBe("pass");
     expect(acceptance.criteria.find((c) => c.id === "ac-licensing")?.status).toBe("pending");
-    expect(acceptance.criteria.find((c) => c.id === "ac-thresholds")?.status).toBe("set_for_test");
-    expect(acceptance.summary.setForTest).toBeGreaterThanOrEqual(1);
+    expect(acceptance.criteria.find((c) => c.id === "ac-thresholds")?.status).toBe("pending");
     expect(acceptance.walkthroughSteps.length).toBeGreaterThanOrEqual(5);
     expect(acceptance.criteria.find((c) => c.id === "ac-discovery-ui")?.status).toBe("pass");
     expect(
@@ -498,8 +499,8 @@ describe("Gate C checklist + publish outputs", () => {
     expect(r2.notCds).toBe(true);
     expect(r2.autoApproveIntoKg).toBe(false);
     expect(r2.scopeLocked).toBe(true);
-    expect(r2.partnerSigned).toBe(true); // fixture path-testing
-    expect(r2.lockedPilot).toBe(false);
+    expect(r2.partnerSigned).toBe(true);
+    expect(r2.lockedPilot).toBe(true);
     expect(r2.hypothesisCards.length).toBeGreaterThanOrEqual(5);
     expect(r2.hypothesisCards.every((c) => c.autoApproved === false)).toBe(true);
     expect(r2.hypothesisCards.every((c) => c.literatureTests.every((t) => t.notClinicalProtocol))).toBe(
@@ -572,10 +573,10 @@ describe("Gate C checklist + publish outputs", () => {
     expect(bundle.discoveryCentre.partnerLock.disease).toBe("Rheumatoid arthritis");
     expect(bundle.discoveryCentre.partnerLock.scopeLocked).toBe(true);
     expect(bundle.discoveryCentre.partnerLock.partnerSigned).toBe(true);
-    expect(bundle.discoveryCentre.partnerLock.lockedPilot).toBe(false);
-    expect(bundle.discoveryCentre.partnerLock.isHypothetical).toBe(true);
+    expect(bundle.discoveryCentre.partnerLock.lockedPilot).toBe(true);
+    expect(bundle.discoveryCentre.partnerLock.isHypothetical).toBe(false);
     expect(bundle.discoveryCentre.partnerLock.provisionalLock).toBe(false);
-    expect(bundle.discoveryCentre.partnerLock.status).toBe("scope_locked");
+    expect(bundle.discoveryCentre.partnerLock.status).toBe("scoping");
     expect(bundle.discoveryCentre.discoveryLoop.steps.map((s) => s.id)).toEqual([
       "ask",
       "map",
@@ -687,9 +688,9 @@ describe("Gate C checklist + publish outputs", () => {
     expect(manifest.autoSurfaceCds).toBe(false);
     expect(manifest.partnerLock.scopeLocked).toBe(true);
     expect(manifest.partnerLock.partnerSigned).toBe(true);
-    expect(manifest.partnerLock.lockedPilot).toBe(false);
+    expect(manifest.partnerLock.lockedPilot).toBe(true);
     expect(manifest.partnerLock.provisionalLock).toBe(false);
-    expect(manifest.partnerLock.status).toBe("scope_locked");
+    expect(manifest.partnerLock.status).toBe("scoping");
     expect(manifest.counts.gateCPending).toBeGreaterThanOrEqual(9);
     expect(manifest.counts.partnerScopedEvidenceRows).toBeGreaterThanOrEqual(12);
     expect(manifest.acceptance.overallStage1Acceptance).toBe("green_with_pending");
@@ -697,11 +698,9 @@ describe("Gate C checklist + publish outputs", () => {
     expect(manifest.acceptance.partnerReadyWalkthrough).toBe(true);
     expect(manifest.acceptance.partnerSigned).toBe(true);
     expect(manifest.counts.stage1FourOutputsGreen).toBe(true);
-    expect(manifest.counts.acceptancePass).toBeGreaterThanOrEqual(9);
+    expect(manifest.counts.acceptancePass).toBeGreaterThanOrEqual(10);
     expect(manifest.counts.acceptancePending).toBeGreaterThanOrEqual(2);
-    expect(manifest.counts.acceptanceSetForTest).toBeGreaterThanOrEqual(1);
-    expect(manifest.counts.reviewRubricSetForTest).toBeGreaterThanOrEqual(1);
-    expect(manifest.counts.reviewRubricThresholdStatus).toBe("set_for_test");
+    expect(manifest.counts.reviewRubricThresholdStatus).toBe("pending");
     expect(manifest.counts.r2HypothesisCards).toBeGreaterThanOrEqual(5);
     expect(manifest.counts.r2RankedGaps).toBeGreaterThanOrEqual(3);
     expect(manifest.r2Validation.phase).toBe("7");

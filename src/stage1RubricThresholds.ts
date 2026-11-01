@@ -9,6 +9,7 @@
 
 import {
   HYPOTHETICAL_PARTNER_FIXTURE,
+  REAL_PARTNER_REPLACEMENT,
   USE_HYPOTHETICAL_PARTNER_FIXTURE,
 } from "./hypotheticalPartnerFixture";
 import type { PilotEvidencePack } from "./pilotEvidencePack";
@@ -109,15 +110,16 @@ export function getStage1RubricThresholds(): Stage1RubricThresholdsBundle {
     thresholdSource: "unset",
     thresholdStatus: "pending",
     replaceWithPartnerAgreedThresholds: true,
-    partnerId: null,
-    agreementKind: null,
+    partnerId: REAL_PARTNER_REPLACEMENT.partner.id,
+    agreementKind: REAL_PARTNER_REPLACEMENT.agreementKind,
     numeric: { ...HYPOTHETICAL_STAGE1_NUMERIC_THRESHOLDS },
     qualitativeFixturePlaceholders: {
       ...HYPOTHETICAL_STAGE1_QUALITATIVE_PLACEHOLDERS,
     },
     honesty: [
-      "Fixture disabled — numeric cut-offs remain engineering defaults until partner agrees.",
+      `Named partner ${REAL_PARTNER_REPLACEMENT.partner.id} active — numeric cut-offs remain engineering defaults until Apolo Pharma re-agrees (thresholdStatus=pending).`,
       "replaceWithPartnerAgreedThresholds=true.",
+      "Does not invent CDS or auto Gate C from these cut-offs.",
     ],
   };
 }

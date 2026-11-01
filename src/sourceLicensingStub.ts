@@ -315,6 +315,65 @@ const PMID_REVIEW: Record<string, ReviewEntry> = {
     publisherLicense: null,
     note: "PNAS 2016; free in PMC; Europe PMC license null / Crossref no CC URL — unknown (do not invent CC-BY).",
   },
+
+  // SSc deepen (CXCL4 / IL-6 / rituximab)
+  "24350901": {
+    status: "restricted",
+    doi: "10.1056/NEJMoa1114576",
+    note: "NEJM 2014 CXCL4/SSc; no OA/PMC VoR — cite metadata only.",
+  },
+  "29853453": {
+    status: "restricted",
+    doi: "10.1136/annrheumdis-2018-213031",
+    note: "Ann Rheum Dis 2018 faSScinate IL-6/TGF-β; paywall signal — cite metadata only.",
+  },
+  "19180481": {
+    status: "restricted",
+    doi: "10.1002/art.24249",
+    note: "Arthritis Rheum 2009 rituximab dcSSc; no OA/PMC — cite metadata only.",
+  },
+
+  // Gut deepen (Arpaia / Chang / Kelly)
+  "24226773": {
+    status: "restricted",
+    doi: "10.1038/nature12726",
+    note: "Nature 2013 Arpaia metabolites→Treg; no OA VoR — cite metadata only.",
+  },
+  "24390544": {
+    status: "ok_oa",
+    doi: "10.1073/pnas.1322269111",
+    pmcid: "PMC3926023",
+    publisherLicense: null,
+    note: "PNAS 2014 Chang butyrate/macrophage HDAC; PMC free author manuscript — cite + link; no invented CC-BY.",
+  },
+  "25865369": {
+    status: "unknown",
+    doi: "10.1016/j.chom.2015.03.005",
+    pmcid: "PMC4430144",
+    publisherLicense: null,
+    note: "Cell Host Microbe 2015 Kelly SCFA/HIF; PMC manuscript — cite + link; no invented CC-BY.",
+  },
+
+  // Neuro deepen (pharmacologic / trafficking / IR)
+  "11901203": {
+    status: "ok_oa",
+    doi: "10.1084/jem.20011714",
+    pmcid: "PMC2193606",
+    publisherLicense: "cc by-nc-sa",
+    note: "J Exp Med 2002 Bernik pharmacologic cholinergic pathway; PMC free — check Rockefeller reuse; cite + PMC.",
+  },
+  "19542466": {
+    status: "ok_oa",
+    doi: "10.4049/jimmunol.0802684",
+    pmcid: "PMC2763207",
+    publisherLicense: null,
+    note: "J Immunol 2009 Huston CD11b trafficking; PMC free — cite + link; no invented CC-BY.",
+  },
+  "12469056": {
+    status: "restricted",
+    doi: "10.1067/mva.2002.129643",
+    note: "J Vasc Surg 2002 Bernik IR TNF; no OA/PMC — cite metadata only.",
+  },
 };
 
 function pubmedUrl(pmid: string): string {

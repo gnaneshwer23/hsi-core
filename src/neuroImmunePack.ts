@@ -183,7 +183,7 @@ export function buildNeuroImmunePack(opts?: {
     honesty: [
       "Systems secondary axis only — Discovery ASK question remains the RA / anti-TNF research question.",
       "SSc dual-track A + gut P1.3 packs untouched; RA Stage 1 scopeLocked packs untouched.",
-      `partnerSigned=${lock.partnerSigned} (fixture path-testing only if isHypothetical); lockedPilot=false until legalBinding — no MoU invented.`,
+      `partnerSigned=${lock.partnerSigned}; lockedPilot=${lock.lockedPilot}; legalBinding=${lock.legalBinding}; isHypothetical=${lock.isHypothetical} — MoU operator-asserted when named; still not CDS.`,
       "Neighbourhood choice: vagus / cholinergic anti-inflammatory reflex — clearest landmark PMID chain vs microglia or BBB atlases.",
       "Human VNS–RA (Koopman) is hypothesized only — never a clinical brain–immune cure claim.",
       "Most mechanism PMIDs are rodent — hsiGrade stays uncertain (source-verified); not human therapeutic claims.",

@@ -175,7 +175,7 @@ export function buildSscPathwayPack(opts?: {
     honesty: [
       "Dual-track option A: RA Stage 1 scopeLocked packs untouched; this pack is parallel PRD MVP depth.",
       "Discovery ASK question remains the RA / anti-TNF research question.",
-      `partnerSigned=${lock.partnerSigned} (fixture path-testing only if isHypothetical); lockedPilot=false until legalBinding — no MoU invented.`,
+      `partnerSigned=${lock.partnerSigned}; lockedPilot=${lock.lockedPilot}; legalBinding=${lock.legalBinding}; isHypothetical=${lock.isHypothetical} — MoU operator-asserted when named; still not CDS.`,
       "EBV edge is hypothesized/uncertain only — do not overclaim.",
       "Cell cards carry CL·MONDO (and related) hints with bindStatus=hint_only — not full ontology bind.",
       "Not clinical decision support. autoApproveIntoKg=false.",

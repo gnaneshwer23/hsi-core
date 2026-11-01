@@ -1,29 +1,25 @@
 /**
- * TEST FIXTURE PARTNER — single swap point for a real org.
+ * Partner fixture swap point — single place to flip hypothetical → named org.
  *
- * ┌─────────────────────────────────────────────────────────────┐
- * │  TEST FIXTURE — replace before real pilot                   │
- * │  Not a MoU / MoA / named legal partner.                     │
- * │  Production ISI must ignore unless ALLOW_HYPOTHETICAL_PARTNER │
- * └─────────────────────────────────────────────────────────────┘
+ * Active path (2026-11-01): **Apolo Pharma** (`partner:apolo-pharma`).
+ * MoU / written-confirm paperwork is **operator-asserted** by workspace
+ * instruction — never invent emails, phone numbers, or named PI contacts.
  *
- * ## How to replace with a real partner
+ * Honesty: still **not CDS**; Gate C never auto-approves; RA Stage 1
+ * `activeScope` unchanged; dual-track SSc / gut / neuro continues.
  *
- * 1. Set `USE_HYPOTHETICAL_PARTNER_FIXTURE = false`.
- * 2. Fill `REAL_PARTNER_REPLACEMENT` (id, label, type=`named_partner`, …).
- * 3. Set `agreementKind` to a real confirm kind, `legalBinding=true`,
- *    `replaceWithRealPartner=false`, `isHypothetical=false`.
- * 4. Record the org in `docs/ISI_PILOT_PARTNER_SHORTLIST.md` (no invented emails).
- * 5. Re-agree licensing + rubric thresholds (fixture numbers are
- *    `set_for_test` only — see `src/stage1RubricThresholds.ts`); then
- *    `bun run outputs`.
+ * ## How this file works
  *
- * `partnerSigned=true` here is **path-testing only** under
- * `agreementKind: hypothetical_test_only`. `lockedPilot` stays false until
- * `legalBinding=true` (see `partnerLock.ts`).
+ * 1. `USE_HYPOTHETICAL_PARTNER_FIXTURE = false` → `REAL_PARTNER_REPLACEMENT`
+ *    feeds `partnerLock.ts` (`legalBinding` → `lockedPilot`).
+ * 2. Keep `HYPOTHETICAL_PARTNER_FIXTURE` as a recoverable test template only.
+ * 3. Record the org in `docs/ISI_PILOT_PARTNER_SHORTLIST.md` (no invented emails).
+ * 4. Rubric thresholds remain `set_for_test` / pending re-agree until the
+ *    partner formally re-agrees numbers (`src/stage1RubricThresholds.ts`).
+ * 5. Re-run `bun run outputs` after edits.
  */
 
-export const USE_HYPOTHETICAL_PARTNER_FIXTURE = true as boolean;
+export const USE_HYPOTHETICAL_PARTNER_FIXTURE = false as boolean;
 
 /** Env flag production ISI / Discovery consumers should require before trusting fixture partnerSigned. */
 export const ALLOW_HYPOTHETICAL_PARTNER_ENV = "ALLOW_HYPOTHETICAL_PARTNER";
@@ -55,8 +51,8 @@ export type HypotheticalPartnerFixtureFields = {
 };
 
 /**
- * Active hypothetical fixture. Edit THIS object (or flip
- * USE_HYPOTHETICAL_PARTNER_FIXTURE) when swapping to a real partner.
+ * Recoverable hypothetical fixture template (inactive while
+ * USE_HYPOTHETICAL_PARTNER_FIXTURE=false).
  */
 export const HYPOTHETICAL_PARTNER_FIXTURE: HypotheticalPartnerFixtureFields = {
   partner: {
@@ -80,21 +76,21 @@ export const HYPOTHETICAL_PARTNER_FIXTURE: HypotheticalPartnerFixtureFields = {
 };
 
 /**
- * Template for the real partner swap. Fill when USE_HYPOTHETICAL_PARTNER_FIXTURE=false.
- * Do not invent org names, emails, or MoUs.
+ * Active named partner (Apolo Pharma). MoU paperwork is operator-asserted
+ * by user instruction — do not invent emails / phones / PI names.
  */
 export const REAL_PARTNER_REPLACEMENT = {
   partner: {
-    id: "named:REPLACE_WITH_REAL_ORG_SLUG",
-    label: "REPLACE WITH REAL ORG NAME",
+    id: "partner:apolo-pharma",
+    label: "Apolo Pharma",
     type: "named_partner" as const,
-    region: "UK" as const,
+    region: "unspecified" as const,
     contactChannel: "programme_introduction" as const,
     outreachStatus: "confirmed" as const,
     notes:
-      "Replace after written confirmation of disease + research question. Record shortlist row. Still no invented emails.",
+      "Named pilot partner Apolo Pharma (id partner:apolo-pharma). MoU / written-confirm paperwork is operator-asserted by HSI workspace instruction (2026-11-01) — no invented emails, phones, or named PI contacts in code. Still not CDS; Gate C never auto-approves. RA Stage 1 activeScope unchanged; dual-track SSc/gut/neuro continues. partnerClearedCount licensing + rubric numeric re-agree remain open.",
   },
-  agreementKind: "written_confirm" as PartnerAgreementKind,
+  agreementKind: "legal_mou" as PartnerAgreementKind,
   replaceWithRealPartner: false,
   legalBinding: true,
   isHypothetical: false,

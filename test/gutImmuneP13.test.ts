@@ -13,7 +13,7 @@ import {
 describe("P1.3 gut–immune SCFA ↔ mucosal Treg/Th17", () => {
   test("deep seeds land with verified PMIDs and honest uncertain grades", () => {
     expect(gutDeepSeedsLanded()).toBe(true);
-    expect(HSI_GUT_SEED_EDGES.length).toBe(9);
+    expect(HSI_GUT_SEED_EDGES.length).toBe(12);
     expect(GUT_PATHWAY_META.primaryPmids).toEqual([
       "21205640",
       "23842501",
@@ -24,6 +24,9 @@ describe("P1.3 gut–immune SCFA ↔ mucosal Treg/Th17", () => {
       "19625695",
       "24412617",
       "29163504",
+      "24226773",
+      "24390544",
+      "25865369",
     ]);
 
     for (const edge of HSI_GUT_SEED_EDGES) {
@@ -52,7 +55,7 @@ describe("P1.3 gut–immune SCFA ↔ mucosal Treg/Th17", () => {
     expect(pack.notCds).toBe(true);
     expect(pack.autoApproveIntoKg).toBe(false);
     expect(pack.stage1ActiveScope.diseaseId).toBe("ra");
-    expect(pack.stage1ActiveScope.partnerSigned).toBe(true); // fixture
+    expect(pack.stage1ActiveScope.partnerSigned).toBe(true);
     expect(
       pack.competingExplanations.some((c) => c.id.includes("th17-promote")),
     ).toBe(true);
@@ -76,9 +79,10 @@ describe("P1.3 gut–immune SCFA ↔ mucosal Treg/Th17", () => {
     const lock = getPartnerLock();
     expect(lock.scopeLocked).toBe(true);
     expect(lock.disease?.id).toBe("ra");
-    expect(lock.partnerSigned).toBe(true); // fixture
-    expect(lock.lockedPilot).toBe(false);
-    expect(lock.isHypothetical).toBe(true);
+    expect(lock.partnerSigned).toBe(true);
+    expect(lock.lockedPilot).toBe(true);
+    expect(lock.isHypothetical).toBe(false);
+    expect(lock.partner?.id).toBe("partner:apolo-pharma");
     expect(lock.verticalStrategy).toBe("dual_track");
 
     const decision = getVerticalDecision();
