@@ -1,12 +1,12 @@
 /**
- * ISI pilot evidence pack — disease-agnostic template for M0 walkthroughs.
+ * ISI pilot evidence pack — Stage 1 walkthrough artifact.
  *
  * Covers the four pilot workflow outputs (evidence map, entity slice,
  * competing explanations, expert shortlist) plus a research-brief shell.
- * Disease + question stay TBD. No fake partner data. No patient-level CDS.
  *
- * Pack-2 adds Discovery Centre vocabulary (ASK→MAP→REVIEW loop + illustrative
- * disease contexts) and claim→LOINC fields on evidence rows — still no UI.
+ * Pack-2 + provisional partner lock: may surface a provisional disease/question
+ * from the strongest seed pathway while lockedPilot stays false. No fake
+ * partner-signed claims. No patient-level CDS. No interactive Discovery UI.
  */
 import {
   buildDiscoveryCentreMeta,
@@ -16,6 +16,11 @@ import { HSI_GRADE_INFO, type HsiGrade } from "./grades";
 import { buildSchemaGapReport } from "./gapReport";
 import { buildGateCChecklist } from "./gateCChecklist";
 import { linkClaimToMarker } from "./markers";
+import {
+  getPartnerLock,
+  isProvisionalPartnerLock,
+  type HsiPartnerLock,
+} from "./partnerLock";
 import {
   HSI_T2D_IMMUNO_SEED_CLAIMS,
   HSI_T2D_IMMUNO_SEED_EDGES,
@@ -40,7 +45,10 @@ export type PilotQuestionProject = {
   };
   owner: string;
   workspace: string;
-  status: "template" | "scoping" | "active" | "archived";
+  status: "template" | "provisional" | "scoping" | "active" | "archived";
+  /** Mirrors partner lock honesty flags. */
+  lockedPilot: boolean;
+  provisionalLock: boolean;
   evidenceSnapshotRef: string;
   createdAt: string;
   updatedAt: string;
@@ -120,9 +128,15 @@ export type PilotEvidencePack = {
   noPatientLevelActions: true;
   autoApproveIntoKg: false;
   generatedAt: string;
-  /** Locked only after partner conversations — never pre-assigned here. */
-  disease: "TBD";
-  researchQuestion: "TBD — lock with partner";
+  /**
+   * Disease / question may be provisional scaffold values.
+   * Read lockedPilot / provisionalLock — never treat as partner-signed alone.
+   */
+  disease: string;
+  researchQuestion: string;
+  lockedPilot: boolean;
+  provisionalLock: boolean;
+  partnerLock: HsiPartnerLock;
   substrateNote: string;
   /** Discovery Centre framing as export metadata — not an interactive UI. */
   discoveryCentre: HsiDiscoveryCentreMeta;
@@ -130,7 +144,10 @@ export type PilotEvidencePack = {
   clinicalBoundary: string[];
   questionProject: PilotQuestionProject;
   evidenceMap: PilotEvidenceMapRow[];
+  /** Full seed map (includes T2D + illustrative stubs). */
   entitySlice: PilotEntitySlice;
+  /** Partner-pathway slice when provisional/locked (RA/TNF focus). */
+  partnerScopedEntitySlice: PilotEntitySlice;
   competingExplanations: PilotExplanationSlot[];
   uncertainties: PilotExplanationSlot[];
   expertShortlist: PilotExpertItem[];
@@ -146,9 +163,12 @@ export type PilotEvidencePack = {
     gapReportMd: string;
     gateCChecklistJson: string;
     gateCChecklistMd: string;
+    reviewRubricJson: string;
+    reviewRubricMd: string;
   };
   summary: {
     evidenceMapRows: number;
+    partnerScopedEvidenceRows: number;
     gradeCounts: Record<HsiGrade, number>;
     missingSourceLabels: number;
     claimsWithLoinc: number;
@@ -237,7 +257,7 @@ function classifyLabel(
     lower.includes("metformin") ||
     lower.includes("therapy") ||
     lower.includes("inhibitor") ||
-    lower.includes("antibody") ||
+    lower.includes("anti-tnf") ||
     lower.includes("blockade")
   ) {
     return "treatment";
@@ -362,23 +382,36 @@ function bucketEntities(edges: readonly HsiEdge[]): PilotEntitySlice {
     typed: [...typedByKey.values()].sort((a, b) =>
       a.kind === b.kind ? a.label.localeCompare(b.label) : a.kind.localeCompare(b.kind),
     ),
-    note: "Buckets are heuristic from illustrative seed labels (T2D + RA/SLE/PsO/IBD pathway stubs). Re-slice after the partner locks disease + question. Empty buckets mean unknown, not 'no biology'. Illustrative disease contexts are not locked pilot indications.",
+    note: "Buckets are heuristic from seed labels (T2D + provisional RA pathway + illustrative SLE/PsO/IBD stubs). Empty buckets mean unknown, not 'no biology'. provisionalLock ≠ partner-signed lockedPilot.",
   };
 }
 
+function partnerScopedEdges(
+  edges: readonly HsiEdge[],
+  lock: HsiPartnerLock,
+): HsiEdge[] {
+  const ids = new Set(lock.seedPathway?.primaryEdgeIds ?? []);
+  if (ids.size === 0) return [];
+  return edges.filter((e) => ids.has(e.id));
+}
+
 /**
- * Build a pilot evidence pack from current seeds (illustrative substrate only).
- * Disease and research question remain TBD placeholders.
+ * Build a pilot evidence pack from current seeds.
+ * Surfaces provisional disease/question when provisionalLock is set; never claims partner-signed.
  */
 export function buildPilotEvidencePack(opts?: {
   generatedAt?: string;
   evidenceSnapshotRef?: string;
+  lock?: HsiPartnerLock;
 }): PilotEvidencePack {
   const generatedAt = opts?.generatedAt ?? new Date().toISOString();
+  const lock = opts?.lock ?? getPartnerLock();
   const evidenceSnapshotRef =
     opts?.evidenceSnapshotRef ?? "dist/outputs/latest/hsi-isi-export.json";
   const edges = HSI_T2D_IMMUNO_SEED_EDGES;
+  const scoped = partnerScopedEdges(edges, lock);
   const evidenceMap = edges.map(toEvidenceRow);
+  const scopedMap = scoped.map(toEvidenceRow);
   const gradeCounts: Record<HsiGrade, number> = {
     established: 0,
     uncertain: 0,
@@ -390,41 +423,53 @@ export function buildPilotEvidencePack(opts?: {
 
   const gap = buildSchemaGapReport({ generatedAt });
   const gateC = buildGateCChecklist({ generatedAt });
-  const discoveryCentre = buildDiscoveryCentreMeta();
+  const discoveryCentre = buildDiscoveryCentreMeta(lock);
+  const provisional = isProvisionalPartnerLock(lock);
+
+  const disease = lock.disease?.label ?? "TBD";
+  const researchQuestion =
+    lock.researchQuestion ?? "TBD — lock with partner";
 
   const competingExplanations: PilotExplanationSlot[] = [
     {
-      id: "expl-template-a",
-      label: "Competing explanation A (partner question TBD)",
-      status: "template",
-      relatedClaimIds: [],
-      note: "Fill after scoping — keep as a hypothesis, not a fact, until claim IDs are attached.",
+      id: "expl-ra-tnf-centric",
+      label: "TNF-centric framing of RA synovial inflammation and anti-TNF benefit",
+      status: provisional ? "from_illustrative_pathway" : "template",
+      relatedClaimIds: ["HSI-C-RA-001", "HSI-C-RA-003", "HSI-C-RA-006", "HSI-C-IM-002"],
+      note: provisional
+        ? "Provisional competing frame for the anti-TNF response question — not partner-signed. Keep as hypothesis until claim IDs survive expert review."
+        : "Fill after partner lock.",
     },
     {
-      id: "expl-template-b",
-      label: "Competing explanation B (partner question TBD)",
-      status: "template",
-      relatedClaimIds: [],
-      note: "Preserve disagreement; do not collapse into a single confident narrative.",
+      id: "expl-ra-multi-cytokine",
+      label: "Multi-cytokine / IL-6 axis framing (including anti-TNF inadequate responders)",
+      status: provisional ? "from_illustrative_pathway" : "template",
+      relatedClaimIds: ["HSI-C-RA-004", "HSI-C-RA-005", "HSI-C-IM-003"],
+      note: provisional
+        ? "Preserves disagreement with TNF-only narratives. PMID 18625622 is related_axis evidence — curator must re-check S-P-O before Gate C."
+        : "Preserve disagreement; do not collapse into a single confident narrative.",
     },
     {
-      id: "expl-ra-tnf-axis",
-      label: "TNF-centric vs multi-cytokine framing in RA (illustrative)",
-      status: "from_illustrative_pathway",
-      relatedClaimIds: ["HSI-C-RA-001", "HSI-C-IM-002", "HSI-C-IM-003"],
-      note: "Illustrative competing frame from Discovery Centre RA context — not a partner-scoped conclusion. Attach partner claim IDs after lock.",
+      id: "expl-ra-acpa-subgroup",
+      label: "Serologic subgroup framing (ACPA / anti-CCP) vs cytokine-axis response",
+      status: provisional ? "from_illustrative_pathway" : "template",
+      relatedClaimIds: ["HSI-C-RA-002"],
+      note: "ACPA is a workup biomarker (LOINC 53031-9); do not equate seropositivity with anti-TNF response prediction without partner-scoped evidence.",
     },
     {
       id: "expl-sle-ifn-axis",
-      label: "Type I IFN–high vs alternate SLE endotypes (illustrative)",
+      label: "Type I IFN–high vs alternate SLE endotypes (illustrative only)",
       status: "from_illustrative_pathway",
       relatedClaimIds: ["HSI-C-SLE-001", "HSI-C-SLE-002"],
-      note: "Illustrative SLE uncertainty slot — substrate scaffolding only until a named partner locks the question.",
+      note: "Not the provisional pilot pathway — retained as Discovery Centre conversation stub only.",
     },
   ];
 
-  const uncertainRows = evidenceMap.filter((r) => r.evidenceGrade === "uncertain").slice(0, 5);
-  const uncertainties: PilotExplanationSlot[] = uncertainRows.map((r, i) => ({
+  const uncertainSource =
+    scopedMap.length > 0
+      ? scopedMap.filter((r) => r.evidenceGrade === "uncertain")
+      : evidenceMap.filter((r) => r.evidenceGrade === "uncertain");
+  const uncertainties: PilotExplanationSlot[] = uncertainSource.slice(0, 6).map((r, i) => ({
     id: `unc-${i + 1}`,
     label: `Uncertainty around ${r.subject} → ${r.object}`,
     status: "from_uncertain_grade",
@@ -432,18 +477,20 @@ export function buildPilotEvidencePack(opts?: {
     note: r.limitations ?? "Grade is uncertain — inspect source and study context before synthesis.",
   }));
 
+  const pathwayClaimSet = new Set(lock.seedPathway?.primaryClaimIds ?? []);
+  const pendingGateC = gateC.rows.filter((r) => r.gateCStatus === "pending");
+  const pathwayPending = pendingGateC.filter((r) => pathwayClaimSet.has(r.claimId));
+  const otherPending = pendingGateC.filter((r) => !pathwayClaimSet.has(r.claimId));
+
   const expertShortlist: PilotExpertItem[] = [
-    ...gateC.rows
-      .filter((r) => r.gateCStatus === "pending")
-      .slice(0, 8)
-      .map((r, i) => ({
-        id: `gatec-${i + 1}`,
-        kind: "pending_gate_c" as const,
-        text: `Review Gate C for ${r.isiRelationshipId}: ${r.spoNote}`,
-        relatedClaimIds: [r.claimId],
-        autoApproved: false as const,
-      })),
-    ...gap.nextActions.slice(0, 4).map((text, i) => ({
+    ...[...pathwayPending, ...otherPending].slice(0, 10).map((r, i) => ({
+      id: `gatec-${i + 1}`,
+      kind: "pending_gate_c" as const,
+      text: `Review Gate C for ${r.isiRelationshipId}: ${r.spoNote}`,
+      relatedClaimIds: [r.claimId],
+      autoApproved: false as const,
+    })),
+    ...gap.nextActions.slice(0, 3).map((text, i) => ({
       id: `gap-${i + 1}`,
       kind: "gap" as const,
       text,
@@ -451,20 +498,28 @@ export function buildPilotEvidencePack(opts?: {
       autoApproved: false as const,
     })),
     {
-      id: "hyp-1",
+      id: "hyp-ra-response-het",
       kind: "hypothesis",
-      text: "Candidate hypothesis slot — attach claim IDs after partner question is locked; never auto-approve into product KG.",
-      relatedClaimIds: [],
+      text: provisional
+        ? "Provisional hypothesis: anti-TNF inadequate responders enrich for IL-6-axis biology that warrants separate evidence mapping before next-line study design — expert must reject or refine; autoApproved=false."
+        : "Candidate hypothesis slot — attach claim IDs after partner question is locked; never auto-approve into product KG.",
+      relatedClaimIds: provisional ? ["HSI-C-RA-003", "HSI-C-RA-005", "HSI-C-RA-004"] : [],
       autoApproved: false,
     },
     {
-      id: "hyp-illustrative-ra",
+      id: "hyp-ra-acpa-scope",
       kind: "hypothesis",
-      text: "Illustrative RA hypothesis slot (TNF / ACPA axis) — replace with partner-scoped gap after disease lock; autoApproved=false.",
-      relatedClaimIds: ["HSI-C-RA-001", "HSI-C-RA-002"],
+      text: "Gap: clarify whether ACPA status should be an inclusion axis for the partner question or only a background serology context — do not invent predictive claims.",
+      relatedClaimIds: ["HSI-C-RA-002"],
       autoApproved: false,
     },
   ];
+
+  const partnerScopedSlice = bucketEntities(scoped.length > 0 ? scoped : []);
+  if (scoped.length > 0) {
+    partnerScopedSlice.note =
+      "Partner-scoped slice for the provisional RA / anti-TNF response pathway (lockedPilot=false). Not a signed partner corpus.";
+  }
 
   return {
     schemaVersion: PILOT_EVIDENCE_PACK_SCHEMA,
@@ -472,10 +527,14 @@ export function buildPilotEvidencePack(opts?: {
     noPatientLevelActions: true,
     autoApproveIntoKg: false,
     generatedAt,
-    disease: "TBD",
-    researchQuestion: "TBD — lock with partner",
-    substrateNote:
-      "Evidence rows include illustrative T2D / immuno-metabolic seeds plus Discovery Centre disease-context pathway stubs (RA/SLE/PsO/IBD). None are a locked pilot indication or partner data.",
+    disease,
+    researchQuestion,
+    lockedPilot: lock.lockedPilot,
+    provisionalLock: lock.provisionalLock,
+    partnerLock: lock,
+    substrateNote: provisional
+      ? "Provisional partner lock: rheumatoid arthritis + anti-TNF response heterogeneity. lockedPilot=false — not partner-signed. Full evidenceMap still includes T2D / immuno-metabolic + SLE/PsO/IBD stubs; use partnerScopedEntitySlice for the RA pathway walkthrough."
+      : "Evidence rows include substrate seeds. Disease/question TBD until a named partner locks them.",
     discoveryCentre,
     gradeDefinitions: HSI_GRADE_INFO,
     clinicalBoundary: [
@@ -486,31 +545,44 @@ export function buildPilotEvidencePack(opts?: {
       "No Akeno/Aksh patient-level CDS in this pack",
     ],
     questionProject: {
-      projectId: "pilot-q-template",
-      question: "TBD — lock with partner",
-      disease: "TBD",
-      scope: {
-        population: "unknown",
-        tissue: "unknown",
-        cellType: "unknown",
-        mechanismOrBiomarkerOrTreatmentFocus: "unknown",
-        timeWindow: "unknown",
-      },
-      owner: "TBD",
-      workspace: "pilot-template",
-      status: "template",
+      projectId: provisional ? "pilot-q-provisional-ra-tnf" : "pilot-q-template",
+      question: researchQuestion,
+      disease,
+      scope: provisional
+        ? {
+            population: "adults with rheumatoid arthritis (scope TBD with partner)",
+            tissue: "synovium / systemic inflammatory tone (TBD)",
+            cellType: "synovial macrophages / cytokine-producing myeloid cells (TBD)",
+            mechanismOrBiomarkerOrTreatmentFocus:
+              "anti-TNF response heterogeneity; TNF vs IL-6 axes; ACPA serology context",
+            timeWindow: "unknown",
+          }
+        : {
+            population: "unknown",
+            tissue: "unknown",
+            cellType: "unknown",
+            mechanismOrBiomarkerOrTreatmentFocus: "unknown",
+            timeWindow: "unknown",
+          },
+      owner: lock.partner?.label ?? "TBD",
+      workspace: provisional ? "pilot-provisional-ra" : "pilot-template",
+      status: provisional ? "provisional" : "template",
+      lockedPilot: lock.lockedPilot,
+      provisionalLock: lock.provisionalLock,
       evidenceSnapshotRef,
       createdAt: generatedAt,
       updatedAt: generatedAt,
     },
     evidenceMap,
     entitySlice: bucketEntities(edges),
+    partnerScopedEntitySlice: partnerScopedSlice,
     competingExplanations,
     uncertainties,
     expertShortlist,
     researchBriefShell: {
       sections: [
         "question_and_scope",
+        "partner_lock_honesty",
         "discovery_loop_framing",
         "findings",
         "supporting_evidence",
@@ -532,9 +604,12 @@ export function buildPilotEvidencePack(opts?: {
       gapReportMd: "hsi-gap-report.md",
       gateCChecklistJson: "gate-c-checklist.json",
       gateCChecklistMd: "gate-c-checklist.md",
+      reviewRubricJson: "hsi-pilot-review-rubric.json",
+      reviewRubricMd: "hsi-pilot-review-rubric.md",
     },
     summary: {
       evidenceMapRows: evidenceMap.length,
+      partnerScopedEvidenceRows: scopedMap.length,
       gradeCounts,
       missingSourceLabels: evidenceMap.filter((r) => r.source.missing.length > 0).length,
       claimsWithLoinc: evidenceMap.filter((r) => Boolean(r.marker.loinc)).length,
@@ -543,11 +618,13 @@ export function buildPilotEvidencePack(opts?: {
       illustrativeDiseaseContexts: discoveryCentre.illustrativeDiseaseContexts.length,
     },
     nextActions: [
-      "Lock disease + research question with a named partner (outreach — not more substrate).",
-      "Replace illustrative seed slice with partner-scoped literature once rights are clear.",
-      "Agree review rubric and success thresholds before user testing.",
+      provisional
+        ? "Keep lockedPilot=false until a named partner confirms disease + question (see partnerLock.flipRequirements)."
+        : "Lock disease + research question with a named partner (outreach — not more substrate).",
+      "Human-review the provisional RA pathway against hsi-pilot-review-rubric.* and the four pack outputs.",
+      "Agree source licensing + success thresholds with the partner before user testing.",
       "Keep Akeno/Aksh patient-level pathways behind M4 / governance gates.",
-      "Do not treat RA/SLE/PsO/IBD illustrative contexts as the selected pilot indication.",
+      "Do not treat SLE/PsO/IBD illustrative stubs as the selected pilot indication.",
     ],
   };
 }
@@ -570,7 +647,20 @@ export function serializePilotEvidencePackMarkdown(
     `**Disease:** ${pack.disease}  `,
     `**Research question:** ${pack.researchQuestion}`,
     "",
+    `**lockedPilot:** \`${pack.lockedPilot}\` · **provisionalLock:** \`${pack.provisionalLock}\` · **status:** \`${pack.partnerLock.status}\``,
+    "",
     `> ${pack.substrateNote}`,
+    "",
+    "## Partner lock (honesty)",
+    "",
+    `| Field | Value |`,
+    `|-------|-------|`,
+    `| partner id | \`${pack.partnerLock.partner?.id ?? "TBD"}\` |`,
+    `| partner | ${pack.partnerLock.partner?.label ?? "TBD"} |`,
+    `| outreachStatus | \`${pack.partnerLock.partner?.outreachStatus ?? "none"}\` |`,
+    `| seed pathway | ${pack.partnerLock.seedPathway?.label ?? "—"} |`,
+    "",
+    "> provisionalLock ≠ partner-signed. Do not claim a live pilot contract from this pack alone.",
     "",
     "## Discovery loop (metadata only)",
     "",
@@ -582,7 +672,7 @@ export function serializePilotEvidencePackMarkdown(
   }
   lines.push(
     "",
-    "### Illustrative disease contexts (not locked)",
+    "### Disease contexts (RA = provisional scaffold; others illustrative)",
     "",
   );
   for (const d of pack.discoveryCentre.illustrativeDiseaseContexts) {
@@ -598,7 +688,7 @@ export function serializePilotEvidencePackMarkdown(
 
   lines.push(
     "",
-    "## Question project (template)",
+    "## Question project",
     "",
     `| Field | Value |`,
     `|-------|-------|`,
@@ -611,6 +701,8 @@ export function serializePilotEvidencePackMarkdown(
     `| focus | ${pack.questionProject.scope.mechanismOrBiomarkerOrTreatmentFocus} |`,
     `| timeWindow | ${pack.questionProject.scope.timeWindow} |`,
     `| status | ${pack.questionProject.status} |`,
+    `| lockedPilot | ${pack.questionProject.lockedPilot} |`,
+    `| provisionalLock | ${pack.questionProject.provisionalLock} |`,
     `| evidence snapshot | ${pack.questionProject.evidenceSnapshotRef} |`,
     "",
     "## Grade definitions",
@@ -624,13 +716,18 @@ export function serializePilotEvidencePackMarkdown(
     "",
     "## 1. Evidence map (sample)",
     "",
-    `Rows: ${pack.summary.evidenceMapRows} · established=${pack.summary.gradeCounts.established}, uncertain=${pack.summary.gradeCounts.uncertain}, unexplored=${pack.summary.gradeCounts.unexplored} · rows with missing source fields: ${pack.summary.missingSourceLabels} · claims with LOINC: ${pack.summary.claimsWithLoinc}`,
+    `Rows: ${pack.summary.evidenceMapRows} (partner-scoped: ${pack.summary.partnerScopedEvidenceRows}) · established=${pack.summary.gradeCounts.established}, uncertain=${pack.summary.gradeCounts.uncertain}, unexplored=${pack.summary.gradeCounts.unexplored} · rows with missing source fields: ${pack.summary.missingSourceLabels} · claims with LOINC: ${pack.summary.claimsWithLoinc}`,
     "",
     "Graph edges are navigational links, not proof of causality. Conflicting / uncertain grades stay visible.",
     "",
+    "### Partner-scoped pathway rows (prefer for walkthrough)",
+    "",
   );
 
-  for (const row of pack.evidenceMap.slice(0, 12)) {
+  const pathwayIds = new Set(pack.partnerLock.seedPathway?.primaryClaimIds ?? []);
+  const scopedRows = pack.evidenceMap.filter((r) => pathwayIds.has(r.claimId));
+  const sampleRows = scopedRows.length > 0 ? scopedRows : pack.evidenceMap.slice(0, 12);
+  for (const row of sampleRows) {
     const src =
       row.source.pmid != null
         ? `PMID:${row.source.pmid}`
@@ -642,11 +739,43 @@ export function serializePilotEvidencePackMarkdown(
       `- \`${row.claimId}\` [${row.evidenceGrade}/${row.reviewStatus}] ${row.subject} — ${row.relationship} — ${row.object} · ${src}${loinc}${miss}`,
     );
   }
-  if (pack.evidenceMap.length > 12) {
+  if (scopedRows.length > 0 && pack.evidenceMap.length > scopedRows.length) {
+    lines.push(`- … ${pack.evidenceMap.length - scopedRows.length} additional substrate rows in JSON`);
+  } else if (pack.evidenceMap.length > 12 && scopedRows.length === 0) {
     lines.push(`- … ${pack.evidenceMap.length - 12} more rows in JSON`);
   }
 
-  lines.push("", "## 2. Entity slice", "", pack.entitySlice.note, "");
+  lines.push(
+    "",
+    "## 2. Entity slice",
+    "",
+    "### Partner-scoped",
+    "",
+    pack.partnerScopedEntitySlice.note,
+    "",
+  );
+  const scopedSliceEntries: [string, string[]][] = [
+    ["Diseases", pack.partnerScopedEntitySlice.diseases],
+    ["Cells", pack.partnerScopedEntitySlice.cells],
+    ["Pathways / mechanisms", pack.partnerScopedEntitySlice.pathwaysOrMechanisms],
+    ["Biomarkers", pack.partnerScopedEntitySlice.biomarkers],
+    ["Treatments", pack.partnerScopedEntitySlice.treatments],
+    ["Studies", pack.partnerScopedEntitySlice.studies],
+  ];
+  for (const [title, items] of scopedSliceEntries) {
+    lines.push(`#### ${title}`, "");
+    if (items.length === 0) {
+      lines.push("- *(unknown / empty — not 'no evidence')*", "");
+    } else {
+      for (const item of items.slice(0, 15)) {
+        lines.push(`- ${item}`);
+      }
+      if (items.length > 15) lines.push(`- … ${items.length - 15} more`);
+      lines.push("");
+    }
+  }
+
+  lines.push("### Full substrate (includes non-pilot stubs)", "", pack.entitySlice.note, "");
   const sliceEntries: [string, string[]][] = [
     ["Diseases", pack.entitySlice.diseases],
     ["Cells", pack.entitySlice.cells],
@@ -656,14 +785,14 @@ export function serializePilotEvidencePackMarkdown(
     ["Studies", pack.entitySlice.studies],
   ];
   for (const [title, items] of sliceEntries) {
-    lines.push(`### ${title}`, "");
+    lines.push(`#### ${title}`, "");
     if (items.length === 0) {
       lines.push("- *(unknown / empty — not 'no evidence')*", "");
     } else {
-      for (const item of items.slice(0, 15)) {
+      for (const item of items.slice(0, 10)) {
         lines.push(`- ${item}`);
       }
-      if (items.length > 15) lines.push(`- … ${items.length - 15} more`);
+      if (items.length > 10) lines.push(`- … ${items.length - 10} more`);
       lines.push("");
     }
   }

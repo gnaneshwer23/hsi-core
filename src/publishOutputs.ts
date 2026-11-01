@@ -32,6 +32,12 @@ import {
   serializePilotEvidencePack,
   serializePilotEvidencePackMarkdown,
 } from "./pilotEvidencePack";
+import {
+  buildPilotReviewRubric,
+  serializePilotReviewRubric,
+  serializePilotReviewRubricMarkdown,
+} from "./pilotReviewRubric";
+import { getPartnerLock, partnerLockExportPointer } from "./partnerLock";
 import { validateHsiEdge } from "./validate";
 
 function packageVersion(cwd: string): string {
@@ -195,9 +201,16 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
   const hitlStub = buildAkshHitlStubBundle();
   const gapReport = buildSchemaGapReport({ generatedAt });
   const gateC = buildGateCChecklist({ generatedAt });
+  const partnerLock = getPartnerLock();
   const pilotPack = buildPilotEvidencePack({
     generatedAt,
     evidenceSnapshotRef: `dist/outputs/${bundleId}/hsi-isi-export.json`,
+    lock: partnerLock,
+  });
+  const reviewRubric = buildPilotReviewRubric({
+    generatedAt,
+    lock: partnerLock,
+    pack: pilotPack,
   });
 
   const fileMap: Record<string, string> = {
@@ -211,6 +224,9 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     "gate-c-checklist.md": serializeGateCChecklistMarkdown(gateC),
     "hsi-pilot-evidence-pack.json": serializePilotEvidencePack(pilotPack),
     "hsi-pilot-evidence-pack.md": serializePilotEvidencePackMarkdown(pilotPack),
+    "hsi-pilot-review-rubric.json": serializePilotReviewRubric(reviewRubric),
+    "hsi-pilot-review-rubric.md": serializePilotReviewRubricMarkdown(reviewRubric),
+    "hsi-partner-lock.json": `${JSON.stringify(partnerLock, null, 2)}\n`,
   };
 
   const files: string[] = [];
@@ -241,6 +257,9 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       gateCChecklistMd: "gate-c-checklist.md",
       pilotEvidencePackJson: "hsi-pilot-evidence-pack.json",
       pilotEvidencePackMd: "hsi-pilot-evidence-pack.md",
+      pilotReviewRubricJson: "hsi-pilot-review-rubric.json",
+      pilotReviewRubricMd: "hsi-pilot-review-rubric.md",
+      partnerLockJson: "hsi-partner-lock.json",
     },
     counts: {
       isiEdges: isiBundle.edges.length,
@@ -250,15 +269,19 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       gapRows: gapReport.gaps.length,
       gateCPending: gateC.summary.pendingGateC,
       pilotEvidenceMapRows: pilotPack.summary.evidenceMapRows,
+      partnerScopedEvidenceRows: pilotPack.summary.partnerScopedEvidenceRows,
       claimsWithLoinc: pilotPack.summary.claimsWithLoinc,
       illustrativeDiseaseContexts: pilotPack.summary.illustrativeDiseaseContexts,
+      reviewRubricReadyForHuman: reviewRubric.summary.readyForHuman,
+      reviewRubricBlockedOnPartner: reviewRubric.summary.blockedOnPartner,
     },
     discoveryLoop: isiBundle.discoveryCentre.discoveryLoop.framing,
-    partnerLock: isiBundle.discoveryCentre.partnerLock,
+    partnerLock: partnerLockExportPointer(partnerLock),
     consumerNotes: [
       "ISI: discovery / Ask / Radar only — use hsi-isi-export.json + hsi-isi-rel-map.json.",
-      "ISI pilot walkthrough: hsi-pilot-evidence-pack.* (disease/question TBD; no patient CDS).",
-      "Discovery Centre vocabulary is metadata only (ASK→MAP→REVIEW… + illustrative RA/SLE/PsO/IBD) — not an interactive UI.",
+      "ISI pilot walkthrough: hsi-pilot-evidence-pack.* + hsi-pilot-review-rubric.* (provisional RA/TNF scaffold; lockedPilot=false; no patient CDS).",
+      "Partner lock honesty: hsi-partner-lock.json — provisionalLock ≠ partner-signed.",
+      "Discovery Centre vocabulary is metadata only (ASK→MAP→REVIEW… + disease contexts) — not an interactive UI.",
       "Aksh: HITL map pointers only — use hsi-aksh-node-map.json + hsi-aksh-hitl-cards.json; CDS stays closed on seeds.",
       "Gate C: human checklist in gate-c-checklist.*; Neon approve is outside this repo (ISI autumn-snow only — never HSI red-wave).",
       "Regenerate with: bun run outputs",

@@ -474,8 +474,9 @@ const SPECS: SeedSpec[] = [
     bridgeCandidate: true,
   },
 
-  // —— Illustrative immune pathways (Discovery Centre disease picker contexts) ——
-  // RA / SLE / psoriasis / IBD — NOT locked pilot indications. Placeholder until partner lock.
+  // —— RA / TNF pathway (provisional partner lock scaffold — lockedPilot=false) ——
+  // Anchored for partner-scoped literature slice under provisionalLock (see partnerLock.ts).
+  // SLE / psoriasis / IBD below remain illustrative-only stubs.
   {
     id: "HSI-E-RA-001",
     edgeType: "contributes_to",
@@ -485,7 +486,7 @@ const SPECS: SeedSpec[] = [
     objectLabel: "Rheumatoid arthritis",
     claimId: "HSI-C-RA-001",
     assertion:
-      "TNF-α contributes to synovial inflammation in rheumatoid arthritis (illustrative pathway — not a locked pilot).",
+      "TNF-α contributes to synovial inflammation in rheumatoid arthritis (provisional pathway seed — not a partner-signed lock).",
     review: "source-verified",
     teaching: "associative",
     domain: "autoimmunity",
@@ -495,7 +496,7 @@ const SPECS: SeedSpec[] = [
       "Feldmann M, Maini RN. Annu Rev Immunol 2001 — Anti-TNF-α therapy of rheumatoid arthritis: what have we learned?",
     sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/11244034/",
     notes:
-      "Illustrative RA pathway seed. PMID 11244034 verified. Maps toward ISI REL-M001-contributes_to-D001. Disease lock remains TBD with partner. Gate C = human Neon approve only.",
+      "Provisional RA pathway seed (partnerLock.provisionalLock=true; lockedPilot=false). PMID 11244034 verified. Maps toward ISI REL-M001-contributes_to-D001. Gate C handoff pattern mirrors PMID 16382236 (evidence-linked · pending human Neon approve). Not partner-signed.",
   },
   {
     id: "HSI-E-RA-002",
@@ -506,13 +507,101 @@ const SPECS: SeedSpec[] = [
     objectLabel: "Rheumatoid arthritis",
     claimId: "HSI-C-RA-002",
     assertion:
-      "Anti-CCP antibodies are used as a serologic biomarker in rheumatoid arthritis (illustrative — not locked pilot).",
+      "Anti-CCP (ACPA) antibodies are a serologic biomarker used in rheumatoid arthritis workup (provisional — not partner-signed / not CDS).",
     review: "source-verified",
     teaching: "associative",
     domain: "autoimmunity",
-    citationLabel: "ACPA / anti-CCP clinical biomarker reviews (placeholder locator)",
+    pmid: "10662881",
+    doi: "10.1002/1529-0131(200001)43:1<155::AID-ANR20>3.0.CO;2-3",
+    citationLabel:
+      "Schellekens GA et al. Arthritis Rheum 2000 — The diagnostic properties of rheumatoid arthritis antibodies recognizing a cyclic citrullinated peptide.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/10662881/",
     notes:
-      "Illustrative RA biomarker seed with LOINC-capable marker. Replace with partner-scoped source set after lock. Not CDS.",
+      "Provisional RA biomarker seed with LOINC 53031-9. PMID 10662881 verified via PubMed. No durable ISI REL-* for anti-CCP→RA yet — marker_only map. Gate C = human Neon approve only. Not CDS.",
+  },
+  {
+    id: "HSI-E-RA-003",
+    edgeType: "treats",
+    subjectId: "HSI-N-anti-tnf",
+    subjectLabel: "Anti-TNF therapy",
+    objectId: "HSI-N-ra",
+    objectLabel: "Rheumatoid arthritis",
+    claimId: "HSI-C-RA-003",
+    assertion:
+      "Anti-TNF therapy (e.g. infliximab class) improves clinical outcomes in rheumatoid arthritis when combined with methotrexate in established trials (provisional — response heterogeneity remains open).",
+    review: "source-verified",
+    teaching: "associative",
+    domain: "autoimmunity",
+    pmid: "11087881",
+    doi: "10.1056/NEJM200011303432202",
+    citationLabel:
+      "Lipsky PE et al. N Engl J Med 2000 — Infliximab and methotrexate in the treatment of rheumatoid arthritis.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/11087881/",
+    notes:
+      "Provisional RA treatment seed for anti-TNF response question. PMID 11087881 verified. Does not prove uniform response — pairs with RA-004/005 for heterogeneity. No invented ISI REL; Gate C = human Neon approve only. Not CDS.",
+  },
+  {
+    id: "HSI-E-RA-004",
+    edgeType: "contributes_to",
+    subjectId: "HSI-N-il6",
+    subjectLabel: "IL-6",
+    objectId: "HSI-N-ra",
+    objectLabel: "Rheumatoid arthritis",
+    claimId: "HSI-C-RA-004",
+    assertion:
+      "IL-6 pathway signalling contributes to rheumatoid arthritis inflammatory tone (provisional competing axis vs TNF-centric framing).",
+    review: "source-verified",
+    teaching: "associative",
+    domain: "autoimmunity",
+    pmid: "18625622",
+    doi: "10.1136/ard.2008.092932",
+    citationLabel:
+      "Emery P et al. Ann Rheum Dis 2008 — Tocilizumab (IL-6R inhibition) improves outcomes in RA refractory to anti-TNF.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/18625622/",
+    notes:
+      "Provisional RA multi-cytokine seed. PMID 18625622 verified. Supports ISI related_axis REL-M003-contributes_to-D001. Same paper underpins anti-TNF-refractory framing (RA-005). Gate C = human Neon approve only.",
+  },
+  {
+    id: "HSI-E-RA-005",
+    edgeType: "associated_with",
+    subjectId: "HSI-N-anti-tnf-refractory",
+    subjectLabel: "Anti-TNF refractory RA phenotype",
+    objectId: "HSI-N-il6-axis",
+    objectLabel: "IL-6 pathway axis",
+    claimId: "HSI-C-RA-005",
+    assertion:
+      "Some patients with inadequate anti-TNF response still show benefit from IL-6 pathway inhibition — supporting competing mechanisms for response heterogeneity (provisional; uncertain grade).",
+    review: "source-verified",
+    teaching: "hypothesized",
+    domain: "autoimmunity",
+    pmid: "18625622",
+    doi: "10.1136/ard.2008.092932",
+    citationLabel:
+      "Emery P et al. Ann Rheum Dis 2008 — Tocilizumab improves outcomes in RA refractory to anti-TNF.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/18625622/",
+    notes:
+      "Provisional response-heterogeneity seed for the pilot question. PMID 18625622 verified. S-P-O is related_axis (trial population = anti-TNF inadequate responders → IL-6R blockade), not a universal causal map. Curator must re-assess claim_support before Neon Gate C approve — same honesty pattern as PMID 16382236 handoff. Not CDS.",
+  },
+  {
+    id: "HSI-E-RA-006",
+    edgeType: "upregulates",
+    subjectId: "HSI-N-synovial-macrophages",
+    subjectLabel: "Synovial macrophages",
+    objectId: "HSI-N-tnf-alpha",
+    objectLabel: "TNF-α",
+    claimId: "HSI-C-RA-006",
+    assertion:
+      "Macrophages are a cellular source of TNF-α — relevant to synovial TNF biology in rheumatoid arthritis (provisional entity-slice seed).",
+    review: "source-verified",
+    teaching: "associative",
+    domain: "autoimmunity",
+    pmid: "2993897",
+    doi: "10.1038/316552a0",
+    citationLabel:
+      "Beutler B et al. Nature 1985 — Identity of tumour necrosis factor and the macrophage-secreted factor cachectin.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/2993897/",
+    notes:
+      "Provisional cell→cytokine seed. PMID 2993897 verified. Supports ISI related_axis REL-C003-produces-M001 (macrophage → TNF); HSI edgeType=upregulates (no produces predicate in Phase 0). Paper is foundational identity, not RA synovial histology — curator must not overclaim tissue specificity at Gate C. Not CDS.",
   },
   {
     id: "HSI-E-SLE-001",
@@ -662,7 +751,7 @@ export const HSI_MARKERS: HsiMarker[] = [
     loinc: "53031-9",
     unit: null,
     description:
-      "Serologic marker used in RA workup (illustrative pathway seed — not locked pilot / not CDS).",
+      "Serologic marker used in RA workup (provisional partner pathway — lockedPilot=false / not CDS).",
   },
   {
     id: "HSI-N-ana",

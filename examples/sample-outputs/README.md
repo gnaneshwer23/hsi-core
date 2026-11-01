@@ -13,4 +13,4 @@ Full layout and consumer rules: [`docs/OUTPUTS.md`](../../docs/OUTPUTS.md).
 | `MANIFEST.sample.json` | `dist/outputs/<bundle>/MANIFEST.json` |
 | `gate-c-checklist.sample.md` | `gate-c-checklist.md` (pending REL rows) |
 | `gap-report.sample.md` | `hsi-gap-report.md` |
-| `pilot-evidence-pack.sample.md` | `hsi-pilot-evidence-pack.md` (pack-2 walkthrough; disease TBD; Discovery Loop metadata) |
+| `pilot-evidence-pack.sample.md` | `hsi-pilot-evidence-pack.md` (pack-2; provisional RA/TNF; lockedPilot=false; Discovery Loop metadata) |

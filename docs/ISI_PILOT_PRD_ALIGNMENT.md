@@ -3,7 +3,7 @@
 **Source (external):** *ISI Immune Disease Discovery Pilot — Product Requirements Document* v1.0 (1 November 2026), local file `ISI_Immune_Discovery_Pilot_PRD.docx`.  
 **Repo anchors:** [`ISI_PILOT_BRIEF.md`](./ISI_PILOT_BRIEF.md), [`ISI_BUSINESS_PROPOSAL_ALIGNMENT.md`](./ISI_BUSINESS_PROPOSAL_ALIGNMENT.md), [`ISI_TARGET_STATE_PRD_ALIGNMENT.md`](./ISI_TARGET_STATE_PRD_ALIGNMENT.md), [`ISI_PILOT_PARTNER_SHORTLIST.md`](./ISI_PILOT_PARTNER_SHORTLIST.md), [`OUTPUTS.md`](./OUTPUTS.md).
 
-This note maps **pilot** PRD requirements to what **hsi-core builds now** vs what is **deferred** (ISI product UI / M1–M3 app work / M4 clinical). For the full product destination (R0–R5), see [`ISI_TARGET_STATE_PRD_ALIGNMENT.md`](./ISI_TARGET_STATE_PRD_ALIGNMENT.md) — do **not** pull that breadth into Stage 1. It does not edit immunecity, Akeno, or invent partners. Disease + question remain **TBD**.
+This note maps **pilot** PRD requirements to what **hsi-core builds now** vs what is **deferred** (ISI product UI / M1–M3 app work / M4 clinical). For the full product destination (R0–R5), see [`ISI_TARGET_STATE_PRD_ALIGNMENT.md`](./ISI_TARGET_STATE_PRD_ALIGNMENT.md) — do **not** pull that breadth into Stage 1. It does not edit immunecity, Akeno, or invent partners. Disease + question may appear as a **provisional** RA/TNF scaffold (`lockedPilot=false`); partner-signed lock remains **TBD**.
 
 ---
 
@@ -41,7 +41,7 @@ The pilot PRD, pilot brief, business-proposal alignment, and [target-state stage
 
 | PRD item | Build now (hsi-core) | Defer |
 |----------|----------------------|--------|
-| **M0** — inspect HSI capabilities; map data contract; partner question/roles | This doc + exports + `hsi-pilot-evidence-pack.*` template; partner shortlist / brief | Signing partner brief / locking disease (outreach) |
+| **M0** — inspect HSI capabilities; map data contract; partner question/roles | This doc + exports + pack + `hsi-partner-lock.json` provisional scaffold + review rubric | Partner-signed `lockedPilot=true` (outreach) |
 | **FR-01/02** Question workspace + scope fields | Template fields in pilot evidence pack (`questionProject`, explicit `unknown` scope) | ISI app project CRUD / tenancy UI |
 | **FR-03/04** Evidence search + claim detail | Graded edges + provenance in `hsi-isi-export.json`; pack claim rows with missing-metadata labels | Full-text search UI, filters in product |
 | **FR-05** Graph exploration | Edges with subject/predicate/object + grade; REL map pointers | Interactive graph product surface |
@@ -65,15 +65,15 @@ PRD / brief four outputs mapped to what `bun run outputs` produces:
 
 | Workflow output | Covered by | Gap / next implementation task |
 |-----------------|------------|--------------------------------|
-| **1. Evidence map** (sources + grades) | `hsi-isi-export.json`, `hsi-pilot-evidence-pack.json` evidenceMap (+ LOINC), `gate-c-checklist.*` | Partner-disease seed slice once disease locks; search UI elsewhere |
-| **2. Entity slice** (cells, pathways, biomarkers, treatments, studies) | Pack `entitySlice` string buckets + typed `{id,label,kind}` refs | External ontology IDs when partner source set known |
-| **3. Competing explanations + uncertainties** | Pack `competingExplanations` + `uncertainties` (templates + illustrative RA/SLE frames + uncertain grades) | Partner-question-specific narratives after scoping |
-| **4. Expert shortlist** (gaps / hypotheses) | Pack `expertShortlist` + `hsi-gap-report.*` + Gate C pending rows | Rubric + partner thresholds before user testing |
-| **Research brief shell** | Pack markdown (`hsi-pilot-evidence-pack.md`) with citations/caveats + Discovery Loop framing | PDF/DOCX + in-app assembly (ISI) |
-| **Question / scope** | Pack `questionProject` (disease/question **TBD**, unknowns explicit) | Live workspace after partner |
-| **Discovery Centre vocabulary** | Pack + ISI export `discoveryCentre` (ASK→MAP→REVIEW…; illustrative RA/SLE/PsO/IBD) | Interactive UI deferred — metadata only in Stage 1 |
+| **1. Evidence map** (sources + grades) | `hsi-isi-export.json`, pack evidenceMap (+ LOINC), Gate C checklist; provisional RA pathway PMIDs | Partner-signed corpus + licensing; search UI elsewhere |
+| **2. Entity slice** (cells, pathways, biomarkers, treatments, studies) | Pack `entitySlice` + `partnerScopedEntitySlice` typed refs | External ontology IDs when partner source set known |
+| **3. Competing explanations + uncertainties** | Pack TNF-centric vs IL-6 / ACPA frames + uncertain grades | Partner-rewritten narratives after signed lock |
+| **4. Expert shortlist** (gaps / hypotheses) | Pack `expertShortlist` + gap report + Gate C pending + **review rubric** | Numeric success thresholds with partner |
+| **Research brief shell** | Pack markdown with citations/caveats + Discovery Loop framing | PDF/DOCX + in-app assembly (ISI) |
+| **Question / scope** | Pack `questionProject` + `hsi-partner-lock.json` (**provisional** RA/TNF; `lockedPilot=false`) | Live workspace after partner-signed lock |
+| **Discovery Centre vocabulary** | Pack + ISI export `discoveryCentre` (ASK→MAP→REVIEW…; RA provisional + SLE/PsO/IBD illustrative) | Interactive UI deferred — metadata only in Stage 1 |
 
-Illustrative seed edges include T2D / immuno-metabolic placeholders **plus** Discovery Centre disease-context pathway stubs (RA/SLE/PsO/IBD) — **not** a locked pilot indication. The pack labels disease as `TBD` and marks substrate as illustrative (`hsi-pilot-evidence-pack-2`).
+Substrate includes T2D / immuno-metabolic seeds **plus** a **provisional** RA/TNF response-heterogeneity slice and illustrative SLE/PsO/IBD stubs. Exports must keep `lockedPilot=false` until a named partner confirms.
 
 ---
 
@@ -96,19 +96,19 @@ Illustrative seed edges include T2D / immuno-metabolic placeholders **plus** Dis
 
 ## Open decisions (PRD §11 — still open)
 
-1. Initial immune-disease area + exact question with a **named** partner  
+1. **Named** partner confirmation of disease + exact question wording (provisional RA/TNF scaffold exists; `lockedPilot` still false)  
 2. Source licensing / attribution for the agreed source set  
 3. Auth, workspace tenancy, export formats for the ISI deploy  
-4. Scientific review rubric + success thresholds with partner  
+4. Success-metric **numeric thresholds** with partner (rubric checklist exported; thresholds TBD)  
 5. Trial-registry context in first release vs P1  
 
-Until (1) lands, keep outreach as the critical path — not more substrate features.
+Critical path remains **outreach** to flip `lockedPilot` — not more Stage 1 substrate breadth.
 
 ---
 
 ## What to say / do next
 
-1. Use the pilot brief + this PRD map in partner discovery.  
-2. Run `bun run outputs` and share `hsi-pilot-evidence-pack.md` as the walkthrough artifact shape.  
+1. Use the pilot brief + this PRD map + provisional pack in partner discovery.  
+2. Run `bun run outputs` and share `hsi-pilot-evidence-pack.md` + `hsi-pilot-review-rubric.md`.  
 3. Do **not** start patient-level or immunecity feature work from this PRD.  
-4. After a partner locks disease + question, add a disease-scoped seed slice and refresh the pack — still no fake partners or PHI.
+4. When a partner signs disease + question, flip `hsi-partner-lock.json` (`lockedPilot=true`, clear provisional), refresh seeds if needed — still no fake partners or PHI.

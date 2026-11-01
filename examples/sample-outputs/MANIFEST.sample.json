@@ -17,16 +17,24 @@
     "gateCChecklistJson": "gate-c-checklist.json",
     "gateCChecklistMd": "gate-c-checklist.md",
     "pilotEvidencePackJson": "hsi-pilot-evidence-pack.json",
-    "pilotEvidencePackMd": "hsi-pilot-evidence-pack.md"
+    "pilotEvidencePackMd": "hsi-pilot-evidence-pack.md",
+    "pilotReviewRubricJson": "hsi-pilot-review-rubric.json",
+    "pilotReviewRubricMd": "hsi-pilot-review-rubric.md",
+    "partnerLockJson": "hsi-partner-lock.json"
   },
   "discoveryLoop": "ASK → MAP → REVIEW → TEST → LEARN",
   "partnerLock": {
-    "disease": "TBD",
-    "researchQuestion": "TBD — lock with partner",
-    "partner": "TBD"
+    "schemaVersion": "hsi-partner-lock-1",
+    "lockedPilot": false,
+    "provisionalLock": true,
+    "status": "provisional",
+    "disease": "Rheumatoid arthritis",
+    "researchQuestion": "Why do some patients with rheumatoid arthritis respond differently to anti-TNF therapy…",
+    "partner": "outreach:uk-versus-arthritis-ndorms-category",
+    "seedPathwayId": "ra-tnf-response-heterogeneity"
   },
   "counts": {
-    "pilotEvidenceMapRows": 31,
+    "partnerScopedEvidenceRows": 8,
     "claimsWithLoinc": 6,
     "illustrativeDiseaseContexts": 4
   },

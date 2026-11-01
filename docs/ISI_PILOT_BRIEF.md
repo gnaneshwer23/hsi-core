@@ -2,8 +2,10 @@
 
 > **ISI helps immune-disease research teams investigate a defined question by connecting traceable evidence across cells, pathways, biomarkers, treatments and studies—and showing what is established, uncertain and worth testing.**
 
-**Status:** outreach / partner-selection. Disease and question are **TBD after partner conversations** — not pre-assigned.  
-**Immediate deliverable:** this brief + [`ISI_PILOT_PARTNER_SHORTLIST.md`](./ISI_PILOT_PARTNER_SHORTLIST.md). Not another general-purpose AI feature.  
+**Status:** outreach / partner-selection.  
+**Provisional scaffold (not partner-signed):** rheumatoid arthritis · anti-TNF response heterogeneity — see `hsi-partner-lock.json` (`provisionalLock=true`, `lockedPilot=false`).  
+**Partner-signed disease + question:** still **TBD after conversations** — do not treat the provisional scaffold as a MoU.  
+**Immediate deliverable:** this brief + [`ISI_PILOT_PARTNER_SHORTLIST.md`](./ISI_PILOT_PARTNER_SHORTLIST.md) + published pack / review rubric. Not another general-purpose AI feature.  
 **PRD map:** [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md) (pilot PRD → build now vs defer). **Target state:** [`ISI_TARGET_STATE_PRD_ALIGNMENT.md`](./ISI_TARGET_STATE_PRD_ALIGNMENT.md) (full vision → Stage 1/2/3 — do not pull breadth into this pilot).
 
 ---
@@ -31,9 +33,9 @@ Prove that ISI improves **one** immune-disease **research intelligence** workflo
 
 | Decision | Rule |
 |----------|------|
-| Disease | TBD — only after partner conversations (interest + shareable data + clear use case) |
-| Question | One recurring research question that costs time or blocks a next experiment / study decision |
-| Fake partners | Do not invent confirmed partners or personal contacts |
+| Disease | **Provisional:** rheumatoid arthritis (strongest seed pathway). **Signed lock:** only after partner conversations |
+| Question | **Provisional:** why anti-TNF response differs + which biomarkers/mechanisms define subgroups. **Signed lock:** partner’s wording |
+| Fake partners | Do not invent confirmed partners or personal contacts; provisional outreach category ≠ MoU |
 
 Ask partners: what recurring question costs them time or blocks decisions, and what data they could actually share?
 
@@ -68,7 +70,8 @@ No requirement for a new product surface beyond what is needed to walk a partner
 
 - Store **evidence**, **provenance**, and **uncertainty** (graded edges, claims, Gate C human curation).
 - Publish artifacts with `bun run outputs` (alias `bun run publish`) → versioned `dist/outputs/` bundles (ISI export, REL map, gap report, Gate C checklist, **pilot evidence pack**, etc.). See [`OUTPUTS.md`](./OUTPUTS.md).
-- Partner walkthrough shape: `hsi-pilot-evidence-pack.md` (disease/question TBD; no patient-level CDS).
+- Partner walkthrough shape: `hsi-pilot-evidence-pack.md` + `hsi-pilot-review-rubric.md` (provisional RA/TNF; `lockedPilot=false`; no patient-level CDS).
+- Durable lock record: `hsi-partner-lock.json` (flip requirements listed for a real partner).
 - Product UIs (immunecity / ISI site) **consume** published exports; they are not edit targets for this pilot work.
 
 ---

@@ -28,6 +28,8 @@ import {
   listIsiRelSuggestions,
   buildGateCChecklist,
   buildPilotEvidencePack,
+  buildPilotReviewRubric,
+  getPartnerLock,
   loadAkshHitlStubFromExport,
   migrateAkshNodeId,
   parseAkshNodeMapExport,
@@ -355,16 +357,21 @@ describe("Gate C checklist + publish outputs", () => {
     );
   });
 
-  it("builds a disease-agnostic pilot evidence pack without patient CDS", () => {
+  it("builds a provisional RA pilot evidence pack without claiming partner-signed lock", () => {
     const pack = buildPilotEvidencePack({ generatedAt: "2026-11-01T12:00:00.000Z" });
     expect(pack.schemaVersion).toBe("hsi-pilot-evidence-pack-2");
-    expect(pack.disease).toBe("TBD");
-    expect(pack.researchQuestion).toContain("TBD");
+    expect(pack.disease).toBe("Rheumatoid arthritis");
+    expect(pack.researchQuestion.toLowerCase()).toContain("anti-tnf");
+    expect(pack.lockedPilot).toBe(false);
+    expect(pack.provisionalLock).toBe(true);
+    expect(pack.partnerLock.status).toBe("provisional");
     expect(pack.notCds).toBe(true);
     expect(pack.noPatientLevelActions).toBe(true);
     expect(pack.autoApproveIntoKg).toBe(false);
-    expect(pack.questionProject.scope.population).toBe("unknown");
+    expect(pack.questionProject.status).toBe("provisional");
+    expect(pack.questionProject.lockedPilot).toBe(false);
     expect(pack.evidenceMap.length).toBe(HSI_T2D_IMMUNO_SEED_EDGES.length);
+    expect(pack.summary.partnerScopedEvidenceRows).toBeGreaterThanOrEqual(6);
     expect(pack.summary.evidenceMapRows).toBe(pack.evidenceMap.length);
     expect(pack.expertShortlist.every((i) => i.autoApproved === false)).toBe(true);
     expect(pack.clinicalBoundary.some((b) => b.toLowerCase().includes("ehr"))).toBe(true);
@@ -374,15 +381,41 @@ describe("Gate C checklist + publish outputs", () => {
     );
     expect(pack.summary.claimsWithLoinc).toBeGreaterThanOrEqual(5);
     expect(pack.entitySlice.typed.length).toBeGreaterThan(0);
+    expect(pack.partnerScopedEntitySlice.diseases.some((d) => d.includes("Rheumatoid"))).toBe(true);
     expect(pack.evidenceMap.some((r) => r.claimId === "HSI-C-RA-001")).toBe(true);
+    expect(pack.evidenceMap.some((r) => r.claimId === "HSI-C-RA-005")).toBe(true);
     expect(pack.evidenceMap.some((r) => r.marker.loinc === "53031-9")).toBe(true);
+    const antiCcp = HSI_T2D_IMMUNO_SEED_EDGES.find((e) => e.id === "HSI-E-RA-002");
+    expect(antiCcp?.provenance.pmid).toBe("10662881");
+  });
+
+  it("ships a review rubric with ready_for_human + blocked_on_partner items", () => {
+    const lock = getPartnerLock();
+    expect(lock.lockedPilot).toBe(false);
+    expect(lock.provisionalLock).toBe(true);
+    expect(lock.disease?.id).toBe("ra");
+    expect(lock.flipRequirements.length).toBeGreaterThanOrEqual(5);
+
+    const rubric = buildPilotReviewRubric({ generatedAt: "2026-11-01T12:00:00.000Z" });
+    expect(rubric.schemaVersion).toBe("hsi-pilot-review-rubric-1");
+    expect(rubric.partnerLock.lockedPilot).toBe(false);
+    expect(rubric.partnerLock.provisionalLock).toBe(true);
+    expect(rubric.summary.readyForHuman).toBeGreaterThanOrEqual(8);
+    expect(rubric.summary.blockedOnPartner).toBeGreaterThanOrEqual(3);
+    expect(rubric.checklist.every((c) => c.status !== "ready_for_human" || c.criterion.length > 0)).toBe(
+      true,
+    );
+    expect(rubric.notCds).toBe(true);
+    expect(rubric.autoApproveIntoKg).toBe(false);
   });
 
   it("embeds Discovery Centre metadata in ISI export without interactive UI claims", () => {
     const bundle = buildIsiExportBundle({ generatedAt: "2026-11-01T12:00:00.000Z" });
     expect(bundle.discoveryCentre.notInteractiveUi).toBe(true);
     expect(bundle.discoveryCentre.notLockedPilotIndications).toBe(true);
-    expect(bundle.discoveryCentre.partnerLock.disease).toBe("TBD");
+    expect(bundle.discoveryCentre.partnerLock.disease).toBe("Rheumatoid arthritis");
+    expect(bundle.discoveryCentre.partnerLock.lockedPilot).toBe(false);
+    expect(bundle.discoveryCentre.partnerLock.provisionalLock).toBe(true);
     expect(bundle.discoveryCentre.discoveryLoop.steps.map((s) => s.id)).toEqual([
       "ask",
       "map",
@@ -391,6 +424,7 @@ describe("Gate C checklist + publish outputs", () => {
       "learn",
     ]);
     expect(bundle.edges.some((e) => e.id === "HSI-E-SLE-001")).toBe(true);
+    expect(bundle.edges.some((e) => e.id === "HSI-E-RA-003")).toBe(true);
     expect(bundle.claimLoincLinks.some((l) => l.loinc === "42254-3")).toBe(true);
   });
 
@@ -407,6 +441,9 @@ describe("Gate C checklist + publish outputs", () => {
     expect(result.files).toContain("gate-c-checklist.md");
     expect(result.files).toContain("hsi-pilot-evidence-pack.json");
     expect(result.files).toContain("hsi-pilot-evidence-pack.md");
+    expect(result.files).toContain("hsi-pilot-review-rubric.json");
+    expect(result.files).toContain("hsi-pilot-review-rubric.md");
+    expect(result.files).toContain("hsi-partner-lock.json");
     expect(result.files).toContain("MANIFEST.json");
 
     for (const name of result.files) {
@@ -420,12 +457,17 @@ describe("Gate C checklist + publish outputs", () => {
       notCds: boolean;
       autoApproveIntoKg: boolean;
       autoSurfaceCds: boolean;
-      counts: { gateCPending: number };
+      partnerLock: { lockedPilot: boolean; provisionalLock: boolean; status: string };
+      counts: { gateCPending: number; partnerScopedEvidenceRows: number };
     };
     expect(manifest.notCds).toBe(true);
     expect(manifest.autoApproveIntoKg).toBe(false);
     expect(manifest.autoSurfaceCds).toBe(false);
+    expect(manifest.partnerLock.lockedPilot).toBe(false);
+    expect(manifest.partnerLock.provisionalLock).toBe(true);
+    expect(manifest.partnerLock.status).toBe("provisional");
     expect(manifest.counts.gateCPending).toBeGreaterThanOrEqual(9);
+    expect(manifest.counts.partnerScopedEvidenceRows).toBeGreaterThanOrEqual(6);
 
     const hitl = JSON.parse(
       readFileSync(join(result.outDir, "hsi-aksh-hitl-cards.json"), "utf8"),

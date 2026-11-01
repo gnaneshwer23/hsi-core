@@ -65,6 +65,7 @@ Approach **categories** first; example orgs below are **illustrative outreach ta
 
 | Org / group | Type | Region | Status | Notes |
 |-------------|------|--------|--------|-------|
-| *(empty — add real outreach rows here)* | | | candidate | No confirmed partners yet |
+| Versus Arthritis research network / Oxford NDORMS–Kennedy Institute (category) | disease_foundation / immunology | UK | candidate | **Illustrative outreach category** for provisional RA/TNF scaffold — not a MoU or named PI. Aligns with `hsi-partner-lock.json` partner id `outreach:uk-versus-arthritis-ndorms-category`. |
+| *(add real outreach rows here)* | | | candidate | No confirmed partners yet |
 
-When a partner confirms interest, update status to `interested` / `scoping` and point disease + question choices back into the pilot brief — still without fabricating emails or agreements.
+When a partner confirms interest, update status to `interested` / `scoping` and point disease + question choices into `hsi-partner-lock.json` / the pilot brief — still without fabricating emails or agreements. Flip `lockedPilot=true` only after named confirmation.

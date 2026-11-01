@@ -226,7 +226,7 @@ export const ISI_REL_SUGGESTIONS: readonly IsiRelSuggestion[] = [
     autoApprove: false,
     isiNodeIds: [],
   },
-  // —— Illustrative immune pathway seeds (Discovery Centre contexts; not locked pilot) ——
+  // —— Provisional RA / TNF pathway (partnerLock.provisionalLock; lockedPilot=false) ——
   {
     claimId: "HSI-C-RA-001",
     edgeId: "HSI-E-RA-001",
@@ -234,7 +234,7 @@ export const ISI_REL_SUGGESTIONS: readonly IsiRelSuggestion[] = [
     matchKind: "exact_concept_pair",
     status: "curated",
     rationale:
-      "Exact ISI map REL-M001-contributes_to-D001 (TNF → RA). Illustrative disease-context seed; PMID 11244034; autoApprove=false; partner disease lock still TBD.",
+      "Exact ISI map REL-M001-contributes_to-D001 (TNF → RA). Provisional pathway seed; PMID 11244034; autoApprove=false; lockedPilot=false until named partner confirms.",
     autoApprove: false,
     isiNodeIds: ["M001", "D001"],
   },
@@ -245,9 +245,53 @@ export const ISI_REL_SUGGESTIONS: readonly IsiRelSuggestion[] = [
     matchKind: "marker_only",
     status: "unmapped",
     rationale:
-      "Anti-CCP → RA illustrative biomarker — LOINC-linked in HSI; no durable ISI REL-* for this pair yet. Do not invent.",
+      "Anti-CCP → RA provisional biomarker — LOINC-linked (53031-9); PMID 10662881; no durable ISI REL-* yet. Do not invent.",
     autoApprove: false,
     isiNodeIds: [],
+  },
+  {
+    claimId: "HSI-C-RA-003",
+    edgeId: "HSI-E-RA-003",
+    suggestedIsiRelationshipId: null,
+    matchKind: "none",
+    status: "unmapped",
+    rationale:
+      "Anti-TNF therapy → treats → RA (PMID 11087881). No durable ISI REL-* invented for this treatment edge; Gate C pending if/when mapped.",
+    autoApprove: false,
+    isiNodeIds: [],
+  },
+  {
+    claimId: "HSI-C-RA-004",
+    edgeId: "HSI-E-RA-004",
+    suggestedIsiRelationshipId: "REL-M003-contributes_to-D001",
+    matchKind: "related_axis",
+    status: "curated",
+    rationale:
+      "IL-6 → RA provisional competing axis. PMID 18625622; related_axis REL-M003-contributes_to-D001; autoApprove=false.",
+    autoApprove: false,
+    isiNodeIds: ["M003", "D001"],
+  },
+  {
+    claimId: "HSI-C-RA-005",
+    edgeId: "HSI-E-RA-005",
+    suggestedIsiRelationshipId: "REL-M003-contributes_to-D001",
+    matchKind: "related_axis",
+    status: "curated",
+    rationale:
+      "Anti-TNF-refractory phenotype ↔ IL-6 axis (response heterogeneity). PMID 18625622; related_axis to REL-M003 — curator must re-check S-P-O before Neon Gate C (same honesty as PMID 16382236 handoff).",
+    autoApprove: false,
+    isiNodeIds: ["M003", "D001"],
+  },
+  {
+    claimId: "HSI-C-RA-006",
+    edgeId: "HSI-E-RA-006",
+    suggestedIsiRelationshipId: "REL-C003-produces-M001",
+    matchKind: "related_axis",
+    status: "curated",
+    rationale:
+      "Synovial macrophages → TNF. PMID 2993897; related_axis REL-C003-produces-M001. Foundational macrophage/TNF identity paper — do not overclaim RA histology at Gate C.",
+    autoApprove: false,
+    isiNodeIds: ["C003", "M001"],
   },
   {
     claimId: "HSI-C-SLE-001",

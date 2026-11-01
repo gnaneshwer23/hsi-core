@@ -124,6 +124,27 @@ export {
 } from "./pilotEvidencePack";
 
 export {
+  PARTNER_LOCK_SCHEMA,
+  HSI_PROVISIONAL_PARTNER_LOCK,
+  getPartnerLock,
+  isProvisionalPartnerLock,
+  partnerLockExportPointer,
+  type HsiPartnerLock,
+  type HsiPartnerRef,
+  type PartnerLockStatus,
+} from "./partnerLock";
+
+export {
+  PILOT_REVIEW_RUBRIC_SCHEMA,
+  buildPilotReviewRubric,
+  serializePilotReviewRubric,
+  serializePilotReviewRubricMarkdown,
+  type PilotReviewRubric,
+  type RubricCheckItem,
+  type RubricCheckStatus,
+} from "./pilotReviewRubric";
+
+export {
   HSI_DISCOVERY_LOOP_STEPS,
   HSI_ILLUSTRATIVE_DISEASE_CONTEXTS,
   buildDiscoveryCentreMeta,

@@ -33,15 +33,18 @@ dist/outputs/
     gate-c-checklist.md
     hsi-pilot-evidence-pack.json      # pilot pack (hsi-pilot-evidence-pack-2)
     hsi-pilot-evidence-pack.md        # human walkthrough / brief shell
+    hsi-pilot-review-rubric.json      # Stage 1 four-output review checklist
+    hsi-pilot-review-rubric.md
+    hsi-partner-lock.json             # durable provisional / future signed lock
 ```
 
 ## Who uses what
 
 | Consumer | Files | Rules |
 |----------|-------|--------|
-| **ISI** | `hsi-isi-export.json`, `hsi-isi-rel-map.json`, `gate-c-checklist.*`, `hsi-pilot-evidence-pack.*` | Discovery / Ask / Radar only. REL map never auto-approves into KG. Gate C approve (if any) is human-only in **ISI Neon `autumn-snow`**, not HSI `red-wave`. Pilot pack = disease/question **TBD** template for partner walkthroughs (PRD M0). Discovery Centre vocabulary (ASK→MAP→REVIEW + illustrative RA/SLE/PsO/IBD) is **metadata only** — not an interactive UI. |
+| **ISI** | `hsi-isi-export.json`, `hsi-isi-rel-map.json`, `gate-c-checklist.*`, `hsi-pilot-evidence-pack.*`, `hsi-pilot-review-rubric.*`, `hsi-partner-lock.json` | Discovery / Ask / Radar only. REL map never auto-approves into KG. Gate C approve (if any) is human-only in **ISI Neon `autumn-snow`**, not HSI `red-wave`. Pack may show a **provisional** RA/TNF disease+question (`provisionalLock=true`, `lockedPilot=false`) — not partner-signed. Discovery Centre vocabulary is **metadata only**. |
 | **Aksh** | `hsi-aksh-node-map.json`, `hsi-aksh-hitl-cards.json` | HITL map pointers. `akshNodeId` ≠ CDS. Seeds stay `cdsSurfacable=false`. |
-| **Curators** | `gate-c-checklist.md`, `hsi-gap-report.md`, `hsi-pilot-evidence-pack.md` | Pending REL list + gap backlog + pilot brief shell. Keep work in hsi-core docs/seeds. |
+| **Curators** | `gate-c-checklist.md`, `hsi-gap-report.md`, `hsi-pilot-evidence-pack.md`, `hsi-pilot-review-rubric.md` | Pending REL list + gap backlog + provisional brief + human review checklist. |
 
 PRD / brief four outputs (evidence map, entity slice, competing explanations, expert shortlist) are assembled in `hsi-pilot-evidence-pack.*`. See [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md).
 
@@ -50,7 +53,8 @@ PRD / brief four outputs (evidence map, entity slice, competing explanations, ex
 - `notCds` / `autoApproveIntoKg=false` / `autoSurfaceCds=false` on publish manifests
 - Gate C checklist rows with evidence are **`pending`** until a human approve+supports in the **ISI product Neon** (`autumn-snow` / `ep-blue-salad…`) — that DB is **not** HSI’s; HSI Neon is `red-wave` only ([`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md))
 - No PHI; no EHR write-back; no invented PMIDs / REL ids; no HSI writes into ISI/Akeno/DeliverX Neon
-- Illustrative disease contexts (RA/SLE/PsO/IBD) are **not** locked pilot indications
+- `provisionalLock=true` **never** implies a signed partner; `lockedPilot` stays false until flip requirements in `hsi-partner-lock.json` are met
+- SLE/PsO/IBD contexts remain **illustrative only**
 
 ## Stage 1 / R0–R1 implementation checklist
 
@@ -64,11 +68,14 @@ PRD / brief four outputs (evidence map, entity slice, competing explanations, ex
 | Pilot evidence pack — four workflow outputs + brief shell | **Done** (`hsi-pilot-evidence-pack-2`) |
 | Versioned `bun run outputs` bundle + MANIFEST | **Done** |
 | Discovery Centre vocabulary in exports (ASK→MAP→REVIEW + illustrative diseases) | **Done** (metadata only) |
-| Illustrative RA/SLE/PsO/IBD pathway seed stubs (not locked) | **Done** |
+| Illustrative RA/SLE/PsO/IBD pathway seed stubs | **Done** (RA elevated to provisional scaffold) |
 | Typed entity slice + LOINC on pack evidence rows | **Done** |
-| Partner disease + question lock | **Remaining** (outreach) |
-| Partner-scoped literature seed slice + source licensing | **Remaining** (after lock) |
-| Scientific review rubric + success thresholds with partner | **Remaining** |
+| Partner disease + question **provisional** lock scaffold (`lockedPilot=false`) | **Done** (RA / anti-TNF response heterogeneity) |
+| Partner-scoped literature seed slice (provisional RA/TNF pathway) | **Done** (public PMIDs; licensing still open with partner) |
+| Scientific review rubric export (Stage 1 four outputs) | **Done** (thresholds TBD with partner) |
+| Partner-signed `lockedPilot=true` | **Remaining** (outreach — named partner confirms disease + question) |
+| Source licensing / attribution for agreed partner corpus | **Remaining** (after signed lock) |
+| Success-metric numeric thresholds with partner | **Remaining** |
 | Interactive Discovery Centre / graph UI | **Deferred** (ISI product — not hsi-core Stage 1) |
 | PDF/DOCX brief renderer | **Deferred** (ISI product P1) |
 | HSI Neon `red-wave` schema migrations | **Deferred** (local JSON/exports suffice for Stage 1) |
