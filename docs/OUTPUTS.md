@@ -39,7 +39,7 @@ dist/outputs/
 
 | Consumer | Files | Rules |
 |----------|-------|--------|
-| **ISI** | `hsi-isi-export.json`, `hsi-isi-rel-map.json`, `gate-c-checklist.*`, `hsi-pilot-evidence-pack.*` | Discovery / Ask / Radar only. REL map never auto-approves into KG. Neon Gate C is human-only. Pilot pack = disease/question **TBD** template for partner walkthroughs (PRD M0). |
+| **ISI** | `hsi-isi-export.json`, `hsi-isi-rel-map.json`, `gate-c-checklist.*`, `hsi-pilot-evidence-pack.*` | Discovery / Ask / Radar only. REL map never auto-approves into KG. Gate C approve (if any) is human-only in **ISI Neon `autumn-snow`**, not HSI `red-wave`. Pilot pack = disease/question **TBD** template for partner walkthroughs (PRD M0). |
 | **Aksh** | `hsi-aksh-node-map.json`, `hsi-aksh-hitl-cards.json` | HITL map pointers. `akshNodeId` ≠ CDS. Seeds stay `cdsSurfacable=false`. |
 | **Curators** | `gate-c-checklist.md`, `hsi-gap-report.md`, `hsi-pilot-evidence-pack.md` | Pending REL list + gap backlog + pilot brief shell. Keep work in hsi-core docs/seeds. |
 
@@ -48,8 +48,8 @@ PRD / brief four outputs (evidence map, entity slice, competing explanations, ex
 ## Invariants
 
 - `notCds` / `autoApproveIntoKg=false` / `autoSurfaceCds=false` on publish manifests
-- Gate C checklist rows with evidence are **`pending`** until product Neon approve+supports
-- No PHI; no EHR write-back; no invented PMIDs / REL ids
+- Gate C checklist rows with evidence are **`pending`** until a human approve+supports in the **ISI product Neon** (`autumn-snow` / `ep-blue-salad…`) — that DB is **not** HSI’s; HSI Neon is `red-wave` only ([`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md))
+- No PHI; no EHR write-back; no invented PMIDs / REL ids; no HSI writes into ISI/Akeno/DeliverX Neon
 
 ## Individual CLIs (still available)
 

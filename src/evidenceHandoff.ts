@@ -17,7 +17,8 @@ export type HsiEvidenceLinkStatus = "unlinked" | "evidence_linked";
 
 /**
  * HSI-side Gate C handoff — not Neon `isGateCSupportingEvidence`.
- * `passed` here only means HSI curationReview=approved (still requires ISI Neon approve).
+ * `passed` here only means HSI curationReview=approved (ISI product Neon approve,
+ * if any, is separate — autumn-snow only; never HSI red-wave substrate).
  */
 export type HsiGateCHandoffStatus = "not_started" | "pending" | "hsi_passed";
 

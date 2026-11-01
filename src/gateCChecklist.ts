@@ -1,5 +1,6 @@
 /**
- * Gate C human checklist — curated REL list for ISI Neon handoff.
+ * Gate C human checklist — curated REL list for ISI product handoff.
+ * HSI Neon is red-wave only; ISI Gate C approve (if any) is autumn-snow — separate DBs.
  *
  * Not Neon approval. Rows with evidence stay `gateCStatus: pending` until a
  * human runs Check → claim_support=supports → Approve in the consuming product.
@@ -141,7 +142,7 @@ export function serializeGateCChecklistMarkdown(
     "",
     `Schema: \`${checklist.schemaVersion}\` · generated ${checklist.generatedAt}`,
     "",
-    "**Not CDS. autoApproveIntoKg=false.** Neon approve+supports is human-only in the consuming product.",
+    "**Not CDS. autoApproveIntoKg=false.** Neon approve+supports is human-only in ISI product Neon (autumn-snow) — never HSI red-wave.",
     "",
     "## Summary",
     "",

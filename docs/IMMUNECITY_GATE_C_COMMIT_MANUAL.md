@@ -2,7 +2,9 @@
 
 **Active edits stay in `hsi-core` only.** Do not commit to `gnaneshwer23/immunecity` for HSI work. DeliverX / `swift-deliveries` is **ignored** (out of scope). Product apps (ISI / Aksh) consume published exports from this repo when needed.
 
-This doc is the durable curator checklist: verified PMID ↔ REL maps for Gate C handoff. Neon approve+supports remains a human product-app action outside this repository.
+This doc is the durable curator checklist: verified PMID ↔ REL maps for Gate C handoff.
+
+**Neon isolation:** HSI substrate DB is **only** `red-wave-06625195` (`human super intelligence` / `ep-restless-dew…`). Gate C **approve+supports** (if performed) is a human action in the **ISI product Neon** (`autumn-snow` / `ep-blue-salad…`) — **never** run those writes from hsi-core against ISI Neon, and **never** point HSI `DATABASE_URL` at ISI/Akeno/DeliverX. No shared evidence DB. See [`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md).
 
 ## Upstream artifacts (this repo)
 
@@ -29,7 +31,7 @@ Publish / sync via hsi-core commits. Consumers pull `dist/outputs/` (or legacy `
 | `HSI-E-AU-001` | `REL-B015-predicts_eligibility_for-I013` | **31180194** | Herold 2019 NEJM (teplizumab) |
 
 | Gate C handoff | **pending** (`evidence-linked · Gate C pending`) on all nine |
-| Product Neon Gate C | **not** passed in hsi-core — human approve+supports only in the consuming product; related_axis papers support ISI REL S-P-O, not T2D invent |
+| ISI product Neon Gate C (`autumn-snow` only) | **not** passed in hsi-core — human approve+supports stays in immunecity’s DB if/when product runs it; HSI never shares that DB; related_axis papers support ISI REL S-P-O, not T2D invent |
 
 ## Honest unmapped gaps (unchanged)
 

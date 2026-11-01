@@ -122,7 +122,7 @@ export function Evidence() {
             <h2 className="display display-md">Curator checklist lives here.</h2>
             <p className="lede">
               Verified PMID ↔ REL maps ship as markdown under docs/ in hsi-core.
-              Neon approve+supports remains a human product-app action outside
+              Neon approve+supports (ISI product DB only — not HSI red-wave) remains a human product-app action outside
               this repository.
             </p>
           </div>

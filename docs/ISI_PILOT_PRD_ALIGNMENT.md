@@ -46,7 +46,7 @@ The pilot PRD, pilot brief, business-proposal alignment, and [target-state stage
 | **FR-03/04** Evidence search + claim detail | Graded edges + provenance in `hsi-isi-export.json`; pack claim rows with missing-metadata labels | Full-text search UI, filters in product |
 | **FR-05** Graph exploration | Edges with subject/predicate/object + grade; REL map pointers | Interactive graph product surface |
 | **FR-06** Evidence grade | `established` / `uncertain` / `unexplored` + definitions in grades + pack | Product help UI only |
-| **FR-07** Reviewer workflow | Gate C checklist (pending, attributed path to human Neon approve); curationReview axis | In-product annotate/accept/reject UX + role RBAC |
+| **FR-07** Reviewer workflow | Gate C checklist (pending; human approve only in ISI product Neon `autumn-snow` — not HSI `red-wave`); curationReview axis | In-product annotate/accept/reject UX + role RBAC |
 | **FR-08/09** Research brief + safe synthesis | Pack sections: findings / conflicting / uncertainties / gaps / hypotheses; cite claim IDs; block ungrounded clinical advice | LLM brief generation in ISI app |
 | **FR-10** Export PDF/DOCX + evidence manifest | Machine-readable pack JSON + markdown + bundle `MANIFEST.json` | PDF/DOCX renderer (ISI app, P1) |
 | **FR-11** Audit history | Provenance timestamps + Gate C rows; publish `generatedAt` / bundleId | Full change-log service |

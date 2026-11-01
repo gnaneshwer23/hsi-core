@@ -1,31 +1,64 @@
 # Neon project map (no secrets)
 
+**Binding rule:** HSI is a **separate technology** with its **own clean Neon project**. It does **not** share an evidence DB with immunecity / ISI, Akeno, DeliverX, or any other product.
+
 Read-only orientation for agents with Neon CLI OAuth (`~/.config/neonctl/credentials.json` or `NEON_API_KEY`). **Do not** put passwords or full connection strings here. Host prefixes only.
 
 Access check: `npx neonctl me` → `npx neonctl projects list`. No Neon MCP is required in this workspace.
 
-## Role map (HSI-relevant)
+## Canonical HSI Neon (the only substrate DB for hsi-core)
 
-| Neon project name | Project ID | Default branch | Endpoint host prefix | Role |
-|-------------------|------------|----------------|----------------------|------|
-| **human super intelligence** | `red-wave-06625195` | `production` (`br-quiet-silence-zab1zvji`) | `ep-restless-dew-zas989pv…eu-west-2` | **HSI / unknown empty** — brand-new PG18 project (created 2026-11-01); `neondb` with **zero** user tables. Not Gate C; not Akeno. Likely intended substrate DB for hsi-core (empty until migrations). |
-| **immunecity** | `autumn-snow-67879321` | `production` (`br-super-sea-b5pre85r`) | **`ep-blue-salad-b5fk2n36…us-east-2`** | **ISI product DB (Gate C–adjacent)** — evidence/community/ask tables (`evidence_*`, `claim_candidates`, graph provenance, clinical_trials, etc.). Many Vercel preview branches. Consume via published exports from hsi-core; do not edit immunecity code for HSI. |
-| **akeno health** | `silent-violet-81283547` | `production` (`br-billowing-leaf-abcx5miw`, archived) | `ep-weathered-mountain-abmzoit7…eu-west-2` | **Akeno clinical** — patients / consent / ingestion (PHI-class schema). Out of Stage 1 pilot; do not merge into ISI or hsi-core. |
+| Field | Value |
+|-------|--------|
+| **Name** | `human super intelligence` |
+| **Project ID** | `red-wave-06625195` |
+| **Default branch** | `production` (`br-quiet-silence-zab1zvji`) |
+| **Host prefix** | `ep-restless-dew-zas989pv…eu-west-2` |
+| **Database** | `neondb` (empty user schema as of 2026-11-01 — zero tables; PG18) |
+| **Role** | **HSI-canonical** — sole Neon for HSI substrate / future migrations owned by this repo |
 
-## Other projects on the same Neon login (context only)
+If `red-wave-06625195` is missing or polluted, create a **new** empty Neon named clearly for HSI (e.g. `hsi-core` / `human-systems-intelligence`) and update this table. Prefer documenting + a minimal HSI-owned schema stub in-repo over copying ISI schemas.
+
+**Placeholder (local only — never commit passwords):**
+
+```bash
+# .env (gitignored) — HSI Neon only
+DATABASE_URL=postgresql://USER:PASSWORD@ep-restless-dew-zas989pv.REGION.aws.neon.tech/neondb?sslmode=require
+NEON_PROJECT_ID=red-wave-06625195
+NEON_BRANCH_ID=br-quiet-silence-zab1zvji
+```
+
+See [`.env.example`](../.env.example).
+
+## Never use for HSI substrate
+
+| Neon project name | Project ID | Endpoint host prefix | Why forbidden for HSI |
+|-------------------|------------|----------------------|------------------------|
+| **immunecity** | `autumn-snow-67879321` | `ep-blue-salad-b5fk2n36…us-east-2` | **ISI product Neon only** — Gate C approve/writes, evidence/community/ask tables. **Never** HSI substrate. Do **not** run Gate C approve or HSI migrations against it. |
+| **akeno health** | `silent-violet-81283547` | `ep-weathered-mountain-abmzoit7…eu-west-2` | **Out of scope** for HSI (deferred clinical / PHI-class). Ignore. |
+| **deliverx** | `spring-wind-48457918` | (DeliverX) | **Ignore** entirely — not an HSI spoke. |
+
+### Explicit isolation
+
+- **No shared evidence DB** between HSI and immunecity for HSI tech.
+- HSI publishes graded exports from this repo; ISI (immunecity) may **consume** those artifacts in **its own** Neon. That is not a shared database.
+- Gate C **checklist** lives in hsi-core; Gate C **approve+supports** (if any) is a human action in the **ISI product Neon** (`autumn-snow` / `ep-blue-salad…`) — never an HSI write path into ISI Neon from this workspace.
+- Akeno / DeliverX Neons: do not inspect for HSI work unless the user explicitly asks; never mutate for HSI.
+
+## Other projects on the same Neon login (context only — not HSI)
 
 | Name | Project ID | Notes |
 |------|------------|--------|
 | praja ledger | `square-cake-28248061` | unrelated |
 | carebridgeindia | `orange-block-41773018` | unrelated |
-| deliverx | `spring-wind-48457918` | **ignore** for HSI (DeliverX) |
 | SIGNALFORGE | `mute-base-44162928` | unrelated |
-| Aksh Health / Aksh Health Production | `floral-salad-21467299` / `tiny-river-29853628` | Aksh HITL consumers — not Gate C substrate |
+| Aksh Health / Aksh Health Production | `floral-salad-21467299` / `tiny-river-29853628` | Aksh HITL consumers — not HSI substrate |
 | SciFlowAI, Modi, modi-pharmacovigilance | various | unrelated |
 
 ## Agent rules
 
-1. Prefer **read-only** inspection (`branches list`, `databases list`, schema `SELECT` via `neonctl psql`) unless the user asked to mutate.
+1. Prefer **read-only** inspection (`branches list`, `databases list`, schema `SELECT` via `neonctl psql`) unless the user asked to mutate **HSI Neon**.
 2. **Never** print API keys, passwords, or full connection strings in docs or chat.
 3. Stay out of immunecity / akeno / swift-deliveries **code** edits; hsi-core is the sole HSI edit target ([`AGENTS.md`](../AGENTS.md), [`VISION_REPO_ALIGNMENT.md`](./VISION_REPO_ALIGNMENT.md)).
-4. Gate C curation artifacts live in this repo (`docs/IMMUNECITY_GATE_C_COMMIT_MANUAL.md`, exports); immunecity Neon holds the **product** evidence/community store that may consume those exports.
+4. **Never** point HSI `DATABASE_URL` / migrations / Gate C substrate writes at `autumn-snow`, `ep-blue-salad…`, Akeno, or DeliverX.
+5. Gate C curation artifacts live in this repo (`docs/IMMUNECITY_GATE_C_COMMIT_MANUAL.md`, exports). Product Gate C approve (ISI) stays in immunecity’s Neon — separate DB, separate technology surface.
