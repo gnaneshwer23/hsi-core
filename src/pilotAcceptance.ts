@@ -33,6 +33,7 @@ export type AcceptanceCriterion = {
     | "partner_lock"
     | "review"
     | "licensing"
+    | "product"
     | "deferred";
   label: string;
   /** Primary artifact filename(s) a partner should open. */
@@ -253,12 +254,13 @@ function buildCriteria(opts: {
     }),
     criterion({
       id: "ac-discovery-ui",
-      category: "deferred",
-      label: "Interactive Discovery Centre / Target R1 product UI",
-      artifact: "(deferred — ISI product)",
-      status: "pending",
-      evidence: "discoveryCentre metadata only in exports (notInteractiveUi=true)",
-      notes: "Phase 6+ — requires explicit user ask. Not Stage 1 acceptance.",
+      category: "product",
+      label: "Discovery Centre product surface (Phase 6 / Target R1)",
+      artifact: "site/src/pages/DiscoveryCentre.tsx · site/public/discovery/",
+      status: "pass",
+      evidence:
+        "ASK→MAP→REVIEW surface loads regenerable packs from site/public/discovery (notCds; partnerSigned=false)",
+      notes: "Phase 6 done. Phase 7 = R2 validation — explicit ask only. Still not clinical / not Akeno.",
     }),
   ];
 }
@@ -298,7 +300,7 @@ function buildWalkthroughSteps(lock: HsiPartnerLock): PilotAcceptancePack["walkt
       title: "Confirm regenerable bundle",
       open: "MANIFEST.json · hsi-pilot-acceptance.md",
       say: "Artifacts regenerate with bun run outputs. Acceptance pack records pass vs pending honestly.",
-      doNot: "Do not claim Phase 6+ Discovery Centre product UI or clinical R2–R5 from this pack.",
+      doNot: "Do not claim Phase 7 R2 validation or clinical R3–R5 / Akeno from this pack without an explicit ask.",
     },
   ];
 }
@@ -378,14 +380,14 @@ export function buildPilotAcceptancePack(opts?: {
     },
     walkthroughSteps: buildWalkthroughSteps(lock),
     nextActions: [
-      "Share hsi-pilot-walkthrough.md + hsi-pilot-acceptance.md with the outreach category / future named partner.",
+      "Share hsi-pilot-walkthrough.md + hsi-pilot-acceptance.md + site `/discovery` with the outreach category / future named partner.",
       "Keep partnerSigned=false / lockedPilot=false until flipRequirements in hsi-partner-lock.json are met.",
       "Agree licensing + numeric success thresholds before formal user testing.",
-      "Phases 6+ (Target R1 Discovery Centre product UI, clinical R2–R5, PDF/DOCX) require an explicit user ask — not implied by Phase 5.",
+      "Phase 6 Discovery Centre surface is live on site `/discovery`. Phase 7 (R2 validation) and clinical R3–R5 require an explicit user ask.",
     ],
     deferredExplicitAsk: [
-      "Phase 6+ Target R1 interactive Discovery Centre product UI",
-      "Clinical R2–R5 / Akeno patient-level pathways",
+      "Phase 7 — R2 validation (hypothesis tracking / gap analysis validation; explicit ask only)",
+      "Clinical R3–R5 / Akeno patient-level pathways",
       "PDF/DOCX brief renderer (ISI product P1)",
       "Stage 2 molecular adapters / Stage 3 clinical",
     ],

@@ -79,6 +79,8 @@ export type PublishOutputsResult = {
   manifestPath: string;
   latestPointerPath: string;
   exportsSynced: string[];
+  /** Static JSON copies for site `/discovery` (Phase 6). */
+  discoverySynced: string[];
 };
 
 function stamp(iso: string): string {
@@ -314,11 +316,12 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       "ISI: discovery / Ask / Radar only — use hsi-isi-export.json + hsi-isi-rel-map.json.",
       "ISI pilot walkthrough: hsi-pilot-walkthrough.md + hsi-pilot-evidence-pack.* + hsi-pilot-review-rubric.* + hsi-pilot-acceptance.* (Phase 5 acceptance on scope-locked RA/TNF; partnerSigned=false; lockedPilot=false; no patient CDS).",
       "Partner lock honesty: hsi-partner-lock.json — Phase 2 = scopeLocked; Phase 3 = evidence depth; Phase 5 = acceptance pack; named partner still flips partnerSigned (then lockedPilot).",
-      "Discovery Centre vocabulary is metadata only (ASK→MAP→REVIEW… + disease contexts) — not an interactive UI. Phase 6+ product UI needs explicit ask.",
+      "Phase 6: Discovery Centre product surface at site `/discovery` loads site/public/discovery/*.json (ASK→MAP→REVIEW; notCds; not Akeno).",
       "Aksh: HITL map pointers only — use hsi-aksh-node-map.json + hsi-aksh-hitl-cards.json; CDS stays closed on seeds.",
       "Gate C: human checklist in gate-c-checklist.*; optional HSI red-wave placeholders via bun run db:gate-c-local (pending only). ISI product approve stays autumn-snow — never from this workspace.",
       "Phase 4: HSI Neon schema stub — bun run db:migrate (guards refuse ISI/Akeno/DeliverX).",
-      "Regenerate with: bun run outputs",
+      "Phase 7 = R2 validation — requires an explicit user ask.",
+      "Regenerate with: bun run outputs (also refreshes site/public/discovery).",
     ],
   };
 
@@ -358,6 +361,47 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     }
   }
 
+  // Phase 6: refresh committed static copies for the Discovery Centre site surface.
+  const discoverySynced: string[] = [];
+  const discoveryPublicDir = join(cwd, "site", "public", "discovery");
+  mkdirSync(discoveryPublicDir, { recursive: true });
+  const discoveryFiles = [
+    "hsi-pilot-evidence-pack.json",
+    "hsi-partner-lock.json",
+    "hsi-gap-report.json",
+    "gate-c-checklist.json",
+  ] as const;
+  for (const name of discoveryFiles) {
+    const dest = join(discoveryPublicDir, name);
+    copyFileSync(join(outDir, name), dest);
+    discoverySynced.push(`site/public/discovery/${name}`);
+  }
+  const discoveryIndex = {
+    schemaVersion: "hsi-discovery-centre-public-1" as const,
+    notCds: true as const,
+    noPatientLevelActions: true as const,
+    autoApproveIntoKg: false as const,
+    surfaceRole: "site_product_surface" as const,
+    productSurfacePath: "/discovery",
+    framing: "ASK → MAP → REVIEW",
+    phase: "6",
+    generatedAt,
+    bundleId,
+    disease: partnerLock.disease?.label ?? null,
+    researchQuestion: partnerLock.researchQuestion,
+    scopeLocked: partnerLock.scopeLocked,
+    partnerSigned: partnerLock.partnerSigned,
+    lockedPilot: partnerLock.lockedPilot,
+    files: [...discoveryFiles],
+    notes: [
+      "Regenerate with bun run outputs — copies land here for the Vite site.",
+      "Not diagnostic / not for clinical use. Akeno = later.",
+      "Phase 7 = R2 validation — explicit ask only.",
+    ],
+  };
+  writeJson(join(discoveryPublicDir, "index.json"), discoveryIndex);
+  discoverySynced.push("site/public/discovery/index.json");
+
   return {
     bundleId,
     version,
@@ -367,5 +411,6 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     manifestPath,
     latestPointerPath,
     exportsSynced,
+    discoverySynced,
   };
 }

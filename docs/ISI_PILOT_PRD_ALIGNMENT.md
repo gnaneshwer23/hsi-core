@@ -71,7 +71,7 @@ PRD / brief four outputs mapped to what `bun run outputs` produces:
 | **4. Expert shortlist** (gaps / hypotheses) | Pack `expertShortlist` + gap report + Gate C pending + **review rubric** | Numeric success thresholds with partner |
 | **Research brief shell** | Pack markdown with citations/caveats + Discovery Loop framing | PDF/DOCX + in-app assembly (ISI) |
 | **Question / scope** | Pack `questionProject` + `hsi-partner-lock.json` (**Phase 2** RA/TNF; `scopeLocked=true`; `partnerSigned=false`) | Live workspace after partnerSigned |
-| **Discovery Centre vocabulary** | Pack + ISI export `discoveryCentre` (ASK→MAP→REVIEW…; RA scope-locked + SLE/PsO/IBD illustrative) | Interactive UI deferred — metadata only in Stage 1 |
+| **Discovery Centre vocabulary** | Pack + ISI export `discoveryCentre` + Phase 6 site `/discovery` (ASK→MAP→REVIEW on real packs; RA scope-locked + SLE/PsO/IBD illustrative) | Phase 7 R2 validation — explicit ask only |
 
 Substrate includes T2D / immuno-metabolic seeds **plus** a **scope-locked** RA/TNF response-heterogeneity slice and illustrative SLE/PsO/IBD stubs. Exports must keep `partnerSigned=false` / `lockedPilot=false` until a named partner confirms.
 
@@ -102,7 +102,7 @@ Substrate includes T2D / immuno-metabolic seeds **plus** a **scope-locked** RA/T
 4. Success-metric **numeric thresholds** with partner (rubric checklist exported; thresholds TBD)  
 5. Trial-registry context in first release vs P1  
 
-Critical path remains **outreach** to flip `partnerSigned` — Phase 4 HSI Neon red-wave readiness and Phase 5 pilot acceptance pack are done. Phase 6+ (Discovery Centre product UI / clinical R2–R5) needs an **explicit user ask**.
+Critical path remains **outreach** to flip `partnerSigned` — Phase 4–6 are done (Neon readiness, acceptance pack, Discovery Centre `/discovery`). Phase 7 R2 validation and clinical R3–R5 need an **explicit user ask**.
 
 ---
 

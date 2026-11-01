@@ -20,6 +20,7 @@ console.log(
       files: result.files,
       latestPointer: result.latestPointerPath,
       exportsSynced: result.exportsSynced,
+      discoverySynced: result.discoverySynced,
     },
     null,
     2,

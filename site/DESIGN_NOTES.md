@@ -46,4 +46,11 @@ ship an equivalent look & feel with original content.
   the cobalt/glass category above.
 - Mock dashboards use **illustrative** demo data, labeled as such.
 
+## Phase 6 Discovery Centre (`/discovery`)
+
+- Original product UI — **do not** vendor ChatGPT/Unkapped `index(5).html` markup.
+- IA labels OK: ASK → MAP → REVIEW; Established / Uncertain / Unexplored; NOW / NEXT / LATER.
+- Data: `fetch('/discovery/*.json')` from committed copies refreshed by `bun run outputs`.
+- Hard banners: not diagnostic; research intelligence only; Akeno = later.
+
 Last reviewed against dump structure + screenshot cadence; no binary assets imported.

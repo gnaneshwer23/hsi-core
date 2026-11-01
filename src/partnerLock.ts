@@ -217,10 +217,12 @@ export const HSI_SCOPE_LOCKED_PARTNER_LOCK: HsiPartnerLock = {
     "Phase 3 done = partner-scoped evidence depth for this locked RA/anti-TNF question (ADA, serology tension, RF LOINC, MTX combo).",
     "Phase 4 done = HSI Neon red-wave readiness (schema stub + guarded migrate; Gate C local pending only).",
     "Phase 5 done = pilot acceptance pack (checklist + walkthrough; partnerSigned still pending).",
+    "Phase 6 done = Discovery Centre product surface at site `/discovery` (research intelligence; notCds).",
     "scopeLocked does NOT mean a commercial partner signed or locked a MoU.",
     "partnerSigned / lockedPilot stay false until flipRequirements are met with a named partner.",
     "Outreach category partners are not MoUs; do not invent personal contacts.",
     "Exports must surface status=scope_locked + partnerSigned=false so consumers cannot mistake this for a live pilot contract.",
+    "Phase 7 = R2 validation — requires an explicit user ask; clinical R3–R5 / Akeno stay gated.",
   ],
   updatedAt: "2026-11-01T14:45:00.000Z",
 };

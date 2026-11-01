@@ -26,15 +26,14 @@ export function Docs() {
 cd hsi-core
 bun install
 bun test
-bun run validate
-bun run export:isi
-bun run export:isi-map
-bun run export:aksh-map
-bun run gap-report`}
+bun run outputs
+bun run site:dev
+# open http://localhost:5173/discovery`}
           </div>
           <p className="muted" style={{ marginTop: "1rem" }}>
-            Requires Bun. <code>bun run build</code> emits dist/ for TypeScript
-            consumers.
+            Requires Bun. <code>bun run outputs</code> refreshes{" "}
+            <code>dist/outputs/</code> and <code>site/public/discovery/</code>.{" "}
+            <code>bun run build</code> emits dist/ for TypeScript consumers.
           </p>
         </div>
       </section>

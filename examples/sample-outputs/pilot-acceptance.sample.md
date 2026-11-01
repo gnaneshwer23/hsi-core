@@ -18,4 +18,4 @@
 | `pending` | `ac-partner-signed` | partnerSigned / lockedPilot |
 | `pending` | `ac-licensing` | Source licensing |
 | `pending` | `ac-thresholds` | Numeric success thresholds |
-| `pending` | `ac-discovery-ui` | Discovery Centre product UI (Phase 6+) |
+| `pass` | `ac-discovery-ui` | Discovery Centre product surface (Phase 6) |

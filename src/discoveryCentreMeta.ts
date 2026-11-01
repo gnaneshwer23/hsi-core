@@ -1,9 +1,10 @@
 /**
- * Discovery Centre–aligned vocabulary for Stage 1 exports.
+ * Discovery Centre vocabulary for Stage 1 exports + site product surface.
  *
- * Labels match the concept-site Discovery Loop and illustrative disease picker
- * (see docs/ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md). These are **metadata only** —
- * not an interactive map UI, not a partner-signed lock, not clinical claims.
+ * Labels match the Discovery Loop and illustrative disease picker
+ * (see docs/ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md). Phase 6 ships a usable
+ * research-intelligence surface at `site/` `/discovery` that consumes published
+ * packs — not clinical CDS, not a partner-signed lock, not Akeno.
  */
 import {
   getPartnerLock,
@@ -92,9 +93,12 @@ export type HsiIllustrativeDiseaseId =
 
 export type HsiDiscoveryCentreMeta = {
   schemaVersion: "hsi-discovery-centre-meta-1";
-  /** Concept-site framing only — Stage 1 delivers packs, not the interactive Discovery Centre. */
-  surfaceRole: "metadata_labels_only";
-  notInteractiveUi: true;
+  /** Phase 6: site `/discovery` loads regenerable packs (research intelligence only). */
+  surfaceRole: "site_product_surface";
+  /** False once Phase 6 shipped — surface is usable but still not clinical / not Akeno. */
+  notInteractiveUi: false;
+  /** Path on the hsi-core vision site. */
+  productSurfacePath: "/discovery";
   notLockedPilotIndications: true;
   notCds: true;
   discoveryLoop: {
@@ -116,8 +120,9 @@ export function buildDiscoveryCentreMeta(
 ): HsiDiscoveryCentreMeta {
   return {
     schemaVersion: "hsi-discovery-centre-meta-1",
-    surfaceRole: "metadata_labels_only",
-    notInteractiveUi: true,
+    surfaceRole: "site_product_surface",
+    notInteractiveUi: false,
+    productSurfacePath: "/discovery",
     notLockedPilotIndications: true,
     notCds: true,
     discoveryLoop: {
@@ -129,10 +134,11 @@ export function buildDiscoveryCentreMeta(
     partnerLockDetail: lock,
     gradeVocabulary: ["established", "uncertain", "unexplored"],
     notes: [
+      "Phase 6 done: Target R1 Discovery Centre product surface at site `/discovery` (consumes bun run outputs).",
       "RA is the Phase 2 working Stage 1 scope (scopeLocked=true; partnerSigned=false; lockedPilot=false).",
       "Do not treat SLE/PsO/IBD as selected pilot indications — illustrative conversation contexts only.",
-      "Do not build the interactive Discovery Loop / disease switcher in hsi-core for Stage 1.",
-      "Ship four pilot outputs via bun run outputs; product UI consumes published artifacts.",
+      "Not diagnostic / not for clinical use. Akeno clinical intelligence remains gated later.",
+      "Phase 7 = R2 validation — requires an explicit user ask.",
     ],
   };
 }

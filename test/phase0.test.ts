@@ -456,14 +456,17 @@ describe("Gate C checklist + publish outputs", () => {
     expect(acceptance.criteria.find((c) => c.id === "ac-licensing")?.status).toBe("pending");
     expect(acceptance.criteria.find((c) => c.id === "ac-thresholds")?.status).toBe("pending");
     expect(acceptance.walkthroughSteps.length).toBeGreaterThanOrEqual(5);
-    expect(acceptance.deferredExplicitAsk.some((d) => d.toLowerCase().includes("discovery"))).toBe(
+    expect(acceptance.criteria.find((c) => c.id === "ac-discovery-ui")?.status).toBe("pass");
+    expect(acceptance.deferredExplicitAsk.some((d) => d.toLowerCase().includes("phase 7"))).toBe(
       true,
     );
   });
 
-  it("embeds Discovery Centre metadata in ISI export without interactive UI claims", () => {
+  it("embeds Discovery Centre metadata pointing at the Phase 6 site surface", () => {
     const bundle = buildIsiExportBundle({ generatedAt: "2026-11-01T13:00:00.000Z" });
-    expect(bundle.discoveryCentre.notInteractiveUi).toBe(true);
+    expect(bundle.discoveryCentre.surfaceRole).toBe("site_product_surface");
+    expect(bundle.discoveryCentre.notInteractiveUi).toBe(false);
+    expect(bundle.discoveryCentre.productSurfacePath).toBe("/discovery");
     expect(bundle.discoveryCentre.notLockedPilotIndications).toBe(true);
     expect(bundle.discoveryCentre.partnerLock.disease).toBe("Rheumatoid arthritis");
     expect(bundle.discoveryCentre.partnerLock.scopeLocked).toBe(true);

@@ -17,7 +17,7 @@ Immune Super Intelligence (ISI) is an immune-science and translational intellige
 
 | Module | Target-state role | Stage posture |
 |--------|-------------------|---------------|
-| **ISI Discovery Centre** | Question → evidence graph → mechanisms → hypotheses → research briefs | Stage 1: four pilot outputs via hsi-core packs + consumer walkthrough; full workspace UX elsewhere later. Concept marketing page catalogued in [`ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md`](./ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md) (reference-only — do not treat as Stage 1 build) |
+| **ISI Discovery Centre** | Question → evidence graph → mechanisms → hypotheses → research briefs | **Phase 6 done:** Target R1 research surface at hsi-core `site/` `/discovery` (consumes packs; ASK→MAP→REVIEW; not clinical). Concept HTML remains reference-only ([`ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md`](./ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md)). Phase 7 = R2 validation (explicit ask). |
 | **HSI Core Evidence Backbone** | Canonical entities, claims, grades, provenance, review, versioned exports | Stage 1: **active edit target** — substrate + `bun run outputs` |
 | **Akeno Clinical Intelligence** | Cohort feasibility, HCP-reviewed screening, trial-site workflows | Stage 3 only — deferred until partner data + HCP eval + governance |
 | **Lab / molecular integrations** | Omics, assay, chemistry, structure, simulation adapters | Stage 2+ (selected adapters after use-case justification); not Stage 1 breadth |
@@ -104,14 +104,15 @@ R4/R5 are **possibilities with gates**, not committed launch dates. The platform
 3. Keep disease + question **TBD** until a real partner locks them.  
 4. Use this map + pilot PRD alignment in discovery conversations.
 
-**Do not pull into the current build:**
+**Do not pull into the current build (post–Phase 6):**
 
-- Full ISI Discovery Centre feature surface (pages, copilot, interactive graph) as hsi-core work  
+- Phase 7 R2 validation / hypothesis workbench depth without an **explicit user ask**  
 - Lab/molecular adapter breadth  
 - Cohort / longitudinal / subgroup analytics  
 - Trial matching or Akeno site workflows  
 - R5 clinical decision support  
 - immunecity product-app edits or DeliverX wiring  
+- Vendoring ChatGPT/Unkapped Discovery Centre HTML  
 
 ---
 

@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "hsi-discovery-centre-public-1",
+  "notCds": true,
+  "noPatientLevelActions": true,
+  "autoApproveIntoKg": false,
+  "surfaceRole": "site_product_surface",
+  "productSurfacePath": "/discovery",
+  "framing": "ASK → MAP → REVIEW",
+  "phase": "6",
+  "generatedAt": "2026-11-01T14:48:01.698Z",
+  "bundleId": "hsi-core-0.1.0-20261101T144801698Z",
+  "disease": "Rheumatoid arthritis",
+  "researchQuestion": "Why do some patients with rheumatoid arthritis respond differently to anti-TNF therapy, and which biomarkers or immune mechanisms are best supported for defining those subgroups?",
+  "scopeLocked": true,
+  "partnerSigned": false,
+  "lockedPilot": false,
+  "files": [
+    "hsi-pilot-evidence-pack.json",
+    "hsi-partner-lock.json",
+    "hsi-gap-report.json",
+    "gate-c-checklist.json"
+  ],
+  "notes": [
+    "Regenerate with bun run outputs — copies land here for the Vite site.",
+    "Not diagnostic / not for clinical use. Akeno = later.",
+    "Phase 7 = R2 validation — explicit ask only."
+  ]
+}

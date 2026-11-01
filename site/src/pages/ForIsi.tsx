@@ -23,13 +23,19 @@ export function ForIsi() {
           <div className="split-headline">
             <div>
               <h2 className="display display-md">
-                Discovery surface,
+                Discovery Centre,
                 <br />
-                <span className="accent">illustrative.</span>
+                <span className="accent">Phase 6 live.</span>
               </h2>
               <p className="lede" style={{ marginTop: "0.85rem" }}>
-                Fake demo metrics on a co-worker-style card — not live telemetry.
-                ISI stays Ask / Radar / REL suggestions only.
+                ASK → MAP → REVIEW on regenerable RA / anti-TNF packs — research
+                intelligence only, not CDS. Co-worker card below remains
+                illustrative demo chrome.
+              </p>
+              <p style={{ marginTop: "1.25rem" }}>
+                <Link to="/discovery" className="btn btn-ink">
+                  Open Discovery Centre <span className="arrow">↗</span>
+                </Link>
               </p>
             </div>
             <IsiCoworkerMock />

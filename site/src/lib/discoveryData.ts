@@ -1,0 +1,220 @@
+/** Types + loaders for Phase 6 Discovery Centre static artifacts. */
+
+export type DiscoveryIndex = {
+  schemaVersion: string;
+  notCds: boolean;
+  framing: string;
+  phase: string;
+  generatedAt: string;
+  bundleId: string;
+  disease: string | null;
+  researchQuestion: string | null;
+  scopeLocked: boolean;
+  partnerSigned: boolean;
+  lockedPilot: boolean;
+  files: string[];
+  notes: string[];
+};
+
+export type PartnerLock = {
+  schemaVersion: string;
+  scopeLocked: boolean;
+  partnerSigned: boolean;
+  lockedPilot: boolean;
+  provisionalLock: boolean;
+  status: string;
+  disease: { id: string; label: string; shortLabel: string } | null;
+  researchQuestion: string | null;
+  candidateQuestions: string[];
+  partner: {
+    id: string;
+    label: string;
+    type: string;
+    region?: string;
+    outreachStatus?: string;
+    notes?: string;
+  } | null;
+  seedPathway: {
+    id: string;
+    label: string;
+    rationale: string;
+    primaryClaimIds: string[];
+    primaryEdgeIds: string[];
+    primaryPmids: string[];
+  } | null;
+  flipRequirements: string[];
+  honesty: string[];
+};
+
+export type EvidenceRow = {
+  claimId: string;
+  edgeId: string;
+  claimText: string;
+  subject: string;
+  relationship: string;
+  object: string;
+  conditionContext: string | null;
+  evidenceGrade: "established" | "uncertain" | "unexplored" | string;
+  reviewStatus: string;
+  source: {
+    pmid: string | null;
+    doi?: string | null;
+    citationLabel?: string | null;
+    sourceUrl?: string | null;
+  };
+  marker?: {
+    markerId: string | null;
+    markerName: string | null;
+    loinc: string | null;
+    linkKind: string | null;
+  };
+  limitations?: string | null;
+};
+
+export type ExplanationSlot = {
+  id: string;
+  label: string;
+  status: string;
+  relatedClaimIds: string[];
+  note: string;
+};
+
+export type ExpertItem = {
+  id: string;
+  kind: string;
+  text: string;
+  relatedClaimIds: string[];
+  autoApproved: boolean;
+};
+
+export type EntitySlice = {
+  diseases?: string[];
+  cells?: string[];
+  pathwaysOrMechanisms?: string[];
+  biomarkers?: string[];
+  treatments?: string[];
+  studies?: string[];
+  note?: string;
+};
+
+export type PilotPack = {
+  schemaVersion: string;
+  notCds: boolean;
+  generatedAt: string;
+  disease: string;
+  researchQuestion: string;
+  scopeLocked: boolean;
+  partnerSigned: boolean;
+  lockedPilot: boolean;
+  substrateNote?: string;
+  partnerLock?: PartnerLock;
+  discoveryCentre: {
+    discoveryLoop: {
+      framing: string;
+      steps: { id: string; label: string; order: number; desc: string }[];
+    };
+    illustrativeDiseaseContexts: {
+      id: string;
+      label: string;
+      shortLabel: string;
+      status: string;
+      lockedPilot: boolean;
+      seedHint: string;
+    }[];
+    gradeVocabulary: string[];
+  };
+  gradeDefinitions?: Record<string, string>;
+  evidenceMap: EvidenceRow[];
+  entitySlice: EntitySlice;
+  partnerScopedEntitySlice?: EntitySlice;
+  competingExplanations: ExplanationSlot[];
+  uncertainties: ExplanationSlot[];
+  expertShortlist: ExpertItem[];
+  summary: {
+    evidenceMapRows: number;
+    partnerScopedEvidenceRows?: number;
+    claimsWithLoinc?: number;
+    gradeCounts?: Record<string, number>;
+  };
+};
+
+export type GapReport = {
+  schemaVersion: string;
+  generatedAt: string;
+  summary: {
+    seedEdges: number;
+    gradeCounts: Record<string, number>;
+    claimsMappedToIsi: number;
+    loinc?: { claimsWithLoincMarker: number };
+  };
+  gaps: {
+    claimId: string;
+    edgeId: string;
+    assertion: string;
+    domain: string;
+    hsiGrade: string;
+    missing: string[];
+  }[];
+  nextActions: string[];
+};
+
+export type DiscoveryBundle = {
+  index: DiscoveryIndex;
+  lock: PartnerLock;
+  pack: PilotPack;
+  gap: GapReport;
+};
+
+const BASE = "/discovery";
+
+async function fetchJson<T>(name: string): Promise<T> {
+  const res = await fetch(`${BASE}/${name}`);
+  if (!res.ok) {
+    throw new Error(`Failed to load ${name} (${res.status})`);
+  }
+  return (await res.json()) as T;
+}
+
+export async function loadDiscoveryBundle(): Promise<DiscoveryBundle> {
+  const [index, lock, pack, gap] = await Promise.all([
+    fetchJson<DiscoveryIndex>("index.json"),
+    fetchJson<PartnerLock>("hsi-partner-lock.json"),
+    fetchJson<PilotPack>("hsi-pilot-evidence-pack.json"),
+    fetchJson<GapReport>("hsi-gap-report.json"),
+  ]);
+  return { index, lock, pack, gap };
+}
+
+/** Prefer pathway claim IDs from the partner lock; fall back to RA/TNF heuristics. */
+export function partnerScopedEvidence(
+  pack: PilotPack,
+  lock?: PartnerLock,
+): EvidenceRow[] {
+  const focus = new Set(
+    lock?.seedPathway?.primaryClaimIds ??
+      pack.partnerLock?.seedPathway?.primaryClaimIds ??
+      [],
+  );
+  if (focus.size > 0) {
+    const scoped = pack.evidenceMap.filter((r) => focus.has(r.claimId));
+    if (scoped.length > 0) return scoped;
+  }
+  return pack.evidenceMap.filter(
+    (r) =>
+      r.claimId.includes("-RA-") ||
+      /anti-?tnf|rheumatoid|acpa|\bADA\b|anti-CCP/i.test(r.claimText),
+  );
+}
+
+export function gradeCounts(rows: EvidenceRow[]): Record<string, number> {
+  const out: Record<string, number> = {
+    established: 0,
+    uncertain: 0,
+    unexplored: 0,
+  };
+  for (const r of rows) {
+    const g = r.evidenceGrade || "uncertain";
+    out[g] = (out[g] ?? 0) + 1;
+  }
+  return out;
+}
