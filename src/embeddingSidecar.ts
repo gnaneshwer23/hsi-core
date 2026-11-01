@@ -252,12 +252,58 @@ export function buildExampleEmbeddingSidecars(opts?: {
   };
 }
 
+/**
+ * Overlay additional sidecar maps (e.g. P3.3 FAIR ESM-2) onto a base map.
+ * Later overlays win on colliding edgeIds; safety-checked.
+ */
+export function mergeEmbeddingSidecarMappings(
+  base: EmbeddingSidecarMapping,
+  ...overlays: EmbeddingSidecarMapping[]
+): EmbeddingSidecarMapping {
+  const merged: EmbeddingSidecarMapping = { ...base };
+  for (const overlay of overlays) {
+    for (const [edgeId, sc] of Object.entries(overlay)) {
+      const safety = assertSafeEmbeddingSidecar(
+        sc as unknown as Record<string, unknown>,
+      );
+      if (!safety.ok) {
+        throw new Error(
+          `Refusing unsafe overlay sidecar for ${edgeId}: ${safety.reason}`,
+        );
+      }
+      merged[edgeId] = sc;
+    }
+  }
+  return merged;
+}
+
+function summarizeSidecars(byEdgeId: EmbeddingSidecarMapping): {
+  edgeCount: number;
+  withVectorRef: number;
+  withContentHash: number;
+  withTinyDemo: number;
+  maxTinyDemoDim: number;
+} {
+  const entries = Object.values(byEdgeId);
+  return {
+    edgeCount: entries.length,
+    withVectorRef: entries.filter((s) => Boolean(s.vectorRef)).length,
+    withContentHash: entries.filter((s) => Boolean(s.contentHash)).length,
+    withTinyDemo: entries.filter((s) => Boolean(s.tinyDemoVector)).length,
+    maxTinyDemoDim: MAX_TINY_DEMO_DIM,
+  };
+}
+
 export function buildEmbeddingSidecarsBundle(opts?: {
   generatedAt?: string;
+  /** Optional overlays (e.g. P3.3 ESM-2 hash/ref sidecars). */
+  overlayByEdgeId?: EmbeddingSidecarMapping;
 }): EmbeddingSidecarsBundle {
   const generatedAt = opts?.generatedAt ?? new Date().toISOString();
-  const byEdgeId = buildExampleEmbeddingSidecars({ createdAt: generatedAt });
-  const entries = Object.values(byEdgeId);
+  const base = buildExampleEmbeddingSidecars({ createdAt: generatedAt });
+  const byEdgeId = opts?.overlayByEdgeId
+    ? mergeEmbeddingSidecarMappings(base, opts.overlayByEdgeId)
+    : base;
 
   return {
     schemaVersion: EMBEDDING_SIDECARS_EXPORT_SCHEMA,
@@ -271,13 +317,7 @@ export function buildEmbeddingSidecarsBundle(opts?: {
     containsPhi: false,
     vendorsModelWeights: false,
     generatedAt,
-    summary: {
-      edgeCount: entries.length,
-      withVectorRef: entries.filter((s) => Boolean(s.vectorRef)).length,
-      withContentHash: entries.filter((s) => Boolean(s.contentHash)).length,
-      withTinyDemo: entries.filter((s) => Boolean(s.tinyDemoVector)).length,
-      maxTinyDemoDim: MAX_TINY_DEMO_DIM,
-    },
+    summary: summarizeSidecars(byEdgeId),
     byEdgeId,
     instructions: [
       "Embeddings are sidecar retrieval slots — never substitute for typed predicates or hsiGrade.",
@@ -286,6 +326,7 @@ export function buildEmbeddingSidecarsBundle(opts?: {
       "RA/SSc/gut/neuro packs remain evidence authority; similarity ≠ mechanism.",
       "Model bumps invalidate prior sidecars (invalidatesOnModelBump).",
       "Gate C compatibility: sidecars never auto-approve into KG; humans still decide grades.",
+      "P3.3 FAIR ESM-2 may overlay hash/ref slots (fair-esm2/*); still no weight vendoring.",
       "See docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md · EDGE_EMBEDDING_SLOT_SCHEMA.",
     ],
   };

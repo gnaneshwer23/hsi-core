@@ -9,8 +9,8 @@
   "productSurfacePath": "/discovery",
   "framing": "ASK → MAP → REVIEW → VALIDATE → TRANSLATE",
   "phase": "8",
-  "generatedAt": "2026-11-01T19:32:51.010Z",
-  "bundleId": "hsi-core-0.1.0-20261101T193251010Z",
+  "generatedAt": "2026-11-01T19:38:33.213Z",
+  "bundleId": "hsi-core-0.1.0-20261101T193833213Z",
   "disease": "Rheumatoid arthritis",
   "researchQuestion": "Why do some patients with rheumatoid arthritis respond differently to anti-TNF therapy, and which biomarkers or immune mechanisms are best supported for defining those subgroups?",
   "scopeLocked": true,
@@ -36,7 +36,8 @@
     "hsi-p3-adapter-license-matrix.json",
     "hsi-rdkit-adapter-proposals.json",
     "hsi-openmm-adapter-proposals.json",
-    "hsi-reinvent4-adapter-proposals.json"
+    "hsi-reinvent4-adapter-proposals.json",
+    "hsi-esm-adapter-proposals.json"
   ],
   "notes": [
     "Regenerate with bun run outputs — copies land here for the Vite site.",
@@ -50,6 +51,7 @@
     "P3.0 RDKit spike: hsi-rdkit-adapter-proposals.json — proposal-only; runtime stub|rdkit; Gate C pending; no grade flips.",
     "P3.1 OpenMM spike: hsi-openmm-adapter-proposals.json — proposal-only; runtime stub|openmm; Gate C pending; MD ≠ Gate C evidence alone.",
     "P3.2 REINVENT4 spike: hsi-reinvent4-adapter-proposals.json — proposal-only; runtime stub|reinvent; Gate C pending; never clinic path; Boltz deferred.",
+    "P3.3 FAIR ESM-2 stub: hsi-esm-adapter-proposals.json — proposal + sidecar refs; runtime stub|esm; Gate C pending; no weight vendoring; Boltz deferred. Next backlog: partner P0.2 / ISI consume.",
     "Phase 7 done = R2 validation (hsi-r2-validation.json) on VALIDATE tab.",
     "Phase 8 done = HSI translation substrate (hsi-translation-handoff.json) on TRANSLATE tab + in-repo Akeno HITL consumer at /akeno (not CDS)."
   ]

@@ -9,38 +9,28 @@
   "mayFlipEvidenceGrade": false,
   "containsPhi": false,
   "vendorsModelWeights": false,
-  "generatedAt": "2026-11-01T19:32:51.010Z",
+  "generatedAt": "2026-11-01T19:38:33.213Z",
   "summary": {
     "edgeCount": 5,
     "withVectorRef": 3,
     "withContentHash": 5,
-    "withTinyDemo": 1,
+    "withTinyDemo": 0,
     "maxTinyDemoDim": 16
   },
   "byEdgeId": {
     "HSI-E-RA-001": {
-      "modelId": "hsi-stub-edge-encoder/v0-demo",
-      "weightsHash": "sha256:demo-weights-not-vendored",
-      "dim": 8,
-      "vectorRef": "omit://demo/HSI-E-RA-001",
-      "contentHash": "sha256:7c18b1ec2e8d4a895b97316804b642d150a4beb6e73754a9cfb83907e02e71e6",
-      "createdAt": "2026-11-01T19:32:51.010Z",
-      "tinyDemoVector": [
-        0.12,
-        -0.05,
-        0.33,
-        0.01,
-        -0.22,
-        0.18,
-        0.07,
-        -0.09
-      ],
-      "notes": "P2.2 demo sidecar — tinyDemoVector for smoke only; does not set hsiGrade. RA evidence remains pack authority.",
+      "modelId": "fair-esm2/stub-t33-650M-UR50D",
+      "weightsHash": "sha256:fair-esm2-weights-not-vendored",
+      "dim": 1280,
+      "vectorRef": "omit://fair-esm2/stub/HSI-E-RA-001",
+      "contentHash": "sha256:95a6d1a8ac5d6bac3e2c5f0945a5319763bc1c3031c35a1ad52107266fad6613",
+      "createdAt": "2026-11-01T19:38:33.213Z",
       "doesNotSetHsiGrade": true,
       "mayFlipEvidenceGrade": false,
       "autoApprove": false,
       "autoApproveIntoKg": false,
-      "invalidatesOnModelBump": true
+      "invalidatesOnModelBump": true,
+      "notes": "P3.3 FAIR ESM-2 sidecar for HSI-E-RA-001; runtime=stub; uniprot=P01375; meanPoolNorm=0.714; hash/ref only — does not set hsiGrade; packs remain authority."
     },
     "HSI-E-RA-006": {
       "modelId": "hsi-stub-edge-encoder/v0-demo",
@@ -48,7 +38,7 @@
       "dim": 384,
       "vectorRef": null,
       "contentHash": "sha256:fe8e850c12edc86d8051aa9763c4008b4c3fc1165dfd0d36677beee839d23fad",
-      "createdAt": "2026-11-01T19:32:51.010Z",
+      "createdAt": "2026-11-01T19:38:33.213Z",
       "notes": "Hash-only slot (dim=384 placeholder) — no floats in git; cosine ≠ mechanism.",
       "doesNotSetHsiGrade": true,
       "mayFlipEvidenceGrade": false,
@@ -62,7 +52,7 @@
       "dim": 384,
       "vectorRef": "ref://hsi-demo-vectors/ssc/HSI-E-SSC-001",
       "contentHash": "sha256:dba99538bfe9385d78115f5060e36840fc6a29b31604ebb49c4343fc00ed0bd2",
-      "createdAt": "2026-11-01T19:32:51.010Z",
+      "createdAt": "2026-11-01T19:38:33.213Z",
       "notes": "Ref + hash for SSc dual-track edge; pack + PMIDs remain evidence authority.",
       "doesNotSetHsiGrade": true,
       "mayFlipEvidenceGrade": false,
@@ -71,18 +61,18 @@
       "invalidatesOnModelBump": true
     },
     "HSI-E-GUT-003": {
-      "modelId": "hsi-stub-edge-encoder/v0-demo",
-      "weightsHash": "sha256:demo-weights-not-vendored",
-      "dim": 384,
-      "vectorRef": "ref://hsi-demo-vectors/gut/HSI-E-GUT-003",
-      "contentHash": "sha256:919b380ccd7799b8727616e3d271e04ae2caf39b194cf6b8ee96ca36b805bafc",
-      "createdAt": "2026-11-01T19:32:51.010Z",
-      "notes": "Gut–immune SCFA→Treg neighbourhood — sidecar is retrieval only; grades stay uncertain/hypothesized.",
+      "modelId": "fair-esm2/stub-t33-650M-UR50D",
+      "weightsHash": "sha256:fair-esm2-weights-not-vendored",
+      "dim": 1280,
+      "vectorRef": "omit://fair-esm2/stub/HSI-E-GUT-003",
+      "contentHash": "sha256:220f2937ba8ac9582e9a5ff337345ad0760c0bb2abe8763bd11ba5acad57005e",
+      "createdAt": "2026-11-01T19:38:33.213Z",
       "doesNotSetHsiGrade": true,
       "mayFlipEvidenceGrade": false,
       "autoApprove": false,
       "autoApproveIntoKg": false,
-      "invalidatesOnModelBump": true
+      "invalidatesOnModelBump": true,
+      "notes": "P3.3 FAIR ESM-2 sidecar for HSI-E-GUT-003; runtime=stub; uniprot=Q9BZS1; meanPoolNorm=0.681; hash/ref only — does not set hsiGrade; packs remain authority."
     },
     "HSI-E-NI-001": {
       "modelId": "hsi-stub-edge-encoder/v0-demo",
@@ -90,7 +80,7 @@
       "dim": 384,
       "vectorRef": null,
       "contentHash": "sha256:bc53ec619827c6afc627a7e77b361167ac474aeea68fec2b6c2684ba7bcb7882",
-      "createdAt": "2026-11-01T19:32:51.010Z",
+      "createdAt": "2026-11-01T19:38:33.213Z",
       "notes": "Neuroimmune vagus reflex — hash only; never overclaim clinical VNS cure from similarity.",
       "doesNotSetHsiGrade": true,
       "mayFlipEvidenceGrade": false,
@@ -106,6 +96,7 @@
     "RA/SSc/gut/neuro packs remain evidence authority; similarity ≠ mechanism.",
     "Model bumps invalidate prior sidecars (invalidatesOnModelBump).",
     "Gate C compatibility: sidecars never auto-approve into KG; humans still decide grades.",
+    "P3.3 FAIR ESM-2 may overlay hash/ref slots (fair-esm2/*); still no weight vendoring.",
     "See docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md · EDGE_EMBEDDING_SLOT_SCHEMA."
   ]
 }

@@ -66,8 +66,9 @@ export const HSI_VERTICAL_DECISION: HsiVerticalDecision = {
     "DONE (P3.0): RDKit thin adapter spike (hsi-rdkit-adapter-proposals.*; runtime stub|rdkit; ModelProposalArtifacts → Gate C pending; license gate refuses blockedUntilSignOff).",
     "DONE (P3.1): OpenMM thin adapter spike (hsi-openmm-adapter-proposals.*; runtime stub|openmm; ModelProposalArtifacts → Gate C pending; cites HSI-E-NI-003 / HSI-E-GUT-003; MD ≠ Gate C evidence alone).",
     "DONE (P3.2): REINVENT4 thin adapter spike (hsi-reinvent4-adapter-proposals.*; runtime stub|reinvent; ModelProposalArtifacts → Gate C pending; never clinic path; no multi-GB weights; Boltz deferred).",
-    "NEXT science: P3.3 FAIR ESM-2 thin embedding stub (proposal/sidecar only; no weight vendoring) — Boltz remains deferred (multi-GB weights). Prefer backlog pivot to partner P0.2 / ISI consumption if partner outreach is ready.",
-    "Partner outreach / partnerSigned / rights table (unchanged P0.2) — parallel critical path (prefer after thin P3 spikes).",
+    "DONE (P3.3): FAIR ESM-2 thin embedding stub (hsi-esm-adapter-proposals.*; runtime stub|esm; ModelProposalArtifacts + embedding sidecar refs → Gate C pending; no weight vendoring; Boltz deferred).",
+    "NEXT backlog pivot: partner P0.2 / ISI consume — adapter spikes for unblocked shelf largely covered (RDKit/OpenMM/REINVENT4/ESM); AF3/TDC/ISI agents still blocked; Boltz remains deferred (multi-GB).",
+    "Partner outreach / partnerSigned / rights table (P0.2) — now the primary critical path after thin P3 spikes.",
   ],
 };
 

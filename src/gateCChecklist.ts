@@ -30,6 +30,7 @@ import {
 import { buildRdkitAdapterProposals } from "./adapters/rdkitAdapter";
 import { buildOpenmmAdapterProposals } from "./adapters/openmmAdapter";
 import { buildReinvent4AdapterProposals } from "./adapters/reinvent4Adapter";
+import { buildEsmAdapterProposals } from "./adapters/esmAdapter";
 
 export const GATE_C_CHECKLIST_SCHEMA = "hsi-gate-c-checklist-1" as const;
 
@@ -191,7 +192,7 @@ export function buildGateCChecklist(opts?: {
   const translationPack = buildTranslationHandoffPack({ generatedAt });
   const translationCandidates = translationPack.candidates.map(toTranslationChecklistRow);
   const exampleProposals = buildGateCModelProposalRows({ createdAt: generatedAt });
-  // P3.0 RDKit + P3.1 OpenMM + P3.2 REINVENT4 spike proposals (forceStub for deterministic Gate C / publish).
+  // P3.0–P3.3 spike proposals (forceStub for deterministic Gate C / publish).
   const rdkitProposals = buildRdkitAdapterProposals({
     createdAt: generatedAt,
     forceStub: true,
@@ -204,11 +205,16 @@ export function buildGateCChecklist(opts?: {
     createdAt: generatedAt,
     forceStub: true,
   }).map(toGateCModelProposalRow);
+  const esmProposals = buildEsmAdapterProposals({
+    createdAt: generatedAt,
+    forceStub: true,
+  }).map(toGateCModelProposalRow);
   const modelProposals = [
     ...exampleProposals,
     ...rdkitProposals,
     ...openmmProposals,
     ...reinvent4Proposals,
+    ...esmProposals,
   ];
 
   return {
@@ -249,6 +255,7 @@ export function buildGateCChecklist(opts?: {
       "P3.0 RDKit thin adapter spike (hsi-rdkit-adapter-proposals.*): sourceAdapterOrAgent=adapter-rdkit; runtime stub|rdkit; ModelProposalArtifacts only → pending; autoApprove=false; does not set hsiGrade; refuse blockedUntilSignOff adapters.",
       "P3.1 OpenMM thin adapter spike (hsi-openmm-adapter-proposals.*): sourceAdapterOrAgent=adapter-openmm; runtime stub|openmm; ModelProposalArtifacts only → pending; autoApprove=false; does not set hsiGrade; MD ≠ Gate C evidence alone; refuse blockedUntilSignOff adapters.",
       "P3.2 REINVENT4 thin adapter spike (hsi-reinvent4-adapter-proposals.*): sourceAdapterOrAgent=adapter-reinvent4; runtime stub|reinvent; ModelProposalArtifacts only → pending; autoApprove=false; does not set hsiGrade; never clinic recommendation path; no multi-GB weights; refuse blockedUntilSignOff adapters.",
+      "P3.3 FAIR ESM-2 thin embedding stub (hsi-esm-adapter-proposals.*): sourceAdapterOrAgent=adapter-esm; runtime stub|esm; ModelProposalArtifacts + embedding sidecar refs → pending; autoApprove=false; does not set hsiGrade; no weight vendoring / PHI sequences; Boltz deferred; refuse blockedUntilSignOff adapters.",
     ],
   };
 }

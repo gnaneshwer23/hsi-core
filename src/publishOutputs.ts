@@ -92,6 +92,11 @@ import {
   serializeReinvent4AdapterMarkdown,
 } from "./adapters/reinvent4Adapter";
 import {
+  runEsmAdapter,
+  serializeEsmAdapterBundle,
+  serializeEsmAdapterMarkdown,
+} from "./adapters/esmAdapter";
+import {
   getVerticalDecision,
   verticalDecisionExportPointer,
 } from "./verticalDecision";
@@ -309,7 +314,6 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
   const sscPathwayPack = buildSscPathwayPack({ generatedAt });
   const gutImmunePack = buildGutImmunePack({ generatedAt });
   const neuroImmunePack = buildNeuroImmunePack({ generatedAt });
-  const embeddingSidecars = buildEmbeddingSidecarsBundle({ generatedAt });
   const modelEvalHarness = buildModelEvalHarnessBundle({ generatedAt });
   const externalGenomePointers = buildExternalGenomePointersBundle({
     generatedAt,
@@ -317,7 +321,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
   const p3AdapterLicenseMatrix = buildP3AdapterLicenseMatrixBundle({
     generatedAt,
   });
-  // Deterministic stub for publish/CI; live RDKit/OpenMM/REINVENT4 optional via CLI --live.
+  // Deterministic stub for publish/CI; live RDKit/OpenMM/REINVENT4/ESM optional via CLI --live.
   const rdkitAdapter = runRdkitAdapter({
     generatedAt,
     forceStub: true,
@@ -329,6 +333,15 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
   const reinvent4Adapter = runReinvent4Adapter({
     generatedAt,
     forceStub: true,
+  });
+  const esmAdapter = runEsmAdapter({
+    generatedAt,
+    forceStub: true,
+  });
+  // P2.2 demo sidecars + P3.3 FAIR ESM-2 hash/ref overlays (ESM wins on colliding edgeIds).
+  const embeddingSidecars = buildEmbeddingSidecarsBundle({
+    generatedAt,
+    overlayByEdgeId: esmAdapter.sidecarsByEdgeId,
   });
 
   const fileMap: Record<string, string> = {
@@ -388,6 +401,8 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     "hsi-reinvent4-adapter-proposals.md": serializeReinvent4AdapterMarkdown(
       reinvent4Adapter,
     ),
+    "hsi-esm-adapter-proposals.json": serializeEsmAdapterBundle(esmAdapter),
+    "hsi-esm-adapter-proposals.md": serializeEsmAdapterMarkdown(esmAdapter),
   };
 
   const files: string[] = [];
@@ -448,6 +463,8 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       openmmAdapterProposalsMd: "hsi-openmm-adapter-proposals.md",
       reinvent4AdapterProposalsJson: "hsi-reinvent4-adapter-proposals.json",
       reinvent4AdapterProposalsMd: "hsi-reinvent4-adapter-proposals.md",
+      esmAdapterProposalsJson: "hsi-esm-adapter-proposals.json",
+      esmAdapterProposalsMd: "hsi-esm-adapter-proposals.md",
     },
     counts: {
       isiEdges: isiBundle.edges.length,
@@ -521,6 +538,12 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       reinvent4AdapterMayFlipEvidenceGrade:
         reinvent4Adapter.mayFlipEvidenceGrade,
       reinvent4AdapterAutoApprove: reinvent4Adapter.autoApprove,
+      esmAdapterProposals: esmAdapter.proposals.length,
+      esmAdapterRuntimeStub: esmAdapter.runtime === "stub",
+      esmAdapterMayFlipEvidenceGrade: esmAdapter.mayFlipEvidenceGrade,
+      esmAdapterAutoApprove: esmAdapter.autoApprove,
+      esmAdapterSidecarEdges: Object.keys(esmAdapter.sidecarsByEdgeId).length,
+      esmAdapterBoltzDeferred: esmAdapter.boltzDeferred,
     },
     discoveryLoop: isiBundle.discoveryCentre.discoveryLoop.framing,
     partnerLock: partnerLockExportPointer(partnerLock),
@@ -585,6 +608,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       "P3.0 RDKit thin adapter spike: hsi-rdkit-adapter-proposals.* — adapter-rdkit; runtime stub|rdkit; ModelProposalArtifacts only → Gate C pending; autoApprove=false; does not set hsiGrade; no weights / PHI / CDS / fake partnerSigned.",
       "P3.1 OpenMM thin adapter spike: hsi-openmm-adapter-proposals.* — adapter-openmm; runtime stub|openmm; ModelProposalArtifacts only → Gate C pending; autoApprove=false; does not set hsiGrade; MD ≠ Gate C evidence alone; no weights / PHI / CDS / fake partnerSigned.",
       "P3.2 REINVENT4 thin adapter spike: hsi-reinvent4-adapter-proposals.* — adapter-reinvent4; runtime stub|reinvent; ModelProposalArtifacts only → Gate C pending; autoApprove=false; does not set hsiGrade; never clinic recommendation path; no multi-GB weights / PHI / CDS / fake partnerSigned; Boltz deferred.",
+      "P3.3 FAIR ESM-2 thin embedding stub: hsi-esm-adapter-proposals.* — adapter-esm; runtime stub|esm; ModelProposalArtifacts + embedding sidecar refs → Gate C pending; overlays hsi-embedding-sidecars.json; autoApprove=false; does not set hsiGrade; no weight vendoring / PHI sequences / CDS / fake partnerSigned; Boltz deferred.",
       "Regenerate with: bun run outputs (also refreshes site/public/discovery).",
     ],
   };
@@ -647,6 +671,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     "hsi-rdkit-adapter-proposals.json",
     "hsi-openmm-adapter-proposals.json",
     "hsi-reinvent4-adapter-proposals.json",
+    "hsi-esm-adapter-proposals.json",
   ] as const;
   for (const name of discoveryFiles) {
     const dest = join(discoveryPublicDir, name);
@@ -687,6 +712,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       "P3.0 RDKit spike: hsi-rdkit-adapter-proposals.json — proposal-only; runtime stub|rdkit; Gate C pending; no grade flips.",
       "P3.1 OpenMM spike: hsi-openmm-adapter-proposals.json — proposal-only; runtime stub|openmm; Gate C pending; MD ≠ Gate C evidence alone.",
       "P3.2 REINVENT4 spike: hsi-reinvent4-adapter-proposals.json — proposal-only; runtime stub|reinvent; Gate C pending; never clinic path; Boltz deferred.",
+      "P3.3 FAIR ESM-2 stub: hsi-esm-adapter-proposals.json — proposal + sidecar refs; runtime stub|esm; Gate C pending; no weight vendoring; Boltz deferred. Next backlog: partner P0.2 / ISI consume.",
       "Phase 7 done = R2 validation (hsi-r2-validation.json) on VALIDATE tab.",
       "Phase 8 done = HSI translation substrate (hsi-translation-handoff.json) on TRANSLATE tab + in-repo Akeno HITL consumer at /akeno (not CDS).",
     ],

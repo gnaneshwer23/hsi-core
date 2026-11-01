@@ -300,7 +300,7 @@ export function buildP3AdapterLicenseRows(): P3AdapterLicenseRow[] {
         "https://www.evolutionaryscale.ai/policies/terms-of-use",
       ],
       notes:
-        "Scoped to archived FAIR ESM (MIT code + weights for ESM-2/ESMFold). EvolutionaryScale ESM-3 / ESMC use Cambrian Open / Non-Commercial terms — treat as a separate adapter/review; never clinic PHI sequences; never vendor multi-GB weights here.",
+        "Scoped to archived FAIR ESM (MIT code + weights for ESM-2/ESMFold). P3.3 thin embedding stub → ModelProposalArtifacts + embedding sidecar refs (runtime stub|esm; import-only live path). EvolutionaryScale ESM-3 / ESMC use Cambrian Open / Non-Commercial terms — treat as a separate adapter/review; never clinic PHI sequences; never vendor multi-GB weights here.",
     }),
     row({
       adapterId: "adapter-openmm",

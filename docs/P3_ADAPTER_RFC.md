@@ -132,11 +132,11 @@ Flipping `blockedUntilSignOff` from `true` → `false` requires a PR that cites 
 | Every adapter `mayFlipEvidenceGrade=false`, `vendorsModelWeights=false` | Yes (invariants) |
 | No commercial “signed” claim without evidence | Yes |
 | MANIFEST / OUTPUTS / BUILD_STATUS updated; next phase named | Yes |
-| Runnable adapter code / weight download | **P3.0–P3.2:** RDKit + OpenMM + REINVENT4 thin spikes only (no weights). Other adapters still gated |
+| Runnable adapter code / weight download | **P3.0–P3.3:** RDKit + OpenMM + REINVENT4 + FAIR ESM-2 thin spikes only (no weights). AF3/TDC/ISI agents still gated; Boltz deferred |
 
 ---
 
-## 9. P3.0–P3.2 spikes (done) + recommended next
+## 9. P3.0–P3.3 spikes (done) + recommended next
 
 **P3.0 DONE — `adapter-rdkit`:** thin proposal-only CLI (`bun run adapter:rdkit`); license gate via `assertP3AdapterRunnable`; deterministic stub descriptors when RDKit absent; optional live RDKit subprocess; proposals on Gate C + offline eval case `EVAL-PASS-RDKIT-MTX-001`; export `hsi-rdkit-adapter-proposals.*`. Still no grade flips / PHI / CDS / fake `partnerSigned`.
 
@@ -144,7 +144,9 @@ Flipping `blockedUntilSignOff` from `true` → `false` requires a PR that cites 
 
 **P3.2 DONE — `adapter-reinvent4`:** thin proposal-only CLI (`bun run adapter:reinvent4`); same license gate; stub generative sandbox metrics when reinvent absent; optional reinvent import-only (no multi-GB weights); cites `HSI-E-RA-012` / `HSI-E-GUT-003`; Gate C + eval case `EVAL-PASS-REINVENT4-MTX-001`; export `hsi-reinvent4-adapter-proposals.*`. Never clinic recommendation path.
 
-**P3.3 — next science (optional):** prefer **FAIR ESM-2** thin embedding stub (proposal/sidecar only; no weight vendoring). **Boltz remains deferred** (multi-GB weights path). Prefer **backlog pivot to partner P0.2 / ISI consumption** when outreach is ready.
+**P3.3 DONE — `adapter-esm`:** thin FAIR ESM-2 embedding stub CLI (`bun run adapter:esm`); same license gate (MIT FAIR / `research_ok_documented`); stub embedding metrics when `esm` absent; optional esm import-only (no multi-GB weights); cites `HSI-E-RA-001` / `HSI-E-GUT-003`; ModelProposalArtifacts + embedding sidecar refs (overlay `hsi-embedding-sidecars.json`); Gate C + eval case `EVAL-PASS-ESM2-TNF-001`; export `hsi-esm-adapter-proposals.*`. Similarity ≠ mechanism; EvolutionaryScale ESM-3/ESMC = separate review.
+
+**NEXT — backlog pivot: partner P0.2 / ISI consume.** Unblocked shelf adapter spikes largely covered (RDKit/OpenMM/REINVENT4/ESM). **Boltz remains deferred** (multi-GB weights). AF3/TDC/ISI agents stay `blockedUntilSignOff`. Prefer partner outreach + ISI product consumption over further adapter spikes.
 
 ---
 

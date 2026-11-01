@@ -189,6 +189,7 @@ export {
   buildEmbeddingSidecarsBundle,
   buildExampleEmbeddingSidecars,
   contentHashOfPayload,
+  mergeEmbeddingSidecarMappings,
   serializeEmbeddingSidecars,
   type EdgeEmbeddingSidecar,
   type EmbeddingSidecarMapping,
@@ -314,6 +315,28 @@ export {
   type Reinvent4Runtime,
   type Reinvent4SeedFixture,
 } from "./adapters/reinvent4Adapter";
+
+export {
+  ESM2_EMBED_DIM,
+  ESM2_MODEL_ID,
+  ESM_ADAPTER_EXPORT_SCHEMA,
+  ESM_ADAPTER_ID,
+  ESM_ADAPTER_RUNTIME_SCHEMA,
+  ESM_PUBLIC_SEQUENCE_FIXTURES,
+  ESM_STUB_METRICS,
+  buildEsmAdapterProposals,
+  buildEsmAdapterSidecars,
+  embeddingToModelProposal,
+  resolveEsmEmbedding,
+  runEsmAdapter,
+  serializeEsmAdapterBundle,
+  serializeEsmAdapterMarkdown,
+  tryComputeEsmMetrics,
+  type EsmAdapterBundle,
+  type EsmEmbeddingSnapshot,
+  type EsmRuntime,
+  type EsmSequenceFixture,
+} from "./adapters/esmAdapter";
 
 export {
   SSC_CELL_CARD_SCHEMA,

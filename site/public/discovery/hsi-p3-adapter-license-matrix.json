@@ -10,7 +10,7 @@
   "vendorsModelWeights": false,
   "emitsModelProposalOnly": true,
   "containsPhi": false,
-  "generatedAt": "2026-11-01T19:32:51.010Z",
+  "generatedAt": "2026-11-01T19:38:33.213Z",
   "summary": {
     "adapterCount": 8,
     "blockedUntilSignOffCount": 3,
@@ -92,7 +92,7 @@
         "https://github.com/facebookresearch/esm",
         "https://www.evolutionaryscale.ai/policies/terms-of-use"
       ],
-      "notes": "Scoped to archived FAIR ESM (MIT code + weights for ESM-2/ESMFold). EvolutionaryScale ESM-3 / ESMC use Cambrian Open / Non-Commercial terms — treat as a separate adapter/review; never clinic PHI sequences; never vendor multi-GB weights here.",
+      "notes": "Scoped to archived FAIR ESM (MIT code + weights for ESM-2/ESMFold). P3.3 thin embedding stub → ModelProposalArtifacts + embedding sidecar refs (runtime stub|esm; import-only live path). EvolutionaryScale ESM-3 / ESMC use Cambrian Open / Non-Commercial terms — treat as a separate adapter/review; never clinic PHI sequences; never vendor multi-GB weights here.",
       "mayFlipEvidenceGrade": false,
       "vendorsModelWeights": false,
       "emitsModelProposalOnly": true,
