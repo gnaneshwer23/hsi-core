@@ -72,7 +72,7 @@ export function Roadmap() {
       <section className="section section-bone">
         <div className="container">
           <div className="section-head">
-            <span className="section-num" style={{ color: "var(--teal-mid)" }}>
+            <span className="section-num">
               NEXT ACTIONS
             </span>
             <h2 className="display display-md">Stay inside hsi-core</h2>

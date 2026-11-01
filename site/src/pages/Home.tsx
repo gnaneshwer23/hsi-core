@@ -153,24 +153,30 @@ export function Home() {
             </p>
           </div>
           <div className="grade-row" style={{ marginTop: "2.5rem" }}>
-            <div className="grade-cell grade-established" style={{ background: "rgba(4,18,16,0.04)", borderColor: "rgba(4,18,16,0.1)" }}>
-              <div className="label" style={{ color: "#1a6b5c" }}>established</div>
+            <div className="grade-cell grade-established">
+              <div className="label" style={{ color: "var(--cobalt)" }}>
+                established
+              </div>
               <h3>Surfacable path</h3>
-              <p style={{ color: "rgba(4,18,16,0.62)" }}>
+              <p>
                 Requires curationReview=approved. Only then can Aksh consider HITL CDS cards.
               </p>
             </div>
-            <div className="grade-cell grade-uncertain" style={{ background: "rgba(4,18,16,0.04)", borderColor: "rgba(4,18,16,0.1)" }}>
-              <div className="label" style={{ color: "#a8742e" }}>uncertain</div>
+            <div className="grade-cell grade-uncertain">
+              <div className="label" style={{ color: "var(--amber)" }}>
+                uncertain
+              </div>
               <h3>Honest gap</h3>
-              <p style={{ color: "rgba(4,18,16,0.62)" }}>
+              <p>
                 Visible to discovery. Never auto-promoted. Never silently treated as clinic truth.
               </p>
             </div>
-            <div className="grade-cell grade-unexplored" style={{ background: "rgba(4,18,16,0.04)", borderColor: "rgba(4,18,16,0.1)" }}>
-              <div className="label" style={{ color: "#5a6b64" }}>unexplored</div>
+            <div className="grade-cell grade-unexplored">
+              <div className="label" style={{ color: "var(--slate)" }}>
+                unexplored
+              </div>
               <h3>Frontier label</h3>
-              <p style={{ color: "rgba(4,18,16,0.62)" }}>
+              <p>
                 Named unknown. Useful for ISI radar — forbidden as diagnosis support.
               </p>
             </div>
@@ -363,7 +369,7 @@ export function Home() {
             <Link to="/docs" className="btn btn-ink">
               How to use <span className="arrow">↗</span>
             </Link>
-            <Link to="/systems" className="btn btn-ghost" style={{ borderColor: "rgba(4,18,16,0.2)", color: "var(--ink)" }}>
+            <Link to="/systems" className="btn btn-ghost">
               Systems overview
             </Link>
           </div>

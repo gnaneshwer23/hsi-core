@@ -57,7 +57,7 @@ export function Evidence() {
       <section className="section section-bone">
         <div className="container">
           <div className="section-head">
-            <span className="section-num" style={{ color: "var(--teal-mid)" }}>
+            <span className="section-num">
               GATE C
             </span>
             <h2 className="display display-md">Curator checklist lives here.</h2>
@@ -77,10 +77,10 @@ export function Evidence() {
             <li>Extend seeds and export:isi-map inside hsi-core only</li>
           </ul>
           <div className="tag-row">
-            <span className="tag" style={{ borderColor: "rgba(4,18,16,0.15)", color: "rgba(4,18,16,0.65)" }}>
+            <span className="tag" style={{ borderColor: "rgba(19,25,48,0.15)", color: "rgba(19,25,48,0.65)" }}>
               docs/IMMUNECITY_GATE_C_COMMIT_MANUAL.md
             </span>
-            <span className="tag" style={{ borderColor: "rgba(4,18,16,0.15)", color: "rgba(4,18,16,0.65)" }}>
+            <span className="tag" style={{ borderColor: "rgba(19,25,48,0.15)", color: "rgba(19,25,48,0.65)" }}>
               bun run export:isi-map
             </span>
           </div>

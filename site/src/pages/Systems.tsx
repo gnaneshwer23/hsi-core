@@ -77,7 +77,7 @@ export function Systems() {
       <section className="section section-bone">
         <div className="container">
           <div className="section-head">
-            <span className="section-num" style={{ color: "var(--teal-mid)" }}>
+            <span className="section-num">
               AXES
             </span>
             <h2 className="display display-md">Do not collapse these.</h2>
@@ -118,7 +118,7 @@ export function Systems() {
               </tr>
             </tbody>
           </table>
-          <p style={{ marginTop: "1.5rem", color: "rgba(4,18,16,0.7)" }}>
+          <p style={{ marginTop: "1.5rem", color: "rgba(19,25,48,0.7)" }}>
             <strong>Rule:</strong> hsiGrade=established requires
             curationReview=approved. Never promote from PMID alone.
           </p>

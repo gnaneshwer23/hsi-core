@@ -67,7 +67,7 @@ export function Alignment() {
       <section className="section section-bone">
         <div className="container">
           <div className="section-head">
-            <span className="section-num" style={{ color: "var(--teal-mid)" }}>
+            <span className="section-num">
               STATUSES
             </span>
             <h2 className="display display-md">Alignment vocabulary</h2>
@@ -112,7 +112,7 @@ export function Alignment() {
               </tr>
             </tbody>
           </table>
-          <p style={{ marginTop: "1.5rem", color: "rgba(4,18,16,0.65)" }}>
+          <p style={{ marginTop: "1.5rem", color: "rgba(19,25,48,0.65)" }}>
             Full portfolio map:{" "}
             <code>docs/VISION_REPO_ALIGNMENT.md</code>
           </p>

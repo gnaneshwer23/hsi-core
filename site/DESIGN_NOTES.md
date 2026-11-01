@@ -1,12 +1,12 @@
-# Design notes — structure cues only
+# Design notes — structure + style tokens
 
 Read-only reference: local Unkapped.ai saveweb2zip dump
 (`/Users/gnaneshwerjadav/Downloads/saveweb2zip-com-unkapped-ai/`).
 
 **Do not vendor.** No Unkapped CSS, JS, HTML, logos, photos, font files, workflow
 WebPs, cert badges, or minified Webflow/vendor bundles ship in hsi-core. This
-file records *information architecture and cadence* so HSI can build original
-forest-ink + phosphor layouts.
+file records *information architecture* and *recreated style tokens* so HSI can
+ship an equivalent look & feel with original content.
 
 ## Dump layout (index.html / index_1.html)
 
@@ -44,30 +44,40 @@ Same page shell (~18 landmarks):
 HSI replacements: **original inline SVG** (network graph, evidence pipeline, dual
 consumer, Gate C gates) drawn in brand tokens — never raster dumps.
 
+## Recreated style tokens (from dump CSS — not pasted)
+
+| Token | Value | Role |
+| --- | --- | --- |
+| Cobalt | `#3965fa` | Primary accent / active chips |
+| Navy | `#131930` / `#141c37` / `#0b0f24` | Ink surfaces, CTA |
+| Soft blue | `#8fa8ff` / `#cfdaff` | Labels, glass chip text |
+| Cream | `#f0ece9` / `#f7f3f0` | Light section bands |
+| Pale | `#eceef3` | Alternate light band |
+| Glass blur | `blur(14–22px) saturate(140–150%)` | Nav, chips, stage panel |
+| Radii | `12px` controls · `999px` pills · `18px` cards | Buttons / chips / panels |
+| Type | Host Grotesk + JetBrains Mono (Google Fonts) | Bold grotesk + mono energy |
+| Hero wash | `#07208a → #1646c4 → #2f6fe0 → #8fb6f2 → cream` | Full-bleed atmosphere |
+| Letter-spacing | `0.08–0.14em` uppercase mono labels | Section tags / chips |
+
 ## Patterns to emulate (not clone)
 
-1. **Sticky compact nav** + one primary CTA; secondary IA in links (HSI: Systems /
-   Evidence / ISI / Aksh / Roadmap / Alignment).
+1. **Floating glass nav** + one primary navy CTA; secondary IA in links.
 2. **Hero as one composition**: brand-forward wordmark, one display line, short
-   lede, CTA pair, optional 3–4 deep-link chips — ambient grid/glow, not inset cards.
-3. **Section cadence**: ink ↔ bone ↔ teal bands; numbered section tags; split
-   headline (display left / lede right).
-4. **Altitude / phase strip**: tab or stage chips driving one detail panel
-   (HSI roadmap P0–P3).
-5. **Process as four steps**: short title, one sentence, tag chips — no agency
-   jargon; HSI maps to schema → seeds → Gate C → publish.
-6. **Diagram section**: large illustration plane + caption strip (“sample /
-   schematic”) — original SVG flows, not competitor workflow WebPs.
-7. **Domain depth tabs**: switch panels without route change (grades, consumers).
-8. **FAQ accordion** closing the page before a dense footer.
-9. **Motion budget**: subtle rise / tab swap; respect `prefers-reduced-motion`.
+   lede, CTA pair, glass deep-link chips — blue gradient atmosphere + light
+   pattern overlay, not inset cards.
+3. **Section cadence**: navy ↔ cream ↔ cobalt-gradient bands; numbered mono
+   section tags; split headline (display left / lede right).
+4. **Altitude / phase strip**: tab or stage chips driving one glass detail panel.
+5. **Process as four steps**: short title, one sentence, tag chips.
+6. **Diagram section**: large illustration plane + caption strip — original SVG.
+7. **FAQ accordion** closing the page before a dense footer.
+8. **Motion budget**: subtle rise / hover lift; respect `prefers-reduced-motion`.
 
-## HSI brand lock
+## HSI brand lock (content stays ours)
 
-- Palette: forest ink `#041210`, teal mid `#1a6b5c`, phosphor `#8dffb8`, bone, amber.
-- Type already on site: Bricolage Grotesque + Newsreader + IBM Plex Mono (Google
-  Fonts links in our `index.html` — not Host Grotesk / Stack Sans from the dump).
 - Voice: evidence honesty, Gate C human, ISI ≠ CDS, edit only `hsi-core`.
+- Name / messaging / routes / diagrams remain HSI — only visual energy matches
+  the cobalt/glass category above.
 
 ## Mapping dump cadence → HSI pages
 
@@ -82,4 +92,4 @@ consumer, Gate C gates) drawn in brand tokens — never raster dumps.
 | FAQ | “What HSI is — and is not” |
 | Footer | Existing multi-column footer |
 
-Last reviewed against dump structure only; no binary assets imported.
+Last reviewed against dump structure + CSS tokens; no binary assets imported.

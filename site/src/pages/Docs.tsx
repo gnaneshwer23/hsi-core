@@ -42,14 +42,14 @@ bun run gap-report`}
       <section className="section section-bone">
         <div className="container">
           <div className="section-head">
-            <span className="section-num" style={{ color: "var(--teal-mid)" }}>
+            <span className="section-num">
               IMPORT
             </span>
             <h2 className="display display-md">Package surface</h2>
           </div>
           <div
             className="code-block"
-            style={{ background: "rgba(4,18,16,0.92)" }}
+            style={{ background: "rgba(11,15,36,0.92)" }}
           >
             {`import {
   HSI_T2D_IMMUNO_SEED_EDGES,

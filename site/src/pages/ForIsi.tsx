@@ -49,7 +49,7 @@ export function ForIsi() {
       <section className="section section-bone">
         <div className="container">
           <div className="section-head">
-            <span className="section-num" style={{ color: "var(--teal-mid)" }}>
+            <span className="section-num">
               ARTIFACTS
             </span>
             <h2 className="display display-md">What ISI pulls</h2>

@@ -45,7 +45,7 @@ export function ForAksh() {
       <section className="section section-bone">
         <div className="container">
           <div className="section-head">
-            <span className="section-num" style={{ color: "var(--teal-mid)" }}>
+            <span className="section-num">
               IDS
             </span>
             <h2 className="display display-md">Durable aksh: scheme</h2>
@@ -54,14 +54,14 @@ export function ForAksh() {
               — condition, finding, medicine, risk, pathway, interaction, watch.
             </p>
           </div>
-          <div className="code-block" style={{ background: "rgba(4,18,16,0.92)", color: "var(--phosphor)" }}>
+          <div className="code-block" style={{ background: "rgba(11,15,36,0.92)", color: "var(--phosphor)" }}>
             {`aksh:finding:hba1c
 aksh:condition:t2dm
 aksh:medicine:metformin
 aksh:interaction:inflammation-insulin-resistance
 aksh:watch:irae-hyperglycemia`}
           </div>
-          <p style={{ marginTop: "1.25rem", color: "rgba(4,18,16,0.65)" }}>
+          <p style={{ marginTop: "1.25rem", color: "rgba(19,25,48,0.65)" }}>
             Export schema hsi-aksh-node-map-2 includes provisional → durable
             migration. Seeds keep cdsSurfacable false until Gate C clears.
           </p>
