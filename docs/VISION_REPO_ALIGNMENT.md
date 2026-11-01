@@ -81,6 +81,16 @@ flowchart TB
 
 **Ignored (not a spoke):** [`gnaneshwer23/swift-deliveries`](https://github.com/gnaneshwer23/swift-deliveries) / DeliverX — logistics product unrelated to HSI. Do not use as HITL pattern reference, do not plan future wire-up, do not sync.
 
+**Deferred clinical (Akeno Stage 3 — not Stage 1):** Akeno surfaces are founder-lineage clinical / marketing work, distinct from the live Aksh diabetes HITL product at [akshhealth.com](https://akshhealth.com). Catalogued so they are not mistaken for the ISI pilot or the hsi-core hub:
+
+| Surface | What it is | HSI status |
+|---------|------------|------------|
+| [`gnaneshwer23/akenohealth`](https://github.com/gnaneshwer23/akenohealth) | Python L0–L10 multi-AMC scaffolding + Next.js Neon dashboard (`akenohealth.vercel.app`) | **deferred** — engineering starter kit; not edit target |
+| [`gnaneshwer23/akeno-health-ai`](https://github.com/gnaneshwer23/akeno-health-ai) | Lovable Vite/React marketing + dashboard prototype | **deferred** — not edit target |
+| [akeno-health-ai.lovable.app](https://akeno-health-ai.lovable.app/) | Live marketing site (digital twins, quantum, RWE, CDS claims) | **deferred** — reference-only claims surface; not pilot deliverable |
+
+**Do not build now (Stage 1):** Akeno digital-twin / quantum / RWE / federated / patient CDS / trial-matching / multi-AMC platform work. Pilot = ISI research intelligence only.
+
 ---
 
 ## Portfolio map
@@ -93,6 +103,7 @@ flowchart TB
 | **[gnaneshwer23/immunecity](https://github.com/gnaneshwer23/immunecity)** | ISI product app / discovery UI (REL graph, Ask, Radar) | **consumer** | Import `buildIsiExportBundle` / `exports/`; Gate C approve stays human in product Neon | P1 | **Do not edit for HSI**; consume published artifacts only |
 | **ISI site** (product surface on immunecity / related deploy) | Public discovery face of HSI grades — never CDS | **consumer** | Same ISI export path | P1 | Honest grades; no diagnosis; no PHI→LLM in prod |
 | **Aksh Health** ([akshhealth.com](https://akshhealth.com) + any `aksh*` repos) | Clinician-safe half: HITL suggestion cards when `isCdsSurfacable` | **consumer** | `export:aksh-map`, HITL stub, `aksh:` ids | P1 | No EHR write-back from map alone; CDS closed until Gate C + `established` |
+| **Akeno Health** ([gnaneshwer23/akenohealth](https://github.com/gnaneshwer23/akenohealth), [gnaneshwer23/akeno-health-ai](https://github.com/gnaneshwer23/akeno-health-ai), [akeno-health-ai.lovable.app](https://akeno-health-ai.lovable.app/)) | Broader clinical / multi-AMC / marketing AI surfaces (same founder lineage as Aksh; brand alias historically) | **deferred** (Akeno Stage 3) | Not wired until data access + HCP eval + governance after ISI Stage 1 | Stage 3 | **Do not edit** from hsi-core; not Stage 1 pilot scope; marketing claims ≠ production CDS |
 | **[gnaneshwer23/hsi-sources](https://github.com/gnaneshwer23/hsi-sources)** | Curator bookmark / raw-source shelf; may retain a historical DeliverX vendor snapshot | **reference-only** (shelf · **archival**) | Never a runtime dep; humans promote claims into hsi-core seeds | P1 | **Archival only** — do not sync or use vendor snapshots for HSI; no auto-ingest; no secrets/PHI |
 | **[gnaneshwer23/swift-deliveries](https://github.com/gnaneshwer23/swift-deliveries)** (DeliverX) | Unrelated logistics product | **ignore** | **never** | — | **Out of scope** — not an HSI spoke, not a HITL pattern reference, not a future wire-up target; do not edit or sync |
 
@@ -114,7 +125,7 @@ flowchart TB
 
 ## How the portfolio aligns (one picture)
 
-hsi-core owns the graded graph and publishes read-only exports. Aksh and ISI (immunecity + site) are **consumers**: clinician-safe HITL vs discovery, both forbidden from inventing grades or writing PHI into LLMs. hsi-sources is a curator shelf (**archival only** — any historical DeliverX vendor snapshot must not be synced or used for HSI). DeliverX / swift-deliveries is **ignored** — out of scope, not a spoke. ClinVar / TCGA indexes may later ground citations; AF3, Boltz, ESM, OpenMM, RDKit, REINVENT4, and TDC stay **P3 plugins** — useful for theory→practical discovery, never for unsupported diagnosis or automatic Gate C.
+hsi-core owns the graded graph and publishes read-only exports. Aksh and ISI (immunecity + site) are **consumers**: clinician-safe HITL vs discovery, both forbidden from inventing grades or writing PHI into LLMs. Akeno repos / Lovable marketing (akenohealth, akeno-health-ai, akeno-health-ai.lovable.app) are **deferred Stage 3** — same clinical gate as the proposal, not Stage 1 work. hsi-sources is a curator shelf (**archival only** — any historical DeliverX vendor snapshot must not be synced or used for HSI). DeliverX / swift-deliveries is **ignored** — out of scope, not a spoke. ClinVar / TCGA indexes may later ground citations; AF3, Boltz, ESM, OpenMM, RDKit, REINVENT4, and TDC stay **P3 plugins** — useful for theory→practical discovery, never for unsupported diagnosis or automatic Gate C.
 
 ---
 
@@ -137,6 +148,6 @@ hsi-core owns the graded graph and publishes read-only exports. Aksh and ISI (im
 4. Grow ISI export / REL suggestion maps for the pilot question; never auto-approve into a product KG.
 5. Document any future ClinVar/TCGA **pointer** fields as optional claim metadata — still Gate C.
 6. Do **not** vendor AF3/Boltz/etc. until a written P3 plugin RFC + license sign-off lands in this repo.
-7. Leave immunecity, Aksh apps, and hsi-sources untouched from this workspace. **Ignore** DeliverX / swift-deliveries (not a next step, not a wire-up).
+7. Leave immunecity, Aksh apps, Akeno repos (`akenohealth`, `akeno-health-ai`), and hsi-sources untouched from this workspace. **Ignore** DeliverX / swift-deliveries (not a next step, not a wire-up).
 
 See also: [ISI_PILOT_BRIEF.md](./ISI_PILOT_BRIEF.md), [ISI_PILOT_PARTNER_SHORTLIST.md](./ISI_PILOT_PARTNER_SHORTLIST.md), [AKSH_HITL_CONSUMPTION.md](./AKSH_HITL_CONSUMPTION.md), [IMMUNECITY_GATE_C_COMMIT_MANUAL.md](./IMMUNECITY_GATE_C_COMMIT_MANUAL.md), README “Pilot” + “Active codebase”.

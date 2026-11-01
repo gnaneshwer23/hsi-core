@@ -31,6 +31,22 @@ The proposal and the pilot docs are **aligned on sequencing**: Stage 1 = researc
 
 ---
 
+## Akeno Stage 3 surfaces (catalogued — do not build in Stage 1)
+
+Verified URLs (hsi-core docs only; **do not edit** these repos from the HSI workspace):
+
+| URL | Role | Maturity note |
+|-----|------|---------------|
+| https://github.com/gnaneshwer23/akenohealth | Deferred clinical platform scaffolding (L0–L10 services + Neon/Next dashboard) | Starter kit / control dashboard; not production CDS |
+| https://github.com/gnaneshwer23/akeno-health-ai | Deferred Lovable marketing + product UI source | Vite/React/shadcn; aspirational feature surface |
+| https://akeno-health-ai.lovable.app/ | Deferred live marketing deploy of the above | Claims digital twins, quantum AI, RWE, CDS — marketing, not Stage 1 deliverables |
+
+**Naming:** **Aksh Health** ([akshhealth.com](https://akshhealth.com)) is the current clinician-safe diabetes HITL product (P1 export consumer). **Akeno** is the broader / earlier clinical-AI brand (same founder lineage; LinkedIn historically aliased to akshhealth.com). Proposal “Akeno Stage 3” = gated clinical pathway after ISI Stage 1 — not the hub, not the Stage 1 pilot build.
+
+**What NOT to build now:** multi-AMC ingestion platform, digital twins, quantum modules, federated RWE, patient-level prediction, trial matching, or wiring Lovable Akeno dashboards to hsi-core. See [`VISION_REPO_ALIGNMENT.md`](./VISION_REPO_ALIGNMENT.md).
+
+---
+
 ## Gaps / tensions (honest)
 
 | Tension | How we hold it |
