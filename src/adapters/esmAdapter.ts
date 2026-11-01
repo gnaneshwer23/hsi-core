@@ -151,7 +151,8 @@ export type EsmAdapterBundle = {
   containsPhi: false;
   partnerSigned: false;
   neverClinicRecommendationPath: true;
-  boltzDeferred: true;
+  /** false once P3.5 Boltz stub is unblocked under WEIGHTS_POLICY_ACK (still no weight vendoring). */
+  boltzDeferred: false;
   licenseGate: {
     adapterId: typeof ESM_ADAPTER_ID;
     signOffStatus: "research_ok_documented";
@@ -450,7 +451,7 @@ export function runEsmAdapter(opts?: {
     containsPhi: false,
     partnerSigned: false,
     neverClinicRecommendationPath: true,
-    boltzDeferred: true,
+    boltzDeferred: false,
     licenseGate: {
       adapterId: ESM_ADAPTER_ID,
       signOffStatus: "research_ok_documented",
@@ -467,7 +468,7 @@ export function runEsmAdapter(opts?: {
       "License gate: refuse adapters with blockedUntilSignOff=true (this row is research_ok_documented / MIT FAIR).",
       "runtime=stub when esm Python is absent; runtime=esm when python3+esm import succeeds (import-only; no multi-GB weights).",
       "Emit hash/ref sidecars only (P2.2 schema); never vendor weights; never PHI / clinic sequences.",
-      "Boltz weights path deferred (avoid multi-GB download).",
+      "Boltz unblocked under WEIGHTS_POLICY_ACK (docs/P3_WEIGHTS_AND_LICENSE_POLICY.md); still no multi-GB weight vendoring.",
       "Never set hsiGrade / curationReview / autoApprove / partnerSigned=true.",
       "No PHI · no CDS · similarity ≠ mechanism · packs remain evidence authority.",
       "See docs/P3_ADAPTER_RFC.md · src/adapters/esmAdapter.ts.",
@@ -509,7 +510,7 @@ export function serializeEsmAdapterMarkdown(
     "",
     `Schema: \`${bundle.schemaVersion}\` · runtime: **${bundle.runtime}** · generated ${bundle.generatedAt}`,
     "",
-    "> ModelProposalArtifacts + embedding sidecar refs. Gate C pending. autoApprove=false. does not set hsiGrade. notCds. partnerSigned=false. No weight vendoring. Boltz deferred. Similarity ≠ mechanism.",
+    "> ModelProposalArtifacts + embedding sidecar refs. Gate C pending. autoApprove=false. does not set hsiGrade. notCds. partnerSigned=false. No weight vendoring. Boltz unblocked under WEIGHTS_POLICY_ACK. Similarity ≠ mechanism.",
     "",
     "## License gate",
     "",

@@ -2,11 +2,11 @@
 
 > Illustrative snippet. Regenerate full artifact with `bun run outputs` → `hsi-esm-adapter-proposals.md`.
 
-Schema: `hsi-esm-adapter-proposals-1` · runtime: **stub** · `autoApprove=false` · does not set `hsiGrade` · `partnerSigned=false` · no weight vendoring · Boltz deferred
+Schema: `hsi-esm-adapter-proposals-1` · runtime: **stub** · `autoApprove=false` · does not set `hsiGrade` · `partnerSigned=false` · no weight vendoring · Boltz unblocked under WEIGHTS_POLICY_ACK
 
-## Why FAIR ESM-2 (Boltz deferred)
+## Why FAIR ESM-2
 
-MIT FAIR / `research_ok_documented`; protein-language embedding sidecars (hash/ref) complement RDKit + OpenMM + REINVENT4; no multi-GB weight vendoring. Boltz structure/affinity weights path deferred.
+MIT FAIR / `research_ok_documented`; protein-language embedding sidecars (hash/ref) complement RDKit + OpenMM + REINVENT4; no multi-GB weight vendoring. Boltz structure stub is separately gated by `WEIGHTS_POLICY_ACK` (still no weight vendoring).
 
 ## Embeddings (shape)
 

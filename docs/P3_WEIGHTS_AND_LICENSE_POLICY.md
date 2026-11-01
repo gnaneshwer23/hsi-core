@@ -1,5 +1,7 @@
 # P3 weights and license policy
 
+**Status:** Boltz stub **unblocked** when `WEIGHTS_POLICY_ACK=true` (proposal-only → Gate C pending). Still **no** multi-GB weight vendoring into git.
+
 **Purpose:** Keep molecular / structure / agent adapters honest in hsi-core.  
 **Binding:** [`P3_ADAPTER_RFC.md`](./P3_ADAPTER_RFC.md) · `src/p3AdapterLicenseMatrix.ts` · `src/researchSignOffFixture.ts`.
 

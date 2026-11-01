@@ -23,7 +23,9 @@ This RFC is the **gate document**. Thin adapter spikes may land only when:
 
 **P3.1 landed:** `adapter-openmm` thin spike (`src/adapters/openmmAdapter.ts`) — LGPL-family / `research_ok_documented` / `blockedUntilSignOff=false`; optional live OpenMM via `python3` subprocess else deterministic stub; export `hsi-openmm-adapter-proposals.*`. Chosen over REINVENT4 at P3.1: classical MD (no generative clinic path), complements RDKit, no multi-GB weights.
 
-**P3.2 landed:** `adapter-reinvent4` thin spike (`src/adapters/reinvent4Adapter.ts`) — Apache-2.0 / `research_ok_documented` / `blockedUntilSignOff=false`; optional reinvent import via `python3` (import-only; no weight download) else deterministic stub; export `hsi-reinvent4-adapter-proposals.*`. Never clinic recommendation path; Boltz weights path deferred.
+**P3.2 landed:** `adapter-reinvent4` thin spike (`src/adapters/reinvent4Adapter.ts`) — Apache-2.0 / `research_ok_documented` / `blockedUntilSignOff=false`; optional reinvent import via `python3` (import-only; no weight download) else deterministic stub; export `hsi-reinvent4-adapter-proposals.*`. Never clinic recommendation path.
+
+**P3.5 landed:** `adapter-boltz` thin spike (`src/adapters/boltzAdapter.ts`) — MIT / `research_ok_documented`; requires `WEIGHTS_POLICY_ACK=true`; optional `BOLTZ_WEIGHTS_CACHE` external only; never vendors multi-GB weights.
 
 ---
 
@@ -132,7 +134,7 @@ Flipping `blockedUntilSignOff` from `true` → `false` requires a PR that cites 
 | Every adapter `mayFlipEvidenceGrade=false`, `vendorsModelWeights=false` | Yes (invariants) |
 | No commercial “signed” claim without evidence | Yes |
 | MANIFEST / OUTPUTS / BUILD_STATUS updated; next phase named | Yes |
-| Runnable adapter code / weight download | **P3.0–P3.3:** RDKit + OpenMM + REINVENT4 + FAIR ESM-2 thin spikes only (no weights). AF3/TDC/ISI agents still gated; Boltz deferred |
+| Runnable adapter code / weight download | **P3.0–P3.5:** RDKit + OpenMM + REINVENT4 + FAIR ESM-2 + Boltz (WEIGHTS_POLICY_ACK) thin spikes (no weight vendoring). AF3/TDC/ISI agents research-test fixtures only (not commercial AF3 rights) |
 
 ---
 
@@ -146,7 +148,9 @@ Flipping `blockedUntilSignOff` from `true` → `false` requires a PR that cites 
 
 **P3.3 DONE — `adapter-esm`:** thin FAIR ESM-2 embedding stub CLI (`bun run adapter:esm`); same license gate (MIT FAIR / `research_ok_documented`); stub embedding metrics when `esm` absent; optional esm import-only (no multi-GB weights); cites `HSI-E-RA-001` / `HSI-E-GUT-003`; ModelProposalArtifacts + embedding sidecar refs (overlay `hsi-embedding-sidecars.json`); Gate C + eval case `EVAL-PASS-ESM2-TNF-001`; export `hsi-esm-adapter-proposals.*`. Similarity ≠ mechanism; EvolutionaryScale ESM-3/ESMC = separate review.
 
-**NEXT — backlog pivot: partner P0.2 / ISI consume.** Unblocked shelf adapter spikes largely covered (RDKit/OpenMM/REINVENT4/ESM). **Boltz remains deferred** (multi-GB weights). AF3/TDC/ISI agents stay `blockedUntilSignOff`. Prefer partner outreach + ISI product consumption over further adapter spikes.
+**P3.5 DONE — `adapter-boltz`:** thin structure stub CLI (`bun run adapter:boltz`); requires `WEIGHTS_POLICY_ACK=true` ([`P3_WEIGHTS_AND_LICENSE_POLICY.md`](./P3_WEIGHTS_AND_LICENSE_POLICY.md)); optional `BOLTZ_WEIGHTS_CACHE` external path only (stub OK if absent); cites `HSI-E-RA-001` / `HSI-E-GUT-003`; Gate C + eval case `EVAL-PASS-BOLTZ-TNF-001`; export `hsi-boltz-adapter-proposals.*`. Never vendor multi-GB weights into git.
+
+**NEXT — backlog pivot: partner P0.2 / ISI consume.** Shelf adapter spikes covered (RDKit/OpenMM/REINVENT4/ESM/Boltz-under-ack). Prefer partner outreach + ISI product consumption over further adapter spikes.
 
 ---
 

@@ -186,8 +186,9 @@ Reproduce: `bun test && bun run outputs && bun run site:dev` → `/discovery`, `
 | **P3 adapter RFC + licenses** | **DONE (P2.5)** RFC + matrix (`docs/P3_ADAPTER_RFC.md`; `hsi-p3-adapter-license-matrix.*`) | No weight vendoring; honest `signOffStatus`; blocked adapters still refused |
 | **P3.0 RDKit spike** | **DONE** thin proposal-only adapter (`hsi-rdkit-adapter-proposals.*`; `runtime: stub|rdkit`) | Gate C pending only; no grade flips / PHI / CDS / weights |
 | **P3.1 OpenMM spike** | **DONE** thin proposal-only adapter (`hsi-openmm-adapter-proposals.*`; `runtime: stub|openmm`; cites NI-003 / GUT-003) | Gate C pending only; MD ≠ evidence alone; no grade flips / PHI / CDS / weights |
-| **P3.2 REINVENT4 spike** | **DONE** thin proposal-only adapter (`hsi-reinvent4-adapter-proposals.*`; `runtime: stub|reinvent`; cites RA-012 / GUT-003) | Gate C pending only; never clinic path; no grade flips / PHI / CDS / multi-GB weights; Boltz deferred |
-| **P3.3 FAIR ESM-2 stub** | **DONE** thin embedding stub (`hsi-esm-adapter-proposals.*`; `runtime: stub|esm`; cites RA-001 / GUT-003; sidecar overlays) | Gate C pending only; hash/ref only; no grade flips / PHI / CDS / weight vendoring; Boltz deferred |
+| **P3.2 REINVENT4 spike** | **DONE** thin proposal-only adapter (`hsi-reinvent4-adapter-proposals.*`; `runtime: stub|reinvent`; cites RA-012 / GUT-003) | Gate C pending only; never clinic path; no grade flips / PHI / CDS / multi-GB weights |
+| **P3.3 FAIR ESM-2 stub** | **DONE** thin embedding stub (`hsi-esm-adapter-proposals.*`; `runtime: stub|esm`; cites RA-001 / GUT-003; sidecar overlays) | Gate C pending only; hash/ref only; no grade flips / PHI / CDS / weight vendoring |
+| **P3.5 Boltz stub** | **DONE** weights-policy-gated stub (`hsi-boltz-adapter-proposals.*`; `WEIGHTS_POLICY_ACK`; optional `BOLTZ_WEIGHTS_CACHE`) | Gate C pending; autoApprove=false; no hsiGrade; no multi-GB weight vendoring |
 | **No agent runtime** | Aksh catalog + ISI 12-agent blueprint ≠ executable loop | ISI product **out of repo**; HSI holds shapes only |
 | **No PHI / no live CDS** | Correct non-goal — do not “close” by building clinic features | Policy |
 | **ISI product still thin** | `/discovery` is HSI demo; immunecity RBAC/search/graph UX not built here | **Out of repo** (immunecity) |
@@ -292,7 +293,8 @@ One-sprint-sized items. Mark **[DECISION]** where the user must choose before co
 | P3.0 RDKit honesty | Proposal-only; `runtime: stub|rdkit`; Gate C pending; `autoApprove=false`; does not set `hsiGrade`; no PHI / CDS / fake `partnerSigned` |
 | P3.1 OpenMM honesty | Proposal-only; `runtime: stub|openmm`; Gate C pending; MD ≠ Gate C evidence alone; `autoApprove=false`; does not set `hsiGrade`; no PHI / CDS / fake `partnerSigned` |
 | P3.2 REINVENT4 honesty | Proposal-only; `runtime: stub|reinvent`; Gate C pending; never clinic recommendation path; `autoApprove=false`; does not set `hsiGrade`; no PHI / CDS / multi-GB weights / fake `partnerSigned` |
-| P3.3 FAIR ESM-2 honesty | Proposal + embedding sidecar refs; `runtime: stub|esm`; Gate C pending; hash/ref only; `autoApprove=false`; does not set `hsiGrade`; no PHI sequences / CDS / weight vendoring / fake `partnerSigned`; Boltz deferred |
+| P3.3 FAIR ESM-2 honesty | Proposal + embedding sidecar refs; `runtime: stub|esm`; Gate C pending; hash/ref only; `autoApprove=false`; does not set `hsiGrade`; no PHI sequences / CDS / weight vendoring / fake `partnerSigned` |
+| P3.5 Boltz honesty | Stub proposals require `WEIGHTS_POLICY_ACK=true`; optional external `BOLTZ_WEIGHTS_CACHE`; Gate C pending; `autoApprove=false`; does not set `hsiGrade`; never vendors multi-GB weights |
 | P0.2-HSI honesty | Consume contract + flip-readiness exported; fixture may set `partnerSigned` under `hypothetical_test_only`; `lockedPilot=false`; `readyToFlipPartnerSigned=false` for real MoU; licensing stub all `needs_review`; adapter track paused |
 | P0.5 wiring honesty | Playbook + wiring-spec + demo client in hsi-core; no immunecity edits; Gate C never auto-approve; Neon isolation restated |
 | Safety | MANIFEST still `notCds`; `/akeno` still `clinicalActive=false`; Neon still red-wave-only |

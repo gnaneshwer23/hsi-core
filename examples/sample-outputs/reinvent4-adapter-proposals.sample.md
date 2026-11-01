@@ -4,9 +4,9 @@
 
 Schema: `hsi-reinvent4-adapter-proposals-1` · runtime: **stub** · `autoApprove=false` · does not set `hsiGrade` · `partnerSigned=false` · never clinic recommendation path
 
-## Why REINVENT4 (Boltz deferred)
+## Why REINVENT4
 
-Apache-2.0 / `research_ok_documented`; generative sandbox complements RDKit + OpenMM; no multi-GB weight vendoring. Boltz structure/affinity weights path deferred.
+Apache-2.0 / `research_ok_documented`; generative sandbox complements RDKit + OpenMM; no multi-GB weight vendoring. Boltz structure stub is separately gated by `WEIGHTS_POLICY_ACK` (still no weight vendoring).
 
 ## Proposals (shape)
 

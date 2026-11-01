@@ -61,8 +61,35 @@ describe("Research sign-off fixture + Boltz weights policy", () => {
     });
     expect(bundle.weightsPolicyAck).toBe(true);
     expect(bundle.vendorsModelWeights).toBe(false);
+    expect(bundle.autoApprove).toBe(false);
+    expect(bundle.mayFlipEvidenceGrade).toBe(false);
     expect(bundle.proposals.length).toBe(2);
     expect(bundle.externalWeightsCache).toBeNull();
+    expect(bundle.proposals[0]!.proposalId).toBe("HSI-MP-BOLTZ-TNF-001");
+    expect(bundle.proposals[1]!.proposalId).toBe("HSI-MP-BOLTZ-FOXP3-001");
+    expect(
+      bundle.proposals[0]!.evidenceHints.some((h) => h === "edge:HSI-E-RA-001"),
+    ).toBe(true);
+    expect(
+      bundle.proposals[1]!.evidenceHints.some((h) => h === "edge:HSI-E-GUT-003"),
+    ).toBe(true);
+
+    // Optional external cache path — stub still runs; no weights downloaded/vendored.
+    const withCache = runBoltzAdapter({
+      generatedAt: "2026-11-01T20:00:00.000Z",
+      env: {
+        WEIGHTS_POLICY_ACK: "true",
+        BOLTZ_WEIGHTS_CACHE: "/tmp/hsi-boltz-cache-absent",
+      },
+    });
+    expect(withCache.externalWeightsCache).toBe(
+      "/tmp/hsi-boltz-cache-absent",
+    );
+    expect(withCache.vendorsModelWeights).toBe(false);
+    expect(withCache.runtime).toBe("stub");
+    expect(withCache.proposals[0]!.contextNote).toContain(
+      "BOLTZ_WEIGHTS_CACHE=/tmp/hsi-boltz-cache-absent",
+    );
   });
 
   test("Gate C + eval harness include new stub proposals", () => {

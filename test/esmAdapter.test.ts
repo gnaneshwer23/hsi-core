@@ -48,7 +48,7 @@ describe("P3.3 FAIR ESM-2 thin embedding stub", () => {
     expect(bundle.partnerSigned).toBe(false);
     expect(bundle.notCds).toBe(true);
     expect(bundle.neverClinicRecommendationPath).toBe(true);
-    expect(bundle.boltzDeferred).toBe(true);
+    expect(bundle.boltzDeferred).toBe(false);
     expect(bundle.emitsEmbeddingSidecarRefs).toBe(true);
     expect(bundle.licenseGate.blockedUntilSignOff).toBe(false);
     expect(bundle.proposals.length).toBe(2);
@@ -192,7 +192,7 @@ describe("P3.3 FAIR ESM-2 thin embedding stub", () => {
     expect(body.autoApprove).toBe(false);
     expect(body.mayFlipEvidenceGrade).toBe(false);
     expect(body.partnerSigned).toBe(false);
-    expect(body.boltzDeferred).toBe(true);
+    expect(body.boltzDeferred).toBe(false);
     expect(
       body.proposals.every((p) => p.sourceAdapterOrAgent === "adapter-esm"),
     ).toBe(true);
