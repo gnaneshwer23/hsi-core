@@ -152,9 +152,16 @@ function buildCriteria(opts: {
       .filter((r) => r.gateCStatus === "pending")
       .every((r) => Boolean(r.isiRelationshipId) && r.autoApprove === false);
 
+  // With Apolo Stage 1 licensing clearance, x-4 flips to ready_for_human →
+  // blockedOnPartner may be 0. Fixture / uncleared paths may still block.
+  const x4 = rubric.checklist.find((c) => c.id === "x-4");
+  const licensingRubricAligned =
+    stage1Thresholds.thresholdStatus === "partner_agreed"
+      ? x4?.status === "ready_for_human" && rubric.summary.blockedOnPartner === 0
+      : rubric.summary.blockedOnPartner >= 1 || x4?.status === "blocked_on_partner";
   const rubricPass =
     rubric.summary.readyForHuman >= 8 &&
-    rubric.summary.blockedOnPartner >= 1 &&
+    licensingRubricAligned &&
     (rubric.summary.setForTest >= 1 ||
       stage1Thresholds.thresholdStatus === "partner_agreed" ||
       stage1Thresholds.thresholdStatus === "pending") &&

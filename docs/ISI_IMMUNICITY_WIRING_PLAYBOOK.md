@@ -68,7 +68,7 @@ Start here:
 
 | File | Role |
 |------|------|
-| `index.json` | Discovery Centre public index + file list + honesty flags |
+| `catalogue.json` (+ `/discovery.json`) | Discovery Centre public catalogue + honesty flags; product UI is `/discovery` (SPA) |
 | `hsi-isi-consume-contract.json` | Load order, grades, Gate C rules, MANIFEST key map |
 | `hsi-isi-wiring-spec.json` | This playbook’s machine companion (URL patterns, route map, acceptance) |
 | `hsi-partner-lock.json` | ASK scope lock; `partnerSigned=false` honesty |
@@ -112,7 +112,7 @@ Consumers that pin a release should copy or host the versioned bundle (or pin a 
 
 Mirror `loadOrderHint` in `hsi-isi-consume-contract.json`:
 
-1. **MANIFEST** (or Discovery `index.json` honesty flags) — verify `notCds=true`, `autoApproveIntoKg=false`, `partnerSigned=false`.
+1. **MANIFEST** (or Discovery `catalogue.json` / `/discovery.json` honesty flags) — verify `notCds=true`, `autoApproveIntoKg=false`, `partnerSigned=false`.
 2. **required_core** — `hsi-isi-export.json` (from publish bundle; may be absent from Discovery static set), `hsi-isi-rel-map.json`, `gate-c-checklist.*`.
 3. **required_pilot** — partner lock, vertical decision, pilot pack/rubric/acceptance/walkthrough, flip-readiness, consume contract (+ wiring spec).
 4. **recommended_secondary** — gap, R2, SSc, gut, neuro, translation, systems vision, licensing stub.
@@ -168,7 +168,7 @@ HSI site reference: `site/src/pages/DiscoveryCentre.tsx` · loaders in `site/src
 
 | HSI surface | Path / tab | Primary JSON | Immunecity mapping hint |
 |-------------|------------|--------------|-------------------------|
-| Discovery home | `/discovery` | `index.json` | Product Discovery / research home |
+| Discovery home | `/discovery` (UI) · `/discovery.json` (machine) | `catalogue.json` | Product Discovery loop UI; packs under `/discovery/*.json` |
 | ASK | tab `ask` | `hsi-partner-lock.json` + pack question | Locked RA/anti-TNF question; dual-track note |
 | MAP | tab `map` | `hsi-pilot-evidence-pack.json` (`evidenceMap`, `entitySlice`) | Evidence map + entity neighbourhood |
 | REVIEW | tab `review` | pack (`competingExplanations`, `expertShortlist`) + `gate-c-checklist.json` | Expert challenge + Gate C queue |

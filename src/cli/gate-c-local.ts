@@ -1,11 +1,13 @@
 #!/usr/bin/env bun
 /**
- * Upsert Gate C checklist into HSI Neon as human-pending rows (never auto-approve).
+ * Upsert pack seeds + Gate C checklist into HSI Neon (never auto-approve).
  * Usage:
  *   bun run db:gate-c-local
  *   bun run db:gate-c-local -- --from-neonctl
  *
  * Requires migrations applied first (`bun run db:migrate`).
+ * Seeds all pack-derived claims/edges/markers (RA + SSc/gut/neuro), then
+ * pending Gate C rows for mapped REL only.
  */
 import { syncGateCChecklistToHsiNeon } from "../db/gateCLocal";
 
@@ -17,13 +19,16 @@ try {
     JSON.stringify(
       {
         ok: true,
+        seedClaimsUpserted: result.seedClaimsUpserted,
+        seedEdgesUpserted: result.seedEdgesUpserted,
+        markersUpserted: result.markersUpserted,
         upserted: result.upserted,
         skippedUnmapped: result.skippedUnmapped,
         host: result.host,
         databaseUrl: result.databaseUrlMasked,
         source: result.source,
         autoApprove: result.autoApprove,
-        note: "Rows stay pending until a human sets human_approved|human_rejected|deferred in HSI Neon. ISI autumn-snow approve remains separate.",
+        note: "Pack seeds synced; Gate C rows stay pending until a human sets human_approved|human_rejected|deferred in HSI Neon. ISI autumn-snow approve remains separate. Intentional gap: Gate C review count tracks mapped REL only (~13), not full edge density.",
       },
       null,
       2,

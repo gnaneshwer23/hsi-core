@@ -8,6 +8,7 @@
  */
 import { getPartnerLock, type HsiPartnerLock } from "./partnerLock";
 import { buildPilotEvidencePack, type PilotEvidencePack } from "./pilotEvidencePack";
+import { buildSourceLicensingStubBundle } from "./sourceLicensingStub";
 import {
   evalPackAgainstStage1NumericThresholds,
   getStage1RubricThresholds,
@@ -100,6 +101,12 @@ function buildChecklist(
     lock.partnerSigned &&
     lock.legalBinding &&
     !lock.isHypothetical;
+  const licensing = buildSourceLicensingStubBundle();
+  const licensingScopes = licensing.summary.clearanceScopeCounts;
+  const licensingCleared =
+    namedPartnerConfirmed &&
+    licensing.summary.partnerClearedCount > 0 &&
+    licensingScopes.uncleared === 0;
   return [
     {
       id: "em-1",
@@ -221,8 +228,10 @@ function buildChecklist(
       id: "x-4",
       output: "cross_cutting",
       criterion: "Source licensing / attribution for the agreed literature set",
-      howToJudge: "Scope-locked PMIDs are public PubMed locators; partner may require additional licensed corpora. See docs/HOW_TO_SOURCE_LICENSING.md.",
-      status: "blocked_on_partner",
+      howToJudge: licensingCleared
+        ? `Apolo Pharma Stage 1 corpus clearance (aligned with sourceLicensingStub + partner lock): partnerClearedCount=${licensing.summary.partnerClearedCount} (oa_reuse=${licensingScopes.oa_reuse}, cite_metadata_pilot=${licensingScopes.cite_metadata_pilot}, uncleared=0). Cite-metadata pilot ≠ FT redistribution. See docs/HOW_TO_SOURCE_LICENSING.md.`
+        : "Scope-locked PMIDs are public PubMed locators; partner may require additional licensed corpora / clearanceScope flip. See docs/HOW_TO_SOURCE_LICENSING.md + hsi-source-licensing-stub.json.",
+      status: licensingCleared ? "ready_for_human" : "blocked_on_partner",
       relatedClaimIds: pathwayClaims,
     },
   ];

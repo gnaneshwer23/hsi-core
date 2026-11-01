@@ -4,7 +4,14 @@
  * Writes regenerable `dist/outputs/<bundleId>/` (gitignored via dist/).
  * Also refreshes legacy `exports/*.json` for local CLI / test convenience.
  */
-import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import {
+  copyFileSync,
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  unlinkSync,
+  writeFileSync,
+} from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { buildAkshHitlStubBundle } from "./akshHitl";
 import { buildIsiExportBundle, serializeIsiExport } from "./exportIsi";
@@ -865,8 +872,25 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       "Phase 8 done = HSI translation substrate (hsi-translation-handoff.json) on TRANSLATE tab + in-repo Akeno HITL consumer at /akeno (not CDS).",
     ],
   };
-  writeJson(join(discoveryPublicDir, "index.json"), discoveryIndex);
-  discoverySynced.push("site/public/discovery/index.json");
+  // catalogue.json under /discovery/* (machine). Do NOT write discovery/index.json —
+  // that file shadows the SPA product route /discovery on Vercel static hosting.
+  writeJson(join(discoveryPublicDir, "catalogue.json"), discoveryIndex);
+  discoverySynced.push("site/public/discovery/catalogue.json");
+  // Machine index at /discovery.json (non-breaking for JSON consumers).
+  const sitePublicDir = join(process.cwd(), "site", "public");
+  writeJson(join(sitePublicDir, "discovery.json"), {
+    ...discoveryIndex,
+    productSurfacePath: "/discovery",
+    machineIndexPath: "/discovery.json",
+    packBasePath: "/discovery/",
+    note: "Product UI is /discovery (SPA). Pack JSON lives under /discovery/*.json. This file is the machine catalogue.",
+  });
+  discoverySynced.push("site/public/discovery.json");
+  // Remove legacy shadowing index if present from older publishes.
+  const legacyIndex = join(discoveryPublicDir, "index.json");
+  if (existsSync(legacyIndex)) {
+    unlinkSync(legacyIndex);
+  }
 
   return {
     bundleId,

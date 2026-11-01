@@ -408,7 +408,7 @@ describe("Gate C checklist + publish outputs", () => {
     expect(ada?.provenance.pmid).toBe("16508927");
   });
 
-  it("ships a review rubric with ready_for_human + blocked_on_partner items", () => {
+  it("ships a review rubric with ready_for_human items (licensing cleared; no stale blocked_on_partner)", () => {
     const lock = getPartnerLock();
     expect(lock.scopeLocked).toBe(true);
     expect(lock.partnerSigned).toBe(true);
@@ -431,7 +431,11 @@ describe("Gate C checklist + publish outputs", () => {
     expect(rubric.partnerLock.provisionalLock).toBe(false);
     expect(rubric.partnerLock.status).toBe("scoping");
     expect(rubric.summary.readyForHuman).toBeGreaterThanOrEqual(8);
-    expect(rubric.summary.blockedOnPartner).toBeGreaterThanOrEqual(1);
+    // Stage 1 licensing clearance + Apolo lock → x-4 ready; no spurious blocked_on_partner
+    expect(rubric.summary.blockedOnPartner).toBe(0);
+    expect(rubric.checklist.find((c) => c.id === "x-4")?.status).toBe(
+      "ready_for_human",
+    );
     expect(rubric.summary.thresholdStatus).toBe("partner_agreed");
     expect(rubric.summary.thresholdSource).toBe("partner_agreed");
     expect(rubric.summary.numericThresholdsMet).toBe(true);
@@ -740,7 +744,7 @@ describe("Gate C checklist + publish outputs", () => {
     expect(xlat.candidates.every((c) => c.status === "deferred_until_hitl")).toBe(true);
 
     const discoveryIndex = JSON.parse(
-      readFileSync(join(process.cwd(), "site/public/discovery/index.json"), "utf8"),
+      readFileSync(join(process.cwd(), "site/public/discovery/catalogue.json"), "utf8"),
     ) as { phase: string; clinicalActive: boolean; framing: string; notes: string[] };
     expect(discoveryIndex.phase).toBe("8");
     expect(discoveryIndex.clinicalActive).toBe(false);

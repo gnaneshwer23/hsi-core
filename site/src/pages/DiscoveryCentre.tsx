@@ -326,13 +326,16 @@ export function DiscoveryCentre() {
             <span className="accent">on real HSI packs.</span>
           </h1>
           <p className="lede">
-            Target R1–R2 research surface plus Stage 3 translation scaffolding
-            for the scope-locked RA / anti-TNF question. TRANSLATE candidates
-            stay deferred_until_hitl — never live CDS.
+            Product discovery loop for the scope-locked RA / anti-TNF question.
+            Majority time stays on current-state evidence (ASK→MAP) before any
+            TRANSLATE handoff. Never live CDS · Gate C never auto-approves.
           </p>
           <div className="dc-hero-actions">
             <a href="#workspace" className="btn btn-primary">
               Open workspace <span className="arrow">↘</span>
+            </a>
+            <a href="/discovery.json" className="btn btn-ghost">
+              Machine catalogue JSON <span className="arrow">↗</span>
             </a>
             <Link to="/docs" className="btn btn-ghost">
               How to regenerate <span className="arrow">↗</span>
@@ -420,7 +423,33 @@ export function DiscoveryCentre() {
                     </p>
                   </div>
 
-                  <div className="dc-ask-grid">
+                  <div className="dc-card dc-contract" role="note">
+                    <span className="panel-label">Upfront contract</span>
+                    <p style={{ marginTop: "0.45rem" }}>
+                      We map what is already evidenced on the locked RA /
+                      anti-TNF question, surface honest gaps, then decide whether
+                      VALIDATE or a HITL handoff is warranted. Outcomes can be:
+                      continue, stop (not a fit / insufficient evidence), or park
+                      pending human Gate C — all fine. No auto-approve into the
+                      product KG.
+                    </p>
+                    <ul className="dc-compact-list" style={{ marginTop: "0.75rem" }}>
+                      <li>
+                        <strong>Spend most of the loop on ASK→MAP</strong> —
+                        current-state evidence before TRANSLATE.
+                      </li>
+                      <li>
+                        Implication prompts on REVIEW/VALIDATE expand the cost of
+                        gaps; they do not manufacture urgency.
+                      </li>
+                      <li>
+                        Need-payoff lives on VALIDATE: what human review unlocks
+                        before any clinic-facing handoff.
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="dc-ask-grid" style={{ marginTop: "1.25rem" }}>
                     <article className="dc-card">
                       <span className="panel-label">Disease</span>
                       <h3>{data.lock.disease?.label}</h3>
@@ -559,11 +588,15 @@ export function DiscoveryCentre() {
                 <div className="dc-panel" role="tabpanel">
                   <div className="section-head">
                     <span className="section-num">MAP</span>
-                    <h2 className="display display-md">Evidence + graph</h2>
+                    <h2 className="display display-md">
+                      Current-state evidence + graph
+                    </h2>
                     <p className="lede">
                       Partner-scoped RA evidence from{" "}
                       <code>hsi-pilot-evidence-pack.json</code>, plus optional
                       SSc / gut / neuro pack toggles on the interactive graph.
+                      This is the majority of discovery time — map what is broken,
+                      missing, or graded uncertain before pitching TRANSLATE.
                       Grades stay honest — established / uncertain / unexplored.
                       Not diagnostic.
                     </p>
@@ -674,6 +707,26 @@ export function DiscoveryCentre() {
                     </p>
                   </div>
 
+                  <div className="dc-card" role="note">
+                    <span className="panel-label">Implication prompts (consequence of gaps)</span>
+                    <ul className="dc-compact-list" style={{ marginTop: "0.75rem" }}>
+                      <li>
+                        If grade holes stay unexplored, what downstream partner
+                        decision (trial arm, biomarker panel, Gate C queue) stays
+                        blocked?
+                      </li>
+                      <li>
+                        When competing frames are not held side-by-side, who else
+                        in the review chain inherits a false single narrative?
+                      </li>
+                      <li>
+                        If LOINC-linked claims stay thin, what does that cost the
+                        HITL translation path six months out — without inventing
+                        urgency?
+                      </li>
+                    </ul>
+                  </div>
+
                   <div className="dc-explain-grid">
                     {raExplanations.map((ex) => (
                       <article key={ex.id} className="dc-card">
@@ -780,6 +833,27 @@ export function DiscoveryCentre() {
                     </p>
                   </div>
 
+                  <div className="dc-card" role="note">
+                    <span className="panel-label">
+                      Need-payoff — what would VALIDATE unlock before TRANSLATE?
+                    </span>
+                    <ul className="dc-compact-list" style={{ marginTop: "0.75rem" }}>
+                      <li>
+                        If ranked gaps were closed under human Gate C, which
+                        handoff candidates could move from deferred_until_hitl
+                        without claiming CDS?
+                      </li>
+                      <li>
+                        What becomes possible for the partner walkthrough that is
+                        not possible while hypothesis cards stay untested?
+                      </li>
+                      <li>
+                        Explicit next step: pick one ranked gap → human review in
+                        HSI Neon (pending only) — never auto-approve.
+                      </li>
+                    </ul>
+                  </div>
+
                   <div className="grade-row dc-grade-summary">
                     {(
                       [
@@ -883,12 +957,12 @@ export function DiscoveryCentre() {
                       Stage 3 handoff candidates
                     </h2>
                     <p className="lede">
-                      Phase 8 HSI translation substrate from{" "}
-                      <code>hsi-translation-handoff.json</code>. Research edges →
-                      clinic-facing pointers. teachingStatus ≠ hsiGrade ≠ CDS.{" "}
-                      <Link to="/akeno" className="btn" style={{ marginLeft: "0.35rem" }}>
-                        Open Akeno HITL consumer →
-                      </Link>
+                      Only after ASK→MAP→REVIEW→VALIDATE. Phase 8 HSI translation
+                      substrate from <code>hsi-translation-handoff.json</code>.
+                      Research edges → clinic-facing pointers. teachingStatus ≠
+                      hsiGrade ≠ CDS. Explicit next: human HITL on{" "}
+                      <Link to="/akeno">/akeno</Link> — never fake Gate C
+                      auto-approve.
                     </p>
                   </div>
 

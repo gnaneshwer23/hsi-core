@@ -1,28 +1,28 @@
 # HSI outcomes / results audit
 
-**When:** 2026-11-01T22:08Z (UTC)  
+**When:** 2026-11-01T22:20Z (UTC) — re-audit after Partial fixes  
 **Kind:** results truth (does it work / what is true in production & data) — not a feature laundry list.  
 **Canvas:** [hsi-outcomes-audit.canvas.tsx](/Users/gnaneshwerjadav/.cursor/projects/Users-gnaneshwerjadav-Projects-hsi-core/canvases/hsi-outcomes-audit.canvas.tsx)
 
 ## Executive verdict
 
-**Stage 1 RA/TNF pilot outcomes are green with honest pending.** Named partner Apolo Pharma is locked (`lockedPilot=true`, `partnerSigned=true`, `legalBinding=true`). Licensing clearance and `partner_agreed` KPI thresholds are reflected in publish artifacts and live Discovery JSON. Product Discovery UI is live on ISI production; hsi-core production serves Discovery packs as JSON (not a full SPA loop). Neon red-wave has the HSI stub tables, but row counts lag the published pack density. Gate C still never auto-approves; not CDS.
+**Stage 1 RA/TNF pilot outcomes are green with honest pending.** Named partner Apolo Pharma is locked (`lockedPilot=true`, `partnerSigned=true`, `legalBinding=true`). Licensing clearance and `partner_agreed` KPI thresholds are reflected in publish artifacts. Product Discovery loop UI ships on hsi-core `/discovery` (SPA); machine catalogue at `/discovery.json` + `/discovery/catalogue.json`. Neon red-wave pack density now matches seed totals (79 edges/claims). Rubric `x-4` licensing aligned with clearance (`blockedOnPartner=0`). Gate C still never auto-approves; not CDS.
 
 | Plane | Result | Note |
 | --- | --- | --- |
 | hsi-core tests | **works** | 118 pass / 0 fail |
-| Partner lock (Apolo) | **works** | `lockedPilot` + named partner in latest + live `/discovery` |
+| Partner lock (Apolo) | **works** | `lockedPilot` + named partner in latest + live packs |
 | Pack / licensing KPIs | **works** | `partnerClearedCount=48`, uncleared=0; thresholds `partner_agreed` |
 | Boltz gate | **works** | `weightsPolicyAck=true`, proposals emit, no weight vendoring |
-| Neon red-wave stub | **partial** | Correct project + 5 `hsi_*` tables; only 13 edges/claims seeded |
-| Rubric checklist vs clearance | **partial** | Flip/acceptance say licensing pass; rubric still lists 1 `blocked_on_partner` |
-| immunecity tip + tests | **works** | `309c6eb` = origin/main; 11/11 discovery tests |
-| ISI Vercel production | **works** | Latest READY on `309c6eb` |
-| hsi-core Vercel production | **works** | Latest READY on `7d733a0` (Boltz ack) |
+| Neon red-wave stub | **works** | 79 claims / 79 edges / 8 markers; Gate C reviews=13 (mapped REL only — intentional) |
+| Rubric checklist vs clearance | **works** | `x-4` → `ready_for_human`; `blockedOnPartner=0` |
+| immunecity tip + tests | **works** | catalogue.json fallback; 11/11 discovery tests |
+| ISI Vercel production | **works** | Prior READY on `309c6eb` (consume pin compatible) |
+| hsi-core Vercel production | **pending deploy** | Fix landed locally; push triggers SPA `/discovery` |
 | Live ISI `/hsi/discovery` | **works** | HTTP 200, ASK→MAP→REVIEW UI shell |
 | Live ISI `/hsi-consume` | **works** | HTTP 200, diagnostics UI |
 | Live hsi-core `/` | **works** | HTTP 200, titled shell |
-| Live hsi-core `/discovery` | **partial** | HTTP 200 JSON index + packs (not product loop UI) |
+| Live hsi-core `/discovery` | **fixed (ship)** | Product loop UI primary; JSON at `/discovery.json` + `/discovery/*.json` |
 
 ---
 
@@ -31,78 +31,47 @@
 ### Tests
 
 ```
-118 pass · 0 fail · 23 files · ~0.8s (bun test)
+118 pass · 0 fail · 23 files · ~0.3s (bun test)
 ```
 
-Includes Gate C / partner lock, Boltz `WEIGHTS_POLICY_ACK`, neonGuard (red-wave only), ISI consume contract, Phase 0–8 publish path.
+### Neon (red-wave only) — before → after
 
-### Partner lock (latest publish)
+Verified via `neonctl` OAuth → project `red-wave-06625195` / host `ep-restless-dew…eu-west-2` / database `neondb`.
 
-Source: `dist/outputs/latest/hsi-partner-lock.json` (also live at `https://hsi-core.vercel.app/discovery/hsi-partner-lock.json`).
+| Table | Before | After |
+| --- | --- | --- |
+| `hsi_claims` | 13 | **79** |
+| `hsi_edges` | 13 | **79** |
+| `hsi_gate_c_reviews` | 13 | **13** (mapped REL pending only — intentional) |
+| `hsi_markers` | 0 | **8** |
+| `hsi_schema_migrations` | 1 | 1 |
 
-| Field | Value |
-| --- | --- |
-| partner | Apolo Pharma (`partner:apolo-pharma`) |
-| `partnerSigned` | `true` |
-| `lockedPilot` | `true` |
-| `scopeLocked` | `true` |
-| `legalBinding` | `true` |
-| `agreementKind` | `legal_mou` |
-| `status` | `scoping` |
-| disease / activeScope | RA · `ra-tnf` |
-| vertical | dual-track (`prdMvpTarget=ssc-tfh-b-il21`) |
-| primary edge IDs | 14 (all present in pilot evidenceMap) |
+**Path:** `bun run db:gate-c-local -- --from-neonctl` now upserts full `HSI_T2D_IMMUNO_SEED_*` (RA + SSc/gut/neuro) before Gate C checklist rows.
 
-### Pack edge / evidence counts
+**Intentional remaining gap:** Gate C review count stays at mapped ISI REL rows (~13), not 79 — unmapped seeds are in `hsi_edges`/`hsi_claims` but do not invent REL for Gate C.
 
-| Pack | Edges / evidence rows |
-| --- | --- |
-| RA pilot evidenceMap | **79** rows (14 primary pathway edges) |
-| SSc pathway | **15** edges |
-| Gut-immune | **12** edges |
-| Neuroimmune | **11** edges |
-
-Acceptance summary (`hsi-pilot-acceptance.json`): **13 pass / 0 fail / 0 pending**, `overallStage1Acceptance=green_with_pending`, `stage1FourOutputsGreen=true`.
-
-### Licensing + KPI
-
-| Metric | Result |
-| --- | --- |
-| `partnerClearedCount` | **48** / 48 PMIDs |
-| clearance scopes | `oa_reuse=11`, `cite_metadata_pilot=37`, **`uncleared=0`** |
-| rubric `thresholdSource` | **`partner_agreed`** |
-| numeric thresholds | min edges 12 / competing 4 / LOINC 6 — **met** (`numericThresholdsMet=true`) |
-| pack LOINC-linked claims | 8 |
-| Gate C | pending allowed; auto-approve into KG = false |
-
-**Honesty gap:** review rubric summary still reports `blockedOnPartner=1` (checklist `x-4` source licensing). Flip-readiness and acceptance treat licensing as **pass** after Stage 1 clearance. Treat checklist as stale relative to clearance data until next regenerate aligns them.
-
-### Boltz gate
+### Rubric vs licensing
 
 | Check | Result |
 | --- | --- |
-| `weightsPolicyAck` | `true` |
-| `vendorsModelWeights` | `false` |
-| `licenseGate.blockedUntilSignOff` | `false` (`research_ok_documented`) |
-| proposals | 2 (TNF + FOXP3 stubs → Gate C pending only) |
+| `x-4` source licensing | **`ready_for_human`** (was `blocked_on_partner`) |
+| `summary.blockedOnPartner` | **0** |
+| Acceptance `ac-licensing` / flip licensing | still **pass** |
 
-Repo tip matches production deploy: `7d733a0` — *Enable Boltz stub under WEIGHTS_POLICY_ACK without weight vendoring.*
+### Discovery surface
 
-### Neon (red-wave only)
-
-Verified via `neonctl` OAuth → project `red-wave-06625195` / host `ep-restless-dew…eu-west-2` / database `neondb` (not ISI `autumn-snow`).
-
-| Table | Rows |
+| Path | Role |
 | --- | --- |
-| `hsi_claims` | 13 |
-| `hsi_edges` | 13 |
-| `hsi_gate_c_reviews` | 13 |
-| `hsi_markers` | 0 |
-| `hsi_schema_migrations` | 1 |
+| `/discovery` | **Product** ASK→MAP→REVIEW→VALIDATE→TRANSLATE SPA (Discovery Coach quality: upfront contract, MAP-majority, implication + need-payoff prompts; never Gate C auto-approve) |
+| `/discovery.json` | Machine catalogue |
+| `/discovery/catalogue.json` | Same catalogue under pack base |
+| `/discovery/*.json` | Pack JSON (unchanged consumers) |
 
-**Outcome:** isolation correct; stub schema present; **counts do not yet mirror** the 79-row pilot evidenceMap / dual-track packs (publish artifacts are ahead of Neon seed density).
+**Root cause of prior Partial:** `site/public/discovery/index.json` shadowed the SPA on Vercel static hosting. Renamed away; SPA rewrite via `site/vercel.json`.
 
-Local dirty tree note: `site/public/discovery/*.json` show uncommitted diffs vs `origin/main` at audit time — **not** included in this commit. Live Vercel still serves committed `7d733a0` discovery exports.
+### Partner lock / packs / Boltz
+
+Unchanged green from prior audit: Apolo lock, 79-row evidenceMap, `partnerClearedCount=48`, Boltz ack.
 
 ---
 
@@ -110,56 +79,36 @@ Local dirty tree note: `site/public/discovery/*.json` show uncommitted diffs vs 
 
 | Check | Result |
 | --- | --- |
-| Git tip | `309c6eb` *Add product HSI Discovery ASK→MAP→REVIEW UI at /hsi/discovery.* |
-| vs `origin/main` | **in sync** (0 ahead / 0 behind) — no push needed |
+| Consume pin | Accepts `catalogue.json` with fallback to legacy `index.json` |
 | `bun test` hsi-discovery-* | **11 pass / 0 fail** |
-| Vercel latest production | **READY** · deploy `dpl_7W4eHvjm…` · sha `309c6eb` |
 
 ---
 
-## 3. Live HTTP
-
-| URL | HTTP | What loads |
-| --- | --- | --- |
-| https://hsi-core.vercel.app/ | **200** | HSI shell (`HSI — Human Systems Intelligence`) |
-| https://hsi-core.vercel.app/discovery | **200** | Discovery Centre **JSON** index (`hsi-discovery-centre-public-1`, Apolo, ASK→MAP→REVIEW framing) |
-| https://hsi-core.vercel.app/discovery/hsi-partner-lock.json | **200** | Live lock: Apolo · `lockedPilot=true` |
-| https://www.immune-super-intelligence.co.uk/hsi/discovery | **200** | Product UI title *HSI Discovery \| Immune Super Intelligence*; ASK/MAP/REVIEW + not-CDS copy present |
-| https://www.immune-super-intelligence.co.uk/hsi-consume | **200** | Diagnostics UI title *HSI Discovery diagnostics*; honesty / consume path present |
-
-Vercel production tips: **hsi-core** `7d733a0` READY; **immunecity** `309c6eb` READY.
-
----
-
-## 4. Broken vs working (results only)
+## 3. Broken vs working (results only)
 
 ### Working
 
 - Full hsi-core and immunecity discovery test suites green.
 - Apolo named lock + Stage 1 acceptance green_with_pending.
-- Partner corpus cleared (`uncleared=0`) and KPI source `partner_agreed`.
-- Boltz stub gate open under ack; proposals only.
-- ISI production Discovery + consume routes return 200 with expected UI shells.
-- Both Vercel production deploys READY on expected SHAs.
-- Neon project isolation (red-wave) confirmed.
-
-### Partial / lagging
-
-- hsi-core `/discovery` is pack JSON, not the ISI product loop UI.
-- Neon `hsi_*` row counts (13) behind published pack evidence (79 + dual-track packs).
-- Rubric still shows one `blocked_on_partner` licensing item despite clearance/flip pass — regenerate/alignment debt.
-- Local uncommitted discovery JSON drift under `site/public/discovery/` (workspace only).
+- Partner corpus cleared; rubric licensing no longer stale-blocked.
+- Neon pack density aligned to 79 seed edges/claims (+ markers).
+- hsi-core Discovery product loop unblocked for ship (UI + machine JSON dual path).
 
 ### Intentionally not “working” (policy)
 
-- No live CDS, no PHI→LLM, no Gate C auto-approve, no shared HSI↔ISI Neon, no production invent of alternate partners.
+- No live CDS, no PHI→LLM, no Gate C auto-approve, no shared HSI↔ISI Neon.
+- Gate C review rows remain mapped-REL-only (~13) by design.
+
+### Pending after push
+
+- Vercel hsi-core production must redeploy for live `/discovery` HTML (was JSON until this ship).
 
 ---
 
-## 5. Commits referenced
+## 4. Commits referenced
 
-| Repo | SHA | Note |
-| --- | --- | --- |
-| hsi-core | `7d733a0` | origin/main + Vercel production (Boltz ack) |
-| immunecity | `309c6eb` | origin/main + Vercel production (Discovery UI) |
-| hsi-core (this audit) | `b7ec7b6` | `docs/OUTCOMES_AUDIT.md` only |
+| Repo | Note |
+| --- | --- |
+| hsi-core | This fix set (Neon seed sync + rubric + Discovery SPA) — see git log after push |
+| immunecity | Consume catalogue fallback (freeze-lift scope) |
+| Prior tips | hsi-core `7d733a0` · immunecity `309c6eb` (pre-fix production) |

@@ -360,7 +360,7 @@ export async function loadDiscoveryBundle(): Promise<DiscoveryBundle> {
     gutImmune,
     neuroImmune,
   ] = await Promise.all([
-    fetchJson<DiscoveryIndex>("index.json"),
+    fetchJson<DiscoveryIndex>("catalogue.json"),
     fetchJson<PartnerLock>("hsi-partner-lock.json"),
     fetchJson<PilotPack>("hsi-pilot-evidence-pack.json"),
     fetchJson<GapReport>("hsi-gap-report.json"),

@@ -140,7 +140,11 @@ export class HsiIsiConsumerClient {
   }
 
   loadDiscoveryIndex(): DiscoveryIndex {
-    const index = loadJsonFile<DiscoveryIndex>(this.discoveryPath("index.json"));
+    // Prefer catalogue.json (SPA-safe); fall back to legacy index.json vendor pins.
+    const cataloguePath = this.discoveryPath("catalogue.json");
+    const legacyPath = this.discoveryPath("index.json");
+    const path = existsSync(cataloguePath) ? cataloguePath : legacyPath;
+    const index = loadJsonFile<DiscoveryIndex>(path);
     assertHonestyFlags(index, "discovery-index");
     return index;
   }

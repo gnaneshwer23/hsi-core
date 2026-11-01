@@ -429,9 +429,9 @@ const ARTIFACTS: IsiArtifactContractRow[] = [
 
 const DISCOVERY_PATHS: IsiDiscoveryJsonPath[] = [
   {
-    sitePath: "site/public/discovery/index.json",
+    sitePath: "site/public/discovery/catalogue.json",
     regenerableFrom: "bun run outputs",
-    role: "Discovery Centre public index (framing + file list)",
+    role: "Discovery Centre public catalogue (framing + file list); also mirrored at site/public/discovery.json — /discovery is the product UI",
     notCds: true,
   },
   {

@@ -1,7 +1,10 @@
 /**
  * Thin local Gate C path → HSI Neon placeholders.
  *
- * Upserts checklist rows into `hsi_gate_c_reviews` as pending / not auto-approved.
+ * 1. Upserts full pack-derived seed claims/edges/markers (RA + dual-track packs)
+ *    so Neon density tracks publish artifacts — not only Gate C–mapped rows.
+ * 2. Upserts checklist rows into `hsi_gate_c_reviews` as pending / not auto-approved.
+ *
  * Human curators must set status to human_approved|human_rejected|deferred —
  * this path never auto-approves.
  *
@@ -15,9 +18,11 @@ import {
   type GateCChecklistRow,
 } from "../gateCChecklist";
 import {
+  HSI_MARKERS,
   HSI_T2D_IMMUNO_SEED_CLAIMS,
   HSI_T2D_IMMUNO_SEED_EDGES,
 } from "../seed/t2dImmunoMetabolic";
+import type { HsiClaim, HsiEdge, HsiMarker } from "../schema";
 import { assertHsiNeonDatabaseUrl, maskDatabaseUrl } from "./neonGuard";
 import { resolveDatabaseUrl, type ResolveDatabaseUrlOptions } from "./resolveDatabaseUrl";
 
@@ -30,6 +35,9 @@ export type GateCLocalSyncResult = {
   ok: true;
   upserted: number;
   skippedUnmapped: number;
+  seedClaimsUpserted: number;
+  seedEdgesUpserted: number;
+  markersUpserted: number;
   host: string;
   databaseUrlMasked: string;
   source: "env" | "neonctl";
@@ -38,9 +46,42 @@ export type GateCLocalSyncResult = {
 
 export type GateCLocalSyncOptions = ResolveDatabaseUrlOptions & {
   checklist?: GateCChecklistBundle;
-  /** When true, also upsert claim/edge stubs required by FK. Default true. */
+  /** When true, upsert full pack seed claims/edges/markers. Default true. */
   ensureSeedRows?: boolean;
 };
+
+function claimFromSeed(c: HsiClaim) {
+  return {
+    id: c.id,
+    assertion: c.assertion,
+    domain: c.domain,
+    isiRelationshipId: c.isiRelationshipId ?? null,
+    akshNodeId: c.akshNodeId ?? null,
+  };
+}
+
+function edgeFromSeed(e: HsiEdge) {
+  return {
+    id: e.id,
+    edgeType: e.edgeType,
+    subjectId: e.subjectId,
+    subjectLabel: e.subjectLabel,
+    objectId: e.objectId,
+    objectLabel: e.objectLabel,
+    claimId: e.claimId,
+    curationReview: e.curationReview,
+    hsiGrade: e.hsiGrade,
+    teachingStatus: e.teachingStatus,
+    domain: e.domain,
+    pmid: e.provenance.pmid ?? null,
+    doi: e.provenance.doi ?? null,
+    citationLabel: e.provenance.citationLabel ?? null,
+    sourceUrl: e.provenance.sourceUrl ?? null,
+    provenanceNotes: e.provenance.notes ?? null,
+    bridgeCandidate: e.bridgeCandidate ?? false,
+    seedKind: e.seedKind ?? "placeholder",
+  };
+}
 
 function claimStub(claimId: string) {
   const c = HSI_T2D_IMMUNO_SEED_CLAIMS.find((x) => x.id === claimId);
@@ -77,11 +118,7 @@ function edgeStub(edgeId: string, claimId: string) {
   };
 }
 
-async function ensureClaimAndEdge(
-  sql: HsiSql,
-  row: GateCChecklistRow,
-): Promise<void> {
-  const claim = claimStub(row.claimId);
+async function upsertClaim(sql: HsiSql, claim: ReturnType<typeof claimFromSeed>): Promise<void> {
   await sql`
     INSERT INTO hsi_claims (id, assertion, domain, isi_relationship_id, aksh_node_id)
     VALUES (
@@ -98,8 +135,9 @@ async function ensureClaimAndEdge(
       aksh_node_id = COALESCE(EXCLUDED.aksh_node_id, hsi_claims.aksh_node_id),
       updated_at = now()
   `;
+}
 
-  const edge = edgeStub(row.edgeId, row.claimId);
+async function upsertEdge(sql: HsiSql, edge: ReturnType<typeof edgeFromSeed>): Promise<void> {
   await sql`
     INSERT INTO hsi_edges (
       id, edge_type, subject_id, subject_label, object_id, object_label,
@@ -136,13 +174,45 @@ async function ensureClaimAndEdge(
       teaching_status = EXCLUDED.teaching_status,
       pmid = COALESCE(EXCLUDED.pmid, hsi_edges.pmid),
       doi = COALESCE(EXCLUDED.doi, hsi_edges.doi),
+      citation_label = COALESCE(EXCLUDED.citation_label, hsi_edges.citation_label),
+      source_url = COALESCE(EXCLUDED.source_url, hsi_edges.source_url),
+      provenance_notes = COALESCE(EXCLUDED.provenance_notes, hsi_edges.provenance_notes),
+      bridge_candidate = EXCLUDED.bridge_candidate,
+      seed_kind = EXCLUDED.seed_kind,
       updated_at = now()
   `;
 }
 
+async function upsertMarker(sql: HsiSql, m: HsiMarker): Promise<void> {
+  await sql`
+    INSERT INTO hsi_markers (id, name, loinc, unit, description)
+    VALUES (
+      ${m.id},
+      ${m.name},
+      ${m.loinc ?? null},
+      ${m.unit ?? null},
+      ${m.description ?? ""}
+    )
+    ON CONFLICT (id) DO UPDATE SET
+      name = EXCLUDED.name,
+      loinc = COALESCE(EXCLUDED.loinc, hsi_markers.loinc),
+      unit = COALESCE(EXCLUDED.unit, hsi_markers.unit),
+      description = EXCLUDED.description
+  `;
+}
+
+async function ensureClaimAndEdge(
+  sql: HsiSql,
+  row: GateCChecklistRow,
+): Promise<void> {
+  await upsertClaim(sql, claimStub(row.claimId));
+  await upsertEdge(sql, edgeStub(row.edgeId, row.claimId));
+}
+
 /**
- * Sync Gate C checklist into HSI Neon as human-pending rows.
- * Skips unmapped rows. Never sets auto_approve or human_approved.
+ * Sync all pack seed claims/edges/markers into HSI Neon, then Gate C checklist
+ * as human-pending rows. Skips unmapped checklist rows for reviews. Never sets
+ * auto_approve or human_approved.
  */
 export async function syncGateCChecklistToHsiNeon(
   opts?: GateCLocalSyncOptions,
@@ -161,8 +231,26 @@ export async function syncGateCChecklistToHsiNeon(
 
   let upserted = 0;
   let skippedUnmapped = 0;
+  let seedClaimsUpserted = 0;
+  let seedEdgesUpserted = 0;
+  let markersUpserted = 0;
 
   try {
+    if (ensureSeedRows) {
+      for (const c of HSI_T2D_IMMUNO_SEED_CLAIMS) {
+        await upsertClaim(sql, claimFromSeed(c));
+        seedClaimsUpserted += 1;
+      }
+      for (const e of HSI_T2D_IMMUNO_SEED_EDGES) {
+        await upsertEdge(sql, edgeFromSeed(e));
+        seedEdgesUpserted += 1;
+      }
+      for (const m of HSI_MARKERS) {
+        await upsertMarker(sql, m);
+        markersUpserted += 1;
+      }
+    }
+
     for (const row of checklist.rows) {
       if (row.gateCStatus === "unmapped" || !row.isiRelationshipId) {
         skippedUnmapped += 1;
@@ -170,6 +258,7 @@ export async function syncGateCChecklistToHsiNeon(
       }
 
       if (ensureSeedRows) {
+        // Refresh any checklist-linked claim/edge (covers model-proposal stubs too).
         await ensureClaimAndEdge(sql, row);
       }
 
@@ -214,6 +303,9 @@ export async function syncGateCChecklistToHsiNeon(
     ok: true,
     upserted,
     skippedUnmapped,
+    seedClaimsUpserted,
+    seedEdgesUpserted,
+    markersUpserted,
     host: check.host,
     databaseUrlMasked: maskDatabaseUrl(resolved.databaseUrl),
     source: resolved.source,

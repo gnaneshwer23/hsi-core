@@ -109,6 +109,9 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | Item | Status | Evidence |
 |------|--------|----------|
 | Canonical HSI Neon documented | **DONE** | `red-wave-06625195` / `ep-restless-dew…` — [`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md) |
+| Neon pack density (seeds → `hsi_*`) | **DONE** | `db:gate-c-local` upserts 79 claims/edges + 8 markers; Gate C reviews stay mapped-REL (~13) |
+| `/discovery` product SPA (not JSON shadow) | **DONE** | UI at `/discovery`; machine `catalogue.json` + `/discovery.json`; `site/vercel.json` SPA rewrite |
+| Rubric licensing vs clearance | **DONE** | `x-4` → `ready_for_human` when Apolo clearance + uncleared=0 |
 | Schema stub + migrate CLI | **DONE** | `db/migrations/001_hsi_substrate.sql`, `bun run db:migrate` |
 | Host guards refuse ISI/Akeno/DeliverX | **DONE** | `src/db/neonGuard.ts` |
 | Gate C local pending upsert | **DONE** | `bun run db:gate-c-local` |
