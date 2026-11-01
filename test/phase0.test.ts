@@ -171,5 +171,37 @@ describe("ISI REL-* suggestion map", () => {
     expect(handoff.gateC).toBe("pending");
     expect(handoff.label).toContain("Gate C pending");
     expect(handoff.pmid).toBe("16382236");
+
+    // Evidence sprint: related-axis maps with real PMIDs → accepted_for_curation, Gate C pending.
+    const evidenceSprint: Array<{ claimId: string; edgeId: string; rel: string; pmid: string }> = [
+      { claimId: "HSI-C-IM-010", edgeId: "HSI-E-IM-010", rel: "REL-I023-targets-M002", pmid: "28845751" },
+      { claimId: "HSI-C-IM-006", edgeId: "HSI-E-IM-006", rel: "REL-R004-activates-P003", pmid: "15030775" },
+      { claimId: "HSI-C-IM-004", edgeId: "HSI-E-IM-004", rel: "REL-P021-produces-B001", pmid: "12813013" },
+      { claimId: "HSI-C-IM-002", edgeId: "HSI-E-IM-002", rel: "REL-M001-contributes_to-D001", pmid: "11244034" },
+      { claimId: "HSI-C-IM-003", edgeId: "HSI-E-IM-003", rel: "REL-M003-contributes_to-D001", pmid: "18625622" },
+      { claimId: "HSI-C-IM-005", edgeId: "HSI-E-IM-005", rel: "REL-C003-produces-M001", pmid: "2993897" },
+      { claimId: "HSI-C-T2D-010", edgeId: "HSI-E-T2D-010", rel: "REL-I010-suppresses-P001", pmid: "7569976" },
+      { claimId: "HSI-C-AU-001", edgeId: "HSI-E-AU-001", rel: "REL-B015-predicts_eligibility_for-I013", pmid: "31180194" },
+    ];
+    expect(suggestions.filter((s) => s.status === "accepted_for_curation").length).toBeGreaterThanOrEqual(9);
+    for (const row of evidenceSprint) {
+      const sug = suggestionForClaim(row.claimId);
+      expect(sug?.suggestedIsiRelationshipId).toBe(row.rel);
+      expect(sug?.matchKind).toBe("related_axis");
+      expect(sug?.status).toBe("accepted_for_curation");
+      expect(sug?.autoApprove).toBe(false);
+      const edge = HSI_T2D_IMMUNO_SEED_EDGES.find((e) => e.id === row.edgeId)!;
+      expect(edge.provenance.pmid).toBe(row.pmid);
+      expect(edge.curationReview).toBe("source-verified");
+      expect(edge.hsiGrade).toBe("uncertain");
+      expect(edge.curationReview).not.toBe("approved");
+      expect(isCdsSurfacable(edge)).toBe(false);
+      const h = hsiEvidenceHandoff(edge);
+      expect(h.evidenceLink).toBe("evidence_linked");
+      expect(h.gateC).toBe("pending");
+      expect(h.pmid).toBe(row.pmid);
+    }
+    // Honest unmapped gaps remain (no invented RELs).
+    expect(suggestions.filter((s) => s.status === "unmapped" && !s.suggestedIsiRelationshipId).length).toBeGreaterThanOrEqual(7);
   });
 });

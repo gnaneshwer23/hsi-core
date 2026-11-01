@@ -188,10 +188,17 @@ const SPECS: SeedSpec[] = [
     objectLabel: "Hyperglycemia",
     claimId: "HSI-C-T2D-010",
     assertion: "Systemic glucocorticoids can worsen hyperglycemia and unmask diabetes.",
+    // Locator supports ISI REL-I010-suppresses-P001 (GC → NF-κB), not hyperglycemia S-P-O.
     review: "source-verified",
     teaching: "associative",
     domain: "t2d",
-    citationLabel: "Drug-induced hyperglycemia reviews (placeholder)",
+    pmid: "7569976",
+    doi: "10.1126/science.270.5234.286",
+    citationLabel:
+      "Auphan N et al. Science 1995 — Immunosuppression by glucocorticoids: inhibition of NF-κB via IκB induction.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/7569976/",
+    notes:
+      "PMID 7569976 verified via Europe PMC. Supports ISI related_axis REL-I010-suppresses-P001 (corticosteroid → NF-κB). HSI hyperglycemia object is not this paper's claim — curator must not approve as hyperglycemia evidence. Gate C = human Neon approve only.",
   },
 
   // —— Immuno-metabolic bridge candidates (ISI ↔ Aksh) ——
@@ -218,10 +225,18 @@ const SPECS: SeedSpec[] = [
     objectLabel: "Insulin resistance",
     claimId: "HSI-C-IM-002",
     assertion: "TNF-α signalling can impair insulin action in metabolic tissues.",
-    review: "draft",
+    // Locator supports ISI REL-M001-contributes_to-D001 (TNF → RA), not insulin-resistance S-P-O.
+    review: "source-verified",
     teaching: "hypothesized",
     domain: "immuno_metabolic",
     bridgeCandidate: true,
+    pmid: "11244034",
+    doi: "10.1146/annurev.immunol.19.1.163",
+    citationLabel:
+      "Feldmann M, Maini RN. Annu Rev Immunol 2001 — Anti-TNF-α therapy of rheumatoid arthritis: what have we learned?",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/11244034/",
+    notes:
+      "PMID 11244034 verified via Europe PMC. Supports ISI related_axis REL-M001-contributes_to-D001 (TNF → RA). Insulin-resistance object is absent from ISI — not T2D proof. Gate C = human Neon approve only.",
   },
   {
     id: "HSI-E-IM-003",
@@ -232,10 +247,18 @@ const SPECS: SeedSpec[] = [
     objectLabel: "Type 2 diabetes mellitus",
     claimId: "HSI-C-IM-003",
     assertion: "Circulating IL-6 is associated with T2D risk and inflammatory tone.",
-    review: "unreviewed",
+    // Locator supports ISI REL-M003-contributes_to-D001 (IL-6 pathway → RA), not T2D S-P-O.
+    review: "source-verified",
     teaching: "associative",
     domain: "immuno_metabolic",
     bridgeCandidate: true,
+    pmid: "18625622",
+    doi: "10.1136/ard.2008.092932",
+    citationLabel:
+      "Emery P et al. Ann Rheum Dis 2008 — Tocilizumab (IL-6R inhibition) improves outcomes in RA refractory to anti-TNF.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/18625622/",
+    notes:
+      "PMID 18625622 verified via Europe PMC. Supports ISI related_axis REL-M003-contributes_to-D001 (IL-6 axis in RA). No Type 2 diabetes node in ISI — not T2D proof. Gate C = human Neon approve only.",
   },
   {
     id: "HSI-E-IM-004",
@@ -250,7 +273,12 @@ const SPECS: SeedSpec[] = [
     teaching: "associative",
     domain: "immuno_metabolic",
     bridgeCandidate: true,
-    citationLabel: "Inflammation biomarker practice (placeholder)",
+    pmid: "12813013",
+    doi: "10.1172/JCI18921",
+    citationLabel: "Pepys MB, Hirschfield GM. J Clin Invest 2003 — C-reactive protein: a critical update.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/12813013/",
+    notes:
+      "PMID 12813013 verified via Europe PMC. Supports ISI related_axis REL-P021-produces-B001 (acute-phase → CRP marker). Not a T2D edge. Gate C = human Neon approve only.",
   },
   {
     id: "HSI-E-IM-005",
@@ -261,10 +289,18 @@ const SPECS: SeedSpec[] = [
     objectLabel: "Insulin resistance",
     claimId: "HSI-C-IM-005",
     assertion: "Adipose tissue macrophage infiltration associates with insulin resistance.",
-    review: "draft",
+    // Locator supports ISI REL-C003-produces-M001 (macrophage → TNF), not adipose/IR S-P-O.
+    review: "source-verified",
     teaching: "hypothesized",
     domain: "immuno_metabolic",
     bridgeCandidate: true,
+    pmid: "2993897",
+    doi: "10.1038/316552a0",
+    citationLabel:
+      "Beutler B et al. Nature 1985 — Identity of tumour necrosis factor and the macrophage-secreted factor cachectin.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/2993897/",
+    notes:
+      "PMID 2993897 verified via Europe PMC. Supports ISI related_axis REL-C003-produces-M001 (macrophage → TNF). Adipose-tissue macrophage / insulin-resistance pair is not this paper — Gate C = human Neon approve only.",
   },
   {
     id: "HSI-E-IM-006",
@@ -275,10 +311,18 @@ const SPECS: SeedSpec[] = [
     objectLabel: "Metabolic inflammation",
     claimId: "HSI-C-IM-006",
     assertion: "NLRP3 inflammasome activation contributes to metabolic inflammation.",
-    review: "unreviewed",
+    // Locator supports ISI REL-R004-activates-P003 (NLRP3 → inflammasome), not metabolic-inflammation object.
+    review: "source-verified",
     teaching: "hypothesized",
     domain: "immuno_metabolic",
     bridgeCandidate: true,
+    pmid: "15030775",
+    doi: "10.1016/s1074-7613(04)00046-9",
+    citationLabel:
+      "Agostini L et al. Immunity 2004 — NALP3 forms an IL-1β-processing inflammasome (Muckle-Wells).",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/15030775/",
+    notes:
+      "PMID 15030775 verified via Europe PMC. Supports ISI related_axis REL-R004-activates-P003 (NLRP3/NALP3 → inflammasome). Metabolic-inflammation object is not a KG node — not T2D proof. Gate C = human Neon approve only.",
   },
   {
     id: "HSI-E-IM-007",
@@ -331,11 +375,17 @@ const SPECS: SeedSpec[] = [
     objectLabel: "Metabolic inflammation",
     claimId: "HSI-C-IM-010",
     assertion: "IL-1 pathway blockade has been studied for metabolic inflammation (research only).",
-    review: "unreviewed",
+    review: "source-verified",
     teaching: "hypothesized",
     domain: "immuno_metabolic",
     bridgeCandidate: true,
-    notes: "ISI discovery only — not Aksh CDS-actionable.",
+    pmid: "28845751",
+    doi: "10.1056/NEJMoa1707914",
+    citationLabel:
+      "Ridker PM et al. N Engl J Med 2017 — CANTOS: antiinflammatory therapy with canakinumab (IL-1β).",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/28845751/",
+    notes:
+      "PMID 28845751 verified via Europe PMC / PubMed. Supports ISI related_axis REL-I023-targets-M002 (canakinumab → IL-1β). Discovery / research only — not Aksh CDS-actionable; not metabolic-inflammation KG proof. Gate C = human Neon approve only.",
   },
 
   // —— IO / autoimmunity wedge stubs (ISI density, not CDS) ——
@@ -397,10 +447,17 @@ const SPECS: SeedSpec[] = [
     objectLabel: "Islet autoantibodies",
     claimId: "HSI-C-AU-001",
     assertion: "Islet autoantibodies mark autoimmune β-cell targeting in T1D (contrast with T2D).",
+    // Locator supports ISI REL-B015-predicts_eligibility_for-I013 (autoAbs → teplizumab eligibility).
     review: "source-verified",
     teaching: "associative",
     domain: "autoimmunity",
-    citationLabel: "Islet autoantibody consensus (placeholder)",
+    pmid: "31180194",
+    doi: "10.1056/NEJMoa1902226",
+    citationLabel:
+      "Herold KC et al. N Engl J Med 2019 — Teplizumab in relatives at risk for type 1 diabetes (autoantibody-defined eligibility).",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/31180194/",
+    notes:
+      "PMID 31180194 verified via Europe PMC. Supports ISI related_axis REL-B015-predicts_eligibility_for-I013 (islet autoantibodies → teplizumab eligibility). T1D contrast with T2D clinics — not a T2D edge. Gate C = human Neon approve only.",
   },
   {
     id: "HSI-E-AU-002",
