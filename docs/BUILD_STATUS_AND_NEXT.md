@@ -1,7 +1,7 @@
 # HSI build status and next
 
 **Audit date:** 1 November 2026  
-**HEAD at write:** `075f45d` (main) — P1 SSc deepen + model→Gate C  
+**HEAD at write:** `c2fd6f3` (main) — P1 SSc deepen + model→Gate C  
 **Edit target:** `hsi-core` only · Neon **`red-wave` only** · no immunecity / Akeno product / DeliverX edits  
 **Prior audit:** [`PRD_IMPLEMENTATION_AUDIT.md`](./PRD_IMPLEMENTATION_AUDIT.md) (phases 0–8 vs Pilot + Target PRDs)
 
@@ -142,7 +142,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | Systems vision stubs | `0ccfb01` |
 | AI / neural position | `566005c` |
 | Dual-track A + SSc first slice | `e68e8bf` |
-| P1 SSc deepen + model→Gate C | `075f45d` |
+| P1 SSc deepen + model→Gate C | `c2fd6f3` |
 
 Reproduce: `bun test && bun run outputs && bun run site:dev` → `/discovery`, `/akeno`, `/aksh-agents`.
 
