@@ -62,6 +62,8 @@ PRD / brief four outputs (evidence map, entity slice, competing explanations, ex
 
 **Expanded systems vision (binding intent):** whole immune + gut–immune + brain–immune + disease/tissue/biomarker + patient-data plane + AI/P3 adapters. Durable map: [`HSI_SYSTEMS_VISION_MAP.md`](./HSI_SYSTEMS_VISION_MAP.md). Regenerable: `buildSystemsVisionBundle()` / `src/systemsAxes.ts` → publish `hsi-systems-vision.json`. Does **not** force an SSc/RA pivot; “all” is the target graph, not one sprint; patient data stays Stage 3+ gated.
 
+**AI / neural / future healthcare position:** [`HSI_AI_NEURAL_FUTURE_HEALTHCARE.md`](./HSI_AI_NEURAL_FUTURE_HEALTHCARE.md) — capabilities + hard bans + model-proposal / embedding-slot / eval-harness stubs in `hsi-systems-vision.json` (`aiFutureTech`); NNs propose, Gate C decides.
+
 ## Partner lock honesty (Phase 2 schema)
 
 | Field | Meaning |
@@ -97,6 +99,7 @@ PRD / brief four outputs (evidence map, entity slice, competing explanations, ex
 | Illustrative RA/SLE/PsO/IBD pathway seed stubs | **Done** (RA elevated to working scope) |
 | Whole-immune-cell spine stubs + PRD relationship vocabulary (RA lock intact; SSc = PRD target) | **Done** (`src/immuneCellSpine.ts`; see [`ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md`](./ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md)) |
 | Systems vision multi-axis stubs (gut–immune, neuroimmune, disease/tissue/biomarker, patient plane, P3 adapters) | **Done** (`src/systemsAxes.ts` + `hsi-systems-vision.json`; see [`HSI_SYSTEMS_VISION_MAP.md`](./HSI_SYSTEMS_VISION_MAP.md)) — vocabulary only, not deep claim seeds |
+| AI / NN / future-tech position + schema stubs (capabilities, hard bans, model-proposal, embedding slot, eval harness) | **Done** ([`HSI_AI_NEURAL_FUTURE_HEALTHCARE.md`](./HSI_AI_NEURAL_FUTURE_HEALTHCARE.md) + `aiFutureTech` in systems vision export) — no ML stack, no auto Gate C |
 | SSc CD4/Tfh–B–IL-21 deep seed vertical | **Not started** (await dual-track / pivot decision — do not wipe RA) |
 | Gut–immune / neuroimmune curated claim edges | **Not started** (Stage 2; deepen one axis after vision stubs) |
 | Typed entity slice + LOINC on pack evidence rows | **Done** |

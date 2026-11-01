@@ -113,7 +113,9 @@ Live patient context stays in **Aksh / Akeno / partner TRE** after governance �
 
 ### 6. AI & future tech (P3 research adapters)
 
-Catalogued in `FUTURE_TECH_ADAPTER_STUBS` and [`VISION_REPO_ALIGNMENT.md`](./VISION_REPO_ALIGNMENT.md):
+**Position paper (deep):** [`HSI_AI_NEURAL_FUTURE_HEALTHCARE.md`](./HSI_AI_NEURAL_FUTURE_HEALTHCARE.md) — NN as proposers/scorers; KG as constraint; agent workbench vs HITL care agents; patient plane; near-term schema stubs vs deferred ML stack.
+
+Catalogued in `FUTURE_TECH_ADAPTER_STUBS`, `AI_FUTURE_TECH_CAPABILITIES` / `AI_FUTURE_TECH_HARD_BANS`, and [`VISION_REPO_ALIGNMENT.md`](./VISION_REPO_ALIGNMENT.md):
 
 | Adapter | Role | Rule |
 |---------|------|------|
@@ -125,7 +127,9 @@ Catalogued in `FUTURE_TECH_ADAPTER_STUBS` and [`VISION_REPO_ALIGNMENT.md`](./VIS
 | REINVENT4 | Generative design sandbox | Never clinic recommendation path |
 | ISI 12-agent workbench | Supervised research agents | Runtime = ISI product; Stage 1 out of scope |
 
-**Invariant:** model output **never** auto-flips `hsiGrade` or Gate C.
+**Schema stubs (not a model stack):** `MODEL_PROPOSAL_ARTIFACT_SCHEMA` · `EDGE_EMBEDDING_SLOT_SCHEMA` · `MODEL_EVAL_HARNESS_STUB`.
+
+**Invariant:** model output **never** auto-flips `hsiGrade` or Gate C (`autoApproveIntoKg=false`).
 
 ---
 
@@ -151,6 +155,7 @@ bun run outputs   # writes dist/outputs/.../hsi-systems-vision.json (+ MANIFEST 
 
 ## Cross-links
 
+- AI / NN / future healthcare position: [`HSI_AI_NEURAL_FUTURE_HEALTHCARE.md`](./HSI_AI_NEURAL_FUTURE_HEALTHCARE.md)  
 - Outputs checklist: [`OUTPUTS.md`](./OUTPUTS.md)  
 - Whole-immune-cell PRD: [`ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md`](./ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md)  
 - Technical blueprint: [`ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md`](./ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md)  

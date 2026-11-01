@@ -126,13 +126,13 @@ export const SYSTEMS_DOMAIN_OWNERSHIP: readonly SystemsDomainOwnership[] = [
     domain: "ai_future_tech",
     label: "AI & future technology",
     hsiOwns:
-      "Adapter registry metadata, license gates, ban on auto-promoting hsiGrade from model output",
+      "Adapter registry metadata, AI capabilities/hard bans, model-proposal + embedding-slot schemas, ban on auto-promoting hsiGrade from model output",
     isiOwns: "Agent workbench runtime (Stage 2+); research plugins UX",
     akshAkenoOwns: "Care agents stay separate; no generative chem → clinic path",
     earliestStage: "stage2",
     deepSeedsPresent: false,
     notes:
-      "AF3/Boltz/ESM/OpenMM/RDKit/REINVENT/TDC = P3 research adapters — see VISION_REPO_ALIGNMENT.md",
+      "AF3/Boltz/ESM/OpenMM/RDKit/REINVENT/TDC = P3 research adapters — see VISION_REPO_ALIGNMENT.md + HSI_AI_NEURAL_FUTURE_HEALTHCARE.md",
   },
 ] as const;
 
@@ -464,7 +464,159 @@ export const PATIENT_DATA_PLANE_RULES: readonly PatientDataPlaneRule[] = [
   },
 ] as const;
 
-// ── AI / future tech adapter registry (P3) ──────────────────────────────────
+// ── AI / future tech: capabilities, hard bans, schema stubs (P3) ────────────
+
+/**
+ * What neural nets / future-tech adapters may buy in this stack.
+ * See docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md.
+ */
+export const AI_FUTURE_TECH_CAPABILITIES = [
+  {
+    id: "representation_learning",
+    label: "Representation learning",
+    detail:
+      "Embeddings over molecules, proteins, cells/omics, literature, and graph neighbourhoods — indexes and scorers, not truth",
+  },
+  {
+    id: "pattern_discovery",
+    label: "Pattern discovery",
+    detail:
+      "Cluster phenotypes, suggest missing edges, retrieve analogous pathways — outputs are hypotheses until Gate C",
+  },
+  {
+    id: "ranking_retrieval",
+    label: "Ranking / retrieval",
+    detail:
+      "Literature triage, biomarker candidate lists, R2 gap cards — never closes Gate C or sets established",
+  },
+  {
+    id: "in_silico_scoring",
+    label: "In-silico scoring",
+    detail:
+      "Structure/chem/ADMET-ish sandbox scores via P3 adapters — discovery-only; license-bound",
+  },
+  {
+    id: "assistive_drafting",
+    label: "Assistive drafting",
+    detail:
+      "Pack briefs, competing-explanation shells, curator checklists — human owns every promote",
+  },
+  {
+    id: "research_agent_tools",
+    label: "Bounded research agent tools",
+    detail:
+      "ISI 12-agent workbench as scoped tools under orchestrator + independent governance review — runtime Stage 2+",
+  },
+] as const;
+
+export type AiFutureTechCapability = (typeof AI_FUTURE_TECH_CAPABILITIES)[number];
+
+/** Hard bans — exported into hsi-systems-vision.json for consumers. */
+export const AI_FUTURE_TECH_HARD_BANS = [
+  {
+    id: "no_replace_provenance",
+    label: "Must not replace provenance",
+    detail: "No edge without citable sources when claiming support",
+  },
+  {
+    id: "no_invent_graded_edges",
+    label: "Must not invent graded edges",
+    detail: "No silent insert of established/approved from model output",
+  },
+  {
+    id: "no_auto_clinical_decisions",
+    label: "Must not auto clinical decisions",
+    detail:
+      "No diagnosis, prognosis, treatment, dosing, or EHR write-back from research surfaces",
+  },
+  {
+    id: "no_promote_across_planes",
+    label: "Must not promote generative/structure hypotheses to CDS",
+    detail: "No chem/structure → Aksh card without Stage 3 product + governance gates",
+  },
+  {
+    id: "no_raw_phi_in_hsi",
+    label: "Must not train or store raw clinic PHI in HSI",
+    detail: "No identifiable records or clinic sequences in seeds/exports/red-wave evidence",
+  },
+  {
+    id: "no_collapse_uncertainty",
+    label: "Must not collapse uncertainty",
+    detail:
+      "Models must not erase uncertain/hypothesized/unexplored into confident clinic language",
+  },
+  {
+    id: "no_auto_approve_into_kg",
+    label: "Must not auto-approve into KG",
+    detail: "NN/agent proposals feed Gate C only; autoApproveIntoKg remains false",
+  },
+] as const;
+
+export type AiFutureTechHardBan = (typeof AI_FUTURE_TECH_HARD_BANS)[number];
+
+/**
+ * Optional sidecar embedding metadata for nodes/edges — schema only.
+ * Vectors are external refs or omitted until an eval harness exists.
+ * Never a substitute for typed predicates or grades.
+ */
+export const EDGE_EMBEDDING_SLOT_SCHEMA = {
+  schemaVersion: "hsi-edge-embedding-slot-1",
+  status: "schema_stub" as const,
+  fields: [
+    "modelId",
+    "weightsHash",
+    "dimensions",
+    "vectorRefOrOmit",
+    "createdAt",
+    "invalidatesOnModelBump",
+  ] as const,
+  mayFlipEvidenceGrade: false as const,
+  notes:
+    "Sidecar retrieval index only — cosine similarity ≠ mechanism; see HSI_AI_NEURAL_FUTURE_HEALTHCARE.md",
+};
+
+export type EdgeEmbeddingSlotSchema = typeof EDGE_EMBEDDING_SLOT_SCHEMA;
+
+/**
+ * Shape for NN/agent drafts that enter Gate C queues — not KG edges.
+ * Runtime emitters live in ISI/adapters later; hsi-core owns the contract stub.
+ */
+export const MODEL_PROPOSAL_ARTIFACT_SCHEMA = {
+  schemaVersion: "hsi-model-proposal-1",
+  status: "schema_stub" as const,
+  requiredFields: [
+    "proposalId",
+    "sourceAdapterOrAgent",
+    "proposedSubject",
+    "proposedPredicate",
+    "proposedObject",
+    "contextNote",
+    "evidenceHints",
+    "suggestedTeachingStatus",
+    "createdAt",
+  ] as const,
+  forbiddenFields: ["hsiGrade", "curationReview", "autoApprove"] as const,
+  defaultSuggestedTeachingStatus: "hypothesized" as const,
+  mayFlipEvidenceGrade: false as const,
+  autoApproveIntoKg: false as const,
+  notes:
+    "Proposers/scorers emit this artifact → human Gate C; never writes graded KG edges directly",
+};
+
+export type ModelProposalArtifactSchema = typeof MODEL_PROPOSAL_ARTIFACT_SCHEMA;
+
+/** Offline eval intent — no training loop in Stage 1. */
+export const MODEL_EVAL_HARNESS_STUB = {
+  schemaVersion: "hsi-model-eval-harness-1",
+  status: "stub" as const,
+  intent:
+    "Offline retrieval/ranking metrics against frozen public packs; TDC-style later",
+  mayUseLivePhi: false as const,
+  mayFlipEvidenceGrade: false as const,
+  visionDocRef: "docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md",
+};
+
+export type ModelEvalHarnessStub = typeof MODEL_EVAL_HARNESS_STUB;
 
 export type FutureTechAdapterStatus =
   | "deferred_p3"
@@ -490,7 +642,7 @@ export const FUTURE_TECH_ADAPTER_STUBS: readonly FutureTechAdapterStub[] = [
     status: "deferred_p3",
     mayFlipEvidenceGrade: false,
     licenseNote: "Per-task dataset licenses — cite TDC + underlying sets",
-    visionDocRef: "docs/VISION_REPO_ALIGNMENT.md",
+    visionDocRef: "docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md",
   },
   {
     id: "adapter-af3",
@@ -499,7 +651,7 @@ export const FUTURE_TECH_ADAPTER_STUBS: readonly FutureTechAdapterStub[] = [
     status: "deferred_p3",
     mayFlipEvidenceGrade: false,
     licenseNote: "Non-commercial / restricted — written license sign-off before adapter",
-    visionDocRef: "docs/VISION_REPO_ALIGNMENT.md",
+    visionDocRef: "docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md",
   },
   {
     id: "adapter-boltz",
@@ -508,7 +660,7 @@ export const FUTURE_TECH_ADAPTER_STUBS: readonly FutureTechAdapterStub[] = [
     status: "deferred_p3",
     mayFlipEvidenceGrade: false,
     licenseNote: "Check Apache/model weights; discovery-only",
-    visionDocRef: "docs/VISION_REPO_ALIGNMENT.md",
+    visionDocRef: "docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md",
   },
   {
     id: "adapter-esm",
@@ -517,7 +669,7 @@ export const FUTURE_TECH_ADAPTER_STUBS: readonly FutureTechAdapterStub[] = [
     status: "deferred_p3",
     mayFlipEvidenceGrade: false,
     licenseNote: "Model card + weights; no PHI sequences from clinic",
-    visionDocRef: "docs/VISION_REPO_ALIGNMENT.md",
+    visionDocRef: "docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md",
   },
   {
     id: "adapter-openmm",
@@ -526,7 +678,7 @@ export const FUTURE_TECH_ADAPTER_STUBS: readonly FutureTechAdapterStub[] = [
     status: "deferred_p3",
     mayFlipEvidenceGrade: false,
     licenseNote: "LGPL/OpenMM; compute cost; not Gate C evidence",
-    visionDocRef: "docs/VISION_REPO_ALIGNMENT.md",
+    visionDocRef: "docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md",
   },
   {
     id: "adapter-rdkit",
@@ -535,7 +687,7 @@ export const FUTURE_TECH_ADAPTER_STUBS: readonly FutureTechAdapterStub[] = [
     status: "deferred_p3",
     mayFlipEvidenceGrade: false,
     licenseNote: "BSD-style; never invents clinical edges",
-    visionDocRef: "docs/VISION_REPO_ALIGNMENT.md",
+    visionDocRef: "docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md",
   },
   {
     id: "adapter-reinvent4",
@@ -544,7 +696,7 @@ export const FUTURE_TECH_ADAPTER_STUBS: readonly FutureTechAdapterStub[] = [
     status: "deferred_p3",
     mayFlipEvidenceGrade: false,
     licenseNote: "Apache-2.0 typical; never clinic recommendation path",
-    visionDocRef: "docs/VISION_REPO_ALIGNMENT.md",
+    visionDocRef: "docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md",
   },
   {
     id: "adapter-isi-agents",
@@ -553,7 +705,7 @@ export const FUTURE_TECH_ADAPTER_STUBS: readonly FutureTechAdapterStub[] = [
     status: "out_of_scope_stage1",
     mayFlipEvidenceGrade: false,
     licenseNote: "Runtime = ISI product; HSI holds Aksh catalog as pattern reuse only",
-    visionDocRef: "docs/AKSH_AGENTS_IN_HSI.md",
+    visionDocRef: "docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md",
   },
 ] as const;
 
@@ -598,6 +750,14 @@ export type SystemsVisionBundle = {
   };
   patientDataPlane: readonly PatientDataPlaneRule[];
   futureTechAdapters: readonly FutureTechAdapterStub[];
+  aiFutureTech: {
+    positionDoc: "docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md";
+    capabilities: readonly AiFutureTechCapability[];
+    hardBans: readonly AiFutureTechHardBan[];
+    embeddingSlotSchema: EdgeEmbeddingSlotSchema;
+    modelProposalArtifactSchema: ModelProposalArtifactSchema;
+    evalHarnessStub: ModelEvalHarnessStub;
+  };
   invariants: string[];
 };
 
@@ -648,6 +808,14 @@ export function buildSystemsVisionBundle(opts?: {
     },
     patientDataPlane: PATIENT_DATA_PLANE_RULES,
     futureTechAdapters: FUTURE_TECH_ADAPTER_STUBS,
+    aiFutureTech: {
+      positionDoc: "docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md",
+      capabilities: AI_FUTURE_TECH_CAPABILITIES,
+      hardBans: AI_FUTURE_TECH_HARD_BANS,
+      embeddingSlotSchema: EDGE_EMBEDDING_SLOT_SCHEMA,
+      modelProposalArtifactSchema: MODEL_PROPOSAL_ARTIFACT_SCHEMA,
+      evalHarnessStub: MODEL_EVAL_HARNESS_STUB,
+    },
     invariants: [
       "Target graph ≠ one sprint — stubs are navigation vocabulary only.",
       "Every claim edge needs context + evidence + dual grade axes.",
@@ -655,6 +823,8 @@ export function buildSystemsVisionBundle(opts?: {
       "SSc stays prd_mvp_target without deep seeds until authorised (no wipe).",
       "Patient data: HSI stores shapes/fixtures/handoff only — never raw PHI.",
       "P3 bio adapters never auto-promote hsiGrade or Gate C.",
+      "NN/agent proposals are model-proposal artifacts only — never autoApproveIntoKg.",
+      "Embeddings are sidecar retrieval slots — not a substitute for typed predicates.",
       "notCds / autoApproveIntoKg=false on this export.",
       "Neon: red-wave only from this workspace.",
     ],

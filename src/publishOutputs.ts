@@ -397,7 +397,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       "Aksh: HITL map pointers only — use hsi-aksh-node-map.json + hsi-aksh-hitl-cards.json; CDS stays closed on seeds.",
       "Gate C: human checklist in gate-c-checklist.* (+ translationCandidates); optional HSI red-wave placeholders via bun run db:gate-c-local (pending only). ISI product approve stays autumn-snow — never from this workspace.",
       "Phase 4: HSI Neon schema stub — bun run db:migrate (guards refuse ISI/Akeno/DeliverX).",
-      "Systems vision: hsi-systems-vision.json — multi-axis target graph stubs (immune + gut–immune + neuroimmune + disease/tissue/biomarker + patient-plane rules + P3 adapters); not claim seeds; see docs/HSI_SYSTEMS_VISION_MAP.md.",
+      "Systems vision: hsi-systems-vision.json — multi-axis target graph stubs (immune + gut–immune + neuroimmune + disease/tissue/biomarker + patient-plane rules + P3 adapters + aiFutureTech capabilities/hard bans/schema stubs); not claim seeds; see docs/HSI_SYSTEMS_VISION_MAP.md + docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md.",
       "Regenerate with: bun run outputs (also refreshes site/public/discovery).",
     ],
   };

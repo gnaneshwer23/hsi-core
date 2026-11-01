@@ -1,7 +1,12 @@
 import { describe, expect, test } from "bun:test";
 import {
+  AI_FUTURE_TECH_CAPABILITIES,
+  AI_FUTURE_TECH_HARD_BANS,
+  EDGE_EMBEDDING_SLOT_SCHEMA,
   FUTURE_TECH_ADAPTER_STUBS,
   GUT_MICROBIOME_ENTITY_STUBS,
+  MODEL_EVAL_HARNESS_STUB,
+  MODEL_PROPOSAL_ARTIFACT_SCHEMA,
   NEUROIMMUNE_ENTITY_STUBS,
   PATIENT_DATA_PLANE_RULES,
   SYSTEMS_CROSS_AXIS_PREDICATES,
@@ -81,6 +86,27 @@ describe("systems vision axes stubs", () => {
     }
     expect(
       FUTURE_TECH_ADAPTER_STUBS.some((a) => a.id === "adapter-af3"),
+    ).toBe(true);
+  });
+
+  test("AI future-tech capabilities, hard bans, and schema stubs", () => {
+    expect(AI_FUTURE_TECH_CAPABILITIES.length).toBeGreaterThanOrEqual(5);
+    expect(AI_FUTURE_TECH_HARD_BANS.some((b) => b.id === "no_auto_approve_into_kg")).toBe(
+      true,
+    );
+    expect(EDGE_EMBEDDING_SLOT_SCHEMA.mayFlipEvidenceGrade).toBe(false);
+    expect(MODEL_PROPOSAL_ARTIFACT_SCHEMA.autoApproveIntoKg).toBe(false);
+    expect(MODEL_PROPOSAL_ARTIFACT_SCHEMA.forbiddenFields).toContain("hsiGrade");
+    expect(MODEL_EVAL_HARNESS_STUB.mayUseLivePhi).toBe(false);
+
+    const bundle = buildSystemsVisionBundle();
+    expect(bundle.aiFutureTech.positionDoc).toContain("HSI_AI_NEURAL_FUTURE_HEALTHCARE");
+    expect(bundle.aiFutureTech.hardBans.length).toBe(AI_FUTURE_TECH_HARD_BANS.length);
+    expect(bundle.aiFutureTech.modelProposalArtifactSchema.mayFlipEvidenceGrade).toBe(
+      false,
+    );
+    expect(
+      bundle.invariants.some((s) => s.includes("model-proposal")),
     ).toBe(true);
   });
 
