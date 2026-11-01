@@ -6,14 +6,14 @@
 
 HSI is a **separate technology**. Use **only** the HSI Neon project for HSI substrate:
 
-- **Canonical:** `human super intelligence` / `red-wave-06625195` / `ep-restless-dew…eu-west-2` (empty `neondb` until HSI-owned migrations)
+- **Canonical:** `human super intelligence` / `red-wave-06625195` / `ep-restless-dew…eu-west-2` (`neondb` + HSI-owned `hsi_*` stub via `bun run db:migrate`)
 
 **Never** use for HSI substrate, migrations, or Gate C local writes from this workspace:
 
 - ISI / immunecity Neon: `autumn-snow-67879321` / `ep-blue-salad…` — ISI product DB only
 - Akeno Neon / DeliverX Neon — out of scope / ignore
 
-No shared evidence DB between HSI and immunecity. Details: [`docs/NEON_PROJECT_MAP.md`](docs/NEON_PROJECT_MAP.md). Do not commit secrets (see `.env.example`).
+No shared evidence DB between HSI and immunecity. Details: [`docs/NEON_PROJECT_MAP.md`](docs/NEON_PROJECT_MAP.md). Do not commit secrets (see `.env.example`). **Never paste Neon passwords into chat** — use `neonctl` OAuth or gitignored `.env.local`; HSI URL must be red-wave only.
 
 ## Immunecity edit policy (freeze lift)
 

@@ -6,6 +6,18 @@ Read-only orientation for agents with Neon CLI OAuth (`~/.config/neonctl/credent
 
 Access check: `npx neonctl me` → `npx neonctl projects list`. No Neon MCP is required in this workspace.
 
+## Credentials hygiene (binding)
+
+**Never paste Neon passwords, API keys, or full connection strings into chat** (Cursor, Slack, email, tickets). Agents must not ask for them.
+
+| Do | Don’t |
+|----|--------|
+| Use `neonctl` OAuth (`~/.config/neonctl/credentials.json`) or `NEON_API_KEY` in the local shell | Paste DB passwords into the chat |
+| Put HSI `DATABASE_URL` only in **gitignored** `.env` / `.env.local` (or Vercel env for the HSI project) | Commit secrets or put them in docs |
+| Confirm host is **`ep-restless-dew…` / project `red-wave-06625195`** before any HSI migrate / Gate C local write | Point HSI writes at ISI `autumn-snow` / Akeno / DeliverX |
+
+Preferred migrate path without a local secrets file: `bun run db:migrate -- --from-neonctl`.
+
 ## Canonical HSI Neon (the only substrate DB for hsi-core)
 
 | Field | Value |

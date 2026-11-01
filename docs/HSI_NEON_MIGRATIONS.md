@@ -21,7 +21,9 @@
 
 This is an **HSI-owned** stub, not a copy of immunecity ISI tables.
 
-## Credentials (never commit)
+## Credentials (never commit; never paste into chat)
+
+Do **not** paste Neon passwords or full `DATABASE_URL`s into Cursor/chat. Prefer neonctl OAuth or a gitignored `.env.local`. HSI URL must target **`ep-restless-dew…` / `red-wave-06625195` only** — see [`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md) § Credentials hygiene.
 
 ```bash
 # Local (gitignored) — preferred for agents / CLI
