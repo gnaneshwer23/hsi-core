@@ -21,8 +21,9 @@
     "validate": "bun run src/cli/validate.ts",
     "export:isi": "bun run src/cli/export-isi.ts",
     "export:isi-map": "bun run src/cli/export-isi-map.ts",
+    "export:aksh-map": "bun run src/cli/export-aksh-map.ts",
     "gap-report": "bun run src/cli/gap-report.ts",
-    "check": "bun test && bun run validate && bun run export:isi && bun run export:isi-map && bun run gap-report"
+    "check": "bun test && bun run validate && bun run export:isi && bun run export:isi-map && bun run export:aksh-map && bun run gap-report"
   },
   "engines": {
     "node": ">=20"

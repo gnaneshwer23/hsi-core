@@ -13,12 +13,16 @@ import {
 } from "./seed/t2dImmunoMetabolic";
 import { linkClaimToMarker, loincCoverageSummary } from "./markers";
 import {
-  claimsWithIsiMappings,
   suggestionForClaim,
   summarizeIsiRelMappings,
   type IsiRelMatchKind,
   type IsiRelMappingSummary,
 } from "./mappings/isiRelSuggestions";
+import {
+  summarizeAkshNodeMappings,
+  type AkshNodeMappingSummary,
+} from "./mappings/akshNodeSuggestions";
+import { claimsWithProductMappings } from "./mappings/productMappings";
 
 export type HsiMappingGap = {
   claimId: string;
@@ -63,8 +67,9 @@ export type HsiSchemaGapReport = {
     matchKind: IsiRelMatchKind | "unspecified";
   }>;
   isiRelMapping: IsiRelMappingSummary;
+  akshNodeMapping: AkshNodeMappingSummary;
   nextActions: string[];
-};
+}
 
 function hasDurableLocator(edge: HsiEdge): boolean {
   return Boolean(
@@ -91,7 +96,7 @@ export function buildSchemaGapReport(opts?: {
   generatedAt?: string;
 }): HsiSchemaGapReport {
   const edges = opts?.edges ?? HSI_T2D_IMMUNO_SEED_EDGES;
-  const claims = opts?.claims ?? claimsWithIsiMappings(HSI_T2D_IMMUNO_SEED_CLAIMS);
+  const claims = opts?.claims ?? claimsWithProductMappings(HSI_T2D_IMMUNO_SEED_CLAIMS);
   const claimById = new Map(claims.map((c) => [c.id, c]));
 
   const domainsInUse = [...new Set(edges.map((e) => e.domain))];
@@ -138,14 +143,15 @@ export function buildSchemaGapReport(opts?: {
   });
 
   const isiRelMapping = summarizeIsiRelMappings();
+  const akshNodeMapping = summarizeAkshNodeMappings();
 
   const nextActions = [
     "Curate suggested ISI REL-* pointers in the immunecity HSI bridge queue — never auto-approve into KG.",
     "Fill remaining unmapped immuno-metabolic bridges (inflammation↔IR, T2D infection, LADA, irAE hyperglycemia).",
-    "Map Aksh clinical KG node / rule ids into claim.akshNodeId for T2D HITL CDS candidates.",
-    "Evidence sprint: replace citationLabel placeholders with PMID/DOI and Gate C review.",
+    "Replace provisional AKSH-N-* / AKSH-RULE-* ids with Aksh clinic KG canonical ids when published.",
+    "P0 leftovers → P1: more real PMIDs on mapped RELs; Neon human Gate C approve (never auto).",
     "Extend LOINC coverage beyond HbA1c / FPG / hs-CRP / IL-6 for bridge markers.",
-    "Do not mark CDS-surfacable until curationReview=approved and hsiGrade=established.",
+    "Do not mark CDS-surfacable until curationReview=approved and hsiGrade=established (isCdsSurfacable).",
   ];
 
   return {
@@ -167,6 +173,7 @@ export function buildSchemaGapReport(opts?: {
     gaps,
     bridgeShortlist: bridges,
     isiRelMapping,
+    akshNodeMapping,
     nextActions,
   };
 }

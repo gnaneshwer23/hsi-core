@@ -12,11 +12,13 @@ import {
   HSI_T2D_IMMUNO_SEED_EDGES,
   buildIsiExportBundle,
   buildSchemaGapReport,
+  claimsWithAkshMappings,
   claimsWithIsiMappings,
   hsiEvidenceHandoff,
   hsiGradeFromCuration,
   isCdsSurfacable,
   linkClaimToMarker,
+  listAkshNodeSuggestions,
   listBridgeCandidates,
   listIsiRelSuggestions,
   seedClaimLoincMap,
@@ -116,7 +118,10 @@ describe("schema gap report (backlog b2)", () => {
     expect(report.schemaVersion).toBe("hsi-gap-report-1");
     expect(report.summary.seedEdges).toBe(HSI_T2D_IMMUNO_SEED_EDGES.length);
     expect(report.summary.claimsMappedToIsi).toBeGreaterThanOrEqual(8);
-    expect(report.summary.claimsMappedToAksh).toBe(0);
+    expect(report.summary.claimsMappedToAksh).toBeGreaterThanOrEqual(10);
+    expect(report.akshNodeMapping.autoApplyToEhr).toBe(false);
+    expect(report.akshNodeMapping.anyCdsSurfacableOnSeedEdges).toBe(false);
+    expect(report.akshNodeMapping.t2dSeedsMapped).toBe(report.akshNodeMapping.t2dSeedsTotal);
     expect(report.summary.bridgeCandidates).toBeGreaterThanOrEqual(8);
     expect(report.isiRelMapping.autoApproveIntoKg).toBe(false);
     expect(report.isiRelMapping.withRelId).toBeGreaterThanOrEqual(8);
@@ -203,5 +208,35 @@ describe("ISI REL-* suggestion map", () => {
     }
     // Honest unmapped gaps remain (no invented RELs).
     expect(suggestions.filter((s) => s.status === "unmapped" && !s.suggestedIsiRelationshipId).length).toBeGreaterThanOrEqual(7);
+  });
+});
+
+describe("Aksh node-id map (P1 HITL)", () => {
+  it("maps T2D seeds to provisional AKSH-* ids without opening CDS", () => {
+    const suggestions = listAkshNodeSuggestions();
+    expect(suggestions.length).toBeGreaterThanOrEqual(20);
+    expect(suggestions.every((s) => s.autoApplyToEhr === false)).toBe(true);
+    expect(suggestions.every((s) => s.cdsSurfacableHint === false)).toBe(true);
+
+    const mapped = claimsWithAkshMappings();
+    const withAksh = mapped.filter((c) => c.akshNodeId);
+    expect(withAksh.length).toBeGreaterThanOrEqual(10);
+    expect(withAksh.every((c) => c.akshNodeId!.startsWith("AKSH-"))).toBe(true);
+
+    const hba1c = mapped.find((c) => c.id === "HSI-C-T2D-001");
+    expect(hba1c?.akshNodeId).toBe("AKSH-N-hba1c");
+
+    // Mapping never promotes CDS: seeds stay closed.
+    for (const edge of HSI_T2D_IMMUNO_SEED_EDGES) {
+      expect(isCdsSurfacable(edge)).toBe(false);
+      expect(edge.curationReview).not.toBe("approved");
+      expect(edge.hsiGrade).not.toBe("established");
+    }
+
+    const bundle = buildIsiExportBundle({ generatedAt: "2026-11-01T00:00:00.000Z" });
+    expect(bundle.akshNodeMapping.t2dSeedsMapped).toBe(bundle.akshNodeMapping.t2dSeedsTotal);
+    expect(bundle.akshNodeMapping.autoApplyToEhr).toBe(false);
+    expect(bundle.akshNodeMapping.anyCdsSurfacableOnSeedEdges).toBe(false);
+    expect(bundle.notCds).toBe(true);
   });
 });
