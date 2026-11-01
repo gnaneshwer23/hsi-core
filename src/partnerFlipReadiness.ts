@@ -159,6 +159,9 @@ function buildRows(lock: HsiPartnerLock): FlipRequirementRow[] {
         if (th.thresholdStatus === "set_for_test") {
           return `set_for_test under thresholdSource=${th.thresholdSource}: minPartnerScopedEdges=${th.numeric.minPartnerScopedEdges}, minCompetingExplanations=${th.numeric.minCompetingExplanations}, minLoincLinkedClaims=${th.numeric.minLoincLinkedClaims}, gateCPendingAllowed=${th.numeric.gateCPendingAllowed}, acceptanceOverallAllowed=${th.numeric.acceptanceOverallAllowed}. replaceWithPartnerAgreedThresholds=${th.replaceWithPartnerAgreedThresholds} — real partner must re-agree.`;
         }
+        if (th.thresholdStatus === "partner_agreed") {
+          return `partner_agreed under thresholdSource=${th.thresholdSource}; partnerId=${th.partnerId}; replaceWithPartnerAgreedThresholds=${th.replaceWithPartnerAgreedThresholds}: minPartnerScopedEdges=${th.numeric.minPartnerScopedEdges}, minCompetingExplanations=${th.numeric.minCompetingExplanations}, minLoincLinkedClaims=${th.numeric.minLoincLinkedClaims}, gateCPendingAllowed=${th.numeric.gateCPendingAllowed}, acceptanceOverallAllowed=${th.numeric.acceptanceOverallAllowed}. Apolo Pharma operator-agreed 2026-11-01.`;
+        }
         return "hsi-pilot-review-rubric.* framing exists; cut-offs still TBD with real partner.";
       })(),
       blocksPartnerSigned: true,
@@ -334,7 +337,7 @@ export function buildPartnerFlipReadinessBundle(opts?: {
       : [
           `Named partner active: ${lock.partner?.label ?? "unknown"} (${lock.partner?.id ?? "unknown"}) — MoU paperwork operator-asserted; still not CDS.`,
           "Agree partner attribution for the PMID corpus (ok_oa ≠ partner clearance; partnerClearedCount still 0). See docs/HOW_TO_SOURCE_LICENSING.md.",
-          "Re-agree Stage 1 numeric rubric thresholds with Apolo Pharma (engineering defaults / pending until partner_agreed).",
+          "Stage 1 numeric rubric thresholds are partner_agreed with Apolo Pharma (2026-11-01) — keep pack depth ≥ 12/4/6.",
           "Keep Gate C human-only — never auto-approve into ISI product KG.",
           "Refresh bun run outputs + re-sync immunecity public/hsi-discovery after pack depth changes.",
           "Never invent emails, phones, or named PI contacts in code.",
@@ -344,7 +347,9 @@ export function buildPartnerFlipReadinessBundle(opts?: {
         ? "readyToFlipPartnerSigned stays false until a real named_partner + legalBinding path is ready."
         : "readyToFlipPartnerSigned=true once named_partner + legalBinding + partnerSigned (Apolo Pharma path).",
       "satisfied_by_fixture ≠ pass for production MoU claims.",
-      "set_for_test / pending thresholds ≠ partner-agreed KPIs — replaceWithPartnerAgreedThresholds=true until re-agreed.",
+      lock.isHypothetical
+        ? "set_for_test / pending thresholds ≠ partner-agreed KPIs — replaceWithPartnerAgreedThresholds=true until re-agreed."
+        : "Apolo Pharma Stage 1 KPIs are partner_agreed (replaceWithPartnerAgreedThresholds=false); licensing partnerClearedCount still 0.",
       lock.isHypothetical
         ? "partnerSigned may be true under hypothetical_test_only; lockedPilot stays false while legalBinding=false."
         : "Named partner: partnerSigned=true + legalBinding=true → lockedPilot=true; MoU operator-asserted — still not CDS / no auto Gate C.",

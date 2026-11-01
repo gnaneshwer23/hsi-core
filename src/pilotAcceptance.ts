@@ -3,7 +3,8 @@
  *
  * Regenerable checklist + partner walkthrough. Marks **pass** only what is
  * actually true in substrate/exports; **pending** for real partnerSigned /
- * licensing; numeric Stage 1 thresholds may be **set_for_test** under the
+ * licensing; numeric Stage 1 thresholds are **partner_agreed** with Apolo Pharma
+ * (2026-11-01) or **set_for_test** under the
  * hypothetical fixture. Never invents a MoU or CDS claim.
  */
 import { buildGateCChecklist, type GateCChecklistBundle } from "./gateCChecklist";
@@ -273,7 +274,7 @@ function buildCriteria(opts: {
       status: rubricPass ? "pass" : "fail",
       evidence: `ready_for_human=${rubric.summary.readyForHuman}; blocked_on_partner=${rubric.summary.blockedOnPartner}; set_for_test=${rubric.summary.setForTest}; thresholdStatus=${rubric.summary.thresholdStatus}; numericThresholdsMet=${rubric.summary.numericThresholdsMet}`,
       notes:
-        "Checklist for human walkthrough; fixture may set numeric thresholds as set_for_test (real partner must re-agree).",
+        "Checklist for human walkthrough; Apolo Pharma KPIs are partner_agreed (fixture path may still be set_for_test).",
     }),
     criterion({
       id: "ac-licensing",
@@ -298,7 +299,9 @@ function buildCriteria(opts: {
             : "pending",
       evidence: `thresholdSource=${stage1Thresholds.thresholdSource}; thresholdStatus=${stage1Thresholds.thresholdStatus}; replaceWithPartnerAgreedThresholds=${stage1Thresholds.replaceWithPartnerAgreedThresholds}; minPartnerScopedEdges=${stage1Thresholds.numeric.minPartnerScopedEdges}; minCompetingExplanations=${stage1Thresholds.numeric.minCompetingExplanations}; minLoincLinkedClaims=${stage1Thresholds.numeric.minLoincLinkedClaims}; gateCPendingAllowed=${stage1Thresholds.numeric.gateCPendingAllowed}; acceptanceOverallAllowed=${stage1Thresholds.numeric.acceptanceOverallAllowed}; packEvalPass=${numericEval.pass} (scoped=${numericEval.partnerScopedEdges}, competing=${numericEval.competingExplanations}, loinc=${numericEval.loincLinkedClaims}, gateCPending=${numericEval.gateCPending})`,
       notes:
-        "Fixture numbers are path-testing only — real partner must re-agree before formal user testing / lockedPilot.",
+        stage1Thresholds.thresholdStatus === "partner_agreed"
+          ? "Apolo Pharma operator-agreed Stage 1 KPIs (2026-11-01); replaceWithPartnerAgreedThresholds=false."
+          : "Fixture numbers are path-testing only — real partner must re-agree before formal user testing / lockedPilot.",
     }),
     criterion({
       id: "ac-discovery-ui",
@@ -344,8 +347,8 @@ function buildWalkthroughSteps(lock: HsiPartnerLock): PilotAcceptancePack["walkt
       step: 4,
       title: "Run the review rubric",
       open: "hsi-pilot-review-rubric.md",
-      say: "Mark ready_for_human items live with the partner. Fixture numeric thresholds are set_for_test — confirm or rewrite with the real partner. Leave licensing + named confirmation blocked until written agree.",
-      doNot: "Do not treat fixture thresholds as a MoU KPI, and do not invent a named legal partner.",
+      say: "Mark ready_for_human items live with the partner. Apolo Pharma Stage 1 numeric KPIs are partner_agreed (2026-11-01). Leave licensing (partnerClearedCount) blocked until corpus clearance.",
+      doNot: "Do not invent CDS or auto-approve Gate C from partner_agreed KPIs.",
     },
     {
       step: 5,
@@ -447,10 +450,14 @@ export function buildPilotAcceptancePack(opts?: {
     nextActions: [
       lock.testFixtureBanner
         ? `${lock.testFixtureBanner} Swap via src/hypotheticalPartnerFixture.ts when a real org confirms.`
-        : "Share walkthrough with the named partner.",
-      "Share hsi-pilot-walkthrough.md + hsi-pilot-acceptance.md + site `/discovery` with outreach / future named partner.",
-      "Keep lockedPilot=false / legalBinding=false until a real named partner meets flipRequirements (fixture partnerSigned is path-testing only).",
-      "Numeric Stage 1 thresholds are set_for_test under the hypothetical fixture — real partner must re-agree numbers before formal user testing.",
+        : "Share walkthrough with Apolo Pharma (named partner locked).",
+      "Share hsi-pilot-walkthrough.md + hsi-pilot-acceptance.md + site `/discovery` with the named partner.",
+      lock.isHypothetical
+        ? "Keep lockedPilot=false / legalBinding=false until a real named partner meets flipRequirements (fixture partnerSigned is path-testing only)."
+        : "Named partner path active (lockedPilot=true); still not CDS / no auto Gate C.",
+      thresholds.thresholdStatus === "partner_agreed"
+        ? "Numeric Stage 1 thresholds are partner_agreed with Apolo Pharma (2026-11-01); keep pack depth ≥ 12/4/6."
+        : "Numeric Stage 1 thresholds are set_for_test under the hypothetical fixture — real partner must re-agree numbers before formal user testing.",
       "Agree source licensing (docs/HOW_TO_SOURCE_LICENSING.md) before claiming a licensed corpus.",
       "Production ISI must ignore fixture partnerSigned unless ALLOW_HYPOTHETICAL_PARTNER=true.",
       "Phase 6–8 Discovery Centre (ASK→MAP→REVIEW→VALIDATE→TRANSLATE) is live. Phase 8 = translation substrate + in-repo Akeno HITL at /akeno (not CDS).",
@@ -592,8 +599,8 @@ export function serializePilotWalkthroughMarkdown(
     `- overall: \`${pack.summary.overallStage1Acceptance}\``,
     `- four outputs green: \`${pack.summary.stage1FourOutputsGreen}\``,
     `- partner-ready walkthrough: \`${pack.summary.partnerReadyWalkthrough}\``,
-    `- pending (expected): real partnerSigned / legalBinding, licensing`,
-    `- set_for_test (fixture): numeric Stage 1 thresholds — real partner must re-agree`,
+    `- pending (expected): partner corpus licensing (partnerClearedCount)`,
+    `- partner_agreed: Apolo Pharma Stage 1 numeric KPIs (2026-11-01)`,
     "",
     "## After the meeting",
     "",

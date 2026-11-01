@@ -67,7 +67,7 @@ describe("P0.2-HSI ISI consume contract + partner flip-readiness", () => {
     expect(json.lockedPilot).toBe(true);
   });
 
-  test("partner flip-readiness: Apolo Pharma named path; licensing/thresholds pending", () => {
+  test("partner flip-readiness: Apolo Pharma named path; KPIs partner_agreed; licensing pending", () => {
     const lock = getPartnerLock();
     expect(lock.partnerSigned).toBe(true);
     expect(lock.lockedPilot).toBe(true);
@@ -96,7 +96,7 @@ describe("P0.2-HSI ISI consume contract + partner flip-readiness", () => {
     expect(byId.partner_signed_flip.status).toBe("pass");
     expect(byId.real_partner_replacement.status).toBe("pass");
     expect(byId.licensing.status).toBe("pending");
-    expect(byId.thresholds.status).toBe("pending");
+    expect(byId.thresholds.status).toBe("pass");
 
     for (const r of bundle.flipRequirements) {
       expect([

@@ -432,10 +432,11 @@ describe("Gate C checklist + publish outputs", () => {
     expect(rubric.partnerLock.status).toBe("scoping");
     expect(rubric.summary.readyForHuman).toBeGreaterThanOrEqual(8);
     expect(rubric.summary.blockedOnPartner).toBeGreaterThanOrEqual(1);
-    expect(rubric.summary.thresholdStatus).toBe("pending");
-    expect(rubric.summary.thresholdSource).toBe("unset");
+    expect(rubric.summary.thresholdStatus).toBe("partner_agreed");
+    expect(rubric.summary.thresholdSource).toBe("partner_agreed");
     expect(rubric.summary.numericThresholdsMet).toBe(true);
-    expect(rubric.stage1Thresholds.replaceWithPartnerAgreedThresholds).toBe(true);
+    expect(rubric.stage1Thresholds.replaceWithPartnerAgreedThresholds).toBe(false);
+    expect(rubric.stage1Thresholds.partnerId).toBe("partner:apolo-pharma");
     expect(rubric.stage1Thresholds.numeric.minPartnerScopedEdges).toBe(12);
     expect(rubric.stage1Thresholds.numeric.minCompetingExplanations).toBe(4);
     expect(rubric.stage1Thresholds.numeric.minLoincLinkedClaims).toBe(6);
@@ -444,11 +445,11 @@ describe("Gate C checklist + publish outputs", () => {
       "green_with_pending",
     );
     expect(rubric.checklist.find((c) => c.id === "x-3")?.status).toBe(
-      "blocked_on_partner",
+      "ready_for_human",
     );
-    expect(rubric.successMetrics.every((m) => m.thresholdStatus === "pending")).toBe(
-      true,
-    );
+    expect(
+      rubric.successMetrics.every((m) => m.thresholdStatus === "partner_agreed"),
+    ).toBe(true);
     expect(rubric.checklist.every((c) => c.status !== "ready_for_human" || c.criterion.length > 0)).toBe(
       true,
     );
@@ -456,7 +457,7 @@ describe("Gate C checklist + publish outputs", () => {
     expect(rubric.autoApproveIntoKg).toBe(false);
   });
 
-  it("ships Phase 5 acceptance pack with Apolo Pharma named partner (licensing/thresholds still pending)", () => {
+  it("ships Phase 5 acceptance pack with Apolo Pharma named partner (thresholds partner_agreed; licensing pending)", () => {
     const acceptance = buildPilotAcceptancePack({ generatedAt: "2026-11-01T14:45:00.000Z" });
     expect(acceptance.schemaVersion).toBe("hsi-pilot-acceptance-1");
     expect(acceptance.phase).toBe("5");
@@ -483,7 +484,7 @@ describe("Gate C checklist + publish outputs", () => {
     expect(acceptance.criteria.find((c) => c.id === "ac-rubric")?.status).toBe("pass");
     expect(acceptance.criteria.find((c) => c.id === "ac-partner-signed")?.status).toBe("pass");
     expect(acceptance.criteria.find((c) => c.id === "ac-licensing")?.status).toBe("pending");
-    expect(acceptance.criteria.find((c) => c.id === "ac-thresholds")?.status).toBe("pending");
+    expect(acceptance.criteria.find((c) => c.id === "ac-thresholds")?.status).toBe("pass");
     expect(acceptance.walkthroughSteps.length).toBeGreaterThanOrEqual(5);
     expect(acceptance.criteria.find((c) => c.id === "ac-discovery-ui")?.status).toBe("pass");
     expect(
@@ -699,8 +700,8 @@ describe("Gate C checklist + publish outputs", () => {
     expect(manifest.acceptance.partnerSigned).toBe(true);
     expect(manifest.counts.stage1FourOutputsGreen).toBe(true);
     expect(manifest.counts.acceptancePass).toBeGreaterThanOrEqual(10);
-    expect(manifest.counts.acceptancePending).toBeGreaterThanOrEqual(2);
-    expect(manifest.counts.reviewRubricThresholdStatus).toBe("pending");
+    expect(manifest.counts.acceptancePending).toBeGreaterThanOrEqual(1);
+    expect(manifest.counts.reviewRubricThresholdStatus).toBe("partner_agreed");
     expect(manifest.counts.r2HypothesisCards).toBeGreaterThanOrEqual(5);
     expect(manifest.counts.r2RankedGaps).toBeGreaterThanOrEqual(3);
     expect(manifest.r2Validation.phase).toBe("7");

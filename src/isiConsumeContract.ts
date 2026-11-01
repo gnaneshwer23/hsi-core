@@ -222,7 +222,7 @@ const ARTIFACTS: IsiArtifactContractRow[] = [
     consumerSurfaces: ["ask_map_review", "partner_readiness"],
     autoApproveIntoKg: false,
     notes:
-      "Review checklist; Stage 1 numeric thresholds may be set_for_test under hypothetical fixture (replaceWithPartnerAgreedThresholds=true).",
+      "Review checklist; Apolo Pharma Stage 1 numeric thresholds are partner_agreed (2026-11-01); fixture path may still be set_for_test.",
   },
   {
     manifestKey: "pilotAcceptanceJson",

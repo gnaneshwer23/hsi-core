@@ -2,8 +2,8 @@
  * Human review rubric for the scope-locked (Phase 2) / future partner-signed pilot
  * question against Stage 1 four workflow outputs.
  *
- * Checklist + export artifact. Numeric Stage 1 cut-offs may be set_for_test under
- * the hypothetical partner fixture; real partners must re-agree before lockedPilot.
+ * Checklist + export artifact. Apolo Pharma Stage 1 numeric cut-offs are
+ * partner_agreed (2026-11-01); hypothetical fixture path remains set_for_test.
  * Not CDS. Not auto-approval into product KG.
  */
 import { getPartnerLock, type HsiPartnerLock } from "./partnerLock";
@@ -94,6 +94,12 @@ function buildChecklist(
 ): RubricCheckItem[] {
   const pathwayClaims = lock.seedPathway?.primaryClaimIds ?? [];
   const thresholdsSetForTest = thresholds.thresholdStatus === "set_for_test";
+  const thresholdsPartnerAgreed = thresholds.thresholdStatus === "partner_agreed";
+  const namedPartnerConfirmed =
+    lock.partner?.type === "named_partner" &&
+    lock.partnerSigned &&
+    lock.legalBinding &&
+    !lock.isHypothetical;
   return [
     {
       id: "em-1",
@@ -189,8 +195,10 @@ function buildChecklist(
       id: "x-2",
       output: "cross_cutting",
       criterion: "Named partner confirms disease + question wording (flip partnerSigned)",
-      howToJudge: "Blocked until outreach produces a confirmed row in ISI_PILOT_PARTNER_SHORTLIST.md and partnerSigned flips under legalBinding.",
-      status: "blocked_on_partner",
+      howToJudge: namedPartnerConfirmed
+        ? `Named partner ${lock.partner?.id} (${lock.partner?.label}) confirmed; partnerSigned=${lock.partnerSigned}; legalBinding=${lock.legalBinding}; lockedPilot=${lock.lockedPilot}. MoU operator-asserted — still not CDS.`
+        : "Blocked until outreach produces a confirmed row in ISI_PILOT_PARTNER_SHORTLIST.md and partnerSigned flips under legalBinding.",
+      status: namedPartnerConfirmed ? "ready_for_human" : "blocked_on_partner",
       relatedClaimIds: [],
     },
     {
@@ -199,8 +207,14 @@ function buildChecklist(
       criterion: "Agree numeric success thresholds (partner-scoped edges, competing frames, LOINC claims, Gate C pending policy)",
       howToJudge: thresholdsSetForTest
         ? `Fixture thresholds set_for_test (source=${thresholds.thresholdSource}): minPartnerScopedEdges=${thresholds.numeric.minPartnerScopedEdges}, minCompetingExplanations=${thresholds.numeric.minCompetingExplanations}, minLoincLinkedClaims=${thresholds.numeric.minLoincLinkedClaims}, gateCPendingAllowed=${thresholds.numeric.gateCPendingAllowed}, acceptanceOverallAllowed=${thresholds.numeric.acceptanceOverallAllowed}. Real partner must re-agree (replaceWithPartnerAgreedThresholds=true).`
-        : "Fill successMetrics / stage1Thresholds with partner before formal user testing.",
-      status: thresholdsSetForTest ? "set_for_test" : "blocked_on_partner",
+        : thresholdsPartnerAgreed
+          ? `Apolo Pharma partner_agreed (source=${thresholds.thresholdSource}; partnerId=${thresholds.partnerId}; replaceWithPartnerAgreedThresholds=${thresholds.replaceWithPartnerAgreedThresholds}): minPartnerScopedEdges=${thresholds.numeric.minPartnerScopedEdges}, minCompetingExplanations=${thresholds.numeric.minCompetingExplanations}, minLoincLinkedClaims=${thresholds.numeric.minLoincLinkedClaims}, gateCPendingAllowed=${thresholds.numeric.gateCPendingAllowed}, acceptanceOverallAllowed=${thresholds.numeric.acceptanceOverallAllowed}. Operator-agreed 2026-11-01.`
+          : "Fill successMetrics / stage1Thresholds with partner before formal user testing.",
+      status: thresholdsSetForTest
+        ? "set_for_test"
+        : thresholdsPartnerAgreed
+          ? "ready_for_human"
+          : "blocked_on_partner",
       relatedClaimIds: [],
     },
     {
@@ -225,7 +239,9 @@ function buildSuccessMetrics(
       ? " (hypothetical_test_fixture — replace with partner-agreed)"
       : status === "pending"
         ? " (TBD — agree before user testing)"
-        : "";
+        : status === "partner_agreed"
+          ? " (partner_agreed — Apolo Pharma 2026-11-01)"
+          : "";
 
   return [
     {
@@ -361,13 +377,17 @@ export function buildPilotReviewRubric(opts?: {
     },
     nextActions: [
       "Human-review checklist items marked ready_for_human against hsi-pilot-evidence-pack.md.",
-      "Keep lockedPilot=false / legalBinding=false until a real named partner confirms disease + question. Fixture partnerSigned is path-testing only (src/hypotheticalPartnerFixture.ts).",
+      lock.isHypothetical
+        ? "Keep lockedPilot=false / legalBinding=false until a real named partner confirms disease + question. Fixture partnerSigned is path-testing only (src/hypotheticalPartnerFixture.ts)."
+        : `Named partner ${lock.partner?.label ?? "Apolo Pharma"} locked (lockedPilot=${lock.lockedPilot}); still not CDS / no auto Gate C.`,
       thresholds.thresholdStatus === "set_for_test"
         ? "Numeric Stage 1 thresholds are set_for_test under the hypothetical fixture — real partner must re-agree before formal user testing (replaceWithPartnerAgreedThresholds=true)."
-        : "Agree success-metric thresholds before formal pilot user testing.",
-      "Phase 5 complete = hsi-pilot-acceptance.* + hsi-pilot-walkthrough.md (partner-ready Stage 1 pack; real MoU still pending).",
+        : thresholds.thresholdStatus === "partner_agreed"
+          ? "Numeric Stage 1 thresholds are partner_agreed with Apolo Pharma (2026-11-01); keep pack depth ≥ 12/4/6."
+          : "Agree success-metric thresholds before formal pilot user testing.",
+      "Phase 5 complete = hsi-pilot-acceptance.* + hsi-pilot-walkthrough.md (partner-ready Stage 1 pack; licensing partnerClearedCount still open).",
       "Phase 8 (clinical R3–R5 / Akeno) needs an explicit user ask + Stage 3 gates.",
-      "Do not treat scopeLocked as a signed commercial partner / MoU.",
+      "Do not invent CDS or auto-approve Gate C from scopeLocked / partner_agreed KPIs.",
     ],
   };
 }

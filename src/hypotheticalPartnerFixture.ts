@@ -14,8 +14,8 @@
  *    feeds `partnerLock.ts` (`legalBinding` → `lockedPilot`).
  * 2. Keep `HYPOTHETICAL_PARTNER_FIXTURE` as a recoverable test template only.
  * 3. Record the org in `docs/ISI_PILOT_PARTNER_SHORTLIST.md` (no invented emails).
- * 4. Rubric thresholds remain `set_for_test` / pending re-agree until the
- *    partner formally re-agrees numbers (`src/stage1RubricThresholds.ts`).
+ * 4. Rubric thresholds for Apolo Pharma are `partner_agreed`
+ *    (`src/stage1RubricThresholds.ts`; operator-agreed 2026-11-01).
  * 5. Re-run `bun run outputs` after edits.
  */
 
@@ -88,7 +88,7 @@ export const REAL_PARTNER_REPLACEMENT = {
     contactChannel: "programme_introduction" as const,
     outreachStatus: "confirmed" as const,
     notes:
-      "Named pilot partner Apolo Pharma (id partner:apolo-pharma). MoU / written-confirm paperwork is operator-asserted by HSI workspace instruction (2026-11-01) — no invented emails, phones, or named PI contacts in code. Still not CDS; Gate C never auto-approves. RA Stage 1 activeScope unchanged; dual-track SSc/gut/neuro continues. partnerClearedCount licensing + rubric numeric re-agree remain open.",
+      "Named pilot partner Apolo Pharma (id partner:apolo-pharma). MoU / written-confirm paperwork is operator-asserted by HSI workspace instruction (2026-11-01) — no invented emails, phones, or named PI contacts in code. Still not CDS; Gate C never auto-approves. RA Stage 1 activeScope unchanged; dual-track SSc/gut/neuro continues. Stage 1 numeric KPIs partner_agreed (2026-11-01); partnerClearedCount licensing remains open.",
   },
   agreementKind: "legal_mou" as PartnerAgreementKind,
   replaceWithRealPartner: false,

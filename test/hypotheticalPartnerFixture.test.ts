@@ -52,7 +52,7 @@ describe("named partner Apolo Pharma lock", () => {
     ).toBe(true);
   });
 
-  test("flip-readiness marks named_org pass; licensing/thresholds still open", () => {
+  test("flip-readiness marks named_org pass; KPIs partner_agreed; licensing pending", () => {
     const bundle = buildPartnerFlipReadinessBundle({
       generatedAt: "2026-11-01T20:00:00.000Z",
     });
@@ -73,7 +73,7 @@ describe("named partner Apolo Pharma lock", () => {
     expect(byId.real_partner_replacement.status).toBe("pass");
     expect(byId.shortlist_row.status).toBe("pass");
     expect(byId.licensing.status).toBe("pending");
-    expect(byId.thresholds.status).toBe("pending");
+    expect(byId.thresholds.status).toBe("pass");
     expect(bundle.summary.pending).toBeGreaterThanOrEqual(1);
 
     expect(REAL_PARTNER_REPLACEMENT.partner.id).toBe("partner:apolo-pharma");
