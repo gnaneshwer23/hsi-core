@@ -766,8 +766,53 @@ export const EXTERNAL_GENOME_POINTER_SCHEMA = {
 
 export type ExternalGenomePointerSchema = typeof EXTERNAL_GENOME_POINTER_SCHEMA;
 
+/**
+ * P3 adapter license matrix schema (P2.5 wired).
+ * RFC: docs/P3_ADAPTER_RFC.md · runtime: src/p3AdapterLicenseMatrix.ts.
+ * Honest sign-off only; no weight vendoring; proposals → Gate C only.
+ */
+export const P3_ADAPTER_LICENSE_MATRIX_SCHEMA = {
+  schemaVersion: "hsi-p3-adapter-license-matrix-1",
+  /** Wired: regenerable matrix + RFC (P2.5). Runnable adapters still deferred. */
+  status: "wired_rfc_and_matrix" as const,
+  fields: [
+    "adapterId",
+    "label",
+    "purpose",
+    "licenseClass",
+    "commercialRisk",
+    "signOffStatus",
+    "blockedUntilSignOff",
+    "docsUrl",
+    "mayFlipEvidenceGrade",
+    "vendorsModelWeights",
+    "emitsModelProposalOnly",
+  ] as const,
+  signOffStatuses: [
+    "not_signed",
+    "needs_review",
+    "non_commercial_only",
+    "research_ok_documented",
+  ] as const,
+  mayFlipEvidenceGrade: false as const,
+  vendorsModelWeights: false as const,
+  emitsModelProposalOnly: true as const,
+  autoApproveIntoKg: false as const,
+  containsPhi: false as const,
+  exportArtifact: "hsi-p3-adapter-license-matrix.json" as const,
+  runtimeModule: "src/p3AdapterLicenseMatrix.ts" as const,
+  rfcDoc: "docs/P3_ADAPTER_RFC.md" as const,
+  visionDocRef: "docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md",
+  notes:
+    "License gate before any adapter run; ModelProposalArtifacts only; never claim commercial signed without evidence; never vendor multi-GB weights",
+};
+
+export type P3AdapterLicenseMatrixSchema =
+  typeof P3_ADAPTER_LICENSE_MATRIX_SCHEMA;
+
 export type FutureTechAdapterStatus =
   | "deferred_p3"
+  | "rfc_matrix_ready"
   | "catalog_only"
   | "out_of_scope_stage1";
 
@@ -787,64 +832,71 @@ export const FUTURE_TECH_ADAPTER_STUBS: readonly FutureTechAdapterStub[] = [
     id: "adapter-tdc",
     label: "Therapeutics Data Commons (TDC)",
     role: "Offline ML eval benchmarks against graded claims",
-    status: "deferred_p3",
+    status: "rfc_matrix_ready",
     mayFlipEvidenceGrade: false,
-    licenseNote: "Per-task dataset licenses — cite TDC + underlying sets",
-    visionDocRef: "docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md",
+    licenseNote:
+      "Code MIT; per-task dataset licenses — needs_review; blockedUntilSignOff=true (see hsi-p3-adapter-license-matrix.json)",
+    visionDocRef: "docs/P3_ADAPTER_RFC.md",
   },
   {
     id: "adapter-af3",
     label: "AlphaFold3",
     role: "Structure prediction for mechanism hypotheses",
-    status: "deferred_p3",
+    status: "rfc_matrix_ready",
     mayFlipEvidenceGrade: false,
-    licenseNote: "Non-commercial / restricted — written license sign-off before adapter",
-    visionDocRef: "docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md",
+    licenseNote:
+      "Code Apache-2.0; weights Terms of Use → non_commercial_only; blockedUntilSignOff=true; never vendor weights",
+    visionDocRef: "docs/P3_ADAPTER_RFC.md",
   },
   {
     id: "adapter-boltz",
     label: "Boltz",
     role: "Open structure / complex prediction alternative",
-    status: "deferred_p3",
+    status: "rfc_matrix_ready",
     mayFlipEvidenceGrade: false,
-    licenseNote: "Check Apache/model weights; discovery-only",
-    visionDocRef: "docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md",
+    licenseNote:
+      "MIT code+weights documented (research_ok_documented); still no weight vendoring; proposals only",
+    visionDocRef: "docs/P3_ADAPTER_RFC.md",
   },
   {
     id: "adapter-esm",
     label: "ESM",
     role: "Protein language embeddings / similarity helpers",
-    status: "deferred_p3",
+    status: "rfc_matrix_ready",
     mayFlipEvidenceGrade: false,
-    licenseNote: "Model card + weights; no PHI sequences from clinic",
-    visionDocRef: "docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md",
+    licenseNote:
+      "FAIR ESM MIT (research_ok_documented); EvolutionaryScale ESM-3/ESMC = separate review; no PHI sequences",
+    visionDocRef: "docs/P3_ADAPTER_RFC.md",
   },
   {
     id: "adapter-openmm",
     label: "OpenMM",
     role: "Molecular dynamics simulation plugin",
-    status: "deferred_p3",
+    status: "rfc_matrix_ready",
     mayFlipEvidenceGrade: false,
-    licenseNote: "LGPL/OpenMM; compute cost; not Gate C evidence",
-    visionDocRef: "docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md",
+    licenseNote:
+      "OpenMM license family documented (research_ok_documented); MD ≠ Gate C evidence",
+    visionDocRef: "docs/P3_ADAPTER_RFC.md",
   },
   {
     id: "adapter-rdkit",
     label: "RDKit",
     role: "Cheminformatics descriptors for research claims",
-    status: "deferred_p3",
+    status: "rfc_matrix_ready",
     mayFlipEvidenceGrade: false,
-    licenseNote: "BSD-style; never invents clinical edges",
-    visionDocRef: "docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md",
+    licenseNote:
+      "BSD-style (research_ok_documented); never invents clinical edges",
+    visionDocRef: "docs/P3_ADAPTER_RFC.md",
   },
   {
     id: "adapter-reinvent4",
     label: "REINVENT4",
     role: "Generative molecular design sandbox",
-    status: "deferred_p3",
+    status: "rfc_matrix_ready",
     mayFlipEvidenceGrade: false,
-    licenseNote: "Apache-2.0 typical; never clinic recommendation path",
-    visionDocRef: "docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md",
+    licenseNote:
+      "Apache-2.0 documented (research_ok_documented); never clinic recommendation path",
+    visionDocRef: "docs/P3_ADAPTER_RFC.md",
   },
   {
     id: "adapter-isi-agents",
@@ -852,8 +904,9 @@ export const FUTURE_TECH_ADAPTER_STUBS: readonly FutureTechAdapterStub[] = [
     role: "Supervised research agents (orchestrator + specialists)",
     status: "out_of_scope_stage1",
     mayFlipEvidenceGrade: false,
-    licenseNote: "Runtime = ISI product; HSI holds Aksh catalog as pattern reuse only",
-    visionDocRef: "docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md",
+    licenseNote:
+      "Runtime = ISI product; not_signed / blockedUntilSignOff=true in matrix; HSI holds catalog patterns only",
+    visionDocRef: "docs/P3_ADAPTER_RFC.md",
   },
 ] as const;
 
@@ -917,6 +970,8 @@ export type SystemsVisionBundle = {
     modelProposalArtifactSchema: ModelProposalArtifactSchema;
     evalHarnessStub: ModelEvalHarnessStub;
     externalGenomePointerSchema: ExternalGenomePointerSchema;
+    p3AdapterLicenseMatrixSchema: P3AdapterLicenseMatrixSchema;
+    p3AdapterRfc: "docs/P3_ADAPTER_RFC.md";
   };
   invariants: string[];
 };
@@ -987,6 +1042,8 @@ export function buildSystemsVisionBundle(opts?: {
       modelProposalArtifactSchema: MODEL_PROPOSAL_ARTIFACT_SCHEMA,
       evalHarnessStub: MODEL_EVAL_HARNESS_STUB,
       externalGenomePointerSchema: EXTERNAL_GENOME_POINTER_SCHEMA,
+      p3AdapterLicenseMatrixSchema: P3_ADAPTER_LICENSE_MATRIX_SCHEMA,
+      p3AdapterRfc: "docs/P3_ADAPTER_RFC.md",
     },
     invariants: [
       "Target graph ≠ one sprint — stubs are navigation vocabulary only.",
@@ -1002,6 +1059,7 @@ export function buildSystemsVisionBundle(opts?: {
       "P2.2: edge embedding sidecars wired (hash/ref; hsi-embedding-sidecars.json); doesNotSetHsiGrade=true; no model weights / PHI.",
       "P2.3: offline eval harness wired (hsi-model-eval-harness.json); mayUseLivePhi=false; mayTrainModels=false; fail-closed clinical/PHI; packs remain authority.",
       "P2.4: ClinVar/TCGA pointer metadata wired (hsi-external-genome-pointers.json); reviewRequired=true; citation/ref only; no bulk genome dump / PHI; doesNotSetHsiGrade.",
+      "P2.5: P3 adapter RFC + license matrix wired (docs/P3_ADAPTER_RFC.md; hsi-p3-adapter-license-matrix.json); license gate before run; vendorsModelWeights=false; honest signOffStatus only; no commercial signed without evidence.",
       "notCds / autoApproveIntoKg=false on this export.",
       "Neon: red-wave only from this workspace.",
     ],

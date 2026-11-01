@@ -9,6 +9,7 @@ import {
   MODEL_EVAL_HARNESS_STUB,
   MODEL_PROPOSAL_ARTIFACT_SCHEMA,
   NEUROIMMUNE_ENTITY_STUBS,
+  P3_ADAPTER_LICENSE_MATRIX_SCHEMA,
   PATIENT_DATA_PLANE_RULES,
   SYSTEMS_CROSS_AXIS_PREDICATES,
   SYSTEMS_HYPOTHESIS_CAPABLE_PREDICATES,
@@ -114,6 +115,13 @@ describe("systems vision axes stubs", () => {
     );
     expect(EXTERNAL_GENOME_POINTER_SCHEMA.reviewRequired).toBe(true);
     expect(EXTERNAL_GENOME_POINTER_SCHEMA.doesNotSetHsiGrade).toBe(true);
+    expect(P3_ADAPTER_LICENSE_MATRIX_SCHEMA.status).toBe(
+      "wired_rfc_and_matrix",
+    );
+    expect(P3_ADAPTER_LICENSE_MATRIX_SCHEMA.vendorsModelWeights).toBe(false);
+    expect(P3_ADAPTER_LICENSE_MATRIX_SCHEMA.exportArtifact).toBe(
+      "hsi-p3-adapter-license-matrix.json",
+    );
 
     const bundle = buildSystemsVisionBundle();
     expect(bundle.aiFutureTech.positionDoc).toContain("HSI_AI_NEURAL_FUTURE_HEALTHCARE");
@@ -124,11 +132,18 @@ describe("systems vision axes stubs", () => {
     expect(
       bundle.aiFutureTech.externalGenomePointerSchema.containsBulkGenomeDump,
     ).toBe(false);
+    expect(bundle.aiFutureTech.p3AdapterRfc).toBe("docs/P3_ADAPTER_RFC.md");
+    expect(
+      bundle.aiFutureTech.p3AdapterLicenseMatrixSchema.emitsModelProposalOnly,
+    ).toBe(true);
     expect(
       bundle.invariants.some((s) => s.includes("model-proposal")),
     ).toBe(true);
     expect(
       bundle.invariants.some((s) => s.includes("P2.4")),
+    ).toBe(true);
+    expect(
+      bundle.invariants.some((s) => s.includes("P2.5")),
     ).toBe(true);
   });
 

@@ -67,6 +67,7 @@ export {
   MODEL_PROPOSAL_ARTIFACT_SCHEMA,
   NEUROIMMUNE_ENTITY_STUBS,
   NEUROIMMUNE_ENTITY_TYPES,
+  P3_ADAPTER_LICENSE_MATRIX_SCHEMA,
   PATIENT_DATA_PLANE_RULES,
   SYSTEMS_CROSS_AXIS_PREDICATES,
   SYSTEMS_DOMAIN_OWNERSHIP,
@@ -94,6 +95,7 @@ export {
   type ModelProposalArtifactSchema,
   type NeuroimmuneEntityStub,
   type NeuroimmuneEntityType,
+  type P3AdapterLicenseMatrixSchema,
   type PatientDataPlaneRule,
   type SystemsCrossAxisPredicate,
   type SystemsDomainOwnership,
@@ -230,6 +232,24 @@ export {
   type ExternalGenomePointersBundle,
   type GenomePointerSource,
 } from "./externalGenomePointers";
+
+export {
+  P3_ADAPTER_COMMERCIAL_RISKS,
+  P3_ADAPTER_LICENSE_CLASSES,
+  P3_ADAPTER_LICENSE_MATRIX_EXPORT_SCHEMA,
+  P3_ADAPTER_LICENSE_MATRIX_RUNTIME_SCHEMA,
+  P3_ADAPTER_SIGN_OFF_STATUSES,
+  assertSafeP3AdapterLicenseRow,
+  buildP3AdapterLicenseMatrixBundle,
+  buildP3AdapterLicenseRows,
+  serializeP3AdapterLicenseMatrix,
+  serializeP3AdapterLicenseMatrixMarkdown,
+  type P3AdapterCommercialRisk,
+  type P3AdapterLicenseClass,
+  type P3AdapterLicenseMatrixBundle,
+  type P3AdapterLicenseRow,
+  type P3AdapterSignOffStatus,
+} from "./p3AdapterLicenseMatrix";
 
 export {
   SSC_CELL_CARD_SCHEMA,

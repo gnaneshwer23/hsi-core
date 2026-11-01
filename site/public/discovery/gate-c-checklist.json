@@ -2,7 +2,7 @@
   "schemaVersion": "hsi-gate-c-checklist-1",
   "notCds": true,
   "autoApproveIntoKg": false,
-  "generatedAt": "2026-11-01T19:03:16.144Z",
+  "generatedAt": "2026-11-01T19:11:38.762Z",
   "summary": {
     "totalRows": 32,
     "curatedWithRel": 13,
@@ -943,7 +943,7 @@
         "pack:hsi-ssc-pathway-pack"
       ],
       "suggestedTeachingStatus": "associative",
-      "createdAt": "2026-11-01T19:03:16.144Z",
+      "createdAt": "2026-11-01T19:11:38.762Z",
       "proposalKind": "model_draft",
       "gateCStatus": "pending",
       "autoApprove": false,
@@ -965,7 +965,7 @@
         "card:HSI-CARD-SSC-IL21"
       ],
       "suggestedTeachingStatus": "hypothesized",
-      "createdAt": "2026-11-01T19:03:16.144Z",
+      "createdAt": "2026-11-01T19:11:38.762Z",
       "proposalKind": "model_draft",
       "gateCStatus": "pending",
       "autoApprove": false,
@@ -988,7 +988,7 @@
         "axis:gut_microbiome"
       ],
       "suggestedTeachingStatus": "hypothesized",
-      "createdAt": "2026-11-01T19:03:16.144Z",
+      "createdAt": "2026-11-01T19:11:38.762Z",
       "proposalKind": "model_draft",
       "gateCStatus": "pending",
       "autoApprove": false,
@@ -1012,7 +1012,7 @@
         "axis:neuroimmune"
       ],
       "suggestedTeachingStatus": "hypothesized",
-      "createdAt": "2026-11-01T19:03:16.144Z",
+      "createdAt": "2026-11-01T19:11:38.762Z",
       "proposalKind": "model_draft",
       "gateCStatus": "pending",
       "autoApprove": false,
@@ -1033,6 +1033,7 @@
     "P1.5 modelProposals: typed ModelProposalArtifact drafts only (autoApprove=false; mayFlipEvidenceGrade=false). Never write hsiGrade/curationReview from a model. Not Neon auto-approve — human Gate C only.",
     "P2.2 embedding sidecars (hsi-embedding-sidecars.json): hash/ref metadata only; doesNotSetHsiGrade=true; autoApprove=false — never treat similarity as Gate C pass or grade flip.",
     "P2.3 offline eval harness (hsi-model-eval-harness.*): scores proposals/sidecars against frozen packs only; mayUseLivePhi=false; never flips grades; never auto-approves into KG.",
-    "P2.4 ClinVar/TCGA pointers (hsi-external-genome-pointers.json): citation/ref only (accession + URL + disease/gene context + optional edgeIds); reviewRequired=true; doesNotSetHsiGrade; no bulk genome dump / PHI — Gate C still required."
+    "P2.4 ClinVar/TCGA pointers (hsi-external-genome-pointers.json): citation/ref only (accession + URL + disease/gene context + optional edgeIds); reviewRequired=true; doesNotSetHsiGrade; no bulk genome dump / PHI — Gate C still required.",
+    "P2.5 P3 adapters (docs/P3_ADAPTER_RFC.md + hsi-p3-adapter-license-matrix.json): emit ModelProposalArtifacts only; license gate before run (blockedUntilSignOff); mayFlipEvidenceGrade=false; vendorsModelWeights=false; never claim commercial signed without evidence."
   ]
 }

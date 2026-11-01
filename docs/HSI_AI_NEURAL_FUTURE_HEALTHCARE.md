@@ -210,7 +210,8 @@ See `PATIENT_DATA_PLANE_RULES` and [`AKENO_IN_HSI.md`](./AKENO_IN_HSI.md).
 - **Not:** embedding tables as a parallel truth store that bypasses grades; no multi-GB weights; no PHI.  
 - **Versioning:** model id + weights hash + dim + createdAt; invalidate on model bump.  
 - **Eval (P2.3 landed):** offline harness (`MODEL_EVAL_HARNESS_STUB` + `src/modelEvalHarness.ts` → `hsi-model-eval-harness.*`) scores proposals/sidecars against frozen RA/SSc/gut/neuro fixtures (cited edges exist; grade not flipped; required fields; fail-closed clinical/PHI; sidecar locators; pack authority). No training / PHI. TDC-style retrieval metrics still deferred to P3.
-- **Genome pointers (P2.4 landed):** ClinVar / TCGA citation metadata (`EXTERNAL_GENOME_POINTER_SCHEMA` + `src/externalGenomePointers.ts` → `hsi-external-genome-pointers.json`) — accession, URL template, disease/gene context, optional `edgeIds`, `reviewRequired=true`, `doesNotSetHsiGrade=true`. No bulk genome dump / PHI.
+- **Genome pointers (P2.4 landed):** ClinVar / TCGA citation metadata (`EXTERNAL_GENOME_POINTER_SCHEMA` + `src/externalGenomePointers.ts` → `hsi-external-genome-pointers.json`) — accession, URL template, disease/gene context, optional `edgeIds`, `reviewRequired=true`, `doesNotSetHsiGrade=true`. No bulk genome dump / PHI.  
+- **P3 adapters (P2.5 landed):** RFC + license matrix ([`P3_ADAPTER_RFC.md`](./P3_ADAPTER_RFC.md); `P3_ADAPTER_LICENSE_MATRIX_SCHEMA` + `src/p3AdapterLicenseMatrix.ts` → `hsi-p3-adapter-license-matrix.*`). Emit **ModelProposalArtifacts** only; license gate (`blockedUntilSignOff`) before run; honest `signOffStatus`; **never** vendor multi-GB weights; no commercial-signed claim without evidence.
 
 ### Human gates
 
@@ -232,20 +233,21 @@ Curator Gate C · ISI product approve · Aksh clinician action · partner govern
 
 ### Deferred (explicit)
 
-- Vendoring AF3/Boltz/ESM/OpenMM/RDKit/REINVENT/TDC until P3 RFC + license sign-off.  
+- Vendoring AF3/Boltz/ESM/OpenMM/RDKit/REINVENT/TDC **weights** (RFC + matrix landed; runnable adapters still gated).  
 - 12-agent research runtime.  
 - Clinical digital twins, closed-loop sensing, federated training in HSI.  
 - ImmPort/GEO/HCA connectors as model fuel.  
 - Any path that auto-flips grades.  
 - SSc deep seed pivot that wipes RA lock.
 
-**P1.5 landed:** typed `ModelProposalArtifact` (`src/modelProposal.ts`) wires into Gate C checklist `modelProposals` (pending only; `autoApprove=false`; unit tests refuse forbidden `hsiGrade` / `mayFlipEvidenceGrade`). **P1.3 landed:** gut–immune SCFA ↔ mucosal Treg/Th17 pack. **P2.1 landed:** neuroimmune vagus / cholinergic anti-inflammatory reflex pack (human VNS–RA hypothesized only). **P2.2 landed:** embedding sidecars (`hsi-embedding-sidecars.json`; hash/ref; `doesNotSetHsiGrade`). **P2.3 landed:** offline eval harness (`hsi-model-eval-harness.*`; fail-closed clinical/PHI; packs remain authority). **P2.4 landed:** ClinVar/TCGA pointer metadata (`hsi-external-genome-pointers.json`; citation/ref; `reviewRequired`; no bulk dump / PHI). **Recommended next science slice:** P2.5 P3 adapter RFC + license sign-off per [`HSI_SYSTEMS_VISION_MAP.md`](./HSI_SYSTEMS_VISION_MAP.md) / [`BUILD_STATUS_AND_NEXT.md`](./BUILD_STATUS_AND_NEXT.md).
+**P1.5 landed:** typed `ModelProposalArtifact` (`src/modelProposal.ts`) wires into Gate C checklist `modelProposals` (pending only; `autoApprove=false`; unit tests refuse forbidden `hsiGrade` / `mayFlipEvidenceGrade`). **P1.3 landed:** gut–immune SCFA ↔ mucosal Treg/Th17 pack. **P2.1 landed:** neuroimmune vagus / cholinergic anti-inflammatory reflex pack (human VNS–RA hypothesized only). **P2.2 landed:** embedding sidecars (`hsi-embedding-sidecars.json`; hash/ref; `doesNotSetHsiGrade`). **P2.3 landed:** offline eval harness (`hsi-model-eval-harness.*`; fail-closed clinical/PHI; packs remain authority). **P2.4 landed:** ClinVar/TCGA pointer metadata (`hsi-external-genome-pointers.json`; citation/ref; `reviewRequired`; no bulk dump / PHI). **P2.5 landed:** P3 adapter RFC + license matrix ([`P3_ADAPTER_RFC.md`](./P3_ADAPTER_RFC.md); `hsi-p3-adapter-license-matrix.*`). **Recommended next science slice:** P3.0 first unblocked thin adapter spike (proposal-only) per [`BUILD_STATUS_AND_NEXT.md`](./BUILD_STATUS_AND_NEXT.md).
 
 ---
 
 ## Cross-links
 
 - Systems map: [`HSI_SYSTEMS_VISION_MAP.md`](./HSI_SYSTEMS_VISION_MAP.md)  
+- P3 adapter RFC: [`P3_ADAPTER_RFC.md`](./P3_ADAPTER_RFC.md)  
 - Bio-stack / P3 inventory: [`VISION_REPO_ALIGNMENT.md`](./VISION_REPO_ALIGNMENT.md)  
 - Blueprint agents: [`ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md`](./ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md)  
 - Whole-immune-cell PRD: [`ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md`](./ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md)  

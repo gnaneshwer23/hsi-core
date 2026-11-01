@@ -62,7 +62,8 @@ export const HSI_VERTICAL_DECISION: HsiVerticalDecision = {
     "DONE (P2.2): embedding sidecar slots (hash/ref; hsi-embedding-sidecars.json; doesNotSetHsiGrade).",
     "DONE (P2.3): offline eval harness stubs against public packs (hsi-model-eval-harness.*; no PHI / no training).",
     "DONE (P2.4): ClinVar/TCGA pointer metadata (hsi-external-genome-pointers.json; citation/ref; reviewRequired; no bulk dump / PHI).",
-    "NEXT science: P2.5 P3 adapter RFC + license sign-off — or P1.4 promote gut/neuro systems predicates onto HSI_EDGE_TYPES.",
+    "DONE (P2.5): P3 adapter RFC + license matrix (docs/P3_ADAPTER_RFC.md; hsi-p3-adapter-license-matrix.*; honest signOffStatus; no weight vendoring).",
+    "NEXT science: P3.0 first unblocked thin adapter spike (proposal-only; prefer RDKit/Boltz without vendoring weights) — or P1.4 promote gut/neuro systems predicates onto HSI_EDGE_TYPES.",
     "Partner outreach / partnerSigned / rights table (unchanged P0.2) — parallel critical path.",
   ],
 };

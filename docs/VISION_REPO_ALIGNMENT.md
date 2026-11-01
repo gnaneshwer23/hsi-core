@@ -21,7 +21,7 @@ HCP eval + governance. Do not pull target-state R2–R5 breadth into Stage 1.
 | **P0** | **DONE** | Schema, seeds, grades, ISI/Aksh exports, validation, gap report |
 | **P1** | **ACTIVE** | **ISI research pilot** (one disease + one question) + durable `aksh:` maps, HITL stubs, Gate C checklists — pilot before more platform |
 | **P2** | Planned | Richer exports / curator UX inside hsi-core *after* pilot learning; product apps bind published artifacts |
-| **P3** | Deferred | Optional bio-stack plugins (structure, docking, generative chem) behind explicit licenses — registry stubs in `src/systemsAxes.ts` / `hsi-systems-vision.json`; map: [`HSI_SYSTEMS_VISION_MAP.md`](./HSI_SYSTEMS_VISION_MAP.md); position: [`HSI_AI_NEURAL_FUTURE_HEALTHCARE.md`](./HSI_AI_NEURAL_FUTURE_HEALTHCARE.md) |
+| **P3** | RFC + matrix ready (P2.5); runnable adapters deferred | Optional bio-stack plugins behind license matrix — [`P3_ADAPTER_RFC.md`](./P3_ADAPTER_RFC.md); `hsi-p3-adapter-license-matrix.*`; stubs in `src/systemsAxes.ts`; map: [`HSI_SYSTEMS_VISION_MAP.md`](./HSI_SYSTEMS_VISION_MAP.md); position: [`HSI_AI_NEURAL_FUTURE_HEALTHCARE.md`](./HSI_AI_NEURAL_FUTURE_HEALTHCARE.md) |
 **Hard edit rule:** only [`gnaneshwer23/hsi-core`](https://github.com/gnaneshwer23/hsi-core)
 (`~/Projects/hsi-core`) is edited for HSI. Product and bio repos **consume** or stay
 reference-only — they are never HSI edit targets.
@@ -150,7 +150,7 @@ hsi-core owns the graded graph and publishes read-only exports. Aksh and ISI (im
 3. Harden Aksh HITL stub + maps without opening CDS on seeds (Aksh/Akeno stay out of patient-level decisions this phase).
 4. Grow ISI export / REL suggestion maps for the pilot question; never auto-approve into a product KG.
 5. **DONE (P2.4):** ClinVar/TCGA **pointer** fields as optional claim metadata (`hsi-external-genome-pointers.json`) — still Gate C / `reviewRequired`.
-6. Do **not** vendor AF3/Boltz/etc. until a written P3 plugin RFC + license sign-off lands in this repo (**next:** P2.5).
+6. **DONE (P2.5):** written P3 plugin RFC + license matrix ([`P3_ADAPTER_RFC.md`](./P3_ADAPTER_RFC.md); `hsi-p3-adapter-license-matrix.*`) — honest `signOffStatus`; **still do not** vendor AF3/Boltz/etc. weights. **Next:** P3.0 thin proposal-only spike on an unblocked adapter.
 7. Leave immunecity, Aksh apps, Akeno repos (`akenohealth`, `akeno-health-ai`), and hsi-sources untouched from this workspace. **Ignore** DeliverX / swift-deliveries (not a next step, not a wire-up).
 
 See also: [ISI_PILOT_BRIEF.md](./ISI_PILOT_BRIEF.md), [ISI_PILOT_PARTNER_SHORTLIST.md](./ISI_PILOT_PARTNER_SHORTLIST.md), [ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md](./ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md), [AKSH_HITL_CONSUMPTION.md](./AKSH_HITL_CONSUMPTION.md), [IMMUNECITY_GATE_C_COMMIT_MANUAL.md](./IMMUNECITY_GATE_C_COMMIT_MANUAL.md), [NEON_PROJECT_MAP.md](./NEON_PROJECT_MAP.md) (Neon IDs / host→role, no secrets), README “Pilot” + “Active codebase”.

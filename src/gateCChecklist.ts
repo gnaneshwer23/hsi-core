@@ -222,6 +222,7 @@ export function buildGateCChecklist(opts?: {
       "P2.2 embedding sidecars (hsi-embedding-sidecars.json): hash/ref metadata only; doesNotSetHsiGrade=true; autoApprove=false — never treat similarity as Gate C pass or grade flip.",
       "P2.3 offline eval harness (hsi-model-eval-harness.*): scores proposals/sidecars against frozen packs only; mayUseLivePhi=false; never flips grades; never auto-approves into KG.",
       "P2.4 ClinVar/TCGA pointers (hsi-external-genome-pointers.json): citation/ref only (accession + URL + disease/gene context + optional edgeIds); reviewRequired=true; doesNotSetHsiGrade; no bulk genome dump / PHI — Gate C still required.",
+      "P2.5 P3 adapters (docs/P3_ADAPTER_RFC.md + hsi-p3-adapter-license-matrix.json): emit ModelProposalArtifacts only; license gate before run (blockedUntilSignOff); mayFlipEvidenceGrade=false; vendorsModelWeights=false; never claim commercial signed without evidence.",
     ],
   };
 }

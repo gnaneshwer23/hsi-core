@@ -72,6 +72,11 @@ import {
   serializeExternalGenomePointers,
 } from "./externalGenomePointers";
 import {
+  buildP3AdapterLicenseMatrixBundle,
+  serializeP3AdapterLicenseMatrix,
+  serializeP3AdapterLicenseMatrixMarkdown,
+} from "./p3AdapterLicenseMatrix";
+import {
   getVerticalDecision,
   verticalDecisionExportPointer,
 } from "./verticalDecision";
@@ -294,6 +299,9 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
   const externalGenomePointers = buildExternalGenomePointersBundle({
     generatedAt,
   });
+  const p3AdapterLicenseMatrix = buildP3AdapterLicenseMatrixBundle({
+    generatedAt,
+  });
 
   const fileMap: Record<string, string> = {
     "hsi-isi-export.json": serializeIsiExport(isiBundle),
@@ -331,6 +339,12 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     ),
     "hsi-external-genome-pointers.json": serializeExternalGenomePointers(
       externalGenomePointers,
+    ),
+    "hsi-p3-adapter-license-matrix.json": serializeP3AdapterLicenseMatrix(
+      p3AdapterLicenseMatrix,
+    ),
+    "hsi-p3-adapter-license-matrix.md": serializeP3AdapterLicenseMatrixMarkdown(
+      p3AdapterLicenseMatrix,
     ),
   };
 
@@ -384,6 +398,8 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       modelEvalHarnessJson: "hsi-model-eval-harness.json",
       modelEvalHarnessMd: "hsi-model-eval-harness.md",
       externalGenomePointersJson: "hsi-external-genome-pointers.json",
+      p3AdapterLicenseMatrixJson: "hsi-p3-adapter-license-matrix.json",
+      p3AdapterLicenseMatrixMd: "hsi-p3-adapter-license-matrix.md",
     },
     counts: {
       isiEdges: isiBundle.edges.length,
@@ -439,6 +455,11 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       modelEvalFailClosedHits: modelEvalHarness.summary.failClosedHits,
       modelEvalStubBehaviorGreen: modelEvalHarness.summary.stubBehaviorGreen,
       modelEvalFixtureEdges: modelEvalHarness.fixtureSummary.edgeCount,
+      p3AdapterCount: p3AdapterLicenseMatrix.summary.adapterCount,
+      p3AdaptersBlockedUntilSignOff:
+        p3AdapterLicenseMatrix.summary.blockedUntilSignOffCount,
+      p3AdaptersResearchOkDocumented:
+        p3AdapterLicenseMatrix.summary.researchOkDocumentedCount,
     },
     discoveryLoop: isiBundle.discoveryCentre.discoveryLoop.framing,
     partnerLock: partnerLockExportPointer(partnerLock),
@@ -499,6 +520,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       "P2.2 embedding sidecars: hsi-embedding-sidecars.json — edgeId→modelId/dim/vectorRef|contentHash (+ optional tiny demo); doesNotSetHsiGrade=true; autoApprove=false; no PHI / no model weights; packs remain evidence authority.",
       "P2.3 offline eval harness: hsi-model-eval-harness.* — scores proposals/sidecars against frozen RA/SSc/gut/neuro fixtures; mayUseLivePhi=false; mayTrainModels=false; fail-closed clinical/PHI; never flips grades.",
       "P2.4 ClinVar/TCGA pointers: hsi-external-genome-pointers.json — accession + URL template + disease/gene context + optional edgeIds; reviewRequired=true; citation/ref only; no bulk genome dump / PHI; doesNotSetHsiGrade.",
+      "P2.5 P3 adapter RFC + license matrix: docs/P3_ADAPTER_RFC.md + hsi-p3-adapter-license-matrix.* — ModelProposalArtifacts only; license gate before run; vendorsModelWeights=false; honest signOffStatus (not_signed|needs_review|non_commercial_only|research_ok_documented); no commercial signed without evidence.",
       "Regenerate with: bun run outputs (also refreshes site/public/discovery).",
     ],
   };
@@ -557,6 +579,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     "hsi-embedding-sidecars.json",
     "hsi-model-eval-harness.json",
     "hsi-external-genome-pointers.json",
+    "hsi-p3-adapter-license-matrix.json",
   ] as const;
   for (const name of discoveryFiles) {
     const dest = join(discoveryPublicDir, name);
@@ -593,6 +616,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       "P2.2 embedding sidecars: hsi-embedding-sidecars.json — hash/ref only; doesNotSetHsiGrade; never auto-approve into KG.",
       "P2.3 offline eval harness: hsi-model-eval-harness.json — frozen-pack checks only; no PHI / no training / no grade flips.",
       "P2.4 ClinVar/TCGA pointers: hsi-external-genome-pointers.json — citation/ref only; reviewRequired; Gate C still required; no bulk dump / PHI.",
+      "P2.5 P3 adapter license matrix: hsi-p3-adapter-license-matrix.json — RFC + honest sign-off; no weight vendoring; proposals only.",
       "Phase 7 done = R2 validation (hsi-r2-validation.json) on VALIDATE tab.",
       "Phase 8 done = HSI translation substrate (hsi-translation-handoff.json) on TRANSLATE tab + in-repo Akeno HITL consumer at /akeno (not CDS).",
     ],
