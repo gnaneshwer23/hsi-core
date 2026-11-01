@@ -1,7 +1,7 @@
 # HSI build status and next
 
 **Audit date:** 1 November 2026  
-**HEAD at write:** pending commit — P2.4 ClinVar / TCGA pointer metadata  
+**HEAD at write:** `13c8a5b` (main) — P2.4 ClinVar / TCGA pointer metadata  
 **Edit target:** `hsi-core` only · Neon **`red-wave` only** · no immunecity / Akeno product / DeliverX edits  
 **Prior audit:** [`PRD_IMPLEMENTATION_AUDIT.md`](./PRD_IMPLEMENTATION_AUDIT.md) (phases 0–8 vs Pilot + Target PRDs)
 
