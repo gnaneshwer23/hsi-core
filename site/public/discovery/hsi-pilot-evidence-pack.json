@@ -3,7 +3,7 @@
   "notCds": true,
   "noPatientLevelActions": true,
   "autoApproveIntoKg": false,
-  "generatedAt": "2026-11-01T18:42:57.148Z",
+  "generatedAt": "2026-11-01T18:56:20.154Z",
   "disease": "Rheumatoid arthritis",
   "researchQuestion": "Why do some patients with rheumatoid arthritis respond differently to anti-TNF therapy, and which biomarkers or immune mechanisms are best supported for defining those subgroups?",
   "lockedPilot": false,
@@ -429,9 +429,9 @@
     "scopeLocked": true,
     "partnerSigned": false,
     "provisionalLock": false,
-    "evidenceSnapshotRef": "dist/outputs/hsi-core-0.1.0-20261101T184257148Z/hsi-isi-export.json",
-    "createdAt": "2026-11-01T18:42:57.148Z",
-    "updatedAt": "2026-11-01T18:42:57.148Z"
+    "evidenceSnapshotRef": "dist/outputs/hsi-core-0.1.0-20261101T185620154Z/hsi-isi-export.json",
+    "createdAt": "2026-11-01T18:56:20.154Z",
+    "updatedAt": "2026-11-01T18:56:20.154Z"
   },
   "evidenceMap": [
     {

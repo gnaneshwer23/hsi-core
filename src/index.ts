@@ -192,6 +192,31 @@ export {
 } from "./embeddingSidecar";
 
 export {
+  MODEL_EVAL_CHECK_DEFINITIONS,
+  MODEL_EVAL_CHECK_IDS,
+  MODEL_EVAL_HARNESS_EXPORT_SCHEMA,
+  MODEL_EVAL_HARNESS_RUNTIME_SCHEMA,
+  buildDemoModelEvalCases,
+  buildFrozenPublicPackFixtures,
+  buildModelEvalHarnessBundle,
+  detectClinicalPhiClaims,
+  extractCitedEdgeIds,
+  fixtureIndex,
+  runOfflineModelEvalHarness,
+  scoreModelEvalSubject,
+  serializeModelEvalHarness,
+  serializeModelEvalHarnessMarkdown,
+  type FrozenPackEdgeFixture,
+  type ModelEvalCaseResult,
+  type ModelEvalCheckDefinition,
+  type ModelEvalCheckId,
+  type ModelEvalCheckResult,
+  type ModelEvalHarnessBundle,
+  type ModelEvalSubjectKind,
+  type ScoreModelEvalSubjectInput,
+} from "./modelEvalHarness";
+
+export {
   SSC_CELL_CARD_SCHEMA,
   SSC_NEIGHBOURHOOD_CARDS,
   listSscNeighbourhoodCards,

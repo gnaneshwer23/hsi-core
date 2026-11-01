@@ -209,7 +209,7 @@ See `PATIENT_DATA_PLANE_RULES` and [`AKENO_IN_HSI.md`](./AKENO_IN_HSI.md).
 - **P2.2 landed:** typed edge sidecars (`EDGE_EMBEDDING_SLOT_SCHEMA` + `src/embeddingSidecar.ts` → `hsi-embedding-sidecars.json`) — `modelId`, `dim`, `vectorRef` and/or `contentHash`, `createdAt`, `doesNotSetHsiGrade=true`. Prefer hash/ref; optional tiny demo ≤16 dims only.  
 - **Not:** embedding tables as a parallel truth store that bypasses grades; no multi-GB weights; no PHI.  
 - **Versioning:** model id + weights hash + dim + createdAt; invalidate on model bump.  
-- **Eval:** offline retrieval / ranking metrics against frozen public packs (TDC-style later); stub `MODEL_EVAL_HARNESS_STUB` records intent without shipping training code — **P2.3 next**.
+- **Eval (P2.3 landed):** offline harness (`MODEL_EVAL_HARNESS_STUB` + `src/modelEvalHarness.ts` → `hsi-model-eval-harness.*`) scores proposals/sidecars against frozen RA/SSc/gut/neuro fixtures (cited edges exist; grade not flipped; required fields; fail-closed clinical/PHI; sidecar locators; pack authority). No training / PHI. TDC-style retrieval metrics still deferred to P3.
 
 ### Human gates
 
@@ -226,7 +226,7 @@ Curator Gate C · ISI product approve · Aksh clinician action · partner govern
 | **This position doc + systemsAxes AI capabilities / hard bans** | Aligns vision export with policy | Purple prose roadmap |
 | **Model-proposal artifact schema stub** | Stable shape for ISI/adapters to emit drafts into Gate C queues | Agent runtime |
 | **Edge embedding sidecars (P2.2)** | Hash/ref slots on sample edges; never grades | Vector DB / training / weight vendoring |
-| **Eval harness stub** | Named offline eval intent + invariants | Full MLOps |
+| **Eval harness stub (P2.3)** | Offline checks vs frozen packs + export | Full MLOps / training |
 | **Cross-links** | SYSTEMS_VISION_MAP / OUTPUTS / README | Site redesign |
 
 ### Deferred (explicit)
@@ -238,7 +238,7 @@ Curator Gate C · ISI product approve · Aksh clinician action · partner govern
 - Any path that auto-flips grades.  
 - SSc deep seed pivot that wipes RA lock.
 
-**P1.5 landed:** typed `ModelProposalArtifact` (`src/modelProposal.ts`) wires into Gate C checklist `modelProposals` (pending only; `autoApprove=false`; unit tests refuse forbidden `hsiGrade` / `mayFlipEvidenceGrade`). **P1.3 landed:** gut–immune SCFA ↔ mucosal Treg/Th17 pack. **P2.1 landed:** neuroimmune vagus / cholinergic anti-inflammatory reflex pack (human VNS–RA hypothesized only). **P2.2 landed:** embedding sidecars (`hsi-embedding-sidecars.json`; hash/ref; `doesNotSetHsiGrade`). **Recommended next science slice:** P2.3 offline eval harness stubs per [`HSI_SYSTEMS_VISION_MAP.md`](./HSI_SYSTEMS_VISION_MAP.md) / [`BUILD_STATUS_AND_NEXT.md`](./BUILD_STATUS_AND_NEXT.md).
+**P1.5 landed:** typed `ModelProposalArtifact` (`src/modelProposal.ts`) wires into Gate C checklist `modelProposals` (pending only; `autoApprove=false`; unit tests refuse forbidden `hsiGrade` / `mayFlipEvidenceGrade`). **P1.3 landed:** gut–immune SCFA ↔ mucosal Treg/Th17 pack. **P2.1 landed:** neuroimmune vagus / cholinergic anti-inflammatory reflex pack (human VNS–RA hypothesized only). **P2.2 landed:** embedding sidecars (`hsi-embedding-sidecars.json`; hash/ref; `doesNotSetHsiGrade`). **P2.3 landed:** offline eval harness (`hsi-model-eval-harness.*`; fail-closed clinical/PHI; packs remain authority). **Recommended next science slice:** P2.4 ClinVar/TCGA pointer metadata per [`HSI_SYSTEMS_VISION_MAP.md`](./HSI_SYSTEMS_VISION_MAP.md) / [`BUILD_STATUS_AND_NEXT.md`](./BUILD_STATUS_AND_NEXT.md).
 
 ---
 

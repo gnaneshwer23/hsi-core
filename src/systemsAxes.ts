@@ -692,15 +692,37 @@ export const MODEL_PROPOSAL_ARTIFACT_SCHEMA = {
 
 export type ModelProposalArtifactSchema = typeof MODEL_PROPOSAL_ARTIFACT_SCHEMA;
 
-/** Offline eval intent — no training loop in Stage 1. */
+/**
+ * Offline eval harness (P2.3 wired).
+ * Runner: src/modelEvalHarness.ts → hsi-model-eval-harness.{json,md}.
+ * No training loop; no PHI; packs remain authority.
+ */
 export const MODEL_EVAL_HARNESS_STUB = {
   schemaVersion: "hsi-model-eval-harness-1",
-  status: "stub" as const,
+  /** Wired: offline stub runner + export against frozen public packs (P2.3). */
+  status: "wired_offline_stub" as const,
   intent:
-    "Offline retrieval/ranking metrics against frozen public packs; TDC-style later",
+    "Offline proposal/sidecar safety + citation checks against frozen public packs; TDC-style retrieval metrics later",
   mayUseLivePhi: false as const,
+  mayTrainModels: false as const,
   mayFlipEvidenceGrade: false as const,
+  autoApprove: false as const,
+  autoApproveIntoKg: false as const,
+  containsPhi: false as const,
+  packsRemainAuthority: true as const,
+  checkIds: [
+    "cited_edge_ids_exist",
+    "grade_not_flipped",
+    "required_fields_present",
+    "fail_closed_clinical_phi",
+    "sidecar_locators_present",
+    "pack_authority_unchanged",
+  ] as const,
+  exportArtifact: "hsi-model-eval-harness.json" as const,
+  runtimeModule: "src/modelEvalHarness.ts" as const,
   visionDocRef: "docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md",
+  notes:
+    "Scores model proposals / embedding sidecars offline; never trains; never PHI; never flips grades; RA/SSc/gut/neuro packs remain authority",
 };
 
 export type ModelEvalHarnessStub = typeof MODEL_EVAL_HARNESS_STUB;
@@ -937,6 +959,7 @@ export function buildSystemsVisionBundle(opts?: {
       "NN/agent proposals are model-proposal artifacts only — never autoApproveIntoKg.",
       "Embeddings are sidecar retrieval slots — not a substitute for typed predicates.",
       "P2.2: edge embedding sidecars wired (hash/ref; hsi-embedding-sidecars.json); doesNotSetHsiGrade=true; no model weights / PHI.",
+      "P2.3: offline eval harness wired (hsi-model-eval-harness.json); mayUseLivePhi=false; mayTrainModels=false; fail-closed clinical/PHI; packs remain authority.",
       "notCds / autoApproveIntoKg=false on this export.",
       "Neon: red-wave only from this workspace.",
     ],

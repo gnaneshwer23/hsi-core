@@ -100,6 +100,11 @@ describe("systems vision axes stubs", () => {
     expect(MODEL_PROPOSAL_ARTIFACT_SCHEMA.autoApproveIntoKg).toBe(false);
     expect(MODEL_PROPOSAL_ARTIFACT_SCHEMA.forbiddenFields).toContain("hsiGrade");
     expect(MODEL_EVAL_HARNESS_STUB.mayUseLivePhi).toBe(false);
+    expect(MODEL_EVAL_HARNESS_STUB.status).toBe("wired_offline_stub");
+    expect(MODEL_EVAL_HARNESS_STUB.mayTrainModels).toBe(false);
+    expect(MODEL_EVAL_HARNESS_STUB.exportArtifact).toBe(
+      "hsi-model-eval-harness.json",
+    );
 
     const bundle = buildSystemsVisionBundle();
     expect(bundle.aiFutureTech.positionDoc).toContain("HSI_AI_NEURAL_FUTURE_HEALTHCARE");
