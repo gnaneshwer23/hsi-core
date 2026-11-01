@@ -1,7 +1,8 @@
 # HSI build status and next
 
 **Audit date:** 1 November 2026  
-**HEAD at write:** (P2.5 landing) — P3 adapter RFC + license matrix  
+**HEAD at write:** `6aee2ea` (main) — P2.5 P3 adapter RFC + license matrix  
+
 
 **Edit target:** `hsi-core` only · Neon **`red-wave` only** · no immunecity / Akeno product / DeliverX edits  
 **Prior audit:** [`PRD_IMPLEMENTATION_AUDIT.md`](./PRD_IMPLEMENTATION_AUDIT.md) (phases 0–8 vs Pilot + Target PRDs)
@@ -148,8 +149,8 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | P2.1 neuroimmune vagus / cholinergic | `7e1baf8` |
 | P2.2 embedding sidecars (hash/ref) | `3f8c4aa` |
 | P2.3 offline eval harness stubs | `35c05fe` |
-| P2.4 ClinVar / TCGA pointers | (see main history) |
-| P2.5 P3 adapter RFC + license matrix | (this commit) |
+| P2.4 ClinVar / TCGA pointers | `13c8a5b` |
+| P2.5 P3 adapter RFC + license matrix | `6aee2ea` |
 
 Reproduce: `bun test && bun run outputs && bun run site:dev` → `/discovery`, `/akeno`, `/aksh-agents`.
 
