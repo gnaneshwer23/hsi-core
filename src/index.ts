@@ -297,6 +297,25 @@ export {
 } from "./adapters/openmmAdapter";
 
 export {
+  REINVENT4_ADAPTER_EXPORT_SCHEMA,
+  REINVENT4_ADAPTER_ID,
+  REINVENT4_ADAPTER_RUNTIME_SCHEMA,
+  REINVENT4_PUBLIC_SEED_FIXTURES,
+  REINVENT4_STUB_METRICS,
+  buildReinvent4AdapterProposals,
+  designToModelProposal,
+  resolveReinvent4Design,
+  runReinvent4Adapter,
+  serializeReinvent4AdapterBundle,
+  serializeReinvent4AdapterMarkdown,
+  tryComputeReinvent4Metrics,
+  type Reinvent4AdapterBundle,
+  type Reinvent4DesignSnapshot,
+  type Reinvent4Runtime,
+  type Reinvent4SeedFixture,
+} from "./adapters/reinvent4Adapter";
+
+export {
   SSC_CELL_CARD_SCHEMA,
   SSC_NEIGHBOURHOOD_CARDS,
   listSscNeighbourhoodCards,

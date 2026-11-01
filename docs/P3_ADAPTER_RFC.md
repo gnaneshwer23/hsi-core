@@ -1,9 +1,9 @@
 # P3 adapter RFC — ModelProposalArtifacts only
 
-**Status:** Written RFC + license matrix (P2.5) + **P3.0 RDKit** + **P3.1 OpenMM** thin spikes (proposal-only). **No model weights in-repo.**  
+**Status:** Written RFC + license matrix (P2.5) + **P3.0 RDKit** + **P3.1 OpenMM** + **P3.2 REINVENT4** thin spikes (proposal-only). **No model weights in-repo.**  
 **Schema:** `hsi-p3-adapter-license-matrix-1` → regenerable `hsi-p3-adapter-license-matrix.json`  
-**Code:** `src/p3AdapterLicenseMatrix.ts` · `src/p3AdapterGate.ts` · `src/adapters/rdkitAdapter.ts` · `src/adapters/openmmAdapter.ts` · stubs in `src/systemsAxes.ts` (`FUTURE_TECH_ADAPTER_STUBS`)  
-**Export:** `hsi-rdkit-adapter-proposals.*` (`runtime: stub|rdkit`) · `hsi-openmm-adapter-proposals.*` (`runtime: stub|openmm`)  
+**Code:** `src/p3AdapterLicenseMatrix.ts` · `src/p3AdapterGate.ts` · `src/adapters/rdkitAdapter.ts` · `src/adapters/openmmAdapter.ts` · `src/adapters/reinvent4Adapter.ts` · stubs in `src/systemsAxes.ts` (`FUTURE_TECH_ADAPTER_STUBS`)  
+**Export:** `hsi-rdkit-adapter-proposals.*` (`runtime: stub|rdkit`) · `hsi-openmm-adapter-proposals.*` (`runtime: stub|openmm`) · `hsi-reinvent4-adapter-proposals.*` (`runtime: stub|reinvent`)  
 **Position:** [`HSI_AI_NEURAL_FUTURE_HEALTHCARE.md`](./HSI_AI_NEURAL_FUTURE_HEALTHCARE.md) · portfolio: [`VISION_REPO_ALIGNMENT.md`](./VISION_REPO_ALIGNMENT.md)
 
 ---
@@ -21,7 +21,9 @@ This RFC is the **gate document**. Thin adapter spikes may land only when:
 
 **P3.0 landed:** `adapter-rdkit` thin spike (`src/adapters/rdkitAdapter.ts`) — BSD / `research_ok_documented` / `blockedUntilSignOff=false`; optional live RDKit via `python3` subprocess else deterministic stub; export `hsi-rdkit-adapter-proposals.*`.
 
-**P3.1 landed:** `adapter-openmm` thin spike (`src/adapters/openmmAdapter.ts`) — LGPL-family / `research_ok_documented` / `blockedUntilSignOff=false`; optional live OpenMM via `python3` subprocess else deterministic stub; export `hsi-openmm-adapter-proposals.*`. Chosen over REINVENT4: classical MD (no generative clinic path), complements RDKit, no multi-GB weights.
+**P3.1 landed:** `adapter-openmm` thin spike (`src/adapters/openmmAdapter.ts`) — LGPL-family / `research_ok_documented` / `blockedUntilSignOff=false`; optional live OpenMM via `python3` subprocess else deterministic stub; export `hsi-openmm-adapter-proposals.*`. Chosen over REINVENT4 at P3.1: classical MD (no generative clinic path), complements RDKit, no multi-GB weights.
+
+**P3.2 landed:** `adapter-reinvent4` thin spike (`src/adapters/reinvent4Adapter.ts`) — Apache-2.0 / `research_ok_documented` / `blockedUntilSignOff=false`; optional reinvent import via `python3` (import-only; no weight download) else deterministic stub; export `hsi-reinvent4-adapter-proposals.*`. Never clinic recommendation path; Boltz weights path deferred.
 
 ---
 
@@ -130,17 +132,19 @@ Flipping `blockedUntilSignOff` from `true` → `false` requires a PR that cites 
 | Every adapter `mayFlipEvidenceGrade=false`, `vendorsModelWeights=false` | Yes (invariants) |
 | No commercial “signed” claim without evidence | Yes |
 | MANIFEST / OUTPUTS / BUILD_STATUS updated; next phase named | Yes |
-| Runnable adapter code / weight download | **P3.0–P3.1:** RDKit + OpenMM thin spikes only (no weights). Other adapters still gated |
+| Runnable adapter code / weight download | **P3.0–P3.2:** RDKit + OpenMM + REINVENT4 thin spikes only (no weights). Other adapters still gated |
 
 ---
 
-## 9. P3.0–P3.1 spikes (done) + recommended next
+## 9. P3.0–P3.2 spikes (done) + recommended next
 
 **P3.0 DONE — `adapter-rdkit`:** thin proposal-only CLI (`bun run adapter:rdkit`); license gate via `assertP3AdapterRunnable`; deterministic stub descriptors when RDKit absent; optional live RDKit subprocess; proposals on Gate C + offline eval case `EVAL-PASS-RDKIT-MTX-001`; export `hsi-rdkit-adapter-proposals.*`. Still no grade flips / PHI / CDS / fake `partnerSigned`.
 
 **P3.1 DONE — `adapter-openmm`:** thin proposal-only CLI (`bun run adapter:openmm`); same license gate; stub MD metrics when OpenMM absent; optional live OpenMM toy vacuum minimize; cites `HSI-E-NI-003` / `HSI-E-GUT-003`; Gate C + eval case `EVAL-PASS-OPENMM-ACH-001`; export `hsi-openmm-adapter-proposals.*`. MD ≠ Gate C evidence alone.
 
-**P3.2 — next unblocked thin adapter spike:** prefer **REINVENT4** (proposal-only generative sandbox; still no clinic path / no weight vendoring). Defer **Boltz** until a weight/ref sidecar pattern is ready (avoid multi-GB download path). Partner P0.2 remains the parallel critical path.
+**P3.2 DONE — `adapter-reinvent4`:** thin proposal-only CLI (`bun run adapter:reinvent4`); same license gate; stub generative sandbox metrics when reinvent absent; optional reinvent import-only (no multi-GB weights); cites `HSI-E-RA-012` / `HSI-E-GUT-003`; Gate C + eval case `EVAL-PASS-REINVENT4-MTX-001`; export `hsi-reinvent4-adapter-proposals.*`. Never clinic recommendation path.
+
+**P3.3 — next science (optional):** prefer **FAIR ESM-2** thin embedding stub (proposal/sidecar only; no weight vendoring). **Boltz remains deferred** (multi-GB weights path). Prefer **backlog pivot to partner P0.2 / ISI consumption** when outreach is ready.
 
 ---
 

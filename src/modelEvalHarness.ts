@@ -22,6 +22,7 @@ import {
 } from "./embeddingSidecar";
 import { buildRdkitAdapterProposals } from "./adapters/rdkitAdapter";
 import { buildOpenmmAdapterProposals } from "./adapters/openmmAdapter";
+import { buildReinvent4AdapterProposals } from "./adapters/reinvent4Adapter";
 import type { HsiEdge } from "./schema";
 import type { HsiGrade, HsiTeachingStatus } from "./grades";
 
@@ -623,6 +624,13 @@ export function buildDemoModelEvalCases(opts?: {
   const goodOpenmm = openmmProposals.find(
     (p) => p.proposalId === "HSI-MP-OPENMM-ACH-001",
   )!;
+  const reinvent4Proposals = buildReinvent4AdapterProposals({
+    createdAt,
+    forceStub: true,
+  });
+  const goodReinvent4 = reinvent4Proposals.find(
+    (p) => p.proposalId === "HSI-MP-REINVENT4-MTX-001",
+  )!;
 
   return [
     {
@@ -655,6 +663,15 @@ export function buildDemoModelEvalCases(opts?: {
       subject: proposalAsRecord(goodOpenmm),
       notes:
         "adapter-openmm proposal cites HSI-E-NI-003; no grade/PHI/clinical/dosing claims; MD ≠ Gate C evidence alone",
+    },
+    {
+      caseId: "EVAL-PASS-REINVENT4-MTX-001",
+      kind: "model_proposal",
+      label: "P3.2 REINVENT4 MTX generative sandbox proposal (stub runtime)",
+      expectPass: true,
+      subject: proposalAsRecord(goodReinvent4),
+      notes:
+        "adapter-reinvent4 proposal cites HSI-E-RA-012; no grade/PHI/clinical/dosing claims; never clinic recommendation path",
     },
     {
       caseId: "EVAL-PASS-SIDECAR-RA-001",
@@ -810,7 +827,7 @@ export function buildModelEvalHarnessBundle(opts?: {
       "Checks: cited edge ids exist · grade not flipped · required fields · fail-closed clinical/PHI · sidecar locators · pack authority.",
       "RA / SSc / gut / neuro evidence packs stay the graded truth store; harness never writes KG or Gate C approve.",
       "Intentional fail cases document fail-closed behavior; stubBehaviorGreen means demos matched expectPass.",
-      "TDC-style retrieval metrics deferred until broader P3 adapters — P3.0 RDKit + P3.1 OpenMM proposals are scored as ModelProposalArtifacts here.",
+      "TDC-style retrieval metrics deferred until broader P3 adapters — P3.0 RDKit + P3.1 OpenMM + P3.2 REINVENT4 proposals are scored as ModelProposalArtifacts here.",
       "See docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md · MODEL_EVAL_HARNESS_STUB · src/modelEvalHarness.ts.",
     ],
   };

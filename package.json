@@ -27,6 +27,7 @@
     "publish": "bun run outputs",
     "adapter:rdkit": "bun run src/cli/rdkit-adapter.ts",
     "adapter:openmm": "bun run src/cli/openmm-adapter.ts",
+    "adapter:reinvent4": "bun run src/cli/reinvent4-adapter.ts",
     "db:migrate": "bun run src/cli/migrate.ts",
     "db:gate-c-local": "bun run src/cli/gate-c-local.ts",
     "check": "bun test && bun run validate && bun run outputs && bun run build",

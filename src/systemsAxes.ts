@@ -804,7 +804,7 @@ export const P3_ADAPTER_LICENSE_MATRIX_SCHEMA = {
   rfcDoc: "docs/P3_ADAPTER_RFC.md" as const,
   visionDocRef: "docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md",
   notes:
-    "License gate before any adapter run; ModelProposalArtifacts only; never claim commercial signed without evidence; never vendor multi-GB weights; P3.0 RDKit + P3.1 OpenMM spike_wired (hsi-rdkit-adapter-proposals.*; hsi-openmm-adapter-proposals.*)",
+    "License gate before any adapter run; ModelProposalArtifacts only; never claim commercial signed without evidence; never vendor multi-GB weights; P3.0 RDKit + P3.1 OpenMM + P3.2 REINVENT4 spike_wired (hsi-rdkit-adapter-proposals.*; hsi-openmm-adapter-proposals.*; hsi-reinvent4-adapter-proposals.*)",
 };
 
 export type P3AdapterLicenseMatrixSchema =
@@ -893,10 +893,10 @@ export const FUTURE_TECH_ADAPTER_STUBS: readonly FutureTechAdapterStub[] = [
     id: "adapter-reinvent4",
     label: "REINVENT4",
     role: "Generative molecular design sandbox",
-    status: "rfc_matrix_ready",
+    status: "spike_wired",
     mayFlipEvidenceGrade: false,
     licenseNote:
-      "Apache-2.0 documented (research_ok_documented); never clinic recommendation path",
+      "Apache-2.0 documented (research_ok_documented); P3.2 thin spike → ModelProposalArtifacts only (runtime stub|reinvent); never clinic recommendation path; no multi-GB weights",
     visionDocRef: "docs/P3_ADAPTER_RFC.md",
   },
   {
@@ -1063,6 +1063,7 @@ export function buildSystemsVisionBundle(opts?: {
       "P2.5: P3 adapter RFC + license matrix wired (docs/P3_ADAPTER_RFC.md; hsi-p3-adapter-license-matrix.json); license gate before run; vendorsModelWeights=false; honest signOffStatus only; no commercial signed without evidence.",
       "P3.0: RDKit thin adapter spike wired (adapter-rdkit; hsi-rdkit-adapter-proposals.*; runtime stub|rdkit; ModelProposalArtifacts → Gate C pending; autoApprove=false; does not set hsiGrade).",
       "P3.1: OpenMM thin adapter spike wired (adapter-openmm; hsi-openmm-adapter-proposals.*; runtime stub|openmm; ModelProposalArtifacts → Gate C pending; autoApprove=false; does not set hsiGrade; MD ≠ Gate C evidence alone).",
+      "P3.2: REINVENT4 thin adapter spike wired (adapter-reinvent4; hsi-reinvent4-adapter-proposals.*; runtime stub|reinvent; ModelProposalArtifacts → Gate C pending; autoApprove=false; does not set hsiGrade; never clinic recommendation path; Boltz weights deferred).",
       "notCds / autoApproveIntoKg=false on this export.",
       "Neon: red-wave only from this workspace.",
     ],

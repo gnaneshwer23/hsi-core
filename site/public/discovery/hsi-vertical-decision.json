@@ -26,7 +26,8 @@
     "DONE (P2.5): P3 adapter RFC + license matrix (docs/P3_ADAPTER_RFC.md; hsi-p3-adapter-license-matrix.*; honest signOffStatus; no weight vendoring).",
     "DONE (P3.0): RDKit thin adapter spike (hsi-rdkit-adapter-proposals.*; runtime stub|rdkit; ModelProposalArtifacts → Gate C pending; license gate refuses blockedUntilSignOff).",
     "DONE (P3.1): OpenMM thin adapter spike (hsi-openmm-adapter-proposals.*; runtime stub|openmm; ModelProposalArtifacts → Gate C pending; cites HSI-E-NI-003 / HSI-E-GUT-003; MD ≠ Gate C evidence alone).",
-    "NEXT science: P3.2 REINVENT4 thin adapter spike (proposal-only; still no weight vendoring; defer Boltz weights path) — or P1.4 promote gut/neuro systems predicates onto HSI_EDGE_TYPES.",
-    "Partner outreach / partnerSigned / rights table (unchanged P0.2) — parallel critical path."
+    "DONE (P3.2): REINVENT4 thin adapter spike (hsi-reinvent4-adapter-proposals.*; runtime stub|reinvent; ModelProposalArtifacts → Gate C pending; never clinic path; no multi-GB weights; Boltz deferred).",
+    "NEXT science: P3.3 FAIR ESM-2 thin embedding stub (proposal/sidecar only; no weight vendoring) — Boltz remains deferred (multi-GB weights). Prefer backlog pivot to partner P0.2 / ISI consumption if partner outreach is ready.",
+    "Partner outreach / partnerSigned / rights table (unchanged P0.2) — parallel critical path (prefer after thin P3 spikes)."
   ]
 }

@@ -87,6 +87,11 @@ import {
   serializeOpenmmAdapterMarkdown,
 } from "./adapters/openmmAdapter";
 import {
+  runReinvent4Adapter,
+  serializeReinvent4AdapterBundle,
+  serializeReinvent4AdapterMarkdown,
+} from "./adapters/reinvent4Adapter";
+import {
   getVerticalDecision,
   verticalDecisionExportPointer,
 } from "./verticalDecision";
@@ -312,12 +317,16 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
   const p3AdapterLicenseMatrix = buildP3AdapterLicenseMatrixBundle({
     generatedAt,
   });
-  // Deterministic stub for publish/CI; live RDKit/OpenMM optional via CLI --live.
+  // Deterministic stub for publish/CI; live RDKit/OpenMM/REINVENT4 optional via CLI --live.
   const rdkitAdapter = runRdkitAdapter({
     generatedAt,
     forceStub: true,
   });
   const openmmAdapter = runOpenmmAdapter({
+    generatedAt,
+    forceStub: true,
+  });
+  const reinvent4Adapter = runReinvent4Adapter({
     generatedAt,
     forceStub: true,
   });
@@ -372,6 +381,12 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     ),
     "hsi-openmm-adapter-proposals.md": serializeOpenmmAdapterMarkdown(
       openmmAdapter,
+    ),
+    "hsi-reinvent4-adapter-proposals.json": serializeReinvent4AdapterBundle(
+      reinvent4Adapter,
+    ),
+    "hsi-reinvent4-adapter-proposals.md": serializeReinvent4AdapterMarkdown(
+      reinvent4Adapter,
     ),
   };
 
@@ -431,6 +446,8 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       rdkitAdapterProposalsMd: "hsi-rdkit-adapter-proposals.md",
       openmmAdapterProposalsJson: "hsi-openmm-adapter-proposals.json",
       openmmAdapterProposalsMd: "hsi-openmm-adapter-proposals.md",
+      reinvent4AdapterProposalsJson: "hsi-reinvent4-adapter-proposals.json",
+      reinvent4AdapterProposalsMd: "hsi-reinvent4-adapter-proposals.md",
     },
     counts: {
       isiEdges: isiBundle.edges.length,
@@ -499,6 +516,11 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       openmmAdapterRuntimeStub: openmmAdapter.runtime === "stub",
       openmmAdapterMayFlipEvidenceGrade: openmmAdapter.mayFlipEvidenceGrade,
       openmmAdapterAutoApprove: openmmAdapter.autoApprove,
+      reinvent4AdapterProposals: reinvent4Adapter.proposals.length,
+      reinvent4AdapterRuntimeStub: reinvent4Adapter.runtime === "stub",
+      reinvent4AdapterMayFlipEvidenceGrade:
+        reinvent4Adapter.mayFlipEvidenceGrade,
+      reinvent4AdapterAutoApprove: reinvent4Adapter.autoApprove,
     },
     discoveryLoop: isiBundle.discoveryCentre.discoveryLoop.framing,
     partnerLock: partnerLockExportPointer(partnerLock),
@@ -562,6 +584,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       "P2.5 P3 adapter RFC + license matrix: docs/P3_ADAPTER_RFC.md + hsi-p3-adapter-license-matrix.* — ModelProposalArtifacts only; license gate before run; vendorsModelWeights=false; honest signOffStatus (not_signed|needs_review|non_commercial_only|research_ok_documented); no commercial signed without evidence.",
       "P3.0 RDKit thin adapter spike: hsi-rdkit-adapter-proposals.* — adapter-rdkit; runtime stub|rdkit; ModelProposalArtifacts only → Gate C pending; autoApprove=false; does not set hsiGrade; no weights / PHI / CDS / fake partnerSigned.",
       "P3.1 OpenMM thin adapter spike: hsi-openmm-adapter-proposals.* — adapter-openmm; runtime stub|openmm; ModelProposalArtifacts only → Gate C pending; autoApprove=false; does not set hsiGrade; MD ≠ Gate C evidence alone; no weights / PHI / CDS / fake partnerSigned.",
+      "P3.2 REINVENT4 thin adapter spike: hsi-reinvent4-adapter-proposals.* — adapter-reinvent4; runtime stub|reinvent; ModelProposalArtifacts only → Gate C pending; autoApprove=false; does not set hsiGrade; never clinic recommendation path; no multi-GB weights / PHI / CDS / fake partnerSigned; Boltz deferred.",
       "Regenerate with: bun run outputs (also refreshes site/public/discovery).",
     ],
   };
@@ -623,6 +646,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     "hsi-p3-adapter-license-matrix.json",
     "hsi-rdkit-adapter-proposals.json",
     "hsi-openmm-adapter-proposals.json",
+    "hsi-reinvent4-adapter-proposals.json",
   ] as const;
   for (const name of discoveryFiles) {
     const dest = join(discoveryPublicDir, name);
@@ -662,6 +686,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       "P2.5 P3 adapter license matrix: hsi-p3-adapter-license-matrix.json — RFC + honest sign-off; no weight vendoring; proposals only.",
       "P3.0 RDKit spike: hsi-rdkit-adapter-proposals.json — proposal-only; runtime stub|rdkit; Gate C pending; no grade flips.",
       "P3.1 OpenMM spike: hsi-openmm-adapter-proposals.json — proposal-only; runtime stub|openmm; Gate C pending; MD ≠ Gate C evidence alone.",
+      "P3.2 REINVENT4 spike: hsi-reinvent4-adapter-proposals.json — proposal-only; runtime stub|reinvent; Gate C pending; never clinic path; Boltz deferred.",
       "Phase 7 done = R2 validation (hsi-r2-validation.json) on VALIDATE tab.",
       "Phase 8 done = HSI translation substrate (hsi-translation-handoff.json) on TRANSLATE tab + in-repo Akeno HITL consumer at /akeno (not CDS).",
     ],

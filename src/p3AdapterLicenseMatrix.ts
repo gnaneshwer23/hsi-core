@@ -339,7 +339,7 @@ export function buildP3AdapterLicenseRows(): P3AdapterLicenseRow[] {
       docsUrl: "https://github.com/MolecularAI/REINVENT4/blob/main/LICENSE",
       secondaryDocsUrls: ["https://github.com/MolecularAI/REINVENT4"],
       notes:
-        "Apache-2.0 typical for REINVENT4. Never clinic recommendation path; never auto-promote generative designs into graded KG.",
+        "Apache-2.0 typical for REINVENT4. P3.2 thin spike → ModelProposalArtifacts only (runtime stub|reinvent; import-only live path). Never clinic recommendation path; never auto-promote generative designs into graded KG; no multi-GB weight vendoring.",
     }),
     row({
       adapterId: "adapter-isi-agents",
