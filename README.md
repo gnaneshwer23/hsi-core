@@ -77,8 +77,21 @@ import {
 - Aksh node-id map (`bun run export:aksh-map`) — HITL pointers; CDS stays closed on seeds
 - Safety release criteria v0
 
+## Active codebase (sole edit target)
+
+**`hsi-core` is the sole active codebase for HSI work.** All substrate, exports, docs, and curator checklists land here.
+
+| Repo | Policy |
+|------|--------|
+| **gnaneshwer23/hsi-core** | Edit here |
+| **gnaneshwer23/immunecity** | Out of scope for edits — consume via published export/API only if needed |
+| **gnaneshwer23/swift-deliveries** | Out of scope for edits — not part of the HSI evidence core |
+
+Do not open PRs or push commits against immunecity or swift-deliveries for HSI. Ship maps and curator markdown from this repo; product apps pull published artifacts.
+
 ## Out of scope
 
 Agent sprawl, AF3/Boltz, clinic write-back, live PHI, inventing PMIDs, treating ISI as CDS,
 collapsing `teachingStatus` / `hsiGrade` / Gate C into one score,
-treating `akshNodeId` as CDS eligibility.
+treating `akshNodeId` as CDS eligibility,
+editing immunecity or swift-deliveries for HSI work.

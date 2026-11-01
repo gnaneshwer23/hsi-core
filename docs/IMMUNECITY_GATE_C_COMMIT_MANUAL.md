@@ -1,57 +1,23 @@
-# Manual commit — Gate C + PMID (immunecity)
+# Gate C curator checklist (hsi-core)
 
-**Do not run full `git status` until locks are cleared.** Prefer pathspecs + `GIT_OPTIONAL_LOCKS=0` + `core.fsmonitor=false`.
+**Active edits stay in `hsi-core` only.** Do not commit to `gnaneshwer23/immunecity` or `gnaneshwer23/swift-deliveries` for HSI work. Product apps (ISI / Aksh) consume published exports from this repo when needed.
 
-## Clear locks first (user action)
+This doc is the durable curator checklist: verified PMID ↔ REL maps for Gate C handoff. Neon approve+supports remains a human product-app action outside this repository.
 
-From `~/Desktop/immune-city`:
-
-```bash
-# Inspect only — remove locks yourself when no other git is running
-ls -la .git/*.lock .git/index*
-# After confirming no live git processes:
-#   rm -f .git/ORIG_HEAD.lock
-```
-
-## Paths to stage (evidence sprint)
+## Upstream artifacts (this repo)
 
 ```bash
-cd ~/Desktop/immune-city
-
-GIT_OPTIONAL_LOCKS=0 git -c core.fsmonitor=false add -- \
-  src/data/hsi-isi-export.json \
-  src/test/hsi-phase0.test.ts \
-  src/components/immune/HsiBridgeCurationPanel.tsx \
-  src/lib/hsi/bridgeCurationQueue.ts \
-  src/lib/hsi/index.ts
+cd ~/Projects/hsi-core
+bun test
+bun run validate
+bun run export:isi
+bun run export:isi-map
+bun run gap-report
 ```
 
-**Do not** `git add .` while the tree is unhealthy.
+Publish / sync via hsi-core commits. Consumers pull `exports/` (or a published package), not ad-hoc edits in other repos.
 
-## Suggested commit
-
-```bash
-GIT_OPTIONAL_LOCKS=0 git -c core.fsmonitor=false commit -- \
-  src/data/hsi-isi-export.json \
-  src/test/hsi-phase0.test.ts \
-  -m "$(cat <<'EOF'
-Sync hsi-core evidence sprint: 9 mapped RELs with verified PMIDs (Gate C pending).
-
-Shows evidence-linked · Gate C pending on /curation; does not Neon-approve or invent PMIDs.
-EOF
-)"
-
-GIT_OPTIONAL_LOCKS=0 git -c core.fsmonitor=false push origin HEAD
-```
-
-Safer verify (path-limited, no full status):
-
-```bash
-bun test src/test/hsi-phase0.test.ts
-ln -sfn ~/Projects/hsi-core node_modules/hsi-core
-```
-
-## What this ships (ISI side) — 9 evidence-linked maps
+## What this checklist covers — 9 evidence-linked maps
 
 | HSI edge | ISI REL | PMID | Paper (verified) |
 |----------|---------|------|------------------|
@@ -66,12 +32,14 @@ ln -sfn ~/Projects/hsi-core node_modules/hsi-core
 | `HSI-E-AU-001` | `REL-B015-predicts_eligibility_for-I013` | **31180194** | Herold 2019 NEJM (teplizumab) |
 
 | Gate C handoff | **pending** (`evidence-linked · Gate C pending`) on all nine |
-| Neon Gate C | **not** passed — human approve+supports only; related_axis papers support ISI REL S-P-O, not T2D invent |
+| Product Neon Gate C | **not** passed in hsi-core — human approve+supports only in the consuming product; related_axis papers support ISI REL S-P-O, not T2D invent |
 
 ## Honest unmapped gaps (unchanged)
 
-`HSI-E-IM-001`, `IM-007`, `IM-008`, `IM-009`, `IO-002`, `IO-003`, `AU-002` — no invented RELs.
+`HSI-E-IM-001`, `IM-007`, `IM-008`, `IM-009`, `IO-002`, `IO-003`, `AU-002` — no invented RELs. Extend maps in hsi-core seeds/exports only.
 
-## Upstream
+## Next steps (hsi-core)
 
-`hsi-core` main — seed + map + exports + tests for this sprint.
+- Add further verified PMID links in seeds + `export:isi-map`
+- Keep this checklist and any new curator notes under `docs/`
+- Do not open immunecity / swift-deliveries PRs for HSI
