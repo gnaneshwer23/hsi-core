@@ -15,7 +15,7 @@
   "testPilotMode": true,
   "testFixtureBanner": "TEST FIXTURE — replace before real pilot",
   "allowHypotheticalPartnerEnv": "ALLOW_HYPOTHETICAL_PARTNER",
-  "generatedAt": "2026-11-01T20:02:48.733Z",
+  "generatedAt": "2026-11-01T20:12:41.390Z",
   "package": "hsi-core",
   "outputsManifestSchema": "hsi-outputs-manifest-1",
   "compatibility": {
@@ -213,7 +213,7 @@
         "partner_readiness"
       ],
       "autoApproveIntoKg": false,
-      "notes": "Review checklist; numeric thresholds still pending partner."
+      "notes": "Review checklist; Stage 1 numeric thresholds may be set_for_test under hypothetical fixture (replaceWithPartnerAgreedThresholds=true)."
     },
     {
       "manifestKey": "pilotAcceptanceJson",

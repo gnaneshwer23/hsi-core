@@ -218,7 +218,8 @@ const ARTIFACTS: IsiArtifactContractRow[] = [
     loadPriority: "required_pilot",
     consumerSurfaces: ["ask_map_review", "partner_readiness"],
     autoApproveIntoKg: false,
-    notes: "Review checklist; numeric thresholds still pending partner.",
+    notes:
+      "Review checklist; Stage 1 numeric thresholds may be set_for_test under hypothetical fixture (replaceWithPartnerAgreedThresholds=true).",
   },
   {
     manifestKey: "pilotAcceptanceJson",

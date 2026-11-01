@@ -505,7 +505,22 @@ export {
   type PilotReviewRubric,
   type RubricCheckItem,
   type RubricCheckStatus,
+  type RubricSuccessMetric,
 } from "./pilotReviewRubric";
+
+export {
+  STAGE1_RUBRIC_THRESHOLDS_SCHEMA,
+  HYPOTHETICAL_STAGE1_NUMERIC_THRESHOLDS,
+  HYPOTHETICAL_STAGE1_QUALITATIVE_PLACEHOLDERS,
+  getStage1RubricThresholds,
+  evalPackAgainstStage1NumericThresholds,
+  type Stage1NumericThresholdEval,
+  type Stage1NumericThresholds,
+  type Stage1QualitativeThresholdPlaceholders,
+  type Stage1RubricThresholdsBundle,
+  type ThresholdSetStatus,
+  type ThresholdSource,
+} from "./stage1RubricThresholds";
 
 export {
   PILOT_ACCEPTANCE_SCHEMA,

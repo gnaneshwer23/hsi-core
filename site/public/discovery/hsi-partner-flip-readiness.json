@@ -3,7 +3,7 @@
   "phase": "P0.2-HSI",
   "notCds": true,
   "containsPhi": false,
-  "generatedAt": "2026-11-01T20:02:48.733Z",
+  "generatedAt": "2026-11-01T20:12:41.390Z",
   "partnerSigned": true,
   "lockedPilot": false,
   "scopeLocked": true,
@@ -57,10 +57,15 @@
     {
       "id": "thresholds",
       "label": "Numeric review thresholds",
-      "requirement": "Agree scientific review rubric thresholds (time saved, usefulness, rejections) with the partner.",
-      "status": "pending",
-      "evidence": "hsi-pilot-review-rubric.* framing exists; cut-offs TBD with real partner (blockedOnPartner). Fixture does not set thresholds.",
-      "blocksPartnerSigned": true
+      "requirement": "Agree scientific review rubric thresholds (partner-scoped edges, competing frames, LOINC claims, Gate C pending policy, qualitative KPIs) with the partner.",
+      "status": "set_for_test",
+      "evidence": "set_for_test under thresholdSource=hypothetical_test_fixture: minPartnerScopedEdges=12, minCompetingExplanations=4, minLoincLinkedClaims=6, gateCPendingAllowed=true, acceptanceOverallAllowed=green_with_pending. replaceWithPartnerAgreedThresholds=true — real partner must re-agree.",
+      "blocksPartnerSigned": true,
+      "pendingRealReplacementSteps": [
+        "Re-agree numeric Stage 1 cut-offs with the real partner (do not treat fixture numbers as MoU KPIs).",
+        "Set thresholdSource=partner_agreed / replaceWithPartnerAgreedThresholds=false after written confirm.",
+        "Refresh hsi-pilot-review-rubric.* via bun run outputs."
+      ]
     },
     {
       "id": "shortlist_row",
@@ -112,21 +117,21 @@
     "total": 8,
     "pass": 0,
     "fail": 0,
-    "pending": 3,
+    "pending": 2,
     "satisfiedByFixture": 5,
+    "setForTest": 1,
     "readyToFlipPartnerSigned": false,
     "readyForRealPartnerReplacement": true,
     "blockingIds": [
-      "licensing",
-      "thresholds"
+      "licensing"
     ]
   },
   "nextHumanActions": [
     "TEST FIXTURE — replace before real pilot",
     "Name a real partner organisation (or rewrite disease/question with them) — do not invent org/email in code.",
     "Record outreach row in docs/ISI_PILOT_PARTNER_SHORTLIST.md when interest is real.",
-    "Agree licensing for the PMID corpus (promote rows in hsi-source-licensing-stub beyond needs_review).",
-    "Agree numeric rubric thresholds; refresh hsi-pilot-review-rubric.*.",
+    "Agree licensing for the PMID corpus (promote rows in hsi-source-licensing-stub beyond needs_review). See docs/HOW_TO_SOURCE_LICENSING.md.",
+    "Numeric Stage 1 thresholds are set_for_test under the hypothetical fixture — real partner must re-agree numbers before formal user testing; then refresh hsi-pilot-review-rubric.*.",
     "Only then set legalBinding=true / lockedPilot=true via REAL_PARTNER_REPLACEMENT and re-run bun run outputs.",
     "Production ISI must ignore fixture partnerSigned unless ALLOW_HYPOTHETICAL_PARTNER=true.",
     "ISI product wiring (immunecity consume of this contract) remains OUT OF REPO."
@@ -134,6 +139,7 @@
   "honesty": [
     "readyToFlipPartnerSigned stays false until a real named_partner + legalBinding path is ready.",
     "satisfied_by_fixture ≠ pass for production MoU claims.",
+    "set_for_test thresholds ≠ partner-agreed KPIs — replaceWithPartnerAgreedThresholds=true.",
     "partnerSigned may be true under hypothetical_test_only; lockedPilot stays false while legalBinding=false.",
     "This pack must never invent a legal MoU or named PI email.",
     "scopeLocked=true is engineering lock only — not a MoU.",

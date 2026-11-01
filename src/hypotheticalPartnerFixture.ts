@@ -14,7 +14,9 @@
  * 3. Set `agreementKind` to a real confirm kind, `legalBinding=true`,
  *    `replaceWithRealPartner=false`, `isHypothetical=false`.
  * 4. Record the org in `docs/ISI_PILOT_PARTNER_SHORTLIST.md` (no invented emails).
- * 5. Agree licensing + rubric thresholds; then `bun run outputs`.
+ * 5. Re-agree licensing + rubric thresholds (fixture numbers are
+ *    `set_for_test` only — see `src/stage1RubricThresholds.ts`); then
+ *    `bun run outputs`.
  *
  * `partnerSigned=true` here is **path-testing only** under
  * `agreementKind: hypothetical_test_only`. `lockedPilot` stays false until

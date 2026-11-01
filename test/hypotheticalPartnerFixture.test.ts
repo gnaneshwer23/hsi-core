@@ -78,7 +78,8 @@ describe("hypothetical test-fixture partner", () => {
     expect(byId.partner_signed_flip.status).toBe("satisfied_by_fixture");
     expect(byId.real_partner_replacement.status).toBe("pending");
     expect(byId.licensing.status).toBe("pending");
-    expect(byId.thresholds.status).toBe("pending");
+    expect(byId.thresholds.status).toBe("set_for_test");
+    expect(bundle.summary.setForTest).toBeGreaterThanOrEqual(1);
 
     expect(HYPOTHETICAL_PARTNER_FIXTURE.partner.id).toBe(
       "test:hypothetical-isi-pilot-partner",

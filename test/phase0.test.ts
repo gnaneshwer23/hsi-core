@@ -430,7 +430,23 @@ describe("Gate C checklist + publish outputs", () => {
     expect(rubric.partnerLock.provisionalLock).toBe(false);
     expect(rubric.partnerLock.status).toBe("scope_locked");
     expect(rubric.summary.readyForHuman).toBeGreaterThanOrEqual(8);
-    expect(rubric.summary.blockedOnPartner).toBeGreaterThanOrEqual(3);
+    expect(rubric.summary.blockedOnPartner).toBeGreaterThanOrEqual(2);
+    expect(rubric.summary.setForTest).toBeGreaterThanOrEqual(1);
+    expect(rubric.summary.thresholdStatus).toBe("set_for_test");
+    expect(rubric.summary.thresholdSource).toBe("hypothetical_test_fixture");
+    expect(rubric.summary.numericThresholdsMet).toBe(true);
+    expect(rubric.stage1Thresholds.replaceWithPartnerAgreedThresholds).toBe(true);
+    expect(rubric.stage1Thresholds.numeric.minPartnerScopedEdges).toBe(12);
+    expect(rubric.stage1Thresholds.numeric.minCompetingExplanations).toBe(4);
+    expect(rubric.stage1Thresholds.numeric.minLoincLinkedClaims).toBe(6);
+    expect(rubric.stage1Thresholds.numeric.gateCPendingAllowed).toBe(true);
+    expect(rubric.stage1Thresholds.numeric.acceptanceOverallAllowed).toBe(
+      "green_with_pending",
+    );
+    expect(rubric.checklist.find((c) => c.id === "x-3")?.status).toBe("set_for_test");
+    expect(rubric.successMetrics.every((m) => m.thresholdStatus === "set_for_test")).toBe(
+      true,
+    );
     expect(rubric.checklist.every((c) => c.status !== "ready_for_human" || c.criterion.length > 0)).toBe(
       true,
     );
@@ -465,7 +481,8 @@ describe("Gate C checklist + publish outputs", () => {
     expect(acceptance.criteria.find((c) => c.id === "ac-rubric")?.status).toBe("pass");
     expect(acceptance.criteria.find((c) => c.id === "ac-partner-signed")?.status).toBe("pending");
     expect(acceptance.criteria.find((c) => c.id === "ac-licensing")?.status).toBe("pending");
-    expect(acceptance.criteria.find((c) => c.id === "ac-thresholds")?.status).toBe("pending");
+    expect(acceptance.criteria.find((c) => c.id === "ac-thresholds")?.status).toBe("set_for_test");
+    expect(acceptance.summary.setForTest).toBeGreaterThanOrEqual(1);
     expect(acceptance.walkthroughSteps.length).toBeGreaterThanOrEqual(5);
     expect(acceptance.criteria.find((c) => c.id === "ac-discovery-ui")?.status).toBe("pass");
     expect(
@@ -637,6 +654,9 @@ describe("Gate C checklist + publish outputs", () => {
         partnerScopedEvidenceRows: number;
         acceptancePass: number;
         acceptancePending: number;
+        acceptanceSetForTest: number;
+        reviewRubricSetForTest: number;
+        reviewRubricThresholdStatus: string;
         stage1FourOutputsGreen: boolean;
         r2HypothesisCards: number;
         r2RankedGaps: number;
@@ -678,7 +698,10 @@ describe("Gate C checklist + publish outputs", () => {
     expect(manifest.acceptance.partnerSigned).toBe(true);
     expect(manifest.counts.stage1FourOutputsGreen).toBe(true);
     expect(manifest.counts.acceptancePass).toBeGreaterThanOrEqual(9);
-    expect(manifest.counts.acceptancePending).toBeGreaterThanOrEqual(3);
+    expect(manifest.counts.acceptancePending).toBeGreaterThanOrEqual(2);
+    expect(manifest.counts.acceptanceSetForTest).toBeGreaterThanOrEqual(1);
+    expect(manifest.counts.reviewRubricSetForTest).toBeGreaterThanOrEqual(1);
+    expect(manifest.counts.reviewRubricThresholdStatus).toBe("set_for_test");
     expect(manifest.counts.r2HypothesisCards).toBeGreaterThanOrEqual(5);
     expect(manifest.counts.r2RankedGaps).toBeGreaterThanOrEqual(3);
     expect(manifest.r2Validation.phase).toBe("7");

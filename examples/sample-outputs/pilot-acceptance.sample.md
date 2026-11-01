@@ -17,5 +17,5 @@
 | `pass` | `ac-rubric` | Review rubric |
 | `pending` | `ac-partner-signed` | partnerSigned / lockedPilot |
 | `pending` | `ac-licensing` | Source licensing |
-| `pending` | `ac-thresholds` | Numeric success thresholds |
+| `set_for_test` | `ac-thresholds` | Numeric success thresholds (fixture; real partner must re-agree) |
 | `pass` | `ac-discovery-ui` | Discovery Centre product surface (Phase 6) |

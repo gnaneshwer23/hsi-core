@@ -12,7 +12,31 @@
 
 **Companion machine spec:** [`hsi-isi-wiring-spec.json`](./hsi-isi-wiring-spec.json)  
 **Consume contract (regenerable):** `hsi-isi-consume-contract.*` via `bun run outputs` · also [`site/public/discovery/hsi-isi-consume-contract.json`](../site/public/discovery/hsi-isi-consume-contract.json)  
-**Reference client (demo in hsi-core only):** [`examples/isi-consumer/`](../examples/isi-consumer/)
+**Reference client (demo in hsi-core only):** [`examples/isi-consumer/`](../examples/isi-consumer/)  
+**PMID license review:** [`HOW_TO_SOURCE_LICENSING.md`](./HOW_TO_SOURCE_LICENSING.md)
+
+---
+
+## What you do on your machine (hsi-core)
+
+Keep this workspace on **hsi-core only**. Do not open immunecity for edits from this session.
+
+```bash
+cd ~/Projects/hsi-core
+bun test
+bun run outputs          # regenerates dist/outputs/latest + site/public/discovery/*
+bun run site:dev         # http://localhost:5173/discovery
+bun run examples/isi-consumer/demo.ts
+```
+
+| Goal | Do this |
+|------|---------|
+| Verify Stage 1 packs | Open `/discovery` → ASK / MAP / REVIEW; check `hsi-pilot-acceptance.md` is `green_with_pending` |
+| Fixture partner path | Confirm `hsi-partner-lock.json` shows `agreementKind=hypothetical_test_only`, `lockedPilot=false` |
+| Rubric thresholds | `hsi-pilot-review-rubric.*` — `thresholdStatus=set_for_test`; real partner must re-agree numbers |
+| Licensing review | Follow [`HOW_TO_SOURCE_LICENSING.md`](./HOW_TO_SOURCE_LICENSING.md) against `hsi-source-licensing-stub.*` |
+| Swap to a real partner | Edit `src/hypotheticalPartnerFixture.ts` (`USE_HYPOTHETICAL_PARTNER_FIXTURE=false` + `REAL_PARTNER_REPLACEMENT`); never invent email/MoU |
+| Wire immunecity | Use a **separate immunecity session** + §8 below — freeze still applies here |
 
 ---
 

@@ -2,8 +2,9 @@
  * Phase 5 — Pilot acceptance pack for Stage 1 on the scope-locked RA/anti-TNF question.
  *
  * Regenerable checklist + partner walkthrough. Marks **pass** only what is
- * actually true in substrate/exports; **pending** for partnerSigned, licensing,
- * and numeric success thresholds. Never invents a MoU or CDS claim.
+ * actually true in substrate/exports; **pending** for real partnerSigned /
+ * licensing; numeric Stage 1 thresholds may be **set_for_test** under the
+ * hypothetical fixture. Never invents a MoU or CDS claim.
  */
 import { buildGateCChecklist, type GateCChecklistBundle } from "./gateCChecklist";
 import { buildSchemaGapReport, type HsiSchemaGapReport } from "./gapReport";
@@ -20,10 +21,14 @@ import {
   buildPilotReviewRubric,
   type PilotReviewRubric,
 } from "./pilotReviewRubric";
+import {
+  evalPackAgainstStage1NumericThresholds,
+  getStage1RubricThresholds,
+} from "./stage1RubricThresholds";
 
 export const PILOT_ACCEPTANCE_SCHEMA = "hsi-pilot-acceptance-1" as const;
 
-export type AcceptanceStatus = "pass" | "fail" | "pending";
+export type AcceptanceStatus = "pass" | "fail" | "pending" | "set_for_test";
 
 export type AcceptanceCriterion = {
   id: string;
@@ -73,6 +78,7 @@ export type PilotAcceptancePack = {
     pass: number;
     fail: number;
     pending: number;
+    setForTest: number;
     stage1FourOutputsGreen: boolean;
     partnerReadyWalkthrough: boolean;
     overallStage1Acceptance: "green_with_pending" | "blocked" | "fail";
@@ -102,10 +108,17 @@ function buildCriteria(opts: {
   gap: HsiSchemaGapReport;
 }): AcceptanceCriterion[] {
   const { lock, pack, rubric, gateC, gap } = opts;
+  const stage1Thresholds = getStage1RubricThresholds();
+  const numericEval = evalPackAgainstStage1NumericThresholds(
+    pack,
+    stage1Thresholds.numeric,
+  );
 
   const evidenceMapPass =
-    pack.summary.partnerScopedEvidenceRows >= 12 &&
-    pack.summary.claimsWithLoinc >= 6 &&
+    numericEval.partnerScopedEdges >=
+      stage1Thresholds.numeric.minPartnerScopedEdges &&
+    numericEval.loincLinkedClaims >=
+      stage1Thresholds.numeric.minLoincLinkedClaims &&
     (pack.summary.gradeCounts.established > 0 ||
       pack.summary.gradeCounts.uncertain > 0 ||
       pack.summary.gradeCounts.unexplored > 0);
@@ -117,7 +130,8 @@ function buildCriteria(opts: {
     pack.entitySlice.typed.length > 0;
 
   const competingPass =
-    pack.competingExplanations.length >= 3 &&
+    numericEval.competingExplanations >=
+      stage1Thresholds.numeric.minCompetingExplanations &&
     pack.competingExplanations.some((c) => c.id === "expl-ra-tnf-centric") &&
     pack.competingExplanations.some((c) => c.id === "expl-ra-multi-cytokine") &&
     pack.uncertainties.length > 0;
@@ -125,7 +139,9 @@ function buildCriteria(opts: {
   const shortlistPass =
     pack.expertShortlist.length > 0 &&
     pack.expertShortlist.every((i) => i.autoApproved === false) &&
-    pack.summary.gateCPending >= 1;
+    (stage1Thresholds.numeric.gateCPendingAllowed
+      ? pack.summary.gateCPending >= 1
+      : pack.summary.gateCPending === 0);
 
   const gateCArtifactPass =
     gateC.autoApproveIntoKg === false &&
@@ -136,7 +152,10 @@ function buildCriteria(opts: {
 
   const rubricPass =
     rubric.summary.readyForHuman >= 8 &&
-    rubric.summary.blockedOnPartner >= 3 &&
+    rubric.summary.blockedOnPartner >= 2 &&
+    (rubric.summary.setForTest >= 1 ||
+      stage1Thresholds.thresholdStatus === "partner_agreed") &&
+    rubric.summary.thresholdStatus === stage1Thresholds.thresholdStatus &&
     rubric.notCds === true;
 
   const gapPass = gap.gaps.length >= 0 && gap.summary.seedEdges > 0;
@@ -247,28 +266,34 @@ function buildCriteria(opts: {
       label: "Stage 1 review rubric export",
       artifact: "hsi-pilot-review-rubric.md",
       status: rubricPass ? "pass" : "fail",
-      evidence: `ready_for_human=${rubric.summary.readyForHuman}; blocked_on_partner=${rubric.summary.blockedOnPartner}`,
-      notes: "Checklist for human walkthrough; numeric thresholds stay TBD with partner.",
+      evidence: `ready_for_human=${rubric.summary.readyForHuman}; blocked_on_partner=${rubric.summary.blockedOnPartner}; set_for_test=${rubric.summary.setForTest}; thresholdStatus=${rubric.summary.thresholdStatus}; numericThresholdsMet=${rubric.summary.numericThresholdsMet}`,
+      notes:
+        "Checklist for human walkthrough; fixture may set numeric thresholds as set_for_test (real partner must re-agree).",
     }),
     criterion({
       id: "ac-licensing",
       category: "licensing",
       label: "Source licensing / attribution for partner corpus",
-      artifact: "hsi-partner-lock.json#flipRequirements",
+      artifact:
+        "hsi-source-licensing-stub.json · docs/HOW_TO_SOURCE_LICENSING.md · hsi-partner-lock.json#flipRequirements",
       status: "pending",
-      evidence: "Scope-locked PMIDs are public PubMed locators only",
+      evidence: "Scope-locked PMIDs are public PubMed locators only; stub rows remain needs_review",
       notes: "Pending after partnerSigned — do not claim licensed corpora.",
     }),
     criterion({
       id: "ac-thresholds",
       category: "review",
       label: "Success-metric numeric thresholds with partner",
-      artifact: "hsi-pilot-review-rubric.md#success-metrics",
-      status: "pending",
-      evidence: rubric.successMetrics
-        .map((m) => `${m.id}=${m.thresholdWithPartner}`)
-        .join("; "),
-      notes: "Agree before formal user testing.",
+      artifact: "hsi-pilot-review-rubric.md#stage-1-numeric-thresholds · src/stage1RubricThresholds.ts",
+      status:
+        stage1Thresholds.thresholdStatus === "set_for_test"
+          ? "set_for_test"
+          : stage1Thresholds.thresholdStatus === "partner_agreed"
+            ? "pass"
+            : "pending",
+      evidence: `thresholdSource=${stage1Thresholds.thresholdSource}; thresholdStatus=${stage1Thresholds.thresholdStatus}; replaceWithPartnerAgreedThresholds=${stage1Thresholds.replaceWithPartnerAgreedThresholds}; minPartnerScopedEdges=${stage1Thresholds.numeric.minPartnerScopedEdges}; minCompetingExplanations=${stage1Thresholds.numeric.minCompetingExplanations}; minLoincLinkedClaims=${stage1Thresholds.numeric.minLoincLinkedClaims}; gateCPendingAllowed=${stage1Thresholds.numeric.gateCPendingAllowed}; acceptanceOverallAllowed=${stage1Thresholds.numeric.acceptanceOverallAllowed}; packEvalPass=${numericEval.pass} (scoped=${numericEval.partnerScopedEdges}, competing=${numericEval.competingExplanations}, loinc=${numericEval.loincLinkedClaims}, gateCPending=${numericEval.gateCPending})`,
+      notes:
+        "Fixture numbers are path-testing only — real partner must re-agree before formal user testing / lockedPilot.",
     }),
     criterion({
       id: "ac-discovery-ui",
@@ -314,8 +339,8 @@ function buildWalkthroughSteps(lock: HsiPartnerLock): PilotAcceptancePack["walkt
       step: 4,
       title: "Run the review rubric",
       open: "hsi-pilot-review-rubric.md",
-      say: "Mark ready_for_human items live with the partner. Leave blocked_on_partner items blocked until named confirmation + thresholds + licensing.",
-      doNot: "Do not invent numeric success thresholds or a named MoU partner.",
+      say: "Mark ready_for_human items live with the partner. Fixture numeric thresholds are set_for_test — confirm or rewrite with the real partner. Leave licensing + named confirmation blocked until written agree.",
+      doNot: "Do not treat fixture thresholds as a MoU KPI, and do not invent a named legal partner.",
     },
     {
       step: 5,
@@ -358,6 +383,7 @@ export function buildPilotAcceptancePack(opts?: {
   const pass = criteria.filter((c) => c.status === "pass").length;
   const fail = criteria.filter((c) => c.status === "fail").length;
   const pending = criteria.filter((c) => c.status === "pending").length;
+  const setForTest = criteria.filter((c) => c.status === "set_for_test").length;
 
   const stage1Ids = ["ac-em", "ac-es", "ac-ce", "ac-ex"];
   const stage1FourOutputsGreen = stage1Ids.every(
@@ -367,12 +393,15 @@ export function buildPilotAcceptancePack(opts?: {
     (id) => criteria.find((c) => c.id === id)?.status === "pass",
   );
   const partnerReadyWalkthrough = stage1FourOutputsGreen && supportGreen && fail === 0;
+  const thresholds = getStage1RubricThresholds();
 
   let overallStage1Acceptance: PilotAcceptancePack["summary"]["overallStage1Acceptance"];
   if (fail > 0) {
     overallStage1Acceptance = "fail";
   } else if (partnerReadyWalkthrough) {
-    overallStage1Acceptance = "green_with_pending";
+    // Fixture explicitly allows green_with_pending while licensing / real MoU open.
+    overallStage1Acceptance =
+      thresholds.numeric.acceptanceOverallAllowed ?? "green_with_pending";
   } else {
     overallStage1Acceptance = "blocked";
   }
@@ -404,6 +433,7 @@ export function buildPilotAcceptancePack(opts?: {
       pass,
       fail,
       pending,
+      setForTest,
       stage1FourOutputsGreen,
       partnerReadyWalkthrough,
       overallStage1Acceptance,
@@ -415,7 +445,8 @@ export function buildPilotAcceptancePack(opts?: {
         : "Share walkthrough with the named partner.",
       "Share hsi-pilot-walkthrough.md + hsi-pilot-acceptance.md + site `/discovery` with outreach / future named partner.",
       "Keep lockedPilot=false / legalBinding=false until a real named partner meets flipRequirements (fixture partnerSigned is path-testing only).",
-      "Agree licensing + numeric success thresholds before formal user testing.",
+      "Numeric Stage 1 thresholds are set_for_test under the hypothetical fixture — real partner must re-agree numbers before formal user testing.",
+      "Agree source licensing (docs/HOW_TO_SOURCE_LICENSING.md) before claiming a licensed corpus.",
       "Production ISI must ignore fixture partnerSigned unless ALLOW_HYPOTHETICAL_PARTNER=true.",
       "Phase 6–8 Discovery Centre (ASK→MAP→REVIEW→VALIDATE→TRANSLATE) is live. Phase 8 = translation substrate + in-repo Akeno HITL at /akeno (not CDS).",
     ],
@@ -466,7 +497,7 @@ export function serializePilotAcceptanceMarkdown(
     `- **overallStage1Acceptance:** \`${pack.summary.overallStage1Acceptance}\``,
     `- **stage1FourOutputsGreen:** \`${pack.summary.stage1FourOutputsGreen}\``,
     `- **partnerReadyWalkthrough:** \`${pack.summary.partnerReadyWalkthrough}\``,
-    `- pass=${pack.summary.pass} · fail=${pack.summary.fail} · pending=${pack.summary.pending}`,
+    `- pass=${pack.summary.pass} · fail=${pack.summary.fail} · pending=${pack.summary.pending} · set_for_test=${pack.summary.setForTest}`,
     "",
     "## Criteria",
     "",
@@ -556,7 +587,8 @@ export function serializePilotWalkthroughMarkdown(
     `- overall: \`${pack.summary.overallStage1Acceptance}\``,
     `- four outputs green: \`${pack.summary.stage1FourOutputsGreen}\``,
     `- partner-ready walkthrough: \`${pack.summary.partnerReadyWalkthrough}\``,
-    `- pending (expected): partnerSigned, licensing, numeric thresholds, Discovery Centre product UI`,
+    `- pending (expected): real partnerSigned / legalBinding, licensing`,
+    `- set_for_test (fixture): numeric Stage 1 thresholds — real partner must re-agree`,
     "",
     "## After the meeting",
     "",

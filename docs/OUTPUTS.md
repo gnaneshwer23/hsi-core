@@ -150,14 +150,14 @@ Living status + prioritized backlog: [`BUILD_STATUS_AND_NEXT.md`](./BUILD_STATUS
 | **Phase 1b** — Partner disease + question **provisional** scaffold | **Done** (superseded by Phase 2) |
 | **Phase 2** — Scope lock (`scopeLocked=true`; RA / anti-TNF question canonical; outreach category only) | **Done** |
 | Partner-scoped literature seed slice (RA/TNF pathway) | **Done** (public PMIDs; licensing still open with partner) |
-| Scientific review rubric export (Stage 1 four outputs) | **Done** (thresholds TBD with partner) |
+| Scientific review rubric export (Stage 1 four outputs) | **Done** (numeric thresholds `set_for_test` under hypothetical fixture; real partner must re-agree) |
 | Named `partnerSigned=true` / `lockedPilot=true` | **Remaining** (outreach — named partner confirms disease + question) |
 | **Phase 3** — Partner-scoped evidence depth for the locked question | **Done** (ADA / immunogenicity, serology tension, RF LOINC, MTX combo; competing explanations filled) |
 | **Phase 4** — HSI Neon `red-wave` readiness | **Done** (HSI-owned schema stub + migrate/gate-c-local guards; never ISI/Akeno/DeliverX) |
-| **Phase 5** — Pilot acceptance pack | **Done** (`hsi-pilot-acceptance.*` + `hsi-pilot-walkthrough.md`; Stage 1 four outputs + MANIFEST + gap + Gate C + rubric green; `partnerSigned` / licensing / thresholds **pending**) |
+| **Phase 5** — Pilot acceptance pack | **Done** (`hsi-pilot-acceptance.*` + `hsi-pilot-walkthrough.md`; Stage 1 four outputs + MANIFEST + gap + Gate C + rubric green; real `partnerSigned` / licensing **pending**; numeric thresholds **`set_for_test`**) |
 | **Phase 6** — Target R1 Discovery Centre product surface | **Done** (`site/` route `/discovery`; loads `site/public/discovery/*.json` refreshed by `bun run outputs`; ASK→MAP→REVIEW; notCds; Akeno = later) |
 | Source licensing / attribution for agreed partner corpus | **Remaining** (after partnerSigned) |
-| Success-metric numeric thresholds with partner | **Remaining** |
+| Success-metric numeric thresholds with partner | **Partial** — fixture cut-offs in `src/stage1RubricThresholds.ts` (`thresholdSource=hypothetical_test_fixture`, `replaceWithPartnerAgreedThresholds=true`). **Real partner must re-agree numbers** before formal user testing / `lockedPilot` |
 | PDF/DOCX brief renderer | **Deferred** (ISI product P1; needs explicit ask) |
 | **Phase 7** — R2 validation | **Done** (`hsi-r2-validation.*`; hypothesis cards with untested/supported/refuted/gap; ranked gaps + literature tests; Discovery Centre **VALIDATE** tab; research only — not clinical protocols) |
 | **Phase 8** — R3–R5 / Akeno translation (HSI substrate) | **Done** (`hsi-translation-handoff.*` + Gate C `translationCandidates` + Discovery Centre **TRANSLATE** tab; `deferred_until_hitl` / `not_for_clinical_use`; no live CDS) |

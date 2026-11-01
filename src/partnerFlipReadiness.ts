@@ -11,6 +11,7 @@ import {
   getPartnerLock,
   type HsiPartnerLock,
 } from "./partnerLock";
+import { getStage1RubricThresholds } from "./stage1RubricThresholds";
 
 export const PARTNER_FLIP_READINESS_SCHEMA =
   "hsi-partner-flip-readiness-1" as const;
@@ -19,7 +20,8 @@ export type FlipRequirementStatus =
   | "pass"
   | "fail"
   | "pending"
-  | "satisfied_by_fixture";
+  | "satisfied_by_fixture"
+  | "set_for_test";
 
 export type FlipRequirementId =
   | "named_org"
@@ -72,6 +74,7 @@ export type PartnerFlipReadinessBundle = {
     fail: number;
     pending: number;
     satisfiedByFixture: number;
+    setForTest: number;
     readyToFlipPartnerSigned: false;
     readyForRealPartnerReplacement: boolean;
     blockingIds: FlipRequirementId[];
@@ -144,11 +147,28 @@ function buildRows(lock: HsiPartnerLock): FlipRequirementRow[] {
       id: "thresholds",
       label: "Numeric review thresholds",
       requirement:
-        "Agree scientific review rubric thresholds (time saved, usefulness, rejections) with the partner.",
-      status: "pending",
-      evidence:
-        "hsi-pilot-review-rubric.* framing exists; cut-offs TBD with real partner (blockedOnPartner). Fixture does not set thresholds.",
+        "Agree scientific review rubric thresholds (partner-scoped edges, competing frames, LOINC claims, Gate C pending policy, qualitative KPIs) with the partner.",
+      status: (() => {
+        const th = getStage1RubricThresholds();
+        if (th.thresholdStatus === "set_for_test") return "set_for_test";
+        if (th.thresholdStatus === "partner_agreed") return "pass";
+        return "pending";
+      })(),
+      evidence: (() => {
+        const th = getStage1RubricThresholds();
+        if (th.thresholdStatus === "set_for_test") {
+          return `set_for_test under thresholdSource=${th.thresholdSource}: minPartnerScopedEdges=${th.numeric.minPartnerScopedEdges}, minCompetingExplanations=${th.numeric.minCompetingExplanations}, minLoincLinkedClaims=${th.numeric.minLoincLinkedClaims}, gateCPendingAllowed=${th.numeric.gateCPendingAllowed}, acceptanceOverallAllowed=${th.numeric.acceptanceOverallAllowed}. replaceWithPartnerAgreedThresholds=${th.replaceWithPartnerAgreedThresholds} — real partner must re-agree.`;
+        }
+        return "hsi-pilot-review-rubric.* framing exists; cut-offs still TBD with real partner.";
+      })(),
       blocksPartnerSigned: true,
+      pendingRealReplacementSteps: isFixture
+        ? [
+            "Re-agree numeric Stage 1 cut-offs with the real partner (do not treat fixture numbers as MoU KPIs).",
+            "Set thresholdSource=partner_agreed / replaceWithPartnerAgreedThresholds=false after written confirm.",
+            "Refresh hsi-pilot-review-rubric.* via bun run outputs.",
+          ]
+        : undefined,
     },
     {
       id: "shortlist_row",
@@ -238,8 +258,17 @@ export function buildPartnerFlipReadinessBundle(opts?: {
   const satisfiedByFixture = flipRequirements.filter(
     (r) => r.status === "satisfied_by_fixture",
   ).length;
+  const setForTest = flipRequirements.filter(
+    (r) => r.status === "set_for_test",
+  ).length;
   const blockingIds = flipRequirements
-    .filter((r) => r.blocksPartnerSigned && r.status !== "pass")
+    .filter(
+      (r) =>
+        r.blocksPartnerSigned &&
+        r.status !== "pass" &&
+        r.status !== "satisfied_by_fixture" &&
+        r.status !== "set_for_test",
+    )
     .map((r) => r.id);
 
   return {
@@ -273,6 +302,7 @@ export function buildPartnerFlipReadinessBundle(opts?: {
       fail,
       pending,
       satisfiedByFixture,
+      setForTest,
       readyToFlipPartnerSigned: false,
       readyForRealPartnerReplacement: isHypotheticalTestFixturePartner(lock),
       blockingIds,
@@ -282,8 +312,8 @@ export function buildPartnerFlipReadinessBundle(opts?: {
         "TEST FIXTURE — replace before real pilot (src/hypotheticalPartnerFixture.ts).",
       "Name a real partner organisation (or rewrite disease/question with them) — do not invent org/email in code.",
       "Record outreach row in docs/ISI_PILOT_PARTNER_SHORTLIST.md when interest is real.",
-      "Agree licensing for the PMID corpus (promote rows in hsi-source-licensing-stub beyond needs_review).",
-      "Agree numeric rubric thresholds; refresh hsi-pilot-review-rubric.*.",
+      "Agree licensing for the PMID corpus (promote rows in hsi-source-licensing-stub beyond needs_review). See docs/HOW_TO_SOURCE_LICENSING.md.",
+      "Numeric Stage 1 thresholds are set_for_test under the hypothetical fixture — real partner must re-agree numbers before formal user testing; then refresh hsi-pilot-review-rubric.*.",
       "Only then set legalBinding=true / lockedPilot=true via REAL_PARTNER_REPLACEMENT and re-run bun run outputs.",
       "Production ISI must ignore fixture partnerSigned unless ALLOW_HYPOTHETICAL_PARTNER=true.",
       "ISI product wiring (immunecity consume of this contract) remains OUT OF REPO.",
@@ -291,6 +321,7 @@ export function buildPartnerFlipReadinessBundle(opts?: {
     honesty: [
       "readyToFlipPartnerSigned stays false until a real named_partner + legalBinding path is ready.",
       "satisfied_by_fixture ≠ pass for production MoU claims.",
+      "set_for_test thresholds ≠ partner-agreed KPIs — replaceWithPartnerAgreedThresholds=true.",
       "partnerSigned may be true under hypothetical_test_only; lockedPilot stays false while legalBinding=false.",
       "This pack must never invent a legal MoU or named PI email.",
       "scopeLocked=true is engineering lock only — not a MoU.",
@@ -338,7 +369,7 @@ export function serializePartnerFlipReadinessMarkdown(
   }
   lines.push(
     "",
-    `Summary: pass=${bundle.summary.pass} · fail=${bundle.summary.fail} · pending=${bundle.summary.pending} · satisfied_by_fixture=${bundle.summary.satisfiedByFixture}`,
+    `Summary: pass=${bundle.summary.pass} · fail=${bundle.summary.fail} · pending=${bundle.summary.pending} · satisfied_by_fixture=${bundle.summary.satisfiedByFixture} · set_for_test=${bundle.summary.setForTest}`,
     "",
     "Blocking ids: " +
       (bundle.summary.blockingIds.length

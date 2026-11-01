@@ -1,7 +1,7 @@
 # HSI build status and next
 
 **Audit date:** 1 November 2026  
-**HEAD at write:** `efa64ac` (main) — hypothetical **TEST FIXTURE** partner (`test:hypothetical-isi-pilot-partner`) for path testing; real named partner still TBD
+**HEAD at write:** (this commit) — Stage 1 numeric rubric thresholds **`set_for_test`** under hypothetical fixture; real partner must re-agree; `legalBinding` still false
 
 
 **Edit target:** `hsi-core` only · Neon **`red-wave` only** · no immunecity / Akeno product / DeliverX edits  
@@ -18,7 +18,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | Plane | Light | One line |
 |-------|-------|----------|
 | R0–R1 substrate + `/discovery` | **GREEN** | Four outputs + ASK→MAP→REVIEW on regenerable packs |
-| R2 workbench (HSI) | **GREEN / YELLOW** | Hypothesis + gaps + VALIDATE; partner thresholds open |
+| R2 workbench (HSI) | **GREEN / YELLOW** | Hypothesis + gaps + VALIDATE; fixture thresholds `set_for_test` (partner re-agree still required) |
 | R3 translation / `/akeno` | **YELLOW** | HITL scaffolding only (`clinicalActive=false`) |
 | Partner pilot readiness (M3) | **YELLOW** | Hypothetical **TEST FIXTURE** partner for path testing; `lockedPilot=false`; real named org still pending |
 | Live CDS / PHI / shared Neon | **RED (correct)** | Explicitly not built |
@@ -61,7 +61,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | Review rubric + acceptance + walkthrough | **DONE** | `hsi-pilot-review-rubric.*`, `hsi-pilot-acceptance.*`, `hsi-pilot-walkthrough.md` |
 | `partnerSigned` / `lockedPilot` | **PARTIAL** | Fixture: `partnerSigned=true` + `agreementKind=hypothetical_test_only` + `legalBinding=false` → `lockedPilot=false`; swap via `src/hypotheticalPartnerFixture.ts` |
 | Source licensing table for agreed corpus | **PARTIAL** | Stub exported (`needs_review`); partner clearance still open |
-| Numeric evaluation thresholds | **NOT STARTED** | Rubric shell only |
+| Numeric evaluation thresholds | **PARTIAL** | Fixture `set_for_test` in `src/stage1RubricThresholds.ts` (min edges 12 / competing 4 / LOINC 6; Gate C pending allowed; `green_with_pending` OK). **Real partner must re-agree** (`replaceWithPartnerAgreedThresholds=true`) |
 | PDF/DOCX brief | **OUT OF SCOPE** | ISI product P1 |
 
 ### 1.3 Discovery Centre (site)
@@ -81,7 +81,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 |------|--------|----------|
 | Hypothesis cards + ranked gaps + literature tests | **DONE** | `src/r2Validation.ts` → `hsi-r2-validation.*` |
 | Discovery **VALIDATE** tab | **DONE** | DiscoveryCentre |
-| Partner-agreed numeric thresholds | **PARTIAL** | Framing done; cut-offs TBD |
+| Partner-agreed numeric thresholds | **PARTIAL** | Fixture cut-offs set (`set_for_test`); partner re-agree still required |
 | Molecular / omics adapters | **OUT OF SCOPE** | Stage 2+ / P3 |
 
 ### 1.5 Translation / Akeno
@@ -173,7 +173,7 @@ Reproduce: `bun test && bun run outputs && bun run site:dev` → `/discovery`, `
 | **SSc-vs-RA vertical conflict** | Resolved as **A dual-track** | Recorded in `verticalDecision.ts` / partner lock / systems vision |
 | **Named real partner not chosen** | Fixture + outreach categories only; no invented contacts | Outreach |
 | **Licensing / rights pack** | Pilot data-rights gate | Stub landed (`hsi-source-licensing-stub.*`); promote beyond `needs_review` with partner |
-| **Numeric success thresholds** | Evaluation plan incomplete | Partner + rubric update |
+| **Numeric success thresholds** | Fixture cut-offs `set_for_test` only — not partner-agreed KPIs | Real partner must re-agree; then flip `thresholdSource=partner_agreed` |
 | **Neuroimmune claim seeds** | **DONE (P2.1)** vagus / cholinergic anti-inflammatory reflex pack | Optional further neighbourhood (microglia/BBB) later; VNS–RA stays hypothesized |
 | **Gut–immune claim seeds** | **DONE (P1.3)** SCFA ↔ mucosal Treg/Th17 pack | Optional further depth later; Th17 frames stay hypothesized |
 | **SSc pack depth** | P1.1 cell cards + extra PMIDs landed; still not a full atlas | Optional further neighbourhood edges later |
@@ -207,7 +207,7 @@ One-sprint-sized items. Mark **[DECISION]** where the user must choose before co
 | P0.1 | **[DONE]** Vertical **A dual-track** recorded | `verticalStrategy=dual_track`, `activeScope=ra-tnf`, `prdMvpTarget=ssc-tfh-b-il21`; SSc first slice + pack published |
 | P0.2 | **[DONE on HSI side / WAITING HUMAN]** Named partner + flip-readiness pack | **P0.2-HSI done:** flip-readiness + **hypothetical TEST FIXTURE** (`test:hypothetical-isi-pilot-partner`; `satisfied_by_fixture` for named_org). Real `legalBinding` / `lockedPilot` only after written confirm — **never invent org/email**. **Next = user supplies real partnerNamed** |
 | P0.3 | **[PARTIAL]** Rights / licensing stub for RA/SSc/gut/neuro PMID set | `hsi-source-licensing-stub.*` — all `licenseStatus=needs_review`; promote after partner agree |
-| P0.4 | Agree numeric thresholds on existing review rubric; refresh `hsi-pilot-review-rubric.*` | Export-only change after partner agrees |
+| P0.4 | **[PARTIAL]** Numeric thresholds on review rubric | Fixture numbers wired (`set_for_test` / `thresholdSource=hypothetical_test_fixture`). **Real partner must re-agree** before formal user testing; then refresh exports |
 | P0.5 | **[DONE on HSI side / OUT-OF-REPO for product]** ISI consume contract + **wiring playbook** | Contract maps MANIFEST/grades/Gate C/Discovery. **Playbook shipped:** [`ISI_IMMUNICITY_WIRING_PLAYBOOK.md`](./ISI_IMMUNICITY_WIRING_PLAYBOOK.md) + `hsi-isi-wiring-spec.json` + `examples/isi-consumer/`. **Applying wires = immunecity session / freeze override** — do not edit immunecity from this workspace |
 | P0.6 | Keep exports stable; refresh walkthrough after partner wording changes | `bun run outputs` discipline |
 

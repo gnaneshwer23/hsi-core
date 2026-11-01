@@ -82,7 +82,8 @@ describe("P0.2-HSI ISI consume contract + partner flip-readiness", () => {
     expect(bundle.lockedPilot).toBe(false);
     expect(bundle.summary.readyToFlipPartnerSigned).toBe(false);
     expect(bundle.summary.satisfiedByFixture).toBeGreaterThanOrEqual(3);
-    expect(bundle.summary.pending).toBeGreaterThanOrEqual(2);
+    expect(bundle.summary.pending).toBeGreaterThanOrEqual(1);
+    expect(bundle.summary.setForTest).toBeGreaterThanOrEqual(1);
 
     const byId = Object.fromEntries(
       bundle.flipRequirements.map((r) => [r.id, r]),
@@ -93,12 +94,18 @@ describe("P0.2-HSI ISI consume contract + partner flip-readiness", () => {
     expect(byId.partner_signed_flip.status).toBe("satisfied_by_fixture");
     expect(byId.real_partner_replacement.status).toBe("pending");
     expect(byId.licensing.status).toBe("pending");
-    expect(byId.thresholds.status).toBe("pending");
+    expect(byId.thresholds.status).toBe("set_for_test");
+    expect(byId.thresholds.evidence).toContain("minPartnerScopedEdges=12");
+    expect(byId.thresholds.evidence).toContain("replaceWithPartnerAgreedThresholds=true");
 
     for (const r of bundle.flipRequirements) {
-      expect(["pass", "fail", "pending", "satisfied_by_fixture"]).toContain(
-        r.status,
-      );
+      expect([
+        "pass",
+        "fail",
+        "pending",
+        "satisfied_by_fixture",
+        "set_for_test",
+      ]).toContain(r.status);
     }
 
     const json = JSON.parse(serializePartnerFlipReadiness(bundle));

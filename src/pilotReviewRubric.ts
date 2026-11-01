@@ -2,15 +2,27 @@
  * Human review rubric for the scope-locked (Phase 2) / future partner-signed pilot
  * question against Stage 1 four workflow outputs.
  *
- * Checklist + export artifact — thresholds stay TBD until a named partner agrees them.
+ * Checklist + export artifact. Numeric Stage 1 cut-offs may be set_for_test under
+ * the hypothetical partner fixture; real partners must re-agree before lockedPilot.
  * Not CDS. Not auto-approval into product KG.
  */
 import { getPartnerLock, type HsiPartnerLock } from "./partnerLock";
 import { buildPilotEvidencePack, type PilotEvidencePack } from "./pilotEvidencePack";
+import {
+  evalPackAgainstStage1NumericThresholds,
+  getStage1RubricThresholds,
+  type Stage1RubricThresholdsBundle,
+  type ThresholdSetStatus,
+  type ThresholdSource,
+} from "./stage1RubricThresholds";
 
 export const PILOT_REVIEW_RUBRIC_SCHEMA = "hsi-pilot-review-rubric-1" as const;
 
-export type RubricCheckStatus = "ready_for_human" | "blocked_on_partner" | "n_a_until_lock";
+export type RubricCheckStatus =
+  | "ready_for_human"
+  | "blocked_on_partner"
+  | "set_for_test"
+  | "n_a_until_lock";
 
 export type RubricCheckItem = {
   id: string;
@@ -24,6 +36,17 @@ export type RubricCheckItem = {
   howToJudge: string;
   status: RubricCheckStatus;
   relatedClaimIds: string[];
+};
+
+export type RubricSuccessMetric = {
+  id: string;
+  metric: string;
+  recordWhat: string;
+  /** Human-readable threshold line (numeric or qualitative). */
+  threshold: string;
+  thresholdStatus: ThresholdSetStatus;
+  /** @deprecated Prefer `threshold` + `thresholdStatus`. Kept for older consumers. */
+  thresholdWithPartner: string;
 };
 
 export type PilotReviewRubric = {
@@ -47,24 +70,30 @@ export type PilotReviewRubric = {
     packField: string;
   }>;
   checklist: RubricCheckItem[];
-  successMetrics: Array<{
-    id: string;
-    metric: string;
-    recordWhat: string;
-    thresholdWithPartner: "TBD — agree before user testing";
-  }>;
+  /** Active Stage 1 numeric + qualitative fixture / partner thresholds. */
+  stage1Thresholds: Stage1RubricThresholdsBundle;
+  successMetrics: RubricSuccessMetric[];
   flipToLockedPilot: string[];
   summary: {
     readyForHuman: number;
     blockedOnPartner: number;
+    setForTest: number;
     packEvidenceRows: number;
     packClaimsWithLoinc: number;
+    numericThresholdsMet: boolean;
+    thresholdSource: ThresholdSource;
+    thresholdStatus: ThresholdSetStatus;
   };
   nextActions: string[];
 };
 
-function buildChecklist(lock: HsiPartnerLock, pack: PilotEvidencePack): RubricCheckItem[] {
+function buildChecklist(
+  lock: HsiPartnerLock,
+  pack: PilotEvidencePack,
+  thresholds: Stage1RubricThresholdsBundle,
+): RubricCheckItem[] {
   const pathwayClaims = lock.seedPathway?.primaryClaimIds ?? [];
+  const thresholdsSetForTest = thresholds.thresholdStatus === "set_for_test";
   return [
     {
       id: "em-1",
@@ -86,7 +115,7 @@ function buildChecklist(lock: HsiPartnerLock, pack: PilotEvidencePack): RubricCh
       id: "em-3",
       output: "evidence_map",
       criterion: "Claim → marker → LOINC visible where applicable (e.g. anti-CCP)",
-      howToJudge: `Pack reports claimsWithLoinc=${pack.summary.claimsWithLoinc}; anti-CCP LOINC 53031-9 and RF LOINC 11572-5 expected on RA biomarker rows.`,
+      howToJudge: `Pack reports claimsWithLoinc=${pack.summary.claimsWithLoinc}; fixture min=${thresholds.numeric.minLoincLinkedClaims}; anti-CCP LOINC 53031-9 and RF LOINC 11572-5 expected on RA biomarker rows.`,
       status: "ready_for_human",
       relatedClaimIds: ["HSI-C-RA-002", "HSI-C-RA-011"],
     },
@@ -112,8 +141,7 @@ function buildChecklist(lock: HsiPartnerLock, pack: PilotEvidencePack): RubricCh
       output: "competing_explanations",
       criterion:
         "Competing frames stay visible: TNF-centric, IL-6 / multi-cytokine, ADA/immunogenicity, and RF/ACPA serology tension",
-      howToJudge:
-        "Pack competingExplanations should include expl-ra-tnf-centric, expl-ra-multi-cytokine, expl-ra-ada-immunogenicity, expl-ra-acpa-subgroup with claim IDs attached.",
+      howToJudge: `Pack competingExplanations should include expl-ra-tnf-centric, expl-ra-multi-cytokine, expl-ra-ada-immunogenicity, expl-ra-acpa-subgroup; fixture min=${thresholds.numeric.minCompetingExplanations}.`,
       status: "ready_for_human",
       relatedClaimIds: [
         "HSI-C-RA-001",
@@ -137,7 +165,7 @@ function buildChecklist(lock: HsiPartnerLock, pack: PilotEvidencePack): RubricCh
       id: "ex-1",
       output: "expert_shortlist",
       criterion: "Gaps / hypotheses are reviewable and autoApproved=false",
-      howToJudge: "Every expertShortlist item must have autoApproved=false; Gate C pending rows included.",
+      howToJudge: "Every expertShortlist item must have autoApproved=false; Gate C pending rows included (allowed under fixture).",
       status: "ready_for_human",
       relatedClaimIds: pathwayClaims,
     },
@@ -161,25 +189,116 @@ function buildChecklist(lock: HsiPartnerLock, pack: PilotEvidencePack): RubricCh
       id: "x-2",
       output: "cross_cutting",
       criterion: "Named partner confirms disease + question wording (flip partnerSigned)",
-      howToJudge: "Blocked until outreach produces a confirmed row in ISI_PILOT_PARTNER_SHORTLIST.md and partnerSigned flips.",
+      howToJudge: "Blocked until outreach produces a confirmed row in ISI_PILOT_PARTNER_SHORTLIST.md and partnerSigned flips under legalBinding.",
       status: "blocked_on_partner",
       relatedClaimIds: [],
     },
     {
       id: "x-3",
       output: "cross_cutting",
-      criterion: "Agree numeric success thresholds (time saved, useful evidence, next decision, rejections)",
-      howToJudge: "Fill successMetrics thresholds with partner before formal user testing.",
-      status: "blocked_on_partner",
+      criterion: "Agree numeric success thresholds (partner-scoped edges, competing frames, LOINC claims, Gate C pending policy)",
+      howToJudge: thresholdsSetForTest
+        ? `Fixture thresholds set_for_test (source=${thresholds.thresholdSource}): minPartnerScopedEdges=${thresholds.numeric.minPartnerScopedEdges}, minCompetingExplanations=${thresholds.numeric.minCompetingExplanations}, minLoincLinkedClaims=${thresholds.numeric.minLoincLinkedClaims}, gateCPendingAllowed=${thresholds.numeric.gateCPendingAllowed}, acceptanceOverallAllowed=${thresholds.numeric.acceptanceOverallAllowed}. Real partner must re-agree (replaceWithPartnerAgreedThresholds=true).`
+        : "Fill successMetrics / stage1Thresholds with partner before formal user testing.",
+      status: thresholdsSetForTest ? "set_for_test" : "blocked_on_partner",
       relatedClaimIds: [],
     },
     {
       id: "x-4",
       output: "cross_cutting",
       criterion: "Source licensing / attribution for the agreed literature set",
-      howToJudge: "Scope-locked PMIDs are public PubMed locators; partner may require additional licensed corpora.",
+      howToJudge: "Scope-locked PMIDs are public PubMed locators; partner may require additional licensed corpora. See docs/HOW_TO_SOURCE_LICENSING.md.",
       status: "blocked_on_partner",
       relatedClaimIds: pathwayClaims,
+    },
+  ];
+}
+
+function buildSuccessMetrics(
+  thresholds: Stage1RubricThresholdsBundle,
+): RubricSuccessMetric[] {
+  const status = thresholds.thresholdStatus;
+  const n = thresholds.numeric;
+  const q = thresholds.qualitativeFixturePlaceholders;
+  const fixtureNote =
+    status === "set_for_test"
+      ? " (hypothetical_test_fixture — replace with partner-agreed)"
+      : status === "pending"
+        ? " (TBD — agree before user testing)"
+        : "";
+
+  return [
+    {
+      id: "m-partner-scoped",
+      metric: "Partner-scoped evidence edges",
+      recordWhat: "Evidence-map rows on the locked RA/anti-TNF pathway",
+      threshold: `≥ ${n.minPartnerScopedEdges}${fixtureNote}`,
+      thresholdStatus: status,
+      thresholdWithPartner: `≥ ${n.minPartnerScopedEdges}${fixtureNote}`,
+    },
+    {
+      id: "m-competing",
+      metric: "Competing explanations",
+      recordWhat: "Distinct frames kept visible (TNF / IL-6 / ADA / serology …)",
+      threshold: `≥ ${n.minCompetingExplanations}${fixtureNote}`,
+      thresholdStatus: status,
+      thresholdWithPartner: `≥ ${n.minCompetingExplanations}${fixtureNote}`,
+    },
+    {
+      id: "m-loinc",
+      metric: "LOINC-linked claims",
+      recordWhat: "Claims with a LOINC marker wired on the pack",
+      threshold: `≥ ${n.minLoincLinkedClaims}${fixtureNote}`,
+      thresholdStatus: status,
+      thresholdWithPartner: `≥ ${n.minLoincLinkedClaims}${fixtureNote}`,
+    },
+    {
+      id: "m-gate-c",
+      metric: "Gate C pending policy",
+      recordWhat: "Pending Gate C rows during Stage 1 review",
+      threshold: n.gateCPendingAllowed
+        ? `pending allowed; acceptance may be ${n.acceptanceOverallAllowed}${fixtureNote}`
+        : `pending not allowed${fixtureNote}`,
+      thresholdStatus: status,
+      thresholdWithPartner: n.gateCPendingAllowed
+        ? `pending allowed; acceptance may be ${n.acceptanceOverallAllowed}${fixtureNote}`
+        : `pending not allowed${fixtureNote}`,
+    },
+    {
+      id: "m-time",
+      metric: "Time saved",
+      recordWhat: "Hours / days vs current lit + synthesis path for this question",
+      threshold: `≥ ${q.timeSavedHoursVsBaselineMin}h vs baseline${fixtureNote}`,
+      thresholdStatus: status,
+      thresholdWithPartner: `≥ ${q.timeSavedHoursVsBaselineMin}h vs baseline${fixtureNote}`,
+    },
+    {
+      id: "m-useful",
+      metric: "Useful evidence",
+      recordWhat: "Sources / mechanisms / biomarkers the partner keeps",
+      threshold: `≥ ${q.usefulEvidenceItemsKeptMin} kept items${fixtureNote}`,
+      thresholdStatus: status,
+      thresholdWithPartner: `≥ ${q.usefulEvidenceItemsKeptMin} kept items${fixtureNote}`,
+    },
+    {
+      id: "m-next",
+      metric: "Better next decision",
+      recordWhat: "Clearer next experiment, study design, or kill/continue call",
+      threshold: q.clearerNextDecisionRequired
+        ? `required${fixtureNote}`
+        : `optional${fixtureNote}`,
+      thresholdStatus: status,
+      thresholdWithPartner: q.clearerNextDecisionRequired
+        ? `required${fixtureNote}`
+        : `optional${fixtureNote}`,
+    },
+    {
+      id: "m-reject",
+      metric: "Expert rejections",
+      recordWhat: "What they reject — as carefully as what they accept",
+      threshold: `≥ ${q.expertRejectionsRecordedMin} recorded rejection(s)${fixtureNote}`,
+      thresholdStatus: status,
+      thresholdWithPartner: `≥ ${q.expertRejectionsRecordedMin} recorded rejection(s)${fixtureNote}`,
     },
   ];
 }
@@ -188,6 +307,7 @@ export function buildPilotReviewRubric(opts?: {
   generatedAt?: string;
   lock?: HsiPartnerLock;
   pack?: PilotEvidencePack;
+  thresholds?: Stage1RubricThresholdsBundle;
 }): PilotReviewRubric {
   const generatedAt = opts?.generatedAt ?? new Date().toISOString();
   const lock = opts?.lock ?? getPartnerLock();
@@ -197,9 +317,12 @@ export function buildPilotReviewRubric(opts?: {
       generatedAt,
       evidenceSnapshotRef: "dist/outputs/latest/hsi-isi-export.json",
     });
-  const checklist = buildChecklist(lock, pack);
+  const thresholds = opts?.thresholds ?? getStage1RubricThresholds();
+  const checklist = buildChecklist(lock, pack, thresholds);
   const readyForHuman = checklist.filter((c) => c.status === "ready_for_human").length;
   const blockedOnPartner = checklist.filter((c) => c.status === "blocked_on_partner").length;
+  const setForTest = checklist.filter((c) => c.status === "set_for_test").length;
+  const numericEval = evalPackAgainstStage1NumericThresholds(pack, thresholds.numeric);
 
   return {
     schemaVersion: PILOT_REVIEW_RUBRIC_SCHEMA,
@@ -223,44 +346,26 @@ export function buildPilotReviewRubric(opts?: {
       { id: "4", label: "Expert shortlist (gaps / hypotheses)", packField: "expertShortlist" },
     ],
     checklist,
-    successMetrics: [
-      {
-        id: "m-time",
-        metric: "Time saved",
-        recordWhat: "Hours / days vs current lit + synthesis path for this question",
-        thresholdWithPartner: "TBD — agree before user testing",
-      },
-      {
-        id: "m-useful",
-        metric: "Useful evidence",
-        recordWhat: "Sources / mechanisms / biomarkers the partner keeps",
-        thresholdWithPartner: "TBD — agree before user testing",
-      },
-      {
-        id: "m-next",
-        metric: "Better next decision",
-        recordWhat: "Clearer next experiment, study design, or kill/continue call",
-        thresholdWithPartner: "TBD — agree before user testing",
-      },
-      {
-        id: "m-reject",
-        metric: "Expert rejections",
-        recordWhat: "What they reject — as carefully as what they accept",
-        thresholdWithPartner: "TBD — agree before user testing",
-      },
-    ],
+    stage1Thresholds: thresholds,
+    successMetrics: buildSuccessMetrics(thresholds),
     flipToLockedPilot: [...lock.flipRequirements],
     summary: {
       readyForHuman,
       blockedOnPartner,
+      setForTest,
       packEvidenceRows: pack.summary.evidenceMapRows,
       packClaimsWithLoinc: pack.summary.claimsWithLoinc,
+      numericThresholdsMet: numericEval.pass,
+      thresholdSource: thresholds.thresholdSource,
+      thresholdStatus: thresholds.thresholdStatus,
     },
     nextActions: [
       "Human-review checklist items marked ready_for_human against hsi-pilot-evidence-pack.md.",
       "Keep lockedPilot=false / legalBinding=false until a real named partner confirms disease + question. Fixture partnerSigned is path-testing only (src/hypotheticalPartnerFixture.ts).",
-      "Agree success-metric thresholds before formal pilot user testing.",
-      "Phase 5 complete = hsi-pilot-acceptance.* + hsi-pilot-walkthrough.md (partner-ready Stage 1 pack; partnerSigned still pending).",
+      thresholds.thresholdStatus === "set_for_test"
+        ? "Numeric Stage 1 thresholds are set_for_test under the hypothetical fixture — real partner must re-agree before formal user testing (replaceWithPartnerAgreedThresholds=true)."
+        : "Agree success-metric thresholds before formal pilot user testing.",
+      "Phase 5 complete = hsi-pilot-acceptance.* + hsi-pilot-walkthrough.md (partner-ready Stage 1 pack; real MoU still pending).",
       "Phase 8 (clinical R3–R5 / Akeno) needs an explicit user ask + Stage 3 gates.",
       "Do not treat scopeLocked as a signed commercial partner / MoU.",
     ],
@@ -311,9 +416,29 @@ export function serializePilotReviewRubricMarkdown(
     );
   }
 
-  lines.push("", "## Success metrics (thresholds TBD with partner)", "");
+  const th = rubric.stage1Thresholds;
+  lines.push(
+    "",
+    "## Stage 1 numeric thresholds",
+    "",
+    `- **thresholdSource:** \`${th.thresholdSource}\``,
+    `- **thresholdStatus:** \`${th.thresholdStatus}\``,
+    `- **replaceWithPartnerAgreedThresholds:** \`${th.replaceWithPartnerAgreedThresholds}\``,
+    `- minPartnerScopedEdges: **${th.numeric.minPartnerScopedEdges}**`,
+    `- minCompetingExplanations: **${th.numeric.minCompetingExplanations}**`,
+    `- minLoincLinkedClaims: **${th.numeric.minLoincLinkedClaims}**`,
+    `- gateCPendingAllowed: **${th.numeric.gateCPendingAllowed}**`,
+    `- acceptanceOverallAllowed: **${th.numeric.acceptanceOverallAllowed}**`,
+    "",
+    "> Real partner must re-agree these numbers before formal user testing / lockedPilot.",
+    "",
+    "## Success metrics",
+    "",
+  );
   for (const m of rubric.successMetrics) {
-    lines.push(`- **${m.metric}** — ${m.recordWhat} · threshold: ${m.thresholdWithPartner}`);
+    lines.push(
+      `- [\`${m.thresholdStatus}\`] **${m.metric}** — ${m.recordWhat} · threshold: ${m.threshold}`,
+    );
   }
 
   lines.push("", "## Flip to partnerSigned / lockedPilot (needs real partner)", "");
@@ -327,8 +452,12 @@ export function serializePilotReviewRubricMarkdown(
     "",
     `- ready_for_human: ${rubric.summary.readyForHuman}`,
     `- blocked_on_partner: ${rubric.summary.blockedOnPartner}`,
+    `- set_for_test: ${rubric.summary.setForTest}`,
     `- pack evidence rows: ${rubric.summary.packEvidenceRows}`,
     `- claims with LOINC: ${rubric.summary.packClaimsWithLoinc}`,
+    `- numericThresholdsMet: ${rubric.summary.numericThresholdsMet}`,
+    `- thresholdSource: ${rubric.summary.thresholdSource}`,
+    `- thresholdStatus: ${rubric.summary.thresholdStatus}`,
     "",
     "## Next actions",
     "",
