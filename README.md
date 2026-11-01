@@ -4,6 +4,8 @@ Shared **Human Systems Intelligence** substrate for **Aksh Health** (clinic HITL
 
 Evidence-graded edges (`established` / `uncertain` / `unexplored`) plus claim → marker (LOINC) → observation → action stubs. No PHI. No auto diagnosis. No EHR write-back.
 
+**Vision alignment:** full portfolio map (Aksh / ISI consumers, bio-stack P3 plugins, DeliverX reference-only) lives in [`docs/VISION_REPO_ALIGNMENT.md`](docs/VISION_REPO_ALIGNMENT.md). **P0 DONE / P1 ACTIVE.**
+
 ## Why this name
 
 Short, GitHub-safe, matches the roadmap “HSI core” lane — see `NAME.md`.
@@ -79,15 +81,18 @@ import {
 
 ## Active codebase (sole edit target)
 
-**`hsi-core` is the sole active codebase for HSI work.** All substrate, exports, docs, and curator checklists land here.
+**`hsi-core` is the sole active codebase for HSI work.** Edit only this repository (`~/Projects/hsi-core`, https://github.com/gnaneshwer23/hsi-core). All substrate, seeds, maps, exports, docs, and curator checklists land here. Product apps (Aksh / ISI) and bio tools consume published artifacts — they are never HSI edit targets.
 
-| Repo | Policy |
-|------|--------|
-| **gnaneshwer23/hsi-core** | Edit here |
-| **gnaneshwer23/immunecity** | Out of scope for edits — consume via published export/API only if needed |
-| **gnaneshwer23/swift-deliveries** | Out of scope for edits — not part of the HSI evidence core |
+| Repo / surface | Policy |
+|----------------|--------|
+| **gnaneshwer23/hsi-core** | **Edit here only** |
+| **gnaneshwer23/immunecity** + ISI site | Out of scope for edits — consume via published export/API |
+| **Aksh Health / aksh\*** | Out of scope for edits — consume Aksh map + HITL stub exports |
+| **gnaneshwer23/hsi-sources** | Shelf only — do not treat as runtime core |
+| **gnaneshwer23/swift-deliveries** | Out of scope — HITL pattern reference only |
+| **AF3 / Boltz / ESM / OpenMM / RDKit / REINVENT4 / TDC** | P3 plugins at most — not P0/P1 |
 
-Do not open PRs or push commits against immunecity or swift-deliveries for HSI. Ship maps and curator markdown from this repo; product apps pull published artifacts.
+Do not open PRs or push commits against immunecity, swift-deliveries, or Aksh product repos for HSI. Ship maps and curator markdown from this repo; consumers pull published artifacts. Detail: [`docs/VISION_REPO_ALIGNMENT.md`](docs/VISION_REPO_ALIGNMENT.md).
 
 ## Out of scope
 

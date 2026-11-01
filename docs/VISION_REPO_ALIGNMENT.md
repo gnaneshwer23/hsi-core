@@ -1,0 +1,136 @@
+# Vision ↔ repo alignment
+
+**Human Systems Intelligence (HSI)** is the shared evidence layer: graded edges
+(`established` / `uncertain` / `unexplored`), claim → marker (LOINC) → observation →
+action stubs, Gate C human-only curation, graph before agents, T2D / immuno-metabolic
+bridge first. **Aksh** = clinician-safe half (HITL CDS). **ISI** = discovery half
+(Ask / Radar). No unsupported diagnosis. No PHI → LLM in production.
+
+| Phase | Status | Focus |
+|-------|--------|--------|
+| **P0** | **DONE** | Schema, seeds, grades, ISI/Aksh exports, validation, gap report |
+| **P1** | **ACTIVE** | Durable `aksh:` maps, HITL read-only stubs, Gate C checklists, bridge shortlist |
+| **P2** | Planned | Richer exports / curator UX inside hsi-core; product apps bind published artifacts |
+| **P3** | Deferred | Optional bio-stack plugins (structure, docking, generative chem) behind explicit licenses |
+
+**Hard edit rule:** only [`gnaneshwer23/hsi-core`](https://github.com/gnaneshwer23/hsi-core)
+(`~/Projects/hsi-core`) is edited for HSI. Product and bio repos **consume** or stay
+reference-only — they are never HSI edit targets.
+
+**Alignment statuses**
+
+| Status | Meaning |
+|--------|---------|
+| `core` | Sole substrate; edit here |
+| `consumer` | Pulls published hsi-core export/API; do not edit for HSI |
+| `data-source` | Public evidence / assay corpus; ingest pointers only (no PHI) |
+| `deferred` | Useful later; not wired until P3+ and license review |
+| `reference-only` | Pattern or shelf; never a dependency of the evidence core |
+
+---
+
+## Architecture (hub and spokes)
+
+```mermaid
+flowchart TB
+  subgraph hub["hsi-core — sole edit target"]
+    SCH[Evidence grades + edge/claim schema]
+    SEED[T2D / immuno-metabolic seeds]
+    EXP[exports: ISI · Aksh map · gap report]
+    DOC[docs: Gate C · HITL · this map]
+  end
+
+  subgraph consumers["P1 consumers — pull exports only"]
+    AKSH[Aksh Health / aksh* apps<br/>clinician-safe HITL]
+    ISI[ISI / immunecity site<br/>discovery Ask / Radar]
+  end
+
+  subgraph shelf["Shelf — not runtime"]
+    SRC[hsi-sources<br/>raw notes / bookmarks]
+  end
+
+  subgraph hitl_ref["HITL pattern reference"]
+    DX[swift-deliveries / DeliverX<br/>reference-only]
+  end
+
+  subgraph p3["P3 optional plugins — never P0/P1"]
+    TDC[TDC]
+    AF3[AlphaFold3]
+    BOLTZ[Boltz]
+    ESM[ESM]
+    OMM[OpenMM]
+    RDK[RDKit]
+    REI[REINVENT4]
+  end
+
+  subgraph data["Data sources — citation / future ingest"]
+    CV[ClinVar]
+    TCGA[awesome-TCGA]
+  end
+
+  hub -->|JSON / npm package| AKSH
+  hub -->|JSON / npm package| ISI
+  SRC -.->|curator shelf only| hub
+  DX -.->|HITL UX patterns only| AKSH
+  p3 -.->|future plugin adapter| hub
+  data -.->|PMID / variant pointers| hub
+```
+
+---
+
+## Portfolio map
+
+### User / product repos
+
+| Repo / surface | Role in vision | Status | Plugs into hsi-core | Phase | Constraints |
+|----------------|----------------|--------|---------------------|-------|-------------|
+| **[gnaneshwer23/hsi-core](https://github.com/gnaneshwer23/hsi-core)** | Shared HSI substrate: grades, seeds, validation, ISI + Aksh exports, Gate C docs | **core** | *is* the hub | P0–P1 | Sole edit target; no PHI; no invented PMIDs |
+| **[gnaneshwer23/immunecity](https://github.com/gnaneshwer23/immunecity)** | ISI product app / discovery UI (REL graph, Ask, Radar) | **consumer** | Import `buildIsiExportBundle` / `exports/`; Gate C approve stays human in product Neon | P1 | **Do not edit for HSI**; consume published artifacts only |
+| **ISI site** (product surface on immunecity / related deploy) | Public discovery face of HSI grades — never CDS | **consumer** | Same ISI export path | P1 | Honest grades; no diagnosis; no PHI→LLM in prod |
+| **Aksh Health** ([akshhealth.com](https://akshhealth.com) + any `aksh*` repos) | Clinician-safe half: HITL suggestion cards when `isCdsSurfacable` | **consumer** | `export:aksh-map`, HITL stub, `aksh:` ids | P1 | No EHR write-back from map alone; CDS closed until Gate C + `established` |
+| **[gnaneshwer23/hsi-sources](https://github.com/gnaneshwer23/hsi-sources)** | Bookmark / raw-source shelf for curators | **reference-only** (shelf) | Never a runtime dep; humans promote claims into hsi-core seeds | P1 | No auto-ingest; no secrets/PHI |
+| **[gnaneshwer23/swift-deliveries](https://github.com/gnaneshwer23/swift-deliveries)** (DeliverX) | Logistics HITL / ops UX — **pattern reference** for human-in-the-loop, not evidence | **reference-only** | **never** (no graph edges, no CDS) | — | **Do not edit for HSI**; borrow HITL interaction ideas only |
+
+### External bio / data stack
+
+| Repo | Role in vision | Status | Plugs into hsi-core | Phase | Constraints |
+|------|----------------|--------|---------------------|-------|-------------|
+| **[mims-harvard/TDC](https://github.com/mims-harvard/TDC)** | Therapeutics Data Commons — benchmarks / datasets for ML eval | **deferred** | Future plugin: offline eval against graded claims; not seed authority | P3 | Dataset licenses vary per task; cite TDC + underlying sets |
+| **[google-deepmind/alphafold3](https://github.com/google-deepmind/alphafold3)** | Structure prediction for mechanism hypotheses | **deferred** | Future ISI plugin only; never auto-promotes `hsiGrade` | P3 | **Non-commercial / restricted terms** — review AF3 license before any adapter; not for clinic CDS |
+| **[jwohlwend/boltz](https://github.com/jwohlwend/boltz)** | Open structure / complex prediction alternative | **deferred** | Future ISI plugin (prefer when AF3 license blocks) | P3 | Check Apache/model weights terms; discovery-only |
+| **[facebookresearch/esm](https://github.com/facebookresearch/esm)** | Protein language models / embeddings | **deferred** | Future similarity / annotation helpers for discovery edges | P3 | Model card + weight license; no PHI sequences from clinic |
+| **[openmm/openmm](https://github.com/openmm/openmm)** | Molecular dynamics | **deferred** | Future simulation plugin behind ISI lab lane | P3 | LGPL/OpenMM license; compute cost; not Gate C evidence |
+| **[rdkit/rdkit](https://github.com/rdkit/rdkit)** | Cheminformatics toolkit | **deferred** | Future small-molecule descriptors for research claims | P3 | BSD-style; still never invents clinical edges |
+| **[MolecularAI/REINVENT4](https://github.com/MolecularAI/REINVENT4)** | Generative molecular design | **deferred** | Future ISI design sandbox only | P3 | Apache-2.0 typical; **never** clinic recommendation path |
+| **[ncbi/clinvar](https://github.com/ncbi/clinvar)** | Variant ↔ clinical significance catalog | **data-source** | Future claim/evidence pointers (variant → phenotype); curation still Gate C | P2–P3 | Public data; cite ClinVar; no silent promotion to `established` |
+| **[IARCbioinfo/awesome-TCGA](https://github.com/IARCbioinfo/awesome-TCGA)** | Curated TCGA resource index | **data-source** / **reference-only** | Pointer shelf for immuno-oncology discovery literature & data portals | P2–P3 | Respect TCGA / dbGaP access rules; no PHI in hsi-core |
+
+---
+
+## How the portfolio aligns (one picture)
+
+hsi-core owns the graded graph and publishes read-only exports. Aksh and ISI (immunecity + site) are **consumers**: clinician-safe HITL vs discovery, both forbidden from inventing grades or writing PHI into LLMs. hsi-sources is a curator shelf; DeliverX is only a HITL UX reference. ClinVar / TCGA indexes may later ground citations; AF3, Boltz, ESM, OpenMM, RDKit, REINVENT4, and TDC stay **P3 plugins** — useful for theory→practical discovery, never for unsupported diagnosis or automatic Gate C.
+
+---
+
+## Non-negotiables (every spoke)
+
+1. Graph and Gate C before agents.
+2. `hsiGrade=established` requires `curationReview=approved` (human).
+3. No unsupported diagnosis; ISI ≠ CDS.
+4. No PHI in seeds/exports; no PHI → LLM in production paths that touch this substrate.
+5. Bio-structure / generative tools do **not** flip evidence grades.
+6. Edit only hsi-core for HSI; never immunecity, swift-deliveries, or Aksh product repos for substrate work.
+
+---
+
+## Next actions (stay inside hsi-core)
+
+1. Keep P1: expand T2D / immuno-metabolic bridge seeds + verified PMID Gate C checklists under `docs/`.
+2. Harden Aksh HITL stub + `exports/hsi-aksh-node-map.json` without opening CDS on seeds.
+3. Grow ISI export / REL suggestion maps; never auto-approve into a product KG.
+4. Document any future ClinVar/TCGA **pointer** fields as optional claim metadata — still Gate C.
+5. Do **not** vendor AF3/Boltz/etc. until a written P3 plugin RFC + license sign-off lands in this repo.
+6. Leave immunecity, swift-deliveries, Aksh apps, and hsi-sources untouched from this workspace.
+
+See also: [AKSH_HITL_CONSUMPTION.md](./AKSH_HITL_CONSUMPTION.md), [IMMUNECITY_GATE_C_COMMIT_MANUAL.md](./IMMUNECITY_GATE_C_COMMIT_MANUAL.md), README “Active codebase (sole edit target)”.
