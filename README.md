@@ -18,6 +18,7 @@ bun test
 bun run validate
 bun run export:isi
 bun run export:isi-map
+bun run export:aksh-map
 bun run gap-report
 ```
 
@@ -36,13 +37,22 @@ import {
   buildIsiExportBundle,
   listIsiRelSuggestions,
   claimsWithIsiMappings,
+  listAkshNodeSuggestions,
+  claimsWithAkshMappings,
 } from "hsi-core";
 ```
 
 | Product | Rules |
 |---------|--------|
 | **ISI** | Discovery / Ask / Radar only; honest grades; `buildIsiExportBundle()` / `bun run export:isi` |
-| **Aksh** | HITL suggestion cards only when `isCdsSurfacable(edge)`; never auto-apply |
+| **Aksh** | HITL suggestion cards only when `isCdsSurfacable(edge)`; `akshNodeId` is a map pointer only — never auto-apply to EHR |
+
+### Aksh consumption (`akshNodeId`)
+
+- `claimsWithAkshMappings()` fills provisional `AKSH-N-*` / `AKSH-RULE-*` ids for T2D / bridge seeds.
+- Having an `akshNodeId` does **not** open CDS. Use `isCdsSurfacable(edge)` (`approved` + `established`) before any HITL CDS card.
+- `bun run export:aksh-map` writes `exports/hsi-aksh-node-map.json` for Aksh / immunecity readers.
+- Replace provisional ids with Aksh clinic KG canonical ids when published.
 
 ## Axes (do not collapse)
 
@@ -63,9 +73,11 @@ import {
 - ISI JSON export (`hsi-isi-export-1`)
 - Schema gap report (`bun run gap-report`) — ISI/Aksh mapping slots + bridge shortlist
 - ISI REL-* suggestion map (`bun run export:isi-map`) — curation pointers only; never auto-approve
+- Aksh node-id map (`bun run export:aksh-map`) — HITL pointers; CDS stays closed on seeds
 - Safety release criteria v0
 
 ## Out of scope
 
 Agent sprawl, AF3/Boltz, clinic write-back, live PHI, inventing PMIDs, treating ISI as CDS,
-collapsing `teachingStatus` / `hsiGrade` / Gate C into one score.
+collapsing `teachingStatus` / `hsiGrade` / Gate C into one score,
+treating `akshNodeId` as CDS eligibility.
