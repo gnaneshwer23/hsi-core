@@ -27,6 +27,11 @@ import {
   ISI_REL_SUGGESTIONS,
   summarizeIsiRelMappings,
 } from "./mappings/isiRelSuggestions";
+import {
+  buildPilotEvidencePack,
+  serializePilotEvidencePack,
+  serializePilotEvidencePackMarkdown,
+} from "./pilotEvidencePack";
 import { validateHsiEdge } from "./validate";
 
 function packageVersion(cwd: string): string {
@@ -190,6 +195,10 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
   const hitlStub = buildAkshHitlStubBundle();
   const gapReport = buildSchemaGapReport({ generatedAt });
   const gateC = buildGateCChecklist({ generatedAt });
+  const pilotPack = buildPilotEvidencePack({
+    generatedAt,
+    evidenceSnapshotRef: `dist/outputs/${bundleId}/hsi-isi-export.json`,
+  });
 
   const fileMap: Record<string, string> = {
     "hsi-isi-export.json": serializeIsiExport(isiBundle),
@@ -200,6 +209,8 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     "hsi-gap-report.md": serializeGapReportMarkdown(gapReport),
     "gate-c-checklist.json": serializeGateCChecklist(gateC),
     "gate-c-checklist.md": serializeGateCChecklistMarkdown(gateC),
+    "hsi-pilot-evidence-pack.json": serializePilotEvidencePack(pilotPack),
+    "hsi-pilot-evidence-pack.md": serializePilotEvidencePackMarkdown(pilotPack),
   };
 
   const files: string[] = [];
@@ -228,6 +239,8 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       gapReportMd: "hsi-gap-report.md",
       gateCChecklistJson: "gate-c-checklist.json",
       gateCChecklistMd: "gate-c-checklist.md",
+      pilotEvidencePackJson: "hsi-pilot-evidence-pack.json",
+      pilotEvidencePackMd: "hsi-pilot-evidence-pack.md",
     },
     counts: {
       isiEdges: isiBundle.edges.length,
@@ -236,9 +249,11 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       hitlCards: hitlStub.cards.length,
       gapRows: gapReport.gaps.length,
       gateCPending: gateC.summary.pendingGateC,
+      pilotEvidenceMapRows: pilotPack.summary.evidenceMapRows,
     },
     consumerNotes: [
       "ISI: discovery / Ask / Radar only — use hsi-isi-export.json + hsi-isi-rel-map.json.",
+      "ISI pilot walkthrough: hsi-pilot-evidence-pack.* (disease/question TBD; no patient CDS).",
       "Aksh: HITL map pointers only — use hsi-aksh-node-map.json + hsi-aksh-hitl-cards.json; CDS stays closed on seeds.",
       "Gate C: human checklist in gate-c-checklist.*; Neon approve is outside this repo.",
       "Regenerate with: bun run outputs",

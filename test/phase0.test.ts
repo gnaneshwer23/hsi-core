@@ -27,6 +27,7 @@ import {
   listBridgeCandidates,
   listIsiRelSuggestions,
   buildGateCChecklist,
+  buildPilotEvidencePack,
   loadAkshHitlStubFromExport,
   migrateAkshNodeId,
   parseAkshNodeMapExport,
@@ -353,6 +354,21 @@ describe("Gate C checklist + publish outputs", () => {
     );
   });
 
+  it("builds a disease-agnostic pilot evidence pack without patient CDS", () => {
+    const pack = buildPilotEvidencePack({ generatedAt: "2026-11-01T12:00:00.000Z" });
+    expect(pack.schemaVersion).toBe("hsi-pilot-evidence-pack-1");
+    expect(pack.disease).toBe("TBD");
+    expect(pack.researchQuestion).toContain("TBD");
+    expect(pack.notCds).toBe(true);
+    expect(pack.noPatientLevelActions).toBe(true);
+    expect(pack.autoApproveIntoKg).toBe(false);
+    expect(pack.questionProject.scope.population).toBe("unknown");
+    expect(pack.evidenceMap.length).toBe(HSI_T2D_IMMUNO_SEED_EDGES.length);
+    expect(pack.summary.evidenceMapRows).toBe(pack.evidenceMap.length);
+    expect(pack.expertShortlist.every((i) => i.autoApproved === false)).toBe(true);
+    expect(pack.clinicalBoundary.some((b) => b.toLowerCase().includes("ehr"))).toBe(true);
+  });
+
   it("writes versioned dist/outputs bundle with required artifacts", () => {
     const result = publishOutputs({ generatedAt: "2026-11-01T12:00:00.000Z" });
     expect(result.bundleId).toContain("hsi-core-0.1.0-");
@@ -364,6 +380,8 @@ describe("Gate C checklist + publish outputs", () => {
     expect(result.files).toContain("hsi-gap-report.md");
     expect(result.files).toContain("gate-c-checklist.json");
     expect(result.files).toContain("gate-c-checklist.md");
+    expect(result.files).toContain("hsi-pilot-evidence-pack.json");
+    expect(result.files).toContain("hsi-pilot-evidence-pack.md");
     expect(result.files).toContain("MANIFEST.json");
 
     for (const name of result.files) {

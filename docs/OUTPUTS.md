@@ -31,15 +31,19 @@ dist/outputs/
     hsi-gap-report.md                 # short human summary
     gate-c-checklist.json             # curated REL + PMID + S-P-O + status pending
     gate-c-checklist.md
+    hsi-pilot-evidence-pack.json      # M0 pilot pack (hsi-pilot-evidence-pack-1)
+    hsi-pilot-evidence-pack.md        # human walkthrough / brief shell
 ```
 
 ## Who uses what
 
 | Consumer | Files | Rules |
 |----------|-------|--------|
-| **ISI** | `hsi-isi-export.json`, `hsi-isi-rel-map.json`, `gate-c-checklist.*` | Discovery / Ask / Radar only. REL map never auto-approves into KG. Neon Gate C is human-only. |
+| **ISI** | `hsi-isi-export.json`, `hsi-isi-rel-map.json`, `gate-c-checklist.*`, `hsi-pilot-evidence-pack.*` | Discovery / Ask / Radar only. REL map never auto-approves into KG. Neon Gate C is human-only. Pilot pack = disease/question **TBD** template for partner walkthroughs (PRD M0). |
 | **Aksh** | `hsi-aksh-node-map.json`, `hsi-aksh-hitl-cards.json` | HITL map pointers. `akshNodeId` ≠ CDS. Seeds stay `cdsSurfacable=false`. |
-| **Curators** | `gate-c-checklist.md`, `hsi-gap-report.md` | Pending REL list + gap backlog. Keep work in hsi-core docs/seeds. |
+| **Curators** | `gate-c-checklist.md`, `hsi-gap-report.md`, `hsi-pilot-evidence-pack.md` | Pending REL list + gap backlog + pilot brief shell. Keep work in hsi-core docs/seeds. |
+
+PRD / brief four outputs (evidence map, entity slice, competing explanations, expert shortlist) are assembled in `hsi-pilot-evidence-pack.*`. See [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md).
 
 ## Invariants
 

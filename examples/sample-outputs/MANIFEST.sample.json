@@ -15,7 +15,9 @@
     "gapReportJson": "hsi-gap-report.json",
     "gapReportMd": "hsi-gap-report.md",
     "gateCChecklistJson": "gate-c-checklist.json",
-    "gateCChecklistMd": "gate-c-checklist.md"
+    "gateCChecklistMd": "gate-c-checklist.md",
+    "pilotEvidencePackJson": "hsi-pilot-evidence-pack.json",
+    "pilotEvidencePackMd": "hsi-pilot-evidence-pack.md"
   },
   "note": "Sample only — run bun run outputs for a real bundle under dist/outputs/"
 }

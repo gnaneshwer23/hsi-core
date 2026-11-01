@@ -109,6 +109,20 @@ export {
 } from "./publishOutputs";
 
 export {
+  PILOT_EVIDENCE_PACK_SCHEMA,
+  buildPilotEvidencePack,
+  serializePilotEvidencePack,
+  serializePilotEvidencePackMarkdown,
+  type PilotEvidenceMapRow,
+  type PilotEvidencePack,
+  type PilotEntitySlice,
+  type PilotExpertItem,
+  type PilotExplanationSlot,
+  type PilotQuestionProject,
+  type PilotScopeField,
+} from "./pilotEvidencePack";
+
+export {
   ISI_REL_SUGGESTIONS,
   claimsWithIsiMappings,
   listIsiRelSuggestions,

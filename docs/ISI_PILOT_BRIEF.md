@@ -3,7 +3,8 @@
 > **ISI helps immune-disease research teams investigate a defined question by connecting traceable evidence across cells, pathways, biomarkers, treatments and studies—and showing what is established, uncertain and worth testing.**
 
 **Status:** outreach / partner-selection. Disease and question are **TBD after partner conversations** — not pre-assigned.  
-**Immediate deliverable:** this brief + [`ISI_PILOT_PARTNER_SHORTLIST.md`](./ISI_PILOT_PARTNER_SHORTLIST.md). Not another general-purpose AI feature.
+**Immediate deliverable:** this brief + [`ISI_PILOT_PARTNER_SHORTLIST.md`](./ISI_PILOT_PARTNER_SHORTLIST.md). Not another general-purpose AI feature.  
+**PRD map:** [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md) (external PRD v1.0 → build now vs defer).
 
 ---
 
@@ -66,7 +67,8 @@ No requirement for a new product surface beyond what is needed to walk a partner
 [`hsi-core`](https://github.com/gnaneshwer23/hsi-core) is the evidence substrate for the pilot:
 
 - Store **evidence**, **provenance**, and **uncertainty** (graded edges, claims, Gate C human curation).
-- Publish artifacts with `bun run outputs` (alias `bun run publish`) → versioned `dist/outputs/` bundles (ISI export, REL map, gap report, Gate C checklist, etc.). See [`OUTPUTS.md`](./OUTPUTS.md).
+- Publish artifacts with `bun run outputs` (alias `bun run publish`) → versioned `dist/outputs/` bundles (ISI export, REL map, gap report, Gate C checklist, **pilot evidence pack**, etc.). See [`OUTPUTS.md`](./OUTPUTS.md).
+- Partner walkthrough shape: `hsi-pilot-evidence-pack.md` (disease/question TBD; no patient-level CDS).
 - Product UIs (immunecity / ISI site) **consume** published exports; they are not edit targets for this pilot work.
 
 ---

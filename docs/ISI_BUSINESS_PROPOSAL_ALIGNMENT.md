@@ -1,7 +1,7 @@
 # ISI business proposal ↔ pilot alignment
 
 **Source (external):** *Immune Disease Discovery and Clinical Intelligence — Business proposal for a partner-led pilot* (Dr Gnaneshwer Jadav, November 2026).  
-**Repo anchors:** [`ISI_PILOT_BRIEF.md`](./ISI_PILOT_BRIEF.md), [`ISI_PILOT_PARTNER_SHORTLIST.md`](./ISI_PILOT_PARTNER_SHORTLIST.md), [`VISION_REPO_ALIGNMENT.md`](./VISION_REPO_ALIGNMENT.md).
+**Repo anchors:** [`ISI_PILOT_BRIEF.md`](./ISI_PILOT_BRIEF.md), [`ISI_PILOT_PARTNER_SHORTLIST.md`](./ISI_PILOT_PARTNER_SHORTLIST.md), [`ISI_PILOT_PRD_ALIGNMENT.md`](./ISI_PILOT_PRD_ALIGNMENT.md), [`VISION_REPO_ALIGNMENT.md`](./VISION_REPO_ALIGNMENT.md).
 
 This note maps proposal claims to what **hsi-core builds now** vs what is **deferred**. It does not edit immunecity or invent partners.
 

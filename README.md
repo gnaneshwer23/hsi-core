@@ -13,6 +13,7 @@ Immediate next move: prove ISI helps one immune-disease **research intelligence*
 | Doc | Purpose |
 |-----|---------|
 | [`docs/ISI_PILOT_BRIEF.md`](docs/ISI_PILOT_BRIEF.md) | One-page pilot brief (purpose, non-goals, scope, outputs, metrics, decision gate) |
+| [`docs/ISI_PILOT_PRD_ALIGNMENT.md`](docs/ISI_PILOT_PRD_ALIGNMENT.md) | External PRD v1.0 → build now vs defer + artifact coverage |
 | [`docs/ISI_PILOT_PARTNER_SHORTLIST.md`](docs/ISI_PILOT_PARTNER_SHORTLIST.md) | Outreach shortlist — partner types + UK/EU/US institution categories (candidates only) |
 
 Disease + question lock **after** partner conversations. `bun run outputs` artifacts from this repo feed the pilot evidence layer.
