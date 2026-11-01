@@ -25,7 +25,8 @@ reference-only — they are never HSI edit targets.
 | `consumer` | Pulls published hsi-core export/API; do not edit for HSI |
 | `data-source` | Public evidence / assay corpus; ingest pointers only (no PHI) |
 | `deferred` | Useful later; not wired until P3+ and license review |
-| `reference-only` | Pattern or shelf; never a dependency of the evidence core |
+| `reference-only` | Shelf or bookmark surface; never a dependency of the evidence core |
+| `ignore` | Out of scope for HSI — do not sync, wire, or treat as pattern reference |
 
 ---
 
@@ -46,11 +47,7 @@ flowchart TB
   end
 
   subgraph shelf["Shelf — not runtime"]
-    SRC[hsi-sources<br/>raw notes / bookmarks]
-  end
-
-  subgraph hitl_ref["HITL pattern reference"]
-    DX[swift-deliveries / DeliverX<br/>reference-only]
+    SRC[hsi-sources<br/>curator shelf · archival only]
   end
 
   subgraph p3["P3 optional plugins — never P0/P1"]
@@ -70,11 +67,12 @@ flowchart TB
 
   hub -->|JSON / npm package| AKSH
   hub -->|JSON / npm package| ISI
-  SRC -.->|curator shelf only| hub
-  DX -.->|HITL UX patterns only| AKSH
+  SRC -.->|curator shelf only · no sync| hub
   p3 -.->|future plugin adapter| hub
   data -.->|PMID / variant pointers| hub
 ```
+
+**Ignored (not a spoke):** [`gnaneshwer23/swift-deliveries`](https://github.com/gnaneshwer23/swift-deliveries) / DeliverX — logistics product unrelated to HSI. Do not use as HITL pattern reference, do not plan future wire-up, do not sync.
 
 ---
 
@@ -88,8 +86,8 @@ flowchart TB
 | **[gnaneshwer23/immunecity](https://github.com/gnaneshwer23/immunecity)** | ISI product app / discovery UI (REL graph, Ask, Radar) | **consumer** | Import `buildIsiExportBundle` / `exports/`; Gate C approve stays human in product Neon | P1 | **Do not edit for HSI**; consume published artifacts only |
 | **ISI site** (product surface on immunecity / related deploy) | Public discovery face of HSI grades — never CDS | **consumer** | Same ISI export path | P1 | Honest grades; no diagnosis; no PHI→LLM in prod |
 | **Aksh Health** ([akshhealth.com](https://akshhealth.com) + any `aksh*` repos) | Clinician-safe half: HITL suggestion cards when `isCdsSurfacable` | **consumer** | `export:aksh-map`, HITL stub, `aksh:` ids | P1 | No EHR write-back from map alone; CDS closed until Gate C + `established` |
-| **[gnaneshwer23/hsi-sources](https://github.com/gnaneshwer23/hsi-sources)** | Bookmark / raw-source shelf for curators | **reference-only** (shelf) | Never a runtime dep; humans promote claims into hsi-core seeds | P1 | No auto-ingest; no secrets/PHI |
-| **[gnaneshwer23/swift-deliveries](https://github.com/gnaneshwer23/swift-deliveries)** (DeliverX) | Logistics HITL / ops UX — **pattern reference** for human-in-the-loop, not evidence | **reference-only** | **never** (no graph edges, no CDS) | — | **Do not edit for HSI**; borrow HITL interaction ideas only |
+| **[gnaneshwer23/hsi-sources](https://github.com/gnaneshwer23/hsi-sources)** | Curator bookmark / raw-source shelf; may retain a historical DeliverX vendor snapshot | **reference-only** (shelf · **archival**) | Never a runtime dep; humans promote claims into hsi-core seeds | P1 | **Archival only** — do not sync or use vendor snapshots for HSI; no auto-ingest; no secrets/PHI |
+| **[gnaneshwer23/swift-deliveries](https://github.com/gnaneshwer23/swift-deliveries)** (DeliverX) | Unrelated logistics product | **ignore** | **never** | — | **Out of scope** — not an HSI spoke, not a HITL pattern reference, not a future wire-up target; do not edit or sync |
 
 ### External bio / data stack
 
@@ -109,7 +107,7 @@ flowchart TB
 
 ## How the portfolio aligns (one picture)
 
-hsi-core owns the graded graph and publishes read-only exports. Aksh and ISI (immunecity + site) are **consumers**: clinician-safe HITL vs discovery, both forbidden from inventing grades or writing PHI into LLMs. hsi-sources is a curator shelf; DeliverX is only a HITL UX reference. ClinVar / TCGA indexes may later ground citations; AF3, Boltz, ESM, OpenMM, RDKit, REINVENT4, and TDC stay **P3 plugins** — useful for theory→practical discovery, never for unsupported diagnosis or automatic Gate C.
+hsi-core owns the graded graph and publishes read-only exports. Aksh and ISI (immunecity + site) are **consumers**: clinician-safe HITL vs discovery, both forbidden from inventing grades or writing PHI into LLMs. hsi-sources is a curator shelf (**archival only** — any historical DeliverX vendor snapshot must not be synced or used for HSI). DeliverX / swift-deliveries is **ignored** — out of scope, not a spoke. ClinVar / TCGA indexes may later ground citations; AF3, Boltz, ESM, OpenMM, RDKit, REINVENT4, and TDC stay **P3 plugins** — useful for theory→practical discovery, never for unsupported diagnosis or automatic Gate C.
 
 ---
 
@@ -120,7 +118,7 @@ hsi-core owns the graded graph and publishes read-only exports. Aksh and ISI (im
 3. No unsupported diagnosis; ISI ≠ CDS.
 4. No PHI in seeds/exports; no PHI → LLM in production paths that touch this substrate.
 5. Bio-structure / generative tools do **not** flip evidence grades.
-6. Edit only hsi-core for HSI; never immunecity, swift-deliveries, or Aksh product repos for substrate work.
+6. Edit only hsi-core for HSI; never immunecity or Aksh product repos for substrate work. Ignore DeliverX / swift-deliveries entirely.
 
 ---
 
@@ -131,6 +129,6 @@ hsi-core owns the graded graph and publishes read-only exports. Aksh and ISI (im
 3. Grow ISI export / REL suggestion maps; never auto-approve into a product KG.
 4. Document any future ClinVar/TCGA **pointer** fields as optional claim metadata — still Gate C.
 5. Do **not** vendor AF3/Boltz/etc. until a written P3 plugin RFC + license sign-off lands in this repo.
-6. Leave immunecity, swift-deliveries, Aksh apps, and hsi-sources untouched from this workspace.
+6. Leave immunecity, Aksh apps, and hsi-sources untouched from this workspace. **Ignore** DeliverX / swift-deliveries (not a next step, not a wire-up).
 
 See also: [AKSH_HITL_CONSUMPTION.md](./AKSH_HITL_CONSUMPTION.md), [IMMUNECITY_GATE_C_COMMIT_MANUAL.md](./IMMUNECITY_GATE_C_COMMIT_MANUAL.md), README “Active codebase (sole edit target)”.

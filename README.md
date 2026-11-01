@@ -4,7 +4,7 @@ Shared **Human Systems Intelligence** substrate for **Aksh Health** (clinic HITL
 
 Evidence-graded edges (`established` / `uncertain` / `unexplored`) plus claim → marker (LOINC) → observation → action stubs. No PHI. No auto diagnosis. No EHR write-back.
 
-**Vision alignment:** full portfolio map (Aksh / ISI consumers, bio-stack P3 plugins, DeliverX reference-only) lives in [`docs/VISION_REPO_ALIGNMENT.md`](docs/VISION_REPO_ALIGNMENT.md). **P0 DONE / P1 ACTIVE.**
+**Vision alignment:** full portfolio map (Aksh / ISI consumers, bio-stack P3 plugins; DeliverX ignored) lives in [`docs/VISION_REPO_ALIGNMENT.md`](docs/VISION_REPO_ALIGNMENT.md). **P0 DONE / P1 ACTIVE.**
 
 ## Why this name
 
@@ -99,15 +99,16 @@ import {
 | **gnaneshwer23/hsi-core** | **Edit here only** |
 | **gnaneshwer23/immunecity** + ISI site | Out of scope for edits — consume via published export/API |
 | **Aksh Health / aksh\*** | Out of scope for edits — consume Aksh map + HITL stub exports |
-| **gnaneshwer23/hsi-sources** | Shelf only — do not treat as runtime core |
-| **gnaneshwer23/swift-deliveries** | Out of scope — HITL pattern reference only |
+| **gnaneshwer23/hsi-sources** | Shelf only / archival — do not sync or treat as runtime core |
+| **gnaneshwer23/swift-deliveries** (DeliverX) | **Ignore** — out of scope; not a HITL pattern ref; not a future wire-up |
 | **AF3 / Boltz / ESM / OpenMM / RDKit / REINVENT4 / TDC** | P3 plugins at most — not P0/P1 |
 
-Do not open PRs or push commits against immunecity, swift-deliveries, or Aksh product repos for HSI. Ship maps and curator markdown from this repo; consumers pull published artifacts. Detail: [`docs/VISION_REPO_ALIGNMENT.md`](docs/VISION_REPO_ALIGNMENT.md).
+Do not open PRs or push commits against immunecity or Aksh product repos for HSI. Ignore DeliverX / swift-deliveries entirely. Ship maps and curator markdown from this repo; consumers pull published artifacts. Detail: [`docs/VISION_REPO_ALIGNMENT.md`](docs/VISION_REPO_ALIGNMENT.md).
 
 ## Out of scope
 
 Agent sprawl, AF3/Boltz, clinic write-back, live PHI, inventing PMIDs, treating ISI as CDS,
 collapsing `teachingStatus` / `hsiGrade` / Gate C into one score,
 treating `akshNodeId` as CDS eligibility,
-editing immunecity or swift-deliveries for HSI work.
+editing immunecity for HSI work,
+DeliverX / swift-deliveries (ignore — not an HSI spoke).

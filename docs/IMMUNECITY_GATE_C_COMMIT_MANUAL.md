@@ -1,6 +1,6 @@
 # Gate C curator checklist (hsi-core)
 
-**Active edits stay in `hsi-core` only.** Do not commit to `gnaneshwer23/immunecity` or `gnaneshwer23/swift-deliveries` for HSI work. Product apps (ISI / Aksh) consume published exports from this repo when needed.
+**Active edits stay in `hsi-core` only.** Do not commit to `gnaneshwer23/immunecity` for HSI work. DeliverX / `swift-deliveries` is **ignored** (out of scope). Product apps (ISI / Aksh) consume published exports from this repo when needed.
 
 This doc is the durable curator checklist: verified PMID ↔ REL maps for Gate C handoff. Neon approve+supports remains a human product-app action outside this repository.
 
@@ -39,4 +39,4 @@ Publish / sync via hsi-core commits. Consumers pull `dist/outputs/` (or legacy `
 
 - Add further verified PMID links in seeds + `export:isi-map`
 - Keep this checklist and any new curator notes under `docs/`
-- Do not open immunecity / swift-deliveries PRs for HSI
+- Do not open immunecity PRs for HSI; ignore DeliverX / swift-deliveries

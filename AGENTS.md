@@ -5,9 +5,12 @@
 ## Do not edit
 
 - https://github.com/gnaneshwer23/immunecity (or `~/Desktop/immune-city`)
-- https://github.com/gnaneshwer23/swift-deliveries
 
-Those repos are out of scope for HSI work. If a product needs HSI data, consume via **published export/API** from this repo only.
+## Ignore (irrelevant to HSI)
+
+- https://github.com/gnaneshwer23/swift-deliveries (DeliverX) — not a HITL pattern reference, not a future wire-up, do not sync
+
+immunecity is out of scope for HSI edits (consume published export/API only). DeliverX is ignored entirely.
 
 ## Stay in this repo
 

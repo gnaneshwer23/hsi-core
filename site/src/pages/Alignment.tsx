@@ -46,10 +46,10 @@ export function Alignment() {
                 </p>
               </div>
               <div className="spoke-item reference">
-                <div className="kind">reference-only</div>
-                <strong>swift-deliveries / hsi-sources</strong>
+                <div className="kind">reference-only · archival</div>
+                <strong>hsi-sources</strong>
                 <p className="muted" style={{ fontSize: "0.95rem", marginTop: "0.25rem" }}>
-                  HITL UX patterns / curator shelf — never runtime deps of the core.
+                  Curator shelf only — never sync vendor snapshots into the core.
                 </p>
               </div>
               <div className="spoke-item deferred">
@@ -108,7 +108,13 @@ export function Alignment() {
                 <td>
                   <strong>reference-only</strong>
                 </td>
-                <td>Pattern or shelf; never a dependency of the evidence core</td>
+                <td>Shelf or bookmark surface; never a dependency of the evidence core</td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>ignore</strong>
+                </td>
+                <td>Out of scope — do not sync, wire, or treat as pattern reference</td>
               </tr>
             </tbody>
           </table>

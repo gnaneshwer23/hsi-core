@@ -544,8 +544,8 @@ export function Home() {
             <details>
               <summary>Where do we edit?</summary>
               <p>
-                Only this repository. immunecity, Aksh product apps, and
-                swift-deliveries consume published artifacts or stay reference-only.
+                Only this repository. immunecity and Aksh product apps consume
+                published artifacts. DeliverX / swift-deliveries is ignored.
               </p>
             </details>
             <details>
