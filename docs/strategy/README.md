@@ -2,6 +2,8 @@
 
 Strategic product reset: audit, architecture, and roadmap. **No feature implementation in this pack.**
 
+**Agent skills (on demand):** see [`../AGENT_SKILLS.md`](../AGENT_SKILLS.md) — when to load installed personal Cursor skills for HSI/ISI work (not always-applied).
+
 **Product requirements authority:** [HSI_MASTER_PRD_v1.md](./HSI_MASTER_PRD_v1.md) (Master PRD V1.0 — **Proposed**, pending founder approval).  
 **FR traceability + Scientific MVP:** [HSI_FR_REQUIREMENTS_TRACEABILITY.md](./HSI_FR_REQUIREMENTS_TRACEABILITY.md) · [HSI_PRD_GAP_ANALYSIS_AND_MVP.md](./HSI_PRD_GAP_ANALYSIS_AND_MVP.md).  
 **PRD companions (canonical):** Document **02** Architecture & Data · Document **03** Intelligence Engine Spec · Document **04** Design System & UX. Detailed packs **§2–§8** remain elaboration + Phase 0 audits. Honesty: [HSI_DOC02_03_RECONCILIATION.md](./HSI_DOC02_03_RECONCILIATION.md) (Docs 02/03/04).

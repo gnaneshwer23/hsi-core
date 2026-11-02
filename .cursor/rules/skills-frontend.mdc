@@ -1,0 +1,15 @@
+---
+description: Load frontend/design personal skills when editing ISI/HSI UI surfaces
+globs: "**/*.{tsx,css,jsx}"
+alwaysApply: false
+---
+
+# Frontend skills
+
+If changing UI or styles, consider reading (pick one primary):
+
+- `~/.cursor/skills/vercel-react-best-practices/SKILL.md` — React/perf
+- `~/.cursor/skills/hallmark/SKILL.md` or `taste-skill/SKILL.md` — anti-slop art direction
+- `~/.cursor/skills/better-ui/SKILL.md` / `better-accessibility/SKILL.md` — polish / a11y
+
+Preserve existing design tokens and project AGENTS.md patterns. Full map: `docs/AGENT_SKILLS.md`.

@@ -1,0 +1,15 @@
+---
+description: Defensive security/privacy skill pointers (no offensive cyber)
+globs: "**/*.{ts,tsx,js,jsx}"
+alwaysApply: false
+---
+
+# Security skills (defensive only)
+
+When reviewing auth, secrets, RLS, or AI-generated code for hardening:
+
+- `~/.cursor/skills/agency-ai-generated-code-security-auditor/SKILL.md`
+- `~/.cursor/skills/agency-application-security-engineer/SKILL.md`
+- `~/.cursor/skills/agency-privacy-engineer/SKILL.md`
+
+Patch and harden only. No exploit PoCs, no offensive procedures. See `docs/AGENT_SKILLS.md` and CDS/PHI boundary.

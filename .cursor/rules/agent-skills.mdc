@@ -1,0 +1,14 @@
+---
+description: When to load personal Cursor skills for HSI work (thin pointer — not the full pack)
+alwaysApply: true
+---
+
+# Skills (load on demand)
+
+Installed skills live in `~/.cursor/skills/`. **Never** dump the full pack into context.
+
+1. For task→skill mapping, read [`docs/AGENT_SKILLS.md`](docs/AGENT_SKILLS.md).
+2. When a row matches, `Read` that skill’s `SKILL.md` before acting.
+3. Prefer one skill; respect [`docs/CDS_PHI_BOUNDARY.md`](docs/CDS_PHI_BOUNDARY.md) — no live CDS/PHI, no Gate C auto-approve, no invented MoU.
+4. Adjacent browse tools (PentAGI, RAG-Anything, Anime.js, MediSearch, Hippocratic, Nabla) stay **out of product code**.
+5. Cursor built-ins (`create-rule`, `create-skill`, `review-security`, …) are under `~/.cursor/skills-cursor/`.

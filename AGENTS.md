@@ -33,6 +33,10 @@ DeliverX is ignored entirely.
 
 Substrate, seeds, maps, exports, docs, and curator checklists (markdown under `docs/`) land here. Immunecity product code only under the freeze-lift scope above. See README “Active codebase”.
 
+## Personal agent skills (on demand)
+
+~590 skills under `~/.cursor/skills/` — **do not** always-load them. Task→skill map: [`docs/AGENT_SKILLS.md`](docs/AGENT_SKILLS.md). Thin Cursor rules in `.cursor/rules/`. Do not wire browse-adjacent tools (PentAGI, RAG-Anything, Anime.js, MediSearch, Hippocratic, Nabla) into this repo.
+
 ## CDS / PHI (binding non-goal)
 
 **No live CDS and no PHI in HSI.** Do not wire Aksh/Akeno clinic engines, patient stores, EHR write-back, or PHI→LLM into this repo. Lift only governance / reject helpers / honesty asserts — see [`docs/CDS_PHI_BOUNDARY.md`](docs/CDS_PHI_BOUNDARY.md) and `src/cdsPhiBoundary.ts`. Aksh product CDS/PHI stays out-of-scope on purpose.
