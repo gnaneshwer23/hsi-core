@@ -173,8 +173,8 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | P3.3 FAIR ESM-2 thin embedding stub | `1c22662` |
 | P0.2-HSI ISI consume + partner flip-readiness (+ P0.3 licensing stub) | `6b4779e` |
 | P1.6 curator UX (richer gap/Gate C + `/curator`) | `e6dd2be` |
-| P1.7 Gate C decisions dry-run / fixtures | (this commit) |
-| P1.8 Stage 2 spine CL hint starters | (this commit) |
+| P1.7 Gate C decisions dry-run / fixtures | `922b0d6` |
+| P1.8 Stage 2 spine CL hint starters | `922b0d6` |
 
 Reproduce: `bun test && bun run outputs && bun run site:dev` → `/discovery`, `/curator`, `/akeno`, `/aksh-agents`.  
 Decisions dry-run: `bun run curator-ux --dry-run --decisions examples/gate-c-decisions/awaiting.empty.json`.
