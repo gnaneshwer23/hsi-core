@@ -206,6 +206,7 @@ export {
   GATE_C_DECISIONS_IMPORT_VOCAB,
   buildAwaitingGateCDecisionsTemplate,
   buildHypotheticalGateCDecisionsFixture,
+  buildOperatorAuthorizedGateCDecisions,
   dryRunGateCDecisionsImport,
   parseGateCDecisionsImport,
   resolvePartnerReviewSessionStatus,

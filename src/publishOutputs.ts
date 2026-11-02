@@ -26,7 +26,9 @@ import {
   serializeCuratorUxMarkdown,
   serializeRichGapReportMarkdown,
   serializeRichGateCChecklistMarkdown,
+  type CuratorGateCDecision,
 } from "./curatorUx";
+import { parseGateCDecisionsImport } from "./gateCDecisionsImport";
 import {
   AKSH_CLINIC_CONCEPTS,
   PROVISIONAL_AKSH_TO_DURABLE,
@@ -360,12 +362,27 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     lock: partnerLock,
   });
   const sourceLicensingStub = buildSourceLicensingStubBundle({ generatedAt });
-  // P1.6 curator UX — richer gap/Gate C markdown; no invented human decisions.
+  // P1.6 / P2.1 curator UX — load operator-authorized Gate C decisions when present
+  // (examples/gate-c-decisions/operator-authorized.*.json). Never invents outcomes.
+  const operatorDecisionsPath = resolve(
+    process.cwd(),
+    "examples/gate-c-decisions/operator-authorized.2026-11-02.json",
+  );
+  let curatorDecisions: CuratorGateCDecision[] = [];
+  let curatorDecisionsHypothetical = false;
+  if (existsSync(operatorDecisionsPath)) {
+    const parsed = parseGateCDecisionsImport(
+      JSON.parse(readFileSync(operatorDecisionsPath, "utf8")),
+    );
+    curatorDecisions = parsed.decisions;
+    curatorDecisionsHypothetical = parsed.envelope.isHypothetical;
+  }
   const curatorUx = buildCuratorUxBundle({
     generatedAt,
     gap: gapReport,
     gateC,
-    decisions: [],
+    decisions: curatorDecisions,
+    decisionsAreHypothetical: curatorDecisionsHypothetical,
   });
 
   const fileMap: Record<string, string> = {
@@ -376,7 +393,10 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     "hsi-gap-report.json": serializeGapReport(gapReport),
     "hsi-gap-report.md": serializeGapReportMarkdown(gapReport),
     "gate-c-checklist.json": serializeGateCChecklist(gateC),
-    "gate-c-checklist.md": serializeRichGateCChecklistMarkdown(gateC, []),
+    "gate-c-checklist.md": serializeRichGateCChecklistMarkdown(
+      gateC,
+      curatorDecisions,
+    ),
     "hsi-curator-ux.json": serializeCuratorUx(curatorUx),
     "hsi-curator-ux.md": serializeCuratorUxMarkdown(curatorUx),
     "hsi-pilot-evidence-pack.json": serializePilotEvidencePack(pilotPack),
@@ -704,7 +724,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       "Phase 7: R2 validation — hsi-r2-validation.* (hypothesis cards, ranked gaps, literature tests; research only).",
       "Phase 8 done (HSI substrate): hsi-translation-handoff.* — Stage 3 scaffolding; deferred_until_hitl; Akeno in-repo HITL consumer at /akeno (not live CDS; no Akeno Neon).",
       "Aksh: HITL map pointers only — use hsi-aksh-node-map.json + hsi-aksh-hitl-cards.json; CDS stays closed on seeds.",
-      "Gate C: human checklist in gate-c-checklist.* (+ translationCandidates); P1.6 curator UX in hsi-curator-ux.* + richer gap/Gate C markdown (awaiting partner review session — no invented decisions). Optional HSI red-wave placeholders via bun run db:gate-c-local (pending only). ISI product approve stays autumn-snow — never from this workspace. Site: /curator.",
+      "Gate C: human checklist in gate-c-checklist.* (+ translationCandidates); P1.6 curator UX in hsi-curator-ux.*; P2.1 operator-authorized decisions (examples/gate-c-decisions/operator-authorized.2026-11-02.json) merge when present — decisions_imported, not invented Apolo signatures; autoApprove=false; does not flip hsiGrade. ISI autumn-snow holds human decisions; HSI red-wave never receives approve writes from this workspace. Site: /curator.",
       "Phase 4: HSI Neon schema stub — bun run db:migrate (guards refuse ISI/Akeno/DeliverX).",
       "Systems vision: hsi-systems-vision.json — multi-axis target graph stubs (immune + gut–immune + neuroimmune + disease/tissue/biomarker + patient-plane rules + P3 adapters + aiFutureTech capabilities/hard bans/schema stubs); dual-track vertical fields; see docs/HSI_SYSTEMS_VISION_MAP.md + docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md.",
       "P2.2 embedding sidecars: hsi-embedding-sidecars.json — edgeId→modelId/dim/vectorRef|contentHash (+ optional tiny demo); doesNotSetHsiGrade=true; autoApprove=false; no PHI / no model weights; packs remain evidence authority.",

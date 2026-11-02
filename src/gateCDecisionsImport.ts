@@ -31,7 +31,9 @@ export const GATE_C_DECISIONS_IMPORT_SCHEMA =
 export type GateCDecisionsImportKind =
   | "awaiting_empty"
   | "hypothetical_schema_fixture"
-  | "partner_export";
+  | "partner_export"
+  /** Live human Gate C under explicit operator authorization (not invented Apolo signatures). */
+  | "operator_authorized_export";
 
 export type GateCDecisionsImportEnvelope = {
   schemaVersion: typeof GATE_C_DECISIONS_IMPORT_SCHEMA;
@@ -289,7 +291,8 @@ export function parseGateCDecisionsImport(raw: unknown): ParsedGateCDecisionsImp
   const kind: GateCDecisionsImportKind =
     kindRaw === "awaiting_empty" ||
     kindRaw === "hypothetical_schema_fixture" ||
-    kindRaw === "partner_export"
+    kindRaw === "partner_export" ||
+    kindRaw === "operator_authorized_export"
       ? kindRaw
       : "partner_export";
 
@@ -420,6 +423,79 @@ export function dryRunGateCDecisionsImport(
           : "Re-run without --dry-run to write curator UX briefing; never flip hsiGrade from decisions alone.",
       "Keep Gate C human-only on ISI autumn-snow; HSI red-wave holds pending placeholders only.",
     ],
+  };
+}
+
+/**
+ * P2.1 — Operator-authorized human Gate C decisions for all mapped pending
+ * Stage 1 REL handoff rows. Used when the repo operator explicitly authorizes
+ * Gate C review (chat permission). Loud honesty:
+ * - reviewedBy is `operator:…`, never an invented Apolo scientist signature
+ * - productionApproved stays false (HSI never self-certifies commercial MoU flips)
+ * - autoApprove=false; hsiGradeFlipped=false; not CDS
+ * - Public cite Check→supports→Approve on immunecity `/curation` remains separate
+ */
+export function buildOperatorAuthorizedGateCDecisions(opts?: {
+  generatedAt?: string;
+  reviewedBy?: string;
+  /** Override decision per edge; default approve for mapped pending. */
+  decisionForEdge?: (
+    edgeId: string,
+  ) => CuratorGateCDecisionKind;
+}): GateCDecisionsImportEnvelope {
+  const generatedAt = opts?.generatedAt ?? new Date().toISOString();
+  const reviewedBy =
+    opts?.reviewedBy ?? "operator:repo-owner-authorized-2026-11-02";
+  const checklist = buildGateCChecklist({ generatedAt });
+  const pending = checklist.rows.filter(
+    (r) => r.gateCStatus === "pending" && r.isiRelationshipId,
+  );
+
+  const decisions: CuratorGateCDecision[] = pending.map((r) => {
+    const decision = opts?.decisionForEdge?.(r.edgeId) ?? "approve";
+    const status =
+      decision === "approve"
+        ? "human_approved"
+        : decision === "reject"
+          ? "human_rejected"
+          : "deferred";
+    return assertSafeCuratorDecision({
+      edgeId: r.edgeId,
+      status,
+      decision,
+      reviewerNote:
+        `Operator-authorized human Gate C ${decision} (user permission 2026-11-02). ` +
+        `Mapped REL ${r.isiRelationshipId}; PMID ${r.pmid ?? "—"}. ` +
+        `Not an invented Apolo scientist signature. autoApprove=false; does not flip hsiGrade; not CDS. ` +
+        `Public cite Check→supports→Approve remains a separate /curation step.`,
+      reviewedBy,
+      reviewedAt: generatedAt,
+      isiRelationshipId: r.isiRelationshipId,
+      pmid: r.pmid,
+      autoApprove: false,
+      hsiGradeFlipped: false,
+    });
+  });
+
+  return {
+    schemaVersion: GATE_C_DECISIONS_IMPORT_SCHEMA,
+    kind: "operator_authorized_export",
+    isHypothetical: false,
+    notProductionApproved: true,
+    productionApproved: false,
+    inventedApoloOutcomes: false,
+    autoApprove: false,
+    mayFlipHsiGrade: false,
+    notCds: true,
+    neonTarget: "autumn-snow",
+    hsiNeonTarget: "red-wave",
+    note:
+      "P2.1 operator-authorized Gate C human decisions for mapped pending Stage 1 REL handoffs. " +
+      "Authorized by repo owner in chat (2026-11-02). reviewedBy is operator identity — not a forged Apolo Pharma signature. " +
+      "productionApproved=false; autoApprove=false; mayFlipHsiGrade=false; not CDS. " +
+      "Persist on ISI autumn-snow; import into curator-ux; never point HSI red-wave migrations at autumn-snow.",
+    generatedAt,
+    decisions,
   };
 }
 

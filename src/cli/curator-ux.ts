@@ -8,12 +8,15 @@
  *   bun run curator-ux --dry-run --decisions path/to/decisions.json
  *   bun run curator-ux --export-template [path]
  *   bun run curator-ux --write-hypothetical-fixture [path]
+ *   bun run curator-ux --write-operator-authorized [path]
  *
  * Default: no human decisions → "awaiting partner review session".
- * Decisions JSON: immunecity autumn-snow array OR P1.7 envelope
+ * Decisions JSON: immunecity autumn-snow array OR P1.7/P2.1 envelope
  * (`isHypothetical` / `notProductionApproved`). autoApprove /
  * hsiGradeFlipped / productionApproved=true are refused.
  * --dry-run validates only (writes nothing).
+ * --write-operator-authorized emits P2.1 operator-authorized Gate C
+ * decisions (explicit human permission; not invented Apolo signatures).
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
@@ -28,6 +31,7 @@ import {
 import {
   buildAwaitingGateCDecisionsTemplate,
   buildHypotheticalGateCDecisionsFixture,
+  buildOperatorAuthorizedGateCDecisions,
   dryRunGateCDecisionsImport,
   parseGateCDecisionsImport,
   serializeGateCDecisionsEnvelope,
@@ -40,8 +44,10 @@ function parseArgs(argv: string[]) {
   let dryRun = false;
   let exportTemplate: string | null = null;
   let writeHypothetical: string | null = null;
+  let writeOperatorAuthorized: string | null = null;
   let exportTemplateSet = false;
   let writeHypotheticalSet = false;
+  let writeOperatorAuthorizedSet = false;
   const positional: string[] = [];
   for (let i = 0; i < argv.length; i += 1) {
     const a = argv[i];
@@ -78,6 +84,18 @@ function parseArgs(argv: string[]) {
       }
       continue;
     }
+    if (a === "--write-operator-authorized") {
+      writeOperatorAuthorizedSet = true;
+      const next = argv[i + 1];
+      if (next && !next.startsWith("-")) {
+        writeOperatorAuthorized = next;
+        i += 1;
+      } else {
+        writeOperatorAuthorized =
+          "examples/gate-c-decisions/operator-authorized.2026-11-02.json";
+      }
+      continue;
+    }
     if (a.startsWith("-")) {
       throw new Error(`Unknown flag: ${a}`);
     }
@@ -88,6 +106,9 @@ function parseArgs(argv: string[]) {
     dryRun,
     exportTemplate: exportTemplateSet ? exportTemplate : null,
     writeHypothetical: writeHypotheticalSet ? writeHypothetical : null,
+    writeOperatorAuthorized: writeOperatorAuthorizedSet
+      ? writeOperatorAuthorized
+      : null,
     outDir: resolve(process.cwd(), positional[0] ?? "exports/curator-ux"),
   };
 }
@@ -132,6 +153,31 @@ if (args.writeHypothetical) {
         productionApproved: false,
         decisionCount: envelope.decisions.length,
         inventedApoloOutcomes: false,
+        notCds: true,
+      },
+      null,
+      2,
+    ),
+  );
+  process.exit(0);
+}
+
+if (args.writeOperatorAuthorized) {
+  const path = resolve(process.cwd(), args.writeOperatorAuthorized);
+  mkdirSync(dirname(path), { recursive: true });
+  const envelope = buildOperatorAuthorizedGateCDecisions({ generatedAt });
+  writeFileSync(path, serializeGateCDecisionsEnvelope(envelope), "utf8");
+  console.log(
+    JSON.stringify(
+      {
+        written: path.replace(process.cwd() + "/", ""),
+        kind: envelope.kind,
+        isHypothetical: false,
+        notProductionApproved: true,
+        productionApproved: false,
+        decisionCount: envelope.decisions.length,
+        inventedApoloOutcomes: false,
+        operatorAuthorized: true,
         notCds: true,
       },
       null,
