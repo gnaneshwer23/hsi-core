@@ -46,6 +46,23 @@ ship an equivalent look & feel with original content.
   the cobalt/glass category above.
 - Mock dashboards use **illustrative** demo data, labeled as such.
 
+## Founder landing HTML (2026-11-02)
+
+Four Downloads exports are **complementary HSI marketing sections**, not ISI pages
+and not four competing versions of one file:
+
+| File | In-HTML section | Role |
+| --- | --- | --- |
+| `index.html` | 01 / Connected by design | Four-stage fabric (Connect→Apply) + wires → `/` + `/platform` via `PlatformEngine` |
+| `index (3).html` | 02 / Ecosystem | Four perspectives cards → `/` + `/products` + `/platform` |
+| `index (2).html` | 03 / Explore evidence | Graph concept demo → `/` + `/explore` |
+| `index (1).html` | 04 / Discovery engine | 5-step workbench → `/` + `/discovery-engine` |
+
+§01 source of truth is specifically `Downloads/index.html` hero + navy stage (not the
+older question→outcome mock). Lime/forest palette **adapted to HSI cobalt/navy/cream**
+(`global.css`). No MoU / Gate C auto-approve invented. Live CTAs stay honesty-bound
+via `productMaturity.ts`. Shell/nav remain product chrome (HTML header not vendored).
+
 ## Phase 6–7 Discovery Centre (`/discovery`)
 
 - Original product UI — **do not** vendor ChatGPT/Unkapped `index(5).html` markup.

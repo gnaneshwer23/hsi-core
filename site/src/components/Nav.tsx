@@ -4,11 +4,11 @@ import { ENGINEERING_LINKS } from "../lib/productMaturity";
 
 /** Primary destinations — product honesty first; engineering demoted. */
 const primaryLinks = [
+  { to: "/platform", label: "Platform" },
   { to: "/products", label: "Products" },
-  { to: "/status", label: "Status" },
+  { to: "/explore", label: "Explore" },
   { to: "/discovery", label: "Discovery" },
-  { to: "/for-isi", label: "For researchers" },
-  { to: "/evidence", label: "Evidence" },
+  { to: "/status", label: "Status" },
 ];
 
 export function Nav() {

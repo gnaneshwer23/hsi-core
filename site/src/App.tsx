@@ -1,6 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import { Home } from "./pages/Home";
+import { Platform } from "./pages/Platform";
+import { Explore } from "./pages/Explore";
+import { DiscoveryEngine } from "./pages/DiscoveryEngine";
 import { Systems } from "./pages/Systems";
 import { Evidence } from "./pages/Evidence";
 import { ForIsi } from "./pages/ForIsi";
@@ -23,6 +26,9 @@ export default function App() {
     <Routes>
       <Route element={<Layout />}>
         <Route index element={<Home />} />
+        <Route path="platform" element={<Platform />} />
+        <Route path="explore" element={<Explore />} />
+        <Route path="discovery-engine" element={<DiscoveryEngine />} />
         <Route path="products" element={<Products />} />
         <Route path="status" element={<Status />} />
         <Route path="clinical-timeline" element={<ClinicalTimeline />} />

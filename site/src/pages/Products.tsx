@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { PageHero } from "../components/PageHero";
+import { EcosystemGrid } from "../components/landing/EcosystemGrid";
 import {
   ECOSYSTEM_PRODUCTS,
   MATURITY_CHIP_LABEL,
@@ -9,21 +9,15 @@ import {
 export function Products() {
   return (
     <>
-      <PageHero
-        eyebrow="One ecosystem · four products"
-        title={
-          <>
-            Specialised experiences,{" "}
-            <span className="accent">shared governance.</span>
-          </>
-        }
-        lede="Health Super Intelligence is four connected product surfaces — not four unrelated apps and not one monolith. Status chips must match /status."
+      <EcosystemGrid
+        headingLevel={1}
+        footLink={{ to: "/platform", label: "How HSI works ↗" }}
       />
 
       <section className="section section-grid-light">
         <div className="container">
           <p className="lede" style={{ maxWidth: "40rem", marginBottom: "2rem" }}>
-            {SHARED_CORE_NOTE}
+            {SHARED_CORE_NOTE} Status chips must match <Link to="/status">/status</Link>.
           </p>
           <div className="product-grid">
             {ECOSYSTEM_PRODUCTS.map((p) => (

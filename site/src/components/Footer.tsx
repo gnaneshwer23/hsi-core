@@ -16,7 +16,19 @@ export function Footer() {
           <h4>Products</h4>
           <ul>
             <li>
+              <Link to="/platform">Platform</Link>
+            </li>
+            <li>
               <Link to="/products">Four products</Link>
+            </li>
+            <li>
+              <Link to="/explore">Explore evidence</Link>
+            </li>
+            <li>
+              <Link to="/discovery-engine">Discovery engine</Link>
+            </li>
+            <li>
+              <Link to="/discovery">Discovery Centre</Link>
             </li>
             <li>
               <Link to="/status">Status (Available / In-dev / Planned)</Link>
@@ -26,9 +38,6 @@ export function Footer() {
             </li>
             <li>
               <Link to="/for-aksh">Aksh (scoped · Available)</Link>
-            </li>
-            <li>
-              <Link to="/discovery">Discovery Centre</Link>
             </li>
           </ul>
         </div>
