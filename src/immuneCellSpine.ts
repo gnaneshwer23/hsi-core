@@ -20,6 +20,12 @@ export const IMMUNE_CELL_LAYERS = [
 ] as const;
 export type ImmuneCellLayer = (typeof IMMUNE_CELL_LAYERS)[number];
 
+/**
+ * P1.8 Stage 2 starter — ontology ids on the spine are curator hints until
+ * a confirmed bind review. Never Gate C claims / never CDS.
+ */
+export type SpineOntologyBindStatus = "hint_only" | "unbound";
+
 export type ImmuneCellSpineNode = {
   id: string;
   layer: ImmuneCellLayer;
@@ -28,12 +34,16 @@ export type ImmuneCellSpineNode = {
   parentId: string | null;
   /** Optional Cell Ontology hint — null until curated. */
   cellOntologyId: string | null;
+  /** Honest bind status for Stage 2 spine starters (P1.8). */
+  ontologyBindStatus: SpineOntologyBindStatus;
   notes: string | null;
 };
 
 /**
  * Major immune-cell classes / lineages / common subsets as navigation stubs.
  * Not a complete ontology; not disease-curated evidence edges.
+ * P1.8: Stage 2 starters add CL hints (`ontologyBindStatus=hint_only`) beyond
+ * the SSc neighbourhood — still not confirmed binds / not Gate C / not CDS.
  */
 export const IMMUNE_CELL_SPINE_NODES: readonly ImmuneCellSpineNode[] = [
   // Classes
@@ -42,40 +52,45 @@ export const IMMUNE_CELL_SPINE_NODES: readonly ImmuneCellSpineNode[] = [
     layer: "class",
     label: "T cell",
     parentId: null,
-    cellOntologyId: null,
-    notes: "PRD spine stub — class layer",
+    cellOntologyId: "CL:0000084",
+    ontologyBindStatus: "hint_only",
+    notes: "PRD spine stub — class layer; CL hint P1.8 Stage 2 starter",
   },
   {
     id: "HSI-IC-class-b",
     layer: "class",
     label: "B cell",
     parentId: null,
-    cellOntologyId: null,
-    notes: "PRD spine stub — class layer",
+    cellOntologyId: "CL:0000236",
+    ontologyBindStatus: "hint_only",
+    notes: "PRD spine stub — class layer; CL hint P1.8 Stage 2 starter",
   },
   {
     id: "HSI-IC-class-myeloid",
     layer: "class",
     label: "Myeloid cell",
     parentId: null,
-    cellOntologyId: null,
-    notes: "PRD spine stub — class layer",
+    cellOntologyId: "CL:0000763",
+    ontologyBindStatus: "hint_only",
+    notes: "PRD spine stub — class layer; CL hint P1.8 Stage 2 starter",
   },
   {
     id: "HSI-IC-class-ilc",
     layer: "class",
     label: "Innate lymphoid cell",
     parentId: null,
-    cellOntologyId: null,
-    notes: "PRD spine stub — class layer",
+    cellOntologyId: "CL:0001065",
+    ontologyBindStatus: "hint_only",
+    notes: "PRD spine stub — class layer; CL hint P1.8 Stage 2 starter",
   },
   {
     id: "HSI-IC-class-dc",
     layer: "class",
     label: "Dendritic cell",
     parentId: null,
-    cellOntologyId: null,
-    notes: "PRD spine stub — class layer (also listed as lineage)",
+    cellOntologyId: "CL:0000451",
+    ontologyBindStatus: "hint_only",
+    notes: "PRD spine stub — class layer (also listed as lineage); CL hint P1.8",
   },
   // Lineages
   {
@@ -83,16 +98,19 @@ export const IMMUNE_CELL_SPINE_NODES: readonly ImmuneCellSpineNode[] = [
     layer: "lineage",
     label: "CD4 T cell",
     parentId: "HSI-IC-class-t",
-    cellOntologyId: null,
-    notes: "One lineage among many — not the sole product focus",
+    cellOntologyId: "CL:0000624",
+    ontologyBindStatus: "hint_only",
+    notes:
+      "One lineage among many — not the sole product focus; CL hint P1.8 Stage 2 starter",
   },
   {
     id: "HSI-IC-lin-cd8",
     layer: "lineage",
     label: "CD8 T cell",
     parentId: "HSI-IC-class-t",
-    cellOntologyId: null,
-    notes: null,
+    cellOntologyId: "CL:0000625",
+    ontologyBindStatus: "hint_only",
+    notes: "CL hint P1.8 Stage 2 starter — not a confirmed ontology bind",
   },
   {
     id: "HSI-IC-lin-b",
@@ -100,6 +118,7 @@ export const IMMUNE_CELL_SPINE_NODES: readonly ImmuneCellSpineNode[] = [
     label: "B cell",
     parentId: "HSI-IC-class-b",
     cellOntologyId: "CL:0000236",
+    ontologyBindStatus: "hint_only",
     notes: "CL hint for SSc Tfh–B–IL-21 neighbourhood (bindStatus=hint_only on pack cards)",
   },
   {
@@ -107,48 +126,55 @@ export const IMMUNE_CELL_SPINE_NODES: readonly ImmuneCellSpineNode[] = [
     layer: "lineage",
     label: "NK cell",
     parentId: "HSI-IC-class-ilc",
-    cellOntologyId: null,
-    notes: "Grouped under innate / ILC neighbourhood for navigation",
+    cellOntologyId: "CL:0000623",
+    ontologyBindStatus: "hint_only",
+    notes:
+      "Grouped under innate / ILC neighbourhood for navigation; CL hint P1.8 Stage 2 starter",
   },
   {
     id: "HSI-IC-lin-monocyte",
     layer: "lineage",
     label: "Monocyte",
     parentId: "HSI-IC-class-myeloid",
-    cellOntologyId: null,
-    notes: null,
+    cellOntologyId: "CL:0000576",
+    ontologyBindStatus: "hint_only",
+    notes: "CL hint P1.8 Stage 2 starter — not a confirmed ontology bind",
   },
   {
     id: "HSI-IC-lin-macrophage",
     layer: "lineage",
     label: "Macrophage",
     parentId: "HSI-IC-class-myeloid",
-    cellOntologyId: null,
-    notes: null,
+    cellOntologyId: "CL:0000235",
+    ontologyBindStatus: "hint_only",
+    notes: "CL hint P1.8 Stage 2 starter — not a confirmed ontology bind",
   },
   {
     id: "HSI-IC-lin-neutrophil",
     layer: "lineage",
     label: "Neutrophil",
     parentId: "HSI-IC-class-myeloid",
-    cellOntologyId: null,
-    notes: null,
+    cellOntologyId: "CL:0000775",
+    ontologyBindStatus: "hint_only",
+    notes: "CL hint P1.8 Stage 2 starter — not a confirmed ontology bind",
   },
   {
     id: "HSI-IC-lin-mast",
     layer: "lineage",
     label: "Mast cell",
     parentId: "HSI-IC-class-myeloid",
-    cellOntologyId: null,
-    notes: null,
+    cellOntologyId: "CL:0000097",
+    ontologyBindStatus: "hint_only",
+    notes: "CL hint P1.8 Stage 2 starter — not a confirmed ontology bind",
   },
   {
     id: "HSI-IC-lin-dc",
     layer: "lineage",
     label: "Dendritic cell",
     parentId: "HSI-IC-class-dc",
-    cellOntologyId: null,
-    notes: null,
+    cellOntologyId: "CL:0000451",
+    ontologyBindStatus: "hint_only",
+    notes: "CL hint P1.8 Stage 2 starter — not a confirmed ontology bind",
   },
   // Subsets / states (minimal MVP set — Tfh called out by PRD SSc vertical)
   {
@@ -157,6 +183,7 @@ export const IMMUNE_CELL_SPINE_NODES: readonly ImmuneCellSpineNode[] = [
     label: "Tfh",
     parentId: "HSI-IC-lin-cd4",
     cellOntologyId: "CL:0002038",
+    ontologyBindStatus: "hint_only",
     notes:
       "PRD SSc vertical subset — dual-track seeds in seed/sscTfhBIl21.ts; CL:0002038 hint only",
   },
@@ -165,40 +192,47 @@ export const IMMUNE_CELL_SPINE_NODES: readonly ImmuneCellSpineNode[] = [
     layer: "subset_state",
     label: "Th1",
     parentId: "HSI-IC-lin-cd4",
-    cellOntologyId: null,
-    notes: null,
+    cellOntologyId: "CL:0000545",
+    ontologyBindStatus: "hint_only",
+    notes: "CL hint P1.8 Stage 2 starter — not a confirmed ontology bind",
   },
   {
     id: "HSI-IC-sub-th2",
     layer: "subset_state",
     label: "Th2",
     parentId: "HSI-IC-lin-cd4",
-    cellOntologyId: null,
-    notes: null,
+    cellOntologyId: "CL:0000546",
+    ontologyBindStatus: "hint_only",
+    notes: "CL hint P1.8 Stage 2 starter — not a confirmed ontology bind",
   },
   {
     id: "HSI-IC-sub-th17",
     layer: "subset_state",
     label: "Th17",
     parentId: "HSI-IC-lin-cd4",
-    cellOntologyId: null,
-    notes: null,
+    cellOntologyId: "CL:0000899",
+    ontologyBindStatus: "hint_only",
+    notes:
+      "CL hint P1.8 Stage 2 starter — gut/neuro packs may cite Th17 frames; RA Stage 1 untouched",
   },
   {
     id: "HSI-IC-sub-treg",
     layer: "subset_state",
     label: "Treg",
     parentId: "HSI-IC-lin-cd4",
-    cellOntologyId: null,
-    notes: null,
+    cellOntologyId: "CL:0000815",
+    ontologyBindStatus: "hint_only",
+    notes:
+      "CL hint P1.8 Stage 2 starter — gut SCFA↔Treg neighbourhood uses related seeds; RA untouched",
   },
   {
     id: "HSI-IC-sub-plasma",
     layer: "subset_state",
     label: "Plasma cell",
     parentId: "HSI-IC-lin-b",
-    cellOntologyId: null,
-    notes: null,
+    cellOntologyId: "CL:0000786",
+    ontologyBindStatus: "hint_only",
+    notes: "CL hint P1.8 Stage 2 starter — not a confirmed ontology bind",
   },
   {
     id: "HSI-IC-sub-plasmablast",
@@ -206,6 +240,7 @@ export const IMMUNE_CELL_SPINE_NODES: readonly ImmuneCellSpineNode[] = [
     label: "Plasmablast",
     parentId: "HSI-IC-lin-b",
     cellOntologyId: "CL:0000980",
+    ontologyBindStatus: "hint_only",
     notes: "CL hint for SSc IL-21→plasmablast frame (bindStatus=hint_only on pack cards)",
   },
 ] as const;
@@ -329,10 +364,20 @@ export function buildImmuneCellSpineBundle(): ImmuneCellSpineBundle {
       "Vocabulary stubs only — not Gate C claims and not CDS.",
       "RA Stage 1 scopeLocked remains authoritative in partnerLock (dual-track activeScope=ra-tnf).",
       "SSc is prd_mvp_target / blueprint Gate 3 — dual-track thin seeds present; EBV hypothesized only.",
+      "P1.8 Stage 2 starters: cellOntologyId values are ontologyBindStatus=hint_only — not confirmed binds; not Gate C outcomes.",
       "Prefer ISI_CONTROLLED_RELATIONSHIP_TYPES for new immune-cell curation; P1.4 promotes produces/activates/suppresses/differentiates_into onto HSI_EDGE_TYPES (identity map); remaining types still alias via ISI_RELATIONSHIP_TO_HSI_EDGE.",
       "Context + evidence mandatory on every future claim edge (PRD §6 / §7.4).",
     ],
   };
+}
+
+/** Count spine nodes that carry a CL (or other) hint — Stage 2 starter metric. */
+export function countSpineOntologyHints(
+  nodes: readonly ImmuneCellSpineNode[] = IMMUNE_CELL_SPINE_NODES,
+): { hinted: number; unbound: number; total: number } {
+  const hinted = nodes.filter((n) => n.ontologyBindStatus === "hint_only").length;
+  const unbound = nodes.filter((n) => n.ontologyBindStatus === "unbound").length;
+  return { hinted, unbound, total: nodes.length };
 }
 
 export function isIsiControlledRelationshipType(

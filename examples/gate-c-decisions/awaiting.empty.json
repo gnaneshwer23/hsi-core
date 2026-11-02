@@ -1,0 +1,16 @@
+{
+  "schemaVersion": "hsi-gate-c-decisions-import-1",
+  "kind": "awaiting_empty",
+  "isHypothetical": false,
+  "notProductionApproved": true,
+  "productionApproved": false,
+  "inventedApoloOutcomes": false,
+  "autoApprove": false,
+  "mayFlipHsiGrade": false,
+  "notCds": true,
+  "neonTarget": "autumn-snow",
+  "hsiNeonTarget": "red-wave",
+  "note": "Empty Gate C decisions template — awaiting live Apolo Pharma review on immunecity `/hsi/discovery` REVIEW. Replace `decisions` with autumn-snow export rows only after a real human session. Do not invent approve/reject/defer.",
+  "generatedAt": "2026-11-02T05:17:25.727Z",
+  "decisions": []
+}

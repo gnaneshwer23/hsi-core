@@ -15,6 +15,9 @@
     "note": "No human Gate C decisions supplied — awaiting partner review session. Do not invent approve/reject/defer outcomes.",
     "humanDecisionCount": 0,
     "inventedOutcomes": false,
+    "isHypothetical": false,
+    "notProductionApproved": true,
+    "productionApproved": false,
     "isiNeonTarget": "autumn-snow",
     "hsiNeonTarget": "red-wave"
   },
@@ -1679,11 +1682,12 @@
     "hsiGrade ≠ Gate C decision ≠ teachingStatus — never collapse axes.",
     "HSI Neon red-wave holds substrate + pending placeholders only; human approve/reject/defer writes stay on ISI autumn-snow (immunecity queue).",
     "Curator UX scaffolding does not invent completed Apolo review outcomes.",
+    "productionApproved=false until operator asserts a live autumn-snow partner export (HSI never self-certifies).",
     "Model proposals and translation candidates remain pending drafts only.",
     "Compatible with immunecity Gate C queue (`090d7ea`) decision shape."
   ],
   "nextActions": [
-    "Run a real Apolo Pharma Gate C review session on immunecity `/hsi/discovery` REVIEW (approve/reject/defer) — then optionally re-export decisions into this bundle.",
+    "Run a real Apolo Pharma Gate C review session on immunecity `/hsi/discovery` REVIEW (approve/reject/defer) — then `bun run curator-ux --decisions <export>` (dry-run first with --dry-run).",
     "Close high-leverage gap buckets (unmapped REL, missing LOINC, durable locator) without inventing maps.",
     "Keep Gate C human-only — refuse auto-approve and shared Neon.",
     "CDS stays closed until curationReview=approved AND hsiGrade=established."

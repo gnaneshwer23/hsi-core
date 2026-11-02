@@ -28,6 +28,9 @@ describe("P1.6 curator UX — richer gap / Gate C scaffolding", () => {
     );
     expect(bundle.partnerReviewSession.humanDecisionCount).toBe(0);
     expect(bundle.partnerReviewSession.inventedOutcomes).toBe(false);
+    expect(bundle.partnerReviewSession.isHypothetical).toBe(false);
+    expect(bundle.partnerReviewSession.productionApproved).toBe(false);
+    expect(bundle.partnerReviewSession.notProductionApproved).toBe(true);
     expect(bundle.partnerReviewSession.isiNeonTarget).toBe("autumn-snow");
     expect(bundle.partnerReviewSession.hsiNeonTarget).toBe("red-wave");
     expect(bundle.gateCQueue.decidedCount).toBe(0);
@@ -97,6 +100,8 @@ describe("P1.6 curator UX — richer gap / Gate C scaffolding", () => {
     expect(bundle.partnerReviewSession.status).toBe("decisions_imported");
     expect(bundle.partnerReviewSession.humanDecisionCount).toBe(1);
     expect(bundle.partnerReviewSession.inventedOutcomes).toBe(false);
+    expect(bundle.partnerReviewSession.isHypothetical).toBe(false);
+    expect(bundle.partnerReviewSession.productionApproved).toBe(false);
     expect(bundle.mayFlipHsiGrade).toBe(false);
 
     const row = bundle.gateCQueue.items.find((i) => i.edgeId === pending!.edgeId);

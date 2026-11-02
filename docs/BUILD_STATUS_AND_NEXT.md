@@ -1,7 +1,7 @@
 # HSI build status and next
 
-**Audit date:** 1 November 2026  
-**HEAD at write:** (post P1.6 curator UX) — richer gap/Gate C markdown + `/curator`; awaiting partner review session (no invented decisions); named partner **Apolo Pharma**; `lockedPilot=true`; Stage 1 clearance 48/48; not CDS
+**Audit date:** 2 November 2026  
+**HEAD at write:** (post P1.7 / P1.8) — Gate C decisions dry-run + hypothetical `--decisions` fixtures (no fake Apolo approvals) + Stage 2 spine CL `hint_only` starters; still awaiting live partner review session; named partner **Apolo Pharma**; `lockedPilot=true`; Stage 1 clearance 48/48; not CDS
 
 
 **Edit target:** `hsi-core` primary · immunecity HSI-consume wiring allowed under freeze lift · Neon **`red-wave` only** for HSI · no DeliverX  
@@ -13,7 +13,7 @@
 
 ## Executive verdict
 
-hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance, Gate C checklists, versioned publish, RA/anti-TNF scope lock + depth, Discovery Centre, R2 validation, translation/Akeno HITL scaffolding, Aksh agent catalog, Neon isolation, systems-vision + AI position stubs). **Vertical decision A (dual-track) is recorded:** RA stays Stage 1 `activeScope`; SSc / gut / neuro packs have **depth PMIDs** (honest `uncertain`/`hypothesized`; RA untouched). **Named partner Apolo Pharma** is locked (`lockedPilot=true`; MoU operator-asserted; Stage 1 clearance 48/48; KPIs `partner_agreed`; **P0.6** walkthrough/export hygiene landed; still not CDS; Gate C never auto-approves). **P1.4** promotes selected gut/neuro/ISI predicates onto `HSI_EDGE_TYPES` (additive; alias maps kept for remainder). **P1.6** curator UX scaffolding ships richer gap/Gate C markdown + `hsi-curator-ux.*` + site `/curator` (honest **awaiting partner review session** when no human decisions). **P2.2–P3.3** plus **AF3/TDC/ISI research sign-off fixtures** and **Boltz weights-policy gate** (`WEIGHTS_POLICY_ACK`; no weight vendoring) land as proposal-only stubs → Gate C pending. **Discovery `/discovery` MAP** ships an interactive evidence **graph explorer**. **P0.5** immunecity Gate C human queue shipped (`090d7ea`). **Next = Partner Apolo Gate C review session → import real decisions** into curator UX. Live CDS / PHI / commercial AF3 rights stay gated.
+hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance, Gate C checklists, versioned publish, RA/anti-TNF scope lock + depth, Discovery Centre, R2 validation, translation/Akeno HITL scaffolding, Aksh agent catalog, Neon isolation, systems-vision + AI position stubs). **Vertical decision A (dual-track) is recorded:** RA stays Stage 1 `activeScope`; SSc / gut / neuro packs have **depth PMIDs** (honest `uncertain`/`hypothesized`; RA untouched). **Named partner Apolo Pharma** is locked (`lockedPilot=true`; MoU operator-asserted; Stage 1 clearance 48/48; KPIs `partner_agreed`; **P0.6** walkthrough/export hygiene landed; still not CDS; Gate C never auto-approves). **P1.4** promotes selected gut/neuro/ISI predicates onto `HSI_EDGE_TYPES` (additive; alias maps kept for remainder). **P1.6** curator UX scaffolding ships richer gap/Gate C markdown + `hsi-curator-ux.*` + site `/curator`. **P1.7** ships honest Gate C decisions dry-run / import envelope + `examples/gate-c-decisions/*` (empty awaiting + hypothetical schema fixture; never fake Apolo production approvals). **P1.8** Stage 2 spine starters add CL `hint_only` binds beyond SSc (RA untouched). **P2.2–P3.3** plus **AF3/TDC/ISI research sign-off fixtures** and **Boltz weights-policy gate** (`WEIGHTS_POLICY_ACK`; no weight vendoring) land as proposal-only stubs → Gate C pending. **Discovery `/discovery` MAP** ships an interactive evidence **graph explorer**. **P0.5** immunecity Gate C human queue shipped (`090d7ea`). **Next = live Partner Apolo Gate C review session → import real autumn-snow decisions** (tooling ready; human partner required). Live CDS / PHI / commercial AF3 rights stay gated.
 
 | Plane | Light | One line |
 |-------|-------|----------|
@@ -26,6 +26,8 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | ISI consume handoff (HSI side) | **GREEN** | **P0.2-HSI** contract + **P0.5** playbook + immunecity Gate C human queue (`090d7ea`) — still human-only |
 | Partner walkthrough / exports (P0.6) | **GREEN** | Apolo named lock + 48/48 clearance + `lockedPilot` reflected in walkthrough/acceptance; `bun run outputs` regenerable |
 | Curator UX (P1.6) | **GREEN** | Richer gap/Gate C markdown + `hsi-curator-ux.*` + `/curator`; awaiting partner review session; no invented decisions / no grade flips |
+| Gate C decisions tooling (P1.7) | **GREEN** | Dry-run + empty/hypothetical `--decisions` envelopes; `hypothetical_fixture_imported` ≠ production Apolo |
+| Immune spine Stage 2 starters (P1.8) | **GREEN** | CL `hint_only` on all spine nodes beyond SSc neighbourhood; not confirmed binds / not Gate C |
 | Vertical strategy | **GREEN** | **A dual-track** written — `verticalStrategy=dual_track` |
 
 ---
@@ -43,7 +45,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | Aksh node map + HITL stubs (`cdsSurfacable=false`) | **DONE** | `src/akshHitl.ts`, `src/mappings/aksh*.ts` |
 | Gate C checklist (pending only) | **DONE** | `src/gateCChecklist.ts` → `gate-c-checklist.*` (+ translation + **modelProposals**) |
 | Versioned `bun run outputs` + MANIFEST + site refresh | **DONE** | `src/publishOutputs.ts`, [`OUTPUTS.md`](./OUTPUTS.md) |
-| Immune-cell spine vocabulary + PRD relation types | **DONE** (vocab) | `src/immuneCellSpine.ts` |
+| Immune-cell spine vocabulary + PRD relation types | **DONE** (vocab + P1.8 CL hints) | `src/immuneCellSpine.ts` — `ontologyBindStatus=hint_only` Stage 2 starters |
 | Systems multi-axis stubs (gut / neuro / DTB / patient plane / P3) | **DONE** (vocab) | `src/systemsAxes.ts` → `hsi-systems-vision.json` |
 | AI / NN position + P3 license + RDKit/OpenMM/REINVENT4/ESM/AF3/TDC/Boltz/ISI-agents spikes | **DONE** | [`HSI_AI_NEURAL_FUTURE_HEALTHCARE.md`](./HSI_AI_NEURAL_FUTURE_HEALTHCARE.md); [`P3_WEIGHTS_AND_LICENSE_POLICY.md`](./P3_WEIGHTS_AND_LICENSE_POLICY.md); research sign-off fixtures; no weight vendoring |
 | Discovery interactive graph explorer | **DONE** | `/discovery` MAP — nodes/edges from pack JSON; grade coloring; click → evidence card; not-diagnostic banners |
@@ -52,6 +54,8 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | Source licensing stub (P0.3) | **DONE** (curator + Apolo clearance) | `src/sourceLicensingStub.ts` → reviewed statuses + `partnerCleared` / `clearanceScope` (2026-11-01); pack uncleared=0 (`ok_cite` for former unknowns) |
 | Package scripts | **DONE** | `test`, `outputs`, `curator-ux`, `db:migrate`, `db:gate-c-local`, `site:dev` / `site:build` |
 | Curator UX (P1.6) | **DONE** | `src/curatorUx.ts` → `hsi-curator-ux.*` + richer `hsi-gap-report.md` / `gate-c-checklist.md`; site `/curator`; awaiting partner session when `decisions=[]` |
+| Gate C decisions dry-run / fixtures (P1.7) | **DONE** | `src/gateCDecisionsImport.ts` + `examples/gate-c-decisions/*`; CLI `--dry-run` / `--export-template` / `--write-hypothetical-fixture`; refuses `productionApproved=true` / autoApprove / grade flip |
+| Immune spine CL starters (P1.8) | **DONE** | `ontologyBindStatus=hint_only` + CL ids on class/lineage/subset spine nodes; RA Stage 1 untouched |
 
 ### 1.2 Stage 1 packs (pilot R0–R1)
 
@@ -169,8 +173,11 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | P3.3 FAIR ESM-2 thin embedding stub | `1c22662` |
 | P0.2-HSI ISI consume + partner flip-readiness (+ P0.3 licensing stub) | `6b4779e` |
 | P1.6 curator UX (richer gap/Gate C + `/curator`) | `e6dd2be` |
+| P1.7 Gate C decisions dry-run / fixtures | (this commit) |
+| P1.8 Stage 2 spine CL hint starters | (this commit) |
 
-Reproduce: `bun test && bun run outputs && bun run site:dev` → `/discovery`, `/curator`, `/akeno`, `/aksh-agents`.
+Reproduce: `bun test && bun run outputs && bun run site:dev` → `/discovery`, `/curator`, `/akeno`, `/aksh-agents`.  
+Decisions dry-run: `bun run curator-ux --dry-run --decisions examples/gate-c-decisions/awaiting.empty.json`.
 
 ---
 
@@ -185,7 +192,7 @@ Reproduce: `bun test && bun run outputs && bun run site:dev` → `/discovery`, `
 | **Neuroimmune claim seeds** | **DONE (P2.1)** vagus / cholinergic anti-inflammatory reflex pack | Optional further neighbourhood (microglia/BBB) later; VNS–RA stays hypothesized |
 | **Gut–immune claim seeds** | **DONE (P1.3)** SCFA ↔ mucosal Treg/Th17 pack | Optional further depth later; Th17 frames stay hypothesized |
 | **SSc pack depth** | P1.1 cell cards + extra PMIDs landed; still not a full atlas | Optional further neighbourhood edges later |
-| **Immune spine = vocabulary + SSc hints** | Full atlas / confirmed ontology bind still open; SSc neighbourhood has `hint_only` CL·MONDO | Stage 2 depth beyond SSc |
+| **Immune spine = vocabulary + CL hints (P1.8)** | Stage 2 starters: all spine nodes carry CL `hint_only`; confirmed ontology bind / full atlas still open | Optional confirmed bind review later; RA untouched |
 | **Model→Gate C** | **DONE (P1.5)** pending drafts only; no agent runtime | Never auto-approve; ISI runtime out of repo |
 | **Embedding sidecars** | **DONE (P2.2)** hash/ref slots on sample edges | Never set grades; no weights / PHI; packs remain authority |
 | **Offline eval harness** | **DONE (P2.3)** stub runner vs frozen packs | No training / PHI; fail-closed clinical claims; packs remain authority |
@@ -230,6 +237,8 @@ One-sprint-sized items. Mark **[DECISION]** where the user must choose before co
 | P1.4 | **DONE:** Promote selected systems / ISI predicates onto `HSI_EDGE_TYPES` | Additive: `modulates_immune`, `produces_metabolite_sensed_by`, `suppresses_peripheral_inflammation`, `signals_via_axis`, `associates_neuroimmune`, `produces`, `activates`, `suppresses`, `differentiates_into`; alias maps kept for remainder; gut/neuro/SSc-002 seeds use first-class labels; RA Stage 1 untouched |
 | P1.5 | **DONE:** wire **ModelProposalArtifact** → Gate C checklist *draft rows* (`modelProposals`; `autoApprove=false`) | `src/modelProposal.ts`; never flips `hsiGrade` |
 | P1.6 | **DONE:** Curator UX scaffolding — richer gap/Gate C markdown + `/curator` + `hsi-curator-ux.*` | Honest: awaiting partner review session when no decisions; compatible with immunecity `090d7ea`; never invents outcomes / never flips `hsiGrade` |
+| P1.7 | **DONE:** Gate C decisions dry-run / import fixtures | `src/gateCDecisionsImport.ts` + `examples/gate-c-decisions/*`; CLI `--dry-run` / `--export-template` / `--write-hypothetical-fixture`; hypothetical ≠ production Apolo |
+| P1.8 | **DONE:** Stage 2 spine CL `hint_only` starters beyond SSc | All spine nodes get CL ids + `ontologyBindStatus=hint_only`; not confirmed binds; RA untouched |
 
 ### P2 — later / gated substrate
 
@@ -253,7 +262,9 @@ One-sprint-sized items. Mark **[DECISION]** where the user must choose before co
 | P0.6 | **DONE:** Apolo walkthrough / export hygiene | Acceptance + walkthrough + pack notes; `bun run outputs` regenerable |
 | P1.4 | **DONE:** systems / ISI predicates first-class | `HSI_EDGE_TYPES` + identity maps; gut/neuro/SSc-002 updated; RA untouched |
 | P1.6 | **DONE:** curator UX scaffolding | `hsi-curator-ux.*` + richer gap/Gate C md + `/curator`; awaiting partner session |
-| **NEXT** | **Partner Apolo Gate C review session → import decisions** | Live immunecity `/hsi/discovery` REVIEW (autumn-snow); re-export via `bun run curator-ux --decisions …`; still no auto-approve / no `hsiGrade` flip / no commercial AF3 claim |
+| P1.7 | **DONE:** Gate C decisions dry-run / fixtures | `examples/gate-c-decisions/*`; CLI dry-run + envelope; hypothetical ≠ production |
+| P1.8 | **DONE:** Stage 2 spine CL hint starters | `ontologyBindStatus=hint_only` on spine; RA untouched |
+| **NEXT** | **Live Partner Apolo Gate C review session → import real decisions** | Human partner required on immunecity `/hsi/discovery` REVIEW (autumn-snow); then `bun run curator-ux --decisions <export>` (dry-run first). Tooling ready (P1.7). Still no auto-approve / no `hsiGrade` flip / no commercial AF3 claim. Optional coded follow-ons: further SSc/gut/neuro neighbourhood depth. |
 
 ### Out-of-repo (track; do not implement here)
 

@@ -96,10 +96,17 @@ export type CuratorUxBundle = {
     partnerSigned: boolean;
   };
   partnerReviewSession: {
-    status: "awaiting_partner_review_session" | "decisions_imported";
+    status:
+      | "awaiting_partner_review_session"
+      | "hypothetical_fixture_imported"
+      | "decisions_imported";
     note: string;
     humanDecisionCount: number;
     inventedOutcomes: false;
+    /** Loud when decisions came from P1.7 hypothetical schema fixture / dry-run. */
+    isHypothetical: boolean;
+    notProductionApproved: true;
+    productionApproved: false;
     isiNeonTarget: "autumn-snow";
     hsiNeonTarget: "red-wave";
   };
@@ -245,6 +252,11 @@ export function buildCuratorUxBundle(opts?: {
   gateC?: GateCChecklistBundle;
   /** Optional human decisions from ISI autumn-snow — never invent. */
   decisions?: readonly CuratorGateCDecision[];
+  /**
+   * P1.7 — when true, decisions are schema/dry-run fixtures only.
+   * Status becomes `hypothetical_fixture_imported` (never production Apolo).
+   */
+  decisionsAreHypothetical?: boolean;
 }): CuratorUxBundle {
   const generatedAt = opts?.generatedAt ?? new Date().toISOString();
   const gap = opts?.gap ?? buildSchemaGapReport({ generatedAt });
@@ -256,6 +268,12 @@ export function buildCuratorUxBundle(opts?: {
   const queue = buildCuratorGateCQueue(gateC, decisions);
   const humanDecisionCount = decisions.length;
   const awaiting = humanDecisionCount === 0;
+  const isHypothetical = Boolean(opts?.decisionsAreHypothetical) && !awaiting;
+  const sessionStatus = awaiting
+    ? ("awaiting_partner_review_session" as const)
+    : isHypothetical
+      ? ("hypothetical_fixture_imported" as const)
+      : ("decisions_imported" as const);
 
   return {
     schemaVersion: CURATOR_UX_SCHEMA,
@@ -270,14 +288,17 @@ export function buildCuratorUxBundle(opts?: {
       partnerSigned: lock.partnerSigned,
     },
     partnerReviewSession: {
-      status: awaiting
-        ? "awaiting_partner_review_session"
-        : "decisions_imported",
+      status: sessionStatus,
       note: awaiting
         ? "No human Gate C decisions supplied — awaiting partner review session. Do not invent approve/reject/defer outcomes."
-        : `Imported ${humanDecisionCount} human decision(s) from ISI autumn-snow shape — does not flip hsiGrade; autoApprove=false.`,
+        : isHypothetical
+          ? `Imported ${humanDecisionCount} HYPOTHETICAL schema fixture decision(s) — NOT production-approved; NOT an Apolo Pharma Gate C session. Does not flip hsiGrade; autoApprove=false.`
+          : `Imported ${humanDecisionCount} human decision(s) from ISI autumn-snow shape — does not flip hsiGrade; autoApprove=false.`,
       humanDecisionCount,
       inventedOutcomes: false,
+      isHypothetical,
+      notProductionApproved: true,
+      productionApproved: false,
       isiNeonTarget: "autumn-snow",
       hsiNeonTarget: "red-wave",
     },
@@ -295,13 +316,18 @@ export function buildCuratorUxBundle(opts?: {
       "hsiGrade ≠ Gate C decision ≠ teachingStatus — never collapse axes.",
       "HSI Neon red-wave holds substrate + pending placeholders only; human approve/reject/defer writes stay on ISI autumn-snow (immunecity queue).",
       "Curator UX scaffolding does not invent completed Apolo review outcomes.",
+      isHypothetical
+        ? "P1.7 hypothetical fixture import — productionApproved=false; replace with live autumn-snow export after partner session."
+        : "productionApproved=false until operator asserts a live autumn-snow partner export (HSI never self-certifies).",
       "Model proposals and translation candidates remain pending drafts only.",
       "Compatible with immunecity Gate C queue (`090d7ea`) decision shape.",
     ],
     nextActions: [
       awaiting
-        ? "Run a real Apolo Pharma Gate C review session on immunecity `/hsi/discovery` REVIEW (approve/reject/defer) — then optionally re-export decisions into this bundle."
-        : "Re-check decided rows for S-P-O honesty before any product KG promote; never flip hsiGrade from checklist alone.",
+        ? "Run a real Apolo Pharma Gate C review session on immunecity `/hsi/discovery` REVIEW (approve/reject/defer) — then `bun run curator-ux --decisions <export>` (dry-run first with --dry-run)."
+        : isHypothetical
+          ? "Replace hypothetical fixture with a real autumn-snow decisions export before claiming partner Gate C complete."
+          : "Re-check decided rows for S-P-O honesty before any product KG promote; never flip hsiGrade from checklist alone.",
       "Close high-leverage gap buckets (unmapped REL, missing LOINC, durable locator) without inventing maps.",
       "Keep Gate C human-only — refuse auto-approve and shared Neon.",
       "CDS stays closed until curationReview=approved AND hsiGrade=established.",
@@ -409,9 +435,11 @@ export function serializeRichGapReportMarkdown(
 export function serializeRichGateCChecklistMarkdown(
   checklist: GateCChecklistBundle = buildGateCChecklist(),
   decisions: readonly CuratorGateCDecision[] = [],
+  opts?: { decisionsAreHypothetical?: boolean },
 ): string {
   const queue = buildCuratorGateCQueue(checklist, decisions);
   const awaiting = decisions.length === 0;
+  const hypothetical = Boolean(opts?.decisionsAreHypothetical) && !awaiting;
   const unmapped = checklist.rows.filter((r) => r.gateCStatus === "unmapped");
 
   const lines: string[] = [
@@ -425,7 +453,9 @@ export function serializeRichGateCChecklistMarkdown(
     "",
     awaiting
       ? "> **Awaiting partner review session** — no human approve/reject/defer decisions imported. Do not invent completed Apolo outcomes."
-      : `> Human decisions imported: **${decisions.length}** (autumn-snow shape). Grades are **not** flipped by this checklist.`,
+      : hypothetical
+        ? `> **Hypothetical schema fixture** imported: **${decisions.length}** row(s) — NOT production-approved; NOT an Apolo session. Grades are **not** flipped.`
+        : `> Human decisions imported: **${decisions.length}** (autumn-snow shape). Grades are **not** flipped by this checklist. productionApproved=false unless operator asserts live export.`,
     "",
     "## Summary",
     "",

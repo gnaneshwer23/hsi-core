@@ -38,6 +38,9 @@ type CuratorUx = {
     note: string;
     humanDecisionCount: number;
     inventedOutcomes: boolean;
+    isHypothetical?: boolean;
+    notProductionApproved?: boolean;
+    productionApproved?: boolean;
     isiNeonTarget: string;
     hsiNeonTarget: string;
   };
@@ -100,13 +103,16 @@ export function Curator() {
 
   const awaiting =
     data?.partnerReviewSession.status === "awaiting_partner_review_session";
+  const hypothetical =
+    data?.partnerReviewSession.status === "hypothetical_fixture_imported" ||
+    data?.partnerReviewSession.isHypothetical === true;
   const actionable = data?.gateCQueue.items.filter((i) => i.actionable) ?? [];
   const decided = data?.gateCQueue.items.filter((i) => !i.actionable) ?? [];
 
   return (
     <>
       <PageHero
-        eyebrow="Curator UX · P1.6"
+        eyebrow="Curator UX · P1.6 / P1.7"
         title={
           <>
             Gap &amp; Gate C
@@ -114,7 +120,7 @@ export function Curator() {
             <span className="accent">without invented outcomes.</span>
           </>
         }
-        lede="Richer gap buckets and Gate C queue from published packs. Human decisions stay on ISI autumn-snow. When none are imported, this surface says awaiting partner review session — it never fabricates Apolo approve/reject rows or flips grades."
+        lede="Richer gap buckets and Gate C queue from published packs. Human decisions stay on ISI autumn-snow. Empty import = awaiting partner session; hypothetical fixtures stay labelled not production-approved — never fabricates Apolo approvals or flips grades."
       />
 
       <section className="section section-ink">
@@ -142,6 +148,13 @@ export function Curator() {
                   inventedOutcomes=
                   {String(data.partnerReviewSession.inventedOutcomes)}
                 </span>
+                <span className="tag">
+                  productionApproved=
+                  {String(data.partnerReviewSession.productionApproved ?? false)}
+                </span>
+                {hypothetical ? (
+                  <span className="tag">isHypothetical=true</span>
+                ) : null}
               </div>
               <p className="lede">
                 Partner: <strong>{data.partner.label ?? "unnamed"}</strong> (
@@ -156,6 +169,21 @@ export function Curator() {
                 <p style={{ marginTop: "0.75rem" }}>
                   {data.partnerReviewSession.note}
                 </p>
+                {awaiting ? (
+                  <p className="muted" style={{ marginTop: "0.5rem" }}>
+                    Dry-run:{" "}
+                    <code>
+                      bun run curator-ux --dry-run --decisions
+                      examples/gate-c-decisions/awaiting.empty.json
+                    </code>
+                  </p>
+                ) : null}
+                {hypothetical ? (
+                  <p className="muted" style={{ marginTop: "0.5rem" }}>
+                    Hypothetical fixture only — replace with a live autumn-snow
+                    export after the Apolo review session.
+                  </p>
+                ) : null}
                 <p className="muted" style={{ marginTop: "0.5rem" }}>
                   Decisions Neon: <code>{data.partnerReviewSession.isiNeonTarget}</code>{" "}
                   · HSI substrate:{" "}

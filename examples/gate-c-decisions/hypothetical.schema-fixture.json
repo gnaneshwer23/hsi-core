@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "hsi-gate-c-decisions-import-1",
+  "kind": "hypothetical_schema_fixture",
+  "isHypothetical": true,
+  "notProductionApproved": true,
+  "productionApproved": false,
+  "inventedApoloOutcomes": false,
+  "autoApprove": false,
+  "mayFlipHsiGrade": false,
+  "notCds": true,
+  "neonTarget": "autumn-snow",
+  "hsiNeonTarget": "red-wave",
+  "note": "Hypothetical schema fixture for curator-ux --dry-run / CI. Demonstrates immunecity-compatible decision rows. NOT production-approved. NOT an Apolo Pharma Gate C session. Do not treat human_approved rows as partner-signed.",
+  "generatedAt": "2026-11-02T05:17:25.764Z",
+  "decisions": [
+    {
+      "edgeId": "HSI-E-IO-001",
+      "status": "deferred",
+      "decision": "defer",
+      "reviewerNote": "HYPOTHETICAL SCHEMA FIXTURE — not a partner decision; dry-run only.",
+      "reviewedBy": "hypothetical-fixture-not-a-partner-signature",
+      "reviewedAt": "2026-11-02T05:17:25.764Z",
+      "isiRelationshipId": "REL-R011-drives-P015",
+      "pmid": "16382236",
+      "autoApprove": false,
+      "hsiGradeFlipped": false
+    },
+    {
+      "edgeId": "HSI-E-IM-006",
+      "status": "human_rejected",
+      "decision": "reject",
+      "reviewerNote": "HYPOTHETICAL SCHEMA FIXTURE — demonstrates reject shape; NOT Apolo-approved.",
+      "reviewedBy": "hypothetical-fixture-not-a-partner-signature",
+      "reviewedAt": "2026-11-02T05:17:25.764Z",
+      "isiRelationshipId": "REL-R004-activates-P003",
+      "pmid": "15030775",
+      "autoApprove": false,
+      "hsiGradeFlipped": false
+    },
+    {
+      "edgeId": "HSI-E-IM-004",
+      "status": "human_approved",
+      "decision": "approve",
+      "reviewerNote": "HYPOTHETICAL SCHEMA FIXTURE — approve *shape* only; productionApproved=false; not a live Apolo Gate C outcome.",
+      "reviewedBy": "hypothetical-fixture-not-a-partner-signature",
+      "reviewedAt": "2026-11-02T05:17:25.764Z",
+      "isiRelationshipId": "REL-P021-produces-B001",
+      "pmid": "12813013",
+      "autoApprove": false,
+      "hsiGradeFlipped": false
+    }
+  ]
+}

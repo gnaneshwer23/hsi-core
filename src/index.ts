@@ -44,6 +44,7 @@ export {
   ISI_CONTROLLED_RELATIONSHIP_TYPES,
   ISI_RELATIONSHIP_TO_HSI_EDGE,
   buildImmuneCellSpineBundle,
+  countSpineOntologyHints,
   getDiseaseVertical,
   isIsiControlledRelationshipType,
   listImmuneCellLineages,
@@ -53,6 +54,7 @@ export {
   type ImmuneCellSpineBundle,
   type ImmuneCellSpineNode,
   type IsiControlledRelationshipType,
+  type SpineOntologyBindStatus,
 } from "./immuneCellSpine";
 
 export {
@@ -195,6 +197,21 @@ export {
   type CuratorQueueItem,
   type CuratorUxBundle,
 } from "./curatorUx";
+
+export {
+  GATE_C_DECISIONS_IMPORT_SCHEMA,
+  GATE_C_DECISIONS_IMPORT_VOCAB,
+  buildAwaitingGateCDecisionsTemplate,
+  buildHypotheticalGateCDecisionsFixture,
+  dryRunGateCDecisionsImport,
+  parseGateCDecisionsImport,
+  resolvePartnerReviewSessionStatus,
+  serializeGateCDecisionsEnvelope,
+  type GateCDecisionsDryRunReport,
+  type GateCDecisionsImportEnvelope,
+  type GateCDecisionsImportKind,
+  type ParsedGateCDecisionsImport,
+} from "./gateCDecisionsImport";
 
 export {
   MODEL_PROPOSAL_RUNTIME_SCHEMA,

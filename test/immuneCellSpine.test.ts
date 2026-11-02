@@ -6,6 +6,7 @@ import {
   ISI_CONTROLLED_RELATIONSHIP_TYPES,
   ISI_RELATIONSHIP_TO_HSI_EDGE,
   buildImmuneCellSpineBundle,
+  countSpineOntologyHints,
   getDiseaseVertical,
   getPartnerLock,
   isHsiEdgeType,
@@ -75,5 +76,32 @@ describe("immune-cell spine stubs (PRD vocabulary)", () => {
     expect(lock.disease?.id).toBe("ra");
     expect(lock.verticalStrategy).toBe("dual_track");
     expect(DISEASE_VERTICAL_STUBS.some((d) => d.id === "ssc")).toBe(true);
+  });
+
+  test("P1.8 Stage 2 spine starters: CL hints beyond SSc are hint_only only", () => {
+    const counts = countSpineOntologyHints();
+    expect(counts.hinted).toBe(counts.total);
+    expect(counts.unbound).toBe(0);
+    expect(counts.total).toBeGreaterThanOrEqual(15);
+
+    const th17 = IMMUNE_CELL_SPINE_NODES.find((n) => n.id === "HSI-IC-sub-th17");
+    const treg = IMMUNE_CELL_SPINE_NODES.find((n) => n.id === "HSI-IC-sub-treg");
+    const cd4 = IMMUNE_CELL_SPINE_NODES.find((n) => n.id === "HSI-IC-lin-cd4");
+    expect(th17?.cellOntologyId).toBe("CL:0000899");
+    expect(th17?.ontologyBindStatus).toBe("hint_only");
+    expect(treg?.cellOntologyId).toBe("CL:0000815");
+    expect(treg?.ontologyBindStatus).toBe("hint_only");
+    expect(cd4?.cellOntologyId).toBe("CL:0000624");
+    expect(cd4?.ontologyBindStatus).toBe("hint_only");
+
+    for (const n of IMMUNE_CELL_SPINE_NODES) {
+      expect(n.ontologyBindStatus).toBe("hint_only");
+      expect(n.cellOntologyId).toMatch(/^CL:\d+$/);
+    }
+
+    const bundle = buildImmuneCellSpineBundle();
+    expect(
+      bundle.invariants.some((s) => s.includes("ontologyBindStatus=hint_only")),
+    ).toBe(true);
   });
 });
