@@ -180,7 +180,7 @@ const CLUSTERS: Cluster[] = [
 
 /**
  * §01 “Connected by design” — interactive four-stage fabric from the founder
- * first-batch platform HTML, adapted to HSI cobalt tokens. Shared by `/` and
+ * first-batch platform HTML, adapted to HSI ivory/teal/coral tokens. Shared by `/` and
  * `/platform`. Current Downloads/index.html is Clinical (separate surface).
  */
 export function PlatformEngine() {

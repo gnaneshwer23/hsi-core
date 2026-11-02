@@ -134,7 +134,7 @@ const CARE_POINTS = [
 
 /**
  * Founder Downloads/index (1).html — Aksh Health personal-intelligence landing.
- * Cobalt/navy/cream tokens; Shell/nav remain product chrome.
+ * Ivory/teal/coral tokens; Shell/nav remain product chrome.
  */
 export function AkshHealthLanding() {
   const [scenario, setScenario] = useState<ScenarioId>("metabolic");

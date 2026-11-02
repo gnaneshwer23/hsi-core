@@ -1,15 +1,15 @@
-/** Original HSI schematic SVGs — cobalt/navy tokens. Not derived from third-party dumps. */
+/** Original HSI schematic SVGs — ivory/teal/coral tokens. Not derived from third-party dumps. */
 
 const FONT_SANS = "Host Grotesk, system-ui, sans-serif";
 const FONT_MONO = "JetBrains Mono, monospace";
-const INK = "#0b0f24";
-const NAVY = "#0a1028";
-const COBALT = "#3965fa";
-const ACCENT = "#8fa8ff";
-const BONE = "#f0ece9";
+const INK = "#0a2e2b";
+const NAVY = "#0a2e2b";
+const COBALT = "#17645f";
+const ACCENT = "#7ab5af";
+const BONE = "#f3eee8";
 const AMBER = "#e4a65a";
-const MUTED = "rgba(168,176,200,0.75)";
-const GRID = "rgba(143,168,255,0.08)";
+const MUTED = "rgba(138,171,167,0.75)";
+const GRID = "rgba(122,181,175,0.08)";
 
 type DiagramProps = {
   className?: string;
@@ -256,9 +256,9 @@ export function TerrainClimb({
       <svg viewBox="0 0 640 380" role="img" aria-label="Evidence altitude climb P0 to P3" className="terrain-svg">
         <defs>
           <linearGradient id="terrain-sky" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#0a2a9a" />
-            <stop offset="45%" stopColor="#1a5ad4" />
-            <stop offset="100%" stopColor="#7eb0f0" />
+            <stop offset="0%" stopColor="#0a2e2b" />
+            <stop offset="45%" stopColor="#1a7a73" />
+            <stop offset="100%" stopColor="#7ab5af" />
           </linearGradient>
           <linearGradient id="path-glow" x1="0" y1="1" x2="1" y2="0">
             <stop offset="0%" stopColor="#fff" stopOpacity="0.3" />
@@ -349,8 +349,8 @@ export function IsometricProcess({ className, title = "From seed to publish" }: 
         <svg viewBox="0 0 640 280" role="img" aria-label={title}>
           <defs>
             <linearGradient id="iso-path" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="#3965fa" stopOpacity="0.4" />
-              <stop offset="100%" stopColor="#3965fa" stopOpacity="1" />
+              <stop offset="0%" stopColor="#17645f" stopOpacity="0.4" />
+              <stop offset="100%" stopColor="#17645f" stopOpacity="1" />
             </linearGradient>
             <pattern id="iso-grid" width="40" height="23" patternUnits="userSpaceOnUse" patternTransform="skewX(-30)">
               <path d="M0 0 H40 M0 0 V23" stroke="rgba(57,101,250,0.12)" strokeWidth="1" fill="none" />
@@ -367,8 +367,8 @@ export function IsometricProcess({ className, title = "From seed to publish" }: 
           />
           {/* monoliths */}
           <g>
-            <rect x="270" y="70" width="36" height="100" rx="4" fill="#141c37" opacity="0.85" />
-            <rect x="310" y="55" width="36" height="115" rx="4" fill="#141c37" opacity="0.7" />
+            <rect x="270" y="70" width="36" height="100" rx="4" fill="#17645f" opacity="0.85" />
+            <rect x="310" y="55" width="36" height="115" rx="4" fill="#17645f" opacity="0.7" />
           </g>
           {nodes.map((n) => (
             <g key={n.label} transform={`translate(${n.x} ${n.y})`}>
@@ -451,7 +451,7 @@ export function AgentWorkflowDiagram({ className, title = "Claim → evidence �
           <g key={c.t}>
             <ellipse cx={c.x + 50} cy={c.y} rx="48" ry="12" fill="rgba(57,101,250,0.25)" stroke={ACCENT} />
             <rect x={c.x + 2} y={c.y} width="96" height="22" fill="rgba(20,28,55,0.9)" />
-            <ellipse cx={c.x + 50} cy={c.y + 22} rx="48" ry="12" fill="rgba(57,101,250,0.35)" stroke={ACCENT} />
+            <ellipse cx={c.x + 50} cy={c.y + 22} rx="48" ry="12" fill="rgba(23,100,95,0.35)" stroke={ACCENT} />
             <text x={c.x + 50} y={c.y + 16} textAnchor="middle" fill={BONE} fontFamily={FONT_MONO} fontSize="9">
               {c.t}
             </text>

@@ -299,7 +299,7 @@ const PRINCIPLES = [
 
 /**
  * Founder Downloads/index (3).html — How HSI Works interactive journeys.
- * Cobalt/navy/cream tokens; Shell/nav remain product chrome.
+ * Ivory/teal/coral tokens; Shell/nav remain product chrome.
  */
 export function HowItWorks() {
   const [persona, setPersona] = useState<PersonaId>("patient");

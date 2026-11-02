@@ -104,7 +104,7 @@ const GOVERNANCE = [
 
 /**
  * Founder Downloads/index (2).html — HSI Trials marketing landing.
- * Cobalt/navy/cream tokens; Shell/nav remain product chrome.
+ * Ivory/teal/coral tokens; Shell/nav remain product chrome.
  * Illustrative criteria completeness only — never eligibility.
  */
 export function TrialsLanding() {

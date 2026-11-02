@@ -197,14 +197,14 @@ export function ClaimMarkerMock({ className }: MockProps) {
           <svg viewBox="0 0 280 80" className="mock-spark">
             <defs>
               <linearGradient id="spark-fill" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#3965fa" stopOpacity="0.35" />
-                <stop offset="100%" stopColor="#3965fa" stopOpacity="0" />
+                <stop offset="0%" stopColor="#17645f" stopOpacity="0.35" />
+                <stop offset="100%" stopColor="#17645f" stopOpacity="0" />
               </linearGradient>
             </defs>
             <path
               d="M0 60 C 40 55, 60 48, 80 42 S 120 28, 140 30 S 180 22, 200 18 S 240 12, 280 8"
               fill="none"
-              stroke="#3965fa"
+              stroke="#17645f"
               strokeWidth="2.5"
             />
             <path
@@ -260,7 +260,7 @@ export function IsiCoworkerMock({ className }: MockProps) {
             key={i}
             style={{
               opacity: [0.15, 0.35, 0.55, 0.8, 1][i % 5],
-              background: i % 7 === 0 ? "#3965fa" : "rgba(57,101,250,0.35)",
+              background: i % 7 === 0 ? "#17645f" : "rgba(23,100,95,0.35)",
             }}
           />
         ))}

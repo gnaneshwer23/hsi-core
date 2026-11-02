@@ -25,9 +25,6 @@ export function Footer() {
               <Link to="/products">Four products</Link>
             </li>
             <li>
-              <Link to="/science">Science atlas</Link>
-            </li>
-            <li>
               <Link to="/explore">Explore evidence</Link>
             </li>
             <li>

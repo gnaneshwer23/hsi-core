@@ -6,7 +6,6 @@ import { ENGINEERING_LINKS } from "../lib/productMaturity";
 const primaryLinks = [
   { to: "/platform", label: "Platform" },
   { to: "/products", label: "Products" },
-  { to: "/science", label: "Science" },
   { to: "/explore", label: "Explore" },
   { to: "/discovery", label: "Discovery" },
   { to: "/status", label: "Status" },

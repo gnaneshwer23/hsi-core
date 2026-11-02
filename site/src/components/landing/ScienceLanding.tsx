@@ -186,7 +186,7 @@ const PILLARS = [
 
 /**
  * Founder Downloads/HSI_Science_FIXED.html — HSI Science educational landing.
- * Cobalt/navy/cream tokens; Shell/nav remain product chrome.
+ * Ivory/teal/coral tokens; Shell/nav remain product chrome.
  * Illustrative mechanism explorer only — not a live research graph or CDS.
  */
 export function ScienceLanding() {

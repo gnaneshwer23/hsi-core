@@ -26,25 +26,52 @@ ship an equivalent look & feel with original content.
 
 ## Recreated style tokens
 
+### Founder palette (2026-11-02) — current
+
 | Token | Value | Role |
 | --- | --- | --- |
-| Cobalt | `#3965fa` | Primary accent / frames / active chips |
-| Navy | `#131930` / `#141c37` / `#0b0f24` | Ink surfaces, CTA |
-| Soft blue | `#8fa8ff` / `#cfdaff` | Labels, glass chip text |
-| Cream | `#f0ece9` / `#f7f3f0` | Light section bands |
-| Live green | `#2fcb86` | Status pills |
+| Warm Ivory | `#F3EEE8` (`--ivory` / `--cream` / `--bone`) | Page / light section backgrounds |
+| Deep Teal | `#17645F` (`--teal` / `--navy` / `--cobalt`) | Headings, chrome, structural accents, active chips |
+| Coral Orange | `#FF6845` (`--coral` / `--action`) | Primary CTAs (`.btn-primary`, `.btn-cobalt`, land next / go-deeper) |
+| Teal ink | `#0A2E2B` (`--ink` / `--teal-ink`) | Dark surfaces, body chrome |
+| Soft teal | `#7AB5AF` (`--accent` / `--phosphor`) | Labels / glass chip text on dark |
+| Live green | `#2fcb86` (`--live`) | Honesty / availability status pills (**unchanged**) |
+| Amber | `#e4a65a` | Uncertain / warning status (**unchanged**) |
 | Glass blur | `blur(14–22px) saturate(140–150%)` | Nav, chips, stage panel |
 | Radii | `12px` controls · `999px` pills · `18–22px` cards | Buttons / chips / panels |
 | Type | Host Grotesk + JetBrains Mono (Google Fonts) | Bold grotesk + mono energy |
-| Hero wash | `#07208a → #1646c4 → #2f6fe0 → #8fb6f2 → cream` | Full-bleed atmosphere |
+| Hero wash | `#0A2E2B → #17645F → #3A8A84 → #A8D0CC → #F3EEE8` | Full-bleed atmosphere |
 | Arrow motif | 12px repeating SVG ↗ | Hero + dark band texture |
+
+Legacy CSS names (`--cobalt`, `--navy`, `--cream`) are remapped to this trio so Home,
+Platform, How-it-works, for-aksh, for-trials, Explore, Discovery-engine, and Products
+landings inherit without page-local hacks. `--cobalt` = teal structure; coral is
+`--coral` / `--action` on CTA classes.
+
+### Prior cobalt set (superseded)
+
+| Old token | Old value | Now |
+| --- | --- | --- |
+| Cobalt | `#3965fa` | → Deep Teal `#17645F` (structure) / Coral `#FF6845` (CTAs) |
+| Navy / ink | `#131930` / `#141c37` / `#0b0f24` | → Teal ink `#0A2E2B` / Teal `#17645F` |
+| Soft blue | `#8fa8ff` / `#cfdaff` | → Soft teal `#7AB5AF` / `#C5E0DC` |
+| Cream | `#f0ece9` / `#f7f3f0` | → Warm Ivory `#F3EEE8` / `#F8F5F1` |
+| Hero wash | cobalt blues → cream | → teal ink → teal → mist → ivory |
+
+### PlatformEngine fabric (intentional choice)
+
+Dark **teal-ink** stage (`#0A2E2B` + soft teal wires/particles), not mid `#17645F` and
+not legacy navy. Mid teal washed out the fabric grid/particles; navy fought the new
+brand. Deep teal ink keeps contrast for light strokes while staying in-family.
 
 ## HSI brand lock
 
 - Voice: evidence honesty, Gate C human, ISI ≠ CDS, edit only `hsi-core`.
-- Name / messaging / routes / diagrams remain HSI — only visual energy matches
-  the cobalt/glass category above.
+- Name / messaging / routes / diagrams remain HSI — visual system is now
+  ivory / deep teal / coral (founder reference).
 - Mock dashboards use **illustrative** demo data, labeled as such.
+- Honesty / maturity status chips keep semantic greens / ambers / reds — not
+  forced into the marketing trio.
 
 ## Founder landing HTML (2026-11-02)
 
@@ -57,7 +84,7 @@ filenames — always re-read the file, do not trust download numbers alone:
 | `index.html` | HSI Clinical — clinician context workspace | Pending fidelity pass (not yet this note’s target) |
 | `index (1).html` | Aksh Health — personal health intelligence | `/for-aksh` via `AkshHealthLanding` |
 | `index (2).html` | HSI Trials — clinical research intelligence | `/for-trials` via `TrialsLanding` (MVP remains `/trials-criteria`) |
-| `HSI_Science_FIXED.html` | HSI Science — educational biology atlas | `/science` via `ScienceLanding` |
+| `HSI_Science_FIXED.html` | HSI Science — educational biology atlas | **Out of portfolio** (founder 2026-11-02); `/science` redirects to `/explore`; `ScienceLanding` retained unlinked |
 
 Earlier same-day mapping (still live in site until replaced):
 
@@ -68,19 +95,18 @@ Earlier same-day mapping (still live in site until replaced):
 | `index (2).html` (first batch) | 03 / Explore evidence | `/` + `/explore` — **do not confuse** with later `index (2).html` = Trials → `/for-trials` |
 | `index (1).html` (first batch) | 04 / Discovery engine | `/` + `/discovery-engine` via `DiscoveryWorkbench` |
 
-Lime/forest palette **adapted to HSI cobalt/navy/cream** (`global.css`). No MoU /
-Gate C auto-approve invented. Live CTAs stay honesty-bound via `productMaturity.ts`.
-Shell/nav remain product chrome (HTML header not vendored). Aksh demo is fictional
-preview only — no live EHR/device connection. Trials landing explorer is fictional
-criteria-completeness only (`syntheticOnly`; never eligibility / live registry).
+Founder HTML lime/forest, then cobalt/navy/cream, now **ivory/teal/coral** via
+`:root` in `global.css`. No MoU / Gate C auto-approve invented. Live CTAs stay
+honesty-bound via `productMaturity.ts`. Shell/nav remain product chrome (HTML
+header not vendored). Aksh demo is fictional preview only — no live EHR/device
+connection. Trials landing explorer is fictional criteria-completeness only
+(`syntheticOnly`; never eligibility / live registry).
 
-### Science (`/science` · `ScienceLanding`)
+### Science (removed from product portfolio)
 
-IA from `HSI_Science_FIXED.html`: hero → interactive atlas (immune / metabolism /
-microbiome) → mechanism sequence → three foundations → research CTA. Intentional
-deltas vs HTML: Shell Nav/Footer (HTML chrome dropped); lime/forest → cobalt/accent
-active states; closing CTAs deep-link `/explore` + `/discovery` (research honesty);
-atlas labeled educational/illustrative — not a live KG or CDS.
+Founder decision 2026-11-02: **do not compete in standalone scientific education /
+edtech.** `/science` redirects to `/explore`. `ScienceLanding` + CSS kept in-tree
+until a deliberate purge; not linked from Nav/Footer.
 
 ## Phase 6–7 Discovery Centre (`/discovery`)
 
