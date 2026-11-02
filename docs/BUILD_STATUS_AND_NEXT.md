@@ -1,7 +1,7 @@
 # HSI build status and next
 
 **Audit date:** 2 November 2026  
-**HEAD at write:** (post P1.7 / P1.8) — Gate C decisions dry-run + hypothetical `--decisions` fixtures (no fake Apolo approvals) + Stage 2 spine CL `hint_only` starters; still awaiting live partner review session; named partner **Apolo Pharma**; `lockedPilot=true`; Stage 1 clearance 48/48; not CDS
+**HEAD at write:** (post P1.9) — SSc/gut/neuro neighbourhood depth (microglia/BBB + SFB/AhR + vascular/fibrosis); still awaiting live partner review session; named partner **Apolo Pharma**; `lockedPilot=true`; Stage 1 clearance uncleared=0; not CDS
 
 
 **Edit target:** `hsi-core` primary · immunecity HSI-consume wiring allowed under freeze lift · Neon **`red-wave` only** for HSI · no DeliverX  
@@ -28,6 +28,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | Curator UX (P1.6) | **GREEN** | Richer gap/Gate C markdown + `hsi-curator-ux.*` + `/curator`; awaiting partner review session; no invented decisions / no grade flips |
 | Gate C decisions tooling (P1.7) | **GREEN** | Dry-run + empty/hypothetical `--decisions` envelopes; `hypothetical_fixture_imported` ≠ production Apolo |
 | Immune spine Stage 2 starters (P1.8) | **GREEN** | CL `hint_only` on all spine nodes beyond SSc neighbourhood; not confirmed binds / not Gate C |
+| Neighbourhood depth (P1.9) | **GREEN** | Neuro microglia/BBB + gut SFB/AhR + SSc vascular/fibrosis; honest uncertain/hypothesized; RA untouched |
 | Vertical strategy | **GREEN** | **A dual-track** written — `verticalStrategy=dual_track` |
 
 ---
@@ -56,6 +57,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | Curator UX (P1.6) | **DONE** | `src/curatorUx.ts` → `hsi-curator-ux.*` + richer `hsi-gap-report.md` / `gate-c-checklist.md`; site `/curator`; awaiting partner session when `decisions=[]` |
 | Gate C decisions dry-run / fixtures (P1.7) | **DONE** | `src/gateCDecisionsImport.ts` + `examples/gate-c-decisions/*`; CLI `--dry-run` / `--export-template` / `--write-hypothetical-fixture`; refuses `productionApproved=true` / autoApprove / grade flip |
 | Immune spine CL starters (P1.8) | **DONE** | `ontologyBindStatus=hint_only` + CL ids on class/lineage/subset spine nodes; RA Stage 1 untouched |
+| Neighbourhood depth (P1.9) | **DONE** | Neuro NI-012..016 microglia/BBB; gut GUT-013/014 SFB+AhR; SSc SSC-016/017 vascular+fibrosis; licensing stubs; RA untouched |
 
 ### 1.2 Stage 1 packs (pilot R0–R1)
 
@@ -175,6 +177,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | P1.6 curator UX (richer gap/Gate C + `/curator`) | `e6dd2be` |
 | P1.7 Gate C decisions dry-run / fixtures | `922b0d6` |
 | P1.8 Stage 2 spine CL hint starters | `922b0d6` |
+| P1.9 SSc/gut/neuro neighbourhood depth | (this commit) |
 
 Reproduce: `bun test && bun run outputs && bun run site:dev` → `/discovery`, `/curator`, `/akeno`, `/aksh-agents`.  
 Decisions dry-run: `bun run curator-ux --dry-run --decisions examples/gate-c-decisions/awaiting.empty.json`.
@@ -189,9 +192,9 @@ Decisions dry-run: `bun run curator-ux --dry-run --decisions examples/gate-c-dec
 | **SSc-vs-RA vertical conflict** | Resolved as **A dual-track** | Recorded in `verticalDecision.ts` / partner lock / systems vision |
 | **Licensing / rights pack** | Stage 1 clearance done (48/48; uncleared=0) | Cite-metadata ≠ FT rights; further FT/commercial licenses still partner-gated |
 | **Numeric success thresholds** | **DONE** — Apolo Pharma `partner_agreed` (12 / 4 / 6; Gate C pending allowed) | Keep pack depth ≥ cut-offs; re-export after pack changes |
-| **Neuroimmune claim seeds** | **DONE (P2.1)** vagus / cholinergic anti-inflammatory reflex pack | Optional further neighbourhood (microglia/BBB) later; VNS–RA stays hypothesized |
-| **Gut–immune claim seeds** | **DONE (P1.3)** SCFA ↔ mucosal Treg/Th17 pack | Optional further depth later; Th17 frames stay hypothesized |
-| **SSc pack depth** | P1.1 cell cards + extra PMIDs landed; still not a full atlas | Optional further neighbourhood edges later |
+| **Neuroimmune claim seeds** | **DONE (P2.1 + P1.9)** vagus / cholinergic + microglia/BBB neighbourhood | VNS–RA stays hypothesized; not MS atlas |
+| **Gut–immune claim seeds** | **DONE (P1.3 + P1.9)** SCFA ↔ mucosal Treg/Th17 + SFB/AhR hops | Th17 frames stay hypothesized |
+| **SSc pack depth** | **DONE (P1.1 + P1.9)** cell cards + vascular/fibrosis neighbourhood | Still not a full atlas |
 | **Immune spine = vocabulary + CL hints (P1.8)** | Stage 2 starters: all spine nodes carry CL `hint_only`; confirmed ontology bind / full atlas still open | Optional confirmed bind review later; RA untouched |
 | **Model→Gate C** | **DONE (P1.5)** pending drafts only; no agent runtime | Never auto-approve; ISI runtime out of repo |
 | **Embedding sidecars** | **DONE (P2.2)** hash/ref slots on sample edges | Never set grades; no weights / PHI; packs remain authority |
@@ -239,6 +242,7 @@ One-sprint-sized items. Mark **[DECISION]** where the user must choose before co
 | P1.6 | **DONE:** Curator UX scaffolding — richer gap/Gate C markdown + `/curator` + `hsi-curator-ux.*` | Honest: awaiting partner review session when no decisions; compatible with immunecity `090d7ea`; never invents outcomes / never flips `hsiGrade` |
 | P1.7 | **DONE:** Gate C decisions dry-run / import fixtures | `src/gateCDecisionsImport.ts` + `examples/gate-c-decisions/*`; CLI `--dry-run` / `--export-template` / `--write-hypothetical-fixture`; hypothetical ≠ production Apolo |
 | P1.8 | **DONE:** Stage 2 spine CL `hint_only` starters beyond SSc | All spine nodes get CL ids + `ontologyBindStatus=hint_only`; not confirmed binds; RA untouched |
+| P1.9 | **DONE:** Further SSc/gut/neuro neighbourhood depth | Neuro microglia/BBB (NI-012..016); gut SFB→Th17 + AhR/IL-22 (GUT-013/014); SSc vascular + fibrosis reviews (SSC-016/017); honest grades; RA untouched |
 
 ### P2 — later / gated substrate
 
@@ -264,7 +268,8 @@ One-sprint-sized items. Mark **[DECISION]** where the user must choose before co
 | P1.6 | **DONE:** curator UX scaffolding | `hsi-curator-ux.*` + richer gap/Gate C md + `/curator`; awaiting partner session |
 | P1.7 | **DONE:** Gate C decisions dry-run / fixtures | `examples/gate-c-decisions/*`; CLI dry-run + envelope; hypothetical ≠ production |
 | P1.8 | **DONE:** Stage 2 spine CL hint starters | `ontologyBindStatus=hint_only` on spine; RA untouched |
-| **NEXT** | **Live Partner Apolo Gate C review session → import real decisions** | Human partner required on immunecity `/hsi/discovery` REVIEW (autumn-snow); then `bun run curator-ux --decisions <export>` (dry-run first). Tooling ready (P1.7). Still no auto-approve / no `hsiGrade` flip / no commercial AF3 claim. Optional coded follow-ons: further SSc/gut/neuro neighbourhood depth. |
+| P1.9 | **DONE:** SSc/gut/neuro neighbourhood depth | Microglia/BBB + SFB/AhR + vascular/fibrosis; licensing stubs; RA untouched |
+| **NEXT** | **Live Partner Apolo Gate C review session → import real decisions** | Human partner required on immunecity `/hsi/discovery` REVIEW (autumn-snow); then `bun run curator-ux --decisions <export>` (dry-run first). Tooling ready (P1.7). Still no auto-approve / no `hsiGrade` flip / no commercial AF3 claim. Optional coded follow-ons: confirmed CL/MONDO binds; ISI Discovery product depth. |
 
 ### Out-of-repo (track; do not implement here)
 

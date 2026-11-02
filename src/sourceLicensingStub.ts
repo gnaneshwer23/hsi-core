@@ -405,6 +405,65 @@ const PMID_REVIEW: Record<string, ReviewEntry> = {
     doi: "10.1067/mva.2002.129643",
     note: "J Vasc Surg 2002 Bernik IR TNF; no OA/PMC — cite metadata only.",
   },
+
+  // P1.9 neuro microglia / BBB
+  "15831717": {
+    status: "restricted",
+    doi: "10.1126/science.1110647",
+    note: "Science 2005 Nimmerjahn microglia surveillance; no OA VoR — cite metadata only.",
+  },
+  "17220915": {
+    status: "restricted",
+    doi: "10.1038/nri2015",
+    note: "Nat Rev Immunol 2007 Perry systemic inflammation→brain; no OA/PMC — cite metadata only.",
+  },
+  "25172555": {
+    status: "restricted",
+    doi: "10.1016/j.bbi.2014.08.007",
+    note: "Brain Behav Immun 2015 Banks BBB neuroimmunology; paywall signal — cite metadata only.",
+  },
+  "8707929": {
+    status: "restricted",
+    doi: "10.1016/0165-5728(96)00036-7",
+    note: "J Neuroimmunol 1996 Banks IL-1α BBB transport; no OA/PMC — cite metadata only.",
+  },
+  "19228962": {
+    status: "ok_oa",
+    doi: "10.1523/JNEUROSCI.3567-08.2009",
+    pmcid: "PMC6665597",
+    publisherLicense: null,
+    note: "J Neurosci 2009 D'Mello microglia/monocyte TNF; PMC free — cite + link; no invented CC-BY.",
+  },
+
+  // P1.9 gut SFB / AhR
+  "19836068": {
+    status: "ok_oa",
+    doi: "10.1016/j.cell.2009.09.033",
+    pmcid: "PMC2796826",
+    publisherLicense: null,
+    note: "Cell 2009 Ivanov SFB→Th17; PMC free author manuscript — cite + link; no invented CC-BY.",
+  },
+  "23973224": {
+    status: "ok_cite",
+    doi: "10.1016/j.immuni.2013.08.003",
+    pmcid: "PMC3780713",
+    publisherLicense: null,
+    note: "Immunity 2013 Zelante AhR/IL-22; recheck EPMC license null — Apolo cite_metadata_pilot; PMC MS link-out OK; no invented CC-BY.",
+  },
+
+  // P1.9 SSc vascular / fibrosis reviews
+  "19420368": {
+    status: "restricted",
+    doi: "10.1056/NEJMra0806188",
+    note: "NEJM 2009 Gabrielli scleroderma review; no OA/PMC VoR — cite metadata only.",
+  },
+  "17332883": {
+    status: "ok_oa",
+    doi: "10.1172/JCI31139",
+    pmcid: "PMC1804389",
+    publisherLicense: null,
+    note: "J Clin Invest 2007 Varga SSc fibrosis; PMC free — cite + link; no invented CC-BY.",
+  },
 };
 
 function pubmedUrl(pmid: string): string {

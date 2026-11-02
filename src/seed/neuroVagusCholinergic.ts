@@ -22,6 +22,12 @@
  * - 11901203 Bernik 2002 J Exp Med — pharmacological cholinergic anti-inflammatory stimulation
  * - 19542466 Huston 2009 J Immunol — cholinergic spleen signals ↓ leukocyte trafficking (CD11b)
  * - 12469056 Bernik 2002 J Vasc Surg — cholinergic pathway inhibits TNF in ischemia–reperfusion
+ * P1.9 complementary microglia / BBB neighbourhood (honest uncertain; not MS atlas):
+ * - 15831717 Nimmerjahn 2005 Science — resting microglia dynamically survey parenchyma
+ * - 17220915 Perry 2007 Nat Rev Immunol — systemic infections/inflammation affect brain
+ * - 25172555 Banks 2015 Brain Behav Immun — BBB as neuroimmune interface
+ * - 8707929 Banks 1996 J Neuroimmunol — IL-1α saturable transport across BBB
+ * - 19228962 D'Mello 2009 J Neurosci — cerebral microglia recruit monocytes via peripheral TNF
  *
  * Not Gate C approved. Not CDS. No PHI.
  */
@@ -330,6 +336,119 @@ const SPECS: SeedSpec[] = [
     notes:
       "Depth deepen: PMID 12469056 verified. Rodent IR context — teaching=associative; never invent perioperative VNS CDS. Gate C = human only. Not CDS. No PHI.",
   },
+  {
+    id: "HSI-E-NI-012",
+    edgeType: "associates_neuroimmune",
+    systemsPredicate: "associates_neuroimmune",
+    subjectId: "HSI-N-microglia-surveillance",
+    subjectLabel: "Resting / surveying microglia",
+    objectId: "HSI-N-brain-parenchyma-surveillance",
+    objectLabel: "Brain parenchyma immune surveillance",
+    claimId: "HSI-C-NI-012",
+    assertion:
+      "Resting microglial cells continuously survey brain parenchyma with highly dynamic processes (CNS-resident myeloid hop — complementary to vagus reflex; not an MS/neurodegeneration atlas; not CDS).",
+    review: "source-verified",
+    teaching: "associative",
+    domain: "immuno_metabolic",
+    bridgeCandidate: true,
+    pmid: "15831717",
+    doi: "10.1126/science.1110647",
+    citationLabel:
+      "Nimmerjahn A et al. Science 2005 — Resting microglial cells are highly dynamic surveillants of brain parenchyma in vivo.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/15831717/",
+    notes:
+      "P1.9 microglia neighbourhood. PMID 15831717 verified. In-vivo imaging — teaching=associative; do not invent disease-specific CDS. Gate C = human only. Not CDS. No PHI.",
+  },
+  {
+    id: "HSI-E-NI-013",
+    edgeType: "associates_neuroimmune",
+    systemsPredicate: "associates_neuroimmune",
+    subjectId: "HSI-N-systemic-inflammation",
+    subjectLabel: "Systemic infection / peripheral inflammation",
+    objectId: "HSI-N-cns-inflammatory-tone",
+    objectLabel: "CNS inflammatory / neurodegenerative tone",
+    claimId: "HSI-C-NI-013",
+    assertion:
+      "Systemic infections and peripheral inflammation can modulate chronic CNS inflammatory and neurodegenerative processes (immune-to-brain neighbourhood frame — review-level; not a clinical cure claim).",
+    review: "source-verified",
+    teaching: "associative",
+    domain: "immuno_metabolic",
+    bridgeCandidate: true,
+    pmid: "17220915",
+    doi: "10.1038/nri2015",
+    citationLabel:
+      "Perry VH et al. Nat Rev Immunol 2007 — Systemic infections and inflammation affect chronic neurodegeneration.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/17220915/",
+    notes:
+      "P1.9 peripheral→CNS frame. PMID 17220915 verified (review). teaching=associative; never invent neurodegeneration therapy CDS. Complements vagus TNF brake without collapsing frames. Gate C = human only. Not CDS. No PHI.",
+  },
+  {
+    id: "HSI-E-NI-014",
+    edgeType: "signals_via_axis",
+    systemsPredicate: "signals_via_axis",
+    subjectId: "HSI-N-bbb",
+    subjectLabel: "Blood–brain barrier (neuroimmune interface)",
+    objectId: "HSI-N-peripheral-immune-cns-axis",
+    objectLabel: "Peripheral immune ↔ CNS communication axis",
+    claimId: "HSI-C-NI-014",
+    assertion:
+      "The blood–brain barrier both separates and reconnects the immune and central nervous systems via regulated cytokine/cell exchange and immunomodulatory signalling (BBB interface neighbourhood — not CDS).",
+    review: "source-verified",
+    teaching: "associative",
+    domain: "immuno_metabolic",
+    bridgeCandidate: true,
+    pmid: "25172555",
+    doi: "10.1016/j.bbi.2014.08.007",
+    citationLabel:
+      "Banks WA. Brain Behav Immun 2015 — The blood-brain barrier in neuroimmunology: Tales of separation and assimilation.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/25172555/",
+    notes:
+      "P1.9 BBB axis frame. PMID 25172555 verified (review). teaching=associative; not clinical BBB-opening CDS. Gate C = human only. Not CDS. No PHI.",
+  },
+  {
+    id: "HSI-E-NI-015",
+    edgeType: "associated_with",
+    systemsPredicate: "crosses_bbb",
+    subjectId: "HSI-N-il1-alpha-circulating",
+    subjectLabel: "Circulating interleukin-1α",
+    objectId: "HSI-N-bbb",
+    objectLabel: "Blood–brain barrier",
+    claimId: "HSI-C-NI-015",
+    assertion:
+      "Interleukin-1α can cross the blood–brain barrier via saturable transport (and related extracellular pathways) — mechanistic BBB cytokine hop (rodent; not human dosing CDS).",
+    review: "source-verified",
+    teaching: "associative",
+    domain: "immuno_metabolic",
+    pmid: "8707929",
+    doi: "10.1016/0165-5728(96)00036-7",
+    citationLabel:
+      "Banks WA et al. J Neuroimmunol 1996 — Comparison of saturable transport and extracellular pathways in the passage of interleukin-1 alpha across the blood-brain barrier.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/8707929/",
+    notes:
+      "P1.9 BBB cytokine transport. PMID 8707929 verified. systemsPredicate crosses_bbb (alias→associated_with). teaching=associative; never invent cytokine CNS dosing. Gate C = human only. Not CDS. No PHI.",
+  },
+  {
+    id: "HSI-E-NI-016",
+    edgeType: "associates_neuroimmune",
+    systemsPredicate: "associates_neuroimmune",
+    subjectId: "HSI-N-microglia-surveillance",
+    subjectLabel: "Cerebral microglia",
+    objectId: "HSI-N-monocyte-cns-recruitment",
+    objectLabel: "Monocyte recruitment into brain",
+    claimId: "HSI-C-NI-016",
+    assertion:
+      "Cerebral microglia can recruit monocytes into the brain in response to tumour necrosis factor-α signalling during peripheral organ inflammation (microglia–peripheral inflammation hop — mouse; hypothesized translational breadth only).",
+    review: "source-verified",
+    teaching: "hypothesized",
+    domain: "immuno_metabolic",
+    pmid: "19228962",
+    doi: "10.1523/JNEUROSCI.3567-08.2009",
+    citationLabel:
+      "D'Mello C et al. J Neurosci 2009 — Cerebral microglia recruit monocytes into the brain in response to tumor necrosis factoralpha signaling during peripheral organ inflammation.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/19228962/",
+    notes:
+      "P1.9 microglia–peripheral TNF hop. PMID 19228962 verified. Mouse — teaching=hypothesized; do not invent human monocyte-trafficking CDS or MS claims. Gate C = human only. Not CDS. No PHI.",
+  },
 
 ];
 
@@ -390,9 +509,9 @@ export const NI_PATHWAY_META = {
   verticalStrategy: "dual_track" as const,
   deepSeedsPresent: true as const,
   neighbourhoodChoiceRationale:
-    "Clearest landmark PMID chain (Borovikova → Tracey → Wang α7 → de Jonge STAT3 → Rosas-Ballina ChAT-T → Koopman VNS pilot) vs microglia–cytokine or BBB cytokine atlases; coherent S–P–O without inventing MS/neurodegeneration disease packs.",
+    "Clearest landmark PMID chain (Borovikova → Tracey → Wang α7 → de Jonge STAT3 → Rosas-Ballina ChAT-T → Koopman VNS pilot) as P2.1 core; P1.9 adds complementary microglia/BBB cytokine neighbourhood (Nimmerjahn / Perry / Banks / D'Mello) without inventing MS/neurodegeneration disease packs.",
   rationale:
-    "P2.1 first honest neuroimmune literature slice for systems vision. Secondary Discovery axis only — does not replace RA ASK. Human VNS–RA kept hypothesized; animal mechanism edges uncertain/associative. No clinical cure claims.",
+    "P2.1 first honest neuroimmune literature slice for systems vision + P1.9 microglia/BBB deepen. Secondary Discovery axis only — does not replace RA ASK. Human VNS–RA kept hypothesized; animal mechanism edges uncertain/associative. No clinical cure claims.",
   primaryClaimIds: SPECS.map((s) => s.claimId),
   primaryEdgeIds: SPECS.map((s) => s.id),
   primaryPmids: [
@@ -407,8 +526,13 @@ export const NI_PATHWAY_META = {
     "11901203",
     "19542466",
     "12469056",
+    "15831717",
+    "17220915",
+    "25172555",
+    "8707929",
+    "19228962",
   ],
-  deepenPhase: "p2_1_neuro_pharmacologic_trafficking_ir_depth" as const,
+  deepenPhase: "p1_9_neuro_microglia_bbb_neighbourhood" as const,
   entities: [
     {
       id: "HSI-N-vagus-efferent",
@@ -484,6 +608,46 @@ export const NI_PATHWAY_META = {
       id: "HSI-N-splenic-cholinergic-signal",
       label: "Cholinergic neural signals to spleen",
       kind: "neuroimmune_axis",
+    },
+    {
+      id: "HSI-N-microglia-surveillance",
+      label: "Microglia (CNS-resident myeloid)",
+      kind: "glial_or_barrier_cell",
+    },
+    {
+      id: "HSI-N-brain-parenchyma-surveillance",
+      label: "Brain parenchyma surveillance",
+      kind: "cns_compartment",
+    },
+    {
+      id: "HSI-N-systemic-inflammation",
+      label: "Systemic / peripheral inflammation",
+      kind: "neuro_mediator",
+    },
+    {
+      id: "HSI-N-cns-inflammatory-tone",
+      label: "CNS inflammatory tone",
+      kind: "cns_compartment",
+    },
+    {
+      id: "HSI-N-bbb",
+      label: "Blood–brain barrier",
+      kind: "cns_compartment",
+    },
+    {
+      id: "HSI-N-peripheral-immune-cns-axis",
+      label: "Peripheral immune ↔ CNS axis",
+      kind: "neuroimmune_axis",
+    },
+    {
+      id: "HSI-N-il1-alpha-circulating",
+      label: "Circulating IL-1α",
+      kind: "neuro_mediator",
+    },
+    {
+      id: "HSI-N-monocyte-cns-recruitment",
+      label: "Monocyte CNS recruitment",
+      kind: "glial_or_barrier_cell",
     },
   ],
 } as const;

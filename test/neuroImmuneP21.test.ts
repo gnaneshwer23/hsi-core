@@ -13,7 +13,7 @@ import {
 describe("P2.1 neuroimmune vagus / cholinergic anti-inflammatory reflex", () => {
   test("deep seeds land with verified PMIDs and honest uncertain grades", () => {
     expect(neuroDeepSeedsLanded()).toBe(true);
-    expect(HSI_NI_SEED_EDGES.length).toBe(11);
+    expect(HSI_NI_SEED_EDGES.length).toBe(16);
     expect(NI_PATHWAY_META.primaryPmids).toEqual([
       "10839541",
       "12490958",
@@ -26,9 +26,17 @@ describe("P2.1 neuroimmune vagus / cholinergic anti-inflammatory reflex", () => 
       "11901203",
       "19542466",
       "12469056",
+      "15831717",
+      "17220915",
+      "25172555",
+      "8707929",
+      "19228962",
     ]);
     expect(NI_PATHWAY_META.neighbourhoodChoiceRationale.toLowerCase()).toContain(
       "clearest",
+    );
+    expect(NI_PATHWAY_META.deepenPhase).toBe(
+      "p1_9_neuro_microglia_bbb_neighbourhood",
     );
 
     for (const edge of HSI_NI_SEED_EDGES) {

@@ -2,7 +2,7 @@
   "schemaVersion": "hsi-gut-immune-pack-1",
   "notCds": true,
   "autoApproveIntoKg": false,
-  "generatedAt": "2026-11-01T12:00:00.000Z",
+  "generatedAt": "2026-11-02T05:24:43.016Z",
   "pathway": {
     "id": "gut-scfa-mucosal-treg-th17",
     "label": "Gut–immune · SCFA / butyrate ↔ mucosal Treg / Th17",
@@ -22,7 +22,9 @@
       "HSI-C-GUT-009",
       "HSI-C-GUT-010",
       "HSI-C-GUT-011",
-      "HSI-C-GUT-012"
+      "HSI-C-GUT-012",
+      "HSI-C-GUT-013",
+      "HSI-C-GUT-014"
     ],
     "primaryEdgeIds": [
       "HSI-E-GUT-001",
@@ -36,7 +38,9 @@
       "HSI-E-GUT-009",
       "HSI-E-GUT-010",
       "HSI-E-GUT-011",
-      "HSI-E-GUT-012"
+      "HSI-E-GUT-012",
+      "HSI-E-GUT-013",
+      "HSI-E-GUT-014"
     ],
     "primaryPmids": [
       "21205640",
@@ -50,9 +54,11 @@
       "29163504",
       "24226773",
       "24390544",
-      "25865369"
+      "25865369",
+      "19836068",
+      "23973224"
     ],
-    "deepenPhase": "p1_3_gut_arpaia_macrophage_hif_depth",
+    "deepenPhase": "p1_9_gut_sfb_ahr_neighbourhood",
     "entities": [
       {
         "id": "HSI-N-scfa",
@@ -123,6 +129,21 @@
         "id": "HSI-N-clostridia-human-mix",
         "label": "Human Clostridia mix",
         "kind": "community"
+      },
+      {
+        "id": "HSI-N-sfb",
+        "label": "Segmented filamentous bacteria",
+        "kind": "taxon_class"
+      },
+      {
+        "id": "HSI-N-trp-catabolites-ahr",
+        "label": "Tryptophan catabolites (AhR ligands)",
+        "kind": "metabolite"
+      },
+      {
+        "id": "HSI-N-mucosal-il22-balance",
+        "label": "Mucosal IL-22 / reactivity balance",
+        "kind": "phenotype"
       }
     ]
   },
@@ -311,6 +332,34 @@
       "pmid": "25865369",
       "citationLabel": "Kelly CJ et al. Cell Host Microbe 2015 — Crosstalk between Microbiota-Derived Short-Chain Fatty Acids and Intestinal Epithelial HIF Augments Tissue Barrier Function.",
       "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/25865369/"
+    },
+    {
+      "edgeId": "HSI-E-GUT-013",
+      "claimId": "HSI-C-GUT-013",
+      "subject": "Segmented filamentous bacteria (SFB)",
+      "predicate": "upregulates",
+      "systemsPredicate": "hypothesized_gut_immune",
+      "systemsPredicateMapsToHsi": "associated_with",
+      "object": "Mucosal / intestinal Th17 cells",
+      "evidenceGrade": "uncertain",
+      "teachingStatus": "hypothesized",
+      "pmid": "19836068",
+      "citationLabel": "Ivanov II et al. Cell 2009 — Induction of intestinal Th17 cells by segmented filamentous bacteria.",
+      "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/19836068/"
+    },
+    {
+      "edgeId": "HSI-E-GUT-014",
+      "claimId": "HSI-C-GUT-014",
+      "subject": "Microbiota tryptophan catabolites (AhR ligands)",
+      "predicate": "modulates_immune",
+      "systemsPredicate": "modulates_immune",
+      "systemsPredicateMapsToHsi": "modulates_immune",
+      "object": "Mucosal IL-22 / reactivity balance",
+      "evidenceGrade": "uncertain",
+      "teachingStatus": "associative",
+      "pmid": "23973224",
+      "citationLabel": "Zelante T et al. Immunity 2013 — Tryptophan catabolites from microbiota engage aryl hydrocarbon receptor and balance mucosal reactivity via interleukin-22.",
+      "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/23973224/"
     }
   ],
   "competingExplanations": [
@@ -469,6 +518,20 @@
     {
       "id": "HSI-C-GUT-012",
       "assertion": "Microbiota-derived short-chain fatty acids crosstalk with intestinal epithelial HIF programmes that augment tissue barrier function (barrier deepen — mouse/mechanistic).",
+      "domain": "immuno_metabolic",
+      "isiRelationshipId": null,
+      "akshNodeId": null
+    },
+    {
+      "id": "HSI-C-GUT-013",
+      "assertion": "Segmented filamentous bacteria can induce intestinal Th17 cells (microbiota→Th17 hop — mouse; hypothesized competing neighbourhood alongside SCFA Th17 promote/inhibit frames; not CDS).",
+      "domain": "immuno_metabolic",
+      "isiRelationshipId": null,
+      "akshNodeId": null
+    },
+    {
+      "id": "HSI-C-GUT-014",
+      "assertion": "Microbiota-derived tryptophan catabolites engage aryl hydrocarbon receptor signalling and help balance mucosal reactivity via interleukin-22 (AhR hop beyond SCFA-only neighbourhood — mouse; not CDS).",
       "domain": "immuno_metabolic",
       "isiRelationshipId": null,
       "akshNodeId": null
@@ -750,6 +813,52 @@
       },
       "bridgeCandidate": false,
       "seedKind": "placeholder"
+    },
+    {
+      "id": "HSI-E-GUT-013",
+      "edgeType": "upregulates",
+      "subjectId": "HSI-N-sfb",
+      "subjectLabel": "Segmented filamentous bacteria (SFB)",
+      "objectId": "HSI-N-mucosal-th17",
+      "objectLabel": "Mucosal / intestinal Th17 cells",
+      "claimId": "HSI-C-GUT-013",
+      "curationReview": "source-verified",
+      "hsiGrade": "uncertain",
+      "teachingStatus": "hypothesized",
+      "domain": "immuno_metabolic",
+      "provenance": {
+        "pmid": "19836068",
+        "doi": "10.1016/j.cell.2009.09.033",
+        "citationLabel": "Ivanov II et al. Cell 2009 — Induction of intestinal Th17 cells by segmented filamentous bacteria.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/19836068/",
+        "notes": "P1.9 SFB→Th17. PMID 19836068 verified. Mouse — teaching=hypothesized; keep separate from butyrate Th17 promote/inhibit; never invent IBD dosing CDS. Gate C = human only. Not CDS.",
+        "recordedAt": "2026-11-01T18:30:00.000Z"
+      },
+      "bridgeCandidate": false,
+      "seedKind": "placeholder"
+    },
+    {
+      "id": "HSI-E-GUT-014",
+      "edgeType": "modulates_immune",
+      "subjectId": "HSI-N-trp-catabolites-ahr",
+      "subjectLabel": "Microbiota tryptophan catabolites (AhR ligands)",
+      "objectId": "HSI-N-mucosal-il22-balance",
+      "objectLabel": "Mucosal IL-22 / reactivity balance",
+      "claimId": "HSI-C-GUT-014",
+      "curationReview": "source-verified",
+      "hsiGrade": "uncertain",
+      "teachingStatus": "associative",
+      "domain": "immuno_metabolic",
+      "provenance": {
+        "pmid": "23973224",
+        "doi": "10.1016/j.immuni.2013.08.003",
+        "citationLabel": "Zelante T et al. Immunity 2013 — Tryptophan catabolites from microbiota engage aryl hydrocarbon receptor and balance mucosal reactivity via interleukin-22.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/23973224/",
+        "notes": "P1.9 AhR/IL-22 hop. PMID 23973224 verified. Mouse — teaching=associative; do not invent tryptophan-supplement CDS. Gate C = human only. Not CDS.",
+        "recordedAt": "2026-11-01T18:30:00.000Z"
+      },
+      "bridgeCandidate": true,
+      "seedKind": "placeholder"
     }
   ],
   "honesty": [
@@ -760,7 +869,7 @@
     "Most PMIDs are mouse or Caco-2 — hsiGrade stays uncertain (source-verified); not human therapeutic claims.",
     "Not clinical decision support. autoApproveIntoKg=false.",
     "deepSeedsPresent=true because verified PMID edges landed.",
-    "P1.3 slice: 12 edges · 12 PMIDs.",
+    "P1.3 slice: 14 edges · 14 PMIDs.",
     "P1.4: modulates_immune / produces_metabolite_sensed_by are first-class HSI_EDGE_TYPES (identity map); hypothesized Th17 frames keep Phase 0 directional types."
   ]
 }

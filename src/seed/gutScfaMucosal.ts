@@ -17,6 +17,9 @@
  * - 24226773 Arpaia 2013 Nature — commensal metabolites → peripheral Treg
  * - 24390544 Chang 2014 PNAS — butyrate → macrophage HDAC inhibition
  * - 25865369 Kelly 2015 Cell Host Microbe — SCFA ↔ epithelial HIF / barrier
+ * P1.9 further neighbourhood (honest; Th17 frames stay competing):
+ * - 19836068 Ivanov 2009 Cell — segmented filamentous bacteria → intestinal Th17
+ * - 23973224 Zelante 2013 Immunity — microbiota tryptophan catabolites → AhR / IL-22 mucosal balance
  *
  * Not Gate C approved. Not CDS. Most evidence is mouse / in vitro — grades stay
  * honest (`source-verified` → hsiGrade `uncertain`; teaching associative/hypothesized).
@@ -347,6 +350,51 @@ const SPECS: SeedSpec[] = [
     notes:
       "Depth deepen: PMID 25865369 verified. Complements Peng tight-junction edge; teaching=associative; do not invent human barrier therapy CDS. Gate C = human only. Not CDS.",
   },
+  {
+    id: "HSI-E-GUT-013",
+    edgeType: "upregulates",
+    systemsPredicate: "hypothesized_gut_immune",
+    subjectId: "HSI-N-sfb",
+    subjectLabel: "Segmented filamentous bacteria (SFB)",
+    objectId: "HSI-N-mucosal-th17",
+    objectLabel: "Mucosal / intestinal Th17 cells",
+    claimId: "HSI-C-GUT-013",
+    assertion:
+      "Segmented filamentous bacteria can induce intestinal Th17 cells (microbiota→Th17 hop — mouse; hypothesized competing neighbourhood alongside SCFA Th17 promote/inhibit frames; not CDS).",
+    review: "source-verified",
+    teaching: "hypothesized",
+    domain: "immuno_metabolic",
+    pmid: "19836068",
+    doi: "10.1016/j.cell.2009.09.033",
+    citationLabel:
+      "Ivanov II et al. Cell 2009 — Induction of intestinal Th17 cells by segmented filamentous bacteria.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/19836068/",
+    notes:
+      "P1.9 SFB→Th17. PMID 19836068 verified. Mouse — teaching=hypothesized; keep separate from butyrate Th17 promote/inhibit; never invent IBD dosing CDS. Gate C = human only. Not CDS.",
+  },
+  {
+    id: "HSI-E-GUT-014",
+    edgeType: "modulates_immune",
+    systemsPredicate: "modulates_immune",
+    subjectId: "HSI-N-trp-catabolites-ahr",
+    subjectLabel: "Microbiota tryptophan catabolites (AhR ligands)",
+    objectId: "HSI-N-mucosal-il22-balance",
+    objectLabel: "Mucosal IL-22 / reactivity balance",
+    claimId: "HSI-C-GUT-014",
+    assertion:
+      "Microbiota-derived tryptophan catabolites engage aryl hydrocarbon receptor signalling and help balance mucosal reactivity via interleukin-22 (AhR hop beyond SCFA-only neighbourhood — mouse; not CDS).",
+    review: "source-verified",
+    teaching: "associative",
+    domain: "immuno_metabolic",
+    bridgeCandidate: true,
+    pmid: "23973224",
+    doi: "10.1016/j.immuni.2013.08.003",
+    citationLabel:
+      "Zelante T et al. Immunity 2013 — Tryptophan catabolites from microbiota engage aryl hydrocarbon receptor and balance mucosal reactivity via interleukin-22.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/23973224/",
+    notes:
+      "P1.9 AhR/IL-22 hop. PMID 23973224 verified. Mouse — teaching=associative; do not invent tryptophan-supplement CDS. Gate C = human only. Not CDS.",
+  },
 
 ];
 
@@ -423,8 +471,10 @@ export const GUT_PATHWAY_META = {
     "24226773",
     "24390544",
     "25865369",
+    "19836068",
+    "23973224",
   ],
-  deepenPhase: "p1_3_gut_arpaia_macrophage_hif_depth" as const,
+  deepenPhase: "p1_9_gut_sfb_ahr_neighbourhood" as const,
   entities: [
     { id: "HSI-N-scfa", label: "SCFA (class)", kind: "metabolite" },
     { id: "HSI-N-butyrate", label: "Butyrate", kind: "metabolite" },
@@ -451,6 +501,21 @@ export const GUT_PATHWAY_META = {
       id: "HSI-N-clostridia-human-mix",
       label: "Human Clostridia mix",
       kind: "community",
+    },
+    {
+      id: "HSI-N-sfb",
+      label: "Segmented filamentous bacteria",
+      kind: "taxon_class",
+    },
+    {
+      id: "HSI-N-trp-catabolites-ahr",
+      label: "Tryptophan catabolites (AhR ligands)",
+      kind: "metabolite",
+    },
+    {
+      id: "HSI-N-mucosal-il22-balance",
+      label: "Mucosal IL-22 / reactivity balance",
+      kind: "phenotype",
     },
   ],
 } as const;

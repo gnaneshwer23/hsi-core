@@ -59,7 +59,9 @@ describe("P1.1 SSc deepen — cell cards + CL·MONDO hints + PMIDs", () => {
     expect(HSI_SSC_SEED_EDGES.some((e) => e.id === "HSI-E-SSC-013")).toBe(true);
     expect(HSI_SSC_SEED_EDGES.some((e) => e.id === "HSI-E-SSC-014")).toBe(true);
     expect(HSI_SSC_SEED_EDGES.some((e) => e.id === "HSI-E-SSC-015")).toBe(true);
-    expect(HSI_SSC_SEED_EDGES.length).toBe(15);
+    expect(HSI_SSC_SEED_EDGES.some((e) => e.id === "HSI-E-SSC-016")).toBe(true);
+    expect(HSI_SSC_SEED_EDGES.some((e) => e.id === "HSI-E-SSC-017")).toBe(true);
+    expect(HSI_SSC_SEED_EDGES.length).toBe(17);
 
     const fibrosisComment = HSI_SSC_SEED_EDGES.find((e) => e.id === "HSI-E-SSC-008");
     expect(fibrosisComment?.provenance?.pmid).toBe("29626172");

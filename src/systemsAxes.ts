@@ -272,7 +272,8 @@ export const NEUROIMMUNE_ENTITY_STUBS: readonly NeuroimmuneEntityStub[] = [
     entityType: "cns_compartment",
     label: "Blood–brain barrier",
     ontologyHint: "UBERON",
-    notes: null,
+    notes:
+      "P1.9 deep seeds — Banks BBB interface + IL-1α transport edges on hsi-neuroimmune-pack",
   },
   {
     id: "HSI-NI-compartment-csf",
@@ -309,7 +310,7 @@ export const NEUROIMMUNE_ENTITY_STUBS: readonly NeuroimmuneEntityStub[] = [
     label: "Microglia",
     ontologyHint: "CL",
     notes:
-      "CNS-resident myeloid stub — not the P2.1 neighbourhood; linkable later to immune-cell spine",
+      "P1.9 deep seeds — microglia/BBB neighbourhood on hsi-neuroimmune-pack (Nimmerjahn / D'Mello); not MS atlas; CL hint only",
   },
   {
     id: "HSI-NI-cell-chat-memory-t",

@@ -4,7 +4,7 @@
   "notCds": true,
   "containsPhi": false,
   "partnerSigned": false,
-  "generatedAt": "2026-11-01T12:00:00.000Z",
+  "generatedAt": "2026-11-02T05:24:43.016Z",
   "reviewDate": "2026-11-01",
   "reviewMethod": "Europe PMC REST search resultType=core (isOpenAccess, inPMC, license, pmcid) + Crossref /works license URLs for ambiguous OA; conservative — no invented CC-BY; free PMC without clear CC → unknown; paywall/no OA → restricted; explicit CC → ok_oa. Bibliographic PMID citation always OK regardless of status.",
   "partnerClearance": {
@@ -15,16 +15,16 @@
     "note": "ok_oa → oa_reuse; restricted/ok_cite → cite_metadata_pilot; unknown → uncleared (needs_confirm). Cite-metadata pilot does not grant FT redistribution. No invented commercial publisher licenses."
   },
   "summary": {
-    "pmidCount": 48,
-    "okCiteCount": 10,
-    "okOaCount": 11,
-    "restrictedCount": 27,
+    "pmidCount": 57,
+    "okCiteCount": 11,
+    "okOaCount": 14,
+    "restrictedCount": 32,
     "unknownCount": 0,
     "needsReviewCount": 0,
-    "partnerClearedCount": 48,
+    "partnerClearedCount": 57,
     "clearanceScopeCounts": {
-      "oa_reuse": 11,
-      "cite_metadata_pilot": 37,
+      "oa_reuse": 14,
+      "cite_metadata_pilot": 43,
       "uncleared": 0
     },
     "blockedCount": 0
@@ -41,6 +41,23 @@
       "doi": "10.1038/316552a0",
       "publisherLicense": null,
       "reviewNotes": "Nature 1985; no OA/PMC; paywall — cite metadata / PMID locator only.",
+      "partnerCleared": true,
+      "clearanceScope": "cite_metadata_pilot",
+      "partnerClearanceNote": "Apolo Pharma Stage 1 cite-metadata-only pilot (partner:apolo-pharma, operator-asserted 2026-11-01): bibliographic PMID/metadata citation OK for pilot Discovery; does NOT grant full-text redistribution or figure republication rights.",
+      "partnerId": "partner:apolo-pharma",
+      "partnerClearedAt": "2026-11-01"
+    },
+    {
+      "pmid": "8707929",
+      "packs": [
+        "neuro_vagus"
+      ],
+      "licenseStatus": "restricted",
+      "attributionNote": "Bibliographic PMID citation / Discovery locator OK. Do not paste paywalled full text into this repo. Paywall / all-rights signal — cite metadata only; no FT/figure reuse.",
+      "europePmcUrl": "https://europepmc.org/article/MED/8707929",
+      "doi": "10.1016/0165-5728(96)00036-7",
+      "publisherLicense": null,
+      "reviewNotes": "J Neuroimmunol 1996 Banks IL-1α BBB transport; no OA/PMC — cite metadata only.",
       "partnerCleared": true,
       "clearanceScope": "cite_metadata_pilot",
       "partnerClearanceNote": "Apolo Pharma Stage 1 cite-metadata-only pilot (partner:apolo-pharma, operator-asserted 2026-11-01): bibliographic PMID/metadata citation OK for pilot Discovery; does NOT grant full-text redistribution or figure republication rights.",
@@ -202,6 +219,23 @@
       "partnerClearedAt": "2026-11-01"
     },
     {
+      "pmid": "15831717",
+      "packs": [
+        "neuro_vagus"
+      ],
+      "licenseStatus": "restricted",
+      "attributionNote": "Bibliographic PMID citation / Discovery locator OK. Do not paste paywalled full text into this repo. Paywall / all-rights signal — cite metadata only; no FT/figure reuse.",
+      "europePmcUrl": "https://europepmc.org/article/MED/15831717",
+      "doi": "10.1126/science.1110647",
+      "publisherLicense": null,
+      "reviewNotes": "Science 2005 Nimmerjahn microglia surveillance; no OA VoR — cite metadata only.",
+      "partnerCleared": true,
+      "clearanceScope": "cite_metadata_pilot",
+      "partnerClearanceNote": "Apolo Pharma Stage 1 cite-metadata-only pilot (partner:apolo-pharma, operator-asserted 2026-11-01): bibliographic PMID/metadata citation OK for pilot Discovery; does NOT grant full-text redistribution or figure republication rights.",
+      "partnerId": "partner:apolo-pharma",
+      "partnerClearedAt": "2026-11-01"
+    },
+    {
       "pmid": "16025117",
       "packs": [
         "neuro_vagus"
@@ -305,6 +339,41 @@
       "partnerClearedAt": "2026-11-01"
     },
     {
+      "pmid": "17220915",
+      "packs": [
+        "neuro_vagus"
+      ],
+      "licenseStatus": "restricted",
+      "attributionNote": "Bibliographic PMID citation / Discovery locator OK. Do not paste paywalled full text into this repo. Paywall / all-rights signal — cite metadata only; no FT/figure reuse.",
+      "europePmcUrl": "https://europepmc.org/article/MED/17220915",
+      "doi": "10.1038/nri2015",
+      "publisherLicense": null,
+      "reviewNotes": "Nat Rev Immunol 2007 Perry systemic inflammation→brain; no OA/PMC — cite metadata only.",
+      "partnerCleared": true,
+      "clearanceScope": "cite_metadata_pilot",
+      "partnerClearanceNote": "Apolo Pharma Stage 1 cite-metadata-only pilot (partner:apolo-pharma, operator-asserted 2026-11-01): bibliographic PMID/metadata citation OK for pilot Discovery; does NOT grant full-text redistribution or figure republication rights.",
+      "partnerId": "partner:apolo-pharma",
+      "partnerClearedAt": "2026-11-01"
+    },
+    {
+      "pmid": "17332883",
+      "packs": [
+        "ssc_tfh_b_il21"
+      ],
+      "licenseStatus": "ok_oa",
+      "attributionNote": "Bibliographic PMID citation / Discovery locator OK. Do not paste paywalled full text into this repo. Open access with publisher license CC; verify attribution and any NC/SA terms before redistribution of PDF/figures.",
+      "europePmcUrl": "https://europepmc.org/article/MED/17332883",
+      "doi": "10.1172/JCI31139",
+      "pmcid": "PMC1804389",
+      "publisherLicense": null,
+      "reviewNotes": "J Clin Invest 2007 Varga SSc fibrosis; PMC free — cite + link; no invented CC-BY.",
+      "partnerCleared": true,
+      "clearanceScope": "oa_reuse",
+      "partnerClearanceNote": "Apolo Pharma Stage 1 (partner:apolo-pharma, operator-asserted 2026-11-01): OA reuse under publisher CC/OA terms — cite + OA full text as license permits; respect NC/SA; no invented commercial publisher license.",
+      "partnerId": "partner:apolo-pharma",
+      "partnerClearedAt": "2026-11-01"
+    },
+    {
       "pmid": "17581616",
       "packs": [
         "ssc_tfh_b_il21"
@@ -393,6 +462,41 @@
       "partnerClearedAt": "2026-11-01"
     },
     {
+      "pmid": "19228962",
+      "packs": [
+        "neuro_vagus"
+      ],
+      "licenseStatus": "ok_oa",
+      "attributionNote": "Bibliographic PMID citation / Discovery locator OK. Do not paste paywalled full text into this repo. Open access with publisher license CC; verify attribution and any NC/SA terms before redistribution of PDF/figures.",
+      "europePmcUrl": "https://europepmc.org/article/MED/19228962",
+      "doi": "10.1523/JNEUROSCI.3567-08.2009",
+      "pmcid": "PMC6665597",
+      "publisherLicense": null,
+      "reviewNotes": "J Neurosci 2009 D'Mello microglia/monocyte TNF; PMC free — cite + link; no invented CC-BY.",
+      "partnerCleared": true,
+      "clearanceScope": "oa_reuse",
+      "partnerClearanceNote": "Apolo Pharma Stage 1 (partner:apolo-pharma, operator-asserted 2026-11-01): OA reuse under publisher CC/OA terms — cite + OA full text as license permits; respect NC/SA; no invented commercial publisher license.",
+      "partnerId": "partner:apolo-pharma",
+      "partnerClearedAt": "2026-11-01"
+    },
+    {
+      "pmid": "19420368",
+      "packs": [
+        "ssc_tfh_b_il21"
+      ],
+      "licenseStatus": "restricted",
+      "attributionNote": "Bibliographic PMID citation / Discovery locator OK. Do not paste paywalled full text into this repo. Paywall / all-rights signal — cite metadata only; no FT/figure reuse.",
+      "europePmcUrl": "https://europepmc.org/article/MED/19420368",
+      "doi": "10.1056/NEJMra0806188",
+      "publisherLicense": null,
+      "reviewNotes": "NEJM 2009 Gabrielli scleroderma review; no OA/PMC VoR — cite metadata only.",
+      "partnerCleared": true,
+      "clearanceScope": "cite_metadata_pilot",
+      "partnerClearanceNote": "Apolo Pharma Stage 1 cite-metadata-only pilot (partner:apolo-pharma, operator-asserted 2026-11-01): bibliographic PMID/metadata citation OK for pilot Discovery; does NOT grant full-text redistribution or figure republication rights.",
+      "partnerId": "partner:apolo-pharma",
+      "partnerClearedAt": "2026-11-01"
+    },
+    {
       "pmid": "19542466",
       "packs": [
         "neuro_vagus"
@@ -425,6 +529,24 @@
       "partnerCleared": true,
       "clearanceScope": "cite_metadata_pilot",
       "partnerClearanceNote": "Apolo Pharma Stage 1 cite-metadata-only pilot (partner:apolo-pharma, operator-asserted 2026-11-01): bibliographic PMID/metadata citation OK for pilot Discovery; does NOT grant full-text redistribution or figure republication rights.",
+      "partnerId": "partner:apolo-pharma",
+      "partnerClearedAt": "2026-11-01"
+    },
+    {
+      "pmid": "19836068",
+      "packs": [
+        "gut_scfa"
+      ],
+      "licenseStatus": "ok_oa",
+      "attributionNote": "Bibliographic PMID citation / Discovery locator OK. Do not paste paywalled full text into this repo. Open access with publisher license CC; verify attribution and any NC/SA terms before redistribution of PDF/figures.",
+      "europePmcUrl": "https://europepmc.org/article/MED/19836068",
+      "doi": "10.1016/j.cell.2009.09.033",
+      "pmcid": "PMC2796826",
+      "publisherLicense": null,
+      "reviewNotes": "Cell 2009 Ivanov SFB→Th17; PMC free author manuscript — cite + link; no invented CC-BY.",
+      "partnerCleared": true,
+      "clearanceScope": "oa_reuse",
+      "partnerClearanceNote": "Apolo Pharma Stage 1 (partner:apolo-pharma, operator-asserted 2026-11-01): OA reuse under publisher CC/OA terms — cite + OA full text as license permits; respect NC/SA; no invented commercial publisher license.",
       "partnerId": "partner:apolo-pharma",
       "partnerClearedAt": "2026-11-01"
     },
@@ -527,6 +649,24 @@
       "doi": "10.1038/nature12331",
       "publisherLicense": null,
       "reviewNotes": "Nature 2013; no OA/PMC — cite metadata only.",
+      "partnerCleared": true,
+      "clearanceScope": "cite_metadata_pilot",
+      "partnerClearanceNote": "Apolo Pharma Stage 1 cite-metadata-only pilot (partner:apolo-pharma, operator-asserted 2026-11-01): bibliographic PMID/metadata citation OK for pilot Discovery; does NOT grant full-text redistribution or figure republication rights.",
+      "partnerId": "partner:apolo-pharma",
+      "partnerClearedAt": "2026-11-01"
+    },
+    {
+      "pmid": "23973224",
+      "packs": [
+        "gut_scfa"
+      ],
+      "licenseStatus": "ok_cite",
+      "attributionNote": "Bibliographic PMID citation / Discovery locator OK. Do not paste paywalled full text into this repo. Curator cleared citation-only use; full-text / figure republication not cleared.",
+      "europePmcUrl": "https://europepmc.org/article/MED/23973224",
+      "doi": "10.1016/j.immuni.2013.08.003",
+      "pmcid": "PMC3780713",
+      "publisherLicense": null,
+      "reviewNotes": "Immunity 2013 Zelante AhR/IL-22; recheck EPMC license null — Apolo cite_metadata_pilot; PMC MS link-out OK; no invented CC-BY.",
       "partnerCleared": true,
       "clearanceScope": "cite_metadata_pilot",
       "partnerClearanceNote": "Apolo Pharma Stage 1 cite-metadata-only pilot (partner:apolo-pharma, operator-asserted 2026-11-01): bibliographic PMID/metadata citation OK for pilot Discovery; does NOT grant full-text redistribution or figure republication rights.",
@@ -668,6 +808,23 @@
       "pmcid": "PMC4263689",
       "publisherLicense": null,
       "reviewNotes": "Mucosal Immunol; recheck EPMC isOA=Y + license null; Crossref Elsevier OA userlicense (not CC) — Apolo cite_metadata_pilot; no invented CC-BY / no FT republication.",
+      "partnerCleared": true,
+      "clearanceScope": "cite_metadata_pilot",
+      "partnerClearanceNote": "Apolo Pharma Stage 1 cite-metadata-only pilot (partner:apolo-pharma, operator-asserted 2026-11-01): bibliographic PMID/metadata citation OK for pilot Discovery; does NOT grant full-text redistribution or figure republication rights.",
+      "partnerId": "partner:apolo-pharma",
+      "partnerClearedAt": "2026-11-01"
+    },
+    {
+      "pmid": "25172555",
+      "packs": [
+        "neuro_vagus"
+      ],
+      "licenseStatus": "restricted",
+      "attributionNote": "Bibliographic PMID citation / Discovery locator OK. Do not paste paywalled full text into this repo. Paywall / all-rights signal — cite metadata only; no FT/figure reuse.",
+      "europePmcUrl": "https://europepmc.org/article/MED/25172555",
+      "doi": "10.1016/j.bbi.2014.08.007",
+      "publisherLicense": null,
+      "reviewNotes": "Brain Behav Immun 2015 Banks BBB neuroimmunology; paywall signal — cite metadata only.",
       "partnerCleared": true,
       "clearanceScope": "cite_metadata_pilot",
       "partnerClearanceNote": "Apolo Pharma Stage 1 cite-metadata-only pilot (partner:apolo-pharma, operator-asserted 2026-11-01): bibliographic PMID/metadata citation OK for pilot Discovery; does NOT grant full-text redistribution or figure republication rights.",
@@ -871,7 +1028,7 @@
   "honesty": [
     "Curator reviewDate=2026-11-01; method recorded on bundle.reviewMethod.",
     "Statuses: ok_cite (citation-only cleared) · ok_oa (CC / clear reuse) · restricted (paywall ARR — metadata cite only) · unknown (unclear — no invented CC).",
-    "Apolo Pharma Stage 1 partner clearance (2026-11-01): partnerClearedCount=48 (oa_reuse=11, cite_metadata_pilot=37, uncleared=0).",
+    "Apolo Pharma Stage 1 partner clearance (2026-11-01): partnerClearedCount=57 (oa_reuse=14, cite_metadata_pilot=43, uncleared=0).",
     "clearanceScope=cite_metadata_pilot ≠ full-text redistribution rights; oa_reuse still bound by publisher CC/OA terms (NC/SA).",
     "Stub partnerSigned stays false (not a publisher MoU); partnerCleared* records Stage 1 pilot attribution scope only.",
     "PMID presence ≠ republication rights for PDFs or figures beyond what the row license + clearanceScope allow.",

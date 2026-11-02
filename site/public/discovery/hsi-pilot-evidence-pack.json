@@ -3,7 +3,7 @@
   "notCds": true,
   "noPatientLevelActions": true,
   "autoApproveIntoKg": false,
-  "generatedAt": "2026-11-01T12:00:00.000Z",
+  "generatedAt": "2026-11-02T05:24:43.016Z",
   "disease": "Rheumatoid arthritis",
   "researchQuestion": "Why do some patients with rheumatoid arthritis respond differently to anti-TNF therapy, and which biomarkers or immune mechanisms are best supported for defining those subgroups?",
   "lockedPilot": true,
@@ -438,9 +438,9 @@
     "scopeLocked": true,
     "partnerSigned": true,
     "provisionalLock": false,
-    "evidenceSnapshotRef": "dist/outputs/hsi-core-0.1.0-20261101T120000000Z/hsi-isi-export.json",
-    "createdAt": "2026-11-01T12:00:00.000Z",
-    "updatedAt": "2026-11-01T12:00:00.000Z"
+    "evidenceSnapshotRef": "dist/outputs/hsi-core-0.1.0-20261102T052443016Z/hsi-isi-export.json",
+    "createdAt": "2026-11-02T05:24:43.016Z",
+    "updatedAt": "2026-11-02T05:24:43.016Z"
   },
   "evidenceMap": [
     {
@@ -2049,6 +2049,60 @@
       "graphEdgeMeans": "navigational_link_not_causality"
     },
     {
+      "claimId": "HSI-C-SSC-016",
+      "edgeId": "HSI-E-SSC-016",
+      "claimText": "Systemic sclerosis pathogenesis is framed by early vascular injury alongside immune dysregulation and fibrosis (review-level triad neighbourhood — associative; not a full SSc atlas; not CDS).",
+      "subject": "SSc vasculopathy / endothelial injury",
+      "relationship": "associated_with",
+      "object": "Systemic sclerosis",
+      "conditionContext": "autoimmunity",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "19420368",
+        "doi": "10.1056/NEJMra0806188",
+        "citationLabel": "Gabrielli A et al. N Engl J Med 2009 — Scleroderma.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/19420368/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "P1.9 SSc vasculopathy neighbourhood. PMID 19420368 verified (review). teaching=associative; do not invent vascular-therapy CDS. Complements Tfh–B–IL-21 without replacing RA ASK. Gate C = human only. Not CDS.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
+      "claimId": "HSI-C-SSC-017",
+      "edgeId": "HSI-E-SSC-017",
+      "claimText": "Systemic sclerosis is a prototypic multisystem fibrotic disorder in which fibroblast activation and TGF-β pathway signalling are central pathogenetic themes (review-level fibrosis neighbourhood — associative; not dosing CDS).",
+      "subject": "SSc fibroblast / TGF-β fibrotic programme",
+      "relationship": "associated_with",
+      "object": "Systemic sclerosis",
+      "conditionContext": "autoimmunity",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "17332883",
+        "doi": "10.1172/JCI31139",
+        "citationLabel": "Varga J, Abraham D. J Clin Invest 2007 — Systemic sclerosis: a prototypic multisystem fibrotic disorder.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/17332883/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "P1.9 SSc fibrosis neighbourhood. PMID 17332883 verified (review). Complements faSScinate IL-6/TGF-β biospecimen insight without inventing anti-fibrotic CDS. Gate C = human only. Not CDS.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
       "claimId": "HSI-C-GUT-001",
       "edgeId": "HSI-E-GUT-001",
       "claimText": "Indigenous Clostridium clusters IV and XIVa promote accumulation of colonic Foxp3+ regulatory T cells (mouse gut–immune neighbourhood seed — not CDS; not Stage 1 RA lock).",
@@ -2373,6 +2427,60 @@
       "graphEdgeMeans": "navigational_link_not_causality"
     },
     {
+      "claimId": "HSI-C-GUT-013",
+      "edgeId": "HSI-E-GUT-013",
+      "claimText": "Segmented filamentous bacteria can induce intestinal Th17 cells (microbiota→Th17 hop — mouse; hypothesized competing neighbourhood alongside SCFA Th17 promote/inhibit frames; not CDS).",
+      "subject": "Segmented filamentous bacteria (SFB)",
+      "relationship": "upregulates",
+      "object": "Mucosal / intestinal Th17 cells",
+      "conditionContext": "immuno_metabolic",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "19836068",
+        "doi": "10.1016/j.cell.2009.09.033",
+        "citationLabel": "Ivanov II et al. Cell 2009 — Induction of intestinal Th17 cells by segmented filamentous bacteria.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/19836068/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "P1.9 SFB→Th17. PMID 19836068 verified. Mouse — teaching=hypothesized; keep separate from butyrate Th17 promote/inhibit; never invent IBD dosing CDS. Gate C = human only. Not CDS.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
+      "claimId": "HSI-C-GUT-014",
+      "edgeId": "HSI-E-GUT-014",
+      "claimText": "Microbiota-derived tryptophan catabolites engage aryl hydrocarbon receptor signalling and help balance mucosal reactivity via interleukin-22 (AhR hop beyond SCFA-only neighbourhood — mouse; not CDS).",
+      "subject": "Microbiota tryptophan catabolites (AhR ligands)",
+      "relationship": "modulates_immune",
+      "object": "Mucosal IL-22 / reactivity balance",
+      "conditionContext": "immuno_metabolic",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "23973224",
+        "doi": "10.1016/j.immuni.2013.08.003",
+        "citationLabel": "Zelante T et al. Immunity 2013 — Tryptophan catabolites from microbiota engage aryl hydrocarbon receptor and balance mucosal reactivity via interleukin-22.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/23973224/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "P1.9 AhR/IL-22 hop. PMID 23973224 verified. Mouse — teaching=associative; do not invent tryptophan-supplement CDS. Gate C = human only. Not CDS.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
       "claimId": "HSI-C-NI-001",
       "edgeId": "HSI-E-NI-001",
       "claimText": "Electrical stimulation of the peripheral vagus nerve attenuates systemic inflammatory responses to endotoxin, including hepatic and serum TNF, in rodent endotoxaemia models (cholinergic anti-inflammatory neighbourhood — not CDS).",
@@ -2668,6 +2776,141 @@
       "studyOrModelContext": "Depth deepen: PMID 12469056 verified. Rodent IR context — teaching=associative; never invent perioperative VNS CDS. Gate C = human only. Not CDS. No PHI.",
       "limitations": null,
       "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
+      "claimId": "HSI-C-NI-012",
+      "edgeId": "HSI-E-NI-012",
+      "claimText": "Resting microglial cells continuously survey brain parenchyma with highly dynamic processes (CNS-resident myeloid hop — complementary to vagus reflex; not an MS/neurodegeneration atlas; not CDS).",
+      "subject": "Resting / surveying microglia",
+      "relationship": "associates_neuroimmune",
+      "object": "Brain parenchyma immune surveillance",
+      "conditionContext": "immuno_metabolic",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "15831717",
+        "doi": "10.1126/science.1110647",
+        "citationLabel": "Nimmerjahn A et al. Science 2005 — Resting microglial cells are highly dynamic surveillants of brain parenchyma in vivo.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/15831717/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "P1.9 microglia neighbourhood. PMID 15831717 verified. In-vivo imaging — teaching=associative; do not invent disease-specific CDS. Gate C = human only. Not CDS. No PHI.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
+      "claimId": "HSI-C-NI-013",
+      "edgeId": "HSI-E-NI-013",
+      "claimText": "Systemic infections and peripheral inflammation can modulate chronic CNS inflammatory and neurodegenerative processes (immune-to-brain neighbourhood frame — review-level; not a clinical cure claim).",
+      "subject": "Systemic infection / peripheral inflammation",
+      "relationship": "associates_neuroimmune",
+      "object": "CNS inflammatory / neurodegenerative tone",
+      "conditionContext": "immuno_metabolic",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "17220915",
+        "doi": "10.1038/nri2015",
+        "citationLabel": "Perry VH et al. Nat Rev Immunol 2007 — Systemic infections and inflammation affect chronic neurodegeneration.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/17220915/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "P1.9 peripheral→CNS frame. PMID 17220915 verified (review). teaching=associative; never invent neurodegeneration therapy CDS. Complements vagus TNF brake without collapsing frames. Gate C = human only. Not CDS. No PHI.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
+      "claimId": "HSI-C-NI-014",
+      "edgeId": "HSI-E-NI-014",
+      "claimText": "The blood–brain barrier both separates and reconnects the immune and central nervous systems via regulated cytokine/cell exchange and immunomodulatory signalling (BBB interface neighbourhood — not CDS).",
+      "subject": "Blood–brain barrier (neuroimmune interface)",
+      "relationship": "signals_via_axis",
+      "object": "Peripheral immune ↔ CNS communication axis",
+      "conditionContext": "immuno_metabolic",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "25172555",
+        "doi": "10.1016/j.bbi.2014.08.007",
+        "citationLabel": "Banks WA. Brain Behav Immun 2015 — The blood-brain barrier in neuroimmunology: Tales of separation and assimilation.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/25172555/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "P1.9 BBB axis frame. PMID 25172555 verified (review). teaching=associative; not clinical BBB-opening CDS. Gate C = human only. Not CDS. No PHI.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
+      "claimId": "HSI-C-NI-015",
+      "edgeId": "HSI-E-NI-015",
+      "claimText": "Interleukin-1α can cross the blood–brain barrier via saturable transport (and related extracellular pathways) — mechanistic BBB cytokine hop (rodent; not human dosing CDS).",
+      "subject": "Circulating interleukin-1α",
+      "relationship": "associated_with",
+      "object": "Blood–brain barrier",
+      "conditionContext": "immuno_metabolic",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "8707929",
+        "doi": "10.1016/0165-5728(96)00036-7",
+        "citationLabel": "Banks WA et al. J Neuroimmunol 1996 — Comparison of saturable transport and extracellular pathways in the passage of interleukin-1 alpha across the blood-brain barrier.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/8707929/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "P1.9 BBB cytokine transport. PMID 8707929 verified. systemsPredicate crosses_bbb (alias→associated_with). teaching=associative; never invent cytokine CNS dosing. Gate C = human only. Not CDS. No PHI.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
+    },
+    {
+      "claimId": "HSI-C-NI-016",
+      "edgeId": "HSI-E-NI-016",
+      "claimText": "Cerebral microglia can recruit monocytes into the brain in response to tumour necrosis factor-α signalling during peripheral organ inflammation (microglia–peripheral inflammation hop — mouse; hypothesized translational breadth only).",
+      "subject": "Cerebral microglia",
+      "relationship": "associates_neuroimmune",
+      "object": "Monocyte recruitment into brain",
+      "conditionContext": "immuno_metabolic",
+      "evidenceGrade": "uncertain",
+      "reviewStatus": "source-verified",
+      "source": {
+        "pmid": "19228962",
+        "doi": "10.1523/JNEUROSCI.3567-08.2009",
+        "citationLabel": "D'Mello C et al. J Neurosci 2009 — Cerebral microglia recruit monocytes into the brain in response to tumor necrosis factoralpha signaling during peripheral organ inflammation.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/19228962/",
+        "missing": []
+      },
+      "marker": {
+        "markerId": null,
+        "markerName": null,
+        "loinc": null,
+        "linkKind": null
+      },
+      "studyOrModelContext": "P1.9 microglia–peripheral TNF hop. PMID 19228962 verified. Mouse — teaching=hypothesized; do not invent human monocyte-trafficking CDS or MS claims. Gate C = human only. Not CDS. No PHI.",
+      "limitations": null,
+      "graphEdgeMeans": "navigational_link_not_causality"
     }
   ],
   "entitySlice": {
@@ -2691,6 +2934,7 @@
       "Intestinal macrophage HDAC activity / inflammatory tone",
       "Macrophage TNF release",
       "Macrophage TNF synthesis / release",
+      "Mucosal / intestinal Th17 cells",
       "Mucosal Th17 cells",
       "Nicotinic ACh receptor α7 subunit (macrophage)",
       "Pancreatic β-cell dysfunction",
@@ -2705,11 +2949,17 @@
     "pathwaysOrMechanisms": [
       "Autoimmune–metabolic comorbidity",
       "BAFF antagonist (experimental)",
+      "Blood–brain barrier",
+      "Blood–brain barrier (neuroimmune interface)",
+      "Brain parenchyma immune surveillance",
       "Butyrate (SCFA)",
       "CGM time-in-range",
+      "CNS inflammatory / neurodegenerative tone",
       "CXCL4 (PF4)",
+      "Cerebral microglia",
       "Cholinergic anti-inflammatory pathway",
       "Cholinergic neural signals to the spleen",
+      "Circulating interleukin-1α",
       "Clostridium clusters IV / XIVa (gut)",
       "Colonic inflammation tone",
       "Commensal bacterial metabolites (SCFA neighbourhood)",
@@ -2737,19 +2987,28 @@
       "Leukocyte trafficking via CD11b",
       "Low-grade chronic inflammation",
       "Metabolic inflammation",
+      "Microbiota tryptophan catabolites (AhR ligands)",
+      "Monocyte recruitment into brain",
+      "Mucosal IL-22 / reactivity balance",
       "NLRP3 inflammasome",
       "Obesity",
       "PD-1",
       "Peripheral / systemic TNF inflammatory tone",
+      "Peripheral immune ↔ CNS communication axis",
       "Pharmacologic cholinergic anti-inflammatory stimulation",
       "Plasmablast",
       "RF/ACPA seropositive RA phenotype",
+      "Resting / surveying microglia",
       "SCFA (class)",
+      "SSc fibroblast / TGF-β fibrotic programme",
+      "SSc vasculopathy / endothelial injury",
+      "Segmented filamentous bacteria (SFB)",
       "Short-chain fatty acids (class)",
       "Skin fibrosis",
       "Spleen (innate cytokine reservoir)",
       "Splenic nerve (catecholaminergic)",
       "Systemic glucocorticoids",
+      "Systemic infection / peripheral inflammation",
       "Systemic sclerosis",
       "TGF-β pathway activation in dermal fibroblasts",
       "TNF-α",
@@ -2800,6 +3059,7 @@
       "PMID:12508119",
       "PMID:12813013",
       "PMID:15030775",
+      "PMID:15831717",
       "PMID:16025117",
       "PMID:16339522",
       "PMID:16382236",
@@ -2807,19 +3067,25 @@
       "PMID:16508927",
       "PMID:16785311",
       "PMID:17133559",
+      "PMID:17220915",
+      "PMID:17332883",
       "PMID:17581616",
       "PMID:18375541",
       "PMID:18625622",
       "PMID:18669662",
       "PMID:19180481",
+      "PMID:19228962",
+      "PMID:19420368",
       "PMID:19542466",
       "PMID:19625695",
+      "PMID:19836068",
       "PMID:20699241",
       "PMID:21205640",
       "PMID:21314428",
       "PMID:21921156",
       "PMID:23828891",
       "PMID:23842501",
+      "PMID:23973224",
       "PMID:24129067",
       "PMID:24226770",
       "PMID:24226773",
@@ -2828,6 +3094,7 @@
       "PMID:24412617",
       "PMID:24586782",
       "PMID:24917457",
+      "PMID:25172555",
       "PMID:25865369",
       "PMID:27382171",
       "PMID:28845751",
@@ -2843,6 +3110,7 @@
       "PMID:34031030",
       "PMID:37763102",
       "PMID:7569976",
+      "PMID:8707929",
       "WHO / ADA diagnostic criteria (placeholder)",
       "irAE clinical reviews (placeholder)"
     ],
@@ -3043,6 +3311,16 @@
         "kind": "pathway"
       },
       {
+        "id": "HSI-N-bbb",
+        "label": "Blood–brain barrier (neuroimmune interface)",
+        "kind": "pathway"
+      },
+      {
+        "id": "HSI-N-brain-parenchyma-surveillance",
+        "label": "Brain parenchyma immune surveillance",
+        "kind": "pathway"
+      },
+      {
         "id": "HSI-N-butyrate",
         "label": "Butyrate (SCFA)",
         "kind": "pathway"
@@ -3063,8 +3341,18 @@
         "kind": "pathway"
       },
       {
+        "id": "HSI-N-il1-alpha-circulating",
+        "label": "Circulating interleukin-1α",
+        "kind": "pathway"
+      },
+      {
         "id": "HSI-N-clostridia-iv-xiva",
         "label": "Clostridium clusters IV / XIVa (gut)",
+        "kind": "pathway"
+      },
+      {
+        "id": "HSI-N-cns-inflammatory-tone",
+        "label": "CNS inflammatory / neurodegenerative tone",
         "kind": "pathway"
       },
       {
@@ -3198,6 +3486,21 @@
         "kind": "pathway"
       },
       {
+        "id": "HSI-N-trp-catabolites-ahr",
+        "label": "Microbiota tryptophan catabolites (AhR ligands)",
+        "kind": "pathway"
+      },
+      {
+        "id": "HSI-N-monocyte-cns-recruitment",
+        "label": "Monocyte recruitment into brain",
+        "kind": "pathway"
+      },
+      {
+        "id": "HSI-N-mucosal-il22-balance",
+        "label": "Mucosal IL-22 / reactivity balance",
+        "kind": "pathway"
+      },
+      {
         "id": "HSI-N-nlrp3",
         "label": "NLRP3 inflammasome",
         "kind": "pathway"
@@ -3218,6 +3521,11 @@
         "kind": "pathway"
       },
       {
+        "id": "HSI-N-peripheral-immune-cns-axis",
+        "label": "Peripheral immune ↔ CNS communication axis",
+        "kind": "pathway"
+      },
+      {
         "id": "HSI-N-cholinergic-agonist",
         "label": "Pharmacologic cholinergic anti-inflammatory stimulation",
         "kind": "pathway"
@@ -3228,8 +3536,18 @@
         "kind": "pathway"
       },
       {
+        "id": "HSI-N-microglia-surveillance",
+        "label": "Resting / surveying microglia",
+        "kind": "pathway"
+      },
+      {
         "id": "HSI-N-ra-seropositive",
         "label": "RF/ACPA seropositive RA phenotype",
+        "kind": "pathway"
+      },
+      {
+        "id": "HSI-N-sfb",
+        "label": "Segmented filamentous bacteria (SFB)",
         "kind": "pathway"
       },
       {
@@ -3253,8 +3571,23 @@
         "kind": "pathway"
       },
       {
+        "id": "HSI-N-ssc-fibroblast-tgfb",
+        "label": "SSc fibroblast / TGF-β fibrotic programme",
+        "kind": "pathway"
+      },
+      {
+        "id": "HSI-N-ssc-vascular-injury",
+        "label": "SSc vasculopathy / endothelial injury",
+        "kind": "pathway"
+      },
+      {
         "id": "HSI-N-glucocorticoids",
         "label": "Systemic glucocorticoids",
+        "kind": "pathway"
+      },
+      {
+        "id": "HSI-N-systemic-inflammation",
+        "label": "Systemic infection / peripheral inflammation",
         "kind": "pathway"
       },
       {
@@ -3363,6 +3696,11 @@
         "kind": "study"
       },
       {
+        "id": "pmid:15831717",
+        "label": "PMID:15831717",
+        "kind": "study"
+      },
+      {
         "id": "pmid:16025117",
         "label": "PMID:16025117",
         "kind": "study"
@@ -3398,6 +3736,16 @@
         "kind": "study"
       },
       {
+        "id": "pmid:17220915",
+        "label": "PMID:17220915",
+        "kind": "study"
+      },
+      {
+        "id": "pmid:17332883",
+        "label": "PMID:17332883",
+        "kind": "study"
+      },
+      {
         "id": "pmid:17581616",
         "label": "PMID:17581616",
         "kind": "study"
@@ -3423,6 +3771,16 @@
         "kind": "study"
       },
       {
+        "id": "pmid:19228962",
+        "label": "PMID:19228962",
+        "kind": "study"
+      },
+      {
+        "id": "pmid:19420368",
+        "label": "PMID:19420368",
+        "kind": "study"
+      },
+      {
         "id": "pmid:19542466",
         "label": "PMID:19542466",
         "kind": "study"
@@ -3430,6 +3788,11 @@
       {
         "id": "pmid:19625695",
         "label": "PMID:19625695",
+        "kind": "study"
+      },
+      {
+        "id": "pmid:19836068",
+        "label": "PMID:19836068",
         "kind": "study"
       },
       {
@@ -3460,6 +3823,11 @@
       {
         "id": "pmid:23842501",
         "label": "PMID:23842501",
+        "kind": "study"
+      },
+      {
+        "id": "pmid:23973224",
+        "label": "PMID:23973224",
         "kind": "study"
       },
       {
@@ -3500,6 +3868,11 @@
       {
         "id": "pmid:24917457",
         "label": "PMID:24917457",
+        "kind": "study"
+      },
+      {
+        "id": "pmid:25172555",
+        "label": "PMID:25172555",
         "kind": "study"
       },
       {
@@ -3575,6 +3948,11 @@
       {
         "id": "pmid:7569976",
         "label": "PMID:7569976",
+        "kind": "study"
+      },
+      {
+        "id": "pmid:8707929",
+        "label": "PMID:8707929",
         "kind": "study"
       },
       {
@@ -4132,11 +4510,11 @@
     "walkthroughMd": "hsi-pilot-walkthrough.md"
   },
   "summary": {
-    "evidenceMapRows": 79,
+    "evidenceMapRows": 88,
     "partnerScopedEvidenceRows": 14,
     "gradeCounts": {
       "established": 0,
-      "uncertain": 68,
+      "uncertain": 77,
       "unexplored": 11
     },
     "missingSourceLabels": 20,

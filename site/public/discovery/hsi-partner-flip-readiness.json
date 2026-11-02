@@ -3,7 +3,7 @@
   "phase": "P0.2-HSI",
   "notCds": true,
   "containsPhi": false,
-  "generatedAt": "2026-11-01T12:00:00.000Z",
+  "generatedAt": "2026-11-02T05:24:43.016Z",
   "partnerSigned": true,
   "lockedPilot": true,
   "scopeLocked": true,
@@ -42,7 +42,7 @@
       "label": "Source licensing / attribution",
       "requirement": "Agree source licensing / attribution for the partner source set.",
       "status": "pass",
-      "evidence": "Apolo Pharma Stage 1 corpus clearance (operator-asserted 2026-11-01): partnerClearedCount=48 (oa_reuse=11, cite_metadata_pilot=37, uncleared=0). Cite-metadata pilot ≠ FT redistribution; pack PMIDs fully cleared for Stage 1 cite/OA scopes (no invented CC).",
+      "evidence": "Apolo Pharma Stage 1 corpus clearance (operator-asserted 2026-11-01): partnerClearedCount=57 (oa_reuse=14, cite_metadata_pilot=43, uncleared=0). Cite-metadata pilot ≠ FT redistribution; pack PMIDs fully cleared for Stage 1 cite/OA scopes (no invented CC).",
       "blocksPartnerSigned": true
     },
     {

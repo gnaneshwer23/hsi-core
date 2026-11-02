@@ -17,6 +17,9 @@
  * - 24350901 van Bon 2014 NEJM — CXCL4 / pDC biomarker in SSc
  * - 29853453 Denton 2018 Ann Rheum Dis — IL-6 blockade reverses TGF-β pathway (faSScinate insight)
  * - 19180481 Lafyatis 2009 Arthritis Rheum — rituximab B depletion in dcSSc (pilot; hypothesized)
+ * P1.9 further neighbourhood (honest uncertain/associative; not full atlas):
+ * - 19420368 Gabrielli 2009 NEJM — scleroderma pathogenesis triad overview
+ * - 17332883 Varga 2007 JCI — SSc as prototypic multisystem fibrotic disorder (TGF-β / fibroblast)
  *
  * Not Gate C approved. Not CDS. Dual-track only — does not replace RA ASK.
  */
@@ -387,6 +390,48 @@ const SPECS: SeedSpec[] = [
     notes:
       "Depth deepen: PMID 19180481 verified. Small pilot — teaching=hypothesized; never invent on-label SSc rituximab CDS. Complements B/Tfh axis; keep separate from EBV. Gate C = human only. Not CDS.",
   },
+  {
+    id: "HSI-E-SSC-016",
+    edgeType: "associated_with",
+    subjectId: "HSI-N-ssc-vascular-injury",
+    subjectLabel: "SSc vasculopathy / endothelial injury",
+    objectId: "HSI-N-ssc",
+    objectLabel: "Systemic sclerosis",
+    claimId: "HSI-C-SSC-016",
+    assertion:
+      "Systemic sclerosis pathogenesis is framed by early vascular injury alongside immune dysregulation and fibrosis (review-level triad neighbourhood — associative; not a full SSc atlas; not CDS).",
+    review: "source-verified",
+    teaching: "associative",
+    domain: "autoimmunity",
+    pmid: "19420368",
+    doi: "10.1056/NEJMra0806188",
+    citationLabel:
+      "Gabrielli A et al. N Engl J Med 2009 — Scleroderma.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/19420368/",
+    notes:
+      "P1.9 SSc vasculopathy neighbourhood. PMID 19420368 verified (review). teaching=associative; do not invent vascular-therapy CDS. Complements Tfh–B–IL-21 without replacing RA ASK. Gate C = human only. Not CDS.",
+  },
+  {
+    id: "HSI-E-SSC-017",
+    edgeType: "associated_with",
+    subjectId: "HSI-N-ssc-fibroblast-tgfb",
+    subjectLabel: "SSc fibroblast / TGF-β fibrotic programme",
+    objectId: "HSI-N-ssc",
+    objectLabel: "Systemic sclerosis",
+    claimId: "HSI-C-SSC-017",
+    assertion:
+      "Systemic sclerosis is a prototypic multisystem fibrotic disorder in which fibroblast activation and TGF-β pathway signalling are central pathogenetic themes (review-level fibrosis neighbourhood — associative; not dosing CDS).",
+    review: "source-verified",
+    teaching: "associative",
+    domain: "autoimmunity",
+    pmid: "17332883",
+    doi: "10.1172/JCI31139",
+    citationLabel:
+      "Varga J, Abraham D. J Clin Invest 2007 — Systemic sclerosis: a prototypic multisystem fibrotic disorder.",
+    sourceUrl: "https://pubmed.ncbi.nlm.nih.gov/17332883/",
+    notes:
+      "P1.9 SSc fibrosis neighbourhood. PMID 17332883 verified (review). Complements faSScinate IL-6/TGF-β biospecimen insight without inventing anti-fibrotic CDS. Gate C = human only. Not CDS.",
+  },
 
 ];
 
@@ -456,8 +501,10 @@ export const SSC_PATHWAY_META = {
     "24350901",
     "29853453",
     "19180481",
+    "19420368",
+    "17332883",
   ],
-  deepenPhase: "p1_ssc_depth_cxcl4_il6_ritux" as const,
+  deepenPhase: "p1_9_ssc_vascular_fibrosis_neighbourhood" as const,
   entities: [
     { id: "HSI-N-ssc", label: "Systemic sclerosis", kind: "disease" },
     { id: "HSI-N-tfh", label: "Tfh", kind: "cell_subset" },
@@ -474,6 +521,16 @@ export const SSC_PATHWAY_META = {
     { id: "HSI-N-rituximab-b-depletion", label: "Rituximab B depletion (experimental)", kind: "intervention_hypothesis" },
     { id: "HSI-N-skin-fibrosis", label: "Skin fibrosis", kind: "phenotype" },
     { id: "HSI-N-ebv", label: "EBV", kind: "pathogen_hypothesis" },
+    {
+      id: "HSI-N-ssc-vascular-injury",
+      label: "SSc vasculopathy / endothelial injury",
+      kind: "phenotype",
+    },
+    {
+      id: "HSI-N-ssc-fibroblast-tgfb",
+      label: "SSc fibroblast / TGF-β fibrotic programme",
+      kind: "pathway",
+    },
   ],
 } as const;
 
