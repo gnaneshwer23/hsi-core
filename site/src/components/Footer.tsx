@@ -7,21 +7,21 @@ export function Footer() {
         <div>
           <div className="footer-brand">HSI</div>
           <p className="muted" style={{ maxWidth: "22rem", fontSize: "1rem" }}>
-            Human Systems Intelligence — shared evidence substrate for clinic-safe
-            HITL and discovery. Graph before agents. No PHI. No invented grades.
+            Evidence and provenance backbone for immune-science discovery.
+            Research intelligence — not clinical CDS. No PHI. No invented grades.
           </p>
         </div>
         <div>
           <h4>Explore</h4>
           <ul>
             <li>
-              <Link to="/systems">Systems</Link>
+              <Link to="/discovery">Discovery</Link>
             </li>
             <li>
               <Link to="/evidence">Evidence & Gate C</Link>
             </li>
             <li>
-              <Link to="/roadmap">Roadmap</Link>
+              <Link to="/for-isi">For ISI</Link>
             </li>
             <li>
               <Link to="/docs">Docs</Link>
@@ -29,16 +29,19 @@ export function Footer() {
           </ul>
         </div>
         <div>
-          <h4>Consumers</h4>
+          <h4>Secondary</h4>
           <ul>
             <li>
-              <Link to="/for-isi">For ISI</Link>
+              <Link to="/for-aksh">For Aksh (gated)</Link>
             </li>
             <li>
-              <Link to="/for-aksh">For Aksh</Link>
+              <Link to="/systems">Systems</Link>
             </li>
             <li>
               <Link to="/alignment">Repo alignment</Link>
+            </li>
+            <li>
+              <Link to="/roadmap">Development status</Link>
             </li>
           </ul>
         </div>
@@ -46,10 +49,10 @@ export function Footer() {
           <h4>Non-negotiables</h4>
           <ul>
             <li>
-              <span className="muted">Graph + Gate C before agents</span>
+              <span className="muted">Research intelligence ≠ CDS</span>
             </li>
             <li>
-              <span className="muted">ISI ≠ CDS</span>
+              <span className="muted">Human Gate C only</span>
             </li>
             <li>
               <span className="muted">Edit only hsi-core</span>

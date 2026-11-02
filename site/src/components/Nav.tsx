@@ -2,16 +2,11 @@ import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
 const links = [
-  { to: "/systems", label: "Systems" },
-  { to: "/evidence", label: "Evidence" },
   { to: "/discovery", label: "Discovery" },
-  { to: "/curator", label: "Curator" },
-  { to: "/akeno", label: "Akeno" },
-  { to: "/aksh-agents", label: "Aksh Agents" },
+  { to: "/evidence", label: "Evidence" },
   { to: "/for-isi", label: "For ISI" },
-  { to: "/for-aksh", label: "For Aksh" },
-  { to: "/roadmap", label: "Roadmap" },
-  { to: "/alignment", label: "Alignment" },
+  { to: "/systems", label: "Systems" },
+  { to: "/curator", label: "Curator" },
 ];
 
 export function Nav() {

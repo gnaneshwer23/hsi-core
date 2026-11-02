@@ -35,15 +35,15 @@ export function Roadmap() {
   return (
     <>
       <PageHero
-        eyebrow="Roadmap · phases"
+        eyebrow="Development status · secondary"
         title={
           <>
-            Same climb.
+            Build phases.
             <br />
-            <span className="accent">Clear altitudes.</span>
+            <span className="accent">Not the product story.</span>
           </>
         }
-        lede="P0 is done. P1 is pilot-first: prove one research workflow before more platform. Everything still ships from hsi-core — never by editing consumer repos."
+        lede="P0–P3 detail for contributors. The homepage leads with what HSI Core enables now — evidence backbone for immune-science discovery. Pilot-first: one research workflow before more platform."
       />
 
       <section className="section section-ink">
