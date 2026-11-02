@@ -71,7 +71,7 @@ The read-only HSI research view needs no database credentials. Signed-in human r
 - 40 targeted tests across six files pass: bridge axes, Discovery consume, product-loop shaping, bundled offline loader, Gate C queue and curator status.
 - New loader tests prove zero network calls, invalid-bundle rejection without remote fallback, partner-lock consistency and caller-mutation isolation.
 - Immunecity client/server production build passes. HSI site checks are run separately.
-- Full Immunecity TypeScript check remains blocked by 136 existing diagnostics. A clean archive of the original commit reports the same diagnostic set after ignoring line shifts. Examples include missing `Link` imports in an existing curation panel and server-function serialization typing. This is not a clean type-check claim and does not make those defects harmless; they remain follow-up work outside this integration.
+- The production audit resolved the original 136 TypeScript diagnostics. Full type checking now passes, including real Bun declarations and JSON-validated server-return types. Missing imports, lookup-result shape mismatches and structured LOINC mappings were corrected. Both Vitest and Bun-native suites run under their own runners.
 - Browser checks exercise the configured HSI→ISI link, rendered packs, fixture labels, MAP source rows, REVIEW navigation, diagnostics and mobile layout without performing review writes. The existing HSI grid/table min-content overflow was corrected, with keyboard focus added to the evidence scroll region.
 - No deployment, publication, shared login, live database validation, scientific efficacy claim or clinical integration occurred. Production release requires review and deployment of both repositories plus the configured ISI origin.
 

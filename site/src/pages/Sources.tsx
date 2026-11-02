@@ -1,15 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import type { SourceRegistry } from "../../../src/sourceRegistry";
+import { parseSourceRegistryStructure, revisionPayload, type SourceRegistry } from "../../../src/sourceRegistrySchema";
 import { PageHero } from "../components/PageHero";
-
-function validRegistry(data: unknown): data is SourceRegistry {
-  if (!data || typeof data !== "object") return false;
-  const root = data as SourceRegistry;
-  return root.schemaVersion === "hsi-source-registry-1" && root.notCds === true && root.containsPhi === false && root.claimSupport === "not_assessed" && Array.isArray(root.sources) && root.sources.every((source) =>
-    source && typeof source.pmid === "string" && /^\d{1,9}$/.test(source.pmid) && source.id === `pmid:${source.pmid}` && Array.isArray(source.claimIds) && Array.isArray(source.revisions) && source.revisions.every((revision) =>
-      revision && typeof revision.id === "string" && typeof revision.retrievedAt === "string" && ["manual_metadata", "europe_pmc"].includes(revision.provider) && revision.metadata && typeof revision.metadata.title === "string" && ["retracted", "corrected", "not_checked"].includes(revision.metadata.retractionStatus) && [revision.metadata.licence, revision.metadata.publishedAt].every((field) => field === null || typeof field === "string")));
-}
 
 export function Sources() {
   const [registry, setRegistry] = useState<SourceRegistry | null>(null);
@@ -18,9 +10,17 @@ export function Sources() {
     const controller = new AbortController();
     fetch("/research/source-registry.json", { signal: controller.signal }).then(async (response) => {
       if (!response.ok) throw new Error("Registry unavailable");
-      const data = await response.json();
-      if (!validRegistry(data)) throw new Error("Invalid registry");
-      setRegistry(data);
+      const raw = await response.text();
+      if (new TextEncoder().encode(raw).length > 5_000_000) throw new Error("Registry exceeds size limit");
+      const data = parseSourceRegistryStructure(JSON.parse(raw));
+      for (const source of data.sources) {
+        for (const revision of source.revisions) {
+          const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(revisionPayload(revision)));
+          const hash = [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+          if (hash !== revision.id) throw new Error("Registry content hash mismatch");
+        }
+      }
+      if (!controller.signal.aborted) setRegistry(data);
     }).catch(() => { if (!controller.signal.aborted) setError(true); });
     return () => controller.abort();
   }, []);

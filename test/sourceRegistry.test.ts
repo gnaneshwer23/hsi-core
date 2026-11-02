@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { mkdtempSync, readFileSync, writeFileSync, rmSync } from "node:fs";
+import { mkdtempSync, readFileSync, writeFileSync, rmSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { createSourceRegistry, importSourceMetadata, parseSourceRegistry } from "../src/sourceRegistry";
@@ -57,6 +57,12 @@ describe("research source registry", () => {
     expect(() => parseSourceRegistry({ ...initial(), containsPhi: true })).toThrow();
     expect(() => parseSourceRegistry({ ...initial(), patient: {} })).toThrow();
     expect(() => importSourceMetadata(initial(), { ...envelope(), schemaVersion: "unknown" })).toThrow();
+    for (const retrievedAt of ["2026-02-31T12:00:00.000Z", "2026-11-02T12:00:00", "yesterday"]) {
+      expect(() => importSourceMetadata(initial(), { ...envelope(), retrievedAt })).toThrow("timestamp");
+    }
+    expect(() => importSourceMetadata({ ...initial(), containsPhi: true } as never, envelope())).toThrow();
+    const duplicated = importSourceMetadata(initial(), { ...envelope(), records: [envelope().records[0], envelope().records[0]] });
+    expect(duplicated.quarantined[0]?.reason).toContain("Duplicate PMID");
   });
 
   it("CLI preserves the existing registry on a rejected import and refuses reinitialisation", () => {
@@ -68,6 +74,11 @@ describe("research source registry", () => {
       const original = readFileSync(registry, "utf8");
       writeFileSync(input, JSON.stringify({ ...envelope(), records: [{ ...envelope().records[0], observation: 42 }] }));
       const cli = resolve(import.meta.dir, "../src/cli/source-registry.ts");
+      expect(Bun.spawnSync([process.execPath, cli, "import", input, registry]).exitCode).toBe(1);
+      expect(readFileSync(registry, "utf8")).toBe(original);
+      expect(existsSync(`${registry}.lock`)).toBe(false);
+      writeFileSync(`${registry}.lock`, "test-owned lock");
+      writeFileSync(input, JSON.stringify(envelope()));
       expect(Bun.spawnSync([process.execPath, cli, "import", input, registry]).exitCode).toBe(1);
       expect(readFileSync(registry, "utf8")).toBe(original);
       expect(Bun.spawnSync([process.execPath, cli, "init", registry]).exitCode).toBe(1);

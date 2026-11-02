@@ -24,6 +24,7 @@ import { ClinicalTimeline } from "./pages/ClinicalTimeline";
 import { TrialsCriteria } from "./pages/TrialsCriteria";
 import { GatewayDemo } from "./pages/GatewayDemo";
 import { Sources } from "./pages/Sources";
+import { NotFound } from "./pages/NotFound";
 
 export default function App() {
   return (
@@ -53,6 +54,7 @@ export default function App() {
         <Route path="roadmap" element={<Roadmap />} />
         <Route path="alignment" element={<Alignment />} />
         <Route path="docs" element={<Docs />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );

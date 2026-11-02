@@ -60,9 +60,10 @@ No database credentials are needed for this public research view. Do not copy Ak
 - HSI producer tests: mapped data, unchanged grades/source notes, no patient/action objects, invalid revision/timestamp rejection.
 - Aksh consumer tests: real 22-card producer snapshot accepted; 11 malformed/unsafe payload variants rejected; known source caveat retained.
 - Aksh capability register consistency test passes; both application TypeScript checks pass.
+- The broad Aksh `npm run verify` additionally requires its own non-production test database. It currently stops at the patient-spine database test without that configuration; do not substitute HSI's connection.
 - Browser smoke checks exercise HSI→Aksh navigation, imported claims, source caveats, resource navigation and mobile page overflow. Evidence is stored locally under `/workspace/vision-audit/`.
 - HSI library and Vite builds are checked independently. The known pre-existing HSI homepage source-assertion mismatch remains outside this integration.
-- Aksh Google Fonts downloads require `fonts.googleapis.com` and `fonts.gstatic.com`. The current proxy returned HTTP 403 for the font stylesheet; dev mode uses fallback fonts. A full Aksh production build cannot be declared verified until the network requirement is applied and the build rerun.
+- Aksh now self-hosts integrity-pinned Fontsource packages; its complete production build passes without Google font downloads. OFL licence copies are served under `/legal/fonts/`.
 - No production deployment, database migration, patient workflow, SSO, or clinical efficacy verification occurred. Release both repos together after reviewing the artifact and configuring the HSI Aksh origin.
 
 ## Next integration stages

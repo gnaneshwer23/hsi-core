@@ -1,8 +1,133 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "rewrites": [
+  "headers": [
     {
       "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        }
+      ]
+    },
+    {
+      "source": "/research/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/discovery/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/platform",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/how-it-works",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/explore",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/science",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/discovery-engine",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/products",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/status",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/sources",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/clinical-timeline",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/trials-criteria",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/gateway",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/systems",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/evidence",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/discovery",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/curator",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/akeno",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/aksh-agents",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/for-isi",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/for-aksh",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/for-trials",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/roadmap",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/alignment",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/docs",
       "destination": "/index.html"
     }
   ]

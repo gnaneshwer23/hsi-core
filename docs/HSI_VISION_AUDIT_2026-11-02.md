@@ -4,6 +4,8 @@ Audit date: 2 November 2026. Scope: local `hsi-core` at `143e82193779069a61f17a7
 
 ## Decision
 
+**Production hardening follow-up:** see `PRODUCTION_READINESS_2026-11-02.md` for current release evidence. It supersedes the original type/build blockers below: the three builds and full type checks now pass, while live database verification and clinical/scientific release evidence remain gated.
+
 **Implementation follow-up (same day):** the initial research comparison, Aksh/ISI snapshot integrations and source-registry metadata MVP are now implemented on a review branch. See `SOURCE_REGISTRY.md`, `AKSH_PLATFORM_INTEGRATION.md` and `IMMUNECITY_PLATFORM_INTEGRATION.md`. The homepage source test was updated to inspect the rendered component's registry usage; the current core suite passes all 182 tests. Findings below retain the audit-time baseline and should not be read as updated production availability. Live retrieval, claim-passage verification and authenticated persistent investigations remain open.
 
 Build the **research workbench for translational teams first**, confirmed by the user in this session. The first use case remains the existing rheumatoid arthritis / anti-TNF response question. Preserve SSc as a separate secondary track. The uploaded ambition is broader than the currently implemented product: HSI has a useful evidence substrate and interactive prototypes, but is not yet the governed, connected health platform described in the PRD.

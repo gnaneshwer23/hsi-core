@@ -32,7 +32,9 @@ This example is a format illustration, not retrieved evidence. Providers may be 
 
 The importer accepts only registered PMIDs and the listed fields. It quarantines invalid dates, DOI/PMID values, missing status and unknown fields without retaining raw rejected content. The CLI rejects a partial import as a whole and leaves the existing snapshot unchanged. Valid writes use an atomic file replacement. Identical latest metadata is idempotent even when the retrieval timestamp differs; content changes append a hash-identified revision rather than erasing history. Hashes detect accidental content tampering, not authenticity or an authorised provider signature.
 
-The snapshot lives at `site/public/research/source-registry.json`. This is intentionally public, Git-reviewed data. Schema checks are not a PHI detector: never submit patient exports or private text. Imports do not grant reuse rights, clinical approval, or scientific support. There is no anonymous upload endpoint or browser write operation.
+The snapshot lives at `site/public/research/source-registry.json`. Browser and CLI share the same structural validator and both verify revision content hashes. Unknown fields, duplicate identities, invalid calendar dates and non-chronological histories are rejected. This is intentionally public, Git-reviewed data. Schema checks are not a PHI detector: never submit patient exports or private text. Imports do not grant reuse rights, clinical approval, or scientific support. There is no anonymous upload endpoint or browser write operation.
+
+CLI writes use an exclusive `.lock` beside the destination, fsync and atomic replacement; failures clean up owned temporary files and locks. A lock left after a killed process requires an operator to confirm no writer is active before removing it. The tool does not automatically steal another process's lock.
 
 `bun run sources:init` is for a missing registry and refuses to overwrite existing history. For a test registry use `bun src/cli/source-registry.ts init /tmp/test-registry.json`; import to that file with `bun src/cli/source-registry.ts import INPUT /tmp/test-registry.json`.
 
