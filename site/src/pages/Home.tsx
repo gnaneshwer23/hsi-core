@@ -1,5 +1,11 @@
 import { Link } from "react-router-dom";
 import { EvidenceGradesMock, GateCQueueMock } from "../components/Mocks";
+import {
+  ECOSYSTEM_PRODUCTS,
+  MATURITY_CHIP_LABEL,
+  SHARED_CORE_NOTE,
+  STATUS_COLUMNS,
+} from "../lib/productMaturity";
 
 /** Published RA / anti-TNF pack rows — illustrative of live Discovery, not invented. */
 const raExampleClaims = [
@@ -88,37 +94,6 @@ const trust = [
   },
 ];
 
-const maturity = [
-  {
-    status: "Implemented",
-    items: [
-      "Graded evidence edges + claim→marker stubs",
-      "Scope-locked RA / anti-TNF pilot pack + Discovery ASK→MAP→REVIEW",
-      "SSc / gut / neuro secondary packs (honest uncertain grades)",
-      "Gate C checklists + curator UX; versioned `bun run outputs`",
-      "ISI consume contract / flip-readiness exports",
-    ],
-  },
-  {
-    status: "Planned / partial",
-    items: [
-      "Real named research partner + one confirmed pilot question",
-      "Deeper ontology binds beyond curator-confirmed CL/MONDO starters",
-      "Broader cell-state / tissue / trial-metadata coverage",
-      "Public cite Check→supports→Approve on Gate C–approved handoffs",
-    ],
-  },
-  {
-    status: "Future concept (not live)",
-    items: [
-      "Patient-level or partner PHI plane",
-      "Automated disease prediction or trial eligibility",
-      "Live Aksh CDS / Akeno clinical product paths",
-      "Commercial structure / generative adapters as clinic tools",
-    ],
-  },
-];
-
 export function Home() {
   return (
     <>
@@ -137,12 +112,53 @@ export function Home() {
             workspace.
           </p>
           <div className="hero-actions">
-            <Link to="/discovery" className="btn btn-primary">
-              Enter Discovery <span className="arrow">↗</span>
+            <Link to="/for-isi" className="btn btn-primary">
+              ISI research workspace <span className="arrow">↗</span>
             </Link>
-            <Link to="/for-isi" className="btn btn-ghost">
-              ISI research workspace
+            <Link to="/status" className="btn btn-ghost">
+              What&apos;s available
             </Link>
+            <Link to="/discovery" className="btn btn-ghost">
+              Discovery (research)
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-elevated" aria-label="Four products">
+        <div className="container">
+          <div className="split-headline">
+            <div>
+              <span className="section-num">ONE ECOSYSTEM</span>
+              <h2 className="display display-lg" style={{ marginTop: "0.75rem" }}>
+                Four products.{" "}
+                <span className="text-cobalt">Honest status chips.</span>
+              </h2>
+            </div>
+            <p className="lede">
+              {SHARED_CORE_NOTE} See{" "}
+              <Link to="/status">/status</Link> before treating any CTA as live.
+            </p>
+          </div>
+          <div className="product-grid">
+            {ECOSYSTEM_PRODUCTS.map((p) => (
+              <article key={p.id} className="product-card">
+                <div className="product-card-head">
+                  <h3>{p.name}</h3>
+                  <span className={`maturity-chip maturity-chip-${p.chip}`}>
+                    {MATURITY_CHIP_LABEL[p.chip]}
+                  </span>
+                </div>
+                <p>{p.oneLine}</p>
+                <p className="xs muted">{p.chipDetail}</p>
+                <Link
+                  to={p.chip === "available" ? p.primaryCta.href : "/status"}
+                  className="text-link"
+                >
+                  {p.chip === "available" ? p.primaryCta.label : "Read status"} →
+                </Link>
+              </article>
+            ))}
           </div>
         </div>
       </section>
@@ -343,13 +359,13 @@ export function Home() {
       <section className="section section-bone">
         <div className="container">
           <div className="section-head">
-            <span className="section-num">MATURITY</span>
-            <h2 className="display display-md">What is live vs planned.</h2>
+            <span className="section-num">STATUS</span>
+            <h2 className="display display-md">Available · In development · Planned.</h2>
           </div>
-          <div className="maturity-grid">
-            {maturity.map((col) => (
-              <article key={col.status} className="maturity-card">
-                <h3>{col.status}</h3>
+          <div className="maturity-grid status-columns">
+            {STATUS_COLUMNS.map((col) => (
+              <article key={col.id} className={`maturity-card status-col status-col-${col.id}`}>
+                <h3>{col.title}</h3>
                 <ul>
                   {col.items.map((item) => (
                     <li key={item}>{item}</li>
@@ -359,16 +375,9 @@ export function Home() {
             ))}
           </div>
           <p className="maturity-foot">
-            Phase detail for collaborators:{" "}
-            <Link to="/roadmap">Development status</Link>
+            Canonical page: <Link to="/status">/status</Link>
             {" · "}
-            <a
-              href="https://github.com/gnaneshwer23/hsi-core/blob/main/docs/BUILD_STATUS_AND_NEXT.md"
-              target="_blank"
-              rel="noreferrer"
-            >
-              BUILD_STATUS_AND_NEXT.md ↗
-            </a>
+            Engineering phases (secondary): <Link to="/roadmap">roadmap</Link>
           </p>
         </div>
       </section>

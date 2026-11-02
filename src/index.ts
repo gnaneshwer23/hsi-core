@@ -831,3 +831,50 @@ export {
   type ListAkshHitlCardsOptions,
   type ParsedAkshNodeMap,
 } from "./akshHitl";
+
+export {
+  buildClinicalTimelineView,
+  buildMissingInformation,
+  getSyntheticTimelineFixture,
+  listSyntheticTimelineFixtures,
+  CLINICAL_PROVIDERS,
+  CLINICAL_SYNTHETIC_TIMELINE_SCHEMA,
+  SYNTHETIC_TIMELINE_FIXTURES,
+  type ClinicalProvider,
+  type ClinicalTimelineView,
+  type MissingInfoItem,
+  type SyntheticPatientFixture,
+  type TimelineEvent,
+} from "./clinicalSyntheticTimeline";
+
+export {
+  assessTrialCriteria,
+  containsForbiddenEligibilityLanguage,
+  getDemoPatientFixture,
+  CRITERION_STATES,
+  DEMO_PATIENT_FIXTURES,
+  DEMO_TRIAL_CRITERIA,
+  FORBIDDEN_ELIGIBILITY_PHRASES,
+  TRIALS_CRITERIA_MVP_SCHEMA,
+  type CriterionAssessment,
+  type CriterionState,
+  type SyntheticPatientAttrs,
+  type TrialCriterion,
+  type TrialsCriteriaReport,
+} from "./trialsCriteriaMvp";
+
+export {
+  decideGatewayRequest,
+  gatewayAuditEvent,
+  gatewayContract,
+  AKSH_HSI_GATEWAY_SCHEMA,
+  GATEWAY_PURPOSES,
+  RESEARCH_DB_TARGETS,
+  type AkshHsiGatewayContract,
+  type GatewayAuditEvent,
+  type GatewayDecision,
+  type GatewayDenyReason,
+  type GatewayPlane,
+  type GatewayPurpose,
+  type GatewayRequestStub,
+} from "./akshHsiGateway";

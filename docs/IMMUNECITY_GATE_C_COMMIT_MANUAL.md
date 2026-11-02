@@ -37,8 +37,17 @@ Publish / sync via hsi-core commits. Consumers pull `dist/outputs/` (or legacy `
 
 `HSI-E-IM-001`, `IM-007`, `IM-008`, `IM-009`, `IO-002`, `IO-003`, `AU-002` — no invented RELs. Extend maps in hsi-core seeds/exports only.
 
+## ISI product operator path (cite Approve — separate repo)
+
+Discovery Gate C `human_approved` on autumn-snow ≠ public cite. Human Check → `claim_support` → Approve/Reject lives in immunecity:
+
+- Operator checklist: `~/Desktop/immune-city/docs/GATE_C_CURATOR_PATH.md`
+- Dry-run (no writes): `cd ~/Desktop/immune-city && bun run hsi:curator-status -- --neon`
+- UI: `/curation?hsi=cite` — never invent supports; never point HSI `DATABASE_URL` at autumn-snow
+- **2026-11-02 live:** 13/13 cite identifiers verified; **0** `claim_support=supports`; **0** `publicCiteApproved`. Founder authorized Approve only for already-eligible rows — human S-P-O assess still required first (no agent invent / no JSON counter edits).
+
 ## Next steps (hsi-core)
 
 - Add further verified PMID links in seeds + `export:isi-map`
 - Keep this checklist and any new curator notes under `docs/`
-- Do not open immunecity PRs for HSI; ignore DeliverX / swift-deliveries
+- Do not open immunecity PRs for HSI substrate; ISI cite wiring only under freeze-lift scope; ignore DeliverX / swift-deliveries

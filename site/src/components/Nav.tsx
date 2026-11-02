@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import { ENGINEERING_LINKS } from "../lib/productMaturity";
 
-const links = [
+/** Primary destinations — product honesty first; engineering demoted. */
+const primaryLinks = [
+  { to: "/products", label: "Products" },
+  { to: "/status", label: "Status" },
   { to: "/discovery", label: "Discovery" },
+  { to: "/for-isi", label: "For researchers" },
   { to: "/evidence", label: "Evidence" },
-  { to: "/for-isi", label: "For ISI" },
-  { to: "/systems", label: "Systems" },
-  { to: "/curator", label: "Curator" },
 ];
 
 export function Nav() {
@@ -34,7 +36,7 @@ export function Nav() {
         </Link>
 
         <nav className="nav-links" aria-label="Primary">
-          {links.map((l) => (
+          {primaryLinks.map((l) => (
             <NavLink
               key={l.to}
               to={l.to}
@@ -45,8 +47,8 @@ export function Nav() {
           ))}
         </nav>
 
-        <Link to="/docs" className="btn nav-cta">
-          How to use <span className="arrow">↗</span>
+        <Link to="/status" className="btn nav-cta">
+          What&apos;s available <span className="arrow">↗</span>
         </Link>
 
         <button
@@ -63,14 +65,17 @@ export function Nav() {
       </div>
 
       <div className={`nav-drawer${open ? " open" : ""}`}>
-        {links.map((l) => (
+        {primaryLinks.map((l) => (
           <NavLink key={l.to} to={l.to} onClick={() => setOpen(false)}>
             {l.label}
           </NavLink>
         ))}
-        <NavLink to="/docs" onClick={() => setOpen(false)}>
-          How to use
-        </NavLink>
+        <p className="nav-drawer-eng-label">Engineering (secondary)</p>
+        {ENGINEERING_LINKS.map((l) => (
+          <NavLink key={l.to} to={l.to} onClick={() => setOpen(false)} className="nav-drawer-eng">
+            {l.label}
+          </NavLink>
+        ))}
       </div>
     </header>
   );

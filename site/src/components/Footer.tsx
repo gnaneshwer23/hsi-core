@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { ENGINEERING_LINKS } from "../lib/productMaturity";
 
 export function Footer() {
   return (
@@ -7,39 +8,55 @@ export function Footer() {
         <div>
           <div className="footer-brand">HSI</div>
           <p className="muted" style={{ maxWidth: "22rem", fontSize: "1rem" }}>
-            Evidence and provenance backbone for immune-science discovery.
-            Powers ISI research exploration. Not clinical decision support.
+            One ecosystem, four products. Evidence backbone for immune-science discovery.
+            Not clinical decision support.
           </p>
         </div>
         <div>
-          <h4>Product</h4>
+          <h4>Products</h4>
           <ul>
             <li>
-              <Link to="/discovery">Discovery</Link>
+              <Link to="/products">Four products</Link>
             </li>
             <li>
-              <Link to="/evidence">Evidence & Gate C</Link>
+              <Link to="/status">Status (Available / In-dev / Planned)</Link>
             </li>
             <li>
-              <Link to="/for-isi">ISI workspace</Link>
+              <Link to="/for-isi">ISI (research · Available)</Link>
             </li>
             <li>
-              <Link to="/docs">Technical docs</Link>
+              <Link to="/for-aksh">Aksh (scoped · Available)</Link>
+            </li>
+            <li>
+              <Link to="/discovery">Discovery Centre</Link>
             </li>
           </ul>
         </div>
         <div>
-          <h4>Collaborators</h4>
+          <h4>Trust</h4>
           <ul>
             <li>
-              <Link to="/roadmap">Development status</Link>
+              <Link to="/evidence">Evidence &amp; Gate C</Link>
             </li>
             <li>
-              <Link to="/alignment">Repo alignment</Link>
+              <span className="muted">Research intelligence ≠ CDS</span>
             </li>
             <li>
-              <Link to="/curator">Curator</Link>
+              <span className="muted">Human Gate C only</span>
             </li>
+            <li>
+              <span className="muted">Never “confirmed eligible”</span>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4>Engineering (secondary)</h4>
+          <ul>
+            {ENGINEERING_LINKS.map((l) => (
+              <li key={l.to}>
+                <Link to={l.to}>{l.label}</Link>
+              </li>
+            ))}
             <li>
               <a
                 href="https://github.com/gnaneshwer23/hsi-core"
@@ -51,24 +68,10 @@ export function Footer() {
             </li>
           </ul>
         </div>
-        <div>
-          <h4>Boundaries</h4>
-          <ul>
-            <li>
-              <span className="muted">Research intelligence ≠ CDS</span>
-            </li>
-            <li>
-              <span className="muted">Human Gate C only</span>
-            </li>
-            <li>
-              <Link to="/for-aksh">Aksh (separate / gated)</Link>
-            </li>
-          </ul>
-        </div>
       </div>
       <div className="container footer-bottom">
-        <span>HSI Core · evidence backbone for ISI</span>
-        <span>No PHI · no invented grades</span>
+        <span>HSI · four-product ecosystem honesty</span>
+        <span>No PHI · no invented MoU · no fake Available chips</span>
       </div>
     </footer>
   );

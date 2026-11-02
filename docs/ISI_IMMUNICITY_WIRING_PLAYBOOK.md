@@ -246,6 +246,10 @@ Run these in an **immunecity** checkout / agent session (not hsi-core):
 
 **P2.3-ISI cite Check (2026-11-02):** `scripts/check-cite-candidates-from-gate-c.ts` runs PubMed identifier checks on the 13 `hsi-gate-c-cite-*` rows (13/13 verified); writes `public/hsi-discovery/cite-check-worksheet.json`; `/curation?hsi=cite` filters the queue. Still does **not** set `claim_support=supports` or `curation=approved` — human S-P-O assessment required.
 
+**P2.4-ISI curator operator path (2026-11-02):** Durable checklist + dry-run status in immunecity — `docs/GATE_C_CURATOR_PATH.md`, `bun run hsi:curator-status` (pin counts; optional `--neon` read-only SELECT). Helpers: `src/lib/hsi/gateCCuratorStatus.ts`. Still **no** auto-approve / invent supports; autumn-snow only for Gate C writes; red-wave isolation unchanged. See also [`IMMUNECITY_GATE_C_COMMIT_MANUAL.md`](./IMMUNECITY_GATE_C_COMMIT_MANUAL.md).
+
+**P2.5-ISI cite Approve authorization (2026-11-02):** Founder authorized public cite **Approve** only for rows already eligible (`verified` + mapped + `claim_support=supports`). Live autumn-snow: **13 verified / 0 supports / 0 publicCiteApproved** — Approve still **BLOCKED** pending human S-P-O on `/curation?hsi=cite` (Neon Auth reviewer). No script invents supports; no JSON counter edits.
+
 ---
 
 ## 9. Acceptance tests (consumer-side)

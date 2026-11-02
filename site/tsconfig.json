@@ -15,7 +15,11 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "@hsi/*": ["../src/*"]
+    }
   },
-  "include": ["src"]
+  "include": ["src", "../src/clinicalSyntheticTimeline.ts", "../src/trialsCriteriaMvp.ts", "../src/cdsPhiBoundary.ts"]
 }
