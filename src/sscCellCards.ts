@@ -1,19 +1,23 @@
 /**
- * SSc Tfh–B–IL-21 neighbourhood cell / disease cards with CL·MONDO *hints*.
+ * SSc Tfh–B–IL-21 neighbourhood cell / disease cards with CL·MONDO binds.
  *
- * Hints only — not a full ontology bind, not Gate C claims, not CDS.
- * Used by the deepened SSc pathway pack (P1.1).
+ * P1.1 started as hints. P2.0 promotes core Tfh / B / plasmablast / SSc MONDO
+ * to `curator_confirmed` (OLS label match) — still not Gate C claim approval,
+ * not CDS, and does not flip hsiGrade. Subset frames (Tfh1, CXCL13-like) and
+ * gene/PR hints stay `hint_only`.
  */
 export const SSC_CELL_CARD_SCHEMA = "hsi-ssc-cell-card-1" as const;
+
+export type SscOntologyBindStatus = "hint_only" | "curator_confirmed";
 
 export type SscOntologyHint = {
   /** Ontology prefix (CL / MONDO / …). */
   ontology: "CL" | "MONDO" | "PR" | "NCBIGene";
-  /** Compact id e.g. CL:0002038 — curator hint, not a validated crosswalk. */
+  /** Compact id e.g. CL:0002038. */
   id: string;
   label: string;
-  /** Honest: hint until a curator confirms the bind. */
-  bindStatus: "hint_only";
+  /** Honest bind status (P2.0 curator_confirmed for core cards). */
+  bindStatus: SscOntologyBindStatus;
 };
 
 export type SscNeighbourhoodCard = {
@@ -34,7 +38,7 @@ export type SscNeighbourhoodCard = {
 
 /**
  * Neighbourhood cards for the dual-track SSc Tfh–B–IL-21 slice.
- * Ontology ids verified via OLS (EBI) 2026-11-01 — still `hint_only`.
+ * Ontology ids verified via OLS (EBI); P2.0 curator_confirmed for core cards.
  */
 export const SSC_NEIGHBOURHOOD_CARDS: readonly SscNeighbourhoodCard[] = [
   {
@@ -49,7 +53,7 @@ export const SSC_NEIGHBOURHOOD_CARDS: readonly SscNeighbourhoodCard[] = [
         ontology: "CL",
         id: "CL:0002038",
         label: "T follicular helper cell",
-        bindStatus: "hint_only",
+        bindStatus: "curator_confirmed",
       },
     ],
     markers: ["CXCR5", "PD-1", "ICOS", "BCL6", "IL-21 (produced)"],
@@ -58,7 +62,7 @@ export const SSC_NEIGHBOURHOOD_CARDS: readonly SscNeighbourhoodCard[] = [
     citationPmids: ["21314428", "30760472", "29514998"],
     spineNodeId: "HSI-IC-sub-tfh",
     notes:
-      "PRD SSc vertical subset. CL hint only — not Gate C approved ontology bind.",
+      "PRD SSc vertical subset. P2.0 curator_confirmed CL:0002038 (OLS); not Gate C claim approval / not CDS.",
   },
   {
     id: "HSI-CARD-SSC-TFH1",
@@ -95,7 +99,7 @@ export const SSC_NEIGHBOURHOOD_CARDS: readonly SscNeighbourhoodCard[] = [
         ontology: "CL",
         id: "CL:0000236",
         label: "B cell",
-        bindStatus: "hint_only",
+        bindStatus: "curator_confirmed",
       },
     ],
     markers: ["CD19", "CD20", "CD21 (context-dependent)"],
@@ -103,7 +107,8 @@ export const SSC_NEIGHBOURHOOD_CARDS: readonly SscNeighbourhoodCard[] = [
     tissues: ["secondary lymphoid organs", "circulation", "inflamed tissue"],
     citationPmids: ["16339522", "30760472", "37763102"],
     spineNodeId: "HSI-IC-lin-b",
-    notes: "CL hint only. CD21^low framing cites PMID 37763102 — not CDS.",
+    notes:
+      "P2.0 curator_confirmed CL:0000236 (OLS). CD21^low framing cites PMID 37763102 — not CDS.",
   },
   {
     id: "HSI-CARD-SSC-PLASMABLAST",
@@ -117,7 +122,7 @@ export const SSC_NEIGHBOURHOOD_CARDS: readonly SscNeighbourhoodCard[] = [
         ontology: "CL",
         id: "CL:0000980",
         label: "plasmablast",
-        bindStatus: "hint_only",
+        bindStatus: "curator_confirmed",
       },
     ],
     markers: ["CD19", "CD27", "CD38^hi", "CD20^lo/neg"],
@@ -125,7 +130,8 @@ export const SSC_NEIGHBOURHOOD_CARDS: readonly SscNeighbourhoodCard[] = [
     tissues: ["circulation", "secondary lymphoid organs"],
     citationPmids: ["30760472", "16339522"],
     spineNodeId: "HSI-IC-sub-plasmablast",
-    notes: "Core SSc pathway object (Ricard 2019). CL hint only.",
+    notes:
+      "Core SSc pathway object (Ricard 2019). P2.0 curator_confirmed CL:0000980 (OLS); not Gate C / not CDS.",
   },
   {
     id: "HSI-CARD-SSC-IL21",
@@ -168,7 +174,7 @@ export const SSC_NEIGHBOURHOOD_CARDS: readonly SscNeighbourhoodCard[] = [
         ontology: "MONDO",
         id: "MONDO:0005100",
         label: "systemic sclerosis",
-        bindStatus: "hint_only",
+        bindStatus: "curator_confirmed",
       },
     ],
     markers: [],
@@ -177,7 +183,7 @@ export const SSC_NEIGHBOURHOOD_CARDS: readonly SscNeighbourhoodCard[] = [
     citationPmids: ["30760472", "33175976", "37763102"],
     spineNodeId: null,
     notes:
-      "MONDO hint only. Does not replace RA Stage 1 activeScope. partnerSigned stays false.",
+      "P2.0 curator_confirmed MONDO:0005100 (OLS). Does not replace RA Stage 1 activeScope. Not Gate C / not CDS.",
   },
   {
     id: "HSI-CARD-SSC-FIBROSIS",

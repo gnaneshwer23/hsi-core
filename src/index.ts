@@ -43,6 +43,8 @@ export {
   IMMUNE_CELL_SPINE_SCHEMA,
   ISI_CONTROLLED_RELATIONSHIP_TYPES,
   ISI_RELATIONSHIP_TO_HSI_EDGE,
+  P20_CURATOR_CONFIRMED_SPINE_IDS,
+  P20_ONTOLOGY_BIND_REVIEW,
   buildImmuneCellSpineBundle,
   countSpineOntologyHints,
   getDiseaseVertical,
@@ -54,6 +56,7 @@ export {
   type ImmuneCellSpineBundle,
   type ImmuneCellSpineNode,
   type IsiControlledRelationshipType,
+  type P20CuratorConfirmedSpineId,
   type SpineOntologyBindStatus,
 } from "./immuneCellSpine";
 
@@ -498,6 +501,7 @@ export {
   listSscNeighbourhoodCards,
   sscCellCardByNodeId,
   type SscNeighbourhoodCard,
+  type SscOntologyBindStatus,
   type SscOntologyHint,
 } from "./sscCellCards";
 

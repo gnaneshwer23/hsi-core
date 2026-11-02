@@ -2,7 +2,7 @@
   "schemaVersion": "hsi-ssc-pathway-pack-1",
   "notCds": true,
   "autoApproveIntoKg": false,
-  "generatedAt": "2026-11-02T05:24:43.016Z",
+  "generatedAt": "2026-11-02T05:29:47.131Z",
   "pathway": {
     "id": "ssc-tfh-b-il21",
     "label": "SSc · CD4/Tfh–B-cell–IL-21",
@@ -184,7 +184,7 @@
           "ontology": "CL",
           "id": "CL:0002038",
           "label": "T follicular helper cell",
-          "bindStatus": "hint_only"
+          "bindStatus": "curator_confirmed"
         }
       ],
       "markers": [
@@ -209,7 +209,7 @@
         "29514998"
       ],
       "spineNodeId": "HSI-IC-sub-tfh",
-      "notes": "PRD SSc vertical subset. CL hint only — not Gate C approved ontology bind."
+      "notes": "PRD SSc vertical subset. P2.0 curator_confirmed CL:0002038 (OLS); not Gate C claim approval / not CDS."
     },
     {
       "id": "HSI-CARD-SSC-TFH1",
@@ -253,7 +253,7 @@
           "ontology": "CL",
           "id": "CL:0000236",
           "label": "B cell",
-          "bindStatus": "hint_only"
+          "bindStatus": "curator_confirmed"
         }
       ],
       "markers": [
@@ -278,7 +278,7 @@
         "37763102"
       ],
       "spineNodeId": "HSI-IC-lin-b",
-      "notes": "CL hint only. CD21^low framing cites PMID 37763102 — not CDS."
+      "notes": "P2.0 curator_confirmed CL:0000236 (OLS). CD21^low framing cites PMID 37763102 — not CDS."
     },
     {
       "id": "HSI-CARD-SSC-PLASMABLAST",
@@ -291,7 +291,7 @@
           "ontology": "CL",
           "id": "CL:0000980",
           "label": "plasmablast",
-          "bindStatus": "hint_only"
+          "bindStatus": "curator_confirmed"
         }
       ],
       "markers": [
@@ -312,7 +312,7 @@
         "16339522"
       ],
       "spineNodeId": "HSI-IC-sub-plasmablast",
-      "notes": "Core SSc pathway object (Ricard 2019). CL hint only."
+      "notes": "Core SSc pathway object (Ricard 2019). P2.0 curator_confirmed CL:0000980 (OLS); not Gate C / not CDS."
     },
     {
       "id": "HSI-CARD-SSC-IL21",
@@ -365,7 +365,7 @@
           "ontology": "MONDO",
           "id": "MONDO:0005100",
           "label": "systemic sclerosis",
-          "bindStatus": "hint_only"
+          "bindStatus": "curator_confirmed"
         }
       ],
       "markers": [],
@@ -384,7 +384,7 @@
         "37763102"
       ],
       "spineNodeId": null,
-      "notes": "MONDO hint only. Does not replace RA Stage 1 activeScope. partnerSigned stays false."
+      "notes": "P2.0 curator_confirmed MONDO:0005100 (OLS). Does not replace RA Stage 1 activeScope. Not Gate C / not CDS."
     },
     {
       "id": "HSI-CARD-SSC-FIBROSIS",

@@ -229,7 +229,8 @@ export const GUT_MICROBIOME_ENTITY_STUBS: readonly GutMicrobiomeEntityStub[] = [
     entityClass: "mucosal_immune_interface",
     label: "Colonic / mucosal Foxp3+ Treg niche",
     ontologyHint: "CL",
-    notes: "P1.3 — CL hint only; bindStatus remains hint_only until fuller ontology work",
+    notes:
+      "P1.3 mucosal Treg stub; spine Treg CL:0000815 is P2.0 curator_confirmed (OLS) — still not Gate C / not CDS",
   },
   {
     id: "HSI-GM-interface-mucosal-th17",

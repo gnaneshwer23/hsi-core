@@ -16,21 +16,30 @@ import {
 } from "../src/index";
 
 describe("P1.1 SSc deepen — cell cards + CL·MONDO hints + PMIDs", () => {
-  test("neighbourhood cards carry CL/MONDO hint_only binds for core entities", () => {
+  test("neighbourhood cards carry CL/MONDO binds; P2.0 confirms core entities", () => {
     expect(SSC_NEIGHBOURHOOD_CARDS.length).toBeGreaterThanOrEqual(7);
 
     const tfh = sscCellCardByNodeId("HSI-N-tfh");
     expect(tfh?.ontologyHints.some((h) => h.id === "CL:0002038")).toBe(true);
-    expect(tfh?.ontologyHints.every((h) => h.bindStatus === "hint_only")).toBe(true);
+    expect(
+      tfh?.ontologyHints.every((h) => h.bindStatus === "curator_confirmed"),
+    ).toBe(true);
 
     const b = sscCellCardByNodeId("HSI-N-b-cell");
     expect(b?.ontologyHints.some((h) => h.id === "CL:0000236")).toBe(true);
+    expect(b?.ontologyHints[0]?.bindStatus).toBe("curator_confirmed");
 
     const pb = sscCellCardByNodeId("HSI-N-plasmablast");
     expect(pb?.ontologyHints.some((h) => h.id === "CL:0000980")).toBe(true);
+    expect(pb?.ontologyHints[0]?.bindStatus).toBe("curator_confirmed");
 
     const ssc = sscCellCardByNodeId("HSI-N-ssc");
     expect(ssc?.ontologyHints.some((h) => h.id === "MONDO:0005100")).toBe(true);
+    expect(ssc?.ontologyHints[0]?.bindStatus).toBe("curator_confirmed");
+
+    // Subset frames stay hint_only
+    const tfh1 = sscCellCardByNodeId("HSI-N-tfh1");
+    expect(tfh1?.ontologyHints[0]?.bindStatus).toBe("hint_only");
 
     const pack = buildSscPathwayPack({ generatedAt: "2026-11-01T18:00:00.000Z" });
     expect(pack.cellCards.length).toBe(SSC_NEIGHBOURHOOD_CARDS.length);
