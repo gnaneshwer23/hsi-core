@@ -1,7 +1,7 @@
 # HSI build status and next
 
 **Audit date:** 2 November 2026  
-**HEAD at write:** (post P2.1) — operator-authorized Gate C human decisions for 13 mapped pending REL handoffs (autumn-snow + curator-ux `decisions_imported`); named partner **Apolo Pharma**; `lockedPilot=true`; Stage 1 clearance uncleared=0; not CDS
+**HEAD at write:** (post P2.2-ISI) — cite-ready path after Gate C (immunecity queue UI + 13 unreviewed autumn-snow evidence seeds; Check→supports→Approve still human); named partner **Apolo Pharma**; `lockedPilot=true`; Stage 1 clearance uncleared=0; not CDS
 
 
 **Edit target:** `hsi-core` primary · immunecity HSI-consume wiring allowed under freeze lift · Neon **`red-wave` only** for HSI · no DeliverX  
@@ -13,7 +13,7 @@
 
 ## Executive verdict
 
-hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance, Gate C checklists, versioned publish, RA/anti-TNF scope lock + depth, Discovery Centre, R2 validation, translation/Akeno HITL scaffolding, Aksh agent catalog, Neon isolation, systems-vision + AI position stubs). **Vertical decision A (dual-track) is recorded:** RA stays Stage 1 `activeScope`; SSc / gut / neuro packs have **depth PMIDs** (honest `uncertain`/`hypothesized`; RA untouched). **Named partner Apolo Pharma** is locked (`lockedPilot=true`; MoU operator-asserted; Stage 1 clearance 48/48; KPIs `partner_agreed`; **P0.6** walkthrough/export hygiene landed; still not CDS; Gate C never auto-approves). **P1.4** promotes selected gut/neuro/ISI predicates onto `HSI_EDGE_TYPES` (additive; alias maps kept for remainder). **P1.6** curator UX scaffolding ships richer gap/Gate C markdown + `hsi-curator-ux.*` + site `/curator`. **P1.7** ships honest Gate C decisions dry-run / import envelope + `examples/gate-c-decisions/*` (empty awaiting + hypothetical schema fixture; never fake Apolo production approvals). **P1.8** Stage 2 spine starters add CL `hint_only` binds beyond SSc (RA untouched). **P2.2–P3.3** plus **AF3/TDC/ISI research sign-off fixtures** and **Boltz weights-policy gate** (`WEIGHTS_POLICY_ACK`; no weight vendoring) land as proposal-only stubs → Gate C pending. **Discovery `/discovery` MAP** ships an interactive evidence **graph explorer**. **P0.5** immunecity Gate C human queue shipped (`090d7ea`). **P2.1** operator-authorized Gate C human decisions (13 mapped REL handoffs → autumn-snow `human_approved` + curator-ux `decisions_imported`; operator identity, not forged Apolo signatures). Live CDS / PHI / commercial AF3 rights stay gated.
+hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance, Gate C checklists, versioned publish, RA/anti-TNF scope lock + depth, Discovery Centre, R2 validation, translation/Akeno HITL scaffolding, Aksh agent catalog, Neon isolation, systems-vision + AI position stubs). **Vertical decision A (dual-track) is recorded:** RA stays Stage 1 `activeScope`; SSc / gut / neuro packs have **depth PMIDs** (honest `uncertain`/`hypothesized`; RA untouched). **Named partner Apolo Pharma** is locked (`lockedPilot=true`; MoU operator-asserted; Stage 1 clearance 48/48; KPIs `partner_agreed`; **P0.6** walkthrough/export hygiene landed; still not CDS; Gate C never auto-approves). **P1.4** promotes selected gut/neuro/ISI predicates onto `HSI_EDGE_TYPES` (additive; alias maps kept for remainder). **P1.6** curator UX scaffolding ships richer gap/Gate C markdown + `hsi-curator-ux.*` + site `/curator`. **P1.7** ships honest Gate C decisions dry-run / import envelope + `examples/gate-c-decisions/*` (empty awaiting + hypothetical schema fixture; never fake Apolo production approvals). **P1.8** Stage 2 spine starters add CL `hint_only` binds beyond SSc (RA untouched). **P2.2–P3.3** plus **AF3/TDC/ISI research sign-off fixtures** and **Boltz weights-policy gate** (`WEIGHTS_POLICY_ACK`; no weight vendoring) land as proposal-only stubs → Gate C pending. **Discovery `/discovery` MAP** ships an interactive evidence **graph explorer**. **P0.5** immunecity Gate C human queue shipped (`090d7ea`). **P2.1** operator-authorized Gate C human decisions (13 mapped REL handoffs → autumn-snow `human_approved` + curator-ux `decisions_imported`; operator identity, not forged Apolo signatures). **P2.2-ISI** cite-ready queue + 13 unreviewed autumn-snow evidence seeds (Check→supports→Approve still human; never auto-approve). Live CDS / PHI / commercial AF3 rights stay gated.
 
 | Plane | Light | One line |
 |-------|-------|----------|
@@ -30,7 +30,8 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | Immune spine Stage 2 starters (P1.8) | **GREEN** | CL ids on spine; P2.0 confirms high-confidence core |
 | Neighbourhood depth (P1.9) | **GREEN** | Neuro microglia/BBB + gut SFB/AhR + SSc vascular/fibrosis; honest uncertain/hypothesized; RA untouched |
 | Ontology binds (P2.0) | **GREEN** | 18 spine + SSc Tfh/B/plasmablast/MONDO `curator_confirmed` (OLS); not Gate C / not CDS |
-| Gate C human session (P2.1) | **GREEN** | Operator-authorized approve ×13 on autumn-snow; curator-ux `decisions_imported`; not invented Apolo signatures; cite Check→supports still separate |
+| Gate C human session (P2.1) | **GREEN** | Operator-authorized approve ×13 on autumn-snow; curator-ux `decisions_imported`; not invented Apolo signatures |
+| Cite path after Gate C (P2.2-ISI) | **GREEN** | immunecity cite-ready queue + 13 `unreviewed`/`unassessed` evidence seeds; Check→supports→Approve still human; `autoApprove=false` |
 | Vertical strategy | **GREEN** | **A dual-track** written — `verticalStrategy=dual_track` |
 
 ---
@@ -251,6 +252,7 @@ One-sprint-sized items. Mark **[DECISION]** where the user must choose before co
 | P1.9 | **DONE:** Further SSc/gut/neuro neighbourhood depth | Neuro microglia/BBB (NI-012..016); gut SFB→Th17 + AhR/IL-22 (GUT-013/014); SSc vascular + fibrosis reviews (SSC-016/017); honest grades; RA untouched |
 | P2.0 | **DONE:** Curator-confirmed CL/MONDO binds | 18 spine nodes + SSc Tfh/B/plasmablast/MONDO:0005100; OLS label match; not Gate C / not CDS / does not set `hsiGrade` |
 | P2.1 | **DONE:** Operator-authorized Gate C human session | 13 mapped pending → `human_approved` on autumn-snow; envelope `operator_authorized_export`; curator-ux `decisions_imported`; reviewedBy=`operator:…` (not forged Apolo); cite `/curation` still separate |
+| P2.2-ISI | **DONE:** Cite-ready path after Gate C | immunecity `citeReadyAfterGateC` + pin; 13 autumn-snow unreviewed cite seeds; Check→supports→Approve still human |
 
 ### P2 — later / gated substrate
 
@@ -279,7 +281,8 @@ One-sprint-sized items. Mark **[DECISION]** where the user must choose before co
 | P1.9 | **DONE:** SSc/gut/neuro neighbourhood depth | Microglia/BBB + SFB/AhR + vascular/fibrosis; licensing stubs; RA untouched |
 | P2.0 | **DONE:** Curator-confirmed CL/MONDO binds | 18 spine + SSc core cards; myeloid/ILC/mast + subset frames stay hint_only |
 | P2.1 | **DONE:** Operator-authorized Gate C human session | 13 mapped REL handoffs approved on autumn-snow + curator-ux; operator identity; productionApproved=false |
-| **NEXT** | **ISI Discovery product depth / further ontology confirms** | Optional: immunecity Discovery search/KG depth under freeze-lift; further `curator_confirmed` binds; public cite Check→supports→Approve for the 13 Gate C rows on `/curation`. Still no auto-approve / no `hsiGrade` flip / no commercial AF3 / no live CDS. |
+| P2.2-ISI | **DONE:** Cite-ready path after Gate C (immunecity) | `citeReadyAfterGateC` queue + pin overlay; seed `hsi-gate-c-cite-*` unreviewed evidence (13); Check→supports→Approve still human on `/curation`; never auto-approves / never flips `hsiGrade` |
+| **NEXT** | **Human cite Check→supports→Approve on the 13 seeds · Discovery depth** | Curators run Check→supports→Approve on autumn-snow cite candidates; optional Discovery search/KG depth; further `curator_confirmed` binds. Still no auto-approve / no `hsiGrade` flip / no commercial AF3 / no live CDS. |
 
 ### Out-of-repo (track; do not implement here)
 

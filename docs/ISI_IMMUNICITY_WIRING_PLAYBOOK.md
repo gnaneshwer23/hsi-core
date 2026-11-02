@@ -242,6 +242,8 @@ Run these in an **immunecity** checkout / agent session (not hsi-core):
 
 **Product apply (immunecity, 2026-11-01):** human Gate C queue at `/hsi/discovery` → REVIEW (`HsiGateCQueuePanel`); server functions `listHsiGateCQueue` / `recordHsiGateCDecision`; table `hsi_gate_c_decisions` (migration `0028`, `bun run db:hsi-gate-c-decisions`); roles = Neon Auth + reviewer/admin (`assertCanReview`); SHA **`090d7ea`**. Evidence Check→supports→Approve on mapped RELs remains a separate `/curation` step. Still no red-wave writes from immunecity; still no invent of CDS/PHI.
 
+**P2.2-ISI cite path (2026-11-02):** after Discovery Gate C `human_approved`, immunecity overlays the decisions pin into `buildHsiBridgeCurationQueue` → `citeReadyAfterGateC`; `/curation` panel lists cite-ready RELs; `scripts/seed-cite-candidates-from-gate-c.ts` inserts autumn-snow `evidence_records` with `curation=unreviewed` + `claim_support=unassessed` only (`hsi-gate-c-cite-*`). Never sets approved/supports automatically. Human Check→supports→Approve still required.
+
 ---
 
 ## 9. Acceptance tests (consumer-side)
