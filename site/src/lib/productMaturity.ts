@@ -32,10 +32,10 @@ export const ECOSYSTEM_PRODUCTS: readonly EcosystemProduct[] = [
     chip: "available",
     chipDetail: "Available (scoped) — diabetes / HITL clinic plane; LIVE_ORGANISATIONS=0 honesty on Aksh side.",
     primaryCta: {
-      label: "Aksh clinical boundary",
+      label: "Explore Aksh Health",
       href: "/for-aksh",
     },
-    secondaryCta: { label: "Status", href: "/status" },
+    secondaryCta: { label: "HITL boundary", href: "/aksh-agents" },
     mustNot: [
       "Not ISI Discovery",
       "No PHI into research DBs",
@@ -76,8 +76,8 @@ export const ECOSYSTEM_PRODUCTS: readonly EcosystemProduct[] = [
     oneLine: "Explainable trial screening and mechanism-linked discovery.",
     chip: "planned",
     chipDetail: "Planned — criterion five-state MVP in substrate; confirmedEligible always false.",
-    primaryCta: { label: "Open five-state demo", href: "/trials-criteria" },
-    secondaryCta: { label: "Status", href: "/status#trials" },
+    primaryCta: { label: "Explore HSI Trials", href: "/for-trials" },
+    secondaryCta: { label: "Five-state MVP", href: "/trials-criteria" },
     mustNot: [
       "Never confirmed eligible",
       "No auto-enrolment",
@@ -120,7 +120,7 @@ export const STATUS_COLUMNS: readonly StatusColumn[] = [
     id: "planned",
     title: "Planned",
     items: [
-      "HSI Trials five-state demo (/trials-criteria; never confirmed eligible)",
+      "HSI Trials marketing (/for-trials) + five-state demo (/trials-criteria; never confirmed eligible)",
       "Full FHIR longitudinal reconstruction / live EMIS",
       "Omics runtimes and live CDS paths",
       "Partner-signed pilot lock (no invented MoU)",

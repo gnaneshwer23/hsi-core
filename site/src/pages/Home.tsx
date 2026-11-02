@@ -6,9 +6,10 @@ import { DiscoveryWorkbench } from "../components/landing/DiscoveryWorkbench";
 import { STATUS_COLUMNS } from "../lib/productMaturity";
 
 /**
- * HSI marketing homepage — founder HTML sections composed as:
- * 01 connected-by-design fabric (index.html) → 02 ecosystem (index 3) →
- * 03 explore (index 2) → 04 discovery engine (index 1) → honesty / status.
+ * HSI marketing homepage — founder first-batch HTML sections composed as:
+ * 01 connected-by-design fabric (PlatformEngine) → 02 ecosystem →
+ * 03 explore → 04 discovery engine → honesty / status.
+ * Note: later Downloads/index.html re-export is HSI Clinical, not §01.
  */
 export function Home() {
   return (

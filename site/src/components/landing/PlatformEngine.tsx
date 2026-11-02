@@ -21,7 +21,9 @@ type UnitInfo = {
   desc: string;
 };
 
-/** Copy from founder Downloads/index.html §01 — honesty language preserved. */
+/** Copy from founder first-batch Downloads/index.html §01 (Connected by design).
+ *  Later re-exports reused `index.html` for HSI Clinical — do not retarget this
+ *  component to that Clinical console. Honesty language preserved. */
 const INFO: Record<UnitId, UnitInfo> = {
   clinical: {
     tag: "01 / CONNECT",
@@ -177,8 +179,9 @@ const CLUSTERS: Cluster[] = [
 ];
 
 /**
- * §01 “Connected by design” — interactive four-stage fabric from founder
- * Downloads/index.html, adapted to HSI cobalt tokens. Shared by `/` and `/platform`.
+ * §01 “Connected by design” — interactive four-stage fabric from the founder
+ * first-batch platform HTML, adapted to HSI cobalt tokens. Shared by `/` and
+ * `/platform`. Current Downloads/index.html is Clinical (separate surface).
  */
 export function PlatformEngine() {
   const [active, setActive] = useState<UnitId>("clinical");

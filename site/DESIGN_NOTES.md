@@ -48,20 +48,39 @@ ship an equivalent look & feel with original content.
 
 ## Founder landing HTML (2026-11-02)
 
-Four Downloads exports are **complementary HSI marketing sections**, not ISI pages
-and not four competing versions of one file:
+Earlier same-day Downloads exports were **complementary HSI marketing sections**
+(platform / ecosystem / explore / discovery-engine). A later re-export reshuffled
+filenames — always re-read the file, do not trust download numbers alone:
 
-| File | In-HTML section | Role |
+| File (as of later re-export) | Actual content | Site surface |
 | --- | --- | --- |
-| `index.html` | 01 / Connected by design | Four-stage fabric (Connect→Apply) + wires → `/` + `/platform` via `PlatformEngine` |
-| `index (3).html` | 02 / Ecosystem | Four perspectives cards → `/` + `/products` + `/platform` |
-| `index (2).html` | 03 / Explore evidence | Graph concept demo → `/` + `/explore` |
-| `index (1).html` | 04 / Discovery engine | 5-step workbench → `/` + `/discovery-engine` |
+| `index.html` | HSI Clinical — clinician context workspace | Pending fidelity pass (not yet this note’s target) |
+| `index (1).html` | Aksh Health — personal health intelligence | `/for-aksh` via `AkshHealthLanding` |
+| `index (2).html` | HSI Trials — clinical research intelligence | `/for-trials` via `TrialsLanding` (MVP remains `/trials-criteria`) |
+| `HSI_Science_FIXED.html` | HSI Science — educational biology atlas | `/science` via `ScienceLanding` |
 
-§01 source of truth is specifically `Downloads/index.html` hero + navy stage (not the
-older question→outcome mock). Lime/forest palette **adapted to HSI cobalt/navy/cream**
-(`global.css`). No MoU / Gate C auto-approve invented. Live CTAs stay honesty-bound
-via `productMaturity.ts`. Shell/nav remain product chrome (HTML header not vendored).
+Earlier same-day mapping (still live in site until replaced):
+
+| Earlier file | Section | Role |
+| --- | --- | --- |
+| `index.html` (first batch) | 01 / Connected by design | `/` + `/platform` via `PlatformEngine` |
+| `index (3).html` | 02 / Ecosystem | `/` + `/products` + `/platform` |
+| `index (2).html` (first batch) | 03 / Explore evidence | `/` + `/explore` — **do not confuse** with later `index (2).html` = Trials → `/for-trials` |
+| `index (1).html` (first batch) | 04 / Discovery engine | `/` + `/discovery-engine` via `DiscoveryWorkbench` |
+
+Lime/forest palette **adapted to HSI cobalt/navy/cream** (`global.css`). No MoU /
+Gate C auto-approve invented. Live CTAs stay honesty-bound via `productMaturity.ts`.
+Shell/nav remain product chrome (HTML header not vendored). Aksh demo is fictional
+preview only — no live EHR/device connection. Trials landing explorer is fictional
+criteria-completeness only (`syntheticOnly`; never eligibility / live registry).
+
+### Science (`/science` · `ScienceLanding`)
+
+IA from `HSI_Science_FIXED.html`: hero → interactive atlas (immune / metabolism /
+microbiome) → mechanism sequence → three foundations → research CTA. Intentional
+deltas vs HTML: Shell Nav/Footer (HTML chrome dropped); lime/forest → cobalt/accent
+active states; closing CTAs deep-link `/explore` + `/discovery` (research honesty);
+atlas labeled educational/illustrative — not a live KG or CDS.
 
 ## Phase 6–7 Discovery Centre (`/discovery`)
 

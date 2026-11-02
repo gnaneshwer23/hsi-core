@@ -11,7 +11,7 @@ export function Products() {
     <>
       <EcosystemGrid
         headingLevel={1}
-        footLink={{ to: "/platform", label: "How HSI works ↗" }}
+        footLink={{ to: "/how-it-works", label: "How HSI works ↗" }}
       />
 
       <section className="section section-grid-light">

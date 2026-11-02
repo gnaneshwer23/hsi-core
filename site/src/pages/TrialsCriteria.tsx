@@ -306,6 +306,9 @@ export function TrialsCriteria() {
             ))}
           </ul>
           <div className="hero-actions" style={{ justifyContent: "flex-start", marginTop: "1.5rem" }}>
+            <Link to="/for-trials" className="btn btn-ghost">
+              Trials marketing
+            </Link>
             <Link to="/status#trials" className="btn btn-ghost">
               Trials status
             </Link>

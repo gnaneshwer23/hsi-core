@@ -19,7 +19,13 @@ export function Footer() {
               <Link to="/platform">Platform</Link>
             </li>
             <li>
+              <Link to="/how-it-works">How it works</Link>
+            </li>
+            <li>
               <Link to="/products">Four products</Link>
+            </li>
+            <li>
+              <Link to="/science">Science atlas</Link>
             </li>
             <li>
               <Link to="/explore">Explore evidence</Link>
@@ -38,6 +44,9 @@ export function Footer() {
             </li>
             <li>
               <Link to="/for-aksh">Aksh (scoped · Available)</Link>
+            </li>
+            <li>
+              <Link to="/for-trials">Trials (Planned)</Link>
             </li>
           </ul>
         </div>
