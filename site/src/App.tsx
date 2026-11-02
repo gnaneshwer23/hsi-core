@@ -23,6 +23,7 @@ import { Status } from "./pages/Status";
 import { ClinicalTimeline } from "./pages/ClinicalTimeline";
 import { TrialsCriteria } from "./pages/TrialsCriteria";
 import { GatewayDemo } from "./pages/GatewayDemo";
+import { Sources } from "./pages/Sources";
 
 export default function App() {
   return (
@@ -36,6 +37,7 @@ export default function App() {
         <Route path="discovery-engine" element={<DiscoveryEngine />} />
         <Route path="products" element={<Products />} />
         <Route path="status" element={<Status />} />
+        <Route path="sources" element={<Sources />} />
         <Route path="clinical-timeline" element={<ClinicalTimeline />} />
         <Route path="trials-criteria" element={<TrialsCriteria />} />
         <Route path="gateway" element={<GatewayDemo />} />

@@ -4,7 +4,7 @@
  * Reuses HITL map pointers + CDS/PHI boundary; does not wire live Aksh CDS.
  */
 import { HSI_CDS_PHI_INVARIANTS, type HsiCdsPhiInvariants } from "./cdsPhiBoundary";
-import { AKSH_HITL_MAP_SCHEMA, AKSH_HITL_STUB_SCHEMA } from "./akshHitl";
+import { AKSH_HITL_MAP_SCHEMA, AKSH_HITL_STUB_SCHEMA } from "./akshHitlSchemas";
 
 export const AKSH_HSI_GATEWAY_SCHEMA = "hsi-aksh-gateway-contract-1" as const;
 

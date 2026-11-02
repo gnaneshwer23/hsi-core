@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import { ResearchComparison } from "../components/ResearchComparison";
 import {
   gradeCounts,
   loadDiscoveryBundle,
@@ -340,6 +341,7 @@ export function DiscoveryCentre() {
             <Link to="/docs" className="btn btn-ghost">
               How to regenerate <span className="arrow">↗</span>
             </Link>
+            <Link to="/sources" className="btn btn-ghost">Inspect source registry ↗</Link>
           </div>
         </div>
       </section>
@@ -691,6 +693,15 @@ export function DiscoveryCentre() {
                     </div>
                     <EvidenceTable rows={filteredRows} />
                   </div>
+                  <ResearchComparison
+                    rows={scopedRows}
+                    context={{
+                      question: data.lock.researchQuestion ?? data.pack.researchQuestion,
+                      disease: data.lock.disease?.label ?? data.pack.disease,
+                      bundleId: data.index.bundleId,
+                      generatedAt: data.index.generatedAt,
+                    }}
+                  />
                 </div>
               ) : null}
 

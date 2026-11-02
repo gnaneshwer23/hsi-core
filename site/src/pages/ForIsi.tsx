@@ -4,6 +4,16 @@ import { DualConsumerDiagram, NetworkGraphDiagram, TriggersFlowDiagram } from ".
 import { IsiCoworkerMock } from "../components/Mocks";
 
 export function ForIsi() {
+  let discoveryUrl: string | null = null;
+  try {
+    const configured = import.meta.env.VITE_ISI_APP_URL as string | undefined;
+    if (configured) {
+      const url = new URL(configured);
+      if (url.protocol === "https:" || (url.protocol === "http:" && ["localhost", "127.0.0.1"].includes(url.hostname))) {
+        discoveryUrl = new URL("/hsi/discovery", url).href;
+      }
+    }
+  } catch { /* Invalid deployment configuration must not create a link. */ }
   return (
     <>
       <PageHero
@@ -22,6 +32,11 @@ export function ForIsi() {
         <div className="container">
           <div className="split-headline">
             <div>
+              <p className="eyebrow">Connected ISI research application</p>
+              <div className="dc-hero-actions">
+                <a href="https://www.immune-super-intelligence.co.uk/" className="btn btn-primary" target="_blank" rel="noreferrer">Open Immune Super Intelligence ↗</a>
+                {discoveryUrl ? <a href={discoveryUrl} className="btn btn-ghost" target="_blank" rel="noreferrer">Open connected research workspace ↗</a> : null}
+              </div>
               <h2 className="display display-md">
                 Discovery Centre,
                 <br />

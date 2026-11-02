@@ -17,6 +17,8 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "sources:init": "bun src/cli/source-registry.ts init",
+    "sources:import": "bun src/cli/source-registry.ts import",
     "test": "bun test",
     "validate": "bun run src/cli/validate.ts",
     "export:isi": "bun run src/cli/export-isi.ts",

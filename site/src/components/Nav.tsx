@@ -7,7 +7,7 @@ const primaryLinks = [
   { to: "/platform", label: "Platform" },
   { to: "/products", label: "Products" },
   { to: "/science", label: "Science" },
-  { to: "/explore", label: "Explore" },
+  { to: "/for-isi", label: "For researchers" },
   { to: "/discovery", label: "Discovery" },
   { to: "/status", label: "Status" },
 ];

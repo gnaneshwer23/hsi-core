@@ -11,6 +11,8 @@
  */
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { AKSH_HITL_MAP_SCHEMA, AKSH_HITL_STUB_SCHEMA } from "./akshHitlSchemas";
+export { AKSH_HITL_MAP_SCHEMA, AKSH_HITL_STUB_SCHEMA } from "./akshHitlSchemas";
 import type { HsiCurationReview, HsiGrade, HsiTeachingStatus } from "./grades";
 import {
   AKSH_CLINIC_CONCEPTS,
@@ -38,12 +40,6 @@ import {
 } from "./seed/t2dImmunoMetabolic";
 import type { HsiClaim, HsiDomain, HsiEdge } from "./schema";
 import { isCdsSurfacable } from "./validate";
-
-/** Export schema written by `bun run export:aksh-map`. */
-export const AKSH_HITL_MAP_SCHEMA = "hsi-aksh-node-map-2" as const;
-
-/** Stub bundle schema for HITL card projection. */
-export const AKSH_HITL_STUB_SCHEMA = "hsi-aksh-hitl-stub-1" as const;
 
 export type AkshHitlMapPayload = {
   schemaVersion: typeof AKSH_HITL_MAP_SCHEMA | string;

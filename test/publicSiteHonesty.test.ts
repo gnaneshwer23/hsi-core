@@ -41,9 +41,13 @@ describe("Public HSI site honesty", () => {
     expect(nav).toContain("ENGINEERING_LINKS");
 
     const home = site("src/pages/Home.tsx");
-    expect(home).toContain("ECOSYSTEM_PRODUCTS");
+    expect(home).toContain("<EcosystemGrid");
+    const ecosystem = site("src/components/landing/EcosystemGrid.tsx");
+    expect(ecosystem).toContain("ECOSYSTEM_PRODUCTS");
+    expect(ecosystem).toContain("MATURITY_CHIP_LABEL");
     expect(home).toContain("STATUS_COLUMNS");
-    expect(home).toMatch(/What(?:&apos;|')s available/);
+    expect(home).toContain("What is live today?");
+    expect(home).toContain('to="/status"');
 
     const footer = site("src/components/Footer.tsx");
     expect(footer).toContain("Engineering (secondary)");
