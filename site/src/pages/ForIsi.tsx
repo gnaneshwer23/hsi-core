@@ -7,15 +7,15 @@ export function ForIsi() {
   return (
     <>
       <PageHero
-        eyebrow="For ISI · discovery"
+        eyebrow="ISI · researcher-facing workspace"
         title={
           <>
-            Explore with
+            Explore immune evidence
             <br />
-            <span className="accent">honest grades.</span>
+            <span className="accent">with context intact.</span>
           </>
         }
-        lede="Immune Super Intelligence consumes published HSI exports for Ask, Radar, and REL suggestions. Discovery never becomes diagnosis support."
+        lede="Immune Super Intelligence is the research workspace for relating immune cells, states, tissues, mechanisms, diseases and evidence. HSI Core supplies the graded, versioned backbone. Not clinical decision support."
       />
 
       <section className="section section-ink-dots">

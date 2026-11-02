@@ -12,6 +12,7 @@ Immediate next move: prove ISI helps one immune-disease **research intelligence*
 
 | Doc | Purpose |
 |-----|---------|
+| [`docs/ISI_HSI_PRODUCT_AND_WEBSITE_BRIEF.md`](docs/ISI_HSI_PRODUCT_AND_WEBSITE_BRIEF.md) | Binding ISI / HSI product + homepage narrative |
 | [`docs/ISI_PILOT_BRIEF.md`](docs/ISI_PILOT_BRIEF.md) | One-page pilot brief (purpose, non-goals, scope, outputs, metrics, decision gate) |
 | [`docs/ISI_PILOT_PRD_ALIGNMENT.md`](docs/ISI_PILOT_PRD_ALIGNMENT.md) | External pilot PRD v1.0 → build now vs defer + artifact coverage |
 | [`docs/ISI_TARGET_STATE_PRD_ALIGNMENT.md`](docs/ISI_TARGET_STATE_PRD_ALIGNMENT.md) | Full target-state vision → Stage 1 / 2 / 3 / out of scope (do not pull breadth into Stage 1) |

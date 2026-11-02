@@ -8,11 +8,11 @@ export function Footer() {
           <div className="footer-brand">HSI</div>
           <p className="muted" style={{ maxWidth: "22rem", fontSize: "1rem" }}>
             Evidence and provenance backbone for immune-science discovery.
-            Research intelligence — not clinical CDS. No PHI. No invented grades.
+            Powers ISI research exploration. Not clinical decision support.
           </p>
         </div>
         <div>
-          <h4>Explore</h4>
+          <h4>Product</h4>
           <ul>
             <li>
               <Link to="/discovery">Discovery</Link>
@@ -21,32 +21,38 @@ export function Footer() {
               <Link to="/evidence">Evidence & Gate C</Link>
             </li>
             <li>
-              <Link to="/for-isi">For ISI</Link>
+              <Link to="/for-isi">ISI workspace</Link>
             </li>
             <li>
-              <Link to="/docs">Docs</Link>
+              <Link to="/docs">Technical docs</Link>
             </li>
           </ul>
         </div>
         <div>
-          <h4>Secondary</h4>
+          <h4>Collaborators</h4>
           <ul>
             <li>
-              <Link to="/for-aksh">For Aksh (gated)</Link>
-            </li>
-            <li>
-              <Link to="/systems">Systems</Link>
+              <Link to="/roadmap">Development status</Link>
             </li>
             <li>
               <Link to="/alignment">Repo alignment</Link>
             </li>
             <li>
-              <Link to="/roadmap">Development status</Link>
+              <Link to="/curator">Curator</Link>
+            </li>
+            <li>
+              <a
+                href="https://github.com/gnaneshwer23/hsi-core"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Repository ↗
+              </a>
             </li>
           </ul>
         </div>
         <div>
-          <h4>Non-negotiables</h4>
+          <h4>Boundaries</h4>
           <ul>
             <li>
               <span className="muted">Research intelligence ≠ CDS</span>
@@ -55,14 +61,14 @@ export function Footer() {
               <span className="muted">Human Gate C only</span>
             </li>
             <li>
-              <span className="muted">Edit only hsi-core</span>
+              <Link to="/for-aksh">Aksh (separate / gated)</Link>
             </li>
           </ul>
         </div>
       </div>
       <div className="container footer-bottom">
-        <span>Human Systems Intelligence</span>
-        <span>hsi-core · sole edit target</span>
+        <span>HSI Core · evidence backbone for ISI</span>
+        <span>No PHI · no invented grades</span>
       </div>
     </footer>
   );
