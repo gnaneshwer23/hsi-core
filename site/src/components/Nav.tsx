@@ -5,6 +5,7 @@ const links = [
   { to: "/systems", label: "Systems" },
   { to: "/evidence", label: "Evidence" },
   { to: "/discovery", label: "Discovery" },
+  { to: "/curator", label: "Curator" },
   { to: "/akeno", label: "Akeno" },
   { to: "/aksh-agents", label: "Aksh Agents" },
   { to: "/for-isi", label: "For ISI" },

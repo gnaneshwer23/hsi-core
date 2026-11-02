@@ -293,7 +293,10 @@ export function serializeGateCChecklistMarkdown(
     "",
     `Schema: \`${checklist.schemaVersion}\` · generated ${checklist.generatedAt}`,
     "",
-    "**Not CDS. autoApproveIntoKg=false.** Neon approve+supports is human-only in ISI product Neon (autumn-snow) — never HSI red-wave.",
+    "**Not CDS. autoApproveIntoKg=false. mayFlipHsiGrade=false.** Neon approve+supports is human-only in ISI product Neon (autumn-snow) — never HSI red-wave.",
+    "Compatible with immunecity Gate C queue. For richer decision columns see `hsi-curator-ux.*` / `serializeRichGateCChecklistMarkdown`.",
+    "",
+    "> **Awaiting partner review session** — publish leaves Gate C rows pending. Do not invent approve/reject/defer outcomes or flip `hsiGrade`.",
     "",
     "## Summary",
     "",
@@ -301,16 +304,18 @@ export function serializeGateCChecklistMarkdown(
     `- Gate C status pending: ${checklist.summary.pendingGateC}`,
     `- Unmapped (no invented REL): ${checklist.summary.unmapped}`,
     `- Rows with PMID: ${checklist.summary.withPmid}`,
+    `- Translation candidates: ${checklist.summary.translationCandidates}`,
+    `- Model proposals: ${checklist.summary.modelProposals}`,
     "",
     "## Pending Gate C (curated REL + evidence)",
     "",
-    "| Edge | ISI REL | PMID | S-P-O note | Status |",
-    "|------|---------|------|------------|--------|",
+    "| Edge | ISI REL | PMID | S-P-O note | Status | Decision |",
+    "|------|---------|------|------------|--------|----------|",
   ];
 
   for (const r of pending) {
     lines.push(
-      `| \`${r.edgeId}\` | \`${r.isiRelationshipId ?? "—"}\` | ${r.pmid ?? "—"} | ${r.spoNote} | **pending** |`,
+      `| \`${r.edgeId}\` | \`${r.isiRelationshipId ?? "—"}\` | ${r.pmid ?? "—"} | ${r.spoNote} | **pending** | — (awaiting partner) |`,
     );
   }
 

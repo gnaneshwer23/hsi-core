@@ -15,7 +15,7 @@
   "testPilotMode": false,
   "testFixtureBanner": null,
   "allowHypotheticalPartnerEnv": "ALLOW_HYPOTHETICAL_PARTNER",
-  "generatedAt": "2026-11-01T23:55:09.602Z",
+  "generatedAt": "2026-11-01T12:00:00.000Z",
   "package": "hsi-core",
   "outputsManifestSchema": "hsi-outputs-manifest-1",
   "compatibility": {
@@ -31,7 +31,7 @@
       "No hypothetical fixture active.",
       "Vertical: dual_track · activeScope=ra-tnf · prdMvpTarget=ssc-tfh-b-il21.",
       "Technical adapter spikes (RDKit/OpenMM/REINVENT4/ESM) are optional_proposal — do not block ISI Discovery core load.",
-      "P1.4 systems/ISI predicates first-class on HSI_EDGE_TYPES (additive); remaining preds stay aliased. Next substrate depth is P1.6 curator UX after partner session (not more adapter spikes)."
+      "P1.6 curator UX shipped (hsi-curator-ux.*; richer gap/Gate C markdown; awaiting partner review session when decisions=[]). Next: import real Apolo Gate C decisions from immunecity autumn-snow after a live review session — still no auto-approve / no hsiGrade flip."
     ]
   },
   "vertical": {
@@ -245,10 +245,23 @@
       "loadPriority": "recommended_secondary",
       "consumerSurfaces": [
         "ask_map_review",
-        "validate"
+        "validate",
+        "gate_c_queue"
       ],
       "autoApproveIntoKg": false,
-      "notes": "Schema / mapping gaps for curator backlog."
+      "notes": "Schema / mapping gaps for curator backlog (P1.6 richer markdown buckets)."
+    },
+    {
+      "manifestKey": "curatorUxJson",
+      "fileName": "hsi-curator-ux.json",
+      "schemaHint": "hsi-curator-ux-1",
+      "loadPriority": "recommended_secondary",
+      "consumerSurfaces": [
+        "gate_c_queue",
+        "ask_map_review"
+      ],
+      "autoApproveIntoKg": false,
+      "notes": "P1.6 curator UX briefing — gap buckets + Gate C queue; awaiting partner review session when decisions=[]; never invents outcomes / never flips hsiGrade."
     },
     {
       "manifestKey": "r2ValidationJson",
@@ -549,10 +562,10 @@
     "6. optional_aksh: node map + HITL cards (Aksh consumer — not ISI Discovery core)"
   ],
   "summary": {
-    "artifactCount": 31,
+    "artifactCount": 32,
     "requiredCoreCount": 4,
     "requiredPilotCount": 9,
-    "recommendedSecondaryCount": 8,
+    "recommendedSecondaryCount": 9,
     "optionalProposalCount": 8,
     "discoveryPathCount": 12
   },

@@ -18,9 +18,15 @@ import { buildIsiExportBundle, serializeIsiExport } from "./exportIsi";
 import {
   buildGateCChecklist,
   serializeGateCChecklist,
-  serializeGateCChecklistMarkdown,
 } from "./gateCChecklist";
 import { buildSchemaGapReport, serializeGapReport } from "./gapReport";
+import {
+  buildCuratorUxBundle,
+  serializeCuratorUx,
+  serializeCuratorUxMarkdown,
+  serializeRichGapReportMarkdown,
+  serializeRichGateCChecklistMarkdown,
+} from "./curatorUx";
 import {
   AKSH_CLINIC_CONCEPTS,
   PROVISIONAL_AKSH_TO_DURABLE,
@@ -211,57 +217,11 @@ function writeText(path: string, text: string): void {
   writeFileSync(path, text.endsWith("\n") ? text : `${text}\n`, "utf8");
 }
 
-/** Short markdown summary of the schema gap report. */
+/** Richer curator gap markdown (P1.6) — buckets + backlog table. */
 export function serializeGapReportMarkdown(
   report: ReturnType<typeof buildSchemaGapReport>,
 ): string {
-  const s = report.summary;
-  const lines = [
-    "# HSI schema gap report",
-    "",
-    `Schema: \`${report.schemaVersion}\` · generated ${report.generatedAt}`,
-    "",
-    "## Summary",
-    "",
-    `- Seed edges: ${s.seedEdges}`,
-    `- Bridge candidates: ${s.bridgeCandidates}`,
-    `- Claims mapped to ISI REL: ${s.claimsMappedToIsi}`,
-    `- Claims mapped to Aksh node: ${s.claimsMappedToAksh}`,
-    `- Claims with durable locator: ${s.claimsWithDurableLocator}`,
-    `- Gap rows: ${report.gaps.length}`,
-    `- Grades: established=${s.gradeCounts.established}, uncertain=${s.gradeCounts.uncertain}, unexplored=${s.gradeCounts.unexplored}`,
-    `- LOINC linked claims: ${s.loinc.claimsWithLoincMarker}`,
-    "",
-    "## ISI REL mapping",
-    "",
-    `- Suggestions: ${report.isiRelMapping.suggestions}`,
-    `- With REL id: ${report.isiRelMapping.withRelId}`,
-    `- Unmapped: ${report.isiRelMapping.unmapped}`,
-    `- Curated (HSI-side): ${report.isiRelMapping.curated}`,
-    `- autoApproveIntoKg: ${report.isiRelMapping.autoApproveIntoKg}`,
-    "",
-    "## Aksh node mapping",
-    "",
-    `- T2D mapped: ${report.akshNodeMapping.t2dSeedsMapped}/${report.akshNodeMapping.t2dSeedsTotal}`,
-    `- autoApplyToEhr: ${report.akshNodeMapping.autoApplyToEhr}`,
-    `- anyCdsSurfacableOnSeedEdges: ${report.akshNodeMapping.anyCdsSurfacableOnSeedEdges}`,
-    "",
-    "## Bridge shortlist (top)",
-    "",
-  ];
-
-  for (const b of report.bridgeShortlist.slice(0, 12)) {
-    lines.push(
-      `- \`${b.edgeId}\` → ${b.suggestedIsiRelationshipId ?? "unmapped"} (${b.matchKind}): ${b.subjectLabel} → ${b.objectLabel}`,
-    );
-  }
-
-  lines.push("", "## Next actions", "");
-  for (const a of report.nextActions) {
-    lines.push(`- ${a}`);
-  }
-  lines.push("");
-  return lines.join("\n");
+  return serializeRichGapReportMarkdown(report);
 }
 
 function buildIsiRelMapPayload(generatedAt: string) {
@@ -400,6 +360,13 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     lock: partnerLock,
   });
   const sourceLicensingStub = buildSourceLicensingStubBundle({ generatedAt });
+  // P1.6 curator UX — richer gap/Gate C markdown; no invented human decisions.
+  const curatorUx = buildCuratorUxBundle({
+    generatedAt,
+    gap: gapReport,
+    gateC,
+    decisions: [],
+  });
 
   const fileMap: Record<string, string> = {
     "hsi-isi-export.json": serializeIsiExport(isiBundle),
@@ -409,7 +376,9 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     "hsi-gap-report.json": serializeGapReport(gapReport),
     "hsi-gap-report.md": serializeGapReportMarkdown(gapReport),
     "gate-c-checklist.json": serializeGateCChecklist(gateC),
-    "gate-c-checklist.md": serializeGateCChecklistMarkdown(gateC),
+    "gate-c-checklist.md": serializeRichGateCChecklistMarkdown(gateC, []),
+    "hsi-curator-ux.json": serializeCuratorUx(curatorUx),
+    "hsi-curator-ux.md": serializeCuratorUxMarkdown(curatorUx),
     "hsi-pilot-evidence-pack.json": serializePilotEvidencePack(pilotPack),
     "hsi-pilot-evidence-pack.md": serializePilotEvidencePackMarkdown(pilotPack),
     "hsi-pilot-review-rubric.json": serializePilotReviewRubric(reviewRubric),
@@ -522,6 +491,8 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       gapReportMd: "hsi-gap-report.md",
       gateCChecklistJson: "gate-c-checklist.json",
       gateCChecklistMd: "gate-c-checklist.md",
+      curatorUxJson: "hsi-curator-ux.json",
+      curatorUxMd: "hsi-curator-ux.md",
       pilotEvidencePackJson: "hsi-pilot-evidence-pack.json",
       pilotEvidencePackMd: "hsi-pilot-evidence-pack.md",
       pilotReviewRubricJson: "hsi-pilot-review-rubric.json",
@@ -577,6 +548,12 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       akshMappedClaims: Object.keys(akshMap.claimToAkshNodeId).length,
       hitlCards: hitlStub.cards.length,
       gapRows: gapReport.gaps.length,
+      curatorGapBuckets: curatorUx.gapAnalysis.buckets.length,
+      curatorGateCActionable: curatorUx.gateCQueue.actionableCount,
+      curatorGateCDecided: curatorUx.gateCQueue.decidedCount,
+      curatorAwaitingPartnerReview:
+        curatorUx.partnerReviewSession.status ===
+        "awaiting_partner_review_session",
       gateCPending: gateC.summary.pendingGateC,
       gateCTranslationCandidates: gateC.summary.translationCandidates,
       gateCModelProposals: gateC.summary.modelProposals,
@@ -727,7 +704,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
       "Phase 7: R2 validation — hsi-r2-validation.* (hypothesis cards, ranked gaps, literature tests; research only).",
       "Phase 8 done (HSI substrate): hsi-translation-handoff.* — Stage 3 scaffolding; deferred_until_hitl; Akeno in-repo HITL consumer at /akeno (not live CDS; no Akeno Neon).",
       "Aksh: HITL map pointers only — use hsi-aksh-node-map.json + hsi-aksh-hitl-cards.json; CDS stays closed on seeds.",
-      "Gate C: human checklist in gate-c-checklist.* (+ translationCandidates); optional HSI red-wave placeholders via bun run db:gate-c-local (pending only). ISI product approve stays autumn-snow — never from this workspace.",
+      "Gate C: human checklist in gate-c-checklist.* (+ translationCandidates); P1.6 curator UX in hsi-curator-ux.* + richer gap/Gate C markdown (awaiting partner review session — no invented decisions). Optional HSI red-wave placeholders via bun run db:gate-c-local (pending only). ISI product approve stays autumn-snow — never from this workspace. Site: /curator.",
       "Phase 4: HSI Neon schema stub — bun run db:migrate (guards refuse ISI/Akeno/DeliverX).",
       "Systems vision: hsi-systems-vision.json — multi-axis target graph stubs (immune + gut–immune + neuroimmune + disease/tissue/biomarker + patient-plane rules + P3 adapters + aiFutureTech capabilities/hard bans/schema stubs); dual-track vertical fields; see docs/HSI_SYSTEMS_VISION_MAP.md + docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md.",
       "P2.2 embedding sidecars: hsi-embedding-sidecars.json — edgeId→modelId/dim/vectorRef|contentHash (+ optional tiny demo); doesNotSetHsiGrade=true; autoApprove=false; no PHI / no model weights; packs remain evidence authority.",
@@ -796,6 +773,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     "hsi-neuroimmune-pack.json",
     "hsi-gap-report.json",
     "gate-c-checklist.json",
+    "hsi-curator-ux.json",
     "hsi-r2-validation.json",
     "hsi-translation-handoff.json",
     "hsi-embedding-sidecars.json",

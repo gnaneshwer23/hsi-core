@@ -28,11 +28,13 @@ bun install
 bun test
 bun run outputs
 bun run site:dev
-# open http://localhost:5173/discovery`}
+# open http://localhost:5173/discovery
+# open http://localhost:5173/curator`}
           </div>
           <p className="muted" style={{ marginTop: "1rem" }}>
             Requires Bun. <code>bun run outputs</code> refreshes{" "}
             <code>dist/outputs/</code> and <code>site/public/discovery/</code>.{" "}
+            <code>bun run curator-ux</code> emits richer gap/Gate C markdown.{" "}
             <code>bun run build</code> emits dist/ for TypeScript consumers.
           </p>
         </div>
@@ -95,6 +97,15 @@ bun run site:dev
                   <code>gap-report</code>
                 </td>
                 <td>Mapping slots + bridge shortlist</td>
+              </tr>
+              <tr>
+                <td>
+                  <code>curator-ux</code>
+                </td>
+                <td>
+                  P1.6 richer gap + Gate C briefing (
+                  <code>/curator</code>)
+                </td>
               </tr>
               <tr>
                 <td>

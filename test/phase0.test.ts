@@ -605,6 +605,11 @@ describe("Gate C checklist + publish outputs", () => {
     expect(result.files).toContain("hsi-gap-report.md");
     expect(result.files).toContain("gate-c-checklist.json");
     expect(result.files).toContain("gate-c-checklist.md");
+    expect(result.files).toContain("hsi-curator-ux.json");
+    expect(result.files).toContain("hsi-curator-ux.md");
+    expect(result.discoverySynced.some((p) => p.includes("hsi-curator-ux.json"))).toBe(
+      true,
+    );
     expect(result.files).toContain("hsi-pilot-evidence-pack.json");
     expect(result.files).toContain("hsi-pilot-evidence-pack.md");
     expect(result.files).toContain("hsi-pilot-review-rubric.json");

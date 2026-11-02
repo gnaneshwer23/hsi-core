@@ -11,6 +11,7 @@ import { Docs } from "./pages/Docs";
 import { DiscoveryCentre } from "./pages/DiscoveryCentre";
 import { AkenoConsumer } from "./pages/AkenoConsumer";
 import { AkshAgents } from "./pages/AkshAgents";
+import { Curator } from "./pages/Curator";
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
         <Route path="systems" element={<Systems />} />
         <Route path="evidence" element={<Evidence />} />
         <Route path="discovery" element={<DiscoveryCentre />} />
+        <Route path="curator" element={<Curator />} />
         <Route path="akeno" element={<AkenoConsumer />} />
         <Route path="aksh-agents" element={<AkshAgents />} />
         <Route path="for-isi" element={<ForIsi />} />

@@ -249,9 +249,19 @@ const ARTIFACTS: IsiArtifactContractRow[] = [
     fileName: "hsi-gap-report.json",
     schemaHint: "hsi-gap-report-1",
     loadPriority: "recommended_secondary",
-    consumerSurfaces: ["ask_map_review", "validate"],
+    consumerSurfaces: ["ask_map_review", "validate", "gate_c_queue"],
     autoApproveIntoKg: false,
-    notes: "Schema / mapping gaps for curator backlog.",
+    notes: "Schema / mapping gaps for curator backlog (P1.6 richer markdown buckets).",
+  },
+  {
+    manifestKey: "curatorUxJson",
+    fileName: "hsi-curator-ux.json",
+    schemaHint: "hsi-curator-ux-1",
+    loadPriority: "recommended_secondary",
+    consumerSurfaces: ["gate_c_queue", "ask_map_review"],
+    autoApproveIntoKg: false,
+    notes:
+      "P1.6 curator UX briefing — gap buckets + Gate C queue; awaiting partner review session when decisions=[]; never invents outcomes / never flips hsiGrade.",
   },
   {
     manifestKey: "r2ValidationJson",
@@ -559,7 +569,7 @@ export function buildIsiConsumeContractBundle(opts?: {
           : "No hypothetical fixture active.",
         `Vertical: ${vertical.verticalStrategy} · activeScope=${vertical.activeScope} · prdMvpTarget=${vertical.prdMvpTarget}.`,
         "Technical adapter spikes (RDKit/OpenMM/REINVENT4/ESM) are optional_proposal — do not block ISI Discovery core load.",
-        "P1.4 systems/ISI predicates first-class on HSI_EDGE_TYPES (additive); remaining preds stay aliased. Next substrate depth is P1.6 curator UX after partner session (not more adapter spikes).",
+        "P1.6 curator UX shipped (hsi-curator-ux.*; richer gap/Gate C markdown; awaiting partner review session when decisions=[]). Next: import real Apolo Gate C decisions from immunecity autumn-snow after a live review session — still no auto-approve / no hsiGrade flip.",
       ],
     },
     vertical: {

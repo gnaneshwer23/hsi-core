@@ -23,6 +23,7 @@
     "export:isi-map": "bun run src/cli/export-isi-map.ts",
     "export:aksh-map": "bun run src/cli/export-aksh-map.ts",
     "gap-report": "bun run src/cli/gap-report.ts",
+    "curator-ux": "bun run src/cli/curator-ux.ts",
     "outputs": "bun run src/cli/publish.ts",
     "publish": "bun run outputs",
     "adapter:rdkit": "bun run src/cli/rdkit-adapter.ts",

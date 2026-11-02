@@ -175,6 +175,28 @@ export {
 } from "./gateCChecklist";
 
 export {
+  CURATOR_UX_SCHEMA,
+  CURATOR_GATE_C_DECISIONS,
+  CURATOR_GATE_C_STATUSES,
+  assertSafeCuratorDecision,
+  buildCuratorGateCQueue,
+  buildCuratorUxBundle,
+  curatorDecisionToStatus,
+  listCuratorPublishPendingRows,
+  parseCuratorGateCDecisions,
+  serializeCuratorUx,
+  serializeCuratorUxMarkdown,
+  serializeRichGapReportMarkdown,
+  serializeRichGateCChecklistMarkdown,
+  type CuratorGapBucket,
+  type CuratorGateCDecision,
+  type CuratorGateCDecisionKind,
+  type CuratorGateCStatus,
+  type CuratorQueueItem,
+  type CuratorUxBundle,
+} from "./curatorUx";
+
+export {
   MODEL_PROPOSAL_RUNTIME_SCHEMA,
   assertSafeModelProposal,
   buildExampleModelProposals,
