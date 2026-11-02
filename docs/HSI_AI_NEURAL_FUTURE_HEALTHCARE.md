@@ -9,6 +9,8 @@
 
 ## Executive thesis
 
+**Product identity:** HSI / ISI is **research intelligence**, not clinical intelligence. We connect several data points to find better healthcare technology and future treatment strategy — not to diagnose or treat patients.
+
 Neural networks are **representation and proposal engines**, not authorities. In this stack they buy: embeddings over molecules/cells/omics/text/graphs; ranking and similarity; hypothesis drafts; in-silico screening scores. They must **not** replace provenance, invent graded edges, or issue clinical decisions. The graded knowledge graph is the **constraint layer**; NNs feed **Gate C** as proposers/scorers. Twelve research agents are **bounded tools** under an orchestrator with independent evidence/governance review; Aksh-named care agents stay **HITL** and off the HSI seed path. Future healthcare tech (multimodal FMs, digital twins, closed-loop sensing, federated learning, causal ML, structure/generative chem adapters) enters only behind **stage gates**, licenses, and explicit failure modes. Patient raw data never lands in HSI; Akeno may hold governed context later. Near-term hsi-core work is **schema and eval stubs**, not a giant ML stack.
 
 **Falsifiers (examples):** (1) Any path that writes `hsiGrade` or Gate C approve from model output alone. (2) Live PHI or identifiable sequences in `red-wave` evidence tables. (3) Claiming clinical digital twins or closed-loop dosing from research packs. (4) Equating Aksh agent names with an executable ISI workbench.

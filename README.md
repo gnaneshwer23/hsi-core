@@ -1,8 +1,8 @@
 # hsi-core
 
-Shared **Human Systems Intelligence** substrate for **Aksh Health** (clinic HITL CDS) and **Immune Super Intelligence / ISI** (discovery).
+Shared **Human Systems Intelligence** substrate for **Immune Super Intelligence / ISI** (**research intelligence** — connect evidence for better healthcare technology and future treatment strategy) and **Aksh Health** (separate clinic HITL CDS plane).
 
-Evidence-graded edges (`established` / `uncertain` / `unexplored`) plus claim → marker (LOINC) → observation → action stubs. No PHI. No auto diagnosis. No EHR write-back.
+Evidence-graded edges (`established` / `uncertain` / `unexplored`) plus claim → marker (LOINC) → observation → action stubs. **Not clinical intelligence.** No PHI. No auto diagnosis. No EHR write-back.
 
 **Vision alignment:** full portfolio map (Aksh / ISI consumers, bio-stack P3 plugins; DeliverX ignored) lives in [`docs/VISION_REPO_ALIGNMENT.md`](docs/VISION_REPO_ALIGNMENT.md). **P0 DONE / P1 ACTIVE — pilot-first** (one research workflow before more platform).
 

@@ -1,6 +1,6 @@
 # ISI pilot brief (one-pager)
 
-> **ISI helps immune-disease research teams investigate a defined question by connecting traceable evidence across cells, pathways, biomarkers, treatments and studies—and showing what is established, uncertain and worth testing.**
+> **ISI is research intelligence, not clinical intelligence.** We connect several data points — cells, pathways, biomarkers, treatments, studies, and related evidence — to find better healthcare technology and future treatment strategy. We show what is established, uncertain, and worth testing. We do **not** diagnose patients, select therapies at the bedside, or act as clinical decision support.
 
 **Status:** Phase 8 HSI translation substrate live · Phase 7 R2 validation · Phase 6 Discovery Centre · Phase 5 acceptance pack · Phase 4 HSI Neon readiness · Phase 3 evidence depth on Phase 2 scope lock · **TEST FIXTURE partner** for path testing · real named partner still TBD.  
 **Working Stage 1 scope (scopeLocked):** rheumatoid arthritis · anti-TNF response heterogeneity — see `hsi-partner-lock.json` (`scopeLocked=true`, `lockedPilot=false`, `legalBinding=false`).  
@@ -20,18 +20,19 @@
 
 ## Purpose
 
-Prove that ISI improves **one** immune-disease **research intelligence** workflow: a partner brings a defined question; ISI returns a traceable evidence picture (what is established, uncertain, and worth testing) that experts can challenge.
+Prove that ISI improves **one** immune-disease **research intelligence** workflow: a partner brings a defined question; ISI connects multiple evidence points into a traceable picture (what is established, uncertain, and worth testing) that experts can challenge — toward better healthcare technology and future treatment strategy, not bedside care.
 
 ## Non-goals (pilot)
 
 | In scope | Out of scope |
 |----------|----------------|
-| Research intelligence for a defined disease + question | Individual disease prediction / risk scores for patients |
+| Research intelligence for a defined disease + question | Clinical intelligence / patient-level decisions |
+| Connecting cells · pathways · biomarkers · treatments · studies | Individual disease prediction / risk scores for patients |
 | Literature- and graph-backed evidence maps with strength labels | Patient recruitment / eligibility matching |
-| Expert review of gaps and hypotheses | Broad platform / agent / omics features before a working pilot |
-| Honest uncertainty and competing explanations | Treating ISI as clinical decision support (CDS) |
+| Expert review of gaps and hypotheses (future treatment strategy) | Treating ISI as clinical decision support (CDS) |
+| Honest uncertainty and competing explanations | Broad platform / agent / omics features before a working pilot |
 
-**Aksh / Akeno:** keep out of **patient-level clinical decisions** until a specific pathway has data access, HCP evaluation, and governance. This pilot does not open clinic CDS.
+**Aksh / Akeno:** separate clinical HITL plane. Keep out of **patient-level clinical decisions** until a specific pathway has data access, HCP evaluation, and governance. This pilot does not open clinic CDS.
 
 ---
 

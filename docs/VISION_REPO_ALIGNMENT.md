@@ -3,8 +3,10 @@
 **Human Systems Intelligence (HSI)** is the shared evidence layer: graded edges
 (`established` / `uncertain` / `unexplored`), claim → marker (LOINC) → observation →
 action stubs, Gate C human-only curation, graph before agents, T2D / immuno-metabolic
-bridge first. **Aksh** = clinician-safe half (HITL CDS). **ISI** = discovery half
-(Ask / Radar). No unsupported diagnosis. No PHI → LLM in production.
+bridge first. **ISI** = **research intelligence** (not clinical intelligence): connect
+cells, pathways, biomarkers, treatments, and studies to find better healthcare
+technology and future treatment strategy. **Aksh** = clinician-safe half (HITL CDS) —
+separate plane; not this pilot. No unsupported diagnosis. No PHI → LLM in production.
 
 **Pilot-first (now):** do **not** broaden the platform before proving one immune-disease
 **research intelligence** workflow with a real partner. See
