@@ -134,7 +134,7 @@ export const DEMO_LINKS = [
     to: "/clinical-timeline",
     label: "Clinical synthetic timeline",
     product: "clinical" as const,
-    note: "≥2 fixtures · Cap 9 missing-info · syntheticOnly · no live EMIS",
+    note: "≥2 fixtures · Cap 9 missing-info · FHIR R4 notes only · syntheticOnly · no live EMIS",
   },
   {
     to: "/trials-criteria",

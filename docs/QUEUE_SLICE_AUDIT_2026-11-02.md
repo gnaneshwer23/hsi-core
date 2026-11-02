@@ -143,9 +143,27 @@ Substrate demos for Clinical / Trials / Gateway + automated G-Ask/G-Mech baselin
 
 ### Human gates only
 
-1. SME review pass on G-Ask/G-Mech v0.1 (set `targetsConfirmedBy` only with written sign-off) — founder interim may already exist; named external still open  
-2. Ask-edu-gold-v0 founder interim or named SME (`awaiting_sme` until human edits)  
-3. **Gate C cite path** — human Check → `claim_support` → Approve/Reject on ISI autumn-snow (`immune-city/docs/GATE_C_CURATOR_PATH.md`; dry-run `bun run hsi:curator-status`); no invent Approve  
-4. Real partner lock (replace hypothetical fixture) when written confirm arrives — no invented MoU  
+1. SME review pass on G-Ask/G-Mech v0.1 (set `targetsConfirmedBy` only with written sign-off) — founder interim may already exist; named external still open (`docs/SME_GOLD_SET_SIGNOFF.md` / M1 sign-off)  
+2. Ask-edu-gold-v0 **named** external SME (`awaiting_sme` / `signed_off`) — founder interim protocol-only; do not invent  
+3. **Gate C cite path** — still open after 2026-11-02 Neon remeasure: **13 verified / 0 supports / 0 publicCiteApproved** (founder-reported done ≠ Neon). Human Check → `claim_support` → Approve/Reject on ISI autumn-snow (`immune-city/docs/GATE_C_CURATOR_PATH.md`; dry-run `bun run hsi:curator-status -- --neon`); no invent Approve  
+4. Real partner lock (replace hypothetical fixture) when written confirm arrives — no invented MoU / `partner_agreed` / `legalBinding`  
 5. Partner corpus clearance / Gate C partner session when named partner lands  
+
+### Engineering note (2026-11-02)
+
+Shipped small ISI UX guard only: `/curation` shows `claim_support` + disables Approve until eligible. No further Cap 8/9 substrate slices queued until human gates above land. Optional later: FHIR mapping notes for synthetic fixtures (still `syntheticOnly`; no live EMIS). 
+
+## ALSO SHIPPED (Claim UX harden + FHIR notes)
+
+| Slice | Repo | How to try |
+|--------|------|------------|
+| **Claim-support inline UX harden** | immune-city | `/curation?hsi=cite` — Check column Claim support; Approve disabled until eligible; bridge panel copy; `curation-claim-support-ux.test.ts` |
+| **Synthetic FHIR R4 mapping notes** | hsi-core | `/clinical-timeline` → FHIR NOTES — `fhirSoT=false`; `buildSyntheticFhirMappingNotes` |
+
+```bash
+cd ~/Desktop/immune-city && bun test src/test/curation-claim-support-ux.test.ts src/test/auth-member-workspace-ui.test.ts
+cd ~/Projects/hsi-core && bun test test/clinicalSyntheticFhirNotes.test.ts test/clinicalSyntheticTimeline.test.ts test/publicSiteHonesty.test.ts
+```
+
+**Still human:** Gate C cite S-P-O → supports → Approve (13/0/0); named SME; real partner lock.
 

@@ -66,14 +66,18 @@ describe("Public HSI site honesty", () => {
 
     const clinical = site("src/pages/ClinicalTimeline.tsx");
     expect(clinical).toContain("buildClinicalTimelineView");
+    expect(clinical).toContain("buildSyntheticFhirMappingNotes");
     expect(clinical).toContain("listSyntheticTimelineFixtures");
     expect(clinical).toContain("syn-t2d-multi-provider-01");
     expect(clinical).toContain("syntheticOnly");
     expect(clinical).toContain("missing-info-panel");
     expect(clinical).toContain("provenance-chip");
     expect(clinical).toContain("sourceSystem");
+    expect(clinical).toContain("fhir-notes");
+    expect(clinical).toContain("fhirSoT=false");
     expect(clinical).toMatch(/liveEmis\s*=\s*false|liveEmis=false/);
     expect(clinical).not.toMatch(/live hospital connector|live EMIS SoT/i);
+    expect(clinical).not.toMatch(/UK Core certified|SMART-on-FHIR launch live/i);
 
     const trials = site("src/pages/TrialsCriteria.tsx");
     expect(trials).toContain("assessTrialCriteria");

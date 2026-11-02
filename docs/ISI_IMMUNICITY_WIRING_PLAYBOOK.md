@@ -250,6 +250,8 @@ Run these in an **immunecity** checkout / agent session (not hsi-core):
 
 **P2.5-ISI cite Approve authorization (2026-11-02):** Founder authorized public cite **Approve** only for rows already eligible (`verified` + mapped + `claim_support=supports`). Live autumn-snow: **13 verified / 0 supports / 0 publicCiteApproved** — Approve still **BLOCKED** pending human S-P-O on `/curation?hsi=cite` (Neon Auth reviewer). No script invents supports; no JSON counter edits.
 
+**P2.6-ISI cite remeasure + Approve UX guard (2026-11-02):** Founder said cite path done → `hsi:curator-status --neon` still **0/0** (before=after). immunecity `/curation` now shows `claim_support` per row and **disables Approve** until `isReadyForSupportsApproval` (verified + mapped + supports); server invariants unchanged. Docs stamped to measured counts only.
+
 ---
 
 ## 9. Acceptance tests (consumer-side)

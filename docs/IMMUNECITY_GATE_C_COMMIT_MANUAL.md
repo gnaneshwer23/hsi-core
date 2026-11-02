@@ -44,7 +44,7 @@ Discovery Gate C `human_approved` on autumn-snow ≠ public cite. Human Check �
 - Operator checklist: `~/Desktop/immune-city/docs/GATE_C_CURATOR_PATH.md`
 - Dry-run (no writes): `cd ~/Desktop/immune-city && bun run hsi:curator-status -- --neon`
 - UI: `/curation?hsi=cite` — never invent supports; never point HSI `DATABASE_URL` at autumn-snow
-- **2026-11-02 live:** 13/13 cite identifiers verified; **0** `claim_support=supports`; **0** `publicCiteApproved`. Founder authorized Approve only for already-eligible rows — human S-P-O assess still required first (no agent invent / no JSON counter edits).
+- **2026-11-02 live (remeasured):** 13/13 cite identifiers verified; still **0** `claim_support=supports`; **0** `publicCiteApproved` — founder-reported Approve not present in Neon. Human S-P-O assess still required first (inline **Claim support** on Check column → Supports → Approve; UI disables Approve until eligible). No agent invent / no JSON counter edits.
 
 ## Next steps (hsi-core)
 

@@ -6,6 +6,7 @@ import {
   listSyntheticTimelineFixtures,
   MISSING_INFO_KIND_LABEL,
 } from "../../../src/clinicalSyntheticTimeline";
+import { buildSyntheticFhirMappingNotes } from "../../../src/clinicalSyntheticFhirNotes";
 
 const DEFAULT_FIXTURE = "syn-t2d-multi-provider-01";
 
@@ -13,6 +14,7 @@ export function ClinicalTimeline() {
   const fixtures = listSyntheticTimelineFixtures();
   const [fixtureId, setFixtureId] = useState(DEFAULT_FIXTURE);
   const view = buildClinicalTimelineView(fixtureId);
+  const fhirNotes = buildSyntheticFhirMappingNotes(fixtureId);
 
   if (!view) {
     return (
@@ -56,7 +58,7 @@ export function ClinicalTimeline() {
             <span className="accent">fixtures only.</span>
           </>
         }
-        lede="Multi-provider synthetic events with Cap 9 missing-information honesty. Not a reconstructed real patient history. No live EMIS, FHIR SoT, or PHI."
+        lede="Multi-provider synthetic events with Cap 9 missing-information honesty and illustrative FHIR R4 mapping notes. Not a reconstructed real patient history. No live EMIS, FHIR SoT, or PHI."
       />
 
       <section className="section section-grid-light">
@@ -96,6 +98,8 @@ export function ClinicalTimeline() {
             <span className="tag tag-light">no live EMIS</span>
             <span className="tag tag-light">not CDS</span>
             <span className="tag tag-light">Cap 9 missing-info</span>
+            <span className="tag tag-light">FHIR notes only</span>
+            <span className="tag tag-light">fhirSoT=false</span>
           </div>
         </div>
       </section>
@@ -113,19 +117,25 @@ export function ClinicalTimeline() {
                   <th>When</th>
                   <th>Provider</th>
                   <th>Kind</th>
+                  <th>FHIR hint</th>
                   <th>Label</th>
                   <th>Codes</th>
                   <th>Provenance</th>
                 </tr>
               </thead>
               <tbody>
-                {view.events.map((e) => (
+                {view.events.map((e) => {
+                  const hint = fhirNotes?.events.find((n) => n.eventId === e.id);
+                  return (
                   <tr key={e.id}>
                     <td>
                       <code>{e.occurredAt.slice(0, 10)}</code>
                     </td>
                     <td>{e.provider}</td>
                     <td>{e.kind}</td>
+                    <td>
+                      <code>{hint?.resourceType ?? "—"}</code>
+                    </td>
                     <td>{e.label}</td>
                     <td>
                       <code>{e.codes.join(", ")}</code>
@@ -134,7 +144,8 @@ export function ClinicalTimeline() {
                       <span className="provenance-chip">{e.sourceSystem}</span>
                     </td>
                   </tr>
-                ))}
+                  );
+                })}
               </tbody>
             </table>
           </div>
@@ -198,8 +209,68 @@ export function ClinicalTimeline() {
               <li key={h}>{h}</li>
             ))}
           </ul>
+        </div>
+      </section>
 
-          <div className="hero-actions" style={{ justifyContent: "flex-start", marginTop: "1.5rem" }}>
+      {fhirNotes ? (
+        <section className="section section-grid-light" id="fhir-notes">
+          <div className="container">
+            <div className="section-head">
+              <span className="section-num">FHIR NOTES</span>
+              <h2 className="display display-md">Illustrative R4 hints only.</h2>
+            </div>
+            <p className="lede" style={{ maxWidth: "42rem" }}>
+              Mapping notes for demo events — not a FHIR System of Record, not UK Core
+              certified, not SMART-on-FHIR. <code>fhirSoT=false</code> ·{" "}
+              <code>liveEmis=false</code>.
+            </p>
+            <div className="dc-banner-stack demo-banner-stack">
+              <p className="dc-banner dc-banner-warn demo-banner-on-light">
+                fhirSoT=false · ukCoreCertified=false · smartOnFhir=false · no live EMIS
+              </p>
+            </div>
+            <div className="dc-table-wrap">
+              <table className="dc-table demo-table">
+                <thead>
+                  <tr>
+                    <th>Event</th>
+                    <th>Kind</th>
+                    <th>Resource</th>
+                    <th>Illustrative system</th>
+                    <th>Note</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {fhirNotes.events.map((n) => (
+                    <tr key={n.eventId}>
+                      <td>
+                        <code>{n.eventId}</code>
+                      </td>
+                      <td>{n.kind}</td>
+                      <td>
+                        <code>{n.resourceType}</code>
+                      </td>
+                      <td>
+                        <span className="provenance-chip">{n.illustrativeSystem}</span>
+                      </td>
+                      <td className="xs muted">{n.note}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <ul className="checklist" style={{ marginTop: "1.5rem" }}>
+              {fhirNotes.honesty.map((h) => (
+                <li key={h}>{h}</li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      ) : null}
+
+      <section className="section section-bone">
+        <div className="container">
+          <div className="hero-actions" style={{ justifyContent: "flex-start" }}>
             <Link to="/status#clinical" className="btn btn-ghost">
               Clinical status
             </Link>
