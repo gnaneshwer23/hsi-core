@@ -7,6 +7,7 @@
 **Test fixture partner:** `test:hypothetical-isi-pilot-partner` (`type=hypothetical_test_fixture`, `agreementKind=hypothetical_test_only`) — **TEST FIXTURE — replace before real pilot.** `partnerSigned=true` is path-testing only; not a MoU. Swap via [`src/hypotheticalPartnerFixture.ts`](../src/hypotheticalPartnerFixture.ts). Production ISI must ignore unless `ALLOW_HYPOTHETICAL_PARTNER=true`.  
 **Vertical strategy (decision A):** **dual-track** — `activeScope=ra-tnf` (ASK / pilot lock unchanged); `prdMvpTarget=ssc-tfh-b-il21` parallel pack (`hsi-ssc-pathway-pack.*`). RA comparison = Release 2 framing. See [`ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md`](./ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md).  
 **Real named partner:** still **TBD after conversations** — do not treat the fixture or scope lock as a MoU.  
+**Honesty correction (2026-11-02):** a prior path briefly set Apolo Pharma to `legal_mou` / `lockedPilot=true` under an “operator-asserted MoU.” That was **not** a real partnership and has been **revoked**. Fixture restored; `lockedPilot=false`.  
 **Immediate deliverable:** this brief + [`ISI_PILOT_PARTNER_SHORTLIST.md`](./ISI_PILOT_PARTNER_SHORTLIST.md) + published pack / review rubric / acceptance + walkthrough + **`site/` `/discovery`**. Not another general-purpose AI feature.  
 **Phase 5 done:** Stage 1 acceptance checklist + partner walkthrough on scope-locked RA/TNF (`hsi-pilot-acceptance.*`, `hsi-pilot-walkthrough.md`).  
 **Phase 6 done:** Target R1 Discovery Centre product surface (`/discovery`) — research intelligence only; not clinical.

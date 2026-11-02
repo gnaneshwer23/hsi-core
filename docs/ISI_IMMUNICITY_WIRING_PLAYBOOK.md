@@ -32,10 +32,10 @@ bun run examples/isi-consumer/demo.ts
 | Goal | Do this |
 |------|---------|
 | Verify Stage 1 packs | Open `/discovery` → ASK / MAP / REVIEW; check `hsi-pilot-acceptance.md` is `green_with_pending` |
-| Named Apolo partner path | Confirm `hsi-partner-lock.json` shows `partner:apolo-pharma`, `agreementKind=legal_mou`, `lockedPilot=true` (fixture template remains recoverable) |
-| Rubric thresholds | `hsi-pilot-review-rubric.*` — Apolo Pharma `thresholdStatus=partner_agreed` (2026-11-01); min edges 12 / competing 4 / LOINC 6 |
+| Partner lock honesty | Confirm `hsi-partner-lock.json` shows fixture path: `test:hypothetical-isi-pilot-partner`, `agreementKind=hypothetical_test_only`, `lockedPilot=false` (real partner TBD; prior Apolo MoU path revoked 2026-11-02) |
+| Rubric thresholds | `hsi-pilot-review-rubric.*` — fixture `thresholdStatus=set_for_test`; min edges 12 / competing 4 / LOINC 6 until a real partner agrees |
 | Licensing review | Follow [`HOW_TO_SOURCE_LICENSING.md`](./HOW_TO_SOURCE_LICENSING.md) against `hsi-source-licensing-stub.*` |
-| Swap to a real partner | Edit `src/hypotheticalPartnerFixture.ts` (`USE_HYPOTHETICAL_PARTNER_FIXTURE=false` + `REAL_PARTNER_REPLACEMENT`); never invent email/MoU |
+| Swap to a real partner | Edit `src/hypotheticalPartnerFixture.ts` (`USE_HYPOTHETICAL_PARTNER_FIXTURE=false` + `REAL_PARTNER_REPLACEMENT`) only after written confirm; never invent email/MoU from chat |
 | Wire immunecity | Apply §8 in immunecity checkout (`~/Desktop/immune-city`); freeze lifted 2026-11-01 for consume wiring only |
 
 ---

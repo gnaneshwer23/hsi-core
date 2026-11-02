@@ -68,13 +68,15 @@ describe("P1.9 SSc/gut/neuro neighbourhood depth", () => {
     );
     const lock = getPartnerLock();
     expect(lock.disease?.id).toBe("ra");
-    expect(lock.lockedPilot).toBe(true);
+    expect(lock.lockedPilot).toBe(false);
   });
 
-  test("new P1.9 PMIDs are licensing-stubbed; uncleared stays 0 under Apolo clearance", () => {
+  test("new P1.9 PMIDs are licensing-stubbed; fixture keeps partnerCleared uncleared", () => {
     const stub = buildSourceLicensingStubBundle();
-    expect(stub.summary.clearanceScopeCounts.uncleared).toBe(0);
-    expect(stub.summary.partnerClearedCount).toBeGreaterThanOrEqual(48);
+    expect(stub.summary.partnerClearedCount).toBe(0);
+    expect(stub.summary.clearanceScopeCounts.uncleared).toBe(
+      stub.summary.pmidCount,
+    );
     for (const pmid of [
       "15831717",
       "17220915",
@@ -87,8 +89,12 @@ describe("P1.9 SSc/gut/neuro neighbourhood depth", () => {
       "17332883",
     ]) {
       const row = stub.rows.find((r) => r.pmid === pmid);
-      expect(row?.partnerCleared).toBe(true);
-      expect(row?.clearanceScope).not.toBe("uncleared");
+      expect(row).toBeTruthy();
+      expect(row?.partnerCleared).toBe(false);
+      expect(row?.clearanceScope).toBe("uncleared");
+      expect(["ok_cite", "ok_oa", "restricted", "unknown"]).toContain(
+        row?.licenseStatus,
+      );
     }
   });
 });

@@ -91,9 +91,9 @@ describe("P1.3 gut–immune SCFA ↔ mucosal Treg/Th17", () => {
     expect(lock.scopeLocked).toBe(true);
     expect(lock.disease?.id).toBe("ra");
     expect(lock.partnerSigned).toBe(true);
-    expect(lock.lockedPilot).toBe(true);
-    expect(lock.isHypothetical).toBe(false);
-    expect(lock.partner?.id).toBe("partner:apolo-pharma");
+    expect(lock.lockedPilot).toBe(false);
+    expect(lock.isHypothetical).toBe(true);
+    expect(lock.partner?.id).toBe("test:hypothetical-isi-pilot-partner");
     expect(lock.verticalStrategy).toBe("dual_track");
 
     const decision = getVerticalDecision();

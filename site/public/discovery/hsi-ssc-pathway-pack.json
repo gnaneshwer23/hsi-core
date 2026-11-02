@@ -2,7 +2,7 @@
   "schemaVersion": "hsi-ssc-pathway-pack-1",
   "notCds": true,
   "autoApproveIntoKg": false,
-  "generatedAt": "2026-11-01T12:00:00.000Z",
+  "generatedAt": "2026-11-02T05:59:35.647Z",
   "pathway": {
     "id": "ssc-tfh-b-il21",
     "label": "SSc · CD4/Tfh–B-cell–IL-21",
@@ -1293,7 +1293,7 @@
   "honesty": [
     "Dual-track option A: RA Stage 1 scopeLocked packs untouched; this pack is parallel PRD MVP depth.",
     "Discovery ASK question remains the RA / anti-TNF research question.",
-    "partnerSigned=true; lockedPilot=true; legalBinding=true; isHypothetical=false — MoU operator-asserted when named; still not CDS.",
+    "partnerSigned=true; lockedPilot=false; legalBinding=false; isHypothetical=true — MoU operator-asserted when named; still not CDS.",
     "EBV edge is hypothesized/uncertain only — do not overclaim.",
     "Cell cards carry CL·MONDO (and related) hints with bindStatus=hint_only — not full ontology bind.",
     "Not clinical decision support. autoApproveIntoKg=false.",

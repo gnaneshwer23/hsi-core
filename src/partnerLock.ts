@@ -170,7 +170,7 @@ const SCOPE_BASE = {
     id: "ra-tnf-response-heterogeneity",
     label: "RA · TNF / ACPA / ADA · anti-TNF response heterogeneity",
     rationale:
-      "Phase 3 deepened partner-scoped slice: TNF→RA + anti-CCP/RF (LOINC) + IL-6 / anti-TNF-refractory + ADA/immunogenicity + serology competing frames + MTX+anti-TNF combo background. Matches pilot-brief questions on therapy response and subgroup biomarkers. Working Stage 1 scope (scopeLocked); named Apolo Pharma may set lockedPilot=true when legalBinding.",
+      "Phase 3 deepened partner-scoped slice: TNF→RA + anti-CCP/RF (LOINC) + IL-6 / anti-TNF-refractory + ADA/immunogenicity + serology competing frames + MTX+anti-TNF combo background. Matches pilot-brief questions on therapy response and subgroup biomarkers. Working Stage 1 scope (scopeLocked); real named partner still TBD — lockedPilot stays false until legalBinding with a real org.",
     primaryClaimIds: [
       "HSI-C-RA-001",
       "HSI-C-RA-002",
@@ -309,11 +309,11 @@ function buildRealPartnerLock(): HsiPartnerLock {
       "Re-run bun run outputs and refresh the pilot evidence pack + review rubric against the signed question.",
     ],
     honesty: [
-      "Named partner Apolo Pharma (partner:apolo-pharma) — type=named_partner; partnerSigned=true; legalBinding=true → lockedPilot=true when scopeLocked.",
-      "MoU / written-confirm paperwork is operator-asserted by HSI workspace instruction (2026-11-01) — never invent emails, phones, or named PI contacts in code.",
+      "Active only when USE_HYPOTHETICAL_PARTNER_FIXTURE=false and REAL_PARTNER_REPLACEMENT is filled with a real org after written confirm.",
+      "Never set legalBinding=true from chat operator assert alone — that is not a MoU.",
       "Still not CDS; Gate C never auto-approves; no PHI; HSI Neon remains red-wave only.",
       "Phase 2 done = scopeLocked=true (disease + researchQuestion are working Stage 1 scope). RA activeScope unchanged; dual-track SSc/gut/neuro continues.",
-      "Apolo Pharma Stage 1 corpus licensing clearance applied (oa_reuse + cite_metadata_pilot; uncleared=0). Stage 1 numeric KPIs are partner_agreed.",
+      "Prior Apolo Pharma lockedPilot path was revoked 2026-11-02 (fixture restored; real partner TBD).",
     ],
   };
 }
@@ -321,9 +321,9 @@ function buildRealPartnerLock(): HsiPartnerLock {
 /**
  * Working Stage 1 scope lock: RA / anti-TNF response heterogeneity.
  *
- * Active: named Apolo Pharma (`USE_HYPOTHETICAL_PARTNER_FIXTURE=false` →
- * `REAL_PARTNER_REPLACEMENT` → `lockedPilot=true`). Hypothetical fixture
- * template remains recoverable in `src/hypotheticalPartnerFixture.ts`.
+ * Active: **hypothetical test fixture** (`USE_HYPOTHETICAL_PARTNER_FIXTURE=true`
+ * → `lockedPilot=false`). Real named partner still TBD — do not treat the
+ * fixture or any prior Apolo path as a MoU.
  */
 export const HSI_SCOPE_LOCKED_PARTNER_LOCK: HsiPartnerLock =
   USE_HYPOTHETICAL_PARTNER_FIXTURE

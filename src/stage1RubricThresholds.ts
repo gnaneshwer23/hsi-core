@@ -1,11 +1,10 @@
 /**
  * Stage 1 numeric rubric success thresholds.
  *
- * Active path (2026-11-01): **Apolo Pharma** (`partner:apolo-pharma`) —
- * operator-agreed KPIs (`thresholdSource=partner_agreed`).
- *
- * Hypothetical fixture path remains recoverable when
- * `USE_HYPOTHETICAL_PARTNER_FIXTURE=true` (`set_for_test` only).
+ * Active path: **hypothetical test fixture**
+ * (`thresholdSource=hypothetical_test_fixture`, `set_for_test`).
+ * Real `partner_agreed` numbers require a written partner confirm —
+ * never invent from chat. Prior Apolo “partner_agreed” path revoked 2026-11-02.
  *
  * Never set legalBinding / invent a MoU from these cut-offs alone.
  * Still not CDS; Gate C never auto-approves.
@@ -64,25 +63,24 @@ export type Stage1RubricThresholdsBundle = {
 };
 
 /**
- * Apolo Pharma operator-agreed Stage 1 numeric cut-offs (2026-11-01).
+ * Fixture Stage 1 numeric cut-offs (path-testing only).
  *
- * Kept at the prior fixture baseline (12 / 4 / 6) with honest safety margin
- * vs current pack (scoped≈14, competing≈5, LOINC≈8). Gate C pending allowed;
- * acceptance may remain green_with_pending while partnerClearedCount licensing
- * stays open.
+ * Baseline 12 / 4 / 6 with honest safety margin vs current pack
+ * (scoped≈14, competing≈5, LOINC≈8). Gate C pending allowed;
+ * acceptance may remain green_with_pending while real partner / licensing
+ * stay open. Replace with partner-agreed numbers only after written confirm.
  */
-export const APOLO_PARTNER_AGREED_STAGE1_NUMERIC_THRESHOLDS: Stage1NumericThresholds =
-  {
-    minPartnerScopedEdges: 12,
-    minCompetingExplanations: 4,
-    minLoincLinkedClaims: 6,
-    gateCPendingAllowed: true,
-    acceptanceOverallAllowed: "green_with_pending",
-  };
+export const HYPOTHETICAL_STAGE1_NUMERIC_THRESHOLDS: Stage1NumericThresholds = {
+  minPartnerScopedEdges: 12,
+  minCompetingExplanations: 4,
+  minLoincLinkedClaims: 6,
+  gateCPendingAllowed: true,
+  acceptanceOverallAllowed: "green_with_pending",
+};
 
-/** @deprecated Alias — same numbers as Apolo partner-agreed baseline. */
-export const HYPOTHETICAL_STAGE1_NUMERIC_THRESHOLDS =
-  APOLO_PARTNER_AGREED_STAGE1_NUMERIC_THRESHOLDS;
+/** @deprecated Alias — use HYPOTHETICAL_STAGE1_NUMERIC_THRESHOLDS. */
+export const APOLO_PARTNER_AGREED_STAGE1_NUMERIC_THRESHOLDS =
+  HYPOTHETICAL_STAGE1_NUMERIC_THRESHOLDS;
 
 export const HYPOTHETICAL_STAGE1_QUALITATIVE_PLACEHOLDERS: Stage1QualitativeThresholdPlaceholders =
   {
@@ -102,7 +100,7 @@ export function getStage1RubricThresholds(): Stage1RubricThresholdsBundle {
       replaceWithPartnerAgreedThresholds: true,
       partnerId: HYPOTHETICAL_PARTNER_FIXTURE.partner.id,
       agreementKind: "hypothetical_test_only",
-      numeric: { ...APOLO_PARTNER_AGREED_STAGE1_NUMERIC_THRESHOLDS },
+      numeric: { ...HYPOTHETICAL_STAGE1_NUMERIC_THRESHOLDS },
       qualitativeFixturePlaceholders: {
         ...HYPOTHETICAL_STAGE1_QUALITATIVE_PLACEHOLDERS,
       },
@@ -112,6 +110,7 @@ export function getStage1RubricThresholds(): Stage1RubricThresholdsBundle {
         "Does not set legalBinding or invent a MoU.",
         "Gate C pending rows are allowed under this fixture.",
         "acceptanceOverallAllowed=green_with_pending is intentional while licensing / real partner remain open.",
+        "Prior Apolo partner_agreed path revoked 2026-11-02 — not a MoU.",
       ],
     };
   }
@@ -124,15 +123,15 @@ export function getStage1RubricThresholds(): Stage1RubricThresholdsBundle {
     replaceWithPartnerAgreedThresholds: false,
     partnerId: REAL_PARTNER_REPLACEMENT.partner.id,
     agreementKind: REAL_PARTNER_REPLACEMENT.agreementKind,
-    numeric: { ...APOLO_PARTNER_AGREED_STAGE1_NUMERIC_THRESHOLDS },
+    numeric: { ...HYPOTHETICAL_STAGE1_NUMERIC_THRESHOLDS },
     qualitativeFixturePlaceholders: {
       ...HYPOTHETICAL_STAGE1_QUALITATIVE_PLACEHOLDERS,
     },
     honesty: [
-      "thresholdSource=partner_agreed — Apolo Pharma operator-agreed Stage 1 KPIs (2026-11-01).",
-      "partnerId=partner:apolo-pharma; replaceWithPartnerAgreedThresholds=false (already agreed).",
-      "Numeric baseline kept honest: minPartnerScopedEdges=12, minCompetingExplanations=4, minLoincLinkedClaims=6 (pack ≈14/5/8).",
-      "gateCPendingAllowed=true; acceptanceOverallAllowed=green_with_pending (honest while Gate C / uncleared PMIDs remain).",
+      "thresholdSource=partner_agreed — only after a real written partner confirm (template path).",
+      "replaceWithPartnerAgreedThresholds=false once numbers are truly partner-agreed.",
+      "Numeric baseline default: minPartnerScopedEdges=12, minCompetingExplanations=4, minLoincLinkedClaims=6.",
+      "gateCPendingAllowed=true; acceptanceOverallAllowed=green_with_pending.",
       "Does not invent CDS or auto Gate C from these cut-offs.",
     ],
   };

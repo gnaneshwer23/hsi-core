@@ -2,7 +2,7 @@
   "schemaVersion": "hsi-neuroimmune-pack-1",
   "notCds": true,
   "autoApproveIntoKg": false,
-  "generatedAt": "2026-11-01T12:00:00.000Z",
+  "generatedAt": "2026-11-02T05:59:35.647Z",
   "pathway": {
     "id": "neuro-vagus-cholinergic-reflex",
     "label": "Neuroimmune · vagus / cholinergic anti-inflammatory reflex",
@@ -988,7 +988,7 @@
   "honesty": [
     "Systems secondary axis only — Discovery ASK question remains the RA / anti-TNF research question.",
     "SSc dual-track A + gut P1.3 packs untouched; RA Stage 1 scopeLocked packs untouched.",
-    "partnerSigned=true; lockedPilot=true; legalBinding=true; isHypothetical=false — MoU operator-asserted when named; still not CDS.",
+    "partnerSigned=true; lockedPilot=false; legalBinding=false; isHypothetical=true — MoU operator-asserted when named; still not CDS.",
     "Neighbourhood choice: vagus / cholinergic anti-inflammatory reflex — clearest landmark PMID chain vs microglia or BBB atlases.",
     "Human VNS–RA (Koopman) is hypothesized only — never a clinical brain–immune cure claim.",
     "Most mechanism PMIDs are rodent — hsiGrade stays uncertain (source-verified); not human therapeutic claims.",

@@ -96,9 +96,9 @@ describe("P1.1 SSc deepen — cell cards + CL·MONDO hints + PMIDs", () => {
     const lock = getPartnerLock();
     expect(lock.disease?.id).toBe("ra");
     expect(lock.partnerSigned).toBe(true);
-    expect(lock.lockedPilot).toBe(true);
-    expect(lock.isHypothetical).toBe(false);
-    expect(lock.partner?.id).toBe("partner:apolo-pharma");
+    expect(lock.lockedPilot).toBe(false);
+    expect(lock.isHypothetical).toBe(true);
+    expect(lock.partner?.id).toBe("test:hypothetical-isi-pilot-partner");
     expect(lock.scopeLocked).toBe(true);
   });
 });

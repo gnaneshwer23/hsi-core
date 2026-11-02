@@ -25,12 +25,12 @@ describe("P0.2-HSI ISI consume contract + partner flip-readiness", () => {
     expect(bundle.notCds).toBe(true);
     expect(bundle.autoApproveIntoKg).toBe(false);
     expect(bundle.containsPhi).toBe(false);
-    expect(bundle.partnerSigned).toBe(true);
-    expect(bundle.lockedPilot).toBe(true);
-    expect(bundle.productionPartnerSigned).toBe(true);
-    expect(bundle.isHypothetical).toBe(false);
-    expect(bundle.agreementKind).toBe("legal_mou");
-    expect(bundle.legalBinding).toBe(true);
+    expect(bundle.partnerSigned).toBe(true); // fixture path-testing
+    expect(bundle.lockedPilot).toBe(false);
+    expect(bundle.productionPartnerSigned).toBe(false);
+    expect(bundle.isHypothetical).toBe(true);
+    expect(bundle.agreementKind).toBe("hypothetical_test_only");
+    expect(bundle.legalBinding).toBe(false);
     expect(bundle.vertical.askStaysRa).toBe(true);
     expect(bundle.gateC.statusOnPublish).toBe("pending");
     expect(bundle.gateC.autoApprove).toBe(false);
@@ -63,16 +63,16 @@ describe("P0.2-HSI ISI consume contract + partner flip-readiness", () => {
 
     const json = JSON.parse(serializeIsiConsumeContract(bundle));
     expect(json.partnerSigned).toBe(true);
-    expect(json.productionPartnerSigned).toBe(true);
-    expect(json.lockedPilot).toBe(true);
+    expect(json.productionPartnerSigned).toBe(false);
+    expect(json.lockedPilot).toBe(false);
   });
 
-  test("partner flip-readiness: Apolo Pharma named path; KPIs partner_agreed; licensing cleared", () => {
+  test("partner flip-readiness: fixture path; real partner + licensing still pending", () => {
     const lock = getPartnerLock();
     expect(lock.partnerSigned).toBe(true);
-    expect(lock.lockedPilot).toBe(true);
-    expect(lock.isHypothetical).toBe(false);
-    expect(lock.partner?.id).toBe("partner:apolo-pharma");
+    expect(lock.lockedPilot).toBe(false);
+    expect(lock.isHypothetical).toBe(true);
+    expect(lock.partner?.id).toBe("test:hypothetical-isi-pilot-partner");
 
     const bundle = buildPartnerFlipReadinessBundle({
       generatedAt: "2026-11-01T19:00:00.000Z",
@@ -81,22 +81,21 @@ describe("P0.2-HSI ISI consume contract + partner flip-readiness", () => {
 
     expect(bundle.schemaVersion).toBe(PARTNER_FLIP_READINESS_SCHEMA);
     expect(bundle.partnerSigned).toBe(true);
-    expect(bundle.lockedPilot).toBe(true);
-    expect(bundle.summary.readyToFlipPartnerSigned).toBe(true);
-    expect(bundle.summary.readyForRealPartnerReplacement).toBe(false);
-    expect(bundle.summary.pass).toBeGreaterThanOrEqual(6);
-    expect(bundle.summary.blockingIds).not.toContain("licensing");
+    expect(bundle.lockedPilot).toBe(false);
+    expect(bundle.summary.readyToFlipPartnerSigned).toBe(false);
+    expect(bundle.summary.readyForRealPartnerReplacement).toBe(true);
+    expect(bundle.summary.satisfiedByFixture).toBeGreaterThanOrEqual(3);
 
     const byId = Object.fromEntries(
       bundle.flipRequirements.map((r) => [r.id, r]),
     );
-    expect(byId.named_org.status).toBe("pass");
-    expect(byId.question_confirm.status).toBe("pass");
-    expect(byId.shortlist_row.status).toBe("pass");
-    expect(byId.partner_signed_flip.status).toBe("pass");
-    expect(byId.real_partner_replacement.status).toBe("pass");
-    expect(byId.licensing.status).toBe("pass");
-    expect(byId.thresholds.status).toBe("pass");
+    expect(byId.named_org.status).toBe("satisfied_by_fixture");
+    expect(byId.question_confirm.status).toBe("satisfied_by_fixture");
+    expect(byId.shortlist_row.status).toBe("satisfied_by_fixture");
+    expect(byId.partner_signed_flip.status).toBe("satisfied_by_fixture");
+    expect(byId.real_partner_replacement.status).toBe("pending");
+    expect(byId.licensing.status).toBe("pending");
+    expect(byId.thresholds.status).toBe("set_for_test");
 
     for (const r of bundle.flipRequirements) {
       expect([
@@ -109,46 +108,31 @@ describe("P0.2-HSI ISI consume contract + partner flip-readiness", () => {
     }
 
     const json = JSON.parse(serializePartnerFlipReadiness(bundle));
-    expect(json.summary.readyToFlipPartnerSigned).toBe(true);
+    expect(json.summary.readyToFlipPartnerSigned).toBe(false);
     expect(json.partnerSigned).toBe(true);
-    expect(json.lockedPilot).toBe(true);
+    expect(json.lockedPilot).toBe(false);
   });
 
-  test("source licensing stub lists RA/SSc/gut/neuro PMIDs with Apolo Stage 1 clearance", () => {
+  test("source licensing stub keeps curator reviews without partner corpus clearance", () => {
     const bundle = buildSourceLicensingStubBundle({
       generatedAt: "2026-11-01T19:00:00.000Z",
     });
 
     expect(bundle.schemaVersion).toBe(SOURCE_LICENSING_STUB_SCHEMA);
     expect(bundle.phase).toBe("P0.3-reviewed");
-    expect(bundle.partnerSigned).toBe(false);
+    expect(bundle.partnerSigned).toBe(false); // production-trusted signed only; fixture ignored
     expect(bundle.reviewDate).toBe("2026-11-01");
     expect(bundle.reviewMethod.length).toBeGreaterThan(40);
     expect(bundle.summary.pmidCount).toBeGreaterThan(20);
     expect(bundle.summary.needsReviewCount).toBe(0);
     expect(bundle.summary.okOaCount).toBeGreaterThan(0);
     expect(bundle.summary.restrictedCount).toBeGreaterThan(0);
-    expect(bundle.partnerClearance?.partnerId).toBe("partner:apolo-pharma");
-    expect(bundle.summary.partnerClearedCount).toBe(
-      bundle.summary.clearanceScopeCounts.oa_reuse +
-        bundle.summary.clearanceScopeCounts.cite_metadata_pilot,
-    );
-    expect(bundle.summary.partnerClearedCount).toBeGreaterThan(0);
-    expect(bundle.summary.clearanceScopeCounts.oa_reuse).toBe(
-      bundle.summary.okOaCount,
-    );
-    expect(bundle.summary.clearanceScopeCounts.cite_metadata_pilot).toBe(
-      bundle.summary.restrictedCount + bundle.summary.okCiteCount,
-    );
+    // Fixture: no named-partner clearance applied
+    expect(bundle.partnerClearance).toBeFalsy();
+    expect(bundle.summary.partnerClearedCount).toBe(0);
     expect(bundle.summary.clearanceScopeCounts.uncleared).toBe(
-      bundle.summary.unknownCount,
+      bundle.summary.pmidCount,
     );
-    expect(
-      bundle.summary.okCiteCount +
-        bundle.summary.okOaCount +
-        bundle.summary.restrictedCount +
-        bundle.summary.unknownCount,
-    ).toBe(bundle.summary.pmidCount);
 
     const packs = new Set(bundle.rows.flatMap((r) => r.packs));
     expect(packs.has("ra_tnf")).toBe(true);
@@ -157,55 +141,29 @@ describe("P0.2-HSI ISI consume contract + partner flip-readiness", () => {
     expect(packs.has("neuro_vagus")).toBe(true);
 
     const allowed = new Set(["ok_cite", "ok_oa", "restricted", "unknown"]);
-    const scopes = new Set([
-      "oa_reuse",
-      "cite_metadata_pilot",
-      "uncleared",
-    ]);
     for (const r of bundle.rows) {
       expect(allowed.has(r.licenseStatus)).toBe(true);
-      expect(scopes.has(r.clearanceScope)).toBe(true);
+      expect(r.clearanceScope).toBe("uncleared");
+      expect(r.partnerCleared).toBe(false);
       expect(r.pmid).toMatch(/^\d+$/);
       expect(r.europePmcUrl).toContain(r.pmid);
-      if (r.licenseStatus === "ok_oa") {
-        expect(r.partnerCleared).toBe(true);
-        expect(r.clearanceScope).toBe("oa_reuse");
-      } else if (r.licenseStatus === "restricted" || r.licenseStatus === "ok_cite") {
-        expect(r.partnerCleared).toBe(true);
-        expect(r.clearanceScope).toBe("cite_metadata_pilot");
-        expect(r.partnerClearanceNote).toContain("does NOT grant full-text");
-      } else {
-        expect(r.partnerCleared).toBe(false);
-        expect(r.clearanceScope).toBe("uncleared");
-        expect(r.partnerClearanceNote).toContain("needs_confirm");
-      }
     }
 
     const byPmid = new Map(bundle.rows.map((r) => [r.pmid, r]));
     expect(byPmid.get("11244034")?.licenseStatus).toBe("restricted"); // RA TNF
-    expect(byPmid.get("11244034")?.clearanceScope).toBe("cite_metadata_pilot");
     expect(byPmid.get("30760472")?.licenseStatus).toBe("restricted"); // SSc
     expect(byPmid.get("24226770")?.licenseStatus).toBe("restricted"); // gut butyrate
     expect(byPmid.get("10839541")?.licenseStatus).toBe("restricted"); // neuro vagus
     expect(byPmid.get("24586782")?.licenseStatus).toBe("ok_oa"); // PLOS CC BY
-    expect(byPmid.get("24586782")?.clearanceScope).toBe("oa_reuse");
     expect(byPmid.get("37763102")?.licenseStatus).toBe("ok_oa"); // MDPI CC BY
-    expect(byPmid.get("27382171")?.licenseStatus).toBe("ok_cite"); // PNAS free, no CC → cite pilot
-    expect(byPmid.get("27382171")?.clearanceScope).toBe("cite_metadata_pilot");
-    expect(byPmid.get("19625695")?.licenseStatus).toBe("ok_cite"); // J Nutr Elsevier userlicense ≠ CC
-    expect(byPmid.get("19625695")?.clearanceScope).toBe("cite_metadata_pilot");
-    expect(byPmid.get("34031030")?.clearanceScope).toBe("cite_metadata_pilot");
-    expect(bundle.summary.clearanceScopeCounts.uncleared).toBe(0);
-    expect(bundle.summary.partnerClearedCount).toBe(bundle.summary.pmidCount);
+    expect(byPmid.get("27382171")?.licenseStatus).toBe("ok_cite"); // PNAS free, no CC
+    expect(byPmid.get("19625695")?.licenseStatus).toBe("ok_cite"); // J Nutr
     expect(byPmid.get("24350901")?.licenseStatus).toBe("restricted"); // CXCL4 NEJM
     expect(byPmid.get("24226773")?.licenseStatus).toBe("restricted"); // Arpaia Nature
     expect(byPmid.get("11901203")?.licenseStatus).toBe("ok_oa"); // Bernik JEM
 
     const json = JSON.parse(serializeSourceLicensingStub(bundle));
-    expect(json.summary.partnerClearedCount).toBeGreaterThan(0);
-    expect(json.summary.clearanceScopeCounts.uncleared).toBe(
-      bundle.summary.unknownCount,
-    );
+    expect(json.summary.partnerClearedCount).toBe(0);
     expect(json.summary.needsReviewCount).toBe(0);
   });
 });

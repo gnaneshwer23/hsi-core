@@ -168,9 +168,9 @@ describe("systems vision axes stubs", () => {
     expect(lock.scopeLocked).toBe(true);
     expect(lock.disease?.id).toBe("ra");
     expect(lock.partnerSigned).toBe(true);
-    expect(lock.lockedPilot).toBe(true);
-    expect(lock.isHypothetical).toBe(false);
-    expect(lock.partner?.id).toBe("partner:apolo-pharma");
+    expect(lock.lockedPilot).toBe(false);
+    expect(lock.isHypothetical).toBe(true);
+    expect(lock.partner?.id).toBe("test:hypothetical-isi-pilot-partner");
 
     const bundle = buildSystemsVisionBundle();
     const ra = bundle.immuneCellSpine.diseaseVerticals.find((d) => d.id === "ra");

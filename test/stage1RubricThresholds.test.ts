@@ -1,6 +1,5 @@
 import { describe, expect, test } from "bun:test";
 import {
-  APOLO_PARTNER_AGREED_STAGE1_NUMERIC_THRESHOLDS,
   HYPOTHETICAL_STAGE1_NUMERIC_THRESHOLDS,
   buildPilotAcceptancePack,
   buildPilotEvidencePack,
@@ -9,15 +8,13 @@ import {
   getStage1RubricThresholds,
 } from "../src/index";
 
-describe("Stage 1 rubric thresholds (Apolo Pharma partner_agreed)", () => {
-  test("exposes Apolo Pharma operator-agreed KPIs (2026-11-01)", () => {
+describe("Stage 1 rubric thresholds (hypothetical fixture)", () => {
+  test("exposes fixture numeric cut-offs with honesty flags", () => {
     const th = getStage1RubricThresholds();
-    expect(th.thresholdSource).toBe("partner_agreed");
-    expect(th.thresholdStatus).toBe("partner_agreed");
-    expect(th.replaceWithPartnerAgreedThresholds).toBe(false);
-    expect(th.partnerId).toBe("partner:apolo-pharma");
-    expect(th.agreementKind).toBe("legal_mou");
-    expect(th.numeric).toEqual(APOLO_PARTNER_AGREED_STAGE1_NUMERIC_THRESHOLDS);
+    expect(th.thresholdSource).toBe("hypothetical_test_fixture");
+    expect(th.thresholdStatus).toBe("set_for_test");
+    expect(th.replaceWithPartnerAgreedThresholds).toBe(true);
+    expect(th.partnerId).toBe("test:hypothetical-isi-pilot-partner");
     expect(th.numeric).toEqual(HYPOTHETICAL_STAGE1_NUMERIC_THRESHOLDS);
     expect(th.numeric.minPartnerScopedEdges).toBe(12);
     expect(th.numeric.minCompetingExplanations).toBe(4);
@@ -26,7 +23,7 @@ describe("Stage 1 rubric thresholds (Apolo Pharma partner_agreed)", () => {
     expect(th.numeric.acceptanceOverallAllowed).toBe("green_with_pending");
   });
 
-  test("current RA/TNF pack meets partner-agreed numeric cut-offs", () => {
+  test("current RA/TNF pack meets fixture numeric cut-offs", () => {
     const pack = buildPilotEvidencePack({
       generatedAt: "2026-11-01T21:00:00.000Z",
     });
@@ -38,13 +35,13 @@ describe("Stage 1 rubric thresholds (Apolo Pharma partner_agreed)", () => {
     expect(ev.gateCPending).toBeGreaterThan(0);
   });
 
-  test("rubric + acceptance surface partner_agreed thresholds (licensing cleared)", () => {
+  test("rubric + acceptance surface set_for_test (not forever-pending)", () => {
     const rubric = buildPilotReviewRubric({
       generatedAt: "2026-11-01T21:00:00.000Z",
     });
-    expect(rubric.summary.thresholdStatus).toBe("partner_agreed");
+    expect(rubric.summary.thresholdStatus).toBe("set_for_test");
     expect(rubric.checklist.find((c) => c.id === "x-3")?.status).toBe(
-      "ready_for_human",
+      "set_for_test",
     );
 
     const acceptance = buildPilotAcceptancePack({
@@ -52,11 +49,9 @@ describe("Stage 1 rubric thresholds (Apolo Pharma partner_agreed)", () => {
       rubric,
     });
     expect(acceptance.criteria.find((c) => c.id === "ac-thresholds")?.status).toBe(
-      "pass",
-    );
-    expect(acceptance.criteria.find((c) => c.id === "ac-partner-signed")?.status).toBe(
-      "pass",
+      "set_for_test",
     );
     expect(acceptance.summary.overallStage1Acceptance).toBe("green_with_pending");
+    expect(acceptance.summary.setForTest).toBeGreaterThanOrEqual(1);
   });
 });

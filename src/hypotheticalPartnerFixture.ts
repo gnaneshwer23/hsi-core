@@ -1,25 +1,35 @@
 /**
- * Partner fixture swap point — single place to flip hypothetical → named org.
+ * TEST FIXTURE PARTNER — single swap point for a real org.
  *
- * Active path (2026-11-01): **Apolo Pharma** (`partner:apolo-pharma`).
- * MoU / written-confirm paperwork is **operator-asserted** by workspace
- * instruction — never invent emails, phone numbers, or named PI contacts.
+ * ┌─────────────────────────────────────────────────────────────┐
+ * │  TEST FIXTURE — replace before real pilot                   │
+ * │  Not a MoU / MoA / named legal partner.                     │
+ * │  Production ISI must ignore unless ALLOW_HYPOTHETICAL_PARTNER │
+ * └─────────────────────────────────────────────────────────────┘
  *
- * Honesty: still **not CDS**; Gate C never auto-approves; RA Stage 1
- * `activeScope` unchanged; dual-track SSc / gut / neuro continues.
+ * Honesty (2026-11-02 correction): a prior path briefly treated
+ * “Apolo Pharma” as `legal_mou` / `lockedPilot=true` under an
+ * operator-asserted MoU. That was **not** a real partnership.
+ * Active path is the **hypothetical test fixture** again. Real named
+ * partner remains **TBD**. Do not treat any fixture or operator chat
+ * instruction as a MoU.
  *
- * ## How this file works
+ * ## How to replace with a real partner
  *
- * 1. `USE_HYPOTHETICAL_PARTNER_FIXTURE = false` → `REAL_PARTNER_REPLACEMENT`
- *    feeds `partnerLock.ts` (`legalBinding` → `lockedPilot`).
- * 2. Keep `HYPOTHETICAL_PARTNER_FIXTURE` as a recoverable test template only.
- * 3. Record the org in `docs/ISI_PILOT_PARTNER_SHORTLIST.md` (no invented emails).
- * 4. Rubric thresholds for Apolo Pharma are `partner_agreed`
- *    (`src/stage1RubricThresholds.ts`; operator-agreed 2026-11-01).
- * 5. Re-run `bun run outputs` after edits.
+ * 1. Set `USE_HYPOTHETICAL_PARTNER_FIXTURE = false`.
+ * 2. Fill `REAL_PARTNER_REPLACEMENT` (id, label, type=`named_partner`, …)
+ *    only after written confirm — never invent org MoUs from chat.
+ * 3. Set `agreementKind` to a real confirm kind, `legalBinding=true`,
+ *    `replaceWithRealPartner=false`, `isHypothetical=false`.
+ * 4. Record the org in `docs/ISI_PILOT_PARTNER_SHORTLIST.md` (no invented emails).
+ * 5. Agree licensing + rubric thresholds with that partner; then `bun run outputs`.
+ *
+ * `partnerSigned=true` here is **path-testing only** under
+ * `agreementKind: hypothetical_test_only`. `lockedPilot` stays false until
+ * `legalBinding=true` (see `partnerLock.ts`).
  */
 
-export const USE_HYPOTHETICAL_PARTNER_FIXTURE = false as boolean;
+export const USE_HYPOTHETICAL_PARTNER_FIXTURE = true as boolean;
 
 /** Env flag production ISI / Discovery consumers should require before trusting fixture partnerSigned. */
 export const ALLOW_HYPOTHETICAL_PARTNER_ENV = "ALLOW_HYPOTHETICAL_PARTNER";
@@ -51,8 +61,8 @@ export type HypotheticalPartnerFixtureFields = {
 };
 
 /**
- * Recoverable hypothetical fixture template (inactive while
- * USE_HYPOTHETICAL_PARTNER_FIXTURE=false).
+ * Active hypothetical fixture. Edit THIS object (or flip
+ * USE_HYPOTHETICAL_PARTNER_FIXTURE) when swapping to a real partner.
  */
 export const HYPOTHETICAL_PARTNER_FIXTURE: HypotheticalPartnerFixtureFields = {
   partner: {
@@ -76,21 +86,21 @@ export const HYPOTHETICAL_PARTNER_FIXTURE: HypotheticalPartnerFixtureFields = {
 };
 
 /**
- * Active named partner (Apolo Pharma). MoU paperwork is operator-asserted
- * by user instruction — do not invent emails / phones / PI names.
+ * Template for the real partner swap. Fill when USE_HYPOTHETICAL_PARTNER_FIXTURE=false.
+ * Do not invent org names, emails, or MoUs — including from chat “operator assert”.
  */
 export const REAL_PARTNER_REPLACEMENT = {
   partner: {
-    id: "partner:apolo-pharma",
-    label: "Apolo Pharma",
+    id: "named:REPLACE_WITH_REAL_ORG_SLUG",
+    label: "REPLACE WITH REAL ORG NAME",
     type: "named_partner" as const,
-    region: "unspecified" as const,
+    region: "UK" as const,
     contactChannel: "programme_introduction" as const,
     outreachStatus: "confirmed" as const,
     notes:
-      "Named pilot partner Apolo Pharma (id partner:apolo-pharma). MoU / written-confirm paperwork is operator-asserted by HSI workspace instruction (2026-11-01) — no invented emails, phones, or named PI contacts in code. Still not CDS; Gate C never auto-approves. RA Stage 1 activeScope unchanged; dual-track SSc/gut/neuro continues. Stage 1 numeric KPIs partner_agreed (2026-11-01); Stage 1 corpus licensing clearance applied (oa_reuse + cite_metadata_pilot; uncleared=0).",
+      "Replace after written confirmation of disease + research question. Record shortlist row. Still no invented emails. Prior Apolo Pharma lock was revoked as non-MoU (2026-11-02).",
   },
-  agreementKind: "legal_mou" as PartnerAgreementKind,
+  agreementKind: "written_confirm" as PartnerAgreementKind,
   replaceWithRealPartner: false,
   legalBinding: true,
   isHypothetical: false,

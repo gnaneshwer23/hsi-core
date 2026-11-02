@@ -82,7 +82,7 @@ describe("P1.4 first-class systems/ISI predicates on HSI_EDGE_TYPES", () => {
     const lock = getPartnerLock();
     expect(lock.scopeLocked).toBe(true);
     expect(lock.disease?.id).toBe("ra");
-    expect(lock.lockedPilot).toBe(true);
+    expect(lock.lockedPilot).toBe(false);
 
     expect(HSI_NI_SEED_EDGES.some((e) => e.id === "HSI-E-NI-001")).toBe(true);
   });

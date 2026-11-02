@@ -58,7 +58,7 @@ describe("P2.0 curator-confirmed CL/MONDO binds", () => {
 
     const lock = getPartnerLock();
     expect(lock.disease?.id).toBe("ra");
-    expect(lock.lockedPilot).toBe(true);
+    expect(lock.lockedPilot).toBe(false);
     expect(lock.scopeLocked).toBe(true);
   });
 });
