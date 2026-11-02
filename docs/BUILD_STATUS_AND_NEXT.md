@@ -168,7 +168,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | P3.2 REINVENT4 thin adapter spike | `14f8412` |
 | P3.3 FAIR ESM-2 thin embedding stub | `1c22662` |
 | P0.2-HSI ISI consume + partner flip-readiness (+ P0.3 licensing stub) | `6b4779e` |
-| P1.6 curator UX (richer gap/Gate C + `/curator`) | see HEAD after P1.6 land |
+| P1.6 curator UX (richer gap/Gate C + `/curator`) | `e6dd2be` |
 
 Reproduce: `bun test && bun run outputs && bun run site:dev` → `/discovery`, `/curator`, `/akeno`, `/aksh-agents`.
 
