@@ -186,6 +186,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 | P2.0 curator-confirmed CL/MONDO binds | `1cd360e` |
 | P2.1 operator-authorized Gate C session | `353abeb` |
 | P2.2-ISI cite-ready path (immunecity) | `82cc0b1` |
+| Partner honesty fix (fixture restored; Apolo MoU revoked) | `d00ad06` |
 
 Reproduce: `bun test && bun run outputs && bun run site:dev` → `/discovery`, `/curator`, `/akeno`, `/aksh-agents`.  
 Decisions dry-run: `bun run curator-ux --dry-run --decisions examples/gate-c-decisions/awaiting.empty.json`.
