@@ -284,7 +284,8 @@ One-sprint-sized items. Mark **[DECISION]** where the user must choose before co
 | P2.0 | **DONE:** Curator-confirmed CL/MONDO binds | 18 spine + SSc core cards; myeloid/ILC/mast + subset frames stay hint_only |
 | P2.1 | **DONE:** Operator-authorized Gate C human session | 13 mapped REL handoffs approved on autumn-snow + curator-ux; operator identity; productionApproved=false |
 | P2.2-ISI | **DONE:** Cite-ready path after Gate C (immunecity) | `citeReadyAfterGateC` queue + pin overlay; seed `hsi-gate-c-cite-*` unreviewed evidence (13); Check→supports→Approve still human on `/curation`; never auto-approves / never flips `hsiGrade` |
-| **NEXT** | **Resolve real pilot partner + one question** | Fixture restored (this fix). Outreach for one real research partner; prove RA/TNF packs answer their question. Parallel: human cite Check→supports→Approve on 13 seeds. Still no auto-approve / no `hsiGrade` flip / no invent MoU / no live CDS. |
+| P2.3-ISI | **DONE:** Identifier Check on 13 cite candidates | `check-cite-candidates-from-gate-c.ts` → 13/13 verified; `cite-check-worksheet.json`; `/curation?hsi=cite` filter; claim_support still unassessed; curation still unreviewed |
+| **NEXT** | **Human claim_support → Approve on 13 cites · real partner** | Curators re-read S-P-O vs PMID and set supports/partial/contradicts then Approve (no bulk invent). Parallel: outreach for one real research partner + question. Still no auto-approve / no `hsiGrade` flip / no invent MoU / no live CDS. |
 
 ### Out-of-repo (track; do not implement here)
 

@@ -244,6 +244,8 @@ Run these in an **immunecity** checkout / agent session (not hsi-core):
 
 **P2.2-ISI cite path (2026-11-02):** after Discovery Gate C `human_approved`, immunecity overlays the decisions pin into `buildHsiBridgeCurationQueue` → `citeReadyAfterGateC`; `/curation` panel lists cite-ready RELs; `scripts/seed-cite-candidates-from-gate-c.ts` inserts autumn-snow `evidence_records` with `curation=unreviewed` + `claim_support=unassessed` only (`hsi-gate-c-cite-*`). Never sets approved/supports automatically. Human Check→supports→Approve still required.
 
+**P2.3-ISI cite Check (2026-11-02):** `scripts/check-cite-candidates-from-gate-c.ts` runs PubMed identifier checks on the 13 `hsi-gate-c-cite-*` rows (13/13 verified); writes `public/hsi-discovery/cite-check-worksheet.json`; `/curation?hsi=cite` filters the queue. Still does **not** set `claim_support=supports` or `curation=approved` — human S-P-O assessment required.
+
 ---
 
 ## 9. Acceptance tests (consumer-side)
