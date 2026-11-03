@@ -1,4 +1,9 @@
+import { Link } from "react-router-dom";
 import { PageHero } from "../components/PageHero";
+import {
+  ECOSYSTEM_PRODUCTS,
+  MATURITY_CHIP_LABEL,
+} from "../lib/productMaturity";
 
 const phases = [
   {
@@ -43,8 +48,40 @@ export function Roadmap() {
             <span className="accent">Not the product story.</span>
           </>
         }
-        lede="P0–P3 detail for contributors. The homepage leads with what HSI Core enables now — evidence backbone for immune-science discovery. Pilot-first: one research workflow before more platform."
+        lede="P0–P3 detail for contributors. Product maturity (Available · In development · Planned) is the living ledger on /status — summarised here so the roadmap stays honest."
       />
+
+      <section className="section section-grid-light" id="maturity">
+        <div className="container">
+          <div className="section-head">
+            <span className="section-num">PRODUCT MATURITY</span>
+            <h2 className="display display-md">Available · In development · Planned.</h2>
+          </div>
+          <p className="lede" style={{ maxWidth: "40rem" }}>
+            Four-product honesty chips. The full column matrix and demo notes live on the
+            canonical <Link to="/status">/status</Link> page.
+          </p>
+          <div className="product-grid roadmap-maturity-grid">
+            {ECOSYSTEM_PRODUCTS.map((p) => (
+              <article key={p.id} className="product-card">
+                <div className="product-card-head">
+                  <h3>{p.name}</h3>
+                  <span className={`maturity-chip maturity-chip-${p.chip}`}>
+                    {MATURITY_CHIP_LABEL[p.chip]}
+                  </span>
+                </div>
+                <p className="xs muted">{p.chipDetail}</p>
+              </article>
+            ))}
+          </div>
+          <p className="maturity-foot">
+            Full Available / In development / Planned columns:{" "}
+            <Link to="/status">/status</Link>
+            {" · "}
+            Demos: <Link to="/status#demos">/status#demos</Link>
+          </p>
+        </div>
+      </section>
 
       <section className="section section-ink">
         <div className="container">

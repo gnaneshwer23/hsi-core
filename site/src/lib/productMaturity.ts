@@ -1,6 +1,6 @@
 /**
  * Public honesty — four products + Available / In development / Planned.
- * Single source for Home, /products, /status. Update when founder signs a status change.
+ * Single source for /status, /products, /roadmap maturity. Update when founder signs a status change.
  * Engineering surfaces (Curator, Systems, Alignment) are secondary — not primary CTAs.
  */
 

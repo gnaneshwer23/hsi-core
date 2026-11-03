@@ -1,92 +1,75 @@
 import { Link } from "react-router-dom";
-import { ENGINEERING_LINKS } from "../lib/productMaturity";
+
+const PLATFORM_LINKS = [
+  { to: "/platform", label: "Platform" },
+  { to: "/products", label: "Products" },
+  { to: "/how-it-works", label: "How it works" },
+  { to: "/explore", label: "Explore" },
+  { to: "/discovery", label: "Discovery" },
+] as const;
+
+const PRODUCT_LINKS = [
+  { to: "/for-aksh", label: "For Aksh" },
+  { to: "/for-trials", label: "For Trials" },
+  { to: "/for-isi", label: "For ISI research" },
+] as const;
+
+const PROGRESS_LINKS = [
+  { to: "/status", label: "Status" },
+  { to: "/roadmap", label: "Roadmap" },
+] as const;
 
 export function Footer() {
   return (
     <footer className="footer">
       <div className="container footer-grid">
-        <div>
+        <div className="footer-brand-col">
           <div className="footer-brand">HSI</div>
-          <p className="muted" style={{ maxWidth: "22rem", fontSize: "1rem" }}>
-            One ecosystem, four products. Evidence backbone for immune-science discovery.
-            Not clinical decision support.
+          <p className="footer-tagline">
+            Evidence backbone for immune-science discovery. Research intelligence — not
+            clinical decision support.
           </p>
+          <p className="footer-honesty">
+            No PHI · no invented MoU.
+          </p>
+          <Link to="/status" className="footer-status-link">
+            What&apos;s available <span aria-hidden="true">→</span>
+          </Link>
         </div>
         <div>
-          <h4>Products</h4>
+          <h4>Platform</h4>
           <ul>
-            <li>
-              <Link to="/platform">Platform</Link>
-            </li>
-            <li>
-              <Link to="/how-it-works">How it works</Link>
-            </li>
-            <li>
-              <Link to="/products">Four products</Link>
-            </li>
-            <li>
-              <Link to="/explore">Explore evidence</Link>
-            </li>
-            <li>
-              <Link to="/discovery-engine">Discovery engine</Link>
-            </li>
-            <li>
-              <Link to="/discovery">Discovery Centre</Link>
-            </li>
-            <li>
-              <Link to="/status">Status (Available / In-dev / Planned)</Link>
-            </li>
-            <li>
-              <Link to="/for-isi">ISI (research · Available)</Link>
-            </li>
-            <li>
-              <Link to="/for-aksh">Aksh (scoped · Available)</Link>
-            </li>
-            <li>
-              <Link to="/for-trials">Trials (Planned)</Link>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h4>Trust</h4>
-          <ul>
-            <li>
-              <Link to="/evidence">Evidence &amp; Gate C</Link>
-            </li>
-            <li>
-              <span className="muted">Research intelligence ≠ CDS</span>
-            </li>
-            <li>
-              <span className="muted">Human Gate C only</span>
-            </li>
-            <li>
-              <span className="muted">Never “confirmed eligible”</span>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h4>Engineering (secondary)</h4>
-          <ul>
-            {ENGINEERING_LINKS.map((l) => (
+            {PLATFORM_LINKS.map((l) => (
               <li key={l.to}>
                 <Link to={l.to}>{l.label}</Link>
               </li>
             ))}
-            <li>
-              <a
-                href="https://github.com/gnaneshwer23/hsi-core"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Repository ↗
-              </a>
-            </li>
+          </ul>
+        </div>
+        <div>
+          <h4>Products</h4>
+          <ul>
+            {PRODUCT_LINKS.map((l) => (
+              <li key={l.to}>
+                <Link to={l.to}>{l.label}</Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h4>Progress</h4>
+          <ul>
+            {PROGRESS_LINKS.map((l) => (
+              <li key={l.to}>
+                <Link to={l.to}>{l.label}</Link>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
       <div className="container footer-bottom">
-        <span>HSI · four-product ecosystem honesty</span>
-        <span>No PHI · no invented MoU · no fake Available chips</span>
+        <span>HSI · four-product ecosystem</span>
+        <Link to="/status">Available · In development · Planned</Link>
       </div>
     </footer>
   );

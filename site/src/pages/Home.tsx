@@ -3,13 +3,12 @@ import { PlatformEngine } from "../components/landing/PlatformEngine";
 import { EcosystemGrid } from "../components/landing/EcosystemGrid";
 import { EvidenceExplorer } from "../components/landing/EvidenceExplorer";
 import { DiscoveryWorkbench } from "../components/landing/DiscoveryWorkbench";
-import { STATUS_COLUMNS } from "../lib/productMaturity";
 
 /**
  * HSI marketing homepage — founder first-batch HTML sections composed as:
  * 01 connected-by-design fabric (PlatformEngine) → 02 ecosystem →
- * 03 explore → 04 discovery engine → honesty / status.
- * Note: later Downloads/index.html re-export is HSI Clinical, not §01.
+ * 03 explore → 04 discovery engine → boundaries / CTA.
+ * Maturity ledger lives on /status (and is surfaced from /roadmap) — not here.
  */
 export function Home() {
   return (
@@ -55,45 +54,14 @@ export function Home() {
             <details>
               <summary>What is live today?</summary>
               <p>
-                See the status columns below and the canonical{" "}
-                <Link to="/status">/status</Link> page before treating any CTA as a live
+                See the canonical{" "}
+                <Link to="/status">/status</Link> maturity ledger (Available · In development
+                · Planned), also linked from the{" "}
+                <Link to="/roadmap">roadmap</Link>, before treating any CTA as a live
                 clinical product.
               </p>
             </details>
           </div>
-        </div>
-      </section>
-
-      <section className="section section-bone">
-        <div className="container">
-          <div className="section-head">
-            <span className="section-num">STATUS</span>
-            <h2 className="display display-md">Available · In development · Planned.</h2>
-          </div>
-          <div className="maturity-grid status-columns">
-            {STATUS_COLUMNS.map((col) => (
-              <article
-                key={col.id}
-                className={`maturity-card status-col status-col-${col.id}`}
-              >
-                <h3>{col.title}</h3>
-                <ul>
-                  {col.items.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-          </div>
-          <p className="maturity-foot">
-            Canonical page: <Link to="/status">/status</Link>
-            {" · "}
-            Deep links: <Link to="/platform">/platform</Link>
-            {" · "}
-            <Link to="/explore">/explore</Link>
-            {" · "}
-            <Link to="/discovery-engine">/discovery-engine</Link>
-          </p>
         </div>
       </section>
 
