@@ -1,3 +1,30 @@
+## Homepage redesign — 2026-11-03
+
+The public homepage now uses `pages/Home.tsx` and scoped `styles/home.css`.
+It replaces the homepage instances of PlatformEngine, EcosystemGrid and
+DiscoveryWorkbench; those components remain available on their specialist routes.
+
+- Narrative: health question → biological context → traceable evidence → human review.
+- Aksh Health, ISI and HSI are explained as distinct experiences and a shared
+  technology foundation, with separate product databases and access controls.
+- Original SVG/CSS illustrations require no remote image service or stock licence.
+- The four-area context selector is an explanatory interaction. It does not query
+  the knowledge graph, analyse patients or represent validated research findings.
+- Homepage CTAs lead to public explanatory pages. Engineering destinations were
+  removed from the shared mobile menu. This is navigation cleanup, not an
+  authentication change to existing routes.
+- Responsive grid, keyboard-operated tabs, visible focus states, skip link,
+  Escape-to-close menu and SVG arrow icons support desktop and mobile use.
+- Homepage metadata and footer colour were aligned with the new presentation.
+
+Verification: production Vite build, site TypeScript check, and Chromium smoke
+checks at 320/390/768/1440px. Checked tabs, keyboard navigation, anchor scrolling,
+mobile menu, all six homepage route destinations and absence of browser errors.
+The build continues to report the existing large application bundle warning.
+Live deployment confirmation is a separate check after the GitHub push.
+
+---
+
 # Design notes — structure + style tokens
 
 Read-only reference: local Unkapped.ai saveweb2zip dump
