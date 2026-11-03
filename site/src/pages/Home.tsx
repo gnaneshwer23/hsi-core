@@ -41,7 +41,7 @@ export function Home() {
             <p className="hsi-editorial-lede">Connecting human biology, scientific evidence and health intelligence — from discovery to the person, with context and human oversight.</p>
             <div className="hsi-editorial-actions"><Link className="hsi-editorial-button" to="/platform">Explore the platform <span aria-hidden="true">↗</span></Link><Link className="hsi-editorial-textlink" to="/products">Meet the ecosystem <span aria-hidden="true">↗</span></Link></div>
           </div>
-          <div className="hsi-editorial-visual"><ConnectionArt/><div className="hsi-editorial-visual-note"><span>01 — 04 / CONNECTED INTELLIGENCE</span><span>CONCEPTUAL SYSTEM VIEW</span></div></div>
+          <div className="hsi-editorial-visual"><ConnectionArt/><div className="hsi-editorial-visual-note"><span>01 — 04 / CONNECTED INTELLIGENCE</span><span>Illustrative connections · not study findings or patient analysis</span></div></div>
         </div>
         <div className="hsi-editorial-bottomline"><span>EXPLORE <b>•</b> CONNECT <b>•</b> UNDERSTAND <b>•</b> DISCOVER</span><Link to="/how-it-works">SEE HOW IT WORKS ↗</Link></div>
       </div>
