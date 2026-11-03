@@ -12,7 +12,75 @@ The next research milestone is a focused, measurable RA evidence-review workflow
 The broader vision remains; an Aksh feature freeze has not been authorised by the
 uploaded strategy document.
 
-**What has been implemented and pushed**
+**The wider vision Cursor must preserve**
+
+Build a connected health and biomedical intelligence ecosystem that links a
+person's health over time with the biology, evidence and research that help
+explain disease and treatment. The experience should let a user follow a question
+through connected records, graph relationships, exact sources, uncertainty and
+human review, rather than stop at a disconnected dashboard or chatbot answer.
+
+The intended roles are:
+
+| Product / technology | Role in the vision |
+| --- | --- |
+| Aksh Health | The person and care-workflow layer: authorised longitudinal observations, laboratory results, CGM, medicines, symptoms, nutrition, activity, sleep and treatment experiences. Keep its interface, permissions, clinical workflows and database. |
+| Immune Super Intelligence | The specialist scientific layer: immune cells, tissues, cytokines, receptors, pathways, biomarkers, diseases, interventions and source evidence. Explain context, support, counterevidence and gaps through the existing KG and scientific workspace. |
+| Human Super Intelligence | The reusable intelligence foundation and wider reasoning experience: shared contracts, graph retrieval, evidence evaluation, investigation orchestration, provenance, human review and versioned learning. These capabilities must execute inside the products through their own authorised backend adapters. |
+| Future HSI Clinical and HSI Trials experiences | Governed clinical-history views and explainable research/trial screening, built on validated integrations. These are intended extensions, not a claim that universal EHR access or production eligibility decisions already exist. |
+
+Connect immunology with gut, brain and metabolic health, including diabetes, as
+evidence coverage and validation permit. The original multi-condition scenarios
+remain a way to test connected interactions; they do not substitute for scientific
+or clinical evidence. Start by proving one bounded RA/anti-TNF research workflow,
+then reuse the validated technology across indications.
+
+The intended end-to-end experience is:
+
+1. View an authorised health timeline or ask a defined research question.
+2. Resolve relevant observations and concepts to their biological context.
+3. Traverse existing graph relationships to cells, tissues, pathways, disease,
+   interventions, evidence and, where available, registered studies.
+4. Inspect exact source passages and their species/sample/setting; retain both
+   supporting and opposing findings and make missing information visible.
+5. Form a traceable research question or testable hypothesis, with its limitations.
+6. Record an appropriate expert's assessment; use governed clinical/trial review
+   when a later product enters those domains.
+7. Feed permitted corrections and validated outcomes into versioned evidence and
+   separately governed training/evaluation releases.
+
+For example, RA/anti-TNF research should connect TNF, relevant immune/tissue
+context, the existing RA/therapy graph relationships and source passages, then
+help reviewers examine response heterogeneity. A serology finding must not become
+an automatic treatment recommendation or a false claim about treatment efficacy.
+
+The knowledge layer may connect references across systems while each system
+retains ownership and access control. Shared technology does not require a shared
+patient database. HSI's current research substrate remains PHI-free; patient
+records and clinical actions stay in their authorised product/clinical plane.
+Future patient-linked research must use purpose-limited, authorised interfaces
+and appropriate research-safe outputs.
+
+Build against interchangeable, versioned data adapters so engineering scenarios
+can later use properly licensed or consented sources with the same provenance and
+permission checks. Real-use release also requires the relevant independent
+validation. Synthetic workflow success alone does not establish clinical fitness.
+
+Keep public landing pages professional and accurate. Put protected investigation,
+curation and engineering tools in the internal workspace. The larger vision is
+the destination; the next task below is a concrete step toward it, not permission
+to add every future capability or broaden the current data boundary at once.
+
+**Execution-state note**
+
+The implementation summary and task checklist below record the original handoff
+at `af63ee5`. Subsequent Cursor commit `2478612` adds the RA artifact-export path,
+readiness handling and annotation templates, and updates the source-import status.
+Read the current [RA implementation status](RA_ANTI_TNF_EVIDENCE_RELEASE.md) and
+inspect all current repository heads before treating a checklist item as missing.
+Preserve that newer work; use the vision above to guide the remaining gaps.
+
+**What had been implemented and pushed at the original handoff**
 
 | Area | Implemented behaviour |
 | --- | --- |
@@ -37,7 +105,7 @@ Validated code baselines before this documentation handoff:
   compatibility changes. Preserve subsequent work too.
 - `hsi-sources` is a frozen archive; do not develop there. DeliverX is unrelated.
 
-**What remains incomplete**
+**What remained incomplete at the original handoff**
 
 `research/ra-anti-tnf/release.json` is explicitly unavailable:
 `awaiting_verified_source_import`. Europe PMC access was denied by the cloud
@@ -63,7 +131,7 @@ is not proof that these migrations or features are active in production.
 6. `research/ra-anti-tnf/protocol.json`, `src/raEvidenceRelease.ts` and
    `tools/import_ra_evidence.py`.
 
-**Next task: finish one end-to-end RA evidence-review slice**
+**Original next-task checklist: complete only the items still outstanding**
 
 1. Inspect the current branches and preserve other contributors' changes.
    Recheck source access through the permitted network path. Run the existing
