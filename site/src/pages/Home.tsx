@@ -86,6 +86,7 @@ function ConnectedUnderstandingArt() {
 export function Home() {
   const [activeStep, setActiveStep] = useState(0);
   const [activeLayer, setActiveLayer] = useState(2);
+  const [activeResearch, setActiveResearch] = useState(0);
   const [activeHeroNode, setActiveHeroNode] = useState<number|null>(null);
   const selected = journey[activeStep];
   return <div className="hsi-editorial">
@@ -158,14 +159,28 @@ export function Home() {
     <section className="hsi-rebuild-story">
       <div className="hsi-editorial-wrap hsi-rebuild-story-grid">
         <div><p className="hsi-editorial-kicker">04 / RESEARCH IN PRACTICE</p><h2>FROM A QUESTION<br/><em>TO TESTABLE INSIGHT.</em></h2><p>Start with an immune mechanism. Follow the evidence. Surface uncertainty and contradictions. Let researchers decide what deserves further investigation.</p><Link className="hsi-editorial-button" to="/for-isi">Enter ISI Research <span aria-hidden="true">↗</span></Link></div>
-        <div className="hsi-rebuild-research-visual" aria-label="Illustrative research process, not an actual patient or study result">
-          <div className="hsi-rebuild-visual-top"><span>ISI / RESEARCH PROCESS</span><span>ILLUSTRATIVE</span></div>
-          <div className="hsi-rebuild-research-node"><span>01</span><strong>Investigate a mechanism</strong><small>Cell states · pathways · disease context</small></div>
-          <div className="hsi-rebuild-research-line"/>
-          <div className="hsi-rebuild-research-node"><span>02</span><strong>Examine the evidence</strong><small>Sources · provenance · uncertainty</small></div>
-          <div className="hsi-rebuild-research-line"/>
-          <div className="hsi-rebuild-research-node"><span>03</span><strong>Review a hypothesis</strong><small>Researcher-supervised · not a clinical conclusion</small></div>
-          <p>Research workflow illustration. No patient data or fabricated scientific findings.</p>
+        <div className="hsi-rebuild-research-visual" aria-label="Interactive illustrative research process, not an actual patient or study result">
+          <div className="hsi-rebuild-visual-top"><span>ISI / RESEARCH PROCESS</span><span>SELECT A STAGE TO EXPLORE</span></div>
+          <div className="hsi-research-flow" role="group" aria-label="Explore the three stages of evidence-governed research">
+            {[
+              ["Investigate a mechanism","Cell states · pathways · disease context"],
+              ["Examine the evidence","Sources · provenance · uncertainty"],
+              ["Review a hypothesis","Researcher-supervised · not a clinical conclusion"],
+            ].map(([title,detail],i)=><button key={title} type="button" className={"hsi-research-step"+(activeResearch===i?" is-active":"")} aria-pressed={activeResearch===i} onClick={()=>setActiveResearch(i)}>
+              <span className="hsi-research-step-index">0{i+1}</span><span className="hsi-research-step-copy"><strong>{title}</strong><small>{detail}</small></span><span aria-hidden="true">↗</span>
+            </button>)}
+          </div>
+          <div className="hsi-research-insight" aria-live="polite">
+            <span className="hsi-editorial-kicker">RESEARCH LENS / 0{activeResearch+1}</span>
+            <div className="hsi-research-insight-art" aria-hidden="true"><span/><span/><span/><span/><span/></div>
+            <h3>{["Start with a biological question.","Trace each claim to its source.","Keep hypotheses separate from facts."][activeResearch]}</h3>
+            <p>{[
+              "Explore immune cell states, tissue context and candidate mechanisms as research questions—not patient-level conclusions.",
+              "Compare supporting and opposing findings with provenance, uncertainty and explicit evidence limitations.",
+              "Agents may propose explanations, but an accountable scientist must review them before any knowledge is approved."
+            ][activeResearch]}</p>
+          </div>
+          <p className="hsi-research-disclaimer">Illustrative workflow only · No patient data or fabricated scientific findings.</p>
         </div>
       </div>
     </section>
@@ -173,7 +188,7 @@ export function Home() {
       <div className="hsi-editorial-sectionhead"><div><p className="hsi-editorial-kicker">05 / FOUR CONNECTED EXPERIENCES</p><h2>FIND YOUR<br/><em>WAY IN.</em></h2></div><p>Different people, different needs. One connected vision, with explicit boundaries between research and care.</p></div>
       <div className="hsi-editorial-product-grid">{destinations.map((item,i)=>{const product=ECOSYSTEM_PRODUCTS.find(p=>p.id===item.id);return <article className={"hsi-editorial-product hsi-editorial-product-"+item.id} key={item.id}>
         <div className="hsi-editorial-product-top"><span>{item.index} / {item.kicker}</span><span className="hsi-editorial-product-icon" aria-hidden="true">{i===0?"✳":i===1?"⌁":i===2?"♡":"⊕"}</span></div>
-        <div className="hsi-editorial-product-body"><h3>{item.title}</h3><p>{item.description}</p></div>
+        <div className="hsi-product-constellation" aria-hidden="true"><span/><span/><span/><span/><span/></div><div className="hsi-editorial-product-body"><h3>{item.title}</h3><p>{item.description}</p></div>
         <div className="hsi-editorial-product-footer"><span>{product ? MATURITY_CHIP_LABEL[product.chip] : "Explore"}</span><Link to={item.href} aria-label={"Explore "+item.title}>Explore <span aria-hidden="true">↗</span></Link></div>
       </article>})}</div>
     </div></section>
