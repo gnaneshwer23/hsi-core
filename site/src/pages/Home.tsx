@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { ECOSYSTEM_PRODUCTS, MATURITY_CHIP_LABEL } from "../lib/productMaturity";
 import "../styles/hsi-editorial.css";
 
@@ -40,8 +40,8 @@ function LandscapeArt() {
   return <svg className="hsi-panorama-mesh" viewBox="0 0 1700 510" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Illustrative three-dimensional fine-line scientific landscape linking eight domains of health and biomedical research">
     <defs><linearGradient id="hsi-mesh-teal" x1="0" y1="0" x2="1" y2=".3"><stop stopColor="#17645F" stopOpacity=".23"/><stop offset=".45" stopColor="#247C76" stopOpacity=".67"/><stop offset="1" stopColor="#17645F" stopOpacity=".3"/></linearGradient><radialGradient id="hsi-mesh-wash"><stop stopColor="#B9DED4" stopOpacity=".45"/><stop offset="1" stopColor="#F3EEE8" stopOpacity="0"/></radialGradient></defs>
     <ellipse cx="810" cy="270" rx="800" ry="230" fill="url(#hsi-mesh-wash)"/>
-    <g fill="none" stroke="url(#hsi-mesh-teal)" strokeWidth=".85">{rows.map((d,i)=><path key={"r"+i} d={d}/>)}{columns.map((d,i)=><path key={"c"+i} d={d}/>)}</g>
-    <path d="M40 260 C300 360 370 110 580 290 S930 155 1130 275 S1460 145 1660 280" fill="none" stroke="#FF6845" strokeWidth="1.2" strokeDasharray="2 9" opacity=".7"/>
+    <g className="hsi-motion-mesh" fill="none" stroke="url(#hsi-mesh-teal)" strokeWidth=".85">{rows.map((d,i)=><path key={"r"+i} d={d}/>)}{columns.map((d,i)=><path key={"c"+i} d={d}/>)}</g>
+    <path className="hsi-motion-signal" d="M40 260 C300 360 370 110 580 290 S930 155 1130 275 S1460 145 1660 280" fill="none" stroke="#FF6845" strokeWidth="1.7" strokeDasharray="4 14" opacity=".8"/>
   </svg>;
 }
 
@@ -84,7 +84,6 @@ function ConnectedUnderstandingArt() {
 }
 
 export function Home() {
-  const domainStripRef = useRef<HTMLDivElement>(null);
   const [activeStep, setActiveStep] = useState(0);
   const [activeLayer, setActiveLayer] = useState(2);
   const [activeHeroNode, setActiveHeroNode] = useState<number|null>(null);
@@ -106,10 +105,12 @@ export function Home() {
         {activeHeroNode!==null&&<div className="hsi-panorama-panel" aria-live="polite"><button type="button" className="hsi-panorama-close" aria-label="Close domain details" onClick={()=>setActiveHeroNode(null)}>×</button><span className="hsi-editorial-kicker">CONNECTED DOMAIN / 0{activeHeroNode+1}</span><h2>{landscapeDomains[activeHeroNode].title}</h2><p>{landscapeDomains[activeHeroNode].description}</p><small>{landscapeDomains[activeHeroNode].status}</small><Link to={landscapeDomains[activeHeroNode].href}>Explore this domain ↗</Link></div>}
       </div>
       <div className="hsi-editorial-wrap hsi-panorama-caption"><span>FROM HEALTH CONTEXT TO BIOLOGICAL UNDERSTANDING</span><span>Illustrative connections · not study findings or patient analysis · SELECT A MARKER TO EXPLORE</span></div>
-      <div className="hsi-editorial-wrap hsi-domain-carousel" aria-label="Eight connected health intelligence domains">
-        <div className="hsi-domain-carousel-head"><span>EXPLORE THE EIGHT CONNECTED DOMAINS</span><div><button type="button" aria-label="Scroll domains left" onClick={()=>domainStripRef.current?.scrollBy({left:-440,behavior:"smooth"})}>←</button><button type="button" aria-label="Scroll domains right" onClick={()=>domainStripRef.current?.scrollBy({left:440,behavior:"smooth"})}>→</button></div></div>
-        <div className="hsi-panorama-domain-strip" ref={domainStripRef} role="group" aria-label="Scrollable domain sequence">{landscapeDomains.map((domain,i)=><button type="button" key={domain.short} className={activeHeroNode===i?"is-active":""} onClick={()=>{setActiveHeroNode(i);document.getElementById("hsi-panorama-title")?.scrollIntoView({behavior:"smooth",block:"start"});}}><span className="hsi-panorama-domain-number">{String(i+1).padStart(2,"0")}</span><strong>{domain.short}</strong><span aria-hidden="true">↗</span></button>)}</div>
-        <p className="hsi-domain-carousel-hint">Scroll horizontally or use the arrows to explore all eight domains. Select a domain to see its connection.</p>
+      <div className="hsi-editorial-wrap hsi-motion-domains" aria-label="Eight connected domains, from health to trials">
+        <div className="hsi-motion-domains-heading"><span>EIGHT DOMAINS / ONE CONNECTED INTELLIGENCE</span><span className="hsi-motion-live-key"><span aria-hidden="true"/> CONNECTED SIGNAL</span></div>
+        <div className="hsi-motion-domain-track">{landscapeDomains.map((domain,i)=><button type="button" key={domain.short} className={"hsi-motion-domain"+(activeHeroNode===i?" is-active":"")} onClick={()=>{setActiveHeroNode(activeHeroNode===i?null:i);document.getElementById("hsi-panorama-title")?.scrollIntoView({behavior:"smooth",block:"start"});}} aria-pressed={activeHeroNode===i} aria-label={"Explore "+domain.title}>
+          <span className="hsi-panorama-domain-number">{String(i+1).padStart(2,"0")}</span><strong>{domain.short}</strong><span className="hsi-motion-domain-arrow" aria-hidden="true">↗</span><span className="hsi-motion-domain-progress" aria-hidden="true"/>
+        </button>)}</div>
+        <p className="hsi-motion-domains-note">The moving signal illustrates connections, not actual patient data or scientific findings. Select any domain to explore.</p>
       </div>
       <div className="hsi-editorial-wrap hsi-panorama-actions"><Link className="hsi-editorial-button" to="/platform">Explore the platform ↗</Link><a className="hsi-editorial-textlink" href="#connected-journey">Follow the connections ↗</a></div>
     </section>
