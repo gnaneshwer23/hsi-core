@@ -14,20 +14,20 @@ function BiologyArt() {
     <title id="biology-title">A connected view of biology</title>
     <desc id="biology-desc">An abstract illustration of cells connected around a central biological system.</desc>
     <defs>
-      <radialGradient id="home-cell"><stop stopColor="#e2f7bf"/><stop offset=".45" stopColor="#7eb89a"/><stop offset="1" stopColor="#315f58" stopOpacity=".2"/></radialGradient>
-      <radialGradient id="home-aura"><stop stopColor="#769b73" stopOpacity=".3"/><stop offset="1" stopColor="#183e36" stopOpacity="0"/></radialGradient>
-      <linearGradient id="home-orbit"><stop stopColor="#ddedb0" stopOpacity=".8"/><stop offset="1" stopColor="#81b7a2" stopOpacity=".1"/></linearGradient>
+      <radialGradient id="home-cell"><stop stopColor="#f3eee8"/><stop offset=".45" stopColor="#7eb9a9"/><stop offset="1" stopColor="#17645f" stopOpacity=".2"/></radialGradient>
+      <radialGradient id="home-aura"><stop stopColor="#99c6b7" stopOpacity=".3"/><stop offset="1" stopColor="#17645f" stopOpacity="0"/></radialGradient>
+      <linearGradient id="home-orbit"><stop stopColor="#f3eee8" stopOpacity=".8"/><stop offset="1" stopColor="#ff6845" stopOpacity=".1"/></linearGradient>
     </defs>
     <circle cx="300" cy="300" r="295" fill="url(#home-aura)"/>
-    {[170, 225, 275].map(r => <circle key={r} cx="300" cy="300" r={r} fill="none" stroke="#b6d7b3" strokeOpacity=".14" strokeDasharray={r === 225 ? "2 9" : undefined}/>)}
+    {[170, 225, 275].map(r => <circle key={r} cx="300" cy="300" r={r} fill="none" stroke="#f3eee8" strokeOpacity=".14" strokeDasharray={r === 225 ? "2 9" : undefined}/>)}
     <g stroke="url(#home-orbit)" fill="none"><path d="M145 180 300 300 470 180M300 300 435 435 155 445 145 180M155 445 300 300 470 180 435 435"/><ellipse cx="300" cy="300" rx="260" ry="105" transform="rotate(-35 300 300)"/></g>
     {[[300,300,100],[145,180,42],[470,180,55],[435,435,44],[155,445,57]].map(([x,y,r], i) => <g key={i}>
-      <circle cx={x} cy={y} r={r} fill="url(#home-cell)" stroke="#dcf0c5" strokeOpacity=".55"/>
-      <circle cx={x} cy={y} r={r * .62} fill="none" stroke="#d6edb8" strokeOpacity=".35"/>
-      <circle cx={x - r * .15} cy={y + r * .08} r={r * .3} fill="#1b4d43" stroke="#c4df9e" strokeOpacity=".6"/>
-      {[0,1,2,3,4,5].map(n => <circle key={n} cx={x + Math.cos(n * 1.04) * r * .77} cy={y + Math.sin(n * 1.04) * r * .77} r="3" fill="#e0efbc" fillOpacity=".7"/>)}
+      <circle cx={x} cy={y} r={r} fill="url(#home-cell)" stroke="#f3eee8" strokeOpacity=".55"/>
+      <circle cx={x} cy={y} r={r * .62} fill="none" stroke="#f3eee8" strokeOpacity=".35"/>
+      <circle cx={x - r * .15} cy={y + r * .08} r={r * .3} fill={i === 0 ? "#ff6845" : "#12544f"} stroke="#ff997f" strokeOpacity=".6"/>
+      {[0,1,2,3,4,5].map(n => <circle key={n} cx={x + Math.cos(n * 1.04) * r * .77} cy={y + Math.sin(n * 1.04) * r * .77} r="3" fill="#f3eee8" fillOpacity=".7"/>)}
     </g>)}
-    <g fill="#d6e9cc" fontSize="11" fontFamily="monospace" letterSpacing="2"><text x="62" y="105">OBSERVE</text><text x="426" y="99">CONNECT</text><text x="414" y="523">UNDERSTAND</text></g>
+    <g fill="#f3eee8" fontSize="11" fontFamily="monospace" letterSpacing="2"><text x="62" y="105">OBSERVE</text><text x="426" y="99">CONNECT</text><text x="414" y="523">UNDERSTAND</text></g>
   </svg>;
 }
 
