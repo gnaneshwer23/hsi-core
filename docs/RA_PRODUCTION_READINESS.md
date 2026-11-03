@@ -63,7 +63,7 @@ HSI_TEST_DB_URL=postgres://hsi_app_test:…@127.0.0.1:5432/hsi_step3_test \
 
 1. Sign in to ISI and Aksh `/internal-research` (Aksh needs research membership).
 2. Start `ra-anti-tnf-research` → passages → reload → export.
-3. Start `ra-anti-tnf-evidence` → `evidence_not_ready`.
+3. Start `ra-anti-tnf-evidence` → real passages (`public_real`, `scientificReview: unreviewed`).
 4. Cross-owner denied; workflow accept ≠ scientific approval.
 
 ## Phase 6 annotation kit

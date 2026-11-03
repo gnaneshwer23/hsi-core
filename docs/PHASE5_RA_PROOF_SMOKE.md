@@ -17,7 +17,7 @@
 | Check | HSI | ISI | Aksh |
 | --- | --- | --- | --- |
 | `ra:verify-research-path` / corpus verify | PASS | PASS | PASS |
-| Pending `ra-anti-tnf-evidence` → `evidence_not_ready` (422) | PASS | PASS | PASS |
+| Start `ra-anti-tnf-evidence` with ≥2 `public_real` passages (unreviewed) | PASS (post Phase 7) | PASS (post Phase 7) | PASS (post Phase 7) |
 | Start `ra-anti-tnf-research` with ≥2 passages | PASS | PASS | PASS |
 | Reload / get matches start snapshot | PASS | PASS | PASS |
 | Cross-owner get/review denied | n/a (memory) | PASS | PASS |
@@ -53,4 +53,4 @@ Scientific Inspector deep-link on ISI relationships was not re-driven in this au
 
 - Serology-response passages do not become anti-TNF efficacy claims (`claims.length === 0`).
 - Workflow `accept_for_research` ≠ Gate C / scientific approval.
-- Rights-verified corpus stays unavailable until licence URI import (Phase 2).
+- Rights-verified corpus is available after Phase 2–3 + Phase 7 vendor sync; still `scientificReview: unreviewed`.
