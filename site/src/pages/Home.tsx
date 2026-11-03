@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ECOSYSTEM_PRODUCTS, MATURITY_CHIP_LABEL } from "../lib/productMaturity";
 import "../styles/hsi-editorial.css";
 
@@ -45,7 +45,46 @@ function LandscapeArt() {
   </svg>;
 }
 
+function ConnectedUnderstandingArt() {
+  return <svg className="hsi-idea-art" viewBox="0 0 660 560" role="img" aria-label="Illustrative connection between a person, clinical information, biological pathways and scientific evidence, linked by a shared knowledge network">
+    <defs>
+      <radialGradient id="idea-glow"><stop stopColor="#C4E5DB" stopOpacity=".8"/><stop offset="1" stopColor="#F3EEE8" stopOpacity="0"/></radialGradient>
+      <linearGradient id="idea-ink" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#17645F"/><stop offset="1" stopColor="#72B9AB"/></linearGradient>
+    </defs>
+    <ellipse cx="325" cy="280" rx="310" ry="250" fill="url(#idea-glow)"/>
+    {[100,155,213].map(r=><circle key={r} cx="327" cy="270" r={r} fill="none" stroke="#17645F" strokeOpacity=".15" strokeDasharray="3 9"/>)}
+    <g fill="none" stroke="#17645F" strokeOpacity=".25" strokeWidth="1.3">
+      <path d="M125 150 330 105 520 158 550 370 330 455 110 360Z"/>
+      <path d="M125 150 330 270 520 158M110 360 330 270 550 370M330 105 330 270 330 455"/>
+      <path d="M125 150 550 370M520 158 110 360" strokeDasharray="4 8"/>
+    </g>
+    <g transform="translate(327 270)">
+      <circle r="96" fill="#17645F"/>
+      <circle r="79" fill="none" stroke="#F3EEE8" strokeOpacity=".38" strokeDasharray="3 7"/>
+      <path d="M-42 -10 C-32-55 16-63 38-20 C59 25 19 62-15 45 C-50 29-58 14-42-10Z" fill="none" stroke="#F3EEE8" strokeWidth="2.2"/>
+      <path d="M-43 -9 4-25 38-20 14 28-15 45-43-9M4-25 14 28" fill="none" stroke="#F3EEE8" strokeOpacity=".6"/>
+      {[[-43,-9],[4,-25],[38,-20],[14,28],[-15,45]].map(([x,y],i)=><circle key={i} cx={x} cy={y} r="5" fill={i===1?"#FF6845":"#F3EEE8"}/>)}
+    </g>
+    {[
+      {x:125,y:150,title:"PERSON",subtitle:"Context",icon:"♡"},
+      {x:330,y:105,title:"CLINICAL",subtitle:"History",icon:"+"},
+      {x:520,y:158,title:"BIOLOGY",subtitle:"Mechanisms",icon:"✳"},
+      {x:550,y:370,title:"EVIDENCE",subtitle:"Provenance",icon:"◇"},
+      {x:330,y:455,title:"RESEARCH",subtitle:"Discovery",icon:"↗"},
+      {x:110,y:360,title:"REVIEW",subtitle:"Governance",icon:"✓"},
+    ].map(({x,y,title,subtitle,icon})=><g key={title}>
+      <circle cx={x} cy={y} r="39" fill="#FFFAF4" stroke="#17645F" strokeOpacity=".45"/>
+      <circle cx={x} cy={y} r="29" fill="#F3EEE8" stroke="#17645F" strokeOpacity=".3"/>
+      <text x={x} y={y+7} textAnchor="middle" fontSize="25" fill="#17645F">{icon}</text>
+      <text x={x} y={y+60} textAnchor="middle" fontSize="11" fontWeight="700" letterSpacing="1.5" fill="#17645F">{title}</text>
+      <text x={x} y={y+75} textAnchor="middle" fontSize="10" fill="#466D67">{subtitle}</text>
+    </g>)}
+    <g fill="#FF6845"><circle cx="228" cy="187" r="5"/><circle cx="432" cy="210" r="5"/><circle cx="436" cy="401" r="5"/></g>
+  </svg>;
+}
+
 export function Home() {
+  const domainStripRef = useRef<HTMLDivElement>(null);
   const [activeStep, setActiveStep] = useState(0);
   const [activeLayer, setActiveLayer] = useState(2);
   const [activeHeroNode, setActiveHeroNode] = useState<number|null>(null);
@@ -67,10 +106,14 @@ export function Home() {
         {activeHeroNode!==null&&<div className="hsi-panorama-panel" aria-live="polite"><button type="button" className="hsi-panorama-close" aria-label="Close domain details" onClick={()=>setActiveHeroNode(null)}>×</button><span className="hsi-editorial-kicker">CONNECTED DOMAIN / 0{activeHeroNode+1}</span><h2>{landscapeDomains[activeHeroNode].title}</h2><p>{landscapeDomains[activeHeroNode].description}</p><small>{landscapeDomains[activeHeroNode].status}</small><Link to={landscapeDomains[activeHeroNode].href}>Explore this domain ↗</Link></div>}
       </div>
       <div className="hsi-editorial-wrap hsi-panorama-caption"><span>FROM HEALTH CONTEXT TO BIOLOGICAL UNDERSTANDING</span><span>Illustrative connections · not study findings or patient analysis · SELECT A MARKER TO EXPLORE</span></div>
-      <div className="hsi-editorial-wrap hsi-panorama-domain-strip">{landscapeDomains.map((domain,i)=><button type="button" key={domain.short} className={activeHeroNode===i?"is-active":""} onClick={()=>setActiveHeroNode(i)}><span className="hsi-panorama-domain-number">0{i+1}</span><strong>{domain.short}</strong><span aria-hidden="true">↗</span></button>)}</div>
+      <div className="hsi-editorial-wrap hsi-domain-carousel" aria-label="Eight connected health intelligence domains">
+        <div className="hsi-domain-carousel-head"><span>EXPLORE THE EIGHT CONNECTED DOMAINS</span><div><button type="button" aria-label="Scroll domains left" onClick={()=>domainStripRef.current?.scrollBy({left:-440,behavior:"smooth"})}>←</button><button type="button" aria-label="Scroll domains right" onClick={()=>domainStripRef.current?.scrollBy({left:440,behavior:"smooth"})}>→</button></div></div>
+        <div className="hsi-panorama-domain-strip" ref={domainStripRef} role="group" aria-label="Scrollable domain sequence">{landscapeDomains.map((domain,i)=><button type="button" key={domain.short} className={activeHeroNode===i?"is-active":""} onClick={()=>{setActiveHeroNode(i);document.getElementById("hsi-panorama-title")?.scrollIntoView({behavior:"smooth",block:"start"});}}><span className="hsi-panorama-domain-number">{String(i+1).padStart(2,"0")}</span><strong>{domain.short}</strong><span aria-hidden="true">↗</span></button>)}</div>
+        <p className="hsi-domain-carousel-hint">Scroll horizontally or use the arrows to explore all eight domains. Select a domain to see its connection.</p>
+      </div>
       <div className="hsi-editorial-wrap hsi-panorama-actions"><Link className="hsi-editorial-button" to="/platform">Explore the platform ↗</Link><a className="hsi-editorial-textlink" href="#connected-journey">Follow the connections ↗</a></div>
     </section>
-    <section className="hsi-editorial-intro"><div className="hsi-editorial-wrap hsi-editorial-intro-grid"><p className="hsi-editorial-kicker">01 / THE IDEA</p><div><h2>Beyond disconnected data.<br/><em>Towards connected understanding.</em></h2><p>Health questions rarely fit inside a single dataset or discipline. HSI brings together evidence-grounded research tools and a connected vision for clinical, patient and trial intelligence — with distinct data permissions and review boundaries.</p></div></div></section>
+    <section className="hsi-editorial-intro"><div className="hsi-editorial-wrap hsi-idea-grid"><div className="hsi-idea-copy"><p className="hsi-editorial-kicker">01 / THE IDEA</p><h2>Beyond disconnected data.<br/><em>Towards connected understanding.</em></h2><p>Health questions rarely fit inside a single dataset or discipline. HSI brings together evidence-grounded research tools and a connected vision for clinical, patient and trial intelligence — with distinct data permissions and review boundaries.</p><Link className="hsi-editorial-textlink" to="/platform">Discover how the connections work ↗</Link></div><figure className="hsi-idea-figure"><ConnectedUnderstandingArt/><figcaption>Illustrative connection map · not a patient record or scientific result</figcaption></figure></div></section>
     <section className="hsi-journey" id="connected-journey" aria-labelledby="hsi-journey-heading">
       <div className="hsi-editorial-wrap">
         <div className="hsi-journey-heading"><div><p className="hsi-editorial-kicker">02 / CONNECTED INTELLIGENCE</p><h2 id="hsi-journey-heading">ONE QUESTION.<br/><em>CONNECTED CONTEXT.</em></h2></div><p>Follow a health question across six connected perspectives. Select any stage to explore what it contributes and which HSI experience it belongs to.</p></div>

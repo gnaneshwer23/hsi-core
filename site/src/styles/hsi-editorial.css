@@ -205,3 +205,23 @@
 @media(max-width:950px){.hsi-panorama-domain-strip{grid-template-columns:repeat(4,minmax(0,1fr))}.hsi-panorama-point-label{font-size:.53rem}.hsi-panorama-stage{height:400px}.hsi-panorama-caption{font-size:.55rem}}
 @media(max-width:620px){.hsi-panorama{padding-top:36px}.hsi-panorama-heading h1{font-size:clamp(2rem,8vw,3.2rem)}.hsi-panorama-stage{height:370px;overflow:visible}.hsi-panorama-point{min-width:55px;max-width:78px}.hsi-panorama-point-label{font-size:.46rem;letter-spacing:0}.hsi-panorama-point-stem{height:22px}.hsi-panorama-domain-strip{grid-template-columns:repeat(4,minmax(0,1fr))}.hsi-panorama-domain-strip button{font-size:.55rem;gap:3px}.hsi-panorama-caption{flex-direction:column}.hsi-panorama-panel{right:4%;bottom:0;padding:17px}.hsi-panorama-actions{flex-wrap:wrap;gap:20px}}
 @media(prefers-reduced-motion:reduce){.hsi-panorama-point-marker{transition:none}}
+
+
+/* Horizontally navigable eight-domain sequence with visible navigation controls. */
+.hsi-domain-carousel{margin-top:28px}
+.hsi-domain-carousel-head{display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:.65rem;letter-spacing:.15em;font-weight:750}
+.hsi-domain-carousel-head>div{display:flex;gap:8px}
+.hsi-domain-carousel-head button{width:42px;height:42px;border:1px solid #17645f70;border-radius:50%;background:transparent;color:#17645f;cursor:pointer;font-size:1.2rem}
+.hsi-domain-carousel-head button:hover{background:#17645f;color:#fff}
+.hsi-domain-carousel .hsi-panorama-domain-strip{width:100%;margin-top:15px;display:flex;gap:12px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth;overscroll-behavior-x:contain;padding:0 0 14px;scrollbar-width:thin;scrollbar-color:#17645f80 transparent}
+.hsi-domain-carousel .hsi-panorama-domain-strip button{flex:0 0 clamp(170px,18vw,245px);scroll-snap-align:start;justify-content:space-between;padding:20px 14px;min-height:64px;font-size:.8rem;border-top:1px solid #17645f55;border-bottom:1px solid #17645f55}
+.hsi-domain-carousel-hint{font-size:.7rem;color:#466d67;margin-top:7px}
+.hsi-idea-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(340px,.85fr);align-items:center;gap:clamp(25px,5vw,85px)}
+.hsi-idea-copy h2{font-size:clamp(2.7rem,4.7vw,5.5rem);margin:25px 0}
+.hsi-idea-copy>p:not(.hsi-editorial-kicker){max-width:700px;font-size:1.05rem;line-height:1.8;color:#466d67;margin-bottom:30px}
+.hsi-idea-figure{margin:0;min-width:0;background:radial-gradient(circle at 50% 46%,#d9eee5,#fffaf4 70%);border:1px solid #17645f22;border-radius:3px;padding:12px 15px 18px}
+.hsi-idea-art{display:block;width:100%;height:auto}
+.hsi-idea-figure figcaption{font-size:.64rem;letter-spacing:.04em;text-align:center;color:#466d67;line-height:1.5}
+@media(max-width:900px){.hsi-idea-grid{grid-template-columns:1fr}.hsi-idea-figure{width:min(100%,620px);margin-inline:auto}}
+@media(max-width:620px){.hsi-domain-carousel .hsi-panorama-domain-strip button{flex-basis:175px}.hsi-domain-carousel-head{font-size:.55rem}.hsi-idea-copy h2{font-size:clamp(2.5rem,9vw,4rem)}}
+@media(prefers-reduced-motion:reduce){.hsi-domain-carousel .hsi-panorama-domain-strip{scroll-behavior:auto}}
