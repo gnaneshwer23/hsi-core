@@ -45,9 +45,23 @@ bun --cwd ../immunecity scripts/verify-ra-research-corpus.ts
 bun --cwd ../aksh-health-redesign/packages/platform-uk scripts/verify-ra-research-corpus.ts
 ```
 
-## Operator checklist (manual later, after DB activation)
+## Phase 5 proof-point (disposable local DB)
 
-1. Sign in to ISI and Aksh `/internal-research`.
+See [PHASE5_RA_PROOF_SMOKE.md](PHASE5_RA_PROOF_SMOKE.md). After
+`setup-investigation-test-db.ts --reset` in each product:
+
+```sh
+# ISI
+HSI_TEST_DB_URL=postgres://hsi_app_test:…@127.0.0.1:5432/hsi_step3_test \
+  bun --cwd ../immunecity scripts/phase5-ra-proof-smoke.ts
+# Aksh
+HSI_TEST_DB_URL=postgres://hsi_app_test:…@127.0.0.1:5432/hsi_step3_test \
+  bun --cwd ../aksh-health-redesign/packages/platform-uk scripts/phase5-ra-proof-smoke.ts
+```
+
+## Operator checklist (manual browser, after DB activation)
+
+1. Sign in to ISI and Aksh `/internal-research` (Aksh needs research membership).
 2. Start `ra-anti-tnf-research` → passages → reload → export.
 3. Start `ra-anti-tnf-evidence` → `evidence_not_ready`.
 4. Cross-owner denied; workflow accept ≠ scientific approval.
