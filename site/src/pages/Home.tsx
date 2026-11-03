@@ -19,42 +19,29 @@ const destinations = [
   { id: "trials", index: "04", title: "HSI Trials", kicker: "CLINICAL RESEARCH", description: "Investigate transparent trial evidence workflows.", href: "/for-trials" },
 ] as const;
 
-function ConnectionArt({activeNode,onSelect}:{activeNode:number|null,onSelect:(node:number)=>void}) {
-  // Original SVG knowledge landscape, inspired by the user's fine-line scientific reference.
-  // All nodes and paths are illustrative, never patient data or published findings.
-  const heightAt = (x: number, depth: number) => {
-    const peak = Math.exp(-Math.pow((x - 350) / 145, 2)) * 155;
-    const second = Math.exp(-Math.pow((x - 545) / 90, 2)) * 65;
-    const valley = Math.exp(-Math.pow((x - 180) / 105, 2)) * 28;
-    return 350 + depth * 7 - peak * (1 - depth * .014) - second * (1 - depth * .012) + valley;
+const landscapeDomains = [
+  {title:"PERSON & LONGITUDINAL HEALTH",short:"HEALTH",x:10,y:43,description:"Symptoms, observations and longitudinal patient context, shared only with appropriate permission.",href:"/for-aksh",status:"Aksh Health · scoped"},
+  {title:"CLINICAL CONTEXT",short:"CLINICAL",x:23,y:28,description:"Encounters, laboratory results, medication history and outcomes from authorised clinical sources.",href:"/products",status:"HSI Clinical · in development"},
+  {title:"ORGANS & PHYSIOLOGY",short:"BIOLOGY",x:35,y:51,description:"Organ systems, tissues, cells and physiology connect health questions to biological mechanisms.",href:"/platform",status:"Biology context · research foundation"},
+  {title:"IMMUNE SYSTEM",short:"IMMUNITY",x:47,y:29,description:"Immune cell states, signalling pathways and mechanisms interpreted with evidence and uncertainty.",href:"/for-isi",status:"ISI Research · available"},
+  {title:"GUT MICROBIOME & METABOLISM",short:"MICROBIOME",x:59,y:53,description:"Microbial functions, metabolites and host pathways; associations are not assumed causal.",href:"/platform",status:"Cross-domain knowledge · developing"},
+  {title:"GENOMICS & MULTI-OMICS",short:"OMICS",x:71,y:31,description:"Genomic, proteomic and multi-omics context can inform biological research when validated.",href:"/platform",status:"Omics context · research direction"},
+  {title:"SCIENTIFIC EVIDENCE",short:"EVIDENCE",x:82,y:46,description:"Publications, experiments, provenance, graded findings, contradictions and hypotheses.",href:"/for-isi",status:"ISI evidence foundation · available"},
+  {title:"RESEARCH & CLINICAL TRIALS",short:"TRIALS",x:92,y:37,description:"Trial criteria and missing evidence can support future investigator-led pre-screening.",href:"/for-trials",status:"HSI Trials · planned"},
+] as const;
+
+function LandscapeArt() {
+  const z = (x:number, depth:number) => {
+    const hill=(c:number,w:number,h:number)=>Math.exp(-Math.pow((x-c)/w,2))*h;
+    return 305+depth*6.1-hill(310,135,95)*(1-depth*.012)-hill(720,115,112)*(1-depth*.012)-hill(1120,115,78)*(1-depth*.012)-hill(1510,95,64)*(1-depth*.012)+hill(520,105,44);
   };
-  const horizontal = Array.from({length: 28},(_,i)=>{
-    const depth=i-12;
-    const pts=Array.from({length:75},(_,j)=>{const x=28+j*8.5;return `${j?"L":"M"}${x.toFixed(1)} ${heightAt(x,depth).toFixed(1)}`;});
-    return pts.join(" ");
-  });
-  const vertical = Array.from({length:36},(_,i)=>{
-    const x=32+i*17.6;
-    return Array.from({length:28},(_,j)=>`${j?"L":"M"}${x.toFixed(1)} ${heightAt(x,j-12).toFixed(1)}`).join(" ");
-  });
-  const labels = [
-    {x:130,y:245,name:"HEALTH CONTEXT"},
-    {x:350,y:96,name:"BIOLOGICAL SYSTEMS"},
-    {x:552,y:211,name:"SCIENTIFIC EVIDENCE"},
-  ];
-  return <svg className="hsi-editorial-art hsi-landscape-art" viewBox="0 0 680 610" role="img" aria-label="Illustrative flowing scientific knowledge landscape with fine teal mesh, coral markers for health context, biological systems and scientific evidence">
-    <defs>
-      <linearGradient id="hsi-landscape-line" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#D7E9E2" stopOpacity=".75"/><stop offset=".5" stopColor="#7FC3B6" stopOpacity=".85"/><stop offset="1" stopColor="#F4B39D" stopOpacity=".7"/></linearGradient>
-      <radialGradient id="hsi-landscape-glow"><stop stopColor="#80C5B6" stopOpacity=".26"/><stop offset="1" stopColor="#17645F" stopOpacity="0"/></radialGradient>
-    </defs>
-    <circle cx="355" cy="310" r="290" fill="url(#hsi-landscape-glow)"/>
-    <g fill="none" stroke="url(#hsi-landscape-line)" strokeWidth=".8" opacity=".68">
-      {horizontal.map((d,i)=><path key={`h${i}`} d={d}/>)}
-      {vertical.map((d,i)=><path key={`v${i}`} d={d}/>)}
-    </g>
-    <path d="M130 260 Q220 170 350 112 T552 223" stroke="#FF9B7D" strokeWidth="1.3" strokeDasharray="3 8" fill="none" opacity=".85"/>
-    {labels.map(({x,y,name},i)=><g key={name} role="button" tabIndex={0} aria-label={`Explore ${name.toLowerCase()}`} aria-pressed={activeNode===i} className={"hsi-landscape-node"+(activeNode===i?" is-active":"")} onClick={()=>onSelect(i)} onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();onSelect(i);}}}><line x1={x} y1={y+15} x2={x} y2={y+56} stroke="#F3EEE8" strokeOpacity=".85"/><circle cx={x} cy={y+56} r="16" fill="none" stroke="#FF9B7D" strokeOpacity=".9"/><circle cx={x} cy={y+56} r="5" fill="#FF6845"/><rect x={x-73} y={y-12} width="146" height="25" rx="2" fill="#17645F" fillOpacity=".86"/><text x={x} y={y+4} fill="#F3EEE8" textAnchor="middle" fontSize="9" letterSpacing="1.1">{name}</text></g>)}
-    <g fill="#F3EEE8" fontSize="9" letterSpacing="1.6"><text x="36" y="560">HEALTH → BIOLOGY → EVIDENCE</text><text x="644" y="560" textAnchor="end">ILLUSTRATIVE KNOWLEDGE LANDSCAPE</text></g>
+  const rows=Array.from({length:35},(_,i)=>Array.from({length:101},(_,j)=>{const x=j*17;return `${j?"L":"M"}${x.toFixed(1)} ${z(x,i-15).toFixed(1)}`}).join(" "));
+  const columns=Array.from({length:88},(_,i)=>Array.from({length:35},(_,j)=>{const x=i*19.4;return `${j?"L":"M"}${x.toFixed(1)} ${z(x,j-15).toFixed(1)}`}).join(" "));
+  return <svg className="hsi-panorama-mesh" viewBox="0 0 1700 510" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Illustrative three-dimensional fine-line scientific landscape linking eight domains of health and biomedical research">
+    <defs><linearGradient id="hsi-mesh-teal" x1="0" y1="0" x2="1" y2=".3"><stop stopColor="#17645F" stopOpacity=".23"/><stop offset=".45" stopColor="#247C76" stopOpacity=".67"/><stop offset="1" stopColor="#17645F" stopOpacity=".3"/></linearGradient><radialGradient id="hsi-mesh-wash"><stop stopColor="#B9DED4" stopOpacity=".45"/><stop offset="1" stopColor="#F3EEE8" stopOpacity="0"/></radialGradient></defs>
+    <ellipse cx="810" cy="270" rx="800" ry="230" fill="url(#hsi-mesh-wash)"/>
+    <g fill="none" stroke="url(#hsi-mesh-teal)" strokeWidth=".85">{rows.map((d,i)=><path key={"r"+i} d={d}/>)}{columns.map((d,i)=><path key={"c"+i} d={d}/>)}</g>
+    <path d="M40 260 C300 360 370 110 580 290 S930 155 1130 275 S1460 145 1660 280" fill="none" stroke="#FF6845" strokeWidth="1.2" strokeDasharray="2 9" opacity=".7"/>
   </svg>;
 }
 
@@ -64,20 +51,24 @@ export function Home() {
   const [activeHeroNode, setActiveHeroNode] = useState<number|null>(null);
   const selected = journey[activeStep];
   return <div className="hsi-editorial">
-    <section className="hsi-editorial-hero">
-      <div className="hsi-editorial-wrap">
-        <div className="hsi-editorial-topline"><span>HEALTH SUPER INTELLIGENCE</span><span>CONNECTED BY DESIGN <b>●</b> GROUNDED IN EVIDENCE</span></div>
-        <div className="hsi-editorial-hero-grid">
-          <div className="hsi-editorial-copy">
-            <p className="hsi-editorial-kicker"><span className="hsi-coral-dot"/> FROM HEALTH CONTEXT TO SCIENTIFIC DISCOVERY</p>
-            <h1>BIOLOGY IS<br/><em>CONNECTED.</em></h1>
-            <p className="hsi-editorial-lede">Intelligence should be too. A governed ecosystem connecting human health, biology, immune mechanisms and scientific discovery — with evidence at every step.</p>
-            <div className="hsi-editorial-actions"><Link className="hsi-editorial-button" to="/platform">Explore the platform <span aria-hidden="true">↗</span></Link><a className="hsi-editorial-textlink" href="#connected-journey">Follow the connections <span aria-hidden="true">↗</span></a></div>
-          </div>
-          <div className="hsi-editorial-visual hsi-landscape-visual"><ConnectionArt activeNode={activeHeroNode} onSelect={setActiveHeroNode}/>{activeHeroNode!==null&&<div className="hsi-landscape-detail" aria-live="polite"><button type="button" aria-label="Close illustration detail" onClick={()=>setActiveHeroNode(null)}>×</button><span>EXPLORE / 0{activeHeroNode+1}</span><strong>{["Health context","Biological systems","Scientific evidence"][activeHeroNode]}</strong><p>{["Personal observations and authorised clinical histories provide context; access requires permission.","Organs, tissues, cells and pathways help explain mechanisms without automatically implying causality.","Source-linked publications, graded findings and uncertainties support researcher-supervised discovery."][activeHeroNode]}</p><Link to={["/for-aksh","/platform","/for-isi"][activeHeroNode]}>Explore this perspective ↗</Link></div>}<div className="hsi-editorial-visual-note"><span>SIX PERSPECTIVES / ONE ECOSYSTEM</span><span>Illustrative connections · not study findings or patient analysis</span></div></div>
-        </div>
-        <div className="hsi-editorial-bottomline"><span>EXPLORE <b>•</b> CONNECT <b>•</b> UNDERSTAND <b>•</b> DISCOVER</span><Link to="/how-it-works">SEE HOW IT WORKS ↗</Link></div>
+    <section className="hsi-panorama" aria-labelledby="hsi-panorama-title">
+      <div className="hsi-editorial-wrap hsi-panorama-heading">
+        <p className="hsi-editorial-kicker"><span className="hsi-coral-dot"/> HEALTH SUPER INTELLIGENCE / ONE CONNECTED ECOSYSTEM</p>
+        <h1 id="hsi-panorama-title">A connected intelligence ecosystem <em>for health and discovery.</em></h1>
+        <p>Built around traceable evidence. Guided by human judgement.</p>
       </div>
+      <div className="hsi-panorama-stage">
+        <LandscapeArt/>
+        <div className="hsi-panorama-points">
+          {landscapeDomains.map((domain,i)=><button key={domain.short} type="button" className={"hsi-panorama-point"+(activeHeroNode===i?" is-active":"")} style={{left:domain.x+"%",top:domain.y+"%"}} onClick={()=>setActiveHeroNode(activeHeroNode===i?null:i)} aria-pressed={activeHeroNode===i} aria-label={"Explore "+domain.title}>
+            <span className="hsi-panorama-point-label">{domain.title}</span><span className="hsi-panorama-point-stem"/><span className="hsi-panorama-point-marker"/>
+          </button>)}
+        </div>
+        {activeHeroNode!==null&&<div className="hsi-panorama-panel" aria-live="polite"><button type="button" className="hsi-panorama-close" aria-label="Close domain details" onClick={()=>setActiveHeroNode(null)}>×</button><span className="hsi-editorial-kicker">CONNECTED DOMAIN / 0{activeHeroNode+1}</span><h2>{landscapeDomains[activeHeroNode].title}</h2><p>{landscapeDomains[activeHeroNode].description}</p><small>{landscapeDomains[activeHeroNode].status}</small><Link to={landscapeDomains[activeHeroNode].href}>Explore this domain ↗</Link></div>}
+      </div>
+      <div className="hsi-editorial-wrap hsi-panorama-caption"><span>FROM HEALTH CONTEXT TO BIOLOGICAL UNDERSTANDING</span><span>ILLUSTRATIVE KNOWLEDGE LANDSCAPE · SELECT A MARKER TO EXPLORE</span></div>
+      <div className="hsi-editorial-wrap hsi-panorama-domain-strip">{landscapeDomains.map((domain,i)=><button type="button" key={domain.short} className={activeHeroNode===i?"is-active":""} onClick={()=>setActiveHeroNode(i)}><span className="hsi-panorama-domain-number">0{i+1}</span><strong>{domain.short}</strong><span aria-hidden="true">↗</span></button>)}</div>
+      <div className="hsi-editorial-wrap hsi-panorama-actions"><Link className="hsi-editorial-button" to="/platform">Explore the platform ↗</Link><a className="hsi-editorial-textlink" href="#connected-journey">Follow the connections ↗</a></div>
     </section>
     <section className="hsi-editorial-intro"><div className="hsi-editorial-wrap hsi-editorial-intro-grid"><p className="hsi-editorial-kicker">01 / THE IDEA</p><div><h2>Beyond disconnected data.<br/><em>Towards connected understanding.</em></h2><p>Health questions rarely fit inside a single dataset or discipline. HSI brings together evidence-grounded research tools and a connected vision for clinical, patient and trial intelligence — with distinct data permissions and review boundaries.</p></div></div></section>
     <section className="hsi-journey" id="connected-journey" aria-labelledby="hsi-journey-heading">
