@@ -29,6 +29,8 @@ Preferred migrate path without a local secrets file: `bun run db:migrate -- --fr
 | **Database** | `neondb` (PG18; HSI-owned Stage 1 stub via `db/migrations` — see [`HSI_NEON_MIGRATIONS.md`](./HSI_NEON_MIGRATIONS.md)) |
 | **Role** | **HSI-canonical** — sole Neon for HSI substrate / migrations owned by this repo |
 
+**Future staging (not live):** HSI-only Neon → AWS RDS PostgreSQL plan (dev-sized, no prod cutover, ISI Auth stays on Neon) — [`NEON_TO_AWS_RDS_RUNBOOK.md`](./NEON_TO_AWS_RDS_RUNBOOK.md). Keep `red-wave` as rollback until founder-approved cutover.
+
 If `red-wave-06625195` is missing or polluted, create a **new** empty Neon named clearly for HSI (e.g. `hsi-core` / `human-systems-intelligence`) and update this table. Prefer documenting + a minimal HSI-owned schema stub in-repo over copying ISI schemas. Apply with `bun run db:migrate` (guards refuse ISI/Akeno/DeliverX hosts).
 
 **Placeholder (local only — never commit passwords):**

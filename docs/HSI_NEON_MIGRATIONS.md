@@ -4,6 +4,8 @@
 
 **Never** point migrations or Gate C local sync at ISI (`autumn-snow` / `ep-blue-salad`), Akeno, or DeliverX. See [`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md).
 
+**RDS staging (planned, not cut over):** see [`NEON_TO_AWS_RDS_RUNBOOK.md`](./NEON_TO_AWS_RDS_RUNBOOK.md). Production / Vercel `DATABASE_URL` stays red-wave until founder approval; ISI Auth is not part of that pass.
+
 ## What shipped
 
 | Piece | Location |
