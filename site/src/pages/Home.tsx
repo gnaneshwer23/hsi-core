@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { PRODUCT_NAME, PRODUCT_SHORT, PRODUCT_TAGLINE } from "../lib/brand";
 import { ECOSYSTEM_PRODUCTS, MATURITY_CHIP_LABEL } from "../lib/productMaturity";
 import "../styles/hsi-editorial.css";
 
@@ -92,9 +93,9 @@ export function Home() {
   return <div className="hsi-editorial">
     <section className="hsi-panorama" aria-labelledby="hsi-panorama-title">
       <div className="hsi-editorial-wrap hsi-panorama-heading">
-        <p className="hsi-editorial-kicker"><span className="hsi-coral-dot"/> HEALTH SUPER INTELLIGENCE / ONE CONNECTED ECOSYSTEM</p>
-        <h1 id="hsi-panorama-title">A connected intelligence ecosystem <em>for health and discovery.</em></h1>
-        <p>Built around traceable evidence. Guided by human judgement.</p>
+        <p className="hsi-editorial-kicker"><span className="hsi-coral-dot"/> {PRODUCT_NAME} / {PRODUCT_SHORT}</p>
+        <h1 id="hsi-panorama-title">Connected context. Traceable evidence. Human review.</h1>
+        <p>{PRODUCT_TAGLINE}</p>
       </div>
       <div className="hsi-panorama-stage">
         <LandscapeArt/>
@@ -113,7 +114,7 @@ export function Home() {
         </button>)}</div>
         <p className="hsi-motion-domains-note">The moving signal illustrates connections, not actual patient data or scientific findings. Select any domain to explore.</p>
       </div>
-      <div className="hsi-editorial-wrap hsi-panorama-actions"><Link className="hsi-editorial-button" to="/platform">Explore the platform ↗</Link><a className="hsi-editorial-textlink" href="#connected-journey">Follow the connections ↗</a></div>
+      <div className="hsi-editorial-wrap hsi-panorama-actions"><Link className="hsi-editorial-button" to="/products">Explore products</Link><a className="hsi-editorial-textlink" href="#connected-journey">Follow the connections</a></div>
     </section>
     <section className="hsi-editorial-intro"><div className="hsi-editorial-wrap hsi-idea-grid"><div className="hsi-idea-copy"><p className="hsi-editorial-kicker">01 / THE IDEA</p><h2>Beyond disconnected data.<br/><em>Towards connected understanding.</em></h2><p>Health questions rarely fit inside a single dataset or discipline. HSI brings together evidence-grounded research tools and a connected vision for clinical, patient and trial intelligence — with distinct data permissions and review boundaries.</p><Link className="hsi-editorial-textlink" to="/platform">Discover how the connections work ↗</Link></div><figure className="hsi-idea-figure"><ConnectedUnderstandingArt/><figcaption>Illustrative connection map · not a patient record or scientific result</figcaption></figure></div></section>
     <section className="hsi-journey" id="connected-journey" aria-labelledby="hsi-journey-heading">
