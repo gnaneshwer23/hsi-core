@@ -7,7 +7,7 @@
  * `verified` requires a rights-verified research/ra-anti-tnf/release.json.
  * Never invents SME labels.
  */
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import {
   emptyContextAnnotationBenchmarkKit,
@@ -16,6 +16,7 @@ import {
   buildDoubleBlindLabelPackets,
   assignPartitionsByPolicy,
   assertBenchmarkKitHonesty,
+  type ContextAnnotationBenchmarkKit,
 } from "../src/contextAnnotationBenchmark";
 import { RaEvidenceUnavailableError } from "../src/raEvidenceRelease";
 
@@ -27,6 +28,18 @@ if (mode !== "practice" && mode !== "verified") {
 const root = resolve(import.meta.dir, "..");
 const outDir = resolve(root, "research/ra-anti-tnf/annotation-kit");
 mkdirSync(outDir, { recursive: true });
+const kitPath = resolve(outDir, "benchmark-kit.json");
+
+function loadPriorPracticeRows(): ContextAnnotationBenchmarkKit["emptyLabelStore"]["practice_not_evaluation"] {
+  if (!existsSync(kitPath)) return [];
+  try {
+    const prior = JSON.parse(readFileSync(kitPath, "utf8")) as ContextAnnotationBenchmarkKit;
+    const rows = prior.emptyLabelStore?.practice_not_evaluation;
+    return Array.isArray(rows) ? rows : [];
+  } catch {
+    return [];
+  }
+}
 
 const kit = emptyContextAnnotationBenchmarkKit(
   mode === "verified" ? "ready_for_sme_kickoff" : "awaiting_rights_verified_passages",
@@ -36,6 +49,19 @@ try {
   if (mode === "practice") {
     const research = JSON.parse(readFileSync(resolve(root, "research/ra-anti-tnf-research/release.json"), "utf8"));
     kit.emptyLabelStore.practice_not_evaluation = scaffoldPracticeRowsFromResearchRelease(research);
+    // Keep any previously minted verified partitions when re-scaffolding practice only.
+    if (existsSync(kitPath)) {
+      try {
+        const prior = JSON.parse(readFileSync(kitPath, "utf8")) as ContextAnnotationBenchmarkKit;
+        kit.emptyLabelStore.evaluation_frozen = prior.emptyLabelStore?.evaluation_frozen ?? [];
+        kit.emptyLabelStore.training_candidate = prior.emptyLabelStore?.training_candidate ?? [];
+        if (kit.emptyLabelStore.evaluation_frozen.length || kit.emptyLabelStore.training_candidate.length) {
+          kit.status = "ready_for_sme_kickoff";
+        }
+      } catch {
+        /* ignore corrupt prior kit */
+      }
+    }
     const [packetA, packetB] = buildDoubleBlindLabelPackets(kit.emptyLabelStore.practice_not_evaluation);
     writeFileSync(resolve(outDir, "practice-packet-annotator-a.json"), `${JSON.stringify(packetA, null, 2)}\n`);
     writeFileSync(resolve(outDir, "practice-packet-annotator-b.json"), `${JSON.stringify(packetB, null, 2)}\n`);
@@ -45,6 +71,7 @@ try {
     const split = assignPartitionsByPolicy(rows);
     kit.emptyLabelStore.evaluation_frozen = split.evaluation_frozen;
     kit.emptyLabelStore.training_candidate = [...split.training_candidate, ...split.holdout_candidate];
+    kit.emptyLabelStore.practice_not_evaluation = loadPriorPracticeRows();
     kit.status = "ready_for_sme_kickoff";
     const [packetA, packetB] = buildDoubleBlindLabelPackets([
       ...kit.emptyLabelStore.evaluation_frozen,

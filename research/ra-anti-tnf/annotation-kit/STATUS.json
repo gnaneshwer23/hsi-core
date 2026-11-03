@@ -1,10 +1,10 @@
 {
   "ok": true,
-  "mode": "practice",
-  "status": "awaiting_rights_verified_passages",
+  "mode": "verified",
+  "status": "ready_for_sme_kickoff",
   "practiceRows": 2,
-  "evaluationRows": 0,
-  "trainingRows": 0,
+  "evaluationRows": 4,
+  "trainingRows": 4,
   "labelledRows": 0,
   "note": "Empty scaffolds only — SME labels not fabricated."
 }

@@ -35,8 +35,14 @@ test("practice scaffolds come from research working set and cannot claim PMIDs",
   }
 });
 
-test("verified scaffold refuses pending release", () => {
-  expect(() => scaffoldRowsFromVerifiedRelease(pending, "evaluation_frozen")).toThrow();
+test("verified scaffold refuses pending marker and mints unlabelled rights-verified rows", () => {
+  const marker = { status: "awaiting_verified_source_import", reason: "Fixture pending marker." };
+  expect(() => scaffoldRowsFromVerifiedRelease(marker, "evaluation_frozen")).toThrow();
+  const rows = scaffoldRowsFromVerifiedRelease(pending, "evaluation_frozen");
+  expect(rows.length).toBeGreaterThanOrEqual(2);
+  expect(rows.every((r) => r.pmid && r.licenceIdentifier && r.annotatorId === null && r.tags.species === null)).toBe(true);
+  const split = assignPartitionsByPolicy(rows);
+  expect(split.evaluation_frozen.length + split.training_candidate.length + split.holdout_candidate.length).toBe(rows.length);
 });
 
 test("double-blind packets omit peer state and stay unlabelled", () => {

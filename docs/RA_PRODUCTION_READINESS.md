@@ -72,12 +72,13 @@ See [PHASE6_CONTEXT_ANNOTATION_BENCHMARK.md](PHASE6_CONTEXT_ANNOTATION_BENCHMARK
 
 ```sh
 bun run ra:scaffold-annotation -- practice   # empty practice packets from research working set
-bun run ra:scaffold-annotation -- verified # blocked until rights-verified release
+bun run ra:scaffold-annotation -- verified # empty eval/training packets from rights-verified release
 ```
+
+Verified scaffolds minted 2026-11-03 (`ready_for_sme_kickoff`; labelledRows=0). See [PHASE6_CONTEXT_ANNOTATION_BENCHMARK.md](PHASE6_CONTEXT_ANNOTATION_BENCHMARK.md).
 
 ## Human verification still required
 
-- Explicit CC BY/CC0 URI import for real PMIDs.
-- Product Neon apply + research roles (Aksh membership grant).
-- SME annotation / adjudication (kit ready; labels empty).
+- Product Neon apply + research roles (Aksh membership grant) where not already done.
+- SME annotation / adjudication on eval packets (labels still empty).
 - Measured utility before a second indication pack.
