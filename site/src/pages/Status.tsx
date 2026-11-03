@@ -46,22 +46,19 @@ export function Status() {
             <h2 className="display display-md">Clinical + Trials substrate UI.</h2>
           </div>
           <p className="lede" style={{ maxWidth: "40rem" }}>
-            In-development and Planned products expose honesty-labelled fixtures — not live
-            hospital or registry products.
+            In-development fixtures only — not live hospital, registry, or CDS products. Trials
+            product chip remains Planned even when the five-state demo is open.
           </p>
           <div className="product-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(16rem, 1fr))" }}>
             {DEMO_LINKS.map((d) => {
-              const chip =
-                d.product === "trials"
-                  ? ("planned" as const)
-                  : ("in_development" as const);
-              const chipLabel = chip === "planned" ? "Planned" : "In development";
+              // Thin demos are In development; Trials *product* chip stays Planned on the card below.
+              const chip = "in_development" as const;
               return (
               <article key={d.to} className="product-card" id={`demo-${d.product}`}>
                 <div className="product-card-head">
                   <h3>{d.label}</h3>
                   <span className={`maturity-chip maturity-chip-${chip}`}>
-                    {chipLabel}
+                    {MATURITY_CHIP_LABEL[chip]}
                   </span>
                 </div>
                 <p className="xs muted">{d.note}</p>

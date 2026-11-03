@@ -41,6 +41,7 @@ Strategic product reset: audit, architecture, and roadmap. **No feature implemen
 | [HSI_CURRENT_STATE_INTELLIGENCE_REPORT.md](./HSI_CURRENT_STATE_INTELLIGENCE_REPORT.md) | Integrated current-state intelligence + first milestone |
 | [HSI_EXECUTIVE_SUMMARY.md](./HSI_EXECUTIVE_SUMMARY.md) | Concise findings + founder decisions |
 | [HSI_COMPETITOR_ANALYSIS_2026-11.md](./HSI_COMPETITOR_ANALYSIS_2026-11.md) | Competitive landscape (Owkin/BenchSci/Function/Tempus); ISI-first entry |
+| [HSI_IMMUNOLOGY_SI_BUILD_PATH.md](./HSI_IMMUNOLOGY_SI_BUILD_PATH.md) | Founder immunology-SI plan → adopt/reshape/defer; melanoma 30-day map; metrics = targets |
 | [HSI_EXISTING_SYSTEM_AUDIT.md](./HSI_EXISTING_SYSTEM_AUDIT.md) | Evidence-based audit of hsi-core, ISI, Aksh |
 | [HSI_TARGET_ARCHITECTURE.md](./HSI_TARGET_ARCHITECTURE.md) | Logical architecture and data planes |
 | [HSI_KNOWLEDGE_GRAPH_MASTER_PLAN.md](./HSI_KNOWLEDGE_GRAPH_MASTER_PLAN.md) | Layers, ontologies, provenance |

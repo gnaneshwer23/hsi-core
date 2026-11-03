@@ -75,7 +75,8 @@ export const ECOSYSTEM_PRODUCTS: readonly EcosystemProduct[] = [
     name: "HSI Trials",
     oneLine: "Explainable trial screening and mechanism-linked discovery.",
     chip: "planned",
-    chipDetail: "Planned — criterion five-state MVP in substrate; confirmedEligible always false.",
+    chipDetail:
+      "Planned product — marketing at /for-trials is Available; five-state demo In development; confirmedEligible always false.",
     primaryCta: { label: "Explore HSI Trials", href: "/for-trials" },
     secondaryCta: { label: "Five-state MVP", href: "/trials-criteria" },
     mustNot: [
@@ -103,7 +104,8 @@ export const STATUS_COLUMNS: readonly StatusColumn[] = [
       "ISI Explore / Ask / Atlas / M1 investigation brief (research limits)",
       "hsi-core graded packs + Gate C patterns + Discovery Centre",
       "Aksh Health (scoped clinic / HITL — separate product)",
-      "Honesty labels: research ≠ CDS; gaps ≠ worldwide literature absence",
+      "HSI Trials marketing landing (/for-trials) — product chip remains Planned; never confirmed eligible",
+      "Public ecosystem status (/status) + honesty labels (research ≠ CDS; gaps ≠ worldwide literature absence)",
     ],
   },
   {
@@ -111,18 +113,18 @@ export const STATUS_COLUMNS: readonly StatusColumn[] = [
     title: "In development",
     items: [
       "HSI Clinical synthetic longitudinal timeline (/clinical-timeline)",
-      "HSI Discovery consume hardening into ISI",
+      "HSI Discovery consume in ISI (/hsi-consume) — hardening continues",
       "Aksh ↔ HSI gateway stub UI (/gateway) — PHI→research denied",
-      "Public ecosystem site maturity chips (this status page)",
+      "Trials five-state criteria demo (/trials-criteria; never confirmed eligible)",
     ],
   },
   {
     id: "planned",
     title: "Planned",
     items: [
-      "HSI Trials marketing (/for-trials) + five-state demo (/trials-criteria; never confirmed eligible)",
+      "HSI Trials workspace / live registry product (never confirmed eligible)",
       "Full FHIR longitudinal reconstruction / live EMIS",
-      "Omics runtimes and live CDS paths",
+      "Omics runtimes (research plane) — live CDS remains a non-goal",
       "Partner-signed pilot lock (no invented MoU)",
     ],
   },
@@ -140,7 +142,7 @@ export const DEMO_LINKS = [
     to: "/trials-criteria",
     label: "Trials five-state criteria",
     product: "trials" as const,
-    note: "multi-trial stubs · criterion_assessment_only · confirmedEligible=false",
+    note: "In development demo · multi-trial stubs · criterion_assessment_only · confirmedEligible=false · product remains Planned",
   },
   {
     to: "/gateway",

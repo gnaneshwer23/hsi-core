@@ -21,6 +21,13 @@ describe("Public HSI site honesty", () => {
     expect(mod).toMatch(/Never confirmed eligible|never “confirmed eligible”|never "confirmed eligible"/i);
     expect(mod).toContain("ENGINEERING_LINKS");
     expect(mod).toContain("STATUS_COLUMNS");
+    // Shipped /for-trials marketing must not sit only under Planned
+    expect(mod).toMatch(
+      /available[\s\S]*HSI Trials marketing landing \(\/for-trials\)[\s\S]*in_development/i,
+    );
+    expect(mod).toContain("Trials five-state criteria demo (/trials-criteria");
+    expect(mod).toContain("live CDS remains a non-goal");
+    expect(mod).not.toMatch(/Omics runtimes and live CDS paths/);
   });
 
   it("routes /products and /status; primary nav demotes engineering chrome", () => {

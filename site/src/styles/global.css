@@ -3563,23 +3563,28 @@ p {
   border: 1px solid transparent;
 }
 .maturity-chip-available {
-  background: rgba(22, 163, 74, 0.12);
-  color: #15803d;
-  border-color: rgba(22, 163, 74, 0.28);
+  background: rgba(23, 100, 95, 0.12);
+  color: var(--teal);
+  border-color: rgba(23, 100, 95, 0.28);
 }
 .maturity-chip-in_development {
-  background: rgba(217, 119, 6, 0.12);
-  color: #b45309;
-  border-color: rgba(217, 119, 6, 0.28);
+  background: rgba(255, 104, 69, 0.14);
+  color: var(--coral);
+  border-color: rgba(255, 104, 69, 0.32);
 }
 .maturity-chip-planned {
-  background: rgba(90, 116, 112, 0.12);
-  color: #475569;
-  border-color: rgba(90, 116, 112, 0.28);
+  background: rgba(122, 148, 144, 0.14);
+  color: var(--slate);
+  border-color: rgba(122, 148, 144, 0.32);
 }
-.status-col-available h3 { color: #15803d; }
-.status-col-in_development h3 { color: #b45309; }
-.status-col-planned h3 { color: #475569; }
+.status-col-available h3 { color: var(--teal); }
+.status-col-in_development h3 { color: var(--coral); }
+.status-col-planned h3 { color: var(--slate); }
+/* Ivory surfaces: bone-dim is too washed for body bullets */
+.section-bone .maturity-card ul,
+.section-grid-light .maturity-card ul {
+  color: rgba(10, 46, 43, 0.72);
+}
 .nav-drawer-eng-label {
   margin: 1rem 0 0.35rem;
   padding: 0 0.25rem;
@@ -4187,14 +4192,14 @@ p {
   border-color: rgba(255, 255, 255, 0.1);
 }
 .land-eco-dark .maturity-chip-available {
-  background: rgba(47, 203, 134, 0.18);
-  color: #9ef0c8;
-  border-color: rgba(47, 203, 134, 0.4);
+  background: rgba(122, 181, 175, 0.2);
+  color: var(--teal-soft);
+  border-color: rgba(122, 181, 175, 0.45);
 }
 .land-eco-dark .maturity-chip-in_development {
-  background: rgba(245, 158, 11, 0.18);
-  color: #fcd34d;
-  border-color: rgba(245, 158, 11, 0.4);
+  background: rgba(255, 104, 69, 0.22);
+  color: #ffb39f;
+  border-color: rgba(255, 104, 69, 0.45);
 }
 .land-eco-dark .maturity-chip-planned {
   background: rgba(138, 160, 156, 0.18);
