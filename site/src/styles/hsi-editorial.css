@@ -149,3 +149,10 @@
 @media(max-width:950px){.hsi-rebuild-heading,.hsi-rebuild-stack-layout,.hsi-rebuild-story-grid{grid-template-columns:1fr;gap:30px}.hsi-rebuild-stack,.hsi-rebuild-story{padding:75px 0}.hsi-rebuild-stack-display{min-height:440px}.hsi-rebuild-orbit{width:210px}}
 @media(max-width:520px){.hsi-rebuild-layer{padding:15px;grid-template-columns:28px 1fr 16px}.hsi-rebuild-layer strong{font-size:.75rem}.hsi-rebuild-layer small{font-size:.7rem}.hsi-rebuild-stack-display{padding:24px}.hsi-rebuild-research-visual{padding:20px}.hsi-rebuild-visual-top{font-size:.52rem}}
 @media(prefers-reduced-motion:reduce){.hsi-rebuild-layer{transition:none}}
+
+
+/* Scientific landscape illustration: a detailed, original wireframe in the existing hero. */
+.hsi-editorial-visual.hsi-landscape-visual{background:radial-gradient(circle at 45% 35%,#277e73 0%,#17645f 58%,#104d49 100%)}
+.hsi-landscape-art{width:115%;height:115%;max-width:none;overflow:visible}
+.hsi-landscape-visual .hsi-editorial-visual-note{z-index:2}
+@media(prefers-reduced-motion:reduce){.hsi-landscape-art *{animation:none!important}}
