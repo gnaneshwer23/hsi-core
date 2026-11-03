@@ -1,42 +1,53 @@
 import { Link } from "react-router-dom";
 import { PlatformEngine } from "../components/landing/PlatformEngine";
 import { EcosystemGrid } from "../components/landing/EcosystemGrid";
-import { EvidenceExplorer } from "../components/landing/EvidenceExplorer";
 import { DiscoveryWorkbench } from "../components/landing/DiscoveryWorkbench";
 
 /**
- * HSI marketing homepage — connected fabric → ecosystem → explore → discovery.
- * Maturity ledger stays on /status (footer), not featured here.
+ * HSI marketing homepage — one cohesive narrative:
+ * value prop + connected fabric → four products once → one research workflow demo →
+ * evidence transparency / human oversight → research collaboration CTA.
+ * Maturity ledger stays on /status (footer). Explore lab lives on /explore (not repeated here).
  */
 export function Home() {
   return (
     <>
       <PlatformEngine />
-      <EcosystemGrid />
-      <EvidenceExplorer />
+      <EcosystemGrid
+        footLink={{ to: "/products", label: "All products and maturity ↗" }}
+      />
       <DiscoveryWorkbench />
 
       <section className="section section-ink">
         <div className="container">
           <div className="split-headline">
             <div>
-              <span className="section-num">BOUNDARIES</span>
+              <span className="section-num">Evidence & oversight</span>
               <h2 className="display display-lg" style={{ marginTop: "0.75rem" }}>
-                Research intelligence — not bedside care.
+                Graded evidence, human review — not bedside care.
               </h2>
             </div>
             <p className="lede">
-              HSI supplies the graded evidence backbone for{" "}
-              <strong>Immune Super Intelligence (ISI)</strong> and related products. Agents may
-              propose; humans review. Care decisions stay with qualified professionals.
+              HSI publishes context-rich claims with provenance and uncertainty. Agents may
+              propose; humans review at Gate C.{" "}
+              <strong>Science</strong> on this site is an educational experience. Care decisions
+              stay with qualified professionals — ISI Research is not clinical decision support.
             </p>
           </div>
           <div className="faq">
             <details open>
-              <summary>Is ISI clinical decision support?</summary>
+              <summary>Is Science a clinical product?</summary>
               <p>
-                No. ISI is research intelligence. It does not diagnose, select therapies at the
-                bedside, score patient risk, or decide trial eligibility.
+                No. Science is educational biology context. Clinical workflows belong to product
+                planes such as Aksh Health and HSI Clinical (in development) — with their own
+                governance.
+              </p>
+            </details>
+            <details>
+              <summary>Is ISI Research clinical decision support?</summary>
+              <p>
+                No. ISI Research explores mechanisms and evidence. It does not diagnose, select
+                therapies at the bedside, score patient risk, or decide trial eligibility.
               </p>
             </details>
             <details>
@@ -47,12 +58,12 @@ export function Home() {
               </p>
             </details>
             <details>
-              <summary>Where should I start?</summary>
+              <summary>What is live today?</summary>
               <p>
-                Open the{" "}
-                <Link to="/discovery">Discovery Centre</Link> on a real evidence question, or
-                browse the{" "}
-                <Link to="/products">four product perspectives</Link>.
+                See the{" "}
+                <Link to="/status">status ledger</Link> for Available / In development / Planned
+                labels, or open{" "}
+                <Link to="/discovery">Discovery Centre</Link> on versioned evidence packs.
               </p>
             </details>
           </div>
@@ -62,18 +73,21 @@ export function Home() {
       <section className="section section-ink cta-band">
         <div className="container cta-band-inner">
           <div>
-            <h2 className="display display-md">Start from a real evidence map.</h2>
+            <h2 className="display display-md">Collaborate on research intelligence.</h2>
             <p className="lede">
-              Open Discovery on the RA / anti-TNF question, or read how ISI consumes versioned
-              exports.
+              Enter via ISI Research, browse the four-product ecosystem, or open Discovery on a
+              real graded pack — not a fictional API.
             </p>
           </div>
           <div className="hero-actions">
-            <Link to="/discovery" className="btn btn-primary">
-              Discovery Centre <span className="arrow">↗</span>
+            <Link to="/for-isi" className="btn btn-primary">
+              ISI Research <span className="arrow">↗</span>
             </Link>
-            <Link to="/for-isi" className="btn btn-ghost">
-              For researchers
+            <Link to="/discovery" className="btn btn-ghost">
+              Discovery Centre
+            </Link>
+            <Link to="/products" className="btn btn-ghost">
+              All products
             </Link>
           </div>
         </div>

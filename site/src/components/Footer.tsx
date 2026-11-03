@@ -4,21 +4,22 @@ import { PRODUCT_NAME, PRODUCT_TAGLINE } from "../lib/brand";
 const PLATFORM_LINKS = [
   { to: "/platform", label: "Platform" },
   { to: "/products", label: "Products" },
-  { to: "/how-it-works", label: "How it works" },
-  { to: "/explore", label: "Explore" },
-  { to: "/discovery", label: "Discovery" },
+  { to: "/science", label: "Science" },
+  { to: "/how-it-works", label: "How It Works" },
 ] as const;
 
 const PRODUCT_LINKS = [
-  { to: "/for-aksh", label: "For Aksh" },
-  { to: "/for-trials", label: "For Trials" },
-  { to: "/for-isi", label: "For ISI research" },
+  { to: "/for-isi", label: "ISI Research" },
+  { to: "/for-aksh", label: "Aksh Health" },
+  { to: "/platform", label: "HSI Clinical" },
+  { to: "/for-trials", label: "HSI Trials" },
 ] as const;
 
-/** Quiet progress links — not primary nav. */
+/** Quiet progress + public docs — not primary nav. */
 const PROGRESS_LINKS = [
-  { to: "/status", label: "Status" },
   { to: "/roadmap", label: "Roadmap" },
+  { to: "/status", label: "Status" },
+  { to: "/docs", label: "Docs" },
 ] as const;
 
 export function Footer() {
@@ -29,11 +30,12 @@ export function Footer() {
           <div className="footer-brand">{PRODUCT_NAME}</div>
           <p className="footer-tagline">{PRODUCT_TAGLINE}</p>
           <p className="footer-honesty">
-            Research intelligence with human oversight.
+            Science is an educational experience — not a clinical product. Research intelligence
+            with human oversight.
           </p>
         </div>
         <div>
-          <h4>Platform</h4>
+          <h4>Explore</h4>
           <ul>
             {PLATFORM_LINKS.map((l) => (
               <li key={l.to}>

@@ -4,18 +4,15 @@ import { PRODUCT_NAME, PRODUCT_SHORT } from "../lib/brand";
 import { ENGINEERING_LINKS } from "../lib/productMaturity";
 
 /**
- * Primary destinations — product/marketing landings only.
- * Status / Roadmap stay footer-only. Engineering surfaces stay drawer-secondary.
+ * Primary destinations — founder public IA.
+ * Research / ISI entry via Products + contextual CTAs (not header clutter).
+ * Status / Roadmap / Docs stay footer-only. Engineering stays drawer-secondary.
  */
 const primaryLinks = [
   { to: "/platform", label: "Platform" },
   { to: "/products", label: "Products" },
-  { to: "/how-it-works", label: "How it works" },
-  { to: "/explore", label: "Explore" },
-  { to: "/discovery", label: "Discovery" },
-  { to: "/for-aksh", label: "For Aksh" },
-  { to: "/for-trials", label: "For Trials" },
-  { to: "/for-isi", label: "For researchers" },
+  { to: "/science", label: "Science" },
+  { to: "/how-it-works", label: "How It Works" },
 ];
 
 export function Nav() {
@@ -61,8 +58,8 @@ export function Nav() {
           ))}
         </nav>
 
-        <Link to="/discovery" className="btn btn-primary nav-cta">
-          Open Discovery <span className="arrow">↗</span>
+        <Link to="/products" className="btn btn-primary nav-cta">
+          Explore products <span className="arrow">↗</span>
         </Link>
 
         <button
@@ -79,13 +76,16 @@ export function Nav() {
       </div>
 
       <div className={`nav-drawer${open ? " open" : ""}`}>
+        <NavLink to="/" onClick={() => setOpen(false)}>
+          Home
+        </NavLink>
         {primaryLinks.map((l) => (
           <NavLink key={l.to} to={l.to} onClick={() => setOpen(false)}>
             {l.label}
           </NavLink>
         ))}
-        <Link to="/discovery" className="btn btn-primary nav-drawer-cta" onClick={() => setOpen(false)}>
-          Open Discovery <span className="arrow">↗</span>
+        <Link to="/products" className="btn btn-primary nav-drawer-cta" onClick={() => setOpen(false)}>
+          Explore products <span className="arrow">↗</span>
         </Link>
         <p className="nav-drawer-eng-label">Engineering (secondary)</p>
         {ENGINEERING_LINKS.map((l) => (

@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import { Home } from "./pages/Home";
 import { Platform } from "./pages/Platform";
@@ -23,6 +23,7 @@ import { ClinicalTimeline } from "./pages/ClinicalTimeline";
 import { TrialsCriteria } from "./pages/TrialsCriteria";
 import { GatewayDemo } from "./pages/GatewayDemo";
 import { Sources } from "./pages/Sources";
+import { Science } from "./pages/Science";
 import { NotFound } from "./pages/NotFound";
 
 export default function App() {
@@ -33,7 +34,7 @@ export default function App() {
         <Route path="platform" element={<Platform />} />
         <Route path="how-it-works" element={<HowItWorks />} />
         <Route path="explore" element={<Explore />} />
-        <Route path="science" element={<Navigate to="/explore" replace />} />
+        <Route path="science" element={<Science />} />
         <Route path="discovery-engine" element={<DiscoveryEngine />} />
         <Route path="products" element={<Products />} />
         <Route path="status" element={<Status />} />
