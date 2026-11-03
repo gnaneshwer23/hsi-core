@@ -61,7 +61,7 @@ describe("Public HSI site honesty", () => {
     const home = site("src/pages/Home.tsx");
     expect(home).toContain("Aksh Health");
     expect(home).toContain("Immune Super Intelligence");
-    expect(home).toContain("Human Super Intelligence");
+    expect(home).toContain("HEALTH SUPER INTELLIGENCE");
     expect(home).toContain("Illustrative connections · not study findings or patient analysis");
     expect(home).toContain('to="/for-isi"');
     expect(home).toContain('to="/for-aksh"');
