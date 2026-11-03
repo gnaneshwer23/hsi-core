@@ -70,9 +70,9 @@ export function createOwnedInvestigationBackend(options: {
           await tx.query("SELECT pg_advisory_xact_lock(hashtextextended($1,0))", [`hsi-start:${owner}`]);
           const [count] = await tx.query(`SELECT count(*) AS total, count(*) FILTER (WHERE created_at>now()-interval '10 minutes') AS recent FROM ${table} WHERE owner_id=$1`, [owner]);
           if (Number(count?.total) >= 200 || Number(count?.recent) >= 5) throw new InvestigationRequestError(429, "investigation_start_limit");
-          rows = await tx.query(`INSERT INTO ${table} (owner_id,investigation_key,revision,state,data_class,question,snapshot) VALUES ($1,$2,$3,$4,$5,$6,$7::jsonb) ON CONFLICT (owner_id,investigation_key) DO NOTHING RETURNING revision`, [owner, key, snapshot.revision, state, snapshot.bundle.context.dataClass, snapshot.bundle.context.question, JSON.stringify(snapshot)]);
+          rows = await tx.query(`INSERT INTO ${table} (owner_id,investigation_key,revision,state,data_class,question,snapshot) VALUES ($1,$2,$3,$4,$5,$6,$7::text::jsonb) ON CONFLICT (owner_id,investigation_key) DO NOTHING RETURNING revision`, [owner, key, snapshot.revision, state, snapshot.bundle.context.dataClass, snapshot.bundle.context.question, JSON.stringify(snapshot)]);
         } else {
-          rows = await tx.query(`UPDATE ${table} SET revision=$3,state=$4,snapshot=$5::jsonb,updated_at=now() WHERE owner_id=$1 AND investigation_key=$2 AND revision=$6 RETURNING revision`, [owner, key, snapshot.revision, state, JSON.stringify(snapshot), expected]);
+          rows = await tx.query(`UPDATE ${table} SET revision=$3,state=$4,snapshot=$5::text::jsonb,updated_at=now() WHERE owner_id=$1 AND investigation_key=$2 AND revision=$6 RETURNING revision`, [owner, key, snapshot.revision, state, JSON.stringify(snapshot), expected]);
         }
         if (rows.length !== 1) throw new InvestigationConflictError();
         await tx.query(`INSERT INTO ${audit} (owner_id,investigation_key,revision,actor_id,operation,run_state) VALUES ($1,$2,$3,$4,$5,$6)`, [owner, key, snapshot.revision, principal.actor.id, snapshot.bundle.runs[0]!.history.at(-1)?.status ?? "created", state]);
