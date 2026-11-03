@@ -13,6 +13,7 @@ if (!requested.length || requested.some((name) => !(name in destinations))) thro
 const modules = [
   { name: "sharedTechnology", version: "hsi-shared-technology-1" },
   { name: "researchContracts", version: "hsi-research-contract-1" },
+  { name: "investigationService", version: "hsi-investigation-1" },
 ];
 // Preflight every source before writing any consumer file.
 for (const module of modules) {

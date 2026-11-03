@@ -58,7 +58,7 @@ a stage. Human review cannot complete as a model or deterministic execution.
 Skipped stages require a reason and produce no outputs. Failed stages require a
 reason, produce no outputs and terminate the run. Empty retrieval results should
 be a completed retrieval artifact with an empty result set, not a failed event.
-Any skipped stage makes a finished run `partial`. A review waiting on a human is
+Any skipped stage makes a finished run `partial`. A completed hypothesis stage awaiting a reviewer (or a started human review) is
 `awaiting_human_review`. Seven completed stages give `completed`, which describes
 workflow execution only and does not approve a claim. Version 1 has no retry
 events; create a new run for another attempt.
@@ -83,7 +83,8 @@ parsing, and revalidate before persistence or dispatch across a trust boundary.
 
 ## Next implementation
 
-Build the authenticated investigation service and product storage adapters against
-this contract, then test the RA/anti-TNF vertical. No live retrieval provider,
-model execution, product API route, database migration or public page is added by
-this milestone.
+The [investigation service](INVESTIGATION_SERVICE.md) now executes this contract
+with scoped corpus retrieval, bounded graph traversal, explicit counterevidence,
+unvalidated questions and a human review pause. Authenticated product storage/API
+adapters and the RA/anti-TNF validation vertical remain next. No product API route,
+database migration or public page is added by these shared library milestones.

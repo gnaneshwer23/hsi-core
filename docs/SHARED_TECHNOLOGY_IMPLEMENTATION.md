@@ -52,9 +52,12 @@ database schema or entity/claim approval behaviour is extracted or changed.
    Authenticated provider interfaces and storage adapters remain next. Providers
    access each product's own storage under its existing permissions. Do not use
    a shared patient database or copy clinical records into HSI.
-3. **Executable investigation service:** question → bounded retrieval → graph
+3. **Executable investigation service (implemented as a server library):** question → bounded retrieval → graph
    context → opposing evidence → researcher hypothesis → human-review queue →
    versioned dossier. Every stage records actual execution/failure, not a badge.
+   Includes corpus retrieval, deterministic unvalidated question drafting, injected
+   provider interfaces and local persistence. Product authentication/database
+   adapters remain next. See [execution semantics](INVESTIGATION_SERVICE.md).
 4. **Replace product-specific duplicate algorithms:** ISI and Aksh consumers use
    the shared release where semantics match. Keep clinical workflows in Aksh;
    HSI orchestrates research-safe capabilities, not autonomous care.
@@ -62,9 +65,9 @@ database schema or entity/claim approval behaviour is extracted or changed.
    research track. Test with fixtures, then source-licensed real evidence and
    independent expert assessment before expanding claims or disease scope.
 
-The algorithms and contracts do **not** complete milestones 3–5 or the product
-provider/storage adapters. It does not implement a
-new AI agent runtime, live database integration, biomarker discovery, clinical
+The shared algorithms, contracts and service do **not** complete milestones 4–5
+or the authenticated product API/storage adapters. It does not implement a
+new model agent runtime, live database integration, biomarker discovery, clinical
 trial matching or a unified production platform. Database/auth integration and
 clinical/scientific validation remain separate requirements. Marketing links and
 source-bundle exchange remain supplementary, not evidence of shared execution.
