@@ -143,3 +143,17 @@ describe("Public HSI site honesty", () => {
     expect(gateway).not.toMatch(/live Aksh CDS engines wired|live EMIS connector/i);
   });
 });
+
+
+test("Stage A Platform includes all four distinct product perspectives and honest maturity", () => {
+  const platform = site("src/pages/Platform.tsx");
+  expect(platform).toContain('type Product = "aksh" | "clinical" | "isi" | "trials"');
+  expect(platform).toContain('name: "Aksh Health"');
+  expect(platform).toContain('name: "HSI Clinical"');
+  expect(platform).toContain('name: "HSI Trials"');
+  expect(platform).toContain('name: "Immune Super Intelligence"');
+  expect(platform).toContain("ECOSYSTEM_PRODUCTS.map");
+  expect(platform).toContain("MATURITY_CHIP_LABEL");
+  expect(platform).toContain("No live matching, eligibility confirmation or enrolment");
+  expect(platform).toContain("not patient-record transfers");
+});
