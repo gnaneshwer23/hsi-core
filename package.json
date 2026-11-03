@@ -30,9 +30,9 @@
       "types": "./dist/raEvidenceRelease.d.ts",
       "import": "./dist/raEvidenceRelease.js"
     },
-    "./ra-demo-evidence-release": {
-      "types": "./dist/raDemoEvidenceRelease.d.ts",
-      "import": "./dist/raDemoEvidenceRelease.js"
+    "./ra-research-evidence-release": {
+      "types": "./dist/raResearchEvidenceRelease.d.ts",
+      "import": "./dist/raResearchEvidenceRelease.js"
     },
     "./correction-provenance": {
       "types": "./dist/correctionProvenance.d.ts",
@@ -86,8 +86,8 @@
     "ra:import": "python3 tools/import_ra_evidence.py",
     "ra:test-parser": "python3 -m unittest discover -s test/python -v",
     "ra:export-artifact": "bun scripts/export-ra-evidence-artifact.ts",
-    "ra:export-demo-artifact": "bun scripts/export-ra-demo-artifact.ts",
-    "ra:smoke-demo": "bun scripts/smoke-ra-demo-path.ts"
+    "ra:export-research-artifact": "bun scripts/export-ra-research-artifact.ts",
+    "ra:verify-research-path": "bun scripts/verify-ra-research-path.ts"
   },
   "engines": {
     "node": ">=20"

@@ -886,20 +886,20 @@ export { INVESTIGATION_SERVICE_VERSION, createInvestigationService, createCorpus
 export { INVESTIGATION_BACKEND_VERSION, createOwnedInvestigationBackend, parseInvestigationCommand, readInvestigationRequest, investigationJson, investigationError, InvestigationRequestError, type InvestigationSql, type InvestigationDatabase, type InvestigationPrincipal, type InvestigationRelease, type InvestigationCommand, type InvestigationCursor } from "./investigationBackend";
 export { RA_EVIDENCE_RELEASE_VERSION, RA_RELEASE_ID, RA_QUESTION, RA_SOURCE_IDENTITIES, parseRaEvidenceRelease, buildRaEvidenceBundle, raEvidenceReadiness, raEvidenceReleaseListing, RaEvidenceUnavailableError, type RaEvidenceRelease, type RaSourceReceipt, type RaReviewCandidate, type RaEvidenceReadiness } from "./raEvidenceRelease";
 export {
-  RA_DEMO_EVIDENCE_RELEASE_VERSION,
-  RA_DEMO_RELEASE_ID,
-  RA_DEMO_QUESTION,
-  RA_DEMO_SOURCE_IDS,
-  RA_DEMO_DATASET_ID,
-  parseRaDemoEvidenceRelease,
-  buildRaDemoEvidenceBundle,
-  raDemoEvidenceReadiness,
-  raDemoEvidenceReleaseListing,
-  sealRaDemoEvidenceRelease,
-  RaDemoEvidenceError,
-  type RaDemoEvidenceRelease,
-  type RaDemoEvidenceReadiness,
-} from "./raDemoEvidenceRelease";
+  RA_RESEARCH_EVIDENCE_RELEASE_VERSION,
+  RA_RESEARCH_RELEASE_ID,
+  RA_RESEARCH_QUESTION,
+  RA_RESEARCH_SOURCE_IDS,
+  RA_RESEARCH_DATASET_ID,
+  parseRaResearchEvidenceRelease,
+  buildRaResearchEvidenceBundle,
+  raResearchEvidenceReadiness,
+  raResearchEvidenceReleaseListing,
+  sealRaResearchEvidenceRelease,
+  RaResearchEvidenceError,
+  type RaResearchEvidenceRelease,
+  type RaResearchEvidenceReadiness,
+} from "./raResearchEvidenceRelease";
 export {
   CORRECTION_PROVENANCE_VERSION,
   emptyCorrectionProvenanceBundle,

@@ -45,25 +45,25 @@ test("observation biology bridge rejects PHI / live EMIS payloads", () => {
   ).toThrow(ObservationBiologyBridgeError);
 });
 
-test("correction provenance keeps eval frozen and blocks demo into training", () => {
+test("correction provenance keeps eval frozen and blocks research working set into training", () => {
   const empty = emptyCorrectionProvenanceBundle();
   expect(empty.schemaVersion).toBe(CORRECTION_PROVENANCE_VERSION);
   assertCorrectionFeedSeparation(empty);
-  const demo = routeCorrectionStub({
-    id: "corr-demo-1",
+  const research = routeCorrectionStub({
+    id: "corr-research-1",
     investigationKey: "inv-1",
-    releaseId: "ra-anti-tnf-demo",
-    rationale: "Demo-only correction",
+    releaseId: "ra-anti-tnf-research",
+    rationale: "Research working-set correction",
     createdAt: "2026-11-03T16:00:00Z",
-    intendedFeed: "demo_fixture_only",
+    intendedFeed: "research_working_set_only",
   });
-  expect(demo.feed).toBe("demo_fixture_only");
-  expect(demo.notForScientificClaim).toBe(true);
+  expect(research.feed).toBe("research_working_set_only");
+  expect(research.notForScientificClaim).toBe(true);
   expect(() =>
     routeCorrectionStub({
       id: "corr-bad",
       investigationKey: "inv-1",
-      releaseId: "ra-anti-tnf-demo",
+      releaseId: "ra-anti-tnf-research",
       rationale: "Must not train",
       createdAt: "2026-11-03T16:00:00Z",
       intendedFeed: "training_permitted",
@@ -74,6 +74,6 @@ test("correction provenance keeps eval frozen and blocks demo into training", ()
 test("second indication pack stub stays scaffolding until rights-verified RA", () => {
   const stub = secondIndicationPackStub();
   expect(stub.status).toBe("scaffolding_only");
-  expect(stub.dependsOn.demoDoesNotSatisfy).toBe(true);
+  expect(stub.dependsOn.researchWorkingSetDoesNotSatisfy).toBe(true);
   expect(stub.dependsOn.firstPackReleaseId).toBe("ra-anti-tnf-evidence");
 });

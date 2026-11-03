@@ -1,22 +1,22 @@
-# Demo production readiness (RA proof-point)
+# RA investigation production readiness
 
-Engineering smoke and product wiring. **Not** scientific validation, licence
-clearance, Gate C approval or clinical fitness.
+Engineering and product wiring for the RA / anti-TNF investigation path. **Not**
+scientific validation, licence clearance, Gate C approval or clinical fitness.
 
-## Demo vs pending-real
+## Research working set vs pending-real
 
 | Corpus id | Status | Use |
 | --- | --- | --- |
-| `ra-anti-tnf-demo` | Always available (`demo_fixture`, `not_for_scientific_claim`) | Authenticated start → passage review → review → export |
+| `ra-anti-tnf-research` | Always available (`research_working_set`, `notForScientificClaim`) | Authenticated start → passage review → review → export |
 | `ra-anti-tnf-evidence` | `awaiting_verified_source_import` until CC URI import succeeds | Must return `evidence_not_ready` (422); never invent passages |
 
-Canonical demo artifact: `research/ra-anti-tnf-demo/release.json` (SYN-DEMO-PMID-* /
-SYN-D001 mirrors). Rights-verified path keeps original ISI ids once import lands.
+Canonical research artifact: `research/ra-anti-tnf-research/release.json` (`SYN-RA-SRC-*` /
+`SYN-D001` mirrors). Rights-verified path keeps original ISI ids once import lands.
 
 ## Shared modules
 
-- `src/raDemoEvidenceRelease.ts` — demo parse/build/listing
-- `src/correctionProvenance.ts` — eval vs training vs demo feeds
+- `src/raResearchEvidenceRelease.ts` — research working-set parse/build/listing
+- `src/correctionProvenance.ts` — eval vs training vs research-working-set feeds
 - `src/observationBiologyBridge.ts` — research-safe observation → concept hints
 - `src/secondPackStub.ts` — second indication scaffolding (blocked until RA proven)
 
@@ -35,20 +35,20 @@ bun --env-file=.env.local scripts/apply-hsi-investigations-migration.ts --apply
 bun --env-file=.env.local scripts/provision-hsi-research.ts EXISTING_USER_ID reviewer
 ```
 
-## Automated smoke (no product Neon)
+## Automated verification (no product Neon)
 
 ```sh
-bun run ra:smoke-demo
+bun run ra:verify-research-path
 # ISI
-bun --cwd ../immunecity scripts/smoke-ra-demo-corpus.ts
+bun --cwd ../immunecity scripts/verify-ra-research-corpus.ts
 # Aksh
-bun --cwd ../aksh-health-redesign/packages/platform-uk scripts/smoke-ra-demo-corpus.ts
+bun --cwd ../aksh-health-redesign/packages/platform-uk scripts/verify-ra-research-corpus.ts
 ```
 
-## Smoke checklist (manual later, after DB activation)
+## Operator checklist (manual later, after DB activation)
 
 1. Sign in to ISI and Aksh `/internal-research`.
-2. Start `ra-anti-tnf-demo` → passages → reload → export.
+2. Start `ra-anti-tnf-research` → passages → reload → export.
 3. Start `ra-anti-tnf-evidence` → `evidence_not_ready`.
 4. Cross-owner denied; workflow accept ≠ scientific approval.
 

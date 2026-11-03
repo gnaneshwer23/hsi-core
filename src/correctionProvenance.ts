@@ -1,10 +1,10 @@
 /**
  * Correction provenance stubs: keep evaluation feeds separate from training feeds.
- * Never fabricates SME labels or promotes demo/fixture corrections into scientific grades.
+ * Never fabricates SME labels or promotes research-working-set corrections into scientific grades.
  */
 export const CORRECTION_PROVENANCE_VERSION = "hsi-correction-provenance-1" as const;
 
-export type CorrectionFeedKind = "evaluation_frozen" | "training_permitted" | "demo_fixture_only";
+export type CorrectionFeedKind = "evaluation_frozen" | "training_permitted" | "research_working_set_only";
 
 export type CorrectionRecordStub = {
   id: string;
@@ -29,7 +29,7 @@ export type CorrectionProvenanceBundle = {
   feeds: {
     evaluation_frozen: { writable: false; description: string };
     training_permitted: { writable: true; description: string; requiresHumanGate: true };
-    demo_fixture_only: { writable: true; description: string; notForScientificClaim: true };
+    research_working_set_only: { writable: true; description: string; notForScientificClaim: true };
   };
   records: CorrectionRecordStub[];
 };
@@ -57,12 +57,12 @@ export function emptyCorrectionProvenanceBundle(): CorrectionProvenanceBundle {
       },
       training_permitted: {
         writable: true,
-        description: "Separately governed training corrections after human scientific review. Never auto-promoted from demo.",
+        description: "Separately governed training corrections after human scientific review. Never auto-promoted from the research working set.",
         requiresHumanGate: true,
       },
-      demo_fixture_only: {
+      research_working_set_only: {
         writable: true,
-        description: "Engineering/demo corrections against ra-anti-tnf-demo. not_for_scientific_claim; never mixed into evaluation_frozen.",
+        description: "Corrections against ra-anti-tnf-research. notForScientificClaim; never mixed into evaluation_frozen.",
         notForScientificClaim: true,
       },
     },
@@ -76,7 +76,7 @@ export function assertCorrectionFeedSeparation(bundle: CorrectionProvenanceBundl
   if (bundle.scientificReview !== "unreviewed") throw new CorrectionProvenanceError("scientificReview");
   if (bundle.feeds.evaluation_frozen.writable !== false) throw new CorrectionProvenanceError("evaluation_writable");
   if (bundle.feeds.training_permitted.requiresHumanGate !== true) throw new CorrectionProvenanceError("training_gate");
-  if (bundle.feeds.demo_fixture_only.notForScientificClaim !== true) throw new CorrectionProvenanceError("demo_honesty");
+  if (bundle.feeds.research_working_set_only.notForScientificClaim !== true) throw new CorrectionProvenanceError("research_honesty");
   for (const record of bundle.records) {
     if (!idPattern.test(record.id) || !idPattern.test(record.investigationKey) || !idPattern.test(record.releaseId)) {
       throw new CorrectionProvenanceError("ids");
@@ -84,11 +84,11 @@ export function assertCorrectionFeedSeparation(bundle: CorrectionProvenanceBundl
     if (record.containsPhi || record.clinicalAdvice || record.kgWrite) throw new CorrectionProvenanceError("record_boundary");
     if (record.scientificReview !== "unreviewed") throw new CorrectionProvenanceError("record_review");
     if (record.feed === "evaluation_frozen") throw new CorrectionProvenanceError("cannot_write_evaluation");
-    if (record.feed === "demo_fixture_only" && !record.notForScientificClaim) {
-      throw new CorrectionProvenanceError("demo_must_not_claim");
+    if (record.feed === "research_working_set_only" && !record.notForScientificClaim) {
+      throw new CorrectionProvenanceError("research_must_not_claim");
     }
-    if (record.feed === "training_permitted" && record.releaseId === "ra-anti-tnf-demo") {
-      throw new CorrectionProvenanceError("demo_cannot_enter_training");
+    if (record.feed === "training_permitted" && record.releaseId === "ra-anti-tnf-research") {
+      throw new CorrectionProvenanceError("research_cannot_enter_training");
     }
     if (!record.rationale.trim() || record.rationale.length > 4000) throw new CorrectionProvenanceError("rationale");
   }
@@ -103,13 +103,13 @@ export function routeCorrectionStub(input: {
   createdAt: string;
   intendedFeed: Exclude<CorrectionFeedKind, "evaluation_frozen">;
 }): CorrectionRecordStub {
-  const notForScientificClaim = input.releaseId === "ra-anti-tnf-demo" || input.intendedFeed === "demo_fixture_only";
+  const notForScientificClaim = input.releaseId === "ra-anti-tnf-research" || input.intendedFeed === "research_working_set_only";
   if (input.intendedFeed === "training_permitted" && notForScientificClaim) {
-    throw new CorrectionProvenanceError("demo_cannot_enter_training");
+    throw new CorrectionProvenanceError("research_cannot_enter_training");
   }
   const record: CorrectionRecordStub = {
     id: input.id,
-    feed: notForScientificClaim ? "demo_fixture_only" : input.intendedFeed,
+    feed: notForScientificClaim ? "research_working_set_only" : input.intendedFeed,
     investigationKey: input.investigationKey,
     releaseId: input.releaseId,
     rationale: input.rationale,

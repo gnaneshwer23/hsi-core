@@ -33,11 +33,11 @@ test("observation bridge refuses PHI-marked payloads", () => {
   ).toThrow(ObservationBiologyBridgeError);
 });
 
-test("second pack stub stays blocked on demo success", () => {
+test("second pack stub stays blocked on research working set", () => {
   const pack = secondIndicationPackStub();
   expect(pack.status).toBe("scaffolding_only");
   expect(pack.candidateIndication).toBeNull();
-  expect(pack.dependsOn.demoDoesNotSatisfy).toBe(true);
+  expect(pack.dependsOn.researchWorkingSetDoesNotSatisfy).toBe(true);
   expect(pack.notForScientificClaim).toBe(true);
 });
 
