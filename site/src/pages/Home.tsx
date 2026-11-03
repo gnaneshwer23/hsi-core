@@ -1,67 +1,61 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import "../styles/home.css";
-import { KnowledgeLandscape } from "../components/KnowledgeLandscape";
+import { ECOSYSTEM_PRODUCTS, MATURITY_CHIP_LABEL } from "../lib/productMaturity";
+import "../styles/hsi-editorial.css";
 
-const contexts = [
-  { id: "immune", label: "Immunity", title: "Look beyond a single marker.", text: "Explore how immune cells, inflammatory signals and tissue context relate to a research question. Evidence needs to be interpreted within the population and setting studied.", nodes: ["Immune cells", "Inflammation", "Tissue context", "Research evidence"] },
-  { id: "gut", label: "Gut health", title: "Put the gut in biological context.", text: "Investigate the relationships between the intestinal barrier, microbial communities and immune responses. A possible mechanism is a starting point for research, rather than proof of causation.", nodes: ["Microbiome", "Intestinal barrier", "Immune response", "Research evidence"] },
-  { id: "brain", label: "Brain health", title: "Connect systems. Keep the context.", text: "Explore neuroimmune questions across nervous and immune systems. Distinguish findings from cell models, animal studies and human research before drawing conclusions.", nodes: ["Neural signalling", "Immune response", "Study setting", "Research evidence"] },
-  { id: "metabolic", label: "Metabolic health", title: "Ask how the pieces relate.", text: "Consider glucose regulation, metabolic pathways and inflammatory biology together. Lifestyle and treatment observations require appropriate permissions and careful interpretation.", nodes: ["Glucose regulation", "Metabolic pathways", "Inflammation", "Research evidence"] },
-];
+const destinations = [
+  { id: "isi", index: "01", title: "Immune Super Intelligence", kicker: "RESEARCH & DISCOVERY", description: "Investigate immune cells, pathways, disease mechanisms and the evidence behind them.", href: "/for-isi" },
+  { id: "clinical", index: "02", title: "HSI Clinical", kicker: "LONGITUDINAL INTELLIGENCE", description: "A developing approach to understanding authorised clinical histories, trends and gaps.", href: "/products" },
+  { id: "aksh", index: "03", title: "Aksh Health", kicker: "PERSONALISED HEALTH", description: "Explore a person-centred approach to metabolic health, monitoring and care.", href: "/for-aksh" },
+  { id: "trials", index: "04", title: "HSI Trials", kicker: "CLINICAL RESEARCH", description: "A planned pathway from study evidence to transparent, investigator-led screening.", href: "/for-trials" },
+] as const;
+
+function ConnectionArt() {
+  return (
+    <svg className="hsi-editorial-art" viewBox="0 0 680 610" role="img" aria-label="Illustrative connected biology network linking health context, immune cells, evidence and research">
+      <defs>
+        <radialGradient id="hsi-halo"><stop stopColor="#2A8579" stopOpacity=".48"/><stop offset="1" stopColor="#17645F" stopOpacity="0"/></radialGradient>
+      </defs>
+      <circle cx="340" cy="302" r="288" fill="url(#hsi-halo)"/>
+      {[110,172,235].map(r=><circle key={r} cx="340" cy="300" r={r} stroke="#F3EEE8" strokeOpacity=".17" strokeDasharray="3 12" fill="none"/>)}
+      <g stroke="#F3EEE8" strokeOpacity=".35" strokeWidth="1.5">
+        <path d="M140 158 340 300 515 134 575 355 340 300 177 465 140 158M177 465 485 492 575 355M515 134 485 492M140 158 575 355"/>
+      </g>
+      {[[140,158,16],[515,134,13],[575,355,17],[177,465,14],[485,492,12]].map(([x,y,r],i)=><g key={i}><circle cx={x} cy={y} r={r+11} fill="none" stroke="#F3EEE8" strokeOpacity=".2"/><circle cx={x} cy={y} r={r} fill={i===2?"#FF6845":"#F3EEE8"}/></g>)}
+      <circle cx="340" cy="300" r="83" fill="#F3EEE8"/><circle cx="340" cy="300" r="65" stroke="#17645F" strokeOpacity=".3" fill="none"/>
+      <path d="M301 303c21-53 53-53 78 0-24 54-56 54-78 0Zm39-58v116" stroke="#17645F" strokeWidth="4" fill="none" strokeLinecap="round"/>
+      <circle cx="340" cy="300" r="7" fill="#FF6845"/>
+      <g fill="#F3EEE8" fontFamily="system-ui" fontSize="12" letterSpacing="2"><text x="76" y="121">BIOLOGY</text><text x="490" y="94">EVIDENCE</text><text x="508" y="408">RESEARCH</text><text x="74" y="510">HEALTH</text></g>
+    </svg>
+  );
+}
 
 export function Home() {
-  const [active, setActive] = useState(0);
-  const context = contexts[active];
-  return <div className="home-redesign">
-    <section className="home-hero" aria-labelledby="home-title">
-      <div className="home-wrap home-hero-grid">
-        <div className="home-hero-copy">
-          <p className="home-kicker"><span /> HUMAN SUPER INTELLIGENCE</p>
-          <h1 id="home-title">Health is connected.<br/><em>Intelligence should be too.</em></h1>
-          <p className="home-lede">A shared technology foundation for connecting health context, human biology and scientific evidence—with people at the centre.</p>
-          <div className="home-actions"><Link className="home-button" to="/platform">Explore the platform <svg className="home-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12" stroke="currentColor" strokeWidth="1.5"/></svg></Link><a className="home-text-link" href="#connected-ecosystem">Meet the ecosystem <span aria-hidden="true">↓</span></a></div>
-          <p className="home-hero-note">Built around traceable evidence. Guided by human judgement.</p>
+  return <div className="hsi-editorial">
+    <section className="hsi-editorial-hero">
+      <div className="hsi-editorial-wrap">
+        <div className="hsi-editorial-topline"><span>HEALTH SUPER INTELLIGENCE</span><span>CONNECTED BY DESIGN <b>●</b> GROUNDED IN EVIDENCE</span></div>
+        <div className="hsi-editorial-hero-grid">
+          <div className="hsi-editorial-copy">
+            <p className="hsi-editorial-kicker"><span className="hsi-coral-dot"/> ONE ECOSYSTEM · FOUR CONNECTED PRODUCTS</p>
+            <h1>HEALTH.<br/><em>REIMAGINED.</em></h1>
+            <p className="hsi-editorial-lede">Connecting human biology, scientific evidence and health intelligence — from discovery to the person, with context and human oversight.</p>
+            <div className="hsi-editorial-actions"><Link className="hsi-editorial-button" to="/platform">Explore the platform <span aria-hidden="true">↗</span></Link><Link className="hsi-editorial-textlink" to="/products">Meet the ecosystem <span aria-hidden="true">↗</span></Link></div>
+          </div>
+          <div className="hsi-editorial-visual"><ConnectionArt/><div className="hsi-editorial-visual-note"><span>01 — 04 / CONNECTED INTELLIGENCE</span><span>Illustrative connections · not study findings or patient analysis</span></div></div>
         </div>
-      </div>
-      <div className="v2-landscape-stage"><KnowledgeLandscape /><p>ILLUSTRATIVE KNOWLEDGE LANDSCAPE</p></div>
-      <div className="home-wrap home-hero-foot"><span>FROM HEALTH CONTEXT TO BIOLOGICAL UNDERSTANDING</span><span>Aksh Health <b>→</b> Immune Super Intelligence <b>→</b> HSI</span></div>
-    </section>
-
-    <section className="home-section home-intro">
-      <div className="home-wrap home-split"><p className="home-kicker">THE BIGGER PICTURE</p><div><h2>Complex questions deserve<br/><span>a connected view.</span></h2><p>A lab result, a biological pathway and a research paper each tell part of a story. Our vision is to help people understand how those pieces relate, where the evidence is strong, and what still needs investigation.</p></div></div>
-    </section>
-
-    <section className="home-section home-ecosystem" id="connected-ecosystem" aria-labelledby="ecosystem-title">
-      <div className="home-wrap">
-        <div className="home-section-head"><div><p className="home-kicker">ONE VISION. DISTINCT EXPERIENCES.</p><h2 id="ecosystem-title">From the person.<br/>To the biology. To the bigger picture.</h2></div><p>Aksh and ISI keep their own experiences and data. HSI develops the shared technology behind a more connected approach.</p></div>
-        <div className="home-product-grid">
-          <article className="home-product home-product-aksh"><div className="home-product-art home-person-art" aria-hidden="true"><div className="home-person-head"/><div className="home-person-body"/><span className="home-person-tag">HEALTH CONTEXT</span><i/><i/><i/></div><div className="home-product-content"><p className="home-kicker">01 / THE PERSON</p><h3>Aksh Health</h3><p>Health information and care workflows, organised around the person and the teams supporting them.</p><Link to="/for-aksh">Explore Aksh Health <svg className="home-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12" stroke="currentColor" strokeWidth="1.5"/></svg></Link></div></article>
-          <article className="home-product home-product-isi"><div className="home-product-art home-network-art" aria-hidden="true"><svg viewBox="0 0 320 220"><g stroke="currentColor" strokeOpacity=".4" fill="none"><path d="M55 80 160 110 265 60 230 175 160 110 85 180 55 80 265 60M85 180 230 175"/></g>{[[55,80,16],[160,110,29],[265,60,13],[230,175,19],[85,180,12]].map(([x,y,r],i)=><circle key={i} cx={x} cy={y} r={r} fill="currentColor" fillOpacity={i===1 ? ".8" : ".3"}/>)}</svg><span className="home-person-tag">BIOLOGICAL CONTEXT</span></div><div className="home-product-content"><p className="home-kicker">02 / THE BIOLOGY</p><h3>Immune Super Intelligence</h3><p>A specialist research experience for exploring immune mechanisms, biological relationships and evidence.</p><Link to="/for-isi">Explore ISI Research <svg className="home-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12" stroke="currentColor" strokeWidth="1.5"/></svg></Link></div></article>
-          <article className="home-product home-product-hsi"><div className="home-product-art home-layers-art" aria-hidden="true"><span/><span/><span/><b>HSI</b><small className="home-person-tag">SHARED TECHNOLOGY</small></div><div className="home-product-content"><p className="home-kicker">03 / THE FOUNDATION</p><h3>Human Super Intelligence</h3><p>Shared tools for evidence retrieval, knowledge relationships and investigations that keep human review in the loop.</p><Link to="/platform">Explore the foundation <svg className="home-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12" stroke="currentColor" strokeWidth="1.5"/></svg></Link></div></article>
-        </div>
+        <div className="hsi-editorial-bottomline"><span>EXPLORE <b>•</b> CONNECT <b>•</b> UNDERSTAND <b>•</b> DISCOVER</span><Link to="/how-it-works">SEE HOW IT WORKS ↗</Link></div>
       </div>
     </section>
-
-    <section className="home-section home-context" aria-labelledby="context-title">
-      <div className="home-wrap"><div className="home-section-head"><div><p className="home-kicker">EXPLORE THE CONNECTIONS</p><h2 id="context-title">Biology doesn’t work in silos.</h2></div><p>Choose a research area to see the kinds of context a connected approach brings into view.</p></div>
-        <div className="home-context-tabs" role="tablist" aria-label="Biological context">{contexts.map((c,i)=><button type="button" role="tab" id={`context-tab-${c.id}`} aria-controls={`context-panel-${c.id}`} aria-selected={active===i} tabIndex={active===i ? 0 : -1} key={c.id} onClick={()=>setActive(i)} onKeyDown={event=>{let next=i;if(event.key==="ArrowRight") next=(i+1)%contexts.length;else if(event.key==="ArrowLeft") next=(i+contexts.length-1)%contexts.length;else if(event.key==="Home") next=0;else if(event.key==="End") next=contexts.length-1;else return;event.preventDefault();setActive(next);document.getElementById(`context-tab-${contexts[next].id}`)?.focus();}}>{c.label}<svg className="home-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12" stroke="currentColor" strokeWidth="1.5"/></svg></button>)}</div>
-        <div className="home-context-panel" role="tabpanel" id={`context-panel-${context.id}`} aria-labelledby={`context-tab-${context.id}`} tabIndex={0}>
-          <div className="home-context-copy"><p className="home-kicker">A CONNECTED RESEARCH PERSPECTIVE</p><h3>{context.title}</h3><p>{context.text}</p><Link className="home-text-link" to="/science">Discover the science <svg className="home-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12" stroke="currentColor" strokeWidth="1.5"/></svg></Link></div>
-          <div className="home-concept-map"><p>CONCEPTUAL VIEW</p><div className="home-concept-centre">{context.label}</div><div className="home-concept-nodes">{context.nodes.map((n,i)=><span key={n}><small>0{i+1}</small>{n}</span>)}</div><small>Illustrative connections · not study findings or patient analysis</small></div>
-        </div>
-      </div>
-    </section>
-
-    <section className="home-section home-workflow"><div className="home-wrap"><div className="home-section-head"><div><p className="home-kicker">HOW THE THINKING CONNECTS</p><h2>A clearer path<br/>from question to understanding.</h2></div><Link className="home-text-link" to="/how-it-works">How it works <svg className="home-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12" stroke="currentColor" strokeWidth="1.5"/></svg></Link></div><div className="home-steps">{[
-      ["01", "Start with a question", "Define the research question and the context needed to investigate it."],
-      ["02", "Connect the biology", "Explore relevant cells, pathways and relationships in the knowledge graph."],
-      ["03", "Examine the evidence", "Review sources, study context, conflicting findings and uncertainty."],
-      ["04", "Keep people in control", "Prepare a traceable investigation for human review and further research."],
-    ].map(([n,title,text])=><article key={n}><span>{n}</span><h3>{title}</h3><p>{text}</p></article>)}</div></div></section>
-
-    <section className="home-section home-trust"><div className="home-wrap home-trust-grid"><div><p className="home-kicker">TRUST IS PART OF THE DESIGN</p><h2>More context.<br/>Clearer limits.<br/><em>Human judgement.</em></h2></div><div className="home-principles"><article><h3>Evidence you can trace</h3><p>Sources and research context belong alongside a claim, so people can assess what it means and where it falls short.</p></article><article><h3>Data stays with its product</h3><p>Shared technology does not mean a shared patient database. Aksh and ISI retain their own data and access controls.</p></article><article><h3>Research with clear boundaries</h3><p>Research investigations support exploration and review. They do not provide diagnosis, treatment decisions or confirmed trial eligibility.</p></article></div></div></section>
-
-    <section className="home-section home-closing"><div className="home-wrap"><p className="home-kicker">HUMAN SUPER INTELLIGENCE</p><h2>See the connections.<br/><em>Ask better questions.</em></h2><p>Discover the technology and the specialist experiences shaping our vision.</p><div className="home-actions"><Link to="/platform" className="home-button">Explore the platform <svg className="home-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12" stroke="currentColor" strokeWidth="1.5"/></svg></Link><Link to="/products" className="home-text-link">Find your starting point <svg className="home-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12" stroke="currentColor" strokeWidth="1.5"/></svg></Link></div></div></section>
+    <section className="hsi-editorial-intro"><div className="hsi-editorial-wrap hsi-editorial-intro-grid"><p className="hsi-editorial-kicker">01 / THE IDEA</p><div><h2>Health is connected.<br/><em>Intelligence should be too.</em></h2><p>Health questions rarely fit inside a single dataset or discipline. HSI brings together evidence-grounded research tools and a connected vision for clinical, patient and trial intelligence — with distinct data permissions and review boundaries.</p></div></div></section>
+    <section className="hsi-editorial-products" id="ecosystem"><div className="hsi-editorial-wrap">
+      <div className="hsi-editorial-sectionhead"><div><p className="hsi-editorial-kicker">02 / THE ECOSYSTEM</p><h2>FOUR WAYS<br/><em>TO GO DEEPER.</em></h2></div><p>Distinct experiences. One shared scientific foundation. Each product keeps its own data ownership and safety boundaries.</p></div>
+      <div className="hsi-editorial-product-grid">{destinations.map((item,i)=>{const product=ECOSYSTEM_PRODUCTS.find(p=>p.id===item.id);return <article className={"hsi-editorial-product hsi-editorial-product-"+item.id} key={item.id}>
+        <div className="hsi-editorial-product-top"><span>{item.index} / {item.kicker}</span><span className="hsi-editorial-product-icon" aria-hidden="true">{i===0?"✳":i===1?"⌁":i===2?"♡":"⊕"}</span></div>
+        <div className="hsi-editorial-product-body"><h3>{item.title}</h3><p>{item.description}</p></div>
+        <div className="hsi-editorial-product-footer"><span>{product ? MATURITY_CHIP_LABEL[product.chip] : "Explore"}</span><Link to={item.href} aria-label={"Explore "+item.title}>Explore <span aria-hidden="true">↗</span></Link></div>
+      </article>})}</div>
+    </div></section>
+    <section className="hsi-editorial-connection"><div className="hsi-editorial-wrap hsi-editorial-connection-grid"><div><p className="hsi-editorial-kicker">03 / THE FOUNDATION</p><h2>CONNECTIONS<br/><em>THAT CARRY MEANING.</em></h2><p>From immune pathways and published findings to permitted clinical context, every relationship needs its source, its uncertainty and its purpose. Research hypotheses remain separate from reviewed evidence.</p><Link className="hsi-editorial-button" to="/platform">Understand the platform <span aria-hidden="true">↗</span></Link></div><div className="hsi-editorial-connection-map"><div className="hsi-editorial-map-core">EVIDENCE<br/>+ CONTEXT</div><span>HUMAN BIOLOGY</span><span>IMMUNE SCIENCE</span><span>LONGITUDINAL HEALTH</span><span>CLINICAL RESEARCH</span></div></div></section>
+    <section className="hsi-editorial-outro"><div className="hsi-editorial-wrap"><p className="hsi-editorial-kicker">04 / DISCOVER MORE</p><h2>FROM QUESTIONS<br/><em>TO UNDERSTANDING.</em></h2><p>Explore our research direction and the distinct journeys designed for researchers, care teams and individuals.</p><div className="hsi-editorial-actions"><Link className="hsi-editorial-button" to="/for-isi">Explore ISI Research <span aria-hidden="true">↗</span></Link><Link className="hsi-editorial-textlink" to="/how-it-works">How it works ↗</Link></div><small>Scientific research tools do not provide diagnosis, prescribing or confirmed trial eligibility. Clinical and trial capabilities are separately governed and subject to validation.</small></div></section>
   </div>;
 }

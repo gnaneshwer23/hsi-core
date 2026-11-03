@@ -76,7 +76,7 @@ export function Platform() {
             <div className="pl-foundation-label">ONE FOUNDATION / SEPARATE DATA</div>
             <div className="pl-foundation-products"><div><span>AKSH HEALTH</span><i /><small>Own data & permissions</small></div><div><span>ISI RESEARCH</span><i /><small>Own data & permissions</small></div></div>
             <div className="pl-foundation-lines" aria-hidden="true"><span /><span /></div>
-            <div className="pl-foundation-core"><span className="pl-symbol" aria-hidden="true">H</span><div><strong>Human Super Intelligence</strong><span>Shared technology foundation</span></div></div>
+            <div className="pl-foundation-core"><span className="pl-symbol" aria-hidden="true">H</span><div><strong>Health Super Intelligence</strong><span>Shared technology foundation</span></div></div>
             <div className="pl-foundation-tools"><span>Evidence</span><span>Knowledge</span><span>Review</span></div>
             <p>Software reuse. Product-owned data.</p>
           </div>

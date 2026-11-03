@@ -1,0 +1,76 @@
+/* HSI editorial art direction — reference palette, scoped to public pages. */
+.public-site-v2 { --v2-paper:#F3EEE8; --v2-teal:#17645F; --v2-ink:#17645F; --v2-dark:#17645F; --v2-coral:#FF6845; background:#F3EEE8; }
+.public-site-v2 .nav { background:#F3EEE8f5; }
+.public-site-v2 .nav .nav-inner { border-bottom-color:#17645F26; }
+.public-site-v2 .nav .brand,.public-site-v2 .nav .nav-links a { color:#17645F; }
+.public-site-v2 .nav .brand-mark { background:#17645F; color:#F3EEE8; }
+.public-site-v2 .nav .nav-cta { background:#FF6845; color:#fff; }
+.public-site-v2 .nav .nav-cta:hover { background:#e95432; }
+.public-site-v2 .nav .nav-links a.active { box-shadow:inset 0 -2px #FF6845; }
+.public-site-v2 :is(.pl-button,.prd-button,.sci-button,.hiw-button,.home-button) { background:#FF6845; color:#fff; }
+.public-site-v2 :is(.pl-page,.prd-page,.sci-page,.hiw-page) { --v2-ink:#17645F; --v2-teal:#17645F; --v2-paper:#F3EEE8; --v2-coral:#FF6845; }
+.hsi-editorial { background:#F3EEE8; color:#17645F; overflow:hidden; }
+.hsi-editorial-wrap { width:min(1380px,calc(100% - 7rem)); margin-inline:auto; }
+.hsi-editorial h1,.hsi-editorial h2,.hsi-editorial h3 { letter-spacing:-.065em; }
+.hsi-editorial em { font-family:Georgia,serif; font-weight:400; letter-spacing:-.065em; }
+.hsi-editorial-kicker { font-size:.68rem; letter-spacing:.2em; font-weight:700; text-transform:uppercase; }
+.hsi-coral-dot { display:inline-block; width:7px; height:7px; border-radius:50%; background:#FF6845; margin-right:9px; vertical-align:middle; }
+.hsi-editorial-hero { background:#F3EEE8; min-height:730px; }
+.hsi-editorial-topline,.hsi-editorial-bottomline { display:flex; justify-content:space-between; align-items:center; gap:20px; padding:19px 0; border-bottom:1px solid #17645F2e; font-size:.61rem; font-weight:650; letter-spacing:.18em; }
+.hsi-editorial-topline b,.hsi-editorial-bottomline b { color:#FF6845; padding:0 9px; }
+.hsi-editorial-hero-grid { display:grid; grid-template-columns:1.1fr .9fr; align-items:center; gap:30px; padding:60px 0 50px; }
+.hsi-editorial-copy { position:relative; z-index:1; }
+.hsi-editorial h1 { font-size:clamp(4.2rem,8.3vw,9.3rem); line-height:.91; margin:27px 0 28px; font-weight:800; }
+.hsi-editorial h1 em { color:#17645F; font-size:.91em; }
+.hsi-editorial-lede { max-width:490px; font-size:clamp(1.05rem,1.4vw,1.24rem); line-height:1.7; color:#466d67; }
+.hsi-editorial-actions { display:flex; gap:26px; align-items:center; flex-wrap:wrap; margin-top:36px; }
+.hsi-editorial-button { display:inline-flex; align-items:center; justify-content:space-between; gap:42px; padding:17px 21px; background:#FF6845; color:white; border-radius:4px; font-size:.86rem; font-weight:700; transition:transform .2s,background .2s; }
+.hsi-editorial-button:hover { background:#e95432; transform:translateY(-2px); }
+.hsi-editorial-textlink { font-size:.85rem; font-weight:700; border-bottom:1px solid #17645F; padding-bottom:7px; }
+.hsi-editorial-visual { position:relative; min-width:0; background:#17645F; border-radius:49% 49% 4px 4px; aspect-ratio:1/1.02; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+.hsi-editorial-art { width:110%; height:110%; }
+.hsi-editorial-visual-note { position:absolute; bottom:20px; left:28px; right:28px; display:flex; justify-content:space-between; gap:15px; font-size:.55rem; letter-spacing:.14em; color:#F3EEE8; }
+.hsi-editorial-bottomline { border-top:1px solid #17645F2e; border-bottom:0; padding:23px 0 30px; }
+.hsi-editorial-intro { background:#fffaf4; padding:120px 0; }
+.hsi-editorial-intro-grid { display:grid; grid-template-columns:.5fr 1.5fr; gap:50px; }
+.hsi-editorial h2 { font-size:clamp(2.9rem,5.4vw,6rem); line-height:1.01; font-weight:750; }
+.hsi-editorial-intro h2 em { color:#FF6845; }
+.hsi-editorial-intro-grid>div>p { max-width:740px; margin-top:27px; font-size:1.05rem; line-height:1.8; color:#466d67; }
+.hsi-editorial-products { padding:115px 0 130px; }
+.hsi-editorial-sectionhead { display:flex; justify-content:space-between; align-items:end; gap:40px; margin-bottom:48px; }
+.hsi-editorial-sectionhead h2 { margin-top:20px; }
+.hsi-editorial-sectionhead h2 em { color:#FF6845; }
+.hsi-editorial-sectionhead>p { max-width:310px; color:#466d67; line-height:1.7; }
+.hsi-editorial-product-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:15px; }
+.hsi-editorial-product { display:flex; flex-direction:column; min-height:400px; background:#fffaf4; border:1px solid #17645F24; padding:24px; transition:transform .2s; }
+.hsi-editorial-product:hover { transform:translateY(-5px); }
+.hsi-editorial-product-isi { background:#17645F; color:#F3EEE8; }
+.hsi-editorial-product-trials { background:#f8ded4; }
+.hsi-editorial-product-top { display:flex; justify-content:space-between; align-items:start; gap:8px; font-size:.58rem; letter-spacing:.13em; line-height:1.7; }
+.hsi-editorial-product-icon { font-size:2rem; line-height:1; }
+.hsi-editorial-product-body { margin-top:auto; padding-top:90px; }
+.hsi-editorial-product h3 { font-size:clamp(1.5rem,2.1vw,2.3rem); line-height:1.04; }
+.hsi-editorial-product-body p { margin-top:17px; font-size:.88rem; line-height:1.65; opacity:.83; }
+.hsi-editorial-product-footer { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:24px; padding-top:17px; border-top:1px solid currentColor; font-size:.7rem; }
+.hsi-editorial-product-footer>a { font-weight:700; }
+.hsi-editorial-connection { background:#17645F; color:#F3EEE8; padding:125px 0; }
+.hsi-editorial-connection-grid { display:grid; grid-template-columns:1fr 1fr; gap:70px; align-items:center; }
+.hsi-editorial-connection h2 { margin:22px 0; }
+.hsi-editorial-connection h2 em { color:#FF927A; }
+.hsi-editorial-connection p:not(.hsi-editorial-kicker) { color:#e1eae4; line-height:1.75; max-width:520px; }
+.hsi-editorial-connection .hsi-editorial-button { margin-top:30px; }
+.hsi-editorial-connection-map { min-height:430px; border:1px solid #F3EEE84a; border-radius:50%; position:relative; display:flex; align-items:center; justify-content:center; background:radial-gradient(circle,#288379 0%,#17645F 65%); }
+.hsi-editorial-map-core { border-radius:50%; width:185px; height:185px; display:grid; place-content:center; text-align:center; background:#F3EEE8; color:#17645F; font-weight:800; letter-spacing:.09em; }
+.hsi-editorial-connection-map>span { position:absolute; background:#FF6845; padding:9px 12px; font-size:.63rem; letter-spacing:.08em; font-weight:700; }
+.hsi-editorial-connection-map>span:nth-of-type(1){top:9%;left:5%}.hsi-editorial-connection-map>span:nth-of-type(2){top:18%;right:0}.hsi-editorial-connection-map>span:nth-of-type(3){bottom:15%;left:-3%}.hsi-editorial-connection-map>span:nth-of-type(4){bottom:6%;right:4%}
+.hsi-editorial-outro { padding:120px 0 140px; text-align:center; }
+.hsi-editorial-outro h2 { margin:25px 0; }
+.hsi-editorial-outro h2 em { color:#FF6845; }
+.hsi-editorial-outro p:not(.hsi-editorial-kicker) { max-width:560px; margin:auto; color:#466d67; line-height:1.7; }
+.hsi-editorial-outro .hsi-editorial-actions { justify-content:center; }
+.hsi-editorial-outro small { display:block; max-width:760px; margin:70px auto 0; color:#466d67; line-height:1.7; }
+.hsi-editorial :focus-visible { outline:3px solid #FF6845; outline-offset:4px; }
+@media(max-width:1100px){.hsi-editorial-product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hsi-editorial-product{min-height:310px}.hsi-editorial-product-body{padding-top:55px}}
+@media(max-width:780px){.hsi-editorial-wrap{width:calc(100% - 2.5rem)}.hsi-editorial-hero-grid{grid-template-columns:1fr;padding:44px 0}.hsi-editorial h1{font-size:clamp(3.7rem,14vw,6rem)}.hsi-editorial-visual{width:min(100%,520px);margin:auto}.hsi-editorial-topline>span:last-child{display:none}.hsi-editorial-intro-grid,.hsi-editorial-connection-grid{grid-template-columns:1fr;gap:30px}.hsi-editorial-sectionhead{display:block}.hsi-editorial-sectionhead>p{margin-top:24px}.hsi-editorial-intro,.hsi-editorial-products,.hsi-editorial-connection,.hsi-editorial-outro{padding:75px 0}.hsi-editorial-connection-map{min-height:340px;max-width:440px;width:100%;margin:auto}.hsi-editorial-visual-note{font-size:.45rem}}
+@media(max-width:480px){.hsi-editorial-product-grid{grid-template-columns:1fr}.hsi-editorial-product{min-height:260px}.hsi-editorial-product-body{padding-top:55px}.hsi-editorial-bottomline{font-size:.49rem}.hsi-editorial-connection-map>span{font-size:.48rem;padding:7px}.hsi-editorial h1{font-size:clamp(3.2rem,13vw,4.6rem)}}
+@media(prefers-reduced-motion:reduce){.hsi-editorial-button,.hsi-editorial-product{transition:none}}
