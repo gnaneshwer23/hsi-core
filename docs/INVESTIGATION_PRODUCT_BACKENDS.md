@@ -79,15 +79,30 @@ See [RA research path](RA_RESEARCH_PATH.md).
 
 Implementation is committed in all three repositories. Live product activation
 requires each product's own configured database, its additive migration and a
-provisioned account. The current workspace provides only HSI runtime DB bindings
-and no product `.env.local`; no live product migration has been executed here.
-Do not use those HSI bindings for the following commands.
+provisioned account. **Never** point these commands at HSI `red-wave` /
+`ep-restless-dew…`. Clear inherited `DATABASE_URL`, `DATABASE_URL_UNPOOLED`,
+`DATABASE`, `NEON_PROJECT_ID`, and `NEON_BRANCH_ID` before loading a product
+`.env.local`.
 
-From ISI, using the ISI deployment's environment:
+### Phase 4 status (2026-11-03)
+
+| Product | Neon target confirmed | Migration | Applied? | Remaining |
+| --- | --- | --- | --- | --- |
+| ISI | `immunecity` / `autumn-snow-67879321` / `ep-blue-salad-b5fk2n36…` (product `.env.local`) | `0029_hsi_investigations` | **Yes** — tables + FORCE RLS present | Sign in as existing ISI `admin`; hit `/internal-research` |
+| Aksh | `Aksh Health Production` / `tiny-river-29853628` branch `local-dev` / `ep-fancy-hall-zaarrstc…` (platform-uk `.env.local`) | `056_hsi_investigations` | **Yes** on **local-dev only** | Provision research role for a real account; optionally apply same migration on `main` (`ep-curly-darkness…`) if production UI needs it |
+| HSI | `human super intelligence` / `red-wave-06625195` | n/a | **Not used** | Keep isolated |
+
+Aksh `aksh.hsi_research_members` is still empty after apply — do **not** invent a
+user id. Disposable loopback `hsi_step3_test` integration checks for both products
+passed (RLS / cross-owner denial / CAS / audit / quotas).
+
+From ISI (`~/Projects/immunecity`), using the ISI product environment (Lovable
+checkout env at `~/Desktop/immune-city/.env.local` is valid when it points at
+`ep-blue-salad…`):
 
 ```sh
-bun --env-file=.env.local scripts/apply-hsi-investigations-migration.ts
-bun --env-file=.env.local scripts/apply-hsi-investigations-migration.ts --apply
+bun --env-file=/Users/gnaneshwerjadav/Desktop/immune-city/.env.local scripts/apply-hsi-investigations-migration.ts
+bun --env-file=/Users/gnaneshwerjadav/Desktop/immune-city/.env.local scripts/apply-hsi-investigations-migration.ts --apply
 ```
 
 This applies only `0029_hsi_investigations.sql` and refuses a non-ISI remote
@@ -107,6 +122,12 @@ requires an existing Aksh account and operator database permissions. Do not expo
 that script as an API. A researcher grant permits start/read/export of owned runs;
 a reviewer/admin grant also permits human review. Visit `/internal-research`
 after signing in. No new shared database or HSI endpoint needs configuring.
+
+To activate production `main` (not local-dev), point `.env.local` /
+`DATABASE_URL` at `tiny-river` default (`ep-curly-darkness…`), re-run the dry-run
+host check, then `--apply`. Simulation project `floral-salad-21467299`
+(`ep-summer-boat…`) is separate — apply there only if that environment should
+expose research investigations.
 
 ## Verification
 
