@@ -85,3 +85,14 @@ The expert-labelled context benchmark and independent scientific adjudication
 remain outstanding. Annotation guideline/worksheet templates ship without
 labels. Existing Aksh/ISI database activation prerequisites also remain as
 documented in [product backend activation](INVESTIGATION_PRODUCT_BACKENDS.md).
+
+## Demo / fixture corpus (engineering readiness)
+
+A separate corpus `ra-anti-tnf-demo` ships under
+`research/ra-anti-tnf-demo/` with `corpusKind=demo_fixture` and
+`not_for_scientific_claim=true`. Human-facing labels use `DEMO-PMID-*`;
+contract IDs are `SYN-DEMO-PMID-*` (synthetic namespace). Passage text is
+authored fixture content under CC0 — not a quotation and not a licence grant
+for real PMIDs. Product loaders register this corpus for authenticated workflow
+smoke while the real release stays pending. See
+[RA demo and smoke](RA_DEMO_AND_SMOKE.md).

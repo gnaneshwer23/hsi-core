@@ -64,13 +64,16 @@ concept pointers, not subject/predicate/object edges or licensed source passages
 its adapter preserves those limits. It never queries a patient table or sends
 records to an HSI server. The public read-only snapshot page is unchanged.
 
-Neither current registered release supplies rights-verified exact passages.
-Retrieval therefore records a genuine empty set, and question drafting abstains.
-The internal UI and dossier say so. Bibliographic locators and KG mechanism text
+The pending real RA release (`ra-anti-tnf-evidence`) does not supply
+rights-verified passages; product start against it returns `evidence_not_ready`
+rather than an empty successful search. The separate demo corpus
+(`ra-anti-tnf-demo`) supplies synthetic fixture passages for engineering smoke
+only (`not_for_scientific_claim`). Bibliographic locators and KG mechanism text
 are not silently promoted into licensed quotations or reviewed evidence. A human
 can request revision or accept the research dossier workflow; neither action
-approves scientific claims or changes care. The next scientific vertical needs a
-source-licensed RA/anti-TNF evidence release and independent review.
+approves scientific claims or changes care. The next scientific vertical still
+needs a source-licensed RA/anti-TNF evidence release and independent review.
+See [RA demo and smoke](RA_DEMO_AND_SMOKE.md).
 
 ## Deployment activation
 
