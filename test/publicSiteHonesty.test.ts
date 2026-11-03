@@ -157,3 +157,28 @@ it("Stage A Platform includes all four distinct product perspectives and honest 
   expect(platform).toContain("No live matching, eligibility confirmation or enrolment");
   expect(platform).toContain("not patient-record transfers");
 });
+
+
+describe("Stage A public security boundary audit", () => {
+  it("labels the clinical and trials public workspaces as synthetic, not live patient services", () => {
+    const clinical = site("src/pages/ClinicalTimeline.tsx");
+    const trials = site("src/pages/TrialsCriteria.tsx");
+    const gateway = site("src/pages/GatewayDemo.tsx");
+    expect(clinical).toContain("syntheticOnly");
+    expect(clinical).toContain("No live EMIS / hospital connector");
+    expect(trials).toContain("No eligibility claim");
+    expect(gateway).toContain("synthetic");
+    expect(gateway).toContain("containsPhi: true");
+  });
+  it("does not place internal demonstration routes in the primary navigation", () => {
+    const nav = site("src/components/Nav.tsx");
+    for (const route of ["/curator", "/gateway", "/clinical-timeline", "/trials-criteria"]) {
+      expect(nav).not.toContain('to="' + route + '"');
+    }
+  });
+  it("retains a visible keyboard skip link and a main landmark", () => {
+    const layout = site("src/components/Layout.tsx");
+    expect(layout).toContain('href="#main-content"');
+    expect(layout).toContain('id="main-content"');
+  });
+});
