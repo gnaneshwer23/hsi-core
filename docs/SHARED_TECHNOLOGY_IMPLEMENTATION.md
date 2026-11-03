@@ -57,7 +57,9 @@ database schema or entity/claim approval behaviour is extracted or changed.
    versioned dossier. Every stage records actual execution/failure, not a badge.
    Includes corpus retrieval, deterministic unvalidated question drafting, injected
    provider interfaces and local persistence. Product authentication/database
-   adapters remain next. See [execution semantics](INVESTIGATION_SERVICE.md).
+   adapters are now implemented with deployment activation still required. See
+   [execution semantics](INVESTIGATION_SERVICE.md) and
+   [product backend activation](INVESTIGATION_PRODUCT_BACKENDS.md).
 4. **Replace product-specific duplicate algorithms:** ISI and Aksh consumers use
    the shared release where semantics match. Keep clinical workflows in Aksh;
    HSI orchestrates research-safe capabilities, not autonomous care.
@@ -66,8 +68,9 @@ database schema or entity/claim approval behaviour is extracted or changed.
    independent expert assessment before expanding claims or disease scope.
 
 The shared algorithms, contracts and service do **not** complete milestones 4–5
-or the authenticated product API/storage adapters. It does not implement a
-new model agent runtime, live database integration, biomarker discovery, clinical
-trial matching or a unified production platform. Database/auth integration and
-clinical/scientific validation remain separate requirements. Marketing links and
+or scientific validation. Authenticated product API/storage adapters are
+implemented; live activation requires their product database configurations and
+migrations. This does not establish a live deployment, a new model agent runtime,
+biomarker discovery, clinical trial matching or a validated unified production
+platform. Clinical/scientific validation remains a separate requirement. Marketing links and
 source-bundle exchange remain supplementary, not evidence of shared execution.

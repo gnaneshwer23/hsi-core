@@ -115,7 +115,9 @@ The ephemeral memory store is for tests/local use only.
 
 ## Remaining work
 
-Step 3 is the authenticated Aksh/ISI backend adapters, tenant-scoped database
-persistence, API limits and internal UI actions. No public route, database
-migration, live literature/model provider or deployment verification is included
-in this step. RA/anti-TNF scientific validation follows those integrations.
+The [product backends](INVESTIGATION_PRODUCT_BACKENDS.md) now supply authenticated
+Aksh/ISI adapters, private owner-scoped PostgreSQL persistence, API limits and
+internal UI actions. Live activation still requires the product migrations and
+provisioned accounts. The core service adds no public route or live literature/model
+provider. Product migrations are separate; live deployment verification remains
+outstanding. RA/anti-TNF scientific validation follows those integrations.
