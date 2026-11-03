@@ -1,0 +1,222 @@
+/* Original HSI art direction informed by the documented Unkapped reference cadence.
+   Scoped to five public pages. No third-party site code or assets are included. */
+body:has(.public-site-v2)::before { display: none; }
+.public-site-v2 {
+  --v2-ink: #093b38;
+  --v2-teal: #17645f;
+  --v2-paper: #f3eee8;
+  --v2-coral: #ff6845;
+  --v2-dark: #082f2e;
+  background: var(--v2-paper);
+}
+.public-site-v2 :is(.home-wrap,.pl-wrap,.prd-wrap,.sci-wrap,.hiw-wrap) { width: min(1320px, calc(100% - 7rem)); }
+.public-site-v2 :is(.home-redesign,.pl-page,.prd-page,.sci-page,.hiw-page) { color: var(--v2-ink); }
+.public-site-v2 :is(h1,h2,h3,h4) { font-family: var(--font-display); font-weight: 500; letter-spacing: -.055em; }
+.public-site-v2 :is(h1,h2) em { font-family: inherit; font-style: normal; font-weight: inherit; text-decoration: none; color: #257871; }
+.public-site-v2 :is(.home-kicker,.pl-eyebrow,.prd-eyebrow,.sci-eyebrow,.hiw-eyebrow) { letter-spacing: .14em; font-size: .64rem; font-weight: 600; }
+.public-site-v2 :is(.home-section,.pl-section,.prd-section,.sci-section,.hiw-section) { padding-block: 112px; }
+.public-site-v2 :is(.home-button,.pl-button,.prd-button,.sci-button,.hiw-button) { border-radius: 5px; padding: 17px 23px; gap: 32px; font-size: .8rem; background: var(--v2-coral); color: #0b302e; box-shadow: 0 3px 0 #a72d1a18; }
+.public-site-v2 :is(.home-text-link,.pl-link,.prd-link,.sci-link,.hiw-link) { font-size: .8rem; }
+/* A quiet, full-width masthead replaces the floating capsule. */
+.public-site-v2 .nav { background: #f3eee8f2; backdrop-filter: blur(16px); padding: 0 0; min-height: 84px; }
+.public-site-v2 .nav .nav-inner { width: min(1400px, calc(100% - 5rem)); background: transparent; border: 0; border-bottom: 1px solid #17645f20; border-radius: 0; box-shadow: none; padding: 17px 0; backdrop-filter: none; }
+.public-site-v2 .nav .brand { color: #093b38; text-shadow: none; font-size: .85rem; }
+.public-site-v2 .nav .brand-name { letter-spacing: -.025em; }
+.public-site-v2 .nav .brand-mark { width: 30px; height: 30px; border-radius: 6px; background: #17645f; color: #f3eee8; box-shadow: none; }
+.public-site-v2 .nav .nav-links { gap: 20px; }
+.public-site-v2 .nav .nav-links a { color: #164b47; font-size: .72rem; padding: 8px 0; border-radius: 0; }
+.public-site-v2 .nav .nav-links a.active { background: transparent; box-shadow: inset 0 -1px #17645f; }
+.public-site-v2 .nav .nav-links a:hover { background: transparent; color: #0b302e; }
+.public-site-v2 .nav .nav-cta { background: #17645f; color: #f3eee8; border-radius: 5px; text-transform: none; font-size: .72rem; letter-spacing: 0; padding-inline: 18px; height: 40px; }
+.public-site-v2 .nav .nav-toggle { border-radius: 5px; }
+/* Homepage: an expansive headline and an original technical landscape. */
+.public-site-v2 .home-hero { position: relative; background: radial-gradient(ellipse at 17% 68%, #d8e8e3aa, transparent 45%), radial-gradient(ellipse at 88% 85%, #f6cfbd66, transparent 35%), #f3eee8; }
+.public-site-v2 .home-hero-grid { display: block; padding-top: 76px; padding-bottom: 0; text-align: center; }
+.public-site-v2 .home-hero-copy { margin-inline: auto; max-width: 1200px; }
+.public-site-v2 .home-hero .home-kicker { justify-content: center; color: #365f5b; }
+.public-site-v2 .home-redesign h1 { font-size: clamp(3.3rem, 7.1vw, 7.2rem); line-height: .99; letter-spacing: -.065em; margin: 26px auto 24px; font-weight: 500; }
+.public-site-v2 .home-redesign h1 em { color: #17645f; }
+.public-site-v2 .home-lede { max-width: 600px; margin-inline: auto; font-size: 1.02rem; line-height: 1.7; }
+.public-site-v2 .home-hero .home-actions { justify-content: center; margin-top: 25px; }
+.public-site-v2 .home-hero-note { border: 0; padding: 0; font-size: .67rem; margin-top: 20px; }
+.v2-landscape-stage { position: relative; width: min(1560px, 100%); margin: -5px auto -40px; pointer-events: none; }
+.v2-knowledge-landscape { width: 100%; height: clamp(230px, 25vw, 390px); display: block; }
+.v2-landscape-stage > p { position: absolute; bottom: 44px; right: 7%; font-family: var(--font-mono); color: #526b68; font-size: .47rem; letter-spacing: .12em; }
+.public-site-v2 .home-hero-foot { position: relative; padding-block: 24px; color: #365f5b; }
+.public-site-v2 .home-intro { background: #faf8f4; border: 0; }
+.public-site-v2 .home-split { grid-template-columns: .65fr 2fr; gap: 90px; }
+.public-site-v2 .home-intro h2 { font-size: clamp(2.4rem,4.1vw,4.2rem); }
+.public-site-v2 .home-intro h2 span { font-family: inherit; font-style: normal; color: #257871; }
+.public-site-v2 .home-intro p:not(.home-kicker) { font-size: .95rem; max-width: 710px; }
+.public-site-v2 .home-ecosystem { padding-top: 90px; background: #f3eee8; }
+.public-site-v2 .home-section-head h2 { font-size: clamp(2.2rem,3.4vw,3.4rem); max-width: 700px; }
+.public-site-v2 .home-product-grid { gap: 24px; }
+.public-site-v2 .home-product { border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+.public-site-v2 .home-product:hover, .public-site-v2 .home-product:focus-within { box-shadow: none; transform: translateY(-3px); }
+.public-site-v2 .home-product-art { height: 265px; border-radius: 8px; background-image: linear-gradient(#17645f09 1px, transparent 1px), linear-gradient(90deg,#17645f09 1px,transparent 1px); background-size: 24px 24px; }
+.public-site-v2 .home-product-content { padding: 25px 0 0; }
+.public-site-v2 .home-product-isi { color: #093b38; }
+.public-site-v2 .home-product-isi .home-product-content .home-kicker, .public-site-v2 .home-product-isi .home-product-content > p:not(.home-kicker) { color: #526b68; }
+.public-site-v2 .home-product-isi a { border-color: #17645f30; }
+.public-site-v2 .home-product h3 { font-size: 1.45rem; }
+.public-site-v2 .home-product-content p:not(.home-kicker) { font-size: .85rem; }
+.public-site-v2 .home-product a .home-arrow { color: #a63621; }
+.public-site-v2 .home-context { background: #092f2d; color: #f3eee8; border: 0; }
+.public-site-v2 .home-context .home-section-head > p { color: #b7cdc5; }
+.public-site-v2 .home-context-tabs { border: 0; gap: 8px; }
+.public-site-v2 .home-context-tabs button { border: 1px solid #d2e2d830; border-radius: 4px; color: #d3e1d9; }
+.public-site-v2 .home-context-tabs button[aria-selected="true"] { background: #f3eee8; color: #093b38; box-shadow: inset 0 -3px #ff6845; }
+.public-site-v2 .home-context-tabs button:hover:not([aria-selected="true"]) { background: #164b47; }
+.public-site-v2 .home-context-panel { border: 1px solid #d2e2d830; border-radius: 8px; background: #103d39; gap: 80px; padding: 48px; }
+.public-site-v2 .home-context-copy > p:not(.home-kicker) { color: #bdd0c8; }
+.public-site-v2 .home-context-copy h3 { font-size: 2.4rem; max-width: 430px; }
+.public-site-v2 .home-concept-map { border-radius: 5px; background: #092f2d; border: 1px solid #d2e2d825; padding: 35px; }
+.public-site-v2 .home-concept-map > p, .public-site-v2 .home-concept-map > small { color: #b8cec5; }
+.public-site-v2 .home-concept-centre { background: #17645f; border-color: #86a99a; box-shadow: none; }
+.public-site-v2 .home-concept-nodes > span { background: #103d39; border-color: #b8cec540; color: #f3eee8; }
+.public-site-v2 .home-concept-nodes small { color: #ffb09a; }
+.public-site-v2 .home-workflow { background-color: #faf8f4; background-image: linear-gradient(#17645f05 1px,transparent 1px),linear-gradient(90deg,#17645f05 1px,transparent 1px); background-size: 36px 36px; }
+.public-site-v2 .home-steps { gap: 40px; }
+.public-site-v2 .home-steps article > span { border-radius: 5px; background: #17645f; color: #f3eee8; border: 0; }
+.public-site-v2 .home-trust { background: #17645f; }
+.public-site-v2 .home-trust h2 em { color: #b8d5ca; text-decoration: none; }
+.public-site-v2 .home-closing { background: radial-gradient(ellipse at bottom,#d5e5dd,transparent 65%),#f3eee8; }
+.public-site-v2 .home-closing h2 { font-size: clamp(2.8rem,5.4vw,5.3rem); }
+.public-site-v2 .home-closing .home-kicker::before { display: none; }
+/* Distinct page introductions use the same bold grotesk family. */
+.public-site-v2 :is(.pl-hero,.prd-hero,.sci-hero,.hiw-hero) { padding-top: 75px; background: radial-gradient(ellipse at 90% 40%,#dbe9e066,transparent 55%),#f3eee8; }
+.public-site-v2 :is(.pl-page,.prd-page,.sci-page,.hiw-page) h1 { font-size: clamp(3.1rem,5.8vw,5.6rem); line-height: 1.01; letter-spacing: -.06em; }
+.public-site-v2 :is(.pl-hero-grid,.prd-hero-grid,.sci-hero-grid,.hiw-hero-grid) { gap: 70px; padding-bottom: 65px; }
+.public-site-v2 :is(.pl-heading,.prd-heading,.sci-heading,.hiw-heading) h2 { font-size: clamp(2.2rem,3.5vw,3.4rem); }
+/* Platform: technical schematic, then an inspectable dark architecture plane. */
+.public-site-v2 .pl-foundation { background: #092f2d; color: #f3eee8; border: 1px solid #92b9a840; border-radius: 8px; padding: 35px; box-shadow: 18px 18px 0 #17645f0c; background-image: linear-gradient(#d2e2d807 1px,transparent 1px),linear-gradient(90deg,#d2e2d807 1px,transparent 1px); background-size: 24px 24px; }
+.public-site-v2 .pl-foundation-label, .public-site-v2 .pl-foundation > p { color: #b8cec5; }
+.public-site-v2 .pl-foundation-products > div { border-radius: 4px; background: #103d39; color: #f3eee8; border-color: #b8cec540; }
+.public-site-v2 .pl-foundation-products small { color: #b8cec5; }
+.public-site-v2 .pl-foundation-products i { border-color: #b8cec5; background: repeating-linear-gradient(0deg,transparent 0 6px,#b8cec530 6px 7px); }
+.public-site-v2 .pl-foundation-lines span { background: #d2e2d870; }
+.public-site-v2 .pl-foundation-core { background: #17645f; border-radius: 4px; border: 1px solid #b8cec550; }
+.public-site-v2 .pl-foundation-tools { border-color: #d2e2d840; }
+.public-site-v2 .pl-foundation-tools span::before { background: #ff997f; }
+.public-site-v2 .pl-architecture { background-color: #faf8f4; background-image: linear-gradient(#17645f05 1px,transparent 1px),linear-gradient(90deg,#17645f05 1px,transparent 1px); background-size: 36px 36px; }
+.public-site-v2 .pl-product-column { background: transparent; border: 0; border-radius: 0; padding: 15px 30px 15px 0; }
+.public-site-v2 .pl-core-column { background: #092f2d; color: #f3eee8; border-radius: 8px; padding: 35px; }
+.public-site-v2 .pl-core-heading p { color: #bdd0c8; }
+.public-site-v2 .pl-capability-selector button { border-color: #b8cec540; color: #f3eee8; border-radius: 4px; }
+.public-site-v2 .pl-capability-selector button > span { color: #bdd0c8; }
+.public-site-v2 .pl-capability-selector button[aria-pressed="true"] { background: #17645f; }
+.public-site-v2 .pl-capability-selector button:hover:not([aria-pressed="true"]) { background: #103d39; }
+.public-site-v2 .pl-capability-detail { background: #103d39; border: 1px solid #b8cec530; border-radius: 4px; }
+.public-site-v2 .pl-capability-detail > p, .public-site-v2 .pl-capability-detail dt { color: #bdd0c8; }
+.public-site-v2 .pl-capability-detail dl { border-color: #b8cec530; }
+.public-site-v2 .pl-trust :is(h2 em) { color: #b8d5ca; text-decoration: none; }
+/* Products: large illustrated editorial rows, rather than duplicate card decks. */
+.public-site-v2 .prd-finder { background: #faf8f4; }
+.public-site-v2 .prd-guidance { border-radius: 5px; background: #e3eae3; min-height: 210px; }
+.public-site-v2 .prd-collection { background: #f3eee8; }
+.public-site-v2 .prd-grid { grid-template-columns: 1fr; gap: 40px; }
+.public-site-v2 .prd-card { display: grid; grid-template-columns: .85fr 1.3fr; border: 0; border-bottom: 1px solid #17645f35; border-radius: 0; background: transparent; gap: 55px; padding-bottom: 40px; box-shadow: none; }
+.public-site-v2 .prd-card:hover, .public-site-v2 .prd-card:focus-within { transform: none; box-shadow: none; }
+.public-site-v2 .prd-card-visual { min-height: 330px; height: 100%; max-height: 430px; border-radius: 7px; background-image: linear-gradient(#17645f09 1px,transparent 1px),linear-gradient(90deg,#17645f09 1px,transparent 1px); background-size: 28px 28px; }
+.public-site-v2 .prd-card:nth-child(even) .prd-card-visual { order: 2; }
+.public-site-v2 .prd-card-body { padding: 15px 0 0; }
+.public-site-v2 .prd-card-title h3 { font-size: 2rem; }
+.public-site-v2 .prd-card ul { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 20px; margin: 20px 0; }
+.public-site-v2 .prd-card li { margin-bottom: 0; }
+.public-site-v2 .prd-foundation h2 em { color: #b8d5ca; text-decoration: none; }
+/* Science: the illustration reads as an atlas, not a rounded image card. */
+.public-site-v2 .sci-art-frame { border-radius: 6px; background-color: #092f2d; background-image: linear-gradient(#d2e2d807 1px,transparent 1px),linear-gradient(90deg,#d2e2d807 1px,transparent 1px); background-size: 28px 28px; box-shadow: 18px 18px 0 #17645f0c; }
+.public-site-v2 .sci-atlas { background: #faf8f4; }
+.public-site-v2 .sci-map { border-radius: 6px; background: #092f2d; color: #f3eee8; border-color: #b8cec530; background-image: linear-gradient(#d2e2d807 1px,transparent 1px),linear-gradient(90deg,#d2e2d807 1px,transparent 1px); background-size: 26px 26px; }
+.public-site-v2 .sci-map-heading, .public-site-v2 .sci-map > p { color: #bdd0c8; }
+.public-site-v2 .sci-central { background: #103d39; border-color: #b8cec540; }
+.public-site-v2 .sci-central::before { border-color: #b8cec550; }
+.public-site-v2 .sci-central::after { background: #b8cec550; }
+.public-site-v2 .sci-central small { color: #bdd0c8; }
+.public-site-v2 .sci-components button { background: #103d39; border-color: #b8cec540; color: #f3eee8; border-radius: 4px; }
+.public-site-v2 .sci-components button[aria-pressed="true"] { background: #17645f; border-color: #9ec2b1; }
+.public-site-v2 .sci-components button:hover:not([aria-pressed="true"]) { background: #164b47; }
+.public-site-v2 .sci-explanation { border-radius: 6px; background: transparent; border: 0; padding-left: 35px; }
+.public-site-v2 .sci-phase-detail { background: #e3eae3; border-radius: 5px; }
+.public-site-v2 .sci-pillars article { background: transparent; border: 0; border-top: 1px solid #17645f40; border-radius: 0; padding: 25px 0; }
+/* How it works: a focused workflow canvas with strong source/output separation. */
+.public-site-v2 .hiw-overview { background: transparent; border: 0; border-block: 1px solid #17645f30; border-radius: 0; padding-block: 30px; padding-inline: 0; }
+.public-site-v2 .hiw-overview > div > span { border-radius: 4px; background: #17645f; color: #f3eee8; border: 0; }
+.public-site-v2 .hiw-explorer { background: #092f2d; color: #f3eee8; border: 0; }
+.public-site-v2 .hiw-explorer h2 em { color: #9cc7b8; }
+.public-site-v2 .hiw-explorer .hiw-heading > p { color: #bdd0c8; }
+.public-site-v2 .hiw-perspectives button { border-color: #b8cec540; border-radius: 4px; color: #f3eee8; }
+.public-site-v2 .hiw-perspectives button[aria-pressed="true"] { background: #f3eee8; color: #093b38; }
+.public-site-v2 .hiw-perspectives button:hover:not([aria-pressed="true"]) { background: #164b47; }
+.public-site-v2 .hiw-experience { border-radius: 7px; background: #103d39; border-color: #b8cec530; }
+.public-site-v2 .hiw-status-available { color: #164b47; }
+.public-site-v2 .hiw-journey-head > p, .public-site-v2 .hiw-scope { color: #bdd0c8; }
+.public-site-v2 .hiw-stages button { border-color: #b8cec540; border-radius: 4px; color: #f3eee8; }
+.public-site-v2 .hiw-stages button small { color: #bdd0c8; }
+.public-site-v2 .hiw-stages button[aria-pressed="true"] { background: #17645f; }
+.public-site-v2 .hiw-stages button:hover:not([aria-pressed="true"]) { background: #164b47; }
+.public-site-v2 .hiw-step-main { background: #092f2d; border-radius: 4px; border: 1px solid #b8cec530; }
+.public-site-v2 .hiw-step-main > p:not(.hiw-eyebrow) { color: #bdd0c8; }
+.public-site-v2 .hiw-step-output { color: #093b38; background: #f3eee8; border-radius: 4px; }
+.public-site-v2 .hiw-controls { border-color: #b8cec540; }
+.public-site-v2 .hiw-controls button:disabled, .public-site-v2 .hiw-controls > span, .public-site-v2 .hiw-experience-foot p { color: #bdd0c8; }
+.public-site-v2 .hiw-principles article { background: transparent; border: 0; border-top: 1px solid #17645f40; border-radius: 0; padding: 25px 0; }
+.public-site-v2 .hiw-trust h2 em { color: #b8d5ca; text-decoration: none; }
+/* High contrast focus on the dark interactive canvases. */
+.public-site-v2 :is(.home-context,.pl-core-column,.sci-map,.hiw-explorer) :focus-visible { outline: 2px solid #f3eee8; outline-offset: 5px; }
+.public-site-v2 .hiw-step-output :focus-visible { outline-color: #17645f; }
+.public-site-v2 .footer { background: #062b29; border-color: #d3e1d920; }
+.public-site-v2 .footer-grid { padding-block: 12px; }
+.public-site-v2 .footer-brand { font-size: 1.2rem; }
+.public-site-v2 .footer h4 { font-size: .6rem; letter-spacing: .12em; }
+.public-site-v2 .footer a { font-size: .8rem; }
+@media (max-width: 1100px) {
+  .public-site-v2 :is(.home-wrap,.pl-wrap,.prd-wrap,.sci-wrap,.hiw-wrap) { width: calc(100% - 4rem); }
+  .public-site-v2 .nav .nav-inner { width: calc(100% - 3rem); }
+  .public-site-v2 .nav .nav-links { gap: 12px; }
+  .public-site-v2 :is(.pl-hero-grid,.prd-hero-grid,.sci-hero-grid,.hiw-hero-grid) { gap: 35px; }
+  .public-site-v2 .home-context-panel { gap: 35px; padding: 35px; }
+  .public-site-v2 .home-split { gap: 45px; }
+  .public-site-v2 .prd-card { gap: 35px; }
+  .public-site-v2 .prd-card ul { grid-template-columns: 1fr; }
+  .public-site-v2 .pl-core-column { padding: 25px; }
+}
+@media (max-width: 750px) {
+  .public-site-v2 :is(.home-wrap,.pl-wrap,.prd-wrap,.sci-wrap,.hiw-wrap) { width: calc(100% - 2.5rem); }
+  .public-site-v2 :is(.home-section,.pl-section,.prd-section,.sci-section,.hiw-section) { padding-block: 65px; }
+  .public-site-v2 .nav { min-height: 72px; }
+  .public-site-v2 .nav .nav-inner { width: calc(100% - 2.5rem); padding-block: 13px; border-radius: 0; }
+  .public-site-v2 .nav .brand { font-size: .72rem; }
+  .public-site-v2 .nav .brand-name { max-width: 12rem; }
+  .public-site-v2 .home-hero-grid { padding-top: 45px; }
+  .public-site-v2 .home-redesign h1 { font-size: clamp(2.7rem,10.1vw,4rem); line-height: 1.04; margin-block: 24px; }
+  .public-site-v2 .home-lede { font-size: .94rem; }
+  .public-site-v2 .home-hero .home-actions { gap: 22px; }
+  .public-site-v2 .home-hero-note { font-size: .62rem; }
+  .v2-landscape-stage { width: 150%; margin-left: -25%; margin-top: 10px; margin-bottom: -35px; }
+  .v2-knowledge-landscape { height: 220px; }
+  .v2-landscape-stage > p { display: none; }
+  .public-site-v2 .home-split { grid-template-columns: 1fr; gap: 22px; }
+  .public-site-v2 .home-product-grid { gap: 35px; }
+  .public-site-v2 .home-product-art { height: 240px; }
+  .public-site-v2 .home-context-panel { padding: 25px; gap: 30px; }
+  .public-site-v2 .home-context-copy h3 { font-size: 1.9rem; }
+  .public-site-v2 .home-concept-map { padding: 25px; }
+  .public-site-v2 .home-steps { gap: 30px 20px; }
+  .public-site-v2 :is(.pl-hero,.prd-hero,.sci-hero,.hiw-hero) { padding-top: 45px; }
+  .public-site-v2 :is(.pl-page,.prd-page,.sci-page,.hiw-page) h1 { font-size: clamp(2.6rem,10vw,3.8rem); line-height: 1.03; }
+  .public-site-v2 :is(.pl-hero-grid,.prd-hero-grid,.sci-hero-grid,.hiw-hero-grid) { gap: 28px; padding-bottom: 40px; }
+  .public-site-v2 .pl-foundation { padding: 25px; box-shadow: 9px 9px 0 #17645f0c; }
+  .public-site-v2 .pl-product-column { padding: 0; }
+  .public-site-v2 .pl-core-column { padding: 22px; }
+  .public-site-v2 .prd-card { grid-template-columns: 1fr; gap: 20px; padding-bottom: 30px; }
+  .public-site-v2 .prd-card-visual { height: 230px; min-height: 230px; max-height: none; }
+  .public-site-v2 .prd-card:nth-child(even) .prd-card-visual { order: 0; }
+  .public-site-v2 .prd-card-title h3 { font-size: 1.7rem; }
+  .public-site-v2 .sci-art-frame { box-shadow: 9px 9px 0 #17645f0c; }
+  .public-site-v2 .sci-explanation { padding: 10px 0 0; }
+  .public-site-v2 .sci-map { padding: 22px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .public-site-v2 *, .public-site-v2 *::before, .public-site-v2 *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

@@ -1,3 +1,32 @@
+## Public-site art direction refresh — 2026-11-03
+
+The founder rejected the repeated serif/card presentation and requested
+Unkapped.ai as a design reference. Direct access to that domain returned a proxy
+policy denial in this session. This refresh uses the pre-existing reference
+cadence documented below, not a claimed inspection of the current live site.
+
+- Retain the founder-selected ivory `#F3EEE8`, teal `#17645F` and coral `#FF6845`.
+- Replace serif marketing headlines with large, tightly spaced Host Grotesk.
+- Give the homepage a centred introduction and an original procedural knowledge
+  landscape. The geometry is decorative and does not represent study data.
+- Alternate open light sections with dark, inspectable workflow canvases.
+- Present product details as illustrated rows, rather than another card deck.
+- Use a quieter masthead and square-edged controls to reduce visual clutter.
+- Keep existing product statuses, research boundaries and interactive content.
+
+`src/styles/marketing-v2.css` is the final scoped presentation layer, imported
+last in `main.tsx`. It applies only through `.public-site-v2` on Home, Platform,
+Products, Science and How It Works. Other routes keep their existing theme.
+`KnowledgeLandscape.tsx` contains original HSI geometry; no Unkapped code,
+fonts, screenshots, logos or proprietary artwork is copied.
+
+Verification covers production build, site TypeScript, public-site honesty tests,
+all five routes at 320/390/768/1024/1440/1920px, mobile navigation, keyboard
+interaction, reduced motion and the existing interactive selectors. The existing
+application bundle-size warning remains a separate performance concern.
+
+---
+
 ## Homepage redesign — 2026-11-03
 
 The public homepage now uses `pages/Home.tsx` and scoped `styles/home.css`.

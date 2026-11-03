@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/home.css";
+import { KnowledgeLandscape } from "../components/KnowledgeLandscape";
 
 const contexts = [
   { id: "immune", label: "Immunity", title: "Look beyond a single marker.", text: "Explore how immune cells, inflammatory signals and tissue context relate to a research question. Evidence needs to be interpreted within the population and setting studied.", nodes: ["Immune cells", "Inflammation", "Tissue context", "Research evidence"] },
@@ -8,28 +9,6 @@ const contexts = [
   { id: "brain", label: "Brain health", title: "Connect systems. Keep the context.", text: "Explore neuroimmune questions across nervous and immune systems. Distinguish findings from cell models, animal studies and human research before drawing conclusions.", nodes: ["Neural signalling", "Immune response", "Study setting", "Research evidence"] },
   { id: "metabolic", label: "Metabolic health", title: "Ask how the pieces relate.", text: "Consider glucose regulation, metabolic pathways and inflammatory biology together. Lifestyle and treatment observations require appropriate permissions and careful interpretation.", nodes: ["Glucose regulation", "Metabolic pathways", "Inflammation", "Research evidence"] },
 ];
-
-function BiologyArt() {
-  return <svg className="home-biology" viewBox="0 0 600 600" role="img" aria-labelledby="biology-title biology-desc">
-    <title id="biology-title">A connected view of biology</title>
-    <desc id="biology-desc">An abstract illustration of cells connected around a central biological system.</desc>
-    <defs>
-      <radialGradient id="home-cell"><stop stopColor="#f3eee8"/><stop offset=".45" stopColor="#7eb9a9"/><stop offset="1" stopColor="#17645f" stopOpacity=".2"/></radialGradient>
-      <radialGradient id="home-aura"><stop stopColor="#99c6b7" stopOpacity=".3"/><stop offset="1" stopColor="#17645f" stopOpacity="0"/></radialGradient>
-      <linearGradient id="home-orbit"><stop stopColor="#f3eee8" stopOpacity=".8"/><stop offset="1" stopColor="#ff6845" stopOpacity=".1"/></linearGradient>
-    </defs>
-    <circle cx="300" cy="300" r="295" fill="url(#home-aura)"/>
-    {[170, 225, 275].map(r => <circle key={r} cx="300" cy="300" r={r} fill="none" stroke="#f3eee8" strokeOpacity=".14" strokeDasharray={r === 225 ? "2 9" : undefined}/>)}
-    <g stroke="url(#home-orbit)" fill="none"><path d="M145 180 300 300 470 180M300 300 435 435 155 445 145 180M155 445 300 300 470 180 435 435"/><ellipse cx="300" cy="300" rx="260" ry="105" transform="rotate(-35 300 300)"/></g>
-    {[[300,300,100],[145,180,42],[470,180,55],[435,435,44],[155,445,57]].map(([x,y,r], i) => <g key={i}>
-      <circle cx={x} cy={y} r={r} fill="url(#home-cell)" stroke="#f3eee8" strokeOpacity=".55"/>
-      <circle cx={x} cy={y} r={r * .62} fill="none" stroke="#f3eee8" strokeOpacity=".35"/>
-      <circle cx={x - r * .15} cy={y + r * .08} r={r * .3} fill={i === 0 ? "#ff6845" : "#12544f"} stroke="#ff997f" strokeOpacity=".6"/>
-      {[0,1,2,3,4,5].map(n => <circle key={n} cx={x + Math.cos(n * 1.04) * r * .77} cy={y + Math.sin(n * 1.04) * r * .77} r="3" fill="#f3eee8" fillOpacity=".7"/>)}
-    </g>)}
-    <g fill="#f3eee8" fontSize="11" fontFamily="monospace" letterSpacing="2"><text x="62" y="105">OBSERVE</text><text x="426" y="99">CONNECT</text><text x="414" y="523">UNDERSTAND</text></g>
-  </svg>;
-}
 
 export function Home() {
   const [active, setActive] = useState(0);
@@ -44,8 +23,8 @@ export function Home() {
           <div className="home-actions"><Link className="home-button" to="/platform">Explore the platform <svg className="home-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12" stroke="currentColor" strokeWidth="1.5"/></svg></Link><a className="home-text-link" href="#connected-ecosystem">Meet the ecosystem <span aria-hidden="true">↓</span></a></div>
           <p className="home-hero-note">Built around traceable evidence. Guided by human judgement.</p>
         </div>
-        <div className="home-hero-art"><BiologyArt/><div className="home-art-caption"><span className="home-dot"/> A wider lens on human biology <span>HUMAN BIOLOGY</span></div></div>
       </div>
+      <div className="v2-landscape-stage"><KnowledgeLandscape /><p>ILLUSTRATIVE KNOWLEDGE LANDSCAPE</p></div>
       <div className="home-wrap home-hero-foot"><span>FROM HEALTH CONTEXT TO BIOLOGICAL UNDERSTANDING</span><span>Aksh Health <b>→</b> Immune Super Intelligence <b>→</b> HSI</span></div>
     </section>
 
