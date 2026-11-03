@@ -214,11 +214,13 @@
   display: grid;
   grid-template-columns: 0.95fr 1.15fr;
   gap: 24px;
+  align-items: stretch;
 }
 
 .hsi-platform-arch-products {
   display: grid;
   gap: 16px;
+  align-content: start;
 }
 
 .hsi-platform-product-detail {
@@ -262,14 +264,22 @@
 }
 
 .hsi-platform-capability-panel {
-  min-height: 0;
+  min-height: 530px;
+  padding: 40px;
+  gap: 0;
+}
+
+.hsi-platform-capability-orbit {
+  width: min(210px, 70%);
+  margin: 8px auto 28px;
+  align-self: center;
 }
 
 .hsi-platform-core-heading {
   display: flex;
   align-items: center;
   gap: 14px;
-  margin-bottom: 22px;
+  margin-bottom: 8px;
   width: 100%;
 }
 
@@ -504,6 +514,120 @@
   color: #ffb09a;
 }
 
+.hsi-platform-experiences {
+  background: #fffaf4;
+  padding: 115px 0 100px;
+}
+
+.hsi-platform-experiences-head {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(28px, 4vw, 70px);
+  align-items: end;
+  margin-bottom: 42px;
+}
+
+.hsi-platform-experiences-head h2 {
+  margin: 22px 0 0;
+}
+
+.hsi-platform-experiences-head > p {
+  margin: 0;
+  color: #466d67;
+  line-height: 1.75;
+  max-width: 420px;
+}
+
+.hsi-platform-experience-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.hsi-platform-experience {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-height: 220px;
+  padding: 22px 20px;
+  background: #f3eee8;
+  border: 1px solid #17645f24;
+  color: #17645f;
+}
+
+.hsi-platform-experience-isi {
+  background: #17645f;
+  color: #f3eee8;
+  border-color: #17645f;
+}
+
+.hsi-platform-experience-isi .maturity-chip {
+  border-color: #f3eee855;
+  color: #f3eee8;
+  background: #215e5a;
+}
+
+.hsi-platform-experience-isi .hsi-platform-experience-ownership {
+  color: #c3d9d2;
+}
+
+.hsi-platform-experience-isi .hsi-platform-experience-link {
+  border-color: #f3eee8;
+  color: #f3eee8;
+}
+
+.hsi-platform-experience-trials {
+  background: #f8ded4;
+}
+
+.hsi-platform-experience-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.hsi-platform-experience-top h3 {
+  margin: 0;
+  font-size: clamp(1.15rem, 1.6vw, 1.45rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.hsi-platform-experience-ownership {
+  margin: 0;
+  margin-top: auto;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: #466d67;
+}
+
+.hsi-platform-experience-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #17645f;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #17645f;
+}
+
+.hsi-platform-experience-link:focus-visible {
+  outline: 3px solid #ff6845;
+  outline-offset: 3px;
+}
+
+.hsi-platform-experiences-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 28px;
+  margin-top: 42px;
+}
+
 /* Beat marketing-v2 teal CTA so Platform matches Home coral. */
 .public-site-v2.platform-shell .nav {
   background: #f3eee8;
@@ -516,6 +640,12 @@
   background: #e95432;
 }
 
+@media (max-width: 1100px) {
+  .hsi-platform-experience-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 1050px) {
   .hsi-platform-arch-layout {
     grid-template-columns: 1fr;
@@ -524,12 +654,14 @@
 
 @media (max-width: 900px) {
   .hsi-platform-trust-head,
-  .hsi-platform-trust-body {
+  .hsi-platform-trust-body,
+  .hsi-platform-experiences-head {
     grid-template-columns: 1fr;
     gap: 28px;
   }
 
-  .hsi-platform-trust-head > p {
+  .hsi-platform-trust-head > p,
+  .hsi-platform-experiences-head > p {
     max-width: none;
   }
 
@@ -573,6 +705,19 @@
     padding: 8px 10px;
     flex-wrap: wrap;
   }
+
+  .hsi-platform-experiences {
+    padding: 75px 0;
+  }
+
+  .hsi-platform-capability-panel {
+    min-height: 440px;
+    padding: 24px;
+  }
+
+  .hsi-platform-capability-orbit {
+    width: 180px;
+  }
 }
 
 @media (max-width: 520px) {
@@ -586,6 +731,14 @@
 
   .hsi-platform-product-detail {
     padding: 22px 18px;
+  }
+
+  .hsi-platform-experience-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hsi-platform-experience {
+    min-height: 0;
   }
 }
 

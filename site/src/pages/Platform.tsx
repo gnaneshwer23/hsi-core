@@ -117,6 +117,34 @@ const trustPrinciples = [
   },
 ] as const;
 
+/** Compact experience entries — ownership-first, no storefront photography. */
+const experienceEntries: readonly {
+  id: ProductId;
+  href: string;
+  ownership: string;
+}[] = [
+  {
+    id: "aksh",
+    href: "/for-aksh",
+    ownership: "Aksh-owned health records and access controls",
+  },
+  {
+    id: "isi",
+    href: "/for-isi",
+    ownership: "ISI Research–owned evidence and research data",
+  },
+  {
+    id: "clinical",
+    href: "/products",
+    ownership: "Care-provider governed clinical records — not a live hospital feed",
+  },
+  {
+    id: "trials",
+    href: "/for-trials",
+    ownership: "Investigator-led pathways · separate permissions",
+  },
+];
+
 function FoundationArt() {
   return (
     <div
@@ -372,6 +400,12 @@ export function Platform() {
                   <p>Reusable patterns · separate product data</p>
                 </div>
               </div>
+              <div className="hsi-rebuild-orbit hsi-platform-capability-orbit" aria-hidden="true">
+                <span className="hsi-rebuild-orbit-a" />
+                <span className="hsi-rebuild-orbit-b" />
+                <span className="hsi-rebuild-orbit-c" />
+                <b>{capability.short.toUpperCase()}</b>
+              </div>
               <div className="hsi-platform-capability-track" role="group" aria-label="Shared capability patterns, not a pipeline">
                 {capabilities.map((item, i) => (
                   <button
@@ -519,17 +553,69 @@ export function Platform() {
         </div>
       </section>
 
+      <section className="hsi-platform-experiences" aria-labelledby="experiences-title">
+        <div className="hsi-editorial-wrap">
+          <div className="hsi-platform-experiences-head">
+            <div>
+              <p className="hsi-editorial-kicker">05 / EXPERIENCE ENTRY</p>
+              <h2 id="experiences-title">
+                Four experiences.<br />
+                <em>Four ownership lines.</em>
+              </h2>
+            </div>
+            <p>
+              Pick a starting product. Each reuses shared Human Super Intelligence patterns inside its own data boundary—software can be shared; records are not.
+            </p>
+          </div>
+
+          <div className="hsi-platform-experience-grid" role="list">
+            {experienceEntries.map((entry) => {
+              const product = ECOSYSTEM_PRODUCTS.find((item) => item.id === entry.id)!;
+              return (
+                <article
+                  key={entry.id}
+                  className={"hsi-platform-experience hsi-platform-experience-" + entry.id}
+                  role="listitem"
+                >
+                  <div className="hsi-platform-experience-top">
+                    <h3>{product.name}</h3>
+                    <span className={`maturity-chip maturity-chip-${product.chip}`}>
+                      {MATURITY_CHIP_LABEL[product.chip]}
+                    </span>
+                  </div>
+                  <p className="hsi-platform-experience-ownership">{entry.ownership}</p>
+                  <Link className="hsi-platform-experience-link" to={entry.href}>
+                    Enter {product.name} <span aria-hidden="true">↗</span>
+                  </Link>
+                </article>
+              );
+            })}
+          </div>
+
+          <div className="hsi-platform-experiences-cta">
+            <Link className="hsi-editorial-button" to="/products">
+              Open the products catalogue <span aria-hidden="true">↗</span>
+            </Link>
+            <Link className="hsi-editorial-textlink" to="/how-it-works">
+              See how investigations work ↗
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <section className="hsi-editorial-outro">
         <div className="hsi-editorial-wrap">
-          <p className="hsi-editorial-kicker">05 / FROM FOUNDATION TO EXPERIENCE</p>
+          <p className="hsi-editorial-kicker">06 / KEEP THE BOUNDARIES CLEAR</p>
           <h2>
             Understand the operating model.<br />
-            <em>Find your starting point.</em>
+            <em>Stay honest about what is shared.</em>
           </h2>
-          <p>Explore the specialist experiences that reuse shared technology while keeping their own data and governance.</p>
+          <p>
+            Technology patterns can travel across products. Patient records, research collections and trial data stay behind each product’s permissions wall.
+          </p>
           <div className="hsi-editorial-actions">
             <Link className="hsi-editorial-button" to="/products">Explore the products <span aria-hidden="true">↗</span></Link>
-            <Link className="hsi-editorial-textlink" to="/how-it-works">See how investigations work ↗</Link>
+            <Link className="hsi-editorial-textlink" to="/status">Check product maturity ↗</Link>
           </div>
           <small>
             Scientific research tools do not provide diagnosis, prescribing or confirmed trial eligibility. Clinical and trial capabilities are separately governed and subject to human validation. Human Super Intelligence does not operate a shared evidence database across products.
