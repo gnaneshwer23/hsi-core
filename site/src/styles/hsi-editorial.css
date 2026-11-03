@@ -291,3 +291,15 @@
 @media(max-width:900px){.hsi-research-insight{min-height:210px}}
 @media(max-width:520px){.hsi-research-insight{padding:19px}.hsi-research-insight-art{opacity:.45}.hsi-research-step{padding:12px}}
 @media(prefers-reduced-motion:reduce){.hsi-research-insight-art{animation:none}.hsi-research-step{transition:none}}
+
+
+/* Product photography: retain editorial palette and readable product information. */
+.hsi-product-photo{position:relative;overflow:hidden;aspect-ratio:1.65/1;margin:26px 0 8px;background:linear-gradient(135deg,#c8ddd5,#8caea8);isolation:isolate}
+.hsi-editorial-product-isi .hsi-product-photo{background:linear-gradient(135deg,#215e5a,#6ba49d)}
+.hsi-editorial-product-trials .hsi-product-photo{background:linear-gradient(135deg,#f2bfae,#e5d7c9)}
+.hsi-product-photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(.75) contrast(1.04);transition:transform .45s ease}
+.hsi-product-photo:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,#092c2988 100%);pointer-events:none}
+.hsi-product-photo-credit{position:absolute;bottom:10px;left:11px;right:11px;z-index:1;color:white;font-size:.56rem;letter-spacing:.02em;text-shadow:0 1px 3px #0009}
+.hsi-editorial-product:hover .hsi-product-photo img{transform:scale(1.045)}
+.hsi-editorial-product .hsi-editorial-product-body{padding-top:22px}
+@media(prefers-reduced-motion:reduce){.hsi-product-photo img{transition:none}.hsi-editorial-product:hover .hsi-product-photo img{transform:none}}
