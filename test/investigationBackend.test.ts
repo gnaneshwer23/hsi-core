@@ -23,3 +23,8 @@ test("invalid SQL namespaces or actors cannot instantiate a product backend", ()
   const options = { database: { query: async () => [], transaction: async () => undefined }, schema: "aksh;DROP TABLE users", principal: { ownerId: "owner", actor: { id: "actor", role: "admin" } }, releases: [], loadRelease: async () => ({}) };
   expect(() => createOwnedInvestigationBackend(options as never)).toThrow();
 });
+test("same-origin validation uses request Host when Next reconstructs an internal URL", async () => {
+  const make = (origin: string) => new Request("http://localhost:3109/api", { method: "POST", headers: { host: "127.0.0.1:3109", origin, "content-type": "application/json", "x-forwarded-host": "attacker.example" }, body: '{"action":"list","cursor":null}' });
+  expect(await readInvestigationRequest(make("http://127.0.0.1:3109"))).toEqual({ action: "list", cursor: null });
+  await expect(readInvestigationRequest(make("http://attacker.example"))).rejects.toMatchObject({ status: 403 });
+});

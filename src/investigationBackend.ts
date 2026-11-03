@@ -125,7 +125,12 @@ export function createOwnedInvestigationBackend(options: {
 /** Invoke only after real product authentication/authorisation. Bounds bytes before parsing JSON. */
 export async function readInvestigationRequest(request: Request): Promise<InvestigationCommand> {
   if (request.method !== "POST") throw new InvestigationRequestError(405, "method_not_allowed");
-  if (request.headers.get("origin") !== new URL(request.url).origin || request.headers.get("sec-fetch-site") === "cross-site") throw new InvestigationRequestError(403, "request_origin_denied");
+  // Next.js may reconstruct its URL with an internal hostname. Host is the browser's
+  // request authority (browsers cannot set it via fetch); never trust a client-selected forwarded host.
+  const url = new URL(request.url), authority = request.headers.get("host") ?? url.host;
+  if (!authority || /[\s/@\\?#]/.test(authority)) throw new InvestigationRequestError(403, "request_origin_denied");
+  const expectedOrigin = new URL(`${url.protocol}//${authority}`).origin;
+  if (request.headers.get("origin") !== expectedOrigin || request.headers.get("sec-fetch-site") === "cross-site") throw new InvestigationRequestError(403, "request_origin_denied");
   if (request.headers.get("content-type")?.split(";")[0]?.trim() !== "application/json") throw new InvestigationRequestError(415, "json_required");
   const maximum = 8192;
   const declared = request.headers.get("content-length");
