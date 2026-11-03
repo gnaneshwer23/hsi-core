@@ -182,3 +182,16 @@ describe("Stage A public security boundary audit", () => {
     expect(layout).toContain('id="main-content"');
   });
 });
+
+
+describe("Stage A homepage product imagery", () => {
+  it("uses separate contextual photographs for four products with alt text and lazy loading", () => {
+    const home = site("src/pages/Home.tsx");
+    expect((home.match(/image: "https:\/\/images\.unsplash\.com\/photo-/g) ?? []).length).toBe(4);
+    expect((home.match(/imageAlt: "/g) ?? []).length).toBe(4);
+    expect(home).toContain('loading="lazy"');
+    expect(home).toContain("item.imageAlt");
+    expect(home).not.toContain('className="hsi-product-constellation"');
+    expect(home).toContain("MATURITY_CHIP_LABEL[product.chip]");
+  });
+});
