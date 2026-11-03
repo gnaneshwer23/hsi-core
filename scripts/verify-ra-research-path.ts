@@ -1,4 +1,4 @@
-/** Automated verification for pending-real vs research RA investigation paths (memory store; no product Neon). */
+/** Automated verification for rights-verified evidence + research RA investigation paths (memory store; no product Neon). */
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import {
@@ -7,7 +7,13 @@ import {
   createMemoryInvestigationStore,
 } from "../src/investigationService";
 import { investigationError } from "../src/investigationBackend";
-import { RaEvidenceUnavailableError, raEvidenceReadiness, RA_RELEASE_ID } from "../src/raEvidenceRelease";
+import {
+  RaEvidenceUnavailableError,
+  buildRaEvidenceBundle,
+  parseRaEvidenceRelease,
+  raEvidenceReadiness,
+  RA_RELEASE_ID,
+} from "../src/raEvidenceRelease";
 import {
   RA_RESEARCH_RELEASE_ID,
   buildRaResearchEvidenceBundle,
@@ -17,10 +23,11 @@ import { emptyCorrectionProvenanceBundle, assertCorrectionFeedSeparation, routeC
 import { bridgeObservationToBiology } from "../src/observationBiologyBridge";
 import { secondIndicationPackStub } from "../src/secondPackStub";
 import { decideClinicalResearchScaffold } from "../src/clinicalResearchScaffold";
-import { researchRunState } from "../src/researchContracts";
+import { parseResearchBundle, researchRunState } from "../src/researchContracts";
 
 const root = resolve(import.meta.dir, "..");
-const pending = JSON.parse(readFileSync(resolve(root, "research/ra-anti-tnf/release.json"), "utf8"));
+const evidence = JSON.parse(readFileSync(resolve(root, "research/ra-anti-tnf/release.json"), "utf8"));
+const graph = JSON.parse(readFileSync(resolve(root, "research/ra-anti-tnf/graph-context.json"), "utf8"));
 const research = JSON.parse(readFileSync(resolve(root, "research/ra-anti-tnf-research/release.json"), "utf8"));
 
 const checks: Array<{ name: string; ok: boolean; detail: string }> = [];
@@ -29,8 +36,15 @@ function check(name: string, ok: boolean, detail: string) {
   if (!ok) throw new Error(`VERIFY FAIL: ${name} — ${detail}`);
 }
 
-const pendingReady = raEvidenceReadiness(pending);
-check("pending_unavailable", pendingReady.available === false, pendingReady.reason ?? "missing reason");
+const evidenceReady = raEvidenceReadiness(evidence);
+check("evidence_available", evidenceReady.available === true, evidenceReady.reason ?? "ok");
+check("evidence_unreviewed", evidenceReady.scientificReview === "unreviewed", evidenceReady.scientificReview);
+check("evidence_passage_count", (evidenceReady.passages ?? 0) >= 2, String(evidenceReady.passages));
+const parsed = parseRaEvidenceRelease(evidence);
+check("evidence_parse", parsed.sources.length === 2 && parsed.passages.length >= 2, `sources=${parsed.sources.length}`);
+
+const pendingMarker = { status: "awaiting_verified_source_import", reason: "Fixture pending marker." };
+check("pending_marker_unavailable", raEvidenceReadiness(pendingMarker).available === false, "marker");
 const pendingError = investigationError(new RaEvidenceUnavailableError());
 check("pending_maps_evidence_not_ready", pendingError.status === 422, `status=${pendingError.status}`);
 
@@ -47,6 +61,17 @@ const service = createInvestigationService({
     return { id: "research-reviewer", role: "reviewer" };
   },
 });
+
+const evidenceKey = "verify-ra-evidence";
+const evidenceStarted = await service.start(evidenceKey, buildRaEvidenceBundle(parseResearchBundle(graph), evidence), token);
+check("evidence_start_passages", (evidenceStarted.payloads.retrieval?.passageIds.length ?? 0) >= 2, JSON.stringify(evidenceStarted.payloads.retrieval));
+check("evidence_public_real", evidenceStarted.bundle.context.dataClass === "public_real", evidenceStarted.bundle.context.dataClass);
+check("evidence_no_claims", evidenceStarted.bundle.claims.length === 0, String(evidenceStarted.bundle.claims.length));
+check(
+  "evidence_real_pmids",
+  evidenceStarted.bundle.sources.every((s) => s.kind === "publication" && !!s.pmid),
+  "sources",
+);
 
 const key = "verify-ra-research";
 const started = await service.start(key, buildRaResearchEvidenceBundle(research), token);
@@ -101,8 +126,8 @@ check("clinical_allows_synthetic", allowSynth.allow === true, JSON.stringify(all
 
 console.log(JSON.stringify({
   ok: true,
-  pendingReleaseId: RA_RELEASE_ID,
+  evidenceReleaseId: RA_RELEASE_ID,
   researchReleaseId: RA_RESEARCH_RELEASE_ID,
   checks: checks.map((c) => c.name),
-  note: "Product Neon activation (ISI 0029 / Aksh 056) and SME licence verification remain human-gated.",
+  note: "Product Neon activation (ISI 0029 / Aksh 056) remains ops-gated. SME labelling remains human-gated. scientificReview stays unreviewed.",
 }, null, 2));
