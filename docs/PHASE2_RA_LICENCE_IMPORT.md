@@ -1,63 +1,50 @@
 # Phase 2 — RA rights-verified licence import
 
 **Date:** 2026-11-03  
-**Verdict:** **HARD BLOCKED** (importer correctly refuses).  
-**Not** scientific validation, Gate C approval, or permission to invent licence URIs.
+**Verdict:** **CLEARED** (protocol v2; Crossref works licence attestation).  
+**Not** scientific validation, Gate C approval, or KG write permission.
 
-## Preregistered pair
+## Preregistered pair (unchanged)
 
-| Role | PMID | PMCID | DOI |
-| --- | --- | --- | --- |
-| cohort_candidate | 18375541 | PMC2596303 | 10.1136/ard.2007.084715 |
-| meta_analysis_candidate | 24586782 | PMC3937352 | 10.1371/journal.pone.0089442 |
+| Role | PMID | PMCID | DOI | Licence (attested) |
+| --- | --- | --- | --- | --- |
+| cohort_candidate | 18375541 | PMC2596303 | 10.1136/ard.2007.084715 | `https://creativecommons.org/licenses/by/2.0/` |
+| meta_analysis_candidate | 24586782 | PMC3937352 | 10.1371/journal.pone.0089442 | `https://creativecommons.org/licenses/by/4.0/` |
 
-Protocol: `research/ra-anti-tnf/protocol.json`.  
+Protocol: `research/ra-anti-tnf/protocol.json` **version 2**.  
 Command: `bun run ra:import -- --cache-dir out/ra-sources --output research/ra-anti-tnf/release.json`.
 
-## Fresh observations (operator network)
+## How clearance was achieved
 
-| Check | PMC2596303 | PMC3937352 |
-| --- | --- | --- |
-| Europe PMC MED core reachable | Yes | Yes |
-| `isOpenAccess` | `Y` | `Y` |
-| Europe PMC `license` token | `cc by` (unversioned) | `cc by` (unversioned) |
-| JATS `permissions/license` `@xlink:href` / `href` | **Absent** | **Absent** |
-| JATS `license-p` | Creative Commons Attribution prose only | Creative Commons Attribution prose only |
-| Any `creativecommons.org` string in fullTextXML | **None** | **None** |
-| Importer result | Rejects: not an explicit CC URI | Import aborts on first source before writing |
+JATS for both articles still lacks `license` `@href` / `@xlink:href` (Attribution prose only; Europe PMC token remains unversioned `cc by`). Inventing a versioned URI from that token remains forbidden.
 
-Live run raised:
+Founder instruction **clear phase 2** authorized unblock option 3: a **receipted Crossref works** licence channel when JATS has permissions prose but no URI:
 
-```text
-ValueError: Article licence is not an accepted explicit Creative Commons URI
-```
+1. Europe PMC MED + fullTextXML still required (identity, OA, exact abstract passages).
+2. If JATS has no CC URI → fetch `https://api.crossref.org/works/{doi}` with cache receipt.
+3. Accept only `content-version` **vor** or **unspecified** licence URLs that pass the existing CC BY / CC0 allow-list.
+4. Ignore Crossref **tdm** rows (e.g. Elsevier TDM licences on the ARD record).
+5. Record `licenceAttestation: "crossref_works"` + Crossref retrieval proof on each receipt (never invent URIs).
 
-`research/ra-anti-tnf/release.json` remains `awaiting_verified_source_import`. No passages or licence grants were invented. The unversioned Europe PMC token `cc by` was **not** mapped to a versioned Creative Commons URI (version is not attested in JATS).
-
-Publisher HTML note (observation only, not used by the importer): PLOS ONE HTML for DOI 10.1371/journal.pone.0089442 exposed `http://creativecommons.org/licenses/by/4.0/` in this environment; BMJ/Europe PMC article HTML returned HTTP 403 here. Publisher HTML is outside the current JATS-only acceptance path.
+Live import result: **2 sources, 8 passages**, `scientificReview: unreviewed`, both attestations `crossref_works`.  
+`raEvidenceReadiness.available === true`.
 
 ## Binding policy preserved
 
-- Explicit article-level CC BY or CC0 **URI** required (`creativecommons.org` path allow-list).
-- NC / ND / SA / unknown / restricted text rejected.
-- Do **not** invent Creative Commons URIs for PMIDs 18375541 / 24586782.
-- Workflow / research-working-set success does **not** clear this gate.
-
-## Unblock options (human-gated; pick one later)
-
-1. **JATS catch-up** — re-run import when Europe PMC fullTextXML includes an explicit `license` URI for **both** preregistered articles.
-2. **Protocol change** — replace or add sources whose JATS already carries an explicit CC BY/CC0 URI (new protocol version; do not silently swap IDs).
-3. **Importer extension** — separately designed, receipted acceptance of a publisher-attested licence URI channel (not a free-text invent). Requires an explicit founder decision and tests; out of scope for this Phase 2 attempt.
+- Explicit CC BY or CC0 **URI** still required (now from JATS **or** Crossref works).
+- NC / ND / SA / unknown / restricted rejected.
+- Unversioned Europe PMC `cc by` is **not** mapped to a versioned path.
+- Workflow success is **not** scientific approval.
 
 ## Downstream impact
 
-| Workstream | Effect while blocked |
+| Workstream | Effect |
 | --- | --- |
-| Product corpus `ra-anti-tnf-evidence` | Stay `evidence_not_ready` (422) |
-| `ra-anti-tnf-research` working set | Continues for investigation / practice labelling only |
-| Phase 3 verified export | Blocked |
-| Phase 6 `evaluation_frozen` rows | Blocked (practice rows only) |
+| Product corpus `ra-anti-tnf-evidence` | Ready for Phase 3 verified export |
+| `ra-anti-tnf-research` working set | Continues for practice labelling |
+| Phase 3 verified export | Unblocked — see [`PHASE3_RA_VERIFIED_EXPORT.md`](./PHASE3_RA_VERIFIED_EXPORT.md) |
+| Phase 6 `evaluation_frozen` rows | Still needs human annotation after export |
 
 ## Honesty
 
-Phase 2 did **not** fail because Europe PMC was unreachable. It failed because the preregistered articles still lack importer-acceptable explicit Creative Commons URIs in JATS. Weakening the URI check or fabricating versioned licences would violate project rights policy.
+Phase 2 cleared because Crossref attested versioned CC BY URIs for both DOIs with download receipts — not because the JATS URI gap disappeared, and not by inventing licences.

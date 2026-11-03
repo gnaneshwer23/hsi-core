@@ -8,14 +8,14 @@ context-tagging benchmark.
 
 ## Current state
 
-`research/ra-anti-tnf/release.json` explicitly says
-`awaiting_verified_source_import`. The current runtime network policy blocks the
-Europe PMC source endpoint. No publication passage or reuse-rights observation
-has been invented to fill that gap. Earlier source-registry notes are candidate
-locators, not a fresh source verification. The proposed network additions were
-saved to the environment configuration draft; saving did not apply them.
+`research/ra-anti-tnf/release.json` is a **rights-verified, scientifically
+unreviewed** import (protocol v2): 2 sources, 8 exact abstract passages.
+Licence URIs come from receipted Crossref works records (`licenceAttestation:
+crossref_works`) because JATS permissions still lack `@href`. See
+[PHASE2_RA_LICENCE_IMPORT.md](PHASE2_RA_LICENCE_IMPORT.md). This is **not**
+scientific approval or Gate C clearance.
 
-The candidate pair is the existing cohort locator PMID 18375541 / PMC2596303 and
+The candidate pair remains cohort locator PMID 18375541 / PMC2596303 and
 meta-analysis locator PMID 24586782 / PMC3937352. Import requires fresh matching
 PMID, PMCID and DOI in Europe PMC MED metadata and JATS front matter. A mismatch
 rejects the entire import and preserves the previous output file.
@@ -26,7 +26,9 @@ rejects the entire import and preserves the previous output file.
 - Requests use the normal proxy and TLS verification. Source redirects stay on
   the registered HTTPS Europe PMC origin; raw downloads are bounded.
 - The importer accepts explicit article-level CC BY or CC0 URIs with recorded
-  authors. NC/ND/SA, unclear, restricted or conflicting reuse terms are outside
+  authors — from JATS `license` `@href` when present, otherwise from a receipted
+  Crossref works licence URL (`vor` / `unspecified` only; never TDM-only; never
+  invented). NC/ND/SA, unclear, restricted or conflicting reuse terms are outside
   this release policy. This is a conservative project policy, not a statement
   that every other licence prohibits all commercial use.
 - Only complete abstract paragraphs are extracted. JATS paths, normalization,
@@ -75,12 +77,11 @@ explicit readiness metadata and return `evidence_not_ready` when start is
 attempted against a pending marker. Passage-review UI consumes only bundle
 sources/passages already returned by the investigation service.
 
-**Current verification note (2026-11-03, Phase 2):** Europe PMC was reachable.
-Both candidate JATS packages still lack an explicit Creative Commons URI in
-article permissions (Attribution prose only; Europe PMC metadata `license` is
-the unversioned token `cc by`). `bun run ra:import` correctly rejects that
-state. The release remains `awaiting_verified_source_import`. No passages or
-licence grants were invented. Report: [PHASE2_RA_LICENCE_IMPORT.md](PHASE2_RA_LICENCE_IMPORT.md).
+**Current verification note (2026-11-03, Phase 2 CLEARED):** Europe PMC + Crossref
+reachable. JATS still lacks licence `@href`; Crossref attested CC BY 2.0 (PMID
+18375541) and CC BY 4.0 (PMID 24586782). Import wrote exact passages with
+`scientificReview: unreviewed`. Report: [PHASE2_RA_LICENCE_IMPORT.md](PHASE2_RA_LICENCE_IMPORT.md).
+Phase 3 product install: [PHASE3_RA_VERIFIED_EXPORT.md](PHASE3_RA_VERIFIED_EXPORT.md).
 
 The expert-labelled context benchmark and independent scientific adjudication
 remain outstanding. Annotation guideline/worksheet templates ship without
@@ -95,5 +96,5 @@ A separate corpus `ra-anti-tnf-research` ships under
 contract IDs are `SYN-RA-SRC-*` (synthetic namespace). Passage text is
 authored working-set content under CC0 — not a quotation and not a licence grant
 for real PMIDs. Product loaders register this corpus for authenticated investigation
-workflows while the real release stays pending. See
+workflows alongside the rights-verified evidence corpus. See
 [RA research path](RA_RESEARCH_PATH.md).

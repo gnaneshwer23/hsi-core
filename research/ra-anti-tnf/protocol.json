@@ -1,14 +1,14 @@
 {
   "schemaVersion": "hsi-ra-protocol-1",
   "id": "ra-anti-tnf-response",
-  "version": "1",
+  "version": "2",
   "question": "How should RF/anti-CCP serostatus evidence be interpreted in rheumatoid arthritis anti-TNF response research?",
   "condition": "rheumatoid_arthritis",
   "purpose": "research_only",
   "containsPhi": false,
   "clinicalAdvice": false,
   "kgWrite": false,
-  "sourceVerification": "awaiting_fresh_retrieval",
+  "sourceVerification": "imported_crossref_licence_attestation",
   "sources": [
     { "pmid": "18375541", "pmcid": "PMC2596303", "doi": "10.1136/ard.2007.084715", "role": "cohort_candidate", "priorRegistryReference": "HSI-C-RA-009" },
     { "pmid": "24586782", "pmcid": "PMC3937352", "doi": "10.1371/journal.pone.0089442", "role": "meta_analysis_candidate", "priorRegistryReference": "HSI-C-RA-010" }
@@ -30,7 +30,7 @@
     "Which statements remain unassessed or require an exact KG relationship proposal?"
   ],
   "acceptance": {
-    "rights": "Explicit article-level CC BY or CC0 with attribution; reject NC, ND, unknown and restricted text.",
+    "rights": "Explicit article-level CC BY or CC0 URI with attribution. Prefer JATS permissions license @href/@xlink:href. When JATS has reuse prose but no URI, accept a receipted Crossref works licence URL (content-version vor or unspecified only; never TDM-only; never invent URIs or map unversioned Europe PMC tokens). Reject NC, ND, SA, unknown and restricted text.",
     "sourceIdentity": "Europe PMC MED metadata PMID/PMCID/DOI must match JATS front matter and the preregistered locator.",
     "passages": "Exact normalized abstract paragraphs, original XML locators and SHA-256; no invented quotes or arbitrary reference-list matches.",
     "scientificApproval": "Independent human assessment required; workflow acceptance is not scientific approval."

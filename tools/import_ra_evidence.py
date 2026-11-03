@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """Operator-side primary-source import. Runtime apps consume only the validated JSON release.
 No patient input, model calls, DTD resolution, clinical advice or evidence approval.
+
+Licence attestation: prefer an explicit Creative Commons URI on JATS permissions.
+When JATS has Attribution prose but no license URI, accept a receipted Crossref works
+licence URL (content-version vor or unspecified only — never TDM-only, never invented).
 """
 from __future__ import annotations
 import argparse
@@ -18,6 +22,7 @@ from datetime import datetime, timezone
 ROOT = Path(__file__).resolve().parents[1]
 MAX_BYTES = 10_000_000
 API = "https://www.ebi.ac.uk/europepmc/webservices/rest"
+CROSSREF = "https://api.crossref.org"
 
 def sha(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
@@ -39,17 +44,19 @@ def licence_uri(value: str) -> str:
         raise ValueError("NC, ND, SA, restricted or unknown terms are not enabled for this commercial research release")
     return "https://creativecommons.org" + path
 
-class SourceRedirects(urllib.request.HTTPRedirectHandler):
-    def redirect_request(self, req, fp, code, msg, headers, newurl):
-        parsed = urllib.parse.urlparse(newurl)
-        if parsed.scheme != "https" or parsed.hostname != "www.ebi.ac.uk":
-            raise ValueError("Source redirect left the registered Europe PMC HTTPS origin")
-        return super().redirect_request(req, fp, code, msg, headers, newurl)
+def origin_redirects(hostname: str):
+    class Handler(urllib.request.HTTPRedirectHandler):
+        def redirect_request(self, req, fp, code, msg, headers, newurl):
+            parsed = urllib.parse.urlparse(newurl)
+            if parsed.scheme != "https" or parsed.hostname != hostname:
+                raise ValueError(f"Source redirect left the registered HTTPS origin ({hostname})")
+            return super().redirect_request(req, fp, code, msg, headers, newurl)
+    return Handler
 
-def download(url: str) -> tuple[bytes, dict]:
+def download(url: str, hostname: str) -> tuple[bytes, dict]:
     req = urllib.request.Request(url, headers={"User-Agent": "HSI-research-evidence-import/1", "Accept-Encoding": "identity"})
     # Uses the environment proxy and normal system TLS trust. Never disable verification.
-    with urllib.request.build_opener(SourceRedirects()).open(req, timeout=30) as response:
+    with urllib.request.build_opener(origin_redirects(hostname)).open(req, timeout=30) as response:
         if response.status != 200 or response.headers.get("Content-Encoding", "identity") != "identity":
             raise ValueError("Unexpected primary-source response")
         declared = response.headers.get("Content-Length")
@@ -101,23 +108,30 @@ def article(raw: bytes, expected: dict) -> dict:
         if not href:
             links = [e.attrib.get("{http://www.w3.org/1999/xlink}href", "") for e in lic.iter() if name(e) == "ext-link"]
             href = next((v for v in links if "creativecommons.org" in v), "")
-        uri = licence_uri(href)
         notice = normalized(lic)
         if re.search(r"non[ -]?commercial|no derivatives|all rights reserved", notice, re.I):
             raise ValueError("Conflicting article reuse restriction")
-        uris.append(uri)
-    if len(set(uris)) != 1:
+        if href:
+            uris.append(licence_uri(href))
+    if uris and len(set(uris)) != 1:
         raise ValueError("Ambiguous article-level licences")
     authors = []
-    for author in front.findall("./contrib-group/contrib"):
-        if author.attrib.get("contrib-type") != "author": continue
-        display = author.find("./name")
-        if display is not None:
-            parts = [normalized(e) for e in list(display)]
-            if parts: authors.append(" ".join(parts))
-        else:
-            collab = author.find("./collab")
-            if collab is not None: authors.append(normalized(collab))
+    for group in front.findall("./contrib-group"):
+        group_authors = group.attrib.get("content-type", "").lower() == "author"
+        for author in group.findall("./contrib"):
+            kind = author.attrib.get("contrib-type", "").lower()
+            # Prefer explicit contrib-type=author; also accept unmarked contribs in an author group (common in older JATS).
+            if kind == "author" or (not kind and group_authors):
+                pass
+            else:
+                continue
+            display = author.find("./name")
+            if display is not None:
+                parts = [normalized(e) for e in list(display)]
+                if parts: authors.append(" ".join(parts))
+            else:
+                collab = author.find("./collab")
+                if collab is not None: authors.append(normalized(collab))
     if not authors:
         raise ValueError("Attribution requires recorded authors")
     passages = []
@@ -139,7 +153,13 @@ def article(raw: bytes, expected: dict) -> dict:
         walk(abstract, f"/article/front/article-meta/abstract[{ai}]")
     if not passages or len(passages) > 20:
         raise ValueError("Expected one to twenty complete abstract paragraphs")
-    return {"title": title, "authors": authors, "licenceUrl": uris[0], "licenceNotice": normalized(licences[0]), "passages": passages}
+    return {
+        "title": title,
+        "authors": authors,
+        "licenceUrl": uris[0] if uris else None,
+        "licenceNotice": normalized(licences[0]),
+        "passages": passages,
+    }
 
 def metadata(raw: bytes, expected: dict) -> dict:
     if len(raw) > MAX_BYTES: raise ValueError("Metadata exceeds size limit")
@@ -156,11 +176,54 @@ def metadata(raw: bytes, expected: dict) -> dict:
         if "retract" in str(comment.get("type", "")).lower(): raise ValueError("Retraction link requires curator review")
     return row
 
-def cached(cache: Path, key: str, url: str, offline: bool) -> tuple[bytes, dict]:
+def crossref_licence_uri(raw: bytes, expected_doi: str) -> str:
+    """Select a single accepted CC BY/CC0 URL from Crossref works.licence (never invent)."""
+    if len(raw) > MAX_BYTES:
+        raise ValueError("Crossref response exceeds size limit")
+    payload = json.loads(raw)
+    message = payload.get("message")
+    if not isinstance(message, dict):
+        raise ValueError("Crossref works payload missing message")
+    doi = str(message.get("DOI", "")).lower()
+    if doi != expected_doi.lower():
+        raise ValueError("Crossref DOI differs from the registered source")
+    rows = message.get("license")
+    if not isinstance(rows, list) or not rows:
+        raise ValueError("Crossref works record has no licence URLs")
+    by_priority: dict[str, list[str]] = {"vor": [], "unspecified": [], "other": []}
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        version = str(row.get("content-version", "")).strip().lower()
+        if version == "tdm":
+            continue
+        url = str(row.get("URL", "")).strip()
+        if not url:
+            continue
+        try:
+            uri = licence_uri(url)
+        except ValueError:
+            continue
+        if version == "vor":
+            by_priority["vor"].append(uri)
+        elif version in ("", "unspecified"):
+            by_priority["unspecified"].append(uri)
+        else:
+            by_priority["other"].append(uri)
+    for key in ("vor", "unspecified", "other"):
+        pool = by_priority[key]
+        if not pool:
+            continue
+        if len(set(pool)) != 1:
+            raise ValueError("Ambiguous Crossref CC BY/CC0 licence URLs")
+        return pool[0]
+    raise ValueError("No Crossref VOR/unspecified CC BY or CC0 licence URL for this DOI")
+
+def cached(cache: Path, key: str, url: str, hostname: str, offline: bool) -> tuple[bytes, dict]:
     data_path = cache / key
     receipt_path = cache / (key + ".receipt.json")
     if not offline:
-        data, receipt = download(url)
+        data, receipt = download(url, hostname)
         cache.mkdir(parents=True, exist_ok=True)
         data_path.write_bytes(data)
         receipt_path.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
@@ -181,17 +244,25 @@ def build(protocol: dict, cache: Path, offline: bool) -> dict:
         query = urllib.parse.urlencode({"query": f"EXT_ID:{expected['pmid']} AND SRC:MED", "format": "json", "resultType": "core", "pageSize": "2"})
         meta_url = API + "/search?" + query
         xml_url = API + "/" + expected["pmcid"] + "/fullTextXML"
-        meta_raw, meta_receipt = cached(cache, expected["pmid"] + ".metadata.json", meta_url, offline)
-        xml_raw, xml_receipt = cached(cache, expected["pmcid"] + ".xml", xml_url, offline)
+        meta_raw, meta_receipt = cached(cache, expected["pmid"] + ".metadata.json", meta_url, "www.ebi.ac.uk", offline)
+        xml_raw, xml_receipt = cached(cache, expected["pmcid"] + ".xml", xml_url, "www.ebi.ac.uk", offline)
         row = metadata(meta_raw, expected); parsed = article(xml_raw, expected)
         if re.sub(r"\W+", "", row.get("title", "")).lower() != re.sub(r"\W+", "", parsed["title"]).lower(): raise ValueError("Article titles disagree between metadata and JATS")
+        licence_url = parsed["licenceUrl"]
+        licence_attestation = "jats"
+        crossref_receipt = None
+        if licence_url is None:
+            crossref_url = f"{CROSSREF}/works/{urllib.parse.quote(expected['doi'])}"
+            crossref_raw, crossref_receipt = cached(cache, expected["pmid"] + ".crossref.json", crossref_url, "api.crossref.org", offline)
+            licence_url = crossref_licence_uri(crossref_raw, expected["doi"])
+            licence_attestation = "crossref_works"
         source_id = "PMID-" + expected["pmid"]
-        sources.append({"id": source_id, "title": ", ".join(parsed["authors"]) + " — " + parsed["title"], "kind": "publication", "dataClass": "public_real", "pmid": expected["pmid"], "doi": expected["doi"], "url": "https://europepmc.org/articles/" + expected["pmcid"], "licence": {"status": "permitted", "identifier": parsed["licenceUrl"], "passageUsePermitted": True}, "provenance": {"product": "hsi", "datasetId": "ra-anti-tnf-source-release", "version": xml_receipt["sha256"], "retrievedAt": xml_receipt["retrievedAt"]}})
+        sources.append({"id": source_id, "title": ", ".join(parsed["authors"]) + " — " + parsed["title"], "kind": "publication", "dataClass": "public_real", "pmid": expected["pmid"], "doi": expected["doi"], "url": "https://europepmc.org/articles/" + expected["pmcid"], "licence": {"status": "permitted", "identifier": licence_url, "passageUsePermitted": True}, "provenance": {"product": "hsi", "datasetId": "ra-anti-tnf-source-release", "version": xml_receipt["sha256"], "retrievedAt": xml_receipt["retrievedAt"]}})
         ids = []
         for index, passage in enumerate(parsed["passages"], 1):
             pid = source_id + "-ABSTRACT-" + str(index); ids.append(pid)
             passages.append({"id": pid, "sourceId": source_id, "sourceVersion": xml_receipt["sha256"], "text": passage["text"], "locator": passage["locator"], "dataClass": "public_real", "sha256": passage["sha256"]})
-        receipts.append({"sourceId": source_id, "pmcid": expected["pmcid"], "metadata": meta_receipt, "articleXml": xml_receipt, "authors": parsed["authors"], "articleTitle": parsed["title"], "licenceUrl": parsed["licenceUrl"], "licenceNotice": parsed["licenceNotice"], "normalization": "xml_itertext_whitespace_collapse"})
+        receipts.append({"sourceId": source_id, "pmcid": expected["pmcid"], "metadata": meta_receipt, "articleXml": xml_receipt, "authors": parsed["authors"], "articleTitle": parsed["title"], "licenceUrl": licence_url, "licenceNotice": parsed["licenceNotice"], "normalization": "xml_itertext_whitespace_collapse", "licenceAttestation": licence_attestation, "crossref": crossref_receipt})
         candidates.append({"sourceId": source_id, "passageIds": ids, "plannedRole": expected["role"], "studyDesign": "unassessed", "claimSupport": "unassessed", "scientificReview": "unreviewed", "graphMapping": "related_context_only"})
     content = {"schemaVersion": "hsi-ra-evidence-release-1", "protocolId": protocol["id"], "protocolVersion": protocol["version"], "question": protocol["question"], "containsPhi": False, "clinicalAdvice": False, "kgWrite": False, "scientificReview": "unreviewed", "sources": sources, "passages": passages, "receipts": receipts, "candidates": candidates}
     # Hash content with stable object ordering; freshness is retained in each receipt.
@@ -216,7 +287,7 @@ def main() -> None:
         with tempfile.NamedTemporaryFile(dir=output.parent, delete=False) as handle:
             temporary = Path(handle.name); handle.write(payload); handle.flush(); os.fsync(handle.fileno())
         os.replace(temporary, output); temporary = None
-        print(json.dumps({"sources": len(release["sources"]), "passages": len(release["passages"]), "scientificReview": "unreviewed", "version": release["version"], "mode": "offline_receipts" if args.offline else "live_source_retrieval"}))
+        print(json.dumps({"sources": len(release["sources"]), "passages": len(release["passages"]), "scientificReview": "unreviewed", "version": release["version"], "mode": "offline_receipts" if args.offline else "live_source_retrieval", "licenceAttestations": [r["licenceAttestation"] for r in release["receipts"]]}))
     finally:
         if temporary is not None: temporary.unlink(missing_ok=True)
         os.close(descriptor); lock.unlink()

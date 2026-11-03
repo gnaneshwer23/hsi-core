@@ -4,10 +4,10 @@
 
 | Corpus ID | Status | Purpose |
 | --- | --- | --- |
-| `ra-anti-tnf-evidence` | `awaiting_verified_source_import` | Real PMID candidates. Product start must return `evidence_not_ready`. |
+| `ra-anti-tnf-evidence` | Rights-verified import (Crossref CC BY; unreviewed) | Real PMID passages after Phase 3 export. Not scientific approval. |
 | `ra-anti-tnf-research` | `available_working_set` / `research_working_set` / `notForScientificClaim` | Synthetic `SYN-RA-SRC-*` / `RS-*` sources for authenticated start → passage review → save → reload → export. |
 
-Never invent Creative Commons URIs for real PMIDs 18375541 / 24586782. Workflow acceptance is **not** scientific validation or Gate C approval.
+Licence URIs for PMIDs 18375541 / 24586782 come from receipted Crossref works records (not invented; not mapped from unversioned Europe PMC tokens). Workflow acceptance is **not** scientific validation or Gate C approval.
 
 ## HSI commands
 

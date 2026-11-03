@@ -28,8 +28,9 @@ test("committed research release is available and clearly non-scientific", () =>
   expect(raResearchEvidenceReleaseListing(research).title).not.toMatch(/demo/i);
 });
 
-test("pending real release stays unavailable beside the research corpus", () => {
-  expect(raEvidenceReadiness(pending).available).toBe(false);
+test("rights-verified real release sits beside the research corpus without scientific approval", () => {
+  expect(raEvidenceReadiness(pending).available).toBe(true);
+  expect(raEvidenceReadiness(pending).scientificReview).toBe("unreviewed");
   expect(raResearchEvidenceReadiness(research).available).toBe(true);
 });
 
@@ -56,7 +57,7 @@ test("research bundle retrieves passages without inventing claims or real PMID l
 test("research README and worksheet templates stay honest", () => {
   const readme = readFileSync("research/ra-anti-tnf-research/README.md", "utf8");
   expect(readme).toContain("notForScientificClaim");
-  expect(readme).toContain("awaiting_verified_source_import");
+  expect(readme).toContain("scientificReview: unreviewed");
   expect(readme).not.toMatch(/licence-cleared real PMID/i);
   expect(readme).not.toMatch(/\bDEMO\b/);
   const worksheet = JSON.parse(readFileSync("research/ra-anti-tnf/context-annotation-worksheet-v1.json", "utf8"));

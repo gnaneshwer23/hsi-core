@@ -8,7 +8,7 @@ scientific validation, licence clearance, Gate C approval or clinical fitness.
 | Corpus id | Status | Use |
 | --- | --- | --- |
 | `ra-anti-tnf-research` | Always available (`research_working_set`, `notForScientificClaim`) | Authenticated start → passage review → review → export |
-| `ra-anti-tnf-evidence` | `awaiting_verified_source_import` until CC URI import succeeds | Must return `evidence_not_ready` (422); never invent passages |
+| `ra-anti-tnf-evidence` | Rights-verified import available (protocol v2; Crossref attestation); still `scientificReview: unreviewed` | Export via Phase 3; never invent passages or treat as scientific approval |
 
 Canonical research artifact: `research/ra-anti-tnf-research/release.json` (`SYN-RA-SRC-*` /
 `SYN-D001` mirrors). Rights-verified path keeps original ISI ids once import lands.

@@ -41,7 +41,7 @@ export function secondIndicationPackStub(): SecondPackStub {
       researchWorkingSetDoesNotSatisfy: true,
     },
     blockedUntil: [
-      "Real RA/anti-TNF release leaves awaiting_verified_source_import with explicit CC URI rights.",
+      "Real RA/anti-TNF release must remain rights-verified with explicit CC URI rights (Crossref or JATS).",
       "Independent scientific review of the first pack (not research working-set workflow acceptance).",
       "Separate protocol registration for the second indication — do not invent candidates here.",
     ],

@@ -18,9 +18,9 @@
 
 - **Practice:** scaffolds unlabelled rows from `ra-anti-tnf-research` into
   `practice_not_evaluation` + double-blind packets A/B.
-- **Verified:** refused while `release.json` remains
-  `awaiting_verified_source_import` (Phase 2 blocker). When a rights-verified
-  release exists, mints empty eval/training rows and packets only.
+- **Verified:** Phase 2 CLEARED — rights-verified `release.json` exists
+  (`scientificReview: unreviewed`). Scaffolding mints empty eval/training rows
+  and packets only; fabricated labels remain forbidden.
 - Adjudication records start with `finalTags: null`; fabricated labels forbidden.
 - Practice rows cannot enter the evaluation split.
 

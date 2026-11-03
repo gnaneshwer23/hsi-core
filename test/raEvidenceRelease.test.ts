@@ -23,21 +23,30 @@ function structureFixture() {
     const licenceUrl = "https://creativecommons.org/licenses/by/4.0/";
     sources.push({ id: sourceId, title: "Structural fixture author; not the publication's author — Structural contract fixture, not retrieved publication metadata", kind: "publication", dataClass: "public_real", pmid: identity.pmid, doi: identity.doi, url: `https://europepmc.org/articles/${identity.pmcid}`, licence: { status: "permitted", identifier: licenceUrl, passageUsePermitted: true }, provenance: { product: "hsi", datasetId: "ra-anti-tnf-source-release", version: xmlHash, retrievedAt } });
     passages.push({ id: `${sourceId}-ABSTRACT-1`, sourceId, sourceVersion: xmlHash, text, locator: "/article/front/article-meta/abstract[1]/p[1]; XML itertext with whitespace collapsed", dataClass: "public_real", sha256: digest(text) });
-    receipts.push({ sourceId, pmcid: identity.pmcid, metadata: proof(metadataUrl, digest("TEST-METADATA")), articleXml: proof(xmlUrl, xmlHash), authors: ["Structural fixture author; not the publication's author"], articleTitle: "Structural contract fixture, not retrieved publication metadata", licenceUrl, licenceNotice: "Fixture only; not a recorded rights observation", normalization: "xml_itertext_whitespace_collapse" });
+    receipts.push({ sourceId, pmcid: identity.pmcid, metadata: proof(metadataUrl, digest("TEST-METADATA")), articleXml: proof(xmlUrl, xmlHash), authors: ["Structural fixture author; not the publication's author"], articleTitle: "Structural contract fixture, not retrieved publication metadata", licenceUrl, licenceNotice: "Fixture only; not a recorded rights observation", normalization: "xml_itertext_whitespace_collapse", licenceAttestation: "jats", crossref: null });
     candidates.push({ sourceId, passageIds: [`${sourceId}-ABSTRACT-1`], plannedRole: identity.role, studyDesign: "unassessed", claimSupport: "unassessed", scientificReview: "unreviewed", graphMapping: "related_context_only" });
   }
-  return seal({ schemaVersion: "hsi-ra-evidence-release-1", protocolId: "ra-anti-tnf-response", protocolVersion: "1", question: RA_QUESTION, containsPhi: false, clinicalAdvice: false, kgWrite: false, scientificReview: "unreviewed", sources, passages, receipts, candidates });
+  return seal({ schemaVersion: "hsi-ra-evidence-release-1", protocolId: "ra-anti-tnf-response", protocolVersion: "2", question: RA_QUESTION, containsPhi: false, clinicalAdvice: false, kgWrite: false, scientificReview: "unreviewed", sources, passages, receipts, candidates });
 }
-test("committed RA release stays unavailable until primary-source import succeeds", () => {
-  const readiness = raEvidenceReadiness(pending);
+test("pending marker still yields evidence_not_ready", () => {
+  const marker = { status: "awaiting_verified_source_import", reason: "Fixture pending marker — not a live observation." };
+  const readiness = raEvidenceReadiness(marker);
   expect(readiness.available).toBe(false);
-  expect(readiness.reason).toContain("Creative Commons URI");
-  expect(raEvidenceReleaseListing(pending).id).toBe(RA_RELEASE_ID);
-  expect(raEvidenceReleaseListing(pending).readiness.available).toBe(false);
-  expect(() => parseRaEvidenceRelease(pending)).toThrow();
-  expect(() => buildRaEvidenceBundle(parseResearchBundle(graph), pending)).toThrow();
+  expect(raEvidenceReleaseListing(marker).id).toBe(RA_RELEASE_ID);
+  expect(() => parseRaEvidenceRelease(marker)).toThrow();
+  expect(() => buildRaEvidenceBundle(parseResearchBundle(graph), marker)).toThrow();
   const response = investigationError(new RaEvidenceUnavailableError());
   expect(response.status).toBe(422);
+});
+test("committed RA release is rights-verified and unreviewed", () => {
+  const readiness = raEvidenceReadiness(pending);
+  expect(readiness.available).toBe(true);
+  expect(readiness.sources).toBe(2);
+  expect(readiness.scientificReview).toBe("unreviewed");
+  const release = parseRaEvidenceRelease(pending);
+  expect(release.protocolVersion).toBe("2");
+  expect(release.receipts.every((r) => r.licenceAttestation === "crossref_works" && r.crossref)).toBe(true);
+  expect(buildRaEvidenceBundle(parseResearchBundle(graph), pending).claims).toHaveLength(0);
 });
 test("annotation guideline and worksheet remain label-free templates", () => {
   const guideline = readFileSync("research/ra-anti-tnf/context-annotation-guideline-v1.md", "utf8");

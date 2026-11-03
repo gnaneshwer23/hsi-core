@@ -1,5 +1,6 @@
 """Parser fixtures only. TEST-* identities and non-biomedical text cannot form a production release."""
 import importlib.util
+import json
 from pathlib import Path
 import unittest
 spec = importlib.util.spec_from_file_location("ra_import", Path(__file__).resolve().parents[2] / "tools/import_ra_evidence.py")
@@ -13,6 +14,7 @@ XML = b'''<article article-type="research-article" xmlns:xlink="http://www.w3.or
 <permissions><license xlink:href="https://creativecommons.org/licenses/by/4.0/"><license-p>Fixture permission notice.</license-p></license></permissions>
 <abstract><sec><title>Results</title><p>First <italic>fixture</italic> paragraph. No biological findings.</p></sec><sec><title>Conclusions</title><p>Second fixture paragraph, for source-trace tests only.</p></sec></abstract>
 </article-meta></front><back><ref-list><ref><mixed-citation><pub-id pub-id-type="pmid">NOT-THE-ARTICLE</pub-id></mixed-citation></ref></ref-list></back></article>'''
+XML_NO_HREF = XML.replace(b' xlink:href="https://creativecommons.org/licenses/by/4.0/"', b"")
 
 class ImportTests(unittest.TestCase):
     def test_exact_abstract_text_and_locators_with_attribution(self):
@@ -21,9 +23,14 @@ class ImportTests(unittest.TestCase):
         self.assertIn("abstract[1]/sec[1]/p[1]", result["passages"][0]["locator"])
         self.assertEqual(result["authors"], ["Fixture Author"])
         self.assertEqual(len(result["passages"]), 2)
+        self.assertEqual(result["licenceUrl"], "https://creativecommons.org/licenses/by/4.0/")
     def test_restrictive_and_ambiguous_licences_fail(self):
-        for uri in ["https://creativecommons.org/licenses/by-nc/4.0/", "https://creativecommons.org/licenses/by-nd/4.0/", "https://example.org/cc-by", "https://creativecommons.org/licenses/by/4.0/?different=terms", ""]:
+        for uri in ["https://creativecommons.org/licenses/by-nc/4.0/", "https://creativecommons.org/licenses/by-nd/4.0/", "https://example.org/cc-by", "https://creativecommons.org/licenses/by/4.0/?different=terms"]:
             with self.subTest(uri=uri), self.assertRaises(ValueError): module.article(XML.replace(b"https://creativecommons.org/licenses/by/4.0/", uri.encode()), EXPECTED)
+    def test_jats_without_uri_defers_licence_to_external_attestation(self):
+        result = module.article(XML_NO_HREF, EXPECTED)
+        self.assertIsNone(result["licenceUrl"])
+        self.assertIn("Fixture permission notice", result["licenceNotice"])
     def test_metadata_not_article_references_supply_identity(self):
         with self.assertRaises(ValueError): module.article(XML.replace(b">TEST-PMID<", b">WRONG<"), EXPECTED)
         self.assertNotEqual(module.article(XML, EXPECTED)["title"], "NOT-THE-ARTICLE")
@@ -40,6 +47,25 @@ class ImportTests(unittest.TestCase):
             with self.assertRaises(ValueError): module.article(raw, EXPECTED)
     def test_cc0_and_http_licence_canonicalisation(self):
         self.assertEqual(module.licence_uri("http://creativecommons.org/publicdomain/zero/1.0/"), "https://creativecommons.org/publicdomain/zero/1.0/")
+    def test_crossref_prefers_vor_cc_by_and_ignores_tdm(self):
+        payload = {
+            "message": {
+                "DOI": "10.1136/ard.2007.084715",
+                "license": [
+                    {"content-version": "tdm", "URL": "https://www.elsevier.com/tdm/userlicense/1.0/"},
+                    {"content-version": "vor", "URL": "http://creativecommons.org/licenses/by/2.0/"},
+                ],
+            }
+        }
+        self.assertEqual(
+            module.crossref_licence_uri(json.dumps(payload).encode(), "10.1136/ard.2007.084715"),
+            "https://creativecommons.org/licenses/by/2.0/",
+        )
+    def test_crossref_rejects_tdm_only_and_nc(self):
+        tdm_only = {"message": {"DOI": "10.1/x", "license": [{"content-version": "tdm", "URL": "http://creativecommons.org/licenses/by/4.0/"}]}}
+        nc = {"message": {"DOI": "10.1/x", "license": [{"content-version": "vor", "URL": "http://creativecommons.org/licenses/by-nc/4.0/"}]}}
+        with self.assertRaises(ValueError): module.crossref_licence_uri(json.dumps(tdm_only).encode(), "10.1/x")
+        with self.assertRaises(ValueError): module.crossref_licence_uri(json.dumps(nc).encode(), "10.1/x")
     def test_no_production_release_can_be_built_from_test_identifiers(self):
         with self.assertRaises(ValueError): module.build({"sources": [EXPECTED]}, Path("/tmp/no-fixture-source-access"), True)
 
