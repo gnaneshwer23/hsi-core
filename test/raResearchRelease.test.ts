@@ -8,20 +8,25 @@ import {
   raResearchEvidenceReleaseListing,
 } from "../src/raResearchEvidenceRelease";
 import { RA_RELEASE_ID, raEvidenceReleaseListing, RaEvidenceUnavailableError } from "../src/raEvidenceRelease";
-import pending from "../research/ra-anti-tnf/release.json";
+import verifiedRelease from "../research/ra-anti-tnf/release.json";
 import { createInvestigationService, createCorpusRetrievalProvider, createMemoryInvestigationStore } from "../src/investigationService";
 import { investigationError } from "../src/investigationBackend";
 
 const researchRelease = JSON.parse(readFileSync("research/ra-anti-tnf-research/release.json", "utf8"));
 
-test("research listing is available and distinct from the rights-verified release id", () => {
+test("research working set and rights-verified release are distinct and independently ready", () => {
   const listing = raResearchEvidenceReleaseListing(researchRelease);
   expect(listing.id).toBe(RA_RESEARCH_RELEASE_ID);
   expect(listing.id).not.toBe(RA_RELEASE_ID);
   expect(listing.readiness.available).toBe(true);
   expect(listing.description).toContain("unreviewed");
   expect(listing.description).not.toMatch(/demo|fixture|smoke/i);
-  expect(raEvidenceReleaseListing(pending).readiness.available).toBe(false);
+  const verified = raEvidenceReleaseListing(verifiedRelease);
+  expect(verified.id).toBe(RA_RELEASE_ID);
+  expect(verified.readiness.available).toBe(true);
+  expect(verified.readiness.sources).toBe(2);
+  expect(verified.readiness.scientificReview).toBe("unreviewed");
+  expect(verified.description).toContain("Scientific support remains unreviewed");
 });
 
 test("research bundle uses synthetic sources only — no PMID/DOI/URL, no claims", () => {
