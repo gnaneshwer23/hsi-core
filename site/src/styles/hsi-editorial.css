@@ -172,3 +172,36 @@
 .hsi-landscape-detail a{font-size:.75rem;font-weight:700;text-decoration:underline;text-underline-offset:4px}
 .hsi-landscape-detail :focus-visible{outline:2px solid #FF6845;outline-offset:2px}
 @media(max-width:600px){.hsi-landscape-detail{bottom:52px;padding:12px 30px 12px 12px}.hsi-landscape-detail p{font-size:.69rem}}
+
+
+/* Full-width scientific ecosystem: airy ivory canvas, fine 3D mesh, accessible interactive domain markers. */
+.hsi-panorama{position:relative;background:radial-gradient(ellipse at 5% 32%,#dceae5 0%,transparent 38%),radial-gradient(ellipse at 93% 40%,#f5ded4 0%,transparent 35%),#f3eee8;color:#17645f;padding:55px 0 60px;overflow:hidden}
+.hsi-panorama-heading{text-align:center;position:relative;z-index:1}
+.hsi-panorama-heading h1{font-size:clamp(2.4rem,4.25vw,5.3rem);line-height:1.1;max-width:1150px;margin:20px auto 14px;letter-spacing:-.065em}
+.hsi-panorama-heading h1 em{color:#ff6845}
+.hsi-panorama-heading>p:last-child{color:#466d67;font-size:1rem}
+.hsi-panorama-stage{position:relative;width:100%;height:clamp(310px,31vw,590px);margin:10px auto 0;isolation:isolate}
+.hsi-panorama-mesh{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hsi-panorama-points{position:absolute;inset:0;z-index:1}
+.hsi-panorama-point{position:absolute;transform:translate(-50%,-5%);display:flex;flex-direction:column;align-items:center;gap:0;min-width:80px;max-width:155px;background:transparent;color:#17645f;cursor:pointer}
+.hsi-panorama-point-label{font-size:clamp(.5rem,.78vw,.75rem);font-weight:800;letter-spacing:.08em;line-height:1.3;max-width:155px;text-align:center;text-shadow:0 1px 8px #f3eee8,0 -1px 8px #f3eee8}
+.hsi-panorama-point-stem{height:clamp(24px,3.3vw,56px);width:1px;background:#ff6845;opacity:.8}
+.hsi-panorama-point-marker{display:block;width:12px;height:12px;border-radius:50%;background:#ff6845;border:3px solid #f3eee8;box-shadow:0 0 0 1px #ff6845,0 0 0 8px #ff68452b;transition:transform .2s,box-shadow .2s}
+.hsi-panorama-point:hover .hsi-panorama-point-marker,.hsi-panorama-point.is-active .hsi-panorama-point-marker{transform:scale(1.4);box-shadow:0 0 0 2px #ff6845,0 0 0 12px #ff68452b}
+.hsi-panorama-point:focus-visible{outline:3px solid #ff6845;outline-offset:6px;border-radius:4px}
+.hsi-panorama-panel{position:absolute;z-index:5;right:5%;bottom:8%;width:min(410px,88%);padding:27px 30px;background:#fffaf4;box-shadow:0 18px 50px #17645f33;border-top:4px solid #ff6845}
+.hsi-panorama-panel h2{font-size:clamp(1.3rem,2vw,2rem);margin:12px 0}
+.hsi-panorama-panel p{color:#466d67;line-height:1.6;font-size:.88rem}
+.hsi-panorama-panel small{display:block;margin:14px 0;color:#466d67}
+.hsi-panorama-panel a{font-weight:700;text-decoration:underline;text-underline-offset:5px}
+.hsi-panorama-close{position:absolute;right:13px;top:7px;font-size:1.5rem;color:#17645f;cursor:pointer}
+.hsi-panorama-caption{display:flex;justify-content:space-between;gap:20px;border-top:1px solid #17645f30;padding-top:15px;font-size:.62rem;letter-spacing:.14em}
+.hsi-panorama-domain-strip{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:5px;margin-top:27px}
+.hsi-panorama-domain-strip button{min-width:0;display:flex;align-items:center;gap:7px;justify-content:center;border-top:1px solid #17645f45;border-bottom:1px solid #17645f45;padding:17px 5px;background:transparent;color:#17645f;cursor:pointer;font-size:.67rem}
+.hsi-panorama-domain-strip button:hover,.hsi-panorama-domain-strip button.is-active{background:#17645f;color:#f3eee8}
+.hsi-panorama-domain-number{font-size:.58rem;opacity:.7}
+.hsi-panorama-domain-strip strong{letter-spacing:.04em}
+.hsi-panorama-actions{display:flex;justify-content:center;align-items:center;gap:30px;margin-top:30px}
+@media(max-width:950px){.hsi-panorama-domain-strip{grid-template-columns:repeat(4,minmax(0,1fr))}.hsi-panorama-point-label{font-size:.53rem}.hsi-panorama-stage{height:400px}.hsi-panorama-caption{font-size:.55rem}}
+@media(max-width:620px){.hsi-panorama{padding-top:36px}.hsi-panorama-heading h1{font-size:clamp(2rem,8vw,3.2rem)}.hsi-panorama-stage{height:370px;overflow:visible}.hsi-panorama-point{min-width:55px;max-width:78px}.hsi-panorama-point-label{font-size:.46rem;letter-spacing:0}.hsi-panorama-point-stem{height:22px}.hsi-panorama-domain-strip{grid-template-columns:repeat(4,minmax(0,1fr))}.hsi-panorama-domain-strip button{font-size:.55rem;gap:3px}.hsi-panorama-caption{flex-direction:column}.hsi-panorama-panel{right:4%;bottom:0;padding:17px}.hsi-panorama-actions{flex-wrap:wrap;gap:20px}}
+@media(prefers-reduced-motion:reduce){.hsi-panorama-point-marker{transition:none}}
