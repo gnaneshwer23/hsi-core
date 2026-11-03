@@ -21,6 +21,10 @@
     "./investigation-service": {
       "types": "./dist/investigationService.d.ts",
       "import": "./dist/investigationService.js"
+    },
+    "./investigation-backend": {
+      "types": "./dist/investigationBackend.d.ts",
+      "import": "./dist/investigationBackend.js"
     }
   },
   "files": [
