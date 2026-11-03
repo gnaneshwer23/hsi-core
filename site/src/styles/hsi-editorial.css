@@ -225,3 +225,37 @@
 @media(max-width:900px){.hsi-idea-grid{grid-template-columns:1fr}.hsi-idea-figure{width:min(100%,620px);margin-inline:auto}}
 @media(max-width:620px){.hsi-domain-carousel .hsi-panorama-domain-strip button{flex-basis:175px}.hsi-domain-carousel-head{font-size:.55rem}.hsi-idea-copy h2{font-size:clamp(2.5rem,9vw,4rem)}}
 @media(prefers-reduced-motion:reduce){.hsi-domain-carousel .hsi-panorama-domain-strip{scroll-behavior:auto}}
+
+
+/* Living scientific landscape: subtle movement without moving the navigation off-screen. */
+.hsi-motion-mesh{transform-box:fill-box;transform-origin:center;animation:hsi-mesh-breathe 14s ease-in-out infinite alternate}
+.hsi-motion-signal{animation:hsi-signal-flow 15s linear infinite}
+.hsi-panorama-point-marker{animation:hsi-marker-breathe 4.8s ease-in-out infinite}
+.hsi-panorama-point:nth-child(2n) .hsi-panorama-point-marker{animation-delay:-2.4s}
+.hsi-motion-domains{margin-top:28px}
+.hsi-motion-domains-heading{display:flex;justify-content:space-between;align-items:center;gap:15px;font-size:.64rem;letter-spacing:.15em;font-weight:750}
+.hsi-motion-live-key{display:inline-flex;align-items:center;gap:9px;color:#466d67}
+.hsi-motion-live-key>span{width:7px;height:7px;background:#ff6845;border-radius:50%;animation:hsi-marker-breathe 2.8s ease-in-out infinite}
+.hsi-motion-domain-track{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px;margin-top:16px}
+.hsi-motion-domain{position:relative;display:flex;align-items:center;justify-content:center;gap:7px;min-width:0;min-height:66px;padding:16px 5px 20px;background:transparent;border-top:1px solid #17645f45;border-bottom:1px solid #17645f45;color:#17645f;font-size:clamp(.58rem,.73vw,.78rem);cursor:pointer;overflow:hidden}
+.hsi-motion-domain strong{font-size:inherit;letter-spacing:.03em}
+.hsi-motion-domain-arrow{font-size:.85rem;color:#ff6845}
+.hsi-motion-domain-progress{position:absolute;bottom:0;left:0;width:100%;height:3px;background:#ff6845;transform:scaleX(0);transform-origin:left;animation:hsi-domain-sequence 16s linear infinite}
+.hsi-motion-domain:nth-child(1) .hsi-motion-domain-progress{animation-delay:0s}
+.hsi-motion-domain:nth-child(2) .hsi-motion-domain-progress{animation-delay:-14s}
+.hsi-motion-domain:nth-child(3) .hsi-motion-domain-progress{animation-delay:-12s}
+.hsi-motion-domain:nth-child(4) .hsi-motion-domain-progress{animation-delay:-10s}
+.hsi-motion-domain:nth-child(5) .hsi-motion-domain-progress{animation-delay:-8s}
+.hsi-motion-domain:nth-child(6) .hsi-motion-domain-progress{animation-delay:-6s}
+.hsi-motion-domain:nth-child(7) .hsi-motion-domain-progress{animation-delay:-4s}
+.hsi-motion-domain:nth-child(8) .hsi-motion-domain-progress{animation-delay:-2s}
+.hsi-motion-domain:hover,.hsi-motion-domain.is-active{background:#17645f;color:#f3eee8}
+.hsi-motion-domain:focus-visible{outline:3px solid #ff6845;outline-offset:2px}
+.hsi-motion-domains-note{margin-top:12px;font-size:.7rem;color:#466d67;line-height:1.5}
+@keyframes hsi-mesh-breathe{0%{transform:translateY(5px) scaleY(.985);opacity:.82}50%{opacity:1}100%{transform:translateY(-5px) scaleY(1.018);opacity:.92}}
+@keyframes hsi-signal-flow{to{stroke-dashoffset:-360}}
+@keyframes hsi-marker-breathe{0%,100%{box-shadow:0 0 0 1px #ff6845,0 0 0 6px #ff684523}50%{box-shadow:0 0 0 1px #ff6845,0 0 0 12px #ff684545}}
+@keyframes hsi-domain-sequence{0%,1%{transform:scaleX(0)}10%,12%{transform:scaleX(1)}12.5%,100%{transform:scaleX(0)}}
+@media(max-width:950px){.hsi-motion-domain-track{grid-template-columns:repeat(4,minmax(0,1fr))}.hsi-motion-domain{font-size:.72rem}}
+@media(max-width:520px){.hsi-motion-domain-track{grid-template-columns:repeat(2,minmax(0,1fr))}.hsi-motion-domains-heading{font-size:.54rem}.hsi-motion-domain{min-height:54px}.hsi-motion-live-key{font-size:.48rem}}
+@media(prefers-reduced-motion:reduce){.hsi-motion-mesh,.hsi-motion-signal,.hsi-panorama-point-marker,.hsi-motion-live-key>span,.hsi-motion-domain-progress{animation:none!important}.hsi-motion-domain-progress{display:none}}
