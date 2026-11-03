@@ -13,6 +13,10 @@
     "./shared-technology": {
       "types": "./dist/sharedTechnology.d.ts",
       "import": "./dist/sharedTechnology.js"
+    },
+    "./research-contracts": {
+      "types": "./dist/researchContracts.d.ts",
+      "import": "./dist/researchContracts.js"
     }
   },
   "files": [

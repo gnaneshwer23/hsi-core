@@ -32,7 +32,7 @@ neighbourhood. Scientific review and evidence presentation stay product-owned.
 The first deployment uses exact source snapshots so both standalone repositories
 can build without an unpublished npm package or sibling checkout in Vercel.
 `bun scripts/sync-shared-technology.ts isi aksh` copies only the committed canonical
-module and its Git revision/version/SHA-256 provenance to the two consumers.
+modules and their Git revision/version/SHA-256 provenance to the two consumers.
 Consumer integrity tests must reject drift. This is a transitional distribution
 method; the canonical implementation is maintained only in HSI. Replace it with
 a versioned private package release when the package registry is configured.
@@ -46,8 +46,10 @@ database schema or entity/claim approval behaviour is extracted or changed.
 
 1. **Shared foundations (this slice):** canonical algorithms execute through both
    existing product functions; integrity and regression checks pass.
-2. **Research contracts and provider interfaces:** versioned research context,
-   source/passages, graph relationships, provenance and audit events. Providers
+2. **Research contracts (implemented):** versioned research context,
+   source/passages, graph relationships, provenance and run events with strict
+   boundary validation. See [contract semantics and limits](SHARED_RESEARCH_CONTRACT.md).
+   Authenticated provider interfaces and storage adapters remain next. Providers
    access each product's own storage under its existing permissions. Do not use
    a shared patient database or copy clinical records into HSI.
 3. **Executable investigation service:** question → bounded retrieval → graph
@@ -60,7 +62,8 @@ database schema or entity/claim approval behaviour is extracted or changed.
    research track. Test with fixtures, then source-licensed real evidence and
    independent expert assessment before expanding claims or disease scope.
 
-This extraction does **not** complete milestones 2–5. It does not implement a
+The algorithms and contracts do **not** complete milestones 3–5 or the product
+provider/storage adapters. It does not implement a
 new AI agent runtime, live database integration, biomarker discovery, clinical
 trial matching or a unified production platform. Database/auth integration and
 clinical/scientific validation remain separate requirements. Marketing links and
