@@ -92,7 +92,8 @@
     "ra:export-artifact": "bun scripts/export-ra-evidence-artifact.ts",
     "ra:export-research-artifact": "bun scripts/export-ra-research-artifact.ts",
     "ra:verify-research-path": "bun scripts/verify-ra-research-path.ts",
-    "ra:scaffold-annotation": "bun scripts/scaffold-ra-annotation.ts"
+    "ra:scaffold-annotation": "bun scripts/scaffold-ra-annotation.ts",
+    "ra:submit-practice-labels": "bun scripts/submit-practice-labels.ts"
   },
   "engines": {
     "node": ">=20"

@@ -24,9 +24,19 @@
 - Adjudication records start with `finalTags: null`; fabricated labels forbidden.
 - Practice rows cannot enter the evaluation split.
 
-## SME next
+## SME practice labelling (available now)
 
-1. Calibrate on practice packets (optional).
+```sh
+bun run ra:scaffold-annotation -- practice
+bun run ra:submit-practice-labels -- annotator-a scripts/example-practice-submission-a.json
+```
+
+Or use ISI `/internal-research` → **Context annotation practice** (Annotator A/B forms).
+Validated practice JSON downloads locally and stays `practice_not_evaluation`.
+
+## SME next (evaluation)
+
+1. Calibrate on practice packets (UI or CLI).
 2. Complete Phase 2 licence import.
 3. `bun run ra:scaffold-annotation -- verified`
 4. Independent A/B labelling → adjudication → freeze evaluation partition.

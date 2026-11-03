@@ -1,0 +1,32 @@
+{
+  "packetId": "PKT-68518e06e3e187d2-A",
+  "annotatorSlot": "annotator_a",
+  "annotatorId": "sme-practice-annotator-a",
+  "labelledAt": "2026-11-03T17:00:00Z",
+  "rows": [
+    {
+      "rowId": "PRACTICE-3f027c499c792d5f",
+      "groundingSpan": "adults with rheumatoid arthritis receiving anti-TNF therapy",
+      "tags": {
+        "species": "human",
+        "tissue_or_sample": "missing",
+        "setting_or_model": "clinical_observational",
+        "intervention": "anti-TNF therapy",
+        "outcome": "response heterogeneity",
+        "timepoint": "baseline"
+      }
+    },
+    {
+      "rowId": "PRACTICE-af8543b373c63373",
+      "groundingSpan": "a null predictive association for RF/anti-CCP does not refute anti-TNF efficacy",
+      "tags": {
+        "species": "missing",
+        "tissue_or_sample": "missing",
+        "setting_or_model": "meta_analysis",
+        "intervention": "anti-TNF",
+        "outcome": "efficacy (distinguished from serology prediction)",
+        "timepoint": "missing"
+      }
+    }
+  ]
+}

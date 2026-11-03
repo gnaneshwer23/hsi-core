@@ -37,6 +37,7 @@
         "licenceIdentifier": "https://creativecommons.org/publicdomain/zero/1.0/",
         "authors": [],
         "articleTitle": "RS-0001 — Research working-set cohort abstract on RF/anti-CCP and anti-TNF response heterogeneity (synthetic research source)",
+        "passageText": "In this research working-set cohort abstract for adults with rheumatoid arthritis receiving anti-TNF therapy, RF and anti-CCP serostatus were recorded at baseline. Any association with response heterogeneity described here is illustrative for investigation workflows only and must not be cited as scientific evidence. Source label: RS-0001.",
         "groundingSpan": null,
         "tags": {
           "species": null,
@@ -67,6 +68,7 @@
         "licenceIdentifier": "https://creativecommons.org/publicdomain/zero/1.0/",
         "authors": [],
         "articleTitle": "RS-0002 — Research working-set meta-analysis style abstract contrasting serology frames with anti-TNF efficacy (synthetic research source)",
+        "passageText": "This research working-set abstract notes that a null predictive association for RF/anti-CCP does not refute anti-TNF efficacy in rheumatoid arthritis. Keep serology-response prediction distinct from treatment efficacy. Graph anchors remain related context only. Source label: RS-0002.",
         "groundingSpan": null,
         "tags": {
           "species": null,

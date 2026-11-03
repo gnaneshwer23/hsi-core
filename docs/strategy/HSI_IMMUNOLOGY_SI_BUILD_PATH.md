@@ -2,7 +2,7 @@
 
 **Status:** Strategy digest (2026-11-02). Preserves the founder “immunology super-intelligence” plan; **stamps honesty** against shipped HSI/ISI.  
 **Not:** a claim of current benchmark performance, MoU, Gate C auto-approve, or live CDS/PHI.  
-**Related:** [HSI_Power_Blueprint](file:///Users/gnaneshwerjadav/Downloads/HSI_Power_Blueprint.md) (Downloads) · [HSI_COMPETITOR_ANALYSIS_2026-11.md](./HSI_COMPETITOR_ANALYSIS_2026-11.md) · [../BUILD_STATUS_AND_NEXT.md](../BUILD_STATUS_AND_NEXT.md) · [../CDS_PHI_BOUNDARY.md](../CDS_PHI_BOUNDARY.md)
+**Related:** [HSI_Power_Blueprint](file:///Users/gnaneshwerjadav/Downloads/HSI_Power_Blueprint.md) (Downloads) · [HSI_COMPETITOR_ANALYSIS_2026-11.md](./HSI_COMPETITOR_ANALYSIS_2026-11.md) · [HSI_AKSH_ISI_COMPETITOR_ANALYSIS.md](./HSI_AKSH_ISI_COMPETITOR_ANALYSIS.md) (RA synovium mismatch wedge) · [HSI_ROADMAP.md](./HSI_ROADMAP.md) · [../BUILD_STATUS_AND_NEXT.md](../BUILD_STATUS_AND_NEXT.md) · [../CDS_PHI_BOUNDARY.md](../CDS_PHI_BOUNDARY.md)
 
 ---
 

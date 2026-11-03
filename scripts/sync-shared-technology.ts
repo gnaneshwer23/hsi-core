@@ -17,6 +17,7 @@ const modules = [
   { name: "investigationBackend", version: "hsi-investigation-backend-1" },
   { name: "raEvidenceRelease", version: "hsi-ra-evidence-release-1" },
   { name: "raResearchEvidenceRelease", version: "hsi-ra-research-evidence-release-1" },
+  { name: "contextAnnotationBenchmark", version: "hsi-ra-context-annotation-benchmark-1" },
 ];
 // Preflight every source before writing any consumer file.
 for (const module of modules) {

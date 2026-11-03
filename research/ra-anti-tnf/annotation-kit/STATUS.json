@@ -1,6 +1,10 @@
 {
-  "ok": false,
-  "mode": "verified",
+  "ok": true,
+  "mode": "practice",
   "status": "awaiting_rights_verified_passages",
-  "reason": "Rights-verified RA release is not available; practice mode can still run."
+  "practiceRows": 2,
+  "evaluationRows": 0,
+  "trainingRows": 0,
+  "labelledRows": 0,
+  "note": "Empty scaffolds only — SME labels not fabricated."
 }

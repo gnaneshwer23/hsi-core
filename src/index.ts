@@ -939,6 +939,7 @@ export {
   buildDoubleBlindLabelPackets,
   openAdjudicationRecord,
   assignPartitionsByPolicy,
+  acceptPracticeLabelSubmission,
   ContextAnnotationBenchmarkError,
   type ContextTagName,
   type ContextTagSet,
@@ -948,4 +949,6 @@ export {
   type BenchmarkSplitPolicy,
   type ContextAnnotationBenchmarkKit,
   type BenchmarkPartition,
+  type PracticeLabelSubmission,
+  type AcceptedPracticePacket,
 } from "./contextAnnotationBenchmark";

@@ -8,6 +8,7 @@ import {
   buildDoubleBlindLabelPackets,
   openAdjudicationRecord,
   assignPartitionsByPolicy,
+  acceptPracticeLabelSubmission,
   ContextAnnotationBenchmarkError,
 } from "../src/contextAnnotationBenchmark";
 import pending from "../research/ra-anti-tnf/release.json";
@@ -82,4 +83,30 @@ test("worksheet and protocol templates remain label-free", () => {
   const protocol = readFileSync("research/ra-anti-tnf/sme-labelling-protocol-v1.md", "utf8");
   expect(protocol).toContain("no expert labels are supplied");
   expect(protocol).not.toMatch(/\b85%\b.*achieved|\bmeasured result\b/i);
+});
+
+test("practice submission accepts grounded tags and keeps practice partition", () => {
+  const rows = scaffoldPracticeRowsFromResearchRelease(research);
+  const [packetA] = buildDoubleBlindLabelPackets(rows);
+  const accepted = acceptPracticeLabelSubmission(packetA, {
+    packetId: packetA.packetId,
+    annotatorSlot: "annotator_a",
+    annotatorId: "sme-a",
+    labelledAt: "2026-11-03T17:00:00Z",
+    rows: packetA.rows.map((row) => ({
+      rowId: row.rowId,
+      groundingSpan: row.passageText.slice(0, 40),
+      tags: {
+        species: "human",
+        tissue_or_sample: "missing",
+        setting_or_model: "clinical_observational",
+        intervention: "anti-TNF",
+        outcome: "response",
+        timepoint: "missing",
+      },
+    })),
+  });
+  expect(accepted.notForEvaluation).toBe(true);
+  expect(accepted.partition).toBe("practice_not_evaluation");
+  expect(accepted.rows.every((r) => r.annotatorId === "sme-a")).toBe(true);
 });

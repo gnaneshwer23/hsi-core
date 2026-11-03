@@ -58,6 +58,8 @@ export type AnnotationWorksheetRow = {
   licenceIdentifier: string | null;
   authors: string[];
   articleTitle: string;
+  /** Exact passage text for labelling; must match passageSha256. */
+  passageText: string;
   /** Grounding quote must come from the passage; left empty until an annotator fills it. */
   groundingSpan: string | null;
   tags: ContextTagSet;
@@ -190,10 +192,26 @@ function assertEmptyTags(tags: ContextTagSet, path: string) {
   }
 }
 
+const SPECIES: SpeciesTag[] = ["human", "mouse", "other", "missing", "mixed"];
+const SETTINGS: SettingTag[] = [
+  "clinical_observational",
+  "clinical_trial",
+  "meta_analysis",
+  "in_vitro",
+  "in_vivo",
+  "in_silico",
+  "missing",
+  "mixed",
+  "other",
+];
+
 export function assertAnnotationRowScaffold(row: AnnotationWorksheetRow): void {
   if (!row.rowId || !row.passageId || !row.sourceId) throw new ContextAnnotationBenchmarkError("row_identity");
   if (row.scientificReview !== "unreviewed") throw new ContextAnnotationBenchmarkError("scientificReview");
   if (row.containsPhi || row.clinicalAdvice || row.kgWrite) throw new ContextAnnotationBenchmarkError("boundary");
+  if (!row.passageText?.trim()) throw new ContextAnnotationBenchmarkError("passageText_required");
+  const expectedHash = createHash("sha256").update(row.passageText).digest("hex");
+  if (row.passageSha256 !== expectedHash) throw new ContextAnnotationBenchmarkError("passageText_hash_mismatch");
   assertEmptyTags(row.tags, row.rowId);
   if (row.annotatorId !== null || row.labelledAt !== null || row.groundingSpan !== null) {
     throw new ContextAnnotationBenchmarkError("scaffold_must_be_unlabelled");
@@ -234,12 +252,13 @@ export function scaffoldRowsFromVerifiedRelease(
     const receipt = release.receipts.find((r) => r.sourceId === passage.sourceId);
     if (!source || !receipt) throw new ContextAnnotationBenchmarkError("source_or_receipt_missing");
     if (!source.licence.identifier) throw new ContextAnnotationBenchmarkError("licence_required");
+    const passageSha256 = passage.sha256 ?? createHash("sha256").update(passage.text).digest("hex");
     const row: AnnotationWorksheetRow = {
-      rowId: `ROW-${digest(`${partition}:${passage.id}:${passage.sha256}`)}`,
+      rowId: `ROW-${digest(`${partition}:${passage.id}:${passageSha256}`)}`,
       partition,
       sourceId: source.id,
       passageId: passage.id,
-      passageSha256: passage.sha256 ?? createHash("sha256").update(passage.text).digest("hex"),
+      passageSha256,
       passageLocator: passage.locator,
       sourceVersion: passage.sourceVersion,
       pmid: source.pmid,
@@ -248,6 +267,7 @@ export function scaffoldRowsFromVerifiedRelease(
       licenceIdentifier: source.licence.identifier,
       authors: [...receipt.authors],
       articleTitle: receipt.articleTitle,
+      passageText: passage.text,
       groundingSpan: null,
       tags: emptyTags(),
       annotatorId: null,
@@ -270,12 +290,13 @@ export function scaffoldPracticeRowsFromResearchRelease(releaseInput: unknown): 
   for (const passage of release.passages) {
     const source = release.sources.find((s) => s.id === passage.sourceId);
     if (!source) throw new ContextAnnotationBenchmarkError("research_source_missing");
+    const passageSha256 = passage.sha256 ?? createHash("sha256").update(passage.text).digest("hex");
     const row: AnnotationWorksheetRow = {
-      rowId: `PRACTICE-${digest(`${passage.id}:${passage.sha256}`)}`,
+      rowId: `PRACTICE-${digest(`${passage.id}:${passageSha256}`)}`,
       partition: "practice_not_evaluation",
       sourceId: source.id,
       passageId: passage.id,
-      passageSha256: passage.sha256 ?? createHash("sha256").update(passage.text).digest("hex"),
+      passageSha256,
       passageLocator: passage.locator,
       sourceVersion: passage.sourceVersion,
       pmid: null,
@@ -284,6 +305,7 @@ export function scaffoldPracticeRowsFromResearchRelease(releaseInput: unknown): 
       licenceIdentifier: source.licence.identifier,
       authors: [],
       articleTitle: source.title,
+      passageText: passage.text,
       groundingSpan: null,
       tags: emptyTags(),
       annotatorId: null,
@@ -360,4 +382,83 @@ export function assignPartitionsByPolicy(
     } else holdout_candidate.push({ ...row, partition: "training_candidate" });
   }
   return { evaluation_frozen, training_candidate, holdout_candidate };
+}
+
+export type PracticeLabelSubmission = {
+  packetId: string;
+  annotatorSlot: "annotator_a" | "annotator_b";
+  annotatorId: string;
+  labelledAt: string;
+  rows: Array<{
+    rowId: string;
+    groundingSpan: string;
+    tags: ContextTagSet;
+  }>;
+};
+
+export type AcceptedPracticePacket = IndependentLabelPacket & {
+  partition: "practice_not_evaluation";
+  notForEvaluation: true;
+  submittedAt: string;
+  annotatorId: string;
+};
+
+/** Accept a filled practice packet. Never promotes rows into evaluation_frozen. */
+export function acceptPracticeLabelSubmission(
+  blankPacket: IndependentLabelPacket,
+  submission: PracticeLabelSubmission,
+): AcceptedPracticePacket {
+  if (submission.packetId !== blankPacket.packetId) throw new ContextAnnotationBenchmarkError("packetId_mismatch");
+  if (submission.annotatorSlot !== blankPacket.annotatorSlot) throw new ContextAnnotationBenchmarkError("annotatorSlot_mismatch");
+  if (!submission.annotatorId.trim()) throw new ContextAnnotationBenchmarkError("annotatorId_required");
+  if (!/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(\.\d+)?Z$/.test(submission.labelledAt)) {
+    throw new ContextAnnotationBenchmarkError("labelledAt_invalid");
+  }
+  if (submission.rows.length !== blankPacket.rows.length) throw new ContextAnnotationBenchmarkError("row_count_mismatch");
+
+  const byId = new Map(submission.rows.map((row) => [row.rowId, row]));
+  const filled: AnnotationWorksheetRow[] = blankPacket.rows.map((scaffold) => {
+    const answer = byId.get(scaffold.rowId);
+    if (!answer) throw new ContextAnnotationBenchmarkError(`missing_row:${scaffold.rowId}`);
+    if (scaffold.partition !== "practice_not_evaluation") {
+      throw new ContextAnnotationBenchmarkError("only_practice_accepted_here");
+    }
+    const tags = answer.tags;
+    if (!tags.species || !SPECIES.includes(tags.species)) throw new ContextAnnotationBenchmarkError("species_invalid");
+    if (!tags.setting_or_model || !SETTINGS.includes(tags.setting_or_model)) {
+      throw new ContextAnnotationBenchmarkError("setting_invalid");
+    }
+    for (const key of ["tissue_or_sample", "intervention", "outcome", "timepoint"] as const) {
+      const value = tags[key];
+      if (typeof value !== "string" || !value.trim() || value.length > 500) {
+        throw new ContextAnnotationBenchmarkError(`${key}_required`);
+      }
+    }
+    const span = answer.groundingSpan.trim();
+    if (!span || span.length > 2000) throw new ContextAnnotationBenchmarkError("groundingSpan_required");
+    if (!scaffold.passageText.includes(span)) throw new ContextAnnotationBenchmarkError("groundingSpan_not_in_passage");
+    return {
+      ...scaffold,
+      groundingSpan: span,
+      tags: {
+        species: tags.species,
+        tissue_or_sample: tags.tissue_or_sample!.trim(),
+        setting_or_model: tags.setting_or_model,
+        intervention: tags.intervention!.trim(),
+        outcome: tags.outcome!.trim(),
+        timepoint: tags.timepoint!.trim(),
+      },
+      annotatorId: submission.annotatorId.trim(),
+      labelledAt: submission.labelledAt,
+    };
+  });
+
+  return {
+    ...blankPacket,
+    rows: filled,
+    partition: "practice_not_evaluation",
+    notForEvaluation: true,
+    submittedAt: submission.labelledAt,
+    annotatorId: submission.annotatorId.trim(),
+  };
 }

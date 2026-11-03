@@ -2,7 +2,8 @@
 
 **Status:** Founder strategic assessment (directional; not a quantified market-share benchmark).  
 **Scope:** Public product capabilities vs intended HSI vision.  
-**Honesty:** Proposed differentiators below are opportunities, not established advantages.
+**Honesty:** Proposed differentiators below are opportunities, not established advantages.  
+**Later UK-workflow depth (3 Nov 2026):** [HSI_AKSH_ISI_COMPETITOR_ANALYSIS.md](./HSI_AKSH_ISI_COMPETITOR_ANALYSIS.md) (Aksh diabetes incumbents + Causaly/Elsevier; Owkin as Partner; RA context-mismatch wedge). Multi-year loop: [HSI_ROADMAP.md](./HSI_ROADMAP.md).
 
 Health Super Intelligence (HSI) competes across several markets, not just one. Ambition combines biological research, clinical intelligence, longitudinal personal health, and clinical trials.
 
