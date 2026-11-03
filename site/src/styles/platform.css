@@ -153,3 +153,14 @@
 @media (prefers-reduced-motion: reduce) {
   .pl-page *, .pl-page *::before, .pl-page *::after { transition: none !important; animation: none !important; }
 }
+
+
+/* Stage A P1: four-product foundation and accessible status-aware selector. */
+.pl-foundation-products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.pl-foundation-products>div{min-width:0}
+.pl-foundation-products>div span{overflow-wrap:anywhere}
+.pl-foundation-products>div small{line-height:1.4}
+.pl-selector-maturity{display:block;font-size:.66rem;letter-spacing:0;opacity:.75;font-weight:400;margin-top:4px}
+.pl-product-selector button{min-height:62px}
+.pl-product-selector button:focus-visible,.pl-capability-selector button:focus-visible{outline:3px solid #ff6845;outline-offset:3px}
+@media(max-width:520px){.pl-foundation-products{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.pl-foundation-products>div{padding:10px 6px}.pl-foundation-products>div span{font-size:.6rem}.pl-foundation-products>div small{font-size:.56rem}}

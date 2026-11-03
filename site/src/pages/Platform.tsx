@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { ECOSYSTEM_PRODUCTS, MATURITY_CHIP_LABEL } from "../lib/productMaturity";
 import "../styles/platform.css";
 
-type Product = "aksh" | "isi";
+type Product = "aksh" | "clinical" | "isi" | "trials";
 
 const products = {
   aksh: {
@@ -11,6 +12,20 @@ const products = {
     description: "Organises health context and care workflows within Aksh’s own permissions and data environment. Shared technology supports review workflows without copying patient records into HSI.",
     data: "Aksh-owned records and access controls",
     link: "/for-aksh",
+  },
+  clinical: {
+    name: "HSI Clinical",
+    label: "Longitudinal clinical intelligence · In development",
+    description: "The planned clinical experience will organise authorised encounters, laboratory trends and treatment history for professional review. The public architecture is illustrative, not a live hospital integration.",
+    data: "Future clinical records remain subject to identity, authorisation, provenance and care-provider governance",
+    link: "/products",
+  },
+  trials: {
+    name: "HSI Trials",
+    label: "Trial intelligence · Planned",
+    description: "A proposed investigator-led experience for exploring study criteria, missing information and pre-screening questions. No live matching, eligibility confirmation or enrolment is available.",
+    data: "Future trial workflows require separate permissions, approved data pathways and investigator confirmation",
+    link: "/for-trials",
   },
   isi: {
     name: "Immune Super Intelligence",
@@ -72,9 +87,9 @@ export function Platform() {
             <p className="pl-lede">The technology that helps connect health questions, biological knowledge and scientific evidence—while keeping each product in control of its own data.</p>
             <div className="pl-actions"><a className="pl-button" href="#platform-architecture">Explore the architecture <Arrow /></a><Link className="pl-link" to="/how-it-works">Follow the workflow <Arrow /></Link></div>
           </div>
-          <div className="pl-foundation" role="img" aria-label="Aksh Health and ISI Research use HSI shared technology while retaining separate product data stores.">
+          <div className="pl-foundation" role="img" aria-label="Four distinct HSI product experiences share a technology direction while retaining separate data ownership and maturity states.">
             <div className="pl-foundation-label">ONE FOUNDATION / SEPARATE DATA</div>
-            <div className="pl-foundation-products"><div><span>AKSH HEALTH</span><i /><small>Own data & permissions</small></div><div><span>ISI RESEARCH</span><i /><small>Own data & permissions</small></div></div>
+            <div className="pl-foundation-products">{ECOSYSTEM_PRODUCTS.map(item => <div key={item.id}><span>{item.name.toUpperCase()}</span><i /><small>{MATURITY_CHIP_LABEL[item.chip]} · separate governance</small></div>)}</div>
             <div className="pl-foundation-lines" aria-hidden="true"><span /><span /></div>
             <div className="pl-foundation-core"><span className="pl-symbol" aria-hidden="true">H</span><div><strong>Health Super Intelligence</strong><span>Shared technology foundation</span></div></div>
             <div className="pl-foundation-tools"><span>Evidence</span><span>Knowledge</span><span>Review</span></div>
@@ -86,10 +101,10 @@ export function Platform() {
 
       <section className="pl-section pl-architecture" id="platform-architecture" aria-labelledby="architecture-title">
         <div className="pl-wrap">
-          <div className="pl-heading"><div><p className="pl-eyebrow">THE CONNECTED ARCHITECTURE</p><h2 id="architecture-title">Share the technology.<br /><em>Keep the boundaries.</em></h2></div><p>Explore a product’s role, then select a capability to see what the shared foundation does.</p></div>
+          <div className="pl-heading"><div><p className="pl-eyebrow">THE CONNECTED ARCHITECTURE</p><h2 id="architecture-title">Share the technology.<br /><em>Keep the boundaries.</em></h2></div><p>Explore all four products and their current maturity, then inspect the shared technology capabilities. These are not claims of deployed cross-product integrations.</p></div>
           <div className="pl-architecture-layout">
             <div className="pl-product-column">
-              <div className="pl-product-selector" role="group" aria-label="Product perspective">{(Object.keys(products) as Product[]).map(id => <button key={id} type="button" aria-pressed={product === id} onClick={() => setProduct(id)}>{id === "aksh" ? "Aksh Health" : "ISI Research"}<Arrow /></button>)}</div>
+              <div className="pl-product-selector" role="group" aria-label="Product perspective">{(Object.keys(products) as Product[]).map(id => <button key={id} type="button" aria-pressed={product === id} onClick={() => setProduct(id)}>{products[id].name} <small className="pl-selector-maturity">{MATURITY_CHIP_LABEL[ECOSYSTEM_PRODUCTS.find(item => item.id === id)!.chip]}</small><Arrow /></button>)}</div>
               <div className="pl-product-detail" aria-live="polite" aria-atomic="true"><p className="pl-eyebrow">{currentProduct.label}</p><h3>{currentProduct.name}</h3><p>{currentProduct.description}</p><div className="pl-data-boundary"><span aria-hidden="true">▤</span>{currentProduct.data}</div><Link className="pl-link" to={currentProduct.link}>Explore this product <Arrow /></Link></div>
             </div>
             <div className="pl-core-column">
@@ -98,7 +113,7 @@ export function Platform() {
               <div className="pl-capability-detail" id="capability-detail" aria-live="polite" aria-atomic="true"><h3>{capability.name}</h3><p>{capability.description}</p><dl><div><dt>START WITH</dt><dd>{capability.input}</dd></div><div><dt>PRODUCE</dt><dd>{capability.output}</dd></div></dl><p className="pl-boundary-note">{capability.boundary}</p></div>
             </div>
           </div>
-          <p className="pl-architecture-note">Architecture explainer · Selecting a product changes this explanation only. Connections represent software reuse, not patient-record transfers or a live data feed.</p>
+          <p className="pl-architecture-note">Architecture explainer · Selecting a product changes this explanation only. Connections represent an architecture direction and existing scoped software reuse, not patient-record transfers, shared access rights or a live data feed.</p>
         </div>
       </section>
 
