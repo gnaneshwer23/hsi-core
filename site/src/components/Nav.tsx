@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import { PRODUCT_NAME, PRODUCT_SHORT } from "../lib/brand";
 import { ENGINEERING_LINKS } from "../lib/productMaturity";
 
 /**
@@ -21,6 +22,7 @@ export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
+  const isHome = pathname === "/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -36,9 +38,15 @@ export function Nav() {
   return (
     <header className={`nav${scrolled ? " scrolled" : ""}`}>
       <div className="nav-inner">
-        <Link to="/" className="brand" aria-label="HSI home">
+        <Link
+          to="/"
+          className={`brand${isHome ? " brand-expanded" : ""}`}
+          aria-label={`${PRODUCT_NAME} home`}
+        >
           <span className="brand-mark">H</span>
-          <span>HSI</span>
+          <span className="brand-wordmark">
+            <span className="brand-name">{isHome ? PRODUCT_NAME : PRODUCT_SHORT}</span>
+          </span>
         </Link>
 
         <nav className="nav-links" aria-label="Primary">

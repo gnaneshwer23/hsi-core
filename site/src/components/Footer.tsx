@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { PRODUCT_NAME, PRODUCT_TAGLINE } from "../lib/brand";
 
 const PLATFORM_LINKS = [
   { to: "/platform", label: "Platform" },
@@ -24,11 +25,8 @@ export function Footer() {
     <footer className="footer">
       <div className="container footer-grid">
         <div className="footer-brand-col">
-          <div className="footer-brand">HSI</div>
-          <p className="footer-tagline">
-            Evidence backbone for immune-science discovery. Research intelligence — not
-            clinical decision support.
-          </p>
+          <div className="footer-brand">{PRODUCT_NAME}</div>
+          <p className="footer-tagline">{PRODUCT_TAGLINE}</p>
           <p className="footer-honesty">
             No PHI · no invented MoU.
           </p>
@@ -68,7 +66,7 @@ export function Footer() {
         </div>
       </div>
       <div className="container footer-bottom">
-        <span>HSI · four-product ecosystem</span>
+        <span>{PRODUCT_NAME} · four-product ecosystem</span>
         <Link to="/status">Available · In development · Planned</Link>
       </div>
     </footer>

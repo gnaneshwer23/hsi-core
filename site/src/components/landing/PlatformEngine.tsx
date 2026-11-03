@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { PRODUCT_NAME, PRODUCT_SHORT, PRODUCT_TAGLINE } from "../../lib/brand";
 
 type UnitId =
   | "clinical"
@@ -195,6 +196,10 @@ export function PlatformEngine() {
     >
       <div className="container">
         <div className="land-platform-hero">
+          <div className="land-brand-lockup">
+            <p className="land-brand-name">{PRODUCT_NAME}</p>
+            <p className="land-brand-tagline">{PRODUCT_TAGLINE}</p>
+          </div>
           <span className="section-num">THE PLATFORM / 01 — CONNECTED BY DESIGN</span>
           <div className="land-platform-headline">
             <h1 className="display display-xl" id="platform-title">
@@ -203,8 +208,8 @@ export function PlatformEngine() {
               <em>Every layer of health.</em>
             </h1>
             <p className="lede">
-              Health data, biology and research are not separate stories. HSI is designed to
-              connect them through one governed intelligence foundation.
+              Health data, biology and research are not separate stories. {PRODUCT_SHORT} is
+              designed to connect them through one governed intelligence foundation.
             </p>
           </div>
           <div className="hero-actions land-platform-ctas">
