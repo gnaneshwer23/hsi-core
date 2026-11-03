@@ -5,10 +5,8 @@ import { EvidenceExplorer } from "../components/landing/EvidenceExplorer";
 import { DiscoveryWorkbench } from "../components/landing/DiscoveryWorkbench";
 
 /**
- * HSI marketing homepage — founder first-batch HTML sections composed as:
- * 01 connected-by-design fabric (PlatformEngine) → 02 ecosystem →
- * 03 explore → 04 discovery engine → boundaries / CTA.
- * Maturity ledger lives on /status (and is surfaced from /roadmap) — not here.
+ * HSI marketing homepage — connected fabric → ecosystem → explore → discovery.
+ * Maturity ledger stays on /status (footer), not featured here.
  */
 export function Home() {
   return (
@@ -28,37 +26,33 @@ export function Home() {
               </h2>
             </div>
             <p className="lede">
-              HSI Core supplies the graded evidence backbone for{" "}
-              <strong>Immune Super Intelligence (ISI)</strong>. Agents may propose; humans
-              review. No invented MoU, no automatic clinical approval, no live PHI in the
-              research graph.
+              HSI supplies the graded evidence backbone for{" "}
+              <strong>Immune Super Intelligence (ISI)</strong> and related products. Agents may
+              propose; humans review. Care decisions stay with qualified professionals.
             </p>
           </div>
           <div className="faq">
             <details open>
               <summary>Is ISI clinical decision support?</summary>
               <p>
-                No. ISI is research intelligence. It does not diagnose, select therapies at
-                the bedside, score patient risk, or decide trial eligibility.
+                No. ISI is research intelligence. It does not diagnose, select therapies at the
+                bedside, score patient risk, or decide trial eligibility.
               </p>
             </details>
             <details>
               <summary>Where do patient records fit?</summary>
               <p>
-                Not in the current discovery plane. Identifiable or sensitive patient data
-                must not enter the general research graph or an LLM by default. Any later
-                patient plane needs separate lawful basis, governance, security and clinical
-                validation.
+                Care records stay in product planes designed for them — such as Aksh Health. They
+                do not enter the general research graph by default.
               </p>
             </details>
             <details>
-              <summary>What is live today?</summary>
+              <summary>Where should I start?</summary>
               <p>
-                See the canonical{" "}
-                <Link to="/status">/status</Link> maturity ledger (Available · In development
-                · Planned), also linked from the{" "}
-                <Link to="/roadmap">roadmap</Link>, before treating any CTA as a live
-                clinical product.
+                Open the{" "}
+                <Link to="/discovery">Discovery Centre</Link> on a real evidence question, or
+                browse the{" "}
+                <Link to="/products">four product perspectives</Link>.
               </p>
             </details>
           </div>

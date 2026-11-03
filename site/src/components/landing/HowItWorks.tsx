@@ -269,7 +269,7 @@ const JOURNEY_CARDS: {
     body: "Bring authorised longitudinal context and evidence-linked considerations into review.",
     jump: "clinician",
     cta: "Explore clinical journey ↗",
-    to: "/clinical-timeline",
+    to: "/platform",
   },
   {
     n: "03 / IMMUNE SUPER INTELLIGENCE",
@@ -421,9 +421,9 @@ export function HowItWorks() {
             </div>
 
             <p className="land-hiw-disclaimer">
-              Illustrative product journey. These screens do not represent live patient data,
-              completed clinical validations or currently deployed research services. No invented
-              MoU; Gate C stays human-only; trial paths never auto-confirm eligibility.
+              Illustrative product journey. These screens do not represent live patient data or
+              completed clinical validations. Humans stay in control of consequential decisions;
+              trial paths never auto-confirm eligibility.
             </p>
           </section>
         </div>
@@ -513,14 +513,14 @@ export function HowItWorks() {
             trials.
           </p>
           <div className="hero-actions" style={{ justifyContent: "center" }}>
-            <a href="#experience" className="btn btn-ink">
+            <a href="#experience" className="btn btn-primary">
               Explore the interactive journey <span className="arrow">↗</span>
             </a>
-            <Link to="/status" className="btn btn-ghost land-btn-on-light">
-              What&apos;s available
-            </Link>
             <Link to="/products" className="btn btn-ghost land-btn-on-light">
               Four products
+            </Link>
+            <Link to="/discovery" className="btn btn-ghost land-btn-on-light">
+              Open Discovery
             </Link>
           </div>
         </div>

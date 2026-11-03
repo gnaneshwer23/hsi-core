@@ -213,11 +213,11 @@ export function PlatformEngine() {
             </p>
           </div>
           <div className="hero-actions land-platform-ctas">
-            <a href="#ecosystem" className="btn btn-ink">
+            <a href="#ecosystem" className="btn btn-primary">
               Explore the platform <span className="arrow">↗</span>
             </a>
-            <Link to="/status" className="btn btn-ghost land-btn-on-light">
-              What&apos;s available
+            <Link to="/how-it-works" className="btn btn-ghost land-btn-on-light">
+              How it works
             </Link>
           </div>
         </div>

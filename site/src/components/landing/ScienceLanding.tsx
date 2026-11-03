@@ -444,8 +444,7 @@ export function ScienceLanding() {
             </Link>
           </div>
           <small className="land-sci-foot-note">
-            Educational illustration only · not clinical advice · not a live knowledge graph · no
-            Gate C auto-approve · no invented MoU
+            Educational illustration only · not clinical advice · not a live knowledge graph
           </small>
         </div>
       </section>

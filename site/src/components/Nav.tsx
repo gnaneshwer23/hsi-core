@@ -5,7 +5,7 @@ import { ENGINEERING_LINKS } from "../lib/productMaturity";
 
 /**
  * Primary destinations — product/marketing landings only.
- * Status / Roadmap live in footer (+ What's available CTA); engineering stays drawer-secondary.
+ * Status / Roadmap stay footer-only. Engineering surfaces stay drawer-secondary.
  */
 const primaryLinks = [
   { to: "/platform", label: "Platform" },
@@ -61,8 +61,8 @@ export function Nav() {
           ))}
         </nav>
 
-        <Link to="/status" className="btn nav-cta">
-          What&apos;s available <span className="arrow">↗</span>
+        <Link to="/discovery" className="btn btn-primary nav-cta">
+          Open Discovery <span className="arrow">↗</span>
         </Link>
 
         <button
@@ -84,6 +84,9 @@ export function Nav() {
             {l.label}
           </NavLink>
         ))}
+        <Link to="/discovery" className="btn btn-primary nav-drawer-cta" onClick={() => setOpen(false)}>
+          Open Discovery <span className="arrow">↗</span>
+        </Link>
         <p className="nav-drawer-eng-label">Engineering (secondary)</p>
         {ENGINEERING_LINKS.map((l) => (
           <NavLink key={l.to} to={l.to} onClick={() => setOpen(false)} className="nav-drawer-eng">

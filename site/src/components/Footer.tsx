@@ -15,6 +15,7 @@ const PRODUCT_LINKS = [
   { to: "/for-isi", label: "For ISI research" },
 ] as const;
 
+/** Quiet progress links — not primary nav. */
 const PROGRESS_LINKS = [
   { to: "/status", label: "Status" },
   { to: "/roadmap", label: "Roadmap" },
@@ -28,11 +29,8 @@ export function Footer() {
           <div className="footer-brand">{PRODUCT_NAME}</div>
           <p className="footer-tagline">{PRODUCT_TAGLINE}</p>
           <p className="footer-honesty">
-            No PHI · no invented MoU.
+            Research intelligence with human oversight.
           </p>
-          <Link to="/status" className="footer-status-link">
-            What&apos;s available <span aria-hidden="true">→</span>
-          </Link>
         </div>
         <div>
           <h4>Platform</h4>
@@ -66,8 +64,10 @@ export function Footer() {
         </div>
       </div>
       <div className="container footer-bottom">
-        <span>{PRODUCT_NAME} · four-product ecosystem</span>
-        <Link to="/status">Available · In development · Planned</Link>
+        <span>{PRODUCT_NAME}</span>
+        <Link to="/status" className="footer-quiet-status">
+          Status
+        </Link>
       </div>
     </footer>
   );

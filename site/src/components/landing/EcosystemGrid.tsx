@@ -151,16 +151,12 @@ export function EcosystemGrid({
           {ORDER.map((id) => {
             const product = byId[id];
             const visual = VISUAL[id];
-            const isLive = product.chip === "available";
-            const href = isLive ? product.primaryCta.href : "/status";
-            const arrowLabel = isLive
-              ? product.primaryCta.label
-              : `${product.name} — ${MATURITY_CHIP_LABEL[product.chip]} (see status)`;
+            const href = product.primaryCta.href;
             return (
               <article key={id} className={`land-eco-card land-eco-${visual.tone}`}>
                 <div className="land-eco-top">
                   <span className="land-eco-num">{visual.number}</span>
-                  <Link to={href} className="land-eco-arrow" aria-label={arrowLabel}>
+                  <Link to={href} className="land-eco-arrow" aria-label={product.primaryCta.label}>
                     ↗
                   </Link>
                 </div>

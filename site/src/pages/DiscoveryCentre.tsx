@@ -310,38 +310,28 @@ export function DiscoveryCentre() {
             <p className="dc-banner dc-banner-warn">
               Not diagnostic · not for clinical use · research intelligence only
             </p>
-            <p className="dc-banner dc-banner-danger">
-              Clinical translation is NOT ACTIVE · clinicalActive=false · Akeno
-              HITL at /akeno is not CDS
-            </p>
-            <p className="dc-banner dc-banner-info">
-              Phase 8 = HSI translation substrate. Akeno HITL consumer at{" "}
-              <Link to="/akeno">/akeno</Link> — not live CDS. Aksh agent
-              names: <Link to="/aksh-agents">/aksh-agents</Link>.
-            </p>
           </div>
-          <span className="eyebrow">ISI · Discovery Centre · Phase 8</span>
+          <span className="eyebrow">ISI · Discovery Centre</span>
           <h1 className="display display-lg">
             ASK → MAP → REVIEW → VALIDATE → TRANSLATE
             <br />
             <span className="accent">on real HSI packs.</span>
           </h1>
           <p className="lede">
-            Product discovery loop for the scope-locked RA / anti-TNF question.
-            Majority time stays on current-state evidence (ASK→MAP) before any
-            TRANSLATE handoff. Never live CDS · Gate C never auto-approves.
+            Product discovery loop for the RA / anti-TNF research question.
+            Spend most of the loop on current-state evidence before any
+            translation handoff. Humans decide what enters the product graph.
           </p>
           <div className="dc-hero-actions">
             <a href="#workspace" className="btn btn-primary">
               Open workspace <span className="arrow">↘</span>
             </a>
-            <a href="/discovery.json" className="btn btn-ghost">
-              Machine catalogue JSON <span className="arrow">↗</span>
-            </a>
-            <Link to="/docs" className="btn btn-ghost">
-              How to regenerate <span className="arrow">↗</span>
+            <Link to="/sources" className="btn btn-ghost">
+              Source registry ↗
             </Link>
-            <Link to="/sources" className="btn btn-ghost">Inspect source registry ↗</Link>
+            <Link to="/for-isi" className="btn btn-ghost">
+              For researchers
+            </Link>
           </div>
         </div>
       </section>
@@ -419,9 +409,9 @@ export function DiscoveryCentre() {
                     <span className="section-num">ASK</span>
                     <h2 className="display display-md">Scoped question</h2>
                     <p className="lede">
-                      Working Stage 1 scope from{" "}
-                      <code>hsi-partner-lock.json</code>. scopeLocked is
-                      engineering scope — not a MoU.
+                      Working Stage 1 scope on the locked RA / anti-TNF research
+                      question — a product investigation boundary, not a partner
+                      contract.
                     </p>
                   </div>
 
@@ -430,10 +420,10 @@ export function DiscoveryCentre() {
                     <p style={{ marginTop: "0.45rem" }}>
                       We map what is already evidenced on the locked RA /
                       anti-TNF question, surface honest gaps, then decide whether
-                      VALIDATE or a HITL handoff is warranted. Outcomes can be:
+                      VALIDATE or a human handoff is warranted. Outcomes can be:
                       continue, stop (not a fit / insufficient evidence), or park
-                      pending human Gate C — all fine. No auto-approve into the
-                      product KG.
+                      for human review — all fine. Nothing auto-promotes into the
+                      product knowledge graph.
                     </p>
                     <ul className="dc-compact-list" style={{ marginTop: "0.75rem" }}>
                       <li>
@@ -952,13 +942,11 @@ export function DiscoveryCentre() {
                 <div className="dc-panel" role="tabpanel">
                   <div className="dc-banner-stack" role="alert">
                     <p className="dc-banner dc-banner-danger">
-                      CLINICAL NOT ACTIVE · not for clinical use · no diagnosis /
-                      treatment · no PHI
+                      Not for clinical use · no diagnosis or treatment
                     </p>
                     <p className="dc-banner dc-banner-warn">
-                      status=deferred_until_hitl · hitlRequired=true ·
-                      autoApprove=false · cdsSurfacable=0 · Akeno consumer =
-                      /akeno HITL (not live CDS)
+                      Translation candidates require human review before any
+                      clinic-facing use. Nothing auto-approves.
                     </p>
                   </div>
 
@@ -968,12 +956,10 @@ export function DiscoveryCentre() {
                       Stage 3 handoff candidates
                     </h2>
                     <p className="lede">
-                      Only after ASK→MAP→REVIEW→VALIDATE. Phase 8 HSI translation
-                      substrate from <code>hsi-translation-handoff.json</code>.
-                      Research edges → clinic-facing pointers. teachingStatus ≠
-                      hsiGrade ≠ CDS. Explicit next: human HITL on{" "}
-                      <Link to="/akeno">/akeno</Link> — never fake Gate C
-                      auto-approve.
+                      Only after ASK→MAP→REVIEW→VALIDATE. Research edges become
+                      candidate pointers for human review — never silent
+                      clinical promotion. Continue in the research workspace, not
+                      as bedside advice.
                     </p>
                   </div>
 
