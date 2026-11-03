@@ -93,8 +93,8 @@ export function createOwnedInvestigationBackend(options: {
       if (!allowed.length) throw new InvestigationRequestError(429, "investigation_request_limit");
       if (command.action === "list") {
         const cursor = command.cursor;
-        const rows = await db.query(`SELECT investigation_key AS key,revision,state,data_class AS "dataClass",question,created_at AS "createdAt",updated_at AS "updatedAt" FROM ${table} WHERE owner_id=$1 AND ($2::timestamptz IS NULL OR (created_at,investigation_key)<($2::timestamptz,$3::text)) ORDER BY created_at DESC,investigation_key DESC LIMIT 21`, [owner, cursor?.createdAt ?? null, cursor?.key ?? null]);
-        const items = rows.slice(0, 20).map((row) => ({ ...row, key: String(row.key), createdAt: new Date(row.createdAt as string).toISOString(), updatedAt: new Date(row.updatedAt as string).toISOString() }));
+        const rows = await db.query(`SELECT investigation_key AS key,revision,state,data_class AS "dataClass",question,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS "createdAt",updated_at AS "updatedAt" FROM ${table} WHERE owner_id=$1 AND ($2::timestamptz IS NULL OR (created_at,investigation_key)<($2::timestamptz,$3::text)) ORDER BY created_at DESC,investigation_key DESC LIMIT 21`, [owner, cursor?.createdAt ?? null, cursor?.key ?? null]);
+        const items = rows.slice(0, 20).map((row) => ({ ...row, key: String(row.key), createdAt: String(row.createdAt), updatedAt: new Date(row.updatedAt as string).toISOString() }));
         const last = items.at(-1);
         return { items, nextCursor: rows.length > 20 && last ? { key: last.key, createdAt: last.createdAt } : null, releases: options.releases, role: principal.actor.role };
       }
