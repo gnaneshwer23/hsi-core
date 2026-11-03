@@ -880,3 +880,4 @@ export {
 } from "./akshHsiGateway";
 export { AKSH_RESEARCH_SCHEMA, buildAkshResearchExport, type AkshResearchExport } from "./akshResearchExport";
 export { createSourceRegistry, importSourceMetadata, parseSourceRegistry, type SourceRegistry, type SourceMetadata, type SourceRevision, type RegistrySource } from "./sourceRegistry";
+export { SHARED_TECHNOLOGY_VERSION, retrieveSharedNeighbourhood, prioritiseHumanReviewQueue, type SharedGraphAdapter, type SharedNeighbourhoodOptions, type SharedReviewQueueItem } from "./sharedTechnology";

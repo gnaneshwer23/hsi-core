@@ -9,6 +9,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./shared-technology": {
+      "types": "./dist/sharedTechnology.d.ts",
+      "import": "./dist/sharedTechnology.js"
     }
   },
   "files": [
