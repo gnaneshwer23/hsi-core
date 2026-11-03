@@ -64,7 +64,8 @@
     "site:preview": "bun run --cwd site preview",
     "investigation:demo": "bun src/cli/investigation-demo.ts",
     "ra:import": "python3 tools/import_ra_evidence.py",
-    "ra:test-parser": "python3 -m unittest discover -s test/python -v"
+    "ra:test-parser": "python3 -m unittest discover -s test/python -v",
+    "ra:export-artifact": "bun scripts/export-ra-evidence-artifact.ts"
   },
   "engines": {
     "node": ">=20"

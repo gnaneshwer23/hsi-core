@@ -1,11 +1,13 @@
 import { test, expect } from "bun:test";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
-import { RA_SOURCE_IDENTITIES, RA_QUESTION, parseRaEvidenceRelease, raEvidenceReadiness, buildRaEvidenceBundle } from "../src/raEvidenceRelease";
+import { RA_SOURCE_IDENTITIES, RA_QUESTION, RA_RELEASE_ID, parseRaEvidenceRelease, raEvidenceReadiness, raEvidenceReleaseListing, buildRaEvidenceBundle } from "../src/raEvidenceRelease";
 import graph from "../research/ra-anti-tnf/graph-context.json";
 import pending from "../research/ra-anti-tnf/release.json";
 import { parseResearchBundle } from "../src/researchContracts";
 import { createInvestigationService, createCorpusRetrievalProvider, createMemoryInvestigationStore } from "../src/investigationService";
+import { investigationError } from "../src/investigationBackend";
+import { RaEvidenceUnavailableError } from "../src/raEvidenceRelease";
 const digest = (value: string) => createHash("sha256").update(value).digest("hex");
 const canonical = (value: unknown) => JSON.stringify(value, (_key, row) => row && typeof row === "object" && !Array.isArray(row) ? Object.fromEntries(Object.entries(row).sort(([a],[b]) => a < b ? -1 : a > b ? 1 : 0)) : row);
 function seal(value: any) { const { version: _, ...content } = value; value.version = digest(canonical(content)); return value; }
@@ -27,9 +29,23 @@ function structureFixture() {
   return seal({ schemaVersion: "hsi-ra-evidence-release-1", protocolId: "ra-anti-tnf-response", protocolVersion: "1", question: RA_QUESTION, containsPhi: false, clinicalAdvice: false, kgWrite: false, scientificReview: "unreviewed", sources, passages, receipts, candidates });
 }
 test("committed RA release stays unavailable until primary-source import succeeds", () => {
-  expect(raEvidenceReadiness(pending).available).toBe(false);
+  const readiness = raEvidenceReadiness(pending);
+  expect(readiness.available).toBe(false);
+  expect(readiness.reason).toContain("Creative Commons URI");
+  expect(raEvidenceReleaseListing(pending).id).toBe(RA_RELEASE_ID);
+  expect(raEvidenceReleaseListing(pending).readiness.available).toBe(false);
   expect(() => parseRaEvidenceRelease(pending)).toThrow();
   expect(() => buildRaEvidenceBundle(parseResearchBundle(graph), pending)).toThrow();
+  const response = investigationError(new RaEvidenceUnavailableError());
+  expect(response.status).toBe(422);
+});
+test("annotation guideline and worksheet remain label-free templates", () => {
+  const guideline = readFileSync("research/ra-anti-tnf/context-annotation-guideline-v1.md", "utf8");
+  const worksheet = JSON.parse(readFileSync("research/ra-anti-tnf/context-annotation-worksheet-v1.json", "utf8"));
+  expect(guideline).toContain("no expert labels are supplied here");
+  expect(worksheet.status).toBe("template_only_no_expert_labels");
+  expect(worksheet.rows).toEqual([]);
+  expect(worksheet.adjudication.fabricatedLabelsPermitted).toBe(false);
 });
 test("registered corpus retains both source roles and leaves scientific support unassessed", () => {
   const release = parseRaEvidenceRelease(structureFixture());

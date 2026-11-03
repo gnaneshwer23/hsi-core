@@ -62,8 +62,26 @@ identity ambiguity, references, attribution, entity declarations and the refusal
 to turn TEST-* identifiers into a production release. Structural contract
 fixtures are not primary-source evidence and are never exported as product data.
 
-This commit provides the import/validation foundation. A verified source import,
-product corpus registration/passage-review UI, the expert-labelled context
-benchmark and independent scientific adjudication remain outstanding. Existing
-Aksh/ISI database activation prerequisites also remain as documented in
-[product backend activation](INVESTIGATION_PRODUCT_BACKENDS.md).
+Operator export (after committing canonical research files):
+
+```sh
+bun run ra:export-artifact -- isi aksh
+```
+
+This writes a versioned research-artifact snapshot (not executable code) into
+each product checkout. An unavailable import must not overwrite a previously
+valid product release. Product loaders register `ra-anti-tnf-evidence` with
+explicit readiness metadata and return `evidence_not_ready` when start is
+attempted against a pending marker. Passage-review UI consumes only bundle
+sources/passages already returned by the investigation service.
+
+**Current verification note (2026-11-03):** Europe PMC was reachable from the
+operator network, but both candidate JATS packages lack an explicit Creative
+Commons URI in article permissions (Attribution prose only). The importer
+correctly rejects that state. The release remains
+`awaiting_verified_source_import`. No passages or licence grants were invented.
+
+The expert-labelled context benchmark and independent scientific adjudication
+remain outstanding. Annotation guideline/worksheet templates ship without
+labels. Existing Aksh/ISI database activation prerequisites also remain as
+documented in [product backend activation](INVESTIGATION_PRODUCT_BACKENDS.md).
