@@ -1,5 +1,5 @@
 /**
- * Public HSI site honesty — four-product Available / In-dev / Planned; engineering demoted.
+ * Public HSI site honesty — four-product Available / In-dev / Planned; simplified IA.
  */
 import { describe, expect, it } from "bun:test";
 import { readFileSync } from "node:fs";
@@ -15,6 +15,7 @@ describe("Public HSI site honesty", () => {
     expect(mod).toContain('id: "clinical"');
     expect(mod).toContain('id: "isi"');
     expect(mod).toContain('id: "trials"');
+    expect(mod).toContain('name: "ISI Research"');
     expect(mod).toContain('chip: "available"');
     expect(mod).toContain('chip: "in_development"');
     expect(mod).toContain('chip: "planned"');
@@ -30,38 +31,53 @@ describe("Public HSI site honesty", () => {
     expect(mod).not.toMatch(/Omics runtimes and live CDS paths/);
   });
 
-  it("routes /products and /status; primary nav demotes engineering chrome", () => {
+  it("routes /products, /science, /status; primary nav is simplified public IA", () => {
     const app = site("src/App.tsx");
     expect(app).toContain('path="products"');
     expect(app).toContain('path="status"');
+    expect(app).toContain('path="science"');
+    expect(app).toContain("<Science");
+    expect(app).not.toMatch(/path="science"[\s\S]*Navigate to="\/explore"/);
     expect(app).toContain('path="clinical-timeline"');
     expect(app).toContain('path="trials-criteria"');
     expect(app).toContain('path="gateway"');
 
     const nav = site("src/components/Nav.tsx");
     expect(nav).toContain("/products");
-    expect(nav).toContain("/status");
-    expect(nav).toContain("For researchers");
+    expect(nav).toContain("/platform");
+    expect(nav).toContain("/science");
+    expect(nav).toContain("/how-it-works");
+    expect(nav).toContain("How It Works");
     expect(nav).toContain("Engineering (secondary)");
-    // Curator / Systems not in primaryLinks
     expect(nav).not.toMatch(/primaryLinks[\s\S]*Curator/);
+    expect(nav).not.toMatch(/primaryLinks[\s\S]*\/discovery/);
+    expect(nav).not.toMatch(/primaryLinks[\s\S]*\/explore/);
+    expect(nav).not.toMatch(/primaryLinks[\s\S]*for-aksh/);
+    expect(nav).not.toMatch(/primaryLinks[\s\S]*for-trials/);
+    expect(nav).not.toMatch(/primaryLinks[\s\S]*for-isi/);
+    expect(nav).not.toMatch(/primaryLinks[\s\S]*\/status/);
     expect(nav).toContain("ENGINEERING_LINKS");
 
     const home = site("src/pages/Home.tsx");
     expect(home).toContain("<EcosystemGrid");
+    expect(home).toContain("<DiscoveryWorkbench");
+    expect(home).not.toContain("<EvidenceExplorer");
+    expect(home).toContain("What is live today?");
+    expect(home).toContain('to="/status"');
+    expect(home).toContain('to="/for-isi"');
     const ecosystem = site("src/components/landing/EcosystemGrid.tsx");
     expect(ecosystem).toContain("ECOSYSTEM_PRODUCTS");
     expect(ecosystem).toContain("MATURITY_CHIP_LABEL");
     const roadmap = site("src/pages/Roadmap.tsx");
     expect(roadmap).toContain("MATURITY_CHIP_LABEL");
     expect(roadmap).toContain('to="/status"');
-    expect(home).toContain("What is live today?");
-    expect(home).toContain('to="/status"');
 
     const footer = site("src/components/Footer.tsx");
     expect(footer).toContain("PROGRESS_LINKS");
     expect(footer).toContain('to: "/roadmap"');
-    expect(footer).toContain("/status");
+    expect(footer).toContain('to: "/status"');
+    expect(footer).toContain('to: "/docs"');
+    expect(footer).toContain("educational experience");
   });
 
   it("wires Clinical timeline + Trials five-state + Gateway thin demos with honesty labels", () => {

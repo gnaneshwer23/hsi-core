@@ -24,15 +24,18 @@ Do **not** present ISI as clinical decision support. Do **not** imply patient re
 
 ## Website homepage order (implemented in `site/src/pages/Home.tsx`)
 
-1. Product purpose + route into Discovery / ISI  
-2. Visual: research question → evidence map  
-3. Worked example (scope-locked RA / anti-TNF slice from published packs)  
-4. Evidence, provenance, uncertainty, Gate C  
-5. What HSI provides to ISI; Aksh brief + gated  
-6. Compact maturity / development-status note  
-7. Footer → Development status, docs, repository  
+Public IA (2026-11-03 simplification): **Home · Platform · Products · Science · How It Works**.  
+Research / ISI entry via Products + contextual CTAs. Science = educational experience, not a clinical product.
 
-Roadmap P0–P3 detail stays on `/roadmap` and in [`BUILD_STATUS_AND_NEXT.md`](./BUILD_STATUS_AND_NEXT.md) — not the homepage hero.
+1. Value prop + connected biology / evidence fabric (`PlatformEngine`)  
+2. Four-product ecosystem once (`EcosystemGrid`)  
+3. One research workflow demo (`DiscoveryWorkbench`) — Explore lab stays on `/explore`  
+4. Evidence transparency + human oversight (FAQ; Science ≠ clinical; ISI ≠ CDS)  
+5. Research collaboration CTA → `/for-isi`, `/discovery`, `/products`  
+6. Footer → Roadmap, Status, Docs  
+
+Roadmap P0–P3 detail stays on `/roadmap` and in [`BUILD_STATUS_AND_NEXT.md`](./BUILD_STATUS_AND_NEXT.md) — not the homepage hero.  
+Audit + capability matrix: `site/docs/PUBLIC_SITE_AUDIT.md`, `site/docs/CAPABILITY_DATA_SOURCE_MATRIX.md`.
 
 ## Honesty
 

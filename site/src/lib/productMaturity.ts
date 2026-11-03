@@ -58,16 +58,16 @@ export const ECOSYSTEM_PRODUCTS: readonly EcosystemProduct[] = [
   },
   {
     id: "isi",
-    name: "Immune Super Intelligence",
+    name: "ISI Research",
     oneLine: "Biological and scientific discovery (research workspace).",
     chip: "available",
     chipDetail: "Available for research — Ask, Atlas, and Discovery on graded evidence.",
-    primaryCta: { label: "ISI research entry", href: "/for-isi" },
+    primaryCta: { label: "ISI Research entry", href: "/for-isi" },
     secondaryCta: { label: "Open Discovery", href: "/discovery" },
     mustNot: [
       "Not clinical decision support",
       "Not HSI Trials matcher",
-      "Research plane only",
+      "Research plane only — Science educational pages are not this product",
     ],
   },
   {
