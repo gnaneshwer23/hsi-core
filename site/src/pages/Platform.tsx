@@ -117,31 +117,52 @@ const trustPrinciples = [
 
 function FoundationArt() {
   return (
-    <div className="hsi-platform-foundation" role="img" aria-label="Four distinct HSI product experiences share a technology direction while retaining separate data ownership and maturity states.">
-      <div className="hsi-platform-foundation-label">ONE FOUNDATION / SEPARATE DATA</div>
-      <div className="hsi-platform-foundation-products">
-        {ECOSYSTEM_PRODUCTS.map((item) => (
-          <div key={item.id}>
-            <span>{item.name.toUpperCase()}</span>
-            <i aria-hidden="true" />
-            <small>{MATURITY_CHIP_LABEL[item.chip]} · separate governance</small>
-          </div>
-        ))}
-      </div>
-      <div className="hsi-platform-foundation-lines" aria-hidden="true"><span /><span /></div>
+    <div
+      className="hsi-platform-foundation"
+      role="img"
+      aria-label="Operating model: Human Super Intelligence is the shared technology foundation. Four product experiences reuse that software while each keeps its own data and governance. Evidence, knowledge and review are reusable patterns—not a live cross-product data pipe."
+    >
+      <div className="hsi-platform-foundation-label">OPERATING MODEL · HOW IT WORKS</div>
+      <p className="hsi-platform-foundation-lede">
+        One shared technology foundation. Four product experiences. Separate data ownership. Humans still review.
+      </p>
+
       <div className="hsi-platform-foundation-core">
         <span className="hsi-platform-symbol" aria-hidden="true">{PRODUCT_SHORT[0]}</span>
         <div>
           <strong>{PRODUCT_NAME}</strong>
-          <span>Shared technology foundation</span>
+          <span>Shared technology foundation — software reuse, not a shared evidence database</span>
         </div>
       </div>
-      <div className="hsi-platform-foundation-tools">
-        <span>Evidence</span>
-        <span>Knowledge</span>
-        <span>Review</span>
+
+      <div className="hsi-platform-foundation-split">
+        <div className="hsi-platform-foundation-shared">
+          <span className="hsi-platform-foundation-eyebrow">What is shared</span>
+          <p>Capability patterns each product can reuse in its own environment.</p>
+          <ul>
+            <li>Evidence</li>
+            <li>Knowledge</li>
+            <li>Review</li>
+          </ul>
+          <small>Connected context · Traceable evidence · Human review</small>
+        </div>
+        <div className="hsi-platform-foundation-owned">
+          <span className="hsi-platform-foundation-eyebrow">What is never shared</span>
+          <p>Product data, access rights and governance stay with each experience.</p>
+          <div className="hsi-platform-foundation-products">
+            {ECOSYSTEM_PRODUCTS.map((item) => (
+              <div key={item.id}>
+                <span>{item.name}</span>
+                <small>{MATURITY_CHIP_LABEL[item.chip]} · own data · own governance</small>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-      <p>Software reuse. Product-owned data.</p>
+
+      <p className="hsi-platform-foundation-foot">
+        Software reuse. Product-owned data. No live cross-product sync claimed here.
+      </p>
     </div>
   );
 }
@@ -178,7 +199,7 @@ export function Platform() {
           <FoundationArt />
         </div>
         <div className="hsi-editorial-wrap hsi-platform-hero-foot">
-          <span>RETRIEVE <b>→</b> CONNECT <b>→</b> INVESTIGATE <b>→</b> REVIEW</span>
+          <span>Shared technology · product-owned data</span>
           <span>Connected context · Traceable evidence · Human review</span>
         </div>
       </section>

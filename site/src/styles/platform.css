@@ -58,59 +58,14 @@
   font-size: 0.59rem;
   font-weight: 700;
   color: #466d67;
-  margin-bottom: 22px;
+  margin-bottom: 12px;
 }
 
-.hsi-platform-foundation-products {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-}
-
-.hsi-platform-foundation-products > div {
-  min-width: 0;
-  padding: 18px 12px;
-  background: #f3eee8;
-  border: 1px solid #17645f24;
-  text-align: center;
-}
-
-.hsi-platform-foundation-products span {
-  display: block;
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  overflow-wrap: anywhere;
-}
-
-.hsi-platform-foundation-products i {
-  display: block;
-  width: 22px;
-  height: 25px;
-  margin: 16px auto 10px;
-  border: 1px solid #17645f80;
-  border-radius: 50% / 20%;
-  background: repeating-linear-gradient(0deg, transparent 0 6px, #17645f25 6px 7px);
-}
-
-.hsi-platform-foundation-products small {
-  display: block;
-  font-size: 0.6rem;
-  line-height: 1.4;
-  color: #466d67;
-}
-
-.hsi-platform-foundation-lines {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  height: 28px;
-}
-
-.hsi-platform-foundation-lines span {
-  width: 1px;
-  height: 100%;
-  background: #17645f50;
-  margin: auto;
+.hsi-platform-foundation-lede {
+  margin: 0 0 20px;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: #17645f;
 }
 
 .hsi-platform-foundation-core {
@@ -120,6 +75,7 @@
   background: #17645f;
   color: #f3eee8;
   padding: 20px;
+  margin-bottom: 14px;
 }
 
 .hsi-platform-symbol {
@@ -146,35 +102,108 @@
   font-size: 0.68rem;
   color: #d3e1d9;
   margin-top: 5px;
+  line-height: 1.45;
 }
 
-.hsi-platform-foundation-tools {
-  display: flex;
-  justify-content: space-around;
+.hsi-platform-foundation-split {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 12px;
+}
+
+.hsi-platform-foundation-shared,
+.hsi-platform-foundation-owned {
+  background: #f3eee8;
+  border: 1px solid #17645f24;
+  padding: 16px 14px;
+}
+
+.hsi-platform-foundation-eyebrow {
+  display: block;
+  letter-spacing: 0.12em;
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: #466d67;
+  margin-bottom: 8px;
+}
+
+.hsi-platform-foundation-shared > p,
+.hsi-platform-foundation-owned > p {
+  margin: 0 0 12px;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: #17645f;
+}
+
+.hsi-platform-foundation-shared ul {
+  list-style: none;
+  margin: 0 0 14px;
+  padding: 0;
+  display: grid;
   gap: 8px;
-  padding: 14px 8px;
-  border-bottom: 1px solid #17645f30;
-  font-size: 0.63rem;
-  font-weight: 650;
-  letter-spacing: 0.08em;
 }
 
-.hsi-platform-foundation-tools span::before {
+.hsi-platform-foundation-shared li {
+  position: relative;
+  padding-left: 14px;
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  color: #17645f;
+}
+
+.hsi-platform-foundation-shared li::before {
   content: "";
-  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 0.45em;
   width: 5px;
   height: 5px;
-  margin-right: 7px;
   background: #ff6845;
   border-radius: 50%;
-  vertical-align: middle;
 }
 
-.hsi-platform-foundation > p {
+.hsi-platform-foundation-shared small {
+  display: block;
+  font-size: 0.58rem;
+  line-height: 1.45;
+  color: #466d67;
+}
+
+.hsi-platform-foundation-products {
+  display: grid;
+  gap: 8px;
+}
+
+.hsi-platform-foundation-products > div {
+  min-width: 0;
+  padding: 10px 12px;
+  background: #fffaf4;
+  border: 1px solid #17645f24;
+}
+
+.hsi-platform-foundation-products span {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #17645f;
+  letter-spacing: -0.01em;
+}
+
+.hsi-platform-foundation-products small {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.58rem;
+  line-height: 1.4;
+  color: #466d67;
+}
+
+.hsi-platform-foundation-foot {
   font-size: 0.65rem;
   text-align: center;
-  margin-top: 18px;
+  margin: 16px 0 0;
   color: #466d67;
+  line-height: 1.45;
 }
 
 .hsi-platform-architecture {
@@ -437,15 +466,19 @@
     width: min(100%, 520px);
     margin-inline: auto;
   }
+
+  .hsi-platform-foundation-split {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 520px) {
   .hsi-platform-foundation-products > div {
-    padding: 12px 8px;
+    padding: 10px 10px;
   }
 
   .hsi-platform-foundation-products span {
-    font-size: 0.55rem;
+    font-size: 0.68rem;
   }
 
   .hsi-platform-product-detail {
