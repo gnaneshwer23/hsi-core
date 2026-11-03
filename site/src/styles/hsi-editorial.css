@@ -74,3 +74,37 @@
 @media(max-width:780px){.hsi-editorial-wrap{width:calc(100% - 2.5rem)}.hsi-editorial-hero-grid{grid-template-columns:1fr;padding:44px 0}.hsi-editorial h1{font-size:clamp(3.7rem,14vw,6rem)}.hsi-editorial-visual{width:min(100%,520px);margin:auto}.hsi-editorial-topline>span:last-child{display:none}.hsi-editorial-intro-grid,.hsi-editorial-connection-grid{grid-template-columns:1fr;gap:30px}.hsi-editorial-sectionhead{display:block}.hsi-editorial-sectionhead>p{margin-top:24px}.hsi-editorial-intro,.hsi-editorial-products,.hsi-editorial-connection,.hsi-editorial-outro{padding:75px 0}.hsi-editorial-connection-map{min-height:340px;max-width:440px;width:100%;margin:auto}.hsi-editorial-visual-note{font-size:.45rem}}
 @media(max-width:480px){.hsi-editorial-product-grid{grid-template-columns:1fr}.hsi-editorial-product{min-height:260px}.hsi-editorial-product-body{padding-top:55px}.hsi-editorial-bottomline{font-size:.49rem}.hsi-editorial-connection-map>span{font-size:.48rem;padding:7px}.hsi-editorial h1{font-size:clamp(3.2rem,13vw,4.6rem)}}
 @media(prefers-reduced-motion:reduce){.hsi-editorial-button,.hsi-editorial-product{transition:none}}
+
+
+/* Connected ecosystem journey: interactive editorial spine, not a decorative product grid. */
+.hsi-journey{background:#fffaf4;padding:115px 0 100px;color:#17645F}
+.hsi-journey-heading{display:grid;grid-template-columns:1.3fr .7fr;align-items:end;gap:50px;margin-bottom:55px}
+.hsi-journey-heading h2{margin-top:22px}
+.hsi-journey-heading h2 em{color:#FF6845}
+.hsi-journey-heading>p{max-width:400px;color:#466d67;line-height:1.75}
+.hsi-journey-stage{background:#17645F;color:#F3EEE8;padding:38px;border-radius:5px}
+.hsi-journey-track{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0;position:relative;margin-bottom:34px}
+.hsi-journey-track:before{content:"";position:absolute;top:68px;left:8%;right:8%;height:1px;background:#F3EEE85c;pointer-events:none}
+.hsi-journey-node{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:13px;text-align:center;min-width:0;padding:8px 5px 18px;color:#F3EEE8;cursor:pointer}
+.hsi-journey-node-index{font-size:.63rem;letter-spacing:.16em;opacity:.75}
+.hsi-journey-node-mark{display:grid;place-items:center;width:68px;height:68px;border-radius:50%;background:#17645F;border:1px solid #F3EEE87c;font-size:1.7rem;transition:background .2s,color .2s,transform .2s}
+.hsi-journey-node.is-active .hsi-journey-node-mark{background:#FF6845;border-color:#FF6845;color:#fff;transform:scale(1.1)}
+.hsi-journey-node-label{font-size:.66rem;font-weight:700;letter-spacing:.09em}
+.hsi-journey-node:hover .hsi-journey-node-mark{border-color:#FF6845}
+.hsi-journey-detail{display:grid;grid-template-columns:1.4fr .7fr;gap:55px;border-top:1px solid #F3EEE84c;padding-top:36px;min-height:270px}
+.hsi-journey-detail-copy h3{font-size:clamp(2.3rem,4vw,4.5rem);margin:16px 0}
+.hsi-journey-detail-copy>p:not(.hsi-editorial-kicker){max-width:670px;color:#e2ece7;line-height:1.75}
+.hsi-journey-tags{display:flex;gap:8px;flex-wrap:wrap;margin:23px 0}
+.hsi-journey-tags span{border:1px solid #F3EEE86a;border-radius:99px;padding:6px 12px;font-size:.7rem}
+.hsi-journey-link{display:inline-flex;gap:18px;align-items:center;border-bottom:1px solid #FF927A;padding-bottom:7px;color:#FFB29E;font-size:.86rem;font-weight:700}
+.hsi-journey-evidence{background:#F3EEE8;color:#17645F;padding:26px;display:flex;flex-direction:column;gap:13px;align-self:stretch}
+.hsi-journey-evidence>span{font-size:.63rem;letter-spacing:.14em;font-weight:700}
+.hsi-journey-evidence strong{font-size:1.45rem;letter-spacing:-.03em}
+.hsi-journey-evidence p{font-size:.86rem;line-height:1.6}
+.hsi-journey-progress{height:3px;background:#17645F2b;margin-top:auto}
+.hsi-journey-progress span{display:block;height:100%;background:#FF6845;transition:width .2s}
+.hsi-journey-evidence small{font-size:.68rem;line-height:1.5;color:#466d67}
+.hsi-journey-boundary{max-width:850px;margin:22px auto 0;text-align:center;color:#466d67;font-size:.78rem;line-height:1.7}
+.hsi-journey :focus-visible{outline:3px solid #FF6845;outline-offset:4px}
+@media(max-width:900px){.hsi-journey-heading,.hsi-journey-detail{grid-template-columns:1fr;gap:24px}.hsi-journey-track{grid-template-columns:repeat(3,1fr);row-gap:14px}.hsi-journey-track:before{display:none}.hsi-journey-stage{padding:24px}.hsi-journey-node-mark{width:58px;height:58px}.hsi-journey{padding:75px 0}}
+@media(max-width:480px){.hsi-journey-track{grid-template-columns:repeat(2,1fr)}.hsi-journey-node-label{font-size:.6rem}.hsi-journey-evidence{padding:20px}}
