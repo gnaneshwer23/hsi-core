@@ -10,8 +10,8 @@ import { PRODUCT_NAME, PRODUCT_SHORT } from "../lib/brand";
 const primaryLinks = [
   { to: "/platform", label: "Platform" },
   { to: "/products", label: "Products" },
-  { to: "/explore", label: "Science" },
-  { to: "/how-it-works", label: "How it works" },
+  { to: "/science", label: "Science" },
+  { to: "/how-it-works", label: "How It Works" },
 ];
 
 export function Nav() {
