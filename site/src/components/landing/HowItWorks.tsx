@@ -1,5 +1,7 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { ECOSYSTEM_PRODUCTS, MATURITY_CHIP_LABEL, type EcosystemProduct } from "../../lib/productMaturity";
+import "../../styles/how-it-works.css";
 
 type PersonaId = "patient" | "clinician" | "researcher" | "trial";
 
@@ -17,7 +19,7 @@ type Journey = {
   steps: Step[];
 };
 
-const STAGES = ["Connect", "Understand", "Investigate", "Verify", "Act", "Learn"] as const;
+const STAGES = ["Connect", "Understand", "Investigate", "Verify", "Review", "Refine"] as const;
 
 /** Founder Downloads/index (3).html — How HSI Works experience explorer. */
 const JOURNEYS: Record<PersonaId, Journey> = {
@@ -131,57 +133,50 @@ const JOURNEYS: Record<PersonaId, Journey> = {
     ],
   },
   researcher: {
-    title: "From a scientific question to a testable direction.",
-    intro:
-      "Follow an ISI researcher comparing biological mechanisms and evidence rather than accepting an opaque answer.",
+    title: "From a research question to a reviewable brief.",
+    intro: "Explore how an ISI investigation can organise permitted evidence, biological context and human assessment. The example explains the approach rather than reporting a scientific result.",
     steps: [
       {
-        title: "Define a question",
-        description:
-          "Specify the biological mechanism, cell population, tissue and disease context under investigation.",
+        title: "Define the research question",
+        description: "Specify the biological concepts, study population and question being investigated. Make assumptions and limits explicit before looking for an explanation.",
         outputTitle: "Investigation scope",
-        outputDescription: "A precise question and explicit assumptions.",
-        oversight: "Research scope should remain transparent.",
+        outputDescription: "A question and the context selected for the investigation.",
+        oversight: "Scope and permissions determine what information can be used.",
       },
       {
-        title: "Retrieve relevant knowledge",
-        description:
-          "Assemble relevant concepts and source-linked studies from approved research collections.",
-        outputTitle: "Evidence collection",
-        outputDescription: "Study context, methods and source metadata.",
-        oversight: "Source coverage and freshness must be stated.",
+        title: "Find relevant evidence",
+        description: "Retrieve relevant passages from the permitted evidence collection. Retain source references and versions so the material can be inspected.",
+        outputTitle: "Evidence references",
+        outputDescription: "Relevant passage references from the supplied collection.",
+        oversight: "Coverage is limited to supplied evidence; this is not a search of all literature.",
       },
       {
-        title: "Compare explanations",
-        description:
-          "Examine alternative mechanisms and where different studies appear to disagree.",
-        outputTitle: "Mechanism comparison",
-        outputDescription: "A structured comparison of plausible explanations.",
-        oversight: "Correlation must not be presented as causation.",
+        title: "Inspect the biological connections",
+        description: "Follow existing knowledge relationships and inspect explicit supporting or opposing assessments where available. Keep biological context distinct from direct claim support.",
+        outputTitle: "Graph and evidence context",
+        outputDescription: "Existing relationship identifiers and the assessments linked to them.",
+        oversight: "A connection does not establish causation. Missing opposing evidence is not proof of agreement.",
       },
       {
-        title: "Evaluate confidence",
-        description:
-          "Review study limitations, reproducibility, confounders and gaps before drawing conclusions.",
-        outputTitle: "Uncertainty assessment",
-        outputDescription: "An evidence-qualified interpretation.",
-        oversight: "Computational inferences are not validated findings.",
+        title: "Assess the limits",
+        description: "A reviewer examines study setting, population, methods and uncertainties before accepting an interpretation. Unmapped evidence and missing context remain visible.",
+        outputTitle: "Questions for assessment",
+        outputDescription: "A clear account of evidence limits and unresolved questions.",
+        oversight: "An investigation does not independently validate a scientific finding.",
       },
       {
-        title: "Form a hypothesis",
-        description:
-          "Translate an unresolved mechanism into a falsifiable question and candidate experiment.",
-        outputTitle: "Research brief",
-        outputDescription: "A proposed hypothesis with measurements and controls.",
-        oversight: "Human scientific review is required.",
+        title: "Review the investigation",
+        description: "An authorised reviewer inspects the evidence and candidate research questions, records an assessment and prepares a brief with source references retained.",
+        outputTitle: "Reviewable research brief",
+        outputDescription: "An investigation summary and explicit human review record.",
+        oversight: "Candidate questions remain unvalidated. Review completion does not approve a claim.",
       },
       {
-        title: "Refine through evidence",
-        description:
-          "Update the hypothesis as new studies or experimental results become available.",
-        outputTitle: "Investigation history",
-        outputDescription: "A traceable record of changing interpretations.",
-        oversight: "Claims require review before promotion to accepted knowledge.",
+        title: "Refine with human oversight",
+        description: "Use reviewer feedback to refine the research question. Further evidence and any change to accepted knowledge require their own checks and human assessment.",
+        outputTitle: "Documented next questions",
+        outputDescription: "A considered direction for further investigation rather than an automatic conclusion.",
+        oversight: "Feedback does not automatically update the knowledge graph or train a model.",
       },
     ],
   },
@@ -240,291 +235,48 @@ const JOURNEYS: Record<PersonaId, Journey> = {
   },
 };
 
-const PERSONA_TABS: { id: PersonaId; label: string }[] = [
-  { id: "patient", label: "For patients" },
-  { id: "clinician", label: "For clinicians" },
-  { id: "researcher", label: "For researchers" },
-  { id: "trial", label: "For trial teams" },
+const PERSPECTIVES: { id: PersonaId; label: string; productId: EcosystemProduct["id"]; href: string; scope: string }[] = [
+  { id: "patient", label: "Personal health", productId: "aksh", href: "/for-aksh", scope: "Illustrative Aksh journey. Available features depend on the product’s stated care scope and authorised data sources." },
+  { id: "researcher", label: "Research", productId: "isi", href: "/for-isi", scope: "Illustrative research journey. Evidence availability and permitted collections determine what an investigation can use." },
+  { id: "clinician", label: "Care teams", productId: "clinical", href: "/platform", scope: "Intended HSI Clinical journey, in development. This page does not connect to clinical records or provide clinical decision support." },
+  { id: "trial", label: "Trial research", productId: "trials", href: "/for-trials", scope: "Intended HSI Trials journey, planned. Live study matching, patient screening and eligibility confirmation are not available here." },
 ];
 
-const JOURNEY_CARDS: {
-  n: string;
-  title: string;
-  body: string;
-  jump: PersonaId;
-  cta: string;
-  to: string;
-}[] = [
-  {
-    n: "01 / AKSH HEALTH",
-    title: "People & patients",
-    body: "Understand personal trends, prepare questions and collaborate with care professionals.",
-    jump: "patient",
-    cta: "Explore patient journey ↗",
-    to: "/for-aksh",
-  },
-  {
-    n: "02 / HSI CLINICAL",
-    title: "Care professionals",
-    body: "Bring authorised longitudinal context and evidence-linked considerations into review.",
-    jump: "clinician",
-    cta: "Explore clinical journey ↗",
-    to: "/platform",
-  },
-  {
-    n: "03 / IMMUNE SUPER INTELLIGENCE",
-    title: "Scientists",
-    body: "Investigate mechanisms, conflicting evidence and testable scientific hypotheses.",
-    jump: "researcher",
-    cta: "Explore research journey ↗",
-    to: "/for-isi",
-  },
-  {
-    n: "04 / HSI TRIALS",
-    title: "Trial teams",
-    body: "Structure study criteria, review relevant information and support investigator screening.",
-    jump: "trial",
-    cta: "Explore trials journey ↗",
-    to: "/for-trials",
-  },
-];
+function Arrow() {
+  return <svg className="hiw-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12" stroke="currentColor" strokeWidth="1.5" /></svg>;
+}
 
-const PRINCIPLES = [
-  "Permission-based access to health information",
-  "Traceable source and evidence context",
-  "Visible uncertainty and missing information",
-  "Human review and accountable decisions",
-  "Safety evaluation before clinical deployment",
-] as const;
-
-/**
- * Founder Downloads/index (3).html — How HSI Works interactive journeys.
- * Ivory/teal/coral tokens; Shell/nav remain product chrome.
- */
+/** Public workflow explainer. Selection updates local educational content only. */
 export function HowItWorks() {
-  const [persona, setPersona] = useState<PersonaId>("patient");
+  const [persona, setPersona] = useState<PersonaId>("researcher");
   const [step, setStep] = useState(0);
-  const experienceRef = useRef<HTMLElement>(null);
-
   const journey = JOURNEYS[persona];
   const current = journey.steps[step];
+  const perspective = PERSPECTIVES.find(p => p.id === persona)!;
+  const product = ECOSYSTEM_PRODUCTS.find(p => p.id === perspective.productId)!;
 
   function selectPersona(id: PersonaId) {
     setPersona(id);
     setStep(0);
   }
 
-  function jumpTo(id: PersonaId) {
-    selectPersona(id);
-    const reduce =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    experienceRef.current?.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
-  }
+  return <div className="hiw-page">
+    <section className="hiw-hero" aria-labelledby="how-title"><div className="hiw-wrap"><p className="hiw-eyebrow"><span /> HOW HSI WORKS</p><div className="hiw-hero-grid"><h1 id="how-title">Start with a question.<br /><em>Build a clearer view.</em></h1><div><p className="hiw-lede">Bring the relevant context into focus. Examine the evidence. Keep people in control of interpretation and the next step.</p><div className="hiw-actions"><a className="hiw-button" href="#journey-explorer">Follow a journey <Arrow /></a><Link className="hiw-link" to="/platform">See the foundation <Arrow /></Link></div></div></div><div className="hiw-overview" aria-label="Question to context, evidence and human review"><div><span>01</span><strong>Your question</strong><small>Define what matters</small></div><b aria-hidden="true">→</b><div><span>02</span><strong>Relevant context</strong><small>Connect the pieces</small></div><b aria-hidden="true">→</b><div><span>03</span><strong>Traceable evidence</strong><small>Examine the support</small></div><b aria-hidden="true">→</b><div><span>04</span><strong>Human review</strong><small>Assess the next step</small></div></div></div></section>
 
-  return (
-    <>
-      <section className="land-hiw section section-bone" aria-labelledby="hiw-title">
-        <div className="container">
-          <span className="section-num">HSI / HOW IT WORKS</span>
-          <div className="land-hiw-hero">
-            <h1 className="display display-xl" id="hiw-title">
-              From complexity
-              <br />
-              to <em className="land-em">clarity.</em>
-            </h1>
-            <p className="lede">
-              Health information is fragmented. Scientific knowledge is vast. HSI is designed to
-              connect the relevant context, investigate meaningful questions and make findings
-              understandable—with evidence, privacy and human judgment at the centre.
-            </p>
-          </div>
+    <section className="hiw-section hiw-explorer" id="journey-explorer" aria-labelledby="explorer-title"><div className="hiw-wrap"><div className="hiw-heading"><div><p className="hiw-eyebrow">THE EXPERIENCE EXPLORER</p><h2 id="explorer-title">Different perspectives.<br /><em>A thoughtful process.</em></h2></div><p>Choose a perspective, then move through its stages. These are explanations of the workflow, rather than live product sessions.</p></div>
+      <div className="hiw-perspectives" role="group" aria-label="Choose a perspective">{PERSPECTIVES.map(p=><button type="button" key={p.id} aria-pressed={p.id===persona} aria-controls="journey-content" onClick={()=>selectPersona(p.id)}>{p.label}<Arrow /></button>)}</div>
+      <div className="hiw-experience" id="journey-content"><div className="hiw-journey-head"><div className="hiw-product-line"><span>{product.name}</span><span className={`hiw-status hiw-status-${product.chip}`}>{MATURITY_CHIP_LABEL[product.chip]}</span></div><h3>{journey.title}</h3><p>{journey.intro}</p><div className="hiw-scope">{perspective.scope}</div></div>
+        <div className="hiw-stages" role="group" aria-label="Journey stages">{STAGES.map((label,i)=><button type="button" key={label} aria-current={i===step ? "step" : undefined} aria-pressed={i===step} aria-controls="journey-step-detail" onClick={()=>setStep(i)}><small>0{i+1} / 06</small><strong>{label}</strong><Arrow /></button>)}</div>
+        <div className="hiw-step" id="journey-step-detail" aria-live="polite" aria-atomic="true"><div className="hiw-step-main"><p className="hiw-eyebrow">STEP 0{step+1} / {STAGES[step].toUpperCase()}</p><h4>{current.title}</h4><p>{current.description}</p></div><aside className="hiw-step-output"><p className="hiw-eyebrow">ILLUSTRATED OUTPUT</p><h4>{current.outputTitle}</h4><p>{current.outputDescription}</p><div className="hiw-review-note"><span>HUMAN OVERSIGHT</span><p>{current.oversight}</p></div></aside></div>
+        <div className="hiw-controls"><button type="button" disabled={step===0} onClick={()=>setStep(s=>Math.max(0,s-1))}>← Previous stage</button><span>0{step+1} / 06</span><button type="button" onClick={()=>setStep(s=>(s+1)%STAGES.length)}>{step===STAGES.length-1 ? "Restart journey" : "Next stage →"}</button></div>
+        <div className="hiw-experience-foot"><p>Illustrative workflow · no live patient data or automatic clinical action. Selecting a stage does not run an investigation.</p><Link className="hiw-link" to={perspective.href}>{persona==="clinician" ? "Explore the foundation" : "Explore this product"}<Arrow /></Link></div>
+      </div>
+    </div></section>
 
-          <section
-            ref={experienceRef}
-            id="experience"
-            className="land-hiw-workspace"
-            aria-label="Interactive HSI journeys"
-          >
-            <div className="land-hiw-topline">
-              <span>HSI / EXPERIENCE EXPLORER</span>
-              <span>
-                <b>●</b> CONCEPTUAL WORKFLOW
-              </span>
-            </div>
+    <section className="hiw-section hiw-boundaries" aria-labelledby="boundaries-title"><div className="hiw-wrap"><div className="hiw-heading"><div><p className="hiw-eyebrow">THE BOUNDARIES THAT MATTER</p><h2 id="boundaries-title">Connect the thinking.<br /><em>Respect the context.</em></h2></div><p>The approach is shared. Product data, permissions and the decisions people make remain distinct.</p></div><div className="hiw-principles"><article><span>01 / OWNERSHIP</span><h3>Data stays with its product</h3><p>Aksh care records and ISI research data remain in their own environments. Shared technology does not create a shared patient database.</p></article><article><span>02 / EVIDENCE</span><h3>Sources stay in view</h3><p>Review requires the context behind an interpretation: source references, study limits, uncertainty and information that is missing.</p></article><article><span>03 / ACCOUNTABILITY</span><h3>People assess the next step</h3><p>Research questions need scientific assessment. Clinical decisions and formal trial eligibility remain with authorised professionals.</p></article></div></div></section>
 
-            <div className="land-hiw-tabs" role="tablist" aria-label="Choose a perspective">
-              {PERSONA_TABS.map((tab) => (
-                <button
-                  key={tab.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={persona === tab.id}
-                  onClick={() => selectPersona(tab.id)}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
+    <section className="hiw-section hiw-trust"><div className="hiw-wrap hiw-trust-grid"><div><p className="hiw-eyebrow">A PROCESS YOU CAN QUESTION</p><h2>Clarity includes<br /><em>knowing the limits.</em></h2></div><div><p>A well-structured investigation should make it easier to see what is known, what is inferred and what still needs work.</p><ul><li>Relevant information is bounded by purpose and permissions.</li><li>Biological context is kept distinct from evidence of an effect.</li><li>Candidate hypotheses remain unvalidated until assessed.</li><li>Feedback requires review before changing accepted knowledge.</li></ul></div></div></section>
 
-            <div className="land-hiw-workspace-head">
-              <h2>{journey.title}</h2>
-              <p>{journey.intro}</p>
-            </div>
-
-            <div className="land-hiw-steps" aria-label="Journey stages">
-              {STAGES.map((label, i) => (
-                <button
-                  key={label}
-                  type="button"
-                  aria-current={i === step ? "step" : undefined}
-                  onClick={() => setStep(i)}
-                >
-                  <small>0{i + 1} / 06</small>
-                  <strong>{label}</strong>
-                </button>
-              ))}
-            </div>
-
-            <div className="land-hiw-detail">
-              <div className="land-hiw-detail-main" aria-live="polite">
-                <div>
-                  <div className="land-hiw-eyebrow">
-                    STEP 0{step + 1} / {STAGES[step].toUpperCase()}
-                  </div>
-                  <h3>{current.title}</h3>
-                  <p>{current.description}</p>
-                </div>
-                <div className="land-hiw-flowline">Context → Interpretation → Review</div>
-              </div>
-              <aside className="land-hiw-side">
-                <div>
-                  <div className="land-hiw-eyebrow">WHAT YOU SEE</div>
-                  <h4>{current.outputTitle}</h4>
-                  <p>{current.outputDescription}</p>
-                </div>
-                <div className="land-hiw-side-foot">REVIEW NOTE · {current.oversight}</div>
-              </aside>
-            </div>
-
-            <div className="land-hiw-actions">
-              <button
-                type="button"
-                disabled={step === 0}
-                onClick={() => setStep((s) => Math.max(0, s - 1))}
-              >
-                ← Previous stage
-              </button>
-              <button type="button" onClick={() => setStep((s) => (s + 1) % 6)}>
-                {step === 5 ? "Restart journey ↺" : "Next stage →"}
-              </button>
-            </div>
-
-            <p className="land-hiw-disclaimer">
-              Illustrative product journey. These screens do not represent live patient data or
-              completed clinical validations. Humans stay in control of consequential decisions;
-              trial paths never auto-confirm eligibility.
-            </p>
-          </section>
-        </div>
-      </section>
-
-      <section className="land-hiw section section-grid-light" id="people" aria-labelledby="hiw-people">
-        <div className="container">
-          <div className="land-hiw-section-head">
-            <div>
-              <span className="section-num">FOUR EXPERIENCES / ONE CONNECTED VISION</span>
-              <h2 className="display display-xl" id="hiw-people">
-                Built around
-                <br />
-                <em className="land-em">your question.</em>
-              </h2>
-            </div>
-            <p className="lede">
-              The underlying approach is shared, but the experience and permissions differ. A
-              patient should not see a researcher&apos;s workbench; a clinician should not receive
-              an unexplained automated recommendation.
-            </p>
-          </div>
-          <div className="land-hiw-journeys">
-            {JOURNEY_CARDS.map((card) => (
-              <article key={card.n} className="land-hiw-journey">
-                <span className="land-hiw-journey-n">{card.n}</span>
-                <h3>{card.title}</h3>
-                <p>{card.body}</p>
-                <button type="button" className="land-hiw-jump" onClick={() => jumpTo(card.jump)}>
-                  {card.cta}
-                </button>
-                <Link to={card.to} className="land-hiw-product-link">
-                  Open product surface →
-                </Link>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section
-        className="land-hiw section section-bone"
-        id="responsibility"
-        aria-labelledby="hiw-trust"
-      >
-        <div className="container">
-          <div className="land-hiw-section-head">
-            <div>
-              <span className="section-num">BUILT WITH RESPONSIBILITY</span>
-              <h2 className="display display-xl" id="hiw-trust">
-                Intelligence you
-                <br />
-                can <em className="land-em">question.</em>
-              </h2>
-            </div>
-            <p className="lede">
-              Useful intelligence needs clear limits. HSI&apos;s intended architecture makes the
-              source, uncertainty, permissions and review requirements visible at the point of use.
-            </p>
-          </div>
-          <div className="land-hiw-principles">
-            <div>
-              <h3>Human judgment stays in control.</h3>
-              <p>
-                HSI is designed to support, not replace, clinical decisions, research validation or
-                trial investigator assessment.
-              </p>
-            </div>
-            <ul>
-              {PRINCIPLES.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section className="land-hiw section section-grid-light land-hiw-last">
-        <div className="container land-hiw-last-inner">
-          <span className="section-num">ONE SYSTEM / DIFFERENT PERSPECTIVES</span>
-          <h2 className="display display-xl">
-            One connected approach. Many meaningful outcomes.
-          </h2>
-          <p className="lede">
-            Explore how HSI is intended to help turn disconnected information into understandable,
-            reviewable knowledge across personal health, clinical care, scientific research and
-            trials.
-          </p>
-          <div className="hero-actions" style={{ justifyContent: "center" }}>
-            <a href="#experience" className="btn btn-primary">
-              Explore the interactive journey <span className="arrow">↗</span>
-            </a>
-            <Link to="/products" className="btn btn-ghost land-btn-on-light">
-              Four products
-            </Link>
-            <Link to="/discovery" className="btn btn-ghost land-btn-on-light">
-              Open Discovery
-            </Link>
-          </div>
-        </div>
-      </section>
-    </>
-  );
+    <section className="hiw-section hiw-closing"><div className="hiw-wrap"><p className="hiw-eyebrow">CHOOSE YOUR NEXT STEP</p><h2>Explore the experience.<br /><em>Understand the foundation.</em></h2><p>Find your product or learn more about the biology behind the questions.</p><div className="hiw-actions"><Link className="hiw-button" to="/products">Explore the products <Arrow /></Link><Link className="hiw-link" to="/science">Discover the science <Arrow /></Link></div></div></section>
+  </div>;
 }
