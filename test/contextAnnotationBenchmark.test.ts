@@ -9,6 +9,8 @@ import {
   openAdjudicationRecord,
   assignPartitionsByPolicy,
   acceptPracticeLabelSubmission,
+  finalizeAdjudicationRecord,
+  buildPracticeAdjudicationQueue,
   ContextAnnotationBenchmarkError,
 } from "../src/contextAnnotationBenchmark";
 import pending from "../research/ra-anti-tnf/release.json";
@@ -109,4 +111,52 @@ test("practice submission accepts grounded tags and keeps practice partition", (
   expect(accepted.notForEvaluation).toBe(true);
   expect(accepted.partition).toBe("practice_not_evaluation");
   expect(accepted.rows.every((r) => r.annotatorId === "sme-a")).toBe(true);
+});
+
+test("practice adjudication queue finalizes human tags without evaluation promotion", () => {
+  const rows = scaffoldPracticeRowsFromResearchRelease(research);
+  const [blankA, blankB] = buildDoubleBlindLabelPackets(rows);
+  const tagsA = {
+    species: "human" as const,
+    tissue_or_sample: "serum",
+    setting_or_model: "clinical_observational" as const,
+    intervention: "anti-TNF",
+    outcome: "response",
+    timepoint: "12 weeks",
+  };
+  const tagsB = { ...tagsA, tissue_or_sample: "plasma" };
+  const packetA = acceptPracticeLabelSubmission(blankA, {
+    packetId: blankA.packetId,
+    annotatorSlot: "annotator_a",
+    annotatorId: "sme-a",
+    labelledAt: "2026-11-03T17:00:00Z",
+    rows: blankA.rows.map((row) => ({
+      rowId: row.rowId,
+      groundingSpan: row.passageText.slice(0, 40),
+      tags: tagsA,
+    })),
+  });
+  const packetB = acceptPracticeLabelSubmission(blankB, {
+    packetId: blankB.packetId,
+    annotatorSlot: "annotator_b",
+    annotatorId: "sme-b",
+    labelledAt: "2026-11-03T17:05:00Z",
+    rows: blankB.rows.map((row) => ({
+      rowId: row.rowId,
+      groundingSpan: row.passageText.slice(0, 40),
+      tags: tagsB,
+    })),
+  });
+  const queue = buildPracticeAdjudicationQueue(packetA, packetB);
+  expect(queue[0]!.disagreeOn).toContain("tissue_or_sample");
+  expect(queue[0]!.finalTags).toBeNull();
+  const closed = finalizeAdjudicationRecord(queue[0]!, {
+    finalTags: tagsA,
+    adjudicatorId: "sme-lead",
+    rationale: "Prefer serum wording from Annotator A for this practice passage.",
+    adjudicatedAt: "2026-11-03T17:10:00Z",
+  });
+  expect(closed.finalTags?.tissue_or_sample).toBe("serum");
+  expect(closed.fabricatedLabelsPermitted).toBe(false);
+  expect(packetA.partition).toBe("practice_not_evaluation");
 });

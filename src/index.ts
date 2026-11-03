@@ -940,6 +940,8 @@ export {
   openAdjudicationRecord,
   assignPartitionsByPolicy,
   acceptPracticeLabelSubmission,
+  finalizeAdjudicationRecord,
+  buildPracticeAdjudicationQueue,
   ContextAnnotationBenchmarkError,
   type ContextTagName,
   type ContextTagSet,
