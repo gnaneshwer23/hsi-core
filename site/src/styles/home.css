@@ -84,8 +84,7 @@
 /* Keep the home masthead aligned with the hero; other routes retain their theme. */
 .nav.home-nav .nav-toggle { background: transparent; border-color: #17645f60; }
 .nav :focus-visible { outline: 2px solid #a6bd73; outline-offset: 4px; }
-.home-skip { position: fixed; top: -100px; left: 20px; z-index: 100; padding: 12px 20px; background: #d6e6ac; color: #153f36; }
-.home-skip:focus { top: 12px; }
+/* Skip-link hide/show lives in global.css (always loaded). Theme only here. */
 @media (min-width: 901px) { .home-nav .nav-drawer { display: none; } }
 @media (max-width: 1000px) {
  .home-wrap { width: calc(100% - 3rem); }.home-hero-grid { gap: 0; }.home-product-content { padding: 22px; }.home-product h3 { font-size: 1.3rem; }.home-section-head { gap: 30px; }.home-context-panel { gap: 30px; padding: 30px; }.home-trust-grid { gap: 50px; }

@@ -143,6 +143,26 @@ p {
   flex: 1;
 }
 
+/* Skip link: off-screen until keyboard focus (must live in global.css —
+   Layout always renders .home-skip; home.css is not imported on any route). */
+.home-skip {
+  position: fixed;
+  top: -100px;
+  left: 20px;
+  z-index: 1000;
+  padding: 12px 20px;
+  background: #ff6845;
+  color: #0b302e;
+  text-decoration: none;
+  font-weight: 600;
+}
+.home-skip:focus,
+.home-skip:focus-visible {
+  top: 12px;
+  outline: 3px solid #17645f;
+  outline-offset: 3px;
+}
+
 .container {
   width: min(1120px, calc(100% - 2.5rem));
   margin-inline: auto;
