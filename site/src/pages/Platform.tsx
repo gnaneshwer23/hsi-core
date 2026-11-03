@@ -68,6 +68,28 @@ const capabilities = [
   },
 ];
 
+
+const graphDomains = [
+  { id: "patient", number: "01", title: "Patient context", status: "Governed clinical direction", nodes: ["Encounters", "Symptoms", "Laboratory results", "Medications", "Outcomes"], detail: "A longitudinal view can connect encounters, measurements, treatments and outcomes only where identity, purpose and access have been authorised.", boundary: "Identifiable patient information remains in governed clinical or patient environments. It is not copied into the public biomedical graph." },
+  { id: "biology", number: "02", title: "Human biology", status: "Research foundation", nodes: ["Organs", "Tissues", "Immune cells", "Pathways", "Biomarkers"], detail: "Trace how organs, tissues, cell states and molecular pathways relate to physiological functions and disease questions.", boundary: "A biological relationship is context, not automatically causal evidence or a clinical conclusion." },
+  { id: "microbiome", number: "03", title: "Gut–immune–metabolic", status: "Developing knowledge direction", nodes: ["Microbes", "Metabolites", "Host pathways", "Immune processes", "Metabolic phenotypes"], detail: "Bring microbial functions, host metabolism and immune pathways into a research framework with explicit study context.", boundary: "Population associations are not treated as patient-specific measurements or proven causal mechanisms." },
+  { id: "evidence", number: "04", title: "Biomedical evidence", status: "Scoped evidence infrastructure", nodes: ["Publications", "Datasets", "Findings", "Contradictions", "Hypotheses"], detail: "Link source material and versioned findings to uncertainty, conflicting interpretations and researcher-proposed questions.", boundary: "Unreviewed hypotheses remain separate from approved findings. Publication and dataset rights must be checked." },
+] as const;
+
+const researchTracks = {
+  ssc: { name: "Systemic sclerosis", state: "Curation pending", question: "How do CD4/Tfh, B cells and IL-21 feature in proposed SSc mechanisms?", focus: ["CD4 / Tfh", "B cells", "IL-21", "EBV uncertainty"], boundary: "An emerging research direction, not a verified SSc mechanism release. EBV remains an uncertainty branch." },
+  ra: { name: "Rheumatoid arthritis", state: "Research working set", question: "What does RF/anti-CCP evidence suggest about variation in anti-TNF response?", focus: ["RF", "Anti-CCP", "Anti-TNF", "Study heterogeneity"], boundary: "Existing RA materials are a research working set. Source availability does not imply scientific approval." },
+} as const;
+
+const intelligenceStages = [
+  { label: "Source", detail: "Register permitted research sources and retain origin, version and rights." },
+  { label: "Retrieve", detail: "Find relevant passages within an authorised, bounded collection." },
+  { label: "Connect", detail: "Explore graph neighbourhoods while retaining relationship context." },
+  { label: "Investigate", detail: "Compare findings, surface contradictions and record missing evidence." },
+  { label: "Propose", detail: "Record candidate hypotheses separately from established evidence." },
+  { label: "Review", detail: "A responsible human reviewer decides what, if anything, is approved." },
+] as const;
+
 function Arrow() {
   return <svg className="pl-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12" stroke="currentColor" strokeWidth="1.5" /></svg>;
 }
@@ -75,6 +97,9 @@ function Arrow() {
 export function Platform() {
   const [product, setProduct] = useState<Product>("isi");
   const [selected, setSelected] = useState(0);
+  const [graphDomain, setGraphDomain] = useState(1);
+  const [researchTrack, setResearchTrack] = useState<"ssc" | "ra">("ssc");
+  const [intelligenceStage, setIntelligenceStage] = useState(0);
   const currentProduct = products[product];
   const capability = capabilities[selected];
 
@@ -85,7 +110,7 @@ export function Platform() {
           <div>
             <p className="pl-eyebrow"><span /> THE HSI PLATFORM</p>
             <h1 id="platform-title">Shared intelligence.<br /><em>Distinct experiences.</em></h1>
-            <p className="pl-lede">The technology that helps connect health questions, biological knowledge and scientific evidence—while keeping each product in control of its own data.</p>
+            <p className="pl-lede">Explore how governed health context, human biology and scientific evidence can work together through shared intelligence—without collapsing product permissions or confusing hypotheses with approved knowledge.</p>
             <div className="pl-actions"><a className="pl-button" href="#platform-architecture">Explore the architecture <Arrow /></a><Link className="pl-link" to="/how-it-works">Follow the workflow <Arrow /></Link></div>
           </div>
           <div className="pl-foundation" role="img" aria-label="Four distinct HSI product experiences share a technology direction while retaining separate data ownership and maturity states.">
@@ -115,6 +140,33 @@ export function Platform() {
             </div>
           </div>
           <p className="pl-architecture-note">Architecture explainer · Selecting a product changes this explanation only. Connections represent an architecture direction and existing scoped software reuse, not patient-record transfers, shared access rights or a live data feed.</p>
+        </div>
+      </section>
+
+
+      <section className="pl-section pl-graph-section" id="knowledge-graph" aria-labelledby="graph-title">
+        <div className="pl-wrap">
+          <div className="pl-heading"><div><p className="pl-eyebrow">01 / LIVING HEALTH KNOWLEDGE GRAPH</p><h2 id="graph-title">Four domains.<br /><em>Context in every connection.</em></h2></div><p>Explore the logical knowledge architecture. These domains describe governed relationships, not a single shared database or unrestricted patient-data access.</p></div>
+          <div className="pl-graph-explorer">
+            <div className="pl-graph-tabs" role="group" aria-label="Knowledge graph domain">{graphDomains.map((domain, index) => <button type="button" key={domain.id} aria-pressed={graphDomain === index} onClick={() => setGraphDomain(index)}><span>{domain.number}</span>{domain.title}</button>)}</div>
+            <div className="pl-graph-detail" aria-live="polite" aria-atomic="true">
+              <div className="pl-graph-copy"><p className="pl-eyebrow">{graphDomains[graphDomain].status}</p><h3>{graphDomains[graphDomain].title}</h3><p>{graphDomains[graphDomain].detail}</p><div className="pl-graph-boundary"><strong>Evidence and access boundary</strong><p>{graphDomains[graphDomain].boundary}</p></div></div>
+              <div className="pl-graph-visual" aria-label={graphDomains[graphDomain].title + " conceptual relationship map"}><div className="pl-graph-hub">HSI<span>CONTEXT</span></div><div className="pl-graph-nodes">{graphDomains[graphDomain].nodes.map((node, index) => <span key={node} className={"pl-graph-node pl-graph-node-" + index}>{node}</span>)}</div><small>Conceptual model · not live patient or research data</small></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="pl-section pl-intelligence-section" id="intelligence" aria-labelledby="intelligence-title">
+        <div className="pl-wrap"><div className="pl-heading"><div><p className="pl-eyebrow">02 / EVIDENCE TO INTELLIGENCE</p><h2 id="intelligence-title">Investigate with AI.<br /><em>Decide with evidence.</em></h2></div><p>A supervised research lifecycle. Shared components can support investigations; agent-led discovery and automated ingestion are not presented as deployed capabilities.</p></div>
+          <div className="pl-intelligence-steps" role="group" aria-label="Research intelligence stages">{intelligenceStages.map((stage, index) => <button key={stage.label} type="button" aria-pressed={intelligenceStage === index} onClick={() => setIntelligenceStage(index)}><span>{String(index + 1).padStart(2, "0")}</span>{stage.label}</button>)}</div>
+          <div className="pl-intelligence-detail" aria-live="polite"><div><span>SELECTED STAGE / {String(intelligenceStage + 1).padStart(2, "0")}</span><h3>{intelligenceStages[intelligenceStage].label}</h3><p>{intelligenceStages[intelligenceStage].detail}</p></div><p>Agent outputs are proposals, not scientific approval. Rights checks, provenance and independent human review remain mandatory.</p></div>
+        </div>
+      </section>
+
+      <section className="pl-section pl-tracks-section" id="research-tracks" aria-labelledby="tracks-title">
+        <div className="pl-wrap"><div className="pl-heading"><div><p className="pl-eyebrow">03 / PARALLEL RESEARCH TRACKS</p><h2 id="tracks-title">Two disease questions.<br /><em>Independent review.</em></h2></div><p>Systemic sclerosis and rheumatoid arthritis follow separate evidence and scientific-review gates. One track cannot approve findings in the other.</p></div>
+          <div className="pl-track-layout"><div className="pl-track-tabs" role="group" aria-label="Disease research track">{(Object.keys(researchTracks) as Array<keyof typeof researchTracks>).map(id => <button key={id} type="button" aria-pressed={researchTrack === id} onClick={() => setResearchTrack(id)}><span>{id.toUpperCase()}</span>{researchTracks[id].name}</button>)}</div><div className="pl-track-detail" aria-live="polite"><p className="pl-eyebrow">{researchTracks[researchTrack].state}</p><h3>{researchTracks[researchTrack].question}</h3><div className="pl-track-tags">{researchTracks[researchTrack].focus.map(term => <span key={term}>{term}</span>)}</div><p>{researchTracks[researchTrack].boundary}</p><div className="pl-track-gate">Separate source rights <b>→</b> Versioned evidence <b>→</b> Independent scientist review</div><Link className="pl-link" to="/for-isi">Explore immune research <Arrow /></Link></div></div>
         </div>
       </section>
 
