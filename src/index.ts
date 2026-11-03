@@ -885,3 +885,43 @@ export { RESEARCH_CONTRACT_VERSION, RESEARCH_STAGES, parseResearchContext, parse
 export { INVESTIGATION_SERVICE_VERSION, createInvestigationService, createCorpusRetrievalProvider, createMemoryInvestigationStore, validateInvestigationSnapshot, renderInvestigationDossier, InvestigationConflictError, InvestigationAccessError, type ResearchActor, type InvestigationAction, type InvestigationAuthorizer, type InvestigationStore, type StoredInvestigation, type InvestigationProviders, type InvestigationProvider, type ProviderDescriptor, type InvestigationPayloads, type RetrievalResult, type GraphResult, type ContradictionResult, type ConflictGroup, type HypothesisResult, type ReviewResult, type DossierResult } from "./investigationService";
 export { INVESTIGATION_BACKEND_VERSION, createOwnedInvestigationBackend, parseInvestigationCommand, readInvestigationRequest, investigationJson, investigationError, InvestigationRequestError, type InvestigationSql, type InvestigationDatabase, type InvestigationPrincipal, type InvestigationRelease, type InvestigationCommand, type InvestigationCursor } from "./investigationBackend";
 export { RA_EVIDENCE_RELEASE_VERSION, RA_RELEASE_ID, RA_QUESTION, RA_SOURCE_IDENTITIES, parseRaEvidenceRelease, buildRaEvidenceBundle, raEvidenceReadiness, raEvidenceReleaseListing, RaEvidenceUnavailableError, type RaEvidenceRelease, type RaSourceReceipt, type RaReviewCandidate, type RaEvidenceReadiness } from "./raEvidenceRelease";
+export {
+  RA_DEMO_EVIDENCE_RELEASE_VERSION,
+  RA_DEMO_RELEASE_ID,
+  RA_DEMO_QUESTION,
+  RA_DEMO_SOURCE_IDS,
+  RA_DEMO_DATASET_ID,
+  parseRaDemoEvidenceRelease,
+  buildRaDemoEvidenceBundle,
+  raDemoEvidenceReadiness,
+  raDemoEvidenceReleaseListing,
+  sealRaDemoEvidenceRelease,
+  RaDemoEvidenceError,
+  type RaDemoEvidenceRelease,
+  type RaDemoEvidenceReadiness,
+} from "./raDemoEvidenceRelease";
+export {
+  CORRECTION_PROVENANCE_VERSION,
+  emptyCorrectionProvenanceBundle,
+  assertCorrectionFeedSeparation,
+  routeCorrectionStub,
+  CorrectionProvenanceError,
+  type CorrectionFeedKind,
+  type CorrectionRecordStub,
+  type CorrectionProvenanceBundle,
+} from "./correctionProvenance";
+export {
+  OBSERVATION_BIOLOGY_BRIDGE_VERSION,
+  ObservationBiologyBridgeError,
+  bridgeObservationToBiology,
+  type ResearchSafeObservationStub,
+  type ObservationBiologyBridgeResult,
+} from "./observationBiologyBridge";
+export { SECOND_PACK_STUB_VERSION, secondIndicationPackStub, type SecondPackStub } from "./secondPackStub";
+export {
+  CLINICAL_RESEARCH_SCAFFOLD_VERSION,
+  decideClinicalResearchScaffold,
+  clinicalResearchScaffoldManifest,
+  type ClinicalResearchScaffoldRequest,
+  type ClinicalResearchScaffoldDecision,
+} from "./clinicalResearchScaffold";

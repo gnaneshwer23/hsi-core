@@ -48,7 +48,7 @@ describe("Public HSI site honesty", () => {
     expect(nav).toContain("/science");
     expect(nav).toContain("/how-it-works");
     expect(nav).toContain("How It Works");
-    expect(nav).toContain("Engineering (secondary)");
+    // Primary IA is founder destinations only; Status/Roadmap/Docs stay footer-only.
     expect(nav).not.toMatch(/primaryLinks[\s\S]*Curator/);
     expect(nav).not.toMatch(/primaryLinks[\s\S]*\/discovery/);
     expect(nav).not.toMatch(/primaryLinks[\s\S]*\/explore/);
@@ -56,15 +56,17 @@ describe("Public HSI site honesty", () => {
     expect(nav).not.toMatch(/primaryLinks[\s\S]*for-trials/);
     expect(nav).not.toMatch(/primaryLinks[\s\S]*for-isi/);
     expect(nav).not.toMatch(/primaryLinks[\s\S]*\/status/);
-    expect(nav).toContain("ENGINEERING_LINKS");
+    expect(nav).not.toContain("ENGINEERING_LINKS");
 
     const home = site("src/pages/Home.tsx");
-    expect(home).toContain("<EcosystemGrid");
-    expect(home).toContain("<DiscoveryWorkbench");
-    expect(home).not.toContain("<EvidenceExplorer");
-    expect(home).toContain("What is live today?");
-    expect(home).toContain('to="/status"');
+    expect(home).toContain("Aksh Health");
+    expect(home).toContain("Immune Super Intelligence");
+    expect(home).toContain("Human Super Intelligence");
+    expect(home).toContain("Illustrative connections · not study findings or patient analysis");
     expect(home).toContain('to="/for-isi"');
+    expect(home).toContain('to="/for-aksh"');
+    expect(home).toContain('to="/platform"');
+    expect(home).not.toContain("<EvidenceExplorer");
     const ecosystem = site("src/components/landing/EcosystemGrid.tsx");
     expect(ecosystem).toContain("ECOSYSTEM_PRODUCTS");
     expect(ecosystem).toContain("MATURITY_CHIP_LABEL");

@@ -29,6 +29,26 @@
     "./ra-evidence-release": {
       "types": "./dist/raEvidenceRelease.d.ts",
       "import": "./dist/raEvidenceRelease.js"
+    },
+    "./ra-demo-evidence-release": {
+      "types": "./dist/raDemoEvidenceRelease.d.ts",
+      "import": "./dist/raDemoEvidenceRelease.js"
+    },
+    "./correction-provenance": {
+      "types": "./dist/correctionProvenance.d.ts",
+      "import": "./dist/correctionProvenance.js"
+    },
+    "./observation-biology-bridge": {
+      "types": "./dist/observationBiologyBridge.d.ts",
+      "import": "./dist/observationBiologyBridge.js"
+    },
+    "./second-pack-stub": {
+      "types": "./dist/secondPackStub.d.ts",
+      "import": "./dist/secondPackStub.js"
+    },
+    "./clinical-research-scaffold": {
+      "types": "./dist/clinicalResearchScaffold.d.ts",
+      "import": "./dist/clinicalResearchScaffold.js"
     }
   },
   "files": [
@@ -65,7 +85,9 @@
     "investigation:demo": "bun src/cli/investigation-demo.ts",
     "ra:import": "python3 tools/import_ra_evidence.py",
     "ra:test-parser": "python3 -m unittest discover -s test/python -v",
-    "ra:export-artifact": "bun scripts/export-ra-evidence-artifact.ts"
+    "ra:export-artifact": "bun scripts/export-ra-evidence-artifact.ts",
+    "ra:export-demo-artifact": "bun scripts/export-ra-demo-artifact.ts",
+    "ra:smoke-demo": "bun scripts/smoke-ra-demo-path.ts"
   },
   "engines": {
     "node": ">=20"
