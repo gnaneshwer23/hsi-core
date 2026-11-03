@@ -30,7 +30,7 @@ const hash = (value: string) => createHash("sha256").update(value).digest("hex")
 const canonical = (value: unknown) => JSON.stringify(value, (_key, row: unknown) => row && typeof row === "object" && !Array.isArray(row) ? Object.fromEntries(Object.entries(row).sort(([a], [b]) => a < b ? -1 : a > b ? 1 : 0)) : row);
 function exact(value: unknown, keys: string[]): asserts value is Record<string, unknown> {
   requireValue(value && typeof value === "object" && !Array.isArray(value));
-  requireValue(Object.keys(value).length === keys.length && keys.every((key) => Object.hasOwn(value, key)));
+  requireValue(Object.keys(value).length === keys.length && keys.every((key) => Object.prototype.hasOwnProperty.call(value, key)));
 }
 const text = (value: unknown, max = 4000): value is string => typeof value === "string" && !!value.trim() && value.length <= max;
 const sha = (value: unknown): value is string => typeof value === "string" && /^[a-f0-9]{64}$/.test(value);
