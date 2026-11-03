@@ -20,18 +20,41 @@ const destinations = [
 ] as const;
 
 function ConnectionArt() {
-  const nodes = [
-    {x:145,y:180,label:"HEALTH CONTEXT",n:0},{x:490,y:122,label:"CLINICAL",n:1},
-    {x:370,y:270,label:"BIOLOGY",n:2},{x:555,y:390,label:"IMMUNE",n:3},
-    {x:180,y:450,label:"EVIDENCE",n:4},{x:420,y:510,label:"RESEARCH",n:5},
+  // Original SVG knowledge landscape, inspired by the user's fine-line scientific reference.
+  // All nodes and paths are illustrative, never patient data or published findings.
+  const heightAt = (x: number, depth: number) => {
+    const peak = Math.exp(-Math.pow((x - 350) / 145, 2)) * 155;
+    const second = Math.exp(-Math.pow((x - 545) / 90, 2)) * 65;
+    const valley = Math.exp(-Math.pow((x - 180) / 105, 2)) * 28;
+    return 350 + depth * 7 - peak * (1 - depth * .014) - second * (1 - depth * .012) + valley;
+  };
+  const horizontal = Array.from({length: 28},(_,i)=>{
+    const depth=i-12;
+    const pts=Array.from({length:75},(_,j)=>{const x=28+j*8.5;return `${j?"L":"M"}${x.toFixed(1)} ${heightAt(x,depth).toFixed(1)}`;});
+    return pts.join(" ");
+  });
+  const vertical = Array.from({length:36},(_,i)=>{
+    const x=32+i*17.6;
+    return Array.from({length:28},(_,j)=>`${j?"L":"M"}${x.toFixed(1)} ${heightAt(x,j-12).toFixed(1)}`).join(" ");
+  });
+  const labels = [
+    {x:130,y:245,name:"HEALTH CONTEXT"},
+    {x:350,y:96,name:"BIOLOGICAL SYSTEMS"},
+    {x:552,y:211,name:"SCIENTIFIC EVIDENCE"},
   ];
-  return <svg className="hsi-editorial-art hsi-new-art" viewBox="0 0 680 610" role="img" aria-label="Illustrative layered scientific network connecting health context, clinical records, biology, immune pathways, evidence and research">
-    <defs><radialGradient id="hsi-glow"><stop stopColor="#56A39B" stopOpacity=".42"/><stop offset="1" stopColor="#17645F" stopOpacity="0"/></radialGradient><linearGradient id="hsi-path" x1="0" x2="1"><stop stopColor="#F3EEE8" stopOpacity=".15"/><stop offset=".6" stopColor="#FFB6A1"/><stop offset="1" stopColor="#F3EEE8" stopOpacity=".25"/></linearGradient></defs>
-    <circle cx="340" cy="305" r="288" fill="url(#hsi-glow)"/>
-    {[118,192,262].map(r=><circle key={r} cx="340" cy="305" r={r} fill="none" stroke="#F3EEE8" strokeOpacity=".18" strokeDasharray="2 10"/>)}
-    <g fill="none" stroke="url(#hsi-path)" strokeWidth="1.5"><path d="M145 180 490 122 370 270 555 390 420 510 180 450 145 180M145 180 370 270 180 450M490 122 555 390M370 270 420 510"/></g>
-    <g transform="translate(340 305)"><circle r="79" fill="#F3EEE8" fillOpacity=".10" stroke="#F3EEE8" strokeOpacity=".4"/><circle r="57" fill="#F3EEE8" fillOpacity=".94"/><path d="M-34 0C-15-45 14-45 34 0 15 45-14 45-34 0ZM0-42V42" stroke="#17645F" strokeWidth="3" fill="none"/><circle r="6" fill="#FF6845"/></g>
-    {nodes.map(({x,y,label,n})=><g key={label}><circle cx={x} cy={y} r="29" fill="#17645F" stroke="#F3EEE8" strokeOpacity=".65"/><circle cx={x} cy={y} r="16" fill={n===3?"#FF6845":"#F3EEE8"}/><circle cx={x} cy={y} r="5" fill="#17645F"/><text x={x} y={y+48} fill="#F3EEE8" fontSize="10" textAnchor="middle" letterSpacing="1.4">{label}</text></g>)}
+  return <svg className="hsi-editorial-art hsi-landscape-art" viewBox="0 0 680 610" role="img" aria-label="Illustrative flowing scientific knowledge landscape with fine teal mesh, coral markers for health context, biological systems and scientific evidence">
+    <defs>
+      <linearGradient id="hsi-landscape-line" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#D7E9E2" stopOpacity=".75"/><stop offset=".5" stopColor="#7FC3B6" stopOpacity=".85"/><stop offset="1" stopColor="#F4B39D" stopOpacity=".7"/></linearGradient>
+      <radialGradient id="hsi-landscape-glow"><stop stopColor="#80C5B6" stopOpacity=".26"/><stop offset="1" stopColor="#17645F" stopOpacity="0"/></radialGradient>
+    </defs>
+    <circle cx="355" cy="310" r="290" fill="url(#hsi-landscape-glow)"/>
+    <g fill="none" stroke="url(#hsi-landscape-line)" strokeWidth=".8" opacity=".68">
+      {horizontal.map((d,i)=><path key={`h${i}`} d={d}/>)}
+      {vertical.map((d,i)=><path key={`v${i}`} d={d}/>)}
+    </g>
+    <path d="M130 260 Q220 170 350 112 T552 223" stroke="#FF9B7D" strokeWidth="1.3" strokeDasharray="3 8" fill="none" opacity=".85"/>
+    {labels.map(({x,y,name})=><g key={name}><line x1={x} y1={y+15} x2={x} y2={y+56} stroke="#F3EEE8" strokeOpacity=".85"/><circle cx={x} cy={y+56} r="16" fill="none" stroke="#FF9B7D" strokeOpacity=".9"/><circle cx={x} cy={y+56} r="5" fill="#FF6845"/><rect x={x-73} y={y-12} width="146" height="25" rx="2" fill="#17645F" fillOpacity=".86"/><text x={x} y={y+4} fill="#F3EEE8" textAnchor="middle" fontSize="9" letterSpacing="1.1">{name}</text></g>)}
+    <g fill="#F3EEE8" fontSize="9" letterSpacing="1.6"><text x="36" y="560">HEALTH → BIOLOGY → EVIDENCE</text><text x="644" y="560" textAnchor="end">ILLUSTRATIVE KNOWLEDGE LANDSCAPE</text></g>
   </svg>;
 }
 
@@ -50,7 +73,7 @@ export function Home() {
             <p className="hsi-editorial-lede">Intelligence should be too. A governed ecosystem connecting human health, biology, immune mechanisms and scientific discovery — with evidence at every step.</p>
             <div className="hsi-editorial-actions"><Link className="hsi-editorial-button" to="/platform">Explore the platform <span aria-hidden="true">↗</span></Link><a className="hsi-editorial-textlink" href="#connected-journey">Follow the connections <span aria-hidden="true">↗</span></a></div>
           </div>
-          <div className="hsi-editorial-visual"><ConnectionArt/><div className="hsi-editorial-visual-note"><span>SIX PERSPECTIVES / ONE ECOSYSTEM</span><span>Illustrative connections · not study findings or patient analysis</span></div></div>
+          <div className="hsi-editorial-visual hsi-landscape-visual"><ConnectionArt/><div className="hsi-editorial-visual-note"><span>SIX PERSPECTIVES / ONE ECOSYSTEM</span><span>Illustrative connections · not study findings or patient analysis</span></div></div>
         </div>
         <div className="hsi-editorial-bottomline"><span>EXPLORE <b>•</b> CONNECT <b>•</b> UNDERSTAND <b>•</b> DISCOVER</span><Link to="/how-it-works">SEE HOW IT WORKS ↗</Link></div>
       </div>
