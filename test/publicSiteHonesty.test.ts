@@ -145,7 +145,7 @@ describe("Public HSI site honesty", () => {
 });
 
 
-test("Stage A Platform includes all four distinct product perspectives and honest maturity", () => {
+it("Stage A Platform includes all four distinct product perspectives and honest maturity", () => {
   const platform = site("src/pages/Platform.tsx");
   expect(platform).toContain('type Product = "aksh" | "clinical" | "isi" | "trials"');
   expect(platform).toContain('name: "Aksh Health"');
