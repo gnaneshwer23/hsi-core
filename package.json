@@ -49,6 +49,10 @@
     "./clinical-research-scaffold": {
       "types": "./dist/clinicalResearchScaffold.d.ts",
       "import": "./dist/clinicalResearchScaffold.js"
+    },
+    "./context-annotation-benchmark": {
+      "types": "./dist/contextAnnotationBenchmark.d.ts",
+      "import": "./dist/contextAnnotationBenchmark.js"
     }
   },
   "files": [
@@ -87,7 +91,8 @@
     "ra:test-parser": "python3 -m unittest discover -s test/python -v",
     "ra:export-artifact": "bun scripts/export-ra-evidence-artifact.ts",
     "ra:export-research-artifact": "bun scripts/export-ra-research-artifact.ts",
-    "ra:verify-research-path": "bun scripts/verify-ra-research-path.ts"
+    "ra:verify-research-path": "bun scripts/verify-ra-research-path.ts",
+    "ra:scaffold-annotation": "bun scripts/scaffold-ra-annotation.ts"
   },
   "engines": {
     "node": ">=20"

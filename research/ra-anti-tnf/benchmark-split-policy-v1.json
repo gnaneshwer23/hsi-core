@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "hsi-ra-context-annotation-benchmark-1",
+  "evaluationShare": 0.4,
+  "trainingShare": 0.4,
+  "holdoutShare": 0.2,
+  "evaluationRequiresRightsVerifiedRelease": true,
+  "practiceRowsCannotEnterEvaluation": true,
+  "proposedAbstractTarget": 200,
+  "proposedAccuracyTargetNote": "Proposed milestone only — not a measured result.",
+  "proposedTimeSavingTargetNote": "Proposed milestone only — not a measured result."
+}

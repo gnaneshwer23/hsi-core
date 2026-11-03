@@ -66,9 +66,18 @@ HSI_TEST_DB_URL=postgres://hsi_app_test:…@127.0.0.1:5432/hsi_step3_test \
 3. Start `ra-anti-tnf-evidence` → `evidence_not_ready`.
 4. Cross-owner denied; workflow accept ≠ scientific approval.
 
+## Phase 6 annotation kit
+
+See [PHASE6_CONTEXT_ANNOTATION_BENCHMARK.md](PHASE6_CONTEXT_ANNOTATION_BENCHMARK.md).
+
+```sh
+bun run ra:scaffold-annotation -- practice   # empty practice packets from research working set
+bun run ra:scaffold-annotation -- verified # blocked until rights-verified release
+```
+
 ## Human verification still required
 
 - Explicit CC BY/CC0 URI import for real PMIDs.
-- Product Neon apply + research roles.
-- SME annotation / adjudication.
+- Product Neon apply + research roles (Aksh membership grant).
+- SME annotation / adjudication (kit ready; labels empty).
 - Measured utility before a second indication pack.
