@@ -2,13 +2,21 @@ import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { ENGINEERING_LINKS } from "../lib/productMaturity";
 
-/** Primary destinations — product honesty first; engineering demoted. */
+/**
+ * Primary destinations — product/marketing landings only.
+ * Matches footer Platform + Products + Progress; engineering stays drawer-secondary.
+ */
 const primaryLinks = [
   { to: "/platform", label: "Platform" },
   { to: "/products", label: "Products" },
+  { to: "/how-it-works", label: "How it works" },
   { to: "/explore", label: "Explore" },
   { to: "/discovery", label: "Discovery" },
+  { to: "/for-aksh", label: "For Aksh" },
+  { to: "/for-trials", label: "For Trials" },
+  { to: "/for-isi", label: "For ISI" },
   { to: "/status", label: "Status" },
+  { to: "/roadmap", label: "Roadmap" },
 ];
 
 export function Nav() {

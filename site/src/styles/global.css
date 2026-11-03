@@ -372,17 +372,21 @@ p {
 .nav-links {
   display: none;
   align-items: center;
-  gap: 0.1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0;
+  max-width: min(52rem, 100%);
 }
 
 .nav-links a {
-  padding: 0.4rem 0.65rem;
+  padding: 0.35rem 0.45rem;
   border-radius: 8px;
   font-family: var(--font-display);
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.82);
   opacity: 0.9;
+  white-space: nowrap;
   transition: opacity 0.15s, background 0.2s var(--ease), color 0.2s;
 }
 
@@ -456,7 +460,7 @@ p {
   color: var(--bone);
 }
 
-@media (min-width: 960px) {
+@media (min-width: 1100px) {
   .nav-links,
   .nav-cta {
     display: flex;

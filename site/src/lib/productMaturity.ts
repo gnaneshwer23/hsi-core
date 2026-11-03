@@ -152,7 +152,7 @@ export const DEMO_LINKS = [
   },
 ] as const;
 
-/** Engineering / substrate chrome — secondary nav only. */
+/** Engineering / substrate chrome — secondary nav only (not primary header). */
 export const ENGINEERING_LINKS = [
   { to: "/clinical-timeline", label: "Clinical timeline (synth)" },
   { to: "/trials-criteria", label: "Trials criteria (MVP)" },
@@ -160,7 +160,6 @@ export const ENGINEERING_LINKS = [
   { to: "/systems", label: "Systems" },
   { to: "/curator", label: "Curator" },
   { to: "/alignment", label: "Alignment" },
-  { to: "/roadmap", label: "Engineering roadmap" },
   { to: "/docs", label: "Technical docs" },
   { to: "/aksh-agents", label: "Aksh agents (ref)" },
 ] as const;
