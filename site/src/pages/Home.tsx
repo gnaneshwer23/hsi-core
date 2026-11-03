@@ -14,10 +14,10 @@ const journey = [
 ] as const;
 
 const destinations = [
-  { id: "isi", index: "01", title: "Immune Super Intelligence", kicker: "RESEARCH & DISCOVERY", description: "Explore immune mechanisms and scientific evidence.", href: "/for-isi", image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1000&q=85", imageAlt: "Scientific laboratory research equipment", imageCredit: "Illustrative laboratory photography" },
-  { id: "clinical", index: "02", title: "HSI Clinical", kicker: "CLINICAL INTELLIGENCE", description: "Understand the direction for authorised longitudinal histories.", href: "/products", image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1000&q=85", imageAlt: "Healthcare professional in a clinical setting", imageCredit: "Illustrative clinical photography" },
-  { id: "aksh", index: "03", title: "Aksh Health", kicker: "PERSONALISED HEALTH", description: "Patient-centred metabolic health and monitoring.", href: "/for-aksh", image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=1000&q=85", imageAlt: "Healthcare and personal health monitoring context", imageCredit: "Illustrative healthcare photography" },
-  { id: "trials", index: "04", title: "HSI Trials", kicker: "CLINICAL RESEARCH", description: "Investigate transparent trial evidence workflows.", href: "/for-trials", image: "https://images.unsplash.com/photo-1582719471384-894fbb16e074?auto=format&fit=crop&w=1000&q=85", imageAlt: "Laboratory scientists working in a research environment", imageCredit: "Illustrative clinical research photography" },
+  { id: "isi", index: "01", title: "Immune Super Intelligence", kicker: "RESEARCH & DISCOVERY", description: "Explore immune mechanisms with source-linked, graded evidence under expert review.", href: "/for-isi", image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1000&q=85", imageAlt: "Scientific laboratory research equipment", imageCredit: "Illustrative laboratory photography" },
+  { id: "clinical", index: "02", title: "HSI Clinical", kicker: "CLINICAL INTELLIGENCE", description: "Authorised longitudinal context, with source and time preserved for clinician review.", href: "/products", image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1000&q=85", imageAlt: "Healthcare professional in a clinical setting", imageCredit: "Illustrative clinical photography" },
+  { id: "aksh", index: "03", title: "Aksh Health", kicker: "PERSONALISED HEALTH", description: "Patient-centred context and monitoring, shared only with permission.", href: "/for-aksh", image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=1000&q=85", imageAlt: "Healthcare and personal health monitoring context", imageCredit: "Illustrative healthcare photography" },
+  { id: "trials", index: "04", title: "HSI Trials", kicker: "CLINICAL RESEARCH", description: "Transparent trial workflows that surface evidence gaps and require clinician review.", href: "/for-trials", image: "https://images.unsplash.com/photo-1582719471384-894fbb16e074?auto=format&fit=crop&w=1000&q=85", imageAlt: "Laboratory scientists working in a research environment", imageCredit: "Illustrative clinical research photography" },
 ] as const;
 
 const landscapeDomains = [
@@ -28,7 +28,7 @@ const landscapeDomains = [
   {title:"GUT MICROBIOME & METABOLISM",short:"MICROBIOME",x:59,y:53,description:"Microbial functions, metabolites and host pathways; associations are not assumed causal.",href:"/platform",status:"Cross-domain knowledge · developing"},
   {title:"GENOMICS & MULTI-OMICS",short:"OMICS",x:71,y:31,description:"Genomic, proteomic and multi-omics context can inform biological research when validated.",href:"/platform",status:"Omics context · research direction"},
   {title:"SCIENTIFIC EVIDENCE",short:"EVIDENCE",x:82,y:46,description:"Publications, experiments, provenance, graded findings, contradictions and hypotheses.",href:"/for-isi",status:"ISI evidence foundation · available"},
-  {title:"RESEARCH & CLINICAL TRIALS",short:"TRIALS",x:92,y:37,description:"Trial criteria and missing evidence can support future investigator-led pre-screening.",href:"/for-trials",status:"HSI Trials · planned"},
+  {title:"RESEARCH & CLINICAL TRIALS",short:"TRIALS",x:92,y:37,description:"Trial criteria and missing evidence can support future investigator-led pre-screening with clinician review.",href:"/for-trials",status:"HSI Trials · planned"},
 ] as const;
 
 function LandscapeArt() {
@@ -72,7 +72,7 @@ function ConnectedUnderstandingArt() {
       {x:520,y:158,title:"BIOLOGY",subtitle:"Mechanisms",icon:"✳"},
       {x:550,y:370,title:"EVIDENCE",subtitle:"Provenance",icon:"◇"},
       {x:330,y:455,title:"RESEARCH",subtitle:"Discovery",icon:"↗"},
-      {x:110,y:360,title:"REVIEW",subtitle:"Governance",icon:"✓"},
+      {x:110,y:360,title:"REVIEW",subtitle:"Humans",icon:"✓"},
     ].map(({x,y,title,subtitle,icon})=><g key={title}>
       <circle cx={x} cy={y} r="39" fill="#FFFAF4" stroke="#17645F" strokeOpacity=".45"/>
       <circle cx={x} cy={y} r="29" fill="#F3EEE8" stroke="#17645F" strokeOpacity=".3"/>
@@ -106,9 +106,9 @@ export function Home() {
         </div>
         {activeHeroNode!==null&&<div className="hsi-panorama-panel" aria-live="polite"><button type="button" className="hsi-panorama-close" aria-label="Close domain details" onClick={()=>setActiveHeroNode(null)}>×</button><span className="hsi-editorial-kicker">CONNECTED DOMAIN / 0{activeHeroNode+1}</span><h2>{landscapeDomains[activeHeroNode].title}</h2><p>{landscapeDomains[activeHeroNode].description}</p><small>{landscapeDomains[activeHeroNode].status}</small><Link to={landscapeDomains[activeHeroNode].href}>Explore this domain ↗</Link></div>}
       </div>
-      <div className="hsi-editorial-wrap hsi-panorama-caption"><span>FROM HEALTH CONTEXT TO BIOLOGICAL UNDERSTANDING</span><span>Illustrative connections · not study findings or patient analysis · SELECT A MARKER TO EXPLORE</span></div>
+      <div className="hsi-editorial-wrap hsi-panorama-caption"><span>CONNECTED CONTEXT ACROSS HEALTH AND BIOLOGY</span><span>Illustrative connections · not study findings or patient analysis · SELECT A MARKER TO EXPLORE</span></div>
       <div className="hsi-editorial-wrap hsi-motion-domains" aria-label="Eight connected domains, from health to trials">
-        <div className="hsi-motion-domains-heading"><span>EIGHT DOMAINS / ONE CONNECTED INTELLIGENCE</span><span className="hsi-motion-live-key"><span aria-hidden="true"/> CONNECTED SIGNAL</span></div>
+        <div className="hsi-motion-domains-heading"><span>EIGHT DOMAINS / CONNECTED CONTEXT</span><span className="hsi-motion-live-key"><span aria-hidden="true"/> CONNECTED SIGNAL</span></div>
         <div className="hsi-motion-domain-track">{landscapeDomains.map((domain,i)=><button type="button" key={domain.short} className={"hsi-motion-domain"+(activeHeroNode===i?" is-active":"")} onClick={()=>{setActiveHeroNode(activeHeroNode===i?null:i);document.getElementById("hsi-panorama-title")?.scrollIntoView({behavior:"smooth",block:"start"});}} aria-pressed={activeHeroNode===i} aria-label={"Explore "+domain.title}>
           <span className="hsi-panorama-domain-number">{String(i+1).padStart(2,"0")}</span><strong>{domain.short}</strong><span className="hsi-motion-domain-arrow" aria-hidden="true">↗</span><span className="hsi-motion-domain-progress" aria-hidden="true"/>
         </button>)}</div>
@@ -116,10 +116,10 @@ export function Home() {
       </div>
       <div className="hsi-editorial-wrap hsi-panorama-actions"><Link className="hsi-editorial-button" to="/products">Explore products</Link><a className="hsi-editorial-textlink" href="#connected-journey">Follow the connections</a></div>
     </section>
-    <section className="hsi-editorial-intro"><div className="hsi-editorial-wrap hsi-idea-grid"><div className="hsi-idea-copy"><p className="hsi-editorial-kicker">01 / THE IDEA</p><h2>Beyond disconnected data.<br/><em>Towards connected understanding.</em></h2><p>Health questions rarely fit inside a single dataset or discipline. HSI brings together evidence-grounded research tools and a connected vision for clinical, patient and trial intelligence — with distinct data permissions and review boundaries.</p><Link className="hsi-editorial-textlink" to="/platform">Discover how the connections work ↗</Link></div><figure className="hsi-idea-figure"><ConnectedUnderstandingArt/><figcaption>Illustrative connection map · not a patient record or scientific result</figcaption></figure></div></section>
+    <section className="hsi-editorial-intro"><div className="hsi-editorial-wrap hsi-idea-grid"><div className="hsi-idea-copy"><p className="hsi-editorial-kicker">01 / THE IDEA</p><h2>Beyond disconnected data.<br/><em>Towards connected understanding.</em></h2><p>Health questions rarely fit inside a single dataset or discipline. HSI connects authorised context across domains, keeps findings source-linked and uncertain where they should be, and requires human review before anything is treated as approved knowledge.</p><Link className="hsi-editorial-textlink" to="/platform">Discover how the connections work ↗</Link></div><figure className="hsi-idea-figure"><ConnectedUnderstandingArt/><figcaption>Illustrative connection map · not a patient record or scientific result</figcaption></figure></div></section>
     <section className="hsi-journey" id="connected-journey" aria-labelledby="hsi-journey-heading">
       <div className="hsi-editorial-wrap">
-        <div className="hsi-journey-heading"><div><p className="hsi-editorial-kicker">02 / CONNECTED INTELLIGENCE</p><h2 id="hsi-journey-heading">ONE QUESTION.<br/><em>CONNECTED CONTEXT.</em></h2></div><p>Follow a health question across six connected perspectives. Select any stage to explore what it contributes and which HSI experience it belongs to.</p></div>
+        <div className="hsi-journey-heading"><div><p className="hsi-editorial-kicker">02 / CONNECTED CONTEXT</p><h2 id="hsi-journey-heading">ONE QUESTION.<br/><em>CONNECTED CONTEXT.</em></h2></div><p>Follow a health question across six connected perspectives — each contributing context, evidence or review. Select any stage to see what it adds and which HSI experience it belongs to.</p></div>
         <div className="hsi-journey-stage">
           <div className="hsi-journey-track" role="group" aria-label="Explore connected health intelligence stages">
             {journey.map((step,i)=><button key={step.short} type="button" className={"hsi-journey-node"+(activeStep===i?" is-active":"")} onClick={()=>setActiveStep(i)} aria-pressed={activeStep===i}>
@@ -136,7 +136,7 @@ export function Home() {
     </section>
     <section className="hsi-rebuild-stack" id="intelligence-foundation" aria-labelledby="hsi-stack-heading">
       <div className="hsi-editorial-wrap">
-        <div className="hsi-rebuild-heading"><div><p className="hsi-editorial-kicker">03 / INTELLIGENCE ARCHITECTURE</p><h2 id="hsi-stack-heading">NOT ANOTHER<br/><em>DATA SILO.</em></h2></div><p>HSI is a logical intelligence layer across separately governed systems — not a single database containing everyone's records.</p></div>
+        <div className="hsi-rebuild-heading"><div><p className="hsi-editorial-kicker">03 / INTELLIGENCE ARCHITECTURE</p><h2 id="hsi-stack-heading">CONNECTED CONTEXT.<br/><em>SEPARATE GOVERNANCE.</em></h2></div><p>HSI is a logical intelligence layer across separately governed systems — connecting context and evidence without merging everyone's records into one database.</p></div>
         <div className="hsi-rebuild-stack-layout">
           <div className="hsi-rebuild-stack-steps" role="group" aria-label="Explore the HSI intelligence architecture">
             {[
@@ -159,7 +159,7 @@ export function Home() {
     </section>
     <section className="hsi-rebuild-story">
       <div className="hsi-editorial-wrap hsi-rebuild-story-grid">
-        <div><p className="hsi-editorial-kicker">04 / RESEARCH IN PRACTICE</p><h2>FROM A QUESTION<br/><em>TO TESTABLE INSIGHT.</em></h2><p>Start with an immune mechanism. Follow the evidence. Surface uncertainty and contradictions. Let researchers decide what deserves further investigation.</p><Link className="hsi-editorial-button" to="/for-isi">Enter ISI Research <span aria-hidden="true">↗</span></Link></div>
+        <div><p className="hsi-editorial-kicker">04 / RESEARCH IN PRACTICE</p><h2>FROM A QUESTION<br/><em>TO REVIEWED EVIDENCE.</em></h2><p>Start with an immune mechanism. Trace the evidence. Surface uncertainty and contradictions. Human review decides what deserves further investigation.</p><Link className="hsi-editorial-button" to="/for-isi">Enter ISI Research <span aria-hidden="true">↗</span></Link></div>
         <div className="hsi-rebuild-research-visual" aria-label="Interactive illustrative research process, not an actual patient or study result">
           <div className="hsi-rebuild-visual-top"><span>ISI / RESEARCH PROCESS</span><span>SELECT A STAGE TO EXPLORE</span></div>
           <div className="hsi-research-flow" role="group" aria-label="Explore the three stages of evidence-governed research">
@@ -186,13 +186,13 @@ export function Home() {
       </div>
     </section>
     <section className="hsi-editorial-products" id="ecosystem"><div className="hsi-editorial-wrap">
-      <div className="hsi-editorial-sectionhead"><div><p className="hsi-editorial-kicker">05 / FOUR CONNECTED EXPERIENCES</p><h2>FIND YOUR<br/><em>WAY IN.</em></h2></div><p>Different people, different needs. One connected vision, with explicit boundaries between research and care.</p></div>
+      <div className="hsi-editorial-sectionhead"><div><p className="hsi-editorial-kicker">05 / FOUR CONNECTED EXPERIENCES</p><h2>FOUR PRODUCTS.<br/><em>ONE CONNECTED VISION.</em></h2></div><p>Different people, different needs. Shared connected context, traceable evidence where it applies, and human review at every governed boundary between research and care.</p></div>
       <div className="hsi-editorial-product-grid">{destinations.map((item,i)=>{const product=ECOSYSTEM_PRODUCTS.find(p=>p.id===item.id);return <article className={"hsi-editorial-product hsi-editorial-product-"+item.id} key={item.id}>
         <div className="hsi-editorial-product-top"><span>{item.index} / {item.kicker}</span><span className="hsi-editorial-product-icon" aria-hidden="true">{i===0?"✳":i===1?"⌁":i===2?"♡":"⊕"}</span></div>
         <div className="hsi-product-photo"><img src={item.image} alt={item.imageAlt} loading="lazy" decoding="async" referrerPolicy="no-referrer" /><span className="hsi-product-photo-credit">{item.imageCredit}</span></div><div className="hsi-editorial-product-body"><h3>{item.title}</h3><p>{item.description}</p></div>
         <div className="hsi-editorial-product-footer"><span>{product ? MATURITY_CHIP_LABEL[product.chip] : "Explore"}</span><Link to={item.href} aria-label={"Explore "+item.title}>Explore <span aria-hidden="true">↗</span></Link></div>
       </article>})}</div>
     </div></section>
-    <section className="hsi-editorial-outro"><div className="hsi-editorial-wrap"><p className="hsi-editorial-kicker">06 / DISCOVER MORE</p><h2>FROM QUESTIONS<br/><em>TO UNDERSTANDING.</em></h2><p>Explore our research direction and the distinct journeys designed for researchers, care teams and individuals.</p><div className="hsi-editorial-actions"><Link className="hsi-editorial-button" to="/for-isi">Explore ISI Research <span aria-hidden="true">↗</span></Link><Link className="hsi-editorial-textlink" to="/how-it-works">How it works ↗</Link></div><small>Scientific research tools do not provide diagnosis, prescribing or confirmed trial eligibility. Clinical and trial capabilities are separately governed and subject to validation.</small></div></section>
+    <section className="hsi-editorial-outro"><div className="hsi-editorial-wrap"><p className="hsi-editorial-kicker">06 / DISCOVER MORE</p><h2>CONNECTED QUESTIONS.<br/><em>ACCOUNTABLE REVIEW.</em></h2><p>Explore how HSI connects context, traces evidence and keeps human review in the loop — across research, care teams and individuals.</p><div className="hsi-editorial-actions"><Link className="hsi-editorial-button" to="/for-isi">Explore ISI Research <span aria-hidden="true">↗</span></Link><Link className="hsi-editorial-textlink" to="/how-it-works">How it works ↗</Link></div><small>Scientific research tools do not provide diagnosis, prescribing or confirmed trial eligibility. Clinical and trial capabilities are separately governed and subject to human validation.</small></div></section>
   </div>;
 }

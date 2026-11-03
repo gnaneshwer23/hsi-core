@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { PRODUCT_NAME } from "../lib/brand";
 import { ECOSYSTEM_PRODUCTS, MATURITY_CHIP_LABEL } from "../lib/productMaturity";
 import "../styles/platform.css";
 
@@ -91,7 +92,7 @@ export function Platform() {
             <div className="pl-foundation-label">ONE FOUNDATION / SEPARATE DATA</div>
             <div className="pl-foundation-products">{ECOSYSTEM_PRODUCTS.map(item => <div key={item.id}><span>{item.name.toUpperCase()}</span><i /><small>{MATURITY_CHIP_LABEL[item.chip]} · separate governance</small></div>)}</div>
             <div className="pl-foundation-lines" aria-hidden="true"><span /><span /></div>
-            <div className="pl-foundation-core"><span className="pl-symbol" aria-hidden="true">H</span><div><strong>Health Super Intelligence</strong><span>Shared technology foundation</span></div></div>
+            <div className="pl-foundation-core"><span className="pl-symbol" aria-hidden="true">H</span><div><strong>{PRODUCT_NAME}</strong><span>Shared technology foundation</span></div></div>
             <div className="pl-foundation-tools"><span>Evidence</span><span>Knowledge</span><span>Review</span></div>
             <p>Software reuse. Product-owned data.</p>
           </div>
