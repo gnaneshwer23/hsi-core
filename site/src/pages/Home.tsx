@@ -20,27 +20,24 @@ const destinations = [
 ] as const;
 
 function ConnectionArt() {
-  return (
-    <svg className="hsi-editorial-art" viewBox="0 0 680 610" role="img" aria-label="Illustrative connected biology network linking health context, immune cells, evidence and research">
-      <defs>
-        <radialGradient id="hsi-halo"><stop stopColor="#2A8579" stopOpacity=".48"/><stop offset="1" stopColor="#17645F" stopOpacity="0"/></radialGradient>
-      </defs>
-      <circle cx="340" cy="302" r="288" fill="url(#hsi-halo)"/>
-      {[110,172,235].map(r=><circle key={r} cx="340" cy="300" r={r} stroke="#F3EEE8" strokeOpacity=".17" strokeDasharray="3 12" fill="none"/>)}
-      <g stroke="#F3EEE8" strokeOpacity=".35" strokeWidth="1.5">
-        <path d="M140 158 340 300 515 134 575 355 340 300 177 465 140 158M177 465 485 492 575 355M515 134 485 492M140 158 575 355"/>
-      </g>
-      {[[140,158,16],[515,134,13],[575,355,17],[177,465,14],[485,492,12]].map(([x,y,r],i)=><g key={i}><circle cx={x} cy={y} r={r+11} fill="none" stroke="#F3EEE8" strokeOpacity=".2"/><circle cx={x} cy={y} r={r} fill={i===2?"#FF6845":"#F3EEE8"}/></g>)}
-      <circle cx="340" cy="300" r="83" fill="#F3EEE8"/><circle cx="340" cy="300" r="65" stroke="#17645F" strokeOpacity=".3" fill="none"/>
-      <path d="M301 303c21-53 53-53 78 0-24 54-56 54-78 0Zm39-58v116" stroke="#17645F" strokeWidth="4" fill="none" strokeLinecap="round"/>
-      <circle cx="340" cy="300" r="7" fill="#FF6845"/>
-      <g fill="#F3EEE8" fontFamily="system-ui" fontSize="12" letterSpacing="2"><text x="76" y="121">BIOLOGY</text><text x="490" y="94">EVIDENCE</text><text x="508" y="408">RESEARCH</text><text x="74" y="510">HEALTH</text></g>
-    </svg>
-  );
+  const nodes = [
+    {x:145,y:180,label:"HEALTH CONTEXT",n:0},{x:490,y:122,label:"CLINICAL",n:1},
+    {x:370,y:270,label:"BIOLOGY",n:2},{x:555,y:390,label:"IMMUNE",n:3},
+    {x:180,y:450,label:"EVIDENCE",n:4},{x:420,y:510,label:"RESEARCH",n:5},
+  ];
+  return <svg className="hsi-editorial-art hsi-new-art" viewBox="0 0 680 610" role="img" aria-label="Illustrative layered scientific network connecting health context, clinical records, biology, immune pathways, evidence and research">
+    <defs><radialGradient id="hsi-glow"><stop stopColor="#56A39B" stopOpacity=".42"/><stop offset="1" stopColor="#17645F" stopOpacity="0"/></radialGradient><linearGradient id="hsi-path" x1="0" x2="1"><stop stopColor="#F3EEE8" stopOpacity=".15"/><stop offset=".6" stopColor="#FFB6A1"/><stop offset="1" stopColor="#F3EEE8" stopOpacity=".25"/></linearGradient></defs>
+    <circle cx="340" cy="305" r="288" fill="url(#hsi-glow)"/>
+    {[118,192,262].map(r=><circle key={r} cx="340" cy="305" r={r} fill="none" stroke="#F3EEE8" strokeOpacity=".18" strokeDasharray="2 10"/>)}
+    <g fill="none" stroke="url(#hsi-path)" strokeWidth="1.5"><path d="M145 180 490 122 370 270 555 390 420 510 180 450 145 180M145 180 370 270 180 450M490 122 555 390M370 270 420 510"/></g>
+    <g transform="translate(340 305)"><circle r="79" fill="#F3EEE8" fillOpacity=".10" stroke="#F3EEE8" strokeOpacity=".4"/><circle r="57" fill="#F3EEE8" fillOpacity=".94"/><path d="M-34 0C-15-45 14-45 34 0 15 45-14 45-34 0ZM0-42V42" stroke="#17645F" strokeWidth="3" fill="none"/><circle r="6" fill="#FF6845"/></g>
+    {nodes.map(({x,y,label,n})=><g key={label}><circle cx={x} cy={y} r="29" fill="#17645F" stroke="#F3EEE8" strokeOpacity=".65"/><circle cx={x} cy={y} r="16" fill={n===3?"#FF6845":"#F3EEE8"}/><circle cx={x} cy={y} r="5" fill="#17645F"/><text x={x} y={y+48} fill="#F3EEE8" fontSize="10" textAnchor="middle" letterSpacing="1.4">{label}</text></g>)}
+  </svg>;
 }
 
 export function Home() {
   const [activeStep, setActiveStep] = useState(0);
+  const [activeLayer, setActiveLayer] = useState(2);
   const selected = journey[activeStep];
   return <div className="hsi-editorial">
     <section className="hsi-editorial-hero">
@@ -49,16 +46,16 @@ export function Home() {
         <div className="hsi-editorial-hero-grid">
           <div className="hsi-editorial-copy">
             <p className="hsi-editorial-kicker"><span className="hsi-coral-dot"/> FROM HEALTH CONTEXT TO SCIENTIFIC DISCOVERY</p>
-            <h1>HEALTH.<br/><em>REIMAGINED.</em></h1>
-            <p className="hsi-editorial-lede">Connecting human biology, scientific evidence and health intelligence — from discovery to the person, with context and human oversight.</p>
+            <h1>BIOLOGY IS<br/><em>CONNECTED.</em></h1>
+            <p className="hsi-editorial-lede">Intelligence should be too. A governed ecosystem connecting human health, biology, immune mechanisms and scientific discovery — with evidence at every step.</p>
             <div className="hsi-editorial-actions"><Link className="hsi-editorial-button" to="/platform">Explore the platform <span aria-hidden="true">↗</span></Link><a className="hsi-editorial-textlink" href="#connected-journey">Follow the connections <span aria-hidden="true">↗</span></a></div>
           </div>
-          <div className="hsi-editorial-visual"><ConnectionArt/><div className="hsi-editorial-visual-note"><span>01 — 04 / CONNECTED INTELLIGENCE</span><span>Illustrative connections · not study findings or patient analysis</span></div></div>
+          <div className="hsi-editorial-visual"><ConnectionArt/><div className="hsi-editorial-visual-note"><span>SIX PERSPECTIVES / ONE ECOSYSTEM</span><span>Illustrative connections · not study findings or patient analysis</span></div></div>
         </div>
         <div className="hsi-editorial-bottomline"><span>EXPLORE <b>•</b> CONNECT <b>•</b> UNDERSTAND <b>•</b> DISCOVER</span><Link to="/how-it-works">SEE HOW IT WORKS ↗</Link></div>
       </div>
     </section>
-    <section className="hsi-editorial-intro"><div className="hsi-editorial-wrap hsi-editorial-intro-grid"><p className="hsi-editorial-kicker">01 / THE IDEA</p><div><h2>Health is connected.<br/><em>Intelligence should be too.</em></h2><p>Health questions rarely fit inside a single dataset or discipline. HSI brings together evidence-grounded research tools and a connected vision for clinical, patient and trial intelligence — with distinct data permissions and review boundaries.</p></div></div></section>
+    <section className="hsi-editorial-intro"><div className="hsi-editorial-wrap hsi-editorial-intro-grid"><p className="hsi-editorial-kicker">01 / THE IDEA</p><div><h2>Beyond disconnected data.<br/><em>Towards connected understanding.</em></h2><p>Health questions rarely fit inside a single dataset or discipline. HSI brings together evidence-grounded research tools and a connected vision for clinical, patient and trial intelligence — with distinct data permissions and review boundaries.</p></div></div></section>
     <section className="hsi-journey" id="connected-journey" aria-labelledby="hsi-journey-heading">
       <div className="hsi-editorial-wrap">
         <div className="hsi-journey-heading"><div><p className="hsi-editorial-kicker">02 / CONNECTED INTELLIGENCE</p><h2 id="hsi-journey-heading">ONE QUESTION.<br/><em>CONNECTED CONTEXT.</em></h2></div><p>Follow a health question across six connected perspectives. Select any stage to explore what it contributes and which HSI experience it belongs to.</p></div>
@@ -76,15 +73,51 @@ export function Home() {
         <p className="hsi-journey-boundary">Research evidence and patient-identifiable clinical information remain in separately governed systems. Connections require appropriate authorisation, validated interfaces and human review.</p>
       </div>
     </section>
+    <section className="hsi-rebuild-stack" id="intelligence-foundation" aria-labelledby="hsi-stack-heading">
+      <div className="hsi-editorial-wrap">
+        <div className="hsi-rebuild-heading"><div><p className="hsi-editorial-kicker">03 / INTELLIGENCE ARCHITECTURE</p><h2 id="hsi-stack-heading">NOT ANOTHER<br/><em>DATA SILO.</em></h2></div><p>HSI is a logical intelligence layer across separately governed systems — not a single database containing everyone's records.</p></div>
+        <div className="hsi-rebuild-stack-layout">
+          <div className="hsi-rebuild-stack-steps" role="group" aria-label="Explore the HSI intelligence architecture">
+            {[
+              ["01","DATA & CONTEXT","Permissioned clinical context, patient-generated observations and scientific sources"],
+              ["02","BIOLOGICAL KNOWLEDGE","Organs, tissues, cells, immune mechanisms and molecular relationships"],
+              ["03","EVIDENCE & PROVENANCE","Source-linked findings, uncertainty, contradictions and reviewed knowledge"],
+              ["04","GOVERNED INTELLIGENCE","Research agents propose, accountable humans review, and hypotheses stay separate"],
+              ["05","PURPOSE-BUILT EXPERIENCES","Aksh Health, HSI Clinical, ISI Research and HSI Trials"],
+            ].map(([number,title,description],i)=><button key={number} type="button" className={"hsi-rebuild-layer"+(activeLayer===i?" is-active":"")} onClick={()=>setActiveLayer(i)} aria-pressed={activeLayer===i}><span>{number}</span><strong>{title}</strong><small>{description}</small><span aria-hidden="true">↗</span></button>)}
+          </div>
+          <div className="hsi-rebuild-stack-display">
+            <p className="hsi-editorial-kicker">CONNECTED INTELLIGENCE / LAYER 0{activeLayer+1}</p>
+            <div className="hsi-rebuild-orbit" aria-hidden="true"><span className="hsi-rebuild-orbit-a"/><span className="hsi-rebuild-orbit-b"/><span className="hsi-rebuild-orbit-c"/><b>{["DATA","BIOLOGY","EVIDENCE","REVIEW","EXPERIENCE"][activeLayer]}</b></div>
+            <h3>{["Context, with permission.","A map of human biology.","Evidence you can trace.","Agents with accountable review.","One ecosystem, distinct products."][activeLayer]}</h3>
+            <p>{["Clinical and patient data are accessed only through authorised interfaces. Public biomedical sources remain separately governed.","Relationships connect physiological systems and immune science without automatically claiming causality.","Every meaningful claim needs a source, review state and uncertainty. Proposed hypotheses do not become approved facts by default.","Agents can retrieve and analyse; scientists and clinicians retain approval and responsibility.","Each product has its own data ownership, validation requirements and user journey."][activeLayer]}</p>
+            <Link to="/platform" className="hsi-rebuild-inline-link">Explore the platform architecture ↗</Link>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section className="hsi-rebuild-story">
+      <div className="hsi-editorial-wrap hsi-rebuild-story-grid">
+        <div><p className="hsi-editorial-kicker">04 / RESEARCH IN PRACTICE</p><h2>FROM A QUESTION<br/><em>TO TESTABLE INSIGHT.</em></h2><p>Start with an immune mechanism. Follow the evidence. Surface uncertainty and contradictions. Let researchers decide what deserves further investigation.</p><Link className="hsi-editorial-button" to="/for-isi">Enter ISI Research <span aria-hidden="true">↗</span></Link></div>
+        <div className="hsi-rebuild-research-visual" aria-label="Illustrative research process, not an actual patient or study result">
+          <div className="hsi-rebuild-visual-top"><span>ISI / RESEARCH PROCESS</span><span>ILLUSTRATIVE</span></div>
+          <div className="hsi-rebuild-research-node"><span>01</span><strong>Investigate a mechanism</strong><small>Cell states · pathways · disease context</small></div>
+          <div className="hsi-rebuild-research-line"/>
+          <div className="hsi-rebuild-research-node"><span>02</span><strong>Examine the evidence</strong><small>Sources · provenance · uncertainty</small></div>
+          <div className="hsi-rebuild-research-line"/>
+          <div className="hsi-rebuild-research-node"><span>03</span><strong>Review a hypothesis</strong><small>Researcher-supervised · not a clinical conclusion</small></div>
+          <p>Research workflow illustration. No patient data or fabricated scientific findings.</p>
+        </div>
+      </div>
+    </section>
     <section className="hsi-editorial-products" id="ecosystem"><div className="hsi-editorial-wrap">
-      <div className="hsi-editorial-sectionhead"><div><p className="hsi-editorial-kicker">03 / THE EXPERIENCES</p><h2>ONE FOUNDATION.<br/><em>FOUR EXPERIENCES.</em></h2></div><p>Enter through your role or question. Each experience has its own purpose, maturity and access boundaries.</p></div>
+      <div className="hsi-editorial-sectionhead"><div><p className="hsi-editorial-kicker">05 / FOUR CONNECTED EXPERIENCES</p><h2>FIND YOUR<br/><em>WAY IN.</em></h2></div><p>Different people, different needs. One connected vision, with explicit boundaries between research and care.</p></div>
       <div className="hsi-editorial-product-grid">{destinations.map((item,i)=>{const product=ECOSYSTEM_PRODUCTS.find(p=>p.id===item.id);return <article className={"hsi-editorial-product hsi-editorial-product-"+item.id} key={item.id}>
         <div className="hsi-editorial-product-top"><span>{item.index} / {item.kicker}</span><span className="hsi-editorial-product-icon" aria-hidden="true">{i===0?"✳":i===1?"⌁":i===2?"♡":"⊕"}</span></div>
         <div className="hsi-editorial-product-body"><h3>{item.title}</h3><p>{item.description}</p></div>
         <div className="hsi-editorial-product-footer"><span>{product ? MATURITY_CHIP_LABEL[product.chip] : "Explore"}</span><Link to={item.href} aria-label={"Explore "+item.title}>Explore <span aria-hidden="true">↗</span></Link></div>
       </article>})}</div>
     </div></section>
-    <section className="hsi-editorial-connection"><div className="hsi-editorial-wrap hsi-editorial-connection-grid"><div><p className="hsi-editorial-kicker">04 / THE FOUNDATION</p><h2>CONNECTIONS<br/><em>THAT CARRY MEANING.</em></h2><p>From immune pathways and published findings to permitted clinical context, every relationship needs its source, its uncertainty and its purpose. Research hypotheses remain separate from reviewed evidence.</p><Link className="hsi-editorial-button" to="/platform">Understand the platform <span aria-hidden="true">↗</span></Link></div><div className="hsi-editorial-connection-map"><div className="hsi-editorial-map-core">EVIDENCE<br/>+ CONTEXT</div><span>HUMAN BIOLOGY</span><span>IMMUNE SCIENCE</span><span>LONGITUDINAL HEALTH</span><span>CLINICAL RESEARCH</span></div></div></section>
-    <section className="hsi-editorial-outro"><div className="hsi-editorial-wrap"><p className="hsi-editorial-kicker">05 / DISCOVER MORE</p><h2>FROM QUESTIONS<br/><em>TO UNDERSTANDING.</em></h2><p>Explore our research direction and the distinct journeys designed for researchers, care teams and individuals.</p><div className="hsi-editorial-actions"><Link className="hsi-editorial-button" to="/for-isi">Explore ISI Research <span aria-hidden="true">↗</span></Link><Link className="hsi-editorial-textlink" to="/how-it-works">How it works ↗</Link></div><small>Scientific research tools do not provide diagnosis, prescribing or confirmed trial eligibility. Clinical and trial capabilities are separately governed and subject to validation.</small></div></section>
+    <section className="hsi-editorial-outro"><div className="hsi-editorial-wrap"><p className="hsi-editorial-kicker">06 / DISCOVER MORE</p><h2>FROM QUESTIONS<br/><em>TO UNDERSTANDING.</em></h2><p>Explore our research direction and the distinct journeys designed for researchers, care teams and individuals.</p><div className="hsi-editorial-actions"><Link className="hsi-editorial-button" to="/for-isi">Explore ISI Research <span aria-hidden="true">↗</span></Link><Link className="hsi-editorial-textlink" to="/how-it-works">How it works ↗</Link></div><small>Scientific research tools do not provide diagnosis, prescribing or confirmed trial eligibility. Clinical and trial capabilities are separately governed and subject to validation.</small></div></section>
   </div>;
 }
