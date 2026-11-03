@@ -66,7 +66,7 @@ export function Home() {
         </div>
         {activeHeroNode!==null&&<div className="hsi-panorama-panel" aria-live="polite"><button type="button" className="hsi-panorama-close" aria-label="Close domain details" onClick={()=>setActiveHeroNode(null)}>×</button><span className="hsi-editorial-kicker">CONNECTED DOMAIN / 0{activeHeroNode+1}</span><h2>{landscapeDomains[activeHeroNode].title}</h2><p>{landscapeDomains[activeHeroNode].description}</p><small>{landscapeDomains[activeHeroNode].status}</small><Link to={landscapeDomains[activeHeroNode].href}>Explore this domain ↗</Link></div>}
       </div>
-      <div className="hsi-editorial-wrap hsi-panorama-caption"><span>FROM HEALTH CONTEXT TO BIOLOGICAL UNDERSTANDING</span><span>ILLUSTRATIVE KNOWLEDGE LANDSCAPE · SELECT A MARKER TO EXPLORE</span></div>
+      <div className="hsi-editorial-wrap hsi-panorama-caption"><span>FROM HEALTH CONTEXT TO BIOLOGICAL UNDERSTANDING</span><span>Illustrative connections · not study findings or patient analysis · SELECT A MARKER TO EXPLORE</span></div>
       <div className="hsi-editorial-wrap hsi-panorama-domain-strip">{landscapeDomains.map((domain,i)=><button type="button" key={domain.short} className={activeHeroNode===i?"is-active":""} onClick={()=>setActiveHeroNode(i)}><span className="hsi-panorama-domain-number">0{i+1}</span><strong>{domain.short}</strong><span aria-hidden="true">↗</span></button>)}</div>
       <div className="hsi-editorial-wrap hsi-panorama-actions"><Link className="hsi-editorial-button" to="/platform">Explore the platform ↗</Link><a className="hsi-editorial-textlink" href="#connected-journey">Follow the connections ↗</a></div>
     </section>
