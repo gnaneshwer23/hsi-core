@@ -35,7 +35,17 @@ bun --env-file=.env.local scripts/apply-hsi-investigations-migration.ts --apply
 bun --env-file=.env.local scripts/provision-hsi-research.ts EXISTING_USER_ID reviewer
 ```
 
-## Smoke checklist (manual later)
+## Automated smoke (no product Neon)
+
+```sh
+bun run ra:smoke-demo
+# ISI
+bun --cwd ../immunecity scripts/smoke-ra-demo-corpus.ts
+# Aksh
+bun --cwd ../aksh-health-redesign/packages/platform-uk scripts/smoke-ra-demo-corpus.ts
+```
+
+## Smoke checklist (manual later, after DB activation)
 
 1. Sign in to ISI and Aksh `/internal-research`.
 2. Start `ra-anti-tnf-demo` → passages → reload → export.
