@@ -15,6 +15,7 @@ const modules = [
   { name: "researchContracts", version: "hsi-research-contract-1" },
   { name: "investigationService", version: "hsi-investigation-1" },
   { name: "investigationBackend", version: "hsi-investigation-backend-1" },
+  { name: "raEvidenceRelease", version: "hsi-ra-evidence-release-1" },
 ];
 // Preflight every source before writing any consumer file.
 for (const module of modules) {

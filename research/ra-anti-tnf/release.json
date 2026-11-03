@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "hsi-ra-evidence-release-1",
+  "status": "awaiting_verified_source_import",
+  "reason": "Primary-source access is blocked by the current environment policy. No exact passages or reuse rights have been freshly verified.",
+  "scientificReview": "unreviewed",
+  "containsPhi": false,
+  "clinicalAdvice": false,
+  "kgWrite": false
+}

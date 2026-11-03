@@ -15,3 +15,7 @@ out/
 # Legacy local CLI paths — refreshed by bun run outputs; committed samples live in examples/sample-outputs/
 exports/*.json
 !exports/.gitkeep
+
+# Operator-side source parser caches
+__pycache__/
+*.pyc

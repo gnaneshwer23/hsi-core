@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "hsi-ra-protocol-1",
+  "id": "ra-anti-tnf-response",
+  "version": "1",
+  "question": "How should RF/anti-CCP serostatus evidence be interpreted in rheumatoid arthritis anti-TNF response research?",
+  "condition": "rheumatoid_arthritis",
+  "purpose": "research_only",
+  "containsPhi": false,
+  "clinicalAdvice": false,
+  "kgWrite": false,
+  "sourceVerification": "awaiting_fresh_retrieval",
+  "sources": [
+    { "pmid": "18375541", "pmcid": "PMC2596303", "doi": "10.1136/ard.2007.084715", "role": "cohort_candidate", "priorRegistryReference": "HSI-C-RA-009" },
+    { "pmid": "24586782", "pmcid": "PMC3937352", "doi": "10.1371/journal.pone.0089442", "role": "meta_analysis_candidate", "priorRegistryReference": "HSI-C-RA-010" }
+  ],
+  "graphContext": {
+    "origin": "ISI existing core KG; context only, not exact serology-response claim support",
+    "conceptIds": ["D001", "I032", "M001"],
+    "relationships": [
+      { "id": "REL-I032-treats-D001", "subjectId": "I032", "predicate": "treats", "objectId": "D001" },
+      { "id": "REL-I032-targets-M001", "subjectId": "I032", "predicate": "targets", "objectId": "M001" },
+      { "id": "REL-M001-contributes_to-D001", "subjectId": "M001", "predicate": "contributes_to", "objectId": "D001" }
+    ]
+  },
+  "reviewQuestions": [
+    "Do the retrieved passages actually address RF/anti-CCP status and anti-TNF response?",
+    "Confirm study design, population, treatment, outcome, follow-up and uncertainty from each source.",
+    "Do the findings disagree on the same proposition, or differ in design, outcome or context?",
+    "A null biomarker-response association is not evidence against anti-TNF efficacy in RA.",
+    "Which statements remain unassessed or require an exact KG relationship proposal?"
+  ],
+  "acceptance": {
+    "rights": "Explicit article-level CC BY or CC0 with attribution; reject NC, ND, unknown and restricted text.",
+    "sourceIdentity": "Europe PMC MED metadata PMID/PMCID/DOI must match JATS front matter and the preregistered locator.",
+    "passages": "Exact normalized abstract paragraphs, original XML locators and SHA-256; no invented quotes or arbitrary reference-list matches.",
+    "scientificApproval": "Independent human assessment required; workflow acceptance is not scientific approval."
+  }
+}
