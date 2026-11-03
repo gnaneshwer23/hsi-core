@@ -26,52 +26,58 @@ ship an equivalent look & feel with original content.
 
 ## Recreated style tokens
 
-### Founder palette (2026-11-02) — current
+### Founder palette (2026-11-03) — current (simplification brief)
 
 | Token | Value | Role |
 | --- | --- | --- |
 | Warm Ivory | `#F3EEE8` (`--ivory` / `--cream` / `--bone`) | Page / light section backgrounds |
-| Deep Teal | `#17645F` (`--teal` / `--navy` / `--cobalt`) | Headings, chrome, structural accents, active chips |
-| Coral Orange | `#FF6845` (`--coral` / `--action`) | Primary CTAs (`.btn-primary`, `.btn-cobalt`, land next / go-deeper) |
-| Teal ink | `#0A2E2B` (`--ink` / `--teal-ink`) | Dark surfaces, body chrome |
-| Soft teal | `#7AB5AF` (`--accent` / `--phosphor`) | Labels / glass chip text on dark |
+| Botanical green | `#2F5D45` (`--botanical` / `--teal` / `--navy` / `--cobalt`) | Headings, chrome, structural accents |
+| Lime | `#C4E05A` (`--lime` / `--coral` / `--action`) | Primary CTAs (midnight text on lime) |
+| Midnight navy | `#0B1628` (`--midnight` / `--ink` / `--teal-ink`) | Dark surfaces, body chrome |
+| Soft botanical | `#7A9E88` (`--accent` / `--phosphor`) | Labels / glass chip text on dark |
 | Live green | `#2fcb86` (`--live`) | Honesty / availability status pills (**unchanged**) |
 | Amber | `#e4a65a` | Uncertain / warning status (**unchanged**) |
 | Glass blur | `blur(14–22px) saturate(140–150%)` | Nav, chips, stage panel |
 | Radii | `12px` controls · `999px` pills · `18–22px` cards | Buttons / chips / panels |
 | Type | Host Grotesk + JetBrains Mono (Google Fonts) | Bold grotesk + mono energy |
-| Hero wash | `#0A2E2B → #17645F → #3A8A84 → #A8D0CC → #F3EEE8` | Full-bleed atmosphere |
+| Hero wash | `#0B1628 → #2F5D45 → #5A8F6E → #C4E05A → #F3EEE8` | Full-bleed atmosphere |
 | Arrow motif | 12px repeating SVG ↗ | Hero + dark band texture |
 
-Legacy CSS names (`--cobalt`, `--navy`, `--cream`) are remapped to this trio so Home,
-Platform, How-it-works, for-aksh, for-trials, Explore, Discovery-engine, and Products
-landings inherit without page-local hacks. `--cobalt` = teal structure; coral is
-`--coral` / `--action` on CTA classes.
+Legacy CSS names (`--cobalt`, `--navy`, `--cream`, `--teal`, `--coral`) remap to this
+quartet so landings inherit without page-local hacks.
 
-### Prior cobalt set (superseded)
+### Mapping from prior teal / coral (2026-11-02)
 
-| Old token | Old value | Now |
+| Prior | Value | Now |
 | --- | --- | --- |
-| Cobalt | `#3965fa` | → Deep Teal `#17645F` (structure) / Coral `#FF6845` (CTAs) |
-| Navy / ink | `#131930` / `#141c37` / `#0b0f24` | → Teal ink `#0A2E2B` / Teal `#17645F` |
-| Soft blue | `#8fa8ff` / `#cfdaff` | → Soft teal `#7AB5AF` / `#C5E0DC` |
-| Cream | `#f0ece9` / `#f7f3f0` | → Warm Ivory `#F3EEE8` / `#F8F5F1` |
-| Hero wash | cobalt blues → cream | → teal ink → teal → mist → ivory |
+| Deep Teal | `#17645F` | → Botanical `#2F5D45` |
+| Coral Orange | `#FF6845` | → Lime `#C4E05A` (CTA; text becomes midnight) |
+| Teal ink | `#0A2E2B` | → Midnight navy `#0B1628` |
+| Soft teal | `#7AB5AF` | → Soft botanical `#7A9E88` |
+| Ivory | `#F3EEE8` | Unchanged |
+
+### Prior cobalt set (superseded earlier)
+
+| Old token | Old value | Via teal/coral | Now |
+| --- | --- | --- | --- |
+| Cobalt | `#3965fa` | Teal / Coral | Botanical / Lime |
+| Navy / ink | `#131930` / `#0b0f24` | Teal ink | Midnight `#0B1628` |
+| Soft blue | `#8fa8ff` | Soft teal | Soft botanical `#7A9E88` |
+| Cream | `#f0ece9` | Ivory | Ivory `#F3EEE8` |
 
 ### PlatformEngine fabric (intentional choice)
 
-Dark **teal-ink** stage (`#0A2E2B` + soft teal wires/particles), not mid `#17645F` and
-not legacy navy. Mid teal washed out the fabric grid/particles; navy fought the new
-brand. Deep teal ink keeps contrast for light strokes while staying in-family.
+Dark **midnight** stage (`#0B1628` + soft botanical wires/particles). Mid botanical
+alone washed out the fabric grid/particles; midnight keeps contrast for light strokes.
 
 ## HSI brand lock
 
-- Voice: evidence honesty, Gate C human, ISI ≠ CDS, edit only `hsi-core`.
-- Name / messaging / routes / diagrams remain HSI — visual system is now
-  ivory / deep teal / coral (founder reference).
+- Voice: evidence honesty, Gate C human, ISI ≠ CDS, Science = educational (not clinical product), edit only `hsi-core`.
+- Name / messaging / routes / diagrams remain HSI — visual system is
+  ivory / botanical / lime / midnight-navy (founder simplification brief).
 - Mock dashboards use **illustrative** demo data, labeled as such.
 - Honesty / maturity status chips keep semantic greens / ambers / reds — not
-  forced into the marketing trio.
+  forced into the marketing quartet.
 
 ## Founder landing HTML (2026-11-02)
 
@@ -84,7 +90,7 @@ filenames — always re-read the file, do not trust download numbers alone:
 | `index.html` | HSI Clinical — clinician context workspace | Pending fidelity pass (not yet this note’s target) |
 | `index (1).html` | Aksh Health — personal health intelligence | `/for-aksh` via `AkshHealthLanding` |
 | `index (2).html` | HSI Trials — clinical research intelligence | `/for-trials` via `TrialsLanding` (MVP remains `/trials-criteria`) |
-| `HSI_Science_FIXED.html` | HSI Science — educational biology atlas | **Out of portfolio** (founder 2026-11-02); `/science` redirects to `/explore`; `ScienceLanding` retained unlinked |
+| `HSI_Science_FIXED.html` | HSI Science — educational biology atlas | **Reintroduced** in public IA (2026-11-03) as educational experience — `/science` via `ScienceLanding` |
 
 Earlier same-day mapping (still live in site until replaced):
 
@@ -95,18 +101,19 @@ Earlier same-day mapping (still live in site until replaced):
 | `index (2).html` (first batch) | 03 / Explore evidence | `/` + `/explore` — **do not confuse** with later `index (2).html` = Trials → `/for-trials` |
 | `index (1).html` (first batch) | 04 / Discovery engine | `/` + `/discovery-engine` via `DiscoveryWorkbench` |
 
-Founder HTML lime/forest, then cobalt/navy/cream, now **ivory/teal/coral** via
-`:root` in `global.css`. No MoU / Gate C auto-approve invented. Live CTAs stay
-honesty-bound via `productMaturity.ts`. Shell/nav remain product chrome (HTML
-header not vendored). Aksh demo is fictional preview only — no live EHR/device
-connection. Trials landing explorer is fictional criteria-completeness only
-(`syntheticOnly`; never eligibility / live registry).
+Founder HTML lime/forest → cobalt/navy/cream → ivory/teal/coral → now
+**ivory / botanical / lime / midnight-navy** via `:root` in `global.css`. No MoU /
+Gate C auto-approve invented. Live CTAs stay honesty-bound via `productMaturity.ts`.
+Shell/nav remain product chrome (HTML header not vendored). Aksh demo is fictional
+preview only — no live EHR/device connection. Trials landing explorer is fictional
+criteria-completeness only (`syntheticOnly`; never eligibility / live registry).
 
-### Science (removed from product portfolio)
+### Science (educational — public IA)
 
-Founder decision 2026-11-02: **do not compete in standalone scientific education /
-edtech.** `/science` redirects to `/explore`. `ScienceLanding` + CSS kept in-tree
-until a deliberate purge; not linked from Nav/Footer.
+Founder simplification brief 2026-11-03: **Science returns to primary nav** as an
+educational experience, explicitly **not** a clinical product. Research/ISI entry
+stays via Products + contextual CTAs. `/explore` remains a PRODUCT demo route
+(demoted from header).
 
 ## Phase 6–7 Discovery Centre (`/discovery`)
 

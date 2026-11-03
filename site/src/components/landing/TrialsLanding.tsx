@@ -344,8 +344,7 @@ export function TrialsLanding() {
               <p>
                 The intended HSI Trials architecture treats registries and protocol documents as
                 authoritative sources, preserves uncertainties and routes eligibility questions to
-                study professionals. No invented MoU · no Gate C auto-approve · no live PHI in this
-                marketing surface.
+                study professionals. Eligibility stays with investigators — never auto-confirmed.
               </p>
             </div>
             <ul>
@@ -368,19 +367,19 @@ export function TrialsLanding() {
             and careful protocol interpretation—without overstating what an algorithm can decide.
           </p>
           <div className="hero-actions" style={{ justifyContent: "center" }}>
-            <a href="#discovery" className="btn btn-ink">
-              Explore the criteria demo <span className="arrow">↗</span>
+            <a href="#discovery" className="btn btn-primary">
+              Explore study discovery <span className="arrow">↗</span>
             </a>
-            <Link to="/trials-criteria" className="btn btn-ghost land-btn-on-light">
-              Five-state MVP (substrate)
+            <Link to="/how-it-works" className="btn btn-ghost land-btn-on-light">
+              How HSI works
             </Link>
-            <Link to="/status#trials" className="btn btn-ghost land-btn-on-light">
-              What&apos;s available
+            <Link to="/products" className="btn btn-ghost land-btn-on-light">
+              Four products
             </Link>
           </div>
           <small className="land-trials-foot-note">
-            Interactive frontend concept only · no live registry connection, patient matching or
-            eligibility assessment · syntheticOnly · confirmedEligible always false
+            Product concept — illustrative criteria only. No live registry matching or eligibility
+            decisions.
           </small>
         </div>
       </section>

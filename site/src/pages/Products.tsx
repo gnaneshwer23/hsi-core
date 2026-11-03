@@ -16,9 +16,13 @@ export function Products() {
 
       <section className="section section-grid-light">
         <div className="container">
-          <p className="lede" style={{ maxWidth: "40rem", marginBottom: "2rem" }}>
-            {SHARED_CORE_NOTE} Status chips must match <Link to="/status">/status</Link>.
-          </p>
+          <div className="section-head" style={{ marginBottom: "2rem" }}>
+            <span className="section-num">PRODUCT DETAIL</span>
+            <h2 className="display display-md">Four perspectives. One foundation.</h2>
+            <p className="lede" style={{ maxWidth: "40rem" }}>
+              {SHARED_CORE_NOTE}
+            </p>
+          </div>
           <div className="product-grid">
             {ECOSYSTEM_PRODUCTS.map((p) => (
               <article key={p.id} className="product-card">
@@ -42,9 +46,11 @@ export function Products() {
                   >
                     {p.primaryCta.label}
                   </Link>
-                  <Link to="/status" className="text-link">
-                    Status →
-                  </Link>
+                  {p.secondaryCta ? (
+                    <Link to={p.secondaryCta.href} className="text-link">
+                      {p.secondaryCta.label} →
+                    </Link>
+                  ) : null}
                 </div>
               </article>
             ))}

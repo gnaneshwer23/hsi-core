@@ -350,19 +350,23 @@ export function AkshHealthLanding() {
             and metabolic health, with responsible pathways to clinician collaboration.
           </p>
           <div className="hero-actions" style={{ justifyContent: "center" }}>
-            <a href="#overview" className="btn btn-ink">
+            <a href="#overview" className="btn btn-primary">
               Explore the health journey <span className="arrow">↗</span>
             </a>
-            <Link to="/status" className="btn btn-ghost land-btn-on-light">
-              What&apos;s available
+            <Link to="/platform" className="btn btn-ghost land-btn-on-light">
+              See the platform
             </Link>
-            <Link to="/aksh-agents" className="btn btn-ghost land-btn-on-light">
-              HITL boundary
-            </Link>
+            <a
+              href="https://www.akshhealth.com"
+              className="btn btn-ghost land-btn-on-light"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Open Aksh Health ↗
+            </a>
           </div>
           <small className="land-aksh-foot-note">
-            Interactive product concept · Fictional data · No live account, EHR or device connection
-            in this prototype
+            Interactive product concept with fictional data — not a live account or care record.
           </small>
         </div>
       </section>

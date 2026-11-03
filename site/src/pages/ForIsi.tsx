@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { PageHero } from "../components/PageHero";
-import { DualConsumerDiagram, NetworkGraphDiagram, TriggersFlowDiagram } from "../components/Diagrams";
+import { NetworkGraphDiagram } from "../components/Diagrams";
 import { IsiCoworkerMock } from "../components/Mocks";
 
 export function ForIsi() {
@@ -25,7 +25,7 @@ export function ForIsi() {
             <span className="accent">with context intact.</span>
           </>
         }
-        lede="Immune Super Intelligence is the research workspace for relating immune cells, states, tissues, mechanisms, diseases and evidence. HSI Core supplies the graded, versioned backbone. Not clinical decision support."
+        lede="Immune Super Intelligence is the research workspace for relating immune cells, states, tissues, mechanisms, diseases and evidence. HSI supplies the graded, versioned backbone. Not clinical decision support."
       />
 
       <section className="section section-ink-dots">
@@ -37,18 +37,17 @@ export function ForIsi() {
                 <a href="https://www.immune-super-intelligence.co.uk/" className="btn btn-primary" target="_blank" rel="noreferrer">Open Immune Super Intelligence ↗</a>
                 {discoveryUrl ? <a href={discoveryUrl} className="btn btn-ghost" target="_blank" rel="noreferrer">Open connected research workspace ↗</a> : null}
               </div>
-              <h2 className="display display-md">
-                Discovery Centre,
+              <h2 className="display display-md" style={{ marginTop: "1.75rem" }}>
+                Discovery Centre
                 <br />
-                <span className="accent">Phase 7 live.</span>
+                <span className="accent">on real packs.</span>
               </h2>
               <p className="lede" style={{ marginTop: "0.85rem" }}>
-                ASK → MAP → REVIEW on regenerable RA / anti-TNF packs — research
-                intelligence only, not CDS. Co-worker card below remains
-                illustrative demo chrome.
+                ASK → MAP → REVIEW on regenerable RA / anti-TNF evidence — research
+                intelligence only, not bedside care.
               </p>
               <p style={{ marginTop: "1.25rem" }}>
-                <Link to="/discovery" className="btn btn-ink">
+                <Link to="/discovery" className="btn btn-primary">
                   Open Discovery Centre <span className="arrow">↗</span>
                 </Link>
               </p>
@@ -62,27 +61,21 @@ export function ForIsi() {
         <div className="container">
           <div className="split-headline">
             <h2 className="display display-md">
-              Consumer,
+              Honest grades.
               <br />
-              not editor.
+              <span className="accent">Human review.</span>
             </h2>
             <p className="lede">
-              immunecity and the ISI site pull buildIsiExportBundle / exports/.
-              Gate C approve stays human in the product — hsi-core ships maps and
-              checklists, not silent promotions.
+              ISI surfaces established, uncertain and unexplored relationships so researchers
+              can see what is supported — and what still needs work. Suggestions assist curation;
+              humans decide what enters the product graph.
             </p>
           </div>
-          <div className="diagram-plane" style={{ marginTop: "2rem" }}>
-            <DualConsumerDiagram title="ISI pulls discovery faces only" />
-          </div>
-          <div className="diagram-plane" style={{ marginTop: "1.5rem" }}>
-            <TriggersFlowDiagram title="Discovery triggers still end at Gate C" />
-          </div>
           <ul className="checklist" style={{ marginTop: "2rem" }}>
-            <li>Discovery / Ask / Radar only</li>
-            <li>Honest established / uncertain / unexplored labels</li>
-            <li>REL-* suggestion map — curation pointers, never auto-approve</li>
-            <li>Do not edit immunecity for HSI substrate work</li>
+            <li>Discovery, Ask and Radar on graded evidence</li>
+            <li>Clear established / uncertain / unexplored labels</li>
+            <li>Suggestion maps that never auto-promote into the graph</li>
+            <li>Versioned exports ISI can consume without silent edits</li>
           </ul>
           <div className="diagram-plane" style={{ marginTop: "2.5rem" }}>
             <NetworkGraphDiagram title="Radar sees uncertain and unexplored edges" />
@@ -93,50 +86,20 @@ export function ForIsi() {
       <section className="section section-bone">
         <div className="container">
           <div className="section-head">
-            <span className="section-num">
-              ARTIFACTS
-            </span>
-            <h2 className="display display-md">What ISI pulls</h2>
+            <span className="section-num">WHERE TO GO</span>
+            <h2 className="display display-md">Continue in product surfaces</h2>
           </div>
-          <table className="axis-table">
-            <thead>
-              <tr>
-                <th>Command / API</th>
-                <th>Purpose</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <code>bun run export:isi</code>
-                </td>
-                <td>ISI JSON export bundle (hsi-isi-export-1)</td>
-              </tr>
-              <tr>
-                <td>
-                  <code>bun run export:isi-map</code>
-                </td>
-                <td>REL suggestion map for Gate C handoff</td>
-              </tr>
-              <tr>
-                <td>
-                  <code>buildIsiExportBundle()</code>
-                </td>
-                <td>Programmatic consumer entry</td>
-              </tr>
-              <tr>
-                <td>
-                  <code>listIsiRelSuggestions()</code>
-                </td>
-                <td>Curation pointers only</td>
-              </tr>
-            </tbody>
-          </table>
-          <p style={{ marginTop: "1.75rem" }}>
-            <Link to="/docs" className="btn btn-ink">
-              How to run exports <span className="arrow">↗</span>
+          <div className="hero-actions" style={{ justifyContent: "flex-start", marginTop: "1.25rem" }}>
+            <Link to="/discovery" className="btn btn-primary">
+              Discovery Centre <span className="arrow">↗</span>
             </Link>
-          </p>
+            <Link to="/explore" className="btn btn-ghost land-btn-on-light">
+              Explore evidence
+            </Link>
+            <Link to="/sources" className="btn btn-ghost land-btn-on-light">
+              Source registry
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -144,11 +107,11 @@ export function ForIsi() {
         <div className="container container-narrow">
           <div className="section-head">
             <span className="section-num">HARD LINE</span>
-            <h2 className="display display-md">ISI ≠ CDS</h2>
+            <h2 className="display display-md">ISI ≠ clinical decision support</h2>
             <p className="lede">
-              Treating discovery as clinical decision support collapses the
-              portfolio. Uncertain and unexplored edges exist so the graph can
-              stay honest — not so they can slip into clinic cards.
+              Treating discovery as bedside decision support collapses the portfolio. Uncertain
+              and unexplored edges exist so the graph can stay honest — not so they can slip into
+              clinic cards.
             </p>
           </div>
         </div>

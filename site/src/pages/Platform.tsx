@@ -17,11 +17,11 @@ export function Platform() {
             </p>
           </div>
           <div className="hero-actions">
-            <Link to="/explore" className="btn btn-ink">
+            <Link to="/explore" className="btn btn-primary">
               Explore evidence <span className="arrow">↗</span>
             </Link>
-            <Link to="/discovery-engine" className="btn btn-ghost land-btn-on-light">
-              Discovery engine
+            <Link to="/discovery" className="btn btn-ghost land-btn-on-light">
+              Open Discovery
             </Link>
           </div>
         </div>

@@ -1,22 +1,25 @@
 import { Link } from "react-router-dom";
+import { PRODUCT_NAME, PRODUCT_TAGLINE } from "../lib/brand";
 
 const PLATFORM_LINKS = [
   { to: "/platform", label: "Platform" },
   { to: "/products", label: "Products" },
-  { to: "/how-it-works", label: "How it works" },
-  { to: "/explore", label: "Explore" },
-  { to: "/discovery", label: "Discovery" },
+  { to: "/science", label: "Science" },
+  { to: "/how-it-works", label: "How It Works" },
 ] as const;
 
 const PRODUCT_LINKS = [
-  { to: "/for-aksh", label: "For Aksh" },
-  { to: "/for-trials", label: "For Trials" },
-  { to: "/for-isi", label: "For ISI research" },
+  { to: "/for-isi", label: "ISI Research" },
+  { to: "/for-aksh", label: "Aksh Health" },
+  { to: "/platform", label: "HSI Clinical" },
+  { to: "/for-trials", label: "HSI Trials" },
 ] as const;
 
+/** Quiet progress + public docs — not primary nav. */
 const PROGRESS_LINKS = [
-  { to: "/status", label: "Status" },
   { to: "/roadmap", label: "Roadmap" },
+  { to: "/status", label: "Status" },
+  { to: "/docs", label: "Docs" },
 ] as const;
 
 export function Footer() {
@@ -24,20 +27,15 @@ export function Footer() {
     <footer className="footer">
       <div className="container footer-grid">
         <div className="footer-brand-col">
-          <div className="footer-brand">HSI</div>
-          <p className="footer-tagline">
-            Evidence backbone for immune-science discovery. Research intelligence — not
-            clinical decision support.
-          </p>
+          <div className="footer-brand">{PRODUCT_NAME}</div>
+          <p className="footer-tagline">{PRODUCT_TAGLINE}</p>
           <p className="footer-honesty">
-            No PHI · no invented MoU.
+            Science is an educational experience — not a clinical product. Research intelligence
+            with human oversight.
           </p>
-          <Link to="/status" className="footer-status-link">
-            What&apos;s available <span aria-hidden="true">→</span>
-          </Link>
         </div>
         <div>
-          <h4>Platform</h4>
+          <h4>Explore</h4>
           <ul>
             {PLATFORM_LINKS.map((l) => (
               <li key={l.to}>
@@ -68,8 +66,10 @@ export function Footer() {
         </div>
       </div>
       <div className="container footer-bottom">
-        <span>HSI · four-product ecosystem</span>
-        <Link to="/status">Available · In development · Planned</Link>
+        <span>{PRODUCT_NAME}</span>
+        <Link to="/status" className="footer-quiet-status">
+          Status
+        </Link>
       </div>
     </footer>
   );

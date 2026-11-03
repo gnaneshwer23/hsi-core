@@ -39,7 +39,7 @@ export function Systems() {
   return (
     <>
       <PageHero
-        eyebrow="Human Systems Intelligence"
+        eyebrow="Human Super Intelligence"
         title={
           <>
             The shared evidence
