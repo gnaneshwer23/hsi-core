@@ -19,7 +19,7 @@ const destinations = [
   { id: "trials", index: "04", title: "HSI Trials", kicker: "CLINICAL RESEARCH", description: "Investigate transparent trial evidence workflows.", href: "/for-trials" },
 ] as const;
 
-function ConnectionArt() {
+function ConnectionArt({activeNode,onSelect}:{activeNode:number|null,onSelect:(node:number)=>void}) {
   // Original SVG knowledge landscape, inspired by the user's fine-line scientific reference.
   // All nodes and paths are illustrative, never patient data or published findings.
   const heightAt = (x: number, depth: number) => {
@@ -53,7 +53,7 @@ function ConnectionArt() {
       {vertical.map((d,i)=><path key={`v${i}`} d={d}/>)}
     </g>
     <path d="M130 260 Q220 170 350 112 T552 223" stroke="#FF9B7D" strokeWidth="1.3" strokeDasharray="3 8" fill="none" opacity=".85"/>
-    {labels.map(({x,y,name})=><g key={name}><line x1={x} y1={y+15} x2={x} y2={y+56} stroke="#F3EEE8" strokeOpacity=".85"/><circle cx={x} cy={y+56} r="16" fill="none" stroke="#FF9B7D" strokeOpacity=".9"/><circle cx={x} cy={y+56} r="5" fill="#FF6845"/><rect x={x-73} y={y-12} width="146" height="25" rx="2" fill="#17645F" fillOpacity=".86"/><text x={x} y={y+4} fill="#F3EEE8" textAnchor="middle" fontSize="9" letterSpacing="1.1">{name}</text></g>)}
+    {labels.map(({x,y,name},i)=><g key={name} role="button" tabIndex={0} aria-label={`Explore ${name.toLowerCase()}`} aria-pressed={activeNode===i} className={"hsi-landscape-node"+(activeNode===i?" is-active":"")} onClick={()=>onSelect(i)} onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();onSelect(i);}}}><line x1={x} y1={y+15} x2={x} y2={y+56} stroke="#F3EEE8" strokeOpacity=".85"/><circle cx={x} cy={y+56} r="16" fill="none" stroke="#FF9B7D" strokeOpacity=".9"/><circle cx={x} cy={y+56} r="5" fill="#FF6845"/><rect x={x-73} y={y-12} width="146" height="25" rx="2" fill="#17645F" fillOpacity=".86"/><text x={x} y={y+4} fill="#F3EEE8" textAnchor="middle" fontSize="9" letterSpacing="1.1">{name}</text></g>)}
     <g fill="#F3EEE8" fontSize="9" letterSpacing="1.6"><text x="36" y="560">HEALTH → BIOLOGY → EVIDENCE</text><text x="644" y="560" textAnchor="end">ILLUSTRATIVE KNOWLEDGE LANDSCAPE</text></g>
   </svg>;
 }
@@ -61,6 +61,7 @@ function ConnectionArt() {
 export function Home() {
   const [activeStep, setActiveStep] = useState(0);
   const [activeLayer, setActiveLayer] = useState(2);
+  const [activeHeroNode, setActiveHeroNode] = useState<number|null>(null);
   const selected = journey[activeStep];
   return <div className="hsi-editorial">
     <section className="hsi-editorial-hero">
@@ -73,7 +74,7 @@ export function Home() {
             <p className="hsi-editorial-lede">Intelligence should be too. A governed ecosystem connecting human health, biology, immune mechanisms and scientific discovery — with evidence at every step.</p>
             <div className="hsi-editorial-actions"><Link className="hsi-editorial-button" to="/platform">Explore the platform <span aria-hidden="true">↗</span></Link><a className="hsi-editorial-textlink" href="#connected-journey">Follow the connections <span aria-hidden="true">↗</span></a></div>
           </div>
-          <div className="hsi-editorial-visual hsi-landscape-visual"><ConnectionArt/><div className="hsi-editorial-visual-note"><span>SIX PERSPECTIVES / ONE ECOSYSTEM</span><span>Illustrative connections · not study findings or patient analysis</span></div></div>
+          <div className="hsi-editorial-visual hsi-landscape-visual"><ConnectionArt activeNode={activeHeroNode} onSelect={setActiveHeroNode}/>{activeHeroNode!==null&&<div className="hsi-landscape-detail" aria-live="polite"><button type="button" aria-label="Close illustration detail" onClick={()=>setActiveHeroNode(null)}>×</button><span>EXPLORE / 0{activeHeroNode+1}</span><strong>{["Health context","Biological systems","Scientific evidence"][activeHeroNode]}</strong><p>{["Personal observations and authorised clinical histories provide context; access requires permission.","Organs, tissues, cells and pathways help explain mechanisms without automatically implying causality.","Source-linked publications, graded findings and uncertainties support researcher-supervised discovery."][activeHeroNode]}</p><Link to={["/for-aksh","/platform","/for-isi"][activeHeroNode]}>Explore this perspective ↗</Link></div>}<div className="hsi-editorial-visual-note"><span>SIX PERSPECTIVES / ONE ECOSYSTEM</span><span>Illustrative connections · not study findings or patient analysis</span></div></div>
         </div>
         <div className="hsi-editorial-bottomline"><span>EXPLORE <b>•</b> CONNECT <b>•</b> UNDERSTAND <b>•</b> DISCOVER</span><Link to="/how-it-works">SEE HOW IT WORKS ↗</Link></div>
       </div>
