@@ -387,6 +387,38 @@
   font-size: 0.88rem !important;
 }
 
+.hsi-platform-silo-art {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.hsi-platform-trust-head {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(28px, 4vw, 70px);
+  align-items: end;
+  margin-bottom: 48px;
+}
+
+.hsi-platform-trust-head h2 {
+  margin: 22px 0 0;
+}
+
+.hsi-platform-trust-head > p {
+  margin: 0;
+  color: #e1eae4;
+  line-height: 1.75;
+  max-width: 460px;
+}
+
+.hsi-platform-trust-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
+  gap: clamp(32px, 5vw, 70px);
+  align-items: center;
+}
+
 .hsi-platform-principles article {
   display: flex;
   gap: 18px;
@@ -424,6 +456,54 @@
   max-width: none;
 }
 
+.hsi-platform-connection-visual {
+  display: grid;
+  gap: 18px;
+  justify-items: center;
+  width: min(100%, 480px);
+  margin-inline: auto;
+}
+
+.hsi-platform-connection-map {
+  width: 100%;
+}
+
+.hsi-platform-connection-map .hsi-editorial-map-core {
+  gap: 6px;
+  line-height: 1.15;
+  font-size: 1.35rem;
+}
+
+.hsi-platform-connection-map .hsi-editorial-map-core small {
+  display: block;
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+  color: #466d67;
+}
+
+.hsi-platform-connection-legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0;
+  padding: 10px 14px;
+  border: 1px solid #f3eee84a;
+  color: #f3eee8;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
+.hsi-platform-connection-legend b {
+  font-weight: 700;
+}
+
+.hsi-platform-connection-legend b:last-child {
+  color: #ffb09a;
+}
+
 /* Beat marketing-v2 teal CTA so Platform matches Home coral. */
 .public-site-v2.platform-shell .nav {
   background: #f3eee8;
@@ -439,6 +519,22 @@
 @media (max-width: 1050px) {
   .hsi-platform-arch-layout {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .hsi-platform-trust-head,
+  .hsi-platform-trust-body {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .hsi-platform-trust-head > p {
+    max-width: none;
+  }
+
+  .hsi-platform-connection-map {
+    max-width: 440px;
   }
 }
 
@@ -469,6 +565,13 @@
 
   .hsi-platform-foundation-split {
     grid-template-columns: 1fr;
+  }
+
+  .hsi-platform-connection-legend {
+    font-size: 0.55rem;
+    gap: 7px;
+    padding: 8px 10px;
+    flex-wrap: wrap;
   }
 }
 

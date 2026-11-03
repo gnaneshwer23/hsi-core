@@ -10,7 +10,7 @@ type ProductId = EcosystemProduct["id"];
 const productCopy: Record<ProductId, { label: string; description: string; data: string; link: string }> = {
   aksh: {
     label: "Health & care experience",
-    description: "Organises health context and care workflows within Aksh’s own permissions and data environment. Shared technology supports review workflows without copying patient records into HSI.",
+    description: "Organises health context and care work within Aksh’s own permissions and data environment. Shared Human Super Intelligence patterns support review without copying patient records into HSI.",
     data: "Aksh-owned records and access controls",
     link: "/for-aksh",
   },
@@ -22,22 +22,23 @@ const productCopy: Record<ProductId, { label: string; description: string; data:
   },
   isi: {
     label: "Specialist research experience",
-    description: "Connects immune concepts, existing knowledge relationships and permitted evidence within ISI. Shared investigation tools help researchers inspect context and prepare work for human review.",
-    data: "ISI-owned research data and access controls",
+    description: "Connects immune concepts, existing knowledge relationships and permitted evidence within ISI Research. Shared investigation tools help researchers inspect context and prepare work for human review—inside ISI Research’s own data boundary.",
+    data: "ISI Research–owned research data and access controls",
     link: "/for-isi",
   },
   trials: {
     label: "Trial intelligence · Planned",
     description: "A proposed investigator-led experience for exploring study criteria, missing information and pre-screening questions. No live matching, eligibility confirmation or enrolment is available.",
-    data: "Future trial workflows require separate permissions, approved data pathways and investigator confirmation",
+    data: "Future trial capabilities require separate permissions, approved data pathways and investigator confirmation",
     link: "/for-trials",
   },
 };
 
+/** Reusable capability patterns — not ordered stages of a live pipeline. */
 const capabilities = [
   {
-    name: "Retrieve evidence",
-    short: "Retrieve",
+    name: "Evidence",
+    short: "Evidence",
     number: "01",
     description: "Find relevant passages within the evidence supplied to an investigation. Retrieval is bounded by the selected collection and its permissions.",
     input: "A research question and permitted source passages",
@@ -46,8 +47,8 @@ const capabilities = [
     pillar: "Traceable evidence",
   },
   {
-    name: "Connect knowledge",
-    short: "Connect",
+    name: "Knowledge",
+    short: "Knowledge",
     number: "02",
     description: "Follow existing knowledge relationships to bring relevant biological concepts into view. Keep original identifiers and the context behind each connection.",
     input: "Selected concepts and existing graph relationships",
@@ -56,17 +57,17 @@ const capabilities = [
     pillar: "Connected context",
   },
   {
-    name: "Structure investigations",
-    short: "Investigate",
+    name: "Investigation",
+    short: "Investigation",
     number: "03",
-    description: "Organise the question, evidence references, graph context and explicit assessments into a saved research investigation.",
-    input: "Retrieved evidence and relevant biological context",
-    output: "A traceable investigation with review checkpoints",
-    boundary: "Candidate research questions remain unvalidated. Workflow completion is not scientific approval.",
+    description: "Organise the question, evidence references, graph context and explicit assessments into a saved research investigation inside the product that owns the data.",
+    input: "Permitted evidence references and relevant biological context",
+    output: "A traceable investigation ready for human review",
+    boundary: "Candidate research questions remain unvalidated. Saving an investigation is not scientific approval.",
     pillar: "Connected context",
   },
   {
-    name: "Support human review",
+    name: "Review",
     short: "Review",
     number: "04",
     description: "Let authorised reviewers inspect the investigation, record their assessment and export a brief with the evidence references retained.",
@@ -77,10 +78,11 @@ const capabilities = [
   },
 ] as const;
 
-const journeySteps = [
+/** Method lenses for one illustrative question — not a product workflow. */
+const methodLenses = [
   {
     title: "Frame the question",
-    detail: "Specify the population, biomarker definitions and outcomes being investigated.",
+    detail: "Specify the population, biomarker definitions and outcomes being investigated—before treating any answer as settled.",
     note: "Method framing · not a study result",
   },
   {
@@ -167,14 +169,101 @@ function FoundationArt() {
   );
 }
 
+/** Cream idea-panel art: shared HSI core with four permission-walled product silos — not Home’s connection map. */
+function SharedSoftwareArt() {
+  const silos = [
+    { x: 48, y: 48, title: "AKSH HEALTH", sub: "Own records", short: "AKSH" },
+    { x: 372, y: 48, title: "HSI CLINICAL", sub: "Own records", short: "CLIN" },
+    { x: 48, y: 318, title: "ISI RESEARCH", sub: "Own evidence", short: "ISI" },
+    { x: 372, y: 318, title: "HSI TRIALS", sub: "Own studies", short: "TRIAL" },
+  ] as const;
+
+  return (
+    <svg
+      className="hsi-platform-silo-art"
+      viewBox="0 0 660 560"
+      role="img"
+      aria-label="Operating model diagram: Human Super Intelligence software at the centre, with four product silos behind permissions walls. Technology can be reused; product records stay inside each silo."
+    >
+      <defs>
+        <radialGradient id="platform-silo-glow">
+          <stop stopColor="#C4E5DB" stopOpacity=".85" />
+          <stop offset="1" stopColor="#FFFAF4" stopOpacity="0" />
+        </radialGradient>
+        <linearGradient id="platform-silo-wall" x1="0" y1="0" x2="1" y2="0">
+          <stop stopColor="#17645F" stopOpacity=".15" />
+          <stop offset=".5" stopColor="#FF6845" stopOpacity=".55" />
+          <stop offset="1" stopColor="#17645F" stopOpacity=".15" />
+        </linearGradient>
+      </defs>
+      <ellipse cx="330" cy="280" rx="300" ry="240" fill="url(#platform-silo-glow)" />
+
+      {/* Cross-silo permission walls — records do not cross */}
+      <rect x="318" y="42" width="24" height="476" fill="url(#platform-silo-wall)" opacity=".9" />
+      <rect x="42" y="268" width="576" height="24" fill="url(#platform-silo-wall)" opacity=".9" />
+      <text x="330" y="36" textAnchor="middle" fontSize="10" fontWeight="700" letterSpacing="2" fill="#FF6845">
+        PERMISSIONS WALLS
+      </text>
+
+      {silos.map((silo) => (
+        <g key={silo.short}>
+          <rect
+            x={silo.x}
+            y={silo.y}
+            width="240"
+            height="194"
+            rx="4"
+            fill="#FFFAF4"
+            stroke="#17645F"
+            strokeOpacity=".35"
+            strokeWidth="1.5"
+          />
+          <rect x={silo.x + 14} y={silo.y + 14} width="212" height="166" rx="2" fill="#F3EEE8" stroke="#17645F" strokeOpacity=".18" />
+          <text x={silo.x + 120} y={silo.y + 78} textAnchor="middle" fontSize="13" fontWeight="800" letterSpacing="1.6" fill="#17645F">
+            {silo.title}
+          </text>
+          <text x={silo.x + 120} y={silo.y + 102} textAnchor="middle" fontSize="11" fill="#466D67">
+            {silo.sub}
+          </text>
+          <text x={silo.x + 120} y={silo.y + 138} textAnchor="middle" fontSize="10" letterSpacing="1.2" fill="#17645F" opacity=".7">
+            SILO · NOT SHARED
+          </text>
+        </g>
+      ))}
+
+      {/* Software reuse rays stop at the wall edge — they do not carry records */}
+      <g fill="none" stroke="#FF6845" strokeWidth="1.4" strokeDasharray="5 7" opacity=".85">
+        <path d="M330 280 L270 210" />
+        <path d="M330 280 L390 210" />
+        <path d="M330 280 L270 350" />
+        <path d="M330 280 L390 350" />
+      </g>
+
+      <g transform="translate(330 280)">
+        <circle r="78" fill="#17645F" />
+        <circle r="64" fill="none" stroke="#F3EEE8" strokeOpacity=".35" strokeDasharray="3 6" />
+        <text y="-8" textAnchor="middle" fontSize="22" fontWeight="800" letterSpacing="2" fill="#F3EEE8">
+          {PRODUCT_SHORT}
+        </text>
+        <text y="16" textAnchor="middle" fontSize="10" letterSpacing="1.4" fill="#D3E1D9">
+          SHARED SOFTWARE
+        </text>
+        <text y="32" textAnchor="middle" fontSize="9" fill="#A8C4BB">
+          not shared records
+        </text>
+      </g>
+    </svg>
+  );
+}
+
 export function Platform() {
   const [productId, setProductId] = useState<ProductId>("isi");
   const [selected, setSelected] = useState(0);
-  const [journeyIndex, setJourneyIndex] = useState(0);
+  const [lensIndex, setLensIndex] = useState(0);
   const productMeta = ECOSYSTEM_PRODUCTS.find((item) => item.id === productId)!;
   const currentProduct = productCopy[productId];
   const capability = capabilities[selected];
-  const journey = journeySteps[journeyIndex];
+  const lens = methodLenses[lensIndex];
 
   return (
     <div className="hsi-editorial">
@@ -193,7 +282,7 @@ export function Platform() {
             </p>
             <div className="hsi-editorial-actions">
               <a className="hsi-editorial-button" href="#platform-architecture">Explore the architecture <span aria-hidden="true">↗</span></a>
-              <Link className="hsi-editorial-textlink" to="/how-it-works">Follow the workflow ↗</Link>
+              <Link className="hsi-editorial-textlink" to="/how-it-works">See how investigations work ↗</Link>
             </div>
           </div>
           <FoundationArt />
@@ -204,17 +293,43 @@ export function Platform() {
         </div>
       </section>
 
+      <section className="hsi-editorial-intro hsi-platform-idea" aria-labelledby="operating-idea-title">
+        <div className="hsi-editorial-wrap hsi-idea-grid">
+          <div className="hsi-idea-copy">
+            <p className="hsi-editorial-kicker">01 / THE OPERATING IDEA</p>
+            <h2 id="operating-idea-title">
+              Share the software.<br />
+              <em>Never share the records.</em>
+            </h2>
+            <p>
+              Human Super Intelligence is an operating model, not a workflow to follow. Products reuse shared capability patterns—evidence, knowledge, investigation and review—inside their own permissions walls. Software can travel; patient records, research collections and trial data stay where they belong.
+            </p>
+            <a className="hsi-editorial-textlink" href="#platform-architecture">
+              Inspect the architecture ↗
+            </a>
+          </div>
+          <figure className="hsi-idea-figure">
+            <SharedSoftwareArt />
+            <figcaption>
+              Operating model · shared HSI software · four product silos with permissions walls · not a live data pipe
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
       <section className="hsi-rebuild-stack hsi-platform-architecture" id="platform-architecture" aria-labelledby="architecture-title">
         <div className="hsi-editorial-wrap">
           <div className="hsi-rebuild-heading">
             <div>
-              <p className="hsi-editorial-kicker">01 / THE CONNECTED ARCHITECTURE</p>
+              <p className="hsi-editorial-kicker">02 / THE CONNECTED ARCHITECTURE</p>
               <h2 id="architecture-title">
                 SHARE THE TECHNOLOGY.<br />
                 <em>KEEP THE BOUNDARIES.</em>
               </h2>
             </div>
-            <p>Explore all four products and their current maturity, then inspect the shared technology capabilities. These are not claims of deployed cross-product integrations.</p>
+            <p>
+              Pick a product to see its data boundary, then inspect shared capability patterns. Patterns are reusable software—not ordered stages of a live cross-product pipeline, and not claims of deployed integrations.
+            </p>
           </div>
 
           <div className="hsi-platform-arch-layout">
@@ -253,11 +368,11 @@ export function Platform() {
               <div className="hsi-platform-core-heading">
                 <span className="hsi-platform-symbol" aria-hidden="true">{PRODUCT_SHORT[0]}</span>
                 <div>
-                  <h3>HSI shared technology</h3>
-                  <p>Shared code, separate product execution</p>
+                  <h3>{PRODUCT_SHORT} shared technology</h3>
+                  <p>Reusable patterns · separate product data</p>
                 </div>
               </div>
-              <div className="hsi-platform-capability-track" role="group" aria-label="Shared technology capabilities">
+              <div className="hsi-platform-capability-track" role="group" aria-label="Shared capability patterns, not a pipeline">
                 {capabilities.map((item, i) => (
                   <button
                     key={item.number}
@@ -277,16 +392,16 @@ export function Platform() {
                 ))}
               </div>
               <div className="hsi-research-insight" id="capability-detail" aria-live="polite" aria-atomic="true">
-                <span className="hsi-editorial-kicker">SHARED CAPABILITY / {capability.number}</span>
+                <span className="hsi-editorial-kicker">CAPABILITY PATTERN / {capability.number}</span>
                 <h3>{capability.name}</h3>
                 <p>{capability.description}</p>
                 <dl className="hsi-platform-io">
                   <div>
-                    <dt>START WITH</dt>
+                    <dt>BOUNDED TO</dt>
                     <dd>{capability.input}</dd>
                   </div>
                   <div>
-                    <dt>PRODUCE</dt>
+                    <dt>SURFACES</dt>
                     <dd>{capability.output}</dd>
                   </div>
                 </dl>
@@ -296,40 +411,40 @@ export function Platform() {
           </div>
 
           <p className="hsi-platform-arch-note">
-            Architecture explainer · Selecting a product changes this explanation only. Connections represent an architecture direction and existing scoped software reuse, not patient-record transfers, shared access rights or a live data feed.
+            Architecture explainer · Selecting a product changes this explanation only. Capability patterns describe software reuse inside each product’s own environment—not patient-record transfers, shared access rights or a live data feed.
           </p>
         </div>
       </section>
 
-      <section className="hsi-rebuild-story" aria-labelledby="journey-title">
+      <section className="hsi-rebuild-story" aria-labelledby="method-title">
         <div className="hsi-editorial-wrap hsi-rebuild-story-grid">
           <div>
-            <p className="hsi-editorial-kicker">02 / AN ILLUSTRATIVE RESEARCH JOURNEY</p>
-            <h2 id="journey-title">
-              A QUESTION BECOMES<br />
-              <em>A REVIEWABLE INVESTIGATION.</em>
+            <p className="hsi-editorial-kicker">03 / METHOD LENSES · NOT A PIPELINE</p>
+            <h2 id="method-title">
+              HOW AN INVESTIGATION<br />
+              <em>SHOULD BE REVIEWED.</em>
             </h2>
             <p>
-              Consider a research question about variation in anti-TNF response in rheumatoid arthritis. The steps below explain the method, rather than report study findings.
+              Consider a research question about variation in anti-TNF response in rheumatoid arthritis. Each lens below is a way to inspect that question—not a stage in a product workflow that runs itself.
             </p>
             <div className="hsi-platform-journey-note">
               <span aria-hidden="true">+</span>
-              <p>An evidence gap stays a gap. The platform should make missing information clear rather than fill it with an unsupported conclusion.</p>
+              <p>An evidence gap stays a gap. Human Super Intelligence should make missing information clear rather than fill it with an unsupported conclusion.</p>
             </div>
           </div>
-          <div className="hsi-rebuild-research-visual" aria-label="Illustrative research method for an anti-TNF rheumatoid arthritis question, not study findings">
+          <div className="hsi-rebuild-research-visual" aria-label="Illustrative method lenses for an anti-TNF rheumatoid arthritis question, not a live product workflow or study findings">
             <div className="hsi-rebuild-visual-top">
               <span>METHOD / ANTI-TNF · RA</span>
-              <span>SELECT A STAGE</span>
+              <span>CHOOSE A LENS</span>
             </div>
-            <div className="hsi-research-flow" role="group" aria-label="Illustrative research method stages">
-              {journeySteps.map((step, i) => (
+            <div className="hsi-research-flow" role="group" aria-label="Illustrative method lenses">
+              {methodLenses.map((step, i) => (
                 <button
                   key={step.title}
                   type="button"
-                  className={"hsi-research-step" + (journeyIndex === i ? " is-active" : "")}
-                  aria-pressed={journeyIndex === i}
-                  onClick={() => setJourneyIndex(i)}
+                  className={"hsi-research-step" + (lensIndex === i ? " is-active" : "")}
+                  aria-pressed={lensIndex === i}
+                  onClick={() => setLensIndex(i)}
                 >
                   <span className="hsi-research-step-index">0{i + 1}</span>
                   <span className="hsi-research-step-copy">
@@ -341,56 +456,83 @@ export function Platform() {
               ))}
             </div>
             <div className="hsi-research-insight" aria-live="polite">
-              <span className="hsi-editorial-kicker">METHOD LENS / 0{journeyIndex + 1}</span>
+              <span className="hsi-editorial-kicker">METHOD LENS / 0{lensIndex + 1}</span>
               <div className="hsi-research-insight-art" aria-hidden="true"><span /><span /><span /><span /><span /></div>
-              <h3>{journey.title}</h3>
-              <p>{journey.detail}</p>
+              <h3>{lens.title}</h3>
+              <p>{lens.detail}</p>
             </div>
-            <p className="hsi-research-disclaimer">Illustrative workflow only · No patient data or fabricated scientific findings.</p>
+            <p className="hsi-research-disclaimer">Illustrative method only · Not a product pipeline · No patient data or fabricated scientific findings.</p>
           </div>
         </div>
       </section>
 
-      <section className="hsi-editorial-connection" aria-labelledby="trust-title">
-        <div className="hsi-editorial-wrap hsi-editorial-connection-grid">
-          <div>
-            <p className="hsi-editorial-kicker">03 / BUILT AROUND ACCOUNTABILITY</p>
-            <h2 id="trust-title">
-              The connection matters.<br />
-              <em>So does the context.</em>
-            </h2>
+      <section className="hsi-editorial-connection hsi-platform-accountability" aria-labelledby="trust-title">
+        <div className="hsi-editorial-wrap">
+          <div className="hsi-platform-trust-head">
+            <div>
+              <p className="hsi-editorial-kicker">04 / BUILT AROUND ACCOUNTABILITY</p>
+              <h2 id="trust-title">
+                Shared technology.<br />
+                <em>Separate accountability.</em>
+              </h2>
+            </div>
             <p>
-              Provenance, product-owned access and human control keep shared technology from becoming a shared evidence database or an automated clinical decision system.
+              Provenance, product-owned access and human control keep Human Super Intelligence from becoming a shared evidence database or an automated clinical decision system. Technology patterns can be reused; records never sync across products by default.
             </p>
           </div>
-          <div className="hsi-platform-principles">
-            {trustPrinciples.map((item, i) => (
-              <article key={item.title}>
-                <span>0{i + 1}</span>
-                <div>
-                  <h3>{item.title}</h3>
-                  <p>{item.detail}</p>
+
+          <div className="hsi-platform-trust-body">
+            <div className="hsi-platform-principles">
+              {trustPrinciples.map((item, i) => (
+                <article key={item.title}>
+                  <span>0{i + 1}</span>
+                  <div>
+                    <h3>{item.title}</h3>
+                    <p>{item.detail}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <div className="hsi-platform-connection-visual">
+              <div
+                className="hsi-editorial-connection-map hsi-platform-connection-map"
+                role="img"
+                aria-label="Connection map: Human Super Intelligence shared technology at the centre. Aksh Health, HSI Clinical, ISI Research and HSI Trials each keep their own data. Technology is shared; records are never shared."
+              >
+                <div className="hsi-editorial-map-core">
+                  {PRODUCT_SHORT}
+                  <small>SHARED TECH</small>
                 </div>
-              </article>
-            ))}
+                <span>AKSH · OWN DATA</span>
+                <span>CLINICAL · OWN DATA</span>
+                <span>ISI RESEARCH · OWN DATA</span>
+                <span>TRIALS · OWN DATA</span>
+              </div>
+              <p className="hsi-platform-connection-legend">
+                <b>Technology shared</b>
+                <span aria-hidden="true">·</span>
+                <b>Data never shared</b>
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       <section className="hsi-editorial-outro">
         <div className="hsi-editorial-wrap">
-          <p className="hsi-editorial-kicker">04 / FROM FOUNDATION TO EXPERIENCE</p>
+          <p className="hsi-editorial-kicker">05 / FROM FOUNDATION TO EXPERIENCE</p>
           <h2>
-            Understand the technology.<br />
+            Understand the operating model.<br />
             <em>Find your starting point.</em>
           </h2>
-          <p>Explore the specialist experiences built around our shared vision.</p>
+          <p>Explore the specialist experiences that reuse shared technology while keeping their own data and governance.</p>
           <div className="hsi-editorial-actions">
             <Link className="hsi-editorial-button" to="/products">Explore the products <span aria-hidden="true">↗</span></Link>
-            <Link className="hsi-editorial-textlink" to="/how-it-works">See how it works ↗</Link>
+            <Link className="hsi-editorial-textlink" to="/how-it-works">See how investigations work ↗</Link>
           </div>
           <small>
-            Scientific research tools do not provide diagnosis, prescribing or confirmed trial eligibility. Clinical and trial capabilities are separately governed and subject to human validation. HSI does not operate a shared evidence database across products.
+            Scientific research tools do not provide diagnosis, prescribing or confirmed trial eligibility. Clinical and trial capabilities are separately governed and subject to human validation. Human Super Intelligence does not operate a shared evidence database across products.
           </small>
         </div>
       </section>
