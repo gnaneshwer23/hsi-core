@@ -75,11 +75,12 @@ explicit readiness metadata and return `evidence_not_ready` when start is
 attempted against a pending marker. Passage-review UI consumes only bundle
 sources/passages already returned by the investigation service.
 
-**Current verification note (2026-11-03):** Europe PMC was reachable from the
-operator network, but both candidate JATS packages lack an explicit Creative
-Commons URI in article permissions (Attribution prose only). The importer
-correctly rejects that state. The release remains
-`awaiting_verified_source_import`. No passages or licence grants were invented.
+**Current verification note (2026-11-03, Phase 2):** Europe PMC was reachable.
+Both candidate JATS packages still lack an explicit Creative Commons URI in
+article permissions (Attribution prose only; Europe PMC metadata `license` is
+the unversioned token `cc by`). `bun run ra:import` correctly rejects that
+state. The release remains `awaiting_verified_source_import`. No passages or
+licence grants were invented. Report: [PHASE2_RA_LICENCE_IMPORT.md](PHASE2_RA_LICENCE_IMPORT.md).
 
 The expert-labelled context benchmark and independent scientific adjudication
 remain outstanding. Annotation guideline/worksheet templates ship without
