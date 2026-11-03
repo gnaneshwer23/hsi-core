@@ -207,3 +207,14 @@ test("resume continues only unstarted stages and never repeats completed retriev
   expect(await service.resume("team-a-resume", s.revision, "researcher")).toEqual(s);
   expect(retrievalCalls).toBe(1); expect(s.bundle.runs[0]!.history).toHaveLength(14);
 });
+
+test("payload integrity survives object-key reordering by JSONB storage", async () => {
+  const { service } = setup(); const s = await service.start("team-a-jsonb", input(), "researcher");
+  const done = await service.review("team-a-jsonb", s.revision, "request_revision", "Fixture review", "reviewer");
+  function reorder(v: unknown): unknown {
+    if (Array.isArray(v)) return v.map(reorder);
+    if (v && typeof v === "object") return Object.fromEntries(Object.entries(v).reverse().map(([k, value]) => [k, reorder(value)]));
+    return v;
+  }
+  expect(validateInvestigationSnapshot(reorder(done) as typeof done)).toEqual(done);
+});

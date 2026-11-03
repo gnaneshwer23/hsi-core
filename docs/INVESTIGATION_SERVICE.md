@@ -85,7 +85,8 @@ failure with the operator reference. Version 1 requires a new run/key after fail
 CAS prevents the old worker from subsequently publishing stale output.
 
 The service verifies provided passage hashes against UTF-8 passage text and hashes
-all generated payloads. It rejects unknown/broken references and applies bounded
+all generated payloads using UTF-8 JSON with recursively sorted object keys
+(array order is preserved), so JSONB key reordering does not break integrity. It rejects unknown/broken references and applies bounded
 output sizes. It is not a PHI detector, source-rights verifier, prompt injection
 filter or scientific adjudicator. Product backends must perform those checks and
 apply request limits before parsing. Markdown exports contain source text; UI

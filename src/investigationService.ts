@@ -50,7 +50,12 @@ export interface InvestigationProviders {
   hypothesis?: InvestigationProvider<HypothesisResult>;
 }
 const clone = <T>(value: T): T => structuredClone(value);
-const digest = (value: unknown) => createHash("sha256").update(JSON.stringify(value)).digest("hex");
+// Stable across JSON/JSONB stores that reorder object keys; array order stays meaningful.
+const canonicalJson = (value: unknown): string => JSON.stringify(value, (_key, row: unknown) => {
+  if (row && typeof row === "object" && !Array.isArray(row)) return Object.fromEntries(Object.entries(row).sort(([a], [b]) => a < b ? -1 : a > b ? 1 : 0));
+  return row;
+});
+const digest = (value: unknown) => createHash("sha256").update(canonicalJson(value)).digest("hex");
 const nonempty = (value: unknown, max = 4000): value is string => typeof value === "string" && !!value.trim() && value.length <= max;
 const validId = (value: unknown): value is string => typeof value === "string" && /^[A-Za-z0-9][A-Za-z0-9:_.-]{0,127}$/.test(value);
 function assert(condition: unknown): asserts condition { if (!condition) throw new Error("Invalid investigation state or provider output"); }
@@ -162,10 +167,10 @@ export function validateInvestigationSnapshot(value: StoredInvestigation): Store
     const stage = Object.entries(kinds).find(([, kind]) => kind === a.kind)?.[0] as ResearchStage;
     assert(stage && Object.hasOwn(s.payloads, stage) && a.sha256 === digest(s.payloads[stage]));
   }
-  if (s.payloads.context) assert(JSON.stringify(s.payloads.context) === JSON.stringify(s.bundle.context));
+  if (s.payloads.context) assert(digest(s.payloads.context) === digest(s.bundle.context));
   if (s.payloads.retrieval) validateRetrieval(s.payloads.retrieval, s.bundle);
-  if (s.payloads.graph) assert(JSON.stringify(s.payloads.graph) === JSON.stringify(graphContext(s.bundle)));
-  if (s.payloads.contradictions) assert(JSON.stringify(s.payloads.contradictions) === JSON.stringify(contradictions(s.bundle, s.payloads)));
+  if (s.payloads.graph) assert(digest(s.payloads.graph) === digest(graphContext(s.bundle)));
+  if (s.payloads.contradictions) assert(digest(s.payloads.contradictions) === digest(contradictions(s.bundle, s.payloads)));
   if (s.payloads.hypothesis) validateHypothesis(s.payloads.hypothesis, s.payloads, s.bundle);
   if (s.payloads.review) {
     const review = s.payloads.review;
@@ -174,7 +179,7 @@ export function validateInvestigationSnapshot(value: StoredInvestigation): Store
     assert(event && event.actorRef === review.reviewerRef && ["accept_for_research", "request_revision"].includes(review.decision as string) && nonempty(review.rationale));
     assert(typeof review.reviewedAt === "string" && Number.isFinite(Date.parse(review.reviewedAt)) && Date.parse(review.reviewedAt) <= Date.parse(event.at));
   }
-  if (s.payloads.dossier) assert(JSON.stringify(s.payloads.dossier) === JSON.stringify(buildDossier(s)));
+  if (s.payloads.dossier) assert(digest(s.payloads.dossier) === digest(buildDossier(s)));
   return s;
 }
 /** Test/local runner store. Ephemeral; production adapters must provide durable, tenant-isolated CAS. */
