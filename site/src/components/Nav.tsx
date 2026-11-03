@@ -4,7 +4,7 @@ import { ENGINEERING_LINKS } from "../lib/productMaturity";
 
 /**
  * Primary destinations — product/marketing landings only.
- * Matches footer Platform + Products + Progress; engineering stays drawer-secondary.
+ * Status / Roadmap live in footer (+ What's available CTA); engineering stays drawer-secondary.
  */
 const primaryLinks = [
   { to: "/platform", label: "Platform" },
@@ -15,8 +15,6 @@ const primaryLinks = [
   { to: "/for-aksh", label: "For Aksh" },
   { to: "/for-trials", label: "For Trials" },
   { to: "/for-isi", label: "For ISI" },
-  { to: "/status", label: "Status" },
-  { to: "/roadmap", label: "Roadmap" },
 ];
 
 export function Nav() {
