@@ -42,8 +42,8 @@ function loadDotEnvFile(path: string, env: NodeJS.ProcessEnv): void {
 export function loadLocalEnv(cwd = process.cwd(), base?: NodeJS.ProcessEnv): NodeJS.ProcessEnv {
   const env = { ...(base ?? process.env) };
   // Prefer .env.local over .env for Vercel-style local secrets.
-  loadDotEnvFile(resolve(cwd, ".env"), env);
   loadDotEnvFile(resolve(cwd, ".env.local"), env);
+  loadDotEnvFile(resolve(cwd, ".env"), env);
   return env;
 }
 
@@ -62,8 +62,7 @@ export function fetchHsiDatabaseUrlViaNeonctl(): string {
     env: process.env,
   });
   if (result.status !== 0) {
-    const err = (result.stderr || result.stdout || "neonctl failed").trim();
-    throw new Error(`neonctl connection-string failed: ${err.slice(0, 400)}`);
+    throw new Error("neonctl connection-string failed; verify authentication and access to the canonical HSI branch.");
   }
   const url = (result.stdout || "").trim().split("\n").filter(Boolean).at(-1);
   if (!url?.startsWith("postgres")) {

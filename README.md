@@ -49,6 +49,14 @@ Individual CLIs still available: `validate`, `export:isi`, `export:isi-map`, `ex
 
 ## Vision site
 
+The research-first implementation now includes a source registry at `/sources`,
+claim comparison and cited brief export in Discovery MAP, and separate Aksh/ISI
+consumer integrations. Start with [the vision audit](docs/HSI_VISION_AUDIT_2026-11-02.md),
+[source-registry workflow](docs/SOURCE_REGISTRY.md),
+[Aksh integration](docs/AKSH_PLATFORM_INTEGRATION.md) and
+[Immunecity integration](docs/IMMUNECITY_PLATFORM_INTEGRATION.md).
+Source metadata and linked identifiers are not independently verified claim support.
+
 Marketing / IA site for HSI concepts (Vite + React) lives in [`site/`](site/).
 
 ```bash

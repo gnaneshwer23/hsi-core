@@ -41,7 +41,7 @@ export async function applyHsiMigrations(opts?: MigrateOptions): Promise<Migrate
     throw new Error(`Refusing migrate: ${check.reason}`);
   }
 
-  const sql = new SQL(resolved.databaseUrl);
+  const sql = new SQL(resolved.databaseUrl, { tls: { rejectUnauthorized: true }, connectionTimeout: 10 });
   const applied: string[] = [];
   const skipped: string[] = [];
 

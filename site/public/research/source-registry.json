@@ -1,0 +1,517 @@
+{
+  "schemaVersion": "hsi-source-registry-1",
+  "notCds": true,
+  "containsPhi": false,
+  "claimSupport": "not_assessed",
+  "sources": [
+    {
+      "id": "pmid:10622295",
+      "pmid": "10622295",
+      "claimIds": [
+        "HSI-C-RA-012"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:10662881",
+      "pmid": "10662881",
+      "claimIds": [
+        "HSI-C-RA-002"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:10839541",
+      "pmid": "10839541",
+      "claimIds": [
+        "HSI-C-NI-001"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:11087881",
+      "pmid": "11087881",
+      "claimIds": [
+        "HSI-C-RA-003"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:11244034",
+      "pmid": "11244034",
+      "claimIds": [
+        "HSI-C-IM-002",
+        "HSI-C-RA-001"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:11901203",
+      "pmid": "11901203",
+      "claimIds": [
+        "HSI-C-NI-009"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:12469056",
+      "pmid": "12469056",
+      "claimIds": [
+        "HSI-C-NI-011"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:12490958",
+      "pmid": "12490958",
+      "claimIds": [
+        "HSI-C-NI-002"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:12508119",
+      "pmid": "12508119",
+      "claimIds": [
+        "HSI-C-NI-003"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:12813013",
+      "pmid": "12813013",
+      "claimIds": [
+        "HSI-C-IM-004"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:15030775",
+      "pmid": "15030775",
+      "claimIds": [
+        "HSI-C-IM-006"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:15831717",
+      "pmid": "15831717",
+      "claimIds": [
+        "HSI-C-NI-012"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:16025117",
+      "pmid": "16025117",
+      "claimIds": [
+        "HSI-C-NI-004"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:16339522",
+      "pmid": "16339522",
+      "claimIds": [
+        "HSI-C-SSC-003"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:16382236",
+      "pmid": "16382236",
+      "claimIds": [
+        "HSI-C-IO-001"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:16385515",
+      "pmid": "16385515",
+      "claimIds": [
+        "HSI-C-SSC-011"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:16508927",
+      "pmid": "16508927",
+      "claimIds": [
+        "HSI-C-RA-007"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:16785311",
+      "pmid": "16785311",
+      "claimIds": [
+        "HSI-C-NI-007"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:17133559",
+      "pmid": "17133559",
+      "claimIds": [
+        "HSI-C-RA-008"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:17220915",
+      "pmid": "17220915",
+      "claimIds": [
+        "HSI-C-NI-013"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:17332883",
+      "pmid": "17332883",
+      "claimIds": [
+        "HSI-C-SSC-017"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:17581616",
+      "pmid": "17581616",
+      "claimIds": [
+        "HSI-C-SSC-012"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:18375541",
+      "pmid": "18375541",
+      "claimIds": [
+        "HSI-C-RA-009"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:18625622",
+      "pmid": "18625622",
+      "claimIds": [
+        "HSI-C-IM-003",
+        "HSI-C-RA-004",
+        "HSI-C-RA-005"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:18669662",
+      "pmid": "18669662",
+      "claimIds": [
+        "HSI-C-NI-008"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:19180481",
+      "pmid": "19180481",
+      "claimIds": [
+        "HSI-C-SSC-015"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:19228962",
+      "pmid": "19228962",
+      "claimIds": [
+        "HSI-C-NI-016"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:19420368",
+      "pmid": "19420368",
+      "claimIds": [
+        "HSI-C-SSC-016"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:19542466",
+      "pmid": "19542466",
+      "claimIds": [
+        "HSI-C-NI-010"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:19625695",
+      "pmid": "19625695",
+      "claimIds": [
+        "HSI-C-GUT-007"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:19836068",
+      "pmid": "19836068",
+      "claimIds": [
+        "HSI-C-GUT-013"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:20699241",
+      "pmid": "20699241",
+      "claimIds": [
+        "HSI-C-RA-011"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:21205640",
+      "pmid": "21205640",
+      "claimIds": [
+        "HSI-C-GUT-001"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:21314428",
+      "pmid": "21314428",
+      "claimIds": [
+        "HSI-C-SSC-002"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:21921156",
+      "pmid": "21921156",
+      "claimIds": [
+        "HSI-C-NI-005"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:23828891",
+      "pmid": "23828891",
+      "claimIds": [
+        "HSI-C-GUT-004"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:23842501",
+      "pmid": "23842501",
+      "claimIds": [
+        "HSI-C-GUT-002"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:23973224",
+      "pmid": "23973224",
+      "claimIds": [
+        "HSI-C-GUT-014"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:24129067",
+      "pmid": "24129067",
+      "claimIds": [
+        "HSI-C-SSC-007"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:24226770",
+      "pmid": "24226770",
+      "claimIds": [
+        "HSI-C-GUT-003"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:24226773",
+      "pmid": "24226773",
+      "claimIds": [
+        "HSI-C-GUT-010"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:24350901",
+      "pmid": "24350901",
+      "claimIds": [
+        "HSI-C-SSC-013"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:24390544",
+      "pmid": "24390544",
+      "claimIds": [
+        "HSI-C-GUT-011"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:24412617",
+      "pmid": "24412617",
+      "claimIds": [
+        "HSI-C-GUT-008"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:24586782",
+      "pmid": "24586782",
+      "claimIds": [
+        "HSI-C-RA-010"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:24917457",
+      "pmid": "24917457",
+      "claimIds": [
+        "HSI-C-GUT-005"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:25172555",
+      "pmid": "25172555",
+      "claimIds": [
+        "HSI-C-NI-014"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:25865369",
+      "pmid": "25865369",
+      "claimIds": [
+        "HSI-C-GUT-012"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:27382171",
+      "pmid": "27382171",
+      "claimIds": [
+        "HSI-C-NI-006"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:28845751",
+      "pmid": "28845751",
+      "claimIds": [
+        "HSI-C-IM-010"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:29163504",
+      "pmid": "29163504",
+      "claimIds": [
+        "HSI-C-GUT-009"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:29514998",
+      "pmid": "29514998",
+      "claimIds": [
+        "HSI-C-SSC-005"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:29626172",
+      "pmid": "29626172",
+      "claimIds": [
+        "HSI-C-SSC-008"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:29853453",
+      "pmid": "29853453",
+      "claimIds": [
+        "HSI-C-SSC-014"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:2993897",
+      "pmid": "2993897",
+      "claimIds": [
+        "HSI-C-IM-005",
+        "HSI-C-RA-006"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:30760472",
+      "pmid": "30760472",
+      "claimIds": [
+        "HSI-C-SSC-001",
+        "HSI-C-SSC-004"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:30918945",
+      "pmid": "30918945",
+      "claimIds": [
+        "HSI-C-GUT-006"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:31180194",
+      "pmid": "31180194",
+      "claimIds": [
+        "HSI-C-AU-001"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:33175976",
+      "pmid": "33175976",
+      "claimIds": [
+        "HSI-C-SSC-006"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:34031030",
+      "pmid": "34031030",
+      "claimIds": [
+        "HSI-C-SSC-010"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:37763102",
+      "pmid": "37763102",
+      "claimIds": [
+        "HSI-C-SSC-009"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:7569976",
+      "pmid": "7569976",
+      "claimIds": [
+        "HSI-C-T2D-010"
+      ],
+      "revisions": []
+    },
+    {
+      "id": "pmid:8707929",
+      "pmid": "8707929",
+      "claimIds": [
+        "HSI-C-NI-015"
+      ],
+      "revisions": []
+    }
+  ]
+}

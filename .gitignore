@@ -9,6 +9,8 @@ site/node_modules/
 .env.*
 !.env.example
 coverage/
+site/test-results/
+site/playwright-report/
 out/
 # Legacy local CLI paths — refreshed by bun run outputs; committed samples live in examples/sample-outputs/
 exports/*.json

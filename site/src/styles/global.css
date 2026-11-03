@@ -6557,3 +6557,17 @@ p {
     transition: none;
   }
 }
+/* Research comparison: scoped evidence, responsive table, explicit review state. */
+.research-comparison { margin-top: 1.5rem; }
+.research-comparison > p { margin-block: 1rem; }
+.research-comparison-warning { border-left: 3px solid currentColor; padding-left: 1rem; }
+.research-comparison-options { border: 1px solid currentColor; padding: 1rem; margin-block: 1.5rem; max-height: 24rem; overflow-y: auto; }
+.research-comparison-options legend { padding-inline: .5rem; }
+.research-comparison-options label { display: flex; gap: .75rem; align-items: flex-start; padding: .65rem 0; cursor: pointer; }
+.research-comparison-options input { margin-top: .35rem; flex-shrink: 0; width: 1.15rem; height: 1.15rem; }
+.research-comparison-options label:has(input:disabled) { opacity: .6; cursor: default; }
+.research-comparison-table { min-width: 40rem; }
+.research-comparison-table caption { text-align: left; padding-block: 1rem; }
+.research-comparison-table th, .research-comparison-table td { vertical-align: top; min-width: 12rem; overflow-wrap: anywhere; }
+.research-comparison button:disabled { opacity: .5; cursor: not-allowed; }
+.research-comparison :focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }

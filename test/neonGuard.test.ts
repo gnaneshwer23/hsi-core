@@ -62,4 +62,19 @@ describe("neonGuard", () => {
       ),
     ).toBe("postgresql://neondb_owner:***@ep-restless-dew.aws.neon.tech/neondb");
   });
+  it("rejects spoofed domains, wrong databases and a project-pin bypass", () => {
+    for (const url of [
+      "postgresql://u:p@ep-restless-dew-zas989pv.evil.test/neondb",
+      "postgresql://u:p@ep-other.aws.neon.tech/neondb",
+      "postgresql://u:p@ep-restless-dew-zas989pv.c-2.eu-west-2.aws.neon.tech/otherdb",
+      "https://ep-restless-dew-zas989pv.c-2.eu-west-2.aws.neon.tech/neondb",
+      "postgresql://u:p@ep-restless-dew-zas989pv.c-2.eu-west-2.aws.neon.tech/neondb?sslmode=disable",
+    ]) expect(assertHsiNeonDatabaseUrl(url, { neonProjectId: HSI_NEON_PROJECT_ID }).ok).toBe(false);
+  });
+  it("masks delimiter-containing passwords and connection query secrets", () => {
+    const masked = maskDatabaseUrl("postgresql://u:p%40ss%3Aword@ep-restless-dew-zas989pv.c-2.eu-west-2.aws.neon.tech/neondb?password=secret");
+    expect(masked).not.toContain("p%40ss%3Aword");
+    expect(masked).not.toContain("secret");
+    expect(maskDatabaseUrl("not a URL secret")).toBe("[invalid database URL]");
+  });
 });

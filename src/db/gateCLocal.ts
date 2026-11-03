@@ -227,7 +227,7 @@ export async function syncGateCChecklistToHsiNeon(
 
   const checklist = opts?.checklist ?? buildGateCChecklist();
   const ensureSeedRows = opts?.ensureSeedRows !== false;
-  const sql = new SQL(resolved.databaseUrl);
+  const sql = new SQL(resolved.databaseUrl, { tls: { rejectUnauthorized: true }, connectionTimeout: 10 });
 
   let upserted = 0;
   let skippedUnmapped = 0;

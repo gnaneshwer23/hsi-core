@@ -72,7 +72,10 @@ Do **not** put ISI / Akeno / DeliverX URLs in this project's Vercel env.
 - `ep-weathered-mountain`, `silent-violet` (Akeno)
 - `spring-wind` (DeliverX)
 
-and requires `ep-restless-dew` **or** explicit `NEON_PROJECT_ID=red-wave-06625195`.
+and requires the canonical `ep-restless-dew-zas989pv` endpoint (pooled or direct),
+the Neon `eu-west-2` domain and `neondb`. A project environment variable cannot
+override a mismatched host. Credential masks omit query parameters and safely
+handle passwords containing URL delimiters.
 
 ## Gate C honesty
 

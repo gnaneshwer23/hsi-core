@@ -14,7 +14,7 @@ const primaryLinks = [
   { to: "/discovery", label: "Discovery" },
   { to: "/for-aksh", label: "For Aksh" },
   { to: "/for-trials", label: "For Trials" },
-  { to: "/for-isi", label: "For ISI" },
+  { to: "/for-isi", label: "For researchers" },
 ];
 
 export function Nav() {

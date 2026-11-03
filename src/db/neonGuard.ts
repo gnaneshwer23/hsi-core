@@ -26,7 +26,7 @@ export const FORBIDDEN_NEON_MARKERS = [
 ] as const;
 
 export type NeonUrlCheck =
-  | { ok: true; host: string; projectHint: "hsi" | "unknown_allowed" }
+  | { ok: true; host: string; projectHint: "hsi" }
   | { ok: false; reason: string; host: string | null };
 
 function extractHost(databaseUrl: string): string | null {
@@ -50,13 +50,13 @@ export function isForbiddenNeonTarget(value: string): boolean {
 /** True when host looks like the canonical HSI endpoint. */
 export function isHsiNeonHost(host: string | null | undefined): boolean {
   if (!host) return false;
-  return host.toLowerCase().includes(HSI_NEON_HOST_PREFIX);
+  return /^ep-restless-dew-zas989pv(?:-pooler)?(?:\.c-\d+)?\.eu-west-2\.aws\.neon\.tech$/i.test(host);
 }
 
 /**
  * Validate DATABASE_URL for HSI migrations / Gate C local writes.
  * Refuses known ISI/Akeno/DeliverX markers. Prefers ep-restless-dew host;
- * allows unknown hosts only when NEON_PROJECT_ID is explicitly red-wave.
+ * accepts only the canonical endpoint/database; a project variable cannot override the host.
  */
 export function assertHsiNeonDatabaseUrl(
   databaseUrl: string,
@@ -65,6 +65,14 @@ export function assertHsiNeonDatabaseUrl(
   const trimmed = databaseUrl.trim();
   if (!trimmed) {
     return { ok: false, reason: "DATABASE_URL is empty", host: null };
+  }
+  let parsed: URL;
+  try { parsed = new URL(trimmed); } catch { return { ok: false, host: null, reason: "DATABASE_URL is not a valid PostgreSQL URL" }; }
+  if (!["postgres:", "postgresql:"].includes(parsed.protocol) || parsed.pathname !== `/${HSI_NEON_DATABASE}`) {
+    return { ok: false, host: parsed.hostname, reason: "HSI requires a PostgreSQL URL for the neondb database" };
+  }
+  if (["disable", "allow", "prefer"].includes(parsed.searchParams.get("sslmode") ?? "")) {
+    return { ok: false, host: parsed.hostname, reason: "HSI database access requires verified TLS" };
   }
 
   if (isForbiddenNeonTarget(trimmed)) {
@@ -89,7 +97,7 @@ export function assertHsiNeonDatabaseUrl(
   if (projectId && projectId !== HSI_NEON_PROJECT_ID) {
     return {
       ok: false,
-      reason: `NEON_PROJECT_ID=${projectId} is not HSI canonical ${HSI_NEON_PROJECT_ID}.`,
+      reason: `NEON_PROJECT_ID does not match HSI canonical ${HSI_NEON_PROJECT_ID}.`,
       host,
     };
   }
@@ -98,21 +106,22 @@ export function assertHsiNeonDatabaseUrl(
     return { ok: true, host: host!, projectHint: "hsi" };
   }
 
-  if (projectId === HSI_NEON_PROJECT_ID) {
-    // Explicit project pin without matching host prefix (e.g. pooled host rename).
-    return { ok: true, host: host ?? "(unknown)", projectHint: "unknown_allowed" };
-  }
-
   return {
     ok: false,
     reason:
-      `DATABASE_URL host must include ${HSI_NEON_HOST_PREFIX} (HSI red-wave), ` +
-      `or set NEON_PROJECT_ID=${HSI_NEON_PROJECT_ID}. Refusing ambiguous target.`,
+      "DATABASE_URL must use the canonical HSI endpoint and Neon domain. A project variable alone cannot authorise another host.",
     host,
   };
 }
 
 /** Mask password in a connection string for logs (never print secrets). */
 export function maskDatabaseUrl(databaseUrl: string): string {
-  return databaseUrl.replace(/:([^:@/]+)@/, ":***@");
+  try {
+    const url = new URL(databaseUrl);
+    if (!["postgres:", "postgresql:"].includes(url.protocol)) return "[invalid database URL]";
+    url.password = "***";
+    url.search = "";
+    url.hash = "";
+    return url.toString();
+  } catch { return "[invalid database URL]"; }
 }
