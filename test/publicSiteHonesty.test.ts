@@ -64,7 +64,7 @@ describe("Public HSI site honesty", () => {
     expect(home).toContain("HEALTH SUPER INTELLIGENCE");
     expect(home).toContain("Illustrative connections · not study findings or patient analysis");
     expect(home).toContain('to="/for-isi"');
-    expect(home).toContain('to="/for-aksh"');
+    expect(home).toContain('href: "/for-aksh"');
     expect(home).toContain('to="/platform"');
     expect(home).not.toContain("<EvidenceExplorer");
     const ecosystem = site("src/components/landing/EcosystemGrid.tsx");
