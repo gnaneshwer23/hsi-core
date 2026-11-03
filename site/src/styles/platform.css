@@ -76,6 +76,18 @@
   color: #f3eee8;
   padding: 20px;
   margin-bottom: 14px;
+  animation: hsi-platform-presence 7s ease-in-out infinite;
+}
+
+/* Soft presence only — not a data-sync pulse. Rays/paths stay still. */
+@keyframes hsi-platform-presence {
+  0%,
+  100% {
+    box-shadow: inset 0 0 0 0 transparent;
+  }
+  50% {
+    box-shadow: inset 0 0 0 1px #f3eee822;
+  }
 }
 
 .hsi-platform-symbol {
@@ -161,6 +173,25 @@
   height: 5px;
   background: #ff6845;
   border-radius: 50%;
+  animation: hsi-platform-dot-soft 5.5s ease-in-out infinite;
+}
+
+.hsi-platform-foundation-shared li:nth-child(2)::before {
+  animation-delay: 0.9s;
+}
+
+.hsi-platform-foundation-shared li:nth-child(3)::before {
+  animation-delay: 1.8s;
+}
+
+@keyframes hsi-platform-dot-soft {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 .hsi-platform-foundation-shared small {
@@ -403,6 +434,37 @@
   height: auto;
 }
 
+.hsi-platform-silo-glow {
+  animation: hsi-platform-glow-breathe 8s ease-in-out infinite;
+  transform-origin: 330px 280px;
+}
+
+.hsi-platform-silo-core {
+  animation: hsi-platform-core-soft 9s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes hsi-platform-glow-breathe {
+  0%,
+  100% {
+    opacity: 0.85;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes hsi-platform-core-soft {
+  0%,
+  100% {
+    opacity: 0.96;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
 .hsi-platform-trust-head {
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
@@ -620,6 +682,22 @@
   outline-offset: 3px;
 }
 
+.hsi-platform-experience:focus-within {
+  border-color: #ff6845;
+}
+
+.hsi-platform-architecture .hsi-rebuild-layer:focus-visible,
+.hsi-platform-capability-track .hsi-research-step:focus-visible,
+.hsi-rebuild-story .hsi-research-step:focus-visible {
+  outline: 3px solid #ff6845;
+  outline-offset: 3px;
+}
+
+.hsi-platform-product-detail .hsi-rebuild-inline-link:focus-visible {
+  outline: 3px solid #ff6845;
+  outline-offset: 3px;
+}
+
 .hsi-platform-experiences-cta {
   display: flex;
   flex-wrap: wrap;
@@ -744,7 +822,13 @@
 
 @media (prefers-reduced-motion: reduce) {
   .hsi-platform-hero *,
-  .hsi-platform-architecture * {
+  .hsi-platform-architecture *,
+  .hsi-platform-idea *,
+  .hsi-platform-foundation-core,
+  .hsi-platform-foundation-shared li::before,
+  .hsi-platform-silo-glow,
+  .hsi-platform-silo-core {
     transition: none !important;
+    animation: none !important;
   }
 }

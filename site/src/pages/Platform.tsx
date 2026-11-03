@@ -1,11 +1,49 @@
-import { useState } from "react";
+import { useState, type KeyboardEvent } from "react";
 import { Link } from "react-router-dom";
+import {
+  FoundationArt,
+  PlatformConnectionMap,
+  SharedSoftwareArt,
+} from "../components/platform/PlatformArt";
 import { PRODUCT_NAME, PRODUCT_SHORT } from "../lib/brand";
 import { ECOSYSTEM_PRODUCTS, MATURITY_CHIP_LABEL, type EcosystemProduct } from "../lib/productMaturity";
 import "../styles/hsi-editorial.css";
 import "../styles/platform.css";
 
 type ProductId = EcosystemProduct["id"];
+
+/** Arrow/Home/End navigation for exclusive radiogroups built from buttons. */
+function moveRadioFocus(
+  event: KeyboardEvent<HTMLElement>,
+  index: number,
+  length: number,
+  select: (next: number) => void,
+) {
+  let next: number | null = null;
+  switch (event.key) {
+    case "ArrowDown":
+    case "ArrowRight":
+      next = (index + 1) % length;
+      break;
+    case "ArrowUp":
+    case "ArrowLeft":
+      next = (index - 1 + length) % length;
+      break;
+    case "Home":
+      next = 0;
+      break;
+    case "End":
+      next = length - 1;
+      break;
+    default:
+      return;
+  }
+  event.preventDefault();
+  select(next);
+  const group = event.currentTarget.closest("[role='radiogroup']");
+  const radios = group?.querySelectorAll<HTMLElement>('[role="radio"]');
+  radios?.[next]?.focus();
+}
 
 const productCopy: Record<ProductId, { label: string; description: string; data: string; link: string }> = {
   aksh: {
@@ -145,145 +183,6 @@ const experienceEntries: readonly {
   },
 ];
 
-function FoundationArt() {
-  return (
-    <div
-      className="hsi-platform-foundation"
-      role="img"
-      aria-label="Operating model: Human Super Intelligence is the shared technology foundation. Four product experiences reuse that software while each keeps its own data and governance. Evidence, knowledge and review are reusable patterns—not a live cross-product data pipe."
-    >
-      <div className="hsi-platform-foundation-label">OPERATING MODEL · HOW IT WORKS</div>
-      <p className="hsi-platform-foundation-lede">
-        One shared technology foundation. Four product experiences. Separate data ownership. Humans still review.
-      </p>
-
-      <div className="hsi-platform-foundation-core">
-        <span className="hsi-platform-symbol" aria-hidden="true">{PRODUCT_SHORT[0]}</span>
-        <div>
-          <strong>{PRODUCT_NAME}</strong>
-          <span>Shared technology foundation — software reuse, not a shared evidence database</span>
-        </div>
-      </div>
-
-      <div className="hsi-platform-foundation-split">
-        <div className="hsi-platform-foundation-shared">
-          <span className="hsi-platform-foundation-eyebrow">What is shared</span>
-          <p>Capability patterns each product can reuse in its own environment.</p>
-          <ul>
-            <li>Evidence</li>
-            <li>Knowledge</li>
-            <li>Review</li>
-          </ul>
-          <small>Connected context · Traceable evidence · Human review</small>
-        </div>
-        <div className="hsi-platform-foundation-owned">
-          <span className="hsi-platform-foundation-eyebrow">What is never shared</span>
-          <p>Product data, access rights and governance stay with each experience.</p>
-          <div className="hsi-platform-foundation-products">
-            {ECOSYSTEM_PRODUCTS.map((item) => (
-              <div key={item.id}>
-                <span>{item.name}</span>
-                <small>{MATURITY_CHIP_LABEL[item.chip]} · own data · own governance</small>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <p className="hsi-platform-foundation-foot">
-        Software reuse. Product-owned data. No live cross-product sync claimed here.
-      </p>
-    </div>
-  );
-}
-
-/** Cream idea-panel art: shared HSI core with four permission-walled product silos — not Home’s connection map. */
-function SharedSoftwareArt() {
-  const silos = [
-    { x: 48, y: 48, title: "AKSH HEALTH", sub: "Own records", short: "AKSH" },
-    { x: 372, y: 48, title: "HSI CLINICAL", sub: "Own records", short: "CLIN" },
-    { x: 48, y: 318, title: "ISI RESEARCH", sub: "Own evidence", short: "ISI" },
-    { x: 372, y: 318, title: "HSI TRIALS", sub: "Own studies", short: "TRIAL" },
-  ] as const;
-
-  return (
-    <svg
-      className="hsi-platform-silo-art"
-      viewBox="0 0 660 560"
-      role="img"
-      aria-label="Operating model diagram: Human Super Intelligence software at the centre, with four product silos behind permissions walls. Technology can be reused; product records stay inside each silo."
-    >
-      <defs>
-        <radialGradient id="platform-silo-glow">
-          <stop stopColor="#C4E5DB" stopOpacity=".85" />
-          <stop offset="1" stopColor="#FFFAF4" stopOpacity="0" />
-        </radialGradient>
-        <linearGradient id="platform-silo-wall" x1="0" y1="0" x2="1" y2="0">
-          <stop stopColor="#17645F" stopOpacity=".15" />
-          <stop offset=".5" stopColor="#FF6845" stopOpacity=".55" />
-          <stop offset="1" stopColor="#17645F" stopOpacity=".15" />
-        </linearGradient>
-      </defs>
-      <ellipse cx="330" cy="280" rx="300" ry="240" fill="url(#platform-silo-glow)" />
-
-      {/* Cross-silo permission walls — records do not cross */}
-      <rect x="318" y="42" width="24" height="476" fill="url(#platform-silo-wall)" opacity=".9" />
-      <rect x="42" y="268" width="576" height="24" fill="url(#platform-silo-wall)" opacity=".9" />
-      <text x="330" y="36" textAnchor="middle" fontSize="10" fontWeight="700" letterSpacing="2" fill="#FF6845">
-        PERMISSIONS WALLS
-      </text>
-
-      {silos.map((silo) => (
-        <g key={silo.short}>
-          <rect
-            x={silo.x}
-            y={silo.y}
-            width="240"
-            height="194"
-            rx="4"
-            fill="#FFFAF4"
-            stroke="#17645F"
-            strokeOpacity=".35"
-            strokeWidth="1.5"
-          />
-          <rect x={silo.x + 14} y={silo.y + 14} width="212" height="166" rx="2" fill="#F3EEE8" stroke="#17645F" strokeOpacity=".18" />
-          <text x={silo.x + 120} y={silo.y + 78} textAnchor="middle" fontSize="13" fontWeight="800" letterSpacing="1.6" fill="#17645F">
-            {silo.title}
-          </text>
-          <text x={silo.x + 120} y={silo.y + 102} textAnchor="middle" fontSize="11" fill="#466D67">
-            {silo.sub}
-          </text>
-          <text x={silo.x + 120} y={silo.y + 138} textAnchor="middle" fontSize="10" letterSpacing="1.2" fill="#17645F" opacity=".7">
-            SILO · NOT SHARED
-          </text>
-        </g>
-      ))}
-
-      {/* Software reuse rays stop at the wall edge — they do not carry records */}
-      <g fill="none" stroke="#FF6845" strokeWidth="1.4" strokeDasharray="5 7" opacity=".85">
-        <path d="M330 280 L270 210" />
-        <path d="M330 280 L390 210" />
-        <path d="M330 280 L270 350" />
-        <path d="M330 280 L390 350" />
-      </g>
-
-      <g transform="translate(330 280)">
-        <circle r="78" fill="#17645F" />
-        <circle r="64" fill="none" stroke="#F3EEE8" strokeOpacity=".35" strokeDasharray="3 6" />
-        <text y="-8" textAnchor="middle" fontSize="22" fontWeight="800" letterSpacing="2" fill="#F3EEE8">
-          {PRODUCT_SHORT}
-        </text>
-        <text y="16" textAnchor="middle" fontSize="10" letterSpacing="1.4" fill="#D3E1D9">
-          SHARED SOFTWARE
-        </text>
-        <text y="32" textAnchor="middle" fontSize="9" fill="#A8C4BB">
-          not shared records
-        </text>
-      </g>
-    </svg>
-  );
-}
-
 export function Platform() {
   const [productId, setProductId] = useState<ProductId>("isi");
   const [selected, setSelected] = useState(0);
@@ -362,14 +261,26 @@ export function Platform() {
 
           <div className="hsi-platform-arch-layout">
             <div className="hsi-platform-arch-products">
-              <div className="hsi-rebuild-stack-steps" role="group" aria-label="Product perspective">
+              <div
+                className="hsi-rebuild-stack-steps"
+                role="radiogroup"
+                aria-label="Product perspective"
+              >
                 {ECOSYSTEM_PRODUCTS.map((item, i) => (
                   <button
                     key={item.id}
                     type="button"
+                    role="radio"
                     className={"hsi-rebuild-layer" + (productId === item.id ? " is-active" : "")}
-                    aria-pressed={productId === item.id}
+                    aria-checked={productId === item.id}
+                    aria-controls="product-detail"
+                    tabIndex={productId === item.id ? 0 : -1}
                     onClick={() => setProductId(item.id)}
+                    onKeyDown={(event) =>
+                      moveRadioFocus(event, i, ECOSYSTEM_PRODUCTS.length, (next) =>
+                        setProductId(ECOSYSTEM_PRODUCTS[next]!.id),
+                      )
+                    }
                   >
                     <span>0{i + 1}</span>
                     <strong>{item.name.toUpperCase()}</strong>
@@ -378,7 +289,12 @@ export function Platform() {
                   </button>
                 ))}
               </div>
-              <div className="hsi-platform-product-detail" aria-live="polite" aria-atomic="true">
+              <div
+                className="hsi-platform-product-detail"
+                id="product-detail"
+                aria-live="polite"
+                aria-atomic="true"
+              >
                 <p className="hsi-editorial-kicker">{currentProduct.label}</p>
                 <h3>{productMeta.name}</h3>
                 <p>{currentProduct.description}</p>
@@ -406,15 +322,24 @@ export function Platform() {
                 <span className="hsi-rebuild-orbit-c" />
                 <b>{capability.short.toUpperCase()}</b>
               </div>
-              <div className="hsi-platform-capability-track" role="group" aria-label="Shared capability patterns, not a pipeline">
+              <div
+                className="hsi-platform-capability-track"
+                role="radiogroup"
+                aria-label="Shared capability patterns, not a pipeline"
+              >
                 {capabilities.map((item, i) => (
                   <button
                     key={item.number}
                     type="button"
+                    role="radio"
                     className={"hsi-research-step" + (selected === i ? " is-active" : "")}
-                    aria-pressed={selected === i}
+                    aria-checked={selected === i}
                     aria-controls="capability-detail"
+                    tabIndex={selected === i ? 0 : -1}
                     onClick={() => setSelected(i)}
+                    onKeyDown={(event) =>
+                      moveRadioFocus(event, i, capabilities.length, setSelected)
+                    }
                   >
                     <span className="hsi-research-step-index">{item.number}</span>
                     <span className="hsi-research-step-copy">
@@ -466,19 +391,32 @@ export function Platform() {
               <p>An evidence gap stays a gap. Human Super Intelligence should make missing information clear rather than fill it with an unsupported conclusion.</p>
             </div>
           </div>
-          <div className="hsi-rebuild-research-visual" aria-label="Illustrative method lenses for an anti-TNF rheumatoid arthritis question, not a live product workflow or study findings">
+          <div
+            className="hsi-rebuild-research-visual"
+            aria-label="Illustrative method lenses for an anti-TNF rheumatoid arthritis question, not a live product workflow or study findings"
+          >
             <div className="hsi-rebuild-visual-top">
               <span>METHOD / ANTI-TNF · RA</span>
               <span>CHOOSE A LENS</span>
             </div>
-            <div className="hsi-research-flow" role="group" aria-label="Illustrative method lenses">
+            <div
+              className="hsi-research-flow"
+              role="radiogroup"
+              aria-label="Illustrative method lenses"
+            >
               {methodLenses.map((step, i) => (
                 <button
                   key={step.title}
                   type="button"
+                  role="radio"
                   className={"hsi-research-step" + (lensIndex === i ? " is-active" : "")}
-                  aria-pressed={lensIndex === i}
+                  aria-checked={lensIndex === i}
+                  aria-controls="method-lens-detail"
+                  tabIndex={lensIndex === i ? 0 : -1}
                   onClick={() => setLensIndex(i)}
+                  onKeyDown={(event) =>
+                    moveRadioFocus(event, i, methodLenses.length, setLensIndex)
+                  }
                 >
                   <span className="hsi-research-step-index">0{i + 1}</span>
                   <span className="hsi-research-step-copy">
@@ -489,7 +427,12 @@ export function Platform() {
                 </button>
               ))}
             </div>
-            <div className="hsi-research-insight" aria-live="polite">
+            <div
+              className="hsi-research-insight"
+              id="method-lens-detail"
+              aria-live="polite"
+              aria-atomic="true"
+            >
               <span className="hsi-editorial-kicker">METHOD LENS / 0{lensIndex + 1}</span>
               <div className="hsi-research-insight-art" aria-hidden="true"><span /><span /><span /><span /><span /></div>
               <h3>{lens.title}</h3>
@@ -528,27 +471,7 @@ export function Platform() {
               ))}
             </div>
 
-            <div className="hsi-platform-connection-visual">
-              <div
-                className="hsi-editorial-connection-map hsi-platform-connection-map"
-                role="img"
-                aria-label="Connection map: Human Super Intelligence shared technology at the centre. Aksh Health, HSI Clinical, ISI Research and HSI Trials each keep their own data. Technology is shared; records are never shared."
-              >
-                <div className="hsi-editorial-map-core">
-                  {PRODUCT_SHORT}
-                  <small>SHARED TECH</small>
-                </div>
-                <span>AKSH · OWN DATA</span>
-                <span>CLINICAL · OWN DATA</span>
-                <span>ISI RESEARCH · OWN DATA</span>
-                <span>TRIALS · OWN DATA</span>
-              </div>
-              <p className="hsi-platform-connection-legend">
-                <b>Technology shared</b>
-                <span aria-hidden="true">·</span>
-                <b>Data never shared</b>
-              </p>
-            </div>
+            <PlatformConnectionMap />
           </div>
         </div>
       </section>
@@ -571,6 +494,7 @@ export function Platform() {
           <div className="hsi-platform-experience-grid" role="list">
             {experienceEntries.map((entry) => {
               const product = ECOSYSTEM_PRODUCTS.find((item) => item.id === entry.id)!;
+              const ownershipId = `experience-ownership-${entry.id}`;
               return (
                 <article
                   key={entry.id}
@@ -578,13 +502,20 @@ export function Platform() {
                   role="listitem"
                 >
                   <div className="hsi-platform-experience-top">
-                    <h3>{product.name}</h3>
+                    <h3 id={`experience-title-${entry.id}`}>{product.name}</h3>
                     <span className={`maturity-chip maturity-chip-${product.chip}`}>
                       {MATURITY_CHIP_LABEL[product.chip]}
                     </span>
                   </div>
-                  <p className="hsi-platform-experience-ownership">{entry.ownership}</p>
-                  <Link className="hsi-platform-experience-link" to={entry.href}>
+                  <p className="hsi-platform-experience-ownership" id={ownershipId}>
+                    {entry.ownership}
+                  </p>
+                  <Link
+                    className="hsi-platform-experience-link"
+                    to={entry.href}
+                    aria-labelledby={`experience-title-${entry.id}`}
+                    aria-describedby={ownershipId}
+                  >
                     Enter {product.name} <span aria-hidden="true">↗</span>
                   </Link>
                 </article>
