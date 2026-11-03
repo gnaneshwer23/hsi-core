@@ -156,3 +156,19 @@
 .hsi-landscape-art{width:115%;height:115%;max-width:none;overflow:visible}
 .hsi-landscape-visual .hsi-editorial-visual-note{z-index:2}
 @media(prefers-reduced-motion:reduce){.hsi-landscape-art *{animation:none!important}}
+
+
+/* Clickable scientific landscape markers and contextual exploration card. */
+.hsi-landscape-node{cursor:pointer;outline:none}
+.hsi-landscape-node rect,.hsi-landscape-node circle{transition:stroke-width .2s,fill-opacity .2s}
+.hsi-landscape-node:hover rect,.hsi-landscape-node.is-active rect{fill-opacity:1}
+.hsi-landscape-node:hover circle:nth-of-type(1),.hsi-landscape-node.is-active circle:nth-of-type(1){stroke-width:3}
+.hsi-landscape-node:focus-visible rect{stroke:#FF6845;stroke-width:3}
+.hsi-landscape-detail{position:absolute;z-index:3;left:5%;right:5%;bottom:65px;background:#F3EEE8;color:#17645F;border-left:4px solid #FF6845;padding:19px 42px 18px 19px;box-shadow:0 14px 40px #082d2b55}
+.hsi-landscape-detail>button{position:absolute;right:10px;top:6px;background:transparent;color:#17645F;font-size:1.6rem;cursor:pointer}
+.hsi-landscape-detail>span{display:block;font-size:.6rem;letter-spacing:.14em;margin-bottom:8px}
+.hsi-landscape-detail strong{font-size:1.1rem}
+.hsi-landscape-detail p{font-size:.77rem;line-height:1.5;margin:7px 0 10px}
+.hsi-landscape-detail a{font-size:.75rem;font-weight:700;text-decoration:underline;text-underline-offset:4px}
+.hsi-landscape-detail :focus-visible{outline:2px solid #FF6845;outline-offset:2px}
+@media(max-width:600px){.hsi-landscape-detail{bottom:52px;padding:12px 30px 12px 12px}.hsi-landscape-detail p{font-size:.69rem}}
