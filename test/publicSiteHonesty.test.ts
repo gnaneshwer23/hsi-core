@@ -166,7 +166,7 @@ describe("Stage A public security boundary audit", () => {
     const gateway = site("src/pages/GatewayDemo.tsx");
     expect(clinical).toContain("syntheticOnly");
     expect(clinical).toContain("No live EMIS / hospital connector");
-    expect(trials).toContain("No eligibility claim");
+    expect(trials).toContain("no eligibility claim");
     expect(gateway).toContain("synthetic");
     expect(gateway).toContain("containsPhi: true");
   });
