@@ -11,7 +11,7 @@ export function Layout() {
   }, [pathname]);
 
   return (
-    <div className={`site-shell${pathname === "/" ? " home-shell" : pathname === "/platform" ? " platform-shell" : ""}`}>
+    <div className={`site-shell${pathname === "/" ? " home-shell" : ["/platform", "/products"].includes(pathname) ? " platform-shell" : ""}`}>
       <a className="home-skip" href="#main-content">Skip to content</a>
       <Nav />
       <main className="site-main" id="main-content" tabIndex={-1}>
