@@ -52,7 +52,8 @@ export function Technology() {
   }, []);
   const [sourceIndex, setSourceIndex] = useState(0);
   const [engineIndex, setEngineIndex] = useState(0);
-  const [journeyIndex, setJourneyIndex] = useState(0);\n  const [applicationIndex, setApplicationIndex] = useState(0);
+  const [journeyIndex, setJourneyIndex] = useState(0);
+  const [applicationIndex, setApplicationIndex] = useState(0);
   const source = sourceSystems[sourceIndex];
   return <main className="nx-page">
     <section className="nx-flow-hero" aria-label="Human Super Intelligence data flow to discovery">
