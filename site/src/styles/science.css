@@ -3,31 +3,33 @@
 .hsi-science-hero {
   position: relative;
   background:
-    radial-gradient(ellipse at 12% 20%, #dceae5 0%, transparent 42%),
-    radial-gradient(ellipse at 88% 40%, #f5ded4 0%, transparent 38%),
+    radial-gradient(ellipse at 8% 28%, #dceae5 0%, transparent 40%),
+    radial-gradient(ellipse at 92% 36%, #f5ded4 0%, transparent 36%),
     #f3eee8;
   color: #17645f;
   padding: 72px 0 0;
   overflow: hidden;
 }
 
-.hsi-science-hero h1 {
+.hsi-science-hero-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(28px, 5vw, 70px);
+  align-items: center;
+  padding-bottom: 48px;
+}
+
+.hsi-science-hero-copy h1 {
   font-size: clamp(2.8rem, 5.6vw, 5.6rem);
   line-height: 1.02;
   margin: 22px 0 24px;
   font-weight: 800;
+  overflow-wrap: break-word;
+  min-width: 0;
 }
 
-.hsi-science-hero h1 em {
+.hsi-science-hero-copy h1 em {
   color: #ff6845;
-}
-
-.hsi-science-hero-grid {
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: clamp(28px, 5vw, 70px);
-  align-items: center;
-  padding-bottom: 36px;
 }
 
 .hsi-science-hero-note {
@@ -37,24 +39,106 @@
   color: #466d67;
 }
 
-.hsi-science-art-frame {
-  background: #17645f;
-  border-radius: 48% 48% 4px 4px;
-  aspect-ratio: 1 / 1.02;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
+/* Platform/Products-weight intentional art panel */
+.hsi-science-hero-art {
+  background: #fffaf4;
+  border: 1px solid #17645f24;
+  padding: 26px 24px 22px;
+  min-width: 0;
 }
 
-.hsi-science-hero-art {
-  width: 108%;
-  height: 108%;
+.hsi-science-hero-art-label {
+  letter-spacing: 0.14em;
+  font-size: 0.59rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #466d67;
+  margin: 0 0 16px;
+}
+
+.hsi-science-hero-art-core {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #17645f;
+  color: #f3eee8;
+  padding: 18px 16px;
+  margin-bottom: 14px;
+}
+
+.hsi-science-hero-symbol {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  font-size: 0.8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.hsi-science-hero-art-core strong {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.hsi-science-hero-art-core span {
+  display: block;
+  font-size: 0.68rem;
+  color: #d3e1d9;
+  margin-top: 4px;
+  line-height: 1.45;
+}
+
+.hsi-science-hero-strip {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0;
+  border: 1px solid #17645f24;
+  background: #f3eee8;
+}
+
+.hsi-science-hero-strip li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 1px solid #17645f18;
+  font-size: 0.78rem;
+  font-weight: 650;
+}
+
+.hsi-science-hero-strip li:last-child {
+  border-bottom: 0;
+}
+
+.hsi-science-hero-strip small {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #466d67;
+  white-space: nowrap;
+}
+
+.hsi-science-hero-art-foot {
+  margin: 14px 0 0;
+  font-size: 0.62rem;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: #466d67;
 }
 
 .hsi-science-hero-foot {
   display: flex;
   justify-content: space-between;
   gap: 20px;
+  align-items: center;
   padding-block: 22px 36px;
   border-top: 1px solid #17645f30;
   font-size: 0.62rem;
@@ -68,8 +152,44 @@
   font-weight: 400;
 }
 
+/* 01 Atlas */
 .hsi-science-atlas {
   scroll-margin-top: 95px;
+}
+
+.hsi-science-atlas-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(240px, 0.85fr);
+  gap: clamp(24px, 4vw, 48px);
+  align-items: end;
+  margin-bottom: 36px;
+}
+
+.hsi-science-atlas-head .hsi-rebuild-heading {
+  margin-bottom: 0;
+}
+
+.hsi-science-atlas-figure {
+  margin: 0;
+  min-width: 0;
+  background: radial-gradient(circle at 48% 42%, #d9eee5, #fffaf4 72%);
+  border: 1px solid #17645f22;
+  padding: 10px 12px 14px;
+}
+
+.hsi-science-atlas-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  color: #17645f;
+}
+
+.hsi-science-atlas-figure figcaption {
+  margin-top: 6px;
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-align: center;
+  color: #466d67;
 }
 
 .hsi-science-system-selector {
@@ -107,6 +227,7 @@
   padding: 28px 16px;
   margin-bottom: 18px;
   border: 1px dashed #ffffff44;
+  background: radial-gradient(circle at 50% 40%, #28837944, transparent 70%);
 }
 
 .hsi-science-central > span {
@@ -232,6 +353,7 @@
   color: #c3d9d2;
 }
 
+/* 02 Mechanisms */
 .hsi-science-mechanisms .hsi-science-mechanism-note {
   color: #466d67;
 }
@@ -246,6 +368,90 @@
 
 .hsi-science-mechanisms h2 em {
   color: #ff6845;
+}
+
+.hsi-science-mech-art {
+  background: #fffaf4;
+  border: 1px solid #17645f24;
+  padding: 22px 20px 18px;
+  margin-bottom: 22px;
+}
+
+.hsi-science-mech-art-label {
+  margin: 0 0 16px;
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #466d67;
+}
+
+.hsi-science-mech-track {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+  position: relative;
+}
+
+.hsi-science-mech-track::before {
+  content: "";
+  position: absolute;
+  top: 18px;
+  left: 6%;
+  right: 6%;
+  height: 1px;
+  background: #17645f28;
+  pointer-events: none;
+}
+
+.hsi-science-mech-node {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  text-align: center;
+  min-width: 0;
+}
+
+.hsi-science-mech-node b {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #17645f40;
+  background: #f3eee8;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #17645f;
+}
+
+.hsi-science-mech-node.is-active b {
+  background: #ff6845;
+  border-color: #ff6845;
+  color: #fff;
+}
+
+.hsi-science-mech-node small {
+  font-size: 0.58rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  color: #466d67;
+  line-height: 1.3;
+}
+
+.hsi-science-mech-node.is-active small {
+  color: #17645f;
+}
+
+.hsi-science-mech-art-foot {
+  margin: 16px 0 0;
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  color: #466d67;
+  line-height: 1.5;
 }
 
 .hsi-science-phases {
@@ -294,54 +500,277 @@
   line-height: 1.75;
 }
 
-.hsi-science-principles-head {
-  margin-bottom: 40px;
+/* 03 Wider lens — denser teal band */
+.hsi-science-wider-head {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(28px, 4vw, 70px);
+  align-items: end;
+  margin-bottom: 48px;
 }
 
-.hsi-science-principles-head > p {
-  color: #d3e1d9;
+.hsi-science-wider-head h2 {
+  margin: 22px 0 0;
+}
+
+.hsi-science-wider-head > p {
+  margin: 0;
+  color: #e1eae4;
+  line-height: 1.75;
+  max-width: 460px;
+}
+
+.hsi-science-wider-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
+  gap: clamp(28px, 4vw, 56px);
+  align-items: stretch;
 }
 
 .hsi-science-pillars {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
+  gap: 0;
 }
 
 .hsi-science-pillars article {
-  border: 1px solid #f3eee840;
-  padding: 26px 22px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 18px;
+  border-bottom: 1px solid #f3eee830;
+  padding: 22px 0;
+}
+
+.hsi-science-pillars article:first-child {
+  padding-top: 0;
+}
+
+.hsi-science-pillars article:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
 }
 
 .hsi-science-pillars span {
-  display: block;
   color: #ffb09a;
   font-size: 0.62rem;
   letter-spacing: 0.12em;
-  margin-bottom: 18px;
+  padding-top: 6px;
 }
 
 .hsi-science-pillars h3 {
-  font-size: 1.25rem;
+  grid-column: 2;
+  font-size: 1.2rem;
   line-height: 1.15;
-  margin-bottom: 14px;
+  margin: 0 0 10px;
 }
 
 .hsi-science-pillars p {
+  grid-column: 2;
   color: #d3e1d9;
-  font-size: 0.88rem;
-  line-height: 1.7;
+  font-size: 0.9rem;
+  line-height: 1.75;
   max-width: none;
+  margin: 0;
 }
 
-.hsi-science-outro-note {
-  margin-top: 14px !important;
+.hsi-science-lens-art {
+  background: #fffaf4;
+  color: #17645f;
+  border: 1px solid #f3eee840;
+  padding: 24px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-self: center;
+}
+
+.hsi-science-lens-art-core {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #17645f;
+  color: #f3eee8;
+  padding: 16px;
+}
+
+.hsi-science-lens-art-core > span {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  flex-shrink: 0;
+  font-size: 1rem;
+}
+
+.hsi-science-lens-art-core strong {
+  display: block;
+  font-size: 0.92rem;
+  letter-spacing: -0.02em;
+}
+
+.hsi-science-lens-art-core span:last-child {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.68rem;
+  color: #d3e1d9;
+}
+
+.hsi-science-lens-art ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.hsi-science-lens-art li {
+  position: relative;
+  padding-left: 16px;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: #466d67;
+}
+
+.hsi-science-lens-art li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ff6845;
+}
+
+/* 04 Learning vs investigation */
+.hsi-science-bridge {
+  background: #e3eae3;
+  border-block: 1px solid #17645f15;
+  padding: 110px 0;
+  scroll-margin-top: 95px;
+  color: #17645f;
+}
+
+.hsi-science-bridge-head {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(28px, 4vw, 70px);
+  align-items: end;
+  margin-bottom: 42px;
+}
+
+.hsi-science-bridge-head h2 {
+  margin: 22px 0 0;
+}
+
+.hsi-science-bridge-head h2 em {
+  color: #ff6845;
+}
+
+.hsi-science-bridge-head > p {
+  margin: 0;
+  color: #466d67;
+  line-height: 1.75;
+  max-width: 460px;
+}
+
+.hsi-science-bridge-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.hsi-science-bridge-card {
+  background: #fffaf4;
+  border: 1px solid #17645f24;
+  padding: 28px 26px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.hsi-science-bridge-card.is-investigation {
+  background: #17645f;
+  color: #f3eee8;
+  border-color: #17645f;
+}
+
+.hsi-science-bridge-card h3 {
+  font-size: clamp(1.45rem, 2vw, 1.9rem);
+  line-height: 1.1;
+  margin: 14px 0 14px;
+}
+
+.hsi-science-bridge-card > p:not(.hsi-editorial-kicker) {
+  color: #466d67;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.hsi-science-bridge-card.is-investigation > p:not(.hsi-editorial-kicker) {
+  color: #d3e1d9;
+}
+
+.hsi-science-bridge-card.is-investigation .hsi-editorial-kicker {
+  color: #ffb09a;
+}
+
+.hsi-science-bridge-card ul {
+  list-style: none;
+  margin: 20px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.hsi-science-bridge-card li {
+  position: relative;
+  padding-left: 16px;
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+.hsi-science-bridge-card li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.45em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ff6845;
+}
+
+.hsi-science-bridge-card .hsi-editorial-actions,
+.hsi-science-bridge-card .hsi-editorial-textlink {
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+.hsi-science-bridge-card.is-investigation .hsi-editorial-textlink {
+  color: #f3eee8;
+  border-bottom-color: #f3eee8;
+}
+
+.hsi-science-bridge-note {
+  margin: 28px 0 0;
+  font-size: 0.74rem;
+  line-height: 1.65;
+  color: #466d67;
+  max-width: 720px;
 }
 
 @media (max-width: 1050px) {
   .hsi-science-hero-grid,
+  .hsi-science-atlas-head,
   .hsi-science-system,
-  .hsi-science-phase-detail {
+  .hsi-science-phase-detail,
+  .hsi-science-wider-head,
+  .hsi-science-wider-body,
+  .hsi-science-bridge-head,
+  .hsi-science-bridge-grid {
     grid-template-columns: 1fr;
   }
 
@@ -349,8 +778,19 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .hsi-science-pillars {
-    grid-template-columns: 1fr;
+  .hsi-science-mech-track {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    row-gap: 14px;
+  }
+
+  .hsi-science-mech-track::before {
+    display: none;
+  }
+
+  .hsi-science-atlas-figure,
+  .hsi-science-lens-art {
+    width: min(100%, 520px);
+    margin-inline: auto;
   }
 }
 
@@ -359,7 +799,7 @@
     padding-top: 48px;
   }
 
-  .hsi-science-hero h1 {
+  .hsi-science-hero-copy h1 {
     font-size: clamp(2.5rem, 9vw, 4rem);
   }
 
@@ -373,8 +813,17 @@
     grid-template-columns: 1fr 1fr;
   }
 
-  .hsi-science-art-frame {
-    max-width: 420px;
-    margin-inline: auto;
+  .hsi-science-mech-track {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .hsi-science-bridge {
+    padding: 75px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hsi-science-mech-node b {
+    transition: none;
   }
 }

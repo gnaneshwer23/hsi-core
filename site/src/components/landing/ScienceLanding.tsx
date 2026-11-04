@@ -161,53 +161,137 @@ const PILLARS = [
   },
 ] as const;
 
+const SCALE_STRIP = [
+  { label: "Molecules", note: "Signals & receptors" },
+  { label: "Cells", note: "Behaviour in context" },
+  { label: "Tissues", note: "Local coordination" },
+  { label: "Systems", note: "Whole-body links" },
+] as const;
+
 const READING: Record<SystemId, { label: string; href: string }> = {
   immune: { label: "Immunobiology · NCBI Bookshelf", href: "https://www.ncbi.nlm.nih.gov/books/NBK10757/" },
   metabolic: { label: "Insulin resistance & prediabetes · NIDDK", href: "https://www.niddk.nih.gov/health-information/diabetes/overview/what-is-diabetes/prediabetes-insulin-resistance" },
   microbiome: { label: "Microbiome · National Human Genome Research Institute", href: "https://www.genome.gov/genetics-glossary/Microbiome" },
 };
 
-function BiologyIllustration() {
+/** Platform/Products-weight hero panel — educational scales, not a live workspace. */
+function ScienceHeroArt() {
   return (
-    <svg className="hsi-science-hero-art" viewBox="0 0 520 420" role="img" aria-labelledby="science-art-title science-art-desc">
-      <title id="science-art-title">Biology across scales</title>
-      <desc id="science-art-desc">An illustrative view of molecular signals, a cell and an interacting group of cells.</desc>
+    <aside
+      className="hsi-science-hero-art"
+      role="img"
+      aria-label="Educational biology across scales: molecules, cells, tissues and systems. Illustrative teaching view only — not clinical decision support, not a research workspace, and not a live knowledge graph."
+    >
+      <p className="hsi-science-hero-art-label">Biology across scales · teaching view</p>
+      <div className="hsi-science-hero-art-core">
+        <span className="hsi-science-hero-symbol" aria-hidden="true">
+          {PRODUCT_SHORT[0]}
+        </span>
+        <div>
+          <strong>{PRODUCT_SHORT} Science</strong>
+          <span>Educational mechanisms · not a live knowledge graph</span>
+        </div>
+      </div>
+      <ul className="hsi-science-hero-strip">
+        {SCALE_STRIP.map((item) => (
+          <li key={item.label}>
+            <span>{item.label}</span>
+            <small>{item.note}</small>
+          </li>
+        ))}
+      </ul>
+      <p className="hsi-science-hero-art-foot">
+        Learning surface · not CDS · not research workspace access
+      </p>
+    </aside>
+  );
+}
+
+/** Atlas section art — schematic cell / signal composition. */
+function AtlasSectionArt() {
+  return (
+    <svg className="hsi-science-atlas-art" viewBox="0 0 520 280" role="img" aria-labelledby="atlas-art-title atlas-art-desc">
+      <title id="atlas-art-title">Connected systems schematic</title>
+      <desc id="atlas-art-desc">Illustrative molecules, a cell and neighbouring cells — not to scale and not a live graph.</desc>
       <defs>
-        <radialGradient id="sci-cell-fill">
-          <stop stopColor="#f3eee8" stopOpacity=".8" />
-          <stop offset="1" stopColor="#91bfae" stopOpacity=".08" />
+        <radialGradient id="sci-atlas-fill">
+          <stop stopColor="#f3eee8" stopOpacity=".85" />
+          <stop offset="1" stopColor="#91bfae" stopOpacity=".12" />
         </radialGradient>
       </defs>
-      <circle cx="260" cy="207" r="160" fill="none" stroke="#f3eee8" strokeOpacity=".12" />
-      <circle cx="260" cy="207" r="122" fill="none" stroke="#f3eee8" strokeOpacity=".18" strokeDasharray="2 7" />
-      <g stroke="#f3eee8" strokeOpacity=".35">
-        <path d="m100 150 160 57 142-77m-142 77 54 129" />
-        <path d="M78 178 121 141 92 107 52 136l26 42 44 18" fill="none" />
-        {[[78, 178], [121, 141], [92, 107], [52, 136], [122, 196]].map(([x, y], i) => (
-          <circle key={i} cx={x} cy={y} r="6" fill={i === 1 ? "#ff6845" : "#f3eee8"} />
+      <circle cx="250" cy="140" r="118" fill="none" stroke="#17645f" strokeOpacity=".12" />
+      <circle cx="250" cy="140" r="86" fill="none" stroke="#17645f" strokeOpacity=".18" strokeDasharray="2 7" />
+      <g stroke="#17645f" strokeOpacity=".4">
+        <path d="m72 96 150 44 128-58m-128 58 42 92" fill="none" />
+        {[[72, 96], [110, 72], [88, 48], [48, 78], [118, 128]].map(([x, y], i) => (
+          <circle key={i} cx={x} cy={y} r="5.5" fill={i === 1 ? "#ff6845" : "#17645f"} fillOpacity={i === 1 ? 1 : 0.55} stroke="none" />
         ))}
       </g>
-      <circle cx="260" cy="207" r="72" fill="url(#sci-cell-fill)" stroke="#f3eee8" strokeOpacity=".65" />
-      <circle cx="260" cy="207" r="48" fill="none" stroke="#f3eee8" strokeOpacity=".3" />
-      <circle cx="250" cy="213" r="22" fill="#ff6845" />
-      <g stroke="#f3eee8" strokeOpacity=".5" fill="url(#sci-cell-fill)">
-        {[[385, 100], [425, 126], [390, 148], [347, 130]].map(([x, y], i) => (
+      <circle cx="250" cy="140" r="54" fill="url(#sci-atlas-fill)" stroke="#17645f" strokeOpacity=".55" />
+      <circle cx="250" cy="140" r="34" fill="none" stroke="#17645f" strokeOpacity=".28" />
+      <circle cx="242" cy="146" r="16" fill="#ff6845" />
+      <g stroke="#17645f" strokeOpacity=".45" fill="url(#sci-atlas-fill)">
+        {[[390, 72], [428, 98], [396, 122], [358, 100]].map(([x, y], i) => (
           <g key={i}>
-            <circle cx={x} cy={y} r="22" />
-            <circle cx={x} cy={y} r="7" fill="#17645f" />
+            <circle cx={x} cy={y} r="18" />
+            <circle cx={x} cy={y} r="6" fill="#17645f" stroke="none" />
           </g>
         ))}
       </g>
-      <g fill="#f3eee8" fontSize="10" fontFamily="monospace" letterSpacing="1.5">
-        <text x="40" y="236">MOLECULE</text>
-        <text x="241" y="303">CELL</text>
-        <text x="363" y="196">TISSUE</text>
-      </g>
-      <g fill="#f3eee8" fontSize="9" fontFamily="monospace" letterSpacing="1">
-        <text x="25" y="32">THE BIOLOGY BEHIND HEALTH</text>
-        <text x="25" y="394">SCHEMATIC VIEW / NOT TO SCALE</text>
+      <g fill="#466d67" fontSize="9" fontFamily="var(--font-mono, monospace)" letterSpacing="1.4">
+        <text x="36" y="168">MOLECULE</text>
+        <text x="228" y="214">CELL</text>
+        <text x="368" y="156">TISSUE</text>
+        <text x="28" y="268">SCHEMATIC · NOT TO SCALE · NOT A LIVE KG</text>
       </g>
     </svg>
+  );
+}
+
+/** Mechanisms section art — teaching sequence arc. */
+function MechanismsSectionArt({ active }: { active: number }) {
+  const labels = ["Detect", "Recognise", "Signal", "Respond", "Regulate", "Resolve", "Remember"] as const;
+  return (
+    <div
+      className="hsi-science-mech-art"
+      role="img"
+      aria-label={`Teaching sequence stage ${active + 1} of 7: ${labels[active]}. Overlapping biological processes simplified for learning.`}
+    >
+      <p className="hsi-science-mech-art-label">Teaching sequence · stages overlap in living systems</p>
+      <div className="hsi-science-mech-track" aria-hidden="true">
+        {labels.map((label, i) => (
+          <span key={label} className={"hsi-science-mech-node" + (i === active ? " is-active" : "")}>
+            <b>0{i + 1}</b>
+            <small>{label}</small>
+          </span>
+        ))}
+      </div>
+      <p className="hsi-science-mech-art-foot">Not a fixed timetable · memory is not inevitable in every response</p>
+    </div>
+  );
+}
+
+/** Wider-lens section art — scales reminder. */
+function WiderLensArt() {
+  return (
+    <div
+      className="hsi-science-lens-art"
+      role="img"
+      aria-label="A wider lens: connect scales, follow change over time, and keep context visible when interpreting signals."
+    >
+      <div className="hsi-science-lens-art-core">
+        <span aria-hidden="true">◎</span>
+        <div>
+          <strong>Keep asking why</strong>
+          <span>Scale · time · context</span>
+        </div>
+      </div>
+      <ul>
+        <li>Connect molecular detail to whole-body physiology</li>
+        <li>Follow feedback and adaptation across time</li>
+        <li>Treat context as part of the explanation</li>
+      </ul>
+    </div>
   );
 }
 
@@ -229,7 +313,7 @@ export function ScienceLanding() {
     <div className="hsi-editorial">
       <section className="hsi-science-hero" aria-labelledby="science-title">
         <div className="hsi-editorial-wrap hsi-science-hero-grid">
-          <div>
+          <div className="hsi-science-hero-copy">
             <p className="hsi-editorial-kicker">
               <span className="hsi-coral-dot" /> {PRODUCT_NAME} / SCIENCE
             </p>
@@ -248,31 +332,35 @@ export function ScienceLanding() {
                 Follow an immune response ↓
               </a>
             </div>
-            <p className="hsi-science-hero-note">An educational experience for curious minds.</p>
+            <p className="hsi-science-hero-note">An educational experience for curious minds — not clinical advice.</p>
           </div>
-          <div className="hsi-science-art-frame">
-            <BiologyIllustration />
-          </div>
+          <ScienceHeroArt />
         </div>
         <div className="hsi-editorial-wrap hsi-science-hero-foot">
           <span>
             MOLECULES <b>→</b> CELLS <b>→</b> TISSUES <b>→</b> SYSTEMS
           </span>
-          <span>Illustrative biology · not clinical advice</span>
+          <span>Illustrative biology · not clinical advice · not a live KG</span>
         </div>
       </section>
 
       <section className="hsi-rebuild-stack hsi-science-atlas" id="science-atlas" aria-labelledby="atlas-title">
         <div className="hsi-editorial-wrap">
-          <div className="hsi-rebuild-heading">
-            <div>
-              <p className="hsi-editorial-kicker">01 / THE BIOLOGY EXPLORER</p>
-              <h2 id="atlas-title">
-                ONE BODY.<br />
-                <em>INTERACTING SYSTEMS.</em>
-              </h2>
+          <div className="hsi-science-atlas-head">
+            <div className="hsi-rebuild-heading">
+              <div>
+                <p className="hsi-editorial-kicker">01 / THE BIOLOGY EXPLORER</p>
+                <h2 id="atlas-title">
+                  ONE BODY.<br />
+                  <em>INTERACTING SYSTEMS.</em>
+                </h2>
+              </div>
+              <p>Select a system, then a component. Explore how the pieces relate without treating a simplified diagram as the whole story.</p>
             </div>
-            <p>Select a system, then a component. Explore how the pieces relate without treating a simplified diagram as the whole story.</p>
+            <figure className="hsi-science-atlas-figure">
+              <AtlasSectionArt />
+              <figcaption>Conceptual composition · educational only</figcaption>
+            </figure>
           </div>
 
           <div className="hsi-science-system-selector" role="group" aria-label="Choose biological system">
@@ -372,6 +460,8 @@ export function ScienceLanding() {
             <p>Follow a simplified immune response. In living systems, these processes overlap and vary with the trigger, tissue and type of response.</p>
           </div>
 
+          <MechanismsSectionArt active={phase} />
+
           <div className="hsi-science-phases" role="group" aria-label="Immune response stages">
             {PHASES.map((p, i) => (
               <button
@@ -415,9 +505,9 @@ export function ScienceLanding() {
         </div>
       </section>
 
-      <section className="hsi-editorial-connection" aria-labelledby="principles-title">
+      <section className="hsi-editorial-connection hsi-science-wider" aria-labelledby="principles-title">
         <div className="hsi-editorial-wrap">
-          <div className="hsi-editorial-sectionhead hsi-science-principles-head">
+          <div className="hsi-science-wider-head">
             <div>
               <p className="hsi-editorial-kicker">03 / A WIDER LENS</p>
               <h2 id="principles-title">
@@ -427,37 +517,98 @@ export function ScienceLanding() {
             </div>
             <p>A useful explanation connects scales, follows change and recognises where context alters the meaning of a signal.</p>
           </div>
-          <div className="hsi-science-pillars">
-            {PILLARS.map((p) => (
-              <article key={p.n}>
-                <span>{p.n}</span>
-                <h3>{p.title}</h3>
-                <p>{p.body}</p>
-              </article>
-            ))}
+
+          <div className="hsi-science-wider-body">
+            <div className="hsi-science-pillars">
+              {PILLARS.map((p) => (
+                <article key={p.n}>
+                  <span>{p.n}</span>
+                  <h3>{p.title}</h3>
+                  <p>{p.body}</p>
+                </article>
+              ))}
+            </div>
+            <WiderLensArt />
           </div>
+        </div>
+      </section>
+
+      <section className="hsi-science-bridge" id="science-bridge" aria-labelledby="bridge-title">
+        <div className="hsi-editorial-wrap">
+          <div className="hsi-science-bridge-head">
+            <div>
+              <p className="hsi-editorial-kicker">04 / LEARNING VS INVESTIGATION</p>
+              <h2 id="bridge-title">
+                Learn the mechanism.<br />
+                <em>Investigate the evidence.</em>
+              </h2>
+            </div>
+            <p>
+              {PRODUCT_SHORT} Science is for learning biology. ISI Research and the {PRODUCT_SHORT} platform are for investigation and technology—separate experiences with different purposes.
+            </p>
+          </div>
+
+          <div className="hsi-science-bridge-grid">
+            <article className="hsi-science-bridge-card is-learning">
+              <p className="hsi-editorial-kicker">This page · Learning</p>
+              <h3>{PRODUCT_SHORT} Science</h3>
+              <p>
+                Educational summaries and teaching diagrams that introduce immune, metabolic and microbiome mechanisms without claiming new findings.
+              </p>
+              <ul>
+                <li>Biology across scales</li>
+                <li>Simplified mechanism sequences</li>
+                <li>Context kept visible</li>
+              </ul>
+              <a className="hsi-editorial-textlink" href="#science-atlas">
+                Stay with the atlas ↓
+              </a>
+            </article>
+
+            <article className="hsi-science-bridge-card is-investigation">
+              <p className="hsi-editorial-kicker">Elsewhere · Investigation &amp; technology</p>
+              <h3>ISI Research · Platform</h3>
+              <p>
+                Specialist research exploration and the shared technology foundation—evidence, knowledge patterns and human review—outside this educational surface.
+              </p>
+              <ul>
+                <li>Research questions and evidence context</li>
+                <li>Shared capability patterns</li>
+                <li>Product-owned data boundaries</li>
+              </ul>
+              <div className="hsi-editorial-actions">
+                <Link className="hsi-editorial-button" to="/for-isi">
+                  Meet ISI Research <span aria-hidden="true">↗</span>
+                </Link>
+                <Link className="hsi-editorial-textlink" to="/platform">
+                  Explore the technology ↗
+                </Link>
+              </div>
+            </article>
+          </div>
+
+          <p className="hsi-science-bridge-note">
+            Neither an educational diagram nor a research hypothesis is a diagnosis, a treatment decision or confirmed trial eligibility.
+          </p>
         </div>
       </section>
 
       <section className="hsi-editorial-outro">
         <div className="hsi-editorial-wrap">
-          <p className="hsi-editorial-kicker">04 / FROM LEARNING TO INVESTIGATION</p>
+          <p className="hsi-editorial-kicker">05 / KEEP THE BOUNDARY CLEAR</p>
           <h2>
-            Understand a mechanism.<br />
-            <em>Then examine the evidence.</em>
+            Curious minds welcome.<br />
+            <em>Clinical claims stay out.</em>
           </h2>
           <p>
-            {PRODUCT_SHORT} Science introduces biological concepts. ISI Research is the specialist experience for exploring scientific evidence and open research questions.
-          </p>
-          <p className="hsi-science-outro-note">
-            Neither an educational diagram nor a research hypothesis is a diagnosis, a treatment decision or confirmed trial eligibility.
+            {PRODUCT_SHORT} Science introduces biological concepts. It is not clinical decision support, not a substitute for peer-reviewed findings and not access to a research workspace.
           </p>
           <div className="hsi-editorial-actions">
-            <Link className="hsi-editorial-button" to="/for-isi">
-              Meet ISI Research <span aria-hidden="true">↗</span>
-            </Link>
-            <Link className="hsi-editorial-textlink" to="/platform">
-              Explore the technology ↗
+            <a className="hsi-editorial-button" href="#science-atlas">
+              Return to the atlas <span aria-hidden="true">↗</span>
+            </a>
+            <Link className="hsi-editorial-textlink" to="/for-isi">
+              Continue to ISI Research ↗
             </Link>
           </div>
           <small>
