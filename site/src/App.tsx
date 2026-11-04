@@ -25,6 +25,7 @@ import { TrialsCriteria } from "./pages/TrialsCriteria";
 import { GatewayDemo } from "./pages/GatewayDemo";
 import { Sources } from "./pages/Sources";
 import { Science } from "./pages/Science";
+import { ScienceBody } from "./pages/ScienceBody";
 import { NotFound } from "./pages/NotFound";
 
 export default function App() {
@@ -37,6 +38,7 @@ export default function App() {
         <Route path="how-it-works" element={<HowItWorks />} />
         <Route path="explore" element={<Explore />} />
         <Route path="science" element={<Science />} />
+        <Route path="science/body" element={<ScienceBody />} />
         <Route path="discovery-engine" element={<DiscoveryEngine />} />
         <Route path="products" element={<Products />} />
         <Route path="status" element={<Status />} />
