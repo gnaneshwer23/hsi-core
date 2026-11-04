@@ -5,7 +5,7 @@ describe("HSI NEXUS technology page", () => {
   const page = read("../site/src/pages/Technology.tsx");
   it("is accessible from a dedicated public route and navigation", () => {
     expect(read("../site/src/App.tsx")).toContain('path="technology" element={<Technology />}');
-    expect(read("../site/src/components/Nav.tsx")).toContain('to: "/technology", label: "Technology"');
+    expect(read("../site/src/lib/primaryNav.ts")).toContain('to: "/technology"');
   });
   it("shows the four independent information domains and six intelligence functions", () => {
     for (const name of ["Akeno Health", "Aksh Health", "Immune Super Intelligence", "Biomedical research ecosystem", "Context", "Biology", "Evidence", "Reasoning", "Discovery", "Governance"]) expect(page).toContain(name);
