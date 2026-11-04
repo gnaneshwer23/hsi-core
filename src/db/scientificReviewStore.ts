@@ -23,7 +23,7 @@ export async function recordScientificReview(input: {
       }
       const sources = await tx`SELECT DISTINCT source_id FROM hsi_evidence_claim_support
         WHERE claim_id = ${record.claimId}`;
-      const linked = new Set(sources.map(row => String(row.source_id)));
+      const linked = new Set(sources.map((row: { source_id: unknown }) => String(row.source_id)));
       if (record.evidenceReviewed.some(id => !linked.has(id))) {
         throw new Error("Reviewed evidence must be linked to the claim");
       }
