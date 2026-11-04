@@ -37,3 +37,40 @@ test("malformed decision JSON returns a safe client error",async()=>{
  const r=await handleInterrogativeApi(new Request(base+"/decision",{method:"POST",headers:{cookie,origin:"https://hsi.example","content-type":"application/json"},body:"{not-json"}),services);
  expect(r.status).toBe(400);
 });
+
+test("review decisions reject missing authentication before service invocation",async()=>{
+ let called=false;
+ const r=await handleInterrogativeApi(new Request(base+"/decision",{method:"POST",headers:{origin:"https://hsi.example","content-type":"application/json"},body:JSON.stringify({investigationId:id})}),{...services,review:async()=>{called=true;return {}}});
+ expect(r.status).toBe(401);expect(called).toBe(false);
+});
+test("review decisions reject cross-origin requests without calling backend",async()=>{
+ let called=false;
+ const r=await handleInterrogativeApi(new Request(base+"/decision",{method:"POST",headers:{cookie,origin:"https://attacker.example","content-type":"application/json"},body:JSON.stringify({investigationId:id})}),{...services,review:async()=>{called=true;return {}}});
+ expect(r.status).toBe(403);expect(called).toBe(false);
+});
+test("review decisions reject investigation ID mismatches",async()=>{
+ let called=false;
+ const r=await handleInterrogativeApi(new Request(base+"/decision",{method:"POST",headers:{cookie,origin:"https://hsi.example","content-type":"application/json"},body:JSON.stringify({investigationId:"hsi-interrogative-other-12345678"})}),{...services,review:async()=>{called=true;return {}}});
+ expect(r.status).toBe(400);expect(called).toBe(false);
+});
+test("review decisions reject non-JSON content types",async()=>{
+ const r=await handleInterrogativeApi(new Request(base+"/decision",{method:"POST",headers:{cookie,origin:"https://hsi.example","content-type":"text/plain"},body:"{}"}),services);
+ expect(r.status).toBe(415);
+});
+test("review decisions reject oversized payloads",async()=>{
+ const r=await handleInterrogativeApi(new Request(base+"/decision",{method:"POST",headers:{cookie,origin:"https://hsi.example","content-type":"application/json"},body:JSON.stringify({investigationId:id,padding:"x".repeat(21000)})}),services);
+ expect(r.status).toBe(413);
+});
+test("trusted decision backend denial never leaks internal details",async()=>{
+ const r=await handleInterrogativeApi(new Request(base+"/decision",{method:"POST",headers:{cookie,origin:"https://hsi.example","content-type":"application/json"},body:JSON.stringify({investigationId:id})}),{...services,review:async()=>{throw Error("private neon database credentials")}});
+ expect(r.status).toBe(403);expect(await r.text()).not.toContain("private neon");
+});
+test("same-origin decision request reaches trusted service, not browser authority",async()=>{
+ let received:unknown=null;
+ const decision={investigationId:id,reviewerPrincipal:"untrusted-client-value"};
+ const r=await handleInterrogativeApi(new Request(base+"/decision",{method:"POST",headers:{cookie,origin:"https://hsi.example","content-type":"application/json"},body:JSON.stringify(decision)}),{...services,review:async(input)=>{received=input;return {decisionId:"review-test",outcome:"reject"}}});
+ expect(r.status).toBe(200);
+ expect((received as {serverSessionToken:string;decision:{investigationId:string}}).serverSessionToken).toBe("example-session-token-long-enough");
+ expect((received as {decision:{investigationId:string}}).decision.investigationId).toBe(id);
+ // Reviewer principal must be independently verified by authenticatedScientificReviewStore.
+});
