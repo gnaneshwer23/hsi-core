@@ -25,6 +25,10 @@ describe("HSI NEXUS technology page", () => {
     for (const name of ["RESEARCH INVESTIGATION · SYSTEMIC SCLEROSIS", "Frame the SSc question", "Compare conflicting findings", "Draft testable hypotheses", "Review and decide", "REVIEWABLE ARTIFACT", "INTERPRETATION LIMIT"]) expect(page).toContain(name);
     expect(page).toContain("No patient data, actual study results");
   });
+  it("shows accountable governance controls and a separate human approval gate", () => {
+    for (const label of ["GOVERNANCE, VALIDATION & SCIENTIFIC REVIEW", "Human scientific review", "STOP CONDITION", "REQUIRED REVIEW RECORD", "Unvalidated hypothesis", "Agents may retrieve, compare and propose"]) expect(page).toContain(label);
+    expect(page).toContain("setGovernanceIndex(i)");
+  });
   it("keeps interactive journeys keyboard-operable and research boundaries explicit", () => {
     expect(page).toContain("setSourceIndex(index)");
     expect(page).toContain("setEngineIndex(i)");
