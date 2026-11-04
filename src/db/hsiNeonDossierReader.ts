@@ -14,7 +14,7 @@ export function createHsiNeonDossierReader(config:{databaseUrl:string;neonProjec
   if(!ids.length)return [];
   const sql=new SQL(config.databaseUrl,{tls:{rejectUnauthorized:true},connectionTimeout:10});
   try{
-   const rows=await sql`SELECT payload FROM hsi_lhkg_dossiers WHERE relationship_id IN ${sql([...ids])} ORDER BY relationship_id,relationship_version DESC LIMIT 100`;
+   const rows=await sql`SELECT DISTINCT ON (relationship_id) payload FROM hsi_lhkg_dossiers WHERE relationship_id IN ${sql([...ids])} ORDER BY relationship_id,split_part(relationship_version,'.',1)::numeric DESC,split_part(relationship_version,'.',2)::numeric DESC,split_part(relationship_version,'.',3)::numeric DESC LIMIT 100`;
    return rows.map((r:Record<string,unknown>)=>r.payload as HsiRelationshipDossier);
   }finally{await sql.close()}
  }};
