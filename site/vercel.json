@@ -149,6 +149,10 @@
     {
       "source": "/science/disease",
       "destination": "/index.html"
+    },
+    {
+      "source": "/science/graph",
+      "destination": "/index.html"
     }
   ]
 }

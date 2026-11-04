@@ -1,0 +1,5 @@
+import type {GraphDataset} from "./knowledgeGraph";
+export function GraphVisual({graph,selected,onSelect}:{graph:GraphDataset;selected:string;onSelect:(id:string)=>void}){
+ const points=new Map(graph.nodes.map((n,i)=>[n.id,{x:250+175*Math.cos(2*Math.PI*i/graph.nodes.length),y:205+145*Math.sin(2*Math.PI*i/graph.nodes.length)}]));
+ return <svg viewBox="0 0 500 420" role="group" aria-label="Interactive graph of biological entities">{graph.edges.map(e=>{const a=points.get(e.subjectId),b=points.get(e.objectId);return a&&b?<line key={e.id} x1={a.x} y1={a.y} x2={b.x} y2={b.y} stroke="#98b7ad" strokeWidth="2" strokeDasharray="5 5"/>:null})}{graph.nodes.map(n=>{const p=points.get(n.id)!;return <g key={n.id} role="button" tabIndex={0} aria-label={`Select ${n.label}`} aria-pressed={selected===n.id} onClick={()=>onSelect(n.id)} onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();onSelect(n.id)}}}><circle cx={p.x} cy={p.y} r={selected===n.id?27:22} fill={selected===n.id?"#ff6845":"#17645f"} stroke="#fff" strokeWidth="3"/><text x={p.x} y={p.y+36} textAnchor="middle" fontSize="12" fill="#183e3b">{n.label}</text></g>})}</svg>;
+}
