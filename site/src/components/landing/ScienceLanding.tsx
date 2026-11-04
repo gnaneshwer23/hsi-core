@@ -1,10 +1,43 @@
-import { useState } from "react";
+import { useState, type KeyboardEvent } from "react";
 import { Link } from "react-router-dom";
 import { PRODUCT_NAME, PRODUCT_SHORT } from "../../lib/brand";
 import "../../styles/hsi-editorial.css";
 import "../../styles/science.css";
 
 type SystemId = "immune" | "metabolic" | "microbiome";
+
+/** Arrow/Home/End navigation for exclusive radiogroups built from buttons. */
+function moveRadioFocus(
+  event: KeyboardEvent<HTMLElement>,
+  index: number,
+  length: number,
+  select: (next: number) => void,
+) {
+  let next: number | null = null;
+  switch (event.key) {
+    case "ArrowDown":
+    case "ArrowRight":
+      next = (index + 1) % length;
+      break;
+    case "ArrowUp":
+    case "ArrowLeft":
+      next = (index - 1 + length) % length;
+      break;
+    case "Home":
+      next = 0;
+      break;
+    case "End":
+      next = length - 1;
+      break;
+    default:
+      return;
+  }
+  event.preventDefault();
+  select(next);
+  const group = event.currentTarget.closest("[role='radiogroup']");
+  const radios = group?.querySelectorAll<HTMLElement>('[role="radio"]');
+  radios?.[next]?.focus();
+}
 
 type SystemNode = {
   name: string;
@@ -483,15 +516,20 @@ export function ScienceLanding() {
             <strong>Depth by design.</strong> Immune gets the deep teaching sequence below. Metabolism and Microbiome stay overview-depth in this explorer—honest summaries, not parallel seven-stage clones.
           </p>
 
-          <div className="hsi-science-system-selector" role="group" aria-label="Choose biological system">
+          <div className="hsi-science-system-selector" role="radiogroup" aria-label="Choose biological system">
             {SYSTEMS.map((s, i) => (
               <button
                 type="button"
                 key={s.id}
+                role="radio"
                 className={"hsi-research-step" + (s.id === systemId ? " is-active" : "")}
-                aria-pressed={s.id === systemId}
+                aria-checked={s.id === systemId}
                 aria-controls="science-system"
+                tabIndex={s.id === systemId ? 0 : -1}
                 onClick={() => selectSystem(s.id)}
+                onKeyDown={(event) =>
+                  moveRadioFocus(event, i, SYSTEMS.length, (next) => selectSystem(SYSTEMS[next]!.id))
+                }
               >
                 <span className="hsi-research-step-index">0{i + 1}</span>
                 <span className="hsi-research-step-copy">
@@ -514,15 +552,20 @@ export function ScienceLanding() {
                 <strong>{system.label}</strong>
                 <small>Four connected perspectives</small>
               </div>
-              <div className="hsi-science-components" role="group" aria-label={`${system.label} components`}>
+              <div className="hsi-science-components" role="radiogroup" aria-label={`${system.label} components`}>
                 {system.nodes.map((n, i) => (
                   <button
                     type="button"
                     key={n.name}
+                    role="radio"
                     className={"hsi-research-step" + (active === i ? " is-active" : "")}
-                    aria-pressed={active === i}
+                    aria-checked={active === i}
                     aria-controls="science-component"
+                    tabIndex={active === i ? 0 : -1}
                     onClick={() => setActive(i)}
+                    onKeyDown={(event) =>
+                      moveRadioFocus(event, i, system.nodes.length, setActive)
+                    }
                   >
                     <span className="hsi-research-step-index">0{i + 1}</span>
                     <span className="hsi-research-step-copy">
@@ -581,15 +624,22 @@ export function ScienceLanding() {
             <p>{path.intro}</p>
           </div>
 
-          <div className="hsi-science-path-selector" role="group" aria-label="Choose mechanism path">
+          <div className="hsi-science-path-selector" role="radiogroup" aria-label="Choose mechanism path">
             {MECHANISM_PATHS.map((p, i) => (
               <button
                 type="button"
                 key={p.id}
+                role="radio"
                 className={"hsi-research-step" + (p.id === pathId ? " is-active" : "")}
-                aria-pressed={p.id === pathId}
+                aria-checked={p.id === pathId}
                 aria-controls="science-phase-detail"
+                tabIndex={p.id === pathId ? 0 : -1}
                 onClick={() => selectPath(p.id)}
+                onKeyDown={(event) =>
+                  moveRadioFocus(event, i, MECHANISM_PATHS.length, (next) =>
+                    selectPath(MECHANISM_PATHS[next]!.id),
+                  )
+                }
               >
                 <span className="hsi-research-step-index">0{i + 1}</span>
                 <span className="hsi-research-step-copy">
@@ -605,17 +655,22 @@ export function ScienceLanding() {
 
           <div
             className={"hsi-science-phases" + (path.depth === "overview" ? " is-overview" : "")}
-            role="group"
+            role="radiogroup"
             aria-label={`${path.label} ${path.depth === "deep" ? "stages" : "overview steps"}`}
           >
             {path.steps.map((p, i) => (
               <button
                 type="button"
                 key={p.title}
+                role="radio"
                 className={"hsi-research-step" + (phase === i ? " is-active" : "")}
-                aria-pressed={phase === i}
+                aria-checked={phase === i}
                 aria-controls="science-phase-detail"
+                tabIndex={phase === i ? 0 : -1}
                 onClick={() => setPhase(i)}
+                onKeyDown={(event) =>
+                  moveRadioFocus(event, i, path.steps.length, setPhase)
+                }
               >
                 <span className="hsi-research-step-index">0{i + 1}</span>
                 <span className="hsi-research-step-copy">

@@ -315,11 +315,23 @@
   font-size: 0.78rem;
   font-weight: 650;
   cursor: pointer;
+  transition: border-color 0.2s;
 }
 
 .hsi-science-node-controls button:hover,
 .hsi-science-phase-controls button:hover:not(:disabled) {
   border-color: #ff6845;
+}
+
+.hsi-science-node-controls button:focus-visible,
+.hsi-science-phase-controls button:focus-visible,
+.hsi-science-system-selector .hsi-research-step:focus-visible,
+.hsi-science-components .hsi-research-step:focus-visible,
+.hsi-science-path-selector .hsi-research-step:focus-visible,
+.hsi-science-phases .hsi-research-step:focus-visible,
+.hsi-science-reading:focus-visible {
+  outline: 3px solid #ff6845;
+  outline-offset: 3px;
 }
 
 .hsi-science-phase-controls button:disabled {
@@ -441,6 +453,7 @@
   font-weight: 700;
   letter-spacing: 0.04em;
   color: #17645f;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
 }
 
 .hsi-science-mech-node.is-active b {
@@ -873,7 +886,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hsi-science-mech-node b {
-    transition: none;
+  .hsi-science-mech-node b,
+  .hsi-science-system-selector .hsi-research-step,
+  .hsi-science-components .hsi-research-step,
+  .hsi-science-path-selector .hsi-research-step,
+  .hsi-science-phases .hsi-research-step,
+  .hsi-science-node-controls button,
+  .hsi-science-phase-controls button {
+    transition: none !important;
   }
 }
