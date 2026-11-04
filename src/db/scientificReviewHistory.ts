@@ -14,6 +14,6 @@ export async function loadScientificReviewHistory(input:{serverSessionToken:stri
  try{
   const limit=Math.min(Math.max(input.limit??30,1),50);
   const rows=await sql`SELECT decision_id,investigation_id,outcome,reviewed_at,reviewer_principal,investigation_hash,decision_hash FROM hsi_interrogative_review_decisions WHERE reviewer_principal=${actor.principalId} ORDER BY reviewed_at DESC,decision_id DESC LIMIT ${limit}`;
-  return {items:rows.map(r=>({decisionId:String(r.decision_id),investigationId:String(r.investigation_id),outcome:String(r.outcome),reviewedAt:new Date(String(r.reviewed_at)).toISOString(),reviewerPrincipal:String(r.reviewer_principal),investigationHash:String(r.investigation_hash),decisionHash:String(r.decision_hash)}))};
+  return {items:rows.map((r:Record<string,unknown>)=>({decisionId:String(r.decision_id),investigationId:String(r.investigation_id),outcome:String(r.outcome),reviewedAt:new Date(String(r.reviewed_at)).toISOString(),reviewerPrincipal:String(r.reviewer_principal),investigationHash:String(r.investigation_hash),decisionHash:String(r.decision_hash)}))};
  }finally{await sql.close()}
 }
