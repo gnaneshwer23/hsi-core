@@ -41,6 +41,12 @@ export function assessReleaseClaim(claim: ReleaseClaim): ReleaseAssessment {
   return {eligible: reasons.length === 0, reasons, claimId: claim.id};
 }
 
+/** Canonical hash shared by candidate creation and authoritative DB release verification. */
+export function computeReleaseManifestHash(input:{schemaVersion:"hsi-graph-release-1";releaseId:string;releaseVersion:string;generatedAt:string;claimIds:readonly string[]}):string{
+ const {schemaVersion,releaseId,releaseVersion,generatedAt,claimIds}=input;
+ return createHash("sha256").update(JSON.stringify({schemaVersion,releaseId,releaseVersion,claimIds:[...claimIds].sort(),generatedAt})).digest("hex");
+}
+
 export function createCandidateManifest(
   releaseId: string, releaseVersion: string, claims: readonly ReleaseClaim[], generatedAt: string,
 ): ReleaseManifest {
@@ -51,7 +57,7 @@ export function createCandidateManifest(
   const failures = claims.map(assessReleaseClaim).filter(x => !x.eligible);
   if (failures.length) throw Error(`Release blocked: ${JSON.stringify(failures)}`);
   const claimIds = [...ids].sort();
-  const manifestHash = createHash("sha256").update(JSON.stringify({schemaVersion:"hsi-graph-release-1",releaseId,releaseVersion,claimIds,generatedAt})).digest("hex");
+  const manifestHash = computeReleaseManifestHash({schemaVersion:"hsi-graph-release-1",releaseId,releaseVersion,claimIds,generatedAt});
   return {schemaVersion:"hsi-graph-release-1",releaseId,releaseVersion,generatedAt,claimIds,manifestHash,status:"candidate"};
 }
 
