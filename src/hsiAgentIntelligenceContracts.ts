@@ -52,6 +52,6 @@ export function validateHsiAgentRunEnvelope(e:HsiAgentRunEnvelope):void{
  validateHsiAgentManifest(e.manifest);
  if(!e.investigationId?.trim()||!e.runId?.trim()||!e.graphRelease?.id?.trim()||!/^\d+\.\d+\.\d+$/.test(e.graphRelease.version)||!/^[a-f0-9]{64}$/.test(e.graphRelease.manifestHash))throw Error("Invalid run identity or graph provenance");
  if(!e.manifest.dataClasses.includes(e.dataClass)||!Number.isFinite(Date.parse(e.startedAt))||(e.completedAt!==null&&!Number.isFinite(Date.parse(e.completedAt))))throw Error("Invalid run context");
- if(e.toolCalls.length>e.manifest.maxToolCalls||e.toolCalls.some(c=>!c.invocationId?.trim()||!isOneOf(c.tool,e.manifest.allowedTools)))throw Error("Invalid tool execution trace");
+ if(e.toolCalls.length>e.manifest.maxToolCalls||e.toolCalls.some(c=>!c.invocationId?.trim()||(!isOneOf(c.tool,e.manifest.allowedTools)&&c.status!=="denied")))throw Error("Invalid tool execution trace");
  if(!["created","running","completed","blocked","failed","cancelled"].includes(e.status))throw Error("Invalid run status");
 }
