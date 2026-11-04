@@ -1,0 +1,129 @@
+{
+  "schemaVersion": "hsi-ssc-study-extraction-1",
+  "createdAt": "2026-11-04",
+  "scope": "Tfh–IL-21–B-cell interactions in SSc",
+  "status": "draft_source_grounded_extraction",
+  "humanReviewed": false,
+  "graphPromotable": false,
+  "studies": [
+    {
+      "pmid": "30760472",
+      "doi": "10.1136/annrheumdis-2018-214382",
+      "sourceUrl": "https://ard.bmj.com/content/annrheumdis/78/4/539.full.pdf",
+      "accessLevel": "accessible_full_text",
+      "population": {
+        "ssc": 50,
+        "healthyControls": 32,
+        "notes": "Absolute cTfh counts reported for subset of controls (n=24) in figure 1; do not assume all measures use n=32."
+      },
+      "methods": {
+        "phenotyping": "Flow cytometry: CD4+CXCR5+PD-1+ circulating Tfh; Tfh1/2/17 distinguished by CXCR3 and CCR6",
+        "functional": "Sorted cTfh/B-cell coculture, 13 SSc (3 diffuse, 10 limited) and 6 healthy controls; IgG/IgM ELISA; IL-21R-Fc or ruxolitinib perturbations",
+        "sourceLocator": "Methods; Results; Figures 1–3"
+      },
+      "quantitativeFindings": [
+        {
+          "measure": "cTfh percentage among CD4 T cells",
+          "ssc": "7.2 ± 3.6%",
+          "control": "4.4 ± 1.5%",
+          "p": "<0.0001",
+          "locator": "Figure 1B / Results"
+        },
+        {
+          "measure": "absolute cTfh cells",
+          "ssc": "69.1 ± 38.9 cells/µL",
+          "control": "33.2 ± 19.2 cells/µL",
+          "p": "<0.0001",
+          "locator": "Figure 1C / Results"
+        },
+        {
+          "measure": "cTfh percentage diffuse versus limited SSc",
+          "ssc": "9.3 ± 4.9% (diffuse)",
+          "control": "6.3 ± 2.7% (limited)",
+          "p": "0.04",
+          "locator": "Figure 2A / Results"
+        },
+        {
+          "measure": "cTfh absolute count and plasmablast absolute count correlation in SSc",
+          "ssc": "r=+0.38",
+          "control": null,
+          "p": "0.006",
+          "locator": "Figure 3C / Results"
+        }
+      ],
+      "interpretation": "Study supports increased cTfh abundance and ex vivo IL-21-dependent B-cell help in its cohort. It does not establish clinical efficacy of IL-21 blockade or JAK inhibition.",
+      "limitations": [
+        "Single cohort and assay-specific gating",
+        "Correlations do not establish in vivo causation",
+        "Coculture perturbation is not a patient trial",
+        "Potential treatment, phenotype and cohort effects require systematic extraction"
+      ]
+    },
+    {
+      "pmid": "29514998",
+      "doi": "10.1126/scitranslmed.aaf5307",
+      "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/29514998/",
+      "accessLevel": "public_abstract_only",
+      "population": {
+        "ssc": null,
+        "healthyControls": null,
+        "notes": "Human skin cohort sizes and experimental model sample sizes not independently extracted from full text."
+      },
+      "methods": {
+        "phenotyping": "Human skin CD4+ICOS+ Tfh-like infiltrates",
+        "functional": "GVHD-SSc mouse model; anti-ICOS and IL-21 neutralisation interventions",
+        "sourceLocator": "PubMed abstract"
+      },
+      "quantitativeFindings": [],
+      "interpretation": "Human skin association and mouse-model intervention are separate evidence types; do not infer treatment efficacy in people.",
+      "limitations": [
+        "Human sample sizes and gating not verified from full text",
+        "Animal findings not transferable without human trials"
+      ]
+    },
+    {
+      "pmid": "33175976",
+      "doi": "10.1093/rheumatology/keaa669",
+      "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/33175976/",
+      "accessLevel": "public_abstract_only",
+      "population": {
+        "ssc": null,
+        "healthyControls": null,
+        "notes": "Cohort numbers and treatment stratification require full-text access."
+      },
+      "methods": {
+        "phenotyping": "Flow cytometry of cTfh/B-cell subsets; cytokine array; skin immunohistochemistry and immunofluorescence",
+        "functional": "Observational study; no human therapeutic intervention verified",
+        "sourceLocator": "PubMed abstract"
+      },
+      "quantitativeFindings": [],
+      "interpretation": "Overall cTfh proportion did not differ, whereas Tfh1 subset frequency increased. This cannot be compared directly with another study until gates and denominators are matched.",
+      "limitations": [
+        "Gating definitions and absolute counts not verified from full text",
+        "Effect sizes and statistical tests require full-text extraction"
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "id": "HSI-D-SSC-001",
+      "status": "methodology_review_required",
+      "comparison": "Ricard: total cTfh percentage and absolute counts increased; Ly: total cTfh proportion unchanged, Tfh1 subset increased.",
+      "additionalFinding": "Ricard also reports no significant Tfh1/2/17 subset percentage differences within cTfh in its cohort (Figure 1E). This makes subtype gating, clinical heterogeneity and sampling especially important.",
+      "unresolved": [
+        "Compare CD4+CXCR5+PD-1+ parent gate in both studies",
+        "Compare Tfh1 CXCR3+CCR6− gates and denominators",
+        "Obtain Ly cohort sizes, disease activity, treatment and numerical effect sizes",
+        "Assess absolute count versus proportion and assay reproducibility"
+      ],
+      "classification": "contextual_disagreement_candidate_not_adjudicated"
+    }
+  ],
+  "reviewGate": {
+    "humanScientificReviewer": "required",
+    "fullTextMethodsForAll": "incomplete",
+    "claimSupport": "source_grounded_draft",
+    "graphPromotion": "blocked",
+    "clinicalInterpretation": "blocked"
+  }
+}
