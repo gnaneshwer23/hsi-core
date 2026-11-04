@@ -10,7 +10,7 @@ test("ARCH-003 adapters reuse deterministic engines and never approve a claim",a
   saveFalsification:async r=>{report=r;return "falsification-ref"}
  };
  const planner=createSscPlannerExecutor({sink,plan:{question:"Which SSc mechanisms require investigation?",actorPrincipal:"researcher-1",createdAt:"2026-11-04T12:00:00Z",dataClass:"public_biomedical",focus:"systemic_sclerosis",release:{id:"HSI-GR-SSC",version:"1.0.0",manifestHash:"a".repeat(64)}}});
- const context={investigationId:"inv-1",taskId:"plan",role:"question_planner" as const,dependencies:{},assertTool:()=>{}};
+ const context={investigationId:"inv-1",taskId:"plan",role:"question_planner" as const,dependencies:{},signal:new AbortController().signal,assertTool:()=>{}};
  expect((await planner(context)).outputRef).toBe("draft-ref");
  expect(draft!.state).toBe("draft");expect(draft!.review).toBeNull();
  const analyst=createSscContradictionExecutor({sink,draftRef:"draft-ref"});
