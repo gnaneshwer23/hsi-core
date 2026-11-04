@@ -189,6 +189,10 @@
     {
       "source": "/science/literature",
       "destination": "/index.html"
+    },
+    {
+      "source": "/science/study-comparison",
+      "destination": "/index.html"
     }
   ]
 }
