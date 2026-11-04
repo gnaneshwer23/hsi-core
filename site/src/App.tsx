@@ -26,6 +26,7 @@ import { GatewayDemo } from "./pages/GatewayDemo";
 import { Sources } from "./pages/Sources";
 import { Science } from "./pages/Science";
 import { ScienceBody } from "./pages/ScienceBody";
+import { ScienceZoom, ScienceConnections } from "./pages/ScienceExplorer";
 import { NotFound } from "./pages/NotFound";
 
 export default function App() {
@@ -39,6 +40,8 @@ export default function App() {
         <Route path="explore" element={<Explore />} />
         <Route path="science" element={<Science />} />
         <Route path="science/body" element={<ScienceBody />} />
+        <Route path="science/zoom" element={<ScienceZoom />} />
+        <Route path="science/connections" element={<ScienceConnections />} />
         <Route path="discovery-engine" element={<DiscoveryEngine />} />
         <Route path="products" element={<Products />} />
         <Route path="status" element={<Status />} />
