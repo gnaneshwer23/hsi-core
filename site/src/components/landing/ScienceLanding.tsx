@@ -112,36 +112,135 @@ const SYSTEMS: SystemDef[] = [
   },
 ];
 
-const PHASES = [
+type MechanismStep = {
+  title: string;
+  detail: string;
+};
+
+type MechanismDepth = "deep" | "overview";
+
+type MechanismPath = {
+  id: SystemId;
+  label: string;
+  depth: MechanismDepth;
+  depthLabel: string;
+  headingLead: string;
+  headingEm: string;
+  intro: string;
+  artLabel: string;
+  artFoot: string;
+  note: string;
+  steps: readonly MechanismStep[];
+};
+
+/** Immune is the deep teaching sequence; metabolism and microbiome stay overview-depth. */
+const MECHANISM_PATHS: readonly MechanismPath[] = [
   {
-    title: "Detect",
-    detail: "Pattern-recognition mechanisms and barriers help identify potential threats or disturbances.",
+    id: "immune",
+    label: "Immune response",
+    depth: "deep",
+    depthLabel: "Deep teaching sequence · 7 stages",
+    headingLead: "From recognition",
+    headingEm: "to resolution—and memory.",
+    intro:
+      "Follow a simplified immune response—the deep teaching sequence on this page. In living systems, these processes overlap and vary with the trigger, tissue and type of response.",
+    artLabel: "Deep teaching sequence · stages overlap in living systems",
+    artFoot: "Not a fixed timetable · memory is not inevitable in every response",
+    note: "A teaching sequence, not a fixed biological timetable. Memory is a feature of some responses, rather than the inevitable final step of every immune event.",
+    steps: [
+      {
+        title: "Detect",
+        detail: "Pattern-recognition mechanisms and barriers help identify potential threats or disturbances.",
+      },
+      {
+        title: "Recognise",
+        detail: "Receptors and antigen-presentation processes provide information about what is being encountered.",
+      },
+      {
+        title: "Signal",
+        detail: "Immune mediators communicate local and systemic context to relevant cells.",
+      },
+      {
+        title: "Respond",
+        detail: "Effector cells and molecules act to contain or address a challenge.",
+      },
+      {
+        title: "Regulate",
+        detail: "Feedback and regulatory mechanisms shape response intensity and duration.",
+      },
+      {
+        title: "Resolve",
+        detail: "Clearance, repair and active resolution pathways help restore tissue function.",
+      },
+      {
+        title: "Remember",
+        detail: "Some responses establish immunological memory that influences future encounters.",
+      },
+    ],
   },
   {
-    title: "Recognise",
-    detail: "Receptors and antigen-presentation processes provide information about what is being encountered.",
+    id: "metabolic",
+    label: "Metabolism",
+    depth: "overview",
+    depthLabel: "Overview depth · 4 steps",
+    headingLead: "From fuel availability",
+    headingEm: "to energy balance.",
+    intro:
+      "A short overview path—not a seven-stage clone of the immune sequence. These steps sketch how tissues coordinate energy use and storage in educational terms only.",
+    artLabel: "Overview path · illustrative energy coordination",
+    artFoot: "Simplified teaching view · not a clinical metabolic assessment",
+    note: "Overview depth only. This sketch does not diagnose metabolic disease, interpret labs or recommend diet or treatment.",
+    steps: [
+      {
+        title: "Sense",
+        detail: "Tissues register circulating nutrients and energy stores, shaping what the body can use next.",
+      },
+      {
+        title: "Signal",
+        detail: "Hormones and related messengers communicate fuel availability across organs—without implying a single master switch.",
+      },
+      {
+        title: "Allocate",
+        detail: "Organs and cells partition energy toward use, storage or production depending on context and demand.",
+      },
+      {
+        title: "Adapt",
+        detail: "Feedback over time adjusts supply and demand; the same signal can mean different things in different states.",
+      },
+    ],
   },
   {
-    title: "Signal",
-    detail: "Immune mediators communicate local and systemic context to relevant cells.",
+    id: "microbiome",
+    label: "Microbiome",
+    depth: "overview",
+    depthLabel: "Overview depth · 4 steps",
+    headingLead: "From community",
+    headingEm: "to host interaction.",
+    intro:
+      "A short overview path—not a deep immune-style sequence. These steps introduce host–microbe interaction as a dynamic ecosystem, not a fixed pipeline or clinical protocol.",
+    artLabel: "Overview path · illustrative host–microbe ecology",
+    artFoot: "Associations are not causation · composition is not the same as function",
+    note: "Overview depth only. Community patterns alone do not prove causality, diagnose disease or justify clinical decisions.",
+    steps: [
+      {
+        title: "Colonise",
+        detail: "Microbial communities occupy niches shaped by diet, environment, medication and host factors.",
+      },
+      {
+        title: "Metabolise",
+        detail: "Microbes transform dietary and host substrates into metabolites that may reach host tissues.",
+      },
+      {
+        title: "Interface",
+        detail: "Barrier surfaces and local immune surveillance mediate contact between luminal contents and the host.",
+      },
+      {
+        title: "Coexist",
+        detail: "Host and microbes continually influence each other; coexistence is dynamic, not a single steady state.",
+      },
+    ],
   },
-  {
-    title: "Respond",
-    detail: "Effector cells and molecules act to contain or address a challenge.",
-  },
-  {
-    title: "Regulate",
-    detail: "Feedback and regulatory mechanisms shape response intensity and duration.",
-  },
-  {
-    title: "Resolve",
-    detail: "Clearance, repair and active resolution pathways help restore tissue function.",
-  },
-  {
-    title: "Remember",
-    detail: "Some responses establish immunological memory that influences future encounters.",
-  },
-] as const;
+];
 
 const PILLARS = [
   {
@@ -248,25 +347,31 @@ function ExplorerSectionArt() {
   );
 }
 
-/** Mechanisms section art — teaching sequence arc. */
-function MechanismsSectionArt({ active }: { active: number }) {
-  const labels = ["Detect", "Recognise", "Signal", "Respond", "Regulate", "Resolve", "Remember"] as const;
+/** Mechanisms section art — deep or overview teaching arc. */
+function MechanismsSectionArt({ path, active }: { path: MechanismPath; active: number }) {
+  const step = path.steps[active];
+  const total = path.steps.length;
+  const depthWord = path.depth === "deep" ? "Deep teaching" : "Overview";
   return (
     <div
-      className="hsi-science-mech-art"
+      className={"hsi-science-mech-art" + (path.depth === "overview" ? " is-overview" : "")}
       role="img"
-      aria-label={`Teaching sequence stage ${active + 1} of 7: ${labels[active]}. Overlapping biological processes simplified for learning.`}
+      aria-label={`${depthWord} sequence step ${active + 1} of ${total}: ${step.title}. Educational simplification only.`}
     >
-      <p className="hsi-science-mech-art-label">Teaching sequence · stages overlap in living systems</p>
-      <div className="hsi-science-mech-track" aria-hidden="true">
-        {labels.map((label, i) => (
-          <span key={label} className={"hsi-science-mech-node" + (i === active ? " is-active" : "")}>
+      <p className="hsi-science-mech-art-label">{path.artLabel}</p>
+      <div
+        className="hsi-science-mech-track"
+        style={{ gridTemplateColumns: `repeat(${total}, minmax(0, 1fr))` }}
+        aria-hidden="true"
+      >
+        {path.steps.map((s, i) => (
+          <span key={s.title} className={"hsi-science-mech-node" + (i === active ? " is-active" : "")}>
             <b>0{i + 1}</b>
-            <small>{label}</small>
+            <small>{s.title}</small>
           </span>
         ))}
       </div>
-      <p className="hsi-science-mech-art-foot">Not a fixed timetable · memory is not inevitable in every response</p>
+      <p className="hsi-science-mech-art-foot">{path.artFoot}</p>
     </div>
   );
 }
@@ -299,14 +404,25 @@ function WiderLensArt() {
 export function ScienceLanding() {
   const [systemId, setSystemId] = useState<SystemId>("immune");
   const [active, setActive] = useState(0);
+  const [pathId, setPathId] = useState<SystemId>("immune");
   const [phase, setPhase] = useState(0);
   const system = SYSTEMS.find((s) => s.id === systemId) ?? SYSTEMS[0];
+  const path = MECHANISM_PATHS.find((p) => p.id === pathId) ?? MECHANISM_PATHS[0];
   const node = system.nodes[active];
   const reading = READING[system.id];
+  const step = path.steps[phase] ?? path.steps[0];
+  const stepTotal = path.steps.length;
+  const stagePad = String(phase + 1).padStart(2, "0");
+  const totalPad = String(stepTotal).padStart(2, "0");
 
   function selectSystem(id: SystemId) {
     setSystemId(id);
     setActive(0);
+  }
+
+  function selectPath(id: SystemId) {
+    setPathId(id);
+    setPhase(0);
   }
 
   return (
@@ -329,7 +445,7 @@ export function ScienceLanding() {
                 Open the biology explorer <span aria-hidden="true">↗</span>
               </a>
               <a className="hsi-editorial-textlink" href="#science-mechanisms">
-                Follow an immune response ↓
+                Follow a mechanism path ↓
               </a>
             </div>
             <p className="hsi-science-hero-note">An educational experience for curious minds — not clinical advice.</p>
@@ -362,6 +478,10 @@ export function ScienceLanding() {
               <figcaption>Conceptual map · educational only · not a live KG</figcaption>
             </figure>
           </div>
+
+          <p className="hsi-science-depth-note" role="note">
+            <strong>Depth by design.</strong> Immune gets the deep teaching sequence below. Metabolism and Microbiome stay overview-depth in this explorer—honest summaries, not parallel seven-stage clones.
+          </p>
 
           <div className="hsi-science-system-selector" role="group" aria-label="Choose biological system">
             {SYSTEMS.map((s, i) => (
@@ -453,17 +573,42 @@ export function ScienceLanding() {
             <div>
               <p className="hsi-editorial-kicker">02 / MECHANISMS IN CONTEXT</p>
               <h2 id="mechanisms-title">
-                From recognition<br />
-                <em>to resolution—and memory.</em>
+                {path.headingLead}
+                <br />
+                <em>{path.headingEm}</em>
               </h2>
             </div>
-            <p>Follow a simplified immune response. In living systems, these processes overlap and vary with the trigger, tissue and type of response.</p>
+            <p>{path.intro}</p>
           </div>
 
-          <MechanismsSectionArt active={phase} />
+          <div className="hsi-science-path-selector" role="group" aria-label="Choose mechanism path">
+            {MECHANISM_PATHS.map((p, i) => (
+              <button
+                type="button"
+                key={p.id}
+                className={"hsi-research-step" + (p.id === pathId ? " is-active" : "")}
+                aria-pressed={p.id === pathId}
+                aria-controls="science-phase-detail"
+                onClick={() => selectPath(p.id)}
+              >
+                <span className="hsi-research-step-index">0{i + 1}</span>
+                <span className="hsi-research-step-copy">
+                  <strong>{p.label}</strong>
+                  <small>{p.depthLabel}</small>
+                </span>
+                <span aria-hidden="true">↗</span>
+              </button>
+            ))}
+          </div>
 
-          <div className="hsi-science-phases" role="group" aria-label="Immune response stages">
-            {PHASES.map((p, i) => (
+          <MechanismsSectionArt path={path} active={phase} />
+
+          <div
+            className={"hsi-science-phases" + (path.depth === "overview" ? " is-overview" : "")}
+            role="group"
+            aria-label={`${path.label} ${path.depth === "deep" ? "stages" : "overview steps"}`}
+          >
+            {path.steps.map((p, i) => (
               <button
                 type="button"
                 key={p.title}
@@ -483,25 +628,29 @@ export function ScienceLanding() {
 
           <div className="hsi-science-phase-detail" id="science-phase-detail" aria-live="polite" aria-atomic="true">
             <div>
-              <p className="hsi-editorial-kicker">STAGE 0{phase + 1} / 07</p>
-              <h3>{PHASES[phase].title}</h3>
+              <p className="hsi-editorial-kicker">
+                {path.depth === "deep" ? "STAGE" : "OVERVIEW STEP"} {stagePad} / {totalPad}
+              </p>
+              <h3>{step.title}</h3>
             </div>
             <div>
-              <p>{PHASES[phase].detail}</p>
+              <p>{step.detail}</p>
               <div className="hsi-science-phase-controls">
                 <button type="button" disabled={phase === 0} onClick={() => setPhase((i) => Math.max(0, i - 1))}>
-                  ← Previous stage
+                  ← Previous {path.depth === "deep" ? "stage" : "step"}
                 </button>
-                <button type="button" disabled={phase === PHASES.length - 1} onClick={() => setPhase((i) => Math.min(PHASES.length - 1, i + 1))}>
-                  Next stage →
+                <button
+                  type="button"
+                  disabled={phase === stepTotal - 1}
+                  onClick={() => setPhase((i) => Math.min(stepTotal - 1, i + 1))}
+                >
+                  Next {path.depth === "deep" ? "stage" : "step"} →
                 </button>
               </div>
             </div>
           </div>
 
-          <p className="hsi-science-mechanism-note">
-            A teaching sequence, not a fixed biological timetable. Memory is a feature of some responses, rather than the inevitable final step of every immune event.
-          </p>
+          <p className="hsi-science-mechanism-note">{path.note}</p>
         </div>
       </section>
 
