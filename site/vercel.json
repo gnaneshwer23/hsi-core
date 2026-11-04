@@ -193,6 +193,10 @@
     {
       "source": "/science/study-comparison",
       "destination": "/index.html"
+    },
+    {
+      "source": "/science/review-preparation",
+      "destination": "/index.html"
     }
   ]
 }
