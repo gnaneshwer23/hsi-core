@@ -145,6 +145,21 @@ Open `/research/account` after email verification:
 - A 503 indicates configuration, provider or database availability requires an
   operator check. Inspect logs without logging secrets, cookies or credentials.
 
+An unverified email receives the explicit `EMAIL_NOT_VERIFIED` response and a
+**Send verification email** button. The button makes a user-initiated request;
+opening the page never sends email automatically. The gateway resolves the
+account from its provider-verified cookie and requests verification only for that
+account's email, with a fixed same-origin callback. Browser-supplied email and
+callback overrides are ignored. After using the verification link, select
+**Refresh access**. A provider acknowledgement does not prove email delivery; if
+no message arrives, an operator must check the provider's verification/email
+configuration. Never flip `emailVerified` in SQL to bypass this step.
+
+Other 401 responses distinguish a missing provider session
+(`BACKEND_PROVIDER_SESSION_REQUIRED`) from a provider identity that cannot resolve
+to an eligible database session (`BACKEND_DATABASE_SESSION_REQUIRED`). These checks
+do not substitute for the subsequent researcher/reviewer grant check.
+
 An approved identity administrator must provision only the authorised researcher
 role for the verified immutable user ID in the staging `hsi_research_access`
 table, recording the real grantor identity and time. Signup and the gateway do

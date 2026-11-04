@@ -14,9 +14,11 @@ export function ResearchAccount(){
  const [signingOut,setSigningOut]=useState(false);
  const [history,setHistory]=useState<{decisionId:string;investigationId:string;outcome:string;reviewedAt:string;decisionHash:string}[]>([]);
  const [historyStatus,setHistoryStatus]=useState("");
+ const [sendingVerification,setSendingVerification]=useState(false);
+ const [verificationMessage,setVerificationMessage]=useState("");
  useEffect(()=>{
   let active=true;
-  setChecking(true);setAccess(null);setStatus("Checking your session…");
+  setChecking(true);setAccess(null);setStatus("Checking your session…");setVerificationMessage("");
   async function check(){
    try{
     if(!authBaseUrl){if(active)setStatus("Authentication is not configured.");return}
@@ -47,13 +49,24 @@ export function ResearchAccount(){
    setHistory(data.items);setHistoryStatus(data.items.length?"":"No decisions recorded for this reviewer.");
   }catch(e){setHistory([]);setHistoryStatus(e instanceof Error?e.message:"Unable to load history")}
  }
+ async function sendVerification(){
+  if(sendingVerification)return;setSendingVerification(true);setVerificationMessage("");
+  try{
+   const result=await hsiAuth.sendVerificationEmail();
+   setVerificationMessage(result.error?result.error.message:result.data?.alreadyVerified===true?"Your email is already verified. Refresh access to check again.":"Verification request accepted. Check your inbox and spam folder, follow the verification link, then refresh access. If no email arrives, contact the HSI administrator to check provider email delivery.");
+  }catch{setVerificationMessage("Verification could not be requested. Please retry or contact the HSI administrator.")}
+  finally{setSendingVerification(false)}
+ }
  const account=access?.kind==="ready"?access.account:null;
  const authorised=account&&(account.researcher||account.scientificReviewer);
  return <section className="hsi-sign-in"><div className="hsi-sign-in-card">
   <p className="hsi-sign-in-eyebrow">HSI / RESEARCH ACCOUNT</p><h1>Research account</h1>
   {session&&<p className="hsi-sign-in-description">Signed in as {session.user.email}.</p>}
   {status&&<p role="status" aria-live="polite">{status}</p>}
-  {access&&access.kind!=="ready"&&<div className="hsi-sign-in-status" role="alert"><strong>Research access could not be checked</strong><p>{access.message}</p></div>}
+  {access&&access.kind!=="ready"&&<div className="hsi-sign-in-status" role="alert"><strong>{access.kind==="email_verification_required"?"Verify your email to continue":"Research access could not be checked"}</strong><p>{access.message}</p>
+   {access.kind==="email_verification_required"&&<button className="hsi-auth-signout" type="button" disabled={sendingVerification||signingOut} onClick={sendVerification}>{sendingVerification?"Requesting verification…":"Send verification email"}</button>}
+  </div>}
+  {verificationMessage&&<p role="status" aria-live="polite">{verificationMessage}</p>}
   {account&&!authorised&&<div className="hsi-sign-in-status" role="status"><strong>Research access requires approval</strong><p>The HSI backend verified your account but found no active research or scientific reviewer grant. Contact the research administrator to request researcher access.</p><p>Scientific reviewer access requires separate approval and an independent reviewer identity.</p></div>}
   {authorised&&<section className="hsi-account-workspace" aria-labelledby="workspace-heading">
    <h2 id="workspace-heading">Your research workspace</h2>

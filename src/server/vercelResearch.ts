@@ -39,7 +39,7 @@ export async function handleVercelResearch(request:Request,env:Environment,depen
   return gatewayJson({service:"hsi-research",status:!config.ok?"configuration_required":originMatches?"configuration_validated":"origin_mismatch",...(config.ok?{writesEnabled:config.writesEnabled,publicOrigin:config.publicOrigin,requestOrigin,originMatches}:{missing:config.missing}),authUrlsMatch:config.authUrlsMatch,databaseConnectionTested:false},config.ok&&originMatches?200:503);
  }
  if(!path.startsWith("/api/auth/")&&!path.startsWith("/api/research/"))return gatewayJson({error:"Not found"},404);
- if(path.startsWith("/api/research/")&&path!=="/api/research/account"&&!/^\/api\/research\/interrogative\/hsi-interrogative-[a-zA-Z0-9-]{8,100}(?:\/(?:submit-review|decision))?$/.test(path))return gatewayJson({error:"Not found"},404);
+ if(path.startsWith("/api/research/")&&path!=="/api/research/account"&&path!=="/api/research/scientific-review/history"&&!/^\/api\/research\/interrogative\/hsi-interrogative-[a-zA-Z0-9-]{8,100}(?:\/(?:submit-review|decision))?$/.test(path))return gatewayJson({error:"Not found"},404);
  if(!config.ok)return gatewayJson({code:"AUTH_GATEWAY_NOT_CONFIGURED",error:"Research service requires deployment configuration"},503);
  if(new URL(request.url).origin!==config.publicOrigin)return gatewayJson({code:"DEPLOYMENT_ORIGIN_MISMATCH",error:"Deployment origin mismatch"},403);
  if(path==="/api/auth/diagnostics")return diagnoseAuthProvider(request,config,dependencies.transport);
@@ -47,10 +47,12 @@ export async function handleVercelResearch(request:Request,env:Environment,depen
  if(request.method==="POST"&&!config.writesEnabled)return gatewayJson({error:"Research writes are disabled on this deployment"},403);
  try{
   const provider=await verifiedProviderSession(config,request,dependencies.transport);
-  let token:string|null=null;
-  if(provider?.user.emailVerified)token=await (dependencies.resolveToken??resolveProviderSessionToken)({databaseUrl:config.databaseUrl,neonProjectId:config.neonProjectId,sessionId:provider.session.id,userId:provider.user.id});
+  if(!provider)return gatewayJson({code:"BACKEND_PROVIDER_SESSION_REQUIRED",error:"A provider-verified session cookie is required"},401);
+  if(!provider.user.emailVerified)return gatewayJson({code:"EMAIL_NOT_VERIFIED",error:"Email verification required before research access"},401);
+  const token=await (dependencies.resolveToken??resolveProviderSessionToken)({databaseUrl:config.databaseUrl,neonProjectId:config.neonProjectId,sessionId:provider.session.id,userId:provider.user.id});
+  if(!token)return gatewayJson({code:"BACKEND_DATABASE_SESSION_REQUIRED",error:"Provider session could not be resolved in the configured HSI database"},401);
   const headers=new Headers(request.headers);headers.delete("cookie");
-  if(token)headers.set("cookie","__Secure-better-auth.session_token="+encodeURIComponent(token));
+  headers.set("cookie","__Secure-better-auth.session_token="+encodeURIComponent(token));
   return handleInterrogativeApi(new Request(request,{headers}),dependencies.services??createNeonInterrogativeApiServices(config));
  }catch{return gatewayJson({error:"Research session verification unavailable"},503)}
 }

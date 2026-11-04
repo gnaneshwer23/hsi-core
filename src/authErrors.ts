@@ -33,6 +33,7 @@ export const AUTH_ERROR_MESSAGES:Record<string,string>={
  JSON_REQUIRED:"The authentication request format was rejected. Refresh the page and try again.",
  INVALID_JSON:"The authentication request could not be read. Refresh the page and try again.",
  PAYLOAD_TOO_LARGE:"The authentication request was too large. Refresh the page and try again.",
+ VERIFICATION_SESSION_REQUIRED:"Sign in again before requesting email verification.",
 };
 
 function object(value:unknown):value is Record<string,unknown>{return !!value&&typeof value==="object"&&!Array.isArray(value)}

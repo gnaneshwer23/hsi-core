@@ -55,3 +55,10 @@ test("account checks time out and use same-origin uncached credentials",async()=
  await checkResearchAccount(principalId,mock(async(_url,options)=>{init=options;return Response.json(pending)}));
  expect(init?.credentials).toBe("same-origin");expect(init?.cache).toBe("no-store");expect(init?.redirect).toBe("error");
 });
+
+test("account messages distinguish email verification from cookie and database session failures",async()=>{
+ for(const [code,kind,pattern] of [["EMAIL_NOT_VERIFIED","email_verification_required",/Verify your email/],["BACKEND_PROVIDER_SESSION_REQUIRED","session_required",/Sign out and sign in again/],["BACKEND_DATABASE_SESSION_REQUIRED","session_required",/same branch/]] as const){
+  const result=await checkResearchAccount(principalId,mock(async()=>Response.json({code,message:"secret provider detail"},{status:401})));
+  expect(result.kind).toBe(kind);if(result.kind!=="ready")expect(result.message).toMatch(pattern);expect(JSON.stringify(result)).not.toContain("secret provider detail");
+ }
+});

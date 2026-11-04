@@ -52,5 +52,6 @@ export function createHsiAuthClient(configured:unknown,request:typeof fetch=fetc
   signUp:(name:string,email:string,password:string)=>authRequest<HsiRegistration>("/sign-up/email",{name,email,password},value=>parseAuthRegistration(value,email)),
   session:()=>authRequest<HsiAuthSession>("/get-session",undefined,value=>parseAuthSession(value)),
   signOut:()=>authRequest("/sign-out",{},action),
+  sendVerificationEmail:()=>authRequest("/send-verification-email",{},action),
  };
 }

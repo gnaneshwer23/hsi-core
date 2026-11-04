@@ -120,3 +120,29 @@ test("unknown upstream codes cannot echo provider details or hide the HTTP rejec
  const client=createHsiAuthClient(env.HSI_AUTH_BASE_URL,transport(async()=>handleVercelResearch(post("/api/auth/sign-in/email",{email:"test@example.invalid",password:"test-password"}),env,{transport:transport(async()=>Response.json({code:"secret-or-arbitrary-code",message:"password-value"},{status:403}))})),8000,"same-origin");
  const result=await client.signIn("test@example.invalid","test-password");expect(result.error?.message).toContain("HTTP 403");expect(result.error?.code).toBe("AUTH_PROVIDER_REJECTED");expect(JSON.stringify(result)).not.toContain("secret-or-arbitrary-code");expect(JSON.stringify(result)).not.toContain("password-value");
 });
+
+test("backend session denials distinguish missing cookie, unverified email and ineligible DB session",async()=>{
+ const missing=await handleVercelResearch(req("/api/research/account"),env,{transport:noCalls});expect((await missing.json()).code).toBe("BACKEND_PROVIDER_SESSION_REQUIRED");
+ const unverified=await handleVercelResearch(req("/api/research/account",{headers:{cookie}}),env,{transport:transport(async()=>Response.json({...identity,user:{...identity.user,emailVerified:false}})),resolveToken:async()=>{throw Error("Unverified identity must not query DB")}});expect((await unverified.json()).code).toBe("EMAIL_NOT_VERIFIED");
+ const absent=await handleVercelResearch(req("/api/research/account",{headers:{cookie}}),env,{transport:transport(async()=>Response.json(identity)),resolveToken:async()=>null});expect((await absent.json()).code).toBe("BACKEND_DATABASE_SESSION_REQUIRED");
+});
+test("email verification is user-requested and bound to the authenticated provider email",async()=>{
+ let sends=0;
+ const response=await handleVercelResearch(post("/api/auth/send-verification-email",{email:"another@example.invalid",callbackURL:"https://attacker.example"}),env,{transport:transport(async(url,init)=>{
+  if(String(url).endsWith("/get-session"))return Response.json({...identity,user:{...identity.user,emailVerified:false}});
+  expect(String(url)).toBe(env.HSI_AUTH_BASE_URL+"/send-verification-email");sends++;expect(JSON.parse(String(init?.body))).toEqual({email:identity.user.email,callbackURL:origin+"/sign-in"});return Response.json({status:true});
+ })});
+ expect(response.status).toBe(200);expect(await response.json()).toEqual({success:true});expect(sends).toBe(1);
+});
+test("verification endpoint never sends for missing or already verified identities and requires an acknowledgement",async()=>{
+ const absent=await handleVercelResearch(post("/api/auth/send-verification-email"),env,{transport:transport(async()=>Response.json(null))});expect(absent.status).toBe(401);
+ let calls=0;
+ const verified=await handleVercelResearch(post("/api/auth/send-verification-email"),env,{transport:transport(async()=>{calls++;return Response.json(identity)})});expect(await verified.json()).toEqual({success:true,alreadyVerified:true});expect(calls).toBe(1);
+ const bad=await handleVercelResearch(post("/api/auth/send-verification-email"),env,{transport:transport(async url=>String(url).endsWith("/get-session")?Response.json({...identity,user:{...identity.user,emailVerified:false}}):Response.json({}))});expect(bad.status).toBe(502);
+});
+
+test("reviewer history route retains the trusted session bridge and reviewer-scoped service",async()=>{
+ let called=false;
+ const response=await handleVercelResearch(req("/api/research/scientific-review/history",{headers:{cookie}}),env,{transport:transport(async()=>Response.json(identity)),resolveToken:async()=>"database-token-long-enough",services:{load:async()=>({}),submit:async()=>({}),review:async()=>({}),history:async input=>{called=true;expect(input.serverSessionToken).toBe("database-token-long-enough");return {items:[]}}}});
+ expect(response.status).toBe(200);expect(called).toBe(true);expect(await response.json()).toEqual({items:[]});
+});

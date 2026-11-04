@@ -46,7 +46,7 @@ function copyProviderCookies(source:Response,target:Response){
 }
 export async function handleAuthGateway(request:Request,config:AuthGatewayConfig,transport:typeof fetch=fetch):Promise<Response>{
  const path=new URL(request.url).pathname.slice("/api/auth".length);
- const method=path==="/get-session"?"GET":["/sign-in/email","/sign-up/email","/sign-out"].includes(path)?"POST":null;
+ const method=path==="/get-session"?"GET":["/sign-in/email","/sign-up/email","/sign-out","/send-verification-email"].includes(path)?"POST":null;
  if(!method)return gatewayJson({code:"NOT_FOUND"},404);
  if(request.method!==method)return gatewayJson({code:"METHOD_NOT_ALLOWED"},405);
  if((request.headers.get("origin")&&request.headers.get("origin")!==config.publicOrigin)||(method==="POST"&&request.headers.get("origin")!==config.publicOrigin))return gatewayJson({code:"INVALID_ORIGIN"},403);
@@ -57,7 +57,16 @@ export async function handleAuthGateway(request:Request,config:AuthGatewayConfig
   let raw:string;try{raw=await request.text()}catch{return gatewayJson({code:"INVALID_JSON"},400)}
   if(raw.length>20000)return gatewayJson({code:"PAYLOAD_TOO_LARGE"},413);
   let v:Record<string,unknown>;try{v=JSON.parse(raw);if(!v||Array.isArray(v)||typeof v!=="object")throw Error()}catch{return gatewayJson({code:"INVALID_JSON"},400)}
-  if(path==="/sign-out")body={};
+  if(path==="/send-verification-email"){
+   // Only the authenticated account can request its own verification email.
+   // Ignore caller-supplied email and callback values; never send automatically.
+   let identity:ReturnType<typeof parseProviderSession>;
+   try{identity=await verifiedProviderSession(config,request,transport)}catch{return gatewayJson({code:"AUTH_UNAVAILABLE"},503)}
+   if(!identity)return gatewayJson({code:"VERIFICATION_SESSION_REQUIRED"},401);
+   if(identity.user.emailVerified)return gatewayJson({success:true,alreadyVerified:true});
+   body={email:identity.user.email,callbackURL:config.publicOrigin+"/sign-in"};
+  }
+  else if(path==="/sign-out")body={};
   else{
    if(typeof v.email!=="string"||!v.email.trim()||v.email.length>254||typeof v.password!=="string"||!v.password||v.password.length>128)return gatewayJson({code:"INVALID_CREDENTIAL_FIELDS"},400);
    if(path==="/sign-up/email"&&(typeof v.name!=="string"||!v.name.trim()||v.name.length>120))return gatewayJson({code:"INVALID_NAME"},400);
@@ -69,7 +78,8 @@ export async function handleAuthGateway(request:Request,config:AuthGatewayConfig
   if(!(response.headers.get("content-type")??"").includes("application/json"))return gatewayJson({code:"AUTH_INVALID_RESPONSE"},502);
   const value=await response.json() as Record<string,unknown>|null;
   if(!response.ok){const result=gatewayJson({code:knownAuthErrorCode(value)??"AUTH_PROVIDER_REJECTED"},response.status);copyProviderCookies(response,result);return result}
-  const result=path==="/get-session"?gatewayJson(parseProviderSession(value)):path==="/sign-out"?gatewayJson({success:true}):gatewayJson({user:safeUser(value?.user)});
+  if(path==="/send-verification-email"&&value?.status!==true&&value?.success!==true)return gatewayJson({code:"AUTH_INVALID_RESPONSE"},502);
+  const result=path==="/get-session"?gatewayJson(parseProviderSession(value)):["/sign-out","/send-verification-email"].includes(path)?gatewayJson({success:true}):gatewayJson({user:safeUser(value?.user)});
   copyProviderCookies(response,result);return result;
  }catch{return gatewayJson({code:"AUTH_UNAVAILABLE"},503)}
 }
