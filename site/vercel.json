@@ -153,6 +153,10 @@
     {
       "source": "/science/graph",
       "destination": "/index.html"
+    },
+    {
+      "source": "/science/paths",
+      "destination": "/index.html"
     }
   ]
 }
