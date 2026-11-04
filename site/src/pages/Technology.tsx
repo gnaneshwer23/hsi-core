@@ -16,13 +16,14 @@ const graphLayers = [
   { title:"Biomedical evidence", path:"Study → finding → confidence → contradiction → hypothesis", note:"Versioned claims, uncertainty and explicit scientific review states" },
 ] as const;
 const engine = [
-  { name: "Context", detail: "Resolve the question and permitted data context. Identity, purpose and authorisation are checked at source boundaries." },
-  { name: "Biology", detail: "Relate phenotypes to organs, tissues, immune cells, pathways, biomarkers and molecular targets." },
-  { name: "Evidence", detail: "Retrieve permitted source material, preserve citations, versioning, provenance and contradictory findings." },
-  { name: "Reasoning", detail: "Coordinate bounded analyses, surface missing evidence and propose testable hypotheses with uncertainty." },
-  { name: "Discovery", detail: "Support supervised target prioritisation and future computational screening, docking and model evaluation workflows." },
-  { name: "Governance", detail: "Keep patient facts, literature associations, computational predictions and human-approved scientific claims distinct." },
+  { name:"Context", role:"Establish permitted scope", detail:"Define the research question, permitted datasets and relevant clinical or biological context before retrieval.", input:"Question + purpose + authorised context", output:"Scoped investigation brief", guard:"Access and identity boundaries" },
+  { name:"Biology", role:"Trace mechanisms", detail:"Connect phenotypes to tissues, immune cells, pathways and biomarkers through reviewable biological relationships.", input:"Phenotype + curated biological graph", output:"Mechanism map with evidence links", guard:"Association is not causation" },
+  { name:"Evidence", role:"Retrieve and compare", detail:"Gather rights-cleared studies and approved datasets, including supporting and contradictory findings with provenance.", input:"Scoped queries + licensed sources", output:"Versioned evidence dossier", guard:"Citations, dates and source rights" },
+  { name:"Reasoning", role:"Investigate uncertainty", detail:"Compare observations and claims, surface contradictions and gaps, and propose clearly labelled, testable hypotheses.", input:"Evidence dossier + biology map", output:"Draft hypotheses and unresolved questions", guard:"Inference is not an approved fact" },
+  { name:"Discovery", role:"Design next research", detail:"Suggest supervised analyses, candidate biomarkers or experimental follow-ups; computational screening remains a future validated capability.", input:"Reviewed gaps + suitable methods", output:"Proposed research plan", guard:"No efficacy or safety claims" },
+  { name:"Governance", role:"Require accountable review", detail:"Record methods, source versions, uncertainty and human scientific decisions before any claim can enter approved knowledge.", input:"Draft outputs + analysis provenance", output:"Approved, revised or rejected decision", guard:"Agents never self-approve claims" },
 ] as const;
+const nexusJourney = ["Question & authorisation","Evidence retrieval","Biological investigation","Reasoned proposals","Scientific review"] as const;
 const outcomes = [
   { title: "Patient and cohort matching", description: "Compare permitted phenotypes, biomarkers and research cohort criteria. Patient-level matching requires validated models and authorised access.", status: "Future clinical research capability" },
   { title: "Clinical trial intelligence", description: "Structure eligibility criteria, identify missing evidence and support investigator-led pre-screening. Never imply confirmed eligibility or enrolment.", status: "Planned governed workflow" },
@@ -82,11 +83,29 @@ export function Technology() {
       </div>
     </section>
 
-    <section className="nx-section nx-engine" id="nexus">
-      <div className="nx-wrap"><div className="nx-section-head"><div><p className="nx-kicker">02 / CONNECTED HEALTH INTELLIGENCE ENGINE</p><h2>Meet <em>HSI NEXUS.</em></h2></div><p>Not a single database or chatbot: a proposed orchestration layer across separately governed data, knowledge, computational models and human review.</p></div>
-        <div className="nx-engine-layout"><div className="nx-engine-orbit"><div className="nx-engine-mark"><small>HSI</small><strong>NEXUS</strong><span>CONNECTED INTELLIGENCE</span></div><div className="nx-engine-orbit-label">Federated by design · Evidence grounded · Human supervised</div></div>
-          <div className="nx-engine-workbench"><div className="nx-engine-tabs" role="group" aria-label="NEXUS intelligence functions">{engine.map((item,index) => <button key={item.name} type="button" aria-pressed={engineIndex === index} onClick={() => setEngineIndex(index)}>{String(index+1).padStart(2,"0")} <strong>{item.name}</strong></button>)}</div><div className="nx-engine-detail" aria-live="polite"><span>INTELLIGENCE FUNCTION / {String(engineIndex+1).padStart(2,"0")}</span><h3>{engine[engineIndex].name} Engine</h3><p>{engine[engineIndex].detail}</p></div></div>
+    <section className="nx-section nx-engine nx-nexus-lab" id="nexus">
+      <div className="nx-wrap">
+        <div className="nx-section-head"><div><p className="nx-kicker">03 / INSIDE HSI NEXUS</p><h2>Six engines.<br/><em>One supervised investigation.</em></h2></div><p>NEXUS is the proposed coordination layer: specialised functions investigate a question, exchange traceable outputs and prepare findings for accountable human review.</p></div>
+        <div className="nx-nexus-layout">
+          <div className="nx-nexus-map" aria-label="Conceptual six-engine NEXUS collaboration diagram">
+            <div className="nx-nexus-orbit">
+              <svg viewBox="0 0 420 420" role="img" aria-label="Six connected intelligence engines surrounding the HSI NEXUS orchestrator">
+                <circle cx="210" cy="210" r="151" className="nx-nexus-ring"/>
+                {engine.map((_,i)=>{const theta=(i*60-90)*Math.PI/180;const x=210+151*Math.cos(theta);const y=210+151*Math.sin(theta);return <g key={i}><line x1="210" y1="210" x2={x} y2={y} className={engineIndex===i?"nx-nexus-link active":"nx-nexus-link"}/><circle cx={x} cy={y} r={engineIndex===i?17:12} className={engineIndex===i?"nx-nexus-point active":"nx-nexus-point"}/><text x={x} y={y+4} textAnchor="middle" className="nx-nexus-point-label">{i+1}</text></g>})}
+                <circle cx="210" cy="210" r="77" className="nx-nexus-center"/>
+                <text x="210" y="199" textAnchor="middle" className="nx-nexus-center-small">HSI</text><text x="210" y="225" textAnchor="middle" className="nx-nexus-center-title">NEXUS</text><text x="210" y="243" textAnchor="middle" className="nx-nexus-center-small">ORCHESTRATION</text>
+              </svg>
+            </div>
+            <p className="nx-nexus-map-caption">Conceptual architecture · Agent proposals remain separate from approved evidence</p>
+            <div className="nx-nexus-workflow" aria-label="Supervised investigation workflow">{nexusJourney.map((step,i)=><div key={step}><span>0{i+1}</span><strong>{step}</strong></div>)}</div>
+          </div>
+          <div className="nx-nexus-console">
+            <p className="nx-kicker">SELECT AN INTELLIGENCE FUNCTION</p>
+            <div className="nx-nexus-tabs" role="group" aria-label="NEXUS intelligence functions">{engine.map((item,i)=><button key={item.name} type="button" aria-pressed={engineIndex===i} onClick={()=>setEngineIndex(i)}><span>0{i+1}</span>{item.name}</button>)}</div>
+            <article className="nx-nexus-detail" aria-live="polite"><p className="nx-kicker">ENGINE 0{engineIndex+1} / {engine[engineIndex].role}</p><h3>{engine[engineIndex].name}</h3><p>{engine[engineIndex].detail}</p><div className="nx-nexus-contract"><div><span>INPUT</span><strong>{engine[engineIndex].input}</strong></div><div><span>REVIEWABLE OUTPUT</span><strong>{engine[engineIndex].output}</strong></div><div><span>SAFETY BOUNDARY</span><strong>{engine[engineIndex].guard}</strong></div></div></article>
+          </div>
         </div>
+        <p className="nx-nexus-note">This diagram describes the intended NEXUS orchestration model, not verified deployment of all six engines. Human scientists retain authority over claims and consequential decisions.</p>
       </div>
     </section>
 
