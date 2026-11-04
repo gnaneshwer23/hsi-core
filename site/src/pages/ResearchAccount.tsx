@@ -10,7 +10,7 @@ export function ResearchAccount(){
  useEffect(()=>{
   let active=true;
   if(!authBaseUrl){setStatus("Authentication is not configured.");return}
-  hsiAuth.session().then(r=>{if(!active)return;if(!r.data?.user?.id){navigate("/sign-in",{replace:true});return}setSession(r.data);setStatus("")});
+  hsiAuth.session().then(r=>{if(!active)return;if(r.error){setStatus(r.error.message);return}if(!r.data?.user?.id){navigate("/sign-in",{replace:true});return}setSession(r.data);setStatus("")});
   return()=>{active=false};
  },[navigate]);
  async function signOut(){const r=await hsiAuth.signOut();if(r.error){setStatus("Could not sign out. Please try again.");return}navigate("/sign-in",{replace:true})}

@@ -16,7 +16,7 @@ export function SignIn() {
  useEffect(()=>{
   if(!authBaseUrl)return;
   let active=true;
-  hsiAuth.session().then(result=>{if(!active)return;setChecking(false);if(result.data?.user?.id)navigate("/research/account",{replace:true})});
+  hsiAuth.session().then(result=>{if(!active)return;setChecking(false);if(result.error){setError(result.error.message);return}if(result.data?.user?.id)navigate("/research/account",{replace:true})});
   return()=>{active=false};
  },[navigate]);
  async function submit(event:FormEvent<HTMLFormElement>){
