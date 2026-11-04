@@ -26,6 +26,7 @@ async function authRequest<T>(path: string, body?: unknown): Promise<AuthResult<
 export type HsiAuthSession={session:{id:string;expiresAt:string};user:{id:string;name?:string;email:string;emailVerified:boolean}};
 export const hsiAuth={
  signIn:(email:string,password:string)=>authRequest<unknown>("/sign-in/email",{email,password}),
+ signUp:(name:string,email:string,password:string)=>authRequest<unknown>("/sign-up/email",{name,email,password}),
  session:()=>authRequest<HsiAuthSession>("/get-session"),
  signOut:()=>authRequest<unknown>("/sign-out",{}),
 };
