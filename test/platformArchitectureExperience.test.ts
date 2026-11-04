@@ -3,28 +3,25 @@ import { readFileSync } from "node:fs";
 const platform = readFileSync(new URL("../site/src/pages/Platform.tsx", import.meta.url), "utf8");
 const css = readFileSync(new URL("../site/src/styles/platform.css", import.meta.url), "utf8");
 describe("Platform architecture experience", () => {
-  it("explains all four governed knowledge graph domains", () => {
-    for (const title of ["Patient context", "Human biology", "Gut–immune–metabolic", "Biomedical evidence"])
-      expect(platform).toContain(title);
-    expect(platform).toContain("not a single shared database");
-    expect(platform).toContain("not copied into the public biomedical graph");
+  it("retains four product-owned perspectives and explicit access boundaries", () => {
+    for (const name of ["aksh:", "clinical:", "isi:", "trials:"]) expect(platform).toContain(name);
+    expect(platform).toContain("Sharing technology does not grant access");
+    expect(platform).toContain("No live matching, eligibility confirmation or enrolment");
   });
-  it("distinguishes SSc curation from existing RA working set", () => {
-    expect(platform).toContain("Curation pending");
-    expect(platform).toContain("Research working set");
-    expect(platform).toContain("One track cannot approve findings in the other");
+  it("keeps research methods separate from scientific approval", () => {
+    for (const name of ["Frame the question", "Inspect the context", "Compare the evidence", "Prepare for review"]) expect(platform).toContain(name);
+    expect(platform).toContain("Saving an investigation is not scientific approval");
+    expect(platform).toContain("Human review remains explicit");
   });
-  it("offers functional state-driven selectors and accessible detail updates", () => {
-    expect(platform).toContain("setGraphDomain(index)");
-    expect(platform).toContain("setResearchTrack(id)");
-    expect(platform).toContain("setIntelligenceStage(index)");
-    expect(platform).toContain('aria-pressed={graphDomain === index}');
-    expect(platform).toContain('aria-live="polite"');
+  it("supports state-driven product, capability and method lens selection", () => {
+    expect(platform).toContain("setProductId");
+    expect(platform).toContain("setSelected");
+    expect(platform).toContain("setLensIndex");
+    expect(platform).toContain("moveRadioFocus");
   });
-  it("keeps evidence and governance boundaries visible", () => {
-    expect(platform).toContain("hypotheses remain separate from approved findings");
-    expect(platform).toContain("not live patient or research data");
-    expect(css).toContain("focus-visible");
-    expect(css).toContain("max-width:600px");
+  it("preserves provenance, access and responsive visual system", () => {
+    expect(platform).toContain("Provenance alongside evidence");
+    expect(platform).toContain("Product-owned access");
+    expect(css).toContain("@media");
   });
 });
