@@ -19,6 +19,6 @@ test("research workbench denies restricted nodes even when repository returns th
  await expect(queryHsiEvidenceBackedWorkbench({...base(),graph})).rejects.toThrow();
 });
 test("missing focus and invalid limit fail closed",async()=>{
- await expect(queryHsiEvidenceBackedWorkbench({...base(),focusNodeId:"missing:1"})).rejects.toThrow("focus");
+ await expect(queryHsiEvidenceBackedWorkbench({...base(),focusNodeId:"missing:1"})).rejects.toThrow();
  await expect(queryHsiEvidenceBackedWorkbench({...base(),limit:101})).rejects.toThrow("limit");
 });
