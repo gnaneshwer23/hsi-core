@@ -7,11 +7,13 @@ import {submitInterrogativeForReview,recordAuthenticatedScientificReview} from "
 import type {HsiScientificReviewDecision} from "../interrogativeScientificReview";
 import {loadResearchAccount} from "../db/researchAccountStore";
 import {loadScientificReviewHistory} from "../db/scientificReviewHistory";
+import {loadSscResearchGraph} from "./sscGraphReadService";
 import type {ResearchAccountAccess} from "../researchAccount";
 
 type ApiServices={
  account?:(input:{serverSessionToken:string|null})=>Promise<ResearchAccountAccess|null>;
  history?:(input:{serverSessionToken:string|null})=>Promise<unknown>;
+ graph?:(input:{serverSessionToken:string|null;nodeId:string})=>Promise<unknown>;
  load:(input:{serverSessionToken:string|null;investigationId:string})=>Promise<unknown>;
  submit:(input:{serverSessionToken:string|null;investigationId:string})=>Promise<unknown>;
  review:(input:{serverSessionToken:string|null;decision:HsiScientificReviewDecision})=>Promise<unknown>;
@@ -31,6 +33,17 @@ function json(data:unknown,status=200):Response{
 }
 export async function handleInterrogativeApi(req:Request,services:ApiServices):Promise<Response>{
  const url=new URL(req.url);
+ if(url.pathname==="/api/research/graph/ssc"){
+  if(req.method!=="GET")return json({error:"Method not allowed"},405);
+  const token=sessionFromCookie(req);
+  if(!token)return json({error:"Authentication required"},401);
+  const nodeId=url.searchParams.get("node")??"";
+  if(!/^[A-Za-z0-9][A-Za-z0-9._:-]{1,127}$/.test(nodeId))return json({error:"Valid graph node required"},400);
+  if(!services.graph)return json({error:"Graph service unavailable"},503);
+  try{return json(await services.graph({serverSessionToken:token,nodeId}))}
+  catch{return json({error:"Graph unavailable or access denied"},403)}
+ }
+
  if(url.pathname==="/api/research/scientific-review/history"){
   if(req.method!=="GET")return json({error:"Method not allowed"},405);
   const token=sessionFromCookie(req);
@@ -82,6 +95,7 @@ export function createNeonInterrogativeApiServices(config:{databaseUrl:string;ne
  return {
   account:args=>loadResearchAccount({...config,...args}),
   history:args=>loadScientificReviewHistory({...config,...args}),
+  graph:args=>loadSscResearchGraph({...config,...args}),
   load:args=>loadAuthenticatedInterrogativeInvestigation({...config,...args}),
   submit:args=>submitInterrogativeForReview({...config,...args}),
   review:args=>recordAuthenticatedScientificReview({...config,...args})
