@@ -6668,3 +6668,14 @@ p {
 .research-comparison-table th, .research-comparison-table td { vertical-align: top; min-width: 12rem; overflow-wrap: anywhere; }
 .research-comparison button:disabled { opacity: .5; cursor: not-allowed; }
 .research-comparison :focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+
+
+/* Shared authentication actions: visible and clickable on marketing and auth pages. */
+.nav .nav-auth-actions{display:flex;align-items:center;gap:.65rem;margin-left:auto;flex-shrink:0;position:relative;z-index:2}
+.nav .nav-auth-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:.55rem .9rem;border:1px solid rgba(243,238,232,.65);border-radius:8px;color:#f3eee8;background:transparent;font-size:.85rem;font-weight:650;white-space:nowrap;line-height:1.2;text-decoration:none;margin:0}
+.nav .nav-auth-actions .nav-sign-up{background:var(--lime);color:var(--midnight);border-color:var(--lime)}
+.nav .nav-auth-actions a:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.nav .nav-auth-actions a:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
+.nav.scrolled .nav-auth-actions .nav-sign-in{color:var(--midnight);border-color:var(--botanical)}
+.nav.scrolled .nav-auth-actions .nav-sign-up{color:var(--midnight)}
+@media(max-width:1099px){.nav .nav-auth-actions{display:none}}
