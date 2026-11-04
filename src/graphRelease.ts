@@ -34,7 +34,7 @@ export function assessReleaseClaim(claim: ReleaseClaim): ReleaseAssessment {
   if (claim.sources.some(s => s.retractionStatus !== "none_reported")) reasons.push("source_retraction_or_correction_unresolved");
   if (claim.sources.some(s => ["unverified","prohibited"].includes(s.licenceStatus))) reasons.push("source_rights_unresolved");
   if (!claim.sources.some(s => s.polarity === "supports" && ["metadata_only","passage_permitted","restricted"].includes(s.licenceStatus))) reasons.push("no_rights_classified_support");
-  if (claim.epistemicType === "hypothesis" || claim.epistemicType === "computational_inference") reasons.push("unvalidated_inference");
+  if (!["established_evidence","association","observational_association"].includes(claim.epistemicType)) reasons.push("unrecognised_or_unvalidated_epistemic_type");
   const latest = [...claim.reviews].sort((a,b) => b.reviewedAt.localeCompare(a.reviewedAt) || b.id.localeCompare(a.id))[0];
   if (!latest || latest.claimId !== claim.id || latest.decision !== "approve" || !latest.reviewerAuthorised || !latest.reviewerPrincipal) reasons.push("missing_current_authorised_approval");
   if (claim.sources.some(s => s.polarity === "contradicts")) reasons.push("contradiction_requires_adjudication");
