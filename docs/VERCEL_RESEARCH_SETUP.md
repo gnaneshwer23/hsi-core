@@ -17,6 +17,11 @@ This guide does not authorise production database migrations or role grants.
 
 The repository supplies `site/api/auth/[...path].ts` and
 `site/api/research/[...path].ts` plus `bunVersion: "1.x"` in `site/vercel.json`.
+Nested login/registration paths have explicit `site/api/auth/sign-in/email.ts`
+and `sign-up/email.ts` entrypoints. Investigation reads and review writes also
+have explicit nested entrypoints under `site/api/research/interrogative/`.
+These avoid relying on catch-all discovery for multi-segment routes in the
+deployed Vite project. They all call the same trusted handler and permission gates.
 These are Bun Web-handler functions; `bun run build` still builds the frontend.
 Vercel builds the API functions separately. Do not run the standalone
 `research:api` listener as the Vercel build command.
@@ -89,6 +94,11 @@ If the route is missing/404, check the deployment commit, root directory,
 function build logs and external-file inclusion. If it returns 503 with
 `configuration_required`, the `missing` field names invalid/missing settings
 without exposing their values.
+An anonymous browser GET to `/api/auth/sign-in/email` or `/api/auth/sign-up/email`
+should return JSON `METHOD_NOT_ALLOWED` (405), without calling the provider or
+submitting credentials. A Vercel `404 NOT_FOUND` at those paths means their
+explicit function entrypoints did not deploy; a successful diagnostics route
+alone does not prove the nested credential routes exist.
 
 For a read-only provider connectivity check, open `/api/auth/diagnostics` on the
 same configured origin. This performs only an anonymous provider `GET /get-session`;
