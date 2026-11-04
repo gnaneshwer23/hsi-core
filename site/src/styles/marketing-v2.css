@@ -354,3 +354,11 @@ body:has(.public-site-v2)::before { display: none; }
 @media (prefers-reduced-motion: reduce) {
   .public-site-v2 *, .public-site-v2 *::before, .public-site-v2 *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
+
+/* Explicit editorial-header auth styling: prevent ivory-on-ivory invisible links. */
+.public-site-v2 .nav .nav-auth-actions{display:flex;align-items:center;gap:12px;margin-left:auto;flex-shrink:0}
+.public-site-v2 .nav .nav-auth-actions .nav-sign-in,.public-site-v2 .nav .nav-auth-actions .nav-sign-up{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:9px 14px;border-radius:6px;border:1px solid #17645f;color:#17645f;background:transparent;font-size:.86rem;font-weight:650;white-space:nowrap}
+.public-site-v2 .nav .nav-auth-actions .nav-sign-up{background:#17645f;color:#fff}
+.public-site-v2 .nav .nav-auth-actions a:hover,.public-site-v2 .nav .nav-auth-actions a:focus-visible{outline:2px solid #17645f;outline-offset:2px}
+@media(max-width:1100px){.public-site-v2 .nav .nav-auth-actions{gap:7px}.public-site-v2 .nav .nav-auth-actions a{padding:8px 10px}}
+@media(max-width:750px){.public-site-v2 .nav .nav-auth-actions{display:none}}
