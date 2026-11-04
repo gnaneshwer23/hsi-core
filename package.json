@@ -86,6 +86,7 @@
     "site:dev": "bun run --cwd site dev",
     "site:build": "bun run --cwd site build",
     "site:preview": "bun run --cwd site preview",
+    "research:api": "bun src/server/runInterrogativeApi.ts",
     "investigation:demo": "bun src/cli/investigation-demo.ts",
     "ra:import": "python3 tools/import_ra_evidence.py",
     "ra:test-parser": "python3 -m unittest discover -s test/python -v",

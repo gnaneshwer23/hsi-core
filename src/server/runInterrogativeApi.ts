@@ -1,5 +1,5 @@
 /** ARCH-003 standalone Bun API server. Deploy behind a trusted same-origin
- * reverse proxy forwarding /api/research/interrogative/*.
+ * reverse proxy forwarding /api/research/account and /api/research/interrogative/*.
  * Never deploy from the static site build or expose database credentials to Vite.
  */
 import {createNeonInterrogativeApiServices,handleInterrogativeApi} from "./interrogativeApi";

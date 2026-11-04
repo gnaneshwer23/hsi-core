@@ -5,8 +5,11 @@
 import {loadAuthenticatedInterrogativeInvestigation} from "../db/authenticatedInterrogativeStore";
 import {submitInterrogativeForReview,recordAuthenticatedScientificReview} from "../db/authenticatedScientificReviewStore";
 import type {HsiScientificReviewDecision} from "../interrogativeScientificReview";
+import {loadResearchAccount} from "../db/researchAccountStore";
+import type {ResearchAccountAccess} from "../researchAccount";
 
 type ApiServices={
+ account?:(input:{serverSessionToken:string|null})=>Promise<ResearchAccountAccess|null>;
  load:(input:{serverSessionToken:string|null;investigationId:string})=>Promise<unknown>;
  submit:(input:{serverSessionToken:string|null;investigationId:string})=>Promise<unknown>;
  review:(input:{serverSessionToken:string|null;decision:HsiScientificReviewDecision})=>Promise<unknown>;
@@ -26,6 +29,16 @@ function json(data:unknown,status=200):Response{
 }
 export async function handleInterrogativeApi(req:Request,services:ApiServices):Promise<Response>{
  const url=new URL(req.url);
+ if(url.pathname==="/api/research/account"){
+  if(req.method!=="GET")return json({error:"Method not allowed"},405);
+  const token=sessionFromCookie(req);
+  if(!token)return json({error:"Verified backend session required"},401);
+  if(!services.account)return json({error:"Account service unavailable"},503);
+  try{
+   const account=await services.account({serverSessionToken:token});
+   return account?json(account):json({error:"Verified backend session required"},401);
+  }catch{return json({error:"Account service unavailable"},503)}
+ }
  const match=/^\/api\/research\/interrogative\/(hsi-interrogative-[a-zA-Z0-9-]{8,100})(?:\/(submit-review|decision))?$/.exec(url.pathname);
  if(!match||!ID.test(match[1]??""))return json({error:"Not found"},404);
  const token=sessionFromCookie(req);
@@ -57,6 +70,7 @@ export async function handleInterrogativeApi(req:Request,services:ApiServices):P
 }
 export function createNeonInterrogativeApiServices(config:{databaseUrl:string;neonProjectId?:string|null}):ApiServices{
  return {
+  account:args=>loadResearchAccount({...config,...args}),
   load:args=>loadAuthenticatedInterrogativeInvestigation({...config,...args}),
   submit:args=>submitInterrogativeForReview({...config,...args}),
   review:args=>recordAuthenticatedScientificReview({...config,...args})

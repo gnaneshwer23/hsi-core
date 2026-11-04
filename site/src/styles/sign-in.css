@@ -11,3 +11,7 @@
 .hsi-sign-up-success p{font-size:.92rem;line-height:1.8;margin-bottom:1rem;color:rgba(243,238,232,.86)}
 .hsi-sign-up-success strong{overflow-wrap:anywhere}
 .hsi-sign-up-success .hsi-sign-in-back{margin-top:.5rem}
+.hsi-account-workspace{margin-top:2rem}.hsi-account-workspace h2{font-size:1.5rem}.hsi-account-workspace p{margin:.8rem 0;line-height:1.7}
+.hsi-account-records{list-style:none;padding:0;margin:1rem 0;display:grid;gap:1rem}.hsi-account-records li{display:grid;gap:.65rem;padding:1.2rem;border:1px solid rgba(196,224,90,.3);border-radius:14px;background:rgba(196,224,90,.05)}
+.hsi-account-record-id{overflow-wrap:anywhere;font-weight:650}.hsi-account-records a{color:var(--lime);text-decoration:underline;text-underline-offset:3px}.hsi-account-records a:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
+.hsi-account-actions{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}.hsi-account-actions button:disabled{opacity:.6;cursor:wait}

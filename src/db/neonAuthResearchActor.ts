@@ -6,7 +6,8 @@
 import {SQL} from "bun";
 import {assertHsiNeonDatabaseUrl} from "./neonGuard";
 import type {TrustedResearchActor} from "./researchInvestigationStore";
-export async function authenticateHsiNeonSession(input:{
+/** Verified provider identity; an empty roles array is not a research grant. */
+export async function authenticateHsiNeonIdentity(input:{
  sessionToken:string|null|undefined;databaseUrl:string;neonProjectId?:string|null;
 }):Promise<TrustedResearchActor|null>{
  const token=input.sessionToken;
@@ -18,11 +19,12 @@ export async function authenticateHsiNeonSession(input:{
   const rows=await sql`SELECT u.id::text AS principal_id,
    a.access_role AS research_role,
    EXISTS(SELECT 1 FROM hsi_reviewer_authority r
-    WHERE r.principal_id=u.id::text AND r.revoked_at IS NULL AND r.scope='ssc') AS reviewer
+    WHERE r.principal_id=u.id::text AND r.revoked_at IS NULL AND r.scope='ssc'
+      AND r.reviewer_role='scientific_reviewer' AND r.granted_at<=now()) AS reviewer
    FROM neon_auth.session s
    JOIN neon_auth."user" u ON u.id=s."userId"
    LEFT JOIN hsi_research_access a ON a.principal_id=u.id::text
-     AND a.revoked_at IS NULL
+     AND a.revoked_at IS NULL AND a.granted_at<=now()
    WHERE s.token=${token} AND s."expiresAt">now()
      AND s."impersonatedBy" IS NULL
      AND u."emailVerified"=true AND COALESCE(u.banned,false)=false
@@ -32,7 +34,10 @@ export async function authenticateHsiNeonSession(input:{
   const roles:string[]=[];
   if(r.research_role==="researcher"||r.research_role==="research_admin")roles.push(String(r.research_role));
   if(r.reviewer===true)roles.push("scientific_reviewer");
-  if(!roles.length)return null;
   return {principalId:String(r.principal_id),authenticated:true,roles};
  }finally{await sql.close();}
+}
+export async function authenticateHsiNeonSession(input:Parameters<typeof authenticateHsiNeonIdentity>[0]):Promise<TrustedResearchActor|null>{
+ const identity=await authenticateHsiNeonIdentity(input);
+ return identity?.roles.length?identity:null;
 }
