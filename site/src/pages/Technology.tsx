@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/technology.css";
+import { TechnologyFlow } from "../components/TechnologyFlow";
 
 const sources = [
   { id: "akeno", number: "01", name: "Akeno Health", label: "Connected healthcare infrastructure", state: "Ecosystem vision", description: "Hospitals, encounters, EHRs, diagnostics, laboratories, pharmacy, imaging and care delivery. Authorised interfaces can supply longitudinal clinical context without giving the research layer unrestricted record access.", data: ["EHR / FHIR", "HL7 / LIS", "Imaging / DICOM", "Medication history"], route: "/akeno" },
@@ -37,24 +38,10 @@ export function Technology() {
   const [journeyIndex, setJourneyIndex] = useState(0);
   const source = sources[sourceIndex];
   return <main className="nx-page">
-    <section className="nx-hero">
-      <div className="nx-wrap nx-hero-layout">
-        <div className="nx-hero-copy">
-          <p className="nx-kicker"><span className="nx-dot" /> HUMAN SUPER INTELLIGENCE / TECHNOLOGY</p>
-          <h1>From fragmented health data to <em>connected biological understanding.</em></h1>
-          <p className="nx-lead">Meet <strong>HSI NEXUS</strong> — our vision for a governed intelligence engine connecting healthcare, personal health, immune biology and biomedical evidence to support discovery and human decisions.</p>
-          <div className="nx-actions"><a className="nx-cta" href="#nexus">Explore NEXUS <span aria-hidden="true">↗</span></a><a className="nx-text-link" href="#journey">Follow a research question <span aria-hidden="true">↗</span></a></div>
-          <p className="nx-honesty">Target architecture · Existing, developing and proposed capabilities are distinguished below. No unrestricted patient-data pooling.</p>
-        </div>
-        <div className="nx-hero-art" aria-label="Conceptual flow from Akeno Health, Aksh Health, immune science and biomedical evidence through HSI NEXUS to research outputs">
-          <div className="nx-art-label">THE CONNECTED INTELLIGENCE MODEL</div>
-          <div className="nx-art-sources">{sources.map(item => <div key={item.id}><span>{item.number}</span><strong>{item.name}</strong></div>)}</div>
-          <div className="nx-art-connector" aria-hidden="true">↓ &nbsp; GOVERNED CONTEXT &nbsp; ↓</div>
-          <div className="nx-art-core"><span>HSI</span><strong>NEXUS</strong><small>CONTEXT · BIOLOGY · EVIDENCE · REASONING</small></div>
-          <div className="nx-art-connector" aria-hidden="true">↓ &nbsp; REVIEWABLE OUTPUTS &nbsp; ↓</div>
-          <div className="nx-art-results"><span>Matching</span><span>Trials</span><span>Discovery</span><span>Research</span></div>
-          <p>Illustrative architecture — not live data processing</p>
-        </div>
+    <section className="nx-flow-hero" aria-label="Human Super Intelligence data flow to discovery">
+      <div className="nx-wrap">
+        <TechnologyFlow />
+        <div className="nx-flow-actions"><a className="nx-cta" href="#nexus">Explore HSI NEXUS <span aria-hidden="true">↗</span></a><a className="nx-text-link" href="#sources">Explore the data sources <span aria-hidden="true">↗</span></a></div>
       </div>
     </section>
 
