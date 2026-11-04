@@ -6,7 +6,7 @@ import {assertHsiNeonDatabaseUrl} from "./neonGuard";
 import {authenticateHsiNeonSession} from "./neonAuthResearchActor";
 export async function authoriseAndRecoverHsiCheckpoint(input:{
  databaseUrl:string;neonProjectId?:string|null;serverSessionToken:string|null|undefined;
- investigationId:string;taskId:string;inputHash:string;reason:string;decisionId:string;
+ investigationId:string;taskId:string;inputHash:string;reason:string;decisionId:string;staleAfterSeconds?:number;
 }):Promise<{attempt:number;version:number;state:"running"}>{
  const guard=assertHsiNeonDatabaseUrl(input.databaseUrl,{neonProjectId:input.neonProjectId});
  if(!guard.ok)throw Error("HSI database guard: "+guard.reason);
