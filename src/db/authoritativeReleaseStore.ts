@@ -67,7 +67,7 @@ export async function loadHsiPublishedRelease(input:{
      id:String(s.id),licenceStatus:String(s.licence_status) as SourceEvidence["licenceStatus"],
      retractionStatus:String(s.retraction_status) as SourceEvidence["retractionStatus"],
      polarity:String(s.polarity) as SourceEvidence["polarity"],
-     sourceVersion:String((s.metadata as Record<string,unknown>|null)?.version??""),
+     sourceVersion:String((s.metadata as Record<string,unknown>|null)?.version??(s.metadata as Record<string,unknown>|null)?.recordHash??""),
     }));
     if(sources.some(s=>!s.sourceVersion))throw Error("Evidence source version missing");
     const reviews:ReviewDecisionSnapshot[]=[{
