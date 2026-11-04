@@ -42,6 +42,10 @@ export async function runHsiAgentOrchestration(input:{
   if(blockedDependency){result={status:"blocked",outputRef:null,reason:"Dependency did not complete"};runStatus="blocked"}
   else if(!executor){result={status:"blocked",outputRef:null,reason:"No registered executor for role"};runStatus="blocked"}
   else{
+   const controller=new AbortController();
+   const onAbort=()=>controller.abort();
+   input.signal?.addEventListener("abort",onAbort,{once:true});
+   let timeout:ReturnType<typeof setTimeout>|undefined;
    try{
     result=await Promise.race([
      executor({investigationId:input.investigationId,taskId:task.id,role:task.manifest.role,signal:controller.signal,dependencies:Object.fromEntries(task.dependsOn.map(d=>[d,results[d]!])),assertTool:(tool)=>{
