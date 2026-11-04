@@ -514,24 +514,93 @@ export function HowItWorks() {
         </div>
       </section>
 
+      <section className="hsi-hiw-bridge" id="hiw-bridge" aria-labelledby="hiw-bridge-title">
+        <div className="hsi-editorial-wrap">
+          <div className="hsi-hiw-bridge-head">
+            <div>
+              <p className="hsi-editorial-kicker">04 / WHERE THIS FITS</p>
+              <h2 id="hiw-bridge-title">
+                Illustrative journeys here.<br />
+                <em>Learning, foundation and products elsewhere.</em>
+              </h2>
+            </div>
+            <p>
+              This page frames how investigations are explained across {PRODUCT_NAME} perspectives — including ISI Research. It is not a live session, not {PRODUCT_SHORT} Science learning content and not the shared technology surface.
+            </p>
+          </div>
+
+          <div className="hsi-hiw-bridge-grid">
+            <article className="hsi-hiw-bridge-card is-here">
+              <p className="hsi-editorial-kicker">This page · Journeys</p>
+              <h3>How It Works</h3>
+              <p>
+                Illustrative workflows that show how a question is framed, checked and prepared for human review — without running a live investigation.
+              </p>
+              <a className="hsi-editorial-textlink" href="#journey-explorer">
+                Stay with the explorer ↓
+              </a>
+            </article>
+
+            <article className="hsi-hiw-bridge-card">
+              <p className="hsi-editorial-kicker">Elsewhere · Learning</p>
+              <h3>{PRODUCT_SHORT} Science</h3>
+              <p>
+                Educational biology — immune, metabolic and microbiome mechanisms taught as learning material, not as product journeys.
+              </p>
+              <Link className="hsi-editorial-textlink" to="/science">
+                Discover the science ↗
+              </Link>
+            </article>
+
+            <article className="hsi-hiw-bridge-card">
+              <p className="hsi-editorial-kicker">Elsewhere · Foundation</p>
+              <h3>Platform</h3>
+              <p>
+                The shared technology and operating model — evidence, knowledge patterns and review — without implying a shared patient or evidence database.
+              </p>
+              <Link className="hsi-editorial-textlink" to="/platform">
+                See the foundation ↗
+              </Link>
+            </article>
+
+            <article className="hsi-hiw-bridge-card">
+              <p className="hsi-editorial-kicker">Elsewhere · Live entry</p>
+              <h3>Products</h3>
+              <p>
+                Live product entry points — including ISI Research and the wider {PRODUCT_SHORT} ecosystem — each with its own data boundary and maturity.
+              </p>
+              <Link className="hsi-editorial-textlink" to="/products">
+                Explore the products ↗
+              </Link>
+            </article>
+          </div>
+
+          <p className="hsi-hiw-bridge-note">
+            Illustrative journeys only. Selecting a stage does not open a live session, run clinical decision support or approve a research claim.
+          </p>
+        </div>
+      </section>
+
       <section className="hsi-editorial-outro">
         <div className="hsi-editorial-wrap">
-          <p className="hsi-editorial-kicker">04 / CHOOSE YOUR NEXT STEP</p>
+          <p className="hsi-editorial-kicker">05 / KEEP THE BOUNDARY CLEAR</p>
           <h2>
-            Explore the experience.<br />
-            <em>Understand the foundation.</em>
+            Follow a perspective.<br />
+            <em>Leave the claims to people.</em>
           </h2>
-          <p>Find your product or learn more about the biology behind the questions.</p>
+          <p>
+            Return to an illustrative journey when you want the process view. Destinations for biology, technology and live products sit in the section above.
+          </p>
           <div className="hsi-editorial-actions">
-            <Link className="hsi-editorial-button" to="/products">
-              Explore the products <span aria-hidden="true">↗</span>
-            </Link>
-            <Link className="hsi-editorial-textlink" to="/science">
-              Discover the science ↗
+            <a className="hsi-editorial-button" href="#journey-explorer">
+              Follow a journey <span aria-hidden="true">↓</span>
+            </a>
+            <Link className="hsi-editorial-textlink" to="/for-isi">
+              Meet ISI Research ↗
             </Link>
           </div>
           <small>
-            Illustrative journeys only. Scientific research tools do not provide diagnosis, prescribing or confirmed trial eligibility. Clinical and trial capabilities are separately governed and subject to human validation. HSI does not operate a shared evidence database across products.
+            Illustrative journeys only. Scientific research tools do not provide diagnosis, prescribing or confirmed trial eligibility. Clinical and trial capabilities are separately governed and subject to human validation. {PRODUCT_SHORT} does not operate a shared evidence database across products.
           </small>
         </div>
       </section>

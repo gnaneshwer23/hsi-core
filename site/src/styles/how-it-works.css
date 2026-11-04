@@ -337,6 +337,98 @@
   font-weight: 700;
 }
 
+/* 04 Where this fits — editorial bridge, not another explorer */
+.hsi-hiw-bridge {
+  background: #e3eae3;
+  border-block: 1px solid #17645f15;
+  padding: 110px 0;
+  scroll-margin-top: 95px;
+  color: #17645f;
+}
+
+.hsi-hiw-bridge-head {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(28px, 4vw, 70px);
+  align-items: end;
+  margin-bottom: 42px;
+}
+
+.hsi-hiw-bridge-head h2 {
+  margin: 22px 0 0;
+}
+
+.hsi-hiw-bridge-head h2 em {
+  color: #ff6845;
+}
+
+.hsi-hiw-bridge-head > p {
+  margin: 0;
+  color: #466d67;
+  line-height: 1.75;
+  max-width: 460px;
+}
+
+.hsi-hiw-bridge-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.hsi-hiw-bridge-card {
+  background: #fffaf4;
+  border: 1px solid #17645f24;
+  padding: 26px 22px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.hsi-hiw-bridge-card.is-here {
+  background: #17645f;
+  color: #f3eee8;
+  border-color: #17645f;
+}
+
+.hsi-hiw-bridge-card h3 {
+  font-size: clamp(1.2rem, 1.6vw, 1.45rem);
+  line-height: 1.15;
+  margin: 12px 0 12px;
+}
+
+.hsi-hiw-bridge-card > p:not(.hsi-editorial-kicker) {
+  color: #466d67;
+  font-size: 0.86rem;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.hsi-hiw-bridge-card.is-here > p:not(.hsi-editorial-kicker) {
+  color: #d3e1d9;
+}
+
+.hsi-hiw-bridge-card.is-here .hsi-editorial-kicker {
+  color: #ffb09a;
+}
+
+.hsi-hiw-bridge-card .hsi-editorial-textlink {
+  margin-top: auto;
+  padding-top: 22px;
+}
+
+.hsi-hiw-bridge-card.is-here .hsi-editorial-textlink {
+  color: #f3eee8;
+  border-bottom-color: #f3eee8;
+}
+
+.hsi-hiw-bridge-note {
+  margin: 28px 0 0;
+  font-size: 0.74rem;
+  line-height: 1.65;
+  color: #466d67;
+  max-width: 720px;
+}
+
 @media (max-width: 1050px) {
   .hsi-hiw-hero-grid {
     grid-template-columns: 1.3fr 1fr;
@@ -356,8 +448,13 @@
   }
 
   .hsi-hiw-step,
-  .hsi-hiw-principles {
+  .hsi-hiw-principles,
+  .hsi-hiw-bridge-head {
     grid-template-columns: 1fr;
+  }
+
+  .hsi-hiw-bridge-grid {
+    grid-template-columns: 1fr 1fr;
   }
 }
 
@@ -395,5 +492,13 @@
   .hsi-hiw-experience-foot {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .hsi-hiw-bridge {
+    padding: 75px 0;
+  }
+
+  .hsi-hiw-bridge-grid {
+    grid-template-columns: 1fr;
   }
 }
