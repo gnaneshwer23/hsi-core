@@ -58,7 +58,7 @@ export async function loadAuthenticatedInterrogativeInvestigation(input:{
   if(rows.length!==1)throw Error("Investigation not found or access denied");
   const i=rows[0]!.payload as InterrogativeInvestigation;
   validateInterrogativeInvestigation(i);
-  if(i.id!==input.investigationId||i.actorPrincipal!==actor.principalId||fingerprintInterrogativeInvestigation(i)!==String(rows[0]!.content_hash))throw Error("Investigation integrity failure");
+  if(i.id!==input.investigationId||i.actorPrincipal!==actor.principalId||digest(i)!==String(rows[0]!.content_hash))throw Error("Investigation integrity failure");
   return i;
  }finally{await sql.close()}
 }
