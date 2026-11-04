@@ -1,4 +1,4 @@
-import {useEffect,useState} from "react";
+import {useEffect,useState,type FormEvent} from "react";
 import {Link,useNavigate} from "react-router-dom";
 import {authBaseUrl,hsiAuth,type HsiAuthSession} from "../lib/hsiAuth";
 import {checkResearchAccount,type AccountCheck} from "../lib/researchAccountClient";
@@ -16,6 +16,9 @@ export function ResearchAccount(){
  const [historyStatus,setHistoryStatus]=useState("");
  const [sendingVerification,setSendingVerification]=useState(false);
  const [verificationMessage,setVerificationMessage]=useState("");
+ const [verificationCode,setVerificationCode]=useState("");
+ const [verifyingCode,setVerifyingCode]=useState(false);
+ const [codeError,setCodeError]=useState("");
  useEffect(()=>{
   let active=true;
   setChecking(true);setAccess(null);setStatus("Checking your session…");setVerificationMessage("");
@@ -50,21 +53,43 @@ export function ResearchAccount(){
   }catch(e){setHistory([]);setHistoryStatus(e instanceof Error?e.message:"Unable to load history")}
  }
  async function sendVerification(){
-  if(sendingVerification)return;setSendingVerification(true);setVerificationMessage("");
+  if(sendingVerification||verifyingCode)return;setSendingVerification(true);setVerificationMessage("");setCodeError("");
   try{
    const result=await hsiAuth.sendVerificationEmail();
-   setVerificationMessage(result.error?result.error.message:result.data?.alreadyVerified===true?"Your email is already verified. Refresh access to check again.":"Verification request accepted. Check your inbox and spam folder, follow the verification link, then refresh access. If no email arrives, contact the HSI administrator to check provider email delivery.");
+   setVerificationMessage(result.error?result.error.message:result.data?.alreadyVerified===true?"Your email is already verified. Refresh access to check again.":"Verification request accepted. Check your inbox and spam folder. Enter the latest email code below, or follow the verification link if your email contains one. If no email arrives, contact the HSI administrator to check provider email delivery.");
   }catch{setVerificationMessage("Verification could not be requested. Please retry or contact the HSI administrator.")}
   finally{setSendingVerification(false)}
+ }
+ async function verifyCode(event:FormEvent<HTMLFormElement>){
+  event.preventDefault();if(verifyingCode||sendingVerification||signingOut)return;
+  const otp=verificationCode.trim();setCodeError("");setVerificationMessage("");
+  if(!/^\d{4,12}$/.test(otp)){setCodeError("Enter the numeric code from your verification email.");document.getElementById("hsi-verification-code")?.focus();return}
+  setVerifyingCode(true);
+  try{
+   const result=await hsiAuth.verifyEmailCode(otp);
+   if(result.error){setCodeError(result.error.message);return}
+   setVerificationCode("");setAttempt(n=>n+1);
+  }catch{setCodeError("The code could not be verified. Please try again.")}
+  finally{setVerifyingCode(false)}
  }
  const account=access?.kind==="ready"?access.account:null;
  const authorised=account&&(account.researcher||account.scientificReviewer);
  return <section className="hsi-sign-in"><div className="hsi-sign-in-card">
   <p className="hsi-sign-in-eyebrow">HSI / RESEARCH ACCOUNT</p><h1>Research account</h1>
   {session&&<p className="hsi-sign-in-description">Signed in as {session.user.email}.</p>}
+  {session?.user.emailVerified&&<p className="hsi-auth-hint">Email verified</p>}
   {status&&<p role="status" aria-live="polite">{status}</p>}
   {access&&access.kind!=="ready"&&<div className="hsi-sign-in-status" role="alert"><strong>{access.kind==="email_verification_required"?"Verify your email to continue":"Research access could not be checked"}</strong><p>{access.message}</p>
-   {access.kind==="email_verification_required"&&<button className="hsi-auth-signout" type="button" disabled={sendingVerification||signingOut} onClick={sendVerification}>{sendingVerification?"Requesting verification…":"Send verification email"}</button>}
+   {access.kind==="email_verification_required"&&<>
+    <form className="hsi-auth-form" onSubmit={verifyCode} noValidate aria-busy={verifyingCode}>
+     <label htmlFor="hsi-verification-code">Verification code</label>
+     <input id="hsi-verification-code" type="text" inputMode="numeric" autoComplete="one-time-code" maxLength={12} value={verificationCode} onChange={e=>{setVerificationCode(e.target.value.replace(/\s/g,""));setCodeError("")}} disabled={verifyingCode||sendingVerification||signingOut} aria-invalid={!!codeError} aria-describedby={"hsi-verification-code-hint"+(codeError?" hsi-verification-code-error":"")}/>
+     <p className="hsi-auth-hint" id="hsi-verification-code-hint">Enter the latest code sent to your account email address.</p>
+     {codeError&&<p className="hsi-auth-error" id="hsi-verification-code-error" role="alert">{codeError}</p>}
+     <button type="submit" disabled={verifyingCode||sendingVerification||signingOut}>{verifyingCode?"Verifying code…":"Verify email"}</button>
+    </form>
+    <button className="hsi-auth-signout" type="button" disabled={sendingVerification||signingOut||verifyingCode} onClick={sendVerification}>{sendingVerification?"Requesting verification…":"Send verification email"}</button>
+   </>}
   </div>}
   {verificationMessage&&<p role="status" aria-live="polite">{verificationMessage}</p>}
   {account&&!authorised&&<div className="hsi-sign-in-status" role="status"><strong>Research access requires approval</strong><p>The HSI backend verified your account but found no active research or scientific reviewer grant. Contact the research administrator to request researcher access.</p><p>Scientific reviewer access requires separate approval and an independent reviewer identity.</p></div>}
@@ -90,8 +115,8 @@ export function ResearchAccount(){
    </section>}
    <p className="hsi-auth-hint">Showing up to 50 recent accessible investigations. Access does not approve evidence or publish knowledge graph relationships.</p>
   </section>}
-  <div className="hsi-account-actions"><button className="hsi-auth-signout" type="button" disabled={checking||signingOut} onClick={()=>setAttempt(n=>n+1)}>{checking?"Checking access…":"Refresh access"}</button>
-   {session&&<button className="hsi-auth-signout" type="button" disabled={signingOut} onClick={signOut}>{signingOut?"Signing out…":"Sign out"}</button>}
+  <div className="hsi-account-actions"><button className="hsi-auth-signout" type="button" disabled={checking||signingOut||verifyingCode||sendingVerification} onClick={()=>setAttempt(n=>n+1)}>{checking?"Checking access…":"Refresh access"}</button>
+   {session&&<button className="hsi-auth-signout" type="button" disabled={signingOut||verifyingCode||sendingVerification} onClick={signOut}>{signingOut?"Signing out…":"Sign out"}</button>}
   </div>
   <p className="hsi-sign-in-footnote"><Link to="/science">Return to public science</Link></p>
  </div></section>

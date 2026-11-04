@@ -155,6 +155,17 @@ callback overrides are ignored. After using the verification link, select
 no message arrives, an operator must check the provider's verification/email
 configuration. Never flip `emailVerified` in SQL to bypass this step.
 
+If Neon sends a numeric code, enter it in **Verification code** and select
+**Verify email**. The explicit `/api/auth/email-otp/verify-email` function proxies
+Neon's email OTP verification endpoint. The account email comes from the verified
+provider session, not the request body. A successful response must confirm the
+same user is email-verified; provider tokens are excluded from browser JSON.
+The page clears the code and refreshes session/access checks after confirmation.
+Incorrect, expired and rate-limited codes have separate retry instructions.
+Codes stay in the form/request memory only; never log, persist or put them in URLs.
+Use a verification link instead when the provider email supplies one. Neither
+verification method grants researcher or reviewer authority.
+
 Other 401 responses distinguish a missing provider session
 (`BACKEND_PROVIDER_SESSION_REQUIRED`) from a provider identity that cannot resolve
 to an eligible database session (`BACKEND_DATABASE_SESSION_REQUIRED`). These checks

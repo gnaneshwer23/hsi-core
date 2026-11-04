@@ -34,6 +34,11 @@ export const AUTH_ERROR_MESSAGES:Record<string,string>={
  INVALID_JSON:"The authentication request could not be read. Refresh the page and try again.",
  PAYLOAD_TOO_LARGE:"The authentication request was too large. Refresh the page and try again.",
  VERIFICATION_SESSION_REQUIRED:"Sign in again before requesting email verification.",
+ INVALID_OTP_FORMAT:"Enter the numeric verification code from your email.",
+ INVALID_OTP:"That verification code is incorrect. Check the code and try again.",
+ OTP_EXPIRED:"That verification code has expired. Request a new email and use the latest code.",
+ OTP_NOT_FOUND:"That verification code could not be found. Request a new email and use its code.",
+ TOO_MANY_ATTEMPTS:"Too many verification attempts. Wait before trying again or requesting a new code.",
 };
 
 function object(value:unknown):value is Record<string,unknown>{return !!value&&typeof value==="object"&&!Array.isArray(value)}

@@ -146,3 +146,35 @@ test("reviewer history route retains the trusted session bridge and reviewer-sco
  const response=await handleVercelResearch(req("/api/research/scientific-review/history",{headers:{cookie}}),env,{transport:transport(async()=>Response.json(identity)),resolveToken:async()=>"database-token-long-enough",services:{load:async()=>({}),submit:async()=>({}),review:async()=>({}),history:async input=>{called=true;expect(input.serverSessionToken).toBe("database-token-long-enough");return {items:[]}}}});
  expect(response.status).toBe(200);expect(called).toBe(true);expect(await response.json()).toEqual({items:[]});
 });
+
+test("email OTP verification is account-bound and strips the provider token",async()=>{
+ let submissions=0;
+ const response=await handleVercelResearch(post("/api/auth/email-otp/verify-email",{email:"another@example.invalid",otp:"012345",role:"research_admin"}),env,{transport:transport(async(url,init)=>{
+  if(String(url).endsWith("/get-session"))return Response.json({...identity,user:{...identity.user,emailVerified:false}});
+  expect(String(url)).toBe(env.HSI_AUTH_BASE_URL+"/email-otp/verify-email");expect(JSON.parse(String(init?.body))).toEqual({email:identity.user.email,otp:"012345"});submissions++;
+  return Response.json({status:true,user:identity.user,token:"never-send-to-browser"},{headers:{"set-cookie":"__Secure-neon-auth.session_token=rotated-cookie; Path=/; HttpOnly; Secure"}});
+ })});
+ expect(response.status).toBe(200);expect(await response.json()).toEqual({success:true,verified:true});expect(submissions).toBe(1);expect(response.headers.getSetCookie()[0]).toContain("rotated-cookie");
+});
+test("email OTP validation rejects malformed codes and cannot verify a different provider identity",async()=>{
+ const unverified={...identity,user:{...identity.user,emailVerified:false}};
+ const bad=await handleVercelResearch(post("/api/auth/email-otp/verify-email",{otp:"invalid-code"}),env,{transport:transport(async()=>Response.json(unverified))});expect(bad.status).toBe(400);expect((await bad.json()).code).toBe("INVALID_OTP_FORMAT");
+ const mismatch=await handleVercelResearch(post("/api/auth/email-otp/verify-email",{otp:"012345"}),env,{transport:transport(async url=>String(url).endsWith("/get-session")?Response.json(unverified):Response.json({status:true,user:{...identity.user,id:"another-user"}}))});expect(mismatch.status).toBe(502);
+ const absent=await handleVercelResearch(post("/api/auth/email-otp/verify-email",{otp:"012345"}),env,{transport:transport(async()=>Response.json(null))});expect(absent.status).toBe(401);
+});
+test("invalid and expired email codes surface safe retry instructions without echoing the code",async()=>{
+ for(const code of ["INVALID_OTP","OTP_EXPIRED","TOO_MANY_ATTEMPTS"]){
+  const client=createHsiAuthClient(env.HSI_AUTH_BASE_URL,transport(async()=>handleVercelResearch(post("/api/auth/email-otp/verify-email",{otp:"012345"}),env,{transport:transport(async url=>String(url).endsWith("/get-session")?Response.json({...identity,user:{...identity.user,emailVerified:false}}):Response.json({code,message:"012345 is sensitive"},{status:400}))})),8000,"same-origin");
+  const result=await client.verifyEmailCode("012345");expect(result.error?.code).toBe(code);expect(result.data).toBeNull();expect(JSON.stringify(result)).not.toContain("012345");
+ }
+});
+test("verification client refuses an unconfirmed HTTP success",async()=>{
+ const client=createHsiAuthClient(env.HSI_AUTH_BASE_URL,transport(async()=>Response.json({success:true})),8000,"same-origin");expect((await client.verifyEmailCode("012345")).error?.code).toBe("auth_invalid_response");
+});
+
+test("concurrent SSc graph route preserves authenticated session verification and node validation",async()=>{
+ let called=false;
+ const response=await handleVercelResearch(req("/api/research/graph/ssc?node=IL21",{headers:{cookie}}),env,{transport:transport(async()=>Response.json(identity)),resolveToken:async()=>"database-token-long-enough",services:{load:async()=>({}),submit:async()=>({}),review:async()=>({}),graph:async input=>{called=true;expect(input.serverSessionToken).toBe("database-token-long-enough");expect(input.nodeId).toBe("IL21");return {nodes:[]}}}});
+ expect(response.status).toBe(200);expect(called).toBe(true);
+ const denied=await handleVercelResearch(req("/api/research/graph/ssc?node=IL21"),env,{transport:noCalls});expect(denied.status).toBe(401);
+});
