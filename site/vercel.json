@@ -157,6 +157,10 @@
     {
       "source": "/science/paths",
       "destination": "/index.html"
+    },
+    {
+      "source": "/science/contradictions",
+      "destination": "/index.html"
     }
   ]
 }
