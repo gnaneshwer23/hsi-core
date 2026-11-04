@@ -67,6 +67,14 @@
       "destination": "/index.html"
     },
     {
+      "source": "/science/connections",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/science/zoom",
+      "destination": "/index.html"
+    },
+    {
       "source": "/products",
       "destination": "/index.html"
     },
