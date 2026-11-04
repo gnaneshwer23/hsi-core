@@ -52,7 +52,7 @@ export function isForbiddenNeonTarget(value: string): boolean {
 /** True when host looks like the canonical HSI endpoint. */
 export function isHsiNeonHost(host: string | null | undefined): boolean {
   if (!host) return false;
-  return /^ep-restless-dew-zas989pv(?:-pooler)?(?:\.c-\d+)?\.eu-west-2\.aws\.neon\.tech$/i.test(host);
+  return /^(?:ep-restless-dew-zas989pv|ep-sweet-hill-zasb0lni)(?:-pooler)?(?:\.c-\d+)?\.eu-west-2\.aws\.neon\.tech$/i.test(host);
 }
 
 /**
