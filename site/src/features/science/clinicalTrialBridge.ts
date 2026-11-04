@@ -22,7 +22,8 @@ export function prescreenSyntheticTrial(trial:TrialRecord,observations:ClinicalO
   const observation=matching[0];
   if(!observation)return {criterionId:criterion.id,state:"unknown",reason:"No comparable observation with the required concept and unit."};
   const passes=evaluate(observation.value,criterion.operator,criterion.threshold);
-  return {criterionId:criterion.id,state:passes?"potentially_met":"not_met",reason:"Illustrative numeric comparison only; temporal validity and clinical interpretation not evaluated.",observationId:observation.id};
+  const interpretation=criterion.criterionType==="exclusion"?(passes?"Exclusion threshold triggered; clinician must verify.":"Exclusion threshold not triggered; other exclusions may apply."):(passes?"Inclusion threshold met numerically; clinician must verify.":"Inclusion threshold not met numerically; clinician must verify.");
+  return {criterionId:criterion.id,state:passes?"potentially_met":"not_met",reason:interpretation+" Illustrative numeric comparison only; temporal validity and clinical interpretation not evaluated.",observationId:observation.id};
  });
  return {trialId:trial.id,state:results.some(r=>r.state==="unknown")?"insufficient_data":"requires_clinician_review",results,limitations:["Synthetic case and trial only; no real patient data or live trial registry connection.","Numeric comparisons are not eligibility decisions. All inclusion and exclusion criteria, consent, timing and clinician confirmation are required."]};
 }
