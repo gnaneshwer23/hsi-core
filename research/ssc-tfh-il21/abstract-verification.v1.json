@@ -1,0 +1,119 @@
+{
+  "schemaVersion": "hsi-ssc-abstract-verification-1",
+  "scope": "Tfh–IL-21–B-cell interactions in systemic sclerosis",
+  "assessmentDate": "2026-11-04",
+  "reviewStatus": "pending_independent_scientific_review",
+  "reviewedByHuman": false,
+  "graphPromotable": false,
+  "sourceLevel": "PubMed bibliographic records and public abstracts only; no full-text methods verification",
+  "sources": [
+    {
+      "pmid": "30760472",
+      "doi": "10.1136/annrheumdis-2018-214382",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/30760472/",
+      "title": "Circulating follicular helper T cells are increased in systemic sclerosis and promote plasmablast differentiation through the IL-21 pathway which can be inhibited by ruxolitinib",
+      "abstractVerified": true,
+      "studyModel": [
+        "human SSc cohort: 50 patients and 32 controls",
+        "human Tfh–B-cell coculture"
+      ]
+    },
+    {
+      "pmid": "29514998",
+      "doi": "10.1126/scitranslmed.aaf5307",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29514998/",
+      "title": "T follicular helper-like cells contribute to skin fibrosis",
+      "abstractVerified": true,
+      "studyModel": [
+        "human SSc skin observational association",
+        "GVHD-SSc mouse model intervention"
+      ]
+    },
+    {
+      "pmid": "33175976",
+      "doi": "10.1093/rheumatology/keaa669",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33175976/",
+      "title": "Imbalance toward TFH 1 cells playing a role in aberrant B cell differentiation in systemic sclerosis",
+      "abstractVerified": true,
+      "studyModel": [
+        "human circulating Tfh subset case-control analysis",
+        "SSc skin tissue staining"
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "id": "HSI-C-SSC-001",
+      "pmid": "30760472",
+      "support": "abstract_consistent",
+      "locator": "Results",
+      "claimType": "human_observational",
+      "limitation": "Increased cTfh cell numbers in one cohort; do not generalise to all cohorts or conflate absolute counts with proportions."
+    },
+    {
+      "id": "HSI-C-SSC-004",
+      "pmid": "30760472",
+      "support": "abstract_consistent",
+      "locator": "Methods and Results",
+      "claimType": "human_ex_vivo_experiment",
+      "limitation": "IL-21R blockade and ruxolitinib effects in coculture are not clinical efficacy evidence."
+    },
+    {
+      "id": "HSI-C-SSC-005",
+      "pmid": "29514998",
+      "support": "abstract_consistent",
+      "locator": "Abstract",
+      "claimType": "human_tissue_observation",
+      "limitation": "Correlation of ICOS+ Tfh-like infiltration with dermal fibrosis does not establish human causality."
+    },
+    {
+      "id": "HSI-C-SSC-005-MOUSE",
+      "pmid": "29514998",
+      "support": "abstract_consistent",
+      "locator": "Abstract",
+      "claimType": "animal_intervention",
+      "limitation": "Anti-ICOS and IL-21 neutralisation effects apply to the reported GVHD-SSc mouse model; no human treatment conclusion."
+    },
+    {
+      "id": "HSI-C-SSC-006",
+      "pmid": "33175976",
+      "support": "abstract_consistent",
+      "locator": "Results",
+      "claimType": "human_observational",
+      "limitation": "Overall cTfh proportion unchanged while Tfh1 frequency increased; subset changes must not be misreported as total cTfh increase."
+    }
+  ],
+  "disagreements": [
+    {
+      "id": "HSI-D-SSC-001",
+      "claimIds": [
+        "HSI-C-SSC-001",
+        "HSI-C-SSC-006"
+      ],
+      "status": "contextual_disagreement_unresolved",
+      "description": "Ricard et al. report increased circulating Tfh cell numbers, while Ly et al. report no difference in overall cTfh proportion but an increased Tfh1 subset.",
+      "requiresReview": [
+        "absolute count versus percentage denominators",
+        "CXCR5/PD-1 gating and Tfh1 subset definitions",
+        "cohort disease severity and treatment",
+        "sample collection and assay protocols",
+        "full-text statistics and effect sizes"
+      ],
+      "interpretation": "Potentially compatible measurements; do not classify as a confirmed biological contradiction."
+    }
+  ],
+  "releaseGates": {
+    "citationIdentifiers": "matched_to_public_pubmed_records",
+    "claimSupport": "abstract_consistent_only",
+    "fullTextReview": "pending",
+    "independentScientistReview": "pending",
+    "graphPromotion": "blocked",
+    "clinicalInference": "blocked"
+  },
+  "nextActions": [
+    "Retrieve full texts where access permits and review source reuse rights",
+    "Record population and gating definitions in a structured extraction sheet",
+    "Add per-claim independent reviewer decision and audit trail",
+    "Only consider approved edges for knowledge-graph publication"
+  ]
+}
