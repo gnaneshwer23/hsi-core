@@ -165,6 +165,10 @@
     {
       "source": "/science/clinical-trials",
       "destination": "/index.html"
+    },
+    {
+      "source": "/science/research-agents",
+      "destination": "/index.html"
     }
   ]
 }
