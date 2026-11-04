@@ -38,6 +38,14 @@ const steps = [
   { title:"Draft testable hypotheses", actor:"Research investigator", detail:"Propose follow-up measurements or analyses, such as comparing cell-state signatures across suitably governed cohorts, with explicit falsification criteria.", evidence:"Unvalidated hypothesis and proposed experiment", limitation:"A hypothesis is not an approved graph fact" },
   { title:"Review and decide", actor:"Accountable scientist", detail:"A human reviewer evaluates source quality, analysis reproducibility, interpretation and limitations before approving, revising or rejecting proposed claims.", evidence:"Recorded review decision and audit trail", limitation:"No autonomous clinical or therapeutic decision" },
 ] as const;
+const governanceControls = [
+  { title:"Identity, purpose and access", owner:"Clinical data steward", evidence:"Verified role, lawful basis, purpose limitation and source-level access decision", gate:"No permitted scope → no patient data retrieval" },
+  { title:"Source rights and provenance", owner:"Evidence curator", evidence:"Licence, source identifier, publication or dataset version, retrieval timestamp and citation", gate:"Unlicensed or untraceable material → excluded" },
+  { title:"Reproducible analysis", owner:"Research scientist", evidence:"Approved dataset snapshot, methods, parameters, quality checks and run record", gate:"Non-reproducible result → draft only" },
+  { title:"Uncertainty and claim status", owner:"Scientific reviewer", evidence:"Separated patient fact, published finding, association, inference and hypothesis", gate:"Unvalidated hypothesis → never an approved fact" },
+  { title:"Clinical safety and validation", owner:"Clinical safety lead", evidence:"Risk assessment, intended use, evaluation, human oversight and incident handling", gate:"No validated clinical use → no autonomous decisions" },
+  { title:"Accountable publication decision", owner:"Authorised scientific approver", evidence:"Approve, revise or reject decision, rationale, reviewer identity and audit trail", gate:"No approval → cannot enter the approved knowledge layer" },
+] as const;
 export function Technology() {
   useEffect(() => {
     const previousTitle = document.title;
@@ -54,6 +62,7 @@ export function Technology() {
   const [engineIndex, setEngineIndex] = useState(0);
   const [journeyIndex, setJourneyIndex] = useState(0);
   const [applicationIndex, setApplicationIndex] = useState(0);
+  const [governanceIndex, setGovernanceIndex] = useState(0);
   const source = sourceSystems[sourceIndex];
   return <main className="nx-page">
     <section className="nx-flow-hero" aria-label="Human Super Intelligence data flow to discovery">
@@ -153,7 +162,24 @@ export function Technology() {
       </div>
     </section>
 
-    <section className="nx-section nx-guardrails"><div className="nx-wrap nx-guardrails-layout"><div><p className="nx-kicker">05 / TRUST IS PART OF THE ARCHITECTURE</p><h2>Connections need<br/><em>accountability.</em></h2></div><div><p>Patient facts, population associations, model predictions and validated scientific evidence are different classes of information. NEXUS must preserve those distinctions.</p><div className="nx-guardrail-grid"><span>Source rights & provenance</span><span>Identity & access boundaries</span><span>Versioned evidence</span><span>Uncertainty & contradiction</span><span>Reproducible model analysis</span><span>Accountable human review</span></div><p className="nx-smallprint">Trial pre-screening does not confirm eligibility. Computational docking and in-silico predictions do not establish drug efficacy, safety or clinical utility. No autonomous diagnosis or prescribing.</p></div></div></section>
+    <section className="nx-section nx-guardrails nx-governance" id="governance">
+      <div className="nx-wrap">
+        <div className="nx-section-head"><div><p className="nx-kicker">06 / GOVERNANCE, VALIDATION & SCIENTIFIC REVIEW</p><h2>Trust is not a label.<br/><em>It is a decision trail.</em></h2></div><p>Every investigation must preserve who supplied the evidence, what an agent inferred, which controls applied and who approved the resulting claim.</p></div>
+        <div className="nx-governance-flow" aria-label="Proposed evidence approval process"><div><span>01</span><strong>Source and permissions</strong><small>Access and provenance</small></div><div><span>02</span><strong>Agent investigation</strong><small>Traceable draft outputs</small></div><div><span>03</span><strong>Human scientific review</strong><small>Approve · revise · reject</small></div><div><span>04</span><strong>Approved knowledge</strong><small>Versioned and auditable</small></div></div>
+        <div className="nx-governance-layout">
+          <div className="nx-governance-controls" role="group" aria-label="Governance controls">{governanceControls.map((control,i)=><button key={control.title} type="button" aria-pressed={governanceIndex===i} onClick={()=>setGovernanceIndex(i)}><span>0{i+1}</span><strong>{control.title}</strong><small>{control.owner}</small></button>)}</div>
+          <article className="nx-governance-detail" aria-live="polite">
+            <div className="nx-governance-detail-top"><span>CONTROL 0{governanceIndex+1} / 06</span><span>REVIEW GATE</span></div>
+            <h3>{governanceControls[governanceIndex].title}</h3><p>Accountable role: <strong>{governanceControls[governanceIndex].owner}</strong></p>
+            <div className="nx-governance-evidence"><span>REQUIRED REVIEW RECORD</span><strong>{governanceControls[governanceIndex].evidence}</strong></div>
+            <div className="nx-governance-gate"><span>STOP CONDITION</span><strong>{governanceControls[governanceIndex].gate}</strong></div>
+            <p className="nx-governance-note">Agents may retrieve, compare and propose. They cannot grant data access, validate clinical performance or approve their own scientific claims.</p>
+          </article>
+        </div>
+        <div className="nx-governance-classes"><h3>Evidence classes must remain distinct</h3><div><span>Patient fact</span><span>Published finding</span><span>Population association</span><span>Computational inference</span><span>Unvalidated hypothesis</span></div></div>
+        <p className="nx-governance-disclaimer">This is the intended governance model, not certification of a deployed clinical system. UK GDPR, applicable clinical safety standards, research ethics, MHRA software requirements and independent evaluation must be assessed for each intended use. Trial pre-screening does not confirm eligibility. No autonomous diagnosis or prescribing.</p>
+      </div>
+    </section>
     <section className="nx-section nx-end"><div className="nx-wrap"><p className="nx-kicker">EXPLORE THE CONNECTED ECOSYSTEM</p><h2>One ambition.<br/><em>Many governed pathways.</em></h2><div className="nx-actions"><Link className="nx-cta" to="/platform">Explore the platform <span aria-hidden="true">↗</span></Link><Link className="nx-text-link" to="/for-isi">Explore immune research <span aria-hidden="true">↗</span></Link></div></div></section>
   </main>;
 }
