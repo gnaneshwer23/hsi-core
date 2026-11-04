@@ -15,6 +15,15 @@ describe("Technology data-to-discovery hero",()=>{
     for(const phrase of ["EHR encounters, diagnoses & procedures","Wearables, glucose & cardiometabolic trends","Immune cells, tissues, pathways & mechanisms","Normalise FHIR, lab, omics & terminology","Verify identity, permissions & purpose","Biomedical evidence, uncertainty & hypotheses"]) expect(flow).toContain(phrase);
     expect(flow).toContain('className="tf-detail-list"');
   });
+  it("uses five accessible original scientific illustrations with responsive styling",()=>{
+    expect(flow).toContain("function StageVisual");
+    expect(flow).toContain('role="img"');
+    expect(flow).toContain("stageVisuals[index]");
+    expect(flow).toContain("<StageVisual index={i}/>");
+    const css=read("../site/src/components/TechnologyFlow.css");
+    expect(css).toContain(".tf-stage-visual");
+    expect(css).toContain("@media(max-width:520px)");
+  });
   it("animates directional data flow with reduced-motion support",()=>{
     expect(flow).toContain('className="tf-motion"');
     expect(flow).toContain("<animateMotion");
