@@ -185,6 +185,10 @@
     {
       "source": "/research/decision-workbench",
       "destination": "/index.html"
+    },
+    {
+      "source": "/science/literature",
+      "destination": "/index.html"
     }
   ]
 }
