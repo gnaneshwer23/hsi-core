@@ -716,18 +716,21 @@ export function ScienceLanding() {
 
             <article className="hsi-science-bridge-card is-investigation">
               <p className="hsi-editorial-kicker">Elsewhere · Investigation &amp; technology</p>
-              <h3>ISI Research · Platform</h3>
+              <h3>ISI Research · Products · Platform</h3>
               <p>
-                Specialist research exploration and the shared technology foundation—evidence, knowledge patterns and human review—outside this educational surface.
+                Specialist research exploration, the four-product ecosystem and the shared technology foundation—evidence, knowledge patterns and human review—outside this educational surface.
               </p>
               <ul>
                 <li>Research questions and evidence context</li>
+                <li>Product surfaces with separate data ownership</li>
                 <li>Shared capability patterns</li>
-                <li>Product-owned data boundaries</li>
               </ul>
               <div className="hsi-editorial-actions">
                 <Link className="hsi-editorial-button" to="/for-isi">
                   Meet ISI Research <span aria-hidden="true">↗</span>
+                </Link>
+                <Link className="hsi-editorial-textlink" to="/products">
+                  Explore products ↗
                 </Link>
                 <Link className="hsi-editorial-textlink" to="/platform">
                   Explore the technology ↗
@@ -753,11 +756,14 @@ export function ScienceLanding() {
             {PRODUCT_SHORT} Science introduces biological concepts. It is not clinical decision support, not a substitute for peer-reviewed findings and not access to a research workspace.
           </p>
           <div className="hsi-editorial-actions">
-            <a className="hsi-editorial-button" href="#biology-explorer">
-              Return to the biology explorer <span aria-hidden="true">↗</span>
-            </a>
-            <Link className="hsi-editorial-textlink" to="/for-isi">
-              Continue to ISI Research ↗
+            <Link className="hsi-editorial-button" to="/for-isi">
+              Continue to ISI Research <span aria-hidden="true">↗</span>
+            </Link>
+            <Link className="hsi-editorial-textlink" to="/products">
+              Explore products ↗
+            </Link>
+            <Link className="hsi-editorial-textlink" to="/how-it-works">
+              How it works ↗
             </Link>
           </div>
           <small>
