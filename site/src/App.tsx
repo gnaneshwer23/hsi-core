@@ -25,6 +25,7 @@ import { TrialsCriteria } from "./pages/TrialsCriteria";
 import { GatewayDemo } from "./pages/GatewayDemo";
 import { Sources } from "./pages/Sources";
 import { Science } from "./pages/Science";
+import { ScienceDisease } from "./pages/ScienceDisease";
 import { ScienceBody } from "./pages/ScienceBody";
 import { ScienceZoom, ScienceConnections } from "./pages/ScienceExplorer";
 import { NotFound } from "./pages/NotFound";
@@ -42,6 +43,7 @@ export default function App() {
         <Route path="science/body" element={<ScienceBody />} />
         <Route path="science/zoom" element={<ScienceZoom />} />
         <Route path="science/connections" element={<ScienceConnections />} />
+        <Route path="science/disease" element={<ScienceDisease />} />
         <Route path="discovery-engine" element={<DiscoveryEngine />} />
         <Route path="products" element={<Products />} />
         <Route path="status" element={<Status />} />
