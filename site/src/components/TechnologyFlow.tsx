@@ -12,11 +12,21 @@ export function TechnologyFlow() {
   const [selected,setSelected] = useState<number|null>(null);
   return <div className="tf">
     <div className="tf-heading"><p className="tf-eyebrow">THE HSI TECHNOLOGY ARCHITECTURE / CONCEPTUAL FLOW</p><h2>From data to <em>discovery.</em></h2><p>How governed healthcare, patient and biological knowledge could become evidence-grounded intelligence and research opportunities.</p></div>
+    <div className="tf-motion" aria-hidden="true">
+      <span className="tf-motion-label">PERMISSIONED DATA</span>
+      <svg viewBox="0 0 1000 90" preserveAspectRatio="none" focusable="false">
+        {Array.from({length:9},(_,i)=><path key={i} className="tf-motion-wave" d={`M 0 ${30+i*3} C 110 ${-2+i*3}, 160 ${72+i*2}, 250 ${40+i*2} S 400 ${10+i*2}, 500 ${40+i*2} S 650 ${70+i*2}, 750 ${40+i*2} S 900 ${10+i*2}, 1000 ${40+i*2}`} />)}
+        <path className="tf-motion-path" d="M 0 43 C 110 11, 160 83, 250 53 S 400 23, 500 53 S 650 83, 750 53 S 900 23, 1000 53" />
+        <circle className="tf-motion-particle" r="5"><animateMotion dur="8s" repeatCount="indefinite" path="M 0 43 C 110 11, 160 83, 250 53 S 400 23, 500 53 S 650 83, 750 53 S 900 23, 1000 53" /></circle>
+        <circle className="tf-motion-particle tf-motion-particle-alt" r="3"><animateMotion dur="8s" begin="-4s" repeatCount="indefinite" path="M 0 43 C 110 11, 160 83, 250 53 S 400 23, 500 53 S 650 83, 750 53 S 900 23, 1000 53" /></circle>
+      </svg>
+      <span className="tf-motion-label">REVIEWABLE INSIGHTS</span>
+    </div>
     <div className="tf-flow" aria-label="Five stages from governed data sources to potential research and care impact">
-      {stages.map((stage,i)=><div className={"tf-stage "+(i===2?"tf-stage-core":"")} key={stage.title}>
+      {stages.map((stage,i)=><div className={"tf-stage "+(i===2?"tf-stage-core":"")+(selected===i?" tf-stage-active":"")} key={stage.title}>
         <button type="button" className="tf-stage-heading" aria-pressed={selected===i} onClick={()=>setSelected(selected===i?null:i)}><span className="tf-stage-number">{i+1}</span><span><strong>{stage.title}</strong><small>{stage.subtitle}</small></span></button>
         <div className="tf-stage-items">{stage.rows.map((row,j)=><div className="tf-stage-item" key={row.name}><span className="tf-item-index">{String(j+1).padStart(2,"0")}</span><div><strong>{row.name}</strong><small>{row.description}</small></div></div>)}</div>
-        {i<4&&<span className="tf-stage-arrow" aria-hidden="true">→</span>}
+        {i<4&&<span className="tf-stage-arrow" aria-hidden="true"><span className="tf-arrow-beam" /><span className="tf-arrow-pulse" />→</span>}
       </div>)}
     </div>
     {selected!==null&&<div className="tf-selected" aria-live="polite"><strong>{String(selected+1).padStart(2,"0")} / {stages[selected].title}</strong><span>{selected===0?"Data remains under the source system's authorisation and access controls.":selected===1?"Logical knowledge layers do not require copying all data into one database.":selected===2?"The six functions are a target architecture, not a claim of live automated processing.":selected===3?"Matching, trials and computational outputs require validation and professional review.":"Potential benefits are research ambitions, not established clinical outcomes."}</span><button type="button" onClick={()=>setSelected(null)} aria-label="Close stage explanation">×</button></div>}
