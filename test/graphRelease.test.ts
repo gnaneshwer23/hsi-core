@@ -38,3 +38,10 @@ test("published snapshot query carries provenance and release ID",()=>{
  expect(queryPublishedGraph(published,{subjectId:"different"}).results).toHaveLength(0);
  expect(()=>queryPublishedGraph(published,{limit:1000})).toThrow("Invalid query limit");
 });
+
+test("unknown evidence epistemic type cannot be published",()=>{
+ const unknown={...claim,epistemicType:"future_unrecognised_type"};
+ expect(assessReleaseClaim(unknown).eligible).toBe(false);
+ expect(assessReleaseClaim(unknown).reasons).toContain("unrecognised_or_unvalidated_epistemic_type");
+ expect(()=>createCandidateManifest("HSI-GR-ssc-1","1.0.0",[unknown],"2026-11-04T12:00:00Z")).toThrow("Release blocked");
+});
