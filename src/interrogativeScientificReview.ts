@@ -3,7 +3,9 @@
  * This pure validator requires independently authenticated server-side authority.
  */
 import {createHash} from "node:crypto";
-import {fingerprintInterrogativeInvestigation,validateInterrogativeInvestigation,type InterrogativeInvestigation} from "./interrogativeContracts";
+import {validateInterrogativeInvestigation,type InterrogativeInvestigation} from "./interrogativeContracts";
+const canonical=(x:unknown):string=>Array.isArray(x)?"["+x.map(canonical).join(",")+"]":x&&typeof x==="object"?"{"+Object.entries(x as Record<string,unknown>).sort(([a],[b])=>a.localeCompare(b)).map(([k,v])=>JSON.stringify(k)+":"+canonical(v)).join(",")+"}":JSON.stringify(x)??"null";
+export const fingerprintReviewSnapshot=(x:InterrogativeInvestigation):string=>createHash("sha256").update(canonical(x)).digest("hex");
 export type HsiScientificReviewDecision={
  schemaVersion:"hsi-interrogative-scientific-review-1";
  decisionId:string;investigationId:string;investigationHash:string;
@@ -28,7 +30,7 @@ export function validateHsiScientificReview(input:{
  if(!r?.authenticated||r.role!=="scientific_reviewer"||r.scope!=="ssc"||!r.principalId.trim())throw Error("Verified SSc scientific reviewer required");
  if(!Number.isFinite(Date.parse(r.authorityVerifiedAt))||!Number.isFinite(Date.parse(d.reviewedAt)))throw Error("Invalid review timestamp");
  if(r.principalId!==d.reviewerPrincipal||r.principalId===i.actorPrincipal)throw Error("Independent reviewer required");
- if(d.schemaVersion!=="hsi-interrogative-scientific-review-1"||!d.decisionId.trim()||d.investigationId!==i.id||d.investigationHash!==fingerprintInterrogativeInvestigation(i))throw Error("Investigation identity or content hash mismatch");
+ if(d.schemaVersion!=="hsi-interrogative-scientific-review-1"||!d.decisionId.trim()||d.investigationId!==i.id||d.investigationHash!==fingerprintReviewSnapshot(i))throw Error("Investigation identity or content hash mismatch");
  if(d.releaseId!==i.release.id||d.releaseManifestHash!==i.release.manifestHash)throw Error("Release provenance mismatch");
  if(!d.conflictOfInterestDeclared||!d.rationale.trim()||d.rationale.length>4000)throw Error("Accountable review rationale and COI declaration required");
  if(!["approve_with_limitations","request_revision","reject"].includes(d.outcome))throw Error("Invalid human review outcome");
