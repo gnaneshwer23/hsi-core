@@ -9,7 +9,7 @@ import {validateInterrogativeInvestigation,type InterrogativeInvestigation} from
 function canonical(value:unknown):string{
  if(Array.isArray(value))return "["+value.map(canonical).join(",")+"]";
  if(value&&typeof value==="object")return "{"+Object.entries(value as Record<string,unknown>).sort(([a],[b])=>a.localeCompare(b)).map(([k,v])=>JSON.stringify(k)+":"+canonical(v)).join(",")+"}";
- return JSON.stringify(value);
+ return JSON.stringify(value)??"null";
 }
 function digest(i:InterrogativeInvestigation){return createHash("sha256").update(canonical(i)).digest("hex")}
 function requireActor(actor:Awaited<ReturnType<typeof authenticateHsiNeonSession>>){
