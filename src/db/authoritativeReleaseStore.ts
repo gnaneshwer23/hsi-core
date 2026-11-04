@@ -10,6 +10,7 @@ import type {TrustedResearchActor} from "./researchInvestigationStore";
 
 export async function loadHsiPublishedRelease(input:{
  actor:TrustedResearchActor|null;version:string;databaseUrl:string;neonProjectId?:string|null;
+ verifyReviewer:(principal:string,reviewedAt:string)=>Promise<boolean>;
 }):Promise<PublishedReleaseSnapshot>{
  if(!input.actor?.authenticated||!input.actor.principalId.trim()||
  !input.actor.roles.some(r=>["researcher","scientific_reviewer","research_admin"].includes(r)))
@@ -60,9 +61,26 @@ export async function loadHsiPublishedRelease(input:{
       latest.conflict_of_interest_declared!==true||
       !Array.isArray(latest.evidence_reviewed)||!latest.evidence_reviewed.length)
       throw Error("Current accountable scientific approval not verified");
-    // Reviewer role in a database row is insufficient proof of authenticated reviewer authority.
-    // Until reviewer identity is checked against a trusted identity registry, refuse retrieval.
-    throw Error("P0 blocker: reviewer identity authority registry not connected");
+    if(!await input.verifyReviewer(String(latest.reviewer_principal),new Date(String(latest.reviewed_at)).toISOString()))
+     throw Error("Reviewer identity not verified by trusted authority");
+    const sources:SourceEvidence[]=supports.map((s:{[key:string]:unknown})=>({
+     id:String(s.id),licenceStatus:String(s.licence_status) as SourceEvidence["licenceStatus"],
+     retractionStatus:String(s.retraction_status) as SourceEvidence["retractionStatus"],
+     polarity:String(s.polarity) as SourceEvidence["polarity"],
+     sourceVersion:String((s.metadata as Record<string,unknown>|null)?.version??""),
+    }));
+    if(sources.some(s=>!s.sourceVersion))throw Error("Evidence source version missing");
+    const reviews:ReviewDecisionSnapshot[]=[{
+     id:String(latest.id),claimId,decision:"approve",reviewerPrincipal:String(latest.reviewer_principal),
+     reviewerAuthorised:true,reviewedAt:new Date(String(latest.reviewed_at)).toISOString(),
+    }];
+    claims.push({
+     id:claimId,subjectId:String(c.subject_id),predicate:String(c.predicate),
+     objectId:String(c.object_id),assertion:String(c.assertion),
+     epistemicType:String(c.epistemic_type),
+     biologicalContext:c.biological_context as Record<string,unknown>,
+     status:"approved",sources,reviews,
+    });
    }
    return {manifest:{schemaVersion:"hsi-graph-release-1",releaseId:String(release.id),
     releaseVersion:input.version,generatedAt,claimIds:ids,
