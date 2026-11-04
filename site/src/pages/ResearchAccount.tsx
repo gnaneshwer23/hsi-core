@@ -12,6 +12,8 @@ export function ResearchAccount(){
  const [checking,setChecking]=useState(true);
  const [attempt,setAttempt]=useState(0);
  const [signingOut,setSigningOut]=useState(false);
+ const [history,setHistory]=useState<{decisionId:string;investigationId:string;outcome:string;reviewedAt:string;decisionHash:string}[]>([]);
+ const [historyStatus,setHistoryStatus]=useState("");
  useEffect(()=>{
   let active=true;
   setChecking(true);setAccess(null);setStatus("Checking your session…");
@@ -35,6 +37,16 @@ export function ResearchAccount(){
   catch{setStatus("Could not sign out. Please try again.")}
   finally{setSigningOut(false)}
  }
+ async function refreshReviewHistory(){
+  setHistoryStatus("Loading authorised decision history…");
+  try{
+   const response=await fetch("/api/research/scientific-review/history",{credentials:"same-origin",cache:"no-store"});
+   if(!response.ok)throw Error("Review history unavailable or access denied.");
+   const data=await response.json() as {items?:typeof history};
+   if(!Array.isArray(data.items))throw Error("Invalid history response");
+   setHistory(data.items);setHistoryStatus(data.items.length?"":"No decisions recorded for this reviewer.");
+  }catch(e){setHistory([]);setHistoryStatus(e instanceof Error?e.message:"Unable to load history")}
+ }
  const account=access?.kind==="ready"?access.account:null;
  const authorised=account&&(account.researcher||account.scientificReviewer);
  return <section className="hsi-sign-in"><div className="hsi-sign-in-card">
@@ -52,6 +64,17 @@ export function ResearchAccount(){
     <Link to={"/research/decision-workbench?investigation="+encodeURIComponent(i.id)}>Open research workbench →</Link>
     {i.canReview&&<Link to={"/research/scientific-review?investigation="+encodeURIComponent(i.id)}>Review independently →</Link>}
    </li>)}</ul>:<p>No accessible investigations yet. An authorised research operator must save a release-bound investigation before it appears here.</p>}
+   {account.scientificReviewer&&<section aria-label="Independent reviewer history">
+    <h3>Your scientific review history</h3>
+    <p>Only decisions signed by your verified reviewer identity are returned. Records are read-only; history is not a knowledge-graph publication.</p>
+    <button type="button" onClick={refreshReviewHistory}>Load my decision history</button>
+    {historyStatus&&<p role="status">{historyStatus}</p>}
+    {history.length>0&&<ul className="hsi-account-records">{history.map(h=><li key={h.decisionId}>
+     <strong>{h.outcome.replaceAll("_"," ")}</strong><span>{h.investigationId}</span>
+     <time dateTime={h.reviewedAt}>{new Date(h.reviewedAt).toLocaleString()}</time>
+     <small>Decision: {h.decisionId} · Audit hash: {h.decisionHash.slice(0,16)}…</small>
+    </li>)}</ul>}
+   </section>}
    <p className="hsi-auth-hint">Showing up to 50 recent accessible investigations. Access does not approve evidence or publish knowledge graph relationships.</p>
   </section>}
   <div className="hsi-account-actions"><button className="hsi-auth-signout" type="button" disabled={checking||signingOut} onClick={()=>setAttempt(n=>n+1)}>{checking?"Checking access…":"Refresh access"}</button>
