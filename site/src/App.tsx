@@ -30,6 +30,7 @@ import { ScienceBody } from "./pages/ScienceBody";
 import { ScienceGraph } from "./pages/ScienceGraph";
 import { SciencePaths } from "./pages/SciencePaths";
 import { ScienceContradictions } from "./pages/ScienceContradictions";
+import { ScienceClinicalTrials } from "./pages/ScienceClinicalTrials";
 import { ScienceZoom, ScienceConnections } from "./pages/ScienceExplorer";
 import { NotFound } from "./pages/NotFound";
 
@@ -47,6 +48,7 @@ export default function App() {
         <Route path="science/graph" element={<ScienceGraph />} />
         <Route path="science/paths" element={<SciencePaths />} />
         <Route path="science/contradictions" element={<ScienceContradictions />} />
+        <Route path="science/clinical-trials" element={<ScienceClinicalTrials />} />
         <Route path="science/zoom" element={<ScienceZoom />} />
         <Route path="science/connections" element={<ScienceConnections />} />
         <Route path="science/disease" element={<ScienceDisease />} />

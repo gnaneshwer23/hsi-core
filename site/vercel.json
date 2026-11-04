@@ -161,6 +161,10 @@
     {
       "source": "/science/contradictions",
       "destination": "/index.html"
+    },
+    {
+      "source": "/science/clinical-trials",
+      "destination": "/index.html"
     }
   ]
 }
