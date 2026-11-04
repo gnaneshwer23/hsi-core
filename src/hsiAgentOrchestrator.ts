@@ -4,7 +4,7 @@
 import {assertHsiToolPermission,validateHsiAgentManifest,validateHsiAgentRunEnvelope,type HsiAgentManifest,type HsiAgentRole,type HsiAgentRunEnvelope,type HsiToolId} from "./hsiAgentIntelligenceContracts";
 export type HsiAgentTask={id:string;manifest:HsiAgentManifest;dependsOn:readonly string[]};
 export type HsiAgentStepResult={status:"completed"|"blocked";outputRef:string|null;reason:string|null};
-export type HsiAgentExecutor=(context:{investigationId:string;taskId:string;role:HsiAgentRole;assertTool:(tool:HsiToolId)=>void;dependencies:Readonly<Record<string,HsiAgentStepResult>>})=>Promise<HsiAgentStepResult>;
+export type HsiAgentExecutor=(context:{investigationId:string;taskId:string;role:HsiAgentRole;assertTool:(tool:HsiToolId)=>void;signal:AbortSignal;dependencies:Readonly<Record<string,HsiAgentStepResult>>})=>Promise<HsiAgentStepResult>;
 export type HsiOrchestrationResult={schemaVersion:"hsi-agent-orchestration-1";investigationId:string;status:"completed"|"blocked"|"failed"|"cancelled";runs:readonly HsiAgentRunEnvelope[];results:Readonly<Record<string,HsiAgentStepResult>>;limitations:readonly string[]};
 const ID=/^[A-Za-z0-9][A-Za-z0-9._:-]{0,99}$/;
 export async function runHsiAgentOrchestration(input:{
@@ -44,17 +44,18 @@ export async function runHsiAgentOrchestration(input:{
   else{
    try{
     result=await Promise.race([
-     executor({investigationId:input.investigationId,taskId:task.id,role:task.manifest.role,dependencies:Object.fromEntries(task.dependsOn.map(d=>[d,results[d]!])),assertTool:(tool)=>{
+     executor({investigationId:input.investigationId,taskId:task.id,role:task.manifest.role,signal:controller.signal,dependencies:Object.fromEntries(task.dependsOn.map(d=>[d,results[d]!])),assertTool:(tool)=>{
       const invocationId=task.id+"-tool-"+(calls.length+1);
       if(calls.length>=task.manifest.maxToolCalls)throw Error("Agent tool budget exceeded");
       try{assertHsiToolPermission(task.manifest,tool,input.dataClass);calls.push({tool,invocationId,status:"success"})}
       catch(e){calls.push({tool,invocationId,status:"denied"});throw e}
      }}),
-     new Promise<never>((_,reject)=>{const timer=setTimeout(()=>reject(Error("Agent timeout")),task.manifest.timeoutMs);timer.unref?.();if(input.signal?.aborted){clearTimeout(timer);reject(Error("Cancelled"))}})
+     new Promise<never>((_,reject)=>{timeout=setTimeout(()=>{controller.abort();reject(Error("Agent timeout"))},task.manifest.timeoutMs);timeout.unref?.();if(input.signal?.aborted){controller.abort();reject(Error("Cancelled"))}})
     ]);
     if(!result||!["completed","blocked"].includes(result.status)|| (result.status==="completed"&&!result.outputRef?.trim()))throw Error("Invalid executor result");
     runStatus=result.status;
-   }catch{result={status:"blocked",outputRef:null,reason:"Executor failed or tool permission denied"};runStatus="failed"}
+   }catch{controller.abort();result={status:"blocked",outputRef:null,reason:"Executor failed, cancelled or tool permission denied"};runStatus="failed"}
+   finally{if(timeout)clearTimeout(timeout);input.signal?.removeEventListener("abort",onAbort)}
   }
   results[task.id]=result;
   const run:HsiAgentRunEnvelope={schemaVersion:"hsi-agent-run-1",investigationId:input.investigationId,runId:input.investigationId+":"+task.id,manifest:task.manifest,graphRelease:input.graphRelease,dataClass:input.dataClass,status:runStatus,toolCalls:calls,startedAt,completedAt:now()};
