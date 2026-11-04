@@ -11,7 +11,7 @@ describe("HSI NEXUS technology page", () => {
     for (const name of ["Akeno Health", "Aksh Health", "Immune Super Intelligence", "Biomedical research ecosystem", "Context", "Biology", "Evidence", "Reasoning", "Discovery", "Governance"]) expect(page).toContain(name);
   });
   it("shows matching, trial intelligence, in-silico discovery and precision medicine without claiming deployment", () => {
-    for (const name of ["Patient and cohort matching", "Clinical trial intelligence", "In-silico drug discovery", "Precision medicine research", "not a validated drug-discovery service", "not live patient analysis"]) expect(page).toContain(name);
+    for (const name of ["Patient and cohort matching", "Clinical trial intelligence", "In-silico drug discovery", "Precision medicine research", "not a validated drug-discovery service", "not a live patient analysis"]) expect(page).toContain(name);
   });
   it("keeps interactive journeys keyboard-operable and research boundaries explicit", () => {
     expect(page).toContain("setSourceIndex(index)");
