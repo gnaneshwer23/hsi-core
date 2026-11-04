@@ -9,6 +9,8 @@ import {validateInterrogativeInvestigation,type InterrogativeInvestigation} from
 export function AuthenticatedInterrogativeWorkbench(){
  const [params]=useSearchParams();
  const id=params.get("investigation");
+ const [submitting,setSubmitting]=useState(false);
+ const [submissionStatus,setSubmissionStatus]=useState("");
  const [record,setRecord]=useState<InterrogativeInvestigation|null>(null);
  const [status,setStatus]=useState("Provide an authorised investigation ID to load research evidence.");
  useEffect(()=>{
@@ -28,5 +30,25 @@ export function AuthenticatedInterrogativeWorkbench(){
    .catch(()=>{if(!controller.signal.aborted){setRecord(null);setStatus("Unable to load an authorised investigation. Sign in with a verified research account or contact the research administrator.")}});
   return ()=>controller.abort();
  },[id]);
- return <><InterrogativeWorkbench investigation={record} falsification={null}/>{status&&<p role="status" style={{maxWidth:920,margin:"1rem auto",padding:"0 1rem"}}>{status}</p>}</>;
+ async function submitReview(){
+  if(!record||record.state!=="draft"||submitting)return;
+  setSubmitting(true);setSubmissionStatus("");
+  try{
+   const response=await fetch("/api/research/interrogative/"+encodeURIComponent(record.id)+"/submit-review",{method:"POST",credentials:"same-origin",cache:"no-store",headers:{"Content-Type":"application/json","Accept":"application/json"},body:"{}"});
+   if(!response.ok)throw Error("Submission denied or unavailable. Check session, researcher grant and trusted API deployment.");
+   const result=await response.json() as {state?:string};
+   if(result.state!=="awaiting_scientific_review")throw Error("Unexpected server response; submission not confirmed.");
+   setRecord({...record,state:"awaiting_scientific_review"});
+   setSubmissionStatus("Submitted for independent review. No evidence has been approved or published.");
+  }catch(e){setSubmissionStatus(e instanceof Error?e.message:"Submission failed")}
+  finally{setSubmitting(false)}
+ }
+ return <><InterrogativeWorkbench investigation={record} falsification={null}/><section style={{maxWidth:920,margin:"1rem auto",padding:"1rem"}}>
+ {record&&<><h2>Governed scientific review</h2><p>State: {record.state.replaceAll("_"," ")}</p>
+ <p>Submission requires verified researcher access to the trusted HSI backend. An independent authorised scientist must make any review decision.</p>
+ {record.state==="draft"&&<button type="button" disabled={submitting} onClick={submitReview}>{submitting?"Submitting…":"Submit for independent review"}</button>}
+ {record.state==="awaiting_scientific_review"&&<p>Awaiting independent review; no graph publication.</p>}
+ {record.state==="reviewed"&&<p>Human reviewed; graph publication remains a separate gate.</p>}
+ {record.state==="rejected"&&<p>Rejected; no graph publication.</p>}</>}
+ {submissionStatus&&<p role="status">{submissionStatus}</p>}</section>{status&&<p role="status" style={{maxWidth:920,margin:"1rem auto",padding:"0 1rem"}}>{status}</p>}</>;
 }
