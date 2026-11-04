@@ -48,7 +48,7 @@ export function ScienceLiterature(){
    <p className="science-body-kicker">HSI / ISI SCIENTIFIC INTELLIGENCE / PRIORITY 01</p>
    <h1>Explore published evidence.<br/><em>Preserve scientific uncertainty.</em></h1>
    <p>Live bibliographic discovery from Europe PMC for systemic sclerosis. Publication metadata and abstracts are not independent verification that a biological claim is true.</p>
-   <div className="science-body-actions"><Link to="/science/graph">Knowledge graph ↗</Link><Link to="/science/contradictions">Contradictions ↗</Link></div>
+   <div className="science-body-actions"><Link to="/science/study-comparison">Compare SSc studies ↗</Link><Link to="/science/graph">Knowledge graph ↗</Link><Link to="/science/contradictions">Contradictions ↗</Link></div>
   </div></header>
   <section className="science-body-wrap" style={{paddingBlock:"3rem"}}>
    <h2>Systemic sclerosis literature</h2>
