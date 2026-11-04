@@ -50,7 +50,7 @@ export async function runHsiAgentOrchestration(input:{
       try{assertHsiToolPermission(task.manifest,tool,input.dataClass);calls.push({tool,invocationId,status:"success"})}
       catch(e){calls.push({tool,invocationId,status:"denied"});throw e}
      }}),
-     new Promise<never>((_,reject)=>{if(input.signal?.aborted)reject(Error("Cancelled"))})
+     new Promise<never>((_,reject)=>{const timer=setTimeout(()=>reject(Error("Agent timeout")),task.manifest.timeoutMs);timer.unref?.();if(input.signal?.aborted){clearTimeout(timer);reject(Error("Cancelled"))}})
     ]);
     if(!result||!["completed","blocked"].includes(result.status)|| (result.status==="completed"&&!result.outputRef?.trim()))throw Error("Invalid executor result");
     runStatus=result.status;
