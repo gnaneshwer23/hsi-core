@@ -31,14 +31,13 @@ const applications = [
   { title:"Biomarker and therapeutic discovery", stage:"Exploratory research direction", focus:"Scientist", description:"Prioritise research hypotheses and potential targets; computational modelling or docking requires separately validated methods.", inputs:["Biological pathways","Evidence and approved datasets"], deliverable:"Candidate research hypotheses and experimental plan", boundary:"Predicted binding or association is not evidence of safety or efficacy", route:"/science" },
 ] as const;
 const steps = [
-  { title: "A clinical or scientific question", detail: "Example: Which immune pathways merit investigation for a systemic sclerosis phenotype?" },
-  { title: "Permissioned context", detail: "Select authorised patient or research context without merging private records into a public graph." },
-  { title: "Evidence and biology", detail: "Retrieve rights-cleared evidence, trace biological pathways and distinguish association from causation." },
-  { title: "NEXUS investigation", detail: "Compare evidence, identify gaps and generate hypotheses labelled as unvalidated." },
-  { title: "Discovery options", detail: "Consider trial criteria, candidate targets or computational experiments where suitable data and models exist." },
-  { title: "Human scientific review", detail: "Scientists and clinicians assess outputs before any consequential use; no autonomous clinical decisions." },
+  { title:"Frame the SSc question", actor:"Researcher", detail:"Investigate which immune mechanisms might be associated with fibrotic disease features in systemic sclerosis (SSc). Define phenotype, tissues, timeframe and exclusions.", evidence:"Documented question and scope", limitation:"No patient-specific diagnosis or mechanistic conclusion" },
+  { title:"Select governed evidence", actor:"Evidence function", detail:"Identify permitted publications, approved datasets and curated immune relationships. Record publication dates, identifiers, access rights and dataset versions.", evidence:"Source register and provenance", limitation:"A source list is not a quality assessment" },
+  { title:"Trace cells and pathways", actor:"Biology function", detail:"Explore candidate connections among immune cell states, cytokine signalling, vascular injury and fibroblast activation, with each relationship tied to evidence.", evidence:"Traceable biological relationship map", limitation:"Biological plausibility does not establish causation" },
+  { title:"Compare conflicting findings", actor:"Evidence + Reasoning", detail:"Separate supporting, opposing and missing findings across study designs, tissues and cohorts. Note potential confounders and methodological differences.", evidence:"Contradiction and uncertainty register", limitation:"No automated consensus or fabricated confidence score" },
+  { title:"Draft testable hypotheses", actor:"Research investigator", detail:"Propose follow-up measurements or analyses, such as comparing cell-state signatures across suitably governed cohorts, with explicit falsification criteria.", evidence:"Unvalidated hypothesis and proposed experiment", limitation:"A hypothesis is not an approved graph fact" },
+  { title:"Review and decide", actor:"Accountable scientist", detail:"A human reviewer evaluates source quality, analysis reproducibility, interpretation and limitations before approving, revising or rejecting proposed claims.", evidence:"Recorded review decision and audit trail", limitation:"No autonomous clinical or therapeutic decision" },
 ] as const;
-
 export function Technology() {
   useEffect(() => {
     const previousTitle = document.title;
@@ -130,9 +129,26 @@ export function Technology() {
       </div>
     </section>
 
-    <section className="nx-section nx-journey" id="journey">
-      <div className="nx-wrap"><div className="nx-section-head"><div><p className="nx-kicker">04 / A QUESTION-TO-DISCOVERY JOURNEY</p><h2>Follow the reasoning.<br/><em>Keep the uncertainty.</em></h2></div><p>Explore an illustrative systemic sclerosis investigation. This is an explanatory workflow, not a live patient analysis or scientific finding.</p></div>
-        <div className="nx-journey-layout"><div className="nx-journey-list" role="group" aria-label="Investigation stages">{steps.map((item,index) => <button key={item.title} type="button" aria-pressed={journeyIndex === index} onClick={() => setJourneyIndex(index)}><span>{String(index+1).padStart(2,"0")}</span>{item.title}</button>)}</div><div className="nx-journey-detail" aria-live="polite"><span>STEP {String(journeyIndex+1).padStart(2,"0")} / 06</span><h3>{steps[journeyIndex].title}</h3><p>{steps[journeyIndex].detail}</p><div className="nx-journey-actions"><button type="button" disabled={journeyIndex===0} onClick={() => setJourneyIndex(i => Math.max(0,i-1))}>Previous</button><button type="button" disabled={journeyIndex===steps.length-1} onClick={() => setJourneyIndex(i => Math.min(steps.length-1,i+1))}>Next step →</button></div></div></div>
+    <section className="nx-section nx-journey nx-ssc-investigation" id="journey">
+      <div className="nx-wrap">
+        <div className="nx-section-head"><div><p className="nx-kicker">05 / RESEARCH INVESTIGATION · SYSTEMIC SCLEROSIS</p><h2>One disease question.<br/><em>A traceable investigation.</em></h2></div><p>Explore how HSI NEXUS could support a supervised investigation of immune mechanisms in systemic sclerosis. The example demonstrates research process, not an actual analysis result.</p></div>
+        <div className="nx-ssc-layout">
+          <div className="nx-ssc-left">
+            <div className="nx-ssc-question"><span>ILLUSTRATIVE RESEARCH QUESTION</span><h3>Which immune mechanisms merit investigation in systemic sclerosis–associated fibrosis?</h3><p>Scope: immune cell states · tissue context · fibrotic pathways · conflicting evidence</p></div>
+            <div className="nx-ssc-steps" role="group" aria-label="Systemic sclerosis investigation stages">{steps.map((item,index)=><button key={item.title} type="button" aria-pressed={journeyIndex===index} onClick={()=>setJourneyIndex(index)}><span>0{index+1}</span><strong>{item.title}</strong><small>{item.actor}</small></button>)}</div>
+          </div>
+          <article className="nx-ssc-detail" aria-live="polite">
+            <div className="nx-ssc-detail-top"><span>INVESTIGATION STAGE 0{journeyIndex+1} / 06</span><span>SUPERVISED WORKFLOW</span></div>
+            <div className="nx-ssc-visual" role="img" aria-label="Conceptual immune research connections between immune cells, signalling, tissue responses and fibrotic processes">
+              <svg viewBox="0 0 560 170" preserveAspectRatio="xMidYMid meet"><path d="M90 85 H190 M280 85 H380" stroke="#75b6a4" strokeWidth="3" strokeDasharray="5 6"/><path d="M470 85 H520" stroke="#75b6a4" strokeWidth="3" strokeDasharray="5 6"/><circle cx="70" cy="85" r="37" fill="#286e66"/><circle cx="235" cy="85" r="43" fill="#367e73"/><circle cx="425" cy="85" r="43" fill="#f3b59c"/><text x="70" y="80" fill="white" textAnchor="middle" fontSize="12" fontWeight="700">Immune</text><text x="70" y="95" fill="white" textAnchor="middle" fontSize="12">cells</text><text x="235" y="80" fill="white" textAnchor="middle" fontSize="12" fontWeight="700">Signalling</text><text x="235" y="95" fill="white" textAnchor="middle" fontSize="11">pathways</text><text x="425" y="80" fill="#693d31" textAnchor="middle" fontSize="12" fontWeight="700">Tissue</text><text x="425" y="95" fill="#693d31" textAnchor="middle" fontSize="11">fibrosis</text></svg>
+              <span>Conceptual relationships — not validated causal links</span>
+            </div>
+            <p className="nx-ssc-actor">{steps[journeyIndex].actor}</p><h3>{steps[journeyIndex].title}</h3><p className="nx-ssc-description">{steps[journeyIndex].detail}</p>
+            <div className="nx-ssc-review"><div><span>REVIEWABLE ARTIFACT</span><strong>{steps[journeyIndex].evidence}</strong></div><div><span>INTERPRETATION LIMIT</span><strong>{steps[journeyIndex].limitation}</strong></div></div>
+            <div className="nx-journey-actions"><button type="button" disabled={journeyIndex===0} onClick={()=>setJourneyIndex(i=>Math.max(0,i-1))}>Previous</button><button type="button" disabled={journeyIndex===steps.length-1} onClick={()=>setJourneyIndex(i=>Math.min(steps.length-1,i+1))}>Next stage →</button></div>
+          </article>
+        </div>
+        <p className="nx-ssc-disclaimer">Illustrative workflow only. No patient data, actual study results, computed biomarker predictions or trial eligibility decisions are presented. Proposed mechanisms require source-level evidence, independent validation and scientific review.</p>
       </div>
     </section>
 
