@@ -60,7 +60,7 @@ describe("Public HSI site honesty", () => {
 
     const home = site("src/pages/Home.tsx");
     expect(home).toContain("Aksh Health");
-    expect(home).toContain("Immune Super Intelligence");
+    expect(home).toContain("ISI Research");
     expect(home).toContain("Connected context. Traceable evidence. Human review.");
     expect(home).toContain("Illustrative connections · not study findings or patient analysis");
     expect(home).toContain('to="/for-isi"');
@@ -147,7 +147,7 @@ describe("Public HSI site honesty", () => {
 
 it("Stage A Platform includes all four distinct product perspectives and honest maturity", () => {
   const platform = site("src/pages/Platform.tsx");
-  expect(platform).toContain('type Product = "aksh" | "clinical" | "isi" | "trials"');
+  expect(platform).toContain('type ProductId = EcosystemProduct["id"];');
   expect(platform).toContain('name: "Aksh Health"');
   expect(platform).toContain('name: "HSI Clinical"');
   expect(platform).toContain('name: "HSI Trials"');
