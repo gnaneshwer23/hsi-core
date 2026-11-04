@@ -1,0 +1,101 @@
+{
+  "schemaVersion": "hsi-ssc-curation-candidates-1",
+  "disease": "systemic sclerosis",
+  "scope": "Tfh–IL-21–B-cell and skin fibrosis",
+  "status": "draft_evidence_assessment",
+  "reviewedByHuman": false,
+  "graphPromotable": false,
+  "sourceAccess": "public bibliographic metadata and abstracts; full text and reuse rights not independently cleared",
+  "claims": [
+    {
+      "id": "HSI-C-SSC-001",
+      "pmid": "30760472",
+      "doi": "10.1136/annrheumdis-2018-214382",
+      "subject": "circulating Tfh cells",
+      "predicate": "increased_in",
+      "object": "SSc cohort versus healthy controls",
+      "epistemicType": "observational_association",
+      "model": "human cohort",
+      "context": "50 SSc patients and 32 healthy controls; flow cytometry; do not generalise to all SSc cohorts",
+      "evidenceLocator": "PubMed abstract: Results",
+      "assessment": "abstract_supported_candidate",
+      "reviewState": "unreviewed",
+      "limitations": "Cohort-specific observation; subgroup composition and assay differences require full-paper review"
+    },
+    {
+      "id": "HSI-C-SSC-004",
+      "pmid": "30760472",
+      "doi": "10.1136/annrheumdis-2018-214382",
+      "subject": "SSc circulating Tfh cells",
+      "predicate": "promotes_in_vitro",
+      "object": "IL-21-dependent plasmablast differentiation",
+      "epistemicType": "experimental_finding",
+      "model": "human ex vivo coculture",
+      "context": "Tfh–B-cell coculture; IL-21R blockade/JAK1/2 inhibition; not a clinical efficacy claim",
+      "evidenceLocator": "PubMed abstract: Methods and Results",
+      "assessment": "abstract_supported_candidate",
+      "reviewState": "unreviewed",
+      "limitations": "In vitro effect does not establish treatment benefit in SSc patients"
+    },
+    {
+      "id": "HSI-C-SSC-005",
+      "pmid": "29514998",
+      "doi": "10.1126/scitranslmed.aaf5307",
+      "subject": "ICOS+ Tfh-like cells",
+      "predicate": "associated_with",
+      "object": "SSc dermal fibrosis",
+      "epistemicType": "observational_association",
+      "model": "human SSc skin",
+      "context": "Skin infiltrating ICOS+ CD4+ Tfh-like cells correlated with dermal fibrosis and clinical status",
+      "evidenceLocator": "PubMed abstract",
+      "assessment": "abstract_supported_candidate",
+      "reviewState": "unreviewed",
+      "limitations": "Human association separated from causal mouse-model findings"
+    },
+    {
+      "id": "HSI-C-SSC-005-MOUSE",
+      "pmid": "29514998",
+      "doi": "10.1126/scitranslmed.aaf5307",
+      "subject": "ICOS+ Tfh-like cells / IL-21",
+      "predicate": "contributes_to_in_model",
+      "object": "dermal fibrosis",
+      "epistemicType": "experimental_finding",
+      "model": "GVHD-SSc mouse model",
+      "context": "Anti-ICOS antibody and IL-21 neutralisation evaluated in experimental model",
+      "evidenceLocator": "PubMed abstract",
+      "assessment": "abstract_supported_candidate",
+      "reviewState": "unreviewed",
+      "limitations": "Animal model intervention; no human therapeutic efficacy inference"
+    },
+    {
+      "id": "HSI-C-SSC-006",
+      "pmid": "33175976",
+      "doi": "10.1093/rheumatology/keaa669",
+      "subject": "circulating Tfh1 subset",
+      "predicate": "increased_or_imbalanced_in",
+      "object": "SSc cohort",
+      "epistemicType": "observational_association",
+      "model": "human case-control",
+      "context": "Overall circulating Tfh proportion not different from controls; Tfh1 subset increased; associations with IL-21/IL-6 and B-cell phenotype",
+      "evidenceLocator": "PubMed abstract: Results",
+      "assessment": "abstract_supported_candidate",
+      "reviewState": "unreviewed",
+      "limitations": "Do not collapse subset imbalance into total circulating Tfh increase"
+    }
+  ],
+  "comparisonCandidates": [
+    {
+      "claimIds": [
+        "HSI-C-SSC-001",
+        "HSI-C-SSC-006"
+      ],
+      "type": "contextual_disagreement_candidate",
+      "reason": "Total circulating Tfh frequency reported differently across cohorts; investigate gating, population, severity and sampling before adjudication"
+    }
+  ],
+  "pendingSourceVerification": [
+    "21314428",
+    "16339522"
+  ],
+  "nextGate": "authenticated qualified scientist review; source rights; complete context; no graph publication"
+}
