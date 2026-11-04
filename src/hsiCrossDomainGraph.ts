@@ -27,10 +27,10 @@ export function adaptHsiCrossDomainRecord(input:HsiCrossDomainInput):HsiCrossDom
  if(input.source!=="trial_registry"&&input.predicate==="EVALUATED_IN")throw Error("Evaluation predicate requires trial source");
  const graphLayer=layer(input.source);
  const provenance=[input.source+":"+input.sourceRecordId+"@"+input.sourceVersion];
- const nodes:[HsiGraphNode,HsiGraphNode]=[input.subject,input.object].map(n=>({
+ const nodes:HsiGraphNode[]=[input.subject,input.object].map(n=>({
   schemaVersion:"hsi-lhkg-node-1",id:n.id,layer:graphLayer,kind:n.kind,preferredLabel:n.label,aliases:[],sourceIdentifiers:[],version:input.sourceVersion,
   visibility:"governed_research",reviewState:"draft",sourceProvenance:provenance
- })) as [HsiGraphNode,HsiGraphNode];
+ }));
  const relationship:HsiGraphRelationship={
   schemaVersion:"hsi-lhkg-edge-1",id:input.sourceRecordId,subjectId:input.subject.id,objectId:input.object.id,
   predicate:input.predicate,layer:graphLayer,
@@ -48,7 +48,7 @@ export function traverseHsiCrossDomainDraftGraph(input:{nodes:readonly HsiGraphN
  if(!validId.test(query.startId)||!Number.isInteger(query.limit)||query.limit<1||query.limit>100||query.allowedLayers.length===0||query.allowedLayers.some(x=>!["human_biology","gut_immune_metabolic","biomedical_evidence"].includes(x)))throw Error("Invalid cross-domain query");
  const byId=new Map(nodes.map(n=>[n.id,n]));
  if(!byId.has(query.startId))throw Error("Unknown query start node");
- const allowed=new Set(query.allowedLayers);
+ const allowed=new Set<string>(query.allowedLayers);
  const permitted=(id:string)=>{const n=byId.get(id);return !!n&&allowed.has(n.layer)&&n.visibility==="governed_research"};
  if(!permitted(query.startId))throw Error("Start node outside governed research scope");
  const visited=new Set([query.startId]),edgeIds=new Set<string>();let frontier=[query.startId];
