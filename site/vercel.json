@@ -169,6 +169,10 @@
     {
       "source": "/science/research-agents",
       "destination": "/index.html"
+    },
+    {
+      "source": "/research/decision-workbench",
+      "destination": "/index.html"
     }
   ]
 }
