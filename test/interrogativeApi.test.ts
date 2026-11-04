@@ -74,3 +74,22 @@ test("same-origin decision request reaches trusted service, not browser authorit
  expect((received as {decision:{investigationId:string}}).decision.investigationId).toBe(id);
  // Reviewer principal must be independently verified by authenticatedScientificReviewStore.
 });
+
+test("review history requires an authenticated cookie",async()=>{
+ let called=false;
+ const r=await handleInterrogativeApi(new Request("https://hsi.example/api/research/scientific-review/history"),{...services,history:async()=>{called=true;return {items:[]}}});
+ expect(r.status).toBe(401);expect(called).toBe(false);
+});
+test("review history is GET-only",async()=>{
+ const r=await handleInterrogativeApi(new Request("https://hsi.example/api/research/scientific-review/history",{method:"POST",headers:{cookie,origin:"https://hsi.example"}}),{...services,history:async()=>({items:[]})});
+ expect(r.status).toBe(405);
+});
+test("review history routes to trusted reviewer-scoped service",async()=>{
+ let token="";
+ const r=await handleInterrogativeApi(new Request("https://hsi.example/api/research/scientific-review/history",{headers:{cookie}}),{...services,history:async input=>{token=input.serverSessionToken??"";return {items:[]}}});
+ expect(r.status).toBe(200);expect(token).toBe("example-session-token-long-enough");expect(r.headers.get("cache-control")).toBe("no-store");
+});
+test("review history backend errors are redacted",async()=>{
+ const r=await handleInterrogativeApi(new Request("https://hsi.example/api/research/scientific-review/history",{headers:{cookie}}),{...services,history:async()=>{throw Error("private database secret")}});
+ expect(r.status).toBe(403);expect(await r.text()).not.toContain("private database");
+});
