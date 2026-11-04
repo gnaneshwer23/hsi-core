@@ -13,7 +13,7 @@ const canonical=(x:unknown):string=>Array.isArray(x)?"["+x.map(canonical).join("
 const hash=(x:unknown)=>createHash("sha256").update(canonical(x)).digest("hex");
 type Config={databaseUrl:string;neonProjectId?:string|null;serverSessionToken:string|null|undefined};
 async function verifiedActor(input:Config){
- const actor=await authenticateHsiNeonSession(input);
+ const actor=await authenticateHsiNeonSession({sessionToken:input.serverSessionToken,databaseUrl:input.databaseUrl,neonProjectId:input.neonProjectId});
  if(!actor?.authenticated||!actor.principalId.trim())throw Error("Verified HSI session required");
  return actor;
 }
