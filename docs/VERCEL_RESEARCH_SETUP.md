@@ -21,6 +21,11 @@ These are Bun Web-handler functions; `bun run build` still builds the frontend.
 Vercel builds the API functions separately. Do not run the standalone
 `research:api` listener as the Vercel build command.
 
+The site package installs its own pinned `@types/bun` dependency. Its build runs
+the dedicated `site/api/tsconfig.json` check before Vite; the CI site-deployment
+job installs only site dependencies to catch missing API types without relying
+on the repository root's development dependencies.
+
 The runtime/export format follows Vercel's official
 [Bun function fixture](https://github.com/vercel/vercel/tree/main/packages/node/test/fixtures/64-bun-runtime).
 Local Bun bundling and handler tests do not substitute for a successful Vercel
