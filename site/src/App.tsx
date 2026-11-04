@@ -28,6 +28,7 @@ import { TrialsCriteria } from "./pages/TrialsCriteria";
 import { GatewayDemo } from "./pages/GatewayDemo";
 import { Sources } from "./pages/Sources";
 import { Science } from "./pages/Science";
+import { ScienceLiterature } from "./pages/ScienceLiterature";
 import { ScienceDisease } from "./pages/ScienceDisease";
 import { ScienceBody } from "./pages/ScienceBody";
 import { ScienceGraph } from "./pages/ScienceGraph";
@@ -52,6 +53,7 @@ export default function App() {
         <Route path="how-it-works" element={<HowItWorks />} />
         <Route path="explore" element={<Explore />} />
         <Route path="science" element={<Science />} />
+        <Route path="science/literature" element={<ScienceLiterature />} />
         <Route path="science/body" element={<ScienceBody />} />
         <Route path="science/graph" element={<ScienceGraph />} />
         <Route path="science/paths" element={<SciencePaths />} />
