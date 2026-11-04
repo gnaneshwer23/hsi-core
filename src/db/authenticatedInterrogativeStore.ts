@@ -59,12 +59,12 @@ export async function loadAuthenticatedInterrogativeInvestigation(input:{
   return verifyHsiReviewerAuthority({principal:actor.principalId,reviewedAt:new Date().toISOString(),databaseUrl:input.databaseUrl,neonProjectId:input.neonProjectId});
  })();
  const rows=reviewerAccess
-  ?await sql`SELECT payload,content_hash,actor_principal FROM hsi_interrogative_investigations WHERE id=${input.investigationId} AND state='awaiting_scientific_review' AND actor_principal<>${actor.principalId} LIMIT 1`
+  ?await sql`SELECT payload,content_hash,actor_principal FROM hsi_interrogative_investigations WHERE id=${input.investigationId} AND (actor_principal=${actor.principalId} OR (state='awaiting_scientific_review' AND actor_principal<>${actor.principalId})) LIMIT 1`
   :await sql`SELECT payload,content_hash,actor_principal FROM hsi_interrogative_investigations WHERE id=${input.investigationId} AND actor_principal=${actor.principalId} LIMIT 1`;
   if(rows.length!==1)throw Error("Investigation not found or access denied");
   const i=rows[0]!.payload as InterrogativeInvestigation;
   validateInterrogativeInvestigation(i);
-  if(i.id!==input.investigationId||i.actorPrincipal!==String(rows[0]!.actor_principal)||(reviewerAccess?i.actorPrincipal===actor.principalId:i.actorPrincipal!==actor.principalId)||digest(i)!==String(rows[0]!.content_hash))throw Error("Investigation integrity failure");
+  if(i.id!==input.investigationId||i.actorPrincipal!==String(rows[0]!.actor_principal)||(!reviewerAccess&&i.actorPrincipal!==actor.principalId)||digest(i)!==String(rows[0]!.content_hash))throw Error("Investigation integrity failure");
   return i;
  }finally{await sql.close()}
 }
