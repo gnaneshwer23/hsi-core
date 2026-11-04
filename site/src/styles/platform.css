@@ -706,18 +706,6 @@
   margin-top: 42px;
 }
 
-/* Beat marketing-v2 teal CTA so Platform matches Home coral. */
-.public-site-v2.platform-shell .nav {
-  background: #f3eee8;
-}
-.public-site-v2.platform-shell .nav .nav-cta {
-  background: #ff6845;
-  color: #fff;
-}
-.public-site-v2.platform-shell .nav .nav-cta:hover {
-  background: #e95432;
-}
-
 @media (max-width: 1100px) {
   .hsi-platform-experience-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -830,5 +818,48 @@
   .hsi-platform-silo-core {
     transition: none !important;
     animation: none !important;
+  }
+}
+
+/* Thin /technology overview — pillars under the shared-foundation copy. */
+.hsi-tech-pillars {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 36px;
+  margin-top: 48px;
+}
+.hsi-tech-pillars article {
+  border-top: 1px solid #17645f40;
+  padding-top: 22px;
+}
+.hsi-tech-pillars article > span {
+  display: block;
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: #466d67;
+}
+.hsi-tech-pillars h3 {
+  font-size: clamp(1.25rem, 1.8vw, 1.55rem);
+  margin: 0 0 12px;
+}
+.hsi-tech-pillars p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: #466d67;
+}
+.hsi-tech-depth-note {
+  margin-top: 48px;
+  max-width: 52rem;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: #466d67;
+}
+@media (max-width: 900px) {
+  .hsi-tech-pillars {
+    grid-template-columns: 1fr;
+    gap: 28px;
   }
 }

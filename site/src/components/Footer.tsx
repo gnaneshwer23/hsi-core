@@ -1,12 +1,6 @@
 import { Link } from "react-router-dom";
 import { PRODUCT_NAME, PRODUCT_TAGLINE } from "../lib/brand";
-
-const PLATFORM_LINKS = [
-  { to: "/platform", label: "Platform" },
-  { to: "/products", label: "Products" },
-  { to: "/science", label: "Science" },
-  { to: "/how-it-works", label: "How It Works" },
-] as const;
+import { PRIMARY_NAV_LINKS } from "../lib/primaryNav";
 
 const PRODUCT_LINKS = [
   { to: "/for-isi", label: "ISI Research" },
@@ -37,7 +31,7 @@ export function Footer() {
         <div>
           <h4>Explore</h4>
           <ul>
-            {PLATFORM_LINKS.map((l) => (
+            {PRIMARY_NAV_LINKS.map((l) => (
               <li key={l.to}>
                 <Link to={l.to}>{l.label}</Link>
               </li>

@@ -42,20 +42,45 @@ describe("Public HSI site honesty", () => {
     expect(app).toContain('path="trials-criteria"');
     expect(app).toContain('path="gateway"');
 
-    const nav = site("src/components/Nav.tsx");
-    expect(nav).toContain("/products");
-    expect(nav).toContain("/platform");
-    expect(nav).toContain("/science");
-    expect(nav).toContain("/how-it-works");
-    expect(nav).toContain("How It Works");
+    const primaryNav = site("src/lib/primaryNav.ts");
+    expect(primaryNav).toContain("/products");
+    expect(primaryNav).toContain("/platform");
+    expect(primaryNav).toContain("/science");
+    expect(primaryNav).toContain("/how-it-works");
+    expect(primaryNav).toContain("How It Works");
+    expect(primaryNav).toContain('label: "Explore products"');
+    expect(primaryNav).toContain('to: "/products"');
+    // Technology is a thin operating-model page; Platform keeps architecture depth.
+    expect(primaryNav).toContain('to: "/technology"');
+    expect(primaryNav).toContain('label: "Technology"');
+    expect(primaryNav).toContain('"/technology"');
+    expect(app).toContain('path="technology"');
+    expect(app).toContain("<Technology");
     // Primary IA is founder destinations only; Status/Roadmap/Docs stay footer-only.
-    expect(nav).not.toMatch(/primaryLinks[\s\S]*Curator/);
-    expect(nav).not.toMatch(/primaryLinks[\s\S]*\/discovery/);
-    expect(nav).not.toMatch(/primaryLinks[\s\S]*\/explore/);
-    expect(nav).not.toMatch(/primaryLinks[\s\S]*for-aksh/);
-    expect(nav).not.toMatch(/primaryLinks[\s\S]*for-trials/);
-    expect(nav).not.toMatch(/primaryLinks[\s\S]*for-isi/);
-    expect(nav).not.toMatch(/primaryLinks[\s\S]*\/status/);
+    // Scope to PRIMARY_NAV_LINKS — PUBLIC_MARKETING_PATHS may include product landings.
+    const primaryLinksBlock =
+      primaryNav.match(/export const PRIMARY_NAV_LINKS = \[[\s\S]*?\] as const/)?.[0] ?? "";
+    expect(primaryLinksBlock).toContain("/platform");
+    expect(primaryLinksBlock).toContain("/technology");
+    expect(primaryLinksBlock).toContain("/products");
+    expect(primaryLinksBlock).not.toContain("Curator");
+    expect(primaryLinksBlock).not.toContain("/discovery");
+    expect(primaryLinksBlock).not.toContain("/explore");
+    expect(primaryLinksBlock).not.toContain("for-aksh");
+    expect(primaryLinksBlock).not.toContain("for-trials");
+    expect(primaryLinksBlock).not.toContain("for-isi");
+    expect(primaryLinksBlock).not.toContain("/status");
+    // Cream masthead covers primary IA + product landings reached from Products CTAs.
+    expect(primaryNav).toContain("PUBLIC_MARKETING_PATHS");
+    expect(primaryNav).toContain('"/for-isi"');
+    expect(primaryNav).toContain('"/for-aksh"');
+    expect(primaryNav).toContain('"/for-trials"');
+    expect(primaryNav).toContain('"/discovery"');
+
+    const nav = site("src/components/Nav.tsx");
+    expect(nav).toContain("PRIMARY_NAV_LINKS");
+    expect(nav).toContain("PRIMARY_NAV_CTA");
+    expect(nav).not.toContain("btn-primary");
     expect(nav).not.toContain("ENGINEERING_LINKS");
 
     const home = site("src/pages/Home.tsx");
@@ -153,9 +178,15 @@ it("Stage A Platform includes all four distinct product perspectives and honest 
   expect(platform).toContain('trials:');
   expect(platform).toContain('isi:');
   expect(platform).toContain("ECOSYSTEM_PRODUCTS.find");
+  expect(platform).toContain("ECOSYSTEM_PRODUCTS.map");
   expect(platform).toContain("MATURITY_CHIP_LABEL");
   expect(platform).toContain("No live matching, eligibility confirmation or enrolment");
   expect(platform).toContain("not patient-record transfers");
+  const maturity = site("src/lib/productMaturity.ts");
+  expect(maturity).toContain('name: "Aksh Health"');
+  expect(maturity).toContain('name: "HSI Clinical"');
+  expect(maturity).toContain('name: "HSI Trials"');
+  expect(maturity).toContain('name: "ISI Research"');
 });
 
 

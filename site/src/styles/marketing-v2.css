@@ -17,18 +17,150 @@ body:has(.public-site-v2)::before { display: none; }
 .public-site-v2 :is(.home-section,.pl-section,.prd-section,.sci-section,.hiw-section) { padding-block: 112px; }
 .public-site-v2 :is(.home-button,.pl-button,.prd-button,.sci-button,.hiw-button) { border-radius: 5px; padding: 17px 23px; gap: 32px; font-size: .8rem; background: var(--v2-coral); color: #0b302e; box-shadow: 0 3px 0 #a72d1a18; }
 .public-site-v2 :is(.home-text-link,.pl-link,.prd-link,.sci-link,.hiw-link) { font-size: .8rem; }
-/* A quiet, full-width masthead replaces the floating capsule. */
-.public-site-v2 .nav { background: #f3eee8f2; backdrop-filter: blur(16px); padding: 0 0; min-height: 84px; }
-.public-site-v2 .nav .nav-inner { width: min(1400px, calc(100% - 5rem)); background: transparent; border: 0; border-bottom: 1px solid #17645f20; border-radius: 0; box-shadow: none; padding: 17px 0; backdrop-filter: none; }
-.public-site-v2 .nav .brand { color: #093b38; text-shadow: none; font-size: .85rem; }
-.public-site-v2 .nav .brand-name { letter-spacing: -.025em; }
-.public-site-v2 .nav .brand-mark { width: 30px; height: 30px; border-radius: 6px; background: #17645f; color: #f3eee8; box-shadow: none; }
-.public-site-v2 .nav .nav-links { gap: 20px; }
-.public-site-v2 .nav .nav-links a { color: #164b47; font-size: .72rem; padding: 8px 0; border-radius: 0; }
-.public-site-v2 .nav .nav-links a.active { background: transparent; box-shadow: inset 0 -1px #17645f; }
-.public-site-v2 .nav .nav-links a:hover { background: transparent; color: #0b302e; }
-.public-site-v2 .nav .nav-cta { background: #17645f; color: #f3eee8; border-radius: 5px; text-transform: none; font-size: .72rem; letter-spacing: 0; padding-inline: 18px; height: 40px; }
-.public-site-v2 .nav .nav-toggle { border-radius: 5px; }
+/* Cream editorial masthead — kills global dark glass pill + lime CTA on public paths.
+   Forest-green brand + CTA (not lime, not coral). Scrolled/home-nav must not revive the pill. */
+.public-site-v2 .nav,
+.public-site-v2 .nav.home-nav,
+.public-site-v2 .nav.scrolled {
+  background: #f3eee8;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  padding: 0;
+  min-height: 88px;
+}
+.public-site-v2 .nav .nav-inner,
+.public-site-v2 .nav.home-nav .nav-inner,
+.public-site-v2 .nav.scrolled .nav-inner {
+  width: min(1400px, calc(100% - 5rem));
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid #17645f22 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 18px 0;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.public-site-v2 .nav .brand,
+.public-site-v2 .nav.scrolled .brand,
+.public-site-v2 .nav.home-nav .brand,
+.public-site-v2 .nav .nav-links a,
+.public-site-v2 .nav.scrolled .nav-links a,
+.public-site-v2 .nav.home-nav .nav-links a {
+  color: #17645f;
+  text-shadow: none;
+}
+.public-site-v2 .nav .brand,
+.public-site-v2 .nav .brand.brand-expanded {
+  font-size: 1.02rem;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  text-transform: none;
+}
+.public-site-v2 .nav .brand-name {
+  letter-spacing: -.025em;
+  text-transform: none;
+  max-width: none;
+}
+.public-site-v2 .nav .brand-mark,
+.public-site-v2 .nav.scrolled .brand-mark,
+.public-site-v2 .nav.home-nav .brand-mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 7px;
+  background: #17645f !important;
+  color: #f3eee8 !important;
+  box-shadow: none !important;
+  font-size: .78rem;
+}
+.public-site-v2 .nav .nav-links { gap: 28px; }
+.public-site-v2 .nav .nav-links a {
+  font-size: .9rem;
+  font-weight: 500;
+  padding: 10px 0;
+  border-radius: 0;
+  opacity: 1;
+  background: transparent;
+}
+.public-site-v2 .nav .nav-links a.active,
+.public-site-v2 .nav.scrolled .nav-links a.active,
+.public-site-v2 .nav.home-nav .nav-links a.active {
+  background: transparent !important;
+  color: #0b302e;
+  font-weight: 650;
+  box-shadow: inset 0 -2px #17645f;
+}
+.public-site-v2 .nav .nav-links a:hover,
+.public-site-v2 .nav.scrolled .nav-links a:hover,
+.public-site-v2 .nav.home-nav .nav-links a:hover {
+  background: transparent !important;
+  color: #0b302e;
+}
+.public-site-v2 .nav .nav-cta,
+.public-site-v2 .nav .nav-drawer-cta,
+.public-site-v2 .nav.home-nav .nav-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: #17645f !important;
+  color: #fff !important;
+  border-radius: 6px !important;
+  text-transform: none;
+  font-size: .82rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  padding: 10px 16px;
+  height: auto;
+  min-height: 48px;
+  box-shadow: none !important;
+}
+.public-site-v2 .nav .nav-cta-label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.15;
+  gap: 1px;
+}
+.public-site-v2 .nav .nav-cta .nav-link-arrow {
+  width: 16px;
+  height: 16px;
+}
+.public-site-v2 .nav .nav-drawer-cta {
+  display: inline-flex;
+  justify-content: center;
+  width: 100%;
+}
+.public-site-v2 .nav .nav-cta:hover,
+.public-site-v2 .nav .nav-drawer-cta:hover,
+.public-site-v2 .nav.home-nav .nav-cta:hover {
+  background: #0f4f4a !important;
+  color: #fff !important;
+  transform: translateY(-1px);
+  box-shadow: none !important;
+}
+.public-site-v2 .nav .nav-toggle,
+.public-site-v2 .nav.home-nav .nav-toggle,
+.public-site-v2 .nav.scrolled .nav-toggle {
+  border-radius: 6px;
+  border-color: #17645f40;
+  background: transparent;
+}
+.public-site-v2 .nav .nav-toggle span,
+.public-site-v2 .nav.scrolled .nav-toggle span,
+.public-site-v2 .nav.home-nav .nav-toggle span {
+  background: #17645f;
+}
+.public-site-v2 .nav-drawer {
+  background: #f3eee8;
+  border-color: #17645f26;
+  border-radius: 8px;
+  box-shadow: 0 18px 40px #17645f18;
+}
+.public-site-v2 .nav-drawer a {
+  color: #17645f;
+  border-bottom-color: #17645f20;
+  font-size: .95rem;
+}
 /* Homepage: an expansive headline and an original technical landscape. */
 .public-site-v2 .home-hero { position: relative; background: radial-gradient(ellipse at 17% 68%, #d8e8e3aa, transparent 45%), radial-gradient(ellipse at 88% 85%, #f6cfbd66, transparent 35%), #f3eee8; }
 .public-site-v2 .home-hero-grid { display: block; padding-top: 76px; padding-bottom: 0; text-align: center; }
@@ -184,10 +316,12 @@ body:has(.public-site-v2)::before { display: none; }
 @media (max-width: 750px) {
   .public-site-v2 :is(.home-wrap,.pl-wrap,.prd-wrap,.sci-wrap,.hiw-wrap) { width: calc(100% - 2.5rem); }
   .public-site-v2 :is(.home-section,.pl-section,.prd-section,.sci-section,.hiw-section) { padding-block: 65px; }
-  .public-site-v2 .nav { min-height: 72px; }
-  .public-site-v2 .nav .nav-inner { width: calc(100% - 2.5rem); padding-block: 13px; border-radius: 0; }
-  .public-site-v2 .nav .brand { font-size: .72rem; }
-  .public-site-v2 .nav .brand-name { max-width: 12rem; }
+  .public-site-v2 .nav { min-height: 76px; }
+  .public-site-v2 .nav .nav-inner { width: calc(100% - 2.5rem); padding-block: 14px; border-radius: 0; }
+  .public-site-v2 .nav .brand,
+  .public-site-v2 .nav .brand.brand-expanded { font-size: .88rem; }
+  .public-site-v2 .nav .brand-name { max-width: 11rem; }
+  .public-site-v2 .nav .nav-links a { font-size: .84rem; }
   .public-site-v2 .home-hero-grid { padding-top: 45px; }
   .public-site-v2 .home-redesign h1 { font-size: clamp(2.7rem,10.1vw,4rem); line-height: 1.04; margin-block: 24px; }
   .public-site-v2 .home-lede { font-size: .94rem; }

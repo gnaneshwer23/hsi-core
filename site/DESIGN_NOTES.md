@@ -15,8 +15,12 @@ cadence documented below, not a claimed inspection of the current live site.
 - Keep existing product statuses, research boundaries and interactive content.
 
 `src/styles/marketing-v2.css` is the final scoped presentation layer, imported
-last in `main.tsx`. It applies only through `.public-site-v2` on Home, Platform,
-Products, Science and How It Works. Other routes keep their existing theme.
+last in `main.tsx`. It applies only through `.public-site-v2` on routes listed in
+`PUBLIC_MARKETING_PATHS` (`primaryNav.ts`): Home, Platform, Technology, Products,
+Science, How It Works, plus product landings `/for-isi`, `/for-aksh`, `/for-trials`
+and research entry `/discovery`. Cream masthead + forest CTA on those paths;
+Status, Roadmap, Docs, demos and engineering surfaces keep the glass theme.
+Technology is a thin operating-model overview; Platform holds architecture depth.
 `KnowledgeLandscape.tsx` contains original HSI geometry; no Unkapped code,
 fonts, screenshots, logos or proprietary artwork is copied.
 

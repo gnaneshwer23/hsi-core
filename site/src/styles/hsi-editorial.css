@@ -1,12 +1,21 @@
 /* HSI editorial art direction — reference palette, scoped to public pages. */
 .public-site-v2 { --v2-paper:#F3EEE8; --v2-teal:#17645F; --v2-ink:#17645F; --v2-dark:#17645F; --v2-coral:#FF6845; background:#F3EEE8; }
-.public-site-v2 .nav { background:#F3EEE8f5; }
-.public-site-v2 .nav .nav-inner { border-bottom-color:#17645F26; }
-.public-site-v2 .nav .brand,.public-site-v2 .nav .nav-links a { color:#17645F; }
-.public-site-v2 .nav .brand-mark { background:#17645F; color:#F3EEE8; }
-.public-site-v2 .nav .nav-cta { background:#FF6845; color:#fff; }
-.public-site-v2 .nav .nav-cta:hover { background:#e95432; }
-.public-site-v2 .nav .nav-links a.active { box-shadow:inset 0 -2px #FF6845; }
+.public-site-v2 .nav,
+.public-site-v2 .nav.home-nav,
+.public-site-v2 .nav.scrolled { background:#F3EEE8; }
+.public-site-v2 .nav .nav-inner,
+.public-site-v2 .nav.home-nav .nav-inner,
+.public-site-v2 .nav.scrolled .nav-inner {
+  background:transparent; border:0; border-bottom:1px solid #17645F26; border-radius:0;
+  box-shadow:none; backdrop-filter:none; -webkit-backdrop-filter:none;
+}
+.public-site-v2 .nav .brand,.public-site-v2 .nav .nav-links a { color:#17645F; text-shadow:none; }
+.public-site-v2 .nav .brand-mark { background:#17645F; color:#F3EEE8; border-radius:6px; box-shadow:none; }
+.public-site-v2 .nav .nav-cta,
+.public-site-v2 .nav .nav-drawer-cta { background:#17645F; color:#fff; }
+.public-site-v2 .nav .nav-cta:hover,
+.public-site-v2 .nav .nav-drawer-cta:hover { background:#0f4f4a; color:#fff; }
+.public-site-v2 .nav .nav-links a.active { background:transparent; box-shadow:inset 0 -2px #17645F; font-weight:600; }
 .public-site-v2 :is(.pl-button,.prd-button,.sci-button,.hiw-button,.home-button) { background:#FF6845; color:#fff; }
 .public-site-v2 :is(.pl-page,.prd-page,.sci-page,.hiw-page) { --v2-ink:#17645F; --v2-teal:#17645F; --v2-paper:#F3EEE8; --v2-coral:#FF6845; }
 .hsi-editorial { background:#F3EEE8; color:#17645F; overflow:hidden; }

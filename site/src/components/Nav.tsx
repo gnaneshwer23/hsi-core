@@ -1,25 +1,20 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { PRODUCT_NAME, PRODUCT_SHORT } from "../lib/brand";
+import { PRODUCT_NAME } from "../lib/brand";
+import { PRIMARY_NAV_CTA, PRIMARY_NAV_LINKS, isPublicMarketingPath } from "../lib/primaryNav";
 
-/**
- * Primary destinations — founder public IA.
- * Research / ISI entry via Products + contextual CTAs (not header clutter).
- * Status / Roadmap / Docs stay footer-only. Internal tools are not public navigation.
- */
-const primaryLinks = [
-  { to: "/platform", label: "Platform" },
-  { to: "/technology", label: "Technology" },
-  { to: "/products", label: "Products" },
-  { to: "/science", label: "Science" },
-  { to: "/how-it-works", label: "How It Works" },
-];
+const ctaArrow = (
+  <svg className="nav-link-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+    <path d="M4 16 16 4M4 4h12v12" stroke="currentColor" strokeWidth="1.5" />
+  </svg>
+);
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
   const isHome = pathname === "/";
+  const creamMasthead = isPublicMarketingPath(pathname);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -48,17 +43,19 @@ export function Nav() {
       <div className="nav-inner">
         <Link
           to="/"
-          className={`brand${isHome ? " brand-expanded" : ""}`}
+          className={`brand${creamMasthead ? " brand-expanded" : ""}`}
           aria-label={`${PRODUCT_NAME} home`}
         >
-          <span className="brand-mark">H</span>
+          <span className="brand-mark" aria-hidden="true">
+            H
+          </span>
           <span className="brand-wordmark">
-            <span className="brand-name">{isHome ? PRODUCT_NAME : PRODUCT_SHORT}</span>
+            <span className="brand-name">{PRODUCT_NAME}</span>
           </span>
         </Link>
 
         <nav className="nav-links" aria-label="Primary">
-          {primaryLinks.map((l) => (
+          {PRIMARY_NAV_LINKS.map((l) => (
             <NavLink
               key={l.to}
               to={l.to}
@@ -69,8 +66,12 @@ export function Nav() {
           ))}
         </nav>
 
-        <Link to="/products" className="btn btn-primary nav-cta">
-          Explore products <svg className="nav-link-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12" stroke="currentColor" strokeWidth="1.5"/></svg>
+        <Link to={PRIMARY_NAV_CTA.to} className="nav-cta">
+          <span className="nav-cta-label">
+            <span>Explore</span>
+            <span>products</span>
+          </span>
+          {ctaArrow}
         </Link>
 
         <button
@@ -91,13 +92,21 @@ export function Nav() {
         <NavLink to="/" onClick={() => setOpen(false)}>
           Home
         </NavLink>
-        {primaryLinks.map((l) => (
+        {PRIMARY_NAV_LINKS.map((l) => (
           <NavLink key={l.to} to={l.to} onClick={() => setOpen(false)}>
             {l.label}
           </NavLink>
         ))}
-        <Link to="/products" className="btn btn-primary nav-drawer-cta" onClick={() => setOpen(false)}>
-          Explore products <svg className="nav-link-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12" stroke="currentColor" strokeWidth="1.5"/></svg>
+        <Link
+          to={PRIMARY_NAV_CTA.to}
+          className="nav-cta nav-drawer-cta"
+          onClick={() => setOpen(false)}
+        >
+          <span className="nav-cta-label">
+            <span>Explore</span>
+            <span>products</span>
+          </span>
+          {ctaArrow}
         </Link>
       </div>
     </header>
