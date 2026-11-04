@@ -26,3 +26,14 @@
 @media(max-width:1100px){.tf-motion{gap:8px}.tf-motion-label{font-size:.53rem}}
 @media(max-width:700px){.tf-motion{min-height:60px;margin-bottom:12px}.tf-motion svg{height:55px}.tf-motion-label{font-size:.47rem;letter-spacing:.04em;white-space:normal;max-width:66px}}
 @media(prefers-reduced-motion:reduce){.tf-motion-wave,.tf-motion-path,.tf-arrow-pulse{animation:none!important}.tf-motion-particle{display:none}.tf-stage,.tf-stage-item{transition:none!important;transform:none!important}}
+
+
+/* Richer source and knowledge cards without adding visual clutter. */
+.tf-stage:nth-child(-n+2) .tf-stage-item{padding:15px 12px;align-items:flex-start}
+.tf-stage:nth-child(-n+2) .tf-stage-item>div{min-width:0}
+.tf-stage:nth-child(-n+2) .tf-stage-item strong{font-size:clamp(.78rem,1.02vw,.94rem)}
+.tf-stage:nth-child(-n+2) .tf-stage-item small{font-size:clamp(.62rem,.78vw,.72rem);line-height:1.4}
+.tf-detail-list{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:7px}
+.tf-detail-list li{position:relative;padding-left:11px;font-size:clamp(.61rem,.74vw,.69rem);line-height:1.5;color:#496760;overflow-wrap:anywhere}
+.tf-detail-list li:before{content:"";position:absolute;left:0;top:.52em;width:4px;height:4px;border-radius:50%;background:#ef7357}
+@media(max-width:700px){.tf-stage:nth-child(-n+2) .tf-stage-items{grid-template-columns:1fr}.tf-detail-list li{font-size:.74rem}}
