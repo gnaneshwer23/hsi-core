@@ -1,7 +1,7 @@
 /** Phase 4.1–4.2: source-to-claim literature verification queue.
  * Metadata discovery is not claim validation; no graph promotion or AI approval.
  */
-import type {LiteratureRecord} from "./evidence/europePmcSscDiscovery";
+import type {LiteratureRecord} from "./europePmcSscDiscovery";
 
 export type SscCandidateClaim={
  id:string;pmid:string;doi:string;subject:string;predicate:string;object:string;
