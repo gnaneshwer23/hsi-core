@@ -12,7 +12,9 @@ export function checkpointHsiExecutor(input:{
  return async context=>{
   const started=await startHsiCheckpoint({store:input.store,investigationId:context.investigationId,taskId:context.taskId,inputHash:input.inputHash,startedAt:now()});
   try{
+   if(context.signal.aborted)throw Error("Execution cancelled before dispatch");
    const result=await input.executor(context);
+   if(context.signal.aborted)throw Error("Execution cancelled before checkpoint commit");
    if(!result||!["completed","blocked"].includes(result.status))throw Error("Invalid executor result");
    await finishHsiCheckpoint({store:input.store,checkpoint:started,state:result.status,outputRef:result.status==="completed"?result.outputRef:null,errorCode:result.status==="blocked"?"agent_blocked":null,finishedAt:now()});
    return result;
