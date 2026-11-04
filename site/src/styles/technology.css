@@ -108,3 +108,36 @@
 .nx-application-disclaimer{font-size:.74rem;line-height:1.75;color:#63786d;margin-top:24px;max-width:960px}
 @media(max-width:850px){.nx-application-layout{grid-template-columns:1fr}.nx-application-menu{grid-template-columns:1fr 1fr}}
 @media(max-width:540px){.nx-application-menu{grid-template-columns:1fr}.nx-application-detail{padding:22px}.nx-application-pipeline{grid-template-columns:1fr}.nx-application-arrow{transform:rotate(90deg)}}
+
+/* Section 05: systemic sclerosis supervised research investigation */
+.nx-ssc-investigation{background:linear-gradient(155deg,#f9f7f1,#eaf1eb)}
+.nx-ssc-layout{display:grid;grid-template-columns:minmax(250px,.85fr) minmax(0,1.45fr);gap:24px;align-items:stretch}
+.nx-ssc-left{display:flex;flex-direction:column;gap:16px}
+.nx-ssc-question{padding:25px;background:#185e56;color:#f9f8f0;border-radius:16px}
+.nx-ssc-question>span,.nx-ssc-detail-top,.nx-ssc-review span{font-size:.65rem;font-weight:800;letter-spacing:.09em}
+.nx-ssc-question>span{color:#ffb99d}
+.nx-ssc-question h3{font-size:1.45rem;line-height:1.3;margin:17px 0}
+.nx-ssc-question p{font-size:.75rem;line-height:1.6;color:#d1e7db}
+.nx-ssc-steps{display:grid;gap:8px}
+.nx-ssc-steps button{display:grid;grid-template-columns:30px 1fr;gap:3px 12px;text-align:left;align-items:center;border:1px solid #ccded3;background:#fffefa;border-radius:11px;padding:14px 16px;color:#174d46;cursor:pointer}
+.nx-ssc-steps button>span{grid-row:span 2;color:#bd6548;font-size:.8rem;font-weight:800}
+.nx-ssc-steps button strong{font-size:.88rem}
+.nx-ssc-steps button small{font-size:.7rem;color:#657d73}
+.nx-ssc-steps button[aria-pressed=true]{background:#1a665d;color:white;border-color:#1a665d}
+.nx-ssc-steps button[aria-pressed=true] small,.nx-ssc-steps button[aria-pressed=true]>span{color:#ffcfb9}
+.nx-ssc-detail{border-radius:18px;background:#fffefa;border:1px solid #d0dfd5;padding:29px;box-shadow:0 15px 40px #165a5210}
+.nx-ssc-detail-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:#b35d43}
+.nx-ssc-visual{margin:24px 0;background:#e8f1e9;border-radius:13px;padding:10px 16px 15px;text-align:center}
+.nx-ssc-visual svg{display:block;width:100%;height:auto;max-height:190px}
+.nx-ssc-visual span{font-size:.65rem;color:#537a70}
+.nx-ssc-actor{color:#ae5940;text-transform:uppercase;letter-spacing:.08em;font-size:.67rem;font-weight:800;margin:24px 0 9px}
+.nx-ssc-detail h3{font-size:clamp(1.6rem,3vw,2.5rem);letter-spacing:-.03em;line-height:1.15;margin:0 0 16px}
+.nx-ssc-description{color:#516c63;line-height:1.8;font-size:.91rem}
+.nx-ssc-review{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:27px 0}
+.nx-ssc-review>div{border-top:2px solid #7db9a5;background:#eff5ed;padding:16px;border-radius:0 0 9px 9px;display:flex;flex-direction:column;gap:10px}
+.nx-ssc-review>div:nth-child(2){border-top-color:#e99c7e}
+.nx-ssc-review span{color:#a45b44}
+.nx-ssc-review strong{font-size:.8rem;line-height:1.5;color:#245d52}
+.nx-ssc-disclaimer{font-size:.73rem;line-height:1.75;color:#617b70;max-width:960px;margin-top:22px}
+@media(max-width:900px){.nx-ssc-layout{grid-template-columns:1fr}.nx-ssc-steps{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:570px){.nx-ssc-steps,.nx-ssc-review{grid-template-columns:1fr}.nx-ssc-detail{padding:20px}.nx-ssc-question{padding:21px}}

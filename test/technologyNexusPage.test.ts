@@ -21,10 +21,15 @@ describe("HSI NEXUS technology page", () => {
   it("shows distinct research and clinical applications with explicit maturity and safety boundaries", () => {
     for (const name of ["Evidence-led immune research", "Longitudinal clinical intelligence", "Clinical trial pre-screening", "Biomarker and therapeutic discovery", "REVIEWABLE OUTPUT", "Interpretation boundary", "not a live patient analysis"]) expect(page).toContain(name);
   });
+  it("shows the six-step SSc investigation with explicit review and uncertainty", () => {
+    for (const name of ["RESEARCH INVESTIGATION · SYSTEMIC SCLEROSIS", "Frame the SSc question", "Compare conflicting findings", "Draft testable hypotheses", "Review and decide", "REVIEWABLE ARTIFACT", "INTERPRETATION LIMIT"]) expect(page).toContain(name);
+    expect(page).toContain("No patient data, actual study results");
+  });
   it("keeps interactive journeys keyboard-operable and research boundaries explicit", () => {
     expect(page).toContain("setSourceIndex(index)");
     expect(page).toContain("setEngineIndex(index)");
-    expect(page).toContain("setJourneyIndex(index)");\n    expect(page).toContain("setApplicationIndex(i)");
+    expect(page).toContain("setJourneyIndex(index)");
+    expect(page).toContain("setApplicationIndex(i)");
     expect(page).toContain('aria-live="polite"');
     expect(read("../site/src/components/TechnologyFlow.tsx")).toContain("Data remains under the source system's authorisation and access controls.");
     expect(page).toContain("No autonomous diagnosis or prescribing");
