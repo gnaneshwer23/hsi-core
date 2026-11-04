@@ -35,3 +35,17 @@ test("filters and keyboard markers",async({page})=>{
  await page.keyboard.press("Enter");
  await expect(page.getByRole("heading",{name:"Heart",exact:true})).toBeVisible();
 });
+
+test("Phase 1 spatial model rotates and retains accessible 2D fallback",async({page})=>{
+ await page.goto("/science/body");
+ await expect(page.getByRole("group",{name:/Spatial body illustration, front view/})).toBeVisible();
+ await page.getByRole("button",{name:"Rotate anatomy right"}).click();
+ await expect(page.getByText("front view · 30°")).toBeVisible();
+ await page.getByRole("button",{name:"2D fallback"}).click();
+ await expect(page.getByText("2D accessible fallback")).toBeVisible();
+ await page.getByRole("button",{name:"Select Heart"}).click();
+ await expect(page.getByRole("heading",{name:"Heart",exact:true})).toBeVisible();
+ await expect(page.getByText(/Claim definition:heart/)).toBeVisible();
+ await page.getByRole("button",{name:"Reset"}).click();
+ await expect(page.getByText("front view · 0°")).toBeVisible();
+});
