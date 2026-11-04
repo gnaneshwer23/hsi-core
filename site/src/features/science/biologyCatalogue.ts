@@ -8,6 +8,7 @@ export type BiologyEntity = {
  reviewState: ReviewState; version: string; reviewedAt?: string; reviewer?: string; sourceRefs: string[];
  system?: Exclude<SystemId,"all">; position?: {x:number;y:number}; next?: string;
 };
+export type BiologyClaim = { id:string; entityId:string; text:string; evidenceRefs:string[]; reviewState:ReviewState; evidenceScope:"background"|"claim_level"; reviewedAt?:string; reviewer?:string };
 export type BiologyRelation = {
  id: string; subjectId: string; predicate: string; objectId: string;
  evidenceRefs: string[]; reviewState: ReviewState;
@@ -37,6 +38,8 @@ export const BIOLOGY_ENTITIES: BiologyEntity[]=[
  organ("muscle","Skeletal muscle","endocrine",91,369,"Supports movement and is a major site of insulin-stimulated glucose disposal.","Myocytes and glucose transport","endocrine"),
  organ("adipose","Adipose tissue","endocrine",209,365,"Stores energy and releases signals that interact with metabolic and immune regulation.","Adipocytes and endocrine signalling","endocrine")
 ];
+/** Each displayed organ definition is tracked as a discrete draft claim. References are background-level until reviewed against the precise statement. */
+export const BIOLOGY_CLAIMS:BiologyClaim[]=BIOLOGY_ENTITIES.map(e=>({id:`definition:${e.id}`,entityId:e.id,text:e.definition,evidenceRefs:e.sourceRefs,reviewState:"draft",evidenceScope:"background"}));
 /** Navigation associations only. Not asserted as mechanistic, causal, or reviewed evidence. */
 const ASSOCIATIONS: Record<string,string[]>={
  brain:["heart","pancreas"],lungs:["heart"],heart:["lungs","kidneys"],liver:["pancreas","intestine"],pancreas:["liver","intestine","muscle","adipose"],kidneys:["heart"],intestine:["liver","pancreas","spleen"],spleen:["intestine"],muscle:["pancreas"],adipose:["pancreas"]
@@ -49,5 +52,7 @@ export function validateScienceCatalogue():string[]{
  if(ids.size!==BIOLOGY_ENTITIES.length)errors.push("Duplicate entity identifiers");
  for(const e of BIOLOGY_ENTITIES){if(!e.definition||!e.version||!e.reviewState)errors.push(`Incomplete entity ${e.id}`);for(const s of e.sourceRefs)if(!refs.has(s))errors.push(`Unknown reference ${s}`);}
  for(const r of BIOLOGY_RELATIONS)if(!ids.has(r.subjectId)||!ids.has(r.objectId))errors.push(`Invalid relation ${r.id}`);
+ for(const c of BIOLOGY_CLAIMS){if(!ids.has(c.entityId)||!c.text)errors.push(`Invalid claim ${c.id}`);for(const id of c.evidenceRefs)if(!refs.has(id))errors.push(`Invalid claim source ${c.id}`);if(c.reviewState==="approved"&&(c.evidenceScope!=="claim_level"||!c.reviewer||!c.reviewedAt))errors.push(`Approved claim lacks scientific review ${c.id}`);}
+ for(const r of BIOLOGY_RELATIONS)if(r.reviewState==="approved"&&r.evidenceRefs.length===0)errors.push(`Approved relation missing evidence ${r.id}`);
  return errors;
 }
