@@ -317,6 +317,7 @@ export function Products() {
             </p>
           </div>
 
+          <p className="hsi-products-maturity-note"><strong>What these statuses mean:</strong> “Available” refers to a scoped product or research experience, not an independently verified clinical deployment. “In development” and “Planned” do not indicate live clinical integrations, validated trial matching or approved medical-device functionality.</p>
           <div className="hsi-products-grid">
             {order.map((id, index) => {
               const product = ECOSYSTEM_PRODUCTS.find((p) => p.id === id)!;
@@ -402,13 +403,13 @@ export function Products() {
                   {PRODUCT_SHORT}
                   <small>SHARED TECH</small>
                 </div>
-                <span>AKSH · OWN DATA</span>
-                <span>CLINICAL · OWN DATA</span>
-                <span>ISI RESEARCH · OWN DATA</span>
-                <span>TRIALS · OWN DATA</span>
+                <span>AKSH · CONTROLLED ACCESS</span>
+                <span>CLINICAL · CONTROLLED ACCESS</span>
+                <span>ISI RESEARCH · CONTROLLED ACCESS</span>
+                <span>TRIALS · CONTROLLED ACCESS</span>
               </div>
               <p className="hsi-products-connect-legend">
-                <b>Technology shared</b>
+                <b>Shared intelligence capabilities</b>
                 <span aria-hidden="true">·</span>
                 <b>Governed data access</b>
               </p>
