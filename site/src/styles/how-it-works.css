@@ -82,9 +82,62 @@
 }
 
 .hsi-hiw-experience {
-  background: #1a514e;
-  border: 1px solid #487b75;
-  padding: 28px;
+  --hiw-accent: #ff6845;
+  --hiw-panel: #1a514e;
+  --hiw-panel-edge: #487b75;
+  background: var(--hiw-panel);
+  border: 1px solid var(--hiw-panel-edge);
+  padding: 0 28px 28px;
+}
+
+.hsi-hiw-persona-patient {
+  --hiw-accent: #ff6845;
+  --hiw-panel: #1f4743;
+  --hiw-panel-edge: #5a7a72;
+}
+
+.hsi-hiw-persona-researcher {
+  --hiw-accent: #7ec8b8;
+  --hiw-panel: #1a514e;
+  --hiw-panel-edge: #487b75;
+}
+
+.hsi-hiw-persona-clinician {
+  --hiw-accent: #c4a574;
+  --hiw-panel: #173f45;
+  --hiw-panel-edge: #3d6a72;
+}
+
+.hsi-hiw-persona-trial {
+  --hiw-accent: #9bb0d4;
+  --hiw-panel: #1a3d48;
+  --hiw-panel-edge: #4a6a78;
+}
+
+.hsi-hiw-journey-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 18px;
+  margin: 0 -28px 22px;
+  padding: 12px 28px;
+  background: color-mix(in srgb, var(--hiw-accent) 18%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--hiw-accent) 35%, #ffffff22);
+}
+
+.hsi-hiw-journey-strip-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #f3eee8;
+}
+
+.hsi-hiw-journey-strip-note {
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: #c5dcd5;
 }
 
 .hsi-hiw-journey-head {
@@ -93,12 +146,21 @@
   border-bottom: 1px solid #ffffff33;
 }
 
+.hsi-hiw-journey-kicker {
+  margin: 0 0 10px;
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  font-weight: 650;
+  text-transform: uppercase;
+  color: var(--hiw-accent);
+}
+
 .hsi-hiw-product-line {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 12px;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .hsi-hiw-product-line > span:first-child {
@@ -211,6 +273,14 @@
   font-weight: 700;
   color: #ff6845;
   margin-bottom: 8px;
+}
+
+.hsi-hiw-experience .hsi-hiw-step-main .hsi-editorial-kicker {
+  color: var(--hiw-accent);
+}
+
+.hsi-hiw-stages .hsi-research-step.is-active {
+  border-color: var(--hiw-accent);
 }
 
 .hsi-hiw-controls {
@@ -485,7 +555,12 @@
   }
 
   .hsi-hiw-experience {
-    padding: 20px;
+    padding: 0 20px 20px;
+  }
+
+  .hsi-hiw-journey-strip {
+    margin: 0 -20px 18px;
+    padding: 11px 20px;
   }
 
   .hsi-hiw-controls,

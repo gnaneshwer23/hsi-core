@@ -41,6 +41,8 @@ function moveRadioFocus(
 }
 
 type Step = {
+  /** Short chrome label — persona-specific so journeys do not share one template. */
+  stage: string;
   title: string;
   description: string;
   outputTitle: string;
@@ -51,10 +53,11 @@ type Step = {
 type Journey = {
   title: string;
   intro: string;
-  steps: Step[];
+  /** Six-step illustrative journey — length is fixed for the stepper chrome. */
+  steps: [Step, Step, Step, Step, Step, Step];
 };
 
-const STAGES = ["Connect", "Understand", "Investigate", "Verify", "Review", "Refine"] as const;
+const STAGE_COUNT = 6;
 
 /** Founder Downloads/index (3).html — How HSI Works experience explorer. */
 const JOURNEYS: Record<PersonaId, Journey> = {
@@ -63,6 +66,7 @@ const JOURNEYS: Record<PersonaId, Journey> = {
     intro: "Follow a person using Aksh Health to understand changing metabolic health signals and prepare for a care conversation.",
     steps: [
       {
+        stage: "Gather",
         title: "Bring your information together",
         description: "With permission, relevant health records, laboratory results and personal measurements can be brought into a longitudinal view.",
         outputTitle: "Connected health timeline",
@@ -70,6 +74,7 @@ const JOURNEYS: Record<PersonaId, Journey> = {
         oversight: "Only authorised data should be accessed.",
       },
       {
+        stage: "Trends",
         title: "See what changed",
         description: "View trends over time, including laboratory values, monitoring and daily-life context, without treating one measurement as the whole story.",
         outputTitle: "Meaningful changes over time",
@@ -77,6 +82,7 @@ const JOURNEYS: Record<PersonaId, Journey> = {
         oversight: "A trend is not a diagnosis.",
       },
       {
+        stage: "Question",
         title: "Ask a better question",
         description: "Explore possible context for changes and identify what information might be useful to discuss with a professional.",
         outputTitle: "Questions worth discussing",
@@ -84,6 +90,7 @@ const JOURNEYS: Record<PersonaId, Journey> = {
         oversight: "Explanations must not imply unsupported causation.",
       },
       {
+        stage: "Check",
         title: "Check the explanation",
         description: "Inspect the data behind a summary, its limits and any missing or inconsistent observations.",
         outputTitle: "Traceable interpretation",
@@ -91,6 +98,7 @@ const JOURNEYS: Record<PersonaId, Journey> = {
         oversight: "Uncertainty must be shown.",
       },
       {
+        stage: "Prepare",
         title: "Prepare for care",
         description: "Create a concise summary and questions to take to a clinician.",
         outputTitle: "Visit preparation",
@@ -98,6 +106,7 @@ const JOURNEYS: Record<PersonaId, Journey> = {
         oversight: "Treatment decisions remain with qualified professionals.",
       },
       {
+        stage: "Follow",
         title: "Follow changes over time",
         description: "Continue monitoring relevant trends and record follow-up outcomes as new information becomes available.",
         outputTitle: "Longitudinal perspective",
@@ -111,6 +120,7 @@ const JOURNEYS: Record<PersonaId, Journey> = {
     intro: "Follow a clinician reviewing a complex longitudinal record without losing sight of safety and accountability.",
     steps: [
       {
+        stage: "Access",
         title: "Access authorised context",
         description: "Bring together relevant history, medications, investigations and monitoring from permitted clinical sources.",
         outputTitle: "Patient context view",
@@ -118,6 +128,7 @@ const JOURNEYS: Record<PersonaId, Journey> = {
         oversight: "Identity, access and provenance must be verified.",
       },
       {
+        stage: "Summarise",
         title: "Summarise the timeline",
         description: "Identify clinically relevant events and changes while retaining links to original records.",
         outputTitle: "Longitudinal summary",
@@ -125,6 +136,7 @@ const JOURNEYS: Record<PersonaId, Journey> = {
         oversight: "Summaries can omit important context and require review.",
       },
       {
+        stage: "Investigate",
         title: "Investigate the question",
         description: "Explore medication changes, trends and missing information relevant to the presenting problem.",
         outputTitle: "Clinical review workspace",
@@ -132,6 +144,7 @@ const JOURNEYS: Record<PersonaId, Journey> = {
         oversight: "No autonomous diagnosis or prescribing.",
       },
       {
+        stage: "Validate",
         title: "Validate with evidence",
         description: "Inspect sources, potential contradictions and uncertainty before accepting any generated interpretation.",
         outputTitle: "Evidence-linked considerations",
@@ -139,6 +152,7 @@ const JOURNEYS: Record<PersonaId, Journey> = {
         oversight: "Clinical safety and local validation are essential.",
       },
       {
+        stage: "Document",
         title: "Document and decide",
         description: "A clinician confirms, edits or rejects the interpretation and records the decision through approved workflows.",
         outputTitle: "Clinician-controlled output",
@@ -146,6 +160,7 @@ const JOURNEYS: Record<PersonaId, Journey> = {
         oversight: "Only authorised clinical actions are permitted.",
       },
       {
+        stage: "Outcomes",
         title: "Review outcomes",
         description: "Use subsequent results and follow-up to update the clinical picture and assess workflow performance.",
         outputTitle: "Care continuity",
@@ -159,6 +174,7 @@ const JOURNEYS: Record<PersonaId, Journey> = {
     intro: "Explore how an ISI Research investigation can organise permitted evidence, biological context and human assessment. The example explains the approach rather than reporting a scientific result.",
     steps: [
       {
+        stage: "Scope",
         title: "Define the research question",
         description: "Specify the biological concepts, study population and question being investigated. Make assumptions and limits explicit before looking for an explanation.",
         outputTitle: "Investigation scope",
@@ -166,6 +182,7 @@ const JOURNEYS: Record<PersonaId, Journey> = {
         oversight: "Scope and permissions determine what information can be used.",
       },
       {
+        stage: "Evidence",
         title: "Find relevant evidence",
         description: "Retrieve relevant passages from the permitted evidence collection. Retain source references and versions so the material can be inspected.",
         outputTitle: "Evidence references",
@@ -173,6 +190,7 @@ const JOURNEYS: Record<PersonaId, Journey> = {
         oversight: "Coverage is limited to supplied evidence; this is not a search of all literature.",
       },
       {
+        stage: "Connections",
         title: "Inspect the biological connections",
         description: "Follow existing knowledge relationships and inspect explicit supporting or opposing assessments where available. Keep biological context distinct from direct claim support.",
         outputTitle: "Graph and evidence context",
@@ -180,6 +198,7 @@ const JOURNEYS: Record<PersonaId, Journey> = {
         oversight: "A connection does not establish causation. Missing opposing evidence is not proof of agreement.",
       },
       {
+        stage: "Assess",
         title: "Assess the limits",
         description: "A reviewer examines study setting, population, methods and uncertainties before accepting an interpretation. Unmapped evidence and missing context remain visible.",
         outputTitle: "Questions for assessment",
@@ -187,6 +206,7 @@ const JOURNEYS: Record<PersonaId, Journey> = {
         oversight: "An investigation does not independently validate a scientific finding.",
       },
       {
+        stage: "Review",
         title: "Review the investigation",
         description: "An authorised reviewer inspects the evidence and candidate research questions, records an assessment and prepares a brief with source references retained.",
         outputTitle: "Reviewable research brief",
@@ -194,6 +214,7 @@ const JOURNEYS: Record<PersonaId, Journey> = {
         oversight: "Candidate questions remain unvalidated. Review completion does not approve a claim.",
       },
       {
+        stage: "Refine",
         title: "Refine with human oversight",
         description: "Use reviewer feedback to refine the research question. Further evidence and any change to accepted knowledge require their own checks and human assessment.",
         outputTitle: "Documented next questions",
@@ -207,6 +228,7 @@ const JOURNEYS: Record<PersonaId, Journey> = {
     intro: "Follow a study team organising protocol criteria and preparing information for human eligibility review.",
     steps: [
       {
+        stage: "Identify",
         title: "Identify a study",
         description: "Find relevant studies using verified registry and protocol information.",
         outputTitle: "Study discovery",
@@ -214,6 +236,7 @@ const JOURNEYS: Record<PersonaId, Journey> = {
         oversight: "Recruitment status and registry dates must be checked.",
       },
       {
+        stage: "Protocol",
         title: "Understand the protocol",
         description: "Break down inclusion, exclusion, intervention and visit requirements.",
         outputTitle: "Structured criteria",
@@ -221,6 +244,7 @@ const JOURNEYS: Record<PersonaId, Journey> = {
         oversight: "The protocol remains authoritative.",
       },
       {
+        stage: "Collect",
         title: "Collect relevant context",
         description: "With appropriate consent and access, identify available information relevant to each criterion.",
         outputTitle: "Criteria checklist",
@@ -228,6 +252,7 @@ const JOURNEYS: Record<PersonaId, Journey> = {
         oversight: "Sensitive data use requires a lawful basis.",
       },
       {
+        stage: "Uncertainty",
         title: "Review uncertainty",
         description: "Distinguish information that appears consistent with a criterion from missing or ambiguous information.",
         outputTitle: "Review flags",
@@ -235,6 +260,7 @@ const JOURNEYS: Record<PersonaId, Journey> = {
         oversight: "No automated eligibility confirmation.",
       },
       {
+        stage: "Screening",
         title: "Support screening",
         description: "Provide a reviewable summary to the authorised research team for formal assessment.",
         outputTitle: "Screening preparation",
@@ -242,6 +268,7 @@ const JOURNEYS: Record<PersonaId, Journey> = {
         oversight: "Investigator-led screening determines eligibility.",
       },
       {
+        stage: "Follow-up",
         title: "Track next steps",
         description: "Record follow-up questions and changes in study status through authorised workflows.",
         outputTitle: "Study follow-up",
@@ -392,7 +419,17 @@ export function HowItWorks() {
             ))}
           </div>
 
-          <div className="hsi-hiw-experience" id="journey-content">
+          <div
+            className={`hsi-hiw-experience hsi-hiw-persona-${persona}`}
+            id="journey-content"
+            data-persona={persona}
+            data-product={product.id}
+          >
+            <div className="hsi-hiw-journey-strip" aria-hidden="true">
+              <span className="hsi-hiw-journey-strip-label">{product.name} journey</span>
+              <span className="hsi-hiw-journey-strip-note">Illustrative · not live</span>
+            </div>
+
             <div className="hsi-hiw-journey-head">
               <div className="hsi-hiw-product-line">
                 <span>{product.name}</span>
@@ -400,16 +437,21 @@ export function HowItWorks() {
                   {MATURITY_CHIP_LABEL[product.chip]}
                 </span>
               </div>
+              <p className="hsi-hiw-journey-kicker">{perspective.label} · six illustrative stages</p>
               <h3>{journey.title}</h3>
               <p>{journey.intro}</p>
               <div className="hsi-hiw-scope">{perspective.scope}</div>
             </div>
 
-            <div className="hsi-hiw-stages" role="radiogroup" aria-label="Journey stages">
-              {STAGES.map((label, i) => (
+            <div
+              className="hsi-hiw-stages"
+              role="radiogroup"
+              aria-label={`${product.name} journey stages`}
+            >
+              {journey.steps.map((s, i) => (
                 <button
                   type="button"
-                  key={label}
+                  key={`${persona}-${s.stage}`}
                   role="radio"
                   className={"hsi-research-step" + (i === step ? " is-active" : "")}
                   aria-current={i === step ? "step" : undefined}
@@ -418,13 +460,13 @@ export function HowItWorks() {
                   tabIndex={i === step ? 0 : -1}
                   onClick={() => setStep(i)}
                   onKeyDown={(event) =>
-                    moveRadioFocus(event, i, STAGES.length, setStep)
+                    moveRadioFocus(event, i, STAGE_COUNT, setStep)
                   }
                 >
                   <span className="hsi-research-step-index">0{i + 1}</span>
                   <span className="hsi-research-step-copy">
-                    <strong>{label}</strong>
-                    <small>0{i + 1} / 06</small>
+                    <strong>{s.stage}</strong>
+                    <small>0{i + 1} / 0{STAGE_COUNT}</small>
                   </span>
                   <span aria-hidden="true">↗</span>
                 </button>
@@ -434,7 +476,7 @@ export function HowItWorks() {
             <div className="hsi-hiw-step" id="journey-step-detail" aria-live="polite" aria-atomic="true">
               <div className="hsi-hiw-step-main">
                 <p className="hsi-editorial-kicker">
-                  STEP 0{step + 1} / {STAGES[step].toUpperCase()}
+                  {product.name.toUpperCase()} · STEP 0{step + 1} / {current.stage.toUpperCase()}
                 </p>
                 <h4>{current.title}</h4>
                 <p>{current.description}</p>
@@ -454,9 +496,9 @@ export function HowItWorks() {
               <button type="button" disabled={step === 0} onClick={() => setStep((s) => Math.max(0, s - 1))}>
                 ← Previous stage
               </button>
-              <span>0{step + 1} / 06</span>
-              <button type="button" onClick={() => setStep((s) => (s + 1) % STAGES.length)}>
-                {step === STAGES.length - 1 ? "Restart journey" : "Next stage →"}
+              <span>0{step + 1} / 0{STAGE_COUNT} · {current.stage}</span>
+              <button type="button" onClick={() => setStep((s) => (s + 1) % STAGE_COUNT)}>
+                {step === STAGE_COUNT - 1 ? "Restart journey" : "Next stage →"}
               </button>
             </div>
 
