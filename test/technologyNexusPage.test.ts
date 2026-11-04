@@ -1,0 +1,25 @@
+import { describe, expect, it } from "bun:test";
+import { readFileSync } from "node:fs";
+const read = (path: string) => readFileSync(new URL(path, import.meta.url), "utf8");
+describe("HSI NEXUS technology page", () => {
+  const page = read("../site/src/pages/Technology.tsx");
+  it("is accessible from a dedicated public route and navigation", () => {
+    expect(read("../site/src/App.tsx")).toContain('path="technology" element={<Technology />}');
+    expect(read("../site/src/components/Nav.tsx")).toContain('to: "/technology", label: "Technology"');
+  });
+  it("shows the four independent information domains and six intelligence functions", () => {
+    for (const name of ["Akeno Health", "Aksh Health", "Immune Super Intelligence", "Biomedical research ecosystem", "Context", "Biology", "Evidence", "Reasoning", "Discovery", "Governance"]) expect(page).toContain(name);
+  });
+  it("shows matching, trial intelligence, in-silico discovery and precision medicine without claiming deployment", () => {
+    for (const name of ["Patient and cohort matching", "Clinical trial intelligence", "In-silico drug discovery", "Precision medicine research", "not a validated drug-discovery service", "not live patient analysis"]) expect(page).toContain(name);
+  });
+  it("keeps interactive journeys keyboard-operable and research boundaries explicit", () => {
+    expect(page).toContain("setSourceIndex(index)");
+    expect(page).toContain("setEngineIndex(index)");
+    expect(page).toContain("setJourneyIndex(index)");
+    expect(page).toContain('aria-live="polite"');
+    expect(page).toContain("No unrestricted patient-data pooling");
+    expect(page).toContain("No autonomous diagnosis or prescribing");
+    expect(read("../site/src/styles/technology.css")).toContain("focus-visible");
+  });
+});
