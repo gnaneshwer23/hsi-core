@@ -21,11 +21,17 @@ export async function recordScientificReview(input: {
       if (claims.length !== 1 || !["qc_passed", "under_review"].includes(String(claims[0]?.status))) {
         throw new Error("Claim must be quality-checked and available for review");
       }
-      const sources = await tx`SELECT DISTINCT source_id FROM hsi_evidence_claim_support
-        WHERE claim_id = ${record.claimId}`;
-      const linked = new Set(sources.map((row: { source_id: unknown }) => String(row.source_id)));
-      if (record.evidenceReviewed.some(id => !linked.has(id))) {
-        throw new Error("Reviewed evidence must be linked to the claim");
+      const sources = await tx`SELECT DISTINCT cs.source_id, s.pmid
+        FROM hsi_evidence_claim_support cs
+        JOIN hsi_evidence_sources s ON s.id = cs.source_id
+        WHERE cs.claim_id = ${record.claimId}`;
+      // Review input uses pmid:<number>; source primary keys may use an ingestion namespace.
+      // Resolve against the canonical PMID, never assume a source's internal ID is a PMID.
+      const linkedPmids = new Set(sources
+        .filter((row: {pmid: unknown}) => row.pmid != null)
+        .map((row: {pmid: unknown}) => "pmid:" + String(row.pmid)));
+      if (record.evidenceReviewed.some(id => !linkedPmids.has(id))) {
+        throw new Error("Reviewed PMIDs must resolve to sources linked to the claim");
       }
       if (record.decision === "approve") {
         const eligible = await tx`SELECT s.id FROM hsi_evidence_sources s
