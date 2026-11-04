@@ -42,3 +42,42 @@
 @media(max-width:980px){.nx-data-architecture{grid-template-columns:1fr 1.25fr}.nx-data-spine{display:none}}
 @media(max-width:680px){.nx-data-architecture,.nx-data-selected{grid-template-columns:1fr}.nx-data-source-rail{grid-template-columns:1fr 1fr}.nx-data-source-button{padding:13px;min-height:110px}.nx-data-source-button strong{font-size:.78rem}.nx-data-graph{padding:18px}.nx-data-selected{padding:20px;gap:10px}}
 @media(max-width:420px){.nx-data-source-rail{grid-template-columns:1fr}.nx-data-source-button{min-height:76px}}
+
+/* Section 03 — HSI NEXUS scientific orchestration workbench */
+.nx-nexus-lab{background:linear-gradient(140deg,#0d4945,#17645f 65%,#0e504b)}
+.nx-nexus-layout{display:grid;grid-template-columns:1.04fr .96fr;gap:30px;align-items:stretch}
+.nx-nexus-map{border:1px solid #ffffff39;border-radius:20px;padding:22px;background:radial-gradient(circle at 50% 36%,#2d8d7e55,transparent 65%),#0b4742}
+.nx-nexus-orbit{width:min(100%,480px);margin:auto;aspect-ratio:1}
+.nx-nexus-orbit svg{width:100%;height:100%;overflow:visible}
+.nx-nexus-ring{fill:none;stroke:#c1e4d64d;stroke-width:1.3;stroke-dasharray:3 7}
+.nx-nexus-link{stroke:#a4d7c57a;stroke-width:1.5;transition:stroke .2s,stroke-width .2s}
+.nx-nexus-link.active{stroke:#ffb49b;stroke-width:3}
+.nx-nexus-point{fill:#236e63;stroke:#b8e1d2;stroke-width:2;transition:fill .2s}
+.nx-nexus-point.active{fill:#ff6845;stroke:#ffe6d9}
+.nx-nexus-point-label{font-size:12px;fill:white;font-weight:700}
+.nx-nexus-center{fill:#f5f1e9;stroke:#8ac4b3;stroke-width:2}
+.nx-nexus-center-small{font-size:9px;fill:#34766d;letter-spacing:2px;font-weight:700}
+.nx-nexus-center-title{font-size:25px;fill:#145d55;font-weight:800;letter-spacing:-1px}
+.nx-nexus-map-caption{font-size:.7rem;color:#c6e1d5;text-align:center;margin:-5px 0 23px}
+.nx-nexus-workflow{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+.nx-nexus-workflow>div{border-top:2px solid #ff9a7c;padding:12px 5px;display:flex;flex-direction:column;gap:7px}
+.nx-nexus-workflow span{font-size:.62rem;color:#ffbba4}
+.nx-nexus-workflow strong{font-size:.68rem;line-height:1.35;font-weight:600;color:#eaf4ec}
+.nx-nexus-console{border:1px solid #ffffff36;border-radius:20px;padding:28px;background:#ffffff0d}
+.nx-nexus-console>.nx-kicker{color:#cce9df;margin-bottom:22px}
+.nx-nexus-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.nx-nexus-tabs button{border:1px solid #ffffff5c;border-radius:10px;padding:17px 12px;display:flex;flex-direction:column;gap:9px;text-align:left;color:#f4f3ed;font-size:.88rem;font-weight:650;cursor:pointer}
+.nx-nexus-tabs button span{font-size:.63rem;color:#c7e1d5}
+.nx-nexus-tabs button[aria-pressed=true]{background:#f5f1e9;color:#145a52;border-color:#f5f1e9}
+.nx-nexus-tabs button[aria-pressed=true] span{color:#bd6046}
+.nx-nexus-detail{margin-top:17px;border-radius:13px;padding:28px;background:#f5f1e9;color:#164b47;min-height:330px}
+.nx-nexus-detail .nx-kicker{color:#b4563e}
+.nx-nexus-detail h3{margin:14px 0;font-size:2rem}
+.nx-nexus-detail>p:not(.nx-kicker){font-size:.86rem;line-height:1.8;color:#536d65}
+.nx-nexus-contract{display:grid;gap:11px;margin-top:24px}
+.nx-nexus-contract>div{display:grid;grid-template-columns:130px 1fr;gap:12px;border-top:1px solid #bfd3c7;padding-top:11px}
+.nx-nexus-contract span{font-size:.6rem;letter-spacing:.08em;font-weight:800;color:#a5543e}
+.nx-nexus-contract strong{font-size:.79rem;line-height:1.45;font-weight:600}
+.nx-nexus-note{font-size:.74rem;color:#d6e9df;line-height:1.7;margin-top:24px;max-width:900px}
+@media(max-width:1000px){.nx-nexus-layout{grid-template-columns:1fr}.nx-nexus-map{max-width:800px}.nx-nexus-orbit{max-width:420px}}
+@media(max-width:620px){.nx-nexus-map,.nx-nexus-console{padding:16px}.nx-nexus-tabs{grid-template-columns:repeat(2,1fr)}.nx-nexus-workflow{grid-template-columns:repeat(3,1fr)}.nx-nexus-contract>div{grid-template-columns:1fr;gap:5px}.nx-nexus-detail{padding:19px}}

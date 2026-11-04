@@ -14,6 +14,10 @@ describe("HSI NEXUS technology page", () => {
     for (const name of ["Patient context", "Human biology", "Gut–immune–metabolic", "Biomedical evidence", "POTENTIAL DATA CONTRACT", "TRUST BOUNDARY"]) expect(page).toContain(name);
     expect(page).toContain("not a claim that every source is currently integrated");
   });
+  it("shows the NEXUS collaboration visual and reviewable engine contracts", () => {
+    for (const label of ["Six engines.", "nx-nexus-orbit", "nx-nexus-contract", "REVIEWABLE OUTPUT", "SAFETY BOUNDARY", "Scientific review"]) expect(page).toContain(label);
+    expect(page).toContain("Agents never self-approve claims");
+  });
   it("shows matching, trial intelligence, in-silico discovery and precision medicine without claiming deployment", () => {
     for (const name of ["Patient and cohort matching", "Clinical trial intelligence", "In-silico drug discovery", "Precision medicine research", "not a validated drug-discovery service", "not a live patient analysis"]) expect(page).toContain(name);
   });
