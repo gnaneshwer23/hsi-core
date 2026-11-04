@@ -3,7 +3,7 @@
 | Field | Value |
 | --- | --- |
 | ID | HSI-ARCH-001 |
-| Version | 1.0 |
+| Version | 1.1 |
 | Date | 2026-11-04 |
 | Status | Adopted as target-state architecture principle; implementation not yet verified |
 | Scope | HSI Core, HSI Clinical, HSI Research, HSI Trials and optional Aksh/ISI integrations |
@@ -110,3 +110,50 @@ If not, establish the missing HSI-owned capability or classify the feature expli
 **HSI is the comprehensive intelligence platform. Aksh Health and ISI are independently valuable specialised products in a connected ecosystem.**
 
 **Build intelligence independently. Connect knowledge responsibly. Govern every consequential decision.**
+
+## 11. Operational amendments (v1.1, 2026-11-04)
+
+These amendments refine ARCH-001 without changing its independent-platform principle or replacing ARCH-002.
+
+### 11.1 Canonical Knowledge Core
+
+HSI owns the authoritative **logical** biomedical concept, evidence, ontology-mapping, review and approved-insight contracts. Physical stores may be separated by access boundary and purpose. Aksh, ISI and other products may hold derived views or caches that identify source, graph release/version and refresh time. No downstream product can modify canonical HSI records except through governed authenticated HSI ingestion/review APIs.
+
+### 11.2 Data classification and isolation
+
+Every record and operation must declare one of: `public_biomedical`, `synthetic`, `licensed_partner`, `patient_identifiable_clinical`. Apply classification-specific retention, access, audit, encryption, licensing, lawful-basis and transfer controls. Synthetic material is never evidence-bearing. Patient-identifiable material must not be copied to public research stores by default; authorised de-identification or research use requires its own documented workflow.
+
+### 11.3 Orthogonal evidence taxonomy
+
+Keep **workflow status** (`draft`, `qc_passed`, `under_review`, `approved`, `rejected`, `superseded`, `retracted`) distinct from **scientific assessment** (`not_curated`, `no_direct_evidence_identified`, `context_limited`, `supported`, `partially_supported`, `contested`, `inconclusive`, `approved_curated`, `rejected`) and **epistemic type** (`observational_association`, `experimental_finding`, `review_summary`, `computational_inference`, `hypothesis`). `synthetic_demo` is a data classification/use label, not scientific evidence. Do not treat `metadata_only` licence status as evidence validation or permission to reuse passages.
+
+Each evidence-bearing relationship must record source ID/type/locator, source version, retrieval time, rights, supporting passage or structured measurement reference where permitted, biological context, evidence grade, accountable reviewer, review timestamp and graph release version. No AI-generated proposal is promoted without authenticated scientific review and release controls.
+
+### 11.4 Model and agent governance
+
+Maintain an HSI-owned registry of agent/model identity, intended use, tool permissions, model/provider version, prompt version, evaluation dataset/metrics, known limitations, approval state and retirement. Consequential runs retain actor/role, question, source/release IDs, model/prompt/tool versions, outputs, verification results, human decisions and final disposition. Research hypotheses are never silently presented as established findings.
+
+### 11.5 Contract-first integrations
+
+Use versioned documented OpenAPI/AsyncAPI (or suitable equivalent), stable identifiers, scoped OAuth2/OIDC access, idempotency keys for writes, cursor pagination where appropriate, structured errors, quotas/rate limits, signed webhooks with replay protection and CI contract tests. Adopt a default 90-day deprecation notice for breaking changes unless safety, security or legal urgency requires a documented exception.
+
+### 11.6 Resilience
+
+External adapters require bounded timeouts, exponential backoff with jitter, circuit breakers, isolation/bulkheads, dead-letter or replay strategies where relevant, idempotent reconciliation, health checks and graceful read-only fallbacks. Cache only where data classification and licence permit, with explicit freshness and invalidation rules. Test Aksh/ISI outages and recovery without duplicate or corrupt evidence promotion.
+
+### 11.7 Observability
+
+For consequential ingestion, review, promotion, research and clinical-boundary operations record trace ID, authorised actor/role, data classification, source/release version, relevant model/prompt/tool versions, latency, error category, cost/token usage where applicable, and human review outcome. Do not log patient data, secrets or prohibited licensed content; apply retention, redaction and least privilege.
+
+### 11.8 Additional acceptance gates
+
+1. Canonical graph creation, retrieval, versioning, audit and governance function without Aksh/ISI.
+2. Synthetic-to-curated and unauthorised patient-to-public research promotion fail closed.
+3. Unreviewed AI findings cannot enter `approved_curated` or published releases.
+4. Agent runs record source, model, prompt, tool and human-decision provenance.
+5. Breaking API contracts fail compatibility tests; cross-product outages degrade safely.
+6. Authentication, authorisation, audit, encryption and privacy-minimisation checks pass.
+7. Model evaluation thresholds, run budgets, cost telemetry and recovery reconciliation are tested.
+8. Capability maturity labels distinguish code, integration, automated tests, scientific validation and operational approval.
+
+**Implementation status:** these are governing requirements, not assertions that the repository or live services currently satisfy them. See the ARCH-002 Step 6 readiness audit for known gaps.
