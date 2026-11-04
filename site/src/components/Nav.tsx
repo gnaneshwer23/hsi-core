@@ -66,6 +66,8 @@ export function Nav() {
           ))}
         </nav>
 
+        <Link to="/sign-in" className="nav-sign-in">Sign in</Link>
+
         <Link to={PRIMARY_NAV_CTA.to} className="nav-cta">
           <span className="nav-cta-label">
             <span>Explore</span>
@@ -97,6 +99,7 @@ export function Nav() {
             {l.label}
           </NavLink>
         ))}
+        <NavLink to="/sign-in" className="nav-drawer-sign-in" onClick={() => setOpen(false)}>Sign in</NavLink>
         <Link
           to={PRIMARY_NAV_CTA.to}
           className="nav-cta nav-drawer-cta"
