@@ -5,6 +5,7 @@
  */
 import {queryHsiGovernedGraph,type HsiGraphActor,type HsiGraphReadRepository} from "./hsiGovernedGraphQuery";
 import {buildHsiResearchWorkbench,type HsiWorkbenchResult} from "./hsiResearchGraphWorkbench";
+import {assertHsiResearchSnapshot} from "./hsiResearchSnapshotIntegrity";
 import type {HsiRelationshipDossier} from "./hsiEvidenceTemporalDossier";
 export interface HsiWorkbenchDossierReader{
  readByRelationshipIds(input:{ids:readonly string[];principalId:string}):Promise<readonly HsiRelationshipDossier[]>;
@@ -25,5 +26,6 @@ export async function queryHsiEvidenceBackedWorkbench(input:{
  const allowed=new Set(ids);
  if(dossiers.some(d=>!allowed.has(d.relationship.id)))throw Error("Unrequested evidence dossier returned");
  if(new Set(dossiers.map(d=>d.relationship.id)).size!==dossiers.length)throw Error("Duplicate evidence dossier returned");
+ assertHsiResearchSnapshot({nodes:page.nodes,relationships:page.relationships,dossiers});
  return buildHsiResearchWorkbench({nodes:page.nodes,relationships:page.relationships,dossiers,query:{focusNodeId:input.focusNodeId,maxRelationships:limit,includeDrafts:input.includeDrafts??true}});
 }
