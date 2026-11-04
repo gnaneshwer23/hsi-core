@@ -2,9 +2,16 @@
  * Does not publish, approve or mutate investigation payloads.
  */
 import {SQL} from "bun";
+import {createHash} from "node:crypto";
 import {assertHsiNeonDatabaseUrl} from "./neonGuard";
 import {authenticateHsiNeonSession} from "./neonAuthResearchActor";
-import {fingerprintInterrogativeInvestigation,validateInterrogativeInvestigation,type InterrogativeInvestigation} from "../interrogativeContracts";
+import {validateInterrogativeInvestigation,type InterrogativeInvestigation} from "../interrogativeContracts";
+function canonical(value:unknown):string{
+ if(Array.isArray(value))return "["+value.map(canonical).join(",")+"]";
+ if(value&&typeof value==="object")return "{"+Object.entries(value as Record<string,unknown>).sort(([a],[b])=>a.localeCompare(b)).map(([k,v])=>JSON.stringify(k)+":"+canonical(v)).join(",")+"}";
+ return JSON.stringify(value);
+}
+function digest(i:InterrogativeInvestigation){return createHash("sha256").update(canonical(i)).digest("hex")}
 function requireActor(actor:Awaited<ReturnType<typeof authenticateHsiNeonSession>>){
  if(!actor?.authenticated||!actor.principalId.trim()||!actor.roles.some(r=>["researcher","scientific_reviewer","research_admin"].includes(r)))throw Error("Verified research access required");
  return actor;
@@ -17,7 +24,7 @@ export async function saveAuthenticatedInterrogativeInvestigation(input:{
  const i=input.investigation;validateInterrogativeInvestigation(i);
  if(i.actorPrincipal!==actor.principalId||i.state!=="draft"||i.review!==null)throw Error("Only own unreviewed draft can be saved");
  const guard=assertHsiNeonDatabaseUrl(input.databaseUrl,{neonProjectId:input.neonProjectId});if(!guard.ok)throw Error("HSI database guard: "+guard.reason);
- const contentHash=fingerprintInterrogativeInvestigation(i);
+ const contentHash=digest(i);
  const sql=new SQL(input.databaseUrl,{tls:{rejectUnauthorized:true},connectionTimeout:10});
  try{
   await sql.begin(async tx=>{
