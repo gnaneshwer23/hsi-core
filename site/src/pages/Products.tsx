@@ -100,35 +100,49 @@ const productShowcases: Record<ProductId, { question: string; input: string; pro
 
 function ProductsHeroArt() {
   return (
-    <aside
-      className="hsi-products-hero-art"
-      role="img"
-      aria-label="Four products on one Human Super Intelligence foundation: Aksh Health, ISI Research, HSI Clinical and HSI Trials. Each retains its own access and governance boundaries."
-    >
-      <p className="hsi-products-hero-art-label">Four products · one foundation</p>
-      <div className="hsi-products-hero-art-core">
-        <span className="hsi-products-hero-symbol" aria-hidden="true">
-          {PRODUCT_SHORT[0]}
-        </span>
-        <div>
-          <strong>{PRODUCT_SHORT}</strong>
-          <span>Shared technology foundation</span>
+    <aside className="hsi-products-hero-art" aria-label="Four governed products connected through the HSI NEXUS intelligence foundation">
+      <p className="hsi-products-hero-art-label">THE HSI ECOSYSTEM / CONCEPTUAL ARCHITECTURE</p>
+      <div className="hsi-products-nexus" aria-hidden="true">
+        <div className="hsi-products-nexus-orbit">
+          {order.map((id, i) => {
+            const product = ECOSYSTEM_PRODUCTS.find((p) => p.id === id)!;
+            return <div className={`hsi-products-nexus-node hsi-products-nexus-node-${id}`} key={id}>
+              <span>0{i + 1}</span><strong>{product.name}</strong><small>{MATURITY_CHIP_LABEL[product.chip]}</small>
+            </div>;
+          })}
+          <div className="hsi-products-nexus-center"><span>HSI</span><strong>NEXUS</strong><small>Governed intelligence</small></div>
         </div>
       </div>
-      <ul className="hsi-products-hero-strip">
-        {order.map((id) => {
-          const product = ECOSYSTEM_PRODUCTS.find((p) => p.id === id)!;
-          return (
-            <li key={id}>
-              <span>{product.name}</span>
-              <small>{MATURITY_CHIP_LABEL[product.chip]}</small>
-            </li>
-          );
-        })}
-      </ul>
-      <p className="hsi-products-hero-art-foot">Chooser · honesty ledger · not live workspace access</p>
+      <p className="hsi-products-hero-art-foot">Shared capabilities · independent product permissions · authorised exchange only</p>
     </aside>
   );
+}
+
+function ProductExperienceVisual({ id }: { id: ProductId }) {
+  return <div className={`hsi-products-experience hsi-products-experience-${id}`} aria-hidden="true">
+    <div className="hsi-products-experience-top"><span>HSI / {id.toUpperCase()}</span><span>ILLUSTRATIVE CONCEPT</span></div>
+    {id === "aksh" && <div className="hsi-products-experience-panel">
+      <span className="hsi-products-experience-label">PERSONAL HEALTH OVERVIEW</span><strong>Metabolic health context</strong>
+      <div className="hsi-products-experience-chart"><svg viewBox="0 0 330 110" preserveAspectRatio="none"><path d="M0 88H330M0 52H330M0 16H330" stroke="currentColor" opacity=".18"/><path d="M0 73 C30 62 45 79 70 57 S110 34 135 56 S180 83 205 49 S248 70 270 38 S310 51 330 24" stroke="#ff6845" strokeWidth="4" fill="none"/></svg></div>
+      <div className="hsi-products-experience-pills"><span>Trends</span><span>Symptoms</span><span>Care review</span></div>
+    </div>}
+    {id === "isi" && <div className="hsi-products-experience-panel">
+      <span className="hsi-products-experience-label">IMMUNE EVIDENCE EXPLORER</span><strong>Systemic sclerosis investigation</strong>
+      <div className="hsi-products-experience-network"><span>Immune cell</span><span>Pathway</span><span>Tissue</span><span>Evidence</span><span>Hypothesis</span></div>
+      <div className="hsi-products-experience-pills"><span>Citations</span><span>Contradictions</span><span>Review</span></div>
+    </div>}
+    {id === "clinical" && <div className="hsi-products-experience-panel">
+      <span className="hsi-products-experience-label">LONGITUDINAL CLINICAL REVIEW</span><strong>Encounter chronology</strong>
+      <div className="hsi-products-experience-timeline"><span><b>01</b> Encounter</span><span><b>02</b> Lab trend</span><span><b>03</b> Medication</span><span><b>04</b> Information gap</span></div>
+      <div className="hsi-products-experience-pills"><span>Provenance</span><span>Clinician review</span></div>
+    </div>}
+    {id === "trials" && <div className="hsi-products-experience-panel">
+      <span className="hsi-products-experience-label">STUDY CRITERIA REVIEW</span><strong>Evidence checklist</strong>
+      <div className="hsi-products-experience-criteria"><span><b>✓</b> Criterion documented</span><span><b>?</b> Further evidence required</span><span><b>—</b> Investigator assessment</span></div>
+      <div className="hsi-products-experience-pills"><span>Study criteria</span><span>Human decision</span></div>
+    </div>}
+    <p>Concept visual · no patient records, live matching or validated clinical output</p>
+  </div>;
 }
 
 function ProductArt({ id }: { id: ProductId }) {
@@ -328,7 +342,7 @@ export function Products() {
             </div>
             <div className="hsi-products-showcase-art" role="img" aria-label={`Conceptual visualisation of ${showcaseProduct.name} intelligence workflow`}>
               <span className="hsi-products-showcase-art-kicker">HSI / PRODUCT INTELLIGENCE</span>
-              <ProductArt id={showcaseId}/>
+              <ProductExperienceVisual id={showcaseId}/>
               <div className="hsi-products-showcase-art-flow"><span>{showcase.illustration}</span><strong>Evidence → Context → Human review</strong></div>
               <small>Conceptual representation · not a live application screenshot</small>
             </div>
@@ -361,7 +375,7 @@ export function Products() {
                 <article key={id} className={`hsi-products-card hsi-products-card-${id}`} aria-labelledby={`product-${id}-title`}>
                   <div className="hsi-products-card-visual">
                     <span className="hsi-products-visual-number">0{index + 1}</span>
-                    <ProductArt id={id} />
+                    <ProductExperienceVisual id={id} />
                     <span className="hsi-products-visual-label">{detail.category}</span>
                   </div>
                   <div className="hsi-products-card-body">
