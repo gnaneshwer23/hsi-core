@@ -15,7 +15,7 @@ test("missing, expired or mismatched patient authorisation denied before clinica
  await expect(linkHsiClinicalContextToBiology({...args(),now:"2026-11-06T00:00:00Z"})).rejects.toThrow("expired");
 });
 test("cross-patient clinical facts rejected",async()=>{
- await expect(linkHsiClinicalContextToBiology({...args(),clinical:{readFacts:async()=>[{...await clinical.readFacts()[0],patientRef:"patient:2"}]}})).rejects.toThrow("cross-patient");
+ await expect(linkHsiClinicalContextToBiology({...args(),clinical:{readFacts:async()=>[{factRef:"fact:1",patientRef:"patient:2",kind:"observation" as const,codeSystem:"LOINC",code:"1234-5",recordedAt:"2026-11-04T00:00:00Z"}]}})).rejects.toThrow("cross-patient");
 });
 test("restricted biology and oversized clinical responses fail closed",async()=>{
  await expect(linkHsiClinicalContextToBiology({...args(),biology:{findByClinicalCode:async()=>({nodes:[node("governed_research")],relationships:[]})}})).rejects.toThrow("restricted");
