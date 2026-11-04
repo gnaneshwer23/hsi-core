@@ -24,3 +24,16 @@ test("API never accepts arbitrary paths or exposes internal errors",async()=>{
  const r=await handleInterrogativeApi(new Request(base,{headers:{cookie}}),{...services,load:async()=>{throw Error("secret database url")}});
  expect(r.status).toBe(403);expect(await r.text()).not.toContain("secret");
 });
+
+test("GET cannot execute review submission",async()=>{
+ const r=await handleInterrogativeApi(new Request(base+"/submit-review",{headers:{cookie}}),services);
+ expect(r.status).toBe(405);
+});
+test("POST cannot execute read endpoint",async()=>{
+ const r=await handleInterrogativeApi(new Request(base,{method:"POST",headers:{cookie,origin:"https://hsi.example","content-type":"application/json"},body:"{}"}),services);
+ expect(r.status).toBe(405);
+});
+test("malformed decision JSON returns a safe client error",async()=>{
+ const r=await handleInterrogativeApi(new Request(base+"/decision",{method:"POST",headers:{cookie,origin:"https://hsi.example","content-type":"application/json"},body:"{not-json"}),services);
+ expect(r.status).toBe(400);
+});
