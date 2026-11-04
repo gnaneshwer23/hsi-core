@@ -13,7 +13,9 @@ export type BranchGraphBinding={
 };
 function evidenceKind(type:string):EvidenceKind{
  if(type==="observational_association"||type==="association")return "association";
- return "established_evidence";
+ if(type==="established_evidence")return "established_evidence";
+ if(type==="computational_inference")return "computational_inference";
+ throw Error("Unrecognised graph epistemic type; scientific evidence mapping denied");
 }
 function contextMatches(actual:Record<string,unknown>,required:Readonly<Record<string,string>>):boolean{
  return Object.entries(required).every(([k,v])=>typeof actual[k]==="string"&&actual[k]===v);
