@@ -1,11 +1,11 @@
 import {test,expect} from "bun:test";
 import {planSscInterrogation} from "../src/interrogativeQuestionEngine";
-import {fingerprintInterrogativeInvestigation} from "../src/interrogativeContracts";
+import {fingerprintReviewSnapshot} from "../src/interrogativeScientificReview";
 import {validateHsiScientificReview,prepareHumanReviewedInvestigation,type HsiScientificReviewDecision} from "../src/interrogativeScientificReview";
 const base=planSscInterrogation({question:"What mechanisms should be investigated in SSc?",actorPrincipal:"researcher-1",createdAt:"2026-11-04T12:00:00Z",dataClass:"public_biomedical",focus:"systemic_sclerosis",release:{id:"HSI-GR-SSC",version:"1.0.0",manifestHash:"a".repeat(64)}});
 const investigation={...base,state:"awaiting_scientific_review" as const};
 const reviewer={principalId:"reviewer-2",authenticated:true as const,scope:"ssc" as const,role:"scientific_reviewer" as const,authorityVerifiedAt:"2026-11-04T13:00:00Z"};
-const decision:HsiScientificReviewDecision={schemaVersion:"hsi-interrogative-scientific-review-1",decisionId:"review-1",investigationId:investigation.id,investigationHash:fingerprintInterrogativeInvestigation(investigation),releaseId:investigation.release.id,releaseManifestHash:investigation.release.manifestHash,reviewerPrincipal:"reviewer-2",reviewedAt:"2026-11-04T13:00:00Z",outcome:"request_revision",rationale:"Evidence has not been curated",reviewedClaimIds:[],limitations:["No eligible graph release"],conflictOfInterestDeclared:true};
+const decision:HsiScientificReviewDecision={schemaVersion:"hsi-interrogative-scientific-review-1",decisionId:"review-1",investigationId:investigation.id,investigationHash:fingerprintReviewSnapshot(investigation),releaseId:investigation.release.id,releaseManifestHash:investigation.release.manifestHash,reviewerPrincipal:"reviewer-2",reviewedAt:"2026-11-04T13:00:00Z",outcome:"request_revision",rationale:"Evidence has not been curated",reviewedClaimIds:[],limitations:["No eligible graph release"],conflictOfInterestDeclared:true};
 test("independent reviewer may request revision without publication",()=>{
  expect(()=>validateHsiScientificReview({investigation,reviewer,decision})).not.toThrow();
  const next=prepareHumanReviewedInvestigation({investigation,reviewer,decision});
