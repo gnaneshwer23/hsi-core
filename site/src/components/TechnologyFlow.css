@@ -38,24 +38,12 @@
 .tf-detail-list li:before{content:"";position:absolute;left:0;top:.52em;width:4px;height:4px;border-radius:50%;background:#ef7357}
 @media(max-width:700px){.tf-stage:nth-child(-n+2) .tf-stage-items{grid-template-columns:1fr}.tf-detail-list li{font-size:.74rem}}
 
-/* Expandable capability cards for stages 3–5 */
-.tf-item-button{font:inherit;text-align:left;width:100%;cursor:pointer;color:inherit;appearance:none;align-items:flex-start}
-.tf-item-copy{min-width:0;display:block}
-.tf-item-more{display:inline-block;margin-top:12px;font-size:.65rem;font-weight:750;letter-spacing:.02em;color:#08766b}
-.tf-stage-core .tf-item-more{color:#b9efe3}
-.tf-item-button:hover{border-color:#f47b5e;box-shadow:0 6px 18px #17645f20}
-.tf-item-button:focus-visible,.tf-capability-close:focus-visible{outline:3px solid #ff6845;outline-offset:3px}
-.tf-item-selected{border-color:#ff6845!important;box-shadow:0 0 0 2px #ff684540!important}
-.tf-capability-detail{margin-top:22px;padding:24px 28px;border-radius:16px;background:linear-gradient(125deg,#e3efe9,#fffaf4);border:1px solid #9ebfb2;color:#124b45}
-.tf-capability-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}
-.tf-capability-head h3{font-size:clamp(1.4rem,2.5vw,2rem);margin:8px 0;letter-spacing:-.03em}
-.tf-capability-head p{margin:0;line-height:1.6;color:#4c6e66}
-.tf-capability-kicker{font-size:.64rem!important;font-weight:750;letter-spacing:.12em;color:#08776b!important}
-.tf-capability-close{border:1px solid #94b9ad;border-radius:50%;width:34px;height:34px;background:#fffdf8;color:#14564f;font-size:1.4rem;cursor:pointer;flex:none}
-.tf-capability-points{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;list-style:none;padding:0;margin:20px 0}
-.tf-capability-points li{display:flex;gap:12px;align-items:flex-start;background:#fffdfa;border:1px solid #d7e5dd;border-radius:10px;padding:15px;font-size:.79rem;line-height:1.55}
-.tf-capability-points li span{color:#ec6c4d;font-weight:800}
-.tf-capability-note{font-size:.68rem;line-height:1.5;color:#58766e;margin:0}
-@media(max-width:700px){.tf-capability-points{grid-template-columns:1fr}.tf-capability-detail{padding:18px}.tf-stage:nth-child(n+3) .tf-stage-items{grid-template-columns:1fr 1fr}}
-@media(max-width:390px){.tf-stage:nth-child(n+3) .tf-stage-items{grid-template-columns:1fr}}
-@media(prefers-reduced-motion:reduce){.tf-item-button{transition:none}}
+
+/* Keep all five infographic stages consistent: concise details directly in each card. */
+.tf-stage:nth-child(n+3) .tf-stage-item{padding:13px 11px;align-items:flex-start}
+.tf-stage:nth-child(n+3) .tf-stage-item>div{min-width:0}
+.tf-stage:nth-child(n+3) .tf-detail-list{margin-top:10px;gap:6px}
+.tf-stage:nth-child(n+3) .tf-detail-list li{font-size:clamp(.59rem,.7vw,.67rem);line-height:1.42}
+.tf-stage-core .tf-detail-list li{color:#e3f3ee}
+.tf-stage-core .tf-detail-list li:before{background:#ffb49f}
+@media(max-width:700px){.tf-stage:nth-child(n+3) .tf-stage-items{grid-template-columns:1fr}.tf-stage:nth-child(n+3) .tf-detail-list li{font-size:.74rem}}
