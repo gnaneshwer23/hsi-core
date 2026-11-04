@@ -93,3 +93,22 @@ test("review history backend errors are redacted",async()=>{
  const r=await handleInterrogativeApi(new Request("https://hsi.example/api/research/scientific-review/history",{headers:{cookie}}),{...services,history:async()=>{throw Error("private database secret")}});
  expect(r.status).toBe(403);expect(await r.text()).not.toContain("private database");
 });
+
+test("SSc graph API requires session and valid node",async()=>{
+ const url="https://hsi.example/api/research/graph/ssc?node=ssc:tfh";
+ expect((await handleInterrogativeApi(new Request(url),services)).status).toBe(401);
+ expect((await handleInterrogativeApi(new Request("https://hsi.example/api/research/graph/ssc?node=bad%20node",{headers:{cookie}}),services)).status).toBe(400);
+});
+test("SSc graph API only permits read methods",async()=>{
+ const r=await handleInterrogativeApi(new Request("https://hsi.example/api/research/graph/ssc?node=ssc:tfh",{method:"POST",headers:{cookie,origin:"https://hsi.example"}}),{...services,graph:async()=>({nodes:[],relationships:[]})});
+ expect(r.status).toBe(405);
+});
+test("SSc graph API delegates trusted cookie identity to governed service",async()=>{
+ let seen="";
+ const r=await handleInterrogativeApi(new Request("https://hsi.example/api/research/graph/ssc?node=ssc:tfh",{headers:{cookie}}),{...services,graph:async input=>{seen=input.nodeId;return {nodes:[],relationships:[]}}});
+ expect(r.status).toBe(200);expect(seen).toBe("ssc:tfh");
+});
+test("SSc graph API does not leak database errors",async()=>{
+ const r=await handleInterrogativeApi(new Request("https://hsi.example/api/research/graph/ssc?node=ssc:tfh",{headers:{cookie}}),{...services,graph:async()=>{throw Error("private database secret")}});
+ expect(r.status).toBe(403);expect(await r.text()).not.toContain("private database");
+});
