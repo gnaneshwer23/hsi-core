@@ -724,3 +724,30 @@
 .hsi-products-showcase-art small{font-size:.65rem;opacity:.8;text-align:center}
 @media(max-width:850px){.hsi-products-showcase-stage{grid-template-columns:1fr}.hsi-products-showcase-art{min-height:300px}.hsi-products-showcase-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:530px){.hsi-products-showcase{padding:65px 0}.hsi-products-showcase-tabs{grid-template-columns:1fr 1fr}.hsi-products-showcase-tabs button{padding:13px}.hsi-products-showcase-sequence>div{grid-template-columns:1fr;gap:6px}}
+
+/* P1 visual system: a governed ecosystem, not a fifth patient product */
+.hsi-products-nexus{position:relative;min-height:340px;background:radial-gradient(circle at 50% 50%,#d4e7de 0%,#fffaf4 62%);border:1px solid #17645f25;overflow:hidden}
+.hsi-products-nexus-orbit{position:relative;width:100%;height:340px;display:grid;place-items:center}
+.hsi-products-nexus-orbit:before,.hsi-products-nexus-orbit:after{content:"";position:absolute;inset:36px 20%;border:1px dashed #17645f60;border-radius:50%;pointer-events:none}
+.hsi-products-nexus-orbit:after{inset:83px 31%;border-style:solid;opacity:.3}
+.hsi-products-nexus-center{position:relative;z-index:2;width:125px;height:125px;border-radius:50%;background:#17645f;color:#fffaf4;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 0 9px #17645f18}
+.hsi-products-nexus-center span{font-size:.65rem;letter-spacing:.2em}.hsi-products-nexus-center strong{font-size:1.4rem;letter-spacing:.03em}.hsi-products-nexus-center small{font-size:.55rem;text-align:center}
+.hsi-products-nexus-node{position:absolute;z-index:3;width:130px;min-height:67px;display:flex;flex-direction:column;justify-content:center;padding:9px 11px;background:#fffaf4;border:1px solid #17645f55;box-shadow:0 5px 15px #17645f12}
+.hsi-products-nexus-node span{color:#b84c33;font-size:.55rem}.hsi-products-nexus-node strong{font-size:.72rem;line-height:1.2}.hsi-products-nexus-node small{font-size:.57rem;color:#52756c}
+.hsi-products-nexus-node-aksh{top:13px;left:10px}.hsi-products-nexus-node-isi{top:13px;right:10px}.hsi-products-nexus-node-clinical{bottom:13px;left:10px}.hsi-products-nexus-node-trials{bottom:13px;right:10px}
+.hsi-products-experience{width:100%;min-height:195px;display:flex;flex-direction:column;gap:13px;padding:17px;color:#f4f4e9;background:#17645f}
+.hsi-products-experience-aksh{background:#226d65}.hsi-products-experience-clinical{background:#315b60}.hsi-products-experience-trials{background:#514f65}
+.hsi-products-experience-top{display:flex;justify-content:space-between;gap:8px;font-size:.56rem;letter-spacing:.1em;opacity:.8}
+.hsi-products-experience-panel{display:grid;gap:10px;padding:14px;background:#ffffff14;border:1px solid #ffffff45;flex:1}
+.hsi-products-experience-label{font-size:.55rem;letter-spacing:.13em;opacity:.8}
+.hsi-products-experience-panel>strong{font-size:clamp(.9rem,1.6vw,1.2rem);line-height:1.3}
+.hsi-products-experience-chart{height:72px;background:#ffffff12;padding:5px}.hsi-products-experience-chart svg{height:100%;width:100%;max-height:none}
+.hsi-products-experience-pills{display:flex;gap:5px;flex-wrap:wrap}.hsi-products-experience-pills span{border:1px solid #ffffff65;padding:4px 7px;font-size:.56rem}
+.hsi-products-experience-network{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:8px;min-height:70px}.hsi-products-experience-network span{border-radius:50%;border:1px solid #ffffff9c;background:#ffffff1d;display:grid;place-items:center;padding:9px;font-size:.63rem}
+.hsi-products-experience-network span:nth-child(2){background:#ff6845;border-color:#ff6845;color:#162d29}
+.hsi-products-experience-timeline{display:grid;gap:5px}.hsi-products-experience-timeline span{padding:5px 8px;border-left:2px solid #ffad95;background:#ffffff13;font-size:.68rem}.hsi-products-experience-timeline b{color:#ffad95;margin-right:9px}
+.hsi-products-experience-criteria{display:grid;gap:6px}.hsi-products-experience-criteria span{padding:6px 8px;background:#ffffff14;font-size:.69rem}.hsi-products-experience-criteria b{display:inline-block;width:20px;color:#ffad95}
+.hsi-products-experience>p{font-size:.57rem;line-height:1.4;opacity:.8;margin:0}
+.hsi-products-card-visual{height:auto;min-height:230px}.hsi-products-card-visual .hsi-products-experience{height:230px;padding:20px 22px}.hsi-products-card-visual .hsi-products-experience-panel{padding:12px}.hsi-products-card-visual .hsi-products-experience-top{padding-right:20px}
+.hsi-products-showcase-art .hsi-products-experience{min-height:320px;background:transparent;padding:0}.hsi-products-showcase-art .hsi-products-experience-panel{padding:20px}.hsi-products-showcase-art .hsi-products-experience-chart{height:110px}
+@media(max-width:540px){.hsi-products-nexus{min-height:290px}.hsi-products-nexus-orbit{height:290px}.hsi-products-nexus-center{width:95px;height:95px}.hsi-products-nexus-center strong{font-size:1.1rem}.hsi-products-nexus-node{width:105px;padding:7px}.hsi-products-nexus-node strong{font-size:.62rem}.hsi-products-nexus-node-aksh,.hsi-products-nexus-node-clinical{left:5px}.hsi-products-nexus-node-isi,.hsi-products-nexus-node-trials{right:5px}.hsi-products-nexus-orbit:before{inset:28px 13%}.hsi-products-nexus-orbit:after{inset:70px 26%}.hsi-products-showcase-art{padding:20px}}
