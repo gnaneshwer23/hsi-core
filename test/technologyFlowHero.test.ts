@@ -21,6 +21,14 @@ describe("Technology data-to-discovery hero",()=>{
     expect(flow).toContain("tf-arrow-pulse");
     expect(read("../site/src/components/TechnologyFlow.css")).toContain("prefers-reduced-motion:reduce");
   });
+  it("makes NEXUS engines, intelligence outputs and impact cards interactive",()=>{
+    for(const term of ["Context Engine","Biology Engine","Evidence Engine","Reasoning Engine","Discovery Engine","Governance Engine","Clinical trial intelligence","In-silico drug discovery","Therapeutic candidates","Inclusive trials"]) expect(flow).toContain(term);
+    expect(flow).toContain("setActiveItem(");
+    expect(flow).toContain('aria-expanded={activeItem?.stage===i&&activeItem.row===j}');
+    expect(flow).toContain('aria-live="polite"');
+    expect(flow).toContain('id="tf-capability-detail"');
+    expect(read("../site/src/components/TechnologyFlow.css")).toContain(".tf-capability-points");
+  });
   it("has interactive and honest stage explanations",()=>{
     expect(flow).toContain("aria-pressed={selected===i}");
     expect(flow).toContain('aria-live="polite"');
