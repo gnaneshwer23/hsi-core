@@ -27,6 +27,7 @@ import { Sources } from "./pages/Sources";
 import { Science } from "./pages/Science";
 import { ScienceDisease } from "./pages/ScienceDisease";
 import { ScienceBody } from "./pages/ScienceBody";
+import { ScienceGraph } from "./pages/ScienceGraph";
 import { ScienceZoom, ScienceConnections } from "./pages/ScienceExplorer";
 import { NotFound } from "./pages/NotFound";
 
@@ -41,6 +42,7 @@ export default function App() {
         <Route path="explore" element={<Explore />} />
         <Route path="science" element={<Science />} />
         <Route path="science/body" element={<ScienceBody />} />
+        <Route path="science/graph" element={<ScienceGraph />} />
         <Route path="science/zoom" element={<ScienceZoom />} />
         <Route path="science/connections" element={<ScienceConnections />} />
         <Route path="science/disease" element={<ScienceDisease />} />
