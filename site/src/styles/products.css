@@ -693,3 +693,34 @@
 
 .hsi-products-maturity-note{max-width:940px;margin:0 0 26px;padding:16px 20px;border-left:3px solid #17645f;background:#e8eee7;color:#245b54;font-size:.81rem;line-height:1.7}
 .hsi-products-maturity-note strong{font-weight:750}
+
+/* P1 — differentiated product showcase */
+.hsi-products-showcase{padding:110px 0;background:#f2eee8;scroll-margin-top:95px}
+.hsi-products-showcase .hsi-editorial-sectionhead h2 em{color:#ff6845}
+.hsi-products-showcase-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:30px 0 15px}
+.hsi-products-showcase-tabs button{display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-width:0;padding:17px 18px;background:#fffaf4;color:#17645f;border:1px solid #17645f40;cursor:pointer;text-align:left}
+.hsi-products-showcase-tabs button[aria-pressed=true]{background:#17645f;color:#fffaf4;border-color:#17645f}
+.hsi-products-showcase-tabs button strong{font-size:.88rem}.hsi-products-showcase-tabs button small{font-size:.68rem;opacity:.75}
+.hsi-products-showcase-tabs button:focus-visible{outline:3px solid #ff6845;outline-offset:2px}
+.hsi-products-showcase-stage{display:grid;grid-template-columns:1.15fr .85fr;min-height:510px;border:1px solid #17645f30;background:#fffaf4}
+.hsi-products-showcase-narrative{padding:clamp(24px,4vw,50px)}
+.hsi-products-showcase-narrative h3{font-size:clamp(1.7rem,3vw,2.8rem);line-height:1.14;margin:18px 0 12px;max-width:570px;color:#17645f}
+.hsi-products-showcase-status{font-size:.75rem;color:#52756c;line-height:1.6}
+.hsi-products-showcase-sequence{display:grid;gap:0;margin:22px 0}
+.hsi-products-showcase-sequence>div{display:grid;grid-template-columns:135px 1fr;gap:15px;padding:15px 0;border-top:1px solid #17645f25}
+.hsi-products-showcase-sequence span{font-size:.64rem;letter-spacing:.08em;font-weight:750;color:#ad4e35}
+.hsi-products-showcase-sequence p{margin:0;color:#3c6159;font-size:.83rem;line-height:1.65}
+.hsi-products-showcase-review{border-left:3px solid #ff6845;padding:12px 16px;background:#f3eee8;color:#375f57;font-size:.79rem;line-height:1.65;margin:20px 0}
+.hsi-products-showcase-review strong{display:block;color:#17645f}
+.hsi-products-showcase-art{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:25px;padding:32px;background:#17645f;color:#fffaf4;min-width:0}
+.hsi-products-showcase-aksh .hsi-products-showcase-art{background:#266e65}
+.hsi-products-showcase-clinical .hsi-products-showcase-art{background:#355d60}
+.hsi-products-showcase-trials .hsi-products-showcase-art{background:#514f65}
+.hsi-products-showcase-art svg{width:min(100%,420px);height:auto;max-height:250px}
+.hsi-products-showcase-art-kicker{font-size:.62rem;letter-spacing:.14em;align-self:flex-start;color:#e0ede7}
+.hsi-products-showcase-art-flow{display:grid;gap:10px;text-align:center;border-top:1px solid #ffffff50;padding-top:20px;width:100%}
+.hsi-products-showcase-art-flow span{font-size:.7rem;letter-spacing:.08em;color:#e0ede7}
+.hsi-products-showcase-art-flow strong{font-size:.95rem}
+.hsi-products-showcase-art small{font-size:.65rem;opacity:.8;text-align:center}
+@media(max-width:850px){.hsi-products-showcase-stage{grid-template-columns:1fr}.hsi-products-showcase-art{min-height:300px}.hsi-products-showcase-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:530px){.hsi-products-showcase{padding:65px 0}.hsi-products-showcase-tabs{grid-template-columns:1fr 1fr}.hsi-products-showcase-tabs button{padding:13px}.hsi-products-showcase-sequence>div{grid-template-columns:1fr;gap:6px}}
