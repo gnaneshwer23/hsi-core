@@ -29,7 +29,7 @@ test("filters and keyboard markers",async({page})=>{
  await page.goto("/science/body");
  await page.getByLabel("Biological system").selectOption("immune");
  await expect(page.getByRole("button",{name:/Spleen/}).first()).toBeVisible();
- await expect(page.getByRole("button",{name:/Pancreas/}).first()).toHaveCount(0);
+ await expect(page.getByRole("group",{name:"Choose an organ"}).getByRole("button",{name:/Pancreas/})).toHaveCount(0);
  await page.getByLabel("Biological system").selectOption("all");
  await page.getByRole("button",{name:"Select Heart"}).focus();
  await page.keyboard.press("Enter");
