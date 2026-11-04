@@ -30,6 +30,7 @@ import { Sources } from "./pages/Sources";
 import { Science } from "./pages/Science";
 import { ScienceLiterature } from "./pages/ScienceLiterature";
 import { ScienceStudyComparison } from "./pages/ScienceStudyComparison";
+import { ScienceReviewPreparation } from "./pages/ScienceReviewPreparation";
 import { ScienceDisease } from "./pages/ScienceDisease";
 import { ScienceBody } from "./pages/ScienceBody";
 import { ScienceGraph } from "./pages/ScienceGraph";
@@ -56,6 +57,7 @@ export default function App() {
         <Route path="science" element={<Science />} />
         <Route path="science/literature" element={<ScienceLiterature />} />
         <Route path="science/study-comparison" element={<ScienceStudyComparison />} />
+        <Route path="science/review-preparation" element={<ScienceReviewPreparation />} />
         <Route path="science/body" element={<ScienceBody />} />
         <Route path="science/graph" element={<ScienceGraph />} />
         <Route path="science/paths" element={<SciencePaths />} />
