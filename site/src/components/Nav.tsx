@@ -66,7 +66,7 @@ export function Nav() {
           ))}
         </nav>
 
-        <Link to="/sign-in" className="nav-sign-in">Sign in</Link>
+        <div className="nav-auth-actions"><Link to="/sign-in" className="nav-sign-in">Sign in</Link><Link to="/sign-up" className="nav-sign-up">Sign up</Link></div>
 
         <Link to={PRIMARY_NAV_CTA.to} className="nav-cta">
           <span className="nav-cta-label">
@@ -100,6 +100,7 @@ export function Nav() {
           </NavLink>
         ))}
         <NavLink to="/sign-in" className="nav-drawer-sign-in" onClick={() => setOpen(false)}>Sign in</NavLink>
+        <NavLink to="/sign-up" className="nav-drawer-sign-in" onClick={() => setOpen(false)}>Sign up</NavLink>
         <Link
           to={PRIMARY_NAV_CTA.to}
           className="nav-cta nav-drawer-cta"
