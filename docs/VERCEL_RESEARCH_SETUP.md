@@ -52,6 +52,10 @@ In **Settings → Environment Variables**:
 The server can fall back from `HSI_AUTH_BASE_URL` to the existing public
 `VITE_HSI_AUTH_BASE_URL`, but an explicit matching server setting is clearer.
 There is deliberately **no fallback** from `HSI_DATABASE_URL` to `DATABASE_URL`.
+When both Auth URL variables are present, they must match after URL normalisation.
+For managed HSI Neon Auth, the endpoint path is `/neondb/auth`, with no trailing
+full stop. A copied `/auth.` or `/auth.` followed by whitespace is rejected by
+configuration checks instead of sending credentials to a nonexistent endpoint.
 
 Add the exact test-site origin to Neon Auth's trusted origins. An automatically
 changing preview URL must not be guessed or trusted with a blanket wildcard;
@@ -79,11 +83,21 @@ open the exact configured domain or correct `HSI_PUBLIC_ORIGIN` and redeploy.
 `https://www.humansuperintelligence.tech` and
 `https://humansuperintelligence.tech` are distinct origins. The matching origin
 must also be trusted by Neon Auth; do not weaken the check to accept arbitrary hosts.
+The `authUrlsMatch` field must also be true.
 
 If the route is missing/404, check the deployment commit, root directory,
 function build logs and external-file inclusion. If it returns 503 with
 `configuration_required`, the `missing` field names invalid/missing settings
 without exposing their values.
+
+For a read-only provider connectivity check, open `/api/auth/diagnostics` on the
+same configured origin. This performs only an anonymous provider `GET /get-session`;
+it never forwards browser cookies, submits credentials, creates accounts or
+queries the database. `provider_reachable` confirms the session endpoint answered
+with the expected signed-out shape, not that login or signup is enabled. Other
+responses report a safe provider HTTP status and recognised error code without
+returning arbitrary upstream messages or session data. The gateway sends Neon's
+`x-neon-auth-middleware: true` proxy marker, matching its published server SDK.
 
 ## 3. Switch login to the same-origin gateway
 

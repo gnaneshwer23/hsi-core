@@ -2,6 +2,7 @@
  * Provider cookies stay HttpOnly; tokens and provider internals never enter JSON sent to the browser.
  */
 export type AuthGatewayConfig={authBaseUrl:string;publicOrigin:string};
+import {knownAuthErrorCode} from "../authErrors";
 const COOKIE=/^(?:__Secure-|__Host-)?(?:better-auth|neon-auth)\.(?:session_token|session_data|dont_remember)$/;
 export function providerCookies(request:Request):string{
  const raw=request.headers.get("cookie")??"";
@@ -25,7 +26,7 @@ export function parseProviderSession(value:unknown){
 }
 export async function requestProvider(config:AuthGatewayConfig,request:Request,path:string,body:unknown,transport:typeof fetch=fetch):Promise<Response>{
  const cookies=providerCookies(request);
- return transport(config.authBaseUrl+path,{method:body===undefined?"GET":"POST",redirect:"error",cache:"no-store",signal:AbortSignal.timeout(6000),headers:{Accept:"application/json",Origin:config.publicOrigin,...(cookies?{Cookie:cookies}:{}),...(body===undefined?{}:{"Content-Type":"application/json"})},...(body===undefined?{}:{body:JSON.stringify(body)})});
+ return transport(config.authBaseUrl+path,{method:body===undefined?"GET":"POST",redirect:"error",cache:"no-store",signal:AbortSignal.timeout(6000),headers:{Accept:"application/json",Origin:config.publicOrigin,"x-neon-auth-middleware":"true",...(cookies?{Cookie:cookies}:{}),...(body===undefined?{}:{"Content-Type":"application/json"})},...(body===undefined?{}:{body:JSON.stringify(body)})});
 }
 export async function verifiedProviderSession(config:AuthGatewayConfig,request:Request,transport:typeof fetch=fetch){
  if(!providerCookies(request))return null;
@@ -67,8 +68,22 @@ export async function handleAuthGateway(request:Request,config:AuthGatewayConfig
   const response=await requestProvider(config,request,path,body,transport);
   if(!(response.headers.get("content-type")??"").includes("application/json"))return gatewayJson({code:"AUTH_INVALID_RESPONSE"},502);
   const value=await response.json() as Record<string,unknown>|null;
-  if(!response.ok){const result=gatewayJson({code:typeof value?.code==="string"&&value.code.length<=100?value.code:"AUTH_DENIED"},response.status);copyProviderCookies(response,result);return result}
+  if(!response.ok){const result=gatewayJson({code:knownAuthErrorCode(value)??"AUTH_PROVIDER_REJECTED"},response.status);copyProviderCookies(response,result);return result}
   const result=path==="/get-session"?gatewayJson(parseProviderSession(value)):path==="/sign-out"?gatewayJson({success:true}):gatewayJson({user:safeUser(value?.user)});
   copyProviderCookies(response,result);return result;
  }catch{return gatewayJson({code:"AUTH_UNAVAILABLE"},503)}
+}
+
+/** Anonymous GET-only provider check. Never forwards browser cookies or returns session data. */
+export async function diagnoseAuthProvider(request:Request,config:AuthGatewayConfig,transport:typeof fetch=fetch):Promise<Response>{
+ if(request.method!=="GET")return gatewayJson({error:"Method not allowed"},405);
+ try{
+  const response=await requestProvider(config,new Request(config.publicOrigin+"/api/auth/diagnostics"),"/get-session",undefined,transport);
+  if(!(response.headers.get("content-type")??"").toLowerCase().includes("application/json"))return gatewayJson({service:"hsi-auth",status:"provider_invalid_response",providerHttpStatus:response.status},502);
+  const value=await response.json();
+  if(!response.ok)return gatewayJson({service:"hsi-auth",status:"provider_rejected",providerHttpStatus:response.status,code:knownAuthErrorCode(value)??"AUTH_PROVIDER_REJECTED"},502);
+  // An anonymous session check must return null. Do not expose any unexpected identity.
+  if(value!==null)return gatewayJson({service:"hsi-auth",status:"provider_unexpected_session_shape",providerHttpStatus:response.status},502);
+  return gatewayJson({service:"hsi-auth",status:"provider_reachable",providerHttpStatus:response.status,credentialsTested:false,databaseConnectionTested:false});
+ }catch{return gatewayJson({service:"hsi-auth",status:"provider_unavailable"},503)}
 }

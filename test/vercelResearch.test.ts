@@ -14,7 +14,7 @@ test("Vercel health reports missing configuration without querying a DB or echoi
  const missing=await handleVercelResearch(req("/api/research/health"),{}, {transport:noCalls});
  expect(missing.status).toBe(503);expect((await missing.json()).missing).toContain("HSI_DATABASE_URL");
  const configured=await handleVercelResearch(req("/api/research/health"),env,{transport:noCalls});
- expect(await configured.json()).toEqual({service:"hsi-research",status:"configuration_validated",writesEnabled:false,publicOrigin:origin,requestOrigin:origin,originMatches:true,databaseConnectionTested:false});
+ expect(await configured.json()).toEqual({service:"hsi-research",status:"configuration_validated",writesEnabled:false,publicOrigin:origin,requestOrigin:origin,originMatches:true,authUrlsMatch:true,databaseConnectionTested:false});
  expect(configured.headers.get("cache-control")).toBe("no-store");
  expect(readResearchDeploymentConfig({...env,HSI_DATABASE_URL:"postgresql://secret@attacker.example/neondb"}).ok).toBe(false);
  expect(readResearchDeploymentConfig({...env,HSI_AUTH_BASE_URL:origin+"/api/auth"}).ok).toBe(false);
@@ -92,4 +92,31 @@ test("browser transport uses same-origin auth routes while preserving approved-p
  let seen="";const c=createHsiAuthClient(env.HSI_AUTH_BASE_URL,transport(async url=>{seen=String(url);return Response.json(null)}),8000,"same-origin");
  expect((await c.session()).error).toBeNull();expect(seen).toBe("/api/auth/get-session");
  const disabled=createHsiAuthClient("postgresql://invalid",noCalls,8000,"same-origin");expect((await disabled.session()).error?.code).toBe("auth_not_configured");
+});
+
+test("configuration rejects a trailing full stop in the Neon endpoint and mismatched browser/server auth URLs",()=>{
+ const neon="https://ep-sweet-hill-zasb0lni.neonauth.c-2.eu-west-2.aws.neon.tech/neondb/auth";
+ for(const serverUrl of [neon+".",neon+".\u00a0",neon+"/wrong"]){
+  const c=readResearchDeploymentConfig({...env,HSI_AUTH_BASE_URL:serverUrl,VITE_HSI_AUTH_BASE_URL:neon});expect(c.ok).toBe(false);expect(c.authUrlsMatch).toBe(false);
+ }
+ expect(readResearchDeploymentConfig({...env,HSI_AUTH_BASE_URL:neon,VITE_HSI_AUTH_BASE_URL:neon}).ok).toBe(true);
+ expect(readResearchDeploymentConfig({...env,HSI_AUTH_BASE_URL:neon,VITE_HSI_AUTH_BASE_URL:"https://different.example/auth"}).ok).toBe(false);
+});
+test("Neon proxy marker is server-owned and wrapped provider errors retain only recognised codes",async()=>{
+ const response=await handleVercelResearch(post("/api/auth/sign-in/email",{email:"test@example.invalid",password:"test-password"}),env,{transport:transport(async(_url,init)=>{
+  expect(new Headers(init?.headers).get("x-neon-auth-middleware")).toBe("true");
+  return Response.json({error:{code:"invalid_email_or_password",message:"must never be echoed"}},{status:401});
+ })});
+ expect(await response.json()).toEqual({code:"INVALID_EMAIL_OR_PASSWORD"});
+});
+test("auth diagnostics use only anonymous GET and never return provider identity or cookies",async()=>{
+ let cookieSent:string|null="not-checked";
+ const response=await handleVercelResearch(req("/api/auth/diagnostics",{headers:{cookie}}),env,{transport:transport(async(_url,init)=>{cookieSent=new Headers(init?.headers).get("cookie");expect(init?.method).toBe("GET");return Response.json(null,{headers:{"set-cookie":"secret-do-not-forward=value"}})})});
+ expect(cookieSent).toBeNull();expect(response.headers.get("set-cookie")).toBeNull();expect(await response.json()).toEqual({service:"hsi-auth",status:"provider_reachable",providerHttpStatus:200,credentialsTested:false,databaseConnectionTested:false});
+ const unexpected=await handleVercelResearch(req("/api/auth/diagnostics"),env,{transport:transport(async()=>Response.json(identity))});expect(unexpected.status).toBe(502);expect(await unexpected.text()).not.toContain(identity.user.email);
+ expect((await handleVercelResearch(post("/api/auth/diagnostics"),env,{transport:noCalls})).status).toBe(405);
+});
+test("unknown upstream codes cannot echo provider details or hide the HTTP rejection status",async()=>{
+ const client=createHsiAuthClient(env.HSI_AUTH_BASE_URL,transport(async()=>handleVercelResearch(post("/api/auth/sign-in/email",{email:"test@example.invalid",password:"test-password"}),env,{transport:transport(async()=>Response.json({code:"secret-or-arbitrary-code",message:"password-value"},{status:403}))})),8000,"same-origin");
+ const result=await client.signIn("test@example.invalid","test-password");expect(result.error?.message).toContain("HTTP 403");expect(result.error?.code).toBe("AUTH_PROVIDER_REJECTED");expect(JSON.stringify(result)).not.toContain("secret-or-arbitrary-code");expect(JSON.stringify(result)).not.toContain("password-value");
 });

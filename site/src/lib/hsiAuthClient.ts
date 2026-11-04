@@ -1,3 +1,4 @@
+import {AUTH_ERROR_MESSAGES,knownAuthErrorCode} from "../../../src/authErrors";
 /** Pure browser authentication transport. No database credentials, sessions or role grants are stored here. */
 export type AuthError={message:string;code?:string};
 export type AuthResult<T>={data:T|null;error:AuthError|null};
@@ -34,32 +35,9 @@ export function createHsiAuthClient(configured:unknown,request:typeof fetch=fetc
     if(!(response.headers.get("content-type")??"").toLowerCase().includes("application/json"))return{data:null,error:{message:"Authentication endpoint returned an unexpected response. Check the approved auth URL and reverse proxy.",code:"auth_invalid_response"}};
     let value:unknown;try{value=await response.json();}catch{return{data:null,error:{message:"Authentication endpoint returned invalid JSON.",code:"auth_invalid_response"}};}
     if(!response.ok){
-     const code=record(value)&&typeof value.code==="string"?value.code:"";
-     const safe:Record<string,string>={
-      INVALID_EMAIL_OR_PASSWORD:"Email address or password is incorrect.",
-      EMAIL_NOT_VERIFIED:"Verify your email address before signing in.",
-      TOO_MANY_REQUESTS:"Too many authentication attempts. Please try again later.",
-      USER_ALREADY_EXISTS:"An account already exists for this email. Try signing in.",
-      USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL:"An account already exists for this email. Try signing in.",
-      EMAIL_ALREADY_EXISTS:"An account already exists for this email. Try signing in.",
-      INVALID_EMAIL:"The authentication service did not accept this email address.",
-      PASSWORD_TOO_SHORT:"The authentication service requires a longer password.",
-      PASSWORD_TOO_LONG:"The authentication service requires a shorter password.",
-      SIGN_UP_DISABLED:"The authentication service has registration disabled. The HSI administrator must enable account creation.",
-      SIGNUP_DISABLED:"The authentication service has registration disabled. The HSI administrator must enable account creation.",
-      INVALID_ORIGIN:"The authentication service has not approved this website’s origin. The HSI administrator must update its trusted origins.",
-      ORIGIN_NOT_ALLOWED:"The authentication service has not approved this website’s origin. The HSI administrator must update its trusted origins.",
-      UNTRUSTED_ORIGIN:"The authentication service has not approved this website’s origin. The HSI administrator must update its trusted origins.",
-      FAILED_TO_CREATE_USER:"The authentication service could not create the account. Please try again or contact the HSI administrator.",
-      AUTH_UNAVAILABLE:"Authentication service unavailable. Please retry or contact the HSI administrator.",
-      AUTH_INVALID_RESPONSE:"Authentication service returned an unexpected response. Contact the HSI administrator.",
-      AUTH_GATEWAY_NOT_CONFIGURED:"Authentication gateway configuration is incomplete. The HSI administrator must check the deployment settings.",
-      DEPLOYMENT_ORIGIN_MISMATCH:"This website address does not match HSI_PUBLIC_ORIGIN in Vercel. Use the configured website address or ask the HSI administrator to correct it and redeploy.",
-      INVALID_CALLBACK_URL:"The authentication service has not approved the verification callback address. The HSI administrator must check the site's trusted origins.",
-      INVALID_REDIRECT_URL:"The authentication service has not approved the sign-in redirect address. The HSI administrator must check the site's trusted origins.",
-      MISSING_OR_NULL_ORIGIN:"The authentication service could not verify the website origin. The HSI administrator must check its trusted origins and gateway configuration.",
-     };
-     return{data:null,error:{message:safe[code]??(response.status===429?"Too many authentication attempts. Please try again later.":"Authentication request was denied."),code:safe[code]?code:"auth_denied"}};
+     const code=knownAuthErrorCode(value)??"";
+
+     return{data:null,error:{message:code==="AUTH_PROVIDER_REJECTED"?`The authentication provider rejected the request (HTTP ${response.status}). Contact the HSI administrator with this status.`:AUTH_ERROR_MESSAGES[code]??(response.status===429?"Too many authentication attempts. Please try again later.":`Authentication failed (HTTP ${response.status}). Contact the HSI administrator with this status.`),code:AUTH_ERROR_MESSAGES[code]?code:"auth_denied"}};
     }
     try{return{data:parse(value),error:null};}catch{return{data:null,error:{message:"Authentication service returned an invalid response. The operation could not be confirmed.",code:"auth_invalid_response"}};}
    })();
