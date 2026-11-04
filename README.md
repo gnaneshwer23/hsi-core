@@ -4,6 +4,8 @@
 
 > **Foundational architecture:** [HSI-ARCH-001 — Independent Intelligence, Connected Ecosystem](docs/architecture/principles/ARCH-001-independent-intelligence-connected-ecosystem.md). HSI must own its core research, biology, clinical intelligence, trial intelligence, knowledge graph and agent orchestration capabilities. Aksh Health and Immune Super Intelligence (ISI) are **optional, governed integrations**, not prerequisites for HSI to function.
 
+> **Knowledge graph governance:** [HSI-ARCH-002 — Living Health Knowledge Graph Ownership](docs/architecture/principles/ARCH-002-living-health-knowledge-graph-ownership.md). HSI independently owns canonical graph models, source ingestion, provenance, review, versioned releases and privacy boundaries; external Aksh/ISI data are optional governed contributions.
+
 **Current implementation vs target state:** This repository presently contains a shared evidence/claim substrate, research contracts, pilot tooling and selected integration adapters. Some workflows are deterministic, stubbed, synthetic or unreviewed. The architecture principle sets the direction; it does **not** imply clinical validation, live patient interoperability, autonomous scientific discovery or production readiness. Preserve existing PHI isolation, human review and no-automatic-EHR-write safeguards.
 
 **Existing planning references:** [Vision/repository alignment](docs/VISION_REPO_ALIGNMENT.md) and [build status](docs/BUILD_STATUS_AND_NEXT.md) describe prior/current implementation scope; interpret any Aksh/ISI dependency framing in those documents as historical implementation detail rather than the target HSI architecture.
