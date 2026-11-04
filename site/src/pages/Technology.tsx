@@ -3,11 +3,17 @@ import { Link } from "react-router-dom";
 import "../styles/technology.css";
 import { TechnologyFlow } from "../components/TechnologyFlow";
 
-const sources = [
-  { id: "akeno", number: "01", name: "Akeno Health", label: "Connected healthcare infrastructure", state: "Ecosystem vision", description: "Hospitals, encounters, EHRs, diagnostics, laboratories, pharmacy, imaging and care delivery. Authorised interfaces can supply longitudinal clinical context without giving the research layer unrestricted record access.", data: ["EHR / FHIR", "HL7 / LIS", "Imaging / DICOM", "Medication history"], route: "/akeno" },
-  { id: "aksh", number: "02", name: "Aksh Health", label: "Patient intelligence", state: "Product development", description: "Patient-generated symptoms, metabolic and diabetes monitoring, wearables, lifestyle observations and follow-up workflows add individual context where consent, purpose and permissions allow.", data: ["Patient observations", "Glucose and metabolic trends", "Wearables", "Patient journeys"], route: "/for-aksh" },
-  { id: "isi", number: "03", name: "Immune Super Intelligence", label: "Biological and scientific intelligence", state: "Research development", description: "Immune cells, tissues, pathways, mechanisms, biomarkers, disease phenotypes and research evidence can be investigated through governed, versioned scientific knowledge.", data: ["Immune cell atlas", "Pathways and mechanisms", "Biomarkers", "SSc / RA evidence"], route: "/for-isi" },
-  { id: "research", number: "04", name: "Biomedical research ecosystem", label: "External evidence and computational research", state: "Integration direction", description: "Published studies, permitted omics datasets, disease registries, trial criteria and computational models are potential evidence sources. Every integration requires source rights and validation.", data: ["Literature", "Genomics / proteomics", "Trial registries", "In-silico models"], route: "/science" },
+const sourceSystems = [
+  { id:"akeno", name:"Akeno Health", type:"Clinical systems", state:"Ecosystem vision", detail:"Hospital encounters, laboratory results, medication records and imaging metadata remain in their authorised systems.", interfaces:"FHIR R4 · HL7 v2 · LIS · DICOM", boundary:"Patient identity, purpose and record-level access checked at source", route:"/akeno" },
+  { id:"aksh", name:"Aksh Health", type:"Patient-generated context", state:"Product development", detail:"Symptoms, glucose trends, wearables and patient-reported outcomes can contribute time-stamped longitudinal observations.", interfaces:"Patient observations · Device data · PROs", boundary:"Consent and purpose-specific sharing; not automatically public research data", route:"/for-aksh" },
+  { id:"isi", name:"Immune Super Intelligence", type:"Biological knowledge", state:"Research development", detail:"Immune cells, tissues, pathways, biomarkers and disease mechanisms are linked to traceable research evidence.", interfaces:"Cell atlas · Pathways · Biomarkers · Literature", boundary:"Source licensing, evidence grading and scientific review", route:"/for-isi" },
+  { id:"evidence", name:"External research & trials", type:"Approved research sources", state:"Integration direction", detail:"Rights-cleared publications, approved omics datasets and trial registries may be indexed with source and version metadata.", interfaces:"Literature · Omics · Trial criteria · Registries", boundary:"Dataset permissions, provenance, updates and reproducibility", route:"/science" },
+] as const;
+const graphLayers = [
+  { title:"Patient context", path:"Encounter → diagnosis → laboratory result → treatment → outcome", note:"Permissioned, longitudinal and separate from public biomedical evidence" },
+  { title:"Human biology", path:"Organ → tissue → cell → pathway → biomarker → disease", note:"Biological relationships anchored to reviewed sources" },
+  { title:"Gut–immune–metabolic", path:"Microbiome → metabolite → host pathway → immune response", note:"Associations remain distinct from established causality" },
+  { title:"Biomedical evidence", path:"Study → finding → confidence → contradiction → hypothesis", note:"Versioned claims, uncertainty and explicit scientific review states" },
 ] as const;
 const engine = [
   { name: "Context", detail: "Resolve the question and permitted data context. Identity, purpose and authorisation are checked at source boundaries." },
@@ -47,7 +53,7 @@ export function Technology() {
   const [sourceIndex, setSourceIndex] = useState(0);
   const [engineIndex, setEngineIndex] = useState(0);
   const [journeyIndex, setJourneyIndex] = useState(0);
-  const source = sources[sourceIndex];
+  const source = sourceSystems[sourceIndex];
   return <main className="nx-page">
     <section className="nx-flow-hero" aria-label="Human Super Intelligence data flow to discovery">
       <div className="nx-wrap">
@@ -56,11 +62,23 @@ export function Technology() {
       </div>
     </section>
 
-    <section className="nx-section nx-inputs" id="sources">
-      <div className="nx-wrap"><div className="nx-section-head"><div><p className="nx-kicker">01 / INTELLIGENCE INPUTS</p><h2>Different sources.<br/><em>One connected direction.</em></h2></div><p>Explore the distinct roles of Akeno, Aksh, ISI and external biomedical research. Each retains its own permissions and provenance.</p></div>
-        <div className="nx-source-layout"><div className="nx-source-tabs" role="group" aria-label="Information source">{sources.map((item, index) => <button key={item.id} type="button" aria-pressed={sourceIndex === index} onClick={() => setSourceIndex(index)}><span>{item.number}</span><strong>{item.name}</strong><small>{item.label}</small></button>)}</div>
-          <article className="nx-source-detail" aria-live="polite"><p className="nx-kicker">{source.state}</p><h3>{source.name}</h3><p>{source.description}</p><div className="nx-chips">{source.data.map(item => <span key={item}>{item}</span>)}</div><Link to={source.route} className="nx-text-link">Explore this domain <span aria-hidden="true">↗</span></Link></article>
+    <section className="nx-section nx-inputs nx-connected-data" id="sources">
+      <div className="nx-wrap">
+        <div className="nx-section-head"><div><p className="nx-kicker">02 / CONNECTED DATA & KNOWLEDGE INFRASTRUCTURE</p><h2>Connected meaning.<br/><em>Not a centralised record store.</em></h2></div><p>HSI is designed to connect authorised clinical context with scientific evidence while retaining source ownership, access boundaries and provenance.</p></div>
+        <div className="nx-data-architecture" aria-label="Conceptual architecture from governed sources to four knowledge layers">
+          <div className="nx-data-source-rail">
+            {sourceSystems.map((item,index)=><button key={item.id} type="button" className="nx-data-source-button" aria-pressed={sourceIndex===index} onClick={()=>setSourceIndex(index)}>
+              <span className="nx-data-source-index">0{index+1}</span><span><strong>{item.name}</strong><small>{item.type}</small></span><span aria-hidden="true">↗</span>
+            </button>)}
+          </div>
+          <div className="nx-data-spine" aria-hidden="true"><span>PERMISSIONED INTERFACES</span><svg viewBox="0 0 90 240" preserveAspectRatio="none"><path d="M0 25 H28 V120 H90 M0 88 H28 M0 151 H28 M0 215 H28 V120" /></svg><span>CONTEXT, NOT COPIES</span></div>
+          <div className="nx-data-graph">
+            <p className="nx-kicker">FOUR LOGICAL KNOWLEDGE LAYERS</p>
+            <div className="nx-graph-layers">{graphLayers.map((layer,index)=><article key={layer.title} className="nx-graph-layer"><span>0{index+1}</span><div><h3>{layer.title}</h3><p className="nx-graph-path">{layer.path}</p><p>{layer.note}</p></div></article>)}</div>
+          </div>
         </div>
+        <div className="nx-data-selected" aria-live="polite"><div><span className="nx-data-state">{source.state}</span><h3>{source.name}</h3><p>{source.detail}</p></div><div><span className="nx-data-field">POTENTIAL DATA CONTRACT</span><p>{source.interfaces}</p><span className="nx-data-field">TRUST BOUNDARY</span><p>{source.boundary}</p><Link className="nx-text-link" to={source.route}>Explore this domain <span aria-hidden="true">↗</span></Link></div></div>
+        <p className="nx-data-footnote">Conceptual interoperability architecture, not a claim that every source is currently integrated. Patient-identifiable records are not merged into the public research graph; any clinical use requires verified permissions, validation and governance.</p>
       </div>
     </section>
 
