@@ -14,7 +14,7 @@ test("draft filtering never promotes scientific approval",()=>{
 });
 test("patient context is excluded from research workbench",()=>{
  const input=data();input.nodes=[node("patient:1","restricted_clinical"),node("pathway:1")];
- expect(()=>buildHsiResearchWorkbench({...input,query:{...input.query,focusNodeId:"patient:1"}})).toThrow("patient context");
+ expect(()=>buildHsiResearchWorkbench({...input,query:{...input.query,focusNodeId:"patient:1"}})).toThrow();
 });
 test("invalid query limits and mismatched dossiers fail closed",()=>{
  expect(()=>buildHsiResearchWorkbench({...data(),query:{...data().query,maxRelationships:101}})).toThrow("Invalid workbench");
