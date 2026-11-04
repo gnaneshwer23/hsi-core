@@ -16,10 +16,13 @@ export async function authoriseAndRecoverHsiCheckpoint(input:{
  const sql=new SQL(input.databaseUrl,{tls:{rejectUnauthorized:true},connectionTimeout:10});
  try{
   return await sql.begin(async tx=>{
-   const rows=await tx`SELECT version,attempt,state,input_hash FROM hsi_agent_checkpoints WHERE investigation_id=${input.investigationId} AND task_id=${input.taskId} FOR UPDATE`;
+   const rows=await tx`SELECT version,attempt,state,input_hash,started_at FROM hsi_agent_checkpoints WHERE investigation_id=${input.investigationId} AND task_id=${input.taskId} FOR UPDATE`;
    if(rows.length!==1)throw Error("Checkpoint unavailable");
    const r=rows[0]!;
-   if(String(r.input_hash)!==input.inputHash||!["failed","blocked","cancelled"].includes(String(r.state))||Number(r.attempt)>=3)throw Error("Checkpoint not recoverable");
+   const staleAfter=input.staleAfterSeconds??3600;
+   if(!Number.isInteger(staleAfter)||staleAfter<300||staleAfter>86400)throw Error("Invalid stale-running threshold");
+   const staleRunning=String(r.state)==="running" && Date.now()-new Date(r.started_at as string).getTime()>staleAfter*1000;
+   if(String(r.input_hash)!==input.inputHash||(!["failed","blocked","cancelled"].includes(String(r.state))&&!staleRunning)||Number(r.attempt)>=3)throw Error("Checkpoint not recoverable");
    const version=Number(r.version)+1,attempt=Number(r.attempt)+1;
    await tx`INSERT INTO hsi_agent_recovery_decisions(decision_id,investigation_id,task_id,prior_version,next_version,operator_principal,reason) VALUES(${input.decisionId},${input.investigationId},${input.taskId},${r.version},${version},${actor.principalId},${input.reason})`;
    const updated=await tx`UPDATE hsi_agent_checkpoints SET version=${version},attempt=${attempt},state='running',output_ref=NULL,error_code=NULL,started_at=now(),finished_at=NULL,updated_at=now() WHERE investigation_id=${input.investigationId} AND task_id=${input.taskId} AND version=${r.version} RETURNING version`;
