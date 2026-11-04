@@ -38,6 +38,11 @@ export function TechnologyFlow() {
         {i<4&&<span className="tf-stage-arrow" aria-hidden="true"><span className="tf-arrow-beam" /><span className="tf-arrow-pulse" />→</span>}
       </div>)}
     </div>
+    {activeItem!==null&&<section id="tf-capability-detail" className="tf-capability-detail" aria-live="polite" aria-label="Selected capability details">
+      <div className="tf-capability-head"><div><p className="tf-capability-kicker">EXPLORE / {stages[activeItem.stage].title}</p><h3>{stages[activeItem.stage].rows[activeItem.row].name}</h3><p>{stages[activeItem.stage].rows[activeItem.row].description}</p></div><button type="button" className="tf-capability-close" onClick={()=>setActiveItem(null)} aria-label="Close capability details">×</button></div>
+      <ol className="tf-capability-points">{stages[activeItem.stage].rows[activeItem.row].details.map((detail,index)=><li key={detail}><span>{String(index+1).padStart(2,"0")}</span>{detail}</li>)}</ol>
+      <p className="tf-capability-note">Conceptual architecture · Source permissions, evidence quality, validation and accountable human review apply.</p>
+    </section>}
     {selected!==null&&<div className="tf-selected" aria-live="polite"><strong>{String(selected+1).padStart(2,"0")} / {stages[selected].title}</strong><span>{selected===0?"Data remains under the source system's authorisation and access controls.":selected===1?"Logical knowledge layers do not require copying all data into one database.":selected===2?"The six functions are a target architecture, not a claim of live automated processing.":selected===3?"Matching, trials and computational outputs require validation and professional review.":"Potential benefits are research ambitions, not established clinical outcomes."}</span><button type="button" onClick={()=>setSelected(null)} aria-label="Close stage explanation">×</button></div>}
     <div className="tf-trust"><strong>GOVERNANCE & TRUST</strong><span>Privacy & permissions</span><span>Provenance & traceability</span><span>Human scientific review</span><span>Uncertainty & limitations</span><span>Evidence updates</span></div>
     <p className="tf-disclaimer">Illustrative future-facing architecture. No claim of live patient integrations, confirmed trial eligibility, validated drug discovery or clinical efficacy.</p>
