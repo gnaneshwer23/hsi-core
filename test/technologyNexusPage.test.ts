@@ -18,7 +18,7 @@ describe("HSI NEXUS technology page", () => {
     expect(page).toContain("setEngineIndex(index)");
     expect(page).toContain("setJourneyIndex(index)");
     expect(page).toContain('aria-live="polite"');
-    expect(page).toContain("No unrestricted patient-data pooling");
+    expect(read("../site/src/components/TechnologyFlow.tsx")).toContain("Data remains under the source system's authorisation and access controls.");
     expect(page).toContain("No autonomous diagnosis or prescribing");
     expect(read("../site/src/styles/technology.css")).toContain("focus-visible");
   });
