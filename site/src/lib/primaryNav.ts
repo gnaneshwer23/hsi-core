@@ -39,3 +39,8 @@ export const PRIMARY_NAV_CTA = {
 export function isPublicMarketingPath(pathname: string): boolean {
   return (PUBLIC_MARKETING_PATHS as readonly string[]).includes(pathname);
 }
+
+/** Account entry shares the editorial shell without becoming a marketing destination. */
+export function isAccountPath(pathname: string): boolean {
+  return ["/sign-in", "/sign-up", "/research/account"].includes(pathname);
+}

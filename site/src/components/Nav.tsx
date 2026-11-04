@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { PRODUCT_NAME } from "../lib/brand";
-import { PRIMARY_NAV_CTA, PRIMARY_NAV_LINKS, isPublicMarketingPath } from "../lib/primaryNav";
+import { PRIMARY_NAV_CTA, PRIMARY_NAV_LINKS, isPublicMarketingPath, isAccountPath } from "../lib/primaryNav";
 
 const ctaArrow = (
   <svg className="nav-link-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true">
@@ -14,7 +14,7 @@ export function Nav() {
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
   const isHome = pathname === "/";
-  const creamMasthead = isPublicMarketingPath(pathname);
+  const creamMasthead = isPublicMarketingPath(pathname) || isAccountPath(pathname);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);

@@ -2,11 +2,12 @@ import { Outlet, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { Nav } from "./Nav";
 import { Footer } from "./Footer";
-import { isPublicMarketingPath } from "../lib/primaryNav";
+import { isPublicMarketingPath, isAccountPath } from "../lib/primaryNav";
 
 export function Layout() {
   const { pathname } = useLocation();
   const isPublicPage = isPublicMarketingPath(pathname);
+  const isAccountPage = isAccountPath(pathname);
   const isHome = pathname === "/";
 
   useEffect(() => {
@@ -17,7 +18,8 @@ export function Layout() {
     "site-shell",
     isHome ? "home-shell" : "",
     isPublicPage && !isHome ? "platform-shell" : "",
-    isPublicPage ? "public-site-v2" : "",
+    isPublicPage || isAccountPage ? "public-site-v2" : "",
+    isAccountPage ? "account-shell" : "",
   ]
     .filter(Boolean)
     .join(" ");
