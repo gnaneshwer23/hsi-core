@@ -20,3 +20,10 @@
 4. Add security/privacy threat model, least-privilege credentials and negative cross-tenant tests.
 5. Add timeout, circuit-breaker, idempotent retry, monitoring and outage/recovery tests.
 6. Validate end-to-end with human scientific reviewers before operational sign-off.
+
+## P1 optional integration resilience increment
+
+- Added `src/p1IntegrationResilience.ts`: read-only optional Aksh/ISI adapter with cooperative abort signal, bounded timeout, per-adapter circuit breaker and explicit unavailable result instead of throwing an external outage into HSI core.
+- Added `test/p1IntegrationResilience.test.ts`: tests availability, outage isolation, circuit opening, timeout and cooldown recovery.
+- This is a reusable primitive, not a deployed integration: actual adapters must supply authenticated, scoped clients; retries/idempotency, caching, tracing, rate limits, contract tests and outage exercises remain outstanding.
+- This module must not be used for clinical writes or other non-idempotent operations.
