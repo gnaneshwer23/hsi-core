@@ -16,10 +16,29 @@ const stages = [
   { title: "Intelligence outputs", subtitle: "Reviewable research directions", rows: [{name:"Patient & disease matching",description:"Cohorts and phenotype comparisons",details:["Authorised phenotype comparisons","Potential research cohort identification","Missing evidence and review flags"]},{name:"Clinical trial intelligence",description:"Criteria and investigator pre-screening",details:["Inclusion and exclusion criteria","Investigator-led eligibility pre-screen","Missing eligibility evidence"]},{name:"In-silico drug discovery",description:"Target and compound hypotheses",details:["Candidate targets and structures","Virtual screening and molecular docking","Predictions are not proven efficacy"]},{name:"Precision medicine research",description:"Mechanisms and biomarkers",details:["Biomarker and subgroup investigation","Disease mechanism comparisons","Independent clinical validation"]},{name:"Research insights",description:"Contradictions and knowledge gaps",details:["Evidence synthesis with citations","Contradictions and research gaps","Reproducible scientific questions"]}] },
   { title: "Potential impact", subtitle: "Health · research · therapy", rows: [{name:"Personalised care",description:"Better contextual understanding",details:["Permissioned clinical context","Longitudinal care summaries","Clinician-led decisions"]},{name:"Faster research",description:"Traceable evidence synthesis",details:["Less repetitive evidence navigation","Reproducible investigation trails","Research quality evaluation"]},{name:"Therapeutic candidates",description:"Prioritised for further validation",details:["Target prioritisation","Computational candidate evaluation","Laboratory validation required"]},{name:"Inclusive trials",description:"Better-informed screening",details:["Transparent screening criteria","Missing eligibility information","Fairness and access evaluation"]},{name:"Safer treatments",description:"Through independent evaluation",details:["Treatment response research","Potential safety signal investigation","Prospective clinical validation"]}] },
 ] as const;
+const stageVisuals = [
+  { label:"Clinical, patient and biomedical sources", nodes:[[16,46],[44,22],[44,70],[77,46]], lines:[[16,46,44,22],[16,46,44,70],[44,22,77,46],[44,70,77,46]] },
+  { label:"Linked and governed knowledge layers", nodes:[[16,25],[16,68],[48,46],[82,25],[82,68]], lines:[[16,25,48,46],[16,68,48,46],[48,46,82,25],[48,46,82,68]] },
+  { label:"Six collaborating intelligence functions", nodes:[[16,25],[16,68],[48,18],[48,75],[82,25],[82,68]], lines:[[16,25,48,18],[16,68,48,75],[48,18,82,25],[48,75,82,68],[48,18,48,75],[16,25,16,68],[82,25,82,68]] },
+  { label:"Evidence-grounded research outputs", nodes:[[16,46],[45,20],[45,72],[82,20],[82,72]], lines:[[16,46,45,20],[16,46,45,72],[45,20,82,20],[45,72,82,72]] },
+  { label:"Potential research and care impact", nodes:[[16,46],[46,46],[80,46]], lines:[[16,46,46,46],[46,46,80,46]] },
+] as const;
+function StageVisual({index}:{index:number}) {
+  const visual=stageVisuals[index];
+  return <div className="tf-stage-visual" role="img" aria-label={visual.label}>
+    <svg viewBox="0 0 100 92" aria-hidden="true" focusable="false">
+      <defs><linearGradient id={`tf-glow-${index}`} x1="0" x2="1"><stop stopColor="#2d9588"/><stop offset="1" stopColor="#f08a6a"/></linearGradient></defs>
+      <circle cx="49" cy="46" r="35" className="tf-visual-halo"/>
+      {visual.lines.map(([x1,y1,x2,y2],i)=><line key={i} x1={x1} y1={y1} x2={x2} y2={y2} className="tf-visual-line"/>)}
+      {visual.nodes.map(([cx,cy],i)=><g key={i}><circle cx={cx} cy={cy} r="8.5" className="tf-visual-node"/><circle cx={cx} cy={cy} r="3" className="tf-visual-dot"/></g>)}
+    </svg>
+    <span>{["MULTIMODAL INPUTS","TRUSTED CONNECTIONS","COORDINATED INTELLIGENCE","REVIEWABLE OUTPUTS","VALIDATED PATHWAYS"][index]}</span>
+  </div>;
+}
 export function TechnologyFlow() {
   const [selected,setSelected] = useState<number|null>(null);
   return <div className="tf">
-    <div className="tf-heading"><p className="tf-eyebrow">THE HSI TECHNOLOGY ARCHITECTURE / CONCEPTUAL FLOW</p><h2>From data to <em>discovery.</em></h2><p>How governed healthcare, patient and biological knowledge could become evidence-grounded intelligence and research opportunities.</p></div>
+    <div className="tf-heading"><p className="tf-eyebrow">01 / THE HSI TECHNOLOGY ARCHITECTURE</p><h2>From data to <em>discovery.</em></h2><p>A connected architecture for bringing authorised health data and biomedical evidence into supervised research — from source systems to testable scientific questions.</p></div>
     <div className="tf-motion" aria-hidden="true">
       <span className="tf-motion-label">PERMISSIONED DATA</span>
       <svg viewBox="0 0 1000 90" preserveAspectRatio="none" focusable="false">
@@ -33,7 +52,7 @@ export function TechnologyFlow() {
     <div className="tf-flow" aria-label="Five stages from governed data sources to potential research and care impact">
       {stages.map((stage,i)=><div className={"tf-stage "+(i===2?"tf-stage-core":"")+(selected===i?" tf-stage-active":"")} key={stage.title}>
         <button type="button" className="tf-stage-heading" aria-pressed={selected===i} onClick={()=>setSelected(selected===i?null:i)}><span className="tf-stage-number">{i+1}</span><span><strong>{stage.title}</strong><small>{stage.subtitle}</small></span></button>
-        <div className="tf-stage-items">{stage.rows.map((row,j)=><div className="tf-stage-item" key={row.name}><span className="tf-item-index">{String(j+1).padStart(2,"0")}</span><div><strong>{row.name}</strong><small>{row.description}</small><ul className="tf-detail-list">{row.details.map(detail=><li key={detail}>{detail}</li>)}</ul></div></div>)}</div>
+        <StageVisual index={i}/><div className="tf-stage-items">{stage.rows.map((row,j)=><div className="tf-stage-item" key={row.name}><span className="tf-item-index">{String(j+1).padStart(2,"0")}</span><div><strong>{row.name}</strong><small>{row.description}</small><ul className="tf-detail-list">{row.details.map(detail=><li key={detail}>{detail}</li>)}</ul></div></div>)}</div>
         {i<4&&<span className="tf-stage-arrow" aria-hidden="true"><span className="tf-arrow-beam" /><span className="tf-arrow-pulse" />→</span>}
       </div>)}
     </div>
