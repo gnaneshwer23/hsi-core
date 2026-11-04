@@ -51,3 +51,22 @@ Focused unit tests cover client configuration, transport failures, session shape
 non-production target checks and existing independent-review guards. Local browser
 checks use mocked auth responses; they are not evidence of live account login.
 The live deployment and two-account staging test still require operational checks.
+
+## Account creation troubleshooting
+
+The signup form validates required fields explicitly and explains its 12–128
+character password requirement. Validation errors focus the first invalid field;
+no registration request is sent until the fields pass. Requests have an eight
+second timeout and the submit button becomes usable again after a failure.
+
+A successful registration requires a matching user identity from the provider.
+The page confirms acceptance and, for an unverified email, explains verification
+and email-delivery checks. It does not claim an email was delivered or grant any
+research/reviewer permissions. Provider responses for disabled registration,
+untrusted origins and existing accounts have specific safe messages.
+
+If the deployed page reports disabled registration or an untrusted origin, fix
+that setting in the approved authentication provider. Changing frontend code does
+not enable provider registration or configure outbound email. Test locally with
+mocked responses first; verify actual email delivery and login separately on the
+approved non-production environment.
