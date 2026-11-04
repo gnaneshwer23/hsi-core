@@ -19,7 +19,7 @@ describe("HSI NEXUS technology page", () => {
     expect(page).toContain("Agents never self-approve claims");
   });
   it("shows distinct research and clinical applications with explicit maturity and safety boundaries", () => {
-    for (const name of ["Evidence-led immune research", "Longitudinal clinical intelligence", "Clinical trial pre-screening", "Biomarker and therapeutic discovery", "REVIEWABLE OUTPUT", "Interpretation boundary", "not a live patient analysis"]) expect(page).toContain(name);
+    for (const name of ["Evidence-led immune research", "Longitudinal clinical intelligence", "Clinical trial pre-screening", "Biomarker and therapeutic discovery", "REVIEWABLE OUTPUT", "Interpretation boundary", "not a claim of live clinical integrations"]) expect(page).toContain(name);
   });
   it("shows the six-step SSc investigation with explicit review and uncertainty", () => {
     for (const name of ["RESEARCH INVESTIGATION · SYSTEMIC SCLEROSIS", "Frame the SSc question", "Compare conflicting findings", "Draft testable hypotheses", "Review and decide", "REVIEWABLE ARTIFACT", "INTERPRETATION LIMIT"]) expect(page).toContain(name);
@@ -27,7 +27,7 @@ describe("HSI NEXUS technology page", () => {
   });
   it("keeps interactive journeys keyboard-operable and research boundaries explicit", () => {
     expect(page).toContain("setSourceIndex(index)");
-    expect(page).toContain("setEngineIndex(index)");
+    expect(page).toContain("setEngineIndex(i)");
     expect(page).toContain("setJourneyIndex(index)");
     expect(page).toContain("setApplicationIndex(i)");
     expect(page).toContain('aria-live="polite"');
