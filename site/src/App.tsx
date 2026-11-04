@@ -34,7 +34,7 @@ import { ScienceClinicalTrials } from "./pages/ScienceClinicalTrials";
 import { ScienceResearchAgents } from "./pages/ScienceResearchAgents";
 import { ScienceZoom, ScienceConnections } from "./pages/ScienceExplorer";
 import { NotFound } from "./pages/NotFound";
-import { InterrogativeWorkbench } from "./components/InterrogativeWorkbench";
+import { AuthenticatedInterrogativeWorkbench } from "./pages/AuthenticatedInterrogativeWorkbench";
 
 export default function App() {
   return (
@@ -50,7 +50,7 @@ export default function App() {
         <Route path="science/graph" element={<ScienceGraph />} />
         <Route path="science/paths" element={<SciencePaths />} />
         <Route path="science/contradictions" element={<ScienceContradictions />} />
-        <Route path="research/decision-workbench" element={<InterrogativeWorkbench investigation={null} falsification={null} />} />
+        <Route path="research/decision-workbench" element={<AuthenticatedInterrogativeWorkbench />} />
         <Route path="science/clinical-trials" element={<ScienceClinicalTrials />} />
         <Route path="science/research-agents" element={<ScienceResearchAgents />} />
         <Route path="science/zoom" element={<ScienceZoom />} />
