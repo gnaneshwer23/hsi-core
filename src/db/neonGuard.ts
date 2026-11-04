@@ -9,6 +9,8 @@ export const HSI_NEON_BRANCH_ID = "br-quiet-silence-zab1zvji" as const;
 export const HSI_NEON_DATABASE = "neondb" as const;
 /** Host prefix for the canonical HSI endpoint (no password / full URL). */
 export const HSI_NEON_HOST_PREFIX = "ep-restless-dew" as const;
+/** Isolated HSI migration staging endpoint, verified against Neon project and branch. */
+export const HSI_STAGING_HOST_PREFIX = "ep-sweet-hill-zasb0lni" as const;
 
 /** Detectable forbidden Neon host / project markers (never migrate here). */
 export const FORBIDDEN_NEON_MARKERS = [
