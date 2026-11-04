@@ -18,13 +18,13 @@ describe("HSI NEXUS technology page", () => {
     for (const label of ["Six engines.", "nx-nexus-orbit", "nx-nexus-contract", "REVIEWABLE OUTPUT", "SAFETY BOUNDARY", "Scientific review"]) expect(page).toContain(label);
     expect(page).toContain("Agents never self-approve claims");
   });
-  it("shows matching, trial intelligence, in-silico discovery and precision medicine without claiming deployment", () => {
-    for (const name of ["Patient and cohort matching", "Clinical trial intelligence", "In-silico drug discovery", "Precision medicine research", "not a validated drug-discovery service", "not a live patient analysis"]) expect(page).toContain(name);
+  it("shows distinct research and clinical applications with explicit maturity and safety boundaries", () => {
+    for (const name of ["Evidence-led immune research", "Longitudinal clinical intelligence", "Clinical trial pre-screening", "Biomarker and therapeutic discovery", "REVIEWABLE OUTPUT", "Interpretation boundary", "not a live patient analysis"]) expect(page).toContain(name);
   });
   it("keeps interactive journeys keyboard-operable and research boundaries explicit", () => {
     expect(page).toContain("setSourceIndex(index)");
     expect(page).toContain("setEngineIndex(index)");
-    expect(page).toContain("setJourneyIndex(index)");
+    expect(page).toContain("setJourneyIndex(index)");\n    expect(page).toContain("setApplicationIndex(i)");
     expect(page).toContain('aria-live="polite"');
     expect(read("../site/src/components/TechnologyFlow.tsx")).toContain("Data remains under the source system's authorisation and access controls.");
     expect(page).toContain("No autonomous diagnosis or prescribing");
