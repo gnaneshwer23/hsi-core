@@ -1,17 +1,21 @@
 /** P1 persistence of deterministic investigation records; trusted backend only.
  * This service cannot authenticate a caller, authorise a graph release or approve a claim.
  */
-import {createHash} from "node:crypto";
+import {createHash,randomUUID} from "node:crypto";
 import {SQL} from "bun";
 import {assertHsiNeonDatabaseUrl} from "./neonGuard";
 import type {ResearchInvestigation} from "../researchWorkbench";
 export type TrustedResearchActor={principalId:string;authenticated:true;roles:readonly string[]};
 export async function persistResearchInvestigation(input:{
  actor:TrustedResearchActor|null;investigation:ResearchInvestigation;
+ runId?:string;
  dataClass:"public_biomedical"|"licensed_partner";
  databaseUrl:string;neonProjectId?:string|null;
 }):Promise<{id:string;stored:true}>{
  const {actor,investigation:run}=input;
+ // Distinct persisted execution identity; the deterministic investigation ID remains a content fingerprint.
+ const executionId=input.runId??`hsi-run-${randomUUID()}`;
+ if(!/^hsi-run-[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(executionId))throw Error("Invalid execution ID");
  if(!actor?.authenticated||!actor.principalId.trim()||
  !actor.roles.some(r=>r==="researcher"||r==="scientific_reviewer"||r==="research_admin"))
  throw Error("Authenticated research role required");
@@ -40,7 +44,7 @@ export async function persistResearchInvestigation(input:{
    const approved=new Set(allowed.map((r:{claim_id:unknown})=>String(r.claim_id)));
    if(ids.some(id=>!approved.has(id)))throw Error("Investigation references unpublished or unapproved claims");
    const existing=await tx`SELECT content_hash,actor_principal FROM hsi_research_investigation_runs
-    WHERE id=${run.id}`;
+    WHERE id=${executionId}`;
    if(existing.length){
     if(String(existing[0]?.content_hash)!==digest||String(existing[0]?.actor_principal)!==actor.principalId)
       throw Error("Investigation ID collision or changed content");
@@ -48,10 +52,10 @@ export async function persistResearchInvestigation(input:{
    }
    await tx`INSERT INTO hsi_research_investigation_runs
     (id,actor_principal,release_id,release_manifest_hash,question,status,mode,data_class,source_claim_ids,investigation,content_hash)
-    VALUES (${run.id},${actor.principalId},${run.release.id},${run.release.manifestHash},
+    VALUES (${executionId},${actor.principalId},${run.release.id},${run.release.manifestHash},
     ${run.question},${run.status},${run.mode},${input.dataClass},
     ${JSON.stringify(ids)}::jsonb,${body}::jsonb,${digest})`;
   });
-  return {id:run.id,stored:true};
+  return {id:executionId,stored:true};
  }finally{await sql.close();}
 }
