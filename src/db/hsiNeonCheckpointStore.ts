@@ -30,8 +30,8 @@ export function createHsiNeonCheckpointStore(config:{databaseUrl:string;neonProj
      const rows=await sql`INSERT INTO hsi_agent_checkpoints(investigation_id,task_id,schema_version,attempt,state,version,input_hash,output_ref,error_code,started_at,finished_at) VALUES(${next.investigationId},${next.taskId},${next.schemaVersion},${next.attempt},${next.state},${next.version},${next.inputHash},${next.outputRef},${next.errorCode},${next.startedAt}::timestamptz,${next.finishedAt}::timestamptz) ON CONFLICT DO NOTHING RETURNING version`;
      return rows.length===1;
     }
-    if(next.version!==expectedVersion+1)return false;
-    const rows=await sql`UPDATE hsi_agent_checkpoints SET attempt=${next.attempt},state=${next.state},version=${next.version},input_hash=${next.inputHash},output_ref=${next.outputRef},error_code=${next.errorCode},started_at=${next.startedAt}::timestamptz,finished_at=${next.finishedAt}::timestamptz,updated_at=now() WHERE investigation_id=${next.investigationId} AND task_id=${next.taskId} AND version=${expectedVersion} AND input_hash=${next.inputHash} RETURNING version`;
+    if(next.version!==expectedVersion+1||next.attempt<1||!["completed","blocked","failed","cancelled"].includes(next.state))return false;
+    const rows=await sql`UPDATE hsi_agent_checkpoints SET attempt=${next.attempt},state=${next.state},version=${next.version},input_hash=${next.inputHash},output_ref=${next.outputRef},error_code=${next.errorCode},started_at=${next.startedAt}::timestamptz,finished_at=${next.finishedAt}::timestamptz,updated_at=now() WHERE investigation_id=${next.investigationId} AND task_id=${next.taskId} AND version=${expectedVersion} AND input_hash=${next.inputHash} AND state='running' AND attempt=${next.attempt} RETURNING version`;
     return rows.length===1;
    }finally{await sql.close()}
   }
