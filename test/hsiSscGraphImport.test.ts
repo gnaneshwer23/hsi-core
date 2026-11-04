@@ -1,0 +1,14 @@
+import {test,expect} from "bun:test";
+import {validateSscGraphDraft,resolveSscDraftIdentity,type SscGraphDraft} from "../src/hsiSscGraphImport";
+import type {HsiGraphNode,HsiGraphRelationship} from "../src/livingHealthKnowledgeGraph";
+const node=(id:string):HsiGraphNode=>({schemaVersion:"hsi-lhkg-node-1",id,layer:"human_biology",kind:"cell",preferredLabel:id,aliases:[],sourceIdentifiers:[],version:"1.0.0",visibility:"governed_research",reviewState:"draft",sourceProvenance:["PMID:30760472"]});
+const edge: HsiGraphRelationship={schemaVersion:"hsi-lhkg-edge-1",id:"HSI-C-SSC-001",subjectId:"ssc:tfh",objectId:"ssc:ssc",predicate:"INCREASED_IN",layer:"human_biology",epistemicType:"association",visibility:"governed_research",reviewState:"draft",sourceEvidenceIds:["PMID:30760472"],version:"1.0.0",context:{sourceLocator:"PubMed abstract",model:"human cohort",limitations:"cohort-specific"},causalClaim:false};
+const draft=():SscGraphDraft=>({schemaVersion:"hsi-ssc-graph-draft-1",release:{id:"ssc-tfh-il21-curation-v1",version:"1.0.0",graphPromotable:false},provenance:{reviewedByHuman:false,rightsCleared:false},nodes:[node("ssc:tfh"),node("ssc:ssc")],relationships:[{...edge}]});
+test("SSc draft preserves governed unreviewed scope",()=>expect(()=>validateSscGraphDraft(draft())).not.toThrow());
+test("publication flag is never accepted as evidence of review",()=>{const d=draft();d.release.graphPromotable=true;expect(()=>validateSscGraphDraft(d)).toThrow()});
+test("review and rights assertions cannot be forged in draft",()=>{const d=draft();d.provenance.reviewedByHuman=true;expect(()=>validateSscGraphDraft(d)).toThrow()});
+test("causal promotion is rejected",()=>{const d=draft();d.relationships[0]={...edge,causalClaim:true,epistemicType:"established_evidence"};expect(()=>validateSscGraphDraft(d)).toThrow()});
+test("missing source evidence is rejected",()=>{const d=draft();d.relationships[0]={...edge,sourceEvidenceIds:[]};expect(()=>validateSscGraphDraft(d)).toThrow()});
+test("missing evidence locator is rejected",()=>{const d=draft();d.relationships[0]={...edge,context:{}};expect(()=>validateSscGraphDraft(d)).toThrow()});
+test("dangling relationship is rejected",()=>{const d=draft();d.nodes.pop();expect(()=>validateSscGraphDraft(d)).toThrow()});
+test("ontology identity remains unresolved without reviewed exact identifiers",()=>{const result=resolveSscDraftIdentity(draft(),"CL","CL:0000084");expect(result.status).toBe("unresolved")});
