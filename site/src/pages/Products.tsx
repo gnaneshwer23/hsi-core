@@ -78,16 +78,16 @@ const foundationPoints = [
   {
     title: "An operating model, not a merged stack",
     detail:
-      "Products reuse shared capability patterns—evidence, knowledge and review—inside their own permissions walls. Software can travel; records do not.",
+      "Products reuse shared capability patterns—evidence, knowledge and review—inside their own permissions walls. Shared methods can be reused; any data exchange requires a defined purpose, authorisation and governance.",
   },
   {
     title: "Shared technology · product-owned data",
     detail:
-      "Each product controls its authentication, database and access. Sharing code does not create a shared patient or evidence database.",
+      "Each product controls its authentication, database and access. Sharing code does not create a shared patient or evidence database; authorised, purpose-limited exchange must be explicitly controlled.",
   },
   {
     title: "Scope you can verify",
-    detail: "Available experiences, development work and planned concepts stay clearly labelled—this page is a chooser and honesty ledger, not live access.",
+    detail: "Available experiences, development work and planned concepts stay clearly labelled—this page is a chooser and honesty ledger, not proof of deployed clinical capability.",
   },
 ] as const;
 
@@ -96,7 +96,7 @@ function ProductsHeroArt() {
     <aside
       className="hsi-products-hero-art"
       role="img"
-      aria-label="Four products on one Human Super Intelligence foundation: Aksh Health, ISI Research, HSI Clinical and HSI Trials. Each keeps its own data."
+      aria-label="Four products on one Human Super Intelligence foundation: Aksh Health, ISI Research, HSI Clinical and HSI Trials. Each retains its own access and governance boundaries."
     >
       <p className="hsi-products-hero-art-label">Four products · one foundation</p>
       <div className="hsi-products-hero-art-core">
@@ -249,7 +249,7 @@ export function Products() {
                 <em>you here?</em>
               </h2>
             </div>
-            <p>Choose an area to understand the relevant product and its current scope. This guide does not open a private workspace.</p>
+            <p>Choose an area to understand the relevant product and its current scope. Maturity labels describe the current declared scope; this guide does not open a private workspace.</p>
           </div>
 
           <div className="hsi-products-journey-selector" role="group" aria-label="Your area of interest">
@@ -313,7 +313,7 @@ export function Products() {
               </h2>
             </div>
             <p>
-              Availability is shown for each product. Overview pages explain the experience; they do not grant access to private workspaces.
+              Repository-declared maturity is shown for each product. Available means scoped access or research experience, not verified clinical deployment. Overview pages do not grant access to private workspaces.
             </p>
           </div>
 
@@ -375,7 +375,7 @@ export function Products() {
               </h2>
             </div>
             <p>
-              {PRODUCT_SHORT} is an operating model for shared capability patterns—not another patient application. Aksh and ISI keep their own interfaces and databases behind permissions walls while reusing tools for knowledge, evidence and review.
+              {PRODUCT_SHORT} is an operating model for shared capability patterns—not another patient application. Aksh and ISI retain distinct interfaces, data stores and access controls while reusing methods for knowledge, evidence and review. Any cross-product data exchange requires an authorised purpose, appropriate safeguards and an auditable interface.
             </p>
           </div>
 
@@ -396,7 +396,7 @@ export function Products() {
               <div
                 className="hsi-editorial-connection-map hsi-products-connection-map"
                 role="img"
-                aria-label="Connection map: Human Super Intelligence shared technology at the centre. Aksh Health, HSI Clinical, ISI Research and HSI Trials each keep their own data."
+                aria-label="Connection map: Human Super Intelligence shared technology at the centre. Aksh Health, HSI Clinical, ISI Research and HSI Trials each retain their own access and governance boundaries."
               >
                 <div className="hsi-editorial-map-core">
                   {PRODUCT_SHORT}
@@ -410,7 +410,7 @@ export function Products() {
               <p className="hsi-products-connect-legend">
                 <b>Technology shared</b>
                 <span aria-hidden="true">·</span>
-                <b>Data never shared</b>
+                <b>Governed data access</b>
               </p>
               <Link className="hsi-editorial-button" to="/platform">
                 Explore the platform <span aria-hidden="true">↗</span>
@@ -438,7 +438,7 @@ export function Products() {
             </Link>
           </div>
           <small>
-            Research tools do not diagnose, prescribe or confirm trial eligibility. Clinical and trial capabilities remain separately governed and human-validated. {PRODUCT_SHORT} does not operate a shared evidence database across products.
+            Research tools do not diagnose, prescribe or confirm trial eligibility. Clinical and trial capabilities require separate governance and human validation before consequential use. {PRODUCT_SHORT} is not a single merged patient database; controlled exchange and shared knowledge services are architectural directions, not verified integrations.
           </small>
         </div>
       </section>
