@@ -8,3 +8,12 @@ test("consistent research graph snapshot accepted",()=>expect(()=>assertHsiResea
 test("ambiguous node versions fail closed",()=>expect(()=>assertHsiResearchSnapshot({...base(),nodes:[...base().nodes,n("cell:1")]})).toThrow("Ambiguous"));
 test("dangling graph edge fails closed",()=>expect(()=>assertHsiResearchSnapshot({...base(),nodes:[n("cell:1")]})).toThrow("edge"));
 test("patient context cannot enter research snapshot",()=>expect(()=>assertHsiResearchSnapshot({...base(),nodes:[{...n("cell:1"),visibility:"restricted_clinical",layer:"patient_context"},n("cell:2")]})).toThrow("restricted"));
+
+test("mismatched dossier revision fails closed",()=>{
+ const dossier={schemaVersion:"hsi-lhkg-dossier-1" as const,relationship:{...e,version:"2.0.0"},temporal:{assertedAt:"2026-11-04T00:00:00Z",sourceAsOf:"2026-11-04T00:00:00Z"},observations:[],reviews:[],generationMethod:"human_curated" as const};
+ expect(()=>assertHsiResearchSnapshot({...base(),dossiers:[dossier]})).toThrow("mismatch");
+});
+test("changed edge identity in dossier fails closed",()=>{
+ const dossier={schemaVersion:"hsi-lhkg-dossier-1" as const,relationship:{...e,objectId:"cell:other"},temporal:{assertedAt:"2026-11-04T00:00:00Z",sourceAsOf:"2026-11-04T00:00:00Z"},observations:[],reviews:[],generationMethod:"human_curated" as const};
+ expect(()=>assertHsiResearchSnapshot({...base(),dossiers:[dossier]})).toThrow("mismatch");
+});
