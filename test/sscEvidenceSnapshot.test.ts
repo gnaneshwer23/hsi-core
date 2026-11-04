@@ -1,0 +1,12 @@
+import {test,expect} from "bun:test";
+import {buildSscEvidenceSnapshot,verifySscEvidenceSnapshot} from "../src/evidence/sscEvidenceSnapshot";
+import type {SscCandidatePack} from "../src/evidence/sscLiteratureVerification";
+import type {LiteratureRecord} from "../src/evidence/europePmcSscDiscovery";
+const pack:SscCandidatePack={schemaVersion:"hsi-ssc-curation-candidates-1",graphPromotable:false,reviewedByHuman:false,claims:[{id:"HSI-C-SSC-001",pmid:"30760472",doi:"10.1136/annrheumdis-2018-214382",subject:"Tfh",predicate:"increased_in",object:"SSc",evidenceLocator:"Abstract Results",context:"human cohort",limitations:"single cohort",reviewState:"unreviewed"}]};
+const record:LiteratureRecord={source:"Europe PMC",sourceId:"30760472",sourceType:"MED",pmid:"30760472",pmcid:null,doi:"10.1136/annrheumdis-2018-214382",title:"Tfh study",authors:null,journal:null,publicationYear:2019,abstract:null,url:"https://europepmc.org/article/MED/30760472",retrievedAt:"2026-11-04T20:00:00.000Z",verificationState:"metadata_retrieved_not_claim_verified",reviewState:"unreviewed"};
+const build=(records:LiteratureRecord[]=[record])=>buildSscEvidenceSnapshot({pack,records,capturedAt:"2026-11-04T20:01:00.000Z",datasetId:"ssc-tfh-il21-v1"});
+test("snapshot is stable and hash-verifiable",()=>{const a=build();expect(a.contentHash).toHaveLength(64);expect(verifySscEvidenceSnapshot(a)).toBe(true);expect(a.contentHash).toBe(build().contentHash);expect(a.graphPromotable).toBe(false)});
+test("tampered claim provenance invalidates hash",()=>{const a=build();a.claimAssessments[0]!.limitations="changed";expect(verifySscEvidenceSnapshot(a)).toBe(false)});
+test("duplicate publication identifiers fail closed",()=>expect(()=>build([record,{...record}])).toThrow("Duplicate source PMID"));
+test("unmatched source is not approved",()=>{const a=build([]);expect(a.claimAssessments[0]?.status).toBe("source_not_retrieved");expect(a.graphPromotable).toBe(false)});
+test("invalid dataset identity rejected",()=>expect(()=>buildSscEvidenceSnapshot({pack,records:[record],capturedAt:"2026-11-04T20:01:00Z",datasetId:"../../bad"})).toThrow());
