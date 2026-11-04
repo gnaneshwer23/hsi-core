@@ -477,6 +477,8 @@ export function ScienceLanding() {
               <Link className="hsi-editorial-button" to="/science/body">
                 Explore the human body <span aria-hidden="true">↗</span>
               </Link>
+              <Link className="hsi-editorial-textlink" to="/science/zoom?organ=pancreas">Biology Zoom ↗</Link>
+              <Link className="hsi-editorial-textlink" to="/science/connections">Connections Explorer ↗</Link>
               <a className="hsi-editorial-textlink" href="#science-mechanisms">
                 Follow a mechanism path ↓
               </a>
