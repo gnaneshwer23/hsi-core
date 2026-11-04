@@ -7,10 +7,11 @@ export function buildEvidenceDossier(graph:TypedGraph,edgeId:string,assessments:
  const records=edge.evidenceIds.map(id=>{const evidence=graph.evidence.find(e=>e.id===id);return evidence?{evidence,assessment:assessments.find(a=>a.edgeId===edgeId&&a.sourceId===id)}:null}).filter((r):r is {evidence:EvidenceRecord;assessment:EvidenceAssessment|undefined}=>r!==null);
  const warnings:string[]=[];
  if(!records.length)warnings.push("No source records linked to this relationship.");
+ if(records.some(r=>r.evidence.assessment!=="supported"))warnings.push("Source-level evidence has not been marked supported.");
  if(records.some(r=>!r.assessment))warnings.push("Some sources have not been assessed against this specific relationship.");
  if(records.some(r=>r.assessment?.scope==="background"))warnings.push("Background sources do not establish claim-level support.");
  if(records.some(r=>r.assessment?.stance==="contradicts"))warnings.push("Contradictory evidence must be reviewed.");
- const direct=records.filter(r=>r.assessment?.scope==="direct_claim"&&r.assessment.stance==="supports"&&r.assessment.reviewedBy&&r.assessment.reviewedAt);
+ const direct=records.filter(r=>r.assessment?.scope==="direct_claim"&&r.assessment.stance==="supports"&&r.assessment.reviewedBy&&r.assessment.reviewedAt&&r.evidence.assessment==="supported");
  if(!direct.length)warnings.push("No independently reviewed, directly supporting evidence.");
  return {edge,records,warnings,readyForReview:direct.length>0&&warnings.length===0};
 }

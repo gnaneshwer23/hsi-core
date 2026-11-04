@@ -6,7 +6,7 @@ const graph:TypedGraph={schemaVersion:"2.0.0",description:"test fixture; not pub
  {id:"macrophage",label:"Macrophage",kind:"cell",reviewStatus:"draft",version:"1"},
  {id:"tnf",label:"TNF",kind:"protein",reviewStatus:"draft",version:"1"}],
  edges:[{id:"e1",subjectId:"macrophage",predicate:"PRODUCES",objectId:"tnf",assertionType:"reported_association",context:{tissue:"synovium",species:"human"},reviewStatus:"draft",evidenceStatus:"unassessed",evidenceIds:["src1"],version:"1"}],
- evidence:[{id:"src1",sourceType:"publication",sourceId:"test-only",url:"https://example.org/test-only",retrievedAt:"2026-11-04",assessment:"unassessed"}]};
+ evidence:[{id:"src1",sourceType:"publication",sourceId:"test-only",url:"https://example.org/test-only",retrievedAt:"2026-11-04",assessment:"supported"}]};
 const assessment:EvidenceAssessment={edgeId:"e1",sourceId:"src1",scope:"direct_claim",stance:"supports",notes:"Test fixture only, no actual claim review.",curator:"test",assessedAt:"2026-11-04",reviewedBy:"test-reviewer",reviewedAt:"2026-11-04"};
 test("Step 2 evidence dossier distinguishes sources from reviewed support",()=>{
  const d=buildEvidenceDossier(graph,"e1")!;

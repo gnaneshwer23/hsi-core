@@ -33,7 +33,7 @@ export function validateTypedGraph(graph:TypedGraph):string[]{
   if(rule&&(!rule.subjects.includes(a.kind)||!rule.objects.includes(b.kind)))errors.push("Invalid predicate types: "+e.id);
   if(e.confidence!==undefined&&(e.confidence<0||e.confidence>1||!Number.isFinite(e.confidence)))errors.push("Invalid confidence: "+e.id);
   for(const id of e.evidenceIds)if(!evidenceIds.has(id))errors.push("Unknown evidence: "+e.id+" -> "+id);
-  if(e.reviewStatus==="approved"&&(!e.reviewer||!e.reviewedAt||!e.evidenceIds.length||e.evidenceStatus==="unassessed"||e.evidenceStatus==="not_curated"||e.assertionType==="hypothesis"||e.predicate==="RELATED_TOPIC"))errors.push("Invalid approved assertion: "+e.id);
+  if(e.reviewStatus==="approved"&&(!e.reviewer?.trim()||!e.reviewedAt||!e.evidenceIds.length||e.evidenceStatus!=="supported"||e.assertionType==="hypothesis"||e.predicate==="RELATED_TOPIC"||e.evidenceIds.some(id=>!graph.evidence.some(source=>source.id===id&&source.assessment==="supported"))))errors.push("Invalid approved assertion: "+e.id);
  }
  return errors;
 }

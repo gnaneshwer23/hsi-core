@@ -13,7 +13,7 @@ export function findGraphPaths(graph:TypedGraph,startId:string,endId:string,opti
   if(current.id===endId){if(path.edges.length)paths.push(path);continue}
   if(path.edges.length>=maxHops)continue;
   for(const edge of graph.edges){
-   if(!includeDraft&&edge.reviewStatus!=="approved")continue;
+   if(edge.reviewStatus!=="approved"&&!(includeDraft&&(edge.reviewStatus==="draft"||edge.reviewStatus==="in_review")))continue;
    const forward=edge.subjectId===current.id,reverse=edge.objectId===current.id;
    if(direction==="outgoing"&&!forward||direction==="incoming"&&!reverse||!forward&&!reverse)continue;
    const next=lookup.get(forward?edge.objectId:edge.subjectId);

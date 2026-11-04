@@ -10,7 +10,7 @@ function compareContext(a:EvidenceContext,b:EvidenceContext){
 }
 /** Flags candidate tensions only. Different contexts do not establish a scientific contradiction. */
 export function detectConflictCandidates(graph:TypedGraph,includeDraft=false):ConflictCandidate[]{
- const edges=graph.edges.filter(e=>includeDraft||e.reviewStatus==="approved");
+ const edges=graph.edges.filter(e=>e.reviewStatus==="approved"||(includeDraft&&(e.reviewStatus==="draft"||e.reviewStatus==="in_review")));
  const candidates:ConflictCandidate[]=[];
  for(let i=0;i<edges.length;i++)for(let j=i+1;j<edges.length;j++){
   const a=edges[i]!,b=edges[j]!;
