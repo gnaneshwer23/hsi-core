@@ -6,10 +6,12 @@ import {loadAuthenticatedInterrogativeInvestigation} from "../db/authenticatedIn
 import {submitInterrogativeForReview,recordAuthenticatedScientificReview} from "../db/authenticatedScientificReviewStore";
 import type {HsiScientificReviewDecision} from "../interrogativeScientificReview";
 import {loadResearchAccount} from "../db/researchAccountStore";
+import {loadScientificReviewHistory} from "../db/scientificReviewHistory";
 import type {ResearchAccountAccess} from "../researchAccount";
 
 type ApiServices={
  account?:(input:{serverSessionToken:string|null})=>Promise<ResearchAccountAccess|null>;
+ history?:(input:{serverSessionToken:string|null})=>Promise<unknown>;
  load:(input:{serverSessionToken:string|null;investigationId:string})=>Promise<unknown>;
  submit:(input:{serverSessionToken:string|null;investigationId:string})=>Promise<unknown>;
  review:(input:{serverSessionToken:string|null;decision:HsiScientificReviewDecision})=>Promise<unknown>;
@@ -29,6 +31,14 @@ function json(data:unknown,status=200):Response{
 }
 export async function handleInterrogativeApi(req:Request,services:ApiServices):Promise<Response>{
  const url=new URL(req.url);
+ if(url.pathname==="/api/research/scientific-review/history"){
+  if(req.method!=="GET")return json({error:"Method not allowed"},405);
+  const token=sessionFromCookie(req);
+  if(!token)return json({error:"Authentication required"},401);
+  if(!services.history)return json({error:"Review history unavailable"},503);
+  try{return json(await services.history({serverSessionToken:token}))}
+  catch{return json({error:"Review history unavailable or access denied"},403)}
+ }
  if(url.pathname==="/api/research/account"){
   if(req.method!=="GET")return json({error:"Method not allowed"},405);
   const token=sessionFromCookie(req);
@@ -71,6 +81,7 @@ export async function handleInterrogativeApi(req:Request,services:ApiServices):P
 export function createNeonInterrogativeApiServices(config:{databaseUrl:string;neonProjectId?:string|null}):ApiServices{
  return {
   account:args=>loadResearchAccount({...config,...args}),
+  history:args=>loadScientificReviewHistory({...config,...args}),
   load:args=>loadAuthenticatedInterrogativeInvestigation({...config,...args}),
   submit:args=>submitInterrogativeForReview({...config,...args}),
   review:args=>recordAuthenticatedScientificReview({...config,...args})
