@@ -690,3 +690,6 @@
     transform: none;
   }
 }
+
+.hsi-products-maturity-note{max-width:940px;margin:0 0 26px;padding:16px 20px;border-left:3px solid #17645f;background:#e8eee7;color:#245b54;font-size:.81rem;line-height:1.7}
+.hsi-products-maturity-note strong{font-weight:750}
