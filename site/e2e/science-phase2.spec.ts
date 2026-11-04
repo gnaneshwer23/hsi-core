@@ -1,7 +1,7 @@
 import {test,expect} from "@playwright/test";
 test("Phase 2 Biology Zoom navigates across levels and preserves deep links",async({page})=>{
  await page.goto("/science/zoom?organ=pancreas");
- await expect(page.getByRole("heading",{name:"Zoom into biology."})).toBeVisible();
+ await expect(page.getByRole("heading",{name:/Zoom into biology/})).toBeVisible();
  await page.getByRole("button",{name:/Beta cell/}).first().click();
  await expect(page).toHaveURL(/step=beta-cell/);
  await expect(page.getByRole("heading",{name:"Beta cell",exact:true})).toBeVisible();
