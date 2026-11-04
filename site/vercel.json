@@ -43,6 +43,10 @@
       "destination": "/index.html"
     },
     {
+      "source": "/technology",
+      "destination": "/index.html"
+    },
+    {
       "source": "/how-it-works",
       "destination": "/index.html"
     },
