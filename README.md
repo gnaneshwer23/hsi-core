@@ -6,6 +6,8 @@
 
 > **Knowledge graph governance:** [HSI-ARCH-002 — Living Health Knowledge Graph Ownership](docs/architecture/principles/ARCH-002-living-health-knowledge-graph-ownership.md). HSI independently owns canonical graph models, source ingestion, provenance, review, versioned releases and privacy boundaries; external Aksh/ISI data are optional governed contributions.
 
+> **ARCH-002 implementation audit:** [Graph gap assessment](docs/audits/ARCH-002-GAP-AUDIT-2026-11-04.md) and [additive evidence lineage schema](db/migrations/002_hsi_evidence_ownership.sql). Schema is committed but **not deployed**; source-backed SSc curation, authenticated review and release-aware retrieval remain open engineering work.
+
 **Current implementation vs target state:** This repository presently contains a shared evidence/claim substrate, research contracts, pilot tooling and selected integration adapters. Some workflows are deterministic, stubbed, synthetic or unreviewed. The architecture principle sets the direction; it does **not** imply clinical validation, live patient interoperability, autonomous scientific discovery or production readiness. Preserve existing PHI isolation, human review and no-automatic-EHR-write safeguards.
 
 **Existing planning references:** [Vision/repository alignment](docs/VISION_REPO_ALIGNMENT.md) and [build status](docs/BUILD_STATUS_AND_NEXT.md) describe prior/current implementation scope; interpret any Aksh/ISI dependency framing in those documents as historical implementation detail rather than the target HSI architecture.
