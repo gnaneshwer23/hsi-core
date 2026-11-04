@@ -1,0 +1,11 @@
+import {test,expect} from "bun:test";
+import {prepareSscLiteratureVerification,type SscCandidatePack} from "../src/evidence/sscLiteratureVerification";
+import type {LiteratureRecord} from "../src/evidence/europePmcSscDiscovery";
+const pack=():SscCandidatePack=>({schemaVersion:"hsi-ssc-curation-candidates-1",reviewedByHuman:false,graphPromotable:false,claims:[{id:"HSI-C-SSC-001",pmid:"30760472",doi:"10.1136/annrheumdis-2018-214382",subject:"Tfh",predicate:"increased_in",object:"SSc",evidenceLocator:"Results",context:"human cohort",limitations:"single cohort",reviewState:"unreviewed"}]});
+const record=():LiteratureRecord=>({source:"Europe PMC",sourceId:"30760472",sourceType:"MED",pmid:"30760472",pmcid:null,doi:"10.1136/annrheumdis-2018-214382",title:"Tfh study",authors:null,journal:null,publicationYear:2019,abstract:null,url:"https://europepmc.org/article/MED/30760472",retrievedAt:"2026-11-04T00:00:00Z",verificationState:"metadata_retrieved_not_claim_verified",reviewState:"unreviewed"});
+test("source match creates review queue, never approved evidence",()=>{const result=prepareSscLiteratureVerification(pack(),[record()]);expect(result[0]?.status).toBe("metadata_matched_unreviewed");expect(result[0]?.graphPromotable).toBe(false);expect(result[0]?.reviewRequired).toBe(true)});
+test("DOI mismatch blocks metadata match",()=>{const r=record();r.doi="10.1000/wrong";expect(prepareSscLiteratureVerification(pack(),[r])[0]?.status).toBe("metadata_mismatch")});
+test("missing source stays pending",()=>expect(prepareSscLiteratureVerification(pack(),[])[0]?.status).toBe("source_not_retrieved"));
+test("candidate pack cannot claim approval",()=>{const p=pack();p.graphPromotable=true;expect(()=>prepareSscLiteratureVerification(p,[record()])).toThrow()});
+test("duplicate candidate IDs fail closed",()=>{const p=pack();p.claims.push({...p.claims[0]!});expect(()=>prepareSscLiteratureVerification(p,[record()])).toThrow()});
+test("missing evidence locator fails closed",()=>{const p=pack();p.claims[0]!.evidenceLocator="";expect(()=>prepareSscLiteratureVerification(p,[record()])).toThrow()});
