@@ -24,11 +24,11 @@ const engine = [
   { name:"Governance", role:"Require accountable review", detail:"Record methods, source versions, uncertainty and human scientific decisions before any claim can enter approved knowledge.", input:"Draft outputs + analysis provenance", output:"Approved, revised or rejected decision", guard:"Agents never self-approve claims" },
 ] as const;
 const nexusJourney = ["Question & authorisation","Evidence retrieval","Biological investigation","Reasoned proposals","Scientific review"] as const;
-const outcomes = [
-  { title: "Patient and cohort matching", description: "Compare permitted phenotypes, biomarkers and research cohort criteria. Patient-level matching requires validated models and authorised access.", status: "Future clinical research capability" },
-  { title: "Clinical trial intelligence", description: "Structure eligibility criteria, identify missing evidence and support investigator-led pre-screening. Never imply confirmed eligibility or enrolment.", status: "Planned governed workflow" },
-  { title: "In-silico drug discovery", description: "Explore targets, candidate molecules, docking, structure-based predictions and computational evaluation. Predicted binding is not proof of efficacy or safety.", status: "Research direction — not a validated drug-discovery service" },
-  { title: "Precision medicine research", description: "Connect disease mechanisms and stratification hypotheses to supporting and conflicting evidence for expert assessment.", status: "Research-led development" },
+const applications = [
+  { title:"Evidence-led immune research", stage:"Research foundation", focus:"Researcher", description:"Investigate systemic sclerosis immune mechanisms using literature, graph relationships and contradictory evidence.", inputs:["Reviewed literature","Immune cell and pathway graph"], deliverable:"Cited mechanism brief with gaps and uncertainty", boundary:"Research interpretation; not a validated clinical recommendation", route:"/for-isi" },
+  { title:"Longitudinal clinical intelligence", stage:"Future clinical evaluation", focus:"Clinician", description:"Reconstruct a permissioned timeline of encounters, medications, laboratory trends and missing information for professional review.", inputs:["Authorised encounters","Laboratory and medication history"], deliverable:"Traceable patient context summary", boundary:"Patient-level processing requires access controls, safety evaluation and clinical oversight", route:"/akeno" },
+  { title:"Clinical trial pre-screening", stage:"Planned governed workflow", focus:"Investigator", description:"Translate registry criteria into structured checks, surface missing evidence and prepare an investigator review queue.", inputs:["Versioned trial criteria","Permitted phenotype data"], deliverable:"Criteria-by-criteria pre-screen dossier", boundary:"Not confirmation of eligibility or enrolment", route:"/trials" },
+  { title:"Biomarker and therapeutic discovery", stage:"Exploratory research direction", focus:"Scientist", description:"Prioritise research hypotheses and potential targets; computational modelling or docking requires separately validated methods.", inputs:["Biological pathways","Evidence and approved datasets"], deliverable:"Candidate research hypotheses and experimental plan", boundary:"Predicted binding or association is not evidence of safety or efficacy", route:"/science" },
 ] as const;
 const steps = [
   { title: "A clinical or scientific question", detail: "Example: Which immune pathways merit investigation for a systemic sclerosis phenotype?" },
@@ -53,7 +53,7 @@ export function Technology() {
   }, []);
   const [sourceIndex, setSourceIndex] = useState(0);
   const [engineIndex, setEngineIndex] = useState(0);
-  const [journeyIndex, setJourneyIndex] = useState(0);
+  const [journeyIndex, setJourneyIndex] = useState(0);\n  const [applicationIndex, setApplicationIndex] = useState(0);
   const source = sourceSystems[sourceIndex];
   return <main className="nx-page">
     <section className="nx-flow-hero" aria-label="Human Super Intelligence data flow to discovery">
@@ -109,9 +109,24 @@ export function Technology() {
       </div>
     </section>
 
-    <section className="nx-section nx-outcomes" id="outcomes">
-      <div className="nx-wrap"><div className="nx-section-head"><div><p className="nx-kicker">03 / FROM INSIGHT TO RESEARCH APPLICATIONS</p><h2>Intelligence that opens<br/><em>new questions.</em></h2></div><p>Potential downstream applications, each requiring independent validation, appropriate rights and expert oversight.</p></div>
-        <div className="nx-outcome-grid">{outcomes.map((item,index) => <article key={item.title} className="nx-outcome-card"><span className="nx-card-number">{String(index+1).padStart(2,"0")}</span><h3>{item.title}</h3><p>{item.description}</p><div className="nx-status">{item.status}</div></article>)}</div>
+    <section className="nx-section nx-outcomes nx-applications" id="outcomes">
+      <div className="nx-wrap">
+        <div className="nx-section-head"><div><p className="nx-kicker">04 / SCIENTIFIC & CLINICAL INTELLIGENCE APPLICATIONS</p><h2>From connected knowledge<br/><em>to reviewable work.</em></h2></div><p>Four distinct use cases, with explicit evidence requirements, expected research outputs and development maturity. Select an application to examine its intended workflow.</p></div>
+        <div className="nx-application-layout">
+          <div className="nx-application-menu" role="group" aria-label="Scientific and clinical applications">{applications.map((item,i)=><button key={item.title} type="button" aria-pressed={applicationIndex===i} onClick={()=>setApplicationIndex(i)}><span>0{i+1} / {item.focus}</span><strong>{item.title}</strong><small>{item.stage}</small></button>)}</div>
+          <article className="nx-application-detail" aria-live="polite">
+            <div className="nx-application-topline"><span>APPLICATION 0{applicationIndex+1}</span><span>{applications[applicationIndex].stage}</span></div>
+            <h3>{applications[applicationIndex].title}</h3><p className="nx-application-summary">{applications[applicationIndex].description}</p>
+            <div className="nx-application-pipeline" aria-label="Conceptual application flow">
+              <div><span>01 / INPUT EVIDENCE</span>{applications[applicationIndex].inputs.map(item=><strong key={item}>{item}</strong>)}</div>
+              <div className="nx-application-arrow" aria-hidden="true">→</div>
+              <div><span>02 / REVIEWABLE OUTPUT</span><strong>{applications[applicationIndex].deliverable}</strong></div>
+            </div>
+            <div className="nx-application-boundary"><strong>Interpretation boundary</strong><p>{applications[applicationIndex].boundary}</p></div>
+            <Link to={applications[applicationIndex].route} className="nx-text-link">Explore related HSI domain <span aria-hidden="true">↗</span></Link>
+          </article>
+        </div>
+        <p className="nx-application-disclaimer">These are capability directions, not a claim of live clinical integrations, approved diagnostic software, validated trial matching or therapeutic efficacy. Actual availability and scientific validation must be verified independently.</p>
       </div>
     </section>
 
