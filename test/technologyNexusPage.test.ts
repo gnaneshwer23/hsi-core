@@ -24,7 +24,8 @@ describe("HSI NEXUS technology page", () => {
   it("keeps interactive journeys keyboard-operable and research boundaries explicit", () => {
     expect(page).toContain("setSourceIndex(index)");
     expect(page).toContain("setEngineIndex(index)");
-    expect(page).toContain("setJourneyIndex(index)");\n    expect(page).toContain("setApplicationIndex(i)");
+    expect(page).toContain("setJourneyIndex(index)");
+    expect(page).toContain("setApplicationIndex(i)");
     expect(page).toContain('aria-live="polite"');
     expect(read("../site/src/components/TechnologyFlow.tsx")).toContain("Data remains under the source system's authorisation and access controls.");
     expect(page).toContain("No autonomous diagnosis or prescribing");
