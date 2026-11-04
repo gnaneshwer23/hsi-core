@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import { Home } from "./pages/Home";
 import { SignIn } from "./pages/SignIn";
+import { SignUp } from "./pages/SignUp";
 import { ResearchAccount } from "./pages/ResearchAccount";
 import { Platform } from "./pages/Platform";
 import { Technology } from "./pages/Technology";
@@ -44,6 +45,7 @@ export default function App() {
       <Route element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="sign-in" element={<SignIn />} />
+        <Route path="sign-up" element={<SignUp />} />
         <Route path="research/account" element={<ResearchAccount />} />
         <Route path="platform" element={<Platform />} />
         <Route path="technology" element={<Technology />} />
