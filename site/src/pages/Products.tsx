@@ -91,6 +91,13 @@ const foundationPoints = [
   },
 ] as const;
 
+const productShowcases: Record<ProductId, { question: string; input: string; process: string; output: string; review: string; illustration: string }> = {
+  aksh: { question: "What has changed in my metabolic health?", input: "Symptoms, glucose trends, medication context and patient-reported information", process: "Organise a longitudinal picture and flag questions for a care conversation", output: "A personal health timeline and a reviewable summary", review: "Patient and authorised clinician retain control over care decisions", illustration: "GLUCOSE · SYMPTOMS · TIMELINE" },
+  isi: { question: "Which immune mechanisms may contribute to systemic sclerosis?", input: "Curated publications, immune-cell evidence and approved biological relationships", process: "Compare pathways, tissue contexts, contradictions and research gaps", output: "A cited investigation brief with candidate hypotheses clearly labelled", review: "An accountable scientist reviews findings before any claim is approved", illustration: "CELLS · PATHWAYS · EVIDENCE" },
+  clinical: { question: "What changed across this person's encounters?", input: "Authorised encounter, medication and laboratory records when integrations are validated", process: "Reconstruct chronology, identify gaps and preserve source attribution", output: "A proposed longitudinal review with missing-information flags", review: "Clinician verifies context; live hospital integration is not offered", illustration: "ENCOUNTERS · LABS · MEDICATIONS" },
+  trials: { question: "Which study criteria require further evidence?", input: "Study criteria and appropriately authorised clinical context when available", process: "Structure inclusion and exclusion criteria and expose unknowns", output: "An investigator-facing pre-screening evidence checklist", review: "Investigators determine eligibility; no live matching or enrolment", illustration: "STUDIES · CRITERIA · REVIEW" },
+};
+
 function ProductsHeroArt() {
   return (
     <aside
@@ -198,8 +205,11 @@ function ProductArt({ id }: { id: ProductId }) {
 
 export function Products() {
   const [selected, setSelected] = useState<ProductId>("isi");
+  const [showcaseId, setShowcaseId] = useState<ProductId>("isi");
   const journey = journeys.find((j) => j.id === selected)!;
   const selectedProduct = ECOSYSTEM_PRODUCTS.find((p) => p.id === selected)!;
+  const showcase = productShowcases[showcaseId];
+  const showcaseProduct = ECOSYSTEM_PRODUCTS.find((p) => p.id === showcaseId)!;
 
   return (
     <div className="hsi-editorial">
@@ -210,12 +220,12 @@ export function Products() {
               <span className="hsi-coral-dot" /> {PRODUCT_NAME} / PRODUCTS
             </p>
             <h1 id="products-title">
-              Different questions.
+              Four specialised products.
               <br />
-              <em>A connected foundation.</em>
+              <em>One intelligence ecosystem.</em>
             </h1>
             <p className="hsi-editorial-lede">
-              From personal health to biological research, find the experience that fits your question. Each product has its own purpose, data and access controls.
+              From personal health to clinical context, immune discovery and trials research: explore what each product is designed to do, and how governed intelligence connects them.
             </p>
             <div className="hsi-editorial-actions">
               <a className="hsi-editorial-button" href="#product-collection">
@@ -301,11 +311,36 @@ export function Products() {
         </div>
       </section>
 
+      <section className="hsi-products-showcase" id="product-showcase" aria-labelledby="showcase-title">
+        <div className="hsi-editorial-wrap">
+          <div className="hsi-editorial-sectionhead"><div><p className="hsi-editorial-kicker">02 / EXPLORE THE PRODUCT EXPERIENCES</p><h2 id="showcase-title">See the question.<br/><em>Follow the intelligence.</em></h2></div><p>Select a product to explore its intended journey, reviewable output and human decision boundary. These are illustrative workflows, not claims of live integration.</p></div>
+          <div className="hsi-products-showcase-tabs" role="group" aria-label="Choose a product experience">
+            {order.map(id=>{const product=ECOSYSTEM_PRODUCTS.find(p=>p.id===id)!;return <button key={id} type="button" aria-pressed={showcaseId===id} onClick={()=>setShowcaseId(id)}><strong>{product.name}</strong><small>{MATURITY_CHIP_LABEL[product.chip]}</small></button>})}
+          </div>
+          <div className={`hsi-products-showcase-stage hsi-products-showcase-${showcaseId}`} aria-live="polite">
+            <div className="hsi-products-showcase-narrative">
+              <p className="hsi-editorial-kicker">{showcaseProduct.name.toUpperCase()} · ILLUSTRATIVE WORKFLOW</p>
+              <h3>{showcase.question}</h3>
+              <p className="hsi-products-showcase-status">{MATURITY_CHIP_LABEL[showcaseProduct.chip]} · {showcaseProduct.chipDetail}</p>
+              <div className="hsi-products-showcase-sequence"><div><span>01 / CONTEXT</span><p>{showcase.input}</p></div><div><span>02 / INTELLIGENCE</span><p>{showcase.process}</p></div><div><span>03 / REVIEWABLE OUTPUT</span><p>{showcase.output}</p></div></div>
+              <p className="hsi-products-showcase-review"><strong>Human decision boundary</strong> {showcase.review}</p>
+              <Link className="hsi-editorial-button" to={showcaseProduct.primaryCta.href}>{showcaseProduct.primaryCta.label} <span aria-hidden="true">↗</span></Link>
+            </div>
+            <div className="hsi-products-showcase-art" role="img" aria-label={`Conceptual visualisation of ${showcaseProduct.name} intelligence workflow`}>
+              <span className="hsi-products-showcase-art-kicker">HSI / PRODUCT INTELLIGENCE</span>
+              <ProductArt id={showcaseId}/>
+              <div className="hsi-products-showcase-art-flow"><span>{showcase.illustration}</span><strong>Evidence → Context → Human review</strong></div>
+              <small>Conceptual representation · not a live application screenshot</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="hsi-products-collection" id="product-collection" aria-labelledby="collection-title">
         <div className="hsi-editorial-wrap">
           <div className="hsi-editorial-sectionhead">
             <div>
-              <p className="hsi-editorial-kicker">02 / THE PRODUCT COLLECTION</p>
+              <p className="hsi-editorial-kicker">03 / THE PRODUCT COLLECTION</p>
               <h2 id="collection-title">
                 Distinct roles.
                 <br />
@@ -368,7 +403,7 @@ export function Products() {
         <div className="hsi-editorial-wrap">
           <div className="hsi-products-connect-head">
             <div>
-              <p className="hsi-editorial-kicker">03 / WHAT CONNECTS THE EXPERIENCES</p>
+              <p className="hsi-editorial-kicker">04 / WHAT CONNECTS THE EXPERIENCES</p>
               <h2 id="shared-title">
                 Shared technology.
                 <br />
@@ -423,7 +458,7 @@ export function Products() {
 
       <section className="hsi-editorial-outro">
         <div className="hsi-editorial-wrap">
-          <p className="hsi-editorial-kicker">04 / UNDERSTAND THE APPROACH</p>
+          <p className="hsi-editorial-kicker">05 / UNDERSTAND THE APPROACH</p>
           <h2>
             See how the pieces
             <br />
