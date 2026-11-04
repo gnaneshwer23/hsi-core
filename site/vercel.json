@@ -197,6 +197,10 @@
     {
       "source": "/science/review-preparation",
       "destination": "/index.html"
+    },
+    {
+      "source": "/research/scientific-review",
+      "destination": "/index.html"
     }
   ]
 }
