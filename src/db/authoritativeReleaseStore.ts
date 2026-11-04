@@ -3,9 +3,8 @@
  * Identity must be verified by the calling server; this is not an HTTP endpoint.
  */
 import {SQL} from "bun";
-import {createHash} from "node:crypto";
 import {assertHsiNeonDatabaseUrl} from "./neonGuard";
-import type {PublishedReleaseSnapshot,ReleaseClaim,SourceEvidence,ReviewDecisionSnapshot} from "../graphRelease";
+import {computeReleaseManifestHash,assessReleaseClaim,type PublishedReleaseSnapshot,type ReleaseClaim,type SourceEvidence,type ReviewDecisionSnapshot} from "../graphRelease";
 import type {TrustedResearchActor} from "./researchInvestigationStore";
 
 export async function loadHsiPublishedRelease(input:{
@@ -31,10 +30,10 @@ export async function loadHsiPublishedRelease(input:{
    const ids=links.map((r:{claim_id:unknown})=>String(r.claim_id));
    if(new Set(ids).size!==ids.length)throw Error("Duplicate release claims");
    const generatedAt=new Date(String(release.created_at)).toISOString();
-   const expected=createHash("sha256").update(JSON.stringify({
+   const expected=computeReleaseManifestHash({
     schemaVersion:"hsi-graph-release-1",releaseId:String(release.id),
     releaseVersion:input.version,claimIds:ids,generatedAt,
-   })).digest("hex");
+   });
    if(expected!==String(release.manifest_hash))
     throw Error("Published release manifest integrity cannot be verified");
    const claims:ReleaseClaim[]=[];
@@ -74,13 +73,16 @@ export async function loadHsiPublishedRelease(input:{
      id:String(latest.id),claimId,decision:"approve",reviewerPrincipal:String(latest.reviewer_principal),
      reviewerAuthorised:true,reviewedAt:new Date(String(latest.reviewed_at)).toISOString(),
     }];
-    claims.push({
+    const verifiedClaim:ReleaseClaim={
      id:claimId,subjectId:String(c.subject_id),predicate:String(c.predicate),
      objectId:String(c.object_id),assertion:String(c.assertion),
      epistemicType:String(c.epistemic_type),
      biologicalContext:c.biological_context as Record<string,unknown>,
      status:"approved",sources,reviews,
-    });
+    };
+    const assessment=assessReleaseClaim(verifiedClaim);
+    if(!assessment.eligible)throw Error("Scientific release eligibility failed: "+assessment.reasons.join(","));
+    claims.push(verifiedClaim);
    }
    return {manifest:{schemaVersion:"hsi-graph-release-1",releaseId:String(release.id),
     releaseVersion:input.version,generatedAt,claimIds:ids,
