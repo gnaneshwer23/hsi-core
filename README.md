@@ -1,10 +1,12 @@
 # hsi-core
 
-Shared **Human Systems Intelligence** substrate for **Immune Super Intelligence / ISI** (**research intelligence** — connect evidence for better healthcare technology and future treatment strategy) and **Aksh Health** (separate clinic HITL CDS plane).
+**Health Super Intelligence (HSI)** — independent, evidence-grounded biomedical and healthcare intelligence platform under active development.
 
-Evidence-graded edges (`established` / `uncertain` / `unexplored`) plus claim → marker (LOINC) → observation → action stubs. **Not clinical intelligence.** No PHI. No auto diagnosis. No EHR write-back.
+> **Foundational architecture:** [HSI-ARCH-001 — Independent Intelligence, Connected Ecosystem](docs/architecture/principles/ARCH-001-independent-intelligence-connected-ecosystem.md). HSI must own its core research, biology, clinical intelligence, trial intelligence, knowledge graph and agent orchestration capabilities. Aksh Health and Immune Super Intelligence (ISI) are **optional, governed integrations**, not prerequisites for HSI to function.
 
-**Vision alignment:** full portfolio map (Aksh / ISI consumers, bio-stack P3 plugins; DeliverX ignored) lives in [`docs/VISION_REPO_ALIGNMENT.md`](docs/VISION_REPO_ALIGNMENT.md). **P0 DONE / P1 ACTIVE — pilot-first** (one research workflow before more platform).
+**Current implementation vs target state:** This repository presently contains a shared evidence/claim substrate, research contracts, pilot tooling and selected integration adapters. Some workflows are deterministic, stubbed, synthetic or unreviewed. The architecture principle sets the direction; it does **not** imply clinical validation, live patient interoperability, autonomous scientific discovery or production readiness. Preserve existing PHI isolation, human review and no-automatic-EHR-write safeguards.
+
+**Existing planning references:** [Vision/repository alignment](docs/VISION_REPO_ALIGNMENT.md) and [build status](docs/BUILD_STATUS_AND_NEXT.md) describe prior/current implementation scope; interpret any Aksh/ISI dependency framing in those documents as historical implementation detail rather than the target HSI architecture.
 
 ## Pilot
 
