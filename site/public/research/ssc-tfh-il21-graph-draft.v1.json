@@ -1,0 +1,293 @@
+{
+  "schemaVersion": "hsi-ssc-graph-draft-1",
+  "release": {
+    "id": "ssc-tfh-il21-curation-v1",
+    "version": "1.0.0",
+    "status": "unreviewed_research_draft",
+    "graphPromotable": false
+  },
+  "provenance": {
+    "sourceFile": "research/ssc-tfh-il21/curation-candidates.v1.json",
+    "reviewedByHuman": false,
+    "rightsCleared": false
+  },
+  "nodes": [
+    {
+      "schemaVersion": "hsi-lhkg-node-1",
+      "id": "ssc:circulating-tfh-cells",
+      "layer": "human_biology",
+      "kind": "cell_state",
+      "preferredLabel": "circulating Tfh cells",
+      "aliases": [],
+      "sourceIdentifiers": [],
+      "version": "1.0.0",
+      "visibility": "governed_research",
+      "reviewState": "draft",
+      "sourceProvenance": [
+        "PMID:30760472"
+      ]
+    },
+    {
+      "schemaVersion": "hsi-lhkg-node-1",
+      "id": "ssc:ssc-cohort-versus-healthy-controls",
+      "layer": "human_biology",
+      "kind": "biological_context",
+      "preferredLabel": "SSc cohort versus healthy controls",
+      "aliases": [],
+      "sourceIdentifiers": [],
+      "version": "1.0.0",
+      "visibility": "governed_research",
+      "reviewState": "draft",
+      "sourceProvenance": [
+        "PMID:30760472"
+      ]
+    },
+    {
+      "schemaVersion": "hsi-lhkg-node-1",
+      "id": "ssc:ssc-circulating-tfh-cells",
+      "layer": "human_biology",
+      "kind": "cell_state",
+      "preferredLabel": "SSc circulating Tfh cells",
+      "aliases": [],
+      "sourceIdentifiers": [],
+      "version": "1.0.0",
+      "visibility": "governed_research",
+      "reviewState": "draft",
+      "sourceProvenance": [
+        "PMID:30760472"
+      ]
+    },
+    {
+      "schemaVersion": "hsi-lhkg-node-1",
+      "id": "ssc:il-21-dependent-plasmablast-differentiation",
+      "layer": "human_biology",
+      "kind": "biological_context",
+      "preferredLabel": "IL-21-dependent plasmablast differentiation",
+      "aliases": [],
+      "sourceIdentifiers": [],
+      "version": "1.0.0",
+      "visibility": "governed_research",
+      "reviewState": "draft",
+      "sourceProvenance": [
+        "PMID:30760472"
+      ]
+    },
+    {
+      "schemaVersion": "hsi-lhkg-node-1",
+      "id": "ssc:icos-tfh-like-cells",
+      "layer": "human_biology",
+      "kind": "cell_state",
+      "preferredLabel": "ICOS+ Tfh-like cells",
+      "aliases": [],
+      "sourceIdentifiers": [],
+      "version": "1.0.0",
+      "visibility": "governed_research",
+      "reviewState": "draft",
+      "sourceProvenance": [
+        "PMID:29514998"
+      ]
+    },
+    {
+      "schemaVersion": "hsi-lhkg-node-1",
+      "id": "ssc:ssc-dermal-fibrosis",
+      "layer": "human_biology",
+      "kind": "phenotype",
+      "preferredLabel": "SSc dermal fibrosis",
+      "aliases": [],
+      "sourceIdentifiers": [],
+      "version": "1.0.0",
+      "visibility": "governed_research",
+      "reviewState": "draft",
+      "sourceProvenance": [
+        "PMID:29514998"
+      ]
+    },
+    {
+      "schemaVersion": "hsi-lhkg-node-1",
+      "id": "ssc:icos-tfh-like-cells-il-21",
+      "layer": "human_biology",
+      "kind": "cell_state",
+      "preferredLabel": "ICOS+ Tfh-like cells / IL-21",
+      "aliases": [],
+      "sourceIdentifiers": [],
+      "version": "1.0.0",
+      "visibility": "governed_research",
+      "reviewState": "draft",
+      "sourceProvenance": [
+        "PMID:29514998"
+      ]
+    },
+    {
+      "schemaVersion": "hsi-lhkg-node-1",
+      "id": "ssc:dermal-fibrosis",
+      "layer": "human_biology",
+      "kind": "phenotype",
+      "preferredLabel": "dermal fibrosis",
+      "aliases": [],
+      "sourceIdentifiers": [],
+      "version": "1.0.0",
+      "visibility": "governed_research",
+      "reviewState": "draft",
+      "sourceProvenance": [
+        "PMID:29514998"
+      ]
+    },
+    {
+      "schemaVersion": "hsi-lhkg-node-1",
+      "id": "ssc:circulating-tfh1-subset",
+      "layer": "human_biology",
+      "kind": "cell_state",
+      "preferredLabel": "circulating Tfh1 subset",
+      "aliases": [],
+      "sourceIdentifiers": [],
+      "version": "1.0.0",
+      "visibility": "governed_research",
+      "reviewState": "draft",
+      "sourceProvenance": [
+        "PMID:33175976"
+      ]
+    },
+    {
+      "schemaVersion": "hsi-lhkg-node-1",
+      "id": "ssc:ssc-cohort",
+      "layer": "human_biology",
+      "kind": "biological_context",
+      "preferredLabel": "SSc cohort",
+      "aliases": [],
+      "sourceIdentifiers": [],
+      "version": "1.0.0",
+      "visibility": "governed_research",
+      "reviewState": "draft",
+      "sourceProvenance": [
+        "PMID:33175976"
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "schemaVersion": "hsi-lhkg-edge-1",
+      "id": "HSI-C-SSC-001",
+      "subjectId": "ssc:circulating-tfh-cells",
+      "predicate": "INCREASED_IN",
+      "objectId": "ssc:ssc-cohort-versus-healthy-controls",
+      "layer": "human_biology",
+      "epistemicType": "association",
+      "visibility": "governed_research",
+      "reviewState": "draft",
+      "sourceEvidenceIds": [
+        "PMID:30760472"
+      ],
+      "version": "1.0.0",
+      "context": {
+        "model": "human cohort",
+        "studyContext": "50 SSc patients and 32 healthy controls; flow cytometry; do not generalise to all SSc cohorts",
+        "sourceLocator": "PubMed abstract: Results",
+        "limitations": "Cohort-specific observation; subgroup composition and assay differences require full-paper review",
+        "doi": "10.1136/annrheumdis-2018-214382"
+      },
+      "causalClaim": false
+    },
+    {
+      "schemaVersion": "hsi-lhkg-edge-1",
+      "id": "HSI-C-SSC-004",
+      "subjectId": "ssc:ssc-circulating-tfh-cells",
+      "predicate": "PROMOTES_IN_VITRO",
+      "objectId": "ssc:il-21-dependent-plasmablast-differentiation",
+      "layer": "human_biology",
+      "epistemicType": "association",
+      "visibility": "governed_research",
+      "reviewState": "draft",
+      "sourceEvidenceIds": [
+        "PMID:30760472"
+      ],
+      "version": "1.0.0",
+      "context": {
+        "model": "human ex vivo coculture",
+        "studyContext": "Tfh–B-cell coculture; IL-21R blockade/JAK1/2 inhibition; not a clinical efficacy claim",
+        "sourceLocator": "PubMed abstract: Methods and Results",
+        "limitations": "In vitro effect does not establish treatment benefit in SSc patients",
+        "doi": "10.1136/annrheumdis-2018-214382"
+      },
+      "causalClaim": false
+    },
+    {
+      "schemaVersion": "hsi-lhkg-edge-1",
+      "id": "HSI-C-SSC-005",
+      "subjectId": "ssc:icos-tfh-like-cells",
+      "predicate": "ASSOCIATED_WITH",
+      "objectId": "ssc:ssc-dermal-fibrosis",
+      "layer": "human_biology",
+      "epistemicType": "association",
+      "visibility": "governed_research",
+      "reviewState": "draft",
+      "sourceEvidenceIds": [
+        "PMID:29514998"
+      ],
+      "version": "1.0.0",
+      "context": {
+        "model": "human SSc skin",
+        "studyContext": "Skin infiltrating ICOS+ CD4+ Tfh-like cells correlated with dermal fibrosis and clinical status",
+        "sourceLocator": "PubMed abstract",
+        "limitations": "Human association separated from causal mouse-model findings",
+        "doi": "10.1126/scitranslmed.aaf5307"
+      },
+      "causalClaim": false
+    },
+    {
+      "schemaVersion": "hsi-lhkg-edge-1",
+      "id": "HSI-C-SSC-005-MOUSE",
+      "subjectId": "ssc:icos-tfh-like-cells-il-21",
+      "predicate": "CONTRIBUTES_TO_IN_MODEL",
+      "objectId": "ssc:dermal-fibrosis",
+      "layer": "human_biology",
+      "epistemicType": "association",
+      "visibility": "governed_research",
+      "reviewState": "draft",
+      "sourceEvidenceIds": [
+        "PMID:29514998"
+      ],
+      "version": "1.0.0",
+      "context": {
+        "model": "GVHD-SSc mouse model",
+        "studyContext": "Anti-ICOS antibody and IL-21 neutralisation evaluated in experimental model",
+        "sourceLocator": "PubMed abstract",
+        "limitations": "Animal model intervention; no human therapeutic efficacy inference",
+        "doi": "10.1126/scitranslmed.aaf5307"
+      },
+      "causalClaim": false
+    },
+    {
+      "schemaVersion": "hsi-lhkg-edge-1",
+      "id": "HSI-C-SSC-006",
+      "subjectId": "ssc:circulating-tfh1-subset",
+      "predicate": "INCREASED_OR_IMBALANCED_IN",
+      "objectId": "ssc:ssc-cohort",
+      "layer": "human_biology",
+      "epistemicType": "association",
+      "visibility": "governed_research",
+      "reviewState": "draft",
+      "sourceEvidenceIds": [
+        "PMID:33175976"
+      ],
+      "version": "1.0.0",
+      "context": {
+        "model": "human case-control",
+        "studyContext": "Overall circulating Tfh proportion not different from controls; Tfh1 subset increased; associations with IL-21/IL-6 and B-cell phenotype",
+        "sourceLocator": "PubMed abstract: Results",
+        "limitations": "Do not collapse subset imbalance into total circulating Tfh increase",
+        "doi": "10.1093/rheumatology/keaa669"
+      },
+      "causalClaim": false
+    }
+  ],
+  "comparisonCandidates": [
+    {
+      "claimIds": [
+        "HSI-C-SSC-001",
+        "HSI-C-SSC-006"
+      ],
+      "type": "contextual_disagreement_candidate",
+      "reason": "Total circulating Tfh frequency reported differently across cohorts; investigate gating, population, severity and sampling before adjudication"
+    }
+  ]
+}
