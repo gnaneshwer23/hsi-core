@@ -474,9 +474,9 @@ export function ScienceLanding() {
               Explore the biology behind health—from immune responses and cellular signals to metabolism and the microbiome. Start with the mechanisms. Keep the context.
             </p>
             <div className="hsi-editorial-actions">
-              <a className="hsi-editorial-button" href="#biology-explorer">
-                Open the biology explorer <span aria-hidden="true">↗</span>
-              </a>
+              <Link className="hsi-editorial-button" to="/science/body">
+                Explore the human body <span aria-hidden="true">↗</span>
+              </Link>
               <a className="hsi-editorial-textlink" href="#science-mechanisms">
                 Follow a mechanism path ↓
               </a>
