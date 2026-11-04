@@ -207,14 +207,14 @@ function ScienceHeroArt() {
   );
 }
 
-/** Atlas section art — schematic cell / signal composition. */
-function AtlasSectionArt() {
+/** Biology explorer section art — schematic cell / signal composition (conceptual map, not a live KG). */
+function ExplorerSectionArt() {
   return (
-    <svg className="hsi-science-atlas-art" viewBox="0 0 520 280" role="img" aria-labelledby="atlas-art-title atlas-art-desc">
-      <title id="atlas-art-title">Connected systems schematic</title>
-      <desc id="atlas-art-desc">Illustrative molecules, a cell and neighbouring cells — not to scale and not a live graph.</desc>
+    <svg className="hsi-science-explorer-art" viewBox="0 0 520 280" role="img" aria-labelledby="explorer-art-title explorer-art-desc">
+      <title id="explorer-art-title">Connected systems schematic</title>
+      <desc id="explorer-art-desc">Illustrative molecules, a cell and neighbouring cells — conceptual map only; not to scale and not a live knowledge graph.</desc>
       <defs>
-        <radialGradient id="sci-atlas-fill">
+        <radialGradient id="sci-explorer-fill">
           <stop stopColor="#f3eee8" stopOpacity=".85" />
           <stop offset="1" stopColor="#91bfae" stopOpacity=".12" />
         </radialGradient>
@@ -227,10 +227,10 @@ function AtlasSectionArt() {
           <circle key={i} cx={x} cy={y} r="5.5" fill={i === 1 ? "#ff6845" : "#17645f"} fillOpacity={i === 1 ? 1 : 0.55} stroke="none" />
         ))}
       </g>
-      <circle cx="250" cy="140" r="54" fill="url(#sci-atlas-fill)" stroke="#17645f" strokeOpacity=".55" />
+      <circle cx="250" cy="140" r="54" fill="url(#sci-explorer-fill)" stroke="#17645f" strokeOpacity=".55" />
       <circle cx="250" cy="140" r="34" fill="none" stroke="#17645f" strokeOpacity=".28" />
       <circle cx="242" cy="146" r="16" fill="#ff6845" />
-      <g stroke="#17645f" strokeOpacity=".45" fill="url(#sci-atlas-fill)">
+      <g stroke="#17645f" strokeOpacity=".45" fill="url(#sci-explorer-fill)">
         {[[390, 72], [428, 98], [396, 122], [358, 100]].map(([x, y], i) => (
           <g key={i}>
             <circle cx={x} cy={y} r="18" />
@@ -242,7 +242,7 @@ function AtlasSectionArt() {
         <text x="36" y="168">MOLECULE</text>
         <text x="228" y="214">CELL</text>
         <text x="368" y="156">TISSUE</text>
-        <text x="28" y="268">SCHEMATIC · NOT TO SCALE · NOT A LIVE KG</text>
+        <text x="28" y="268">CONCEPTUAL MAP · NOT TO SCALE · NOT A LIVE KG</text>
       </g>
     </svg>
   );
@@ -325,8 +325,8 @@ export function ScienceLanding() {
               Explore the biology behind health—from immune responses and cellular signals to metabolism and the microbiome. Start with the mechanisms. Keep the context.
             </p>
             <div className="hsi-editorial-actions">
-              <a className="hsi-editorial-button" href="#science-atlas">
-                Explore the science atlas <span aria-hidden="true">↗</span>
+              <a className="hsi-editorial-button" href="#biology-explorer">
+                Open the biology explorer <span aria-hidden="true">↗</span>
               </a>
               <a className="hsi-editorial-textlink" href="#science-mechanisms">
                 Follow an immune response ↓
@@ -344,22 +344,22 @@ export function ScienceLanding() {
         </div>
       </section>
 
-      <section className="hsi-rebuild-stack hsi-science-atlas" id="science-atlas" aria-labelledby="atlas-title">
+      <section className="hsi-rebuild-stack hsi-science-explorer" id="biology-explorer" aria-labelledby="explorer-title">
         <div className="hsi-editorial-wrap">
-          <div className="hsi-science-atlas-head">
+          <div className="hsi-science-explorer-head">
             <div className="hsi-rebuild-heading">
               <div>
-                <p className="hsi-editorial-kicker">01 / THE BIOLOGY EXPLORER</p>
-                <h2 id="atlas-title">
+                <p className="hsi-editorial-kicker">01 / BIOLOGY EXPLORER · CONCEPTUAL MAP</p>
+                <h2 id="explorer-title">
                   ONE BODY.<br />
                   <em>INTERACTING SYSTEMS.</em>
                 </h2>
               </div>
-              <p>Select a system, then a component. Explore how the pieces relate without treating a simplified diagram as the whole story.</p>
+              <p>Select a system, then a component. This is a conceptual systems overview—not a live knowledge graph. Explore how the pieces relate without treating a simplified diagram as the whole story.</p>
             </div>
-            <figure className="hsi-science-atlas-figure">
-              <AtlasSectionArt />
-              <figcaption>Conceptual composition · educational only</figcaption>
+            <figure className="hsi-science-explorer-figure">
+              <ExplorerSectionArt />
+              <figcaption>Conceptual map · educational only · not a live KG</figcaption>
             </figure>
           </div>
 
@@ -441,7 +441,7 @@ export function ScienceLanding() {
             </div>
           </div>
 
-          <p className="hsi-science-atlas-note">
+          <p className="hsi-science-explorer-note">
             Educational summaries simplify complex biology. They do not represent patient analysis, evidence grading or conclusions from a new study.
           </p>
         </div>
@@ -560,8 +560,8 @@ export function ScienceLanding() {
                 <li>Simplified mechanism sequences</li>
                 <li>Context kept visible</li>
               </ul>
-              <a className="hsi-editorial-textlink" href="#science-atlas">
-                Stay with the atlas ↓
+              <a className="hsi-editorial-textlink" href="#biology-explorer">
+                Stay with the biology explorer ↓
               </a>
             </article>
 
@@ -604,8 +604,8 @@ export function ScienceLanding() {
             {PRODUCT_SHORT} Science introduces biological concepts. It is not clinical decision support, not a substitute for peer-reviewed findings and not access to a research workspace.
           </p>
           <div className="hsi-editorial-actions">
-            <a className="hsi-editorial-button" href="#science-atlas">
-              Return to the atlas <span aria-hidden="true">↗</span>
+            <a className="hsi-editorial-button" href="#biology-explorer">
+              Return to the biology explorer <span aria-hidden="true">↗</span>
             </a>
             <Link className="hsi-editorial-textlink" to="/for-isi">
               Continue to ISI Research ↗

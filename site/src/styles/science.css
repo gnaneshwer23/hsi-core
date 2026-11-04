@@ -152,12 +152,12 @@
   font-weight: 400;
 }
 
-/* 01 Atlas */
-.hsi-science-atlas {
+/* 01 Biology explorer · conceptual map */
+.hsi-science-explorer {
   scroll-margin-top: 95px;
 }
 
-.hsi-science-atlas-head {
+.hsi-science-explorer-head {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(240px, 0.85fr);
   gap: clamp(24px, 4vw, 48px);
@@ -165,11 +165,11 @@
   margin-bottom: 36px;
 }
 
-.hsi-science-atlas-head .hsi-rebuild-heading {
+.hsi-science-explorer-head .hsi-rebuild-heading {
   margin-bottom: 0;
 }
 
-.hsi-science-atlas-figure {
+.hsi-science-explorer-figure {
   margin: 0;
   min-width: 0;
   background: radial-gradient(circle at 48% 42%, #d9eee5, #fffaf4 72%);
@@ -177,14 +177,14 @@
   padding: 10px 12px 14px;
 }
 
-.hsi-science-atlas-art {
+.hsi-science-explorer-art {
   display: block;
   width: 100%;
   height: auto;
   color: #17645f;
 }
 
-.hsi-science-atlas-figure figcaption {
+.hsi-science-explorer-figure figcaption {
   margin-top: 6px;
   font-size: 0.62rem;
   letter-spacing: 0.06em;
@@ -345,7 +345,7 @@
   color: #466d67;
 }
 
-.hsi-science-atlas-note,
+.hsi-science-explorer-note,
 .hsi-science-mechanism-note {
   margin-top: 22px;
   font-size: 0.74rem;
@@ -764,7 +764,7 @@
 
 @media (max-width: 1050px) {
   .hsi-science-hero-grid,
-  .hsi-science-atlas-head,
+  .hsi-science-explorer-head,
   .hsi-science-system,
   .hsi-science-phase-detail,
   .hsi-science-wider-head,
@@ -787,7 +787,7 @@
     display: none;
   }
 
-  .hsi-science-atlas-figure,
+  .hsi-science-explorer-figure,
   .hsi-science-lens-art {
     width: min(100%, 520px);
     margin-inline: auto;
