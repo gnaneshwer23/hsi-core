@@ -1,4 +1,4 @@
-import type {EvidenceContext,EvidenceRecord,ScientificEdge,TypedGraph} from "./typedGraphSchema";
+import type {EvidenceRecord,ScientificEdge,TypedGraph} from "./typedGraphSchema";
 export type EvidenceAssessment={edgeId:string;sourceId:string;scope:"background"|"direct_claim";stance:"supports"|"contradicts"|"mentions"|"unclear";notes:string;curator:string;assessedAt:string;reviewedBy?:string;reviewedAt?:string};
 export type EvidenceDossier={edge:ScientificEdge;records:Array<{evidence:EvidenceRecord;assessment?:EvidenceAssessment}>;warnings:string[];readyForReview:boolean};
 /** Evidence registry and edge-to-source assessments are kept distinct. Linking a URL is not evidence of a biological assertion. */
