@@ -16,7 +16,7 @@ export function ScienceStudyComparison(){
  return <main className="science-body"><header className="science-body-hero"><div className="science-body-wrap">
  <p className="science-body-kicker">HSI / ISI / INVESTIGATION 01</p><h1>Compare the evidence.<br/><em>Keep the context.</em></h1>
  <p>Systemic sclerosis · Tfh–IL-21–B-cell interactions. A read-only scientific comparison of source-grounded draft extractions. Not an approved mechanism or clinical interpretation.</p>
- <div className="science-body-actions"><Link to="/science/literature">Explore publications ↗</Link><Link to="/science/contradictions">Research contradictions ↗</Link></div>
+ <div className="science-body-actions"><Link to="/science/literature">Explore publications ↗</Link><Link to="/science/review-preparation">Prepare scientific review ↗</Link><Link to="/science/contradictions">Research contradictions ↗</Link></div>
  </div></header><section className="science-body-wrap" style={{paddingBlock:"3rem"}}>
  {error&&<p role="alert">{error}. No scientific conclusions are available.</p>}
  {!data&&!error&&<p role="status">Loading study comparison…</p>}
