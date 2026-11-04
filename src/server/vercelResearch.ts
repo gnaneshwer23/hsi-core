@@ -29,12 +29,14 @@ export async function handleVercelResearch(request:Request,env:Environment,depen
  const config=readResearchDeploymentConfig(env);
  if(path==="/api/research/health"){
   if(request.method!=="GET")return gatewayJson({error:"Method not allowed"},405);
-  return gatewayJson({service:"hsi-research",status:config.ok?"configuration_validated":"configuration_required",...(config.ok?{writesEnabled:config.writesEnabled}:{missing:config.missing}),databaseConnectionTested:false},config.ok?200:503);
+  const requestOrigin=new URL(request.url).origin;
+  const originMatches=config.ok&&requestOrigin===config.publicOrigin;
+  return gatewayJson({service:"hsi-research",status:!config.ok?"configuration_required":originMatches?"configuration_validated":"origin_mismatch",...(config.ok?{writesEnabled:config.writesEnabled,publicOrigin:config.publicOrigin,requestOrigin,originMatches}:{missing:config.missing}),databaseConnectionTested:false},config.ok&&originMatches?200:503);
  }
  if(!path.startsWith("/api/auth/")&&!path.startsWith("/api/research/"))return gatewayJson({error:"Not found"},404);
  if(path.startsWith("/api/research/")&&path!=="/api/research/account"&&!/^\/api\/research\/interrogative\/hsi-interrogative-[a-zA-Z0-9-]{8,100}(?:\/(?:submit-review|decision))?$/.test(path))return gatewayJson({error:"Not found"},404);
- if(!config.ok)return gatewayJson({error:"Research service requires deployment configuration"},503);
- if(new URL(request.url).origin!==config.publicOrigin)return gatewayJson({error:"Deployment origin mismatch"},403);
+ if(!config.ok)return gatewayJson({code:"AUTH_GATEWAY_NOT_CONFIGURED",error:"Research service requires deployment configuration"},503);
+ if(new URL(request.url).origin!==config.publicOrigin)return gatewayJson({code:"DEPLOYMENT_ORIGIN_MISMATCH",error:"Deployment origin mismatch"},403);
  if(path.startsWith("/api/auth/"))return handleAuthGateway(request,config,dependencies.transport);
  if(request.method==="POST"&&!config.writesEnabled)return gatewayJson({error:"Research writes are disabled on this deployment"},403);
  try{

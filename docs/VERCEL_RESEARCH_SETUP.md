@@ -73,6 +73,12 @@ Expected after configuration:
 
 This validates configuration only. It does not query the database, authenticate a
 user, confirm migrations, verify privileges or prove scientific readiness.
+The response also reports the non-secret `publicOrigin`, `requestOrigin` and
+`originMatches` fields. An origin mismatch returns 503 with `origin_mismatch`:
+open the exact configured domain or correct `HSI_PUBLIC_ORIGIN` and redeploy.
+`https://www.humansuperintelligence.tech` and
+`https://humansuperintelligence.tech` are distinct origins. The matching origin
+must also be trusted by Neon Auth; do not weaken the check to accept arbitrary hosts.
 
 If the route is missing/404, check the deployment commit, root directory,
 function build logs and external-file inclusion. If it returns 503 with

@@ -53,6 +53,11 @@ export function createHsiAuthClient(configured:unknown,request:typeof fetch=fetc
       FAILED_TO_CREATE_USER:"The authentication service could not create the account. Please try again or contact the HSI administrator.",
       AUTH_UNAVAILABLE:"Authentication service unavailable. Please retry or contact the HSI administrator.",
       AUTH_INVALID_RESPONSE:"Authentication service returned an unexpected response. Contact the HSI administrator.",
+      AUTH_GATEWAY_NOT_CONFIGURED:"Authentication gateway configuration is incomplete. The HSI administrator must check the deployment settings.",
+      DEPLOYMENT_ORIGIN_MISMATCH:"This website address does not match HSI_PUBLIC_ORIGIN in Vercel. Use the configured website address or ask the HSI administrator to correct it and redeploy.",
+      INVALID_CALLBACK_URL:"The authentication service has not approved the verification callback address. The HSI administrator must check the site's trusted origins.",
+      INVALID_REDIRECT_URL:"The authentication service has not approved the sign-in redirect address. The HSI administrator must check the site's trusted origins.",
+      MISSING_OR_NULL_ORIGIN:"The authentication service could not verify the website origin. The HSI administrator must check its trusted origins and gateway configuration.",
      };
      return{data:null,error:{message:safe[code]??(response.status===429?"Too many authentication attempts. Please try again later.":"Authentication request was denied."),code:safe[code]?code:"auth_denied"}};
     }

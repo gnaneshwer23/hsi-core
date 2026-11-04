@@ -14,10 +14,23 @@ test("Vercel health reports missing configuration without querying a DB or echoi
  const missing=await handleVercelResearch(req("/api/research/health"),{}, {transport:noCalls});
  expect(missing.status).toBe(503);expect((await missing.json()).missing).toContain("HSI_DATABASE_URL");
  const configured=await handleVercelResearch(req("/api/research/health"),env,{transport:noCalls});
- expect(await configured.json()).toEqual({service:"hsi-research",status:"configuration_validated",writesEnabled:false,databaseConnectionTested:false});
+ expect(await configured.json()).toEqual({service:"hsi-research",status:"configuration_validated",writesEnabled:false,publicOrigin:origin,requestOrigin:origin,originMatches:true,databaseConnectionTested:false});
  expect(configured.headers.get("cache-control")).toBe("no-store");
  expect(readResearchDeploymentConfig({...env,HSI_DATABASE_URL:"postgresql://secret@attacker.example/neondb"}).ok).toBe(false);
  expect(readResearchDeploymentConfig({...env,HSI_AUTH_BASE_URL:origin+"/api/auth"}).ok).toBe(false);
+});
+test("health catches www/non-www mismatch without querying the provider or exposing private configuration",async()=>{
+ const r=await handleVercelResearch(new Request("https://www.hsi.example/api/research/health"),env,{transport:noCalls});
+ expect(r.status).toBe(503);
+ const body=await r.json();expect(body.status).toBe("origin_mismatch");expect(body.publicOrigin).toBe(origin);expect(body.requestOrigin).toBe("https://www.hsi.example");expect(body.originMatches).toBe(false);
+ expect(JSON.stringify(body)).not.toContain("never-used");expect(JSON.stringify(body)).not.toContain("provider.example.invalid");
+});
+test("gateway configuration and deployment-origin denials have safe actionable client errors",async()=>{
+ const cases=[{url:origin,settings:{},code:"AUTH_GATEWAY_NOT_CONFIGURED"},{url:"https://www.hsi.example",settings:env,code:"DEPLOYMENT_ORIGIN_MISMATCH"}];
+ for(const c of cases){
+  const client=createHsiAuthClient(env.HSI_AUTH_BASE_URL,transport(async()=>handleVercelResearch(new Request(c.url+"/api/auth/sign-up/email",{method:"POST",headers:{origin:c.url,"content-type":"application/json"},body:JSON.stringify({name:"Test",email:"test@example.invalid",password:"test-only-password"})}),c.settings,{transport:noCalls})),8000,"same-origin");
+  const result=await client.signUp("Test","test@example.invalid","test-only-password");expect(result.error?.code).toBe(c.code);expect(result.error?.message).not.toBe("Authentication request was denied.");expect(JSON.stringify(result)).not.toContain("test-only-password");
+ }
 });
 test("wrong public origin and arbitrary routes fail closed before any provider call",async()=>{
  expect((await handleVercelResearch(new Request("https://attacker.example/api/research/account",{headers:{"x-forwarded-host":"hsi.example"}}),env,{transport:noCalls})).status).toBe(403);
