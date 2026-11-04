@@ -39,6 +39,10 @@
   ],
   "rewrites": [
     {
+      "source": "/sign-in",
+      "destination": "/index.html"
+    },
+    {
       "source": "/platform",
       "destination": "/index.html"
     },
