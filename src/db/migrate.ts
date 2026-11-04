@@ -70,6 +70,23 @@ export async function applyHsiMigrations(opts?: MigrateOptions): Promise<Migrate
         continue;
       }
 
+      // Migration 003 tightens constraints on existing review rows. Never apply
+      // blindly: pre-existing unbackfilled records must be remediated manually.
+      if (id === "003_hsi_scientific_review_guardrails") {
+        const preflight = await sql`
+          SELECT count(*)::int AS invalid_count
+          FROM hsi_evidence_review_decisions
+          WHERE length(trim(rationale)) < 30
+             OR decision = 'revoke'
+        `;
+        if (Number(preflight[0]?.invalid_count ?? 0) > 0) {
+          throw new Error("Migration 003 preflight blocked: legacy review rows require human-led reconciliation");
+        }
+        const legacy = await sql`SELECT count(*)::int AS row_count FROM hsi_evidence_review_decisions`;
+        if (Number(legacy[0]?.row_count ?? 0) > 0) {
+          throw new Error("Migration 003 preflight blocked: existing reviews lack verified evidence/COI backfill");
+        }
+      }
       const body = readFileSync(join(migrationsDir, file), "utf8");
       await sql.unsafe(body);
       await sql`
