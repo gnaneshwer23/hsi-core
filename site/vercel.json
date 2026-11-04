@@ -145,6 +145,10 @@
     {
       "source": "/docs",
       "destination": "/index.html"
+    },
+    {
+      "source": "/science/disease",
+      "destination": "/index.html"
     }
   ]
 }
