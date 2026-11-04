@@ -18,6 +18,7 @@ const stages = [
 ] as const;
 export function TechnologyFlow() {
   const [selected,setSelected] = useState<number|null>(null);
+  const [activeItem,setActiveItem] = useState<{stage:number;row:number}|null>(null);
   return <div className="tf">
     <div className="tf-heading"><p className="tf-eyebrow">THE HSI TECHNOLOGY ARCHITECTURE / CONCEPTUAL FLOW</p><h2>From data to <em>discovery.</em></h2><p>How governed healthcare, patient and biological knowledge could become evidence-grounded intelligence and research opportunities.</p></div>
     <div className="tf-motion" aria-hidden="true">
@@ -33,7 +34,7 @@ export function TechnologyFlow() {
     <div className="tf-flow" aria-label="Five stages from governed data sources to potential research and care impact">
       {stages.map((stage,i)=><div className={"tf-stage "+(i===2?"tf-stage-core":"")+(selected===i?" tf-stage-active":"")} key={stage.title}>
         <button type="button" className="tf-stage-heading" aria-pressed={selected===i} onClick={()=>setSelected(selected===i?null:i)}><span className="tf-stage-number">{i+1}</span><span><strong>{stage.title}</strong><small>{stage.subtitle}</small></span></button>
-        <div className="tf-stage-items">{stage.rows.map((row,j)=><div className="tf-stage-item" key={row.name}><span className="tf-item-index">{String(j+1).padStart(2,"0")}</span><div><strong>{row.name}</strong><small>{row.description}</small>{"details" in row && row.details && <ul className="tf-detail-list">{row.details.map(detail=><li key={detail}>{detail}</li>)}</ul>}</div></div>)}</div>
+        <div className="tf-stage-items">{stage.rows.map((row,j)=>i>=2?<button type="button" className={"tf-stage-item tf-item-button"+(activeItem?.stage===i&&activeItem.row===j?" tf-item-selected":"")} aria-expanded={activeItem?.stage===i&&activeItem.row===j} aria-controls="tf-capability-detail" key={row.name} onClick={()=>{setActiveItem(activeItem?.stage===i&&activeItem.row===j?null:{stage:i,row:j});setSelected(i);}}><span className="tf-item-index">{String(j+1).padStart(2,"0")}</span><span className="tf-item-copy"><strong>{row.name}</strong><small>{row.description}</small><span className="tf-item-more">Explore details ↗</span></span></button>:<div className="tf-stage-item" key={row.name}><span className="tf-item-index">{String(j+1).padStart(2,"0")}</span><div><strong>{row.name}</strong><small>{row.description}</small><ul className="tf-detail-list">{row.details.map(detail=><li key={detail}>{detail}</li>)}</ul></div></div>)}</div>
         {i<4&&<span className="tf-stage-arrow" aria-hidden="true"><span className="tf-arrow-beam" /><span className="tf-arrow-pulse" />→</span>}
       </div>)}
     </div>
