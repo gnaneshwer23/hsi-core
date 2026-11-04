@@ -31,6 +31,7 @@ export async function handleInterrogativeApi(req:Request,services:ApiServices):P
  const token=sessionFromCookie(req);
  if(!token)return json({error:"Authentication required"},401);
  if(req.method!=="GET"&&req.method!=="POST")return json({error:"Method not allowed"},405);
+ if((req.method==="GET"&&match[2])||(req.method==="POST"&&!match[2]))return json({error:"Method not allowed"},405);
  if(req.method==="POST"){
   // A same-origin request and JSON content type are required for cookie-authenticated writes.
   if(req.headers.get("origin")!==url.origin)return json({error:"Origin verification failed"},403);
@@ -43,7 +44,8 @@ export async function handleInterrogativeApi(req:Request,services:ApiServices):P
   if(req.method==="POST"&&match[2]==="decision"){
    const raw=await req.text();
    if(raw.length>20000)return json({error:"Payload too large"},413);
-   const decision=JSON.parse(raw) as HsiScientificReviewDecision;
+   let decision:HsiScientificReviewDecision;
+   try{decision=JSON.parse(raw) as HsiScientificReviewDecision}catch{return json({error:"Invalid JSON"},400)}
    if(!decision||decision.investigationId!==id)return json({error:"Investigation mismatch"},400);
    return json(await services.review({serverSessionToken:token,decision}));
   }
