@@ -15,10 +15,10 @@ export function createHsiNeonGraphReadRepository(config:{databaseUrl:string;neon
   const sql=new SQL(config.databaseUrl,{tls:{rejectUnauthorized:true},connectionTimeout:10});
   try{
    // No client-provided SQL identifiers. Only research-visible graph rows.
-   const rows=await sql`SELECT payload FROM hsi_lhkg_relationships WHERE visibility='governed_research' AND (subject_id=${query.nodeId} OR object_id=${query.nodeId}) AND (${query.predicate??null}::text IS NULL OR predicate=${query.predicate??null}) AND (${query.layer??null}::text IS NULL OR layer=${query.layer??null}) ORDER BY id,version LIMIT ${limit}`;
+   const rows=await sql`SELECT DISTINCT ON (id) payload FROM hsi_lhkg_relationships WHERE visibility='governed_research' AND (subject_id=${query.nodeId} OR object_id=${query.nodeId}) AND (${query.predicate??null}::text IS NULL OR predicate=${query.predicate??null}) AND (${query.layer??null}::text IS NULL OR layer=${query.layer??null}) ORDER BY id,split_part(version,'.',1)::numeric DESC,split_part(version,'.',2)::numeric DESC,split_part(version,'.',3)::numeric DESC LIMIT ${limit}`;
    const relationships:HsiGraphRelationship[]=rows.map((r:Record<string,unknown>)=>r.payload as HsiGraphRelationship);
    const ids=[query.nodeId,...relationships.flatMap(e=>[e.subjectId,e.objectId])];
-   const nodes=await sql`SELECT DISTINCT ON (id) payload FROM hsi_lhkg_nodes WHERE visibility='governed_research' AND id IN ${sql(ids)} ORDER BY id,version DESC`;
+   const nodes=await sql`SELECT DISTINCT ON (id) payload FROM hsi_lhkg_nodes WHERE visibility='governed_research' AND id IN ${sql(ids)} ORDER BY id,split_part(version,'.',1)::numeric DESC,split_part(version,'.',2)::numeric DESC,split_part(version,'.',3)::numeric DESC`;
    return {nodes:nodes.map((r:Record<string,unknown>)=>r.payload as HsiGraphNode),relationships};
   }finally{await sql.close()}
  }};
