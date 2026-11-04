@@ -21,7 +21,7 @@ export function parseAuthRegistration(value:unknown,submittedEmail:string):HsiRe
  if(typeof user.id!=="string"||!user.id.trim()||user.id.length>256||typeof user.email!=="string"||user.email.trim().toLowerCase()!==submittedEmail.trim().toLowerCase()||typeof user.emailVerified!=="boolean")throw Error("Invalid registration identity response");
  return {user:{id:user.id,email:user.email,emailVerified:user.emailVerified}};
 }
-export function createHsiAuthClient(configured:unknown,request:typeof fetch=fetch,timeoutMs=8000){
+export function createHsiAuthClient(configured:unknown,request:typeof fetch=fetch,timeoutMs=8000,transportMode:"provider"|"same-origin"="provider"){
  const baseUrl=parseAuthBaseUrl(configured);
  if(!Number.isSafeInteger(timeoutMs)||timeoutMs<1||timeoutMs>30_000)throw Error("Invalid authentication timeout");
  async function authRequest<T>(path:string,body:unknown,parse:(value:unknown)=>T|null):Promise<AuthResult<T>>{
@@ -30,7 +30,7 @@ export function createHsiAuthClient(configured:unknown,request:typeof fetch=fetc
   const timer=setTimeout(()=>{expired=true;controller.abort();},timeoutMs);
   try{
    const operation=(async()=>{
-    const response=await request(baseUrl+path,{method:body===undefined?"GET":"POST",credentials:"include",cache:"no-store",redirect:"error",signal:controller.signal,headers:{Accept:"application/json",...(body===undefined?{}:{"Content-Type":"application/json"})},...(body===undefined?{}:{body:JSON.stringify(body)})});
+    const response=await request((transportMode==="same-origin"?"/api/auth":baseUrl)+path,{method:body===undefined?"GET":"POST",credentials:"include",cache:"no-store",redirect:"error",signal:controller.signal,headers:{Accept:"application/json",...(body===undefined?{}:{"Content-Type":"application/json"})},...(body===undefined?{}:{body:JSON.stringify(body)})});
     if(!(response.headers.get("content-type")??"").toLowerCase().includes("application/json"))return{data:null,error:{message:"Authentication endpoint returned an unexpected response. Check the approved auth URL and reverse proxy.",code:"auth_invalid_response"}};
     let value:unknown;try{value=await response.json();}catch{return{data:null,error:{message:"Authentication endpoint returned invalid JSON.",code:"auth_invalid_response"}};}
     if(!response.ok){
@@ -51,6 +51,8 @@ export function createHsiAuthClient(configured:unknown,request:typeof fetch=fetc
       ORIGIN_NOT_ALLOWED:"The authentication service has not approved this website’s origin. The HSI administrator must update its trusted origins.",
       UNTRUSTED_ORIGIN:"The authentication service has not approved this website’s origin. The HSI administrator must update its trusted origins.",
       FAILED_TO_CREATE_USER:"The authentication service could not create the account. Please try again or contact the HSI administrator.",
+      AUTH_UNAVAILABLE:"Authentication service unavailable. Please retry or contact the HSI administrator.",
+      AUTH_INVALID_RESPONSE:"Authentication service returned an unexpected response. Contact the HSI administrator.",
      };
      return{data:null,error:{message:safe[code]??(response.status===429?"Too many authentication attempts. Please try again later.":"Authentication request was denied."),code:safe[code]?code:"auth_denied"}};
     }

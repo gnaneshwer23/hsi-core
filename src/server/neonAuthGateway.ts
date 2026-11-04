@@ -1,0 +1,74 @@
+/** Same-origin, narrowly scoped Neon Better Auth gateway. No role provisioning.
+ * Provider cookies stay HttpOnly; tokens and provider internals never enter JSON sent to the browser.
+ */
+export type AuthGatewayConfig={authBaseUrl:string;publicOrigin:string};
+const COOKIE=/^(?:__Secure-|__Host-)?(?:better-auth|neon-auth)\.(?:session_token|session_data|dont_remember)$/;
+export function providerCookies(request:Request):string{
+ const raw=request.headers.get("cookie")??"";
+ if(raw.length>16384)throw Error("Oversized cookie header");
+ return raw.split(";").map(s=>s.trim()).filter(s=>COOKIE.test(s.split("=",1)[0]??"")).join("; ");
+}
+export function gatewayJson(body:unknown,status=200):Response{
+ return Response.json(body,{status,headers:{"Cache-Control":"no-store","Vary":"Cookie","X-Content-Type-Options":"nosniff"}});
+}
+function safeUser(value:unknown){
+ const u=value as Record<string,unknown>|null;
+ if(!u||typeof u.id!=="string"||!u.id||u.id.length>256||typeof u.email!=="string"||u.email.length>254||typeof u.emailVerified!=="boolean")throw Error("Invalid provider user");
+ return {id:u.id,email:u.email,emailVerified:u.emailVerified,...(typeof u.name==="string"?{name:u.name}:{})};
+}
+export function parseProviderSession(value:unknown){
+ if(value===null)return null;
+ const v=value as {session?:Record<string,unknown>;user?:unknown};const s=v?.session;
+ const user=safeUser(v?.user);
+ if(!s||typeof s.id!=="string"||!s.id||s.id.length>256||typeof s.expiresAt!=="string"||!Number.isFinite(Date.parse(s.expiresAt))||Date.parse(s.expiresAt)<=Date.now()||s.userId!==user.id)throw Error("Invalid provider session");
+ return {session:{id:s.id,userId:user.id,expiresAt:s.expiresAt},user};
+}
+export async function requestProvider(config:AuthGatewayConfig,request:Request,path:string,body:unknown,transport:typeof fetch=fetch):Promise<Response>{
+ const cookies=providerCookies(request);
+ return transport(config.authBaseUrl+path,{method:body===undefined?"GET":"POST",redirect:"error",cache:"no-store",signal:AbortSignal.timeout(6000),headers:{Accept:"application/json",Origin:config.publicOrigin,...(cookies?{Cookie:cookies}:{}),...(body===undefined?{}:{"Content-Type":"application/json"})},...(body===undefined?{}:{body:JSON.stringify(body)})});
+}
+export async function verifiedProviderSession(config:AuthGatewayConfig,request:Request,transport:typeof fetch=fetch){
+ if(!providerCookies(request))return null;
+ const response=await requestProvider(config,request,"/get-session",undefined,transport);
+ if(response.status===401)return null;
+ if(!response.ok||!(response.headers.get("content-type")??"").includes("application/json"))throw Error("Provider session unavailable");
+ return parseProviderSession(await response.json());
+}
+function copyProviderCookies(source:Response,target:Response){
+ for(const cookie of source.headers.getSetCookie()){
+  const parts=cookie.split(";").map(s=>s.trim());const pair=parts[0]??"";
+  if(!COOKIE.test(pair.split("=",1)[0]??""))continue;
+  const expiry=parts.slice(1).filter(p=>/^(expires|max-age)=/i.test(p));
+  // Host-only cookies work for both the same-origin auth gateway and research API.
+  target.headers.append("Set-Cookie",[pair,...expiry,"Path=/","HttpOnly","Secure","SameSite=Lax"].join("; "));
+ }
+}
+export async function handleAuthGateway(request:Request,config:AuthGatewayConfig,transport:typeof fetch=fetch):Promise<Response>{
+ const path=new URL(request.url).pathname.slice("/api/auth".length);
+ const method=path==="/get-session"?"GET":["/sign-in/email","/sign-up/email","/sign-out"].includes(path)?"POST":null;
+ if(!method)return gatewayJson({code:"NOT_FOUND"},404);
+ if(request.method!==method)return gatewayJson({code:"METHOD_NOT_ALLOWED"},405);
+ if((request.headers.get("origin")&&request.headers.get("origin")!==config.publicOrigin)||(method==="POST"&&request.headers.get("origin")!==config.publicOrigin))return gatewayJson({code:"INVALID_ORIGIN"},403);
+ let body:unknown;
+ if(method==="POST"){
+  if(!/^application\/json(?:\s*;|$)/i.test(request.headers.get("content-type")??""))return gatewayJson({code:"JSON_REQUIRED"},415);
+  if(Number(request.headers.get("content-length")??0)>20000)return gatewayJson({code:"PAYLOAD_TOO_LARGE"},413);
+  let raw:string;try{raw=await request.text()}catch{return gatewayJson({code:"INVALID_JSON"},400)}
+  if(raw.length>20000)return gatewayJson({code:"PAYLOAD_TOO_LARGE"},413);
+  let v:Record<string,unknown>;try{v=JSON.parse(raw);if(!v||Array.isArray(v)||typeof v!=="object")throw Error()}catch{return gatewayJson({code:"INVALID_JSON"},400)}
+  if(path==="/sign-out")body={};
+  else{
+   if(typeof v.email!=="string"||!v.email.trim()||v.email.length>254||typeof v.password!=="string"||!v.password||v.password.length>128)return gatewayJson({code:"INVALID_CREDENTIAL_FIELDS"},400);
+   if(path==="/sign-up/email"&&(typeof v.name!=="string"||!v.name.trim()||v.name.length>120))return gatewayJson({code:"INVALID_NAME"},400);
+   body={email:v.email.trim(),password:v.password,...(path==="/sign-up/email"?{name:(v.name as string).trim(),callbackURL:config.publicOrigin+"/sign-in"}:{})};
+  }
+ }
+ try{
+  const response=await requestProvider(config,request,path,body,transport);
+  if(!(response.headers.get("content-type")??"").includes("application/json"))return gatewayJson({code:"AUTH_INVALID_RESPONSE"},502);
+  const value=await response.json() as Record<string,unknown>|null;
+  if(!response.ok){const result=gatewayJson({code:typeof value?.code==="string"&&value.code.length<=100?value.code:"AUTH_DENIED"},response.status);copyProviderCookies(response,result);return result}
+  const result=path==="/get-session"?gatewayJson(parseProviderSession(value)):path==="/sign-out"?gatewayJson({success:true}):gatewayJson({user:safeUser(value?.user)});
+  copyProviderCookies(response,result);return result;
+ }catch{return gatewayJson({code:"AUTH_UNAVAILABLE"},503)}
+}

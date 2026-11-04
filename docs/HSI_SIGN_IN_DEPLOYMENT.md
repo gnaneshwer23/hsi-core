@@ -34,9 +34,10 @@ instructions authorise no production database changes and provision no roles.
 - Browser session metadata cannot grant scientific-review permission.
 - The account page calls same-origin `GET /api/research/account` to check grants and list accessible investigations. It shows the approval notice only after the backend confirms a verified identity with no active grants. Routing failures, missing backend sessions and timeouts have distinct messages and a refresh action.
 
-The Vercel static build does not host this Bun API. Follow
-[`ARCH-003-AUTHENTICATED-API-INTEGRATION.md`](ARCH-003-AUTHENTICATED-API-INTEGRATION.md)
-for trusted backend deployment and session forwarding. Configuring only
+The Vercel static build alone does not host this Bun API. The repository now
+includes separately built Vercel Bun functions and an opt-in same-origin auth
+gateway. Follow [`VERCEL_RESEARCH_SETUP.md`](VERCEL_RESEARCH_SETUP.md)
+for deployment and the `VITE_HSI_USE_AUTH_GATEWAY` cutover. Configuring only
 `VITE_HSI_AUTH_BASE_URL` enables provider login; it does not deploy the research API
 or share an external provider cookie with the website's API.
 
