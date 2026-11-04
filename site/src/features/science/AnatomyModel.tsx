@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { BIOLOGY_ENTITIES } from "./biologyCatalogue";
-import "../styles/science-anatomy.css";
+import "../../styles/science-anatomy.css";
 
 type Props={selected:string;visible:Set<string>;onSelect:(id:string)=>void};
 type View="front"|"back";
