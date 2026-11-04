@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type KeyboardEvent } from "react";
 import { Link } from "react-router-dom";
 import { PRODUCT_NAME, PRODUCT_SHORT } from "../../lib/brand";
 import { ECOSYSTEM_PRODUCTS, MATURITY_CHIP_LABEL, type EcosystemProduct } from "../../lib/productMaturity";
@@ -6,6 +6,39 @@ import "../../styles/hsi-editorial.css";
 import "../../styles/how-it-works.css";
 
 type PersonaId = "patient" | "clinician" | "researcher" | "trial";
+
+/** Arrow/Home/End navigation for exclusive radiogroups built from buttons. */
+function moveRadioFocus(
+  event: KeyboardEvent<HTMLElement>,
+  index: number,
+  length: number,
+  select: (next: number) => void,
+) {
+  let next: number | null = null;
+  switch (event.key) {
+    case "ArrowDown":
+    case "ArrowRight":
+      next = (index + 1) % length;
+      break;
+    case "ArrowUp":
+    case "ArrowLeft":
+      next = (index - 1 + length) % length;
+      break;
+    case "Home":
+      next = 0;
+      break;
+    case "End":
+      next = length - 1;
+      break;
+    default:
+      return;
+  }
+  event.preventDefault();
+  select(next);
+  const group = event.currentTarget.closest("[role='radiogroup']");
+  const radios = group?.querySelectorAll<HTMLElement>('[role="radio"]');
+  radios?.[next]?.focus();
+}
 
 type Step = {
   title: string;
@@ -332,15 +365,22 @@ export function HowItWorks() {
             <p>Choose a perspective, then move through its stages. These are explanations of the workflow, rather than live product sessions.</p>
           </div>
 
-          <div className="hsi-hiw-perspectives" role="group" aria-label="Choose a perspective">
+          <div className="hsi-hiw-perspectives" role="radiogroup" aria-label="Choose a perspective">
             {PERSPECTIVES.map((p, i) => (
               <button
                 type="button"
                 key={p.id}
+                role="radio"
                 className={"hsi-research-step" + (p.id === persona ? " is-active" : "")}
-                aria-pressed={p.id === persona}
+                aria-checked={p.id === persona}
                 aria-controls="journey-content"
+                tabIndex={p.id === persona ? 0 : -1}
                 onClick={() => selectPersona(p.id)}
+                onKeyDown={(event) =>
+                  moveRadioFocus(event, i, PERSPECTIVES.length, (next) =>
+                    selectPersona(PERSPECTIVES[next]!.id),
+                  )
+                }
               >
                 <span className="hsi-research-step-index">0{i + 1}</span>
                 <span className="hsi-research-step-copy">
@@ -365,16 +405,21 @@ export function HowItWorks() {
               <div className="hsi-hiw-scope">{perspective.scope}</div>
             </div>
 
-            <div className="hsi-hiw-stages" role="group" aria-label="Journey stages">
+            <div className="hsi-hiw-stages" role="radiogroup" aria-label="Journey stages">
               {STAGES.map((label, i) => (
                 <button
                   type="button"
                   key={label}
+                  role="radio"
                   className={"hsi-research-step" + (i === step ? " is-active" : "")}
                   aria-current={i === step ? "step" : undefined}
-                  aria-pressed={i === step}
+                  aria-checked={i === step}
                   aria-controls="journey-step-detail"
+                  tabIndex={i === step ? 0 : -1}
                   onClick={() => setStep(i)}
+                  onKeyDown={(event) =>
+                    moveRadioFocus(event, i, STAGES.length, setStep)
+                  }
                 >
                   <span className="hsi-research-step-index">0{i + 1}</span>
                   <span className="hsi-research-step-copy">

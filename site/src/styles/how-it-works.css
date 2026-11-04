@@ -229,10 +229,18 @@
   font-size: 0.78rem;
   font-weight: 650;
   cursor: pointer;
+  transition: border-color 0.2s;
 }
 
 .hsi-hiw-controls button:hover:not(:disabled) {
   border-color: #ff6845;
+}
+
+.hsi-hiw-controls button:focus-visible,
+.hsi-hiw-perspectives .hsi-research-step:focus-visible,
+.hsi-hiw-stages .hsi-research-step:focus-visible {
+  outline: 3px solid #ff6845;
+  outline-offset: 3px;
 }
 
 .hsi-hiw-controls button:disabled {
@@ -350,6 +358,14 @@
   .hsi-hiw-step,
   .hsi-hiw-principles {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hsi-hiw-perspectives .hsi-research-step,
+  .hsi-hiw-stages .hsi-research-step,
+  .hsi-hiw-controls button {
+    transition: none !important;
   }
 }
 
