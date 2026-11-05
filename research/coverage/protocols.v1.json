@@ -1,0 +1,203 @@
+{
+  "schemaVersion": "hsi-coverage-protocols-1",
+  "protocols": [
+    {
+      "id": "crohns-mucosal-context",
+      "label": "Crohn’s disease — mucosal research context",
+      "axis": "gut",
+      "disease": {
+        "label": "Crohn’s disease",
+        "mondoId": "MONDO:0005011",
+        "mapping": "unreviewed_hint"
+      },
+      "question": "Which disease-specific human mucosal evidence would be needed to assess microbiome–Treg/Th17 mechanisms in Crohn’s disease?",
+      "requiredSample": "Human intestinal mucosa; matched collection method and timepoint",
+      "variables": [
+        {
+          "id": "calprotectin",
+          "label": "Faecal calprotectin collection",
+          "kind": "lab",
+          "identifier": null,
+          "mapping": "not_mapped",
+          "unit": null,
+          "purpose": "protocol_requirement_not_finding"
+        },
+        {
+          "id": "diet-pattern",
+          "label": "Dietary pattern instrument",
+          "kind": "lifestyle",
+          "identifier": null,
+          "mapping": "not_mapped",
+          "unit": null,
+          "purpose": "protocol_requirement_not_finding"
+        },
+        {
+          "id": "smoking-context",
+          "label": "Smoking exposure collection",
+          "kind": "lifestyle",
+          "identifier": null,
+          "mapping": "not_mapped",
+          "unit": null,
+          "purpose": "protocol_requirement_not_finding"
+        },
+        {
+          "id": "prior-therapy",
+          "label": "Prior therapy class and collection window",
+          "kind": "medication_context",
+          "identifier": null,
+          "mapping": "not_mapped",
+          "unit": null,
+          "purpose": "protocol_requirement_not_finding"
+        }
+      ],
+      "backgroundEdgeIds": [
+        "HSI-E-GUT-003",
+        "HSI-E-GUT-005",
+        "HSI-E-GUT-006"
+      ],
+      "registryConditionTerms": [
+        "Crohn's Disease",
+        "Crohn Disease"
+      ],
+      "limitations": [
+        "Protocol draft; disease-specific source passages and independent scientific review are not available.",
+        "Background mechanisms, ontology hints and collection variables do not establish causality or clinical applicability.",
+        "Registry topic overlap is not participant eligibility; investigator review is required.",
+        "Mouse SCFA/Treg and opposing Th17 frames remain separate background; they do not establish human Crohn’s disease findings."
+      ]
+    },
+    {
+      "id": "ms-neuroimmune-context",
+      "label": "Multiple sclerosis — neuroimmune research context",
+      "axis": "brain",
+      "disease": {
+        "label": "Multiple sclerosis",
+        "mondoId": "MONDO:0005301",
+        "mapping": "unreviewed_hint"
+      },
+      "question": "Which human disease-specific evidence would be needed to evaluate peripheral immune and CNS context in multiple sclerosis?",
+      "requiredSample": "Human CNS-related research sample; fluid/tissue and assay specified",
+      "variables": [
+        {
+          "id": "neurofilament",
+          "label": "Neurofilament collection and assay context",
+          "kind": "lab",
+          "identifier": null,
+          "mapping": "not_mapped",
+          "unit": null,
+          "purpose": "protocol_requirement_not_finding"
+        },
+        {
+          "id": "csf-context",
+          "label": "CSF assay collection context",
+          "kind": "lab",
+          "identifier": null,
+          "mapping": "not_mapped",
+          "unit": null,
+          "purpose": "protocol_requirement_not_finding"
+        },
+        {
+          "id": "activity-instrument",
+          "label": "Physical activity research instrument",
+          "kind": "lifestyle",
+          "identifier": null,
+          "mapping": "not_mapped",
+          "unit": null,
+          "purpose": "protocol_requirement_not_finding"
+        },
+        {
+          "id": "prior-therapy",
+          "label": "Prior disease-modifying therapy collection window",
+          "kind": "medication_context",
+          "identifier": null,
+          "mapping": "not_mapped",
+          "unit": null,
+          "purpose": "protocol_requirement_not_finding"
+        }
+      ],
+      "backgroundEdgeIds": [
+        "HSI-E-NI-012",
+        "HSI-E-NI-014"
+      ],
+      "registryConditionTerms": [
+        "Multiple Sclerosis"
+      ],
+      "limitations": [
+        "Protocol draft; disease-specific source passages and independent scientific review are not available.",
+        "Background mechanisms, ontology hints and collection variables do not establish causality or clinical applicability.",
+        "Registry topic overlap is not participant eligibility; investigator review is required.",
+        "General microglial surveillance and BBB references are not multiple-sclerosis-specific evidence or treatment claims."
+      ]
+    },
+    {
+      "id": "t2d-inflammatory-context",
+      "label": "Type 2 diabetes — inflammatory research context",
+      "axis": "metabolic",
+      "disease": {
+        "label": "Type 2 diabetes mellitus",
+        "mondoId": "MONDO:0005148",
+        "mapping": "unreviewed_hint"
+      },
+      "question": "Which human cohort and assay context is needed to investigate inflammatory associations in type 2 diabetes without inferring treatment response?",
+      "requiredSample": "Human metabolic cohort; specimen, fasting status and collection time specified",
+      "variables": [
+        {
+          "id": "hba1c",
+          "label": "HbA1c research collection",
+          "kind": "lab",
+          "identifier": {
+            "system": "LOINC",
+            "value": "4548-4"
+          },
+          "mapping": "unreviewed_hint",
+          "unit": "%",
+          "purpose": "protocol_requirement_not_finding"
+        },
+        {
+          "id": "fasting-glucose",
+          "label": "Fasting glucose research collection",
+          "kind": "lab",
+          "identifier": {
+            "system": "LOINC",
+            "value": "1558-6"
+          },
+          "mapping": "unreviewed_hint",
+          "unit": "mg/dL",
+          "purpose": "protocol_requirement_not_finding"
+        },
+        {
+          "id": "sleep-instrument",
+          "label": "Sleep research instrument",
+          "kind": "lifestyle",
+          "identifier": null,
+          "mapping": "not_mapped",
+          "unit": null,
+          "purpose": "protocol_requirement_not_finding"
+        },
+        {
+          "id": "prior-therapy",
+          "label": "Glucose-lowering therapy class and collection window",
+          "kind": "medication_context",
+          "identifier": null,
+          "mapping": "not_mapped",
+          "unit": null,
+          "purpose": "protocol_requirement_not_finding"
+        }
+      ],
+      "backgroundEdgeIds": [
+        "HSI-E-IM-004"
+      ],
+      "registryConditionTerms": [
+        "Type 2 Diabetes",
+        "Diabetes Mellitus, Type 2",
+        "Type 2 Diabetes Mellitus"
+      ],
+      "limitations": [
+        "Protocol draft; disease-specific source passages and independent scientific review are not available.",
+        "Background mechanisms, ontology hints and collection variables do not establish causality or clinical applicability.",
+        "Registry topic overlap is not participant eligibility; investigator review is required.",
+        "The CRP background reference does not verify a type 2 diabetes mechanism. Existing LOINC/unit entries are unreviewed hints here; no diagnostic thresholds or conversions are applied."
+      ]
+    }
+  ]
+}

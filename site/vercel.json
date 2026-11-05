@@ -45,6 +45,10 @@
   ],
   "rewrites": [
     {
+      "source": "/research/coverage",
+      "destination": "/index.html"
+    },
+    {
       "source": "/research/evidence-readiness",
       "destination": "/index.html"
     },

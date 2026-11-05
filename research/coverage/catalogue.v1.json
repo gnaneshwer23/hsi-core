@@ -1,0 +1,364 @@
+{
+  "schemaVersion": "hsi-research-coverage-1",
+  "status": "protocol_drafts",
+  "containsPhi": false,
+  "clinicalAdvice": false,
+  "graphPromotable": false,
+  "releaseEligible": false,
+  "inputs": [
+    {
+      "path": "research/coverage/protocols.v1.json",
+      "sha256": "e2292946dd7bf27e25e643f08fffd6b2f9a4666c677dc133f58d6cbcac5dfbe6"
+    },
+    {
+      "path": "research/coverage/registry.snapshot.v1.json",
+      "sha256": "8a59b5b3cc81e6d69f45da9f9dc9df72c150b6bc7c4707b6783bae3d225cc44c"
+    },
+    {
+      "path": "src/seed/gutScfaMucosal.ts",
+      "sha256": "5f01e07de0777ec4cbef56c7a3589ff58bbe5f22a5fb4d6284bd76d4fa818e7d"
+    },
+    {
+      "path": "src/seed/neuroVagusCholinergic.ts",
+      "sha256": "56b05e52ccf81ef09ba783dced44a46fdd689ee798948902abe446daef617fd0"
+    },
+    {
+      "path": "src/seed/t2dImmunoMetabolic.ts",
+      "sha256": "ff4f99d98f8e7a973faee59d9a21d77d491f9885f719fc574b26eaa7e907fd18"
+    }
+  ],
+  "packs": [
+    {
+      "id": "crohns-mucosal-context",
+      "label": "Crohn’s disease — mucosal research context",
+      "axis": "gut",
+      "disease": {
+        "label": "Crohn’s disease",
+        "mondoId": "MONDO:0005011",
+        "mapping": "unreviewed_hint"
+      },
+      "question": "Which disease-specific human mucosal evidence would be needed to assess microbiome–Treg/Th17 mechanisms in Crohn’s disease?",
+      "requiredSample": "Human intestinal mucosa; matched collection method and timepoint",
+      "variables": [
+        {
+          "id": "calprotectin",
+          "label": "Faecal calprotectin collection",
+          "kind": "lab",
+          "identifier": null,
+          "mapping": "not_mapped",
+          "unit": null,
+          "purpose": "protocol_requirement_not_finding"
+        },
+        {
+          "id": "diet-pattern",
+          "label": "Dietary pattern instrument",
+          "kind": "lifestyle",
+          "identifier": null,
+          "mapping": "not_mapped",
+          "unit": null,
+          "purpose": "protocol_requirement_not_finding"
+        },
+        {
+          "id": "smoking-context",
+          "label": "Smoking exposure collection",
+          "kind": "lifestyle",
+          "identifier": null,
+          "mapping": "not_mapped",
+          "unit": null,
+          "purpose": "protocol_requirement_not_finding"
+        },
+        {
+          "id": "prior-therapy",
+          "label": "Prior therapy class and collection window",
+          "kind": "medication_context",
+          "identifier": null,
+          "mapping": "not_mapped",
+          "unit": null,
+          "purpose": "protocol_requirement_not_finding"
+        }
+      ],
+      "backgroundEdgeIds": [
+        "HSI-E-GUT-003",
+        "HSI-E-GUT-005",
+        "HSI-E-GUT-006"
+      ],
+      "registryConditionTerms": [
+        "Crohn's Disease",
+        "Crohn Disease"
+      ],
+      "limitations": [
+        "Protocol draft; disease-specific source passages and independent scientific review are not available.",
+        "Background mechanisms, ontology hints and collection variables do not establish causality or clinical applicability.",
+        "Registry topic overlap is not participant eligibility; investigator review is required.",
+        "Mouse SCFA/Treg and opposing Th17 frames remain separate background; they do not establish human Crohn’s disease findings."
+      ],
+      "status": "protocol_draft",
+      "scientificReview": "unreviewed",
+      "releaseEligible": false,
+      "graphPromotable": false,
+      "background": [
+        {
+          "seedEdgeId": "HSI-E-GUT-003",
+          "subjectId": "HSI-N-butyrate",
+          "subjectLabel": "Butyrate (SCFA)",
+          "predicate": "produces_metabolite_sensed_by",
+          "objectId": "HSI-N-mucosal-treg",
+          "objectLabel": "Colonic / mucosal Foxp3+ Treg",
+          "pmid": "24226770",
+          "citationLabel": "Furusawa Y et al. Nature 2013 — Commensal microbe-derived butyrate induces the differentiation of colonic regulatory T cells.",
+          "sourcePath": "src/seed/gutScfaMucosal.ts",
+          "sourceVersion": "5f01e07de0777ec4cbef56c7a3589ff58bbe5f22a5fb4d6284bd76d4fa818e7d",
+          "contextNote": "P1.3 primary SCFA→Treg edge. PMID 24226770 verified. P1.4 first-class edgeType produces_metabolite_sensed_by (was alias→upregulates). Mouse / HDAC–Foxp3 mechanism — not human disease claim. Gate C = human only. Not CDS.",
+          "relation": "background_context_only",
+          "sourceStatus": "repository_locator_unverified",
+          "rights": "unverified",
+          "scientificReview": "unreviewed",
+          "supportsIndication": false,
+          "passageText": null
+        },
+        {
+          "seedEdgeId": "HSI-E-GUT-005",
+          "subjectId": "HSI-N-scfa",
+          "subjectLabel": "Short-chain fatty acids (class)",
+          "predicate": "upregulates",
+          "objectId": "HSI-N-mucosal-th17",
+          "objectLabel": "Mucosal Th17 cells",
+          "pmid": "24917457",
+          "citationLabel": "Park J et al. Mucosal Immunol 2015 — Short-chain fatty acids induce both effector and regulatory T cells by suppression of histone deacetylases and regulation of the mTOR-S6K pathway.",
+          "sourcePath": "src/seed/gutScfaMucosal.ts",
+          "sourceVersion": "5f01e07de0777ec4cbef56c7a3589ff58bbe5f22a5fb4d6284bd76d4fa818e7d",
+          "contextNote": "P1.3 competing Th17-promote frame. PMID 24917457 verified. teaching=hypothesized — milieu-dependent; NEVER hard-merge with butyrate→Th17 inhibition or Treg edges as settled causation (EBV-style overclaim ban). Gate C = human only. Not CDS.",
+          "relation": "background_context_only",
+          "sourceStatus": "repository_locator_unverified",
+          "rights": "unverified",
+          "scientificReview": "unreviewed",
+          "supportsIndication": false,
+          "passageText": null
+        },
+        {
+          "seedEdgeId": "HSI-E-GUT-006",
+          "subjectId": "HSI-N-butyrate",
+          "subjectLabel": "Butyrate (SCFA)",
+          "predicate": "inhibits",
+          "objectId": "HSI-N-mucosal-th17",
+          "objectLabel": "Mucosal Th17 cells",
+          "pmid": "30918945",
+          "citationLabel": "Chen L et al. Inflamm Bowel Dis 2019 — Microbiota metabolite butyrate differentially regulates Th1 and Th17 cells’ differentiation and function in induction of colitis.",
+          "sourcePath": "src/seed/gutScfaMucosal.ts",
+          "sourceVersion": "5f01e07de0777ec4cbef56c7a3589ff58bbe5f22a5fb4d6284bd76d4fa818e7d",
+          "contextNote": "P1.3 competing Th17-inhibit frame. PMID 30918945 verified. Keep separate from HSI-E-GUT-005 — do not collapse promote vs inhibit. teaching=hypothesized. Gate C = human only. Not CDS.",
+          "relation": "background_context_only",
+          "sourceStatus": "repository_locator_unverified",
+          "rights": "unverified",
+          "scientificReview": "unreviewed",
+          "supportsIndication": false,
+          "passageText": null
+        }
+      ]
+    },
+    {
+      "id": "ms-neuroimmune-context",
+      "label": "Multiple sclerosis — neuroimmune research context",
+      "axis": "brain",
+      "disease": {
+        "label": "Multiple sclerosis",
+        "mondoId": "MONDO:0005301",
+        "mapping": "unreviewed_hint"
+      },
+      "question": "Which human disease-specific evidence would be needed to evaluate peripheral immune and CNS context in multiple sclerosis?",
+      "requiredSample": "Human CNS-related research sample; fluid/tissue and assay specified",
+      "variables": [
+        {
+          "id": "neurofilament",
+          "label": "Neurofilament collection and assay context",
+          "kind": "lab",
+          "identifier": null,
+          "mapping": "not_mapped",
+          "unit": null,
+          "purpose": "protocol_requirement_not_finding"
+        },
+        {
+          "id": "csf-context",
+          "label": "CSF assay collection context",
+          "kind": "lab",
+          "identifier": null,
+          "mapping": "not_mapped",
+          "unit": null,
+          "purpose": "protocol_requirement_not_finding"
+        },
+        {
+          "id": "activity-instrument",
+          "label": "Physical activity research instrument",
+          "kind": "lifestyle",
+          "identifier": null,
+          "mapping": "not_mapped",
+          "unit": null,
+          "purpose": "protocol_requirement_not_finding"
+        },
+        {
+          "id": "prior-therapy",
+          "label": "Prior disease-modifying therapy collection window",
+          "kind": "medication_context",
+          "identifier": null,
+          "mapping": "not_mapped",
+          "unit": null,
+          "purpose": "protocol_requirement_not_finding"
+        }
+      ],
+      "backgroundEdgeIds": [
+        "HSI-E-NI-012",
+        "HSI-E-NI-014"
+      ],
+      "registryConditionTerms": [
+        "Multiple Sclerosis"
+      ],
+      "limitations": [
+        "Protocol draft; disease-specific source passages and independent scientific review are not available.",
+        "Background mechanisms, ontology hints and collection variables do not establish causality or clinical applicability.",
+        "Registry topic overlap is not participant eligibility; investigator review is required.",
+        "General microglial surveillance and BBB references are not multiple-sclerosis-specific evidence or treatment claims."
+      ],
+      "status": "protocol_draft",
+      "scientificReview": "unreviewed",
+      "releaseEligible": false,
+      "graphPromotable": false,
+      "background": [
+        {
+          "seedEdgeId": "HSI-E-NI-012",
+          "subjectId": "HSI-N-microglia-surveillance",
+          "subjectLabel": "Resting / surveying microglia",
+          "predicate": "associates_neuroimmune",
+          "objectId": "HSI-N-brain-parenchyma-surveillance",
+          "objectLabel": "Brain parenchyma immune surveillance",
+          "pmid": "15831717",
+          "citationLabel": "Nimmerjahn A et al. Science 2005 — Resting microglial cells are highly dynamic surveillants of brain parenchyma in vivo.",
+          "sourcePath": "src/seed/neuroVagusCholinergic.ts",
+          "sourceVersion": "56b05e52ccf81ef09ba783dced44a46fdd689ee798948902abe446daef617fd0",
+          "contextNote": "P1.9 microglia neighbourhood. PMID 15831717 verified. In-vivo imaging — teaching=associative; do not invent disease-specific CDS. Gate C = human only. Not CDS. No PHI.",
+          "relation": "background_context_only",
+          "sourceStatus": "repository_locator_unverified",
+          "rights": "unverified",
+          "scientificReview": "unreviewed",
+          "supportsIndication": false,
+          "passageText": null
+        },
+        {
+          "seedEdgeId": "HSI-E-NI-014",
+          "subjectId": "HSI-N-bbb",
+          "subjectLabel": "Blood–brain barrier (neuroimmune interface)",
+          "predicate": "signals_via_axis",
+          "objectId": "HSI-N-peripheral-immune-cns-axis",
+          "objectLabel": "Peripheral immune ↔ CNS communication axis",
+          "pmid": "25172555",
+          "citationLabel": "Banks WA. Brain Behav Immun 2015 — The blood-brain barrier in neuroimmunology: Tales of separation and assimilation.",
+          "sourcePath": "src/seed/neuroVagusCholinergic.ts",
+          "sourceVersion": "56b05e52ccf81ef09ba783dced44a46fdd689ee798948902abe446daef617fd0",
+          "contextNote": "P1.9 BBB axis frame. PMID 25172555 verified (review). teaching=associative; not clinical BBB-opening CDS. Gate C = human only. Not CDS. No PHI.",
+          "relation": "background_context_only",
+          "sourceStatus": "repository_locator_unverified",
+          "rights": "unverified",
+          "scientificReview": "unreviewed",
+          "supportsIndication": false,
+          "passageText": null
+        }
+      ]
+    },
+    {
+      "id": "t2d-inflammatory-context",
+      "label": "Type 2 diabetes — inflammatory research context",
+      "axis": "metabolic",
+      "disease": {
+        "label": "Type 2 diabetes mellitus",
+        "mondoId": "MONDO:0005148",
+        "mapping": "unreviewed_hint"
+      },
+      "question": "Which human cohort and assay context is needed to investigate inflammatory associations in type 2 diabetes without inferring treatment response?",
+      "requiredSample": "Human metabolic cohort; specimen, fasting status and collection time specified",
+      "variables": [
+        {
+          "id": "hba1c",
+          "label": "HbA1c research collection",
+          "kind": "lab",
+          "identifier": {
+            "system": "LOINC",
+            "value": "4548-4"
+          },
+          "mapping": "unreviewed_hint",
+          "unit": "%",
+          "purpose": "protocol_requirement_not_finding"
+        },
+        {
+          "id": "fasting-glucose",
+          "label": "Fasting glucose research collection",
+          "kind": "lab",
+          "identifier": {
+            "system": "LOINC",
+            "value": "1558-6"
+          },
+          "mapping": "unreviewed_hint",
+          "unit": "mg/dL",
+          "purpose": "protocol_requirement_not_finding"
+        },
+        {
+          "id": "sleep-instrument",
+          "label": "Sleep research instrument",
+          "kind": "lifestyle",
+          "identifier": null,
+          "mapping": "not_mapped",
+          "unit": null,
+          "purpose": "protocol_requirement_not_finding"
+        },
+        {
+          "id": "prior-therapy",
+          "label": "Glucose-lowering therapy class and collection window",
+          "kind": "medication_context",
+          "identifier": null,
+          "mapping": "not_mapped",
+          "unit": null,
+          "purpose": "protocol_requirement_not_finding"
+        }
+      ],
+      "backgroundEdgeIds": [
+        "HSI-E-IM-004"
+      ],
+      "registryConditionTerms": [
+        "Type 2 Diabetes",
+        "Diabetes Mellitus, Type 2",
+        "Type 2 Diabetes Mellitus"
+      ],
+      "limitations": [
+        "Protocol draft; disease-specific source passages and independent scientific review are not available.",
+        "Background mechanisms, ontology hints and collection variables do not establish causality or clinical applicability.",
+        "Registry topic overlap is not participant eligibility; investigator review is required.",
+        "The CRP background reference does not verify a type 2 diabetes mechanism. Existing LOINC/unit entries are unreviewed hints here; no diagnostic thresholds or conversions are applied."
+      ],
+      "status": "protocol_draft",
+      "scientificReview": "unreviewed",
+      "releaseEligible": false,
+      "graphPromotable": false,
+      "background": [
+        {
+          "seedEdgeId": "HSI-E-IM-004",
+          "subjectId": "HSI-N-crp",
+          "subjectLabel": "hs-CRP",
+          "predicate": "biomarker_of",
+          "objectId": "HSI-N-chronic-inflammation",
+          "objectLabel": "Low-grade chronic inflammation",
+          "pmid": "12813013",
+          "citationLabel": "Pepys MB, Hirschfield GM. J Clin Invest 2003 — C-reactive protein: a critical update.",
+          "sourcePath": "src/seed/t2dImmunoMetabolic.ts",
+          "sourceVersion": "ff4f99d98f8e7a973faee59d9a21d77d491f9885f719fc574b26eaa7e907fd18",
+          "contextNote": "PMID 12813013 verified via Europe PMC. Supports ISI related_axis REL-P021-produces-B001 (acute-phase → CRP marker). Not a T2D edge. Gate C = human Neon approve only.",
+          "relation": "background_context_only",
+          "sourceStatus": "repository_locator_unverified",
+          "rights": "unverified",
+          "scientificReview": "unreviewed",
+          "supportsIndication": false,
+          "passageText": null
+        }
+      ]
+    }
+  ],
+  "registry": null,
+  "version": "b3625edca59d91f8da1a439201232d6011d09048350d173474cb6731e50948cd"
+}

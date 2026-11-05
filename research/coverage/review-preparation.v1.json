@@ -1,0 +1,252 @@
+{
+  "schemaVersion": "hsi-coverage-review-preparation-1",
+  "catalogueVersion": "b3625edca59d91f8da1a439201232d6011d09048350d173474cb6731e50948cd",
+  "scope": "preparation_only",
+  "scientificApprovalGranted": false,
+  "packs": [
+    {
+      "packId": "crohns-mucosal-context",
+      "status": "blocked_pending_human_review",
+      "releaseEligible": false,
+      "scientificReview": "unreviewed",
+      "graphPromotable": false,
+      "sourcePointers": [
+        {
+          "seedEdgeId": "HSI-E-GUT-003",
+          "pmid": "24226770",
+          "relation": "background_context_only",
+          "contextNote": "P1.3 primary SCFA→Treg edge. PMID 24226770 verified. P1.4 first-class edgeType produces_metabolite_sensed_by (was alias→upregulates). Mouse / HDAC–Foxp3 mechanism — not human disease claim. Gate C = human only. Not CDS."
+        },
+        {
+          "seedEdgeId": "HSI-E-GUT-005",
+          "pmid": "24917457",
+          "relation": "background_context_only",
+          "contextNote": "P1.3 competing Th17-promote frame. PMID 24917457 verified. teaching=hypothesized — milieu-dependent; NEVER hard-merge with butyrate→Th17 inhibition or Treg edges as settled causation (EBV-style overclaim ban). Gate C = human only. Not CDS."
+        },
+        {
+          "seedEdgeId": "HSI-E-GUT-006",
+          "pmid": "30918945",
+          "relation": "background_context_only",
+          "contextNote": "P1.3 competing Th17-inhibit frame. PMID 30918945 verified. Keep separate from HSI-E-GUT-005 — do not collapse promote vs inhibit. teaching=hypothesized. Gate C = human only. Not CDS."
+        }
+      ],
+      "directSupportingPassages": 0,
+      "approvedClaims": 0,
+      "gates": [
+        {
+          "id": "first_pack_independent_scientific_acceptance",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "protocol_and_indication_mapping_review",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "disease_specific_source_identity_and_rights",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "verified_passages_and_study_context",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "independent_scientific_review",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "governed_graph_scope_and_permissions",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "reproducible_brief_and_independent_review",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "product_contract_acceptance",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        }
+      ],
+      "question": "Which disease-specific human mucosal evidence would be needed to assess microbiome–Treg/Th17 mechanisms in Crohn’s disease?",
+      "disease": {
+        "label": "Crohn’s disease",
+        "mondoId": "MONDO:0005011",
+        "mapping": "unreviewed_hint"
+      },
+      "labelStore": [],
+      "assignedReviewer": null
+    },
+    {
+      "packId": "ms-neuroimmune-context",
+      "status": "blocked_pending_human_review",
+      "releaseEligible": false,
+      "scientificReview": "unreviewed",
+      "graphPromotable": false,
+      "sourcePointers": [
+        {
+          "seedEdgeId": "HSI-E-NI-012",
+          "pmid": "15831717",
+          "relation": "background_context_only",
+          "contextNote": "P1.9 microglia neighbourhood. PMID 15831717 verified. In-vivo imaging — teaching=associative; do not invent disease-specific CDS. Gate C = human only. Not CDS. No PHI."
+        },
+        {
+          "seedEdgeId": "HSI-E-NI-014",
+          "pmid": "25172555",
+          "relation": "background_context_only",
+          "contextNote": "P1.9 BBB axis frame. PMID 25172555 verified (review). teaching=associative; not clinical BBB-opening CDS. Gate C = human only. Not CDS. No PHI."
+        }
+      ],
+      "directSupportingPassages": 0,
+      "approvedClaims": 0,
+      "gates": [
+        {
+          "id": "first_pack_independent_scientific_acceptance",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "protocol_and_indication_mapping_review",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "disease_specific_source_identity_and_rights",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "verified_passages_and_study_context",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "independent_scientific_review",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "governed_graph_scope_and_permissions",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "reproducible_brief_and_independent_review",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "product_contract_acceptance",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        }
+      ],
+      "question": "Which human disease-specific evidence would be needed to evaluate peripheral immune and CNS context in multiple sclerosis?",
+      "disease": {
+        "label": "Multiple sclerosis",
+        "mondoId": "MONDO:0005301",
+        "mapping": "unreviewed_hint"
+      },
+      "labelStore": [],
+      "assignedReviewer": null
+    },
+    {
+      "packId": "t2d-inflammatory-context",
+      "status": "blocked_pending_human_review",
+      "releaseEligible": false,
+      "scientificReview": "unreviewed",
+      "graphPromotable": false,
+      "sourcePointers": [
+        {
+          "seedEdgeId": "HSI-E-IM-004",
+          "pmid": "12813013",
+          "relation": "background_context_only",
+          "contextNote": "PMID 12813013 verified via Europe PMC. Supports ISI related_axis REL-P021-produces-B001 (acute-phase → CRP marker). Not a T2D edge. Gate C = human Neon approve only."
+        }
+      ],
+      "directSupportingPassages": 0,
+      "approvedClaims": 0,
+      "gates": [
+        {
+          "id": "first_pack_independent_scientific_acceptance",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "protocol_and_indication_mapping_review",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "disease_specific_source_identity_and_rights",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "verified_passages_and_study_context",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "independent_scientific_review",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "governed_graph_scope_and_permissions",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "reproducible_brief_and_independent_review",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "product_contract_acceptance",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        }
+      ],
+      "question": "Which human cohort and assay context is needed to investigate inflammatory associations in type 2 diabetes without inferring treatment response?",
+      "disease": {
+        "label": "Type 2 diabetes mellitus",
+        "mondoId": "MONDO:0005148",
+        "mapping": "unreviewed_hint"
+      },
+      "labelStore": [],
+      "assignedReviewer": null
+    }
+  ],
+  "note": "No human decisions or role grants are created. Complete accountable source-rights, context, scientific, graph, permission, brief and product acceptance separately."
+}

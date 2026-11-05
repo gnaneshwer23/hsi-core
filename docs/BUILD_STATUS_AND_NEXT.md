@@ -14,6 +14,8 @@
 
 **Delivery Phase F implementation:** [Product-owned research artifact acceptance](PHASE_F_PRODUCT_ACCEPTANCE.md) now runs in both Aksh and ISI loaders, with independent trust policies, exact code provenance, source parity, signature-policy checks and atomic local replacement. Product builds/type checks passed. The transferable source corpus remains unreviewed; approved-artifact/live database acceptance is pending.
 
+**Delivery Phase G implementation:** [Bounded research coverage](PHASE_G_RESEARCH_COVERAGE.md) adds three source-bound protocol drafts (Crohn’s disease, multiple sclerosis and type 2 diabetes), lab/lifestyle/medication design metadata, pinned exports and conservative public-registry topic relevance. No new indication has passed scientific release gates; 20-condition expansion and new governed disease activation remain pending.
+
 **Audit date:** 2 November 2026  
 **HEAD at write:** (post partner-honesty fix) — restored **TEST FIXTURE** partner (`lockedPilot=false`); real named partner **TBD**; prior Apolo `legal_mou` / operator-assert MoU path **revoked**; Stage 1 RA/TNF scope still locked; cite-ready path after Gate C remains; not CDS
 

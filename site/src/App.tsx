@@ -29,6 +29,7 @@ import { GatewayDemo } from "./pages/GatewayDemo";
 import { Sources } from "./pages/Sources";
 import { Science } from "./pages/Science";
 import { ScienceLiterature } from "./pages/ScienceLiterature";
+import { ResearchCoverage } from "./pages/ResearchCoverage";
 import { ResearchEvidenceCatalogue } from "./pages/ResearchEvidenceCatalogue";
 import { ScientificResearchWorkbench } from "./pages/ScientificResearchWorkbench";
 import { ScienceStudyComparison } from "./pages/ScienceStudyComparison";
@@ -60,6 +61,7 @@ export default function App() {
         <Route path="science" element={<Science />} />
         <Route path="science/literature" element={<ScienceLiterature />} />
         <Route path="research/scientific-workbench" element={<ScientificResearchWorkbench />} />
+        <Route path="research/coverage" element={<ResearchCoverage />} />
         <Route path="research/evidence-readiness" element={<ResearchEvidenceCatalogue />} />
         <Route path="science/study-comparison" element={<ScienceStudyComparison />} />
         <Route path="science/review-preparation" element={<ScienceReviewPreparation />} />

@@ -1,0 +1,186 @@
+{
+  "schemaVersion": "hsi-coverage-readiness-1",
+  "catalogueVersion": "b3625edca59d91f8da1a439201232d6011d09048350d173474cb6731e50948cd",
+  "packs": [
+    {
+      "packId": "crohns-mucosal-context",
+      "status": "blocked_pending_human_review",
+      "releaseEligible": false,
+      "scientificReview": "unreviewed",
+      "graphPromotable": false,
+      "sourcePointers": 3,
+      "directSupportingPassages": 0,
+      "approvedClaims": 0,
+      "gates": [
+        {
+          "id": "first_pack_independent_scientific_acceptance",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "protocol_and_indication_mapping_review",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "disease_specific_source_identity_and_rights",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "verified_passages_and_study_context",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "independent_scientific_review",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "governed_graph_scope_and_permissions",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "reproducible_brief_and_independent_review",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "product_contract_acceptance",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        }
+      ]
+    },
+    {
+      "packId": "ms-neuroimmune-context",
+      "status": "blocked_pending_human_review",
+      "releaseEligible": false,
+      "scientificReview": "unreviewed",
+      "graphPromotable": false,
+      "sourcePointers": 2,
+      "directSupportingPassages": 0,
+      "approvedClaims": 0,
+      "gates": [
+        {
+          "id": "first_pack_independent_scientific_acceptance",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "protocol_and_indication_mapping_review",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "disease_specific_source_identity_and_rights",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "verified_passages_and_study_context",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "independent_scientific_review",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "governed_graph_scope_and_permissions",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "reproducible_brief_and_independent_review",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "product_contract_acceptance",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        }
+      ]
+    },
+    {
+      "packId": "t2d-inflammatory-context",
+      "status": "blocked_pending_human_review",
+      "releaseEligible": false,
+      "scientificReview": "unreviewed",
+      "graphPromotable": false,
+      "sourcePointers": 1,
+      "directSupportingPassages": 0,
+      "approvedClaims": 0,
+      "gates": [
+        {
+          "id": "first_pack_independent_scientific_acceptance",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "protocol_and_indication_mapping_review",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "disease_specific_source_identity_and_rights",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "verified_passages_and_study_context",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "independent_scientific_review",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "governed_graph_scope_and_permissions",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "reproducible_brief_and_independent_review",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        },
+        {
+          "id": "product_contract_acceptance",
+          "state": "pending",
+          "reviewer": null,
+          "decisionId": null
+        }
+      ]
+    }
+  ]
+}

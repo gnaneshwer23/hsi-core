@@ -27,6 +27,8 @@ A translational researcher can ask a bounded question, inspect source-grounded e
 
 ## First implementation work package
 
+**Phase G implementation update — 5 November:** [Draft indication coverage](../PHASE_G_RESEARCH_COVERAGE.md) implements three versioned gut/brain/metabolic research protocols, background/source inspection, metadata completeness checks and bounded registry-topic contracts. No new scientific approvals, disease-specific supporting passages or live registry records are supplied. RA/SSc and product source contracts remain unchanged; activation and expansion toward 20 conditions remain gated.
+
 **Phase F implementation update — 5 November:** [Product-owned source acceptance](../PHASE_F_PRODUCT_ACCEPTANCE.md) is wired in both Aksh and ISI, using identical verified source content with separate product pins. Actual-loader parity/denial checks, product builds and type checks passed. Zero approved claims were transferred; independent scientific approval and live product schema/role acceptance remain pending.
 
 **Phase E implementation update — 5 November:** [Bounded assistance and scientific evaluation](../PHASE_E_BOUNDED_AI_AND_SCIENTIFIC_EVALUATION.md) implements the verified deterministic source baseline and versioned offline comparison/label/threshold contracts. Engineering fixtures cover six categories. Rights-cleared SME labels, agreed thresholds, model improvement and activation are pending; no scientific acceptance is claimed.

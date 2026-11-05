@@ -19,3 +19,9 @@ exports/*.json
 # Operator-side source parser caches
 __pycache__/
 *.pyc
+
+# Versioned scientific coverage drafts are source artifacts, not test coverage output.
+!research/coverage/
+!research/coverage/**
+!site/public/research/coverage/
+!site/public/research/coverage/**
