@@ -14,7 +14,7 @@ export function investigateGovernedDiseaseGraph(page:HsiGraphPage,disease:Diseas
  const out:DiscoveryCandidate[]=[];
  for(const e of edges){
   if(!e.sourceEvidenceIds.length||!e.context.sourceLocator?.trim()||!e.context.studyContext?.trim())out.push({id:"provenance:"+e.id,kind:"missing_provenance",relationshipIds:[e.id],sourceEvidenceIds:[...e.sourceEvidenceIds],explanation:"Evidence identifier, precise locator or study context is missing; relationship must not be promoted.",reviewState:"requires_independent_review"});
-  if(disease==="rheumatoid_arthritis"&&!/rheumatoid arthritis|\\bra\\b/i.test(e.context.studyContext??""))out.push({id:"ra-context:"+e.id,kind:"comparison_gap",relationshipIds:[e.id],sourceEvidenceIds:[...e.sourceEvidenceIds],explanation:"No explicit RA study context. SSc evidence cannot be transferred to RA without independently reviewed disease-specific sources.",reviewState:"requires_independent_review"});
+  if(disease==="rheumatoid_arthritis"&&!/rheumatoid arthritis|\bra\b/i.test(e.context.studyContext??""))out.push({id:"ra-context:"+e.id,kind:"comparison_gap",relationshipIds:[e.id],sourceEvidenceIds:[...e.sourceEvidenceIds],explanation:"No explicit RA study context. SSc evidence cannot be transferred to RA without independently reviewed disease-specific sources.",reviewState:"requires_independent_review"});
  }
  for(let i=0;i<edges.length;i++)for(let j=i+1;j<edges.length;j++){
   const a=edges[i]!,b=edges[j]!;
