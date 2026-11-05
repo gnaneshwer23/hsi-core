@@ -27,6 +27,8 @@ A translational researcher can ask a bounded question, inspect source-grounded e
 
 ## First implementation work package
 
+**Phase F implementation update — 5 November:** [Product-owned source acceptance](../PHASE_F_PRODUCT_ACCEPTANCE.md) is wired in both Aksh and ISI, using identical verified source content with separate product pins. Actual-loader parity/denial checks, product builds and type checks passed. Zero approved claims were transferred; independent scientific approval and live product schema/role acceptance remain pending.
+
 **Phase E implementation update — 5 November:** [Bounded assistance and scientific evaluation](../PHASE_E_BOUNDED_AI_AND_SCIENTIFIC_EVALUATION.md) implements the verified deterministic source baseline and versioned offline comparison/label/threshold contracts. Engineering fixtures cover six categories. Rights-cleared SME labels, agreed thresholds, model improvement and activation are pending; no scientific acceptance is claimed.
 
 **Phase D implementation update — 5 November:** [Reproducible briefs and independent review](../PHASE_D_BRIEFS_AND_INDEPENDENT_REVIEW.md) adds context-bound exports, immutable submissions/decisions, a reviewer queue and linked revision/resubmission. Staging migration `015`, real identities and cleared evidence remain live-acceptance prerequisites; no publication is authorised.

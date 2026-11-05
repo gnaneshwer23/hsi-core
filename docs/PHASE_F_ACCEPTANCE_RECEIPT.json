@@ -1,0 +1,151 @@
+{
+  "schemaVersion": "hsi-product-acceptance-report-1",
+  "status": "engineering_source_parity_passed",
+  "hsiRevision": "7d1e7aedf0b70f8858d52479f9efd12f91898d36",
+  "products": [
+    {
+      "product": "isi",
+      "denial": {
+        "product": "isi",
+        "tamperedCorpusUnavailable": true,
+        "tamperedLoadDenied": true,
+        "separateLocalCorpusUsable": true,
+        "databaseTested": false
+      },
+      "revision": "efba00354052648135ed5b66b7d896b64eae7b73",
+      "workingTree": "clean",
+      "modulePins": [
+        {
+          "name": "researchContracts",
+          "commit": "7d1e7aedf0b70f8858d52479f9efd12f91898d36",
+          "sha256": "0539b2abb2b8af643d4d213f98ce33e98b014a8458a7f43365427bda4be1c852"
+        },
+        {
+          "name": "raEvidenceRelease",
+          "commit": "7d1e7aedf0b70f8858d52479f9efd12f91898d36",
+          "sha256": "a2afc7a6c3bf042826048f5e9fc8bd0dd3510ea8e46eb59ee5e6832ad30e7c74"
+        },
+        {
+          "name": "researchArtifactAcceptance",
+          "commit": "7d1e7aedf0b70f8858d52479f9efd12f91898d36",
+          "sha256": "ffe0a24f46305dfb8ab03c174b840ec94530ddbad0c71fc511e9e5196f132b0f"
+        },
+        {
+          "name": "researchArtifactStore",
+          "commit": "7d1e7aedf0b70f8858d52479f9efd12f91898d36",
+          "sha256": "abd02363dd937dfa332f8b96764b0601a29482d7125cceecd6da9675ac2d312b"
+        }
+      ],
+      "acceptance": {
+        "product": "isi",
+        "artifactHash": "bfa69bf56689bd00c6df1a5f329b207bf573ad67234082cce8ec2842b59ed72b",
+        "bundleHash": "f8a18a05bdf768679a462d57b9e74f7cf84d7508f312ee1b749d7c1ff583f13b",
+        "releaseVersion": "5553add22202a8ed35bc570c471fbcd7872296cbb477c38fb9529f8ff4e3df36",
+        "sequence": 1,
+        "sources": 2,
+        "passages": 8,
+        "claims": 0,
+        "sourceIds": [
+          "PMID-18375541",
+          "PMID-24586782"
+        ],
+        "passageIds": [
+          "PMID-18375541-ABSTRACT-1",
+          "PMID-18375541-ABSTRACT-2",
+          "PMID-18375541-ABSTRACT-3",
+          "PMID-18375541-ABSTRACT-4",
+          "PMID-24586782-ABSTRACT-1",
+          "PMID-24586782-ABSTRACT-2",
+          "PMID-24586782-ABSTRACT-3",
+          "PMID-24586782-ABSTRACT-4"
+        ],
+        "relationshipIds": [
+          "REL-I032-treats-D001",
+          "REL-I032-targets-M001",
+          "REL-M001-contributes_to-D001"
+        ],
+        "refusedUnsafeCases": 7,
+        "scientificReview": "unreviewed",
+        "rolesTransferred": false,
+        "scientificApprovalTransferred": false,
+        "graphPublicationApproved": false,
+        "trustMode": "pinned_digest",
+        "signatureVerified": false
+      }
+    },
+    {
+      "product": "aksh",
+      "denial": {
+        "product": "aksh",
+        "tamperedCorpusUnavailable": true,
+        "tamperedLoadDenied": true,
+        "separateLocalCorpusUsable": true,
+        "databaseTested": false
+      },
+      "revision": "1a237ccf13bb3078773d629c3d7a762cebf22155",
+      "workingTree": "clean",
+      "modulePins": [
+        {
+          "name": "researchContracts",
+          "commit": "7d1e7aedf0b70f8858d52479f9efd12f91898d36",
+          "sha256": "0539b2abb2b8af643d4d213f98ce33e98b014a8458a7f43365427bda4be1c852"
+        },
+        {
+          "name": "raEvidenceRelease",
+          "commit": "7d1e7aedf0b70f8858d52479f9efd12f91898d36",
+          "sha256": "a2afc7a6c3bf042826048f5e9fc8bd0dd3510ea8e46eb59ee5e6832ad30e7c74"
+        },
+        {
+          "name": "researchArtifactAcceptance",
+          "commit": "7d1e7aedf0b70f8858d52479f9efd12f91898d36",
+          "sha256": "ffe0a24f46305dfb8ab03c174b840ec94530ddbad0c71fc511e9e5196f132b0f"
+        },
+        {
+          "name": "researchArtifactStore",
+          "commit": "7d1e7aedf0b70f8858d52479f9efd12f91898d36",
+          "sha256": "abd02363dd937dfa332f8b96764b0601a29482d7125cceecd6da9675ac2d312b"
+        }
+      ],
+      "acceptance": {
+        "product": "aksh",
+        "artifactHash": "bfa69bf56689bd00c6df1a5f329b207bf573ad67234082cce8ec2842b59ed72b",
+        "bundleHash": "f8a18a05bdf768679a462d57b9e74f7cf84d7508f312ee1b749d7c1ff583f13b",
+        "releaseVersion": "5553add22202a8ed35bc570c471fbcd7872296cbb477c38fb9529f8ff4e3df36",
+        "sequence": 1,
+        "sources": 2,
+        "passages": 8,
+        "claims": 0,
+        "sourceIds": [
+          "PMID-18375541",
+          "PMID-24586782"
+        ],
+        "passageIds": [
+          "PMID-18375541-ABSTRACT-1",
+          "PMID-18375541-ABSTRACT-2",
+          "PMID-18375541-ABSTRACT-3",
+          "PMID-18375541-ABSTRACT-4",
+          "PMID-24586782-ABSTRACT-1",
+          "PMID-24586782-ABSTRACT-2",
+          "PMID-24586782-ABSTRACT-3",
+          "PMID-24586782-ABSTRACT-4"
+        ],
+        "relationshipIds": [
+          "REL-I032-treats-D001",
+          "REL-I032-targets-M001",
+          "REL-M001-contributes_to-D001"
+        ],
+        "refusedUnsafeCases": 7,
+        "scientificReview": "unreviewed",
+        "rolesTransferred": false,
+        "scientificApprovalTransferred": false,
+        "graphPublicationApproved": false,
+        "trustMode": "pinned_digest",
+        "signatureVerified": false
+      }
+    }
+  ],
+  "approvedArtifactGate": "pending_independent_scientific_approval",
+  "databaseActivationChecked": false,
+  "roleProvisioningChecked": false,
+  "productionDeploymentChecked": false
+}

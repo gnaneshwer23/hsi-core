@@ -12,6 +12,8 @@
 
 **Delivery Phase E implementation:** [Bounded source assistance and scientific evaluation](PHASE_E_BOUNDED_AI_AND_SCIENTIFIC_EVALUATION.md) adds a verified extractive baseline, versioned offline comparisons, source/context checks, blank SME worksheets and unapproved threshold proposals. Real SME-labelled held-out evaluation and model activation remain pending; no provider calls or scientific approvals occurred.
 
+**Delivery Phase F implementation:** [Product-owned research artifact acceptance](PHASE_F_PRODUCT_ACCEPTANCE.md) now runs in both Aksh and ISI loaders, with independent trust policies, exact code provenance, source parity, signature-policy checks and atomic local replacement. Product builds/type checks passed. The transferable source corpus remains unreviewed; approved-artifact/live database acceptance is pending.
+
 **Audit date:** 2 November 2026  
 **HEAD at write:** (post partner-honesty fix) — restored **TEST FIXTURE** partner (`lockedPilot=false`); real named partner **TBD**; prior Apolo `legal_mou` / operator-assert MoU path **revoked**; Stage 1 RA/TNF scope still locked; cite-ready path after Gate C remains; not CDS
 

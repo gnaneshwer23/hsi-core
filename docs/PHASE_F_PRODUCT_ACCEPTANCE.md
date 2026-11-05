@@ -48,6 +48,8 @@ For an upgrade, increase the sequence and install a separately reviewed policy b
 
 ## Acceptance and operations
 
+Run `bun --no-env-file run consumers:verify` from HSI with sibling product checkouts, or supply `--isi-root DIRECTORY --aksh-root DIRECTORY`. The runner verifies exact source/provenance against the recorded HSI commit, executes both actual loaders and isolated denial checks, and compares their complete bundle hashes. It is read-only and does not run product migrations or builds.
+
 Run each product's real corpus loader and focused consumer tests against the same installed transfer artifact. Compare the complete bundle digest, source/passages/relationship IDs, versions, zero claims and no-promotion flags. Exercise hash drift, wrong schema/product/producer, rollback/conflict, missing trust and signature-required refusal. Run each product build. Record exact revisions and failures instead of calling a historical smoke report current evidence.
 
 Live writes require **each product's own** approved schema and roles: ISI `0029`, Aksh `056`, plus its existing trusted auth/RLS adapters. This phase must not run HSI migrations on either product database, reuse HSI accounts as product grants, or infer activation from static configuration. No database migrations or grants are performed here. HSI's own migrations `014`/`015` and authentication/database alignment remain pending independently.
@@ -56,4 +58,23 @@ Independent source-rights/scientific reviewers must supply a genuinely approved 
 
 ## Verification record
 
-Implementation and product acceptance results will be recorded after the final checks. No production deployment, live account login, product database activation or scientific acceptance is implied by local checks.
+[Machine-readable actual-loader receipt](PHASE_F_ACCEPTANCE_RECEIPT.json), produced by `bun --no-env-file run consumers:verify` against clean, committed product trees:
+
+| Check | Result |
+| --- | --- |
+| HSI core tests | **684 passed**, including **14** artifact/signature/atomic-import/rollback checks |
+| HSI core and site/API builds | Passed; evidence-corpus integrity check also passed |
+| ISI focused consumer suite | **13 passed** across shared technology/contracts/service, corpus and RA scenario checks |
+| Aksh focused consumer checks | **7 suites passed**: research contract/import, shared technology, investigation contract/service, RA evidence and working-set corpora |
+| ISI type check and production build | Passed |
+| Aksh type check and Next production build | Passed |
+| Actual-loader artifact and complete bundle parity | Passed in both products; two sources / eight passages / zero claims |
+| Unsafe mutations | **7 refused per product**, using the actual installed trust policy |
+| Isolated tampered runtime | Both mark the corpus unavailable, deny its load and preserve their separate local corpus |
+| Product CI | Added acceptance and isolated denial checks to the existing consumer workflows; remote CI not yet observed |
+
+Pinned artifact sequence: **1**. Artifact SHA-256: `bfa69bf56689bd00c6df1a5f329b207bf573ad67234082cce8ec2842b59ed72b`. Complete bundle SHA-256: `f8a18a05bdf768679a462d57b9e74f7cf84d7508f312ee1b749d7c1ff583f13b`. Source/module producer revision: `7d1e7aedf0b70f8858d52479f9efd12f91898d36`.
+
+Committed consumers: ISI `efba003`, Aksh `1a237cc`. Existing large-chunk warnings remain in HSI/ISI; Aksh retains its pre-existing typedRoutes configuration warning. No public homepage or product visual redesign was performed.
+
+No production deployment, live account login, product database activation or scientific acceptance is implied by local checks. No migrations, role grants, production signing keys or human scientific decisions were created. **Delivery Phase F's engineering source-consumption path is implemented; approved-artifact and live operational acceptance are pending.**
