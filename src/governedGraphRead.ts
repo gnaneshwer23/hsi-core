@@ -19,7 +19,7 @@ function visible(scope:HsiGraphVisibility,p:GraphReadPrincipal,s:GovernedGraphSn
 }
 export function readGovernedGraph(snapshot:GovernedGraphSnapshot,principal:GraphReadPrincipal,request:GraphReadRequest):GraphReadResult{
  if(!principal||!request||!principal.id||!principal.tenantId||!key.test(request.seedId)||!request.tenantId||request.tenantId!==principal.tenantId)deny();
- if(!/^\\d+\\.\\d+\\.\\d+$/.test(snapshot.version)||!snapshot.tenantId&&!snapshot.nodes.every(n=>n.visibility==="public_biomedical"))deny();
+ if(!/^\d+\.\d+\.\d+$/.test(snapshot.version)||!snapshot.tenantId&&!snapshot.nodes.every(n=>n.visibility==="public_biomedical"))deny();
  if(snapshot.tenantId!==null&&snapshot.tenantId!==principal.tenantId)deny();
  if(request.depth!==undefined&&(!Number.isInteger(request.depth)||request.depth<0||request.depth>3))deny();
  if(request.maxEdges!==undefined&&(!Number.isInteger(request.maxEdges)||request.maxEdges<1||request.maxEdges>120))deny();
