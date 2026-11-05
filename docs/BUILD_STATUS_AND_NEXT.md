@@ -1,5 +1,7 @@
 # HSI build status and next
 
+**Graph-experience increment — 5 November:** [ISI/Obsidian-style graph workspace](HSI_GRAPH_EXPLORER_EXPERIENCE.md) replaces the circular overview with force-directed exploration, search/filter rails, global/local views, pointer drag/zoom, connected-concept navigation and typed evidence inspection. Existing public data and source/review boundaries remain unchanged.
+
 **Product-experience increment — 5 November:** [Blueprint implementation and QA handoff](HSI_PRODUCT_EXPERIENCE_IMPLEMENTATION.md) records the unified public pages, research dashboard/governance navigation, graph controls and exports, verified previews and native PDF printing. Community discussions remain local drafts and contact remains preparation/download; live access and scientific/operational acceptance are not declared complete.
 
 **Current-state update — 5 November 2026:** see the [fresh code/build audit](audits/HSI_BUILD_AUDIT_2026-11-05.md) and [phased delivery plan](strategy/HSI_PHASED_BUILD_PLAN.md). The dated GREEN/DONE labels below describe historical scoped milestones, not current end-to-end production readiness.
