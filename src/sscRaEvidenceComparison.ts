@@ -1,0 +1,15 @@
+/** P1.2: evidence-bound SSc/RA comparison. Research only; no cross-disease transfer. */
+import type {HsiGraphPage} from "./hsiGovernedGraphQuery";
+export type DiseaseKey="systemic_sclerosis"|"rheumatoid_arthritis";
+export type DiseaseComparisonRow={relationshipId:string;subjectId:string;predicate:string;objectId:string;studyContext:string;sourceEvidenceIds:string[];reviewState:string;epistemicType:string};
+export type DiseaseComparisonResult={schemaVersion:"hsi-disease-comparison-1";scope:"governed_research";readOnly:true;graphPromotable:false;ssc:DiseaseComparisonRow[];ra:DiseaseComparisonRow[];sharedMechanismCandidates:Array<{subjectId:string;predicate:string;objectId:string;sscRelationshipIds:string[];raRelationshipIds:string[];interpretation:"comparison_candidate_only"}>;unresolved:string[]};
+const ssc=/systemic sclerosis|\\bssc\\b/i,ra=/rheumatoid arthritis|\\bra\\b/i;
+export function compareSscRaEvidence(sscPage:HsiGraphPage,raPage:HsiGraphPage):DiseaseComparisonResult{
+ for(const p of [sscPage,raPage]){if(p.scope!=="governed_research"||p.limit<1||p.limit>100||p.relationships.length>p.limit)throw Error("Invalid governed graph page");const ids=new Set(p.nodes.map(n=>n.id));if(p.relationships.some(e=>e.visibility!=="governed_research"||e.layer==="patient_context"||!ids.has(e.subjectId)||!ids.has(e.objectId)))throw Error("Invalid or clinical relationship");}
+ const rows=(page:HsiGraphPage,disease:RegExp)=>page.relationships.filter(e=>disease.test(e.context.studyContext??"")&&e.sourceEvidenceIds.length>0).map(e=>({relationshipId:e.id,subjectId:e.subjectId,predicate:e.predicate,objectId:e.objectId,studyContext:e.context.studyContext!,sourceEvidenceIds:[...e.sourceEvidenceIds],reviewState:e.reviewState,epistemicType:e.epistemicType})).sort((a,b)=>a.relationshipId.localeCompare(b.relationshipId));
+ const a=rows(sscPage,ssc),b=rows(raPage,ra);
+ const grouped=new Map<string,{subjectId:string;predicate:string;objectId:string;sscRelationshipIds:string[];raRelationshipIds:string[]}>();
+ for(const [source,key] of [[a,"sscRelationshipIds"],[b,"raRelationshipIds"]] as const)for(const e of source){const id=JSON.stringify([e.subjectId,e.predicate,e.objectId]);const row=grouped.get(id)??{subjectId:e.subjectId,predicate:e.predicate,objectId:e.objectId,sscRelationshipIds:[],raRelationshipIds:[]};row[key].push(e.relationshipId);grouped.set(id,row)}
+ const sharedMechanismCandidates=[...grouped.values()].filter(x=>x.sscRelationshipIds.length&&x.raRelationshipIds.length).map(x=>({...x,interpretation:"comparison_candidate_only" as const})).sort((x,y)=>x.subjectId.localeCompare(y.subjectId));
+ return {schemaVersion:"hsi-disease-comparison-1",scope:"governed_research",readOnly:true,graphPromotable:false,ssc:a,ra:b,sharedMechanismCandidates,unresolved:[...(!a.length?["No source-linked SSc relationships available for comparison"]:[]),...(!b.length?["No source-linked RA relationships available for comparison"]:[]),"Shared predicates do not establish equivalent biology, causality or treatment response; compare assay, tissue, disease stage, population and source quality under independent review"]};
+}
