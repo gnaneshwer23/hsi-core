@@ -4,6 +4,8 @@
 
 **Delivery Phase A implementation:** [Connected create/list/reopen workspace](PHASE_A_INVESTIGATION_WORKSPACE.md) is implemented and locally verified. Live Neon acceptance remains pending the paused access prerequisite; no production writes were enabled.
 
+**Delivery Phase B implementation:** [Evidence/source readiness catalogue](PHASE_B_EVIDENCE_AND_SOURCE_READINESS.md) includes 5 publications, 7 unreviewed candidates and 8 imported passages, with unresolved rights/context/scientific gates visible. No candidate was approved or published.
+
 **Audit date:** 2 November 2026  
 **HEAD at write:** (post partner-honesty fix) — restored **TEST FIXTURE** partner (`lockedPilot=false`); real named partner **TBD**; prior Apolo `legal_mou` / operator-assert MoU path **revoked**; Stage 1 RA/TNF scope still locked; cite-ready path after Gate C remains; not CDS
 

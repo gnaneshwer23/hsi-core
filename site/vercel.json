@@ -45,6 +45,10 @@
   ],
   "rewrites": [
     {
+      "source": "/research/evidence-readiness",
+      "destination": "/index.html"
+    },
+    {
       "source": "/research/scientific-workbench",
       "destination": "/index.html"
     },

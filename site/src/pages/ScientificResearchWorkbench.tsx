@@ -29,7 +29,7 @@ export function ScientificResearchWorkbench(){
  return <main className="science-body"><header className="science-body-hero"><div className="science-body-wrap">
  <p className="science-body-kicker">HSI / ISI · SCIENTIFIC RESEARCH WORKBENCH</p><h1>Investigate mechanisms.<br/><em>Follow the evidence.</em></h1>
  <p>Systemic sclerosis · Tfh–IL-21–B-cell responses · Research candidates only. This view does not approve scientific claims.</p>
- <div className="science-body-actions"><Link to="/science/literature">Literature discovery</Link><Link to="/science/graph">Full graph explorer</Link><Link to="/research/account">Researcher sign-in</Link></div>
+ <div className="science-body-actions"><Link to="/research/evidence-readiness">Evidence catalogue</Link><Link to="/science/literature">Literature discovery</Link><Link to="/science/graph">Full graph explorer</Link><Link to="/research/account">Researcher sign-in</Link></div>
  </div></header><div className="science-body-wrap" style={{paddingBlock:"2rem"}}>
  <InvestigationWorkspace/>
  <section aria-label="Authenticated governed graph" style={{padding:"1.25rem",border:"1px solid #aab3c0",borderRadius:12,marginBottom:24}}>

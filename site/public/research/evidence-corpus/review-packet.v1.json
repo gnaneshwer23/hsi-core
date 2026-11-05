@@ -1,0 +1,280 @@
+{
+  "schemaVersion": "hsi-evidence-review-packet-1",
+  "corpusVersion": "2e4704bb3c90322045403ddda78e3ba6cc9eef77479519cf88b95a9f446a0f1b",
+  "status": "unassigned_pending_human_review",
+  "grantsAuthority": false,
+  "publishesGraph": false,
+  "instructions": "Preparation only. Complete source rights, correction checks and claim review through trusted authenticated services. Filling this file never grants permissions or approves a release.",
+  "sources": [
+    {
+      "sourceId": "pmid:18375541",
+      "doi": "10.1136/ard.2007.084715",
+      "scope": "rheumatoid_arthritis",
+      "sourceVersion": "103e8c947ccb82702f90e4f53e7a0189096109cdb3234509943443065936360b",
+      "rights": {
+        "assignedPrincipal": null,
+        "decision": null,
+        "recordId": null,
+        "licenceEvidenceUri": "https://creativecommons.org/licenses/by/2.0/",
+        "permittedUses": [],
+        "rationale": null
+      },
+      "integrity": {
+        "assignedPrincipal": null,
+        "decision": null,
+        "recordId": null,
+        "checkedAt": null,
+        "evidenceUri": null
+      }
+    },
+    {
+      "sourceId": "pmid:24586782",
+      "doi": "10.1371/journal.pone.0089442",
+      "scope": "rheumatoid_arthritis",
+      "sourceVersion": "071c97933fa0edbe4e75ed68b07fe57bee308809c34a3b660ac878c866e6dc7b",
+      "rights": {
+        "assignedPrincipal": null,
+        "decision": null,
+        "recordId": null,
+        "licenceEvidenceUri": "https://creativecommons.org/licenses/by/4.0/",
+        "permittedUses": [],
+        "rationale": null
+      },
+      "integrity": {
+        "assignedPrincipal": null,
+        "decision": null,
+        "recordId": null,
+        "checkedAt": null,
+        "evidenceUri": null
+      }
+    },
+    {
+      "sourceId": "pmid:30760472",
+      "doi": "10.1136/annrheumdis-2018-214382",
+      "scope": "systemic_sclerosis",
+      "sourceVersion": null,
+      "rights": {
+        "assignedPrincipal": null,
+        "decision": null,
+        "recordId": null,
+        "licenceEvidenceUri": null,
+        "permittedUses": [],
+        "rationale": null
+      },
+      "integrity": {
+        "assignedPrincipal": null,
+        "decision": null,
+        "recordId": null,
+        "checkedAt": null,
+        "evidenceUri": null
+      }
+    },
+    {
+      "sourceId": "pmid:29514998",
+      "doi": "10.1126/scitranslmed.aaf5307",
+      "scope": "systemic_sclerosis",
+      "sourceVersion": null,
+      "rights": {
+        "assignedPrincipal": null,
+        "decision": null,
+        "recordId": null,
+        "licenceEvidenceUri": null,
+        "permittedUses": [],
+        "rationale": null
+      },
+      "integrity": {
+        "assignedPrincipal": null,
+        "decision": null,
+        "recordId": null,
+        "checkedAt": null,
+        "evidenceUri": null
+      }
+    },
+    {
+      "sourceId": "pmid:33175976",
+      "doi": "10.1093/rheumatology/keaa669",
+      "scope": "systemic_sclerosis",
+      "sourceVersion": null,
+      "rights": {
+        "assignedPrincipal": null,
+        "decision": null,
+        "recordId": null,
+        "licenceEvidenceUri": null,
+        "permittedUses": [],
+        "rationale": null
+      },
+      "integrity": {
+        "assignedPrincipal": null,
+        "decision": null,
+        "recordId": null,
+        "checkedAt": null,
+        "evidenceUri": null
+      }
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "HSI-C-RA-SEROLOGY-COHORT-RESULTS",
+      "sourceId": "pmid:18375541",
+      "passageIds": [
+        "PMID-18375541-ABSTRACT-3",
+        "PMID-18375541-ABSTRACT-2"
+      ],
+      "missingChecks": [
+        "human_rights_clearance_required",
+        "current_correction_check_required",
+        "independent_scientific_review_required"
+      ],
+      "assignedPrincipal": null,
+      "decision": null,
+      "recordId": null,
+      "evidenceReviewed": [],
+      "conflictOfInterestDeclared": null,
+      "rationale": null
+    },
+    {
+      "claimId": "HSI-C-RA-SEROLOGY-META-RESULTS",
+      "sourceId": "pmid:24586782",
+      "passageIds": [
+        "PMID-24586782-ABSTRACT-3",
+        "PMID-24586782-ABSTRACT-2"
+      ],
+      "missingChecks": [
+        "human_rights_clearance_required",
+        "current_correction_check_required",
+        "independent_scientific_review_required",
+        "context_tissue_not_extracted",
+        "context_assay_not_extracted"
+      ],
+      "assignedPrincipal": null,
+      "decision": null,
+      "recordId": null,
+      "evidenceReviewed": [],
+      "conflictOfInterestDeclared": null,
+      "rationale": null
+    },
+    {
+      "claimId": "HSI-C-SSC-001",
+      "sourceId": "pmid:30760472",
+      "passageIds": [
+        "HSI-C-SSC-001-LOCATOR"
+      ],
+      "missingChecks": [
+        "human_rights_clearance_required",
+        "current_correction_check_required",
+        "independent_scientific_review_required",
+        "source_identity_verification_required",
+        "licence_evidence_missing",
+        "supporting_passage_not_available",
+        "context_tissue_not_extracted",
+        "context_intervention_not_extracted",
+        "context_timepoint_not_extracted"
+      ],
+      "assignedPrincipal": null,
+      "decision": null,
+      "recordId": null,
+      "evidenceReviewed": [],
+      "conflictOfInterestDeclared": null,
+      "rationale": null
+    },
+    {
+      "claimId": "HSI-C-SSC-004",
+      "sourceId": "pmid:30760472",
+      "passageIds": [
+        "HSI-C-SSC-004-LOCATOR"
+      ],
+      "missingChecks": [
+        "human_rights_clearance_required",
+        "current_correction_check_required",
+        "independent_scientific_review_required",
+        "source_identity_verification_required",
+        "licence_evidence_missing",
+        "supporting_passage_not_available",
+        "context_population_not_extracted",
+        "context_tissue_not_extracted",
+        "context_timepoint_not_extracted"
+      ],
+      "assignedPrincipal": null,
+      "decision": null,
+      "recordId": null,
+      "evidenceReviewed": [],
+      "conflictOfInterestDeclared": null,
+      "rationale": null
+    },
+    {
+      "claimId": "HSI-C-SSC-005",
+      "sourceId": "pmid:29514998",
+      "passageIds": [
+        "HSI-C-SSC-005-LOCATOR"
+      ],
+      "missingChecks": [
+        "human_rights_clearance_required",
+        "current_correction_check_required",
+        "independent_scientific_review_required",
+        "source_identity_verification_required",
+        "licence_evidence_missing",
+        "supporting_passage_not_available",
+        "context_population_not_extracted",
+        "context_assay_not_extracted",
+        "context_intervention_not_extracted",
+        "context_timepoint_not_extracted"
+      ],
+      "assignedPrincipal": null,
+      "decision": null,
+      "recordId": null,
+      "evidenceReviewed": [],
+      "conflictOfInterestDeclared": null,
+      "rationale": null
+    },
+    {
+      "claimId": "HSI-C-SSC-005-MOUSE",
+      "sourceId": "pmid:29514998",
+      "passageIds": [
+        "HSI-C-SSC-005-MOUSE-LOCATOR"
+      ],
+      "missingChecks": [
+        "human_rights_clearance_required",
+        "current_correction_check_required",
+        "independent_scientific_review_required",
+        "source_identity_verification_required",
+        "licence_evidence_missing",
+        "supporting_passage_not_available",
+        "context_population_not_extracted",
+        "context_tissue_not_extracted",
+        "context_assay_not_extracted",
+        "context_timepoint_not_extracted"
+      ],
+      "assignedPrincipal": null,
+      "decision": null,
+      "recordId": null,
+      "evidenceReviewed": [],
+      "conflictOfInterestDeclared": null,
+      "rationale": null
+    },
+    {
+      "claimId": "HSI-C-SSC-006",
+      "sourceId": "pmid:33175976",
+      "passageIds": [
+        "HSI-C-SSC-006-LOCATOR"
+      ],
+      "missingChecks": [
+        "human_rights_clearance_required",
+        "current_correction_check_required",
+        "independent_scientific_review_required",
+        "source_identity_verification_required",
+        "licence_evidence_missing",
+        "supporting_passage_not_available",
+        "context_tissue_not_extracted",
+        "context_assay_not_extracted",
+        "context_intervention_not_extracted",
+        "context_timepoint_not_extracted"
+      ],
+      "assignedPrincipal": null,
+      "decision": null,
+      "recordId": null,
+      "evidenceReviewed": [],
+      "conflictOfInterestDeclared": null,
+      "rationale": null
+    }
+  ]
+}

@@ -82,7 +82,7 @@
     "adapter:isi-agents": "bun run src/cli/isi-agents-adapter.ts",
     "db:migrate": "bun run src/cli/migrate.ts",
     "db:gate-c-local": "bun run src/cli/gate-c-local.ts",
-    "check": "bun run test && bun run validate && bun run outputs && bun run build",
+    "check": "bun run test && bun run validate && bun run evidence:check && bun run outputs && bun run build",
     "site:dev": "bun run --cwd site dev",
     "site:build": "bun run --cwd site build",
     "site:preview": "bun run --cwd site preview",
@@ -96,7 +96,9 @@
     "ra:scaffold-annotation": "bun scripts/scaffold-ra-annotation.ts",
     "ra:submit-practice-labels": "bun scripts/submit-practice-labels.ts",
     "sources:ingest:ssc": "bun src/cli/ingest-ssc-sources.ts",
-    "audit:step6": "bun src/cli/step6-readiness.ts"
+    "audit:step6": "bun src/cli/step6-readiness.ts",
+    "evidence:build": "bun scripts/build-evidence-corpus.ts",
+    "evidence:check": "bun scripts/build-evidence-corpus.ts --check"
   },
   "engines": {
     "node": ">=20"

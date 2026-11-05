@@ -1,0 +1,127 @@
+{
+  "schemaVersion": "hsi-working-evidence-readiness-1",
+  "corpusVersion": "2e4704bb3c90322045403ddda78e3ba6cc9eef77479519cf88b95a9f446a0f1b",
+  "status": "blocked_pending_human_review",
+  "graphPromotable": false,
+  "counts": {
+    "sources": 5,
+    "claims": 7,
+    "textPassages": 8,
+    "locatorOnly": 5,
+    "eligibleClaims": 0
+  },
+  "claims": [
+    {
+      "claimId": "HSI-C-RA-SEROLOGY-COHORT-RESULTS",
+      "sourceId": "pmid:18375541",
+      "disease": "rheumatoid_arthritis",
+      "reasons": [
+        "human_rights_clearance_required",
+        "current_correction_check_required",
+        "independent_scientific_review_required"
+      ],
+      "releaseEligible": false
+    },
+    {
+      "claimId": "HSI-C-RA-SEROLOGY-META-RESULTS",
+      "sourceId": "pmid:24586782",
+      "disease": "rheumatoid_arthritis",
+      "reasons": [
+        "human_rights_clearance_required",
+        "current_correction_check_required",
+        "independent_scientific_review_required",
+        "context_tissue_not_extracted",
+        "context_assay_not_extracted"
+      ],
+      "releaseEligible": false
+    },
+    {
+      "claimId": "HSI-C-SSC-001",
+      "sourceId": "pmid:30760472",
+      "disease": "systemic_sclerosis",
+      "reasons": [
+        "human_rights_clearance_required",
+        "current_correction_check_required",
+        "independent_scientific_review_required",
+        "source_identity_verification_required",
+        "licence_evidence_missing",
+        "supporting_passage_not_available",
+        "context_tissue_not_extracted",
+        "context_intervention_not_extracted",
+        "context_timepoint_not_extracted"
+      ],
+      "releaseEligible": false
+    },
+    {
+      "claimId": "HSI-C-SSC-004",
+      "sourceId": "pmid:30760472",
+      "disease": "systemic_sclerosis",
+      "reasons": [
+        "human_rights_clearance_required",
+        "current_correction_check_required",
+        "independent_scientific_review_required",
+        "source_identity_verification_required",
+        "licence_evidence_missing",
+        "supporting_passage_not_available",
+        "context_population_not_extracted",
+        "context_tissue_not_extracted",
+        "context_timepoint_not_extracted"
+      ],
+      "releaseEligible": false
+    },
+    {
+      "claimId": "HSI-C-SSC-005",
+      "sourceId": "pmid:29514998",
+      "disease": "systemic_sclerosis",
+      "reasons": [
+        "human_rights_clearance_required",
+        "current_correction_check_required",
+        "independent_scientific_review_required",
+        "source_identity_verification_required",
+        "licence_evidence_missing",
+        "supporting_passage_not_available",
+        "context_population_not_extracted",
+        "context_assay_not_extracted",
+        "context_intervention_not_extracted",
+        "context_timepoint_not_extracted"
+      ],
+      "releaseEligible": false
+    },
+    {
+      "claimId": "HSI-C-SSC-005-MOUSE",
+      "sourceId": "pmid:29514998",
+      "disease": "systemic_sclerosis",
+      "reasons": [
+        "human_rights_clearance_required",
+        "current_correction_check_required",
+        "independent_scientific_review_required",
+        "source_identity_verification_required",
+        "licence_evidence_missing",
+        "supporting_passage_not_available",
+        "context_population_not_extracted",
+        "context_tissue_not_extracted",
+        "context_assay_not_extracted",
+        "context_timepoint_not_extracted"
+      ],
+      "releaseEligible": false
+    },
+    {
+      "claimId": "HSI-C-SSC-006",
+      "sourceId": "pmid:33175976",
+      "disease": "systemic_sclerosis",
+      "reasons": [
+        "human_rights_clearance_required",
+        "current_correction_check_required",
+        "independent_scientific_review_required",
+        "source_identity_verification_required",
+        "licence_evidence_missing",
+        "supporting_passage_not_available",
+        "context_tissue_not_extracted",
+        "context_assay_not_extracted",
+        "context_intervention_not_extracted",
+        "context_timepoint_not_extracted"
+      ],
+      "releaseEligible": false
+    }
+  ]
+}
