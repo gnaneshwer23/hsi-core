@@ -1,3 +1,4 @@
+import {lazy,Suspense} from "react";
 import { Route, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import { Home } from "./pages/Home";
@@ -46,6 +47,8 @@ import { ScienceZoom, ScienceConnections } from "./pages/ScienceExplorer";
 import { NotFound } from "./pages/NotFound";
 import { AuthenticatedInterrogativeWorkbench } from "./pages/AuthenticatedInterrogativeWorkbench";
 
+const SyntheticValidationWorkbench=lazy(()=>import("./pages/SyntheticValidationWorkbench").then(m=>({default:m.SyntheticValidationWorkbench})));
+
 export default function App() {
   return (
     <Routes>
@@ -61,6 +64,7 @@ export default function App() {
         <Route path="science" element={<Science />} />
         <Route path="science/literature" element={<ScienceLiterature />} />
         <Route path="research/scientific-workbench" element={<ScientificResearchWorkbench />} />
+        <Route path="research/validation" element={<Suspense fallback={<p role="status">Loading validation workspace…</p>}><SyntheticValidationWorkbench/></Suspense>} />
         <Route path="research/coverage" element={<ResearchCoverage />} />
         <Route path="research/evidence-readiness" element={<ResearchEvidenceCatalogue />} />
         <Route path="science/study-comparison" element={<ScienceStudyComparison />} />

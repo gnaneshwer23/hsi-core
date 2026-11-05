@@ -1,0 +1,5402 @@
+[
+  {
+    "trial_id": "SYN-TRIAL-001",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "phase": "Phase 3",
+    "intervention": "TNF inhibitor",
+    "biomarkers": [
+      "Fasting insulin",
+      "Vitamin D",
+      "Ferritin"
+    ],
+    "endpoints": [
+      "safety events",
+      "CRP change",
+      "HbA1c change"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-002",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "phase": "Phase 2",
+    "intervention": "GLP-1 receptor agonist",
+    "biomarkers": [
+      "hs-CRP",
+      "Triglycerides",
+      "HbA1c"
+    ],
+    "endpoints": [
+      "CRP change",
+      "safety events",
+      "symptom score"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-003",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "phase": "Phase 3",
+    "intervention": "Metformin",
+    "biomarkers": [
+      "hs-CRP",
+      "Ferritin",
+      "Vitamin D"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "symptom score",
+      "safety events"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-004",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "phase": "Phase 1",
+    "intervention": "Lifestyle programme",
+    "biomarkers": [
+      "Calprotectin",
+      "ALT",
+      "Vitamin D"
+    ],
+    "endpoints": [
+      "safety events",
+      "CRP change",
+      "HbA1c change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-005",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "phase": "Phase 2",
+    "intervention": "Probiotic",
+    "biomarkers": [
+      "HbA1c",
+      "Calprotectin",
+      "Fasting insulin"
+    ],
+    "endpoints": [
+      "response rate",
+      "symptom score",
+      "CRP change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-006",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "phase": "Phase 2",
+    "intervention": "Probiotic",
+    "biomarkers": [
+      "Ferritin",
+      "ALT",
+      "TNF-alpha"
+    ],
+    "endpoints": [
+      "CRP change",
+      "response rate",
+      "HbA1c change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-007",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "phase": "Phase 2",
+    "intervention": "Low-FODMAP diet",
+    "biomarkers": [
+      "HbA1c",
+      "HDL",
+      "hs-CRP"
+    ],
+    "endpoints": [
+      "symptom score",
+      "HbA1c change",
+      "safety events"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-008",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "phase": "Phase 2",
+    "intervention": "Mesalamine",
+    "biomarkers": [
+      "Fasting glucose",
+      "Ferritin",
+      "HbA1c"
+    ],
+    "endpoints": [
+      "response rate",
+      "safety events",
+      "HbA1c change"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-009",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "phase": "Phase 1",
+    "intervention": "TNF inhibitor",
+    "biomarkers": [
+      "Fasting glucose",
+      "TNF-alpha",
+      "HbA1c"
+    ],
+    "endpoints": [
+      "safety events",
+      "symptom score",
+      "response rate"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-010",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "phase": "Phase 2",
+    "intervention": "IL-6 inhibitor",
+    "biomarkers": [
+      "Vitamin D",
+      "LDL",
+      "Calprotectin"
+    ],
+    "endpoints": [
+      "response rate",
+      "CRP change",
+      "symptom score"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-011",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "phase": "Phase 1",
+    "intervention": "Corticosteroid",
+    "biomarkers": [
+      "HDL",
+      "Fasting insulin",
+      "ALT"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "safety events",
+      "response rate"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-012",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "phase": "Phase 3",
+    "intervention": "CGRP inhibitor",
+    "biomarkers": [
+      "LDL",
+      "Vitamin D",
+      "IL-6"
+    ],
+    "endpoints": [
+      "symptom score",
+      "response rate",
+      "safety events"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-013",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "phase": "Phase 2",
+    "intervention": "CGRP inhibitor",
+    "biomarkers": [
+      "hs-CRP",
+      "TNF-alpha",
+      "ALT"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "safety events",
+      "response rate"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-014",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "phase": "Phase 2",
+    "intervention": "SNRI",
+    "biomarkers": [
+      "Calprotectin",
+      "TNF-alpha",
+      "Triglycerides"
+    ],
+    "endpoints": [
+      "safety events",
+      "CRP change",
+      "symptom score"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-015",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "phase": "Phase 2",
+    "intervention": "SNRI",
+    "biomarkers": [
+      "Triglycerides",
+      "ALT",
+      "Ferritin"
+    ],
+    "endpoints": [
+      "CRP change",
+      "response rate",
+      "HbA1c change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-016",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "phase": "Phase 1",
+    "intervention": "SSRI",
+    "biomarkers": [
+      "Fasting glucose",
+      "Vitamin D",
+      "TNF-alpha"
+    ],
+    "endpoints": [
+      "safety events",
+      "symptom score",
+      "CRP change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-017",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "phase": "Phase 3",
+    "intervention": "Biologic",
+    "biomarkers": [
+      "Triglycerides",
+      "Calprotectin",
+      "Fasting glucose"
+    ],
+    "endpoints": [
+      "response rate",
+      "safety events",
+      "symptom score"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-018",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "phase": "Phase 3",
+    "intervention": "Biologic",
+    "biomarkers": [
+      "hs-CRP",
+      "Triglycerides",
+      "TNF-alpha"
+    ],
+    "endpoints": [
+      "safety events",
+      "HbA1c change",
+      "response rate"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-019",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "phase": "Phase 2",
+    "intervention": "Pacing programme",
+    "biomarkers": [
+      "hs-CRP",
+      "HDL",
+      "Fasting insulin"
+    ],
+    "endpoints": [
+      "symptom score",
+      "CRP change",
+      "response rate"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-020",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "phase": "Phase 2",
+    "intervention": "Statin",
+    "biomarkers": [
+      "HbA1c",
+      "hs-CRP",
+      "Fasting glucose"
+    ],
+    "endpoints": [
+      "symptom score",
+      "response rate",
+      "HbA1c change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-021",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "phase": "Phase 1",
+    "intervention": "Methotrexate",
+    "biomarkers": [
+      "Vitamin D",
+      "Fasting glucose",
+      "Calprotectin"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "symptom score",
+      "CRP change"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-022",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "phase": "Phase 3",
+    "intervention": "Metformin",
+    "biomarkers": [
+      "Vitamin D",
+      "Fasting glucose",
+      "TNF-alpha"
+    ],
+    "endpoints": [
+      "safety events",
+      "HbA1c change",
+      "response rate"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-023",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "phase": "Phase 3",
+    "intervention": "Statin",
+    "biomarkers": [
+      "hs-CRP",
+      "Calprotectin",
+      "Fasting glucose"
+    ],
+    "endpoints": [
+      "safety events",
+      "HbA1c change",
+      "response rate"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-024",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "phase": "Phase 1",
+    "intervention": "Lifestyle programme",
+    "biomarkers": [
+      "LDL",
+      "ALT",
+      "IL-6"
+    ],
+    "endpoints": [
+      "safety events",
+      "HbA1c change",
+      "CRP change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-025",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "phase": "Phase 2",
+    "intervention": "Biologic",
+    "biomarkers": [
+      "Triglycerides",
+      "Fasting insulin",
+      "Fasting glucose"
+    ],
+    "endpoints": [
+      "CRP change",
+      "safety events",
+      "symptom score"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-026",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "phase": "Phase 2",
+    "intervention": "Biologic",
+    "biomarkers": [
+      "Calprotectin",
+      "TNF-alpha",
+      "HDL"
+    ],
+    "endpoints": [
+      "safety events",
+      "HbA1c change",
+      "CRP change"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-027",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "phase": "Phase 1",
+    "intervention": "SSRI",
+    "biomarkers": [
+      "Calprotectin",
+      "Ferritin",
+      "Fasting glucose"
+    ],
+    "endpoints": [
+      "symptom score",
+      "response rate",
+      "CRP change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-028",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "phase": "Phase 2",
+    "intervention": "Probiotic",
+    "biomarkers": [
+      "Calprotectin",
+      "Triglycerides",
+      "HbA1c"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "CRP change",
+      "response rate"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-029",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "phase": "Phase 1",
+    "intervention": "Corticosteroid",
+    "biomarkers": [
+      "Ferritin",
+      "IL-6",
+      "Vitamin D"
+    ],
+    "endpoints": [
+      "safety events",
+      "CRP change",
+      "HbA1c change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-030",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "phase": "Phase 2",
+    "intervention": "Corticosteroid",
+    "biomarkers": [
+      "Fasting glucose",
+      "Ferritin",
+      "IL-6"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "safety events",
+      "symptom score"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-031",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "phase": "Phase 2",
+    "intervention": "Corticosteroid",
+    "biomarkers": [
+      "LDL",
+      "Fasting insulin",
+      "Ferritin"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "symptom score",
+      "safety events"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-032",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "phase": "Phase 2",
+    "intervention": "Disease-modifying therapy",
+    "biomarkers": [
+      "Calprotectin",
+      "ALT",
+      "TNF-alpha"
+    ],
+    "endpoints": [
+      "symptom score",
+      "HbA1c change",
+      "response rate"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-033",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "phase": "Phase 3",
+    "intervention": "Disease-modifying therapy",
+    "biomarkers": [
+      "Triglycerides",
+      "Ferritin",
+      "Fasting insulin"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "response rate",
+      "safety events"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-034",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "phase": "Phase 2",
+    "intervention": "Cognitive therapy",
+    "biomarkers": [
+      "Calprotectin",
+      "HbA1c",
+      "TNF-alpha"
+    ],
+    "endpoints": [
+      "symptom score",
+      "response rate",
+      "safety events"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-035",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "phase": "Phase 1",
+    "intervention": "Sleep intervention",
+    "biomarkers": [
+      "HDL",
+      "HbA1c",
+      "Vitamin D"
+    ],
+    "endpoints": [
+      "safety events",
+      "CRP change",
+      "response rate"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-036",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "phase": "Phase 2",
+    "intervention": "Cognitive therapy",
+    "biomarkers": [
+      "Vitamin D",
+      "hs-CRP",
+      "Fasting glucose"
+    ],
+    "endpoints": [
+      "CRP change",
+      "symptom score",
+      "response rate"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-037",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "phase": "Phase 3",
+    "intervention": "Topical corticosteroid",
+    "biomarkers": [
+      "Triglycerides",
+      "ALT",
+      "Fasting insulin"
+    ],
+    "endpoints": [
+      "symptom score",
+      "CRP change",
+      "HbA1c change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-038",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "phase": "Phase 3",
+    "intervention": "Topical corticosteroid",
+    "biomarkers": [
+      "Vitamin D",
+      "Calprotectin",
+      "Fasting insulin"
+    ],
+    "endpoints": [
+      "safety events",
+      "CRP change",
+      "response rate"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-039",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "phase": "Phase 1",
+    "intervention": "Sleep intervention",
+    "biomarkers": [
+      "HbA1c",
+      "Calprotectin",
+      "hs-CRP"
+    ],
+    "endpoints": [
+      "safety events",
+      "HbA1c change",
+      "symptom score"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-040",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "phase": "Phase 1",
+    "intervention": "SGLT2 inhibitor",
+    "biomarkers": [
+      "Fasting glucose",
+      "HDL",
+      "ALT"
+    ],
+    "endpoints": [
+      "symptom score",
+      "response rate",
+      "safety events"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-041",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "phase": "Phase 1",
+    "intervention": "IL-6 inhibitor",
+    "biomarkers": [
+      "Ferritin",
+      "hs-CRP",
+      "Triglycerides"
+    ],
+    "endpoints": [
+      "CRP change",
+      "response rate",
+      "HbA1c change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-042",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "phase": "Phase 2",
+    "intervention": "Statin",
+    "biomarkers": [
+      "Vitamin D",
+      "hs-CRP",
+      "Ferritin"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "response rate",
+      "safety events"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-043",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "phase": "Phase 1",
+    "intervention": "Statin",
+    "biomarkers": [
+      "LDL",
+      "hs-CRP",
+      "IL-6"
+    ],
+    "endpoints": [
+      "response rate",
+      "symptom score",
+      "safety events"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-044",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "phase": "Phase 2",
+    "intervention": "Vitamin E",
+    "biomarkers": [
+      "Triglycerides",
+      "hs-CRP",
+      "TNF-alpha"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "symptom score",
+      "safety events"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-045",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "phase": "Phase 3",
+    "intervention": "Biologic",
+    "biomarkers": [
+      "hs-CRP",
+      "Vitamin D",
+      "Fasting glucose"
+    ],
+    "endpoints": [
+      "CRP change",
+      "response rate",
+      "safety events"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-046",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "phase": "Phase 2",
+    "intervention": "Corticosteroid",
+    "biomarkers": [
+      "Calprotectin",
+      "LDL",
+      "TNF-alpha"
+    ],
+    "endpoints": [
+      "CRP change",
+      "safety events",
+      "HbA1c change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-047",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "phase": "Phase 3",
+    "intervention": "Psychological therapy",
+    "biomarkers": [
+      "Vitamin D",
+      "Fasting insulin",
+      "Triglycerides"
+    ],
+    "endpoints": [
+      "safety events",
+      "HbA1c change",
+      "symptom score"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-048",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "phase": "Phase 1",
+    "intervention": "Corticosteroid",
+    "biomarkers": [
+      "Triglycerides",
+      "Fasting insulin",
+      "Calprotectin"
+    ],
+    "endpoints": [
+      "symptom score",
+      "safety events",
+      "response rate"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-049",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "phase": "Phase 1",
+    "intervention": "Methotrexate",
+    "biomarkers": [
+      "Fasting insulin",
+      "LDL",
+      "Vitamin D"
+    ],
+    "endpoints": [
+      "CRP change",
+      "HbA1c change",
+      "symptom score"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-050",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "phase": "Phase 1",
+    "intervention": "IL-6 inhibitor",
+    "biomarkers": [
+      "hs-CRP",
+      "Vitamin D",
+      "HbA1c"
+    ],
+    "endpoints": [
+      "safety events",
+      "HbA1c change",
+      "response rate"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-051",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "phase": "Phase 1",
+    "intervention": "Disease-modifying therapy",
+    "biomarkers": [
+      "Fasting glucose",
+      "Triglycerides",
+      "Calprotectin"
+    ],
+    "endpoints": [
+      "symptom score",
+      "safety events",
+      "response rate"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-052",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "phase": "Phase 1",
+    "intervention": "Disease-modifying therapy",
+    "biomarkers": [
+      "ALT",
+      "LDL",
+      "TNF-alpha"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "safety events",
+      "CRP change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-053",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "phase": "Phase 1",
+    "intervention": "CGRP inhibitor",
+    "biomarkers": [
+      "HDL",
+      "TNF-alpha",
+      "Ferritin"
+    ],
+    "endpoints": [
+      "response rate",
+      "symptom score",
+      "safety events"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-054",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "phase": "Phase 1",
+    "intervention": "Sleep intervention",
+    "biomarkers": [
+      "Vitamin D",
+      "Ferritin",
+      "HDL"
+    ],
+    "endpoints": [
+      "symptom score",
+      "safety events",
+      "CRP change"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-055",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "phase": "Phase 1",
+    "intervention": "Sleep intervention",
+    "biomarkers": [
+      "LDL",
+      "Calprotectin",
+      "hs-CRP"
+    ],
+    "endpoints": [
+      "CRP change",
+      "symptom score",
+      "HbA1c change"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-056",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "phase": "Phase 2",
+    "intervention": "SSRI",
+    "biomarkers": [
+      "IL-6",
+      "hs-CRP",
+      "Ferritin"
+    ],
+    "endpoints": [
+      "response rate",
+      "HbA1c change",
+      "symptom score"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-057",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "phase": "Phase 1",
+    "intervention": "Topical corticosteroid",
+    "biomarkers": [
+      "HDL",
+      "ALT",
+      "Vitamin D"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "safety events",
+      "symptom score"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-058",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "phase": "Phase 2",
+    "intervention": "Antihistamine",
+    "biomarkers": [
+      "IL-6",
+      "LDL",
+      "Triglycerides"
+    ],
+    "endpoints": [
+      "symptom score",
+      "CRP change",
+      "response rate"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-059",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "phase": "Phase 3",
+    "intervention": "Sleep intervention",
+    "biomarkers": [
+      "Fasting insulin",
+      "HDL",
+      "hs-CRP"
+    ],
+    "endpoints": [
+      "safety events",
+      "symptom score",
+      "CRP change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-060",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "phase": "Phase 3",
+    "intervention": "GLP-1 receptor agonist",
+    "biomarkers": [
+      "hs-CRP",
+      "Vitamin D",
+      "HbA1c"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "CRP change",
+      "symptom score"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-061",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "phase": "Phase 2",
+    "intervention": "Methotrexate",
+    "biomarkers": [
+      "Calprotectin",
+      "Vitamin D",
+      "ALT"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "safety events",
+      "response rate"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-062",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "phase": "Phase 2",
+    "intervention": "Metformin",
+    "biomarkers": [
+      "LDL",
+      "Ferritin",
+      "Calprotectin"
+    ],
+    "endpoints": [
+      "safety events",
+      "response rate",
+      "symptom score"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-063",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "phase": "Phase 1",
+    "intervention": "Metformin",
+    "biomarkers": [
+      "HDL",
+      "Vitamin D",
+      "HbA1c"
+    ],
+    "endpoints": [
+      "response rate",
+      "CRP change",
+      "safety events"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-064",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "phase": "Phase 2",
+    "intervention": "GLP-1 receptor agonist",
+    "biomarkers": [
+      "IL-6",
+      "Ferritin",
+      "Triglycerides"
+    ],
+    "endpoints": [
+      "safety events",
+      "symptom score",
+      "response rate"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-065",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "phase": "Phase 2",
+    "intervention": "Corticosteroid",
+    "biomarkers": [
+      "ALT",
+      "Triglycerides",
+      "Fasting insulin"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "safety events",
+      "CRP change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-066",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "phase": "Phase 2",
+    "intervention": "Biologic",
+    "biomarkers": [
+      "Triglycerides",
+      "Fasting insulin",
+      "HDL"
+    ],
+    "endpoints": [
+      "CRP change",
+      "safety events",
+      "response rate"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-067",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "phase": "Phase 2",
+    "intervention": "SSRI",
+    "biomarkers": [
+      "hs-CRP",
+      "ALT",
+      "LDL"
+    ],
+    "endpoints": [
+      "CRP change",
+      "HbA1c change",
+      "response rate"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-068",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "phase": "Phase 2",
+    "intervention": "Probiotic",
+    "biomarkers": [
+      "HDL",
+      "ALT",
+      "Fasting insulin"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "response rate",
+      "safety events"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-069",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "phase": "Phase 2",
+    "intervention": "TNF inhibitor",
+    "biomarkers": [
+      "Calprotectin",
+      "IL-6",
+      "HbA1c"
+    ],
+    "endpoints": [
+      "CRP change",
+      "safety events",
+      "HbA1c change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-070",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "phase": "Phase 3",
+    "intervention": "TNF inhibitor",
+    "biomarkers": [
+      "HbA1c",
+      "TNF-alpha",
+      "IL-6"
+    ],
+    "endpoints": [
+      "safety events",
+      "symptom score",
+      "CRP change"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-071",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "phase": "Phase 2",
+    "intervention": "Rehabilitation programme",
+    "biomarkers": [
+      "TNF-alpha",
+      "Calprotectin",
+      "HbA1c"
+    ],
+    "endpoints": [
+      "response rate",
+      "HbA1c change",
+      "CRP change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-072",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "phase": "Phase 1",
+    "intervention": "Cholinesterase inhibitor",
+    "biomarkers": [
+      "TNF-alpha",
+      "Fasting insulin",
+      "hs-CRP"
+    ],
+    "endpoints": [
+      "safety events",
+      "symptom score",
+      "HbA1c change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-073",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "phase": "Phase 1",
+    "intervention": "CGRP inhibitor",
+    "biomarkers": [
+      "HDL",
+      "Triglycerides",
+      "Calprotectin"
+    ],
+    "endpoints": [
+      "symptom score",
+      "HbA1c change",
+      "safety events"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-074",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "phase": "Phase 3",
+    "intervention": "SNRI",
+    "biomarkers": [
+      "HDL",
+      "Ferritin",
+      "ALT"
+    ],
+    "endpoints": [
+      "response rate",
+      "HbA1c change",
+      "safety events"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-075",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "phase": "Phase 2",
+    "intervention": "SNRI",
+    "biomarkers": [
+      "Triglycerides",
+      "Vitamin D",
+      "Calprotectin"
+    ],
+    "endpoints": [
+      "response rate",
+      "CRP change",
+      "HbA1c change"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-076",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "phase": "Phase 2",
+    "intervention": "Sleep intervention",
+    "biomarkers": [
+      "TNF-alpha",
+      "Calprotectin",
+      "Fasting glucose"
+    ],
+    "endpoints": [
+      "CRP change",
+      "response rate",
+      "symptom score"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-077",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "phase": "Phase 3",
+    "intervention": "Topical corticosteroid",
+    "biomarkers": [
+      "IL-6",
+      "LDL",
+      "TNF-alpha"
+    ],
+    "endpoints": [
+      "safety events",
+      "CRP change",
+      "HbA1c change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-078",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "phase": "Phase 3",
+    "intervention": "Inhaled corticosteroid",
+    "biomarkers": [
+      "IL-6",
+      "Fasting insulin",
+      "ALT"
+    ],
+    "endpoints": [
+      "CRP change",
+      "HbA1c change",
+      "safety events"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-079",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "phase": "Phase 1",
+    "intervention": "Sleep intervention",
+    "biomarkers": [
+      "HDL",
+      "Vitamin D",
+      "HbA1c"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "symptom score",
+      "response rate"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-080",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "phase": "Phase 1",
+    "intervention": "SGLT2 inhibitor",
+    "biomarkers": [
+      "HbA1c",
+      "TNF-alpha",
+      "HDL"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "symptom score",
+      "response rate"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-081",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "phase": "Phase 1",
+    "intervention": "TNF inhibitor",
+    "biomarkers": [
+      "Ferritin",
+      "hs-CRP",
+      "Calprotectin"
+    ],
+    "endpoints": [
+      "response rate",
+      "CRP change",
+      "symptom score"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-082",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "phase": "Phase 2",
+    "intervention": "Statin",
+    "biomarkers": [
+      "Ferritin",
+      "hs-CRP",
+      "IL-6"
+    ],
+    "endpoints": [
+      "symptom score",
+      "safety events",
+      "response rate"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-083",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "phase": "Phase 1",
+    "intervention": "SGLT2 inhibitor",
+    "biomarkers": [
+      "HDL",
+      "TNF-alpha",
+      "Calprotectin"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "symptom score",
+      "safety events"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-084",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "phase": "Phase 1",
+    "intervention": "Vitamin E",
+    "biomarkers": [
+      "Triglycerides",
+      "ALT",
+      "Ferritin"
+    ],
+    "endpoints": [
+      "safety events",
+      "HbA1c change",
+      "symptom score"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-085",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "phase": "Phase 2",
+    "intervention": "Biologic",
+    "biomarkers": [
+      "Fasting insulin",
+      "Vitamin D",
+      "Calprotectin"
+    ],
+    "endpoints": [
+      "symptom score",
+      "response rate",
+      "safety events"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-086",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "phase": "Phase 1",
+    "intervention": "Mesalamine",
+    "biomarkers": [
+      "Fasting insulin",
+      "HDL",
+      "Ferritin"
+    ],
+    "endpoints": [
+      "response rate",
+      "CRP change",
+      "safety events"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-087",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "phase": "Phase 3",
+    "intervention": "Probiotic",
+    "biomarkers": [
+      "Triglycerides",
+      "Fasting glucose",
+      "HbA1c"
+    ],
+    "endpoints": [
+      "symptom score",
+      "CRP change",
+      "response rate"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-088",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "phase": "Phase 3",
+    "intervention": "Probiotic",
+    "biomarkers": [
+      "TNF-alpha",
+      "Ferritin",
+      "ALT"
+    ],
+    "endpoints": [
+      "safety events",
+      "symptom score",
+      "response rate"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-089",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "phase": "Phase 2",
+    "intervention": "TNF inhibitor",
+    "biomarkers": [
+      "LDL",
+      "Calprotectin",
+      "TNF-alpha"
+    ],
+    "endpoints": [
+      "response rate",
+      "HbA1c change",
+      "safety events"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-090",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "phase": "Phase 2",
+    "intervention": "Corticosteroid",
+    "biomarkers": [
+      "Ferritin",
+      "Calprotectin",
+      "LDL"
+    ],
+    "endpoints": [
+      "CRP change",
+      "response rate",
+      "HbA1c change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-091",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "phase": "Phase 2",
+    "intervention": "Disease-modifying therapy",
+    "biomarkers": [
+      "TNF-alpha",
+      "IL-6",
+      "hs-CRP"
+    ],
+    "endpoints": [
+      "response rate",
+      "symptom score",
+      "safety events"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-092",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "phase": "Phase 2",
+    "intervention": "CGRP inhibitor",
+    "biomarkers": [
+      "Calprotectin",
+      "Fasting insulin",
+      "hs-CRP"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "CRP change",
+      "safety events"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-093",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "phase": "Phase 2",
+    "intervention": "Cholinesterase inhibitor",
+    "biomarkers": [
+      "Triglycerides",
+      "Vitamin D",
+      "Ferritin"
+    ],
+    "endpoints": [
+      "response rate",
+      "safety events",
+      "symptom score"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-094",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "phase": "Phase 1",
+    "intervention": "Sleep intervention",
+    "biomarkers": [
+      "Ferritin",
+      "HDL",
+      "TNF-alpha"
+    ],
+    "endpoints": [
+      "symptom score",
+      "safety events",
+      "CRP change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-095",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "phase": "Phase 1",
+    "intervention": "Cognitive therapy",
+    "biomarkers": [
+      "ALT",
+      "Calprotectin",
+      "Ferritin"
+    ],
+    "endpoints": [
+      "response rate",
+      "safety events",
+      "HbA1c change"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-096",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "phase": "Phase 3",
+    "intervention": "Cognitive therapy",
+    "biomarkers": [
+      "Vitamin D",
+      "ALT",
+      "hs-CRP"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "CRP change",
+      "symptom score"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-097",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "phase": "Phase 1",
+    "intervention": "Biologic",
+    "biomarkers": [
+      "IL-6",
+      "HDL",
+      "Triglycerides"
+    ],
+    "endpoints": [
+      "CRP change",
+      "response rate",
+      "HbA1c change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-098",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "phase": "Phase 2",
+    "intervention": "Topical corticosteroid",
+    "biomarkers": [
+      "TNF-alpha",
+      "Ferritin",
+      "HDL"
+    ],
+    "endpoints": [
+      "symptom score",
+      "CRP change",
+      "response rate"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-099",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "phase": "Phase 2",
+    "intervention": "Pacing programme",
+    "biomarkers": [
+      "ALT",
+      "Calprotectin",
+      "Fasting glucose"
+    ],
+    "endpoints": [
+      "response rate",
+      "symptom score",
+      "safety events"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-100",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "phase": "Phase 1",
+    "intervention": "GLP-1 receptor agonist",
+    "biomarkers": [
+      "LDL",
+      "ALT",
+      "Fasting insulin"
+    ],
+    "endpoints": [
+      "symptom score",
+      "response rate",
+      "CRP change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-101",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "phase": "Phase 2",
+    "intervention": "IL-6 inhibitor",
+    "biomarkers": [
+      "TNF-alpha",
+      "hs-CRP",
+      "HDL"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "safety events",
+      "response rate"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-102",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "phase": "Phase 1",
+    "intervention": "GLP-1 receptor agonist",
+    "biomarkers": [
+      "Vitamin D",
+      "hs-CRP",
+      "HbA1c"
+    ],
+    "endpoints": [
+      "CRP change",
+      "safety events",
+      "HbA1c change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-103",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "phase": "Phase 3",
+    "intervention": "Statin",
+    "biomarkers": [
+      "TNF-alpha",
+      "Ferritin",
+      "IL-6"
+    ],
+    "endpoints": [
+      "symptom score",
+      "safety events",
+      "response rate"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-104",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "phase": "Phase 1",
+    "intervention": "GLP-1 receptor agonist",
+    "biomarkers": [
+      "Vitamin D",
+      "IL-6",
+      "Calprotectin"
+    ],
+    "endpoints": [
+      "CRP change",
+      "symptom score",
+      "safety events"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-105",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "phase": "Phase 2",
+    "intervention": "Corticosteroid",
+    "biomarkers": [
+      "ALT",
+      "hs-CRP",
+      "Triglycerides"
+    ],
+    "endpoints": [
+      "safety events",
+      "HbA1c change",
+      "response rate"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-106",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "phase": "Phase 1",
+    "intervention": "Mesalamine",
+    "biomarkers": [
+      "ALT",
+      "HbA1c",
+      "Fasting glucose"
+    ],
+    "endpoints": [
+      "response rate",
+      "safety events",
+      "CRP change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-107",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "phase": "Phase 3",
+    "intervention": "Low-FODMAP diet",
+    "biomarkers": [
+      "Vitamin D",
+      "HDL",
+      "TNF-alpha"
+    ],
+    "endpoints": [
+      "CRP change",
+      "safety events",
+      "response rate"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-108",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "phase": "Phase 2",
+    "intervention": "Corticosteroid",
+    "biomarkers": [
+      "Ferritin",
+      "HDL",
+      "LDL"
+    ],
+    "endpoints": [
+      "symptom score",
+      "response rate",
+      "safety events"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-109",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "phase": "Phase 1",
+    "intervention": "Corticosteroid",
+    "biomarkers": [
+      "Triglycerides",
+      "HbA1c",
+      "ALT"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "CRP change",
+      "safety events"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-110",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "phase": "Phase 2",
+    "intervention": "IL-6 inhibitor",
+    "biomarkers": [
+      "Calprotectin",
+      "Vitamin D",
+      "Ferritin"
+    ],
+    "endpoints": [
+      "symptom score",
+      "HbA1c change",
+      "safety events"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-111",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "phase": "Phase 2",
+    "intervention": "Rehabilitation programme",
+    "biomarkers": [
+      "TNF-alpha",
+      "Vitamin D",
+      "Fasting glucose"
+    ],
+    "endpoints": [
+      "safety events",
+      "response rate",
+      "symptom score"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-112",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "phase": "Phase 2",
+    "intervention": "Cholinesterase inhibitor",
+    "biomarkers": [
+      "Calprotectin",
+      "TNF-alpha",
+      "Vitamin D"
+    ],
+    "endpoints": [
+      "response rate",
+      "safety events",
+      "symptom score"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-113",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "phase": "Phase 3",
+    "intervention": "CGRP inhibitor",
+    "biomarkers": [
+      "IL-6",
+      "LDL",
+      "ALT"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "symptom score",
+      "CRP change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-114",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "phase": "Phase 2",
+    "intervention": "SSRI",
+    "biomarkers": [
+      "LDL",
+      "TNF-alpha",
+      "HDL"
+    ],
+    "endpoints": [
+      "response rate",
+      "symptom score",
+      "safety events"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-115",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "phase": "Phase 2",
+    "intervention": "SSRI",
+    "biomarkers": [
+      "ALT",
+      "LDL",
+      "Vitamin D"
+    ],
+    "endpoints": [
+      "response rate",
+      "CRP change",
+      "safety events"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-116",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "phase": "Phase 1",
+    "intervention": "Cognitive therapy",
+    "biomarkers": [
+      "Fasting insulin",
+      "HbA1c",
+      "ALT"
+    ],
+    "endpoints": [
+      "safety events",
+      "symptom score",
+      "response rate"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-117",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "phase": "Phase 3",
+    "intervention": "Antihistamine",
+    "biomarkers": [
+      "Triglycerides",
+      "IL-6",
+      "Fasting insulin"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "CRP change",
+      "response rate"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-118",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "phase": "Phase 3",
+    "intervention": "Topical corticosteroid",
+    "biomarkers": [
+      "Fasting glucose",
+      "Triglycerides",
+      "ALT"
+    ],
+    "endpoints": [
+      "CRP change",
+      "symptom score",
+      "HbA1c change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-119",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "phase": "Phase 1",
+    "intervention": "Nutritional support",
+    "biomarkers": [
+      "Fasting glucose",
+      "LDL",
+      "Triglycerides"
+    ],
+    "endpoints": [
+      "response rate",
+      "symptom score",
+      "HbA1c change"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-120",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "phase": "Phase 1",
+    "intervention": "Metformin",
+    "biomarkers": [
+      "Ferritin",
+      "Fasting insulin",
+      "Triglycerides"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "CRP change",
+      "symptom score"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-121",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "phase": "Phase 1",
+    "intervention": "Methotrexate",
+    "biomarkers": [
+      "LDL",
+      "Calprotectin",
+      "HbA1c"
+    ],
+    "endpoints": [
+      "CRP change",
+      "symptom score",
+      "response rate"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-122",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "phase": "Phase 3",
+    "intervention": "SGLT2 inhibitor",
+    "biomarkers": [
+      "Triglycerides",
+      "Calprotectin",
+      "HbA1c"
+    ],
+    "endpoints": [
+      "symptom score",
+      "HbA1c change",
+      "safety events"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-123",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "phase": "Phase 2",
+    "intervention": "SGLT2 inhibitor",
+    "biomarkers": [
+      "HDL",
+      "Fasting glucose",
+      "Calprotectin"
+    ],
+    "endpoints": [
+      "safety events",
+      "HbA1c change",
+      "symptom score"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-124",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "phase": "Phase 1",
+    "intervention": "Vitamin E",
+    "biomarkers": [
+      "hs-CRP",
+      "IL-6",
+      "Vitamin D"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "symptom score",
+      "response rate"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-125",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "phase": "Phase 3",
+    "intervention": "Probiotic",
+    "biomarkers": [
+      "Vitamin D",
+      "Fasting insulin",
+      "Calprotectin"
+    ],
+    "endpoints": [
+      "response rate",
+      "safety events",
+      "symptom score"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-126",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "phase": "Phase 3",
+    "intervention": "Mesalamine",
+    "biomarkers": [
+      "Ferritin",
+      "ALT",
+      "Calprotectin"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "response rate",
+      "CRP change"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-127",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "phase": "Phase 2",
+    "intervention": "Probiotic",
+    "biomarkers": [
+      "TNF-alpha",
+      "Calprotectin",
+      "Fasting insulin"
+    ],
+    "endpoints": [
+      "CRP change",
+      "safety events",
+      "symptom score"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-128",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "phase": "Phase 3",
+    "intervention": "Probiotic",
+    "biomarkers": [
+      "HbA1c",
+      "hs-CRP",
+      "TNF-alpha"
+    ],
+    "endpoints": [
+      "response rate",
+      "symptom score",
+      "CRP change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-129",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "phase": "Phase 1",
+    "intervention": "Methotrexate",
+    "biomarkers": [
+      "IL-6",
+      "ALT",
+      "Fasting insulin"
+    ],
+    "endpoints": [
+      "safety events",
+      "CRP change",
+      "symptom score"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-130",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "phase": "Phase 1",
+    "intervention": "Methotrexate",
+    "biomarkers": [
+      "hs-CRP",
+      "IL-6",
+      "Fasting glucose"
+    ],
+    "endpoints": [
+      "symptom score",
+      "safety events",
+      "HbA1c change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-131",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "phase": "Phase 1",
+    "intervention": "Biologic",
+    "biomarkers": [
+      "LDL",
+      "HbA1c",
+      "Triglycerides"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "symptom score",
+      "safety events"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-132",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "phase": "Phase 3",
+    "intervention": "Disease-modifying therapy",
+    "biomarkers": [
+      "TNF-alpha",
+      "Triglycerides",
+      "Ferritin"
+    ],
+    "endpoints": [
+      "symptom score",
+      "HbA1c change",
+      "CRP change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-133",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "phase": "Phase 1",
+    "intervention": "Disease-modifying therapy",
+    "biomarkers": [
+      "Ferritin",
+      "Vitamin D",
+      "ALT"
+    ],
+    "endpoints": [
+      "CRP change",
+      "safety events",
+      "symptom score"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-134",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "phase": "Phase 1",
+    "intervention": "Sleep intervention",
+    "biomarkers": [
+      "Calprotectin",
+      "Ferritin",
+      "HDL"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "safety events",
+      "response rate"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-135",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "phase": "Phase 1",
+    "intervention": "Cognitive therapy",
+    "biomarkers": [
+      "ALT",
+      "IL-6",
+      "Calprotectin"
+    ],
+    "endpoints": [
+      "CRP change",
+      "response rate",
+      "symptom score"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-136",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "phase": "Phase 2",
+    "intervention": "SSRI",
+    "biomarkers": [
+      "HDL",
+      "Vitamin D",
+      "hs-CRP"
+    ],
+    "endpoints": [
+      "response rate",
+      "safety events",
+      "HbA1c change"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-137",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "phase": "Phase 3",
+    "intervention": "Inhaled corticosteroid",
+    "biomarkers": [
+      "TNF-alpha",
+      "IL-6",
+      "hs-CRP"
+    ],
+    "endpoints": [
+      "CRP change",
+      "symptom score",
+      "safety events"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-138",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "phase": "Phase 1",
+    "intervention": "Inhaled corticosteroid",
+    "biomarkers": [
+      "HbA1c",
+      "ALT",
+      "Fasting glucose"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "response rate",
+      "safety events"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-139",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "phase": "Phase 3",
+    "intervention": "Pacing programme",
+    "biomarkers": [
+      "HDL",
+      "Calprotectin",
+      "Fasting insulin"
+    ],
+    "endpoints": [
+      "response rate",
+      "symptom score",
+      "CRP change"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-140",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "phase": "Phase 3",
+    "intervention": "Statin",
+    "biomarkers": [
+      "Fasting glucose",
+      "LDL",
+      "HbA1c"
+    ],
+    "endpoints": [
+      "safety events",
+      "response rate",
+      "HbA1c change"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-141",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "phase": "Phase 3",
+    "intervention": "TNF inhibitor",
+    "biomarkers": [
+      "Triglycerides",
+      "Vitamin D",
+      "IL-6"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "CRP change",
+      "response rate"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-142",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "phase": "Phase 3",
+    "intervention": "SGLT2 inhibitor",
+    "biomarkers": [
+      "hs-CRP",
+      "Triglycerides",
+      "Fasting insulin"
+    ],
+    "endpoints": [
+      "safety events",
+      "HbA1c change",
+      "response rate"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-143",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "phase": "Phase 1",
+    "intervention": "Statin",
+    "biomarkers": [
+      "HbA1c",
+      "Ferritin",
+      "hs-CRP"
+    ],
+    "endpoints": [
+      "response rate",
+      "HbA1c change",
+      "safety events"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-144",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "phase": "Phase 3",
+    "intervention": "Lifestyle programme",
+    "biomarkers": [
+      "Ferritin",
+      "Vitamin D",
+      "Calprotectin"
+    ],
+    "endpoints": [
+      "CRP change",
+      "response rate",
+      "HbA1c change"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-145",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "phase": "Phase 1",
+    "intervention": "Biologic",
+    "biomarkers": [
+      "Fasting insulin",
+      "ALT",
+      "LDL"
+    ],
+    "endpoints": [
+      "safety events",
+      "CRP change",
+      "HbA1c change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-146",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "phase": "Phase 1",
+    "intervention": "Corticosteroid",
+    "biomarkers": [
+      "hs-CRP",
+      "Fasting glucose",
+      "Ferritin"
+    ],
+    "endpoints": [
+      "symptom score",
+      "safety events",
+      "response rate"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-147",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "phase": "Phase 3",
+    "intervention": "Low-FODMAP diet",
+    "biomarkers": [
+      "HbA1c",
+      "ALT",
+      "Triglycerides"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "safety events",
+      "symptom score"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-148",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "phase": "Phase 2",
+    "intervention": "Biologic",
+    "biomarkers": [
+      "HbA1c",
+      "Fasting insulin",
+      "IL-6"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "response rate",
+      "safety events"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-149",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "phase": "Phase 1",
+    "intervention": "Corticosteroid",
+    "biomarkers": [
+      "HbA1c",
+      "LDL",
+      "hs-CRP"
+    ],
+    "endpoints": [
+      "safety events",
+      "symptom score",
+      "HbA1c change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-150",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "phase": "Phase 3",
+    "intervention": "Methotrexate",
+    "biomarkers": [
+      "Fasting glucose",
+      "Calprotectin",
+      "Triglycerides"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "response rate",
+      "symptom score"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-151",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "phase": "Phase 2",
+    "intervention": "Disease-modifying therapy",
+    "biomarkers": [
+      "Fasting glucose",
+      "HbA1c",
+      "LDL"
+    ],
+    "endpoints": [
+      "CRP change",
+      "symptom score",
+      "response rate"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-152",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "phase": "Phase 2",
+    "intervention": "CGRP inhibitor",
+    "biomarkers": [
+      "Fasting glucose",
+      "ALT",
+      "Fasting insulin"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "safety events",
+      "response rate"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-153",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "phase": "Phase 3",
+    "intervention": "CGRP inhibitor",
+    "biomarkers": [
+      "LDL",
+      "HbA1c",
+      "Triglycerides"
+    ],
+    "endpoints": [
+      "CRP change",
+      "safety events",
+      "response rate"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-154",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "phase": "Phase 2",
+    "intervention": "Sleep intervention",
+    "biomarkers": [
+      "ALT",
+      "LDL",
+      "TNF-alpha"
+    ],
+    "endpoints": [
+      "response rate",
+      "symptom score",
+      "safety events"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-155",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "phase": "Phase 1",
+    "intervention": "Sleep intervention",
+    "biomarkers": [
+      "Fasting glucose",
+      "IL-6",
+      "ALT"
+    ],
+    "endpoints": [
+      "symptom score",
+      "HbA1c change",
+      "CRP change"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-156",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "phase": "Phase 3",
+    "intervention": "SSRI",
+    "biomarkers": [
+      "Fasting glucose",
+      "ALT",
+      "Fasting insulin"
+    ],
+    "endpoints": [
+      "safety events",
+      "response rate",
+      "CRP change"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-157",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "phase": "Phase 2",
+    "intervention": "Inhaled corticosteroid",
+    "biomarkers": [
+      "Ferritin",
+      "Calprotectin",
+      "LDL"
+    ],
+    "endpoints": [
+      "symptom score",
+      "safety events",
+      "CRP change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-158",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "phase": "Phase 3",
+    "intervention": "Antihistamine",
+    "biomarkers": [
+      "ALT",
+      "Fasting insulin",
+      "TNF-alpha"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "response rate",
+      "CRP change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-159",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "phase": "Phase 2",
+    "intervention": "Pacing programme",
+    "biomarkers": [
+      "LDL",
+      "Ferritin",
+      "Triglycerides"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "safety events",
+      "CRP change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-160",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "phase": "Phase 3",
+    "intervention": "Statin",
+    "biomarkers": [
+      "LDL",
+      "Fasting insulin",
+      "ALT"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "CRP change",
+      "symptom score"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-161",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "phase": "Phase 1",
+    "intervention": "Corticosteroid",
+    "biomarkers": [
+      "Triglycerides",
+      "hs-CRP",
+      "Vitamin D"
+    ],
+    "endpoints": [
+      "safety events",
+      "response rate",
+      "HbA1c change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-162",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "phase": "Phase 3",
+    "intervention": "Statin",
+    "biomarkers": [
+      "Triglycerides",
+      "HbA1c",
+      "TNF-alpha"
+    ],
+    "endpoints": [
+      "symptom score",
+      "CRP change",
+      "safety events"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-163",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "phase": "Phase 3",
+    "intervention": "Statin",
+    "biomarkers": [
+      "HDL",
+      "Ferritin",
+      "HbA1c"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "safety events",
+      "CRP change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-164",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "phase": "Phase 1",
+    "intervention": "Vitamin E",
+    "biomarkers": [
+      "Vitamin D",
+      "HDL",
+      "Ferritin"
+    ],
+    "endpoints": [
+      "symptom score",
+      "HbA1c change",
+      "safety events"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-165",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "phase": "Phase 2",
+    "intervention": "Probiotic",
+    "biomarkers": [
+      "IL-6",
+      "TNF-alpha",
+      "hs-CRP"
+    ],
+    "endpoints": [
+      "CRP change",
+      "symptom score",
+      "HbA1c change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-166",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "phase": "Phase 1",
+    "intervention": "Corticosteroid",
+    "biomarkers": [
+      "Fasting insulin",
+      "IL-6",
+      "Calprotectin"
+    ],
+    "endpoints": [
+      "safety events",
+      "HbA1c change",
+      "response rate"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-167",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "phase": "Phase 2",
+    "intervention": "SSRI",
+    "biomarkers": [
+      "ALT",
+      "Triglycerides",
+      "hs-CRP"
+    ],
+    "endpoints": [
+      "safety events",
+      "CRP change",
+      "HbA1c change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-168",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "phase": "Phase 1",
+    "intervention": "Biologic",
+    "biomarkers": [
+      "Calprotectin",
+      "IL-6",
+      "HbA1c"
+    ],
+    "endpoints": [
+      "symptom score",
+      "CRP change",
+      "safety events"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-169",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "phase": "Phase 1",
+    "intervention": "TNF inhibitor",
+    "biomarkers": [
+      "Vitamin D",
+      "hs-CRP",
+      "LDL"
+    ],
+    "endpoints": [
+      "symptom score",
+      "response rate",
+      "CRP change"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-170",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "phase": "Phase 2",
+    "intervention": "TNF inhibitor",
+    "biomarkers": [
+      "Fasting glucose",
+      "Ferritin",
+      "IL-6"
+    ],
+    "endpoints": [
+      "CRP change",
+      "response rate",
+      "HbA1c change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-171",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "phase": "Phase 3",
+    "intervention": "Disease-modifying therapy",
+    "biomarkers": [
+      "HbA1c",
+      "ALT",
+      "hs-CRP"
+    ],
+    "endpoints": [
+      "CRP change",
+      "symptom score",
+      "response rate"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-172",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "phase": "Phase 1",
+    "intervention": "Disease-modifying therapy",
+    "biomarkers": [
+      "Calprotectin",
+      "Fasting glucose",
+      "Ferritin"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "symptom score",
+      "response rate"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-173",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "phase": "Phase 2",
+    "intervention": "Levodopa",
+    "biomarkers": [
+      "Fasting glucose",
+      "Vitamin D",
+      "TNF-alpha"
+    ],
+    "endpoints": [
+      "safety events",
+      "response rate",
+      "symptom score"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-174",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "phase": "Phase 1",
+    "intervention": "Cognitive therapy",
+    "biomarkers": [
+      "HbA1c",
+      "IL-6",
+      "hs-CRP"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "safety events",
+      "symptom score"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-175",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "phase": "Phase 1",
+    "intervention": "SSRI",
+    "biomarkers": [
+      "TNF-alpha",
+      "HDL",
+      "ALT"
+    ],
+    "endpoints": [
+      "response rate",
+      "HbA1c change",
+      "symptom score"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-176",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "phase": "Phase 3",
+    "intervention": "SSRI",
+    "biomarkers": [
+      "HbA1c",
+      "Ferritin",
+      "ALT"
+    ],
+    "endpoints": [
+      "safety events",
+      "CRP change",
+      "response rate"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-177",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "phase": "Phase 2",
+    "intervention": "Biologic",
+    "biomarkers": [
+      "HDL",
+      "LDL",
+      "ALT"
+    ],
+    "endpoints": [
+      "safety events",
+      "CRP change",
+      "symptom score"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-178",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "phase": "Phase 2",
+    "intervention": "Topical corticosteroid",
+    "biomarkers": [
+      "HDL",
+      "Fasting glucose",
+      "Fasting insulin"
+    ],
+    "endpoints": [
+      "CRP change",
+      "safety events",
+      "HbA1c change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-179",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "phase": "Phase 2",
+    "intervention": "Sleep intervention",
+    "biomarkers": [
+      "LDL",
+      "Calprotectin",
+      "IL-6"
+    ],
+    "endpoints": [
+      "CRP change",
+      "safety events",
+      "symptom score"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-180",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "phase": "Phase 2",
+    "intervention": "SGLT2 inhibitor",
+    "biomarkers": [
+      "Fasting glucose",
+      "Vitamin D",
+      "IL-6"
+    ],
+    "endpoints": [
+      "CRP change",
+      "symptom score",
+      "HbA1c change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-181",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "phase": "Phase 1",
+    "intervention": "Methotrexate",
+    "biomarkers": [
+      "HDL",
+      "LDL",
+      "Ferritin"
+    ],
+    "endpoints": [
+      "response rate",
+      "CRP change",
+      "symptom score"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-182",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "phase": "Phase 2",
+    "intervention": "Metformin",
+    "biomarkers": [
+      "TNF-alpha",
+      "Fasting glucose",
+      "Fasting insulin"
+    ],
+    "endpoints": [
+      "symptom score",
+      "CRP change",
+      "response rate"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-183",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "phase": "Phase 3",
+    "intervention": "GLP-1 receptor agonist",
+    "biomarkers": [
+      "LDL",
+      "HDL",
+      "IL-6"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "symptom score",
+      "CRP change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-184",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "phase": "Phase 2",
+    "intervention": "Vitamin E",
+    "biomarkers": [
+      "Triglycerides",
+      "Calprotectin",
+      "HbA1c"
+    ],
+    "endpoints": [
+      "response rate",
+      "CRP change",
+      "symptom score"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-185",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "phase": "Phase 2",
+    "intervention": "Biologic",
+    "biomarkers": [
+      "Fasting insulin",
+      "Vitamin D",
+      "LDL"
+    ],
+    "endpoints": [
+      "safety events",
+      "HbA1c change",
+      "symptom score"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-186",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "phase": "Phase 1",
+    "intervention": "Mesalamine",
+    "biomarkers": [
+      "Ferritin",
+      "HDL",
+      "Fasting insulin"
+    ],
+    "endpoints": [
+      "CRP change",
+      "HbA1c change",
+      "symptom score"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-187",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "phase": "Phase 3",
+    "intervention": "Psychological therapy",
+    "biomarkers": [
+      "LDL",
+      "Fasting insulin",
+      "ALT"
+    ],
+    "endpoints": [
+      "CRP change",
+      "HbA1c change",
+      "response rate"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-188",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "phase": "Phase 1",
+    "intervention": "Probiotic",
+    "biomarkers": [
+      "IL-6",
+      "hs-CRP",
+      "Ferritin"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "safety events",
+      "CRP change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-189",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "phase": "Phase 1",
+    "intervention": "IL-6 inhibitor",
+    "biomarkers": [
+      "Calprotectin",
+      "Fasting glucose",
+      "TNF-alpha"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "response rate",
+      "safety events"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-190",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "phase": "Phase 1",
+    "intervention": "IL-6 inhibitor",
+    "biomarkers": [
+      "Fasting glucose",
+      "Fasting insulin",
+      "IL-6"
+    ],
+    "endpoints": [
+      "response rate",
+      "safety events",
+      "CRP change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-191",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "phase": "Phase 3",
+    "intervention": "Rehabilitation programme",
+    "biomarkers": [
+      "Fasting glucose",
+      "Calprotectin",
+      "TNF-alpha"
+    ],
+    "endpoints": [
+      "CRP change",
+      "HbA1c change",
+      "symptom score"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-192",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "phase": "Phase 2",
+    "intervention": "Disease-modifying therapy",
+    "biomarkers": [
+      "Calprotectin",
+      "hs-CRP",
+      "Ferritin"
+    ],
+    "endpoints": [
+      "symptom score",
+      "CRP change",
+      "HbA1c change"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-193",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "phase": "Phase 2",
+    "intervention": "Cholinesterase inhibitor",
+    "biomarkers": [
+      "IL-6",
+      "ALT",
+      "Triglycerides"
+    ],
+    "endpoints": [
+      "response rate",
+      "safety events",
+      "HbA1c change"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-194",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "phase": "Phase 1",
+    "intervention": "SSRI",
+    "biomarkers": [
+      "Vitamin D",
+      "TNF-alpha",
+      "Ferritin"
+    ],
+    "endpoints": [
+      "symptom score",
+      "CRP change",
+      "safety events"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-195",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "phase": "Phase 3",
+    "intervention": "Sleep intervention",
+    "biomarkers": [
+      "Fasting insulin",
+      "Vitamin D",
+      "LDL"
+    ],
+    "endpoints": [
+      "symptom score",
+      "safety events",
+      "response rate"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-196",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "phase": "Phase 3",
+    "intervention": "SSRI",
+    "biomarkers": [
+      "HDL",
+      "LDL",
+      "Triglycerides"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "CRP change",
+      "response rate"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-197",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "phase": "Phase 3",
+    "intervention": "Inhaled corticosteroid",
+    "biomarkers": [
+      "HDL",
+      "ALT",
+      "Fasting glucose"
+    ],
+    "endpoints": [
+      "CRP change",
+      "safety events",
+      "response rate"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-198",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "phase": "Phase 3",
+    "intervention": "Inhaled corticosteroid",
+    "biomarkers": [
+      "HDL",
+      "Fasting glucose",
+      "ALT"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "CRP change",
+      "response rate"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-199",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "phase": "Phase 1",
+    "intervention": "Pacing programme",
+    "biomarkers": [
+      "IL-6",
+      "TNF-alpha",
+      "ALT"
+    ],
+    "endpoints": [
+      "symptom score",
+      "response rate",
+      "safety events"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-200",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "phase": "Phase 2",
+    "intervention": "Metformin",
+    "biomarkers": [
+      "Fasting glucose",
+      "HDL",
+      "TNF-alpha"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "symptom score",
+      "safety events"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-201",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "phase": "Phase 3",
+    "intervention": "TNF inhibitor",
+    "biomarkers": [
+      "Calprotectin",
+      "Triglycerides",
+      "LDL"
+    ],
+    "endpoints": [
+      "safety events",
+      "symptom score",
+      "CRP change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-202",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "phase": "Phase 3",
+    "intervention": "Statin",
+    "biomarkers": [
+      "Fasting glucose",
+      "HbA1c",
+      "HDL"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "CRP change",
+      "safety events"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-203",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "phase": "Phase 2",
+    "intervention": "SGLT2 inhibitor",
+    "biomarkers": [
+      "Triglycerides",
+      "HbA1c",
+      "Vitamin D"
+    ],
+    "endpoints": [
+      "safety events",
+      "response rate",
+      "symptom score"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-204",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "phase": "Phase 1",
+    "intervention": "GLP-1 receptor agonist",
+    "biomarkers": [
+      "IL-6",
+      "hs-CRP",
+      "Calprotectin"
+    ],
+    "endpoints": [
+      "response rate",
+      "CRP change",
+      "HbA1c change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-205",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "phase": "Phase 1",
+    "intervention": "Probiotic",
+    "biomarkers": [
+      "LDL",
+      "IL-6",
+      "HDL"
+    ],
+    "endpoints": [
+      "response rate",
+      "symptom score",
+      "CRP change"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-206",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "phase": "Phase 2",
+    "intervention": "Biologic",
+    "biomarkers": [
+      "Vitamin D",
+      "TNF-alpha",
+      "ALT"
+    ],
+    "endpoints": [
+      "CRP change",
+      "response rate",
+      "HbA1c change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-207",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "phase": "Phase 3",
+    "intervention": "SSRI",
+    "biomarkers": [
+      "Ferritin",
+      "ALT",
+      "Triglycerides"
+    ],
+    "endpoints": [
+      "response rate",
+      "CRP change",
+      "symptom score"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-208",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "phase": "Phase 2",
+    "intervention": "Probiotic",
+    "biomarkers": [
+      "Ferritin",
+      "Triglycerides",
+      "HbA1c"
+    ],
+    "endpoints": [
+      "symptom score",
+      "response rate",
+      "HbA1c change"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-209",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "phase": "Phase 1",
+    "intervention": "TNF inhibitor",
+    "biomarkers": [
+      "Fasting glucose",
+      "Ferritin",
+      "Calprotectin"
+    ],
+    "endpoints": [
+      "CRP change",
+      "symptom score",
+      "safety events"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-210",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "phase": "Phase 2",
+    "intervention": "Methotrexate",
+    "biomarkers": [
+      "hs-CRP",
+      "LDL",
+      "Ferritin"
+    ],
+    "endpoints": [
+      "symptom score",
+      "safety events",
+      "CRP change"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-211",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "phase": "Phase 1",
+    "intervention": "Biologic",
+    "biomarkers": [
+      "IL-6",
+      "hs-CRP",
+      "HbA1c"
+    ],
+    "endpoints": [
+      "safety events",
+      "CRP change",
+      "response rate"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-212",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "phase": "Phase 3",
+    "intervention": "Disease-modifying therapy",
+    "biomarkers": [
+      "HDL",
+      "Vitamin D",
+      "HbA1c"
+    ],
+    "endpoints": [
+      "symptom score",
+      "CRP change",
+      "safety events"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-213",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "phase": "Phase 3",
+    "intervention": "Disease-modifying therapy",
+    "biomarkers": [
+      "hs-CRP",
+      "Vitamin D",
+      "Triglycerides"
+    ],
+    "endpoints": [
+      "symptom score",
+      "response rate",
+      "CRP change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-214",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "phase": "Phase 3",
+    "intervention": "Cognitive therapy",
+    "biomarkers": [
+      "ALT",
+      "Fasting glucose",
+      "IL-6"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "CRP change",
+      "safety events"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-215",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "phase": "Phase 1",
+    "intervention": "SSRI",
+    "biomarkers": [
+      "TNF-alpha",
+      "Triglycerides",
+      "Calprotectin"
+    ],
+    "endpoints": [
+      "safety events",
+      "symptom score",
+      "response rate"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-216",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "phase": "Phase 1",
+    "intervention": "Sleep intervention",
+    "biomarkers": [
+      "Triglycerides",
+      "HDL",
+      "Calprotectin"
+    ],
+    "endpoints": [
+      "response rate",
+      "safety events",
+      "CRP change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-217",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "phase": "Phase 2",
+    "intervention": "Inhaled corticosteroid",
+    "biomarkers": [
+      "Fasting insulin",
+      "LDL",
+      "Triglycerides"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "CRP change",
+      "safety events"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-218",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "phase": "Phase 2",
+    "intervention": "Biologic",
+    "biomarkers": [
+      "ALT",
+      "hs-CRP",
+      "Calprotectin"
+    ],
+    "endpoints": [
+      "symptom score",
+      "CRP change",
+      "response rate"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-219",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "phase": "Phase 3",
+    "intervention": "Sleep intervention",
+    "biomarkers": [
+      "LDL",
+      "Fasting glucose",
+      "IL-6"
+    ],
+    "endpoints": [
+      "safety events",
+      "response rate",
+      "HbA1c change"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-220",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "phase": "Phase 1",
+    "intervention": "Metformin",
+    "biomarkers": [
+      "Ferritin",
+      "HDL",
+      "Triglycerides"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "symptom score",
+      "response rate"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-221",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "phase": "Phase 1",
+    "intervention": "Methotrexate",
+    "biomarkers": [
+      "hs-CRP",
+      "TNF-alpha",
+      "ALT"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "symptom score",
+      "CRP change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-222",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "phase": "Phase 1",
+    "intervention": "SGLT2 inhibitor",
+    "biomarkers": [
+      "Fasting glucose",
+      "IL-6",
+      "TNF-alpha"
+    ],
+    "endpoints": [
+      "safety events",
+      "symptom score",
+      "CRP change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-223",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "phase": "Phase 1",
+    "intervention": "Metformin",
+    "biomarkers": [
+      "Fasting glucose",
+      "ALT",
+      "Vitamin D"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "response rate",
+      "safety events"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-224",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "phase": "Phase 3",
+    "intervention": "Vitamin E",
+    "biomarkers": [
+      "hs-CRP",
+      "Triglycerides",
+      "Fasting glucose"
+    ],
+    "endpoints": [
+      "safety events",
+      "HbA1c change",
+      "CRP change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-225",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "phase": "Phase 3",
+    "intervention": "Mesalamine",
+    "biomarkers": [
+      "Fasting insulin",
+      "HDL",
+      "TNF-alpha"
+    ],
+    "endpoints": [
+      "response rate",
+      "HbA1c change",
+      "CRP change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-226",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "phase": "Phase 3",
+    "intervention": "Probiotic",
+    "biomarkers": [
+      "HDL",
+      "Ferritin",
+      "TNF-alpha"
+    ],
+    "endpoints": [
+      "safety events",
+      "response rate",
+      "HbA1c change"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-227",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "phase": "Phase 3",
+    "intervention": "Psychological therapy",
+    "biomarkers": [
+      "hs-CRP",
+      "HbA1c",
+      "IL-6"
+    ],
+    "endpoints": [
+      "CRP change",
+      "safety events",
+      "HbA1c change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-228",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "phase": "Phase 2",
+    "intervention": "Corticosteroid",
+    "biomarkers": [
+      "Ferritin",
+      "IL-6",
+      "HbA1c"
+    ],
+    "endpoints": [
+      "symptom score",
+      "safety events",
+      "response rate"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-229",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "phase": "Phase 2",
+    "intervention": "TNF inhibitor",
+    "biomarkers": [
+      "Fasting glucose",
+      "Fasting insulin",
+      "ALT"
+    ],
+    "endpoints": [
+      "safety events",
+      "HbA1c change",
+      "symptom score"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-230",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "phase": "Phase 2",
+    "intervention": "IL-6 inhibitor",
+    "biomarkers": [
+      "Ferritin",
+      "HDL",
+      "ALT"
+    ],
+    "endpoints": [
+      "CRP change",
+      "response rate",
+      "safety events"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-231",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "phase": "Phase 1",
+    "intervention": "Disease-modifying therapy",
+    "biomarkers": [
+      "hs-CRP",
+      "Ferritin",
+      "Fasting insulin"
+    ],
+    "endpoints": [
+      "symptom score",
+      "HbA1c change",
+      "CRP change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-232",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "phase": "Phase 2",
+    "intervention": "Levodopa",
+    "biomarkers": [
+      "Ferritin",
+      "IL-6",
+      "Triglycerides"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "safety events",
+      "symptom score"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-233",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "phase": "Phase 2",
+    "intervention": "Cholinesterase inhibitor",
+    "biomarkers": [
+      "Calprotectin",
+      "hs-CRP",
+      "HbA1c"
+    ],
+    "endpoints": [
+      "response rate",
+      "symptom score",
+      "safety events"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-234",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "phase": "Phase 2",
+    "intervention": "SNRI",
+    "biomarkers": [
+      "Fasting insulin",
+      "LDL",
+      "Triglycerides"
+    ],
+    "endpoints": [
+      "safety events",
+      "symptom score",
+      "HbA1c change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-235",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "phase": "Phase 1",
+    "intervention": "Sleep intervention",
+    "biomarkers": [
+      "Fasting glucose",
+      "Calprotectin",
+      "HDL"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "CRP change",
+      "safety events"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-236",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "phase": "Phase 1",
+    "intervention": "Sleep intervention",
+    "biomarkers": [
+      "Triglycerides",
+      "HDL",
+      "Ferritin"
+    ],
+    "endpoints": [
+      "safety events",
+      "symptom score",
+      "response rate"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-237",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "phase": "Phase 2",
+    "intervention": "Biologic",
+    "biomarkers": [
+      "LDL",
+      "HDL",
+      "Ferritin"
+    ],
+    "endpoints": [
+      "safety events",
+      "response rate",
+      "symptom score"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-238",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "phase": "Phase 3",
+    "intervention": "Biologic",
+    "biomarkers": [
+      "HDL",
+      "Vitamin D",
+      "hs-CRP"
+    ],
+    "endpoints": [
+      "symptom score",
+      "response rate",
+      "safety events"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-239",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "phase": "Phase 1",
+    "intervention": "Nutritional support",
+    "biomarkers": [
+      "HDL",
+      "Fasting glucose",
+      "Fasting insulin"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "CRP change",
+      "safety events"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-240",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "phase": "Phase 2",
+    "intervention": "GLP-1 receptor agonist",
+    "biomarkers": [
+      "HDL",
+      "Calprotectin",
+      "IL-6"
+    ],
+    "endpoints": [
+      "response rate",
+      "HbA1c change",
+      "symptom score"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-241",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "phase": "Phase 2",
+    "intervention": "Corticosteroid",
+    "biomarkers": [
+      "Fasting insulin",
+      "TNF-alpha",
+      "Ferritin"
+    ],
+    "endpoints": [
+      "response rate",
+      "symptom score",
+      "CRP change"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-242",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "phase": "Phase 1",
+    "intervention": "Statin",
+    "biomarkers": [
+      "Calprotectin",
+      "Fasting insulin",
+      "Fasting glucose"
+    ],
+    "endpoints": [
+      "response rate",
+      "HbA1c change",
+      "CRP change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-243",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "phase": "Phase 1",
+    "intervention": "SGLT2 inhibitor",
+    "biomarkers": [
+      "TNF-alpha",
+      "LDL",
+      "Calprotectin"
+    ],
+    "endpoints": [
+      "CRP change",
+      "symptom score",
+      "response rate"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-244",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "phase": "Phase 1",
+    "intervention": "Lifestyle programme",
+    "biomarkers": [
+      "Vitamin D",
+      "ALT",
+      "hs-CRP"
+    ],
+    "endpoints": [
+      "CRP change",
+      "safety events",
+      "symptom score"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-245",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "phase": "Phase 2",
+    "intervention": "Mesalamine",
+    "biomarkers": [
+      "Vitamin D",
+      "Fasting glucose",
+      "HbA1c"
+    ],
+    "endpoints": [
+      "safety events",
+      "CRP change",
+      "response rate"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-246",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "phase": "Phase 1",
+    "intervention": "Biologic",
+    "biomarkers": [
+      "hs-CRP",
+      "Fasting insulin",
+      "HbA1c"
+    ],
+    "endpoints": [
+      "safety events",
+      "CRP change",
+      "HbA1c change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-247",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "phase": "Phase 2",
+    "intervention": "Low-FODMAP diet",
+    "biomarkers": [
+      "Fasting insulin",
+      "hs-CRP",
+      "HbA1c"
+    ],
+    "endpoints": [
+      "CRP change",
+      "safety events",
+      "response rate"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-248",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "phase": "Phase 1",
+    "intervention": "Probiotic",
+    "biomarkers": [
+      "Ferritin",
+      "ALT",
+      "Triglycerides"
+    ],
+    "endpoints": [
+      "CRP change",
+      "response rate",
+      "safety events"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-249",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "phase": "Phase 2",
+    "intervention": "IL-6 inhibitor",
+    "biomarkers": [
+      "Ferritin",
+      "Triglycerides",
+      "Fasting glucose"
+    ],
+    "endpoints": [
+      "safety events",
+      "response rate",
+      "symptom score"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-250",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "phase": "Phase 1",
+    "intervention": "TNF inhibitor",
+    "biomarkers": [
+      "IL-6",
+      "HDL",
+      "TNF-alpha"
+    ],
+    "endpoints": [
+      "response rate",
+      "safety events",
+      "CRP change"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-251",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "phase": "Phase 2",
+    "intervention": "Corticosteroid",
+    "biomarkers": [
+      "Calprotectin",
+      "HbA1c",
+      "ALT"
+    ],
+    "endpoints": [
+      "symptom score",
+      "HbA1c change",
+      "safety events"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-252",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "phase": "Phase 1",
+    "intervention": "Levodopa",
+    "biomarkers": [
+      "Ferritin",
+      "HDL",
+      "Triglycerides"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "safety events",
+      "symptom score"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-253",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "phase": "Phase 3",
+    "intervention": "CGRP inhibitor",
+    "biomarkers": [
+      "hs-CRP",
+      "Triglycerides",
+      "Fasting glucose"
+    ],
+    "endpoints": [
+      "response rate",
+      "symptom score",
+      "safety events"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-254",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "phase": "Phase 2",
+    "intervention": "Sleep intervention",
+    "biomarkers": [
+      "TNF-alpha",
+      "LDL",
+      "Calprotectin"
+    ],
+    "endpoints": [
+      "CRP change",
+      "HbA1c change",
+      "response rate"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-255",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "phase": "Phase 2",
+    "intervention": "Cognitive therapy",
+    "biomarkers": [
+      "TNF-alpha",
+      "Fasting insulin",
+      "HDL"
+    ],
+    "endpoints": [
+      "symptom score",
+      "response rate",
+      "safety events"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-256",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "phase": "Phase 3",
+    "intervention": "SNRI",
+    "biomarkers": [
+      "Fasting insulin",
+      "HbA1c",
+      "Calprotectin"
+    ],
+    "endpoints": [
+      "CRP change",
+      "safety events",
+      "HbA1c change"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-257",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "phase": "Phase 2",
+    "intervention": "Antihistamine",
+    "biomarkers": [
+      "Vitamin D",
+      "Triglycerides",
+      "LDL"
+    ],
+    "endpoints": [
+      "safety events",
+      "symptom score",
+      "CRP change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-258",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "phase": "Phase 1",
+    "intervention": "Topical corticosteroid",
+    "biomarkers": [
+      "hs-CRP",
+      "Ferritin",
+      "LDL"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "CRP change",
+      "symptom score"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-259",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "phase": "Phase 1",
+    "intervention": "Sleep intervention",
+    "biomarkers": [
+      "Triglycerides",
+      "hs-CRP",
+      "TNF-alpha"
+    ],
+    "endpoints": [
+      "response rate",
+      "HbA1c change",
+      "safety events"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-260",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "phase": "Phase 2",
+    "intervention": "Statin",
+    "biomarkers": [
+      "Fasting glucose",
+      "Fasting insulin",
+      "ALT"
+    ],
+    "endpoints": [
+      "response rate",
+      "symptom score",
+      "safety events"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-261",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "phase": "Phase 3",
+    "intervention": "TNF inhibitor",
+    "biomarkers": [
+      "TNF-alpha",
+      "HDL",
+      "Triglycerides"
+    ],
+    "endpoints": [
+      "response rate",
+      "safety events",
+      "HbA1c change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-262",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "phase": "Phase 3",
+    "intervention": "Metformin",
+    "biomarkers": [
+      "HDL",
+      "ALT",
+      "hs-CRP"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "safety events",
+      "symptom score"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-263",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "phase": "Phase 1",
+    "intervention": "Metformin",
+    "biomarkers": [
+      "Triglycerides",
+      "Fasting glucose",
+      "HbA1c"
+    ],
+    "endpoints": [
+      "safety events",
+      "HbA1c change",
+      "CRP change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-264",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "phase": "Phase 1",
+    "intervention": "GLP-1 receptor agonist",
+    "biomarkers": [
+      "Ferritin",
+      "Calprotectin",
+      "Fasting glucose"
+    ],
+    "endpoints": [
+      "safety events",
+      "symptom score",
+      "response rate"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-265",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "phase": "Phase 1",
+    "intervention": "Corticosteroid",
+    "biomarkers": [
+      "Fasting glucose",
+      "LDL",
+      "Fasting insulin"
+    ],
+    "endpoints": [
+      "safety events",
+      "CRP change",
+      "response rate"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-266",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "phase": "Phase 3",
+    "intervention": "Biologic",
+    "biomarkers": [
+      "Vitamin D",
+      "Ferritin",
+      "HbA1c"
+    ],
+    "endpoints": [
+      "symptom score",
+      "response rate",
+      "safety events"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-267",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "phase": "Phase 2",
+    "intervention": "Probiotic",
+    "biomarkers": [
+      "LDL",
+      "HbA1c",
+      "ALT"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "CRP change",
+      "response rate"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-268",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "phase": "Phase 3",
+    "intervention": "Corticosteroid",
+    "biomarkers": [
+      "Calprotectin",
+      "Ferritin",
+      "Triglycerides"
+    ],
+    "endpoints": [
+      "symptom score",
+      "CRP change",
+      "response rate"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-269",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "phase": "Phase 2",
+    "intervention": "Corticosteroid",
+    "biomarkers": [
+      "Vitamin D",
+      "LDL",
+      "Fasting insulin"
+    ],
+    "endpoints": [
+      "response rate",
+      "symptom score",
+      "CRP change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-270",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "phase": "Phase 1",
+    "intervention": "IL-6 inhibitor",
+    "biomarkers": [
+      "Vitamin D",
+      "ALT",
+      "TNF-alpha"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "CRP change",
+      "response rate"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-271",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "phase": "Phase 1",
+    "intervention": "Rehabilitation programme",
+    "biomarkers": [
+      "Ferritin",
+      "Fasting insulin",
+      "Triglycerides"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "symptom score",
+      "response rate"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-272",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "phase": "Phase 3",
+    "intervention": "Disease-modifying therapy",
+    "biomarkers": [
+      "hs-CRP",
+      "Vitamin D",
+      "Fasting insulin"
+    ],
+    "endpoints": [
+      "CRP change",
+      "response rate",
+      "symptom score"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-273",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "phase": "Phase 1",
+    "intervention": "Cholinesterase inhibitor",
+    "biomarkers": [
+      "Triglycerides",
+      "TNF-alpha",
+      "Vitamin D"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "CRP change",
+      "response rate"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-274",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "phase": "Phase 2",
+    "intervention": "Cognitive therapy",
+    "biomarkers": [
+      "Fasting glucose",
+      "HbA1c",
+      "TNF-alpha"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "safety events",
+      "symptom score"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-275",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "phase": "Phase 3",
+    "intervention": "SSRI",
+    "biomarkers": [
+      "Calprotectin",
+      "Fasting insulin",
+      "Fasting glucose"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "CRP change",
+      "symptom score"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-276",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "phase": "Phase 1",
+    "intervention": "SNRI",
+    "biomarkers": [
+      "HbA1c",
+      "hs-CRP",
+      "IL-6"
+    ],
+    "endpoints": [
+      "response rate",
+      "symptom score",
+      "HbA1c change"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-277",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "phase": "Phase 3",
+    "intervention": "Biologic",
+    "biomarkers": [
+      "HbA1c",
+      "Calprotectin",
+      "Fasting glucose"
+    ],
+    "endpoints": [
+      "CRP change",
+      "response rate",
+      "HbA1c change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-278",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "phase": "Phase 3",
+    "intervention": "Inhaled corticosteroid",
+    "biomarkers": [
+      "Vitamin D",
+      "HbA1c",
+      "Triglycerides"
+    ],
+    "endpoints": [
+      "response rate",
+      "CRP change",
+      "HbA1c change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-279",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "phase": "Phase 3",
+    "intervention": "Pacing programme",
+    "biomarkers": [
+      "Calprotectin",
+      "Vitamin D",
+      "HbA1c"
+    ],
+    "endpoints": [
+      "response rate",
+      "CRP change",
+      "HbA1c change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-280",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "phase": "Phase 2",
+    "intervention": "SGLT2 inhibitor",
+    "biomarkers": [
+      "Vitamin D",
+      "HDL",
+      "TNF-alpha"
+    ],
+    "endpoints": [
+      "response rate",
+      "symptom score",
+      "CRP change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-281",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "phase": "Phase 3",
+    "intervention": "Corticosteroid",
+    "biomarkers": [
+      "TNF-alpha",
+      "ALT",
+      "LDL"
+    ],
+    "endpoints": [
+      "CRP change",
+      "symptom score",
+      "safety events"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-282",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "phase": "Phase 3",
+    "intervention": "SGLT2 inhibitor",
+    "biomarkers": [
+      "TNF-alpha",
+      "LDL",
+      "hs-CRP"
+    ],
+    "endpoints": [
+      "symptom score",
+      "HbA1c change",
+      "response rate"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-283",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "phase": "Phase 2",
+    "intervention": "GLP-1 receptor agonist",
+    "biomarkers": [
+      "Ferritin",
+      "TNF-alpha",
+      "LDL"
+    ],
+    "endpoints": [
+      "CRP change",
+      "safety events",
+      "response rate"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-284",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "phase": "Phase 3",
+    "intervention": "Vitamin E",
+    "biomarkers": [
+      "hs-CRP",
+      "LDL",
+      "Fasting insulin"
+    ],
+    "endpoints": [
+      "CRP change",
+      "symptom score",
+      "response rate"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-285",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "phase": "Phase 2",
+    "intervention": "Probiotic",
+    "biomarkers": [
+      "Calprotectin",
+      "LDL",
+      "Vitamin D"
+    ],
+    "endpoints": [
+      "HbA1c change",
+      "symptom score",
+      "CRP change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-286",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "phase": "Phase 1",
+    "intervention": "Corticosteroid",
+    "biomarkers": [
+      "HbA1c",
+      "LDL",
+      "hs-CRP"
+    ],
+    "endpoints": [
+      "response rate",
+      "safety events",
+      "symptom score"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-287",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "phase": "Phase 3",
+    "intervention": "SSRI",
+    "biomarkers": [
+      "Fasting glucose",
+      "Calprotectin",
+      "LDL"
+    ],
+    "endpoints": [
+      "safety events",
+      "response rate",
+      "HbA1c change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-288",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "phase": "Phase 2",
+    "intervention": "Mesalamine",
+    "biomarkers": [
+      "Vitamin D",
+      "Fasting glucose",
+      "LDL"
+    ],
+    "endpoints": [
+      "response rate",
+      "symptom score",
+      "safety events"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-289",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "phase": "Phase 1",
+    "intervention": "IL-6 inhibitor",
+    "biomarkers": [
+      "Vitamin D",
+      "HbA1c",
+      "LDL"
+    ],
+    "endpoints": [
+      "response rate",
+      "CRP change",
+      "symptom score"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-290",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "phase": "Phase 2",
+    "intervention": "Corticosteroid",
+    "biomarkers": [
+      "Vitamin D",
+      "Fasting glucose",
+      "HbA1c"
+    ],
+    "endpoints": [
+      "CRP change",
+      "symptom score",
+      "HbA1c change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-291",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "phase": "Phase 2",
+    "intervention": "Biologic",
+    "biomarkers": [
+      "Fasting insulin",
+      "Calprotectin",
+      "ALT"
+    ],
+    "endpoints": [
+      "CRP change",
+      "symptom score",
+      "response rate"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-292",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "phase": "Phase 3",
+    "intervention": "Disease-modifying therapy",
+    "biomarkers": [
+      "HbA1c",
+      "LDL",
+      "IL-6"
+    ],
+    "endpoints": [
+      "CRP change",
+      "safety events",
+      "response rate"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-293",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "phase": "Phase 2",
+    "intervention": "Cholinesterase inhibitor",
+    "biomarkers": [
+      "Calprotectin",
+      "HDL",
+      "Ferritin"
+    ],
+    "endpoints": [
+      "safety events",
+      "response rate",
+      "CRP change"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-294",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "phase": "Phase 3",
+    "intervention": "SNRI",
+    "biomarkers": [
+      "Fasting insulin",
+      "Fasting glucose",
+      "hs-CRP"
+    ],
+    "endpoints": [
+      "CRP change",
+      "response rate",
+      "symptom score"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-295",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "phase": "Phase 1",
+    "intervention": "Cognitive therapy",
+    "biomarkers": [
+      "Vitamin D",
+      "ALT",
+      "TNF-alpha"
+    ],
+    "endpoints": [
+      "safety events",
+      "response rate",
+      "symptom score"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-296",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "phase": "Phase 1",
+    "intervention": "Sleep intervention",
+    "biomarkers": [
+      "HbA1c",
+      "Vitamin D",
+      "Fasting glucose"
+    ],
+    "endpoints": [
+      "symptom score",
+      "response rate",
+      "safety events"
+    ],
+    "status": "active"
+  },
+  {
+    "trial_id": "SYN-TRIAL-297",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "phase": "Phase 3",
+    "intervention": "Biologic",
+    "biomarkers": [
+      "ALT",
+      "Vitamin D",
+      "Triglycerides"
+    ],
+    "endpoints": [
+      "safety events",
+      "symptom score",
+      "response rate"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-298",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "phase": "Phase 2",
+    "intervention": "Topical corticosteroid",
+    "biomarkers": [
+      "IL-6",
+      "TNF-alpha",
+      "Ferritin"
+    ],
+    "endpoints": [
+      "response rate",
+      "symptom score",
+      "CRP change"
+    ],
+    "status": "completed"
+  },
+  {
+    "trial_id": "SYN-TRIAL-299",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "phase": "Phase 2",
+    "intervention": "Pacing programme",
+    "biomarkers": [
+      "IL-6",
+      "Fasting insulin",
+      "Vitamin D"
+    ],
+    "endpoints": [
+      "response rate",
+      "CRP change",
+      "safety events"
+    ],
+    "status": "recruiting"
+  },
+  {
+    "trial_id": "SYN-TRIAL-300",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "phase": "Phase 1",
+    "intervention": "Statin",
+    "biomarkers": [
+      "Triglycerides",
+      "HDL",
+      "Fasting glucose"
+    ],
+    "endpoints": [
+      "response rate",
+      "HbA1c change",
+      "CRP change"
+    ],
+    "status": "active"
+  }
+]

@@ -1,0 +1,1001 @@
+evidence_id,data_class,condition,claim,evidence_status,confidence,source_type,scientific_claim_allowed
+SYN-EVID-0001,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0002,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0003,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0004,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0005,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0006,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0007,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0008,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0009,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0010,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0011,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0012,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0013,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0014,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0015,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0016,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0017,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0018,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0019,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0020,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0021,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0022,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0023,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0024,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0025,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0026,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0027,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0028,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0029,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0030,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0031,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0032,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0033,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0034,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0035,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0036,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0037,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0038,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0039,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0040,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0041,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0042,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0043,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0044,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0045,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0046,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0047,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0048,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0049,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0050,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0051,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0052,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0053,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0054,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0055,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0056,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0057,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0058,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0059,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0060,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0061,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0062,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0063,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0064,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0065,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0066,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0067,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0068,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0069,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0070,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0071,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0072,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0073,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0074,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0075,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0076,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0077,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0078,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0079,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0080,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0081,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0082,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0083,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0084,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0085,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0086,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0087,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0088,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0089,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0090,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0091,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0092,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0093,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0094,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0095,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0096,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0097,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0098,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0099,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0100,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0101,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0102,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0103,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0104,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0105,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0106,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0107,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0108,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0109,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0110,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0111,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0112,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0113,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0114,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0115,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0116,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0117,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0118,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0119,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0120,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0121,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0122,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0123,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0124,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0125,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0126,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0127,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0128,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0129,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0130,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0131,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0132,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0133,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0134,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0135,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0136,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0137,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0138,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0139,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0140,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0141,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0142,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0143,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0144,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0145,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0146,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0147,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0148,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0149,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0150,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0151,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0152,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0153,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0154,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0155,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0156,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0157,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0158,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0159,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0160,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0161,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0162,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0163,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0164,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0165,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0166,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0167,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0168,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0169,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0170,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0171,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0172,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0173,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0174,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0175,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0176,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0177,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0178,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0179,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0180,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0181,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0182,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0183,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0184,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0185,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0186,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0187,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0188,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0189,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0190,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0191,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0192,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0193,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0194,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0195,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0196,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0197,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0198,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0199,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0200,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0201,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0202,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0203,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0204,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0205,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0206,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0207,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0208,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0209,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0210,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0211,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0212,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0213,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0214,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0215,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0216,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0217,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0218,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0219,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0220,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0221,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0222,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0223,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0224,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0225,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0226,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0227,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0228,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0229,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0230,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0231,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0232,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0233,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0234,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0235,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0236,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0237,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0238,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0239,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0240,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0241,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0242,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0243,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0244,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0245,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0246,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0247,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0248,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0249,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0250,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0251,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0252,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0253,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0254,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0255,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0256,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0257,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0258,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0259,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0260,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0261,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0262,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0263,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0264,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0265,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0266,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0267,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0268,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0269,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0270,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0271,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0272,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0273,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0274,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0275,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0276,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0277,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0278,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0279,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0280,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0281,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0282,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0283,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0284,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0285,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0286,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0287,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0288,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0289,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0290,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0291,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0292,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0293,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0294,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0295,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0296,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0297,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0298,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0299,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0300,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0301,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0302,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0303,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0304,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0305,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0306,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0307,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0308,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0309,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0310,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0311,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0312,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0313,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0314,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0315,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0316,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0317,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0318,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0319,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0320,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0321,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0322,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0323,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0324,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0325,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0326,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0327,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0328,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0329,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0330,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0331,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0332,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0333,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0334,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0335,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0336,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0337,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0338,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0339,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0340,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0341,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0342,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0343,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0344,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0345,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0346,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0347,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0348,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0349,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0350,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0351,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0352,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0353,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0354,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0355,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0356,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0357,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0358,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0359,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0360,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0361,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0362,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0363,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0364,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0365,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0366,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0367,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0368,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0369,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0370,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0371,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0372,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0373,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0374,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0375,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0376,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0377,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0378,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0379,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0380,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0381,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0382,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0383,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0384,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0385,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0386,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0387,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0388,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0389,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0390,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0391,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0392,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0393,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0394,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0395,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0396,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0397,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0398,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0399,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0400,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0401,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0402,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0403,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0404,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0405,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0406,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0407,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0408,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0409,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0410,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0411,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0412,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0413,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0414,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0415,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0416,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0417,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0418,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0419,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0420,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0421,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0422,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0423,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0424,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0425,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0426,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0427,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0428,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0429,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0430,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0431,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0432,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0433,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0434,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0435,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0436,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0437,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0438,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0439,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0440,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0441,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0442,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0443,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0444,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0445,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0446,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0447,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0448,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0449,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0450,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0451,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0452,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0453,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0454,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0455,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0456,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0457,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0458,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0459,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0460,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0461,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0462,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0463,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0464,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0465,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0466,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0467,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0468,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0469,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0470,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0471,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0472,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0473,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0474,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0475,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0476,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0477,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0478,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0479,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0480,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0481,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0482,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0483,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0484,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0485,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0486,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0487,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0488,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0489,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0490,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0491,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0492,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0493,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0494,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0495,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0496,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0497,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0498,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0499,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0500,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0501,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0502,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0503,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0504,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0505,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0506,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0507,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0508,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0509,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0510,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0511,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0512,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0513,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0514,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0515,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0516,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0517,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0518,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0519,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0520,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0521,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0522,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0523,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0524,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0525,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0526,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0527,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0528,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0529,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0530,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0531,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0532,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0533,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0534,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0535,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0536,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0537,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0538,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0539,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0540,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0541,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0542,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0543,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0544,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0545,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0546,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0547,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0548,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0549,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0550,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0551,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0552,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0553,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0554,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0555,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0556,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0557,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0558,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0559,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0560,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0561,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0562,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0563,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0564,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0565,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0566,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0567,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0568,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0569,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0570,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0571,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0572,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0573,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0574,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0575,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0576,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0577,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0578,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0579,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0580,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0581,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0582,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0583,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0584,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0585,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0586,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0587,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0588,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0589,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0590,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0591,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0592,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0593,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0594,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0595,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0596,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0597,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0598,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0599,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0600,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0601,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0602,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0603,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0604,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0605,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0606,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0607,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0608,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0609,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0610,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0611,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0612,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0613,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0614,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0615,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0616,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0617,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0618,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0619,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0620,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0621,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0622,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0623,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0624,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0625,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0626,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0627,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0628,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0629,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0630,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0631,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0632,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0633,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0634,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0635,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0636,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0637,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0638,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0639,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0640,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0641,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0642,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0643,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0644,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0645,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0646,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0647,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0648,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0649,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0650,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0651,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0652,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0653,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0654,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0655,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0656,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0657,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0658,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0659,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0660,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0661,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0662,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0663,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0664,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0665,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0666,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0667,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0668,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0669,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0670,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0671,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0672,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0673,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0674,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0675,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0676,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0677,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0678,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0679,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0680,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0681,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0682,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0683,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0684,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0685,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0686,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0687,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0688,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0689,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0690,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0691,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0692,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0693,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0694,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0695,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0696,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0697,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0698,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0699,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0700,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0701,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0702,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0703,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0704,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0705,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0706,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0707,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0708,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0709,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0710,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0711,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0712,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0713,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0714,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0715,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0716,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0717,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0718,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0719,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0720,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0721,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0722,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0723,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0724,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0725,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0726,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0727,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0728,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0729,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0730,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0731,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0732,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0733,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0734,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0735,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0736,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0737,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0738,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0739,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0740,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0741,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0742,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0743,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0744,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0745,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0746,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0747,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0748,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0749,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0750,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0751,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0752,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0753,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0754,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0755,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0756,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0757,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0758,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0759,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0760,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0761,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0762,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0763,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0764,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0765,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0766,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0767,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0768,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0769,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0770,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0771,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0772,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0773,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0774,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0775,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0776,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0777,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0778,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0779,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0780,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0781,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0782,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0783,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0784,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0785,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0786,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0787,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0788,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0789,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0790,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0791,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0792,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0793,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0794,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0795,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0796,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0797,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0798,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0799,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0800,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0801,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0802,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0803,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0804,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0805,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0806,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0807,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0808,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0809,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0810,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0811,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0812,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0813,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0814,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0815,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0816,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0817,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0818,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0819,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0820,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0821,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0822,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0823,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0824,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0825,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0826,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0827,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0828,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0829,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0830,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0831,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0832,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0833,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0834,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0835,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0836,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0837,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0838,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0839,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0840,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0841,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0842,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0843,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0844,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0845,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0846,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0847,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0848,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0849,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0850,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0851,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0852,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0853,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0854,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0855,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0856,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0857,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0858,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0859,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0860,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0861,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0862,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0863,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0864,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0865,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0866,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0867,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0868,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0869,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0870,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0871,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0872,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0873,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0874,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0875,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0876,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0877,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0878,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0879,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0880,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0881,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0882,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0883,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0884,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0885,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0886,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0887,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0888,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0889,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0890,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0891,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0892,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0893,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0894,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0895,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0896,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0897,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0898,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0899,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0900,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0901,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0902,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0903,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0904,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0905,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0906,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0907,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0908,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0909,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0910,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0911,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0912,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0913,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0914,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0915,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0916,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0917,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0918,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0919,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0920,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0921,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0922,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0923,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0924,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0925,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0926,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0927,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0928,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0929,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0930,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0931,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0932,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0933,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0934,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0935,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0936,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0937,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0938,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0939,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0940,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0941,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0942,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0943,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0944,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0945,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0946,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0947,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0948,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0949,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0950,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0951,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0952,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0953,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0954,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0955,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0956,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0957,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0958,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0959,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0960,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0961,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0962,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0963,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0964,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0965,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0966,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0967,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0968,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0969,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0970,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0971,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0972,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0973,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0974,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0975,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0976,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0977,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0978,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0979,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0980,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0981,synthetic,Type 1 diabetes,Synthetic evidence link for Type 1 diabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0982,synthetic,Prediabetes,Synthetic evidence link for Prediabetes,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0983,synthetic,Obesity,Synthetic evidence link for Obesity,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0984,synthetic,MASH,Synthetic evidence link for MASH,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0985,synthetic,Crohn's disease,Synthetic evidence link for Crohn's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0986,synthetic,Ulcerative colitis,Synthetic evidence link for Ulcerative colitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0987,synthetic,IBS,Synthetic evidence link for IBS,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0988,synthetic,Coeliac disease,Synthetic evidence link for Coeliac disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0989,synthetic,Rheumatoid arthritis,Synthetic evidence link for Rheumatoid arthritis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0990,synthetic,Systemic lupus erythematosus,Synthetic evidence link for Systemic lupus erythematosus,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0991,synthetic,Multiple sclerosis,Synthetic evidence link for Multiple sclerosis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0992,synthetic,Alzheimer's disease,Synthetic evidence link for Alzheimer's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0993,synthetic,Parkinson's disease,Synthetic evidence link for Parkinson's disease,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0994,synthetic,Major depressive disorder,Synthetic evidence link for Major depressive disorder,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0995,synthetic,Anxiety disorders,Synthetic evidence link for Anxiety disorders,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0996,synthetic,Migraine,Synthetic evidence link for Migraine,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0997,synthetic,Asthma,Synthetic evidence link for Asthma,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0998,synthetic,Atopic dermatitis,Synthetic evidence link for Atopic dermatitis,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-0999,synthetic,Long COVID,Synthetic evidence link for Long COVID,synthetic_demo,none,synthetic_generator,False
+SYN-EVID-1000,synthetic,Type 2 diabetes,Synthetic evidence link for Type 2 diabetes,synthetic_demo,none,synthetic_generator,False

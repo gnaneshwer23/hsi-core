@@ -1,0 +1,8002 @@
+[
+  {
+    "patient_id": "SYN-P-000001",
+    "visit": 1,
+    "diversity": 2.53,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.81,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000001",
+    "visit": 2,
+    "diversity": 3.44,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.63,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000001",
+    "visit": 3,
+    "diversity": 3.12,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.58,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000001",
+    "visit": 4,
+    "diversity": 4.36,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.26,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000001",
+    "visit": 5,
+    "diversity": 2.93,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.17,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000002",
+    "visit": 1,
+    "diversity": 1.79,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.35,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000002",
+    "visit": 2,
+    "diversity": 2.94,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.9,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000002",
+    "visit": 3,
+    "diversity": 3.53,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.4,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000002",
+    "visit": 4,
+    "diversity": 4.14,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.37,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000002",
+    "visit": 5,
+    "diversity": 2.77,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.04,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000003",
+    "visit": 1,
+    "diversity": 3.71,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.78,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000003",
+    "visit": 2,
+    "diversity": 1.85,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.18,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000003",
+    "visit": 3,
+    "diversity": 2.39,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.19,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000003",
+    "visit": 4,
+    "diversity": 3.92,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.02,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000003",
+    "visit": 5,
+    "diversity": 3.29,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.61,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000004",
+    "visit": 1,
+    "diversity": 2.67,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.95,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000004",
+    "visit": 2,
+    "diversity": 2.68,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.66,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000004",
+    "visit": 3,
+    "diversity": 1.88,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.11,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000004",
+    "visit": 4,
+    "diversity": 3.48,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.51,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000004",
+    "visit": 5,
+    "diversity": 2.51,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.85,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000005",
+    "visit": 1,
+    "diversity": 2.86,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.25,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000005",
+    "visit": 2,
+    "diversity": 3.41,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.1,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000005",
+    "visit": 3,
+    "diversity": 3.27,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.31,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000005",
+    "visit": 4,
+    "diversity": 1.95,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.83,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000005",
+    "visit": 5,
+    "diversity": 3.77,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.52,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000006",
+    "visit": 1,
+    "diversity": 3.15,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.44,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000006",
+    "visit": 2,
+    "diversity": 3.3,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.88,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000006",
+    "visit": 3,
+    "diversity": 2.92,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.39,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000006",
+    "visit": 4,
+    "diversity": 3.78,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.04,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000006",
+    "visit": 5,
+    "diversity": 2.22,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.14,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000007",
+    "visit": 1,
+    "diversity": 3.74,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.78,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000007",
+    "visit": 2,
+    "diversity": 3.99,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.91,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000007",
+    "visit": 3,
+    "diversity": 2.91,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.88,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000007",
+    "visit": 4,
+    "diversity": 4.32,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.03,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000007",
+    "visit": 5,
+    "diversity": 3.16,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.22,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000008",
+    "visit": 1,
+    "diversity": 3.43,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.06,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000008",
+    "visit": 2,
+    "diversity": 2.86,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.73,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000008",
+    "visit": 3,
+    "diversity": 3.47,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.85,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000008",
+    "visit": 4,
+    "diversity": 3.4,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.09,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000008",
+    "visit": 5,
+    "diversity": 3.08,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.05,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000009",
+    "visit": 1,
+    "diversity": 2.02,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.46,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000009",
+    "visit": 2,
+    "diversity": 3.38,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.75,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000009",
+    "visit": 3,
+    "diversity": 3.24,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.9,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000009",
+    "visit": 4,
+    "diversity": 3.39,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.07,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000009",
+    "visit": 5,
+    "diversity": 1.55,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.18,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000010",
+    "visit": 1,
+    "diversity": 3.85,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.37,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000010",
+    "visit": 2,
+    "diversity": 2.69,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.24,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000010",
+    "visit": 3,
+    "diversity": 1.64,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.64,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000010",
+    "visit": 4,
+    "diversity": 2.26,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.36,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000010",
+    "visit": 5,
+    "diversity": 3.05,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.47,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000011",
+    "visit": 1,
+    "diversity": 1.63,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.61,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000011",
+    "visit": 2,
+    "diversity": 3.22,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.37,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000011",
+    "visit": 3,
+    "diversity": 4.05,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.71,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000011",
+    "visit": 4,
+    "diversity": 3.54,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.13,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000011",
+    "visit": 5,
+    "diversity": 3.24,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.66,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000012",
+    "visit": 1,
+    "diversity": 2.46,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.98,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000012",
+    "visit": 2,
+    "diversity": 2.68,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.97,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000012",
+    "visit": 3,
+    "diversity": 3.37,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.12,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000012",
+    "visit": 4,
+    "diversity": 3.1,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.56,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000012",
+    "visit": 5,
+    "diversity": 2.82,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.15,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000013",
+    "visit": 1,
+    "diversity": 4.3,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.27,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000013",
+    "visit": 2,
+    "diversity": 2.18,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.05,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000013",
+    "visit": 3,
+    "diversity": 2.06,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.96,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000013",
+    "visit": 4,
+    "diversity": 3.42,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.83,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000013",
+    "visit": 5,
+    "diversity": 3.57,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.92,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000014",
+    "visit": 1,
+    "diversity": 3.54,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.58,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000014",
+    "visit": 2,
+    "diversity": 4.43,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.96,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000014",
+    "visit": 3,
+    "diversity": 2.07,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.77,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000014",
+    "visit": 4,
+    "diversity": 4.13,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.52,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000014",
+    "visit": 5,
+    "diversity": 2.75,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.13,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000015",
+    "visit": 1,
+    "diversity": 2.35,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.53,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000015",
+    "visit": 2,
+    "diversity": 3.46,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.34,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000015",
+    "visit": 3,
+    "diversity": 2.87,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.62,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000015",
+    "visit": 4,
+    "diversity": 2.88,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.99,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000015",
+    "visit": 5,
+    "diversity": 4.2,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.66,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000016",
+    "visit": 1,
+    "diversity": 2.57,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.43,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000016",
+    "visit": 2,
+    "diversity": 2.56,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.6,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000016",
+    "visit": 3,
+    "diversity": 3.35,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.11,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000016",
+    "visit": 4,
+    "diversity": 2.68,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.93,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000016",
+    "visit": 5,
+    "diversity": 4.26,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.42,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000017",
+    "visit": 1,
+    "diversity": 1.76,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.14,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000017",
+    "visit": 2,
+    "diversity": 1.59,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.88,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000017",
+    "visit": 3,
+    "diversity": 3.27,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.13,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000017",
+    "visit": 4,
+    "diversity": 3.02,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.41,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000017",
+    "visit": 5,
+    "diversity": 3.46,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.3,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000018",
+    "visit": 1,
+    "diversity": 4.1,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.15,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000018",
+    "visit": 2,
+    "diversity": 2.79,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.49,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000018",
+    "visit": 3,
+    "diversity": 2.62,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.17,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000018",
+    "visit": 4,
+    "diversity": 3.94,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.64,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000018",
+    "visit": 5,
+    "diversity": 3.32,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.03,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000019",
+    "visit": 1,
+    "diversity": 4.35,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.51,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000019",
+    "visit": 2,
+    "diversity": 2.43,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.66,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000019",
+    "visit": 3,
+    "diversity": 3.0,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.17,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000019",
+    "visit": 4,
+    "diversity": 2.04,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.98,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000019",
+    "visit": 5,
+    "diversity": 1.5,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.38,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000020",
+    "visit": 1,
+    "diversity": 2.86,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.07,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000020",
+    "visit": 2,
+    "diversity": 2.28,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.03,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000020",
+    "visit": 3,
+    "diversity": 1.65,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.43,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000020",
+    "visit": 4,
+    "diversity": 3.13,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.34,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000020",
+    "visit": 5,
+    "diversity": 3.92,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.36,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000021",
+    "visit": 1,
+    "diversity": 3.49,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.1,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000021",
+    "visit": 2,
+    "diversity": 3.93,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.22,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000021",
+    "visit": 3,
+    "diversity": 4.15,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.88,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000021",
+    "visit": 4,
+    "diversity": 1.99,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.16,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000021",
+    "visit": 5,
+    "diversity": 2.92,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.31,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000022",
+    "visit": 1,
+    "diversity": 4.06,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.5,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000022",
+    "visit": 2,
+    "diversity": 2.33,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.92,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000022",
+    "visit": 3,
+    "diversity": 2.71,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.89,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000022",
+    "visit": 4,
+    "diversity": 3.05,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.82,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000022",
+    "visit": 5,
+    "diversity": 4.11,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.55,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000023",
+    "visit": 1,
+    "diversity": 2.41,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.82,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000023",
+    "visit": 2,
+    "diversity": 1.58,
+    "scfa_production": "normal",
+    "dysbiosis_score": 1.0,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000023",
+    "visit": 3,
+    "diversity": 2.57,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.87,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000023",
+    "visit": 4,
+    "diversity": 2.96,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.99,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000023",
+    "visit": 5,
+    "diversity": 2.18,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.31,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000024",
+    "visit": 1,
+    "diversity": 2.63,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.26,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000024",
+    "visit": 2,
+    "diversity": 1.84,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.5,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000024",
+    "visit": 3,
+    "diversity": 2.39,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.05,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000024",
+    "visit": 4,
+    "diversity": 3.9,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.89,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000024",
+    "visit": 5,
+    "diversity": 4.43,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.87,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000025",
+    "visit": 1,
+    "diversity": 4.07,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.32,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000025",
+    "visit": 2,
+    "diversity": 1.84,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.22,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000025",
+    "visit": 3,
+    "diversity": 3.82,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.46,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000025",
+    "visit": 4,
+    "diversity": 2.86,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.14,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000025",
+    "visit": 5,
+    "diversity": 3.52,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.29,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000026",
+    "visit": 1,
+    "diversity": 2.11,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.83,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000026",
+    "visit": 2,
+    "diversity": 4.29,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.05,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000026",
+    "visit": 3,
+    "diversity": 3.51,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.24,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000026",
+    "visit": 4,
+    "diversity": 3.39,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.86,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000026",
+    "visit": 5,
+    "diversity": 2.67,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.53,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000027",
+    "visit": 1,
+    "diversity": 3.11,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.3,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000027",
+    "visit": 2,
+    "diversity": 3.36,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.32,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000027",
+    "visit": 3,
+    "diversity": 2.34,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.89,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000027",
+    "visit": 4,
+    "diversity": 3.49,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.68,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000027",
+    "visit": 5,
+    "diversity": 4.0,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.58,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000028",
+    "visit": 1,
+    "diversity": 3.53,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.21,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000028",
+    "visit": 2,
+    "diversity": 2.05,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.51,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000028",
+    "visit": 3,
+    "diversity": 1.5,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.65,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000028",
+    "visit": 4,
+    "diversity": 1.85,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.38,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000028",
+    "visit": 5,
+    "diversity": 3.85,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.1,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000029",
+    "visit": 1,
+    "diversity": 3.35,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.04,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000029",
+    "visit": 2,
+    "diversity": 3.18,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.29,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000029",
+    "visit": 3,
+    "diversity": 4.0,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.29,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000029",
+    "visit": 4,
+    "diversity": 2.98,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.76,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000029",
+    "visit": 5,
+    "diversity": 2.45,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.01,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000030",
+    "visit": 1,
+    "diversity": 4.49,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.52,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000030",
+    "visit": 2,
+    "diversity": 4.44,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.36,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000030",
+    "visit": 3,
+    "diversity": 3.06,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.41,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000030",
+    "visit": 4,
+    "diversity": 4.02,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.04,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000030",
+    "visit": 5,
+    "diversity": 3.07,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.34,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000031",
+    "visit": 1,
+    "diversity": 2.37,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.46,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000031",
+    "visit": 2,
+    "diversity": 2.68,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.47,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000031",
+    "visit": 3,
+    "diversity": 2.58,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.86,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000031",
+    "visit": 4,
+    "diversity": 3.87,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.49,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000031",
+    "visit": 5,
+    "diversity": 3.96,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.37,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000032",
+    "visit": 1,
+    "diversity": 3.47,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.62,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000032",
+    "visit": 2,
+    "diversity": 2.19,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.19,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000032",
+    "visit": 3,
+    "diversity": 2.79,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.32,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000032",
+    "visit": 4,
+    "diversity": 1.61,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.16,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000032",
+    "visit": 5,
+    "diversity": 3.31,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.63,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000033",
+    "visit": 1,
+    "diversity": 2.69,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.2,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000033",
+    "visit": 2,
+    "diversity": 3.77,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.11,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000033",
+    "visit": 3,
+    "diversity": 3.87,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.27,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000033",
+    "visit": 4,
+    "diversity": 2.97,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.16,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000033",
+    "visit": 5,
+    "diversity": 4.41,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.33,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000034",
+    "visit": 1,
+    "diversity": 3.79,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.62,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000034",
+    "visit": 2,
+    "diversity": 4.46,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.49,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000034",
+    "visit": 3,
+    "diversity": 2.82,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.77,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000034",
+    "visit": 4,
+    "diversity": 3.63,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.72,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000034",
+    "visit": 5,
+    "diversity": 3.8,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.46,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000035",
+    "visit": 1,
+    "diversity": 3.33,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.7,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000035",
+    "visit": 2,
+    "diversity": 3.09,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.48,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000035",
+    "visit": 3,
+    "diversity": 3.9,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.41,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000035",
+    "visit": 4,
+    "diversity": 2.89,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.93,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000035",
+    "visit": 5,
+    "diversity": 2.99,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.37,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000036",
+    "visit": 1,
+    "diversity": 4.17,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.52,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000036",
+    "visit": 2,
+    "diversity": 2.52,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.05,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000036",
+    "visit": 3,
+    "diversity": 2.91,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.14,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000036",
+    "visit": 4,
+    "diversity": 2.22,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.55,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000036",
+    "visit": 5,
+    "diversity": 3.81,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.33,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000037",
+    "visit": 1,
+    "diversity": 4.44,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.86,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000037",
+    "visit": 2,
+    "diversity": 3.43,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.86,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000037",
+    "visit": 3,
+    "diversity": 3.69,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.98,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000037",
+    "visit": 4,
+    "diversity": 4.27,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.3,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000037",
+    "visit": 5,
+    "diversity": 2.28,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.24,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000038",
+    "visit": 1,
+    "diversity": 1.54,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.38,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000038",
+    "visit": 2,
+    "diversity": 4.0,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.41,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000038",
+    "visit": 3,
+    "diversity": 1.73,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.92,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000038",
+    "visit": 4,
+    "diversity": 4.24,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.26,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000038",
+    "visit": 5,
+    "diversity": 4.31,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.33,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000039",
+    "visit": 1,
+    "diversity": 4.39,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.97,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000039",
+    "visit": 2,
+    "diversity": 3.96,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.46,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000039",
+    "visit": 3,
+    "diversity": 2.0,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.93,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000039",
+    "visit": 4,
+    "diversity": 4.35,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.83,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000039",
+    "visit": 5,
+    "diversity": 2.8,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.62,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000040",
+    "visit": 1,
+    "diversity": 3.66,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.36,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000040",
+    "visit": 2,
+    "diversity": 2.24,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.43,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000040",
+    "visit": 3,
+    "diversity": 1.77,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.67,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000040",
+    "visit": 4,
+    "diversity": 4.14,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.93,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000040",
+    "visit": 5,
+    "diversity": 2.33,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.37,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000041",
+    "visit": 1,
+    "diversity": 1.9,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.42,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000041",
+    "visit": 2,
+    "diversity": 2.35,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.62,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000041",
+    "visit": 3,
+    "diversity": 4.34,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.16,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000041",
+    "visit": 4,
+    "diversity": 3.32,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.58,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000041",
+    "visit": 5,
+    "diversity": 3.68,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.74,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000042",
+    "visit": 1,
+    "diversity": 3.87,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.26,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000042",
+    "visit": 2,
+    "diversity": 2.28,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.06,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000042",
+    "visit": 3,
+    "diversity": 1.93,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.52,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000042",
+    "visit": 4,
+    "diversity": 4.41,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.71,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000042",
+    "visit": 5,
+    "diversity": 1.79,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.92,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000043",
+    "visit": 1,
+    "diversity": 4.37,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.83,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000043",
+    "visit": 2,
+    "diversity": 4.18,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.94,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000043",
+    "visit": 3,
+    "diversity": 3.77,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.94,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000043",
+    "visit": 4,
+    "diversity": 3.88,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.29,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000043",
+    "visit": 5,
+    "diversity": 3.21,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.66,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000044",
+    "visit": 1,
+    "diversity": 3.56,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.11,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000044",
+    "visit": 2,
+    "diversity": 4.04,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.84,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000044",
+    "visit": 3,
+    "diversity": 3.05,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.76,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000044",
+    "visit": 4,
+    "diversity": 2.74,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.65,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000044",
+    "visit": 5,
+    "diversity": 1.69,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.9,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000045",
+    "visit": 1,
+    "diversity": 3.6,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.32,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000045",
+    "visit": 2,
+    "diversity": 2.68,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.3,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000045",
+    "visit": 3,
+    "diversity": 3.14,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.45,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000045",
+    "visit": 4,
+    "diversity": 3.9,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.08,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000045",
+    "visit": 5,
+    "diversity": 4.26,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.83,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000046",
+    "visit": 1,
+    "diversity": 3.64,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.42,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000046",
+    "visit": 2,
+    "diversity": 4.13,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.09,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000046",
+    "visit": 3,
+    "diversity": 1.61,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.16,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000046",
+    "visit": 4,
+    "diversity": 4.26,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.77,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000046",
+    "visit": 5,
+    "diversity": 2.35,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.74,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000047",
+    "visit": 1,
+    "diversity": 3.93,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.19,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000047",
+    "visit": 2,
+    "diversity": 3.04,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.42,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000047",
+    "visit": 3,
+    "diversity": 3.31,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.11,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000047",
+    "visit": 4,
+    "diversity": 2.23,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.86,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000047",
+    "visit": 5,
+    "diversity": 3.04,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.61,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000048",
+    "visit": 1,
+    "diversity": 3.89,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.62,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000048",
+    "visit": 2,
+    "diversity": 4.48,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.77,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000048",
+    "visit": 3,
+    "diversity": 3.02,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.87,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000048",
+    "visit": 4,
+    "diversity": 3.05,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.36,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000048",
+    "visit": 5,
+    "diversity": 1.52,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.9,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000049",
+    "visit": 1,
+    "diversity": 4.0,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.73,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000049",
+    "visit": 2,
+    "diversity": 3.25,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.45,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000049",
+    "visit": 3,
+    "diversity": 1.89,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.51,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000049",
+    "visit": 4,
+    "diversity": 3.96,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.0,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000049",
+    "visit": 5,
+    "diversity": 4.37,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.74,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000050",
+    "visit": 1,
+    "diversity": 4.3,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.44,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000050",
+    "visit": 2,
+    "diversity": 2.22,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.59,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000050",
+    "visit": 3,
+    "diversity": 1.93,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.99,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000050",
+    "visit": 4,
+    "diversity": 2.4,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.7,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000050",
+    "visit": 5,
+    "diversity": 3.17,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.7,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000051",
+    "visit": 1,
+    "diversity": 4.21,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.61,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000051",
+    "visit": 2,
+    "diversity": 2.78,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.94,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000051",
+    "visit": 3,
+    "diversity": 1.69,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.1,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000051",
+    "visit": 4,
+    "diversity": 3.33,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.07,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000051",
+    "visit": 5,
+    "diversity": 3.87,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.9,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000052",
+    "visit": 1,
+    "diversity": 3.58,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.6,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000052",
+    "visit": 2,
+    "diversity": 1.93,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.19,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000052",
+    "visit": 3,
+    "diversity": 4.32,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.88,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000052",
+    "visit": 4,
+    "diversity": 3.87,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.06,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000052",
+    "visit": 5,
+    "diversity": 1.75,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.3,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000053",
+    "visit": 1,
+    "diversity": 3.95,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.85,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000053",
+    "visit": 2,
+    "diversity": 1.76,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.43,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000053",
+    "visit": 3,
+    "diversity": 3.31,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.57,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000053",
+    "visit": 4,
+    "diversity": 2.48,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.39,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000053",
+    "visit": 5,
+    "diversity": 3.21,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.46,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000054",
+    "visit": 1,
+    "diversity": 1.73,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.5,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000054",
+    "visit": 2,
+    "diversity": 2.81,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.82,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000054",
+    "visit": 3,
+    "diversity": 3.82,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.93,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000054",
+    "visit": 4,
+    "diversity": 1.82,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.17,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000054",
+    "visit": 5,
+    "diversity": 4.05,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.07,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000055",
+    "visit": 1,
+    "diversity": 2.12,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.91,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000055",
+    "visit": 2,
+    "diversity": 2.09,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.18,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000055",
+    "visit": 3,
+    "diversity": 2.42,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.38,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000055",
+    "visit": 4,
+    "diversity": 3.75,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.51,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000055",
+    "visit": 5,
+    "diversity": 2.69,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.97,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000056",
+    "visit": 1,
+    "diversity": 2.01,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.19,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000056",
+    "visit": 2,
+    "diversity": 1.53,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.75,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000056",
+    "visit": 3,
+    "diversity": 2.71,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.03,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000056",
+    "visit": 4,
+    "diversity": 4.32,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.99,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000056",
+    "visit": 5,
+    "diversity": 4.29,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.9,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000057",
+    "visit": 1,
+    "diversity": 4.06,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.58,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000057",
+    "visit": 2,
+    "diversity": 2.46,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.99,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000057",
+    "visit": 3,
+    "diversity": 4.47,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.39,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000057",
+    "visit": 4,
+    "diversity": 4.47,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.38,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000057",
+    "visit": 5,
+    "diversity": 2.84,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.12,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000058",
+    "visit": 1,
+    "diversity": 3.46,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.97,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000058",
+    "visit": 2,
+    "diversity": 1.92,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.7,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000058",
+    "visit": 3,
+    "diversity": 3.53,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.14,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000058",
+    "visit": 4,
+    "diversity": 2.5,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.15,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000058",
+    "visit": 5,
+    "diversity": 4.15,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.48,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000059",
+    "visit": 1,
+    "diversity": 1.67,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.29,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000059",
+    "visit": 2,
+    "diversity": 4.15,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.9,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000059",
+    "visit": 3,
+    "diversity": 4.18,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.06,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000059",
+    "visit": 4,
+    "diversity": 2.82,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.16,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000059",
+    "visit": 5,
+    "diversity": 1.88,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.5,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000060",
+    "visit": 1,
+    "diversity": 2.32,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.93,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000060",
+    "visit": 2,
+    "diversity": 2.36,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.91,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000060",
+    "visit": 3,
+    "diversity": 2.08,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.93,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000060",
+    "visit": 4,
+    "diversity": 4.4,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.05,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000060",
+    "visit": 5,
+    "diversity": 4.06,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.71,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000061",
+    "visit": 1,
+    "diversity": 4.4,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.26,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000061",
+    "visit": 2,
+    "diversity": 2.06,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.19,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000061",
+    "visit": 3,
+    "diversity": 4.32,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.01,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000061",
+    "visit": 4,
+    "diversity": 1.57,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.39,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000061",
+    "visit": 5,
+    "diversity": 3.56,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.82,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000062",
+    "visit": 1,
+    "diversity": 2.5,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.92,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000062",
+    "visit": 2,
+    "diversity": 4.06,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.24,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000062",
+    "visit": 3,
+    "diversity": 3.6,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.47,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000062",
+    "visit": 4,
+    "diversity": 3.36,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.39,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000062",
+    "visit": 5,
+    "diversity": 2.11,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.24,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000063",
+    "visit": 1,
+    "diversity": 2.19,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.81,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000063",
+    "visit": 2,
+    "diversity": 1.93,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.55,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000063",
+    "visit": 3,
+    "diversity": 4.25,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.44,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000063",
+    "visit": 4,
+    "diversity": 3.43,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.11,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000063",
+    "visit": 5,
+    "diversity": 1.57,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.42,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000064",
+    "visit": 1,
+    "diversity": 3.5,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.14,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000064",
+    "visit": 2,
+    "diversity": 3.3,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.35,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000064",
+    "visit": 3,
+    "diversity": 2.36,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.69,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000064",
+    "visit": 4,
+    "diversity": 4.35,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.97,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000064",
+    "visit": 5,
+    "diversity": 2.23,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.19,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000065",
+    "visit": 1,
+    "diversity": 3.7,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.63,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000065",
+    "visit": 2,
+    "diversity": 2.97,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.41,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000065",
+    "visit": 3,
+    "diversity": 3.05,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.22,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000065",
+    "visit": 4,
+    "diversity": 2.12,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.49,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000065",
+    "visit": 5,
+    "diversity": 3.47,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.15,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000066",
+    "visit": 1,
+    "diversity": 2.48,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.24,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000066",
+    "visit": 2,
+    "diversity": 2.68,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.98,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000066",
+    "visit": 3,
+    "diversity": 3.56,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.27,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000066",
+    "visit": 4,
+    "diversity": 2.12,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.08,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000066",
+    "visit": 5,
+    "diversity": 3.56,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.65,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000067",
+    "visit": 1,
+    "diversity": 1.83,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.65,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000067",
+    "visit": 2,
+    "diversity": 3.72,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.24,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000067",
+    "visit": 3,
+    "diversity": 3.83,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.3,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000067",
+    "visit": 4,
+    "diversity": 3.59,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.36,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000067",
+    "visit": 5,
+    "diversity": 3.88,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.11,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000068",
+    "visit": 1,
+    "diversity": 2.09,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.92,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000068",
+    "visit": 2,
+    "diversity": 2.05,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.1,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000068",
+    "visit": 3,
+    "diversity": 2.89,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.46,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000068",
+    "visit": 4,
+    "diversity": 1.52,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.62,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000068",
+    "visit": 5,
+    "diversity": 3.96,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.24,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000069",
+    "visit": 1,
+    "diversity": 3.62,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.51,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000069",
+    "visit": 2,
+    "diversity": 1.7,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.85,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000069",
+    "visit": 3,
+    "diversity": 2.63,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.57,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000069",
+    "visit": 4,
+    "diversity": 3.0,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.62,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000069",
+    "visit": 5,
+    "diversity": 3.0,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.62,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000070",
+    "visit": 1,
+    "diversity": 3.02,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.35,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000070",
+    "visit": 2,
+    "diversity": 1.67,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.09,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000070",
+    "visit": 3,
+    "diversity": 3.71,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.9,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000070",
+    "visit": 4,
+    "diversity": 3.79,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.02,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000070",
+    "visit": 5,
+    "diversity": 2.8,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.78,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000071",
+    "visit": 1,
+    "diversity": 4.01,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.44,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000071",
+    "visit": 2,
+    "diversity": 3.02,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.58,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000071",
+    "visit": 3,
+    "diversity": 3.86,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.98,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000071",
+    "visit": 4,
+    "diversity": 3.7,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.73,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000071",
+    "visit": 5,
+    "diversity": 3.32,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.79,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000072",
+    "visit": 1,
+    "diversity": 4.1,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.9,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000072",
+    "visit": 2,
+    "diversity": 2.61,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.45,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000072",
+    "visit": 3,
+    "diversity": 2.0,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.27,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000072",
+    "visit": 4,
+    "diversity": 4.26,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.44,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000072",
+    "visit": 5,
+    "diversity": 3.38,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.14,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000073",
+    "visit": 1,
+    "diversity": 3.89,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.6,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000073",
+    "visit": 2,
+    "diversity": 3.82,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.67,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000073",
+    "visit": 3,
+    "diversity": 2.13,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.2,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000073",
+    "visit": 4,
+    "diversity": 2.63,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.13,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000073",
+    "visit": 5,
+    "diversity": 2.37,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.22,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000074",
+    "visit": 1,
+    "diversity": 1.68,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.25,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000074",
+    "visit": 2,
+    "diversity": 1.86,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.44,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000074",
+    "visit": 3,
+    "diversity": 2.13,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.93,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000074",
+    "visit": 4,
+    "diversity": 2.32,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.58,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000074",
+    "visit": 5,
+    "diversity": 3.91,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.14,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000075",
+    "visit": 1,
+    "diversity": 3.46,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.03,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000075",
+    "visit": 2,
+    "diversity": 2.69,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.7,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000075",
+    "visit": 3,
+    "diversity": 2.44,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.28,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000075",
+    "visit": 4,
+    "diversity": 2.02,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.84,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000075",
+    "visit": 5,
+    "diversity": 2.64,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.18,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000076",
+    "visit": 1,
+    "diversity": 3.82,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.22,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000076",
+    "visit": 2,
+    "diversity": 2.82,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.46,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000076",
+    "visit": 3,
+    "diversity": 4.42,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.13,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000076",
+    "visit": 4,
+    "diversity": 2.68,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.91,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000076",
+    "visit": 5,
+    "diversity": 1.5,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.75,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000077",
+    "visit": 1,
+    "diversity": 1.53,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.96,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000077",
+    "visit": 2,
+    "diversity": 2.8,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.28,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000077",
+    "visit": 3,
+    "diversity": 1.93,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.43,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000077",
+    "visit": 4,
+    "diversity": 3.46,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.84,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000077",
+    "visit": 5,
+    "diversity": 3.47,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.27,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000078",
+    "visit": 1,
+    "diversity": 3.39,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.98,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000078",
+    "visit": 2,
+    "diversity": 4.09,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.98,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000078",
+    "visit": 3,
+    "diversity": 3.47,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.91,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000078",
+    "visit": 4,
+    "diversity": 3.67,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.18,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000078",
+    "visit": 5,
+    "diversity": 4.37,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.54,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000079",
+    "visit": 1,
+    "diversity": 3.63,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.76,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000079",
+    "visit": 2,
+    "diversity": 2.18,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.58,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000079",
+    "visit": 3,
+    "diversity": 3.33,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.79,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000079",
+    "visit": 4,
+    "diversity": 3.72,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.94,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000079",
+    "visit": 5,
+    "diversity": 2.93,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.54,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000080",
+    "visit": 1,
+    "diversity": 4.18,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.47,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000080",
+    "visit": 2,
+    "diversity": 1.97,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.98,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000080",
+    "visit": 3,
+    "diversity": 3.65,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.83,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000080",
+    "visit": 4,
+    "diversity": 2.53,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.37,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000080",
+    "visit": 5,
+    "diversity": 2.18,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.33,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000081",
+    "visit": 1,
+    "diversity": 2.91,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.99,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000081",
+    "visit": 2,
+    "diversity": 3.25,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.53,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000081",
+    "visit": 3,
+    "diversity": 4.26,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.03,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000081",
+    "visit": 4,
+    "diversity": 2.45,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.21,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000081",
+    "visit": 5,
+    "diversity": 1.53,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.16,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000082",
+    "visit": 1,
+    "diversity": 4.12,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.05,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000082",
+    "visit": 2,
+    "diversity": 3.21,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.22,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000082",
+    "visit": 3,
+    "diversity": 1.6,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.16,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000082",
+    "visit": 4,
+    "diversity": 2.78,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.96,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000082",
+    "visit": 5,
+    "diversity": 3.1,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.23,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000083",
+    "visit": 1,
+    "diversity": 1.7,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.14,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000083",
+    "visit": 2,
+    "diversity": 2.43,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.77,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000083",
+    "visit": 3,
+    "diversity": 3.31,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.87,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000083",
+    "visit": 4,
+    "diversity": 3.98,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.56,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000083",
+    "visit": 5,
+    "diversity": 3.51,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.22,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000084",
+    "visit": 1,
+    "diversity": 3.72,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.32,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000084",
+    "visit": 2,
+    "diversity": 1.73,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.09,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000084",
+    "visit": 3,
+    "diversity": 2.18,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.81,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000084",
+    "visit": 4,
+    "diversity": 3.98,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.25,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000084",
+    "visit": 5,
+    "diversity": 1.67,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.48,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000085",
+    "visit": 1,
+    "diversity": 3.69,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.19,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000085",
+    "visit": 2,
+    "diversity": 2.18,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.63,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000085",
+    "visit": 3,
+    "diversity": 3.22,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.71,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000085",
+    "visit": 4,
+    "diversity": 2.52,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.14,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000085",
+    "visit": 5,
+    "diversity": 1.57,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.32,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000086",
+    "visit": 1,
+    "diversity": 2.99,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.64,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000086",
+    "visit": 2,
+    "diversity": 2.73,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.42,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000086",
+    "visit": 3,
+    "diversity": 2.28,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.39,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000086",
+    "visit": 4,
+    "diversity": 1.54,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.34,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000086",
+    "visit": 5,
+    "diversity": 3.1,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.72,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000087",
+    "visit": 1,
+    "diversity": 4.2,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.54,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000087",
+    "visit": 2,
+    "diversity": 2.48,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.13,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000087",
+    "visit": 3,
+    "diversity": 4.31,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.18,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000087",
+    "visit": 4,
+    "diversity": 1.77,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.2,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000087",
+    "visit": 5,
+    "diversity": 1.94,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.1,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000088",
+    "visit": 1,
+    "diversity": 4.45,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.02,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000088",
+    "visit": 2,
+    "diversity": 3.22,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.38,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000088",
+    "visit": 3,
+    "diversity": 2.03,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.15,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000088",
+    "visit": 4,
+    "diversity": 3.65,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.32,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000088",
+    "visit": 5,
+    "diversity": 4.01,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.6,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000089",
+    "visit": 1,
+    "diversity": 3.73,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.37,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000089",
+    "visit": 2,
+    "diversity": 3.95,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.15,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000089",
+    "visit": 3,
+    "diversity": 2.21,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.8,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000089",
+    "visit": 4,
+    "diversity": 2.49,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.9,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000089",
+    "visit": 5,
+    "diversity": 3.83,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.25,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000090",
+    "visit": 1,
+    "diversity": 3.79,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.37,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000090",
+    "visit": 2,
+    "diversity": 2.03,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.84,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000090",
+    "visit": 3,
+    "diversity": 3.87,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.15,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000090",
+    "visit": 4,
+    "diversity": 3.64,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.55,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000090",
+    "visit": 5,
+    "diversity": 3.45,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.03,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000091",
+    "visit": 1,
+    "diversity": 3.31,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.92,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000091",
+    "visit": 2,
+    "diversity": 2.39,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.9,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000091",
+    "visit": 3,
+    "diversity": 2.69,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.03,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000091",
+    "visit": 4,
+    "diversity": 2.59,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.37,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000091",
+    "visit": 5,
+    "diversity": 3.12,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.16,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000092",
+    "visit": 1,
+    "diversity": 2.68,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.82,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000092",
+    "visit": 2,
+    "diversity": 2.07,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.03,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000092",
+    "visit": 3,
+    "diversity": 2.65,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.77,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000092",
+    "visit": 4,
+    "diversity": 1.78,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.13,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000092",
+    "visit": 5,
+    "diversity": 1.52,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.81,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000093",
+    "visit": 1,
+    "diversity": 1.7,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.88,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000093",
+    "visit": 2,
+    "diversity": 2.67,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.06,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000093",
+    "visit": 3,
+    "diversity": 1.72,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.25,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000093",
+    "visit": 4,
+    "diversity": 1.59,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.56,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000093",
+    "visit": 5,
+    "diversity": 4.43,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.52,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000094",
+    "visit": 1,
+    "diversity": 1.85,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.88,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000094",
+    "visit": 2,
+    "diversity": 3.03,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.2,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000094",
+    "visit": 3,
+    "diversity": 2.35,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.23,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000094",
+    "visit": 4,
+    "diversity": 2.02,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.28,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000094",
+    "visit": 5,
+    "diversity": 4.01,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.21,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000095",
+    "visit": 1,
+    "diversity": 2.6,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.48,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000095",
+    "visit": 2,
+    "diversity": 2.2,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.62,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000095",
+    "visit": 3,
+    "diversity": 2.48,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.77,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000095",
+    "visit": 4,
+    "diversity": 3.53,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.55,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000095",
+    "visit": 5,
+    "diversity": 2.1,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.22,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000096",
+    "visit": 1,
+    "diversity": 4.3,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.07,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000096",
+    "visit": 2,
+    "diversity": 3.14,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.57,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000096",
+    "visit": 3,
+    "diversity": 1.7,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.27,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000096",
+    "visit": 4,
+    "diversity": 2.8,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.33,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000096",
+    "visit": 5,
+    "diversity": 4.35,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.07,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000097",
+    "visit": 1,
+    "diversity": 4.3,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.65,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000097",
+    "visit": 2,
+    "diversity": 3.08,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.28,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000097",
+    "visit": 3,
+    "diversity": 1.74,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.88,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000097",
+    "visit": 4,
+    "diversity": 2.99,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.97,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000097",
+    "visit": 5,
+    "diversity": 1.62,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.63,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000098",
+    "visit": 1,
+    "diversity": 4.4,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.47,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000098",
+    "visit": 2,
+    "diversity": 4.2,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.02,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000098",
+    "visit": 3,
+    "diversity": 3.69,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.66,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000098",
+    "visit": 4,
+    "diversity": 3.34,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.36,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000098",
+    "visit": 5,
+    "diversity": 3.41,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.75,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000099",
+    "visit": 1,
+    "diversity": 1.86,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.79,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000099",
+    "visit": 2,
+    "diversity": 1.91,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.6,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000099",
+    "visit": 3,
+    "diversity": 1.66,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.09,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000099",
+    "visit": 4,
+    "diversity": 3.69,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.49,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000099",
+    "visit": 5,
+    "diversity": 4.4,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.13,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000100",
+    "visit": 1,
+    "diversity": 3.5,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.24,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000100",
+    "visit": 2,
+    "diversity": 3.57,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.84,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000100",
+    "visit": 3,
+    "diversity": 2.26,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.76,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000100",
+    "visit": 4,
+    "diversity": 3.3,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.36,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000100",
+    "visit": 5,
+    "diversity": 2.14,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.1,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000101",
+    "visit": 1,
+    "diversity": 3.59,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.75,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000101",
+    "visit": 2,
+    "diversity": 4.0,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.47,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000101",
+    "visit": 3,
+    "diversity": 4.28,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.2,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000101",
+    "visit": 4,
+    "diversity": 2.52,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.09,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000101",
+    "visit": 5,
+    "diversity": 3.67,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.32,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000102",
+    "visit": 1,
+    "diversity": 3.79,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.62,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000102",
+    "visit": 2,
+    "diversity": 2.01,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.38,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000102",
+    "visit": 3,
+    "diversity": 3.7,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.18,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000102",
+    "visit": 4,
+    "diversity": 3.67,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.43,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000102",
+    "visit": 5,
+    "diversity": 2.63,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.79,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000103",
+    "visit": 1,
+    "diversity": 3.92,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.09,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000103",
+    "visit": 2,
+    "diversity": 3.0,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.78,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000103",
+    "visit": 3,
+    "diversity": 3.54,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.37,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000103",
+    "visit": 4,
+    "diversity": 2.51,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.08,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000103",
+    "visit": 5,
+    "diversity": 2.11,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.4,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000104",
+    "visit": 1,
+    "diversity": 3.08,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.78,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000104",
+    "visit": 2,
+    "diversity": 2.0,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.71,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000104",
+    "visit": 3,
+    "diversity": 1.56,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.89,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000104",
+    "visit": 4,
+    "diversity": 2.15,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.94,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000104",
+    "visit": 5,
+    "diversity": 3.79,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.68,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000105",
+    "visit": 1,
+    "diversity": 1.99,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.0,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000105",
+    "visit": 2,
+    "diversity": 3.82,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.52,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000105",
+    "visit": 3,
+    "diversity": 2.92,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.92,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000105",
+    "visit": 4,
+    "diversity": 4.2,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.68,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000105",
+    "visit": 5,
+    "diversity": 1.63,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.43,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000106",
+    "visit": 1,
+    "diversity": 2.81,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.87,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000106",
+    "visit": 2,
+    "diversity": 1.51,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.14,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000106",
+    "visit": 3,
+    "diversity": 4.36,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.59,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000106",
+    "visit": 4,
+    "diversity": 1.7,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.28,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000106",
+    "visit": 5,
+    "diversity": 3.13,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.57,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000107",
+    "visit": 1,
+    "diversity": 2.53,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.27,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000107",
+    "visit": 2,
+    "diversity": 2.48,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.76,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000107",
+    "visit": 3,
+    "diversity": 3.18,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.61,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000107",
+    "visit": 4,
+    "diversity": 2.38,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.33,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000107",
+    "visit": 5,
+    "diversity": 1.87,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.52,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000108",
+    "visit": 1,
+    "diversity": 2.52,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.42,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000108",
+    "visit": 2,
+    "diversity": 4.11,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.21,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000108",
+    "visit": 3,
+    "diversity": 3.05,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.7,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000108",
+    "visit": 4,
+    "diversity": 2.89,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.53,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000108",
+    "visit": 5,
+    "diversity": 3.15,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.72,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000109",
+    "visit": 1,
+    "diversity": 2.48,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.7,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000109",
+    "visit": 2,
+    "diversity": 4.08,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.0,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000109",
+    "visit": 3,
+    "diversity": 3.16,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.81,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000109",
+    "visit": 4,
+    "diversity": 4.01,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.95,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000109",
+    "visit": 5,
+    "diversity": 1.65,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.73,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000110",
+    "visit": 1,
+    "diversity": 3.48,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.65,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000110",
+    "visit": 2,
+    "diversity": 3.92,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.72,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000110",
+    "visit": 3,
+    "diversity": 3.34,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.23,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000110",
+    "visit": 4,
+    "diversity": 4.22,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.96,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000110",
+    "visit": 5,
+    "diversity": 1.58,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.79,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000111",
+    "visit": 1,
+    "diversity": 4.36,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.3,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000111",
+    "visit": 2,
+    "diversity": 1.69,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.83,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000111",
+    "visit": 3,
+    "diversity": 4.07,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.7,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000111",
+    "visit": 4,
+    "diversity": 2.73,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.96,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000111",
+    "visit": 5,
+    "diversity": 3.96,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.84,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000112",
+    "visit": 1,
+    "diversity": 4.05,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.93,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000112",
+    "visit": 2,
+    "diversity": 2.4,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.09,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000112",
+    "visit": 3,
+    "diversity": 4.2,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.25,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000112",
+    "visit": 4,
+    "diversity": 2.3,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.31,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000112",
+    "visit": 5,
+    "diversity": 3.76,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.6,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000113",
+    "visit": 1,
+    "diversity": 3.99,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.91,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000113",
+    "visit": 2,
+    "diversity": 3.12,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.0,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000113",
+    "visit": 3,
+    "diversity": 2.44,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.33,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000113",
+    "visit": 4,
+    "diversity": 2.73,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.65,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000113",
+    "visit": 5,
+    "diversity": 2.29,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.82,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000114",
+    "visit": 1,
+    "diversity": 2.54,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.01,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000114",
+    "visit": 2,
+    "diversity": 4.48,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.76,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000114",
+    "visit": 3,
+    "diversity": 3.09,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.74,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000114",
+    "visit": 4,
+    "diversity": 2.79,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.65,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000114",
+    "visit": 5,
+    "diversity": 3.56,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.9,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000115",
+    "visit": 1,
+    "diversity": 2.36,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.84,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000115",
+    "visit": 2,
+    "diversity": 3.04,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.87,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000115",
+    "visit": 3,
+    "diversity": 2.3,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.83,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000115",
+    "visit": 4,
+    "diversity": 2.03,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.02,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000115",
+    "visit": 5,
+    "diversity": 1.64,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.28,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000116",
+    "visit": 1,
+    "diversity": 3.44,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.3,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000116",
+    "visit": 2,
+    "diversity": 3.68,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.62,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000116",
+    "visit": 3,
+    "diversity": 1.57,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.13,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000116",
+    "visit": 4,
+    "diversity": 1.91,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.39,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000116",
+    "visit": 5,
+    "diversity": 2.62,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.32,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000117",
+    "visit": 1,
+    "diversity": 4.24,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.18,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000117",
+    "visit": 2,
+    "diversity": 3.73,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.95,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000117",
+    "visit": 3,
+    "diversity": 4.1,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.34,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000117",
+    "visit": 4,
+    "diversity": 2.39,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.36,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000117",
+    "visit": 5,
+    "diversity": 3.12,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.33,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000118",
+    "visit": 1,
+    "diversity": 1.56,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.81,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000118",
+    "visit": 2,
+    "diversity": 1.74,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.34,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000118",
+    "visit": 3,
+    "diversity": 4.45,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.96,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000118",
+    "visit": 4,
+    "diversity": 2.23,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.69,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000118",
+    "visit": 5,
+    "diversity": 4.37,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.19,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000119",
+    "visit": 1,
+    "diversity": 2.42,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.07,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000119",
+    "visit": 2,
+    "diversity": 4.45,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.32,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000119",
+    "visit": 3,
+    "diversity": 2.53,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.23,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000119",
+    "visit": 4,
+    "diversity": 3.69,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.57,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000119",
+    "visit": 5,
+    "diversity": 3.47,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.14,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000120",
+    "visit": 1,
+    "diversity": 1.65,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.7,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000120",
+    "visit": 2,
+    "diversity": 3.25,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.54,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000120",
+    "visit": 3,
+    "diversity": 3.9,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.94,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000120",
+    "visit": 4,
+    "diversity": 2.79,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.68,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000120",
+    "visit": 5,
+    "diversity": 4.05,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.89,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000121",
+    "visit": 1,
+    "diversity": 3.62,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.85,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000121",
+    "visit": 2,
+    "diversity": 3.92,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.21,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000121",
+    "visit": 3,
+    "diversity": 2.6,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.59,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000121",
+    "visit": 4,
+    "diversity": 3.56,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.5,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000121",
+    "visit": 5,
+    "diversity": 4.11,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.03,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000122",
+    "visit": 1,
+    "diversity": 1.7,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.32,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000122",
+    "visit": 2,
+    "diversity": 2.06,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.63,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000122",
+    "visit": 3,
+    "diversity": 1.76,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.97,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000122",
+    "visit": 4,
+    "diversity": 4.08,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.79,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000122",
+    "visit": 5,
+    "diversity": 4.07,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.15,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000123",
+    "visit": 1,
+    "diversity": 2.47,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.89,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000123",
+    "visit": 2,
+    "diversity": 3.2,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.34,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000123",
+    "visit": 3,
+    "diversity": 1.72,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.57,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000123",
+    "visit": 4,
+    "diversity": 2.76,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.84,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000123",
+    "visit": 5,
+    "diversity": 3.19,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.8,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000124",
+    "visit": 1,
+    "diversity": 1.61,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.39,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000124",
+    "visit": 2,
+    "diversity": 3.34,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.62,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000124",
+    "visit": 3,
+    "diversity": 2.36,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.88,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000124",
+    "visit": 4,
+    "diversity": 2.4,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.35,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000124",
+    "visit": 5,
+    "diversity": 2.5,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.86,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000125",
+    "visit": 1,
+    "diversity": 2.3,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.66,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000125",
+    "visit": 2,
+    "diversity": 4.48,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.21,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000125",
+    "visit": 3,
+    "diversity": 2.15,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.23,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000125",
+    "visit": 4,
+    "diversity": 3.81,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.17,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000125",
+    "visit": 5,
+    "diversity": 4.38,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.64,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000126",
+    "visit": 1,
+    "diversity": 3.02,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.15,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000126",
+    "visit": 2,
+    "diversity": 3.29,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.1,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000126",
+    "visit": 3,
+    "diversity": 2.28,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.38,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000126",
+    "visit": 4,
+    "diversity": 3.55,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.26,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000126",
+    "visit": 5,
+    "diversity": 1.97,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.29,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000127",
+    "visit": 1,
+    "diversity": 2.17,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.76,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000127",
+    "visit": 2,
+    "diversity": 1.83,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.26,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000127",
+    "visit": 3,
+    "diversity": 2.04,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.14,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000127",
+    "visit": 4,
+    "diversity": 1.98,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.2,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000127",
+    "visit": 5,
+    "diversity": 2.57,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.16,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000128",
+    "visit": 1,
+    "diversity": 2.24,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.3,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000128",
+    "visit": 2,
+    "diversity": 2.77,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.72,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000128",
+    "visit": 3,
+    "diversity": 1.55,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.82,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000128",
+    "visit": 4,
+    "diversity": 2.3,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.14,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000128",
+    "visit": 5,
+    "diversity": 3.06,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.34,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000129",
+    "visit": 1,
+    "diversity": 1.5,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.57,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000129",
+    "visit": 2,
+    "diversity": 3.28,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.36,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000129",
+    "visit": 3,
+    "diversity": 4.17,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.05,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000129",
+    "visit": 4,
+    "diversity": 3.8,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.94,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000129",
+    "visit": 5,
+    "diversity": 2.36,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.35,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000130",
+    "visit": 1,
+    "diversity": 4.08,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.41,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000130",
+    "visit": 2,
+    "diversity": 2.4,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.46,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000130",
+    "visit": 3,
+    "diversity": 2.36,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.43,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000130",
+    "visit": 4,
+    "diversity": 2.69,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.99,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000130",
+    "visit": 5,
+    "diversity": 3.61,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.59,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000131",
+    "visit": 1,
+    "diversity": 3.25,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.54,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000131",
+    "visit": 2,
+    "diversity": 3.68,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.03,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000131",
+    "visit": 3,
+    "diversity": 3.87,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.63,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000131",
+    "visit": 4,
+    "diversity": 3.22,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.53,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000131",
+    "visit": 5,
+    "diversity": 3.9,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.7,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000132",
+    "visit": 1,
+    "diversity": 1.51,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.29,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000132",
+    "visit": 2,
+    "diversity": 1.93,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.21,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000132",
+    "visit": 3,
+    "diversity": 4.07,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.51,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000132",
+    "visit": 4,
+    "diversity": 3.78,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.51,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000132",
+    "visit": 5,
+    "diversity": 3.86,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.92,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000133",
+    "visit": 1,
+    "diversity": 3.13,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.03,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000133",
+    "visit": 2,
+    "diversity": 2.65,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.1,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000133",
+    "visit": 3,
+    "diversity": 1.68,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.24,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000133",
+    "visit": 4,
+    "diversity": 3.73,
+    "scfa_production": "low",
+    "dysbiosis_score": 1.0,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000133",
+    "visit": 5,
+    "diversity": 3.49,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.58,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000134",
+    "visit": 1,
+    "diversity": 2.46,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.58,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000134",
+    "visit": 2,
+    "diversity": 2.81,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.56,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000134",
+    "visit": 3,
+    "diversity": 4.33,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.5,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000134",
+    "visit": 4,
+    "diversity": 3.73,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.45,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000134",
+    "visit": 5,
+    "diversity": 1.53,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.34,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000135",
+    "visit": 1,
+    "diversity": 1.55,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.26,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000135",
+    "visit": 2,
+    "diversity": 1.96,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.65,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000135",
+    "visit": 3,
+    "diversity": 4.48,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.95,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000135",
+    "visit": 4,
+    "diversity": 2.87,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.09,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000135",
+    "visit": 5,
+    "diversity": 2.76,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.85,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000136",
+    "visit": 1,
+    "diversity": 3.61,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.93,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000136",
+    "visit": 2,
+    "diversity": 2.41,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.48,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000136",
+    "visit": 3,
+    "diversity": 1.8,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.61,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000136",
+    "visit": 4,
+    "diversity": 4.48,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.09,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000136",
+    "visit": 5,
+    "diversity": 3.28,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.83,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000137",
+    "visit": 1,
+    "diversity": 3.41,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.33,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000137",
+    "visit": 2,
+    "diversity": 1.83,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.47,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000137",
+    "visit": 3,
+    "diversity": 3.45,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.87,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000137",
+    "visit": 4,
+    "diversity": 4.05,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.7,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000137",
+    "visit": 5,
+    "diversity": 3.01,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.02,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000138",
+    "visit": 1,
+    "diversity": 3.93,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.86,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000138",
+    "visit": 2,
+    "diversity": 1.96,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.44,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000138",
+    "visit": 3,
+    "diversity": 2.06,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.3,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000138",
+    "visit": 4,
+    "diversity": 2.93,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.86,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000138",
+    "visit": 5,
+    "diversity": 2.61,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.26,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000139",
+    "visit": 1,
+    "diversity": 4.08,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.84,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000139",
+    "visit": 2,
+    "diversity": 1.6,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.94,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000139",
+    "visit": 3,
+    "diversity": 3.92,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.4,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000139",
+    "visit": 4,
+    "diversity": 4.29,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.06,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000139",
+    "visit": 5,
+    "diversity": 2.86,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.33,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000140",
+    "visit": 1,
+    "diversity": 3.83,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.88,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000140",
+    "visit": 2,
+    "diversity": 1.6,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.58,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000140",
+    "visit": 3,
+    "diversity": 3.84,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.39,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000140",
+    "visit": 4,
+    "diversity": 1.73,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.1,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000140",
+    "visit": 5,
+    "diversity": 3.62,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.35,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000141",
+    "visit": 1,
+    "diversity": 3.71,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.3,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000141",
+    "visit": 2,
+    "diversity": 3.09,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.54,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000141",
+    "visit": 3,
+    "diversity": 3.69,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.93,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000141",
+    "visit": 4,
+    "diversity": 2.7,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.92,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000141",
+    "visit": 5,
+    "diversity": 1.52,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.42,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000142",
+    "visit": 1,
+    "diversity": 3.43,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.26,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000142",
+    "visit": 2,
+    "diversity": 4.14,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.47,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000142",
+    "visit": 3,
+    "diversity": 3.22,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.57,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000142",
+    "visit": 4,
+    "diversity": 3.68,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.32,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000142",
+    "visit": 5,
+    "diversity": 1.89,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.76,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000143",
+    "visit": 1,
+    "diversity": 2.77,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.25,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000143",
+    "visit": 2,
+    "diversity": 3.93,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.39,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000143",
+    "visit": 3,
+    "diversity": 3.79,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.86,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000143",
+    "visit": 4,
+    "diversity": 2.2,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.46,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000143",
+    "visit": 5,
+    "diversity": 2.85,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.6,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000144",
+    "visit": 1,
+    "diversity": 4.15,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.58,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000144",
+    "visit": 2,
+    "diversity": 3.12,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.64,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000144",
+    "visit": 3,
+    "diversity": 2.77,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.69,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000144",
+    "visit": 4,
+    "diversity": 3.54,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.9,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000144",
+    "visit": 5,
+    "diversity": 2.85,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.92,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000145",
+    "visit": 1,
+    "diversity": 2.09,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.23,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000145",
+    "visit": 2,
+    "diversity": 2.69,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.95,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000145",
+    "visit": 3,
+    "diversity": 3.84,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.3,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000145",
+    "visit": 4,
+    "diversity": 4.37,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.74,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000145",
+    "visit": 5,
+    "diversity": 3.63,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.06,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000146",
+    "visit": 1,
+    "diversity": 4.31,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.57,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000146",
+    "visit": 2,
+    "diversity": 1.72,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.06,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000146",
+    "visit": 3,
+    "diversity": 1.58,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.96,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000146",
+    "visit": 4,
+    "diversity": 1.61,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.56,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000146",
+    "visit": 5,
+    "diversity": 1.85,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.98,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000147",
+    "visit": 1,
+    "diversity": 2.12,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.72,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000147",
+    "visit": 2,
+    "diversity": 2.35,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.08,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000147",
+    "visit": 3,
+    "diversity": 2.93,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.36,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000147",
+    "visit": 4,
+    "diversity": 3.23,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.36,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000147",
+    "visit": 5,
+    "diversity": 2.3,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.62,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000148",
+    "visit": 1,
+    "diversity": 2.89,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.93,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000148",
+    "visit": 2,
+    "diversity": 2.0,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.37,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000148",
+    "visit": 3,
+    "diversity": 3.54,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.44,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000148",
+    "visit": 4,
+    "diversity": 4.25,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.05,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000148",
+    "visit": 5,
+    "diversity": 3.14,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.37,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000149",
+    "visit": 1,
+    "diversity": 1.99,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.93,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000149",
+    "visit": 2,
+    "diversity": 2.03,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.29,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000149",
+    "visit": 3,
+    "diversity": 3.65,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.79,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000149",
+    "visit": 4,
+    "diversity": 2.51,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.17,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000149",
+    "visit": 5,
+    "diversity": 2.07,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.66,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000150",
+    "visit": 1,
+    "diversity": 3.49,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.82,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000150",
+    "visit": 2,
+    "diversity": 3.6,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.14,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000150",
+    "visit": 3,
+    "diversity": 3.59,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.2,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000150",
+    "visit": 4,
+    "diversity": 1.68,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.42,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000150",
+    "visit": 5,
+    "diversity": 3.93,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.86,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000151",
+    "visit": 1,
+    "diversity": 3.37,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.15,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000151",
+    "visit": 2,
+    "diversity": 1.96,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.11,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000151",
+    "visit": 3,
+    "diversity": 1.5,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.62,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000151",
+    "visit": 4,
+    "diversity": 2.6,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.66,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000151",
+    "visit": 5,
+    "diversity": 3.77,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.46,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000152",
+    "visit": 1,
+    "diversity": 2.21,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.72,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000152",
+    "visit": 2,
+    "diversity": 1.71,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.42,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000152",
+    "visit": 3,
+    "diversity": 3.15,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.41,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000152",
+    "visit": 4,
+    "diversity": 3.95,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.65,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000152",
+    "visit": 5,
+    "diversity": 2.76,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.46,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000153",
+    "visit": 1,
+    "diversity": 2.29,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.37,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000153",
+    "visit": 2,
+    "diversity": 2.85,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.54,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000153",
+    "visit": 3,
+    "diversity": 2.12,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.36,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000153",
+    "visit": 4,
+    "diversity": 3.15,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.74,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000153",
+    "visit": 5,
+    "diversity": 4.19,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.51,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000154",
+    "visit": 1,
+    "diversity": 3.26,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.82,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000154",
+    "visit": 2,
+    "diversity": 4.42,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.22,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000154",
+    "visit": 3,
+    "diversity": 3.75,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.22,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000154",
+    "visit": 4,
+    "diversity": 2.12,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.78,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000154",
+    "visit": 5,
+    "diversity": 3.05,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.82,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000155",
+    "visit": 1,
+    "diversity": 4.34,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.49,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000155",
+    "visit": 2,
+    "diversity": 2.09,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.96,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000155",
+    "visit": 3,
+    "diversity": 3.72,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.13,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000155",
+    "visit": 4,
+    "diversity": 3.05,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.8,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000155",
+    "visit": 5,
+    "diversity": 2.92,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.28,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000156",
+    "visit": 1,
+    "diversity": 2.37,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.78,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000156",
+    "visit": 2,
+    "diversity": 3.42,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.7,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000156",
+    "visit": 3,
+    "diversity": 4.08,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.95,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000156",
+    "visit": 4,
+    "diversity": 1.85,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.98,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000156",
+    "visit": 5,
+    "diversity": 2.29,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.08,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000157",
+    "visit": 1,
+    "diversity": 2.32,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.92,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000157",
+    "visit": 2,
+    "diversity": 3.49,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.77,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000157",
+    "visit": 3,
+    "diversity": 2.13,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.07,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000157",
+    "visit": 4,
+    "diversity": 4.3,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.8,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000157",
+    "visit": 5,
+    "diversity": 2.64,
+    "scfa_production": "high",
+    "dysbiosis_score": 1.0,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000158",
+    "visit": 1,
+    "diversity": 4.3,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.58,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000158",
+    "visit": 2,
+    "diversity": 1.97,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.13,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000158",
+    "visit": 3,
+    "diversity": 1.68,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.99,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000158",
+    "visit": 4,
+    "diversity": 1.6,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.09,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000158",
+    "visit": 5,
+    "diversity": 2.97,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.6,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000159",
+    "visit": 1,
+    "diversity": 3.33,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.39,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000159",
+    "visit": 2,
+    "diversity": 3.28,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.7,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000159",
+    "visit": 3,
+    "diversity": 1.75,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.14,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000159",
+    "visit": 4,
+    "diversity": 1.92,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.17,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000159",
+    "visit": 5,
+    "diversity": 2.14,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.14,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000160",
+    "visit": 1,
+    "diversity": 3.81,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.36,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000160",
+    "visit": 2,
+    "diversity": 2.13,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.23,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000160",
+    "visit": 3,
+    "diversity": 2.53,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.14,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000160",
+    "visit": 4,
+    "diversity": 1.68,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.66,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000160",
+    "visit": 5,
+    "diversity": 2.51,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.15,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000161",
+    "visit": 1,
+    "diversity": 3.3,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.5,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000161",
+    "visit": 2,
+    "diversity": 2.05,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.87,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000161",
+    "visit": 3,
+    "diversity": 2.6,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.02,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000161",
+    "visit": 4,
+    "diversity": 2.31,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.07,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000161",
+    "visit": 5,
+    "diversity": 2.11,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.61,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000162",
+    "visit": 1,
+    "diversity": 3.01,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.13,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000162",
+    "visit": 2,
+    "diversity": 4.46,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.28,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000162",
+    "visit": 3,
+    "diversity": 3.42,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.74,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000162",
+    "visit": 4,
+    "diversity": 2.64,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.11,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000162",
+    "visit": 5,
+    "diversity": 3.98,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.44,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000163",
+    "visit": 1,
+    "diversity": 1.78,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.48,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000163",
+    "visit": 2,
+    "diversity": 3.93,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.06,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000163",
+    "visit": 3,
+    "diversity": 3.0,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.32,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000163",
+    "visit": 4,
+    "diversity": 3.53,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.63,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000163",
+    "visit": 5,
+    "diversity": 2.05,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.58,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000164",
+    "visit": 1,
+    "diversity": 3.17,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.22,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000164",
+    "visit": 2,
+    "diversity": 3.84,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.31,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000164",
+    "visit": 3,
+    "diversity": 1.93,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.4,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000164",
+    "visit": 4,
+    "diversity": 3.68,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.85,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000164",
+    "visit": 5,
+    "diversity": 1.57,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.14,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000165",
+    "visit": 1,
+    "diversity": 1.87,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.14,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000165",
+    "visit": 2,
+    "diversity": 3.85,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.46,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000165",
+    "visit": 3,
+    "diversity": 3.2,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.14,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000165",
+    "visit": 4,
+    "diversity": 3.97,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.96,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000165",
+    "visit": 5,
+    "diversity": 3.82,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.2,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000166",
+    "visit": 1,
+    "diversity": 4.21,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.71,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000166",
+    "visit": 2,
+    "diversity": 3.87,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.65,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000166",
+    "visit": 3,
+    "diversity": 2.67,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.52,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000166",
+    "visit": 4,
+    "diversity": 1.68,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.03,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000166",
+    "visit": 5,
+    "diversity": 2.51,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.11,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000167",
+    "visit": 1,
+    "diversity": 2.05,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.82,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000167",
+    "visit": 2,
+    "diversity": 4.27,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.83,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000167",
+    "visit": 3,
+    "diversity": 3.08,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.98,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000167",
+    "visit": 4,
+    "diversity": 2.76,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.68,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000167",
+    "visit": 5,
+    "diversity": 1.9,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.77,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000168",
+    "visit": 1,
+    "diversity": 4.35,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.6,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000168",
+    "visit": 2,
+    "diversity": 2.58,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.51,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000168",
+    "visit": 3,
+    "diversity": 4.14,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.59,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000168",
+    "visit": 4,
+    "diversity": 3.75,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.24,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000168",
+    "visit": 5,
+    "diversity": 4.32,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.99,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000169",
+    "visit": 1,
+    "diversity": 2.28,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.42,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000169",
+    "visit": 2,
+    "diversity": 2.98,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.1,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000169",
+    "visit": 3,
+    "diversity": 2.02,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.1,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000169",
+    "visit": 4,
+    "diversity": 3.42,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.73,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000169",
+    "visit": 5,
+    "diversity": 1.97,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.12,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000170",
+    "visit": 1,
+    "diversity": 3.16,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.66,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000170",
+    "visit": 2,
+    "diversity": 2.96,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.51,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000170",
+    "visit": 3,
+    "diversity": 1.86,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.08,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000170",
+    "visit": 4,
+    "diversity": 1.96,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.78,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000170",
+    "visit": 5,
+    "diversity": 3.29,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.26,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000171",
+    "visit": 1,
+    "diversity": 3.83,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.33,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000171",
+    "visit": 2,
+    "diversity": 4.02,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.81,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000171",
+    "visit": 3,
+    "diversity": 4.31,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.67,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000171",
+    "visit": 4,
+    "diversity": 3.5,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.03,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000171",
+    "visit": 5,
+    "diversity": 3.85,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.61,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000172",
+    "visit": 1,
+    "diversity": 3.68,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.38,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000172",
+    "visit": 2,
+    "diversity": 1.79,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.4,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000172",
+    "visit": 3,
+    "diversity": 3.6,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.02,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000172",
+    "visit": 4,
+    "diversity": 3.56,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.49,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000172",
+    "visit": 5,
+    "diversity": 3.64,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.9,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000173",
+    "visit": 1,
+    "diversity": 2.55,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.72,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000173",
+    "visit": 2,
+    "diversity": 4.34,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.42,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000173",
+    "visit": 3,
+    "diversity": 4.16,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.68,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000173",
+    "visit": 4,
+    "diversity": 2.26,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.96,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000173",
+    "visit": 5,
+    "diversity": 4.05,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.03,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000174",
+    "visit": 1,
+    "diversity": 3.76,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.82,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000174",
+    "visit": 2,
+    "diversity": 3.66,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.58,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000174",
+    "visit": 3,
+    "diversity": 2.45,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.68,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000174",
+    "visit": 4,
+    "diversity": 2.35,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.93,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000174",
+    "visit": 5,
+    "diversity": 2.3,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.77,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000175",
+    "visit": 1,
+    "diversity": 2.43,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.09,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000175",
+    "visit": 2,
+    "diversity": 2.08,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.99,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000175",
+    "visit": 3,
+    "diversity": 2.72,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.43,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000175",
+    "visit": 4,
+    "diversity": 1.55,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.73,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000175",
+    "visit": 5,
+    "diversity": 4.3,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.75,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000176",
+    "visit": 1,
+    "diversity": 4.29,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.95,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000176",
+    "visit": 2,
+    "diversity": 2.28,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.09,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000176",
+    "visit": 3,
+    "diversity": 1.53,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.48,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000176",
+    "visit": 4,
+    "diversity": 2.2,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.13,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000176",
+    "visit": 5,
+    "diversity": 1.99,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.9,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000177",
+    "visit": 1,
+    "diversity": 4.31,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.9,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000177",
+    "visit": 2,
+    "diversity": 3.34,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.79,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000177",
+    "visit": 3,
+    "diversity": 2.34,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.52,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000177",
+    "visit": 4,
+    "diversity": 4.14,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.4,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000177",
+    "visit": 5,
+    "diversity": 3.63,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.41,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000178",
+    "visit": 1,
+    "diversity": 2.84,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.78,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000178",
+    "visit": 2,
+    "diversity": 3.52,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.52,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000178",
+    "visit": 3,
+    "diversity": 3.25,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.86,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000178",
+    "visit": 4,
+    "diversity": 2.6,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.34,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000178",
+    "visit": 5,
+    "diversity": 2.59,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.1,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000179",
+    "visit": 1,
+    "diversity": 4.48,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.71,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000179",
+    "visit": 2,
+    "diversity": 4.33,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.31,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000179",
+    "visit": 3,
+    "diversity": 1.9,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.21,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000179",
+    "visit": 4,
+    "diversity": 4.06,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.01,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000179",
+    "visit": 5,
+    "diversity": 3.93,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.13,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000180",
+    "visit": 1,
+    "diversity": 3.82,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.67,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000180",
+    "visit": 2,
+    "diversity": 1.58,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.26,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000180",
+    "visit": 3,
+    "diversity": 3.72,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.0,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000180",
+    "visit": 4,
+    "diversity": 3.27,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.4,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000180",
+    "visit": 5,
+    "diversity": 1.8,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.99,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000181",
+    "visit": 1,
+    "diversity": 4.02,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.08,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000181",
+    "visit": 2,
+    "diversity": 2.95,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.01,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000181",
+    "visit": 3,
+    "diversity": 2.13,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.39,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000181",
+    "visit": 4,
+    "diversity": 3.68,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.91,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000181",
+    "visit": 5,
+    "diversity": 2.58,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.72,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000182",
+    "visit": 1,
+    "diversity": 2.55,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.01,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000182",
+    "visit": 2,
+    "diversity": 2.91,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.88,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000182",
+    "visit": 3,
+    "diversity": 2.7,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.89,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000182",
+    "visit": 4,
+    "diversity": 2.94,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.25,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000182",
+    "visit": 5,
+    "diversity": 2.19,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.95,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000183",
+    "visit": 1,
+    "diversity": 3.5,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.31,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000183",
+    "visit": 2,
+    "diversity": 3.09,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.14,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000183",
+    "visit": 3,
+    "diversity": 2.62,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.14,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000183",
+    "visit": 4,
+    "diversity": 1.58,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.35,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000183",
+    "visit": 5,
+    "diversity": 2.13,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.65,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000184",
+    "visit": 1,
+    "diversity": 3.75,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.19,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000184",
+    "visit": 2,
+    "diversity": 2.39,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.47,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000184",
+    "visit": 3,
+    "diversity": 4.27,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.97,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000184",
+    "visit": 4,
+    "diversity": 1.99,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.54,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000184",
+    "visit": 5,
+    "diversity": 1.55,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.7,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000185",
+    "visit": 1,
+    "diversity": 3.26,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.32,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000185",
+    "visit": 2,
+    "diversity": 2.04,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.76,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000185",
+    "visit": 3,
+    "diversity": 1.66,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.15,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000185",
+    "visit": 4,
+    "diversity": 4.12,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.33,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000185",
+    "visit": 5,
+    "diversity": 1.5,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.94,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000186",
+    "visit": 1,
+    "diversity": 1.79,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.21,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000186",
+    "visit": 2,
+    "diversity": 1.6,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.95,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000186",
+    "visit": 3,
+    "diversity": 2.27,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.61,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000186",
+    "visit": 4,
+    "diversity": 4.25,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.44,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000186",
+    "visit": 5,
+    "diversity": 1.54,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.14,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000187",
+    "visit": 1,
+    "diversity": 3.51,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.03,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000187",
+    "visit": 2,
+    "diversity": 1.97,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.63,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000187",
+    "visit": 3,
+    "diversity": 3.13,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.85,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000187",
+    "visit": 4,
+    "diversity": 1.71,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.23,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000187",
+    "visit": 5,
+    "diversity": 3.94,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.13,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000188",
+    "visit": 1,
+    "diversity": 2.85,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.36,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000188",
+    "visit": 2,
+    "diversity": 2.17,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.27,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000188",
+    "visit": 3,
+    "diversity": 2.54,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.24,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000188",
+    "visit": 4,
+    "diversity": 1.71,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.9,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000188",
+    "visit": 5,
+    "diversity": 2.33,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.17,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000189",
+    "visit": 1,
+    "diversity": 2.54,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.39,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000189",
+    "visit": 2,
+    "diversity": 3.49,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.7,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000189",
+    "visit": 3,
+    "diversity": 2.06,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.75,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000189",
+    "visit": 4,
+    "diversity": 1.88,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.05,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000189",
+    "visit": 5,
+    "diversity": 3.72,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.14,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000190",
+    "visit": 1,
+    "diversity": 4.14,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.41,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000190",
+    "visit": 2,
+    "diversity": 1.94,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.67,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000190",
+    "visit": 3,
+    "diversity": 2.34,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.8,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000190",
+    "visit": 4,
+    "diversity": 3.84,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.48,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000190",
+    "visit": 5,
+    "diversity": 4.35,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.77,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000191",
+    "visit": 1,
+    "diversity": 1.98,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.03,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000191",
+    "visit": 2,
+    "diversity": 3.79,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.54,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000191",
+    "visit": 3,
+    "diversity": 1.55,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.89,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000191",
+    "visit": 4,
+    "diversity": 2.49,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.57,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000191",
+    "visit": 5,
+    "diversity": 2.67,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.46,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000192",
+    "visit": 1,
+    "diversity": 1.99,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.79,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000192",
+    "visit": 2,
+    "diversity": 3.56,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.46,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000192",
+    "visit": 3,
+    "diversity": 3.61,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.77,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000192",
+    "visit": 4,
+    "diversity": 4.44,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.97,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000192",
+    "visit": 5,
+    "diversity": 3.56,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.28,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000193",
+    "visit": 1,
+    "diversity": 2.23,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.91,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000193",
+    "visit": 2,
+    "diversity": 3.81,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.28,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000193",
+    "visit": 3,
+    "diversity": 2.75,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.07,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000193",
+    "visit": 4,
+    "diversity": 3.25,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.19,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000193",
+    "visit": 5,
+    "diversity": 3.57,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.14,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000194",
+    "visit": 1,
+    "diversity": 2.25,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.6,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000194",
+    "visit": 2,
+    "diversity": 2.52,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.05,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000194",
+    "visit": 3,
+    "diversity": 4.01,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.89,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000194",
+    "visit": 4,
+    "diversity": 3.3,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.91,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000194",
+    "visit": 5,
+    "diversity": 3.03,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.46,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000195",
+    "visit": 1,
+    "diversity": 2.47,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.88,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000195",
+    "visit": 2,
+    "diversity": 3.6,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.42,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000195",
+    "visit": 3,
+    "diversity": 4.1,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.65,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000195",
+    "visit": 4,
+    "diversity": 3.52,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.08,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000195",
+    "visit": 5,
+    "diversity": 2.77,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.58,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000196",
+    "visit": 1,
+    "diversity": 1.75,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.17,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000196",
+    "visit": 2,
+    "diversity": 1.84,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.21,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000196",
+    "visit": 3,
+    "diversity": 3.47,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.52,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000196",
+    "visit": 4,
+    "diversity": 2.82,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.11,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000196",
+    "visit": 5,
+    "diversity": 2.1,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.69,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000197",
+    "visit": 1,
+    "diversity": 2.38,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.25,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000197",
+    "visit": 2,
+    "diversity": 2.91,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.28,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000197",
+    "visit": 3,
+    "diversity": 1.58,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.84,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000197",
+    "visit": 4,
+    "diversity": 1.81,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.13,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000197",
+    "visit": 5,
+    "diversity": 3.13,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.56,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000198",
+    "visit": 1,
+    "diversity": 3.34,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.59,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000198",
+    "visit": 2,
+    "diversity": 3.07,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.13,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000198",
+    "visit": 3,
+    "diversity": 2.17,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.63,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000198",
+    "visit": 4,
+    "diversity": 3.41,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.17,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000198",
+    "visit": 5,
+    "diversity": 3.25,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.78,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000199",
+    "visit": 1,
+    "diversity": 4.17,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.68,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000199",
+    "visit": 2,
+    "diversity": 2.24,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.55,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000199",
+    "visit": 3,
+    "diversity": 2.89,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.67,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000199",
+    "visit": 4,
+    "diversity": 4.06,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.14,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000199",
+    "visit": 5,
+    "diversity": 2.89,
+    "scfa_production": "low",
+    "dysbiosis_score": 0.51,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000200",
+    "visit": 1,
+    "diversity": 3.2,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.03,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000200",
+    "visit": 2,
+    "diversity": 3.37,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.18,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000200",
+    "visit": 3,
+    "diversity": 1.71,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.68,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000200",
+    "visit": 4,
+    "diversity": 1.76,
+    "scfa_production": "high",
+    "dysbiosis_score": 0.22,
+    "data_class": "synthetic"
+  },
+  {
+    "patient_id": "SYN-P-000200",
+    "visit": 5,
+    "diversity": 3.65,
+    "scfa_production": "normal",
+    "dysbiosis_score": 0.35,
+    "data_class": "synthetic"
+  }
+]

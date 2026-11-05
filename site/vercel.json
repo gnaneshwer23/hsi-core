@@ -45,6 +45,10 @@
   ],
   "rewrites": [
     {
+      "source": "/research/validation",
+      "destination": "/index.html"
+    },
+    {
       "source": "/research/coverage",
       "destination": "/index.html"
     },

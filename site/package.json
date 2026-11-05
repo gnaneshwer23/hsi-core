@@ -9,11 +9,12 @@
   "scripts": {
     "test:e2e": "playwright test",
     "dev": "vite",
-    "build": "bun run check:coverage && bun run check:evidence && bun run check:api && vite build",
+    "build": "bun run check:coverage && bun run check:evidence && bun run check:api && bun run check:validation && vite build",
     "check:api": "tsc --noEmit -p api/tsconfig.json",
     "preview": "vite preview",
     "check:evidence": "bun ../scripts/build-evidence-corpus.ts --check",
-    "check:coverage": "bun --no-env-file ../scripts/build-research-coverage.ts --check"
+    "check:coverage": "bun --no-env-file ../scripts/build-research-coverage.ts --check",
+    "check:validation": "bun --no-env-file ../scripts/build-synthetic-validation.ts --check"
   },
   "dependencies": {
     "react": "^19.3.1",

@@ -32,6 +32,7 @@ export function ScientificResearchWorkbench(){
  <div className="science-body-actions"><Link to="/research/evidence-readiness">Evidence catalogue</Link><Link to="/research/coverage">Research coverage</Link><Link to="/science/literature">Literature discovery</Link><Link to="/science/graph">Full graph explorer</Link><Link to="/research/account">Researcher sign-in</Link></div>
  </div></header><div className="science-body-wrap" style={{paddingBlock:"2rem"}}>
  <InvestigationWorkspace/>
+ <p><Link to="/research/validation">Open synthetic validation lab →</Link> · Test connected profiles and exports separately from scientific evidence.</p>
  <section aria-label="Authenticated governed graph" style={{padding:"1.25rem",border:"1px solid #aab3c0",borderRadius:12,marginBottom:24}}>
  <h2>Governed graph · authenticated research</h2>
  <p>Explore the current governed graph using verified research access. Saved investigations keep a separate, release-bound evidence view. This exploration does not change evidence or approve claims.</p>

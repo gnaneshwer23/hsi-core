@@ -1,0 +1,4502 @@
+[
+  {
+    "hypothesis_id": "SYN-HYP-0001",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 1 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0002",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Prediabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0003",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "hypothesis": "Synthetic mechanism hypothesis for Obesity",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0004",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "hypothesis": "Synthetic mechanism hypothesis for MASH",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0005",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Crohn's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0006",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Ulcerative colitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0007",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "hypothesis": "Synthetic mechanism hypothesis for IBS",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0008",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Coeliac disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0009",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "hypothesis": "Synthetic mechanism hypothesis for Rheumatoid arthritis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0010",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "hypothesis": "Synthetic mechanism hypothesis for Systemic lupus erythematosus",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0011",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "hypothesis": "Synthetic mechanism hypothesis for Multiple sclerosis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0012",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Alzheimer's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0013",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Parkinson's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0014",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "hypothesis": "Synthetic mechanism hypothesis for Major depressive disorder",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0015",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "hypothesis": "Synthetic mechanism hypothesis for Anxiety disorders",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0016",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "hypothesis": "Synthetic mechanism hypothesis for Migraine",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0017",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "hypothesis": "Synthetic mechanism hypothesis for Asthma",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0018",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Atopic dermatitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0019",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "hypothesis": "Synthetic mechanism hypothesis for Long COVID",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0020",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 2 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0021",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 1 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0022",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Prediabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0023",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "hypothesis": "Synthetic mechanism hypothesis for Obesity",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0024",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "hypothesis": "Synthetic mechanism hypothesis for MASH",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0025",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Crohn's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0026",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Ulcerative colitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0027",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "hypothesis": "Synthetic mechanism hypothesis for IBS",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0028",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Coeliac disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0029",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "hypothesis": "Synthetic mechanism hypothesis for Rheumatoid arthritis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0030",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "hypothesis": "Synthetic mechanism hypothesis for Systemic lupus erythematosus",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0031",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "hypothesis": "Synthetic mechanism hypothesis for Multiple sclerosis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0032",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Alzheimer's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0033",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Parkinson's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0034",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "hypothesis": "Synthetic mechanism hypothesis for Major depressive disorder",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0035",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "hypothesis": "Synthetic mechanism hypothesis for Anxiety disorders",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0036",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "hypothesis": "Synthetic mechanism hypothesis for Migraine",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0037",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "hypothesis": "Synthetic mechanism hypothesis for Asthma",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0038",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Atopic dermatitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0039",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "hypothesis": "Synthetic mechanism hypothesis for Long COVID",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0040",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 2 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0041",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 1 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0042",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Prediabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0043",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "hypothesis": "Synthetic mechanism hypothesis for Obesity",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0044",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "hypothesis": "Synthetic mechanism hypothesis for MASH",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0045",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Crohn's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0046",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Ulcerative colitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0047",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "hypothesis": "Synthetic mechanism hypothesis for IBS",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0048",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Coeliac disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0049",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "hypothesis": "Synthetic mechanism hypothesis for Rheumatoid arthritis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0050",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "hypothesis": "Synthetic mechanism hypothesis for Systemic lupus erythematosus",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0051",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "hypothesis": "Synthetic mechanism hypothesis for Multiple sclerosis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0052",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Alzheimer's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0053",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Parkinson's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0054",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "hypothesis": "Synthetic mechanism hypothesis for Major depressive disorder",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0055",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "hypothesis": "Synthetic mechanism hypothesis for Anxiety disorders",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0056",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "hypothesis": "Synthetic mechanism hypothesis for Migraine",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0057",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "hypothesis": "Synthetic mechanism hypothesis for Asthma",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0058",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Atopic dermatitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0059",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "hypothesis": "Synthetic mechanism hypothesis for Long COVID",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0060",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 2 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0061",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 1 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0062",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Prediabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0063",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "hypothesis": "Synthetic mechanism hypothesis for Obesity",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0064",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "hypothesis": "Synthetic mechanism hypothesis for MASH",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0065",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Crohn's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0066",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Ulcerative colitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0067",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "hypothesis": "Synthetic mechanism hypothesis for IBS",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0068",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Coeliac disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0069",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "hypothesis": "Synthetic mechanism hypothesis for Rheumatoid arthritis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0070",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "hypothesis": "Synthetic mechanism hypothesis for Systemic lupus erythematosus",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0071",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "hypothesis": "Synthetic mechanism hypothesis for Multiple sclerosis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0072",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Alzheimer's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0073",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Parkinson's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0074",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "hypothesis": "Synthetic mechanism hypothesis for Major depressive disorder",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0075",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "hypothesis": "Synthetic mechanism hypothesis for Anxiety disorders",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0076",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "hypothesis": "Synthetic mechanism hypothesis for Migraine",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0077",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "hypothesis": "Synthetic mechanism hypothesis for Asthma",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0078",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Atopic dermatitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0079",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "hypothesis": "Synthetic mechanism hypothesis for Long COVID",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0080",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 2 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0081",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 1 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0082",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Prediabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0083",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "hypothesis": "Synthetic mechanism hypothesis for Obesity",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0084",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "hypothesis": "Synthetic mechanism hypothesis for MASH",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0085",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Crohn's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0086",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Ulcerative colitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0087",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "hypothesis": "Synthetic mechanism hypothesis for IBS",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0088",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Coeliac disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0089",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "hypothesis": "Synthetic mechanism hypothesis for Rheumatoid arthritis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0090",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "hypothesis": "Synthetic mechanism hypothesis for Systemic lupus erythematosus",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0091",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "hypothesis": "Synthetic mechanism hypothesis for Multiple sclerosis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0092",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Alzheimer's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0093",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Parkinson's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0094",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "hypothesis": "Synthetic mechanism hypothesis for Major depressive disorder",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0095",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "hypothesis": "Synthetic mechanism hypothesis for Anxiety disorders",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0096",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "hypothesis": "Synthetic mechanism hypothesis for Migraine",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0097",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "hypothesis": "Synthetic mechanism hypothesis for Asthma",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0098",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Atopic dermatitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0099",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "hypothesis": "Synthetic mechanism hypothesis for Long COVID",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0100",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 2 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0101",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 1 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0102",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Prediabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0103",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "hypothesis": "Synthetic mechanism hypothesis for Obesity",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0104",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "hypothesis": "Synthetic mechanism hypothesis for MASH",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0105",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Crohn's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0106",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Ulcerative colitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0107",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "hypothesis": "Synthetic mechanism hypothesis for IBS",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0108",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Coeliac disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0109",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "hypothesis": "Synthetic mechanism hypothesis for Rheumatoid arthritis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0110",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "hypothesis": "Synthetic mechanism hypothesis for Systemic lupus erythematosus",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0111",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "hypothesis": "Synthetic mechanism hypothesis for Multiple sclerosis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0112",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Alzheimer's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0113",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Parkinson's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0114",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "hypothesis": "Synthetic mechanism hypothesis for Major depressive disorder",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0115",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "hypothesis": "Synthetic mechanism hypothesis for Anxiety disorders",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0116",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "hypothesis": "Synthetic mechanism hypothesis for Migraine",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0117",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "hypothesis": "Synthetic mechanism hypothesis for Asthma",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0118",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Atopic dermatitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0119",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "hypothesis": "Synthetic mechanism hypothesis for Long COVID",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0120",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 2 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0121",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 1 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0122",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Prediabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0123",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "hypothesis": "Synthetic mechanism hypothesis for Obesity",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0124",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "hypothesis": "Synthetic mechanism hypothesis for MASH",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0125",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Crohn's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0126",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Ulcerative colitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0127",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "hypothesis": "Synthetic mechanism hypothesis for IBS",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0128",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Coeliac disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0129",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "hypothesis": "Synthetic mechanism hypothesis for Rheumatoid arthritis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0130",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "hypothesis": "Synthetic mechanism hypothesis for Systemic lupus erythematosus",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0131",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "hypothesis": "Synthetic mechanism hypothesis for Multiple sclerosis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0132",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Alzheimer's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0133",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Parkinson's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0134",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "hypothesis": "Synthetic mechanism hypothesis for Major depressive disorder",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0135",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "hypothesis": "Synthetic mechanism hypothesis for Anxiety disorders",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0136",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "hypothesis": "Synthetic mechanism hypothesis for Migraine",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0137",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "hypothesis": "Synthetic mechanism hypothesis for Asthma",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0138",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Atopic dermatitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0139",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "hypothesis": "Synthetic mechanism hypothesis for Long COVID",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0140",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 2 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0141",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 1 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0142",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Prediabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0143",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "hypothesis": "Synthetic mechanism hypothesis for Obesity",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0144",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "hypothesis": "Synthetic mechanism hypothesis for MASH",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0145",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Crohn's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0146",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Ulcerative colitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0147",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "hypothesis": "Synthetic mechanism hypothesis for IBS",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0148",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Coeliac disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0149",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "hypothesis": "Synthetic mechanism hypothesis for Rheumatoid arthritis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0150",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "hypothesis": "Synthetic mechanism hypothesis for Systemic lupus erythematosus",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0151",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "hypothesis": "Synthetic mechanism hypothesis for Multiple sclerosis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0152",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Alzheimer's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0153",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Parkinson's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0154",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "hypothesis": "Synthetic mechanism hypothesis for Major depressive disorder",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0155",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "hypothesis": "Synthetic mechanism hypothesis for Anxiety disorders",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0156",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "hypothesis": "Synthetic mechanism hypothesis for Migraine",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0157",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "hypothesis": "Synthetic mechanism hypothesis for Asthma",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0158",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Atopic dermatitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0159",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "hypothesis": "Synthetic mechanism hypothesis for Long COVID",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0160",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 2 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0161",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 1 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0162",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Prediabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0163",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "hypothesis": "Synthetic mechanism hypothesis for Obesity",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0164",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "hypothesis": "Synthetic mechanism hypothesis for MASH",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0165",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Crohn's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0166",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Ulcerative colitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0167",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "hypothesis": "Synthetic mechanism hypothesis for IBS",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0168",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Coeliac disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0169",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "hypothesis": "Synthetic mechanism hypothesis for Rheumatoid arthritis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0170",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "hypothesis": "Synthetic mechanism hypothesis for Systemic lupus erythematosus",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0171",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "hypothesis": "Synthetic mechanism hypothesis for Multiple sclerosis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0172",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Alzheimer's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0173",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Parkinson's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0174",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "hypothesis": "Synthetic mechanism hypothesis for Major depressive disorder",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0175",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "hypothesis": "Synthetic mechanism hypothesis for Anxiety disorders",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0176",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "hypothesis": "Synthetic mechanism hypothesis for Migraine",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0177",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "hypothesis": "Synthetic mechanism hypothesis for Asthma",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0178",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Atopic dermatitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0179",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "hypothesis": "Synthetic mechanism hypothesis for Long COVID",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0180",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 2 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0181",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 1 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0182",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Prediabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0183",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "hypothesis": "Synthetic mechanism hypothesis for Obesity",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0184",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "hypothesis": "Synthetic mechanism hypothesis for MASH",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0185",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Crohn's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0186",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Ulcerative colitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0187",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "hypothesis": "Synthetic mechanism hypothesis for IBS",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0188",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Coeliac disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0189",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "hypothesis": "Synthetic mechanism hypothesis for Rheumatoid arthritis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0190",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "hypothesis": "Synthetic mechanism hypothesis for Systemic lupus erythematosus",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0191",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "hypothesis": "Synthetic mechanism hypothesis for Multiple sclerosis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0192",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Alzheimer's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0193",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Parkinson's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0194",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "hypothesis": "Synthetic mechanism hypothesis for Major depressive disorder",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0195",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "hypothesis": "Synthetic mechanism hypothesis for Anxiety disorders",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0196",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "hypothesis": "Synthetic mechanism hypothesis for Migraine",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0197",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "hypothesis": "Synthetic mechanism hypothesis for Asthma",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0198",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Atopic dermatitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0199",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "hypothesis": "Synthetic mechanism hypothesis for Long COVID",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0200",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 2 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0201",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 1 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0202",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Prediabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0203",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "hypothesis": "Synthetic mechanism hypothesis for Obesity",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0204",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "hypothesis": "Synthetic mechanism hypothesis for MASH",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0205",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Crohn's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0206",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Ulcerative colitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0207",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "hypothesis": "Synthetic mechanism hypothesis for IBS",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0208",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Coeliac disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0209",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "hypothesis": "Synthetic mechanism hypothesis for Rheumatoid arthritis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0210",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "hypothesis": "Synthetic mechanism hypothesis for Systemic lupus erythematosus",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0211",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "hypothesis": "Synthetic mechanism hypothesis for Multiple sclerosis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0212",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Alzheimer's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0213",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Parkinson's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0214",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "hypothesis": "Synthetic mechanism hypothesis for Major depressive disorder",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0215",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "hypothesis": "Synthetic mechanism hypothesis for Anxiety disorders",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0216",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "hypothesis": "Synthetic mechanism hypothesis for Migraine",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0217",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "hypothesis": "Synthetic mechanism hypothesis for Asthma",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0218",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Atopic dermatitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0219",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "hypothesis": "Synthetic mechanism hypothesis for Long COVID",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0220",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 2 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0221",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 1 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0222",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Prediabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0223",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "hypothesis": "Synthetic mechanism hypothesis for Obesity",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0224",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "hypothesis": "Synthetic mechanism hypothesis for MASH",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0225",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Crohn's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0226",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Ulcerative colitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0227",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "hypothesis": "Synthetic mechanism hypothesis for IBS",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0228",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Coeliac disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0229",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "hypothesis": "Synthetic mechanism hypothesis for Rheumatoid arthritis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0230",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "hypothesis": "Synthetic mechanism hypothesis for Systemic lupus erythematosus",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0231",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "hypothesis": "Synthetic mechanism hypothesis for Multiple sclerosis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0232",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Alzheimer's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0233",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Parkinson's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0234",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "hypothesis": "Synthetic mechanism hypothesis for Major depressive disorder",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0235",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "hypothesis": "Synthetic mechanism hypothesis for Anxiety disorders",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0236",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "hypothesis": "Synthetic mechanism hypothesis for Migraine",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0237",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "hypothesis": "Synthetic mechanism hypothesis for Asthma",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0238",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Atopic dermatitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0239",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "hypothesis": "Synthetic mechanism hypothesis for Long COVID",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0240",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 2 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0241",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 1 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0242",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Prediabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0243",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "hypothesis": "Synthetic mechanism hypothesis for Obesity",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0244",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "hypothesis": "Synthetic mechanism hypothesis for MASH",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0245",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Crohn's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0246",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Ulcerative colitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0247",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "hypothesis": "Synthetic mechanism hypothesis for IBS",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0248",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Coeliac disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0249",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "hypothesis": "Synthetic mechanism hypothesis for Rheumatoid arthritis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0250",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "hypothesis": "Synthetic mechanism hypothesis for Systemic lupus erythematosus",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0251",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "hypothesis": "Synthetic mechanism hypothesis for Multiple sclerosis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0252",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Alzheimer's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0253",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Parkinson's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0254",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "hypothesis": "Synthetic mechanism hypothesis for Major depressive disorder",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0255",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "hypothesis": "Synthetic mechanism hypothesis for Anxiety disorders",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0256",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "hypothesis": "Synthetic mechanism hypothesis for Migraine",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0257",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "hypothesis": "Synthetic mechanism hypothesis for Asthma",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0258",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Atopic dermatitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0259",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "hypothesis": "Synthetic mechanism hypothesis for Long COVID",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0260",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 2 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0261",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 1 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0262",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Prediabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0263",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "hypothesis": "Synthetic mechanism hypothesis for Obesity",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0264",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "hypothesis": "Synthetic mechanism hypothesis for MASH",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0265",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Crohn's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0266",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Ulcerative colitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0267",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "hypothesis": "Synthetic mechanism hypothesis for IBS",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0268",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Coeliac disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0269",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "hypothesis": "Synthetic mechanism hypothesis for Rheumatoid arthritis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0270",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "hypothesis": "Synthetic mechanism hypothesis for Systemic lupus erythematosus",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0271",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "hypothesis": "Synthetic mechanism hypothesis for Multiple sclerosis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0272",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Alzheimer's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0273",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Parkinson's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0274",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "hypothesis": "Synthetic mechanism hypothesis for Major depressive disorder",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0275",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "hypothesis": "Synthetic mechanism hypothesis for Anxiety disorders",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0276",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "hypothesis": "Synthetic mechanism hypothesis for Migraine",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0277",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "hypothesis": "Synthetic mechanism hypothesis for Asthma",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0278",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Atopic dermatitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0279",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "hypothesis": "Synthetic mechanism hypothesis for Long COVID",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0280",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 2 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0281",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 1 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0282",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Prediabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0283",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "hypothesis": "Synthetic mechanism hypothesis for Obesity",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0284",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "hypothesis": "Synthetic mechanism hypothesis for MASH",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0285",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Crohn's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0286",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Ulcerative colitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0287",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "hypothesis": "Synthetic mechanism hypothesis for IBS",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0288",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Coeliac disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0289",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "hypothesis": "Synthetic mechanism hypothesis for Rheumatoid arthritis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0290",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "hypothesis": "Synthetic mechanism hypothesis for Systemic lupus erythematosus",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0291",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "hypothesis": "Synthetic mechanism hypothesis for Multiple sclerosis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0292",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Alzheimer's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0293",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Parkinson's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0294",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "hypothesis": "Synthetic mechanism hypothesis for Major depressive disorder",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0295",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "hypothesis": "Synthetic mechanism hypothesis for Anxiety disorders",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0296",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "hypothesis": "Synthetic mechanism hypothesis for Migraine",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0297",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "hypothesis": "Synthetic mechanism hypothesis for Asthma",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0298",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Atopic dermatitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0299",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "hypothesis": "Synthetic mechanism hypothesis for Long COVID",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0300",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 2 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0301",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 1 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0302",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Prediabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0303",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "hypothesis": "Synthetic mechanism hypothesis for Obesity",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0304",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "hypothesis": "Synthetic mechanism hypothesis for MASH",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0305",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Crohn's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0306",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Ulcerative colitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0307",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "hypothesis": "Synthetic mechanism hypothesis for IBS",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0308",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Coeliac disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0309",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "hypothesis": "Synthetic mechanism hypothesis for Rheumatoid arthritis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0310",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "hypothesis": "Synthetic mechanism hypothesis for Systemic lupus erythematosus",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0311",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "hypothesis": "Synthetic mechanism hypothesis for Multiple sclerosis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0312",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Alzheimer's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0313",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Parkinson's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0314",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "hypothesis": "Synthetic mechanism hypothesis for Major depressive disorder",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0315",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "hypothesis": "Synthetic mechanism hypothesis for Anxiety disorders",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0316",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "hypothesis": "Synthetic mechanism hypothesis for Migraine",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0317",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "hypothesis": "Synthetic mechanism hypothesis for Asthma",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0318",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Atopic dermatitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0319",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "hypothesis": "Synthetic mechanism hypothesis for Long COVID",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0320",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 2 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0321",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 1 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0322",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Prediabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0323",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "hypothesis": "Synthetic mechanism hypothesis for Obesity",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0324",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "hypothesis": "Synthetic mechanism hypothesis for MASH",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0325",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Crohn's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0326",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Ulcerative colitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0327",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "hypothesis": "Synthetic mechanism hypothesis for IBS",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0328",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Coeliac disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0329",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "hypothesis": "Synthetic mechanism hypothesis for Rheumatoid arthritis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0330",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "hypothesis": "Synthetic mechanism hypothesis for Systemic lupus erythematosus",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0331",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "hypothesis": "Synthetic mechanism hypothesis for Multiple sclerosis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0332",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Alzheimer's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0333",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Parkinson's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0334",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "hypothesis": "Synthetic mechanism hypothesis for Major depressive disorder",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0335",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "hypothesis": "Synthetic mechanism hypothesis for Anxiety disorders",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0336",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "hypothesis": "Synthetic mechanism hypothesis for Migraine",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0337",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "hypothesis": "Synthetic mechanism hypothesis for Asthma",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0338",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Atopic dermatitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0339",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "hypothesis": "Synthetic mechanism hypothesis for Long COVID",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0340",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 2 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0341",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 1 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0342",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Prediabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0343",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "hypothesis": "Synthetic mechanism hypothesis for Obesity",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0344",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "hypothesis": "Synthetic mechanism hypothesis for MASH",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0345",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Crohn's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0346",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Ulcerative colitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0347",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "hypothesis": "Synthetic mechanism hypothesis for IBS",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0348",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Coeliac disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0349",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "hypothesis": "Synthetic mechanism hypothesis for Rheumatoid arthritis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0350",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "hypothesis": "Synthetic mechanism hypothesis for Systemic lupus erythematosus",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0351",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "hypothesis": "Synthetic mechanism hypothesis for Multiple sclerosis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0352",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Alzheimer's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0353",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Parkinson's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0354",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "hypothesis": "Synthetic mechanism hypothesis for Major depressive disorder",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0355",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "hypothesis": "Synthetic mechanism hypothesis for Anxiety disorders",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0356",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "hypothesis": "Synthetic mechanism hypothesis for Migraine",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0357",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "hypothesis": "Synthetic mechanism hypothesis for Asthma",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0358",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Atopic dermatitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0359",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "hypothesis": "Synthetic mechanism hypothesis for Long COVID",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0360",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 2 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0361",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 1 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0362",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Prediabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0363",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "hypothesis": "Synthetic mechanism hypothesis for Obesity",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0364",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "hypothesis": "Synthetic mechanism hypothesis for MASH",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0365",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Crohn's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0366",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Ulcerative colitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0367",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "hypothesis": "Synthetic mechanism hypothesis for IBS",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0368",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Coeliac disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0369",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "hypothesis": "Synthetic mechanism hypothesis for Rheumatoid arthritis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0370",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "hypothesis": "Synthetic mechanism hypothesis for Systemic lupus erythematosus",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0371",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "hypothesis": "Synthetic mechanism hypothesis for Multiple sclerosis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0372",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Alzheimer's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0373",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Parkinson's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0374",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "hypothesis": "Synthetic mechanism hypothesis for Major depressive disorder",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0375",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "hypothesis": "Synthetic mechanism hypothesis for Anxiety disorders",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0376",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "hypothesis": "Synthetic mechanism hypothesis for Migraine",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0377",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "hypothesis": "Synthetic mechanism hypothesis for Asthma",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0378",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Atopic dermatitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0379",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "hypothesis": "Synthetic mechanism hypothesis for Long COVID",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0380",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 2 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0381",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 1 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0382",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Prediabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0383",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "hypothesis": "Synthetic mechanism hypothesis for Obesity",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0384",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "hypothesis": "Synthetic mechanism hypothesis for MASH",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0385",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Crohn's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0386",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Ulcerative colitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0387",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "hypothesis": "Synthetic mechanism hypothesis for IBS",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0388",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Coeliac disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0389",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "hypothesis": "Synthetic mechanism hypothesis for Rheumatoid arthritis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0390",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "hypothesis": "Synthetic mechanism hypothesis for Systemic lupus erythematosus",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0391",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "hypothesis": "Synthetic mechanism hypothesis for Multiple sclerosis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0392",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Alzheimer's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0393",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Parkinson's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0394",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "hypothesis": "Synthetic mechanism hypothesis for Major depressive disorder",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0395",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "hypothesis": "Synthetic mechanism hypothesis for Anxiety disorders",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0396",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "hypothesis": "Synthetic mechanism hypothesis for Migraine",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0397",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "hypothesis": "Synthetic mechanism hypothesis for Asthma",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0398",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Atopic dermatitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0399",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "hypothesis": "Synthetic mechanism hypothesis for Long COVID",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0400",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 2 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0401",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 1 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0402",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Prediabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0403",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "hypothesis": "Synthetic mechanism hypothesis for Obesity",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0404",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "hypothesis": "Synthetic mechanism hypothesis for MASH",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0405",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Crohn's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0406",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Ulcerative colitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0407",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "hypothesis": "Synthetic mechanism hypothesis for IBS",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0408",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Coeliac disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0409",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "hypothesis": "Synthetic mechanism hypothesis for Rheumatoid arthritis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0410",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "hypothesis": "Synthetic mechanism hypothesis for Systemic lupus erythematosus",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0411",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "hypothesis": "Synthetic mechanism hypothesis for Multiple sclerosis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0412",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Alzheimer's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0413",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Parkinson's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0414",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "hypothesis": "Synthetic mechanism hypothesis for Major depressive disorder",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0415",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "hypothesis": "Synthetic mechanism hypothesis for Anxiety disorders",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0416",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "hypothesis": "Synthetic mechanism hypothesis for Migraine",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0417",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "hypothesis": "Synthetic mechanism hypothesis for Asthma",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0418",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Atopic dermatitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0419",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "hypothesis": "Synthetic mechanism hypothesis for Long COVID",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0420",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 2 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0421",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 1 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0422",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Prediabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0423",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "hypothesis": "Synthetic mechanism hypothesis for Obesity",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0424",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "hypothesis": "Synthetic mechanism hypothesis for MASH",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0425",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Crohn's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0426",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Ulcerative colitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0427",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "hypothesis": "Synthetic mechanism hypothesis for IBS",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0428",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Coeliac disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0429",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "hypothesis": "Synthetic mechanism hypothesis for Rheumatoid arthritis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0430",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "hypothesis": "Synthetic mechanism hypothesis for Systemic lupus erythematosus",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0431",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "hypothesis": "Synthetic mechanism hypothesis for Multiple sclerosis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0432",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Alzheimer's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0433",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Parkinson's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0434",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "hypothesis": "Synthetic mechanism hypothesis for Major depressive disorder",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0435",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "hypothesis": "Synthetic mechanism hypothesis for Anxiety disorders",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0436",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "hypothesis": "Synthetic mechanism hypothesis for Migraine",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0437",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "hypothesis": "Synthetic mechanism hypothesis for Asthma",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0438",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Atopic dermatitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0439",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "hypothesis": "Synthetic mechanism hypothesis for Long COVID",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0440",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 2 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0441",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 1 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0442",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Prediabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0443",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "hypothesis": "Synthetic mechanism hypothesis for Obesity",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0444",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "hypothesis": "Synthetic mechanism hypothesis for MASH",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0445",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Crohn's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0446",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Ulcerative colitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0447",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "hypothesis": "Synthetic mechanism hypothesis for IBS",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0448",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Coeliac disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0449",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "hypothesis": "Synthetic mechanism hypothesis for Rheumatoid arthritis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0450",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "hypothesis": "Synthetic mechanism hypothesis for Systemic lupus erythematosus",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0451",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "hypothesis": "Synthetic mechanism hypothesis for Multiple sclerosis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0452",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Alzheimer's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0453",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Parkinson's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0454",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "hypothesis": "Synthetic mechanism hypothesis for Major depressive disorder",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0455",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "hypothesis": "Synthetic mechanism hypothesis for Anxiety disorders",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0456",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "hypothesis": "Synthetic mechanism hypothesis for Migraine",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0457",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "hypothesis": "Synthetic mechanism hypothesis for Asthma",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0458",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Atopic dermatitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0459",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "hypothesis": "Synthetic mechanism hypothesis for Long COVID",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0460",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 2 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0461",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 1 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0462",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Prediabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0463",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "hypothesis": "Synthetic mechanism hypothesis for Obesity",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0464",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "hypothesis": "Synthetic mechanism hypothesis for MASH",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0465",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Crohn's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0466",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Ulcerative colitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0467",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "hypothesis": "Synthetic mechanism hypothesis for IBS",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0468",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Coeliac disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0469",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "hypothesis": "Synthetic mechanism hypothesis for Rheumatoid arthritis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0470",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "hypothesis": "Synthetic mechanism hypothesis for Systemic lupus erythematosus",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0471",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "hypothesis": "Synthetic mechanism hypothesis for Multiple sclerosis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0472",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Alzheimer's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0473",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Parkinson's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0474",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "hypothesis": "Synthetic mechanism hypothesis for Major depressive disorder",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0475",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "hypothesis": "Synthetic mechanism hypothesis for Anxiety disorders",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0476",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "hypothesis": "Synthetic mechanism hypothesis for Migraine",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0477",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "hypothesis": "Synthetic mechanism hypothesis for Asthma",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0478",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Atopic dermatitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0479",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "hypothesis": "Synthetic mechanism hypothesis for Long COVID",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0480",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 2 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0481",
+    "data_class": "synthetic",
+    "condition": "Type 1 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 1 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0482",
+    "data_class": "synthetic",
+    "condition": "Prediabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Prediabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0483",
+    "data_class": "synthetic",
+    "condition": "Obesity",
+    "hypothesis": "Synthetic mechanism hypothesis for Obesity",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0484",
+    "data_class": "synthetic",
+    "condition": "MASH",
+    "hypothesis": "Synthetic mechanism hypothesis for MASH",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0485",
+    "data_class": "synthetic",
+    "condition": "Crohn's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Crohn's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0486",
+    "data_class": "synthetic",
+    "condition": "Ulcerative colitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Ulcerative colitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0487",
+    "data_class": "synthetic",
+    "condition": "IBS",
+    "hypothesis": "Synthetic mechanism hypothesis for IBS",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0488",
+    "data_class": "synthetic",
+    "condition": "Coeliac disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Coeliac disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0489",
+    "data_class": "synthetic",
+    "condition": "Rheumatoid arthritis",
+    "hypothesis": "Synthetic mechanism hypothesis for Rheumatoid arthritis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0490",
+    "data_class": "synthetic",
+    "condition": "Systemic lupus erythematosus",
+    "hypothesis": "Synthetic mechanism hypothesis for Systemic lupus erythematosus",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0491",
+    "data_class": "synthetic",
+    "condition": "Multiple sclerosis",
+    "hypothesis": "Synthetic mechanism hypothesis for Multiple sclerosis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0492",
+    "data_class": "synthetic",
+    "condition": "Alzheimer's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Alzheimer's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0493",
+    "data_class": "synthetic",
+    "condition": "Parkinson's disease",
+    "hypothesis": "Synthetic mechanism hypothesis for Parkinson's disease",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0494",
+    "data_class": "synthetic",
+    "condition": "Major depressive disorder",
+    "hypothesis": "Synthetic mechanism hypothesis for Major depressive disorder",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0495",
+    "data_class": "synthetic",
+    "condition": "Anxiety disorders",
+    "hypothesis": "Synthetic mechanism hypothesis for Anxiety disorders",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0496",
+    "data_class": "synthetic",
+    "condition": "Migraine",
+    "hypothesis": "Synthetic mechanism hypothesis for Migraine",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0497",
+    "data_class": "synthetic",
+    "condition": "Asthma",
+    "hypothesis": "Synthetic mechanism hypothesis for Asthma",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0498",
+    "data_class": "synthetic",
+    "condition": "Atopic dermatitis",
+    "hypothesis": "Synthetic mechanism hypothesis for Atopic dermatitis",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0499",
+    "data_class": "synthetic",
+    "condition": "Long COVID",
+    "hypothesis": "Synthetic mechanism hypothesis for Long COVID",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  },
+  {
+    "hypothesis_id": "SYN-HYP-0500",
+    "data_class": "synthetic",
+    "condition": "Type 2 diabetes",
+    "hypothesis": "Synthetic mechanism hypothesis for Type 2 diabetes",
+    "evidence_status": "ai_draft",
+    "review_status": "pending",
+    "scientific_claim_allowed": false
+  }
+]

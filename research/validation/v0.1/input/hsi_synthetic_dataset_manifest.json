@@ -1,0 +1,24 @@
+{
+  "dataset": "HSI Synthetic Validation Dataset v0.1",
+  "generated_for": "Build/test only; not scientific evidence",
+  "data_class": "synthetic",
+  "counts": {
+    "patients": 200,
+    "lab_results": 13000,
+    "medications": 1000,
+    "lifestyle_records": 1000,
+    "wearable_records": 1000,
+    "immune_profiles": 1000,
+    "microbiome_profiles": 1000,
+    "trials": 300,
+    "evidence_records": 1000,
+    "hypotheses": 500
+  },
+  "rules": [
+    "All records labelled synthetic",
+    "No real patient identifiers",
+    "Evidence cannot be promoted to supported",
+    "Trials are synthetic and not for enrolment",
+    "Replace via canonical adapter before production"
+  ]
+}

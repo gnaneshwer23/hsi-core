@@ -1,0 +1,201 @@
+patient_id,data_class,condition,domain,age,sex,bmi,disease_stage,symptoms,cohort
+SYN-P-000001,synthetic,Type 2 diabetes,metabolic,62,female,19.6,advanced,"['joint_pain', 'brain_fog', 'headache']",synthetic_metabolic
+SYN-P-000002,synthetic,Type 2 diabetes,metabolic,55,male,41.2,moderate,"['poor_sleep', 'joint_pain', 'anxiety']",synthetic_metabolic
+SYN-P-000003,synthetic,Type 2 diabetes,metabolic,43,female,33.7,advanced,"['bloating', 'anxiety', 'joint_pain']",synthetic_metabolic
+SYN-P-000004,synthetic,Type 2 diabetes,metabolic,68,male,38.1,stable,"['bloating', 'anxiety', 'joint_pain']",synthetic_metabolic
+SYN-P-000005,synthetic,Type 2 diabetes,metabolic,33,male,23.9,advanced,"['anxiety', 'bloating', 'poor_sleep']",synthetic_metabolic
+SYN-P-000006,synthetic,Type 2 diabetes,metabolic,50,male,23.2,stable,"['breathlessness', 'fatigue', 'joint_pain']",synthetic_metabolic
+SYN-P-000007,synthetic,Type 2 diabetes,metabolic,51,male,29.6,early,"['breathlessness', 'bloating', 'anxiety']",synthetic_metabolic
+SYN-P-000008,synthetic,Type 2 diabetes,metabolic,77,female,26.6,moderate,"['fatigue', 'bloating', 'brain_fog']",synthetic_metabolic
+SYN-P-000009,synthetic,Type 2 diabetes,metabolic,47,female,19.2,advanced,"['joint_pain', 'headache', 'brain_fog']",synthetic_metabolic
+SYN-P-000010,synthetic,Type 2 diabetes,metabolic,35,male,40.8,stable,"['joint_pain', 'brain_fog', 'headache']",synthetic_metabolic
+SYN-P-000011,synthetic,Type 1 diabetes,autoimmune,24,female,25.6,early,"['anxiety', 'bloating', 'fatigue']",synthetic_autoimmune
+SYN-P-000012,synthetic,Type 1 diabetes,autoimmune,68,male,38.4,early,"['fatigue', 'breathlessness', 'headache']",synthetic_autoimmune
+SYN-P-000013,synthetic,Type 1 diabetes,autoimmune,66,female,28.4,stable,"['fatigue', 'anxiety', 'brain_fog']",synthetic_autoimmune
+SYN-P-000014,synthetic,Type 1 diabetes,autoimmune,40,male,33.1,moderate,"['bloating', 'joint_pain', 'brain_fog']",synthetic_autoimmune
+SYN-P-000015,synthetic,Type 1 diabetes,autoimmune,37,male,23.7,early,"['breathlessness', 'headache', 'bloating']",synthetic_autoimmune
+SYN-P-000016,synthetic,Type 1 diabetes,autoimmune,33,male,19.4,moderate,"['bloating', 'headache', 'anxiety']",synthetic_autoimmune
+SYN-P-000017,synthetic,Type 1 diabetes,autoimmune,24,male,35.1,early,"['brain_fog', 'headache', 'breathlessness']",synthetic_autoimmune
+SYN-P-000018,synthetic,Type 1 diabetes,autoimmune,24,male,25.0,early,"['breathlessness', 'headache', 'fatigue']",synthetic_autoimmune
+SYN-P-000019,synthetic,Type 1 diabetes,autoimmune,76,male,23.7,moderate,"['headache', 'bloating', 'anxiety']",synthetic_autoimmune
+SYN-P-000020,synthetic,Type 1 diabetes,autoimmune,69,male,21.4,moderate,"['headache', 'joint_pain', 'fatigue']",synthetic_autoimmune
+SYN-P-000021,synthetic,Prediabetes,metabolic,59,female,35.2,advanced,"['bloating', 'poor_sleep', 'brain_fog']",synthetic_metabolic
+SYN-P-000022,synthetic,Prediabetes,metabolic,47,male,30.2,advanced,"['brain_fog', 'anxiety', 'poor_sleep']",synthetic_metabolic
+SYN-P-000023,synthetic,Prediabetes,metabolic,44,female,38.3,advanced,"['brain_fog', 'bloating', 'fatigue']",synthetic_metabolic
+SYN-P-000024,synthetic,Prediabetes,metabolic,28,male,30.6,advanced,"['bloating', 'fatigue', 'headache']",synthetic_metabolic
+SYN-P-000025,synthetic,Prediabetes,metabolic,55,female,29.0,moderate,"['breathlessness', 'bloating', 'anxiety']",synthetic_metabolic
+SYN-P-000026,synthetic,Prediabetes,metabolic,76,male,37.6,early,"['fatigue', 'joint_pain', 'brain_fog']",synthetic_metabolic
+SYN-P-000027,synthetic,Prediabetes,metabolic,63,female,36.4,early,"['brain_fog', 'bloating', 'poor_sleep']",synthetic_metabolic
+SYN-P-000028,synthetic,Prediabetes,metabolic,58,female,27.7,stable,"['anxiety', 'poor_sleep', 'breathlessness']",synthetic_metabolic
+SYN-P-000029,synthetic,Prediabetes,metabolic,54,male,37.1,early,"['bloating', 'joint_pain', 'anxiety']",synthetic_metabolic
+SYN-P-000030,synthetic,Prediabetes,metabolic,35,male,32.4,advanced,"['anxiety', 'poor_sleep', 'bloating']",synthetic_metabolic
+SYN-P-000031,synthetic,Obesity,metabolic,52,female,34.8,stable,"['breathlessness', 'bloating', 'fatigue']",synthetic_metabolic
+SYN-P-000032,synthetic,Obesity,metabolic,22,male,35.9,early,"['anxiety', 'headache', 'poor_sleep']",synthetic_metabolic
+SYN-P-000033,synthetic,Obesity,metabolic,62,male,20.2,early,"['anxiety', 'poor_sleep', 'headache']",synthetic_metabolic
+SYN-P-000034,synthetic,Obesity,metabolic,56,female,23.8,moderate,"['joint_pain', 'headache', 'brain_fog']",synthetic_metabolic
+SYN-P-000035,synthetic,Obesity,metabolic,76,male,31.5,early,"['breathlessness', 'brain_fog', 'headache']",synthetic_metabolic
+SYN-P-000036,synthetic,Obesity,metabolic,75,male,24.0,advanced,"['bloating', 'fatigue', 'breathlessness']",synthetic_metabolic
+SYN-P-000037,synthetic,Obesity,metabolic,63,female,21.1,moderate,"['fatigue', 'headache', 'brain_fog']",synthetic_metabolic
+SYN-P-000038,synthetic,Obesity,metabolic,33,female,26.9,early,"['bloating', 'poor_sleep', 'brain_fog']",synthetic_metabolic
+SYN-P-000039,synthetic,Obesity,metabolic,41,male,20.3,early,"['anxiety', 'poor_sleep', 'bloating']",synthetic_metabolic
+SYN-P-000040,synthetic,Obesity,metabolic,78,male,20.0,early,"['bloating', 'brain_fog', 'fatigue']",synthetic_metabolic
+SYN-P-000041,synthetic,MASH,liver,50,male,30.5,early,"['breathlessness', 'anxiety', 'poor_sleep']",synthetic_liver
+SYN-P-000042,synthetic,MASH,liver,48,male,25.6,stable,"['headache', 'brain_fog', 'poor_sleep']",synthetic_liver
+SYN-P-000043,synthetic,MASH,liver,35,female,23.2,advanced,"['fatigue', 'breathlessness', 'brain_fog']",synthetic_liver
+SYN-P-000044,synthetic,MASH,liver,65,male,29.9,moderate,"['fatigue', 'joint_pain', 'bloating']",synthetic_liver
+SYN-P-000045,synthetic,MASH,liver,64,female,28.1,moderate,"['joint_pain', 'fatigue', 'poor_sleep']",synthetic_liver
+SYN-P-000046,synthetic,MASH,liver,53,female,24.2,moderate,"['joint_pain', 'headache', 'bloating']",synthetic_liver
+SYN-P-000047,synthetic,MASH,liver,57,male,21.1,advanced,"['bloating', 'brain_fog', 'joint_pain']",synthetic_liver
+SYN-P-000048,synthetic,MASH,liver,65,male,24.3,early,"['fatigue', 'joint_pain', 'poor_sleep']",synthetic_liver
+SYN-P-000049,synthetic,MASH,liver,61,female,35.1,stable,"['joint_pain', 'poor_sleep', 'headache']",synthetic_liver
+SYN-P-000050,synthetic,MASH,liver,63,female,38.9,early,"['poor_sleep', 'breathlessness', 'anxiety']",synthetic_liver
+SYN-P-000051,synthetic,Crohn's disease,gut,70,male,31.4,early,"['fatigue', 'headache', 'anxiety']",synthetic_gut
+SYN-P-000052,synthetic,Crohn's disease,gut,30,male,27.2,stable,"['breathlessness', 'brain_fog', 'headache']",synthetic_gut
+SYN-P-000053,synthetic,Crohn's disease,gut,55,male,24.3,early,"['breathlessness', 'poor_sleep', 'headache']",synthetic_gut
+SYN-P-000054,synthetic,Crohn's disease,gut,58,female,36.0,advanced,"['breathlessness', 'bloating', 'anxiety']",synthetic_gut
+SYN-P-000055,synthetic,Crohn's disease,gut,23,male,27.8,moderate,"['fatigue', 'brain_fog', 'breathlessness']",synthetic_gut
+SYN-P-000056,synthetic,Crohn's disease,gut,27,female,39.1,moderate,"['headache', 'bloating', 'anxiety']",synthetic_gut
+SYN-P-000057,synthetic,Crohn's disease,gut,71,male,24.1,advanced,"['breathlessness', 'anxiety', 'fatigue']",synthetic_gut
+SYN-P-000058,synthetic,Crohn's disease,gut,27,female,30.3,moderate,"['fatigue', 'poor_sleep', 'headache']",synthetic_gut
+SYN-P-000059,synthetic,Crohn's disease,gut,30,male,19.2,moderate,"['bloating', 'brain_fog', 'joint_pain']",synthetic_gut
+SYN-P-000060,synthetic,Crohn's disease,gut,71,female,20.2,advanced,"['headache', 'poor_sleep', 'anxiety']",synthetic_gut
+SYN-P-000061,synthetic,Ulcerative colitis,gut,57,female,22.9,early,"['joint_pain', 'bloating', 'fatigue']",synthetic_gut
+SYN-P-000062,synthetic,Ulcerative colitis,gut,44,female,25.2,stable,"['anxiety', 'bloating', 'breathlessness']",synthetic_gut
+SYN-P-000063,synthetic,Ulcerative colitis,gut,27,female,32.0,stable,"['fatigue', 'breathlessness', 'bloating']",synthetic_gut
+SYN-P-000064,synthetic,Ulcerative colitis,gut,38,female,20.9,early,"['poor_sleep', 'joint_pain', 'fatigue']",synthetic_gut
+SYN-P-000065,synthetic,Ulcerative colitis,gut,63,male,38.1,stable,"['bloating', 'anxiety', 'joint_pain']",synthetic_gut
+SYN-P-000066,synthetic,Ulcerative colitis,gut,42,female,19.2,early,"['anxiety', 'brain_fog', 'joint_pain']",synthetic_gut
+SYN-P-000067,synthetic,Ulcerative colitis,gut,31,male,39.2,early,"['joint_pain', 'fatigue', 'breathlessness']",synthetic_gut
+SYN-P-000068,synthetic,Ulcerative colitis,gut,22,male,40.3,moderate,"['breathlessness', 'anxiety', 'brain_fog']",synthetic_gut
+SYN-P-000069,synthetic,Ulcerative colitis,gut,54,female,30.0,advanced,"['poor_sleep', 'anxiety', 'fatigue']",synthetic_gut
+SYN-P-000070,synthetic,Ulcerative colitis,gut,56,female,32.4,advanced,"['fatigue', 'breathlessness', 'bloating']",synthetic_gut
+SYN-P-000071,synthetic,IBS,gut_brain,69,female,37.6,stable,"['poor_sleep', 'headache', 'breathlessness']",synthetic_gut_brain
+SYN-P-000072,synthetic,IBS,gut_brain,36,female,40.3,moderate,"['headache', 'anxiety', 'poor_sleep']",synthetic_gut_brain
+SYN-P-000073,synthetic,IBS,gut_brain,46,female,34.5,advanced,"['breathlessness', 'brain_fog', 'joint_pain']",synthetic_gut_brain
+SYN-P-000074,synthetic,IBS,gut_brain,48,male,30.1,moderate,"['headache', 'fatigue', 'joint_pain']",synthetic_gut_brain
+SYN-P-000075,synthetic,IBS,gut_brain,52,female,26.4,early,"['bloating', 'poor_sleep', 'joint_pain']",synthetic_gut_brain
+SYN-P-000076,synthetic,IBS,gut_brain,30,male,28.5,moderate,"['poor_sleep', 'brain_fog', 'headache']",synthetic_gut_brain
+SYN-P-000077,synthetic,IBS,gut_brain,26,female,22.2,moderate,"['fatigue', 'brain_fog', 'bloating']",synthetic_gut_brain
+SYN-P-000078,synthetic,IBS,gut_brain,60,male,21.2,moderate,"['fatigue', 'anxiety', 'bloating']",synthetic_gut_brain
+SYN-P-000079,synthetic,IBS,gut_brain,67,female,29.1,early,"['poor_sleep', 'headache', 'joint_pain']",synthetic_gut_brain
+SYN-P-000080,synthetic,IBS,gut_brain,35,male,25.9,early,"['headache', 'breathlessness', 'fatigue']",synthetic_gut_brain
+SYN-P-000081,synthetic,Coeliac disease,gut,65,male,24.9,early,"['bloating', 'fatigue', 'anxiety']",synthetic_gut
+SYN-P-000082,synthetic,Coeliac disease,gut,66,male,36.5,early,"['joint_pain', 'headache', 'anxiety']",synthetic_gut
+SYN-P-000083,synthetic,Coeliac disease,gut,55,female,27.6,early,"['bloating', 'anxiety', 'headache']",synthetic_gut
+SYN-P-000084,synthetic,Coeliac disease,gut,33,female,33.5,advanced,"['brain_fog', 'bloating', 'joint_pain']",synthetic_gut
+SYN-P-000085,synthetic,Coeliac disease,gut,67,female,20.5,advanced,"['brain_fog', 'anxiety', 'bloating']",synthetic_gut
+SYN-P-000086,synthetic,Coeliac disease,gut,52,male,26.0,advanced,"['fatigue', 'poor_sleep', 'breathlessness']",synthetic_gut
+SYN-P-000087,synthetic,Coeliac disease,gut,68,male,27.5,moderate,"['brain_fog', 'anxiety', 'breathlessness']",synthetic_gut
+SYN-P-000088,synthetic,Coeliac disease,gut,24,female,39.2,stable,"['headache', 'joint_pain', 'brain_fog']",synthetic_gut
+SYN-P-000089,synthetic,Coeliac disease,gut,54,male,24.0,advanced,"['anxiety', 'breathlessness', 'brain_fog']",synthetic_gut
+SYN-P-000090,synthetic,Coeliac disease,gut,62,female,26.5,stable,"['bloating', 'headache', 'breathlessness']",synthetic_gut
+SYN-P-000091,synthetic,Rheumatoid arthritis,autoimmune,60,male,23.7,early,"['fatigue', 'joint_pain', 'breathlessness']",synthetic_autoimmune
+SYN-P-000092,synthetic,Rheumatoid arthritis,autoimmune,24,male,30.6,moderate,"['anxiety', 'poor_sleep', 'breathlessness']",synthetic_autoimmune
+SYN-P-000093,synthetic,Rheumatoid arthritis,autoimmune,33,male,20.0,moderate,"['joint_pain', 'bloating', 'anxiety']",synthetic_autoimmune
+SYN-P-000094,synthetic,Rheumatoid arthritis,autoimmune,62,female,24.8,advanced,"['poor_sleep', 'headache', 'bloating']",synthetic_autoimmune
+SYN-P-000095,synthetic,Rheumatoid arthritis,autoimmune,31,female,32.8,stable,"['bloating', 'headache', 'joint_pain']",synthetic_autoimmune
+SYN-P-000096,synthetic,Rheumatoid arthritis,autoimmune,71,female,29.3,moderate,"['poor_sleep', 'joint_pain', 'brain_fog']",synthetic_autoimmune
+SYN-P-000097,synthetic,Rheumatoid arthritis,autoimmune,42,female,29.0,stable,"['bloating', 'joint_pain', 'headache']",synthetic_autoimmune
+SYN-P-000098,synthetic,Rheumatoid arthritis,autoimmune,67,male,37.4,advanced,"['anxiety', 'fatigue', 'headache']",synthetic_autoimmune
+SYN-P-000099,synthetic,Rheumatoid arthritis,autoimmune,26,female,38.2,stable,"['breathlessness', 'joint_pain', 'bloating']",synthetic_autoimmune
+SYN-P-000100,synthetic,Rheumatoid arthritis,autoimmune,24,female,42.0,early,"['brain_fog', 'anxiety', 'joint_pain']",synthetic_autoimmune
+SYN-P-000101,synthetic,Systemic lupus erythematosus,autoimmune,38,female,40.1,stable,"['brain_fog', 'bloating', 'anxiety']",synthetic_autoimmune
+SYN-P-000102,synthetic,Systemic lupus erythematosus,autoimmune,70,female,20.9,moderate,"['breathlessness', 'headache', 'fatigue']",synthetic_autoimmune
+SYN-P-000103,synthetic,Systemic lupus erythematosus,autoimmune,77,male,30.8,early,"['joint_pain', 'anxiety', 'fatigue']",synthetic_autoimmune
+SYN-P-000104,synthetic,Systemic lupus erythematosus,autoimmune,60,female,37.8,early,"['headache', 'brain_fog', 'anxiety']",synthetic_autoimmune
+SYN-P-000105,synthetic,Systemic lupus erythematosus,autoimmune,49,male,21.2,stable,"['headache', 'bloating', 'joint_pain']",synthetic_autoimmune
+SYN-P-000106,synthetic,Systemic lupus erythematosus,autoimmune,40,female,24.4,moderate,"['poor_sleep', 'headache', 'fatigue']",synthetic_autoimmune
+SYN-P-000107,synthetic,Systemic lupus erythematosus,autoimmune,49,male,35.5,moderate,"['bloating', 'breathlessness', 'poor_sleep']",synthetic_autoimmune
+SYN-P-000108,synthetic,Systemic lupus erythematosus,autoimmune,57,female,32.9,moderate,"['breathlessness', 'fatigue', 'bloating']",synthetic_autoimmune
+SYN-P-000109,synthetic,Systemic lupus erythematosus,autoimmune,29,male,23.0,stable,"['joint_pain', 'brain_fog', 'breathlessness']",synthetic_autoimmune
+SYN-P-000110,synthetic,Systemic lupus erythematosus,autoimmune,29,female,22.6,stable,"['headache', 'joint_pain', 'anxiety']",synthetic_autoimmune
+SYN-P-000111,synthetic,Multiple sclerosis,neuroimmune,57,female,21.3,stable,"['poor_sleep', 'headache', 'fatigue']",synthetic_neuroimmune
+SYN-P-000112,synthetic,Multiple sclerosis,neuroimmune,28,female,28.4,moderate,"['fatigue', 'anxiety', 'headache']",synthetic_neuroimmune
+SYN-P-000113,synthetic,Multiple sclerosis,neuroimmune,26,male,19.5,early,"['brain_fog', 'bloating', 'fatigue']",synthetic_neuroimmune
+SYN-P-000114,synthetic,Multiple sclerosis,neuroimmune,41,male,28.7,advanced,"['breathlessness', 'headache', 'joint_pain']",synthetic_neuroimmune
+SYN-P-000115,synthetic,Multiple sclerosis,neuroimmune,44,female,34.1,early,"['brain_fog', 'poor_sleep', 'joint_pain']",synthetic_neuroimmune
+SYN-P-000116,synthetic,Multiple sclerosis,neuroimmune,72,female,23.5,advanced,"['headache', 'breathlessness', 'poor_sleep']",synthetic_neuroimmune
+SYN-P-000117,synthetic,Multiple sclerosis,neuroimmune,71,female,19.1,moderate,"['bloating', 'headache', 'breathlessness']",synthetic_neuroimmune
+SYN-P-000118,synthetic,Multiple sclerosis,neuroimmune,50,male,40.3,early,"['headache', 'bloating', 'joint_pain']",synthetic_neuroimmune
+SYN-P-000119,synthetic,Multiple sclerosis,neuroimmune,76,male,26.1,advanced,"['joint_pain', 'fatigue', 'headache']",synthetic_neuroimmune
+SYN-P-000120,synthetic,Multiple sclerosis,neuroimmune,68,male,22.7,early,"['bloating', 'poor_sleep', 'brain_fog']",synthetic_neuroimmune
+SYN-P-000121,synthetic,Alzheimer's disease,neuro,24,male,40.8,early,"['headache', 'brain_fog', 'anxiety']",synthetic_neuro
+SYN-P-000122,synthetic,Alzheimer's disease,neuro,55,male,37.3,moderate,"['joint_pain', 'breathlessness', 'headache']",synthetic_neuro
+SYN-P-000123,synthetic,Alzheimer's disease,neuro,74,female,23.1,advanced,"['headache', 'fatigue', 'joint_pain']",synthetic_neuro
+SYN-P-000124,synthetic,Alzheimer's disease,neuro,40,male,19.2,early,"['fatigue', 'brain_fog', 'joint_pain']",synthetic_neuro
+SYN-P-000125,synthetic,Alzheimer's disease,neuro,55,male,23.4,advanced,"['breathlessness', 'fatigue', 'poor_sleep']",synthetic_neuro
+SYN-P-000126,synthetic,Alzheimer's disease,neuro,66,male,26.4,advanced,"['headache', 'fatigue', 'poor_sleep']",synthetic_neuro
+SYN-P-000127,synthetic,Alzheimer's disease,neuro,26,male,40.3,stable,"['joint_pain', 'fatigue', 'brain_fog']",synthetic_neuro
+SYN-P-000128,synthetic,Alzheimer's disease,neuro,48,female,34.2,early,"['fatigue', 'joint_pain', 'headache']",synthetic_neuro
+SYN-P-000129,synthetic,Alzheimer's disease,neuro,47,female,41.9,advanced,"['fatigue', 'bloating', 'headache']",synthetic_neuro
+SYN-P-000130,synthetic,Alzheimer's disease,neuro,28,female,35.1,early,"['fatigue', 'anxiety', 'brain_fog']",synthetic_neuro
+SYN-P-000131,synthetic,Parkinson's disease,neuro,64,male,39.8,moderate,"['poor_sleep', 'joint_pain', 'bloating']",synthetic_neuro
+SYN-P-000132,synthetic,Parkinson's disease,neuro,62,male,31.5,stable,"['brain_fog', 'bloating', 'anxiety']",synthetic_neuro
+SYN-P-000133,synthetic,Parkinson's disease,neuro,26,female,38.8,moderate,"['brain_fog', 'poor_sleep', 'fatigue']",synthetic_neuro
+SYN-P-000134,synthetic,Parkinson's disease,neuro,41,male,37.4,stable,"['bloating', 'joint_pain', 'poor_sleep']",synthetic_neuro
+SYN-P-000135,synthetic,Parkinson's disease,neuro,56,female,40.7,stable,"['breathlessness', 'bloating', 'joint_pain']",synthetic_neuro
+SYN-P-000136,synthetic,Parkinson's disease,neuro,41,male,38.0,early,"['brain_fog', 'poor_sleep', 'fatigue']",synthetic_neuro
+SYN-P-000137,synthetic,Parkinson's disease,neuro,61,female,20.8,advanced,"['fatigue', 'breathlessness', 'brain_fog']",synthetic_neuro
+SYN-P-000138,synthetic,Parkinson's disease,neuro,41,female,36.0,early,"['fatigue', 'bloating', 'brain_fog']",synthetic_neuro
+SYN-P-000139,synthetic,Parkinson's disease,neuro,44,female,34.8,moderate,"['breathlessness', 'brain_fog', 'poor_sleep']",synthetic_neuro
+SYN-P-000140,synthetic,Parkinson's disease,neuro,32,male,38.8,advanced,"['anxiety', 'brain_fog', 'poor_sleep']",synthetic_neuro
+SYN-P-000141,synthetic,Major depressive disorder,brain,36,male,27.2,advanced,"['brain_fog', 'bloating', 'breathlessness']",synthetic_brain
+SYN-P-000142,synthetic,Major depressive disorder,brain,23,female,29.6,early,"['anxiety', 'joint_pain', 'bloating']",synthetic_brain
+SYN-P-000143,synthetic,Major depressive disorder,brain,47,female,27.5,advanced,"['brain_fog', 'poor_sleep', 'bloating']",synthetic_brain
+SYN-P-000144,synthetic,Major depressive disorder,brain,26,male,37.8,stable,"['joint_pain', 'fatigue', 'bloating']",synthetic_brain
+SYN-P-000145,synthetic,Major depressive disorder,brain,40,female,27.6,moderate,"['poor_sleep', 'fatigue', 'bloating']",synthetic_brain
+SYN-P-000146,synthetic,Major depressive disorder,brain,33,female,26.7,moderate,"['fatigue', 'poor_sleep', 'joint_pain']",synthetic_brain
+SYN-P-000147,synthetic,Major depressive disorder,brain,70,female,32.9,moderate,"['bloating', 'fatigue', 'poor_sleep']",synthetic_brain
+SYN-P-000148,synthetic,Major depressive disorder,brain,59,female,19.3,moderate,"['fatigue', 'poor_sleep', 'breathlessness']",synthetic_brain
+SYN-P-000149,synthetic,Major depressive disorder,brain,51,female,36.8,moderate,"['breathlessness', 'headache', 'joint_pain']",synthetic_brain
+SYN-P-000150,synthetic,Major depressive disorder,brain,44,male,39.3,advanced,"['headache', 'anxiety', 'fatigue']",synthetic_brain
+SYN-P-000151,synthetic,Anxiety disorders,brain,40,female,27.2,stable,"['headache', 'bloating', 'breathlessness']",synthetic_brain
+SYN-P-000152,synthetic,Anxiety disorders,brain,75,male,25.7,moderate,"['brain_fog', 'headache', 'joint_pain']",synthetic_brain
+SYN-P-000153,synthetic,Anxiety disorders,brain,61,male,38.8,moderate,"['joint_pain', 'bloating', 'headache']",synthetic_brain
+SYN-P-000154,synthetic,Anxiety disorders,brain,28,male,32.0,early,"['poor_sleep', 'fatigue', 'brain_fog']",synthetic_brain
+SYN-P-000155,synthetic,Anxiety disorders,brain,35,female,22.1,early,"['poor_sleep', 'fatigue', 'breathlessness']",synthetic_brain
+SYN-P-000156,synthetic,Anxiety disorders,brain,58,male,23.1,stable,"['joint_pain', 'bloating', 'breathlessness']",synthetic_brain
+SYN-P-000157,synthetic,Anxiety disorders,brain,64,female,23.2,stable,"['headache', 'anxiety', 'bloating']",synthetic_brain
+SYN-P-000158,synthetic,Anxiety disorders,brain,32,female,33.8,early,"['anxiety', 'bloating', 'fatigue']",synthetic_brain
+SYN-P-000159,synthetic,Anxiety disorders,brain,51,female,19.7,early,"['brain_fog', 'fatigue', 'bloating']",synthetic_brain
+SYN-P-000160,synthetic,Anxiety disorders,brain,72,male,34.5,advanced,"['anxiety', 'brain_fog', 'headache']",synthetic_brain
+SYN-P-000161,synthetic,Migraine,brain,65,male,21.8,advanced,"['bloating', 'fatigue', 'brain_fog']",synthetic_brain
+SYN-P-000162,synthetic,Migraine,brain,30,female,25.7,moderate,"['joint_pain', 'brain_fog', 'breathlessness']",synthetic_brain
+SYN-P-000163,synthetic,Migraine,brain,59,female,34.3,moderate,"['headache', 'fatigue', 'joint_pain']",synthetic_brain
+SYN-P-000164,synthetic,Migraine,brain,70,male,24.6,early,"['breathlessness', 'fatigue', 'bloating']",synthetic_brain
+SYN-P-000165,synthetic,Migraine,brain,30,male,31.0,advanced,"['poor_sleep', 'headache', 'joint_pain']",synthetic_brain
+SYN-P-000166,synthetic,Migraine,brain,29,female,35.8,moderate,"['anxiety', 'breathlessness', 'fatigue']",synthetic_brain
+SYN-P-000167,synthetic,Migraine,brain,24,female,34.8,early,"['poor_sleep', 'bloating', 'fatigue']",synthetic_brain
+SYN-P-000168,synthetic,Migraine,brain,50,male,29.7,early,"['brain_fog', 'anxiety', 'bloating']",synthetic_brain
+SYN-P-000169,synthetic,Migraine,brain,69,male,32.8,stable,"['poor_sleep', 'anxiety', 'joint_pain']",synthetic_brain
+SYN-P-000170,synthetic,Migraine,brain,34,female,21.0,early,"['breathlessness', 'anxiety', 'poor_sleep']",synthetic_brain
+SYN-P-000171,synthetic,Asthma,immune,74,female,35.6,advanced,"['anxiety', 'brain_fog', 'fatigue']",synthetic_immune
+SYN-P-000172,synthetic,Asthma,immune,23,female,37.0,advanced,"['bloating', 'breathlessness', 'anxiety']",synthetic_immune
+SYN-P-000173,synthetic,Asthma,immune,72,male,20.7,moderate,"['anxiety', 'headache', 'joint_pain']",synthetic_immune
+SYN-P-000174,synthetic,Asthma,immune,48,male,28.2,moderate,"['joint_pain', 'anxiety', 'bloating']",synthetic_immune
+SYN-P-000175,synthetic,Asthma,immune,56,female,27.0,advanced,"['bloating', 'anxiety', 'fatigue']",synthetic_immune
+SYN-P-000176,synthetic,Asthma,immune,22,male,32.1,moderate,"['anxiety', 'joint_pain', 'brain_fog']",synthetic_immune
+SYN-P-000177,synthetic,Asthma,immune,70,female,31.1,moderate,"['joint_pain', 'bloating', 'brain_fog']",synthetic_immune
+SYN-P-000178,synthetic,Asthma,immune,69,female,37.5,advanced,"['fatigue', 'brain_fog', 'breathlessness']",synthetic_immune
+SYN-P-000179,synthetic,Asthma,immune,48,male,20.0,advanced,"['brain_fog', 'headache', 'breathlessness']",synthetic_immune
+SYN-P-000180,synthetic,Asthma,immune,34,female,20.7,moderate,"['anxiety', 'headache', 'brain_fog']",synthetic_immune
+SYN-P-000181,synthetic,Atopic dermatitis,immune,31,male,29.7,early,"['breathlessness', 'bloating', 'brain_fog']",synthetic_immune
+SYN-P-000182,synthetic,Atopic dermatitis,immune,41,male,28.5,early,"['brain_fog', 'fatigue', 'headache']",synthetic_immune
+SYN-P-000183,synthetic,Atopic dermatitis,immune,32,female,24.7,early,"['breathlessness', 'fatigue', 'headache']",synthetic_immune
+SYN-P-000184,synthetic,Atopic dermatitis,immune,27,male,32.8,early,"['breathlessness', 'bloating', 'joint_pain']",synthetic_immune
+SYN-P-000185,synthetic,Atopic dermatitis,immune,62,female,28.9,stable,"['headache', 'fatigue', 'anxiety']",synthetic_immune
+SYN-P-000186,synthetic,Atopic dermatitis,immune,42,female,25.7,early,"['anxiety', 'poor_sleep', 'headache']",synthetic_immune
+SYN-P-000187,synthetic,Atopic dermatitis,immune,64,female,22.2,advanced,"['poor_sleep', 'bloating', 'headache']",synthetic_immune
+SYN-P-000188,synthetic,Atopic dermatitis,immune,42,male,41.0,moderate,"['poor_sleep', 'anxiety', 'joint_pain']",synthetic_immune
+SYN-P-000189,synthetic,Atopic dermatitis,immune,27,male,25.6,early,"['anxiety', 'bloating', 'poor_sleep']",synthetic_immune
+SYN-P-000190,synthetic,Atopic dermatitis,immune,70,female,31.2,advanced,"['headache', 'breathlessness', 'poor_sleep']",synthetic_immune
+SYN-P-000191,synthetic,Long COVID,post_viral,68,male,41.3,moderate,"['anxiety', 'joint_pain', 'poor_sleep']",synthetic_post_viral
+SYN-P-000192,synthetic,Long COVID,post_viral,23,male,25.7,advanced,"['fatigue', 'breathlessness', 'bloating']",synthetic_post_viral
+SYN-P-000193,synthetic,Long COVID,post_viral,28,female,36.2,stable,"['bloating', 'joint_pain', 'fatigue']",synthetic_post_viral
+SYN-P-000194,synthetic,Long COVID,post_viral,30,female,25.2,stable,"['brain_fog', 'bloating', 'joint_pain']",synthetic_post_viral
+SYN-P-000195,synthetic,Long COVID,post_viral,69,male,23.2,early,"['anxiety', 'bloating', 'poor_sleep']",synthetic_post_viral
+SYN-P-000196,synthetic,Long COVID,post_viral,68,male,32.7,stable,"['bloating', 'anxiety', 'breathlessness']",synthetic_post_viral
+SYN-P-000197,synthetic,Long COVID,post_viral,76,female,39.2,early,"['bloating', 'brain_fog', 'anxiety']",synthetic_post_viral
+SYN-P-000198,synthetic,Long COVID,post_viral,53,female,39.8,stable,"['brain_fog', 'bloating', 'anxiety']",synthetic_post_viral
+SYN-P-000199,synthetic,Long COVID,post_viral,40,male,39.0,stable,"['joint_pain', 'poor_sleep', 'breathlessness']",synthetic_post_viral
+SYN-P-000200,synthetic,Long COVID,post_viral,71,female,25.9,early,"['joint_pain', 'headache', 'anxiety']",synthetic_post_viral

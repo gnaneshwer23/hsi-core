@@ -1,0 +1,173 @@
+{
+  "schema_version": "hsi-validation-upload-receipt-1",
+  "files": [
+    {
+      "file": "hsi_synthetic_microbiome.json",
+      "bytes": 172181,
+      "sha256": "5304fa7402e00ddc49f187678fad8aec4878968535c28c2040f37486bd7ff188"
+    },
+    {
+      "file": "hsi_synthetic_hypotheses.json",
+      "bytes": 144502,
+      "sha256": "ebc1aad7d6cbec3e45e93954752f89204b811ba2d91b14d996144772035072fa"
+    },
+    {
+      "file": "hsi_synthetic_wearables.csv",
+      "bytes": 41502,
+      "sha256": "297e1a69c7c70c608a341d8e29650a3ec73fae3466b7c9132f72371361e1e487"
+    },
+    {
+      "file": "hsi_synthetic_microbiome.csv",
+      "bytes": 41250,
+      "sha256": "7848ba3230a9aaa681f759e085dbd17746bb4c853a92e916f306e3a74e06bf24"
+    },
+    {
+      "file": "hsi_synthetic_dataset_manifest.json",
+      "bytes": 676,
+      "sha256": "72f49230f43ca2c660f82b300bde475510cf9db2b268af05f44fecb3e6042d1b"
+    },
+    {
+      "file": "hsi_synthetic_patients.csv",
+      "bytes": 25875,
+      "sha256": "bad509463223700037d42d602c67b9e3d6d76d884fc7eb07ed1aa023831e8f71"
+    },
+    {
+      "file": "hsi_synthetic_medications.json",
+      "bytes": 124601,
+      "sha256": "e27c113978f0718b991dbd9fc138268c69ec58a8ba0e1f0d94580b8448de10cf"
+    },
+    {
+      "file": "hsi_synthetic_lifestyle.json",
+      "bytes": 210763,
+      "sha256": "a3631cc400e0e4e84cafd0440da0bca1304e7f026c117a9bae390870bff4f54a"
+    },
+    {
+      "file": "hsi_synthetic_lifestyle.csv",
+      "bytes": 56843,
+      "sha256": "a645dac373f874cae4ef58e1d1ef03741c62ea629b1da9d37235adc4a8285d38"
+    },
+    {
+      "file": "hsi_synthetic_evidence.csv",
+      "bytes": 130104,
+      "sha256": "334f2fd9ee15ee2a6293e18d0b07eeced17b4505b4cb80a8e0153bf10a7f9e7a"
+    },
+    {
+      "file": "hsi_synthetic_lab_results.csv",
+      "bytes": 829709,
+      "sha256": "2b7c2c7cfad259bcca368979475c66a3a876c49575a5adad75915f9225b1a84d"
+    },
+    {
+      "file": "hsi_synthetic_wearables.json",
+      "bytes": 172439,
+      "sha256": "6a78b70f942bc51b19099bb8fb46f8563d1518bb067d74e3ebb1ba631f83ef99"
+    },
+    {
+      "file": "hsi_synthetic_lab_results.json",
+      "bytes": 2610656,
+      "sha256": "eb219c01ac17d6f37f31881f9174e2cd609490256fec705e915f9aad6ec3f33f"
+    },
+    {
+      "file": "hsi_synthetic_patients.json",
+      "bytes": 66595,
+      "sha256": "b9c0d750bfd0879db025771e7cc29d6dc2f19da01897c87830993c2fd459c5b1"
+    },
+    {
+      "file": "hsi_synthetic_hypotheses.csv",
+      "bytes": 56602,
+      "sha256": "24819c5fc2b4209f69ad6fa2df193f1898793d34393d7114dd48efe0597ce04d"
+    },
+    {
+      "file": "hsi_synthetic_immune_profiles.csv",
+      "bytes": 56340,
+      "sha256": "baa7ba000f2db07e5d90a63e3f2da8386ceae5f25781d3fc2c31a2cc241e9d04"
+    },
+    {
+      "file": "hsi_synthetic_medications.csv",
+      "bytes": 40639,
+      "sha256": "5e5e5f1d1c3ce9c23e72fd0ba9c2ac8734c07fdfe8514e3eee865276dfbd33cf"
+    },
+    {
+      "file": "hsi_synthetic_immune_profiles.json",
+      "bytes": 244242,
+      "sha256": "a30fa3e43355ecdb2ec983726a6c571b83513731b3ea21cc8de8c99412f42789"
+    },
+    {
+      "file": "hsi_synthetic_trials (1).json",
+      "sha256": "0ce2f17b0fcc37c91adc15a0c24a4618cf4ea93a0212654977bdd95a77c3c14b",
+      "duplicate_of": "hsi_synthetic_trials.json"
+    },
+    {
+      "file": "hsi_synthetic_evidence.json",
+      "bytes": 318002,
+      "sha256": "23e7bb1da2c3de3eef9f7f313337d15258f53213761418c416f7a7863f94e6f1"
+    },
+    {
+      "file": "hsi_synthetic_trials.json",
+      "bytes": 110380,
+      "sha256": "0ce2f17b0fcc37c91adc15a0c24a4618cf4ea93a0212654977bdd95a77c3c14b"
+    }
+  ],
+  "csv_json_parity": [
+    {
+      "csv": "hsi_synthetic_evidence.csv",
+      "json": "hsi_synthetic_evidence.json",
+      "rows": 1000,
+      "equivalent": true
+    },
+    {
+      "csv": "hsi_synthetic_hypotheses.csv",
+      "json": "hsi_synthetic_hypotheses.json",
+      "rows": 500,
+      "equivalent": true
+    },
+    {
+      "csv": "hsi_synthetic_immune_profiles.csv",
+      "json": "hsi_synthetic_immune_profiles.json",
+      "rows": 1000,
+      "equivalent": true
+    },
+    {
+      "csv": "hsi_synthetic_lab_results.csv",
+      "json": "hsi_synthetic_lab_results.json",
+      "rows": 13000,
+      "equivalent": true
+    },
+    {
+      "csv": "hsi_synthetic_lifestyle.csv",
+      "json": "hsi_synthetic_lifestyle.json",
+      "rows": 1000,
+      "equivalent": true
+    },
+    {
+      "csv": "hsi_synthetic_medications.csv",
+      "json": "hsi_synthetic_medications.json",
+      "rows": 1000,
+      "equivalent": true
+    },
+    {
+      "csv": "hsi_synthetic_microbiome.csv",
+      "json": "hsi_synthetic_microbiome.json",
+      "rows": 1000,
+      "equivalent": true
+    },
+    {
+      "csv": "hsi_synthetic_patients.csv",
+      "json": "hsi_synthetic_patients.json",
+      "rows": 200,
+      "equivalent": true
+    },
+    {
+      "csv": "hsi_synthetic_wearables.csv",
+      "json": "hsi_synthetic_wearables.json",
+      "rows": 1000,
+      "equivalent": true
+    }
+  ],
+  "missing_uploads": [
+    "hsi_synthetic_trials.csv"
+  ],
+  "notes": [
+    "Duplicate trials upload is byte-identical and is not counted twice.",
+    "Original files are preserved; normalized guards are added by the adapter."
+  ]
+}

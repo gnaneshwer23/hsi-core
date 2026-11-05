@@ -20,6 +20,8 @@
 
 **Unified outcome implementation — 5 November:** [Backend-composed research outcome](UNIFIED_RESEARCH_OUTCOME.md) brings the saved answer, source map/passages, question tree, candidate hypotheses, missing evidence, research tasks, trial status and scoped human review into one verified view with JSON/Markdown export. The [ultimate product function](strategy/HSI_ULTIMATE_PRODUCT_FUNCTION.md) is now recorded as the target acceptance map. No new scientific inference, live clinical connector, calibrated accuracy claim or operational sign-off is implied.
 
+**Synthetic validation integration — 5 November:** [Audited 200-profile / 20-condition validation lab](SYNTHETIC_VALIDATION_DATASET.md) connects 20,000 supplied records through a fixture-only adapter, hash-verified lazy assets, timelines/context, condition-level evidence/hypotheses, trial topic overlap and in-memory review/export rehearsal. Original files remain intact; missing guards are normalized. This is software workflow validation, not clinical/scientific acceptance or a new real-data connector.
+
 **Audit date:** 2 November 2026  
 **HEAD at write:** (post partner-honesty fix) — restored **TEST FIXTURE** partner (`lockedPilot=false`); real named partner **TBD**; prior Apolo `legal_mou` / operator-assert MoU path **revoked**; Stage 1 RA/TNF scope still locked; cite-ready path after Gate C remains; not CDS
 
