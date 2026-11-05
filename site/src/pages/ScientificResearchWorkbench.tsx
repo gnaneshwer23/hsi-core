@@ -19,7 +19,7 @@ export function ScientificResearchWorkbench(){
  const visible=useMemo(()=>graph?.nodes.filter(n=>(n.preferredLabel+" "+n.id).toLowerCase().includes(query.toLowerCase()))??[],[graph,query]);
  const node=graph?.nodes.find(n=>n.id===selected);
  const edges=graph?.relationships.filter(e=>e.subjectId===selected||e.objectId===selected)??[];
- const findings=useMemo(()=>graph&&verification?investigateDiscoveryCandidates({edges:graph.relationships,claims:verification.claims,disagreements:verification.disagreements}):[],[graph,verification]);
+ const findings=useMemo(()=>graph&&verification?investigateDiscoveryCandidates({edges:graph.relationships,claims:verification.claims,disagreements:verification.disagreements.map(d=>({id:d.id,claimIds:[],description:d.description,interpretation:d.interpretation,requiresReview:d.requiresReview}))}):[],[graph,verification]);
  const validId=/^hsi-interrogative-[a-zA-Z0-9-]{8,100}$/.test(investigation);
  return <main className="science-body"><header className="science-body-hero"><div className="science-body-wrap">
  <p className="science-body-kicker">HSI / ISI · SCIENTIFIC RESEARCH WORKBENCH</p><h1>Investigate mechanisms.<br/><em>Follow the evidence.</em></h1>
