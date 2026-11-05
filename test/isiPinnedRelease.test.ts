@@ -1,0 +1,10 @@
+import {test,expect} from "bun:test";
+import {createHash} from "node:crypto";
+import {verifyPinnedIsiRelease,type IsiPinnedRelease} from "../src/adapters/isiPinnedRelease";
+const bytes=JSON.stringify({version:"0.3",nodes:[{id:"C001",name:"Tfh",node_type:"CELL"}],relationships:[],stats:{total_nodes:1,total_relationships:0}});
+const manifest=():IsiPinnedRelease=>({schemaVersion:"hsi-isi-pinned-release-1",sourceRepository:"gnaneshwer23/immunecity",sourceCommit:"a".repeat(40),sourcePath:"src/data/kg.json",graphVersion:"0.3",sha256:createHash("sha256").update(bytes).digest("hex"),approvedForStaging:true,approvedForScientificPublication:false});
+test("accepts matching immutable artifact for unreviewed staging only",()=>{const g=verifyPinnedIsiRelease({manifest:manifest(),bytes});expect(g.nodes).toHaveLength(1);expect(g.graphPromotable).toBe(false)});
+test("rejects tampered artifact",()=>expect(()=>verifyPinnedIsiRelease({manifest:manifest(),bytes:bytes+" "})).toThrow("integrity"));
+test("rejects unpinned commit",()=>expect(()=>verifyPinnedIsiRelease({manifest:{...manifest(),sourceCommit:"main"},bytes})).toThrow());
+test("rejects publication approval claimed by source",()=>expect(()=>verifyPinnedIsiRelease({manifest:{...manifest(),approvedForScientificPublication:true} as IsiPinnedRelease,bytes})).toThrow());
+test("rejects dangling relationship even if checksum matches",()=>{const bad=JSON.stringify({version:"0.3",nodes:[{id:"C001",name:"Tfh",node_type:"CELL"}],relationships:[{id:"REL1",subject_id:"C001",object_id:"BAD",relation:"activates"}],stats:{total_nodes:1,total_relationships:1}});expect(()=>verifyPinnedIsiRelease({manifest:{...manifest(),sha256:createHash("sha256").update(bad).digest("hex")},bytes:bad})).toThrow("invalid graph")});
