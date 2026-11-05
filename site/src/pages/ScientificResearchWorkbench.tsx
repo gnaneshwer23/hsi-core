@@ -5,6 +5,7 @@ import {investigateDiscoveryCandidates} from "../features/science/discoveryInves
 import {projectMechanismTraces} from "../features/science/mechanismTrace";
 import {ResearchEvidenceQueue,validateScientificVerification,type ScientificVerification} from "../components/ResearchEvidenceQueue";
 import {SscGovernedDiscovery} from "../components/SscGovernedDiscovery";
+import {SscRaComparison} from "../components/SscRaComparison";
 type Node={id:string;preferredLabel:string;kind:string};
 type Edge={id:string;subjectId:string;objectId:string;predicate:string;reviewState:string;sourceEvidenceIds:string[];context:{studyContext?:string;limitations?:string;sourceLocator?:string}};
 type Draft={release:{id:string;version:string;graphPromotable:boolean};provenance:{reviewedByHuman:boolean;rightsCleared:boolean};nodes:Node[];relationships:Edge[]};
@@ -44,6 +45,7 @@ export function ScientificResearchWorkbench(){
  {governed&&<div>{governed.relationships.map(e=><article key={e.id} style={{borderTop:"1px solid #aab3c0",paddingBlock:12}}><strong>{governed.nodes.find(n=>n.id===e.subjectId)?.preferredLabel||e.subjectId} → {e.predicate} → {governed.nodes.find(n=>n.id===e.objectId)?.preferredLabel||e.objectId}</strong><p>Evidence classification: {e.epistemicType} · Review: {e.reviewState}</p><p>Context: {e.context?.studyContext||"Not supplied"} · Source locator: {e.context?.sourceLocator||"Not supplied"}</p><p>Limitations: {e.context?.limitations||"Not supplied"}</p><p>Evidence identifiers: {e.sourceEvidenceIds.join(", ")||"Not supplied"}</p></article>)}</div>}
  </section>
  <SscGovernedDiscovery nodeId={selected}/>
+ <SscRaComparison sscNodeId={selected}/>
  <h2>Evidence-linked SSc investigation</h2><p role="status">{error||(!graph?"Loading versioned research sources…":graph.release.id+" · version "+graph.release.version+" · "+graph.nodes.length+" concepts · "+graph.relationships.length+" candidate relationships")}</p>
  {graph&&<><p><strong>Evidence status:</strong> Unreviewed · No automatic promotion · No clinical use</p>
  <label htmlFor="workbench-concepts">Find immune cells, pathways and molecules</label>{" "}<input id="workbench-concepts" type="search" value={query} onChange={e=>setQuery(e.target.value)} placeholder="Tfh, IL-21, B cell…" style={{padding:10,maxWidth:"100%"}}/>
