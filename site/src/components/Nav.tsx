@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import {authBaseUrl,hsiAuth} from "../lib/hsiAuth";
 import { PRODUCT_NAME } from "../lib/brand";
-import { PRIMARY_NAV_CTA, PRIMARY_NAV_LINKS, isPublicMarketingPath, isAccountPath } from "../lib/primaryNav";
+import { PRIMARY_NAV_CTA, PRIMARY_NAV_LINKS, SECONDARY_NAV_LINKS, isPublicMarketingPath, isAccountPath } from "../lib/primaryNav";
 
 const ctaArrow = (
   <svg className="nav-link-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true">
@@ -12,7 +13,9 @@ const ctaArrow = (
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [signedIn,setSignedIn]=useState(false);
   const { pathname } = useLocation();
+  useEffect(()=>{let active=true;if(!authBaseUrl){setSignedIn(false);return}hsiAuth.session().then(r=>{if(active)setSignedIn(!!r.data&&!r.error)}).catch(()=>{if(active)setSignedIn(false)});return()=>{active=false}},[pathname]);
   const isHome = pathname === "/";
   const creamMasthead = isPublicMarketingPath(pathname) || isAccountPath(pathname);
 
@@ -66,12 +69,11 @@ export function Nav() {
           ))}
         </nav>
 
-        <div className="nav-auth-actions"><Link to="/sign-in" className="nav-sign-in">Sign in</Link><Link to="/sign-up" className="nav-sign-up">Sign up</Link></div>
+        <div className="nav-auth-actions"><Link to={signedIn?"/research/account":"/sign-in"} className="nav-sign-in">{signedIn?"Account":"Sign in"}</Link></div>
 
         <Link to={PRIMARY_NAV_CTA.to} className="nav-cta">
           <span className="nav-cta-label">
-            <span>Explore</span>
-            <span>products</span>
+            {PRIMARY_NAV_CTA.label}
           </span>
           {ctaArrow}
         </Link>
@@ -90,7 +92,7 @@ export function Nav() {
         </button>
       </div>
 
-      <div id="primary-menu" className={`nav-drawer${open ? " open" : ""}`}>
+      <div id="primary-menu" hidden={!open} className={`nav-drawer${open ? " open" : ""}`}>
         <NavLink to="/" onClick={() => setOpen(false)}>
           Home
         </NavLink>
@@ -99,6 +101,7 @@ export function Nav() {
             {l.label}
           </NavLink>
         ))}
+        {SECONDARY_NAV_LINKS.map(l=><NavLink key={l.to} to={l.to} onClick={()=>setOpen(false)}>{l.label}</NavLink>)}
         <NavLink to="/sign-in" className="nav-drawer-sign-in" onClick={() => setOpen(false)}>Sign in</NavLink>
         <NavLink to="/sign-up" className="nav-drawer-sign-in" onClick={() => setOpen(false)}>Sign up</NavLink>
         <Link
@@ -107,8 +110,7 @@ export function Nav() {
           onClick={() => setOpen(false)}
         >
           <span className="nav-cta-label">
-            <span>Explore</span>
-            <span>products</span>
+            {PRIMARY_NAV_CTA.label}
           </span>
           {ctaArrow}
         </Link>

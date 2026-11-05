@@ -96,7 +96,7 @@ export function ResearchAccount(){
   {authorised&&<section className="hsi-account-workspace" aria-labelledby="workspace-heading">
    <h2 id="workspace-heading">Your research workspace</h2>
    <p role="status">{account.researcher?"Researcher access confirmed.":""} {account.scientificReviewer?"Scientific reviewer access confirmed for systemic sclerosis.":""}</p>
-   <p><Link to="/research/scientific-workbench">Open your research workspace →</Link></p><p>Create a release-bound draft or reopen an investigation to examine its evidence and review status. Each record is checked again by the backend.</p>
+   <p><Link to="/research/dashboard">Open your research workspace →</Link></p><p>Create a release-bound draft or reopen an investigation to examine its evidence and review status. Each record is checked again by the backend.</p>
    {account.investigations.length?<ul className="hsi-account-records">{account.investigations.map(i=><li key={i.id}>
     <span className="hsi-account-record-id">{i.id}</span><span>{i.state.replaceAll("_"," ")}</span>
     <Link to={"/research/decision-workbench?investigation="+encodeURIComponent(i.id)}>Open research workbench →</Link>

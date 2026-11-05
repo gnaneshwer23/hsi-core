@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/technology.css";
+import { ExperienceHero } from "../components/Experience";
 import { TechnologyFlow } from "../components/TechnologyFlow";
 
 const sourceSystems = [
@@ -64,7 +65,7 @@ export function Technology() {
   const [applicationIndex, setApplicationIndex] = useState(0);
   const [governanceIndex, setGovernanceIndex] = useState(0);
   const source = sourceSystems[sourceIndex];
-  return <main className="nx-page">
+  return <div className="nx-page xp-page"><ExperienceHero eyebrow="TECHNOLOGY" title="Connected knowledge." emphasis="Accountable reasoning." description="Explore the shared research technology behind HSI: source-aware connections, evidence inspection and independent human review. Product data and permissions remain separate."/>
     <section className="nx-flow-hero" aria-label="Human Super Intelligence data flow to discovery">
       <div className="nx-wrap">
         <TechnologyFlow />
@@ -181,5 +182,5 @@ export function Technology() {
       </div>
     </section>
     <section className="nx-section nx-end"><div className="nx-wrap"><p className="nx-kicker">EXPLORE THE CONNECTED ECOSYSTEM</p><h2>One ambition.<br/><em>Many governed pathways.</em></h2><div className="nx-actions"><Link className="nx-cta" to="/platform">Explore the platform <span aria-hidden="true">↗</span></Link><Link className="nx-text-link" to="/for-isi">Explore immune research <span aria-hidden="true">↗</span></Link></div></div></section>
-  </main>;
+  </div>;
 }

@@ -1,6 +1,9 @@
 import {lazy,Suspense} from "react";
 import { Route, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout";
+import {ResearchLanding,Solutions,EvidenceSafety,Pricing,Contact,Community} from "./pages/ExperiencePages";
+import {GovernanceDashboard} from "./pages/GovernanceDashboard";
+import {ResearchDashboard} from "./pages/ResearchDashboard";
 import { Home } from "./pages/Home";
 import { SignIn } from "./pages/SignIn";
 import { SignUp } from "./pages/SignUp";
@@ -54,6 +57,14 @@ export default function App() {
     <Routes>
       <Route element={<Layout />}>
         <Route index element={<Home />} />
+        <Route path="research" element={<ResearchLanding/>}/>
+        <Route path="solutions" element={<Solutions/>}/>
+        <Route path="evidence-safety" element={<EvidenceSafety/>}/>
+        <Route path="community" element={<Community/>}/>
+        <Route path="pricing" element={<Pricing/>}/>
+        <Route path="contact" element={<Contact/>}/>
+        <Route path="research/dashboard" element={<ResearchDashboard/>}/>
+        <Route path="research/governance" element={<GovernanceDashboard/>}/>
         <Route path="sign-in" element={<SignIn />} />
         <Route path="sign-up" element={<SignUp />} />
         <Route path="research/account" element={<ResearchAccount />} />

@@ -1,3 +1,15 @@
+## Product experience blueprint — 2026-11-05
+
+The current presentation is `src/styles/experience.css`, imported after the historical layers below. It uses the founder’s ivory/teal/coral palette, local interactive SVGs, restrained domain colours, clear sections and consistent public/account/workspace chrome. Large sans headings use a limited serif accent. The homepage is an outcome-led split layout; the older procedural landscape and stock-image sections are no longer used there.
+
+Primary navigation: Platform, Solutions, Research, Evidence & safety, Community. Request access leads to the actual account/access path and an explicitly local pilot-preparation form. The footer/mobile drawer carries secondary product and explanatory pages. The header is sticky and responsive; keyboard skip navigation starts normally on initial load, while client route changes focus the main landmark.
+
+See [implementation and QA handoff](../docs/HSI_PRODUCT_EXPERIENCE_IMPLEMENTATION.md) for page coverage, interactive behavior, source/fixture verification, connected backend tools and remaining gates. Community is a local rehearsal and contact preparation does not submit a lead. No live clinical functionality or scientific readiness is implied.
+
+Earlier entries below document past decisions and are superseded where they conflict with this increment.
+
+---
+
 ## Public-site art direction refresh — 2026-11-03
 
 The founder rejected the repeated serif/card presentation and requested

@@ -1,3 +1,5 @@
+import {printResearchDocument} from "../lib/printResearchDocument";
+import {renderResearchOutcome} from "../../../src/researchOutcome";
 import {useEffect,useState} from "react";
 import type {EvidenceBrief} from "../../../src/investigationDelivery";
 import type {ResearchOutcome} from "../../../src/researchOutcome";
@@ -16,6 +18,7 @@ export function ResearchOutcomePanel({brief}:{brief:EvidenceBrief}){
   return()=>{controller.signal.removeEventListener("abort",abort);controller.abort();clearTimeout(timeout)};
  },[key,attempt]);
  async function download(format:"json"|"markdown"){if(!outcome||busy)return;setBusy(true);setMessage("");try{await downloadResearchOutcome(brief,outcome,format);setMessage("Verified research outcome downloaded.")}catch{setMessage("The download could not be verified. Refresh the outcome before retrying.")}finally{setBusy(false)}}
+ async function print(){if(!outcome||busy)return;setBusy(true);setMessage("");try{const current=await fetchResearchOutcome(brief,AbortSignal.timeout(20000));if(current.outcomeHash!==outcome.outcomeHash)throw Error();printResearchDocument("Human Super Intelligence — research brief",renderResearchOutcome(current,"markdown"))}catch{setMessage("The current brief could not be verified for printing. Refresh and check access.")}finally{setBusy(false)}}
  const edge=outcome?.mechanismMap.edges.find(e=>e.id===edgeId);
  return <section className="research-outcome" aria-labelledby="outcome-heading">
   <div className="outcome-top"><div><p className="outcome-eyebrow">HUMAN SUPER INTELLIGENCE / RESEARCH</p><h3 id="outcome-heading">Unified research outcome</h3><p>One question. Connected evidence. Visible limits.</p></div><button type="button" onClick={()=>setAttempt(n=>n+1)} disabled={busy}>Refresh outcome</button></div>
@@ -40,7 +43,7 @@ export function ResearchOutcomePanel({brief}:{brief:EvidenceBrief}){
    {tab==="Next research & trials"&&<><h4>Missing evidence</h4><ul>{outcome.missingData.map((s,i)=><li key={i}>{s}</li>)}</ul><h4>Next research work</h4><p>These are research-planning tasks, not patient measurement orders.</p>{outcome.nextResearchSteps.map(s=><article key={s.branchId}><p>{s.falsificationQuestion}</p><p>{s.action}</p></article>)}<h4>Relevant clinical trials</h4><p>{outcome.trials.note}</p><p>No participant eligibility has been assessed.</p></>}
    {tab==="Review & provenance"&&<><h4>Independent human review</h4><p>{human(outcome.review.status)} · Evidence brief only</p><p>{outcome.review.rationale??"No independent brief decision is recorded."}</p><ul>{outcome.review.limitations.map((s,i)=><li key={i}>{s}</li>)}</ul><p>Review does not transfer approval to a hypothesis, graph publication or clinical use.</p>
     <h4>Reproducible source binding</h4><p>Release: {outcome.binding.releaseId} v{outcome.binding.releaseVersion}</p><p>Package SHA-256: <code>{outcome.binding.packageHash}</code></p><p>Outcome SHA-256: <code>{outcome.outcomeHash}</code></p><p>Method: {outcome.method}</p><ul>{outcome.provenance.methods.map((m,i)=><li key={i}>{m.agentId} v{m.version} · {m.modelVersion} · prompt {m.promptVersion} · {m.toolCallCount} recorded tool calls</li>)}</ul><p>This projection invokes no model and performs no new external search. A matching hash verifies the saved content, not scientific truth.</p></>}
-   </div><div className="outcome-downloads"><button type="button" disabled={busy} onClick={()=>void download("markdown")}>Download research outcome</button><button type="button" disabled={busy} onClick={()=>void download("json")}>Download outcome JSON</button></div><p className="outcome-disclaimer">{outcome.disclaimer}</p>
+   </div><div className="outcome-downloads"><button type="button" disabled={busy} onClick={()=>void print()}>Print / Save PDF</button><button type="button" disabled={busy} onClick={()=>void download("markdown")}>Download research outcome</button><button type="button" disabled={busy} onClick={()=>void download("json")}>Download outcome JSON</button></div><p className="outcome-disclaimer">{outcome.disclaimer}</p>
   </>}
  </section>;
 }

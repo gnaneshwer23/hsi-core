@@ -45,6 +45,38 @@
   ],
   "rewrites": [
     {
+      "source": "/research/governance",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/research/dashboard",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/pricing",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/community",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/evidence-safety",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/solutions",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/research",
+      "destination": "/index.html"
+    },
+    {
       "source": "/research/validation",
       "destination": "/index.html"
     },

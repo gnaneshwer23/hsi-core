@@ -1,5 +1,7 @@
 # HSI build status and next
 
+**Product-experience increment — 5 November:** [Blueprint implementation and QA handoff](HSI_PRODUCT_EXPERIENCE_IMPLEMENTATION.md) records the unified public pages, research dashboard/governance navigation, graph controls and exports, verified previews and native PDF printing. Community discussions remain local drafts and contact remains preparation/download; live access and scientific/operational acceptance are not declared complete.
+
 **Current-state update — 5 November 2026:** see the [fresh code/build audit](audits/HSI_BUILD_AUDIT_2026-11-05.md) and [phased delivery plan](strategy/HSI_PHASED_BUILD_PLAN.md). The dated GREEN/DONE labels below describe historical scoped milestones, not current end-to-end production readiness.
 
 **Delivery Phase A implementation:** [Connected create/list/reopen workspace](PHASE_A_INVESTIGATION_WORKSPACE.md) is implemented and locally verified. Live Neon acceptance remains pending the paused access prerequisite; no production writes were enabled.

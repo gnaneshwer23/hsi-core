@@ -43,55 +43,18 @@ describe("Public HSI site honesty", () => {
     expect(app).toContain('path="gateway"');
 
     const primaryNav = site("src/lib/primaryNav.ts");
-    expect(primaryNav).toContain("/products");
-    expect(primaryNav).toContain("/platform");
-    expect(primaryNav).toContain("/science");
-    expect(primaryNav).toContain("/how-it-works");
-    expect(primaryNav).toContain("How It Works");
-    expect(primaryNav).toContain('label: "Explore products"');
-    expect(primaryNav).toContain('to: "/products"');
-    // Technology is a thin operating-model page; Platform keeps architecture depth.
-    expect(primaryNav).toContain('to: "/technology"');
-    expect(primaryNav).toContain('label: "Technology"');
-    expect(primaryNav).toContain('"/technology"');
-    expect(app).toContain('path="technology"');
-    expect(app).toContain("<Technology");
-    // Primary IA is founder destinations only; Status/Roadmap/Docs stay footer-only.
-    // Scope to PRIMARY_NAV_LINKS — PUBLIC_MARKETING_PATHS may include product landings.
-    const primaryLinksBlock =
-      primaryNav.match(/export const PRIMARY_NAV_LINKS = \[[\s\S]*?\] as const/)?.[0] ?? "";
-    expect(primaryLinksBlock).toContain("/platform");
-    expect(primaryLinksBlock).toContain("/technology");
-    expect(primaryLinksBlock).toContain("/products");
-    expect(primaryLinksBlock).not.toContain("Curator");
-    expect(primaryLinksBlock).not.toContain("/discovery");
-    expect(primaryLinksBlock).not.toContain("/explore");
-    expect(primaryLinksBlock).not.toContain("for-aksh");
-    expect(primaryLinksBlock).not.toContain("for-trials");
-    expect(primaryLinksBlock).not.toContain("for-isi");
-    expect(primaryLinksBlock).not.toContain("/status");
-    // Cream masthead covers primary IA + product landings reached from Products CTAs.
-    expect(primaryNav).toContain("PUBLIC_MARKETING_PATHS");
-    expect(primaryNav).toContain('"/for-isi"');
-    expect(primaryNav).toContain('"/for-aksh"');
-    expect(primaryNav).toContain('"/for-trials"');
-    expect(primaryNav).toContain('"/discovery"');
-
-    const nav = site("src/components/Nav.tsx");
-    expect(nav).toContain("PRIMARY_NAV_LINKS");
-    expect(nav).toContain("PRIMARY_NAV_CTA");
-    expect(nav).not.toContain("btn-primary");
-    expect(nav).not.toContain("ENGINEERING_LINKS");
-
-    const home = site("src/pages/Home.tsx");
-    expect(home).toContain("Aksh Health");
-    expect(home).toContain("ISI Research");
-    expect(home).toContain("Connected context. Traceable evidence. Human review.");
-    expect(home).toContain("Illustrative connections · not study findings or patient analysis");
-    expect(home).toContain('to="/for-isi"');
-    expect(home).toContain('href: "/for-aksh"');
-    expect(home).toContain('to="/platform"');
-    expect(home).not.toContain("<EvidenceExplorer");
+    for(const route of ["/platform","/solutions","/research","/evidence-safety","/community","/pricing","/contact","/products","/technology","/science","/how-it-works"])expect(primaryNav).toContain(route);
+    expect(primaryNav).toContain('label: "Request access"');
+    const primaryLinksBlock=primaryNav.match(/export const PRIMARY_NAV_LINKS = \[[\s\S]*?\] as const/)?.[0]??"";
+    for(const route of ["/platform","/solutions","/research","/evidence-safety","/community"])expect(primaryLinksBlock).toContain(route);
+    for(const route of ["/curator","/gateway","/clinical-timeline","/trials-criteria","/status"])expect(primaryLinksBlock).not.toContain(route);
+    for(const route of ["/for-isi","/for-aksh","/for-trials","/discovery"])expect(primaryNav).toContain(route);
+    const nav=site("src/components/Nav.tsx");
+    expect(nav).toContain("PRIMARY_NAV_LINKS");expect(nav).toContain("PRIMARY_NAV_CTA");expect(nav).not.toContain("ENGINEERING_LINKS");
+    const home=site("src/pages/Home.tsx"),experience=site("src/components/Experience.tsx");
+    expect(home).toContain("Make sense of the connections.");expect(home).toContain("Aksh Health");expect(home).toContain("ISI Research");
+    expect(home).toContain("ValidationPreview");expect(home).toContain("EvidenceLegend");expect(experience).toContain("Illustrative domain map");
+    expect(home).not.toContain("100% accurate");
     const ecosystem = site("src/components/landing/EcosystemGrid.tsx");
     expect(ecosystem).toContain("ECOSYSTEM_PRODUCTS");
     expect(ecosystem).toContain("MATURITY_CHIP_LABEL");
@@ -215,14 +178,11 @@ describe("Stage A public security boundary audit", () => {
 });
 
 
-describe("Stage A homepage product imagery", () => {
-  it("uses separate contextual photographs for four products with alt text and lazy loading", () => {
-    const home = site("src/pages/Home.tsx");
-    expect((home.match(/image: "https:\/\/images\.unsplash\.com\/photo-/g) ?? []).length).toBe(4);
-    expect((home.match(/imageAlt: "/g) ?? []).length).toBe(4);
-    expect(home).toContain('loading="lazy"');
-    expect(home).toContain("item.imageAlt");
-    expect(home).not.toContain('className="hsi-product-constellation"');
-    expect(home).toContain("MATURITY_CHIP_LABEL[product.chip]");
-  });
+describe("Homepage scientific visuals and product proof",()=>{
+ it("uses labelled domain artwork and a verified fixture preview instead of fabricated results",()=>{
+  const home=site("src/pages/Home.tsx"),preview=site("src/components/ValidationPreview.tsx"),art=site("src/components/Experience.tsx");
+  expect(home).toContain("LivingContextMap");expect(art).toContain('role="img"');expect(art).toContain("EXPERIENCE_DOMAINS");
+  expect(preview).toContain("loadValidationCatalogue");expect(preview).toContain("loadValidationScenario");expect(preview).toContain("Synthetic validation");
+  expect(preview).toContain("Reference intervals are not supplied");expect(home).not.toContain("PMID:12345678");
+ });
 });

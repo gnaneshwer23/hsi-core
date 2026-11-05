@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { PRODUCT_NAME, PRODUCT_TAGLINE } from "../lib/brand";
-import { PRIMARY_NAV_LINKS } from "../lib/primaryNav";
+import { PRIMARY_NAV_LINKS, SECONDARY_NAV_LINKS } from "../lib/primaryNav";
 
 const PRODUCT_LINKS = [
   { to: "/for-isi", label: "ISI Research" },
@@ -31,7 +31,7 @@ export function Footer() {
         <div>
           <h4>Explore</h4>
           <ul>
-            {PRIMARY_NAV_LINKS.map((l) => (
+            {[...PRIMARY_NAV_LINKS,...SECONDARY_NAV_LINKS.filter(l=>["/technology","/science","/how-it-works"].includes(l.to))].map((l) => (
               <li key={l.to}>
                 <Link to={l.to}>{l.label}</Link>
               </li>
@@ -49,9 +49,9 @@ export function Footer() {
           </ul>
         </div>
         <div>
-          <h4>Progress</h4>
+          <h4>Access & information</h4>
           <ul>
-            {PROGRESS_LINKS.map((l) => (
+            {[...SECONDARY_NAV_LINKS.filter(l=>["/pricing","/contact"].includes(l.to)),...PROGRESS_LINKS].map((l) => (
               <li key={l.to}>
                 <Link to={l.to}>{l.label}</Link>
               </li>

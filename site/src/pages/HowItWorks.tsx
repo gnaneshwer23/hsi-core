@@ -1,29 +1,11 @@
-import { useEffect } from "react";
-import { HowItWorks as HowItWorksLanding } from "../components/landing/HowItWorks";
-import { PRODUCT_NAME } from "../lib/brand";
-
-/** Page-specific head — SPA has no react-helmet; siblings still use the index.html default. */
-const PAGE_TITLE = `How It Works — ${PRODUCT_NAME}`;
-const PAGE_DESCRIPTION =
-  "Illustrative journeys showing how Human Super Intelligence frames investigations — from question to context, evidence and human review. Not live sessions or clinical decision support.";
-
-/** Public illustrative journeys with product-specific availability and boundaries. */
-export function HowItWorks() {
-  useEffect(() => {
-    const previousTitle = document.title;
-    const meta = document.querySelector('meta[name="description"]');
-    const previousDescription = meta?.getAttribute("content") ?? null;
-
-    document.title = PAGE_TITLE;
-    meta?.setAttribute("content", PAGE_DESCRIPTION);
-
-    return () => {
-      document.title = previousTitle;
-      if (meta && previousDescription !== null) {
-        meta.setAttribute("content", previousDescription);
-      }
-    };
-  }, []);
-
-  return <HowItWorksLanding />;
+import {useState} from "react";
+import {BlueprintSection,ExperienceCTA,ExperienceHero,ExperienceLink,ResearchJourney} from "../components/Experience";
+export function HowItWorks(){
+ const [flow,setFlow]=useState(0),flows=[
+ {name:"Researcher",status:"Access-controlled workflow",title:"Follow a question through evidence and review.",steps:["Create a verified research account","Confirm source and researcher permissions","Save a bounded SSc research question","Capture permitted source context","Inspect graph, evidence and candidate explanations","Submit to a separate authorised reviewer","Export the bound brief and outcome"],to:"/research/dashboard",cta:"Open research dashboard"},
+ {name:"Reviewer",status:"Independent backend permissions required",title:"Review the package, not just the answer.",steps:["Confirm reviewer identity and permissions","Open an authorised submitted investigation","Inspect its exact release, claims and passages","Record limitations and conflicts of interest","Approve with limitations, request revision or reject","Keep the decision bound to that package version"],to:"/research/scientific-review",cta:"Open independent review"},
+ {name:"Validation",status:"Synthetic software testing",title:"Explore connected data without invented findings.",steps:["Choose a condition and generated profile","Switch among five visit contexts","Inspect labs, immune/gut and lifestyle records","Explore condition-only evidence and trial overlap","Rehearse a UI review without scientific promotion","Download a labelled validation brief"],to:"/research/validation",cta:"Explore validation lab"},
+ {name:"Discussion",status:"Local discussion preview",title:"Prepare a careful, source-linked challenge.",steps:["Choose an editorial research topic","Write a non-identifying question or interpretation","Attach an inspectable public source reference","Reply or flag within the local rehearsal","Export the draft for a separate review process"],to:"/community",cta:"Explore discussion preview"}
+ ];const selected=flows[flow]!;
+ return <div className="xp-page"><ExperienceHero eyebrow="HOW IT WORKS" title="From a question" emphasis="to a reviewable research brief." description="A clear journey through context, sources, competing explanations and human review. Actual completion states come from recorded work—not an animated progress story."/><BlueprintSection kicker="01 / THE CONNECTED LOOP" title="See what each step contributes."><ResearchJourney/></BlueprintSection><BlueprintSection kicker="02 / WALK THROUGH THE EXPERIENCE" title="A flow for the work you need to do."><div className="xp-audience-tabs" role="group" aria-label="Choose a product workflow">{flows.map((f,i)=><button key={f.name} type="button" aria-pressed={flow===i} onClick={()=>setFlow(i)}>{f.name}</button>)}</div><article className="xp-audience-panel" aria-live="polite"><div><span className="xp-badge xp-badge-slate">{selected.status}</span><h3>{selected.title}</h3><ExperienceLink to={selected.to}>{selected.cta}</ExperienceLink></div><ol>{selected.steps.map(s=><li key={s}>{s}</li>)}</ol></article></BlueprintSection><BlueprintSection kicker="03 / KEEP THE LIMITS VISIBLE" title="An output should explain its own scope."><div className="xp-card-grid xp-three">{[["A graph path is context","Inspect its underlying assertions and sources before treating a path as relevant to a scientific claim."],["A brief review has a scope","A recorded decision does not establish scientific truth, graph publication permission or a clinical action."],["A synthetic case is a test","Generated records exercise software behavior. They never become evidence for real findings or enrolment."]].map(([t,d])=><article className="xp-card" key={t}><h3>{t}</h3><p>{d}</p></article>)}</div></BlueprintSection><ExperienceCTA/></div>;
 }
