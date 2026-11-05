@@ -1,0 +1,189 @@
+{
+  "schemaVersion": "hsi-research-pilot-readiness-1",
+  "status": "blocked_pending_trusted_acceptance",
+  "pilotReady": false,
+  "scientificApprovalGranted": false,
+  "operatorEvidenceAuthenticated": false,
+  "gates": [
+    {
+      "id": "artifact_integrity_and_public_recovery",
+      "scope": "local_engineering",
+      "gateId": "artifact_integrity_and_public_recovery",
+      "status": "not_run",
+      "ownerRef": null,
+      "evidenceRef": null,
+      "evidenceSha256": null,
+      "trustedAcceptanceVerified": false
+    },
+    {
+      "id": "request_bounds_and_redacted_telemetry",
+      "scope": "local_engineering",
+      "gateId": "request_bounds_and_redacted_telemetry",
+      "status": "not_run",
+      "ownerRef": null,
+      "evidenceRef": null,
+      "evidenceSha256": null,
+      "trustedAcceptanceVerified": false
+    },
+    {
+      "id": "locked_build_and_dependency_review",
+      "scope": "local_engineering",
+      "gateId": "locked_build_and_dependency_review",
+      "status": "not_run",
+      "ownerRef": null,
+      "evidenceRef": null,
+      "evidenceSha256": null,
+      "trustedAcceptanceVerified": false
+    },
+    {
+      "id": "keyboard_accessibility_and_performance",
+      "scope": "local_engineering",
+      "gateId": "keyboard_accessibility_and_performance",
+      "status": "not_run",
+      "ownerRef": null,
+      "evidenceRef": null,
+      "evidenceSha256": null,
+      "trustedAcceptanceVerified": false
+    },
+    {
+      "id": "deployment_and_shared_admission",
+      "scope": "live_operations",
+      "gateId": "deployment_and_shared_admission",
+      "status": "not_run",
+      "ownerRef": null,
+      "evidenceRef": null,
+      "evidenceSha256": null,
+      "trustedAcceptanceVerified": false
+    },
+    {
+      "id": "two_identity_and_cross_owner_acceptance",
+      "scope": "live_operations",
+      "gateId": "two_identity_and_cross_owner_acceptance",
+      "status": "not_run",
+      "ownerRef": null,
+      "evidenceRef": null,
+      "evidenceSha256": null,
+      "trustedAcceptanceVerified": false
+    },
+    {
+      "id": "revoked_session_and_reviewer_independence",
+      "scope": "live_operations",
+      "gateId": "revoked_session_and_reviewer_independence",
+      "status": "not_run",
+      "ownerRef": null,
+      "evidenceRef": null,
+      "evidenceSha256": null,
+      "trustedAcceptanceVerified": false
+    },
+    {
+      "id": "hsionly_staging_schema_and_write_guards",
+      "scope": "live_operations",
+      "gateId": "hsionly_staging_schema_and_write_guards",
+      "status": "not_run",
+      "ownerRef": null,
+      "evidenceRef": null,
+      "evidenceSha256": null,
+      "trustedAcceptanceVerified": false
+    },
+    {
+      "id": "database_backup_restore_and_isolation",
+      "scope": "live_operations",
+      "gateId": "database_backup_restore_and_isolation",
+      "status": "not_run",
+      "ownerRef": null,
+      "evidenceRef": null,
+      "evidenceSha256": null,
+      "trustedAcceptanceVerified": false
+    },
+    {
+      "id": "deployment_rollback_rehearsal",
+      "scope": "live_operations",
+      "gateId": "deployment_rollback_rehearsal",
+      "status": "not_run",
+      "ownerRef": null,
+      "evidenceRef": null,
+      "evidenceSha256": null,
+      "trustedAcceptanceVerified": false
+    },
+    {
+      "id": "monitoring_retention_and_incident_ownership",
+      "scope": "live_operations",
+      "gateId": "monitoring_retention_and_incident_ownership",
+      "status": "not_run",
+      "ownerRef": null,
+      "evidenceRef": null,
+      "evidenceSha256": null,
+      "trustedAcceptanceVerified": false
+    },
+    {
+      "id": "approved_sources_and_scientific_claims",
+      "scope": "scientific",
+      "gateId": "approved_sources_and_scientific_claims",
+      "status": "not_run",
+      "ownerRef": null,
+      "evidenceRef": null,
+      "evidenceSha256": null,
+      "trustedAcceptanceVerified": false
+    },
+    {
+      "id": "pilot_data_terms_and_team_acceptance",
+      "scope": "scientific",
+      "gateId": "pilot_data_terms_and_team_acceptance",
+      "status": "not_run",
+      "ownerRef": null,
+      "evidenceRef": null,
+      "evidenceSha256": null,
+      "trustedAcceptanceVerified": false
+    }
+  ],
+  "blockers": [
+    "Verified staging identity, database and source prerequisites remain required.",
+    "Operator-reported receipts need independent authority, scope and freshness verification.",
+    "Public artifact recovery does not demonstrate database restore or role/session isolation.",
+    "Shared admission, deployment rollback, observability ownership and real-team acceptance require live evidence.",
+    "Scientific review and pilot data terms must be signed off by accountable humans."
+  ],
+  "candidateCommit": "c9f4492d73bd8001c2dcfa6244b8a5574848fc21",
+  "checkedAt": "2026-11-05T15:53:43.555Z",
+  "localRecovery": {
+    "schemaVersion": "hsi-public-recovery-drill-1",
+    "status": "local_artifact_drill_passed",
+    "scope": "public_repository_artifacts_only",
+    "producerCommit": "c9f4492d73bd8001c2dcfa6244b8a5574848fc21",
+    "bundleHash": "bf070ca4ae0a0b867f39b9a05bc42890463756309fbb6f874b88bc3068ad6a5f",
+    "filesVerified": 6,
+    "bytesVerified": 91056,
+    "semantics": {
+      "sources": 2,
+      "passages": 8,
+      "claims": 0,
+      "evidenceVersion": "2e4704bb3c90322045403ddda78e3ba6cc9eef77479519cf88b95a9f446a0f1b",
+      "coverageVersion": "b3625edca59d91f8da1a439201232d6011d09048350d173474cb6731e50948cd"
+    },
+    "canonicalFilesChanged": false,
+    "temporaryDestinationRemoved": true,
+    "databaseRestoreVerified": false,
+    "accountIsolationVerified": false
+  },
+  "lockfiles": [
+    {
+      "path": "bun.lock",
+      "sha256": "f7004963a956519c6cf4fca962f3db656df500576faab6fe9a27dfe1374fed1b"
+    },
+    {
+      "path": "site/bun.lock",
+      "sha256": "c37235fb000ec39a6f9b2d0d3525d645717e0568ade037b956c1c2850b94f122"
+    }
+  ],
+  "configuration": {
+    "validationAttempted": true,
+    "configurationValidated": false,
+    "databaseConnectionTested": false,
+    "authCredentialsTested": false,
+    "writesEnabled": false,
+    "sharedAdmissionRequired": false,
+    "maintenance": false
+  },
+  "dependencyVulnerabilitiesChecked": false,
+  "liveDeploymentVerified": false
+}

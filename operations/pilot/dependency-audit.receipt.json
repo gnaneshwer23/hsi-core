@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "hsi-locked-dependency-audit-receipt-1",
+  "recordedAt": "2026-11-05T15:53:43.588391+00:00",
+  "candidateCommit": "c9f4492d73bd8001c2dcfa6244b8a5574848fc21",
+  "tool": "bun audit --json",
+  "bunVersion": "1.3.11",
+  "scopes": [
+    {
+      "scope": "root",
+      "lockfile": "bun.lock",
+      "lockfileSha256": "f7004963a956519c6cf4fca962f3db656df500576faab6fe9a27dfe1374fed1b",
+      "reportedAdvisories": {},
+      "exitCode": 0
+    },
+    {
+      "scope": "site",
+      "lockfile": "site/bun.lock",
+      "lockfileSha256": "c37235fb000ec39a6f9b2d0d3525d645717e0568ade037b956c1c2850b94f122",
+      "reportedAdvisories": {},
+      "exitCode": 0
+    }
+  ],
+  "sourceCodeSecurityAssessment": false,
+  "externalAdvisoryCoverageEstablished": false,
+  "scientificOrPilotApprovalGranted": false
+}
