@@ -92,6 +92,10 @@ Hashes prove which fixture bytes were used; they do not certify science, de-iden
 
 FHIR/OMOP describe possible interoperability mappings; they do not themselves establish authorization, scientific validity or privacy. Aksh and ISI keep separate interfaces/databases. Clinical records and PHI remain outside HSI under [the binding boundary](CDS_PHI_BOUNDARY.md). The [ultimate product definition](strategy/HSI_ULTIMATE_PRODUCT_FUNCTION.md), approved research-source gates and [pilot operating runbook](RESEARCH_PILOT_RUNBOOK.md) still determine release readiness.
 
+## Record-level provenance extension
+
+Every normalized source record now retains its original JSON filename, file SHA-256, one-based row and record key. Unknown generator version and generation date remain null. The browser binds row lineage to the source-file hashes in its pinned catalogue; exports preserve it. Original CSV/JSON uploads remain unchanged. See the [field dictionary](SYNTHETIC_VALIDATION_DATA_DICTIONARY.md). This strengthens lineage without creating scientific evidence.
+
 ## Engineering verification receipt
 
 Local results on 5 November 2026: **754 core tests and 92 browser checks passed**. Core build, site TypeScript, API TypeScript, source/coverage consistency, fixture byte/hash/CSV parity checks and site build passed. Browser coverage exercises every condition, wrong IDs, altered catalogue/profile data, retry and idle cancellation, visit switching, guarded downloads, self-review rejection, keyboard access and 320px layout.

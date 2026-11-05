@@ -22,6 +22,8 @@
 
 **Synthetic validation integration — 5 November:** [Audited 200-profile / 20-condition validation lab](SYNTHETIC_VALIDATION_DATASET.md) connects 20,000 supplied records through a fixture-only adapter, hash-verified lazy assets, timelines/context, condition-level evidence/hypotheses, trial topic overlap and in-memory review/export rehearsal. Original files remain intact; missing guards are normalized. This is software workflow validation, not clinical/scientific acceptance or a new real-data connector.
 
+**Research-readiness increment — 5 November:** [Three-note audit and next sequence](strategy/HSI_RESEARCH_READINESS_AUDIT.md) adds a 50-question unlabelled design bank, separate pending SME packets, current method/prompt registry, record-level fixture lineage, a generated data dictionary, discovery/design-partner materials and hybrid retrieval/operating acceptance. This is preparation for measured research quality; no expert labels, model activation, new vector service or customer/partner results are claimed.
+
 **Audit date:** 2 November 2026  
 **HEAD at write:** (post partner-honesty fix) — restored **TEST FIXTURE** partner (`lockedPilot=false`); real named partner **TBD**; prior Apolo `legal_mou` / operator-assert MoU path **revoked**; Stage 1 RA/TNF scope still locked; cite-ready path after Gate C remains; not CDS
 

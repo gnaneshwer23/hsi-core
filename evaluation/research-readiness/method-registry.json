@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "hsi-research-method-registry-1",
+  "methods": [
+    {
+      "id": "deterministic-extractive-baseline",
+      "version": "hsi-extractive-baseline-1",
+      "promptVersion": "hsi-source-selection-1",
+      "promptHash": "ac355a177482044572bb7a0681d1c236f205709372506cabdc6d4b4471d11390",
+      "provider": null,
+      "modelVersion": null,
+      "temperature": null,
+      "externalModelCalled": false,
+      "allowedTools": [],
+      "activationScope": "existing_source_selection_only",
+      "evaluationReference": "evaluation/phase-e/engineering-cases.json",
+      "scientificAccuracy": null,
+      "latencyP95Ms": null,
+      "costPerInvestigationUsd": null
+    }
+  ],
+  "candidateModel": {
+    "status": "not_configured",
+    "provider": null,
+    "modelVersion": null,
+    "promptVersion": null,
+    "pricingSnapshot": null,
+    "budgetOwner": null,
+    "costBudgetUsd": null,
+    "latencyBudgetMs": null,
+    "activationAllowed": false
+  }
+}

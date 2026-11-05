@@ -97,6 +97,12 @@
     }
   ],
   "originalRecordsMissingClaimGuard": 18500,
+  "recordLineage": {
+    "records": 20000,
+    "source": "uploaded_json_file_and_one_based_row",
+    "generatorVersion": null,
+    "generationDate": null
+  },
   "normalizedRecordsMissingClaimGuard": 0,
   "duplicateTrialUpload": "byte_identical_not_double_counted",
   "csvJsonParity": [

@@ -54,3 +54,14 @@ test("validation navigation works from research and supports keyboard and 320px 
  await page.setViewportSize({width:320,height:760});const b=s.getByRole("button",{name:"Context map",exact:true});await b.focus();await page.keyboard.press("Enter");await expect(s.getByRole("heading",{name:"Navigate the connected record map"})).toBeVisible();
  for(const name of ["Labs & timeline","Immune & gut","Lifestyle & medications","Context map","Evidence & hypotheses","Trials","Review & brief"]){await s.getByRole("button",{name,exact:true}).click();expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)}
 });
+
+test("record provenance preserves original file/row keys and unknown generation metadata in exports",async({page})=>{
+ await page.goto("/research/validation?patient=SYN-P-000002");const s=scenario(page);await expect(s).toBeVisible();
+ await s.getByRole("button",{name:"Review & brief",exact:true}).click();await s.getByText("Inspect record provenance",{exact:true}).click();
+ await expect(s).toContainText("hsi_synthetic_patients.json, row 2");await expect(s).toContainText("Generator version and generation date: unknown");
+ const event=page.waitForEvent("download");await s.getByRole("button",{name:"Download validation JSON",exact:true}).click();const download=await event,b=JSON.parse(await readFile((await download.path())!,"utf8")).brief;
+ expect(b.patient.validation_provenance.sourceRow).toBe(2);expect(b.patient.validation_provenance.sourceRecordKey).toBe("SYN-P-000002");
+ for(const record of [b.patient,...b.observations.lab_results,...b.observations.medications,...b.evidence,...b.hypotheses,...b.trials]){
+  expect(record.validation_provenance.sourceFileSha256).toMatch(/^[a-f0-9]{64}$/);expect(record.validation_provenance.generatorVersion).toBeNull();expect(record.validation_provenance.generationDate).toBeNull();expect(record.scientific_claim_allowed).toBe(false);
+ }
+});

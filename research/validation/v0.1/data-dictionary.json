@@ -1,0 +1,498 @@
+{
+  "schemaVersion": "hsi-validation-data-dictionary-1",
+  "datasetVersion": "hsi-synthetic-validation-0.1",
+  "dataClass": "synthetic",
+  "scientificClaimsAllowed": false,
+  "tables": [
+    {
+      "table": "patients",
+      "sourceFile": "hsi_synthetic_patients.json",
+      "sourceFileSha256": "b9c0d750bfd0879db025771e7cc29d6dc2f19da01897c87830993c2fd459c5b1",
+      "records": 200,
+      "sourceFields": [
+        {
+          "name": "patient_id",
+          "valueType": "string",
+          "presentInOriginalRecords": 200
+        },
+        {
+          "name": "data_class",
+          "valueType": "string",
+          "presentInOriginalRecords": 200
+        },
+        {
+          "name": "condition",
+          "valueType": "string",
+          "presentInOriginalRecords": 200
+        },
+        {
+          "name": "domain",
+          "valueType": "string",
+          "presentInOriginalRecords": 200
+        },
+        {
+          "name": "age",
+          "valueType": "number",
+          "presentInOriginalRecords": 200
+        },
+        {
+          "name": "sex",
+          "valueType": "string",
+          "presentInOriginalRecords": 200
+        },
+        {
+          "name": "bmi",
+          "valueType": "number",
+          "presentInOriginalRecords": 200
+        },
+        {
+          "name": "disease_stage",
+          "valueType": "string",
+          "presentInOriginalRecords": 200
+        },
+        {
+          "name": "symptoms",
+          "valueType": "array",
+          "presentInOriginalRecords": 200
+        },
+        {
+          "name": "cohort",
+          "valueType": "string",
+          "presentInOriginalRecords": 200
+        }
+      ],
+      "normalizationAdds": [
+        "scientific_claim_allowed:false when absent",
+        "validation_provenance with file/hash/one-based-row/key; unknown generator and generation date stay null"
+      ]
+    },
+    {
+      "table": "lab_results",
+      "sourceFile": "hsi_synthetic_lab_results.json",
+      "sourceFileSha256": "eb219c01ac17d6f37f31881f9174e2cd609490256fec705e915f9aad6ec3f33f",
+      "records": 13000,
+      "sourceFields": [
+        {
+          "name": "patient_id",
+          "valueType": "string",
+          "presentInOriginalRecords": 13000
+        },
+        {
+          "name": "visit",
+          "valueType": "number",
+          "presentInOriginalRecords": 13000
+        },
+        {
+          "name": "date",
+          "valueType": "string",
+          "presentInOriginalRecords": 13000
+        },
+        {
+          "name": "test",
+          "valueType": "string",
+          "presentInOriginalRecords": 13000
+        },
+        {
+          "name": "value",
+          "valueType": "number",
+          "presentInOriginalRecords": 13000
+        },
+        {
+          "name": "unit",
+          "valueType": "string",
+          "presentInOriginalRecords": 13000
+        },
+        {
+          "name": "flag",
+          "valueType": "string",
+          "presentInOriginalRecords": 13000
+        },
+        {
+          "name": "data_class",
+          "valueType": "string",
+          "presentInOriginalRecords": 13000
+        }
+      ],
+      "normalizationAdds": [
+        "scientific_claim_allowed:false when absent",
+        "validation_provenance with file/hash/one-based-row/key; unknown generator and generation date stay null"
+      ]
+    },
+    {
+      "table": "medications",
+      "sourceFile": "hsi_synthetic_medications.json",
+      "sourceFileSha256": "e27c113978f0718b991dbd9fc138268c69ec58a8ba0e1f0d94580b8448de10cf",
+      "records": 1000,
+      "sourceFields": [
+        {
+          "name": "patient_id",
+          "valueType": "string",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "visit",
+          "valueType": "number",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "medication",
+          "valueType": "string",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "data_class",
+          "valueType": "string",
+          "presentInOriginalRecords": 1000
+        }
+      ],
+      "normalizationAdds": [
+        "scientific_claim_allowed:false when absent",
+        "validation_provenance with file/hash/one-based-row/key; unknown generator and generation date stay null"
+      ]
+    },
+    {
+      "table": "lifestyle",
+      "sourceFile": "hsi_synthetic_lifestyle.json",
+      "sourceFileSha256": "a3631cc400e0e4e84cafd0440da0bca1304e7f026c117a9bae390870bff4f54a",
+      "records": 1000,
+      "sourceFields": [
+        {
+          "name": "patient_id",
+          "valueType": "string",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "visit",
+          "valueType": "number",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "diet_pattern",
+          "valueType": "string",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "sleep_hours",
+          "valueType": "number",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "activity_level",
+          "valueType": "string",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "stress_level",
+          "valueType": "string",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "data_class",
+          "valueType": "string",
+          "presentInOriginalRecords": 1000
+        }
+      ],
+      "normalizationAdds": [
+        "scientific_claim_allowed:false when absent",
+        "validation_provenance with file/hash/one-based-row/key; unknown generator and generation date stay null"
+      ]
+    },
+    {
+      "table": "wearables",
+      "sourceFile": "hsi_synthetic_wearables.json",
+      "sourceFileSha256": "6a78b70f942bc51b19099bb8fb46f8563d1518bb067d74e3ebb1ba631f83ef99",
+      "records": 1000,
+      "sourceFields": [
+        {
+          "name": "patient_id",
+          "valueType": "string",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "visit",
+          "valueType": "number",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "sleep_hours",
+          "valueType": "number",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "hrv_ms",
+          "valueType": "number",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "steps",
+          "valueType": "number",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "resting_hr",
+          "valueType": "number",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "data_class",
+          "valueType": "string",
+          "presentInOriginalRecords": 1000
+        }
+      ],
+      "normalizationAdds": [
+        "scientific_claim_allowed:false when absent",
+        "validation_provenance with file/hash/one-based-row/key; unknown generator and generation date stay null"
+      ]
+    },
+    {
+      "table": "immune_profiles",
+      "sourceFile": "hsi_synthetic_immune_profiles.json",
+      "sourceFileSha256": "a30fa3e43355ecdb2ec983726a6c571b83513731b3ea21cc8de8c99412f42789",
+      "records": 1000,
+      "sourceFields": [
+        {
+          "name": "patient_id",
+          "valueType": "string",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "visit",
+          "valueType": "number",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "cd4_count",
+          "valueType": "number",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "cd8_count",
+          "valueType": "number",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "nk_activity",
+          "valueType": "string",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "monocytes",
+          "valueType": "string",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "th17_signature",
+          "valueType": "string",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "treg_fraction",
+          "valueType": "number",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "data_class",
+          "valueType": "string",
+          "presentInOriginalRecords": 1000
+        }
+      ],
+      "normalizationAdds": [
+        "scientific_claim_allowed:false when absent",
+        "validation_provenance with file/hash/one-based-row/key; unknown generator and generation date stay null"
+      ]
+    },
+    {
+      "table": "microbiome",
+      "sourceFile": "hsi_synthetic_microbiome.json",
+      "sourceFileSha256": "5304fa7402e00ddc49f187678fad8aec4878968535c28c2040f37486bd7ff188",
+      "records": 1000,
+      "sourceFields": [
+        {
+          "name": "patient_id",
+          "valueType": "string",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "visit",
+          "valueType": "number",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "diversity",
+          "valueType": "number",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "scfa_production",
+          "valueType": "string",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "dysbiosis_score",
+          "valueType": "number",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "data_class",
+          "valueType": "string",
+          "presentInOriginalRecords": 1000
+        }
+      ],
+      "normalizationAdds": [
+        "scientific_claim_allowed:false when absent",
+        "validation_provenance with file/hash/one-based-row/key; unknown generator and generation date stay null"
+      ]
+    },
+    {
+      "table": "trials",
+      "sourceFile": "hsi_synthetic_trials.json",
+      "sourceFileSha256": "0ce2f17b0fcc37c91adc15a0c24a4618cf4ea93a0212654977bdd95a77c3c14b",
+      "records": 300,
+      "sourceFields": [
+        {
+          "name": "trial_id",
+          "valueType": "string",
+          "presentInOriginalRecords": 300
+        },
+        {
+          "name": "data_class",
+          "valueType": "string",
+          "presentInOriginalRecords": 300
+        },
+        {
+          "name": "condition",
+          "valueType": "string",
+          "presentInOriginalRecords": 300
+        },
+        {
+          "name": "phase",
+          "valueType": "string",
+          "presentInOriginalRecords": 300
+        },
+        {
+          "name": "intervention",
+          "valueType": "string",
+          "presentInOriginalRecords": 300
+        },
+        {
+          "name": "biomarkers",
+          "valueType": "array",
+          "presentInOriginalRecords": 300
+        },
+        {
+          "name": "endpoints",
+          "valueType": "array",
+          "presentInOriginalRecords": 300
+        },
+        {
+          "name": "status",
+          "valueType": "string",
+          "presentInOriginalRecords": 300
+        }
+      ],
+      "normalizationAdds": [
+        "scientific_claim_allowed:false when absent",
+        "validation_provenance with file/hash/one-based-row/key; unknown generator and generation date stay null"
+      ]
+    },
+    {
+      "table": "evidence",
+      "sourceFile": "hsi_synthetic_evidence.json",
+      "sourceFileSha256": "23e7bb1da2c3de3eef9f7f313337d15258f53213761418c416f7a7863f94e6f1",
+      "records": 1000,
+      "sourceFields": [
+        {
+          "name": "evidence_id",
+          "valueType": "string",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "data_class",
+          "valueType": "string",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "condition",
+          "valueType": "string",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "claim",
+          "valueType": "string",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "evidence_status",
+          "valueType": "string",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "confidence",
+          "valueType": "string",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "source_type",
+          "valueType": "string",
+          "presentInOriginalRecords": 1000
+        },
+        {
+          "name": "scientific_claim_allowed",
+          "valueType": "boolean",
+          "presentInOriginalRecords": 1000
+        }
+      ],
+      "normalizationAdds": [
+        "scientific_claim_allowed:false when absent",
+        "validation_provenance with file/hash/one-based-row/key; unknown generator and generation date stay null"
+      ]
+    },
+    {
+      "table": "hypotheses",
+      "sourceFile": "hsi_synthetic_hypotheses.json",
+      "sourceFileSha256": "ebc1aad7d6cbec3e45e93954752f89204b811ba2d91b14d996144772035072fa",
+      "records": 500,
+      "sourceFields": [
+        {
+          "name": "hypothesis_id",
+          "valueType": "string",
+          "presentInOriginalRecords": 500
+        },
+        {
+          "name": "data_class",
+          "valueType": "string",
+          "presentInOriginalRecords": 500
+        },
+        {
+          "name": "condition",
+          "valueType": "string",
+          "presentInOriginalRecords": 500
+        },
+        {
+          "name": "hypothesis",
+          "valueType": "string",
+          "presentInOriginalRecords": 500
+        },
+        {
+          "name": "evidence_status",
+          "valueType": "string",
+          "presentInOriginalRecords": 500
+        },
+        {
+          "name": "review_status",
+          "valueType": "string",
+          "presentInOriginalRecords": 500
+        },
+        {
+          "name": "scientific_claim_allowed",
+          "valueType": "boolean",
+          "presentInOriginalRecords": 500
+        }
+      ],
+      "normalizationAdds": [
+        "scientific_claim_allowed:false when absent",
+        "validation_provenance with file/hash/one-based-row/key; unknown generator and generation date stay null"
+      ]
+    }
+  ]
+}

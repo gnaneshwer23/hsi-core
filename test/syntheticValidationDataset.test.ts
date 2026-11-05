@@ -73,3 +73,27 @@ test("static fixture assets and catalogue are pinned to committed hashes; route 
  for(const entry of [...catalogue.patients,...catalogue.conditions,catalogue.audit]){const bytes=readFileSync(new URL(entry.file,dir));expect(sha(bytes)).toBe(entry.sha256);expect(bytes.byteLength).toBe(entry.bytes)}
  const config=JSON.parse(readFileSync(new URL("../site/vercel.json",import.meta.url),"utf8"));expect(config.rewrites).toContainEqual({source:"/research/validation",destination:"/index.html"});expect(config.rewrites.some((r:{source:string})=>r.source==="/research/validation/:path*")).toBe(false);
 });
+
+test("record-level lineage uses original file/row/key and never invents generation metadata",()=>{
+ const normalized=adaptSyntheticValidationDataset(raw,{sourceHashes:Object.fromEntries(VALIDATION_TABLES.map(t=>[t,sha(readFileSync(new URL("hsi_synthetic_"+t+".json",root)))]))});
+ for(const table of VALIDATION_TABLES){
+  const sourceHash=sha(readFileSync(new URL("hsi_synthetic_"+table+".json",root)));
+  normalized[table].forEach((r,i)=>{
+   expect(r.validation_provenance.sourceFile).toBe("hsi_synthetic_"+table+".json");expect(r.validation_provenance.sourceRow).toBe(i+1);
+   expect(r.validation_provenance.sourceFileSha256).toBe(sourceHash);
+   expect(r.validation_provenance.generatorVersion).toBeNull();expect(r.validation_provenance.generationDate).toBeNull();
+  });
+ }
+ const bundle=patientValidationBundle(normalized,"SYN-P-000002"),condition=conditionValidationBundle(normalized,bundle.patient.condition);
+ expect(bundle.patient.validation_provenance.sourceRow).toBe(2);expect(verifyValidationBundles(bundle,condition).profile.patient.validation_provenance.sourceRow).toBe(2);
+});
+test("forged or missing normalized lineage is refused before export",()=>{
+ for(const mutation of ["generation","key","file","missing"]){
+  const changed=structuredClone(p),lineage=changed.patient.validation_provenance;
+  if(mutation==="generation")(lineage as {generationDate:unknown}).generationDate="2026-11-05";
+  if(mutation==="key")lineage.sourceRecordKey="SYN-P-999999";
+  if(mutation==="file")lineage.sourceFile="real-ehr.json";
+  if(mutation==="missing")delete (changed.patient as Partial<typeof changed.patient>).validation_provenance;
+  expect(()=>verifyValidationBundles(changed,c)).toThrow();
+ }
+});

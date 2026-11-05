@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "hsi-research-readiness-1",
+  "bankHash": "8f84210591c1eb6ef0d8f42711ce1c5f1697ddf79744a5b4f36e56f155295612",
+  "version": "0.1.0",
+  "totalCases": 50,
+  "categoryCoverage": [
+    {
+      "category": "mechanism_reasoning",
+      "cases": 7
+    },
+    {
+      "category": "biomarker_context",
+      "cases": 6
+    },
+    {
+      "category": "evidence_retrieval",
+      "cases": 8
+    },
+    {
+      "category": "contradiction_detection",
+      "cases": 6
+    },
+    {
+      "category": "trial_relevance",
+      "cases": 5
+    },
+    {
+      "category": "safety_boundaries",
+      "cases": 8
+    },
+    {
+      "category": "entity_resolution",
+      "cases": 6
+    },
+    {
+      "category": "uncertainty_communication",
+      "cases": 4
+    }
+  ],
+  "sourcePacketsBound": 0,
+  "independentlyLabelledCases": 0,
+  "heldOutPartitionFrozen": false,
+  "scientificMetrics": null,
+  "thresholdsApproved": false,
+  "scientificValidityEstablished": false,
+  "modelActivationAllowed": false,
+  "blockers": [
+    "Assign rights-cleared versioned source packets, including opposing evidence and context, to each case.",
+    "Obtain two independent SME annotations and adjudicate disagreement through accountable review.",
+    "Freeze separate development and held-out partitions and define leakage controls before candidate tuning.",
+    "Agree scientific metrics and release thresholds; measure baseline and candidate on identical frozen inputs.",
+    "Verify reviewer authority, source access, operational ownership and live two-account acceptance."
+  ]
+}

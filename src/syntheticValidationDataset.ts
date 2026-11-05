@@ -8,16 +8,36 @@ export const SYNTHETIC_VALIDATION_VERSION="hsi-synthetic-validation-0.1" as cons
 export const VALIDATION_TABLES=["patients","lab_results","medications","lifestyle","wearables","immune_profiles","microbiome","trials","evidence","hypotheses"] as const;
 export type ValidationTable=typeof VALIDATION_TABLES[number];
 type Guard={data_class:"synthetic";scientific_claim_allowed:false};
-export type SyntheticPatient=Guard&{patient_id:string;condition:string;domain:string;age:number;sex:string;bmi:number;disease_stage:string;symptoms:string[];cohort:string};
-export type SyntheticLab=Guard&{patient_id:string;visit:number;date:string;test:string;value:number;unit:string;flag:string};
-export type SyntheticMedication=Guard&{patient_id:string;visit:number;medication:string};
-export type SyntheticLifestyle=Guard&{patient_id:string;visit:number;diet_pattern:string;sleep_hours:number;activity_level:string;stress_level:string};
-export type SyntheticWearable=Guard&{patient_id:string;visit:number;sleep_hours:number;hrv_ms:number;steps:number;resting_hr:number};
-export type SyntheticImmune=Guard&{patient_id:string;visit:number;cd4_count:number;cd8_count:number;nk_activity:string;monocytes:string;th17_signature:string;treg_fraction:number};
-export type SyntheticMicrobiome=Guard&{patient_id:string;visit:number;diversity:number;scfa_production:string;dysbiosis_score:number};
-export type SyntheticTrial=Guard&{trial_id:string;condition:string;phase:string;intervention:string;biomarkers:string[];endpoints:string[];status:string};
-export type SyntheticEvidence=Guard&{evidence_id:string;condition:string;claim:string;evidence_status:"synthetic_demo";confidence:"none";source_type:"synthetic_generator"};
-export type SyntheticHypothesis=Guard&{hypothesis_id:string;condition:string;hypothesis:string;evidence_status:"ai_draft";review_status:"pending"};
+export type SyntheticRecordProvenance={
+ schemaVersion:"hsi-fixture-record-lineage-1";datasetVersion:typeof SYNTHETIC_VALIDATION_VERSION;sourceFile:string;sourceFileSha256:string|null;
+ sourceRow:number;sourceRecordKey:string;generatorVersion:null;generationDate:null;intendedUse:"build_and_test_only";replacementStatus:"pending_real_data";
+};
+type FixtureRecord=Guard&{validation_provenance:SyntheticRecordProvenance};
+type NormalizationOptions={sourceHashes?:Partial<Record<ValidationTable,string>>;normalized?:boolean};
+function rowKey(table:ValidationTable,row:Record<string,unknown>):string{
+ return String(table==="patients"?row.patient_id:table==="evidence"?row.evidence_id:table==="hypotheses"?row.hypothesis_id:table==="trials"?row.trial_id:[row.patient_id,row.visit,table==="lab_results"?row.test:""].join(":"));
+}
+function lineage(table:ValidationTable,row:Record<string,unknown>,index:number,options:NormalizationOptions):SyntheticRecordProvenance{
+ const file="hsi_synthetic_"+table+".json",hash=options.sourceHashes?.[table]??null;
+ if(hash!==null&&!/^[a-f0-9]{64}$/.test(hash))throw Error("Invalid source-file hash");
+ const body={schemaVersion:"hsi-fixture-record-lineage-1" as const,datasetVersion:SYNTHETIC_VALIDATION_VERSION,sourceFile:file,sourceFileSha256:hash,sourceRow:index+1,sourceRecordKey:rowKey(table,row),generatorVersion:null,generationDate:null,intendedUse:"build_and_test_only" as const,replacementStatus:"pending_real_data" as const};
+ if(options.normalized){
+  const value=row.validation_provenance;
+  if(!object(value)||Object.keys(value).sort().join()!==Object.keys(body).sort().join()||value.schemaVersion!==body.schemaVersion||value.datasetVersion!==body.datasetVersion||value.sourceFile!==file||value.sourceRecordKey!==body.sourceRecordKey||!Number.isInteger(value.sourceRow)||(value.sourceRow as number)<1||(value.sourceRow as number)>caps[table]||value.generatorVersion!==null||value.generationDate!==null||value.intendedUse!==body.intendedUse||value.replacementStatus!==body.replacementStatus||(value.sourceFileSha256!==null&&!/^[a-f0-9]{64}$/.test(String(value.sourceFileSha256)))||(hash!==null&&value.sourceFileSha256!==hash))throw Error("Missing, altered or invented fixture provenance");
+  return structuredClone(value) as SyntheticRecordProvenance;
+ }
+ return body;
+}
+export type SyntheticPatient=FixtureRecord&{patient_id:string;condition:string;domain:string;age:number;sex:string;bmi:number;disease_stage:string;symptoms:string[];cohort:string};
+export type SyntheticLab=FixtureRecord&{patient_id:string;visit:number;date:string;test:string;value:number;unit:string;flag:string};
+export type SyntheticMedication=FixtureRecord&{patient_id:string;visit:number;medication:string};
+export type SyntheticLifestyle=FixtureRecord&{patient_id:string;visit:number;diet_pattern:string;sleep_hours:number;activity_level:string;stress_level:string};
+export type SyntheticWearable=FixtureRecord&{patient_id:string;visit:number;sleep_hours:number;hrv_ms:number;steps:number;resting_hr:number};
+export type SyntheticImmune=FixtureRecord&{patient_id:string;visit:number;cd4_count:number;cd8_count:number;nk_activity:string;monocytes:string;th17_signature:string;treg_fraction:number};
+export type SyntheticMicrobiome=FixtureRecord&{patient_id:string;visit:number;diversity:number;scfa_production:string;dysbiosis_score:number};
+export type SyntheticTrial=FixtureRecord&{trial_id:string;condition:string;phase:string;intervention:string;biomarkers:string[];endpoints:string[];status:string};
+export type SyntheticEvidence=FixtureRecord&{evidence_id:string;condition:string;claim:string;evidence_status:"synthetic_demo";confidence:"none";source_type:"synthetic_generator"};
+export type SyntheticHypothesis=FixtureRecord&{hypothesis_id:string;condition:string;hypothesis:string;evidence_status:"ai_draft";review_status:"pending"};
 export type SyntheticDataset={
  patients:SyntheticPatient[];lab_results:SyntheticLab[];medications:SyntheticMedication[];lifestyle:SyntheticLifestyle[];wearables:SyntheticWearable[];
  immune_profiles:SyntheticImmune[];microbiome:SyntheticMicrobiome[];trials:SyntheticTrial[];evidence:SyntheticEvidence[];hypotheses:SyntheticHypothesis[];
@@ -39,9 +59,9 @@ const specs={
 const caps:Record<ValidationTable,number>={patients:500,lab_results:40000,medications:5000,lifestyle:5000,wearables:5000,immune_profiles:5000,microbiome:5000,trials:1000,evidence:5000,hypotheses:2000};
 const text=(x:unknown):x is string=>typeof x==="string"&&x.trim().length>0&&x.length<=500&&!/[\u0000-\u001f<>]/.test(x);
 function object(x:unknown):x is Record<string,unknown>{return !!x&&typeof x==="object"&&!Array.isArray(x)}
-export function normalizeSyntheticTable(table:ValidationTable,value:unknown):Guard[] {
+export function normalizeSyntheticTable(table:ValidationTable,value:unknown,options:NormalizationOptions={}):FixtureRecord[] {
  if(!Array.isArray(value)||!value.length||value.length>caps[table])throw Error("Invalid fixture table budget: "+table);
- const spec=specs[table],keys=new Set<string>([...spec.text,...spec.number,...spec.list,"data_class","scientific_claim_allowed"]);
+ const spec=specs[table],keys=new Set<string>([...spec.text,...spec.number,...spec.list,"data_class","scientific_claim_allowed",...(options.normalized?["validation_provenance"]:[])]);
  return value.map((row,index)=>{
   if(!object(row)||row.data_class!=="synthetic"||("scientific_claim_allowed" in row&&row.scientific_claim_allowed!==false)||Object.keys(row).some(k=>!keys.has(k)))throw Error("Non-synthetic, promoted or unexpected fixture record: "+table+" row "+index);
   if(spec.text.some(k=>!text(row[k]))||spec.number.some(k=>typeof row[k]!=="number"||!Number.isFinite(row[k])||Math.abs(row[k] as number)>1e8)||spec.list.some(k=>!Array.isArray(row[k])||(row[k] as unknown[]).length>30||!(row[k] as unknown[]).every(text)))throw Error("Invalid fixture fields: "+table+" row "+index);
@@ -52,12 +72,12 @@ export function normalizeSyntheticTable(table:ValidationTable,value:unknown):Gua
   if(table==="trials"&&(!/^SYN-TRIAL-\d{3}$/.test(String(row.trial_id))||!["recruiting","active","completed"].includes(String(row.status))))throw Error("Invalid fixture trial");
   if(table==="evidence"&&(!/^SYN-EVID-\d{4}$/.test(String(row.evidence_id))||row.evidence_status!=="synthetic_demo"||row.confidence!=="none"||row.source_type!=="synthetic_generator"))throw Error("Synthetic evidence cannot be scientific support");
   if(table==="hypotheses"&&(!/^SYN-HYP-\d{4}$/.test(String(row.hypothesis_id))||row.evidence_status!=="ai_draft"||row.review_status!=="pending"))throw Error("Synthetic hypotheses must remain draft/pending");
-  return structuredClone({...row,...guard}) as Guard;
+  return structuredClone({...row,...guard,validation_provenance:lineage(table,row,index,options)}) as FixtureRecord;
  });
 }
-export function adaptSyntheticValidationDataset(raw:Record<ValidationTable,unknown>):SyntheticDataset{
+export function adaptSyntheticValidationDataset(raw:Record<ValidationTable,unknown>,options:NormalizationOptions={}):SyntheticDataset{
  if(!object(raw)||Object.keys(raw).length!==VALIDATION_TABLES.length||Object.keys(raw).some(k=>!VALIDATION_TABLES.includes(k as ValidationTable)))throw Error("Unexpected fixture datasets");
- const d=Object.fromEntries(VALIDATION_TABLES.map(t=>[t,normalizeSyntheticTable(t,raw[t])])) as SyntheticDataset;
+ const d=Object.fromEntries(VALIDATION_TABLES.map(t=>[t,normalizeSyntheticTable(t,raw[t],options)])) as SyntheticDataset;
  const ids=new Set(d.patients.map(p=>p.patient_id));if(ids.size!==d.patients.length)throw Error("Duplicate synthetic patient");
  const conditions=new Set(d.patients.map(p=>p.condition));
  for(const t of VALIDATION_TABLES){
@@ -106,7 +126,7 @@ export function verifyValidationBundles(p:unknown,c:unknown):{profile:Validation
  for(const rows of [[p.patient],p.lab_results,p.medications,p.lifestyle,p.wearables,p.immune_profiles,p.microbiome,c.trials,c.evidence,c.hypotheses]){
   if(!Array.isArray(rows)||rows.some(r=>!object(r)||r.scientific_claim_allowed!==false))throw Error("Normalised fixture guard missing");
  }
- const d=adaptSyntheticValidationDataset({patients:[p.patient],lab_results:p.lab_results,medications:p.medications,lifestyle:p.lifestyle,wearables:p.wearables,immune_profiles:p.immune_profiles,microbiome:p.microbiome,trials:c.trials,evidence:c.evidence,hypotheses:c.hypotheses});
+ const d=adaptSyntheticValidationDataset({patients:[p.patient],lab_results:p.lab_results,medications:p.medications,lifestyle:p.lifestyle,wearables:p.wearables,immune_profiles:p.immune_profiles,microbiome:p.microbiome,trials:c.trials,evidence:c.evidence,hypotheses:c.hypotheses},{normalized:true});
  return {profile:patientValidationBundle(d,String(p.patient.patient_id)),condition:conditionValidationBundle(d,String(c.condition))};
 }
 export function validationTrialContext(p:ValidationPatientBundle,c:ValidationConditionBundle){
@@ -131,7 +151,7 @@ export function buildValidationBrief(p:ValidationPatientBundle,c:ValidationCondi
 export type ValidationBrief=ReturnType<typeof buildValidationBrief>;
 export function renderValidationBrief(b:ValidationBrief,format:"json"|"markdown"){
  if(b.data_class!=="synthetic"||b.scientific_claim_allowed!==false||b.graphPublicationAllowed!==false)throw Error("Synthetic-only export required");
- const trials=b.trials.map(t=>({trial_id:t.trial_id,condition:t.condition,phase:t.phase,intervention:t.intervention,biomarkers:t.biomarkers,endpoints:t.endpoints,status:t.status,...guard}));
+ const trials=b.trials.map(t=>({trial_id:t.trial_id,condition:t.condition,phase:t.phase,intervention:t.intervention,biomarkers:t.biomarkers,endpoints:t.endpoints,status:t.status,validation_provenance:t.validation_provenance,...guard}));
  const expected=buildValidationBrief(b.observations,{schemaVersion:SYNTHETIC_VALIDATION_VERSION,condition:b.patient.condition,...guard,trials,evidence:b.evidence,hypotheses:b.hypotheses},b.reviewRehearsal);
  if(canonicalGraphContext(expected)!==canonicalGraphContext(b))throw Error("Altered validation brief");
  if(format==="json")return JSON.stringify(b,null,2)+"\n";
