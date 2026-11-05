@@ -1,5 +1,7 @@
 # Document 02 — HSI Architecture and Data Design
 
+**Implementation profile — 5 November 2026:** [Technology stack and deployment](HSI_TECHNOLOGY_STACK_AND_DEPLOYMENT.md) maps the founder's newer stack proposal to the existing research implementation, environment/data ownership and release acceptance. It does not authorise a frontend/backend rewrite, Kubernetes provisioning or clinical/PHI processing.
+
 **Human Super Intelligence (HSI) | Version 1.1 | 2 November 2026**<br>
 **Status:** Proposed / pending founder approval — target architecture; current implementation unverified.  
 **Canonical path:** [`docs/strategy/HSI_ARCHITECTURE_AND_DATA.md`](./HSI_ARCHITECTURE_AND_DATA.md)  

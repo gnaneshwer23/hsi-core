@@ -1,5 +1,7 @@
 # HSI Target Architecture
 
+**MVP deployment elaboration:** [Technology stack and deployment profile](HSI_TECHNOLOGY_STACK_AND_DEPLOYMENT.md) preserves the existing application stack and records the conditions for introducing additional services or private deployments.
+
 **Status:** Logical architecture for founder review — not an implementation mandate to rewrite working systems.  
 **PRD companion (canonical Document 02):** [`HSI_ARCHITECTURE_AND_DATA.md`](./HSI_ARCHITECTURE_AND_DATA.md) — this sketch is subordinate elaboration. Honesty: [`HSI_DOC02_03_RECONCILIATION.md`](./HSI_DOC02_03_RECONCILIATION.md) (Documents 02 / 03 / 04).  
 **Product binding:** [`HSI_FOUR_PRODUCT_ECOSYSTEM.md`](./HSI_FOUR_PRODUCT_ECOSYSTEM.md) (§3 ownership, exchanges X-A–X-F, API catalogue).  

@@ -4,6 +4,8 @@
 
 **Latest founder direction:** [Human Super Intelligence — Product Direction](HSI_PRODUCT_DIRECTION.md) · [Implementation crosswalk and next research work package](HSI_PRODUCT_DIRECTION_IMPLEMENTATION.md). These align the new direction to the existing workbench and shared-technology boundaries; they do not change runtime maturity, approve clinical/PHI processing or mark proposed PRD requirements as implemented.
 
+**Technology/deployment profile:** [MVP baseline, addition gates and deployment acceptance](HSI_TECHNOLOGY_STACK_AND_DEPLOYMENT.md) · [Founder stack proposal retained for traceability](HSI_TECHNOLOGY_STACK_PROPOSAL.md). Reuse the existing React/Vite, Bun/TypeScript, Neon/PostgreSQL and Vercel foundations; enterprise services remain conditional additions.
+
 Strategic product reset: audit, architecture, and roadmap. **No feature implementation in this pack.**
 
 **Agent skills (on demand):** see [`../AGENT_SKILLS.md`](../AGENT_SKILLS.md) — when to load installed personal Cursor skills for HSI/ISI work (not always-applied).

@@ -83,6 +83,8 @@ Use `/research/scientific-workbench` as the existing entry surface and the exist
 
 ## 5. Architecture and sequencing
 
+The [technology stack and deployment profile](HSI_TECHNOLOGY_STACK_AND_DEPLOYMENT.md) details the implementation baseline, environment bindings, conditional service additions and operational acceptance for this sequence.
+
 Retain the current Vite/React frontend, Bun/TypeScript server functions and HSI PostgreSQL boundary. The supplied Next.js, Neo4j/AGE, Qdrant and Python orchestration list is an option catalogue, not a migration instruction. Add a component only after a documented capability/performance/operational need and license review.
 
 1. **Connect the research experience:** inventory and close the acceptance gaps above against the existing scientific workbench, mechanism dossier, graph projections and review surfaces.
