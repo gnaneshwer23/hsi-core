@@ -62,3 +62,7 @@ Live PHI, EHR write-back, shared patient databases, diagnostic/treatment advice,
 ## Verification note
 
 Core tests (**599 passed**), both builds, seed validation (**88 edges / 8 LOINC links**) and the existing local site browser suite (**51 passed**) succeeded during this audit. Builds retain the warnings recorded in the audit. Local mocked/browser checks do not establish live authentication, persistence, scientific validity or product deployment readiness.
+
+## End-product refinement — 5 November 2026
+
+The [ultimate product function](HSI_ULTIMATE_PRODUCT_FUNCTION.md) defines the target outcome and remaining acceptance across ten functions. The additive [unified research outcome](../UNIFIED_RESEARCH_OUTCOME.md) now composes the saved components through the trusted backend; it does not replace Delivery A–H or mark live/scientific gates complete.

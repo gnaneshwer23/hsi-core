@@ -1,6 +1,7 @@
 import {test,expect,type Page} from "@playwright/test";
 import {readFile} from "node:fs/promises";
 import {deliveryHarness} from "../../test/fixtures/deliveryHarness";
+import {renderResearchOutcome} from "../../src/researchOutcome";
 import {deliveryHash} from "../../src/server/investigationDeliveryService";
 async function wire(page:Page,f:ReturnType<typeof deliveryHarness>,actor:string){
  await page.route("**/api/research/scientific-review/queue**",async route=>{
@@ -13,6 +14,12 @@ async function wire(page:Page,f:ReturnType<typeof deliveryHarness>,actor:string)
   const url=new URL(route.request().url()),match=/\/interrogative\/(hsi-interrogative-[a-zA-Z0-9-]+)(?:\/([^/]+))?$/.exec(url.pathname);if(!match)return route.fulfill({status:404});const id=match[1]!,action=match[2];
   try{
    if(!action){await f.service.view(actor,id);return route.fulfill({json:f.states.get(id)!.record})}
+   if(action==="outcome"){
+    const o=await f.service.outcome(actor,id),format=url.searchParams.get("format");
+    if(!format)return route.fulfill({json:o});
+    if(format!=="json"&&format!=="markdown")return route.fulfill({status:400});
+    const text=renderResearchOutcome(o,format);return route.fulfill({body:text,headers:{"content-type":format==="json"?"application/json":"text/markdown","x-hsi-content-sha256":deliveryHash(text),"x-hsi-package-sha256":o.binding.packageHash,"x-hsi-outcome-sha256":o.outcomeHash}});
+   }
    if(action==="review-package")return route.fulfill({json:await f.service.view(actor,id)});
    if(action==="graph-context"){const v=await f.service.view(actor,id);if(route.request().method()==="POST")f.capture(id);const c=f.contexts.get(id);return route.fulfill({json:c?{status:"saved",canCapture:false,context:c}:{status:"not_captured",canCapture:v.capabilities.writesEnabled&&actor==="alice",context:null}})}
    if(action==="submit-review")return route.fulfill({json:await f.service.submit(actor,id)});
@@ -69,11 +76,45 @@ test("tampered download is rejected and reviewer queue fits mobile width",async(
 test("Phase E baseline shows exact, bound source excerpts without enabling AI or changing the investigation",async({page})=>{
  const f=deliveryHarness(),before=JSON.stringify(f.states.get(f.initial.id)),calls:string[]=[];
  page.on("request",r=>{if(/\/api\//.test(r.url()))calls.push(r.url())});await wire(page,f,"alice");await page.goto("/research/decision-workbench?investigation="+f.initial.id);
- const panel=page.getByRole("region",{name:"Source-grounded baseline",exact:true});await expect(panel).toContainText("Matching source observations");await expect(panel.getByRole("blockquote")).toHaveText(f.contexts.get(f.initial.id)!.primary.bundle.passages[0]!.text);
+ await page.getByText("Inspect source-grounded baseline",{exact:true}).click();const panel=page.getByRole("region",{name:"Source-grounded baseline",exact:true});await expect(panel).toContainText("Matching source observations");await expect(panel.getByRole("blockquote")).toHaveText(f.contexts.get(f.initial.id)!.primary.bundle.passages[0]!.text);
  await panel.getByText("Inspect citation binding",{exact:true}).click();await expect(panel).toContainText(f.contexts.get(f.initial.id)!.primary.bundle.passages[0]!.sha256!);await expect(panel).toContainText("Model assistance remains disabled");expect(JSON.stringify(f.states.get(f.initial.id))).toBe(before);expect(calls.some(u=>/\/api\/(?:ai|model|assist)/.test(u))).toBe(false);
  await page.setViewportSize({width:375,height:812});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true);
 });
 test("Phase E assistance disappears if the package cannot be verified",async({page})=>{
  const f=deliveryHarness();await wire(page,f,"alice");await page.route("**/review-package",async route=>{const v=await f.service.view("alice",f.initial.id);v.package!.context.primary.bundle.passages[0]!.text="Forged source text";return route.fulfill({json:v})});
  await page.goto("/research/decision-workbench?investigation="+f.initial.id);await expect(page.getByText("The evidence brief could not be verified.",{exact:false})).toBeVisible();await expect(page.getByRole("region",{name:"Source-grounded baseline",exact:true})).toHaveCount(0);
+});
+
+
+test("unified outcome connects source passages, candidate questions, trial gaps and verified downloads",async({page})=>{
+ const f=deliveryHarness();await wire(page,f,"alice");await page.goto("/research/decision-workbench?investigation="+f.initial.id);
+ const panel=page.getByRole("region",{name:"Unified research outcome",exact:true});
+ await expect(panel).toContainText("Not calibrated");
+ await panel.getByRole("button",{name:"Mechanism & evidence",exact:true}).click();
+ await expect(panel.getByRole("blockquote")).toHaveText(f.contexts.get(f.initial.id)!.primary.bundle.passages[0]!.text);
+ await expect(panel).toContainText("no branch assigned");await expect(panel.getByLabel("Select a relationship")).toHaveValue("rel-test");
+ await panel.getByRole("button",{name:"Questions & hypotheses",exact:true}).click();
+ await expect(panel).toContainText(f.initial.questions[0]!.text);await panel.getByText(f.initial.branches[0]!.statement,{exact:true}).click();
+ await expect(panel).toContainText("not specified in the saved record");
+ await panel.getByRole("button",{name:"Next research & trials",exact:true}).click();await expect(panel).toContainText("No registry search is attached");
+ await panel.getByRole("button",{name:"Review & provenance",exact:true}).click();await expect(panel).toContainText("This projection invokes no model");
+ const event=page.waitForEvent("download");await panel.getByRole("button",{name:"Download outcome JSON",exact:true}).click();const download=await event,body=JSON.parse(await readFile((await download.path())!,"utf8"));
+ expect(body.binding.contextHash).toBe(f.contexts.get(f.initial.id)!.contentHash);expect(body.trials.eligibilityAssessed).toBe(false);expect(body.answer.confidence.value).toBeNull();
+ const mdEvent=page.waitForEvent("download");await panel.getByRole("button",{name:"Download research outcome",exact:true}).click();const md=await mdEvent;expect(await readFile((await md.path())!,"utf8")).toContain(body.outcomeHash);
+});
+
+test("outcome refuses a forged answer and hides stale content when source access is revoked",async({page})=>{
+ const f=deliveryHarness();await wire(page,f,"alice");
+ await page.route("**/outcome",async route=>{const o=await f.service.outcome("alice",f.initial.id);o.answer.summary="Invented scientific conclusion";return route.fulfill({json:o})});
+ await page.goto("/research/decision-workbench?investigation="+f.initial.id);const panel=page.getByRole("region",{name:"Unified research outcome",exact:true});
+ await expect(panel).toContainText("could not be verified");await expect(panel).not.toContainText("Invented scientific conclusion");await expect(panel.getByRole("button",{name:"Download research outcome",exact:true})).toHaveCount(0);
+ await page.unroute("**/outcome");await panel.getByRole("button",{name:"Refresh outcome"}).click();await expect(panel).toContainText("Not calibrated");
+ f.revokeSources();await panel.getByRole("button",{name:"Refresh outcome"}).click();await expect(panel).toContainText("could not be verified");await expect(panel).not.toContainText("Not calibrated");
+});
+
+test("outcome is keyboard navigable and fits a 320px viewport",async({page})=>{
+ const f=deliveryHarness();await wire(page,f,"alice");await page.setViewportSize({width:320,height:740});await page.goto("/research/decision-workbench?investigation="+f.initial.id);
+ const panel=page.getByRole("region",{name:"Unified research outcome",exact:true});await expect(panel).toContainText("Not calibrated");
+ const button=panel.getByRole("button",{name:"Mechanism & evidence",exact:true});await button.focus();await page.keyboard.press("Enter");await expect(panel.getByLabel("Select a relationship")).toBeVisible();
+ for(const name of ["Mechanism & evidence","Questions & hypotheses","Next research & trials","Review & provenance"]){await panel.getByRole("button",{name,exact:true}).click();expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true)}
 });

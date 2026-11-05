@@ -1,4 +1,5 @@
 /** Phase D trusted orchestration. Identity/time/decision IDs come from the backend. */
+import {buildResearchOutcome} from "../researchOutcome";
 import {createHash} from "node:crypto";
 import {planSscInterrogation} from "../interrogativeQuestionEngine";
 import {canonicalGraphContext,verifyInvestigationGraphContext,type InvestigationGraphContext} from "../investigationGraphContext";
@@ -66,6 +67,11 @@ export function createInvestigationDeliveryService(deps:DeliveryDependencies){
    const child={...planSscInterrogation({question:request.question,actorPrincipal:actor.principalId,createdAt,dataClass:state.record.dataClass,focus:"systemic_sclerosis",release:state.record.release}),id:childId};
    const link={parentId:id,rootId:state.revision?.rootId??id,number:(state.revision?.number??1)+1,decisionId:state.decision.id,reason:request.reason};
    return deps.revise(actor,state,child,request.requestId,deliveryHash(canonicalGraphContext(request)),link);
+  },
+  async outcome(token:string|null,id:string){
+   const {state,p}=await load(token,id);
+   if(!p||!state.submission&&(state.legacyDecision||state.record.state!=="draft"))throw Error("A verified, release-bound context is required");
+   return buildResearchOutcome({schemaVersion:"hsi-investigation-brief-1",package:p,submission:state.submission,decision:state.decision,scope:"research_only",graphPublicationApproved:false},async s=>deliveryHash(s));
   },
   async brief(token:string|null,id:string,format:"json"|"markdown"){
    const {state,p}=await load(token,id);if(!p||!state.submission&&(state.legacyDecision||state.record.state!=="draft"))throw Error("A verified, release-bound evidence context is required for this brief");

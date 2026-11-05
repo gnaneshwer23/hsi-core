@@ -18,6 +18,8 @@
 
 **Delivery Phase H implementation:** [Research pilot operations](PHASE_H_RESEARCH_PILOT_OPERATIONS.md) adds bounded request admission/body reads, redacted correlation events, maintenance controls, public-artifact recovery drills, dependency checks and a blocked readiness inventory/runbook. Distributed admission, live auth/role isolation, database restore, deployment rollback, real owners/data terms and scientific/team acceptance remain pending.
 
+**Unified outcome implementation — 5 November:** [Backend-composed research outcome](UNIFIED_RESEARCH_OUTCOME.md) brings the saved answer, source map/passages, question tree, candidate hypotheses, missing evidence, research tasks, trial status and scoped human review into one verified view with JSON/Markdown export. The [ultimate product function](strategy/HSI_ULTIMATE_PRODUCT_FUNCTION.md) is now recorded as the target acceptance map. No new scientific inference, live clinical connector, calibrated accuracy claim or operational sign-off is implied.
+
 **Audit date:** 2 November 2026  
 **HEAD at write:** (post partner-honesty fix) — restored **TEST FIXTURE** partner (`lockedPilot=false`); real named partner **TBD**; prior Apolo `legal_mou` / operator-assert MoU path **revoked**; Stage 1 RA/TNF scope still locked; cite-ready path after Gate C remains; not CDS
 

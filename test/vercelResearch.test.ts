@@ -1,3 +1,4 @@
+import {deliveryHarness} from "./fixtures/deliveryHarness";
 import {test,expect} from "bun:test";
 import {handleVercelResearch,readResearchDeploymentConfig} from "../src/server/vercelResearch";
 import {providerCookies} from "../src/server/neonAuthGateway";
@@ -214,4 +215,13 @@ test("session diagnostics require a verified provider identity and inspect only 
  const verified=await handleVercelResearch(req("/api/research/session-diagnostics?userId=attacker",{headers:{cookie}}),env,{transport:transport(async()=>Response.json(identity)),inspectSession});
  expect(verified.status).toBe(200);const body=await verified.json();expect(body.status).toBe("database_session_not_visible");expect(body.databaseConnectionTested).toBe(true);expect(body.databaseEndpointPrefix).toBe("ep-sweet-hill-zasb0lni");expect(JSON.stringify(body)).not.toContain(identity.user.id);expect(JSON.stringify(body)).not.toContain(identity.user.email);expect(JSON.stringify(body)).not.toContain("never-used");expect(calls).toBe(1);
  const postResponse=await handleVercelResearch(post("/api/research/session-diagnostics"),env,{transport:noCalls,inspectSession});expect(postResponse.status).toBe(405);expect(calls).toBe(1);
+});
+
+test("outcome Vercel route uses the trusted session bridge with writes disabled",async()=>{
+ const f=deliveryHarness({writesEnabled:false}),path="/api/research/interrogative/"+f.initial.id+"/outcome";let seen="";
+ const dependencies={transport:transport(async()=>Response.json(identity)),resolveToken:async()=>"alice",services:{load:async()=>({}),submit:async()=>({}),review:async()=>({}),outcome:async(input:{serverSessionToken:string|null;investigationId:string})=>{seen=input.serverSessionToken??"";return f.service.outcome(input.serverSessionToken,input.investigationId)}}};
+ const r=await handleVercelResearch(req(path,{headers:{cookie,"x-role":"research_admin","x-principal-id":"bob"}}),env,dependencies);
+ expect(r.status).toBe(200);expect(seen).toBe("alice");expect((await r.json()).scope.clinicalAdvice).toBe(false);
+ expect((await handleVercelResearch(post(path),env,{transport:noCalls})).status).toBe(403);
+ expect((await handleVercelResearch(req(path),env,{transport:noCalls})).status).toBe(401);
 });

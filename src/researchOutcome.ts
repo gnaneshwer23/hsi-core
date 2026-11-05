@@ -1,0 +1,85 @@
+/** Deterministic composition of a saved, verified research package. No new scientific inference or approval. */
+import {canonicalGraphContext} from "./investigationGraphContext";
+import {verifyReviewPackage,verifyDeliveryDecision,type EvidenceBrief} from "./investigationDelivery";
+import type {EvidenceTrace} from "./interrogativeValidation";
+export const RESEARCH_OUTCOME_VERSION="hsi-research-outcome-1" as const;
+export const RESEARCH_OUTCOME_METHOD="hsi-bound-outcome-projection-1" as const;
+export type Digest=(text:string)=>Promise<string>;
+const unique=<T>(values:readonly T[])=>[...new Set(values)];
+function exact(value:unknown,keys:string[]){if(!value||typeof value!=="object"||Array.isArray(value)||Object.keys(value).sort().join(",")!==[...keys].sort().join(","))throw Error("Invalid research outcome input fields")}
+function contextFor(brief:EvidenceBrief,relationshipId:string){
+ const e=brief.package.context.primary,r=e.bundle.relationships.find(r=>r.id===relationshipId)!;
+ return {disease:e.disease,studyContext:e.studyContexts[r.id]!,species:r.context.species,experimentalSystem:r.context.experimentalSystem,tissueId:r.context.tissueId,assay:r.context.assay,timepoint:r.context.timepoint,diseaseStage:null,cellState:null,dose:null,cohort:null};
+}
+function projectResearchOutcome(brief:EvidenceBrief){
+ const p=brief.package,i=p.investigation,e=p.context.primary,b=e.bundle;
+ const claimById=new Map(b.claims.map(c=>[c.id,c])),relationshipById=new Map(b.relationships.map(r=>[r.id,r]));
+ const sourceIdsFor=(claimId:string)=>unique(claimById.get(claimId)!.passageIds.map(id=>b.passages.find(p=>p.id===id)!.sourceId));
+ function trace(t:EvidenceTrace){
+  const c=claimById.get(t.claimId);if(!c||t.reviewDecisionId!==c.review!.decisionId||!t.sourceIds.length||!unique(t.sourceIds).every(id=>sourceIdsFor(c.id).includes(id))||t.evidenceKind!==e.epistemicTypes[c.relationshipId]||t.graphPath.some(id=>!relationshipById.has(id))||(t.graphPath.length>0&&!t.graphPath.includes(c.relationshipId)))throw Error("Outcome trace is outside the reviewed primary source context");
+  const actual=contextFor(brief,c.relationshipId);
+  if(!t.context||Object.entries(t.context).some(([key,value])=>!Object.hasOwn(actual,key)||canonicalGraphContext(value)!==canonicalGraphContext(actual[key as keyof typeof actual])))throw Error("Outcome trace overrides or invents biological context");
+  for(let n=1;n<t.graphPath.length;n++){const a=relationshipById.get(t.graphPath[n-1]!)!,r=relationshipById.get(t.graphPath[n]!)!;if(![a.subjectId,a.objectId].some(id=>id===r.subjectId||id===r.objectId))throw Error("Disconnected outcome graph path")}
+  return c.id;
+ }
+ const branches=i.branches.map(branch=>{
+  const supporting=branch.supporting.map(trace),opposing=branch.opposing.map(trace);
+  if(unique(supporting).length!==supporting.length||unique(opposing).length!==opposing.length||supporting.some(id=>opposing.includes(id)))throw Error("Ambiguous or duplicated branch evidence binding");
+  if(!["supported","partially_supported","contested","context_limited","inconclusive","insufficient_evidence"].includes(branch.assessment)||!Array.isArray(branch.missingEvidence)||!Array.isArray(branch.uncertainty)||branch.missingEvidence.length>30||branch.uncertainty.length>30||[...branch.missingEvidence,...branch.uncertainty,branch.falsificationTest].some(s=>typeof s!=="string"||!s.trim()||s.length>2000))throw Error("Invalid bounded hypothesis metadata");
+  return {id:branch.id,questionId:branch.questionId,statement:branch.statement,classification:branch.classification,assessment:branch.assessment,supportingClaimIds:supporting,opposingClaimIds:opposing,missingEvidence:[...branch.missingEvidence],uncertainty:[...branch.uncertainty],falsificationCriteria:branch.falsificationTest,predictedObservation:null,suggestedExperiment:null,requiredControls:null,experimentalPlanStatus:"not_specified" as const,interpretation:"saved_candidate_requires_independent_assessment" as const};
+ });
+ if(i.conclusion.assessment==="supported"&&!branches.some(b=>b.assessment==="supported"&&b.supportingClaimIds.length>0&&b.classification!=="unvalidated_hypothesis"))throw Error("Saved supported conclusion has no bound supported branch");
+ const questions=i.questions.map(q=>{if(!["clarify","discriminate","falsify"].includes(q.purpose)||!["pending","answered","unanswerable"].includes(q.status))throw Error("Invalid recorded question state");return {id:q.id,parentId:q.parentId,text:q.text,purpose:q.purpose,depth:q.depth,status:q.status,branchIds:branches.filter(b=>b.questionId===q.id).map(b=>b.id)}});
+ const scopeReview=/\b(?:this patient|my patient|diagnose|prescribe|diabetes|glyca?emic|hba1c|crohn|multiple sclerosis)\b/i.test(i.question);
+ const supportingClaimIds=unique(branches.flatMap(b=>b.supportingClaimIds)),opposingClaimIds=unique(branches.flatMap(b=>b.opposingClaimIds));
+ const methods=i.provenance.agentRuns.map(r=>{
+  if([r.agentId,r.version,r.modelVersion,r.promptVersion].some(v=>typeof v!=="string"||!(/^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$/).test(v))||!Array.isArray(r.toolCalls))throw Error("Unbounded method metadata");
+  return {agentId:r.agentId,version:r.version,modelVersion:r.modelVersion,promptVersion:r.promptVersion,toolCallCount:r.toolCalls.length};
+ });
+ const d=brief.decision;
+ return {schemaVersion:RESEARCH_OUTCOME_VERSION,method:RESEARCH_OUTCOME_METHOD,investigationId:i.id,question:i.question,
+  binding:{packageHash:p.packageHash,contextHash:p.context.contentHash,investigationHash:p.investigationHash,releaseId:e.release.id,releaseVersion:e.release.version,manifestHash:e.release.manifestHash,submissionId:brief.submission?.id??null,decisionHash:d?.decisionHash??null},
+  scope:{purpose:"research_only" as const,sourceDisease:e.disease,patientDataConnected:false,clinicalAdvice:false,graphPublicationApproved:false,questionFit:scopeReview?"scope_review_required" as const:"pinned_scope_only" as const,semanticScopeValidated:false},
+  answer:{summary:scopeReview?"The saved systemic-sclerosis source context does not establish an answer to this patient-specific or out-of-scope question.":i.conclusion.text,summaryOrigin:scopeReview?"scope_gate" as const:"saved_conclusion" as const,evidenceStatus:scopeReview?"insufficient_evidence" as const:i.conclusion.assessment,savedAssessment:i.conclusion.assessment,scientificTruthEstablished:false,confidence:{status:"not_calibrated" as const,value:null,method:null},limitations:unique([...i.conclusion.limitations,...p.limitations,"A source citation or brief acceptance does not establish that the overall answer is scientifically correct.","Question-scope checking is a conservative keyword screen, not semantic validation."])},
+  stages:[{id:"question_plan",status:"recorded",detail:"Saved questions and candidate branches; no newly executed planner."},{id:"data_context",status:"research_sources_only",detail:"No clinical, wearable, microbiome, omics or patient timeline connection is supplied by this outcome."},{id:"source_context",status:"captured",detail:"Fixed source release, passages and current access are checked by the backend."},{id:"branch_evidence",status:supportingClaimIds.length||opposingClaimIds.length?"recorded_bindings":"not_bound",detail:"Capturing graph context does not assign it to candidate branches."},{id:"external_search",status:"not_recorded",detail:"This contract has no complete external literature or contradiction-search audit."},{id:"scientific_synthesis",status:"not_executed_by_projection",detail:"No LLM, new causal chain, ranking or model confidence is generated here."},{id:"human_review",status:d?"decision_recorded":"not_recorded",detail:"A recorded decision is scoped to the evidence brief."}],
+  mechanismMap:{scope:"primary_release_context" as const,causalClaim:false,nodes:b.entities.map(n=>({id:n.id,label:n.label,type:n.type})),edges:b.relationships.map(r=>({id:r.id,subjectId:r.subjectId,predicate:r.predicate,objectId:r.objectId,claimIds:b.claims.filter(c=>c.relationshipId===r.id).map(c=>c.id),epistemicType:e.epistemicTypes[r.id]!,context:contextFor(brief,r.id),causalClaim:false}))},
+  evidence:b.claims.map(c=>({claimId:c.id,statement:c.statement,relationshipId:c.relationshipId,passageIds:[...c.passageIds],sourceIds:sourceIdsFor(c.id),context:contextFor(brief,c.relationshipId),epistemicType:e.epistemicTypes[c.relationshipId]!,sourceHumanReview:{status:"recorded_approved_support" as const,decisionId:c.review!.decisionId,reviewedAt:c.review!.reviewedAt},supportingBranchIds:branches.filter(b=>b.supportingClaimIds.includes(c.id)).map(b=>b.id),opposingBranchIds:branches.filter(b=>b.opposingClaimIds.includes(c.id)).map(b=>b.id),semanticBranchSupportVerified:false})),
+  sources:b.sources.map(s=>({id:s.id,title:s.title,pmid:s.pmid,doi:s.doi,url:s.url,sourceVersion:s.provenance.version,licence:{...s.licence}})),
+  passages:b.passages.map(p=>({id:p.id,sourceId:p.sourceId,sourceVersion:p.sourceVersion,text:p.text,locator:p.locator,sha256:p.sha256!})),
+  contradictions:{recordedOpposingClaimIds:opposingClaimIds,searchStatus:"not_recorded" as const,consensusEstablished:false,note:opposingClaimIds.length?"Recorded opposing references require context-specific expert interpretation. Their presence is not an exhaustive contradiction search.":"No opposing traces are recorded in this saved investigation. This does not establish that no contradictory evidence exists."},
+  missingData:unique(branches.flatMap(b=>b.missingEvidence)),decisionTree:{kind:"saved_investigation_questions" as const,diagnosticDecisionSupport:false,questions},hypotheses:branches,
+  nextResearchSteps:branches.map(b=>({branchId:b.id,action:"Retrieve and independently assess evidence addressing the recorded falsification question; define population, specimen, assay, timepoint and controls before proposing an experiment.",falsificationQuestion:b.falsificationCriteria,experimentSpecified:false,patientMeasurementOrder:false})),
+  trials:{status:"not_queried" as const,records:[],relevanceScope:"preliminary_research_only" as const,eligibilityAssessed:false,confirmedEligible:false,note:"No registry search is attached to this investigation. An empty list is not evidence of worldwide trial absence."},
+  review:{status:d?d.outcome:"not_independently_reviewed" as const,scope:"evidence_brief_only" as const,decisionId:d?.id??null,decisionHash:d?.decisionHash??null,reviewedAt:d?.reviewedAt??null,rationale:d?.rationale??null,limitations:d?[...d.limitations]:[],scientificApprovalTransferred:false},
+  comparison:{available:p.context.comparison!==null,releaseId:p.context.comparison?.release.id??null,manifestHash:p.context.comparison?.release.manifestHash??null,role:"separate_disease_context_not_branch_evidence" as const},
+  provenance:{methods,declaredRetrievalReferenceCount:i.provenance.retrievalIds.length,projectionInvokesModel:false,sourceSearchCompletenessVerified:false,deterministic:true},
+  disclaimer:"Research use only. Not a diagnosis, treatment recommendation, patient measurement order or trial-eligibility decision."
+ };
+}
+export type ResearchOutcome=ReturnType<typeof projectResearchOutcome>&{outcomeHash:string};
+/** Trusted backend must authorise the current source read before invoking this pure compiler. */
+export async function buildResearchOutcome(value:EvidenceBrief,digest:Digest):Promise<ResearchOutcome>{
+ exact(value,["schemaVersion","package","submission","decision","scope","graphPublicationApproved"]);
+ if(value.schemaVersion!=="hsi-investigation-brief-1"||value.scope!=="research_only"||value.graphPublicationApproved!==false)throw Error("Research-only brief required");
+ const p=await verifyReviewPackage(value.package,digest),s=value.submission;
+ if(s){exact(s,["id","packageHash","submittedAt","submittedBy"]);if(s.packageHash!==p.packageHash||s.submittedBy!==p.investigation.actorPrincipal||!/^submission-[a-f0-9]{32}$/.test(s.id)||!Number.isFinite(Date.parse(s.submittedAt))||p.investigation.state!=="awaiting_scientific_review")throw Error("Unbound outcome submission")}
+ else if(value.decision||p.investigation.state!=="draft")throw Error("A submitted investigation requires its bound submission");
+ if(value.decision)await verifyDeliveryDecision(value.decision,p,s!,digest);
+ const body=projectResearchOutcome(value),text=canonicalGraphContext(body);if(new TextEncoder().encode(text).byteLength>2_000_000)throw Error("Research outcome exceeds export budget");
+ return {...body,outcomeHash:await digest(text)};
+}
+/** Recomputes a serialization projection to check binding; it performs no scientific inference. */
+export async function verifyResearchOutcome(value:unknown,expected:EvidenceBrief,digest:Digest):Promise<ResearchOutcome>{
+ const checked=await buildResearchOutcome(expected,digest);if(canonicalGraphContext(value)!==canonicalGraphContext(checked))throw Error("Outcome differs from the independently loaded evidence package or decision");return checked;
+}
+const md=(text:string)=>text.replace(/\\/g,"\\\\").replace(/[<>\[\]*_`#|]/g,c=>"\\"+c).replace(/\r/g,"").replace(/\n/g," ");
+export function renderResearchOutcome(outcome:ResearchOutcome,format:"json"|"markdown"):string{
+ if(format==="json")return JSON.stringify(JSON.parse(canonicalGraphContext(outcome)),null,2)+"\n";
+ const o=outcome,lines=["# Human Super Intelligence — research outcome","",md(o.question),"",`Outcome SHA-256: ${o.outcomeHash}`,`Package: ${o.binding.packageHash}`,`Source context: ${o.binding.contextHash}`,`Primary release: ${o.binding.releaseId} v${o.binding.releaseVersion}`,`Method: ${o.method}`,"","## Answer and limits","",md(o.answer.summary),`Saved assessment: ${o.answer.savedAssessment}; confidence: not calibrated.`,...o.answer.limitations.map(s=>"- "+md(s)),"","## Mechanism map — source context, not a causal chain","",...o.mechanismMap.edges.map(e=>"- "+md(e.subjectId+" → "+e.predicate+" → "+e.objectId)+"; claims: "+e.claimIds.map(md).join(", ")),"","## Source evidence and biological context",""];
+ for(const c of o.evidence){lines.push("### "+md(c.claimId),"",md(c.statement),`Source review: ${c.sourceHumanReview.status}; decision ${md(c.sourceHumanReview.decisionId)}`,`Context: ${md(JSON.stringify(c.context))}`,`Supporting branches: ${c.supportingBranchIds.map(md).join(", ")||"none assigned"}; opposing branches: ${c.opposingBranchIds.map(md).join(", ")||"none assigned"}`);
+  for(const id of c.passageIds){const p=o.passages.find(p=>p.id===id)!,s=o.sources.find(s=>s.id===p.sourceId)!;lines.push("",md(s.title),`PMID: ${s.pmid??"not recorded"}; DOI: ${md(s.doi??"not recorded")}`,`Source URL: ${md(s.url??"not recorded")}`,`Source version: ${md(p.sourceVersion)}; locator: ${md(p.locator)}`,`Passage SHA-256: ${p.sha256}`,"> "+md(p.text));}
+ }
+ lines.push("","## Conflicting evidence","",md(o.contradictions.note),...o.contradictions.recordedOpposingClaimIds.map(id=>"- "+md(id)),"","## Missing data","",...o.missingData.map(s=>"- "+md(s)),"","## Investigation question tree","",...o.decisionTree.questions.map(q=>"  ".repeat(q.depth)+"- "+md(q.text)+` (${q.status}; ${q.purpose})`),"","## Candidate hypotheses and falsification","");
+ for(const b of o.hypotheses)lines.push("### "+md(b.statement),`Assessment: ${b.assessment}; classification: ${b.classification}`,md(b.falsificationCriteria),"Predicted observation, experiment and controls: not specified in the saved record.",...b.uncertainty.map(s=>"- "+md(s)));
+ lines.push("","## Next research work","",...o.nextResearchSteps.map(s=>"- "+md(s.action)+" "+md(s.falsificationQuestion)),"","## Clinical-trial context","",md(o.trials.note),"No participant eligibility has been assessed.","","## Human review","",`Recorded outcome: ${o.review.status}; scope: evidence brief only.`,md(o.review.rationale??"No independent decision recorded."),...o.review.limitations.map(s=>"- "+md(s)),"","## Methods and provenance","",...o.provenance.methods.map(m=>"- "+md(`${m.agentId} v${m.version}; recorded model ${m.modelVersion}; prompt ${m.promptVersion}; tool-call count ${m.toolCallCount}`)),"No new model call, live patient connection or exhaustive literature search is performed by this projection.","",o.disclaimer,"");return lines.join("\n");
+}

@@ -2,6 +2,8 @@
  * Deploy only behind a same-origin reverse proxy and secure HTTPS session cookies.
  * Never accept identity, session tokens or roles from request bodies.
  */
+import {renderResearchOutcome,type ResearchOutcome} from "../researchOutcome";
+import {deliveryHash} from "./investigationDeliveryService";
 import {loadAuthenticatedInterrogativeInvestigation} from "../db/authenticatedInterrogativeStore";
 import {boundedRequestText,RequestBodyTooLarge,RequestBodyTimeout} from "./boundedRequestBody";
 import {withInvestigationDelivery} from "../db/investigationDeliveryStore";
@@ -18,6 +20,7 @@ import {parseCreateInvestigation,parseInvestigationCursor,type InvestigationCurs
 import {loadOrCaptureInvestigationGraphContext} from "../db/investigationGraphContextStore";
 
 type ApiServices={
+ outcome?:(input:{serverSessionToken:string|null;investigationId:string})=>Promise<ResearchOutcome>;
  deliveryView?:(input:{serverSessionToken:string|null;investigationId:string})=>Promise<unknown>;
  brief?:(input:{serverSessionToken:string|null;investigationId:string;format:"json"|"markdown"})=>Promise<{content:string;hash:string;packageHash:string;mime:string;filename:string}>;
  revise?:(input:{serverSessionToken:string|null;investigationId:string;request:unknown})=>Promise<unknown>;
@@ -48,6 +51,22 @@ function json(data:unknown,status=200):Response{
 }
 export async function handleInterrogativeApi(req:Request,services:ApiServices):Promise<Response>{
  const url=new URL(req.url);
+ const outcome=/^\/api\/research\/interrogative\/(hsi-interrogative-[a-zA-Z0-9-]{8,100})\/outcome$/.exec(url.pathname);
+ if(outcome){
+  if(req.method!=="GET")return json({error:"Method not allowed"},405);
+  const token=sessionFromCookie(req);if(!token)return json({error:"Authentication required"},401);
+  if([...url.searchParams.keys()].some(k=>k!=="format")||url.searchParams.getAll("format").length>1)return json({error:"Query overrides refused"},400);
+  const format=url.searchParams.get("format");
+  if(format!==null&&format!=="json"&&format!=="markdown")return json({error:"Invalid outcome format"},400);
+  if(!services.outcome)return json({error:"Outcome unavailable"},503);
+  try{
+   const result=await services.outcome({serverSessionToken:token,investigationId:outcome[1]!});
+   if(format===null)return json(result);
+   const content=renderResearchOutcome(result,format),hash=deliveryHash(content);
+   if(new TextEncoder().encode(content).byteLength>2_000_000)throw Error("Export budget");
+   return new Response(content,{headers:{"Content-Type":format==="json"?"application/json":"text/markdown; charset=utf-8","Content-Disposition":'attachment; filename="'+outcome[1]+'-outcome-'+hash.slice(0,12)+(format==="json"?'.json"':'.md"'),"Cache-Control":"no-store","Vary":"Cookie","X-Content-Type-Options":"nosniff","X-HSI-Content-SHA256":hash,"X-HSI-Package-SHA256":result.binding.packageHash,"X-HSI-Outcome-SHA256":result.outcomeHash}});
+  }catch{return json({error:"Outcome unavailable, changed or access denied"},403)}
+ }
  const delivery=/^\/api\/research\/interrogative\/(hsi-interrogative-[a-zA-Z0-9-]{8,100})\/(review-package|brief|revision)$/.exec(url.pathname);
  if(delivery){
   const token=sessionFromCookie(req);if(!token)return json({error:"Authentication required"},401);
@@ -199,6 +218,7 @@ export function createNeonInterrogativeApiServices(config:{databaseUrl:string;ne
   graph:args=>loadSscResearchGraph({...config,...args}),
   discovery:async args=>investigateGovernedDiseaseGraph(await loadSscResearchGraph({...config,...args}) as HsiGraphPage,"systemic_sclerosis"),
   load:args=>loadAuthenticatedInterrogativeInvestigation({...config,...args}),
+  outcome:args=>withInvestigationDelivery(config,false,s=>s.outcome(args.serverSessionToken,args.investigationId)),
   deliveryView:args=>withInvestigationDelivery(config,false,s=>s.view(args.serverSessionToken,args.investigationId)),
   brief:args=>withInvestigationDelivery(config,false,s=>s.brief(args.serverSessionToken,args.investigationId,args.format)),
   revise:args=>withInvestigationDelivery(config,true,s=>s.revise(args.serverSessionToken,args.investigationId,args.request)),
