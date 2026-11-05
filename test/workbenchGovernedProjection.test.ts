@@ -1,0 +1,12 @@
+import {describe,expect,test} from "bun:test";
+import {readGovernedGraph} from "../src/governedGraphRead";
+import {projectGovernedGraphForWorkbench} from "../src/workbenchGovernedProjection";
+import type {HsiGraphNode,HsiGraphRelationship} from "../src/livingHealthKnowledgeGraph";
+const node=(id:string):HsiGraphNode=>({schemaVersion:"hsi-lhkg-node-1",id,layer:"human_biology",kind:"cell",preferredLabel:id,aliases:[],sourceIdentifiers:[],version:"1.0.0",visibility:"governed_research",reviewState:"draft",sourceProvenance:["isi-ssc"]});
+const relationship:HsiGraphRelationship={schemaVersion:"hsi-lhkg-edge-1",id:"edge:tfh-il21",subjectId:"cell:tfh",predicate:"associated_with",objectId:"molecule:il21",layer:"human_biology",epistemicType:"association",visibility:"governed_research",reviewState:"draft",sourceEvidenceIds:["PMID:30760472"],version:"1.0.0",context:{studyContext:"SSc research",sourceLocator:"Abstract",limitations:"Requires independent verification"},causalClaim:false};
+const principal={id:"reviewer-1",tenantId:"tenant-a",role:"researcher" as const,authenticated:true};
+describe("Phase 3.3 governed workbench projection",()=>{
+ test("preserves context, sources, uncertainty and review gaps",()=>{const read=readGovernedGraph({version:"1.0.0",tenantId:"tenant-a",nodes:[node("cell:tfh"),node("molecule:il21")],relationships:[relationship]},principal,{tenantId:"tenant-a",seedId:"cell:tfh",includeDraft:true});const view=projectGovernedGraphForWorkbench(read);expect(view.mechanisms[0]?.sourceEvidenceIds).toEqual(["PMID:30760472"]);expect(view.mechanisms[0]?.studyContext).toBe("SSc research");expect(view.mechanisms[0]?.gaps).toContain("Independent scientific approval pending");expect(view.readOnly).toBe(true)});
+ test("rejects unresolved endpoint",()=>{const read={schemaVersion:"hsi-governed-graph-read-1" as const,version:"1.0.0",seedId:"cell:tfh",readOnly:true as const,truncated:false,nodes:[node("cell:tfh")],relationships:[relationship]};expect(()=>projectGovernedGraphForWorkbench(read)).toThrow()});
+ test("refuses clinical content in research projection",()=>{const restricted={...node("cell:tfh"),visibility:"restricted_clinical" as const,layer:"patient_context" as const};const read={schemaVersion:"hsi-governed-graph-read-1" as const,version:"1.0.0",seedId:"cell:tfh",readOnly:true as const,truncated:false,nodes:[restricted,node("molecule:il21")],relationships:[relationship]};expect(()=>projectGovernedGraphForWorkbench(read)).toThrow()});
+});
