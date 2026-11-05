@@ -1,0 +1,14 @@
+import {describe,expect,test} from "bun:test";
+import {readGovernedGraph,GraphReadDenied} from "../src/governedGraphRead";
+import type {HsiGraphNode,HsiGraphRelationship} from "../src/livingHealthKnowledgeGraph";
+const node=(id:string,visibility:HsiGraphNode["visibility"],reviewState:HsiGraphNode["reviewState"]="draft"):HsiGraphNode=>({schemaVersion:"hsi-lhkg-node-1",id,layer:"human_biology",kind:"cell",preferredLabel:id,aliases:[],sourceIdentifiers:[],version:"1.0.0",visibility,reviewState,sourceProvenance:["isi-ssc"]});
+const edge=(id:string,a:string,b:string,visibility:HsiGraphRelationship["visibility"],reviewState:HsiGraphRelationship["reviewState"]="draft"):HsiGraphRelationship=>({schemaVersion:"hsi-lhkg-edge-1",id,subjectId:a,objectId:b,predicate:"associated_with",layer:"human_biology",epistemicType:"association",visibility,reviewState,sourceEvidenceIds:["PMID:30760472"],version:"1.0.0",context:{studyContext:"SSc"},causalClaim:false,...(reviewState==="approved"?{reviewDecisionId:"review:1"}:{})});
+const research={version:"1.0.0",tenantId:"tenant-a",nodes:[node("cell:tfh","governed_research"),node("molecule:il21","governed_research")],relationships:[edge("edge:1","cell:tfh","molecule:il21","governed_research")]};
+const researcher={id:"actor-1",tenantId:"tenant-a",role:"researcher" as const,authenticated:true};
+describe("Phase 3.2 governed graph reads",()=>{
+ test("authorised researcher sees bounded draft with provenance",()=>{const x=readGovernedGraph(research,researcher,{seedId:"cell:tfh",tenantId:"tenant-a",includeDraft:true});expect(x.relationships[0]?.sourceEvidenceIds).toEqual(["PMID:30760472"]);expect(x.nodes).toHaveLength(2);expect(x.readOnly).toBe(true)});
+ test("default hides drafts",()=>{expect(()=>readGovernedGraph(research,researcher,{seedId:"cell:tfh",tenantId:"tenant-a"})).toThrow(GraphReadDenied)});
+ test("rejects cross-tenant and anonymous research access",()=>{expect(()=>readGovernedGraph(research,{...researcher,tenantId:"tenant-b"},{seedId:"cell:tfh",tenantId:"tenant-b",includeDraft:true})).toThrow(GraphReadDenied);expect(()=>readGovernedGraph(research,{...researcher,authenticated:false},{seedId:"cell:tfh",tenantId:"tenant-a",includeDraft:true})).toThrow(GraphReadDenied)});
+ test("rejects unbounded traversal",()=>{expect(()=>readGovernedGraph(research,researcher,{seedId:"cell:tfh",tenantId:"tenant-a",depth:99,includeDraft:true})).toThrow(GraphReadDenied)});
+ test("public only reads approved public graph",()=>{const publicSnapshot={version:"1.0.0",tenantId:null,nodes:[node("cell:tfh","public_biomedical","approved"),node("molecule:il21","public_biomedical","approved")],relationships:[edge("edge:1","cell:tfh","molecule:il21","public_biomedical","approved")]};const result=readGovernedGraph(publicSnapshot,{id:"anonymous",tenantId:"public",role:"public",authenticated:false},{seedId:"cell:tfh",tenantId:"public"});expect(result.relationships).toHaveLength(1)});
+});
