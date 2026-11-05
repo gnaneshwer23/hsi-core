@@ -8,12 +8,15 @@ import type {HsiScientificReviewDecision} from "../interrogativeScientificReview
 import {loadResearchAccount} from "../db/researchAccountStore";
 import {loadScientificReviewHistory} from "../db/scientificReviewHistory";
 import {loadSscResearchGraph} from "./sscGraphReadService";
+import {investigateGovernedDiseaseGraph} from "../governedDiseaseDiscovery";
+import type {HsiGraphPage} from "../hsiGovernedGraphQuery";
 import type {ResearchAccountAccess} from "../researchAccount";
 
 type ApiServices={
  account?:(input:{serverSessionToken:string|null})=>Promise<ResearchAccountAccess|null>;
  history?:(input:{serverSessionToken:string|null})=>Promise<unknown>;
  graph?:(input:{serverSessionToken:string|null;nodeId:string})=>Promise<unknown>;
+ discovery?:(input:{serverSessionToken:string|null;nodeId:string})=>Promise<unknown>;
  load:(input:{serverSessionToken:string|null;investigationId:string})=>Promise<unknown>;
  submit:(input:{serverSessionToken:string|null;investigationId:string})=>Promise<unknown>;
  review:(input:{serverSessionToken:string|null;decision:HsiScientificReviewDecision})=>Promise<unknown>;
@@ -33,14 +36,16 @@ function json(data:unknown,status=200):Response{
 }
 export async function handleInterrogativeApi(req:Request,services:ApiServices):Promise<Response>{
  const url=new URL(req.url);
- if(url.pathname==="/api/research/graph/ssc"){
+ if(url.pathname==="/api/research/graph/ssc"||url.pathname==="/api/research/discovery/ssc"){
   if(req.method!=="GET")return json({error:"Method not allowed"},405);
   const token=sessionFromCookie(req);
   if(!token)return json({error:"Authentication required"},401);
   const nodeId=url.searchParams.get("node")??"";
   if(!/^[A-Za-z0-9][A-Za-z0-9._:-]{1,127}$/.test(nodeId))return json({error:"Valid graph node required"},400);
-  if(!services.graph)return json({error:"Graph service unavailable"},503);
-  try{return json(await services.graph({serverSessionToken:token,nodeId}))}
+  const discovery=url.pathname==="/api/research/discovery/ssc";
+  const handler=discovery?services.discovery:services.graph;
+  if(!handler)return json({error:"Research service unavailable"},503);
+  try{return json(await handler({serverSessionToken:token,nodeId}))}
   catch{return json({error:"Graph unavailable or access denied"},403)}
  }
 
@@ -96,6 +101,7 @@ export function createNeonInterrogativeApiServices(config:{databaseUrl:string;ne
   account:args=>loadResearchAccount({...config,...args}),
   history:args=>loadScientificReviewHistory({...config,...args}),
   graph:args=>loadSscResearchGraph({...config,...args}),
+  discovery:async args=>investigateGovernedDiseaseGraph(await loadSscResearchGraph({...config,...args}) as HsiGraphPage,"systemic_sclerosis"),
   load:args=>loadAuthenticatedInterrogativeInvestigation({...config,...args}),
   submit:args=>submitInterrogativeForReview({...config,...args}),
   review:args=>recordAuthenticatedScientificReview({...config,...args})
