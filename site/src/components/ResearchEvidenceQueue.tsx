@@ -1,0 +1,12 @@
+import type {ReactNode} from "react";
+export type ScientificVerification={schemaVersion:string;reviewedByHuman:boolean;graphPromotable:boolean;sources:{pmid:string;url:string;title:string;abstractVerified:boolean;studyModel:string[]}[];claims:{id:string;pmid:string;support:string;locator:string;claimType:string;limitation:string}[];disagreements:{id:string;status:string;description:string;interpretation:string;requiresReview:string[]}[]};
+export function validateScientificVerification(value:ScientificVerification):void{
+ if(value.schemaVersion!=="hsi-ssc-abstract-verification-1"||value.reviewedByHuman!==false||value.graphPromotable!==false||!Array.isArray(value.sources)||!Array.isArray(value.claims)||!Array.isArray(value.disagreements))throw Error("Untrusted scientific verification source");
+}
+const panel={border:"1px solid #aab3c0",borderRadius:12,padding:18,marginBlock:12};
+export function ResearchEvidenceQueue({verification}:{verification:ScientificVerification}):ReactNode{
+ return <section aria-label="Scientific evidence verification queue"><h2>Scientific evidence review queue</h2><p>Abstract-level source checks are not independent scientific approval. Claim assessments remain unreviewed.</p>
+ <h3>Publications · {verification.sources.length}</h3>{verification.sources.map(source=><article key={source.pmid} style={panel}><h4>{source.title}</h4><p>PMID {source.pmid} · {source.abstractVerified?"Abstract checked; not independently approved":"Abstract check pending"}</p><p>Study models: {source.studyModel.join("; ")}</p><a href={source.url} target="_blank" rel="noreferrer">Inspect source record</a><h4>Source-linked claims</h4>{verification.claims.filter(c=>c.pmid===source.pmid).map(c=><div key={c.id}><strong>{c.id}</strong><p>{c.claimType} · {c.support} · {c.locator}</p><p>Limitation: {c.limitation}</p></div>)}</article>)}
+ <h3>Contextual disagreements · {verification.disagreements.length}</h3>{verification.disagreements.map(d=><article key={d.id} style={panel}><h4>{d.id} · {d.status.replaceAll("_"," ")}</h4><p>{d.description}</p><p>{d.interpretation}</p><strong>Checks required</strong><ul>{d.requiresReview.map(c=><li key={c}>{c}</li>)}</ul></article>)}
+ <h3>Ontology mapping review</h3><p>Canonical ISI-to-HSI mappings are not available from a trusted, authenticated release endpoint yet. No automatic equivalence or graph publication is permitted.</p></section>
+}
