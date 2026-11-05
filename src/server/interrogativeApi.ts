@@ -10,6 +10,7 @@ import {loadScientificReviewHistory} from "../db/scientificReviewHistory";
 import {loadSscResearchGraph} from "./sscGraphReadService";
 import {investigateGovernedDiseaseGraph} from "../governedDiseaseDiscovery";
 import type {HsiGraphPage} from "../hsiGovernedGraphQuery";
+import {compareSscRaEvidence} from "../sscRaEvidenceComparison";
 import type {ResearchAccountAccess} from "../researchAccount";
 
 type ApiServices={
@@ -17,6 +18,7 @@ type ApiServices={
  history?:(input:{serverSessionToken:string|null})=>Promise<unknown>;
  graph?:(input:{serverSessionToken:string|null;nodeId:string})=>Promise<unknown>;
  discovery?:(input:{serverSessionToken:string|null;nodeId:string})=>Promise<unknown>;
+ compare?:(input:{serverSessionToken:string|null;sscNodeId:string;raNodeId:string})=>Promise<unknown>;
  load:(input:{serverSessionToken:string|null;investigationId:string})=>Promise<unknown>;
  submit:(input:{serverSessionToken:string|null;investigationId:string})=>Promise<unknown>;
  review:(input:{serverSessionToken:string|null;decision:HsiScientificReviewDecision})=>Promise<unknown>;
@@ -36,6 +38,17 @@ function json(data:unknown,status=200):Response{
 }
 export async function handleInterrogativeApi(req:Request,services:ApiServices):Promise<Response>{
  const url=new URL(req.url);
+ if(url.pathname==="/api/research/comparison/ssc-ra"){
+  if(req.method!=="GET")return json({error:"Method not allowed"},405);
+  const token=sessionFromCookie(req);
+  if(!token)return json({error:"Authentication required"},401);
+  const sscNodeId=url.searchParams.get("sscNode")??"",raNodeId=url.searchParams.get("raNode")??"";
+  const valid=/^[A-Za-z0-9][A-Za-z0-9._:-]{1,127}$/;
+  if(!valid.test(sscNodeId)||!valid.test(raNodeId))return json({error:"Two valid graph nodes required"},400);
+  if(!services.compare)return json({error:"Comparison service unavailable"},503);
+  try{return json(await services.compare({serverSessionToken:token,sscNodeId,raNodeId}))}
+  catch{return json({error:"Comparison unavailable or access denied"},403)}
+ }
  if(url.pathname==="/api/research/graph/ssc"||url.pathname==="/api/research/discovery/ssc"){
   if(req.method!=="GET")return json({error:"Method not allowed"},405);
   const token=sessionFromCookie(req);
@@ -102,6 +115,7 @@ export function createNeonInterrogativeApiServices(config:{databaseUrl:string;ne
   history:args=>loadScientificReviewHistory({...config,...args}),
   graph:args=>loadSscResearchGraph({...config,...args}),
   discovery:async args=>investigateGovernedDiseaseGraph(await loadSscResearchGraph({...config,...args}) as HsiGraphPage,"systemic_sclerosis"),
+  compare:async args=>compareSscRaEvidence(await loadSscResearchGraph({...config,serverSessionToken:args.serverSessionToken,nodeId:args.sscNodeId}) as HsiGraphPage,await loadSscResearchGraph({...config,serverSessionToken:args.serverSessionToken,nodeId:args.raNodeId}) as HsiGraphPage),
   load:args=>loadAuthenticatedInterrogativeInvestigation({...config,...args}),
   submit:args=>submitInterrogativeForReview({...config,...args}),
   review:args=>recordAuthenticatedScientificReview({...config,...args})
