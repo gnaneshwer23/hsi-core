@@ -2,7 +2,9 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "bunVersion": "1.x",
   "functions": {
-    "api/**/*.ts": { "maxDuration": 30 }
+    "api/**/*.ts": {
+      "maxDuration": 30
+    }
   },
   "headers": [
     {
@@ -42,6 +44,10 @@
     }
   ],
   "rewrites": [
+    {
+      "source": "/research/scientific-workbench",
+      "destination": "/index.html"
+    },
     {
       "source": "/sign-up",
       "destination": "/index.html"
