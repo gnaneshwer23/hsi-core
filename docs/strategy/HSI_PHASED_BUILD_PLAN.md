@@ -27,6 +27,8 @@ A translational researcher can ask a bounded question, inspect source-grounded e
 
 ## First implementation work package
 
+**Phase E implementation update — 5 November:** [Bounded assistance and scientific evaluation](../PHASE_E_BOUNDED_AI_AND_SCIENTIFIC_EVALUATION.md) implements the verified deterministic source baseline and versioned offline comparison/label/threshold contracts. Engineering fixtures cover six categories. Rights-cleared SME labels, agreed thresholds, model improvement and activation are pending; no scientific acceptance is claimed.
+
 **Phase D implementation update — 5 November:** [Reproducible briefs and independent review](../PHASE_D_BRIEFS_AND_INDEPENDENT_REVIEW.md) adds context-bound exports, immutable submissions/decisions, a reviewer queue and linked revision/resubmission. Staging migration `015`, real identities and cleared evidence remain live-acceptance prerequisites; no publication is authorised.
 
 **Phase C implementation update — 5 November:** [Connected evidence graph and mechanism context](../PHASE_C_CONNECTED_EVIDENCE_GRAPH.md) adds immutable release-bound investigation views, reused mechanism/comparison builders and pinned working-catalogue links. The new staging migration and live acceptance remain pending; human evidence gates are unchanged.

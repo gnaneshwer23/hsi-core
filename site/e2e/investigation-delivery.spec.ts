@@ -65,3 +65,15 @@ test("tampered download is rejected and reviewer queue fits mobile width",async(
  await page.goto("/research/scientific-review?investigation="+f.initial.id);await page.getByRole("button",{name:"Download evidence JSON"}).click();await expect(page.getByText("Download could not be verified.",{exact:false})).toBeVisible();
  await page.setViewportSize({width:375,height:812});await page.goto("/research/scientific-review");await expect(page.getByRole("link",{name:f.initial.question,exact:true})).toBeVisible();expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true);
 });
+
+test("Phase E baseline shows exact, bound source excerpts without enabling AI or changing the investigation",async({page})=>{
+ const f=deliveryHarness(),before=JSON.stringify(f.states.get(f.initial.id)),calls:string[]=[];
+ page.on("request",r=>{if(/\/api\//.test(r.url()))calls.push(r.url())});await wire(page,f,"alice");await page.goto("/research/decision-workbench?investigation="+f.initial.id);
+ const panel=page.getByRole("region",{name:"Source-grounded baseline",exact:true});await expect(panel).toContainText("Matching source observations");await expect(panel.getByRole("blockquote")).toHaveText(f.contexts.get(f.initial.id)!.primary.bundle.passages[0]!.text);
+ await panel.getByText("Inspect citation binding",{exact:true}).click();await expect(panel).toContainText(f.contexts.get(f.initial.id)!.primary.bundle.passages[0]!.sha256!);await expect(panel).toContainText("Model assistance remains disabled");expect(JSON.stringify(f.states.get(f.initial.id))).toBe(before);expect(calls.some(u=>/\/api\/(?:ai|model|assist)/.test(u))).toBe(false);
+ await page.setViewportSize({width:375,height:812});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true);
+});
+test("Phase E assistance disappears if the package cannot be verified",async({page})=>{
+ const f=deliveryHarness();await wire(page,f,"alice");await page.route("**/review-package",async route=>{const v=await f.service.view("alice",f.initial.id);v.package!.context.primary.bundle.passages[0]!.text="Forged source text";return route.fulfill({json:v})});
+ await page.goto("/research/decision-workbench?investigation="+f.initial.id);await expect(page.getByText("The evidence brief could not be verified.",{exact:false})).toBeVisible();await expect(page.getByRole("region",{name:"Source-grounded baseline",exact:true})).toHaveCount(0);
+});

@@ -1,4 +1,5 @@
 import {useEffect,useRef,useState,type FormEvent} from "react";
+import {SourceGroundedBaseline} from "./SourceGroundedBaseline";
 import {Link,useNavigate} from "react-router-dom";
 import {fetchDeliveryView,downloadEvidenceBrief} from "../lib/investigationDeliveryClient";
 import type {DeliveryView} from "../../../src/investigationDelivery";
@@ -27,6 +28,7 @@ export function InvestigationDelivery({investigation,onSubmitted,onRecordChange}
   <p>Download the exact evidence package, submit it to a separate reviewer, and keep each revision and decision traceable. No graph publication or clinical decision is authorised here.</p>
   {loading&&<p role="status">Verifying evidence brief…</p>}{message&&<p role="status">{message}</p>}
   {view&&<><p><strong>Review status:</strong> {view.status.replaceAll("_"," ")}</p>{view.package?<><p>Package SHA-256: <code>{view.package.packageHash}</code></p><p>Bound evidence context: <code>{view.package.context.contentHash}</code></p>{view.status!=="legacy_unbound"&&<BriefDownloads id={investigation.id} packageHash={view.package.packageHash}/>}</>:<p>Capture a verified evidence context above before exporting or submitting this investigation.</p>}
+   {view.package&&view.status!=="legacy_unbound"&&<SourceGroundedBaseline evidencePackage={view.package}/>}
    {view.status==="legacy_unbound"&&<p>This older decision is preserved. It is not reclassified as a context-bound review. Start a new investigation to use the current workflow.</p>}
    {view.capabilities.canSubmit&&<button type="button" disabled={busy} onClick={()=>void submit()}>Submit evidence brief for independent review</button>}
    {view.status==="awaiting_review"&&<p>The submitted package is fixed. An independently authorised reviewer must record a decision.</p>}

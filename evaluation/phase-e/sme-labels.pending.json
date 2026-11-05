@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "hsi-scientific-labels-1",
+  "datasetHash": "82451674fd3fd312d47615a2ac8b40847d9a004d51e8cfdf5c4f595fc6bc5b41",
+  "status": "awaiting_sme",
+  "rows": [
+    {
+      "caseId": "supported-one",
+      "caseHash": "5fdff56c911a4cce8103daa6bb361be058393b966a1775d63db8cab17d4edd28",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotator": null,
+      "rationale": null
+    },
+    {
+      "caseId": "supported-two",
+      "caseHash": "a67cfa7fa23abc08103fff8f8e2969de570780770462502df64f73f139de5303",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotator": null,
+      "rationale": null
+    },
+    {
+      "caseId": "unassessed",
+      "caseHash": "f18748a8397d981aa6b1e4545a5cb724069ef1a78ad4137b6519e7341a112048",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotator": null,
+      "rationale": null
+    },
+    {
+      "caseId": "unreviewed",
+      "caseHash": "3ea9668e9886c8be3afe805b4a37e132d149d1313dbac74223ab5f58563145bc",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotator": null,
+      "rationale": null
+    },
+    {
+      "caseId": "conflicting",
+      "caseHash": "45c42f4042f83393a58ff9becb038cab37f98f3ffb6d3b1945780cf5787743b2",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotator": null,
+      "rationale": null
+    },
+    {
+      "caseId": "wrong-disease",
+      "caseHash": "f4707f1b55ca80a1a71ec3a594f86b999406b00b792bdc0a6803b6c5a9f4ddcf",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotator": null,
+      "rationale": null
+    },
+    {
+      "caseId": "wrong-species",
+      "caseHash": "e18e3480bd27a2f0408b8395e638b09cb13471fec6e1abe660264013b643449f",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotator": null,
+      "rationale": null
+    },
+    {
+      "caseId": "no-evidence",
+      "caseHash": "71173c4d7eff75e82ad56aaa3b204b9253721cd37f8235f6ae7bd993853e5b8d",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotator": null,
+      "rationale": null
+    },
+    {
+      "caseId": "rights-not-cleared",
+      "caseHash": "b7c41a99662e9c74c2be0da50c9843de06011ebdd29e819748fdb59764690a20",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotator": null,
+      "rationale": null
+    },
+    {
+      "caseId": "opposing-only",
+      "caseHash": "1e88ebe94fa00b53d75fd144dbcbb7b90ec1e27692c05e716ee3dd72bd99dbce",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotator": null,
+      "rationale": null
+    },
+    {
+      "caseId": "question-instruction",
+      "caseHash": "ab819fab01c039a05e5b60be9e1d88c517033806528aef83de0d38ee1a786c94",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotator": null,
+      "rationale": null
+    },
+    {
+      "caseId": "source-instruction",
+      "caseHash": "6050bd269b9ca0d2d80699be1c7741b458c92ea2ad95c5067468a9ec6caf9370",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotator": null,
+      "rationale": null
+    }
+  ]
+}

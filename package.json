@@ -53,6 +53,10 @@
     "./context-annotation-benchmark": {
       "types": "./dist/contextAnnotationBenchmark.d.ts",
       "import": "./dist/contextAnnotationBenchmark.js"
+    },
+    "./scientific-evaluation": {
+      "types": "./dist/scientificEvaluation.d.ts",
+      "import": "./dist/scientificEvaluation.js"
     }
   },
   "files": [
@@ -98,7 +102,8 @@
     "sources:ingest:ssc": "bun src/cli/ingest-ssc-sources.ts",
     "audit:step6": "bun src/cli/step6-readiness.ts",
     "evidence:build": "bun scripts/build-evidence-corpus.ts",
-    "evidence:check": "bun scripts/build-evidence-corpus.ts --check"
+    "evidence:check": "bun scripts/build-evidence-corpus.ts --check",
+    "evaluation:scientific": "bun --no-env-file scripts/evaluate-scientific-assistance.ts"
   },
   "engines": {
     "node": ">=20"

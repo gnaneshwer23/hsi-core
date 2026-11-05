@@ -1,0 +1,10 @@
+{
+  "schemaVersion": "hsi-scientific-thresholds-1",
+  "status": "proposal_only",
+  "citationCorrectnessMin": null,
+  "unsupportedClaimsMax": null,
+  "abstentionAccuracyMin": null,
+  "outcomeAccuracyMin": null,
+  "latencyP95MsMax": null,
+  "costUsdMax": null
+}
