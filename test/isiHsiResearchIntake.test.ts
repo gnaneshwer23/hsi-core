@@ -1,0 +1,13 @@
+import {test,expect} from "bun:test";
+import {stageIsiGraphRelease} from "../src/adapters/isiGraphReleaseAdapter";
+import {composeIsiHsiResearchIntake} from "../src/adapters/isiHsiResearchIntake";
+import {buildSscEvidenceSnapshot} from "../src/evidence/sscEvidenceSnapshot";
+import type {SscCandidatePack} from "../src/evidence/sscLiteratureVerification";
+const graph=()=>stageIsiGraphRelease({version:"0.3",nodes:[{id:"C001",name:"Tfh",node_type:"CELL"}],relationships:[],stats:{total_nodes:1,total_relationships:0}});
+const evidence=()=>buildSscEvidenceSnapshot({pack:{schemaVersion:"hsi-ssc-curation-candidates-1",graphPromotable:false,reviewedByHuman:false,claims:[]} as SscCandidatePack,records:[],datasetId:"ssc-tfh-il21-v1",capturedAt:"2026-11-05T00:00:00.000Z"});
+test("combines ISI and HSI provenance without graph promotion",()=>{const x=composeIsiHsiResearchIntake({graph:graph(),evidence:evidence()});expect(x.graph.nodeCount).toBe(1);expect(x.ontology.pending).toHaveLength(1);expect(x.ontology.mapped).toHaveLength(0);expect(x.graphPromotable).toBe(false);expect(x.reviewRequired).toBe(true)});
+test("reviewed exact mapping remains non-promotable",()=>{const x=composeIsiHsiResearchIntake({graph:graph(),evidence:evidence(),ontologyReviews:[{isiId:"C001",hsiCanonicalId:"hsi:tfh",reviewDecisionId:"review-1",sourceRef:"curator-1",relation:"exact",status:"approved"}]});expect(x.ontology.mapped).toHaveLength(1);expect(x.ontology.pending).toHaveLength(0);expect(x.graphPromotable).toBe(false)});
+test("related mapping cannot be approved as exact",()=>expect(()=>composeIsiHsiResearchIntake({graph:graph(),evidence:evidence(),ontologyReviews:[{isiId:"C001",hsiCanonicalId:"hsi:tfh",reviewDecisionId:"review-1",sourceRef:"curator-1",relation:"related",status:"approved"}]})).toThrow());
+test("unknown ontology ID fails closed",()=>expect(()=>composeIsiHsiResearchIntake({graph:graph(),evidence:evidence(),ontologyReviews:[{isiId:"C999",hsiCanonicalId:"hsi:tfh",reviewDecisionId:"review-1",sourceRef:"curator-1",relation:"exact",status:"approved"}]})).toThrow());
+test("tampered evidence snapshot is rejected",()=>{const e=evidence();e.datasetId="ssc-modified-v1";expect(()=>composeIsiHsiResearchIntake({graph:graph(),evidence:e})).toThrow()});
+test("forged graph promotion is rejected",()=>{const g=graph();(g as unknown as {graphPromotable:boolean}).graphPromotable=true;expect(()=>composeIsiHsiResearchIntake({graph:g,evidence:evidence()})).toThrow()});
