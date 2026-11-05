@@ -24,7 +24,7 @@ export function ResearchEvidenceCatalogue(){
  const sources=useMemo(()=>corpus?.sources.filter(s=>(disease==="all"||s.disease===disease)&&[s.title,s.pmid,s.doi,...corpus.claims.filter(c=>c.sourceId===s.id).map(c=>c.assertion)].join(" ").toLowerCase().includes(query.trim().toLowerCase()))??[],[corpus,disease,query]);
  const source=sources.find(s=>s.id===selected)??sources[0];
  const claims=corpus?.claims.filter(c=>c.sourceId===source?.id)??[];
- return <main className="science-body evidence-catalogue"><header className="science-body-hero"><div className="science-body-wrap"><p className="science-body-kicker">HSI / RESEARCH EVIDENCE</p><h1>Inspect the source.<br/><em>Understand the limits.</em></h1><p>Explore the bounded RA and SSc evidence working set. Imported passages, bibliographic candidates and human clearance remain distinct.</p><div className="science-body-actions"><Link to="/research/scientific-workbench">Research workspace</Link><Link to="/research/account">Research account</Link></div></div></header>
+ return <div className="science-body evidence-catalogue"><header className="science-body-hero"><div className="science-body-wrap"><p className="science-body-kicker">HSI / RESEARCH EVIDENCE</p><h1>Inspect the source.<br/><em>Understand the limits.</em></h1><p>Explore the bounded RA and SSc evidence working set. Imported passages, bibliographic candidates and human clearance remain distinct.</p><div className="science-body-actions"><Link to="/research/scientific-workbench">Research workspace</Link><Link to="/research/account">Research account</Link></div></div></header>
  <div className="science-body-wrap evidence-catalogue-content">
   {error?<div role="alert"><p>{error}</p><button type="button" onClick={()=>setAttempt(n=>n+1)}>Retry evidence catalogue</button></div>:!corpus?<p role="status">Verifying the versioned evidence catalogue…</p>:null}
   {corpus&&report&&<>
@@ -41,5 +41,5 @@ export function ResearchEvidenceCatalogue(){
    </section>}</div>
    <section className="evidence-catalogue-review"><h2>Prepare accountable review</h2><p>The versioned review packet lists source-rights, correction and scientific checks. Reviewer identities and decisions are unassigned. Completing a file does not grant authority or publish evidence.</p>{!pinnedVersion&&<a href="/research/evidence-corpus/review-packet.v1.json" download="hsi-evidence-review-packet.v1.json">Download review preparation packet</a>}{pinnedVersion&&<p>This is a pinned historical working set. Use the review packet that matches this version; current packets are not substituted.</p>}<p>RA and SSc stay source-separated. Shared immune terminology does not transfer a conclusion between diseases.</p></section>
   </>}
- </div></main>;
+ </div></div>;
 }

@@ -27,6 +27,8 @@ A translational researcher can ask a bounded question, inspect source-grounded e
 
 ## First implementation work package
 
+**Phase H implementation update — 5 November:** [Pilot operational hardening](../PHASE_H_RESEARCH_PILOT_OPERATIONS.md) implements process/shared-admission contracts, privacy-safe request events, bounded bodies, maintenance, a disposable public-artifact recovery drill and read-only readiness inventory. The [live operating runbook](../RESEARCH_PILOT_RUNBOOK.md) keeps database recovery, deployed rollback, identities/permissions, ownership, scientific terms and real-team acceptance unverified. Local checks are not a production pilot sign-off.
+
 **Phase G implementation update — 5 November:** [Draft indication coverage](../PHASE_G_RESEARCH_COVERAGE.md) implements three versioned gut/brain/metabolic research protocols, background/source inspection, metadata completeness checks and bounded registry-topic contracts. No new scientific approvals, disease-specific supporting passages or live registry records are supplied. RA/SSc and product source contracts remain unchanged; activation and expansion toward 20 conditions remain gated.
 
 **Phase F implementation update — 5 November:** [Product-owned source acceptance](../PHASE_F_PRODUCT_ACCEPTANCE.md) is wired in both Aksh and ISI, using identical verified source content with separate product pins. Actual-loader parity/denial checks, product builds and type checks passed. Zero approved claims were transferred; independent scientific approval and live product schema/role acceptance remain pending.

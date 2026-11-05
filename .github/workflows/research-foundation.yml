@@ -31,11 +31,15 @@ jobs:
         with:
           bun-version: '1.3.11'
       - run: bun install --frozen-lockfile
+      - run: bun audit --json
       - run: bun run check
+      - run: bun --no-env-file run pilot:check --out /tmp/hsi-pilot-engineering-report.json
       - run: bun run ra:test-parser
       - run: bun install --frozen-lockfile
         working-directory: site
       - run: bunx --no-install tsc -p site/tsconfig.json
+      - run: bun audit --json
+        working-directory: site
       - run: bun run site:build
       - run: bunx --no-install playwright install --with-deps chromium
         working-directory: site

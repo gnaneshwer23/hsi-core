@@ -120,7 +120,8 @@
     "consumers:verify": "bun --no-env-file scripts/verify-product-research-acceptance.ts",
     "coverage:build": "bun --no-env-file scripts/build-research-coverage.ts",
     "coverage:check": "bun --no-env-file scripts/build-research-coverage.ts --check",
-    "coverage:prepare-registry": "bun --no-env-file scripts/prepare-public-registry-snapshot.ts"
+    "coverage:prepare-registry": "bun --no-env-file scripts/prepare-public-registry-snapshot.ts",
+    "pilot:check": "bun --no-env-file scripts/research-pilot-readiness.ts"
   },
   "engines": {
     "node": ">=20"

@@ -3,7 +3,7 @@
  * Never accept identity, session tokens or roles from request bodies.
  */
 import {loadAuthenticatedInterrogativeInvestigation} from "../db/authenticatedInterrogativeStore";
-import {boundedRequestText,RequestBodyTooLarge} from "./boundedRequestBody";
+import {boundedRequestText,RequestBodyTooLarge,RequestBodyTimeout} from "./boundedRequestBody";
 import {withInvestigationDelivery} from "../db/investigationDeliveryStore";
 import {loadIndependentReviewQueue,parseReviewQueueCursor,type ReviewQueueCursor} from "../db/independentReviewQueue";
 import {loadResearchAccount} from "../db/researchAccountStore";
@@ -68,7 +68,7 @@ export async function handleInterrogativeApi(req:Request,services:ApiServices):P
    const raw=await boundedRequestText(req,12000);
    let request:unknown;try{request=JSON.parse(raw)}catch{return json({error:"Invalid JSON"},400)}
    return services.revise?json(await services.revise({serverSessionToken:token,investigationId:id,request}),201):json({error:"Revision unavailable"},503);
-  }catch(error){if(error instanceof RequestBodyTooLarge)return json({error:"Payload too large"},413);return json({error:"Delivery unavailable, changed or access denied"},403)}
+  }catch(error){if(error instanceof RequestBodyTooLarge)return json({error:"Payload too large"},413);if(error instanceof RequestBodyTimeout)return json({error:"Request body timed out"},408);return json({error:"Delivery unavailable, changed or access denied"},403)}
  }
  if(url.pathname==="/api/research/scientific-review/queue"){
   if(req.method!=="GET")return json({error:"Method not allowed"},405);
@@ -87,10 +87,9 @@ export async function handleInterrogativeApi(req:Request,services:ApiServices):P
    if(req.headers.get("origin")!==url.origin)return json({error:"Origin verification failed"},403);
    if((req.headers.get("content-type")??"").split(";")[0]?.trim().toLowerCase()!=="application/json")return json({error:"JSON required"},415);
    try{
-    const reader=req.body?.getReader();let raw="",size=0;const decoder=new TextDecoder();
-    if(reader){try{for(;;){const {done,value}=await reader.read();if(done)break;size+=value.length;if(size>64){await reader.cancel();return json({error:"Payload too large"},413)}raw+=decoder.decode(value,{stream:true})}}finally{reader.releaseLock()}}
-    const body=JSON.parse(raw+decoder.decode());if(!body||typeof body!=="object"||Array.isArray(body)||Object.keys(body).length)return json({error:"No client evidence, identity or release overrides accepted"},400);
-   }catch{return json({error:"Empty JSON object required"},400)}
+    const raw=await boundedRequestText(req,64);
+    const body=JSON.parse(raw);if(!body||typeof body!=="object"||Array.isArray(body)||Object.keys(body).length)return json({error:"No client evidence, identity or release overrides accepted"},400);
+   }catch(error){if(error instanceof RequestBodyTooLarge)return json({error:"Payload too large"},413);if(error instanceof RequestBodyTimeout)return json({error:"Request body timed out"},408);return json({error:"Empty JSON object required"},400)}
   }
   if(!services.graphContext)return json({error:"Evidence context unavailable"},503);
   try{return json(await services.graphContext({serverSessionToken,investigationId:graphContext[1]!,capture:req.method==="POST"}))}
@@ -114,11 +113,8 @@ export async function handleInterrogativeApi(req:Request,services:ApiServices):P
   // Bound the incoming stream before parsing; content-length alone is untrusted.
   let request:unknown;
   try{
-   const reader=req.body?.getReader();let size=0;const chunks:Uint8Array[]=[];
-   if(reader){try{for(;;){const {done,value}=await reader.read();if(done)break;size+=value.length;if(size>4096){await reader.cancel();return json({error:"Payload too large"},413)}chunks.push(value)}}finally{reader.releaseLock()}}
-   const bytes=new Uint8Array(size);let offset=0;for(const chunk of chunks){bytes.set(chunk,offset);offset+=chunk.length}
-   request=parseCreateInvestigation(JSON.parse(new TextDecoder().decode(bytes)));
-  }catch{return json({error:"Provide a research question, published release and request ID only"},400)}
+   request=parseCreateInvestigation(JSON.parse(await boundedRequestText(req,4096)));
+  }catch(error){if(error instanceof RequestBodyTooLarge)return json({error:"Payload too large"},413);if(error instanceof RequestBodyTimeout)return json({error:"Request body timed out"},408);return json({error:"Provide a research question, published release and request ID only"},400)}
   if(!services.create)return json({error:"Workspace unavailable"},503);
   try{const result=await services.create({serverSessionToken,request});return json(result,result.created?201:200)}
   catch(error){return workspaceError(error)}
@@ -170,7 +166,7 @@ export async function handleInterrogativeApi(req:Request,services:ApiServices):P
   if(req.method==="GET"&&!match[2])return json(await services.load({serverSessionToken:token,investigationId:id}));
   if(req.method==="POST"&&match[2]==="submit-review"){
    if(url.search)return json({error:"Submission query overrides refused"},400);
-   const raw=await boundedRequestText(req,64);let body:unknown;try{body=JSON.parse(raw)}catch{return json({error:"Empty JSON object required"},400)}
+   const raw=await boundedRequestText(req,64);let body:unknown;try{body=JSON.parse(raw)}catch(error){if(error instanceof RequestBodyTooLarge)return json({error:"Payload too large"},413);if(error instanceof RequestBodyTimeout)return json({error:"Request body timed out"},408);return json({error:"Empty JSON object required"},400)}
    if(!body||typeof body!=="object"||Array.isArray(body)||Object.keys(body).length)return json({error:"Empty JSON object required"},400);
    return json(await services.submit({serverSessionToken:token,investigationId:id}));
   }
@@ -183,7 +179,7 @@ export async function handleInterrogativeApi(req:Request,services:ApiServices):P
   }
   return json({error:"Not found"},404);
  }catch(error){
-  if(error instanceof RequestBodyTooLarge)return json({error:"Payload too large"},413);
+  if(error instanceof RequestBodyTooLarge)return json({error:"Payload too large"},413);if(error instanceof RequestBodyTimeout)return json({error:"Request body timed out"},408);
   // Do not expose DB errors, tokens, reviewer identities or source data.
   return json({error:"Research record unavailable or operation denied"},403);
  }

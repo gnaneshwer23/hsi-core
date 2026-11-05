@@ -26,7 +26,7 @@ export function ScientificResearchWorkbench(){
  const edges=graph?.relationships.filter(e=>e.subjectId===selected||e.objectId===selected)??[];
  const findings=useMemo(()=>graph&&verification?investigateDiscoveryCandidates({edges:graph.relationships,claims:verification.claims,disagreements:verification.disagreements.map(d=>({id:d.id,claimIds:[],description:d.description,interpretation:d.interpretation,requiresReview:d.requiresReview}))}):[],[graph,verification]);
  const traces=useMemo(()=>graph&&verification?projectMechanismTraces(graph.nodes,graph.relationships,verification.claims,selected):[],[graph,verification,selected]);
- return <main className="science-body"><header className="science-body-hero"><div className="science-body-wrap">
+ return <div className="science-body"><header className="science-body-hero"><div className="science-body-wrap">
  <p className="science-body-kicker">HSI / ISI · SCIENTIFIC RESEARCH WORKBENCH</p><h1>Investigate mechanisms.<br/><em>Follow the evidence.</em></h1>
  <p>Systemic sclerosis · Tfh–IL-21–B-cell responses · Research candidates only. This view does not approve scientific claims.</p>
  <div className="science-body-actions"><Link to="/research/evidence-readiness">Evidence catalogue</Link><Link to="/research/coverage">Research coverage</Link><Link to="/science/literature">Literature discovery</Link><Link to="/science/graph">Full graph explorer</Link><Link to="/research/account">Researcher sign-in</Link></div>
@@ -55,5 +55,5 @@ export function ScientificResearchWorkbench(){
  <p><Link to="/science/study-comparison">Compare studies</Link> · <Link to="/science/contradictions">Inspect potential contradictions</Link> · <Link to="/science/review-preparation">Prepare independent review</Link></p>
  {verification&&<ResearchEvidenceQueue verification={verification}/>}
  <p>Ontology mappings, claim-level support and graph publication remain separately governed. No patient records are loaded on this page.</p></section>
- </div></main>
+ </div></div>
 }

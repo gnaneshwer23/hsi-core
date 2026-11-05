@@ -2,6 +2,7 @@
  * Provider cookies stay HttpOnly; tokens and provider internals never enter JSON sent to the browser.
  */
 export type AuthGatewayConfig={authBaseUrl:string;publicOrigin:string};
+import {boundedRequestText,RequestBodyTooLarge,RequestBodyTimeout} from "./boundedRequestBody";
 import {knownAuthErrorCode} from "../authErrors";
 const COOKIE=/^(?:__Secure-|__Host-)?(?:better-auth|neon-auth)\.(?:session_token|session_data|dont_remember)$/;
 export function providerCookies(request:Request):string{
@@ -55,7 +56,7 @@ export async function handleAuthGateway(request:Request,config:AuthGatewayConfig
  if(method==="POST"){
   if(!/^application\/json(?:\s*;|$)/i.test(request.headers.get("content-type")??""))return gatewayJson({code:"JSON_REQUIRED"},415);
   if(Number(request.headers.get("content-length")??0)>20000)return gatewayJson({code:"PAYLOAD_TOO_LARGE"},413);
-  let raw:string;try{raw=await request.text()}catch{return gatewayJson({code:"INVALID_JSON"},400)}
+  let raw:string;try{raw=await boundedRequestText(request,20000)}catch(error){return error instanceof RequestBodyTooLarge?gatewayJson({code:"PAYLOAD_TOO_LARGE"},413):error instanceof RequestBodyTimeout?gatewayJson({code:"REQUEST_TIMEOUT"},408):gatewayJson({code:"INVALID_JSON"},400)}
   if(raw.length>20000)return gatewayJson({code:"PAYLOAD_TOO_LARGE"},413);
   let v:Record<string,unknown>;try{v=JSON.parse(raw);if(!v||Array.isArray(v)||typeof v!=="object")throw Error()}catch{return gatewayJson({code:"INVALID_JSON"},400)}
   if(path==="/send-verification-email"||path==="/email-otp/verify-email"){

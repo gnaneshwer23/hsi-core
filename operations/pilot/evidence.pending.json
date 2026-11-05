@@ -1,0 +1,96 @@
+{
+  "schemaVersion": "hsi-research-pilot-evidence-1",
+  "records": [
+    {
+      "gateId": "artifact_integrity_and_public_recovery",
+      "status": "not_run",
+      "ownerRef": null,
+      "evidenceRef": null,
+      "evidenceSha256": null
+    },
+    {
+      "gateId": "request_bounds_and_redacted_telemetry",
+      "status": "not_run",
+      "ownerRef": null,
+      "evidenceRef": null,
+      "evidenceSha256": null
+    },
+    {
+      "gateId": "locked_build_and_dependency_review",
+      "status": "not_run",
+      "ownerRef": null,
+      "evidenceRef": null,
+      "evidenceSha256": null
+    },
+    {
+      "gateId": "keyboard_accessibility_and_performance",
+      "status": "not_run",
+      "ownerRef": null,
+      "evidenceRef": null,
+      "evidenceSha256": null
+    },
+    {
+      "gateId": "deployment_and_shared_admission",
+      "status": "not_run",
+      "ownerRef": null,
+      "evidenceRef": null,
+      "evidenceSha256": null
+    },
+    {
+      "gateId": "two_identity_and_cross_owner_acceptance",
+      "status": "not_run",
+      "ownerRef": null,
+      "evidenceRef": null,
+      "evidenceSha256": null
+    },
+    {
+      "gateId": "revoked_session_and_reviewer_independence",
+      "status": "not_run",
+      "ownerRef": null,
+      "evidenceRef": null,
+      "evidenceSha256": null
+    },
+    {
+      "gateId": "hsionly_staging_schema_and_write_guards",
+      "status": "not_run",
+      "ownerRef": null,
+      "evidenceRef": null,
+      "evidenceSha256": null
+    },
+    {
+      "gateId": "database_backup_restore_and_isolation",
+      "status": "not_run",
+      "ownerRef": null,
+      "evidenceRef": null,
+      "evidenceSha256": null
+    },
+    {
+      "gateId": "deployment_rollback_rehearsal",
+      "status": "not_run",
+      "ownerRef": null,
+      "evidenceRef": null,
+      "evidenceSha256": null
+    },
+    {
+      "gateId": "monitoring_retention_and_incident_ownership",
+      "status": "not_run",
+      "ownerRef": null,
+      "evidenceRef": null,
+      "evidenceSha256": null
+    },
+    {
+      "gateId": "approved_sources_and_scientific_claims",
+      "status": "not_run",
+      "ownerRef": null,
+      "evidenceRef": null,
+      "evidenceSha256": null
+    },
+    {
+      "gateId": "pilot_data_terms_and_team_acceptance",
+      "status": "not_run",
+      "ownerRef": null,
+      "evidenceRef": null,
+      "evidenceSha256": null
+    }
+  ]
+}

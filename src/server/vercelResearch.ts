@@ -1,3 +1,4 @@
+import {withResearchRequestControls,researchOperationalLogger,type ResearchControls} from "./researchRequestControls";
 /** Vercel Bun Web-handler adapter. No listener, migrations, automatic grants or client identity trust. */
 import {assertHsiNeonDatabaseUrl,HSI_STAGING_HOST_PREFIX} from "../db/neonGuard";
 import {resolveProviderSessionToken} from "../db/providerSessionToken";
@@ -27,19 +28,24 @@ export function readResearchDeploymentConfig(env:Environment){
  return {ok:true as const,publicOrigin:publicOrigin!,authBaseUrl:authBaseUrl!,databaseUrl:databaseUrl!,neonProjectId:env.HSI_NEON_PROJECT_ID,writesEnabled,authUrlsMatch,sscReleaseId,raComparisonReleaseId:env.HSI_RA_COMPARISON_RELEASE_ID};
 }
 export type VercelResearchDependencies={
+ controls?:ResearchControls;
  transport?:typeof fetch;
  resolveToken?:typeof resolveProviderSessionToken;
  inspectSession?:typeof inspectProviderDatabaseSession;
  services?:ReturnType<typeof createNeonInterrogativeApiServices>;
 };
 export async function handleVercelResearch(request:Request,env:Environment,dependencies:VercelResearchDependencies={}):Promise<Response>{
+ return withResearchRequestControls(request,()=>handleVercelResearchCore(request,env,dependencies),{...dependencies.controls,requireShared:env.HSI_PILOT_REQUIRE_SHARED_LIMITER==="true"||dependencies.controls?.requireShared===true,emit:dependencies.controls?.emit??researchOperationalLogger(env.HSI_OPERATIONAL_LOGGING==="true")});
+}
+async function handleVercelResearchCore(request:Request,env:Environment,dependencies:VercelResearchDependencies):Promise<Response>{
  const path=new URL(request.url).pathname;
  const config=readResearchDeploymentConfig(env);
  if(path==="/api/research/health"){
   if(request.method!=="GET")return gatewayJson({error:"Method not allowed"},405);
   const requestOrigin=new URL(request.url).origin;
   const originMatches=config.ok&&requestOrigin===config.publicOrigin;
-  return gatewayJson({service:"hsi-research",status:!config.ok?"configuration_required":originMatches?"configuration_validated":"origin_mismatch",...(config.ok?{writesEnabled:config.writesEnabled,publicOrigin:config.publicOrigin,requestOrigin,originMatches}:{missing:config.missing}),authUrlsMatch:config.authUrlsMatch,databaseConnectionTested:false},config.ok&&originMatches?200:503);
+  const maintenance=env.HSI_RESEARCH_MAINTENANCE==="true";
+  return gatewayJson({service:"hsi-research",status:!config.ok?"configuration_required":originMatches?(maintenance?"maintenance":"configuration_validated"):"origin_mismatch",...(config.ok?{writesEnabled:config.writesEnabled,publicOrigin:config.publicOrigin,requestOrigin,originMatches}:{missing:config.missing}),authUrlsMatch:config.authUrlsMatch,maintenance,databaseConnectionTested:false},config.ok&&originMatches&&!maintenance?200:503);
  }
  if(!path.startsWith("/api/auth/")&&!path.startsWith("/api/research/"))return gatewayJson({error:"Not found"},404);
  if(path.startsWith("/api/research/")&&path!=="/api/research/investigations"&&path!=="/api/research/account"&&path!=="/api/research/session-diagnostics"&&path!=="/api/research/scientific-review/queue"&&path!=="/api/research/scientific-review/history"&&path!=="/api/research/graph/ssc"&&path!=="/api/research/discovery/ssc"&&!/^\/api\/research\/interrogative\/hsi-interrogative-[a-zA-Z0-9-]{8,100}(?:\/(?:submit-review|decision|graph-context|review-package|brief|revision))?$/.test(path))return gatewayJson({error:"Not found"},404);
@@ -47,6 +53,7 @@ export async function handleVercelResearch(request:Request,env:Environment,depen
  if(new URL(request.url).origin!==config.publicOrigin)return gatewayJson({code:"DEPLOYMENT_ORIGIN_MISMATCH",error:"Deployment origin mismatch"},403);
  if(path==="/api/auth/diagnostics")return diagnoseAuthProvider(request,config,dependencies.transport);
  if(path.startsWith("/api/auth/"))return handleAuthGateway(request,config,dependencies.transport);
+ if(env.HSI_RESEARCH_MAINTENANCE==="true")return gatewayJson({code:"RESEARCH_MAINTENANCE",error:"Research access temporarily unavailable"},503);
  if(path==="/api/research/session-diagnostics"&&request.method!=="GET")return gatewayJson({error:"Method not allowed"},405);
  if(request.method==="POST"&&!config.writesEnabled)return gatewayJson({error:"Research writes are disabled on this deployment"},403);
  try{

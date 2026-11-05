@@ -16,6 +16,8 @@
 
 **Delivery Phase G implementation:** [Bounded research coverage](PHASE_G_RESEARCH_COVERAGE.md) adds three source-bound protocol drafts (Crohn’s disease, multiple sclerosis and type 2 diabetes), lab/lifestyle/medication design metadata, pinned exports and conservative public-registry topic relevance. No new indication has passed scientific release gates; 20-condition expansion and new governed disease activation remain pending.
 
+**Delivery Phase H implementation:** [Research pilot operations](PHASE_H_RESEARCH_PILOT_OPERATIONS.md) adds bounded request admission/body reads, redacted correlation events, maintenance controls, public-artifact recovery drills, dependency checks and a blocked readiness inventory/runbook. Distributed admission, live auth/role isolation, database restore, deployment rollback, real owners/data terms and scientific/team acceptance remain pending.
+
 **Audit date:** 2 November 2026  
 **HEAD at write:** (post partner-honesty fix) — restored **TEST FIXTURE** partner (`lockedPilot=false`); real named partner **TBD**; prior Apolo `legal_mou` / operator-assert MoU path **revoked**; Stage 1 RA/TNF scope still locked; cite-ready path after Gate C remains; not CDS
 
