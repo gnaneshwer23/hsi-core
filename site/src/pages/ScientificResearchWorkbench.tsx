@@ -8,8 +8,10 @@ type Node={id:string;preferredLabel:string;kind:string};
 type Edge={id:string;subjectId:string;objectId:string;predicate:string;reviewState:string;sourceEvidenceIds:string[];context:{studyContext?:string;limitations?:string;sourceLocator?:string}};
 type Draft={release:{id:string;version:string;graphPromotable:boolean};provenance:{reviewedByHuman:boolean;rightsCleared:boolean};nodes:Node[];relationships:Edge[]};
 type Verification=ScientificVerification;
+type GovernedPage={scope:string;limit:number;nodes:Array<{id:string;preferredLabel:string;kind:string;reviewState:string}>;relationships:Array<{id:string;subjectId:string;objectId:string;predicate:string;reviewState:string;epistemicType:string;sourceEvidenceIds:string[];context:Record<string,string>}>};
 export function ScientificResearchWorkbench(){
  const [graph,setGraph]=useState<Draft|null>(null),[verification,setVerification]=useState<Verification|null>(null);
+ const [governed,setGoverned]=useState<GovernedPage|null>(null),[governedLoading,setGovernedLoading]=useState(false),[governedError,setGovernedError]=useState("");
  const [error,setError]=useState(""),[query,setQuery]=useState(""),[selected,setSelected]=useState<string|null>(null),[investigation,setInvestigation]=useState("");
  useEffect(()=>{const c=new AbortController();Promise.all([
   fetch("/research/ssc-tfh-il21-graph-draft.v1.json",{signal:c.signal,cache:"no-store"}),
@@ -32,6 +34,13 @@ export function ScientificResearchWorkbench(){
  <h2>Authorised research investigation</h2><p>Public graph candidates are shown below. Protected investigation records and review submissions require a verified research account and server-side permission checks.</p>
  <label htmlFor="investigation-id">Authorised investigation ID</label>{" "}<input id="investigation-id" value={investigation} onChange={e=>setInvestigation(e.target.value)} placeholder="hsi-interrogative-…" style={{padding:10,maxWidth:"100%"}}/>
  {" "}{validId?<Link to={"/research/decision-workbench?investigation="+encodeURIComponent(investigation)}>Open authenticated investigation</Link>:<span>Enter a valid investigation ID to open the protected workbench.</span>}
+ </section>
+ <section aria-label="Authenticated governed graph" style={{padding:"1.25rem",border:"1px solid #aab3c0",borderRadius:12,marginBottom:24}}>
+ <h2>Governed graph · authenticated research</h2>
+ <p>Query the existing server-side Neon graph read service using your verified research session. This does not modify graph evidence or approve claims.</p>
+ <button type="button" disabled={!selected||governedLoading} onClick={async()=>{if(!selected)return;setGoverned(null);setGovernedError("");setGovernedLoading(true);try{const response=await fetch("/api/research/graph/ssc?node="+encodeURIComponent(selected),{credentials:"same-origin",cache:"no-store",headers:{"Accept":"application/json"}});if(!response.ok)throw Error(response.status===401?"Researcher sign-in required":response.status===403?"Graph access denied or unavailable":"Graph service unavailable");const page:GovernedPage=await response.json();if(page.scope!=="governed_research"||!Array.isArray(page.nodes)||!Array.isArray(page.relationships)||page.relationships.length>100||page.nodes.length>500)throw Error("Unexpected governed graph response");setGoverned(page)}catch(e){setGovernedError(e instanceof Error?e.message:"Graph unavailable")}finally{setGovernedLoading(false)}}}> {governedLoading?"Querying governed graph…":"Query selected concept in governed graph"}</button>
+ <p role="status">{governedError||(!selected?"Select a concept below to query its governed graph neighbourhood.":governed?governed.relationships.length+" governed relationships returned · read only":"No authenticated graph query loaded")}</p>
+ {governed&&<div>{governed.relationships.map(e=><article key={e.id} style={{borderTop:"1px solid #aab3c0",paddingBlock:12}}><strong>{governed.nodes.find(n=>n.id===e.subjectId)?.preferredLabel||e.subjectId} → {e.predicate} → {governed.nodes.find(n=>n.id===e.objectId)?.preferredLabel||e.objectId}</strong><p>Evidence classification: {e.epistemicType} · Review: {e.reviewState}</p><p>Context: {e.context?.studyContext||"Not supplied"} · Source locator: {e.context?.sourceLocator||"Not supplied"}</p><p>Limitations: {e.context?.limitations||"Not supplied"}</p><p>Evidence identifiers: {e.sourceEvidenceIds.join(", ")||"Not supplied"}</p></article>)}</div>}
  </section>
  <h2>Evidence-linked SSc investigation</h2><p role="status">{error||(!graph?"Loading versioned research sources…":graph.release.id+" · version "+graph.release.version+" · "+graph.nodes.length+" concepts · "+graph.relationships.length+" candidate relationships")}</p>
  {graph&&<><p><strong>Evidence status:</strong> Unreviewed · No automatic promotion · No clinical use</p>
