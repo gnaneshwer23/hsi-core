@@ -1,5 +1,7 @@
 # HSI build status and next
 
+**Current-state update — 5 November 2026:** see the [fresh code/build audit](audits/HSI_BUILD_AUDIT_2026-11-05.md) and [phased delivery plan](strategy/HSI_PHASED_BUILD_PLAN.md). The dated GREEN/DONE labels below describe historical scoped milestones, not current end-to-end production readiness.
+
 **Audit date:** 2 November 2026  
 **HEAD at write:** (post partner-honesty fix) — restored **TEST FIXTURE** partner (`lockedPilot=false`); real named partner **TBD**; prior Apolo `legal_mou` / operator-assert MoU path **revoked**; Stage 1 RA/TNF scope still locked; cite-ready path after Gate C remains; not CDS
 
