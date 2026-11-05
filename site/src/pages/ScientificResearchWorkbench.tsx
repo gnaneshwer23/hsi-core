@@ -1,6 +1,7 @@
 import {useEffect,useMemo,useState} from "react";
 import {Link} from "react-router-dom";
 import "../styles/science-body.css";
+import {investigateDiscoveryCandidates} from "../features/science/discoveryInvestigation";
 import {ResearchEvidenceQueue,validateScientificVerification,type ScientificVerification} from "../components/ResearchEvidenceQueue";
 type Node={id:string;preferredLabel:string;kind:string};
 type Edge={id:string;subjectId:string;objectId:string;predicate:string;reviewState:string;sourceEvidenceIds:string[];context:{studyContext?:string;limitations?:string;sourceLocator?:string}};
@@ -18,6 +19,7 @@ export function ScientificResearchWorkbench(){
  const visible=useMemo(()=>graph?.nodes.filter(n=>(n.preferredLabel+" "+n.id).toLowerCase().includes(query.toLowerCase()))??[],[graph,query]);
  const node=graph?.nodes.find(n=>n.id===selected);
  const edges=graph?.relationships.filter(e=>e.subjectId===selected||e.objectId===selected)??[];
+ const findings=useMemo(()=>graph&&verification?investigateDiscoveryCandidates({edges:graph.relationships,claims:verification.claims,disagreements:verification.disagreements}):[],[graph,verification]);
  const validId=/^hsi-interrogative-[a-zA-Z0-9-]{8,100}$/.test(investigation);
  return <main className="science-body"><header className="science-body-hero"><div className="science-body-wrap">
  <p className="science-body-kicker">HSI / ISI · SCIENTIFIC RESEARCH WORKBENCH</p><h1>Investigate mechanisms.<br/><em>Follow the evidence.</em></h1>
@@ -38,6 +40,7 @@ export function ScientificResearchWorkbench(){
  <p>{e.context.studyContext||"Study context not supplied"} · {e.reviewState}</p><p>Limitations: {e.context.limitations||"Not documented"}</p><p>Source locator: {e.context.sourceLocator||"Missing — needs review"}</p>
  {e.sourceEvidenceIds.map(s=><p key={s}><a href={"https://pubmed.ncbi.nlm.nih.gov/"+encodeURIComponent(s.replace(/^PMID:/,""))+"/"} target="_blank" rel="noreferrer">Publication {s}</a></p>)}</article>)}</section>}
  </>}
+ <section aria-label="P1 scientific discovery candidates" style={{marginBlock:28}}><h2>Scientific Discovery Intelligence · P1</h2><p>Deterministic evidence-gap and contextual tension screening. These are research candidates, not validated contradictions or clinical findings.</p><p role="status">{findings.length} candidates requiring scientific review</p>{findings.map(item=><article key={item.id} style={{border:"1px solid #aab3c0",borderRadius:10,padding:16,marginBlock:10}}><h3>{item.title}</h3><p>{item.explanation}</p><small>{item.kind.replaceAll("_"," ")} · unvalidated · reviewer required</small>{item.sourceIds.length>0&&<p>Source or claim IDs: {item.sourceIds.join(", ")}</p>}</article>)}<p>Hypothesis generation is intentionally held until the reviewed evidence and method context support a falsifiable proposal.</p></section>
  <section style={{marginBlock:28}}><h2>Scientific verification and review</h2><p>Abstract-verification dataset: {verification?.schemaVersion||"Unavailable"}. Source identity checks and abstract review do not establish mechanistic truth.</p>
  <p><Link to="/science/study-comparison">Compare studies</Link> · <Link to="/science/contradictions">Inspect potential contradictions</Link> · <Link to="/science/review-preparation">Prepare independent review</Link></p>
  {verification&&<ResearchEvidenceQueue verification={verification}/>}
