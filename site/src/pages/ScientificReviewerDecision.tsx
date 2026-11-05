@@ -53,7 +53,7 @@ export function ScientificReviewerDecision(){
  <p>For qualified, independently authorised reviewers only. This form cannot grant reviewer roles, approve draft literature claims, or publish knowledge-graph relationships.</p>
  <p><Link to="/science/review-preparation">Review preparation</Link> · <Link to="/science/study-comparison">SSc evidence comparison</Link></p>
  {record&&!complete&&<section style={{display:"grid",gap:"1rem",padding:"1.5rem",border:"1px solid #64748b",borderRadius:12}}>
- <h2>Investigation {record.id}</h2><p><strong>Research question:</strong> {record.question}</p>
+ <h2>Investigation {record.id}</h2><p><Link to={"/research/decision-workbench?investigation="+encodeURIComponent(record.id)}>Inspect saved evidence graph and sources →</Link></p><p><strong>Research question:</strong> {record.question}</p>
  <p><strong>Original researcher:</strong> {record.actorPrincipal} · <strong>Release:</strong> {record.release.id} ({record.release.version})</p>
  <p><strong>Conclusion under review:</strong> {record.conclusion.text}</p>
  <p><strong>Limitations:</strong> {record.conclusion.limitations.join("; ")||"None recorded"}</p>

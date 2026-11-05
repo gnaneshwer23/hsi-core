@@ -6,6 +6,8 @@
 
 **Delivery Phase B implementation:** [Evidence/source readiness catalogue](PHASE_B_EVIDENCE_AND_SOURCE_READINESS.md) includes 5 publications, 7 unreviewed candidates and 8 imported passages, with unresolved rights/context/scientific gates visible. No candidate was approved or published.
 
+**Delivery Phase C implementation:** [Release-bound investigation graph and dossiers](PHASE_C_CONNECTED_EVIDENCE_GRAPH.md) connect saved investigations to inspectable sources, independent disease comparison and pinned catalogue versions. Migration `014` and live acceptance remain pending; no grants or publication occurred.
+
 **Audit date:** 2 November 2026  
 **HEAD at write:** (post partner-honesty fix) — restored **TEST FIXTURE** partner (`lockedPilot=false`); real named partner **TBD**; prior Apolo `legal_mou` / operator-assert MoU path **revoked**; Stage 1 RA/TNF scope still locked; cite-ready path after Gate C remains; not CDS
 

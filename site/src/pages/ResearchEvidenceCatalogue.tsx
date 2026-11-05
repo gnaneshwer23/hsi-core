@@ -1,23 +1,25 @@
 import {useEffect,useMemo,useState} from "react";
-import {Link} from "react-router-dom";
+import {Link,useSearchParams} from "react-router-dom";
 import {verifyResearchEvidenceCorpus,assessWorkingEvidence,type ResearchEvidenceCorpus,type CorpusDisease} from "../../../src/evidence/researchEvidenceCorpus";
 import "../styles/science-body.css";
 import "../styles/research-evidence-catalogue.css";
 const diseaseName=(d:CorpusDisease)=>d==="rheumatoid_arthritis"?"Rheumatoid arthritis":"Systemic sclerosis";
 async function digest(text:string){const bytes=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(text));return Array.from(new Uint8Array(bytes),x=>x.toString(16).padStart(2,"0")).join("")}
 export function ResearchEvidenceCatalogue(){
+ const [params]=useSearchParams();const pinnedVersion=params.get("version"),linkedClaim=params.get("claim");
  const [corpus,setCorpus]=useState<ResearchEvidenceCorpus|null>(null),[error,setError]=useState("");
  const [attempt,setAttempt]=useState(0),[disease,setDisease]=useState<CorpusDisease|"all">("all"),[query,setQuery]=useState(""),[selected,setSelected]=useState<string|null>(null);
  useEffect(()=>{
   const c=new AbortController();setCorpus(null);setError("");const timer=setTimeout(()=>c.abort(),12000);
-  fetch("/research/evidence-corpus/corpus.v1.json",{signal:c.signal,cache:"no-store",redirect:"error",headers:{Accept:"application/json"}})
+  if(pinnedVersion&&!/^[a-f0-9]{64}$/.test(pinnedVersion)){setError("Invalid pinned catalogue version. No evidence loaded.");clearTimeout(timer);return()=>c.abort()}
+  fetch(pinnedVersion?"/research/evidence-corpus/versions/"+pinnedVersion+".json":"/research/evidence-corpus/corpus.v1.json",{signal:c.signal,cache:"no-store",redirect:"error",headers:{Accept:"application/json"}})
    .then(async response=>{if(!response.ok||!(response.headers.get("content-type")??"").includes("application/json"))throw Error();const raw=await response.text();if(raw.length>1_000_000)throw Error();return verifyResearchEvidenceCorpus(JSON.parse(raw),digest)})
-   .then(value=>{if(!c.signal.aborted)setCorpus(value)})
+   .then(value=>{if(pinnedVersion&&value.version!==pinnedVersion)throw Error();if(linkedClaim&&!value.claims.some(c=>c.id===linkedClaim))throw Error();if(!c.signal.aborted){setCorpus(value);if(linkedClaim){setSelected(value.claims.find(c=>c.id===linkedClaim)!.sourceId);setDisease("all");setQuery("")}}})
    .catch(()=>{if(!c.signal.aborted)setError("The evidence catalogue could not be verified. No source or claim has been loaded.")})
    .finally(()=>clearTimeout(timer));
   const onAbort=()=>{setError("The evidence catalogue request timed out. Please retry.")};c.signal.addEventListener("abort",onAbort,{once:true});
   return()=>{c.signal.removeEventListener("abort",onAbort);c.abort();clearTimeout(timer)};
- },[attempt]);
+ },[attempt,pinnedVersion,linkedClaim]);
  const report=useMemo(()=>corpus?assessWorkingEvidence(corpus):null,[corpus]);
  const sources=useMemo(()=>corpus?.sources.filter(s=>(disease==="all"||s.disease===disease)&&[s.title,s.pmid,s.doi,...corpus.claims.filter(c=>c.sourceId===s.id).map(c=>c.assertion)].join(" ").toLowerCase().includes(query.trim().toLowerCase()))??[],[corpus,disease,query]);
  const source=sources.find(s=>s.id===selected)??sources[0];
@@ -37,7 +39,7 @@ export function ResearchEvidenceCatalogue(){
     <h5>Passage provenance</h5>{claim.passageIds.map(id=>{const passage=corpus.passages.find(p=>p.id===id)!;return <details key={id}><summary>{passage.text===null?"Locator only — passage verification pending":"Inspect imported passage"} · {passage.id}</summary><p>Locator: {passage.locator}</p>{passage.text!==null?<><blockquote>{passage.text}</blockquote><p>Text SHA-256: <code>{passage.sha256}</code></p><p>Source version: <code>{passage.sourceVersion}</code></p></>:<p>No passage text or hash is available. A bibliographic link alone does not verify this claim.</p>}</details>})}
     <h5>Before release review</h5><ul>{report.claims.find(c=>c.claimId===claim.id)!.reasons.map(reason=><li key={reason}>{reason.replaceAll("_"," ")}</li>)}</ul></article>)}
    </section>}</div>
-   <section className="evidence-catalogue-review"><h2>Prepare accountable review</h2><p>The versioned review packet lists source-rights, correction and scientific checks. Reviewer identities and decisions are unassigned. Completing a file does not grant authority or publish evidence.</p><a href="/research/evidence-corpus/review-packet.v1.json" download="hsi-evidence-review-packet.v1.json">Download review preparation packet</a><p>RA and SSc stay source-separated. Shared immune terminology does not transfer a conclusion between diseases.</p></section>
+   <section className="evidence-catalogue-review"><h2>Prepare accountable review</h2><p>The versioned review packet lists source-rights, correction and scientific checks. Reviewer identities and decisions are unassigned. Completing a file does not grant authority or publish evidence.</p>{!pinnedVersion&&<a href="/research/evidence-corpus/review-packet.v1.json" download="hsi-evidence-review-packet.v1.json">Download review preparation packet</a>}{pinnedVersion&&<p>This is a pinned historical working set. Use the review packet that matches this version; current packets are not substituted.</p>}<p>RA and SSc stay source-separated. Shared immune terminology does not transfer a conclusion between diseases.</p></section>
   </>}
  </div></main>;
 }

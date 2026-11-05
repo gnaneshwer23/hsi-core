@@ -14,8 +14,10 @@ import type {ResearchAccountAccess} from "../researchAccount";
 import {createNeonInvestigationWorkspace} from "../db/investigationWorkspaceStore";
 import {InvestigationWorkspaceError} from "./investigationWorkspaceService";
 import {parseCreateInvestigation,parseInvestigationCursor,type InvestigationCursor} from "../interrogativeWorkspace";
+import {loadOrCaptureInvestigationGraphContext} from "../db/investigationGraphContextStore";
 
 type ApiServices={
+ graphContext?:(input:{serverSessionToken:string|null;investigationId:string;capture:boolean})=>Promise<unknown>;
  workspace?:(input:{serverSessionToken:string|null;cursor:InvestigationCursor|null})=>Promise<unknown>;
  create?:(input:{serverSessionToken:string|null;request:unknown})=>Promise<{id:string;created:boolean}>;
  account?:(input:{serverSessionToken:string|null})=>Promise<ResearchAccountAccess|null>;
@@ -41,6 +43,24 @@ function json(data:unknown,status=200):Response{
 }
 export async function handleInterrogativeApi(req:Request,services:ApiServices):Promise<Response>{
  const url=new URL(req.url);
+ const graphContext=/^\/api\/research\/interrogative\/(hsi-interrogative-[a-zA-Z0-9-]{8,100})\/graph-context$/.exec(url.pathname);
+ if(graphContext){
+  if(req.method!=="GET"&&req.method!=="POST")return json({error:"Method not allowed"},405);
+  const serverSessionToken=sessionFromCookie(req);if(!serverSessionToken)return json({error:"Authentication required"},401);
+  if(url.search)return json({error:"Context does not accept query parameters"},400);
+  if(req.method==="POST"){
+   if(req.headers.get("origin")!==url.origin)return json({error:"Origin verification failed"},403);
+   if((req.headers.get("content-type")??"").split(";")[0]?.trim().toLowerCase()!=="application/json")return json({error:"JSON required"},415);
+   try{
+    const reader=req.body?.getReader();let raw="",size=0;const decoder=new TextDecoder();
+    if(reader){try{for(;;){const {done,value}=await reader.read();if(done)break;size+=value.length;if(size>64){await reader.cancel();return json({error:"Payload too large"},413)}raw+=decoder.decode(value,{stream:true})}}finally{reader.releaseLock()}}
+    const body=JSON.parse(raw+decoder.decode());if(!body||typeof body!=="object"||Array.isArray(body)||Object.keys(body).length)return json({error:"No client evidence, identity or release overrides accepted"},400);
+   }catch{return json({error:"Empty JSON object required"},400)}
+  }
+  if(!services.graphContext)return json({error:"Evidence context unavailable"},503);
+  try{return json(await services.graphContext({serverSessionToken,investigationId:graphContext[1]!,capture:req.method==="POST"}))}
+  catch{return json({code:"EVIDENCE_CONTEXT_UNAVAILABLE",error:"Evidence context unavailable, changed or access denied"},403)}
+ }
  if(url.pathname==="/api/research/investigations"){
   if(req.method!=="GET"&&req.method!=="POST")return json({error:"Method not allowed"},405);
   const serverSessionToken=sessionFromCookie(req);
@@ -132,9 +152,10 @@ function workspaceError(error:unknown):Response{
  if(error instanceof InvestigationWorkspaceError)return json({code:error.code,error:error.publicMessage},error.status);
  return json({error:"Research workspace unavailable or operation denied"},403);
 }
-export function createNeonInterrogativeApiServices(config:{databaseUrl:string;neonProjectId?:string|null;writesEnabled?:boolean;sscReleaseId?:string}):ApiServices{
+export function createNeonInterrogativeApiServices(config:{databaseUrl:string;neonProjectId?:string|null;writesEnabled?:boolean;sscReleaseId?:string;raComparisonReleaseId?:string}):ApiServices{
  const workspace=createNeonInvestigationWorkspace(config);
  return {
+  graphContext:args=>loadOrCaptureInvestigationGraphContext({...config,...args}),
   workspace:args=>workspace.list(args),
   create:args=>workspace.create(args),
   account:args=>loadResearchAccount({...config,...args}),

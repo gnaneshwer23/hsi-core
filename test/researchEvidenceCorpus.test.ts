@@ -3,6 +3,7 @@ import {readFileSync} from "node:fs";
 import {createHash} from "node:crypto";
 import {buildResearchEvidenceCorpus,buildEvidenceReviewPacket,CORPUS_INPUT_PATHS} from "../src/evidence/buildResearchEvidenceCorpus";
 import {canonicalEvidenceJson,parseResearchEvidenceCorpus,verifyResearchEvidenceCorpus,assessWorkingEvidence} from "../src/evidence/researchEvidenceCorpus";
+import {WORKING_EVIDENCE_INDEX} from "../src/evidence/generatedWorkingEvidenceIndex";
 const read=(p:string)=>JSON.parse(readFileSync(new URL("../"+p,import.meta.url),"utf8"));
 const inputs=()=>({ra:read(CORPUS_INPUT_PATHS.ra),ssc:read(CORPUS_INPUT_PATHS.ssc),verification:read(CORPUS_INPUT_PATHS.verification)});
 const digest=async(text:string)=>createHash("sha256").update(text).digest("hex");
@@ -66,5 +67,7 @@ test("committed public copies and readiness/packet are reproducible from the can
  const corpus=buildResearchEvidenceCorpus(inputs());
  for(const dir of ["research/evidence-corpus","site/public/research/evidence-corpus"]){
   expect(read(dir+"/corpus.v1.json")).toEqual(corpus);expect(read(dir+"/readiness.v1.json")).toEqual(assessWorkingEvidence(corpus));expect(read(dir+"/review-packet.v1.json")).toEqual(buildEvidenceReviewPacket(corpus));
+  expect(read(dir+"/versions/"+corpus.version+".json")).toEqual(corpus);
  }
+ expect(WORKING_EVIDENCE_INDEX.version).toBe(corpus.version);expect(WORKING_EVIDENCE_INDEX.claims.map(c=>c.id)).toEqual(corpus.claims.map(c=>c.id));
 });

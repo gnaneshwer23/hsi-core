@@ -5,9 +5,9 @@
 import {SQL} from "bun";
 import {assertHsiNeonDatabaseUrl} from "./neonGuard";
 export async function verifyHsiReviewerAuthority(input:{
- principal:string;reviewedAt:string;databaseUrl:string;neonProjectId?:string|null;
+ principal:string;reviewedAt:string;databaseUrl:string;neonProjectId?:string|null;scope?:"ssc"|"ra";
 }):Promise<boolean>{
- if(!input.principal.trim()||!Number.isFinite(Date.parse(input.reviewedAt)))return false;
+ if(!input.principal.trim()||!Number.isFinite(Date.parse(input.reviewedAt))||Date.parse(input.reviewedAt)>Date.now()||!["ssc","ra"].includes(input.scope??"ssc"))return false;
  const guard=assertHsiNeonDatabaseUrl(input.databaseUrl,{neonProjectId:input.neonProjectId});
  if(!guard.ok)throw Error("HSI database guard: "+guard.reason);
  const sql=new SQL(input.databaseUrl,{tls:{rejectUnauthorized:true},connectionTimeout:10});
@@ -16,7 +16,8 @@ export async function verifyHsiReviewerAuthority(input:{
     JOIN neon_auth."user" u ON u.id=a.principal_id
     WHERE a.principal_id=${input.principal}
       AND a.reviewer_role='scientific_reviewer'
-      AND a.scope='ssc'
+      AND a.scope=${input.scope??"ssc"}
+      AND u."emailVerified"=true AND COALESCE(u.banned,false)=false
       AND a.granted_at<=${input.reviewedAt}::timestamptz
       AND (a.revoked_at IS NULL OR a.revoked_at>${input.reviewedAt}::timestamptz)
       AND a.revoked_at IS NULL LIMIT 1`;

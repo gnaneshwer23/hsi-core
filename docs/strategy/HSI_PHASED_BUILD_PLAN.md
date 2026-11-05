@@ -27,6 +27,8 @@ A translational researcher can ask a bounded question, inspect source-grounded e
 
 ## First implementation work package
 
+**Phase C implementation update — 5 November:** [Connected evidence graph and mechanism context](../PHASE_C_CONNECTED_EVIDENCE_GRAPH.md) adds immutable release-bound investigation views, reused mechanism/comparison builders and pinned working-catalogue links. The new staging migration and live acceptance remain pending; human evidence gates are unchanged.
+
 **Phase B implementation update — 5 November:** [Evidence/source readiness](../PHASE_B_EVIDENCE_AND_SOURCE_READINESS.md) now includes a reproducible, source-separated real-publication corpus, a source/passage/context inspector, fail-closed readiness and a human-review preparation packet. Source-rights attestation and scientific acceptance remain human/trusted-backend gates; zero candidates have been promoted.
 
 **5 November implementation update:** [Phase A is implemented and locally verified](../PHASE_A_INVESTIGATION_WORKSPACE.md), including create/list APIs, owned saved-investigation navigation and retry handling. Live database-backed acceptance remains pending the paused operational prerequisite; do not treat this update as a production-ready claim.

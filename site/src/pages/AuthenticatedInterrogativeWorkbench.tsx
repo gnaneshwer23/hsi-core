@@ -1,5 +1,6 @@
 import {useEffect,useState} from "react";
 import {Link,useSearchParams} from "react-router-dom";
+import {InvestigationEvidenceGraph} from "../components/InvestigationEvidenceGraph";
 import {InterrogativeWorkbench} from "../components/InterrogativeWorkbench";
 import {validateInterrogativeInvestigation,type InterrogativeInvestigation} from "../../../src/interrogativeValidation";
 /** This page never accepts an investigation from URL JSON or local storage.
@@ -43,7 +44,7 @@ export function AuthenticatedInterrogativeWorkbench(){
   }catch(e){setSubmissionStatus(e instanceof Error?e.message:"Submission failed")}
   finally{setSubmitting(false)}
  }
- return <><nav aria-label="Investigation navigation" style={{maxWidth:1180,margin:"1rem auto",padding:"0 1.5rem"}}><Link to="/research/scientific-workbench">← Your saved investigations</Link></nav><InterrogativeWorkbench investigation={record} falsification={null}/><section style={{maxWidth:920,margin:"1rem auto",padding:"1rem"}}>
+ return <><nav aria-label="Investigation navigation" style={{maxWidth:1180,margin:"1rem auto",padding:"0 1.5rem"}}><Link to="/research/scientific-workbench">← Your saved investigations</Link></nav><InterrogativeWorkbench investigation={record} falsification={null}/>{record&&<InvestigationEvidenceGraph key={record.id} investigation={record}/>}<section style={{maxWidth:920,margin:"1rem auto",padding:"1rem"}}>
  {record&&<><h2>Governed scientific review</h2><p>State: {record.state.replaceAll("_"," ")}</p>
  <p>Submission requires verified researcher access to the trusted HSI backend. An independent authorised scientist must make any review decision.</p>
  {record.state==="draft"&&<button type="button" disabled={submitting} onClick={submitReview}>{submitting?"Submitting…":"Submit for independent review"}</button>}

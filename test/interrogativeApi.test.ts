@@ -6,6 +6,23 @@ const base="https://hsi.example/api/research/interrogative/"+id;
 const cookie="__Secure-better-auth.session_token=example-session-token-long-enough";
 const collection="https://hsi.example/api/research/investigations";
 const createRequest={question:"SSc fibrosis mechanisms?",releaseId:"ssc-release",requestId:"a65bd046-cccd-4dda-a957-b8fbb169e062"};
+test("graph contexts require a verified cookie, accept GET/empty POST only and redact failures",async()=>{
+ const url=base+"/graph-context";let captures=0;
+ const graphContext=async(input:{capture:boolean})=>{if(input.capture)captures++;return {status:"not_captured",canCapture:true,context:null}};
+ expect((await handleInterrogativeApi(new Request(url),{...services,graphContext})).status).toBe(401);
+ expect((await handleInterrogativeApi(new Request(url,{headers:{cookie}}),{...services,graphContext})).status).toBe(200);
+ for(const [body,status] of [["{}",200],[JSON.stringify({release:"forged"}),400],["x".repeat(65),413]] as const){
+  expect((await handleInterrogativeApi(new Request(url,{method:"POST",headers:{cookie,origin:"https://hsi.example","content-type":"application/json"},body}),{...services,graphContext})).status).toBe(status);
+ }
+ expect(captures).toBe(1);
+ const failed=await handleInterrogativeApi(new Request(url,{headers:{cookie}}),{...services,graphContext:async()=>{throw Error("private source credentials")}});expect(failed.status).toBe(403);expect(await failed.text()).not.toContain("private");
+});
+test("graph context capture refuses cross-origin, non-JSON and client query overrides",async()=>{
+ const url=base+"/graph-context",graphContext=async()=>{throw Error("must not run")};
+ expect((await handleInterrogativeApi(new Request(url,{method:"POST",headers:{cookie,origin:"https://other.example","content-type":"application/json"},body:"{}"}),{...services,graphContext})).status).toBe(403);
+ expect((await handleInterrogativeApi(new Request(url,{method:"POST",headers:{cookie,origin:"https://hsi.example","content-type":"text/plain"},body:"{}"}),{...services,graphContext})).status).toBe(415);
+ expect((await handleInterrogativeApi(new Request(url+"?release=forged",{headers:{cookie}}),{...services,graphContext})).status).toBe(400);
+});
 test("workspace routes require authentication and redact backend errors",async()=>{
  let called=false;const workspace=async()=>{called=true;throw Error("secret database password")};
  expect((await handleInterrogativeApi(new Request(collection),{...services,workspace})).status).toBe(401);expect(called).toBe(false);

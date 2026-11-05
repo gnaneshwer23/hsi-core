@@ -85,6 +85,13 @@ test("research writes remain disabled unless explicitly enabled for the confirme
  const staging=readResearchDeploymentConfig({...env,HSI_RESEARCH_WRITES_ENABLED:"true",HSI_NEON_BRANCH_ID:"br-rough-snow-zagxbvjp"});expect(staging.ok&&staging.writesEnabled).toBe(true);
  const production=readResearchDeploymentConfig({...env,HSI_DATABASE_URL:env.HSI_DATABASE_URL.replace("ep-sweet-hill-zasb0lni","ep-restless-dew-zas989pv"),HSI_RESEARCH_WRITES_ENABLED:"true",HSI_NEON_BRANCH_ID:"br-rough-snow-zagxbvjp"});expect(production.ok&&production.writesEnabled).toBe(false);
 });
+test("graph-context route retains the provider bridge and staging write guard",async()=>{
+ const path="/api/research/interrogative/hsi-interrogative-example-12345678/graph-context";
+ expect((await handleVercelResearch(post(path),env,{transport:noCalls})).status).toBe(403);
+ let seen="";
+ const result=await handleVercelResearch(req(path,{headers:{cookie}}),env,{transport:transport(async()=>Response.json(identity)),resolveToken:async()=>"trusted-db-session-token",services:{load:async()=>({}),submit:async()=>({}),review:async()=>({}),graphContext:async input=>{seen=input.serverSessionToken??"";return {status:"not_captured",canCapture:false,context:null}}}});
+ expect(result.status).toBe(200);expect(seen).toBe("trusted-db-session-token");
+});
 test("workspace creation stays behind the deployment write guard; reads use verified backend identity",async()=>{
  const path="/api/research/investigations";
  expect((await handleVercelResearch(post(path),env,{transport:noCalls})).status).toBe(403);

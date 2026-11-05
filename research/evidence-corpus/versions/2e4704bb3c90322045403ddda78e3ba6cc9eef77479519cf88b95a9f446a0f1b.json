@@ -1,0 +1,369 @@
+{
+  "schemaVersion": "hsi-research-evidence-corpus-1",
+  "id": "hsi-ra-ssc-working-evidence",
+  "status": "working_set",
+  "containsPhi": false,
+  "clinicalAdvice": false,
+  "graphPromotable": false,
+  "inputs": [
+    {
+      "path": "research/ra-anti-tnf/release.json",
+      "sha256": "9102c21075a862e1171db31a406e2cbb8434bef0cc89ea2886a6090d86f1a1c3"
+    },
+    {
+      "path": "research/ssc-tfh-il21/curation-candidates.v1.json",
+      "sha256": "afde8943fbe49b085b6cfdf13a26659b20c3408e438ae6b7fcff7e6f2a38acd0"
+    },
+    {
+      "path": "research/ssc-tfh-il21/abstract-verification.v1.json",
+      "sha256": "90b8c48c568d165e67e2f925b4cf52bb03c741127d31612dce6a81146a9c6e11"
+    }
+  ],
+  "sources": [
+    {
+      "id": "pmid:18375541",
+      "pmid": "18375541",
+      "doi": "10.1136/ard.2007.084715",
+      "title": "Potter C, Hyrich K L, Tracey A, Lunt M, Plant D, Symmons D P M, Thomson W, Worthington J, Emery P, Morgan A W, Wilson A G, Isaacs J, Barton A, BRAGGSS — Association of rheumatoid factor and anti-cyclic citrullinated peptide positivity, but not carriage of shared epitope or PTPN22 susceptibility variants, with anti-tumour necrosis factor response in rheumatoid arthritis",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/18375541/",
+      "disease": "rheumatoid_arthritis",
+      "identityStatus": "import_receipt_validated",
+      "contentVersion": "103e8c947ccb82702f90e4f53e7a0189096109cdb3234509943443065936360b",
+      "retrievedAt": "2026-11-03T18:36:10Z",
+      "rights": {
+        "status": "import_receipt_only",
+        "licenceUrl": "https://creativecommons.org/licenses/by/2.0/",
+        "receiptRef": "research/ra-anti-tnf/release.json#receipts/PMID-18375541"
+      }
+    },
+    {
+      "id": "pmid:24586782",
+      "pmid": "24586782",
+      "doi": "10.1371/journal.pone.0089442",
+      "title": "Lv Qianwen, Yin Yufeng, Li Xin, Shan Guangliang, Wu Xiangni, Liang Di, Li Yongzhe, Zhang Xuan — The Status of Rheumatoid Factor and Anti-Cyclic Citrullinated Peptide Antibody Are Not Associated with the Effect of Anti-TNFα Agent Treatment in Patients with Rheumatoid Arthritis: A Meta-Analysis",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24586782/",
+      "disease": "rheumatoid_arthritis",
+      "identityStatus": "import_receipt_validated",
+      "contentVersion": "071c97933fa0edbe4e75ed68b07fe57bee308809c34a3b660ac878c866e6dc7b",
+      "retrievedAt": "2026-11-03T18:36:11Z",
+      "rights": {
+        "status": "import_receipt_only",
+        "licenceUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "receiptRef": "research/ra-anti-tnf/release.json#receipts/PMID-24586782"
+      }
+    },
+    {
+      "id": "pmid:30760472",
+      "pmid": "30760472",
+      "doi": "10.1136/annrheumdis-2018-214382",
+      "title": "Circulating follicular helper T cells are increased in systemic sclerosis and promote plasmablast differentiation through the IL-21 pathway which can be inhibited by ruxolitinib",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/30760472/",
+      "disease": "systemic_sclerosis",
+      "identityStatus": "repository_metadata_unverified",
+      "contentVersion": null,
+      "retrievedAt": null,
+      "rights": {
+        "status": "unverified",
+        "licenceUrl": null,
+        "receiptRef": null
+      }
+    },
+    {
+      "id": "pmid:29514998",
+      "pmid": "29514998",
+      "doi": "10.1126/scitranslmed.aaf5307",
+      "title": "T follicular helper-like cells contribute to skin fibrosis",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29514998/",
+      "disease": "systemic_sclerosis",
+      "identityStatus": "repository_metadata_unverified",
+      "contentVersion": null,
+      "retrievedAt": null,
+      "rights": {
+        "status": "unverified",
+        "licenceUrl": null,
+        "receiptRef": null
+      }
+    },
+    {
+      "id": "pmid:33175976",
+      "pmid": "33175976",
+      "doi": "10.1093/rheumatology/keaa669",
+      "title": "Imbalance toward TFH 1 cells playing a role in aberrant B cell differentiation in systemic sclerosis",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33175976/",
+      "disease": "systemic_sclerosis",
+      "identityStatus": "repository_metadata_unverified",
+      "contentVersion": null,
+      "retrievedAt": null,
+      "rights": {
+        "status": "unverified",
+        "licenceUrl": null,
+        "receiptRef": null
+      }
+    }
+  ],
+  "passages": [
+    {
+      "id": "PMID-18375541-ABSTRACT-1",
+      "sourceId": "pmid:18375541",
+      "sourceVersion": "103e8c947ccb82702f90e4f53e7a0189096109cdb3234509943443065936360b",
+      "locator": "/article/front/article-meta/abstract[1]/sec[1]/p[1]; XML itertext with whitespace collapsed",
+      "text": "To determine whether rheumatoid factor (RF), anti-cyclic citrullinated peptide (CCP) antibodies, or carriage of shared epitope (SE) and PTPN22 genetic susceptibility variants predict response to therapy in patients with rheumatoid arthritis (RA) treated with anti-tumour necrosis factor (TNF) agents.",
+      "sha256": "cd64ed03416e37c9815d3031714604ed111c009ed6c16d4552498d770748fd74"
+    },
+    {
+      "id": "PMID-18375541-ABSTRACT-2",
+      "sourceId": "pmid:18375541",
+      "sourceVersion": "103e8c947ccb82702f90e4f53e7a0189096109cdb3234509943443065936360b",
+      "locator": "/article/front/article-meta/abstract[1]/sec[2]/p[1]; XML itertext with whitespace collapsed",
+      "text": "UK-wide multicentre collaborations were established to recruit a large cohort of patients treated with anti-TNF drugs for RA. Serum RF, anti-CCP antibody and SE status were determined using commercially available kits. PTPN22 R620W genotyping was performed by Sequenom MassArray. Linear regression analyses were performed to investigate the role of these four factors in predicting response to treatment by 6 months, defined as the absolute change in 28-joint Disease Activity Score (DAS28).",
+      "sha256": "165c2b6be9e8bfaa46ce117749a371bde1ebb8c10f4d2e3bec7dae258c510975"
+    },
+    {
+      "id": "PMID-18375541-ABSTRACT-3",
+      "sourceId": "pmid:18375541",
+      "sourceVersion": "103e8c947ccb82702f90e4f53e7a0189096109cdb3234509943443065936360b",
+      "locator": "/article/front/article-meta/abstract[1]/sec[3]/p[1]; XML itertext with whitespace collapsed",
+      "text": "Of the 642 patients analysed, 46% received infliximab, 43% etanercept and 11% adalimumab. In all, 89% and 82% of patients were RF and anti-CCP positive, respectively. Patients that were RF negative had a 0.48 (95% CI 0.08 to 0.87) greater mean improvement in DAS28 compared to patients that were RF positive. A better response was also seen among patients that were anti-CCP negative. No association was demonstrated between drug response and SE or PTPN22 620W carriage.",
+      "sha256": "ff39e3db8d10d19ab39e3bc36099637f5e4ae13db43978d6cf1d93e5923e4fd8"
+    },
+    {
+      "id": "PMID-18375541-ABSTRACT-4",
+      "sourceId": "pmid:18375541",
+      "sourceVersion": "103e8c947ccb82702f90e4f53e7a0189096109cdb3234509943443065936360b",
+      "locator": "/article/front/article-meta/abstract[1]/sec[4]/p[1]; XML itertext with whitespace collapsed",
+      "text": "The presence of RF or anti-CCP antibodies was associated with a reduced response to anti-TNF drugs. However, these antibodies only account for a small proportion of the variance in treatment response. It is likely that genetic factors will contribute to treatment response, but these do not include the well established RA susceptibility loci, SE and PTPN22.",
+      "sha256": "d791cca32a787fbbc21647fbfcb180864a05ca279896990e88b89315c065a486"
+    },
+    {
+      "id": "PMID-24586782-ABSTRACT-1",
+      "sourceId": "pmid:24586782",
+      "sourceVersion": "071c97933fa0edbe4e75ed68b07fe57bee308809c34a3b660ac878c866e6dc7b",
+      "locator": "/article/front/article-meta/abstract[1]/sec[1]/p[1]; XML itertext with whitespace collapsed",
+      "text": "This meta-analysis was conducted to investigate whether the status of rheumatoid factor (RF) and anti-cyclic citrullinated peptide (anti-CCP) antibody are associated with the clinical response to anti-tumor necrosis factor (TNF) alpha treatment in rheumatoid arthritis (RA).",
+      "sha256": "ca5b746f6048cf7c86dd29446d04e204efe147025ee024f1a894dff4ca750df7"
+    },
+    {
+      "id": "PMID-24586782-ABSTRACT-2",
+      "sourceId": "pmid:24586782",
+      "sourceVersion": "071c97933fa0edbe4e75ed68b07fe57bee308809c34a3b660ac878c866e6dc7b",
+      "locator": "/article/front/article-meta/abstract[1]/sec[2]/p[1]; XML itertext with whitespace collapsed",
+      "text": "A systemic literature review was performed using the MEDLINE, SCOPUS, Cochrane Library, ISI Web of Knowledge, and Clinical Trials Register databases, and Hayden's criteria of quality assessment for prognostic studies were used to evaluate all of the studies. The correlation between the RF and anti-CCP antibody status with the treatment effect of anti-TNFα agents was analyzed separately using the Mantel Haenszel method. A fixed-effects model was used when there was no significant heterogeneity; otherwise, a random-effects model was applied. Publication bias was assessed using Egger's linear regression and a funnel plot.",
+      "sha256": "dfd31a98aa4d9235479449e613af462091784eb38244339c3d017e32b50d297e"
+    },
+    {
+      "id": "PMID-24586782-ABSTRACT-3",
+      "sourceId": "pmid:24586782",
+      "sourceVersion": "071c97933fa0edbe4e75ed68b07fe57bee308809c34a3b660ac878c866e6dc7b",
+      "locator": "/article/front/article-meta/abstract[1]/sec[3]/p[1]; XML itertext with whitespace collapsed",
+      "text": "A total of 14 studies involving 5561 RA patients meeting the inclusion criteria were included. The overall analysis showed that the pooled relative risk for the predictive effects of the RF and anti-CCP antibody status on patient response to anti-TNFα agents was 0.98 (95% CI: 0.91–1.05, p = 0.54) and 0.88 (95% CI: 0.76–1.03, p = 0.11), respectively, with I2 values of 43% (p = 0.05) and 67% (p<0.01), respectively. Subgroup analyses of different anti-TNFα treatments (infliximab vs. etanercept vs. adalimumab vs. golimumab), response criteria (DAS28 vs. ACR20 vs. EULAR response), follow-up period (≥6 vs. <6 months), and ethnic group did not reveal a significant association for the status of RF and anti-CCP.",
+      "sha256": "32b73c40f8f4de7f27d76aaabb0bc6368e7cd9730ad5faea665673ec96d97487"
+    },
+    {
+      "id": "PMID-24586782-ABSTRACT-4",
+      "sourceId": "pmid:24586782",
+      "sourceVersion": "071c97933fa0edbe4e75ed68b07fe57bee308809c34a3b660ac878c866e6dc7b",
+      "locator": "/article/front/article-meta/abstract[1]/sec[4]/p[1]; XML itertext with whitespace collapsed",
+      "text": "Neither the RF nor anti-CCP antibody status in RA patients is associated with a clinical response to anti-TNFα treatment.",
+      "sha256": "66868b5d548a2c83058472d0f0ebf8254c183bb2faecf907b210a073d1fe326f"
+    },
+    {
+      "id": "HSI-C-SSC-001-LOCATOR",
+      "sourceId": "pmid:30760472",
+      "sourceVersion": null,
+      "locator": "PubMed abstract: Results",
+      "text": null,
+      "sha256": null
+    },
+    {
+      "id": "HSI-C-SSC-004-LOCATOR",
+      "sourceId": "pmid:30760472",
+      "sourceVersion": null,
+      "locator": "PubMed abstract: Methods and Results",
+      "text": null,
+      "sha256": null
+    },
+    {
+      "id": "HSI-C-SSC-005-LOCATOR",
+      "sourceId": "pmid:29514998",
+      "sourceVersion": null,
+      "locator": "PubMed abstract",
+      "text": null,
+      "sha256": null
+    },
+    {
+      "id": "HSI-C-SSC-005-MOUSE-LOCATOR",
+      "sourceId": "pmid:29514998",
+      "sourceVersion": null,
+      "locator": "PubMed abstract",
+      "text": null,
+      "sha256": null
+    },
+    {
+      "id": "HSI-C-SSC-006-LOCATOR",
+      "sourceId": "pmid:33175976",
+      "sourceVersion": null,
+      "locator": "PubMed abstract: Results",
+      "text": null,
+      "sha256": null
+    }
+  ],
+  "claims": [
+    {
+      "id": "HSI-C-RA-SEROLOGY-COHORT-RESULTS",
+      "disease": "rheumatoid_arthritis",
+      "assertion": "Of the 642 patients analysed, 46% received infliximab, 43% etanercept and 11% adalimumab. In all, 89% and 82% of patients were RF and anti-CCP positive, respectively. Patients that were RF negative had a 0.48 (95% CI 0.08 to 0.87) greater mean improvement in DAS28 compared to patients that were RF positive. A better response was also seen among patients that were anti-CCP negative. No association was demonstrated between drug response and SE or PTPN22 620W carriage.",
+      "sourceId": "pmid:18375541",
+      "passageIds": [
+        "PMID-18375541-ABSTRACT-3",
+        "PMID-18375541-ABSTRACT-2"
+      ],
+      "status": "unreviewed_candidate",
+      "context": {
+        "model": "Human observational cohort",
+        "notes": "UK-wide multicentre collaborations were established to recruit a large cohort of patients treated with anti-TNF drugs for RA. Serum RF, anti-CCP antibody and SE status were determined using commercially available kits. PTPN22 R620W genotyping was performed by Sequenom MassArray. Linear regression analyses were performed to investigate the role of these four factors in predicting response to treatment by 6 months, defined as the absolute change in 28-joint Disease Activity Score (DAS28).",
+        "population": "642 RA patients (abstract Results)",
+        "tissue": "Serum for RF/anti-CCP; genotyping material not specified in abstract",
+        "assay": "Commercial RF/anti-CCP and SE kits; PTPN22 R620W by Sequenom MassArray (abstract Methods)",
+        "intervention": "Infliximab, etanercept or adalimumab (abstract Results)",
+        "outcome": "Absolute change in DAS28",
+        "timepoint": "6 months",
+        "limitations": "Source-reported association; abstract-only extraction; limited response variance explained. No individual treatment recommendation.",
+        "originRef": "research/ra-anti-tnf/release.json#passages/PMID-18375541-ABSTRACT-3"
+      }
+    },
+    {
+      "id": "HSI-C-RA-SEROLOGY-META-RESULTS",
+      "disease": "rheumatoid_arthritis",
+      "assertion": "A total of 14 studies involving 5561 RA patients meeting the inclusion criteria were included. The overall analysis showed that the pooled relative risk for the predictive effects of the RF and anti-CCP antibody status on patient response to anti-TNFα agents was 0.98 (95% CI: 0.91–1.05, p = 0.54) and 0.88 (95% CI: 0.76–1.03, p = 0.11), respectively, with I2 values of 43% (p = 0.05) and 67% (p<0.01), respectively. Subgroup analyses of different anti-TNFα treatments (infliximab vs. etanercept vs. adalimumab vs. golimumab), response criteria (DAS28 vs. ACR20 vs. EULAR response), follow-up period (≥6 vs. <6 months), and ethnic group did not reveal a significant association for the status of RF and anti-CCP.",
+      "sourceId": "pmid:24586782",
+      "passageIds": [
+        "PMID-24586782-ABSTRACT-3",
+        "PMID-24586782-ABSTRACT-2"
+      ],
+      "status": "unreviewed_candidate",
+      "context": {
+        "model": "Meta-analysis of human studies",
+        "notes": "A systemic literature review was performed using the MEDLINE, SCOPUS, Cochrane Library, ISI Web of Knowledge, and Clinical Trials Register databases, and Hayden's criteria of quality assessment for prognostic studies were used to evaluate all of the studies. The correlation between the RF and anti-CCP antibody status with the treatment effect of anti-TNFα agents was analyzed separately using the Mantel Haenszel method. A fixed-effects model was used when there was no significant heterogeneity; otherwise, a random-effects model was applied. Publication bias was assessed using Egger's linear regression and a funnel plot.",
+        "population": "14 studies; 5561 RA patients (abstract Results)",
+        "tissue": null,
+        "assay": null,
+        "intervention": "Anti-TNF agents; treatment subgroups reported in abstract Results",
+        "outcome": "Clinical response by DAS28, ACR20 or EULAR; pooled relative risks",
+        "timepoint": "Subgroups: at least 6 months versus less than 6 months",
+        "limitations": "Abstract-only extraction; differing response criteria, follow-up and heterogeneity require independent assessment. No individual prediction.",
+        "originRef": "research/ra-anti-tnf/release.json#passages/PMID-24586782-ABSTRACT-3"
+      }
+    },
+    {
+      "id": "HSI-C-SSC-001",
+      "disease": "systemic_sclerosis",
+      "assertion": "circulating Tfh cells → increased_in → SSc cohort versus healthy controls",
+      "sourceId": "pmid:30760472",
+      "passageIds": [
+        "HSI-C-SSC-001-LOCATOR"
+      ],
+      "status": "unreviewed_candidate",
+      "context": {
+        "model": "human cohort",
+        "notes": "50 SSc patients and 32 healthy controls; flow cytometry; do not generalise to all SSc cohorts",
+        "population": "50 SSc patients and 32 healthy controls",
+        "tissue": null,
+        "assay": "Flow cytometry",
+        "intervention": null,
+        "outcome": "SSc cohort versus healthy controls",
+        "timepoint": null,
+        "limitations": "Cohort-specific observation; subgroup composition and assay differences require full-paper review",
+        "originRef": "research/ssc-tfh-il21/curation-candidates.v1.json#claims/HSI-C-SSC-001"
+      }
+    },
+    {
+      "id": "HSI-C-SSC-004",
+      "disease": "systemic_sclerosis",
+      "assertion": "SSc circulating Tfh cells → promotes_in_vitro → IL-21-dependent plasmablast differentiation",
+      "sourceId": "pmid:30760472",
+      "passageIds": [
+        "HSI-C-SSC-004-LOCATOR"
+      ],
+      "status": "unreviewed_candidate",
+      "context": {
+        "model": "human ex vivo coculture",
+        "notes": "Tfh–B-cell coculture; IL-21R blockade/JAK1/2 inhibition; not a clinical efficacy claim",
+        "population": null,
+        "tissue": null,
+        "assay": "Tfh–B-cell coculture",
+        "intervention": "IL-21R blockade/JAK1/2 inhibition",
+        "outcome": "IL-21-dependent plasmablast differentiation",
+        "timepoint": null,
+        "limitations": "In vitro effect does not establish treatment benefit in SSc patients",
+        "originRef": "research/ssc-tfh-il21/curation-candidates.v1.json#claims/HSI-C-SSC-004"
+      }
+    },
+    {
+      "id": "HSI-C-SSC-005",
+      "disease": "systemic_sclerosis",
+      "assertion": "ICOS+ Tfh-like cells → associated_with → SSc dermal fibrosis",
+      "sourceId": "pmid:29514998",
+      "passageIds": [
+        "HSI-C-SSC-005-LOCATOR"
+      ],
+      "status": "unreviewed_candidate",
+      "context": {
+        "model": "human SSc skin",
+        "notes": "Skin infiltrating ICOS+ CD4+ Tfh-like cells correlated with dermal fibrosis and clinical status",
+        "population": null,
+        "tissue": "human SSc skin",
+        "assay": null,
+        "intervention": null,
+        "outcome": "SSc dermal fibrosis",
+        "timepoint": null,
+        "limitations": "Human association separated from causal mouse-model findings",
+        "originRef": "research/ssc-tfh-il21/curation-candidates.v1.json#claims/HSI-C-SSC-005"
+      }
+    },
+    {
+      "id": "HSI-C-SSC-005-MOUSE",
+      "disease": "systemic_sclerosis",
+      "assertion": "ICOS+ Tfh-like cells / IL-21 → contributes_to_in_model → dermal fibrosis",
+      "sourceId": "pmid:29514998",
+      "passageIds": [
+        "HSI-C-SSC-005-MOUSE-LOCATOR"
+      ],
+      "status": "unreviewed_candidate",
+      "context": {
+        "model": "GVHD-SSc mouse model",
+        "notes": "Anti-ICOS antibody and IL-21 neutralisation evaluated in experimental model",
+        "population": null,
+        "tissue": null,
+        "assay": null,
+        "intervention": "Anti-ICOS antibody and IL-21 neutralisation",
+        "outcome": "dermal fibrosis",
+        "timepoint": null,
+        "limitations": "Animal model intervention; no human therapeutic efficacy inference",
+        "originRef": "research/ssc-tfh-il21/curation-candidates.v1.json#claims/HSI-C-SSC-005-MOUSE"
+      }
+    },
+    {
+      "id": "HSI-C-SSC-006",
+      "disease": "systemic_sclerosis",
+      "assertion": "circulating Tfh1 subset → increased_or_imbalanced_in → SSc cohort",
+      "sourceId": "pmid:33175976",
+      "passageIds": [
+        "HSI-C-SSC-006-LOCATOR"
+      ],
+      "status": "unreviewed_candidate",
+      "context": {
+        "model": "human case-control",
+        "notes": "Overall circulating Tfh proportion not different from controls; Tfh1 subset increased; associations with IL-21/IL-6 and B-cell phenotype",
+        "population": "SSc cohort",
+        "tissue": null,
+        "assay": null,
+        "intervention": null,
+        "outcome": "SSc cohort",
+        "timepoint": null,
+        "limitations": "Do not collapse subset imbalance into total circulating Tfh increase",
+        "originRef": "research/ssc-tfh-il21/curation-candidates.v1.json#claims/HSI-C-SSC-006"
+      }
+    }
+  ],
+  "version": "2e4704bb3c90322045403ddda78e3ba6cc9eef77479519cf88b95a9f446a0f1b"
+}

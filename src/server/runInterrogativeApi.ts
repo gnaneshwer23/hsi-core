@@ -12,7 +12,7 @@ if(!databaseUrl||!publicOrigin||!/^https:\/\//.test(publicOrigin)||!Number.isInt
 const origin=new URL(publicOrigin).origin;
 const deployment=readResearchDeploymentConfig(process.env);
 const services=createNeonInterrogativeApiServices({databaseUrl,neonProjectId:process.env.HSI_NEON_PROJECT_ID,
- writesEnabled:deployment.ok&&deployment.writesEnabled,sscReleaseId:process.env.HSI_SSC_RESEARCH_RELEASE_ID});
+ writesEnabled:deployment.ok&&deployment.writesEnabled,sscReleaseId:process.env.HSI_SSC_RESEARCH_RELEASE_ID,raComparisonReleaseId:process.env.HSI_RA_COMPARISON_RELEASE_ID});
 Bun.serve({hostname:"127.0.0.1",port,fetch(request){
  // The reverse proxy must preserve the original Host and HTTPS forwarding.
  const url=new URL(request.url);
