@@ -1,0 +1,4 @@
+# Preserve hash-bound uploaded fixtures byte-for-byte across platforms.
+research/validation/v0.1/input/* -text
+research/validation/v0.1/input/*.csv whitespace=cr-at-eol
+site/public/research/validation/v0.1/*.json -text
