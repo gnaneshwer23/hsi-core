@@ -178,3 +178,15 @@ test("concurrent SSc graph route preserves authenticated session verification an
  expect(response.status).toBe(200);expect(called).toBe(true);
  const denied=await handleVercelResearch(req("/api/research/graph/ssc?node=IL21"),env,{transport:noCalls});expect(denied.status).toBe(401);
 });
+
+test("session diagnostics require a verified provider identity and inspect only its immutable IDs",async()=>{
+ let calls=0;
+ const inspectSession=async(input:Parameters<NonNullable<import('../src/server/vercelResearch').VercelResearchDependencies['inspectSession']>>[0])=>{
+  calls++;expect(input.sessionId).toBe(identity.session.id);expect(input.userId).toBe(identity.user.id);
+  return {status:"database_session_not_visible",checks:{userVisible:true,emailVerified:true,userNotBanned:true,sessionVisible:false,sessionActive:false,sessionNotImpersonated:false,tokenUsable:false}};
+ };
+ const missing=await handleVercelResearch(req("/api/research/session-diagnostics"),env,{transport:noCalls,inspectSession});expect(missing.status).toBe(401);expect(calls).toBe(0);
+ const verified=await handleVercelResearch(req("/api/research/session-diagnostics?userId=attacker",{headers:{cookie}}),env,{transport:transport(async()=>Response.json(identity)),inspectSession});
+ expect(verified.status).toBe(200);const body=await verified.json();expect(body.status).toBe("database_session_not_visible");expect(body.databaseConnectionTested).toBe(true);expect(body.databaseEndpointPrefix).toBe("ep-sweet-hill-zasb0lni");expect(JSON.stringify(body)).not.toContain(identity.user.id);expect(JSON.stringify(body)).not.toContain(identity.user.email);expect(JSON.stringify(body)).not.toContain("never-used");expect(calls).toBe(1);
+ const postResponse=await handleVercelResearch(post("/api/research/session-diagnostics"),env,{transport:noCalls,inspectSession});expect(postResponse.status).toBe(405);expect(calls).toBe(1);
+});

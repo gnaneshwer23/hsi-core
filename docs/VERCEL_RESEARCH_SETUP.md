@@ -171,6 +171,23 @@ Other 401 responses distinguish a missing provider session
 to an eligible database session (`BACKEND_DATABASE_SESSION_REQUIRED`). These checks
 do not substitute for the subsequent researcher/reviewer grant check.
 
+For the latter, a signed-in, email-verified user can open
+`/api/research/session-diagnostics`. This GET-only endpoint inspects only that
+provider-verified session/user pair. It returns boolean row-visibility, email,
+ban, expiry, impersonation and token-format checks, plus non-secret Auth/database
+endpoint prefixes. It never returns connection strings, session tokens, IDs,
+emails, database roles or other users' records, and never alters the database.
+Query-string identity overrides are ignored. Anonymous/unverified callers are
+denied before the database query. Endpoint-prefix equality is an observation,
+not proof of role grants or branch management identity.
+
+`database_user_not_visible` and `database_session_not_visible` can mean a wrong
+target, absent row or row-level visibility restriction; do not assume one cause
+or disable RLS. Other status codes isolate verification, ban, expiry,
+impersonation or unusable-token gates. Even `session_eligible` does not grant
+researcher/reviewer authority. An operator must verify the exact failing check
+on the approved target before changing configuration or privileges.
+
 An approved identity administrator must provision only the authorised researcher
 role for the verified immutable user ID in the staging `hsi_research_access`
 table, recording the real grantor identity and time. Signup and the gateway do
