@@ -1,4 +1,6 @@
-# Health Super Intelligence — Definitive Product Vision
+# Human Super Intelligence — Definitive Product Vision
+
+**Naming clarification — 5 November 2026:** The founder-confirmed product name is **Human Super Intelligence (HSI)**. See the [new product direction](HSI_PRODUCT_DIRECTION.md) and [implementation crosswalk](HSI_PRODUCT_DIRECTION_IMPLEMENTATION.md) for its relationship to the existing research-first build. The target-state description below is not authorisation to add live CDS or PHI to `hsi-core`.
 
 **Document status:** Authoritative target-state product vision  
 **Adopted:** 2 November 2026  
@@ -9,9 +11,9 @@
 
 ---
 
-# 2.1 What Is Health Super Intelligence?
+# 2.1 What Is Human Super Intelligence?
 
-Health Super Intelligence (HSI) is an interconnected, evidence-grounded healthcare and biomedical intelligence ecosystem designed to connect human health information with the biological mechanisms, clinical evidence and scientific research that help explain disease and treatment.
+Human Super Intelligence (HSI) is an interconnected, evidence-grounded healthcare and biomedical intelligence ecosystem designed to connect human health information with the biological mechanisms, clinical evidence and scientific research that help explain disease and treatment.
 
 HSI aims to create a unified intelligence experience across information that is currently distributed among hospitals, laboratories, pharmacies, patient applications, wearable devices, biomedical databases, scientific publications and clinical trial registries.
 

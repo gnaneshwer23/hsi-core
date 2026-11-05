@@ -9,7 +9,7 @@
 
 ## 3.1 Fundamental product architecture
 
-Health Super Intelligence is **one connected intelligence ecosystem with four specialised product experiences**, not four unrelated apps and not one monolith.
+Human Super Intelligence is **one connected intelligence ecosystem with four specialised product experiences**, not four unrelated apps and not one monolith.
 
 | # | Product | Role |
 |---|---------|------|

@@ -1,6 +1,6 @@
 # Document 02 — HSI Architecture and Data Design
 
-**Health Super Intelligence (HSI) | Version 1.1 | 2 November 2026**  
+**Human Super Intelligence (HSI) | Version 1.1 | 2 November 2026**<br>
 **Status:** Proposed / pending founder approval — target architecture; current implementation unverified.  
 **Canonical path:** [`docs/strategy/HSI_ARCHITECTURE_AND_DATA.md`](./HSI_ARCHITECTURE_AND_DATA.md)  
 **Governing document:** [`HSI_MASTER_PRD_v1.md`](./HSI_MASTER_PRD_v1.md) (HSI-FR-001–054).  

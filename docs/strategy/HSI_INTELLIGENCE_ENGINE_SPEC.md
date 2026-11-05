@@ -1,6 +1,6 @@
 # Document 03 — HSI Intelligence Engine and Agent Specifications
 
-**Health Super Intelligence (HSI) | Version 1.0 | 2 November 2026**  
+**Human Super Intelligence (HSI) | Version 1.0 | 2 November 2026**<br>
 **Status:** Proposed / pending founder approval — target-state design; existing implementation unverified.  
 **Canonical path:** [`docs/strategy/HSI_INTELLIGENCE_ENGINE_SPEC.md`](./HSI_INTELLIGENCE_ENGINE_SPEC.md)  
 **Governing documents:** [`HSI_MASTER_PRD_v1.md`](./HSI_MASTER_PRD_v1.md) (HSI-FR-001–054) and [`HSI_ARCHITECTURE_AND_DATA.md`](./HSI_ARCHITECTURE_AND_DATA.md) (Document 02 v1.1).  

@@ -1,5 +1,9 @@
 # HSI Strategy Pack (2026-11-02)
 
+**Naming clarification — 5 November 2026:** HSI means **Human Super Intelligence**. The master vision, PRD and active companion documents use this name. Older dated audits retain their historical wording. “Living Health Knowledge Graph” and health-data terminology describe the application domain, not a different company/product name.
+
+**Latest founder direction:** [Human Super Intelligence — Product Direction](HSI_PRODUCT_DIRECTION.md) · [Implementation crosswalk and next research work package](HSI_PRODUCT_DIRECTION_IMPLEMENTATION.md). These align the new direction to the existing workbench and shared-technology boundaries; they do not change runtime maturity, approve clinical/PHI processing or mark proposed PRD requirements as implemented.
+
 Strategic product reset: audit, architecture, and roadmap. **No feature implementation in this pack.**
 
 **Agent skills (on demand):** see [`../AGENT_SKILLS.md`](../AGENT_SKILLS.md) — when to load installed personal Cursor skills for HSI/ISI work (not always-applied).

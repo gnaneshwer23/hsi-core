@@ -41,9 +41,9 @@
 ## 3. Decisions requiring founder approval
 
 ### D1 — Brand hierarchy
-**Options:** (a) Health Super Intelligence umbrella + ISI + Aksh sub-brands; (b) keep Human Systems Intelligence for hsi-core only; (c) Immune-first public brand.  
-**Impact:** Website, legal, domain strategy.  
-**Blocker for:** Public relaunch copy.
+**Product name confirmed — 5 November 2026:** HSI means **Human Super Intelligence**.
+**Product relationship:** HSI supplies shared technology; ISI and Aksh retain their interfaces, databases and product responsibilities, as described in the [latest implementation crosswalk](HSI_PRODUCT_DIRECTION_IMPLEMENTATION.md).
+**Effect:** The HSI name is resolved for product documents and public copy. This does not assert a legal-entity registration or approve additional clinical/data scope. Other decisions below retain their recorded proposal status.
 
 ### D2 — Stage 1 sequencing
 **Options:** (a) Research-intelligence first (Phases 1–2) — **recommended**; (b) Parallel accelerate HSI Clinical; (c) Trials-first.  

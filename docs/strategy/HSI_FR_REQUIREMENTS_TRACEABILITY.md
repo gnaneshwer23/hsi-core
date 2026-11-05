@@ -117,7 +117,7 @@ Verified IDs: **004, 007, 009, 010, 042, 048**. Mocked: **045**. Not assessed: *
 
 | ID | Statement | Priority | Classification | Evidence (paths/docs) | Gap / next step |
 |----|-----------|----------|----------------|----------------------|-----------------|
-| HSI-FR-039 ★ | Provide a professional public HSI website | P0 | Partial | hsi-core site research narrative Partial; ISI marketing site; unified Health Super Intelligence ecosystem site **Missing** ([`HSI_PUBLIC_WEBSITE_SPECIFICATION.md`](./HSI_PUBLIC_WEBSITE_SPECIFICATION.md) Proposed) | §8 Phase 3 site after D1 — MVP include |
+| HSI-FR-039 ★ | Provide a professional public HSI website | P0 | Partial | hsi-core site research narrative Partial; ISI marketing site; unified Human Super Intelligence ecosystem site **Missing** ([`HSI_PUBLIC_WEBSITE_SPECIFICATION.md`](./HSI_PUBLIC_WEBSITE_SPECIFICATION.md) Proposed) | §8 Phase 3 site after D1 — MVP include |
 | HSI-FR-040 ★ | Explain the four-product ecosystem clearly | P0 | Missing | Spec complete; public surfaces do not yet present four-product honesty | Website copy after brand decision (D1 / HSI-D06) |
 | HSI-FR-041 ★ | Show verified capability availability honestly | P0 | Partial | Partner lock fixture honesty restored; capability badges Incomplete ([`HSI_EVIDENCE_AND_TRUST_UI.md`](./HSI_EVIDENCE_AND_TRUST_UI.md)) | Mandatory for MVP website + workspace |
 | HSI-FR-042 ★ | Provide an interactive scientific research workspace | P0 | Verified working | ISI Atlas / Ask / journeys / GraphView — primary research surface ([`HSI_RESEARCHER_WORKSPACE_UX.md`](./HSI_RESEARCHER_WORKSPACE_UX.md) reuse) | Harden toward Question→…→Brief M1 journey |

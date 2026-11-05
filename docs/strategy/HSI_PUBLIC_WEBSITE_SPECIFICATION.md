@@ -4,7 +4,7 @@
 **PRD companion:** [`HSI_DESIGN_SYSTEM_AND_UX.md`](./HSI_DESIGN_SYSTEM_AND_UX.md) (Document 04 Spec §§3–4) is the canonical product UX companion; this file elaborates page specs.  
 **Aligns:** Vision §2.1 proposition · IA [`HSI_PRODUCT_INFORMATION_ARCHITECTURE.md`](./HSI_PRODUCT_INFORMATION_ARCHITECTURE.md) · audit [`HSI_EXISTING_UX_AUDIT.md`](./HSI_EXISTING_UX_AUDIT.md)
 
-**Scope:** Marketing / trust site for **Health Super Intelligence** as one ecosystem. Distinct from:
+**Scope:** Marketing / trust site for **Human Super Intelligence** as one ecosystem. Distinct from:
 
 - **hsi-core.vercel.app** — evidence substrate / research-intelligence (preserve; do not replace with marketing-only)  
 - **immune-super-intelligence.co.uk** — ISI researcher product  
@@ -24,7 +24,7 @@
 
 | Element | Spec |
 |---------|------|
-| Brand | Health Super Intelligence (hierarchy vs ISI / Aksh resolved per D1) |
+| Brand | Human Super Intelligence (hierarchy vs ISI / Aksh resolved per D1) |
 | Headline | Ecosystem outcome, not “AI agents” or climb milestones |
 | Support | One sentence: connect health information with biology, evidence and research — with provenance and human review |
 | Visual | One composition; scientific credibility; **not** decorative AI theatre |

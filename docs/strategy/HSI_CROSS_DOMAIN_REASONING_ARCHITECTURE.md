@@ -13,7 +13,7 @@
 
 ## 6.1 Mission
 
-Cross-domain reasoning (CDR) is the central intelligence capability that differentiates Health Super Intelligence from EHRs, biomedical databases, literature search tools, and general-purpose AI chatbots.
+Cross-domain reasoning (CDR) is the central intelligence capability that differentiates Human Super Intelligence from EHRs, biomedical databases, literature search tools, and general-purpose AI chatbots.
 
 HSI must investigate questions spanning patient history, encounters, labs, medications, physiology, immune-cell biology, signalling, gut–microbiome–metabolism, disease mechanisms, biomedical evidence, therapeutic targets, clinical trials, research gaps, and scientific hypotheses.
 

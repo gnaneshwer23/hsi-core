@@ -1,7 +1,9 @@
-# HEALTH SUPER INTELLIGENCE (HSI)
+# HUMAN SUPER INTELLIGENCE (HSI)
+
+**Naming clarification — 5 November 2026:** HSI expands to **Human Super Intelligence**. This editorial correction does not change requirement status or clinical/data approvals. The [latest product direction](HSI_PRODUCT_DIRECTION.md) and [implementation crosswalk](HSI_PRODUCT_DIRECTION_IMPLEMENTATION.md) provide a connected research delivery brief.
 ## Master Product Requirements Document — Version 1.0
 
-**Product:** Health Super Intelligence  
+**Product:** Human Super Intelligence<br>
 **Product category:** Connected clinical and biomedical intelligence platform  
 **Primary market:** United Kingdom  
 **Future market:** International healthcare and biomedical research  
@@ -29,7 +31,7 @@ This PRD is the **product requirements authority** for HSI (V1.0). Target vision
 
 ## 1.1 Product Vision
 
-**Health Super Intelligence connects human health information with biological knowledge, scientific evidence and clinical research opportunities to help people make better-informed decisions.**
+**Human Super Intelligence connects human health information with biological knowledge, scientific evidence and clinical research opportunities to help people make better-informed decisions.**
 
 HSI is a coordinated intelligence ecosystem spanning patient health, clinical care, biomedical research and clinical trials.
 
@@ -1130,7 +1132,7 @@ Do not:
 
 # 20. Final Product Definition
 
-**Health Super Intelligence is a governed clinical and biomedical intelligence ecosystem that connects longitudinal health information, human biology, scientific evidence and clinical research opportunities through interoperable data services, a living knowledge graph and coordinated AI-assisted reasoning.**
+**Human Super Intelligence is a governed clinical and biomedical intelligence ecosystem that connects longitudinal health information, human biology, scientific evidence and clinical research opportunities through interoperable data services, a living knowledge graph and coordinated AI-assisted reasoning.**
 
 Its differentiation is not the number of AI agents, databases or features.
 
