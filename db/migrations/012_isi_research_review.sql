@@ -20,3 +20,17 @@ CREATE TABLE IF NOT EXISTS hsi_isi_review_events (
  CONSTRAINT independent_reviewer CHECK (submitted_by <> reviewer_principal)
 );
 -- No database writes until permissions, immutability and RLS have been reviewed.
+
+ALTER TABLE hsi_isi_intake ADD CONSTRAINT isi_intake_hash_format CHECK (release_hash ~ '^[a-f0-9]{64}$' AND artifact_sha256 ~ '^[a-f0-9]{64}$' AND source_commit ~ '^[a-f0-9]{40}$');
+ALTER TABLE hsi_isi_review_events ADD CONSTRAINT isi_review_decision CHECK (decision IN ('approved','rejected','needs_evidence'));
+ALTER TABLE hsi_isi_review_events ADD CONSTRAINT isi_review_kind CHECK (subject_kind IN ('ontology','claim'));
+ALTER TABLE hsi_isi_review_events ADD CONSTRAINT isi_review_nonempty CHECK (length(trim(subject_id))>0 AND length(trim(source_locator))>0 AND length(trim(rationale))>0);
+CREATE OR REPLACE FUNCTION hsi_isi_deny_mutation() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN RAISE EXCEPTION 'Immutable ISI scientific research record'; END $$;
+CREATE TRIGGER hsi_isi_intake_immutable BEFORE UPDATE OR DELETE ON hsi_isi_intake FOR EACH ROW EXECUTE FUNCTION hsi_isi_deny_mutation();
+CREATE TRIGGER hsi_isi_review_immutable BEFORE UPDATE OR DELETE ON hsi_isi_review_events FOR EACH ROW EXECUTE FUNCTION hsi_isi_deny_mutation();
+ALTER TABLE hsi_isi_intake ENABLE ROW LEVEL SECURITY;
+ALTER TABLE hsi_isi_intake FORCE ROW LEVEL SECURITY;
+ALTER TABLE hsi_isi_review_events ENABLE ROW LEVEL SECURITY;
+ALTER TABLE hsi_isi_review_events FORCE ROW LEVEL SECURITY;
+-- Deliberately no public policies: owner/service grants must be reviewed separately.
