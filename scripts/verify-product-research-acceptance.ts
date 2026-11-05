@@ -17,7 +17,9 @@ const results=products.map(p=>{
  const output=execFileSync(process.execPath,["--no-env-file","scripts/verify-hsi-artifact-acceptance.ts"],{cwd:join(p.repo,p.app),env,encoding:"utf8",maxBuffer:100000});
  const acceptance=JSON.parse(output);
  if(acceptance.product!==p.product||acceptance.scientificReview!=="unreviewed"||acceptance.claims!==0||acceptance.rolesTransferred!==false||acceptance.scientificApprovalTransferred!==false||acceptance.graphPublicationApproved!==false)throw Error("Product loader incorrectly transferred authority");
- return {product:p.product,revision:git(p.repo,"rev-parse","HEAD"),workingTree:git(p.repo,"status","--porcelain")?"includes_local_changes":"clean",modulePins,acceptance};
+ const denial=JSON.parse(execFileSync(process.execPath,["--no-env-file","scripts/verify-hsi-artifact-denial.ts"],{cwd:join(p.repo,p.app),env,encoding:"utf8",maxBuffer:100000}));
+ if(denial.product!==p.product||denial.tamperedCorpusUnavailable!==true||denial.tamperedLoadDenied!==true||denial.separateLocalCorpusUsable!==true)throw Error("Product failed closed-corpus isolation check");
+ return {product:p.product,denial,revision:git(p.repo,"rev-parse","HEAD"),workingTree:git(p.repo,"status","--porcelain")?"includes_local_changes":"clean",modulePins,acceptance};
 });
 if(results[0]!.acceptance.bundleHash!==results[1]!.acceptance.bundleHash||results[0]!.acceptance.artifactHash!==results[1]!.acceptance.artifactHash)throw Error("Products interpreted different artifacts or source bundles");
 console.log(JSON.stringify({schemaVersion:"hsi-product-acceptance-report-1",status:"engineering_source_parity_passed",hsiRevision:git(root,"rev-parse","HEAD"),products:results,approvedArtifactGate:"pending_independent_scientific_approval",databaseActivationChecked:false,roleProvisioningChecked:false,productionDeploymentChecked:false},null,2));

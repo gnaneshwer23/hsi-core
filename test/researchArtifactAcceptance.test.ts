@@ -62,3 +62,8 @@ test("stale, malformed, unsafe and locked imports preserve installed snapshot an
 test("symlink, oversized inputs and corrupt installed metadata fail without replacement",()=>temporary(dir=>{
  const input=join(dir,"incoming.json"),destination=join(dir,"installed.json"),a=fixture();writeFileSync(input,JSON.stringify(a));const link=join(dir,"link.json");symlinkSync(input,link);expect(()=>importResearchCorpusArtifact(link,destination,policy(a),"isi")).toThrow("regular");writeFileSync(input," ".repeat(1_000_001));expect(()=>importResearchCorpusArtifact(input,destination,policy(a),"isi")).toThrow("regular");writeFileSync(input,JSON.stringify(a));writeFileSync(destination,"bad installed data");expect(()=>importResearchCorpusArtifact(input,destination,policy(a),"isi")).toThrow("preserve");expect(readFileSync(destination,"utf8")).toBe("bad installed data");
 }));
+
+test("valid JSON with altered installed sequence cannot weaken rollback protection",()=>temporary(dir=>{
+ const input=join(dir,"incoming.json"),destination=join(dir,"installed.json"),a=fixture(2);writeFileSync(input,JSON.stringify(a));importResearchCorpusArtifact(input,destination,policy(a),"isi");
+ const corrupted=JSON.parse(readFileSync(destination,"utf8"));corrupted.sequence=1;writeFileSync(destination,JSON.stringify(corrupted));const bytes=readFileSync(destination,"utf8"),old=fixture(1);writeFileSync(input,JSON.stringify(old));expect(()=>importResearchCorpusArtifact(input,destination,policy(old),"isi")).toThrow("preserve");expect(readFileSync(destination,"utf8")).toBe(bytes);
+}));
