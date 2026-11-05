@@ -1,0 +1,10 @@
+import {test,expect} from "bun:test";
+import {handleInterrogativeApi} from "../src/server/interrogativeApi";
+const path="https://hsi.example/api/research/discovery/ssc?node=cell:tfh";
+const cookie="__Secure-better-auth.session_token=verified-session";
+const services={load:async()=>({}),submit:async()=>({}),review:async()=>({}),discovery:async({nodeId}:{nodeId:string})=>({schemaVersion:"hsi-governed-discovery-1",nodeId,graphPromotable:false,candidates:[]})};
+test("discovery denies missing session",async()=>{expect((await handleInterrogativeApi(new Request(path),services)).status).toBe(401)});
+test("discovery rejects invalid node",async()=>{expect((await handleInterrogativeApi(new Request(path.replace("cell:tfh","bad%20node"),{headers:{cookie}}),services)).status).toBe(400)});
+test("discovery accepts verified cookie and remains no-store",async()=>{const r=await handleInterrogativeApi(new Request(path,{headers:{cookie}}),services);expect(r.status).toBe(200);expect(r.headers.get("cache-control")).toBe("no-store");expect((await r.json()).graphPromotable).toBe(false)});
+test("discovery rejects writes",async()=>{expect((await handleInterrogativeApi(new Request(path,{method:"POST",headers:{cookie}}),services)).status).toBe(405)});
+test("discovery masks backend errors",async()=>{const r=await handleInterrogativeApi(new Request(path,{headers:{cookie}}),{...services,discovery:async()=>{throw Error("secret database error")}});expect(r.status).toBe(403);expect(await r.text()).not.toContain("secret database error")});
