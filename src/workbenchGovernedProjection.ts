@@ -7,7 +7,7 @@ export const WORKBENCH_GRAPH_PROJECTION_VERSION="hsi-workbench-governed-projecti
 export type WorkbenchMechanism={id:string;subjectId:string;subject:string;predicate:string;objectId:string;object:string;reviewState:string;epistemicType:string;sourceEvidenceIds:string[];studyContext:string|null;sourceLocator:string|null;limitations:string|null;gaps:string[]};
 export type WorkbenchGraphProjection={schemaVersion:typeof WORKBENCH_GRAPH_PROJECTION_VERSION;sourceVersion:string;readOnly:true;truncated:boolean;concepts:Array<{id:string;label:string;kind:string;reviewState:string}>;mechanisms:WorkbenchMechanism[];warning:string};
 export function projectGovernedGraphForWorkbench(result:GraphReadResult):WorkbenchGraphProjection{
- if(!result||result.schemaVersion!==GOVERNED_GRAPH_READ_VERSION||result.readOnly!==true||!/^\\d+\\.\\d+\\.\\d+$/.test(result.version)||!Array.isArray(result.nodes)||!Array.isArray(result.relationships)||result.nodes.length>500||result.relationships.length>120)throw Error("Untrusted graph query result");
+ if(!result||result.schemaVersion!==GOVERNED_GRAPH_READ_VERSION||result.readOnly!==true||!/^\d+\.\d+\.\d+$/.test(result.version)||!Array.isArray(result.nodes)||!Array.isArray(result.relationships)||result.nodes.length>500||result.relationships.length>120)throw Error("Untrusted graph query result");
  const nodes=new Map(result.nodes.map(n=>[n.id,n]));if(nodes.size!==result.nodes.length)throw Error("Duplicate graph nodes");
  const mechanisms=result.relationships.map(e=>{
   const a=nodes.get(e.subjectId),b=nodes.get(e.objectId);
