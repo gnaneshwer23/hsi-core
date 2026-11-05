@@ -1,11 +1,11 @@
 import {useEffect,useMemo,useState} from "react";
 import {Link} from "react-router-dom";
 import "../styles/science-body.css";
+import {ResearchEvidenceQueue,validateScientificVerification,type ScientificVerification} from "../components/ResearchEvidenceQueue";
 type Node={id:string;preferredLabel:string;kind:string};
 type Edge={id:string;subjectId:string;objectId:string;predicate:string;reviewState:string;sourceEvidenceIds:string[];context:{studyContext?:string;limitations?:string;sourceLocator?:string}};
 type Draft={release:{id:string;version:string;graphPromotable:boolean};provenance:{reviewedByHuman:boolean;rightsCleared:boolean};nodes:Node[];relationships:Edge[]};
-type Source={pmid:string;verificationStatus?:string;sourceTitle?:string};
-type Verification={schemaVersion:string;records?:Source[]};
+type Verification=ScientificVerification;
 export function ScientificResearchWorkbench(){
  const [graph,setGraph]=useState<Draft|null>(null),[verification,setVerification]=useState<Verification|null>(null);
  const [error,setError]=useState(""),[query,setQuery]=useState(""),[selected,setSelected]=useState<string|null>(null),[investigation,setInvestigation]=useState("");
@@ -13,7 +13,7 @@ export function ScientificResearchWorkbench(){
   fetch("/research/ssc-tfh-il21-graph-draft.v1.json",{signal:c.signal,cache:"no-store"}),
   fetch("/research/ssc-tfh-il21-abstract-verification.v1.json",{signal:c.signal,cache:"no-store"})
  ]).then(async ([a,b])=>{if(!a.ok||!b.ok)throw Error("Research sources unavailable");return Promise.all([a.json(),b.json()])})
- .then(([g,v]:[Draft,Verification])=>{if(g.release.graphPromotable!==false||g.provenance.reviewedByHuman!==false||g.provenance.rightsCleared!==false||!Array.isArray(g.nodes)||!Array.isArray(g.relationships))throw Error("Source governance validation failed");if(!c.signal.aborted){setGraph(g);setVerification(v)}})
+ .then(([g,v]:[Draft,Verification])=>{validateScientificVerification(v);if(g.release.graphPromotable!==false||g.provenance.reviewedByHuman!==false||g.provenance.rightsCleared!==false||!Array.isArray(g.nodes)||!Array.isArray(g.relationships))throw Error("Source governance validation failed");if(!c.signal.aborted){setGraph(g);setVerification(v)}})
  .catch(e=>{if(!c.signal.aborted)setError(e instanceof Error?e.message:"Research sources unavailable")});return()=>c.abort()},[]);
  const visible=useMemo(()=>graph?.nodes.filter(n=>(n.preferredLabel+" "+n.id).toLowerCase().includes(query.toLowerCase()))??[],[graph,query]);
  const node=graph?.nodes.find(n=>n.id===selected);
@@ -40,6 +40,7 @@ export function ScientificResearchWorkbench(){
  </>}
  <section style={{marginBlock:28}}><h2>Scientific verification and review</h2><p>Abstract-verification dataset: {verification?.schemaVersion||"Unavailable"}. Source identity checks and abstract review do not establish mechanistic truth.</p>
  <p><Link to="/science/study-comparison">Compare studies</Link> · <Link to="/science/contradictions">Inspect potential contradictions</Link> · <Link to="/science/review-preparation">Prepare independent review</Link></p>
+ {verification&&<ResearchEvidenceQueue verification={verification}/>}
  <p>Ontology mappings, claim-level support and graph publication remain separately governed. No patient records are loaded on this page.</p></section>
  </div></main>
 }
