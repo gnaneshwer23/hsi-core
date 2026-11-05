@@ -5,6 +5,7 @@ import {SCIENCE_TYPED_GRAPH,typedGraphNeighbours} from "../features/science/type
 import {buildEvidenceDossier} from "../features/science/evidenceDossier";
 import "../styles/science-body.css";
 import {GraphVisual} from "../features/science/GraphVisual";
+import {SscGraphVisual} from "../features/science/SscGraphVisual";
 import {GovernedResearchPanel} from "../components/GovernedResearchPanel";
 import "../styles/science-graph.css";
 type SscNode={id:string;preferredLabel:string;kind:string;sourceIdentifiers:{system:string;value:string;mapping:string}[]};
@@ -36,6 +37,7 @@ export function ScienceGraph(){
  {!ssc&&!sscError&&<p role="status">Loading SSc source-linked graph…</p>}
  {ssc&&<><p>Dataset: {ssc.release.id} · v{ssc.release.version} · {ssc.nodes.length} concepts · {ssc.relationships.length} candidate relationships · {ssc.release.status}</p>
  <label>Find SSc entities and identifiers <input type="text" value={sscSearch} onChange={e=>setSscSearch(e.target.value)} placeholder="Tfh, fibrosis, IL-21…"/></label>
+ <SscGraphVisual nodes={sscNodes} edges={ssc.relationships.filter(e=>sscNodes.some(n=>n.id===e.subjectId)&&sscNodes.some(n=>n.id===e.objectId))} selected={sscSelected} onSelect={setSscSelected}/>
  <div className="science-graph-nodes" role="group" aria-label="SSc research concepts">{sscNodes.map(n=><button type="button" key={n.id} aria-pressed={sscSelected===n.id} onClick={()=>setSscSelected(n.id)}><strong>{n.preferredLabel}</strong><small>{n.kind} · draft</small></button>)}</div>
  {sscNode&&<aside className="science-graph-detail"><h3>{sscNode.preferredLabel}</h3><p>Canonical draft ID: {sscNode.id}</p><p>Ontology identifiers: {sscNode.sourceIdentifiers.length?sscNode.sourceIdentifiers.map(x=>x.system+":"+x.value+" ("+x.mapping+")").join(", "):"Not yet curated; no equivalence inferred"}</p>
  <h4>Candidate relationships and source context</h4>{sscEdges.map(e=><article key={e.id} className="science-graph-edge"><strong>{e.id} · {e.predicate.replaceAll("_"," ")}</strong><p>{ssc.nodes.find(n=>n.id===e.subjectId)?.preferredLabel} → {ssc.nodes.find(n=>n.id===e.objectId)?.preferredLabel}</p><p>{e.context.studyContext}</p><p>Model: {e.context.model} · {e.epistemicType} · {e.reviewState}</p><p>Limitations: {e.context.limitations}</p><p>Locator: {e.context.sourceLocator}</p>{e.sourceEvidenceIds.map(id=><p key={id}><a href={"https://pubmed.ncbi.nlm.nih.gov/"+encodeURIComponent(id.replace("PMID:",""))+"/"} target="_blank" rel="noreferrer">Source {id}</a></p>)}</article>)}</aside>}
