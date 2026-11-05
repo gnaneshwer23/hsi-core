@@ -6,7 +6,7 @@ const provenance = { product: "isi" as const, datasetId: "ssc-source", version: 
 const fixture = {
   schemaVersion: RESEARCH_CONTRACT_VERSION, containsPhi: false, clinicalAdvice: false, kgWrite: false,
   context: { id: "ctx", question: "What is the evidence for macrophage TGF-beta signalling in SSc?", conceptIds: ["cell", "disease"], dataClass: "public_real", purpose: "research_only", containsPhi: false, provenance },
-  sources: [{ id: "source", title: "Source-linked study", kind: "publication", dataClass: "public_real", pmid: "123", doi: null, url: "https://pubmed.ncbi.nlm.nih.gov/123/", licence: { status: "permitted", identifier: null, passageUsePermitted: true }, provenance }],
+  sources: [{ id: "source", title: "Source-linked study", kind: "publication", dataClass: "public_real", pmid: "123", doi: null, url: "https://pubmed.ncbi.nlm.nih.gov/123/", licence: { status: "permitted", identifier: "test-source-permission", passageUsePermitted: true }, provenance }],
   passages: [{ id: "passage", sourceId: "source", sourceVersion: "1", text: "Study excerpt for a test fixture.", locator: "abstract", dataClass: "public_real", sha256: null }],
   entities: [
     { id: "cell", label: "Macrophage", type: "cell", dataClass: "public_real", provenance },
