@@ -1,0 +1,3 @@
+/** P0.4.2: immutable scientific review event contract. */
+export type ScientificReviewEvent={releaseHash:string;subjectId:string;decision:'approved'|'rejected'|'needs_evidence';reviewerPrincipal:string;submittedBy:string;sourceLocator:string;rationale:string};
+export function validateScientificReviewEvent(event:ScientificReviewEvent){if(!/^[a-f0-9]{64}$/.test(event.releaseHash)||!event.subjectId.trim()||!event.reviewerPrincipal.trim()||!event.submittedBy.trim()||event.reviewerPrincipal===event.submittedBy||!event.sourceLocator.trim()||!event.rationale.trim()||!['approved','rejected','needs_evidence'].includes(event.decision))throw Error('Invalid or self-approved scientific review');return event;}
