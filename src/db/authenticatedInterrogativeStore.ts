@@ -58,8 +58,13 @@ export async function loadAuthenticatedInterrogativeInvestigation(input:{
   const {verifyHsiReviewerAuthority}=await import("./reviewerAuthority");
   return verifyHsiReviewerAuthority({principal:actor.principalId,reviewedAt:new Date().toISOString(),databaseUrl:input.databaseUrl,neonProjectId:input.neonProjectId});
  })();
+ let deliverySigner=false;
+ if(reviewerAccess){
+  const schema=await sql`SELECT to_regclass('public.hsi_review_decisions_v2') AS review_table`;
+  if(schema[0]?.review_table){const signed=await sql`SELECT 1 FROM hsi_review_decisions_v2 WHERE investigation_id=${input.investigationId} AND reviewer_principal=${actor.principalId} LIMIT 1`;deliverySigner=signed.length===1}
+ }
  const rows=reviewerAccess
-  ?await sql`SELECT payload,content_hash,actor_principal FROM hsi_interrogative_investigations WHERE id=${input.investigationId} AND (actor_principal=${actor.principalId} OR (state='awaiting_scientific_review' AND actor_principal<>${actor.principalId})) LIMIT 1`
+  ?await sql`SELECT payload,content_hash,actor_principal FROM hsi_interrogative_investigations WHERE id=${input.investigationId} AND (actor_principal=${actor.principalId} OR (state='awaiting_scientific_review' AND actor_principal<>${actor.principalId}) OR ${deliverySigner}) LIMIT 1`
   :await sql`SELECT payload,content_hash,actor_principal FROM hsi_interrogative_investigations WHERE id=${input.investigationId} AND actor_principal=${actor.principalId} LIMIT 1`;
   if(rows.length!==1)throw Error("Investigation not found or access denied");
   const i=rows[0]!.payload as InterrogativeInvestigation;

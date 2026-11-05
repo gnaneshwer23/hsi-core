@@ -27,6 +27,8 @@ A translational researcher can ask a bounded question, inspect source-grounded e
 
 ## First implementation work package
 
+**Phase D implementation update — 5 November:** [Reproducible briefs and independent review](../PHASE_D_BRIEFS_AND_INDEPENDENT_REVIEW.md) adds context-bound exports, immutable submissions/decisions, a reviewer queue and linked revision/resubmission. Staging migration `015`, real identities and cleared evidence remain live-acceptance prerequisites; no publication is authorised.
+
 **Phase C implementation update — 5 November:** [Connected evidence graph and mechanism context](../PHASE_C_CONNECTED_EVIDENCE_GRAPH.md) adds immutable release-bound investigation views, reused mechanism/comparison builders and pinned working-catalogue links. The new staging migration and live acceptance remain pending; human evidence gates are unchanged.
 
 **Phase B implementation update — 5 November:** [Evidence/source readiness](../PHASE_B_EVIDENCE_AND_SOURCE_READINESS.md) now includes a reproducible, source-separated real-publication corpus, a source/passage/context inspector, fail-closed readiness and a human-review preparation packet. Source-rights attestation and scientific acceptance remain human/trusted-backend gates; zero candidates have been promoted.

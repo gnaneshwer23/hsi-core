@@ -221,3 +221,7 @@ knowledge graph relationships, enable live clinical decision support or permit P
 ## Phase A workspace addition
 
 The connected investigation workspace adds `GET/POST /api/research/investigations` and a server-only `HSI_SSC_RESEARCH_RELEASE_ID` binding. It uses the existing write/session safeguards and requires an existing published public-biomedical SSc release. Default writes remain disabled. See the [implementation and non-production acceptance procedure](PHASE_A_INVESTIGATION_WORKSPACE.md) before activation; no configuration or database changes were made by this delivery.
+
+## Phase D delivery addition
+
+Saved investigations now support context-bound JSON/Markdown briefs, immutable submissions and independent decisions, and linked revisions. The reviewer queue is `/research/scientific-review`. Review the [Phase D migration and two-account staging procedure](PHASE_D_BRIEFS_AND_INDEPENDENT_REVIEW.md) before activation. Migrations `014`/`015`, trusted grants and cleared published sources are prerequisites; they were not applied or provisioned by the code delivery. Existing write guards remain in force, and v1 browser decision payloads are no longer the production review contract.

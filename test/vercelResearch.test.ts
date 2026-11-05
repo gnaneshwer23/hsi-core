@@ -10,6 +10,13 @@ const transport=(fn:(...args:Parameters<typeof fetch>)=>ReturnType<typeof fetch>
 const req=(path:string,init:RequestInit={})=>new Request(origin+path,init);
 const post=(path:string,body:unknown={})=>req(path,{method:"POST",headers:{origin,"content-type":"application/json",cookie},body:JSON.stringify(body)});
 const noCalls=transport(async()=>{throw Error("Unexpected outbound request")});
+test("delivery brief and queue routes use the verified session bridge and revision writes stay disabled",async()=>{
+ const path="/api/research/interrogative/hsi-interrogative-example-12345678";
+ expect((await handleVercelResearch(post(path+"/revision"),env,{transport:noCalls})).status).toBe(403);
+ let seen="";const dependencies={transport:transport(async()=>Response.json(identity)),resolveToken:async()=>"verified-database-token",services:{load:async()=>({}),submit:async()=>({}),review:async()=>({}),deliveryView:async(input:{serverSessionToken:string|null})=>{seen=input.serverSessionToken??"";return {package:null}},queue:async()=>({items:[],nextCursor:null,history:[]})}};
+ expect((await handleVercelResearch(req(path+"/review-package",{headers:{cookie}}),env,dependencies)).status).toBe(200);expect(seen).toBe("verified-database-token");
+ expect((await handleVercelResearch(req("/api/research/scientific-review/queue",{headers:{cookie}}),env,dependencies)).status).toBe(200);
+});
 test("Vercel health reports missing configuration without querying a DB or echoing credentials",async()=>{
  const missing=await handleVercelResearch(req("/api/research/health"),{}, {transport:noCalls});
  expect(missing.status).toBe(503);expect((await missing.json()).missing).toContain("HSI_DATABASE_URL");

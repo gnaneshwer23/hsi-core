@@ -103,7 +103,7 @@ export function ResearchAccount(){
     {i.canReview&&<Link to={"/research/scientific-review?investigation="+encodeURIComponent(i.id)}>Review independently →</Link>}
    </li>)}</ul>:<p>No accessible investigations yet. Open your research workspace to start a draft when researcher access and a published release are available.</p>}
    {account.scientificReviewer&&<section aria-label="Independent reviewer history">
-    <h3>Your scientific review history</h3>
+    <p><Link to="/research/scientific-review">Open independent reviewer queue and brief history →</Link></p><h3>Your scientific review history</h3>
     <p>Only decisions signed by your verified reviewer identity are returned. Records are read-only; history is not a knowledge-graph publication.</p>
     <button type="button" onClick={refreshReviewHistory}>Load my decision history</button>
     {historyStatus&&<p role="status">{historyStatus}</p>}

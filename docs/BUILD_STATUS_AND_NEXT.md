@@ -8,6 +8,8 @@
 
 **Delivery Phase C implementation:** [Release-bound investigation graph and dossiers](PHASE_C_CONNECTED_EVIDENCE_GRAPH.md) connect saved investigations to inspectable sources, independent disease comparison and pinned catalogue versions. Migration `014` and live acceptance remain pending; no grants or publication occurred.
 
+**Delivery Phase D implementation:** [Bound briefs, independent review and revisions](PHASE_D_BRIEFS_AND_INDEPENDENT_REVIEW.md) adds verified exports, a reviewer queue, immutable decisions and linked drafts for resubmission. Migration `015` and live two-account acceptance remain pending.
+
 **Audit date:** 2 November 2026  
 **HEAD at write:** (post partner-honesty fix) — restored **TEST FIXTURE** partner (`lockedPilot=false`); real named partner **TBD**; prior Apolo `legal_mou` / operator-assert MoU path **revoked**; Stage 1 RA/TNF scope still locked; cite-ready path after Gate C remains; not CDS
 

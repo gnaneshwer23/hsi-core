@@ -6,6 +6,28 @@ const base="https://hsi.example/api/research/interrogative/"+id;
 const cookie="__Secure-better-auth.session_token=example-session-token-long-enough";
 const collection="https://hsi.example/api/research/investigations";
 const createRequest={question:"SSc fibrosis mechanisms?",releaseId:"ssc-release",requestId:"a65bd046-cccd-4dda-a957-b8fbb169e062"};
+test("brief exports are authenticated attachments with exact hashes and no HTML fallback",async()=>{
+ const url=base+"/brief?format=markdown",brief=async()=>({content:"# Research brief\n",hash:"a".repeat(64),packageHash:"b".repeat(64),mime:"text/markdown; charset=utf-8",filename:id+"-aaaaaaaaaaaa.md"});
+ expect((await handleInterrogativeApi(new Request(url),{...services,brief})).status).toBe(401);
+ const response=await handleInterrogativeApi(new Request(url,{headers:{cookie}}),{...services,brief});expect(response.status).toBe(200);expect(response.headers.get("x-hsi-content-sha256")).toBe("a".repeat(64));expect(response.headers.get("cache-control")).toBe("no-store");expect(response.headers.get("content-disposition")).toContain("attachment;");expect(await response.text()).toBe("# Research brief\n");
+ expect((await handleInterrogativeApi(new Request(base+"/brief?format=html",{headers:{cookie}}),{...services,brief})).status).toBe(400);
+ const denied=await handleInterrogativeApi(new Request(url,{headers:{cookie}}),{...services,brief:async()=>{throw Error("private database credentials")}});expect(denied.status).toBe(403);expect(await denied.text()).not.toContain("private");
+});
+test("revision routes require origin/JSON and a bounded body before invoking the backend",async()=>{
+ const url=base+"/revision";let called=false;const revise=async()=>{called=true;return {id}};
+ for(const [headers,body,status] of [[{origin:"https://evil.example","content-type":"application/json"},"{}",403],[{origin:"https://hsi.example","content-type":"text/plain"},"{}",415],[{origin:"https://hsi.example","content-type":"application/json"},"x".repeat(13000),413]] as const){expect((await handleInterrogativeApi(new Request(url,{method:"POST",headers:{cookie,...headers},body}),{...services,revise})).status).toBe(status)}
+ expect(called).toBe(false);expect((await handleInterrogativeApi(new Request(url,{method:"POST",headers:{cookie,origin:"https://hsi.example","content-type":"application/json"},body:"{}"}),{...services,revise})).status).toBe(201);
+});
+test("review queue is GET-only, authenticated, cursor bounded and cannot accept an identity filter",async()=>{
+ const url="https://hsi.example/api/research/scientific-review/queue",queue=async()=>({items:[],nextCursor:null,history:[]});
+ expect((await handleInterrogativeApi(new Request(url),{...services,queue})).status).toBe(401);
+ expect((await handleInterrogativeApi(new Request(url+"?principal=other",{headers:{cookie}}),{...services,queue})).status).toBe(400);
+ expect((await handleInterrogativeApi(new Request(url,{method:"POST",headers:{cookie}}),{...services,queue})).status).toBe(405);
+ expect((await handleInterrogativeApi(new Request(url,{headers:{cookie}}),{...services,queue})).status).toBe(200);
+});
+test("submission never accepts caller-supplied package or reviewer fields",async()=>{
+ const response=await handleInterrogativeApi(new Request(base+"/submit-review",{method:"POST",headers:{cookie,origin:"https://hsi.example","content-type":"application/json"},body:JSON.stringify({packageHash:"forged"})}),services);expect(response.status).toBe(400);
+});
 test("graph contexts require a verified cookie, accept GET/empty POST only and redact failures",async()=>{
  const url=base+"/graph-context";let captures=0;
  const graphContext=async(input:{capture:boolean})=>{if(input.capture)captures++;return {status:"not_captured",canCapture:true,context:null}};

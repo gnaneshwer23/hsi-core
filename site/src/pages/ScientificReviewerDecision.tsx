@@ -1,72 +1,38 @@
-import {useEffect,useState} from "react";
+import {useEffect,useRef,useState,type FormEvent} from "react";
 import {useSearchParams,Link} from "react-router-dom";
-import {hsiAuth} from "../lib/hsiAuth";
-import type {InterrogativeInvestigation} from "../../../src/interrogativeContracts";
-import type {HsiScientificReviewDecision} from "../../../src/interrogativeScientificReview";
-const validId=/^hsi-interrogative-[a-zA-Z0-9-]{8,100}$/;
-function canonical(value:unknown):string{
- if(Array.isArray(value))return "["+value.map(canonical).join(",")+"]";
- if(value&&typeof value==="object")return "{"+Object.entries(value as Record<string,unknown>).sort(([a],[b])=>a.localeCompare(b)).map(([k,v])=>JSON.stringify(k)+":"+canonical(v)).join(",")+"}";
- return JSON.stringify(value)??"null";
-}
-async function digest(value:unknown){const bytes=new TextEncoder().encode(canonical(value));const hash=await crypto.subtle.digest("SHA-256",bytes);return Array.from(new Uint8Array(hash)).map(b=>b.toString(16).padStart(2,"0")).join("")}
-export function ScientificReviewerDecision(){
- const [params]=useSearchParams();const id=params.get("investigation")??"";
- const [record,setRecord]=useState<InterrogativeInvestigation|null>(null);
- const [principal,setPrincipal]=useState("");
- const [status,setStatus]=useState("Enter a valid investigation ID in the URL query to begin.");
- const [outcome,setOutcome]=useState<HsiScientificReviewDecision["outcome"]>("request_revision");
- const [rationale,setRationale]=useState("");const [limitations,setLimitations]=useState("");
- const [coi,setCoi]=useState(false);const [claims,setClaims]=useState<string[]>([]);
- const [submitting,setSubmitting]=useState(false);const [complete,setComplete]=useState(false);
- useEffect(()=>{if(!validId.test(id)){setRecord(null);setStatus("A valid investigation ID is required.");return}
-  const controller=new AbortController();setRecord(null);setStatus("Verifying account and loading investigation…");
-  Promise.all([hsiAuth.session(),fetch("/api/research/interrogative/"+encodeURIComponent(id),{credentials:"same-origin",cache:"no-store",signal:controller.signal})])
-   .then(async ([session,response])=>{if(session.error||!session.data?.user.id)throw Error("Verified Neon Auth session required");if(!response.ok)throw Error("Access denied or trusted research API unavailable");const i=await response.json() as InterrogativeInvestigation;
-    if(i.id!==id||i.state!=="awaiting_scientific_review")throw Error("Investigation is not awaiting scientific review");if(i.actorPrincipal===session.data.user.id)throw Error("Authors cannot review their own investigations");
-    if(!controller.signal.aborted){setPrincipal(session.data.user.id);setRecord(i);setStatus("")}})
-   .catch(e=>{if(!controller.signal.aborted){setRecord(null);setStatus(e instanceof Error?e.message:"Unable to load review")}});return()=>controller.abort();
- },[id]);
- const eligible=record?[...new Set(record.branches.flatMap(b=>[...b.supporting,...b.opposing].map(e=>e.claimId)))]:[];
- async function submit(){
-  if(!record||!principal||submitting||!coi||!rationale.trim()||complete)return;
-  if(outcome==="approve_with_limitations"&&(!claims.length||!limitations.split("\n").some(s=>s.trim())))return;
-  setSubmitting(true);setStatus("");
-  try{
-   const decision:HsiScientificReviewDecision={
-    schemaVersion:"hsi-interrogative-scientific-review-1",decisionId:crypto.randomUUID(),investigationId:record.id,
-    investigationHash:await digest(record),releaseId:record.release.id,releaseManifestHash:record.release.manifestHash,
-    reviewerPrincipal:principal,reviewedAt:new Date().toISOString(),outcome,rationale:rationale.trim(),
-    reviewedClaimIds:claims,limitations:limitations.split("\n").map(s=>s.trim()).filter(Boolean),conflictOfInterestDeclared:coi
-   };
-   const response=await fetch("/api/research/interrogative/"+encodeURIComponent(record.id)+"/decision",{
-    method:"POST",credentials:"same-origin",cache:"no-store",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(decision)});
-   if(!response.ok)throw Error("Decision rejected. Verify reviewer authority, independent identity, investigation hash and trusted API availability.");
-   const result=await response.json() as {decisionId?:string;outcome?:string};
-   if(result.decisionId!==decision.decisionId||result.outcome!==decision.outcome)throw Error("Unexpected server acknowledgement");
-   setComplete(true);setStatus("Decision recorded by trusted backend. Graph promotion remains blocked pending a separate release gate.");
-  }catch(e){setStatus(e instanceof Error?e.message:"Decision submission failed")}
-  finally{setSubmitting(false)}
+import {IndependentReviewQueue} from "../components/IndependentReviewQueue";
+import {InvestigationEvidenceGraph} from "../components/InvestigationEvidenceGraph";
+import {BriefDownloads} from "../components/InvestigationDelivery";
+import {fetchDeliveryView} from "../lib/investigationDeliveryClient";
+import {packageClaimIds,type DeliveryView,type ReviewDecisionRequest,type ReviewOutcome} from "../../../src/investigationDelivery";
+import "../styles/investigation-delivery.css";
+function ReviewForm({id}:{id:string}){
+ const [view,setView]=useState<DeliveryView|null>(null),[message,setMessage]=useState("Loading verified evidence package…"),[attempt,setAttempt]=useState(0),[busy,setBusy]=useState(false);
+ const [outcome,setOutcome]=useState<ReviewOutcome>("request_revision"),[rationale,setRationale]=useState(""),[limitations,setLimitations]=useState(""),[coi,setCoi]=useState(false),[claims,setClaims]=useState<string[]>([]);
+ const limitLines=limitations.split("\n").map(s=>s.trim()).filter(Boolean),limitsValid=limitLines.length<=8&&limitLines.every(s=>s.length<=250);
+ const request=useRef<{key:string;id:string}|null>(null),pending=useRef(false);
+ useEffect(()=>{const c=new AbortController(),timer=setTimeout(()=>c.abort(),20000);setView(null);setMessage("Loading verified evidence package…");fetchDeliveryView(id,c.signal).then(v=>{if(!c.signal.aborted){setView(v);setMessage("")}}).catch(()=>{if(!c.signal.aborted)setMessage("The submitted package could not be verified. Check reviewer authority, source permissions and research access.")}).finally(()=>clearTimeout(timer));const timeout=()=>setMessage("The submitted package request timed out. Refresh to retry.");c.signal.addEventListener("abort",timeout,{once:true});return()=>{c.signal.removeEventListener("abort",timeout);c.abort();clearTimeout(timer)}},[id,attempt]);
+ async function submit(e:FormEvent){e.preventDefault();if(pending.current||!view?.capabilities.canDecide||!view.package||!view.submission)return;
+  const limits=limitations.split("\n").map(s=>s.trim()).filter(Boolean);if(!coi||rationale.trim().length<30||limits.length>8||limits.some(s=>s.length>250)||(outcome==="approve_with_limitations"&&(!claims.length||!limits.length)))return;
+  pending.current=true;setBusy(true);setMessage("");try{
+   const values={schemaVersion:"hsi-review-request-2" as const,investigationId:id,submissionId:view.submission.id,packageHash:view.package.packageHash,outcome,rationale:rationale.trim(),reviewedClaimIds:[...claims].sort(),limitations:limits,conflictOfInterestDeclared:true as const};
+   const key=JSON.stringify(values);if(!request.current||request.current.key!==key)request.current={key,id:crypto.randomUUID()};const decision:ReviewDecisionRequest={...values,requestId:request.current.id};
+   const response=await fetch("/api/research/interrogative/"+encodeURIComponent(id)+"/decision",{method:"POST",credentials:"same-origin",cache:"no-store",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify(decision),signal:AbortSignal.timeout(20000)});
+   const result=await response.json();if(!response.ok||result.packageHash!==view.package.packageHash||result.outcome!==outcome||typeof result.id!=="string"||!/^review-[a-f0-9]{32}$/.test(result.id))throw Error();setAttempt(n=>n+1);
+  }catch{setMessage("The decision could not be confirmed. Your input is retained. Retry the same request or refresh to check whether it was recorded.")}finally{pending.current=false;setBusy(false)}
  }
- return <main style={{maxWidth:960,margin:"3rem auto",padding:"0 1.25rem"}}>
- <p>HSI / ISI / INDEPENDENT SCIENTIFIC GOVERNANCE</p><h1>Scientific reviewer decision</h1>
- <p>For qualified, independently authorised reviewers only. This form cannot grant reviewer roles, approve draft literature claims, or publish knowledge-graph relationships.</p>
- <p><Link to="/science/review-preparation">Review preparation</Link> · <Link to="/science/study-comparison">SSc evidence comparison</Link></p>
- {record&&!complete&&<section style={{display:"grid",gap:"1rem",padding:"1.5rem",border:"1px solid #64748b",borderRadius:12}}>
- <h2>Investigation {record.id}</h2><p><Link to={"/research/decision-workbench?investigation="+encodeURIComponent(record.id)}>Inspect saved evidence graph and sources →</Link></p><p><strong>Research question:</strong> {record.question}</p>
- <p><strong>Original researcher:</strong> {record.actorPrincipal} · <strong>Release:</strong> {record.release.id} ({record.release.version})</p>
- <p><strong>Conclusion under review:</strong> {record.conclusion.text}</p>
- <p><strong>Limitations:</strong> {record.conclusion.limitations.join("; ")||"None recorded"}</p>
- <label>Review outcome <select value={outcome} onChange={e=>setOutcome(e.target.value as HsiScientificReviewDecision["outcome"])} style={{display:"block",padding:10,width:"100%"}}>
- <option value="request_revision">Request revision</option><option value="reject">Reject</option><option value="approve_with_limitations">Approve investigation with limitations</option>
- </select></label>
- <fieldset><legend>Claims examined (select only claims independently assessed)</legend>{eligible.length?eligible.map(c=><label key={c} style={{display:"block",margin:8}}>
- <input type="checkbox" checked={claims.includes(c)} onChange={e=>setClaims(old=>e.target.checked?[...old,c]:old.filter(x=>x!==c))}/> {c}</label>):<p>No eligible evidence claims. Approval is not permitted.</p>}</fieldset>
- <label>Scientific rationale <textarea required maxLength={4000} value={rationale} onChange={e=>setRationale(e.target.value)} rows={5} style={{display:"block",width:"100%"}}/></label>
- <label>Limitations (one per line) <textarea value={limitations} onChange={e=>setLimitations(e.target.value)} rows={4} style={{display:"block",width:"100%"}}/></label>
- <label><input type="checkbox" checked={coi} onChange={e=>setCoi(e.target.checked)}/> I declare that I have disclosed any conflicts of interest and am independent of the investigation author.</label>
- <button type="button" disabled={submitting||!coi||!rationale.trim()||(outcome==="approve_with_limitations"&&(!claims.length||!limitations.trim()))} onClick={submit}>{submitting?"Submitting…":"Record independent scientific decision"}</button>
- </section>}
- {status&&<p role="status">{status}</p>}
+ return <main className="delivery-review"><p>HSI / ACCOUNTABLE SCIENTIFIC REVIEW</p><h1>Review the submitted evidence brief</h1><p><Link to="/research/scientific-review">← Reviewer queue</Link> · <Link to={"/research/decision-workbench?investigation="+id}>Investigation workbench</Link></p><p>Acceptance concerns this fixed evidence brief. It does not validate candidate mechanisms, authorise clinical decisions or approve graph publication.</p><button type="button" disabled={busy} onClick={()=>setAttempt(n=>n+1)}>Refresh submitted package</button>
+  {message&&<p role="status">{message}</p>}
+  {view?.package&&<><h2>{view.package.investigation.question}</h2><p>Package <code>{view.package.packageHash}</code></p><p>Evidence context <code>{view.package.context.contentHash}</code></p><BriefDownloads id={id} packageHash={view.package.packageHash}/><InvestigationEvidenceGraph investigation={view.package.investigation}/>
+   {view.decision?<article aria-label="Recorded independent decision"><h2>{view.decision.outcome.replaceAll("_"," ")}</h2><p>{view.decision.rationale}</p><ul>{view.decision.limitations.map((s,i)=><li key={i}>{s}</li>)}</ul><p>Decision <code>{view.decision.decisionHash}</code></p><p>The decision and submitted package are immutable. Further changes require a linked revision.</p></article>:view.capabilities.canDecide&&view.submission?<form onSubmit={submit}>
+   <label htmlFor="brief-review-outcome">Review outcome</label><select id="brief-review-outcome" disabled={busy} value={outcome} onChange={e=>setOutcome(e.target.value as ReviewOutcome)}><option value="request_revision">Request revision</option><option value="reject">Reject brief</option><option value="approve_with_limitations">Accept evidence brief with limitations</option></select>
+   <fieldset><legend>Primary-release claims independently examined</legend>{packageClaimIds(view.package).map(id=><label key={id}><input type="checkbox" disabled={busy} checked={claims.includes(id)} onChange={e=>setClaims(old=>e.target.checked?[...old,id]:old.filter(x=>x!==id))}/>{id}</label>)}</fieldset>
+   <label htmlFor="brief-review-rationale">Scientific rationale</label><textarea id="brief-review-rationale" required minLength={30} maxLength={4000} rows={5} disabled={busy} value={rationale} onChange={e=>setRationale(e.target.value)}/>
+   <label htmlFor="brief-review-limitations">Limitations (up to eight lines, 250 characters each)</label><textarea id="brief-review-limitations" maxLength={2007} rows={4} disabled={busy} value={limitations} onChange={e=>setLimitations(e.target.value)}/>
+   {!limitsValid&&<p role="alert">Use up to eight limitation lines, with no more than 250 characters per line.</p>}
+   <label><input type="checkbox" disabled={busy} checked={coi} onChange={e=>setCoi(e.target.checked)}/>I have disclosed conflicts of interest and am independent of the investigation author.</label><p>No patient-identifying information. The backend verifies reviewer identity and authority independently.</p>
+   <button type="submit" disabled={busy||!coi||!limitsValid||rationale.trim().length<30||(outcome==="approve_with_limitations"&&(!claims.length||!limitations.trim()))}>Record independent brief decision</button></form>:<p>Recording a decision is not available for this identity or deployment. Authors cannot review their own investigations.</p>}
+  </>}
  </main>;
 }
+export function ScientificReviewerDecision(){const [params]=useSearchParams();const id=params.get("investigation");return !id?<IndependentReviewQueue/>:/^hsi-interrogative-[a-zA-Z0-9-]{8,100}$/.test(id)?<ReviewForm key={id} id={id}/>:<main className="delivery-review"><h1>Valid investigation required</h1><Link to="/research/scientific-review">Open reviewer queue</Link></main>}
