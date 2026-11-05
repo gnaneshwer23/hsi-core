@@ -85,6 +85,17 @@ test("research writes remain disabled unless explicitly enabled for the confirme
  const staging=readResearchDeploymentConfig({...env,HSI_RESEARCH_WRITES_ENABLED:"true",HSI_NEON_BRANCH_ID:"br-rough-snow-zagxbvjp"});expect(staging.ok&&staging.writesEnabled).toBe(true);
  const production=readResearchDeploymentConfig({...env,HSI_DATABASE_URL:env.HSI_DATABASE_URL.replace("ep-sweet-hill-zasb0lni","ep-restless-dew-zas989pv"),HSI_RESEARCH_WRITES_ENABLED:"true",HSI_NEON_BRANCH_ID:"br-rough-snow-zagxbvjp"});expect(production.ok&&production.writesEnabled).toBe(false);
 });
+test("workspace creation stays behind the deployment write guard; reads use verified backend identity",async()=>{
+ const path="/api/research/investigations";
+ expect((await handleVercelResearch(post(path),env,{transport:noCalls})).status).toBe(403);
+ let seen="";
+ const dependencies={transport:transport(async()=>Response.json(identity)),resolveToken:async()=>"verified-database-session-token",
+  services:{load:async()=>({}),submit:async()=>({}),review:async()=>({}),workspace:async(input:{serverSessionToken:string|null})=>{seen=input.serverSessionToken??"";return {items:[],nextCursor:null}}}};
+ expect((await handleVercelResearch(req(path,{headers:{cookie}}),env,dependencies)).status).toBe(200);expect(seen).toBe("verified-database-session-token");
+ const request={question:"SSc mechanisms?",releaseId:"ssc-release",requestId:"a65bd046-cccd-4dda-a957-b8fbb169e062"};
+ const settings={...env,HSI_RESEARCH_WRITES_ENABLED:"true",HSI_NEON_BRANCH_ID:"br-rough-snow-zagxbvjp"};
+ const response=await handleVercelResearch(post(path,request),settings,{...dependencies,services:{...dependencies.services,create:async()=>({id:"hsi-interrogative-example-12345678",created:true})}});expect(response.status).toBe(201);
+});
 test("cookie gateway forwards only recognised auth cookies",()=>{
  expect(providerCookies(req("/",{headers:{cookie}}))).toBe("__Secure-neon-auth.session_token=signed-test-cookie.signature");
 });

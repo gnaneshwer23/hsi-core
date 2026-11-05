@@ -96,12 +96,12 @@ export function ResearchAccount(){
   {authorised&&<section className="hsi-account-workspace" aria-labelledby="workspace-heading">
    <h2 id="workspace-heading">Your research workspace</h2>
    <p role="status">{account.researcher?"Researcher access confirmed.":""} {account.scientificReviewer?"Scientific reviewer access confirmed for systemic sclerosis.":""}</p>
-   <p>Open an investigation to examine its evidence and review status. Each record is checked again by the backend.</p>
+   <p><Link to="/research/scientific-workbench">Open your research workspace →</Link></p><p>Create a release-bound draft or reopen an investigation to examine its evidence and review status. Each record is checked again by the backend.</p>
    {account.investigations.length?<ul className="hsi-account-records">{account.investigations.map(i=><li key={i.id}>
     <span className="hsi-account-record-id">{i.id}</span><span>{i.state.replaceAll("_"," ")}</span>
     <Link to={"/research/decision-workbench?investigation="+encodeURIComponent(i.id)}>Open research workbench →</Link>
     {i.canReview&&<Link to={"/research/scientific-review?investigation="+encodeURIComponent(i.id)}>Review independently →</Link>}
-   </li>)}</ul>:<p>No accessible investigations yet. An authorised research operator must save a release-bound investigation before it appears here.</p>}
+   </li>)}</ul>:<p>No accessible investigations yet. Open your research workspace to start a draft when researcher access and a published release are available.</p>}
    {account.scientificReviewer&&<section aria-label="Independent reviewer history">
     <h3>Your scientific review history</h3>
     <p>Only decisions signed by your verified reviewer identity are returned. Records are read-only; history is not a knowledge-graph publication.</p>

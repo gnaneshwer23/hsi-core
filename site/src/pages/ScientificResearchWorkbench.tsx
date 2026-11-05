@@ -4,6 +4,7 @@ import "../styles/science-body.css";
 import {investigateDiscoveryCandidates} from "../features/science/discoveryInvestigation";
 import {projectMechanismTraces} from "../features/science/mechanismTrace";
 import {ResearchEvidenceQueue,validateScientificVerification,type ScientificVerification} from "../components/ResearchEvidenceQueue";
+import {InvestigationWorkspace} from "../components/InvestigationWorkspace";
 import {SscGovernedDiscovery} from "../components/SscGovernedDiscovery";
 type Node={id:string;preferredLabel:string;kind:string};
 type Edge={id:string;subjectId:string;objectId:string;predicate:string;reviewState:string;sourceEvidenceIds:string[];context:{studyContext?:string;limitations?:string;sourceLocator?:string}};
@@ -13,7 +14,7 @@ type GovernedPage={scope:string;limit:number;nodes:Array<{id:string;preferredLab
 export function ScientificResearchWorkbench(){
  const [graph,setGraph]=useState<Draft|null>(null),[verification,setVerification]=useState<Verification|null>(null);
  const [governed,setGoverned]=useState<GovernedPage|null>(null),[governedLoading,setGovernedLoading]=useState(false),[governedError,setGovernedError]=useState("");
- const [error,setError]=useState(""),[query,setQuery]=useState(""),[selected,setSelected]=useState<string|null>(null),[investigation,setInvestigation]=useState("");
+ const [error,setError]=useState(""),[query,setQuery]=useState(""),[selected,setSelected]=useState<string|null>(null);
  useEffect(()=>{const c=new AbortController();Promise.all([
   fetch("/research/ssc-tfh-il21-graph-draft.v1.json",{signal:c.signal,cache:"no-store"}),
   fetch("/research/ssc-tfh-il21-abstract-verification.v1.json",{signal:c.signal,cache:"no-store"})
@@ -25,17 +26,12 @@ export function ScientificResearchWorkbench(){
  const edges=graph?.relationships.filter(e=>e.subjectId===selected||e.objectId===selected)??[];
  const findings=useMemo(()=>graph&&verification?investigateDiscoveryCandidates({edges:graph.relationships,claims:verification.claims,disagreements:verification.disagreements.map(d=>({id:d.id,claimIds:[],description:d.description,interpretation:d.interpretation,requiresReview:d.requiresReview}))}):[],[graph,verification]);
  const traces=useMemo(()=>graph&&verification?projectMechanismTraces(graph.nodes,graph.relationships,verification.claims,selected):[],[graph,verification,selected]);
- const validId=/^hsi-interrogative-[a-zA-Z0-9-]{8,100}$/.test(investigation);
  return <main className="science-body"><header className="science-body-hero"><div className="science-body-wrap">
  <p className="science-body-kicker">HSI / ISI · SCIENTIFIC RESEARCH WORKBENCH</p><h1>Investigate mechanisms.<br/><em>Follow the evidence.</em></h1>
  <p>Systemic sclerosis · Tfh–IL-21–B-cell responses · Research candidates only. This view does not approve scientific claims.</p>
  <div className="science-body-actions"><Link to="/science/literature">Literature discovery</Link><Link to="/science/graph">Full graph explorer</Link><Link to="/research/account">Researcher sign-in</Link></div>
  </div></header><div className="science-body-wrap" style={{paddingBlock:"2rem"}}>
- <section aria-label="Research access" style={{padding:"1.25rem",border:"1px solid #aab3c0",borderRadius:12,marginBottom:24}}>
- <h2>Authorised research investigation</h2><p>Public graph candidates are shown below. Protected investigation records and review submissions require a verified research account and server-side permission checks.</p>
- <label htmlFor="investigation-id">Authorised investigation ID</label>{" "}<input id="investigation-id" value={investigation} onChange={e=>setInvestigation(e.target.value)} placeholder="hsi-interrogative-…" style={{padding:10,maxWidth:"100%"}}/>
- {" "}{validId?<Link to={"/research/decision-workbench?investigation="+encodeURIComponent(investigation)}>Open authenticated investigation</Link>:<span>Enter a valid investigation ID to open the protected workbench.</span>}
- </section>
+ <InvestigationWorkspace/>
  <section aria-label="Authenticated governed graph" style={{padding:"1.25rem",border:"1px solid #aab3c0",borderRadius:12,marginBottom:24}}>
  <h2>Governed graph · authenticated research</h2>
  <p>Query the existing server-side Neon graph read service using your verified research session. This does not modify graph evidence or approve claims.</p>

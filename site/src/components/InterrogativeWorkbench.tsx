@@ -25,6 +25,7 @@ export function InterrogativeWorkbench({investigation,falsification,sourceUrl}:I
   <p className="iw-kicker">HSI RESEARCH / ARCH-003 · {investigation.state.replaceAll("_"," ")}</p>
   <h1>Explainable research decisions</h1><p className="iw-question">{investigation.question}</p>
   <p className="iw-meta">Graph release: {investigation.release.id} · v{investigation.release.version} · Investigation: {investigation.id}</p>
+  <details className="iw-meta"><summary>Release provenance</summary><p>Manifest SHA-256: {investigation.release.manifestHash}</p><p>Draft created: {investigation.createdAt} · Data class: {investigation.dataClass.replaceAll("_"," ")}</p></details>
   <p className="iw-notice">Research-only. Branches are candidate mechanisms, not clinical conclusions. Review status: {investigation.review?"Human review recorded":"Not scientifically reviewed"}.</p>
   <div className="iw-tabs" role="tablist" aria-label="Investigation views">
    {(["conclusion","decision-tree","evidence-trace"] as const).map(v=><button key={v} role="tab" aria-selected={view===v} onClick={()=>setView(v)}>{v==="decision-tree"?"Decision tree":v==="evidence-trace"?"Evidence trace":"Conclusion"}</button>)}

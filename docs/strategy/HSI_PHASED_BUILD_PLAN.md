@@ -27,6 +27,8 @@ A translational researcher can ask a bounded question, inspect source-grounded e
 
 ## First implementation work package
 
+**5 November implementation update:** [Phase A is implemented and locally verified](../PHASE_A_INVESTIGATION_WORKSPACE.md), including create/list APIs, owned saved-investigation navigation and retry handling. Live database-backed acceptance remains pending the paused operational prerequisite; do not treat this update as a production-ready claim.
+
 Start **Phase A**, with a narrowly scoped PR:
 
 1. Define create/list request and response contracts and ownership rules around the existing save/load store.

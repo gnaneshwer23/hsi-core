@@ -11,8 +11,13 @@ import {loadSscResearchGraph} from "./sscGraphReadService";
 import {investigateGovernedDiseaseGraph} from "../governedDiseaseDiscovery";
 import type {HsiGraphPage} from "../hsiGovernedGraphQuery";
 import type {ResearchAccountAccess} from "../researchAccount";
+import {createNeonInvestigationWorkspace} from "../db/investigationWorkspaceStore";
+import {InvestigationWorkspaceError} from "./investigationWorkspaceService";
+import {parseCreateInvestigation,parseInvestigationCursor,type InvestigationCursor} from "../interrogativeWorkspace";
 
 type ApiServices={
+ workspace?:(input:{serverSessionToken:string|null;cursor:InvestigationCursor|null})=>Promise<unknown>;
+ create?:(input:{serverSessionToken:string|null;request:unknown})=>Promise<{id:string;created:boolean}>;
  account?:(input:{serverSessionToken:string|null})=>Promise<ResearchAccountAccess|null>;
  history?:(input:{serverSessionToken:string|null})=>Promise<unknown>;
  graph?:(input:{serverSessionToken:string|null;nodeId:string})=>Promise<unknown>;
@@ -36,6 +41,33 @@ function json(data:unknown,status=200):Response{
 }
 export async function handleInterrogativeApi(req:Request,services:ApiServices):Promise<Response>{
  const url=new URL(req.url);
+ if(url.pathname==="/api/research/investigations"){
+  if(req.method!=="GET"&&req.method!=="POST")return json({error:"Method not allowed"},405);
+  const serverSessionToken=sessionFromCookie(req);
+  if(!serverSessionToken)return json({error:"Authentication required"},401);
+  if(req.method==="GET"){
+   if([...url.searchParams.keys()].some(k=>k!=="cursor")||url.searchParams.getAll("cursor").length>1)return json({error:"Invalid workspace query"},400);
+   let cursor:InvestigationCursor|null;
+   try{const raw=url.searchParams.get("cursor");if(raw&&raw.length>512)throw Error();cursor=parseInvestigationCursor(raw===null?null:JSON.parse(raw))}catch{return json({error:"Invalid investigation cursor"},400)}
+   if(!services.workspace)return json({error:"Workspace unavailable"},503);
+   try{return json(await services.workspace({serverSessionToken,cursor}))}
+   catch(error){return workspaceError(error)}
+  }
+  if(req.headers.get("origin")!==url.origin)return json({error:"Origin verification failed"},403);
+  if((req.headers.get("content-type")??"").split(";")[0]?.trim().toLowerCase()!=="application/json")return json({error:"JSON content type required"},415);
+  if(url.search)return json({error:"Invalid workspace query"},400);
+  // Bound the incoming stream before parsing; content-length alone is untrusted.
+  let request:unknown;
+  try{
+   const reader=req.body?.getReader();let size=0;const chunks:Uint8Array[]=[];
+   if(reader){try{for(;;){const {done,value}=await reader.read();if(done)break;size+=value.length;if(size>4096){await reader.cancel();return json({error:"Payload too large"},413)}chunks.push(value)}}finally{reader.releaseLock()}}
+   const bytes=new Uint8Array(size);let offset=0;for(const chunk of chunks){bytes.set(chunk,offset);offset+=chunk.length}
+   request=parseCreateInvestigation(JSON.parse(new TextDecoder().decode(bytes)));
+  }catch{return json({error:"Provide a research question, published release and request ID only"},400)}
+  if(!services.create)return json({error:"Workspace unavailable"},503);
+  try{const result=await services.create({serverSessionToken,request});return json(result,result.created?201:200)}
+  catch(error){return workspaceError(error)}
+ }
  if(url.pathname==="/api/research/graph/ssc"||url.pathname==="/api/research/discovery/ssc"){
   if(req.method!=="GET")return json({error:"Method not allowed"},405);
   const token=sessionFromCookie(req);
@@ -96,8 +128,15 @@ export async function handleInterrogativeApi(req:Request,services:ApiServices):P
   return json({error:"Research record unavailable or operation denied"},403);
  }
 }
-export function createNeonInterrogativeApiServices(config:{databaseUrl:string;neonProjectId?:string|null}):ApiServices{
+function workspaceError(error:unknown):Response{
+ if(error instanceof InvestigationWorkspaceError)return json({code:error.code,error:error.publicMessage},error.status);
+ return json({error:"Research workspace unavailable or operation denied"},403);
+}
+export function createNeonInterrogativeApiServices(config:{databaseUrl:string;neonProjectId?:string|null;writesEnabled?:boolean;sscReleaseId?:string}):ApiServices{
+ const workspace=createNeonInvestigationWorkspace(config);
  return {
+  workspace:args=>workspace.list(args),
+  create:args=>workspace.create(args),
   account:args=>loadResearchAccount({...config,...args}),
   history:args=>loadScientificReviewHistory({...config,...args}),
   graph:args=>loadSscResearchGraph({...config,...args}),

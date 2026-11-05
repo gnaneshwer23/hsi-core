@@ -4,6 +4,36 @@ const id="hsi-interrogative-example-12345678";
 const services={load:async()=>({id}),submit:async()=>({state:"awaiting_scientific_review"}),review:async()=>({outcome:"reject"})};
 const base="https://hsi.example/api/research/interrogative/"+id;
 const cookie="__Secure-better-auth.session_token=example-session-token-long-enough";
+const collection="https://hsi.example/api/research/investigations";
+const createRequest={question:"SSc fibrosis mechanisms?",releaseId:"ssc-release",requestId:"a65bd046-cccd-4dda-a957-b8fbb169e062"};
+test("workspace routes require authentication and redact backend errors",async()=>{
+ let called=false;const workspace=async()=>{called=true;throw Error("secret database password")};
+ expect((await handleInterrogativeApi(new Request(collection),{...services,workspace})).status).toBe(401);expect(called).toBe(false);
+ const r=await handleInterrogativeApi(new Request(collection,{headers:{cookie}}),{...services,workspace});expect(r.status).toBe(403);expect(await r.text()).not.toContain("secret");
+});
+test("workspace list permits only a bounded valid cursor, never an owner override",async()=>{
+ const workspace=async()=>({items:[],nextCursor:null});
+ for(const suffix of ["?principal=someone-else","?cursor=invalid","?cursor=null&cursor=null"]){
+  expect((await handleInterrogativeApi(new Request(collection+suffix,{headers:{cookie}}),{...services,workspace})).status).toBe(400);
+ }
+ const response=await handleInterrogativeApi(new Request(collection,{headers:{cookie}}),{...services,workspace});expect(response.status).toBe(200);expect(response.headers.get("cache-control")).toBe("no-store");
+});
+test("creation enforces same origin, JSON, body size and server-owned fields",async()=>{
+ let calls=0;const create=async()=>{calls++;return {id,created:true}};
+ const post=(headers:Record<string,string>,body=JSON.stringify(createRequest))=>handleInterrogativeApi(new Request(collection,{method:"POST",headers:{cookie,origin:"https://hsi.example","content-type":"application/json",...headers},body}),{...services,create});
+ expect((await post({origin:"https://evil.example"})).status).toBe(403);
+ expect((await post({"content-type":"text/plain"})).status).toBe(415);
+ expect((await post({"content-type":"application/jsonp"})).status).toBe(415);
+ expect((await post({},"x".repeat(5000))).status).toBe(413);
+ expect((await post({},"{bad-json")).status).toBe(400);
+ expect((await post({},JSON.stringify({...createRequest,actorPrincipal:"admin"}))).status).toBe(400);
+ expect(calls).toBe(0);expect((await post({})).status).toBe(201);expect(calls).toBe(1);
+});
+test("creation passes only the validated request and trusted cookie; idempotent retry is HTTP 200",async()=>{
+ const response=await handleInterrogativeApi(new Request(collection,{method:"POST",headers:{cookie,origin:"https://hsi.example","content-type":"application/json"},body:JSON.stringify(createRequest)}),{...services,create:async args=>{
+  expect(args.serverSessionToken).toBe("example-session-token-long-enough");expect(args.request).toEqual(createRequest);return {id,created:false};
+ }});expect(response.status).toBe(200);expect(await response.json()).toEqual({id,created:false});
+});
 test("GET requires secure cookie session",async()=>{
  const r=await handleInterrogativeApi(new Request(base),services);
  expect(r.status).toBe(401);

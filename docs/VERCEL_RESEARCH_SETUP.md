@@ -217,3 +217,7 @@ Before activation, complete two-account staging checks including expired session
 revoked grants, wrong-branch sessions, author self-review rejection and record
 ownership. A deployment or green health response does not approve science, publish
 knowledge graph relationships, enable live clinical decision support or permit PHI.
+
+## Phase A workspace addition
+
+The connected investigation workspace adds `GET/POST /api/research/investigations` and a server-only `HSI_SSC_RESEARCH_RELEASE_ID` binding. It uses the existing write/session safeguards and requires an existing published public-biomedical SSc release. Default writes remain disabled. See the [implementation and non-production acceptance procedure](PHASE_A_INVESTIGATION_WORKSPACE.md) before activation; no configuration or database changes were made by this delivery.
