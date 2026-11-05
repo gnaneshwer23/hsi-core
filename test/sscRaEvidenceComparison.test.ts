@@ -1,0 +1,11 @@
+import {test,expect} from "bun:test";
+import {compareSscRaEvidence} from "../src/sscRaEvidenceComparison";
+import type {HsiGraphPage} from "../src/hsiGovernedGraphQuery";
+import type {HsiGraphNode,HsiGraphRelationship} from "../src/livingHealthKnowledgeGraph";
+const node=(id:string):HsiGraphNode=>({schemaVersion:"hsi-lhkg-node-1",id,layer:"human_biology",kind:"molecule",preferredLabel:id,aliases:[],sourceIdentifiers:[],version:"1.0.0",visibility:"governed_research",reviewState:"draft",sourceProvenance:["study"]});
+const edge=(id:string,studyContext:string):HsiGraphRelationship=>({schemaVersion:"hsi-lhkg-edge-1",id,subjectId:"cell:tfh",objectId:"molecule:il21",predicate:"associated_with",layer:"human_biology",epistemicType:"association",visibility:"governed_research",reviewState:"draft",sourceEvidenceIds:["PMID:12345678"],version:"1.0.0",context:{studyContext,sourceLocator:"abstract"},causalClaim:false});
+const page=(edges:HsiGraphRelationship[]):HsiGraphPage=>({scope:"governed_research",limit:25,nodes:[node("cell:tfh"),node("molecule:il21")],relationships:edges});
+test("compares independently contextualised disease evidence without promoting",()=>{const x=compareSscRaEvidence(page([edge("ssc1","Systemic sclerosis")]),page([edge("ra1","Rheumatoid arthritis")]));expect(x.sharedMechanismCandidates).toHaveLength(1);expect(x.graphPromotable).toBe(false);expect(x.sharedMechanismCandidates[0]?.interpretation).toBe("comparison_candidate_only")});
+test("does not transfer SSc records to RA",()=>{const x=compareSscRaEvidence(page([edge("ssc1","Systemic sclerosis")]),page([edge("ssc2","Systemic sclerosis")]));expect(x.ra).toHaveLength(0);expect(x.unresolved.some(x=>x.includes("RA"))).toBe(true)});
+test("rejects clinical graph data",()=>{expect(()=>compareSscRaEvidence(page([{...edge("p","Systemic sclerosis"),layer:"patient_context"}]),page([]))).toThrow()});
+test("rejects missing source evidence",()=>{const x=compareSscRaEvidence(page([{...edge("a","Systemic sclerosis"),sourceEvidenceIds:[]}]),page([]));expect(x.ssc).toHaveLength(0)});
