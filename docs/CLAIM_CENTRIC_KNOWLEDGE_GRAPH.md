@@ -44,7 +44,7 @@ bun --no-env-file run graph:build
 bun --no-env-file run graph:check
 ```
 
-The builder reads approved repository working inputs, validates source-candidate bindings against the corpus assertions, verifies corpus/passage hashes and writes identical artifacts to:
+The builder reads existing repository working inputs, validates source-candidate bindings against the corpus assertions, verifies corpus/passage hashes and writes identical artifacts to:
 
 - `research/claim-graph/graph.v1.json`
 - `research/claim-graph/versions/<sha256>.json`
@@ -81,3 +81,7 @@ The working adapter refuses causal/clinical promotion, arbitrary numeric confide
 | Production release | Still blocked by the prior QA launch gates, including live auth/database acceptance, legal/security/operations, manual accessibility and mobile performance |
 
 No production database was migrated, no scientific approval was recorded and no existing product database was shared. This branch builds on the already-pushed QA branch; it does not merge into the production-deploying `main` branch.
+
+## Local validation
+
+Candidate `4e8f03b` passed 790 core tests and 165 Chromium tests, frontend type checking, core/site builds and the reproducible graph-artifact check. New tests cover tampered snapshots, source offsets, source-array-independent IDs, negative findings, mixed-species uncertainty, ambiguous resolution, filtered bounded paths, exports, saved/pinned versions, backend permission denial and desktop/mobile automated accessibility. These are software checks using the existing public corpus and mocked service responses; no live database or scientific benchmark was tested. See [the engineering receipt](../operations/qa/2026-11-06/claim-graph-results.json).

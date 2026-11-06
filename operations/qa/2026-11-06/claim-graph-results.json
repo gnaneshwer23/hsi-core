@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "hsi-claim-graph-engineering-receipt-1",
+  "recordedAt": "2026-11-06T05:14:48.665954+00:00",
+  "testedSourceCommit": "4e8f03bc37a72b06c42dc7ea3454ba5d9af35fe5",
+  "qaBaseCommit": "f363b77857ef2630819671a368806d21a084b720",
+  "inputSpecificationSha256": "af760d45e278ff870b63ace7d3b154f5c16ca2978f48c3e4498c969e18cc9546",
+  "graphVersion": "10d6c60d65e5cd9855294bb9cfc22e780564cb974707c6b83b96b90c8197bc4f",
+  "corpusVersion": "2e4704bb3c90322045403ddda78e3ba6cc9eef77479519cf88b95a9f446a0f1b",
+  "counts": {
+    "entities": 15,
+    "mentions": 34,
+    "claims": 7,
+    "relationships": 16,
+    "sources": 5
+  },
+  "checks": {
+    "coreTests": {
+      "passed": 790,
+      "failed": 0
+    },
+    "chromiumTests": {
+      "passed": 165,
+      "failed": 0
+    },
+    "coreBuild": "passed",
+    "frontendTypes": "passed",
+    "siteBuild": "passed",
+    "graphArtifactAndLineageCheck": "passed",
+    "graphMobileAndDesktopAxe": "passed_local_automated_only",
+    "trustedBackendPermissionDenial": "passed_mocked"
+  },
+  "liveDatabaseTested": false,
+  "scientificApprovalGranted": false,
+  "graphPromotable": false,
+  "productionModified": false,
+  "pilotReady": false,
+  "knownLimitations": [
+    "Source rights and independent scientific decisions remain pending",
+    "Five supporting passages are locator-only; exact text is unavailable",
+    "Confidence is not calibrated; no scientific precision/recall or production p95 benchmark claimed",
+    "No new vector retrieval, LLM extraction or generated-answer service",
+    "No new claim approval/publication route or database migration",
+    "Prior production QA launch gates remain unresolved"
+  ],
+  "manualAccessibilityVerified": false,
+  "report": "docs/CLAIM_CENTRIC_KNOWLEDGE_GRAPH.md"
+}
