@@ -52,9 +52,9 @@
   --radius-pill: 999px;
   --nav-h: 5rem;
   --ease: cubic-bezier(0.2, 0.8, 0.3, 1);
-  --font-display: "Host Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-body: "Host Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-display: "Host Grotesk Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "Host Grotesk Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
 
   /* Compat aliases used by pages */
   --teal-deep: #0b1628;

@@ -28,3 +28,15 @@ for(const path of ['/','/platform','/products','/research/dashboard','/science/g
   expect(result.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))}))).toEqual([]);
  });
 }
+test('public pages load the existing typefaces locally without third-party font requests',async({page})=>{
+ const fonts:string[]=[];page.on('request',r=>{if(/fonts\.(googleapis|gstatic)\.com/.test(r.url()))fonts.push(r.url())});
+ await page.goto('/');await page.evaluate(()=>document.fonts.ready);
+ expect(await page.evaluate(()=>[...document.fonts].some(f=>f.family==='Host Grotesk Variable'&&f.status==='loaded'))).toBe(true);expect(fonts).toEqual([]);
+});
+
+test('mobile hero chooses compressed responsive artwork and reserves its dimensions',async({page})=>{
+ await page.setViewportSize({width:390,height:844});await page.goto('/');
+ const art=page.getByRole('img',{name:/Sculptural view of human anatomy/});await expect(art).toBeVisible();
+ expect(await art.evaluate(el=>(el as HTMLImageElement).currentSrc)).toContain('hsi-anatomy-480.webp');
+ await expect(art).toHaveAttribute('width','1024');await expect(art).toHaveAttribute('height','1536');
+});
