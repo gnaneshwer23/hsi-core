@@ -73,6 +73,10 @@
     "./claim-graph": {
       "types": "./dist/knowledgeGraph/claimGraph.d.ts",
       "import": "./dist/knowledgeGraph/claimGraph.js"
+    },
+    "./capability-rehearsal": {
+      "types": "./dist/capabilities/index.d.ts",
+      "import": "./dist/capabilities/index.js"
     }
   },
   "files": [
@@ -131,7 +135,8 @@
     "readiness:prepare": "bun --no-env-file scripts/prepare-research-readiness.ts",
     "readiness:check": "bun --no-env-file scripts/prepare-research-readiness.ts --check",
     "graph:build": "bun --no-env-file scripts/build-claim-graph.ts",
-    "graph:check": "bun --no-env-file scripts/build-claim-graph.ts --check"
+    "graph:check": "bun --no-env-file scripts/build-claim-graph.ts --check",
+    "scenarios:generate": "bun --no-env-file scripts/generate-longitudinal-scenarios.ts"
   },
   "engines": {
     "node": ">=20"

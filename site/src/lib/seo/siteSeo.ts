@@ -18,6 +18,7 @@ export const SEO_PAGES:Record<string,{title:string;description:string;name:strin
  '/for-trials':{name:'HSI Trials',title:'HSI Trials | Transparent Clinical Research',description:'Explore the HSI Trials programme for study context, transparent criteria and investigator-led review. A planned product; no live matching or enrolment.'}
 };
 const NOINDEX_PAGES:Record<string,{name:string;title:string;description:string}>={
+ '/research/capabilities':{name:'Capability rehearsals',title:'Governed Capability Rehearsals | Human Super Intelligence',description:'Local synthetic longitudinal scenarios, sample community moderation and shadow graph assessment. No live patient workflow or scientific publication.'},
  '/research/knowledge-graph':{name:'Claim-linked knowledge graph',title:'Claim-Linked Knowledge Graph | Human Super Intelligence',description:'Inspect source-linked candidate claims, local entity mentions, context, evidence gaps and versioned research paths. No scientific approval is inferred.'},
  '/forgot-password':{name:'Password recovery',title:'Password Recovery | Human Super Intelligence',description:'Request an email to reset your HSI account password.'},
  '/reset-password':{name:'Reset password',title:'Reset Password | Human Super Intelligence',description:'Set a new password using your provider-issued recovery link.'},

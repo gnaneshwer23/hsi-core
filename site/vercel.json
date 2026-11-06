@@ -97,6 +97,10 @@
   ],
   "rewrites": [
     {
+      "source": "/research/capabilities",
+      "destination": "/_pages/research--capabilities.html"
+    },
+    {
       "source": "/research/knowledge-graph",
       "destination": "/_pages/research--knowledge-graph.html"
     },
