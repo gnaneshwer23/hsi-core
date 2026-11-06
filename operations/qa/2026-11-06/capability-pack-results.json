@@ -1,0 +1,103 @@
+{
+  "schemaVersion": "hsi-capability-pack-engineering-receipt-1",
+  "recordedAt": "2026-11-06T05:55:57.120693+00:00",
+  "testedSourceCommit": "634a2a900cb63f6d6e0b6bfcab3b92d3fa7fedb8",
+  "inputSpecificationSha256": "9ddf100a422a2e5206171d41ee87c23ffc24c195c6d09b19d45c5965ca053df3",
+  "scope": "local_default_off_rehearsals_and_design_specs",
+  "specifications": [
+    "docs/capabilities/01_SCOPE_AND_RELEASE_PLAN.md",
+    "docs/capabilities/02_SYNTHETIC_REAL_WORLD_DATA.md",
+    "docs/capabilities/03_LIVE_PATIENT_WORKFLOW.md",
+    "docs/capabilities/04_COMMUNITY_PUBLISHING_AND_MODERATION.md",
+    "docs/capabilities/05_AUTOMATIC_GRAPH_PROMOTION.md",
+    "docs/capabilities/06_SCENARIOS_AND_QA.md"
+  ],
+  "testResults": {
+    "core": {
+      "passed": 799,
+      "failed": 0
+    },
+    "chromium": {
+      "passed": 172,
+      "failed": 0
+    },
+    "coreBuild": "passed",
+    "frontendTypes": "passed",
+    "siteBuild": "passed_14_public_44_noindex_tool_shells",
+    "capabilityMobileAxe": "passed_automated_only",
+    "smallGeneratorReplayIdentical": true
+  },
+  "generatorScaleRun": {
+    "out": "/tmp/hsi-capability-scale-final",
+    "contentSha256": "9176f78bd302eebd6330327bf4d42e59c45b39d718da3a58caa70ea2d06dedbe",
+    "patients": 1250,
+    "events": 155225,
+    "visits": 11250,
+    "cohortCounts": {
+      "metabolic_inflammation": 250,
+      "gut_brain": 250,
+      "autoimmune_flare": 250,
+      "treatment_response": 250,
+      "healthy_control": 250
+    },
+    "missingWearableProfiles": 247,
+    "missingMicrobiomeProfiles": 392,
+    "missingImmuneProfiles": 324,
+    "uniqueCoarseDemographicTuples": 49,
+    "privacyAttackTesting": "not_performed_no_real_training_population_used",
+    "clinicalCalibration": false,
+    "scientificValidityClaimed": false
+  },
+  "smallGeneratorRun": {
+    "out": "/tmp/hsi-capability-small-final",
+    "contentSha256": "4f2e0d1c43a9dbf872cf51b1bbd4398f977716a86ba7322ce45cc16b6c305c76",
+    "patients": 10,
+    "events": 1269,
+    "visits": 90,
+    "cohortCounts": {
+      "metabolic_inflammation": 2,
+      "gut_brain": 2,
+      "autoimmune_flare": 2,
+      "treatment_response": 2,
+      "healthy_control": 2
+    },
+    "missingWearableProfiles": 1,
+    "missingMicrobiomeProfiles": 2,
+    "missingImmuneProfiles": 1,
+    "uniqueCoarseDemographicTuples": 10,
+    "privacyAttackTesting": "not_performed_no_real_training_population_used",
+    "clinicalCalibration": false,
+    "scientificValidityClaimed": false
+  },
+  "artifact": {
+    "name": "hsi-capability-cohorts-v1.zip",
+    "bytes": 3946121,
+    "sha256": "781d7a4da34a9b737a25d5e71d0a4c9b19b08212034dab9d7e17492db7388081",
+    "zipIntegrityVerified": true
+  },
+  "boundaries": {
+    "defaultOff": true,
+    "killSwitchTested": true,
+    "livePatientImplementation": false,
+    "livePatientFlagCanOverrideBoundary": false,
+    "liveCommunityPublishing": false,
+    "actualNotificationsSent": false,
+    "durableOperationalAudit": false,
+    "serverGroupIsolationVerified": false,
+    "shadowCanaryAllowed": false,
+    "shadowProductionAllowed": false,
+    "scientificApprovalGranted": false,
+    "productionModified": false
+  },
+  "knownLimitations": [
+    "Uncalibrated fixture generator; no real training population or clinical efficacy evaluation",
+    "Privacy attacks and formal fairness/privacy certification not performed",
+    "Sample lookup is not a general moderation, PII, spam or clinical-safety classifier",
+    "Simulated identities and browser membership checks do not establish a live authentication or private-community boundary",
+    "Shadow inputs are synthetic test controls, not calibrated or independently verified scientific evidence",
+    "Live patient workflow is design-only under the current no-PHI/no-CDS boundary",
+    "Real release owners, agreements, legal/privacy policy, server flags, moderation operations and recovery acceptance remain unassigned or unverified"
+  ],
+  "pilotReady": false,
+  "pilotReadinessStatus": "blocked_pending_trusted_acceptance"
+}
