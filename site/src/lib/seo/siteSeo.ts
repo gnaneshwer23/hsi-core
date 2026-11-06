@@ -18,6 +18,8 @@ export const SEO_PAGES:Record<string,{title:string;description:string;name:strin
  '/for-trials':{name:'HSI Trials',title:'HSI Trials | Transparent Clinical Research',description:'Explore the HSI Trials programme for study context, transparent criteria and investigator-led review. A planned product; no live matching or enrolment.'}
 };
 const NOINDEX_PAGES:Record<string,{name:string;title:string;description:string}>={
+ '/forgot-password':{name:'Password recovery',title:'Password Recovery | Human Super Intelligence',description:'Request an email to reset your HSI account password.'},
+ '/reset-password':{name:'Reset password',title:'Reset Password | Human Super Intelligence',description:'Set a new password using your provider-issued recovery link.'},
  '/community':{name:'Community preview',title:'Research Community Preview | Human Super Intelligence',description:'Explore research discussion themes and prepare local source-linked drafts. Public posting and participant identity verification are not enabled.'},
  '/sign-in':{name:'Sign in',title:'Sign In | Human Super Intelligence',description:'Sign in to your HSI account. Authorised research access and scientific-review permissions are provisioned and checked separately.'},
  '/sign-up':{name:'Create account',title:'Create an Account | Human Super Intelligence',description:'Register an HSI account and complete email verification. Creating an account does not grant research or reviewer permissions.'},

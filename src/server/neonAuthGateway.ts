@@ -47,7 +47,7 @@ function copyProviderCookies(source:Response,target:Response){
 }
 export async function handleAuthGateway(request:Request,config:AuthGatewayConfig,transport:typeof fetch=fetch):Promise<Response>{
  const path=new URL(request.url).pathname.slice("/api/auth".length);
- const method=path==="/get-session"?"GET":["/sign-in/email","/sign-up/email","/sign-out","/send-verification-email","/email-otp/verify-email"].includes(path)?"POST":null;
+ const method=path==="/get-session"?"GET":["/sign-in/email","/sign-up/email","/sign-out","/send-verification-email","/email-otp/verify-email","/request-password-reset","/reset-password"].includes(path)?"POST":null;
  if(!method)return gatewayJson({code:"NOT_FOUND"},404);
  if(request.method!==method)return gatewayJson({code:"METHOD_NOT_ALLOWED"},405);
  if((request.headers.get("origin")&&request.headers.get("origin")!==config.publicOrigin)||(method==="POST"&&request.headers.get("origin")!==config.publicOrigin))return gatewayJson({code:"INVALID_ORIGIN"},403);
@@ -71,6 +71,15 @@ export async function handleAuthGateway(request:Request,config:AuthGatewayConfig
     verificationPrincipal=identity.user.id;body={email:identity.user.email,otp:v.otp.trim()};
    }else body={email:identity.user.email,callbackURL:config.publicOrigin+"/sign-in"};
   }
+  else if(path==="/request-password-reset"){
+   if(typeof v.email!=="string"||v.email.length>254||!/^\S+@\S+\.\S+$/.test(v.email.trim()))return gatewayJson({code:"INVALID_CREDENTIAL_FIELDS"},400);
+   // Never trust a browser-provided redirect or role. The provider owns delivery and token validity.
+   body={email:v.email.trim(),redirectTo:config.publicOrigin+"/reset-password"};
+  }
+  else if(path==="/reset-password"){
+   if(typeof v.token!=="string"||!/^[A-Za-z0-9._~-]{16,2048}$/.test(v.token)||typeof v.newPassword!=="string"||v.newPassword.length<12||v.newPassword.length>128)return gatewayJson({code:"INVALID_CREDENTIAL_FIELDS"},400);
+   body={token:v.token,newPassword:v.newPassword};
+  }
   else if(path==="/sign-out")body={};
   else{
    if(typeof v.email!=="string"||!v.email.trim()||v.email.length>254||typeof v.password!=="string"||!v.password||v.password.length>128)return gatewayJson({code:"INVALID_CREDENTIAL_FIELDS"},400);
@@ -88,8 +97,8 @@ export async function handleAuthGateway(request:Request,config:AuthGatewayConfig
    if(value?.status!==true||!verifiedUser.emailVerified||verifiedUser.id!==verificationPrincipal)return gatewayJson({code:"AUTH_INVALID_RESPONSE"},502);
    const result=gatewayJson({success:true,verified:true});copyProviderCookies(response,result);return result;
   }
-  if(path==="/send-verification-email"&&value?.status!==true&&value?.success!==true)return gatewayJson({code:"AUTH_INVALID_RESPONSE"},502);
-  const result=path==="/get-session"?gatewayJson(parseProviderSession(value)):["/sign-out","/send-verification-email"].includes(path)?gatewayJson({success:true}):gatewayJson({user:safeUser(value?.user)});
+  if(["/send-verification-email","/request-password-reset","/reset-password"].includes(path)&&value?.status!==true&&value?.success!==true)return gatewayJson({code:"AUTH_INVALID_RESPONSE"},502);
+  const result=path==="/get-session"?gatewayJson(parseProviderSession(value)):["/sign-out","/send-verification-email","/request-password-reset","/reset-password"].includes(path)?gatewayJson({success:true}):gatewayJson({user:safeUser(value?.user)});
   copyProviderCookies(response,result);return result;
  }catch{return gatewayJson({code:"AUTH_UNAVAILABLE"},503)}
 }

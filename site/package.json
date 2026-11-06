@@ -14,7 +14,9 @@
     "preview": "vite preview",
     "check:evidence": "bun ../scripts/build-evidence-corpus.ts --check",
     "check:coverage": "bun --no-env-file ../scripts/build-research-coverage.ts --check",
-    "check:validation": "bun --no-env-file ../scripts/build-synthetic-validation.ts --check"
+    "check:validation": "bun --no-env-file ../scripts/build-synthetic-validation.ts --check",
+    "qa:accessibility": "playwright test production-qa.spec.ts",
+    "qa:lighthouse": "node scripts/qa/lighthouse.mjs"
   },
   "dependencies": {
     "react": "^19.3.1",
@@ -22,11 +24,14 @@
     "react-router-dom": "^7.18.5"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
     "@playwright/test": "1.64.1",
     "@types/bun": "1.4.4",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.2",
+    "chrome-launcher": "1.2.3",
+    "lighthouse": "13.6.0",
     "typescript": "^5.9.3",
     "vite": "^8.3.5"
   }

@@ -24,6 +24,9 @@ export const AUTH_ERROR_MESSAGES:Record<string,string>={
  MISSING_OR_NULL_ORIGIN:"The authentication service could not verify the website origin. The HSI administrator must check its trusted origins and gateway configuration.",
 
  AUTH_PROVIDER_REJECTED:"The authentication provider rejected the request.",
+ INVALID_TOKEN:"This recovery link is invalid or has expired. Request a new recovery email.",
+ RESET_PASSWORD_DISABLED:"Password recovery is disabled by the authentication provider. Contact the HSI administrator.",
+ FAILED_TO_SEND_RESET_PASSWORD:"The authentication provider could not send the recovery email. Please retry or contact the HSI administrator.",
  INVALID_PASSWORD:"Email address or password is incorrect.",
  CREDENTIAL_ACCOUNT_NOT_FOUND:"Email/password sign-in is not available for this account. Use its original sign-in method or contact the HSI administrator.",
  FAILED_TO_CREATE_SESSION:"The authentication provider could not create a session. Contact the HSI administrator.",

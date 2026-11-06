@@ -40,6 +40,7 @@ export function SignIn() {
     {error&&<p role="alert" className="hsi-auth-error">{error}</p>}
     <button type="submit" disabled={pending||checking}>{pending?"Signing in…":checking?"Checking session…":"Sign in securely"}</button>
    </form>:<div className="hsi-sign-in-status" role="status"><strong>Research sign-in is not enabled on this deployment.</strong><p>The authentication endpoint must be approved and configured before credentials can be accepted. Please contact the HSI administrator.</p></div>}
+  <p className="hsi-auth-switch"><Link to="/forgot-password">Forgot your password?</Link></p>
   <p className="hsi-auth-switch">New to HSI? <Link to="/sign-up">Create an account</Link></p>
   <Link className="hsi-sign-in-back" to="/science">Explore public science <span aria-hidden="true">↗</span></Link>
   <p className="hsi-sign-in-footnote">Signing in does not grant access to private research or clinical records.</p>

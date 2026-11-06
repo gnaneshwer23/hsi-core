@@ -46,8 +46,14 @@ export function createHsiAuthClient(configured:unknown,request:typeof fetch=fetc
    return await Promise.race([operation,timeout]);
   }catch{return{data:null,error:{message:expired?"Authentication request timed out. Please try again.":"Authentication service unavailable. Check the approved origin and network configuration.",code:expired?"auth_timeout":"auth_unavailable"}};}finally{clearTimeout(timer);}
  }
+ const confirmedAction=(value:unknown)=>{if(!record(value)||(value.status!==true&&value.success!==true))throw Error("Action not confirmed");return {success:true as const}};
  const action=(value:unknown)=>{if(!record(value))throw Error("Invalid authentication action response");return value;};
  return {baseUrl,
+  requestPasswordReset:(email:string,origin:string)=>{
+   let redirectTo:string;try{const u=new URL(origin);if(u.protocol!=="https:"||u.origin!==origin)throw Error();redirectTo=u.origin+"/reset-password"}catch{return Promise.resolve({data:null,error:{message:"Password recovery requires an approved HTTPS website.",code:"auth_invalid_origin"}})}
+   return authRequest("/request-password-reset",{email,redirectTo},confirmedAction);
+  },
+  resetPassword:(token:string,newPassword:string)=>authRequest("/reset-password",{token,newPassword},confirmedAction),
   signIn:(email:string,password:string)=>authRequest("/sign-in/email",{email,password},action),
   signUp:(name:string,email:string,password:string)=>authRequest<HsiRegistration>("/sign-up/email",{name,email,password},value=>parseAuthRegistration(value,email)),
   session:()=>authRequest<HsiAuthSession>("/get-session",undefined,value=>parseAuthSession(value)),

@@ -5,6 +5,7 @@ import {ResearchLanding,Solutions,EvidenceSafety,Pricing,Contact,Community} from
 const GovernanceDashboard=lazy(()=>import("./pages/GovernanceDashboard").then(m=>({default:m.GovernanceDashboard})));
 const ResearchDashboard=lazy(()=>import("./pages/ResearchDashboard").then(m=>({default:m.ResearchDashboard})));
 import { Home } from "./pages/Home";
+import {PasswordRecovery} from "./pages/PasswordRecovery";
 import { SignIn } from "./pages/SignIn";
 import { SignUp } from "./pages/SignUp";
 import { ResearchAccount } from "./pages/ResearchAccount";
@@ -67,6 +68,8 @@ export default function App() {
         <Route path="research/dashboard" element={<ResearchDashboard/>}/>
         <Route path="research/governance" element={<GovernanceDashboard/>}/>
         <Route path="sign-in" element={<SignIn />} />
+        <Route path="forgot-password" element={<PasswordRecovery key="request" mode="request" />} />
+        <Route path="reset-password" element={<PasswordRecovery key="reset" mode="reset" />} />
         <Route path="sign-up" element={<SignUp />} />
         <Route path="research/account" element={<ResearchAccount />} />
         <Route path="platform" element={<Platform />} />

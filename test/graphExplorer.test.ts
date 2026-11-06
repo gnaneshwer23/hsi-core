@@ -20,3 +20,11 @@ test('force layout is deterministic, bounded and does not mutate scientific reco
  expect(JSON.stringify(SCIENCE_GRAPH)).toBe(before);
  expect([...forceGraphPositions({...SCIENCE_GRAPH,nodes:[],edges:[]})]).toEqual([]);
 });
+test('graph layout handles 100 and 500 test nodes and rejects 1000 before expensive work',()=>{
+ for(const count of [100,500]){
+  const graph={...SCIENCE_GRAPH,nodes:Array.from({length:count},(_,i)=>({...SCIENCE_GRAPH.nodes[0]!,id:'layout-fixture-'+i})),edges:[]};
+  const points=forceGraphPositions(graph);expect(points.size).toBe(count);
+  expect([...points.values()].every(p=>Number.isFinite(p.x)&&Number.isFinite(p.y))).toBe(true);
+ }
+ expect(()=>forceGraphPositions({...SCIENCE_GRAPH,nodes:Array.from({length:1000},(_,i)=>({...SCIENCE_GRAPH.nodes[0]!,id:'oversized-fixture-'+i})),edges:[]})).toThrow('layout budget');
+});

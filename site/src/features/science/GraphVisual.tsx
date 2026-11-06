@@ -6,13 +6,14 @@ export function GraphVisual({graph,selected,onSelect,onSelectEdge}:{graph:GraphD
  const [positions,setPositions]=useState<Record<string,{x:number;y:number}>>({}),[hover,setHover]=useState<string|null>(null),[labels,setLabels]=useState(false);
  const drag=useRef<{id:string|null;x:number;y:number;startX:number;startY:number;moved:boolean}|null>(null),moved=useRef(false);
  const signature=graph.nodes.map(n=>n.id).join('|')+';'+graph.edges.map(e=>e.id).join('|');
- const initial=useMemo(()=>forceGraphPositions(graph),[signature]);
+ const oversized=graph.nodes.length>500;
+ const initial=useMemo(()=>oversized?new Map<string,{x:number;y:number}>():forceGraphPositions(graph),[signature,oversized]);
  useEffect(()=>{setPositions({});setZoom(1);setPan({x:0,y:0})},[signature]);
  const points=new Map([...initial].map(([id,p])=>[id,positions[id]??p]));
  const focus=hover??selected,neighbours=new Set([focus,...graph.edges.filter(e=>e.subjectId===focus||e.objectId===focus).flatMap(e=>[e.subjectId,e.objectId])]);
  const hasFocus=points.has(focus);
  const changeZoom=(delta:number)=>setZoom(z=>Math.max(.4,Math.min(3,Math.round((z+delta)*10)/10)));
- useEffect(()=>{const svg=ref.current;if(!svg)return;const wheel=(e:WheelEvent)=>{e.preventDefault();setZoom(z=>Math.max(.4,Math.min(3,Math.round((z+(e.deltaY<0?.1:-.1))*10)/10)))};svg.addEventListener("wheel",wheel,{passive:false});return()=>svg.removeEventListener("wheel",wheel)},[]);
+ useEffect(()=>{const svg=ref.current;if(!svg)return;const wheel=(e:WheelEvent)=>{e.preventDefault();setZoom(z=>Math.max(.4,Math.min(3,Math.round((z+(e.deltaY<0?.1:-.1))*10)/10)))};svg.addEventListener("wheel",wheel,{passive:false});return()=>svg.removeEventListener("wheel",wheel)},[oversized]);
  function pointerPoint(e:ReactPointerEvent<SVGSVGElement>){const matrix=e.currentTarget.getScreenCTM();return matrix?new DOMPoint(e.clientX,e.clientY).matrixTransform(matrix.inverse()):{x:0,y:0}}
  function start(e:ReactPointerEvent<SVGSVGElement>){if(e.button!==0)return;const target=(e.target as Element).closest('[data-graph-node]'),edge=(e.target as Element).closest('[data-graph-edge]');if(edge)return;const p=pointerPoint(e);moved.current=false;drag.current={id:target?.getAttribute('data-graph-node')??null,...p,startX:p.x,startY:p.y,moved:false};e.currentTarget.setPointerCapture(e.pointerId)}
  function move(e:ReactPointerEvent<SVGSVGElement>){const d=drag.current;if(!d)return;const p=pointerPoint(e),dx=p.x-d.x,dy=p.y-d.y;if(Math.hypot(p.x-d.startX,p.y-d.startY)>4)d.moved=true;if(d.id){const at=points.get(d.id);if(at)setPositions(old=>({...old,[d.id!]:{x:at.x+dx/zoom,y:at.y+dy/zoom}}))}else setPan(old=>({x:old.x+dx,y:old.y+dy}));d.x=p.x;d.y=p.y}
@@ -27,6 +28,7 @@ export function GraphVisual({graph,selected,onSelect,onSelectEdge}:{graph:GraphD
   }catch{setMessage("The graph export could not be produced. Try JSON or retry the view.")}
  }
  const shift=(x:number,y:number)=>setPan(p=>({x:p.x+x,y:p.y+y}));
+ if(oversized)return <p role="status">This view supports up to 500 nodes. Narrow the graph filters to view a smaller network; use the text view to inspect connections.</p>;
  return <div className="xp-graph-frame kg-canvas"><div className="xp-graph-toolbar" role="group" aria-label="Graph view controls"><button type="button" aria-label="Zoom in graph" disabled={zoom>=3} onClick={()=>changeZoom(.2)}>+</button><button type="button" aria-label="Zoom out graph" disabled={zoom<=.4} onClick={()=>changeZoom(-.2)}>−</button><span>{Math.round(zoom*100)}%</span>{[["Pan graph left",-25,0],["Pan graph right",25,0],["Pan graph up",0,-25],["Pan graph down",0,25]].map(([label,x,y],i)=><button type="button" key={label} aria-label={String(label)} onClick={()=>shift(Number(x),Number(y))}>{["←","→","↑","↓"][i]}</button>)}<button type="button" onClick={()=>{setZoom(1);setPan({x:0,y:0});setPositions({})}}>Reset graph view</button><button type="button" aria-pressed={labels} onClick={()=>setLabels(v=>!v)}>All labels</button></div>
  <svg ref={ref} viewBox="0 0 900 650" role="group" aria-label="Interactive graph of biological entities" onPointerDown={start} onPointerMove={move} onPointerUp={end} onPointerCancel={()=>{drag.current=null}}>
  <rect width="900" height="650" fill="#101a20"/><g transform={"translate("+pan.x+" "+pan.y+") translate(450 325) scale("+zoom+") translate(-450 -325)"}>
