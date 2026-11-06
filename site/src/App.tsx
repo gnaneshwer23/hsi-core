@@ -54,6 +54,8 @@ const AuthenticatedInterrogativeWorkbench=lazy(()=>import("./pages/Authenticated
 
 const SyntheticValidationWorkbench=lazy(()=>import("./pages/SyntheticValidationWorkbench").then(m=>({default:m.SyntheticValidationWorkbench})));
 
+const ClaimKnowledgeGraph=lazy(()=>import("./pages/ClaimKnowledgeGraph").then(m=>({default:m.ClaimKnowledgeGraph})));
+
 export default function App() {
   return (
     <Routes>
@@ -86,6 +88,7 @@ export default function App() {
         <Route path="science/review-preparation" element={<ScienceReviewPreparation />} />
         <Route path="research/scientific-review" element={<ScientificReviewerDecision />} />
         <Route path="science/body" element={<ScienceBody />} />
+        <Route path="research/knowledge-graph" element={<ClaimKnowledgeGraph />} />
         <Route path="science/graph" element={<ScienceGraph />} />
         <Route path="science/paths" element={<SciencePaths />} />
         <Route path="science/contradictions" element={<ScienceContradictions />} />

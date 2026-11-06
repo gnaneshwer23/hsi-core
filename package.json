@@ -69,6 +69,10 @@
     "./research-coverage": {
       "types": "./dist/researchCoverage.d.ts",
       "import": "./dist/researchCoverage.js"
+    },
+    "./claim-graph": {
+      "types": "./dist/knowledgeGraph/claimGraph.d.ts",
+      "import": "./dist/knowledgeGraph/claimGraph.js"
     }
   },
   "files": [
@@ -125,7 +129,9 @@
     "validation:build": "bun --no-env-file scripts/build-synthetic-validation.ts",
     "validation:check": "bun --no-env-file scripts/build-synthetic-validation.ts --check",
     "readiness:prepare": "bun --no-env-file scripts/prepare-research-readiness.ts",
-    "readiness:check": "bun --no-env-file scripts/prepare-research-readiness.ts --check"
+    "readiness:check": "bun --no-env-file scripts/prepare-research-readiness.ts --check",
+    "graph:build": "bun --no-env-file scripts/build-claim-graph.ts",
+    "graph:check": "bun --no-env-file scripts/build-claim-graph.ts --check"
   },
   "engines": {
     "node": ">=20"

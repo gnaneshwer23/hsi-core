@@ -1,0 +1,1203 @@
+{
+  "schemaVersion": "hsi-claim-graph-1",
+  "parentVersion": null,
+  "method": {
+    "adapter": "hsi-working-corpus-graph",
+    "version": "1.0.0",
+    "entityMentions": "exact_dictionary_offsets",
+    "relationships": "explicit_source_candidate_mapping",
+    "model": null,
+    "promptVersion": null
+  },
+  "corpus": {
+    "schemaVersion": "hsi-research-evidence-corpus-1",
+    "id": "hsi-ra-ssc-working-evidence",
+    "status": "working_set",
+    "containsPhi": false,
+    "clinicalAdvice": false,
+    "graphPromotable": false,
+    "inputs": [
+      {
+        "path": "research/ra-anti-tnf/release.json",
+        "sha256": "9102c21075a862e1171db31a406e2cbb8434bef0cc89ea2886a6090d86f1a1c3"
+      },
+      {
+        "path": "research/ssc-tfh-il21/curation-candidates.v1.json",
+        "sha256": "afde8943fbe49b085b6cfdf13a26659b20c3408e438ae6b7fcff7e6f2a38acd0"
+      },
+      {
+        "path": "research/ssc-tfh-il21/abstract-verification.v1.json",
+        "sha256": "90b8c48c568d165e67e2f925b4cf52bb03c741127d31612dce6a81146a9c6e11"
+      }
+    ],
+    "sources": [
+      {
+        "id": "pmid:18375541",
+        "pmid": "18375541",
+        "doi": "10.1136/ard.2007.084715",
+        "title": "Potter C, Hyrich K L, Tracey A, Lunt M, Plant D, Symmons D P M, Thomson W, Worthington J, Emery P, Morgan A W, Wilson A G, Isaacs J, Barton A, BRAGGSS — Association of rheumatoid factor and anti-cyclic citrullinated peptide positivity, but not carriage of shared epitope or PTPN22 susceptibility variants, with anti-tumour necrosis factor response in rheumatoid arthritis",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/18375541/",
+        "disease": "rheumatoid_arthritis",
+        "identityStatus": "import_receipt_validated",
+        "contentVersion": "103e8c947ccb82702f90e4f53e7a0189096109cdb3234509943443065936360b",
+        "retrievedAt": "2026-11-03T18:36:10Z",
+        "rights": {
+          "status": "import_receipt_only",
+          "licenceUrl": "https://creativecommons.org/licenses/by/2.0/",
+          "receiptRef": "research/ra-anti-tnf/release.json#receipts/PMID-18375541"
+        }
+      },
+      {
+        "id": "pmid:24586782",
+        "pmid": "24586782",
+        "doi": "10.1371/journal.pone.0089442",
+        "title": "Lv Qianwen, Yin Yufeng, Li Xin, Shan Guangliang, Wu Xiangni, Liang Di, Li Yongzhe, Zhang Xuan — The Status of Rheumatoid Factor and Anti-Cyclic Citrullinated Peptide Antibody Are Not Associated with the Effect of Anti-TNFα Agent Treatment in Patients with Rheumatoid Arthritis: A Meta-Analysis",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/24586782/",
+        "disease": "rheumatoid_arthritis",
+        "identityStatus": "import_receipt_validated",
+        "contentVersion": "071c97933fa0edbe4e75ed68b07fe57bee308809c34a3b660ac878c866e6dc7b",
+        "retrievedAt": "2026-11-03T18:36:11Z",
+        "rights": {
+          "status": "import_receipt_only",
+          "licenceUrl": "https://creativecommons.org/licenses/by/4.0/",
+          "receiptRef": "research/ra-anti-tnf/release.json#receipts/PMID-24586782"
+        }
+      },
+      {
+        "id": "pmid:30760472",
+        "pmid": "30760472",
+        "doi": "10.1136/annrheumdis-2018-214382",
+        "title": "Circulating follicular helper T cells are increased in systemic sclerosis and promote plasmablast differentiation through the IL-21 pathway which can be inhibited by ruxolitinib",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/30760472/",
+        "disease": "systemic_sclerosis",
+        "identityStatus": "repository_metadata_unverified",
+        "contentVersion": null,
+        "retrievedAt": null,
+        "rights": {
+          "status": "unverified",
+          "licenceUrl": null,
+          "receiptRef": null
+        }
+      },
+      {
+        "id": "pmid:29514998",
+        "pmid": "29514998",
+        "doi": "10.1126/scitranslmed.aaf5307",
+        "title": "T follicular helper-like cells contribute to skin fibrosis",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/29514998/",
+        "disease": "systemic_sclerosis",
+        "identityStatus": "repository_metadata_unverified",
+        "contentVersion": null,
+        "retrievedAt": null,
+        "rights": {
+          "status": "unverified",
+          "licenceUrl": null,
+          "receiptRef": null
+        }
+      },
+      {
+        "id": "pmid:33175976",
+        "pmid": "33175976",
+        "doi": "10.1093/rheumatology/keaa669",
+        "title": "Imbalance toward TFH 1 cells playing a role in aberrant B cell differentiation in systemic sclerosis",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/33175976/",
+        "disease": "systemic_sclerosis",
+        "identityStatus": "repository_metadata_unverified",
+        "contentVersion": null,
+        "retrievedAt": null,
+        "rights": {
+          "status": "unverified",
+          "licenceUrl": null,
+          "receiptRef": null
+        }
+      }
+    ],
+    "passages": [
+      {
+        "id": "PMID-18375541-ABSTRACT-1",
+        "sourceId": "pmid:18375541",
+        "sourceVersion": "103e8c947ccb82702f90e4f53e7a0189096109cdb3234509943443065936360b",
+        "locator": "/article/front/article-meta/abstract[1]/sec[1]/p[1]; XML itertext with whitespace collapsed",
+        "text": "To determine whether rheumatoid factor (RF), anti-cyclic citrullinated peptide (CCP) antibodies, or carriage of shared epitope (SE) and PTPN22 genetic susceptibility variants predict response to therapy in patients with rheumatoid arthritis (RA) treated with anti-tumour necrosis factor (TNF) agents.",
+        "sha256": "cd64ed03416e37c9815d3031714604ed111c009ed6c16d4552498d770748fd74"
+      },
+      {
+        "id": "PMID-18375541-ABSTRACT-2",
+        "sourceId": "pmid:18375541",
+        "sourceVersion": "103e8c947ccb82702f90e4f53e7a0189096109cdb3234509943443065936360b",
+        "locator": "/article/front/article-meta/abstract[1]/sec[2]/p[1]; XML itertext with whitespace collapsed",
+        "text": "UK-wide multicentre collaborations were established to recruit a large cohort of patients treated with anti-TNF drugs for RA. Serum RF, anti-CCP antibody and SE status were determined using commercially available kits. PTPN22 R620W genotyping was performed by Sequenom MassArray. Linear regression analyses were performed to investigate the role of these four factors in predicting response to treatment by 6 months, defined as the absolute change in 28-joint Disease Activity Score (DAS28).",
+        "sha256": "165c2b6be9e8bfaa46ce117749a371bde1ebb8c10f4d2e3bec7dae258c510975"
+      },
+      {
+        "id": "PMID-18375541-ABSTRACT-3",
+        "sourceId": "pmid:18375541",
+        "sourceVersion": "103e8c947ccb82702f90e4f53e7a0189096109cdb3234509943443065936360b",
+        "locator": "/article/front/article-meta/abstract[1]/sec[3]/p[1]; XML itertext with whitespace collapsed",
+        "text": "Of the 642 patients analysed, 46% received infliximab, 43% etanercept and 11% adalimumab. In all, 89% and 82% of patients were RF and anti-CCP positive, respectively. Patients that were RF negative had a 0.48 (95% CI 0.08 to 0.87) greater mean improvement in DAS28 compared to patients that were RF positive. A better response was also seen among patients that were anti-CCP negative. No association was demonstrated between drug response and SE or PTPN22 620W carriage.",
+        "sha256": "ff39e3db8d10d19ab39e3bc36099637f5e4ae13db43978d6cf1d93e5923e4fd8"
+      },
+      {
+        "id": "PMID-18375541-ABSTRACT-4",
+        "sourceId": "pmid:18375541",
+        "sourceVersion": "103e8c947ccb82702f90e4f53e7a0189096109cdb3234509943443065936360b",
+        "locator": "/article/front/article-meta/abstract[1]/sec[4]/p[1]; XML itertext with whitespace collapsed",
+        "text": "The presence of RF or anti-CCP antibodies was associated with a reduced response to anti-TNF drugs. However, these antibodies only account for a small proportion of the variance in treatment response. It is likely that genetic factors will contribute to treatment response, but these do not include the well established RA susceptibility loci, SE and PTPN22.",
+        "sha256": "d791cca32a787fbbc21647fbfcb180864a05ca279896990e88b89315c065a486"
+      },
+      {
+        "id": "PMID-24586782-ABSTRACT-1",
+        "sourceId": "pmid:24586782",
+        "sourceVersion": "071c97933fa0edbe4e75ed68b07fe57bee308809c34a3b660ac878c866e6dc7b",
+        "locator": "/article/front/article-meta/abstract[1]/sec[1]/p[1]; XML itertext with whitespace collapsed",
+        "text": "This meta-analysis was conducted to investigate whether the status of rheumatoid factor (RF) and anti-cyclic citrullinated peptide (anti-CCP) antibody are associated with the clinical response to anti-tumor necrosis factor (TNF) alpha treatment in rheumatoid arthritis (RA).",
+        "sha256": "ca5b746f6048cf7c86dd29446d04e204efe147025ee024f1a894dff4ca750df7"
+      },
+      {
+        "id": "PMID-24586782-ABSTRACT-2",
+        "sourceId": "pmid:24586782",
+        "sourceVersion": "071c97933fa0edbe4e75ed68b07fe57bee308809c34a3b660ac878c866e6dc7b",
+        "locator": "/article/front/article-meta/abstract[1]/sec[2]/p[1]; XML itertext with whitespace collapsed",
+        "text": "A systemic literature review was performed using the MEDLINE, SCOPUS, Cochrane Library, ISI Web of Knowledge, and Clinical Trials Register databases, and Hayden's criteria of quality assessment for prognostic studies were used to evaluate all of the studies. The correlation between the RF and anti-CCP antibody status with the treatment effect of anti-TNFα agents was analyzed separately using the Mantel Haenszel method. A fixed-effects model was used when there was no significant heterogeneity; otherwise, a random-effects model was applied. Publication bias was assessed using Egger's linear regression and a funnel plot.",
+        "sha256": "dfd31a98aa4d9235479449e613af462091784eb38244339c3d017e32b50d297e"
+      },
+      {
+        "id": "PMID-24586782-ABSTRACT-3",
+        "sourceId": "pmid:24586782",
+        "sourceVersion": "071c97933fa0edbe4e75ed68b07fe57bee308809c34a3b660ac878c866e6dc7b",
+        "locator": "/article/front/article-meta/abstract[1]/sec[3]/p[1]; XML itertext with whitespace collapsed",
+        "text": "A total of 14 studies involving 5561 RA patients meeting the inclusion criteria were included. The overall analysis showed that the pooled relative risk for the predictive effects of the RF and anti-CCP antibody status on patient response to anti-TNFα agents was 0.98 (95% CI: 0.91–1.05, p = 0.54) and 0.88 (95% CI: 0.76–1.03, p = 0.11), respectively, with I2 values of 43% (p = 0.05) and 67% (p<0.01), respectively. Subgroup analyses of different anti-TNFα treatments (infliximab vs. etanercept vs. adalimumab vs. golimumab), response criteria (DAS28 vs. ACR20 vs. EULAR response), follow-up period (≥6 vs. <6 months), and ethnic group did not reveal a significant association for the status of RF and anti-CCP.",
+        "sha256": "32b73c40f8f4de7f27d76aaabb0bc6368e7cd9730ad5faea665673ec96d97487"
+      },
+      {
+        "id": "PMID-24586782-ABSTRACT-4",
+        "sourceId": "pmid:24586782",
+        "sourceVersion": "071c97933fa0edbe4e75ed68b07fe57bee308809c34a3b660ac878c866e6dc7b",
+        "locator": "/article/front/article-meta/abstract[1]/sec[4]/p[1]; XML itertext with whitespace collapsed",
+        "text": "Neither the RF nor anti-CCP antibody status in RA patients is associated with a clinical response to anti-TNFα treatment.",
+        "sha256": "66868b5d548a2c83058472d0f0ebf8254c183bb2faecf907b210a073d1fe326f"
+      },
+      {
+        "id": "HSI-C-SSC-001-LOCATOR",
+        "sourceId": "pmid:30760472",
+        "sourceVersion": null,
+        "locator": "PubMed abstract: Results",
+        "text": null,
+        "sha256": null
+      },
+      {
+        "id": "HSI-C-SSC-004-LOCATOR",
+        "sourceId": "pmid:30760472",
+        "sourceVersion": null,
+        "locator": "PubMed abstract: Methods and Results",
+        "text": null,
+        "sha256": null
+      },
+      {
+        "id": "HSI-C-SSC-005-LOCATOR",
+        "sourceId": "pmid:29514998",
+        "sourceVersion": null,
+        "locator": "PubMed abstract",
+        "text": null,
+        "sha256": null
+      },
+      {
+        "id": "HSI-C-SSC-005-MOUSE-LOCATOR",
+        "sourceId": "pmid:29514998",
+        "sourceVersion": null,
+        "locator": "PubMed abstract",
+        "text": null,
+        "sha256": null
+      },
+      {
+        "id": "HSI-C-SSC-006-LOCATOR",
+        "sourceId": "pmid:33175976",
+        "sourceVersion": null,
+        "locator": "PubMed abstract: Results",
+        "text": null,
+        "sha256": null
+      }
+    ],
+    "claims": [
+      {
+        "id": "HSI-C-RA-SEROLOGY-COHORT-RESULTS",
+        "disease": "rheumatoid_arthritis",
+        "assertion": "Of the 642 patients analysed, 46% received infliximab, 43% etanercept and 11% adalimumab. In all, 89% and 82% of patients were RF and anti-CCP positive, respectively. Patients that were RF negative had a 0.48 (95% CI 0.08 to 0.87) greater mean improvement in DAS28 compared to patients that were RF positive. A better response was also seen among patients that were anti-CCP negative. No association was demonstrated between drug response and SE or PTPN22 620W carriage.",
+        "sourceId": "pmid:18375541",
+        "passageIds": [
+          "PMID-18375541-ABSTRACT-3",
+          "PMID-18375541-ABSTRACT-2"
+        ],
+        "status": "unreviewed_candidate",
+        "context": {
+          "model": "Human observational cohort",
+          "notes": "UK-wide multicentre collaborations were established to recruit a large cohort of patients treated with anti-TNF drugs for RA. Serum RF, anti-CCP antibody and SE status were determined using commercially available kits. PTPN22 R620W genotyping was performed by Sequenom MassArray. Linear regression analyses were performed to investigate the role of these four factors in predicting response to treatment by 6 months, defined as the absolute change in 28-joint Disease Activity Score (DAS28).",
+          "population": "642 RA patients (abstract Results)",
+          "tissue": "Serum for RF/anti-CCP; genotyping material not specified in abstract",
+          "assay": "Commercial RF/anti-CCP and SE kits; PTPN22 R620W by Sequenom MassArray (abstract Methods)",
+          "intervention": "Infliximab, etanercept or adalimumab (abstract Results)",
+          "outcome": "Absolute change in DAS28",
+          "timepoint": "6 months",
+          "limitations": "Source-reported association; abstract-only extraction; limited response variance explained. No individual treatment recommendation.",
+          "originRef": "research/ra-anti-tnf/release.json#passages/PMID-18375541-ABSTRACT-3"
+        }
+      },
+      {
+        "id": "HSI-C-RA-SEROLOGY-META-RESULTS",
+        "disease": "rheumatoid_arthritis",
+        "assertion": "A total of 14 studies involving 5561 RA patients meeting the inclusion criteria were included. The overall analysis showed that the pooled relative risk for the predictive effects of the RF and anti-CCP antibody status on patient response to anti-TNFα agents was 0.98 (95% CI: 0.91–1.05, p = 0.54) and 0.88 (95% CI: 0.76–1.03, p = 0.11), respectively, with I2 values of 43% (p = 0.05) and 67% (p<0.01), respectively. Subgroup analyses of different anti-TNFα treatments (infliximab vs. etanercept vs. adalimumab vs. golimumab), response criteria (DAS28 vs. ACR20 vs. EULAR response), follow-up period (≥6 vs. <6 months), and ethnic group did not reveal a significant association for the status of RF and anti-CCP.",
+        "sourceId": "pmid:24586782",
+        "passageIds": [
+          "PMID-24586782-ABSTRACT-3",
+          "PMID-24586782-ABSTRACT-2"
+        ],
+        "status": "unreviewed_candidate",
+        "context": {
+          "model": "Meta-analysis of human studies",
+          "notes": "A systemic literature review was performed using the MEDLINE, SCOPUS, Cochrane Library, ISI Web of Knowledge, and Clinical Trials Register databases, and Hayden's criteria of quality assessment for prognostic studies were used to evaluate all of the studies. The correlation between the RF and anti-CCP antibody status with the treatment effect of anti-TNFα agents was analyzed separately using the Mantel Haenszel method. A fixed-effects model was used when there was no significant heterogeneity; otherwise, a random-effects model was applied. Publication bias was assessed using Egger's linear regression and a funnel plot.",
+          "population": "14 studies; 5561 RA patients (abstract Results)",
+          "tissue": null,
+          "assay": null,
+          "intervention": "Anti-TNF agents; treatment subgroups reported in abstract Results",
+          "outcome": "Clinical response by DAS28, ACR20 or EULAR; pooled relative risks",
+          "timepoint": "Subgroups: at least 6 months versus less than 6 months",
+          "limitations": "Abstract-only extraction; differing response criteria, follow-up and heterogeneity require independent assessment. No individual prediction.",
+          "originRef": "research/ra-anti-tnf/release.json#passages/PMID-24586782-ABSTRACT-3"
+        }
+      },
+      {
+        "id": "HSI-C-SSC-001",
+        "disease": "systemic_sclerosis",
+        "assertion": "circulating Tfh cells → increased_in → SSc cohort versus healthy controls",
+        "sourceId": "pmid:30760472",
+        "passageIds": [
+          "HSI-C-SSC-001-LOCATOR"
+        ],
+        "status": "unreviewed_candidate",
+        "context": {
+          "model": "human cohort",
+          "notes": "50 SSc patients and 32 healthy controls; flow cytometry; do not generalise to all SSc cohorts",
+          "population": "50 SSc patients and 32 healthy controls",
+          "tissue": null,
+          "assay": "Flow cytometry",
+          "intervention": null,
+          "outcome": "SSc cohort versus healthy controls",
+          "timepoint": null,
+          "limitations": "Cohort-specific observation; subgroup composition and assay differences require full-paper review",
+          "originRef": "research/ssc-tfh-il21/curation-candidates.v1.json#claims/HSI-C-SSC-001"
+        }
+      },
+      {
+        "id": "HSI-C-SSC-004",
+        "disease": "systemic_sclerosis",
+        "assertion": "SSc circulating Tfh cells → promotes_in_vitro → IL-21-dependent plasmablast differentiation",
+        "sourceId": "pmid:30760472",
+        "passageIds": [
+          "HSI-C-SSC-004-LOCATOR"
+        ],
+        "status": "unreviewed_candidate",
+        "context": {
+          "model": "human ex vivo coculture",
+          "notes": "Tfh–B-cell coculture; IL-21R blockade/JAK1/2 inhibition; not a clinical efficacy claim",
+          "population": null,
+          "tissue": null,
+          "assay": "Tfh–B-cell coculture",
+          "intervention": "IL-21R blockade/JAK1/2 inhibition",
+          "outcome": "IL-21-dependent plasmablast differentiation",
+          "timepoint": null,
+          "limitations": "In vitro effect does not establish treatment benefit in SSc patients",
+          "originRef": "research/ssc-tfh-il21/curation-candidates.v1.json#claims/HSI-C-SSC-004"
+        }
+      },
+      {
+        "id": "HSI-C-SSC-005",
+        "disease": "systemic_sclerosis",
+        "assertion": "ICOS+ Tfh-like cells → associated_with → SSc dermal fibrosis",
+        "sourceId": "pmid:29514998",
+        "passageIds": [
+          "HSI-C-SSC-005-LOCATOR"
+        ],
+        "status": "unreviewed_candidate",
+        "context": {
+          "model": "human SSc skin",
+          "notes": "Skin infiltrating ICOS+ CD4+ Tfh-like cells correlated with dermal fibrosis and clinical status",
+          "population": null,
+          "tissue": "human SSc skin",
+          "assay": null,
+          "intervention": null,
+          "outcome": "SSc dermal fibrosis",
+          "timepoint": null,
+          "limitations": "Human association separated from causal mouse-model findings",
+          "originRef": "research/ssc-tfh-il21/curation-candidates.v1.json#claims/HSI-C-SSC-005"
+        }
+      },
+      {
+        "id": "HSI-C-SSC-005-MOUSE",
+        "disease": "systemic_sclerosis",
+        "assertion": "ICOS+ Tfh-like cells / IL-21 → contributes_to_in_model → dermal fibrosis",
+        "sourceId": "pmid:29514998",
+        "passageIds": [
+          "HSI-C-SSC-005-MOUSE-LOCATOR"
+        ],
+        "status": "unreviewed_candidate",
+        "context": {
+          "model": "GVHD-SSc mouse model",
+          "notes": "Anti-ICOS antibody and IL-21 neutralisation evaluated in experimental model",
+          "population": null,
+          "tissue": null,
+          "assay": null,
+          "intervention": "Anti-ICOS antibody and IL-21 neutralisation",
+          "outcome": "dermal fibrosis",
+          "timepoint": null,
+          "limitations": "Animal model intervention; no human therapeutic efficacy inference",
+          "originRef": "research/ssc-tfh-il21/curation-candidates.v1.json#claims/HSI-C-SSC-005-MOUSE"
+        }
+      },
+      {
+        "id": "HSI-C-SSC-006",
+        "disease": "systemic_sclerosis",
+        "assertion": "circulating Tfh1 subset → increased_or_imbalanced_in → SSc cohort",
+        "sourceId": "pmid:33175976",
+        "passageIds": [
+          "HSI-C-SSC-006-LOCATOR"
+        ],
+        "status": "unreviewed_candidate",
+        "context": {
+          "model": "human case-control",
+          "notes": "Overall circulating Tfh proportion not different from controls; Tfh1 subset increased; associations with IL-21/IL-6 and B-cell phenotype",
+          "population": "SSc cohort",
+          "tissue": null,
+          "assay": null,
+          "intervention": null,
+          "outcome": "SSc cohort",
+          "timepoint": null,
+          "limitations": "Do not collapse subset imbalance into total circulating Tfh increase",
+          "originRef": "research/ssc-tfh-il21/curation-candidates.v1.json#claims/HSI-C-SSC-006"
+        }
+      }
+    ],
+    "version": "2e4704bb3c90322045403ddda78e3ba6cc9eef77479519cf88b95a9f446a0f1b"
+  },
+  "entities": [
+    {
+      "id": "ssc:circulating-tfh-cells",
+      "kind": "cell_state",
+      "name": "circulating Tfh cells",
+      "aliases": [],
+      "externalIds": [],
+      "description": "Source-linked candidate concept. Context-specific names remain distinct until independently resolved.",
+      "domains": [
+        "immune"
+      ],
+      "definitionSourceIds": [
+        "pmid:30760472"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "ssc:ssc-cohort-versus-healthy-controls",
+      "kind": "biological_context",
+      "name": "SSc cohort versus healthy controls",
+      "aliases": [],
+      "externalIds": [],
+      "description": "Source-linked candidate concept. Context-specific names remain distinct until independently resolved.",
+      "domains": [
+        "immune"
+      ],
+      "definitionSourceIds": [
+        "pmid:30760472"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "ssc:ssc-circulating-tfh-cells",
+      "kind": "cell_state",
+      "name": "SSc circulating Tfh cells",
+      "aliases": [],
+      "externalIds": [],
+      "description": "Source-linked candidate concept. Context-specific names remain distinct until independently resolved.",
+      "domains": [
+        "immune"
+      ],
+      "definitionSourceIds": [
+        "pmid:30760472"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "ssc:il-21-dependent-plasmablast-differentiation",
+      "kind": "biological_context",
+      "name": "IL-21-dependent plasmablast differentiation",
+      "aliases": [],
+      "externalIds": [],
+      "description": "Source-linked candidate concept. Context-specific names remain distinct until independently resolved.",
+      "domains": [
+        "immune"
+      ],
+      "definitionSourceIds": [
+        "pmid:30760472"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "ssc:icos-tfh-like-cells",
+      "kind": "cell_state",
+      "name": "ICOS+ Tfh-like cells",
+      "aliases": [],
+      "externalIds": [],
+      "description": "Source-linked candidate concept. Context-specific names remain distinct until independently resolved.",
+      "domains": [
+        "immune"
+      ],
+      "definitionSourceIds": [
+        "pmid:29514998"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "ssc:ssc-dermal-fibrosis",
+      "kind": "phenotype",
+      "name": "SSc dermal fibrosis",
+      "aliases": [],
+      "externalIds": [],
+      "description": "Source-linked candidate concept. Context-specific names remain distinct until independently resolved.",
+      "domains": [
+        "immune"
+      ],
+      "definitionSourceIds": [
+        "pmid:29514998"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "ssc:icos-tfh-like-cells-il-21",
+      "kind": "cell_state",
+      "name": "ICOS+ Tfh-like cells / IL-21",
+      "aliases": [],
+      "externalIds": [],
+      "description": "Source-linked candidate concept. Context-specific names remain distinct until independently resolved.",
+      "domains": [
+        "immune"
+      ],
+      "definitionSourceIds": [
+        "pmid:29514998"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "ssc:dermal-fibrosis",
+      "kind": "phenotype",
+      "name": "dermal fibrosis",
+      "aliases": [],
+      "externalIds": [],
+      "description": "Source-linked candidate concept. Context-specific names remain distinct until independently resolved.",
+      "domains": [
+        "immune"
+      ],
+      "definitionSourceIds": [
+        "pmid:29514998"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "ssc:circulating-tfh1-subset",
+      "kind": "cell_state",
+      "name": "circulating Tfh1 subset",
+      "aliases": [],
+      "externalIds": [],
+      "description": "Source-linked candidate concept. Context-specific names remain distinct until independently resolved.",
+      "domains": [
+        "immune"
+      ],
+      "definitionSourceIds": [
+        "pmid:33175976"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "ssc:ssc-cohort",
+      "kind": "biological_context",
+      "name": "SSc cohort",
+      "aliases": [],
+      "externalIds": [],
+      "description": "Source-linked candidate concept. Context-specific names remain distinct until independently resolved.",
+      "domains": [
+        "immune"
+      ],
+      "definitionSourceIds": [
+        "pmid:33175976"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "ra:rheumatoid-factor",
+      "kind": "biomarker",
+      "name": "Rheumatoid factor",
+      "aliases": [
+        "RF"
+      ],
+      "externalIds": [],
+      "description": "Serology term mentioned in the imported RA studies; predictive value requires context-specific review.",
+      "domains": [
+        "immune"
+      ],
+      "definitionSourceIds": [
+        "pmid:18375541",
+        "pmid:24586782"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "ra:anti-ccp",
+      "kind": "biomarker",
+      "name": "Anti-CCP antibodies",
+      "aliases": [
+        "anti-CCP",
+        "anti-cyclic citrullinated peptide"
+      ],
+      "externalIds": [],
+      "description": "Source-reported antibody-status term. Not an individual treatment selection rule.",
+      "domains": [
+        "immune"
+      ],
+      "definitionSourceIds": [
+        "pmid:18375541",
+        "pmid:24586782"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "ra:anti-tnf-response",
+      "kind": "phenotype",
+      "name": "Anti-TNF treatment response",
+      "aliases": [
+        "response to anti-TNF",
+        "anti-TNF treatment response"
+      ],
+      "externalIds": [],
+      "description": "Study-specific response outcome; DAS28, population and timing remain attached to each claim.",
+      "domains": [
+        "immune"
+      ],
+      "definitionSourceIds": [
+        "pmid:18375541",
+        "pmid:24586782"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "disease:ra",
+      "name": "Rheumatoid arthritis",
+      "kind": "disease",
+      "aliases": [
+        "RA"
+      ],
+      "externalIds": [],
+      "description": "Disease context in the cited research; not a patient record.",
+      "domains": [
+        "immune"
+      ],
+      "definitionSourceIds": [
+        "pmid:18375541",
+        "pmid:24586782"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "disease:ssc",
+      "name": "Systemic sclerosis",
+      "kind": "disease",
+      "aliases": [
+        "SSc"
+      ],
+      "externalIds": [],
+      "description": "Disease context in the cited research; not a patient record.",
+      "domains": [
+        "immune"
+      ],
+      "definitionSourceIds": [
+        "pmid:30760472",
+        "pmid:29514998",
+        "pmid:33175976"
+      ],
+      "status": "draft"
+    }
+  ],
+  "mentions": [
+    {
+      "id": "mention:PMID-18375541-ABSTRACT-1:68c79917dc70",
+      "entityId": "ra:rheumatoid-factor",
+      "passageId": "PMID-18375541-ABSTRACT-1",
+      "text": "rheumatoid factor",
+      "start": 21,
+      "end": 38,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-18375541-ABSTRACT-1:4cae90b867bd",
+      "entityId": "ra:rheumatoid-factor",
+      "passageId": "PMID-18375541-ABSTRACT-1",
+      "text": "RF",
+      "start": 40,
+      "end": 42,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-18375541-ABSTRACT-1:8d28cff3a19e",
+      "entityId": "ra:anti-ccp",
+      "passageId": "PMID-18375541-ABSTRACT-1",
+      "text": "anti-cyclic citrullinated peptide",
+      "start": 45,
+      "end": 78,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-18375541-ABSTRACT-1:ff6f2d965a52",
+      "entityId": "disease:ra",
+      "passageId": "PMID-18375541-ABSTRACT-1",
+      "text": "rheumatoid arthritis",
+      "start": 220,
+      "end": 240,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-18375541-ABSTRACT-1:59235b7eeadb",
+      "entityId": "disease:ra",
+      "passageId": "PMID-18375541-ABSTRACT-1",
+      "text": "RA",
+      "start": 242,
+      "end": 244,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-18375541-ABSTRACT-2:c912475a436a",
+      "entityId": "ra:rheumatoid-factor",
+      "passageId": "PMID-18375541-ABSTRACT-2",
+      "text": "RF",
+      "start": 132,
+      "end": 134,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-18375541-ABSTRACT-2:43d1e5b60ce5",
+      "entityId": "ra:anti-ccp",
+      "passageId": "PMID-18375541-ABSTRACT-2",
+      "text": "anti-CCP",
+      "start": 136,
+      "end": 144,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-18375541-ABSTRACT-2:f2ae69418e9e",
+      "entityId": "disease:ra",
+      "passageId": "PMID-18375541-ABSTRACT-2",
+      "text": "RA",
+      "start": 122,
+      "end": 124,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-18375541-ABSTRACT-3:074627f5b73f",
+      "entityId": "ra:rheumatoid-factor",
+      "passageId": "PMID-18375541-ABSTRACT-3",
+      "text": "RF",
+      "start": 127,
+      "end": 129,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-18375541-ABSTRACT-3:6deff09fecab",
+      "entityId": "ra:rheumatoid-factor",
+      "passageId": "PMID-18375541-ABSTRACT-3",
+      "text": "RF",
+      "start": 186,
+      "end": 188,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-18375541-ABSTRACT-3:43a802fb9dc0",
+      "entityId": "ra:rheumatoid-factor",
+      "passageId": "PMID-18375541-ABSTRACT-3",
+      "text": "RF",
+      "start": 296,
+      "end": 298,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-18375541-ABSTRACT-3:c892499185df",
+      "entityId": "ra:anti-ccp",
+      "passageId": "PMID-18375541-ABSTRACT-3",
+      "text": "anti-CCP",
+      "start": 134,
+      "end": 142,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-18375541-ABSTRACT-3:a9832a1d41fb",
+      "entityId": "ra:anti-ccp",
+      "passageId": "PMID-18375541-ABSTRACT-3",
+      "text": "anti-CCP",
+      "start": 366,
+      "end": 374,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-18375541-ABSTRACT-4:5d7e68f0a65b",
+      "entityId": "ra:rheumatoid-factor",
+      "passageId": "PMID-18375541-ABSTRACT-4",
+      "text": "RF",
+      "start": 16,
+      "end": 18,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-18375541-ABSTRACT-4:9294ecc65c9e",
+      "entityId": "ra:anti-ccp",
+      "passageId": "PMID-18375541-ABSTRACT-4",
+      "text": "anti-CCP antibodies",
+      "start": 22,
+      "end": 41,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-18375541-ABSTRACT-4:812ae67e543d",
+      "entityId": "ra:anti-ccp",
+      "passageId": "PMID-18375541-ABSTRACT-4",
+      "text": "anti-CCP",
+      "start": 22,
+      "end": 30,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-18375541-ABSTRACT-4:9692ad247d45",
+      "entityId": "ra:anti-tnf-response",
+      "passageId": "PMID-18375541-ABSTRACT-4",
+      "text": "response to anti-TNF",
+      "start": 72,
+      "end": 92,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-18375541-ABSTRACT-4:134fe199719a",
+      "entityId": "disease:ra",
+      "passageId": "PMID-18375541-ABSTRACT-4",
+      "text": "RA",
+      "start": 320,
+      "end": 322,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-24586782-ABSTRACT-1:1071bf04b569",
+      "entityId": "ra:rheumatoid-factor",
+      "passageId": "PMID-24586782-ABSTRACT-1",
+      "text": "rheumatoid factor",
+      "start": 70,
+      "end": 87,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-24586782-ABSTRACT-1:020142380b77",
+      "entityId": "ra:rheumatoid-factor",
+      "passageId": "PMID-24586782-ABSTRACT-1",
+      "text": "RF",
+      "start": 89,
+      "end": 91,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-24586782-ABSTRACT-1:97279e05e957",
+      "entityId": "ra:anti-ccp",
+      "passageId": "PMID-24586782-ABSTRACT-1",
+      "text": "anti-CCP",
+      "start": 132,
+      "end": 140,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-24586782-ABSTRACT-1:a2d52f69e9c4",
+      "entityId": "ra:anti-ccp",
+      "passageId": "PMID-24586782-ABSTRACT-1",
+      "text": "anti-cyclic citrullinated peptide",
+      "start": 97,
+      "end": 130,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-24586782-ABSTRACT-1:5c56be42bf00",
+      "entityId": "disease:ra",
+      "passageId": "PMID-24586782-ABSTRACT-1",
+      "text": "rheumatoid arthritis",
+      "start": 248,
+      "end": 268,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-24586782-ABSTRACT-1:93b474303816",
+      "entityId": "disease:ra",
+      "passageId": "PMID-24586782-ABSTRACT-1",
+      "text": "RA",
+      "start": 270,
+      "end": 272,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-24586782-ABSTRACT-2:5d437e9c00c1",
+      "entityId": "ra:rheumatoid-factor",
+      "passageId": "PMID-24586782-ABSTRACT-2",
+      "text": "RF",
+      "start": 287,
+      "end": 289,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-24586782-ABSTRACT-2:ddc6ccc0ff74",
+      "entityId": "ra:anti-ccp",
+      "passageId": "PMID-24586782-ABSTRACT-2",
+      "text": "anti-CCP",
+      "start": 294,
+      "end": 302,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-24586782-ABSTRACT-3:7c681269add4",
+      "entityId": "ra:rheumatoid-factor",
+      "passageId": "PMID-24586782-ABSTRACT-3",
+      "text": "RF",
+      "start": 187,
+      "end": 189,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-24586782-ABSTRACT-3:c7a42b66509f",
+      "entityId": "ra:rheumatoid-factor",
+      "passageId": "PMID-24586782-ABSTRACT-3",
+      "text": "RF",
+      "start": 696,
+      "end": 698,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-24586782-ABSTRACT-3:dfacc40db135",
+      "entityId": "ra:anti-ccp",
+      "passageId": "PMID-24586782-ABSTRACT-3",
+      "text": "anti-CCP",
+      "start": 194,
+      "end": 202,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-24586782-ABSTRACT-3:104fc5d8544a",
+      "entityId": "ra:anti-ccp",
+      "passageId": "PMID-24586782-ABSTRACT-3",
+      "text": "anti-CCP",
+      "start": 703,
+      "end": 711,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-24586782-ABSTRACT-3:645fba675711",
+      "entityId": "disease:ra",
+      "passageId": "PMID-24586782-ABSTRACT-3",
+      "text": "RA",
+      "start": 37,
+      "end": 39,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-24586782-ABSTRACT-4:1189eef02a98",
+      "entityId": "ra:rheumatoid-factor",
+      "passageId": "PMID-24586782-ABSTRACT-4",
+      "text": "RF",
+      "start": 12,
+      "end": 14,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-24586782-ABSTRACT-4:64b78b6ff18c",
+      "entityId": "ra:anti-ccp",
+      "passageId": "PMID-24586782-ABSTRACT-4",
+      "text": "anti-CCP",
+      "start": 19,
+      "end": 27,
+      "resolution": "candidate_exact_alias"
+    },
+    {
+      "id": "mention:PMID-24586782-ABSTRACT-4:303907cdb9f7",
+      "entityId": "disease:ra",
+      "passageId": "PMID-24586782-ABSTRACT-4",
+      "text": "RA",
+      "start": 47,
+      "end": 49,
+      "resolution": "candidate_exact_alias"
+    }
+  ],
+  "edges": [
+    {
+      "id": "binding:HSI-C-RA-SEROLOGY-COHORT-RESULTS:bb2c4793bf33",
+      "claimId": "HSI-C-RA-SEROLOGY-COHORT-RESULTS",
+      "subjectId": "ra:rheumatoid-factor",
+      "predicate": "associated_with",
+      "objectId": "ra:anti-tnf-response",
+      "relationshipType": "associative",
+      "negated": false,
+      "hedged": false,
+      "dataClass": "public_source_candidate",
+      "evidenceStatus": "not_curated",
+      "confidence": "not_calibrated",
+      "reviewStatus": "draft",
+      "originalPredicate": "source_reports_association"
+    },
+    {
+      "id": "binding:HSI-C-RA-SEROLOGY-COHORT-RESULTS:e8c2fa5c3ac5",
+      "claimId": "HSI-C-RA-SEROLOGY-COHORT-RESULTS",
+      "subjectId": "ra:anti-ccp",
+      "predicate": "associated_with",
+      "objectId": "ra:anti-tnf-response",
+      "relationshipType": "associative",
+      "negated": false,
+      "hedged": false,
+      "dataClass": "public_source_candidate",
+      "evidenceStatus": "not_curated",
+      "confidence": "not_calibrated",
+      "reviewStatus": "draft",
+      "originalPredicate": "source_reports_association"
+    },
+    {
+      "id": "binding:HSI-C-RA-SEROLOGY-COHORT-RESULTS:1d1837035d9c",
+      "claimId": "HSI-C-RA-SEROLOGY-COHORT-RESULTS",
+      "subjectId": "ra:anti-tnf-response",
+      "predicate": "studied_in",
+      "objectId": "disease:ra",
+      "relationshipType": "contextual",
+      "negated": false,
+      "hedged": false,
+      "dataClass": "public_source_candidate",
+      "evidenceStatus": "not_curated",
+      "confidence": "not_calibrated",
+      "reviewStatus": "draft",
+      "originalPredicate": "source_disease_context"
+    },
+    {
+      "id": "binding:HSI-C-RA-SEROLOGY-META-RESULTS:bb2c4793bf33",
+      "claimId": "HSI-C-RA-SEROLOGY-META-RESULTS",
+      "subjectId": "ra:rheumatoid-factor",
+      "predicate": "associated_with",
+      "objectId": "ra:anti-tnf-response",
+      "relationshipType": "associative",
+      "negated": true,
+      "hedged": false,
+      "dataClass": "public_source_candidate",
+      "evidenceStatus": "not_curated",
+      "confidence": "not_calibrated",
+      "reviewStatus": "draft",
+      "originalPredicate": "source_reports_no_significant_association"
+    },
+    {
+      "id": "binding:HSI-C-RA-SEROLOGY-META-RESULTS:e8c2fa5c3ac5",
+      "claimId": "HSI-C-RA-SEROLOGY-META-RESULTS",
+      "subjectId": "ra:anti-ccp",
+      "predicate": "associated_with",
+      "objectId": "ra:anti-tnf-response",
+      "relationshipType": "associative",
+      "negated": true,
+      "hedged": false,
+      "dataClass": "public_source_candidate",
+      "evidenceStatus": "not_curated",
+      "confidence": "not_calibrated",
+      "reviewStatus": "draft",
+      "originalPredicate": "source_reports_no_significant_association"
+    },
+    {
+      "id": "binding:HSI-C-RA-SEROLOGY-META-RESULTS:1d1837035d9c",
+      "claimId": "HSI-C-RA-SEROLOGY-META-RESULTS",
+      "subjectId": "ra:anti-tnf-response",
+      "predicate": "studied_in",
+      "objectId": "disease:ra",
+      "relationshipType": "contextual",
+      "negated": false,
+      "hedged": false,
+      "dataClass": "public_source_candidate",
+      "evidenceStatus": "not_curated",
+      "confidence": "not_calibrated",
+      "reviewStatus": "draft",
+      "originalPredicate": "source_disease_context"
+    },
+    {
+      "id": "binding:HSI-C-SSC-001:1f1ef03708bb",
+      "claimId": "HSI-C-SSC-001",
+      "subjectId": "ssc:circulating-tfh-cells",
+      "predicate": "increased_in",
+      "objectId": "ssc:ssc-cohort-versus-healthy-controls",
+      "relationshipType": "associative",
+      "negated": false,
+      "hedged": false,
+      "dataClass": "public_source_candidate",
+      "evidenceStatus": "not_curated",
+      "confidence": "not_calibrated",
+      "reviewStatus": "draft",
+      "originalPredicate": "INCREASED_IN"
+    },
+    {
+      "id": "binding:HSI-C-SSC-001:fa1909b371e2",
+      "claimId": "HSI-C-SSC-001",
+      "subjectId": "ssc:circulating-tfh-cells",
+      "predicate": "studied_in",
+      "objectId": "disease:ssc",
+      "relationshipType": "contextual",
+      "negated": false,
+      "hedged": false,
+      "dataClass": "public_source_candidate",
+      "evidenceStatus": "not_curated",
+      "confidence": "not_calibrated",
+      "reviewStatus": "draft",
+      "originalPredicate": "source_disease_context"
+    },
+    {
+      "id": "binding:HSI-C-SSC-004:db75b6cc7b81",
+      "claimId": "HSI-C-SSC-004",
+      "subjectId": "ssc:ssc-circulating-tfh-cells",
+      "predicate": "promotes_in_vitro",
+      "objectId": "ssc:il-21-dependent-plasmablast-differentiation",
+      "relationshipType": "experimental",
+      "negated": false,
+      "hedged": false,
+      "dataClass": "public_source_candidate",
+      "evidenceStatus": "not_curated",
+      "confidence": "not_calibrated",
+      "reviewStatus": "draft",
+      "originalPredicate": "PROMOTES_IN_VITRO"
+    },
+    {
+      "id": "binding:HSI-C-SSC-004:fb8d364bd4d9",
+      "claimId": "HSI-C-SSC-004",
+      "subjectId": "ssc:ssc-circulating-tfh-cells",
+      "predicate": "studied_in",
+      "objectId": "disease:ssc",
+      "relationshipType": "contextual",
+      "negated": false,
+      "hedged": false,
+      "dataClass": "public_source_candidate",
+      "evidenceStatus": "not_curated",
+      "confidence": "not_calibrated",
+      "reviewStatus": "draft",
+      "originalPredicate": "source_disease_context"
+    },
+    {
+      "id": "binding:HSI-C-SSC-005:ae996afc132f",
+      "claimId": "HSI-C-SSC-005",
+      "subjectId": "ssc:icos-tfh-like-cells",
+      "predicate": "associated_with",
+      "objectId": "ssc:ssc-dermal-fibrosis",
+      "relationshipType": "associative",
+      "negated": false,
+      "hedged": false,
+      "dataClass": "public_source_candidate",
+      "evidenceStatus": "not_curated",
+      "confidence": "not_calibrated",
+      "reviewStatus": "draft",
+      "originalPredicate": "ASSOCIATED_WITH"
+    },
+    {
+      "id": "binding:HSI-C-SSC-005:038af39c4d08",
+      "claimId": "HSI-C-SSC-005",
+      "subjectId": "ssc:icos-tfh-like-cells",
+      "predicate": "studied_in",
+      "objectId": "disease:ssc",
+      "relationshipType": "contextual",
+      "negated": false,
+      "hedged": false,
+      "dataClass": "public_source_candidate",
+      "evidenceStatus": "not_curated",
+      "confidence": "not_calibrated",
+      "reviewStatus": "draft",
+      "originalPredicate": "source_disease_context"
+    },
+    {
+      "id": "binding:HSI-C-SSC-005-MOUSE:c03983969fe7",
+      "claimId": "HSI-C-SSC-005-MOUSE",
+      "subjectId": "ssc:icos-tfh-like-cells-il-21",
+      "predicate": "contributes_to_in_model",
+      "objectId": "ssc:dermal-fibrosis",
+      "relationshipType": "experimental",
+      "negated": false,
+      "hedged": false,
+      "dataClass": "public_source_candidate",
+      "evidenceStatus": "not_curated",
+      "confidence": "not_calibrated",
+      "reviewStatus": "draft",
+      "originalPredicate": "CONTRIBUTES_TO_IN_MODEL"
+    },
+    {
+      "id": "binding:HSI-C-SSC-005-MOUSE:52cae07a40b0",
+      "claimId": "HSI-C-SSC-005-MOUSE",
+      "subjectId": "ssc:icos-tfh-like-cells-il-21",
+      "predicate": "studied_in",
+      "objectId": "disease:ssc",
+      "relationshipType": "contextual",
+      "negated": false,
+      "hedged": false,
+      "dataClass": "public_source_candidate",
+      "evidenceStatus": "not_curated",
+      "confidence": "not_calibrated",
+      "reviewStatus": "draft",
+      "originalPredicate": "source_disease_context"
+    },
+    {
+      "id": "binding:HSI-C-SSC-006:674577bee7f1",
+      "claimId": "HSI-C-SSC-006",
+      "subjectId": "ssc:circulating-tfh1-subset",
+      "predicate": "increased_or_imbalanced_in",
+      "objectId": "ssc:ssc-cohort",
+      "relationshipType": "associative",
+      "negated": false,
+      "hedged": false,
+      "dataClass": "public_source_candidate",
+      "evidenceStatus": "not_curated",
+      "confidence": "not_calibrated",
+      "reviewStatus": "draft",
+      "originalPredicate": "INCREASED_OR_IMBALANCED_IN"
+    },
+    {
+      "id": "binding:HSI-C-SSC-006:6dec7c395ba5",
+      "claimId": "HSI-C-SSC-006",
+      "subjectId": "ssc:circulating-tfh1-subset",
+      "predicate": "studied_in",
+      "objectId": "disease:ssc",
+      "relationshipType": "contextual",
+      "negated": false,
+      "hedged": false,
+      "dataClass": "public_source_candidate",
+      "evidenceStatus": "not_curated",
+      "confidence": "not_calibrated",
+      "reviewStatus": "draft",
+      "originalPredicate": "source_disease_context"
+    }
+  ],
+  "comparisons": [
+    {
+      "id": "comparison:ra-serology",
+      "claimIds": [
+        "HSI-C-RA-SEROLOGY-COHORT-RESULTS",
+        "HSI-C-RA-SEROLOGY-META-RESULTS"
+      ],
+      "classification": "context_comparison_required",
+      "reason": "A cohort reports serology-associated response differences; a meta-analysis reports no significant pooled association. Compare design, response definitions, heterogeneity and intervals before adjudication.",
+      "confirmedContradiction": false
+    },
+    {
+      "id": "comparison:ssc-tfh",
+      "claimIds": [
+        "HSI-C-SSC-001",
+        "HSI-C-SSC-006"
+      ],
+      "classification": "context_comparison_required",
+      "reason": "Total cTfh counts and proportions versus a Tfh1 subset are different measurements. Compare gating, denominators, cohort and treatment; do not infer a confirmed contradiction.",
+      "confirmedContradiction": false
+    }
+  ],
+  "containsPhi": false,
+  "clinicalAdvice": false,
+  "graphPromotable": false,
+  "status": "working_draft",
+  "version": "10d6c60d65e5cd9855294bb9cfc22e780564cb974707c6b83b96b90c8197bc4f"
+}

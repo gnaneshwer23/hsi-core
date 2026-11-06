@@ -12,7 +12,7 @@ export function filterExplorerGraph(graph:GraphDataset,filters:ExplorerFilters,s
 export const GRAPH_KIND_COLOURS:Record<string,string>={organ:'#62c6c0',tissue:'#d4b376',cell:'#a4a1ee',molecule:'#f197ab',pathway:'#86c69d',process:'#91b5e5',disease:'#ef9d69'};
 function hash(s:string){let h=2166136261;for(const c of s)h=Math.imul(h^c.charCodeAt(0),16777619);return h>>>0}
 /** Bounded deterministic force layout: visual proximity never asserts a scientific relationship. */
-export function forceGraphPositions(graph:GraphDataset):Map<string,{x:number;y:number}>{
+export function forceGraphPositions(graph:{nodes:readonly {id:string;kind:string;system?:string}[];edges:readonly {subjectId:string;objectId:string}[]}):Map<string,{x:number;y:number}>{
  if(graph.nodes.length>500)throw Error('Graph view exceeds local layout budget');
  const domains=[...new Set(graph.nodes.map(n=>n.system??n.kind))].sort();
  const points=graph.nodes.map(n=>{const a=domains.indexOf(n.system??n.kind)/Math.max(1,domains.length)*Math.PI*2;return {id:n.id,x:450+210*Math.cos(a)+(hash(n.id)%151)-75,y:310+170*Math.sin(a)+(hash(n.id+'y')%151)-75,vx:0,vy:0}});

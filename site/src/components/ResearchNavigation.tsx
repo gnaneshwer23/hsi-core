@@ -1,7 +1,7 @@
 import {Link,useLocation} from "react-router-dom";
 export const RESEARCH_NAV_ITEMS=[
  {to:"/research/dashboard",label:"Dashboard"},{to:"/research/scientific-workbench",label:"Workbench"},
- {to:"/science/graph",label:"Graph"},{to:"/research/evidence-readiness",label:"Evidence"},
+ {to:"/science/graph",label:"Graph"},{to:"/research/knowledge-graph",label:"Claim graph"},{to:"/research/evidence-readiness",label:"Evidence"},
  {to:"/science/clinical-trials",label:"Trials"},{to:"/research/dashboard?view=briefs",label:"Briefs"},
  {to:"/research/governance",label:"Governance"},{to:"/community",label:"Discussions"}
 ];

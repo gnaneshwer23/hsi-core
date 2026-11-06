@@ -38,7 +38,7 @@ export function Layout() {
       </a>
       <Nav />
       <main className="site-main" id="main-content" tabIndex={-1}>
-        {(["/research/governance","/research/scientific-workbench","/research/decision-workbench","/research/scientific-review","/research/evidence-readiness","/science/graph","/science/clinical-trials"].includes(pathname))&&<ResearchNavigation/>}
+        {(["/research/knowledge-graph","/research/governance","/research/scientific-workbench","/research/decision-workbench","/research/scientific-review","/research/evidence-readiness","/science/graph","/science/clinical-trials"].includes(pathname))&&<ResearchNavigation/>}
         <Suspense fallback={<p role="status" style={{padding:"3rem 1.5rem"}}>Loading research tools…</p>}><Outlet /></Suspense>
       </main>
       <Footer />

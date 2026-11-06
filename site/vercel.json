@@ -97,6 +97,10 @@
   ],
   "rewrites": [
     {
+      "source": "/research/knowledge-graph",
+      "destination": "/_pages/research--knowledge-graph.html"
+    },
+    {
       "source": "/forgot-password",
       "destination": "/_pages/forgot-password.html"
     },

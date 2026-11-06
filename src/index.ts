@@ -954,3 +954,6 @@ export {
   type PracticeLabelSubmission,
   type AcceptedPracticePacket,
 } from "./contextAnnotationBenchmark";
+
+// Read-only source-linked working graph. This export cannot grant scientific approval.
+export {parseClaimGraph,verifyClaimGraph,resolveClaimEntity,filterClaimGraph,findClaimPaths,claimGraphQuality,claimSpecies,CLAIM_PREDICATES,type ClaimGraph,type ClaimEntity,type ClaimBinding,type EntityMention,type ClaimPath,type ClaimPredicate,type GraphFilters as ClaimGraphFilters} from './knowledgeGraph/claimGraph';
