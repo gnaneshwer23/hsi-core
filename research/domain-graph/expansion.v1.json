@@ -1,0 +1,969 @@
+{
+  "schemaVersion": "hsi-domain-expansion-seed-1",
+  "sources": [
+    {
+      "id": "doi:10.2337/db08-1637",
+      "doi": "10.2337/db08-1637",
+      "title": "Butyrate improves insulin sensitivity and increases energy expenditure in mice",
+      "url": "https://doi.org/10.2337/db08-1637",
+      "identityStatus": "bibliographic_candidate_not_retrieved",
+      "rights": "unverified",
+      "retrievedAt": null,
+      "passage": null,
+      "key": "gao2009",
+      "model": "mouse",
+      "design": "mouse metabolic intervention",
+      "outcome": "Insulin sensitivity and energy expenditure",
+      "limitations": "Mouse effects do not establish efficacy, dosing or durability in people."
+    },
+    {
+      "id": "doi:10.1038/nature21492",
+      "doi": "10.1038/nature21492",
+      "title": "Gut microbial metabolites limit the frequency of autoimmune T cells and protect against type 1 diabetes",
+      "url": "https://doi.org/10.1038/nature21492",
+      "identityStatus": "bibliographic_candidate_not_retrieved",
+      "rights": "unverified",
+      "retrievedAt": null,
+      "passage": null,
+      "key": "marino2017",
+      "model": "mouse",
+      "design": "NOD mouse dietary-metabolite experiments",
+      "outcome": "Autoimmune T cells and diabetes development",
+      "limitations": "Protection in a mouse model is not prevention or treatment of human type 1 diabetes."
+    },
+    {
+      "id": "doi:10.1038/nature16961",
+      "doi": "10.1038/nature16961",
+      "title": "Human gut microbes impact host serum metabolome and insulin sensitivity",
+      "url": "https://doi.org/10.1038/nature16961",
+      "identityStatus": "bibliographic_candidate_not_retrieved",
+      "rights": "unverified",
+      "retrievedAt": null,
+      "passage": null,
+      "key": "pedersen2016",
+      "model": "mixed",
+      "design": "human observational metabolomics with preclinical mechanistic follow-up",
+      "outcome": "Microbial branched-chain amino acid metabolism and insulin resistance",
+      "limitations": "Human association and experimental model findings require separate interpretation; reverse causation and diet remain concerns."
+    },
+    {
+      "id": "doi:10.1038/nature11450",
+      "doi": "10.1038/nature11450",
+      "title": "A metagenome-wide association study of gut microbiota in type 2 diabetes",
+      "url": "https://doi.org/10.1038/nature11450",
+      "identityStatus": "bibliographic_candidate_not_retrieved",
+      "rights": "unverified",
+      "retrievedAt": null,
+      "passage": null,
+      "key": "qin2012",
+      "model": "human_in_vivo",
+      "design": "human observational metagenomic study",
+      "outcome": "Microbiome features associated with type 2 diabetes",
+      "limitations": "Case-control association does not establish causality, metabolite exposure or a therapeutic effect."
+    },
+    {
+      "id": "doi:10.1038/nature15766",
+      "doi": "10.1038/nature15766",
+      "title": "Disentangling type 2 diabetes and metformin treatment signatures in the human gut microbiota",
+      "url": "https://doi.org/10.1038/nature15766",
+      "identityStatus": "bibliographic_candidate_not_retrieved",
+      "rights": "unverified",
+      "retrievedAt": null,
+      "passage": null,
+      "key": "forslund2015",
+      "model": "human_in_vivo",
+      "design": "human observational analysis of disease and medication signatures",
+      "outcome": "Metformin-related microbiome confounding",
+      "limitations": "Medication exposure must be separated from disease effects; this does not establish treatment mediation."
+    },
+    {
+      "id": "doi:10.1126/science.aao5774",
+      "doi": "10.1126/science.aao5774",
+      "title": "Gut bacteria selectively promoted by dietary fibers alleviate type 2 diabetes",
+      "url": "https://doi.org/10.1126/science.aao5774",
+      "identityStatus": "bibliographic_candidate_not_retrieved",
+      "rights": "unverified",
+      "retrievedAt": null,
+      "passage": null,
+      "key": "zhao2018",
+      "model": "human_in_vivo",
+      "design": "human dietary intervention with microbiome analyses",
+      "outcome": "Fibre-responsive microbiota and glycaemic outcomes",
+      "limitations": "A multi-component diet intervention cannot isolate butyrate as the cause; treatment and dietary context matter."
+    },
+    {
+      "id": "doi:10.1016/j.cell.2018.09.055",
+      "doi": "10.1016/j.cell.2018.09.055",
+      "title": "Microbially Produced Imidazole Propionate Impairs Insulin Signaling through mTORC1",
+      "url": "https://doi.org/10.1016/j.cell.2018.09.055",
+      "identityStatus": "bibliographic_candidate_not_retrieved",
+      "rights": "unverified",
+      "retrievedAt": null,
+      "passage": null,
+      "key": "koh2018",
+      "model": "mixed",
+      "design": "human metabolite observations and experimental mechanistic models",
+      "outcome": "Imidazole propionate and insulin signalling",
+      "limitations": "Mechanistic models and human associations are different evidence layers; human exposure and mediation need evaluation."
+    },
+    {
+      "id": "doi:10.1172/JCI19246",
+      "doi": "10.1172/JCI19246",
+      "title": "Obesity is associated with macrophage accumulation in adipose tissue",
+      "url": "https://doi.org/10.1172/JCI19246",
+      "identityStatus": "bibliographic_candidate_not_retrieved",
+      "rights": "unverified",
+      "retrievedAt": null,
+      "passage": null,
+      "key": "weisberg2003",
+      "model": "mixed",
+      "design": "human and mouse adipose-tissue observations",
+      "outcome": "Adipose macrophage accumulation with obesity",
+      "limitations": "Adipose and intestinal macrophages are not interchangeable; association alone is not causal proof."
+    },
+    {
+      "id": "doi:10.1126/science.7678183",
+      "doi": "10.1126/science.7678183",
+      "title": "Adipose expression of tumor necrosis factor-alpha: direct role in obesity-linked insulin resistance",
+      "url": "https://doi.org/10.1126/science.7678183",
+      "identityStatus": "bibliographic_candidate_not_retrieved",
+      "rights": "unverified",
+      "retrievedAt": null,
+      "passage": null,
+      "key": "hotamisligil1993",
+      "model": "rodent",
+      "design": "preclinical obesity and TNF experiments",
+      "outcome": "TNF and insulin resistance in obesity models",
+      "limitations": "Preclinical intervention does not establish a human anti-TNF diabetes treatment."
+    },
+    {
+      "id": "doi:10.1038/nm.2279",
+      "doi": "10.1038/nm.2279",
+      "title": "The NLRP3 inflammasome instigates obesity-induced inflammation and insulin resistance",
+      "url": "https://doi.org/10.1038/nm.2279",
+      "identityStatus": "bibliographic_candidate_not_retrieved",
+      "rights": "unverified",
+      "retrievedAt": null,
+      "passage": null,
+      "key": "vandanmagsar2011",
+      "model": "mixed",
+      "design": "preclinical metabolic-inflammation experiments with human context",
+      "outcome": "NLRP3, metabolic inflammation and insulin resistance",
+      "limitations": "Species, tissues, obesity state and intervention context require verification before translation."
+    },
+    {
+      "id": "doi:10.2337/db06-1491",
+      "doi": "10.2337/db06-1491",
+      "title": "Metabolic endotoxemia initiates obesity and insulin resistance",
+      "url": "https://doi.org/10.2337/db06-1491",
+      "identityStatus": "bibliographic_candidate_not_retrieved",
+      "rights": "unverified",
+      "retrievedAt": null,
+      "passage": null,
+      "key": "cani2007",
+      "model": "mouse",
+      "design": "mouse endotoxin and metabolic experiments",
+      "outcome": "Endotoxin exposure, inflammation and insulin resistance",
+      "limitations": "Experimental endotoxin exposure does not demonstrate that an individual has gut-derived inflammation."
+    },
+    {
+      "id": "doi:10.1038/s41586-018-0620-2",
+      "doi": "10.1038/s41586-018-0620-2",
+      "title": "The human gut microbiome in early-onset type 1 diabetes from the TEDDY study",
+      "url": "https://doi.org/10.1038/s41586-018-0620-2",
+      "identityStatus": "bibliographic_candidate_not_retrieved",
+      "rights": "unverified",
+      "retrievedAt": null,
+      "passage": null,
+      "key": "vatanen2018",
+      "model": "human_in_vivo",
+      "design": "human longitudinal childhood microbiome observations",
+      "outcome": "Microbiome features and early-onset type 1 diabetes",
+      "limitations": "Observational childhood microbiome patterns do not prove that a metabolite prevents autoimmunity."
+    }
+  ],
+  "claims": [
+    {
+      "id": "DIAB-001",
+      "sourceId": "doi:10.2337/db08-1637",
+      "subject": "Butyrate",
+      "predicate": "investigated_effect_on",
+      "object": "Insulin sensitivity",
+      "domains": [
+        "gut",
+        "metabolic"
+      ],
+      "conditions": [
+        "Type 2 diabetes",
+        "Obesity"
+      ],
+      "assertion": "Candidate summary: butyrate intervention improved insulin sensitivity in a mouse metabolic model; human efficacy is not established by this source.",
+      "model": "mouse",
+      "design": "mouse metabolic intervention",
+      "tissue": null,
+      "population": null,
+      "assay": null,
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "Insulin sensitivity and energy expenditure",
+      "limitations": "Mouse effects do not establish efficacy, dosing or durability in people.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "DIAB-002",
+      "sourceId": "doi:10.1038/nature21492",
+      "subject": "Microbial acetate and butyrate",
+      "predicate": "investigated_effect_on",
+      "object": "Autoimmune T-cell responses",
+      "domains": [
+        "gut",
+        "immune"
+      ],
+      "conditions": [
+        "Type 1 diabetes"
+      ],
+      "assertion": "Candidate summary: acetate- and butyrate-yielding diets affected autoimmune T-cell responses in a mouse type 1 diabetes model; metabolite-specific effects must remain distinct.",
+      "model": "mouse",
+      "design": "NOD mouse dietary-metabolite experiments",
+      "tissue": null,
+      "population": null,
+      "assay": null,
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "Autoimmune T cells and diabetes development",
+      "limitations": "Protection in a mouse model is not prevention or treatment of human type 1 diabetes.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "DIAB-003",
+      "sourceId": "doi:10.1038/nature21492",
+      "subject": "Microbial acetate and butyrate",
+      "predicate": "investigated_effect_on",
+      "object": "Type 1 diabetes",
+      "domains": [
+        "gut",
+        "immune",
+        "metabolic"
+      ],
+      "conditions": [
+        "Type 1 diabetes"
+      ],
+      "assertion": "Candidate summary: microbial-metabolite dietary interventions protected mice from diabetes development; this is not evidence of human prevention.",
+      "model": "mouse",
+      "design": "NOD mouse dietary-metabolite experiments",
+      "tissue": null,
+      "population": null,
+      "assay": null,
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "Autoimmune T cells and diabetes development",
+      "limitations": "Protection in a mouse model is not prevention or treatment of human type 1 diabetes.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "DIAB-004",
+      "sourceId": "doi:10.1038/nature16961",
+      "subject": "Microbial BCAA biosynthesis",
+      "predicate": "associated_with",
+      "object": "Insulin resistance",
+      "domains": [
+        "gut",
+        "metabolic"
+      ],
+      "conditions": [
+        "Type 2 diabetes"
+      ],
+      "assertion": "Candidate summary: microbial branched-chain amino acid biosynthesis was associated with human insulin resistance; experimental follow-up must not be read as human causal proof.",
+      "model": "mixed",
+      "design": "human observational metabolomics with preclinical mechanistic follow-up",
+      "tissue": null,
+      "population": null,
+      "assay": null,
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "Microbial branched-chain amino acid metabolism and insulin resistance",
+      "limitations": "Human association and experimental model findings require separate interpretation; reverse causation and diet remain concerns.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "DIAB-005",
+      "sourceId": "doi:10.1038/nature11450",
+      "subject": "Gut microbiome composition",
+      "predicate": "associated_with",
+      "object": "Type 2 diabetes",
+      "domains": [
+        "gut",
+        "metabolic"
+      ],
+      "conditions": [
+        "Type 2 diabetes"
+      ],
+      "assertion": "Candidate summary: metagenomic features differed with type 2 diabetes status in an observational human study.",
+      "model": "human_in_vivo",
+      "design": "human observational metagenomic study",
+      "tissue": null,
+      "population": null,
+      "assay": null,
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "Microbiome features associated with type 2 diabetes",
+      "limitations": "Case-control association does not establish causality, metabolite exposure or a therapeutic effect.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "DIAB-006",
+      "sourceId": "doi:10.1038/nature15766",
+      "subject": "Metformin",
+      "predicate": "confounds_interpretation_of",
+      "object": "Gut microbiome composition",
+      "domains": [
+        "gut",
+        "metabolic"
+      ],
+      "conditions": [
+        "Type 2 diabetes"
+      ],
+      "assertion": "Candidate summary: metformin exposure contributes a microbiome signature that can confound comparisons attributed to type 2 diabetes.",
+      "model": "human_in_vivo",
+      "design": "human observational analysis of disease and medication signatures",
+      "tissue": null,
+      "population": null,
+      "assay": null,
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "Metformin-related microbiome confounding",
+      "limitations": "Medication exposure must be separated from disease effects; this does not establish treatment mediation.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "DIAB-007",
+      "sourceId": "doi:10.1126/science.aao5774",
+      "subject": "Dietary fibre intervention",
+      "predicate": "investigated_effect_on",
+      "object": "Fibre-responsive gut bacteria",
+      "domains": [
+        "gut",
+        "lifestyle",
+        "metabolic"
+      ],
+      "conditions": [
+        "Type 2 diabetes"
+      ],
+      "assertion": "Candidate summary: a dietary fibre intervention promoted selected gut bacteria in people with type 2 diabetes; the intervention is not equivalent to isolated butyrate.",
+      "model": "human_in_vivo",
+      "design": "human dietary intervention with microbiome analyses",
+      "tissue": null,
+      "population": null,
+      "assay": null,
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "Fibre-responsive microbiota and glycaemic outcomes",
+      "limitations": "A multi-component diet intervention cannot isolate butyrate as the cause; treatment and dietary context matter.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "DIAB-008",
+      "sourceId": "doi:10.1126/science.aao5774",
+      "subject": "Dietary fibre intervention",
+      "predicate": "investigated_effect_on",
+      "object": "Glycaemic control",
+      "domains": [
+        "gut",
+        "lifestyle",
+        "metabolic"
+      ],
+      "conditions": [
+        "Type 2 diabetes"
+      ],
+      "assertion": "Candidate summary: a human dietary intervention examined glycaemic outcomes alongside microbiome changes; mediation and treatment context require inspection.",
+      "model": "human_in_vivo",
+      "design": "human dietary intervention with microbiome analyses",
+      "tissue": null,
+      "population": null,
+      "assay": null,
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "Fibre-responsive microbiota and glycaemic outcomes",
+      "limitations": "A multi-component diet intervention cannot isolate butyrate as the cause; treatment and dietary context matter.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "DIAB-009",
+      "sourceId": "doi:10.1016/j.cell.2018.09.055",
+      "subject": "Imidazole propionate",
+      "predicate": "investigated_effect_on",
+      "object": "mTORC1 insulin-signalling pathway",
+      "domains": [
+        "gut",
+        "metabolic"
+      ],
+      "conditions": [
+        "Type 2 diabetes"
+      ],
+      "assertion": "Candidate summary: microbially produced imidazole propionate impaired insulin-signalling pathways in experimental systems with human observational context.",
+      "model": "mixed",
+      "design": "human metabolite observations and experimental mechanistic models",
+      "tissue": null,
+      "population": null,
+      "assay": null,
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "Imidazole propionate and insulin signalling",
+      "limitations": "Mechanistic models and human associations are different evidence layers; human exposure and mediation need evaluation.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "DIAB-010",
+      "sourceId": "doi:10.1016/j.cell.2018.09.055",
+      "subject": "Imidazole propionate",
+      "predicate": "associated_with",
+      "object": "Type 2 diabetes",
+      "domains": [
+        "gut",
+        "metabolic"
+      ],
+      "conditions": [
+        "Type 2 diabetes"
+      ],
+      "assertion": "Candidate summary: human metabolite observations motivate investigation of imidazole propionate in type 2 diabetes; a causal human treatment target is not established.",
+      "model": "mixed",
+      "design": "human metabolite observations and experimental mechanistic models",
+      "tissue": null,
+      "population": null,
+      "assay": null,
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "Imidazole propionate and insulin signalling",
+      "limitations": "Mechanistic models and human associations are different evidence layers; human exposure and mediation need evaluation.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "DIAB-011",
+      "sourceId": "doi:10.1172/JCI19246",
+      "subject": "Adipose tissue macrophages",
+      "predicate": "associated_with",
+      "object": "Obesity",
+      "domains": [
+        "immune",
+        "metabolic"
+      ],
+      "conditions": [
+        "Obesity",
+        "Type 2 diabetes"
+      ],
+      "assertion": "Candidate summary: obesity was associated with adipose macrophage accumulation in human and mouse observations; this does not establish an intestinal macrophage mechanism.",
+      "model": "mixed",
+      "design": "human and mouse adipose-tissue observations",
+      "tissue": null,
+      "population": null,
+      "assay": null,
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "Adipose macrophage accumulation with obesity",
+      "limitations": "Adipose and intestinal macrophages are not interchangeable; association alone is not causal proof.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "DIAB-012",
+      "sourceId": "doi:10.1126/science.7678183",
+      "subject": "TNF-α",
+      "predicate": "investigated_effect_on",
+      "object": "Insulin resistance",
+      "domains": [
+        "immune",
+        "metabolic"
+      ],
+      "conditions": [
+        "Obesity",
+        "Type 2 diabetes"
+      ],
+      "assertion": "Candidate summary: preclinical obesity experiments investigated a role for adipose TNF in insulin resistance; human diabetes treatment implications require separate evidence.",
+      "model": "rodent",
+      "design": "preclinical obesity and TNF experiments",
+      "tissue": null,
+      "population": null,
+      "assay": null,
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "TNF and insulin resistance in obesity models",
+      "limitations": "Preclinical intervention does not establish a human anti-TNF diabetes treatment.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "DIAB-013",
+      "sourceId": "doi:10.1038/nm.2279",
+      "subject": "NLRP3 inflammasome",
+      "predicate": "investigated_effect_on",
+      "object": "Insulin resistance",
+      "domains": [
+        "immune",
+        "metabolic"
+      ],
+      "conditions": [
+        "Obesity",
+        "Type 2 diabetes"
+      ],
+      "assertion": "Candidate summary: NLRP3 was investigated in obesity-associated inflammation and insulin resistance; evidence layers and human relevance remain to be checked.",
+      "model": "mixed",
+      "design": "preclinical metabolic-inflammation experiments with human context",
+      "tissue": null,
+      "population": null,
+      "assay": null,
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "NLRP3, metabolic inflammation and insulin resistance",
+      "limitations": "Species, tissues, obesity state and intervention context require verification before translation.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "DIAB-014",
+      "sourceId": "doi:10.2337/db06-1491",
+      "subject": "Endotoxin exposure",
+      "predicate": "investigated_effect_on",
+      "object": "Insulin resistance",
+      "domains": [
+        "gut",
+        "immune",
+        "metabolic"
+      ],
+      "conditions": [
+        "Obesity",
+        "Type 2 diabetes"
+      ],
+      "assertion": "Candidate summary: mouse endotoxin-exposure experiments linked metabolic inflammation and insulin resistance; this cannot establish a patient-specific gut-barrier cause.",
+      "model": "mouse",
+      "design": "mouse endotoxin and metabolic experiments",
+      "tissue": null,
+      "population": null,
+      "assay": null,
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "Endotoxin exposure, inflammation and insulin resistance",
+      "limitations": "Experimental endotoxin exposure does not demonstrate that an individual has gut-derived inflammation.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "DIAB-015",
+      "sourceId": "doi:10.1038/s41586-018-0620-2",
+      "subject": "Gut microbiome composition",
+      "predicate": "associated_with",
+      "object": "Type 1 diabetes",
+      "domains": [
+        "gut",
+        "immune",
+        "metabolic"
+      ],
+      "conditions": [
+        "Type 1 diabetes"
+      ],
+      "assertion": "Candidate summary: longitudinal human microbiome observations in early-onset type 1 diabetes provide a comparison to mouse metabolite findings, without proving a preventive intervention.",
+      "model": "human_in_vivo",
+      "design": "human longitudinal childhood microbiome observations",
+      "tissue": null,
+      "population": null,
+      "assay": null,
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "Microbiome features and early-onset type 1 diabetes",
+      "limitations": "Observational childhood microbiome patterns do not prove that a metabolite prevents autoimmunity.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "domains": [
+        "gut",
+        "immune"
+      ],
+      "conditions": [],
+      "model": "human_ex_vivo",
+      "design": "Human dendritic-cell conditioning and regulatory T-cell priming, ex vivo",
+      "tissue": null,
+      "population": null,
+      "assay": null,
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "Regulatory T-cell priming",
+      "limitations": "Ex-vivo cell conditioning does not establish a clinical immune or metabolic effect. Exact passages and assay details await review.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification",
+      "id": "DIAB-016",
+      "sourceId": "pmid:29163504",
+      "subject": "Butyrate",
+      "predicate": "investigated_effect_on",
+      "object": "Human dendritic-cell conditioning",
+      "assertion": "Candidate decomposition of the existing source record: butyrate conditions human dendritic cells in an ex-vivo setting."
+    },
+    {
+      "domains": [
+        "gut",
+        "immune"
+      ],
+      "conditions": [],
+      "model": "human_ex_vivo",
+      "design": "Human dendritic-cell conditioning and regulatory T-cell priming, ex vivo",
+      "tissue": null,
+      "population": null,
+      "assay": null,
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "Regulatory T-cell priming",
+      "limitations": "Ex-vivo cell conditioning does not establish a clinical immune or metabolic effect. Exact passages and assay details await review.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification",
+      "id": "DIAB-017",
+      "sourceId": "pmid:29163504",
+      "subject": "Human dendritic-cell conditioning",
+      "predicate": "investigated_effect_on",
+      "object": "IL-10+ type-1 regulatory T cells (Tr1-like)",
+      "assertion": "Candidate decomposition of the existing source record: conditioned human dendritic cells prime IL-10-producing type-1 regulatory T cells; this is not a human treatment outcome."
+    },
+    {
+      "domains": [
+        "immune",
+        "metabolic",
+        "trials"
+      ],
+      "conditions": [
+        "Type 1 diabetes"
+      ],
+      "model": "human_in_vivo",
+      "design": "Randomised trial in relatives at high risk for type 1 diabetes; not established longstanding disease",
+      "tissue": null,
+      "population": null,
+      "assay": null,
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "Clinical diabetes onset",
+      "limitations": "A stage-specific immunotherapy trial is not evidence of microbiome mediation or reversal of established type 1 diabetes. Current registry recruitment is not inferred.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification",
+      "id": "DIAB-018",
+      "sourceId": "pmid:31180194",
+      "subject": "Teplizumab",
+      "predicate": "investigated_effect_on",
+      "object": "Type 1 diabetes progression",
+      "assertion": "Candidate summary of the existing Herold 2019 source record: teplizumab delayed clinical diabetes onset in an at-risk study population; this is not a patient-specific recommendation."
+    }
+  ],
+  "gaps": [
+    {
+      "id": "gap:human-butyrate-diabetes",
+      "subject": "Butyrate",
+      "object": "Glycaemic control",
+      "question": "Does a reproducible change in human butyrate exposure mediate improved glycaemic outcomes?",
+      "missing": "Verified human intervention passages, measured metabolite exposure, medication adjustment, effect estimates and independent replication.",
+      "domains": [
+        "gut",
+        "immune",
+        "metabolic"
+      ],
+      "conditions": [
+        "Type 2 diabetes"
+      ],
+      "nextStudy": "Prospectively compare matched metabolite, immune and metabolic measurements; pre-register mediation analysis and confounder adjustment."
+    },
+    {
+      "id": "gap:treg-insulin",
+      "subject": "Colonic / mucosal Foxp3+ Treg",
+      "object": "Insulin resistance",
+      "question": "Does the intestinal Treg change explain a metabolic outcome in humans?",
+      "missing": "Matched human tissue, cell-state assays, metabolite measurements and longitudinal metabolic outcomes in the same study.",
+      "domains": [
+        "gut",
+        "immune",
+        "metabolic"
+      ],
+      "conditions": [
+        "Type 2 diabetes"
+      ],
+      "nextStudy": "Measure tissue-specific regulatory-cell states and insulin sensitivity together; compare cell composition and activation state rather than inferring function from counts."
+    },
+    {
+      "id": "gap:macrophage-transfer",
+      "subject": "Intestinal macrophage HDAC activity / inflammatory tone",
+      "object": "Adipose tissue macrophages",
+      "question": "Which macrophage mechanisms transfer across intestinal and adipose tissues?",
+      "missing": "Direct cross-tissue evidence; tissue-specific states and interventions cannot be merged.",
+      "domains": [
+        "gut",
+        "immune",
+        "metabolic"
+      ],
+      "conditions": [
+        "Type 2 diabetes",
+        "Obesity"
+      ],
+      "nextStudy": "Paired tissue profiling and perturbation studies with explicit tissue controls and reproducible cell-state definitions."
+    },
+    {
+      "id": "gap:t1d-human-translation",
+      "subject": "Autoimmune T-cell responses",
+      "object": "Type 1 diabetes",
+      "question": "Which metabolite-associated effects in NOD mice replicate in human islet autoimmunity?",
+      "missing": "Human islet-specific immunity, autoantibody stage, C-peptide, age and longitudinal progression with measured exposures.",
+      "domains": [
+        "gut",
+        "immune",
+        "metabolic"
+      ],
+      "conditions": [
+        "Type 1 diabetes"
+      ],
+      "nextStudy": "Separate prevention, recent-onset and longstanding disease cohorts; preserve antigen specificity and beta-cell outcomes."
+    },
+    {
+      "id": "gap:th17-context",
+      "subject": "Butyrate",
+      "object": "Mucosal Th17 cells",
+      "question": "When do SCFAs promote versus inhibit Th17-related responses?",
+      "missing": "Comparable dose, cytokine milieu, assay, tissue, species and timepoint; promotion and inhibition are not interchangeable.",
+      "domains": [
+        "gut",
+        "immune"
+      ],
+      "conditions": [
+        "Crohn’s disease",
+        "Ulcerative colitis",
+        "Type 1 diabetes",
+        "Type 2 diabetes"
+      ],
+      "nextStudy": "Pre-register a perturbation matrix across dose and cytokine context with regulatory and effector readouts."
+    },
+    {
+      "id": "gap:neuro-metabolic",
+      "subject": "Peripheral / systemic TNF inflammatory tone",
+      "object": "Insulin resistance",
+      "question": "Can neuroimmune modulation explain a metabolic outcome in the same human cohort?",
+      "missing": "Direct metabolic outcomes and source-matched human circuit evidence; an RA vagus pilot is not diabetes efficacy evidence.",
+      "domains": [
+        "brain",
+        "immune",
+        "metabolic"
+      ],
+      "conditions": [
+        "Type 2 diabetes"
+      ],
+      "nextStudy": "Evaluate matched autonomic, inflammatory and metabolic measures; keep circuit plausibility separate from clinical intervention effects."
+    },
+    {
+      "id": "gap:t1d-t2d",
+      "subject": "Type 1 diabetes",
+      "object": "Type 2 diabetes",
+      "question": "Which mechanisms are shared, and which depend on islet autoimmunity rather than insulin resistance?",
+      "missing": "Disease stage and antigen-specific immune context. The two diagnoses are not interchangeable evidence populations.",
+      "domains": [
+        "immune",
+        "metabolic"
+      ],
+      "conditions": [
+        "Type 1 diabetes",
+        "Type 2 diabetes"
+      ],
+      "nextStudy": "Stratify by diagnosis, autoantibody status, residual beta-cell function, medication and insulin-sensitivity measures."
+    },
+    {
+      "id": "gap:trial-criteria",
+      "subject": "Glycaemic control",
+      "object": "Clinical trial research",
+      "question": "Which study criteria can be assessed for a clearly defined research cohort?",
+      "missing": "Current registry snapshot, full criteria, recruitment dates, geography, medication, autoantibody and C-peptide requirements.",
+      "domains": [
+        "metabolic",
+        "immune",
+        "trials"
+      ],
+      "conditions": [
+        "Type 1 diabetes",
+        "Type 2 diabetes"
+      ],
+      "nextStudy": "Import public registry records and inspect condition and age overlap; leave unparsed criteria and eligibility unresolved."
+    },
+    {
+      "id": "gap:islet-specificity",
+      "subject": "Autoreactive CD8 T cells",
+      "object": "Beta-cell injury",
+      "question": "Which antigen-specific immune-cell changes explain beta-cell injury in the population being studied?",
+      "missing": "Source-verified islet-specific human immune evidence, antigen specificity, tissue and disease stage. Peripheral immune-cell counts alone cannot establish islet injury.",
+      "domains": [
+        "immune",
+        "metabolic"
+      ],
+      "conditions": [
+        "Type 1 diabetes"
+      ],
+      "nextStudy": "Pair stage-specific immune assays with beta-cell function measurements and independent source review; separate autoreactivity from general inflammation."
+    }
+  ],
+  "questions": [
+    {
+      "id": "gut-t2d",
+      "title": "Gut metabolites → immune signalling → type 2 diabetes",
+      "fromNode": "Butyrate",
+      "toNode": "Insulin resistance",
+      "domains": [
+        "gut",
+        "immune",
+        "metabolic",
+        "lifestyle"
+      ],
+      "conditions": [
+        "Type 2 diabetes",
+        "Obesity"
+      ],
+      "gapIds": [
+        "gap:human-butyrate-diabetes",
+        "gap:treg-insulin",
+        "gap:macrophage-transfer",
+        "gap:th17-context"
+      ],
+      "summary": "Mouse butyrate/Treg mechanisms, human microbiome associations and human dietary interventions answer different questions. No single path establishes that gut-driven immune activity causes a person’s insulin resistance.",
+      "prediction": "A pre-specified metabolite–immune signature tracks a metabolic outcome after adjustment for medication, diet and adiposity.",
+      "falsifier": "The association disappears after adjustment, fails independent replication or lacks the predicted immune change.",
+      "experiment": "Prospective repeated metabolomics, tissue-aware immune profiling and metabolic outcomes, with a pre-registered causal model.",
+      "controls": [
+        "Medication and diet",
+        "Adiposity and disease stage",
+        "Sample timing and assay batch",
+        "Independent held-out cohort"
+      ]
+    },
+    {
+      "id": "gut-t1d",
+      "title": "Gut metabolites → islet autoimmunity → type 1 diabetes",
+      "fromNode": "Microbial acetate and butyrate",
+      "toNode": "Type 1 diabetes",
+      "domains": [
+        "gut",
+        "immune",
+        "metabolic"
+      ],
+      "conditions": [
+        "Type 1 diabetes"
+      ],
+      "gapIds": [
+        "gap:t1d-human-translation",
+        "gap:t1d-t2d",
+        "gap:islet-specificity"
+      ],
+      "summary": "A protective mouse intervention and human longitudinal microbiome associations do not establish human prevention. Islet autoimmunity and beta-cell function must remain distinct from insulin resistance.",
+      "prediction": "A source-verified metabolite signature precedes a specified change in islet-specific immunity within a defined disease stage.",
+      "falsifier": "Temporal ordering is absent or the immune and beta-cell outcomes do not change as predicted.",
+      "experiment": "Stage-stratified human observational validation before any intervention proposal, preserving autoantibody and C-peptide context.",
+      "controls": [
+        "Age and disease duration",
+        "Autoantibody stage",
+        "Residual beta-cell function",
+        "Insulin and other medication"
+      ]
+    },
+    {
+      "id": "gut-immune",
+      "title": "SCFAs, Treg/Th17 cells and inflammatory disease",
+      "fromNode": "Butyrate",
+      "toNode": "Mucosal Th17 cells",
+      "domains": [
+        "gut",
+        "immune"
+      ],
+      "conditions": [
+        "Crohn’s disease",
+        "Ulcerative colitis",
+        "Rheumatoid arthritis"
+      ],
+      "gapIds": [
+        "gap:th17-context",
+        "gap:macrophage-transfer"
+      ],
+      "summary": "Regulatory, effector and barrier findings depend on species, tissue, dose and cytokine setting. Mouse colitis does not automatically establish a human Crohn’s disease mechanism.",
+      "prediction": "Dose and cytokine setting explain a reproducible direction change in the selected immune readout.",
+      "falsifier": "The direction change fails under matched conditions or tracks cell viability rather than differentiation.",
+      "experiment": "A controlled perturbation matrix with appropriate cellular and tissue models, followed by independent human validation.",
+      "controls": [
+        "Species and tissue",
+        "Cytokine milieu",
+        "Dose and viability",
+        "Assay and timepoint"
+      ]
+    },
+    {
+      "id": "brain-immune",
+      "title": "Neuroimmune signalling and metabolic inflammation",
+      "fromNode": "Efferent vagus nerve stimulation",
+      "toNode": "Insulin resistance",
+      "domains": [
+        "brain",
+        "immune",
+        "metabolic"
+      ],
+      "conditions": [
+        "Type 2 diabetes",
+        "Rheumatoid arthritis"
+      ],
+      "gapIds": [
+        "gap:neuro-metabolic"
+      ],
+      "summary": "Neural anti-inflammatory model findings and small human inflammatory-disease studies support questions for investigation, not a demonstrated diabetes treatment.",
+      "prediction": "A pre-specified autonomic change precedes matched inflammatory and metabolic changes in the same cohort.",
+      "falsifier": "The metabolic association is absent, non-replicable or explained by medication and activity.",
+      "experiment": "Prospective multimodal observational validation before a separately governed intervention study.",
+      "controls": [
+        "Medication and activity",
+        "Autonomic measurement quality",
+        "Disease-specific context",
+        "Matched metabolic endpoint"
+      ]
+    }
+  ],
+  "futureResearch": [
+    {
+      "id": "retrieval",
+      "title": "Living evidence retrieval",
+      "status": "adapter_required",
+      "capability": "Hybrid keyword, semantic and graph retrieval with source versions, correction checks and study-context extraction.",
+      "evaluation": "Compare against independently labelled relevant and contradictory passages; measure retrieval recall and citation entailment."
+    },
+    {
+      "id": "context",
+      "title": "Context-aware contradiction analysis",
+      "status": "research_proposal",
+      "capability": "Use models to propose differences in species, tissue, dose and assay that might explain apparently opposing findings.",
+      "evaluation": "Blind expert adjudication of genuine contradictions versus context differences; report both precision and recall."
+    },
+    {
+      "id": "multimodal",
+      "title": "Multimodal discovery",
+      "status": "research_proposal",
+      "capability": "Combine approved metabolomics, single-cell/spatial immune profiles and longitudinal metabolic measurements in authorised research cohorts.",
+      "evaluation": "Pre-register endpoints, batch controls, subgroup evaluation and external replication; do not treat correlation as mediation."
+    },
+    {
+      "id": "perturbation",
+      "title": "Perturbation and organoid experiments",
+      "status": "research_proposal",
+      "capability": "Prioritise falsifiable metabolite–cell hypotheses for gut organoid, immune co-culture or microphysiological experiments.",
+      "evaluation": "Independent wet-lab replication, dose and viability controls, and clear model-to-human translation limits."
+    },
+    {
+      "id": "federated",
+      "title": "Privacy-preserving cohort research",
+      "status": "requires_separate_governance",
+      "capability": "Evaluate federated queries over partner-owned cohorts with consent, small-cell suppression and access controls; no shared patient database.",
+      "evaluation": "Privacy threat modelling, access-control tests and approved prospective protocols before any real-data use."
+    }
+  ],
+  "annotationNote": "Bibliographic pointers and editorial candidate paraphrases only. New DOI metadata, model annotations, rights and exact passages await online verification and independent review. No generated quotation or scientific approval."
+}

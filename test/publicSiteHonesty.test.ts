@@ -63,10 +63,12 @@ describe("Public HSI site honesty", () => {
     expect(roadmap).toContain('to="/status"');
 
     const footer = site("src/components/Footer.tsx");
-    expect(footer).toContain("PROGRESS_LINKS");
+    expect(footer).toContain("RESEARCH_LINKS");
     expect(footer).not.toContain('to: "/roadmap"');
-    expect(footer).toContain('to: "/status"');
-    expect(footer).toContain('to: "/docs"');
+    expect(footer).not.toContain('to: "/status"');
+    expect(footer).toContain('to: "/evidence-safety"');
+    expect(footer).not.toContain('to: "/docs"');
+    expect(footer).toContain('to: "/contact"');
     expect(footer).toContain("For research and education");
   });
 

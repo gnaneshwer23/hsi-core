@@ -1,0 +1,48 @@
+{
+  "auditDate": "2026-11-06",
+  "scope": "Local compiled cross-domain graph, source corpus and research-safe cohort/registry workflows",
+  "result": "passed",
+  "graphVersion": "a36ceb6a3781e1eb5c18935f108523840ac56d8fd35fa217ae8807331091aaf7",
+  "method": "explicit_repository_and_editorial_candidate_mapping_v2",
+  "concepts": 153,
+  "relationships": 131,
+  "relationshipKinds": {
+    "source_candidate": 95,
+    "research_gap": 36
+  },
+  "sourceRecords": 75,
+  "newBibliographicCandidates": 12,
+  "structuredGapQuestions": 9,
+  "validationProfiles": 200,
+  "validationConditions": 20,
+  "coreTests": {
+    "passed": 815,
+    "failed": 0
+  },
+  "distinctBrowserChecksPassed": 186,
+  "finalTargetedRun": {
+    "passed": 25,
+    "failed": 0
+  },
+  "validationNotes": [
+    "The broad 184-case run passed 181 checks. Source-corpus filter reset and two exact selector-label failures were corrected; all affected checks passed in targeted reruns.",
+    "Final graph checks also cover pinned-filter restoration, Markdown export, retired adapter refusal, context comparison and paginated keyboard-accessible lists.",
+    "A mobile toolbar target-size issue was corrected with larger touch targets and scroll clearance; the final automated graph and navigation accessibility checks passed."
+  ],
+  "rootBuild": "passed",
+  "frontendTypes": "passed",
+  "siteBuild": "passed",
+  "graphArtifactCheck": "passed",
+  "liveSourceRetrieval": {
+    "status": "blocked",
+    "endpoint": "Europe PMC metadata API",
+    "observedError": "Proxy CONNECT HTTP 403"
+  },
+  "scientificApproval": false,
+  "liveRegistryQueried": false,
+  "patientEligibilityAssessed": false,
+  "productionDatabaseModified": false,
+  "vercelDeploymentVerified": false,
+  "isiReferenceCommit": "efba003",
+  "isiDatabaseShared": false
+}

@@ -77,6 +77,14 @@
     "./capability-rehearsal": {
       "types": "./dist/capabilities/index.d.ts",
       "import": "./dist/capabilities/index.js"
+    },
+    "./domain-graph": {
+      "types": "./dist/knowledgeGraph/domainGraph.d.ts",
+      "import": "./dist/knowledgeGraph/domainGraph.js"
+    },
+    "./cohort-trials": {
+      "types": "./dist/knowledgeGraph/cohortTrials.d.ts",
+      "import": "./dist/knowledgeGraph/cohortTrials.js"
     }
   },
   "files": [
@@ -136,7 +144,9 @@
     "readiness:check": "bun --no-env-file scripts/prepare-research-readiness.ts --check",
     "graph:build": "bun --no-env-file scripts/build-claim-graph.ts",
     "graph:check": "bun --no-env-file scripts/build-claim-graph.ts --check",
-    "scenarios:generate": "bun --no-env-file scripts/generate-longitudinal-scenarios.ts"
+    "scenarios:generate": "bun --no-env-file scripts/generate-longitudinal-scenarios.ts",
+    "domain-graph:build": "bun --no-env-file scripts/build-domain-graph.ts",
+    "domain-graph:check": "bun --no-env-file scripts/build-domain-graph.ts --check"
   },
   "engines": {
     "node": ">=20"

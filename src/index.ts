@@ -957,3 +957,6 @@ export {
 
 // Read-only source-linked working graph. This export cannot grant scientific approval.
 export {parseClaimGraph,verifyClaimGraph,resolveClaimEntity,filterClaimGraph,findClaimPaths,claimGraphQuality,claimSpecies,CLAIM_PREDICATES,type ClaimGraph,type ClaimEntity,type ClaimBinding,type EntityMention,type ClaimPath,type ClaimPredicate,type GraphFilters as ClaimGraphFilters} from './knowledgeGraph/claimGraph';
+
+export {parseDomainBundle,verifyDomainBundle,filterDomainGraph,domainPaths,exportDomainBrief,compareDomainEvidence,renderDomainBrief,DOMAIN_MODELS,type DomainBundle,type DomainNode,type DomainEdge,type DomainSource,type DomainQuestion,type DomainGap,type DomainFilters,type DomainPath,type DomainModel,type ValidationProfile} from './knowledgeGraph/domainGraph';
+export {selectValidationCohort,importPublicStudies,assessCohortStudyOverlap,type CohortQuery,type PublicStudy} from './knowledgeGraph/cohortTrials';

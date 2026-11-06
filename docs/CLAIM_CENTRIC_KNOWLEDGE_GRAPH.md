@@ -1,6 +1,6 @@
 # HSI claim-centric knowledge graph
 
-Implemented entry point: `/research/knowledge-graph`. Open it from the research navigation, dashboard tools or the existing `/science/graph` topic explorer. The educational topic map remains separate from the source-linked working graph.
+The default `/research/knowledge-graph` now opens the broader [cross-domain investigations](CROSS_DOMAIN_RESEARCH_GRAPH.md). This document describes the retained RA/SSc exact-passage corpus at `/research/knowledge-graph?dataset=source-corpus`. Open it from the research navigation, dashboard tools or the existing `/science/graph` topic explorer. The educational topic map remains separate from the source-linked working graph.
 
 ## What is built
 
@@ -80,7 +80,7 @@ The working adapter refuses causal/clinical promotion, arbitrary numeric confide
 | New diseases and licensed sources | Require explicit adapters, canonical mapping and source/rights review; do not extrapolate these RA/SSc bindings |
 | Production release | Still blocked by the prior QA launch gates, including live auth/database acceptance, legal/security/operations, manual accessibility and mobile performance |
 
-No production database was migrated, no scientific approval was recorded and no existing product database was shared. This branch builds on the already-pushed QA branch; it does not merge into the production-deploying `main` branch.
+No production database was migrated, no scientific approval was recorded and no existing product database was shared. The QA and initial claim-graph work were subsequently merged to `main` at `2fde44b`; that code publication did not establish scientific or live-service acceptance.
 
 ## Local validation
 

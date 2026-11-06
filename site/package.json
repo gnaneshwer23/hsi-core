@@ -9,7 +9,7 @@
   "scripts": {
     "test:e2e": "playwright test",
     "dev": "vite",
-    "build": "bun run check:coverage && bun run check:evidence && bun run check:api && bun run check:validation && bun run check:graph && vite build && vite build --ssr scripts/prerender-entry.tsx --outDir .seo-render && bun --no-env-file scripts/build-seo.ts",
+    "build": "bun run check:coverage && bun run check:evidence && bun run check:api && bun run check:validation && bun run check:graph && bun run check:domain-graph && vite build && vite build --ssr scripts/prerender-entry.tsx --outDir .seo-render && bun --no-env-file scripts/build-seo.ts",
     "check:api": "tsc --noEmit -p api/tsconfig.json",
     "preview": "vite preview",
     "check:evidence": "bun ../scripts/build-evidence-corpus.ts --check",
@@ -17,7 +17,8 @@
     "check:validation": "bun --no-env-file ../scripts/build-synthetic-validation.ts --check",
     "qa:accessibility": "playwright test production-qa.spec.ts",
     "qa:lighthouse": "node scripts/qa/lighthouse.mjs",
-    "check:graph": "bun --no-env-file ../scripts/build-claim-graph.ts --check"
+    "check:graph": "bun --no-env-file ../scripts/build-claim-graph.ts --check",
+    "check:domain-graph": "bun --no-env-file ../scripts/build-domain-graph.ts --check"
   },
   "dependencies": {
     "@fontsource-variable/host-grotesk": "5.3.0",
