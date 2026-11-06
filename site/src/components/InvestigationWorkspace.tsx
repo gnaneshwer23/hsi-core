@@ -5,7 +5,8 @@ import "../styles/investigation-workspace.css";
 
 class WorkspaceUiError extends Error{}
 
-export function InvestigationWorkspace(){
+export type WorkspaceSnapshot={workspace:Workspace|null;items:InvestigationSummary[];loading:boolean;error:string};
+export function InvestigationWorkspace({onSnapshot}:{onSnapshot?:(value:WorkspaceSnapshot)=>void}={}){
  const navigate=useNavigate();
  const [workspace,setWorkspace]=useState<Workspace|null>(null),[items,setItems]=useState<InvestigationSummary[]>([]);
  const [loading,setLoading]=useState(true),[saving,setSaving]=useState(false),[error,setError]=useState("");
@@ -14,6 +15,7 @@ export function InvestigationWorkspace(){
  const requestKey=useRef<{question:string;releaseId:string;id:string}|null>(null);
  const controller=useRef<AbortController|null>(null),saveController=useRef<AbortController|null>(null);
  const savingRef=useRef(false);
+ useEffect(()=>{onSnapshot?.({workspace,items,loading,error})},[workspace,items,loading,error,onSnapshot]);
  async function load(cursor:InvestigationCursor|null=null){
   controller.current?.abort();const c=new AbortController();controller.current=c;
   setLoading(true);setError("");

@@ -1,3 +1,9 @@
+## Research dashboard reference adaptation — 2026-11-06
+
+See [dashboard implementation and data boundaries](../docs/HSI_RESEARCH_DASHBOARD.md). The dashboard now uses a compact toolbar, original anatomy illustration, soft metric cards, a selectable profile table and an actual fixture-domain/context side rail. Private research summaries come from the existing backend-validated workspace response; validation data uses the pinned fixture adapter. No diagnosis, clinical alert, treatment-success or fabricated growth metric is displayed. The dashboard supplies its own contextual navigation, avoiding a duplicate research-navigation row.
+
+---
+
 ## Search and sharing foundations — 2026-11-06
 
 See [SEO implementation and deployment checks](../docs/HSI_SEO_IMPLEMENTATION.md). Public landing pages are now rendered into crawlable HTML from the same React components, with shared canonical/title/description/OG/schema metadata, an allowlisted sitemap and original HSI sharing artwork. Tool/account/demo pages remain noindex. Heavy research routes load separately so public navigation does not download every tool upfront. This does not change scientific status, account permissions or claim that indexing/rankings have already improved.
