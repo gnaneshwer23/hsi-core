@@ -1,8 +1,8 @@
 import { Outlet, useLocation } from "react-router-dom";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, Suspense } from "react";
 import { Nav } from "./Nav";
 import { ResearchNavigation } from "./ResearchNavigation";
-import {EXPERIENCE_PAGE_META} from "../features/experience/content";
+import {applySeo} from "../lib/seo/applySeo";
 import { Footer } from "./Footer";
 import { isPublicMarketingPath, isAccountPath } from "../lib/primaryNav";
 
@@ -15,8 +15,7 @@ export function Layout() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    const meta=EXPERIENCE_PAGE_META[pathname];
-    if(meta){document.title=meta.title;document.querySelector('meta[name="description"]')?.setAttribute("content",meta.description)}else{document.title="Human Super Intelligence — Research & evidence";document.querySelector('meta[name="description"]')?.setAttribute("content","Explore research context, scientific evidence and accountable review in Human Super Intelligence.")}
+    applySeo(pathname);
     if(previousPathname.current!==pathname)document.getElementById("main-content")?.focus({preventScroll:true});
     previousPathname.current=pathname;
   }, [pathname]);
@@ -39,7 +38,7 @@ export function Layout() {
       <Nav />
       <main className="site-main" id="main-content" tabIndex={-1}>
         {(["/research/dashboard","/research/governance","/research/scientific-workbench","/research/decision-workbench","/research/scientific-review","/research/evidence-readiness","/science/graph","/science/clinical-trials"].includes(pathname))&&<ResearchNavigation/>}
-        <Outlet />
+        <Suspense fallback={<p role="status" style={{padding:"3rem 1.5rem"}}>Loading research tools…</p>}><Outlet /></Suspense>
       </main>
       <Footer />
     </div>

@@ -30,18 +30,3 @@ export const EVIDENCE_STATES=[
  {id:"ai_draft",label:"AI draft",meaning:"A proposed explanation, not established knowledge. It needs evidence mapping and human review.",tone:"violet"},
  {id:"synthetic",label:"Synthetic",meaning:"Generated software-validation data. It cannot establish scientific support or trial eligibility.",tone:"slate"},
 ] as const;
-export const EXPERIENCE_PAGE_META:Record<string,{title:string;description:string}>={
- "/":{title:"Human Super Intelligence — Connected evidence. Clearer research.",description:"Explore biological context, source-linked evidence and accountable human review in the Human Super Intelligence research ecosystem."},
- "/research":{title:"Research — Human Super Intelligence",description:"A connected research journey from a bounded question to inspectable evidence, independent review and a reproducible brief."},
- "/solutions":{title:"Solutions — Human Super Intelligence",description:"Explore HSI workflows for translational researchers, discovery teams and product partners, with clear research and clinical boundaries."},
- "/evidence-safety":{title:"Evidence & safety — Human Super Intelligence",description:"Understand evidence status, provenance, context, uncertainty and independent review in HSI."},
- "/community":{title:"Community — Human Super Intelligence",description:"Explore evidence-led research discussion themes and prepare local discussion drafts. Public posting is not enabled."},
- "/pricing":{title:"Access & pilots — Human Super Intelligence",description:"Choose public exploration, authorised research access or a proposed team pilot. No paid plans or checkout are currently published."},
- "/contact":{title:"Request access — Human Super Intelligence",description:"Create an HSI account, understand research permissions and prepare a scoped research collaboration brief."},
- "/platform":{title:"Platform — Human Super Intelligence",description:"Explore shared research technology across separately governed products, source context and human review."},
- "/technology":{title:"Technology — Human Super Intelligence",description:"Inspect the source, graph, investigation and review foundations behind HSI's research experience."},
- "/products":{title:"Products — Human Super Intelligence",description:"Meet Aksh Health, ISI Research, HSI Clinical and HSI Trials, with clear product scope and maturity."},
- "/science":{title:"Science — Human Super Intelligence",description:"Explore educational biological context, organ systems and draft relationships separately from approved research findings."},
- "/how-it-works":{title:"How it works — Human Super Intelligence",description:"Follow HSI's question, context, graph, evidence, independent review and brief workflows."},
- "/research/dashboard":{title:"Research dashboard — Human Super Intelligence",description:"Create and reopen authorised investigations, inspect evidence and access independent review."}
-};

@@ -1,0 +1,8 @@
+import {getSeoMetadata,seoRobots,safeJsonLd,SOCIAL_IMAGE} from './siteSeo';
+export function applySeo(pathname:string){
+ const m=getSeoMetadata(pathname,document.documentElement.dataset.seoNoindex==='true');document.title=m.title;
+ const tags:Record<string,string>={description:m.description,robots:seoRobots(m.indexable),'og:type':'website','og:site_name':'Human Super Intelligence','og:title':m.title,'og:description':m.description,'og:url':m.canonical,'og:locale':'en_GB','og:image':SOCIAL_IMAGE,'og:image:width':'1200','og:image:height':'630','og:image:alt':'Human Super Intelligence — connected context, traceable evidence, human review','twitter:card':'summary_large_image','twitter:title':m.title,'twitter:description':m.description,'twitter:image':SOCIAL_IMAGE,'twitter:image:alt':'Human Super Intelligence research platform'};
+ for(const [key,value] of Object.entries(tags)){const attr=key.startsWith('og:')?'property':'name';let el=document.head.querySelector<HTMLMetaElement>('meta['+attr+'="'+key+'"]');if(!el){el=document.createElement('meta');el.setAttribute(attr,key);document.head.append(el)}el.content=value}
+ let canonical=document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');if(!canonical){canonical=document.createElement('link');canonical.rel='canonical';document.head.append(canonical)}canonical.href=m.canonical;
+ document.getElementById('hsi-seo-schema')?.remove();if(m.structuredData){const script=document.createElement('script');script.id='hsi-seo-schema';script.type='application/ld+json';script.textContent=safeJsonLd(m.structuredData);document.head.append(script)}
+}

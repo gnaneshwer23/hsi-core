@@ -41,220 +41,248 @@
           "value": "public, max-age=0, must-revalidate"
         }
       ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/_pages/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/research/(.*)\\.json",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
     }
   ],
   "rewrites": [
     {
       "source": "/research/governance",
-      "destination": "/index.html"
+      "destination": "/_pages/research--governance.html"
     },
     {
       "source": "/research/dashboard",
-      "destination": "/index.html"
+      "destination": "/_pages/research--dashboard.html"
     },
     {
       "source": "/contact",
-      "destination": "/index.html"
+      "destination": "/_pages/contact.html"
     },
     {
       "source": "/pricing",
-      "destination": "/index.html"
+      "destination": "/_pages/pricing.html"
     },
     {
       "source": "/community",
-      "destination": "/index.html"
+      "destination": "/_pages/community.html"
     },
     {
       "source": "/evidence-safety",
-      "destination": "/index.html"
+      "destination": "/_pages/evidence-safety.html"
     },
     {
       "source": "/solutions",
-      "destination": "/index.html"
+      "destination": "/_pages/solutions.html"
     },
     {
       "source": "/research",
-      "destination": "/index.html"
+      "destination": "/_pages/research.html"
     },
     {
       "source": "/research/validation",
-      "destination": "/index.html"
+      "destination": "/_pages/research--validation.html"
     },
     {
       "source": "/research/coverage",
-      "destination": "/index.html"
+      "destination": "/_pages/research--coverage.html"
     },
     {
       "source": "/research/evidence-readiness",
-      "destination": "/index.html"
+      "destination": "/_pages/research--evidence-readiness.html"
     },
     {
       "source": "/research/scientific-workbench",
-      "destination": "/index.html"
+      "destination": "/_pages/research--scientific-workbench.html"
     },
     {
       "source": "/sign-up",
-      "destination": "/index.html"
+      "destination": "/_pages/sign-up.html"
     },
     {
       "source": "/research/account",
-      "destination": "/index.html"
+      "destination": "/_pages/research--account.html"
     },
     {
       "source": "/sign-in",
-      "destination": "/index.html"
+      "destination": "/_pages/sign-in.html"
     },
     {
       "source": "/platform",
-      "destination": "/index.html"
+      "destination": "/_pages/platform.html"
     },
     {
       "source": "/technology",
-      "destination": "/index.html"
+      "destination": "/_pages/technology.html"
     },
     {
       "source": "/how-it-works",
-      "destination": "/index.html"
+      "destination": "/_pages/how-it-works.html"
     },
     {
       "source": "/explore",
-      "destination": "/index.html"
+      "destination": "/_pages/explore.html"
     },
     {
       "source": "/science",
-      "destination": "/index.html"
+      "destination": "/_pages/science.html"
     },
     {
       "source": "/discovery-engine",
-      "destination": "/index.html"
+      "destination": "/_pages/discovery-engine.html"
     },
     {
       "source": "/science/body",
-      "destination": "/index.html"
+      "destination": "/_pages/science--body.html"
     },
     {
       "source": "/science/connections",
-      "destination": "/index.html"
+      "destination": "/_pages/science--connections.html"
     },
     {
       "source": "/science/zoom",
-      "destination": "/index.html"
+      "destination": "/_pages/science--zoom.html"
     },
     {
       "source": "/products",
-      "destination": "/index.html"
+      "destination": "/_pages/products.html"
     },
     {
       "source": "/status",
-      "destination": "/index.html"
+      "destination": "/_pages/status.html"
     },
     {
       "source": "/sources",
-      "destination": "/index.html"
+      "destination": "/_pages/sources.html"
     },
     {
       "source": "/clinical-timeline",
-      "destination": "/index.html"
+      "destination": "/_pages/clinical-timeline.html"
     },
     {
       "source": "/trials-criteria",
-      "destination": "/index.html"
+      "destination": "/_pages/trials-criteria.html"
     },
     {
       "source": "/gateway",
-      "destination": "/index.html"
+      "destination": "/_pages/gateway.html"
     },
     {
       "source": "/systems",
-      "destination": "/index.html"
+      "destination": "/_pages/systems.html"
     },
     {
       "source": "/evidence",
-      "destination": "/index.html"
+      "destination": "/_pages/evidence.html"
     },
     {
       "source": "/discovery",
-      "destination": "/index.html"
+      "destination": "/_pages/discovery.html"
     },
     {
       "source": "/curator",
-      "destination": "/index.html"
+      "destination": "/_pages/curator.html"
     },
     {
       "source": "/akeno",
-      "destination": "/index.html"
+      "destination": "/_pages/akeno.html"
     },
     {
       "source": "/aksh-agents",
-      "destination": "/index.html"
+      "destination": "/_pages/aksh-agents.html"
     },
     {
       "source": "/for-isi",
-      "destination": "/index.html"
+      "destination": "/_pages/for-isi.html"
     },
     {
       "source": "/for-aksh",
-      "destination": "/index.html"
+      "destination": "/_pages/for-aksh.html"
     },
     {
       "source": "/for-trials",
-      "destination": "/index.html"
+      "destination": "/_pages/for-trials.html"
     },
     {
       "source": "/roadmap",
-      "destination": "/index.html"
+      "destination": "/_pages/roadmap.html"
     },
     {
       "source": "/alignment",
-      "destination": "/index.html"
+      "destination": "/_pages/alignment.html"
     },
     {
       "source": "/docs",
-      "destination": "/index.html"
+      "destination": "/_pages/docs.html"
     },
     {
       "source": "/science/disease",
-      "destination": "/index.html"
+      "destination": "/_pages/science--disease.html"
     },
     {
       "source": "/science/graph",
-      "destination": "/index.html"
+      "destination": "/_pages/science--graph.html"
     },
     {
       "source": "/science/paths",
-      "destination": "/index.html"
+      "destination": "/_pages/science--paths.html"
     },
     {
       "source": "/science/contradictions",
-      "destination": "/index.html"
+      "destination": "/_pages/science--contradictions.html"
     },
     {
       "source": "/science/clinical-trials",
-      "destination": "/index.html"
+      "destination": "/_pages/science--clinical-trials.html"
     },
     {
       "source": "/science/research-agents",
-      "destination": "/index.html"
+      "destination": "/_pages/science--research-agents.html"
     },
     {
       "source": "/research/decision-workbench",
-      "destination": "/index.html"
+      "destination": "/_pages/research--decision-workbench.html"
     },
     {
       "source": "/science/literature",
-      "destination": "/index.html"
+      "destination": "/_pages/science--literature.html"
     },
     {
       "source": "/science/study-comparison",
-      "destination": "/index.html"
+      "destination": "/_pages/science--study-comparison.html"
     },
     {
       "source": "/science/review-preparation",
-      "destination": "/index.html"
+      "destination": "/_pages/science--review-preparation.html"
     },
     {
       "source": "/research/scientific-review",
-      "destination": "/index.html"
+      "destination": "/_pages/research--scientific-review.html"
     }
-  ]
+  ],
+  "trailingSlash": false
 }

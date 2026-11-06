@@ -25,3 +25,6 @@ __pycache__/
 !research/coverage/**
 !site/public/research/coverage/
 !site/public/research/coverage/**
+
+# Temporary server bundle for public SEO prerendering
+site/.seo-render/

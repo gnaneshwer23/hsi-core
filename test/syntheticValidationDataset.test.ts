@@ -71,7 +71,7 @@ test("static fixture assets and catalogue are pinned to committed hashes; route 
  expect(sha(readFileSync(new URL("catalogue.json",dir)))).toBe(VALIDATION_CATALOGUE_SHA256);
  expect(catalogue.patients).toHaveLength(200);expect(catalogue.conditions).toHaveLength(20);
  for(const entry of [...catalogue.patients,...catalogue.conditions,catalogue.audit]){const bytes=readFileSync(new URL(entry.file,dir));expect(sha(bytes)).toBe(entry.sha256);expect(bytes.byteLength).toBe(entry.bytes)}
- const config=JSON.parse(readFileSync(new URL("../site/vercel.json",import.meta.url),"utf8"));expect(config.rewrites).toContainEqual({source:"/research/validation",destination:"/index.html"});expect(config.rewrites.some((r:{source:string})=>r.source==="/research/validation/:path*")).toBe(false);
+ const config=JSON.parse(readFileSync(new URL("../site/vercel.json",import.meta.url),"utf8"));expect(config.rewrites).toContainEqual({source:"/research/validation",destination:"/_pages/research--validation.html"});expect(config.rewrites.some((r:{source:string})=>r.source==="/research/validation/:path*")).toBe(false);
 });
 
 test("record-level lineage uses original file/row/key and never invents generation metadata",()=>{

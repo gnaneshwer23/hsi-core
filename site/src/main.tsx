@@ -1,5 +1,5 @@
 import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import { createRoot, hydrateRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import "./styles/global.css";
@@ -7,10 +7,7 @@ import "./styles/marketing-v2.css";
 import "./styles/experience.css";
 import "./styles/site-chrome.css";
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </StrictMode>,
-);
+const root=document.getElementById("root")!;
+const app=<StrictMode><BrowserRouter><App /></BrowserRouter></StrictMode>;
+// Query-driven screens render afresh; public static pages hydrate only their exact route.
+if(root.dataset.prerendered===window.location.pathname&&!window.location.search){hydrateRoot(root,app)}else{createRoot(root).render(app)}

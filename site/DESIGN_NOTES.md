@@ -1,3 +1,9 @@
+## Search and sharing foundations — 2026-11-06
+
+See [SEO implementation and deployment checks](../docs/HSI_SEO_IMPLEMENTATION.md). Public landing pages are now rendered into crawlable HTML from the same React components, with shared canonical/title/description/OG/schema metadata, an allowlisted sitemap and original HSI sharing artwork. Tool/account/demo pages remain noindex. Heavy research routes load separately so public navigation does not download every tool upfront. This does not change scientific status, account permissions or claim that indexing/rankings have already improved.
+
+---
+
 ## Header, footer and controls — 2026-11-06
 
 `src/styles/site-chrome.css` is the final shared presentation layer, after `experience.css`. The header now has consistent sign-in/access actions, a desktop More disclosure for secondary pages, a compact labelled mobile brand and a proper SVG menu/close icon. Escape, outside click, route changes and breakpoint changes close menus appropriately. The mobile account link follows the provider-session display state without granting backend permissions.

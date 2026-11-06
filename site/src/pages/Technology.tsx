@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/technology.css";
 import { ExperienceHero } from "../components/Experience";
@@ -48,17 +48,6 @@ const governanceControls = [
   { title:"Accountable publication decision", owner:"Authorised scientific approver", evidence:"Approve, revise or reject decision, rationale, reviewer identity and audit trail", gate:"No approval → cannot enter the approved knowledge layer" },
 ] as const;
 export function Technology() {
-  useEffect(() => {
-    const previousTitle = document.title;
-    const meta = document.querySelector('meta[name="description"]');
-    const previousDescription = meta?.getAttribute("content") ?? null;
-    document.title = "Technology — Human Super Intelligence";
-    meta?.setAttribute("content", "Explore HSI NEXUS: governed health data, biological evidence, research intelligence, trial matching and in-silico discovery.");
-    return () => {
-      document.title = previousTitle;
-      if (meta && previousDescription !== null) meta.setAttribute("content", previousDescription);
-    };
-  }, []);
   const [sourceIndex, setSourceIndex] = useState(0);
   const [engineIndex, setEngineIndex] = useState(0);
   const [journeyIndex, setJourneyIndex] = useState(0);

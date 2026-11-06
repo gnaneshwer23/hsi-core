@@ -2,7 +2,7 @@ import { describe, expect, it } from "bun:test";
 import { readFileSync } from "node:fs";
 const root = new URL("../site/", import.meta.url);
 describe("static deployment routes", () => {
-  it("deploys same-origin Bun functions alongside Vite without changing app rewrites", () => {
+  it("deploys same-origin Bun functions alongside Vite with exact app rewrites", () => {
     const config = JSON.parse(readFileSync(new URL("vercel.json", root), "utf8"));
     const pkg = JSON.parse(readFileSync(new URL("package.json", root), "utf8"));
     expect(config.bunVersion).toBe("1.x");
@@ -17,7 +17,7 @@ describe("static deployment routes", () => {
     const app = readFileSync(new URL("src/App.tsx", root), "utf8");
     const routes = [...app.matchAll(/path="([^"*]+)"/g)].map((match) => `/${match[1]}`);
     expect(config.rewrites.map((row: { source: string }) => row.source).sort()).toEqual(routes.sort());
-    expect(config.rewrites.every((row: { destination: string }) => row.destination === "/index.html")).toBe(true);
+    expect(config.rewrites.every((row: { source:string; destination:string }) => row.destination === "/_pages/"+row.source.slice(1).replaceAll("/","--")+".html")).toBe(true);
     expect(config.rewrites.some((row: { source: string }) => row.source.includes(".*"))).toBe(false);
   });
 });
