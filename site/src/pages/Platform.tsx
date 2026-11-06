@@ -1,5 +1,5 @@
+import {HeroArtwork} from "../components/editorial/HeroArtwork";
 import {ArrowIcon} from "../components/ArrowIcon";
-import { BiologyArtwork } from "../components/editorial/Editorial";
 import { useState, type KeyboardEvent } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -213,7 +213,7 @@ export function Platform() {
               <Link className="hsi-editorial-textlink" to="/how-it-works">See how investigations work <ArrowIcon/></Link>
             </div>
           </div>
-          <BiologyArtwork />
+          <HeroArtwork kind="platform"/>
         </div>
         <div className="hsi-editorial-wrap hsi-platform-hero-foot">
           <span>Shared technology · product-owned data</span>
@@ -547,7 +547,7 @@ export function Platform() {
           </p>
           <div className="hsi-editorial-actions">
             <Link className="hsi-editorial-button" to="/products">Explore the products <span aria-hidden="true"><ArrowIcon/></span></Link>
-            <Link className="hsi-editorial-textlink" to="/status">Check product maturity <ArrowIcon/></Link>
+            <Link className="hsi-editorial-textlink" to="/products#product-collection">Compare product scope <ArrowIcon/></Link>
           </div>
           <small>
             Scientific research tools do not provide diagnosis, prescribing or confirmed trial eligibility. Clinical and trial capabilities are separately governed and subject to human validation. Human Super Intelligence does not operate a shared evidence database across products.

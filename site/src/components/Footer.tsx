@@ -7,9 +7,9 @@ const PRODUCT_LINKS = [
   { to: "/for-isi", label: "ISI Research" },
   { to: "/for-trials", label: "HSI Trials" },
 ] as const;
-const PROGRESS_LINKS = [
-  { to: "/status", label: "Status" },
-  { to: "/docs", label: "Docs" },
+const RESEARCH_LINKS = [
+  { to: "/evidence-safety", label: "Evidence & safety" },
+  { to: "/contact", label: "Research access" },
 ] as const;
 const INFORMATION_LINKS=[{to:"/solutions",label:"Solutions"},{to:"/technology",label:"Technology"},{to:"/evidence-safety",label:"Evidence & safety"},{to:"/pricing",label:"Access options"},{to:"/contact",label:"Research access"}];
 export function Footer() {
@@ -20,6 +20,6 @@ export function Footer() {
       <nav aria-label="Footer products"><h2>Products</h2><ul>{PRODUCT_LINKS.map(l=><li key={l.to}><Link to={l.to}>{l.label}</Link></li>)}</ul></nav>
       <nav aria-label="Footer information"><h2>Information</h2><ul>{INFORMATION_LINKS.map(l=><li key={l.to}><Link to={l.to}>{l.label}</Link></li>)}</ul></nav>
     </div>
-    <div className="footer-wrap footer-bottom"><span>© {new Date().getFullYear()} {PRODUCT_NAME}</span><span className="footer-scope">Research use · Human oversight</span><nav aria-label="Project information">{PROGRESS_LINKS.map(l=><Link key={l.to} to={l.to}>{l.label}</Link>)}</nav></div>
+    <div className="footer-wrap footer-bottom"><span>© {new Date().getFullYear()} {PRODUCT_NAME}</span><span className="footer-scope">Research use · Human oversight</span><nav aria-label="Research information">{RESEARCH_LINKS.map(l=><Link key={l.to} to={l.to}>{l.label}</Link>)}</nav></div>
   </footer>;
 }

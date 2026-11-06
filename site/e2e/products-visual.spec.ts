@@ -6,7 +6,7 @@ test.describe("Products visual and responsive QA", () => {
       await page.setViewportSize(viewport);
       await page.goto("/products");
       await expect(page.getByRole("heading", { level: 1 })).toContainText("Four specialised products");
-      await expect(page.getByText("NEXUS", { exact: true })).toBeVisible();
+      await expect(page.getByRole("img", { name: "Four separate product orbits around shared research methods" })).toBeVisible();
       await expect(page.getByText("Governed data access", { exact: true })).toBeVisible();
       const documentWidth = await page.evaluate(() => document.documentElement.scrollWidth);
       expect(documentWidth).toBeLessThanOrEqual(viewport.width + 1);

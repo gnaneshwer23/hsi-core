@@ -13,4 +13,4 @@ export const PUBLIC_MARKETING_PATHS=[
 ] as const;
 export const PRIMARY_NAV_CTA={ to: "/contact", label: "Request access"} as const;
 export function isPublicMarketingPath(pathname:string){return (PUBLIC_MARKETING_PATHS as readonly string[]).includes(pathname)}
-export function isAccountPath(pathname:string){return ["/sign-in","/sign-up","/research/account"].includes(pathname)}
+export function isAccountPath(pathname:string){return ["/sign-in","/sign-up","/forgot-password","/reset-password","/research/account"].includes(pathname)}

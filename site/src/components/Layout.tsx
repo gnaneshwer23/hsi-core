@@ -7,14 +7,21 @@ import { Footer } from "./Footer";
 import { isPublicMarketingPath, isAccountPath } from "../lib/primaryNav";
 
 export function Layout() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   const previousPathname = useRef(pathname);
   const isPublicPage = isPublicMarketingPath(pathname);
   const isAccountPage = isAccountPath(pathname);
   const isHome = pathname === "/";
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // React Router does not scroll cross-page fragment links by itself.
+    if(hash){
+      let id:string;try{id=decodeURIComponent(hash.slice(1))}catch{id=hash.slice(1)}
+      document.getElementById(id)?.scrollIntoView({block:"start"});
+    }else window.scrollTo(0, 0);
+  }, [pathname, hash]);
+
+  useEffect(() => {
     applySeo(pathname);
     if(previousPathname.current!==pathname)document.getElementById("main-content")?.focus({preventScroll:true});
     previousPathname.current=pathname;

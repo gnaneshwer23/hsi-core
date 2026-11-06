@@ -1,0 +1,16 @@
+.hero-artwork{position:relative;isolation:isolate;width:100%;min-width:0;max-width:600px;margin:24px auto;align-self:center;color:#174e43;background:radial-gradient(ellipse at 55% 46%,#daeee2 0,transparent 65%)}
+.hero-artwork::after{content:'';position:absolute;inset:10% 15% 15%;background:#d6eadd;filter:blur(45px);z-index:-1;opacity:.4}
+.ha-eyebrow{display:flex;align-items:center;gap:9px;padding:0 24px;font-size:.57rem;letter-spacing:.13em;line-height:1.6;color:#406d60;font-weight:600}
+.ha-eyebrow>span{height:5px;width:5px;background:#e36a4b;border-radius:50%;flex:none}
+.hero-artwork>svg{display:block;width:100%;height:auto;overflow:visible}
+.hero-artwork .ha-grid{stroke:#6ba18a;stroke-width:.5;opacity:.1;fill:none}
+.hero-artwork .ha-label{font-size:13px;font-weight:500;fill:#174e43;font-family:var(--font-body)}
+.hero-artwork .ha-small{font-size:11px;fill:#426b58;font-family:var(--font-body)}
+.hero-artwork figcaption{display:flex;justify-content:space-between;align-items:start;gap:20px;border-top:1px solid #cbded0;padding:16px 0;margin:0 24px;color:#406754;font-size:.72rem;line-height:1.7}
+.hero-artwork figcaption small{flex:none;font-size:.55rem;text-transform:uppercase;letter-spacing:.09em;padding-top:3px}
+.editorial-site .hsi-products-hero-art.ed-product-hero{padding:0;background:none;border:0}
+.editorial-site .ed-product-hero .hero-artwork{margin-bottom:0}
+.editorial-site .xp-hero:has(.hero-artwork){padding-bottom:35px}
+.hero-artwork-access{max-width:540px}.hero-artwork-research{background:radial-gradient(ellipse at 50% 50%,#edf0de,transparent 70%)}
+@media(max-width:950px){.hero-artwork{margin-block:18px;max-width:520px}.ha-eyebrow{padding-inline:14px}.hero-artwork figcaption{margin-inline:14px;gap:12px;font-size:.67rem}.hero-artwork figcaption small{font-size:.5rem}}
+@media(max-width:600px){.hero-artwork{max-width:440px;margin-top:30px;margin-bottom:10px}.hero-artwork figcaption{flex-direction:column;gap:3px;padding-block:12px}.ha-eyebrow{font-size:.52rem}.editorial-site .xp-hero:has(.hero-artwork){padding-bottom:24px}}

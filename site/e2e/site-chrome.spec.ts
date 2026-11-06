@@ -20,7 +20,7 @@ test('mobile menu uses a clear icon, touch targets and working account/navigatio
 test('footer has product navigation, clear project links and accessible touch targets',async({page})=>{
  for(const width of [320,768,1440]){
   await page.setViewportSize({width,height:900});await page.goto('/');const footer=page.getByRole('contentinfo');await footer.scrollIntoViewIfNeeded();
-  await expect(footer.getByRole('navigation',{name:'Footer products'})).toBeVisible();await expect(footer.getByRole('link',{name:'All products',exact:true})).toHaveAttribute('href','/products');await expect(footer.getByRole('link',{name:'Status',exact:true})).toHaveCount(1);
+  await expect(footer.getByRole('navigation',{name:'Footer products'})).toBeVisible();await expect(footer.getByRole('link',{name:'All products',exact:true})).toHaveAttribute('href','/products');await expect(footer.locator('a[href="/status"],a[href="/docs"]')).toHaveCount(0);await expect(footer.getByRole('navigation',{name:'Research information'})).toBeVisible();
   for(const a of await footer.locator('nav a').all())expect((await a.boundingBox())!.height).toBeGreaterThanOrEqual(44);
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
  }

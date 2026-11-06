@@ -1,5 +1,5 @@
 import {ArrowIcon} from "../components/ArrowIcon";
-import {BiologyArtwork} from "../components/editorial/Editorial";
+import {HeroArtwork} from "../components/editorial/HeroArtwork";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { PRODUCT_NAME, PRODUCT_SHORT } from "../lib/brand";
@@ -100,7 +100,7 @@ const productShowcases: Record<ProductId, { question: string; input: string; pro
   trials: { question: "Which study criteria require further evidence?", input: "Study criteria and appropriately authorised clinical context when available", process: "Structure inclusion and exclusion criteria and expose unknowns", output: "An investigator-facing pre-screening evidence checklist", review: "Investigators determine eligibility; no live matching or enrolment", illustration: "STUDIES · CRITERIA · REVIEW" },
 };
 
-function ProductsHeroArt(){return <aside className="hsi-products-hero-art ed-product-hero"><BiologyArtwork/><p className="ed-product-foundation"><strong>NEXUS</strong><span>Shared research technology</span></p></aside>}
+function ProductsHeroArt(){return <aside className="hsi-products-hero-art ed-product-hero"><HeroArtwork kind="products"/></aside>}
 
 function ProductExperienceVisual({ id }: { id: ProductId }) {
   return <div className={`hsi-products-experience hsi-products-experience-${id}`} aria-hidden="true">

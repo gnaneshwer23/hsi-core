@@ -1,0 +1,131 @@
+{
+  "auditDate": "2026-11-06",
+  "scope": "Local compiled public website; not live deployment acceptance",
+  "result": "passed",
+  "publicPages": 14,
+  "buttonTabRadioControls": 77,
+  "linkInstances": 731,
+  "browserErrors": [],
+  "distinctBrowserChecksPassed": 62,
+  "finalTargetedRerun": {
+    "passed": 9,
+    "failed": 0
+  },
+  "validationNotes": [
+    "57 checks passed in the broader run. Four obsolete NEXUS assertions and one desktop test that selected a mobile-only link were corrected; all nine checks in the affected suites then passed.",
+    "All final test outcomes pass; no disabled or broken product action was bypassed."
+  ],
+  "productionBuild": "passed",
+  "frontendTypecheck": "passed",
+  "artworkPages": 12,
+  "artworkWidths": [
+    320,
+    768,
+    1440
+  ],
+  "liveDeploymentVerified": false,
+  "externalProductUptimeVerified": false,
+  "authenticatedBackendAcceptanceVerified": false,
+  "pages": [
+    {
+      "path": "/",
+      "buttons": 3,
+      "links": 56
+    },
+    {
+      "path": "/platform",
+      "buttons": 12,
+      "links": 58
+    },
+    {
+      "path": "/technology",
+      "buttons": 33,
+      "links": 52
+    },
+    {
+      "path": "/products",
+      "buttons": 8,
+      "links": 57
+    },
+    {
+      "path": "/solutions",
+      "buttons": 4,
+      "links": 49
+    },
+    {
+      "path": "/research",
+      "buttons": 6,
+      "links": 52
+    },
+    {
+      "path": "/evidence-safety",
+      "buttons": 5,
+      "links": 49
+    },
+    {
+      "path": "/pricing",
+      "buttons": 0,
+      "links": 49
+    },
+    {
+      "path": "/contact",
+      "buttons": 0,
+      "links": 50
+    },
+    {
+      "path": "/science",
+      "buttons": 0,
+      "links": 53
+    },
+    {
+      "path": "/how-it-works",
+      "buttons": 6,
+      "links": 51
+    },
+    {
+      "path": "/for-isi",
+      "buttons": 0,
+      "links": 53
+    },
+    {
+      "path": "/for-aksh",
+      "buttons": 0,
+      "links": 52
+    },
+    {
+      "path": "/for-trials",
+      "buttons": 0,
+      "links": 50
+    }
+  ],
+  "destinations": [
+    "/#main-content",
+    "/sign-in",
+    "/sign-up",
+    "/platform#main-content",
+    "/platform#platform-architecture",
+    "/products#product-collection",
+    "/technology#main-content",
+    "/technology#nexus",
+    "/technology#sources",
+    "/products#main-content",
+    "/products#product-finder",
+    "/solutions#main-content",
+    "/research#main-content",
+    "/research/dashboard",
+    "/science/graph",
+    "/research/evidence-readiness",
+    "/research/scientific-review",
+    "/research/dashboard?view=briefs",
+    "/evidence-safety#main-content",
+    "/pricing#main-content",
+    "/contact#main-content",
+    "/research/account",
+    "/science#main-content",
+    "/science/body",
+    "/how-it-works#main-content",
+    "/for-isi#main-content",
+    "/for-aksh#main-content",
+    "/for-trials#main-content"
+  ]
+}

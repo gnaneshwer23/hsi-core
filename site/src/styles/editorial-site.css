@@ -53,3 +53,6 @@
 .editorial-site .xp-journey-tabs button>span{color:#345844}
 .editorial-site .xp-journey-tabs button[aria-selected=true]>span{color:#fffdf5}
 .editorial-site :is(#finder-title,#collection-title,#showcase-title,#governance h2)>em{color:#237a72}
+
+/* Keep fragment destinations clear of the sticky masthead. */
+.editorial-site [id]{scroll-margin-top:110px}

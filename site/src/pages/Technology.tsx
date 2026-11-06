@@ -1,4 +1,4 @@
-import {BiologyArtwork} from "../components/editorial/Editorial";
+import {HeroArtwork} from "../components/editorial/HeroArtwork";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/technology.css";
@@ -29,7 +29,7 @@ const nexusJourney = ["Question & authorisation","Evidence retrieval","Biologica
 const applications = [
   { title:"Evidence-led immune research", stage:"Research foundation", focus:"Researcher", description:"Investigate systemic sclerosis immune mechanisms using literature, graph relationships and contradictory evidence.", inputs:["Reviewed literature","Immune cell and pathway graph"], deliverable:"Cited mechanism brief with gaps and uncertainty", boundary:"Research interpretation; not a validated clinical recommendation", route:"/for-isi" },
   { title:"Longitudinal clinical intelligence", stage:"Future clinical evaluation", focus:"Clinician", description:"Reconstruct a permissioned timeline of encounters, medications, laboratory trends and missing information for professional review.", inputs:["Authorised encounters","Laboratory and medication history"], deliverable:"Traceable patient context summary", boundary:"Patient-level processing requires access controls, safety evaluation and clinical oversight", route:"/products" },
-  { title:"Clinical trial pre-screening", stage:"Planned governed workflow", focus:"Investigator", description:"Translate registry criteria into structured checks, surface missing evidence and prepare an investigator review queue.", inputs:["Versioned trial criteria","Permitted phenotype data"], deliverable:"Criteria-by-criteria pre-screen dossier", boundary:"Not confirmation of eligibility or enrolment", route:"/trials" },
+  { title:"Clinical trial pre-screening", stage:"Planned governed workflow", focus:"Investigator", description:"Translate registry criteria into structured checks, surface missing evidence and prepare an investigator review queue.", inputs:["Versioned trial criteria","Permitted phenotype data"], deliverable:"Criteria-by-criteria pre-screen dossier", boundary:"Not confirmation of eligibility or enrolment", route:"/for-trials" },
   { title:"Biomarker and therapeutic discovery", stage:"Exploratory research direction", focus:"Scientist", description:"Prioritise research hypotheses and potential targets; computational modelling or docking requires separately validated methods.", inputs:["Biological pathways","Evidence and approved datasets"], deliverable:"Candidate research hypotheses and experimental plan", boundary:"Predicted binding or association is not evidence of safety or efficacy", route:"/science" },
 ] as const;
 const steps = [
@@ -55,7 +55,7 @@ export function Technology() {
   const [applicationIndex, setApplicationIndex] = useState(0);
   const [governanceIndex, setGovernanceIndex] = useState(0);
   const source = sourceSystems[sourceIndex];
-  return <div className="nx-page xp-page"><ExperienceHero eyebrow="TECHNOLOGY" title="Connected knowledge." emphasis="Accountable reasoning." visual={<BiologyArtwork compact/>} description="Explore the shared research technology behind HSI: source-aware connections, evidence inspection and independent human review. Product data and permissions remain separate."/>
+  return <div className="nx-page xp-page"><ExperienceHero eyebrow="TECHNOLOGY" title="Connected knowledge." emphasis="Accountable reasoning." visual={<HeroArtwork kind="technology"/>} description="Explore the shared research technology behind HSI: source-aware connections, evidence inspection and independent human review. Product data and permissions remain separate."/>
     <section className="nx-flow-hero" aria-label="Human Super Intelligence data flow to discovery">
       <div className="nx-wrap">
         <TechnologyFlow />
