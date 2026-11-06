@@ -1,3 +1,4 @@
+import {ArrowIcon} from "../components/ArrowIcon";
 import { BiologyArtwork } from "../components/editorial/Editorial";
 import { useState, type KeyboardEvent } from "react";
 import { Link } from "react-router-dom";
@@ -208,8 +209,8 @@ export function Platform() {
               The technology that helps connect health questions, biological knowledge and scientific evidence—while keeping each product in control of its own data.
             </p>
             <div className="hsi-editorial-actions">
-              <a className="hsi-editorial-button" href="#platform-architecture">Explore the architecture <span aria-hidden="true">↗</span></a>
-              <Link className="hsi-editorial-textlink" to="/how-it-works">See how investigations work ↗</Link>
+              <a className="hsi-editorial-button" href="#platform-architecture">Explore the architecture <span aria-hidden="true"><ArrowIcon/></span></a>
+              <Link className="hsi-editorial-textlink" to="/how-it-works">See how investigations work <ArrowIcon/></Link>
             </div>
           </div>
           <BiologyArtwork />
@@ -232,7 +233,7 @@ export function Platform() {
               Products reuse HSI capabilities for evidence, biological knowledge, investigation and review while keeping their records under their own permissions. Shared technology connects the work; source ownership and access remain with each product.
             </p>
             <a className="hsi-editorial-textlink" href="#platform-architecture">
-              Inspect the architecture ↗
+              Inspect the architecture <ArrowIcon/>
             </a>
           </div>
           <figure className="hsi-idea-figure">
@@ -285,7 +286,7 @@ export function Platform() {
                     <span>0{i + 1}</span>
                     <strong>{item.name.toUpperCase()}</strong>
                     <small>{MATURITY_CHIP_LABEL[item.chip]} · separate governance</small>
-                    <span aria-hidden="true">↗</span>
+                    <span aria-hidden="true"><ArrowIcon/></span>
                   </button>
                 ))}
               </div>
@@ -303,7 +304,7 @@ export function Platform() {
                   {currentProduct.data}
                 </div>
                 <Link className="hsi-rebuild-inline-link" to={currentProduct.link}>
-                  Explore this product ↗
+                  Explore this product <ArrowIcon/>
                 </Link>
               </div>
             </div>
@@ -346,7 +347,7 @@ export function Platform() {
                       <strong>{item.short}</strong>
                       <small>{item.pillar}</small>
                     </span>
-                    <span aria-hidden="true">↗</span>
+                    <span aria-hidden="true"><ArrowIcon/></span>
                   </button>
                 ))}
               </div>
@@ -423,7 +424,7 @@ export function Platform() {
                     <strong>{step.title}</strong>
                     <small>{step.note}</small>
                   </span>
-                  <span aria-hidden="true">↗</span>
+                  <span aria-hidden="true"><ArrowIcon/></span>
                 </button>
               ))}
             </div>
@@ -516,7 +517,7 @@ export function Platform() {
                     aria-labelledby={`experience-title-${entry.id}`}
                     aria-describedby={ownershipId}
                   >
-                    Enter {product.name} <span aria-hidden="true">↗</span>
+                    Enter {product.name} <span aria-hidden="true"><ArrowIcon/></span>
                   </Link>
                 </article>
               );
@@ -525,10 +526,10 @@ export function Platform() {
 
           <div className="hsi-platform-experiences-cta">
             <Link className="hsi-editorial-button" to="/products">
-              Open the products catalogue <span aria-hidden="true">↗</span>
+              Open the products catalogue <span aria-hidden="true"><ArrowIcon/></span>
             </Link>
             <Link className="hsi-editorial-textlink" to="/how-it-works">
-              See how investigations work ↗
+              See how investigations work <ArrowIcon/>
             </Link>
           </div>
         </div>
@@ -545,8 +546,8 @@ export function Platform() {
             Technology patterns can travel across products. Patient records, research collections and trial data stay behind each product’s permissions wall.
           </p>
           <div className="hsi-editorial-actions">
-            <Link className="hsi-editorial-button" to="/products">Explore the products <span aria-hidden="true">↗</span></Link>
-            <Link className="hsi-editorial-textlink" to="/status">Check product maturity ↗</Link>
+            <Link className="hsi-editorial-button" to="/products">Explore the products <span aria-hidden="true"><ArrowIcon/></span></Link>
+            <Link className="hsi-editorial-textlink" to="/status">Check product maturity <ArrowIcon/></Link>
           </div>
           <small>
             Scientific research tools do not provide diagnosis, prescribing or confirmed trial eligibility. Clinical and trial capabilities are separately governed and subject to human validation. Human Super Intelligence does not operate a shared evidence database across products.

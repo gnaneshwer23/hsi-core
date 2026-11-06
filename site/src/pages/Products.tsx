@@ -1,3 +1,4 @@
+import {ArrowIcon} from "../components/ArrowIcon";
 import {BiologyArtwork} from "../components/editorial/Editorial";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -155,10 +156,10 @@ export function Products() {
             </p>
             <div className="hsi-editorial-actions">
               <a className="hsi-editorial-button" href="#product-collection">
-                Explore the products <span aria-hidden="true">↗</span>
+                Explore the products <span aria-hidden="true"><ArrowIcon/></span>
               </a>
               <a className="hsi-editorial-textlink" href="#product-finder">
-                Find your starting point ↗
+                Find your starting point <ArrowIcon/>
               </a>
             </div>
           </div>
@@ -209,7 +210,7 @@ export function Products() {
                     </small>
                   </span>
                   <span className="hsi-products-journey-mark" aria-hidden="true">
-                    {isActive ? "●" : "↗"}
+                    {isActive ? "●" : <ArrowIcon/>}
                   </span>
                 </button>
               );
@@ -230,7 +231,7 @@ export function Products() {
                 {MATURITY_CHIP_LABEL[selectedProduct.chip]}
               </span>
               <Link className="hsi-editorial-button" to={selectedProduct.primaryCta.href}>
-                {selectedProduct.primaryCta.label} <span aria-hidden="true">↗</span>
+                {selectedProduct.primaryCta.label} <span aria-hidden="true"><ArrowIcon/></span>
               </Link>
             </div>
           </div>
@@ -250,7 +251,7 @@ export function Products() {
               <p className="hsi-products-showcase-status">{MATURITY_CHIP_LABEL[showcaseProduct.chip]} · {showcaseProduct.chipDetail}</p>
               <div className="hsi-products-showcase-sequence"><div><span>01 / CONTEXT</span><p>{showcase.input}</p></div><div><span>02 / INTELLIGENCE</span><p>{showcase.process}</p></div><div><span>03 / REVIEWABLE OUTPUT</span><p>{showcase.output}</p></div></div>
               <p className="hsi-products-showcase-review"><strong>Human decision boundary</strong> {showcase.review}</p>
-              <Link className="hsi-editorial-button" to={showcaseProduct.primaryCta.href}>{showcaseProduct.primaryCta.label} <span aria-hidden="true">↗</span></Link>
+              <Link className="hsi-editorial-button" to={showcaseProduct.primaryCta.href}>{showcaseProduct.primaryCta.label} <span aria-hidden="true"><ArrowIcon/></span></Link>
             </div>
             <div className="hsi-products-showcase-art" role="img" aria-label={`Conceptual visualisation of ${showcaseProduct.name} intelligence workflow`}>
               <span className="hsi-products-showcase-art-kicker">HSI / PRODUCT INTELLIGENCE</span>
@@ -315,7 +316,7 @@ export function Products() {
                       {detail.boundary}
                     </p>
                     <Link className="hsi-products-card-link" to={product.primaryCta.href}>
-                      {product.primaryCta.label} <span aria-hidden="true">↗</span>
+                      {product.primaryCta.label} <span aria-hidden="true"><ArrowIcon/></span>
                     </Link>
                   </div>
                 </article>
@@ -375,7 +376,7 @@ export function Products() {
                 <b>Governed data access</b>
               </p>
               <Link className="hsi-editorial-button" to="/platform">
-                Explore the platform <span aria-hidden="true">↗</span>
+                Explore the platform <span aria-hidden="true"><ArrowIcon/></span>
               </Link>
             </div>
           </div>
@@ -393,10 +394,10 @@ export function Products() {
           <p>Follow the path from a question to context, evidence and human review—or inspect the shared technology behind the products.</p>
           <div className="hsi-editorial-actions">
             <Link className="hsi-editorial-button" to="/how-it-works">
-              See how it works <span aria-hidden="true">↗</span>
+              See how it works <span aria-hidden="true"><ArrowIcon/></span>
             </Link>
             <Link className="hsi-editorial-textlink" to="/platform">
-              Explore the technology ↗
+              Explore the technology <ArrowIcon/>
             </Link>
           </div>
           <small>

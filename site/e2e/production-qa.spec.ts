@@ -40,3 +40,8 @@ test('mobile hero chooses compressed responsive artwork and reserves its dimensi
  expect(await art.evaluate(el=>(el as HTMLImageElement).currentSrc)).toContain('hsi-anatomy-480.webp');
  await expect(art).toHaveAttribute('width','1024');await expect(art).toHaveAttribute('height','1536');
 });
+
+test('editorial action arrows use scalable paths instead of platform symbol fonts',async({page})=>{
+ await page.goto('/');
+ for(const item of await page.locator('.ed-actions a,.ed-feature-tablist button,.ed-product-rows a').all())await expect(item.locator('svg.hsi-arrow-icon path')).toHaveCount(1);
+});
