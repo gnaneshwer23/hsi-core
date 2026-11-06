@@ -1,0 +1,50 @@
+{
+  "kind": "local_mobile_lab_only",
+  "fieldCwvVerified": false,
+  "recordedAt": "2026-11-06T04:34:58.853Z",
+  "lighthouseVersion": "13.6.0",
+  "pages": [
+    {
+      "path": "/",
+      "scores": {
+        "performance": 0.95,
+        "accessibility": 1,
+        "best-practices": 1,
+        "seo": 1
+      },
+      "lcpMs": 2882.0233,
+      "cls": 0,
+      "totalBlockingTimeMs": 24.5,
+      "warnings": []
+    },
+    {
+      "path": "/platform",
+      "scores": {
+        "performance": 0.95,
+        "accessibility": 1,
+        "best-practices": 1,
+        "seo": 1
+      },
+      "lcpMs": 2903.9803,
+      "cls": 0,
+      "totalBlockingTimeMs": 66.5,
+      "warnings": []
+    },
+    {
+      "path": "/research",
+      "scores": {
+        "performance": 0.96,
+        "accessibility": 1,
+        "best-practices": 1,
+        "seo": 1
+      },
+      "lcpMs": 2798.6874,
+      "cls": 0,
+      "totalBlockingTimeMs": 34,
+      "warnings": []
+    }
+  ],
+  "measuredSourceCommit": "db60d7ce672a52e377530cfe7bb56b90cfc3a944",
+  "lcpTargetMs": 2500,
+  "lcpTargetMetOnAllMeasuredPages": false
+}

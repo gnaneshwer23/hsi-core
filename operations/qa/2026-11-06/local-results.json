@@ -1,0 +1,365 @@
+{
+  "schemaVersion": "hsi-local-production-qa-1",
+  "recordedAt": "2026-11-06T04:41:57.315582+00:00",
+  "launchReady": false,
+  "status": "blocked_pending_live_and_human_acceptance",
+  "scope": "local_engineering_only",
+  "testedSourceCommit": "dbbca7446652057e74dd827c7b4219120c57991a",
+  "sourceBranch": "codex/production-qa-20261106",
+  "productionModified": false,
+  "inputRequirements": [
+    {
+      "title": "HSI Production-Ready QA Plan",
+      "sha256": "b709a3bf82b8305f50f7cf3a5a3ee4c8b4707bafb9bf10d1ce7e5928a31a949b"
+    },
+    {
+      "title": "HSI Features, User Journeys, Accessibility & Launch Testing",
+      "sha256": "17837ae850b85aa73746737330a8217be20f3091933120c712e5eb4d07f92894"
+    }
+  ],
+  "testResults": {
+    "core": {
+      "passed": 780,
+      "failed": 0,
+      "files": 136
+    },
+    "chromium": {
+      "passed": 155,
+      "failed": 0,
+      "mockedResearchApi": true,
+      "liveCredentialsUsed": false
+    },
+    "typescriptCore": "passed",
+    "typescriptFrontend": "passed",
+    "typescriptApi": "passed",
+    "siteBuild": "passed_14_public_42_noindex_shells",
+    "advisories": {
+      "root": "none_reported",
+      "site": "none_reported",
+      "independentSecurityAssessment": false
+    }
+  },
+  "accessibility": {
+    "engine": "axe-core",
+    "standardTags": [
+      "wcag2a",
+      "wcag2aa",
+      "wcag21aa",
+      "wcag22aa"
+    ],
+    "persistedPageScans": [
+      {
+        "path": "/",
+        "viewport": "desktop",
+        "violations": 0,
+        "manualReviewRules": [
+          "aria-prohibited-attr",
+          "color-contrast"
+        ]
+      },
+      {
+        "path": "/contact",
+        "viewport": "desktop",
+        "violations": 0,
+        "manualReviewRules": [
+          "color-contrast"
+        ]
+      },
+      {
+        "path": "/evidence-safety",
+        "viewport": "desktop",
+        "violations": 0,
+        "manualReviewRules": []
+      },
+      {
+        "path": "/for-aksh",
+        "viewport": "desktop",
+        "violations": 0,
+        "manualReviewRules": [
+          "color-contrast"
+        ]
+      },
+      {
+        "path": "/for-isi",
+        "viewport": "desktop",
+        "violations": 0,
+        "manualReviewRules": [
+          "color-contrast"
+        ]
+      },
+      {
+        "path": "/for-trials",
+        "viewport": "desktop",
+        "violations": 0,
+        "manualReviewRules": []
+      },
+      {
+        "path": "/forgot-password",
+        "viewport": "desktop",
+        "violations": 0,
+        "manualReviewRules": []
+      },
+      {
+        "path": "/how-it-works",
+        "viewport": "desktop",
+        "violations": 0,
+        "manualReviewRules": [
+          "color-contrast"
+        ]
+      },
+      {
+        "path": "/platform",
+        "viewport": "desktop",
+        "violations": 0,
+        "manualReviewRules": [
+          "aria-prohibited-attr",
+          "color-contrast"
+        ]
+      },
+      {
+        "path": "/pricing",
+        "viewport": "desktop",
+        "violations": 0,
+        "manualReviewRules": []
+      },
+      {
+        "path": "/products",
+        "viewport": "desktop",
+        "violations": 0,
+        "manualReviewRules": [
+          "color-contrast"
+        ]
+      },
+      {
+        "path": "/research",
+        "viewport": "desktop",
+        "violations": 0,
+        "manualReviewRules": [
+          "color-contrast"
+        ]
+      },
+      {
+        "path": "/research/dashboard",
+        "viewport": "desktop",
+        "violations": 0,
+        "manualReviewRules": [
+          "aria-prohibited-attr",
+          "color-contrast"
+        ]
+      },
+      {
+        "path": "/research/validation",
+        "viewport": "desktop",
+        "violations": 0,
+        "manualReviewRules": [
+          "color-contrast"
+        ]
+      },
+      {
+        "path": "/reset-password",
+        "viewport": "desktop",
+        "violations": 0,
+        "manualReviewRules": []
+      },
+      {
+        "path": "/science",
+        "viewport": "desktop",
+        "violations": 0,
+        "manualReviewRules": [
+          "color-contrast"
+        ]
+      },
+      {
+        "path": "/science/graph",
+        "viewport": "desktop",
+        "violations": 0,
+        "manualReviewRules": [
+          "color-contrast"
+        ]
+      },
+      {
+        "path": "/sign-in",
+        "viewport": "desktop",
+        "violations": 0,
+        "manualReviewRules": []
+      },
+      {
+        "path": "/sign-up",
+        "viewport": "desktop",
+        "violations": 0,
+        "manualReviewRules": []
+      },
+      {
+        "path": "/solutions",
+        "viewport": "desktop",
+        "violations": 0,
+        "manualReviewRules": [
+          "color-contrast"
+        ]
+      },
+      {
+        "path": "/technology",
+        "viewport": "desktop",
+        "violations": 0,
+        "manualReviewRules": [
+          "aria-prohibited-attr",
+          "color-contrast"
+        ]
+      },
+      {
+        "path": "/",
+        "viewport": "mobile",
+        "violations": 0,
+        "manualReviewRules": [
+          "aria-prohibited-attr",
+          "color-contrast"
+        ]
+      },
+      {
+        "path": "/platform",
+        "viewport": "mobile",
+        "violations": 0,
+        "manualReviewRules": [
+          "aria-prohibited-attr",
+          "color-contrast"
+        ]
+      },
+      {
+        "path": "/products",
+        "viewport": "mobile",
+        "violations": 0,
+        "manualReviewRules": [
+          "color-contrast"
+        ]
+      },
+      {
+        "path": "/research/dashboard",
+        "viewport": "mobile",
+        "violations": 0,
+        "manualReviewRules": [
+          "aria-prohibited-attr",
+          "color-contrast"
+        ]
+      },
+      {
+        "path": "/research/validation",
+        "viewport": "mobile",
+        "violations": 0,
+        "manualReviewRules": [
+          "color-contrast"
+        ]
+      },
+      {
+        "path": "/science/graph",
+        "viewport": "mobile",
+        "violations": 0,
+        "manualReviewRules": [
+          "color-contrast"
+        ]
+      }
+    ],
+    "configuredRecoveryFormsAlsoScanned": 2,
+    "manualAssistiveTechnologyVerified": false,
+    "fullWcagConformanceClaim": false
+  },
+  "performanceReport": "performance.lab.json",
+  "researchPilotStatus": "blocked_pending_trusted_acceptance",
+  "researchPilotReady": false,
+  "liveChecks": {
+    "neonDatabase": false,
+    "authProvider": false,
+    "emailDelivery": false,
+    "vercelDeployment": false,
+    "twoAccountReviewerRehearsal": false,
+    "databaseRestore": false,
+    "deploymentRollback": false,
+    "fieldCoreWebVitals": false,
+    "manualDeviceAndBrowserMatrix": false
+  },
+  "releaseBlockers": [
+    {
+      "id": "auth_database_alignment",
+      "type": "verification_gap",
+      "status": "live_not_verified",
+      "owner": null
+    },
+    {
+      "id": "recovery_email_token_abuse_and_session_invalidation",
+      "type": "verification_gap",
+      "status": "live_not_verified",
+      "owner": null
+    },
+    {
+      "id": "staging_roles_and_independent_reviewer_journey",
+      "type": "verification_gap",
+      "status": "live_not_verified",
+      "owner": null
+    },
+    {
+      "id": "mobile_lcp_2500ms",
+      "type": "measured_budget_failure",
+      "status": "open",
+      "owner": null
+    },
+    {
+      "id": "manual_accessibility_and_cross_browser",
+      "type": "verification_gap",
+      "status": "not_verified",
+      "owner": null
+    },
+    {
+      "id": "source_rights_scientific_and_evaluation_acceptance",
+      "type": "human_acceptance_gap",
+      "status": "not_verified",
+      "owner": null
+    },
+    {
+      "id": "legal_privacy_terms_retention_and_support",
+      "type": "required_information_and_acceptance",
+      "status": "not_published_or_approved",
+      "owner": null
+    },
+    {
+      "id": "live_security_headers_cookie_csp_and_rate_limits",
+      "type": "verification_gap",
+      "status": "not_verified",
+      "owner": null
+    },
+    {
+      "id": "monitoring_oncall_restore_and_rollback",
+      "type": "operations_acceptance_gap",
+      "status": "not_verified",
+      "owner": null
+    },
+    {
+      "id": "consent_and_privacy_safe_analytics",
+      "type": "unimplemented_or_unverified",
+      "status": "not_verified",
+      "owner": null
+    }
+  ],
+  "unavailableCapabilities": [
+    "1000_node_graph_rendering",
+    "live_moderated_community",
+    "automatic_review_to_graph_publication",
+    "real_trial_enrolment"
+  ],
+  "excludedCapabilities": [
+    "live_PHI",
+    "live_CDS",
+    "shared_patient_database",
+    "automatic_scientific_approval"
+  ],
+  "lockfiles": [
+    {
+      "path": "bun.lock",
+      "sha256": "f7004963a956519c6cf4fca962f3db656df500576faab6fe9a27dfe1374fed1b"
+    },
+    {
+      "path": "site/bun.lock",
+      "sha256": "131882536fd6509637cfe21694e23f78b2fd36c6c813bc4cc7d95f259ddf8f9e"
+    }
+  ],
+  "fullLocalArtifacts": "site/test-results (gitignored); CI local-browser-qa artifact (7 days); /tmp/hsi-qa-performance",
+  "receiptIsNotTrustedOperationalApproval": true
+}
