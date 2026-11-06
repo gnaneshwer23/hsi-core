@@ -1,15 +1,15 @@
 /** Public product-experience IA. Governed tools remain contextual workspace links. */
 export const PRIMARY_NAV_LINKS = [
- { to: "/platform", label: "Platform"},{ to: "/solutions", label: "Solutions"},{ to: "/research", label: "Research"},
- { to: "/evidence-safety", label: "Evidence & safety"},{ to: "/community", label: "Community"}
+ { to: "/platform", label: "Platform"},{ to: "/research", label: "Research"},{ to: "/products", label: "Products"},
+ { to: "/science", label: "Science"},{ to: "/how-it-works", label: "How it works"}
 ] as const;
 export const SECONDARY_NAV_LINKS=[
- { to: "/products", label: "Products"},{ to: "/technology", label: "Technology"},{ to: "/science", label: "Science"},
- { to: "/how-it-works", label: "How It Works"},{ to: "/pricing", label: "Access & pilots"},{ to: "/contact", label: "Contact"}
+ { to: "/solutions", label: "Solutions"},{ to: "/technology", label: "Technology"},{ to: "/evidence-safety", label: "Evidence & safety"},
+ { to: "/pricing", label: "Access options"},{ to: "/contact", label: "Research access"}
 ] as const;
 export const PUBLIC_MARKETING_PATHS=[
- "/","/platform","/technology","/products","/solutions","/research","/evidence-safety","/community","/pricing","/contact",
- "/science","/how-it-works","/for-isi","/for-aksh","/for-trials","/discovery"
+ "/","/platform","/technology","/products","/solutions","/research","/evidence-safety","/pricing","/contact",
+ "/science","/how-it-works","/for-isi","/for-aksh","/for-trials"
 ] as const;
 export const PRIMARY_NAV_CTA={ to: "/contact", label: "Request access"} as const;
 export function isPublicMarketingPath(pathname:string){return (PUBLIC_MARKETING_PATHS as readonly string[]).includes(pathname)}

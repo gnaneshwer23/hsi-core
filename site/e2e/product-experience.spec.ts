@@ -11,32 +11,25 @@ test("public pages have a single main/title, working navigation and no narrow-sc
   if(route==="/")await page.screenshot({path:info.outputPath("home-mobile.png"),fullPage:true});
  }
 });
-test("home context map, journey and live fixture preview are accessible and truthful",async({page})=>{
- await page.goto("/");await expect(page.getByRole("heading",{level:1})).toContainText("Make sense of the connections.");
- const map=page.getByRole("group",{name:"Explore connected domains"});await map.getByRole("button",{name:"Microbiome",exact:true}).focus();await page.keyboard.press("Enter");await expect(page.locator(".xp-context-figure figcaption")).toContainText("causal link");
- const journey=page.getByRole("group",{name:"Explore the research journey"});await journey.getByRole("button",{name:/Review/}).click();await expect(page.locator(".xp-journey")).toContainText("An authorised independent reviewer");
- const panel=page.locator(".xp-product-preview");await panel.getByRole("button",{name:"Load verified example"}).click();await expect(panel).toContainText("SYN-P-000001");
- await expect(panel.getByRole("img")).toHaveAccessibleName(/HbA1c synthetic trend: 7.81/);
- await panel.getByLabel("Lab marker",{exact:true}).selectOption("hs-CRP");await expect(panel.getByRole("img")).toHaveAccessibleName(/8.15 mg\/L/);await expect(panel).toContainText("Reference intervals are not supplied");
- await panel.getByRole("link",{name:"Open this profile and its provenance"}).click();await expect(page).toHaveURL(/research\/validation\?patient=SYN-P-000001/);
+test("home communicates the research workflow and supports accessible capability navigation",async({page})=>{
+ await page.goto("/");await expect(page.getByRole("heading",{level:1})).toContainText("See the biology.");await expect(page.getByRole("img",{name:/Sculptural view of human anatomy/})).toBeVisible();
+ const tabs=page.getByRole("tablist",{name:"Research capabilities"});await tabs.getByRole("tab",{name:"Evidence"}).focus();await page.keyboard.press("ArrowRight");await expect(tabs.getByRole("tab",{name:"Connections"})).toHaveAttribute("aria-selected","true");await expect(page.getByRole("tabpanel")).toContainText("Explore biology");
+ await page.getByRole("tabpanel").getByRole("link",{name:/Explore the science/}).click();await expect(page).toHaveURL(/science$/);
 });
 test("mobile menu opens, closes with Escape and connects public destinations",async({page})=>{
  await page.setViewportSize({width:390,height:844});await page.goto("/");const menu=page.locator(".nav-toggle");await menu.click();await expect(menu).toHaveAttribute("aria-expanded","true");
  await page.keyboard.press("Escape");await expect(menu).toHaveAttribute("aria-expanded","false");await expect(menu).toBeFocused();
  await menu.click();await page.locator("#primary-menu").getByRole("link",{name:"Evidence & safety",exact:true}).click();await expect(page).toHaveURL(/evidence-safety$/);
- await expect(page.getByRole("heading",{level:1})).toContainText("Trust starts with");
+ await expect(page.getByRole("heading",{level:1})).toContainText("Confidence begins");
 });
-test("evidence overview uses the real working catalogue and keeps confidence separate",async({page})=>{
- await page.goto("/evidence-safety");const preview=page.getByRole("region",{name:"Verified working evidence preview"});await expect(preview).toContainText("Unreviewed candidates");
- await expect(preview).toContainText("Release-eligible claims");await expect(preview).toContainText("Source rights and scientific clearance remain pending");
+test("evidence overview explains source context without presenting unreviewed records as results",async({page})=>{
+ await page.goto("/evidence-safety");await expect(page.getByRole("main")).toContainText("Sources and candidate claims require appropriate reuse rights");
  await page.getByRole("group",{name:"Understand evidence states"}).getByRole("button",{name:"Supported",exact:true}).click();await expect(page.locator(".xp-evidence-legend")).toContainText("Not calibrated");
- await preview.getByRole("link",{name:"Open sources, passages and candidate details"}).click();await expect(page).toHaveURL(/evidence-readiness$/);
+ await page.getByRole("link",{name:"Follow the research workflow",exact:true}).click();await expect(page).toHaveURL(/how-it-works$/);
 });
-test("access and contact flows create a local preparation file without pretending submission",async({page})=>{
- const posts:string[]=[];page.on("request",r=>{if(r.method()==="POST")posts.push(r.url())});await page.goto("/pricing");await page.getByRole("link",{name:"Prepare a pilot brief"}).click();await expect(page).toHaveURL(/contact\?interest=pilot/);
- await expect(page.getByLabel("Your interest",{exact:true})).toHaveValue("pilot");await page.getByLabel("The research workflow (no identifying data)",{exact:true}).fill("Review permitted RA mechanism sources with an independent scientist.");
- const event=page.waitForEvent("download");await page.getByRole("button",{name:"Download preparation brief"}).click();const d=await event,p=JSON.parse(await readFile((await d.path())!,"utf8"));expect(p.submitted).toBe(false);expect(p.permissionsGranted).toBe(false);expect(posts).toEqual([]);
- await expect(page.getByRole("status")).toContainText("It has not been sent");await page.getByRole("link",{name:"Create an account",exact:true}).click();await expect(page).toHaveURL(/sign-up$/);
+test("public access paths lead to the real account process without a pretend submission",async({page})=>{
+ const posts:string[]=[];page.on("request",r=>{if(r.method()==="POST")posts.push(r.url())});await page.goto("/pricing");await page.getByRole("main").getByRole("link",{name:"Research access",exact:true}).click();await expect(page).toHaveURL(/contact$/);
+ await expect(page.getByRole("main")).toContainText("permissions are provisioned independently");await page.getByRole("link",{name:"Create an account",exact:true}).click();await expect(page).toHaveURL(/sign-up$/);expect(posts).toEqual([]);
 });
 test("community drafts allow source-linked replies, flags and export without fake publication",async({page})=>{
  const posts:string[]=[];page.on("request",r=>{if(r.method()==="POST")posts.push(r.url())});await page.goto("/community");await page.getByLabel("Research question or claim challenge",{exact:true}).fill("Which tissue and assay details should travel with the source?");await page.getByLabel("Optional source URL",{exact:true}).fill("https://pubmed.ncbi.nlm.nih.gov/18375541/");
@@ -57,14 +50,13 @@ test("graph controls, bookmarks and SVG/PNG/JSON exports preserve draft scope",a
  await frame.getByRole("button",{name:"Pan graph right",exact:true}).click();await page.getByLabel("Depth",{exact:true}).selectOption("2");await expect(page).toHaveURL(/depth=2/);await page.reload();await expect(page.getByLabel("Depth",{exact:true})).toHaveValue("2");
  for(const format of ["SVG","PNG","JSON"]){const event=page.waitForEvent("download");await frame.getByRole("button",{name:"Download graph "+format,exact:true}).click();const d=await event;expect(d.suggestedFilename()).toContain("."+format.toLowerCase());if(format==="JSON"){const p=JSON.parse(await readFile((await d.path())!,"utf8"));expect(p.scientificApproval).toBe(false);expect(p.scope).toBe("public_educational_draft")}}
 });
-test("reduced-motion mode retains functional navigation without animated nuclei",async({page})=>{
- await page.emulateMedia({reducedMotion:"reduce"});await page.goto("/");expect(await page.locator(".xp-map-nucleus").evaluate(el=>getComputedStyle(el).animationName)).toBe("none");await page.getByRole("group",{name:"Explore connected domains"}).getByRole("button",{name:"Trials",exact:true}).click();await expect(page.locator(".xp-context-figure figcaption")).toContainText("eligibility");
+test("reduced-motion mode retains functional capability navigation",async({page})=>{
+ await page.emulateMedia({reducedMotion:"reduce"});await page.goto("/");await page.getByRole("tab",{name:"Review",exact:true}).click();await expect(page.getByRole("tabpanel")).toContainText("independent review");await expect(page.locator(".ed-brief")).toHaveCSS("transform","none");
 });
 
-
-test("trial entry opens the actual trial view and PDF printing keeps labels and inert text",async({page})=>{
+test("internal validation opens the actual trial view and PDF printing keeps labels and inert text",async({page})=>{
  await page.addInitScript(()=>{window.print=()=>{(window as unknown as {printCalled:boolean}).printCalled=true}});
- await page.goto("/for-trials");await page.getByRole("link",{name:"Open synthetic trial context",exact:true}).click();await expect(page).toHaveURL(/view=trials/);
+ await page.goto("/research/validation?patient=SYN-P-000001&view=trials");await expect(page).toHaveURL(/view=trials/);
  await expect(page.getByRole("button",{name:"Trials",exact:true})).toHaveAttribute("aria-pressed","true");await expect(page.getByRole("main")).toContainText("15 synthetic trial records");
  await page.getByRole("button",{name:"Review & brief",exact:true}).click();await page.getByRole("button",{name:"Print / Save PDF",exact:true}).click();
  expect(await page.evaluate(()=>(window as unknown as {printCalled:boolean}).printCalled)).toBe(true);

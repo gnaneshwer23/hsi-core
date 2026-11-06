@@ -9,7 +9,7 @@ describe("Technology data-to-discovery hero",()=>{
     expect(page.indexOf("<TechnologyFlow />")).toBeLessThan(page.indexOf('id="sources"'));
   });
   it("shows five ordered stages, three product inputs and six governed intelligence engines",()=>{
-    for(const label of ["Data sources","Knowledge building","HSI NEXUS","Intelligence outputs","Potential impact","Akeno Health","Aksh Health","Immune Super Intelligence","Context Engine","Biology Engine","Evidence Engine","Reasoning Engine","Discovery Engine","Governance Engine"])expect(flow).toContain(label);
+    for(const label of ["Data sources","Knowledge building","HSI NEXUS","Intelligence outputs","Potential impact","Authorised care systems","Aksh Health","Immune Super Intelligence","Context Engine","Biology Engine","Evidence Engine","Reasoning Engine","Discovery Engine","Governance Engine"])expect(flow).toContain(label);
   });
   it("details the three source products and governed integration layers",()=>{
     for(const phrase of ["EHR encounters, diagnoses & procedures","Wearables, glucose & cardiometabolic trends","Immune cells, tissues, pathways & mechanisms","Normalise FHIR, lab, omics & terminology","Verify identity, permissions & purpose","Biomedical evidence, uncertainty & hypotheses"]) expect(flow).toContain(phrase);

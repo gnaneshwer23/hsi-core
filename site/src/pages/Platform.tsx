@@ -1,7 +1,7 @@
+import { BiologyArtwork } from "../components/editorial/Editorial";
 import { useState, type KeyboardEvent } from "react";
 import { Link } from "react-router-dom";
 import {
-  FoundationArt,
   PlatformConnectionMap,
   SharedSoftwareArt,
 } from "../components/platform/PlatformArt";
@@ -212,7 +212,7 @@ export function Platform() {
               <Link className="hsi-editorial-textlink" to="/how-it-works">See how investigations work ↗</Link>
             </div>
           </div>
-          <FoundationArt />
+          <BiologyArtwork />
         </div>
         <div className="hsi-editorial-wrap hsi-platform-hero-foot">
           <span>Shared technology · product-owned data</span>
@@ -229,7 +229,7 @@ export function Platform() {
               <em>Never share the records.</em>
             </h2>
             <p>
-              Human Super Intelligence is an operating model, not a workflow to follow. Products reuse shared capability patterns—evidence, knowledge, investigation and review—inside their own permissions walls. Software can travel; patient records, research collections and trial data stay where they belong.
+              Products reuse HSI capabilities for evidence, biological knowledge, investigation and review while keeping their records under their own permissions. Shared technology connects the work; source ownership and access remain with each product.
             </p>
             <a className="hsi-editorial-textlink" href="#platform-architecture">
               Inspect the architecture ↗
@@ -238,7 +238,7 @@ export function Platform() {
           <figure className="hsi-idea-figure">
             <SharedSoftwareArt />
             <figcaption>
-              Operating model · shared HSI software · four product silos with permissions walls · not a live data pipe
+              Shared research technology. Product-owned records and permissions.
             </figcaption>
           </figure>
         </div>

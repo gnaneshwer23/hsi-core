@@ -1,3 +1,4 @@
+import {BiologyArtwork} from "../components/editorial/Editorial";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { PRODUCT_NAME, PRODUCT_SHORT } from "../lib/brand";
@@ -87,7 +88,7 @@ const foundationPoints = [
   },
   {
     title: "Scope you can verify",
-    detail: "Available experiences, development work and planned concepts stay clearly labelled—this page is a chooser and honesty ledger, not proof of deployed clinical capability.",
+    detail: "Available experiences, development work and planned concepts stay clearly labelled—each product has a defined role, data boundary and scope.",
   },
 ] as const;
 
@@ -98,25 +99,7 @@ const productShowcases: Record<ProductId, { question: string; input: string; pro
   trials: { question: "Which study criteria require further evidence?", input: "Study criteria and appropriately authorised clinical context when available", process: "Structure inclusion and exclusion criteria and expose unknowns", output: "An investigator-facing pre-screening evidence checklist", review: "Investigators determine eligibility; no live matching or enrolment", illustration: "STUDIES · CRITERIA · REVIEW" },
 };
 
-function ProductsHeroArt() {
-  return (
-    <aside className="hsi-products-hero-art" aria-label="Four governed products connected through the HSI NEXUS intelligence foundation">
-      <p className="hsi-products-hero-art-label">THE HSI ECOSYSTEM / CONCEPTUAL ARCHITECTURE</p>
-      <div className="hsi-products-nexus" aria-hidden="true">
-        <div className="hsi-products-nexus-orbit">
-          {order.map((id, i) => {
-            const product = ECOSYSTEM_PRODUCTS.find((p) => p.id === id)!;
-            return <div className={`hsi-products-nexus-node hsi-products-nexus-node-${id}`} key={id}>
-              <span>0{i + 1}</span><strong>{product.name}</strong><small>{MATURITY_CHIP_LABEL[product.chip]}</small>
-            </div>;
-          })}
-          <div className="hsi-products-nexus-center"><span>HSI</span><strong>NEXUS</strong><small>Governed intelligence</small></div>
-        </div>
-      </div>
-      <p className="hsi-products-hero-art-foot">Shared capabilities · independent product permissions · authorised exchange only</p>
-    </aside>
-  );
-}
+function ProductsHeroArt(){return <aside className="hsi-products-hero-art ed-product-hero"><BiologyArtwork/><p className="ed-product-foundation"><strong>NEXUS</strong><span>Shared research technology</span></p></aside>}
 
 function ProductExperienceVisual({ id }: { id: ProductId }) {
   return <div className={`hsi-products-experience hsi-products-experience-${id}`} aria-hidden="true">

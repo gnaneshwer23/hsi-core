@@ -1,3 +1,11 @@
+## Public website editorial direction — 2026-11-06
+
+The founder's anatomical biotech references now guide a continuous website narrative, replacing the public slide/card presentation. `styles/editorial-site.css` applies only through the public `editorial-site` shell. The homepage uses original anatomy artwork, larger sans type, open sections and accessible capability tabs. Other landing pages share the visual language while retaining their real interactions. Public data previews and local preparation forms are removed; account access and product maturity remain truthful. See [implementation and QA scope](../docs/HSI_PUBLIC_WEBSITE_EDITORIAL_REFRESH.md).
+
+This entry supersedes the earlier public-page design directions below. Internal research/validation labels and controls are preserved.
+
+---
+
 ## Research dashboard reference adaptation — 2026-11-06
 
 See [dashboard implementation and data boundaries](../docs/HSI_RESEARCH_DASHBOARD.md). The dashboard now uses a compact toolbar, original anatomy illustration, soft metric cards, a selectable profile table and an actual fixture-domain/context side rail. Private research summaries come from the existing backend-validated workspace response; validation data uses the pinned fixture adapter. No diagnosis, clinical alert, treatment-success or fabricated growth metric is displayed. The dashboard supplies its own contextual navigation, avoiding a duplicate research-navigation row.

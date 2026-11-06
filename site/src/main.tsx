@@ -6,6 +6,7 @@ import "./styles/global.css";
 import "./styles/marketing-v2.css";
 import "./styles/experience.css";
 import "./styles/site-chrome.css";
+import "./styles/editorial-site.css";
 
 const root=document.getElementById("root")!;
 const app=<StrictMode><BrowserRouter><App /></BrowserRouter></StrictMode>;

@@ -8,15 +8,14 @@ const PRODUCT_LINKS = [
   { to: "/for-trials", label: "HSI Trials" },
 ] as const;
 const PROGRESS_LINKS = [
-  { to: "/roadmap", label: "Roadmap" },
   { to: "/status", label: "Status" },
   { to: "/docs", label: "Docs" },
 ] as const;
-const INFORMATION_LINKS=[{to:"/technology",label:"Technology"},{to:"/science",label:"Science"},{to:"/how-it-works",label:"How it works"},{to:"/pricing",label:"Access & pilots"},{to:"/contact",label:"Contact"}];
+const INFORMATION_LINKS=[{to:"/solutions",label:"Solutions"},{to:"/technology",label:"Technology"},{to:"/evidence-safety",label:"Evidence & safety"},{to:"/pricing",label:"Access options"},{to:"/contact",label:"Research access"}];
 export function Footer() {
   return <footer className="footer site-footer" aria-label="Site footer">
     <div className="footer-wrap footer-grid">
-      <div className="footer-brand-col"><Link to="/" className="footer-brand" aria-label={`${PRODUCT_NAME} home`}><span className="footer-mark" aria-hidden="true">H</span><span>{PRODUCT_NAME}</span></Link><p className="footer-tagline">{PRODUCT_TAGLINE}</p><p className="footer-honesty">Science is an educational experience. Research tools support human review; they do not provide diagnosis or treatment advice.</p><Link to="/contact" className="footer-contact">Contact the team <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 13 13 3M3 3h10v10" stroke="currentColor" strokeWidth="1.5"/></svg></Link></div>
+      <div className="footer-brand-col"><Link to="/" className="footer-brand" aria-label={`${PRODUCT_NAME} home`}><span className="footer-mark" aria-hidden="true">H</span><span>{PRODUCT_NAME}</span></Link><p className="footer-tagline">{PRODUCT_TAGLINE}</p><p className="footer-honesty">For research and education. Clinical decisions remain with qualified professionals in the appropriate care setting.</p><Link to="/contact" className="footer-contact">Research access <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 13 13 3M3 3h10v10" stroke="currentColor" strokeWidth="1.5"/></svg></Link></div>
       <nav aria-label="Footer explore"><h2>Explore</h2><ul>{PRIMARY_NAV_LINKS.map(l=><li key={l.to}><Link to={l.to}>{l.label}</Link></li>)}</ul></nav>
       <nav aria-label="Footer products"><h2>Products</h2><ul>{PRODUCT_LINKS.map(l=><li key={l.to}><Link to={l.to}>{l.label}</Link></li>)}</ul></nav>
       <nav aria-label="Footer information"><h2>Information</h2><ul>{INFORMATION_LINKS.map(l=><li key={l.to}><Link to={l.to}>{l.label}</Link></li>)}</ul></nav>

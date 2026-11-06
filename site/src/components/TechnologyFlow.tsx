@@ -3,7 +3,7 @@ import "./TechnologyFlow.css";
 
 const stages = [
   { title: "Data sources", subtitle: "Authorised & governed", rows: [
-    {name:"Akeno Health",description:"Healthcare systems & clinical context",details:["EHR encounters, diagnoses & procedures","Laboratory results, diagnostics & imaging","Medications, prescriptions & treatment outcomes","FHIR / HL7 / LIS / DICOM interfaces"]},
+    {name:"Authorised care systems",description:"Healthcare systems & clinical context",details:["EHR encounters, diagnoses & procedures","Laboratory results, diagnostics & imaging","Medications, prescriptions & treatment outcomes","FHIR / HL7 / LIS / DICOM interfaces"]},
     {name:"Aksh Health",description:"Longitudinal patient intelligence",details:["Symptoms, history & patient-reported outcomes","Wearables, glucose & cardiometabolic trends","Medication adherence, lifestyle & follow-ups","Personalised journeys and care coordination"]},
     {name:"Immune Super Intelligence",description:"Biological & research intelligence",details:["Immune cells, tissues, pathways & mechanisms","Genomics, proteomics & other multi-omics","Microbiome, metabolites & host responses","Disease evidence, biomarkers & publications"]},
   ] },

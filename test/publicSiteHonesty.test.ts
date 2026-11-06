@@ -43,17 +43,17 @@ describe("Public HSI site honesty", () => {
     expect(app).toContain('path="gateway"');
 
     const primaryNav = site("src/lib/primaryNav.ts");
-    for(const route of ["/platform","/solutions","/research","/evidence-safety","/community","/pricing","/contact","/products","/technology","/science","/how-it-works"])expect(primaryNav).toContain(route);
+    for(const route of ["/platform","/solutions","/research","/evidence-safety","/pricing","/contact","/products","/technology","/science","/how-it-works"])expect(primaryNav).toContain(route);
     expect(primaryNav).toContain('label: "Request access"');
     const primaryLinksBlock=primaryNav.match(/export const PRIMARY_NAV_LINKS = \[[\s\S]*?\] as const/)?.[0]??"";
-    for(const route of ["/platform","/solutions","/research","/evidence-safety","/community"])expect(primaryLinksBlock).toContain(route);
+    for(const route of ["/platform","/research","/products","/science","/how-it-works"])expect(primaryLinksBlock).toContain(route);
     for(const route of ["/curator","/gateway","/clinical-timeline","/trials-criteria","/status"])expect(primaryLinksBlock).not.toContain(route);
-    for(const route of ["/for-isi","/for-aksh","/for-trials","/discovery"])expect(primaryNav).toContain(route);
+    for(const route of ["/for-isi","/for-aksh","/for-trials"])expect(primaryNav).toContain(route);
     const nav=site("src/components/Nav.tsx");
     expect(nav).toContain("PRIMARY_NAV_LINKS");expect(nav).toContain("PRIMARY_NAV_CTA");expect(nav).not.toContain("ENGINEERING_LINKS");
     const home=site("src/pages/Home.tsx"),experience=site("src/components/Experience.tsx");
-    expect(home).toContain("Make sense of the connections.");expect(home).toContain("Aksh Health");expect(home).toContain("ISI Research");
-    expect(home).toContain("ValidationPreview");expect(home).toContain("EvidenceLegend");expect(experience).toContain("Illustrative domain map");
+    expect(home).toContain("See the biology.");expect(home).toContain("Aksh Health");expect(home).toContain("Immune Super Intelligence");
+    expect(home).not.toContain("ValidationPreview");expect(home).toContain("ResearchFeatureTabs");expect(experience).toContain("review scope");
     expect(home).not.toContain("100% accurate");
     const ecosystem = site("src/components/landing/EcosystemGrid.tsx");
     expect(ecosystem).toContain("ECOSYSTEM_PRODUCTS");
@@ -64,10 +64,10 @@ describe("Public HSI site honesty", () => {
 
     const footer = site("src/components/Footer.tsx");
     expect(footer).toContain("PROGRESS_LINKS");
-    expect(footer).toContain('to: "/roadmap"');
+    expect(footer).not.toContain('to: "/roadmap"');
     expect(footer).toContain('to: "/status"');
     expect(footer).toContain('to: "/docs"');
-    expect(footer).toContain("educational experience");
+    expect(footer).toContain("For research and education");
   });
 
   it("wires Clinical timeline + Trials five-state + Gateway thin demos with honesty labels", () => {
@@ -179,9 +179,9 @@ describe("Stage A public security boundary audit", () => {
 
 
 describe("Homepage scientific visuals and product proof",()=>{
- it("uses labelled domain artwork and a verified fixture preview instead of fabricated results",()=>{
+ it("uses original public artwork while preserving labelled validation components",()=>{
   const home=site("src/pages/Home.tsx"),preview=site("src/components/ValidationPreview.tsx"),art=site("src/components/Experience.tsx");
-  expect(home).toContain("LivingContextMap");expect(art).toContain('role="img"');expect(art).toContain("EXPERIENCE_DOMAINS");
+  expect(home).toContain("BiologyArtwork");expect(art).toContain('role="img"');expect(art).toContain("EXPERIENCE_DOMAINS");
   expect(preview).toContain("loadValidationCatalogue");expect(preview).toContain("loadValidationScenario");expect(preview).toContain("Synthetic validation");
   expect(preview).toContain("Reference intervals are not supplied");expect(home).not.toContain("PMID:12345678");
  });

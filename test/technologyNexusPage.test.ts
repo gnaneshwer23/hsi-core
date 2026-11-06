@@ -8,7 +8,7 @@ describe("HSI NEXUS technology page", () => {
     expect(read("../site/src/lib/primaryNav.ts")).toContain('to: "/technology"');
   });
   it("shows the four independent information domains and six intelligence functions", () => {
-    for (const name of ["Akeno Health", "Aksh Health", "Immune Super Intelligence", "External research & trials", "Context", "Biology", "Evidence", "Reasoning", "Discovery", "Governance"]) expect(page).toContain(name);
+    for (const name of ["Authorised care systems", "Aksh Health", "Immune Super Intelligence", "External research & trials", "Context", "Biology", "Evidence", "Reasoning", "Discovery", "Governance"]) expect(page).toContain(name);
   });
   it("explains four governed logical graph layers and source-specific trust boundaries", () => {
     for (const name of ["Patient context", "Human biology", "Gut–immune–metabolic", "Biomedical evidence", "POTENTIAL DATA CONTRACT", "TRUST BOUNDARY"]) expect(page).toContain(name);

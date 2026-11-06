@@ -22,6 +22,7 @@ export function Layout() {
 
   const shellClass = [
     "site-shell experience-shell",
+    isPublicPage ? "editorial-site" : "",
     isHome ? "home-shell" : "",
     isPublicPage && !isHome ? "platform-shell" : "",
     isPublicPage || isAccountPage ? "public-site-v2" : "",
