@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import {authBaseUrl,hsiAuth} from "../lib/hsiAuth";
 import { PRODUCT_NAME } from "../lib/brand";
@@ -13,6 +13,9 @@ const ctaArrow = (
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [moreOpen,setMoreOpen]=useState(false);
+  const moreRef=useRef<HTMLDivElement>(null);
+  const moreButtonRef=useRef<HTMLButtonElement>(null);
   const [signedIn,setSignedIn]=useState(false);
   const { pathname } = useLocation();
   useEffect(()=>{let active=true;if(!authBaseUrl){setSignedIn(false);return}hsiAuth.session().then(r=>{if(active)setSignedIn(!!r.data&&!r.error)}).catch(()=>{if(active)setSignedIn(false)});return()=>{active=false}},[pathname]);
@@ -38,8 +41,11 @@ export function Nav() {
   }, [open]);
 
   useEffect(() => {
-    setOpen(false);
+    setOpen(false);setMoreOpen(false);
   }, [pathname]);
+
+  useEffect(()=>{if(!moreOpen)return;const outside=(e:PointerEvent)=>{if(!moreRef.current?.contains(e.target as Node))setMoreOpen(false)};const escape=(e:KeyboardEvent)=>{if(e.key==="Escape"){setMoreOpen(false);moreButtonRef.current?.focus()}};document.addEventListener("pointerdown",outside);document.addEventListener("keydown",escape);return()=>{document.removeEventListener("pointerdown",outside);document.removeEventListener("keydown",escape)}},[moreOpen]);
+  useEffect(()=>{const media=window.matchMedia("(min-width:1151px)");const reset=()=>{setOpen(false);setMoreOpen(false)};media.addEventListener("change",reset);return()=>media.removeEventListener("change",reset)},[]);
 
   return (
     <header className={`nav${isHome ? " home-nav" : ""}${scrolled ? " scrolled" : ""}`}>
@@ -53,7 +59,7 @@ export function Nav() {
             H
           </span>
           <span className="brand-wordmark">
-            <span className="brand-name">{PRODUCT_NAME}</span>
+            <span className="brand-name">{PRODUCT_NAME}</span><span className="brand-short" aria-hidden="true">HSI</span>
           </span>
         </Link>
 
@@ -67,6 +73,7 @@ export function Nav() {
               {l.label}
             </NavLink>
           ))}
+          <div className="nav-more" ref={moreRef}><button ref={moreButtonRef} type="button" aria-expanded={moreOpen} aria-controls="secondary-pages" onClick={()=>setMoreOpen(v=>!v)}>More<svg viewBox="0 0 16 16" width="12" height="12" fill="none" aria-hidden="true"><path d="m4 6 4 4 4-4" stroke="currentColor" strokeWidth="1.5"/></svg></button><div id="secondary-pages" hidden={!moreOpen}>{SECONDARY_NAV_LINKS.map(l=><NavLink key={l.to} to={l.to} onClick={()=>setMoreOpen(false)}>{l.label}</NavLink>)}</div></div>
         </nav>
 
         <div className="nav-auth-actions"><Link to={signedIn?"/research/account":"/sign-in"} className="nav-sign-in">{signedIn?"Account":"Sign in"}</Link></div>
@@ -86,13 +93,11 @@ export function Nav() {
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
         >
-          <span />
-          <span />
-          <span />
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true">{open?<path d="m6 6 12 12M6 18 18 6" stroke="currentColor" strokeWidth="1.7"/>:<path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" strokeWidth="1.7"/>}</svg>
         </button>
       </div>
 
-      <div id="primary-menu" hidden={!open} className={`nav-drawer${open ? " open" : ""}`}>
+      <nav aria-label="Mobile navigation" id="primary-menu" hidden={!open} className={`nav-drawer${open ? " open" : ""}`}>
         <NavLink to="/" onClick={() => setOpen(false)}>
           Home
         </NavLink>
@@ -102,8 +107,8 @@ export function Nav() {
           </NavLink>
         ))}
         {SECONDARY_NAV_LINKS.map(l=><NavLink key={l.to} to={l.to} onClick={()=>setOpen(false)}>{l.label}</NavLink>)}
-        <NavLink to="/sign-in" className="nav-drawer-sign-in" onClick={() => setOpen(false)}>Sign in</NavLink>
-        <NavLink to="/sign-up" className="nav-drawer-sign-in" onClick={() => setOpen(false)}>Sign up</NavLink>
+        <NavLink to={signedIn?"/research/account":"/sign-in"} className="nav-drawer-sign-in" onClick={() => setOpen(false)}>{signedIn?"Account":"Sign in"}</NavLink>
+        {!signedIn&&<NavLink to="/sign-up" className="nav-drawer-sign-in" onClick={() => setOpen(false)}>Sign up</NavLink>}
         <Link
           to={PRIMARY_NAV_CTA.to}
           className="nav-cta nav-drawer-cta"
@@ -114,7 +119,7 @@ export function Nav() {
           </span>
           {ctaArrow}
         </Link>
-      </div>
+      </nav>
     </header>
   );
 }

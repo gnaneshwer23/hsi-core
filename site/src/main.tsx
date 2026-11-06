@@ -5,6 +5,7 @@ import App from "./App";
 import "./styles/global.css";
 import "./styles/marketing-v2.css";
 import "./styles/experience.css";
+import "./styles/site-chrome.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

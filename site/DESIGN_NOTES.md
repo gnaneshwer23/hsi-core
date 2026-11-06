@@ -1,3 +1,13 @@
+## Header, footer and controls — 2026-11-06
+
+`src/styles/site-chrome.css` is the final shared presentation layer, after `experience.css`. The header now has consistent sign-in/access actions, a desktop More disclosure for secondary pages, a compact labelled mobile brand and a proper SVG menu/close icon. Escape, outside click, route changes and breakpoint changes close menus appropriately. The mobile account link follows the provider-session display state without granting backend permissions.
+
+The footer uses independent responsive containers, readable Explore / Products / Information groups, a real product-index link and a single set of Roadmap / Status / Docs links. No missing policy pages or new services are invented. Primary, secondary and disabled controls share dimensions and contrast; explicit secondary selectors avoid the legacy CSS specificity collision. Graph controls and footer links retain at least 44px touch height.
+
+Verification: 772 core tests and the full 112-test browser suite passed. A focused five-test chrome suite passed after final secondary-action/account-link polish. It checks seven viewport widths, header overlap, menu keyboard/outside behaviour, footer links and touch targets, and action contrast. Desktop footer and mobile menu were visually inspected. Site TypeScript and production build passed; the existing bundle-size warning remains.
+
+---
+
 ## Product experience blueprint — 2026-11-05
 
 The current presentation is `src/styles/experience.css`, imported after the historical layers below. It uses the founder’s ivory/teal/coral palette, local interactive SVGs, restrained domain colours, clear sections and consistent public/account/workspace chrome. Large sans headings use a limited serif accent. The homepage is an outcome-led split layout; the older procedural landscape and stock-image sections are no longer used there.
