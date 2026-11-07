@@ -1,0 +1,104 @@
+{
+  "schemaVersion": "hsi-n1-fixture-index-1",
+  "provider": "europe_pmc",
+  "capturedFor": "offline_replay_not_live_acceptance",
+  "scientificApproval": false,
+  "entries": {
+    "N1-C-01": {
+      "ok": true,
+      "httpStatus": 200,
+      "doi": "10.2337/db08-1637",
+      "fixture": "research/domain-graph/n1/fixtures/n1_c_01.europepmc.json",
+      "hitCount": 1,
+      "firstPmid": "19366864"
+    },
+    "N1-C-02": {
+      "ok": true,
+      "httpStatus": 200,
+      "doi": "10.1038/nature21492",
+      "fixture": "research/domain-graph/n1/fixtures/n1_c_02.europepmc.json",
+      "hitCount": 1,
+      "firstPmid": "28150762"
+    },
+    "N1-C-03": {
+      "ok": true,
+      "httpStatus": 200,
+      "doi": "10.1038/nature16961",
+      "fixture": "research/domain-graph/n1/fixtures/n1_c_03.europepmc.json",
+      "hitCount": 1,
+      "firstPmid": "26819042"
+    },
+    "N1-C-04": {
+      "ok": true,
+      "httpStatus": 200,
+      "doi": "10.1038/nature11450",
+      "fixture": "research/domain-graph/n1/fixtures/n1_c_04.europepmc.json",
+      "hitCount": 1,
+      "firstPmid": "23023125"
+    },
+    "N1-C-05": {
+      "ok": true,
+      "httpStatus": 200,
+      "doi": "10.1038/nature15766",
+      "fixture": "research/domain-graph/n1/fixtures/n1_c_05.europepmc.json",
+      "hitCount": 1,
+      "firstPmid": "26633628"
+    },
+    "N1-C-06": {
+      "ok": true,
+      "httpStatus": 200,
+      "doi": "10.1126/science.aao5774",
+      "fixture": "research/domain-graph/n1/fixtures/n1_c_06.europepmc.json",
+      "hitCount": 1,
+      "firstPmid": "29590046"
+    },
+    "N1-C-07": {
+      "ok": true,
+      "httpStatus": 200,
+      "doi": "10.1016/j.cell.2018.09.055",
+      "fixture": "research/domain-graph/n1/fixtures/n1_c_07.europepmc.json",
+      "hitCount": 1,
+      "firstPmid": "30401435"
+    },
+    "N1-C-08": {
+      "ok": true,
+      "httpStatus": 200,
+      "doi": "10.1172/JCI19246",
+      "fixture": "research/domain-graph/n1/fixtures/n1_c_08.europepmc.json",
+      "hitCount": 1,
+      "firstPmid": "14679176"
+    },
+    "N1-C-09": {
+      "ok": true,
+      "httpStatus": 200,
+      "doi": "10.1126/science.7678183",
+      "fixture": "research/domain-graph/n1/fixtures/n1_c_09.europepmc.json",
+      "hitCount": 1,
+      "firstPmid": "7678183"
+    },
+    "N1-C-10": {
+      "ok": true,
+      "httpStatus": 200,
+      "doi": "10.1038/nm.2279",
+      "fixture": "research/domain-graph/n1/fixtures/n1_c_10.europepmc.json",
+      "hitCount": 1,
+      "firstPmid": "21217695"
+    },
+    "N1-C-11": {
+      "ok": true,
+      "httpStatus": 200,
+      "doi": "10.2337/db06-1491",
+      "fixture": "research/domain-graph/n1/fixtures/n1_c_11.europepmc.json",
+      "hitCount": 1,
+      "firstPmid": "17456850"
+    },
+    "N1-C-12": {
+      "ok": true,
+      "httpStatus": 200,
+      "doi": "10.1038/s41586-018-0620-2",
+      "fixture": "research/domain-graph/n1/fixtures/n1_c_12.europepmc.json",
+      "hitCount": 1,
+      "firstPmid": "30356183"
+    }
+  }
+}

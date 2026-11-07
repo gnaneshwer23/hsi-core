@@ -1,0 +1,192 @@
+{
+  "schemaVersion": "hsi-n3-study-family-split-1",
+  "programme": "gut_immune_t2d",
+  "phase": "N3",
+  "guidelineVersion": "hsi-n3-gut-immune-t2d-guideline-1",
+  "freezeDate": null,
+  "families": [
+    {
+      "familyId": "SF-gao2009",
+      "label": "Butyrate improves insulin sensitivity and increases energy expenditure in mice",
+      "members": [
+        {
+          "sourceId": "doi:10.2337/db08-1637",
+          "n1QueueId": "N1-C-01",
+          "role": "primary"
+        }
+      ],
+      "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
+    },
+    {
+      "familyId": "SF-marino2017",
+      "label": "Gut microbial metabolites limit the frequency of autoimmune T cells and protect against type 1 diabetes",
+      "members": [
+        {
+          "sourceId": "doi:10.1038/nature21492",
+          "n1QueueId": "N1-C-02",
+          "role": "fixture_only"
+        }
+      ],
+      "notes": "N1 DOI↔title identity mismatch — family excluded from scored partitions until human DOI correction."
+    },
+    {
+      "familyId": "SF-pedersen2016",
+      "label": "Human gut microbes impact host serum metabolome and insulin sensitivity",
+      "members": [
+        {
+          "sourceId": "doi:10.1038/nature16961",
+          "n1QueueId": "N1-C-03",
+          "role": "fixture_only"
+        }
+      ],
+      "notes": "N1 DOI↔title identity mismatch — family excluded from scored partitions until human DOI correction."
+    },
+    {
+      "familyId": "SF-qin2012",
+      "label": "A metagenome-wide association study of gut microbiota in type 2 diabetes",
+      "members": [
+        {
+          "sourceId": "doi:10.1038/nature11450",
+          "n1QueueId": "N1-C-04",
+          "role": "primary"
+        }
+      ],
+      "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
+    },
+    {
+      "familyId": "SF-forslund2015",
+      "label": "Disentangling type 2 diabetes and metformin treatment signatures in the human gut microbiota",
+      "members": [
+        {
+          "sourceId": "doi:10.1038/nature15766",
+          "n1QueueId": "N1-C-05",
+          "role": "primary"
+        }
+      ],
+      "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
+    },
+    {
+      "familyId": "SF-zhao2018",
+      "label": "Gut bacteria selectively promoted by dietary fibers alleviate type 2 diabetes",
+      "members": [
+        {
+          "sourceId": "doi:10.1126/science.aao5774",
+          "n1QueueId": "N1-C-06",
+          "role": "primary"
+        }
+      ],
+      "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
+    },
+    {
+      "familyId": "SF-koh2018",
+      "label": "Microbially Produced Imidazole Propionate Impairs Insulin Signaling through mTORC1",
+      "members": [
+        {
+          "sourceId": "doi:10.1016/j.cell.2018.09.055",
+          "n1QueueId": "N1-C-07",
+          "role": "primary"
+        }
+      ],
+      "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
+    },
+    {
+      "familyId": "SF-weisberg2003",
+      "label": "Obesity is associated with macrophage accumulation in adipose tissue",
+      "members": [
+        {
+          "sourceId": "doi:10.1172/JCI19246",
+          "n1QueueId": "N1-C-08",
+          "role": "primary"
+        }
+      ],
+      "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
+    },
+    {
+      "familyId": "SF-hotamisligil1993",
+      "label": "Adipose expression of tumor necrosis factor-alpha: direct role in obesity-linked insulin resistance",
+      "members": [
+        {
+          "sourceId": "doi:10.1126/science.7678183",
+          "n1QueueId": "N1-C-09",
+          "role": "primary"
+        }
+      ],
+      "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
+    },
+    {
+      "familyId": "SF-vandanmagsar2011",
+      "label": "The NLRP3 inflammasome instigates obesity-induced inflammation and insulin resistance",
+      "members": [
+        {
+          "sourceId": "doi:10.1038/nm.2279",
+          "n1QueueId": "N1-C-10",
+          "role": "primary"
+        }
+      ],
+      "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
+    },
+    {
+      "familyId": "SF-cani2007",
+      "label": "Metabolic endotoxemia initiates obesity and insulin resistance",
+      "members": [
+        {
+          "sourceId": "doi:10.2337/db06-1491",
+          "n1QueueId": "N1-C-11",
+          "role": "primary"
+        }
+      ],
+      "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
+    },
+    {
+      "familyId": "SF-vatanen2018",
+      "label": "The human gut microbiome in early-onset type 1 diabetes from the TEDDY study",
+      "members": [
+        {
+          "sourceId": "doi:10.1038/s41586-018-0620-2",
+          "n1QueueId": "N1-C-12",
+          "role": "primary"
+        }
+      ],
+      "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
+    }
+  ],
+  "partitionFamilies": {
+    "calibration": [
+      "SF-cani2007",
+      "SF-forslund2015",
+      "SF-gao2009",
+      "SF-hotamisligil1993",
+      "SF-koh2018",
+      "SF-qin2012",
+      "SF-vandanmagsar2011",
+      "SF-vatanen2018",
+      "SF-weisberg2003",
+      "SF-zhao2018"
+    ],
+    "pilot_candidate": [],
+    "held_out_frozen": [],
+    "excluded_identity_blocked": [
+      "SF-marino2017",
+      "SF-pedersen2016"
+    ]
+  },
+  "rules": {
+    "relatedPreprintsStayTogether": true,
+    "practiceCannotEnterHeldOut": true,
+    "heldOutFrozenRequiresHumanLabels": true,
+    "noTrainTestFamilyOverlap": true
+  },
+  "proposedPilotSize": {
+    "min": 100,
+    "max": 200
+  },
+  "proposedCalibrationSize": {
+    "min": 20,
+    "max": 50
+  },
+  "notes": [
+    "Calibration items are unlabelled scaffolds for annotator agreement — not frozen scientific labels.",
+    "held_out_frozen starts empty; freeze only after human labels and adjudication.",
+    "Identity-blocked N1 candidates remain excluded until DOI correction."
+  ]
+}

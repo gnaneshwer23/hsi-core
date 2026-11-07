@@ -1,0 +1,1037 @@
+{
+  "schemaVersion": "hsi-n3-scientific-benchmark-1",
+  "programme": "gut_immune_t2d",
+  "phase": "N3",
+  "guidelineVersion": "hsi-n3-gut-immune-t2d-guideline-1",
+  "generatedAt": "2026-11-07T22:00:00.000Z",
+  "scientificApproval": false,
+  "graphPromotable": false,
+  "claimEntailmentAssessed": false,
+  "fabricatedLabelsPermitted": false,
+  "items": [
+    {
+      "itemId": "N3-N1-C-01-support-assessment",
+      "task": "support_assessment",
+      "partition": "calibration",
+      "studyFamilyId": "SF-gao2009",
+      "diseaseTrack": "t2d_gut_immune",
+      "category": "supported",
+      "question": "For Butyrate improves insulin sensitivity and increases energy expenditure in mice: does available metadata-only evidence support a gut–immune–metabolic assertion about this source, or must the system abstain pending passage/rights clearance?",
+      "assertionPrompt": "Butyrate improves insulin sensitivity and increases energy expenditure in mice",
+      "n1QueueId": "N1-C-01",
+      "ledgerRecordId": "N2-R-001",
+      "sourceId": "doi:10.2337/db08-1637",
+      "modelAnnotation": "mouse",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotatorId": null,
+      "labelledAt": null,
+      "rationale": null,
+      "disagreementRecorded": false,
+      "insufficientContext": true,
+      "fabricatedLabelsPermitted": false,
+      "scientificReview": "unreviewed",
+      "containsPhi": false,
+      "clinicalAdvice": false,
+      "kgWrite": false
+    },
+    {
+      "itemId": "N3-N1-C-01-context-sufficiency",
+      "task": "context_sufficiency",
+      "partition": "calibration",
+      "studyFamilyId": "SF-gao2009",
+      "diseaseTrack": "t2d_gut_immune",
+      "category": "insufficient_evidence",
+      "question": "For Butyrate improves insulin sensitivity and increases energy expenditure in mice: which context fields (species, tissue, assay, dose, timepoint) remain missing and force abstention rather than a causal claim?",
+      "assertionPrompt": "Butyrate improves insulin sensitivity and increases energy expenditure in mice",
+      "n1QueueId": "N1-C-01",
+      "ledgerRecordId": "N2-R-001",
+      "sourceId": "doi:10.2337/db08-1637",
+      "modelAnnotation": "mouse",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotatorId": null,
+      "labelledAt": null,
+      "rationale": null,
+      "disagreementRecorded": false,
+      "insufficientContext": true,
+      "fabricatedLabelsPermitted": false,
+      "scientificReview": "unreviewed",
+      "containsPhi": false,
+      "clinicalAdvice": false,
+      "kgWrite": false
+    },
+    {
+      "itemId": "N3-N1-C-02-support-assessment",
+      "task": "support_assessment",
+      "partition": "excluded_identity_blocked",
+      "studyFamilyId": "SF-marino2017",
+      "diseaseTrack": "t1d_comparison",
+      "category": "supported",
+      "question": "For Gut microbial metabolites limit the frequency of autoimmune T cells and protect against type 1 diabetes: does available metadata-only evidence support a gut–immune–metabolic assertion about this source, or must the system abstain pending passage/rights clearance?",
+      "assertionPrompt": "Gut microbial metabolites limit the frequency of autoimmune T cells and protect against type 1 diabetes",
+      "n1QueueId": "N1-C-02",
+      "ledgerRecordId": null,
+      "sourceId": "doi:10.1038/nature21492",
+      "modelAnnotation": "mouse",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotatorId": null,
+      "labelledAt": null,
+      "rationale": null,
+      "disagreementRecorded": false,
+      "insufficientContext": true,
+      "fabricatedLabelsPermitted": false,
+      "scientificReview": "unreviewed",
+      "containsPhi": false,
+      "clinicalAdvice": false,
+      "kgWrite": false
+    },
+    {
+      "itemId": "N3-N1-C-02-context-sufficiency",
+      "task": "context_sufficiency",
+      "partition": "excluded_identity_blocked",
+      "studyFamilyId": "SF-marino2017",
+      "diseaseTrack": "t1d_comparison",
+      "category": "insufficient_evidence",
+      "question": "For Gut microbial metabolites limit the frequency of autoimmune T cells and protect against type 1 diabetes: which context fields (species, tissue, assay, dose, timepoint) remain missing and force abstention rather than a causal claim?",
+      "assertionPrompt": "Gut microbial metabolites limit the frequency of autoimmune T cells and protect against type 1 diabetes",
+      "n1QueueId": "N1-C-02",
+      "ledgerRecordId": null,
+      "sourceId": "doi:10.1038/nature21492",
+      "modelAnnotation": "mouse",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotatorId": null,
+      "labelledAt": null,
+      "rationale": null,
+      "disagreementRecorded": false,
+      "insufficientContext": true,
+      "fabricatedLabelsPermitted": false,
+      "scientificReview": "unreviewed",
+      "containsPhi": false,
+      "clinicalAdvice": false,
+      "kgWrite": false
+    },
+    {
+      "itemId": "N3-N1-C-03-support-assessment",
+      "task": "support_assessment",
+      "partition": "excluded_identity_blocked",
+      "studyFamilyId": "SF-pedersen2016",
+      "diseaseTrack": "t2d_gut_immune",
+      "category": "supported",
+      "question": "For Human gut microbes impact host serum metabolome and insulin sensitivity: does available metadata-only evidence support a gut–immune–metabolic assertion about this source, or must the system abstain pending passage/rights clearance?",
+      "assertionPrompt": "Human gut microbes impact host serum metabolome and insulin sensitivity",
+      "n1QueueId": "N1-C-03",
+      "ledgerRecordId": null,
+      "sourceId": "doi:10.1038/nature16961",
+      "modelAnnotation": "mixed",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotatorId": null,
+      "labelledAt": null,
+      "rationale": null,
+      "disagreementRecorded": false,
+      "insufficientContext": true,
+      "fabricatedLabelsPermitted": false,
+      "scientificReview": "unreviewed",
+      "containsPhi": false,
+      "clinicalAdvice": false,
+      "kgWrite": false
+    },
+    {
+      "itemId": "N3-N1-C-03-context-sufficiency",
+      "task": "context_sufficiency",
+      "partition": "excluded_identity_blocked",
+      "studyFamilyId": "SF-pedersen2016",
+      "diseaseTrack": "t2d_gut_immune",
+      "category": "insufficient_evidence",
+      "question": "For Human gut microbes impact host serum metabolome and insulin sensitivity: which context fields (species, tissue, assay, dose, timepoint) remain missing and force abstention rather than a causal claim?",
+      "assertionPrompt": "Human gut microbes impact host serum metabolome and insulin sensitivity",
+      "n1QueueId": "N1-C-03",
+      "ledgerRecordId": null,
+      "sourceId": "doi:10.1038/nature16961",
+      "modelAnnotation": "mixed",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotatorId": null,
+      "labelledAt": null,
+      "rationale": null,
+      "disagreementRecorded": false,
+      "insufficientContext": true,
+      "fabricatedLabelsPermitted": false,
+      "scientificReview": "unreviewed",
+      "containsPhi": false,
+      "clinicalAdvice": false,
+      "kgWrite": false
+    },
+    {
+      "itemId": "N3-N1-C-04-support-assessment",
+      "task": "support_assessment",
+      "partition": "calibration",
+      "studyFamilyId": "SF-qin2012",
+      "diseaseTrack": "t2d_gut_immune",
+      "category": "supported",
+      "question": "For A metagenome-wide association study of gut microbiota in type 2 diabetes: does available metadata-only evidence support a gut–immune–metabolic assertion about this source, or must the system abstain pending passage/rights clearance?",
+      "assertionPrompt": "A metagenome-wide association study of gut microbiota in type 2 diabetes",
+      "n1QueueId": "N1-C-04",
+      "ledgerRecordId": null,
+      "sourceId": "doi:10.1038/nature11450",
+      "modelAnnotation": "human_in_vivo",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotatorId": null,
+      "labelledAt": null,
+      "rationale": null,
+      "disagreementRecorded": false,
+      "insufficientContext": true,
+      "fabricatedLabelsPermitted": false,
+      "scientificReview": "unreviewed",
+      "containsPhi": false,
+      "clinicalAdvice": false,
+      "kgWrite": false
+    },
+    {
+      "itemId": "N3-N1-C-04-context-sufficiency",
+      "task": "context_sufficiency",
+      "partition": "calibration",
+      "studyFamilyId": "SF-qin2012",
+      "diseaseTrack": "t2d_gut_immune",
+      "category": "insufficient_evidence",
+      "question": "For A metagenome-wide association study of gut microbiota in type 2 diabetes: which context fields (species, tissue, assay, dose, timepoint) remain missing and force abstention rather than a causal claim?",
+      "assertionPrompt": "A metagenome-wide association study of gut microbiota in type 2 diabetes",
+      "n1QueueId": "N1-C-04",
+      "ledgerRecordId": null,
+      "sourceId": "doi:10.1038/nature11450",
+      "modelAnnotation": "human_in_vivo",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotatorId": null,
+      "labelledAt": null,
+      "rationale": null,
+      "disagreementRecorded": false,
+      "insufficientContext": true,
+      "fabricatedLabelsPermitted": false,
+      "scientificReview": "unreviewed",
+      "containsPhi": false,
+      "clinicalAdvice": false,
+      "kgWrite": false
+    },
+    {
+      "itemId": "N3-N1-C-05-support-assessment",
+      "task": "support_assessment",
+      "partition": "calibration",
+      "studyFamilyId": "SF-forslund2015",
+      "diseaseTrack": "t2d_gut_immune",
+      "category": "supported",
+      "question": "For Disentangling type 2 diabetes and metformin treatment signatures in the human gut microbiota: does available metadata-only evidence support a gut–immune–metabolic assertion about this source, or must the system abstain pending passage/rights clearance?",
+      "assertionPrompt": "Disentangling type 2 diabetes and metformin treatment signatures in the human gut microbiota",
+      "n1QueueId": "N1-C-05",
+      "ledgerRecordId": null,
+      "sourceId": "doi:10.1038/nature15766",
+      "modelAnnotation": "human_in_vivo",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotatorId": null,
+      "labelledAt": null,
+      "rationale": null,
+      "disagreementRecorded": false,
+      "insufficientContext": true,
+      "fabricatedLabelsPermitted": false,
+      "scientificReview": "unreviewed",
+      "containsPhi": false,
+      "clinicalAdvice": false,
+      "kgWrite": false
+    },
+    {
+      "itemId": "N3-N1-C-05-context-sufficiency",
+      "task": "context_sufficiency",
+      "partition": "calibration",
+      "studyFamilyId": "SF-forslund2015",
+      "diseaseTrack": "t2d_gut_immune",
+      "category": "insufficient_evidence",
+      "question": "For Disentangling type 2 diabetes and metformin treatment signatures in the human gut microbiota: which context fields (species, tissue, assay, dose, timepoint) remain missing and force abstention rather than a causal claim?",
+      "assertionPrompt": "Disentangling type 2 diabetes and metformin treatment signatures in the human gut microbiota",
+      "n1QueueId": "N1-C-05",
+      "ledgerRecordId": null,
+      "sourceId": "doi:10.1038/nature15766",
+      "modelAnnotation": "human_in_vivo",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotatorId": null,
+      "labelledAt": null,
+      "rationale": null,
+      "disagreementRecorded": false,
+      "insufficientContext": true,
+      "fabricatedLabelsPermitted": false,
+      "scientificReview": "unreviewed",
+      "containsPhi": false,
+      "clinicalAdvice": false,
+      "kgWrite": false
+    },
+    {
+      "itemId": "N3-N1-C-06-support-assessment",
+      "task": "support_assessment",
+      "partition": "calibration",
+      "studyFamilyId": "SF-zhao2018",
+      "diseaseTrack": "t2d_gut_immune",
+      "category": "supported",
+      "question": "For Gut bacteria selectively promoted by dietary fibers alleviate type 2 diabetes: does available metadata-only evidence support a gut–immune–metabolic assertion about this source, or must the system abstain pending passage/rights clearance?",
+      "assertionPrompt": "Gut bacteria selectively promoted by dietary fibers alleviate type 2 diabetes",
+      "n1QueueId": "N1-C-06",
+      "ledgerRecordId": null,
+      "sourceId": "doi:10.1126/science.aao5774",
+      "modelAnnotation": "human_in_vivo",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotatorId": null,
+      "labelledAt": null,
+      "rationale": null,
+      "disagreementRecorded": false,
+      "insufficientContext": true,
+      "fabricatedLabelsPermitted": false,
+      "scientificReview": "unreviewed",
+      "containsPhi": false,
+      "clinicalAdvice": false,
+      "kgWrite": false
+    },
+    {
+      "itemId": "N3-N1-C-06-context-sufficiency",
+      "task": "context_sufficiency",
+      "partition": "calibration",
+      "studyFamilyId": "SF-zhao2018",
+      "diseaseTrack": "t2d_gut_immune",
+      "category": "insufficient_evidence",
+      "question": "For Gut bacteria selectively promoted by dietary fibers alleviate type 2 diabetes: which context fields (species, tissue, assay, dose, timepoint) remain missing and force abstention rather than a causal claim?",
+      "assertionPrompt": "Gut bacteria selectively promoted by dietary fibers alleviate type 2 diabetes",
+      "n1QueueId": "N1-C-06",
+      "ledgerRecordId": null,
+      "sourceId": "doi:10.1126/science.aao5774",
+      "modelAnnotation": "human_in_vivo",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotatorId": null,
+      "labelledAt": null,
+      "rationale": null,
+      "disagreementRecorded": false,
+      "insufficientContext": true,
+      "fabricatedLabelsPermitted": false,
+      "scientificReview": "unreviewed",
+      "containsPhi": false,
+      "clinicalAdvice": false,
+      "kgWrite": false
+    },
+    {
+      "itemId": "N3-N1-C-07-support-assessment",
+      "task": "support_assessment",
+      "partition": "calibration",
+      "studyFamilyId": "SF-koh2018",
+      "diseaseTrack": "t2d_gut_immune",
+      "category": "supported",
+      "question": "For Microbially Produced Imidazole Propionate Impairs Insulin Signaling through mTORC1: does available metadata-only evidence support a gut–immune–metabolic assertion about this source, or must the system abstain pending passage/rights clearance?",
+      "assertionPrompt": "Microbially Produced Imidazole Propionate Impairs Insulin Signaling through mTORC1",
+      "n1QueueId": "N1-C-07",
+      "ledgerRecordId": null,
+      "sourceId": "doi:10.1016/j.cell.2018.09.055",
+      "modelAnnotation": "mixed",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotatorId": null,
+      "labelledAt": null,
+      "rationale": null,
+      "disagreementRecorded": false,
+      "insufficientContext": true,
+      "fabricatedLabelsPermitted": false,
+      "scientificReview": "unreviewed",
+      "containsPhi": false,
+      "clinicalAdvice": false,
+      "kgWrite": false
+    },
+    {
+      "itemId": "N3-N1-C-07-context-sufficiency",
+      "task": "context_sufficiency",
+      "partition": "calibration",
+      "studyFamilyId": "SF-koh2018",
+      "diseaseTrack": "t2d_gut_immune",
+      "category": "insufficient_evidence",
+      "question": "For Microbially Produced Imidazole Propionate Impairs Insulin Signaling through mTORC1: which context fields (species, tissue, assay, dose, timepoint) remain missing and force abstention rather than a causal claim?",
+      "assertionPrompt": "Microbially Produced Imidazole Propionate Impairs Insulin Signaling through mTORC1",
+      "n1QueueId": "N1-C-07",
+      "ledgerRecordId": null,
+      "sourceId": "doi:10.1016/j.cell.2018.09.055",
+      "modelAnnotation": "mixed",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotatorId": null,
+      "labelledAt": null,
+      "rationale": null,
+      "disagreementRecorded": false,
+      "insufficientContext": true,
+      "fabricatedLabelsPermitted": false,
+      "scientificReview": "unreviewed",
+      "containsPhi": false,
+      "clinicalAdvice": false,
+      "kgWrite": false
+    },
+    {
+      "itemId": "N3-N1-C-08-support-assessment",
+      "task": "support_assessment",
+      "partition": "calibration",
+      "studyFamilyId": "SF-weisberg2003",
+      "diseaseTrack": "cross_cutting",
+      "category": "supported",
+      "question": "For Obesity is associated with macrophage accumulation in adipose tissue: does available metadata-only evidence support a gut–immune–metabolic assertion about this source, or must the system abstain pending passage/rights clearance?",
+      "assertionPrompt": "Obesity is associated with macrophage accumulation in adipose tissue",
+      "n1QueueId": "N1-C-08",
+      "ledgerRecordId": null,
+      "sourceId": "doi:10.1172/JCI19246",
+      "modelAnnotation": "mixed",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotatorId": null,
+      "labelledAt": null,
+      "rationale": null,
+      "disagreementRecorded": false,
+      "insufficientContext": true,
+      "fabricatedLabelsPermitted": false,
+      "scientificReview": "unreviewed",
+      "containsPhi": false,
+      "clinicalAdvice": false,
+      "kgWrite": false
+    },
+    {
+      "itemId": "N3-N1-C-08-context-sufficiency",
+      "task": "context_sufficiency",
+      "partition": "calibration",
+      "studyFamilyId": "SF-weisberg2003",
+      "diseaseTrack": "cross_cutting",
+      "category": "insufficient_evidence",
+      "question": "For Obesity is associated with macrophage accumulation in adipose tissue: which context fields (species, tissue, assay, dose, timepoint) remain missing and force abstention rather than a causal claim?",
+      "assertionPrompt": "Obesity is associated with macrophage accumulation in adipose tissue",
+      "n1QueueId": "N1-C-08",
+      "ledgerRecordId": null,
+      "sourceId": "doi:10.1172/JCI19246",
+      "modelAnnotation": "mixed",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotatorId": null,
+      "labelledAt": null,
+      "rationale": null,
+      "disagreementRecorded": false,
+      "insufficientContext": true,
+      "fabricatedLabelsPermitted": false,
+      "scientificReview": "unreviewed",
+      "containsPhi": false,
+      "clinicalAdvice": false,
+      "kgWrite": false
+    },
+    {
+      "itemId": "N3-N1-C-09-support-assessment",
+      "task": "support_assessment",
+      "partition": "calibration",
+      "studyFamilyId": "SF-hotamisligil1993",
+      "diseaseTrack": "t2d_gut_immune",
+      "category": "supported",
+      "question": "For Adipose expression of tumor necrosis factor-alpha: direct role in obesity-linked insulin resistance: does available metadata-only evidence support a gut–immune–metabolic assertion about this source, or must the system abstain pending passage/rights clearance?",
+      "assertionPrompt": "Adipose expression of tumor necrosis factor-alpha: direct role in obesity-linked insulin resistance",
+      "n1QueueId": "N1-C-09",
+      "ledgerRecordId": null,
+      "sourceId": "doi:10.1126/science.7678183",
+      "modelAnnotation": "rodent",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotatorId": null,
+      "labelledAt": null,
+      "rationale": null,
+      "disagreementRecorded": false,
+      "insufficientContext": true,
+      "fabricatedLabelsPermitted": false,
+      "scientificReview": "unreviewed",
+      "containsPhi": false,
+      "clinicalAdvice": false,
+      "kgWrite": false
+    },
+    {
+      "itemId": "N3-N1-C-09-context-sufficiency",
+      "task": "context_sufficiency",
+      "partition": "calibration",
+      "studyFamilyId": "SF-hotamisligil1993",
+      "diseaseTrack": "t2d_gut_immune",
+      "category": "insufficient_evidence",
+      "question": "For Adipose expression of tumor necrosis factor-alpha: direct role in obesity-linked insulin resistance: which context fields (species, tissue, assay, dose, timepoint) remain missing and force abstention rather than a causal claim?",
+      "assertionPrompt": "Adipose expression of tumor necrosis factor-alpha: direct role in obesity-linked insulin resistance",
+      "n1QueueId": "N1-C-09",
+      "ledgerRecordId": null,
+      "sourceId": "doi:10.1126/science.7678183",
+      "modelAnnotation": "rodent",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotatorId": null,
+      "labelledAt": null,
+      "rationale": null,
+      "disagreementRecorded": false,
+      "insufficientContext": true,
+      "fabricatedLabelsPermitted": false,
+      "scientificReview": "unreviewed",
+      "containsPhi": false,
+      "clinicalAdvice": false,
+      "kgWrite": false
+    },
+    {
+      "itemId": "N3-N1-C-10-support-assessment",
+      "task": "support_assessment",
+      "partition": "calibration",
+      "studyFamilyId": "SF-vandanmagsar2011",
+      "diseaseTrack": "cross_cutting",
+      "category": "supported",
+      "question": "For The NLRP3 inflammasome instigates obesity-induced inflammation and insulin resistance: does available metadata-only evidence support a gut–immune–metabolic assertion about this source, or must the system abstain pending passage/rights clearance?",
+      "assertionPrompt": "The NLRP3 inflammasome instigates obesity-induced inflammation and insulin resistance",
+      "n1QueueId": "N1-C-10",
+      "ledgerRecordId": null,
+      "sourceId": "doi:10.1038/nm.2279",
+      "modelAnnotation": "mixed",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotatorId": null,
+      "labelledAt": null,
+      "rationale": null,
+      "disagreementRecorded": false,
+      "insufficientContext": true,
+      "fabricatedLabelsPermitted": false,
+      "scientificReview": "unreviewed",
+      "containsPhi": false,
+      "clinicalAdvice": false,
+      "kgWrite": false
+    },
+    {
+      "itemId": "N3-N1-C-10-context-sufficiency",
+      "task": "context_sufficiency",
+      "partition": "calibration",
+      "studyFamilyId": "SF-vandanmagsar2011",
+      "diseaseTrack": "cross_cutting",
+      "category": "insufficient_evidence",
+      "question": "For The NLRP3 inflammasome instigates obesity-induced inflammation and insulin resistance: which context fields (species, tissue, assay, dose, timepoint) remain missing and force abstention rather than a causal claim?",
+      "assertionPrompt": "The NLRP3 inflammasome instigates obesity-induced inflammation and insulin resistance",
+      "n1QueueId": "N1-C-10",
+      "ledgerRecordId": null,
+      "sourceId": "doi:10.1038/nm.2279",
+      "modelAnnotation": "mixed",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotatorId": null,
+      "labelledAt": null,
+      "rationale": null,
+      "disagreementRecorded": false,
+      "insufficientContext": true,
+      "fabricatedLabelsPermitted": false,
+      "scientificReview": "unreviewed",
+      "containsPhi": false,
+      "clinicalAdvice": false,
+      "kgWrite": false
+    },
+    {
+      "itemId": "N3-N1-C-11-support-assessment",
+      "task": "support_assessment",
+      "partition": "calibration",
+      "studyFamilyId": "SF-cani2007",
+      "diseaseTrack": "cross_cutting",
+      "category": "supported",
+      "question": "For Metabolic endotoxemia initiates obesity and insulin resistance: does available metadata-only evidence support a gut–immune–metabolic assertion about this source, or must the system abstain pending passage/rights clearance?",
+      "assertionPrompt": "Metabolic endotoxemia initiates obesity and insulin resistance",
+      "n1QueueId": "N1-C-11",
+      "ledgerRecordId": null,
+      "sourceId": "doi:10.2337/db06-1491",
+      "modelAnnotation": "mouse",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotatorId": null,
+      "labelledAt": null,
+      "rationale": null,
+      "disagreementRecorded": false,
+      "insufficientContext": true,
+      "fabricatedLabelsPermitted": false,
+      "scientificReview": "unreviewed",
+      "containsPhi": false,
+      "clinicalAdvice": false,
+      "kgWrite": false
+    },
+    {
+      "itemId": "N3-N1-C-11-context-sufficiency",
+      "task": "context_sufficiency",
+      "partition": "calibration",
+      "studyFamilyId": "SF-cani2007",
+      "diseaseTrack": "cross_cutting",
+      "category": "insufficient_evidence",
+      "question": "For Metabolic endotoxemia initiates obesity and insulin resistance: which context fields (species, tissue, assay, dose, timepoint) remain missing and force abstention rather than a causal claim?",
+      "assertionPrompt": "Metabolic endotoxemia initiates obesity and insulin resistance",
+      "n1QueueId": "N1-C-11",
+      "ledgerRecordId": null,
+      "sourceId": "doi:10.2337/db06-1491",
+      "modelAnnotation": "mouse",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotatorId": null,
+      "labelledAt": null,
+      "rationale": null,
+      "disagreementRecorded": false,
+      "insufficientContext": true,
+      "fabricatedLabelsPermitted": false,
+      "scientificReview": "unreviewed",
+      "containsPhi": false,
+      "clinicalAdvice": false,
+      "kgWrite": false
+    },
+    {
+      "itemId": "N3-N1-C-12-support-assessment",
+      "task": "support_assessment",
+      "partition": "calibration",
+      "studyFamilyId": "SF-vatanen2018",
+      "diseaseTrack": "t1d_comparison",
+      "category": "supported",
+      "question": "For The human gut microbiome in early-onset type 1 diabetes from the TEDDY study: does available metadata-only evidence support a gut–immune–metabolic assertion about this source, or must the system abstain pending passage/rights clearance?",
+      "assertionPrompt": "The human gut microbiome in early-onset type 1 diabetes from the TEDDY study",
+      "n1QueueId": "N1-C-12",
+      "ledgerRecordId": null,
+      "sourceId": "doi:10.1038/s41586-018-0620-2",
+      "modelAnnotation": "human_in_vivo",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotatorId": null,
+      "labelledAt": null,
+      "rationale": null,
+      "disagreementRecorded": false,
+      "insufficientContext": true,
+      "fabricatedLabelsPermitted": false,
+      "scientificReview": "unreviewed",
+      "containsPhi": false,
+      "clinicalAdvice": false,
+      "kgWrite": false
+    },
+    {
+      "itemId": "N3-N1-C-12-context-sufficiency",
+      "task": "context_sufficiency",
+      "partition": "calibration",
+      "studyFamilyId": "SF-vatanen2018",
+      "diseaseTrack": "t1d_comparison",
+      "category": "insufficient_evidence",
+      "question": "For The human gut microbiome in early-onset type 1 diabetes from the TEDDY study: which context fields (species, tissue, assay, dose, timepoint) remain missing and force abstention rather than a causal claim?",
+      "assertionPrompt": "The human gut microbiome in early-onset type 1 diabetes from the TEDDY study",
+      "n1QueueId": "N1-C-12",
+      "ledgerRecordId": null,
+      "sourceId": "doi:10.1038/s41586-018-0620-2",
+      "modelAnnotation": "human_in_vivo",
+      "expectedOutcome": null,
+      "allowedClaimIds": [],
+      "requiredClaimIds": [],
+      "annotatorId": null,
+      "labelledAt": null,
+      "rationale": null,
+      "disagreementRecorded": false,
+      "insufficientContext": true,
+      "fabricatedLabelsPermitted": false,
+      "scientificReview": "unreviewed",
+      "containsPhi": false,
+      "clinicalAdvice": false,
+      "kgWrite": false
+    }
+  ],
+  "studyFamilies": [
+    {
+      "familyId": "SF-gao2009",
+      "label": "Butyrate improves insulin sensitivity and increases energy expenditure in mice",
+      "members": [
+        {
+          "sourceId": "doi:10.2337/db08-1637",
+          "n1QueueId": "N1-C-01",
+          "role": "primary"
+        }
+      ],
+      "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
+    },
+    {
+      "familyId": "SF-marino2017",
+      "label": "Gut microbial metabolites limit the frequency of autoimmune T cells and protect against type 1 diabetes",
+      "members": [
+        {
+          "sourceId": "doi:10.1038/nature21492",
+          "n1QueueId": "N1-C-02",
+          "role": "fixture_only"
+        }
+      ],
+      "notes": "N1 DOI↔title identity mismatch — family excluded from scored partitions until human DOI correction."
+    },
+    {
+      "familyId": "SF-pedersen2016",
+      "label": "Human gut microbes impact host serum metabolome and insulin sensitivity",
+      "members": [
+        {
+          "sourceId": "doi:10.1038/nature16961",
+          "n1QueueId": "N1-C-03",
+          "role": "fixture_only"
+        }
+      ],
+      "notes": "N1 DOI↔title identity mismatch — family excluded from scored partitions until human DOI correction."
+    },
+    {
+      "familyId": "SF-qin2012",
+      "label": "A metagenome-wide association study of gut microbiota in type 2 diabetes",
+      "members": [
+        {
+          "sourceId": "doi:10.1038/nature11450",
+          "n1QueueId": "N1-C-04",
+          "role": "primary"
+        }
+      ],
+      "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
+    },
+    {
+      "familyId": "SF-forslund2015",
+      "label": "Disentangling type 2 diabetes and metformin treatment signatures in the human gut microbiota",
+      "members": [
+        {
+          "sourceId": "doi:10.1038/nature15766",
+          "n1QueueId": "N1-C-05",
+          "role": "primary"
+        }
+      ],
+      "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
+    },
+    {
+      "familyId": "SF-zhao2018",
+      "label": "Gut bacteria selectively promoted by dietary fibers alleviate type 2 diabetes",
+      "members": [
+        {
+          "sourceId": "doi:10.1126/science.aao5774",
+          "n1QueueId": "N1-C-06",
+          "role": "primary"
+        }
+      ],
+      "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
+    },
+    {
+      "familyId": "SF-koh2018",
+      "label": "Microbially Produced Imidazole Propionate Impairs Insulin Signaling through mTORC1",
+      "members": [
+        {
+          "sourceId": "doi:10.1016/j.cell.2018.09.055",
+          "n1QueueId": "N1-C-07",
+          "role": "primary"
+        }
+      ],
+      "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
+    },
+    {
+      "familyId": "SF-weisberg2003",
+      "label": "Obesity is associated with macrophage accumulation in adipose tissue",
+      "members": [
+        {
+          "sourceId": "doi:10.1172/JCI19246",
+          "n1QueueId": "N1-C-08",
+          "role": "primary"
+        }
+      ],
+      "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
+    },
+    {
+      "familyId": "SF-hotamisligil1993",
+      "label": "Adipose expression of tumor necrosis factor-alpha: direct role in obesity-linked insulin resistance",
+      "members": [
+        {
+          "sourceId": "doi:10.1126/science.7678183",
+          "n1QueueId": "N1-C-09",
+          "role": "primary"
+        }
+      ],
+      "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
+    },
+    {
+      "familyId": "SF-vandanmagsar2011",
+      "label": "The NLRP3 inflammasome instigates obesity-induced inflammation and insulin resistance",
+      "members": [
+        {
+          "sourceId": "doi:10.1038/nm.2279",
+          "n1QueueId": "N1-C-10",
+          "role": "primary"
+        }
+      ],
+      "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
+    },
+    {
+      "familyId": "SF-cani2007",
+      "label": "Metabolic endotoxemia initiates obesity and insulin resistance",
+      "members": [
+        {
+          "sourceId": "doi:10.2337/db06-1491",
+          "n1QueueId": "N1-C-11",
+          "role": "primary"
+        }
+      ],
+      "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
+    },
+    {
+      "familyId": "SF-vatanen2018",
+      "label": "The human gut microbiome in early-onset type 1 diabetes from the TEDDY study",
+      "members": [
+        {
+          "sourceId": "doi:10.1038/s41586-018-0620-2",
+          "n1QueueId": "N1-C-12",
+          "role": "primary"
+        }
+      ],
+      "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
+    }
+  ],
+  "split": {
+    "schemaVersion": "hsi-n3-study-family-split-1",
+    "programme": "gut_immune_t2d",
+    "phase": "N3",
+    "guidelineVersion": "hsi-n3-gut-immune-t2d-guideline-1",
+    "freezeDate": null,
+    "families": [
+      {
+        "familyId": "SF-gao2009",
+        "label": "Butyrate improves insulin sensitivity and increases energy expenditure in mice",
+        "members": [
+          {
+            "sourceId": "doi:10.2337/db08-1637",
+            "n1QueueId": "N1-C-01",
+            "role": "primary"
+          }
+        ],
+        "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
+      },
+      {
+        "familyId": "SF-marino2017",
+        "label": "Gut microbial metabolites limit the frequency of autoimmune T cells and protect against type 1 diabetes",
+        "members": [
+          {
+            "sourceId": "doi:10.1038/nature21492",
+            "n1QueueId": "N1-C-02",
+            "role": "fixture_only"
+          }
+        ],
+        "notes": "N1 DOI↔title identity mismatch — family excluded from scored partitions until human DOI correction."
+      },
+      {
+        "familyId": "SF-pedersen2016",
+        "label": "Human gut microbes impact host serum metabolome and insulin sensitivity",
+        "members": [
+          {
+            "sourceId": "doi:10.1038/nature16961",
+            "n1QueueId": "N1-C-03",
+            "role": "fixture_only"
+          }
+        ],
+        "notes": "N1 DOI↔title identity mismatch — family excluded from scored partitions until human DOI correction."
+      },
+      {
+        "familyId": "SF-qin2012",
+        "label": "A metagenome-wide association study of gut microbiota in type 2 diabetes",
+        "members": [
+          {
+            "sourceId": "doi:10.1038/nature11450",
+            "n1QueueId": "N1-C-04",
+            "role": "primary"
+          }
+        ],
+        "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
+      },
+      {
+        "familyId": "SF-forslund2015",
+        "label": "Disentangling type 2 diabetes and metformin treatment signatures in the human gut microbiota",
+        "members": [
+          {
+            "sourceId": "doi:10.1038/nature15766",
+            "n1QueueId": "N1-C-05",
+            "role": "primary"
+          }
+        ],
+        "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
+      },
+      {
+        "familyId": "SF-zhao2018",
+        "label": "Gut bacteria selectively promoted by dietary fibers alleviate type 2 diabetes",
+        "members": [
+          {
+            "sourceId": "doi:10.1126/science.aao5774",
+            "n1QueueId": "N1-C-06",
+            "role": "primary"
+          }
+        ],
+        "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
+      },
+      {
+        "familyId": "SF-koh2018",
+        "label": "Microbially Produced Imidazole Propionate Impairs Insulin Signaling through mTORC1",
+        "members": [
+          {
+            "sourceId": "doi:10.1016/j.cell.2018.09.055",
+            "n1QueueId": "N1-C-07",
+            "role": "primary"
+          }
+        ],
+        "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
+      },
+      {
+        "familyId": "SF-weisberg2003",
+        "label": "Obesity is associated with macrophage accumulation in adipose tissue",
+        "members": [
+          {
+            "sourceId": "doi:10.1172/JCI19246",
+            "n1QueueId": "N1-C-08",
+            "role": "primary"
+          }
+        ],
+        "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
+      },
+      {
+        "familyId": "SF-hotamisligil1993",
+        "label": "Adipose expression of tumor necrosis factor-alpha: direct role in obesity-linked insulin resistance",
+        "members": [
+          {
+            "sourceId": "doi:10.1126/science.7678183",
+            "n1QueueId": "N1-C-09",
+            "role": "primary"
+          }
+        ],
+        "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
+      },
+      {
+        "familyId": "SF-vandanmagsar2011",
+        "label": "The NLRP3 inflammasome instigates obesity-induced inflammation and insulin resistance",
+        "members": [
+          {
+            "sourceId": "doi:10.1038/nm.2279",
+            "n1QueueId": "N1-C-10",
+            "role": "primary"
+          }
+        ],
+        "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
+      },
+      {
+        "familyId": "SF-cani2007",
+        "label": "Metabolic endotoxemia initiates obesity and insulin resistance",
+        "members": [
+          {
+            "sourceId": "doi:10.2337/db06-1491",
+            "n1QueueId": "N1-C-11",
+            "role": "primary"
+          }
+        ],
+        "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
+      },
+      {
+        "familyId": "SF-vatanen2018",
+        "label": "The human gut microbiome in early-onset type 1 diabetes from the TEDDY study",
+        "members": [
+          {
+            "sourceId": "doi:10.1038/s41586-018-0620-2",
+            "n1QueueId": "N1-C-12",
+            "role": "primary"
+          }
+        ],
+        "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
+      }
+    ],
+    "partitionFamilies": {
+      "calibration": [
+        "SF-cani2007",
+        "SF-forslund2015",
+        "SF-gao2009",
+        "SF-hotamisligil1993",
+        "SF-koh2018",
+        "SF-qin2012",
+        "SF-vandanmagsar2011",
+        "SF-vatanen2018",
+        "SF-weisberg2003",
+        "SF-zhao2018"
+      ],
+      "pilot_candidate": [],
+      "held_out_frozen": [],
+      "excluded_identity_blocked": [
+        "SF-marino2017",
+        "SF-pedersen2016"
+      ]
+    },
+    "rules": {
+      "relatedPreprintsStayTogether": true,
+      "practiceCannotEnterHeldOut": true,
+      "heldOutFrozenRequiresHumanLabels": true,
+      "noTrainTestFamilyOverlap": true
+    },
+    "proposedPilotSize": {
+      "min": 100,
+      "max": 200
+    },
+    "proposedCalibrationSize": {
+      "min": 20,
+      "max": 50
+    },
+    "notes": [
+      "Calibration items are unlabelled scaffolds for annotator agreement — not frozen scientific labels.",
+      "held_out_frozen starts empty; freeze only after human labels and adjudication.",
+      "Identity-blocked N1 candidates remain excluded until DOI correction."
+    ]
+  },
+  "scalePlan": {
+    "calibrationTarget": {
+      "min": 20,
+      "max": 50
+    },
+    "pilotTarget": {
+      "min": 100,
+      "max": 200
+    },
+    "expansionTarget": {
+      "min": 500,
+      "max": 1000,
+      "gatedOn": "Reviewer agreement, rights-cleared passages and resources after pilot freeze"
+    },
+    "currentCalibrationCount": 20,
+    "currentPilotCandidateCount": 0,
+    "currentHeldOutFrozenCount": 0,
+    "labelledCount": 0
+  },
+  "gates": {
+    "engineeringHarness": "CLEARED",
+    "calibrationScaffold": "CLEARED",
+    "studyFamilySplit": "CLEARED",
+    "humanLabelFreeze": "BLOCKED",
+    "scientificAcceptance": "BLOCKED"
+  },
+  "blockers": [
+    "Human reviewers and adjudication are not supplied; label freeze remains BLOCKED.",
+    "No held_out_frozen partition has been frozen with human labels.",
+    "Exact passages and rights clearance remain N1 residuals; items stay metadata-scaffolds.",
+    "4 items excluded due to N1 DOI↔title identity mismatches (N1-C-02, N1-C-03).",
+    "Pilot scale (100–200) requires reviewer agreement and additional cleared sources — not fabricated rows."
+  ],
+  "notes": [
+    "Extends Phase E scientific-evaluation and Phase 6 annotation patterns; does not replace RA/SSc kits.",
+    "Calibration scaffolds are for annotator process rehearsal — not measured scientific performance.",
+    "N2 ledger links are optional pointers; absence of a ledger id does not invent a finding."
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "hsi-n3-eval-receipt-1",
+  "kitHash": "2d9c5c68abf6bebc9757466e051bd888b983486fc7fd31f0ca74fa4e83054b3b",
+  "labelsHash": "c6ab4029abc63c5deadee067ac30d107108210969ca850f2e4c9dda071602963",
+  "evaluatedAt": "2026-11-07T22:00:00.000Z",
+  "totalItems": 24,
+  "labelledItems": 0,
+  "calibrationItems": 20,
+  "pilotCandidateItems": 0,
+  "heldOutFrozenItems": 0,
+  "engineeringHarness": "CLEARED",
+  "humanLabelFreeze": "BLOCKED",
+  "scientificAcceptance": "BLOCKED",
+  "outcomeAccuracy": null,
+  "modelActivationAllowed": false,
+  "scientificValidityEstablished": false,
+  "blockers": [
+    "Human reviewers and adjudication are not supplied; label freeze remains BLOCKED.",
+    "No held_out_frozen partition has been frozen with human labels.",
+    "Exact passages and rights clearance remain N1 residuals; items stay metadata-scaffolds.",
+    "4 items excluded due to N1 DOI↔title identity mismatches (N1-C-02, N1-C-03).",
+    "Pilot scale (100–200) requires reviewer agreement and additional cleared sources — not fabricated rows.",
+    "Label packet status is awaiting_sme; freeze requires frozen_human_labels.",
+    "Only 0/20 scored items have expectedOutcome labels.",
+    "held_out_frozen study-family partition is empty.",
+    "Split freezeDate is null.",
+    "Scientific acceptance blocked until human label freeze CLEARED."
+  ],
+  "notes": [
+    "Engineering harness replay succeeded; scientific validity is not established by this receipt.",
+    "Do not report outcomeAccuracy as a product claim while humanLabelFreeze is BLOCKED."
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "phase": "N4",
+  "programme": "gut_immune_t2d",
+  "generatedAt": "2026-11-07T22:30:00.000Z",
+  "engineeringHarness": "CLEARED",
+  "scientificAcceptance": "BLOCKED",
+  "groundedClaimAccepted": false,
+  "modelActivationAllowed": false,
+  "briefCount": 4,
+  "outcomes": {
+    "N4-Q-01": "abstain",
+    "N4-Q-02": "abstain",
+    "N4-Q-03": "abstain",
+    "N4-Q-04": "source_summary"
+  },
+  "pins": {
+    "n1ReceiptHash": "2a0fcfff288943beecf690817ce144297ed366d989c53100c117f040d28df09b",
+    "n2LedgerHash": "4fcbb700730ba784b7e0f4871e0fe9067ae5716285c22470fa4bbaeb3732891d",
+    "n3KitHash": "0c5244e3247c7e88f0c9f3fdea85856eff6706aca178d395ade7cfcc20593d0a"
+  },
+  "note": "Deterministic baseline only. Metadata-only N1 hits abstain. groundedClaimAccepted remains false."
+}

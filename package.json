@@ -146,7 +146,17 @@
     "graph:check": "bun --no-env-file scripts/build-claim-graph.ts --check",
     "scenarios:generate": "bun --no-env-file scripts/generate-longitudinal-scenarios.ts",
     "domain-graph:build": "bun --no-env-file scripts/build-domain-graph.ts",
-    "domain-graph:check": "bun --no-env-file scripts/build-domain-graph.ts --check"
+    "domain-graph:check": "bun --no-env-file scripts/build-domain-graph.ts --check",
+    "n1:verify": "bun --no-env-file scripts/n1-verify-candidates.ts",
+    "n1:verify:live": "bun --no-env-file scripts/n1-verify-candidates.ts --live",
+    "n1:check": "bun --no-env-file scripts/n1-verify-candidates.ts --check",
+    "n2:ledger": "bun --no-env-file scripts/n2-evidence-ledger.ts",
+    "n2:check": "bun --no-env-file scripts/n2-evidence-ledger.ts --check",
+    "n3:benchmark": "bun --no-env-file scripts/n3-scientific-benchmark.ts",
+    "n3:check": "bun --no-env-file scripts/n3-scientific-benchmark.ts --check",
+    "n3:eval": "bun --no-env-file scripts/n3-scientific-benchmark.ts --eval",
+    "n4:brief": "bun --no-env-file scripts/n4-grounded-brief.ts",
+    "n4:check": "bun --no-env-file scripts/n4-grounded-brief.ts --check"
   },
   "engines": {
     "node": ">=20"

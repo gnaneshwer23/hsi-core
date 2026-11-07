@@ -65,7 +65,7 @@ The TN10 registration is an ISI reference pointer, not a fabricated current recr
 
 AI can help retrieve overlooked studies, identify opposing findings, propose context explanations and prioritise falsifiable experiments. It cannot convert an attractive graph path into established biology. These future capabilities are described with evaluation criteria; they are not represented as running services.
 
-Live Europe PMC access returned a proxy HTTP 403 in this environment. No blocked source was silently replaced with fabricated metadata or text. Completing the verified-evidence phase requires access to the relevant public scientific APIs, then source verification and scientific review. The current graph does not claim a complete online search.
+N1 bibliographic verification for the 12 gut–immune–T2D DOI candidates lives under `research/domain-graph/n1/` with adapters in `src/evidence/n1*.ts` and `europePmcBibliographicLookup.ts`. Offline fixture replay and identity fail-closed checks are engineering-cleared; exact-text rights and two DOI↔title mismatches remain blocked — see `docs/engineering/N1_SOURCE_VERIFICATION_STATUS.md`. A prior proxy HTTP 403 is no longer reproduced for metadata search here; no blocked or mismatched source was replaced with fabricated text. Completing scientific acceptance still requires rights clearance, human correction of mismatched DOIs, and independent review. The current graph does not claim a complete online search.
 
 ## Build and validation
 

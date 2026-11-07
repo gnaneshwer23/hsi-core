@@ -1,0 +1,206 @@
+{
+  "schemaVersion": "hsi-n4-grounded-corpus-1",
+  "programme": "gut_immune_t2d",
+  "purpose": "engineering_fixture",
+  "generatedAt": "2026-11-07T22:30:00.000Z",
+  "records": [
+    {
+      "recordId": "N2-R-001",
+      "assertionKind": "reported_finding",
+      "assertion": "Butyrate administration was reported to improve insulin sensitivity in mice (N1 metadata match; exact passage not imported; dose/assay still missing).",
+      "subjectId": "metabolite:butyrate",
+      "predicate": "associated_with",
+      "objectId": "phenotype:insulin_sensitivity",
+      "sourceId": "doi:10.2337/db08-1637",
+      "n1QueueId": "N1-C-01",
+      "n1Outcome": "metadata_matched_unreviewed",
+      "passageIds": [
+        "N4-P-ENG-001"
+      ],
+      "model": "mouse",
+      "species": "mouse",
+      "diseaseTrack": "t2d_gut_immune",
+      "status": "draft"
+    },
+    {
+      "recordId": "N2-R-002",
+      "assertionKind": "prediction",
+      "assertion": "Raising luminal butyrate in a matched human gut–immune organoid will reduce inflammatory signalling markers relative to vehicle under a frozen protocol.",
+      "subjectId": "metabolite:butyrate",
+      "predicate": "associated_with",
+      "objectId": "process:inflammatory_signalling",
+      "sourceId": "doi:10.2337/db08-1637",
+      "n1QueueId": "N1-C-01",
+      "n1Outcome": "metadata_matched_unreviewed",
+      "passageIds": [],
+      "model": "human gut-immune organoid (proposed)",
+      "species": "human",
+      "diseaseTrack": "t2d_gut_immune",
+      "status": "draft"
+    },
+    {
+      "recordId": "N2-R-003",
+      "assertionKind": "hypothesis",
+      "assertion": "Gut microbial short-chain fatty acids may modulate host immune tone that contributes to insulin resistance in type 2 diabetes; this remains an unvalidated research hypothesis.",
+      "subjectId": "process:scfa_signalling",
+      "predicate": "associated_with",
+      "objectId": "phenotype:insulin_resistance",
+      "sourceId": null,
+      "n1QueueId": null,
+      "n1Outcome": null,
+      "passageIds": [],
+      "model": null,
+      "species": null,
+      "diseaseTrack": "t2d_gut_immune",
+      "status": "draft"
+    },
+    {
+      "recordId": "N2-R-004",
+      "assertionKind": "experimental_observation",
+      "assertion": "Fixture-only observation slot for a protocol-linked measurement. No laboratory result is claimed.",
+      "subjectId": "metabolite:butyrate",
+      "predicate": "measured_in",
+      "objectId": "assay:fixture_slot",
+      "sourceId": null,
+      "n1QueueId": null,
+      "n1Outcome": null,
+      "passageIds": [],
+      "model": "fixture",
+      "species": "unspecified",
+      "diseaseTrack": "t2d_gut_immune",
+      "status": "draft"
+    }
+  ],
+  "passages": [
+    {
+      "passageId": "N4-P-ENG-001",
+      "sourceId": "doi:10.2337/db08-1637",
+      "text": "ENGINEERING FIXTURE ONLY — not imported paper text. In this synthetic mouse metabolic study, oral butyrate administration improved insulin sensitivity relative to vehicle.",
+      "locator": "engineering-fixture:n4/butyrate-insulin",
+      "passageHash": "691c03c74643cd08f239105d547d5d91854710e09eb524a8793180bdea496b80",
+      "rightsCleared": true,
+      "disease": "t2d_gut_immune",
+      "species": "mouse",
+      "support": "supports",
+      "scientificReview": "approved",
+      "fixtureKind": "engineering"
+    }
+  ],
+  "n1Results": [
+    {
+      "queueId": "N1-C-01",
+      "sourceId": "doi:10.2337/db08-1637",
+      "outcome": "metadata_matched_unreviewed",
+      "requestedTitle": "Butyrate improves insulin sensitivity and increases energy expenditure in mice",
+      "matchedTitle": "Butyrate improves insulin sensitivity and increases energy expenditure in mice.",
+      "passageTextImported": false,
+      "rightsStatus": "unverified_metadata_only"
+    },
+    {
+      "queueId": "N1-C-02",
+      "sourceId": "doi:10.1038/nature21492",
+      "outcome": "identity_mismatch",
+      "requestedTitle": "Gut microbial metabolites limit the frequency of autoimmune T cells and protect against type 1 diabetes",
+      "matchedTitle": "Medicine: The final frontier in cancer diagnosis.",
+      "passageTextImported": false,
+      "rightsStatus": "unverified_metadata_only"
+    },
+    {
+      "queueId": "N1-C-03",
+      "sourceId": "doi:10.1038/nature16961",
+      "outcome": "identity_mismatch",
+      "requestedTitle": "Human gut microbes impact host serum metabolome and insulin sensitivity",
+      "matchedTitle": "Mastering the game of Go with deep neural networks and tree search.",
+      "passageTextImported": false,
+      "rightsStatus": "unverified_metadata_only"
+    },
+    {
+      "queueId": "N1-C-04",
+      "sourceId": "doi:10.1038/nature11450",
+      "outcome": "metadata_matched_unreviewed",
+      "requestedTitle": "A metagenome-wide association study of gut microbiota in type 2 diabetes",
+      "matchedTitle": "A metagenome-wide association study of gut microbiota in type 2 diabetes.",
+      "passageTextImported": false,
+      "rightsStatus": "unverified_metadata_only"
+    },
+    {
+      "queueId": "N1-C-05",
+      "sourceId": "doi:10.1038/nature15766",
+      "outcome": "metadata_matched_unreviewed",
+      "requestedTitle": "Disentangling type 2 diabetes and metformin treatment signatures in the human gut microbiota",
+      "matchedTitle": "Disentangling type 2 diabetes and metformin treatment signatures in the human gut microbiota.",
+      "passageTextImported": false,
+      "rightsStatus": "unverified_metadata_only"
+    },
+    {
+      "queueId": "N1-C-06",
+      "sourceId": "doi:10.1126/science.aao5774",
+      "outcome": "metadata_matched_unreviewed",
+      "requestedTitle": "Gut bacteria selectively promoted by dietary fibers alleviate type 2 diabetes",
+      "matchedTitle": "Gut bacteria selectively promoted by dietary fibers alleviate type 2 diabetes.",
+      "passageTextImported": false,
+      "rightsStatus": "unverified_metadata_only"
+    },
+    {
+      "queueId": "N1-C-07",
+      "sourceId": "doi:10.1016/j.cell.2018.09.055",
+      "outcome": "metadata_matched_unreviewed",
+      "requestedTitle": "Microbially Produced Imidazole Propionate Impairs Insulin Signaling through mTORC1",
+      "matchedTitle": "Microbially Produced Imidazole Propionate Impairs Insulin Signaling through mTORC1.",
+      "passageTextImported": false,
+      "rightsStatus": "unverified_metadata_only"
+    },
+    {
+      "queueId": "N1-C-08",
+      "sourceId": "doi:10.1172/JCI19246",
+      "outcome": "metadata_matched_unreviewed",
+      "requestedTitle": "Obesity is associated with macrophage accumulation in adipose tissue",
+      "matchedTitle": "Obesity is associated with macrophage accumulation in adipose tissue.",
+      "passageTextImported": false,
+      "rightsStatus": "unverified_metadata_only"
+    },
+    {
+      "queueId": "N1-C-09",
+      "sourceId": "doi:10.1126/science.7678183",
+      "outcome": "metadata_matched_unreviewed",
+      "requestedTitle": "Adipose expression of tumor necrosis factor-alpha: direct role in obesity-linked insulin resistance",
+      "matchedTitle": "Adipose expression of tumor necrosis factor-alpha: direct role in obesity-linked insulin resistance.",
+      "passageTextImported": false,
+      "rightsStatus": "unverified_metadata_only"
+    },
+    {
+      "queueId": "N1-C-10",
+      "sourceId": "doi:10.1038/nm.2279",
+      "outcome": "metadata_matched_unreviewed",
+      "requestedTitle": "The NLRP3 inflammasome instigates obesity-induced inflammation and insulin resistance",
+      "matchedTitle": "The NLRP3 inflammasome instigates obesity-induced inflammation and insulin resistance.",
+      "passageTextImported": false,
+      "rightsStatus": "unverified_metadata_only"
+    },
+    {
+      "queueId": "N1-C-11",
+      "sourceId": "doi:10.2337/db06-1491",
+      "outcome": "metadata_matched_unreviewed",
+      "requestedTitle": "Metabolic endotoxemia initiates obesity and insulin resistance",
+      "matchedTitle": "Metabolic endotoxemia initiates obesity and insulin resistance.",
+      "passageTextImported": false,
+      "rightsStatus": "unverified_metadata_only"
+    },
+    {
+      "queueId": "N1-C-12",
+      "sourceId": "doi:10.1038/s41586-018-0620-2",
+      "outcome": "metadata_matched_unreviewed",
+      "requestedTitle": "The human gut microbiome in early-onset type 1 diabetes from the TEDDY study",
+      "matchedTitle": "The human gut microbiome in early-onset type 1 diabetes from the TEDDY study.",
+      "passageTextImported": false,
+      "rightsStatus": "unverified_metadata_only"
+    }
+  ],
+  "pins": {
+    "n1ReceiptHash": "2a0fcfff288943beecf690817ce144297ed366d989c53100c117f040d28df09b",
+    "n2LedgerHash": "4fcbb700730ba784b7e0f4871e0fe9067ae5716285c22470fa4bbaeb3732891d",
+    "n3KitHash": "0c5244e3247c7e88f0c9f3fdea85856eff6706aca178d395ade7cfcc20593d0a"
+  },
+  "groundedClaimAccepted": false,
+  "scientificApproval": false
+}

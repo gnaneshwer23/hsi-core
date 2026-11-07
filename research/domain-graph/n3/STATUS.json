@@ -1,0 +1,15 @@
+{
+  "phase": "N3",
+  "programme": "gut_immune_t2d",
+  "generatedAt": "2026-11-07T22:00:00.000Z",
+  "labelledRows": 0,
+  "calibrationRows": 20,
+  "pilotCandidateRows": 0,
+  "heldOutFrozenRows": 0,
+  "engineeringHarness": "CLEARED",
+  "humanLabelFreeze": "BLOCKED",
+  "scientificAcceptance": "BLOCKED",
+  "fabricatedLabelsPermitted": false,
+  "scientificApproval": false,
+  "note": "Empty scaffolds only. No expert labels were invented."
+}

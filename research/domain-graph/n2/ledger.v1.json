@@ -1,0 +1,256 @@
+{
+  "schemaVersion": "hsi-evidence-ledger-1",
+  "phase": "N2",
+  "programme": "gut_immune_t2d",
+  "scientificApproval": false,
+  "graphPromotable": false,
+  "claimEntailmentAssessed": false,
+  "records": [
+    {
+      "id": "N2-R-001",
+      "version": 2,
+      "parentVersion": 1,
+      "assertionKind": "reported_finding",
+      "assertion": "Butyrate administration was reported to improve insulin sensitivity in mice (N1 metadata match; exact passage not imported; dose/assay still missing).",
+      "subjectId": "metabolite:butyrate",
+      "predicate": "associated_with",
+      "objectId": "phenotype:insulin_sensitivity",
+      "context": {
+        "model": "mouse",
+        "species": null,
+        "tissue": null,
+        "population": null,
+        "assay": null,
+        "dose": null,
+        "doseUnit": null,
+        "timepoint": null,
+        "intervention": null,
+        "outcome": "Insulin sensitivity and energy expenditure",
+        "missingFields": [
+          "species",
+          "tissue",
+          "population",
+          "assay",
+          "dose",
+          "doseUnit",
+          "timepoint",
+          "intervention"
+        ]
+      },
+      "lineage": {
+        "sourceId": "doi:10.2337/db08-1637",
+        "passageIds": [],
+        "methodId": null,
+        "n1QueueId": "N1-C-01",
+        "n1Outcome": "metadata_matched_unreviewed"
+      },
+      "status": "draft",
+      "predictionFreeze": null,
+      "observationProtocol": null,
+      "legacyEpistemicType": "observational_association",
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "claimEntailmentAssessed": false,
+      "createdAt": "2026-11-07T21:35:00.000Z",
+      "contentHash": "f612bdcfc8b2cb0aebfc31a517ee6c976f2975bd4a1246668603d638db8f0c92"
+    },
+    {
+      "id": "N2-R-002",
+      "version": 1,
+      "parentVersion": null,
+      "assertionKind": "prediction",
+      "assertion": "Raising luminal butyrate in a matched human gut–immune organoid will reduce inflammatory signalling markers relative to vehicle under a frozen protocol.",
+      "subjectId": "metabolite:butyrate",
+      "predicate": "associated_with",
+      "objectId": "process:inflammatory_signalling",
+      "context": {
+        "model": "human gut-immune organoid (proposed)",
+        "species": "human",
+        "tissue": "intestinal epithelium / immune co-culture",
+        "population": null,
+        "assay": null,
+        "dose": null,
+        "doseUnit": null,
+        "timepoint": null,
+        "intervention": "butyrate",
+        "outcome": "inflammatory signalling markers",
+        "missingFields": [
+          "population",
+          "assay",
+          "dose",
+          "doseUnit",
+          "timepoint"
+        ]
+      },
+      "lineage": {
+        "sourceId": "doi:10.2337/db08-1637",
+        "passageIds": [],
+        "methodId": "method:organoid-butyrate-v0",
+        "n1QueueId": "N1-C-01",
+        "n1Outcome": "metadata_matched_unreviewed"
+      },
+      "status": "draft",
+      "predictionFreeze": {
+        "frozenAt": "2026-11-07T21:30:00.000Z",
+        "outcomeUnknown": true,
+        "falsifier": "No reduction (or an increase) in pre-specified inflammatory markers versus vehicle under the frozen protocol."
+      },
+      "observationProtocol": null,
+      "legacyEpistemicType": "computational_inference",
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "claimEntailmentAssessed": false,
+      "createdAt": "2026-11-07T21:30:00.000Z",
+      "contentHash": "67f6faad6a08dda3c6d067b3dccb8d74e1f910ee1a2044970deb52201b162526"
+    },
+    {
+      "id": "N2-R-003",
+      "version": 1,
+      "parentVersion": null,
+      "assertionKind": "hypothesis",
+      "assertion": "Gut microbial short-chain fatty acids may modulate host immune tone that contributes to insulin resistance in type 2 diabetes; this remains an unvalidated research hypothesis.",
+      "subjectId": "process:scfa_signalling",
+      "predicate": "associated_with",
+      "objectId": "phenotype:insulin_resistance",
+      "context": {
+        "model": null,
+        "species": null,
+        "tissue": null,
+        "population": "adults with type 2 diabetes (unspecified)",
+        "assay": null,
+        "dose": null,
+        "doseUnit": null,
+        "timepoint": null,
+        "intervention": null,
+        "outcome": "insulin resistance",
+        "missingFields": [
+          "model",
+          "species",
+          "tissue",
+          "assay",
+          "dose",
+          "doseUnit",
+          "timepoint",
+          "intervention"
+        ]
+      },
+      "lineage": {
+        "sourceId": null,
+        "passageIds": [],
+        "methodId": null,
+        "n1QueueId": null,
+        "n1Outcome": null
+      },
+      "status": "draft",
+      "predictionFreeze": null,
+      "observationProtocol": null,
+      "legacyEpistemicType": "hypothesis",
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "claimEntailmentAssessed": false,
+      "createdAt": "2026-11-07T21:30:00.000Z",
+      "contentHash": "f9077d0bcc268ac4e442ef5bbb1ac6e8b31d6aa547b4f1af973df8f7e8590279"
+    },
+    {
+      "id": "N2-R-004",
+      "version": 1,
+      "parentVersion": null,
+      "assertionKind": "experimental_observation",
+      "assertion": "Fixture-only observation slot for a protocol-linked measurement. No laboratory result is claimed.",
+      "subjectId": "metabolite:butyrate",
+      "predicate": "measured_in",
+      "objectId": "assay:fixture_slot",
+      "context": {
+        "model": "fixture",
+        "species": "unspecified",
+        "tissue": null,
+        "population": null,
+        "assay": "fixture assay slot",
+        "dose": null,
+        "doseUnit": null,
+        "timepoint": null,
+        "intervention": null,
+        "outcome": null,
+        "missingFields": [
+          "tissue",
+          "population",
+          "dose",
+          "doseUnit",
+          "timepoint",
+          "intervention",
+          "outcome"
+        ]
+      },
+      "lineage": {
+        "sourceId": null,
+        "passageIds": [],
+        "methodId": "method:fixture-protocol-v0",
+        "n1QueueId": null,
+        "n1Outcome": null
+      },
+      "status": "draft",
+      "predictionFreeze": null,
+      "observationProtocol": {
+        "protocolId": "protocol:fixture-v0",
+        "measuredAt": null,
+        "qcStatus": "not_run"
+      },
+      "legacyEpistemicType": "experimental_finding",
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "claimEntailmentAssessed": false,
+      "createdAt": "2026-11-07T21:30:00.000Z",
+      "contentHash": "842a4c01bfd468e04b2f2e60a4805b4a5ccd2f545f80a56c7c50af8e1913559d"
+    }
+  ],
+  "archives": [
+    {
+      "id": "N2-R-001",
+      "version": 1,
+      "parentVersion": null,
+      "assertionKind": "reported_finding",
+      "assertion": "Butyrate administration was reported to improve insulin sensitivity in a mouse metabolic intervention study (bibliographic candidate; passage not imported).",
+      "subjectId": "metabolite:butyrate",
+      "predicate": "associated_with",
+      "objectId": "phenotype:insulin_sensitivity",
+      "context": {
+        "model": "mouse",
+        "species": null,
+        "tissue": null,
+        "population": null,
+        "assay": null,
+        "dose": null,
+        "doseUnit": null,
+        "timepoint": null,
+        "intervention": null,
+        "outcome": "Insulin sensitivity and energy expenditure",
+        "missingFields": [
+          "species",
+          "tissue",
+          "population",
+          "assay",
+          "dose",
+          "doseUnit",
+          "timepoint",
+          "intervention"
+        ]
+      },
+      "lineage": {
+        "sourceId": "doi:10.2337/db08-1637",
+        "passageIds": [],
+        "methodId": null,
+        "n1QueueId": "N1-C-01",
+        "n1Outcome": "metadata_matched_unreviewed"
+      },
+      "status": "superseded",
+      "predictionFreeze": null,
+      "observationProtocol": null,
+      "legacyEpistemicType": "observational_association",
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "claimEntailmentAssessed": false,
+      "createdAt": "2026-11-07T21:30:00.000Z",
+      "contentHash": "48333cf0072a24acc8e7dfbc98f122c8944d32d057af85a68c54e516380f8f16"
+    }
+  ]
+}
