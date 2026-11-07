@@ -1,0 +1,181 @@
+{
+  "schemaVersion": "hsi-n6-run-manifest-1",
+  "programme": "gut_immune_t2d",
+  "phase": "N6",
+  "generatedAt": "2026-11-07T23:00:00.000Z",
+  "protocolHash": "3d2bbef5b8b54444f5ed264f6a9a5778d4031a03b6021e05f0c356256cbba505",
+  "scorePacketHash": "27ea8535663ad4d291dd0f51486d0b1310812f5b121ed9bc3f0dd999a240d304",
+  "artifacts": [
+    {
+      "packetId": "N6-Q-01-A",
+      "questionId": "N6-Q-01",
+      "blindedCode": "A",
+      "blindedTitle": "Blinded research packet N6-Q-01/A",
+      "artifactKind": "phase_e_extractive_baseline",
+      "artifactHash": null,
+      "artifactPointer": "evaluation/phase-e/engineering-cases.json",
+      "systemIdentityVisible": false,
+      "notes": "Engineering pointer only; blinded reviewers must not see methodId or conditionId."
+    },
+    {
+      "packetId": "N6-Q-01-B",
+      "questionId": "N6-Q-01",
+      "blindedCode": "B",
+      "blindedTitle": "Blinded research packet N6-Q-01/B",
+      "artifactKind": "n4_grounded_brief",
+      "artifactHash": null,
+      "artifactPointer": "research/domain-graph/n4/brief.offline.receipt.json",
+      "systemIdentityVisible": false,
+      "notes": "Engineering pointer only; blinded reviewers must not see methodId or conditionId."
+    },
+    {
+      "packetId": "N6-Q-01-C",
+      "questionId": "N6-Q-01",
+      "blindedCode": "C",
+      "blindedTitle": "Blinded research packet N6-Q-01/C",
+      "artifactKind": "conventional_research_slot",
+      "artifactHash": null,
+      "artifactPointer": null,
+      "systemIdentityVisible": false,
+      "notes": "Conventional arm awaits human researcher artifact — slot only."
+    },
+    {
+      "packetId": "N6-Q-02-A",
+      "questionId": "N6-Q-02",
+      "blindedCode": "A",
+      "blindedTitle": "Blinded research packet N6-Q-02/A",
+      "artifactKind": "phase_e_extractive_baseline",
+      "artifactHash": null,
+      "artifactPointer": "evaluation/phase-e/engineering-cases.json",
+      "systemIdentityVisible": false,
+      "notes": "Engineering pointer only; blinded reviewers must not see methodId or conditionId."
+    },
+    {
+      "packetId": "N6-Q-02-B",
+      "questionId": "N6-Q-02",
+      "blindedCode": "B",
+      "blindedTitle": "Blinded research packet N6-Q-02/B",
+      "artifactKind": "n4_grounded_brief",
+      "artifactHash": null,
+      "artifactPointer": "research/domain-graph/n4/brief.offline.receipt.json",
+      "systemIdentityVisible": false,
+      "notes": "Engineering pointer only; blinded reviewers must not see methodId or conditionId."
+    },
+    {
+      "packetId": "N6-Q-02-C",
+      "questionId": "N6-Q-02",
+      "blindedCode": "C",
+      "blindedTitle": "Blinded research packet N6-Q-02/C",
+      "artifactKind": "conventional_research_slot",
+      "artifactHash": null,
+      "artifactPointer": null,
+      "systemIdentityVisible": false,
+      "notes": "Conventional arm awaits human researcher artifact — slot only."
+    },
+    {
+      "packetId": "N6-Q-03-A",
+      "questionId": "N6-Q-03",
+      "blindedCode": "A",
+      "blindedTitle": "Blinded research packet N6-Q-03/A",
+      "artifactKind": "phase_e_extractive_baseline",
+      "artifactHash": null,
+      "artifactPointer": "evaluation/phase-e/engineering-cases.json",
+      "systemIdentityVisible": false,
+      "notes": "Engineering pointer only; blinded reviewers must not see methodId or conditionId."
+    },
+    {
+      "packetId": "N6-Q-03-B",
+      "questionId": "N6-Q-03",
+      "blindedCode": "B",
+      "blindedTitle": "Blinded research packet N6-Q-03/B",
+      "artifactKind": "n4_grounded_brief",
+      "artifactHash": null,
+      "artifactPointer": "research/domain-graph/n4/brief.offline.receipt.json",
+      "systemIdentityVisible": false,
+      "notes": "Engineering pointer only; blinded reviewers must not see methodId or conditionId."
+    },
+    {
+      "packetId": "N6-Q-03-C",
+      "questionId": "N6-Q-03",
+      "blindedCode": "C",
+      "blindedTitle": "Blinded research packet N6-Q-03/C",
+      "artifactKind": "conventional_research_slot",
+      "artifactHash": null,
+      "artifactPointer": null,
+      "systemIdentityVisible": false,
+      "notes": "Conventional arm awaits human researcher artifact — slot only."
+    },
+    {
+      "packetId": "N6-Q-04-A",
+      "questionId": "N6-Q-04",
+      "blindedCode": "A",
+      "blindedTitle": "Blinded research packet N6-Q-04/A",
+      "artifactKind": "phase_e_extractive_baseline",
+      "artifactHash": null,
+      "artifactPointer": "evaluation/phase-e/engineering-cases.json",
+      "systemIdentityVisible": false,
+      "notes": "Engineering pointer only; blinded reviewers must not see methodId or conditionId."
+    },
+    {
+      "packetId": "N6-Q-04-B",
+      "questionId": "N6-Q-04",
+      "blindedCode": "B",
+      "blindedTitle": "Blinded research packet N6-Q-04/B",
+      "artifactKind": "n4_grounded_brief",
+      "artifactHash": null,
+      "artifactPointer": "research/domain-graph/n4/brief.offline.receipt.json",
+      "systemIdentityVisible": false,
+      "notes": "Engineering pointer only; blinded reviewers must not see methodId or conditionId."
+    },
+    {
+      "packetId": "N6-Q-04-C",
+      "questionId": "N6-Q-04",
+      "blindedCode": "C",
+      "blindedTitle": "Blinded research packet N6-Q-04/C",
+      "artifactKind": "conventional_research_slot",
+      "artifactHash": null,
+      "artifactPointer": null,
+      "systemIdentityVisible": false,
+      "notes": "Conventional arm awaits human researcher artifact — slot only."
+    }
+  ],
+  "pins": {
+    "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c",
+    "n4BriefReceiptHash": "06e8fd59e3f3372c8abbd0945c25327ecc823ff0c30dc5f3f6ec9625fdd8729c",
+    "n5CriteriaReceiptHash": "d6d62522a82efe54ad98f25d668f7e7f8d40458c849b43f7e895884dc90b5c7e"
+  },
+  "correctionLog": [
+    {
+      "correctionId": "N6-CORR-000",
+      "at": "2026-11-07T23:00:00.000Z",
+      "note": "Scaffold created. No expert corrections recorded.",
+      "inventedOutcome": false
+    }
+  ],
+  "gates": {
+    "engineeringHarness": "CLEARED",
+    "protocolFrozen": "CLEARED",
+    "blindingScaffold": "CLEARED",
+    "emptyScorePacket": "CLEARED",
+    "independentBlindedReviewers": "BLOCKED",
+    "scientificAcceptance": "BLOCKED"
+  },
+  "blockers": [
+    "Independent blinded reviewers are not supplied; score freeze remains BLOCKED.",
+    "No expert usefulness scores were invented by this engineering harness.",
+    "Proposed acceptance thresholds remain unagreed.",
+    "N3 human label freeze and N2 entailment remain upstream residuals for scientific measurement.",
+    "Conventional research arm has empty human artifacts until a real study run.",
+    "Score packet status is awaiting_blinded_reviewers; freeze requires frozen_human_scores.",
+    "Only 0/12 packets have reviewerId + scoredAt."
+  ],
+  "notes": [
+    "Engineering can precede people; scientific acceptance stays BLOCKED until real blinded reviewers score empty packets.",
+    "Score rows omit conditionId; unblinding uses protocol.blindingKey under separate human control.",
+    "A count of passing software tests does not replace scientific evaluation.",
+    "N5 cohort/trial criteria remain a parallel research track; N6 pins N5 receipt hash when present without requiring live eligibility."
+  ],
+  "fabricatedExpertScoresPermitted": false,
+  "scientificApproval": false,
+  "usefulnessClaimed": false
+}

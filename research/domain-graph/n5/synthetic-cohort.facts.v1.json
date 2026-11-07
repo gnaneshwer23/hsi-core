@@ -1,0 +1,51 @@
+[
+  {
+    "caseId": "SYN-P-000101",
+    "dataClass": "synthetic",
+    "containsPhi": false,
+    "condition": "Type 1 diabetes",
+    "age": 16,
+    "sex": "F",
+    "diseaseStage": null,
+    "autoantibodiesRecorded": null,
+    "cPeptideRecorded": null,
+    "medicationTimingKnown": false,
+    "medications": [
+      "insulin"
+    ],
+    "lastHba1c": 7.2,
+    "attrs": {}
+  },
+  {
+    "caseId": "SYN-P-000102",
+    "dataClass": "synthetic",
+    "containsPhi": false,
+    "condition": "Type 2 diabetes",
+    "age": 54,
+    "sex": "M",
+    "diseaseStage": null,
+    "autoantibodiesRecorded": null,
+    "cPeptideRecorded": null,
+    "medicationTimingKnown": false,
+    "medications": [
+      "metformin"
+    ],
+    "lastHba1c": 8.1,
+    "attrs": {}
+  },
+  {
+    "caseId": "SYN-P-000103",
+    "dataClass": "synthetic",
+    "containsPhi": false,
+    "condition": "Diabetes",
+    "age": 30,
+    "sex": "F",
+    "diseaseStage": null,
+    "autoantibodiesRecorded": null,
+    "cPeptideRecorded": null,
+    "medicationTimingKnown": false,
+    "medications": [],
+    "lastHba1c": null,
+    "attrs": {}
+  }
+]

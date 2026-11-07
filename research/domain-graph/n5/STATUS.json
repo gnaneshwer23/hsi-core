@@ -1,0 +1,16 @@
+{
+  "phase": "N5",
+  "programme": "gut_immune_t2d",
+  "generatedAt": "2026-11-07T22:45:00.000Z",
+  "asOf": "2026-11-07T22:45:00.000Z",
+  "snapshotHash": "2a856b9bb160e800883ffa19b62aee32c7475e4c1f80476ecf83c6e99e4926b7",
+  "studyCount": 2,
+  "cohortSize": 3,
+  "engineeringHarness": "CLEARED",
+  "scientificAcceptance": "BLOCKED",
+  "confirmedEligible": false,
+  "patientEligibilityAssessed": false,
+  "liveRegistryQueried": false,
+  "enrolmentEnabled": false,
+  "note": "Engineering fixtures only. Public-registry criterion research — not live eligibility."
+}

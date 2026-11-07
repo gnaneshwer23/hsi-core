@@ -1,0 +1,765 @@
+{
+  "schemaVersion": "hsi-n5-suite-receipt-1",
+  "generatedAt": "2026-11-07T22:45:00.000Z",
+  "asOf": "2026-11-07T22:45:00.000Z",
+  "snapshotHash": "2a856b9bb160e800883ffa19b62aee32c7475e4c1f80476ecf83c6e99e4926b7",
+  "reports": [
+    {
+      "schemaVersion": "hsi-n5-cohort-trial-criteria-1",
+      "method": "hsi-n5-public-registry-criterion-inspection-1",
+      "programme": "gut_immune_t2d",
+      "generatedAt": "2026-11-07T22:45:00.000Z",
+      "asOf": "2026-11-07T22:45:00.000Z",
+      "snapshotHash": "2a856b9bb160e800883ffa19b62aee32c7475e4c1f80476ecf83c6e99e4926b7",
+      "nctId": "NCT99990061",
+      "studyTitle": "Engineering fixture — T1D public-registry criteria research (not a live recruitment claim)",
+      "cohortSize": 3,
+      "inspections": [
+        {
+          "criterionId": "NCT99990061-c-01-min",
+          "nctId": "NCT99990061",
+          "caseId": "SYN-P-000101",
+          "state": "satisfied",
+          "parseKind": "structured_age_bound",
+          "method": "structured_age_gte",
+          "attributeKey": "age_years",
+          "attributePresent": true,
+          "sourceSpan": {
+            "start": 0,
+            "end": 14,
+            "excerpt": "Age 8-45 years"
+          },
+          "notes": "Age bound only — not a complete criterion assessment",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990061-c-01-max",
+          "nctId": "NCT99990061",
+          "caseId": "SYN-P-000101",
+          "state": "satisfied",
+          "parseKind": "structured_age_bound",
+          "method": "structured_age_lte",
+          "attributeKey": "age_years",
+          "attributePresent": true,
+          "sourceSpan": {
+            "start": 0,
+            "end": 14,
+            "excerpt": "Age 8-45 years"
+          },
+          "notes": "Age bound only — not a complete criterion assessment",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990061-c-02",
+          "nctId": "NCT99990061",
+          "caseId": "SYN-P-000101",
+          "state": "satisfied",
+          "parseKind": "structured_condition_alias",
+          "method": "narrow_condition_alias",
+          "attributeKey": "condition_family",
+          "attributePresent": true,
+          "sourceSpan": {
+            "start": 15,
+            "end": 43,
+            "excerpt": "Diagnosis of Type 1 diabetes"
+          },
+          "notes": "Exact controlled alias match — not confirmed eligibility",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990061-c-03",
+          "nctId": "NCT99990061",
+          "caseId": "SYN-P-000101",
+          "state": "unknown",
+          "parseKind": "unstructured_requires_review",
+          "method": "disease_stage_missing",
+          "attributeKey": "condition_family",
+          "attributePresent": false,
+          "sourceSpan": {
+            "start": 44,
+            "end": 81,
+            "excerpt": "Documented disease stage at screening"
+          },
+          "notes": "Disease stage not recorded",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990061-c-04",
+          "nctId": "NCT99990061",
+          "caseId": "SYN-P-000101",
+          "state": "unknown",
+          "parseKind": "unstructured_requires_review",
+          "method": "autoantibody_context_missing",
+          "attributeKey": null,
+          "attributePresent": false,
+          "sourceSpan": {
+            "start": 82,
+            "end": 123,
+            "excerpt": "Autoantibody status recorded per protocol"
+          },
+          "notes": "Autoantibody context not recorded on synthetic profile",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990061-c-05",
+          "nctId": "NCT99990061",
+          "caseId": "SYN-P-000101",
+          "state": "unknown",
+          "parseKind": "unstructured_requires_review",
+          "method": "c_peptide_context_missing",
+          "attributeKey": null,
+          "attributePresent": false,
+          "sourceSpan": {
+            "start": 124,
+            "end": 173,
+            "excerpt": "C-peptide measurement within 30 days of screening"
+          },
+          "notes": "C-peptide context not recorded on synthetic profile",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990061-c-06",
+          "nctId": "NCT99990061",
+          "caseId": "SYN-P-000101",
+          "state": "ambiguous",
+          "parseKind": "unstructured_requires_review",
+          "method": "medication_timing_unknown",
+          "attributeKey": null,
+          "attributePresent": true,
+          "sourceSpan": {
+            "start": 174,
+            "end": 224,
+            "excerpt": "Prior therapy washout timing known to investigator"
+          },
+          "notes": "Medication exposure without timing is not contemporaneous treatment",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990061-c-07",
+          "nctId": "NCT99990061",
+          "caseId": "SYN-P-000101",
+          "state": "requires_investigator_review",
+          "parseKind": "unstructured_requires_review",
+          "method": "unstructured_or_unparsed_force_review",
+          "attributeKey": null,
+          "attributePresent": false,
+          "sourceSpan": {
+            "start": 225,
+            "end": 275,
+            "excerpt": "Investigator judgment on concurrent infection risk"
+          },
+          "notes": "Unstructured registry criterion — never auto-resolved",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990061-c-01-min",
+          "nctId": "NCT99990061",
+          "caseId": "SYN-P-000102",
+          "state": "satisfied",
+          "parseKind": "structured_age_bound",
+          "method": "structured_age_gte",
+          "attributeKey": "age_years",
+          "attributePresent": true,
+          "sourceSpan": {
+            "start": 0,
+            "end": 14,
+            "excerpt": "Age 8-45 years"
+          },
+          "notes": "Age bound only — not a complete criterion assessment",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990061-c-01-max",
+          "nctId": "NCT99990061",
+          "caseId": "SYN-P-000102",
+          "state": "not_satisfied",
+          "parseKind": "structured_age_bound",
+          "method": "structured_age_lte",
+          "attributeKey": "age_years",
+          "attributePresent": true,
+          "sourceSpan": {
+            "start": 0,
+            "end": 14,
+            "excerpt": "Age 8-45 years"
+          },
+          "notes": "Age bound only — not a complete criterion assessment",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990061-c-02",
+          "nctId": "NCT99990061",
+          "caseId": "SYN-P-000102",
+          "state": "not_satisfied",
+          "parseKind": "structured_condition_alias",
+          "method": "narrow_condition_alias",
+          "attributeKey": "condition_family",
+          "attributePresent": true,
+          "sourceSpan": {
+            "start": 15,
+            "end": 43,
+            "excerpt": "Diagnosis of Type 1 diabetes"
+          },
+          "notes": "Condition alias does not match required disease family",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990061-c-03",
+          "nctId": "NCT99990061",
+          "caseId": "SYN-P-000102",
+          "state": "unknown",
+          "parseKind": "unstructured_requires_review",
+          "method": "disease_stage_missing",
+          "attributeKey": "condition_family",
+          "attributePresent": false,
+          "sourceSpan": {
+            "start": 44,
+            "end": 81,
+            "excerpt": "Documented disease stage at screening"
+          },
+          "notes": "Disease stage not recorded",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990061-c-04",
+          "nctId": "NCT99990061",
+          "caseId": "SYN-P-000102",
+          "state": "unknown",
+          "parseKind": "unstructured_requires_review",
+          "method": "autoantibody_context_missing",
+          "attributeKey": null,
+          "attributePresent": false,
+          "sourceSpan": {
+            "start": 82,
+            "end": 123,
+            "excerpt": "Autoantibody status recorded per protocol"
+          },
+          "notes": "Autoantibody context not recorded on synthetic profile",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990061-c-05",
+          "nctId": "NCT99990061",
+          "caseId": "SYN-P-000102",
+          "state": "unknown",
+          "parseKind": "unstructured_requires_review",
+          "method": "c_peptide_context_missing",
+          "attributeKey": null,
+          "attributePresent": false,
+          "sourceSpan": {
+            "start": 124,
+            "end": 173,
+            "excerpt": "C-peptide measurement within 30 days of screening"
+          },
+          "notes": "C-peptide context not recorded on synthetic profile",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990061-c-06",
+          "nctId": "NCT99990061",
+          "caseId": "SYN-P-000102",
+          "state": "ambiguous",
+          "parseKind": "unstructured_requires_review",
+          "method": "medication_timing_unknown",
+          "attributeKey": null,
+          "attributePresent": true,
+          "sourceSpan": {
+            "start": 174,
+            "end": 224,
+            "excerpt": "Prior therapy washout timing known to investigator"
+          },
+          "notes": "Medication exposure without timing is not contemporaneous treatment",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990061-c-07",
+          "nctId": "NCT99990061",
+          "caseId": "SYN-P-000102",
+          "state": "requires_investigator_review",
+          "parseKind": "unstructured_requires_review",
+          "method": "unstructured_or_unparsed_force_review",
+          "attributeKey": null,
+          "attributePresent": false,
+          "sourceSpan": {
+            "start": 225,
+            "end": 275,
+            "excerpt": "Investigator judgment on concurrent infection risk"
+          },
+          "notes": "Unstructured registry criterion — never auto-resolved",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990061-c-01-min",
+          "nctId": "NCT99990061",
+          "caseId": "SYN-P-000103",
+          "state": "satisfied",
+          "parseKind": "structured_age_bound",
+          "method": "structured_age_gte",
+          "attributeKey": "age_years",
+          "attributePresent": true,
+          "sourceSpan": {
+            "start": 0,
+            "end": 14,
+            "excerpt": "Age 8-45 years"
+          },
+          "notes": "Age bound only — not a complete criterion assessment",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990061-c-01-max",
+          "nctId": "NCT99990061",
+          "caseId": "SYN-P-000103",
+          "state": "satisfied",
+          "parseKind": "structured_age_bound",
+          "method": "structured_age_lte",
+          "attributeKey": "age_years",
+          "attributePresent": true,
+          "sourceSpan": {
+            "start": 0,
+            "end": 14,
+            "excerpt": "Age 8-45 years"
+          },
+          "notes": "Age bound only — not a complete criterion assessment",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990061-c-02",
+          "nctId": "NCT99990061",
+          "caseId": "SYN-P-000103",
+          "state": "ambiguous",
+          "parseKind": "structured_condition_alias",
+          "method": "generic_diabetes_alias_unresolved",
+          "attributeKey": "condition_family",
+          "attributePresent": true,
+          "sourceSpan": {
+            "start": 15,
+            "end": 43,
+            "excerpt": "Diagnosis of Type 1 diabetes"
+          },
+          "notes": "Generic diabetes label is not an exact T1D/T2D match",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990061-c-03",
+          "nctId": "NCT99990061",
+          "caseId": "SYN-P-000103",
+          "state": "unknown",
+          "parseKind": "unstructured_requires_review",
+          "method": "disease_stage_missing",
+          "attributeKey": "condition_family",
+          "attributePresent": false,
+          "sourceSpan": {
+            "start": 44,
+            "end": 81,
+            "excerpt": "Documented disease stage at screening"
+          },
+          "notes": "Disease stage not recorded",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990061-c-04",
+          "nctId": "NCT99990061",
+          "caseId": "SYN-P-000103",
+          "state": "unknown",
+          "parseKind": "unstructured_requires_review",
+          "method": "autoantibody_context_missing",
+          "attributeKey": null,
+          "attributePresent": false,
+          "sourceSpan": {
+            "start": 82,
+            "end": 123,
+            "excerpt": "Autoantibody status recorded per protocol"
+          },
+          "notes": "Autoantibody context not recorded on synthetic profile",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990061-c-05",
+          "nctId": "NCT99990061",
+          "caseId": "SYN-P-000103",
+          "state": "unknown",
+          "parseKind": "unstructured_requires_review",
+          "method": "c_peptide_context_missing",
+          "attributeKey": null,
+          "attributePresent": false,
+          "sourceSpan": {
+            "start": 124,
+            "end": 173,
+            "excerpt": "C-peptide measurement within 30 days of screening"
+          },
+          "notes": "C-peptide context not recorded on synthetic profile",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990061-c-06",
+          "nctId": "NCT99990061",
+          "caseId": "SYN-P-000103",
+          "state": "ambiguous",
+          "parseKind": "unstructured_requires_review",
+          "method": "medication_timing_unknown",
+          "attributeKey": null,
+          "attributePresent": false,
+          "sourceSpan": {
+            "start": 174,
+            "end": 224,
+            "excerpt": "Prior therapy washout timing known to investigator"
+          },
+          "notes": "Medication exposure without timing is not contemporaneous treatment",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990061-c-07",
+          "nctId": "NCT99990061",
+          "caseId": "SYN-P-000103",
+          "state": "requires_investigator_review",
+          "parseKind": "unstructured_requires_review",
+          "method": "unstructured_or_unparsed_force_review",
+          "attributeKey": null,
+          "attributePresent": false,
+          "sourceSpan": {
+            "start": 225,
+            "end": 275,
+            "excerpt": "Investigator judgment on concurrent infection risk"
+          },
+          "notes": "Unstructured registry criterion — never auto-resolved",
+          "confirmedEligible": false
+        }
+      ],
+      "overlapSummary": {
+        "nctId": "NCT99990061",
+        "cohortSize": 3,
+        "conditionOverlapCount": 1,
+        "ageAssessable": true,
+        "ageCompatibleCount": 1,
+        "state": "potential_topic_and_age_overlap",
+        "unassessed": [
+          "Full inclusion and exclusion criteria",
+          "Sex, healthy-volunteer and disease-stage criteria",
+          "Medication, prior therapy and washout",
+          "Autoantibody, C-peptide and laboratory thresholds",
+          "Geography, recruitment availability and investigator decision"
+        ],
+        "criteriaTextAvailable": true,
+        "sourceStatus": "operator_uploaded_unverified",
+        "liveRegistryQueried": false,
+        "patientEligibilityAssessed": false,
+        "confirmedEligible": false,
+        "scientificClaimAllowed": false
+      },
+      "satisfiedCount": 6,
+      "notSatisfiedCount": 2,
+      "unknownCount": 9,
+      "ambiguousCount": 4,
+      "requiresInvestigatorReviewCount": 3,
+      "overallLabel": "criterion_assessment_only",
+      "confirmedEligible": false,
+      "patientEligible": false,
+      "patientEligibilityAssessed": false,
+      "liveRegistryQueried": false,
+      "enrolmentEnabled": false,
+      "clinicalAdvice": false,
+      "containsPhi": false,
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "engineeringHarness": "CLEARED",
+      "scientificAcceptance": "BLOCKED",
+      "honesty": [
+        "N5 is public-registry criterion research over synthetic validation cohorts only.",
+        "A recorded age match is not a complete criterion assessment.",
+        "A list of satisfied criteria is not confirmed eligibility.",
+        "T1D and T2D aliases stay narrow; generic diabetes remains unresolved.",
+        "Missing/ambiguous autoantibody, C-peptide, disease-stage and medication-timing facts stay unresolved.",
+        "confirmedEligible=false · patientEligible=false · enrolmentEnabled=false always.",
+        "No live CDS/PHI, Gate C auto-approve, or invented trial enrolment.",
+        "Forbidden phrase retained as ban token only: confirmed eligible",
+        "Forbidden phrase retained as ban token only: patient eligible",
+        "Forbidden phrase retained as ban token only: ai confirmed eligible",
+        "Forbidden phrase retained as ban token only: fully eligible",
+        "Forbidden phrase retained as ban token only: eligible for enrolment",
+        "Forbidden phrase retained as ban token only: eligible for enrollment"
+      ],
+      "pins": {
+        "n2LedgerHash": "3718b6e7a5e7d08dc08290622ccb9cab16b34b56a27a57c5b3bafca1f5e0c86d",
+        "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c"
+      }
+    },
+    {
+      "schemaVersion": "hsi-n5-cohort-trial-criteria-1",
+      "method": "hsi-n5-public-registry-criterion-inspection-1",
+      "programme": "gut_immune_t2d",
+      "generatedAt": "2026-11-07T22:45:00.000Z",
+      "asOf": "2026-11-07T22:45:00.000Z",
+      "snapshotHash": "2a856b9bb160e800883ffa19b62aee32c7475e4c1f80476ecf83c6e99e4926b7",
+      "nctId": "NCT99990062",
+      "studyTitle": "Engineering fixture — T2D public-registry criteria research (not a live recruitment claim)",
+      "cohortSize": 3,
+      "inspections": [
+        {
+          "criterionId": "NCT99990062-c-01",
+          "nctId": "NCT99990062",
+          "caseId": "SYN-P-000101",
+          "state": "not_satisfied",
+          "parseKind": "structured_age_bound",
+          "method": "structured_age_gte",
+          "attributeKey": "age_years",
+          "attributePresent": true,
+          "sourceSpan": {
+            "start": 0,
+            "end": 14,
+            "excerpt": "Age ≥ 18 years"
+          },
+          "notes": "Age bound only — not a complete criterion assessment",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990062-c-02",
+          "nctId": "NCT99990062",
+          "caseId": "SYN-P-000101",
+          "state": "satisfied",
+          "parseKind": "structured_age_bound",
+          "method": "structured_age_lte",
+          "attributeKey": "age_years",
+          "attributePresent": true,
+          "sourceSpan": {
+            "start": 15,
+            "end": 29,
+            "excerpt": "Age ≤ 75 years"
+          },
+          "notes": "Age bound only — not a complete criterion assessment",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990062-c-03",
+          "nctId": "NCT99990062",
+          "caseId": "SYN-P-000101",
+          "state": "not_satisfied",
+          "parseKind": "structured_condition_alias",
+          "method": "narrow_condition_alias",
+          "attributeKey": "condition_family",
+          "attributePresent": true,
+          "sourceSpan": {
+            "start": 30,
+            "end": 58,
+            "excerpt": "Diagnosis of Type 2 diabetes"
+          },
+          "notes": "Condition alias does not match required disease family",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990062-c-04",
+          "nctId": "NCT99990062",
+          "caseId": "SYN-P-000101",
+          "state": "ambiguous",
+          "parseKind": "unstructured_requires_review",
+          "method": "medication_timing_unknown",
+          "attributeKey": null,
+          "attributePresent": true,
+          "sourceSpan": {
+            "start": 59,
+            "end": 95,
+            "excerpt": "Current medication timing documented"
+          },
+          "notes": "Medication exposure without timing is not contemporaneous treatment",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990062-c-01",
+          "nctId": "NCT99990062",
+          "caseId": "SYN-P-000102",
+          "state": "satisfied",
+          "parseKind": "structured_age_bound",
+          "method": "structured_age_gte",
+          "attributeKey": "age_years",
+          "attributePresent": true,
+          "sourceSpan": {
+            "start": 0,
+            "end": 14,
+            "excerpt": "Age ≥ 18 years"
+          },
+          "notes": "Age bound only — not a complete criterion assessment",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990062-c-02",
+          "nctId": "NCT99990062",
+          "caseId": "SYN-P-000102",
+          "state": "satisfied",
+          "parseKind": "structured_age_bound",
+          "method": "structured_age_lte",
+          "attributeKey": "age_years",
+          "attributePresent": true,
+          "sourceSpan": {
+            "start": 15,
+            "end": 29,
+            "excerpt": "Age ≤ 75 years"
+          },
+          "notes": "Age bound only — not a complete criterion assessment",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990062-c-03",
+          "nctId": "NCT99990062",
+          "caseId": "SYN-P-000102",
+          "state": "satisfied",
+          "parseKind": "structured_condition_alias",
+          "method": "narrow_condition_alias",
+          "attributeKey": "condition_family",
+          "attributePresent": true,
+          "sourceSpan": {
+            "start": 30,
+            "end": 58,
+            "excerpt": "Diagnosis of Type 2 diabetes"
+          },
+          "notes": "Exact controlled alias match — not confirmed eligibility",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990062-c-04",
+          "nctId": "NCT99990062",
+          "caseId": "SYN-P-000102",
+          "state": "ambiguous",
+          "parseKind": "unstructured_requires_review",
+          "method": "medication_timing_unknown",
+          "attributeKey": null,
+          "attributePresent": true,
+          "sourceSpan": {
+            "start": 59,
+            "end": 95,
+            "excerpt": "Current medication timing documented"
+          },
+          "notes": "Medication exposure without timing is not contemporaneous treatment",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990062-c-01",
+          "nctId": "NCT99990062",
+          "caseId": "SYN-P-000103",
+          "state": "satisfied",
+          "parseKind": "structured_age_bound",
+          "method": "structured_age_gte",
+          "attributeKey": "age_years",
+          "attributePresent": true,
+          "sourceSpan": {
+            "start": 0,
+            "end": 14,
+            "excerpt": "Age ≥ 18 years"
+          },
+          "notes": "Age bound only — not a complete criterion assessment",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990062-c-02",
+          "nctId": "NCT99990062",
+          "caseId": "SYN-P-000103",
+          "state": "satisfied",
+          "parseKind": "structured_age_bound",
+          "method": "structured_age_lte",
+          "attributeKey": "age_years",
+          "attributePresent": true,
+          "sourceSpan": {
+            "start": 15,
+            "end": 29,
+            "excerpt": "Age ≤ 75 years"
+          },
+          "notes": "Age bound only — not a complete criterion assessment",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990062-c-03",
+          "nctId": "NCT99990062",
+          "caseId": "SYN-P-000103",
+          "state": "ambiguous",
+          "parseKind": "structured_condition_alias",
+          "method": "generic_diabetes_alias_unresolved",
+          "attributeKey": "condition_family",
+          "attributePresent": true,
+          "sourceSpan": {
+            "start": 30,
+            "end": 58,
+            "excerpt": "Diagnosis of Type 2 diabetes"
+          },
+          "notes": "Generic diabetes label is not an exact T1D/T2D match",
+          "confirmedEligible": false
+        },
+        {
+          "criterionId": "NCT99990062-c-04",
+          "nctId": "NCT99990062",
+          "caseId": "SYN-P-000103",
+          "state": "ambiguous",
+          "parseKind": "unstructured_requires_review",
+          "method": "medication_timing_unknown",
+          "attributeKey": null,
+          "attributePresent": false,
+          "sourceSpan": {
+            "start": 59,
+            "end": 95,
+            "excerpt": "Current medication timing documented"
+          },
+          "notes": "Medication exposure without timing is not contemporaneous treatment",
+          "confirmedEligible": false
+        }
+      ],
+      "overlapSummary": {
+        "nctId": "NCT99990062",
+        "cohortSize": 3,
+        "conditionOverlapCount": 1,
+        "ageAssessable": true,
+        "ageCompatibleCount": 1,
+        "state": "potential_topic_and_age_overlap",
+        "unassessed": [
+          "Full inclusion and exclusion criteria",
+          "Sex, healthy-volunteer and disease-stage criteria",
+          "Medication, prior therapy and washout",
+          "Autoantibody, C-peptide and laboratory thresholds",
+          "Geography, recruitment availability and investigator decision"
+        ],
+        "criteriaTextAvailable": true,
+        "sourceStatus": "operator_uploaded_unverified",
+        "liveRegistryQueried": false,
+        "patientEligibilityAssessed": false,
+        "confirmedEligible": false,
+        "scientificClaimAllowed": false
+      },
+      "satisfiedCount": 6,
+      "notSatisfiedCount": 2,
+      "unknownCount": 0,
+      "ambiguousCount": 4,
+      "requiresInvestigatorReviewCount": 0,
+      "overallLabel": "criterion_assessment_only",
+      "confirmedEligible": false,
+      "patientEligible": false,
+      "patientEligibilityAssessed": false,
+      "liveRegistryQueried": false,
+      "enrolmentEnabled": false,
+      "clinicalAdvice": false,
+      "containsPhi": false,
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "engineeringHarness": "CLEARED",
+      "scientificAcceptance": "BLOCKED",
+      "honesty": [
+        "N5 is public-registry criterion research over synthetic validation cohorts only.",
+        "A recorded age match is not a complete criterion assessment.",
+        "A list of satisfied criteria is not confirmed eligibility.",
+        "T1D and T2D aliases stay narrow; generic diabetes remains unresolved.",
+        "Missing/ambiguous autoantibody, C-peptide, disease-stage and medication-timing facts stay unresolved.",
+        "confirmedEligible=false · patientEligible=false · enrolmentEnabled=false always.",
+        "No live CDS/PHI, Gate C auto-approve, or invented trial enrolment.",
+        "Forbidden phrase retained as ban token only: confirmed eligible",
+        "Forbidden phrase retained as ban token only: patient eligible",
+        "Forbidden phrase retained as ban token only: ai confirmed eligible",
+        "Forbidden phrase retained as ban token only: fully eligible",
+        "Forbidden phrase retained as ban token only: eligible for enrolment",
+        "Forbidden phrase retained as ban token only: eligible for enrollment"
+      ],
+      "pins": {
+        "n2LedgerHash": "3718b6e7a5e7d08dc08290622ccb9cab16b34b56a27a57c5b3bafca1f5e0c86d",
+        "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c"
+      }
+    }
+  ],
+  "engineeringHarness": "CLEARED",
+  "scientificAcceptance": "BLOCKED",
+  "confirmedEligible": false,
+  "patientEligibilityAssessed": false,
+  "liveRegistryQueried": false
+}

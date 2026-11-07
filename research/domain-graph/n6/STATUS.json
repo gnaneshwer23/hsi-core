@@ -1,0 +1,17 @@
+{
+  "phase": "N6",
+  "programme": "gut_immune_t2d",
+  "generatedAt": "2026-11-07T23:00:00.000Z",
+  "questionCount": 4,
+  "conditionCount": 3,
+  "packetCount": 12,
+  "scoredRows": 0,
+  "engineeringHarness": "CLEARED",
+  "independentBlindedReviewers": "BLOCKED",
+  "scientificAcceptance": "BLOCKED",
+  "usefulnessClaimed": false,
+  "fabricatedExpertScoresPermitted": false,
+  "scientificApproval": false,
+  "n5Coexistence": "N5 uncommitted artifacts left intact; N6 pins n5 receipt hash when present",
+  "note": "Empty score packets only. No expert usefulness scores were invented."
+}

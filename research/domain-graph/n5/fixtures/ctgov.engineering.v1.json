@@ -1,0 +1,52 @@
+{
+  "studies": [
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT99990061",
+          "briefTitle": "Engineering fixture — T1D public-registry criteria research (not a live recruitment claim)"
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Diabetes Mellitus, Type 1"
+          ]
+        },
+        "statusModule": {
+          "overallStatus": "COMPLETED",
+          "lastUpdatePostDateStruct": {
+            "date": "2020-01-15"
+          }
+        },
+        "eligibilityModule": {
+          "minimumAge": "8 Years",
+          "maximumAge": "45 Years",
+          "eligibilityCriteria": "Age 8-45 years\nDiagnosis of Type 1 diabetes\nDocumented disease stage at screening\nAutoantibody status recorded per protocol\nC-peptide measurement within 30 days of screening\nPrior therapy washout timing known to investigator\nInvestigator judgment on concurrent infection risk"
+        }
+      }
+    },
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT99990062",
+          "briefTitle": "Engineering fixture — T2D public-registry criteria research (not a live recruitment claim)"
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Diabetes Mellitus, Type 2"
+          ]
+        },
+        "statusModule": {
+          "overallStatus": "COMPLETED",
+          "lastUpdatePostDateStruct": {
+            "date": "2021-06-01"
+          }
+        },
+        "eligibilityModule": {
+          "minimumAge": "18 Years",
+          "maximumAge": "75 Years",
+          "eligibilityCriteria": "Age ≥ 18 years\nAge ≤ 75 years\nDiagnosis of Type 2 diabetes\nCurrent medication timing documented"
+        }
+      }
+    }
+  ]
+}

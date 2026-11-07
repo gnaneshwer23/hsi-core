@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "hsi-n6-eval-receipt-1",
+  "protocolHash": "3d2bbef5b8b54444f5ed264f6a9a5778d4031a03b6021e05f0c356256cbba505",
+  "scorePacketHash": "27ea8535663ad4d291dd0f51486d0b1310812f5b121ed9bc3f0dd999a240d304",
+  "runManifestHash": "505d63fc1289f8982ddf5aef9b54b993aeb3cad7ec09c349d6ea861cdd0a7c1e",
+  "evaluatedAt": "2026-11-07T23:00:00.000Z",
+  "questionCount": 4,
+  "conditionCount": 3,
+  "packetCount": 12,
+  "scoredRows": 0,
+  "engineeringHarness": "CLEARED",
+  "independentBlindedReviewers": "BLOCKED",
+  "scientificAcceptance": "BLOCKED",
+  "usefulnessDeltaVsBaseline": null,
+  "usefulnessDeltaVsConventional": null,
+  "majorErrorRate": null,
+  "interRaterAgreement": null,
+  "modelActivationAllowed": false,
+  "scientificValidityEstablished": false,
+  "usefulnessClaimed": false,
+  "blockers": [
+    "Independent blinded reviewers are not supplied; score freeze remains BLOCKED.",
+    "No expert usefulness scores were invented by this engineering harness.",
+    "Proposed acceptance thresholds remain unagreed.",
+    "N3 human label freeze and N2 entailment remain upstream residuals for scientific measurement.",
+    "Conventional research arm has empty human artifacts until a real study run.",
+    "Score packet status is awaiting_blinded_reviewers; freeze requires frozen_human_scores.",
+    "Only 0/12 packets have reviewerId + scoredAt.",
+    "Scientific acceptance blocked until independent blinded reviewers exist and scores are frozen."
+  ],
+  "notes": [
+    "Engineering harness replay succeeded; usefulness is not established by this receipt.",
+    "Do not report usefulness deltas while independentBlindedReviewers is BLOCKED.",
+    "Automated usefulness scores are forbidden by the analysis plan."
+  ]
+}

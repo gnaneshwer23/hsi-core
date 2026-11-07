@@ -156,7 +156,12 @@
     "n3:check": "bun --no-env-file scripts/n3-scientific-benchmark.ts --check",
     "n3:eval": "bun --no-env-file scripts/n3-scientific-benchmark.ts --eval",
     "n4:brief": "bun --no-env-file scripts/n4-grounded-brief.ts",
-    "n4:check": "bun --no-env-file scripts/n4-grounded-brief.ts --check"
+    "n4:check": "bun --no-env-file scripts/n4-grounded-brief.ts --check",
+    "n5:research": "bun --no-env-file scripts/n5-cohort-trial-criteria.ts",
+    "n5:check": "bun --no-env-file scripts/n5-cohort-trial-criteria.ts --check",
+    "n6:study": "bun --no-env-file scripts/n6-blinded-expert-usefulness.ts",
+    "n6:check": "bun --no-env-file scripts/n6-blinded-expert-usefulness.ts --check",
+    "n6:eval": "bun --no-env-file scripts/n6-blinded-expert-usefulness.ts --eval"
   },
   "engines": {
     "node": ">=20"

@@ -1,0 +1,264 @@
+{
+  "schemaVersion": "hsi-n5-registry-criteria-snapshot-1",
+  "origin": "operator_supplied_unverified",
+  "scope": "public_registry_eligibility_research",
+  "containsPhi": false,
+  "retrievedAt": "2026-11-07T20:00:00.000Z",
+  "asOf": "2026-11-07T22:45:00.000Z",
+  "studies": [
+    {
+      "nctId": "NCT99990061",
+      "title": "Engineering fixture — T1D public-registry criteria research (not a live recruitment claim)",
+      "conditions": [
+        "Diabetes Mellitus, Type 1"
+      ],
+      "status": "COMPLETED",
+      "lastUpdateDate": "2020-01-15",
+      "minimumAge": 8,
+      "maximumAge": 45,
+      "eligibilityText": "Age 8-45 years\nDiagnosis of Type 1 diabetes\nDocumented disease stage at screening\nAutoantibody status recorded per protocol\nC-peptide measurement within 30 days of screening\nPrior therapy washout timing known to investigator\nInvestigator judgment on concurrent infection risk",
+      "url": "https://clinicaltrials.gov/study/NCT99990061",
+      "sourceStatus": "operator_uploaded_unverified",
+      "liveStatusVerified": false
+    },
+    {
+      "nctId": "NCT99990062",
+      "title": "Engineering fixture — T2D public-registry criteria research (not a live recruitment claim)",
+      "conditions": [
+        "Diabetes Mellitus, Type 2"
+      ],
+      "status": "COMPLETED",
+      "lastUpdateDate": "2021-06-01",
+      "minimumAge": 18,
+      "maximumAge": 75,
+      "eligibilityText": "Age ≥ 18 years\nAge ≤ 75 years\nDiagnosis of Type 2 diabetes\nCurrent medication timing documented",
+      "url": "https://clinicaltrials.gov/study/NCT99990062",
+      "sourceStatus": "operator_uploaded_unverified",
+      "liveStatusVerified": false
+    }
+  ],
+  "criteriaByNct": {
+    "NCT99990061": [
+      {
+        "criterionId": "NCT99990061-c-01-min",
+        "text": "Age 8-45 years",
+        "parseKind": "structured_age_bound",
+        "logic": "and",
+        "attributeKey": "age_years",
+        "operator": "gte",
+        "expected": 8,
+        "unit": "years",
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 0,
+          "end": 14,
+          "excerpt": "Age 8-45 years"
+        },
+        "structuredRuleSupported": true
+      },
+      {
+        "criterionId": "NCT99990061-c-01-max",
+        "text": "Age 8-45 years",
+        "parseKind": "structured_age_bound",
+        "logic": "and",
+        "attributeKey": "age_years",
+        "operator": "lte",
+        "expected": 45,
+        "unit": "years",
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 0,
+          "end": 14,
+          "excerpt": "Age 8-45 years"
+        },
+        "structuredRuleSupported": true
+      },
+      {
+        "criterionId": "NCT99990061-c-02",
+        "text": "Diagnosis of Type 1 diabetes",
+        "parseKind": "structured_condition_alias",
+        "logic": "and",
+        "attributeKey": "condition_family",
+        "operator": "eq",
+        "expected": "type_1_diabetes",
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": "type_1_diabetes",
+        "sourceSpan": {
+          "start": 15,
+          "end": 43,
+          "excerpt": "Diagnosis of Type 1 diabetes"
+        },
+        "structuredRuleSupported": true
+      },
+      {
+        "criterionId": "NCT99990061-c-03",
+        "text": "Documented disease stage at screening",
+        "parseKind": "unstructured_requires_review",
+        "logic": "unspecified",
+        "attributeKey": "condition_family",
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": "other",
+        "sourceSpan": {
+          "start": 44,
+          "end": 81,
+          "excerpt": "Documented disease stage at screening"
+        },
+        "structuredRuleSupported": false
+      },
+      {
+        "criterionId": "NCT99990061-c-04",
+        "text": "Autoantibody status recorded per protocol",
+        "parseKind": "unstructured_requires_review",
+        "logic": "and",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 82,
+          "end": 123,
+          "excerpt": "Autoantibody status recorded per protocol"
+        },
+        "structuredRuleSupported": false
+      },
+      {
+        "criterionId": "NCT99990061-c-05",
+        "text": "C-peptide measurement within 30 days of screening",
+        "parseKind": "unstructured_requires_review",
+        "logic": "and",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": "within 30 days",
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 124,
+          "end": 173,
+          "excerpt": "C-peptide measurement within 30 days of screening"
+        },
+        "structuredRuleSupported": false
+      },
+      {
+        "criterionId": "NCT99990061-c-06",
+        "text": "Prior therapy washout timing known to investigator",
+        "parseKind": "unstructured_requires_review",
+        "logic": "and",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 174,
+          "end": 224,
+          "excerpt": "Prior therapy washout timing known to investigator"
+        },
+        "structuredRuleSupported": false
+      },
+      {
+        "criterionId": "NCT99990061-c-07",
+        "text": "Investigator judgment on concurrent infection risk",
+        "parseKind": "unstructured_requires_review",
+        "logic": "and",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 225,
+          "end": 275,
+          "excerpt": "Investigator judgment on concurrent infection risk"
+        },
+        "structuredRuleSupported": false
+      }
+    ],
+    "NCT99990062": [
+      {
+        "criterionId": "NCT99990062-c-01",
+        "text": "Age ≥ 18 years",
+        "parseKind": "structured_age_bound",
+        "logic": "and",
+        "attributeKey": "age_years",
+        "operator": "gte",
+        "expected": 18,
+        "unit": "years",
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 0,
+          "end": 14,
+          "excerpt": "Age ≥ 18 years"
+        },
+        "structuredRuleSupported": true
+      },
+      {
+        "criterionId": "NCT99990062-c-02",
+        "text": "Age ≤ 75 years",
+        "parseKind": "structured_age_bound",
+        "logic": "and",
+        "attributeKey": "age_years",
+        "operator": "lte",
+        "expected": 75,
+        "unit": "years",
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 15,
+          "end": 29,
+          "excerpt": "Age ≤ 75 years"
+        },
+        "structuredRuleSupported": true
+      },
+      {
+        "criterionId": "NCT99990062-c-03",
+        "text": "Diagnosis of Type 2 diabetes",
+        "parseKind": "structured_condition_alias",
+        "logic": "and",
+        "attributeKey": "condition_family",
+        "operator": "eq",
+        "expected": "type_2_diabetes",
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": "type_2_diabetes",
+        "sourceSpan": {
+          "start": 30,
+          "end": 58,
+          "excerpt": "Diagnosis of Type 2 diabetes"
+        },
+        "structuredRuleSupported": true
+      },
+      {
+        "criterionId": "NCT99990062-c-04",
+        "text": "Current medication timing documented",
+        "parseKind": "unstructured_requires_review",
+        "logic": "and",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 59,
+          "end": 95,
+          "excerpt": "Current medication timing documented"
+        },
+        "structuredRuleSupported": false
+      }
+    ]
+  },
+  "liveRegistryQueried": false,
+  "liveStatusVerified": false
+}
