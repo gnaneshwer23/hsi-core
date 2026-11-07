@@ -1,0 +1,1379 @@
+{
+  "schemaVersion": "hsi-experiment-ledger-1",
+  "phase": "N7",
+  "programme": "gut_immune_t2d",
+  "scientificApproval": false,
+  "graphPromotable": false,
+  "realObservationClaimed": false,
+  "engineeringHarness": "CLEARED",
+  "realObservationAcceptance": "BLOCKED",
+  "publicDataOrPartnerAgreement": "BLOCKED",
+  "records": [
+    {
+      "id": "EXP-N7-001",
+      "version": 3,
+      "parentVersion": 2,
+      "lifecycle": "protocol_bound",
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "programme": "gut_immune_t2d",
+      "prediction": {
+        "n2PredictionRecordId": "N2-R-002",
+        "n2PredictionVersion": 1,
+        "assertion": "Raising luminal butyrate in a matched human gut–immune organoid will reduce inflammatory signalling markers relative to vehicle under a frozen protocol.",
+        "subjectId": "metabolite:butyrate",
+        "predicate": "associated_with",
+        "objectId": "process:inflammatory_signalling",
+        "falsifier": "No reduction (or an increase) in pre-specified inflammatory markers versus vehicle under the frozen protocol.",
+        "freeze": {
+          "frozenAt": "2026-11-07T22:05:00.000Z",
+          "outcomeUnknownAtFreeze": true,
+          "predictionContentHash": "aacc845598727f53ce0ffd971481fbedc3c3e22afd972cf083e30b7ed1ac9386"
+        }
+      },
+      "protocol": {
+        "protocolId": "protocol:organoid-butyrate-v0",
+        "compoundIdentity": "sodium butyrate (fixture identity only)",
+        "dose": null,
+        "doseUnit": null,
+        "tissueOrCellState": "human gut-immune organoid (proposed)",
+        "controls": [
+          "vehicle"
+        ],
+        "timing": null,
+        "batchId": null,
+        "deviations": [],
+        "missingFields": [
+          "dose",
+          "doseUnit",
+          "timing",
+          "batchId"
+        ]
+      },
+      "rawArtifacts": [],
+      "processing": null,
+      "qc": null,
+      "outcome": null,
+      "reviewCandidate": null,
+      "frozenEvalPins": {
+        "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c",
+        "n6ProtocolHash": "9e3b5c80727cf57f921632760b58d505d2d7f34dd171906261bec7188fe4f6b4",
+        "mayMutatePinnedEval": false
+      },
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "realObservationClaimed": false,
+      "createdAt": "2026-11-07T22:10:00.000Z",
+      "contentHash": "e77f6328a463602991e0e4652becf2c84eb47f657686ced8be6aba591e494960"
+    },
+    {
+      "id": "EXP-N7-002",
+      "version": 6,
+      "parentVersion": 5,
+      "lifecycle": "review_candidate",
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "programme": "gut_immune_t2d",
+      "prediction": {
+        "n2PredictionRecordId": null,
+        "n2PredictionVersion": null,
+        "assertion": "Fixture prediction: plate-reader inflammatory marker panel will complete QC under engineering protocol v0.",
+        "subjectId": "assay:fixture_inflammation_panel",
+        "predicate": "completes",
+        "objectId": "qc:fixture_pass",
+        "falsifier": "Panel fails calibration or plate QC under the frozen fixture protocol.",
+        "freeze": {
+          "frozenAt": "2026-11-07T22:21:00.000Z",
+          "outcomeUnknownAtFreeze": true,
+          "predictionContentHash": "dd87e3837cae237494e7e0e671925dda5fab2a0ac7101d3402f7a7803bf46015"
+        }
+      },
+      "protocol": {
+        "protocolId": "protocol:fixture-qc-v0",
+        "compoundIdentity": "fixture-compound-A",
+        "dose": "0",
+        "doseUnit": "n/a",
+        "tissueOrCellState": "fixture well plate",
+        "controls": [
+          "blank",
+          "vehicle"
+        ],
+        "timing": "t0 fixture",
+        "batchId": "fixture-batch-001",
+        "deviations": [
+          "Engineering dry-run only — no wet lab execution."
+        ],
+        "missingFields": []
+      },
+      "rawArtifacts": [
+        {
+          "artifactId": "raw:fixture-plate-001",
+          "pointer": "research/domain-graph/n7/fixtures/raw-plate-fixture.txt",
+          "contentHash": "abf9f2117babf8e16cbe3f883f1f1e184164e144f287e68d22afff97d45a3f68",
+          "capturedAt": "2026-11-07T22:23:00.000Z",
+          "notes": "Synthetic fixture pointer; not a laboratory file."
+        }
+      ],
+      "processing": {
+        "processingVersion": "fixture-process-1",
+        "calibrationNotes": "Fixture calibration curve intentionally out of range.",
+        "pipelineId": "pipeline:fixture-qc-v0"
+      },
+      "qc": {
+        "status": "failed",
+        "assessedAt": "2026-11-07T22:24:00.000Z",
+        "notes": "Fixture QC fail — biology must not be treated as refuted.",
+        "biologyNotRefutedByFailedQc": true
+      },
+      "outcome": {
+        "outcomeClass": "technical_failure",
+        "recordedAt": "2026-11-07T22:25:00.000Z",
+        "summary": "Fixture technical failure: plate QC failed. This does not refute the biological prediction.",
+        "measuredValues": [],
+        "noEffectNotEstablished": false,
+        "biologyNotRefuted": true,
+        "lockedPredictionContentHash": "dd87e3837cae237494e7e0e671925dda5fab2a0ac7101d3402f7a7803bf46015"
+      },
+      "reviewCandidate": {
+        "submittedAt": "2026-11-07T22:26:00.000Z",
+        "graphPromotable": false,
+        "scientificApproval": false,
+        "mayEditFrozenEvaluationData": false,
+        "note": "Fixture review candidate only — cannot publish graph facts or edit frozen N3/N6 eval."
+      },
+      "frozenEvalPins": {
+        "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c",
+        "n6ProtocolHash": "9e3b5c80727cf57f921632760b58d505d2d7f34dd171906261bec7188fe4f6b4",
+        "mayMutatePinnedEval": false
+      },
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "realObservationClaimed": false,
+      "createdAt": "2026-11-07T22:26:00.000Z",
+      "contentHash": "e66533fd7c96fdadc2298e5b57ea976119761592453ccac23e6097816f40523a"
+    },
+    {
+      "id": "EXP-N7-003",
+      "version": 5,
+      "parentVersion": 4,
+      "lifecycle": "outcome_recorded",
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "programme": "gut_immune_t2d",
+      "prediction": {
+        "n2PredictionRecordId": null,
+        "n2PredictionVersion": null,
+        "assertion": "Fixture prediction: marker M1 decreases ≥20% versus vehicle after fixture stimulus.",
+        "subjectId": "marker:fixture_m1",
+        "predicate": "decreases_after",
+        "objectId": "stimulus:fixture_s1",
+        "falsifier": "M1 change is <20% decrease versus vehicle under the frozen fixture protocol.",
+        "freeze": {
+          "frozenAt": "2026-11-07T22:31:00.000Z",
+          "outcomeUnknownAtFreeze": true,
+          "predictionContentHash": "c0b3752b6583951c9f5bc5a821163c4d8fd07c9d1e8937a96bd2377b68798b1e"
+        }
+      },
+      "protocol": {
+        "protocolId": "protocol:fixture-negnull-v0",
+        "compoundIdentity": "fixture-stimulus-S1",
+        "dose": "1",
+        "doseUnit": "µM",
+        "tissueOrCellState": "fixture monolayer",
+        "controls": [
+          "vehicle"
+        ],
+        "timing": "24h fixture",
+        "batchId": "fixture-batch-002",
+        "deviations": [],
+        "missingFields": []
+      },
+      "rawArtifacts": [
+        {
+          "artifactId": "raw:fixture-m1-001",
+          "pointer": "research/domain-graph/n7/fixtures/raw-m1-fixture.txt",
+          "contentHash": "f89e2a74612fe6fc679f660ec5a68a8cda636bf50cd00374abbb89f53f71f41a",
+          "capturedAt": "2026-11-07T22:33:00.000Z",
+          "notes": "Synthetic fixture values only."
+        }
+      ],
+      "processing": {
+        "processingVersion": "fixture-process-1",
+        "calibrationNotes": "Fixture calibration within range.",
+        "pipelineId": "pipeline:fixture-negnull-v0"
+      },
+      "qc": {
+        "status": "passed",
+        "assessedAt": "2026-11-07T22:34:00.000Z",
+        "notes": "Fixture QC passed; negative/null still does not establish no effect.",
+        "biologyNotRefutedByFailedQc": true
+      },
+      "outcome": {
+        "outcomeClass": "negative_null",
+        "recordedAt": "2026-11-07T22:35:00.000Z",
+        "summary": "Fixture negative/null: M1 change below pre-specified threshold. noEffectNotEstablished remains true.",
+        "measuredValues": [
+          {
+            "name": "M1_fold_change_vs_vehicle",
+            "value": "-0.05",
+            "unit": "fold"
+          }
+        ],
+        "noEffectNotEstablished": true,
+        "biologyNotRefuted": false,
+        "lockedPredictionContentHash": "c0b3752b6583951c9f5bc5a821163c4d8fd07c9d1e8937a96bd2377b68798b1e"
+      },
+      "reviewCandidate": null,
+      "frozenEvalPins": {
+        "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c",
+        "n6ProtocolHash": "9e3b5c80727cf57f921632760b58d505d2d7f34dd171906261bec7188fe4f6b4",
+        "mayMutatePinnedEval": false
+      },
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "realObservationClaimed": false,
+      "createdAt": "2026-11-07T22:35:00.000Z",
+      "contentHash": "e7a1d996b565502d533a248b5ac800a70df6041410174584b39b17b940159cd8"
+    },
+    {
+      "id": "EXP-N7-004",
+      "version": 4,
+      "parentVersion": 3,
+      "lifecycle": "outcome_recorded",
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "programme": "gut_immune_t2d",
+      "prediction": {
+        "n2PredictionRecordId": null,
+        "n2PredictionVersion": null,
+        "assertion": "Fixture prediction: directional change in marker M2 is decidable after one run.",
+        "subjectId": "marker:fixture_m2",
+        "predicate": "directionally_decidable_after",
+        "objectId": "run:fixture_single",
+        "falsifier": "Run yields overlapping intervals that prevent a directional call.",
+        "freeze": {
+          "frozenAt": "2026-11-07T22:41:00.000Z",
+          "outcomeUnknownAtFreeze": true,
+          "predictionContentHash": "0cccdb17a97d66f561f6b044daea489e17815966877361ce33c0cc836db970e9"
+        }
+      },
+      "protocol": {
+        "protocolId": "protocol:fixture-inconclusive-v0",
+        "compoundIdentity": "fixture-stimulus-S2",
+        "dose": "2",
+        "doseUnit": "µM",
+        "tissueOrCellState": "fixture monolayer",
+        "controls": [
+          "vehicle"
+        ],
+        "timing": "12h fixture",
+        "batchId": "fixture-batch-003",
+        "deviations": [
+          "Single-run fixture — underpowered by design."
+        ],
+        "missingFields": []
+      },
+      "rawArtifacts": [],
+      "processing": null,
+      "qc": null,
+      "outcome": {
+        "outcomeClass": "inconclusive",
+        "recordedAt": "2026-11-07T22:43:00.000Z",
+        "summary": "Fixture inconclusive: confidence intervals overlap; no directional call.",
+        "measuredValues": [
+          {
+            "name": "M2_delta",
+            "value": "0.02±0.08",
+            "unit": "AU"
+          }
+        ],
+        "noEffectNotEstablished": false,
+        "biologyNotRefuted": false,
+        "lockedPredictionContentHash": "0cccdb17a97d66f561f6b044daea489e17815966877361ce33c0cc836db970e9"
+      },
+      "reviewCandidate": null,
+      "frozenEvalPins": {
+        "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c",
+        "n6ProtocolHash": "9e3b5c80727cf57f921632760b58d505d2d7f34dd171906261bec7188fe4f6b4",
+        "mayMutatePinnedEval": false
+      },
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "realObservationClaimed": false,
+      "createdAt": "2026-11-07T22:43:00.000Z",
+      "contentHash": "4c132a6def2b9d6368ba4d8ec944f1c634b90204b87f43aa9156a1002581d7d1"
+    },
+    {
+      "id": "EXP-N7-005",
+      "version": 4,
+      "parentVersion": 3,
+      "lifecycle": "outcome_recorded",
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "programme": "gut_immune_t2d",
+      "prediction": {
+        "n2PredictionRecordId": null,
+        "n2PredictionVersion": null,
+        "assertion": "Fixture prediction: assay reagent R1 produces detectable signal in positive control.",
+        "subjectId": "reagent:fixture_r1",
+        "predicate": "detects",
+        "objectId": "control:fixture_positive",
+        "falsifier": "Positive control yields no detectable signal (inactive assay).",
+        "freeze": {
+          "frozenAt": "2026-11-07T22:51:00.000Z",
+          "outcomeUnknownAtFreeze": true,
+          "predictionContentHash": "55b24b0c74ecfef378e25364eabcb7bfa83a7aee34af82ce8fab2358870e97d2"
+        }
+      },
+      "protocol": {
+        "protocolId": "protocol:fixture-inactive-v0",
+        "compoundIdentity": "fixture-reagent-R1",
+        "dose": null,
+        "doseUnit": null,
+        "tissueOrCellState": "fixture positive-control well",
+        "controls": [
+          "positive",
+          "negative"
+        ],
+        "timing": "t_read fixture",
+        "batchId": "fixture-batch-004",
+        "deviations": [],
+        "missingFields": [
+          "dose",
+          "doseUnit"
+        ]
+      },
+      "rawArtifacts": [],
+      "processing": null,
+      "qc": null,
+      "outcome": {
+        "outcomeClass": "inactive_assay",
+        "recordedAt": "2026-11-07T22:53:00.000Z",
+        "summary": "Fixture inactive assay: positive control silent. Biology of the original prediction is not refuted.",
+        "measuredValues": [
+          {
+            "name": "positive_control_signal",
+            "value": "LOD",
+            "unit": "AU"
+          }
+        ],
+        "noEffectNotEstablished": false,
+        "biologyNotRefuted": true,
+        "lockedPredictionContentHash": "55b24b0c74ecfef378e25364eabcb7bfa83a7aee34af82ce8fab2358870e97d2"
+      },
+      "reviewCandidate": null,
+      "frozenEvalPins": {
+        "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c",
+        "n6ProtocolHash": "9e3b5c80727cf57f921632760b58d505d2d7f34dd171906261bec7188fe4f6b4",
+        "mayMutatePinnedEval": false
+      },
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "realObservationClaimed": false,
+      "createdAt": "2026-11-07T22:53:00.000Z",
+      "contentHash": "552b93d17e16f45c2e8ba0ee3c3da17c35b20f2047123723a8d43e74e6297ea5"
+    },
+    {
+      "id": "EXP-N7-006",
+      "version": 4,
+      "parentVersion": 3,
+      "lifecycle": "outcome_recorded",
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "programme": "gut_immune_t2d",
+      "prediction": {
+        "n2PredictionRecordId": null,
+        "n2PredictionVersion": null,
+        "assertion": "Fixture prediction: marker M3 increases ≥15% versus vehicle under protocol v0.",
+        "subjectId": "marker:fixture_m3",
+        "predicate": "increases_after",
+        "objectId": "stimulus:fixture_s3",
+        "falsifier": "M3 increase is <15% versus vehicle.",
+        "freeze": {
+          "frozenAt": "2026-11-07T23:01:00.000Z",
+          "outcomeUnknownAtFreeze": true,
+          "predictionContentHash": "3e5b5c25a15476618d8ed4bc4e1c724d6a3e64cfaa3390f07685abf52e28b6cc"
+        }
+      },
+      "protocol": {
+        "protocolId": "protocol:fixture-supported-v0",
+        "compoundIdentity": "fixture-stimulus-S3",
+        "dose": "5",
+        "doseUnit": "µM",
+        "tissueOrCellState": "fixture monolayer",
+        "controls": [
+          "vehicle"
+        ],
+        "timing": "24h fixture",
+        "batchId": "fixture-batch-005",
+        "deviations": [],
+        "missingFields": []
+      },
+      "rawArtifacts": [],
+      "processing": null,
+      "qc": null,
+      "outcome": {
+        "outcomeClass": "supported",
+        "recordedAt": "2026-11-07T23:03:00.000Z",
+        "summary": "Fixture supported outcome for engineering path coverage only — not a real laboratory finding.",
+        "measuredValues": [
+          {
+            "name": "M3_percent_increase",
+            "value": "22",
+            "unit": "%"
+          }
+        ],
+        "noEffectNotEstablished": false,
+        "biologyNotRefuted": false,
+        "lockedPredictionContentHash": "3e5b5c25a15476618d8ed4bc4e1c724d6a3e64cfaa3390f07685abf52e28b6cc"
+      },
+      "reviewCandidate": null,
+      "frozenEvalPins": {
+        "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c",
+        "n6ProtocolHash": "9e3b5c80727cf57f921632760b58d505d2d7f34dd171906261bec7188fe4f6b4",
+        "mayMutatePinnedEval": false
+      },
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "realObservationClaimed": false,
+      "createdAt": "2026-11-07T23:03:00.000Z",
+      "contentHash": "c3cb31f964a83ab83dda6610676ad177af679cc6a0004d724e57c11bae043af6"
+    }
+  ],
+  "archives": [
+    {
+      "id": "EXP-N7-001",
+      "version": 1,
+      "parentVersion": null,
+      "lifecycle": "prediction_draft",
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "programme": "gut_immune_t2d",
+      "prediction": {
+        "n2PredictionRecordId": "N2-R-002",
+        "n2PredictionVersion": 1,
+        "assertion": "Raising luminal butyrate in a matched human gut–immune organoid will reduce inflammatory signalling markers relative to vehicle under a frozen protocol.",
+        "subjectId": "metabolite:butyrate",
+        "predicate": "associated_with",
+        "objectId": "process:inflammatory_signalling",
+        "falsifier": "No reduction (or an increase) in pre-specified inflammatory markers versus vehicle under the frozen protocol.",
+        "freeze": null
+      },
+      "protocol": null,
+      "rawArtifacts": [],
+      "processing": null,
+      "qc": null,
+      "outcome": null,
+      "reviewCandidate": null,
+      "frozenEvalPins": {
+        "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c",
+        "n6ProtocolHash": "9e3b5c80727cf57f921632760b58d505d2d7f34dd171906261bec7188fe4f6b4",
+        "mayMutatePinnedEval": false
+      },
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "realObservationClaimed": false,
+      "createdAt": "2026-11-07T22:00:00.000Z",
+      "contentHash": "836eaa9e7696ede5ad3aab24e84db2989bc5f7bae6364c515b14bcc012751f8a"
+    },
+    {
+      "id": "EXP-N7-001",
+      "version": 2,
+      "parentVersion": 1,
+      "lifecycle": "prediction_frozen",
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "programme": "gut_immune_t2d",
+      "prediction": {
+        "n2PredictionRecordId": "N2-R-002",
+        "n2PredictionVersion": 1,
+        "assertion": "Raising luminal butyrate in a matched human gut–immune organoid will reduce inflammatory signalling markers relative to vehicle under a frozen protocol.",
+        "subjectId": "metabolite:butyrate",
+        "predicate": "associated_with",
+        "objectId": "process:inflammatory_signalling",
+        "falsifier": "No reduction (or an increase) in pre-specified inflammatory markers versus vehicle under the frozen protocol.",
+        "freeze": {
+          "frozenAt": "2026-11-07T22:05:00.000Z",
+          "outcomeUnknownAtFreeze": true,
+          "predictionContentHash": "aacc845598727f53ce0ffd971481fbedc3c3e22afd972cf083e30b7ed1ac9386"
+        }
+      },
+      "protocol": null,
+      "rawArtifacts": [],
+      "processing": null,
+      "qc": null,
+      "outcome": null,
+      "reviewCandidate": null,
+      "frozenEvalPins": {
+        "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c",
+        "n6ProtocolHash": "9e3b5c80727cf57f921632760b58d505d2d7f34dd171906261bec7188fe4f6b4",
+        "mayMutatePinnedEval": false
+      },
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "realObservationClaimed": false,
+      "createdAt": "2026-11-07T22:05:00.000Z",
+      "contentHash": "013823337cf9918d0d9d3ed85dff61dd7a4058227d7a513d6fe1abb09ab1d46b"
+    },
+    {
+      "id": "EXP-N7-002",
+      "version": 1,
+      "parentVersion": null,
+      "lifecycle": "prediction_draft",
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "programme": "gut_immune_t2d",
+      "prediction": {
+        "n2PredictionRecordId": null,
+        "n2PredictionVersion": null,
+        "assertion": "Fixture prediction: plate-reader inflammatory marker panel will complete QC under engineering protocol v0.",
+        "subjectId": "assay:fixture_inflammation_panel",
+        "predicate": "completes",
+        "objectId": "qc:fixture_pass",
+        "falsifier": "Panel fails calibration or plate QC under the frozen fixture protocol.",
+        "freeze": null
+      },
+      "protocol": null,
+      "rawArtifacts": [],
+      "processing": null,
+      "qc": null,
+      "outcome": null,
+      "reviewCandidate": null,
+      "frozenEvalPins": {
+        "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c",
+        "n6ProtocolHash": "9e3b5c80727cf57f921632760b58d505d2d7f34dd171906261bec7188fe4f6b4",
+        "mayMutatePinnedEval": false
+      },
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "realObservationClaimed": false,
+      "createdAt": "2026-11-07T22:20:00.000Z",
+      "contentHash": "40b7248f76bbddd4a72cf40f39168773ff82c5ad1d39831f173a4209c480f64a"
+    },
+    {
+      "id": "EXP-N7-002",
+      "version": 2,
+      "parentVersion": 1,
+      "lifecycle": "prediction_frozen",
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "programme": "gut_immune_t2d",
+      "prediction": {
+        "n2PredictionRecordId": null,
+        "n2PredictionVersion": null,
+        "assertion": "Fixture prediction: plate-reader inflammatory marker panel will complete QC under engineering protocol v0.",
+        "subjectId": "assay:fixture_inflammation_panel",
+        "predicate": "completes",
+        "objectId": "qc:fixture_pass",
+        "falsifier": "Panel fails calibration or plate QC under the frozen fixture protocol.",
+        "freeze": {
+          "frozenAt": "2026-11-07T22:21:00.000Z",
+          "outcomeUnknownAtFreeze": true,
+          "predictionContentHash": "dd87e3837cae237494e7e0e671925dda5fab2a0ac7101d3402f7a7803bf46015"
+        }
+      },
+      "protocol": null,
+      "rawArtifacts": [],
+      "processing": null,
+      "qc": null,
+      "outcome": null,
+      "reviewCandidate": null,
+      "frozenEvalPins": {
+        "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c",
+        "n6ProtocolHash": "9e3b5c80727cf57f921632760b58d505d2d7f34dd171906261bec7188fe4f6b4",
+        "mayMutatePinnedEval": false
+      },
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "realObservationClaimed": false,
+      "createdAt": "2026-11-07T22:21:00.000Z",
+      "contentHash": "9df614e1137356c5365f90d425fa575a1746b0add837c1ea267dc50f770ddfb2"
+    },
+    {
+      "id": "EXP-N7-002",
+      "version": 3,
+      "parentVersion": 2,
+      "lifecycle": "protocol_bound",
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "programme": "gut_immune_t2d",
+      "prediction": {
+        "n2PredictionRecordId": null,
+        "n2PredictionVersion": null,
+        "assertion": "Fixture prediction: plate-reader inflammatory marker panel will complete QC under engineering protocol v0.",
+        "subjectId": "assay:fixture_inflammation_panel",
+        "predicate": "completes",
+        "objectId": "qc:fixture_pass",
+        "falsifier": "Panel fails calibration or plate QC under the frozen fixture protocol.",
+        "freeze": {
+          "frozenAt": "2026-11-07T22:21:00.000Z",
+          "outcomeUnknownAtFreeze": true,
+          "predictionContentHash": "dd87e3837cae237494e7e0e671925dda5fab2a0ac7101d3402f7a7803bf46015"
+        }
+      },
+      "protocol": {
+        "protocolId": "protocol:fixture-qc-v0",
+        "compoundIdentity": "fixture-compound-A",
+        "dose": "0",
+        "doseUnit": "n/a",
+        "tissueOrCellState": "fixture well plate",
+        "controls": [
+          "blank",
+          "vehicle"
+        ],
+        "timing": "t0 fixture",
+        "batchId": "fixture-batch-001",
+        "deviations": [
+          "Engineering dry-run only — no wet lab execution."
+        ],
+        "missingFields": []
+      },
+      "rawArtifacts": [],
+      "processing": null,
+      "qc": null,
+      "outcome": null,
+      "reviewCandidate": null,
+      "frozenEvalPins": {
+        "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c",
+        "n6ProtocolHash": "9e3b5c80727cf57f921632760b58d505d2d7f34dd171906261bec7188fe4f6b4",
+        "mayMutatePinnedEval": false
+      },
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "realObservationClaimed": false,
+      "createdAt": "2026-11-07T22:22:00.000Z",
+      "contentHash": "a1717ff7d8eada663420bba81a4bb77eecbd7dae3459ad935091702353615b45"
+    },
+    {
+      "id": "EXP-N7-002",
+      "version": 4,
+      "parentVersion": 3,
+      "lifecycle": "artifacts_attached",
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "programme": "gut_immune_t2d",
+      "prediction": {
+        "n2PredictionRecordId": null,
+        "n2PredictionVersion": null,
+        "assertion": "Fixture prediction: plate-reader inflammatory marker panel will complete QC under engineering protocol v0.",
+        "subjectId": "assay:fixture_inflammation_panel",
+        "predicate": "completes",
+        "objectId": "qc:fixture_pass",
+        "falsifier": "Panel fails calibration or plate QC under the frozen fixture protocol.",
+        "freeze": {
+          "frozenAt": "2026-11-07T22:21:00.000Z",
+          "outcomeUnknownAtFreeze": true,
+          "predictionContentHash": "dd87e3837cae237494e7e0e671925dda5fab2a0ac7101d3402f7a7803bf46015"
+        }
+      },
+      "protocol": {
+        "protocolId": "protocol:fixture-qc-v0",
+        "compoundIdentity": "fixture-compound-A",
+        "dose": "0",
+        "doseUnit": "n/a",
+        "tissueOrCellState": "fixture well plate",
+        "controls": [
+          "blank",
+          "vehicle"
+        ],
+        "timing": "t0 fixture",
+        "batchId": "fixture-batch-001",
+        "deviations": [
+          "Engineering dry-run only — no wet lab execution."
+        ],
+        "missingFields": []
+      },
+      "rawArtifacts": [
+        {
+          "artifactId": "raw:fixture-plate-001",
+          "pointer": "research/domain-graph/n7/fixtures/raw-plate-fixture.txt",
+          "contentHash": "abf9f2117babf8e16cbe3f883f1f1e184164e144f287e68d22afff97d45a3f68",
+          "capturedAt": "2026-11-07T22:23:00.000Z",
+          "notes": "Synthetic fixture pointer; not a laboratory file."
+        }
+      ],
+      "processing": {
+        "processingVersion": "fixture-process-1",
+        "calibrationNotes": "Fixture calibration curve intentionally out of range.",
+        "pipelineId": "pipeline:fixture-qc-v0"
+      },
+      "qc": {
+        "status": "failed",
+        "assessedAt": "2026-11-07T22:24:00.000Z",
+        "notes": "Fixture QC fail — biology must not be treated as refuted.",
+        "biologyNotRefutedByFailedQc": true
+      },
+      "outcome": null,
+      "reviewCandidate": null,
+      "frozenEvalPins": {
+        "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c",
+        "n6ProtocolHash": "9e3b5c80727cf57f921632760b58d505d2d7f34dd171906261bec7188fe4f6b4",
+        "mayMutatePinnedEval": false
+      },
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "realObservationClaimed": false,
+      "createdAt": "2026-11-07T22:24:00.000Z",
+      "contentHash": "bb6533314ffeeea61a9687866a65f4e2df252eca5317a933d3f35bc8ff8bc8d3"
+    },
+    {
+      "id": "EXP-N7-002",
+      "version": 5,
+      "parentVersion": 4,
+      "lifecycle": "outcome_recorded",
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "programme": "gut_immune_t2d",
+      "prediction": {
+        "n2PredictionRecordId": null,
+        "n2PredictionVersion": null,
+        "assertion": "Fixture prediction: plate-reader inflammatory marker panel will complete QC under engineering protocol v0.",
+        "subjectId": "assay:fixture_inflammation_panel",
+        "predicate": "completes",
+        "objectId": "qc:fixture_pass",
+        "falsifier": "Panel fails calibration or plate QC under the frozen fixture protocol.",
+        "freeze": {
+          "frozenAt": "2026-11-07T22:21:00.000Z",
+          "outcomeUnknownAtFreeze": true,
+          "predictionContentHash": "dd87e3837cae237494e7e0e671925dda5fab2a0ac7101d3402f7a7803bf46015"
+        }
+      },
+      "protocol": {
+        "protocolId": "protocol:fixture-qc-v0",
+        "compoundIdentity": "fixture-compound-A",
+        "dose": "0",
+        "doseUnit": "n/a",
+        "tissueOrCellState": "fixture well plate",
+        "controls": [
+          "blank",
+          "vehicle"
+        ],
+        "timing": "t0 fixture",
+        "batchId": "fixture-batch-001",
+        "deviations": [
+          "Engineering dry-run only — no wet lab execution."
+        ],
+        "missingFields": []
+      },
+      "rawArtifacts": [
+        {
+          "artifactId": "raw:fixture-plate-001",
+          "pointer": "research/domain-graph/n7/fixtures/raw-plate-fixture.txt",
+          "contentHash": "abf9f2117babf8e16cbe3f883f1f1e184164e144f287e68d22afff97d45a3f68",
+          "capturedAt": "2026-11-07T22:23:00.000Z",
+          "notes": "Synthetic fixture pointer; not a laboratory file."
+        }
+      ],
+      "processing": {
+        "processingVersion": "fixture-process-1",
+        "calibrationNotes": "Fixture calibration curve intentionally out of range.",
+        "pipelineId": "pipeline:fixture-qc-v0"
+      },
+      "qc": {
+        "status": "failed",
+        "assessedAt": "2026-11-07T22:24:00.000Z",
+        "notes": "Fixture QC fail — biology must not be treated as refuted.",
+        "biologyNotRefutedByFailedQc": true
+      },
+      "outcome": {
+        "outcomeClass": "technical_failure",
+        "recordedAt": "2026-11-07T22:25:00.000Z",
+        "summary": "Fixture technical failure: plate QC failed. This does not refute the biological prediction.",
+        "measuredValues": [],
+        "noEffectNotEstablished": false,
+        "biologyNotRefuted": true,
+        "lockedPredictionContentHash": "dd87e3837cae237494e7e0e671925dda5fab2a0ac7101d3402f7a7803bf46015"
+      },
+      "reviewCandidate": null,
+      "frozenEvalPins": {
+        "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c",
+        "n6ProtocolHash": "9e3b5c80727cf57f921632760b58d505d2d7f34dd171906261bec7188fe4f6b4",
+        "mayMutatePinnedEval": false
+      },
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "realObservationClaimed": false,
+      "createdAt": "2026-11-07T22:25:00.000Z",
+      "contentHash": "525828c0abfd00fa0167e5699aa845c157bfbaab63025f3aca0e3fc8433f63b7"
+    },
+    {
+      "id": "EXP-N7-003",
+      "version": 1,
+      "parentVersion": null,
+      "lifecycle": "prediction_draft",
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "programme": "gut_immune_t2d",
+      "prediction": {
+        "n2PredictionRecordId": null,
+        "n2PredictionVersion": null,
+        "assertion": "Fixture prediction: marker M1 decreases ≥20% versus vehicle after fixture stimulus.",
+        "subjectId": "marker:fixture_m1",
+        "predicate": "decreases_after",
+        "objectId": "stimulus:fixture_s1",
+        "falsifier": "M1 change is <20% decrease versus vehicle under the frozen fixture protocol.",
+        "freeze": null
+      },
+      "protocol": null,
+      "rawArtifacts": [],
+      "processing": null,
+      "qc": null,
+      "outcome": null,
+      "reviewCandidate": null,
+      "frozenEvalPins": {
+        "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c",
+        "n6ProtocolHash": "9e3b5c80727cf57f921632760b58d505d2d7f34dd171906261bec7188fe4f6b4",
+        "mayMutatePinnedEval": false
+      },
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "realObservationClaimed": false,
+      "createdAt": "2026-11-07T22:30:00.000Z",
+      "contentHash": "a9c0ffc181d14ea71ff6cc3e6aae296cc14256ca0d2220e4b6f7fa1d4e5bcc09"
+    },
+    {
+      "id": "EXP-N7-003",
+      "version": 2,
+      "parentVersion": 1,
+      "lifecycle": "prediction_frozen",
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "programme": "gut_immune_t2d",
+      "prediction": {
+        "n2PredictionRecordId": null,
+        "n2PredictionVersion": null,
+        "assertion": "Fixture prediction: marker M1 decreases ≥20% versus vehicle after fixture stimulus.",
+        "subjectId": "marker:fixture_m1",
+        "predicate": "decreases_after",
+        "objectId": "stimulus:fixture_s1",
+        "falsifier": "M1 change is <20% decrease versus vehicle under the frozen fixture protocol.",
+        "freeze": {
+          "frozenAt": "2026-11-07T22:31:00.000Z",
+          "outcomeUnknownAtFreeze": true,
+          "predictionContentHash": "c0b3752b6583951c9f5bc5a821163c4d8fd07c9d1e8937a96bd2377b68798b1e"
+        }
+      },
+      "protocol": null,
+      "rawArtifacts": [],
+      "processing": null,
+      "qc": null,
+      "outcome": null,
+      "reviewCandidate": null,
+      "frozenEvalPins": {
+        "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c",
+        "n6ProtocolHash": "9e3b5c80727cf57f921632760b58d505d2d7f34dd171906261bec7188fe4f6b4",
+        "mayMutatePinnedEval": false
+      },
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "realObservationClaimed": false,
+      "createdAt": "2026-11-07T22:31:00.000Z",
+      "contentHash": "79f78ae8b801fcf2f796132786443a506c3c8ead35014432bd6bdfa57e4c6884"
+    },
+    {
+      "id": "EXP-N7-003",
+      "version": 3,
+      "parentVersion": 2,
+      "lifecycle": "protocol_bound",
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "programme": "gut_immune_t2d",
+      "prediction": {
+        "n2PredictionRecordId": null,
+        "n2PredictionVersion": null,
+        "assertion": "Fixture prediction: marker M1 decreases ≥20% versus vehicle after fixture stimulus.",
+        "subjectId": "marker:fixture_m1",
+        "predicate": "decreases_after",
+        "objectId": "stimulus:fixture_s1",
+        "falsifier": "M1 change is <20% decrease versus vehicle under the frozen fixture protocol.",
+        "freeze": {
+          "frozenAt": "2026-11-07T22:31:00.000Z",
+          "outcomeUnknownAtFreeze": true,
+          "predictionContentHash": "c0b3752b6583951c9f5bc5a821163c4d8fd07c9d1e8937a96bd2377b68798b1e"
+        }
+      },
+      "protocol": {
+        "protocolId": "protocol:fixture-negnull-v0",
+        "compoundIdentity": "fixture-stimulus-S1",
+        "dose": "1",
+        "doseUnit": "µM",
+        "tissueOrCellState": "fixture monolayer",
+        "controls": [
+          "vehicle"
+        ],
+        "timing": "24h fixture",
+        "batchId": "fixture-batch-002",
+        "deviations": [],
+        "missingFields": []
+      },
+      "rawArtifacts": [],
+      "processing": null,
+      "qc": null,
+      "outcome": null,
+      "reviewCandidate": null,
+      "frozenEvalPins": {
+        "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c",
+        "n6ProtocolHash": "9e3b5c80727cf57f921632760b58d505d2d7f34dd171906261bec7188fe4f6b4",
+        "mayMutatePinnedEval": false
+      },
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "realObservationClaimed": false,
+      "createdAt": "2026-11-07T22:32:00.000Z",
+      "contentHash": "f9b3014fd0d7f67145fc60b74f719f658c4eb3a7c374317228a89191f72e01fc"
+    },
+    {
+      "id": "EXP-N7-003",
+      "version": 4,
+      "parentVersion": 3,
+      "lifecycle": "artifacts_attached",
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "programme": "gut_immune_t2d",
+      "prediction": {
+        "n2PredictionRecordId": null,
+        "n2PredictionVersion": null,
+        "assertion": "Fixture prediction: marker M1 decreases ≥20% versus vehicle after fixture stimulus.",
+        "subjectId": "marker:fixture_m1",
+        "predicate": "decreases_after",
+        "objectId": "stimulus:fixture_s1",
+        "falsifier": "M1 change is <20% decrease versus vehicle under the frozen fixture protocol.",
+        "freeze": {
+          "frozenAt": "2026-11-07T22:31:00.000Z",
+          "outcomeUnknownAtFreeze": true,
+          "predictionContentHash": "c0b3752b6583951c9f5bc5a821163c4d8fd07c9d1e8937a96bd2377b68798b1e"
+        }
+      },
+      "protocol": {
+        "protocolId": "protocol:fixture-negnull-v0",
+        "compoundIdentity": "fixture-stimulus-S1",
+        "dose": "1",
+        "doseUnit": "µM",
+        "tissueOrCellState": "fixture monolayer",
+        "controls": [
+          "vehicle"
+        ],
+        "timing": "24h fixture",
+        "batchId": "fixture-batch-002",
+        "deviations": [],
+        "missingFields": []
+      },
+      "rawArtifacts": [
+        {
+          "artifactId": "raw:fixture-m1-001",
+          "pointer": "research/domain-graph/n7/fixtures/raw-m1-fixture.txt",
+          "contentHash": "f89e2a74612fe6fc679f660ec5a68a8cda636bf50cd00374abbb89f53f71f41a",
+          "capturedAt": "2026-11-07T22:33:00.000Z",
+          "notes": "Synthetic fixture values only."
+        }
+      ],
+      "processing": {
+        "processingVersion": "fixture-process-1",
+        "calibrationNotes": "Fixture calibration within range.",
+        "pipelineId": "pipeline:fixture-negnull-v0"
+      },
+      "qc": {
+        "status": "passed",
+        "assessedAt": "2026-11-07T22:34:00.000Z",
+        "notes": "Fixture QC passed; negative/null still does not establish no effect.",
+        "biologyNotRefutedByFailedQc": true
+      },
+      "outcome": null,
+      "reviewCandidate": null,
+      "frozenEvalPins": {
+        "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c",
+        "n6ProtocolHash": "9e3b5c80727cf57f921632760b58d505d2d7f34dd171906261bec7188fe4f6b4",
+        "mayMutatePinnedEval": false
+      },
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "realObservationClaimed": false,
+      "createdAt": "2026-11-07T22:34:00.000Z",
+      "contentHash": "b54dcdb9f39d1d5812bc7ea42d2ba8cfb8a7fbc04f17239439e5f85264ff674b"
+    },
+    {
+      "id": "EXP-N7-004",
+      "version": 1,
+      "parentVersion": null,
+      "lifecycle": "prediction_draft",
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "programme": "gut_immune_t2d",
+      "prediction": {
+        "n2PredictionRecordId": null,
+        "n2PredictionVersion": null,
+        "assertion": "Fixture prediction: directional change in marker M2 is decidable after one run.",
+        "subjectId": "marker:fixture_m2",
+        "predicate": "directionally_decidable_after",
+        "objectId": "run:fixture_single",
+        "falsifier": "Run yields overlapping intervals that prevent a directional call.",
+        "freeze": null
+      },
+      "protocol": null,
+      "rawArtifacts": [],
+      "processing": null,
+      "qc": null,
+      "outcome": null,
+      "reviewCandidate": null,
+      "frozenEvalPins": {
+        "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c",
+        "n6ProtocolHash": "9e3b5c80727cf57f921632760b58d505d2d7f34dd171906261bec7188fe4f6b4",
+        "mayMutatePinnedEval": false
+      },
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "realObservationClaimed": false,
+      "createdAt": "2026-11-07T22:40:00.000Z",
+      "contentHash": "709d2ffe54d9c5284d75a259fb6d2633e2906a3db7523b284e7b1d9b19a5db59"
+    },
+    {
+      "id": "EXP-N7-004",
+      "version": 2,
+      "parentVersion": 1,
+      "lifecycle": "prediction_frozen",
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "programme": "gut_immune_t2d",
+      "prediction": {
+        "n2PredictionRecordId": null,
+        "n2PredictionVersion": null,
+        "assertion": "Fixture prediction: directional change in marker M2 is decidable after one run.",
+        "subjectId": "marker:fixture_m2",
+        "predicate": "directionally_decidable_after",
+        "objectId": "run:fixture_single",
+        "falsifier": "Run yields overlapping intervals that prevent a directional call.",
+        "freeze": {
+          "frozenAt": "2026-11-07T22:41:00.000Z",
+          "outcomeUnknownAtFreeze": true,
+          "predictionContentHash": "0cccdb17a97d66f561f6b044daea489e17815966877361ce33c0cc836db970e9"
+        }
+      },
+      "protocol": null,
+      "rawArtifacts": [],
+      "processing": null,
+      "qc": null,
+      "outcome": null,
+      "reviewCandidate": null,
+      "frozenEvalPins": {
+        "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c",
+        "n6ProtocolHash": "9e3b5c80727cf57f921632760b58d505d2d7f34dd171906261bec7188fe4f6b4",
+        "mayMutatePinnedEval": false
+      },
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "realObservationClaimed": false,
+      "createdAt": "2026-11-07T22:41:00.000Z",
+      "contentHash": "f92743e126817579ef8b660fe9467e5670d7ac85f3ccac136d994582400eafbb"
+    },
+    {
+      "id": "EXP-N7-004",
+      "version": 3,
+      "parentVersion": 2,
+      "lifecycle": "protocol_bound",
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "programme": "gut_immune_t2d",
+      "prediction": {
+        "n2PredictionRecordId": null,
+        "n2PredictionVersion": null,
+        "assertion": "Fixture prediction: directional change in marker M2 is decidable after one run.",
+        "subjectId": "marker:fixture_m2",
+        "predicate": "directionally_decidable_after",
+        "objectId": "run:fixture_single",
+        "falsifier": "Run yields overlapping intervals that prevent a directional call.",
+        "freeze": {
+          "frozenAt": "2026-11-07T22:41:00.000Z",
+          "outcomeUnknownAtFreeze": true,
+          "predictionContentHash": "0cccdb17a97d66f561f6b044daea489e17815966877361ce33c0cc836db970e9"
+        }
+      },
+      "protocol": {
+        "protocolId": "protocol:fixture-inconclusive-v0",
+        "compoundIdentity": "fixture-stimulus-S2",
+        "dose": "2",
+        "doseUnit": "µM",
+        "tissueOrCellState": "fixture monolayer",
+        "controls": [
+          "vehicle"
+        ],
+        "timing": "12h fixture",
+        "batchId": "fixture-batch-003",
+        "deviations": [
+          "Single-run fixture — underpowered by design."
+        ],
+        "missingFields": []
+      },
+      "rawArtifacts": [],
+      "processing": null,
+      "qc": null,
+      "outcome": null,
+      "reviewCandidate": null,
+      "frozenEvalPins": {
+        "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c",
+        "n6ProtocolHash": "9e3b5c80727cf57f921632760b58d505d2d7f34dd171906261bec7188fe4f6b4",
+        "mayMutatePinnedEval": false
+      },
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "realObservationClaimed": false,
+      "createdAt": "2026-11-07T22:42:00.000Z",
+      "contentHash": "ad764deba17a0d74c6110cbc91672590dcee1ee9d3dfc2b9dad9b05d5a91a8be"
+    },
+    {
+      "id": "EXP-N7-005",
+      "version": 1,
+      "parentVersion": null,
+      "lifecycle": "prediction_draft",
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "programme": "gut_immune_t2d",
+      "prediction": {
+        "n2PredictionRecordId": null,
+        "n2PredictionVersion": null,
+        "assertion": "Fixture prediction: assay reagent R1 produces detectable signal in positive control.",
+        "subjectId": "reagent:fixture_r1",
+        "predicate": "detects",
+        "objectId": "control:fixture_positive",
+        "falsifier": "Positive control yields no detectable signal (inactive assay).",
+        "freeze": null
+      },
+      "protocol": null,
+      "rawArtifacts": [],
+      "processing": null,
+      "qc": null,
+      "outcome": null,
+      "reviewCandidate": null,
+      "frozenEvalPins": {
+        "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c",
+        "n6ProtocolHash": "9e3b5c80727cf57f921632760b58d505d2d7f34dd171906261bec7188fe4f6b4",
+        "mayMutatePinnedEval": false
+      },
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "realObservationClaimed": false,
+      "createdAt": "2026-11-07T22:50:00.000Z",
+      "contentHash": "3af3933c286ccb9be8ebecdd4cb82dc4704e9daaf58c14cad183c9856a306478"
+    },
+    {
+      "id": "EXP-N7-005",
+      "version": 2,
+      "parentVersion": 1,
+      "lifecycle": "prediction_frozen",
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "programme": "gut_immune_t2d",
+      "prediction": {
+        "n2PredictionRecordId": null,
+        "n2PredictionVersion": null,
+        "assertion": "Fixture prediction: assay reagent R1 produces detectable signal in positive control.",
+        "subjectId": "reagent:fixture_r1",
+        "predicate": "detects",
+        "objectId": "control:fixture_positive",
+        "falsifier": "Positive control yields no detectable signal (inactive assay).",
+        "freeze": {
+          "frozenAt": "2026-11-07T22:51:00.000Z",
+          "outcomeUnknownAtFreeze": true,
+          "predictionContentHash": "55b24b0c74ecfef378e25364eabcb7bfa83a7aee34af82ce8fab2358870e97d2"
+        }
+      },
+      "protocol": null,
+      "rawArtifacts": [],
+      "processing": null,
+      "qc": null,
+      "outcome": null,
+      "reviewCandidate": null,
+      "frozenEvalPins": {
+        "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c",
+        "n6ProtocolHash": "9e3b5c80727cf57f921632760b58d505d2d7f34dd171906261bec7188fe4f6b4",
+        "mayMutatePinnedEval": false
+      },
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "realObservationClaimed": false,
+      "createdAt": "2026-11-07T22:51:00.000Z",
+      "contentHash": "e71b77807527ce8ccab7407eef1fa32143fecc55300155950483fc8998266e85"
+    },
+    {
+      "id": "EXP-N7-005",
+      "version": 3,
+      "parentVersion": 2,
+      "lifecycle": "protocol_bound",
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "programme": "gut_immune_t2d",
+      "prediction": {
+        "n2PredictionRecordId": null,
+        "n2PredictionVersion": null,
+        "assertion": "Fixture prediction: assay reagent R1 produces detectable signal in positive control.",
+        "subjectId": "reagent:fixture_r1",
+        "predicate": "detects",
+        "objectId": "control:fixture_positive",
+        "falsifier": "Positive control yields no detectable signal (inactive assay).",
+        "freeze": {
+          "frozenAt": "2026-11-07T22:51:00.000Z",
+          "outcomeUnknownAtFreeze": true,
+          "predictionContentHash": "55b24b0c74ecfef378e25364eabcb7bfa83a7aee34af82ce8fab2358870e97d2"
+        }
+      },
+      "protocol": {
+        "protocolId": "protocol:fixture-inactive-v0",
+        "compoundIdentity": "fixture-reagent-R1",
+        "dose": null,
+        "doseUnit": null,
+        "tissueOrCellState": "fixture positive-control well",
+        "controls": [
+          "positive",
+          "negative"
+        ],
+        "timing": "t_read fixture",
+        "batchId": "fixture-batch-004",
+        "deviations": [],
+        "missingFields": [
+          "dose",
+          "doseUnit"
+        ]
+      },
+      "rawArtifacts": [],
+      "processing": null,
+      "qc": null,
+      "outcome": null,
+      "reviewCandidate": null,
+      "frozenEvalPins": {
+        "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c",
+        "n6ProtocolHash": "9e3b5c80727cf57f921632760b58d505d2d7f34dd171906261bec7188fe4f6b4",
+        "mayMutatePinnedEval": false
+      },
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "realObservationClaimed": false,
+      "createdAt": "2026-11-07T22:52:00.000Z",
+      "contentHash": "e2a4f0b730fb70c72f0fc560abe6cbcebaf5da3d2a75e7686bc1fc21c2782e36"
+    },
+    {
+      "id": "EXP-N7-006",
+      "version": 1,
+      "parentVersion": null,
+      "lifecycle": "prediction_draft",
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "programme": "gut_immune_t2d",
+      "prediction": {
+        "n2PredictionRecordId": null,
+        "n2PredictionVersion": null,
+        "assertion": "Fixture prediction: marker M3 increases ≥15% versus vehicle under protocol v0.",
+        "subjectId": "marker:fixture_m3",
+        "predicate": "increases_after",
+        "objectId": "stimulus:fixture_s3",
+        "falsifier": "M3 increase is <15% versus vehicle.",
+        "freeze": null
+      },
+      "protocol": null,
+      "rawArtifacts": [],
+      "processing": null,
+      "qc": null,
+      "outcome": null,
+      "reviewCandidate": null,
+      "frozenEvalPins": {
+        "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c",
+        "n6ProtocolHash": "9e3b5c80727cf57f921632760b58d505d2d7f34dd171906261bec7188fe4f6b4",
+        "mayMutatePinnedEval": false
+      },
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "realObservationClaimed": false,
+      "createdAt": "2026-11-07T23:00:00.000Z",
+      "contentHash": "31e23139d47d42cc55f10cb6200c311fad324ff22c4d4c40915f710d136e119d"
+    },
+    {
+      "id": "EXP-N7-006",
+      "version": 2,
+      "parentVersion": 1,
+      "lifecycle": "prediction_frozen",
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "programme": "gut_immune_t2d",
+      "prediction": {
+        "n2PredictionRecordId": null,
+        "n2PredictionVersion": null,
+        "assertion": "Fixture prediction: marker M3 increases ≥15% versus vehicle under protocol v0.",
+        "subjectId": "marker:fixture_m3",
+        "predicate": "increases_after",
+        "objectId": "stimulus:fixture_s3",
+        "falsifier": "M3 increase is <15% versus vehicle.",
+        "freeze": {
+          "frozenAt": "2026-11-07T23:01:00.000Z",
+          "outcomeUnknownAtFreeze": true,
+          "predictionContentHash": "3e5b5c25a15476618d8ed4bc4e1c724d6a3e64cfaa3390f07685abf52e28b6cc"
+        }
+      },
+      "protocol": null,
+      "rawArtifacts": [],
+      "processing": null,
+      "qc": null,
+      "outcome": null,
+      "reviewCandidate": null,
+      "frozenEvalPins": {
+        "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c",
+        "n6ProtocolHash": "9e3b5c80727cf57f921632760b58d505d2d7f34dd171906261bec7188fe4f6b4",
+        "mayMutatePinnedEval": false
+      },
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "realObservationClaimed": false,
+      "createdAt": "2026-11-07T23:01:00.000Z",
+      "contentHash": "b85fe781b9e9a5c9cc21b52451eb3ee498a2b801ef47fb5156f03c43be8dd94a"
+    },
+    {
+      "id": "EXP-N7-006",
+      "version": 3,
+      "parentVersion": 2,
+      "lifecycle": "protocol_bound",
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "programme": "gut_immune_t2d",
+      "prediction": {
+        "n2PredictionRecordId": null,
+        "n2PredictionVersion": null,
+        "assertion": "Fixture prediction: marker M3 increases ≥15% versus vehicle under protocol v0.",
+        "subjectId": "marker:fixture_m3",
+        "predicate": "increases_after",
+        "objectId": "stimulus:fixture_s3",
+        "falsifier": "M3 increase is <15% versus vehicle.",
+        "freeze": {
+          "frozenAt": "2026-11-07T23:01:00.000Z",
+          "outcomeUnknownAtFreeze": true,
+          "predictionContentHash": "3e5b5c25a15476618d8ed4bc4e1c724d6a3e64cfaa3390f07685abf52e28b6cc"
+        }
+      },
+      "protocol": {
+        "protocolId": "protocol:fixture-supported-v0",
+        "compoundIdentity": "fixture-stimulus-S3",
+        "dose": "5",
+        "doseUnit": "µM",
+        "tissueOrCellState": "fixture monolayer",
+        "controls": [
+          "vehicle"
+        ],
+        "timing": "24h fixture",
+        "batchId": "fixture-batch-005",
+        "deviations": [],
+        "missingFields": []
+      },
+      "rawArtifacts": [],
+      "processing": null,
+      "qc": null,
+      "outcome": null,
+      "reviewCandidate": null,
+      "frozenEvalPins": {
+        "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c",
+        "n6ProtocolHash": "9e3b5c80727cf57f921632760b58d505d2d7f34dd171906261bec7188fe4f6b4",
+        "mayMutatePinnedEval": false
+      },
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "realObservationClaimed": false,
+      "createdAt": "2026-11-07T23:02:00.000Z",
+      "contentHash": "d9b838ddd26c1dd6cda2c97386f2dc3d984be77079dccb58346cb238bbcc50b2"
+    }
+  ]
+}

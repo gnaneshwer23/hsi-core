@@ -1,0 +1,25 @@
+{
+  "phase": "N7",
+  "programme": "gut_immune_t2d",
+  "generatedAt": "2026-11-07T23:30:00.000Z",
+  "liveExperiments": 6,
+  "archivedVersions": 20,
+  "frozenPredictions": 6,
+  "outcomesRecorded": 5,
+  "reviewCandidates": 1,
+  "outcomeClassesPresent": [
+    "inactive_assay",
+    "inconclusive",
+    "negative_null",
+    "supported",
+    "technical_failure"
+  ],
+  "engineeringHarness": "CLEARED",
+  "realObservationAcceptance": "BLOCKED",
+  "publicDataOrPartnerAgreement": "BLOCKED",
+  "scientificApproval": false,
+  "graphPromotable": false,
+  "realObservationClaimed": false,
+  "inventedRealOutcomesPermitted": false,
+  "note": "Fixture engineering outcomes only. Real laboratory / authorised public observations remain BLOCKED until agreements exist."
+}

@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "hsi-n8-baseline-comparison-1",
+  "adapterId": "adapter-n8-bounded-research-1",
+  "baselineMethodId": "hsi-n4-deterministic-lexical-graph-baseline-1",
+  "rows": [
+    {
+      "investigationId": "N4-Q-01",
+      "deterministicOutcome": "abstain",
+      "fixtureModelOutcome": "abstain",
+      "outcomesAgree": true,
+      "abstentionPreserved": true,
+      "uncertainty": "abstain_required"
+    },
+    {
+      "investigationId": "N4-Q-02",
+      "deterministicOutcome": "abstain",
+      "fixtureModelOutcome": "abstain",
+      "outcomesAgree": true,
+      "abstentionPreserved": true,
+      "uncertainty": "abstain_required"
+    },
+    {
+      "investigationId": "N4-Q-03",
+      "deterministicOutcome": "abstain",
+      "fixtureModelOutcome": "abstain",
+      "outcomesAgree": true,
+      "abstentionPreserved": true,
+      "uncertainty": "abstain_required"
+    },
+    {
+      "investigationId": "N4-Q-04",
+      "deterministicOutcome": "source_summary",
+      "fixtureModelOutcome": "source_summary",
+      "outcomesAgree": true,
+      "abstentionPreserved": true,
+      "uncertainty": "high"
+    }
+  ],
+  "agreementRate": 1,
+  "usefulnessDeltaVsBaseline": null,
+  "n6UsefulnessClaimed": false,
+  "note": "Outcome agreement is an engineering reproducibility check — not N6 expert usefulness."
+}

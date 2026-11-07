@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "hsi-n8-model-manifest-1",
+  "adapterId": "adapter-n8-bounded-research-1",
+  "modelVersion": "hsi-n8-fixture-dry-run-v0",
+  "configVersion": "hsi-n8-config-v0",
+  "intendedUse": "Research-safe dry-run augmentation of N4 grounded briefs over inspectable hits only, with an optional public-structure multimodal fixture slot.",
+  "supportedTask": "n4_grounded_brief_augmentation",
+  "supportedInputs": [
+    "inspectable_n4_hits",
+    "optional_public_structure_fixture"
+  ],
+  "modality": "text_plus_public_structure_fixture",
+  "permittedUse": "research_engineering_dry_run_only",
+  "limitations": [
+    "Activation disallowed by default; live / paid providers are refused in this increment.",
+    "Fixture proposals never invent passages or flip groundedClaimAccepted.",
+    "Multimodal structure fixture is logged metadata only — not embedding inference or wet-lab execution.",
+    "N6 usefulness and held-out scientific evaluation remain BLOCKED until independent expert evidence exists.",
+    "Compatible commercial / research weights licences are not assumed."
+  ],
+  "licence": {
+    "status": "fixture_engineering_only",
+    "compatibleForLiveWeights": false,
+    "note": "No external model weights or paid API credentials are required or invoked for N8 dry-run."
+  },
+  "benchmarkEvidence": {
+    "independentHeldOut": false,
+    "n6UsefulnessDemonstrated": false,
+    "note": "Engineering baseline comparison only. Do not treat agreement with N4 as demonstrated expert usefulness."
+  },
+  "activationDefault": false,
+  "mayCallPaidApis": false,
+  "mayUseLivePhi": false,
+  "notCds": true
+}

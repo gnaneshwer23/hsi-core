@@ -161,7 +161,11 @@
     "n5:check": "bun --no-env-file scripts/n5-cohort-trial-criteria.ts --check",
     "n6:study": "bun --no-env-file scripts/n6-blinded-expert-usefulness.ts",
     "n6:check": "bun --no-env-file scripts/n6-blinded-expert-usefulness.ts --check",
-    "n6:eval": "bun --no-env-file scripts/n6-blinded-expert-usefulness.ts --eval"
+    "n6:eval": "bun --no-env-file scripts/n6-blinded-expert-usefulness.ts --eval",
+    "n7:ledger": "bun --no-env-file scripts/n7-experiment-ledger.ts",
+    "n7:check": "bun --no-env-file scripts/n7-experiment-ledger.ts --check",
+    "n8:adapter": "bun --no-env-file scripts/n8-specialised-model-adapter.ts",
+    "n8:check": "bun --no-env-file scripts/n8-specialised-model-adapter.ts --check"
   },
   "engines": {
     "node": ">=20"
