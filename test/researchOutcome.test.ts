@@ -58,7 +58,7 @@ describe("backend-composed research outcomes",()=>{
  });
  test("exports all ten outcome areas and excludes technical identity/session payloads",async()=>{
   const o=await deliveryHarness().service.outcome("alice","hsi-interrogative-test-12345678"),json=renderResearchOutcome(o,"json"),md=renderResearchOutcome(o,"markdown");
-  expect(JSON.parse(json)).toEqual(o);for(const label of ["Answer and limits","Mechanism map","Source evidence","Conflicting evidence","Missing data","Investigation question tree","Candidate hypotheses","Next research work","Clinical-trial context","Human review"])expect(md).toContain(label);
+  expect(JSON.parse(json)).toEqual(o);for(const label of ["Answer and limits","Mechanism map","Source evidence","Conflicting evidence","Missing data","Investigation question tree","Candidate hypotheses","Next research work","Clinical-trial / translational context (O-04)","Human review"])expect(md).toContain(label);
   for(const key of ["actorPrincipal","reviewerPrincipal","reviewerRef","submittedBy","toolCalls"])expect(json).not.toContain('"'+key+'"');
   expect(md).toContain(o.passages[0]!.sha256);expect(md).toContain("not specified");expect(md).toContain("not calibrated");
  });

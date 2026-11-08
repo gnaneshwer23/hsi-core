@@ -516,16 +516,92 @@ export function ResearchOutcomePanel({brief}: {brief: EvidenceBrief}) {
 
             {section === "04" && (
               <>
-                <h4>Translational intelligence</h4>
+                <h4>Translational intelligence (O-04)</h4>
                 <p>{outcome.trials.note}</p>
                 <p>
                   Status: <strong>{human(outcome.trials.status)}</strong> · relevance{" "}
                   {human(outcome.trials.relevanceScope)}. No participant eligibility has been assessed.
+                  Registration is not efficacy; missing results are not therapy failure.
                 </p>
-                <p role="note">
-                  Attaching a versioned registry snapshot to the same investigation is reserved for execution
-                  step 05. An empty list is not evidence of worldwide trial absence.
-                </p>
+                {outcome.trials.status === "not_queried" ? (
+                  <p role="note">
+                    No versioned registry snapshot is bound. An empty list is not evidence of worldwide trial
+                    absence. Living-evidence NCT identity resolution remains separate from O-04 attach.
+                  </p>
+                ) : (
+                  <>
+                    <h4>Trial registration and status</h4>
+                    <ul>
+                      {(outcome.trials.planes?.trialRegistrationAndStatus ?? []).map((r) => (
+                        <li key={r.nctId}>
+                          <a href={r.registryUrl} target="_blank" rel="noopener noreferrer">
+                            {r.nctId} ↗
+                          </a>
+                          {r.briefTitle ? ` · ${r.briefTitle}` : ""}
+                          {r.overallStatus ? ` · ${r.overallStatus}` : ""}
+                          {r.phases?.length ? ` · ${r.phases.join(", ")}` : ""} · registration≠efficacy
+                        </li>
+                      ))}
+                    </ul>
+                    <h4>Intervention and target mapping</h4>
+                    <ul>
+                      {(outcome.trials.planes?.interventionAndTargetMapping ?? []).map((m) => (
+                        <li key={m.nctId}>
+                          {m.nctId} · interventions:{" "}
+                          {m.interventions.map((i) => i.name).join(", ") || "none"} · mapped targets:{" "}
+                          {m.mappedTargets.map((t) => t.targetSymbol).join(", ") || "none"} ·
+                          association≠efficacy
+                        </li>
+                      ))}
+                    </ul>
+                    <h4>Registry-reported results</h4>
+                    <ul>
+                      {(outcome.trials.planes?.registryReportedResults ?? []).map((r) => (
+                        <li key={r.nctId}>
+                          {r.nctId} · hasResultsSection={String(r.hasResultsSection)} · primary:{" "}
+                          {r.primaryOutcomeMeasures.map((p) => p.title).join("; ") || "none extracted"} ·
+                          registry results≠efficacy proof
+                        </li>
+                      ))}
+                    </ul>
+                    <h4>Published outcomes (locators)</h4>
+                    <ul>
+                      {(outcome.trials.planes?.publishedOutcomes ?? []).length ? (
+                        outcome.trials.planes.publishedOutcomes.map((p, i) => (
+                          <li key={`${p.nctId}:${p.pmid ?? i}`}>
+                            {p.nctId}
+                            {p.pmid ? ` · PMID ${p.pmid}` : ""} · {p.referenceType ?? "ref"} · claim
+                            support not assessed
+                          </li>
+                        ))
+                      ) : (
+                        <li>No published outcome locators attached.</li>
+                      )}
+                    </ul>
+                    <h4>Missing or unresolved outcome evidence</h4>
+                    <ul>
+                      {(outcome.trials.planes?.missingOrUnresolvedOutcomeEvidence ?? []).map((m, i) => (
+                        <li key={`${m.nctId}:${m.kind}:${i}`}>
+                          {m.nctId} · {human(m.kind)}: {m.detail}
+                        </li>
+                      ))}
+                    </ul>
+                    {outcome.researchBrief ? (
+                      <details>
+                        <summary>Integrated research brief (source-linked; unapproved)</summary>
+                        <p>
+                          Scientific validity claimed: {String(outcome.researchBrief.scientificValidityClaimed)} ·
+                          eligibility inferred: {String(outcome.researchBrief.eligibilityInferred)}
+                        </p>
+                        <ul>
+                          {outcome.researchBrief.limitations.slice(0, 8).map((l, i) => (
+                            <li key={i}>{l}</li>
+                          ))}
+                        </ul>
+                      </details>
+                    ) : null}
+                  </>
+                )}
               </>
             )}
 

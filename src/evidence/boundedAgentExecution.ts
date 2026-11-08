@@ -63,7 +63,13 @@ import {
   runOpposingEvidenceSearch,
   type OpposingEvidenceSearchReport,
 } from "./opposingEvidenceSearch";
+import {
+  integrateResearchBrief,
+  toBoundedResearchBriefArtifact,
+} from "./researchBriefIntegration";
 import {canonicalEvidenceJson} from "./researchEvidenceCorpus";
+import type {TranslationalOutcomeSection} from "./translationalEvidenceAttach";
+import type {ReleaseAwareRetrievalResult} from "./releaseAwareRetrieval";
 
 export const BOUNDED_AGENT_EXECUTION_SCHEMA = "hsi-bounded-agent-execution-1" as const;
 export const BOUNDED_AGENT_EXECUTION_METHOD = "hsi.bounded_agent_execution.v1" as const;
@@ -499,6 +505,10 @@ export async function runBoundedAgentExecution(input: {
   };
   /** When true, opposing stage records budget skip instead of stub search. */
   skipOpposingForBudget?: boolean;
+  /** PR 7 optional O-04 translational outcome section for brief bind. */
+  translational?: TranslationalOutcomeSection | null;
+  /** PR 7 optional release-aware retrieval surface for brief / product bind. */
+  releaseAware?: ReleaseAwareRetrievalResult | null;
 }): Promise<BoundedAgentExecutionResult> {
   if (!ID.test(input.investigationId)) fail("Invalid investigation identity");
   const question = input.question?.trim() ?? "";
@@ -1117,7 +1127,7 @@ export async function runBoundedAgentExecution(input: {
       assertTool("evidence.get");
       assertTool("graph.query");
       // Policy / review control surface: brief must not claim validity.
-      const claims: ResearchBriefArtifact["claims"][number][] = (scratch.hypotheses?.alternatives ?? [])
+      const draftClaims: ResearchBriefArtifact["claims"][number][] = (scratch.hypotheses?.alternatives ?? [])
         .slice(0, 5)
         .map((alt) => ({
           text: `Draft candidate ${alt.candidateId} recorded as an uncertain alternative pending human review.`,
@@ -1128,17 +1138,27 @@ export async function runBoundedAgentExecution(input: {
           ],
           support: "traceable_candidate_only" as const,
         }));
-      if (claims.length === 0) {
-        claims.push({
+      if (draftClaims.length === 0) {
+        draftClaims.push({
           text: "No draft candidates were available to summarise; brief abstains from scientific claims.",
           traceRefs: [scratch.retrieval?.searchRecordId ?? "retrieval:none"],
           support: "insufficient" as const,
         });
       }
-      const artifact: ResearchBriefArtifact = {
-        schemaVersion: "hsi-bounded-research-brief-1",
-        question,
-        claims,
+      const sourceLocators = [
+        ...(scratch.retrieval?.searchRecordId
+          ? (scratch.candidatePack?.relationships ?? [])
+              .flatMap((r) => r.evidenceSourceIds)
+              .filter((id) => /^pmid:/i.test(id) || /^\d+$/.test(id))
+              .slice(0, 8)
+              .map((id) => ({
+                kind: "pmid" as const,
+                value: id.replace(/^pmid:/i, ""),
+              }))
+          : []),
+      ];
+      const seedBrief = {
+        claims: draftClaims,
         limitations: [
           "Structured engineering brief only — not a scientifically validated conclusion",
           "Candidate claims remain unapproved (curationReview=draft, hsiGrade=unexplored)",
@@ -1149,15 +1169,23 @@ export async function runBoundedAgentExecution(input: {
         nextResearchActions: [
           "Expert-reviewed gap assessment with recorded search scope and date (no Gate C auto-approve)",
           "Passage-backed semantic entailment when reuse rights clear (human queue #2)",
-          "Translational O-04 / research-brief product bind (PR 7); eval deepening (PR 8)",
         ],
-        scientificValidityClaimed: false,
-        graphPromotable: false,
-        gateCAutoApprove: false,
-        cdsPhi: false,
+        scientificValidityClaimed: false as const,
       };
+      const integrated = integrateResearchBrief({
+        question,
+        boundedBrief: seedBrief,
+        opposingSearch: scratch.opposingReport,
+        translational: input.translational ?? null,
+        releaseAware: input.releaseAware ?? null,
+        sourceLocators,
+      });
+      const artifact = toBoundedResearchBriefArtifact(integrated) as ResearchBriefArtifact;
       if (artifact.cdsPhi !== false || HSI_CDS_PHI_INVARIANTS.containsPhi !== false) {
         fail("CDS/PHI honesty violated");
+      }
+      if (artifact.scientificValidityClaimed !== false || integrated.efficacyInferred !== false) {
+        fail("Brief must not claim scientific validity or efficacy");
       }
       scratch.brief = artifact;
       return {status: "completed", artifact, reason: null};
