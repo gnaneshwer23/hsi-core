@@ -1,0 +1,25 @@
+{
+  "phase": "human_queue_residuals",
+  "remediationPhase": "production_readiness_human_queue_residuals",
+  "generatedAt": "2026-11-08T14:00:00.000Z",
+  "engineeringScaffold": "CLEARED",
+  "humanAcceptance": "BLOCKED",
+  "residualCount": 5,
+  "residuals": [
+    "#2 N1 rights",
+    "#3 ISI cite HITL",
+    "#4 N3 SMEs",
+    "#5 staging two-account",
+    "#8 partner MoU"
+  ],
+  "n1HumanCleared": 0,
+  "passageImported": 0,
+  "citeSupports": 0,
+  "citePublicApproved": 0,
+  "n3Labels": 0,
+  "smeSlotsFilled": 0,
+  "stagingOpsAcceptance": "BLOCKED",
+  "partnerLockedPilot": false,
+  "note": "Eng-safe residual deepen only. Ranked #1–#10 scaffolds complete. Humans must finish attestation / HITL / SME / ops / MoU. Never invent clearance.",
+  "packHash": "f90ee7482775fcf6adb994572c1ef28d8202f0cc3e4c870eca0fb37a41c2069e"
+}

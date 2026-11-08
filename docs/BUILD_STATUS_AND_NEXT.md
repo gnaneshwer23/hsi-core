@@ -324,7 +324,8 @@ One-sprint-sized items. Mark **[DECISION]** where the user must choose before co
 | P2.13-Partner | **DONE (eng):** Audit #8 partner-lock prep | `partner-lock-prep.v1.json` + empty MoU slots + checklist; `partner:lock-prep`; founder still **BLOCKED** (0 MoU / `lockedPilot=false`) |
 | P2.14-N5Live | **DONE (eng):** Audit #9 N5 live public-registry refresh | CT.gov API v2 pins + fixtures + `n5:research:live`; `confirmedEligible=false`; sci still **BLOCKED** |
 | P2.15-N7N8 | **DONE (eng):** Audit #10 N7/N8 real-data prep (NO-GO scaffold) | `real-data-prep.v1.json` + empty slots + checklist + STOP; `n7n8:real-data-prep`; sci still **NO-GO** (0 slots; never invent live runs) |
-| **NEXT** | **STOP eng ranked track — human residuals only** | Audit #3–#10 (2026-11-08): #10 eng CLEARED / SCIENCE NO-GO. Remaining: #2 rights · #3 cite HITL · #4 SMEs · #5 two-account · #8 MoU. Still no auto-approve / no invent MoU / no live CDS / no invent N7/N8. |
+| P2.16-HQ | **DONE (eng):** HUMAN QUEUE residual deepen | `operations/human-queue/` + empty attestation worksheets + immunecity cite runbook; `human-queue:check`; humans still **BLOCKED** (counters unchanged) |
+| **NEXT** | **STOP — HUMAN QUEUE only** | Ranked #1–#10 eng complete + residual deepen. Remaining humans: #2 rights · #3 cite HITL · #4 SMEs · #5 two-account · #8 MoU. Still no auto-approve / no invent MoU / no live CDS / no invent N7/N8. |
 
 ### Out-of-repo (track; do not implement here)
 

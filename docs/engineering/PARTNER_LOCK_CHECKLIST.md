@@ -41,6 +41,8 @@ Honesty: fixture `partnerSigned=true` under `hypothetical_test_only` is **path-t
 - [ ] Agree licensing + Stage 1 rubric thresholds (`PARTNER-MOU-RUBRIC`)
 - [ ] Founder attests `legalBinding` only after written confirm (`PARTNER-MOU-FOUNDER`)
 
+**Empty MoU attestation worksheet (eng):** `operations/partner/mou-attestation-worksheet.v1.json` — all org/URI fields null; `legalBinding=false`. `bun run human-queue:check` refuses invented org names or `legalBinding=true`.
+
 ### B3 — Code swap (after B2)
 
 - [ ] Set `USE_HYPOTHETICAL_PARTNER_FIXTURE=false`

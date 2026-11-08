@@ -21,3 +21,5 @@ Public cite **Approve** (`claim_support=supports` + `curation=approved`) is an I
 
 - No auto-approve · no invent supports · no MoU invent · not CDS  
 - Dry-run in ISI: `cd ~/Desktop/immune-city && bun run hsi:curator-status`
+- Residual deepen: immunecity `docs/engineering/CITE_HITL_CURATOR_RUNBOOK.md` + `bun run hsi:cite-hitl:check` (still 0/0)
+- HSI consolidator: [`../engineering/HUMAN_QUEUE_RESIDUALS.md`](../engineering/HUMAN_QUEUE_RESIDUALS.md)

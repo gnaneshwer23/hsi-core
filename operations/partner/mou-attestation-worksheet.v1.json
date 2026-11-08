@@ -1,0 +1,85 @@
+{
+  "schemaVersion": "hsi-partner-mou-attestation-worksheet-1",
+  "residualId": "audit_8_partner_mou",
+  "generatedAt": "2026-11-08T14:00:00.000Z",
+  "engineeringScaffold": "CLEARED",
+  "founderAcceptance": "BLOCKED",
+  "lockedPilot": false,
+  "legalBinding": false,
+  "agreementKind": "hypothetical_test_only",
+  "honesty": {
+    "fixturePartnerSignedIsNotMou": true,
+    "emptyMouSlotsAreNotAgreements": true,
+    "noInventedMouText": true,
+    "noInventedNamedOrg": true,
+    "priorApoloPathRevoked": true
+  },
+  "mouSlots": [
+    {
+      "slotId": "PARTNER-MOU-ORG",
+      "roleLabel": "Named partner organisation",
+      "organisationName": null,
+      "writtenConfirmUri": null,
+      "mouDocumentUri": null,
+      "mouSignedAt": null,
+      "legalBindingAttested": false
+    },
+    {
+      "slotId": "PARTNER-MOU-WRITTEN",
+      "roleLabel": "Written confirm artifact",
+      "organisationName": null,
+      "writtenConfirmUri": null,
+      "mouDocumentUri": null,
+      "mouSignedAt": null,
+      "legalBindingAttested": false
+    },
+    {
+      "slotId": "PARTNER-MOU-LEGAL",
+      "roleLabel": "Legal MoU / MoA artifact",
+      "organisationName": null,
+      "writtenConfirmUri": null,
+      "mouDocumentUri": null,
+      "mouSignedAt": null,
+      "legalBindingAttested": false
+    },
+    {
+      "slotId": "PARTNER-MOU-SCOPE",
+      "roleLabel": "Disease + research question confirm",
+      "organisationName": null,
+      "writtenConfirmUri": null,
+      "mouDocumentUri": null,
+      "mouSignedAt": null,
+      "legalBindingAttested": false
+    },
+    {
+      "slotId": "PARTNER-MOU-RUBRIC",
+      "roleLabel": "Licensing + Stage 1 rubric confirm",
+      "organisationName": null,
+      "writtenConfirmUri": null,
+      "mouDocumentUri": null,
+      "mouSignedAt": null,
+      "legalBindingAttested": false
+    },
+    {
+      "slotId": "PARTNER-MOU-FOUNDER",
+      "roleLabel": "Founder legalBinding attestor",
+      "organisationName": null,
+      "writtenConfirmUri": null,
+      "mouDocumentUri": null,
+      "mouSignedAt": null,
+      "legalBindingAttested": false
+    }
+  ],
+  "founderAttestation": {
+    "principal": null,
+    "recordedAt": null,
+    "legalBinding": false,
+    "writtenConfirmObserved": false,
+    "notes": null
+  },
+  "summary": {
+    "mouSlotsReserved": 6,
+    "mouSlotsFilled": 0
+  },
+  "worksheetHash": "ce8dd396c44a2d727930d4871f444d19157440538370650ba19b89eea8ac4ed6"
+}

@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "hsi-staging-ops-acceptance-worksheet-1",
+  "residualId": "audit_5_staging_two_account",
+  "generatedAt": "2026-11-08T14:00:00.000Z",
+  "engineeringScaffold": "CLEARED",
+  "opsAcceptance": "BLOCKED",
+  "liveAuthVerified": false,
+  "researchWritesLiveVerified": false,
+  "productionWritesEnabled": false,
+  "authAWwwUserConfirmed": true,
+  "honesty": {
+    "roleSlotsAreNotAccounts": true,
+    "noInventedNeonAuthPrincipals": true,
+    "noProductionWritesFromThisWorksheet": true,
+    "noAutumnSnowForHsi": true,
+    "noGateCAutoApprove": true
+  },
+  "accountSlots": [
+    {
+      "slotId": "STAGING-RESEARCHER",
+      "roleLabel": "Staging researcher",
+      "neonAuthUserId": null,
+      "email": null,
+      "emailVerified": false,
+      "researchAccessGranted": false,
+      "reviewerAuthorityGranted": false
+    },
+    {
+      "slotId": "STAGING-REVIEWER",
+      "roleLabel": "Independent reviewer",
+      "neonAuthUserId": null,
+      "email": null,
+      "emailVerified": false,
+      "researchAccessGranted": false,
+      "reviewerAuthorityGranted": false
+    },
+    {
+      "slotId": "STAGING-GRANT-OPERATOR",
+      "roleLabel": "Grant operator",
+      "neonAuthUserId": null,
+      "email": null,
+      "emailVerified": false,
+      "researchAccessGranted": false,
+      "reviewerAuthorityGranted": false
+    }
+  ],
+  "journeyReceipt": {
+    "researcherInvestigationCreated": null,
+    "reviewerIndependentDecision": null,
+    "denialCasesExercised": null,
+    "stagingWritesEnabledObserved": null,
+    "productionWritesRemainDisabledObserved": null,
+    "privateOpsReceiptUri": null,
+    "recordedAt": null,
+    "principal": null
+  },
+  "summary": {
+    "accountSlotsReserved": 3,
+    "accountSlotsFilled": 0,
+    "journeyStepsCompleted": 0
+  },
+  "worksheetHash": "c66b49bba13215cf292fcd65f15c561db758c5baf0ced4cfce2cf30036d5b3d6"
+}

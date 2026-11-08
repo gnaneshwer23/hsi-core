@@ -142,6 +142,8 @@
     "staging:auth-prep:check": "bun --no-env-file scripts/staging-two-account-auth-prep.ts --check",
     "partner:lock-prep": "bun --no-env-file scripts/partner-lock-prep.ts",
     "partner:lock-prep:check": "bun --no-env-file scripts/partner-lock-prep.ts --check",
+    "human-queue:prep": "bun --no-env-file scripts/human-queue-residual-prep.ts",
+    "human-queue:check": "bun --no-env-file scripts/human-queue-residual-prep.ts --check",
     "validation:build": "bun --no-env-file scripts/build-synthetic-validation.ts",
     "validation:check": "bun --no-env-file scripts/build-synthetic-validation.ts --check",
     "readiness:prepare": "bun --no-env-file scripts/prepare-research-readiness.ts",

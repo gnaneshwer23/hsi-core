@@ -1,0 +1,258 @@
+{
+  "schemaVersion": "hsi-human-queue-residuals-1",
+  "remediationPhase": "production_readiness_human_queue_residuals",
+  "generatedAt": "2026-11-08T14:00:00.000Z",
+  "rankedEngTrack": "COMPLETE_THROUGH_10",
+  "engineeringScaffold": "CLEARED",
+  "humanAcceptance": "BLOCKED",
+  "honesty": {
+    "noInventedMou": true,
+    "noInventedClaimSupport": true,
+    "noInventedSmeLabels": true,
+    "noInventedLicenceClearance": true,
+    "noGateCAutoApprove": true,
+    "noLiveCdsPhi": true,
+    "noProductionWritesEnabled": true,
+    "hsiNeonRedWaveOnly": true,
+    "isiCiteNeonAutumnSnowOnly": true
+  },
+  "residuals": [
+    {
+      "residualId": "audit_2_n1_rights",
+      "auditPhase": 2,
+      "title": "N1 human rights attestation (licenceEvidenceUri)",
+      "plane": "science",
+      "status": "ENG_CLEARED_HUMAN_BLOCKED",
+      "engScaffoldCleared": true,
+      "humanAcceptance": "BLOCKED",
+      "neonTarget": "red-wave",
+      "metricSnapshot": [
+        {
+          "key": "humanCleared",
+          "value": 0
+        },
+        {
+          "key": "passageImported",
+          "value": 0
+        },
+        {
+          "key": "pendingHumanReview",
+          "value": 12
+        }
+      ],
+      "checklistPath": "docs/engineering/N1_PASSAGE_RIGHTS_ATTESTATION_CHECKLIST.md",
+      "worksheetPath": "research/domain-graph/n1/attestation-worksheet.v1.json",
+      "verifyCommand": "bun run human-queue:check",
+      "onlyHumansCan": [
+        "Supply real licenceEvidenceUri + permittedUses per source",
+        "Authorize passage import only after attestation",
+        "Record accountable principal + timestamp outside invented chat claims"
+      ],
+      "engMustNever": [
+        "Invent licenceEvidenceUri from Europe PMC OA/CC labels",
+        "Set humanCleared>0 or passageImported>0 in git without human attestation",
+        "Promote uncleared passages into the graph"
+      ]
+    },
+    {
+      "residualId": "audit_3_isi_cite_hitl",
+      "auditPhase": 3,
+      "title": "ISI cite HITL (Claim support → Approve)",
+      "plane": "hitl",
+      "status": "ENG_CLEARED_HUMAN_BLOCKED",
+      "engScaffoldCleared": true,
+      "humanAcceptance": "BLOCKED",
+      "neonTarget": "autumn-snow",
+      "metricSnapshot": [
+        {
+          "key": "claim_support=supports",
+          "value": 0
+        },
+        {
+          "key": "publicCiteApproved",
+          "value": 0
+        },
+        {
+          "key": "readyForHumanSupportsAssess",
+          "value": 13
+        }
+      ],
+      "checklistPath": "immunecity/docs/GATE_C_CURATOR_PATH.md",
+      "worksheetPath": "immunecity/public/hsi-discovery/cite-hitl-residual-worksheet.json",
+      "verifyCommand": "cd immunecity && bun run hsi:cite-hitl:check",
+      "onlyHumansCan": [
+        "Neon Auth scientific reviewer / admin S-P-O assess on /curation?hsi=cite",
+        "Set claim_support per row after reading the paper",
+        "Approve only when verified + mapped + supports; remeasure with --neon"
+      ],
+      "engMustNever": [
+        "Invent claim_support=supports",
+        "Auto-approve or flip hsiGrade",
+        "Write cite Approve against red-wave"
+      ]
+    },
+    {
+      "residualId": "audit_4_n3_sme_labels",
+      "auditPhase": 4,
+      "title": "N3 SME calibration labels + freeze",
+      "plane": "science",
+      "status": "ENG_CLEARED_HUMAN_BLOCKED",
+      "engScaffoldCleared": true,
+      "humanAcceptance": "BLOCKED",
+      "neonTarget": "red-wave",
+      "metricSnapshot": [
+        {
+          "key": "labelledCalibrationCount",
+          "value": 0
+        },
+        {
+          "key": "smeSlotsFilled",
+          "value": 0
+        },
+        {
+          "key": "calibrationItems",
+          "value": 24
+        }
+      ],
+      "checklistPath": "docs/engineering/N3_CALIBRATION_FREEZE_CHECKLIST.md",
+      "worksheetPath": "research/domain-graph/n3/sme-label-worksheet.v1.json",
+      "verifyCommand": "bun run human-queue:check",
+      "onlyHumansCan": [
+        "Recruit Annotator A/B + Adjudicator into empty roster slots",
+        "Fill expectedOutcome / rationale for 20–50 calibration items",
+        "Adjudicate disagreements and set frozen_human_labels"
+      ],
+      "engMustNever": [
+        "Invent SME identities or expectedOutcome values",
+        "Clear humanLabelFreeze without real labels",
+        "Fabricate usefulness scores ahead of freeze"
+      ]
+    },
+    {
+      "residualId": "audit_5_staging_two_account",
+      "auditPhase": 5,
+      "title": "Staging two-account Auth opsAcceptance",
+      "plane": "ops",
+      "status": "ENG_CLEARED_HUMAN_BLOCKED",
+      "engScaffoldCleared": true,
+      "humanAcceptance": "BLOCKED",
+      "neonTarget": "red-wave",
+      "metricSnapshot": [
+        {
+          "key": "opsAcceptance",
+          "value": "BLOCKED"
+        },
+        {
+          "key": "accountSlotsFilled",
+          "value": 0
+        },
+        {
+          "key": "authAWwwUserConfirmed",
+          "value": true
+        },
+        {
+          "key": "productionWritesEnabled",
+          "value": false
+        }
+      ],
+      "checklistPath": "docs/engineering/STAGING_TWO_ACCOUNT_AUTH_CHECKLIST.md",
+      "worksheetPath": "operations/staging/ops-acceptance-worksheet.v1.json",
+      "verifyCommand": "bun run staging:auth-prep:check && bun run human-queue:check",
+      "onlyHumansCan": [
+        "Align Preview env to staging Auth + ep-sweet-hill",
+        "Create two verified neon_auth principals + grants",
+        "Flip staging writes only; run live two-account journey; private ops receipt"
+      ],
+      "engMustNever": [
+        "Invent neon_auth user ids or grants in git",
+        "Enable production writesEnabled=true",
+        "Point HSI at autumn-snow"
+      ]
+    },
+    {
+      "residualId": "audit_8_partner_mou",
+      "auditPhase": 8,
+      "title": "Founder MoU / partner lock",
+      "plane": "founder",
+      "status": "ENG_CLEARED_HUMAN_BLOCKED",
+      "engScaffoldCleared": true,
+      "humanAcceptance": "BLOCKED",
+      "neonTarget": "none",
+      "metricSnapshot": [
+        {
+          "key": "mouSlotsFilled",
+          "value": 0
+        },
+        {
+          "key": "legalBinding",
+          "value": false
+        },
+        {
+          "key": "lockedPilot",
+          "value": false
+        }
+      ],
+      "checklistPath": "docs/engineering/PARTNER_LOCK_CHECKLIST.md",
+      "worksheetPath": "operations/partner/mou-attestation-worksheet.v1.json",
+      "verifyCommand": "bun run partner:lock-prep:check && bun run human-queue:check",
+      "onlyHumansCan": [
+        "Obtain written partner confirm / MoU for a real named org",
+        "Fill empty MoU slots with real URIs (keep bodies private)",
+        "Attest legalBinding and swap off hypothetical fixture"
+      ],
+      "engMustNever": [
+        "Invent MoU text, named orgs, or legalBinding=true",
+        "Claim lockedPilot under hypothetical_test_only",
+        "Re-lock Apolo without new written confirm"
+      ]
+    }
+  ],
+  "citeHitlPointer": {
+    "residualId": "audit_3_isi_cite_hitl",
+    "productRepo": "immunecity",
+    "neonTarget": "autumn-snow",
+    "engScaffoldCleared": true,
+    "hitlAcceptance": "BLOCKED",
+    "pinSupports": 0,
+    "pinPublicCiteApproved": 0,
+    "readyForHumanSupportsAssess": 13,
+    "checklistPath": "immunecity/docs/GATE_C_CURATOR_PATH.md",
+    "runbookPath": "immunecity/docs/engineering/CITE_HITL_CURATOR_RUNBOOK.md",
+    "worksheetPath": "immunecity/public/hsi-discovery/cite-hitl-residual-worksheet.json",
+    "verifyCommand": "cd immunecity && bun run hsi:curator-status && bun run hsi:cite-hitl:check",
+    "onlyHumansCan": [
+      "Neon Auth scientific reviewer / admin S-P-O assess on /curation?hsi=cite",
+      "Set claim_support per row after reading the paper",
+      "Approve only when verified + mapped + supports; remeasure with --neon"
+    ],
+    "engMustNever": [
+      "Invent claim_support=supports",
+      "Auto-approve or flip hsiGrade",
+      "Write cite Approve against red-wave"
+    ]
+  },
+  "stopList": [
+    "Do not invent MoU text / legalBinding=true / signed partners",
+    "Do not invent claim_support or Approve on cites",
+    "Do not invent SME scientific labels / usefulness scores",
+    "Do not invent licence clearance or passage imports",
+    "Do not Gate C auto-approve / live CDS-PHI",
+    "Do not set production writesEnabled=true",
+    "Ranked eng track #1–#10 is complete — remaining work is HUMAN QUEUE only"
+  ],
+  "summary": {
+    "residualCount": 5,
+    "engClearedHumanBlocked": 5,
+    "n1HumanCleared": 0,
+    "n1PassageImported": 0,
+    "citeSupports": 0,
+    "citePublicApproved": 0,
+    "n3Labels": 0,
+    "n3SmeSlotsFilled": 0,
+    "stagingAccountSlotsFilled": 0,
+    "stagingOpsAcceptance": "BLOCKED",
+    "partnerMouSlotsFilled": 0,
+    "partnerLockedPilot": false
+  },
+  "packHash": "f90ee7482775fcf6adb994572c1ef28d8202f0cc3e4c870eca0fb37a41c2069e"
+}

@@ -27,6 +27,8 @@ This is an **operator checklist**. Engineering scaffold can be CLEARED while sci
 | 9 | Record disagreement; adjudicate unresolved rows | Adjudicator |
 | 10 | Set packet status `frozen_human_labels` + `split.freezeDate` only after adjudication | Operator + adjudicator |
 
+**Empty worklog (eng):** `research/domain-graph/n3/sme-label-worksheet.v1.json` — 24 unlabelled rows + empty roster principals. Fill only after real SMEs act; `bun run human-queue:check` refuses invented `expectedOutcome`.
+
 **Do not** invent principals, organisations, or `expectedOutcome` values to clear these rows.
 
 ## Recommended pilot path (after calibration freeze)

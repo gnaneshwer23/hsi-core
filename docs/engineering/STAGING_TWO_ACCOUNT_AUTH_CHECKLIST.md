@@ -66,6 +66,8 @@ Authoritative setup: [`docs/VERCEL_RESEARCH_SETUP.md`](../VERCEL_RESEARCH_SETUP.
 - [ ] Revision path if `request_revision`
 - [ ] Private ops receipt (no tokens, passwords, PHI) — then opsAcceptance can move off BLOCKED via human stamp only
 
+**Empty ops worksheet (eng):** `operations/staging/ops-acceptance-worksheet.v1.json` — account slots + journey receipt fields stay null/`false`. Auth A www session/grant/fixture user-confirmed ≠ full opsAcceptance. `bun run human-queue:check` refuses invented neon_auth principals or `opsAcceptance=CLEARED`.
+
 ## C. Explicit non-goals
 
 - Inventing neon_auth users, passwords, or grants in git

@@ -1,0 +1,243 @@
+{
+  "schemaVersion": "hsi-n1-rights-attestation-worksheet-1",
+  "residualId": "audit_2_n1_rights",
+  "generatedAt": "2026-11-08T14:00:00.000Z",
+  "engineeringScaffold": "CLEARED",
+  "humanAcceptance": "BLOCKED",
+  "scientificApproval": false,
+  "anyPassageImported": false,
+  "anyLicenceEvidenceUriSet": false,
+  "humanCleared": 0,
+  "passageImported": 0,
+  "honesty": {
+    "providerSignalsAreNotClearance": true,
+    "openAccessIsNotCorpusReusePermission": true,
+    "emptyAttestationIsNotClearance": true,
+    "noInventedLicenceEvidenceUri": true,
+    "metadataOnlyUntilHumanRightsClearance": true
+  },
+  "rows": [
+    {
+      "queueId": "N1-C-01",
+      "sourceId": "doi:10.2337/db08-1637",
+      "doi": "10.2337/db08-1637",
+      "providerArticleUrl": "https://europepmc.org/article/MED/19366864",
+      "providerLicenseLabel": "cc by-nc-nd",
+      "providerIsOpenAccess": "N",
+      "attestation": {
+        "decision": null,
+        "principal": null,
+        "recordedAt": null,
+        "licenceEvidenceUri": null,
+        "permittedUses": [],
+        "rationale": null,
+        "passageImportAuthorized": false
+      },
+      "curatorPrompt": "Human only: record licenceEvidenceUri + permittedUses from publisher terms; do not invent clearance from Europe PMC OA labels; keep passageImported=0 until attested."
+    },
+    {
+      "queueId": "N1-C-02",
+      "sourceId": "doi:10.1038/ni.3713",
+      "doi": "10.1038/ni.3713",
+      "providerArticleUrl": "https://europepmc.org/article/MED/28346408",
+      "providerLicenseLabel": null,
+      "providerIsOpenAccess": "N",
+      "attestation": {
+        "decision": null,
+        "principal": null,
+        "recordedAt": null,
+        "licenceEvidenceUri": null,
+        "permittedUses": [],
+        "rationale": null,
+        "passageImportAuthorized": false
+      },
+      "curatorPrompt": "Human only: record licenceEvidenceUri + permittedUses from publisher terms; do not invent clearance from Europe PMC OA labels; keep passageImported=0 until attested."
+    },
+    {
+      "queueId": "N1-C-03",
+      "sourceId": "doi:10.1038/nature18646",
+      "doi": "10.1038/nature18646",
+      "providerArticleUrl": "https://europepmc.org/article/MED/27409811",
+      "providerLicenseLabel": null,
+      "providerIsOpenAccess": "N",
+      "attestation": {
+        "decision": null,
+        "principal": null,
+        "recordedAt": null,
+        "licenceEvidenceUri": null,
+        "permittedUses": [],
+        "rationale": null,
+        "passageImportAuthorized": false
+      },
+      "curatorPrompt": "Human only: record licenceEvidenceUri + permittedUses from publisher terms; do not invent clearance from Europe PMC OA labels; keep passageImported=0 until attested."
+    },
+    {
+      "queueId": "N1-C-04",
+      "sourceId": "doi:10.1038/nature11450",
+      "doi": "10.1038/nature11450",
+      "providerArticleUrl": "https://europepmc.org/article/MED/23023125",
+      "providerLicenseLabel": null,
+      "providerIsOpenAccess": "N",
+      "attestation": {
+        "decision": null,
+        "principal": null,
+        "recordedAt": null,
+        "licenceEvidenceUri": null,
+        "permittedUses": [],
+        "rationale": null,
+        "passageImportAuthorized": false
+      },
+      "curatorPrompt": "Human only: record licenceEvidenceUri + permittedUses from publisher terms; do not invent clearance from Europe PMC OA labels; keep passageImported=0 until attested."
+    },
+    {
+      "queueId": "N1-C-05",
+      "sourceId": "doi:10.1038/nature15766",
+      "doi": "10.1038/nature15766",
+      "providerArticleUrl": "https://europepmc.org/article/MED/26633628",
+      "providerLicenseLabel": null,
+      "providerIsOpenAccess": "Y",
+      "attestation": {
+        "decision": null,
+        "principal": null,
+        "recordedAt": null,
+        "licenceEvidenceUri": null,
+        "permittedUses": [],
+        "rationale": null,
+        "passageImportAuthorized": false
+      },
+      "curatorPrompt": "Human only: record licenceEvidenceUri + permittedUses from publisher terms; do not invent clearance from Europe PMC OA labels; keep passageImported=0 until attested."
+    },
+    {
+      "queueId": "N1-C-06",
+      "sourceId": "doi:10.1126/science.aao5774",
+      "doi": "10.1126/science.aao5774",
+      "providerArticleUrl": "https://europepmc.org/article/MED/29590046",
+      "providerLicenseLabel": null,
+      "providerIsOpenAccess": "N",
+      "attestation": {
+        "decision": null,
+        "principal": null,
+        "recordedAt": null,
+        "licenceEvidenceUri": null,
+        "permittedUses": [],
+        "rationale": null,
+        "passageImportAuthorized": false
+      },
+      "curatorPrompt": "Human only: record licenceEvidenceUri + permittedUses from publisher terms; do not invent clearance from Europe PMC OA labels; keep passageImported=0 until attested."
+    },
+    {
+      "queueId": "N1-C-07",
+      "sourceId": "doi:10.1016/j.cell.2018.09.055",
+      "doi": "10.1016/j.cell.2018.09.055",
+      "providerArticleUrl": "https://europepmc.org/article/MED/30401435",
+      "providerLicenseLabel": null,
+      "providerIsOpenAccess": "N",
+      "attestation": {
+        "decision": null,
+        "principal": null,
+        "recordedAt": null,
+        "licenceEvidenceUri": null,
+        "permittedUses": [],
+        "rationale": null,
+        "passageImportAuthorized": false
+      },
+      "curatorPrompt": "Human only: record licenceEvidenceUri + permittedUses from publisher terms; do not invent clearance from Europe PMC OA labels; keep passageImported=0 until attested."
+    },
+    {
+      "queueId": "N1-C-08",
+      "sourceId": "doi:10.1172/JCI19246",
+      "doi": "10.1172/jci19246",
+      "providerArticleUrl": "https://europepmc.org/article/MED/14679176",
+      "providerLicenseLabel": null,
+      "providerIsOpenAccess": "N",
+      "attestation": {
+        "decision": null,
+        "principal": null,
+        "recordedAt": null,
+        "licenceEvidenceUri": null,
+        "permittedUses": [],
+        "rationale": null,
+        "passageImportAuthorized": false
+      },
+      "curatorPrompt": "Human only: record licenceEvidenceUri + permittedUses from publisher terms; do not invent clearance from Europe PMC OA labels; keep passageImported=0 until attested."
+    },
+    {
+      "queueId": "N1-C-09",
+      "sourceId": "doi:10.1126/science.7678183",
+      "doi": "10.1126/science.7678183",
+      "providerArticleUrl": "https://europepmc.org/article/MED/7678183",
+      "providerLicenseLabel": null,
+      "providerIsOpenAccess": "N",
+      "attestation": {
+        "decision": null,
+        "principal": null,
+        "recordedAt": null,
+        "licenceEvidenceUri": null,
+        "permittedUses": [],
+        "rationale": null,
+        "passageImportAuthorized": false
+      },
+      "curatorPrompt": "Human only: record licenceEvidenceUri + permittedUses from publisher terms; do not invent clearance from Europe PMC OA labels; keep passageImported=0 until attested."
+    },
+    {
+      "queueId": "N1-C-10",
+      "sourceId": "doi:10.1038/nm.2279",
+      "doi": "10.1038/nm.2279",
+      "providerArticleUrl": "https://europepmc.org/article/MED/21217695",
+      "providerLicenseLabel": null,
+      "providerIsOpenAccess": "Y",
+      "attestation": {
+        "decision": null,
+        "principal": null,
+        "recordedAt": null,
+        "licenceEvidenceUri": null,
+        "permittedUses": [],
+        "rationale": null,
+        "passageImportAuthorized": false
+      },
+      "curatorPrompt": "Human only: record licenceEvidenceUri + permittedUses from publisher terms; do not invent clearance from Europe PMC OA labels; keep passageImported=0 until attested."
+    },
+    {
+      "queueId": "N1-C-11",
+      "sourceId": "doi:10.2337/db06-1491",
+      "doi": "10.2337/db06-1491",
+      "providerArticleUrl": "https://europepmc.org/article/MED/17456850",
+      "providerLicenseLabel": null,
+      "providerIsOpenAccess": "N",
+      "attestation": {
+        "decision": null,
+        "principal": null,
+        "recordedAt": null,
+        "licenceEvidenceUri": null,
+        "permittedUses": [],
+        "rationale": null,
+        "passageImportAuthorized": false
+      },
+      "curatorPrompt": "Human only: record licenceEvidenceUri + permittedUses from publisher terms; do not invent clearance from Europe PMC OA labels; keep passageImported=0 until attested."
+    },
+    {
+      "queueId": "N1-C-12",
+      "sourceId": "doi:10.1038/s41586-018-0620-2",
+      "doi": "10.1038/s41586-018-0620-2",
+      "providerArticleUrl": "https://europepmc.org/article/MED/30356183",
+      "providerLicenseLabel": "cc by",
+      "providerIsOpenAccess": "Y",
+      "attestation": {
+        "decision": null,
+        "principal": null,
+        "recordedAt": null,
+        "licenceEvidenceUri": null,
+        "permittedUses": [],
+        "rationale": null,
+        "passageImportAuthorized": false
+      },
+      "curatorPrompt": "Human only: record licenceEvidenceUri + permittedUses from publisher terms; do not invent clearance from Europe PMC OA labels; keep passageImported=0 until attested."
+    }
+  ],
+  "summary": {
+    "rows": 12,
+    "attested": 0,
+    "pending": 12
+  },
+  "worksheetHash": "1a13e955e707ee285549053ae94e4fe5d8a39e355644c4153aacf677c49070f8"
+}

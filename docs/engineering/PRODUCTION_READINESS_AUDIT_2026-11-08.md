@@ -1,7 +1,7 @@
 # HSI production-readiness audit receipt
 
 **Audited tip:** `482db110c0efa0b4d3a9166b4f97cd8bcd53b38c` (`482db11`) · `origin/main`  
-**Follow-through tip:** `a3e07169d33c11b25cf1f0ff651679700a436059` (`a3e0716`) — Phases 1–10 eng stamps; #10 = N7/N8 real-data prep ENG CLEARED / SCIENCE NO-GO (`realDataSlotsFilled=0`); #9 N5 live eng CLEARED / sci BLOCKED; #8 partner-lock FOUNDER BLOCKED; Auth A www user-confirmed (not writesEnabled / not Gate C)
+**Follow-through tip:** *(pending HUMAN QUEUE residual deepen commit)* — Phases 1–10 eng stamps + HUMAN QUEUE deepen (#2/#3/#4/#5/#8 empty worksheets + consolidator); #10 = N7/N8 real-data prep ENG CLEARED / SCIENCE NO-GO (`realDataSlotsFilled=0`); Auth A www user-confirmed (not writesEnabled / not Gate C)
 **Prior #10 feature tip:** `a3e07169d33c11b25cf1f0ff651679700a436059` (`a3e0716`) — N7/N8 empty real-data / licence slots + checklist + STOP
 **Prior #9 feature tip:** `feef64b1363370561dd4c3f0a12e99ed4be720ee` (`feef64b`) — N5 live CT.gov snapshot refresh + honesty harness
 **Prior #8 feature tip:** `491d236eba77a527bc933b2987a5f22ff704e7f8` (`491d236`) — partner-lock empty MoU slots + checklist
@@ -82,6 +82,7 @@ Default science programme remains **gut–immune–T2D** (Nov 6 plan). SSc stays
 - **Phase #8 eng done (founder still BLOCKED):** Partner-lock prep scaffolded — `src/ops/partnerLockPrep.ts`, `operations/partner/partner-lock-prep.v1.json`, checklist, empty MoU slots (`mouSlotsFilled=0`), `bun run partner:lock-prep`. Active path remains hypothetical fixture (`legalBinding=false` → `lockedPilot=false`); `founderAcceptance=BLOCKED`. No invented MoU text, named orgs, or `legalBinding=true`. Receipt: [`AUDIT_8_PARTNER_LOCK_2026-11-08.md`](./AUDIT_8_PARTNER_LOCK_2026-11-08.md).
 - **Phase #9 eng done (science still BLOCKED):** N5 live public-registry snapshot refresh — ClinicalTrials.gov API v2 lookup for pinned NCTs `NCT01030861` + `NCT02401880`, captured fixtures, live snapshot/receipt, `bun run n5:research:live` / `n5:research:live:check`. `liveRegistryQueried=true` on live path; `confirmedEligible=false`, `liveStatusVerified=false`, `scientificAcceptance=BLOCKED` always. Offline engineering fixtures remain `n5:check` authority. No invented eligibility / enrolment / Gate C / MoU. Receipt: [`AUDIT_9_N5_LIVE_REGISTRY_REFRESH_2026-11-08.md`](./AUDIT_9_N5_LIVE_REGISTRY_REFRESH_2026-11-08.md).
 - **Phase #10 eng done (science still NO-GO):** N7/N8 real-data / licensed-model prep scaffolded — `src/evidence/n7n8RealDataPrep.ts`, `research/domain-graph/n7n8/real-data-prep.v1.json`, checklist, empty real-data / licence slots (`realDataSlotsFilled=0`), `bun run n7n8:real-data-prep`. `nearTermGoNoGo=NO_GO`; `realObservationClaimed=false`; `modelActivationAllowed=false`; `scientificAcceptance=BLOCKED`. Explicit STOP: further progress is human residuals (#2 rights, #3 cite HITL, #4 SMEs, #5 two-account, #8 MoU). No invented wet-lab, partner data, licences, MoU, or Gate C. Receipt: [`AUDIT_10_N7_N8_REAL_DATA_2026-11-08.md`](./AUDIT_10_N7_N8_REAL_DATA_2026-11-08.md).
+- **HUMAN QUEUE deepen (eng CLEARED / humans still BLOCKED):** Consolidated residuals #2/#3/#4/#5/#8 — empty attestation worksheets, curator runbooks, `operations/human-queue/human-queue.v1.json`, `bun run human-queue:check`. Counters unchanged: N1 `humanCleared=0`/`passageImported=0`; cite 0/0; N3 labels 0; staging `opsAcceptance=BLOCKED`; MoU `mouSlotsFilled=0`. No invented MoU / supports / SME labels / licence clearance / Gate C / production writes. Receipt: [`AUDIT_HUMAN_QUEUE_RESIDUALS_2026-11-08.md`](./AUDIT_HUMAN_QUEUE_RESIDUALS_2026-11-08.md) · master [`HUMAN_QUEUE_RESIDUALS.md`](./HUMAN_QUEUE_RESIDUALS.md).
 
 ## Verify (post-correction)
 
@@ -102,6 +103,8 @@ bun run n5:research:live:check
 bun run n5:check
 bun run n7n8:real-data-prep
 bun run n7n8:real-data-prep:check
+bun run human-queue:prep
+bun run human-queue:check
 bun run db:migrate -- --from-neonctl
-bun --no-env-file test test/n1SourceVerification.test.ts test/scientificBenchmark.test.ts test/n3CalibrationFreezePrep.test.ts test/groundedBrief.test.ts test/stagingTwoAccountAuthPrep.test.ts test/n6UsefulnessPilotPrep.test.ts test/ledgerNeonStores.test.ts test/partnerLockPrep.test.ts test/n5RegistryLiveRefresh.test.ts test/cohortTrialCriteriaResearch.test.ts test/n7n8RealDataPrep.test.ts test/vercelResearch.test.ts
+bun --no-env-file test test/n1SourceVerification.test.ts test/scientificBenchmark.test.ts test/n3CalibrationFreezePrep.test.ts test/groundedBrief.test.ts test/stagingTwoAccountAuthPrep.test.ts test/n6UsefulnessPilotPrep.test.ts test/ledgerNeonStores.test.ts test/partnerLockPrep.test.ts test/n5RegistryLiveRefresh.test.ts test/cohortTrialCriteriaResearch.test.ts test/n7n8RealDataPrep.test.ts test/humanQueueResidualPrep.test.ts test/vercelResearch.test.ts
 ```
