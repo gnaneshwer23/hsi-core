@@ -11,6 +11,39 @@ export const OPEN_TARGETS_PROVIDER = "open_targets_platform_graphql_v4" as const
 
 const MAX_BODY_BYTES = 400_000;
 const DEFAULT_ASSOCIATION_PAGE_SIZE = 5;
+export const OPEN_TARGETS_ASSOCIATION_PAGE_SIZE_MIN = 1;
+export const OPEN_TARGETS_ASSOCIATION_PAGE_SIZE_MAX = 25;
+
+export function assertValidOpenTargetsAssociationPageSize(pageSize: number): number {
+  if (
+    !Number.isInteger(pageSize) ||
+    pageSize < OPEN_TARGETS_ASSOCIATION_PAGE_SIZE_MIN ||
+    pageSize > OPEN_TARGETS_ASSOCIATION_PAGE_SIZE_MAX
+  ) {
+    throw new Error(
+      `Invalid Open Targets association page size (allowed ${OPEN_TARGETS_ASSOCIATION_PAGE_SIZE_MIN}–${OPEN_TARGETS_ASSOCIATION_PAGE_SIZE_MAX})`,
+    );
+  }
+  return pageSize;
+}
+
+function diseaseAssociationQuery(pageSize: number): string {
+  const size = assertValidOpenTargetsAssociationPageSize(pageSize);
+  return `query diseaseAssoc($efoId: String!) {
+  disease(efoId: $efoId) {
+    id
+    name
+    associatedTargets(page: { index: 0, size: ${size} }) {
+      count
+      rows {
+        score
+        target { id approvedSymbol }
+        datatypeScores { id score }
+      }
+    }
+  }
+}`;
+}
 
 /** Disease IDs accepted by current Open Targets Platform (underscore form). */
 export function assertValidOpenTargetsDiseaseId(id: string): string {
@@ -54,6 +87,10 @@ export type OpenTargetsLookupOk = {
   responseIdentity: string;
   record: OpenTargetsDiseaseRecord;
   bodyText: string;
+  pageSize: number;
+  truncatedByPageBudget: boolean;
+  /** Disease id matched provider payload — source identity verified for this lookup. */
+  sourceIdentity: "verified";
 };
 
 export type OpenTargetsLookupFail = {
@@ -75,20 +112,8 @@ export type OpenTargetsLookupFail = {
 
 export type OpenTargetsLookupResult = OpenTargetsLookupOk | OpenTargetsLookupFail;
 
-export const OPEN_TARGETS_DISEASE_ASSOCIATION_QUERY = `query diseaseAssoc($efoId: String!) {
-  disease(efoId: $efoId) {
-    id
-    name
-    associatedTargets(page: { index: 0, size: ${DEFAULT_ASSOCIATION_PAGE_SIZE} }) {
-      count
-      rows {
-        score
-        target { id approvedSymbol }
-        datatypeScores { id score }
-      }
-    }
-  }
-}`;
+/** Default GraphQL document (page size 5). Prefer diseaseAssociationQuery(pageSize) for dynamic budgets. */
+export const OPEN_TARGETS_DISEASE_ASSOCIATION_QUERY = diseaseAssociationQuery(DEFAULT_ASSOCIATION_PAGE_SIZE);
 
 function responseIdentityOf(body: string): string {
   return createHash("sha256").update(body).digest("hex");
@@ -107,8 +132,10 @@ export function parseOpenTargetsDiseasePayload(input: {
   bodyText: string;
   httpStatus: number;
   retrievedAt: string;
+  pageSize?: number;
 }): OpenTargetsLookupResult {
   const diseaseId = assertValidOpenTargetsDiseaseId(input.diseaseId);
+  const pageSize = assertValidOpenTargetsAssociationPageSize(input.pageSize ?? DEFAULT_ASSOCIATION_PAGE_SIZE);
   const query = `disease(efoId: ${diseaseId})`;
   const {bodyText, httpStatus, retrievedAt} = input;
 
@@ -249,7 +276,7 @@ export function parseOpenTargetsDiseasePayload(input: {
   const assoc = associated as Record<string, unknown>;
   const count = numberOrNull(assoc.count);
   const rowsRaw = assoc.rows;
-  if (count === null || count < 0 || !Array.isArray(rowsRaw) || rowsRaw.length > DEFAULT_ASSOCIATION_PAGE_SIZE) {
+  if (count === null || count < 0 || !Array.isArray(rowsRaw) || rowsRaw.length > pageSize) {
     return {
       ok: false,
       provider: OPEN_TARGETS_PROVIDER,
@@ -301,6 +328,9 @@ export function parseOpenTargetsDiseasePayload(input: {
     httpStatus,
     responseIdentity: identity,
     bodyText,
+    pageSize,
+    truncatedByPageBudget: count > associations.length,
+    sourceIdentity: "verified",
     record: {
       provider: OPEN_TARGETS_PROVIDER,
       diseaseId,
@@ -318,13 +348,20 @@ export function parseOpenTargetsDiseasePayload(input: {
   };
 }
 
+/**
+ * Lookup disease→target associations for a researcher-supplied Open Targets disease id.
+ * Accepts validated MONDO_/EFO_ ids (unpinned relative to living-evidence pins).
+ * Metadata only — not claim support, independent lit corroboration, or graph approval.
+ */
 export async function lookupOpenTargetsDiseaseAssociations(input: {
   diseaseId: string;
+  pageSize?: number;
   fetcher?: typeof fetch;
   now?: () => Date;
   signal?: AbortSignal;
 }): Promise<OpenTargetsLookupResult> {
   const diseaseId = assertValidOpenTargetsDiseaseId(input.diseaseId);
+  const pageSize = assertValidOpenTargetsAssociationPageSize(input.pageSize ?? DEFAULT_ASSOCIATION_PAGE_SIZE);
   const retrievedAt = (input.now ?? (() => new Date()))().toISOString();
   const query = `disease(efoId: ${diseaseId})`;
   try {
@@ -333,7 +370,7 @@ export async function lookupOpenTargetsDiseaseAssociations(input: {
       headers: {Accept: "application/json", "Content-Type": "application/json"},
       signal: input.signal,
       body: JSON.stringify({
-        query: OPEN_TARGETS_DISEASE_ASSOCIATION_QUERY,
+        query: diseaseAssociationQuery(pageSize),
         variables: {efoId: diseaseId},
       }),
     });
@@ -343,6 +380,7 @@ export async function lookupOpenTargetsDiseaseAssociations(input: {
       bodyText,
       httpStatus: response.status,
       retrievedAt,
+      pageSize,
     });
   } catch (error) {
     return {
