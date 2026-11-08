@@ -11,6 +11,7 @@ import {
   projectTranslationalForOutcome,
 } from "../src/evidence/translationalEvidenceAttach";
 import type {OpenTargetsDiseaseRecord} from "../src/evidence/openTargetsLookup";
+import {OPEN_TARGETS_SCORE_HONESTY} from "../src/evidence/openTargetsLookup";
 import {buildResearchOutcome} from "../src/researchOutcome";
 import {deliveryHarness} from "./fixtures/deliveryHarness";
 import {deliveryHash} from "../src/server/investigationDeliveryService";
@@ -37,8 +38,12 @@ const teplizumabTargets: OpenTargetsDiseaseRecord[] = [
         approvedSymbol: "Teplizumab",
         score: 0.4,
         datatypeScores: [{id: "literature", score: 0.3}],
+        datasourceScores: [{id: "europepmc", score: 0.25}],
       },
     ],
+    associationScope: "direct",
+    enableIndirect: false,
+    scoreHonesty: OPEN_TARGETS_SCORE_HONESTY,
     retrievedAt: "2026-11-08T21:00:00.000Z",
     responseIdentity: "a".repeat(64),
     verificationState: "metadata_retrieved_not_claim_verified",

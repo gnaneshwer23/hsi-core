@@ -16,6 +16,10 @@ import {
 } from "../src/evidence/europePmcBibliographicLookup";
 import {
   assertValidOpenTargetsAssociationPageSize,
+  assertValidOpenTargetsEnableIndirect,
+  associationScopeFromEnableIndirect,
+  diseaseAssociationQuery,
+  OPEN_TARGETS_SCORE_HONESTY,
   parseOpenTargetsDiseasePayload,
 } from "../src/evidence/openTargetsLookup";
 import {
@@ -331,6 +335,14 @@ describe("dynamic retrieval — failure taxonomy + honesty", () => {
     expect(record.retrievedOpenTargets[0]!.claimSupport).toBe("not_assessed");
     expect(record.retrievedOpenTargets[0]!.independentCorroborationOfEuropePmc).toBe(false);
     expect(record.retrievedOpenTargets[0]!.sourceIdentity).toBe("verified");
+    expect(record.retrievedOpenTargets[0]!.associationScope).toBe("direct");
+    expect(record.retrievedOpenTargets[0]!.scoreHonesty).toEqual(OPEN_TARGETS_SCORE_HONESTY);
+    expect(record.retrievedOpenTargets[0]!.associations.length).toBeGreaterThan(0);
+    expect(record.retrievedOpenTargets[0]!.associations[0]!.evidenceTypes.length).toBeGreaterThan(0);
+    expect(record.retrievedOpenTargets[0]!.associations[0]!.evidenceSources.length).toBeGreaterThan(0);
+    expect(record.honesty.openTargetsScoreIsNotCausation).toBe(true);
+    expect(record.honesty.openTargetsScoreIsNotEfficacy).toBe(true);
+    expect(record.honesty.openTargetsScoreIsNotTargetValidation).toBe(true);
   });
 
   test("cache hit avoids a second provider call", async () => {
@@ -422,5 +434,123 @@ describe("adapter parse helpers preserve hitCount fields", () => {
     if (!parsed.ok) throw new Error("expected ok");
     expect(parsed.sourceIdentity).toBe("verified");
     expect(parsed.record.scientificApproval).toBe(false);
+  });
+});
+
+describe("Open Targets GraphQL hardening", () => {
+  test("query document validates required fields and bounds pageSize / enableIndirect", () => {
+    expect(() => assertValidOpenTargetsAssociationPageSize(0)).toThrow(/page size/);
+    expect(() => assertValidOpenTargetsAssociationPageSize(26)).toThrow(/page size/);
+    expect(assertValidOpenTargetsEnableIndirect(false)).toBe(false);
+    expect(associationScopeFromEnableIndirect(false)).toBe("direct");
+    expect(associationScopeFromEnableIndirect(true)).toBe("indirect_enabled");
+    const direct = diseaseAssociationQuery({pageSize: 5, enableIndirect: false});
+    expect(direct).toContain("enableIndirect: false");
+    expect(direct).toContain("datatypeScores");
+    expect(direct).toContain("datasourceScores");
+    const indirect = diseaseAssociationQuery({pageSize: 3, enableIndirect: true});
+    expect(indirect).toContain("enableIndirect: true");
+    expect(indirect).toContain("size: 3");
+  });
+
+  test("preserves evidence types, datasource scores, direct scope, and score ≠ causation honesty", () => {
+    const path = resolve(fixturesDir, "opentargets.disease.mondo_0008383.json");
+    const parsed = parseOpenTargetsDiseasePayload({
+      diseaseId: "MONDO_0008383",
+      bodyText: readFileSync(path, "utf8"),
+      httpStatus: 200,
+      retrievedAt,
+      pageSize: 5,
+      enableIndirect: false,
+    });
+    expect(parsed.ok).toBe(true);
+    if (!parsed.ok) throw new Error("expected ok");
+    expect(parsed.associationScope).toBe("direct");
+    expect(parsed.enableIndirect).toBe(false);
+    expect(parsed.scoreHonesty.scoreIsNotCausation).toBe(true);
+    expect(parsed.scoreHonesty.scoreIsNotEfficacy).toBe(true);
+    expect(parsed.scoreHonesty.scoreIsNotTargetValidation).toBe(true);
+    expect(parsed.scoreHonesty.scoreIsNotClaimSupport).toBe(true);
+    expect(parsed.record.scoreHonesty).toEqual(OPEN_TARGETS_SCORE_HONESTY);
+    expect(parsed.graphqlPartialErrors).toBeNull();
+    expect(parsed.truncatedByPageBudget).toBe(true);
+    const first = parsed.record.associations[0]!;
+    expect(first.datatypeScores.some((d) => d.id === "genetic_association" || d.id === "literature")).toBe(
+      true,
+    );
+    expect(first.datasourceScores.length).toBeGreaterThan(0);
+    expect(first.datasourceScores.every((d) => d.score >= 0 && d.score <= 1)).toBe(true);
+  });
+
+  test("records indirect_enabled scope when enableIndirect is requested", () => {
+    const path = resolve(fixturesDir, "opentargets.disease.mondo_0005100.json");
+    const parsed = parseOpenTargetsDiseasePayload({
+      diseaseId: "MONDO_0005100",
+      bodyText: readFileSync(path, "utf8"),
+      httpStatus: 200,
+      retrievedAt,
+      pageSize: 5,
+      enableIndirect: true,
+    });
+    expect(parsed.ok).toBe(true);
+    if (!parsed.ok) throw new Error("expected ok");
+    expect(parsed.associationScope).toBe("indirect_enabled");
+    expect(parsed.query).toContain("enableIndirect: true");
+  });
+
+  test("GraphQL errors without data are provider invalid_response (not empty hits)", () => {
+    const parsed = parseOpenTargetsDiseasePayload({
+      diseaseId: "MONDO_0008383",
+      bodyText: JSON.stringify({
+        errors: [{message: "Cannot query field associatedTargets"}],
+      }),
+      httpStatus: 200,
+      retrievedAt,
+      pageSize: 5,
+    });
+    expect(parsed.ok).toBe(false);
+    if (parsed.ok) throw new Error("expected fail");
+    expect(parsed.outcome).toBe("invalid_response");
+    expect(parsed.detail).toMatch(/GraphQL errors/);
+  });
+
+  test("GraphQL errors alongside usable data are reported as partial", () => {
+    const path = resolve(fixturesDir, "opentargets.disease.mondo_0008383.json");
+    const fixture = JSON.parse(readFileSync(path, "utf8")) as Record<string, unknown>;
+    fixture.errors = [{message: "Field 'novelty' is deprecated"}];
+    const parsed = parseOpenTargetsDiseasePayload({
+      diseaseId: "MONDO_0008383",
+      bodyText: JSON.stringify(fixture),
+      httpStatus: 200,
+      retrievedAt,
+      pageSize: 5,
+    });
+    expect(parsed.ok).toBe(true);
+    if (!parsed.ok) throw new Error("expected ok");
+    expect(parsed.graphqlPartialErrors).toEqual(["Field 'novelty' is deprecated"]);
+  });
+
+  test("provider HTTP failure is not silent empty associations", async () => {
+    const {record} = await runDynamicEvidenceRetrieval({
+      query: {
+        question: "targets for MONDO_0008383 rheumatoid arthritis",
+        entities: {diseaseIds: ["MONDO_0008383"]},
+        pageSize: 5,
+      },
+      rateLimitMs: 0,
+      now: () => new Date(retrievedAt),
+      fetcher: async (url) => {
+        const u = String(url);
+        if (u.includes("opentargets")) return new Response("unavailable", {status: 503});
+        if (u.includes("europepmc")) return new Response(epmcEmptyBody(0), {status: 200});
+        return new Response("unexpected", {status: 500});
+      },
+    });
+    expect(record.retrievedOpenTargets).toEqual([]);
+    expect(record.failures.some((f) => f.provider.includes("open_targets") && f.outcome === "provider_http_error")).toBe(
+      true,
+    );
+    expect(record.coverage.openTargetsHits).toBe(0);
+    expect(record.coverage.overallOutcome).not.toBe("successful_empty");
   });
 });

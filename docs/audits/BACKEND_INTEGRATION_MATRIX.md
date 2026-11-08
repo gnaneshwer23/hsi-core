@@ -53,7 +53,7 @@ Honesty freeze: no Gate C auto-approve · no invented MoU / `legalBinding` · no
 | Europe PMC `cursorMark` pagination | Bibliographic adapter (+ SSC discovery already had cursor) | Search → `cursorMark=*` → `nextCursorMark` pages · cache key includes cursor + provider version | `partially_connected` → target `connected` (library) | This PR; SSC: `europePmcSscDiscovery.ts` | Local | Europe PMC REST | Wire true cursor into bibliographic + dynamic retrieve | Incomplete coverage claimed complete | Multi-page fixture tests |
 | Cache key: query + filters + provider version + params | `createMemoryRetrievalCache` in dynamic retrieve | Cache key `epmc:{providerVersion}:q=…:ps=…:cursor=…` | `partially_connected` | Code inspection + cache test | Local | — | Preserve cursor in key | Stale page reuse | Cache hit test |
 | Evidence-status separation fields | Persistence/candidates: `sourceIdentity` · `contentAccess` · `claimSupport` · draft `curationReview` | Retrieve → plan → candidate rows | `partially_connected` | `dynamicEvidencePersistence.ts` | Local / Staging Unknown | Write gate | Align naming with brief snake aliases in exports later | Axes conflation | Persistence honesty tests |
-| Open Targets evidence-type / direct vs indirect / score ≠ causation | `openTargetsLookup` keeps `score` + `datatypeScores`; no direct/indirect flag; no underlying evidence-source rows | GraphQL disease→targets | `partially_connected` | OT parse tests | Local | OT GraphQL | Next PR: preserve association evidence types + directness honesty | Score read as causation | OT fixture + schema tests |
+| Open Targets evidence-type / direct vs indirect / score ≠ causation | `openTargetsLookup` + dynamic retrieve: `datatypeScores` / `datasourceScores`, `enableIndirect` → `associationScope`, `scoreHonesty`, GraphQL error/partial reporting, bounded pageSize | GraphQL disease→targets (explicit enableIndirect) | `partially_connected` → target `connected` (library) | OT hardening tests in `dynamicEvidenceRetrieval.test.ts` | Local | OT GraphQL | Keep; score stays non-causal | Score read as causation / efficacy | Fixture + GraphQL error/partial tests |
 | Persist permitted metadata + dedup links | `dynamicEvidencePersistence.ts` · migration `018` · candidate store | Search record → candidates + identity links | `partially_connected` | Persistence tests | Staging Unknown | red-wave write gate | Keep; no auto promote | Duplicate silent drop | Dedup tests |
 
 ### Biological context / graph (Phase 3)
@@ -93,10 +93,10 @@ Honesty freeze: no Gate C auto-approve · no invented MoU / `legalBinding` · no
 
 ## Top gaps vs refined brief (audited tip)
 
-1. **Europe PMC bibliographic path lacked true `cursorMark` pagination** (SSC discovery had it; dynamic retrieve did not) — addressed in the companion PR on this branch.
-2. **Open Targets** still thin vs brief: no GraphQL validation layer beyond parse, no direct/indirect distinction, limited underlying evidence-source preservation (score preserved but must stay non-causal).
-3. **`evaluation/scientific_benchmark_v1/`** path missing; independent-evaluation exists with empty SME slots.
-4. **Investigation / gap / relationship JSON** shapes are richer in the brief than current durable artifacts (execution envelope, gap record, relationship context).
+1. **Europe PMC bibliographic `cursorMark` pagination** — addressed on `main` via PR #83.
+2. **Open Targets evidence-type / direct vs indirect / score ≠ causation** — addressed in this companion PR (extend existing adapter; score honesty + datasource preservation + GraphQL partial/fail reporting).
+3. **`evaluation/scientific_benchmark_v1/`** path missing; independent-evaluation exists with empty SME slots — **next recommended eng slice**.
+4. **Investigation / gap / relationship JSON** shapes are richer in the brief than current durable artifacts (execution-record envelope, gap record, relationship context).
 5. **Live authenticated vertical slice** (#5) and **rights (#2) / SME (#4)** remain human-blocked — eng cannot clear.
 
 ---
@@ -120,7 +120,7 @@ Research question → evidence retrieval → biological context → mechanism an
 | Traceable research brief | `partially_connected` |
 | Human review intact | `connected` (validators) · journey `blocked` (#5) |
 
-**Highest-leverage eng slice chosen for companion PR:** Europe PMC `cursorMark` + cache/provider-version fields on the bibliographic → dynamic retrieval path — foundational to every later stage’s coverage honesty.
+**Highest-leverage eng slice chosen for companion PR:** Open Targets GraphQL hardening on the existing `openTargetsLookup` → dynamic retrieval path (evidence types, direct vs indirect scope, score ≠ causation honesty, datasource preservation, bounded budgets, failure/partial reporting).
 
 ---
 
