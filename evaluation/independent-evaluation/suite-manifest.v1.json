@@ -1,0 +1,402 @@
+{
+  "schemaVersion": "hsi-independent-evaluation-suites-1",
+  "phase": "PR8",
+  "programme": "backend_scientific_intelligence",
+  "suiteVersion": "1.0.0",
+  "generatedAt": "2026-11-08T22:20:00.000Z",
+  "engineeringScaffold": "CLEARED",
+  "scientificAcceptance": "BLOCKED",
+  "rightsAcceptance": "BLOCKED",
+  "liveJourneyAcceptance": "BLOCKED",
+  "productionReadinessClaimed": false,
+  "ciGreenIsNotScientificValidity": true,
+  "gateCAutoApprove": false,
+  "legalBinding": false,
+  "inventSmeScoresPermitted": false,
+  "containsPhi": false,
+  "graphPromotable": false,
+  "redWaveOnly": true,
+  "suites": {
+    "deterministic": {
+      "suiteId": "deterministic_regression",
+      "purpose": "schema_permissions_state_transitions_failure_handling",
+      "releaseEvidence": "reproducible_ci_results",
+      "status": "ENGINEERING_CLEARED",
+      "scientificValidityClaimed": false,
+      "contracts": [
+        {
+          "contractId": "phase1_state_non_conflation",
+          "description": "Source identity ≠ content access ≠ claim support ≠ scientific review states",
+          "ciRunnable": true,
+          "evidencePath": "test/backendScientificIntelligencePhase1Acceptance.test.ts"
+        },
+        {
+          "contractId": "provider_fail_not_empty",
+          "description": "provider_unavailable must not become successful empty / no evidence",
+          "ciRunnable": true,
+          "evidencePath": "test/dynamicEvidenceRetrieval.test.ts"
+        },
+        {
+          "contractId": "review_gate_intact",
+          "description": "validateScientificReview refuses unauthenticated / incomplete reviews",
+          "ciRunnable": true,
+          "evidencePath": "test/scientificReview.test.ts"
+        },
+        {
+          "contractId": "release_assessment_fail_closed",
+          "description": "assessReleaseClaim never auto-promotes draft living candidates",
+          "ciRunnable": true,
+          "evidencePath": "test/graphRelease.test.ts"
+        },
+        {
+          "contractId": "r2_sme_gold_empty",
+          "description": "R2 worksheets stay empty; scientificAcceptance=BLOCKED",
+          "ciRunnable": true,
+          "evidencePath": "test/r2GoldEvaluationSuite.test.ts"
+        },
+        {
+          "contractId": "scorecard_and_failure_mode_taxonomy",
+          "description": "PR 8 scorecard dimensions + orthogonal failure modes exist as contracts",
+          "ciRunnable": true,
+          "evidencePath": "test/independentEvaluationSuites.test.ts"
+        },
+        {
+          "contractId": "limitations_report_published",
+          "description": "Limitations report documents fixture-only / blocked / scientific limits",
+          "ciRunnable": true,
+          "evidencePath": "docs/engineering/BACKEND_SCIENTIFIC_INTELLIGENCE_LIMITATIONS_REPORT.md"
+        }
+      ]
+    },
+    "live": {
+      "suiteId": "live_integration",
+      "purpose": "real_provider_queries_persistence_brief_generation",
+      "releaseEvidence": "timestamped_runs_and_source_records",
+      "status": "GATED_NOT_RUN",
+      "gate": {
+        "envFlag": "HSI_LIVE_INTEGRATION_EVAL",
+        "requireExplicitOptIn": true,
+        "ciMustNotEnable": true
+      },
+      "scientificValidityClaimed": false,
+      "liveSuccessClaimed": false,
+      "walkthroughHooks": [
+        {
+          "hookId": "provider_query",
+          "stage": "provider_query",
+          "description": "Real Europe PMC / Open Targets / CT.gov queries for unpinned walkthrough questions",
+          "lastRunAt": null,
+          "lastOutcome": "skipped_gate",
+          "sourceRecordIds": []
+        },
+        {
+          "hookId": "persist_metadata",
+          "stage": "persist_metadata",
+          "description": "Persist permitted metadata into candidate store (red-wave; write-gated)",
+          "lastRunAt": null,
+          "lastOutcome": "skipped_gate",
+          "sourceRecordIds": []
+        },
+        {
+          "hookId": "research_brief",
+          "stage": "research_brief",
+          "description": "Generate source-linked research brief without efficacy/eligibility inference",
+          "lastRunAt": null,
+          "lastOutcome": "skipped_gate",
+          "sourceRecordIds": []
+        }
+      ],
+      "honestFailurePolicy": {
+        "reportProviderFailures": true,
+        "neverClaimSuccessWithoutTimestampedRun": true,
+        "neverTreatCiGreenAsLiveSuccess": true
+      }
+    },
+    "scientific": {
+      "suiteId": "scientific_evaluation",
+      "purpose": "context_claim_support_contradictions_usefulness",
+      "releaseEvidence": "blinded_expert_review_slots",
+      "status": "AWAITING_SME",
+      "scientificValidityClaimed": false,
+      "smeSlotsFilled": 0,
+      "inventScoresPermitted": false,
+      "scorecard": [
+        {
+          "dimensionId": "citation_correctness",
+          "value": null,
+          "labelledDenominator": 0,
+          "thresholdApproved": false,
+          "scientificAccuracy": null,
+          "notes": "Points to a real source identity (PMID/DOI/NCT) — distinct from support."
+        },
+        {
+          "dimensionId": "citation_supports_statement",
+          "value": null,
+          "labelledDenominator": 0,
+          "thresholdApproved": false,
+          "scientificAccuracy": null,
+          "notes": "Cited source actually supports the associated statement — distinct from identity."
+        },
+        {
+          "dimensionId": "biological_context_accuracy",
+          "value": null,
+          "labelledDenominator": 0,
+          "thresholdApproved": false,
+          "scientificAccuracy": null,
+          "notes": "Species / tissue / experimental system match the question context."
+        },
+        {
+          "dimensionId": "contradiction_retrieval",
+          "value": null,
+          "labelledDenominator": 0,
+          "thresholdApproved": false,
+          "scientificAccuracy": null,
+          "notes": "Opposing or null findings surfaced when present in searchable literature."
+        },
+        {
+          "dimensionId": "gap_assessment_precision",
+          "value": null,
+          "labelledDenominator": 0,
+          "thresholdApproved": false,
+          "scientificAccuracy": null,
+          "notes": "Coverage incompleteness ≠ verified novelty; taxonomy classes stay distinct."
+        },
+        {
+          "dimensionId": "abstention_quality",
+          "value": null,
+          "labelledDenominator": 0,
+          "thresholdApproved": false,
+          "scientificAccuracy": null,
+          "notes": "Appropriate abstention when evidence is insufficient — not overclaim."
+        },
+        {
+          "dimensionId": "expert_rated_research_usefulness",
+          "value": null,
+          "labelledDenominator": 0,
+          "thresholdApproved": false,
+          "scientificAccuracy": null,
+          "notes": "Blinded expert usefulness slots — human queue #4 PARKED; never invent ratings."
+        }
+      ],
+      "failureModeContracts": [
+        {
+          "modeId": "citation_points_to_real_source",
+          "distinctFrom": [
+            "citation_supports_statement",
+            "retrieved_evidence_matches_species_tissue_context",
+            "overall_conclusion_justified"
+          ],
+          "description": "External id resolves to a real provider record.",
+          "taxonomyContractTestable": true,
+          "scored": false
+        },
+        {
+          "modeId": "citation_supports_statement",
+          "distinctFrom": [
+            "citation_points_to_real_source",
+            "retrieved_evidence_matches_species_tissue_context",
+            "overall_conclusion_justified"
+          ],
+          "description": "Resolved source semantically supports the claim statement.",
+          "taxonomyContractTestable": true,
+          "scored": false
+        },
+        {
+          "modeId": "retrieved_evidence_matches_species_tissue_context",
+          "distinctFrom": [
+            "citation_points_to_real_source",
+            "citation_supports_statement",
+            "overall_conclusion_justified"
+          ],
+          "description": "Evidence biological context matches the researcher question.",
+          "taxonomyContractTestable": true,
+          "scored": false
+        },
+        {
+          "modeId": "overall_conclusion_justified",
+          "distinctFrom": [
+            "citation_points_to_real_source",
+            "citation_supports_statement",
+            "retrieved_evidence_matches_species_tissue_context"
+          ],
+          "description": "Aggregate conclusion is justified by assessed evidence — not identity alone.",
+          "taxonomyContractTestable": true,
+          "scored": false
+        }
+      ],
+      "expertReviewSlots": [
+        {
+          "slotId": "sme_a",
+          "role": "sme_a",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "sme_b",
+          "role": "sme_b",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "adjudicator",
+          "role": "adjudicator",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        }
+      ],
+      "researcherWorkflowComparison": {
+        "status": "scaffold",
+        "slots": [
+          {
+            "questionId": "IEW-AI-001",
+            "arms": [
+              "hsi_assisted",
+              "conventional_researcher"
+            ],
+            "informationAccessComparable": true,
+            "reportQualitySeparately": true,
+            "reportTimeBudgetSeparately": true,
+            "qualityScore": null,
+            "timeBudgetMinutes": null,
+            "recordedAt": null,
+            "recorder": null
+          },
+          {
+            "questionId": "IEW-IN-002",
+            "arms": [
+              "hsi_assisted",
+              "conventional_researcher"
+            ],
+            "informationAccessComparable": true,
+            "reportQualitySeparately": true,
+            "reportTimeBudgetSeparately": true,
+            "qualityScore": null,
+            "timeBudgetMinutes": null,
+            "recordedAt": null,
+            "recorder": null
+          },
+          {
+            "questionId": "IEW-TR-003",
+            "arms": [
+              "hsi_assisted",
+              "conventional_researcher"
+            ],
+            "informationAccessComparable": true,
+            "reportQualitySeparately": true,
+            "reportTimeBudgetSeparately": true,
+            "qualityScore": null,
+            "timeBudgetMinutes": null,
+            "recordedAt": null,
+            "recorder": null
+          },
+          {
+            "questionId": "IEW-AI-004",
+            "arms": [
+              "hsi_assisted",
+              "conventional_researcher"
+            ],
+            "informationAccessComparable": true,
+            "reportQualitySeparately": true,
+            "reportTimeBudgetSeparately": true,
+            "qualityScore": null,
+            "timeBudgetMinutes": null,
+            "recordedAt": null,
+            "recorder": null
+          },
+          {
+            "questionId": "IEW-IN-005",
+            "arms": [
+              "hsi_assisted",
+              "conventional_researcher"
+            ],
+            "informationAccessComparable": true,
+            "reportQualitySeparately": true,
+            "reportTimeBudgetSeparately": true,
+            "qualityScore": null,
+            "timeBudgetMinutes": null,
+            "recordedAt": null,
+            "recorder": null
+          }
+        ]
+      },
+      "representativeQuestions": [
+        {
+          "questionId": "IEW-AI-001",
+          "domain": "autoimmune",
+          "question": "What human evidence links type I interferon pathway activity to cutaneous versus renal disease activity in systemic lupus erythematosus, and where do studies disagree?",
+          "embedsPinnedFixtureIds": false,
+          "speciesHint": "human",
+          "tissueHint": "skin_and_kidney",
+          "notes": "Unpinned SLE interferon / tissue-context question for walkthrough checklist."
+        },
+        {
+          "questionId": "IEW-IN-002",
+          "domain": "inflammatory",
+          "question": "Which human intestinal barrier and microbiome-associated findings are reported for ulcerative colitis relapse risk, and which opposing or null results should be retrieved?",
+          "embedsPinnedFixtureIds": false,
+          "speciesHint": "human",
+          "tissueHint": "intestinal_mucosa",
+          "notes": "IBD barrier / inflammatory question without living-evidence PMID pins."
+        },
+        {
+          "questionId": "IEW-TR-003",
+          "domain": "translational",
+          "question": "For IL-17 / IL-23 pathway inhibitors in plaque psoriasis, what registry-reported outcomes exist versus peer-reviewed efficacy claims, and what evidence remains missing?",
+          "embedsPinnedFixtureIds": false,
+          "speciesHint": "human",
+          "tissueHint": "skin",
+          "notes": "Translational registry-vs-publication question; registration ≠ efficacy."
+        },
+        {
+          "questionId": "IEW-AI-004",
+          "domain": "autoimmune",
+          "question": "What evidence supports or contradicts fibroblast activation protein as a fibrosis-relevant target in systemic sclerosis interstitial lung disease, across human tissue versus mouse models?",
+          "embedsPinnedFixtureIds": false,
+          "speciesHint": "mixed_unspecified",
+          "tissueHint": "lung",
+          "notes": "Species/tissue mismatch probe — distinct from citation identity correctness."
+        },
+        {
+          "questionId": "IEW-IN-005",
+          "domain": "inflammatory",
+          "question": "In axial spondyloarthritis, which human studies associate IL-23 axis signalling with axial inflammation, and when should the system abstain for insufficient evidence?",
+          "embedsPinnedFixtureIds": false,
+          "speciesHint": "human",
+          "tissueHint": "axial_skeleton",
+          "notes": "Abstention-quality probe; not covered by pinned living-evidence fixtures."
+        }
+      ]
+    }
+  },
+  "suiteSeparation": {
+    "deterministicIsNotLive": true,
+    "deterministicIsNotScientific": true,
+    "liveIsNotScientific": true,
+    "ciPassDoesNotClearScience": true
+  },
+  "humanQueueBlocked": {
+    "rightsQueue2": "PARKED",
+    "smeQueue4": "PARKED",
+    "liveJourneyQueue5": "PARKED"
+  },
+  "honesty": {
+    "noInventedLiveE2eValidation": true,
+    "noInventedSmeGold": true,
+    "noFakeLiveSuccess": true,
+    "noGateCAutoApprove": true,
+    "noInventedMoU": true,
+    "noLiveCdsPhi": true,
+    "fixturesAreNotLiveScience": true
+  },
+  "parkedHumanResiduals": [
+    "#2 N1 rights",
+    "#4 SMEs",
+    "#5 live researcher journey",
+    "#8 MoU"
+  ],
+  "stopNote": "PR 8 eng scaffold complete. Three suites stay separate. Deterministic CI ≠ live success ≠ scientific validity. SME gold slots empty; live integration gated; production readiness not claimed. Human queue #2/#4/#5 remain PARKED.",
+  "inventoryHash": "0b3a25b1c134bb3e3c5464206e8407b2835cc21129ff5eb7e55eb7d1696742a5"
+}

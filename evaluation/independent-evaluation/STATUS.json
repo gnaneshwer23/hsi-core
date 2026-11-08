@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "hsi-independent-evaluation-status-1",
+  "phase": "PR8",
+  "programme": "backend_scientific_intelligence",
+  "generatedAt": "2026-11-08T22:20:00.000Z",
+  "engineeringScaffold": "CLEARED",
+  "scientificAcceptance": "BLOCKED",
+  "rightsAcceptance": "BLOCKED",
+  "liveJourneyAcceptance": "BLOCKED",
+  "productionReadinessClaimed": false,
+  "ciGreenIsNotScientificValidity": true,
+  "smeSlotsFilled": 0,
+  "liveSuccessClaimed": false,
+  "liveSuiteStatus": "GATED_NOT_RUN",
+  "deterministicSuiteStatus": "ENGINEERING_CLEARED",
+  "scientificSuiteStatus": "AWAITING_SME",
+  "scorecardDimensions": 7,
+  "failureModeContracts": 4,
+  "walkthroughQuestions": 5,
+  "parkedHumanResiduals": [
+    "#2 N1 rights",
+    "#4 SMEs",
+    "#5 live researcher journey",
+    "#8 MoU"
+  ],
+  "gateCAutoApprove": false,
+  "legalBinding": false,
+  "inventoryHash": "0b3a25b1c134bb3e3c5464206e8407b2835cc21129ff5eb7e55eb7d1696742a5",
+  "stopNote": "PR 8 eng scaffold complete. Three suites stay separate. Deterministic CI ≠ live success ≠ scientific validity. SME gold slots empty; live integration gated; production readiness not claimed. Human queue #2/#4/#5 remain PARKED.",
+  "note": "Three suites stay separate. Deterministic CI ≠ live success ≠ scientific validity. SME slots empty; live gated."
+}
