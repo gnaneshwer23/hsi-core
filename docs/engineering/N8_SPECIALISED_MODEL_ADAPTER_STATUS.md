@@ -68,3 +68,8 @@ bun run n1:check && bun run n2:check && bun run n3:check && bun run n4:check && 
 2. Select a bounded live model with a compatible licence and appropriate research data.
 3. Add held-out multimodal / organoid evaluation under a separately approved protocol.
 4. Keep paid / live providers behind explicit human activation — never default-on.
+
+## Audit #10 real-data prep (2026-11-08)
+
+Engineering empty-slot scaffold: [`AUDIT_10_N7_N8_REAL_DATA_2026-11-08.md`](./AUDIT_10_N7_N8_REAL_DATA_2026-11-08.md) · `bun run n7n8:real-data-prep`.  
+`nearTermGoNoGo=NO_GO`; licence / activation slots empty; never invent licensed models or live provider calls.

@@ -323,7 +323,8 @@ One-sprint-sized items. Mark **[DECISION]** where the user must choose before co
 | P2.12-AuthA | **USER-CONFIRMED:** Auth A www residual | Session eligible + researcher grant + synthetic fixture for founder Gmail; **not** production `writesEnabled` / Gate C / full #5 two-account |
 | P2.13-Partner | **DONE (eng):** Audit #8 partner-lock prep | `partner-lock-prep.v1.json` + empty MoU slots + checklist; `partner:lock-prep`; founder still **BLOCKED** (0 MoU / `lockedPilot=false`) |
 | P2.14-N5Live | **DONE (eng):** Audit #9 N5 live public-registry refresh | CT.gov API v2 pins + fixtures + `n5:research:live`; `confirmedEligible=false`; sci still **BLOCKED** |
-| **NEXT** | **Human cite HITL · N3 SMEs · #5 two-account residual · founder MoU** | Audit #3–#9 (2026-11-08): cite HITL 0/0; N3 0 labels; Auth A www confirmed (writes/Gate C not claimed); #8 MoU BLOCKED; #9 N5 live eng CLEARED / sci BLOCKED. Still no auto-approve / no invent MoU / no live CDS. #10 N7/N8 NO-GO near-term. |
+| P2.15-N7N8 | **DONE (eng):** Audit #10 N7/N8 real-data prep (NO-GO scaffold) | `real-data-prep.v1.json` + empty slots + checklist + STOP; `n7n8:real-data-prep`; sci still **NO-GO** (0 slots; never invent live runs) |
+| **NEXT** | **STOP eng ranked track — human residuals only** | Audit #3–#10 (2026-11-08): #10 eng CLEARED / SCIENCE NO-GO. Remaining: #2 rights · #3 cite HITL · #4 SMEs · #5 two-account · #8 MoU. Still no auto-approve / no invent MoU / no live CDS / no invent N7/N8. |
 
 ### Out-of-repo (track; do not implement here)
 

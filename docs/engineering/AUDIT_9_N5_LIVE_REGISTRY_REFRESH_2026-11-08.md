@@ -68,7 +68,7 @@ Pins are public-registry research anchors only — not recruitment claims.
 1. Human/scientific acceptance of any real registry slice remains BLOCKED.
 2. Parallel human tracks stay primary: ISI cite HITL (#3), N1 rights (#2), N3 SME labels (#4), Audit #5 two-account residual, founder MoU (#8).
 3. N6 usefulness stays **NO-GO until #4**.
-4. N7/N8 remain **NO-GO near-term** (audit #10).
+4. Audit **#10** N7/N8 real-data prep is **ENG CLEARED / SCIENCE NO-GO** — see [`AUDIT_10_N7_N8_REAL_DATA_2026-11-08.md`](./AUDIT_10_N7_N8_REAL_DATA_2026-11-08.md) (`realDataSlotsFilled=0`; never invent live runs).
 
 ## Verify
 

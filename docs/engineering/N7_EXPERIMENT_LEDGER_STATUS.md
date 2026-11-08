@@ -62,6 +62,11 @@ bun run n1:check && bun run n2:check && bun run n3:check && bun run n4:check && 
 ## Residual toward full N7
 
 1. Obtain authorised public experimental data **or** a partner laboratory / data agreement before any non-fixture `dataBasis`.
-2. Wire Neon read/write helpers for `hsi_experiment_ledger_records` behind the red-wave guard (`017` applied — Audit #6).
+2. Wire Neon read/write helpers for `hsi_experiment_ledger_records` behind the red-wave guard (`017` applied — Audit #6; helpers ENG CLEARED Audit #7).
 3. Human review workflow that keeps candidates out of approved graph publish and out of frozen N3/N6 evaluation corpora.
 4. Prospective wet-lab execution remains a separately approved protocol — not implied by this harness.
+
+## Audit #10 real-data prep (2026-11-08)
+
+Engineering empty-slot scaffold: [`AUDIT_10_N7_N8_REAL_DATA_2026-11-08.md`](./AUDIT_10_N7_N8_REAL_DATA_2026-11-08.md) · `bun run n7n8:real-data-prep`.  
+`nearTermGoNoGo=NO_GO`; `realDataSlotsFilled=0`; never invent wet-lab or partner data.
