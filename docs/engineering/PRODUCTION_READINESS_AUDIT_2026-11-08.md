@@ -1,8 +1,10 @@
 # HSI production-readiness audit receipt
 
 **Audited tip:** `482db110c0efa0b4d3a9166b4f97cd8bcd53b38c` (`482db11`) · `origin/main`  
-**Follow-through tip:** `0f6634bd1d1d66f56bc2d56fb134b6df6751c2e8` (`0f6634b`) — Phases 1–7 eng stamps; #7 = N6 pilot-prep ENG CLEARED / science NO-GO  
+**Follow-through tip:** `8d25d261183c0b0e268da328de873849f2770bd8` (`8d25d26`) — Phases 1–7 eng stamps; #7 = N6 pilot-prep ENG CLEARED / science NO-GO  
+**Prior #7 feature tip:** `0f6634bd1d1d66f56bc2d56fb134b6df6751c2e8` (`0f6634b`) — N6 pilot-prep + Neon ledger helpers  
 **Prior #6 tip:** `15871a413e68f119be282294924a18fcbfb9d183` (`15871a4`) — 016/017 already on red-wave  
+ 
  
 **Audit date:** 2026-11-08  
 **Canvas source:** `canvases/hsi-production-readiness-audit.canvas.tsx` (workspace)  
