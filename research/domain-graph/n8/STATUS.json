@@ -11,11 +11,11 @@
   "groundedClaimAccepted": false,
   "liveProviderCalled": false,
   "pins": {
-    "n4BriefReceiptHash": "06e8fd59e3f3372c8abbd0945c25327ecc823ff0c30dc5f3f6ec9625fdd8729c",
+    "n4BriefReceiptHash": "c28d384f9cd3b8b3a0a2699ab6a3a47a648052ff613f69d1470be97bf77a79ee",
     "n6ProtocolHash": "9e3b5c80727cf57f921632760b58d505d2d7f34dd171906261bec7188fe4f6b4",
     "n7LedgerHash": "7d947603411efe2686d49a94da11717f709942f8ec6547d79861700d511750b2",
     "manifestHash": "2f165b185f7207e8b1da43146749621f62ab41963fe55b67892487fdaf7428fb",
-    "runReceiptHash": "91db1450d2bfea9b652d6640368c04e272215737ded98a709789d2a321bc52a8"
+    "runReceiptHash": "144d3f5ecb029d16bd49ee952f6298b037946932d75081361cf5f88014397da5"
   },
   "note": "Engineering adapter harness only. N4 honesty retained; N6 usefulness BLOCKED; activation disallowed by default."
 }

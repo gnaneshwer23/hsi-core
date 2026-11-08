@@ -300,7 +300,7 @@ export function parseEligibilityCriteriaText(eligibilityText: string | null, nct
     }
 
     const diagnosis = /^(?:diagnosis of|documented)\s+(.+)$/i.exec(line);
-    if (diagnosis) {
+    if (diagnosis?.[1]) {
       const family = classifyDiseaseAlias(diagnosis[1].replace(/\.$/, ""));
       if (family === "type_1_diabetes" || family === "type_2_diabetes") {
         rules.push({
