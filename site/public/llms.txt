@@ -1,0 +1,34 @@
+# Human Super Intelligence (HSI)
+
+> Evidence-linked health and immunology research technology: biological context, source-linked evidence, and independent human review. For research and education — not a clinical decision system and not a substitute for qualified professional care.
+
+Canonical site: https://www.humansuperintelligence.tech/
+Sitemap: https://www.humansuperintelligence.tech/sitemap.xml
+Robots: https://www.humansuperintelligence.tech/robots.txt
+
+## Public marketing pages
+
+- [Home](https://www.humansuperintelligence.tech/): Shared research foundation overview
+- [Platform](https://www.humansuperintelligence.tech/platform): Research intelligence platform and product boundaries
+- [Technology](https://www.humansuperintelligence.tech/technology): Knowledge graph and research technology
+- [Science](https://www.humansuperintelligence.tech/science): Educational human biology and evidence explorer
+- [Research](https://www.humansuperintelligence.tech/research): Evidence-linked research workbench overview
+- [Products](https://www.humansuperintelligence.tech/products): Ecosystem products and maturity labels
+- [Solutions](https://www.humansuperintelligence.tech/solutions): Translational and discovery workflows
+- [Evidence & safety](https://www.humansuperintelligence.tech/evidence-safety): Provenance, uncertainty, human review
+- [How it works](https://www.humansuperintelligence.tech/how-it-works): Question to research brief
+- [Access options](https://www.humansuperintelligence.tech/pricing): Research access and pilots
+- [Research access](https://www.humansuperintelligence.tech/contact): Request account / access
+
+## Ecosystem products (separate experiences)
+
+- [Aksh Health](https://www.humansuperintelligence.tech/for-aksh): Personal health context product (separate care setting and data)
+- [Immune Super Intelligence (ISI)](https://www.humansuperintelligence.tech/for-isi): Immune-science research product
+- [HSI Trials](https://www.humansuperintelligence.tech/for-trials): Planned trials research programme (no live matching or enrolment)
+
+## Honesty / non-goals
+
+- No live clinical decision support (CDS) and no patient PHI in the HSI substrate
+- Gate C / scientific promotion to product knowledge graphs remains human-gated
+- Account signup does not grant research write or reviewer permissions
+- APIs under `/api/` and internal `/_pages/` HTML are not public discovery surfaces
