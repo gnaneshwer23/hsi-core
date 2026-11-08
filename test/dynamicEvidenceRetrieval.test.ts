@@ -6,8 +6,11 @@ import {describe, expect, test} from "bun:test";
 import {readFileSync, existsSync} from "node:fs";
 import {resolve} from "node:path";
 import {
+  assertValidEuropePmcCursorMark,
   assertValidEuropePmcPageSize,
   assertValidEuropePmcSearchQuery,
+  EUROPE_PMC_CURSOR_MARK_START,
+  EUROPE_PMC_PROVIDER_VERSION,
   parseEuropePmcBibliographicPayload,
   searchEuropePmcByQuery,
 } from "../src/evidence/europePmcBibliographicLookup";
@@ -29,11 +32,16 @@ const fixturesDir = resolve(root, "research/domain-graph/living-evidence/fixture
 const retrievedAt = "2026-11-08T20:00:00.000Z";
 
 function epmcEmptyBody(hitCount = 0): string {
-  return JSON.stringify({hitCount, resultList: {result: []}});
+  return JSON.stringify({hitCount, resultList: {result: []}, nextCursorMark: EUROPE_PMC_CURSOR_MARK_START});
 }
 
-function epmcHitBody(pmid: string, title: string, hitCount = 1): string {
-  return JSON.stringify({
+function epmcHitBody(
+  pmid: string,
+  title: string,
+  hitCount = 1,
+  nextCursorMark: string | null = null,
+): string {
+  const body: Record<string, unknown> = {
     hitCount,
     resultList: {
       result: [
@@ -51,7 +59,9 @@ function epmcHitBody(pmid: string, title: string, hitCount = 1): string {
         },
       ],
     },
-  });
+  };
+  if (nextCursorMark !== null) body.nextCursorMark = nextCursorMark;
+  return JSON.stringify(body);
 }
 
 describe("Europe PMC adapter — unpinned search query validation", () => {
@@ -69,6 +79,12 @@ describe("Europe PMC adapter — unpinned search query validation", () => {
     expect(assertValidOpenTargetsAssociationPageSize(5)).toBe(5);
   });
 
+  test("rejects invalid cursorMark", () => {
+    expect(() => assertValidEuropePmcCursorMark("")).toThrow(/cursorMark/);
+    expect(() => assertValidEuropePmcCursorMark("bad\ncursor")).toThrow(/control characters/);
+    expect(assertValidEuropePmcCursorMark(EUROPE_PMC_CURSOR_MARK_START)).toBe("*");
+  });
+
   test("searchEuropePmcByQuery records truncation vs successful empty", async () => {
     const empty = await searchEuropePmcByQuery({
       query: "systemic sclerosis Tfh",
@@ -81,18 +97,41 @@ describe("Europe PMC adapter — unpinned search query validation", () => {
     expect(empty.records).toEqual([]);
     expect(empty.hitCount).toBe(0);
     expect(empty.truncatedByPageBudget).toBe(false);
+    expect(empty.cursorMark).toBe(EUROPE_PMC_CURSOR_MARK_START);
+    expect(empty.nextCursorMark).toBeNull();
+    expect(empty.providerVersion).toBe(EUROPE_PMC_PROVIDER_VERSION);
 
     const truncated = await searchEuropePmcByQuery({
       query: "fibrosis",
       pageSize: 1,
       now: () => new Date(retrievedAt),
-      fetcher: async () => new Response(epmcHitBody("30760472", "Example", 42), {status: 200}),
+      fetcher: async () => new Response(epmcHitBody("30760472", "Example", 42, "cursor-page-2"), {status: 200}),
     });
     expect(truncated.ok).toBe(true);
     if (!truncated.ok) throw new Error("expected ok");
     expect(truncated.records.length).toBe(1);
     expect(truncated.hitCount).toBe(42);
     expect(truncated.truncatedByPageBudget).toBe(true);
+    expect(truncated.nextCursorMark).toBe("cursor-page-2");
+  });
+
+  test("searchEuropePmcByQuery sends cursorMark and parses nextCursorMark", async () => {
+    let requestedUrl = "";
+    const page = await searchEuropePmcByQuery({
+      query: "IL-6 insulin resistance",
+      pageSize: 2,
+      cursorMark: "page-token-1",
+      now: () => new Date(retrievedAt),
+      fetcher: async (url) => {
+        requestedUrl = String(url);
+        return new Response(epmcHitBody("11111111", "Page two", 3, "page-token-2"), {status: 200});
+      },
+    });
+    expect(requestedUrl).toContain("cursorMark=page-token-1");
+    expect(page.ok).toBe(true);
+    if (!page.ok) throw new Error("expected ok");
+    expect(page.cursorMark).toBe("page-token-1");
+    expect(page.nextCursorMark).toBe("page-token-2");
   });
 
   test("provider_unavailable stays typed (never empty records)", async () => {
@@ -185,7 +224,7 @@ describe("dynamic retrieval — failure taxonomy + honesty", () => {
 
   test("truncated_by_budget when hitCount exceeds page", async () => {
     const {record} = await runDynamicEvidenceRetrieval({
-      query: {question: "systemic sclerosis fibrosis", pageSize: 1},
+      query: {question: "systemic sclerosis fibrosis", pageSize: 1, maxResults: 1},
       rateLimitMs: 0,
       now: () => new Date(retrievedAt),
       fetcher: async () => new Response(epmcHitBody("24586782", "SSc fibrosis", 99), {status: 200}),
@@ -196,6 +235,70 @@ describe("dynamic retrieval — failure taxonomy + honesty", () => {
     expect(record.retrievedBibliographic[0]!.claimSupport).toBe("not_assessed");
     expect(record.retrievedBibliographic[0]!.sourceIdentity).toBe("verified");
     expect(record.retrievedBibliographic[0]!.passageImported).toBe(false);
+    expect(record.pagination.cursor).toBe(EUROPE_PMC_CURSOR_MARK_START);
+    expect(record.providerVersions.europePmc).toBe(EUROPE_PMC_PROVIDER_VERSION);
+  });
+
+  test("cursorMark pagination walks pages until maxResults", async () => {
+    const urls: string[] = [];
+    const {record} = await runDynamicEvidenceRetrieval({
+      query: {question: "systemic sclerosis fibrosis IL-21", pageSize: 1, maxResults: 2},
+      rateLimitMs: 0,
+      now: () => new Date(retrievedAt),
+      fetcher: async (url) => {
+        const u = String(url);
+        urls.push(u);
+        if (u.includes("cursorMark=%2A") || u.includes("cursorMark=*")) {
+          return new Response(epmcHitBody("24586782", "Page one", 5, "cursor-b"), {status: 200});
+        }
+        if (u.includes("cursorMark=cursor-b")) {
+          return new Response(epmcHitBody("30760472", "Page two", 5, "cursor-c"), {status: 200});
+        }
+        return new Response(epmcHitBody("99999999", "Should not fetch", 5), {status: 200});
+      },
+    });
+    expect(urls.some((u) => u.includes("cursorMark=%2A") || u.includes("cursorMark=*"))).toBe(true);
+    expect(urls.some((u) => u.includes("cursorMark=cursor-b"))).toBe(true);
+    expect(record.pagination.europePmcPagesFetched).toBe(2);
+    expect(record.pagination.maxResults).toBe(2);
+    expect(record.pagination.nextCursorMark).toBe("cursor-c");
+    expect(record.coverage.literatureHits).toBe(2);
+    expect(record.coverage.truncated).toBe(true);
+    expect(record.coverage.overallOutcome).toBe("truncated_by_budget");
+    const pmids = record.retrievedBibliographic.map((r) => r.pmid).sort();
+    expect(pmids).toEqual(["24586782", "30760472"]);
+    expect(record.queriesSent.every((q) => q.provider !== "europe_pmc" || q.cursorMark !== undefined)).toBe(true);
+  });
+
+  test("cache key distinguishes cursorMark pages", async () => {
+    let calls = 0;
+    const cache = createMemoryRetrievalCache();
+    const fetcher: typeof fetch = async (url) => {
+      calls += 1;
+      const u = String(url);
+      if (u.includes("cursorMark=%2A") || u.includes("cursorMark=*")) {
+        return new Response(epmcHitBody("11111111", "A", 3, "cursor-b"), {status: 200});
+      }
+      return new Response(epmcHitBody("22222222", "B", 3), {status: 200});
+    };
+    await runDynamicEvidenceRetrieval({
+      query: {question: "Tfh scleroderma fibrosis", pageSize: 1, maxResults: 2},
+      rateLimitMs: 0,
+      cache,
+      now: () => new Date(retrievedAt),
+      nowMs: () => 1_000,
+      fetcher,
+    });
+    expect(calls).toBe(2);
+    await runDynamicEvidenceRetrieval({
+      query: {question: "Tfh scleroderma fibrosis", pageSize: 1, maxResults: 2},
+      rateLimitMs: 0,
+      cache,
+      now: () => new Date(retrievedAt),
+      nowMs: () => 2_000,
+      fetcher,
+    });
+    expect(calls).toBe(2);
   });
 
   test("partial retrieval when one provider fails and another returns hits", async () => {
@@ -291,15 +394,19 @@ describe("adapter parse helpers preserve hitCount fields", () => {
   test("parseEuropePmcBibliographicPayload exposes truncation flags", () => {
     const parsed = parseEuropePmcBibliographicPayload({
       query: "fibrosis",
-      bodyText: epmcHitBody("30760472", "Example", 10),
+      bodyText: epmcHitBody("30760472", "Example", 10, "next-page"),
       httpStatus: 200,
       retrievedAt,
       pageSize: 1,
+      cursorMark: EUROPE_PMC_CURSOR_MARK_START,
     });
     expect(parsed.ok).toBe(true);
     if (!parsed.ok) throw new Error("expected ok");
     expect(parsed.truncatedByPageBudget).toBe(true);
     expect(parsed.pageSize).toBe(1);
+    expect(parsed.cursorMark).toBe("*");
+    expect(parsed.nextCursorMark).toBe("next-page");
+    expect(parsed.providerVersion).toBe(EUROPE_PMC_PROVIDER_VERSION);
   });
 
   test("Open Targets fixture still parses with sourceIdentity verified", () => {

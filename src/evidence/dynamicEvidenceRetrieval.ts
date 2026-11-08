@@ -18,9 +18,12 @@ import {createHash} from "node:crypto";
 import {canonicalEvidenceJson} from "./researchEvidenceCorpus";
 import {
   assertValidDoi,
+  assertValidEuropePmcCursorMark,
   assertValidEuropePmcPageSize,
   assertValidEuropePmcSearchQuery,
   assertValidPmid,
+  EUROPE_PMC_CURSOR_MARK_START,
+  EUROPE_PMC_PROVIDER_VERSION,
   type BibliographicLookupResult,
   type BibliographicRecord,
   searchEuropePmcByQuery,
@@ -40,6 +43,12 @@ export const DYNAMIC_QUESTION_MAX_CHARS = 1_000;
 export const DYNAMIC_TERM_MAX_CHARS = 120;
 export const DYNAMIC_MAX_ENTITY_IDS = 8;
 export const DYNAMIC_CACHE_TTL_MS = 5 * 60_000;
+/** Bound on unique literature hits retained for one unpinned question. */
+export const DYNAMIC_MAX_RESULTS_MIN = 1;
+export const DYNAMIC_MAX_RESULTS_MAX = 100;
+export const DYNAMIC_MAX_RESULTS_DEFAULT = 25;
+/** Hard cap on Europe PMC pages walked per literature query (cursorMark chain). */
+export const DYNAMIC_EUROPE_PMC_MAX_PAGES = 4;
 
 export type SourceIdentityState = "verified" | "unresolved" | "invalid";
 export type ClaimSupportState = "not_assessed";
@@ -76,6 +85,8 @@ export type ResearcherQueryInput = {
   ordering?: "relevance" | "date_desc" | "provider_default";
   synonyms?: readonly string[];
   pageSize?: number;
+  /** Unique literature hit budget across cursorMark pages (default 25, max 100). */
+  maxResults?: number;
   /** Only metadata is permitted without human rights clearance (PR 2/3). */
   contentAccess?: DynamicContentAccessRequest;
 };
@@ -106,6 +117,10 @@ export type DynamicQueryAttempt = {
   returnedCount: number;
   truncatedByPageBudget: boolean;
   pageSize: number;
+  /** Europe PMC request cursor (`*` first page); null for non-EPMC providers. */
+  cursorMark: string | null;
+  /** Provider nextCursorMark when more pages remain; null when exhausted or N/A. */
+  nextCursorMark: string | null;
 };
 
 export type PermittedBibliographicMetadata = {
@@ -163,13 +178,20 @@ export type DynamicSearchRecord = {
   pagination: {
     pageSize: number;
     rateLimitMs: number;
+    /** Literature unique-hit budget across cursorMark pages. */
+    maxResults: number;
+    /** First Europe PMC cursor used for literature search (`*` or null if unused). */
+    cursor: string | null;
+    /** Final nextCursorMark left uncleared when budget stopped pagination. */
+    nextCursorMark: string | null;
+    europePmcPagesFetched: number;
   };
   timestamps: {
     startedAt: string;
     completedAt: string;
   };
   providerVersions: {
-    europePmc: "europepmc_rest_search";
+    europePmc: typeof EUROPE_PMC_PROVIDER_VERSION;
     openTargets: typeof OPEN_TARGETS_PROVIDER;
   };
   queriesSent: DynamicQueryAttempt[];
@@ -285,10 +307,24 @@ function extractDois(text: string): string[] {
   return uniquePreserve(out);
 }
 
+export function assertValidDynamicMaxResults(maxResults: number): number {
+  if (
+    !Number.isInteger(maxResults) ||
+    maxResults < DYNAMIC_MAX_RESULTS_MIN ||
+    maxResults > DYNAMIC_MAX_RESULTS_MAX
+  ) {
+    throw new Error(
+      `Invalid maxResults (allowed ${DYNAMIC_MAX_RESULTS_MIN}–${DYNAMIC_MAX_RESULTS_MAX})`,
+    );
+  }
+  return maxResults;
+}
+
 export function validateResearcherQuery(input: ResearcherQueryInput): {
   ok: true;
   question: string;
   pageSize: number;
+  maxResults: number;
   ordering: DynamicSearchRecord["ordering"];
   synonyms: string[];
   contentAccess: DynamicContentAccessRequest;
@@ -320,14 +356,16 @@ export function validateResearcherQuery(input: ResearcherQueryInput): {
     };
   }
   let pageSize: number;
+  let maxResults: number;
   try {
     pageSize = assertValidEuropePmcPageSize(input.pageSize ?? 10);
     assertValidOpenTargetsAssociationPageSize(Math.min(pageSize, 25));
+    maxResults = assertValidDynamicMaxResults(input.maxResults ?? DYNAMIC_MAX_RESULTS_DEFAULT);
   } catch (error) {
     return {
       ok: false,
       outcome: "invalid_query",
-      detail: error instanceof Error ? error.message : "Invalid page size",
+      detail: error instanceof Error ? error.message : "Invalid page size or maxResults",
     };
   }
   const ordering = input.ordering ?? "provider_default";
@@ -346,7 +384,15 @@ export function validateResearcherQuery(input: ResearcherQueryInput): {
       synonyms.push(s.trim().replace(/\s+/g, " "));
     }
   }
-  return {ok: true, question, pageSize, ordering, synonyms: uniquePreserve(synonyms), contentAccess};
+  return {
+    ok: true,
+    question,
+    pageSize,
+    maxResults,
+    ordering,
+    synonyms: uniquePreserve(synonyms),
+    contentAccess,
+  };
 }
 
 export function clarifyResearcherEntities(input: {
@@ -598,9 +644,16 @@ export async function runDynamicEvidenceRetrieval(input: {
       synonyms: [],
       ordering: "provider_default",
       filters: {contentAccess: "metadata", europePmcResultType: "core", metadataOnly: true},
-      pagination: {pageSize: 0, rateLimitMs},
+      pagination: {
+        pageSize: 0,
+        rateLimitMs,
+        maxResults: 0,
+        cursor: null,
+        nextCursorMark: null,
+        europePmcPagesFetched: 0,
+      },
       timestamps: {startedAt, completedAt},
-      providerVersions: {europePmc: "europepmc_rest_search", openTargets: OPEN_TARGETS_PROVIDER},
+      providerVersions: {europePmc: EUROPE_PMC_PROVIDER_VERSION, openTargets: OPEN_TARGETS_PROVIDER},
       queriesSent: [],
       retrievedBibliographic: [],
       retrievedOpenTargets: [],
@@ -652,19 +705,51 @@ export async function runDynamicEvidenceRetrieval(input: {
   const deduped: DynamicSearchRecord["deduped"] = [];
   let cacheHits = 0;
   let callIndex = 0;
+  let literatureCursorStart: string | null = null;
+  let literatureNextCursorLeft: string | null = null;
+  let europePmcPagesFetched = 0;
+  let uniqueLiteratureHits = 0;
 
   const pace = async () => {
     if (callIndex > 0 && rateLimitMs > 0) await sleep(rateLimitMs);
     callIndex += 1;
   };
 
-  const runEuropePmc = async (args: {
+  const ingestBibliographicPage = (
+    rows: readonly BibliographicRecord[],
+    sourceIdentity: SourceIdentityState,
+    remainingBudget: number,
+  ): number => {
+    let accepted = 0;
+    for (const row of rows) {
+      if (accepted >= remainingBudget) break;
+      if (row.pmid && seenPmids.has(row.pmid)) {
+        const kept = seenPmids.get(row.pmid)!;
+        const existing = deduped.find((d) => d.pmid === row.pmid);
+        if (existing) existing.droppedCount += 1;
+        else deduped.push({pmid: row.pmid, keptResponseIdentity: kept, droppedCount: 1});
+        bibliographic.push(toPermittedBibliographic(row, sourceIdentity, row.pmid));
+        continue;
+      }
+      if (row.pmid) seenPmids.set(row.pmid, row.responseIdentity);
+      bibliographic.push(toPermittedBibliographic(row, sourceIdentity, null));
+      accepted += 1;
+    }
+    return accepted;
+  };
+
+  const runEuropePmcPage = async (args: {
     query: string;
     purpose: DynamicQueryAttempt["purpose"];
     requestedExternalId: string | null;
     pageSize: number;
-  }) => {
-    const cacheKey = `epmc:${args.query}:ps=${args.pageSize}`;
+    cursorMark: string;
+    /** When false, more cursor pages will follow — do not mark this page truncated. */
+    finalPageAttempt: boolean;
+  }): Promise<BibliographicLookupResult> => {
+    const cursorMark = assertValidEuropePmcCursorMark(args.cursorMark);
+    const cacheKey =
+      `epmc:${EUROPE_PMC_PROVIDER_VERSION}:q=${args.query}:ps=${args.pageSize}:cursor=${cursorMark}`;
     const cached = cache.get(cacheKey);
     let result: BibliographicLookupResult;
     let cacheStatus: "miss" | "hit" = "miss";
@@ -677,6 +762,7 @@ export async function runDynamicEvidenceRetrieval(input: {
       result = await searchEuropePmcByQuery({
         query: args.query,
         pageSize: args.pageSize,
+        cursorMark,
         fetcher: input.fetcher,
         now,
         signal: input.signal,
@@ -691,7 +777,7 @@ export async function runDynamicEvidenceRetrieval(input: {
         query: args.query,
         purpose: args.purpose,
         requestedExternalId: args.requestedExternalId,
-        sourceIdentity: args.requestedExternalId ? "unresolved" : "unresolved",
+        sourceIdentity: "unresolved",
         cacheStatus,
         outcome,
         retrievedAt: result.retrievedAt,
@@ -702,9 +788,11 @@ export async function runDynamicEvidenceRetrieval(input: {
         returnedCount: 0,
         truncatedByPageBudget: false,
         pageSize: args.pageSize,
+        cursorMark,
+        nextCursorMark: null,
       });
       failures.push({outcome, provider: "europe_pmc", detail: result.detail});
-      return;
+      return result;
     }
 
     let sourceIdentity: SourceIdentityState = "unresolved";
@@ -721,13 +809,38 @@ export async function runDynamicEvidenceRetrieval(input: {
         records: result.records,
       });
     } else if (result.records.length > 0) {
-      // Search hits: provider returned concrete records; identity verified at record layer.
       sourceIdentity = "verified";
     }
 
-    const outcome: RetrievalOutcomeClass = result.truncatedByPageBudget
+    const remaining =
+      args.purpose === "literature_search"
+        ? Math.max(0, validated.maxResults - uniqueLiteratureHits)
+        : result.records.length;
+    const accepted = ingestBibliographicPage(result.records, sourceIdentity, remaining);
+    if (args.purpose === "literature_search") uniqueLiteratureHits += accepted;
+
+    const budgetClipped =
+      args.purpose === "literature_search" &&
+      (uniqueLiteratureHits >= validated.maxResults || accepted < result.records.length);
+    const willContinue =
+      !args.finalPageAttempt &&
+      args.purpose === "literature_search" &&
+      result.nextCursorMark !== null &&
+      uniqueLiteratureHits < validated.maxResults &&
+      !budgetClipped;
+    const truncated =
+      !willContinue &&
+      (budgetClipped ||
+        (args.finalPageAttempt && result.nextCursorMark !== null) ||
+        (args.finalPageAttempt &&
+          result.hitCount !== null &&
+          uniqueLiteratureHits < result.hitCount &&
+          args.purpose === "literature_search") ||
+        (args.finalPageAttempt && result.truncatedByPageBudget));
+
+    const outcome: RetrievalOutcomeClass = truncated
       ? "truncated_by_budget"
-      : result.records.length === 0
+      : result.records.length === 0 && accepted === 0
         ? "successful_empty"
         : "successful_hits";
 
@@ -745,21 +858,89 @@ export async function runDynamicEvidenceRetrieval(input: {
       detail: null,
       hitCount: result.hitCount,
       returnedCount: result.records.length,
-      truncatedByPageBudget: result.truncatedByPageBudget,
+      truncatedByPageBudget: truncated,
       pageSize: result.pageSize,
+      cursorMark: result.cursorMark,
+      nextCursorMark: result.nextCursorMark,
     });
 
-    for (const row of result.records) {
-      if (row.pmid && seenPmids.has(row.pmid)) {
-        const kept = seenPmids.get(row.pmid)!;
-        const existing = deduped.find((d) => d.pmid === row.pmid);
-        if (existing) existing.droppedCount += 1;
-        else deduped.push({pmid: row.pmid, keptResponseIdentity: kept, droppedCount: 1});
-        bibliographic.push(toPermittedBibliographic(row, sourceIdentity, row.pmid));
-        continue;
+    return result;
+  };
+
+  const runEuropePmc = async (args: {
+    query: string;
+    purpose: DynamicQueryAttempt["purpose"];
+    requestedExternalId: string | null;
+    pageSize: number;
+    /** When true, walk cursorMark pages until maxResults / page cap. */
+    paginate?: boolean;
+  }) => {
+    let cursorMark: string = EUROPE_PMC_CURSOR_MARK_START;
+    if (args.paginate) literatureCursorStart = cursorMark;
+    let pages = 0;
+    const maxPages = args.paginate ? DYNAMIC_EUROPE_PMC_MAX_PAGES : 1;
+
+    while (pages < maxPages) {
+      if (args.paginate && uniqueLiteratureHits >= validated.maxResults) break;
+      pages += 1;
+      europePmcPagesFetched += 1;
+      // Peek: treat as final unless we know we can continue after this response.
+      // finalPageAttempt is refined after the response via a second pass flag —
+      // first call assumes may continue when paginate; corrected for truncation below.
+      const result = await runEuropePmcPage({
+        query: args.query,
+        purpose: args.purpose,
+        requestedExternalId: args.requestedExternalId,
+        pageSize: args.pageSize,
+        cursorMark,
+        finalPageAttempt: !args.paginate || pages >= maxPages,
+      });
+      if (!result.ok) {
+        if (args.paginate) literatureNextCursorLeft = null;
+        break;
       }
-      if (row.pmid) seenPmids.set(row.pmid, row.responseIdentity);
-      bibliographic.push(toPermittedBibliographic(row, sourceIdentity, null));
+      if (!args.paginate) break;
+      if (!result.nextCursorMark) {
+        literatureNextCursorLeft = null;
+        const last = attempts[attempts.length - 1];
+        if (last && last.provider === "europe_pmc") {
+          const underHitCount =
+            last.hitCount !== null && uniqueLiteratureHits < last.hitCount;
+          if (underHitCount || uniqueLiteratureHits >= validated.maxResults) {
+            last.truncatedByPageBudget = true;
+            last.outcome = "truncated_by_budget";
+          } else {
+            last.truncatedByPageBudget = false;
+            last.outcome = last.returnedCount === 0 ? "successful_empty" : "successful_hits";
+          }
+        }
+        break;
+      }
+      if (uniqueLiteratureHits >= validated.maxResults) {
+        literatureNextCursorLeft = result.nextCursorMark;
+        const last = attempts[attempts.length - 1];
+        if (last && last.provider === "europe_pmc") {
+          last.truncatedByPageBudget = true;
+          last.outcome = "truncated_by_budget";
+        }
+        break;
+      }
+      if (pages >= maxPages) {
+        literatureNextCursorLeft = result.nextCursorMark;
+        const last = attempts[attempts.length - 1];
+        if (last && last.provider === "europe_pmc") {
+          last.truncatedByPageBudget = true;
+          last.outcome = "truncated_by_budget";
+        }
+        break;
+      }
+      // Continuing: clear premature truncation on this intermediate page.
+      const last = attempts[attempts.length - 1];
+      if (last && last.provider === "europe_pmc") {
+        last.truncatedByPageBudget = false;
+        last.outcome = last.returnedCount === 0 ? "successful_empty" : "successful_hits";
+      }
+      cursorMark = result.nextCursorMark;
     }
   };
 
@@ -802,6 +983,8 @@ export async function runDynamicEvidenceRetrieval(input: {
         returnedCount: 0,
         truncatedByPageBudget: false,
         pageSize,
+        cursorMark: null,
+        nextCursorMark: null,
       });
       failures.push({outcome, provider: OPEN_TARGETS_PROVIDER, detail: result.detail});
       return;
@@ -829,6 +1012,8 @@ export async function runDynamicEvidenceRetrieval(input: {
       returnedCount: result.record.associations.length,
       truncatedByPageBudget: result.truncatedByPageBudget,
       pageSize: result.pageSize,
+      cursorMark: null,
+      nextCursorMark: null,
     });
 
     openTargetsMeta.push({
@@ -875,6 +1060,7 @@ export async function runDynamicEvidenceRetrieval(input: {
       purpose: "literature_search",
       requestedExternalId: null,
       pageSize: validated.pageSize,
+      paginate: true,
     });
   } else if (entities.pmids.length === 0 && entities.dois.length === 0 && entities.diseaseIds.length === 0) {
     excluded.push({
@@ -917,9 +1103,16 @@ export async function runDynamicEvidenceRetrieval(input: {
     synonyms: validated.synonyms,
     ordering: validated.ordering,
     filters: {contentAccess: "metadata", europePmcResultType: "core", metadataOnly: true},
-    pagination: {pageSize: validated.pageSize, rateLimitMs},
+    pagination: {
+      pageSize: validated.pageSize,
+      rateLimitMs,
+      maxResults: validated.maxResults,
+      cursor: literatureCursorStart,
+      nextCursorMark: literatureNextCursorLeft,
+      europePmcPagesFetched,
+    },
     timestamps: {startedAt, completedAt},
-    providerVersions: {europePmc: "europepmc_rest_search", openTargets: OPEN_TARGETS_PROVIDER},
+    providerVersions: {europePmc: EUROPE_PMC_PROVIDER_VERSION, openTargets: OPEN_TARGETS_PROVIDER},
     queriesSent: attempts,
     retrievedBibliographic: bibliographic,
     retrievedOpenTargets: openTargetsMeta,
