@@ -1,11 +1,20 @@
 /**
- * N1 gut–immune–T2D bibliographic verification.
+ * N1 gut–immune–T2D bibliographic verification + passage-rights inventory.
  * Default: offline fixture replay (reproducible). Pass --live to probe Europe PMC.
  * Never invents passage text, rights clearances or scientific approval.
  */
 import {readFileSync, writeFileSync, mkdirSync, existsSync} from "node:fs";
 import {resolve} from "node:path";
 import {materializeN1QueueFromExpansion, parseN1CandidateQueue} from "../src/evidence/n1CandidateQueue";
+import {
+  lookupEuropePmcByDoi,
+  parseEuropePmcBibliographicPayload,
+  type BibliographicLookupResult,
+} from "../src/evidence/europePmcBibliographicLookup";
+import {
+  buildN1PassageRightsInventory,
+  parseN1PassageRightsInventory,
+} from "../src/evidence/n1PassageRightsInventory";
 import {
   parseN1ImportReceipt,
   verifyN1CandidatesFromFixtures,
@@ -33,18 +42,56 @@ if (JSON.stringify(queued) !== JSON.stringify(queueFromExpansion)) {
 
 const generatedAt = "2026-11-07T21:20:00.000Z";
 
+function loadOfflineLookups(): Record<string, BibliographicLookupResult> {
+  const lookups: Record<string, BibliographicLookupResult> = {};
+  for (const candidate of queued.candidates) {
+    const file = resolve(fixturesDir, `${candidate.queueId.toLowerCase().replace(/-/g, "_")}.europepmc.json`);
+    if (!existsSync(file)) throw new Error(`Missing offline fixture: ${file}`);
+    lookups[candidate.queueId] = parseEuropePmcBibliographicPayload({
+      query: `DOI:"${candidate.doi}"`,
+      bodyText: readFileSync(file, "utf8"),
+      httpStatus: 200,
+      retrievedAt: generatedAt,
+    });
+  }
+  return lookups;
+}
+
+async function loadLiveLookups(): Promise<Record<string, BibliographicLookupResult>> {
+  const lookups: Record<string, BibliographicLookupResult> = {};
+  for (const candidate of queued.candidates) {
+    lookups[candidate.queueId] = await lookupEuropePmcByDoi({doi: candidate.doi});
+  }
+  return lookups;
+}
+
+function writeOrCheck(path: string, content: string, label: string) {
+  if (check) {
+    if (!existsSync(path) || readFileSync(path, "utf8") !== content) {
+      throw new Error(`Stale N1 artifact: ${label}`);
+    }
+    return;
+  }
+  writeFileSync(path, content);
+}
+
 async function main() {
   mkdirSync(receiptsDir, {recursive: true});
+  mkdirSync(n1Dir, {recursive: true});
+
   let receipt;
+  let lookups: Record<string, BibliographicLookupResult>;
   if (live) {
+    lookups = await loadLiveLookups();
     receipt = await verifyN1CandidatesLive({queue: queued});
   } else {
-    const fixtures: Record<string, {httpStatus: number; bodyText: string}> = {};
-    for (const candidate of queued.candidates) {
-      const file = resolve(fixturesDir, `${candidate.queueId.toLowerCase().replace(/-/g, "_")}.europepmc.json`);
-      if (!existsSync(file)) throw new Error(`Missing offline fixture: ${file}`);
-      fixtures[candidate.queueId] = {httpStatus: 200, bodyText: readFileSync(file, "utf8")};
-    }
+    lookups = loadOfflineLookups();
+    const fixtures = Object.fromEntries(
+      queued.candidates.map((candidate) => {
+        const file = resolve(fixturesDir, `${candidate.queueId.toLowerCase().replace(/-/g, "_")}.europepmc.json`);
+        return [candidate.queueId, {httpStatus: 200, bodyText: readFileSync(file, "utf8")}];
+      }),
+    );
     receipt = verifyN1CandidatesFromFixtures({
       queue: queued,
       fixtures,
@@ -54,20 +101,39 @@ async function main() {
     });
   }
   parseN1ImportReceipt(receipt);
-  const outName = live ? "import.live.receipt.json" : "import.offline.receipt.json";
-  const outPath = resolve(receiptsDir, outName);
-  const content = `${JSON.stringify(receipt, null, 2)}\n`;
-  if (check) {
-    if (!existsSync(outPath) || readFileSync(outPath, "utf8") !== content) {
-      throw new Error(`Stale N1 receipt: ${outName}`);
-    }
+
+  const inventory = buildN1PassageRightsInventory({
+    queue: queued,
+    receipt,
+    lookups,
+    generatedAt: live ? receipt.generatedAt : generatedAt,
+  });
+  parseN1PassageRightsInventory(inventory);
+
+  const receiptName = live ? "import.live.receipt.json" : "import.offline.receipt.json";
+  writeOrCheck(resolve(receiptsDir, receiptName), `${JSON.stringify(receipt, null, 2)}\n`, receiptName);
+
+  // Durable Phase B artifact is the offline inventory; live mode writes a sidecar only.
+  if (live) {
+    writeOrCheck(
+      resolve(receiptsDir, "rights-inventory.live.json"),
+      `${JSON.stringify(inventory, null, 2)}\n`,
+      "rights-inventory.live.json",
+    );
   } else {
-    writeFileSync(outPath, content);
+    writeOrCheck(
+      resolve(n1Dir, "rights-inventory.v1.json"),
+      `${JSON.stringify(inventory, null, 2)}\n`,
+      "rights-inventory.v1.json",
+    );
   }
+
   console.log(JSON.stringify({
     mode: receipt.mode,
     liveAcceptance: receipt.liveAcceptance,
     receiptHash: receipt.receiptHash,
+    rightsInventoryHash: inventory.inventoryHash,
+    rightsSummary: inventory.summary,
     summary: receipt.summary,
     mismatches: receipt.results.filter((r) => r.outcome === "identity_mismatch").map((r) => ({
       queueId: r.queueId,
@@ -77,6 +143,7 @@ async function main() {
     })),
     scientificApproval: false,
     graphPromotable: false,
+    anyPassageUsePermitted: false,
   }, null, 2));
 }
 

@@ -8,6 +8,17 @@ export const EUROPE_PMC_SEARCH_ENDPOINT = "https://www.ebi.ac.uk/europepmc/webse
 
 export type BibliographicProvider = "europe_pmc";
 
+export type BibliographicYn = "Y" | "N" | null;
+
+/** Provider-reported reuse signals. Observation ≠ HSI passage clearance. */
+export type BibliographicRightsSignals = {
+  isOpenAccess: BibliographicYn;
+  inEPMC: BibliographicYn;
+  inPMC: BibliographicYn;
+  /** Raw Europe PMC `license` label when present (e.g. `cc by`); not a cleared URI. */
+  providerLicenseLabel: string | null;
+};
+
 export type BibliographicRecord = {
   provider: BibliographicProvider;
   sourceId: string;
@@ -20,6 +31,7 @@ export type BibliographicRecord = {
   journal: string | null;
   publicationYear: number | null;
   isRetracted: boolean | null;
+  rightsSignals: BibliographicRightsSignals;
   url: string;
   retrievedAt: string;
   responseIdentity: string;
@@ -67,6 +79,10 @@ type EpmcResult = {
   journalTitle?: unknown;
   pubYear?: unknown;
   isRetracted?: unknown;
+  isOpenAccess?: unknown;
+  inEPMC?: unknown;
+  inPMC?: unknown;
+  license?: unknown;
 };
 
 function stringOrNull(v: unknown): string | null {
@@ -76,6 +92,27 @@ function stringOrNull(v: unknown): string | null {
 function publicationYear(v: unknown): number | null {
   const year = typeof v === "string" && /^\d{4}$/.test(v) ? Number(v) : null;
   return year !== null && year >= 1800 && year <= 2200 ? year : null;
+}
+
+function ynFlag(v: unknown): BibliographicYn {
+  if (v === "Y" || v === "N") return v;
+  return null;
+}
+
+function providerLicenseLabel(v: unknown): string | null {
+  if (typeof v !== "string") return null;
+  const label = v.trim().toLowerCase().replace(/\s+/g, " ");
+  if (!label || label.length > 64 || !/^[a-z0-9 .+\-]+$/.test(label)) return null;
+  return label;
+}
+
+function rightsSignalsOf(item: EpmcResult): BibliographicRightsSignals {
+  return {
+    isOpenAccess: ynFlag(item.isOpenAccess),
+    inEPMC: ynFlag(item.inEPMC),
+    inPMC: ynFlag(item.inPMC),
+    providerLicenseLabel: providerLicenseLabel(item.license),
+  };
 }
 
 function normalizeDoi(doi: string): string {
@@ -114,6 +151,7 @@ function parseRecords(list: unknown[], retrievedAt: string, responseIdentity: st
       journal: stringOrNull(item.journalTitle),
       publicationYear: publicationYear(item.pubYear),
       isRetracted: retracted,
+      rightsSignals: rightsSignalsOf(item),
       url: `https://europepmc.org/article/${encodeURIComponent(sourceType)}/${encodeURIComponent(sourceId)}`,
       retrievedAt,
       responseIdentity,

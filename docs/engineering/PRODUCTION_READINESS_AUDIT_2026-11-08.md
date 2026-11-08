@@ -35,7 +35,7 @@ Default science programme remains **gut–immune–T2D** (Nov 6 plan). SSc stays
 ## Explicitly not production
 
 - Partner lock / KPIs (`hypothetical_test_only`)
-- N1 passage reuse rights (still BLOCKED after DOI correction)
+- N1 passage reuse rights (provider signals inventoried; human clearance still BLOCKED)
 - N3 label freeze · N6 usefulness · N7 wet-lab · N8 live models
 - Live auth / two-account review / Neon restore drills
 - ISI cite Approve (0 supports / 0 publicCiteApproved at audit)
@@ -46,7 +46,7 @@ Default science programme remains **gut–immune–T2D** (Nov 6 plan). SSc stays
 | # | Phase | Go / no-go |
 | --- | --- | --- |
 | 1 | Human-correct N1-C-02/C-03 DOIs + rebuild domain-graph queue | **GO (human edit)** — executed 2026-11-08 (this follow-through) |
-| 2 | Record per-source passage reuse rights; keep metadata-only until cleared | GO eng / NO-GO sci until rights |
+| 2 | Record per-source passage reuse rights; keep metadata-only until cleared | **ENG DONE 2026-11-08** / NO-GO sci until human rights |
 | 3 | ISI pending HITL: claim_support → Approve on cites (immunecity) | GO out-of-repo HITL |
 | 4 | Recruit SMEs; freeze N3 calibration labels (20–50) then pilot plan | GO only with real reviewers |
 | 5 | Unpause staging: two-account auth, research writes, live investigation accept | GO when ops prerequisite lifted |
@@ -65,6 +65,7 @@ Default science programme remains **gut–immune–T2D** (Nov 6 plan). SSc stays
 ## Follow-through logged in this commit series
 
 - **Phase #1 done:** N1-C-02 → `10.1038/ni.3713`, N1-C-03 → `10.1038/nature18646` (Crossref + Europe PMC verified). Offline + live N1: **0** identity mismatches; 12/12 metadata matched unreviewed. Rights + scientific acceptance remain **BLOCKED**. Neon red-wave only; no graph promotion of unverified science.
+- **Phase #2 eng done (science still NO-GO):** Per-source passage reuse inventory at `research/domain-graph/n1/rights-inventory.v1.json` (`src/evidence/n1PassageRightsInventory.ts`). Records Europe PMC OA/licence signals for all 12 candidates; `humanCleared=0`, `passageImported=0`, metadata-only. Provider OA/CC labels ≠ corpus reuse permission. Scientific acceptance + human `licenceEvidenceUri` attestation remain **BLOCKED**.
 
 ## Verify (post-correction)
 
