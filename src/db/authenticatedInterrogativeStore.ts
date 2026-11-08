@@ -41,7 +41,8 @@ export async function saveAuthenticatedInterrogativeInvestigation(input:{
     if(String(existing[0]?.content_hash)!==contentHash||String(existing[0]?.actor_principal)!==actor.principalId)throw Error("Immutable investigation conflict");
     return;
    }
-   await tx`INSERT INTO hsi_interrogative_investigations (id,schema_version,actor_principal,release_id,release_manifest_hash,data_class,state,payload,content_hash) VALUES (${i.id},${i.schemaVersion},${actor.principalId},${i.release.id},${i.release.manifestHash},${i.dataClass},${i.state},${JSON.stringify(i)}::jsonb,${contentHash})`;
+   // Bun SQL JSON-encodes objects; JSON.stringify would store a jsonb string scalar.
+   await tx`INSERT INTO hsi_interrogative_investigations (id,schema_version,actor_principal,release_id,release_manifest_hash,data_class,state,payload,content_hash) VALUES (${i.id},${i.schemaVersion},${actor.principalId},${i.release.id},${i.release.manifestHash},${i.dataClass},${i.state},${i},${contentHash})`;
   });
   return {id:i.id,contentHash,stored:true};
  }finally{await sql.close()}

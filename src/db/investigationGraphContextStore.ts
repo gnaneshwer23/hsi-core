@@ -37,7 +37,7 @@ export async function loadOrCaptureInvestigationGraphContext(input:{serverSessio
    const release=await tx`SELECT id FROM hsi_evidence_graph_releases WHERE id=${value.primary.release.id} AND manifest_hash=${value.primary.release.manifestHash} AND state='published' FOR SHARE`;
    if(release.length!==1)throw Error("Pinned release unavailable");
    await tx`INSERT INTO hsi_investigation_graph_contexts (investigation_id,actor_principal,release_id,release_manifest_hash,content_hash,payload,captured_at)
-    VALUES (${record.id},${principal.principalId},${value.primary.release.id},${value.primary.release.manifestHash},${value.contentHash},${JSON.stringify(value)}::jsonb,${value.capturedAt}) ON CONFLICT (investigation_id) DO NOTHING`;
+    VALUES (${record.id},${principal.principalId},${value.primary.release.id},${value.primary.release.manifestHash},${value.contentHash},${value},${value.capturedAt}) ON CONFLICT (investigation_id) DO NOTHING`;
    const rows=await tx`SELECT payload,content_hash FROM hsi_investigation_graph_contexts WHERE investigation_id=${record.id} AND actor_principal=${principal.principalId} LIMIT 1`;
    const saved=rows[0]?.payload as InvestigationGraphContext;
    if(!saved||saved.contentHash!==String(rows[0]?.content_hash)||canonicalGraphContext(saved.workingEvidence)!==canonicalGraphContext(value.workingEvidence))throw Error("Context save conflict");return saved;

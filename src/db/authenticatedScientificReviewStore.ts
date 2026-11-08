@@ -36,7 +36,8 @@ export async function submitInterrogativeForReview(input:Config&{investigationId
    if(hash(i)!==String(rows[0]!.content_hash)||i.state!=="draft"||rows[0]!.state!=="draft")throw Error("Investigation state or hash mismatch");
    const next={...i,state:"awaiting_scientific_review" as const};
    validateInterrogativeInvestigation(next);
-   await tx`UPDATE hsi_interrogative_investigations SET payload=${JSON.stringify(next)}::jsonb,content_hash=${hash(next)},state='awaiting_scientific_review' WHERE id=${i.id}`;
+   // Bun SQL JSON-encodes objects; JSON.stringify would store a jsonb string scalar.
+   await tx`UPDATE hsi_interrogative_investigations SET payload=${next},content_hash=${hash(next)},state='awaiting_scientific_review' WHERE id=${i.id}`;
   });
   return {state:"awaiting_scientific_review"};
  }finally{await sql.close()}
@@ -62,8 +63,8 @@ export async function recordAuthenticatedScientificReview(input:Config&{decision
    if(existing.length)throw Error("Review already decided");
    const next:InterrogativeInvestigation={...i,state:d.outcome==="approve_with_limitations"?"reviewed":d.outcome==="reject"?"rejected":"draft",review:d.outcome==="approve_with_limitations"?{reviewerPrincipal:actor.principalId,reviewDecisionId:d.decisionId,reviewedAt:d.reviewedAt}:null};
    validateInterrogativeInvestigation(next);
-   await tx`INSERT INTO hsi_interrogative_review_decisions (decision_id,investigation_id,investigation_hash,reviewer_principal,outcome,decision_payload,decision_hash,reviewed_at) VALUES (${d.decisionId},${i.id},${hash(i)},${actor.principalId},${d.outcome},${JSON.stringify(d)}::jsonb,${hash(d)},${d.reviewedAt}::timestamptz)`;
-   await tx`UPDATE hsi_interrogative_investigations SET payload=${JSON.stringify(next)}::jsonb,content_hash=${hash(next)},state=${next.state} WHERE id=${i.id}`;
+   await tx`INSERT INTO hsi_interrogative_review_decisions (decision_id,investigation_id,investigation_hash,reviewer_principal,outcome,decision_payload,decision_hash,reviewed_at) VALUES (${d.decisionId},${i.id},${hash(i)},${actor.principalId},${d.outcome},${d},${hash(d)},${d.reviewedAt}::timestamptz)`;
+   await tx`UPDATE hsi_interrogative_investigations SET payload=${next},content_hash=${hash(next)},state=${next.state} WHERE id=${i.id}`;
   });
   return {decisionId:d.decisionId,outcome:d.outcome};
  }finally{await sql.close()}
