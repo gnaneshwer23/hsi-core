@@ -5,7 +5,7 @@
  * Never queries live registries, invents eligibility, or clears scientificAcceptance.
  */
 import {createHash} from "node:crypto";
-import {mkdirSync, readFileSync, writeFileSync} from "node:fs";
+import {existsSync, mkdirSync, readFileSync, writeFileSync} from "node:fs";
 import {resolve} from "node:path";
 import {canonicalEvidenceJson} from "../src/evidence/researchEvidenceCorpus";
 import {
@@ -126,6 +126,33 @@ function main(): void {
   writeJson(snapshotPath, snapshot);
   writeJson(factsPath, facts);
   writeJson(receiptPath, receipt);
+
+  // Preserve Audit #9 live-refresh sidecar pointer when present (do not clobber).
+  let liveRefresh: unknown = undefined;
+  const liveStatusPath = resolve(n5Dir, "LIVE_REFRESH_STATUS.json");
+  if (existsSync(liveStatusPath)) {
+    const liveStatus = JSON.parse(readFileSync(liveStatusPath, "utf8")) as {
+      receiptHash?: string;
+      mode?: string;
+    };
+    liveRefresh = {
+      remediationPhase: "production_readiness_audit_phase_9",
+      statusPath: "research/domain-graph/n5/LIVE_REFRESH_STATUS.json",
+      receiptPath: "research/domain-graph/n5/receipts/registry.live.receipt.json",
+      snapshotPath: "research/domain-graph/n5/registry-criteria.live.snapshot.v1.json",
+      engineeringHarness: "CLEARED",
+      scientificAcceptance: "BLOCKED",
+      confirmedEligible: false,
+      liveRegistryQueried: true,
+      liveStatusVerified: false,
+      receiptHash: liveStatus.receiptHash ?? null,
+      mode: liveStatus.mode ?? null,
+    };
+  } else if (existsSync(statusPath)) {
+    const prior = JSON.parse(readFileSync(statusPath, "utf8")) as {liveRefresh?: unknown};
+    if (prior.liveRefresh) liveRefresh = prior.liveRefresh;
+  }
+
   writeJson(statusPath, {
     phase: "N5",
     programme: "gut_immune_t2d",
@@ -140,7 +167,8 @@ function main(): void {
     patientEligibilityAssessed: false,
     liveRegistryQueried: false,
     enrolmentEnabled: false,
-    note: "Engineering fixtures only. Public-registry criterion research — not live eligibility.",
+    note: "Engineering fixtures only. Public-registry criterion research — not live eligibility. See liveRefresh for Audit #9 sidecar.",
+    ...(liveRefresh ? {liveRefresh} : {}),
   });
 
   console.log(

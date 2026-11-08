@@ -76,7 +76,7 @@ This receipt is **not** a signed MoU, production partner lock, or scientific acc
 
 ## Next audit item (recommended)
 
-Optional **#9** N5 live public-registry snapshot refresh with `confirmedEligible=false`. Parallel human tracks remain primary: ISI cite HITL (#3), N1 rights (#2), N3 SME labels (#4), Audit #5 two-account residual (independent reviewer + staging writes — Auth A session/grant/fixture path now user-confirmed on www). N6 usefulness stays **NO-GO until #4**. N7/N8 remain **NO-GO near-term**.
+Audit **#9** N5 live public-registry snapshot refresh is **ENG CLEARED / sci BLOCKED** — see [`AUDIT_9_N5_LIVE_REGISTRY_REFRESH_2026-11-08.md`](./AUDIT_9_N5_LIVE_REGISTRY_REFRESH_2026-11-08.md) (`confirmedEligible=false`). Parallel human tracks remain primary: ISI cite HITL (#3), N1 rights (#2), N3 SME labels (#4), Audit #5 two-account residual (independent reviewer + staging writes — Auth A session/grant/fixture path now user-confirmed on www), founder MoU (#8 residual). N6 usefulness stays **NO-GO until #4**. N7/N8 remain **NO-GO near-term**.
 
 ## Verify
 

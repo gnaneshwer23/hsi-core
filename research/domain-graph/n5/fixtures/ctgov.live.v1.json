@@ -1,0 +1,3232 @@
+{
+  "studies": [
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT01030861",
+          "orgStudyIdInfo": {
+            "id": "TrialNet - tep (IND)"
+          },
+          "secondaryIdInfos": [
+            {
+              "id": "UC4DK106993",
+              "type": "NIH",
+              "link": "https://reporter.nih.gov/quickSearch/UC4DK106993"
+            }
+          ],
+          "organization": {
+            "fullName": "National Institute of Diabetes and Digestive and Kidney Diseases (NIDDK)",
+            "class": "NIH"
+          },
+          "briefTitle": "Teplizumab for Prevention of Type 1 Diabetes In Relatives \"At-Risk\"",
+          "officialTitle": "AntiCD3 Mab (Teplizumab) For Prevention of Diabetes In Relatives At-Risk for Type 1 Diabetes Mellitus"
+        },
+        "statusModule": {
+          "statusVerifiedDate": "2020-07",
+          "overallStatus": "COMPLETED",
+          "expandedAccessInfo": {
+            "hasExpandedAccess": false
+          },
+          "startDateStruct": {
+            "date": "2010-08",
+            "type": "ACTUAL"
+          },
+          "primaryCompletionDateStruct": {
+            "date": "2018-11",
+            "type": "ACTUAL"
+          },
+          "completionDateStruct": {
+            "date": "2019-06",
+            "type": "ACTUAL"
+          },
+          "studyFirstSubmitDate": "2009-12-11",
+          "studyFirstSubmitQcDate": "2009-12-11",
+          "studyFirstPostDateStruct": {
+            "date": "2009-12-14",
+            "type": "ESTIMATED"
+          },
+          "resultsFirstSubmitDate": "2020-07-02",
+          "resultsFirstSubmitQcDate": "2020-07-21",
+          "resultsFirstPostDateStruct": {
+            "date": "2020-08-05",
+            "type": "ACTUAL"
+          },
+          "lastUpdateSubmitDate": "2020-07-21",
+          "lastUpdatePostDateStruct": {
+            "date": "2020-08-05",
+            "type": "ACTUAL"
+          }
+        },
+        "sponsorCollaboratorsModule": {
+          "responsibleParty": {
+            "type": "SPONSOR"
+          },
+          "leadSponsor": {
+            "name": "National Institute of Diabetes and Digestive and Kidney Diseases (NIDDK)",
+            "class": "NIH"
+          },
+          "collaborators": [
+            {
+              "name": "National Institute of Allergy and Infectious Diseases (NIAID)",
+              "class": "NIH"
+            },
+            {
+              "name": "Eunice Kennedy Shriver National Institute of Child Health and Human Development (NICHD)",
+              "class": "NIH"
+            },
+            {
+              "name": "National Center for Research Resources (NCRR)",
+              "class": "NIH"
+            },
+            {
+              "name": "Juvenile Diabetes Research Foundation",
+              "class": "OTHER"
+            },
+            {
+              "name": "American Diabetes Association",
+              "class": "OTHER"
+            }
+          ]
+        },
+        "oversightModule": {
+          "oversightHasDmc": true
+        },
+        "descriptionModule": {
+          "briefSummary": "The study will determine whether the anti-CD3 monoclonal antibody, teplizumab, can help to prevent or delay the onset of type 1 diabetes (T1D) in relatives determined to be at very high risk for developing the disease. Teplizumab has been studied in new onset type 1 diabetes for testing of efficacy and safety in previous studies; other studies are currently in progress. The results of previous studies indicate that teplizumab reduces the loss of insulin production during the first year after diagnosis in individuals with type 1 diabetes. The purpose of this study is to determine if teplizumab can interdict the immune process that causes the destruction of insulin secreting beta cells in the pancreas during the \"pre-diabetic\" state and thereby prevent or delay the onset of type 1 diabetes.",
+          "detailedDescription": "The study plans to enroll approximately 71 subjects between the ages of 8-45 years, over 2-3 years. The study is projected to last between 4-6 years, depending upon rate of enrollment and number of subjects who develop diabetes.\n\nThe main study objective is to determine whether intervention with teplizumab will prevent or delay the development of type 1 diabetes in high risk autoantibody positive non-diabetic relatives of individuals with T1D. Secondary outcomes are to include analyses of C-peptide and other measures from Oral Glucose Tolerance Testing (OGTT), safety, tolerability, and other mechanistic outcomes will be assessed during the study."
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Autoantibody Positive",
+            "Non-diabetic Relatives at Risk for Type 1 Diabetes",
+            "High Risk",
+            "Impaired Glucose Tolerance"
+          ],
+          "keywords": [
+            "type 1 diabetes",
+            "pre-diabetic",
+            "autoantibody positive",
+            "at risk for type 1 diabetes",
+            "glucose intolerance",
+            "relatives of people with type 1 diabetes"
+          ]
+        },
+        "designModule": {
+          "studyType": "INTERVENTIONAL",
+          "phases": [
+            "PHASE2"
+          ],
+          "designInfo": {
+            "allocation": "RANDOMIZED",
+            "interventionModel": "PARALLEL",
+            "primaryPurpose": "TREATMENT",
+            "maskingInfo": {
+              "masking": "QUADRUPLE",
+              "whoMasked": [
+                "PARTICIPANT",
+                "CARE_PROVIDER",
+                "INVESTIGATOR",
+                "OUTCOMES_ASSESSOR"
+              ]
+            }
+          },
+          "enrollmentInfo": {
+            "count": 76,
+            "type": "ACTUAL"
+          }
+        },
+        "armsInterventionsModule": {
+          "armGroups": [
+            {
+              "label": "teplizumab",
+              "type": "ACTIVE_COMPARATOR",
+              "description": "Intravenous infusions of teplizumab given for 14 consecutive days. Each infusion takes about 30 minutes and is followed by a 2 hour observation period.",
+              "interventionNames": [
+                "Drug: Teplizumab"
+              ]
+            },
+            {
+              "label": "Placebo infusion",
+              "type": "PLACEBO_COMPARATOR",
+              "description": "Intravenous infusion of placebo (saline) will be given for 14 consecutive days. Infusions will take approximately 30 minutes and will be followed by a two hour observation period.",
+              "interventionNames": [
+                "Drug: Placebo infusion"
+              ]
+            }
+          ],
+          "interventions": [
+            {
+              "type": "DRUG",
+              "name": "Teplizumab",
+              "description": "intravenous infusions",
+              "armGroupLabels": [
+                "teplizumab"
+              ]
+            },
+            {
+              "type": "DRUG",
+              "name": "Placebo infusion",
+              "description": "Placebo for Teplizumab",
+              "armGroupLabels": [
+                "Placebo infusion"
+              ]
+            }
+          ]
+        },
+        "outcomesModule": {
+          "primaryOutcomes": [
+            {
+              "measure": "Rate of New Diabetes Per Year",
+              "description": "Rate at which criteria are met for diabetes onset as defined by the American Diabetes Association (ADA) based on glucose testing or the presence of unequivocal hyperglycemia with acute metabolic decompensation.",
+              "timeFrame": "During follow-up, median 745 days, range 74 to 2683"
+            }
+          ],
+          "secondaryOutcomes": [
+            {
+              "measure": "Number of Participants With Adverse Events",
+              "description": "Adverse events categorized and graded via CTCAE.",
+              "timeFrame": "Baseline Visit to Diagnosis of Type 1 Diabetes median 745 days, range 74 to 2683"
+            }
+          ]
+        },
+        "eligibilityModule": {
+          "eligibilityCriteria": "Inclusion Criteria:\n\n* Between ages of 8-45 years\n* Have a relative with type 1 diabetes\n* If first degree relative must be 8-45 years old (brother, sister, parent, offspring)\n* If second degree relative must be between 8-20 years old (niece, nephew, aunt, uncle, grandchild, cousin)\n* Abnormal glucose tolerance by OGTT confirmed with 7 weeks of baseline visit \\[fasting blood glucose greater than 110mg/dL or and less than 126 mg/dL OR 2 hour glucose greater or equal to 140 mg/dL and less than 200 mg/dL OR 30, 60, or 90 minute value on OGTT greater than or equal to 200 mg/dL\\]\n* Presence of at least two confirmed diabetes autoantibodies\n\nExclusion Criteria:\n\n* type 1 diabetes previously diagnosed or detected at screening \\[fasting glucose greater or equal to 126 mg/dL or 2 hour glucose greater or equal to 200 mg/dL\\]\n* abnormalities in blood counts, liver enzymes, international normalised ratio (INR),\n* positive purified protein derivative (PPD) test\n\n  * vaccination with live virus within 6 weeks of randomization\n* evidence of acute infection based on laboratory testing or clinical evidence\n* serological evidence of past current or past HIV , hepatitis B, or hepatitis C infection\n* Be currently pregnant or lactating\n* Prior treatment with study drug\n* Prior treatment with other monoclonal antibody in past one year",
+          "healthyVolunteers": false,
+          "sex": "ALL",
+          "minimumAge": "8 Years",
+          "maximumAge": "45 Years",
+          "stdAges": [
+            "CHILD",
+            "ADULT"
+          ]
+        },
+        "contactsLocationsModule": {
+          "overallOfficials": [
+            {
+              "name": "Carla J Greenbaum, MD",
+              "affiliation": "Type 1 Diabetes TrialNet",
+              "role": "STUDY_CHAIR"
+            }
+          ],
+          "locations": [
+            {
+              "facility": "University of California in San Francisco",
+              "city": "San Francisco",
+              "state": "California",
+              "zip": "94143",
+              "country": "United States",
+              "geoPoint": {
+                "lat": 37.77493,
+                "lon": -122.41942
+              }
+            },
+            {
+              "facility": "University of California-San Francisco",
+              "city": "San Francisco",
+              "state": "California",
+              "zip": "94143",
+              "country": "United States",
+              "geoPoint": {
+                "lat": 37.77493,
+                "lon": -122.41942
+              }
+            },
+            {
+              "facility": "Stanford University",
+              "city": "Stanford",
+              "state": "California",
+              "zip": "94305",
+              "country": "United States",
+              "geoPoint": {
+                "lat": 37.42411,
+                "lon": -122.16608
+              }
+            },
+            {
+              "facility": "Barbara Davis Center for Childhood Diabetes/ University of Colorado",
+              "city": "Denver",
+              "state": "Colorado",
+              "zip": "80045",
+              "country": "United States",
+              "geoPoint": {
+                "lat": 39.73915,
+                "lon": -104.9847
+              }
+            },
+            {
+              "facility": "Yale University School of Medicine",
+              "city": "New Haven",
+              "state": "Connecticut",
+              "zip": "06519",
+              "country": "United States",
+              "geoPoint": {
+                "lat": 41.30815,
+                "lon": -72.92816
+              }
+            },
+            {
+              "facility": "University of Florida",
+              "city": "Gainesville",
+              "state": "Florida",
+              "zip": "32610",
+              "country": "United States",
+              "geoPoint": {
+                "lat": 29.65163,
+                "lon": -82.32483
+              }
+            },
+            {
+              "facility": "University of Miami",
+              "city": "Miami",
+              "state": "Florida",
+              "zip": "33136",
+              "country": "United States",
+              "geoPoint": {
+                "lat": 25.77427,
+                "lon": -80.19366
+              }
+            },
+            {
+              "facility": "University of South Florida",
+              "city": "Tampa",
+              "state": "Florida",
+              "zip": "33612",
+              "country": "United States",
+              "geoPoint": {
+                "lat": 27.94752,
+                "lon": -82.45843
+              }
+            },
+            {
+              "facility": "Indiana University",
+              "city": "Indianapolis",
+              "state": "Indiana",
+              "zip": "46202",
+              "country": "United States",
+              "geoPoint": {
+                "lat": 39.76838,
+                "lon": -86.15804
+              }
+            },
+            {
+              "facility": "University of Minnesota",
+              "city": "Minneapolis",
+              "state": "Minnesota",
+              "zip": "55455",
+              "country": "United States",
+              "geoPoint": {
+                "lat": 44.97997,
+                "lon": -93.26384
+              }
+            },
+            {
+              "facility": "The Children's Mercy Hospital",
+              "city": "Kansas City",
+              "state": "Missouri",
+              "zip": "64108",
+              "country": "United States",
+              "geoPoint": {
+                "lat": 39.09973,
+                "lon": -94.57857
+              }
+            },
+            {
+              "facility": "Columbia University",
+              "city": "New York",
+              "state": "New York",
+              "zip": "10032",
+              "country": "United States",
+              "geoPoint": {
+                "lat": 40.71427,
+                "lon": -74.00597
+              }
+            },
+            {
+              "facility": "University of Pittsburgh",
+              "city": "Pittsburgh",
+              "state": "Pennsylvania",
+              "zip": "15201",
+              "country": "United States",
+              "geoPoint": {
+                "lat": 40.44062,
+                "lon": -79.99589
+              }
+            },
+            {
+              "facility": "Vanderbilt University",
+              "city": "Nashville",
+              "state": "Tennessee",
+              "zip": "37232",
+              "country": "United States",
+              "geoPoint": {
+                "lat": 36.16589,
+                "lon": -86.78444
+              }
+            },
+            {
+              "facility": "University of Texas",
+              "city": "Dallas",
+              "state": "Texas",
+              "zip": "75390-9072",
+              "country": "United States",
+              "geoPoint": {
+                "lat": 32.78306,
+                "lon": -96.80667
+              }
+            },
+            {
+              "facility": "Baylor College of Medicine",
+              "city": "Houston",
+              "state": "Texas",
+              "zip": "77030",
+              "country": "United States",
+              "geoPoint": {
+                "lat": 29.76328,
+                "lon": -95.36327
+              }
+            },
+            {
+              "facility": "Benaroya Research Institute",
+              "city": "Seattle",
+              "state": "Washington",
+              "zip": "982101",
+              "country": "United States",
+              "geoPoint": {
+                "lat": 47.60621,
+                "lon": -122.33207
+              }
+            },
+            {
+              "facility": "The Hospital for Sick Children",
+              "city": "Toronto",
+              "state": "Ontario",
+              "zip": "MSG-1X8",
+              "country": "Canada",
+              "geoPoint": {
+                "lat": 43.65333,
+                "lon": -79.38389
+              }
+            },
+            {
+              "facility": "Forschergruppe Diabetes",
+              "city": "Munich",
+              "country": "Germany",
+              "geoPoint": {
+                "lat": 48.13743,
+                "lon": 11.57549
+              }
+            }
+          ]
+        },
+        "referencesModule": {
+          "references": [
+            {
+              "pmid": "39735417",
+              "type": "DERIVED",
+              "citation": "Ajmal N, Bogart MC, Khan P, Max-Harry IM, Healy AM, Nunemaker CS. Identifying Promising Immunomodulators for Type 1 Diabetes (T1D) and Islet Transplantation. J Diabetes Res. 2024 Dec 20;2024:5151171. doi: 10.1155/jdr/5151171. eCollection 2024."
+            },
+            {
+              "pmid": "39137044",
+              "type": "DERIVED",
+              "citation": "Lledo-Delgado A, Preston-Hurlburt P, Currie S, Clark P, Linsley PS, Long SA, Liu C, Koroleva G, Martins AJ, Tsang JS, Herold KC. Teplizumab induces persistent changes in the antigen-specific repertoire in individuals at risk for type 1 diabetes. J Clin Invest. 2024 Aug 13;134(18):e177492. doi: 10.1172/JCI177492."
+            },
+            {
+              "pmid": "37158990",
+              "type": "DERIVED",
+              "citation": "Novograd J, Frishman WH. Teplizumab Therapy to Delay the Onset of Type 1 Diabetes. Cardiol Rev. 2024 Nov-Dec 01;32(6):572-576. doi: 10.1097/CRD.0000000000000563. Epub 2023 May 9."
+            },
+            {
+              "pmid": "35713929",
+              "type": "DERIVED",
+              "citation": "Leung SS, Borg DJ, McCarthy DA, Boursalian TE, Cracraft J, Zhuang A, Fotheringham AK, Flemming N, Watkins T, Miles JJ, Groop PH, Scheijen JL, Schalkwijk CG, Steptoe RJ, Radford KJ, Knip M, Forbes JM. Soluble RAGE Prevents Type 1 Diabetes Expanding Functional Regulatory T Cells. Diabetes. 2022 Sep 1;71(9):1994-2008. doi: 10.2337/db22-0177."
+            },
+            {
+              "pmid": "31180194",
+              "type": "DERIVED",
+              "citation": "Herold KC, Bundy BN, Long SA, Bluestone JA, DiMeglio LA, Dufort MJ, Gitelman SE, Gottlieb PA, Krischer JP, Linsley PS, Marks JB, Moore W, Moran A, Rodriguez H, Russell WE, Schatz D, Skyler JS, Tsalikian E, Wherrett DK, Ziegler AG, Greenbaum CJ; Type 1 Diabetes TrialNet Study Group. An Anti-CD3 Antibody, Teplizumab, in Relatives at Risk for Type 1 Diabetes. N Engl J Med. 2019 Aug 15;381(7):603-613. doi: 10.1056/NEJMoa1902226. Epub 2019 Jun 9."
+            }
+          ],
+          "seeAlsoLinks": [
+            {
+              "label": "Type 1 Diabetes TrialNet",
+              "url": "https://www.diabetestrialnet.org/publicationsdatabase/Article"
+            }
+          ]
+        },
+        "ipdSharingStatementModule": {
+          "ipdSharing": "YES",
+          "description": "Data are available at the National Institute of Diabetes and Digestive and Kidney Diseases (NIDDK) Central Repository: https://repository.niddk.nih.gov/studies/tn10-anti-cd3-prevention/?query=trialnet%20Teplizumab",
+          "url": "https://repository.niddk.nih.gov/studies/tn10-anti-cd3-prevention/?query=trialnet%20Teplizumab"
+        }
+      },
+      "resultsSection": {
+        "participantFlowModule": {
+          "groups": [
+            {
+              "id": "FG000",
+              "title": "Teplizumab",
+              "description": "Intravenous infusions of teplizumab given for 14 consecutive days. Each infusion takes about 30 minutes and is followed by a 2 hour observation period.\n\nTeplizumab: intravenous infusions"
+            },
+            {
+              "id": "FG001",
+              "title": "Placebo Infusion",
+              "description": "Intravenous infusion of placebo (saline) will be given for 14 consecutive days. Infusions will take approximately 30 minutes and will be followed by a two hour observation period.\n\nPlacebo infusion: Placebo for Teplizumab"
+            }
+          ],
+          "periods": [
+            {
+              "title": "Overall Study",
+              "milestones": [
+                {
+                  "type": "STARTED",
+                  "achievements": [
+                    {
+                      "groupId": "FG000",
+                      "numSubjects": "44"
+                    },
+                    {
+                      "groupId": "FG001",
+                      "numSubjects": "32"
+                    }
+                  ]
+                },
+                {
+                  "type": "COMPLETED",
+                  "achievements": [
+                    {
+                      "groupId": "FG000",
+                      "numSubjects": "44"
+                    },
+                    {
+                      "groupId": "FG001",
+                      "numSubjects": "32"
+                    }
+                  ]
+                },
+                {
+                  "type": "NOT COMPLETED",
+                  "achievements": [
+                    {
+                      "groupId": "FG000",
+                      "numSubjects": "0"
+                    },
+                    {
+                      "groupId": "FG001",
+                      "numSubjects": "0"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "baselineCharacteristicsModule": {
+          "groups": [
+            {
+              "id": "BG000",
+              "title": "Teplizumab",
+              "description": "Intravenous infusions of teplizumab given for 14 consecutive days. Each infusion takes about 30 minutes and is followed by a 2 hour observation period.\n\nTeplizumab: intravenous infusions"
+            },
+            {
+              "id": "BG001",
+              "title": "Placebo Infusion",
+              "description": "Intravenous infusion of placebo (saline) will be given for 14 consecutive days. Infusions will take approximately 30 minutes and will be followed by a two hour observation period.\n\nPlacebo infusion: Placebo for Teplizumab"
+            },
+            {
+              "id": "BG002",
+              "title": "Total",
+              "description": "Total of all reporting groups"
+            }
+          ],
+          "denoms": [
+            {
+              "units": "Participants",
+              "counts": [
+                {
+                  "groupId": "BG000",
+                  "value": "44"
+                },
+                {
+                  "groupId": "BG001",
+                  "value": "32"
+                },
+                {
+                  "groupId": "BG002",
+                  "value": "76"
+                }
+              ]
+            }
+          ],
+          "measures": [
+            {
+              "title": "Age, Continuous",
+              "paramType": "MEDIAN",
+              "dispersionType": "INTER_QUARTILE_RANGE",
+              "unitOfMeasure": "years",
+              "classes": [
+                {
+                  "categories": [
+                    {
+                      "measurements": [
+                        {
+                          "groupId": "BG000",
+                          "value": "14",
+                          "lowerLimit": "8.5",
+                          "upperLimit": "49.5"
+                        },
+                        {
+                          "groupId": "BG001",
+                          "value": "13",
+                          "lowerLimit": "8.6",
+                          "upperLimit": "45.0"
+                        },
+                        {
+                          "groupId": "BG002",
+                          "value": "13.9",
+                          "lowerLimit": "11.5",
+                          "upperLimit": "20.0"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Sex: Female, Male",
+              "paramType": "COUNT_OF_PARTICIPANTS",
+              "unitOfMeasure": "Participants",
+              "classes": [
+                {
+                  "categories": [
+                    {
+                      "title": "Female",
+                      "measurements": [
+                        {
+                          "groupId": "BG000",
+                          "value": "19"
+                        },
+                        {
+                          "groupId": "BG001",
+                          "value": "15"
+                        },
+                        {
+                          "groupId": "BG002",
+                          "value": "34"
+                        }
+                      ]
+                    },
+                    {
+                      "title": "Male",
+                      "measurements": [
+                        {
+                          "groupId": "BG000",
+                          "value": "25"
+                        },
+                        {
+                          "groupId": "BG001",
+                          "value": "17"
+                        },
+                        {
+                          "groupId": "BG002",
+                          "value": "42"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Ethnicity (NIH/OMB)",
+              "paramType": "COUNT_OF_PARTICIPANTS",
+              "unitOfMeasure": "Participants",
+              "classes": [
+                {
+                  "categories": [
+                    {
+                      "title": "Hispanic or Latino",
+                      "measurements": [
+                        {
+                          "groupId": "BG000",
+                          "value": "1"
+                        },
+                        {
+                          "groupId": "BG001",
+                          "value": "1"
+                        },
+                        {
+                          "groupId": "BG002",
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "title": "Not Hispanic or Latino",
+                      "measurements": [
+                        {
+                          "groupId": "BG000",
+                          "value": "43"
+                        },
+                        {
+                          "groupId": "BG001",
+                          "value": "31"
+                        },
+                        {
+                          "groupId": "BG002",
+                          "value": "74"
+                        }
+                      ]
+                    },
+                    {
+                      "title": "Unknown or Not Reported",
+                      "measurements": [
+                        {
+                          "groupId": "BG000",
+                          "value": "0"
+                        },
+                        {
+                          "groupId": "BG001",
+                          "value": "0"
+                        },
+                        {
+                          "groupId": "BG002",
+                          "value": "0"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Race (NIH/OMB)",
+              "paramType": "COUNT_OF_PARTICIPANTS",
+              "unitOfMeasure": "Participants",
+              "classes": [
+                {
+                  "categories": [
+                    {
+                      "title": "American Indian or Alaska Native",
+                      "measurements": [
+                        {
+                          "groupId": "BG000",
+                          "value": "0"
+                        },
+                        {
+                          "groupId": "BG001",
+                          "value": "0"
+                        },
+                        {
+                          "groupId": "BG002",
+                          "value": "0"
+                        }
+                      ]
+                    },
+                    {
+                      "title": "Asian",
+                      "measurements": [
+                        {
+                          "groupId": "BG000",
+                          "value": "0"
+                        },
+                        {
+                          "groupId": "BG001",
+                          "value": "2"
+                        },
+                        {
+                          "groupId": "BG002",
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "title": "Native Hawaiian or Other Pacific Islander",
+                      "measurements": [
+                        {
+                          "groupId": "BG000",
+                          "value": "0"
+                        },
+                        {
+                          "groupId": "BG001",
+                          "value": "0"
+                        },
+                        {
+                          "groupId": "BG002",
+                          "value": "0"
+                        }
+                      ]
+                    },
+                    {
+                      "title": "Black or African American",
+                      "measurements": [
+                        {
+                          "groupId": "BG000",
+                          "value": "0"
+                        },
+                        {
+                          "groupId": "BG001",
+                          "value": "0"
+                        },
+                        {
+                          "groupId": "BG002",
+                          "value": "0"
+                        }
+                      ]
+                    },
+                    {
+                      "title": "White",
+                      "measurements": [
+                        {
+                          "groupId": "BG000",
+                          "value": "44"
+                        },
+                        {
+                          "groupId": "BG001",
+                          "value": "30"
+                        },
+                        {
+                          "groupId": "BG002",
+                          "value": "74"
+                        }
+                      ]
+                    },
+                    {
+                      "title": "More than one race",
+                      "measurements": [
+                        {
+                          "groupId": "BG000",
+                          "value": "0"
+                        },
+                        {
+                          "groupId": "BG001",
+                          "value": "0"
+                        },
+                        {
+                          "groupId": "BG002",
+                          "value": "0"
+                        }
+                      ]
+                    },
+                    {
+                      "title": "Unknown or Not Reported",
+                      "measurements": [
+                        {
+                          "groupId": "BG000",
+                          "value": "0"
+                        },
+                        {
+                          "groupId": "BG001",
+                          "value": "0"
+                        },
+                        {
+                          "groupId": "BG002",
+                          "value": "0"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Relationship to person with type 1 diabetes",
+              "paramType": "COUNT_OF_PARTICIPANTS",
+              "unitOfMeasure": "Participants",
+              "classes": [
+                {
+                  "title": "Sibling(s)",
+                  "categories": [
+                    {
+                      "measurements": [
+                        {
+                          "groupId": "BG000",
+                          "value": "24"
+                        },
+                        {
+                          "groupId": "BG001",
+                          "value": "16"
+                        },
+                        {
+                          "groupId": "BG002",
+                          "value": "40"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Identical twin",
+                  "categories": [
+                    {
+                      "measurements": [
+                        {
+                          "groupId": "BG000",
+                          "value": "4"
+                        },
+                        {
+                          "groupId": "BG001",
+                          "value": "0"
+                        },
+                        {
+                          "groupId": "BG002",
+                          "value": "4"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Offspring",
+                  "categories": [
+                    {
+                      "measurements": [
+                        {
+                          "groupId": "BG000",
+                          "value": "6"
+                        },
+                        {
+                          "groupId": "BG001",
+                          "value": "6"
+                        },
+                        {
+                          "groupId": "BG002",
+                          "value": "12"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Parent",
+                  "categories": [
+                    {
+                      "measurements": [
+                        {
+                          "groupId": "BG000",
+                          "value": "6"
+                        },
+                        {
+                          "groupId": "BG001",
+                          "value": "3"
+                        },
+                        {
+                          "groupId": "BG002",
+                          "value": "9"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Sibling and another first degree relative",
+                  "categories": [
+                    {
+                      "measurements": [
+                        {
+                          "groupId": "BG000",
+                          "value": "2"
+                        },
+                        {
+                          "groupId": "BG001",
+                          "value": "3"
+                        },
+                        {
+                          "groupId": "BG002",
+                          "value": "5"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Second degree relative",
+                  "categories": [
+                    {
+                      "measurements": [
+                        {
+                          "groupId": "BG000",
+                          "value": "2"
+                        },
+                        {
+                          "groupId": "BG001",
+                          "value": "3"
+                        },
+                        {
+                          "groupId": "BG002",
+                          "value": "5"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Third degree relative or further removed",
+                  "categories": [
+                    {
+                      "measurements": [
+                        {
+                          "groupId": "BG000",
+                          "value": "0"
+                        },
+                        {
+                          "groupId": "BG001",
+                          "value": "1"
+                        },
+                        {
+                          "groupId": "BG002",
+                          "value": "1"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Autoantibodies Positive",
+              "paramType": "COUNT_OF_PARTICIPANTS",
+              "unitOfMeasure": "Participants",
+              "classes": [
+                {
+                  "title": "Anti-GAD65 harmonized",
+                  "categories": [
+                    {
+                      "measurements": [
+                        {
+                          "groupId": "BG000",
+                          "value": "40"
+                        },
+                        {
+                          "groupId": "BG001",
+                          "value": "28"
+                        },
+                        {
+                          "groupId": "BG002",
+                          "value": "68"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Micro insulin",
+                  "categories": [
+                    {
+                      "measurements": [
+                        {
+                          "groupId": "BG000",
+                          "value": "20"
+                        },
+                        {
+                          "groupId": "BG001",
+                          "value": "11"
+                        },
+                        {
+                          "groupId": "BG002",
+                          "value": "31"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Anti-IA-2 harmonized",
+                  "categories": [
+                    {
+                      "measurements": [
+                        {
+                          "groupId": "BG000",
+                          "value": "27"
+                        },
+                        {
+                          "groupId": "BG001",
+                          "value": "24"
+                        },
+                        {
+                          "groupId": "BG002",
+                          "value": "51"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Islet Cell Cytoplasmic Autoantibodies (ICA)",
+                  "categories": [
+                    {
+                      "measurements": [
+                        {
+                          "groupId": "BG000",
+                          "value": "29"
+                        },
+                        {
+                          "groupId": "BG001",
+                          "value": "28"
+                        },
+                        {
+                          "groupId": "BG002",
+                          "value": "57"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Anti-ZnT8",
+                  "categories": [
+                    {
+                      "measurements": [
+                        {
+                          "groupId": "BG000",
+                          "value": "32"
+                        },
+                        {
+                          "groupId": "BG001",
+                          "value": "24"
+                        },
+                        {
+                          "groupId": "BG002",
+                          "value": "56"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Glycated hemoglobin level",
+              "paramType": "MEDIAN",
+              "dispersionType": "INTER_QUARTILE_RANGE",
+              "unitOfMeasure": "percentage of glycated hemoglobin",
+              "classes": [
+                {
+                  "categories": [
+                    {
+                      "measurements": [
+                        {
+                          "groupId": "BG000",
+                          "value": "5.2",
+                          "lowerLimit": "4.9",
+                          "upperLimit": "5.4"
+                        },
+                        {
+                          "groupId": "BG001",
+                          "value": "5.3",
+                          "lowerLimit": "5.1",
+                          "upperLimit": "5.4"
+                        },
+                        {
+                          "groupId": "BG002",
+                          "value": "5.2",
+                          "lowerLimit": "5.0",
+                          "upperLimit": "5.4"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "outcomeMeasuresModule": {
+          "outcomeMeasures": [
+            {
+              "type": "PRIMARY",
+              "title": "Rate of New Diabetes Per Year",
+              "description": "Rate at which criteria are met for diabetes onset as defined by the American Diabetes Association (ADA) based on glucose testing or the presence of unequivocal hyperglycemia with acute metabolic decompensation.",
+              "populationDescription": "Relatives of patients with type 1 diabetes who did not have diabetes but were at high risk for development of clinical disease.",
+              "reportingStatus": "POSTED",
+              "paramType": "NUMBER",
+              "unitOfMeasure": "N diabetes per 100 participant years",
+              "timeFrame": "During follow-up, median 745 days, range 74 to 2683",
+              "groups": [
+                {
+                  "id": "OG000",
+                  "title": "Teplizumab",
+                  "description": "Intravenous infusions of teplizumab given for 14 consecutive days. Each infusion takes about 30 minutes and is followed by a 2 hour observation period.\n\nTeplizumab: intravenous infusions"
+                },
+                {
+                  "id": "OG001",
+                  "title": "Placebo Infusion",
+                  "description": "Intravenous infusion of placebo (saline) will be given for 14 consecutive days. Infusions will take approximately 30 minutes and will be followed by a two hour observation period.\n\nPlacebo infusion: Placebo for Teplizumab"
+                }
+              ],
+              "denoms": [
+                {
+                  "units": "Participants",
+                  "counts": [
+                    {
+                      "groupId": "OG000",
+                      "value": "44"
+                    },
+                    {
+                      "groupId": "OG001",
+                      "value": "32"
+                    }
+                  ]
+                }
+              ],
+              "classes": [
+                {
+                  "categories": [
+                    {
+                      "measurements": [
+                        {
+                          "groupId": "OG000",
+                          "value": "43"
+                        },
+                        {
+                          "groupId": "OG001",
+                          "value": "72"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "SECONDARY",
+              "title": "Number of Participants With Adverse Events",
+              "description": "Adverse events categorized and graded via CTCAE.",
+              "reportingStatus": "POSTED",
+              "paramType": "COUNT_OF_PARTICIPANTS",
+              "unitOfMeasure": "Participants",
+              "timeFrame": "Baseline Visit to Diagnosis of Type 1 Diabetes median 745 days, range 74 to 2683",
+              "groups": [
+                {
+                  "id": "OG000",
+                  "title": "Teplizumab",
+                  "description": "Intravenous infusions of teplizumab given for 14 consecutive days. Each infusion takes about 30 minutes and is followed by a 2 hour observation period.\n\nTeplizumab: intravenous infusions"
+                },
+                {
+                  "id": "OG001",
+                  "title": "Placebo Infusion",
+                  "description": "Intravenous infusion of placebo (saline) will be given for 14 consecutive days. Infusions will take approximately 30 minutes and will be followed by a two hour observation period.\n\nPlacebo infusion: Placebo for Teplizumab"
+                }
+              ],
+              "denoms": [
+                {
+                  "units": "Participants",
+                  "counts": [
+                    {
+                      "groupId": "OG000",
+                      "value": "44"
+                    },
+                    {
+                      "groupId": "OG001",
+                      "value": "32"
+                    }
+                  ]
+                }
+              ],
+              "classes": [
+                {
+                  "categories": [
+                    {
+                      "measurements": [
+                        {
+                          "groupId": "OG000",
+                          "value": "43"
+                        },
+                        {
+                          "groupId": "OG001",
+                          "value": "23"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "adverseEventsModule": {
+          "frequencyThreshold": "0",
+          "timeFrame": "Adverse Event data were collected for individual participants, beginning with the Baseline Visit and ending with the documented Diagnosis of Type 1 Diabetes (the primary study endpoint), median 745 days, range 74 to 2683.",
+          "description": "CTCAE",
+          "eventGroups": [
+            {
+              "id": "EG000",
+              "title": "Teplizumab",
+              "description": "Intravenous infusions of teplizumab given for 14 consecutive days. Each infusion takes about 30 minutes and is followed by a 2 hour observation period.\n\nTeplizumab: intravenous infusions",
+              "deathsNumAffected": 0,
+              "deathsNumAtRisk": 44,
+              "seriousNumAffected": 8,
+              "seriousNumAtRisk": 44,
+              "otherNumAffected": 43,
+              "otherNumAtRisk": 44
+            },
+            {
+              "id": "EG001",
+              "title": "Placebo Infusion",
+              "description": "Intravenous infusion of placebo (saline) will be given for 14 consecutive days. Infusions will take approximately 30 minutes and will be followed by a two hour observation period.\n\nPlacebo infusion: Placebo for Teplizumab",
+              "deathsNumAffected": 0,
+              "deathsNumAtRisk": 32,
+              "seriousNumAffected": 1,
+              "seriousNumAtRisk": 32,
+              "otherNumAffected": 23,
+              "otherNumAtRisk": 32
+            }
+          ],
+          "seriousEvents": [
+            {
+              "term": "Fracture",
+              "organSystem": "Musculoskeletal and connective tissue disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Gastroenteritis",
+              "organSystem": "Gastrointestinal disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Infection - Skin",
+              "organSystem": "Skin and subcutaneous tissue disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Infection with normal ANC or Grade 1 or 2 neutrophils",
+              "organSystem": "Infections and infestations",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Infection with unknown ANC",
+              "organSystem": "Infections and infestations",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Obstruction, GI",
+              "organSystem": "Gastrointestinal disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Dizziness",
+              "organSystem": "Nervous system disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Chest Wall Pain",
+              "organSystem": "Musculoskeletal and connective tissue disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Obstruction, GU",
+              "organSystem": "Gastrointestinal disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Pain",
+              "organSystem": "Musculoskeletal and connective tissue disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            }
+          ],
+          "otherEvents": [
+            {
+              "term": "Allergic reaction/hypersensitivity (including drug fever)",
+              "organSystem": "Immune system disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 4,
+                  "numAffected": 3,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Allergic rhinitis (including sneezing, nasal stuffiness, postnasal drip)",
+              "organSystem": "Immune system disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 2,
+                  "numAffected": 2,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Alpha-Gal Allergy",
+              "organSystem": "Immune system disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "ALT, SGPT (serum glutamic pyruvic transaminase)",
+              "organSystem": "Metabolism and nutrition disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 2,
+                  "numAffected": 2,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "AST, SGOT(serum glutamic oxaloacetic transaminase)",
+              "organSystem": "Metabolism and nutrition disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Lymphopenia",
+              "organSystem": "Blood and lymphatic system disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Bronchospasm, wheezing",
+              "organSystem": "Respiratory, thoracic and mediastinal disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 4,
+                  "numAffected": 4,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Cough",
+              "organSystem": "Respiratory, thoracic and mediastinal disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 5,
+                  "numAffected": 3,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Cytokine release syndrome/acute infusion reaction",
+              "organSystem": "Immune system disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 3,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Dental: periodontal disease",
+              "organSystem": "Gastrointestinal disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Folliculitis",
+              "organSystem": "Skin and subcutaneous tissue disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Diarrhea",
+              "organSystem": "Gastrointestinal disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 2,
+                  "numAffected": 2,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Dyspnea (shortness of breath)",
+              "organSystem": "Respiratory, thoracic and mediastinal disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 2,
+                  "numAffected": 2,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Fatigue (asthenia, lethargy, malaise)",
+              "organSystem": "General disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Fever (in the absence of neutropenia, where neutropenia is defined as ANC <1.0 x 10e9/L)",
+              "organSystem": "General disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 3,
+                  "numAffected": 2,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Flu-like syndrome",
+              "organSystem": "General disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 7,
+                  "numAffected": 2,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Fracture",
+              "organSystem": "Musculoskeletal and connective tissue disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 6,
+                  "numAffected": 3,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Stomach Pain",
+              "organSystem": "Gastrointestinal disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 2,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Heartburn/dyspepsia",
+              "organSystem": "Gastrointestinal disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 2,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Hemoglobin",
+              "organSystem": "Blood and lymphatic system disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 6,
+                  "numAffected": 2,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Vitreous hemorrhage",
+              "organSystem": "Eye disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Hypertension",
+              "organSystem": "Cardiac disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 2,
+                  "numAffected": 2,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Hypoxia",
+              "organSystem": "Respiratory, thoracic and mediastinal disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Infection with Normal ANC",
+              "organSystem": "Infections and infestations",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 34,
+                  "numAffected": 12,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 13,
+                  "numAffected": 4,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Infection with unknown ANC",
+              "organSystem": "Infections and infestations",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 9,
+                  "numAffected": 5,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 3,
+                  "numAffected": 1,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Injection site reaction/extravasation changes",
+              "organSystem": "Skin and subcutaneous tissue disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Leukocytes (total WBC)",
+              "organSystem": "Blood and lymphatic system disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 13,
+                  "numAffected": 8,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Lymphopenia",
+              "organSystem": "Blood and lymphatic system disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 73,
+                  "numAffected": 30,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 5,
+                  "numAffected": 2,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Leukocytes",
+              "organSystem": "Blood and lymphatic system disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 2,
+                  "numAffected": 2,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Mood alteration",
+              "organSystem": "Nervous system disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 4,
+                  "numAffected": 2,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 6,
+                  "numAffected": 2,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Joint Pain",
+              "organSystem": "Musculoskeletal and connective tissue disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 5,
+                  "numAffected": 3,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Myositis (inflammation/damage of muscle)",
+              "organSystem": "Musculoskeletal and connective tissue disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 4,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Nasal cavity/paranasal sinus reactions",
+              "organSystem": "Respiratory, thoracic and mediastinal disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 4,
+                  "numAffected": 2,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Nausea",
+              "organSystem": "Gastrointestinal disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 3,
+                  "numAffected": 2,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 2,
+                  "numAffected": 1,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Cognitive Disturbance",
+              "organSystem": "Nervous system disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Neuropathy: motor",
+              "organSystem": "Nervous system disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 2,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 2,
+                  "numAffected": 1,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Neutrophils/granulocytes (ANC/AGC)",
+              "organSystem": "Blood and lymphatic system disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 5,
+                  "numAffected": 4,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 6,
+                  "numAffected": 1,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Obstruction, GI",
+              "organSystem": "Gastrointestinal disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 3,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Ocular surface disease",
+              "organSystem": "Eye disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 4,
+                  "numAffected": 2,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 2,
+                  "numAffected": 1,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Conjunctivitis",
+              "organSystem": "Eye disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Pain",
+              "organSystem": "General disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 13,
+                  "numAffected": 10,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 6,
+                  "numAffected": 4,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Pneumonitis/pulmonary infiltrates",
+              "organSystem": "Respiratory, thoracic and mediastinal disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Pruritus/itching",
+              "organSystem": "Skin and subcutaneous tissue disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 5,
+                  "numAffected": 4,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 2,
+                  "numAffected": 1,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Pulmonary/Upper Respiratory Infection",
+              "organSystem": "Respiratory, thoracic and mediastinal disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 5,
+                  "numAffected": 4,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 2,
+                  "numAffected": 1,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Rash/desquamation",
+              "organSystem": "Skin and subcutaneous tissue disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 41,
+                  "numAffected": 13,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Rash: erythema multiforme (e.g., Stevens-Johnson syndrome, toxic epidermal necrolysis)",
+              "organSystem": "Skin and subcutaneous tissue disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 2,
+                  "numAffected": 2,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Rash: hand-foot skin reaction",
+              "organSystem": "Skin and subcutaneous tissue disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 2,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Kidney Stones",
+              "organSystem": "Renal and urinary disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Seizure",
+              "organSystem": "Nervous system disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Thyroid function, low (hypothyroidism)",
+              "organSystem": "Endocrine disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Urticaria (hives, welts, wheals)",
+              "organSystem": "Skin and subcutaneous tissue disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 2,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Thrombosis",
+              "organSystem": "Vascular disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Vomiting",
+              "organSystem": "Gastrointestinal disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 3,
+                  "numAffected": 2,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 3,
+                  "numAffected": 2,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Weight gain",
+              "organSystem": "General disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Bilirubin (hyperbilirubinemia)",
+              "organSystem": "Metabolism and nutrition disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 3,
+                  "numAffected": 2,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Breast function/lactation",
+              "organSystem": "Reproductive system and breast disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Bruising (in absence of Grade 3 or 4 thrombocytopenia)",
+              "organSystem": "Skin and subcutaneous tissue disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 4,
+                  "numAffected": 2,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Cardiac Arrhythmia - Other (Specify in Event Details)",
+              "organSystem": "Cardiac disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Cardiac Arrhythmia",
+              "organSystem": "Cardiac disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Cholesterol, serum-high (hypercholesteremia)",
+              "organSystem": "Metabolism and nutrition disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Dental: teeth",
+              "organSystem": "Gastrointestinal disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 4,
+                  "numAffected": 2,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Dental: teeth development",
+              "organSystem": "Gastrointestinal disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Hypoglycemia",
+              "organSystem": "Endocrine disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 3,
+                  "numAffected": 2,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Eyelid dysfunction",
+              "organSystem": "Eye disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 2,
+                  "numAffected": 1,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Elevated Bilirubin",
+              "organSystem": "Hepatobiliary disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 2,
+                  "numAffected": 1,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Hypotension",
+              "organSystem": "Cardiac disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Nail changes",
+              "organSystem": "Skin and subcutaneous tissue disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Neuropathy: sensory",
+              "organSystem": "Nervous system disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 2,
+                  "numAffected": 1,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Otitis, middle ear (non-infectious)",
+              "organSystem": "Ear and labyrinth disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 2,
+                  "numAffected": 1,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Palpitations",
+              "organSystem": "Cardiac disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 2,
+                  "numAffected": 1,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Personality/behavioral",
+              "organSystem": "Nervous system disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Phlebitis (including superficial thrombosis)",
+              "organSystem": "Vascular disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 2,
+                  "numAffected": 1,
+                  "numAtRisk": 32
+                }
+              ]
+            },
+            {
+              "term": "Syncope (fainting)",
+              "organSystem": "Nervous system disorders",
+              "assessmentType": "SYSTEMATIC_ASSESSMENT",
+              "stats": [
+                {
+                  "groupId": "EG000",
+                  "numEvents": 0,
+                  "numAffected": 0,
+                  "numAtRisk": 44
+                },
+                {
+                  "groupId": "EG001",
+                  "numEvents": 1,
+                  "numAffected": 1,
+                  "numAtRisk": 32
+                }
+              ]
+            }
+          ]
+        },
+        "moreInfoModule": {
+          "certainAgreement": {
+            "piSponsorEmployee": false,
+            "restrictiveAgreement": false
+          },
+          "pointOfContact": {
+            "title": "Carla Greenbaum, MD",
+            "organization": "Benaroya Research Institute",
+            "email": "cjgreen@benaroyaresearch.org",
+            "phone": "206-342-6933"
+          }
+        }
+      },
+      "documentSection": {
+        "largeDocumentModule": {
+          "largeDocs": [
+            {
+              "typeAbbrev": "Prot",
+              "hasProtocol": true,
+              "hasSap": false,
+              "hasIcf": false,
+              "label": "Study Protocol",
+              "date": "2014-06-25",
+              "uploadDate": "2019-08-27T11:01",
+              "filename": "Prot_000.pdf",
+              "size": 591515
+            },
+            {
+              "typeAbbrev": "SAP",
+              "hasProtocol": false,
+              "hasSap": true,
+              "hasIcf": false,
+              "label": "Statistical Analysis Plan",
+              "date": "2018-03-27",
+              "uploadDate": "2019-08-27T11:01",
+              "filename": "SAP_001.pdf",
+              "size": 212707
+            }
+          ]
+        }
+      },
+      "derivedSection": {
+        "miscInfoModule": {
+          "versionHolder": "2026-11-06"
+        },
+        "conditionBrowseModule": {
+          "meshes": [
+            {
+              "id": "D018149",
+              "term": "Glucose Intolerance"
+            },
+            {
+              "id": "D003922",
+              "term": "Diabetes Mellitus, Type 1"
+            }
+          ],
+          "ancestors": [
+            {
+              "id": "D006943",
+              "term": "Hyperglycemia"
+            },
+            {
+              "id": "D044882",
+              "term": "Glucose Metabolism Disorders"
+            },
+            {
+              "id": "D008659",
+              "term": "Metabolic Diseases"
+            },
+            {
+              "id": "D009750",
+              "term": "Nutritional and Metabolic Diseases"
+            },
+            {
+              "id": "D003920",
+              "term": "Diabetes Mellitus"
+            },
+            {
+              "id": "D004700",
+              "term": "Endocrine System Diseases"
+            },
+            {
+              "id": "D001327",
+              "term": "Autoimmune Diseases"
+            },
+            {
+              "id": "D007154",
+              "term": "Immune System Diseases"
+            }
+          ]
+        },
+        "interventionBrowseModule": {
+          "meshes": [
+            {
+              "id": "C502540",
+              "term": "teplizumab"
+            }
+          ]
+        }
+      },
+      "hasResults": true
+    },
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT02401880",
+          "orgStudyIdInfo": {
+            "id": "EMLIN-001"
+          },
+          "organization": {
+            "fullName": "Profil Institut für Stoffwechselforschung GmbH",
+            "class": "INDUSTRY"
+          },
+          "briefTitle": "Effects of Linagliptin in Addition to Empagliflozin on Islet Cell Physiology",
+          "officialTitle": "Effects of Linagliptin in Addition to Empagliflozin on Islet Cell Physiology and Metabolic Control in Patients With Type 2 Diabetes Mellitus on Stable Metformin Treatment"
+        },
+        "statusModule": {
+          "statusVerifiedDate": "2016-02",
+          "overallStatus": "COMPLETED",
+          "expandedAccessInfo": {
+            "hasExpandedAccess": false
+          },
+          "startDateStruct": {
+            "date": "2015-05"
+          },
+          "primaryCompletionDateStruct": {
+            "date": "2015-12",
+            "type": "ACTUAL"
+          },
+          "completionDateStruct": {
+            "date": "2015-12",
+            "type": "ACTUAL"
+          },
+          "studyFirstSubmitDate": "2014-12-11",
+          "studyFirstSubmitQcDate": "2015-03-24",
+          "studyFirstPostDateStruct": {
+            "date": "2015-03-30",
+            "type": "ESTIMATED"
+          },
+          "lastUpdateSubmitDate": "2016-02-23",
+          "lastUpdatePostDateStruct": {
+            "date": "2016-02-24",
+            "type": "ESTIMATED"
+          }
+        },
+        "sponsorCollaboratorsModule": {
+          "responsibleParty": {
+            "type": "SPONSOR"
+          },
+          "leadSponsor": {
+            "name": "Profil Institut für Stoffwechselforschung GmbH",
+            "class": "INDUSTRY"
+          }
+        },
+        "oversightModule": {
+          "oversightHasDmc": false
+        },
+        "descriptionModule": {
+          "briefSummary": "The primary aim of this exploratory mechanistic study is to investigate the effects of Empagliflozin and Linagliptin on alpha- and beta cell physiology in T2DM patients.\n\nThis study aims to evaluate the effect of the DPP-IV inhibitor linagliptin (as compared to placebo) in addition to the SGLT-2 inhibitor empagliflozin on pancreatic alpha and beta cell function, as well as several markers of metabolic control.",
+          "detailedDescription": "This study will be performed as a multi-center study which includes 2 centres. 44 subjects with T2DM are to be included according to the defined in- and exclusion criteria.\n\nSubjects has to be on a stable metformin therapy and will receive in a first step empagliflozin for 30 days. Both therapies (metformin and empagliflozin) will be continued for another 30 days and subjects will be randomized to receive in addition Linagliptin or Placebo for 30 days.\n\nSubjects will come for two inhouse periods to their corresponding study center and will undergo an hyperglycaemic clamp test as well as a Meal test in each of the periods."
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Type 2 Diabetes Mellitus"
+          ]
+        },
+        "designModule": {
+          "studyType": "INTERVENTIONAL",
+          "phases": [
+            "PHASE4"
+          ],
+          "designInfo": {
+            "allocation": "RANDOMIZED",
+            "interventionModel": "PARALLEL",
+            "primaryPurpose": "BASIC_SCIENCE",
+            "maskingInfo": {
+              "masking": "TRIPLE",
+              "whoMasked": [
+                "PARTICIPANT",
+                "INVESTIGATOR",
+                "OUTCOMES_ASSESSOR"
+              ]
+            }
+          },
+          "enrollmentInfo": {
+            "count": 89,
+            "type": "ACTUAL"
+          }
+        },
+        "armsInterventionsModule": {
+          "armGroups": [
+            {
+              "label": "Empagliflozin plus Linagliptin",
+              "type": "ACTIVE_COMPARATOR",
+              "description": "Linagliptin 5mg to be adminstered for 30 days in T2DM patients on stable metformin and Empagliflozin",
+              "interventionNames": [
+                "Drug: Linagliptin",
+                "Drug: Empagliflozin"
+              ]
+            },
+            {
+              "label": "Empagliflozin plus Placebo",
+              "type": "PLACEBO_COMPARATOR",
+              "description": "Placebo to be adminstered for 30 days in T2DM patients on stable metformin and Empagliflozin",
+              "interventionNames": [
+                "Other: Placebo",
+                "Drug: Empagliflozin"
+              ]
+            },
+            {
+              "label": "Empagliflozin",
+              "type": "OTHER",
+              "description": "Empagliflozin 25mg will be adminstered for 30 days in T2DM patients",
+              "interventionNames": [
+                "Drug: Empagliflozin"
+              ]
+            }
+          ],
+          "interventions": [
+            {
+              "type": "DRUG",
+              "name": "Linagliptin",
+              "description": "22 subjects will receive Linagliptin for 30 days",
+              "armGroupLabels": [
+                "Empagliflozin plus Linagliptin"
+              ],
+              "otherNames": [
+                "Trajenta"
+              ]
+            },
+            {
+              "type": "OTHER",
+              "name": "Placebo",
+              "description": "22 subjects will receive Placebo for 30 days",
+              "armGroupLabels": [
+                "Empagliflozin plus Placebo"
+              ]
+            },
+            {
+              "type": "DRUG",
+              "name": "Empagliflozin",
+              "description": "44 subjects will receive Empagliflozin for 60 days",
+              "armGroupLabels": [
+                "Empagliflozin",
+                "Empagliflozin plus Linagliptin",
+                "Empagliflozin plus Placebo"
+              ],
+              "otherNames": [
+                "Jardiance"
+              ]
+            }
+          ]
+        },
+        "outcomesModule": {
+          "primaryOutcomes": [
+            {
+              "measure": "• Change in glucagon release (AUC0-180 min) during Liquid Meal Test (LMT) from V3 to V4 between the two treatment groups (Linagliptin vs. placebo)",
+              "timeFrame": "30 days"
+            }
+          ],
+          "secondaryOutcomes": [
+            {
+              "measure": "• Change in glucagon release (AUC0-180 min) during LMT from V2 to V3 during treatment with Empagliflozin (V2 vs. V3)",
+              "timeFrame": "30 days"
+            }
+          ]
+        },
+        "eligibilityModule": {
+          "eligibilityCriteria": "Inclusion Criteria:\n\n1. Male or female subject with diabetes mellitus type 2\n2. Diabetes mellitus type 2 on stable treatment with metformin (daily dose at least 1000 mg) for at least 6 months\n3. HbA1c 7.0%-9.9%, both inclusive\n4. Diabetes duration of at least 24 months)\n\nExclusion Criteria:\n\n1. History of diabetes mellitus type 1\n2. GFR (as calculated by the Cockcroft-Gault equation) \\< 60 ml/min at Screening\n3. Systolic blood pressure outside the range of 100-160 mmHg or diastolic blood pressure above 95 mmHg at Screening",
+          "healthyVolunteers": false,
+          "sex": "ALL",
+          "minimumAge": "30 Years",
+          "maximumAge": "80 Years",
+          "stdAges": [
+            "ADULT",
+            "OLDER_ADULT"
+          ]
+        },
+        "contactsLocationsModule": {
+          "locations": [
+            {
+              "facility": "Profil Mainz GmbH & Co. KG",
+              "city": "Mainz",
+              "zip": "55116",
+              "country": "Germany",
+              "geoPoint": {
+                "lat": 49.98185,
+                "lon": 8.28008
+              }
+            },
+            {
+              "facility": "Profil Institut für Stoffwechselforschung GmbH",
+              "city": "Neuss",
+              "zip": "41460",
+              "country": "Germany",
+              "geoPoint": {
+                "lat": 51.19807,
+                "lon": 6.68504
+              }
+            }
+          ]
+        }
+      },
+      "derivedSection": {
+        "miscInfoModule": {
+          "versionHolder": "2026-11-06"
+        },
+        "conditionBrowseModule": {
+          "meshes": [
+            {
+              "id": "D003924",
+              "term": "Diabetes Mellitus, Type 2"
+            }
+          ],
+          "ancestors": [
+            {
+              "id": "D003920",
+              "term": "Diabetes Mellitus"
+            },
+            {
+              "id": "D044882",
+              "term": "Glucose Metabolism Disorders"
+            },
+            {
+              "id": "D008659",
+              "term": "Metabolic Diseases"
+            },
+            {
+              "id": "D009750",
+              "term": "Nutritional and Metabolic Diseases"
+            },
+            {
+              "id": "D004700",
+              "term": "Endocrine System Diseases"
+            }
+          ]
+        },
+        "interventionBrowseModule": {
+          "meshes": [
+            {
+              "id": "D000069476",
+              "term": "Linagliptin"
+            },
+            {
+              "id": "C570240",
+              "term": "empagliflozin"
+            }
+          ],
+          "ancestors": [
+            {
+              "id": "D011687",
+              "term": "Purines"
+            },
+            {
+              "id": "D006574",
+              "term": "Heterocyclic Compounds, 2-Ring"
+            },
+            {
+              "id": "D000072471",
+              "term": "Heterocyclic Compounds, Fused-Ring"
+            },
+            {
+              "id": "D006571",
+              "term": "Heterocyclic Compounds"
+            },
+            {
+              "id": "D011799",
+              "term": "Quinazolines"
+            }
+          ]
+        }
+      },
+      "hasResults": false
+    }
+  ]
+}

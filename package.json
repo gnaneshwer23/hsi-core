@@ -164,6 +164,8 @@
     "n4:check": "bun --no-env-file scripts/n4-grounded-brief.ts --check",
     "n5:research": "bun --no-env-file scripts/n5-cohort-trial-criteria.ts",
     "n5:check": "bun --no-env-file scripts/n5-cohort-trial-criteria.ts --check",
+    "n5:research:live": "bun --no-env-file scripts/n5-registry-live-refresh.ts --live",
+    "n5:research:live:check": "bun --no-env-file scripts/n5-registry-live-refresh.ts --check",
     "n6:study": "bun --no-env-file scripts/n6-blinded-expert-usefulness.ts",
     "n6:check": "bun --no-env-file scripts/n6-blinded-expert-usefulness.ts --check",
     "n6:eval": "bun --no-env-file scripts/n6-blinded-expert-usefulness.ts --eval",

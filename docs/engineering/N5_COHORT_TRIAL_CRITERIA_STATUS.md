@@ -20,7 +20,8 @@ This is an engineering status receipt. It is **not** live patient eligibility, e
 
 | Gate | Status | Notes |
 | --- | --- | --- |
-| Timestamped public-registry criteria snapshot | **CLEARED (engineering)** | Operator-supplied CT.gov-shaped fixtures; `liveRegistryQueried=false` |
+| Timestamped public-registry criteria snapshot | **CLEARED (engineering)** | Offline CT.gov-shaped fixtures; `liveRegistryQueried=false` |
+| Live public-registry snapshot refresh (Audit #9) | **CLEARED (engineering) / sci BLOCKED** | CT.gov API v2 pins `NCT01030861` + `NCT02401880`; live path `liveRegistryQueried=true`; `confirmedEligible=false` always |
 | Explicit criterion source spans | **CLEARED (engineering)** | Exact excerpt offsets into eligibility text |
 | Structured rules only where supported | **CLEARED (engineering)** | Age bounds + narrow T1D/T2D aliases |
 | Five Path B states preserved | **CLEARED (engineering)** | `satisfied` / `not_satisfied` / `unknown` / `ambiguous` / `requires_investigator_review` |
@@ -32,8 +33,11 @@ This is an engineering status receipt. It is **not** live patient eligibility, e
 
 - Types / parse / inspect / suite: `src/evidence/cohortTrialCriteriaResearch.ts`
 - Runner: `bun run n5:research` · `bun run n5:check`
+- Live refresh (Audit #9): `bun run n5:research:live` · `bun run n5:research:live:check`
 - Offline fixtures + receipt: `research/domain-graph/n5/`
-- Tests: `test/cohortTrialCriteriaResearch.test.ts`
+- Live fixtures + receipt: `fixtures/ctgov.live.*` · `registry-criteria.live.snapshot.v1.json` · `receipts/registry.live.receipt.json`
+- Tests: `test/cohortTrialCriteriaResearch.test.ts` · `test/n5RegistryLiveRefresh.test.ts`
+- Audit receipt: [`AUDIT_9_N5_LIVE_REGISTRY_REFRESH_2026-11-08.md`](./AUDIT_9_N5_LIVE_REGISTRY_REFRESH_2026-11-08.md)
 
 Extends `src/knowledgeGraph/cohortTrials.ts` (public study import + topic/age overlap), `src/trialsCriteriaMvp.ts` (five states + forbidden eligibility phrases), and coverage registry honesty (`origin: operator_supplied_unverified`).
 
@@ -43,7 +47,8 @@ Extends `src/knowledgeGraph/cohortTrials.ts` (public study import + topic/age ov
 - T1D ≠ T2D; generic “Diabetes” stays unresolved
 - AND/OR/negation preserved as logic tags; unstructured lines force investigator review
 - Units and temporal phrases recorded when present; missing facts stay unresolved
-- `confirmedEligible`, `patientEligible`, `patientEligibilityAssessed`, `enrolmentEnabled`, `liveRegistryQueried` remain false
+- Offline path: `confirmedEligible`, `patientEligible`, `patientEligibilityAssessed`, `enrolmentEnabled`, `liveRegistryQueried` remain false
+- Live path (Audit #9): `liveRegistryQueried=true` allowed; `liveStatusVerified=false`; eligibility / enrolment flags stay false
 - No Gate C auto-approve, invented MoU, live CDS/PHI or immunecity Neon use
 
 ## Verify locally
@@ -51,14 +56,16 @@ Extends `src/knowledgeGraph/cohortTrials.ts` (public study import + topic/age ov
 ```sh
 bun run n5:research
 bun run n5:check
-bun --no-env-file test test/cohortTrialCriteriaResearch.test.ts
+bun run n5:research:live          # optional live CT.gov probe
+bun run n5:research:live:check
+bun --no-env-file test test/cohortTrialCriteriaResearch.test.ts test/n5RegistryLiveRefresh.test.ts
 # Optional regression with prior phases:
-bun run n1:check && bun run n2:check && bun run n3:check && bun run n4:check && bun run n5:check
+bun run n1:check && bun run n2:check && bun run n3:check && bun run n4:check && bun run n5:check && bun run n5:research:live:check
 ```
 
 ## Residual (human / later engineering)
 
-1. Replace engineering NCT fixtures with operator-downloaded public registry snapshots when needed — keep provenance unverified until independently checked.
+1. Scientific / operational acceptance of live registry slices remains human-gated (`liveStatusVerified` stays false until independently checked).
 2. Add structured rules only where protocols explicitly support them (do not invent disease-stage or lab thresholds).
 3. Keep validation cohorts synthetic; partner-owned cohort research remains a separately governed future phase.
-4. Scientific / operational acceptance of any real registry slice remains human-gated.
+4. Do not flip `confirmedEligible` without real investigator eligibility evidence (never invent).

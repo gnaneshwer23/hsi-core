@@ -322,7 +322,8 @@ One-sprint-sized items. Mark **[DECISION]** where the user must choose before co
 | P2.11-N6 | **DONE (eng):** Audit #7 N6 usefulness pilot-prep + Neon ledger helpers | `pilot-prep.v1.json` + checklist + empty reviewer slots; `n6:pilot-prep`; sci still **NO-GO** (0 scores / waits #4); 016/017 helpers fail-closed |
 | P2.12-AuthA | **USER-CONFIRMED:** Auth A www residual | Session eligible + researcher grant + synthetic fixture for founder Gmail; **not** production `writesEnabled` / Gate C / full #5 two-account |
 | P2.13-Partner | **DONE (eng):** Audit #8 partner-lock prep | `partner-lock-prep.v1.json` + empty MoU slots + checklist; `partner:lock-prep`; founder still **BLOCKED** (0 MoU / `lockedPilot=false`) |
-| **NEXT** | **Human cite HITL · N3 SMEs · #5 two-account residual · founder MoU · optional #9 N5** | Audit #3–#8 (2026-11-08): cite HITL 0/0; N3 0 labels; Auth A www session/grant/fixture confirmed (writes/Gate C not claimed); #8 eng CLEARED / founder MoU BLOCKED. Still no auto-approve / no invent MoU / no live CDS. |
+| P2.14-N5Live | **DONE (eng):** Audit #9 N5 live public-registry refresh | CT.gov API v2 pins + fixtures + `n5:research:live`; `confirmedEligible=false`; sci still **BLOCKED** |
+| **NEXT** | **Human cite HITL · N3 SMEs · #5 two-account residual · founder MoU** | Audit #3–#9 (2026-11-08): cite HITL 0/0; N3 0 labels; Auth A www confirmed (writes/Gate C not claimed); #8 MoU BLOCKED; #9 N5 live eng CLEARED / sci BLOCKED. Still no auto-approve / no invent MoU / no live CDS. #10 N7/N8 NO-GO near-term. |
 
 ### Out-of-repo (track; do not implement here)
 

@@ -1,7 +1,8 @@
 # HSI production-readiness audit receipt
 
 **Audited tip:** `482db110c0efa0b4d3a9166b4f97cd8bcd53b38c` (`482db11`) · `origin/main`  
-**Follow-through tip:** `491d236eba77a527bc933b2987a5f22ff704e7f8` (`491d236`) — Phases 1–8 eng stamps; #8 = partner-lock prep ENG CLEARED / FOUNDER BLOCKED; Auth A residual user-confirmed on www (session + grant + fixture; not writesEnabled / not Gate C)  
+**Follow-through tip:** _(stamp after Audit #9 commit)_ — Phases 1–9 eng stamps; #9 = N5 live public-registry refresh ENG CLEARED / sci BLOCKED (`confirmedEligible=false`); #8 partner-lock FOUNDER BLOCKED; Auth A www user-confirmed (not writesEnabled / not Gate C)  
+**Prior #9 feature tip:** _(this series)_ — N5 live CT.gov snapshot refresh + honesty harness  
 **Prior #8 feature tip:** `491d236eba77a527bc933b2987a5f22ff704e7f8` (`491d236`) — partner-lock empty MoU slots + checklist  
 **Prior #7 tip:** `0f6634bd1d1d66f56bc2d56fb134b6df6751c2e8` (`0f6634b`) — N6 pilot-prep + Neon ledger helpers  
 **Prior #6 tip:** `15871a413e68f119be282294924a18fcbfb9d183` (`15871a4`) — 016/017 already on red-wave  
@@ -22,7 +23,7 @@ Default science programme remains **gut–immune–T2D** (Nov 6 plan). SSc stays
 
 | Plane | Score | State | One-line evidence |
 | --- | --- | --- | --- |
-| Substrate / evidence | 3 / 5 | Eng CLEARED / sci BLOCKED | N1–N8 modules + scripts; migrations 001–017 on red-wave (016/017 ledger-applied; Audit #6); Neon ledger helpers ENG CLEARED (Audit #7 companion); N1 rights BLOCKED (DOI identity cleared post-audit — see follow-through) |
+| Substrate / evidence | 3 / 5 | Eng CLEARED / sci BLOCKED | N1–N8 modules + scripts; migrations 001–017 on red-wave (016/017 ledger-applied; Audit #6); Neon ledger helpers ENG CLEARED (Audit #7); N5 live registry refresh ENG CLEARED / sci BLOCKED (Audit #9; `confirmedEligible=false`); N1 rights BLOCKED (DOI identity cleared post-audit — see follow-through) |
 | Science gates | 1 / 5 | Scaffold + freeze-prep | N3 freeze-prep ENG CLEARED (Audit #4); labels still empty; N6 pilot-prep ENG CLEARED / NO-GO (Audit #7); N4 `groundedClaimAccepted` forced false |
 | Site / marketing | 3 / 5 | Demo deployable | Vite site + Playwright; honesty banners; not a verified live research product |
 | Deploy / CI | 3 / 5 | CI green path ≠ launch | Auth A residual user-confirmed on www (session + researcher grant + fixture); Audit #5 two-account / staging writes still residual; production `writesEnabled` not claimed; PRODUCTION_QA launch blocked |
@@ -58,7 +59,7 @@ Default science programme remains **gut–immune–T2D** (Nov 6 plan). SSc stays
 | 6 | Apply 016/017 on red-wave after offline parity + founder approve | **ENG CLEARED 2026-11-08** (already applied; idempotent skip) |
 | 7 | N6 blinded usefulness study after N3 freeze + agreed thresholds | **ENG CLEARED 2026-11-08** / sci NO-GO (0 scores / 0 reviewer slots; waits #4) |
 | 8 | Real named partner lock (replace hypothetical fixture) | **ENG CLEARED 2026-11-08** / FOUNDER BLOCKED (0 MoU slots filled; never invent MoU) |
-| 9 | Optional: live public-registry snapshot refresh for N5 research | Conditional GO; keep `confirmedEligible=false` |
+| 9 | Optional: live public-registry snapshot refresh for N5 research | **ENG CLEARED 2026-11-08** / sci BLOCKED (`confirmedEligible=false`; liveStatusVerified=false) |
 | 10 | N7/N8 real data or licensed models | NO-GO near-term |
 
 ## Explicit non-goals (next 90 days)
@@ -78,6 +79,7 @@ Default science programme remains **gut–immune–T2D** (Nov 6 plan). SSc stays
 - **Phase #7 eng done (science still NO-GO):** N6 usefulness pilot-prep scaffolded — `src/evidence/n6UsefulnessPilotPrep.ts`, `research/domain-graph/n6/pilot-prep.v1.json`, checklist, anonymous blinded-reviewer roster slots (`reviewerSlotsFilled=0`), `bun run n6:pilot-prep` wired into `n6:check`. Packets **12** unscored; `usefulnessPilotGoNoGo=NO_GO`; `n3HumanLabelFreezePrerequisite=BLOCKED`; `scientificAcceptance=BLOCKED`. Companion: fail-closed Neon R/W helpers for 016/017 (`evidenceLedgerStore` / `experimentLedgerStore` / `ledgerNeonWriteGate`) — staging writes only; production read-only; offline fixtures remain authority. No invented scores, reviewer identities, MoU, or Gate C. Receipt: [`AUDIT_7_N6_USEFULNESS_PILOT_2026-11-08.md`](./AUDIT_7_N6_USEFULNESS_PILOT_2026-11-08.md).
 - **Auth A residual (user-confirmed 2026-11-08):** On www for `jadav.gnaneshwar@gmail.com` — research **session eligible**, **researcher grant** visible, **synthetic test fixture** visible. Does **not** claim production `writesEnabled`, Gate C, or full Audit #5 two-account opsAcceptance.
 - **Phase #8 eng done (founder still BLOCKED):** Partner-lock prep scaffolded — `src/ops/partnerLockPrep.ts`, `operations/partner/partner-lock-prep.v1.json`, checklist, empty MoU slots (`mouSlotsFilled=0`), `bun run partner:lock-prep`. Active path remains hypothetical fixture (`legalBinding=false` → `lockedPilot=false`); `founderAcceptance=BLOCKED`. No invented MoU text, named orgs, or `legalBinding=true`. Receipt: [`AUDIT_8_PARTNER_LOCK_2026-11-08.md`](./AUDIT_8_PARTNER_LOCK_2026-11-08.md).
+- **Phase #9 eng done (science still BLOCKED):** N5 live public-registry snapshot refresh — ClinicalTrials.gov API v2 lookup for pinned NCTs `NCT01030861` + `NCT02401880`, captured fixtures, live snapshot/receipt, `bun run n5:research:live` / `n5:research:live:check`. `liveRegistryQueried=true` on live path; `confirmedEligible=false`, `liveStatusVerified=false`, `scientificAcceptance=BLOCKED` always. Offline engineering fixtures remain `n5:check` authority. No invented eligibility / enrolment / Gate C / MoU. Receipt: [`AUDIT_9_N5_LIVE_REGISTRY_REFRESH_2026-11-08.md`](./AUDIT_9_N5_LIVE_REGISTRY_REFRESH_2026-11-08.md).
 
 ## Verify (post-correction)
 
@@ -94,6 +96,8 @@ bun run n6:pilot-prep
 bun run n6:check
 bun run partner:lock-prep
 bun run partner:lock-prep:check
+bun run n5:research:live:check
+bun run n5:check
 bun run db:migrate -- --from-neonctl
-bun --no-env-file test test/n1SourceVerification.test.ts test/scientificBenchmark.test.ts test/n3CalibrationFreezePrep.test.ts test/groundedBrief.test.ts test/stagingTwoAccountAuthPrep.test.ts test/n6UsefulnessPilotPrep.test.ts test/ledgerNeonStores.test.ts test/partnerLockPrep.test.ts test/vercelResearch.test.ts
+bun --no-env-file test test/n1SourceVerification.test.ts test/scientificBenchmark.test.ts test/n3CalibrationFreezePrep.test.ts test/groundedBrief.test.ts test/stagingTwoAccountAuthPrep.test.ts test/n6UsefulnessPilotPrep.test.ts test/ledgerNeonStores.test.ts test/partnerLockPrep.test.ts test/n5RegistryLiveRefresh.test.ts test/cohortTrialCriteriaResearch.test.ts test/vercelResearch.test.ts
 ```

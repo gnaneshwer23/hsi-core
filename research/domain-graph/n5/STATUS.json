@@ -12,5 +12,18 @@
   "patientEligibilityAssessed": false,
   "liveRegistryQueried": false,
   "enrolmentEnabled": false,
-  "note": "Engineering fixtures only. Public-registry criterion research — not live eligibility."
+  "note": "Engineering fixtures only. Public-registry criterion research — not live eligibility. See liveRefresh for Audit #9 sidecar.",
+  "liveRefresh": {
+    "remediationPhase": "production_readiness_audit_phase_9",
+    "statusPath": "research/domain-graph/n5/LIVE_REFRESH_STATUS.json",
+    "receiptPath": "research/domain-graph/n5/receipts/registry.live.receipt.json",
+    "snapshotPath": "research/domain-graph/n5/registry-criteria.live.snapshot.v1.json",
+    "engineeringHarness": "CLEARED",
+    "scientificAcceptance": "BLOCKED",
+    "confirmedEligible": false,
+    "liveRegistryQueried": true,
+    "liveStatusVerified": false,
+    "receiptHash": "4f912ea4c3cbd2d3f6c2aa6a51cd58556983d40f53c546358ffcf328ee71dfef",
+    "mode": "offline_live_fixture_replay"
+  }
 }

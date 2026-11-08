@@ -1,0 +1,528 @@
+{
+  "schemaVersion": "hsi-n5-registry-criteria-live-snapshot-1",
+  "offlineSchemaCompat": "hsi-n5-registry-criteria-snapshot-1",
+  "origin": "live_provider_unverified",
+  "scope": "public_registry_eligibility_research",
+  "containsPhi": false,
+  "retrievedAt": "2026-11-08T12:15:00.000Z",
+  "asOf": "2026-11-08T12:20:00.000Z",
+  "studies": [
+    {
+      "nctId": "NCT01030861",
+      "title": "Teplizumab for Prevention of Type 1 Diabetes In Relatives \"At-Risk\"",
+      "conditions": [
+        "Autoantibody Positive",
+        "Non-diabetic Relatives at Risk for Type 1 Diabetes",
+        "High Risk",
+        "Impaired Glucose Tolerance"
+      ],
+      "status": "COMPLETED",
+      "lastUpdateDate": "2020-08-05",
+      "minimumAge": 8,
+      "maximumAge": 45,
+      "eligibilityText": "Inclusion Criteria:\n\n* Between ages of 8-45 years\n* Have a relative with type 1 diabetes\n* If first degree relative must be 8-45 years old (brother, sister, parent, offspring)\n* If second degree relative must be between 8-20 years old (niece, nephew, aunt, uncle, grandchild, cousin)\n* Abnormal glucose tolerance by OGTT confirmed with 7 weeks of baseline visit \\[fasting blood glucose greater than 110mg/dL or and less than 126 mg/dL OR 2 hour glucose greater or equal to 140 mg/dL and less than 200 mg/dL OR 30, 60, or 90 minute value on OGTT greater than or equal to 200 mg/dL\\]\n* Presence of at least two confirmed diabetes autoantibodies\n\nExclusion Criteria:\n\n* type 1 diabetes previously diagnosed or detected at screening \\[fasting glucose greater or equal to 126 mg/dL or 2 hour glucose greater or equal to 200 mg/dL\\]\n* abnormalities in blood counts, liver enzymes, international normalised ratio (INR),\n* positive purified protein derivative (PPD) test\n\n  * vaccination with live virus within 6 weeks of randomization\n* evidence of acute infection based on laboratory testing or clinical evidence\n* serological evidence of past current or past HIV , hepatitis B, or hepatitis C infection\n* Be currently pregnant or lactating\n* Prior treatment with study drug\n* Prior treatment with other monoclonal antibody in past one year",
+      "url": "https://clinicaltrials.gov/study/NCT01030861",
+      "sourceStatus": "operator_uploaded_unverified",
+      "liveStatusVerified": false
+    },
+    {
+      "nctId": "NCT02401880",
+      "title": "Effects of Linagliptin in Addition to Empagliflozin on Islet Cell Physiology",
+      "conditions": [
+        "Type 2 Diabetes Mellitus"
+      ],
+      "status": "COMPLETED",
+      "lastUpdateDate": "2016-02-24",
+      "minimumAge": 30,
+      "maximumAge": 80,
+      "eligibilityText": "Inclusion Criteria:\n\n1. Male or female subject with diabetes mellitus type 2\n2. Diabetes mellitus type 2 on stable treatment with metformin (daily dose at least 1000 mg) for at least 6 months\n3. HbA1c 7.0%-9.9%, both inclusive\n4. Diabetes duration of at least 24 months)\n\nExclusion Criteria:\n\n1. History of diabetes mellitus type 1\n2. GFR (as calculated by the Cockcroft-Gault equation) \\< 60 ml/min at Screening\n3. Systolic blood pressure outside the range of 100-160 mmHg or diastolic blood pressure above 95 mmHg at Screening",
+      "url": "https://clinicaltrials.gov/study/NCT02401880",
+      "sourceStatus": "operator_uploaded_unverified",
+      "liveStatusVerified": false
+    }
+  ],
+  "criteriaByNct": {
+    "NCT01030861": [
+      {
+        "criterionId": "NCT01030861-c-01",
+        "text": "Inclusion Criteria:",
+        "parseKind": "unparsed_remainder",
+        "logic": "and",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 0,
+          "end": 19,
+          "excerpt": "Inclusion Criteria:"
+        },
+        "structuredRuleSupported": false
+      },
+      {
+        "criterionId": "NCT01030861-c-02",
+        "text": "* Between ages of 8-45 years",
+        "parseKind": "unparsed_remainder",
+        "logic": "and",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 21,
+          "end": 49,
+          "excerpt": "* Between ages of 8-45 years"
+        },
+        "structuredRuleSupported": false
+      },
+      {
+        "criterionId": "NCT01030861-c-03",
+        "text": "* Have a relative with type 1 diabetes",
+        "parseKind": "unparsed_remainder",
+        "logic": "and",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 50,
+          "end": 88,
+          "excerpt": "* Have a relative with type 1 diabetes"
+        },
+        "structuredRuleSupported": false
+      },
+      {
+        "criterionId": "NCT01030861-c-04",
+        "text": "* If first degree relative must be 8-45 years old (brother, sister, parent, offspring)",
+        "parseKind": "unparsed_remainder",
+        "logic": "and",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 89,
+          "end": 175,
+          "excerpt": "* If first degree relative must be 8-45 years old (brother, sister, parent, offspring)"
+        },
+        "structuredRuleSupported": false
+      },
+      {
+        "criterionId": "NCT01030861-c-05",
+        "text": "* If second degree relative must be between 8-20 years old (niece, nephew, aunt, uncle, grandchild, cousin)",
+        "parseKind": "unparsed_remainder",
+        "logic": "and",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 176,
+          "end": 283,
+          "excerpt": "* If second degree relative must be between 8-20 years old (niece, nephew, aunt, uncle, grandchild, cousin)"
+        },
+        "structuredRuleSupported": false
+      },
+      {
+        "criterionId": "NCT01030861-c-06",
+        "text": "* Abnormal glucose tolerance by OGTT confirmed with 7 weeks of baseline visit \\[fasting blood glucose greater than 110mg/dL or and less than 126 mg/dL OR 2 hour glucose greater or equal to 140 mg/dL and less than 200 mg/dL OR 30, 60, or 90 minute value on OGTT greater than or equal to 200 mg/dL\\]",
+        "parseKind": "unparsed_remainder",
+        "logic": "and",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 284,
+          "end": 581,
+          "excerpt": "* Abnormal glucose tolerance by OGTT confirmed with 7 weeks of baseline visit \\[fasting blood glucose greater than 110mg/dL or and less than 126 mg/dL OR 2 hour glucose greater or equal to 140 mg/dL and less than 200 mg/dL OR 30, 60, or 90 minute value on OGTT greater than or equal to 200 mg/dL\\]"
+        },
+        "structuredRuleSupported": false
+      },
+      {
+        "criterionId": "NCT01030861-c-07",
+        "text": "* Presence of at least two confirmed diabetes autoantibodies",
+        "parseKind": "unparsed_remainder",
+        "logic": "and",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 582,
+          "end": 642,
+          "excerpt": "* Presence of at least two confirmed diabetes autoantibodies"
+        },
+        "structuredRuleSupported": false
+      },
+      {
+        "criterionId": "NCT01030861-c-08",
+        "text": "Exclusion Criteria:",
+        "parseKind": "unparsed_remainder",
+        "logic": "not",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 644,
+          "end": 663,
+          "excerpt": "Exclusion Criteria:"
+        },
+        "structuredRuleSupported": false
+      },
+      {
+        "criterionId": "NCT01030861-c-09",
+        "text": "* type 1 diabetes previously diagnosed or detected at screening \\[fasting glucose greater or equal to 126 mg/dL or 2 hour glucose greater or equal to 200 mg/dL\\]",
+        "parseKind": "unparsed_remainder",
+        "logic": "and",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 665,
+          "end": 826,
+          "excerpt": "* type 1 diabetes previously diagnosed or detected at screening \\[fasting glucose greater or equal to 126 mg/dL or 2 hour glucose greater or equal to 200 mg/dL\\]"
+        },
+        "structuredRuleSupported": false
+      },
+      {
+        "criterionId": "NCT01030861-c-10",
+        "text": "* abnormalities in blood counts, liver enzymes, international normalised ratio (INR),",
+        "parseKind": "unparsed_remainder",
+        "logic": "and",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 827,
+          "end": 912,
+          "excerpt": "* abnormalities in blood counts, liver enzymes, international normalised ratio (INR),"
+        },
+        "structuredRuleSupported": false
+      },
+      {
+        "criterionId": "NCT01030861-c-11",
+        "text": "* positive purified protein derivative (PPD) test",
+        "parseKind": "unparsed_remainder",
+        "logic": "and",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 913,
+          "end": 962,
+          "excerpt": "* positive purified protein derivative (PPD) test"
+        },
+        "structuredRuleSupported": false
+      },
+      {
+        "criterionId": "NCT01030861-c-12",
+        "text": "* vaccination with live virus within 6 weeks of randomization",
+        "parseKind": "unparsed_remainder",
+        "logic": "and",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": "within 6 weeks",
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 966,
+          "end": 1027,
+          "excerpt": "* vaccination with live virus within 6 weeks of randomization"
+        },
+        "structuredRuleSupported": false
+      },
+      {
+        "criterionId": "NCT01030861-c-13",
+        "text": "* evidence of acute infection based on laboratory testing or clinical evidence",
+        "parseKind": "unparsed_remainder",
+        "logic": "and",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 1028,
+          "end": 1106,
+          "excerpt": "* evidence of acute infection based on laboratory testing or clinical evidence"
+        },
+        "structuredRuleSupported": false
+      },
+      {
+        "criterionId": "NCT01030861-c-14",
+        "text": "* serological evidence of past current or past HIV , hepatitis B, or hepatitis C infection",
+        "parseKind": "unparsed_remainder",
+        "logic": "and",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 1107,
+          "end": 1197,
+          "excerpt": "* serological evidence of past current or past HIV , hepatitis B, or hepatitis C infection"
+        },
+        "structuredRuleSupported": false
+      },
+      {
+        "criterionId": "NCT01030861-c-15",
+        "text": "* Be currently pregnant or lactating",
+        "parseKind": "unparsed_remainder",
+        "logic": "and",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 1198,
+          "end": 1234,
+          "excerpt": "* Be currently pregnant or lactating"
+        },
+        "structuredRuleSupported": false
+      },
+      {
+        "criterionId": "NCT01030861-c-16",
+        "text": "* Prior treatment with study drug",
+        "parseKind": "unparsed_remainder",
+        "logic": "and",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 1235,
+          "end": 1268,
+          "excerpt": "* Prior treatment with study drug"
+        },
+        "structuredRuleSupported": false
+      },
+      {
+        "criterionId": "NCT01030861-c-17",
+        "text": "* Prior treatment with other monoclonal antibody in past one year",
+        "parseKind": "unparsed_remainder",
+        "logic": "and",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 1269,
+          "end": 1334,
+          "excerpt": "* Prior treatment with other monoclonal antibody in past one year"
+        },
+        "structuredRuleSupported": false
+      }
+    ],
+    "NCT02401880": [
+      {
+        "criterionId": "NCT02401880-c-01",
+        "text": "Inclusion Criteria:",
+        "parseKind": "unparsed_remainder",
+        "logic": "and",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 0,
+          "end": 19,
+          "excerpt": "Inclusion Criteria:"
+        },
+        "structuredRuleSupported": false
+      },
+      {
+        "criterionId": "NCT02401880-c-02",
+        "text": "1. Male or female subject with diabetes mellitus type 2",
+        "parseKind": "unparsed_remainder",
+        "logic": "and",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 21,
+          "end": 76,
+          "excerpt": "1. Male or female subject with diabetes mellitus type 2"
+        },
+        "structuredRuleSupported": false
+      },
+      {
+        "criterionId": "NCT02401880-c-03",
+        "text": "2. Diabetes mellitus type 2 on stable treatment with metformin (daily dose at least 1000 mg) for at least 6 months",
+        "parseKind": "unparsed_remainder",
+        "logic": "and",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 77,
+          "end": 191,
+          "excerpt": "2. Diabetes mellitus type 2 on stable treatment with metformin (daily dose at least 1000 mg) for at least 6 months"
+        },
+        "structuredRuleSupported": false
+      },
+      {
+        "criterionId": "NCT02401880-c-04",
+        "text": "3. HbA1c 7.0%-9.9%, both inclusive",
+        "parseKind": "unparsed_remainder",
+        "logic": "and",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 192,
+          "end": 226,
+          "excerpt": "3. HbA1c 7.0%-9.9%, both inclusive"
+        },
+        "structuredRuleSupported": false
+      },
+      {
+        "criterionId": "NCT02401880-c-05",
+        "text": "4. Diabetes duration of at least 24 months)",
+        "parseKind": "unparsed_remainder",
+        "logic": "and",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 227,
+          "end": 270,
+          "excerpt": "4. Diabetes duration of at least 24 months)"
+        },
+        "structuredRuleSupported": false
+      },
+      {
+        "criterionId": "NCT02401880-c-06",
+        "text": "Exclusion Criteria:",
+        "parseKind": "unparsed_remainder",
+        "logic": "not",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 272,
+          "end": 291,
+          "excerpt": "Exclusion Criteria:"
+        },
+        "structuredRuleSupported": false
+      },
+      {
+        "criterionId": "NCT02401880-c-07",
+        "text": "1. History of diabetes mellitus type 1",
+        "parseKind": "unparsed_remainder",
+        "logic": "and",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 293,
+          "end": 331,
+          "excerpt": "1. History of diabetes mellitus type 1"
+        },
+        "structuredRuleSupported": false
+      },
+      {
+        "criterionId": "NCT02401880-c-08",
+        "text": "2. GFR (as calculated by the Cockcroft-Gault equation) \\< 60 ml/min at Screening",
+        "parseKind": "unparsed_remainder",
+        "logic": "and",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 332,
+          "end": 412,
+          "excerpt": "2. GFR (as calculated by the Cockcroft-Gault equation) \\< 60 ml/min at Screening"
+        },
+        "structuredRuleSupported": false
+      },
+      {
+        "criterionId": "NCT02401880-c-09",
+        "text": "3. Systolic blood pressure outside the range of 100-160 mmHg or diastolic blood pressure above 95 mmHg at Screening",
+        "parseKind": "unparsed_remainder",
+        "logic": "and",
+        "attributeKey": null,
+        "operator": null,
+        "expected": null,
+        "unit": null,
+        "temporalConstraint": null,
+        "diseaseAliasFamily": null,
+        "sourceSpan": {
+          "start": 413,
+          "end": 528,
+          "excerpt": "3. Systolic blood pressure outside the range of 100-160 mmHg or diastolic blood pressure above 95 mmHg at Screening"
+        },
+        "structuredRuleSupported": false
+      }
+    ]
+  },
+  "liveRegistryQueried": true,
+  "liveStatusVerified": false,
+  "confirmedEligible": false,
+  "patientEligibilityAssessed": false,
+  "enrolmentEnabled": false,
+  "provider": "clinicaltrials_gov_api_v2",
+  "pinnedNctIds": [
+    "NCT01030861",
+    "NCT02401880"
+  ]
+}

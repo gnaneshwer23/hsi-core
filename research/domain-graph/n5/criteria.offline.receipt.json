@@ -479,7 +479,7 @@
       ],
       "pins": {
         "n2LedgerHash": "3718b6e7a5e7d08dc08290622ccb9cab16b34b56a27a57c5b3bafca1f5e0c86d",
-        "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c"
+        "n3KitHash": "d7b25fdc2840851cd928e5e3efcbbc31a95647019021bc3cea6dbbcc5905cb2a"
       }
     },
     {
@@ -753,7 +753,7 @@
       ],
       "pins": {
         "n2LedgerHash": "3718b6e7a5e7d08dc08290622ccb9cab16b34b56a27a57c5b3bafca1f5e0c86d",
-        "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c"
+        "n3KitHash": "d7b25fdc2840851cd928e5e3efcbbc31a95647019021bc3cea6dbbcc5905cb2a"
       }
     }
   ],

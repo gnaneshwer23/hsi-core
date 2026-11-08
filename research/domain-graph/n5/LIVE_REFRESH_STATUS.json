@@ -1,0 +1,26 @@
+{
+  "phase": "N5",
+  "remediationPhase": "production_readiness_audit_phase_9",
+  "programme": "gut_immune_t2d",
+  "mode": "offline_live_fixture_replay",
+  "generatedAt": "2026-11-08T12:20:00.000Z",
+  "asOf": "2026-11-08T12:20:00.000Z",
+  "retrievedAt": "2026-11-08T12:15:00.000Z",
+  "snapshotHash": "132ae56f90b6b718bed4e92fc1fb282c150b5596823914205b66e00cd238509a",
+  "receiptHash": "4f912ea4c3cbd2d3f6c2aa6a51cd58556983d40f53c546358ffcf328ee71dfef",
+  "studyCount": 2,
+  "pinnedNctIds": [
+    "NCT01030861",
+    "NCT02401880"
+  ],
+  "engineeringHarness": "CLEARED",
+  "scientificAcceptance": "BLOCKED",
+  "confirmedEligible": false,
+  "patientEligible": false,
+  "patientEligibilityAssessed": false,
+  "liveRegistryQueried": true,
+  "liveStatusVerified": false,
+  "enrolmentEnabled": false,
+  "inventedEligibilityPermitted": false,
+  "note": "Live public-registry snapshot refresh for research only. Not confirmed eligibility or enrolment."
+}
