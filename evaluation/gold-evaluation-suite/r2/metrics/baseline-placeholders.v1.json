@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "hsi-r2-baseline-metrics-1",
+  "scientificAcceptance": "BLOCKED",
+  "thresholdsApproved": false,
+  "modelActivationAllowed": false,
+  "candidateConfigured": false,
+  "metrics": [
+    {
+      "metricId": "citation_correctness",
+      "value": null,
+      "labelledDenominator": 0,
+      "thresholdApproved": false,
+      "scientificAccuracy": null,
+      "baselineMethodId": "deterministic-extractive-baseline"
+    },
+    {
+      "metricId": "semantic_support",
+      "value": null,
+      "labelledDenominator": 0,
+      "thresholdApproved": false,
+      "scientificAccuracy": null,
+      "baselineMethodId": "deterministic-extractive-baseline"
+    },
+    {
+      "metricId": "context_mismatch_detection",
+      "value": null,
+      "labelledDenominator": 0,
+      "thresholdApproved": false,
+      "scientificAccuracy": null,
+      "baselineMethodId": "deterministic-extractive-baseline"
+    },
+    {
+      "metricId": "abstention_accuracy",
+      "value": null,
+      "labelledDenominator": 0,
+      "thresholdApproved": false,
+      "scientificAccuracy": null,
+      "baselineMethodId": "deterministic-extractive-baseline"
+    },
+    {
+      "metricId": "opposition_null_coverage",
+      "value": null,
+      "labelledDenominator": 0,
+      "thresholdApproved": false,
+      "scientificAccuracy": null,
+      "baselineMethodId": null
+    },
+    {
+      "metricId": "baseline_vs_candidate_delta",
+      "value": null,
+      "labelledDenominator": 0,
+      "thresholdApproved": false,
+      "scientificAccuracy": null,
+      "baselineMethodId": "hsi-lexical-retrieval-baseline-1"
+    }
+  ]
+}

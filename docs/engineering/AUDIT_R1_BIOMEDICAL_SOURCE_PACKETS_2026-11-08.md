@@ -65,7 +65,7 @@ Documented stages through controlled research pilot. **Current stage:** `ingesti
 ## Next
 
 1. **Parked:** human #2 N1 rights attestation (still required before any non-quarantine packet).  
-2. **R2** (later): Gold Evaluation Suite fill after rights + SME adjudication.  
+2. **R2** eng deepen landed (`bun run r2:check`); SME gold fill still after rights + SME adjudication.  
 3. Do **not** merge scientific acceptance from this eng scaffold.
 
 ## Verify

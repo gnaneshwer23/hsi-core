@@ -2,12 +2,15 @@
 
 Extends `evaluation/research-readiness` and Phase E contracts. **Not** a separate framework and **not** scientific gold.
 
+Roadmap **R2** deepen (exit-shape scaffold, still not gold): [`R2_GOLD_EVALUATION_SUITE_CHECKLIST.md`](./R2_GOLD_EVALUATION_SUITE_CHECKLIST.md) · `bun run r2:prepare` / `r2:check` · artifacts under `evaluation/gold-evaluation-suite/r2/`.
+
 ## Honesty
 
 - Current 50-question bank = **draft**, not expert gold.
 - SME annotation / adjudication slots stay empty (`independentlyLabelledCases=0`).
 - No invented labels, licensed packets, frozen held-out gold, or model activation.
 - Metrics remain null until rights-cleared packets + independent SME adjudication exist.
+- R2 keeps `smeGoldFilled=false` · `frozenHeldOut=false` · `scientificAcceptance=BLOCKED`.
 
 ## Ten capability slots
 

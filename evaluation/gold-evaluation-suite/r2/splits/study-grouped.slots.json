@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "hsi-r2-study-grouped-splits-1",
+  "status": "awaiting_packet_and_label_binding",
+  "developmentStudyIds": [],
+  "validationStudyIds": [],
+  "heldOutStudyIds": [],
+  "casePartitionAssignments": [],
+  "leakageControlsDocumented": false,
+  "frozenHeldOut": false,
+  "frozenAt": null,
+  "frozenBy": null
+}

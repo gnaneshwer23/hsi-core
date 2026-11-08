@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "hsi-r2-gold-evaluation-suite-status-1",
+  "phase": "R2",
+  "roadmapPhase": "gold_evaluation_suite",
+  "generatedAt": "2026-11-08T15:45:00.000Z",
+  "engineeringScaffold": "CLEARED",
+  "scientificAcceptance": "BLOCKED",
+  "rightsAcceptance": "BLOCKED",
+  "draftCaseCount": 50,
+  "smeGoldFilled": false,
+  "frozenHeldOut": false,
+  "independentlyLabelledCases": 0,
+  "adjudicatedCases": 0,
+  "baselineMetricsScored": 0,
+  "r1PacketsBoundToGold": 0,
+  "gateCAutoApprove": false,
+  "legalBinding": false,
+  "draftBankHash": "8f84210591c1eb6ef0d8f42711ce1c5f1697ddf79744a5b4f36e56f155295612",
+  "goldV1SuiteHash": "9f529f7a87d731faa7b4639998c9aa24bf6a554dff0fe3b4365e9952490b5b14",
+  "r1InventoryHash": "6a2ab7be0bfc8d3bcbe044d2d3ac7e6671729a1c0471622911fe2e8d06067c0c",
+  "engineeringChecksCleared": 9,
+  "humanChecksPending": 6,
+  "parkedHumanResiduals": [
+    "#2 N1 rights",
+    "#3 cite HITL",
+    "#4 SMEs",
+    "#5 staging",
+    "#8 MoU"
+  ],
+  "note": "Eng harness only. Draft bank is not gold. Empty SME A/B + adjudication worksheets. Do not invent labels, adjudications, scientificAccuracy, MoU, or Gate C.",
+  "stopNote": "R2 eng deepen complete. Scientific acceptance remains BLOCKED. Draft bank is not gold. SME A/B + adjudication worksheets stay empty; frozenHeldOut=false; baseline metric placeholders are not scores. Human #2/#4 explicitly parked — do not invent labels, adjudications, or scientific accuracy.",
+  "inventoryHash": "0ce79c937dfaf2149a79b4282b997b50463137695f80b1ee93f06a5585d626ef"
+}
