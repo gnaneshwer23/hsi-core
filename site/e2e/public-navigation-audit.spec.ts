@@ -18,7 +18,7 @@ test('all public links and selector states resolve, without linking older engine
         if(!link.href.startsWith('/')&&!link.href.startsWith('#'))continue;
         const url=new URL(link.href,'http://127.0.0.1:4178'+path);
         expect(routes.has(url.pathname),`${path}: ${link.name} → ${link.href}`).toBe(true);
-        expect(['/status','/docs','/gateway','/clinical-timeline','/trials-criteria','/roadmap','/alignment','/curator','/systems','/discovery-engine','/explore']).not.toContain(url.pathname);
+        expect(['/status','/docs','/gateway','/clinical-timeline','/trials-criteria','/roadmap','/alignment','/curator','/systems','/discovery-engine','/explore','/products','/for-aksh','/for-isi','/for-trials']).not.toContain(url.pathname);
         if(url.hash||!PUBLIC_MARKETING_PATHS.includes(url.pathname as typeof path))destinations.add(url.pathname+url.search+url.hash);
         if(url.pathname===path&&url.hash)expect(await page.locator(`[id=${JSON.stringify(decodeURIComponent(url.hash.slice(1)))}]`).count(),`${path}: ${link.href}`).toBe(1);
       }
@@ -65,20 +65,21 @@ test('all public body links are clickable and reach their intended destinations'
   }
 });
 
-test('hero illustrations fit their pages and remain legible at mobile sizes',async({page},info)=>{
-  const artwork:Record<string,string>={'/platform':'platform','/technology':'technology','/products':'products','/research':'research','/science':'science','/how-it-works':'workflow','/solutions':'solutions','/evidence-safety':'evidence','/contact':'access','/for-aksh':'aksh','/for-isi':'immune','/for-trials':'trials'};
-  for(const [path,kind] of Object.entries(artwork)){
+test('landing visuals fit their pages and remain legible at mobile sizes',async({page},info)=>{
+  const pages=['/','/platform','/biology','/drug-discovery','/research','/solutions','/technology','/evidence-safety','/how-it-works','/about','/contact'];
+  for(const path of pages){
     for(const width of [320,768,1440]){
       await page.setViewportSize({width,height:1000});await page.goto(path);
-      const art=page.locator(`[data-artwork="${kind}"]`);await expect(art).toBeVisible();await expect(art.getByRole('img')).toHaveAccessibleName(/.+/);
-      await expect(page.locator('img[src*="hsi-anatomy"]')).toHaveCount(0);
+      const art=page.locator('.ed-landing-visual img').first();
+      await expect(art).toBeVisible();
+      await expect(art).toHaveAttribute('alt',/.+/);
       expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`${path} at ${width}`).toBe(true);
-      if(width!==768)await page.screenshot({path:info.outputPath(`${kind}-${width}.png`)});
+      if(width!==768&&path==='/')await page.screenshot({path:info.outputPath(`home-visual-${width}.png`)});
     }
   }
 });
 
-test('header and footer destinations can be clicked; product links open a separate tab',async({page})=>{
+test('header and footer destinations can be clicked',async({page})=>{
   await page.setViewportSize({width:1440,height:1000});await page.goto('/');
   const hrefs=await page.locator('.nav-inner,#secondary-pages,.site-footer').locator('a[href]').evaluateAll(as=>as.map(a=>a.getAttribute('href')!).filter(h=>h.startsWith('/')));
   for(const href of new Set(hrefs)){
@@ -86,12 +87,5 @@ test('header and footer destinations can be clicked; product links open a separa
     let link=page.locator('.nav,.site-footer').locator(`a[href=${JSON.stringify(href)}]:visible`).first();
     if(!await link.count()){await page.getByRole('button',{name:'More',exact:true}).click();link=page.locator('#secondary-pages').locator(`a[href=${JSON.stringify(href)}]`)}
     await link.click();await expect(page).toHaveURL(new URL(href,'http://127.0.0.1:4178').href);await expect(page.getByRole('heading',{level:1})).toBeVisible();
-  }
-  for(const path of ['/for-aksh','/for-isi']){
-    await page.goto(path);const external=page.getByRole('main').locator('a[target="_blank"]');
-    await expect(external).toHaveAttribute('href',/^https:\/\//);await expect(external).toHaveAttribute('rel','noopener noreferrer');
-    // Verify the click/popup contract locally without depending on the external product's uptime.
-    await page.context().route('https://**/*',route=>route.fulfill({status:200,body:'External product navigation check'}));
-    const popupEvent=page.waitForEvent('popup');await external.click();const popup=await popupEvent;await popup.close();
   }
 });

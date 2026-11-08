@@ -19,7 +19,7 @@ test('recovery navigation, absent-token error and query removal never expose tok
  await expect(page.locator('meta[name=robots]')).toHaveAttribute('content','noindex, follow');
 });
 
-for(const path of ['/','/platform','/products','/research/dashboard','/science/graph','/research/validation']){
+for(const path of ['/','/platform','/biology','/research/dashboard','/science/graph','/research/validation']){
  test('mobile WCAG scan '+path,async({page},info)=>{
   await page.setViewportSize({width:390,height:844});await page.emulateMedia({reducedMotion:'reduce'});await page.goto(path);await expect(page.getByRole('heading',{level:1})).toBeVisible();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);

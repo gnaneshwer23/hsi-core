@@ -786,7 +786,7 @@ export function ScienceLanding() {
                 <Link className="hsi-editorial-button" to="/for-isi">
                   Meet ISI Research <span aria-hidden="true">↗</span>
                 </Link>
-                <Link className="hsi-editorial-textlink" to="/products">
+                <Link className="hsi-editorial-textlink" to="/platform">
                   Explore products ↗
                 </Link>
                 <Link className="hsi-editorial-textlink" to="/platform">
@@ -816,7 +816,7 @@ export function ScienceLanding() {
             <Link className="hsi-editorial-button" to="/for-isi">
               Continue to ISI Research <span aria-hidden="true">↗</span>
             </Link>
-            <Link className="hsi-editorial-textlink" to="/products">
+            <Link className="hsi-editorial-textlink" to="/platform">
               Explore products ↗
             </Link>
             <Link className="hsi-editorial-textlink" to="/how-it-works">

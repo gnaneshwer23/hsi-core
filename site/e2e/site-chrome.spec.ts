@@ -11,20 +11,20 @@ test('shared header stays usable without overlap across mobile and desktop width
 test('desktop more menu closes with Escape/outside click and reaches secondary destinations',async({page})=>{
  await page.setViewportSize({width:1440,height:900});await page.goto('/');const more=page.getByRole('button',{name:'More',exact:true});await more.click();await expect(more).toHaveAttribute('aria-expanded','true');
  await page.keyboard.press('Escape');await expect(more).toBeFocused();await expect(more).toHaveAttribute('aria-expanded','false');await more.click();await page.getByRole('heading',{level:1}).click();await expect(more).toHaveAttribute('aria-expanded','false');
- await more.click();await page.locator('#secondary-pages').getByRole('link',{name:'Technology',exact:true}).click();await expect(page).toHaveURL(/technology$/);await expect(more).toHaveAttribute('aria-expanded','false');
+ await more.click();await page.locator('#secondary-pages').getByRole('link',{name:'About',exact:true}).click();await expect(page).toHaveURL(/about$/);await expect(more).toHaveAttribute('aria-expanded','false');
 });
 test('mobile menu uses a clear icon, touch targets and working account/navigation links',async({page})=>{
  await page.setViewportSize({width:320,height:800});await page.goto('/science/graph');const toggle=page.getByRole('button',{name:'Open menu',exact:true});await expect(toggle.locator('svg')).toBeVisible();const box=(await toggle.boundingBox())!;expect(box.width).toBeGreaterThanOrEqual(44);expect(box.height).toBeGreaterThanOrEqual(44);await toggle.click();
- const drawer=page.getByRole('navigation',{name:'Mobile navigation'});await expect(drawer.getByRole('link',{name:'Sign up',exact:true})).toBeVisible();await drawer.getByRole('link',{name:'Research access',exact:true}).click();await expect(page).toHaveURL(/contact$/);await expect(drawer).toBeHidden();
+ const drawer=page.getByRole('navigation',{name:'Mobile navigation'});await expect(drawer.getByRole('link',{name:'Sign up',exact:true})).toBeVisible();await drawer.getByRole('link',{name:'Explore the Platform',exact:true}).click();await expect(page).toHaveURL(/platform$/);await expect(drawer).toBeHidden();
 });
-test('footer has product navigation, clear project links and accessible touch targets',async({page})=>{
+test('footer has company and trust navigation without legacy product catalogue links',async({page})=>{
  for(const width of [320,768,1440]){
   await page.setViewportSize({width,height:900});await page.goto('/');const footer=page.getByRole('contentinfo');await footer.scrollIntoViewIfNeeded();
-  await expect(footer.getByRole('navigation',{name:'Footer products'})).toBeVisible();await expect(footer.getByRole('link',{name:'All products',exact:true})).toHaveAttribute('href','/products');await expect(footer.locator('a[href="/status"],a[href="/docs"]')).toHaveCount(0);await expect(footer.getByRole('navigation',{name:'Research information'})).toBeVisible();
+  await expect(footer.getByRole('navigation',{name:'Footer company'})).toBeVisible();await expect(footer.getByRole('link',{name:'About',exact:true})).toHaveAttribute('href','/about');await expect(footer.getByRole('link',{name:'Aksh Health'})).toHaveCount(0);await expect(footer.locator('a[href="/status"],a[href="/docs"],a[href="/products"],a[href="/for-aksh"],a[href="/for-isi"]')).toHaveCount(0);await expect(footer.getByRole('navigation',{name:'Research information'})).toBeVisible();
   for(const a of await footer.locator('nav a').all())expect((await a.boundingBox())!.height).toBeGreaterThanOrEqual(44);
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
  }
- await page.getByRole('contentinfo').getByRole('link',{name:'All products',exact:true}).click();await expect(page).toHaveURL(/products$/);
+ await page.getByRole('contentinfo').getByRole('link',{name:'About',exact:true}).click();await expect(page).toHaveURL(/about$/);
 });
 test('primary and secondary actions remain readable and large enough on light and dark sections',async({page})=>{
  await page.goto('/');const heroActions=page.locator('.ed-actions .ed-button,.ed-actions .ed-text-link');const backgrounds=await heroActions.evaluateAll(els=>els.map(el=>getComputedStyle(el).backgroundColor));expect(backgrounds[0]).not.toBe(backgrounds[1]);const buttons=page.locator('.ed-button');

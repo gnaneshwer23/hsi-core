@@ -1,5 +1,5 @@
 import {lazy,Suspense} from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import {ResearchLanding,Solutions,EvidenceSafety,Pricing,Contact,Community} from "./pages/ExperiencePages";
 const GovernanceDashboard=lazy(()=>import("./pages/GovernanceDashboard").then(m=>({default:m.GovernanceDashboard})));
@@ -11,13 +11,13 @@ import { SignUp } from "./pages/SignUp";
 import { ResearchAccount } from "./pages/ResearchAccount";
 import { Platform } from "./pages/Platform";
 import { Technology } from "./pages/Technology";
+import { Biology } from "./pages/Biology";
+import { DrugDiscovery } from "./pages/DrugDiscovery";
+import { About } from "./pages/About";
 const Explore=lazy(()=>import("./pages/Explore").then(m=>({default:m.Explore})));
 const DiscoveryEngine=lazy(()=>import("./pages/DiscoveryEngine").then(m=>({default:m.DiscoveryEngine})));
 const Systems=lazy(()=>import("./pages/Systems").then(m=>({default:m.Systems})));
 const Evidence=lazy(()=>import("./pages/Evidence").then(m=>({default:m.Evidence})));
-import { ForIsi } from "./pages/ForIsi";
-import { ForAksh } from "./pages/ForAksh";
-import { ForTrials } from "./pages/ForTrials";
 import { HowItWorks } from "./pages/HowItWorks";
 const Roadmap=lazy(()=>import("./pages/Roadmap").then(m=>({default:m.Roadmap})));
 const Alignment=lazy(()=>import("./pages/Alignment").then(m=>({default:m.Alignment})));
@@ -26,7 +26,6 @@ const DiscoveryCentre=lazy(()=>import("./pages/DiscoveryCentre").then(m=>({defau
 const AkenoConsumer=lazy(()=>import("./pages/AkenoConsumer").then(m=>({default:m.AkenoConsumer})));
 const AkshAgents=lazy(()=>import("./pages/AkshAgents").then(m=>({default:m.AkshAgents})));
 const Curator=lazy(()=>import("./pages/Curator").then(m=>({default:m.Curator})));
-import { Products } from "./pages/Products";
 const Status=lazy(()=>import("./pages/Status").then(m=>({default:m.Status})));
 const ClinicalTimeline=lazy(()=>import("./pages/ClinicalTimeline").then(m=>({default:m.ClinicalTimeline})));
 const TrialsCriteria=lazy(()=>import("./pages/TrialsCriteria").then(m=>({default:m.TrialsCriteria})));
@@ -79,6 +78,9 @@ export default function App() {
         <Route path="research/account" element={<ResearchAccount />} />
         <Route path="platform" element={<Platform />} />
         <Route path="technology" element={<Technology />} />
+        <Route path="biology" element={<Biology />} />
+        <Route path="drug-discovery" element={<DrugDiscovery />} />
+        <Route path="about" element={<About />} />
         <Route path="how-it-works" element={<HowItWorks />} />
         <Route path="explore" element={<Explore />} />
         <Route path="science" element={<Science />} />
@@ -104,7 +106,10 @@ export default function App() {
         <Route path="science/connections" element={<ScienceConnections />} />
         <Route path="science/disease" element={<ScienceDisease />} />
         <Route path="discovery-engine" element={<DiscoveryEngine />} />
-        <Route path="products" element={<Products />} />
+        <Route path="products" element={<Navigate to="/platform" replace />} />
+        <Route path="for-isi" element={<Navigate to="/biology" replace />} />
+        <Route path="for-aksh" element={<Navigate to="/platform" replace />} />
+        <Route path="for-trials" element={<Navigate to="/solutions" replace />} />
         <Route path="status" element={<Status />} />
         <Route path="sources" element={<Sources />} />
         <Route path="clinical-timeline" element={<ClinicalTimeline />} />
@@ -116,9 +121,6 @@ export default function App() {
         <Route path="curator" element={<Curator />} />
         <Route path="akeno" element={<AkenoConsumer />} />
         <Route path="aksh-agents" element={<AkshAgents />} />
-        <Route path="for-isi" element={<ForIsi />} />
-        <Route path="for-aksh" element={<ForAksh />} />
-        <Route path="for-trials" element={<ForTrials />} />
         <Route path="roadmap" element={<Roadmap />} />
         <Route path="alignment" element={<Alignment />} />
         <Route path="docs" element={<Docs />} />

@@ -95,7 +95,41 @@
       ]
     }
   ],
+  "redirects": [
+    {
+      "source": "/products",
+      "destination": "/platform",
+      "permanent": true
+    },
+    {
+      "source": "/for-aksh",
+      "destination": "/platform",
+      "permanent": true
+    },
+    {
+      "source": "/for-isi",
+      "destination": "/biology",
+      "permanent": true
+    },
+    {
+      "source": "/for-trials",
+      "destination": "/solutions",
+      "permanent": true
+    }
+  ],
   "rewrites": [
+    {
+      "source": "/biology",
+      "destination": "/_pages/biology.html"
+    },
+    {
+      "source": "/drug-discovery",
+      "destination": "/_pages/drug-discovery.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/_pages/about.html"
+    },
     {
       "source": "/research/capabilities",
       "destination": "/_pages/research--capabilities.html"
@@ -209,10 +243,6 @@
       "destination": "/_pages/science--zoom.html"
     },
     {
-      "source": "/products",
-      "destination": "/_pages/products.html"
-    },
-    {
       "source": "/status",
       "destination": "/_pages/status.html"
     },
@@ -255,18 +285,6 @@
     {
       "source": "/aksh-agents",
       "destination": "/_pages/aksh-agents.html"
-    },
-    {
-      "source": "/for-isi",
-      "destination": "/_pages/for-isi.html"
-    },
-    {
-      "source": "/for-aksh",
-      "destination": "/_pages/for-aksh.html"
-    },
-    {
-      "source": "/for-trials",
-      "destination": "/_pages/for-trials.html"
     },
     {
       "source": "/roadmap",

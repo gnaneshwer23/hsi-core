@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import {authBaseUrl,hsiAuth} from "../lib/hsiAuth";
 import { PRODUCT_NAME } from "../lib/brand";
-import { PRIMARY_NAV_CTA, PRIMARY_NAV_LINKS, SECONDARY_NAV_LINKS, isPublicMarketingPath, isAccountPath } from "../lib/primaryNav";
+import { AUTHENTICATED_NAV_CTA, PRIMARY_NAV_CTA, PRIMARY_NAV_LINKS, SECONDARY_NAV_LINKS, isPublicMarketingPath, isAccountPath } from "../lib/primaryNav";
 
 const ctaArrow = (
   <svg className="nav-link-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true">
@@ -78,9 +78,9 @@ export function Nav() {
 
         <div className="nav-auth-actions"><Link to={signedIn?"/research/account":"/sign-in"} className="nav-sign-in">{signedIn?"Account":"Sign in"}</Link></div>
 
-        <Link to={PRIMARY_NAV_CTA.to} className="nav-cta">
+        <Link to={signedIn?AUTHENTICATED_NAV_CTA.to:PRIMARY_NAV_CTA.to} className="nav-cta">
           <span className="nav-cta-label">
-            {PRIMARY_NAV_CTA.label}
+            {signedIn?AUTHENTICATED_NAV_CTA.label:PRIMARY_NAV_CTA.label}
           </span>
           {ctaArrow}
         </Link>
@@ -110,12 +110,12 @@ export function Nav() {
         <NavLink to={signedIn?"/research/account":"/sign-in"} className="nav-drawer-sign-in" onClick={() => setOpen(false)}>{signedIn?"Account":"Sign in"}</NavLink>
         {!signedIn&&<NavLink to="/sign-up" className="nav-drawer-sign-in" onClick={() => setOpen(false)}>Sign up</NavLink>}
         <Link
-          to={PRIMARY_NAV_CTA.to}
+          to={signedIn?AUTHENTICATED_NAV_CTA.to:PRIMARY_NAV_CTA.to}
           className="nav-cta nav-drawer-cta"
           onClick={() => setOpen(false)}
         >
           <span className="nav-cta-label">
-            {PRIMARY_NAV_CTA.label}
+            {signedIn?AUTHENTICATED_NAV_CTA.label:PRIMARY_NAV_CTA.label}
           </span>
           {ctaArrow}
         </Link>

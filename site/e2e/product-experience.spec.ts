@@ -1,6 +1,6 @@
 import {test,expect} from "@playwright/test";
 import {readFile} from "node:fs/promises";
-const routes=["/","/platform","/technology","/products","/solutions","/research","/evidence-safety","/community","/pricing","/contact","/how-it-works","/science","/for-aksh","/for-isi","/for-trials"];
+const routes=["/","/platform","/technology","/biology","/drug-discovery","/solutions","/research","/evidence-safety","/community","/pricing","/contact","/how-it-works","/science","/about"];
 test("public pages have a single main/title, working navigation and no narrow-screen overflow",async({page},info)=>{
  test.setTimeout(90000);
  for(const route of routes){
@@ -11,24 +11,24 @@ test("public pages have a single main/title, working navigation and no narrow-sc
   if(route==="/")await page.screenshot({path:info.outputPath("home-mobile.png"),fullPage:true});
  }
 });
-test("home communicates the research workflow and supports accessible capability navigation",async({page})=>{
- await page.goto("/");await expect(page.getByRole("heading",{level:1})).toContainText("See the biology.");await expect(page.getByRole("img",{name:/Sculptural view of human anatomy/})).toBeVisible();
- const tabs=page.getByRole("tablist",{name:"Research capabilities"});await tabs.getByRole("tab",{name:"Evidence"}).focus();await page.keyboard.press("ArrowRight");await expect(tabs.getByRole("tab",{name:"Connections"})).toHaveAttribute("aria-selected","true");await expect(page.getByRole("tabpanel")).toContainText("Explore biology");
- await page.getByRole("tabpanel").getByRole("link",{name:/Explore the science/}).click();await expect(page).toHaveURL(/science$/);
+test("home communicates connected biology and the research stages",async({page})=>{
+ await page.goto("/");await expect(page.getByRole("heading",{level:1})).toContainText("Biology is connected.");
+ await expect(page.getByRole("img",{name:/Bioluminescent cell connected/})).toBeVisible();
+ await expect(page.getByRole("main")).toContainText("Biological landscape");
+ await page.getByRole("link",{name:/Explore the research workflow/}).click();await expect(page).toHaveURL(/platform$/);
 });
 test("mobile menu opens, closes with Escape and connects public destinations",async({page})=>{
  await page.setViewportSize({width:390,height:844});await page.goto("/");const menu=page.locator(".nav-toggle");await menu.click();await expect(menu).toHaveAttribute("aria-expanded","true");
  await page.keyboard.press("Escape");await expect(menu).toHaveAttribute("aria-expanded","false");await expect(menu).toBeFocused();
- await menu.click();await page.locator("#primary-menu").getByRole("link",{name:"Evidence & safety",exact:true}).click();await expect(page).toHaveURL(/evidence-safety$/);
- await expect(page.getByRole("heading",{level:1})).toContainText("Confidence begins");
+ await menu.click();await page.locator("#primary-menu").getByRole("link",{name:"Collaborate",exact:true}).click();await expect(page).toHaveURL(/contact$/);
+ await expect(page.getByRole("heading",{level:1})).toContainText("collaboration");
 });
 test("evidence overview explains source context without presenting unreviewed records as results",async({page})=>{
- await page.goto("/evidence-safety");await expect(page.getByRole("main")).toContainText("Sources and candidate claims require appropriate reuse rights");
+ await page.goto("/evidence-safety");await expect(page.getByRole("main")).toContainText("Engineering readiness is not");
  await page.getByRole("group",{name:"Understand evidence states"}).getByRole("button",{name:"Supported",exact:true}).click();await expect(page.locator(".xp-evidence-legend")).toContainText("Not calibrated");
- await page.getByRole("link",{name:"Follow the research workflow",exact:true}).click();await expect(page).toHaveURL(/how-it-works$/);
 });
 test("public access paths lead to the real account process without a pretend submission",async({page})=>{
- const posts:string[]=[];page.on("request",r=>{if(r.method()==="POST")posts.push(r.url())});await page.goto("/pricing");await page.getByRole("main").getByRole("link",{name:"Research access",exact:true}).click();await expect(page).toHaveURL(/contact$/);
+ const posts:string[]=[];page.on("request",r=>{if(r.method()==="POST")posts.push(r.url())});await page.goto("/pricing");await page.getByRole("main").getByRole("link",{name:"Collaborate",exact:true}).click();await expect(page).toHaveURL(/contact$/);
  await expect(page.getByRole("main")).toContainText("permissions are provisioned independently");await page.getByRole("link",{name:"Create an account",exact:true}).click();await expect(page).toHaveURL(/sign-up$/);expect(posts).toEqual([]);
 });
 test("community drafts allow source-linked replies, flags and export without fake publication",async({page})=>{
@@ -50,8 +50,8 @@ test("graph controls, bookmarks and SVG/PNG/JSON exports preserve draft scope",a
  await frame.getByRole("button",{name:"Pan graph right",exact:true}).click();await page.getByLabel("Depth",{exact:true}).selectOption("2");await expect(page).toHaveURL(/depth=2/);await page.reload();await expect(page.getByLabel("Depth",{exact:true})).toHaveValue("2");
  for(const format of ["SVG","PNG","JSON"]){const event=page.waitForEvent("download");await frame.getByRole("button",{name:"Download graph "+format,exact:true}).click();const d=await event;expect(d.suggestedFilename()).toContain("."+format.toLowerCase());if(format==="JSON"){const p=JSON.parse(await readFile((await d.path())!,"utf8"));expect(p.scientificApproval).toBe(false);expect(p.scope).toBe("public_educational_draft")}}
 });
-test("reduced-motion mode retains functional capability navigation",async({page})=>{
- await page.emulateMedia({reducedMotion:"reduce"});await page.goto("/");await page.getByRole("tab",{name:"Review",exact:true}).click();await expect(page.getByRole("tabpanel")).toContainText("independent review");await expect(page.locator(".ed-brief")).toHaveCSS("transform","none");
+test("reduced-motion mode retains readable home content",async({page})=>{
+ await page.emulateMedia({reducedMotion:"reduce"});await page.goto("/");await expect(page.getByRole("heading",{level:1})).toContainText("Biology is connected.");await expect(page.getByRole("main")).toContainText("Research-gap investigation");
 });
 
 test("internal validation opens the actual trial view and PDF printing keeps labels and inert text",async({page})=>{
@@ -62,4 +62,11 @@ test("internal validation opens the actual trial view and PDF printing keeps lab
  expect(await page.evaluate(()=>(window as unknown as {printCalled:boolean}).printCalled)).toBe(true);
  await expect(page.locator("#hsi-print-document")).toContainText("Synthetic software-validation output only");await expect(page.locator("#hsi-print-document")).toContainText("No scientific conclusion");
  await page.evaluate(()=>window.dispatchEvent(new Event("afterprint")));await expect(page.locator("#hsi-print-document")).toHaveCount(0);
+});
+
+test("legacy product catalogue paths redirect into HSI surfaces",async({page})=>{
+ await page.goto("/products");await expect(page).toHaveURL(/platform$/);
+ await page.goto("/for-isi");await expect(page).toHaveURL(/biology$/);
+ await page.goto("/for-aksh");await expect(page).toHaveURL(/platform$/);
+ await page.goto("/for-trials");await expect(page).toHaveURL(/solutions$/);
 });
