@@ -69,7 +69,22 @@ above. Mixing a staging Auth host with a production database (or the reverse) yi
 
 Never point HSI Auth or `HSI_DATABASE_URL` at ISI `autumn-snow` / `ep-blue-salad`.
 After changing Auth URLs, redeploy so the Vite-built `VITE_HSI_AUTH_BASE_URL` matches,
-sign out, and sign in again on that origin (branch cookies do not transfer).
+then sign out on that origin (branch cookies do not transfer).
+
+**Auth branch cutover — accounts do not migrate.** Neon Auth users live in
+`neon_auth."user"` / `session` / `account` on the **same** branch compute as the
+Auth URL. Switching production from staging Auth (`ep-sweet-hill-zasb0lni`) to
+production Auth (`ep-restless-dew-zas989pv`) leaves production `neon_auth` empty
+until someone registers there. Sign-in with a password that only existed on the
+old Auth returns the normal “Email address or password is incorrect” response —
+that is expected, not a mis-pointed env, when `/api/research/health` already
+shows matching `ep-restless-dew-zas989pv` Auth and database prefixes.
+
+**Recovery:** create a new account on `/sign-up` against the current Auth (then
+verify email). Password reset cannot move or recreate users from a previous Auth
+branch; it only helps after an account already exists on the current Auth. Do
+not invent passwords, grant `hsi_research_access` without a real `neon_auth`
+user id, or point migrations at ISI Neon.
 
 The server can fall back from `HSI_AUTH_BASE_URL` to the existing public
 `VITE_HSI_AUTH_BASE_URL`, but an explicit matching server setting is clearer.

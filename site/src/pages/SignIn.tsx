@@ -1,5 +1,6 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { AUTH_ERROR_MESSAGES } from "../../../src/authErrors";
 import { authBaseUrl, hsiAuth } from "../lib/hsiAuth";
 import "../styles/sign-in.css";
 
@@ -38,6 +39,7 @@ export function SignIn() {
     <label htmlFor="hsi-password">Password</label>
     <input id="hsi-password" type="password" autoComplete="current-password" required value={password} onChange={e=>setPassword(e.target.value)} disabled={pending||checking}/>
     {error&&<p role="alert" className="hsi-auth-error">{error}</p>}
+    {error===AUTH_ERROR_MESSAGES.INVALID_EMAIL_OR_PASSWORD&&<p className="hsi-auth-hint">If you have not registered on this authentication service yet, <Link to="/sign-up">create an account</Link>. Password reset only works for accounts that already exist here.</p>}
     <button type="submit" disabled={pending||checking}>{pending?"Signing in…":checking?"Checking session…":"Sign in securely"}</button>
    </form>:<div className="hsi-sign-in-status" role="status"><strong>Research sign-in is not enabled on this deployment.</strong><p>The authentication endpoint must be approved and configured before credentials can be accepted. Please contact the HSI administrator.</p></div>}
   <p className="hsi-auth-switch"><Link to="/forgot-password">Forgot your password?</Link></p>
