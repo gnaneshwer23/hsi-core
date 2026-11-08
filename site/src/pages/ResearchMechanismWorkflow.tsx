@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {Link} from "react-router-dom";
+import {InvestigationProgress} from "../components/InvestigationProgress";
 import {
   RESEARCH_MECHANISM_STEPS,
   buildResearchMechanismWorkflow,
@@ -150,6 +151,10 @@ export function ResearchMechanismWorkflowPage() {
         Roadmap R3 Connected Research Workbench. UI probes consume real backend responses. Inspectable
         passages appear only when the authenticated API returns them — never invented client-side.
       </p>
+      <InvestigationProgress
+        investigationId={workflow.syntheticFixture.investigationId}
+        note="Shared 01–06 chrome with the decision workbench. Probe APIs here; read the continuous outcome sections on the workbench for the same investigation ID. Live Ask→export writes stay parked (#5)."
+      />
       <p>
         <Link to="/research/dashboard">Research workspace</Link>
         {" · "}
