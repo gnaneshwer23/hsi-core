@@ -14,7 +14,7 @@ Honesty: provider OA/CC ≠ corpus reuse · `humanCleared=0` · `passageImported
 | N1 attestation residual (#2) | [`N1_PASSAGE_RIGHTS_ATTESTATION_CHECKLIST.md`](./N1_PASSAGE_RIGHTS_ATTESTATION_CHECKLIST.md) |
 | R1 packet inventory | `research/domain-graph/r1/source-packets.v1.json` |
 | Harness | `bun run r1:prepare` · `bun run r1:check` |
-| Gold Suite (R2; not filled here) | [`GOLD_EVALUATION_SUITE_V1.md`](./GOLD_EVALUATION_SUITE_V1.md) |
+| Gold Suite (R2; eng deepen, not filled) | [`R2_GOLD_EVALUATION_SUITE_CHECKLIST.md`](./R2_GOLD_EVALUATION_SUITE_CHECKLIST.md) · `bun run r2:check` |
 | Dataset lifecycle | Roadmap §2 — scaffold documented; SME gold = R2 |
 
 ## A. What engineering already automated

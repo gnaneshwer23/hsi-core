@@ -182,6 +182,8 @@
     "n7n8:real-data-prep:check": "bun --no-env-file scripts/n7n8-real-data-prep.ts --check",
     "r1:prepare": "bun --no-env-file scripts/r1-source-packets.ts",
     "r1:check": "bun --no-env-file scripts/r1-source-packets.ts --check",
+    "r2:prepare": "bun --no-env-file scripts/r2-gold-evaluation-suite.ts",
+    "r2:check": "bun --no-env-file scripts/r2-gold-evaluation-suite.ts --check",
     "fixture:synthetic-e2e:check": "bun --no-env-file scripts/check-synthetic-e2e-fixture.ts",
     "fixture:synthetic-e2e:n5-adapter": "bun --no-env-file scripts/check-synthetic-e2e-n5-adapter.ts",
     "fixture:synthetic-e2e:n4-adapter": "bun --no-env-file scripts/check-synthetic-e2e-n4-adapter.ts",
