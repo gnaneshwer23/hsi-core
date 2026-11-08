@@ -1,8 +1,8 @@
 # HSI production-readiness audit receipt
 
 **Audited tip:** `482db110c0efa0b4d3a9166b4f97cd8bcd53b38c` (`482db11`) · `origin/main`  
-**Follow-through tip:** _(stamp after Audit #9 commit)_ — Phases 1–9 eng stamps; #9 = N5 live public-registry refresh ENG CLEARED / sci BLOCKED (`confirmedEligible=false`); #8 partner-lock FOUNDER BLOCKED; Auth A www user-confirmed (not writesEnabled / not Gate C)  
-**Prior #9 feature tip:** _(this series)_ — N5 live CT.gov snapshot refresh + honesty harness  
+**Follow-through tip:** `feef64b1363370561dd4c3f0a12e99ed4be720ee` (`feef64b`) — Phases 1–9 eng stamps; #9 = N5 live public-registry refresh ENG CLEARED / sci BLOCKED (`confirmedEligible=false`); #8 partner-lock FOUNDER BLOCKED; Auth A www user-confirmed (not writesEnabled / not Gate C)  
+**Prior #9 feature tip:** `feef64b1363370561dd4c3f0a12e99ed4be720ee` (`feef64b`) — N5 live CT.gov snapshot refresh + honesty harness  
 **Prior #8 feature tip:** `491d236eba77a527bc933b2987a5f22ff704e7f8` (`491d236`) — partner-lock empty MoU slots + checklist  
 **Prior #7 tip:** `0f6634bd1d1d66f56bc2d56fb134b6df6751c2e8` (`0f6634b`) — N6 pilot-prep + Neon ledger helpers  
 **Prior #6 tip:** `15871a413e68f119be282294924a18fcbfb9d183` (`15871a4`) — 016/017 already on red-wave  
