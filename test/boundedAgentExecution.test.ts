@@ -6,9 +6,11 @@ import {
   createMemoryCheckpointStore,
   createMemoryFencedArtifactStore,
   inspectUntrustedRetrievedText,
+  projectInvestigationExecutionRecord,
   reconstructBoundedArtifacts,
   runBoundedAgentExecution,
   BOUNDED_STAGE_IDS,
+  INVESTIGATION_EXECUTION_RECORD_SCHEMA,
 } from "../src/evidence/boundedAgentExecution";
 import {createMemoryDynamicEvidencePersistStore} from "../src/evidence/dynamicEvidencePersistence";
 import {createMemoryRetrievalCache} from "../src/evidence/dynamicEvidenceRetrieval";
@@ -136,6 +138,20 @@ describe("bounded agent execution durable traces", () => {
       expect(candidate.axes.curationReview).toBe("draft");
       expect(candidate.graphPromotable).toBe(false);
     }
+
+    const executionRecord = projectInvestigationExecutionRecord(result);
+    expect(executionRecord.schemaVersion).toBe(INVESTIGATION_EXECUTION_RECORD_SCHEMA);
+    expect(executionRecord.investigation_id).toBe("inv-bounded-1");
+    expect(executionRecord.steps).toHaveLength(BOUNDED_STAGE_IDS.length);
+    expect(executionRecord.steps.map((s) => s.stage_id)).toEqual([...BOUNDED_STAGE_IDS]);
+    expect(executionRecord.artifacts.length).toBeGreaterThan(0);
+    expect(executionRecord.resource_budget).not.toBeNull();
+    expect(executionRecord.resource_budget?.max_stages).toBe(BOUNDED_STAGE_IDS.length);
+    expect(executionRecord.review_status.scientific_approval).toBe(false);
+    expect(executionRecord.review_status.gate_c_auto_approve).toBe(false);
+    expect(executionRecord.review_status.scientific_validity_claimed).toBe(false);
+    expect(executionRecord.honesty.projectedFromBoundedAgent).toBe(true);
+    expect(executionRecord.honesty.notAParallelOrchestrator).toBe(true);
   });
 
   test("cancellation stops new work and leaves prior stage traces visible", async () => {

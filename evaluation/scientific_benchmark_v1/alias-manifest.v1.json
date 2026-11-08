@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "hsi-scientific-benchmark-v1-alias-1",
+  "path": "evaluation/scientific_benchmark_v1",
+  "aliases": {
+    "canonicalPath": "evaluation/independent-evaluation",
+    "suiteManifestRelativePath": "suite-manifest.v1.json",
+    "statusRelativePath": "STATUS.json",
+    "suiteVersion": "1.1.0",
+    "inventoryHash": "317ab621dafb4a4108593fff89e664c06334663415f80f2b2860c813dde014a7"
+  },
+  "engineeringScaffold": "CLEARED",
+  "scientificAcceptance": "BLOCKED",
+  "rightsAcceptance": "BLOCKED",
+  "liveJourneyAcceptance": "BLOCKED",
+  "productionReadinessClaimed": false,
+  "scientificValidityClaimed": false,
+  "liveSuccessClaimed": false,
+  "ciGreenIsNotScientificValidity": true,
+  "inventSmeScoresPermitted": false,
+  "smeSlotsFilled": 0,
+  "liveSuiteGate": {
+    "envFlag": "HSI_LIVE_INTEGRATION_EVAL",
+    "requireExplicitOptIn": true,
+    "ciMustNotEnable": true,
+    "defaultStatus": "GATED_NOT_RUN"
+  },
+  "scorecardDimensionIds": [
+    "citation_correctness",
+    "citation_supports_statement",
+    "biological_context_accuracy",
+    "contradiction_retrieval",
+    "gap_assessment_precision",
+    "abstention_quality",
+    "unsupported_claim",
+    "brief_completeness",
+    "expert_rated_research_usefulness"
+  ],
+  "scorecardValuesAllNull": true,
+  "representativeQuestionDomains": [
+    "autoimmune",
+    "inflammatory",
+    "translational",
+    "fibrosis",
+    "gut_immune_metabolic",
+    "contradiction",
+    "gap",
+    "abstention"
+  ],
+  "researcherWorkflowComparison": {
+    "status": "scaffold",
+    "sameQuestion": true,
+    "comparableInformationAccess": true,
+    "reportQualitySeparately": true,
+    "reportTimeBudgetSeparately": true,
+    "qualityScoresInvented": false,
+    "timeBudgetsInvented": false
+  },
+  "humanQueueBlocked": {
+    "rightsQueue2": "PARKED",
+    "smeQueue4": "PARKED",
+    "liveJourneyQueue5": "PARKED"
+  },
+  "honesty": {
+    "noParallelEvalPlatform": true,
+    "noInventedSmeGold": true,
+    "noFakeLiveSuccess": true,
+    "noGateCAutoApprove": true,
+    "noInventedMoU": true,
+    "noLiveCdsPhi": true,
+    "fixturesAreNotLiveScience": true
+  },
+  "stopNote": "scientific_benchmark_v1 is an alias of independent-evaluation. Empty SME ratings; live gated; #2/#4/#5 PARKED. Not scientific validity or production readiness.",
+  "inventoryHash": "6edf5c372a870592d07eb3f1df0cb77c732361eec84347ac4f6d9d50d1cd8ad2"
+}

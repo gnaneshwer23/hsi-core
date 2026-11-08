@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "hsi-scientific-benchmark-v1-status-1",
+  "path": "evaluation/scientific_benchmark_v1",
+  "generatedAt": "2026-11-08T23:55:00.000Z",
+  "aliasesCanonicalPath": "evaluation/independent-evaluation",
+  "canonicalInventoryHash": "317ab621dafb4a4108593fff89e664c06334663415f80f2b2860c813dde014a7",
+  "engineeringScaffold": "CLEARED",
+  "scientificAcceptance": "BLOCKED",
+  "rightsAcceptance": "BLOCKED",
+  "liveJourneyAcceptance": "BLOCKED",
+  "productionReadinessClaimed": false,
+  "scientificValidityClaimed": false,
+  "liveSuccessClaimed": false,
+  "smeSlotsFilled": 0,
+  "scorecardDimensions": 9,
+  "representativeQuestionDomains": [
+    "autoimmune",
+    "inflammatory",
+    "translational",
+    "fibrosis",
+    "gut_immune_metabolic",
+    "contradiction",
+    "gap",
+    "abstention"
+  ],
+  "humanQueueBlocked": {
+    "rightsQueue2": "PARKED",
+    "smeQueue4": "PARKED",
+    "liveJourneyQueue5": "PARKED"
+  },
+  "inventoryHash": "6edf5c372a870592d07eb3f1df0cb77c732361eec84347ac4f6d9d50d1cd8ad2",
+  "stopNote": "scientific_benchmark_v1 is an alias of independent-evaluation. Empty SME ratings; live gated; #2/#4/#5 PARKED. Not scientific validity or production readiness.",
+  "note": "Alias of independent-evaluation. Not a parallel eval platform. #2/#4/#5 PARKED."
+}

@@ -37,10 +37,11 @@ Connected or partial library paths from PRs 1–7, exercised by deterministic co
 
 Deterministic PR 8 additions:
 
-- Explicit scorecard **fields** (null values) for citation correctness, citation→statement support, biological context, contradiction retrieval, gap-assessment precision, abstention quality, expert-rated usefulness.
+- Explicit scorecard **fields** (null values) for citation correctness, citation→statement support, biological context, contradiction retrieval, gap-assessment precision, abstention quality, unsupported-claim, brief completeness, expert-rated usefulness.
 - Orthogonal **failure-mode contracts**: real source identity · statement support · species/tissue/context match · overall conclusion justified.
-- Unpinned representative walkthrough questions (autoimmune / inflammatory / translational) that do **not** embed living-evidence or SSC fixture PMIDs/NCTs/MONDO pins.
+- Unpinned representative walkthrough questions across autoimmune / inflammatory / translational / fibrosis / gut–immune–metabolic / contradiction / gap / abstention that do **not** embed living-evidence or SSC fixture PMIDs/NCTs/MONDO pins.
 - Researcher-workflow comparison scaffold: same questions, comparable information access; **quality and time budgets recorded separately** (slots empty).
+- Named path `evaluation/scientific_benchmark_v1/` is an **alias** of `evaluation/independent-evaluation/` — not a parallel evaluation platform. Science remains BLOCKED (`smeSlotsFilled=0`; `liveSuccessClaimed=false`).
 
 ---
 

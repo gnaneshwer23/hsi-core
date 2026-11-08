@@ -14,9 +14,9 @@
   "liveSuiteStatus": "GATED_NOT_RUN",
   "deterministicSuiteStatus": "ENGINEERING_CLEARED",
   "scientificSuiteStatus": "AWAITING_SME",
-  "scorecardDimensions": 7,
+  "scorecardDimensions": 9,
   "failureModeContracts": 4,
-  "walkthroughQuestions": 5,
+  "walkthroughQuestions": 8,
   "parkedHumanResiduals": [
     "#2 N1 rights",
     "#4 SMEs",
@@ -25,7 +25,7 @@
   ],
   "gateCAutoApprove": false,
   "legalBinding": false,
-  "inventoryHash": "0b3a25b1c134bb3e3c5464206e8407b2835cc21129ff5eb7e55eb7d1696742a5",
-  "stopNote": "PR 8 eng scaffold complete. Three suites stay separate. Deterministic CI ≠ live success ≠ scientific validity. SME gold slots empty; live integration gated; production readiness not claimed. Human queue #2/#4/#5 remain PARKED.",
+  "inventoryHash": "317ab621dafb4a4108593fff89e664c06334663415f80f2b2860c813dde014a7",
+  "stopNote": "Independent evaluation v1.1 scaffold (scientific_benchmark_v1 alias). Three suites stay separate. Deterministic CI ≠ live success ≠ scientific validity. SME gold slots empty; live integration gated; production readiness not claimed. Human queue #2/#4/#5 remain PARKED.",
   "note": "Three suites stay separate. Deterministic CI ≠ live success ≠ scientific validity. SME slots empty; live gated."
 }

@@ -15,6 +15,9 @@ import {
 import {SSC_INITIAL_PMIDS} from "../src/evidenceIngestion";
 import {
   REPRESENTATIVE_WALKTHROUGH_QUESTIONS,
+  REQUIRED_BENCHMARK_QUESTION_DOMAINS,
+  SCIENTIFIC_SCORECARD_DIMENSION_COUNT,
+  assertBenchmarkDomainCoverage,
   assertQuestionsAvoidPinnedFixtures,
   buildIndependentEvaluationSuites,
   buildLiveIntegrationAttemptReceipt,
@@ -51,7 +54,7 @@ describe("PR 8 independent evaluation suites — deterministic", () => {
     expect(manifest.suites.live.gate.ciMustNotEnable).toBe(true);
     expect(manifest.suites.scientific.status).toBe("AWAITING_SME");
     expect(manifest.suites.scientific.smeSlotsFilled).toBe(0);
-    expect(manifest.suites.scientific.scorecard).toHaveLength(7);
+    expect(manifest.suites.scientific.scorecard).toHaveLength(SCIENTIFIC_SCORECARD_DIMENSION_COUNT);
     expect(manifest.suites.scientific.scorecard.every((s) => s.value === null)).toBe(true);
     expect(manifest.suites.scientific.failureModeContracts).toHaveLength(4);
     expect(manifest.suites.scientific.expertReviewSlots.every((s) => !s.filled)).toBe(true);
@@ -68,6 +71,8 @@ describe("PR 8 independent evaluation suites — deterministic", () => {
       "contradiction_retrieval",
       "gap_assessment_precision",
       "abstention_quality",
+      "unsupported_claim",
+      "brief_completeness",
       "expert_rated_research_usefulness",
     ]);
     const modes = manifest.suites.scientific.failureModeContracts.map((m) => m.modeId);
@@ -85,8 +90,9 @@ describe("PR 8 independent evaluation suites — deterministic", () => {
     }
   });
 
-  test("walkthrough questions avoid living-evidence and SSC fixture pins", () => {
+  test("walkthrough questions cover benchmark domains and avoid fixture pins", () => {
     assertQuestionsAvoidPinnedFixtures(REPRESENTATIVE_WALKTHROUGH_QUESTIONS);
+    assertBenchmarkDomainCoverage(REPRESENTATIVE_WALKTHROUGH_QUESTIONS);
     const pins = [
       ...LIVING_EVIDENCE_PMID_PINS,
       ...SSC_INITIAL_PMIDS,
@@ -99,15 +105,9 @@ describe("PR 8 independent evaluation suites — deterministic", () => {
         expect(q.question.includes(pin)).toBe(false);
       }
     }
-    expect(REPRESENTATIVE_WALKTHROUGH_QUESTIONS.some((q) => q.domain === "autoimmune")).toBe(
-      true,
-    );
-    expect(REPRESENTATIVE_WALKTHROUGH_QUESTIONS.some((q) => q.domain === "inflammatory")).toBe(
-      true,
-    );
-    expect(REPRESENTATIVE_WALKTHROUGH_QUESTIONS.some((q) => q.domain === "translational")).toBe(
-      true,
-    );
+    for (const domain of REQUIRED_BENCHMARK_QUESTION_DOMAINS) {
+      expect(REPRESENTATIVE_WALKTHROUGH_QUESTIONS.some((q) => q.domain === domain)).toBe(true);
+    }
   });
 
   test("researcher workflow comparison keeps quality and time separate and empty", () => {
