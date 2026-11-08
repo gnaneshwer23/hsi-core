@@ -166,7 +166,8 @@
     "n7:check": "bun --no-env-file scripts/n7-experiment-ledger.ts --check",
     "n8:adapter": "bun --no-env-file scripts/n8-specialised-model-adapter.ts",
     "n8:check": "bun --no-env-file scripts/n8-specialised-model-adapter.ts --check",
-    "fixture:synthetic-e2e:check": "bun --no-env-file scripts/check-synthetic-e2e-fixture.ts"
+    "fixture:synthetic-e2e:check": "bun --no-env-file scripts/check-synthetic-e2e-fixture.ts",
+    "fixture:synthetic-e2e:n5-adapter": "bun --no-env-file scripts/check-synthetic-e2e-n5-adapter.ts"
   },
   "engines": {
     "node": ">=20"

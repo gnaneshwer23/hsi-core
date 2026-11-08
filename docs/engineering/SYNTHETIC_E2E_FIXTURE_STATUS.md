@@ -35,9 +35,27 @@ Verify with digests in `MANIFEST.json` → `pin`.
 
 ```sh
 bun run fixture:synthetic-e2e:check
+bun run fixture:synthetic-e2e:n5-adapter
 bun --no-env-file test test/syntheticE2eFixture.test.ts
+bun --no-env-file test test/syntheticE2eN5Adapter.test.ts
 ```
 
-## Residual (move 3)
+## Move 3 — N5-adjacent TS adapter slice
 
-Still out of scope here: implement or stub the proposed `/v1/synthetic/*` HTTP surface, wire an external Python CLI runner, or absorb any large data/SQLite artifacts. Any later HTTP work must retain synthetic-only honesty and must not claim live eligibility, CDS, Gate C, or Neon cross-wiring.
+**Shipped:** thin adapter `src/evidence/syntheticE2eN5Adapter.ts` maps vendored sample `trial_screening` (1 patient × 1 protocol version × criteria) into Path B criterion states with forced honesty:
+
+| Pack | Path B / N5 honesty |
+| --- | --- |
+| truth `true` | `satisfied` (screening contribution `candidate`) |
+| truth `false` | `not_satisfied` (screening contribution `excluded`) |
+| truth `unknown` | `unknown` (screening contribution `needs_review`) |
+| status `candidate` / `excluded` / `needs_review` | aggregate correspondence only — never `patientEligible` / `confirmedEligible` |
+| Forced flags | `dataClass=synthetic`, `containsPhi=false`, both eligibility flags `false` |
+
+Check: `bun run fixture:synthetic-e2e:n5-adapter` · Tests: `test/syntheticE2eN5Adapter.test.ts`
+
+Honesty banners from `synthetic_notice` + screening `notice` are retained. Scientific acceptance stays **BLOCKED**.
+
+## Residual
+
+Still out of scope: implement or stub the proposed `/v1/synthetic/*` HTTP surface, wire an external Python CLI runner, or absorb any large data/SQLite artifacts. Any later HTTP work must retain synthetic-only honesty and must not claim live eligibility, CDS, Gate C, or Neon cross-wiring.
