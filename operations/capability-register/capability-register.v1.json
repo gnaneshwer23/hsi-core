@@ -55,11 +55,13 @@
         "src/livingHealthKnowledgeGraph.ts",
         "src/researchContracts.ts",
         "src/graphRelease.ts",
+        "src/evidence/livingEvidenceExpansion.ts",
+        "src/evidence/openTargetsLookup.ts",
         "site/src/components/ResearchOutcomePanel.tsx",
         "site/src/components/InvestigationProgress.tsx"
       ],
-      "gap": "Broader disease atlas still thin; journey binds graph-context to investigation UI",
-      "nextAction": "Expand living evidence (step 03); keep contracts"
+      "gap": "Broader disease atlas still thin; relationship candidates not human-promoted; passages rights-blocked",
+      "nextAction": "Keep fail-closed passages; broaden pins after human #2"
     },
     {
       "id": "F-03",
@@ -198,11 +200,13 @@
       "evidence": [
         "src/immuneMechanismInvestigation.ts",
         "src/interrogativeQuestionEngine.ts",
+        "src/researchOutcome.ts",
+        "src/evidence/livingEvidenceExpansion.ts",
         "site/src/components/ResearchOutcomePanel.tsx",
         "site/src/lib/investigationSections.ts"
       ],
-      "gap": "Landscape section from mechanism map + saved answer; not curated for arbitrary questions",
-      "nextAction": "Keep honesty; expand packs via step 03"
+      "gap": "Landscape + bound livingEvidence metadata; not curated synthesis for arbitrary questions",
+      "nextAction": "Keep honesty; broaden domain pins after rights"
     },
     {
       "id": "O-02",
@@ -444,10 +448,13 @@
       "evidence": [
         "src/graphRelease.ts",
         "src/interrogativeEvidenceEngine.ts",
-        "src/researchConnectedWorkbench.ts"
+        "src/researchConnectedWorkbench.ts",
+        "src/evidence/livingEvidenceExpansion.ts",
+        "src/evidence/europePmcBibliographicLookup.ts",
+        "src/evidence/openTargetsLookup.ts"
       ],
-      "gap": "Fresh ingest incomplete",
-      "nextAction": "Living evidence expansion (step 03)"
+      "gap": "Metadata ingest connected; passage-linked claims still rights-blocked (#2)",
+      "nextAction": "Human #2 rights then passage-linked ledger; step 04 gap verification"
     },
     {
       "id": "E-BWD",

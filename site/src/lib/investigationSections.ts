@@ -5,7 +5,7 @@ export const INVESTIGATION_SECTIONS = [
     anchor: "inv-01",
     short: "Landscape",
     title: "Scientific landscape",
-    detail: "Immune-cell involvement, mechanisms and therapies from the bound release — not a new synthesis.",
+    detail: "Bound release landscape plus living-evidence metadata refresh when PMIDs overlap pins — not a new synthesis.",
   },
   {
     id: "02",

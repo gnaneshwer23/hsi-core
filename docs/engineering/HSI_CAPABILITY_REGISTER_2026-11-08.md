@@ -1,9 +1,9 @@
 # HSI Capability Register — 2026-11-08
 
-**Execution step:** 02 Unified research journey (UI reconnect over existing APIs)  
+**Execution step:** 03 Living evidence and graph expansion (metadata ingest + outcome bind)  
 **Master spec:** [`../product/HSI_DEFINITIVE_PRODUCT_SPEC.md`](../product/HSI_DEFINITIVE_PRODUCT_SPEC.md)  
 **Machine-readable:** [`../../operations/capability-register/capability-register.v1.json`](../../operations/capability-register/capability-register.v1.json)  
-**Tip audited:** step 01 merged (`9e75a00`); step 02 on `eng/step-02-unified-research-journey`
+**Tip audited:** step 01–02 on `main` (`9e75a00`, `#68`); step 03 on `eng/step-03-living-evidence-graph`
 
 ## Status vocabulary
 
@@ -31,7 +31,7 @@ A row may list a primary status plus honesty tags. **Documents ≠ scientific va
 | ID | Capability | Status | Evidence (paths) | Gap vs scientist outcome | Next eng action |
 |----|------------|--------|------------------|--------------------------|-----------------|
 | F-01 | Immune-cell spine + relationship vocabulary | `implemented` | `src/immuneCellSpine.ts`, publish packs, tests | Coverage thin beyond RA/SSc starters; not full disease atlas | Curate broader cell/tissue/disease binds — no rebuild |
-| F-02 | Living graph + evidence/claim contracts | `implemented` · `connected` | `src/livingHealthKnowledgeGraph.ts`, `src/researchContracts.ts`, `src/graphRelease.ts`, outcome panel | Graph-context bound in continuous investigation UI; atlas depth still thin | Expand living evidence (step 03) |
+| F-02 | Living graph + evidence/claim contracts | `implemented` · `connected` | `src/livingHealthKnowledgeGraph.ts`, `src/researchContracts.ts`, `src/graphRelease.ts`, `src/evidence/livingEvidenceExpansion.ts`, outcome panel | Living-evidence metadata expansion bound when PMIDs overlap pins; atlas depth still thin; candidates not graph-promoted | Keep fail-closed passages; broaden pins after rights |
 | F-03 | Source provenance, versions, review records | `implemented` · `connected` | ledger stores + outcome reverse-trace UI | Reverse trace first-class in outcome 01–06; not every science page | Keep claim→passage→source exposure |
 | F-04 | RA / SSc evidence packages | `implemented` · not `scientifically_validated` | `research/ra-anti-tnf/`, `research/ssc-tfh-il21/`, R1 packets | Rights/passages pending (#2); SME gold empty (#4) | Bounded integration tests only until humans clear |
 | F-05 | Saved investigation + research outcome APIs | `connected` | interrogative APIs + outcome DTO powering 01–06 panel | Composes **saved** evidence; no new scientific generation | Preserve APIs — do not replace |
@@ -47,7 +47,7 @@ A row may list a primary status plus honesty tags. **Documents ≠ scientific va
 
 | ID | Output | Status | Evidence | Gap | Next eng action |
 |----|--------|--------|----------|-----|-----------------|
-| O-01 | Scientific landscape | `connected` | Outcome section 01 from mechanism map + saved answer | Not a curated landscape for arbitrary questions; release-bound only | Expand packs (step 03); keep honesty |
+| O-01 | Scientific landscape | `connected` | Outcome section 01 + livingEvidence bibliographic / OT candidates when bound | Not a curated landscape for arbitrary questions; metadata ≠ synthesis | Keep honesty; broaden domain pins |
 | O-02 | Evidence comparison | `connected` | Outcome section 02 + reverse trace; oppose note honesty | Cross-species depth still limited; empty oppose ≠ consensus | Richer oppose search when rights clear |
 | O-03 | Gap intelligence | `implemented` · `connected` (recorded fields) | Outcome section 03 from missingEvidence/uncertainty | Not verified scientific gaps / not scientist-ranked | Gap verification (step 04); keep abstention |
 | O-04 | Translational intelligence | `planned` / scaffold | Trials criteria MVP, N5 refresh, science clinical-trials page | Not attached to investigation outcome (`trials: not_queried` honesty) | Attach versioned registry snapshot to same question (step 05) |
@@ -80,7 +80,7 @@ Map logical names → real code. Roles in `HSI_AGENT_ROLES` are **policy contrac
 
 | Direction | Status | Evidence | Gap |
 |-----------|--------|----------|-----|
-| Forward: source → claim → graph → investigation | `connected` (release-bound) | Research bundles, graph release, interrogative branches, R3 retrieve/investigate | Fresh ingest + entity resolution incomplete (step 03) |
+| Forward: source → claim → graph → investigation | `connected` (release-bound + metadata expand) | Research bundles, graph release, livingEvidenceExpansion (Europe PMC / Open Targets / CT.gov identity), R3 retrieve/investigate | Passage-linked fresh claims still rights-blocked (#2); relationship candidates need human review |
 | Backward: recommendation → claim → passage → source | `connected` | Outcome reverse-trace UI in sections 02/03/05/06; review-package hashes | Not every specialist science page |
 | Continuous re-verify / version | `planned` / ledger scaffold | Evidence ledger N2, temporal dossier | Step 07; no silent overwrite |
 
@@ -123,9 +123,25 @@ Map logical names → real code. Roles in `HSI_AGENT_ROLES` are **policy contrac
 4. Reverse trace (claim → passage → source) exposed in outcome sections where APIs already supply bindings.
 5. Live Ask→export (#5) remains **PARKED** — no production write enablement, no MoU/Gate C/SME gold/CDS-PHI.
 
-**Residual:** translational trials still `not_queried` (step 05); verified scientific gaps (step 04); living evidence expansion (step 03); live researcher session completion (#5).
+**Residual (after step 02):** translational trials still `not_queried` (step 05); verified scientific gaps (step 04); living evidence expansion (step 03 — see §I); live researcher session completion (#5).
 
 **Out of scope (unchanged):** new architecture, new agent catalogue, public landing redesign, Gate C/MoU/CDS, autumn-snow for HSI.
+
+---
+
+## I. Step 03 — Living evidence and graph expansion (shipped eng)
+
+**Done:**
+
+1. Europe PMC PMID lookup + Open Targets disease→target adapter + CT.gov identity reuse.
+2. Versioned living-evidence expansion snapshot with provenance, response identities, rate-limit disclosure, licensing *signals* (not clearance), entity resolution via ontology registry, graph relationship *candidates* (`graphPromotable=false`).
+3. Passage import fail-closed (`humanCleared=false`, `passageImported=false`, `licenceEvidenceUri=null`).
+4. Research outcome `livingEvidence` section + outcome panel section 01 surfacing bound bibliographic / OT / registry-identity metadata; `external_search` stage updates when bound; trials remain `not_queried` (step 05).
+5. Harness: `bun run living-evidence:expand` · `living-evidence:check` · optional `living-evidence:live`.
+
+**Residual:** human #2 rights before passage import; expert-promoted graph edges; step 04 gap verification; step 05 O-04 trials attach; live #5 session completion.
+
+**Out of scope (unchanged):** Gate C/MoU/CDS-PHI, inventing clearances, autumn-snow.
 
 ---
 
@@ -151,4 +167,16 @@ Map logical names → real code. Roles in `HSI_AGENT_ROLES` are **policy contrac
 | Live Ask→export / #5 | **Parked** — not claimed complete |
 | Scientifically validated claimed | **No** — none |
 
-**Verify:** read this register; `jq . operations/capability-register/capability-register.v1.json`; optional `bun run r3:check`.
+### Step 03
+
+| Criterion | Result |
+|-----------|--------|
+| Metadata ingest from permitted public providers | **Yes** — Europe PMC / Open Targets / CT.gov fixtures + live harness |
+| Provenance, timestamps, source IDs, licensing signals | **Yes** — snapshot + receipt hashes |
+| Passage import fail-closed until humanCleared | **Yes** — forced false; #2 PARKED |
+| Entity resolution + relationship candidates (not promoted) | **Yes** — ontology resolve + OT candidates |
+| Outcome sections show retrieved evidence / disclose gaps | **Yes** — `livingEvidence` on outcome + panel 01 |
+| Scientifically validated claimed | **No** — none |
+| Human queue disturbed | **No** — remains PARKED |
+
+**Verify:** read this register; `jq . operations/capability-register/capability-register.v1.json`; `bun run living-evidence:check`; optional `bun run r3:check`.
