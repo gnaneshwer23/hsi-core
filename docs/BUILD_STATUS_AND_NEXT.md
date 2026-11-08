@@ -315,7 +315,8 @@ One-sprint-sized items. Mark **[DECISION]** where the user must choose before co
 | P2.2-ISI | **DONE:** Cite-ready path after Gate C (immunecity) | `citeReadyAfterGateC` queue + pin overlay; seed `hsi-gate-c-cite-*` unreviewed evidence (13); Check→supports→Approve still human on `/curation`; never auto-approves / never flips `hsiGrade` |
 | P2.3-ISI | **DONE:** Identifier Check on 13 cite candidates | `check-cite-candidates-from-gate-c.ts` → 13/13 verified; `cite-check-worksheet.json`; `/curation?hsi=cite` filter; claim_support still unassessed; curation still unreviewed |
 | Cap9-FHIR | **DONE:** Illustrative FHIR R4 mapping notes for synthetic timeline | `src/clinicalSyntheticFhirNotes.ts` + `/clinical-timeline` FHIR NOTES; `fhirSoT=false`; no live EMIS |
-| **NEXT** | **Human claim_support → Approve on 13 cites · real partner** | 2026-11-02 remeasure: Check **13/13 verified**; still **0** supports / **0** publicCiteApproved (autumn-snow) — founder-reported cite Approve **not** reflected in Neon (before=after). Still blocked on human S-P-O → inline Claim support then `/curation?hsi=cite` Approve (no bulk invent / no agent Auth bypass). Parallel: named external SME + real partner lock (human). Still no auto-approve / no `hsiGrade` flip / no invent MoU / no live CDS. |
+| P2.7-ISI | **DONE (eng):** Audit #3 cite HITL path receipt | immunecity `docs/engineering/AUDIT_3_ISI_CITE_HITL_2026-11-08.md`; eng CLEARED; pin still **0** supports / **0** publicCiteApproved |
+| **NEXT** | **Human claim_support → Approve on 13 cites · SME N3 · real partner** | Audit #3 (2026-11-08): eng path CLEARED; Check **13/13**; still **0** supports / **0** publicCiteApproved — blocked on human S-P-O → `/curation?hsi=cite` Approve (no bulk invent / no agent Auth bypass). Parallel next-build #4: recruit SMEs / freeze N3 labels. Still no auto-approve / no `hsiGrade` flip / no invent MoU / no live CDS. |
 
 ### Out-of-repo (track; do not implement here)
 

@@ -252,6 +252,8 @@ Run these in an **immunecity** checkout / agent session (not hsi-core):
 
 **P2.6-ISI cite remeasure + Approve UX guard (2026-11-02):** Founder said cite path done → `hsi:curator-status --neon` still **0/0** (before=after). immunecity `/curation` now shows `claim_support` per row and **disables Approve** until `isReadyForSupportsApproval` (verified + mapped + supports); server invariants unchanged. Docs stamped to measured counts only.
 
+**P2.7-ISI Audit #3 cite HITL (2026-11-08):** Engineering path re-verified ENG CLEARED (seed → Check → Claim support → Approve UX + honesty asserts + dry-run status). Pin remeasure still **0** supports / **0** publicCiteApproved — residual human S-P-O on `/curation?hsi=cite`. Receipt in immunecity `docs/engineering/AUDIT_3_ISI_CITE_HITL_2026-11-08.md`. Still no invent supports / no Gate C auto-approve / autumn-snow only.
+
 ---
 
 ## 9. Acceptance tests (consumer-side)

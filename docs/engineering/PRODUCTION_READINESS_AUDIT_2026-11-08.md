@@ -22,7 +22,7 @@ Default science programme remains **gut–immune–T2D** (Nov 6 plan). SSc stays
 | Site / marketing | 3 / 5 | Demo deployable | Vite site + Playwright; honesty banners; not a verified live research product |
 | Deploy / CI | 3 / 5 | CI green path ≠ launch | `research-foundation.yml` + site:build/e2e; bun pin mismatch noted; PRODUCTION_QA launch blocked |
 | Security / honesty | 4 / 5 | Strong invariants | `neonGuard` refuses autumn-snow; `cdsPhiBoundary`; honesty regressions; `.env.example` only |
-| Product integrations | 2 / 5 | Contracts ≠ live product | ISI consume + Gate C human queue; cite Approve still 0; Trials Path B fixtures only |
+| Product integrations | 2 / 5 | Contracts ≠ live product | ISI consume + Gate C human queue; cite eng path CLEARED / Approve still 0 HITL; Trials Path B fixtures only |
 
 ## Closest to shippable (engineering)
 
@@ -47,7 +47,7 @@ Default science programme remains **gut–immune–T2D** (Nov 6 plan). SSc stays
 | --- | --- | --- |
 | 1 | Human-correct N1-C-02/C-03 DOIs + rebuild domain-graph queue | **GO (human edit)** — executed 2026-11-08 (this follow-through) |
 | 2 | Record per-source passage reuse rights; keep metadata-only until cleared | **ENG DONE 2026-11-08** / NO-GO sci until human rights |
-| 3 | ISI pending HITL: claim_support → Approve on cites (immunecity) | GO out-of-repo HITL |
+| 3 | ISI pending HITL: claim_support → Approve on cites (immunecity) | **ENG CLEARED 2026-11-08** / HITL BLOCKED (0 supports / 0 publicCiteApproved) |
 | 4 | Recruit SMEs; freeze N3 calibration labels (20–50) then pilot plan | GO only with real reviewers |
 | 5 | Unpause staging: two-account auth, research writes, live investigation accept | GO when ops prerequisite lifted |
 | 6 | Apply 016/017 on red-wave after offline parity + founder approve | GO eng / gated migrate |
@@ -66,6 +66,7 @@ Default science programme remains **gut–immune–T2D** (Nov 6 plan). SSc stays
 
 - **Phase #1 done:** N1-C-02 → `10.1038/ni.3713`, N1-C-03 → `10.1038/nature18646` (Crossref + Europe PMC verified). Offline + live N1: **0** identity mismatches; 12/12 metadata matched unreviewed. Rights + scientific acceptance remain **BLOCKED**. Neon red-wave only; no graph promotion of unverified science.
 - **Phase #2 eng done (science still NO-GO):** Per-source passage reuse inventory at `research/domain-graph/n1/rights-inventory.v1.json` (`src/evidence/n1PassageRightsInventory.ts`). Records Europe PMC OA/licence signals for all 12 candidates; `humanCleared=0`, `passageImported=0`, metadata-only. Provider OA/CC labels ≠ corpus reuse permission. Scientific acceptance + human `licenceEvidenceUri` attestation remain **BLOCKED**.
+- **Phase #3 eng done (cite HITL still BLOCKED):** immunecity Gate C cite path re-audited — seed → Check (13/13 verified) → inline Claim support → Approve UX + server invariants + `hsi:curator-status` dry-run. Pin remeasure still **0** `claim_support=supports` / **0** `publicCiteApproved`. No invent supports / no auto-approve / autumn-snow only. Receipt: immunecity `docs/engineering/AUDIT_3_ISI_CITE_HITL_2026-11-08.md`. Residual: Neon Auth reviewer S-P-O → Claim support → Approve on `/curation?hsi=cite`, then `--neon` remeasure.
 
 ## Verify (post-correction)
 
