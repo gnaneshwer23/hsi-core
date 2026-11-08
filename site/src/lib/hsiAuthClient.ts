@@ -58,7 +58,10 @@ export function createHsiAuthClient(configured:unknown,request:typeof fetch=fetc
   signUp:(name:string,email:string,password:string)=>authRequest<HsiRegistration>("/sign-up/email",{name,email,password},value=>parseAuthRegistration(value,email)),
   session:()=>authRequest<HsiAuthSession>("/get-session",undefined,value=>parseAuthSession(value)),
   signOut:()=>authRequest("/sign-out",{},action),
-  sendVerificationEmail:()=>authRequest("/send-verification-email",{},action),
+  sendVerificationEmail:()=>authRequest("/send-verification-email",{},value=>{
+   if(!record(value)||(value.status!==true&&value.success!==true))throw Error("Verification email request not confirmed");
+   return {success:true as const,...(value.alreadyVerified===true?{alreadyVerified:true as const}:{})};
+  }),
   verifyEmailCode:(otp:string)=>authRequest("/email-otp/verify-email",{otp},value=>{if(!record(value)||value.verified!==true)throw Error("Email verification not confirmed");return {verified:true as const}}),
- };
+};
 }
