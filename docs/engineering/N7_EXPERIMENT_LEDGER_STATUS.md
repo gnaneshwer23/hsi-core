@@ -25,7 +25,7 @@ This is an engineering status receipt. It is **not** a laboratory result, scient
 | Protocol + raw artifact + processing + QC fields | **CLEARED (engineering)** | Missing dose/tissue/timing declared explicitly |
 | Review candidate cannot publish graph / edit frozen eval | **CLEARED (engineering)** | `graphPromotable=false`, `mayEditFrozenEvaluationData=false` |
 | Real laboratory / authorised observations | **BLOCKED** | Fixtures only; no invented wet-lab results |
-| SQL persistence on red-wave | **Stub only** | Additive migration `017_hsi_experiment_ledger.sql` — not applied in this increment |
+| SQL persistence on red-wave | **Applied (Audit #6)** | `017_hsi_experiment_ledger` in `hsi_schema_migrations` on red-wave; table + indexes live; Neon R/W helpers still residual |
 
 ## Delivered in this increment
 
@@ -62,6 +62,6 @@ bun run n1:check && bun run n2:check && bun run n3:check && bun run n4:check && 
 ## Residual toward full N7
 
 1. Obtain authorised public experimental data **or** a partner laboratory / data agreement before any non-fixture `dataBasis`.
-2. Wire Neon read/write helpers for `hsi_experiment_ledger_records` behind the red-wave guard (after human apply of `017`).
+2. Wire Neon read/write helpers for `hsi_experiment_ledger_records` behind the red-wave guard (`017` applied — Audit #6).
 3. Human review workflow that keeps candidates out of approved graph publish and out of frozen N3/N6 evaluation corpora.
 4. Prospective wet-lab execution remains a separately approved protocol — not implied by this harness.

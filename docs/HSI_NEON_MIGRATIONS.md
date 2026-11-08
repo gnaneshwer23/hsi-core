@@ -20,8 +20,10 @@
 - `hsi_schema_migrations` — ledger
 - `hsi_claims` / `hsi_markers` / `hsi_edges` — Stage 1 substrate (grades + provenance columns on edges)
 - `hsi_gate_c_reviews` — human-only review queue (`CHECK (auto_approve = false)`)
+- `hsi_evidence_ledger_records` — N2 versioned evidence ledger (**016** applied on red-wave; Audit #6)
+- `hsi_experiment_ledger_records` — N7 experiment ledger (**017** applied on red-wave; Audit #6)
 
-This is an **HSI-owned** stub, not a copy of immunecity ISI tables.
+This is an **HSI-owned** stub, not a copy of immunecity ISI tables. Neon R/W helpers for 016/017 remain residual; offline fixtures stay authoritative until helpers land.
 
 ## Credentials (never commit; never paste into chat)
 

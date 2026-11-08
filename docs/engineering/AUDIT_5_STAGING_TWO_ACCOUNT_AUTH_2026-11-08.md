@@ -69,4 +69,4 @@ This receipt is **not** PRODUCTION_QA launch clearance, live Auth acceptance, or
 
 ## Next audit item (recommended)
 
-Parallel human tracks remain: ISI cite HITL residual (#3), N1 human rights (#2), N3 SME labels (#4). Next eng-safe numbered gate after ops lift: **#6** apply migrations 016/017 on red-wave after offline parity + founder approve. N6 usefulness stays **NO-GO until #4 human freeze**.
+Parallel human tracks remain: ISI cite HITL residual (#3), N1 human rights (#2), N3 SME labels (#4). Audit **#6** (016/017 on red-wave) is **ENG CLEARED** — see [`AUDIT_6_MIGRATIONS_016_017_2026-11-08.md`](./AUDIT_6_MIGRATIONS_016_017_2026-11-08.md). N6 usefulness stays **NO-GO until #4 human freeze**.

@@ -24,7 +24,7 @@ N2 does **not** regress N1. Failed N1 outcomes remain blocked from becoming find
 | Versioned write/read + archive lineage | **CLEARED (engineering)** | Live draft + superseded archives; parentVersion required. |
 | Explicit missing dose/assay/context | **CLEARED (engineering)** | Null context fields must appear in `missingFields`. |
 | Invalid combinations fail closed | **CLEARED (engineering)** | Covered by unit tests. |
-| SQL persistence on red-wave | **Stub only** | Additive migration `016_hsi_evidence_ledger.sql` — not applied in this increment. |
+| SQL persistence on red-wave | **Applied (Audit #6)** | `016_hsi_evidence_ledger` in `hsi_schema_migrations` on red-wave; table + indexes live; Neon R/W helpers still residual. |
 | Scientific entailment / Gate C / graph publish | **BLOCKED** | Explicitly out of scope; honesty flags forced false. |
 | Full N2 (passage-linked claims for all sources, inspector UI, Neon write path) | **Residual** | See below. |
 
@@ -57,7 +57,7 @@ bun --no-env-file test test/evidenceLedger.test.ts
 
 ## Residual toward full N2
 
-1. Wire Neon read/write helpers for `hsi_evidence_ledger_records` behind the existing red-wave guard (after human apply of `016`).
+1. Wire Neon read/write helpers for `hsi_evidence_ledger_records` behind the existing red-wave guard (`016` applied — Audit #6).
 2. Attach permitted passages when N1 rights clearance exists; keep locator-only otherwise.
 3. Inspector UI surfacing kind + lineage + missing context.
 4. Qualified review for entailment/context — still a scientific dependency, not an engineering auto-gate.
