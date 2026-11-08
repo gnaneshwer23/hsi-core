@@ -4,6 +4,8 @@ import {writeFile} from 'node:fs/promises';
 import {SEO_PAGES} from '../src/lib/seo/siteSeo';
 for(const path of [...Object.keys(SEO_PAGES),'/sign-in','/sign-up','/forgot-password','/reset-password','/research/dashboard','/science/graph','/research/validation']){
  test('WCAG automated scan '+path,async({page},testInfo)=>{
+  // Disable hero rise opacity animation so axe samples settled contrast, not mid-fade blends.
+  await page.emulateMedia({reducedMotion:'reduce'});
   await page.goto(path);await expect(page.getByRole('heading',{level:1})).toBeVisible();
   await page.evaluate(()=>document.fonts.ready);
   const results=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();
@@ -34,11 +36,11 @@ test('public pages load the existing typefaces locally without third-party font 
  expect(await page.evaluate(()=>[...document.fonts].some(f=>f.family==='Host Grotesk Variable'&&f.status==='loaded'))).toBe(true);expect(fonts).toEqual([]);
 });
 
-test('mobile hero chooses compressed responsive artwork and reserves its dimensions',async({page})=>{
+test('mobile hero shows the landing network visual and reserves its dimensions',async({page})=>{
  await page.setViewportSize({width:390,height:844});await page.goto('/');
- const art=page.getByRole('img',{name:/Sculptural view of human anatomy/});await expect(art).toBeVisible();
- expect(await art.evaluate(el=>(el as HTMLImageElement).currentSrc)).toContain('hsi-anatomy-480.webp');
- await expect(art).toHaveAttribute('width','1024');await expect(art).toHaveAttribute('height','1536');
+ const art=page.getByRole('img',{name:/Bioluminescent cell connected/});await expect(art).toBeVisible();
+ expect(await art.evaluate(el=>(el as HTMLImageElement).currentSrc)).toContain('neon-immune-cell-network.jpg');
+ await expect(art).toHaveAttribute('width','1600');await expect(art).toHaveAttribute('height','900');
 });
 
 test('editorial action arrows use scalable paths instead of platform symbol fonts',async({page})=>{
