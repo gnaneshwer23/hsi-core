@@ -309,6 +309,10 @@
       "destination": "/_pages/research--decision-workbench.html"
     },
     {
+      "source": "/research/mechanism-workflow",
+      "destination": "/_pages/research--mechanism-workflow.html"
+    },
+    {
       "source": "/science/literature",
       "destination": "/_pages/science--literature.html"
     },

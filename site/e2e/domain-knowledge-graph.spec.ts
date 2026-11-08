@@ -2,6 +2,8 @@ import {test,expect} from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import {readFile} from 'node:fs/promises';
 const bundle=JSON.parse(await readFile(new URL('../public/research/domain-graph/graph.v1.json',import.meta.url),'utf8'));
+/** Immutable retired v1 adapter snapshot still published for lineage; interactive client must refuse it. parentVersion is now a loadable v2 tip after regen, so it is no longer a fail-closed pin. */
+const retiredAdapterVersion='ee23b6545a0d3dfdc3eab81002655d47b39dddb1b94a1b89a5d796d68a27d050';
 async function ready(page:any){await page.goto('/research/knowledge-graph');await expect(page.getByRole('heading',{name:'Connected research network',exact:true})).toBeVisible()}
 const trial={protocolSection:{identificationModule:{nctId:'NCT01030861',briefTitle:'Browser test registry record, not independently verified'},conditionsModule:{conditions:['Diabetes Mellitus, Type 1']},statusModule:{overallStatus:'COMPLETED',lastUpdatePostDateStruct:{date:'2020-01-01'}},eligibilityModule:{minimumAge:'8 Years',maximumAge:'45 Years',eligibilityCriteria:'Test-only unparsed criteria. Investigator assessment required.'}}};
 test('the default graph connects domains and preserves the original source-corpus entry',async({page})=>{
@@ -39,7 +41,8 @@ test('future AI capabilities are proposals with evaluation criteria and make no 
 });
 test('pinned snapshots and altered scope flags fail closed',async({page})=>{
  await page.goto('/research/knowledge-graph?domainVersion='+bundle.version);await expect(page.getByRole('heading',{name:'Connected research network',exact:true})).toBeVisible();
- await page.goto('/research/knowledge-graph?domainVersion='+bundle.parentVersion);await expect(page.getByRole('alert')).toContainText('could not be verified');
+ await page.goto('/research/knowledge-graph?domainVersion='+retiredAdapterVersion);await expect(page.getByRole('alert')).toContainText('could not be verified');
+ await page.goto('/research/knowledge-graph?domainVersion='+'f'.repeat(64));await expect(page.getByRole('alert')).toContainText('could not be verified');
  await page.goto('/research/knowledge-graph?domainVersion='+bundle.version);await expect(page.getByRole('heading',{name:'Connected research network',exact:true})).toBeVisible();
  await page.route('**/research/domain-graph/versions/*.json',r=>r.fulfill({json:{...bundle,scientificApproval:true}}));await page.reload();await expect(page.getByRole('alert')).toContainText('could not be verified');await expect(page.locator('.dg-workspace')).toHaveCount(0);
 });

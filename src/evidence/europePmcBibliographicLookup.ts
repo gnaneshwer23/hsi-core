@@ -130,7 +130,8 @@ function responseIdentityOf(body: string): string {
 }
 
 function parseRecords(list: unknown[], retrievedAt: string, responseIdentity: string): BibliographicRecord[] {
-  return list.flatMap((item: EpmcResult): BibliographicRecord[] => {
+  return list.flatMap((raw): BibliographicRecord[] => {
+    const item = raw as EpmcResult;
     const sourceId = stringOrNull(item.id);
     const sourceType = stringOrNull(item.source);
     const title = stringOrNull(item.title);
