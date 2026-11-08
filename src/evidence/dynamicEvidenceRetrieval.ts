@@ -31,8 +31,11 @@ import {
 import {
   assertValidOpenTargetsAssociationPageSize,
   assertValidOpenTargetsDiseaseId,
+  assertValidOpenTargetsEnableIndirect,
   lookupOpenTargetsDiseaseAssociations,
+  type OpenTargetsAssociationScope,
   type OpenTargetsLookupResult,
+  type OpenTargetsScoreHonesty,
   OPEN_TARGETS_PROVIDER,
 } from "./openTargetsLookup";
 
@@ -89,6 +92,11 @@ export type ResearcherQueryInput = {
   maxResults?: number;
   /** Only metadata is permitted without human rights clearance (PR 2/3). */
   contentAccess?: DynamicContentAccessRequest;
+  /**
+   * Open Targets disease→target scope. Default false = direct associations only.
+   * When true, OT includes ontology-propagated (indirect) evidence.
+   */
+  openTargetsEnableIndirect?: boolean;
 };
 
 export type NormalisedEntityBundle = {
@@ -144,12 +152,29 @@ export type PermittedBibliographicMetadata = {
   duplicateOfPmid: string | null;
 };
 
+export type PermittedOpenTargetsAssociation = {
+  targetEnsemblId: string;
+  approvedSymbol: string;
+  /** OT association score (0–1). Not causation / efficacy / target validation. */
+  score: number;
+  /** Evidence-type ids preserved from datatypeScores. */
+  evidenceTypes: string[];
+  /** Underlying evidence-source / datasource ids. */
+  evidenceSources: string[];
+};
+
 export type PermittedOpenTargetsMetadata = {
   provider: typeof OPEN_TARGETS_PROVIDER;
   diseaseId: string;
   diseaseName: string;
   associationCount: number;
   associationSymbols: string[];
+  associations: PermittedOpenTargetsAssociation[];
+  associationScope: OpenTargetsAssociationScope;
+  enableIndirect: boolean;
+  scoreHonesty: OpenTargetsScoreHonesty;
+  truncatedByPageBudget: boolean;
+  graphqlPartialErrors: readonly string[] | null;
   retrievedAt: string;
   responseIdentity: string;
   sourceIdentity: SourceIdentityState;
@@ -226,6 +251,9 @@ export type DynamicSearchRecord = {
     cdsPhi: false;
     fixturesAreNotLiveEvidence: true;
     openTargetsNotIndependentEuropePmcCorroboration: true;
+    openTargetsScoreIsNotCausation: true;
+    openTargetsScoreIsNotEfficacy: true;
+    openTargetsScoreIsNotTargetValidation: true;
   };
   searchRecordHash?: string;
 };
@@ -328,6 +356,7 @@ export function validateResearcherQuery(input: ResearcherQueryInput): {
   ordering: DynamicSearchRecord["ordering"];
   synonyms: string[];
   contentAccess: DynamicContentAccessRequest;
+  openTargetsEnableIndirect: boolean;
 } | {
   ok: false;
   outcome: "invalid_query" | "permission_licence_restriction";
@@ -357,10 +386,14 @@ export function validateResearcherQuery(input: ResearcherQueryInput): {
   }
   let pageSize: number;
   let maxResults: number;
+  let openTargetsEnableIndirect: boolean;
   try {
     pageSize = assertValidEuropePmcPageSize(input.pageSize ?? 10);
     assertValidOpenTargetsAssociationPageSize(Math.min(pageSize, 25));
     maxResults = assertValidDynamicMaxResults(input.maxResults ?? DYNAMIC_MAX_RESULTS_DEFAULT);
+    openTargetsEnableIndirect = assertValidOpenTargetsEnableIndirect(
+      input.openTargetsEnableIndirect ?? false,
+    );
   } catch (error) {
     return {
       ok: false,
@@ -392,6 +425,7 @@ export function validateResearcherQuery(input: ResearcherQueryInput): {
     ordering,
     synonyms: uniquePreserve(synonyms),
     contentAccess,
+    openTargetsEnableIndirect,
   };
 }
 
@@ -686,6 +720,9 @@ export async function runDynamicEvidenceRetrieval(input: {
         cdsPhi: false,
         fixturesAreNotLiveEvidence: true,
         openTargetsNotIndependentEuropePmcCorroboration: true,
+        openTargetsScoreIsNotCausation: true,
+        openTargetsScoreIsNotEfficacy: true,
+        openTargetsScoreIsNotTargetValidation: true,
       },
     });
     return {ok: false, record};
@@ -944,8 +981,12 @@ export async function runDynamicEvidenceRetrieval(input: {
     }
   };
 
-  const runOpenTargets = async (diseaseId: string, pageSize: number) => {
-    const cacheKey = `ot:${diseaseId}:ps=${pageSize}`;
+  const runOpenTargets = async (
+    diseaseId: string,
+    pageSize: number,
+    enableIndirect: boolean,
+  ) => {
+    const cacheKey = `ot:${diseaseId}:ps=${pageSize}:indirect=${enableIndirect ? "1" : "0"}`;
     const cached = cache.get(cacheKey);
     let result: OpenTargetsLookupResult;
     let cacheStatus: "miss" | "hit" = "miss";
@@ -958,6 +999,7 @@ export async function runDynamicEvidenceRetrieval(input: {
       result = await lookupOpenTargetsDiseaseAssociations({
         diseaseId,
         pageSize,
+        enableIndirect,
         fetcher: input.fetcher,
         now,
         signal: input.signal,
@@ -990,11 +1032,14 @@ export async function runDynamicEvidenceRetrieval(input: {
       return;
     }
 
-    const outcome: RetrievalOutcomeClass = result.truncatedByPageBudget
-      ? "truncated_by_budget"
-      : result.record.associations.length === 0 && result.record.associationCount === 0
-        ? "successful_empty"
-        : "successful_hits";
+    const outcome: RetrievalOutcomeClass =
+      result.graphqlPartialErrors && result.graphqlPartialErrors.length > 0
+        ? "partial_retrieval"
+        : result.truncatedByPageBudget
+          ? "truncated_by_budget"
+          : result.record.associations.length === 0 && result.record.associationCount === 0
+            ? "successful_empty"
+            : "successful_hits";
 
     attempts.push({
       provider: OPEN_TARGETS_PROVIDER,
@@ -1007,7 +1052,9 @@ export async function runDynamicEvidenceRetrieval(input: {
       retrievedAt: result.retrievedAt,
       httpStatus: result.httpStatus,
       responseIdentity: result.responseIdentity,
-      detail: null,
+      detail: result.graphqlPartialErrors
+        ? `GraphQL partial errors: ${result.graphqlPartialErrors.join("; ")}`
+        : null,
       hitCount: result.record.associationCount,
       returnedCount: result.record.associations.length,
       truncatedByPageBudget: result.truncatedByPageBudget,
@@ -1022,6 +1069,18 @@ export async function runDynamicEvidenceRetrieval(input: {
       diseaseName: result.record.diseaseName,
       associationCount: result.record.associationCount,
       associationSymbols: result.record.associations.map((a) => a.approvedSymbol),
+      associations: result.record.associations.map((a) => ({
+        targetEnsemblId: a.targetEnsemblId,
+        approvedSymbol: a.approvedSymbol,
+        score: a.score,
+        evidenceTypes: a.datatypeScores.map((d) => d.id),
+        evidenceSources: a.datasourceScores.map((d) => d.id),
+      })),
+      associationScope: result.associationScope,
+      enableIndirect: result.enableIndirect,
+      scoreHonesty: result.scoreHonesty,
+      truncatedByPageBudget: result.truncatedByPageBudget,
+      graphqlPartialErrors: result.graphqlPartialErrors,
       retrievedAt: result.record.retrievedAt,
       responseIdentity: result.record.responseIdentity,
       sourceIdentity: result.sourceIdentity,
@@ -1075,7 +1134,11 @@ export async function runDynamicEvidenceRetrieval(input: {
   }
 
   for (const diseaseId of entities.diseaseIds) {
-    await runOpenTargets(diseaseId, Math.min(validated.pageSize, 25));
+    await runOpenTargets(
+      diseaseId,
+      Math.min(validated.pageSize, 25),
+      validated.openTargetsEnableIndirect,
+    );
   }
 
   for (const a of entities.ambiguities) {
@@ -1145,6 +1208,9 @@ export async function runDynamicEvidenceRetrieval(input: {
       cdsPhi: false,
       fixturesAreNotLiveEvidence: true,
       openTargetsNotIndependentEuropePmcCorroboration: true,
+      openTargetsScoreIsNotCausation: true,
+      openTargetsScoreIsNotEfficacy: true,
+      openTargetsScoreIsNotTargetValidation: true,
     },
   });
 

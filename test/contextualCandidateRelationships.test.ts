@@ -28,7 +28,10 @@ import {
   type ReleaseClaim,
 } from "../src/graphRelease";
 import type {OpenTargetsDiseaseRecord} from "../src/evidence/openTargetsLookup";
-import {OPEN_TARGETS_PROVIDER} from "../src/evidence/openTargetsLookup";
+import {
+  OPEN_TARGETS_PROVIDER,
+  OPEN_TARGETS_SCORE_HONESTY,
+} from "../src/evidence/openTargetsLookup";
 
 const root = resolve(import.meta.dir, "..");
 const retrievedAt = "2026-11-08T21:00:00.000Z";
@@ -112,8 +115,12 @@ const otRecord: OpenTargetsDiseaseRecord = {
       approvedSymbol: "TGFB1",
       score: 0.5,
       datatypeScores: [{id: "literature", score: 0.4}],
+      datasourceScores: [{id: "europepmc", score: 0.35}],
     },
   ],
+  associationScope: "direct",
+  enableIndirect: false,
+  scoreHonesty: OPEN_TARGETS_SCORE_HONESTY,
   retrievedAt,
   responseIdentity: "a".repeat(64),
   verificationState: "metadata_retrieved_not_claim_verified",
