@@ -80,7 +80,9 @@ export type ContextualCandidateRelationship = {
 export type OpposingEvidenceSearchStatus =
   | "not_executed"
   | "stubbed_incomplete"
-  | "recorded_traces_only";
+  | "recorded_traces_only"
+  | "completed_bounded"
+  | "provider_unavailable";
 
 export type ContextualCandidatePack = {
   schemaVersion: "hsi-contextual-candidate-pack-1";
@@ -500,7 +502,11 @@ export function buildContextualCandidatePack(input: {
           ? "Opposing-evidence search was not executed. Absence of oppose rows is not consensus."
           : opposingStatus === "recorded_traces_only"
             ? "Only recorded opposing traces are present; exhaustive contradiction search is not claimed."
-            : "Opposing-evidence search workflow is stubbed incomplete in this PR. Incomplete oppose ≠ consensus.",
+            : opposingStatus === "provider_unavailable"
+              ? "Opposing-evidence provider was unavailable. Provider unavailable ≠ no opposing evidence."
+              : opposingStatus === "completed_bounded"
+                ? "Bounded opposing-evidence search completed for configured providers/date/budget. Incomplete corpus ≠ consensus."
+                : "Opposing-evidence search workflow is stubbed incomplete in this PR. Incomplete oppose ≠ consensus.",
     },
     honesty: {
       metadataOnly: true,

@@ -20,7 +20,7 @@
     "blockedUntilSignOff": false,
     "docsUrl": "https://github.com/mims-harvard/TDC/blob/main/LICENSE"
   },
-  "generatedAt": "2026-11-08T21:22:43.839Z",
+  "generatedAt": "2026-11-08T21:36:41.663Z",
   "fixtures": [
     {
       "fixtureId": "admet",
@@ -59,7 +59,7 @@
         "replaceWithLegalSignOff:true"
       ],
       "suggestedTeachingStatus": "hypothesized",
-      "createdAt": "2026-11-08T21:22:43.839Z"
+      "createdAt": "2026-11-08T21:36:41.663Z"
     },
     {
       "proposalId": "HSI-MP-TDC-DTI-001",
@@ -78,7 +78,7 @@
         "replaceWithLegalSignOff:true"
       ],
       "suggestedTeachingStatus": "hypothesized",
-      "createdAt": "2026-11-08T21:22:43.839Z"
+      "createdAt": "2026-11-08T21:36:41.663Z"
     }
   ],
   "instructions": [

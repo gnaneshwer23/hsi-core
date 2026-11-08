@@ -1,9 +1,10 @@
 /**
- * PR 5 — Bounded agent execution with durable traces.
+ * PR 5/6 — Bounded agent execution with durable traces.
  *
  * Extends existing ARCH-009 orchestration / checkpoints / fenced artifacts with
- * PR 2 dynamic retrieval, PR 3 persistence planning, and PR 4 contextual
- * candidates. Does not invent a parallel orchestrator, agent catalogue, or
+ * PR 2 dynamic retrieval, PR 3 persistence planning, PR 4 contextual
+ * candidates, and PR 6 opposing-evidence search + gap assessment.
+ * Does not invent a parallel orchestrator, agent catalogue, or
  * scientific approval path.
  *
  * Stage path:
@@ -12,7 +13,8 @@
  *   research brief
  *
  * Honesty: candidate claims stay unapproved; fixtures ≠ live evidence;
- * provider failures ≠ empty evidence; retrieved text is untrusted input.
+ * provider failures ≠ empty evidence; retrieved text is untrusted input;
+ * incomplete literature coverage ≠ verified scientific novelty gap.
  */
 import {createHash} from "node:crypto";
 import {HSI_CDS_PHI_INVARIANTS, rejectPhiPayload} from "../cdsPhiBoundary";
@@ -56,6 +58,11 @@ import {
 } from "./dynamicEvidenceRetrieval";
 import {projectGapVerificationForOutcome, type GapVerificationOutcomeSection} from "./gapVerification";
 import type {LivingEvidenceOutcomeSection} from "./livingEvidenceExpansion";
+import {
+  opposingSearchStatusToContextual,
+  runOpposingEvidenceSearch,
+  type OpposingEvidenceSearchReport,
+} from "./opposingEvidenceSearch";
 import {canonicalEvidenceJson} from "./researchEvidenceCorpus";
 
 export const BOUNDED_AGENT_EXECUTION_SCHEMA = "hsi-bounded-agent-execution-1" as const;
@@ -80,7 +87,11 @@ export type BoundedStageStatus =
   | "failed"
   | "cancelled"
   | "skipped_budget"
-  | "stubbed_incomplete";
+  | "stubbed_incomplete"
+  | "completed_bounded"
+  | "provider_unavailable"
+  | "successful_empty"
+  | "partial";
 
 export type InvestigationPlanArtifact = {
   schemaVersion: "hsi-investigation-plan-1";
@@ -152,8 +163,11 @@ export type OpposingEvidenceAssessmentArtifact = {
   searchPerformed: boolean;
   status: BoundedStageStatus;
   findings: readonly {candidateId: string; polarity: string; note: string}[];
+  searchScope: OpposingEvidenceSearchReport["searchScope"] | null;
+  coverage: OpposingEvidenceSearchReport["coverage"] | null;
   limitations: readonly string[];
   consensusEstablished: false;
+  providerUnavailableDistinctFromNoEvidence: true;
 };
 
 export type GapAssessmentArtifact = {
@@ -163,10 +177,15 @@ export type GapAssessmentArtifact = {
     id: string;
     classification: string;
     rationale: string;
-    reviewStatus: "unavailable" | "draft";
+    scientificGapStatus: string;
+    searchCompleteness: string;
+    scientificNovelty: string;
+    semanticSupportKind: string;
+    reviewStatus: "unavailable" | "draft" | "expert_reviewed";
   }[];
   summary: GapVerificationOutcomeSection["summary"] | null;
   scientificallyValidated: false;
+  searchCompletenessDistinctFromScientificNovelty: true;
 };
 
 export type HypothesisComparisonArtifact = {
@@ -380,6 +399,7 @@ type RunScratch = {
   retrieval: RetrievalRecordArtifact | null;
   mechanism: MechanismAssessmentArtifact | null;
   opposing: OpposingEvidenceAssessmentArtifact | null;
+  opposingReport: OpposingEvidenceSearchReport | null;
   gaps: GapAssessmentArtifact | null;
   hypotheses: HypothesisComparisonArtifact | null;
   brief: ResearchBriefArtifact | null;
@@ -518,6 +538,7 @@ export async function runBoundedAgentExecution(input: {
     retrieval: null,
     mechanism: null,
     opposing: null,
+    opposingReport: null,
     gaps: null,
     hypotheses: null,
     brief: null,
@@ -578,15 +599,24 @@ export async function runBoundedAgentExecution(input: {
     if (record) {
       scratch.searchRecord = record;
       scratch.persistencePlan = buildDynamicPersistencePlan({searchRecord: record});
+      const opposeContextual = scratch.opposingReport
+        ? opposingSearchStatusToContextual(scratch.opposingReport.status)
+        : scratch.opposing?.status === "stubbed_incomplete"
+          ? "stubbed_incomplete"
+          : scratch.opposing?.status === "skipped_budget"
+            ? "not_executed"
+            : scratch.opposing?.status === "provider_unavailable"
+              ? "provider_unavailable"
+              : scratch.opposing?.status === "completed_bounded" ||
+                  scratch.opposing?.status === "successful_empty" ||
+                  scratch.opposing?.status === "partial"
+                ? "completed_bounded"
+                : "not_executed";
       scratch.candidatePack = buildContextualCandidatePack({
         plan: scratch.persistencePlan,
         surfaceLabel: "candidate",
         generatedAt: now(),
-        opposingSearchStatus: scratch.opposing?.status === "stubbed_incomplete"
-          ? "stubbed_incomplete"
-          : scratch.opposing?.status === "skipped_budget"
-            ? "not_executed"
-            : "not_executed",
+        opposingSearchStatus: opposeContextual,
       });
     }
   }
@@ -849,49 +879,106 @@ export async function runBoundedAgentExecution(input: {
     contradiction_analyst: wrapStage("opposing-evidence", async ({assertTool}) => {
       assertTool("literature.search");
       assertTool("evidence.get");
-      if (input.skipOpposingForBudget) {
-        const skipped: OpposingEvidenceAssessmentArtifact = {
-          schemaVersion: "hsi-opposing-evidence-assessment-1",
-          searchPerformed: false,
-          status: "skipped_budget",
-          findings: [],
-          limitations: [
-            "Opposing-evidence stage skipped by resource budget",
-            "Skipped oppose ≠ consensus or absence of contradiction",
-          ],
-          consensusEstablished: false,
-        };
-        scratch.opposing = skipped;
-        // Visible completed stage with honest skipped status (not silently omitted).
-        return {
-          status: "completed",
-          artifact: skipped,
-          reason: "Opposing-evidence search skipped by budget",
-        };
-      }
       const pack = scratch.candidatePack;
-      const opposingFindings = (pack?.relationships ?? [])
+      const recordedOpposing = (pack?.relationships ?? [])
+        .filter((r) => r.findingPolarity === "opposing")
+        .map((r) => r.id);
+
+      const report = await runOpposingEvidenceSearch({
+        question,
+        entities: input.entities,
+        recordedOpposingCandidateIds: recordedOpposing,
+        now,
+        fetcher: input.fetcher,
+        cache,
+        signal: input.signal,
+        pageSize: budgets.pageSize,
+        skipForBudget: input.skipOpposingForBudget === true,
+      });
+      scratch.opposingReport = report;
+
+      const titleFindings = report.findings.map((f, idx) => ({
+        candidateId: f.pmid ? `oppose-pmid:${f.pmid}` : `oppose-hit:${idx + 1}`,
+        polarity: f.polarityHint,
+        note: inspectUntrustedRetrievedText(`${f.title} — ${f.note}`).sanitizedText,
+      }));
+      const recordedFindings = (pack?.relationships ?? [])
         .filter((r) => r.findingPolarity === "opposing")
         .map((r) => ({
           candidateId: r.id,
           polarity: r.findingPolarity,
           note: inspectUntrustedRetrievedText(r.note).sanitizedText,
         }));
-      // Thin / stubbed opposing search — full semantic oppose is PR 6+.
+
+      let stageStatus: BoundedStageStatus;
+      switch (report.status) {
+        case "skipped_budget":
+          stageStatus = "skipped_budget";
+          break;
+        case "provider_unavailable":
+          stageStatus = "provider_unavailable";
+          break;
+        case "successful_empty":
+          stageStatus = "successful_empty";
+          break;
+        case "partial":
+          stageStatus = "partial";
+          break;
+        case "completed_bounded":
+          stageStatus = "completed_bounded";
+          break;
+        case "not_executed":
+          stageStatus = "stubbed_incomplete";
+          break;
+        case "invalid_query":
+          stageStatus = "blocked";
+          break;
+        default: {
+          const _exhaustive: never = report.status;
+          void _exhaustive;
+          stageStatus = "stubbed_incomplete";
+          break;
+        }
+      }
+
       const artifact: OpposingEvidenceAssessmentArtifact = {
         schemaVersion: "hsi-opposing-evidence-assessment-1",
-        searchPerformed: true,
-        status: "stubbed_incomplete",
-        findings: opposingFindings,
+        searchPerformed: report.searchPerformed,
+        status: stageStatus,
+        findings: [...recordedFindings, ...titleFindings],
+        searchScope: report.searchScope,
+        coverage: report.coverage,
         limitations: [
-          "Opposing-evidence search is stubbed incomplete in this milestone",
-          "Incomplete oppose ≠ scientific consensus",
-          "Deeper contradiction analysis deferred (PR 6+)",
+          ...report.limitations,
+          "Passage-level contradiction adjudication remains rights-gated (human queue #2)",
+          "Expert contradiction ranking unavailable (human queue #4)",
         ],
         consensusEstablished: false,
+        providerUnavailableDistinctFromNoEvidence: true,
       };
       scratch.opposing = artifact;
-      return {status: "completed", artifact, reason: null};
+
+      if (scratch.persistencePlan) {
+        scratch.candidatePack = buildContextualCandidatePack({
+          plan: scratch.persistencePlan,
+          surfaceLabel: "candidate",
+          generatedAt: now(),
+          opposingSearchStatus: opposingSearchStatusToContextual(report.status),
+        });
+      }
+
+      return {
+        status: report.status === "invalid_query" ? "blocked" : "completed",
+        artifact,
+        reason:
+          report.status === "skipped_budget"
+            ? "Opposing-evidence search skipped by budget"
+            : report.status === "provider_unavailable"
+              ? "Opposing-evidence provider unavailable (≠ no evidence)"
+              : report.status === "invalid_query"
+                ? "Opposing-evidence search blocked on invalid query"
+                : null,
+      };
     }),
 
     claim_verifier: wrapStage("gap-assessment", async ({assertTool}) => {
@@ -899,6 +986,37 @@ export async function runBoundedAgentExecution(input: {
       const asOf = now();
       const localPmids =
         scratch.searchRecord?.retrievedBibliographic.map((r) => r.pmid).filter(Boolean) ?? [];
+      const oppose = scratch.opposing;
+      const opposeReport = scratch.opposingReport;
+      const missingEvidence: string[] = [];
+      if (
+        oppose?.status === "skipped_budget" ||
+        oppose?.status === "stubbed_incomplete" ||
+        !oppose?.searchPerformed
+      ) {
+        missingEvidence.push("Opposing-evidence search incomplete for unpinned question");
+      }
+      if (
+        oppose?.status === "successful_empty" ||
+        (opposeReport?.searchPerformed &&
+          opposeReport.findings.length === 0 &&
+          !opposeReport.coverage.providerUnavailable)
+      ) {
+        missingEvidence.push(
+          "no relevant study retrieved under bounded opposing-evidence literature coverage",
+        );
+      }
+      if (oppose?.status === "provider_unavailable") {
+        missingEvidence.push(
+          "Opposing-evidence provider unavailable — incomplete literature coverage (provider fail ≠ empty evidence)",
+        );
+      }
+      if ((scratch.mechanism?.candidateRelationships ?? []).some((c) => /mechanism|pathway/i.test(c.predicate))) {
+        missingEvidence.push("Approved source-linked claims for the biological mechanism");
+      }
+      if (missingEvidence.length === 0) {
+        missingEvidence.push("Passage-backed entailment unavailable without rights clearance");
+      }
       const gaps = projectGapVerificationForOutcome({
         asOf,
         branches: [
@@ -911,14 +1029,10 @@ export async function runBoundedAgentExecution(input: {
             opposingClaimIds: (scratch.mechanism?.candidateRelationships ?? [])
               .filter((c) => c.findingPolarity === "opposing")
               .map((c) => c.id),
-            missingEvidence: [
-              scratch.opposing?.status === "stubbed_incomplete" ||
-              scratch.opposing?.status === "skipped_budget"
-                ? "Opposing-evidence search incomplete for unpinned question"
-                : "Passage-backed entailment unavailable without rights clearance",
-            ],
+            missingEvidence,
             uncertainty: [
               "Candidate relationships remain draft / claimSupport not assessed",
+              "Computational or model-derived edges remain unverified computational hypotheses until expert review",
             ],
           },
         ],
@@ -929,6 +1043,14 @@ export async function runBoundedAgentExecution(input: {
           searchStatus: scratch.opposing?.status ?? "not_executed",
         },
         livingEvidence: emptyLivingEvidence(asOf),
+        opposingSearch: opposeReport,
+        semanticSupports: [
+          {
+            matchText: missingEvidence[0]!,
+            reasoningRecord:
+              "Bounded agent gap stage: engineering classification from oppose-search receipt + draft candidate axes. Not passage-entailed.",
+          },
+        ],
       });
       const artifact: GapAssessmentArtifact = {
         schemaVersion: "hsi-gap-assessment-1",
@@ -937,11 +1059,20 @@ export async function runBoundedAgentExecution(input: {
           id: item.id,
           classification: item.kind,
           rationale: item.rationale,
-          reviewStatus: "unavailable",
+          scientificGapStatus: item.scientificGapStatus,
+          searchCompleteness: item.searchCompleteness.status,
+          scientificNovelty: item.scientificNovelty.status,
+          semanticSupportKind: item.semanticSupport.kind,
+          reviewStatus:
+            item.expertReview.status === "expert_reviewed" ? "expert_reviewed" : "unavailable",
         })),
         summary: gaps.summary,
         scientificallyValidated: false,
+        searchCompletenessDistinctFromScientificNovelty: true,
       };
+      if (artifact.items.some((i) => i.scientificGapStatus === "scientifically_verified")) {
+        fail("Gap assessment refused scientifically_verified without expert acceptance");
+      }
       scratch.gaps = artifact;
       return {status: "completed", artifact, reason: null};
     }),
@@ -1016,9 +1147,9 @@ export async function runBoundedAgentExecution(input: {
           "No efficacy, eligibility, or causal benefit inference",
         ],
         nextResearchActions: [
-          "Authenticated human scientific review (PR 6) without Gate C auto-approve",
-          "Deeper opposing-evidence / gap semantic analysis when passage rights clear",
-          "Release-aware product surface bind for draft vs approved (PR 7)",
+          "Expert-reviewed gap assessment with recorded search scope and date (no Gate C auto-approve)",
+          "Passage-backed semantic entailment when reuse rights clear (human queue #2)",
+          "Translational O-04 / research-brief product bind (PR 7); eval deepening (PR 8)",
         ],
         scientificValidityClaimed: false,
         graphPromotable: false,
@@ -1094,7 +1225,8 @@ export async function runBoundedAgentExecution(input: {
     },
     limitations: [
       "Bounded in-process orchestration with durable checkpoints/artifacts; not a live multi-agent swarm",
-      "Opposing-evidence and deep gap semantics remain thin / stubbed pending PR 6+",
+      "Opposing-evidence search is bounded metadata (Europe PMC / Open Targets); incomplete ≠ consensus; provider fail ≠ no evidence",
+      "Gap scientific-novelty status remains not_verified without expert-reviewed evaluation that records search scope/date",
       "Research brief is a structured engineering artifact — no scientific validity claim",
       "Neon red-wave writes remain staging-gated via existing persist/checkpoint stores",
       "No Gate C auto-approve, CDS/PHI, or graph promotion",
