@@ -22,7 +22,7 @@ test("Vercel health reports missing configuration without querying a DB or echoi
  const missing=await handleVercelResearch(req("/api/research/health"),{}, {transport:noCalls});
  expect(missing.status).toBe(503);expect((await missing.json()).missing).toContain("HSI_DATABASE_URL");
  const configured=await handleVercelResearch(req("/api/research/health"),env,{transport:noCalls});
- expect(await configured.json()).toEqual({service:"hsi-research",status:"configuration_validated",writesEnabled:false,publicOrigin:origin,requestOrigin:origin,originMatches:true,authUrlsMatch:true,maintenance:false,databaseConnectionTested:false});
+ expect(await configured.json()).toEqual({service:"hsi-research",status:"configuration_validated",writesEnabled:false,publicOrigin:origin,requestOrigin:origin,originMatches:true,authUrlsMatch:true,authEndpointPrefix:null,databaseEndpointPrefix:"ep-sweet-hill-zasb0lni",endpointPrefixesMatch:true,maintenance:false,databaseConnectionTested:false});
  expect(configured.headers.get("cache-control")).toBe("no-store");
  expect(readResearchDeploymentConfig({...env,HSI_DATABASE_URL:"postgresql://secret@attacker.example/neondb"}).ok).toBe(false);
  expect(readResearchDeploymentConfig({...env,HSI_AUTH_BASE_URL:origin+"/api/auth"}).ok).toBe(false);
@@ -127,6 +127,16 @@ test("configuration rejects a trailing full stop in the Neon endpoint and mismat
  }
  expect(readResearchDeploymentConfig({...env,HSI_AUTH_BASE_URL:neon,VITE_HSI_AUTH_BASE_URL:neon}).ok).toBe(true);
  expect(readResearchDeploymentConfig({...env,HSI_AUTH_BASE_URL:neon,VITE_HSI_AUTH_BASE_URL:"https://different.example/auth"}).ok).toBe(false);
+});
+test("configuration rejects Neon Auth and database hosts from different HSI branches",()=>{
+ const stagingAuth="https://ep-sweet-hill-zasb0lni.neonauth.c-2.eu-west-2.aws.neon.tech/neondb/auth";
+ const productionDb=env.HSI_DATABASE_URL.replace("ep-sweet-hill-zasb0lni","ep-restless-dew-zas989pv");
+ const mismatched=readResearchDeploymentConfig({...env,HSI_AUTH_BASE_URL:stagingAuth,VITE_HSI_AUTH_BASE_URL:stagingAuth,HSI_DATABASE_URL:productionDb});
+ expect(mismatched.ok).toBe(false);expect(mismatched.endpointPrefixesMatch).toBe(false);
+ expect(mismatched.authEndpointPrefix).toBe("ep-sweet-hill-zasb0lni");expect(mismatched.databaseEndpointPrefix).toBe("ep-restless-dew-zas989pv");
+ expect(mismatched.missing).toEqual(expect.arrayContaining(["HSI_AUTH_BASE_URL","HSI_DATABASE_URL"]));
+ const aligned=readResearchDeploymentConfig({...env,HSI_AUTH_BASE_URL:stagingAuth,VITE_HSI_AUTH_BASE_URL:stagingAuth});
+ expect(aligned.ok).toBe(true);expect(aligned.endpointPrefixesMatch).toBe(true);
 });
 test("Neon proxy marker is server-owned and wrapped provider errors retain only recognised codes",async()=>{
  const response=await handleVercelResearch(post("/api/auth/sign-in/email",{email:"test@example.invalid",password:"test-password"}),env,{transport:transport(async(_url,init)=>{

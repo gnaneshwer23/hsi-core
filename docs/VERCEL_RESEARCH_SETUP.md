@@ -48,11 +48,28 @@ In **Settings → Environment Variables**:
 
 | Name | Value/source |
 | --- | --- |
-| `HSI_DATABASE_URL` | PostgreSQL connection string copied using **Connect** on the confirmed HSI staging branch; verified TLS required |
+| `HSI_DATABASE_URL` | PostgreSQL connection string copied using **Connect** on the confirmed HSI branch; verified TLS required |
 | `HSI_NEON_PROJECT_ID` | `red-wave-06625195` |
 | `HSI_PUBLIC_ORIGIN` | Exact HTTPS origin of the test website, for example its stable preview alias; no path |
-| `HSI_AUTH_BASE_URL` | Public Better Auth base URL copied from the **same staging branch** |
+| `HSI_AUTH_BASE_URL` | Public Better Auth base URL copied from the **same HSI branch** as `HSI_DATABASE_URL` |
 | `VITE_HSI_AUTH_BASE_URL` | The same public Auth URL; retain this existing public setting |
+
+### Auth ↔ database branch alignment (binding)
+
+Neon’s Vercel integration may set `DATABASE_URL`, `NEON_AUTH_BASE_URL`, and
+`VITE_NEON_AUTH_URL`. The research gateway **does not** read those names. Operators
+must copy values from **one** red-wave branch into the `HSI_*` / `VITE_HSI_*` vars
+above. Mixing a staging Auth host with a production database (or the reverse) yields
+`BACKEND_DATABASE_SESSION_REQUIRED` for every signed-in user.
+
+| Deployment | Neon branch | Database host prefix | Auth host prefix (`*.neonauth.*`) |
+| --- | --- | --- | --- |
+| Production (`https://www.humansuperintelligence.tech`) | `production` / `br-quiet-silence-zab1zvji` | `ep-restless-dew-zas989pv` | `ep-restless-dew-zas989pv` |
+| Staging / research writes | `hsi-gateway-migrations-staging-20261104` / `br-rough-snow-zagxbvjp` | `ep-sweet-hill-zasb0lni` | `ep-sweet-hill-zasb0lni` |
+
+Never point HSI Auth or `HSI_DATABASE_URL` at ISI `autumn-snow` / `ep-blue-salad`.
+After changing Auth URLs, redeploy so the Vite-built `VITE_HSI_AUTH_BASE_URL` matches,
+sign out, and sign in again on that origin (branch cookies do not transfer).
 
 The server can fall back from `HSI_AUTH_BASE_URL` to the existing public
 `VITE_HSI_AUTH_BASE_URL`, but an explicit matching server setting is clearer.
@@ -77,18 +94,22 @@ https://YOUR-TEST-SITE/api/research/health
 Expected after configuration:
 
 ```json
-{"service":"hsi-research","status":"configuration_validated","writesEnabled":false,"databaseConnectionTested":false}
+{"service":"hsi-research","status":"configuration_validated","writesEnabled":false,"authUrlsMatch":true,"endpointPrefixesMatch":true,"databaseConnectionTested":false}
 ```
 
 This validates configuration only. It does not query the database, authenticate a
 user, confirm migrations, verify privileges or prove scientific readiness.
-The response also reports the non-secret `publicOrigin`, `requestOrigin` and
-`originMatches` fields. An origin mismatch returns 503 with `origin_mismatch`:
+The response also reports the non-secret `publicOrigin`, `requestOrigin`,
+`originMatches`, `authEndpointPrefix`, `databaseEndpointPrefix` and
+`endpointPrefixesMatch` fields. An origin mismatch returns 503 with `origin_mismatch`:
 open the exact configured domain or correct `HSI_PUBLIC_ORIGIN` and redeploy.
 `https://www.humansuperintelligence.tech` and
 `https://humansuperintelligence.tech` are distinct origins. The matching origin
 must also be trusted by Neon Auth; do not weaken the check to accept arbitrary hosts.
-The `authUrlsMatch` field must also be true.
+The `authUrlsMatch` field must also be true. When Neon Auth is configured, a
+staging/production host-prefix mismatch fails closed as `configuration_required`
+with `endpointPrefixesMatch: false` (and those two vars listed under `missing`)
+instead of a misleading session 401.
 
 If the route is missing/404, check the deployment commit, root directory,
 function build logs and external-file inclusion. If it returns 503 with
