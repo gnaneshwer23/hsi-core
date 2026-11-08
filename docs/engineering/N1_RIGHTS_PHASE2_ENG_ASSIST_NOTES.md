@@ -28,6 +28,8 @@ Engineering looked up Crossref works `license` rows for all 12 `N1-C-*` DOIs (of
 
 ## Remaining human actions for #2
 
+**Active checklist:** [`N1_ATTESTATION_HUMAN_CHECKLIST.md`](./N1_ATTESTATION_HUMAN_CHECKLIST.md)
+
 1. For each row: open publisher terms (+ Crossref candidate URL when present).  
 2. Decide reuse scope (prefer **metadata-only** if ambiguous / NC / ND / non-CC userlicense).  
 3. Stamp `licenceEvidenceUri` · `permittedUses` · `principal` · `recordedAt` · `rationale` on the attestation worksheet.  

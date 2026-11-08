@@ -7,6 +7,8 @@
 
 Engineering inventory is **CLEARED**. Scientific / rights acceptance stays **BLOCKED**.
 
+**Active human action (fill-ready):** [`N1_ATTESTATION_HUMAN_CHECKLIST.md`](./N1_ATTESTATION_HUMAN_CHECKLIST.md) — per-row eng lookup results, recommended decisions, worksheet fields, caution quotes for NC-ND / Elsevier OA / TDM-only CC, and post-fill verify transitions. Use that doc to stamp the worksheet; this page remains the eng scaffold checklist.
+
 ## A. What engineering already automated
 
 - [x] Per-source provider OA/licence signals for all 12 candidates
@@ -15,21 +17,22 @@ Engineering inventory is **CLEARED**. Scientific / rights acceptance stays **BLO
 - [x] `bun run n1:check` + `bun run human-queue:check` refuse invented clearance
 - [x] Crossref works licence **eng-assist** lookups (`fixtures/*.crossref.json` · `licence-lookup-assist.v1.json`) — observations only; not attestation stamps
 - [x] Fail-closed attestation completeness gate (`bun run n1:attestation:check`) — incomplete ≠ CLEARED
-- [x] Progress notes: [`N1_RIGHTS_PHASE2_ENG_ASSIST_NOTES.md`](./N1_RIGHTS_PHASE2_ENG_ASSIST_NOTES.md) · residual status **IN PROGRESS · eng-assist** (not CLEARED)
+- [x] Progress notes: [`N1_RIGHTS_PHASE2_ENG_ASSIST_NOTES.md`](./N1_RIGHTS_PHASE2_ENG_ASSIST_NOTES.md) · residual status **IN PROGRESS · awaiting human principal** (not CLEARED)
+- [x] Fill-ready human checklist: [`N1_ATTESTATION_HUMAN_CHECKLIST.md`](./N1_ATTESTATION_HUMAN_CHECKLIST.md)
 
 ## B. Human must attest (not inventable by code)
 
-For **each** of the 12 `N1-C-*` rows in the attestation worksheet:
+Follow [`N1_ATTESTATION_HUMAN_CHECKLIST.md`](./N1_ATTESTATION_HUMAN_CHECKLIST.md). Summary:
 
 1. Open `providerArticleUrl` + publisher landing / Crossref license URL.
-2. Decide reuse scope for HSI corpus (cite-metadata only vs passage storage/display).
+2. Decide reuse scope for HSI corpus (cite-metadata only vs passage storage/display); prefer **metadata-only** when ambiguous.
 3. Record privately, then (when ready to stamp trusted workflow) fill:
    - `licenceEvidenceUri` (publisher terms / OA statement URI — not a chat invent)
    - `permittedUses` (explicit list)
    - `principal` + `recordedAt` + `rationale`
    - `passageImportAuthorized` only when passage import is actually allowed
 4. Keep `passageImported=0` until a separate import step runs under the attested URI.
-5. Prefer **metadata-only** when licence is ambiguous — do **not** invent CC clearance from Europe PMC labels.
+5. Do **not** invent CC clearance from Europe PMC labels or eng-assist URLs.
 
 **Do not** edit `rights-inventory.v1.json` to invent `humanAttestation` fields from this agent chat.
 
