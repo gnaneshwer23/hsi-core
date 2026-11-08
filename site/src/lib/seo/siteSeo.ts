@@ -27,6 +27,7 @@ const NOINDEX_PAGES:Record<string,{name:string;title:string;description:string}>
  '/sign-up':{name:'Create account',title:'Create an Account | Human Super Intelligence',description:'Register an HSI account and complete email verification. Creating an account does not grant research or reviewer permissions.'},
  '/research/account':{name:'Research account',title:'Research Account | Human Super Intelligence',description:'Check your HSI account and independently verified research permissions.'},
  '/research/dashboard':{name:'Research dashboard',title:'Research Dashboard | Human Super Intelligence',description:'Create and reopen authorised source-bound investigations, inspect evidence and access independent review.'},
+ '/research/mechanism-workflow':{name:'Mechanism research path',title:'Mechanism Research Workflow | Human Super Intelligence',description:'Walk one honesty-labelled RA/SSc research path against real research APIs. Synthetic fixture only — not scientific gold or Gate C approval.'},
  '/science/graph':{name:'Knowledge graph',title:'Knowledge Graph Explorer | Human Super Intelligence',description:'Explore HSI draft biological topic connections with filters, neighbourhood navigation and inspectable evidence states. Not a validated causal graph.'}
 };
 export type SeoMetadata={title:string;description:string;canonical:string;indexable:boolean;name:string;structuredData:Record<string,unknown>|null};

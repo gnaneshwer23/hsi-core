@@ -32,3 +32,5 @@ The first command updates generated, unanswered templates. Store actual annotati
 9. Model activation and graph publication require their own gates; a high offline score or edited status field cannot activate them.
 
 The existing engineering harness is documented in [Phase E](../../docs/PHASE_E_BOUNDED_AI_AND_SCIENTIFIC_EVALUATION.md). This packet broadens evaluation design, not measured scientific capability.
+
+Gold Evaluation Suite v1 extends these contracts with ten capability slots (still empty of SME gold): see [GOLD_EVALUATION_SUITE_V1.md](../../docs/engineering/GOLD_EVALUATION_SUITE_V1.md) and `bun run gold:prepare` / `gold:check`.

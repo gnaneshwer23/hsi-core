@@ -1,7 +1,8 @@
 # HSI production-readiness audit receipt
 
 **Audited tip:** `482db110c0efa0b4d3a9166b4f97cd8bcd53b38c` (`482db11`) · `origin/main`  
-**Follow-through tip:** `8013d4cdc13946ddc2c71f958d51cd1c31db7b3d` (`8013d4c`) — Phases 1–10 eng stamps + HUMAN QUEUE deepen (#2/#3/#4/#5/#8 empty worksheets + consolidator); humans still BLOCKED; Auth A www user-confirmed (not writesEnabled / not Gate C)
+**Follow-through tip:** `eng/recovery-evidence-validation-2026-11-08` — Engineering recovery: N8 artifact regen, Cursor-plan contract map, Gold Eval Suite v1 slots, research mechanism workflow UI; humans / science gates still BLOCKED; Auth A www user-confirmed (not writesEnabled / not Gate C)  
+**Prior follow-through tip:** `8013d4cdc13946ddc2c71f958d51cd1c31db7b3d` (`8013d4c`) — Phases 1–10 eng stamps + HUMAN QUEUE deepen (#2/#3/#4/#5/#8 empty worksheets + consolidator); humans still BLOCKED; Auth A www user-confirmed (not writesEnabled / not Gate C)
 **Prior HUMAN QUEUE feature tip:** `8013d4cdc13946ddc2c71f958d51cd1c31db7b3d` (`8013d4c`) — empty attestation worksheets + `human-queue:check`
 **Prior #10 feature tip:** `a3e07169d33c11b25cf1f0ff651679700a436059` (`a3e0716`) — N7/N8 empty real-data / licence slots + checklist + STOP
 **Prior #9 feature tip:** `feef64b1363370561dd4c3f0a12e99ed4be720ee` (`feef64b`) — N5 live CT.gov snapshot refresh + honesty harness

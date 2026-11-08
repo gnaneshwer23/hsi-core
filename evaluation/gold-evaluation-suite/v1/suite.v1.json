@@ -1,0 +1,210 @@
+{
+  "schemaVersion": "hsi-gold-evaluation-suite-1",
+  "id": "hsi-gold-evaluation-suite-v1",
+  "version": "1.0.0",
+  "purpose": "engineering_scaffold_only",
+  "draftBankId": "hsi-translational-immunology-question-design",
+  "draftBankVersion": "0.1.0",
+  "draftBankHash": "8f84210591c1eb6ef0d8f42711ce1c5f1697ddf79744a5b4f36e56f155295612",
+  "scientificGroundTruthEstablished": false,
+  "modelActivationAllowed": false,
+  "graphPromotable": false,
+  "gateCAutoApprove": false,
+  "legalBinding": false,
+  "inventLabelsPermitted": false,
+  "containsPhi": false,
+  "capabilities": [
+    {
+      "capability": "versioned_licensed_packets",
+      "status": "awaiting_rights",
+      "filled": false,
+      "draftBankBound": true,
+      "inventLabelsPermitted": false,
+      "scientificGold": false,
+      "notes": "Bind each draft case to a rights-cleared packet hash; packets stay empty until licensing."
+    },
+    {
+      "capability": "claim_level_spans",
+      "status": "awaiting_sme",
+      "filled": false,
+      "draftBankBound": true,
+      "inventLabelsPermitted": false,
+      "scientificGold": false,
+      "notes": "Annotation rows reserve claim/passage span fields; no invented spans."
+    },
+    {
+      "capability": "species_tissue_study_context",
+      "status": "awaiting_sme",
+      "filled": false,
+      "draftBankBound": true,
+      "inventLabelsPermitted": false,
+      "scientificGold": false,
+      "notes": "Draft bank already requires species/tissue/stage/cell/assay/dose/timepoint/cohort context."
+    },
+    {
+      "capability": "supporting_opposing_null",
+      "status": "awaiting_sme",
+      "filled": false,
+      "draftBankBound": true,
+      "inventLabelsPermitted": false,
+      "scientificGold": false,
+      "notes": "Packet design must retain supporting, opposing and null observations without erasure."
+    },
+    {
+      "capability": "sme_annotation_adjudication_slots",
+      "status": "awaiting_sme",
+      "filled": false,
+      "draftBankBound": true,
+      "inventLabelsPermitted": false,
+      "scientificGold": false,
+      "notes": "Two pending annotator slots + adjudication remain empty; authorityVerified=false."
+    },
+    {
+      "capability": "study_grouped_splits",
+      "status": "scaffolded",
+      "filled": false,
+      "draftBankBound": true,
+      "inventLabelsPermitted": false,
+      "scientificGold": false,
+      "notes": "Study-family partitions reserved; held-out freeze blocked until packets + labels exist."
+    },
+    {
+      "capability": "citation_and_semantic_support_eval",
+      "status": "awaiting_thresholds",
+      "filled": false,
+      "draftBankBound": true,
+      "inventLabelsPermitted": false,
+      "scientificGold": false,
+      "notes": "Citation correctness and semantic-support metrics stay null without SME labels."
+    },
+    {
+      "capability": "context_mismatch_and_abstention",
+      "status": "awaiting_thresholds",
+      "filled": false,
+      "draftBankBound": true,
+      "inventLabelsPermitted": false,
+      "scientificGold": false,
+      "notes": "Phase E / N4 patterns cover mismatch + abstention; gold scores remain unmeasured."
+    },
+    {
+      "capability": "baseline_vs_candidate",
+      "status": "awaiting_thresholds",
+      "filled": false,
+      "draftBankBound": true,
+      "inventLabelsPermitted": false,
+      "scientificGold": false,
+      "notes": "Deterministic + lexical baselines registered; candidate model not configured."
+    },
+    {
+      "capability": "immutable_manifests_and_reports",
+      "status": "scaffolded",
+      "filled": false,
+      "draftBankBound": true,
+      "inventLabelsPermitted": false,
+      "scientificGold": false,
+      "notes": "Suite hash pins draft bank + readiness; reports stay scaffold_only."
+    }
+  ],
+  "studyGroupedSplits": {
+    "schemaVersion": "hsi-gold-study-split-1",
+    "status": "awaiting_packet_binding",
+    "developmentStudyIds": [],
+    "heldOutStudyIds": [],
+    "leakageControlsDocumented": false,
+    "frozen": false
+  },
+  "smeSlots": {
+    "annotatorA": "awaiting_sme",
+    "annotatorB": "awaiting_sme",
+    "adjudication": "awaiting_sme",
+    "authorityVerified": false,
+    "independentlyLabelledCases": 0
+  },
+  "metrics": [
+    {
+      "metricId": "citation_correctness",
+      "value": null,
+      "labelledDenominator": 0,
+      "thresholdApproved": false
+    },
+    {
+      "metricId": "semantic_support",
+      "value": null,
+      "labelledDenominator": 0,
+      "thresholdApproved": false
+    },
+    {
+      "metricId": "context_mismatch_detection",
+      "value": null,
+      "labelledDenominator": 0,
+      "thresholdApproved": false
+    },
+    {
+      "metricId": "abstention_accuracy",
+      "value": null,
+      "labelledDenominator": 0,
+      "thresholdApproved": false
+    },
+    {
+      "metricId": "opposition_null_coverage",
+      "value": null,
+      "labelledDenominator": 0,
+      "thresholdApproved": false
+    },
+    {
+      "metricId": "baseline_vs_candidate_delta",
+      "value": null,
+      "labelledDenominator": 0,
+      "thresholdApproved": false
+    }
+  ],
+  "baselines": {
+    "schemaVersion": "hsi-gold-baseline-registry-1",
+    "methods": [
+      {
+        "id": "deterministic-extractive-baseline",
+        "kind": "deterministic_extractive",
+        "version": "hsi-extractive-baseline-1",
+        "promptVersion": "hsi-source-selection-1",
+        "promptHash": "ac355a177482044572bb7a0681d1c236f205709372506cabdc6d4b4471d11390",
+        "externalModelCalled": false,
+        "activationAllowed": false,
+        "scientificAccuracy": null
+      },
+      {
+        "id": "hsi-lexical-retrieval-baseline-1",
+        "kind": "lexical_retrieval",
+        "version": "fa70074459153a80",
+        "promptVersion": null,
+        "promptHash": "fa70074459153a807ccda56a00aa0f02f7fba1d378a5d8d93aa0fa675a95fae1",
+        "externalModelCalled": false,
+        "activationAllowed": false,
+        "scientificAccuracy": null
+      }
+    ],
+    "candidateModel": {
+      "status": "not_configured",
+      "activationAllowed": false,
+      "provider": null,
+      "modelVersion": null
+    }
+  },
+  "blockers": [
+    "Assign rights-cleared versioned source packets, including opposing evidence and context, to each case.",
+    "Obtain two independent SME annotations and adjudicate disagreement through accountable review.",
+    "Freeze separate development and held-out partitions and define leakage controls before candidate tuning.",
+    "Agree scientific metrics and release thresholds; measure baseline and candidate on identical frozen inputs.",
+    "Verify reviewer authority, source access, operational ownership and live two-account acceptance.",
+    "Do not treat the 50-question draft bank as gold or invent SME labels.",
+    "Evaluate candidate/hybrid extractors only on permitted datasets after rights + SME gates.",
+    "Keep generative model activation and predictive biological validity claims blocked."
+  ],
+  "immutableManifest": {
+    "schemaVersion": "hsi-gold-immutable-manifest-1",
+    "suiteHash": "9f529f7a87d731faa7b4639998c9aa24bf6a554dff0fe3b4365e9952490b5b14",
+    "readinessBankHash": "8f84210591c1eb6ef0d8f42711ce1c5f1697ddf79744a5b4f36e56f155295612",
+    "phaseEReference": "evaluation/phase-e/engineering-cases.json",
+    "reportStatus": "scaffold_only",
+    "scientificValidityEstablished": false
+  }
+}
