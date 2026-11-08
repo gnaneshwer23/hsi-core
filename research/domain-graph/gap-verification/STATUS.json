@@ -1,0 +1,32 @@
+{
+  "pack": "gap-verification",
+  "phase": "step_04",
+  "asOf": "2026-11-08T17:45:00.000Z",
+  "engineeringHarness": "CLEARED",
+  "scientificAcceptance": "BLOCKED",
+  "smeGoldFilled": false,
+  "expertLabelsAvailable": false,
+  "scientificallyValidated": false,
+  "passageImportAuthorized": false,
+  "livingEvidenceStatus": "bound_metadata_refresh",
+  "matchedPmids": [
+    "18375541",
+    "24586782",
+    "30760472"
+  ],
+  "itemCount": 20,
+  "summary": {
+    "missingLocalData": 4,
+    "genuineUnresolved": 0,
+    "passageRightsBlocked": 12,
+    "opposeSearchIncomplete": 4,
+    "abstain": 0
+  },
+  "unavailableCapabilities": [
+    "Expert-labelled scientific gap ranking (human queue #4 PARKED; smeGoldFilled=false)",
+    "Passage-backed entailment against uncleared passages (human queue #2 PARKED)",
+    "Gate C auto-approve / MoU legalBinding (forbidden)",
+    "Live literature / LLM tool activation beyond deterministic classification"
+  ],
+  "nextMilestone": "step_05_translational_landscape_intelligence"
+}

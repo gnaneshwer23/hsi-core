@@ -6,7 +6,7 @@ body:has(.experience-shell)::before{display:none}
 .experience-shell .nav .brand,.experience-shell .nav .brand-name{color:#17645f!important;text-shadow:none;text-transform:none;font-size:1rem;font-weight:650;letter-spacing:-.025em;white-space:nowrap}
 .experience-shell .nav .brand-mark{background:#17645f!important;color:#fffaf3!important;box-shadow:inset 0 1px 1px #ffffff55,0 3px 5px #17645f15!important;border:1px solid #17645f33;width:35px;height:35px;border-radius:10px}
 .experience-shell .nav .nav-links{gap:23px;display:flex;margin-left:auto}
-.experience-shell .nav .nav-links a{color:#315f55!important;font-size:.85rem;font-weight:500;padding:10px 0;text-shadow:none;white-space:nowrap}
+.experience-shell .nav .nav-links a{color:#315f55!important;opacity:1;font-size:.85rem;font-weight:500;padding:10px 0;text-shadow:none;white-space:nowrap}
 .experience-shell .nav .nav-links a.active{color:#093b38!important;border-bottom:2px solid #17645f}
 .experience-shell .nav-auth-actions{margin-left:0;display:flex}
 .experience-shell .nav .nav-sign-in{border:0;color:#17645f;font-size:.84rem;padding:.5rem 0;margin:0;background:transparent}

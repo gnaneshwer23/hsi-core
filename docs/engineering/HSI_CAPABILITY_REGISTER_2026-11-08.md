@@ -1,9 +1,9 @@
 # HSI Capability Register — 2026-11-08
 
-**Execution step:** 03 Living evidence and graph expansion (metadata ingest + outcome bind)  
+**Execution step:** 04 Agent intelligence and gap verification (deterministic classification + claim_verifier adapter)  
 **Master spec:** [`../product/HSI_DEFINITIVE_PRODUCT_SPEC.md`](../product/HSI_DEFINITIVE_PRODUCT_SPEC.md)  
 **Machine-readable:** [`../../operations/capability-register/capability-register.v1.json`](../../operations/capability-register/capability-register.v1.json)  
-**Tip audited:** step 01–02 on `main` (`9e75a00`, `#68`); step 03 on `eng/step-03-living-evidence-graph`
+**Tip audited:** step 01–03 on `main` (`94650ae`, `#69`); step 04 on `eng/step-04-agent-gap-verification`
 
 ## Status vocabulary
 
@@ -39,7 +39,7 @@ A row may list a primary status plus honesty tags. **Documents ≠ scientific va
 | F-07 | Synthetic patient validation records | `synthetic_only` | `src/syntheticValidationDataset.ts`, `/research/validation`, dashboard profiles | Risk of looking like real cohorts if labelling slips | Keep separate; never promote into evidence package |
 | F-08 | Trial / therapeutic scaffolding | `implemented` · mostly `planned` for live landscape | `src/trialsCriteriaMvp.ts`, `src/clinicalResearchScaffold.ts`, `src/evidence/n5RegistryLiveRefresh.ts`, `/science/clinical-trials` | No full versioned development landscape in investigation 04 | Extend registry snapshots into same investigation object |
 | F-09 | Scientific evaluation harness | `implemented` · `blocked` for science | `src/goldEvaluationSuite.ts`, R2 suite, `src/modelEvalHarness.ts`, N3/N6 worksheets | `labelledRows=0`, `smeGoldFilled=false` | Complete harness wiring; **do not invent labels** |
-| F-10 | AI orchestration + agent contracts | `implemented` (contracts/orchestrator) · not end-to-end scientific | `src/hsiAgentIntelligenceContracts.ts`, `src/hsiAgentOrchestrator.ts`, durable checkpoint/recovery, `site/src/features/science/researchOrchestrator.ts` (local deterministic) | Tool IDs are allowlisted; live literature/LLM tools not product-connected | Audit+connect (step 04); reuse contracts |
+| F-10 | AI orchestration + agent contracts | `implemented` (contracts/orchestrator) · gap adapter connected | `src/hsiAgentIntelligenceContracts.ts`, `src/hsiAgentOrchestrator.ts`, `createGapVerificationExecutor` on `claim_verifier`, local `researchOrchestrator.ts` | Live literature/LLM tools still unused; no new agent catalogue | Keep claim_verifier adapter; no swarm invent |
 
 ---
 
@@ -49,7 +49,7 @@ A row may list a primary status plus honesty tags. **Documents ≠ scientific va
 |----|--------|--------|----------|-----|-----------------|
 | O-01 | Scientific landscape | `connected` | Outcome section 01 + livingEvidence bibliographic / OT candidates when bound | Not a curated landscape for arbitrary questions; metadata ≠ synthesis | Keep honesty; broaden domain pins |
 | O-02 | Evidence comparison | `connected` | Outcome section 02 + reverse trace; oppose note honesty | Cross-species depth still limited; empty oppose ≠ consensus | Richer oppose search when rights clear |
-| O-03 | Gap intelligence | `implemented` · `connected` (recorded fields) | Outcome section 03 from missingEvidence/uncertainty | Not verified scientific gaps / not scientist-ranked | Gap verification (step 04); keep abstention |
+| O-03 | Gap intelligence | `implemented` · `connected` (classified) | `src/evidence/gapVerification.ts`, outcome `gapVerification`, panel §03 | Engineering classes only; SME gold empty (#4); not scientist-ranked | Keep abstention; await #4 for scientific labels |
 | O-04 | Translational intelligence | `planned` / scaffold | Trials criteria MVP, N5 refresh, science clinical-trials page | Not attached to investigation outcome (`trials: not_queried` honesty) | Attach versioned registry snapshot to same question (step 05) |
 | O-05 | Research action plan | `connected` (partial) | Outcome `nextResearchSteps`, falsification engine | Tasks from saved record; not evaluated experiment designs | Keep fields; fill only from recorded planner — no invention |
 | O-06 | Evidence package | `connected` | `…/review-package`, outcome JSON/Markdown export, hashes | Live researcher completion blocked on #5 | Keep export path; probe via R3; no redesign |
@@ -69,7 +69,7 @@ Map logical names → real code. Roles in `HSI_AGENT_ROLES` are **policy contrac
 | Microbiome / Neuroimmune | `gutImmunePack`, `neuroImmunePack`, systems axes | `implemented` packs · thin science | Treat as packs, not agents |
 | Clinical Evidence Investigator | Synthetic validation; Aksh clinical agents catalog only in-repo | `synthetic_only` / `blocked` for real cohorts | Step 06 only with authorised data |
 | Contradiction Investigator | Contract role + local contradictionEngine | `implemented` detection helpers · not full service | First-class oppose search audit |
-| Research Gap Investigator | gap reports + local role | `planned` as verified gaps | Expert-labelled cases required |
+| Research Gap Investigator | `gapVerification` + claim_verifier adapter (reuse; not a new agent name) | `implemented` engineering classification · `blocked` scientific labels | Expert-labelled cases (#4) still required |
 | Therapeutic / Trial Investigator | trials MVP, N5, ATLAS catalog (Aksh) | `planned` product depth | Step 05 |
 | Research Planning Agent | Falsification / question engines, outcome next steps | `connected` (recorded) | No invented protocols |
 | Evidence Verifier | Claim/passage hashes, outcome compiler, Gate C patterns (ISI) | `connected` integrity · `blocked` scientific approval | Human #2/#3/#4 |
@@ -139,9 +139,25 @@ Map logical names → real code. Roles in `HSI_AGENT_ROLES` are **policy contrac
 4. Research outcome `livingEvidence` section + outcome panel section 01 surfacing bound bibliographic / OT / registry-identity metadata; `external_search` stage updates when bound; trials remain `not_queried` (step 05).
 5. Harness: `bun run living-evidence:expand` · `living-evidence:check` · optional `living-evidence:live`.
 
-**Residual:** human #2 rights before passage import; expert-promoted graph edges; step 04 gap verification; step 05 O-04 trials attach; live #5 session completion.
+**Residual:** human #2 rights before passage import; expert-promoted graph edges; step 04 gap verification (see §J); step 05 O-04 trials attach; live #5 session completion.
 
 **Out of scope (unchanged):** Gate C/MoU/CDS-PHI, inventing clearances, autumn-snow.
+
+---
+
+## J. Step 04 — Agent intelligence and gap verification (shipped eng)
+
+**Done:**
+
+1. Deterministic `gapVerification` classifier: missing local data vs genuine unresolved vs passage-rights-blocked vs oppose-search-incomplete vs abstain.
+2. Binds living-evidence outcome projection + local claim/source traces; every item reverse-traceable; `smeGoldFilled=false`.
+3. Research outcome + panel §03 surface classifications with explicit unavailable capabilities.
+4. Reuses ARCH-009 `claim_verifier` via `createGapVerificationExecutor` — no new agent catalogue entry.
+5. Harness: `bun run gap-verification:expand` · `:check`.
+
+**Residual:** expert-labelled cases (#4 PARKED); passage entailment (#2); live LLM/literature tools; step 05 trials attach; live #5 session.
+
+**Out of scope (unchanged):** inventing SME gold / MoU / Gate C / CDS-PHI / autumn-snow.
 
 ---
 
@@ -179,4 +195,15 @@ Map logical names → real code. Roles in `HSI_AGENT_ROLES` are **policy contrac
 | Scientifically validated claimed | **No** — none |
 | Human queue disturbed | **No** — remains PARKED |
 
-**Verify:** read this register; `jq . operations/capability-register/capability-register.v1.json`; `bun run living-evidence:check`; optional `bun run r3:check`.
+### Step 04
+
+| Criterion | Result |
+|-----------|--------|
+| Gap recommendations classified vs bound evidence | **Yes** — `gapVerification` on outcome + panel 03 |
+| Distinguish missing local data vs unresolved questions | **Yes** — deterministic kinds + abstain |
+| Traceable reverse bindings | **Yes** — claim / PMID / OT disease ids on each item |
+| Expert-labelled / scientifically validated | **No** — #4 PARKED; honesty flags false |
+| New agent catalogue invented | **No** — claim_verifier adapter only |
+| Human queue disturbed | **No** — remains PARKED |
+
+**Verify:** read this register; `jq . operations/capability-register/capability-register.v1.json`; `bun run gap-verification:check`; `bun run living-evidence:check`; optional `bun run r3:check`.

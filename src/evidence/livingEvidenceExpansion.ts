@@ -543,7 +543,7 @@ function unavailableCapabilities(snapshot: LivingEvidenceExpansionSnapshot): str
     "Scientific acceptance / SME gold (human queue #4 PARKED)",
     "Gate C auto-approve / MoU legalBinding (forbidden)",
     "Investigation trials attach / O-04 translational (reserved for step 05)",
-    "Verified scientific gap ranking (reserved for step 04)",
+    "Expert-labelled scientific gap ranking (human queue #4 PARKED; engineering classification in gapVerification)",
   ];
   if (snapshot.bibliographicRecords.length < LIVING_EVIDENCE_PMID_PINS.length) {
     out.push("Complete Europe PMC retrieval for all pinned PMIDs");

@@ -180,15 +180,17 @@
       "group": "foundations",
       "name": "AI orchestration and agent contracts",
       "status": [
-        "implemented"
+        "implemented",
+        "connected"
       ],
       "evidence": [
         "src/hsiAgentIntelligenceContracts.ts",
         "src/hsiAgentOrchestrator.ts",
+        "src/hsiArch003AgentAdapters.ts",
         "site/src/features/science/researchOrchestrator.ts"
       ],
-      "gap": "No end-to-end scientific agent execution in product",
-      "nextAction": "Audit and connect tools (step 04); no new catalogue"
+      "gap": "Gap verification adapter on claim_verifier; live literature/LLM tools still unused",
+      "nextAction": "Keep claim_verifier adapter; no new catalogue"
     },
     {
       "id": "O-01",
@@ -232,12 +234,13 @@
         "connected"
       ],
       "evidence": [
+        "src/evidence/gapVerification.ts",
+        "src/researchOutcome.ts",
         "src/gapReport.ts",
-        "src/researchCoverage.ts",
         "site/src/components/ResearchOutcomePanel.tsx"
       ],
-      "gap": "Gap section surfaces recorded missingEvidence/uncertainty \u2014 not verified scientific gaps",
-      "nextAction": "Gap verification with expert labels (step 04)"
+      "gap": "Engineering gap classes connected; SME gold / scientist ranking still blocked (#4)",
+      "nextAction": "Keep abstention; await expert labels (#4)"
     },
     {
       "id": "O-04",
@@ -387,13 +390,16 @@
       "group": "nexus_agent",
       "name": "Research Gap Investigator",
       "status": [
-        "planned"
+        "implemented",
+        "blocked"
       ],
       "evidence": [
+        "src/evidence/gapVerification.ts",
+        "src/hsiArch003AgentAdapters.ts",
         "src/gapReport.ts"
       ],
-      "gap": "Coverage gaps \u2260 scientific gaps",
-      "nextAction": "Expert-labelled verification (step 04)"
+      "gap": "Engineering classification implemented; scientific labels blocked on #4",
+      "nextAction": "Expert-labelled cases when #4 clears; no new agent name"
     },
     {
       "id": "A-TRIAL",
