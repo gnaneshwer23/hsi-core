@@ -1,5 +1,7 @@
 /**
  * PR 2 — Dynamic evidence retrieval (unpinned researcher queries).
+ * PR 3 persistence lives in `dynamicEvidencePersistence.ts` (candidate store +
+ * identity links); this module still produces the reproducible search record.
  *
  * Extends Europe PMC + Open Targets adapters with validated free-form /
  * entity-shaped queries, honest failure taxonomy, rate limits, caching,
@@ -74,7 +76,7 @@ export type ResearcherQueryInput = {
   ordering?: "relevance" | "date_desc" | "provider_default";
   synonyms?: readonly string[];
   pageSize?: number;
-  /** Only metadata is permitted in PR 2 without human rights clearance. */
+  /** Only metadata is permitted without human rights clearance (PR 2/3). */
   contentAccess?: DynamicContentAccessRequest;
 };
 
@@ -314,7 +316,7 @@ export function validateResearcherQuery(input: ResearcherQueryInput): {
       ok: false,
       outcome: "permission_licence_restriction",
       detail:
-        "PR 2 retrieves permitted metadata only. Abstract/full-text import requires verified reuse rights (human queue #2).",
+        "Dynamic retrieval persists permitted metadata only. Abstract/full-text import requires verified reuse rights (human queue #2).",
     };
   }
   let pageSize: number;
@@ -560,7 +562,7 @@ function classifyOverall(input: {
 
 /**
  * Run dynamic retrieval for an unpinned researcher question.
- * Persists nothing to Neon — returns permitted metadata + search record for PR 3 persistence.
+ * Returns permitted metadata + search record; Neon persistence is `persistDynamicEvidencePlan`.
  */
 export async function runDynamicEvidenceRetrieval(input: {
   query: ResearcherQueryInput;
