@@ -1,0 +1,844 @@
+{
+  "schemaVersion": "hsi-living-evidence-expansion-receipt-1",
+  "phase": "step_03",
+  "programme": "immune_disease_living_evidence",
+  "generatedAt": "2026-11-08T17:45:00.000Z",
+  "engineeringHarness": "CLEARED",
+  "scientificAcceptance": "BLOCKED",
+  "rightsAcceptance": "BLOCKED",
+  "humanCleared": false,
+  "passageImported": false,
+  "graphPromotable": false,
+  "gateCAutoApprove": false,
+  "legalBinding": false,
+  "mode": "offline_fixture_replay",
+  "bibliographicRetrieved": 3,
+  "openTargetsRetrieved": 2,
+  "registryEntitiesResolved": 1,
+  "entityResolutions": 6,
+  "graphRelationshipCandidates": 10,
+  "providerHits": [
+    {
+      "provider": "europe_pmc",
+      "pmid": "18375541",
+      "ok": true,
+      "outcome": "metadata_retrieved",
+      "retrievedAt": "2026-11-08T17:40:00.000Z",
+      "responseIdentity": "c70f08e5f0c0a60e9a15894c0c5584c3de6d15227a9ca9013a6af0ec5742e0cc",
+      "httpStatus": 200,
+      "detail": null
+    },
+    {
+      "provider": "europe_pmc",
+      "pmid": "24586782",
+      "ok": true,
+      "outcome": "metadata_retrieved",
+      "retrievedAt": "2026-11-08T17:40:00.000Z",
+      "responseIdentity": "bcf5db304c1c8e85dfa12b7454456a544bb175a6257add460ea31c4e0aa87f31",
+      "httpStatus": 200,
+      "detail": null
+    },
+    {
+      "provider": "europe_pmc",
+      "pmid": "30760472",
+      "ok": true,
+      "outcome": "metadata_retrieved",
+      "retrievedAt": "2026-11-08T17:40:00.000Z",
+      "responseIdentity": "4940fa33951b325155cca8dccf7a2f93845deb77b89a6ef5db0c05b33aa631ac",
+      "httpStatus": 200,
+      "detail": null
+    },
+    {
+      "provider": "open_targets",
+      "diseaseId": "MONDO_0008383",
+      "ok": true,
+      "outcome": "metadata_retrieved",
+      "retrievedAt": "2026-11-08T17:40:00.000Z",
+      "responseIdentity": "3b2fd8e88270bb5062cfe978096d8a5d1a99f72bb338dd39bb4b77c54dc4b448",
+      "httpStatus": 200,
+      "detail": null
+    },
+    {
+      "provider": "open_targets",
+      "diseaseId": "MONDO_0005100",
+      "ok": true,
+      "outcome": "metadata_retrieved",
+      "retrievedAt": "2026-11-08T17:40:00.000Z",
+      "responseIdentity": "a2b4ffc64970056982e0d64e648eb8e860d1b8b86e9c75f755c133784caa5c2c",
+      "httpStatus": 200,
+      "detail": null
+    },
+    {
+      "provider": "clinicaltrials_gov",
+      "nctId": "NCT01030861",
+      "ok": true,
+      "outcome": "metadata_retrieved",
+      "retrievedAt": "2026-11-08T17:40:00.000Z",
+      "responseIdentity": "86989bcf8c252c195dc03e2e0ca0ac506bc9ce8962cc48b670b70bc5f8a91b36",
+      "httpStatus": 200,
+      "detail": null
+    }
+  ],
+  "snapshot": {
+    "schemaVersion": "hsi-living-evidence-expansion-1",
+    "method": "hsi-living-evidence-metadata-expand-1",
+    "programme": "immune_disease_living_evidence",
+    "origin": "fixture_replay",
+    "generatedAt": "2026-11-08T17:45:00.000Z",
+    "asOf": "2026-11-08T17:45:00.000Z",
+    "retrievedAt": "2026-11-08T17:40:00.000Z",
+    "pinnedPmids": [
+      "18375541",
+      "24586782",
+      "30760472"
+    ],
+    "pinnedDiseaseIds": [
+      "MONDO_0008383",
+      "MONDO_0005100"
+    ],
+    "pinnedNctIds": [
+      "NCT01030861"
+    ],
+    "bibliographicRecords": [
+      {
+        "provider": "europe_pmc",
+        "sourceId": "18375541",
+        "sourceType": "MED",
+        "pmid": "18375541",
+        "pmcid": "PMC2596303",
+        "doi": "10.1136/ard.2007.084715",
+        "title": "Association of rheumatoid factor and anti-cyclic citrullinated peptide positivity, but not carriage of shared epitope or PTPN22 susceptibility variants, with anti-tumour necrosis factor response in rheumatoid arthritis.",
+        "authors": "Potter C, Hyrich KL, Tracey A, Lunt M, Plant D, Symmons DP, Thomson W, Worthington J, Emery P, Morgan AW, Wilson AG, Isaacs J, Barton A, BRAGGSS.",
+        "journal": null,
+        "publicationYear": 2009,
+        "isRetracted": null,
+        "rightsSignals": {
+          "isOpenAccess": "Y",
+          "inEPMC": "Y",
+          "inPMC": "Y",
+          "providerLicenseLabel": "cc by"
+        },
+        "url": "https://europepmc.org/article/MED/18375541",
+        "retrievedAt": "2026-11-08T17:40:00.000Z",
+        "responseIdentity": "c70f08e5f0c0a60e9a15894c0c5584c3de6d15227a9ca9013a6af0ec5742e0cc",
+        "verificationState": "metadata_retrieved_not_claim_verified",
+        "reviewState": "unreviewed",
+        "scientificApproval": false,
+        "graphPromotable": false
+      },
+      {
+        "provider": "europe_pmc",
+        "sourceId": "24586782",
+        "sourceType": "MED",
+        "pmid": "24586782",
+        "pmcid": "PMC3937352",
+        "doi": "10.1371/journal.pone.0089442",
+        "title": "The status of rheumatoid factor and anti-cyclic citrullinated peptide antibody are not associated with the effect of anti-TNFα agent treatment in patients with rheumatoid arthritis: a meta-analysis.",
+        "authors": "Lv Q, Yin Y, Li X, Shan G, Wu X, Liang D, Li Y, Zhang X.",
+        "journal": null,
+        "publicationYear": 2014,
+        "isRetracted": null,
+        "rightsSignals": {
+          "isOpenAccess": "Y",
+          "inEPMC": "Y",
+          "inPMC": "Y",
+          "providerLicenseLabel": "cc by"
+        },
+        "url": "https://europepmc.org/article/MED/24586782",
+        "retrievedAt": "2026-11-08T17:40:00.000Z",
+        "responseIdentity": "bcf5db304c1c8e85dfa12b7454456a544bb175a6257add460ea31c4e0aa87f31",
+        "verificationState": "metadata_retrieved_not_claim_verified",
+        "reviewState": "unreviewed",
+        "scientificApproval": false,
+        "graphPromotable": false
+      },
+      {
+        "provider": "europe_pmc",
+        "sourceId": "30760472",
+        "sourceType": "MED",
+        "pmid": "30760472",
+        "pmcid": null,
+        "doi": "10.1136/annrheumdis-2018-214382",
+        "title": "Circulating follicular helper T cells are increased in systemic sclerosis and promote plasmablast differentiation through the IL-21 pathway which can be inhibited by ruxolitinib.",
+        "authors": "Ricard L, Jachiet V, Malard F, Ye Y, Stocker N, Rivière S, Senet P, Monfort JB, Fain O, Mohty M, Gaugler B, Mekinian A.",
+        "journal": null,
+        "publicationYear": 2019,
+        "isRetracted": null,
+        "rightsSignals": {
+          "isOpenAccess": "N",
+          "inEPMC": "N",
+          "inPMC": "N",
+          "providerLicenseLabel": null
+        },
+        "url": "https://europepmc.org/article/MED/30760472",
+        "retrievedAt": "2026-11-08T17:40:00.000Z",
+        "responseIdentity": "4940fa33951b325155cca8dccf7a2f93845deb77b89a6ef5db0c05b33aa631ac",
+        "verificationState": "metadata_retrieved_not_claim_verified",
+        "reviewState": "unreviewed",
+        "scientificApproval": false,
+        "graphPromotable": false
+      }
+    ],
+    "openTargetsRecords": [
+      {
+        "provider": "open_targets_platform_graphql_v4",
+        "diseaseId": "MONDO_0008383",
+        "diseaseName": "rheumatoid arthritis",
+        "associationCount": 8420,
+        "associations": [
+          {
+            "targetEnsemblId": "ENSG00000105397",
+            "approvedSymbol": "TYK2",
+            "score": 0.763825465200706,
+            "datatypeScores": [
+              {
+                "id": "literature",
+                "score": 0.8271193810235968
+              },
+              {
+                "id": "animal_model",
+                "score": 0.26827986098600837
+              },
+              {
+                "id": "genetic_association",
+                "score": 0.9731961765839988
+              },
+              {
+                "id": "clinical",
+                "score": 0.9914019175206491
+              }
+            ]
+          },
+          {
+            "targetEnsemblId": "ENSG00000160712",
+            "approvedSymbol": "IL6R",
+            "score": 0.751690492375485,
+            "datatypeScores": [
+              {
+                "id": "literature",
+                "score": 0.833520493962114
+              },
+              {
+                "id": "genetic_association",
+                "score": 0.8978311373726781
+              },
+              {
+                "id": "clinical",
+                "score": 0.9934933197802531
+              }
+            ]
+          },
+          {
+            "targetEnsemblId": "ENSG00000113302",
+            "approvedSymbol": "IL12B",
+            "score": 0.7452752344606981,
+            "datatypeScores": [
+              {
+                "id": "literature",
+                "score": 0.5134218944030698
+              },
+              {
+                "id": "genetic_association",
+                "score": 0.9189901043348859
+              },
+              {
+                "id": "clinical",
+                "score": 0.9847642681127319
+              }
+            ]
+          },
+          {
+            "targetEnsemblId": "ENSG00000162434",
+            "approvedSymbol": "JAK1",
+            "score": 0.718689448504761,
+            "datatypeScores": [
+              {
+                "id": "literature",
+                "score": 0.5167851228398721
+              },
+              {
+                "id": "animal_model",
+                "score": 0.319893185703235
+              },
+              {
+                "id": "genetic_association",
+                "score": 0.6935060372649307
+              },
+              {
+                "id": "clinical",
+                "score": 0.9933302824928972
+              }
+            ]
+          },
+          {
+            "targetEnsemblId": "ENSG00000056972",
+            "approvedSymbol": "TRAF3IP2",
+            "score": 0.7183131839800645,
+            "datatypeScores": [
+              {
+                "id": "rna_expression",
+                "score": 0.024730415607504327
+              },
+              {
+                "id": "clinical",
+                "score": 0.9457466776013786
+              },
+              {
+                "id": "literature",
+                "score": 0.5898295413257296
+              },
+              {
+                "id": "genetic_association",
+                "score": 0.871471757008798
+              },
+              {
+                "id": "animal_model",
+                "score": 0.3720688464082524
+              }
+            ]
+          }
+        ],
+        "retrievedAt": "2026-11-08T17:40:00.000Z",
+        "responseIdentity": "3b2fd8e88270bb5062cfe978096d8a5d1a99f72bb338dd39bb4b77c54dc4b448",
+        "verificationState": "metadata_retrieved_not_claim_verified",
+        "reviewState": "unreviewed",
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "passageImportAuthorized": false
+      },
+      {
+        "provider": "open_targets_platform_graphql_v4",
+        "diseaseId": "MONDO_0005100",
+        "diseaseName": "systemic sclerosis",
+        "associationCount": 3031,
+        "associations": [
+          {
+            "targetEnsemblId": "ENSG00000151617",
+            "approvedSymbol": "EDNRA",
+            "score": 0.587103637374233,
+            "datatypeScores": [
+              {
+                "id": "literature",
+                "score": 0.8716635769511302
+              },
+              {
+                "id": "animal_model",
+                "score": 0.4012647229635504
+              },
+              {
+                "id": "clinical",
+                "score": 0.9132407301891834
+              }
+            ]
+          },
+          {
+            "targetEnsemblId": "ENSG00000136160",
+            "approvedSymbol": "EDNRB",
+            "score": 0.5645756608325632,
+            "datatypeScores": [
+              {
+                "id": "literature",
+                "score": 0.30886723798558097
+              },
+              {
+                "id": "clinical",
+                "score": 0.9132407301891834
+              }
+            ]
+          },
+          {
+            "targetEnsemblId": "ENSG00000113721",
+            "approvedSymbol": "PDGFRB",
+            "score": 0.5562921479889932,
+            "datatypeScores": [
+              {
+                "id": "literature",
+                "score": 0.6610564787564904
+              },
+              {
+                "id": "clinical",
+                "score": 0.882005518515789
+              }
+            ]
+          },
+          {
+            "targetEnsemblId": "ENSG00000134853",
+            "approvedSymbol": "PDGFRA",
+            "score": 0.5529719090191935,
+            "datatypeScores": [
+              {
+                "id": "literature",
+                "score": 0.7703280663977057
+              },
+              {
+                "id": "clinical",
+                "score": 0.8710803981444514
+              }
+            ]
+          },
+          {
+            "targetEnsemblId": "ENSG00000128052",
+            "approvedSymbol": "KDR",
+            "score": 0.5464381487512622,
+            "datatypeScores": [
+              {
+                "id": "literature",
+                "score": 0.5553772761564297
+              },
+              {
+                "id": "clinical",
+                "score": 0.8710803981444514
+              }
+            ]
+          }
+        ],
+        "retrievedAt": "2026-11-08T17:40:00.000Z",
+        "responseIdentity": "a2b4ffc64970056982e0d64e648eb8e860d1b8b86e9c75f755c133784caa5c2c",
+        "verificationState": "metadata_retrieved_not_claim_verified",
+        "reviewState": "unreviewed",
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "passageImportAuthorized": false
+      }
+    ],
+    "registryEntityResolutions": [
+      {
+        "nctId": "NCT01030861",
+        "briefTitle": "Teplizumab for Prevention of Type 1 Diabetes In Relatives \"At-Risk\"",
+        "overallStatus": "COMPLETED",
+        "retrievedAt": "2026-11-08T17:40:00.000Z",
+        "responseIdentity": "86989bcf8c252c195dc03e2e0ca0ac506bc9ce8962cc48b670b70bc5f8a91b36",
+        "translationalAttachStatus": "not_attached_step_05",
+        "eligibilityAssessed": false,
+        "confirmedEligible": false
+      }
+    ],
+    "entityResolutions": [
+      {
+        "system": "PMID",
+        "value": "18375541",
+        "resolution": {
+          "status": "resolved",
+          "canonicalId": "pub.pmid.18375541",
+          "candidates": [
+            "pub.pmid.18375541"
+          ],
+          "reason": "unique reviewed exact identifier"
+        },
+        "sourceProvider": "europe_pmc",
+        "graphRelationshipCandidate": false,
+        "needsHumanReview": true
+      },
+      {
+        "system": "PMID",
+        "value": "24586782",
+        "resolution": {
+          "status": "resolved",
+          "canonicalId": "pub.pmid.24586782",
+          "candidates": [
+            "pub.pmid.24586782"
+          ],
+          "reason": "unique reviewed exact identifier"
+        },
+        "sourceProvider": "europe_pmc",
+        "graphRelationshipCandidate": false,
+        "needsHumanReview": true
+      },
+      {
+        "system": "PMID",
+        "value": "30760472",
+        "resolution": {
+          "status": "resolved",
+          "canonicalId": "pub.pmid.30760472",
+          "candidates": [
+            "pub.pmid.30760472"
+          ],
+          "reason": "unique reviewed exact identifier"
+        },
+        "sourceProvider": "europe_pmc",
+        "graphRelationshipCandidate": false,
+        "needsHumanReview": true
+      },
+      {
+        "system": "MONDO",
+        "value": "MONDO:0008383",
+        "resolution": {
+          "status": "resolved",
+          "canonicalId": "disease.MONDO_0008383",
+          "candidates": [
+            "disease.MONDO_0008383"
+          ],
+          "reason": "unique reviewed exact identifier"
+        },
+        "sourceProvider": "open_targets",
+        "graphRelationshipCandidate": false,
+        "needsHumanReview": true
+      },
+      {
+        "system": "MONDO",
+        "value": "MONDO:0005100",
+        "resolution": {
+          "status": "resolved",
+          "canonicalId": "disease.MONDO_0005100",
+          "candidates": [
+            "disease.MONDO_0005100"
+          ],
+          "reason": "unique reviewed exact identifier"
+        },
+        "sourceProvider": "open_targets",
+        "graphRelationshipCandidate": false,
+        "needsHumanReview": true
+      },
+      {
+        "system": "NCT",
+        "value": "NCT01030861",
+        "resolution": {
+          "status": "resolved",
+          "canonicalId": "trial.NCT01030861",
+          "candidates": [
+            "trial.NCT01030861"
+          ],
+          "reason": "unique reviewed exact identifier"
+        },
+        "sourceProvider": "clinicaltrials_gov",
+        "graphRelationshipCandidate": false,
+        "needsHumanReview": true
+      }
+    ],
+    "graphRelationshipCandidates": [
+      {
+        "id": "ot-rel:MONDO_0008383:ENSG00000105397",
+        "kind": "disease_associated_target_metadata",
+        "subject": {
+          "system": "MONDO",
+          "value": "MONDO:0008383",
+          "label": "rheumatoid arthritis"
+        },
+        "object": {
+          "system": "Ensembl",
+          "value": "ENSG00000105397",
+          "label": "TYK2"
+        },
+        "score": 0.763825465200706,
+        "sourceProvider": "open_targets",
+        "sourceDiseaseId": "MONDO_0008383",
+        "retrievedAt": "2026-11-08T17:40:00.000Z",
+        "responseIdentity": "3b2fd8e88270bb5062cfe978096d8a5d1a99f72bb338dd39bb4b77c54dc4b448",
+        "graphPromotable": false,
+        "scientificApproval": false,
+        "claimSupport": false,
+        "needsHumanReview": true
+      },
+      {
+        "id": "ot-rel:MONDO_0008383:ENSG00000160712",
+        "kind": "disease_associated_target_metadata",
+        "subject": {
+          "system": "MONDO",
+          "value": "MONDO:0008383",
+          "label": "rheumatoid arthritis"
+        },
+        "object": {
+          "system": "Ensembl",
+          "value": "ENSG00000160712",
+          "label": "IL6R"
+        },
+        "score": 0.751690492375485,
+        "sourceProvider": "open_targets",
+        "sourceDiseaseId": "MONDO_0008383",
+        "retrievedAt": "2026-11-08T17:40:00.000Z",
+        "responseIdentity": "3b2fd8e88270bb5062cfe978096d8a5d1a99f72bb338dd39bb4b77c54dc4b448",
+        "graphPromotable": false,
+        "scientificApproval": false,
+        "claimSupport": false,
+        "needsHumanReview": true
+      },
+      {
+        "id": "ot-rel:MONDO_0008383:ENSG00000113302",
+        "kind": "disease_associated_target_metadata",
+        "subject": {
+          "system": "MONDO",
+          "value": "MONDO:0008383",
+          "label": "rheumatoid arthritis"
+        },
+        "object": {
+          "system": "Ensembl",
+          "value": "ENSG00000113302",
+          "label": "IL12B"
+        },
+        "score": 0.7452752344606981,
+        "sourceProvider": "open_targets",
+        "sourceDiseaseId": "MONDO_0008383",
+        "retrievedAt": "2026-11-08T17:40:00.000Z",
+        "responseIdentity": "3b2fd8e88270bb5062cfe978096d8a5d1a99f72bb338dd39bb4b77c54dc4b448",
+        "graphPromotable": false,
+        "scientificApproval": false,
+        "claimSupport": false,
+        "needsHumanReview": true
+      },
+      {
+        "id": "ot-rel:MONDO_0008383:ENSG00000162434",
+        "kind": "disease_associated_target_metadata",
+        "subject": {
+          "system": "MONDO",
+          "value": "MONDO:0008383",
+          "label": "rheumatoid arthritis"
+        },
+        "object": {
+          "system": "Ensembl",
+          "value": "ENSG00000162434",
+          "label": "JAK1"
+        },
+        "score": 0.718689448504761,
+        "sourceProvider": "open_targets",
+        "sourceDiseaseId": "MONDO_0008383",
+        "retrievedAt": "2026-11-08T17:40:00.000Z",
+        "responseIdentity": "3b2fd8e88270bb5062cfe978096d8a5d1a99f72bb338dd39bb4b77c54dc4b448",
+        "graphPromotable": false,
+        "scientificApproval": false,
+        "claimSupport": false,
+        "needsHumanReview": true
+      },
+      {
+        "id": "ot-rel:MONDO_0008383:ENSG00000056972",
+        "kind": "disease_associated_target_metadata",
+        "subject": {
+          "system": "MONDO",
+          "value": "MONDO:0008383",
+          "label": "rheumatoid arthritis"
+        },
+        "object": {
+          "system": "Ensembl",
+          "value": "ENSG00000056972",
+          "label": "TRAF3IP2"
+        },
+        "score": 0.7183131839800645,
+        "sourceProvider": "open_targets",
+        "sourceDiseaseId": "MONDO_0008383",
+        "retrievedAt": "2026-11-08T17:40:00.000Z",
+        "responseIdentity": "3b2fd8e88270bb5062cfe978096d8a5d1a99f72bb338dd39bb4b77c54dc4b448",
+        "graphPromotable": false,
+        "scientificApproval": false,
+        "claimSupport": false,
+        "needsHumanReview": true
+      },
+      {
+        "id": "ot-rel:MONDO_0005100:ENSG00000151617",
+        "kind": "disease_associated_target_metadata",
+        "subject": {
+          "system": "MONDO",
+          "value": "MONDO:0005100",
+          "label": "systemic sclerosis"
+        },
+        "object": {
+          "system": "Ensembl",
+          "value": "ENSG00000151617",
+          "label": "EDNRA"
+        },
+        "score": 0.587103637374233,
+        "sourceProvider": "open_targets",
+        "sourceDiseaseId": "MONDO_0005100",
+        "retrievedAt": "2026-11-08T17:40:00.000Z",
+        "responseIdentity": "a2b4ffc64970056982e0d64e648eb8e860d1b8b86e9c75f755c133784caa5c2c",
+        "graphPromotable": false,
+        "scientificApproval": false,
+        "claimSupport": false,
+        "needsHumanReview": true
+      },
+      {
+        "id": "ot-rel:MONDO_0005100:ENSG00000136160",
+        "kind": "disease_associated_target_metadata",
+        "subject": {
+          "system": "MONDO",
+          "value": "MONDO:0005100",
+          "label": "systemic sclerosis"
+        },
+        "object": {
+          "system": "Ensembl",
+          "value": "ENSG00000136160",
+          "label": "EDNRB"
+        },
+        "score": 0.5645756608325632,
+        "sourceProvider": "open_targets",
+        "sourceDiseaseId": "MONDO_0005100",
+        "retrievedAt": "2026-11-08T17:40:00.000Z",
+        "responseIdentity": "a2b4ffc64970056982e0d64e648eb8e860d1b8b86e9c75f755c133784caa5c2c",
+        "graphPromotable": false,
+        "scientificApproval": false,
+        "claimSupport": false,
+        "needsHumanReview": true
+      },
+      {
+        "id": "ot-rel:MONDO_0005100:ENSG00000113721",
+        "kind": "disease_associated_target_metadata",
+        "subject": {
+          "system": "MONDO",
+          "value": "MONDO:0005100",
+          "label": "systemic sclerosis"
+        },
+        "object": {
+          "system": "Ensembl",
+          "value": "ENSG00000113721",
+          "label": "PDGFRB"
+        },
+        "score": 0.5562921479889932,
+        "sourceProvider": "open_targets",
+        "sourceDiseaseId": "MONDO_0005100",
+        "retrievedAt": "2026-11-08T17:40:00.000Z",
+        "responseIdentity": "a2b4ffc64970056982e0d64e648eb8e860d1b8b86e9c75f755c133784caa5c2c",
+        "graphPromotable": false,
+        "scientificApproval": false,
+        "claimSupport": false,
+        "needsHumanReview": true
+      },
+      {
+        "id": "ot-rel:MONDO_0005100:ENSG00000134853",
+        "kind": "disease_associated_target_metadata",
+        "subject": {
+          "system": "MONDO",
+          "value": "MONDO:0005100",
+          "label": "systemic sclerosis"
+        },
+        "object": {
+          "system": "Ensembl",
+          "value": "ENSG00000134853",
+          "label": "PDGFRA"
+        },
+        "score": 0.5529719090191935,
+        "sourceProvider": "open_targets",
+        "sourceDiseaseId": "MONDO_0005100",
+        "retrievedAt": "2026-11-08T17:40:00.000Z",
+        "responseIdentity": "a2b4ffc64970056982e0d64e648eb8e860d1b8b86e9c75f755c133784caa5c2c",
+        "graphPromotable": false,
+        "scientificApproval": false,
+        "claimSupport": false,
+        "needsHumanReview": true
+      },
+      {
+        "id": "ot-rel:MONDO_0005100:ENSG00000128052",
+        "kind": "disease_associated_target_metadata",
+        "subject": {
+          "system": "MONDO",
+          "value": "MONDO:0005100",
+          "label": "systemic sclerosis"
+        },
+        "object": {
+          "system": "Ensembl",
+          "value": "ENSG00000128052",
+          "label": "KDR"
+        },
+        "score": 0.5464381487512622,
+        "sourceProvider": "open_targets",
+        "sourceDiseaseId": "MONDO_0005100",
+        "retrievedAt": "2026-11-08T17:40:00.000Z",
+        "responseIdentity": "a2b4ffc64970056982e0d64e648eb8e860d1b8b86e9c75f755c133784caa5c2c",
+        "graphPromotable": false,
+        "scientificApproval": false,
+        "claimSupport": false,
+        "needsHumanReview": true
+      }
+    ],
+    "providerHits": [
+      {
+        "provider": "europe_pmc",
+        "pmid": "18375541",
+        "ok": true,
+        "outcome": "metadata_retrieved",
+        "retrievedAt": "2026-11-08T17:40:00.000Z",
+        "responseIdentity": "c70f08e5f0c0a60e9a15894c0c5584c3de6d15227a9ca9013a6af0ec5742e0cc",
+        "httpStatus": 200,
+        "detail": null
+      },
+      {
+        "provider": "europe_pmc",
+        "pmid": "24586782",
+        "ok": true,
+        "outcome": "metadata_retrieved",
+        "retrievedAt": "2026-11-08T17:40:00.000Z",
+        "responseIdentity": "bcf5db304c1c8e85dfa12b7454456a544bb175a6257add460ea31c4e0aa87f31",
+        "httpStatus": 200,
+        "detail": null
+      },
+      {
+        "provider": "europe_pmc",
+        "pmid": "30760472",
+        "ok": true,
+        "outcome": "metadata_retrieved",
+        "retrievedAt": "2026-11-08T17:40:00.000Z",
+        "responseIdentity": "4940fa33951b325155cca8dccf7a2f93845deb77b89a6ef5db0c05b33aa631ac",
+        "httpStatus": 200,
+        "detail": null
+      },
+      {
+        "provider": "open_targets",
+        "diseaseId": "MONDO_0008383",
+        "ok": true,
+        "outcome": "metadata_retrieved",
+        "retrievedAt": "2026-11-08T17:40:00.000Z",
+        "responseIdentity": "3b2fd8e88270bb5062cfe978096d8a5d1a99f72bb338dd39bb4b77c54dc4b448",
+        "httpStatus": 200,
+        "detail": null
+      },
+      {
+        "provider": "open_targets",
+        "diseaseId": "MONDO_0005100",
+        "ok": true,
+        "outcome": "metadata_retrieved",
+        "retrievedAt": "2026-11-08T17:40:00.000Z",
+        "responseIdentity": "a2b4ffc64970056982e0d64e648eb8e860d1b8b86e9c75f755c133784caa5c2c",
+        "httpStatus": 200,
+        "detail": null
+      },
+      {
+        "provider": "clinicaltrials_gov",
+        "nctId": "NCT01030861",
+        "ok": true,
+        "outcome": "metadata_retrieved",
+        "retrievedAt": "2026-11-08T17:40:00.000Z",
+        "responseIdentity": "86989bcf8c252c195dc03e2e0ca0ac506bc9ce8962cc48b670b70bc5f8a91b36",
+        "httpStatus": 200,
+        "detail": null
+      }
+    ],
+    "licensing": {
+      "providerSignalsObserved": true,
+      "humanCleared": false,
+      "passageImported": false,
+      "passageImportAuthorized": false,
+      "licenceEvidenceUri": null,
+      "note": "Europe PMC OA/licence fields and Open Targets public indexes are provider observations only. Human queue #2 attestation is required before any passage import."
+    },
+    "honesty": {
+      "metadataOnly": true,
+      "passageImportFailClosed": true,
+      "rightsClearanceNotClaimed": true,
+      "scientificAcceptance": "BLOCKED",
+      "graphPromotable": false,
+      "gateCAutoApprove": false,
+      "legalBinding": false,
+      "trialsAttachedToInvestigation": false,
+      "cdsPhi": false
+    },
+    "cache": {
+      "rateLimited": true,
+      "minIntervalMs": 350,
+      "responseIdentities": [
+        "3b2fd8e88270bb5062cfe978096d8a5d1a99f72bb338dd39bb4b77c54dc4b448",
+        "4940fa33951b325155cca8dccf7a2f93845deb77b89a6ef5db0c05b33aa631ac",
+        "86989bcf8c252c195dc03e2e0ca0ac506bc9ce8962cc48b670b70bc5f8a91b36",
+        "a2b4ffc64970056982e0d64e648eb8e860d1b8b86e9c75f755c133784caa5c2c",
+        "bcf5db304c1c8e85dfa12b7454456a544bb175a6257add460ea31c4e0aa87f31",
+        "c70f08e5f0c0a60e9a15894c0c5584c3de6d15227a9ca9013a6af0ec5742e0cc"
+      ]
+    },
+    "snapshotHash": "5d4e93171f9ab78d5067717283b8b85105cf316df9bd4ed79f9f99b2e216656a"
+  },
+  "unavailableCapabilities": [
+    "Passage import (humanCleared=false; human queue #2 PARKED)",
+    "Scientific acceptance / SME gold (human queue #4 PARKED)",
+    "Gate C auto-approve / MoU legalBinding (forbidden)",
+    "Investigation trials attach / O-04 translational (reserved for step 05)",
+    "Verified scientific gap ranking (reserved for step 04)"
+  ],
+  "nextMilestone": "step_04_agent_intelligence_gap_verification",
+  "receiptHash": "569089ab5e853b44581e080abbbea82e7d50463fc65d0aaedb73106314a80544"
+}

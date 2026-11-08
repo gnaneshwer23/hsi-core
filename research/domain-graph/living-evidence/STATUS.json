@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "hsi-living-evidence-status-1",
+  "phase": "step_03",
+  "engineeringHarness": "CLEARED",
+  "scientificAcceptance": "BLOCKED",
+  "rightsAcceptance": "BLOCKED",
+  "humanCleared": 0,
+  "passageImported": 0,
+  "graphPromotable": false,
+  "receiptHash": "569089ab5e853b44581e080abbbea82e7d50463fc65d0aaedb73106314a80544",
+  "snapshotHash": "5d4e93171f9ab78d5067717283b8b85105cf316df9bd4ed79f9f99b2e216656a",
+  "pinnedPmids": [
+    "18375541",
+    "24586782",
+    "30760472"
+  ],
+  "pinnedDiseaseIds": [
+    "MONDO_0008383",
+    "MONDO_0005100"
+  ],
+  "pinnedNctIds": [
+    "NCT01030861"
+  ],
+  "nextMilestone": "step_04_agent_intelligence_gap_verification",
+  "generatedAt": "2026-11-08T17:45:00.000Z"
+}

@@ -259,6 +259,58 @@ export function ResearchOutcomePanel({brief}: {brief: EvidenceBrief}) {
                     </li>
                   ))}
                 </ul>
+                <h4>Living evidence metadata (step 03)</h4>
+                <p>{outcome.livingEvidence.note}</p>
+                <p>
+                  Status: <strong>{human(outcome.livingEvidence.status)}</strong>
+                  {outcome.livingEvidence.asOf ? ` · as of ${outcome.livingEvidence.asOf}` : ""}
+                </p>
+                {outcome.livingEvidence.status === "bound_metadata_refresh" ? (
+                  <>
+                    <h4>Retrieved bibliographic records (Europe PMC)</h4>
+                    <ul>
+                      {outcome.livingEvidence.bibliographic.map((r) => (
+                        <li key={r.pmid ?? r.url}>
+                          <a href={r.url} target="_blank" rel="noopener noreferrer">
+                            {r.title} ↗
+                          </a>
+                          {" · "}PMID {r.pmid ?? "n/a"}
+                          {r.journal ? ` · ${r.journal}` : ""}
+                          {r.publicationYear ? ` · ${r.publicationYear}` : ""}
+                          {r.isRetracted ? " · retracted flag observed" : ""}
+                        </li>
+                      ))}
+                    </ul>
+                    <h4>Open Targets association candidates (not graph-promoted)</h4>
+                    <ul>
+                      {outcome.livingEvidence.openTargetsAssociations.slice(0, 10).map((a) => (
+                        <li key={`${a.diseaseId}:${a.targetEnsemblId}`}>
+                          {a.diseaseName} → {a.targetSymbol} ({a.targetEnsemblId}) · score{" "}
+                          {a.score.toFixed(3)} · graphPromotable=false
+                        </li>
+                      ))}
+                    </ul>
+                    <h4>Registry identity only (not O-04 trials attach)</h4>
+                    <ul>
+                      {outcome.livingEvidence.registryIdentityOnly.map((r) => (
+                        <li key={r.nctId}>
+                          {r.nctId}
+                          {r.briefTitle ? ` · ${r.briefTitle}` : ""}
+                          {r.overallStatus ? ` · ${r.overallStatus}` : ""} ·{" "}
+                          {human(r.translationalAttachStatus)}
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ) : null}
+                <details>
+                  <summary>Unavailable capabilities disclosed</summary>
+                  <ul>
+                    {outcome.livingEvidence.unavailableCapabilities.map((s, i) => (
+                      <li key={i}>{s}</li>
+                    ))}
+                  </ul>
+                </details>
                 <h4>What has been recorded</h4>
                 <ol className="outcome-stages">
                   {outcome.stages.map((s) => (

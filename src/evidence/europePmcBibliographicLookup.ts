@@ -208,20 +208,24 @@ export function parseEuropePmcBibliographicPayload(input: {
   };
 }
 
-/** Lookup by DOI. Does not grant claim support, rights or scientific approval. */
-export async function lookupEuropePmcByDoi(input: {
-  doi: string;
+export function assertValidPmid(pmid: string): string {
+  const id = pmid.trim();
+  if (!/^[1-9]\d{0,8}$/.test(id)) throw new Error("Invalid PMID");
+  return id;
+}
+
+async function lookupEuropePmc(input: {
+  query: string;
+  pageSize: number;
   fetcher?: typeof fetch;
   now?: () => Date;
   signal?: AbortSignal;
 }): Promise<BibliographicLookupResult> {
-  const doi = assertValidDoi(input.doi);
-  const query = `DOI:"${doi}"`;
   const params = new URLSearchParams({
-    query,
+    query: input.query,
     format: "json",
     resultType: "core",
-    pageSize: "5",
+    pageSize: String(input.pageSize),
   });
   const retrievedAt = (input.now ?? (() => new Date()))().toISOString();
   try {
@@ -231,7 +235,7 @@ export async function lookupEuropePmcByDoi(input: {
     });
     const bodyText = await response.text();
     return parseEuropePmcBibliographicPayload({
-      query,
+      query: input.query,
       bodyText,
       httpStatus: response.status,
       retrievedAt,
@@ -240,11 +244,45 @@ export async function lookupEuropePmcByDoi(input: {
     return {
       ok: false,
       provider: "europe_pmc",
-      query,
+      query: input.query,
       retrievedAt,
       outcome: "timeout_or_network",
       httpStatus: null,
       detail: error instanceof Error ? error.message : "Network failure",
     };
   }
+}
+
+/** Lookup by DOI. Does not grant claim support, rights or scientific approval. */
+export async function lookupEuropePmcByDoi(input: {
+  doi: string;
+  fetcher?: typeof fetch;
+  now?: () => Date;
+  signal?: AbortSignal;
+}): Promise<BibliographicLookupResult> {
+  const doi = assertValidDoi(input.doi);
+  return lookupEuropePmc({
+    query: `DOI:"${doi}"`,
+    pageSize: 5,
+    fetcher: input.fetcher,
+    now: input.now,
+    signal: input.signal,
+  });
+}
+
+/** Lookup by PubMed ID via Europe PMC. Metadata only — not claim support or rights clearance. */
+export async function lookupEuropePmcByPmid(input: {
+  pmid: string;
+  fetcher?: typeof fetch;
+  now?: () => Date;
+  signal?: AbortSignal;
+}): Promise<BibliographicLookupResult> {
+  const pmid = assertValidPmid(input.pmid);
+  return lookupEuropePmc({
+    query: `EXT_ID:${pmid} AND SRC:MED`,
+    pageSize: 2,
+    fetcher: input.fetcher,
+    now: input.now,
+    signal: input.signal,
+  });
 }
