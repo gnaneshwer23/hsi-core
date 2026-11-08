@@ -184,6 +184,8 @@
     "r1:check": "bun --no-env-file scripts/r1-source-packets.ts --check",
     "r2:prepare": "bun --no-env-file scripts/r2-gold-evaluation-suite.ts",
     "r2:check": "bun --no-env-file scripts/r2-gold-evaluation-suite.ts --check",
+    "r3:prepare": "bun --no-env-file scripts/r3-connected-research-workbench.ts",
+    "r3:check": "bun --no-env-file scripts/r3-connected-research-workbench.ts --check",
     "fixture:synthetic-e2e:check": "bun --no-env-file scripts/check-synthetic-e2e-fixture.ts",
     "fixture:synthetic-e2e:n5-adapter": "bun --no-env-file scripts/check-synthetic-e2e-n5-adapter.ts",
     "fixture:synthetic-e2e:n4-adapter": "bun --no-env-file scripts/check-synthetic-e2e-n4-adapter.ts",

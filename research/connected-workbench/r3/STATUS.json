@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "hsi-r3-connected-research-workbench-status-1",
+  "phase": "R3",
+  "roadmapPhase": "connected_research_workbench",
+  "generatedAt": "2026-11-08T16:00:00.000Z",
+  "engineeringScaffold": "CLEARED",
+  "scientificAcceptance": "BLOCKED",
+  "rightsAcceptance": "BLOCKED",
+  "researcherJourneyCompleteClaimed": false,
+  "productionReadyClaimed": false,
+  "writesEnabledClaimed": false,
+  "stageCount": 6,
+  "apiBoundStages": 6,
+  "inspectablePassageStages": 3,
+  "hardCodedDemoContent": 0,
+  "gateCAutoApprove": false,
+  "legalBinding": false,
+  "recordedPilotDecisionUnchanged": true,
+  "syntheticFixtureId": "hsi-interrogative-test-fixture-ws-001",
+  "mechanismWorkflowHash": "a0808274eec77f820d60b50f8b6b41dd94835ba04671c55abba343bd20e27563",
+  "engineeringChecksCleared": 8,
+  "humanChecksPending": 4,
+  "parkedHumanResiduals": [
+    "#2 N1 rights",
+    "#3 cite HITL",
+    "#4 SMEs",
+    "#5 staging",
+    "#8 MoU"
+  ],
+  "note": "Eng harness only. Journey is API-mapped; inspectable passages come from backend responses. Synthetic fixture is not scientific gold. Do not invent MoU, Gate C, or production writes.",
+  "stopNote": "R3 eng deepen complete. Scientific acceptance remains BLOCKED. Journey is API-mapped with synthetic fixture honesty; inspectable passages come only from backend responses. researcherJourneyCompleteClaimed=false; production writes not claimed. Human #2/#3/#4/#5/#8 explicitly parked.",
+  "inventoryHash": "2e5affbdd77dc5ecdd406b2b523ad6c35dd5321b91aaf5ba362e561159e017e2"
+}
