@@ -2,6 +2,7 @@
 
 **Status:** Real named partner still **TBD**. Active lock is the **hypothetical test fixture** (`test:hypothetical-isi-pilot-partner`).  
 **Active lock:** [`src/hypotheticalPartnerFixture.ts`](../src/hypotheticalPartnerFixture.ts) — `USE_HYPOTHETICAL_PARTNER_FIXTURE=true`; `agreementKind=hypothetical_test_only`; `legalBinding=false` → `lockedPilot=false`.  
+**Audit #8 eng:** empty MoU slots + founder checklist — [`engineering/PARTNER_LOCK_CHECKLIST.md`](./engineering/PARTNER_LOCK_CHECKLIST.md) · `operations/partner/partner-lock-prep.v1.json` · `bun run partner:lock-prep` (**FOUNDER BLOCKED**; never invent MoU).  
 **Honesty:** Do **not** treat the fixture, scope lock, or any chat “operator assert” as a MoU. A prior Apolo Pharma `lockedPilot=true` path was **revoked 2026-11-02** as non-MoU. **Do not invent** personal emails, phone numbers, or named PIs. Still **not CDS**; Gate C never auto-approves.  
 **Use with:** [`ISI_PILOT_BRIEF.md`](./ISI_PILOT_BRIEF.md).
 

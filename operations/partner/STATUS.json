@@ -1,0 +1,16 @@
+{
+  "phase": "partner_lock",
+  "remediationPhase": "production_readiness_audit_phase_8",
+  "generatedAt": "2026-11-08T12:00:00.000Z",
+  "engineeringScaffold": "CLEARED",
+  "founderAcceptance": "BLOCKED",
+  "lockedPilot": false,
+  "legalBinding": false,
+  "agreementKind": "hypothetical_test_only",
+  "mouSlotsReserved": 6,
+  "mouSlotsFilled": 0,
+  "engineeringChecksCleared": 8,
+  "founderChecksPending": 7,
+  "note": "Eng harness only. Founder must obtain written partner confirm / MoU. Never invent legalBinding or MoU text. lockedPilot stays false under fixture.",
+  "prepHash": "d368a8cad4bbe42834cd9137ddeaa2660ff961e8433e07557c6c6e903e59a3a6"
+}

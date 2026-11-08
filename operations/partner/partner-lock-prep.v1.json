@@ -1,0 +1,266 @@
+{
+  "schemaVersion": "hsi-partner-lock-prep-1",
+  "phase": "partner_lock",
+  "remediationPhase": "production_readiness_audit_phase_8",
+  "generatedAt": "2026-11-08T12:00:00.000Z",
+  "partnerLockSchema": "hsi-partner-lock-1",
+  "engineeringScaffold": "CLEARED",
+  "founderAcceptance": "BLOCKED",
+  "lockedPilot": false,
+  "legalBinding": false,
+  "partnerSignedPathTestingOnly": true,
+  "agreementKind": "hypothetical_test_only",
+  "useHypotheticalFixture": true,
+  "inventedMouPermitted": false,
+  "inventedNamedOrgPermitted": false,
+  "honesty": {
+    "fixturePartnerSignedIsNotMou": true,
+    "emptyMouSlotsAreNotAgreements": true,
+    "legalBindingRequiresFounderWrittenConfirm": true,
+    "lockedPilotRequiresLegalBinding": true,
+    "noInventedMouText": true,
+    "noGateCAutoApprove": true,
+    "noLiveCdsPhi": true,
+    "redWaveOnlyForHsi": true,
+    "priorApoloPathRevoked": true
+  },
+  "activeFixture": {
+    "partnerId": "test:hypothetical-isi-pilot-partner",
+    "partnerLabel": "Hypothetical ISI Pilot Partner (replace with real org)",
+    "agreementKind": "hypothetical_test_only",
+    "legalBinding": false,
+    "lockedPilot": false,
+    "replaceWithRealPartner": true,
+    "banner": "TEST FIXTURE — replace before real pilot"
+  },
+  "realPartnerTemplatePresent": true,
+  "mouSlots": [
+    {
+      "slotId": "PARTNER-MOU-ORG",
+      "role": "named_partner_org",
+      "roleLabel": "Named partner organisation",
+      "organisationName": null,
+      "organisationSlug": null,
+      "contactChannel": null,
+      "writtenConfirmUri": null,
+      "mouDocumentUri": null,
+      "mouSignedAt": null,
+      "agreementKind": null,
+      "legalBindingAttested": false,
+      "notes": "Fill only after a real org confirms in writing. Never invent org names, emails, or MoU text from chat."
+    },
+    {
+      "slotId": "PARTNER-MOU-WRITTEN",
+      "role": "written_confirm_artifact",
+      "roleLabel": "Written confirm artifact",
+      "organisationName": null,
+      "organisationSlug": null,
+      "contactChannel": null,
+      "writtenConfirmUri": null,
+      "mouDocumentUri": null,
+      "mouSignedAt": null,
+      "agreementKind": null,
+      "legalBindingAttested": false,
+      "notes": "URI / private receipt of written confirm (disease + research question). Keep out of git if sensitive; stamp hash only."
+    },
+    {
+      "slotId": "PARTNER-MOU-LEGAL",
+      "role": "legal_mou_artifact",
+      "roleLabel": "Legal MoU / MoA artifact (optional vs written_confirm)",
+      "organisationName": null,
+      "organisationSlug": null,
+      "contactChannel": null,
+      "writtenConfirmUri": null,
+      "mouDocumentUri": null,
+      "mouSignedAt": null,
+      "agreementKind": null,
+      "legalBindingAttested": false,
+      "notes": "Empty until a real legal_mou exists. Do not paste MoU body into git. agreementKind may be written_confirm without a full MoU."
+    },
+    {
+      "slotId": "PARTNER-MOU-SCOPE",
+      "role": "disease_question_confirm",
+      "roleLabel": "Disease + research-question confirm",
+      "organisationName": null,
+      "organisationSlug": null,
+      "contactChannel": null,
+      "writtenConfirmUri": null,
+      "mouDocumentUri": null,
+      "mouSignedAt": null,
+      "agreementKind": null,
+      "legalBindingAttested": false,
+      "notes": "Partner confirms RA/anti-TNF working scope or explicitly rewrites disease + question (then re-lock scope)."
+    },
+    {
+      "slotId": "PARTNER-MOU-RUBRIC",
+      "role": "licensing_rubric_confirm",
+      "roleLabel": "Licensing + rubric thresholds confirm",
+      "organisationName": null,
+      "organisationSlug": null,
+      "contactChannel": null,
+      "writtenConfirmUri": null,
+      "mouDocumentUri": null,
+      "mouSignedAt": null,
+      "agreementKind": null,
+      "legalBindingAttested": false,
+      "notes": "Agree source licensing / attribution and Stage 1 rubric thresholds with the named partner."
+    },
+    {
+      "slotId": "PARTNER-MOU-FOUNDER",
+      "role": "founder_legal_binding_attestor",
+      "roleLabel": "Founder legalBinding attestor",
+      "organisationName": null,
+      "organisationSlug": null,
+      "contactChannel": null,
+      "writtenConfirmUri": null,
+      "mouDocumentUri": null,
+      "mouSignedAt": null,
+      "agreementKind": null,
+      "legalBindingAttested": false,
+      "notes": "Only the founder may attest legalBinding=true after written confirm. Chat / eng cannot invent this."
+    }
+  ],
+  "founderMustDecide": [
+    "Outreach to a real immunology / translational / clinician-scientist partner (categories in ISI_PILOT_PARTNER_SHORTLIST.md) — never invent named PIs or emails.",
+    "Obtain written confirm of disease + research question (or partner rewrite → re-lock scope).",
+    "Record a real shortlist row (org, type, region, status) without fabricating contacts.",
+    "Agree source licensing / attribution and Stage 1 rubric thresholds with that partner.",
+    "Only then set USE_HYPOTHETICAL_PARTNER_FIXTURE=false and fill REAL_PARTNER_REPLACEMENT; set legalBinding=true with agreementKind=written_confirm|legal_mou.",
+    "Keep MoU / confirm artifacts private; do not paste MoU body or invent legalBinding from chat.",
+    "Re-run bun run outputs; lockedPilot becomes true only when scopeLocked && partnerSigned && legalBinding.",
+    "Prior Apolo Pharma lockedPilot path stays revoked (2026-11-02) — do not re-lock without written confirm."
+  ],
+  "codeCanAutomate": [
+    "Assert active fixture keeps legalBinding=false and lockedPilot=false.",
+    "Reserve empty MoU / named-partner slots (all null / false).",
+    "Refuse prep packets that invent org names, MoU URIs, or legalBindingAttested=true.",
+    "Seal prepHash + offline check harness (partner:lock-prep / partner:lock-prep:check).",
+    "Operator checklist + Audit #8 receipt stamps (ENG CLEARED / FOUNDER BLOCKED).",
+    "Surface fixture honesty banners already wired in partnerLock / Discovery packs."
+  ],
+  "checks": [
+    {
+      "id": "scope_lock_engineering_present",
+      "title": "Stage 1 scope lock engineering present (scopeLocked=true)",
+      "plane": "engineering",
+      "status": "CLEARED",
+      "evidence": "disease=ra; schema=hsi-partner-lock-1."
+    },
+    {
+      "id": "hypothetical_fixture_active_documented",
+      "title": "Hypothetical test fixture remains the active partner path",
+      "plane": "engineering",
+      "status": "CLEARED",
+      "evidence": "USE_HYPOTHETICAL_PARTNER_FIXTURE=true; partnerId=test:hypothetical-isi-pilot-partner."
+    },
+    {
+      "id": "locked_pilot_forced_false",
+      "title": "lockedPilot forced false under fixture",
+      "plane": "engineering",
+      "status": "CLEARED",
+      "evidence": "lockedPilot = scopeLocked && partnerSigned && legalBinding; legalBinding=false → lockedPilot=false."
+    },
+    {
+      "id": "legal_binding_forced_false",
+      "title": "legalBinding forced false (no invented MoU)",
+      "plane": "engineering",
+      "status": "CLEARED",
+      "evidence": "Fixture and prep refuse legalBinding=true until founder written confirm."
+    },
+    {
+      "id": "empty_mou_slots_reserved",
+      "title": "Empty MoU / named-partner slots reserved",
+      "plane": "engineering",
+      "status": "CLEARED",
+      "evidence": "Six slots with organisationName/mouDocumentUri null; legalBindingAttested=false."
+    },
+    {
+      "id": "real_partner_replacement_template_present",
+      "title": "REAL_PARTNER_REPLACEMENT template present (unfilled placeholders)",
+      "plane": "engineering",
+      "status": "CLEARED",
+      "evidence": "src/hypotheticalPartnerFixture.ts REAL_PARTNER_REPLACEMENT still REPLACE_* placeholders."
+    },
+    {
+      "id": "partner_lock_checklist_published",
+      "title": "Partner-lock founder checklist published",
+      "plane": "engineering",
+      "status": "CLEARED",
+      "evidence": "docs/engineering/PARTNER_LOCK_CHECKLIST.md — ENG CLEARED / FOUNDER BLOCKED."
+    },
+    {
+      "id": "shortlist_tracking_rows_empty_of_mou",
+      "title": "Shortlist documents fixture + outreach categories without signed MoU",
+      "plane": "engineering",
+      "status": "CLEARED",
+      "evidence": "docs/ISI_PILOT_PARTNER_SHORTLIST.md — real named partner TBD; Apolo path revoked."
+    },
+    {
+      "id": "named_org_written_confirm",
+      "title": "Named organisation written confirm",
+      "plane": "founder",
+      "status": "PENDING_FOUNDER",
+      "evidence": "mouSlotsFilled=0. Founder outreach only — never invent org from chat."
+    },
+    {
+      "id": "mou_or_written_confirm_artifact",
+      "title": "MoU or written_confirm artifact exists (private)",
+      "plane": "founder",
+      "status": "PENDING_FOUNDER",
+      "evidence": "Empty mouDocumentUri / writtenConfirmUri slots. Do not paste MoU body into git."
+    },
+    {
+      "id": "disease_question_partner_confirmed",
+      "title": "Partner confirms disease + research question (or rewrites)",
+      "plane": "founder",
+      "status": "PENDING_FOUNDER",
+      "evidence": "Working RA/anti-TNF scope stays provisional until partner words match."
+    },
+    {
+      "id": "shortlist_row_filled_with_real_org",
+      "title": "Shortlist row filled with real org (no invented emails)",
+      "plane": "founder",
+      "status": "PENDING_FOUNDER",
+      "evidence": "ISI_PILOT_PARTNER_SHORTLIST.md awaiting_named_partner until real confirm."
+    },
+    {
+      "id": "licensing_and_rubric_agreed",
+      "title": "Source licensing + rubric thresholds agreed with partner",
+      "plane": "founder",
+      "status": "PENDING_FOUNDER",
+      "evidence": "Cannot invent thresholds or licence grants."
+    },
+    {
+      "id": "fixture_swapped_legal_binding_true",
+      "title": "Fixture swapped + legalBinding=true after founder attest",
+      "plane": "founder",
+      "status": "NO_GO",
+      "evidence": "USE_HYPOTHETICAL_PARTNER_FIXTURE must stay true until founder fills REAL_PARTNER_REPLACEMENT; legalBinding stays false."
+    },
+    {
+      "id": "outputs_rebundled_after_real_lock",
+      "title": "Re-run outputs after real lock (lockedPilot may become true)",
+      "plane": "founder",
+      "status": "NO_GO",
+      "evidence": "bun run outputs only after real swap; lockedPilot stays false under fixture."
+    }
+  ],
+  "summary": {
+    "engineeringChecksCleared": 8,
+    "engineeringChecksTotal": 8,
+    "founderChecksPending": 7,
+    "founderChecksTotal": 7,
+    "mouSlotsReserved": 6,
+    "mouSlotsFilled": 0,
+    "lockedPilot": false,
+    "legalBinding": false
+  },
+  "residualFounderSteps": [
+    "Keep hypothetical fixture + loud banners until a real org writes confirm.",
+    "Fill empty MoU slots only with real org / artifact pointers after founder decision.",
+    "Never set legalBinding=true or lockedPilot=true from engineering chat.",
+    "Do not claim production partner lock, Gate C clearance, or CDS readiness from this scaffold.",
+    "Re-run bun run partner:lock-prep:check; founderAcceptance stays BLOCKED until a human founder receipt replaces empty slots."
+  ],
+  "prepHash": "d368a8cad4bbe42834cd9137ddeaa2660ff961e8433e07557c6c6e903e59a3a6"
+}

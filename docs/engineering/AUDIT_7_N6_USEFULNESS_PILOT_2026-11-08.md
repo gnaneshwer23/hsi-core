@@ -80,7 +80,7 @@ This receipt is **not** N6 pilot CLEARED, scientific usefulness vs baseline, or 
 
 ## Next audit item (recommended)
 
-Parallel human tracks remain primary: ISI cite HITL (#3), N1 rights (#2), **N3 SME labels (#4)** — hard unlock for N6 science. Ops residual: staging Auth flip (#5). Audit **#8** partner lock is founder-only (never invent MoU). Optional: N5 registry refresh with `confirmedEligible=false`.
+Parallel human tracks remain primary: ISI cite HITL (#3), N1 rights (#2), **N3 SME labels (#4)** — hard unlock for N6 science. Auth A www session/grant/fixture user-confirmed; Audit #5 two-account residual open. Audit **#8** partner-lock prep is **ENG CLEARED / FOUNDER BLOCKED** — see [`AUDIT_8_PARTNER_LOCK_2026-11-08.md`](./AUDIT_8_PARTNER_LOCK_2026-11-08.md). Optional next eng-safe: #9 N5 registry refresh with `confirmedEligible=false`.
 
 ## Verify
 

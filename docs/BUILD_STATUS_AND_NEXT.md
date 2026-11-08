@@ -320,7 +320,9 @@ One-sprint-sized items. Mark **[DECISION]** where the user must choose before co
 | P2.9-Auth | **DONE (eng):** Audit #5 staging two-account Auth prep | `two-account-auth-prep.v1.json` + checklist + empty account slots; `staging:auth-prep`; ops still **BLOCKED** (0 accounts / writes live-unverified) |
 | P2.10-Mig | **DONE (eng):** Audit #6 migrations 016/017 on red-wave | Ledger rows present; idempotent migrate skipped; empty tables 0/0 |
 | P2.11-N6 | **DONE (eng):** Audit #7 N6 usefulness pilot-prep + Neon ledger helpers | `pilot-prep.v1.json` + checklist + empty reviewer slots; `n6:pilot-prep`; sci still **NO-GO** (0 scores / waits #4); 016/017 helpers fail-closed |
-| **NEXT** | **Human claim_support → Approve on 13 cites · real SMEs fill N3 · founder staging Auth flip · real partner** | Audit #3/#4/#5/#6/#7 (2026-11-08): cite eng CLEARED / HITL 0/0; N3 freeze-prep eng CLEARED / science BLOCKED; staging Auth eng CLEARED / OPS BLOCKED; 016/017 **ENG CLEARED**; N6 pilot-prep **ENG CLEARED** / usefulness **NO-GO until #4**. Blocked on human S-P-O → `/curation?hsi=cite` Approve, named SME recruitment, and founder Preview env + two verified neon_auth accounts (no invent labels / scores / Auth bypass / production writes). #8 partner lock founder-only. Still no auto-approve / no `hsiGrade` flip / no invent MoU / no live CDS. |
+| P2.12-AuthA | **USER-CONFIRMED:** Auth A www residual | Session eligible + researcher grant + synthetic fixture for founder Gmail; **not** production `writesEnabled` / Gate C / full #5 two-account |
+| P2.13-Partner | **DONE (eng):** Audit #8 partner-lock prep | `partner-lock-prep.v1.json` + empty MoU slots + checklist; `partner:lock-prep`; founder still **BLOCKED** (0 MoU / `lockedPilot=false`) |
+| **NEXT** | **Human cite HITL · N3 SMEs · #5 two-account residual · founder MoU · optional #9 N5** | Audit #3–#8 (2026-11-08): cite HITL 0/0; N3 0 labels; Auth A www session/grant/fixture confirmed (writes/Gate C not claimed); #8 eng CLEARED / founder MoU BLOCKED. Still no auto-approve / no invent MoU / no live CDS. |
 
 ### Out-of-repo (track; do not implement here)
 

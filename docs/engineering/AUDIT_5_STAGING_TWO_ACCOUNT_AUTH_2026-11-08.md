@@ -10,11 +10,11 @@
 | Plane | State |
 |-------|--------|
 | Engineering harness (write-gate honesty, checklist, roster slots, offline checks) | **ENG CLEARED** |
-| Live staging Auth / two-account acceptance / research writes | **OPS BLOCKED** (`accountSlotsFilled=0`, `liveAuthVerified=false`) |
-| Production research writes | **Must stay disabled** (`writesEnabled=false` on `ep-restless-dew`) |
+| Live staging Auth / two-account acceptance / research writes | **OPS residual** — Auth A www path **user-confirmed** (session eligible + researcher grant + synthetic fixture for founder Gmail); full two-account + staging write journey still open; harness still keeps `accountSlotsFilled=0` / `liveAuthVerified=false` in git |
+| Production research writes | **Must stay disabled** (`writesEnabled=false` on `ep-restless-dew`) — **not claimed** by Auth A confirm |
 | Invented principals / Gate C auto-approve / MoU / CDS-PHI | **Forbidden** (unchanged) |
 
-This receipt is **not** PRODUCTION_QA launch clearance, live Auth acceptance, or scientific readiness.
+This receipt is **not** PRODUCTION_QA launch clearance, production `writesEnabled`, Gate C, or scientific readiness. Auth A user confirm (2026-11-08) stamps session/grant/fixture only.
 
 ## Delivered (engineering)
 
@@ -69,4 +69,4 @@ This receipt is **not** PRODUCTION_QA launch clearance, live Auth acceptance, or
 
 ## Next audit item (recommended)
 
-Parallel human tracks remain: ISI cite HITL residual (#3), N1 human rights (#2), N3 SME labels (#4). Audit **#6** (016/017 on red-wave) is **ENG CLEARED** — see [`AUDIT_6_MIGRATIONS_016_017_2026-11-08.md`](./AUDIT_6_MIGRATIONS_016_017_2026-11-08.md). N6 usefulness stays **NO-GO until #4 human freeze**.
+Audit **#8** partner-lock prep is **ENG CLEARED / FOUNDER BLOCKED** — see [`AUDIT_8_PARTNER_LOCK_2026-11-08.md`](./AUDIT_8_PARTNER_LOCK_2026-11-08.md). Parallel human tracks remain: ISI cite HITL residual (#3), N1 human rights (#2), N3 SME labels (#4), #5 two-account residual. Optional #9 N5 registry refresh. N6 usefulness stays **NO-GO until #4 human freeze**.

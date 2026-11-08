@@ -140,6 +140,8 @@
     "pilot:check": "bun --no-env-file scripts/research-pilot-readiness.ts",
     "staging:auth-prep": "bun --no-env-file scripts/staging-two-account-auth-prep.ts",
     "staging:auth-prep:check": "bun --no-env-file scripts/staging-two-account-auth-prep.ts --check",
+    "partner:lock-prep": "bun --no-env-file scripts/partner-lock-prep.ts",
+    "partner:lock-prep:check": "bun --no-env-file scripts/partner-lock-prep.ts --check",
     "validation:build": "bun --no-env-file scripts/build-synthetic-validation.ts",
     "validation:check": "bun --no-env-file scripts/build-synthetic-validation.ts --check",
     "readiness:prepare": "bun --no-env-file scripts/prepare-research-readiness.ts",
