@@ -246,7 +246,7 @@ function lexicalScore(queryTokens: string[], haystack: string): number {
   return hit / queryTokens.length;
 }
 
-function passageHash(textValue: string): string {
+export function passageHash(textValue: string): string {
   return createHash("sha256").update(textValue).digest("hex");
 }
 

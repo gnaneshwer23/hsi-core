@@ -14,7 +14,7 @@ describe("synthetic e2e contract pin", () => {
     expect(result.label).toBe("e2e-fixture");
     expect(result.packVersion).toBe("hsi-fixture-1.0.0");
     expect(result.seed).toBe(20261106);
-    expect(result.pinnedFiles).toBe(7);
+    expect(result.pinnedFiles).toBe(10);
   });
 
   test("sample responses keep synthetic banner and null confidence", () => {

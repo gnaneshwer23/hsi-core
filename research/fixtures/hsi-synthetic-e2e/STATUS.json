@@ -4,7 +4,7 @@
   "distinctFrom": "hsi-synthetic-validation-0.1",
   "packVersion": "hsi-fixture-1.0.0",
   "seed": 20261106,
-  "generatedAt": "2026-11-08T05:17:00.000Z",
+  "generatedAt": "2026-11-08T05:40:00.000Z",
   "engineeringPin": "CLEARED",
   "scientificAcceptance": "BLOCKED",
   "cdsPhi": "BLOCKED",
@@ -13,10 +13,16 @@
   "gateCAutoApprove": false,
   "mouInvented": false,
   "neonWrites": false,
+  "n4ContextMismatchDemo": "CLEARED",
+  "honestyRegression": "CLEARED",
+  "banner": "synthetic ≠ clinical ≠ eligible",
   "pins": {
     "manifestPath": "research/fixtures/hsi-synthetic-e2e/MANIFEST.json",
     "apiContractSha256": "6b9458296eebad66d68d93f57c50bcf4afd2b16b2c0e82e8cb2be3711d6b2e7e",
-    "packManifestSha256": "8c118c398c41f5bbf651c33ebc2321f76aaa67837ec5e49695b9177abe8ef0de"
+    "packManifestSha256": "8c118c398c41f5bbf651c33ebc2321f76aaa67837ec5e49695b9177abe8ef0de",
+    "evidenceLookupN4Sha256": "abfadc1840507e7898d42e825e07e3cf11ea288c97dde4f10609c5e12d93741e",
+    "oracleCasesSha256": "f36db008f42a533fb6ee312c6518e910f636a2e0798f99e75baf4cc475cbc1ae",
+    "quarantineSha256": "8bea4874cbb289bf7dfcbc26df61d15a6d857960af30d1d2230959a0dfb46091"
   },
-  "note": "Engineering contract pin CLEARED. Science/CDS BLOCKED. engine.py is not product authority."
+  "note": "Engineering contract pin CLEARED including N4 mismatch demo + honesty regression. Science/CDS BLOCKED. engine.py is not product authority."
 }

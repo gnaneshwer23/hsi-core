@@ -55,6 +55,18 @@
     "outputs/sample_response_needs_review.json": {
       "bytes": 27269,
       "sha256": "4199a39fb3f77713442b885298fa4510be75d85e27e7743c1b1460d2031e3f1e"
+    },
+    "outputs/sample_evidence_lookup_n4.json": {
+      "bytes": 6287,
+      "sha256": "abfadc1840507e7898d42e825e07e3cf11ea288c97dde4f10609c5e12d93741e"
+    },
+    "fixtures/oracle_cases.json": {
+      "bytes": 2347,
+      "sha256": "f36db008f42a533fb6ee312c6518e910f636a2e0798f99e75baf4cc475cbc1ae"
+    },
+    "fixtures/quarantine.jsonl": {
+      "bytes": 9242,
+      "sha256": "8bea4874cbb289bf7dfcbc26df61d15a6d857960af30d1d2230959a0dfb46091"
     }
   },
   "honestyExpectations": {
@@ -64,7 +76,11 @@
     "uiState": "ready_synthetic",
     "confidenceValue": null,
     "modelVersion": null,
-    "screeningStatuses": ["candidate", "excluded", "needs_review"],
+    "screeningStatuses": [
+      "candidate",
+      "excluded",
+      "needs_review"
+    ],
     "screeningNoticeMustInclude": "not confirmed eligibility",
     "permanentBannerFields": [
       "synthetic",

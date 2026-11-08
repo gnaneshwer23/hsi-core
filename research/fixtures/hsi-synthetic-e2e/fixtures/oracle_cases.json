@@ -1,0 +1,26 @@
+{
+ "synthetic": true,
+ "namespace": "SYNTHETIC/HSI/v1",
+ "provenance": "Hand-authored software oracle, separate from generator and screening implementation; not independently clinically adjudicated",
+ "id": "SYNTHETIC/ORACLE/manual-001",
+ "as_of": "2026-11-06T23:00:00Z",
+ "baseline": {"age": 45, "conditions": ["RA"], "crp": 8, "egfr": 85, "lab_event": "2026-11-05T12:00:00Z", "lab_ingested": "2026-11-05T12:00:00Z"},
+ "cases": [
+  {"id":"SYNTHETIC/CASE/positive", "changes":{}, "expected_status":"candidate"},
+  {"id":"SYNTHETIC/CASE/low-renal", "changes":{"egfr":40}, "expected_status":"excluded", "expected_reason":"outside_bounds"},
+  {"id":"SYNTHETIC/CASE/missing-crp", "changes":{"crp":null}, "expected_status":"needs_review", "expected_reason":"missing"},
+  {"id":"SYNTHETIC/CASE/stale", "changes":{"lab_event":"2026-07-01T12:00:00Z","lab_ingested":"2026-07-01T12:00:00Z"}, "expected_status":"needs_review", "expected_reason":"stale"},
+  {"id":"SYNTHETIC/CASE/wrong-condition", "changes":{"conditions":["T2D"]}, "expected_status":"excluded"},
+  {"id":"SYNTHETIC/CASE/age-above", "changes":{"age":80}, "expected_status":"excluded"},
+  {"id":"SYNTHETIC/CASE/age-boundary", "changes":{"age":18}, "expected_status":"candidate"},
+  {"id":"SYNTHETIC/CASE/renal-boundary", "changes":{"egfr":60}, "expected_status":"candidate"},
+  {"id":"SYNTHETIC/CASE/below-renal-boundary", "changes":{"egfr":59.9}, "expected_status":"excluded"},
+  {"id":"SYNTHETIC/CASE/crp-new-version", "changes":{"crp":4}, "expected_status":"candidate"},
+  {"id":"SYNTHETIC/CASE/negation", "changes":{"crp":2}, "expected_status":"excluded"},
+  {"id":"SYNTHETIC/CASE/late-arrival", "changes":{"lab_ingested":"2026-11-07T12:00:00Z"}, "expected_status":"needs_review", "expected_reason":"missing"},
+  {"id":"SYNTHETIC/CASE/wrong-unit", "changes":{"crp_unit":"bananas"}, "expected_status":"needs_review", "expected_reason":"invalid_unit"},
+  {"id":"SYNTHETIC/CASE/convert-crp", "changes":{"crp":0.8,"crp_unit":"mg/dL"}, "expected_status":"candidate"},
+  {"id":"SYNTHETIC/CASE/active-med", "changes":{"med_status":["active"]}, "expected_status":"excluded", "expected_reason":"active_exclusion_medication"},
+  {"id":"SYNTHETIC/CASE/conflicting-med", "changes":{"med_status":["active","stopped"]}, "expected_status":"needs_review", "expected_reason":"conflicting_medications"}
+ ]
+}
