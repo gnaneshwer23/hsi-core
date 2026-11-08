@@ -1,42 +1,56 @@
 import { describe, expect, it } from "bun:test";
 import { readFileSync } from "node:fs";
 const read = (path: string) => readFileSync(new URL(path, import.meta.url), "utf8");
-describe("HSI NEXUS technology page", () => {
+describe("HSI technology architecture page", () => {
   const page = read("../site/src/pages/Technology.tsx");
-  it("is accessible from a dedicated public route and navigation", () => {
+  it("is accessible from a dedicated public route outside primary nav", () => {
     expect(read("../site/src/App.tsx")).toContain('path="technology" element={<Technology />}');
-    expect(read("../site/src/lib/primaryNav.ts")).toContain('to: "/technology"');
+    const primaryNav = read("../site/src/lib/primaryNav.ts");
+    expect(primaryNav).toContain('"/technology"');
+    expect(primaryNav).toContain("PUBLIC_MARKETING_PATHS");
+    const primaryLinks = primaryNav.match(/export const PRIMARY_NAV_LINKS = \[[\s\S]*?\] as const/)?.[0] ?? "";
+    expect(primaryLinks).not.toContain("/technology");
+    expect(primaryLinks).toContain("/platform");
+    expect(primaryLinks).toContain("/biology");
   });
-  it("shows the four independent information domains and six intelligence functions", () => {
-    for (const name of ["Authorised care systems", "Aksh Health", "Immune Super Intelligence", "External research & trials", "Context", "Biology", "Evidence", "Reasoning", "Discovery", "Governance"]) expect(page).toContain(name);
+  it("describes five HSI architecture layers without public catalogue brands", () => {
+    for (const name of [
+      "Biomedical evidence connections",
+      "Living knowledge graph",
+      "Research agent orchestration",
+      "Scientific governance",
+      "Research experience",
+    ]) {
+      expect(page).toContain(name);
+    }
+    expect(page).not.toContain("Aksh Health");
+    expect(page).not.toContain("Immune Super Intelligence");
+    expect(page).not.toContain("nx-nexus-orbit");
   });
-  it("explains four governed logical graph layers and source-specific trust boundaries", () => {
-    for (const name of ["Patient context", "Human biology", "Gut–immune–metabolic", "Biomedical evidence", "POTENTIAL DATA CONTRACT", "TRUST BOUNDARY"]) expect(page).toContain(name);
-    expect(page).toContain("not a claim that every source is currently integrated");
+  it("labels future connectors as illustrative and refuses live CDS claims", () => {
+    expect(page).toContain("Illustrative future architecture");
+    expect(page).toContain("Authorised care systems");
+    expect(page).toContain("not live hospital integrations");
+    expect(page).toMatch(/eligibility engines or clinical[\s\S]*decision support/);
+    expect(page).toMatch(/No live[\s\S]*CDS, PHI or EHR write-back is offered here/);
   });
-  it("shows the NEXUS collaboration visual and reviewable engine contracts", () => {
-    for (const label of ["Six engines.", "nx-nexus-orbit", "nx-nexus-contract", "REVIEWABLE OUTPUT", "SAFETY BOUNDARY", "Scientific review"]) expect(page).toContain(label);
-    expect(page).toContain("Agents never self-approve claims");
+  it("keeps naming a capability separate from scientific validation", () => {
+    expect(page).toContain("Naming a capability does not claim scientific validation");
+    expect(page).toContain("under continuous engineering and scientific evaluation");
+    expect(page).toContain("to=\"/evidence-safety\"");
   });
-  it("shows distinct research and clinical applications with explicit maturity and safety boundaries", () => {
-    for (const name of ["Evidence-led immune research", "Longitudinal clinical intelligence", "Clinical trial pre-screening", "Biomarker and therapeutic discovery", "REVIEWABLE OUTPUT", "Interpretation boundary", "not a claim of live clinical integrations"]) expect(page).toContain(name);
+  it("uses editorial visuals rather than interactive NEXUS journeys", () => {
+    expect(page).toContain("LandingVisual");
+    expect(page).toContain('kind="network"');
+    expect(page).not.toContain("setSourceIndex");
+    expect(page).not.toContain("setEngineIndex");
+    expect(page).not.toContain("setJourneyIndex");
+    expect(page).not.toContain("setGovernanceIndex");
   });
-  it("shows the six-step SSc investigation with explicit review and uncertainty", () => {
-    for (const name of ["RESEARCH INVESTIGATION · SYSTEMIC SCLEROSIS", "Frame the SSc question", "Compare conflicting findings", "Draft testable hypotheses", "Review and decide", "REVIEWABLE ARTIFACT", "INTERPRETATION LIMIT"]) expect(page).toContain(name);
-    expect(page).toContain("No patient data, actual study results");
-  });
-  it("shows accountable governance controls and a separate human approval gate", () => {
-    for (const label of ["GOVERNANCE, VALIDATION & SCIENTIFIC REVIEW", "Human scientific review", "STOP CONDITION", "REQUIRED REVIEW RECORD", "Unvalidated hypothesis", "Agents may retrieve, compare and propose"]) expect(page).toContain(label);
-    expect(page).toContain("setGovernanceIndex(i)");
-  });
-  it("keeps interactive journeys keyboard-operable and research boundaries explicit", () => {
-    expect(page).toContain("setSourceIndex(index)");
-    expect(page).toContain("setEngineIndex(i)");
-    expect(page).toContain("setJourneyIndex(index)");
-    expect(page).toContain("setApplicationIndex(i)");
-    expect(page).toContain('aria-live="polite"');
-    expect(read("../site/src/components/TechnologyFlow.tsx")).toContain("Data remains under the source system's authorisation and access controls.");
-    expect(page).toContain("No autonomous diagnosis or prescribing");
-    expect(read("../site/src/styles/technology.css")).toContain("focus-visible");
+  it("preserves the internal TechnologyFlow honesty contract for governed engines", () => {
+    const flow = read("../site/src/components/TechnologyFlow.tsx");
+    expect(flow).toContain("Data remains under the source system's authorisation and access controls.");
+    expect(flow).toContain("No claim of live patient integrations");
+    expect(read("../site/src/styles/editorial-site.css")).toContain("focus-visible");
   });
 });

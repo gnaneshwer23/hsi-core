@@ -16,7 +16,29 @@ describe("static deployment routes", () => {
     const config = JSON.parse(readFileSync(new URL("vercel.json", root), "utf8"));
     const app = readFileSync(new URL("src/App.tsx", root), "utf8");
     const routes = [...app.matchAll(/path="([^"*]+)"/g)].map((match) => `/${match[1]}`);
-    expect(config.rewrites.map((row: { source: string }) => row.source).sort()).toEqual(routes.sort());
+    const redirected = new Set(
+      ((config.redirects ?? []) as { source: string }[]).map((row) => row.source),
+    );
+    // Legacy catalogue paths are permanent redirects, not SPA HTML rewrites.
+    expect([...redirected].sort()).toEqual(["/for-aksh", "/for-isi", "/for-trials", "/products"]);
+    for (const row of config.redirects as { source: string; destination: string; permanent: boolean }[]) {
+      expect(row.permanent).toBe(true);
+      expect(app).toContain(`path="${row.source.slice(1)}"`);
+      expect(app).toContain(`Navigate to="${row.destination}"`);
+    }
+    expect(
+      (config.redirects as { source: string; destination: string }[]).map((row) => [
+        row.source,
+        row.destination,
+      ]),
+    ).toEqual([
+      ["/products", "/platform"],
+      ["/for-aksh", "/platform"],
+      ["/for-isi", "/biology"],
+      ["/for-trials", "/solutions"],
+    ]);
+    const rewriteable = routes.filter((route) => !redirected.has(route)).sort();
+    expect(config.rewrites.map((row: { source: string }) => row.source).sort()).toEqual(rewriteable);
     expect(config.rewrites.every((row: { source:string; destination:string }) => row.destination === "/_pages/"+row.source.slice(1).replaceAll("/","--")+".html")).toBe(true);
     expect(config.rewrites.some((row: { source: string }) => row.source.includes(".*"))).toBe(false);
   });

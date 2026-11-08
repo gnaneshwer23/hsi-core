@@ -1,27 +1,34 @@
 import { describe, expect, it } from "bun:test";
 import { readFileSync } from "node:fs";
 const platform = readFileSync(new URL("../site/src/pages/Platform.tsx", import.meta.url), "utf8");
-const css = readFileSync(new URL("../site/src/styles/platform.css", import.meta.url), "utf8");
+const css = readFileSync(new URL("../site/src/styles/editorial-site.css", import.meta.url), "utf8");
 describe("Platform architecture experience", () => {
-  it("retains four product-owned perspectives and explicit access boundaries", () => {
-    for (const name of ["aksh:", "clinical:", "isi:", "trials:"]) expect(platform).toContain(name);
-    expect(platform).toContain("Sharing technology does not grant access");
-    expect(platform).toContain("No live matching, eligibility confirmation or enrolment");
+  it("presents an HSI-only research workflow without catalogue product lenses", () => {
+    for (const name of ["Investigate", "Connect", "Evaluate", "Translate", "Decide"]) {
+      expect(platform).toContain(name);
+    }
+    expect(platform).not.toContain("aksh:");
+    expect(platform).not.toContain("Aksh Health");
+    expect(platform).not.toContain("Immune Super Intelligence");
+    expect(platform).toContain("Authorised tools remain behind separately provisioned access");
   });
-  it("keeps research methods separate from scientific approval", () => {
-    for (const name of ["Frame the question", "Inspect the context", "Compare the evidence", "Prepare for review"]) expect(platform).toContain(name);
-    expect(platform).toContain("Saving an investigation is not scientific approval");
-    expect(platform).toContain("Human review remains explicit");
+  it("keeps provenance, uncertainty and human review explicit", () => {
+    expect(platform).toContain("source provenance");
+    expect(platform).toContain("uncertainty and human review kept visible");
+    expect(platform).toContain("never presented as independently proven");
+    expect(platform).toContain("Capabilities still under validation are labelled as such");
   });
-  it("supports state-driven product, capability and method lens selection", () => {
-    expect(platform).toContain("setProductId");
-    expect(platform).toContain("setSelected");
-    expect(platform).toContain("setLensIndex");
-    expect(platform).toContain("moveRadioFocus");
+  it("uses editorial landing visuals rather than interactive product lenses", () => {
+    expect(platform).toContain("LandingVisual");
+    expect(platform).toContain('kind="knowledge"');
+    expect(platform).not.toContain("setProductId");
+    expect(platform).not.toContain("setLensIndex");
+    expect(platform).not.toContain("ECOSYSTEM_PRODUCTS");
   });
-  it("preserves provenance, access and responsive visual system", () => {
-    expect(platform).toContain("Provenance alongside evidence");
-    expect(platform).toContain("Product-owned access");
+  it("preserves responsive editorial focus styling", () => {
+    expect(platform).toContain("to=\"/evidence-safety\"");
+    expect(platform).toContain("to=\"/biology\"");
     expect(css).toContain("@media");
+    expect(css).toContain("focus-visible");
   });
 });

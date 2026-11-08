@@ -1,5 +1,5 @@
 /**
- * Public HSI site honesty — four-product Available / In-dev / Planned; simplified IA.
+ * Public HSI site honesty — HSI-only public IA; maturity chips retained for status/demos.
  */
 import { describe, expect, it } from "bun:test";
 import { readFileSync } from "node:fs";
@@ -31,9 +31,15 @@ describe("Public HSI site honesty", () => {
     expect(mod).not.toMatch(/Omics runtimes and live CDS paths/);
   });
 
-  it("routes /products, /science, /status; primary nav is simplified public IA", () => {
+  it("routes legacy catalogue paths via redirects; primary nav is HSI-only public IA", () => {
     const app = site("src/App.tsx");
     expect(app).toContain('path="products"');
+    expect(app).toContain('Navigate to="/platform"');
+    expect(app).toContain('path="for-isi"');
+    expect(app).toContain('Navigate to="/biology"');
+    expect(app).toContain('path="for-aksh"');
+    expect(app).toContain('path="for-trials"');
+    expect(app).toContain('Navigate to="/solutions"');
     expect(app).toContain('path="status"');
     expect(app).toContain('path="science"');
     expect(app).toContain("<Science");
@@ -41,35 +47,80 @@ describe("Public HSI site honesty", () => {
     expect(app).toContain('path="clinical-timeline"');
     expect(app).toContain('path="trials-criteria"');
     expect(app).toContain('path="gateway"');
+    expect(app).toContain('path="biology"');
+    expect(app).toContain('path="drug-discovery"');
 
     const primaryNav = site("src/lib/primaryNav.ts");
-    for(const route of ["/platform","/solutions","/research","/evidence-safety","/pricing","/contact","/products","/technology","/science","/how-it-works"])expect(primaryNav).toContain(route);
-    expect(primaryNav).toContain('label: "Request access"');
-    const primaryLinksBlock=primaryNav.match(/export const PRIMARY_NAV_LINKS = \[[\s\S]*?\] as const/)?.[0]??"";
-    for(const route of ["/platform","/research","/products","/science","/how-it-works"])expect(primaryLinksBlock).toContain(route);
-    for(const route of ["/curator","/gateway","/clinical-timeline","/trials-criteria","/status"])expect(primaryLinksBlock).not.toContain(route);
-    for(const route of ["/for-isi","/for-aksh","/for-trials"])expect(primaryNav).toContain(route);
-    const nav=site("src/components/Nav.tsx");
-    expect(nav).toContain("PRIMARY_NAV_LINKS");expect(nav).toContain("PRIMARY_NAV_CTA");expect(nav).not.toContain("ENGINEERING_LINKS");
-    const home=site("src/pages/Home.tsx"),experience=site("src/components/Experience.tsx");
-    expect(home).toContain("See the biology.");expect(home).toContain("Aksh Health");expect(home).toContain("Immune Super Intelligence");
-    expect(home).not.toContain("ValidationPreview");expect(home).toContain("ResearchFeatureTabs");expect(experience).toContain("review scope");
+    for (const route of [
+      "/platform",
+      "/research",
+      "/biology",
+      "/drug-discovery",
+      "/solutions",
+      "/science",
+    ]) {
+      expect(primaryNav).toContain(route);
+    }
+    expect(primaryNav).toContain('label: "Explore the Platform"');
+    const primaryLinksBlock =
+      primaryNav.match(/export const PRIMARY_NAV_LINKS = \[[\s\S]*?\] as const/)?.[0] ?? "";
+    for (const route of [
+      "/platform",
+      "/research",
+      "/biology",
+      "/drug-discovery",
+      "/solutions",
+      "/science",
+    ]) {
+      expect(primaryLinksBlock).toContain(route);
+    }
+    for (const route of [
+      "/products",
+      "/technology",
+      "/for-isi",
+      "/for-aksh",
+      "/for-trials",
+      "/curator",
+      "/gateway",
+      "/clinical-timeline",
+      "/trials-criteria",
+      "/status",
+      "/how-it-works",
+      "/pricing",
+      "/contact",
+    ]) {
+      expect(primaryLinksBlock).not.toContain(route);
+    }
+    // Legacy paths remain as redirects / marketing allowlist entries, not primary chrome.
+    expect(primaryNav).toContain('"/technology"');
+    expect(primaryNav).toContain('"/how-it-works"');
+    expect(primaryNav).toContain('"/pricing"');
+    expect(primaryNav).toContain('"/contact"');
+
+    const nav = site("src/components/Nav.tsx");
+    expect(nav).toContain("PRIMARY_NAV_LINKS");
+    expect(nav).toContain("PRIMARY_NAV_CTA");
+    expect(nav).not.toContain("ENGINEERING_LINKS");
+
+    const home = site("src/pages/Home.tsx");
+    expect(home).toContain("Human Super Intelligence");
+    expect(home).toContain("LandingVisual");
+    expect(home).toContain("LandingBleedBand");
+    expect(home).not.toContain("Aksh Health");
+    expect(home).not.toContain("Immune Super Intelligence");
+    expect(home).not.toContain("ValidationPreview");
+    expect(home).not.toContain("BiologyArtwork");
     expect(home).not.toContain("100% accurate");
-    const ecosystem = site("src/components/landing/EcosystemGrid.tsx");
-    expect(ecosystem).toContain("ECOSYSTEM_PRODUCTS");
-    expect(ecosystem).toContain("MATURITY_CHIP_LABEL");
-    const roadmap = site("src/pages/Roadmap.tsx");
-    expect(roadmap).toContain("MATURITY_CHIP_LABEL");
-    expect(roadmap).toContain('to="/status"');
+    expect(home).toContain("Research intelligence under development");
 
     const footer = site("src/components/Footer.tsx");
-    expect(footer).toContain("RESEARCH_LINKS");
+    expect(footer).toContain("PRIMARY_NAV_LINKS");
+    expect(footer).toContain('to: "/evidence-safety"');
+    expect(footer).toContain('to: "/contact"');
+    expect(footer).toContain("Research use · Human oversight");
     expect(footer).not.toContain('to: "/roadmap"');
     expect(footer).not.toContain('to: "/status"');
-    expect(footer).toContain('to: "/evidence-safety"');
     expect(footer).not.toContain('to: "/docs"');
-    expect(footer).toContain('to: "/contact"');
-    expect(footer).toContain("For research and education");
   });
 
   it("wires Clinical timeline + Trials five-state + Gateway thin demos with honesty labels", () => {
@@ -135,18 +186,18 @@ describe("Public HSI site honesty", () => {
 });
 
 
-it("Stage A Platform includes all four distinct product perspectives and honest maturity", () => {
+it("Stage A Platform is HSI-only with honest maturity retained off-page", () => {
   const platform = site("src/pages/Platform.tsx");
-  expect(platform).toContain('type ProductId = EcosystemProduct["id"];');
-  expect(platform).toContain('aksh:');
-  expect(platform).toContain('clinical:');
-  expect(platform).toContain('trials:');
-  expect(platform).toContain('isi:');
-  expect(platform).toContain("ECOSYSTEM_PRODUCTS.find");
-  expect(platform).toContain("ECOSYSTEM_PRODUCTS.map");
-  expect(platform).toContain("MATURITY_CHIP_LABEL");
-  expect(platform).toContain("No live matching, eligibility confirmation or enrolment");
-  expect(platform).toContain("not patient-record transfers");
+  expect(platform).toContain("Investigate");
+  expect(platform).toContain("Connect");
+  expect(platform).toContain("Evaluate");
+  expect(platform).toContain("Translate");
+  expect(platform).toContain("Decide");
+  expect(platform).toContain("LandingVisual");
+  expect(platform).not.toContain("aksh:");
+  expect(platform).not.toContain("ECOSYSTEM_PRODUCTS");
+  expect(platform).not.toContain("Aksh Health");
+  expect(platform).not.toContain("Immune Super Intelligence");
   const maturity = site("src/lib/productMaturity.ts");
   expect(maturity).toContain('name: "Aksh Health"');
   expect(maturity).toContain('name: "HSI Clinical"');
@@ -180,11 +231,22 @@ describe("Stage A public security boundary audit", () => {
 });
 
 
-describe("Homepage scientific visuals and product proof",()=>{
- it("uses original public artwork while preserving labelled validation components",()=>{
-  const home=site("src/pages/Home.tsx"),preview=site("src/components/ValidationPreview.tsx"),art=site("src/components/Experience.tsx");
-  expect(home).toContain("BiologyArtwork");expect(art).toContain('role="img"');expect(art).toContain("EXPERIENCE_DOMAINS");
-  expect(preview).toContain("loadValidationCatalogue");expect(preview).toContain("loadValidationScenario");expect(preview).toContain("Synthetic validation");
-  expect(preview).toContain("Reference intervals are not supplied");expect(home).not.toContain("PMID:12345678");
- });
+describe("Homepage scientific visuals and product proof", () => {
+  it("uses landing reference visuals while preserving labelled validation components", () => {
+    const home = site("src/pages/Home.tsx");
+    const preview = site("src/components/ValidationPreview.tsx");
+    const visuals = site("src/lib/landingVisuals.ts");
+    expect(home).toContain("LandingVisual");
+    expect(home).toContain("LandingBleedBand");
+    expect(home).toContain('kind="network"');
+    expect(home).toContain('kind="signalling"');
+    expect(home).toContain('kind="immunometabolic"');
+    expect(home).not.toContain("BiologyArtwork");
+    expect(home).not.toContain("PMID:12345678");
+    expect(visuals).toContain("neon-immune-cell-network.jpg");
+    expect(preview).toContain("loadValidationCatalogue");
+    expect(preview).toContain("loadValidationScenario");
+    expect(preview).toContain("Synthetic validation");
+    expect(preview).toContain("Reference intervals are not supplied");
+  });
 });
