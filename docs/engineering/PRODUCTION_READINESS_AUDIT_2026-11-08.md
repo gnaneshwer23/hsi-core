@@ -85,6 +85,7 @@ Default science programme remains **gut–immune–T2D** (Nov 6 plan). SSc stays
 - **Phase #9 eng done (science still BLOCKED):** N5 live public-registry snapshot refresh — ClinicalTrials.gov API v2 lookup for pinned NCTs `NCT01030861` + `NCT02401880`, captured fixtures, live snapshot/receipt, `bun run n5:research:live` / `n5:research:live:check`. `liveRegistryQueried=true` on live path; `confirmedEligible=false`, `liveStatusVerified=false`, `scientificAcceptance=BLOCKED` always. Offline engineering fixtures remain `n5:check` authority. No invented eligibility / enrolment / Gate C / MoU. Receipt: [`AUDIT_9_N5_LIVE_REGISTRY_REFRESH_2026-11-08.md`](./AUDIT_9_N5_LIVE_REGISTRY_REFRESH_2026-11-08.md).
 - **Phase #10 eng done (science still NO-GO):** N7/N8 real-data / licensed-model prep scaffolded — `src/evidence/n7n8RealDataPrep.ts`, `research/domain-graph/n7n8/real-data-prep.v1.json`, checklist, empty real-data / licence slots (`realDataSlotsFilled=0`), `bun run n7n8:real-data-prep`. `nearTermGoNoGo=NO_GO`; `realObservationClaimed=false`; `modelActivationAllowed=false`; `scientificAcceptance=BLOCKED`. Explicit STOP: further progress is human residuals (#2 rights, #3 cite HITL, #4 SMEs, #5 two-account, #8 MoU). No invented wet-lab, partner data, licences, MoU, or Gate C. Receipt: [`AUDIT_10_N7_N8_REAL_DATA_2026-11-08.md`](./AUDIT_10_N7_N8_REAL_DATA_2026-11-08.md).
 - **HUMAN QUEUE deepen (eng CLEARED / humans still BLOCKED):** Consolidated residuals #2/#3/#4/#5/#8 — empty attestation worksheets, curator runbooks, `operations/human-queue/human-queue.v1.json`, `bun run human-queue:check`. Counters unchanged: N1 `humanCleared=0`/`passageImported=0`; cite 0/0; N3 labels 0; staging `opsAcceptance=BLOCKED`; MoU `mouSlotsFilled=0`. No invented MoU / supports / SME labels / licence clearance / Gate C / production writes. Receipt: [`AUDIT_HUMAN_QUEUE_RESIDUALS_2026-11-08.md`](./AUDIT_HUMAN_QUEUE_RESIDUALS_2026-11-08.md) · master [`HUMAN_QUEUE_RESIDUALS.md`](./HUMAN_QUEUE_RESIDUALS.md).
+- **Roadmap R1 eng done (science + rights still BLOCKED; #2 parked):** Biomedical source-packet inventory scaffolded — `src/evidence/r1BiomedicalSourcePackets.ts`, `research/domain-graph/r1/source-packets.v1.json`, checklist, 12 rights-pending quarantine slots bound to N1 rights inventory, `bun run r1:prepare` / `r1:check`. `humanCleared=0` · `passageImported=0` · `licenceEvidenceUri=null` · `smeGoldFilled=false` · `scientificAcceptance=BLOCKED` · `rightsAcceptance=BLOCKED`. No invented clearances / SME gold / MoU / Gate C. Receipt: [`AUDIT_R1_BIOMEDICAL_SOURCE_PACKETS_2026-11-08.md`](./AUDIT_R1_BIOMEDICAL_SOURCE_PACKETS_2026-11-08.md).
 
 ## Verify (post-correction)
 
@@ -105,6 +106,8 @@ bun run n5:research:live:check
 bun run n5:check
 bun run n7n8:real-data-prep
 bun run n7n8:real-data-prep:check
+bun run r1:prepare
+bun run r1:check
 bun run human-queue:prep
 bun run human-queue:check
 bun run db:migrate -- --from-neonctl

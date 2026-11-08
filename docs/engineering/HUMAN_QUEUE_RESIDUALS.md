@@ -13,7 +13,7 @@ This document consolidates eng-safe residual deepen work. It does **not** clear 
 
 | # | Residual | Neon | Metrics (must stay until humans act) | Checklist | Empty worksheet |
 |---|----------|------|--------------------------------------|-----------|-----------------|
-| 2 | N1 rights attestation | red-wave | `humanCleared=0` · `passageImported=0` | [`N1_PASSAGE_RIGHTS_ATTESTATION_CHECKLIST.md`](./N1_PASSAGE_RIGHTS_ATTESTATION_CHECKLIST.md) | `research/domain-graph/n1/attestation-worksheet.v1.json` |
+| 2 | N1 rights attestation | red-wave | `humanCleared=0` · `passageImported=0` · R1 packets stay `rights_pending_quarantine` ([`R1_BIOMEDICAL_SOURCE_PACKETS_CHECKLIST.md`](./R1_BIOMEDICAL_SOURCE_PACKETS_CHECKLIST.md)) | [`N1_PASSAGE_RIGHTS_ATTESTATION_CHECKLIST.md`](./N1_PASSAGE_RIGHTS_ATTESTATION_CHECKLIST.md) | `research/domain-graph/n1/attestation-worksheet.v1.json` |
 | 3 | ISI cite HITL | autumn-snow | `supports=0` · `publicCiteApproved=0` | immunecity `GATE_C_CURATOR_PATH.md` + `CITE_HITL_CURATOR_RUNBOOK.md` | immunecity `cite-hitl-residual-worksheet.json` |
 | 4 | N3 SME labels | red-wave | `labelledRows=0` · `smeSlotsFilled=0` | [`N3_CALIBRATION_FREEZE_CHECKLIST.md`](./N3_CALIBRATION_FREEZE_CHECKLIST.md) | `research/domain-graph/n3/sme-label-worksheet.v1.json` |
 | 5 | Staging two-account | red-wave | `opsAcceptance=BLOCKED` · Auth A www confirmed ≠ full #5 | [`STAGING_TWO_ACCOUNT_AUTH_CHECKLIST.md`](./STAGING_TWO_ACCOUNT_AUTH_CHECKLIST.md) | `operations/staging/ops-acceptance-worksheet.v1.json` |
