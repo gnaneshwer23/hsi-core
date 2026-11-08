@@ -188,8 +188,9 @@ Draft findings may surface **only** when explicitly labelled draft / candidate /
 |------------|----------------|----------------|--------|----------|------------|--------|------------|
 | Dynamic retrieval from researcher question **without** pre-pinned PMIDs/DOIs | `src/evidence/dynamicEvidenceRetrieval.ts` · extends `searchEuropePmcByQuery` / `lookupOpenTargetsDiseaseAssociations` | Question → entity clarify → live metadata search → search record | **Partial** (retrieve + fail taxonomy; persist via PR 3) | `test/dynamicEvidenceRetrieval.test.ts` | Local | Keep | Fail taxonomy; rate limits; rights |
 | Persist permitted metadata for arbitrary search hits into candidate store with full state axes | `src/evidence/dynamicEvidencePersistence.ts` · `src/db/dynamicEvidenceCandidateStore.ts` · migration `018` · extends `hsi_evidence_sources` | Retrieve → plan (draft axes) → memory/Neon store · identity links · preserved search record | **Partial** (library + staging-gated Neon; live journey write still gated) | `test/dynamicEvidencePersistence.test.ts` | Local / Staging Unknown | Keep; no auto graph promote | Write gate; red-wave only |
-| Contextual candidate claims + opposing findings for new questions | Oppose notes / falsification on saved corpus | Investigate stage | **Partial** / fixture | Outcome §02 honesty | — | PR 3–4 | Passages #2 |
-| Hypothesis comparison + source-linked brief for unpinned questions | Grounded brief on recorded evidence | Brief API | **Partial** | groundedBrief tests | — | PR 4–5 | Review intact |
+| Contextual candidate claims + opposing findings for new questions | `src/evidence/contextualCandidateRelationships.ts` · extends living-evidence OT candidates + dynamic persistence plan · biological context axes · finding polarity · limitation classes | Persist plan / OT records / declared context → labelled draft candidate pack (`graphPromotable: false`) · oppose search stubbed incomplete ≠ consensus | **Partial** (library; oppose workflow thin) | `test/contextualCandidateRelationships.test.ts` | Local | Keep; no auto graph promote; axes orthogonal | Passages #2 for deeper oppose |
+| Release-aware retrieval (draft vs approved separation) | `src/evidence/releaseAwareRetrieval.ts` · composes `graphRelease.assessReleaseClaim` / `queryPublishedGraph` · candidate pack opt-in | Published release → approved channel; draft candidates only when `includeDraftCandidates` + surfaceLabel; bypass mutations fail-closed | **Partial** (library gates; UI/API surface still PR 7) | `test/contextualCandidateRelationships.test.ts` | Local | Keep fail-closed; never render drafts as approved | Auth review E2E (PR 6); UI bind (PR 7) |
+| Hypothesis comparison + source-linked brief for unpinned questions | Grounded brief on recorded evidence | Brief API | **Partial** | groundedBrief tests | — | PR 5 | Review intact |
 | O-04 translational landscape on investigation | Trials `not_queried` | — | **Missing** product bind | Step 04/05 audits | — | Later PR (seq 5+) | Registry snapshots |
 | Production readiness / scientific validity claims | — | — | **Blocked** | Human queue #2/#3/#4/#5/#8 PARKED | — | Human clearances only | Never invent |
 
@@ -202,10 +203,10 @@ Draft findings may surface **only** when explicitly labelled draft / candidate /
 | **1 (this)** | Baseline audit, file-level matrix, Phase 1 acceptance scaffolding | Matrix + tests merge-ready for human review; no science claims |
 | **2** | Dynamic retrieval (unpinned question → entity clarify → live metadata search) extending Europe PMC / OT adapters · `dynamicEvidenceRetrieval.ts` | Provider fail ≠ empty; source identity ≠ claim support; metadata-only; Neon persist deferred to PR 3 |
 | **3** | Persist permitted metadata → candidate store; explicit draft labelling · identity links (record/study/independence) | No auto graph promote; red-wave only; OT≠independent EPMC corroboration |
-| **4** | Contextual candidate claims + opposing findings + limitation classification | Oppose incomplete ≠ consensus; review gate intact |
+| **4** | Contextual candidate claims + opposing findings + limitation classification + library release-aware draft/approved gates (`contextualCandidateRelationships` · `releaseAwareRetrieval`) | Oppose incomplete ≠ consensus; review gate intact; drafts labelled only |
 | **5** | Hypothesis comparison + source-linked brief on recorded candidates | Brief honesty; no efficacy/eligibility inference |
 | **6** | Authenticated human review path E2E on staging (no auto-approve) | Writes staging-gated; reviewer authority |
-| **7** | Release-aware retrieval + labelled draft vs approved separation in UI/API | Fail-closed `assessReleaseClaim` |
+| **7** | Release-aware retrieval UI/API bind + labelled draft vs approved separation in product surfaces | Fail-closed `assessReleaseClaim`; compose PR 4 library |
 | **8** | Evaluation deepening (deterministic regression only; still no invented SME gold) | Scientific acceptance remains BLOCKED until humans |
 
 Aksh / ISI remain optional side wires — never prerequisites for PRs 2–8.
@@ -262,8 +263,8 @@ Acceptance (engineering, not science):
 | **Partial** | Living-evidence (pinned); governed graph read; agent orchestrator; grounded brief; ledgers; discovery search; workbench journey |
 | **Fixture-only** | Research workspace test fixture; R1/R3 synthetic honesty paths; offline living-evidence replay |
 | **Blocked** | Passage rights (#2); SME gold (#4); live researcher journey completion (#5); scientific acceptance; MoU/partner locks |
-| **Missing** | O-04 trials attach on investigation; contextual oppose agents (PR 4); hypothesis brief (PR 5) |
-| **Partial (new)** | Dynamic candidate persist + identity links (PR 3) — staging write-gated; not production-ready |
+| **Missing** | O-04 trials attach on investigation; full opposing-evidence search agents; hypothesis brief (PR 5); release-aware UI/API bind (PR 7) |
+| **Partial (new)** | Dynamic candidate persist + identity links (PR 3); contextual candidate relationships + release-aware retrieval library gates (PR 4) — not production-ready |
 
 ## 8. Verify (Phase 1)
 
