@@ -138,6 +138,8 @@
     "coverage:check": "bun --no-env-file scripts/build-research-coverage.ts --check",
     "coverage:prepare-registry": "bun --no-env-file scripts/prepare-public-registry-snapshot.ts",
     "pilot:check": "bun --no-env-file scripts/research-pilot-readiness.ts",
+    "staging:auth-prep": "bun --no-env-file scripts/staging-two-account-auth-prep.ts",
+    "staging:auth-prep:check": "bun --no-env-file scripts/staging-two-account-auth-prep.ts --check",
     "validation:build": "bun --no-env-file scripts/build-synthetic-validation.ts",
     "validation:check": "bun --no-env-file scripts/build-synthetic-validation.ts --check",
     "readiness:prepare": "bun --no-env-file scripts/prepare-research-readiness.ts",

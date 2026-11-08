@@ -317,7 +317,8 @@ One-sprint-sized items. Mark **[DECISION]** where the user must choose before co
 | Cap9-FHIR | **DONE:** Illustrative FHIR R4 mapping notes for synthetic timeline | `src/clinicalSyntheticFhirNotes.ts` + `/clinical-timeline` FHIR NOTES; `fhirSoT=false`; no live EMIS |
 | P2.7-ISI | **DONE (eng):** Audit #3 cite HITL path receipt | immunecity `docs/engineering/AUDIT_3_ISI_CITE_HITL_2026-11-08.md`; eng CLEARED; pin still **0** supports / **0** publicCiteApproved |
 | P2.8-N3 | **DONE (eng):** Audit #4 N3 calibration freeze-prep | `freeze-prep.v1.json` + checklist + empty SME slots; `n3:freeze-prep`; sci still **BLOCKED** (0 labels / 0 slots filled) |
-| **NEXT** | **Human claim_support → Approve on 13 cites · real SMEs fill N3 · real partner** | Audit #3/#4 (2026-11-08): cite eng CLEARED / HITL 0/0; N3 freeze-prep eng CLEARED / science BLOCKED. Blocked on human S-P-O → `/curation?hsi=cite` Approve and named SME recruitment (no invent labels / no Auth bypass). Parallel next-build #5: staging two-account Auth. Still no auto-approve / no `hsiGrade` flip / no invent MoU / no live CDS. |
+| P2.9-Auth | **DONE (eng):** Audit #5 staging two-account Auth prep | `two-account-auth-prep.v1.json` + checklist + empty account slots; `staging:auth-prep`; ops still **BLOCKED** (0 accounts / writes live-unverified) |
+| **NEXT** | **Human claim_support → Approve on 13 cites · real SMEs fill N3 · founder staging Auth flip · real partner** | Audit #3/#4/#5 (2026-11-08): cite eng CLEARED / HITL 0/0; N3 freeze-prep eng CLEARED / science BLOCKED; staging Auth eng CLEARED / OPS BLOCKED. Blocked on human S-P-O → `/curation?hsi=cite` Approve, named SME recruitment, and founder Preview env + two verified neon_auth accounts (no invent labels / no Auth bypass / no production writes). Next eng-safe numbered gate: #6 apply 016/017. Still no auto-approve / no `hsiGrade` flip / no invent MoU / no live CDS. |
 
 ### Out-of-repo (track; do not implement here)
 

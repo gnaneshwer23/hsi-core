@@ -1,6 +1,6 @@
 import {withResearchRequestControls,researchOperationalLogger,type ResearchControls} from "./researchRequestControls";
 /** Vercel Bun Web-handler adapter. No listener, migrations, automatic grants or client identity trust. */
-import {assertHsiNeonDatabaseUrl,HSI_STAGING_HOST_PREFIX} from "../db/neonGuard";
+import {assertHsiNeonDatabaseUrl,HSI_STAGING_BRANCH_ID,HSI_STAGING_HOST_PREFIX} from "../db/neonGuard";
 import {resolveProviderSessionToken} from "../db/providerSessionToken";
 import {inspectProviderDatabaseSession} from "../db/providerSessionDiagnostics";
 import {createNeonInterrogativeApiServices,handleInterrogativeApi} from "./interrogativeApi";
@@ -33,7 +33,7 @@ export function readResearchDeploymentConfig(env:Environment){
  const missing=[...(!publicOrigin?["HSI_PUBLIC_ORIGIN"]:[]),...(!authBaseUrl||!authUrlsMatch?["HSI_AUTH_BASE_URL"]:[]),...(!databaseOk?["HSI_DATABASE_URL"]:[]),...(!endpointPrefixesMatch?["HSI_AUTH_BASE_URL","HSI_DATABASE_URL"]:[])];
  const alignment={authUrlsMatch,authEndpointPrefix,databaseEndpointPrefix,endpointPrefixesMatch};
  if(missing.length)return {ok:false as const,missing,...alignment};
- const writesEnabled=env.HSI_RESEARCH_WRITES_ENABLED==="true"&&env.HSI_NEON_BRANCH_ID==="br-rough-snow-zagxbvjp"&&databaseEndpointPrefix===HSI_STAGING_HOST_PREFIX;
+ const writesEnabled=env.HSI_RESEARCH_WRITES_ENABLED==="true"&&env.HSI_NEON_BRANCH_ID===HSI_STAGING_BRANCH_ID&&databaseEndpointPrefix===HSI_STAGING_HOST_PREFIX;
  const sscReleaseId=env.HSI_SSC_RESEARCH_RELEASE_ID;
  return {ok:true as const,publicOrigin:publicOrigin!,authBaseUrl:authBaseUrl!,databaseUrl:databaseUrl!,neonProjectId:env.HSI_NEON_PROJECT_ID,writesEnabled,sscReleaseId,raComparisonReleaseId:env.HSI_RA_COMPARISON_RELEASE_ID,...alignment};
 }

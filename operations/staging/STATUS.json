@@ -1,0 +1,15 @@
+{
+  "phase": "staging_two_account_auth",
+  "remediationPhase": "production_readiness_audit_phase_5",
+  "generatedAt": "2026-11-08T11:00:00.000Z",
+  "engineeringScaffold": "CLEARED",
+  "opsAcceptance": "BLOCKED",
+  "liveAuthVerified": false,
+  "researchWritesLiveVerified": false,
+  "accountSlotsReserved": 3,
+  "accountSlotsFilled": 0,
+  "engineeringChecksCleared": 7,
+  "opsChecksPending": 6,
+  "note": "Eng harness only. Founder must flip staging env / create two verified neon_auth accounts / grant access. No production writes. Auth signup polish for founder Gmail deferred.",
+  "prepHash": "e0fc61271209873ddc3e7784869a10fb48a765a76e535651eb47941924e10ff6"
+}

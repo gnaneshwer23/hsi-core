@@ -258,8 +258,12 @@ review authority and all evidence/release gates still apply.
 
 Before activation, complete two-account staging checks including expired sessions,
 revoked grants, wrong-branch sessions, author self-review rejection and record
-ownership. A deployment or green health response does not approve science, publish
-knowledge graph relationships, enable live clinical decision support or permit PHI.
+ownership. Use the Audit #5 operator checklist
+([`docs/engineering/STAGING_TWO_ACCOUNT_AUTH_CHECKLIST.md`](./engineering/STAGING_TWO_ACCOUNT_AUTH_CHECKLIST.md))
+and offline harness (`bun run staging:auth-prep:check`) — eng CLEARED / ops BLOCKED
+until a human records live acceptance. A deployment or green health response does
+not approve science, publish knowledge graph relationships, enable live clinical
+decision support or permit PHI.
 
 ## Phase A workspace addition
 

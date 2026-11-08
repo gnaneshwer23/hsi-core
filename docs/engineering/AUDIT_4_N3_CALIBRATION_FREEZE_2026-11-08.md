@@ -61,4 +61,4 @@ This receipt is **not** scientific acceptance, N3 freeze CLEARED, or N6 usefulne
 
 ## Next audit item (recommended)
 
-Parallel human tracks: ISI cite HITL residual (ranked #1) and/or N1 human rights attestation (ranked #2). Next eng-safe ops track: staging two-account Auth + research writes (audit #5) when ops prerequisites lift. N6 usefulness stays **NO-GO until #4 human freeze**.
+Parallel human tracks: ISI cite HITL residual (ranked #1) and/or N1 human rights attestation (ranked #2). Audit #5 staging Auth eng harness is CLEARED / OPS BLOCKED — see [`AUDIT_5_STAGING_TWO_ACCOUNT_AUTH_2026-11-08.md`](./AUDIT_5_STAGING_TWO_ACCOUNT_AUTH_2026-11-08.md). N6 usefulness stays **NO-GO until #4 human freeze**.

@@ -5,7 +5,12 @@
  */
 
 export const HSI_NEON_PROJECT_ID = "red-wave-06625195" as const;
+/** Canonical production branch (quiet-silence). */
 export const HSI_NEON_BRANCH_ID = "br-quiet-silence-zab1zvji" as const;
+/** Approved research-write staging branch (rough-snow). Never treat as production. */
+export const HSI_STAGING_BRANCH_ID = "br-rough-snow-zagxbvjp" as const;
+/** Disposable non-production branch for unsafe experiments. */
+export const HSI_DISPOSABLE_BRANCH_ID = "br-morning-fog-zaobvjs0" as const;
 export const HSI_NEON_DATABASE = "neondb" as const;
 /** Host prefix for the canonical HSI endpoint (no password / full URL). */
 export const HSI_NEON_HOST_PREFIX = "ep-restless-dew" as const;

@@ -1,8 +1,14 @@
 /** Read-only control-plane checks. No SQL, migrations, signup or role writes. */
-export const HSI_PROJECT="red-wave-06625195";
-export const PRODUCTION_BRANCH="br-quiet-silence-zab1zvji";
-export const STAGING_BRANCH="br-rough-snow-zagxbvjp";
-export const DISPOSABLE_BRANCH="br-morning-fog-zaobvjs0";
+import {
+  HSI_DISPOSABLE_BRANCH_ID,
+  HSI_NEON_BRANCH_ID,
+  HSI_NEON_PROJECT_ID,
+  HSI_STAGING_BRANCH_ID,
+} from "../../src/db/neonGuard";
+export const HSI_PROJECT=HSI_NEON_PROJECT_ID;
+export const PRODUCTION_BRANCH=HSI_NEON_BRANCH_ID;
+export const STAGING_BRANCH=HSI_STAGING_BRANCH_ID;
+export const DISPOSABLE_BRANCH=HSI_DISPOSABLE_BRANCH_ID;
 export function assertNonProductionBranch(projectId:string,branchId:string){
  if(projectId!==HSI_PROJECT||![STAGING_BRANCH,DISPOSABLE_BRANCH].includes(branchId)||branchId===PRODUCTION_BRANCH)throw Error("Only the explicit HSI staging/disposable branches are allowed");
 }

@@ -1,7 +1,7 @@
 # HSI production-readiness audit receipt
 
 **Audited tip:** `482db110c0efa0b4d3a9166b4f97cd8bcd53b38c` (`482db11`) · `origin/main`  
-**Follow-through tip:** `8d8572daca23c7f2eb848101db412e2ca07a90dc` (`8d8572d`) — Phases 1–4 eng stamps  
+**Follow-through tip:** Phases 1–5 eng stamps (see Follow-through + Audit #5 receipt; tip advances on commit)  
 **Audit date:** 2026-11-08  
 **Canvas source:** `canvases/hsi-production-readiness-audit.canvas.tsx` (workspace)  
 **This document:** durable engineering receipt — **not** Gate C clearance, MoU, CDS/PHI, or scientific acceptance.
@@ -21,7 +21,7 @@ Default science programme remains **gut–immune–T2D** (Nov 6 plan). SSc stays
 | Substrate / evidence | 3 / 5 | Eng CLEARED / sci BLOCKED | N1–N8 modules + scripts; migrations 001–017 in-repo; 016/017 stub-not-applied; N1 rights BLOCKED (DOI identity cleared post-audit — see follow-through) |
 | Science gates | 1 / 5 | Scaffold + freeze-prep | N3 freeze-prep ENG CLEARED (Audit #4); labels still empty; N6 empty score packets; N4 `groundedClaimAccepted` forced false |
 | Site / marketing | 3 / 5 | Demo deployable | Vite site + Playwright; honesty banners; not a verified live research product |
-| Deploy / CI | 3 / 5 | CI green path ≠ launch | `research-foundation.yml` + site:build/e2e; bun pin mismatch noted; PRODUCTION_QA launch blocked |
+| Deploy / CI | 3 / 5 | CI green path ≠ launch | `research-foundation.yml` + site:build/e2e; staging Auth prep ENG CLEARED / OPS BLOCKED; PRODUCTION_QA launch blocked |
 | Security / honesty | 4 / 5 | Strong invariants | `neonGuard` refuses autumn-snow; `cdsPhiBoundary`; honesty regressions; `.env.example` only |
 | Product integrations | 2 / 5 | Contracts ≠ live product | ISI consume + Gate C human queue; cite eng path CLEARED / Approve still 0 HITL; Trials Path B fixtures only |
 
@@ -38,7 +38,7 @@ Default science programme remains **gut–immune–T2D** (Nov 6 plan). SSc stays
 - Partner lock / KPIs (`hypothetical_test_only`)
 - N1 passage reuse rights (provider signals inventoried; human clearance still BLOCKED)
 - N3 label freeze · N6 usefulness · N7 wet-lab · N8 live models
-- Live auth / two-account review / Neon restore drills
+- Live auth / two-account review / Neon restore drills (Audit #5 eng harness only; ops BLOCKED)
 - ISI cite Approve (0 supports / 0 publicCiteApproved at audit)
 - Live CDS / PHI / eligibility / Gate C auto-approve (**out of scope**)
 
@@ -50,7 +50,7 @@ Default science programme remains **gut–immune–T2D** (Nov 6 plan). SSc stays
 | 2 | Record per-source passage reuse rights; keep metadata-only until cleared | **ENG DONE 2026-11-08** / NO-GO sci until human rights |
 | 3 | ISI pending HITL: claim_support → Approve on cites (immunecity) | **ENG CLEARED 2026-11-08** / HITL BLOCKED (0 supports / 0 publicCiteApproved) |
 | 4 | Recruit SMEs; freeze N3 calibration labels (20–50) then pilot plan | **ENG CLEARED 2026-11-08** / sci BLOCKED (0 labels / 0 SME slots filled) |
-| 5 | Unpause staging: two-account auth, research writes, live investigation accept | GO when ops prerequisite lifted |
+| 5 | Unpause staging: two-account auth, research writes, live investigation accept | **ENG CLEARED 2026-11-08** / OPS BLOCKED (0 accounts filled; writes live-unverified) |
 | 6 | Apply 016/017 on red-wave after offline parity + founder approve | GO eng / gated migrate |
 | 7 | N6 blinded usefulness study after N3 freeze + agreed thresholds | NO-GO until #4 |
 | 8 | Real named partner lock (replace hypothetical fixture) | Founder decision — never invent MoU |
@@ -69,6 +69,7 @@ Default science programme remains **gut–immune–T2D** (Nov 6 plan). SSc stays
 - **Phase #2 eng done (science still NO-GO):** Per-source passage reuse inventory at `research/domain-graph/n1/rights-inventory.v1.json` (`src/evidence/n1PassageRightsInventory.ts`). Records Europe PMC OA/licence signals for all 12 candidates; `humanCleared=0`, `passageImported=0`, metadata-only. Provider OA/CC labels ≠ corpus reuse permission. Scientific acceptance + human `licenceEvidenceUri` attestation remain **BLOCKED**.
 - **Phase #3 eng done (cite HITL still BLOCKED):** immunecity Gate C cite path re-audited — seed → Check (13/13 verified) → inline Claim support → Approve UX + server invariants + `hsi:curator-status` dry-run. Pin remeasure still **0** `claim_support=supports` / **0** `publicCiteApproved`. No invent supports / no auto-approve / autumn-snow only. Receipt: immunecity `docs/engineering/AUDIT_3_ISI_CITE_HITL_2026-11-08.md`. Residual: Neon Auth reviewer S-P-O → Claim support → Approve on `/curation?hsi=cite`, then `--neon` remeasure.
 - **Phase #4 eng done (science still NO-GO):** Short recheck found **no** safe cite-HITL eng leftovers (remeasure docs + worksheet already present; Approve/`supports` remain human-only). N3 calibration freeze-prep scaffolded — `src/evidence/n3CalibrationFreezePrep.ts`, `research/domain-graph/n3/freeze-prep.v1.json`, checklist, anonymous SME roster slots (`smeSlotsFilled=0`), `bun run n3:freeze-prep` wired into `n3:check`. Calibration items **24** unlabelled; `humanLabelFreeze=BLOCKED`; `scientificAcceptance=BLOCKED`. No invented labels or SME identities. Receipt: [`AUDIT_4_N3_CALIBRATION_FREEZE_2026-11-08.md`](./AUDIT_4_N3_CALIBRATION_FREEZE_2026-11-08.md).
+- **Phase #5 eng done (ops still BLOCKED):** Staging two-account Auth + research-writes harness — `src/ops/stagingTwoAccountAuthPrep.ts`, `operations/staging/two-account-auth-prep.v1.json`, checklist, anonymous account roster slots (`accountSlotsFilled=0`), write-gate honesty samples (staging enable / production refuse / autumn-snow refuse), `bun run staging:auth-prep`. `opsAcceptance=BLOCKED`; `liveAuthVerified=false`; production writes stay disabled; Auth signup polish for founder Gmail deferred. No invented neon_auth principals or production grants. Receipt: [`AUDIT_5_STAGING_TWO_ACCOUNT_AUTH_2026-11-08.md`](./AUDIT_5_STAGING_TWO_ACCOUNT_AUTH_2026-11-08.md).
 
 ## Verify (post-correction)
 
@@ -79,5 +80,7 @@ bun run n1:check
 bun run n3:freeze-prep
 bun run n3:check
 bun run n4:check
-bun --no-env-file test test/n1SourceVerification.test.ts test/scientificBenchmark.test.ts test/n3CalibrationFreezePrep.test.ts test/groundedBrief.test.ts
+bun run staging:auth-prep
+bun run staging:auth-prep:check
+bun --no-env-file test test/n1SourceVerification.test.ts test/scientificBenchmark.test.ts test/n3CalibrationFreezePrep.test.ts test/groundedBrief.test.ts test/stagingTwoAccountAuthPrep.test.ts test/vercelResearch.test.ts
 ```
