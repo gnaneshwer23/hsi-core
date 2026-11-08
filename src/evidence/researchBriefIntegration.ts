@@ -171,7 +171,7 @@ export function integrateResearchBrief(input: IntegrateResearchBriefInput): Inte
 
   const nextResearchActions = uniqueStrings([
     ...(input.boundedBrief?.nextResearchActions.filter(
-      (a) => !/Translational O-04|eval deepening \(PR 8\)/i.test(a),
+      (a) => !/Translational O-04|eval deepening \(PR 8\)|Independent evaluation suites \(PR 8\)/i.test(a),
     ) ?? []),
     "Expert-reviewed gap assessment with recorded search scope and date (no Gate C auto-approve)",
     "Passage-backed semantic entailment when reuse rights clear (human queue #2)",
@@ -181,7 +181,7 @@ export function integrateResearchBrief(input: IntegrateResearchBriefInput): Inte
           "Independently verify registry-reported results and published outcome passages before any efficacy interpretation",
         ]
       : ["Attach O-04 translational registry snapshot when NCT pins or operator-supplied studies are available"]),
-    "Eval deepening / deterministic regression harness (PR 8) — SME gold remains blocked",
+    "Independent evaluation suites (PR 8): deterministic CI ≠ live gated ≠ scientific SME slots — gold remains blocked",
   ]);
 
   if (input.boundedBrief && input.boundedBrief.scientificValidityClaimed !== false) {

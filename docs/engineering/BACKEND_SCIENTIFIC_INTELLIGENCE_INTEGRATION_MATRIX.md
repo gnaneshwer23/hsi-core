@@ -141,7 +141,7 @@ Draft findings may surface **only** when explicitly labelled draft / candidate /
 | Capability | Implementation | Execution path | Status | Evidence | Deployment | Change | Dependency |
 |------------|----------------|----------------|--------|----------|------------|--------|------------|
 | Agent intelligence contracts + orchestrator | `src/hsiAgentIntelligenceContracts.ts` · `src/hsiAgentOrchestrator.ts` · durable checkpoint / fenced artifact modules | In-process plan → executors → checkpoints (no LLM swarm) | **Partial** | `test/hsiAgentOrchestrator.test.ts`; ARCH-009 docs | Local | Reuse claim_verifier; no new agent catalogue | Migrations 009/010 |
-| Bounded agent execution with durable traces | `src/evidence/boundedAgentExecution.ts` · composes orchestrator + checkpoints/fences + PR2–7 retrieval/persist/candidates/oppose/gapVerification/researchBriefIntegration | Question → plan → retrieve → mechanism → oppose → gaps → hypotheses → integrated research brief · durable stage artifacts | **Partial** (library; journey still gated) | `test/boundedAgentExecution.test.ts`; `test/researchBriefIntegration.test.ts` | Local | Keep cancel/retry/idempotency; untrusted retrieved text | Eval (PR 8); live #5 |
+| Bounded agent execution with durable traces | `src/evidence/boundedAgentExecution.ts` · composes orchestrator + checkpoints/fences + PR2–7 retrieval/persist/candidates/oppose/gapVerification/researchBriefIntegration | Question → plan → retrieve → mechanism → oppose → gaps → hypotheses → integrated research brief · durable stage artifacts | **Partial** (library; journey still gated) | `test/boundedAgentExecution.test.ts`; `test/researchBriefIntegration.test.ts` | Local | Keep cancel/retry/idempotency; untrusted retrieved text | Live journey #5; SME #4 |
 | Gap verification classifier | `src/evidence/gapVerification.ts` · bind in `src/researchOutcome.ts` · UI `ResearchOutcomePanel` §03 · opposing search receipt | Outcome / bounded agent → classify gaps (coverage ≠ novelty) → panel | **Connected** (eng classes + PR 6 taxonomy) | `test/gapVerification.test.ts`; PR #70/#77 | Local | Keep abstention; await SME gold; never auto-verify | Human queue #4 |
 | Opposing-evidence search (bounded) | `src/evidence/opposingEvidenceSearch.ts` · wired in bounded agent oppose stage | Question → oppose-oriented dynamic retrieval → search scope/date/limitations receipt | **Partial** (metadata; Europe PMC + OT only) | `test/opposingEvidenceSearch.test.ts` | Local | Provider fail ≠ no evidence; incomplete ≠ consensus | Passage rights #2; SME #4 |
 | claim_verifier adapter | `src/hsiArch003AgentAdapters.ts` · `createGapVerificationExecutor` | Orchestrator role → gapVerification | **Connected** (adapter) | `test/hsiArch003AgentAdapters.test.ts` | Local | No parallel verifier | — |
@@ -169,7 +169,7 @@ Draft findings may surface **only** when explicitly labelled draft / candidate /
 | Research outcome 01–06 panel | `src/researchOutcome.ts` · `site/src/components/ResearchOutcomePanel.tsx` · `researchOutcomeClient.ts` | Outcome API → client → sections 01–06 | **Connected** (UI eng) | Step 02/03/04 audits | Staging Unknown | Keep honesty labels for trials/gaps | — |
 | Synthetic workspace fixture | `src/researchWorkspaceTestFixture.ts` · seed script | Fixture investigation id → APIs | **Fixture-only** | Banner + hashes; must stay labelled | Local | Never present as live evidence | — |
 | Mechanism / decision workbenches | site pages + `InvestigationProgress` | Shared chrome → same APIs | **Partial** | site e2e investigation specs | Unknown | Nav consolidate — no rebuild | — |
-| Gold / scientific evaluation harness | `src/goldEvaluationSuite.ts` · R2 · `scientificEvaluation.ts` · N3 worksheets | Offline harness · `labelledRows=0` honesty | **Blocked** (science) / eng **Partial** | R2 tests; N3 status | Local | Do not invent SME labels | Human #4 |
+| Gold / scientific evaluation harness | `src/goldEvaluationSuite.ts` · R2 · `scientificEvaluation.ts` · N3 worksheets · **PR 8** `independentEvaluationSuites.ts` (deterministic / live-gated / scientific slots) | Offline harness · `labelledRows=0` · `smeSlotsFilled=0` · live `HSI_LIVE_INTEGRATION_EVAL` gated | **Blocked** (science) / eng **Partial** (PR 8 scaffold) | R2 tests; N3 status; `test/independentEvaluationSuites.test.ts`; [`BACKEND_SCIENTIFIC_INTELLIGENCE_LIMITATIONS_REPORT.md`](./BACKEND_SCIENTIFIC_INTELLIGENCE_LIMITATIONS_REPORT.md) | Local | Do not invent SME labels or fake live success | Human #4 / #5 |
 | Evidence + experiment ledgers | `src/evidence/evidenceLedger.ts` · `experimentLedger.ts` · migrations 016/017 · Neon stores | Ledger write gate → red-wave | **Partial** | Ledger tests; Audit #6 | Staging Unknown | Continuous re-verify later | Write gate |
 
 ### 3.6 DB migrations (substrate)
@@ -209,7 +209,7 @@ Draft findings may surface **only** when explicitly labelled draft / candidate /
 | **5** | Bounded agent execution with durable traces (plan → retrieve → mechanism → oppose → gaps → hypotheses → brief) wiring orchestrator + PR2–4 | Cancel/retry/idempotency; untrusted text; brief honesty; no efficacy/eligibility inference |
 | **6** | Opposing-evidence search + gap assessment taxonomy (coverage ≠ novelty; expert review requires scope/date; semantic support required) | Incomplete coverage ≠ verified novelty; provider fail ≠ no evidence; no Gate C auto-approve |
 | **7** | Translational O-04 + research-brief product bind + release-aware UI/API surfaces | Fail-closed `assessReleaseClaim`; compose PR 4–6 libraries |
-| **8** | Evaluation deepening (deterministic regression only; still no invented SME gold) | Scientific acceptance remains BLOCKED until humans |
+| **8** | Independent evaluation (deterministic regression · gated live walkthrough hooks · scientific SME slots) + limitations report | Three suites stay separate; no invented SME gold; live gated; scientific acceptance BLOCKED until humans |
 
 Aksh / ISI remain optional side wires — never prerequisites for PRs 2–8.
 
@@ -265,7 +265,8 @@ Acceptance (engineering, not science):
 | **Partial** | Living-evidence (pinned); governed graph read; agent orchestrator + bounded durable traces; grounded brief; ledgers; discovery search; workbench journey |
 | **Fixture-only** | Research workspace test fixture; R1/R3 synthetic honesty paths; offline living-evidence replay |
 | **Blocked** | Passage rights (#2); SME gold (#4); live researcher journey completion (#5); scientific acceptance; MoU/partner locks |
-| **Missing** | Eval suite deepening (PR 8); live authenticated journey completion |
+| **Missing** | Live authenticated journey completion (#5) |
+| **Partial (PR 8)** | Independent evaluation suites scaffold (deterministic CI contracts · live gated-not-run · empty SME scorecard) — see limitations report; not scientific validity |
 | **Partial (new)** | Dynamic candidate persist + identity links (PR 3); contextual candidates + release-aware gates (PR 4); bounded agent durable traces (PR 5); opposing-evidence search + gap taxonomy (PR 6); O-04 translational attach + research-brief / release-aware product bind (PR 7) — not production-ready |
 
 ## 8. Verify (Phase 1)
