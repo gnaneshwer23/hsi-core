@@ -15,18 +15,18 @@
     "N1-C-02": {
       "ok": true,
       "httpStatus": 200,
-      "doi": "10.1038/nature21492",
+      "doi": "10.1038/ni.3713",
       "fixture": "research/domain-graph/n1/fixtures/n1_c_02.europepmc.json",
       "hitCount": 1,
-      "firstPmid": "28150762"
+      "firstPmid": "28346408"
     },
     "N1-C-03": {
       "ok": true,
       "httpStatus": 200,
-      "doi": "10.1038/nature16961",
+      "doi": "10.1038/nature18646",
       "fixture": "research/domain-graph/n1/fixtures/n1_c_03.europepmc.json",
       "hitCount": 1,
-      "firstPmid": "26819042"
+      "firstPmid": "27409811"
     },
     "N1-C-04": {
       "ok": true,

@@ -2,7 +2,7 @@
 
 **Phase:** N1 — Verify and ingest sources (gut–immune–T2D bibliographic candidates)  
 **Plan:** [`docs/strategy/HSI_NEXT_BUILD_PHASES_2026-11-06.md`](../strategy/HSI_NEXT_BUILD_PHASES_2026-11-06.md)  
-**Date:** 7 November 2026
+**Date:** 8 November 2026 (DOI identity correction)
 
 This is an engineering status receipt. It is **not** scientific approval, claim entailment, Gate C clearance or a rights licence.
 
@@ -11,36 +11,37 @@ This is an engineering status receipt. It is **not** scientific approval, claim 
 | Gate | Status | Notes |
 | --- | --- | --- |
 | Offline adapter + queue + identity fail-closed tests | **CLEARED** | Reproducible via fixtures under `research/domain-graph/n1/`. |
-| Live Europe PMC metadata reachability (this environment) | **CLEARED (metadata only)** | Probe returned HTTP 200 for DOI search; previously documented proxy HTTP 403 is no longer reproduced here. |
+| Live Europe PMC metadata reachability (this environment) | **CLEARED (metadata only)** | Live probe: 12/12 `metadata_matched_unreviewed`; `liveAcceptance=cleared_for_metadata_only`. |
 | Exact passage / full-text reuse rights | **BLOCKED** | No permitted-use basis recorded; receipts keep `passageTextImported=false` and `rightsStatus=unverified_metadata_only`. |
-| DOI↔title identity for all 12 expansion candidates | **BLOCKED (2 mismatches)** | `N1-C-02` and `N1-C-03` request titles that conflict with Crossref/Europe PMC titles for the stored DOIs. Failed identity ≠ verified source. |
+| DOI↔title identity for all 12 expansion candidates | **CLEARED** | Human-corrected 2026-11-08: `N1-C-02` → `10.1038/ni.3713`, `N1-C-03` → `10.1038/nature18646` (Crossref + Europe PMC title match). Offline + live: 0 identity mismatches. |
 | Claim entailment / graph publication / Gate C | **BLOCKED** | Explicitly out of scope for the import adapter. |
-| Live N1 *scientific* acceptance | **BLOCKED** | Metadata reachability does not clear rights, mismatches or review. |
+| Live N1 *scientific* acceptance | **BLOCKED** | Metadata identity clearance does not clear rights or review. |
 
 ## Already present before this increment
 
 - 12 DOI bibliographic candidates in `research/domain-graph/expansion.v1.json` with `identityStatus=bibliographic_candidate_not_retrieved`.
-- Domain graph snapshot (153 concepts / 131 relationships / 75 sources) and inspector warnings for unreverified candidates.
+- Domain graph snapshot and inspector warnings for unreverified candidates.
 - SSc-scoped Europe PMC helper (`src/evidence/europePmcSscDiscovery.ts`) — not reused as authority for this general biomedical queue.
 
-## Delivered in this increment
+## Delivered
 
 - Queue materialisation: `research/domain-graph/n1/candidates.v1.json` + `src/evidence/n1CandidateQueue.ts`
 - General bibliographic adapter: `src/evidence/europePmcBibliographicLookup.ts`
 - Identity / receipt pipeline: `src/evidence/n1SourceVerification.ts`
 - Offline fixtures: `research/domain-graph/n1/fixtures/*.europepmc.json` (captured provider JSON; not invented paper text)
 - Offline receipt: `research/domain-graph/n1/receipts/import.offline.receipt.json`
+- Live receipt: `research/domain-graph/n1/receipts/import.live.receipt.json`
 - Runner: `bun run n1:verify` (fixtures) · `bun run n1:verify:live` (provider probe) · `bun run n1:check`
 - Tests: `test/n1SourceVerification.test.ts`
 
-## Identity mismatches (do not auto-correct)
+## Human DOI correction (2026-11-08)
 
-| Queue ID | Stored DOI | Requested title (expansion) | Provider title for that DOI |
-| --- | --- | --- | --- |
-| N1-C-02 | `10.1038/nature21492` | Gut microbial metabolites limit… type 1 diabetes | Medicine: The final frontier in cancer diagnosis |
-| N1-C-03 | `10.1038/nature16961` | Human gut microbes impact host serum metabolome… | Mastering the game of Go with deep neural networks and tree search |
+| Queue ID | Previous (wrong) DOI | Corrected DOI | Requested title | Provider title (verified) |
+| --- | --- | --- | --- | --- |
+| N1-C-02 | `10.1038/nature21492` (cancer diagnosis note) | `10.1038/ni.3713` | Gut microbial metabolites limit… type 1 diabetes | Same (Nature Immunology; PMID 28346408) |
+| N1-C-03 | `10.1038/nature16961` (AlphaGo paper) | `10.1038/nature18646` | Human gut microbes impact host serum metabolome… | Same (Nature; PMID 27409811) |
 
-Title search (informational only; **not** applied to the graph) suggests different DOIs exist for the requested papers (`10.1038/ni.3713`, `10.1038/nature18646`). Correcting expansion DOIs requires an explicit human edit and a new domain-graph rebuild — N1 must not silently rewrite source identity.
+Verification: Crossref works API + Europe PMC DOI search (live). Expansion sources + claim `sourceId`s updated; domain-graph rebuilt; N1 fixtures/receipts regenerated; N3 default identity-block set cleared; N3/N4 scaffolds regenerated. **No** passage import, rights clearance, claim entailment, Gate C, or scientific approval.
 
 ## Honesty constraints retained
 

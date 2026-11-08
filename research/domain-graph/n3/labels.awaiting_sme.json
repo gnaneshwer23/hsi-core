@@ -1,6 +1,6 @@
 {
   "schemaVersion": "hsi-n3-scientific-labels-1",
-  "kitHash": "2d9c5c68abf6bebc9757466e051bd888b983486fc7fd31f0ca74fa4e83054b3b",
+  "kitHash": "a6bdcbce4f135e20bf493c204363db6a91fa10c051999e53a355ec733e43087a",
   "guidelineVersion": "hsi-n3-gut-immune-t2d-guideline-1",
   "status": "awaiting_sme",
   "fabricatedLabelsPermitted": false,
@@ -31,7 +31,7 @@
     },
     {
       "itemId": "N3-N1-C-02-support-assessment",
-      "itemHash": "57f17c2c3b89eba9ed9890aab4f21ff6e1e86ae9681f6694037ca27f1ff39720",
+      "itemHash": "4e2abb0493df1b19d11d475094edb6c0c9b453659355963ddae99e2615285eec",
       "expectedOutcome": null,
       "allowedClaimIds": [],
       "requiredClaimIds": [],
@@ -43,7 +43,7 @@
     },
     {
       "itemId": "N3-N1-C-02-context-sufficiency",
-      "itemHash": "36feaf061e9522d8f069272c052e103bf6a5c6f1a0b6b7509b3d2fbbe81412e8",
+      "itemHash": "edcf75d2386d2ae7446fa5b258c0d2a3b0a7654a5f6ab45600ada7d8cd891c36",
       "expectedOutcome": null,
       "allowedClaimIds": [],
       "requiredClaimIds": [],
@@ -55,7 +55,7 @@
     },
     {
       "itemId": "N3-N1-C-03-support-assessment",
-      "itemHash": "bafa14b7fae1cf609e261ec45f7728e34a92182fe2b0d8686ae63a4e9e95917e",
+      "itemHash": "33659f4e5f53e66ab7243b334bea182e7006aefd1b31aae5a2e2c5fd98d115a1",
       "expectedOutcome": null,
       "allowedClaimIds": [],
       "requiredClaimIds": [],
@@ -67,7 +67,7 @@
     },
     {
       "itemId": "N3-N1-C-03-context-sufficiency",
-      "itemHash": "93a5661edc3fef6481a4ca3f800e028107ec6a27dbd22da928df9108c1683102",
+      "itemHash": "61b3a3092c13c145672d6871acb6ef0e947b82ad7f7da0a6dd614cf6bf1475a5",
       "expectedOutcome": null,
       "allowedClaimIds": [],
       "requiredClaimIds": [],

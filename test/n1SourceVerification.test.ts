@@ -56,7 +56,7 @@ describe("N1 identity checks", () => {
     ).toBeLessThan(0.3);
   });
 
-  it("fails closed when DOI metadata title conflicts with the requested candidate title", () => {
+  it("matches corrected N1-C-02 / N1-C-03 DOIs and still fails closed on conflicting titles", () => {
     const fixtures = Object.fromEntries(queue.candidates.map((c) => [c.queueId, fixture(c.queueId)]));
     const receipt = verifyN1CandidatesFromFixtures({
       queue,
@@ -71,12 +71,18 @@ describe("N1 identity checks", () => {
     expect(receipt.results.every((r) => r.claimEntailmentAssessed === false)).toBe(true);
 
     const mismatches = receipt.results.filter((r) => r.outcome === "identity_mismatch");
-    expect(mismatches.map((r) => r.queueId).sort()).toEqual(["N1-C-02", "N1-C-03"]);
-    expect(mismatches.every((r) => r.matched?.doi === r.requestedDoi)).toBe(true);
+    expect(mismatches).toEqual([]);
+
+    const byId = Object.fromEntries(receipt.results.map((r) => [r.queueId, r]));
+    expect(byId["N1-C-02"]?.requestedDoi).toBe("10.1038/ni.3713");
+    expect(byId["N1-C-03"]?.requestedDoi).toBe("10.1038/nature18646");
+    expect(byId["N1-C-02"]?.outcome).toBe("metadata_matched_unreviewed");
+    expect(byId["N1-C-03"]?.outcome).toBe("metadata_matched_unreviewed");
 
     const matched = receipt.results.filter((r) => r.outcome === "metadata_matched_unreviewed");
-    expect(matched.length).toBe(10);
+    expect(matched.length).toBe(12);
     expect(matched.every((r) => r.rightsStatus === "unverified_metadata_only")).toBe(true);
+    // Offline fixture mode still blocks live scientific acceptance (rights uncleared).
     expect(receipt.liveAcceptance).toBe("blocked");
   });
 

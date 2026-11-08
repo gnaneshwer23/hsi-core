@@ -243,7 +243,7 @@ function trackForCandidate(candidate: N1Candidate): DiseaseTrack {
 /** One study family per N1 candidate; identity-mismatched DOIs stay excluded until human correction. */
 export function studyFamiliesFromN1Candidates(
   candidates: N1Candidate[],
-  identityBlockedQueueIds: ReadonlySet<string> = new Set(["N1-C-02", "N1-C-03"]),
+  identityBlockedQueueIds: ReadonlySet<string> = new Set(),
 ): StudyFamily[] {
   return candidates.map((c) => ({
     familyId: `SF-${c.expansionKey}`,
@@ -266,7 +266,7 @@ export function buildCalibrationItems(input: {
   identityBlockedQueueIds?: ReadonlySet<string>;
   ledgerRecordByQueueId?: ReadonlyMap<string, string>;
 }): BenchmarkItem[] {
-  const blocked = input.identityBlockedQueueIds ?? new Set(["N1-C-02", "N1-C-03"]);
+  const blocked = input.identityBlockedQueueIds ?? new Set<string>();
   const ledger = input.ledgerRecordByQueueId ?? new Map<string, string>();
   const tasks: BenchmarkTask[] = [
     "support_assessment",
@@ -738,7 +738,7 @@ export function buildScientificBenchmarkKit(input: {
     "No held_out_frozen partition has been frozen with human labels.",
     "Exact passages and rights clearance remain N1 residuals; items stay metadata-scaffolds.",
     excludedCount > 0
-      ? `${excludedCount} items excluded due to N1 DOI↔title identity mismatches (N1-C-02, N1-C-03).`
+      ? `${excludedCount} items excluded due to N1 DOI↔title identity mismatches.`
       : null,
     "Pilot scale (100–200) requires reviewer agreement and additional cleared sources — not fabricated rows.",
   ].filter((b): b is string => b !== null);

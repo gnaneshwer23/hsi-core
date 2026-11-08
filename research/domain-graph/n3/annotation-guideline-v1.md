@@ -36,7 +36,7 @@ Human donor material in a mouse model must not be labelled as human participant 
 
 ## Study-family rule
 
-Related preprints, publications, protocol amendments and repeated cohorts stay in the **same** study family and therefore the **same** partition. Do not treat them as independent studies for held-out scoring. Identity-mismatched DOI↔title candidates (currently N1-C-02, N1-C-03) stay in `excluded_identity_blocked` until a human corrects expansion identity.
+Related preprints, publications, protocol amendments and repeated cohorts stay in the **same** study family and therefore the **same** partition. Do not treat them as independent studies for held-out scoring. Identity-mismatched DOI↔title candidates stay in `excluded_identity_blocked` until a human corrects expansion identity (N1-C-02 / N1-C-03 were human-corrected 2026-11-08).
 
 ## Calibration vs freeze
 

@@ -17,10 +17,10 @@
       "limitations": "Mouse effects do not establish efficacy, dosing or durability in people."
     },
     {
-      "id": "doi:10.1038/nature21492",
-      "doi": "10.1038/nature21492",
+      "id": "doi:10.1038/ni.3713",
+      "doi": "10.1038/ni.3713",
       "title": "Gut microbial metabolites limit the frequency of autoimmune T cells and protect against type 1 diabetes",
-      "url": "https://doi.org/10.1038/nature21492",
+      "url": "https://doi.org/10.1038/ni.3713",
       "identityStatus": "bibliographic_candidate_not_retrieved",
       "rights": "unverified",
       "retrievedAt": null,
@@ -32,10 +32,10 @@
       "limitations": "Protection in a mouse model is not prevention or treatment of human type 1 diabetes."
     },
     {
-      "id": "doi:10.1038/nature16961",
-      "doi": "10.1038/nature16961",
+      "id": "doi:10.1038/nature18646",
+      "doi": "10.1038/nature18646",
       "title": "Human gut microbes impact host serum metabolome and insulin sensitivity",
-      "url": "https://doi.org/10.1038/nature16961",
+      "url": "https://doi.org/10.1038/nature18646",
       "identityStatus": "bibliographic_candidate_not_retrieved",
       "rights": "unverified",
       "retrievedAt": null,
@@ -212,7 +212,7 @@
     },
     {
       "id": "DIAB-002",
-      "sourceId": "doi:10.1038/nature21492",
+      "sourceId": "doi:10.1038/ni.3713",
       "subject": "Microbial acetate and butyrate",
       "predicate": "investigated_effect_on",
       "object": "Autoimmune T-cell responses",
@@ -238,7 +238,7 @@
     },
     {
       "id": "DIAB-003",
-      "sourceId": "doi:10.1038/nature21492",
+      "sourceId": "doi:10.1038/ni.3713",
       "subject": "Microbial acetate and butyrate",
       "predicate": "investigated_effect_on",
       "object": "Type 1 diabetes",
@@ -265,7 +265,7 @@
     },
     {
       "id": "DIAB-004",
-      "sourceId": "doi:10.1038/nature16961",
+      "sourceId": "doi:10.1038/nature18646",
       "subject": "Microbial BCAA biosynthesis",
       "predicate": "associated_with",
       "object": "Insulin resistance",

@@ -28,11 +28,11 @@ function freshKit(): ScientificBenchmarkKit {
 }
 
 describe("N3 scientific benchmark", () => {
-  test("builds a 20-item calibration scaffold without inventing labels", () => {
+  test("builds a 24-item calibration scaffold without inventing labels", () => {
     const kit = freshKit();
     expect(kit.fabricatedLabelsPermitted).toBe(false);
     expect(kit.scientificApproval).toBe(false);
-    expect(kit.scalePlan.currentCalibrationCount).toBe(20);
+    expect(kit.scalePlan.currentCalibrationCount).toBe(24);
     expect(kit.scalePlan.labelledCount).toBe(0);
     expect(kit.gates.engineeringHarness).toBe("CLEARED");
     expect(kit.gates.calibrationScaffold).toBe("CLEARED");
@@ -40,7 +40,7 @@ describe("N3 scientific benchmark", () => {
     expect(kit.gates.humanLabelFreeze).toBe("BLOCKED");
     expect(kit.gates.scientificAcceptance).toBe("BLOCKED");
     expect(kit.items.every((i) => i.expectedOutcome === null && i.annotatorId === null)).toBe(true);
-    expect(kit.items.filter((i) => i.partition === "excluded_identity_blocked")).toHaveLength(4);
+    expect(kit.items.filter((i) => i.partition === "excluded_identity_blocked")).toHaveLength(0);
     expect(kit.items.find((i) => i.n1QueueId === "N1-C-01")?.ledgerRecordId).toBe("N2-R-001");
   });
 
@@ -65,7 +65,7 @@ describe("N3 scientific benchmark", () => {
     expect(receipt.outcomeAccuracy).toBeNull();
     expect(receipt.modelActivationAllowed).toBe(false);
     expect(receipt.scientificValidityEstablished).toBe(false);
-    expect(receipt.calibrationItems).toBe(20);
+    expect(receipt.calibrationItems).toBe(24);
   });
 
   test("study-family leakage across scored partitions fails closed", () => {
@@ -95,7 +95,7 @@ describe("N3 scientific benchmark", () => {
     const labelsPath = resolve(root, "research/domain-graph/n3/labels.awaiting_sme.json");
     const kit = parseScientificBenchmarkKit(JSON.parse(readFileSync(kitPath, "utf8")));
     const labels = parseBenchmarkLabelPacket(JSON.parse(readFileSync(labelsPath, "utf8")));
-    expect(kit.scalePlan.currentCalibrationCount).toBe(20);
+    expect(kit.scalePlan.currentCalibrationCount).toBe(24);
     expect(labels.status).toBe("awaiting_sme");
     expect(evaluateBenchmarkKit(kit, labels, kit.generatedAt).humanLabelFreeze).toBe("BLOCKED");
   });

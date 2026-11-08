@@ -100,7 +100,7 @@ describe("N4 grounded brief baseline", () => {
     expect(brief.markdownBrief).toContain("groundedClaimAccepted: false");
   });
 
-  test("identity-mismatched N1 hits are blocked, not entailed", () => {
+  test("corrected N1-C-02 / N1-C-03 hits are no longer identity-blocked", () => {
     const corpus = loadPrereqCorpus();
     const hits = retrieveGroundedHits({
       question: "Gut microbial metabolites autoimmune T cells type 1 diabetes",
@@ -108,9 +108,9 @@ describe("N4 grounded brief baseline", () => {
       diseaseTrack: "t2d_gut_immune",
       speciesScope: "any",
     });
-    const blocked = hits.filter((h) => h.n1QueueId === "N1-C-02" || h.n1QueueId === "N1-C-03");
-    expect(blocked.length).toBeGreaterThan(0);
-    expect(blocked.every((h) => h.supportAssessment === "identity_blocked")).toBe(true);
+    const corrected = hits.filter((h) => h.n1QueueId === "N1-C-02" || h.n1QueueId === "N1-C-03");
+    expect(corrected.length).toBeGreaterThan(0);
+    expect(corrected.every((h) => h.supportAssessment !== "identity_blocked")).toBe(true);
   });
 
   test("instruction-like questions abstain with empty selections", () => {

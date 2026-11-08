@@ -22,24 +22,24 @@
       "label": "Gut microbial metabolites limit the frequency of autoimmune T cells and protect against type 1 diabetes",
       "members": [
         {
-          "sourceId": "doi:10.1038/nature21492",
+          "sourceId": "doi:10.1038/ni.3713",
           "n1QueueId": "N1-C-02",
-          "role": "fixture_only"
+          "role": "primary"
         }
       ],
-      "notes": "N1 DOI↔title identity mismatch — family excluded from scored partitions until human DOI correction."
+      "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
     },
     {
       "familyId": "SF-pedersen2016",
       "label": "Human gut microbes impact host serum metabolome and insulin sensitivity",
       "members": [
         {
-          "sourceId": "doi:10.1038/nature16961",
+          "sourceId": "doi:10.1038/nature18646",
           "n1QueueId": "N1-C-03",
-          "role": "fixture_only"
+          "role": "primary"
         }
       ],
-      "notes": "N1 DOI↔title identity mismatch — family excluded from scored partitions until human DOI correction."
+      "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
     },
     {
       "familyId": "SF-qin2012",
@@ -157,6 +157,8 @@
       "SF-gao2009",
       "SF-hotamisligil1993",
       "SF-koh2018",
+      "SF-marino2017",
+      "SF-pedersen2016",
       "SF-qin2012",
       "SF-vandanmagsar2011",
       "SF-vatanen2018",
@@ -165,10 +167,7 @@
     ],
     "pilot_candidate": [],
     "held_out_frozen": [],
-    "excluded_identity_blocked": [
-      "SF-marino2017",
-      "SF-pedersen2016"
-    ]
+    "excluded_identity_blocked": []
   },
   "rules": {
     "relatedPreprintsStayTogether": true,

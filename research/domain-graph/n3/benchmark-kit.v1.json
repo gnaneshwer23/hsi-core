@@ -66,7 +66,7 @@
     {
       "itemId": "N3-N1-C-02-support-assessment",
       "task": "support_assessment",
-      "partition": "excluded_identity_blocked",
+      "partition": "calibration",
       "studyFamilyId": "SF-marino2017",
       "diseaseTrack": "t1d_comparison",
       "category": "supported",
@@ -74,7 +74,7 @@
       "assertionPrompt": "Gut microbial metabolites limit the frequency of autoimmune T cells and protect against type 1 diabetes",
       "n1QueueId": "N1-C-02",
       "ledgerRecordId": null,
-      "sourceId": "doi:10.1038/nature21492",
+      "sourceId": "doi:10.1038/ni.3713",
       "modelAnnotation": "mouse",
       "expectedOutcome": null,
       "allowedClaimIds": [],
@@ -93,7 +93,7 @@
     {
       "itemId": "N3-N1-C-02-context-sufficiency",
       "task": "context_sufficiency",
-      "partition": "excluded_identity_blocked",
+      "partition": "calibration",
       "studyFamilyId": "SF-marino2017",
       "diseaseTrack": "t1d_comparison",
       "category": "insufficient_evidence",
@@ -101,7 +101,7 @@
       "assertionPrompt": "Gut microbial metabolites limit the frequency of autoimmune T cells and protect against type 1 diabetes",
       "n1QueueId": "N1-C-02",
       "ledgerRecordId": null,
-      "sourceId": "doi:10.1038/nature21492",
+      "sourceId": "doi:10.1038/ni.3713",
       "modelAnnotation": "mouse",
       "expectedOutcome": null,
       "allowedClaimIds": [],
@@ -120,7 +120,7 @@
     {
       "itemId": "N3-N1-C-03-support-assessment",
       "task": "support_assessment",
-      "partition": "excluded_identity_blocked",
+      "partition": "calibration",
       "studyFamilyId": "SF-pedersen2016",
       "diseaseTrack": "t2d_gut_immune",
       "category": "supported",
@@ -128,7 +128,7 @@
       "assertionPrompt": "Human gut microbes impact host serum metabolome and insulin sensitivity",
       "n1QueueId": "N1-C-03",
       "ledgerRecordId": null,
-      "sourceId": "doi:10.1038/nature16961",
+      "sourceId": "doi:10.1038/nature18646",
       "modelAnnotation": "mixed",
       "expectedOutcome": null,
       "allowedClaimIds": [],
@@ -147,7 +147,7 @@
     {
       "itemId": "N3-N1-C-03-context-sufficiency",
       "task": "context_sufficiency",
-      "partition": "excluded_identity_blocked",
+      "partition": "calibration",
       "studyFamilyId": "SF-pedersen2016",
       "diseaseTrack": "t2d_gut_immune",
       "category": "insufficient_evidence",
@@ -155,7 +155,7 @@
       "assertionPrompt": "Human gut microbes impact host serum metabolome and insulin sensitivity",
       "n1QueueId": "N1-C-03",
       "ledgerRecordId": null,
-      "sourceId": "doi:10.1038/nature16961",
+      "sourceId": "doi:10.1038/nature18646",
       "modelAnnotation": "mixed",
       "expectedOutcome": null,
       "allowedClaimIds": [],
@@ -676,24 +676,24 @@
       "label": "Gut microbial metabolites limit the frequency of autoimmune T cells and protect against type 1 diabetes",
       "members": [
         {
-          "sourceId": "doi:10.1038/nature21492",
+          "sourceId": "doi:10.1038/ni.3713",
           "n1QueueId": "N1-C-02",
-          "role": "fixture_only"
+          "role": "primary"
         }
       ],
-      "notes": "N1 DOI↔title identity mismatch — family excluded from scored partitions until human DOI correction."
+      "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
     },
     {
       "familyId": "SF-pedersen2016",
       "label": "Human gut microbes impact host serum metabolome and insulin sensitivity",
       "members": [
         {
-          "sourceId": "doi:10.1038/nature16961",
+          "sourceId": "doi:10.1038/nature18646",
           "n1QueueId": "N1-C-03",
-          "role": "fixture_only"
+          "role": "primary"
         }
       ],
-      "notes": "N1 DOI↔title identity mismatch — family excluded from scored partitions until human DOI correction."
+      "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
     },
     {
       "familyId": "SF-qin2012",
@@ -828,24 +828,24 @@
         "label": "Gut microbial metabolites limit the frequency of autoimmune T cells and protect against type 1 diabetes",
         "members": [
           {
-            "sourceId": "doi:10.1038/nature21492",
+            "sourceId": "doi:10.1038/ni.3713",
             "n1QueueId": "N1-C-02",
-            "role": "fixture_only"
+            "role": "primary"
           }
         ],
-        "notes": "N1 DOI↔title identity mismatch — family excluded from scored partitions until human DOI correction."
+        "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
       },
       {
         "familyId": "SF-pedersen2016",
         "label": "Human gut microbes impact host serum metabolome and insulin sensitivity",
         "members": [
           {
-            "sourceId": "doi:10.1038/nature16961",
+            "sourceId": "doi:10.1038/nature18646",
             "n1QueueId": "N1-C-03",
-            "role": "fixture_only"
+            "role": "primary"
           }
         ],
-        "notes": "N1 DOI↔title identity mismatch — family excluded from scored partitions until human DOI correction."
+        "notes": "Single-source family scaffold; related preprints/amendments must be added before freeze, not after."
       },
       {
         "familyId": "SF-qin2012",
@@ -963,6 +963,8 @@
         "SF-gao2009",
         "SF-hotamisligil1993",
         "SF-koh2018",
+        "SF-marino2017",
+        "SF-pedersen2016",
         "SF-qin2012",
         "SF-vandanmagsar2011",
         "SF-vatanen2018",
@@ -971,10 +973,7 @@
       ],
       "pilot_candidate": [],
       "held_out_frozen": [],
-      "excluded_identity_blocked": [
-        "SF-marino2017",
-        "SF-pedersen2016"
-      ]
+      "excluded_identity_blocked": []
     },
     "rules": {
       "relatedPreprintsStayTogether": true,
@@ -1010,7 +1009,7 @@
       "max": 1000,
       "gatedOn": "Reviewer agreement, rights-cleared passages and resources after pilot freeze"
     },
-    "currentCalibrationCount": 20,
+    "currentCalibrationCount": 24,
     "currentPilotCandidateCount": 0,
     "currentHeldOutFrozenCount": 0,
     "labelledCount": 0
@@ -1026,7 +1025,6 @@
     "Human reviewers and adjudication are not supplied; label freeze remains BLOCKED.",
     "No held_out_frozen partition has been frozen with human labels.",
     "Exact passages and rights clearance remain N1 residuals; items stay metadata-scaffolds.",
-    "4 items excluded due to N1 DOI↔title identity mismatches (N1-C-02, N1-C-03).",
     "Pilot scale (100–200) requires reviewer agreement and additional cleared sources — not fabricated rows."
   ],
   "notes": [

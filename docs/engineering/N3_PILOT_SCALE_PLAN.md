@@ -18,8 +18,8 @@ This is an **engineering + process plan**. It does not invent 200 labelled items
 
 | Metric | Value |
 | --- | --- |
-| Calibration items (unlabelled) | 20 (10 identity-cleared N1 families × 2 tasks) |
-| Excluded (N1 identity mismatch) | 4 items (N1-C-02, N1-C-03 × 2 tasks) |
+| Calibration items (unlabelled) | 24 (12 identity-cleared N1 families × 2 tasks; C-02/C-03 corrected 2026-11-08) |
+| Excluded (N1 identity mismatch) | 0 |
 | Pilot candidates minted | 0 |
 | Held-out frozen | 0 |
 | Human labels | 0 → `humanLabelFreeze: BLOCKED` |
@@ -27,7 +27,7 @@ This is an **engineering + process plan**. It does not invent 200 labelled items
 ## Path from 20 → ~150 pilot (honest)
 
 1. **Keep calibration at 20–50.** Do not pad with fabricated rows. Clarifications go into the guideline changelog; frozen evaluation rows are not silently rewritten.
-2. **Clear N1 residuals** that block item quality: DOI↔title mismatches (C-02/C-03), passage rights, and any further bibliographic candidates added after expansion rebuilds.
+2. **Clear N1 residuals** that block item quality: passage rights (DOI↔title C-02/C-03 corrected 2026-11-08), and any further bibliographic candidates added after expansion rebuilds.
 3. **Mint pilot_candidate rows** only from rights-eligible sources with study-family assignment **before** labelling. Prefer ~8–12 items per cleared family across the five N3 tasks / Phase E categories rather than inventing free-text papers.
 4. **Split by study family**, not by item id: related preprint/paper/cohort amendments stay together. Development/calibration vs `held_out_frozen` must not share families.
 5. **Independent A/B labels + adjudication** on the pilot set. Record disagreement and insufficient context. Incomplete labels keep evaluation `BLOCKED`.

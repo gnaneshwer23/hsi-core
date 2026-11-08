@@ -11,19 +11,19 @@ This is an engineering status receipt. It is **not** scientific approval, claim 
 | Prerequisite | Status | Notes |
 | --- | --- | --- |
 | N1 offline queue + adapters + identity fail-closed | **Present (local uncommitted)** | [`N1_SOURCE_VERIFICATION_STATUS.md`](./N1_SOURCE_VERIFICATION_STATUS.md) |
-| N1 live scientific acceptance | **BLOCKED** | Rights uncleared; DOI↔title mismatches on N1-C-02 / N1-C-03 |
+| N1 live scientific acceptance | **BLOCKED** | Rights uncleared (DOI↔title identity for C-02/C-03 human-corrected 2026-11-08) |
 | N2 assertion kinds + offline ledger fixture | **Present (local uncommitted)** | [`N2_EVIDENCE_LEDGER_STATUS.md`](./N2_EVIDENCE_LEDGER_STATUS.md) |
 | N2 scientific entailment / Neon write path | **BLOCKED / residual** | Enough for N3 to link optional `ledgerRecordId` pointers |
 | N3 engineering may proceed | **Yes** | Plan: engineering can precede people; scientific acceptance waits on reviewers |
 
-N3 does **not** clobber N1/N2 artifacts. Identity-blocked candidates stay excluded from scored partitions.
+N3 does **not** clobber N1/N2 artifacts. Identity-blocked candidates stay excluded from scored partitions (none currently after N1 DOI correction).
 
 ## Verdict
 
 | Gate | Status | Notes |
 | --- | --- | --- |
 | Annotation guideline + empty label packet | **CLEARED (engineering)** | `research/domain-graph/n3/annotation-guideline-v1.md` |
-| Calibration scaffold (~20–50) | **CLEARED (engineering)** | 20 unlabelled calibration items |
+| Calibration scaffold (~20–50) | **CLEARED (engineering)** | 24 unlabelled calibration items (12 N1 families × 2 tasks after DOI correction) |
 | Study-family split manifest | **CLEARED (engineering)** | Fail-closed leakage checks; held-out empty |
 | Replayable evaluation runner | **CLEARED (engineering)** | Incomplete labels → explicit `humanLabelFreeze: BLOCKED` |
 | Human label freeze | **BLOCKED** | Zero expert labels; none invented |

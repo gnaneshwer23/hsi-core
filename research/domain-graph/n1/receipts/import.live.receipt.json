@@ -3,7 +3,7 @@
   "phase": "N1",
   "programme": "gut_immune_t2d",
   "mode": "live_provider",
-  "generatedAt": "2026-11-07T21:17:16.779Z",
+  "generatedAt": "2026-11-08T06:03:24.758Z",
   "providerCapability": {
     "provider": "europe_pmc",
     "probed": true,
@@ -25,8 +25,8 @@
       "outcome": "metadata_matched_unreviewed",
       "provider": "europe_pmc",
       "query": "DOI:\"10.2337/db08-1637\"",
-      "retrievedAt": "2026-11-07T21:17:16.779Z",
-      "responseIdentity": "2e46a3750bd7ee439f957160c25cd4fd443e0e2eaece8614b42821605170b8df",
+      "retrievedAt": "2026-11-08T06:03:24.760Z",
+      "responseIdentity": "07b79f81690bdf255760e1095bcd57df9a6b7904741617d05e63ff28e51959d9",
       "matched": {
         "pmid": "19366864",
         "doi": "10.2337/db08-1637",
@@ -61,33 +61,33 @@
     },
     {
       "queueId": "N1-C-02",
-      "sourceId": "doi:10.1038/nature21492",
-      "requestedDoi": "10.1038/nature21492",
+      "sourceId": "doi:10.1038/ni.3713",
+      "requestedDoi": "10.1038/ni.3713",
       "requestedTitle": "Gut microbial metabolites limit the frequency of autoimmune T cells and protect against type 1 diabetes",
-      "outcome": "identity_mismatch",
+      "outcome": "metadata_matched_unreviewed",
       "provider": "europe_pmc",
-      "query": "DOI:\"10.1038/nature21492\"",
-      "retrievedAt": "2026-11-07T21:17:16.974Z",
-      "responseIdentity": "2808360ed723f24e4d8214d1dbcc4a7bc36576d7fd5384e3002a22ebae919fc4",
+      "query": "DOI:\"10.1038/ni.3713\"",
+      "retrievedAt": "2026-11-08T06:03:25.007Z",
+      "responseIdentity": "c38e03bf78a8f2a3349cf6024d2708956f30a7c8d01e45ba22fe28739485c55a",
       "matched": {
-        "pmid": "28150762",
-        "doi": "10.1038/nature21492",
-        "title": "Medicine: The final frontier in cancer diagnosis.",
-        "url": "https://europepmc.org/article/MED/28150762",
+        "pmid": "28346408",
+        "doi": "10.1038/ni.3713",
+        "title": "Gut microbial metabolites limit the frequency of autoimmune T cells and protect against type 1 diabetes.",
+        "url": "https://europepmc.org/article/MED/28346408",
         "journal": null,
         "publicationYear": 2017,
         "isRetracted": null
       },
-      "titleSimilarity": 0,
+      "titleSimilarity": 1,
       "passageTextImported": false,
       "rightsStatus": "unverified_metadata_only",
       "claimEntailmentAssessed": false,
       "scientificApproval": false,
       "graphPromotable": false,
       "notes": [
-        "Requested editorial title conflicts with bibliographic metadata for this DOI.",
-        "Failed lookups and mismatched identities are not verified sources.",
-        "DOI identity alone cannot substitute for title agreement or claim entailment."
+        "Bibliographic identity matched (DOI + title).",
+        "Exact passage text was not imported; reuse rights remain unverified (rights_restricted_metadata_only).",
+        "Metadata retrieval is not claim entailment or scientific approval."
       ],
       "contextFields": {
         "model": "mouse",
@@ -103,33 +103,33 @@
     },
     {
       "queueId": "N1-C-03",
-      "sourceId": "doi:10.1038/nature16961",
-      "requestedDoi": "10.1038/nature16961",
+      "sourceId": "doi:10.1038/nature18646",
+      "requestedDoi": "10.1038/nature18646",
       "requestedTitle": "Human gut microbes impact host serum metabolome and insulin sensitivity",
-      "outcome": "identity_mismatch",
+      "outcome": "metadata_matched_unreviewed",
       "provider": "europe_pmc",
-      "query": "DOI:\"10.1038/nature16961\"",
-      "retrievedAt": "2026-11-07T21:17:17.016Z",
-      "responseIdentity": "51bcff28effeb34ad44461d0d4d7fd2229c0bf8c1f3aa369cae3e8fc2969289a",
+      "query": "DOI:\"10.1038/nature18646\"",
+      "retrievedAt": "2026-11-08T06:03:25.103Z",
+      "responseIdentity": "5a2d9158b70158fa7f595c5804d5f5201bd8c9e399d2d8777135b94d02ea4248",
       "matched": {
-        "pmid": "26819042",
-        "doi": "10.1038/nature16961",
-        "title": "Mastering the game of Go with deep neural networks and tree search.",
-        "url": "https://europepmc.org/article/MED/26819042",
+        "pmid": "27409811",
+        "doi": "10.1038/nature18646",
+        "title": "Human gut microbes impact host serum metabolome and insulin sensitivity.",
+        "url": "https://europepmc.org/article/MED/27409811",
         "journal": null,
         "publicationYear": 2016,
         "isRetracted": null
       },
-      "titleSimilarity": 0,
+      "titleSimilarity": 1,
       "passageTextImported": false,
       "rightsStatus": "unverified_metadata_only",
       "claimEntailmentAssessed": false,
       "scientificApproval": false,
       "graphPromotable": false,
       "notes": [
-        "Requested editorial title conflicts with bibliographic metadata for this DOI.",
-        "Failed lookups and mismatched identities are not verified sources.",
-        "DOI identity alone cannot substitute for title agreement or claim entailment."
+        "Bibliographic identity matched (DOI + title).",
+        "Exact passage text was not imported; reuse rights remain unverified (rights_restricted_metadata_only).",
+        "Metadata retrieval is not claim entailment or scientific approval."
       ],
       "contextFields": {
         "model": "mixed",
@@ -151,8 +151,8 @@
       "outcome": "metadata_matched_unreviewed",
       "provider": "europe_pmc",
       "query": "DOI:\"10.1038/nature11450\"",
-      "retrievedAt": "2026-11-07T21:17:17.057Z",
-      "responseIdentity": "57d1534cbcb24f8416f5b467ca29782a70241ae5e88b0605661e82fb5acac2ba",
+      "retrievedAt": "2026-11-08T06:03:28.734Z",
+      "responseIdentity": "fc539233e47efdcbbdd090cb5d4012da9dc993dc3ac701aab35cf41b58b01a06",
       "matched": {
         "pmid": "23023125",
         "doi": "10.1038/nature11450",
@@ -193,7 +193,7 @@
       "outcome": "metadata_matched_unreviewed",
       "provider": "europe_pmc",
       "query": "DOI:\"10.1038/nature15766\"",
-      "retrievedAt": "2026-11-07T21:17:17.101Z",
+      "retrievedAt": "2026-11-08T06:03:28.783Z",
       "responseIdentity": "b79c362c5dac8a4ed087199781e2bd0a4ec020631beeefa7f58835e74a9874ef",
       "matched": {
         "pmid": "26633628",
@@ -235,7 +235,7 @@
       "outcome": "metadata_matched_unreviewed",
       "provider": "europe_pmc",
       "query": "DOI:\"10.1126/science.aao5774\"",
-      "retrievedAt": "2026-11-07T21:17:17.152Z",
+      "retrievedAt": "2026-11-08T06:03:31.721Z",
       "responseIdentity": "a5141a67854b6db61c387ed26a6a8f45510cff05196ad226a5d1e04dee189ed3",
       "matched": {
         "pmid": "29590046",
@@ -277,8 +277,8 @@
       "outcome": "metadata_matched_unreviewed",
       "provider": "europe_pmc",
       "query": "DOI:\"10.1016/j.cell.2018.09.055\"",
-      "retrievedAt": "2026-11-07T21:17:17.197Z",
-      "responseIdentity": "c344d2a804fd0c7a7155d3a9154a7aea3b4944134f62f0ec391aedfc73e6a719",
+      "retrievedAt": "2026-11-08T06:03:31.761Z",
+      "responseIdentity": "7054e1c68dc086a93d24e3d9f1533d57e07c66c067a00de521bfd8ad63dba5fb",
       "matched": {
         "pmid": "30401435",
         "doi": "10.1016/j.cell.2018.09.055",
@@ -319,8 +319,8 @@
       "outcome": "metadata_matched_unreviewed",
       "provider": "europe_pmc",
       "query": "DOI:\"10.1172/jci19246\"",
-      "retrievedAt": "2026-11-07T21:17:17.240Z",
-      "responseIdentity": "559ae3a1934413170cadeaff2d3a4c41bf1b5b4bc14ac787d32e925dc6af3cb7",
+      "retrievedAt": "2026-11-08T06:03:31.817Z",
+      "responseIdentity": "917a1def649d9424017edd2795f56424d4a1723cf62204a8aa05c322528b06c7",
       "matched": {
         "pmid": "14679176",
         "doi": "10.1172/jci19246",
@@ -361,7 +361,7 @@
       "outcome": "metadata_matched_unreviewed",
       "provider": "europe_pmc",
       "query": "DOI:\"10.1126/science.7678183\"",
-      "retrievedAt": "2026-11-07T21:17:17.296Z",
+      "retrievedAt": "2026-11-08T06:03:31.866Z",
       "responseIdentity": "1362f8484d4fb5060bba765b9d96a68281ba20e9c1d8e56857ed5de08013a1f9",
       "matched": {
         "pmid": "7678183",
@@ -403,7 +403,7 @@
       "outcome": "metadata_matched_unreviewed",
       "provider": "europe_pmc",
       "query": "DOI:\"10.1038/nm.2279\"",
-      "retrievedAt": "2026-11-07T21:17:17.412Z",
+      "retrievedAt": "2026-11-08T06:03:31.981Z",
       "responseIdentity": "cd27d2d73b66d742464d1729dbb1090f2aaab519599cdce4c54fd56faf5ff593",
       "matched": {
         "pmid": "21217695",
@@ -445,8 +445,8 @@
       "outcome": "metadata_matched_unreviewed",
       "provider": "europe_pmc",
       "query": "DOI:\"10.2337/db06-1491\"",
-      "retrievedAt": "2026-11-07T21:17:17.744Z",
-      "responseIdentity": "cf18697dcddf418d56eafd84e012017ec7b079164cdf288c0cab94e5df611e93",
+      "retrievedAt": "2026-11-08T06:03:32.146Z",
+      "responseIdentity": "63c81e35afff3c87885332e1666d9a646eec798042493d25e9a35adfc1dc0501",
       "matched": {
         "pmid": "17456850",
         "doi": "10.2337/db06-1491",
@@ -487,8 +487,8 @@
       "outcome": "metadata_matched_unreviewed",
       "provider": "europe_pmc",
       "query": "DOI:\"10.1038/s41586-018-0620-2\"",
-      "retrievedAt": "2026-11-07T21:17:17.919Z",
-      "responseIdentity": "2c17b8bf37e41f59cb42f72f9f830af36a0205b8e44de27a59d7afd5498187ac",
+      "retrievedAt": "2026-11-08T06:03:32.188Z",
+      "responseIdentity": "6c5460592de378199a64565c2131e113d0184d5f8b15ba549c00d560b47bbd8e",
       "matched": {
         "pmid": "30356183",
         "doi": "10.1038/s41586-018-0620-2",
@@ -524,13 +524,13 @@
   ],
   "summary": {
     "total": 12,
-    "metadataMatchedUnreviewed": 10,
-    "identityMismatch": 2,
+    "metadataMatchedUnreviewed": 12,
+    "identityMismatch": 0,
     "ambiguous": 0,
     "notFound": 0,
     "lookupFailed": 0,
     "providerUnavailable": 0,
     "rightsRestrictedMetadataOnly": 0
   },
-  "receiptHash": "1bd4a1f75487d9cdba727a9ecc4cf38de76f7961aafbdbb7c3c3446bf5059642"
+  "receiptHash": "1c3de483576269777a49a76948cf30e18760d4fb7c03d2d7b95b6754b8c46720"
 }

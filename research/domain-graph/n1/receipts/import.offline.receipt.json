@@ -61,33 +61,33 @@
     },
     {
       "queueId": "N1-C-02",
-      "sourceId": "doi:10.1038/nature21492",
-      "requestedDoi": "10.1038/nature21492",
+      "sourceId": "doi:10.1038/ni.3713",
+      "requestedDoi": "10.1038/ni.3713",
       "requestedTitle": "Gut microbial metabolites limit the frequency of autoimmune T cells and protect against type 1 diabetes",
-      "outcome": "identity_mismatch",
+      "outcome": "metadata_matched_unreviewed",
       "provider": "europe_pmc",
-      "query": "DOI:\"10.1038/nature21492\"",
+      "query": "DOI:\"10.1038/ni.3713\"",
       "retrievedAt": "2026-11-07T21:20:00.000Z",
-      "responseIdentity": "630844da675d9a3ff762ce8c1a5a8d0b00a41ad4ffb59b171a594b1503b280c5",
+      "responseIdentity": "c38e03bf78a8f2a3349cf6024d2708956f30a7c8d01e45ba22fe28739485c55a",
       "matched": {
-        "pmid": "28150762",
-        "doi": "10.1038/nature21492",
-        "title": "Medicine: The final frontier in cancer diagnosis.",
-        "url": "https://europepmc.org/article/MED/28150762",
+        "pmid": "28346408",
+        "doi": "10.1038/ni.3713",
+        "title": "Gut microbial metabolites limit the frequency of autoimmune T cells and protect against type 1 diabetes.",
+        "url": "https://europepmc.org/article/MED/28346408",
         "journal": null,
         "publicationYear": 2017,
         "isRetracted": null
       },
-      "titleSimilarity": 0,
+      "titleSimilarity": 1,
       "passageTextImported": false,
       "rightsStatus": "unverified_metadata_only",
       "claimEntailmentAssessed": false,
       "scientificApproval": false,
       "graphPromotable": false,
       "notes": [
-        "Requested editorial title conflicts with bibliographic metadata for this DOI.",
-        "Failed lookups and mismatched identities are not verified sources.",
-        "DOI identity alone cannot substitute for title agreement or claim entailment."
+        "Bibliographic identity matched (DOI + title).",
+        "Exact passage text was not imported; reuse rights remain unverified (rights_restricted_metadata_only).",
+        "Metadata retrieval is not claim entailment or scientific approval."
       ],
       "contextFields": {
         "model": "mouse",
@@ -103,33 +103,33 @@
     },
     {
       "queueId": "N1-C-03",
-      "sourceId": "doi:10.1038/nature16961",
-      "requestedDoi": "10.1038/nature16961",
+      "sourceId": "doi:10.1038/nature18646",
+      "requestedDoi": "10.1038/nature18646",
       "requestedTitle": "Human gut microbes impact host serum metabolome and insulin sensitivity",
-      "outcome": "identity_mismatch",
+      "outcome": "metadata_matched_unreviewed",
       "provider": "europe_pmc",
-      "query": "DOI:\"10.1038/nature16961\"",
+      "query": "DOI:\"10.1038/nature18646\"",
       "retrievedAt": "2026-11-07T21:20:00.000Z",
-      "responseIdentity": "dfa82bb5991d353e26c13b303f5db7f9b37f1f2162ad0fe78ac6e9b27ad3d112",
+      "responseIdentity": "5a2d9158b70158fa7f595c5804d5f5201bd8c9e399d2d8777135b94d02ea4248",
       "matched": {
-        "pmid": "26819042",
-        "doi": "10.1038/nature16961",
-        "title": "Mastering the game of Go with deep neural networks and tree search.",
-        "url": "https://europepmc.org/article/MED/26819042",
+        "pmid": "27409811",
+        "doi": "10.1038/nature18646",
+        "title": "Human gut microbes impact host serum metabolome and insulin sensitivity.",
+        "url": "https://europepmc.org/article/MED/27409811",
         "journal": null,
         "publicationYear": 2016,
         "isRetracted": null
       },
-      "titleSimilarity": 0,
+      "titleSimilarity": 1,
       "passageTextImported": false,
       "rightsStatus": "unverified_metadata_only",
       "claimEntailmentAssessed": false,
       "scientificApproval": false,
       "graphPromotable": false,
       "notes": [
-        "Requested editorial title conflicts with bibliographic metadata for this DOI.",
-        "Failed lookups and mismatched identities are not verified sources.",
-        "DOI identity alone cannot substitute for title agreement or claim entailment."
+        "Bibliographic identity matched (DOI + title).",
+        "Exact passage text was not imported; reuse rights remain unverified (rights_restricted_metadata_only).",
+        "Metadata retrieval is not claim entailment or scientific approval."
       ],
       "contextFields": {
         "model": "mixed",
@@ -524,13 +524,13 @@
   ],
   "summary": {
     "total": 12,
-    "metadataMatchedUnreviewed": 10,
-    "identityMismatch": 2,
+    "metadataMatchedUnreviewed": 12,
+    "identityMismatch": 0,
     "ambiguous": 0,
     "notFound": 0,
     "lookupFailed": 0,
     "providerUnavailable": 0,
     "rightsRestrictedMetadataOnly": 0
   },
-  "receiptHash": "2a0fcfff288943beecf690817ce144297ed366d989c53100c117f040d28df09b"
+  "receiptHash": "eb6b8a83c0b1b4d133f923c6a37cac16545949dfb6a5fe45601bafbb6e0b8fa9"
 }

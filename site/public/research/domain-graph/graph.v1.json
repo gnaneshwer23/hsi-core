@@ -1,6 +1,6 @@
 {
   "schemaVersion": "hsi-domain-graph-1",
-  "parentVersion": "ee23b6545a0d3dfdc3eab81002655d47b39dddb1b94a1b89a5d796d68a27d050",
+  "parentVersion": "a36ceb6a3781e1eb5c18935f108523840ac56d8fd35fa217ae8807331091aaf7",
   "inputs": [
     {
       "path": "site/public/discovery/hsi-pilot-evidence-pack.json",
@@ -12,7 +12,7 @@
     },
     {
       "path": "research/domain-graph/expansion.v1.json",
-      "sha256": "ae1cc1cde41096452f0f5699e596d43700cc12261eefc89d4a9c41a184dd2516"
+      "sha256": "b62e09ed4fa3ffe7ac18278bd6c6a8d522a2fa7e101c7c7d46752bd67b479ec3"
     },
     {
       "path": "research/validation/v0.1/input/hsi_synthetic_patients.json",
@@ -1562,7 +1562,7 @@
     },
     {
       "id": "DIAB-002",
-      "sourceId": "doi:10.1038/nature21492",
+      "sourceId": "doi:10.1038/ni.3713",
       "predicate": "investigated_effect_on",
       "domains": [
         "gut",
@@ -1595,7 +1595,7 @@
     },
     {
       "id": "DIAB-003",
-      "sourceId": "doi:10.1038/nature21492",
+      "sourceId": "doi:10.1038/ni.3713",
       "predicate": "investigated_effect_on",
       "domains": [
         "gut",
@@ -1629,7 +1629,7 @@
     },
     {
       "id": "DIAB-004",
-      "sourceId": "doi:10.1038/nature16961",
+      "sourceId": "doi:10.1038/nature18646",
       "predicate": "associated_with",
       "domains": [
         "gut",
@@ -5587,11 +5587,11 @@
       ]
     },
     {
-      "id": "doi:10.1038/nature16961",
+      "id": "doi:10.1038/nature18646",
       "title": "Human gut microbes impact host serum metabolome and insulin sensitivity",
-      "url": "https://doi.org/10.1038/nature16961",
+      "url": "https://doi.org/10.1038/nature18646",
       "pmid": null,
-      "doi": "10.1038/nature16961",
+      "doi": "10.1038/nature18646",
       "identityStatus": "bibliographic_candidate_not_retrieved",
       "rights": "unverified",
       "retrievedAt": null,
@@ -5603,11 +5603,11 @@
       ]
     },
     {
-      "id": "doi:10.1038/nature21492",
+      "id": "doi:10.1038/ni.3713",
       "title": "Gut microbial metabolites limit the frequency of autoimmune T cells and protect against type 1 diabetes",
-      "url": "https://doi.org/10.1038/nature21492",
+      "url": "https://doi.org/10.1038/ni.3713",
       "pmid": null,
-      "doi": "10.1038/nature21492",
+      "doi": "10.1038/ni.3713",
       "identityStatus": "bibliographic_candidate_not_retrieved",
       "rights": "unverified",
       "retrievedAt": null,
@@ -9596,5 +9596,5 @@
   "clinicalAdvice": false,
   "graphPromotable": false,
   "scientificApproval": false,
-  "version": "a36ceb6a3781e1eb5c18935f108523840ac56d8fd35fa217ae8807331091aaf7"
+  "version": "5519241a7b2c67f4dc3afd81ead9c782bc1ce8d10bd0f64975536d48f208bf61"
 }
