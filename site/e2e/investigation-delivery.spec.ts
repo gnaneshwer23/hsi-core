@@ -90,14 +90,15 @@ test("unified outcome connects source passages, candidate questions, trial gaps 
  const f=deliveryHarness();await wire(page,f,"alice");await page.goto("/research/decision-workbench?investigation="+f.initial.id);
  const panel=page.getByRole("region",{name:"Unified research outcome",exact:true});
  await expect(panel).toContainText("Not calibrated");
- await panel.getByRole("button",{name:"Mechanism & evidence",exact:true}).click();
- await expect(panel.getByRole("blockquote")).toHaveText(f.contexts.get(f.initial.id)!.primary.bundle.passages[0]!.text);
+ await panel.getByRole("button",{name:"02 Evidence",exact:true}).click();
+ await expect(panel.getByRole("blockquote").first()).toHaveText(f.contexts.get(f.initial.id)!.primary.bundle.passages[0]!.text);
  await expect(panel).toContainText("no branch assigned");await expect(panel.getByLabel("Select a relationship")).toHaveValue("rel-test");
- await panel.getByRole("button",{name:"Questions & hypotheses",exact:true}).click();
+ await expect(panel).toContainText("Reverse trace");
+ await panel.getByRole("button",{name:"05 Action plan",exact:true}).click();
  await expect(panel).toContainText(f.initial.questions[0]!.text);await panel.getByText(f.initial.branches[0]!.statement,{exact:true}).click();
  await expect(panel).toContainText("not specified in the saved record");
- await panel.getByRole("button",{name:"Next research & trials",exact:true}).click();await expect(panel).toContainText("No registry search is attached");
- await panel.getByRole("button",{name:"Review & provenance",exact:true}).click();await expect(panel).toContainText("This projection invokes no model");
+ await panel.getByRole("button",{name:"04 Translational",exact:true}).click();await expect(panel).toContainText("No registry search is attached");
+ await panel.getByRole("button",{name:"06 Package",exact:true}).click();await expect(panel).toContainText("This projection invokes no model");
  const event=page.waitForEvent("download");await panel.getByRole("button",{name:"Download outcome JSON",exact:true}).click();const download=await event,body=JSON.parse(await readFile((await download.path())!,"utf8"));
  expect(body.binding.contextHash).toBe(f.contexts.get(f.initial.id)!.contentHash);expect(body.trials.eligibilityAssessed).toBe(false);expect(body.answer.confidence.value).toBeNull();
  const mdEvent=page.waitForEvent("download");await panel.getByRole("button",{name:"Download research outcome",exact:true}).click();const md=await mdEvent;expect(await readFile((await md.path())!,"utf8")).toContain(body.outcomeHash);
@@ -115,6 +116,6 @@ test("outcome refuses a forged answer and hides stale content when source access
 test("outcome is keyboard navigable and fits a 320px viewport",async({page})=>{
  const f=deliveryHarness();await wire(page,f,"alice");await page.setViewportSize({width:320,height:740});await page.goto("/research/decision-workbench?investigation="+f.initial.id);
  const panel=page.getByRole("region",{name:"Unified research outcome",exact:true});await expect(panel).toContainText("Not calibrated");
- const button=panel.getByRole("button",{name:"Mechanism & evidence",exact:true});await button.focus();await page.keyboard.press("Enter");await expect(panel.getByLabel("Select a relationship")).toBeVisible();
- for(const name of ["Mechanism & evidence","Questions & hypotheses","Next research & trials","Review & provenance"]){await panel.getByRole("button",{name,exact:true}).click();expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true)}
+ const button=panel.getByRole("button",{name:"02 Evidence",exact:true});await button.focus();await page.keyboard.press("Enter");await expect(panel.getByLabel("Select a relationship")).toBeVisible();
+ for(const name of ["01 Landscape","02 Evidence","03 Gaps","04 Translational","05 Action plan","06 Package"]){await panel.getByRole("button",{name,exact:true}).click();expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true)}
 });
