@@ -1,0 +1,224 @@
+{
+  "schemaVersion": "hsi-n6-usefulness-pilot-prep-1",
+  "phase": "N6",
+  "programme": "gut_immune_t2d",
+  "remediationPhase": "production_readiness_audit_phase_7",
+  "generatedAt": "2026-11-08T12:00:00.000Z",
+  "protocolSchema": "hsi-n6-blinded-usefulness-protocol-1",
+  "scorePacketSchema": "hsi-n6-expert-score-packet-1",
+  "rubricVersion": "hsi-n6-gut-immune-t2d-usefulness-rubric-1",
+  "protocolHash": "3d2bbef5b8b54444f5ed264f6a9a5778d4031a03b6021e05f0c356256cbba505",
+  "scorePacketHash": "27ea8535663ad4d291dd0f51486d0b1310812f5b121ed9bc3f0dd999a240d304",
+  "runManifestHash": "cd6af365b4b45eb09a70037d72aa452e62dee727489681bfd1328f85325cbae2",
+  "evalReceiptHash": "c9e7493a2aa01331231978513cafaa35cba4814ee5e5d35d19e15dc36ad9a473",
+  "questionCount": 4,
+  "conditionCount": 3,
+  "packetCount": 12,
+  "scoredRows": 0,
+  "n3HumanLabelFreezePrerequisite": "BLOCKED",
+  "thresholdsStatus": "proposed_unagreed",
+  "usefulnessPilotGoNoGo": "NO_GO",
+  "engineeringScaffold": "CLEARED",
+  "independentBlindedReviewers": "BLOCKED",
+  "scientificAcceptance": "BLOCKED",
+  "usefulnessClaimed": false,
+  "scientificApproval": false,
+  "graphPromotable": false,
+  "fabricatedExpertScoresPermitted": false,
+  "inventedReviewerIdentitiesPermitted": false,
+  "honesty": {
+    "emptyScoresAreNotUsefulness": true,
+    "roleSlotsAreNotPeople": true,
+    "n6PilotRequiresN3Freeze": true,
+    "thresholdsMustBePreAgreed": true,
+    "noGateCAutoApprove": true,
+    "noLiveCdsPhi": true,
+    "redWaveOnlyForHsi": true,
+    "noInventedMoU": true
+  },
+  "reviewerRosterSlots": [
+    {
+      "slotId": "N6-REV-SLOT-1",
+      "role": "blinded_reviewer_1",
+      "roleLabel": "Blinded reviewer 1",
+      "principal": null,
+      "organisation": null,
+      "recruitedAt": null,
+      "credentialsAttested": false,
+      "independenceAttested": false,
+      "notes": "Independent primary blinded scorer. Fill only with a real recruited reviewer after N3 freeze."
+    },
+    {
+      "slotId": "N6-REV-SLOT-2",
+      "role": "blinded_reviewer_2",
+      "roleLabel": "Blinded reviewer 2",
+      "principal": null,
+      "organisation": null,
+      "recruitedAt": null,
+      "credentialsAttested": false,
+      "independenceAttested": false,
+      "notes": "Independent secondary blinded scorer. Must not share scores with reviewer 1 before adjudication."
+    },
+    {
+      "slotId": "N6-REV-SLOT-ADJ",
+      "role": "adjudicator",
+      "roleLabel": "Adjudicator",
+      "principal": null,
+      "organisation": null,
+      "recruitedAt": null,
+      "credentialsAttested": false,
+      "independenceAttested": false,
+      "notes": "Resolves reviewer disagreement; retains both originals. Not inventable by engineering."
+    },
+    {
+      "slotId": "N6-REV-SLOT-UNBLIND",
+      "role": "unblinding_operator",
+      "roleLabel": "Unblinding operator",
+      "principal": null,
+      "organisation": null,
+      "recruitedAt": null,
+      "credentialsAttested": false,
+      "independenceAttested": false,
+      "notes": "Holds protocol.blindingKey separately; unblinds only after scores are frozen."
+    },
+    {
+      "slotId": "N6-REV-SLOT-OPS",
+      "role": "study_operator",
+      "roleLabel": "Study operator",
+      "principal": null,
+      "organisation": null,
+      "recruitedAt": null,
+      "credentialsAttested": false,
+      "independenceAttested": false,
+      "notes": "Maintains empty packets and pilot checklist; never invents usefulness scores or deltas."
+    }
+  ],
+  "checks": [
+    {
+      "id": "protocol_rubric_frozen",
+      "title": "Frozen study protocol + rubric + major-error taxonomy",
+      "plane": "engineering",
+      "status": "CLEARED",
+      "evidence": "protocol.v1.json · rubric hsi-n6-gut-immune-t2d-usefulness-rubric-1; engineeringHarness=CLEARED."
+    },
+    {
+      "id": "empty_score_packets_awaiting_reviewers",
+      "title": "Empty expert score packets awaiting blinded reviewers",
+      "plane": "engineering",
+      "status": "CLEARED",
+      "evidence": "Packet status=awaiting_blinded_reviewers; scoredRows=0; no invented reviewerIds."
+    },
+    {
+      "id": "blinding_scaffold_conceals_system",
+      "title": "Blinding scaffold conceals system identity on score rows",
+      "plane": "engineering",
+      "status": "CLEARED",
+      "evidence": "Score rows omit conditionId; unblinding key stays on protocol only."
+    },
+    {
+      "id": "reviewer_roster_slots_reserved",
+      "title": "Anonymous blinded-reviewer roster slots reserved",
+      "plane": "engineering",
+      "status": "CLEARED",
+      "evidence": "Five role slots with principal=null; identities not invented."
+    },
+    {
+      "id": "thresholds_remain_proposed_unagreed",
+      "title": "Acceptance thresholds remain proposed_unagreed",
+      "plane": "engineering",
+      "status": "CLEARED",
+      "evidence": "Proposed targets are not measured HSI performance and are not pre-agreed."
+    },
+    {
+      "id": "n3_freeze_prerequisite_acknowledged_blocked",
+      "title": "N3 human label freeze prerequisite acknowledged BLOCKED",
+      "plane": "engineering",
+      "status": "CLEARED",
+      "evidence": "Audit #4 freeze-prep eng CLEARED; labelledCalibrationCount=0 / smeSlotsFilled=0 → N6 pilot NO-GO."
+    },
+    {
+      "id": "eval_deltas_forced_null",
+      "title": "Eval usefulness deltas forced null / unclaimed",
+      "plane": "engineering",
+      "status": "CLEARED",
+      "evidence": "usefulnessDeltaVsBaseline/Conventional null; usefulnessClaimed=false."
+    },
+    {
+      "id": "pilot_checklist_published",
+      "title": "N6 usefulness pilot checklist published",
+      "plane": "engineering",
+      "status": "CLEARED",
+      "evidence": "docs/engineering/N6_USEFULNESS_PILOT_CHECKLIST.md — operator path only; no pilot CLEARED claim."
+    },
+    {
+      "id": "n3_human_label_freeze_cleared",
+      "title": "N3 human label freeze CLEARED (Audit #4 residual)",
+      "plane": "human",
+      "status": "NO_GO",
+      "evidence": "n3HumanLabelFreezePrerequisite=BLOCKED; usefulness pilot must wait for real SME labels."
+    },
+    {
+      "id": "thresholds_pre_agreed_with_smes",
+      "title": "Scoring rubric thresholds pre-agreed with SMEs",
+      "plane": "human",
+      "status": "PENDING_HUMAN",
+      "evidence": "thresholdsStatus=proposed_unagreed until humans lock acceptance criteria."
+    },
+    {
+      "id": "independent_blinded_reviewers_recruited",
+      "title": "Independent blinded reviewers recruited into roster slots",
+      "plane": "human",
+      "status": "PENDING_HUMAN",
+      "evidence": "reviewerSlotsFilled=0. Founder/operator must name independent reviewers."
+    },
+    {
+      "id": "conventional_arm_artifacts_supplied",
+      "title": "Conventional-research arm artifacts supplied without unblinding A/B",
+      "plane": "human",
+      "status": "PENDING_HUMAN",
+      "evidence": "Condition C remains an empty human slot in the protocol."
+    },
+    {
+      "id": "dual_review_adjudicated_scores_frozen",
+      "title": "Dual-review → adjudicate → freeze frozen_human_scores",
+      "plane": "human",
+      "status": "PENDING_HUMAN",
+      "evidence": "Score packet remains awaiting_blinded_reviewers with zero scored rows."
+    },
+    {
+      "id": "human_controlled_unblinding_complete",
+      "title": "Human-controlled unblinding with denominators + uncertainty",
+      "plane": "human",
+      "status": "PENDING_HUMAN",
+      "evidence": "Unblinding requires separate human key; software tests alone do not suffice."
+    },
+    {
+      "id": "usefulness_claim_vs_baseline",
+      "title": "Scientific usefulness claim vs baseline",
+      "plane": "human",
+      "status": "NO_GO",
+      "evidence": "usefulnessPilotGoNoGo=NO_GO; usefulnessClaimed=false; scientificAcceptance=BLOCKED."
+    }
+  ],
+  "summary": {
+    "engineeringChecksCleared": 8,
+    "engineeringChecksTotal": 8,
+    "humanChecksPending": 7,
+    "humanChecksTotal": 7,
+    "reviewerSlotsReserved": 5,
+    "reviewerSlotsFilled": 0,
+    "scoredRows": 0,
+    "usefulnessPilotCleared": false
+  },
+  "residualHumanSteps": [
+    "Complete Audit #4 N3 human label freeze (named SMEs + adjudication) before starting N6 pilot scoring.",
+    "Pre-agree scoring rubric thresholds and major-error adjudication with SMEs — keep proposed_unagreed until locked.",
+    "Recruit independent blinded reviewers into empty roster slots (do not invent identities).",
+    "Supply conventional-research artifacts for condition C without unblinding A/B.",
+    "Dual-review → record disagreement → adjudicate → freeze scores as frozen_human_scores.",
+    "Unblind under separate human control using protocol.blindingKey; report denominators and uncertainty.",
+    "Only then consider usefulness vs baseline — software tests and empty packets never clear the pilot.",
+    "Re-run bun run n6:check / n6:pilot-prep; scientificAcceptance and usefulnessClaimed stay BLOCKED/false until humans finish."
+  ],
+  "prepHash": "0c8bdbe5457fd2024d3d510c489e7066ca49b6634ce19adcc1e39d23a884c3e2"
+}

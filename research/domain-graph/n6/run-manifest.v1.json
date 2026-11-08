@@ -140,8 +140,8 @@
     }
   ],
   "pins": {
-    "n3KitHash": "fcb4b940f27e629413bd55dc0b496a6228b9c676763b7b22b13cc5e934c6a38c",
-    "n4BriefReceiptHash": "06e8fd59e3f3372c8abbd0945c25327ecc823ff0c30dc5f3f6ec9625fdd8729c",
+    "n3KitHash": "d7b25fdc2840851cd928e5e3efcbbc31a95647019021bc3cea6dbbcc5905cb2a",
+    "n4BriefReceiptHash": "c28d384f9cd3b8b3a0a2699ab6a3a47a648052ff613f69d1470be97bf77a79ee",
     "n5CriteriaReceiptHash": "d6d62522a82efe54ad98f25d668f7e7f8d40458c849b43f7e895884dc90b5c7e"
   },
   "correctionLog": [

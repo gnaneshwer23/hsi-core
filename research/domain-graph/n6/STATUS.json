@@ -1,7 +1,7 @@
 {
   "phase": "N6",
   "programme": "gut_immune_t2d",
-  "generatedAt": "2026-11-07T23:00:00.000Z",
+  "generatedAt": "2026-11-08T12:00:00.000Z",
   "questionCount": 4,
   "conditionCount": 3,
   "packetCount": 12,
@@ -10,8 +10,12 @@
   "independentBlindedReviewers": "BLOCKED",
   "scientificAcceptance": "BLOCKED",
   "usefulnessClaimed": false,
+  "usefulnessPilotGoNoGo": "NO_GO",
+  "n3HumanLabelFreezePrerequisite": "BLOCKED",
+  "reviewerSlotsFilled": 0,
+  "pilotPrepHash": "0c8bdbe5457fd2024d3d510c489e7066ca49b6634ce19adcc1e39d23a884c3e2",
   "fabricatedExpertScoresPermitted": false,
   "scientificApproval": false,
   "n5Coexistence": "N5 uncommitted artifacts left intact; N6 pins n5 receipt hash when present",
-  "note": "Empty score packets only. No expert usefulness scores were invented."
+  "note": "Empty score packets + Phase #7 pilot-prep only. No expert usefulness scores were invented."
 }

@@ -165,6 +165,7 @@
     "n6:study": "bun --no-env-file scripts/n6-blinded-expert-usefulness.ts",
     "n6:check": "bun --no-env-file scripts/n6-blinded-expert-usefulness.ts --check",
     "n6:eval": "bun --no-env-file scripts/n6-blinded-expert-usefulness.ts --eval",
+    "n6:pilot-prep": "bun --no-env-file scripts/n6-blinded-expert-usefulness.ts --pilot-prep",
     "n7:ledger": "bun --no-env-file scripts/n7-experiment-ledger.ts",
     "n7:check": "bun --no-env-file scripts/n7-experiment-ledger.ts --check",
     "n8:adapter": "bun --no-env-file scripts/n8-specialised-model-adapter.ts",

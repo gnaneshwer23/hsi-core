@@ -373,6 +373,14 @@ function validateRecordShape(record: EvidenceLedgerRecord): void {
   if (contentHash !== hashRecordBody(body)) fail("contentHash mismatch");
 }
 
+/** Validate a single N2 ledger row (Neon helper / offline fixture) without requiring parent archives. */
+export function parseEvidenceLedgerRecord(value: unknown): EvidenceLedgerRecord {
+  if (!value || typeof value !== "object" || Array.isArray(value)) fail("Invalid evidence ledger record");
+  const record = value as EvidenceLedgerRecord;
+  validateRecordShape(record);
+  return record;
+}
+
 export function emptyEvidenceLedger(): EvidenceLedger {
   return {
     schemaVersion: EVIDENCE_LEDGER_SCHEMA,

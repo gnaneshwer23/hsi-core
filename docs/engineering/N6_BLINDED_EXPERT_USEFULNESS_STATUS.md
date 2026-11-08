@@ -2,9 +2,9 @@
 
 **Phase:** N6 — Demonstrate expert usefulness  
 **Plan:** [`docs/strategy/HSI_NEXT_BUILD_PHASES_2026-11-06.md`](../strategy/HSI_NEXT_BUILD_PHASES_2026-11-06.md)  
-**Date:** 7 November 2026
+**Date:** 8 November 2026 (Audit #7 pilot-prep stamp)
 
-This is an engineering status receipt. It is **not** a measured expert usefulness result, scientific approval, Gate C clearance or a claim that HSI beats baseline.
+This is an engineering status receipt. It is **not** a measured expert usefulness result, scientific approval, Gate C clearance or a claim that HSI beats baseline. **N6 pilot is not CLEARED.**
 
 ## N5 coexistence
 
@@ -14,12 +14,13 @@ Uncommitted **N5** artifacts (`research/domain-graph/n5/`, `src/evidence/cohortT
 
 | Prerequisite | Status | Notes |
 | --- | --- | --- |
-| N1–N4 on `origin/main` @ `19ef067` | **Present (committed)** | Engineering harnesses + honesty gates |
-| N3 human label freeze | **BLOCKED** | Empty SME labels; N6 measurement still waits |
+| N1–N4 on `origin/main` | **Present (committed)** | Engineering harnesses + honesty gates |
+| N3 human label freeze | **BLOCKED** | Empty SME labels; N6 measurement still waits (Audit #4 residual) |
 | N4 grounded brief baseline | **Present (committed)** | Questions reused as N6 study items |
-| N5 cohort/trial criteria | **Present (local uncommitted)** | Parallel track; optional pin only |
+| N5 cohort/trial criteria | **Present (optional pin)** | Parallel track; optional pin only |
 | Independent blinded reviewers | **Not supplied** | No invented reviewers or scores |
 | N6 engineering may proceed | **Yes** | Plan: engineering can precede people |
+| Usefulness pilot go/no-go | **NO-GO** | Audit #7 — until #4 freeze + agreed thresholds |
 
 ## Verdict
 
@@ -30,15 +31,18 @@ Uncommitted **N5** artifacts (`research/domain-graph/n5/`, `src/evidence/cohortT
 | Baseline vs HSI vs conventional conditions | **CLEARED (engineering)** | Conventional arm is an empty human slot |
 | Empty expert score packets | **CLEARED (engineering)** | 12 packets (4 questions × 3 conditions) |
 | Replayable eval runner | **CLEARED (engineering)** | Usefulness deltas forced `null` while BLOCKED |
+| Pilot-prep + anonymous reviewer slots (Audit #7) | **CLEARED (engineering)** | `pilot-prep.v1.json` · checklist · `n6:pilot-prep`; `reviewerSlotsFilled=0` |
 | Independent blinded reviewers | **BLOCKED** | Zero expert scores; none invented |
-| Scientific acceptance / usefulness claim | **BLOCKED** | Requires real blinded study + agreed thresholds |
+| Scientific acceptance / usefulness claim | **BLOCKED / NO-GO** | Requires N3 freeze + real blinded study + agreed thresholds |
 
 ## Delivered in this increment
 
 - Types / protocol / empty scores / run manifest / eval: `src/evidence/blindedExpertUsefulness.ts`
-- Runner: `bun run n6:study` · `bun run n6:check` · `bun run n6:eval`
+- Pilot-prep (Audit #7): `src/evidence/n6UsefulnessPilotPrep.ts` · `pilot-prep.v1.json` · checklist
+- Runner: `bun run n6:study` · `bun run n6:check` · `bun run n6:eval` · `bun run n6:pilot-prep`
 - Offline fixtures + receipt: `research/domain-graph/n6/`
-- Tests: `test/blindedExpertUsefulness.test.ts`
+- Tests: `test/blindedExpertUsefulness.test.ts` · `test/n6UsefulnessPilotPrep.test.ts`
+- Companion: Neon ledger R/W helpers for 016/017 behind `neonGuard` + `writesEnabled` (staging writes only)
 
 Extends N3 empty-label / freeze-blocked eval and N4 pinned brief honesty: incomplete human assessment → explicit **BLOCKED**, never a silent usefulness win.
 
@@ -48,7 +52,7 @@ Extends N3 empty-label / freeze-blocked eval and N4 pinned brief honesty: incomp
 - Automated usefulness scoring is forbidden by the analysis plan
 - Proposed thresholds remain `proposed_unagreed` — not measured HSI performance
 - Score rows omit `conditionId`; system identity stays concealed on artifacts
-- `scientificAcceptance`, `usefulnessClaimed`, `scientificApproval` remain false / BLOCKED
+- `scientificAcceptance`, `usefulnessClaimed`, `scientificApproval`, `usefulnessPilotGoNoGo` remain false / BLOCKED / NO-GO
 - No Gate C auto-approve, invented MoU, live CDS/PHI or immunecity Neon use
 
 ## Verify locally
@@ -57,16 +61,18 @@ Extends N3 empty-label / freeze-blocked eval and N4 pinned brief honesty: incomp
 bun run n6:study
 bun run n6:check
 bun run n6:eval
-bun --no-env-file test test/blindedExpertUsefulness.test.ts
+bun run n6:pilot-prep
+bun --no-env-file test test/blindedExpertUsefulness.test.ts test/n6UsefulnessPilotPrep.test.ts test/ledgerNeonStores.test.ts
 # Optional regression with prior phases (N5 if present):
 bun run n1:check && bun run n2:check && bun run n3:check && bun run n4:check && bun run n5:check && bun run n6:check
 ```
 
 ## Residual (human blinded study)
 
-1. Recruit qualified **independent** blinded reviewers (not supplied by this tip).
-2. Agree the scoring rubric thresholds and major-error adjudication process in advance.
-3. Supply conventional-research artifacts for condition C without unblinding A/B.
-4. Dual-review → record disagreement → adjudicate → freeze `scores` as `frozen_human_scores`.
-5. Unblind under separate human control using `protocol.blindingKey`; report denominators and uncertainty.
-6. Only then claim N6 scientific usefulness vs baseline — software tests alone do not suffice.
+1. Complete N3 human label freeze (Audit #4) — hard unlock.
+2. Recruit qualified **independent** blinded reviewers (not supplied by this tip).
+3. Agree the scoring rubric thresholds and major-error adjudication process in advance.
+4. Supply conventional-research artifacts for condition C without unblinding A/B.
+5. Dual-review → record disagreement → adjudicate → freeze `scores` as `frozen_human_scores`.
+6. Unblind under separate human control using `protocol.blindingKey`; report denominators and uncertainty.
+7. Only then claim N6 scientific usefulness vs baseline — software tests alone do not suffice.

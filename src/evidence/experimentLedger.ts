@@ -552,6 +552,14 @@ function validateRecordShape(record: ExperimentRecord): void {
   if (contentHash !== hashRecordBody(body)) fail("contentHash mismatch");
 }
 
+/** Validate a single N7 experiment row (Neon helper / offline fixture) without requiring parent archives. */
+export function parseExperimentLedgerRecord(value: unknown): ExperimentRecord {
+  if (!value || typeof value !== "object" || Array.isArray(value)) fail("Invalid experiment ledger record");
+  const record = value as ExperimentRecord;
+  validateRecordShape(record);
+  return record;
+}
+
 export function emptyExperimentLedger(input?: {
   engineeringHarness?: GateStatus;
   realObservationAcceptance?: GateStatus;
