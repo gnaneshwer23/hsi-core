@@ -155,6 +155,7 @@
     "n3:benchmark": "bun --no-env-file scripts/n3-scientific-benchmark.ts",
     "n3:check": "bun --no-env-file scripts/n3-scientific-benchmark.ts --check",
     "n3:eval": "bun --no-env-file scripts/n3-scientific-benchmark.ts --eval",
+    "n3:freeze-prep": "bun --no-env-file scripts/n3-scientific-benchmark.ts --freeze-prep",
     "n4:brief": "bun --no-env-file scripts/n4-grounded-brief.ts",
     "n4:check": "bun --no-env-file scripts/n4-grounded-brief.ts --check",
     "n5:research": "bun --no-env-file scripts/n5-cohort-trial-criteria.ts",

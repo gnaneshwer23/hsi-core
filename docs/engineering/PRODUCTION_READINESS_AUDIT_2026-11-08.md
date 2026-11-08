@@ -18,7 +18,7 @@ Default science programme remains **gut–immune–T2D** (Nov 6 plan). SSc stays
 | Plane | Score | State | One-line evidence |
 | --- | --- | --- | --- |
 | Substrate / evidence | 3 / 5 | Eng CLEARED / sci BLOCKED | N1–N8 modules + scripts; migrations 001–017 in-repo; 016/017 stub-not-applied; N1 rights BLOCKED (DOI identity cleared post-audit — see follow-through) |
-| Science gates | 1 / 5 | Scaffold only | N3 empty labels; N6 empty score packets; N4 `groundedClaimAccepted` forced false; no SME freeze |
+| Science gates | 1 / 5 | Scaffold + freeze-prep | N3 freeze-prep ENG CLEARED (Audit #4); labels still empty; N6 empty score packets; N4 `groundedClaimAccepted` forced false |
 | Site / marketing | 3 / 5 | Demo deployable | Vite site + Playwright; honesty banners; not a verified live research product |
 | Deploy / CI | 3 / 5 | CI green path ≠ launch | `research-foundation.yml` + site:build/e2e; bun pin mismatch noted; PRODUCTION_QA launch blocked |
 | Security / honesty | 4 / 5 | Strong invariants | `neonGuard` refuses autumn-snow; `cdsPhiBoundary`; honesty regressions; `.env.example` only |
@@ -48,7 +48,7 @@ Default science programme remains **gut–immune–T2D** (Nov 6 plan). SSc stays
 | 1 | Human-correct N1-C-02/C-03 DOIs + rebuild domain-graph queue | **GO (human edit)** — executed 2026-11-08 (this follow-through) |
 | 2 | Record per-source passage reuse rights; keep metadata-only until cleared | **ENG DONE 2026-11-08** / NO-GO sci until human rights |
 | 3 | ISI pending HITL: claim_support → Approve on cites (immunecity) | **ENG CLEARED 2026-11-08** / HITL BLOCKED (0 supports / 0 publicCiteApproved) |
-| 4 | Recruit SMEs; freeze N3 calibration labels (20–50) then pilot plan | GO only with real reviewers |
+| 4 | Recruit SMEs; freeze N3 calibration labels (20–50) then pilot plan | **ENG CLEARED 2026-11-08** / sci BLOCKED (0 labels / 0 SME slots filled) |
 | 5 | Unpause staging: two-account auth, research writes, live investigation accept | GO when ops prerequisite lifted |
 | 6 | Apply 016/017 on red-wave after offline parity + founder approve | GO eng / gated migrate |
 | 7 | N6 blinded usefulness study after N3 freeze + agreed thresholds | NO-GO until #4 |
@@ -67,6 +67,7 @@ Default science programme remains **gut–immune–T2D** (Nov 6 plan). SSc stays
 - **Phase #1 done:** N1-C-02 → `10.1038/ni.3713`, N1-C-03 → `10.1038/nature18646` (Crossref + Europe PMC verified). Offline + live N1: **0** identity mismatches; 12/12 metadata matched unreviewed. Rights + scientific acceptance remain **BLOCKED**. Neon red-wave only; no graph promotion of unverified science.
 - **Phase #2 eng done (science still NO-GO):** Per-source passage reuse inventory at `research/domain-graph/n1/rights-inventory.v1.json` (`src/evidence/n1PassageRightsInventory.ts`). Records Europe PMC OA/licence signals for all 12 candidates; `humanCleared=0`, `passageImported=0`, metadata-only. Provider OA/CC labels ≠ corpus reuse permission. Scientific acceptance + human `licenceEvidenceUri` attestation remain **BLOCKED**.
 - **Phase #3 eng done (cite HITL still BLOCKED):** immunecity Gate C cite path re-audited — seed → Check (13/13 verified) → inline Claim support → Approve UX + server invariants + `hsi:curator-status` dry-run. Pin remeasure still **0** `claim_support=supports` / **0** `publicCiteApproved`. No invent supports / no auto-approve / autumn-snow only. Receipt: immunecity `docs/engineering/AUDIT_3_ISI_CITE_HITL_2026-11-08.md`. Residual: Neon Auth reviewer S-P-O → Claim support → Approve on `/curation?hsi=cite`, then `--neon` remeasure.
+- **Phase #4 eng done (science still NO-GO):** Short recheck found **no** safe cite-HITL eng leftovers (remeasure docs + worksheet already present; Approve/`supports` remain human-only). N3 calibration freeze-prep scaffolded — `src/evidence/n3CalibrationFreezePrep.ts`, `research/domain-graph/n3/freeze-prep.v1.json`, checklist, anonymous SME roster slots (`smeSlotsFilled=0`), `bun run n3:freeze-prep` wired into `n3:check`. Calibration items **24** unlabelled; `humanLabelFreeze=BLOCKED`; `scientificAcceptance=BLOCKED`. No invented labels or SME identities. Receipt: [`AUDIT_4_N3_CALIBRATION_FREEZE_2026-11-08.md`](./AUDIT_4_N3_CALIBRATION_FREEZE_2026-11-08.md).
 
 ## Verify (post-correction)
 
@@ -74,7 +75,8 @@ Default science programme remains **gut–immune–T2D** (Nov 6 plan). SSc stays
 bun run n1:verify
 bun run n1:verify:live
 bun run n1:check
+bun run n3:freeze-prep
 bun run n3:check
 bun run n4:check
-bun --no-env-file test test/n1SourceVerification.test.ts test/scientificBenchmark.test.ts test/groundedBrief.test.ts
+bun --no-env-file test test/n1SourceVerification.test.ts test/scientificBenchmark.test.ts test/n3CalibrationFreezePrep.test.ts test/groundedBrief.test.ts
 ```

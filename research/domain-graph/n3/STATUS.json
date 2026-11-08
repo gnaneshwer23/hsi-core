@@ -11,5 +11,11 @@
   "scientificAcceptance": "BLOCKED",
   "fabricatedLabelsPermitted": false,
   "scientificApproval": false,
-  "note": "Empty scaffolds only. No expert labels were invented."
+  "freezePrepEngineering": "CLEARED",
+  "freezePrepHuman": "BLOCKED",
+  "note": "Empty scaffolds + Phase #4 freeze-prep only. No expert labels or SME identities were invented.",
+  "freezePrepHash": "1a5e78ec885f100adf05bcc8b3c88c2db3a82d357a368c3ccff19cf47aabdf91",
+  "freezePrepGeneratedAt": "2026-11-08T10:00:00.000Z",
+  "smeSlotsReserved": 4,
+  "smeSlotsFilled": 0
 }

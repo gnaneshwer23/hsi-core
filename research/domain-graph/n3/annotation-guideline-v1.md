@@ -62,7 +62,7 @@ Related preprints, publications, protocol amendments and repeated cohorts stay i
 
 ## Next human steps
 
-1. Recruit qualified reviewers (not supplied by engineering).
-2. Calibrate on the 20 unlabelled calibration items in `benchmark-kit.v1.json`.
+1. Fill anonymous roster slots in `freeze-prep.v1.json` with real recruited reviewers (see [`N3_CALIBRATION_FREEZE_CHECKLIST.md`](../../../docs/engineering/N3_CALIBRATION_FREEZE_CHECKLIST.md)).
+2. Calibrate on the 24 unlabelled calibration items in `benchmark-kit.v1.json`.
 3. Record disagreement and insufficient-context cases explicitly.
 4. Agree pilot item set and freeze `held_out_frozen` before N4/N6 measurement claims.

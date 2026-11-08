@@ -45,6 +45,9 @@ This is an **engineering + process plan**. It does not invent 200 labelled items
 
 ```sh
 bun run n3:benchmark
+bun run n3:freeze-prep
 bun run n3:check
-bun --no-env-file test test/scientificBenchmark.test.ts
+bun --no-env-file test test/scientificBenchmark.test.ts test/n3CalibrationFreezePrep.test.ts
 ```
+
+Operator freeze checklist (Audit #4): [`N3_CALIBRATION_FREEZE_CHECKLIST.md`](./N3_CALIBRATION_FREEZE_CHECKLIST.md).

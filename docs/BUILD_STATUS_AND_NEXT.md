@@ -316,7 +316,8 @@ One-sprint-sized items. Mark **[DECISION]** where the user must choose before co
 | P2.3-ISI | **DONE:** Identifier Check on 13 cite candidates | `check-cite-candidates-from-gate-c.ts` → 13/13 verified; `cite-check-worksheet.json`; `/curation?hsi=cite` filter; claim_support still unassessed; curation still unreviewed |
 | Cap9-FHIR | **DONE:** Illustrative FHIR R4 mapping notes for synthetic timeline | `src/clinicalSyntheticFhirNotes.ts` + `/clinical-timeline` FHIR NOTES; `fhirSoT=false`; no live EMIS |
 | P2.7-ISI | **DONE (eng):** Audit #3 cite HITL path receipt | immunecity `docs/engineering/AUDIT_3_ISI_CITE_HITL_2026-11-08.md`; eng CLEARED; pin still **0** supports / **0** publicCiteApproved |
-| **NEXT** | **Human claim_support → Approve on 13 cites · SME N3 · real partner** | Audit #3 (2026-11-08): eng path CLEARED; Check **13/13**; still **0** supports / **0** publicCiteApproved — blocked on human S-P-O → `/curation?hsi=cite` Approve (no bulk invent / no agent Auth bypass). Parallel next-build #4: recruit SMEs / freeze N3 labels. Still no auto-approve / no `hsiGrade` flip / no invent MoU / no live CDS. |
+| P2.8-N3 | **DONE (eng):** Audit #4 N3 calibration freeze-prep | `freeze-prep.v1.json` + checklist + empty SME slots; `n3:freeze-prep`; sci still **BLOCKED** (0 labels / 0 slots filled) |
+| **NEXT** | **Human claim_support → Approve on 13 cites · real SMEs fill N3 · real partner** | Audit #3/#4 (2026-11-08): cite eng CLEARED / HITL 0/0; N3 freeze-prep eng CLEARED / science BLOCKED. Blocked on human S-P-O → `/curation?hsi=cite` Approve and named SME recruitment (no invent labels / no Auth bypass). Parallel next-build #5: staging two-account Auth. Still no auto-approve / no `hsiGrade` flip / no invent MoU / no live CDS. |
 
 ### Out-of-repo (track; do not implement here)
 
