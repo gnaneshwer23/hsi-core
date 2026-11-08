@@ -1,0 +1,298 @@
+{
+  "schemaVersion": "hsi-r3-connected-research-workbench-1",
+  "phase": "R3",
+  "programme": "connected_research_workbench",
+  "roadmapPhase": "connected_research_workbench",
+  "workbenchVersion": "1.0.0",
+  "generatedAt": "2026-11-08T16:00:00.000Z",
+  "engineeringScaffold": "CLEARED",
+  "scientificAcceptance": "BLOCKED",
+  "rightsAcceptance": "BLOCKED",
+  "researcherJourneyCompleteClaimed": false,
+  "productionReadyClaimed": false,
+  "writesEnabledClaimed": false,
+  "modelActivationAllowed": false,
+  "graphPromotable": false,
+  "gateCAutoApprove": false,
+  "legalBinding": false,
+  "inventPassagesPermitted": false,
+  "containsPhi": false,
+  "recordedPilotDecisionUnchanged": true,
+  "indicationScope": [
+    "rheumatoid_arthritis",
+    "systemic_sclerosis"
+  ],
+  "syntheticFixture": {
+    "investigationId": "hsi-interrogative-test-fixture-ws-001",
+    "honestyBanner": "SYNTHETIC/TEST FIXTURE ONLY — not scientific approval, Gate C auto-approve, MoU, legalBinding, or live CDS/PHI",
+    "label": "synthetic-test-fixture",
+    "releaseId": "hsi-release-test-fixture-ssc-ws-001"
+  },
+  "mechanismWorkflow": {
+    "schemaVersion": "hsi-research-mechanism-workflow-1",
+    "workflowId": "ra-ssc-mechanism-research-path-1",
+    "stepCount": 9,
+    "workflowHash": "a0808274eec77f820d60b50f8b6b41dd94835ba04671c55abba343bd20e27563"
+  },
+  "honesty": {
+    "noHardCodedScientificOutput": true,
+    "uiMustConsumeBackendResponses": true,
+    "syntheticFixtureIsNotScientificGold": true,
+    "inspectablePassagesFromBackendOnly": true,
+    "scientificAcceptanceBlocked": true,
+    "noGateCAutoApprove": true,
+    "noInventedMoU": true,
+    "noLiveCdsPhi": true,
+    "redWaveOnlyForHsi": true,
+    "humanQueueParked": true,
+    "productionWritesNotClaimed": true
+  },
+  "exitShapeScaffold": {
+    "section": "roadmap_r3",
+    "targetExit": "researcher_completes_journey_on_authenticated_apis",
+    "stagesDocumented": [
+      "ask",
+      "retrieve",
+      "investigate",
+      "verify",
+      "review",
+      "export"
+    ],
+    "currentStage": "ask",
+    "researcherJourneyCompleteClaimed": false,
+    "scientificAcceptance": "BLOCKED"
+  },
+  "stages": [
+    {
+      "id": "ask",
+      "title": "Ask",
+      "order": 1,
+      "uiPath": "/research/decision-workbench?investigation=hsi-interrogative-test-fixture-ws-001",
+      "apiPath": "/api/research/interrogative/hsi-interrogative-test-fixture-ws-001",
+      "method": "GET",
+      "consumesBackend": true,
+      "hardCodedDemoContent": false,
+      "inspectablePassages": false,
+      "passageSourceHint": "Question + branch plan from authenticated investigation record.",
+      "mechanismStepIds": [
+        "ask_mechanism_question"
+      ],
+      "note": "Loads the authorised investigation question from the research API."
+    },
+    {
+      "id": "retrieve",
+      "title": "Retrieve",
+      "order": 2,
+      "uiPath": "/research/decision-workbench?investigation=hsi-interrogative-test-fixture-ws-001",
+      "apiPath": "/api/research/interrogative/hsi-interrogative-test-fixture-ws-001/graph-context",
+      "method": "GET",
+      "consumesBackend": true,
+      "hardCodedDemoContent": false,
+      "inspectablePassages": true,
+      "passageSourceHint": "Passages under context.primary.bundle.passages (locator + sha256 + text when captured).",
+      "mechanismStepIds": [
+        "authorised_source_linked_evidence",
+        "context_and_limitations"
+      ],
+      "note": "Release-bound graph context carries inspectable source passages when captured."
+    },
+    {
+      "id": "investigate",
+      "title": "Investigate",
+      "order": 3,
+      "uiPath": "/research/scientific-workbench",
+      "apiPath": "/api/research/graph/ssc",
+      "method": "GET",
+      "consumesBackend": true,
+      "hardCodedDemoContent": false,
+      "inspectablePassages": false,
+      "passageSourceHint": "Mechanism graph edges + support/oppose polarity from authenticated reads.",
+      "mechanismStepIds": [
+        "support_vs_oppose",
+        "multi_hop_mechanism"
+      ],
+      "note": "Support vs oppose and multi-hop mechanism use authenticated SSc graph reads."
+    },
+    {
+      "id": "verify",
+      "title": "Verify",
+      "order": 4,
+      "uiPath": "/research/decision-workbench?investigation=hsi-interrogative-test-fixture-ws-001",
+      "apiPath": "/api/research/interrogative/hsi-interrogative-test-fixture-ws-001/outcome",
+      "method": "GET",
+      "consumesBackend": true,
+      "hardCodedDemoContent": false,
+      "inspectablePassages": true,
+      "passageSourceHint": "Outcome passages[] with text, locator, and sha256 when package is bound.",
+      "mechanismStepIds": [
+        "uncertainty_and_review_status",
+        "bounded_brief"
+      ],
+      "note": "Outcome/brief endpoints verify package hashes; missing evidence stays missing."
+    },
+    {
+      "id": "review",
+      "title": "Review",
+      "order": 5,
+      "uiPath": "/research/decision-workbench?investigation=hsi-interrogative-test-fixture-ws-001",
+      "apiPath": "/api/research/interrogative/hsi-interrogative-test-fixture-ws-001/submit-review",
+      "method": "POST",
+      "consumesBackend": true,
+      "hardCodedDemoContent": false,
+      "inspectablePassages": false,
+      "passageSourceHint": "Independent reviewer path; no Gate C auto-approve.",
+      "mechanismStepIds": [
+        "propose_claim_for_independent_review"
+      ],
+      "note": "Submission creates a fixed package for a separate reviewer; POST not auto-fired by probe."
+    },
+    {
+      "id": "export",
+      "title": "Export",
+      "order": 6,
+      "uiPath": "/research/decision-workbench?investigation=hsi-interrogative-test-fixture-ws-001",
+      "apiPath": "/api/research/interrogative/hsi-interrogative-test-fixture-ws-001/review-package",
+      "method": "GET",
+      "consumesBackend": true,
+      "hardCodedDemoContent": false,
+      "inspectablePassages": true,
+      "passageSourceHint": "Review package context.primary.bundle.passages — verified before download bytes.",
+      "mechanismStepIds": [
+        "export_reproducible_package"
+      ],
+      "note": "JSON/Markdown downloads verify packageHash before returning bytes."
+    }
+  ],
+  "checks": [
+    {
+      "id": "mechanism_workflow_bound",
+      "title": "PR #62 mechanism workflow bound without changing pilot decision",
+      "plane": "engineering",
+      "status": "CLEARED",
+      "evidence": "workflowId=ra-ssc-mechanism-research-path-1; recordedPilotDecisionUnchanged=true"
+    },
+    {
+      "id": "six_stage_journey_mapped",
+      "title": "Ask→retrieve→investigate→verify→review→export mapped",
+      "plane": "engineering",
+      "status": "CLEARED",
+      "evidence": "stages=ask→retrieve→investigate→verify→review→export; mechanismStepsBound=true"
+    },
+    {
+      "id": "real_api_paths_bound",
+      "title": "Every stage binds a real /api/research/* path",
+      "plane": "engineering",
+      "status": "CLEARED",
+      "evidence": "GET /api/research/interrogative/hsi-interrogative-test-fixture-ws-001 · GET /api/research/interrogative/hsi-interrogative-test-fixture-ws-001/graph-context · GET /api/research/graph/ssc · GET /api/research/interrogative/hsi-interrogative-test-fixture-ws-001/outcome · POST /api/research/interrogative/hsi-interrogative-test-fixture-ws-001/submit-review · GET /api/research/interrogative/hsi-interrogative-test-fixture-ws-001/review-package"
+    },
+    {
+      "id": "synthetic_fixture_honesty_preserved",
+      "title": "Synthetic fixture honesty banner preserved",
+      "plane": "engineering",
+      "status": "CLEARED",
+      "evidence": "SYNTHETIC/TEST FIXTURE ONLY — not scientific approval, Gate C auto-approve, MoU, legalBinding, or live CDS/PHI"
+    },
+    {
+      "id": "inspectable_passage_contract",
+      "title": "Inspectable passage stages documented (backend-sourced only)",
+      "plane": "engineering",
+      "status": "CLEARED",
+      "evidence": "3 stages mark inspectablePassages=true; inventPassagesPermitted=false"
+    },
+    {
+      "id": "ui_consumes_backend_only",
+      "title": "UI contract forbids hard-coded demo content",
+      "plane": "engineering",
+      "status": "CLEARED",
+      "evidence": "All stages hardCodedDemoContent=false; probes must fetch /api/research/*"
+    },
+    {
+      "id": "r3_checklist_published",
+      "title": "Operator checklist published",
+      "plane": "engineering",
+      "status": "CLEARED",
+      "evidence": "docs/engineering/R3_CONNECTED_RESEARCH_WORKBENCH_CHECKLIST.md"
+    },
+    {
+      "id": "recorded_pilot_decision_unchanged",
+      "title": "Recorded RA/SSc pilot decision unchanged",
+      "plane": "engineering",
+      "status": "CLEARED",
+      "evidence": "recordedPilotDecisionUnchanged=true; packages remain RA/SSc scoped"
+    },
+    {
+      "id": "authenticated_session_required",
+      "title": "Authenticated researcher session required for live journey",
+      "plane": "human",
+      "status": "PENDING_HUMAN",
+      "evidence": "Endpoints return 401/403 without verified research session (#5 staging residual)."
+    },
+    {
+      "id": "production_writes_not_claimed",
+      "title": "Production writesEnabled remains unclaimed",
+      "plane": "human",
+      "status": "NO_GO",
+      "evidence": "writesEnabledClaimed=false; production writes stay disabled until #5 clears."
+    },
+    {
+      "id": "scientific_acceptance_human",
+      "title": "Scientific acceptance of journey outputs",
+      "plane": "human",
+      "status": "BLOCKED",
+      "evidence": "scientificAcceptance=BLOCKED until SME review / partner usefulness (#4/#8)."
+    },
+    {
+      "id": "partner_pilot_usefulness",
+      "title": "External researcher completes journey usefulness",
+      "plane": "human",
+      "status": "PENDING_HUMAN",
+      "evidence": "Exit gate needs authenticated researcher completion — not inventable by eng."
+    }
+  ],
+  "humanMustSupply": [
+    "Verified researcher session to walk Ask→export on live authenticated APIs (#5).",
+    "Do not claim production writesEnabled=true from this eng deepen.",
+    "Scientific acceptance of mechanism answers remains human (#4 SME / partner review).",
+    "Partner usefulness / external pilot findings remain human (#8 MoU — never invent).",
+    "Rights-cleared passage corpus expansion remains parked (#2)."
+  ],
+  "codeCanAutomate": [
+    "Bind PR #62 mechanism workflow + synthetic fixture into versioned R3 journey.",
+    "Map six stages onto existing /api/research/* interrogative + graph endpoints.",
+    "Document inspectable passage source hints (graph-context / outcome / review-package).",
+    "Deepen /research/mechanism-workflow UI to probe APIs and surface backend passages.",
+    "Keep scientificAcceptance=BLOCKED and refuse hard-coded demo content.",
+    "Seal inventoryHash + offline prepare/check harness.",
+    "Operator checklist + Audit R3 receipt (ENG CLEARED / SCIENCE BLOCKED)."
+  ],
+  "summary": {
+    "stageCount": 6,
+    "apiBoundStages": 6,
+    "inspectablePassageStages": 3,
+    "mechanismStepsBound": 9,
+    "hardCodedDemoContent": 0,
+    "researcherJourneyCompleteClaimed": false,
+    "scientificAcceptance": "BLOCKED",
+    "rightsAcceptance": "BLOCKED",
+    "engineeringChecksCleared": 8,
+    "engineeringChecksTotal": 8,
+    "humanChecksPending": 4,
+    "humanChecksTotal": 4
+  },
+  "residualHumanSteps": [
+    "Parked: do not fix human queue #2 rights, #3 cite HITL, #4 SMEs, #5 staging, #8 MoU in this eng phase.",
+    "Keep researcherJourneyCompleteClaimed=false / scientificAcceptance=BLOCKED.",
+    "Do not invent passage text, SME gold, MoU, or Gate C auto-approve.",
+    "Do not claim production-ready or production writesEnabled from this scaffold.",
+    "When #5 clears, a verified researcher can complete the authenticated journey — not before."
+  ],
+  "parkedHumanResiduals": [
+    "#2 N1 rights",
+    "#3 cite HITL",
+    "#4 SMEs",
+    "#5 staging",
+    "#8 MoU"
+  ],
+  "stopNote": "R3 eng deepen complete. Scientific acceptance remains BLOCKED. Journey is API-mapped with synthetic fixture honesty; inspectable passages come only from backend responses. researcherJourneyCompleteClaimed=false; production writes not claimed. Human #2/#3/#4/#5/#8 explicitly parked.",
+  "inventoryHash": "2e5affbdd77dc5ecdd406b2b523ad6c35dd5321b91aaf5ba362e561159e017e2"
+}
