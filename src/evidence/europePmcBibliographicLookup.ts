@@ -49,6 +49,11 @@ export type BibliographicLookupOk = {
   httpStatus: number;
   responseIdentity: string;
   records: BibliographicRecord[];
+  /** Provider hitCount when present; null if absent from payload. */
+  hitCount: number | null;
+  /** True when hitCount exceeds returned page (bounded pageSize). */
+  truncatedByPageBudget: boolean;
+  pageSize: number;
 };
 
 export type BibliographicLookupFail = {
@@ -164,13 +169,38 @@ function parseRecords(list: unknown[], retrievedAt: string, responseIdentity: st
   });
 }
 
+export const EUROPE_PMC_SEARCH_PAGE_SIZE_MIN = 1;
+export const EUROPE_PMC_SEARCH_PAGE_SIZE_MAX = 25;
+/** Free-text / structured search queries (not only pinned EXT_ID / DOI). */
+export const EUROPE_PMC_SEARCH_QUERY_MAX_CHARS = 500;
+
+export function assertValidEuropePmcSearchQuery(query: string): string {
+  if (typeof query !== "string" || /[\x00-\x1f]/.test(query)) {
+    throw new Error("Invalid Europe PMC search query control characters");
+  }
+  const trimmed = query.trim().replace(/\s+/g, " ");
+  if (!trimmed || trimmed.length > EUROPE_PMC_SEARCH_QUERY_MAX_CHARS) {
+    throw new Error("Invalid Europe PMC search query length");
+  }
+  return trimmed;
+}
+
+export function assertValidEuropePmcPageSize(pageSize: number): number {
+  if (!Number.isInteger(pageSize) || pageSize < EUROPE_PMC_SEARCH_PAGE_SIZE_MIN || pageSize > EUROPE_PMC_SEARCH_PAGE_SIZE_MAX) {
+    throw new Error(`Invalid Europe PMC page size (allowed ${EUROPE_PMC_SEARCH_PAGE_SIZE_MIN}–${EUROPE_PMC_SEARCH_PAGE_SIZE_MAX})`);
+  }
+  return pageSize;
+}
+
 export function parseEuropePmcBibliographicPayload(input: {
   query: string;
   bodyText: string;
   httpStatus: number;
   retrievedAt: string;
+  pageSize?: number;
 }): BibliographicLookupResult {
   const {query, bodyText, httpStatus, retrievedAt} = input;
+  const pageSize = input.pageSize ?? EUROPE_PMC_SEARCH_PAGE_SIZE_MAX;
   if (httpStatus === 403 || httpStatus === 401) {
     return {ok: false, provider: "europe_pmc", query, retrievedAt, outcome: "provider_unavailable", httpStatus, detail: `Europe PMC blocked or unauthorized (HTTP ${httpStatus})`};
   }
@@ -197,6 +227,11 @@ export function parseEuropePmcBibliographicPayload(input: {
     return {ok: false, provider: "europe_pmc", query, retrievedAt, outcome: "invalid_response", httpStatus, detail: "Europe PMC result list missing"};
   }
   const identity = responseIdentityOf(bodyText);
+  const records = parseRecords(list, retrievedAt, identity);
+  const hitCount =
+    typeof body.hitCount === "number" && Number.isFinite(body.hitCount) && body.hitCount >= 0
+      ? Math.floor(body.hitCount)
+      : null;
   return {
     ok: true,
     provider: "europe_pmc",
@@ -204,7 +239,10 @@ export function parseEuropePmcBibliographicPayload(input: {
     retrievedAt,
     httpStatus,
     responseIdentity: identity,
-    records: parseRecords(list, retrievedAt, identity),
+    records,
+    hitCount,
+    truncatedByPageBudget: hitCount !== null ? hitCount > records.length : false,
+    pageSize,
   };
 }
 
@@ -221,11 +259,12 @@ async function lookupEuropePmc(input: {
   now?: () => Date;
   signal?: AbortSignal;
 }): Promise<BibliographicLookupResult> {
+  const pageSize = assertValidEuropePmcPageSize(input.pageSize);
   const params = new URLSearchParams({
     query: input.query,
     format: "json",
     resultType: "core",
-    pageSize: String(input.pageSize),
+    pageSize: String(pageSize),
   });
   const retrievedAt = (input.now ?? (() => new Date()))().toISOString();
   try {
@@ -239,6 +278,7 @@ async function lookupEuropePmc(input: {
       bodyText,
       httpStatus: response.status,
       retrievedAt,
+      pageSize,
     });
   } catch (error) {
     return {
@@ -251,6 +291,29 @@ async function lookupEuropePmc(input: {
       detail: error instanceof Error ? error.message : "Network failure",
     };
   }
+}
+
+/**
+ * Unpinned / researcher-defined Europe PMC search (metadata only).
+ * Does not grant claim support, rights clearance, or scientific approval.
+ * Provider failures stay typed — never collapse to an empty hit list.
+ */
+export async function searchEuropePmcByQuery(input: {
+  query: string;
+  pageSize?: number;
+  fetcher?: typeof fetch;
+  now?: () => Date;
+  signal?: AbortSignal;
+}): Promise<BibliographicLookupResult> {
+  const query = assertValidEuropePmcSearchQuery(input.query);
+  const pageSize = assertValidEuropePmcPageSize(input.pageSize ?? 10);
+  return lookupEuropePmc({
+    query,
+    pageSize,
+    fetcher: input.fetcher,
+    now: input.now,
+    signal: input.signal,
+  });
 }
 
 /** Lookup by DOI. Does not grant claim support, rights or scientific approval. */

@@ -278,16 +278,8 @@ describe("Phase 1 scaffolding — vertical slice (PR 2+) documented, not impleme
     const body = readFileSync(matrixPath, "utf8");
     expect(body).toContain("New researcher question");
     expect(body).toContain("must NOT rely on already-pinned source identifiers");
-    expect(body).toContain("**PR 2**");
     expect(body).toContain("Dynamic retrieval");
+    expect(body).toContain("dynamicEvidenceRetrieval");
+    expect(body).toContain("| **2** |");
   });
-
-  /**
-   * Scaffolding marker for PR 2: dynamic retrieval must accept an unpinned
-   * researcher question. This Phase 1 suite intentionally does not call live
-   * providers or invent scientific hits.
-   */
-  test.todo(
-    "PR2: unpinned researcher question retrieves live metadata without depending on LIVING_EVIDENCE_PMID_PINS",
-  );
 });
