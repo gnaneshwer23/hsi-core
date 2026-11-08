@@ -1,0 +1,66 @@
+{
+  "status": "ok",
+  "message-type": "work",
+  "message": {
+    "DOI": "10.1038/nature15766",
+    "publisher": "Springer Science and Business Media LLC",
+    "title": [
+      "Disentangling type 2 diabetes and metformin treatment signatures in the human gut microbiota"
+    ],
+    "license": [
+      {
+        "start": {
+          "date-parts": [
+            [
+              2015,
+              12,
+              2
+            ]
+          ],
+          "date-time": "2015-12-02T00:00:00Z",
+          "timestamp": 1449014400000
+        },
+        "content-version": "tdm",
+        "delay-in-days": 0,
+        "URL": "http://www.springer.com/tdm"
+      },
+      {
+        "start": {
+          "date-parts": [
+            [
+              2015,
+              12,
+              2
+            ]
+          ],
+          "date-time": "2015-12-02T00:00:00Z",
+          "timestamp": 1449014400000
+        },
+        "content-version": "vor",
+        "delay-in-days": 0,
+        "URL": "http://www.springer.com/tdm"
+      }
+    ],
+    "link": [
+      {
+        "URL": "http://www.nature.com/articles/nature15766.pdf",
+        "content-type": "application/pdf",
+        "content-version": "vor",
+        "intended-application": "text-mining"
+      },
+      {
+        "URL": "http://www.nature.com/articles/nature15766",
+        "content-type": "text/html",
+        "content-version": "vor",
+        "intended-application": "text-mining"
+      },
+      {
+        "URL": "http://www.nature.com/articles/nature15766.pdf",
+        "content-type": "application/pdf",
+        "content-version": "vor",
+        "intended-application": "similarity-checking"
+      }
+    ],
+    "URL": "https://doi.org/10.1038/nature15766"
+  }
+}

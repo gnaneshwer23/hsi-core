@@ -1,0 +1,76 @@
+{
+  "status": "ok",
+  "message-type": "work",
+  "message": {
+    "DOI": "10.1016/j.cell.2018.09.055",
+    "publisher": "Elsevier BV",
+    "title": [
+      "Microbially Produced Imidazole Propionate Impairs Insulin Signaling through mTORC1"
+    ],
+    "license": [
+      {
+        "start": {
+          "date-parts": [
+            [
+              2018,
+              11,
+              1
+            ]
+          ],
+          "date-time": "2018-11-01T00:00:00Z",
+          "timestamp": 1541030400000
+        },
+        "content-version": "tdm",
+        "delay-in-days": 0,
+        "URL": "https://www.elsevier.com/tdm/userlicense/1.0/"
+      },
+      {
+        "start": {
+          "date-parts": [
+            [
+              2018,
+              11,
+              1
+            ]
+          ],
+          "date-time": "2018-11-01T00:00:00Z",
+          "timestamp": 1541030400000
+        },
+        "content-version": "tdm",
+        "delay-in-days": 0,
+        "URL": "https://www.elsevier.com/legal/tdmrep-license"
+      },
+      {
+        "start": {
+          "date-parts": [
+            [
+              2019,
+              11,
+              1
+            ]
+          ],
+          "date-time": "2019-11-01T00:00:00Z",
+          "timestamp": 1572566400000
+        },
+        "content-version": "vor",
+        "delay-in-days": 365,
+        "URL": "http://www.elsevier.com/open-access/userlicense/1.0/"
+      }
+    ],
+    "link": [
+      {
+        "URL": "https://api.elsevier.com/content/article/PII:S0092867418313060?httpAccept=text/xml",
+        "content-type": "text/xml",
+        "content-version": "vor",
+        "intended-application": "text-mining"
+      },
+      {
+        "URL": "https://api.elsevier.com/content/article/PII:S0092867418313060?httpAccept=text/plain",
+        "content-type": "text/plain",
+        "content-version": "vor",
+        "intended-application": "text-mining"
+      }
+    ],
+    "URL": "https://doi.org/10.1016/j.cell.2018.09.055"
+  }
+}

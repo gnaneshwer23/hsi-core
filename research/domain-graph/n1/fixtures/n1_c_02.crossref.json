@@ -1,0 +1,72 @@
+{
+  "status": "ok",
+  "message-type": "work",
+  "message": {
+    "DOI": "10.1038/ni.3713",
+    "publisher": "Springer Science and Business Media LLC",
+    "title": [
+      "Gut microbial metabolites limit the frequency of autoimmune T cells and protect against type 1 diabetes"
+    ],
+    "license": [
+      {
+        "start": {
+          "date-parts": [
+            [
+              2017,
+              3,
+              27
+            ]
+          ],
+          "date-time": "2017-03-27T00:00:00Z",
+          "timestamp": 1490572800000
+        },
+        "content-version": "tdm",
+        "delay-in-days": 0,
+        "URL": "http://www.springer.com/tdm"
+      },
+      {
+        "start": {
+          "date-parts": [
+            [
+              2017,
+              3,
+              27
+            ]
+          ],
+          "date-time": "2017-03-27T00:00:00Z",
+          "timestamp": 1490572800000
+        },
+        "content-version": "vor",
+        "delay-in-days": 0,
+        "URL": "http://www.springer.com/tdm"
+      }
+    ],
+    "link": [
+      {
+        "URL": "http://www.nature.com/articles/ni.3713.pdf",
+        "content-type": "application/pdf",
+        "content-version": "vor",
+        "intended-application": "text-mining"
+      },
+      {
+        "URL": "http://www.nature.com/articles/ni.3713",
+        "content-type": "text/html",
+        "content-version": "vor",
+        "intended-application": "text-mining"
+      },
+      {
+        "URL": "http://www.nature.com/doifinder/10.1038/ni.3713",
+        "content-type": "unspecified",
+        "content-version": "vor",
+        "intended-application": "similarity-checking"
+      },
+      {
+        "URL": "http://www.nature.com/articles/ni.3713.pdf",
+        "content-type": "application/pdf",
+        "content-version": "vor",
+        "intended-application": "similarity-checking"
+      }
+    ],
+    "URL": "https://doi.org/10.1038/ni.3713"
+  }
+}

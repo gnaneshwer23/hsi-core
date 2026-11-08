@@ -1,0 +1,50 @@
+{
+  "status": "ok",
+  "message-type": "work",
+  "message": {
+    "DOI": "10.1038/nature11450",
+    "publisher": "Springer Science and Business Media LLC",
+    "title": [
+      "A metagenome-wide association study of gut microbiota in type 2 diabetes"
+    ],
+    "license": [
+      {
+        "start": {
+          "date-parts": [
+            [
+              2012,
+              9,
+              26
+            ]
+          ],
+          "date-time": "2012-09-26T00:00:00Z",
+          "timestamp": 1348617600000
+        },
+        "content-version": "tdm",
+        "delay-in-days": 0,
+        "URL": "http://www.springer.com/tdm"
+      }
+    ],
+    "link": [
+      {
+        "URL": "http://www.nature.com/articles/nature11450.pdf",
+        "content-type": "application/pdf",
+        "content-version": "vor",
+        "intended-application": "text-mining"
+      },
+      {
+        "URL": "http://www.nature.com/articles/nature11450",
+        "content-type": "text/html",
+        "content-version": "vor",
+        "intended-application": "text-mining"
+      },
+      {
+        "URL": "http://www.nature.com/articles/nature11450.pdf",
+        "content-type": "application/pdf",
+        "content-version": "vor",
+        "intended-application": "similarity-checking"
+      }
+    ],
+    "URL": "https://doi.org/10.1038/nature11450"
+  }
+}

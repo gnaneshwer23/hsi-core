@@ -1,0 +1,21 @@
+{
+  "status": "ok",
+  "message-type": "work",
+  "message": {
+    "DOI": "10.1126/science.7678183",
+    "publisher": "American Association for the Advancement of Science (AAAS)",
+    "title": [
+      "Adipose Expression of Tumor Necrosis Factor-α: Direct Role in Obesity-Linked Insulin Resistance"
+    ],
+    "license": [],
+    "link": [
+      {
+        "URL": "https://www.science.org/doi/pdf/10.1126/science.7678183",
+        "content-type": "unspecified",
+        "content-version": "vor",
+        "intended-application": "similarity-checking"
+      }
+    ],
+    "URL": "https://doi.org/10.1126/science.7678183"
+  }
+}

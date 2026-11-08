@@ -158,6 +158,8 @@
     "n1:verify": "bun --no-env-file scripts/n1-verify-candidates.ts",
     "n1:verify:live": "bun --no-env-file scripts/n1-verify-candidates.ts --live",
     "n1:check": "bun --no-env-file scripts/n1-verify-candidates.ts --check",
+    "n1:attestation:prep": "bun --no-env-file scripts/n1-attestation-completeness.ts",
+    "n1:attestation:check": "bun --no-env-file scripts/n1-attestation-completeness.ts --check",
     "n2:ledger": "bun --no-env-file scripts/n2-evidence-ledger.ts",
     "n2:check": "bun --no-env-file scripts/n2-evidence-ledger.ts --check",
     "n3:benchmark": "bun --no-env-file scripts/n3-scientific-benchmark.ts",

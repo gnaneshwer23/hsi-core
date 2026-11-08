@@ -1,0 +1,50 @@
+{
+  "status": "ok",
+  "message-type": "work",
+  "message": {
+    "DOI": "10.1038/nm.2279",
+    "publisher": "Springer Science and Business Media LLC",
+    "title": [
+      "The NLRP3 inflammasome instigates obesity-induced inflammation and insulin resistance"
+    ],
+    "license": [
+      {
+        "start": {
+          "date-parts": [
+            [
+              2011,
+              1,
+              9
+            ]
+          ],
+          "date-time": "2011-01-09T00:00:00Z",
+          "timestamp": 1294531200000
+        },
+        "content-version": "tdm",
+        "delay-in-days": 0,
+        "URL": "http://www.springer.com/tdm"
+      }
+    ],
+    "link": [
+      {
+        "URL": "http://www.nature.com/articles/nm.2279.pdf",
+        "content-type": "application/pdf",
+        "content-version": "vor",
+        "intended-application": "text-mining"
+      },
+      {
+        "URL": "http://www.nature.com/articles/nm.2279",
+        "content-type": "text/html",
+        "content-version": "vor",
+        "intended-application": "text-mining"
+      },
+      {
+        "URL": "http://www.nature.com/articles/nm.2279.pdf",
+        "content-type": "application/pdf",
+        "content-version": "vor",
+        "intended-application": "similarity-checking"
+      }
+    ],
+    "URL": "https://doi.org/10.1038/nm.2279"
+  }
+}

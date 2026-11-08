@@ -1,0 +1,50 @@
+{
+  "status": "ok",
+  "message-type": "work",
+  "message": {
+    "DOI": "10.1038/s41586-018-0620-2",
+    "publisher": "Springer Science and Business Media LLC",
+    "title": [
+      "The human gut microbiome in early-onset type 1 diabetes from the TEDDY study"
+    ],
+    "license": [
+      {
+        "start": {
+          "date-parts": [
+            [
+              2018,
+              10,
+              1
+            ]
+          ],
+          "date-time": "2018-10-01T00:00:00Z",
+          "timestamp": 1538352000000
+        },
+        "content-version": "tdm",
+        "delay-in-days": 0,
+        "URL": "https://creativecommons.org/licenses/by/4.0"
+      }
+    ],
+    "link": [
+      {
+        "URL": "http://www.nature.com/articles/s41586-018-0620-2",
+        "content-type": "text/html",
+        "content-version": "vor",
+        "intended-application": "text-mining"
+      },
+      {
+        "URL": "http://www.nature.com/articles/s41586-018-0620-2.pdf",
+        "content-type": "application/pdf",
+        "content-version": "vor",
+        "intended-application": "text-mining"
+      },
+      {
+        "URL": "http://www.nature.com/articles/s41586-018-0620-2.pdf",
+        "content-type": "application/pdf",
+        "content-version": "vor",
+        "intended-application": "similarity-checking"
+      }
+    ],
+    "URL": "https://doi.org/10.1038/s41586-018-0620-2"
+  }
+}

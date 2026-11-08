@@ -22,11 +22,11 @@ Focus residuals the founder called out after Backend Scientific Intelligence PRs
 |--|--|
 | **Unblocks** | Licensed full-text / passage import; deeper semantic entailment; R1 packet gold binding; rights-eligible pilot passages for N3/R2 |
 | **Human action** | Programme lead / rights owner: for each of 12 `N1-C-*` rows in `research/domain-graph/n1/attestation-worksheet.v1.json`, open publisher terms, decide reuse scope (prefer metadata-only if ambiguous), record `licenceEvidenceUri` · `permittedUses` · `principal` · `recordedAt` · `rationale`; set `passageImportAuthorized` only when import is actually allowed. Separate import step later — keep `passageImported=0` until then |
-| **Eng prepared** | `rights-inventory.v1.json` · empty attestation worksheet · [`N1_PASSAGE_RIGHTS_ATTESTATION_CHECKLIST.md`](./N1_PASSAGE_RIGHTS_ATTESTATION_CHECKLIST.md) · R1 quarantine packets · `bun run n1:check` / `human-queue:check` refuse invented clearance · matrix default metadata-only / fail-closed import |
-| **Eng must NOT** | Invent `licenceEvidenceUri` from Europe PMC OA/CC labels; set `humanCleared>0` / `passageImported>0` without attestation; promote uncleared passages; edit inventory attestation fields from chat |
-| **Verify after humans** | `bun run n1:check` · `bun run r1:check` · `bun run human-queue:check` · `bun --no-env-file test test/n1PassageRightsInventory.test.ts test/humanQueueResidualPrep.test.ts` — counters move only when worksheet attestations are real |
+| **Eng prepared** | `rights-inventory.v1.json` · empty attestation worksheet · Crossref offline fixtures + [`licence-lookup-assist.v1.json`](../../research/domain-graph/n1/licence-lookup-assist.v1.json) · [`N1_PASSAGE_RIGHTS_ATTESTATION_CHECKLIST.md`](./N1_PASSAGE_RIGHTS_ATTESTATION_CHECKLIST.md) · [`N1_RIGHTS_PHASE2_ENG_ASSIST_NOTES.md`](./N1_RIGHTS_PHASE2_ENG_ASSIST_NOTES.md) · R1 quarantine packets · `bun run n1:check` / `n1:attestation:check` / `human-queue:check` refuse invented clearance · matrix default metadata-only / fail-closed import |
+| **Eng must NOT** | Invent `licenceEvidenceUri` / `principal` on the attestation worksheet from Europe PMC OA/CC labels or Crossref observations; set `humanCleared>0` / `passageImported>0` / `rightsCleared=true` without human attestation; promote uncleared passages; edit inventory attestation fields from chat; claim CLEARED from eng-assist |
+| **Verify after humans** | `bun run n1:check` · `bun run n1:attestation:check` · `bun run r1:check` · `bun run human-queue:check` · `bun --no-env-file test test/n1PassageRightsInventory.test.ts test/n1LicenceLookupAssist.test.ts test/humanQueueResidualPrep.test.ts` — counters move only when worksheet attestations are real |
 
-**Status:** **PARKED** · `humanCleared=0` · `passageImported=0`
+**Status:** **IN PROGRESS · eng-assist** · `rightsCleared=false` · `humanCleared=0` · `passageImported=0` · **not CLEARED** until human principal attests (2 Crossref candidate URIs + 1 CC-under-TDM observation recorded for humans; 12/12 still need principal)
 
 ### #4 — SME dual labels + adjudication (N3 + R2 / N6)
 
