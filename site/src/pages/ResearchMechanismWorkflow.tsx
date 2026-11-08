@@ -151,11 +151,13 @@ export function ResearchMechanismWorkflowPage() {
         passages appear only when the authenticated API returns them — never invented client-side.
       </p>
       <p>
+        <Link to="/research/dashboard">Research workspace</Link>
+        {" · "}
         <Link to={`/research/decision-workbench?investigation=${encodeURIComponent(workflow.syntheticFixture.investigationId)}`}>
           Open decision workbench
         </Link>
         {" · "}
-        <Link to="/research/scientific-workbench">Scientific workbench</Link>
+        <Link to="/research/scientific-workbench">Saved investigations</Link>
         {" · "}
         <Link to="/research/account">Research account</Link>
       </p>

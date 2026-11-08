@@ -1,0 +1,12 @@
+{
+  "pack": "capability-register",
+  "asOf": "2026-11-08",
+  "executionStep": "01",
+  "engineeringCleared": true,
+  "scientificallyValidatedClaimed": false,
+  "humanDoc": "docs/engineering/HSI_CAPABILITY_REGISTER_2026-11-08.md",
+  "register": "operations/capability-register/capability-register.v1.json",
+  "masterSpec": "docs/product/HSI_DEFINITIVE_PRODUCT_SPEC.md",
+  "step02": "documented_plus_nav_reconnects_only",
+  "humanQueueParked": true
+}
