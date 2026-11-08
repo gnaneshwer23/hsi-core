@@ -1,0 +1,22 @@
+{
+  "status": "ok",
+  "message-type": "work",
+  "requestedDoi": "10.1172/jci19246",
+  "message": {
+    "DOI": "10.1172/jci200319246",
+    "publisher": "American Society for Clinical Investigation",
+    "title": [
+      "Obesity is associated with macrophage accumulation in adipose tissue"
+    ],
+    "license": [],
+    "link": [
+      {
+        "URL": "http://www.jci.org/articles/view/19246/files/pdf",
+        "content-type": "unspecified",
+        "content-version": "vor",
+        "intended-application": "similarity-checking"
+      }
+    ],
+    "URL": "https://doi.org/10.1172/jci200319246"
+  }
+}

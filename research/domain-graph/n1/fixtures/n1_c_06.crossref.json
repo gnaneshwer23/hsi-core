@@ -1,0 +1,27 @@
+{
+  "status": "ok",
+  "message-type": "work",
+  "message": {
+    "DOI": "10.1126/science.aao5774",
+    "publisher": "American Association for the Advancement of Science (AAAS)",
+    "title": [
+      "Gut bacteria selectively promoted by dietary fibers alleviate type 2 diabetes"
+    ],
+    "license": [],
+    "link": [
+      {
+        "URL": "https://syndication.highwire.org/content/doi/10.1126/science.aao5774",
+        "content-type": "unspecified",
+        "content-version": "vor",
+        "intended-application": "syndication"
+      },
+      {
+        "URL": "https://www.science.org/doi/pdf/10.1126/science.aao5774",
+        "content-type": "unspecified",
+        "content-version": "vor",
+        "intended-application": "similarity-checking"
+      }
+    ],
+    "URL": "https://doi.org/10.1126/science.aao5774"
+  }
+}

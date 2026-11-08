@@ -1,0 +1,44 @@
+{
+  "status": "ok",
+  "message-type": "work",
+  "message": {
+    "DOI": "10.2337/db08-1637",
+    "publisher": "American Diabetes Association",
+    "title": [
+      "Butyrate Improves Insulin Sensitivity and Increases Energy Expenditure in Mice"
+    ],
+    "license": [
+      {
+        "start": {
+          "date-parts": [
+            [
+              2021,
+              8,
+              27
+            ]
+          ],
+          "date-time": "2021-08-27T00:00:00Z",
+          "timestamp": 1630022400000
+        },
+        "content-version": "vor",
+        "delay-in-days": 4518,
+        "URL": "http://creativecommons.org/licenses/by-nc-nd/3.0/"
+      }
+    ],
+    "link": [
+      {
+        "URL": "https://journals.org/diabetes/diabetes/article-pdf/58/7/1509/393385/zdb00709001509.pdf",
+        "content-type": "application/pdf",
+        "content-version": "vor",
+        "intended-application": "syndication"
+      },
+      {
+        "URL": "https://diabetesjournals.org/diabetes/article-pdf/58/7/1509/393385/zdb00709001509.pdf",
+        "content-type": "unspecified",
+        "content-version": "vor",
+        "intended-application": "similarity-checking"
+      }
+    ],
+    "URL": "https://doi.org/10.2337/db08-1637"
+  }
+}

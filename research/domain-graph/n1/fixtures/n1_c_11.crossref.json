@@ -1,0 +1,27 @@
+{
+  "status": "ok",
+  "message-type": "work",
+  "message": {
+    "DOI": "10.2337/db06-1491",
+    "publisher": "American Diabetes Association",
+    "title": [
+      "Metabolic Endotoxemia Initiates Obesity and Insulin Resistance"
+    ],
+    "license": [],
+    "link": [
+      {
+        "URL": "https://journals.org/diabetes/diabetes/article-pdf/56/7/1761/388478/zdb00707001761.pdf",
+        "content-type": "application/pdf",
+        "content-version": "vor",
+        "intended-application": "syndication"
+      },
+      {
+        "URL": "https://diabetesjournals.org/diabetes/article-pdf/56/7/1761/388478/zdb00707001761.pdf",
+        "content-type": "unspecified",
+        "content-version": "vor",
+        "intended-application": "similarity-checking"
+      }
+    ],
+    "URL": "https://doi.org/10.2337/db06-1491"
+  }
+}

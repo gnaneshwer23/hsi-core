@@ -13,6 +13,9 @@ Engineering inventory is **CLEARED**. Scientific / rights acceptance stays **BLO
 - [x] Fail-closed inventory (`passageUsePermitted=false`, empty `licenceEvidenceUri`)
 - [x] Empty attestation worksheet (12 rows; all attestation fields null)
 - [x] `bun run n1:check` + `bun run human-queue:check` refuse invented clearance
+- [x] Crossref works licence **eng-assist** lookups (`fixtures/*.crossref.json` · `licence-lookup-assist.v1.json`) — observations only; not attestation stamps
+- [x] Fail-closed attestation completeness gate (`bun run n1:attestation:check`) — incomplete ≠ CLEARED
+- [x] Progress notes: [`N1_RIGHTS_PHASE2_ENG_ASSIST_NOTES.md`](./N1_RIGHTS_PHASE2_ENG_ASSIST_NOTES.md) · residual status **IN PROGRESS · eng-assist** (not CLEARED)
 
 ## B. Human must attest (not inventable by code)
 
@@ -41,8 +44,9 @@ For **each** of the 12 `N1-C-*` rows in the attestation worksheet:
 
 ```sh
 bun run n1:check
+bun run n1:attestation:check
 bun run human-queue:check
-bun --no-env-file test test/n1PassageRightsInventory.test.ts test/humanQueueResidualPrep.test.ts
+bun --no-env-file test test/n1PassageRightsInventory.test.ts test/n1LicenceLookupAssist.test.ts test/humanQueueResidualPrep.test.ts
 ```
 
-Expected: `humanCleared=0`, `passageImported=0`, attestation worksheet `anyLicenceEvidenceUriSet=false`.
+Expected: `humanCleared=0`, `passageImported=0`, `rightsCleared=false`, attestation worksheet `anyLicenceEvidenceUriSet=false`, completeness gate `FAIL_CLOSED_INCOMPLETE`.

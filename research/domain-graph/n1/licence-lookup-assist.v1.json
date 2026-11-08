@@ -1,0 +1,496 @@
+{
+  "schemaVersion": "hsi-n1-licence-lookup-assist-1",
+  "residualId": "audit_2_n1_rights",
+  "generatedAt": "2026-11-08T22:00:00.000Z",
+  "engPhaseStatus": "IN_PROGRESS_ENG_ASSIST",
+  "rightsCleared": false,
+  "humanAcceptance": "BLOCKED",
+  "scientificApproval": false,
+  "anyPassageImported": false,
+  "humanCleared": 0,
+  "passageImported": 0,
+  "honesty": {
+    "providerSignalsAreNotClearance": true,
+    "openAccessIsNotCorpusReusePermission": true,
+    "emptyAttestationIsNotClearance": true,
+    "incompleteLookupIsNotCleared": true,
+    "noInventedLicenceEvidenceUri": true,
+    "engLookupIsNotHumanAttestation": true,
+    "metadataOnlyUntilHumanRightsClearance": true
+  },
+  "rows": [
+    {
+      "queueId": "N1-C-01",
+      "sourceId": "doi:10.2337/db08-1637",
+      "doi": "10.2337/db08-1637",
+      "pmid": "19366864",
+      "pmcid": null,
+      "providerArticleUrl": "https://europepmc.org/article/MED/19366864",
+      "providerLicenseLabel": "cc by-nc-nd",
+      "providerIsOpenAccess": "N",
+      "engLookup": {
+        "filledBy": "engineering",
+        "status": "candidate_uri_observed",
+        "crossrefResolvedDoi": "10.2337/db08-1637",
+        "crossrefPublisher": "American Diabetes Association",
+        "candidateEvidenceUrls": [
+          "https://creativecommons.org/licenses/by-nc-nd/3.0/"
+        ],
+        "tdmUrls": [],
+        "creativeCommonsUrlsUnderTdmOnly": [],
+        "doiRedirected": false,
+        "notes": [
+          "Crossref license rows are provider observations only — not HSI passage clearance.",
+          "Do not copy engLookup URLs into attestation.licenceEvidenceUri without human principal review of publisher terms.",
+          "Observed 1 non-TDM vor/unspecified Crossref licence URL(s) for human review.",
+          "Observed licence includes NC and/or ND terms — prefer metadata-only until human confirms permittedUses for HSI corpus."
+        ]
+      },
+      "humanAttestationRequired": {
+        "decision": null,
+        "principal": null,
+        "recordedAt": null,
+        "licenceEvidenceUri": null,
+        "permittedUses": [],
+        "rationale": null,
+        "passageImportAuthorized": false
+      },
+      "humanRequired": true,
+      "blocker": null
+    },
+    {
+      "queueId": "N1-C-02",
+      "sourceId": "doi:10.1038/ni.3713",
+      "doi": "10.1038/ni.3713",
+      "pmid": "28346408",
+      "pmcid": null,
+      "providerArticleUrl": "https://europepmc.org/article/MED/28346408",
+      "providerLicenseLabel": null,
+      "providerIsOpenAccess": "N",
+      "engLookup": {
+        "filledBy": "engineering",
+        "status": "tdm_or_publisher_stub_only",
+        "crossrefResolvedDoi": "10.1038/ni.3713",
+        "crossrefPublisher": "Springer Science and Business Media LLC",
+        "candidateEvidenceUrls": [
+          "http://www.springer.com/tdm"
+        ],
+        "tdmUrls": [
+          "http://www.springer.com/tdm"
+        ],
+        "creativeCommonsUrlsUnderTdmOnly": [],
+        "doiRedirected": false,
+        "notes": [
+          "Crossref license rows are provider observations only — not HSI passage clearance.",
+          "Do not copy engLookup URLs into attestation.licenceEvidenceUri without human principal review of publisher terms.",
+          "Observed 1 non-TDM vor/unspecified Crossref licence URL(s) for human review.",
+          "Non-TDM Crossref URL(s) are Springer TDM stubs — not corpus reuse licences; open publisher terms."
+        ]
+      },
+      "humanAttestationRequired": {
+        "decision": null,
+        "principal": null,
+        "recordedAt": null,
+        "licenceEvidenceUri": null,
+        "permittedUses": [],
+        "rationale": null,
+        "passageImportAuthorized": false
+      },
+      "humanRequired": true,
+      "blocker": "Crossref only reports publisher TDM stub URLs; human must open publisher / VoR terms."
+    },
+    {
+      "queueId": "N1-C-03",
+      "sourceId": "doi:10.1038/nature18646",
+      "doi": "10.1038/nature18646",
+      "pmid": "27409811",
+      "pmcid": null,
+      "providerArticleUrl": "https://europepmc.org/article/MED/27409811",
+      "providerLicenseLabel": null,
+      "providerIsOpenAccess": "N",
+      "engLookup": {
+        "filledBy": "engineering",
+        "status": "tdm_or_publisher_stub_only",
+        "crossrefResolvedDoi": "10.1038/nature18646",
+        "crossrefPublisher": "Springer Science and Business Media LLC",
+        "candidateEvidenceUrls": [],
+        "tdmUrls": [
+          "http://www.springer.com/tdm"
+        ],
+        "creativeCommonsUrlsUnderTdmOnly": [],
+        "doiRedirected": false,
+        "notes": [
+          "Crossref license rows are provider observations only — not HSI passage clearance.",
+          "Do not copy engLookup URLs into attestation.licenceEvidenceUri without human principal review of publisher terms.",
+          "Crossref licences are TDM-only or non-candidate stubs."
+        ]
+      },
+      "humanAttestationRequired": {
+        "decision": null,
+        "principal": null,
+        "recordedAt": null,
+        "licenceEvidenceUri": null,
+        "permittedUses": [],
+        "rationale": null,
+        "passageImportAuthorized": false
+      },
+      "humanRequired": true,
+      "blocker": "Crossref lacks vor/unspecified reuse URI; human must open publisher terms (prefer metadata-only if ambiguous)."
+    },
+    {
+      "queueId": "N1-C-04",
+      "sourceId": "doi:10.1038/nature11450",
+      "doi": "10.1038/nature11450",
+      "pmid": "23023125",
+      "pmcid": null,
+      "providerArticleUrl": "https://europepmc.org/article/MED/23023125",
+      "providerLicenseLabel": null,
+      "providerIsOpenAccess": "N",
+      "engLookup": {
+        "filledBy": "engineering",
+        "status": "tdm_or_publisher_stub_only",
+        "crossrefResolvedDoi": "10.1038/nature11450",
+        "crossrefPublisher": "Springer Science and Business Media LLC",
+        "candidateEvidenceUrls": [],
+        "tdmUrls": [
+          "http://www.springer.com/tdm"
+        ],
+        "creativeCommonsUrlsUnderTdmOnly": [],
+        "doiRedirected": false,
+        "notes": [
+          "Crossref license rows are provider observations only — not HSI passage clearance.",
+          "Do not copy engLookup URLs into attestation.licenceEvidenceUri without human principal review of publisher terms.",
+          "Crossref licences are TDM-only or non-candidate stubs."
+        ]
+      },
+      "humanAttestationRequired": {
+        "decision": null,
+        "principal": null,
+        "recordedAt": null,
+        "licenceEvidenceUri": null,
+        "permittedUses": [],
+        "rationale": null,
+        "passageImportAuthorized": false
+      },
+      "humanRequired": true,
+      "blocker": "Crossref lacks vor/unspecified reuse URI; human must open publisher terms (prefer metadata-only if ambiguous)."
+    },
+    {
+      "queueId": "N1-C-05",
+      "sourceId": "doi:10.1038/nature15766",
+      "doi": "10.1038/nature15766",
+      "pmid": "26633628",
+      "pmcid": "PMC4681099",
+      "providerArticleUrl": "https://europepmc.org/article/MED/26633628",
+      "providerLicenseLabel": null,
+      "providerIsOpenAccess": "Y",
+      "engLookup": {
+        "filledBy": "engineering",
+        "status": "tdm_or_publisher_stub_only",
+        "crossrefResolvedDoi": "10.1038/nature15766",
+        "crossrefPublisher": "Springer Science and Business Media LLC",
+        "candidateEvidenceUrls": [
+          "http://www.springer.com/tdm"
+        ],
+        "tdmUrls": [
+          "http://www.springer.com/tdm"
+        ],
+        "creativeCommonsUrlsUnderTdmOnly": [],
+        "doiRedirected": false,
+        "notes": [
+          "Crossref license rows are provider observations only — not HSI passage clearance.",
+          "Do not copy engLookup URLs into attestation.licenceEvidenceUri without human principal review of publisher terms.",
+          "Observed 1 non-TDM vor/unspecified Crossref licence URL(s) for human review.",
+          "Non-TDM Crossref URL(s) are Springer TDM stubs — not corpus reuse licences; open publisher terms."
+        ]
+      },
+      "humanAttestationRequired": {
+        "decision": null,
+        "principal": null,
+        "recordedAt": null,
+        "licenceEvidenceUri": null,
+        "permittedUses": [],
+        "rationale": null,
+        "passageImportAuthorized": false
+      },
+      "humanRequired": true,
+      "blocker": "Crossref only reports publisher TDM stub URLs; human must open publisher / VoR terms."
+    },
+    {
+      "queueId": "N1-C-06",
+      "sourceId": "doi:10.1126/science.aao5774",
+      "doi": "10.1126/science.aao5774",
+      "pmid": "29590046",
+      "pmcid": null,
+      "providerArticleUrl": "https://europepmc.org/article/MED/29590046",
+      "providerLicenseLabel": null,
+      "providerIsOpenAccess": "N",
+      "engLookup": {
+        "filledBy": "engineering",
+        "status": "empty_crossref_licences",
+        "crossrefResolvedDoi": "10.1126/science.aao5774",
+        "crossrefPublisher": "American Association for the Advancement of Science (AAAS)",
+        "candidateEvidenceUrls": [],
+        "tdmUrls": [],
+        "creativeCommonsUrlsUnderTdmOnly": [],
+        "doiRedirected": false,
+        "notes": [
+          "Crossref license rows are provider observations only — not HSI passage clearance.",
+          "Do not copy engLookup URLs into attestation.licenceEvidenceUri without human principal review of publisher terms.",
+          "Crossref works license array is empty."
+        ]
+      },
+      "humanAttestationRequired": {
+        "decision": null,
+        "principal": null,
+        "recordedAt": null,
+        "licenceEvidenceUri": null,
+        "permittedUses": [],
+        "rationale": null,
+        "passageImportAuthorized": false
+      },
+      "humanRequired": true,
+      "blocker": "No Crossref licence URL; human must open publisher landing / Europe PMC article page."
+    },
+    {
+      "queueId": "N1-C-07",
+      "sourceId": "doi:10.1016/j.cell.2018.09.055",
+      "doi": "10.1016/j.cell.2018.09.055",
+      "pmid": "30401435",
+      "pmcid": null,
+      "providerArticleUrl": "https://europepmc.org/article/MED/30401435",
+      "providerLicenseLabel": null,
+      "providerIsOpenAccess": "N",
+      "engLookup": {
+        "filledBy": "engineering",
+        "status": "candidate_uri_observed",
+        "crossrefResolvedDoi": "10.1016/j.cell.2018.09.055",
+        "crossrefPublisher": "Elsevier BV",
+        "candidateEvidenceUrls": [
+          "http://www.elsevier.com/open-access/userlicense/1.0/"
+        ],
+        "tdmUrls": [
+          "https://www.elsevier.com/tdm/userlicense/1.0/",
+          "https://www.elsevier.com/legal/tdmrep-license"
+        ],
+        "creativeCommonsUrlsUnderTdmOnly": [],
+        "doiRedirected": false,
+        "notes": [
+          "Crossref license rows are provider observations only — not HSI passage clearance.",
+          "Do not copy engLookup URLs into attestation.licenceEvidenceUri without human principal review of publisher terms.",
+          "Observed 1 non-TDM vor/unspecified Crossref licence URL(s) for human review.",
+          "Elsevier OA userlicense URL is not Creative Commons — human must decide cite-metadata vs passage scope."
+        ]
+      },
+      "humanAttestationRequired": {
+        "decision": null,
+        "principal": null,
+        "recordedAt": null,
+        "licenceEvidenceUri": null,
+        "permittedUses": [],
+        "rationale": null,
+        "passageImportAuthorized": false
+      },
+      "humanRequired": true,
+      "blocker": null
+    },
+    {
+      "queueId": "N1-C-08",
+      "sourceId": "doi:10.1172/JCI19246",
+      "doi": "10.1172/jci19246",
+      "pmid": "14679176",
+      "pmcid": "PMC296995",
+      "providerArticleUrl": "https://europepmc.org/article/MED/14679176",
+      "providerLicenseLabel": null,
+      "providerIsOpenAccess": "N",
+      "engLookup": {
+        "filledBy": "engineering",
+        "status": "empty_crossref_licences",
+        "crossrefResolvedDoi": "10.1172/jci200319246",
+        "crossrefPublisher": "American Society for Clinical Investigation",
+        "candidateEvidenceUrls": [],
+        "tdmUrls": [],
+        "creativeCommonsUrlsUnderTdmOnly": [],
+        "doiRedirected": true,
+        "notes": [
+          "Crossref license rows are provider observations only — not HSI passage clearance.",
+          "Do not copy engLookup URLs into attestation.licenceEvidenceUri without human principal review of publisher terms.",
+          "Crossref resolved DOI 10.1172/jci200319246 (requested 10.1172/jci19246); confirm identity before attesting.",
+          "Crossref works license array is empty."
+        ]
+      },
+      "humanAttestationRequired": {
+        "decision": null,
+        "principal": null,
+        "recordedAt": null,
+        "licenceEvidenceUri": null,
+        "permittedUses": [],
+        "rationale": null,
+        "passageImportAuthorized": false
+      },
+      "humanRequired": true,
+      "blocker": "No Crossref licence URL; human must open publisher landing / Europe PMC article page."
+    },
+    {
+      "queueId": "N1-C-09",
+      "sourceId": "doi:10.1126/science.7678183",
+      "doi": "10.1126/science.7678183",
+      "pmid": "7678183",
+      "pmcid": null,
+      "providerArticleUrl": "https://europepmc.org/article/MED/7678183",
+      "providerLicenseLabel": null,
+      "providerIsOpenAccess": "N",
+      "engLookup": {
+        "filledBy": "engineering",
+        "status": "empty_crossref_licences",
+        "crossrefResolvedDoi": "10.1126/science.7678183",
+        "crossrefPublisher": "American Association for the Advancement of Science (AAAS)",
+        "candidateEvidenceUrls": [],
+        "tdmUrls": [],
+        "creativeCommonsUrlsUnderTdmOnly": [],
+        "doiRedirected": false,
+        "notes": [
+          "Crossref license rows are provider observations only — not HSI passage clearance.",
+          "Do not copy engLookup URLs into attestation.licenceEvidenceUri without human principal review of publisher terms.",
+          "Crossref works license array is empty."
+        ]
+      },
+      "humanAttestationRequired": {
+        "decision": null,
+        "principal": null,
+        "recordedAt": null,
+        "licenceEvidenceUri": null,
+        "permittedUses": [],
+        "rationale": null,
+        "passageImportAuthorized": false
+      },
+      "humanRequired": true,
+      "blocker": "No Crossref licence URL; human must open publisher landing / Europe PMC article page."
+    },
+    {
+      "queueId": "N1-C-10",
+      "sourceId": "doi:10.1038/nm.2279",
+      "doi": "10.1038/nm.2279",
+      "pmid": "21217695",
+      "pmcid": "PMC3076025",
+      "providerArticleUrl": "https://europepmc.org/article/MED/21217695",
+      "providerLicenseLabel": null,
+      "providerIsOpenAccess": "Y",
+      "engLookup": {
+        "filledBy": "engineering",
+        "status": "tdm_or_publisher_stub_only",
+        "crossrefResolvedDoi": "10.1038/nm.2279",
+        "crossrefPublisher": "Springer Science and Business Media LLC",
+        "candidateEvidenceUrls": [],
+        "tdmUrls": [
+          "http://www.springer.com/tdm"
+        ],
+        "creativeCommonsUrlsUnderTdmOnly": [],
+        "doiRedirected": false,
+        "notes": [
+          "Crossref license rows are provider observations only — not HSI passage clearance.",
+          "Do not copy engLookup URLs into attestation.licenceEvidenceUri without human principal review of publisher terms.",
+          "Crossref licences are TDM-only or non-candidate stubs."
+        ]
+      },
+      "humanAttestationRequired": {
+        "decision": null,
+        "principal": null,
+        "recordedAt": null,
+        "licenceEvidenceUri": null,
+        "permittedUses": [],
+        "rationale": null,
+        "passageImportAuthorized": false
+      },
+      "humanRequired": true,
+      "blocker": "Crossref lacks vor/unspecified reuse URI; human must open publisher terms (prefer metadata-only if ambiguous)."
+    },
+    {
+      "queueId": "N1-C-11",
+      "sourceId": "doi:10.2337/db06-1491",
+      "doi": "10.2337/db06-1491",
+      "pmid": "17456850",
+      "pmcid": null,
+      "providerArticleUrl": "https://europepmc.org/article/MED/17456850",
+      "providerLicenseLabel": null,
+      "providerIsOpenAccess": "N",
+      "engLookup": {
+        "filledBy": "engineering",
+        "status": "empty_crossref_licences",
+        "crossrefResolvedDoi": "10.2337/db06-1491",
+        "crossrefPublisher": "American Diabetes Association",
+        "candidateEvidenceUrls": [],
+        "tdmUrls": [],
+        "creativeCommonsUrlsUnderTdmOnly": [],
+        "doiRedirected": false,
+        "notes": [
+          "Crossref license rows are provider observations only — not HSI passage clearance.",
+          "Do not copy engLookup URLs into attestation.licenceEvidenceUri without human principal review of publisher terms.",
+          "Crossref works license array is empty."
+        ]
+      },
+      "humanAttestationRequired": {
+        "decision": null,
+        "principal": null,
+        "recordedAt": null,
+        "licenceEvidenceUri": null,
+        "permittedUses": [],
+        "rationale": null,
+        "passageImportAuthorized": false
+      },
+      "humanRequired": true,
+      "blocker": "No Crossref licence URL; human must open publisher landing / Europe PMC article page."
+    },
+    {
+      "queueId": "N1-C-12",
+      "sourceId": "doi:10.1038/s41586-018-0620-2",
+      "doi": "10.1038/s41586-018-0620-2",
+      "pmid": "30356183",
+      "pmcid": "PMC6296767",
+      "providerArticleUrl": "https://europepmc.org/article/MED/30356183",
+      "providerLicenseLabel": "cc by",
+      "providerIsOpenAccess": "Y",
+      "engLookup": {
+        "filledBy": "engineering",
+        "status": "cc_uri_under_tdm_only",
+        "crossrefResolvedDoi": "10.1038/s41586-018-0620-2",
+        "crossrefPublisher": "Springer Science and Business Media LLC",
+        "candidateEvidenceUrls": [],
+        "tdmUrls": [
+          "https://creativecommons.org/licenses/by/4.0"
+        ],
+        "creativeCommonsUrlsUnderTdmOnly": [
+          "https://creativecommons.org/licenses/by/4.0"
+        ],
+        "doiRedirected": false,
+        "notes": [
+          "Crossref license rows are provider observations only — not HSI passage clearance.",
+          "Do not copy engLookup URLs into attestation.licenceEvidenceUri without human principal review of publisher terms.",
+          "Creative Commons URL appears only under Crossref content-version=tdm; RA-style import refuses TDM-only. Human must confirm VoR / publisher OA statement."
+        ]
+      },
+      "humanAttestationRequired": {
+        "decision": null,
+        "principal": null,
+        "recordedAt": null,
+        "licenceEvidenceUri": null,
+        "permittedUses": [],
+        "rationale": null,
+        "passageImportAuthorized": false
+      },
+      "humanRequired": true,
+      "blocker": "CC URL under TDM-only Crossref row — prefer metadata-only until human confirms VoR reuse terms."
+    }
+  ],
+  "summary": {
+    "rows": 12,
+    "factualCandidateUriObserved": 2,
+    "ccUriUnderTdmOnly": 1,
+    "lookedUpNoCandidateUri": 10,
+    "lookupFailed": 0,
+    "stillNeedsHumanPrincipal": 12,
+    "attested": 0,
+    "pending": 12
+  },
+  "assistHash": "b5e6e0294aaebcaab4fce884fc0814881deb8d23c2b0099ccacca33c6b6a4253"
+}
