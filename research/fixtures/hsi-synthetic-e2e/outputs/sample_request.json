@@ -1,0 +1,9 @@
+{
+  "as_of": "2026-11-06T23:00:00Z",
+  "contract_version": "hsi-output/1.0.0",
+  "idempotency_key": "SYNTHETIC/REQUEST/demo-001",
+  "namespace": "SYNTHETIC/HSI/v1",
+  "patient_id": "SYNTHETIC/PATIENT/0000",
+  "synthetic": true,
+  "trial_id": "SYNTHETIC/TRIAL/RA"
+}

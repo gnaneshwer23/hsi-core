@@ -1,0 +1,845 @@
+{
+  "as_of": "2026-11-06T23:00:00Z",
+  "confidence": {
+    "method": "not_calibrated; deterministic fixture rules only",
+    "value": null
+  },
+  "contract_version": "hsi-output/1.0.0",
+  "dataset_manifest_sha256": "ee7bf36a9cb683f94cac3c27de1e83b53afe4a07a06ab8461856a8cbb2adf756",
+  "dataset_version": "hsi-fixture-1.0.0",
+  "event_at": "2026-11-06T23:00:00Z",
+  "evidence_lookup": {
+    "SYNTHETIC/CLAIM/000/0": {
+      "concept_id": "SYNTHETIC/CONCEPT/RA",
+      "disease": "RA",
+      "event_at": "2026-11-05T12:00:00Z",
+      "evidence_kind": "fictional_measurement_claim",
+      "generated_at": "2026-11-06T00:00:00Z",
+      "id": "SYNTHETIC/CLAIM/000/0",
+      "ingested_at": "2026-11-05T12:00:00Z",
+      "namespace": "SYNTHETIC/HSI/v1",
+      "passage_id": "SYNTHETIC/PASSAGE/000/0",
+      "polarity": "supports",
+      "proposition": "pathway_X_increases_fixture_signal_Y",
+      "provenance": {
+        "generator": "hsi-fixture-1.0.0",
+        "kind": "procedural-fiction",
+        "seed": 20261106
+      },
+      "setting": "ex_vivo",
+      "source_id": "SYNTHETIC/SOURCE/000/v2",
+      "species": "human",
+      "split": "train",
+      "status": "reviewed",
+      "study_id": "SYNTHETIC/STUDY/000",
+      "synthetic": true,
+      "tenant": "research-sandbox",
+      "tissue": "synovium"
+    },
+    "SYNTHETIC/CLAIM/000/1": {
+      "concept_id": "SYNTHETIC/CONCEPT/RA",
+      "disease": "RA",
+      "event_at": "2026-11-05T12:00:00Z",
+      "evidence_kind": "fictional_measurement_claim",
+      "generated_at": "2026-11-06T00:00:00Z",
+      "id": "SYNTHETIC/CLAIM/000/1",
+      "ingested_at": "2026-11-05T12:00:00Z",
+      "namespace": "SYNTHETIC/HSI/v1",
+      "passage_id": "SYNTHETIC/PASSAGE/000/1",
+      "polarity": "opposes",
+      "proposition": "pathway_X_increases_fixture_signal_Y",
+      "provenance": {
+        "generator": "hsi-fixture-1.0.0",
+        "kind": "procedural-fiction",
+        "seed": 20261106
+      },
+      "setting": "ex_vivo",
+      "source_id": "SYNTHETIC/SOURCE/000/v2",
+      "species": "human",
+      "split": "train",
+      "status": "reviewed",
+      "study_id": "SYNTHETIC/STUDY/000",
+      "synthetic": true,
+      "tenant": "research-sandbox",
+      "tissue": "synovium"
+    },
+    "SYNTHETIC/CLAIM/000/2": {
+      "concept_id": "SYNTHETIC/CONCEPT/RA",
+      "disease": "RA",
+      "event_at": "2026-11-05T12:00:00Z",
+      "evidence_kind": "fictional_measurement_claim",
+      "generated_at": "2026-11-06T00:00:00Z",
+      "id": "SYNTHETIC/CLAIM/000/2",
+      "ingested_at": "2026-11-05T12:00:00Z",
+      "namespace": "SYNTHETIC/HSI/v1",
+      "passage_id": "SYNTHETIC/PASSAGE/000/2",
+      "polarity": "supports",
+      "proposition": "pathway_X_increases_fixture_signal_Y",
+      "provenance": {
+        "generator": "hsi-fixture-1.0.0",
+        "kind": "procedural-fiction",
+        "seed": 20261106
+      },
+      "setting": "in_vivo",
+      "source_id": "SYNTHETIC/SOURCE/000/v2",
+      "species": "mouse",
+      "split": "train",
+      "status": "unreviewed",
+      "study_id": "SYNTHETIC/STUDY/000",
+      "synthetic": true,
+      "tenant": "research-sandbox",
+      "tissue": "blood"
+    },
+    "SYNTHETIC/CLAIM/000/3": {
+      "concept_id": "SYNTHETIC/CONCEPT/RA",
+      "disease": "RA",
+      "event_at": "2026-11-05T12:00:00Z",
+      "evidence_kind": "model_inference_fixture",
+      "generated_at": "2026-11-06T00:00:00Z",
+      "id": "SYNTHETIC/CLAIM/000/3",
+      "ingested_at": "2026-11-05T12:00:00Z",
+      "namespace": "SYNTHETIC/HSI/v1",
+      "passage_id": "SYNTHETIC/PASSAGE/000/3",
+      "polarity": "supports",
+      "proposition": "pathway_X_increases_fixture_signal_Y",
+      "provenance": {
+        "generator": "hsi-fixture-1.0.0",
+        "kind": "procedural-fiction",
+        "seed": 20261106
+      },
+      "setting": "in_vitro",
+      "source_id": "SYNTHETIC/SOURCE/000/v2",
+      "species": "human",
+      "split": "train",
+      "status": "inferred",
+      "study_id": "SYNTHETIC/STUDY/000",
+      "synthetic": true,
+      "tenant": "research-sandbox",
+      "tissue": "synovium"
+    },
+    "SYNTHETIC/CLAIM/001/0": {
+      "concept_id": "SYNTHETIC/CONCEPT/RA",
+      "disease": "RA",
+      "event_at": "2026-11-05T12:00:00Z",
+      "evidence_kind": "fictional_measurement_claim",
+      "generated_at": "2026-11-06T00:00:00Z",
+      "id": "SYNTHETIC/CLAIM/001/0",
+      "ingested_at": "2026-11-05T12:00:00Z",
+      "namespace": "SYNTHETIC/HSI/v1",
+      "passage_id": "SYNTHETIC/PASSAGE/001/0",
+      "polarity": "supports",
+      "proposition": "pathway_X_increases_fixture_signal_Y",
+      "provenance": {
+        "generator": "hsi-fixture-1.0.0",
+        "kind": "procedural-fiction",
+        "seed": 20261106
+      },
+      "setting": "ex_vivo",
+      "source_id": "SYNTHETIC/SOURCE/001/v2",
+      "species": "human",
+      "split": "train",
+      "status": "reviewed",
+      "study_id": "SYNTHETIC/STUDY/001",
+      "synthetic": true,
+      "tenant": "research-sandbox",
+      "tissue": "synovium"
+    },
+    "SYNTHETIC/CLAIM/001/1": {
+      "concept_id": "SYNTHETIC/CONCEPT/RA",
+      "disease": "RA",
+      "event_at": "2026-11-05T12:00:00Z",
+      "evidence_kind": "fictional_measurement_claim",
+      "generated_at": "2026-11-06T00:00:00Z",
+      "id": "SYNTHETIC/CLAIM/001/1",
+      "ingested_at": "2026-11-05T12:00:00Z",
+      "namespace": "SYNTHETIC/HSI/v1",
+      "passage_id": "SYNTHETIC/PASSAGE/001/1",
+      "polarity": "opposes",
+      "proposition": "pathway_X_increases_fixture_signal_Y",
+      "provenance": {
+        "generator": "hsi-fixture-1.0.0",
+        "kind": "procedural-fiction",
+        "seed": 20261106
+      },
+      "setting": "ex_vivo",
+      "source_id": "SYNTHETIC/SOURCE/001/v2",
+      "species": "human",
+      "split": "train",
+      "status": "reviewed",
+      "study_id": "SYNTHETIC/STUDY/001",
+      "synthetic": true,
+      "tenant": "research-sandbox",
+      "tissue": "synovium"
+    },
+    "SYNTHETIC/CLAIM/001/2": {
+      "concept_id": "SYNTHETIC/CONCEPT/RA",
+      "disease": "RA",
+      "event_at": "2026-11-05T12:00:00Z",
+      "evidence_kind": "fictional_measurement_claim",
+      "generated_at": "2026-11-06T00:00:00Z",
+      "id": "SYNTHETIC/CLAIM/001/2",
+      "ingested_at": "2026-11-05T12:00:00Z",
+      "namespace": "SYNTHETIC/HSI/v1",
+      "passage_id": "SYNTHETIC/PASSAGE/001/2",
+      "polarity": "supports",
+      "proposition": "pathway_X_increases_fixture_signal_Y",
+      "provenance": {
+        "generator": "hsi-fixture-1.0.0",
+        "kind": "procedural-fiction",
+        "seed": 20261106
+      },
+      "setting": "in_vivo",
+      "source_id": "SYNTHETIC/SOURCE/001/v2",
+      "species": "mouse",
+      "split": "train",
+      "status": "unreviewed",
+      "study_id": "SYNTHETIC/STUDY/001",
+      "synthetic": true,
+      "tenant": "research-sandbox",
+      "tissue": "blood"
+    },
+    "SYNTHETIC/CLAIM/001/3": {
+      "concept_id": "SYNTHETIC/CONCEPT/RA",
+      "disease": "RA",
+      "event_at": "2026-11-05T12:00:00Z",
+      "evidence_kind": "model_inference_fixture",
+      "generated_at": "2026-11-06T00:00:00Z",
+      "id": "SYNTHETIC/CLAIM/001/3",
+      "ingested_at": "2026-11-05T12:00:00Z",
+      "namespace": "SYNTHETIC/HSI/v1",
+      "passage_id": "SYNTHETIC/PASSAGE/001/3",
+      "polarity": "supports",
+      "proposition": "pathway_X_increases_fixture_signal_Y",
+      "provenance": {
+        "generator": "hsi-fixture-1.0.0",
+        "kind": "procedural-fiction",
+        "seed": 20261106
+      },
+      "setting": "in_vitro",
+      "source_id": "SYNTHETIC/SOURCE/001/v2",
+      "species": "human",
+      "split": "train",
+      "status": "inferred",
+      "study_id": "SYNTHETIC/STUDY/001",
+      "synthetic": true,
+      "tenant": "research-sandbox",
+      "tissue": "synovium"
+    },
+    "SYNTHETIC/LAB/0000/18/CRP": {
+      "available_for_screening": true,
+      "code": "CRP",
+      "concept_id": "SYNTHETIC/CONCEPT/CRP",
+      "encounter_id": "SYNTHETIC/ENCOUNTER/0000/18",
+      "event_at": "2026-11-06T12:00:00Z",
+      "generated_at": "2026-11-06T00:00:00Z",
+      "id": "SYNTHETIC/LAB/0000/18/CRP",
+      "ingested_at": "2026-11-06T12:00:00Z",
+      "missing_reason": null,
+      "namespace": "SYNTHETIC/HSI/v1",
+      "patient_id": "SYNTHETIC/PATIENT/0000",
+      "provenance": {
+        "generator": "hsi-fixture-1.0.0",
+        "kind": "procedural-fiction",
+        "seed": 20261106
+      },
+      "research_only": false,
+      "split": "train",
+      "synthetic": true,
+      "tenant": "sandbox-alpha",
+      "unit": "mg/L",
+      "value": 8.0
+    },
+    "SYNTHETIC/LAB/0000/18/EGFR": {
+      "available_for_screening": true,
+      "code": "EGFR",
+      "concept_id": "SYNTHETIC/CONCEPT/EGFR",
+      "encounter_id": "SYNTHETIC/ENCOUNTER/0000/18",
+      "event_at": "2026-11-06T12:00:00Z",
+      "generated_at": "2026-11-06T00:00:00Z",
+      "id": "SYNTHETIC/LAB/0000/18/EGFR",
+      "ingested_at": "2026-11-06T12:00:00Z",
+      "missing_reason": null,
+      "namespace": "SYNTHETIC/HSI/v1",
+      "patient_id": "SYNTHETIC/PATIENT/0000",
+      "provenance": {
+        "generator": "hsi-fixture-1.0.0",
+        "kind": "procedural-fiction",
+        "seed": 20261106
+      },
+      "research_only": false,
+      "split": "train",
+      "synthetic": true,
+      "tenant": "sandbox-alpha",
+      "unit": "mL/min/1.73m2",
+      "value": 85.0
+    },
+    "SYNTHETIC/PASSAGE/000/0": {
+      "event_at": "2026-11-05T12:00:00Z",
+      "generated_at": "2026-11-06T00:00:00Z",
+      "id": "SYNTHETIC/PASSAGE/000/0",
+      "ingested_at": "2026-11-05T12:00:00Z",
+      "namespace": "SYNTHETIC/HSI/v1",
+      "negated": false,
+      "provenance": {
+        "generator": "hsi-fixture-1.0.0",
+        "kind": "procedural-fiction",
+        "seed": 20261106
+      },
+      "source_id": "SYNTHETIC/SOURCE/000/v2",
+      "split": "train",
+      "study_id": "SYNTHETIC/STUDY/000",
+      "synthetic": true,
+      "tenant": "research-sandbox",
+      "text": "SYNTHETIC_ONLY. In this invented human synovium ex_vivo setting, pathway X increased fixture signal Y. This is not a clinical finding."
+    },
+    "SYNTHETIC/PASSAGE/000/1": {
+      "event_at": "2026-11-05T12:00:00Z",
+      "generated_at": "2026-11-06T00:00:00Z",
+      "id": "SYNTHETIC/PASSAGE/000/1",
+      "ingested_at": "2026-11-05T12:00:00Z",
+      "namespace": "SYNTHETIC/HSI/v1",
+      "negated": true,
+      "provenance": {
+        "generator": "hsi-fixture-1.0.0",
+        "kind": "procedural-fiction",
+        "seed": 20261106
+      },
+      "source_id": "SYNTHETIC/SOURCE/000/v2",
+      "split": "train",
+      "study_id": "SYNTHETIC/STUDY/000",
+      "synthetic": true,
+      "tenant": "research-sandbox",
+      "text": "SYNTHETIC_ONLY. In this invented human synovium ex_vivo setting, pathway X did not increase fixture signal Y. This is not a clinical finding."
+    },
+    "SYNTHETIC/PASSAGE/000/2": {
+      "event_at": "2026-11-05T12:00:00Z",
+      "generated_at": "2026-11-06T00:00:00Z",
+      "id": "SYNTHETIC/PASSAGE/000/2",
+      "ingested_at": "2026-11-05T12:00:00Z",
+      "namespace": "SYNTHETIC/HSI/v1",
+      "negated": false,
+      "provenance": {
+        "generator": "hsi-fixture-1.0.0",
+        "kind": "procedural-fiction",
+        "seed": 20261106
+      },
+      "source_id": "SYNTHETIC/SOURCE/000/v2",
+      "split": "train",
+      "study_id": "SYNTHETIC/STUDY/000",
+      "synthetic": true,
+      "tenant": "research-sandbox",
+      "text": "SYNTHETIC_ONLY. In this invented mouse blood in_vivo setting, pathway X increased fixture signal Y. This is not a clinical finding."
+    },
+    "SYNTHETIC/PASSAGE/000/3": {
+      "event_at": "2026-11-05T12:00:00Z",
+      "generated_at": "2026-11-06T00:00:00Z",
+      "id": "SYNTHETIC/PASSAGE/000/3",
+      "ingested_at": "2026-11-05T12:00:00Z",
+      "namespace": "SYNTHETIC/HSI/v1",
+      "negated": false,
+      "provenance": {
+        "generator": "hsi-fixture-1.0.0",
+        "kind": "procedural-fiction",
+        "seed": 20261106
+      },
+      "source_id": "SYNTHETIC/SOURCE/000/v2",
+      "split": "train",
+      "study_id": "SYNTHETIC/STUDY/000",
+      "synthetic": true,
+      "tenant": "research-sandbox",
+      "text": "SYNTHETIC_ONLY. In this invented human synovium in_vitro setting, pathway X increased fixture signal Y. This is not a clinical finding."
+    },
+    "SYNTHETIC/PASSAGE/001/0": {
+      "event_at": "2026-11-05T12:00:00Z",
+      "generated_at": "2026-11-06T00:00:00Z",
+      "id": "SYNTHETIC/PASSAGE/001/0",
+      "ingested_at": "2026-11-05T12:00:00Z",
+      "namespace": "SYNTHETIC/HSI/v1",
+      "negated": false,
+      "provenance": {
+        "generator": "hsi-fixture-1.0.0",
+        "kind": "procedural-fiction",
+        "seed": 20261106
+      },
+      "source_id": "SYNTHETIC/SOURCE/001/v2",
+      "split": "train",
+      "study_id": "SYNTHETIC/STUDY/001",
+      "synthetic": true,
+      "tenant": "research-sandbox",
+      "text": "SYNTHETIC_ONLY. In this invented human synovium ex_vivo setting, pathway X increased fixture signal Y. This is not a clinical finding."
+    },
+    "SYNTHETIC/PASSAGE/001/1": {
+      "event_at": "2026-11-05T12:00:00Z",
+      "generated_at": "2026-11-06T00:00:00Z",
+      "id": "SYNTHETIC/PASSAGE/001/1",
+      "ingested_at": "2026-11-05T12:00:00Z",
+      "namespace": "SYNTHETIC/HSI/v1",
+      "negated": true,
+      "provenance": {
+        "generator": "hsi-fixture-1.0.0",
+        "kind": "procedural-fiction",
+        "seed": 20261106
+      },
+      "source_id": "SYNTHETIC/SOURCE/001/v2",
+      "split": "train",
+      "study_id": "SYNTHETIC/STUDY/001",
+      "synthetic": true,
+      "tenant": "research-sandbox",
+      "text": "SYNTHETIC_ONLY. In this invented human synovium ex_vivo setting, pathway X did not increase fixture signal Y. This is not a clinical finding."
+    },
+    "SYNTHETIC/PASSAGE/001/2": {
+      "event_at": "2026-11-05T12:00:00Z",
+      "generated_at": "2026-11-06T00:00:00Z",
+      "id": "SYNTHETIC/PASSAGE/001/2",
+      "ingested_at": "2026-11-05T12:00:00Z",
+      "namespace": "SYNTHETIC/HSI/v1",
+      "negated": false,
+      "provenance": {
+        "generator": "hsi-fixture-1.0.0",
+        "kind": "procedural-fiction",
+        "seed": 20261106
+      },
+      "source_id": "SYNTHETIC/SOURCE/001/v2",
+      "split": "train",
+      "study_id": "SYNTHETIC/STUDY/001",
+      "synthetic": true,
+      "tenant": "research-sandbox",
+      "text": "SYNTHETIC_ONLY. In this invented mouse blood in_vivo setting, pathway X increased fixture signal Y. This is not a clinical finding."
+    },
+    "SYNTHETIC/PASSAGE/001/3": {
+      "event_at": "2026-11-05T12:00:00Z",
+      "generated_at": "2026-11-06T00:00:00Z",
+      "id": "SYNTHETIC/PASSAGE/001/3",
+      "ingested_at": "2026-11-05T12:00:00Z",
+      "namespace": "SYNTHETIC/HSI/v1",
+      "negated": false,
+      "provenance": {
+        "generator": "hsi-fixture-1.0.0",
+        "kind": "procedural-fiction",
+        "seed": 20261106
+      },
+      "source_id": "SYNTHETIC/SOURCE/001/v2",
+      "split": "train",
+      "study_id": "SYNTHETIC/STUDY/001",
+      "synthetic": true,
+      "tenant": "research-sandbox",
+      "text": "SYNTHETIC_ONLY. In this invented human synovium in_vitro setting, pathway X increased fixture signal Y. This is not a clinical finding."
+    },
+    "SYNTHETIC/PATIENT/0000": {
+      "age_at_reference": 30,
+      "cohort": "RA",
+      "conditions": [
+        "RA"
+      ],
+      "event_at": "2025-05-06T12:00:00Z",
+      "generated_at": "2026-11-06T00:00:00Z",
+      "id": "SYNTHETIC/PATIENT/0000",
+      "ingested_at": "2025-05-06T12:00:00Z",
+      "namespace": "SYNTHETIC/HSI/v1",
+      "provenance": {
+        "generator": "hsi-fixture-1.0.0",
+        "kind": "procedural-fiction",
+        "seed": 20261106
+      },
+      "split": "train",
+      "synthetic": true,
+      "tenant": "sandbox-alpha",
+      "timeline_end": "2026-11-06",
+      "timeline_start": "2025-05-06"
+    },
+    "SYNTHETIC/SOURCE/000/v2": {
+      "event_at": "2026-11-05T12:00:00Z",
+      "external_citation": null,
+      "generated_at": "2026-11-06T00:00:00Z",
+      "id": "SYNTHETIC/SOURCE/000/v2",
+      "ingested_at": "2026-11-05T12:00:00Z",
+      "licence": "fixture-only; no external publication",
+      "lineage_id": "SYNTHETIC/LINEAGE/000",
+      "namespace": "SYNTHETIC/HSI/v1",
+      "provenance": {
+        "generator": "hsi-fixture-1.0.0",
+        "kind": "procedural-fiction",
+        "seed": 20261106
+      },
+      "split": "train",
+      "study_id": "SYNTHETIC/STUDY/000",
+      "synthetic": true,
+      "tenant": "research-sandbox",
+      "title": "SYNTHETIC_ONLY fixture study 000 revision 2",
+      "version": 2
+    },
+    "SYNTHETIC/SOURCE/001/v2": {
+      "event_at": "2026-11-05T12:00:00Z",
+      "external_citation": null,
+      "generated_at": "2026-11-06T00:00:00Z",
+      "id": "SYNTHETIC/SOURCE/001/v2",
+      "ingested_at": "2026-11-05T12:00:00Z",
+      "licence": "fixture-only; no external publication",
+      "lineage_id": "SYNTHETIC/LINEAGE/001",
+      "namespace": "SYNTHETIC/HSI/v1",
+      "provenance": {
+        "generator": "hsi-fixture-1.0.0",
+        "kind": "procedural-fiction",
+        "seed": 20261106
+      },
+      "split": "train",
+      "study_id": "SYNTHETIC/STUDY/001",
+      "synthetic": true,
+      "tenant": "research-sandbox",
+      "title": "SYNTHETIC_ONLY fixture study 001 revision 2",
+      "version": 2
+    }
+  },
+  "generated_at": "2026-11-06T00:00:00Z",
+  "id": "SYNTHETIC/RUN/839acc31c6e8",
+  "ingested_at": "2026-11-06T23:00:00Z",
+  "model_version": null,
+  "namespace": "SYNTHETIC/HSI/v1",
+  "patient_timeline": {
+    "latest_events": [
+      {
+        "encounter_id": "SYNTHETIC/ENCOUNTER/0000/17",
+        "event_at": "2026-10-06T12:00:00Z",
+        "generated_at": "2026-11-06T00:00:00Z",
+        "id": "SYNTHETIC/WEAR/0000/17",
+        "ingested_at": "2026-10-06T12:00:00Z",
+        "missing_reason": null,
+        "namespace": "SYNTHETIC/HSI/v1",
+        "patient_id": "SYNTHETIC/PATIENT/0000",
+        "provenance": {
+          "generator": "hsi-fixture-1.0.0",
+          "kind": "procedural-fiction",
+          "seed": 20261106
+        },
+        "resting_heart_rate_bpm": 75,
+        "split": "train",
+        "steps_daily_mean": 7328,
+        "synthetic": true,
+        "tenant": "sandbox-alpha",
+        "window_days": 7
+      },
+      {
+        "encounter_id": "SYNTHETIC/ENCOUNTER/0000/18",
+        "event_at": "2026-11-06T12:00:00Z",
+        "fibre_g_per_day": 22.4,
+        "generated_at": "2026-11-06T00:00:00Z",
+        "id": "SYNTHETIC/DIET/0000/18",
+        "ingested_at": "2026-11-06T12:00:00Z",
+        "namespace": "SYNTHETIC/HSI/v1",
+        "patient_id": "SYNTHETIC/PATIENT/0000",
+        "provenance": {
+          "generator": "hsi-fixture-1.0.0",
+          "kind": "procedural-fiction",
+          "seed": 20261106
+        },
+        "self_reported": true,
+        "split": "train",
+        "synthetic": true,
+        "tenant": "sandbox-alpha",
+        "window_days": 7
+      },
+      {
+        "event_at": "2026-11-06T12:00:00Z",
+        "generated_at": "2026-11-06T00:00:00Z",
+        "id": "SYNTHETIC/ENCOUNTER/0000/18",
+        "ingested_at": "2026-11-06T12:00:00Z",
+        "kind": "synthetic_follow_up",
+        "namespace": "SYNTHETIC/HSI/v1",
+        "patient_id": "SYNTHETIC/PATIENT/0000",
+        "provenance": {
+          "generator": "hsi-fixture-1.0.0",
+          "kind": "procedural-fiction",
+          "seed": 20261106
+        },
+        "split": "train",
+        "synthetic": true,
+        "tenant": "sandbox-alpha"
+      },
+      {
+        "available_for_screening": true,
+        "code": "CRP",
+        "concept_id": "SYNTHETIC/CONCEPT/CRP",
+        "encounter_id": "SYNTHETIC/ENCOUNTER/0000/18",
+        "event_at": "2026-11-06T12:00:00Z",
+        "generated_at": "2026-11-06T00:00:00Z",
+        "id": "SYNTHETIC/LAB/0000/18/CRP",
+        "ingested_at": "2026-11-06T12:00:00Z",
+        "missing_reason": null,
+        "namespace": "SYNTHETIC/HSI/v1",
+        "patient_id": "SYNTHETIC/PATIENT/0000",
+        "provenance": {
+          "generator": "hsi-fixture-1.0.0",
+          "kind": "procedural-fiction",
+          "seed": 20261106
+        },
+        "research_only": false,
+        "split": "train",
+        "synthetic": true,
+        "tenant": "sandbox-alpha",
+        "unit": "mg/L",
+        "value": 8.0
+      },
+      {
+        "available_for_screening": true,
+        "code": "EGFR",
+        "concept_id": "SYNTHETIC/CONCEPT/EGFR",
+        "encounter_id": "SYNTHETIC/ENCOUNTER/0000/18",
+        "event_at": "2026-11-06T12:00:00Z",
+        "generated_at": "2026-11-06T00:00:00Z",
+        "id": "SYNTHETIC/LAB/0000/18/EGFR",
+        "ingested_at": "2026-11-06T12:00:00Z",
+        "missing_reason": null,
+        "namespace": "SYNTHETIC/HSI/v1",
+        "patient_id": "SYNTHETIC/PATIENT/0000",
+        "provenance": {
+          "generator": "hsi-fixture-1.0.0",
+          "kind": "procedural-fiction",
+          "seed": 20261106
+        },
+        "research_only": false,
+        "split": "train",
+        "synthetic": true,
+        "tenant": "sandbox-alpha",
+        "unit": "mL/min/1.73m2",
+        "value": 85.0
+      },
+      {
+        "available_for_screening": true,
+        "code": "HBA1C",
+        "concept_id": "SYNTHETIC/CONCEPT/HBA1C",
+        "encounter_id": "SYNTHETIC/ENCOUNTER/0000/18",
+        "event_at": "2026-11-06T12:00:00Z",
+        "generated_at": "2026-11-06T00:00:00Z",
+        "id": "SYNTHETIC/LAB/0000/18/HBA1C",
+        "ingested_at": "2026-11-06T12:00:00Z",
+        "missing_reason": null,
+        "namespace": "SYNTHETIC/HSI/v1",
+        "patient_id": "SYNTHETIC/PATIENT/0000",
+        "provenance": {
+          "generator": "hsi-fixture-1.0.0",
+          "kind": "procedural-fiction",
+          "seed": 20261106
+        },
+        "research_only": false,
+        "split": "train",
+        "synthetic": true,
+        "tenant": "sandbox-alpha",
+        "unit": "mmol/mol",
+        "value": 60.0
+      },
+      {
+        "code": "joint_pain_fixture",
+        "encounter_id": "SYNTHETIC/ENCOUNTER/0000/18",
+        "event_at": "2026-11-06T12:00:00Z",
+        "generated_at": "2026-11-06T00:00:00Z",
+        "id": "SYNTHETIC/SYMPTOM/0000/18",
+        "ingested_at": "2026-11-06T12:00:00Z",
+        "namespace": "SYNTHETIC/HSI/v1",
+        "negated": false,
+        "patient_id": "SYNTHETIC/PATIENT/0000",
+        "provenance": {
+          "generator": "hsi-fixture-1.0.0",
+          "kind": "procedural-fiction",
+          "seed": 20261106
+        },
+        "split": "train",
+        "synthetic": true,
+        "tenant": "sandbox-alpha",
+        "unit": "score_0_to_10",
+        "value": 2
+      },
+      {
+        "encounter_id": "SYNTHETIC/ENCOUNTER/0000/18",
+        "event_at": "2026-11-06T12:00:00Z",
+        "generated_at": "2026-11-06T00:00:00Z",
+        "id": "SYNTHETIC/WEAR/0000/18",
+        "ingested_at": "2026-11-06T12:00:00Z",
+        "missing_reason": null,
+        "namespace": "SYNTHETIC/HSI/v1",
+        "patient_id": "SYNTHETIC/PATIENT/0000",
+        "provenance": {
+          "generator": "hsi-fixture-1.0.0",
+          "kind": "procedural-fiction",
+          "seed": 20261106
+        },
+        "resting_heart_rate_bpm": 73,
+        "split": "train",
+        "steps_daily_mean": 7090,
+        "synthetic": true,
+        "tenant": "sandbox-alpha",
+        "window_days": 7
+      }
+    ],
+    "patient_id": "SYNTHETIC/PATIENT/0000",
+    "total_visible_events": 116
+  },
+  "provenance": {
+    "generator": "hsi-fixture-1.0.0",
+    "kind": "procedural-fiction"
+  },
+  "research_evidence": [
+    {
+      "claim_id": "SYNTHETIC/CLAIM/000/0",
+      "evidence_ids": [
+        "SYNTHETIC/PASSAGE/000/0",
+        "SYNTHETIC/SOURCE/000/v2"
+      ],
+      "negated": false,
+      "reasons": [],
+      "review_status": "reviewed",
+      "scientific_confidence": null,
+      "status": "match"
+    },
+    {
+      "claim_id": "SYNTHETIC/CLAIM/000/1",
+      "evidence_ids": [
+        "SYNTHETIC/PASSAGE/000/1",
+        "SYNTHETIC/SOURCE/000/v2"
+      ],
+      "negated": true,
+      "reasons": [],
+      "review_status": "reviewed",
+      "scientific_confidence": null,
+      "status": "match"
+    },
+    {
+      "claim_id": "SYNTHETIC/CLAIM/000/2",
+      "evidence_ids": [
+        "SYNTHETIC/PASSAGE/000/2",
+        "SYNTHETIC/SOURCE/000/v2"
+      ],
+      "negated": false,
+      "reasons": [
+        "species: expected human, evidence mouse",
+        "tissue: expected synovium, evidence blood",
+        "setting: expected ex_vivo, evidence in_vivo"
+      ],
+      "review_status": "unreviewed",
+      "scientific_confidence": null,
+      "status": "mismatch"
+    },
+    {
+      "claim_id": "SYNTHETIC/CLAIM/000/3",
+      "evidence_ids": [
+        "SYNTHETIC/PASSAGE/000/3",
+        "SYNTHETIC/SOURCE/000/v2"
+      ],
+      "negated": false,
+      "reasons": [
+        "setting: expected ex_vivo, evidence in_vitro"
+      ],
+      "review_status": "inferred",
+      "scientific_confidence": null,
+      "status": "partial_match"
+    },
+    {
+      "claim_id": "SYNTHETIC/CLAIM/001/0",
+      "evidence_ids": [
+        "SYNTHETIC/PASSAGE/001/0",
+        "SYNTHETIC/SOURCE/001/v2"
+      ],
+      "negated": false,
+      "reasons": [],
+      "review_status": "reviewed",
+      "scientific_confidence": null,
+      "status": "match"
+    },
+    {
+      "claim_id": "SYNTHETIC/CLAIM/001/1",
+      "evidence_ids": [
+        "SYNTHETIC/PASSAGE/001/1",
+        "SYNTHETIC/SOURCE/001/v2"
+      ],
+      "negated": true,
+      "reasons": [],
+      "review_status": "reviewed",
+      "scientific_confidence": null,
+      "status": "match"
+    },
+    {
+      "claim_id": "SYNTHETIC/CLAIM/001/2",
+      "evidence_ids": [
+        "SYNTHETIC/PASSAGE/001/2",
+        "SYNTHETIC/SOURCE/001/v2"
+      ],
+      "negated": false,
+      "reasons": [
+        "species: expected human, evidence mouse",
+        "tissue: expected synovium, evidence blood",
+        "setting: expected ex_vivo, evidence in_vivo"
+      ],
+      "review_status": "unreviewed",
+      "scientific_confidence": null,
+      "status": "mismatch"
+    },
+    {
+      "claim_id": "SYNTHETIC/CLAIM/001/3",
+      "evidence_ids": [
+        "SYNTHETIC/PASSAGE/001/3",
+        "SYNTHETIC/SOURCE/001/v2"
+      ],
+      "negated": false,
+      "reasons": [
+        "setting: expected ex_vivo, evidence in_vitro"
+      ],
+      "review_status": "inferred",
+      "scientific_confidence": null,
+      "status": "partial_match"
+    }
+  ],
+  "rules_version": "fixture-rules/1.0.0",
+  "run_id": "SYNTHETIC/RUN/839acc31c6e8",
+  "synthetic": true,
+  "synthetic_notice": "Wholly synthetic demonstration; not scientific or clinical validation.",
+  "trial_screening": {
+    "as_of": "2026-11-06T23:00:00Z",
+    "criterion_decisions": [
+      {
+        "criterion_id": "SYNTHETIC/TRIAL/RA/v2/C0",
+        "evidence_ids": [
+          "SYNTHETIC/PATIENT/0000"
+        ],
+        "reason": "reference_age",
+        "truth": "true"
+      },
+      {
+        "criterion_id": "SYNTHETIC/TRIAL/RA/v2/C1",
+        "evidence_ids": [
+          "SYNTHETIC/PATIENT/0000"
+        ],
+        "reason": "explicit_fixture_condition_list",
+        "truth": "true"
+      },
+      {
+        "criterion_id": "SYNTHETIC/TRIAL/RA/v2/C2",
+        "evidence_ids": [
+          "SYNTHETIC/LAB/0000/18/EGFR"
+        ],
+        "reason": "within_bounds",
+        "truth": "true"
+      },
+      {
+        "criterion_id": "SYNTHETIC/TRIAL/RA/v2/C3",
+        "evidence_ids": [],
+        "reason": "absent_from_complete_fixture_medication_list",
+        "truth": "true"
+      },
+      {
+        "criterion_id": "SYNTHETIC/TRIAL/RA/v2/C4",
+        "evidence_ids": [
+          "SYNTHETIC/LAB/0000/18/CRP"
+        ],
+        "reason": "within_bounds",
+        "truth": "true"
+      }
+    ],
+    "notice": "SYNTHETIC_ONLY candidate screening; not confirmed eligibility or treatment advice",
+    "patient_id": "SYNTHETIC/PATIENT/0000",
+    "protocol_version_id": "SYNTHETIC/TRIAL/RA/v2",
+    "status": "candidate",
+    "trial_id": "SYNTHETIC/TRIAL/RA",
+    "unknowns": []
+  },
+  "ui_state": "ready_synthetic",
+  "unknowns": []
+}

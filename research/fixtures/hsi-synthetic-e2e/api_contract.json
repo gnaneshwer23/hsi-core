@@ -1,0 +1,307 @@
+{
+  "components": {
+    "schemas": {
+      "CriterionDecision": {
+        "properties": {
+          "criterion_id": {
+            "type": "string"
+          },
+          "evidence_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "truth": {
+            "enum": [
+              "true",
+              "false",
+              "unknown"
+            ]
+          }
+        },
+        "required": [
+          "criterion_id",
+          "truth",
+          "reason",
+          "evidence_ids"
+        ],
+        "type": "object"
+      },
+      "JobState": {
+        "properties": {
+          "contract_version": {
+            "const": "hsi-output/1.0.0"
+          },
+          "job_id": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "queued",
+              "running",
+              "error",
+              "cancelled"
+            ]
+          },
+          "synthetic": {
+            "const": true
+          }
+        },
+        "required": [
+          "job_id",
+          "status",
+          "synthetic",
+          "contract_version"
+        ],
+        "type": "object"
+      },
+      "Output": {
+        "properties": {
+          "as_of": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "confidence": {
+            "type": "object"
+          },
+          "contract_version": {
+            "const": "hsi-output/1.0.0"
+          },
+          "evidence_lookup": {
+            "type": "object"
+          },
+          "id": {
+            "type": "string"
+          },
+          "model_version": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "namespace": {
+            "const": "SYNTHETIC/HSI/v1"
+          },
+          "patient_timeline": {
+            "type": "object"
+          },
+          "research_evidence": {
+            "items": {
+              "properties": {
+                "status": {
+                  "enum": [
+                    "match",
+                    "partial_match",
+                    "mismatch"
+                  ]
+                }
+              },
+              "required": [
+                "claim_id",
+                "status",
+                "reasons",
+                "negated",
+                "evidence_ids"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "rules_version": {
+            "type": "string"
+          },
+          "run_id": {
+            "type": "string"
+          },
+          "synthetic": {
+            "const": true
+          },
+          "synthetic_notice": {
+            "type": "string"
+          },
+          "trial_screening": {
+            "$ref": "#/components/schemas/Screening"
+          },
+          "ui_state": {
+            "const": "ready_synthetic"
+          },
+          "unknowns": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "contract_version",
+          "synthetic",
+          "namespace",
+          "id",
+          "run_id",
+          "as_of",
+          "rules_version",
+          "model_version",
+          "synthetic_notice",
+          "patient_timeline",
+          "trial_screening",
+          "research_evidence",
+          "evidence_lookup",
+          "unknowns",
+          "confidence",
+          "ui_state"
+        ],
+        "type": "object"
+      },
+      "Screening": {
+        "properties": {
+          "criterion_decisions": {
+            "items": {
+              "$ref": "#/components/schemas/CriterionDecision"
+            },
+            "type": "array"
+          },
+          "status": {
+            "enum": [
+              "candidate",
+              "excluded",
+              "needs_review"
+            ]
+          },
+          "unknowns": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "patient_id",
+          "trial_id",
+          "protocol_version_id",
+          "as_of",
+          "status",
+          "criterion_decisions",
+          "unknowns",
+          "notice"
+        ],
+        "type": "object"
+      },
+      "ScreeningRequest": {
+        "properties": {
+          "as_of": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "contract_version": {
+            "const": "hsi-output/1.0.0"
+          },
+          "idempotency_key": {
+            "type": "string"
+          },
+          "namespace": {
+            "const": "SYNTHETIC/HSI/v1"
+          },
+          "patient_id": {
+            "pattern": "^SYNTHETIC/PATIENT/",
+            "type": "string"
+          },
+          "synthetic": {
+            "const": true
+          },
+          "trial_id": {
+            "pattern": "^SYNTHETIC/TRIAL/",
+            "type": "string"
+          }
+        },
+        "required": [
+          "contract_version",
+          "synthetic",
+          "namespace",
+          "patient_id",
+          "trial_id",
+          "as_of",
+          "idempotency_key"
+        ],
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "title": "Proposed HSI synthetic adapter API \u2014 not implemented HTTP service",
+    "version": "1.0.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/v1/synthetic/jobs/{job_id}": {
+      "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/Output"
+                    },
+                    {
+                      "$ref": "#/components/schemas/JobState"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "Job state or ready output"
+          },
+          "403": {
+            "description": "Generic denial"
+          }
+        }
+      }
+    },
+    "/v1/synthetic/screenings": {
+      "post": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScreeningRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Queued job, not eligibility"
+          },
+          "403": {
+            "description": "Generic authorisation failure"
+          },
+          "409": {
+            "description": "Idempotency or revision conflict"
+          },
+          "422": {
+            "description": "Invalid/quarantined input"
+          }
+        },
+        "summary": "Enqueue authorised synthetic screening"
+      }
+    }
+  },
+  "x-auth-note": "Use existing approved server-side session; no auth server delivered. Never trust body tenant/role.",
+  "x-synthetic-only": true
+}

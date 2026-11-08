@@ -1,0 +1,1419 @@
+{
+  "common_required": [
+    "id",
+    "synthetic",
+    "namespace",
+    "provenance",
+    "generated_at",
+    "event_at",
+    "ingested_at",
+    "split",
+    "tenant"
+  ],
+  "description": "Per-table required fields and JSON types; additional fields require a contract version change in product adapters.",
+  "tables": {
+    "assays": {
+      "properties": {
+        "assay_type": [
+          "string"
+        ],
+        "event_at": [
+          "string"
+        ],
+        "generated_at": [
+          "string"
+        ],
+        "id": [
+          "string"
+        ],
+        "ingested_at": [
+          "string"
+        ],
+        "namespace": [
+          "string"
+        ],
+        "provenance": [
+          "object"
+        ],
+        "research_only": [
+          "boolean"
+        ],
+        "specimen_id": [
+          "string"
+        ],
+        "split": [
+          "string"
+        ],
+        "study_id": [
+          "string"
+        ],
+        "synthetic": [
+          "boolean"
+        ],
+        "tenant": [
+          "string"
+        ],
+        "unit": [
+          "string"
+        ],
+        "value": [
+          "number"
+        ]
+      },
+      "required": [
+        "assay_type",
+        "event_at",
+        "generated_at",
+        "id",
+        "ingested_at",
+        "namespace",
+        "provenance",
+        "research_only",
+        "specimen_id",
+        "split",
+        "study_id",
+        "synthetic",
+        "tenant",
+        "unit",
+        "value"
+      ]
+    },
+    "claims": {
+      "properties": {
+        "concept_id": [
+          "string"
+        ],
+        "disease": [
+          "string"
+        ],
+        "event_at": [
+          "string"
+        ],
+        "evidence_kind": [
+          "string"
+        ],
+        "generated_at": [
+          "string"
+        ],
+        "id": [
+          "string"
+        ],
+        "ingested_at": [
+          "string"
+        ],
+        "namespace": [
+          "string"
+        ],
+        "passage_id": [
+          "string"
+        ],
+        "polarity": [
+          "string"
+        ],
+        "proposition": [
+          "string"
+        ],
+        "provenance": [
+          "object"
+        ],
+        "setting": [
+          "string"
+        ],
+        "source_id": [
+          "string"
+        ],
+        "species": [
+          "string"
+        ],
+        "split": [
+          "string"
+        ],
+        "status": [
+          "string"
+        ],
+        "study_id": [
+          "string"
+        ],
+        "synthetic": [
+          "boolean"
+        ],
+        "tenant": [
+          "string"
+        ],
+        "tissue": [
+          "string"
+        ]
+      },
+      "required": [
+        "concept_id",
+        "disease",
+        "event_at",
+        "evidence_kind",
+        "generated_at",
+        "id",
+        "ingested_at",
+        "namespace",
+        "passage_id",
+        "polarity",
+        "proposition",
+        "provenance",
+        "setting",
+        "source_id",
+        "species",
+        "split",
+        "status",
+        "study_id",
+        "synthetic",
+        "tenant",
+        "tissue"
+      ]
+    },
+    "concepts": {
+      "properties": {
+        "code": [
+          "string"
+        ],
+        "event_at": [
+          "string"
+        ],
+        "generated_at": [
+          "string"
+        ],
+        "id": [
+          "string"
+        ],
+        "ingested_at": [
+          "string"
+        ],
+        "label": [
+          "string"
+        ],
+        "mapping_status": [
+          "string"
+        ],
+        "namespace": [
+          "string"
+        ],
+        "provenance": [
+          "object"
+        ],
+        "split": [
+          "string"
+        ],
+        "synthetic": [
+          "boolean"
+        ],
+        "tenant": [
+          "string"
+        ]
+      },
+      "required": [
+        "code",
+        "event_at",
+        "generated_at",
+        "id",
+        "ingested_at",
+        "label",
+        "mapping_status",
+        "namespace",
+        "provenance",
+        "split",
+        "synthetic",
+        "tenant"
+      ]
+    },
+    "consents": {
+      "properties": {
+        "action": [
+          "string"
+        ],
+        "effective_at": [
+          "string"
+        ],
+        "event_at": [
+          "string"
+        ],
+        "generated_at": [
+          "string"
+        ],
+        "id": [
+          "string"
+        ],
+        "ingested_at": [
+          "string"
+        ],
+        "namespace": [
+          "string"
+        ],
+        "patient_id": [
+          "string"
+        ],
+        "provenance": [
+          "object"
+        ],
+        "purposes": [
+          "array"
+        ],
+        "split": [
+          "string"
+        ],
+        "synthetic": [
+          "boolean"
+        ],
+        "tenant": [
+          "string"
+        ]
+      },
+      "required": [
+        "action",
+        "effective_at",
+        "event_at",
+        "generated_at",
+        "id",
+        "ingested_at",
+        "namespace",
+        "patient_id",
+        "provenance",
+        "purposes",
+        "split",
+        "synthetic",
+        "tenant"
+      ]
+    },
+    "criteria": {
+      "conditional_required": {
+        "age": [
+          "minimum",
+          "maximum"
+        ],
+        "condition": [
+          "condition"
+        ],
+        "lab": [
+          "code",
+          "minimum",
+          "maximum",
+          "unit",
+          "window_days"
+        ],
+        "medication_absent": [
+          "code"
+        ]
+      },
+      "properties": {
+        "code": [
+          "string"
+        ],
+        "condition": [
+          "string"
+        ],
+        "event_at": [
+          "string"
+        ],
+        "generated_at": [
+          "string"
+        ],
+        "id": [
+          "string"
+        ],
+        "ingested_at": [
+          "string"
+        ],
+        "kind": [
+          "string"
+        ],
+        "maximum": [
+          "integer",
+          "null"
+        ],
+        "minimum": [
+          "integer"
+        ],
+        "namespace": [
+          "string"
+        ],
+        "provenance": [
+          "object"
+        ],
+        "split": [
+          "string"
+        ],
+        "synthetic": [
+          "boolean"
+        ],
+        "tenant": [
+          "string"
+        ],
+        "trial_id": [
+          "string"
+        ],
+        "trial_version_id": [
+          "string"
+        ],
+        "unit": [
+          "string"
+        ],
+        "window_days": [
+          "integer"
+        ]
+      },
+      "required": [
+        "id",
+        "synthetic",
+        "namespace",
+        "provenance",
+        "generated_at",
+        "event_at",
+        "ingested_at",
+        "split",
+        "tenant",
+        "trial_id",
+        "trial_version_id",
+        "kind"
+      ]
+    },
+    "diet": {
+      "properties": {
+        "encounter_id": [
+          "string"
+        ],
+        "event_at": [
+          "string"
+        ],
+        "fibre_g_per_day": [
+          "number"
+        ],
+        "generated_at": [
+          "string"
+        ],
+        "id": [
+          "string"
+        ],
+        "ingested_at": [
+          "string"
+        ],
+        "namespace": [
+          "string"
+        ],
+        "patient_id": [
+          "string"
+        ],
+        "provenance": [
+          "object"
+        ],
+        "self_reported": [
+          "boolean"
+        ],
+        "split": [
+          "string"
+        ],
+        "synthetic": [
+          "boolean"
+        ],
+        "tenant": [
+          "string"
+        ],
+        "window_days": [
+          "integer"
+        ]
+      },
+      "required": [
+        "encounter_id",
+        "event_at",
+        "fibre_g_per_day",
+        "generated_at",
+        "id",
+        "ingested_at",
+        "namespace",
+        "patient_id",
+        "provenance",
+        "self_reported",
+        "split",
+        "synthetic",
+        "tenant",
+        "window_days"
+      ]
+    },
+    "donors": {
+      "properties": {
+        "event_at": [
+          "string"
+        ],
+        "generated_at": [
+          "string"
+        ],
+        "id": [
+          "string"
+        ],
+        "identity_scope": [
+          "string"
+        ],
+        "ingested_at": [
+          "string"
+        ],
+        "namespace": [
+          "string"
+        ],
+        "provenance": [
+          "object"
+        ],
+        "species": [
+          "string"
+        ],
+        "split": [
+          "string"
+        ],
+        "study_id": [
+          "string"
+        ],
+        "synthetic": [
+          "boolean"
+        ],
+        "tenant": [
+          "string"
+        ]
+      },
+      "required": [
+        "event_at",
+        "generated_at",
+        "id",
+        "identity_scope",
+        "ingested_at",
+        "namespace",
+        "provenance",
+        "species",
+        "split",
+        "study_id",
+        "synthetic",
+        "tenant"
+      ]
+    },
+    "edges": {
+      "properties": {
+        "event_at": [
+          "string"
+        ],
+        "generated_at": [
+          "string"
+        ],
+        "id": [
+          "string"
+        ],
+        "ingested_at": [
+          "string"
+        ],
+        "link_scope": [
+          "string"
+        ],
+        "namespace": [
+          "string"
+        ],
+        "predicate": [
+          "string"
+        ],
+        "provenance": [
+          "object"
+        ],
+        "source_id": [
+          "string"
+        ],
+        "split": [
+          "string"
+        ],
+        "synthetic": [
+          "boolean"
+        ],
+        "target_id": [
+          "string"
+        ],
+        "tenant": [
+          "string"
+        ]
+      },
+      "required": [
+        "event_at",
+        "generated_at",
+        "id",
+        "ingested_at",
+        "link_scope",
+        "namespace",
+        "predicate",
+        "provenance",
+        "source_id",
+        "split",
+        "synthetic",
+        "target_id",
+        "tenant"
+      ]
+    },
+    "encounters": {
+      "properties": {
+        "event_at": [
+          "string"
+        ],
+        "generated_at": [
+          "string"
+        ],
+        "id": [
+          "string"
+        ],
+        "ingested_at": [
+          "string"
+        ],
+        "kind": [
+          "string"
+        ],
+        "namespace": [
+          "string"
+        ],
+        "patient_id": [
+          "string"
+        ],
+        "provenance": [
+          "object"
+        ],
+        "split": [
+          "string"
+        ],
+        "synthetic": [
+          "boolean"
+        ],
+        "tenant": [
+          "string"
+        ]
+      },
+      "required": [
+        "event_at",
+        "generated_at",
+        "id",
+        "ingested_at",
+        "kind",
+        "namespace",
+        "patient_id",
+        "provenance",
+        "split",
+        "synthetic",
+        "tenant"
+      ]
+    },
+    "hypotheses": {
+      "properties": {
+        "concept_id": [
+          "string"
+        ],
+        "event_at": [
+          "string"
+        ],
+        "generated_at": [
+          "string"
+        ],
+        "id": [
+          "string"
+        ],
+        "ingested_at": [
+          "string"
+        ],
+        "namespace": [
+          "string"
+        ],
+        "provenance": [
+          "object"
+        ],
+        "split": [
+          "string"
+        ],
+        "status": [
+          "string"
+        ],
+        "study_id": [
+          "string"
+        ],
+        "supporting_claim_ids": [
+          "array"
+        ],
+        "synthetic": [
+          "boolean"
+        ],
+        "tenant": [
+          "string"
+        ],
+        "text": [
+          "string"
+        ]
+      },
+      "required": [
+        "concept_id",
+        "event_at",
+        "generated_at",
+        "id",
+        "ingested_at",
+        "namespace",
+        "provenance",
+        "split",
+        "status",
+        "study_id",
+        "supporting_claim_ids",
+        "synthetic",
+        "tenant",
+        "text"
+      ]
+    },
+    "labs": {
+      "properties": {
+        "available_for_screening": [
+          "boolean"
+        ],
+        "code": [
+          "string"
+        ],
+        "concept_id": [
+          "string"
+        ],
+        "encounter_id": [
+          "string"
+        ],
+        "event_at": [
+          "string"
+        ],
+        "generated_at": [
+          "string"
+        ],
+        "id": [
+          "string"
+        ],
+        "ingested_at": [
+          "string"
+        ],
+        "missing_reason": [
+          "null",
+          "string"
+        ],
+        "namespace": [
+          "string"
+        ],
+        "patient_id": [
+          "string"
+        ],
+        "provenance": [
+          "object"
+        ],
+        "research_only": [
+          "boolean"
+        ],
+        "split": [
+          "string"
+        ],
+        "synthetic": [
+          "boolean"
+        ],
+        "tenant": [
+          "string"
+        ],
+        "unit": [
+          "string"
+        ],
+        "value": [
+          "null",
+          "number"
+        ]
+      },
+      "required": [
+        "available_for_screening",
+        "code",
+        "concept_id",
+        "encounter_id",
+        "event_at",
+        "generated_at",
+        "id",
+        "ingested_at",
+        "missing_reason",
+        "namespace",
+        "patient_id",
+        "provenance",
+        "research_only",
+        "split",
+        "synthetic",
+        "tenant",
+        "unit",
+        "value"
+      ]
+    },
+    "medications": {
+      "properties": {
+        "code": [
+          "string"
+        ],
+        "end": [
+          "null"
+        ],
+        "event_at": [
+          "string"
+        ],
+        "generated_at": [
+          "string"
+        ],
+        "id": [
+          "string"
+        ],
+        "ingested_at": [
+          "string"
+        ],
+        "namespace": [
+          "string"
+        ],
+        "patient_id": [
+          "string"
+        ],
+        "provenance": [
+          "object"
+        ],
+        "research_only": [
+          "boolean"
+        ],
+        "split": [
+          "string"
+        ],
+        "start": [
+          "string"
+        ],
+        "status": [
+          "string"
+        ],
+        "synthetic": [
+          "boolean"
+        ],
+        "tenant": [
+          "string"
+        ]
+      },
+      "required": [
+        "code",
+        "end",
+        "event_at",
+        "generated_at",
+        "id",
+        "ingested_at",
+        "namespace",
+        "patient_id",
+        "provenance",
+        "research_only",
+        "split",
+        "start",
+        "status",
+        "synthetic",
+        "tenant"
+      ]
+    },
+    "passages": {
+      "properties": {
+        "event_at": [
+          "string"
+        ],
+        "generated_at": [
+          "string"
+        ],
+        "id": [
+          "string"
+        ],
+        "ingested_at": [
+          "string"
+        ],
+        "namespace": [
+          "string"
+        ],
+        "negated": [
+          "boolean"
+        ],
+        "provenance": [
+          "object"
+        ],
+        "source_id": [
+          "string"
+        ],
+        "split": [
+          "string"
+        ],
+        "study_id": [
+          "string"
+        ],
+        "synthetic": [
+          "boolean"
+        ],
+        "tenant": [
+          "string"
+        ],
+        "text": [
+          "string"
+        ]
+      },
+      "required": [
+        "event_at",
+        "generated_at",
+        "id",
+        "ingested_at",
+        "namespace",
+        "negated",
+        "provenance",
+        "source_id",
+        "split",
+        "study_id",
+        "synthetic",
+        "tenant",
+        "text"
+      ]
+    },
+    "patients": {
+      "properties": {
+        "age_at_reference": [
+          "integer"
+        ],
+        "cohort": [
+          "string"
+        ],
+        "conditions": [
+          "array"
+        ],
+        "event_at": [
+          "string"
+        ],
+        "generated_at": [
+          "string"
+        ],
+        "id": [
+          "string"
+        ],
+        "ingested_at": [
+          "string"
+        ],
+        "namespace": [
+          "string"
+        ],
+        "provenance": [
+          "object"
+        ],
+        "split": [
+          "string"
+        ],
+        "synthetic": [
+          "boolean"
+        ],
+        "tenant": [
+          "string"
+        ],
+        "timeline_end": [
+          "string"
+        ],
+        "timeline_start": [
+          "string"
+        ]
+      },
+      "required": [
+        "age_at_reference",
+        "cohort",
+        "conditions",
+        "event_at",
+        "generated_at",
+        "id",
+        "ingested_at",
+        "namespace",
+        "provenance",
+        "split",
+        "synthetic",
+        "tenant",
+        "timeline_end",
+        "timeline_start"
+      ]
+    },
+    "research_observations": {
+      "properties": {
+        "event_at": [
+          "string"
+        ],
+        "generated_at": [
+          "string"
+        ],
+        "id": [
+          "string"
+        ],
+        "ingested_at": [
+          "string"
+        ],
+        "kind": [
+          "string"
+        ],
+        "missing_reason": [
+          "null"
+        ],
+        "namespace": [
+          "string"
+        ],
+        "patient_id": [
+          "string"
+        ],
+        "provenance": [
+          "object"
+        ],
+        "research_only": [
+          "boolean"
+        ],
+        "split": [
+          "string"
+        ],
+        "synthetic": [
+          "boolean"
+        ],
+        "tenant": [
+          "string"
+        ],
+        "unit": [
+          "string"
+        ],
+        "value": [
+          "number"
+        ]
+      },
+      "required": [
+        "event_at",
+        "generated_at",
+        "id",
+        "ingested_at",
+        "kind",
+        "missing_reason",
+        "namespace",
+        "patient_id",
+        "provenance",
+        "research_only",
+        "split",
+        "synthetic",
+        "tenant",
+        "unit",
+        "value"
+      ]
+    },
+    "sources": {
+      "properties": {
+        "event_at": [
+          "string"
+        ],
+        "external_citation": [
+          "null"
+        ],
+        "generated_at": [
+          "string"
+        ],
+        "id": [
+          "string"
+        ],
+        "ingested_at": [
+          "string"
+        ],
+        "licence": [
+          "string"
+        ],
+        "lineage_id": [
+          "string"
+        ],
+        "namespace": [
+          "string"
+        ],
+        "provenance": [
+          "object"
+        ],
+        "split": [
+          "string"
+        ],
+        "study_id": [
+          "string"
+        ],
+        "synthetic": [
+          "boolean"
+        ],
+        "tenant": [
+          "string"
+        ],
+        "title": [
+          "string"
+        ],
+        "version": [
+          "integer"
+        ]
+      },
+      "required": [
+        "event_at",
+        "external_citation",
+        "generated_at",
+        "id",
+        "ingested_at",
+        "licence",
+        "lineage_id",
+        "namespace",
+        "provenance",
+        "split",
+        "study_id",
+        "synthetic",
+        "tenant",
+        "title",
+        "version"
+      ]
+    },
+    "specimens": {
+      "properties": {
+        "collection_protocol": [
+          "string"
+        ],
+        "donor_id": [
+          "string"
+        ],
+        "event_at": [
+          "string"
+        ],
+        "generated_at": [
+          "string"
+        ],
+        "id": [
+          "string"
+        ],
+        "ingested_at": [
+          "string"
+        ],
+        "namespace": [
+          "string"
+        ],
+        "provenance": [
+          "object"
+        ],
+        "split": [
+          "string"
+        ],
+        "study_id": [
+          "string"
+        ],
+        "synthetic": [
+          "boolean"
+        ],
+        "tenant": [
+          "string"
+        ],
+        "tissue": [
+          "string"
+        ]
+      },
+      "required": [
+        "collection_protocol",
+        "donor_id",
+        "event_at",
+        "generated_at",
+        "id",
+        "ingested_at",
+        "namespace",
+        "provenance",
+        "split",
+        "study_id",
+        "synthetic",
+        "tenant",
+        "tissue"
+      ]
+    },
+    "studies": {
+      "properties": {
+        "description": [
+          "string"
+        ],
+        "design": [
+          "string"
+        ],
+        "event_at": [
+          "string"
+        ],
+        "generated_at": [
+          "string"
+        ],
+        "id": [
+          "string"
+        ],
+        "ingested_at": [
+          "string"
+        ],
+        "namespace": [
+          "string"
+        ],
+        "provenance": [
+          "object"
+        ],
+        "split": [
+          "string"
+        ],
+        "synthetic": [
+          "boolean"
+        ],
+        "tenant": [
+          "string"
+        ]
+      },
+      "required": [
+        "description",
+        "design",
+        "event_at",
+        "generated_at",
+        "id",
+        "ingested_at",
+        "namespace",
+        "provenance",
+        "split",
+        "synthetic",
+        "tenant"
+      ]
+    },
+    "symptoms": {
+      "properties": {
+        "code": [
+          "string"
+        ],
+        "encounter_id": [
+          "string"
+        ],
+        "event_at": [
+          "string"
+        ],
+        "generated_at": [
+          "string"
+        ],
+        "id": [
+          "string"
+        ],
+        "ingested_at": [
+          "string"
+        ],
+        "namespace": [
+          "string"
+        ],
+        "negated": [
+          "boolean"
+        ],
+        "patient_id": [
+          "string"
+        ],
+        "provenance": [
+          "object"
+        ],
+        "split": [
+          "string"
+        ],
+        "synthetic": [
+          "boolean"
+        ],
+        "tenant": [
+          "string"
+        ],
+        "unit": [
+          "string"
+        ],
+        "value": [
+          "integer"
+        ]
+      },
+      "required": [
+        "code",
+        "encounter_id",
+        "event_at",
+        "generated_at",
+        "id",
+        "ingested_at",
+        "namespace",
+        "negated",
+        "patient_id",
+        "provenance",
+        "split",
+        "synthetic",
+        "tenant",
+        "unit",
+        "value"
+      ]
+    },
+    "trial_versions": {
+      "properties": {
+        "effective_from": [
+          "string"
+        ],
+        "event_at": [
+          "string"
+        ],
+        "generated_at": [
+          "string"
+        ],
+        "id": [
+          "string"
+        ],
+        "ingested_at": [
+          "string"
+        ],
+        "namespace": [
+          "string"
+        ],
+        "protocol_status": [
+          "string"
+        ],
+        "provenance": [
+          "object"
+        ],
+        "split": [
+          "string"
+        ],
+        "synthetic": [
+          "boolean"
+        ],
+        "tenant": [
+          "string"
+        ],
+        "trial_id": [
+          "string"
+        ],
+        "version": [
+          "integer"
+        ]
+      },
+      "required": [
+        "effective_from",
+        "event_at",
+        "generated_at",
+        "id",
+        "ingested_at",
+        "namespace",
+        "protocol_status",
+        "provenance",
+        "split",
+        "synthetic",
+        "tenant",
+        "trial_id",
+        "version"
+      ]
+    },
+    "trials": {
+      "properties": {
+        "condition": [
+          "string"
+        ],
+        "event_at": [
+          "string"
+        ],
+        "generated_at": [
+          "string"
+        ],
+        "id": [
+          "string"
+        ],
+        "ingested_at": [
+          "string"
+        ],
+        "namespace": [
+          "string"
+        ],
+        "provenance": [
+          "object"
+        ],
+        "site": [
+          "string"
+        ],
+        "split": [
+          "string"
+        ],
+        "status": [
+          "string"
+        ],
+        "synthetic": [
+          "boolean"
+        ],
+        "tenant": [
+          "string"
+        ],
+        "title": [
+          "string"
+        ]
+      },
+      "required": [
+        "condition",
+        "event_at",
+        "generated_at",
+        "id",
+        "ingested_at",
+        "namespace",
+        "provenance",
+        "site",
+        "split",
+        "status",
+        "synthetic",
+        "tenant",
+        "title"
+      ]
+    },
+    "wearables": {
+      "properties": {
+        "encounter_id": [
+          "string"
+        ],
+        "event_at": [
+          "string"
+        ],
+        "generated_at": [
+          "string"
+        ],
+        "id": [
+          "string"
+        ],
+        "ingested_at": [
+          "string"
+        ],
+        "missing_reason": [
+          "null",
+          "string"
+        ],
+        "namespace": [
+          "string"
+        ],
+        "patient_id": [
+          "string"
+        ],
+        "provenance": [
+          "object"
+        ],
+        "resting_heart_rate_bpm": [
+          "integer"
+        ],
+        "split": [
+          "string"
+        ],
+        "steps_daily_mean": [
+          "integer",
+          "null"
+        ],
+        "synthetic": [
+          "boolean"
+        ],
+        "tenant": [
+          "string"
+        ],
+        "window_days": [
+          "integer"
+        ]
+      },
+      "required": [
+        "encounter_id",
+        "event_at",
+        "generated_at",
+        "id",
+        "ingested_at",
+        "missing_reason",
+        "namespace",
+        "patient_id",
+        "provenance",
+        "resting_heart_rate_bpm",
+        "split",
+        "steps_daily_mean",
+        "synthetic",
+        "tenant",
+        "window_days"
+      ]
+    }
+  },
+  "version": "hsi-records/1.0.0"
+}

@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "hsi-synthetic-e2e-fixture-status-1",
+  "label": "e2e-fixture",
+  "distinctFrom": "hsi-synthetic-validation-0.1",
+  "packVersion": "hsi-fixture-1.0.0",
+  "seed": 20261106,
+  "generatedAt": "2026-11-08T05:17:00.000Z",
+  "engineeringPin": "CLEARED",
+  "scientificAcceptance": "BLOCKED",
+  "cdsPhi": "BLOCKED",
+  "liveEligibility": false,
+  "httpServer": false,
+  "gateCAutoApprove": false,
+  "mouInvented": false,
+  "neonWrites": false,
+  "pins": {
+    "manifestPath": "research/fixtures/hsi-synthetic-e2e/MANIFEST.json",
+    "apiContractSha256": "6b9458296eebad66d68d93f57c50bcf4afd2b16b2c0e82e8cb2be3711d6b2e7e",
+    "packManifestSha256": "8c118c398c41f5bbf651c33ebc2321f76aaa67837ec5e49695b9177abe8ef0de"
+  },
+  "note": "Engineering contract pin CLEARED. Science/CDS BLOCKED. engine.py is not product authority."
+}

@@ -1,0 +1,78 @@
+{
+  "schemaVersion": "hsi-synthetic-e2e-fixture-manifest-1",
+  "label": "e2e-fixture",
+  "not": "hsi-synthetic-validation-0.1",
+  "packVersion": "hsi-fixture-1.0.0",
+  "namespace": "SYNTHETIC/HSI/v1",
+  "seed": 20261106,
+  "synthetic": true,
+  "engineeringPin": "CLEARED",
+  "scientificAcceptance": "BLOCKED",
+  "cdsPhi": "BLOCKED",
+  "httpServer": false,
+  "pythonCliAuthority": "external-only",
+  "enginePyIsProductAuthority": false,
+  "externalPack": {
+    "note": "Full pack (JSONL, SQLite caches, learning sets, engine.py) stays outside git.",
+    "typicalAbsolutePath": "/Users/gnaneshwerjadav/Downloads/hsi-synthetic-e2e/",
+    "verify": "sha256sum (or shasum -a 256) the listed artifacts against pin.sha256 below; do not modify the Downloads tree from this repo."
+  },
+  "vendoredRelativeRoot": "research/fixtures/hsi-synthetic-e2e/",
+  "excludedFromGit": [
+    "data/*.jsonl",
+    "*.sqlite*",
+    "learning/",
+    "engine.py",
+    "demo.py",
+    "generate.py",
+    "full SQLite / 48k-scale tables"
+  ],
+  "pin": {
+    "PACK_MANIFEST.json": {
+      "bytes": 10710,
+      "sha256": "8c118c398c41f5bbf651c33ebc2321f76aaa67837ec5e49695b9177abe8ef0de"
+    },
+    "api_contract.json": {
+      "bytes": 7255,
+      "sha256": "6b9458296eebad66d68d93f57c50bcf4afd2b16b2c0e82e8cb2be3711d6b2e7e"
+    },
+    "schema_contract.json": {
+      "bytes": 25330,
+      "sha256": "ee12c30a679251e9e6a270b72b1dd73b35f788e9050209bdc6421e79b42646c8"
+    },
+    "outputs/sample_request.json": {
+      "bytes": 265,
+      "sha256": "d90cdb05f099c417f828e0e6027cd80b07d1155aa59b04d7220f9bd2ad928b40"
+    },
+    "outputs/sample_response.json": {
+      "bytes": 28001,
+      "sha256": "2a857965aad7264a9403eddf41f770ac2f5c6a94591de17238829e42b357ed2f"
+    },
+    "outputs/sample_response_excluded.json": {
+      "bytes": 28002,
+      "sha256": "e41aeeb80bfe5d3866cdec030349e710c074976af53582f28d39a48cd57a92f2"
+    },
+    "outputs/sample_response_needs_review.json": {
+      "bytes": 27269,
+      "sha256": "4199a39fb3f77713442b885298fa4510be75d85e27e7743c1b1460d2031e3f1e"
+    }
+  },
+  "honestyExpectations": {
+    "synthetic": true,
+    "namespace": "SYNTHETIC/HSI/v1",
+    "contractVersion": "hsi-output/1.0.0",
+    "uiState": "ready_synthetic",
+    "confidenceValue": null,
+    "modelVersion": null,
+    "screeningStatuses": ["candidate", "excluded", "needs_review"],
+    "screeningNoticeMustInclude": "not confirmed eligibility",
+    "permanentBannerFields": [
+      "synthetic",
+      "synthetic_notice",
+      "namespace",
+      "ui_state",
+      "trial_screening.notice"
+    ]
+  },
+  "note": "Contract pin only. Vendor path + hashes; Python CLI remains external. Not live CDS/PHI, Gate C, or validation-0.1 science clearance."
+}
