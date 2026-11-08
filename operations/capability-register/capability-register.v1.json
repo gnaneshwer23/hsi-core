@@ -1,0 +1,425 @@
+{
+  "schemaVersion": "hsi-capability-register-1",
+  "registerId": "hsi-capability-register-2026-11-08",
+  "asOf": "2026-11-08",
+  "masterSpec": "docs/product/HSI_DEFINITIVE_PRODUCT_SPEC.md",
+  "humanDoc": "docs/engineering/HSI_CAPABILITY_REGISTER_2026-11-08.md",
+  "honesty": {
+    "scientificallyValidatedClaimed": false,
+    "mouInvented": false,
+    "gateCAutoApprove": false,
+    "cdsPhiInHsi": false,
+    "hsiNeon": "red-wave-only",
+    "humanQueueParked": ["#2", "#3", "#4", "#5", "#8"],
+    "researcherJourneyCompleteClaimed": false,
+    "writesEnabledClaimed": false,
+    "syntheticEqualsClinical": false
+  },
+  "statusVocabulary": [
+    "implemented",
+    "connected",
+    "scientifically_validated",
+    "blocked",
+    "planned",
+    "synthetic_only"
+  ],
+  "capabilities": [
+    {
+      "id": "F-01",
+      "group": "foundations",
+      "name": "Immune-cell spine and relationship vocabulary",
+      "status": ["implemented"],
+      "evidence": ["src/immuneCellSpine.ts"],
+      "gap": "Thin coverage beyond RA/SSc starters",
+      "nextAction": "Curate broader binds; no rebuild"
+    },
+    {
+      "id": "F-02",
+      "group": "foundations",
+      "name": "Living graph and evidence/claim contracts",
+      "status": ["implemented"],
+      "evidence": [
+        "src/livingHealthKnowledgeGraph.ts",
+        "src/researchContracts.ts",
+        "src/graphRelease.ts"
+      ],
+      "gap": "Not always bound to question-specific investigation UI",
+      "nextAction": "Connect via unified journey (02)"
+    },
+    {
+      "id": "F-03",
+      "group": "foundations",
+      "name": "Source provenance versions and review records",
+      "status": ["implemented", "connected"],
+      "evidence": [
+        "src/evidence/evidenceLedger.ts",
+        "src/db/evidenceLedgerStore.ts",
+        "src/researchOutcome.ts"
+      ],
+      "gap": "Reverse trace not first-class in all result UIs",
+      "nextAction": "Expose passage→claim→branch in outcome/workbench"
+    },
+    {
+      "id": "F-04",
+      "group": "foundations",
+      "name": "RA and SSc evidence packages",
+      "status": ["implemented", "blocked"],
+      "evidence": ["research/ra-anti-tnf/", "research/ssc-tfh-il21/"],
+      "gap": "Rights (#2) and SME gold (#4) empty",
+      "nextAction": "Bounded integration tests only until humans clear"
+    },
+    {
+      "id": "F-05",
+      "group": "foundations",
+      "name": "Saved investigation and research outcome APIs",
+      "status": ["connected"],
+      "evidence": [
+        "src/server/interrogativeApi.ts",
+        "src/researchOutcome.ts",
+        "src/investigationDelivery.ts"
+      ],
+      "gap": "Composes saved evidence; no new scientific generation",
+      "nextAction": "Power one continuous research journey"
+    },
+    {
+      "id": "F-06",
+      "group": "foundations",
+      "name": "Research dashboard and multiple workbenches",
+      "status": ["implemented"],
+      "evidence": [
+        "site/src/pages/ResearchDashboard.tsx",
+        "site/src/pages/ScientificResearchWorkbench.tsx",
+        "site/src/pages/AuthenticatedInterrogativeWorkbench.tsx",
+        "site/src/pages/ResearchMechanismWorkflow.tsx"
+      ],
+      "gap": "Duplicated entry points; synthetic profiles dominate dashboard",
+      "nextAction": "Consolidate nav around connected path + decision workbench"
+    },
+    {
+      "id": "F-07",
+      "group": "foundations",
+      "name": "Synthetic patient validation records",
+      "status": ["synthetic_only"],
+      "evidence": [
+        "src/syntheticValidationDataset.ts",
+        "site/src/pages/SyntheticValidationWorkbench.tsx"
+      ],
+      "gap": "Must never appear as cohort evidence",
+      "nextAction": "Keep separate and labelled"
+    },
+    {
+      "id": "F-08",
+      "group": "foundations",
+      "name": "Trial and therapeutic scaffolding",
+      "status": ["implemented", "planned"],
+      "evidence": [
+        "src/trialsCriteriaMvp.ts",
+        "src/clinicalResearchScaffold.ts",
+        "src/evidence/n5RegistryLiveRefresh.ts"
+      ],
+      "gap": "Not attached to investigation translational section",
+      "nextAction": "Connect versioned registry data (step 05)"
+    },
+    {
+      "id": "F-09",
+      "group": "foundations",
+      "name": "Scientific evaluation harness",
+      "status": ["implemented", "blocked"],
+      "evidence": [
+        "src/goldEvaluationSuite.ts",
+        "src/modelEvalHarness.ts",
+        "docs/engineering/GOLD_EVALUATION_SUITE_V1.md"
+      ],
+      "gap": "SME labels empty; no scientific scores",
+      "nextAction": "Do not invent labels; await #4"
+    },
+    {
+      "id": "F-10",
+      "group": "foundations",
+      "name": "AI orchestration and agent contracts",
+      "status": ["implemented"],
+      "evidence": [
+        "src/hsiAgentIntelligenceContracts.ts",
+        "src/hsiAgentOrchestrator.ts",
+        "site/src/features/science/researchOrchestrator.ts"
+      ],
+      "gap": "No end-to-end scientific agent execution in product",
+      "nextAction": "Audit and connect tools (step 04); no new catalogue"
+    },
+    {
+      "id": "O-01",
+      "group": "investigation_output",
+      "name": "Scientific landscape",
+      "status": ["connected"],
+      "evidence": [
+        "src/immuneMechanismInvestigation.ts",
+        "src/interrogativeQuestionEngine.ts"
+      ],
+      "gap": "Not a full curated landscape for arbitrary questions",
+      "nextAction": "Compose from release + mechanism map in outcome"
+    },
+    {
+      "id": "O-02",
+      "group": "investigation_output",
+      "name": "Evidence comparison",
+      "status": ["connected"],
+      "evidence": [
+        "src/interrogativeContracts.ts",
+        "site/src/features/science/contradictionEngine.ts"
+      ],
+      "gap": "Cross-context comparison incomplete",
+      "nextAction": "Bind oppose + context into outcome view"
+    },
+    {
+      "id": "O-03",
+      "group": "investigation_output",
+      "name": "Gap intelligence",
+      "status": ["implemented", "planned"],
+      "evidence": ["src/gapReport.ts", "src/researchCoverage.ts"],
+      "gap": "Mapping gaps ≠ verified scientific gaps",
+      "nextAction": "Gap verification with expert labels (step 04)"
+    },
+    {
+      "id": "O-04",
+      "group": "investigation_output",
+      "name": "Translational intelligence",
+      "status": ["planned"],
+      "evidence": ["src/trialsCriteriaMvp.ts", "site/src/pages/ScienceClinicalTrials.tsx"],
+      "gap": "Outcome reports trials not_queried",
+      "nextAction": "Attach registry snapshot (step 05)"
+    },
+    {
+      "id": "O-05",
+      "group": "investigation_output",
+      "name": "Research action plan",
+      "status": ["connected"],
+      "evidence": [
+        "src/researchOutcome.ts",
+        "src/interrogativeFalsificationEngine.ts"
+      ],
+      "gap": "Saved planner fields only; no invented protocols",
+      "nextAction": "Keep honesty; fill only from recorded work"
+    },
+    {
+      "id": "O-06",
+      "group": "investigation_output",
+      "name": "Evidence package export",
+      "status": ["connected", "blocked"],
+      "evidence": [
+        "src/researchOutcome.ts",
+        "src/investigationDelivery.ts",
+        "research/connected-workbench/r3/"
+      ],
+      "gap": "Live Ask→export completion needs human #5",
+      "nextAction": "Keep export path; do not fake completion"
+    },
+    {
+      "id": "A-ORCH",
+      "group": "nexus_agent",
+      "name": "Research Orchestrator",
+      "status": ["implemented"],
+      "evidence": [
+        "src/hsiAgentOrchestrator.ts",
+        "site/src/features/science/researchOrchestrator.ts"
+      ],
+      "gap": "Deterministic/local or contract-only; not full Nexus runtime",
+      "nextAction": "Reuse; wire journey stages"
+    },
+    {
+      "id": "A-EVID",
+      "group": "nexus_agent",
+      "name": "Evidence Investigator",
+      "status": ["connected"],
+      "evidence": [
+        "src/interrogativeEvidenceEngine.ts",
+        "src/evidence/groundedBrief.ts"
+      ],
+      "gap": "Fresh literature retrieval rights-gated",
+      "nextAction": "Preserve saved corpus path"
+    },
+    {
+      "id": "A-CELL",
+      "group": "nexus_agent",
+      "name": "Immune Cell Investigator",
+      "status": ["implemented"],
+      "evidence": ["src/immuneCellSpine.ts"],
+      "gap": "Vocabulary/spine ≠ autonomous investigator service",
+      "nextAction": "Expand curation"
+    },
+    {
+      "id": "A-MECH",
+      "group": "nexus_agent",
+      "name": "Mechanism Investigator",
+      "status": ["connected"],
+      "evidence": [
+        "src/immuneMechanismInvestigation.ts",
+        "src/researchMechanismWorkflow.ts"
+      ],
+      "gap": "RA/SSc fixture-scoped",
+      "nextAction": "Broaden after rights clearance"
+    },
+    {
+      "id": "A-MICRO",
+      "group": "nexus_agent",
+      "name": "Microbiome / Neuroimmune Investigator",
+      "status": ["implemented"],
+      "evidence": ["src/gutImmunePack.ts", "src/neuroImmunePack.ts"],
+      "gap": "Packs only; thin science",
+      "nextAction": "Treat as packs not agents"
+    },
+    {
+      "id": "A-CLIN",
+      "group": "nexus_agent",
+      "name": "Clinical Evidence Investigator",
+      "status": ["synthetic_only", "blocked"],
+      "evidence": [
+        "src/syntheticValidationDataset.ts",
+        "src/akshAgents.ts"
+      ],
+      "gap": "No authorised real cohort bridge in HSI",
+      "nextAction": "Step 06 with governed access only"
+    },
+    {
+      "id": "A-CONTRA",
+      "group": "nexus_agent",
+      "name": "Contradiction Investigator",
+      "status": ["implemented"],
+      "evidence": [
+        "src/hsiAgentIntelligenceContracts.ts",
+        "site/src/features/science/contradictionEngine.ts"
+      ],
+      "gap": "Helpers/contracts; not full oppose-search service",
+      "nextAction": "First-class oppose audit in journey"
+    },
+    {
+      "id": "A-GAP",
+      "group": "nexus_agent",
+      "name": "Research Gap Investigator",
+      "status": ["planned"],
+      "evidence": ["src/gapReport.ts"],
+      "gap": "Coverage gaps ≠ scientific gaps",
+      "nextAction": "Expert-labelled verification (step 04)"
+    },
+    {
+      "id": "A-TRIAL",
+      "group": "nexus_agent",
+      "name": "Therapeutic / Trial Investigator",
+      "status": ["planned"],
+      "evidence": ["src/trialsCriteriaMvp.ts", "src/evidence/n5RegistryLiveRefresh.ts"],
+      "gap": "Scaffold depth only",
+      "nextAction": "Translational landscape (step 05)"
+    },
+    {
+      "id": "A-PLAN",
+      "group": "nexus_agent",
+      "name": "Research Planning Agent",
+      "status": ["connected"],
+      "evidence": [
+        "src/interrogativeFalsificationEngine.ts",
+        "src/researchOutcome.ts"
+      ],
+      "gap": "Recorded fields only",
+      "nextAction": "No invented experimental protocols"
+    },
+    {
+      "id": "A-VERIFY",
+      "group": "nexus_agent",
+      "name": "Evidence Verifier",
+      "status": ["connected", "blocked"],
+      "evidence": [
+        "src/researchOutcome.ts",
+        "src/gateCChecklist.ts"
+      ],
+      "gap": "Hash integrity ≠ scientific truth; Gate C human",
+      "nextAction": "Await human #2/#3/#4"
+    },
+    {
+      "id": "E-FWD",
+      "group": "evidence_trace",
+      "name": "Forward evidence traceability",
+      "status": ["connected"],
+      "evidence": [
+        "src/graphRelease.ts",
+        "src/interrogativeEvidenceEngine.ts",
+        "src/researchConnectedWorkbench.ts"
+      ],
+      "gap": "Fresh ingest incomplete",
+      "nextAction": "Living evidence expansion (step 03)"
+    },
+    {
+      "id": "E-BWD",
+      "group": "evidence_trace",
+      "name": "Backward evidence traceability",
+      "status": ["connected"],
+      "evidence": [
+        "src/researchOutcome.ts",
+        "src/immuneMechanismInvestigation.ts"
+      ],
+      "gap": "Not one-click from every UI",
+      "nextAction": "Surface reverse links in journey UI (02)"
+    },
+    {
+      "id": "E-CONT",
+      "group": "evidence_trace",
+      "name": "Continuous evidence re-verification",
+      "status": ["planned"],
+      "evidence": ["src/evidence/evidenceLedger.ts", "src/hsiEvidenceTemporalDossier.ts"],
+      "gap": "No automatic conclusion revision product",
+      "nextAction": "Step 07; human approval for promoted claims"
+    },
+    {
+      "id": "J-R3",
+      "group": "research_journey",
+      "name": "R3 Ask→export connected workbench",
+      "status": ["connected", "blocked"],
+      "evidence": [
+        "src/researchConnectedWorkbench.ts",
+        "src/evidence/r3ConnectedResearchWorkbench.ts",
+        "research/connected-workbench/r3/",
+        "site/src/pages/ResearchMechanismWorkflow.tsx"
+      ],
+      "gap": "researcherJourneyCompleteClaimed=false; needs #5",
+      "nextAction": "Nav reconnects now; live completion parked"
+    }
+  ],
+  "duplicatesAndDisconnects": [
+    {
+      "finding": "Multiple research workbench entry points",
+      "disposition": "reconnect_nav_do_not_rebuild"
+    },
+    {
+      "finding": "Browser researchOrchestrator vs hsiAgentOrchestrator",
+      "disposition": "keep_both_labelled"
+    },
+    {
+      "finding": "Aksh agent catalog in hsi-core vs Aksh runtime",
+      "disposition": "catalog_only_here"
+    },
+    {
+      "finding": "gapReport mapping gaps vs scientific gaps",
+      "disposition": "keep_concepts_distinct"
+    }
+  ],
+  "step02Plan": {
+    "smallReconnectsInThisPr": [
+      "Dashboard links to /research/mechanism-workflow and decision-workbench",
+      "Decision workbench nav links Connected path + dashboard",
+      "Mechanism-workflow links dashboard as workspace home"
+    ],
+    "largerWorkDocumentedOnly": [
+      "Map outcome DTO sections to investigation outputs 01–06",
+      "Demote synthetic profiles from primary research hero",
+      "Shared InvestigationProgress chrome across journey surfaces",
+      "Stop at human #5 for live Ask→export"
+    ],
+    "forbidden": [
+      "landing_redesign",
+      "new_agent_catalogue",
+      "new_architecture",
+      "mou_invent",
+      "gate_c_auto_approve",
+      "cds_phi",
+      "autumn_snow_for_hsi"
+    ]
+  }
+}
