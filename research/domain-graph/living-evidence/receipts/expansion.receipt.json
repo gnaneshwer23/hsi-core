@@ -837,8 +837,8 @@
     "Scientific acceptance / SME gold (human queue #4 PARKED)",
     "Gate C auto-approve / MoU legalBinding (forbidden)",
     "Investigation trials attach / O-04 translational (reserved for step 05)",
-    "Verified scientific gap ranking (reserved for step 04)"
+    "Expert-labelled scientific gap ranking (human queue #4 PARKED; engineering classification in gapVerification)"
   ],
   "nextMilestone": "step_04_agent_intelligence_gap_verification",
-  "receiptHash": "569089ab5e853b44581e080abbbea82e7d50463fc65d0aaedb73106314a80544"
+  "receiptHash": "437fbea079b6a4ae6896183de15961f7fe5f8f47df5dc40907969aac8823a6cd"
 }

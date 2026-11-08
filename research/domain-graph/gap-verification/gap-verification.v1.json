@@ -1,0 +1,591 @@
+{
+  "schemaVersion": "hsi-gap-verification-1",
+  "method": "hsi-deterministic-gap-classification-1",
+  "asOf": "2026-11-08T17:45:00.000Z",
+  "items": [
+    {
+      "id": "gap-001",
+      "branchId": "b-bf7a47c11425",
+      "sourceField": "missingEvidence",
+      "recordedText": "Approved source-linked claims for the mechanism",
+      "kind": "passage_rights_blocked",
+      "rationale": "Living-evidence bibliographic identities overlap pins, but passage import remains fail-closed (humanCleared=false).",
+      "trace": {
+        "supportingClaimIds": [],
+        "opposingClaimIds": [],
+        "matchedLivingPmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ],
+        "openTargetsDiseaseIds": [
+          "MONDO_0008383",
+          "MONDO_0005100"
+        ],
+        "localSourcePmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ]
+      },
+      "expertLabelStatus": "unavailable",
+      "scientificallyValidated": false
+    },
+    {
+      "id": "gap-002",
+      "branchId": "b-bf7a47c11425",
+      "sourceField": "missingEvidence",
+      "recordedText": "Evidence addressing disease stage, tissue and assay context",
+      "kind": "missing_local_data",
+      "rationale": "Bound claims do not carry the disease-stage / tissue / assay context this gap requests.",
+      "trace": {
+        "supportingClaimIds": [],
+        "opposingClaimIds": [],
+        "matchedLivingPmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ],
+        "openTargetsDiseaseIds": [
+          "MONDO_0008383",
+          "MONDO_0005100"
+        ],
+        "localSourcePmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ]
+      },
+      "expertLabelStatus": "unavailable",
+      "scientificallyValidated": false
+    },
+    {
+      "id": "gap-003",
+      "branchId": "b-bf7a47c11425",
+      "sourceField": "missingEvidence",
+      "recordedText": "Independent contradictory or null findings",
+      "kind": "oppose_search_incomplete",
+      "rationale": "No opposing traces and no recorded contradiction-search audit. Absence of oppose rows is not consensus.",
+      "trace": {
+        "supportingClaimIds": [],
+        "opposingClaimIds": [],
+        "matchedLivingPmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ],
+        "openTargetsDiseaseIds": [
+          "MONDO_0008383",
+          "MONDO_0005100"
+        ],
+        "localSourcePmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ]
+      },
+      "expertLabelStatus": "unavailable",
+      "scientificallyValidated": false
+    },
+    {
+      "id": "gap-004",
+      "branchId": "b-bf7a47c11425",
+      "sourceField": "uncertainty",
+      "recordedText": "No evidence retrieval performed by question planner",
+      "kind": "passage_rights_blocked",
+      "rationale": "Planner uncertainty remains; living-evidence metadata refresh is bound but passages are not cleared for entailment.",
+      "trace": {
+        "supportingClaimIds": [],
+        "opposingClaimIds": [],
+        "matchedLivingPmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ],
+        "openTargetsDiseaseIds": [
+          "MONDO_0008383",
+          "MONDO_0005100"
+        ],
+        "localSourcePmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ]
+      },
+      "expertLabelStatus": "unavailable",
+      "scientificallyValidated": false
+    },
+    {
+      "id": "gap-005",
+      "branchId": "b-bf7a47c11425",
+      "sourceField": "uncertainty",
+      "recordedText": "Mechanism is not established by its inclusion in the question plan",
+      "kind": "passage_rights_blocked",
+      "rationale": "Planner uncertainty remains; living-evidence metadata refresh is bound but passages are not cleared for entailment.",
+      "trace": {
+        "supportingClaimIds": [],
+        "opposingClaimIds": [],
+        "matchedLivingPmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ],
+        "openTargetsDiseaseIds": [
+          "MONDO_0008383",
+          "MONDO_0005100"
+        ],
+        "localSourcePmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ]
+      },
+      "expertLabelStatus": "unavailable",
+      "scientificallyValidated": false
+    },
+    {
+      "id": "gap-006",
+      "branchId": "b-3242eca7662a",
+      "sourceField": "missingEvidence",
+      "recordedText": "Approved source-linked claims for the mechanism",
+      "kind": "passage_rights_blocked",
+      "rationale": "Living-evidence bibliographic identities overlap pins, but passage import remains fail-closed (humanCleared=false).",
+      "trace": {
+        "supportingClaimIds": [],
+        "opposingClaimIds": [],
+        "matchedLivingPmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ],
+        "openTargetsDiseaseIds": [
+          "MONDO_0008383",
+          "MONDO_0005100"
+        ],
+        "localSourcePmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ]
+      },
+      "expertLabelStatus": "unavailable",
+      "scientificallyValidated": false
+    },
+    {
+      "id": "gap-007",
+      "branchId": "b-3242eca7662a",
+      "sourceField": "missingEvidence",
+      "recordedText": "Evidence addressing disease stage, tissue and assay context",
+      "kind": "missing_local_data",
+      "rationale": "Bound claims do not carry the disease-stage / tissue / assay context this gap requests.",
+      "trace": {
+        "supportingClaimIds": [],
+        "opposingClaimIds": [],
+        "matchedLivingPmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ],
+        "openTargetsDiseaseIds": [
+          "MONDO_0008383",
+          "MONDO_0005100"
+        ],
+        "localSourcePmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ]
+      },
+      "expertLabelStatus": "unavailable",
+      "scientificallyValidated": false
+    },
+    {
+      "id": "gap-008",
+      "branchId": "b-3242eca7662a",
+      "sourceField": "missingEvidence",
+      "recordedText": "Independent contradictory or null findings",
+      "kind": "oppose_search_incomplete",
+      "rationale": "No opposing traces and no recorded contradiction-search audit. Absence of oppose rows is not consensus.",
+      "trace": {
+        "supportingClaimIds": [],
+        "opposingClaimIds": [],
+        "matchedLivingPmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ],
+        "openTargetsDiseaseIds": [
+          "MONDO_0008383",
+          "MONDO_0005100"
+        ],
+        "localSourcePmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ]
+      },
+      "expertLabelStatus": "unavailable",
+      "scientificallyValidated": false
+    },
+    {
+      "id": "gap-009",
+      "branchId": "b-3242eca7662a",
+      "sourceField": "uncertainty",
+      "recordedText": "No evidence retrieval performed by question planner",
+      "kind": "passage_rights_blocked",
+      "rationale": "Planner uncertainty remains; living-evidence metadata refresh is bound but passages are not cleared for entailment.",
+      "trace": {
+        "supportingClaimIds": [],
+        "opposingClaimIds": [],
+        "matchedLivingPmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ],
+        "openTargetsDiseaseIds": [
+          "MONDO_0008383",
+          "MONDO_0005100"
+        ],
+        "localSourcePmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ]
+      },
+      "expertLabelStatus": "unavailable",
+      "scientificallyValidated": false
+    },
+    {
+      "id": "gap-010",
+      "branchId": "b-3242eca7662a",
+      "sourceField": "uncertainty",
+      "recordedText": "Mechanism is not established by its inclusion in the question plan",
+      "kind": "passage_rights_blocked",
+      "rationale": "Planner uncertainty remains; living-evidence metadata refresh is bound but passages are not cleared for entailment.",
+      "trace": {
+        "supportingClaimIds": [],
+        "opposingClaimIds": [],
+        "matchedLivingPmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ],
+        "openTargetsDiseaseIds": [
+          "MONDO_0008383",
+          "MONDO_0005100"
+        ],
+        "localSourcePmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ]
+      },
+      "expertLabelStatus": "unavailable",
+      "scientificallyValidated": false
+    },
+    {
+      "id": "gap-011",
+      "branchId": "b-644197977520",
+      "sourceField": "missingEvidence",
+      "recordedText": "Approved source-linked claims for the mechanism",
+      "kind": "passage_rights_blocked",
+      "rationale": "Living-evidence bibliographic identities overlap pins, but passage import remains fail-closed (humanCleared=false).",
+      "trace": {
+        "supportingClaimIds": [],
+        "opposingClaimIds": [],
+        "matchedLivingPmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ],
+        "openTargetsDiseaseIds": [
+          "MONDO_0008383",
+          "MONDO_0005100"
+        ],
+        "localSourcePmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ]
+      },
+      "expertLabelStatus": "unavailable",
+      "scientificallyValidated": false
+    },
+    {
+      "id": "gap-012",
+      "branchId": "b-644197977520",
+      "sourceField": "missingEvidence",
+      "recordedText": "Evidence addressing disease stage, tissue and assay context",
+      "kind": "missing_local_data",
+      "rationale": "Bound claims do not carry the disease-stage / tissue / assay context this gap requests.",
+      "trace": {
+        "supportingClaimIds": [],
+        "opposingClaimIds": [],
+        "matchedLivingPmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ],
+        "openTargetsDiseaseIds": [
+          "MONDO_0008383",
+          "MONDO_0005100"
+        ],
+        "localSourcePmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ]
+      },
+      "expertLabelStatus": "unavailable",
+      "scientificallyValidated": false
+    },
+    {
+      "id": "gap-013",
+      "branchId": "b-644197977520",
+      "sourceField": "missingEvidence",
+      "recordedText": "Independent contradictory or null findings",
+      "kind": "oppose_search_incomplete",
+      "rationale": "No opposing traces and no recorded contradiction-search audit. Absence of oppose rows is not consensus.",
+      "trace": {
+        "supportingClaimIds": [],
+        "opposingClaimIds": [],
+        "matchedLivingPmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ],
+        "openTargetsDiseaseIds": [
+          "MONDO_0008383",
+          "MONDO_0005100"
+        ],
+        "localSourcePmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ]
+      },
+      "expertLabelStatus": "unavailable",
+      "scientificallyValidated": false
+    },
+    {
+      "id": "gap-014",
+      "branchId": "b-644197977520",
+      "sourceField": "uncertainty",
+      "recordedText": "No evidence retrieval performed by question planner",
+      "kind": "passage_rights_blocked",
+      "rationale": "Planner uncertainty remains; living-evidence metadata refresh is bound but passages are not cleared for entailment.",
+      "trace": {
+        "supportingClaimIds": [],
+        "opposingClaimIds": [],
+        "matchedLivingPmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ],
+        "openTargetsDiseaseIds": [
+          "MONDO_0008383",
+          "MONDO_0005100"
+        ],
+        "localSourcePmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ]
+      },
+      "expertLabelStatus": "unavailable",
+      "scientificallyValidated": false
+    },
+    {
+      "id": "gap-015",
+      "branchId": "b-644197977520",
+      "sourceField": "uncertainty",
+      "recordedText": "Mechanism is not established by its inclusion in the question plan",
+      "kind": "passage_rights_blocked",
+      "rationale": "Planner uncertainty remains; living-evidence metadata refresh is bound but passages are not cleared for entailment.",
+      "trace": {
+        "supportingClaimIds": [],
+        "opposingClaimIds": [],
+        "matchedLivingPmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ],
+        "openTargetsDiseaseIds": [
+          "MONDO_0008383",
+          "MONDO_0005100"
+        ],
+        "localSourcePmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ]
+      },
+      "expertLabelStatus": "unavailable",
+      "scientificallyValidated": false
+    },
+    {
+      "id": "gap-016",
+      "branchId": "b-9b881244be0f",
+      "sourceField": "missingEvidence",
+      "recordedText": "Approved source-linked claims for the mechanism",
+      "kind": "passage_rights_blocked",
+      "rationale": "Living-evidence bibliographic identities overlap pins, but passage import remains fail-closed (humanCleared=false).",
+      "trace": {
+        "supportingClaimIds": [],
+        "opposingClaimIds": [],
+        "matchedLivingPmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ],
+        "openTargetsDiseaseIds": [
+          "MONDO_0008383",
+          "MONDO_0005100"
+        ],
+        "localSourcePmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ]
+      },
+      "expertLabelStatus": "unavailable",
+      "scientificallyValidated": false
+    },
+    {
+      "id": "gap-017",
+      "branchId": "b-9b881244be0f",
+      "sourceField": "missingEvidence",
+      "recordedText": "Evidence addressing disease stage, tissue and assay context",
+      "kind": "missing_local_data",
+      "rationale": "Bound claims do not carry the disease-stage / tissue / assay context this gap requests.",
+      "trace": {
+        "supportingClaimIds": [],
+        "opposingClaimIds": [],
+        "matchedLivingPmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ],
+        "openTargetsDiseaseIds": [
+          "MONDO_0008383",
+          "MONDO_0005100"
+        ],
+        "localSourcePmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ]
+      },
+      "expertLabelStatus": "unavailable",
+      "scientificallyValidated": false
+    },
+    {
+      "id": "gap-018",
+      "branchId": "b-9b881244be0f",
+      "sourceField": "missingEvidence",
+      "recordedText": "Independent contradictory or null findings",
+      "kind": "oppose_search_incomplete",
+      "rationale": "No opposing traces and no recorded contradiction-search audit. Absence of oppose rows is not consensus.",
+      "trace": {
+        "supportingClaimIds": [],
+        "opposingClaimIds": [],
+        "matchedLivingPmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ],
+        "openTargetsDiseaseIds": [
+          "MONDO_0008383",
+          "MONDO_0005100"
+        ],
+        "localSourcePmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ]
+      },
+      "expertLabelStatus": "unavailable",
+      "scientificallyValidated": false
+    },
+    {
+      "id": "gap-019",
+      "branchId": "b-9b881244be0f",
+      "sourceField": "uncertainty",
+      "recordedText": "No evidence retrieval performed by question planner",
+      "kind": "passage_rights_blocked",
+      "rationale": "Planner uncertainty remains; living-evidence metadata refresh is bound but passages are not cleared for entailment.",
+      "trace": {
+        "supportingClaimIds": [],
+        "opposingClaimIds": [],
+        "matchedLivingPmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ],
+        "openTargetsDiseaseIds": [
+          "MONDO_0008383",
+          "MONDO_0005100"
+        ],
+        "localSourcePmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ]
+      },
+      "expertLabelStatus": "unavailable",
+      "scientificallyValidated": false
+    },
+    {
+      "id": "gap-020",
+      "branchId": "b-9b881244be0f",
+      "sourceField": "uncertainty",
+      "recordedText": "Mechanism is not established by its inclusion in the question plan",
+      "kind": "passage_rights_blocked",
+      "rationale": "Planner uncertainty remains; living-evidence metadata refresh is bound but passages are not cleared for entailment.",
+      "trace": {
+        "supportingClaimIds": [],
+        "opposingClaimIds": [],
+        "matchedLivingPmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ],
+        "openTargetsDiseaseIds": [
+          "MONDO_0008383",
+          "MONDO_0005100"
+        ],
+        "localSourcePmids": [
+          "18375541",
+          "24586782",
+          "30760472"
+        ]
+      },
+      "expertLabelStatus": "unavailable",
+      "scientificallyValidated": false
+    }
+  ],
+  "summary": {
+    "missingLocalData": 4,
+    "genuineUnresolved": 0,
+    "passageRightsBlocked": 12,
+    "opposeSearchIncomplete": 4,
+    "abstain": 0
+  },
+  "honesty": {
+    "smeGoldFilled": false,
+    "expertLabelsAvailable": false,
+    "scientificallyValidated": false,
+    "humanQueueBlocked": [
+      "#4"
+    ],
+    "passageImportAuthorized": false
+  },
+  "unavailableCapabilities": [
+    "Expert-labelled scientific gap ranking (human queue #4 PARKED; smeGoldFilled=false)",
+    "Passage-backed entailment against uncleared passages (human queue #2 PARKED)",
+    "Gate C auto-approve / MoU legalBinding (forbidden)",
+    "Live literature / LLM tool activation beyond deterministic classification"
+  ],
+  "note": "Engineering classification only: separates missing local corpus coverage from unresolved questions and rights-blocked passages. Not scientist-ranked and not scientifically validated.",
+  "status": "classified_against_bound_evidence"
+}

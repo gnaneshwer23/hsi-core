@@ -425,11 +425,48 @@ export function ResearchOutcomePanel({brief}: {brief: EvidenceBrief}) {
 
             {section === "03" && (
               <>
-                <h4>Recorded gaps and uncertainty</h4>
+                <h4>Gap verification</h4>
                 <p>
-                  These are missing-evidence fields from the saved investigation. They are not independently
-                  verified scientific gaps.
+                  Status: <strong>{human(outcome.gapVerification.status)}</strong>.{" "}
+                  {outcome.gapVerification.note}
                 </p>
+                <p role="note">
+                  SME gold filled: {String(outcome.gapVerification.honesty.smeGoldFilled)} · scientifically
+                  validated: {String(outcome.gapVerification.honesty.scientificallyValidated)} · passage
+                  import authorised: {String(outcome.gapVerification.honesty.passageImportAuthorized)}.
+                  Expert labels remain unavailable (human queue #4 PARKED).
+                </p>
+                <p>
+                  Classes · missing local {outcome.gapVerification.summary.missingLocalData} · genuine
+                  unresolved {outcome.gapVerification.summary.genuineUnresolved} · passage rights blocked{" "}
+                  {outcome.gapVerification.summary.passageRightsBlocked} · oppose search incomplete{" "}
+                  {outcome.gapVerification.summary.opposeSearchIncomplete} · abstain{" "}
+                  {outcome.gapVerification.summary.abstain}.
+                </p>
+                {outcome.gapVerification.items.length ? (
+                  <ul>
+                    {outcome.gapVerification.items.map((g) => (
+                      <li key={g.id}>
+                        <strong>[{human(g.kind)}]</strong> {g.recordedText}
+                        <p>{g.rationale}</p>
+                        <ReverseTrace
+                          outcome={outcome}
+                          claimIds={[...g.trace.supportingClaimIds, ...g.trace.opposingClaimIds]}
+                          heading={`Reverse trace · ${g.id}`}
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>No recorded missing-evidence or uncertainty strings to classify.</p>
+                )}
+                <h4>Unavailable for this verification</h4>
+                <ul>
+                  {outcome.gapVerification.unavailableCapabilities.map((s, i) => (
+                    <li key={i}>{s}</li>
+                  ))}
+                </ul>
+                <h4>Recorded gap strings (raw)</h4>
                 <ul>
                   {outcome.missingData.length ? (
                     outcome.missingData.map((s, i) => <li key={i}>{s}</li>)

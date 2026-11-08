@@ -189,6 +189,8 @@
     "living-evidence:expand": "bun --no-env-file scripts/living-evidence-expand.ts",
     "living-evidence:check": "bun --no-env-file scripts/living-evidence-expand.ts --check",
     "living-evidence:live": "bun --no-env-file scripts/living-evidence-expand.ts --live",
+    "gap-verification:expand": "bun --no-env-file scripts/gap-verification-check.ts",
+    "gap-verification:check": "bun --no-env-file scripts/gap-verification-check.ts --check",
     "fixture:synthetic-e2e:check": "bun --no-env-file scripts/check-synthetic-e2e-fixture.ts",
     "fixture:synthetic-e2e:n5-adapter": "bun --no-env-file scripts/check-synthetic-e2e-n5-adapter.ts",
     "fixture:synthetic-e2e:n4-adapter": "bun --no-env-file scripts/check-synthetic-e2e-n4-adapter.ts",

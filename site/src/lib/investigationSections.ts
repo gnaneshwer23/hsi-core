@@ -19,7 +19,7 @@ export const INVESTIGATION_SECTIONS = [
     anchor: "inv-03",
     short: "Gaps",
     title: "Gap intelligence",
-    detail: "Recorded missing evidence and uncertainty only — coverage gaps are not verified scientific gaps.",
+    detail: "Deterministic gap classes vs local + living evidence; SME gold ranking remains parked (#4).",
   },
   {
     id: "04",
