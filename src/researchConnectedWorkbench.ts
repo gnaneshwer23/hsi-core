@@ -177,8 +177,8 @@ export function buildR3ConnectedWorkbenchJourney(): R3ConnectedWorkbenchJourney 
       label: RESEARCH_WORKSPACE_TEST_FIXTURE.label,
     },
     mechanismWorkflow: {
-      schemaVersion: RESEARCH_MECHANISM_WORKFLOW_SCHEMA,
-      workflowId: RESEARCH_MECHANISM_WORKFLOW_ID,
+      schemaVersion: workflow.schemaVersion,
+      workflowId: workflow.workflowId,
       stepCount: RESEARCH_MECHANISM_STEPS.length,
     },
     stages: buildR3JourneyStages(),
