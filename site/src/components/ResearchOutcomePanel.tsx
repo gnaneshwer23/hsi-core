@@ -437,11 +437,20 @@ export function ResearchOutcomePanel({brief}: {brief: EvidenceBrief}) {
                   Expert labels remain unavailable (human queue #4 PARKED).
                 </p>
                 <p>
-                  Classes · missing local {outcome.gapVerification.summary.missingLocalData} · genuine
-                  unresolved {outcome.gapVerification.summary.genuineUnresolved} · passage rights blocked{" "}
+                  Classes · missing local {outcome.gapVerification.summary.missingLocalData} · incomplete
+                  literature {outcome.gapVerification.summary.incompleteLiteratureCoverage} · contradictory{" "}
+                  {outcome.gapVerification.summary.contradictoryFindings} · unresolved mechanism{" "}
+                  {outcome.gapVerification.summary.unresolvedBiologicalMechanism} · unverified computational{" "}
+                  {outcome.gapVerification.summary.unverifiedComputationalHypothesis} · insufficient{" "}
+                  {outcome.gapVerification.summary.insufficientEvidence} · genuine unresolved{" "}
+                  {outcome.gapVerification.summary.genuineUnresolved} · passage rights blocked{" "}
                   {outcome.gapVerification.summary.passageRightsBlocked} · oppose search incomplete{" "}
                   {outcome.gapVerification.summary.opposeSearchIncomplete} · abstain{" "}
                   {outcome.gapVerification.summary.abstain}.
+                </p>
+                <p role="note">
+                  Search completeness ≠ scientific novelty. Incomplete literature coverage leaves
+                  scientific-gap status not verified.
                 </p>
                 {outcome.gapVerification.items.length ? (
                   <ul>
@@ -449,6 +458,14 @@ export function ResearchOutcomePanel({brief}: {brief: EvidenceBrief}) {
                       <li key={g.id}>
                         <strong>[{human(g.kind)}]</strong> {g.recordedText}
                         <p>{g.rationale}</p>
+                        <p role="note">
+                          Scientific-gap: {human(g.scientificGapStatus)} · search completeness:{" "}
+                          {human(g.searchCompleteness.status)} · novelty: {human(g.scientificNovelty.status)} ·
+                          semantic support: {human(g.semanticSupport.kind)}
+                          {g.expertReview.status === "expert_reviewed" && g.expertReview.searchScope
+                            ? ` · expert search scope: ${g.expertReview.searchScope.providers.join(", ")} @ ${g.expertReview.searchScope.dateOfSearch}`
+                            : ""}
+                        </p>
                         <ReverseTrace
                           outcome={outcome}
                           claimIds={[...g.trace.supportingClaimIds, ...g.trace.opposingClaimIds]}

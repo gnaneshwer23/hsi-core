@@ -2,9 +2,12 @@ import {describe, expect, test} from "bun:test";
 import {readFileSync, existsSync} from "node:fs";
 import {resolve} from "node:path";
 import {
+  buildExpertReviewedGapAssessment,
   projectGapVerificationForOutcome,
+  requireSemanticGapSupport,
   verifyRecordedGaps,
 } from "../src/evidence/gapVerification";
+import type {OpposingEvidenceSearchReport} from "../src/evidence/opposingEvidenceSearch";
 import {
   LIVING_EVIDENCE_DISEASE_PINS,
   LIVING_EVIDENCE_NCT_PINS,
@@ -156,6 +159,214 @@ describe("gap verification (step 04)", () => {
     const withSnapshot = await buildResearchOutcome(brief, deliveryHash, {livingEvidenceSnapshot: snapshot});
     expect(withSnapshot.gapVerification.honesty.passageImportAuthorized).toBe(false);
     expect(withSnapshot.gapVerification.unavailableCapabilities.some((s) => /#4/.test(s))).toBe(true);
+  });
+
+  test("incomplete literature coverage does not verify scientific novelty gap", () => {
+    const opposingSearch: OpposingEvidenceSearchReport = {
+      schemaVersion: "hsi-opposing-evidence-search-1",
+      method: "hsi.opposing_evidence_search.v1",
+      version: "0.1.0",
+      searchPerformed: true,
+      status: "successful_empty",
+      searchScope: {
+        providers: ["europe_pmc", "open_targets"],
+        contentLevel: "abstract-level",
+        dateOfSearch: asOf,
+        corpusNote: "Europe PMC only; abstract-level; bounded",
+        queryVariants: ["q oppose"],
+        bounded: true,
+      },
+      findings: [],
+      recordedOpposingCandidateIds: [],
+      coverage: {
+        literatureAttempts: 1,
+        literatureHits: 0,
+        openTargetsAttempts: 0,
+        openTargetsHits: 0,
+        providerUnavailable: false,
+        successfulEmpty: true,
+        overallOutcome: "successful_empty",
+      },
+      searchRecordId: null,
+      searchRecordHash: null,
+      limitations: ["Incomplete oppose ≠ consensus"],
+      consensusEstablished: false,
+      providerUnavailableDistinctFromNoEvidence: true,
+      scientificApproval: false,
+      graphPromotable: false,
+    };
+
+    const report = verifyRecordedGaps({
+      asOf,
+      branches: [
+        {
+          id: "b-cov",
+          assessment: "insufficient_evidence",
+          supportingClaimIds: [],
+          opposingClaimIds: [],
+          missingEvidence: ["no relevant study retrieved under bounded literature coverage"],
+          uncertainty: [],
+        },
+      ],
+      claimContexts: [],
+      localSourcePmids: [],
+      contradictions: {recordedOpposingClaimIds: [], searchStatus: "successful_empty"},
+      livingEvidence: emptyLiving,
+      opposingSearch,
+    });
+
+    const item = report.items[0]!;
+    expect(item.kind).toBe("incomplete_literature_coverage");
+    expect(item.scientificGapStatus).toBe("not_verified");
+    expect(item.searchCompleteness.impliesScientificNovelty).toBe(false);
+    expect(item.scientificNovelty.status).toBe("not_verified");
+    expect(item.scientificNovelty.expertReviewRequired).toBe(true);
+    expect(item.scientificallyValidated).toBe(false);
+    expect(report.honesty.incompleteCoverageDoesNotVerifyNoveltyGap).toBe(true);
+    expect(report.honesty.searchCompletenessDistinctFromScientificNovelty).toBe(true);
+    expect(item.searchCompleteness.coverageNote).toMatch(/Europe PMC/);
+  });
+
+  test("taxonomy distinguishes contradictory, mechanism, computational, and insufficient classes", () => {
+    const report = verifyRecordedGaps({
+      asOf,
+      branches: [
+        {
+          id: "b-tax",
+          assessment: "insufficient_evidence",
+          supportingClaimIds: ["HSI-C-TAX-1"],
+          opposingClaimIds: ["HSI-C-TAX-OPP"],
+          missingEvidence: [
+            "Independent contradictory or null findings",
+            "Approved source-linked claims for the biological mechanism",
+            "Unverified computational hypothesis from in silico docking",
+          ],
+          uncertainty: [],
+        },
+      ],
+      claimContexts: [],
+      localSourcePmids: ["123"],
+      contradictions: {
+        recordedOpposingClaimIds: ["HSI-C-TAX-OPP"],
+        searchStatus: "completed_bounded",
+      },
+      livingEvidence: emptyLiving,
+    });
+    expect(report.items.some((i) => i.kind === "contradictory_findings")).toBe(true);
+    expect(report.items.some((i) => i.kind === "unresolved_biological_mechanism")).toBe(true);
+    expect(report.items.some((i) => i.kind === "unverified_computational_hypothesis")).toBe(true);
+    expect(report.items.every((i) => i.scientificGapStatus === "not_verified")).toBe(true);
+  });
+
+  test("semantic gap analysis requires supporting passage or reasoning record", () => {
+    const absent = requireSemanticGapSupport({});
+    expect(absent.acceptedForSemanticAnalysis).toBe(false);
+    expect(absent.kind).toBe("absent");
+
+    const withReason = requireSemanticGapSupport({
+      reasoningRecord: "Classifier used oppose-search receipt; not passage-entailed.",
+    });
+    expect(withReason.acceptedForSemanticAnalysis).toBe(true);
+    expect(withReason.kind).toBe("explicit_reasoning_record");
+
+    const withPassage = requireSemanticGapSupport({
+      supportingPassage: "Quoted abstract sentence (rights-cleared fixture).",
+      passageRef: "pmid:18375541#abs-1",
+    });
+    expect(withPassage.acceptedForSemanticAnalysis).toBe(true);
+    expect(withPassage.kind).toBe("supporting_passage");
+
+    const report = verifyRecordedGaps({
+      asOf,
+      branches: [
+        {
+          id: "b-sem",
+          assessment: "insufficient_evidence",
+          supportingClaimIds: [],
+          opposingClaimIds: [],
+          missingEvidence: ["Approved source-linked claims for the mechanism"],
+          uncertainty: [],
+        },
+      ],
+      claimContexts: [],
+      localSourcePmids: [],
+      contradictions: {recordedOpposingClaimIds: [], searchStatus: "not_recorded"},
+      livingEvidence: emptyLiving,
+      semanticSupports: [
+        {
+          matchText: "Approved source-linked claims for the mechanism",
+          reasoningRecord: "No local claims bound; engineering missing_local_data.",
+        },
+      ],
+    });
+    expect(report.items[0]!.semanticSupport.acceptedForSemanticAnalysis).toBe(true);
+    expect(report.items[0]!.semanticSupport.kind).toBe("explicit_reasoning_record");
+  });
+
+  test("expert-reviewed assessment requires search scope and date; never scientifically verified", () => {
+    const assessment = buildExpertReviewedGapAssessment({
+      reviewerId: "reviewer-alice",
+      assessedAt: asOf,
+      searchScope: {
+        providers: ["europe_pmc"],
+        contentLevel: "abstract-level",
+        dateOfSearch: asOf,
+        corpusNote: "Europe PMC abstracts only as of assessment date — not a claim that nobody investigated",
+      },
+    });
+    expect(assessment.status).toBe("expert_reviewed");
+    expect(assessment.scientificGapStatus).toBe("expert_reviewed_labelled");
+    expect(assessment.searchScope?.dateOfSearch).toBe(asOf);
+    expect(assessment.note).toMatch(/does not imply nobody/i);
+
+    expect(() =>
+      buildExpertReviewedGapAssessment({
+        reviewerId: "reviewer-alice",
+        assessedAt: asOf,
+        searchScope: {
+          providers: [],
+          contentLevel: "metadata",
+          dateOfSearch: asOf,
+          corpusNote: "x",
+        },
+      }),
+    ).toThrow(/providers/);
+
+    const report = verifyRecordedGaps({
+      asOf,
+      branches: [
+        {
+          id: "b-exp",
+          assessment: "insufficient_evidence",
+          supportingClaimIds: [],
+          opposingClaimIds: [],
+          missingEvidence: ["no relevant study retrieved"],
+          uncertainty: [],
+        },
+      ],
+      claimContexts: [],
+      localSourcePmids: [],
+      contradictions: {recordedOpposingClaimIds: [], searchStatus: "successful_empty"},
+      livingEvidence: emptyLiving,
+      expertReviews: [
+        {
+          gapId: "gap-001",
+          reviewerId: "reviewer-alice",
+          assessedAt: asOf,
+          searchScope: {
+            providers: ["europe_pmc"],
+            contentLevel: "abstract-level",
+            dateOfSearch: asOf,
+            corpusNote: "Bounded Europe PMC only",
+          },
+        },
+      ],
+    });
+    expect(report.items[0]!.expertReview.status).toBe("expert_reviewed");
+    expect(report.items[0]!.scientificGapStatus).toBe("expert_reviewed_labelled");
+    expect(report.items[0]!.scientificallyValidated).toBe(false);
+    expect(report.honesty.scientificallyValidated).toBe(false);
+    expect(report.honesty.smeGoldFilled).toBe(false);
   });
 
   test("claim_verifier adapter persists gap verification without approving science", async () => {

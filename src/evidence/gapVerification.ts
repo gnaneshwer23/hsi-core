@@ -1,19 +1,88 @@
 /**
- * Execution step 04 — deterministic gap verification against permitted local + living evidence.
- * Distinguishes missing local data from unresolved scientific questions; never invents SME gold.
- * Passage import remains fail-closed; scientificallyValidated stays false until human #4.
+ * Execution step 04 / PR 6 — deterministic gap verification with semantic
+ * evidence analysis hooks against permitted local + living + oppose-search evidence.
+ *
+ * Distinguishes missing local data, incomplete literature coverage, contradictory
+ * findings, unresolved mechanisms, unverified computational hypotheses, and
+ * insufficient evidence. Search completeness and scientific novelty are separate
+ * assessments — incomplete coverage never implies a verified scientific novelty gap.
+ *
+ * A gap is never labelled scientifically verified without expert-reviewed evaluation
+ * that records search scope and date. Semantic analysis requires a supporting
+ * passage or explicit reasoning record — not a classifier label alone.
  */
 import type {LivingEvidenceOutcomeSection} from "./livingEvidenceExpansion";
+import type {OpposingEvidenceSearchReport} from "./opposingEvidenceSearch";
 
 export const GAP_VERIFICATION_SCHEMA = "hsi-gap-verification-1" as const;
 export const GAP_VERIFICATION_METHOD = "hsi-deterministic-gap-classification-1" as const;
 
+/** Engineering + scientific gap classes (PR 6 taxonomy + retained operational kinds). */
 export type GapKind =
   | "missing_local_data"
+  | "incomplete_literature_coverage"
+  | "contradictory_findings"
+  | "unresolved_biological_mechanism"
+  | "unverified_computational_hypothesis"
+  | "insufficient_evidence"
+  /** Retained operational / step-04 kinds (still emitted where templates match). */
   | "genuine_unresolved_question"
   | "passage_rights_blocked"
   | "oppose_search_incomplete"
   | "abstain_insufficient_evidence";
+
+/**
+ * Scientific-gap status is orthogonal to engineering classification.
+ * Incomplete literature coverage → Not verified (never “verified novelty gap”).
+ */
+export type ScientificGapStatus =
+  | "not_verified"
+  | "expert_reviewed_labelled"
+  | "scientifically_verified";
+
+export type SearchCompletenessAssessment = {
+  status:
+    | "not_assessed"
+    | "search_not_performed"
+    | "incomplete_bounded"
+    | "provider_unavailable"
+    | "bounded_completed";
+  finding: string;
+  coverageNote: string;
+  /** Explicit: search completeness ≠ scientific novelty. */
+  impliesScientificNovelty: false;
+};
+
+export type ScientificNoveltyAssessment = {
+  status: "not_assessed" | "not_verified";
+  note: string;
+  /** Novelty claims require expert-reviewed evaluation with search scope/date. */
+  expertReviewRequired: true;
+};
+
+export type SemanticGapSupport = {
+  kind: "supporting_passage" | "explicit_reasoning_record" | "absent";
+  passageRef: string | null;
+  reasoningRecord: string | null;
+  /** Semantic analysis is refused when support is absent. */
+  acceptedForSemanticAnalysis: boolean;
+  refusalReason: string | null;
+};
+
+export type ExpertReviewedGapAssessment = {
+  status: "not_reviewed" | "expert_reviewed";
+  scientificGapStatus: Exclude<ScientificGapStatus, "scientifically_verified">;
+  reviewerId: string | null;
+  assessedAt: string | null;
+  /** Required when expert_reviewed — must not imply nobody ever investigated. */
+  searchScope: {
+    providers: readonly string[];
+    contentLevel: string;
+    dateOfSearch: string;
+    corpusNote: string;
+  } | null;
+  note: string;
+};
 
 export type GapVerificationItem = {
   id: string;
@@ -22,14 +91,20 @@ export type GapVerificationItem = {
   recordedText: string;
   kind: GapKind;
   rationale: string;
+  scientificGapStatus: ScientificGapStatus;
+  searchCompleteness: SearchCompletenessAssessment;
+  scientificNovelty: ScientificNoveltyAssessment;
+  semanticSupport: SemanticGapSupport;
+  expertReview: ExpertReviewedGapAssessment;
   trace: {
     supportingClaimIds: string[];
     opposingClaimIds: string[];
     matchedLivingPmids: string[];
     openTargetsDiseaseIds: string[];
     localSourcePmids: string[];
+    opposingSearchStatus: string | null;
   };
-  expertLabelStatus: "unavailable";
+  expertLabelStatus: "unavailable" | "recorded";
   scientificallyValidated: false;
 };
 
@@ -40,6 +115,11 @@ export type GapVerificationReport = {
   items: GapVerificationItem[];
   summary: {
     missingLocalData: number;
+    incompleteLiteratureCoverage: number;
+    contradictoryFindings: number;
+    unresolvedBiologicalMechanism: number;
+    unverifiedComputationalHypothesis: number;
+    insufficientEvidence: number;
     genuineUnresolved: number;
     passageRightsBlocked: number;
     opposeSearchIncomplete: number;
@@ -47,10 +127,12 @@ export type GapVerificationReport = {
   };
   honesty: {
     smeGoldFilled: false;
-    expertLabelsAvailable: false;
+    expertLabelsAvailable: boolean;
     scientificallyValidated: false;
     humanQueueBlocked: readonly ["#4"];
     passageImportAuthorized: false;
+    searchCompletenessDistinctFromScientificNovelty: true;
+    incompleteCoverageDoesNotVerifyNoveltyGap: true;
   };
   unavailableCapabilities: string[];
   note: string;
@@ -87,6 +169,29 @@ export type GapVerificationInput = {
   localSourcePmids: readonly (string | null | undefined)[];
   contradictions: {recordedOpposingClaimIds: readonly string[]; searchStatus: string};
   livingEvidence: LivingEvidenceOutcomeSection;
+  /** Optional PR 6 opposing-evidence search receipt. */
+  opposingSearch?: OpposingEvidenceSearchReport | null;
+  /** Optional semantic supports keyed by recorded gap text or gap id. */
+  semanticSupports?: readonly {
+    matchText?: string;
+    gapId?: string;
+    supportingPassage?: string | null;
+    reasoningRecord?: string | null;
+    passageRef?: string | null;
+  }[];
+  /** Optional expert-reviewed assessments keyed by gap id (never auto-verify science). */
+  expertReviews?: readonly {
+    gapId: string;
+    reviewerId: string;
+    assessedAt: string;
+    searchScope: {
+      providers: readonly string[];
+      contentLevel: string;
+      dateOfSearch: string;
+      corpusNote: string;
+    };
+    note?: string;
+  }[];
 };
 
 function unique(values: readonly string[]): string[] {
@@ -107,6 +212,187 @@ function contextPresent(claimContexts: readonly ClaimContextInput[], claimIds: r
   });
 }
 
+function buildSemanticSupport(input: {
+  supportingPassage?: string | null;
+  reasoningRecord?: string | null;
+  passageRef?: string | null;
+}): SemanticGapSupport {
+  const passage = input.supportingPassage?.trim() || null;
+  const reasoning = input.reasoningRecord?.trim() || null;
+  const passageRef = input.passageRef?.trim() || null;
+  if (passage) {
+    return {
+      kind: "supporting_passage",
+      passageRef,
+      reasoningRecord: reasoning,
+      acceptedForSemanticAnalysis: true,
+      refusalReason: null,
+    };
+  }
+  if (reasoning) {
+    return {
+      kind: "explicit_reasoning_record",
+      passageRef,
+      reasoningRecord: reasoning,
+      acceptedForSemanticAnalysis: true,
+      refusalReason: null,
+    };
+  }
+  return {
+    kind: "absent",
+    passageRef: null,
+    reasoningRecord: null,
+    acceptedForSemanticAnalysis: false,
+    refusalReason:
+      "Semantic gap analysis requires a supporting passage or explicit reasoning record — classifier label alone is insufficient",
+  };
+}
+
+/**
+ * Refuse “semantic” gap analysis when neither a passage nor a reasoning record is supplied.
+ */
+export function requireSemanticGapSupport(input: {
+  supportingPassage?: string | null;
+  reasoningRecord?: string | null;
+  passageRef?: string | null;
+}): SemanticGapSupport {
+  return buildSemanticSupport(input);
+}
+
+/**
+ * Expert-reviewed gap assessment must record search scope + date and must not
+ * imply worldwide absence of investigation. Never sets scientifically_verified.
+ */
+export function buildExpertReviewedGapAssessment(input: {
+  reviewerId: string;
+  assessedAt: string;
+  searchScope: {
+    providers: readonly string[];
+    contentLevel: string;
+    dateOfSearch: string;
+    corpusNote: string;
+  };
+  note?: string;
+}): ExpertReviewedGapAssessment {
+  if (!input.reviewerId.trim()) throw Error("Expert gap assessment requires reviewerId");
+  if (!Number.isFinite(Date.parse(input.assessedAt))) throw Error("Invalid expert assessment date");
+  if (!Number.isFinite(Date.parse(input.searchScope.dateOfSearch))) {
+    throw Error("Expert gap assessment requires dateOfSearch");
+  }
+  if (!input.searchScope.providers.length) throw Error("Expert gap assessment requires search scope providers");
+  if (!input.searchScope.contentLevel.trim() || !input.searchScope.corpusNote.trim()) {
+    throw Error("Expert gap assessment requires contentLevel and corpusNote");
+  }
+  return {
+    status: "expert_reviewed",
+    scientificGapStatus: "expert_reviewed_labelled",
+    reviewerId: input.reviewerId.trim(),
+    assessedAt: input.assessedAt,
+    searchScope: {
+      providers: [...input.searchScope.providers],
+      contentLevel: input.searchScope.contentLevel,
+      dateOfSearch: input.searchScope.dateOfSearch,
+      corpusNote: input.searchScope.corpusNote,
+    },
+    note:
+      input.note?.trim() ||
+      "Expert-reviewed engineering label only. Scope/date bound the search — does not imply nobody has investigated the question. Scientifically verified remains false pending acceptance (#4).",
+  };
+}
+
+function defaultExpertReview(): ExpertReviewedGapAssessment {
+  return {
+    status: "not_reviewed",
+    scientificGapStatus: "not_verified",
+    reviewerId: null,
+    assessedAt: null,
+    searchScope: null,
+    note: "Expert review unavailable (human queue #4 PARKED). Scientific-gap status remains not_verified.",
+  };
+}
+
+function assessSearchCompleteness(input: {
+  opposingSearch: OpposingEvidenceSearchReport | null | undefined;
+  contradictions: GapVerificationInput["contradictions"];
+  text: string;
+}): SearchCompletenessAssessment {
+  const oppose = input.opposingSearch;
+  const providerFailed =
+    oppose?.coverage.providerUnavailable === true ||
+    oppose?.status === "provider_unavailable" ||
+    oppose?.coverage.overallOutcome === "provider_unavailable" ||
+    oppose?.coverage.overallOutcome === "provider_http_error" ||
+    oppose?.coverage.overallOutcome === "timeout_or_network";
+  if (providerFailed && oppose) {
+    return {
+      status: "provider_unavailable",
+      finding: "Provider unavailable during opposing/literature search",
+      coverageNote:
+        oppose.searchScope.corpusNote ||
+        "Provider unavailable ≠ no evidence; search completeness incomplete",
+      impliesScientificNovelty: false,
+    };
+  }
+  if (oppose?.searchPerformed) {
+    const empty =
+      oppose.status === "successful_empty" ||
+      (oppose.findings.length === 0 && !oppose.coverage.providerUnavailable);
+    return {
+      status: empty || oppose.status === "partial" ? "incomplete_bounded" : "bounded_completed",
+      finding: empty
+        ? "no relevant study retrieved (bounded oppose/literature pass)"
+        : `bounded search returned ${oppose.findings.length} bibliographic hit(s)`,
+      coverageNote: `${oppose.searchScope.corpusNote}; contentLevel=${oppose.searchScope.contentLevel}; dateOfSearch=${oppose.searchScope.dateOfSearch}`,
+      impliesScientificNovelty: false,
+    };
+  }
+  if (
+    input.contradictions.searchStatus === "not_recorded" ||
+    input.contradictions.searchStatus === "not_executed" ||
+    input.contradictions.searchStatus === "skipped_budget" ||
+    input.contradictions.searchStatus === "stubbed_incomplete"
+  ) {
+    return {
+      status: "search_not_performed",
+      finding: /no relevant study|not retrieved|no study/i.test(input.text)
+        ? "no relevant study retrieved"
+        : "Opposing/literature search not completed in this audit",
+      coverageNote: "Search completeness unknown or incomplete; does not establish scientific novelty",
+      impliesScientificNovelty: false,
+    };
+  }
+  return {
+    status: "not_assessed",
+    finding: "Search completeness not separately audited for this gap text",
+    coverageNote: "Engineering classification only",
+    impliesScientificNovelty: false,
+  };
+}
+
+function assessScientificNovelty(
+  searchCompleteness: SearchCompletenessAssessment,
+  kind: GapKind,
+): ScientificNoveltyAssessment {
+  if (
+    kind === "incomplete_literature_coverage" ||
+    searchCompleteness.status === "incomplete_bounded" ||
+    searchCompleteness.status === "search_not_performed" ||
+    searchCompleteness.status === "provider_unavailable"
+  ) {
+    return {
+      status: "not_verified",
+      note:
+        "Search completeness and scientific novelty are separate. Incomplete or empty bounded search does not verify a scientific novelty gap.",
+      expertReviewRequired: true,
+    };
+  }
+  return {
+    status: "not_assessed",
+    note: "Scientific novelty is not assessed by the engineering classifier; expert-reviewed evaluation with search scope/date is required.",
+    expertReviewRequired: true,
+  };
+}
+
 function classifyGap(input: {
   text: string;
   branch: BranchInput | null;
@@ -114,6 +400,8 @@ function classifyGap(input: {
   contradictions: GapVerificationInput["contradictions"];
   livingEvidence: LivingEvidenceOutcomeSection;
   localSourcePmids: readonly string[];
+  opposingSearch: OpposingEvidenceSearchReport | null | undefined;
+  searchCompleteness: SearchCompletenessAssessment;
 }): {kind: GapKind; rationale: string} {
   const text = input.text;
   const supporting = input.branch?.supportingClaimIds ?? [];
@@ -126,33 +414,75 @@ function classifyGap(input: {
       input.livingEvidence.licensing?.passageImportAuthorized === false ||
       input.livingEvidence.unavailableCapabilities.some((s) => /passage import/i.test(s)));
 
-  if (/contradictor|opposing|null findings/i.test(text)) {
+  // PR 6 critical path: empty/incomplete search → incomplete literature coverage, novelty not verified.
+  if (
+    /no relevant study|no study retrieved|literature coverage|successful_empty|bounded search returned 0/i.test(
+      text,
+    ) ||
+    (input.searchCompleteness.finding.includes("no relevant study retrieved") &&
+      /coverage|literature|study|retrieve|oppose/i.test(text))
+  ) {
+    return {
+      kind: "incomplete_literature_coverage",
+      rationale:
+        "Bounded search completeness is incomplete (e.g. no relevant study retrieved under Europe PMC / abstract-or-metadata-level coverage). Scientific-gap / novelty status remains not_verified — incomplete coverage ≠ verified scientific novelty gap.",
+    };
+  }
+
+  if (/computational|in silico|simulation|model-derived|algorithmic hypothesis/i.test(text)) {
+    return {
+      kind: "unverified_computational_hypothesis",
+      rationale:
+        "Recorded gap concerns a computational / model-derived hypothesis that lacks expert-verified experimental support in this audit.",
+    };
+  }
+
+  if (/contradictor|opposing|null findings|contradictory findings/i.test(text)) {
     if (opposing.length > 0 || input.contradictions.recordedOpposingClaimIds.length > 0) {
       return {
-        kind: "genuine_unresolved_question",
+        kind: "contradictory_findings",
         rationale:
-          "Opposing claim bindings are recorded, but contradiction search is not exhaustive and expert adjudication is unavailable (#4 PARKED).",
+          "Opposing claim bindings are recorded. Contradiction search is not exhaustive; expert adjudication is unavailable (#4 PARKED). Scientific-gap status remains not_verified.",
       };
     }
-    if (input.contradictions.searchStatus === "not_recorded") {
+    if (
+      input.contradictions.searchStatus === "not_recorded" ||
+      input.contradictions.searchStatus === "not_executed" ||
+      input.contradictions.searchStatus === "skipped_budget" ||
+      input.contradictions.searchStatus === "stubbed_incomplete"
+    ) {
       return {
         kind: "oppose_search_incomplete",
         rationale:
-          "No opposing traces and no recorded contradiction-search audit. Absence of oppose rows is not consensus.",
+          "No opposing traces and no completed contradiction-search audit. Absence of oppose rows is not consensus.",
+      };
+    }
+    if (input.opposingSearch?.status === "provider_unavailable") {
+      return {
+        kind: "incomplete_literature_coverage",
+        rationale:
+          "Opposing-evidence provider was unavailable. Provider unavailable ≠ no contradictory evidence; scientific novelty not verified.",
+      };
+    }
+    if (input.opposingSearch?.searchPerformed && input.opposingSearch.findings.length === 0) {
+      return {
+        kind: "incomplete_literature_coverage",
+        rationale:
+          "Opposing-evidence search completed within bounded providers/date with no hits. Incomplete coverage ≠ verified absence of contradiction or novelty gap.",
       };
     }
     return {
-      kind: "abstain_insufficient_evidence",
+      kind: "insufficient_evidence",
       rationale: "Contradiction status cannot be classified from the available audit fields.",
     };
   }
 
-  if (/approved source-linked claims/i.test(text)) {
+  if (/approved source-linked claims|biological mechanism|mechanism gap|pathway|signalling|signaling/i.test(text)) {
     if (supporting.length > 0) {
       return {
-        kind: "genuine_unresolved_question",
+        kind: "unresolved_biological_mechanism",
         rationale:
-          "Local source-linked claims are bound to this branch, yet the recorded assessment remains unresolved pending independent scientific review.",
+          "Local source-linked claims are bound, yet the mechanism assessment remains unresolved pending independent scientific review. Not SME-ranked.",
       };
     }
     if (livingBound && livingPmids.length > 0) {
@@ -205,6 +535,14 @@ function classifyGap(input: {
     };
   }
 
+  if (input.searchCompleteness.status === "incomplete_bounded" || input.searchCompleteness.status === "provider_unavailable") {
+    return {
+      kind: "incomplete_literature_coverage",
+      rationale:
+        "Search completeness is incomplete or provider-unavailable under a bounded corpus. Scientific novelty remains not_verified.",
+    };
+  }
+
   if (supporting.length > 0 || opposing.length > 0 || livingBound) {
     return {
       kind: "abstain_insufficient_evidence",
@@ -227,6 +565,17 @@ export function verifyRecordedGaps(input: GapVerificationInput): GapVerification
   const openTargetsDiseaseIds = unique(
     input.livingEvidence.openTargetsAssociations.map((a) => a.diseaseId),
   );
+  const expertByGapId = new Map(
+    (input.expertReviews ?? []).map((row) => [
+      row.gapId,
+      buildExpertReviewedGapAssessment({
+        reviewerId: row.reviewerId,
+        assessedAt: row.assessedAt,
+        searchScope: row.searchScope,
+        note: row.note,
+      }),
+    ]),
+  );
   const items: GapVerificationItem[] = [];
   let seq = 0;
   for (const branch of input.branches) {
@@ -234,6 +583,13 @@ export function verifyRecordedGaps(input: GapVerificationInput): GapVerification
       if (typeof recordedText !== "string" || !recordedText.trim() || recordedText.length > 2000) {
         throw Error("Invalid gap text");
       }
+      seq += 1;
+      const id = `gap-${seq.toString().padStart(3, "0")}`;
+      const searchCompleteness = assessSearchCompleteness({
+        opposingSearch: input.opposingSearch,
+        contradictions: input.contradictions,
+        text: recordedText,
+      });
       const {kind, rationale} = classifyGap({
         text: recordedText,
         branch,
@@ -241,23 +597,44 @@ export function verifyRecordedGaps(input: GapVerificationInput): GapVerification
         contradictions: input.contradictions,
         livingEvidence: input.livingEvidence,
         localSourcePmids,
+        opposingSearch: input.opposingSearch,
+        searchCompleteness,
       });
-      seq += 1;
+      const scientificNovelty = assessScientificNovelty(searchCompleteness, kind);
+      const semanticMatch = (input.semanticSupports ?? []).find(
+        (s) => s.gapId === id || (s.matchText && s.matchText === recordedText),
+      );
+      const semanticSupport = buildSemanticSupport({
+        supportingPassage: semanticMatch?.supportingPassage,
+        reasoningRecord: semanticMatch?.reasoningRecord,
+        passageRef: semanticMatch?.passageRef,
+      });
+      const expertReview = expertByGapId.get(id) ?? defaultExpertReview();
+      // Engineering path never emits scientifically_verified.
+      if (expertReview.scientificGapStatus === ("scientifically_verified" as ScientificGapStatus)) {
+        throw Error("Gap verification refuses scientifically_verified without separate acceptance gate");
+      }
       items.push({
-        id: `gap-${seq.toString().padStart(3, "0")}`,
+        id,
         branchId: branch.id,
         sourceField,
         recordedText,
         kind,
         rationale,
+        scientificGapStatus: expertReview.status === "expert_reviewed" ? "expert_reviewed_labelled" : "not_verified",
+        searchCompleteness,
+        scientificNovelty,
+        semanticSupport,
+        expertReview,
         trace: {
           supportingClaimIds: [...branch.supportingClaimIds],
           opposingClaimIds: [...branch.opposingClaimIds],
           matchedLivingPmids: [...input.livingEvidence.matchedPmids],
           openTargetsDiseaseIds,
           localSourcePmids,
+          opposingSearchStatus: input.opposingSearch?.status ?? input.contradictions.searchStatus,
         },
-        expertLabelStatus: "unavailable",
+        expertLabelStatus: expertReview.status === "expert_reviewed" ? "recorded" : "unavailable",
         scientificallyValidated: false,
       });
     };
@@ -267,11 +644,19 @@ export function verifyRecordedGaps(input: GapVerificationInput): GapVerification
 
   const summary = {
     missingLocalData: items.filter((i) => i.kind === "missing_local_data").length,
+    incompleteLiteratureCoverage: items.filter((i) => i.kind === "incomplete_literature_coverage").length,
+    contradictoryFindings: items.filter((i) => i.kind === "contradictory_findings").length,
+    unresolvedBiologicalMechanism: items.filter((i) => i.kind === "unresolved_biological_mechanism").length,
+    unverifiedComputationalHypothesis: items.filter((i) => i.kind === "unverified_computational_hypothesis")
+      .length,
+    insufficientEvidence: items.filter((i) => i.kind === "insufficient_evidence").length,
     genuineUnresolved: items.filter((i) => i.kind === "genuine_unresolved_question").length,
     passageRightsBlocked: items.filter((i) => i.kind === "passage_rights_blocked").length,
     opposeSearchIncomplete: items.filter((i) => i.kind === "oppose_search_incomplete").length,
     abstain: items.filter((i) => i.kind === "abstain_insufficient_evidence").length,
   };
+
+  const anyExpert = items.some((i) => i.expertReview.status === "expert_reviewed");
 
   return {
     schemaVersion: GAP_VERIFICATION_SCHEMA,
@@ -281,19 +666,22 @@ export function verifyRecordedGaps(input: GapVerificationInput): GapVerification
     summary,
     honesty: {
       smeGoldFilled: false,
-      expertLabelsAvailable: false,
+      expertLabelsAvailable: anyExpert,
       scientificallyValidated: false,
       humanQueueBlocked: ["#4"],
       passageImportAuthorized: false,
+      searchCompletenessDistinctFromScientificNovelty: true,
+      incompleteCoverageDoesNotVerifyNoveltyGap: true,
     },
     unavailableCapabilities: [
-      "Expert-labelled scientific gap ranking (human queue #4 PARKED; smeGoldFilled=false)",
+      "Expert-labelled scientific gap ranking accepted as gold (human queue #4 PARKED; smeGoldFilled=false)",
       "Passage-backed entailment against uncleared passages (human queue #2 PARKED)",
       "Gate C auto-approve / MoU legalBinding (forbidden)",
-      "Live literature / LLM tool activation beyond deterministic classification",
+      "Declaring scientifically_verified gaps without expert-reviewed evaluation that records search scope and date",
+      "Treating incomplete literature coverage as verified scientific novelty",
     ],
     note:
-      "Engineering classification only: separates missing local corpus coverage from unresolved questions and rights-blocked passages. Not scientist-ranked and not scientifically validated.",
+      "Engineering classification only: separates missing local data, incomplete literature coverage, contradictory findings, unresolved mechanisms, unverified computational hypotheses, and insufficient evidence. Search completeness ≠ scientific novelty. Not scientist-ranked and not scientifically validated.",
   };
 }
 

@@ -337,6 +337,41 @@ describe("bounded agent execution durable traces", () => {
     if (oppose?.artifact && "searchPerformed" in oppose.artifact) {
       expect(oppose.artifact.searchPerformed).toBe(false);
       expect(oppose.artifact.consensusEstablished).toBe(false);
+      expect(oppose.artifact.providerUnavailableDistinctFromNoEvidence).toBe(true);
+      expect(oppose.artifact.limitations.some((l) => /Skipped oppose|budget/i.test(l))).toBe(true);
+    }
+  });
+
+  test("opposing search limitations are visible; gap novelty stays not_verified", async () => {
+    const result = await runBoundedAgentExecution({
+      investigationId: "inv-oppose-gap-1",
+      question: "Tfh IL-21 systemic sclerosis fibrosis",
+      entities: {freeTextTerms: ["Tfh IL-21"], diseaseIds: ["MONDO_0005100"]},
+      graphRelease,
+      now: () => retrievedAt,
+      fetcher: mockFetcher(),
+      cache: createMemoryRetrievalCache(),
+      budgets: {pageSize: 5, timeoutMsPerStage: 5_000},
+    });
+    expect(result.status).toBe("completed");
+    const oppose = result.stages.find((s) => s.stageId === "opposing-evidence");
+    expect(oppose?.artifact).not.toBeNull();
+    if (oppose?.artifact && "searchPerformed" in oppose.artifact) {
+      expect(oppose.artifact.searchPerformed).toBe(true);
+      expect(oppose.artifact.consensusEstablished).toBe(false);
+      expect(oppose.artifact.searchScope?.dateOfSearch).toBe(retrievedAt);
+      expect(oppose.artifact.limitations.length).toBeGreaterThan(0);
+      expect(oppose.artifact.providerUnavailableDistinctFromNoEvidence).toBe(true);
+    }
+    const gaps = result.stages.find((s) => s.stageId === "gap-assessment");
+    expect(gaps?.artifact).not.toBeNull();
+    if (gaps?.artifact && "items" in gaps.artifact) {
+      expect(gaps.artifact.scientificallyValidated).toBe(false);
+      expect(gaps.artifact.searchCompletenessDistinctFromScientificNovelty).toBe(true);
+      expect(gaps.artifact.items.every((i) => i.scientificGapStatus !== "scientifically_verified")).toBe(
+        true,
+      );
+      expect(gaps.artifact.items.some((i) => i.semanticSupportKind !== "absent")).toBe(true);
     }
   });
 

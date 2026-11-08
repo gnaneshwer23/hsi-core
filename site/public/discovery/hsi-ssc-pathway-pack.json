@@ -2,7 +2,7 @@
   "schemaVersion": "hsi-ssc-pathway-pack-1",
   "notCds": true,
   "autoApproveIntoKg": false,
-  "generatedAt": "2026-11-08T21:22:43.839Z",
+  "generatedAt": "2026-11-08T21:36:41.663Z",
   "pathway": {
     "id": "ssc-tfh-b-il21",
     "label": "SSc · CD4/Tfh–B-cell–IL-21",
