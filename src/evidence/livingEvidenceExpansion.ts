@@ -542,7 +542,7 @@ function unavailableCapabilities(snapshot: LivingEvidenceExpansionSnapshot): str
     "Passage import (humanCleared=false; human queue #2 PARKED)",
     "Scientific acceptance / SME gold (human queue #4 PARKED)",
     "Gate C auto-approve / MoU legalBinding (forbidden)",
-    "Investigation trials attach / O-04 translational (reserved for step 05)",
+    "Investigation trials attach / O-04 translational (bind via translationalEvidenceAttach — this living-evidence path stays registry identity only)",
     "Expert-labelled scientific gap ranking (human queue #4 PARKED; engineering classification in gapVerification)",
   ];
   if (snapshot.bibliographicRecords.length < LIVING_EVIDENCE_PMID_PINS.length) {
@@ -851,7 +851,7 @@ export function projectLivingEvidenceForOutcome(input: {
       unavailableCapabilities: [
         "Living evidence expansion snapshot not bound to this investigation",
         "Passage import (humanCleared=false)",
-        "O-04 translational trials attach (step 05)",
+        "O-04 translational trials attach (use translationalEvidenceAttach on outcome options)",
       ],
       note: "No living-evidence metadata refresh is attached. Saved release sources remain the only bound evidence.",
     };

@@ -11,10 +11,25 @@ import {
   projectGapVerificationForOutcome,
   type GapVerificationOutcomeSection,
 } from "./evidence/gapVerification";
+import {
+  projectTranslationalForOutcome,
+  type TranslationalLandscapeSnapshot,
+  type TranslationalOutcomeSection,
+} from "./evidence/translationalEvidenceAttach";
+import {
+  integrateResearchBrief,
+  type IntegratedResearchBrief,
+} from "./evidence/researchBriefIntegration";
 export const RESEARCH_OUTCOME_VERSION="hsi-research-outcome-1" as const;
 export const RESEARCH_OUTCOME_METHOD="hsi-bound-outcome-projection-1" as const;
 export type Digest=(text:string)=>Promise<string>;
-export type ResearchOutcomeOptions={livingEvidenceSnapshot?:LivingEvidenceExpansionSnapshot|null};
+export type ResearchOutcomeOptions={
+  livingEvidenceSnapshot?:LivingEvidenceExpansionSnapshot|null;
+  /** PR 7 / O-04 translational landscape bind. */
+  translationalLandscape?:TranslationalLandscapeSnapshot|null;
+  /** Optional pre-built integrated brief; otherwise composed when translational is bound. */
+  researchBrief?:IntegratedResearchBrief|null;
+};
 const unique=<T>(values:readonly T[])=>[...new Set(values)];
 function exact(value:unknown,keys:string[]){if(!value||typeof value!=="object"||Array.isArray(value)||Object.keys(value).sort().join(",")!==[...keys].sort().join(","))throw Error("Invalid research outcome input fields")}
 function contextFor(brief:EvidenceBrief,relationshipId:string){
@@ -63,6 +78,14 @@ function projectResearchOutcome(brief:EvidenceBrief,options:ResearchOutcomeOptio
   contradictions,
   livingEvidence,
  });
+ const trials=projectTrialsSection(options.translationalLandscape);
+ const researchBrief=projectResearchBriefSection({
+  question:i.question,
+  options,
+  trials,
+  gapVerification,
+  livingEvidence,
+ });
  return {schemaVersion:RESEARCH_OUTCOME_VERSION,method:RESEARCH_OUTCOME_METHOD,investigationId:i.id,question:i.question,
   binding:{packageHash:p.packageHash,contextHash:p.context.contentHash,investigationHash:p.investigationHash,releaseId:e.release.id,releaseVersion:e.release.version,manifestHash:e.release.manifestHash,submissionId:brief.submission?.id??null,decisionHash:d?.decisionHash??null},
   scope:{purpose:"research_only" as const,sourceDisease:e.disease,patientDataConnected:false,clinicalAdvice:false,graphPublicationApproved:false,questionFit:scopeReview?"scope_review_required" as const:"pinned_scope_only" as const,semanticScopeValidated:false},
@@ -75,14 +98,39 @@ function projectResearchOutcome(brief:EvidenceBrief,options:ResearchOutcomeOptio
   contradictions,
   missingData:unique(branches.flatMap(b=>b.missingEvidence)),decisionTree:{kind:"saved_investigation_questions" as const,diagnosticDecisionSupport:false,questions},hypotheses:branches,
   nextResearchSteps:branches.map(b=>({branchId:b.id,action:"Retrieve and independently assess evidence addressing the recorded falsification question; define population, specimen, assay, timepoint and controls before proposing an experiment.",falsificationQuestion:b.falsificationCriteria,experimentSpecified:false,patientMeasurementOrder:false})),
-  trials:{status:"not_queried" as const,records:[],relevanceScope:"preliminary_research_only" as const,eligibilityAssessed:false,confirmedEligible:false,note:"No registry search is attached to this investigation. An empty list is not evidence of worldwide trial absence. Living-evidence NCT identity resolution (when bound) is not O-04 translational attach."},
+  trials,
   livingEvidence,
   gapVerification,
+  researchBrief,
   review:{status:d?d.outcome:"not_independently_reviewed" as const,scope:"evidence_brief_only" as const,decisionId:d?.id??null,decisionHash:d?.decisionHash??null,reviewedAt:d?.reviewedAt??null,rationale:d?.rationale??null,limitations:d?[...d.limitations]:[],scientificApprovalTransferred:false},
   comparison:{available:p.context.comparison!==null,releaseId:p.context.comparison?.release.id??null,manifestHash:p.context.comparison?.release.manifestHash??null,role:"separate_disease_context_not_branch_evidence" as const},
   provenance:{methods,declaredRetrievalReferenceCount:i.provenance.retrievalIds.length,projectionInvokesModel:false,sourceSearchCompletenessVerified:false,deterministic:true},
   disclaimer:"Research use only. Not a diagnosis, treatment recommendation, patient measurement order or trial-eligibility decision."
  };
+}
+function projectTrialsSection(landscape:TranslationalLandscapeSnapshot|null|undefined):TranslationalOutcomeSection{
+ return projectTranslationalForOutcome(landscape??null);
+}
+function projectResearchBriefSection(input:{
+ question:string;
+ options:ResearchOutcomeOptions;
+ trials:TranslationalOutcomeSection;
+ gapVerification:GapVerificationOutcomeSection;
+ livingEvidence:LivingEvidenceOutcomeSection;
+}):IntegratedResearchBrief|null{
+ if(input.options.researchBrief)return input.options.researchBrief;
+ // Auto-compose a product brief when O-04 is bound so the outcome carries source-linked limitations.
+ if(input.trials.status==="not_queried")return null;
+ const sourceLocators=[
+  ...input.livingEvidence.bibliographic.flatMap(r=>r.pmid?[{kind:"pmid" as const,value:r.pmid}]:[]),
+  ...input.trials.records.map(r=>({kind:"nct" as const,value:r.nctId})),
+ ];
+ return integrateResearchBrief({
+  question:input.question,
+  translational:input.trials,
+  gapVerification:input.gapVerification,
+  sourceLocators,
+ });
 }
 export type ResearchOutcome=ReturnType<typeof projectResearchOutcome>&{outcomeHash:string};
 /** Trusted backend must authorise the current source read before invoking this pure compiler. */
@@ -109,5 +157,13 @@ export function renderResearchOutcome(outcome:ResearchOutcome,format:"json"|"mar
  }
  lines.push("","## Conflicting evidence","",md(o.contradictions.note),...o.contradictions.recordedOpposingClaimIds.map(id=>"- "+md(id)),"","## Missing data","",...o.missingData.map(s=>"- "+md(s)),"","## Gap verification (step 04)","",`Status: ${o.gapVerification.status}`,md(o.gapVerification.note),`SME gold filled: ${o.gapVerification.honesty.smeGoldFilled}; scientifically validated: ${o.gapVerification.honesty.scientificallyValidated}.`,...o.gapVerification.items.map(g=>`- [${g.kind}] ${md(g.recordedText)} — ${md(g.rationale)}`),...o.gapVerification.unavailableCapabilities.map(s=>`- Unavailable: ${md(s)}`),"","## Investigation question tree","",...o.decisionTree.questions.map(q=>"  ".repeat(q.depth)+"- "+md(q.text)+` (${q.status}; ${q.purpose})`),"","## Candidate hypotheses and falsification","");
  for(const b of o.hypotheses)lines.push("### "+md(b.statement),`Assessment: ${b.assessment}; classification: ${b.classification}`,md(b.falsificationCriteria),"Predicted observation, experiment and controls: not specified in the saved record.",...b.uncertainty.map(s=>"- "+md(s)));
- lines.push("","## Next research work","",...o.nextResearchSteps.map(s=>"- "+md(s.action)+" "+md(s.falsificationQuestion)),"","## Living evidence metadata (step 03)","",`Status: ${o.livingEvidence.status}`,md(o.livingEvidence.note),...o.livingEvidence.bibliographic.map(r=>`- ${md(r.title)} · PMID ${r.pmid??"n/a"} · ${md(r.url)}`),...o.livingEvidence.unavailableCapabilities.map(s=>`- Unavailable: ${md(s)}`),"","## Clinical-trial context","",md(o.trials.note),"No participant eligibility has been assessed.","","## Human review","",`Recorded outcome: ${o.review.status}; scope: evidence brief only.`,md(o.review.rationale??"No independent decision recorded."),...o.review.limitations.map(s=>"- "+md(s)),"","## Methods and provenance","",...o.provenance.methods.map(m=>"- "+md(`${m.agentId} v${m.version}; recorded model ${m.modelVersion}; prompt ${m.promptVersion}; tool-call count ${m.toolCallCount}`)),"No new model call, live patient connection or exhaustive literature search is performed by this projection.","",o.disclaimer,"");return lines.join("\n");
+ lines.push("","## Next research work","",...o.nextResearchSteps.map(s=>"- "+md(s.action)+" "+md(s.falsificationQuestion)),"","## Living evidence metadata (step 03)","",`Status: ${o.livingEvidence.status}`,md(o.livingEvidence.note),...o.livingEvidence.bibliographic.map(r=>`- ${md(r.title)} · PMID ${r.pmid??"n/a"} · ${md(r.url)}`),...o.livingEvidence.unavailableCapabilities.map(s=>`- Unavailable: ${md(s)}`),"","## Clinical-trial / translational context (O-04)","",md(o.trials.note),`Status: ${o.trials.status}; eligibility assessed: ${o.trials.eligibilityAssessed}.`);
+ if(o.trials.status!=="not_queried"){
+  lines.push("","### Trial registration and status",...o.trials.planes.trialRegistrationAndStatus.map(r=>`- ${md(r.nctId)} · ${md(r.briefTitle??"untitled")} · ${md(r.overallStatus??"status unknown")} · registration≠efficacy`),"","### Intervention and target mapping",...o.trials.planes.interventionAndTargetMapping.map(m=>`- ${md(m.nctId)} · interventions: ${m.interventions.map(i=>md(i.name)).join(", ")||"none"} · mapped targets: ${m.mappedTargets.map(t=>md(t.targetSymbol)).join(", ")||"none"}`),"","### Registry-reported results",...o.trials.planes.registryReportedResults.map(r=>`- ${md(r.nctId)} · hasResultsSection=${r.hasResultsSection} · primary measures: ${r.primaryOutcomeMeasures.map(p=>md(p.title)).join("; ")||"none extracted"} · registry results≠efficacy proof`),"","### Published outcomes (locators)",...o.trials.planes.publishedOutcomes.map(p=>`- ${md(p.nctId)} · PMID ${p.pmid??"n/a"} · ${md(p.referenceType??"ref")} · claim support not assessed`),...(o.trials.planes.publishedOutcomes.length?[]:["- None attached"]),"","### Missing or unresolved outcome evidence",...o.trials.planes.missingOrUnresolvedOutcomeEvidence.map(m=>`- ${md(m.nctId)} · ${m.kind}: ${md(m.detail)} · missing≠failure`),...(o.trials.limitations.map(s=>`- Limitation: ${md(s)}`)));
+ }
+ lines.push("No participant eligibility has been assessed.");
+ if(o.researchBrief){
+  lines.push("","## Integrated research brief (PR 7)","",`Question: ${md(o.researchBrief.question)}`,`Scientific validity claimed: ${o.researchBrief.scientificValidityClaimed}; candidates unapproved: ${o.researchBrief.candidatesRemainUnapproved}.`,"","### Source-linked claims",...o.researchBrief.claims.map(c=>`- ${md(c.text)} · support=${c.support} · traces: ${c.traceRefs.map(md).join(", ")}`),"","### Explicit limitations",...o.researchBrief.limitations.map(s=>`- ${md(s)}`),"","### Next research actions",...o.researchBrief.nextResearchActions.map(s=>`- ${md(s)}`));
+ }
+ lines.push("","## Human review","",`Recorded outcome: ${o.review.status}; scope: evidence brief only.`,md(o.review.rationale??"No independent decision recorded."),...o.review.limitations.map(s=>"- "+md(s)),"","## Methods and provenance","",...o.provenance.methods.map(m=>"- "+md(`${m.agentId} v${m.version}; recorded model ${m.modelVersion}; prompt ${m.promptVersion}; tool-call count ${m.toolCallCount}`)),"No new model call, live patient connection or exhaustive literature search is performed by this projection.","",o.disclaimer,"");return lines.join("\n");
 }
