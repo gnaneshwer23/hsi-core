@@ -20,7 +20,11 @@ test('locator-only SSc claims never invent quotations, mappings or text mentions
 test('filters preserve source context and label unsupported slices as empty',async({page})=>{
  await ready(page);await page.getByLabel('Species',{exact:true}).selectOption('mouse');await expect(page.locator('.kg-stage-head')).toContainText('2 relationships');
  await page.getByLabel('Evidence status',{exact:true}).selectOption('supported');await expect(page.getByRole('heading',{name:'No graph records match.'})).toBeVisible();await expect(page.locator('.cg-text-view button')).toHaveCount(0);
- await page.getByRole('button',{name:'Clear graph filters'}).click();await page.getByLabel('Search names, aliases or IDs').fill('RF');await expect(page.getByText(/Resolution: same/)).toBeVisible();await page.getByRole('button',{name:'Rheumatoid factor biomarker',exact:true}).click();await expect(page.locator('.kg-stage-head')).toContainText('16 relationships');
+ await page.getByRole('button',{name:'Clear graph filters'}).click();
+ await expect(page.getByLabel('Species',{exact:true})).toHaveValue('');
+ await expect(page.getByLabel('Evidence status',{exact:true})).toHaveValue('');
+ await expect(page.locator('.kg-stage-head')).toContainText('16 relationships');
+ await page.getByLabel('Search names, aliases or IDs').fill('RF');await expect(page.getByText(/Resolution: same/)).toBeVisible();await page.getByRole('button',{name:'Rheumatoid factor biomarker',exact:true}).click();await expect(page.locator('.kg-stage-head')).toContainText('16 relationships');
 });
 test('multi-hop path inspection preserves negative results, incoming edges and cross-study context',async({page})=>{
  await ready(page);await page.getByRole('button').filter({hasText:'2 sources · 2 steps'}).first().click();const path=page.getByRole('article',{name:'Selected reasoning path'});await expect(path).toContainText('negative finding');await expect(path).toContainText('Context changes');await expect(path).toContainText('incoming edges');
