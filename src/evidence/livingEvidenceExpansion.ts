@@ -109,7 +109,7 @@ export type LivingEvidenceExpansionSnapshot = {
   }[];
   entityResolutions: LivingEvidenceEntityResolution[];
   graphRelationshipCandidates: LivingEvidenceGraphRelationshipCandidate[];
-  providerHits: LivingEvidenceProviderHit[];
+  providerHits: LivingEvidenceProviderRow[];
   licensing: {
     providerSignalsObserved: boolean;
     humanCleared: false;
@@ -156,7 +156,7 @@ export type LivingEvidenceExpansionReceipt = {
   registryEntitiesResolved: number;
   entityResolutions: number;
   graphRelationshipCandidates: number;
-  providerHits: LivingEvidenceProviderHit[];
+  providerHits: LivingEvidenceProviderRow[];
   snapshot: LivingEvidenceExpansionSnapshot;
   unavailableCapabilities: string[];
   nextMilestone: "step_04_agent_intelligence_gap_verification";
@@ -348,7 +348,7 @@ function studyBrief(study: Record<string, unknown>): {briefTitle: string | null;
 function providerHitFromBibliographic(
   pmid: LivingEvidencePmid,
   result: BibliographicLookupResult,
-): LivingEvidenceProviderHit {
+): LivingEvidenceProviderRow {
   if (result.ok) {
     return {
       provider: "europe_pmc",
@@ -376,7 +376,7 @@ function providerHitFromBibliographic(
 function providerHitFromOpenTargets(
   diseaseId: LivingEvidenceDiseaseId,
   result: OpenTargetsLookupResult,
-): LivingEvidenceProviderHit {
+): LivingEvidenceProviderRow {
   if (result.ok) {
     return {
       provider: "open_targets",
@@ -404,7 +404,7 @@ function providerHitFromOpenTargets(
 function providerHitFromCtgov(
   nctId: LivingEvidenceNctId,
   result: CtgovLookupResult,
-): LivingEvidenceProviderHit {
+): LivingEvidenceProviderRow {
   if (result.ok) {
     return {
       provider: "clinicaltrials_gov",
@@ -440,7 +440,7 @@ function buildSnapshotFromResults(input: {
 }): LivingEvidenceExpansionSnapshot {
   assertLivingEvidencePins();
   const bibliographicRecords: BibliographicRecord[] = [];
-  const providerHits: LivingEvidenceProviderHit[] = [];
+  const providerHits: LivingEvidenceProviderRow[] = [];
   let providerSignalsObserved = false;
 
   for (const row of input.bibliographicResults) {
