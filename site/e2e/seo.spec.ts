@@ -17,7 +17,8 @@ test('public route hydrates from generated HTML without losing content or mismat
 });
 test('sitemap contains only public canonical pages and tool shells are noindex without saved data',async({request})=>{
  const sitemap=await (await request.get('/sitemap.xml')).text();for(const path of Object.keys(SEO_PAGES))expect(sitemap).toContain('<loc>'+SITE_ORIGIN+(path==='/'?'/':path)+'</loc>');for(const value of ['/sign-in','/research/validation','/api/','/community'])expect(sitemap).not.toContain('<loc>'+SITE_ORIGIN+value+'</loc>');
- const robots=await (await request.get('/robots.txt')).text();expect(robots).toContain('Sitemap: '+SITE_ORIGIN+'/sitemap.xml');expect(robots).not.toContain('Disallow: /research/');
+ const robots=await (await request.get('/robots.txt')).text();expect(robots).toContain('Sitemap: '+SITE_ORIGIN+'/sitemap.xml');expect(robots).not.toContain('Disallow: /research/');expect(robots).toContain('User-agent: GPTBot');expect(robots).toContain('User-agent: PerplexityBot');expect(robots).toContain('User-agent: ChatGPT-User');
+ const llms=await request.get('/llms.txt');expect(llms.status()).toBe(200);expect(await llms.text()).toContain('Human Super Intelligence');
  const shell=await readFile(new URL('_pages/research--dashboard.html',dist),'utf8');expect(shell).toContain('content="noindex, follow"');expect(shell).toContain('<div id="root"></div>');expect(shell).not.toContain('data-prerendered=');expect(shell).not.toContain('id="hsi-seo-schema"');
  const cover=await request.get('/social/hsi-research.png');expect(cover.status()).toBe(200);expect(cover.headers()['content-type']).toContain('image/png');
 });

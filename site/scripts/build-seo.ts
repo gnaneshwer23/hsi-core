@@ -17,6 +17,50 @@ for(const pathname of routes){
 }
 const sitemap='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+Object.keys(SEO_PAGES).map(path=>'  <url><loc>'+SITE_ORIGIN+(path==='/'?'/':path)+'</loc></url>').join('\n')+'\n</urlset>\n';
 await writeFile(resolve(dist,'sitemap.xml'),sitemap);
-await writeFile(resolve(dist,'robots.txt'),'User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /_pages/\n\nSitemap: '+SITE_ORIGIN+'/sitemap.xml\n');
+// Explicit Allow for major search + AI crawlers. Marketing HTML stays public; /api and /_pages stay disallowed.
+const robots=[
+ 'User-agent: *',
+ 'Allow: /',
+ 'Disallow: /api/',
+ 'Disallow: /_pages/',
+ '',
+ 'User-agent: GPTBot',
+ 'Allow: /',
+ 'Disallow: /api/',
+ 'Disallow: /_pages/',
+ '',
+ 'User-agent: ChatGPT-User',
+ 'Allow: /',
+ 'Disallow: /api/',
+ 'Disallow: /_pages/',
+ '',
+ 'User-agent: OAI-SearchBot',
+ 'Allow: /',
+ 'Disallow: /api/',
+ 'Disallow: /_pages/',
+ '',
+ 'User-agent: PerplexityBot',
+ 'Allow: /',
+ 'Disallow: /api/',
+ 'Disallow: /_pages/',
+ '',
+ 'User-agent: ClaudeBot',
+ 'Allow: /',
+ 'Disallow: /api/',
+ 'Disallow: /_pages/',
+ '',
+ 'User-agent: Google-Extended',
+ 'Allow: /',
+ 'Disallow: /api/',
+ 'Disallow: /_pages/',
+ '',
+ 'User-agent: Applebot-Extended',
+ 'Allow: /',
+ 'Disallow: /api/',
+ 'Disallow: /_pages/',
+ '',
+ 'Sitemap: '+SITE_ORIGIN+'/sitemap.xml',
+ '']
+await writeFile(resolve(dist,'robots.txt'),robots.join('\n'));
 await rm(resolve(root,'.seo-render'),{recursive:true,force:true});
 console.log('SEO HTML generated: '+Object.keys(SEO_PAGES).length+' public pages; '+(routes.size-Object.keys(SEO_PAGES).length)+' noindex tool/account shells.');
