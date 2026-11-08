@@ -1,12 +1,11 @@
 # HSI production-readiness audit receipt
 
 **Audited tip:** `482db110c0efa0b4d3a9166b4f97cd8bcd53b38c` (`482db11`) · `origin/main`  
- **Follow-through tip:** `5990dd24295ae27b9ebb146c6a0141b3c9776316` (`5990dd2`) — Phases 1–8 eng stamps; #8 = partner-lock prep ENG CLEARED / FOUNDER BLOCKED; Auth A residual user-confirmed on www (session + grant + fixture; not writesEnabled / not Gate C). Feature tip `491d236`.  
+**Follow-through tip:** `491d236eba77a527bc933b2987a5f22ff704e7f8` (`491d236`) — Phases 1–8 eng stamps; #8 = partner-lock prep ENG CLEARED / FOUNDER BLOCKED; Auth A residual user-confirmed on www (session + grant + fixture; not writesEnabled / not Gate C)  
 **Prior #8 feature tip:** `491d236eba77a527bc933b2987a5f22ff704e7f8` (`491d236`) — partner-lock empty MoU slots + checklist  
 **Prior #7 tip:** `0f6634bd1d1d66f56bc2d56fb134b6df6751c2e8` (`0f6634b`) — N6 pilot-prep + Neon ledger helpers  
 **Prior #6 tip:** `15871a413e68f119be282294924a18fcbfb9d183` (`15871a4`) — 016/017 already on red-wave  
- 
- 
+
 **Audit date:** 2026-11-08  
 **Canvas source:** `canvases/hsi-production-readiness-audit.canvas.tsx` (workspace)  
 **This document:** durable engineering receipt — **not** Gate C clearance, MoU, CDS/PHI, or scientific acceptance.
