@@ -1,6 +1,7 @@
 # HSI production-readiness audit receipt
 
 **Audited tip:** `482db110c0efa0b4d3a9166b4f97cd8bcd53b38c` (`482db11`) · `origin/main`  
+**Follow-through tip:** `8d8572daca23c7f2eb848101db412e2ca07a90dc` (`8d8572d`) — Phases 1–4 eng stamps  
 **Audit date:** 2026-11-08  
 **Canvas source:** `canvases/hsi-production-readiness-audit.canvas.tsx` (workspace)  
 **This document:** durable engineering receipt — **not** Gate C clearance, MoU, CDS/PHI, or scientific acceptance.
