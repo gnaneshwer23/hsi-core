@@ -438,16 +438,48 @@ export function clarifyResearcherEntities(input: {
   };
 }
 
-function mapProviderFailOutcome(
-  outcome: BibliographicLookupResult extends {ok: false; outcome: infer O} ? O : never,
-): RetrievalOutcomeClass {
-  return outcome;
+type BibliographicFailOutcome = Extract<BibliographicLookupResult, {ok: false}>["outcome"];
+type OpenTargetsFailOutcome = Extract<OpenTargetsLookupResult, {ok: false}>["outcome"];
+
+/** Map provider fail codes onto the search-record taxonomy (exhaustive — new variants must compile). */
+function mapProviderFailOutcome(outcome: BibliographicFailOutcome): RetrievalOutcomeClass {
+  switch (outcome) {
+    case "provider_http_error":
+      return "provider_http_error";
+    case "provider_unavailable":
+      return "provider_unavailable";
+    case "invalid_response":
+      return "invalid_response";
+    case "oversized_response":
+      return "oversized_response";
+    case "timeout_or_network":
+      return "timeout_or_network";
+    default: {
+      const _exhaustive: never = outcome;
+      return _exhaustive;
+    }
+  }
 }
 
-function mapOpenTargetsFailOutcome(
-  outcome: OpenTargetsLookupResult extends {ok: false; outcome: infer O} ? O : never,
-): RetrievalOutcomeClass {
-  return outcome;
+function mapOpenTargetsFailOutcome(outcome: OpenTargetsFailOutcome): RetrievalOutcomeClass {
+  switch (outcome) {
+    case "provider_http_error":
+      return "provider_http_error";
+    case "provider_unavailable":
+      return "provider_unavailable";
+    case "invalid_response":
+      return "invalid_response";
+    case "oversized_response":
+      return "oversized_response";
+    case "timeout_or_network":
+      return "timeout_or_network";
+    case "disease_not_found":
+      return "disease_not_found";
+    default: {
+      const _exhaustive: never = outcome;
+      return _exhaustive;
+    }
+  }
 }
 
 function sourceIdentityForPinnedHit(input: {
