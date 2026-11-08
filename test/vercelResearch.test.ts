@@ -170,11 +170,27 @@ test("email verification is user-requested and bound to the authenticated provid
  })});
  expect(response.status).toBe(200);expect(await response.json()).toEqual({success:true});expect(sends).toBe(1);
 });
-test("verification endpoint never sends for missing or already verified identities and requires an acknowledgement",async()=>{
- const absent=await handleVercelResearch(post("/api/auth/send-verification-email"),env,{transport:transport(async()=>Response.json(null))});expect(absent.status).toBe(401);
+test("verification without a session accepts email and ignores attacker callbacks",async()=>{
+ let sends=0;
+ const response=await handleVercelResearch(post("/api/auth/send-verification-email",{email:"test@example.invalid",callbackURL:"https://attacker.example"}),env,{transport:transport(async(url,init)=>{
+  if(String(url).endsWith("/get-session"))return Response.json(null);
+  expect(String(url)).toBe(env.HSI_AUTH_BASE_URL+"/send-verification-email");sends++;expect(JSON.parse(String(init?.body))).toEqual({email:"test@example.invalid",callbackURL:origin+"/sign-in"});return Response.json({status:true});
+ })});
+ expect(response.status).toBe(200);expect(await response.json()).toEqual({success:true});expect(sends).toBe(1);
+ const missingEmail=await handleVercelResearch(post("/api/auth/send-verification-email",{}),env,{transport:transport(async()=>Response.json(null))});expect(missingEmail.status).toBe(400);
+});
+test("verification endpoint never sends for already verified identities and requires an acknowledgement",async()=>{
  let calls=0;
  const verified=await handleVercelResearch(post("/api/auth/send-verification-email"),env,{transport:transport(async()=>{calls++;return Response.json(identity)})});expect(await verified.json()).toEqual({success:true,alreadyVerified:true});expect(calls).toBe(1);
  const bad=await handleVercelResearch(post("/api/auth/send-verification-email"),env,{transport:transport(async url=>String(url).endsWith("/get-session")?Response.json({...identity,user:{...identity.user,emailVerified:false}}):Response.json({}))});expect(bad.status).toBe(502);
+});
+test("signup without a provider session still requests verification for the created email",async()=>{
+ let sends=0;
+ const response=await handleVercelResearch(post("/api/auth/sign-up/email",{name:"Test",email:"test@example.invalid",password:"test-only-password"}),env,{transport:transport(async(url,init)=>{
+  if(String(url).endsWith("/sign-up/email"))return Response.json({user:{id:"new-user",email:"test@example.invalid",emailVerified:false,name:"Test"},token:null});
+  expect(String(url)).toBe(env.HSI_AUTH_BASE_URL+"/send-verification-email");sends++;expect(JSON.parse(String(init?.body))).toEqual({email:"test@example.invalid",callbackURL:origin+"/sign-in"});return Response.json({status:true});
+ })});
+ expect(response.status).toBe(200);expect(await response.json()).toEqual({user:{id:"new-user",email:"test@example.invalid",emailVerified:false,name:"Test"},verificationEmailRequested:true});expect(sends).toBe(1);
 });
 
 test("reviewer history route retains the trusted session bridge and reviewer-scoped service",async()=>{
@@ -196,7 +212,18 @@ test("email OTP validation rejects malformed codes and cannot verify a different
  const unverified={...identity,user:{...identity.user,emailVerified:false}};
  const bad=await handleVercelResearch(post("/api/auth/email-otp/verify-email",{otp:"invalid-code"}),env,{transport:transport(async()=>Response.json(unverified))});expect(bad.status).toBe(400);expect((await bad.json()).code).toBe("INVALID_OTP_FORMAT");
  const mismatch=await handleVercelResearch(post("/api/auth/email-otp/verify-email",{otp:"012345"}),env,{transport:transport(async url=>String(url).endsWith("/get-session")?Response.json(unverified):Response.json({status:true,user:{...identity.user,id:"another-user"}}))});expect(mismatch.status).toBe(502);
- const absent=await handleVercelResearch(post("/api/auth/email-otp/verify-email",{otp:"012345"}),env,{transport:transport(async()=>Response.json(null))});expect(absent.status).toBe(401);
+ const absent=await handleVercelResearch(post("/api/auth/email-otp/verify-email",{otp:"012345"}),env,{transport:transport(async()=>Response.json(null))});expect(absent.status).toBe(400);expect((await absent.json()).code).toBe("INVALID_CREDENTIAL_FIELDS");
+});
+test("email OTP without a session requires matching email and strips provider tokens",async()=>{
+ let submissions=0;
+ const response=await handleVercelResearch(post("/api/auth/email-otp/verify-email",{email:"test@example.invalid",otp:"012345",role:"research_admin"}),env,{transport:transport(async(url,init)=>{
+  if(String(url).endsWith("/get-session"))return Response.json(null);
+  expect(String(url)).toBe(env.HSI_AUTH_BASE_URL+"/email-otp/verify-email");expect(JSON.parse(String(init?.body))).toEqual({email:"test@example.invalid",otp:"012345"});submissions++;
+  return Response.json({status:true,user:{...identity.user,email:"test@example.invalid",emailVerified:true},token:"never-send-to-browser"});
+ })});
+ expect(response.status).toBe(200);expect(await response.json()).toEqual({success:true,verified:true});expect(submissions).toBe(1);
+ const mismatched=await handleVercelResearch(post("/api/auth/email-otp/verify-email",{email:"test@example.invalid",otp:"012345"}),env,{transport:transport(async url=>String(url).endsWith("/get-session")?Response.json(null):Response.json({status:true,user:{...identity.user,email:"other@example.invalid",emailVerified:true}}))});
+ expect(mismatched.status).toBe(502);
 });
 test("invalid and expired email codes surface safe retry instructions without echoing the code",async()=>{
  for(const code of ["INVALID_OTP","OTP_EXPIRED","TOO_MANY_ATTEMPTS"]){

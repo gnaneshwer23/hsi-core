@@ -181,22 +181,29 @@ Open `/research/account` after email verification:
 - A 503 indicates configuration, provider or database availability requires an
   operator check. Inspect logs without logging secrets, cookies or credentials.
 
-An unverified email receives the explicit `EMAIL_NOT_VERIFIED` response and a
-**Send verification email** button. The button makes a user-initiated request;
-opening the page never sends email automatically. The gateway resolves the
-account from its provider-verified cookie and requests verification only for that
-account's email, with a fixed same-origin callback. Browser-supplied email and
-callback overrides are ignored. After using the verification link, select
-**Refresh access**. A provider acknowledgement does not prove email delivery; if
-no message arrives, an operator must check the provider's verification/email
-configuration. Never flip `emailVerified` in SQL to bypass this step.
+Neon Auth with `requireEmailVerification` creates accounts without a session
+cookie, and sign-in returns `EMAIL_NOT_VERIFIED` until the address is confirmed.
+The gateway therefore:
+
+- requests verification automatically after a successful `/sign-up/email` using
+  the created account email and a fixed same-origin callback;
+- allows `/send-verification-email` with an email when no session cookie exists
+  (session cookies still win, and browser callback overrides are ignored);
+- accepts `/email-otp/verify-email` with email+OTP when no session exists, or
+  OTP alone when a verified provider session is present.
+
+Sign-up and sign-in surfaces expose **Resend verification email** and
+**Verification code** for that pre-session state. After a session exists,
+`/research/account` keeps the same controls. Opening a page never sends email
+by itself except the signup response path above. A provider acknowledgement does
+not prove email delivery; if no message arrives, an operator must check the
+provider's verification/email configuration. Never flip `emailVerified` in SQL
+to bypass this step.
 
 If Neon sends a numeric code, enter it in **Verification code** and select
 **Verify email**. The explicit `/api/auth/email-otp/verify-email` function proxies
-Neon's email OTP verification endpoint. The account email comes from the verified
-provider session, not the request body. A successful response must confirm the
-same user is email-verified; provider tokens are excluded from browser JSON.
-The page clears the code and refreshes session/access checks after confirmation.
+Neon's email OTP verification endpoint. A successful response must confirm the
+same email is verified; provider tokens are excluded from browser JSON.
 Incorrect, expired and rate-limited codes have separate retry instructions.
 Codes stay in the form/request memory only; never log, persist or put them in URLs.
 Use a verification link instead when the provider email supplies one. Neither

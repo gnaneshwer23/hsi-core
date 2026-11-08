@@ -3,7 +3,7 @@ import {AUTH_ERROR_MESSAGES,knownAuthErrorCode} from "../../../src/authErrors";
 export type AuthError={message:string;code?:string};
 export type AuthResult<T>={data:T|null;error:AuthError|null};
 export type HsiAuthSession={session:{id:string;expiresAt:string;userId?:string};user:{id:string;name?:string;email:string;emailVerified:boolean}};
-export type HsiRegistration={user:{id:string;email:string;emailVerified:boolean}};
+export type HsiRegistration={user:{id:string;email:string;emailVerified:boolean};verificationEmailRequested?:boolean};
 function record(v:unknown):v is Record<string,unknown>{return !!v&&typeof v==="object"&&!Array.isArray(v);}
 export function parseAuthBaseUrl(value:unknown):string|null {
  if(typeof value!=="string"||!value.trim())return null;
@@ -20,7 +20,7 @@ export function parseAuthRegistration(value:unknown,submittedEmail:string):HsiRe
  if(!record(value)||!record(value.user))throw Error("Registration was not confirmed by the provider");
  const user=value.user;
  if(typeof user.id!=="string"||!user.id.trim()||user.id.length>256||typeof user.email!=="string"||user.email.trim().toLowerCase()!==submittedEmail.trim().toLowerCase()||typeof user.emailVerified!=="boolean")throw Error("Invalid registration identity response");
- return {user:{id:user.id,email:user.email,emailVerified:user.emailVerified}};
+ return {user:{id:user.id,email:user.email,emailVerified:user.emailVerified},...(typeof value.verificationEmailRequested==="boolean"?{verificationEmailRequested:value.verificationEmailRequested}:{})};
 }
 export function createHsiAuthClient(configured:unknown,request:typeof fetch=fetch,timeoutMs=8000,transportMode:"provider"|"same-origin"="provider"){
  const baseUrl=parseAuthBaseUrl(configured);
@@ -58,10 +58,10 @@ export function createHsiAuthClient(configured:unknown,request:typeof fetch=fetc
   signUp:(name:string,email:string,password:string)=>authRequest<HsiRegistration>("/sign-up/email",{name,email,password},value=>parseAuthRegistration(value,email)),
   session:()=>authRequest<HsiAuthSession>("/get-session",undefined,value=>parseAuthSession(value)),
   signOut:()=>authRequest("/sign-out",{},action),
-  sendVerificationEmail:()=>authRequest("/send-verification-email",{},value=>{
-   if(!record(value)||(value.status!==true&&value.success!==true))throw Error("Verification email request not confirmed");
+  sendVerificationEmail:(email?:string)=>authRequest("/send-verification-email",email===undefined?{}:{email},value=>{
+   if(!record(value)||(value.status!==true&&value.success!==true&&value.alreadyVerified!==true))throw Error("Verification email request not confirmed");
    return {success:true as const,...(value.alreadyVerified===true?{alreadyVerified:true as const}:{})};
   }),
-  verifyEmailCode:(otp:string)=>authRequest("/email-otp/verify-email",{otp},value=>{if(!record(value)||value.verified!==true)throw Error("Email verification not confirmed");return {verified:true as const}}),
+  verifyEmailCode:(otp:string,email?:string)=>authRequest("/email-otp/verify-email",email===undefined?{otp}:{email,otp},value=>{if(!record(value)||value.verified!==true)throw Error("Email verification not confirmed");return {verified:true as const}}),
 };
 }
