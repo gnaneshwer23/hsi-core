@@ -31,8 +31,10 @@ const matrixPath = resolve(
   root,
   "docs/engineering/BACKEND_SCIENTIFIC_INTELLIGENCE_INTEGRATION_MATRIX.md",
 );
+const refinedMatrixPath = resolve(root, "docs/audits/BACKEND_INTEGRATION_MATRIX.md");
 
 const AUDITED_MAIN_SHA = "4452e14b7a40d8ebfec978d9cc9b63d1d7b23719";
+const REFINED_AUDITED_MAIN_SHA = "c5c8c3299ce4879757cb0fd0633b80a281a09781";
 
 describe("Phase 1 backend scientific intelligence — audit baseline", () => {
   test("integration matrix document exists with required audit fields", () => {
@@ -60,6 +62,28 @@ describe("Phase 1 backend scientific intelligence — audit baseline", () => {
     expect(body).toContain("No evidence found");
     expect(body).toContain("Proposed PR sequence");
     expect(body).toContain("First vertical-slice acceptance criteria");
+    expect(body).toContain("../audits/BACKEND_INTEGRATION_MATRIX.md");
+  });
+
+  test("refined brief audit matrix exists with honest statuses and cross-link", () => {
+    expect(existsSync(refinedMatrixPath)).toBe(true);
+    const body = readFileSync(refinedMatrixPath, "utf8");
+    expect(body).toContain(REFINED_AUDITED_MAIN_SHA);
+    expect(body).toContain("BACKEND_SCIENTIFIC_INTELLIGENCE_INTEGRATION_MATRIX.md");
+    for (const status of [
+      "`connected`",
+      "`partially_connected`",
+      "`fixture_only`",
+      "`blocked`",
+      "`missing`",
+      "`out_of_scope`",
+    ]) {
+      expect(body).toContain(status);
+    }
+    expect(body).toContain("cursorMark");
+    expect(body).toContain("rights still not CLEARED");
+    expect(body).toContain("no Gate C auto-approve");
+    expect(body).toContain("red-wave");
   });
 
   test("matrix freezes honesty: no Gate C / MoU / CDS-PHI / autumn-snow", () => {

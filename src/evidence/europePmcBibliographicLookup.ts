@@ -5,6 +5,10 @@
 import {createHash} from "node:crypto";
 
 export const EUROPE_PMC_SEARCH_ENDPOINT = "https://www.ebi.ac.uk/europepmc/webservices/rest/search";
+/** Provider-version token for cache keys / search records (cursorMark-capable REST search). */
+export const EUROPE_PMC_PROVIDER_VERSION = "europepmc_rest_search_cursor_v1" as const;
+/** First-page cursorMark value required by Europe PMC search. */
+export const EUROPE_PMC_CURSOR_MARK_START = "*" as const;
 
 export type BibliographicProvider = "europe_pmc";
 
@@ -51,9 +55,17 @@ export type BibliographicLookupOk = {
   records: BibliographicRecord[];
   /** Provider hitCount when present; null if absent from payload. */
   hitCount: number | null;
-  /** True when hitCount exceeds returned page (bounded pageSize). */
+  /** True when hitCount exceeds returned page (bounded pageSize) or more pages remain. */
   truncatedByPageBudget: boolean;
   pageSize: number;
+  /** Cursor used for this request (`*` for the first page). */
+  cursorMark: string;
+  /**
+   * Next cursor from the provider. Null when absent, equal to the request cursor,
+   * or when no further page should be requested.
+   */
+  nextCursorMark: string | null;
+  providerVersion: typeof EUROPE_PMC_PROVIDER_VERSION;
 };
 
 export type BibliographicLookupFail = {
@@ -192,15 +204,28 @@ export function assertValidEuropePmcPageSize(pageSize: number): number {
   return pageSize;
 }
 
+export function assertValidEuropePmcCursorMark(cursorMark: string): string {
+  if (typeof cursorMark !== "string" || /[\x00-\x1f]/.test(cursorMark)) {
+    throw new Error("Invalid Europe PMC cursorMark control characters");
+  }
+  const trimmed = cursorMark.trim();
+  if (!trimmed || trimmed.length > 256) {
+    throw new Error("Invalid Europe PMC cursorMark length");
+  }
+  return trimmed;
+}
+
 export function parseEuropePmcBibliographicPayload(input: {
   query: string;
   bodyText: string;
   httpStatus: number;
   retrievedAt: string;
   pageSize?: number;
+  cursorMark?: string;
 }): BibliographicLookupResult {
   const {query, bodyText, httpStatus, retrievedAt} = input;
   const pageSize = input.pageSize ?? EUROPE_PMC_SEARCH_PAGE_SIZE_MAX;
+  const cursorMark = assertValidEuropePmcCursorMark(input.cursorMark ?? EUROPE_PMC_CURSOR_MARK_START);
   if (httpStatus === 403 || httpStatus === 401) {
     return {ok: false, provider: "europe_pmc", query, retrievedAt, outcome: "provider_unavailable", httpStatus, detail: `Europe PMC blocked or unauthorized (HTTP ${httpStatus})`};
   }
@@ -232,6 +257,9 @@ export function parseEuropePmcBibliographicPayload(input: {
     typeof body.hitCount === "number" && Number.isFinite(body.hitCount) && body.hitCount >= 0
       ? Math.floor(body.hitCount)
       : null;
+  const rawNext = stringOrNull(body.nextCursorMark);
+  const nextCursorMark = rawNext && rawNext !== cursorMark ? rawNext : null;
+  const morePagesRemain = nextCursorMark !== null;
   return {
     ok: true,
     provider: "europe_pmc",
@@ -241,8 +269,12 @@ export function parseEuropePmcBibliographicPayload(input: {
     responseIdentity: identity,
     records,
     hitCount,
-    truncatedByPageBudget: hitCount !== null ? hitCount > records.length : false,
+    truncatedByPageBudget:
+      (hitCount !== null ? hitCount > records.length : false) || morePagesRemain,
     pageSize,
+    cursorMark,
+    nextCursorMark,
+    providerVersion: EUROPE_PMC_PROVIDER_VERSION,
   };
 }
 
@@ -255,16 +287,19 @@ export function assertValidPmid(pmid: string): string {
 async function lookupEuropePmc(input: {
   query: string;
   pageSize: number;
+  cursorMark: string;
   fetcher?: typeof fetch;
   now?: () => Date;
   signal?: AbortSignal;
 }): Promise<BibliographicLookupResult> {
   const pageSize = assertValidEuropePmcPageSize(input.pageSize);
+  const cursorMark = assertValidEuropePmcCursorMark(input.cursorMark);
   const params = new URLSearchParams({
     query: input.query,
     format: "json",
     resultType: "core",
     pageSize: String(pageSize),
+    cursorMark,
   });
   const retrievedAt = (input.now ?? (() => new Date()))().toISOString();
   try {
@@ -279,6 +314,7 @@ async function lookupEuropePmc(input: {
       httpStatus: response.status,
       retrievedAt,
       pageSize,
+      cursorMark,
     });
   } catch (error) {
     return {
@@ -297,19 +333,24 @@ async function lookupEuropePmc(input: {
  * Unpinned / researcher-defined Europe PMC search (metadata only).
  * Does not grant claim support, rights clearance, or scientific approval.
  * Provider failures stay typed — never collapse to an empty hit list.
+ * Uses Europe PMC `cursorMark` pagination (`*` then `nextCursorMark`).
  */
 export async function searchEuropePmcByQuery(input: {
   query: string;
   pageSize?: number;
+  /** Cursor for this page; defaults to `*` (first page). */
+  cursorMark?: string;
   fetcher?: typeof fetch;
   now?: () => Date;
   signal?: AbortSignal;
 }): Promise<BibliographicLookupResult> {
   const query = assertValidEuropePmcSearchQuery(input.query);
   const pageSize = assertValidEuropePmcPageSize(input.pageSize ?? 10);
+  const cursorMark = assertValidEuropePmcCursorMark(input.cursorMark ?? EUROPE_PMC_CURSOR_MARK_START);
   return lookupEuropePmc({
     query,
     pageSize,
+    cursorMark,
     fetcher: input.fetcher,
     now: input.now,
     signal: input.signal,
@@ -327,6 +368,7 @@ export async function lookupEuropePmcByDoi(input: {
   return lookupEuropePmc({
     query: `DOI:"${doi}"`,
     pageSize: 5,
+    cursorMark: EUROPE_PMC_CURSOR_MARK_START,
     fetcher: input.fetcher,
     now: input.now,
     signal: input.signal,
@@ -344,6 +386,7 @@ export async function lookupEuropePmcByPmid(input: {
   return lookupEuropePmc({
     query: `EXT_ID:${pmid} AND SRC:MED`,
     pageSize: 2,
+    cursorMark: EUROPE_PMC_CURSOR_MARK_START,
     fetcher: input.fetcher,
     now: input.now,
     signal: input.signal,
