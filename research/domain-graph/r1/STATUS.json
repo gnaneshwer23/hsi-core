@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "hsi-r1-biomedical-source-packets-status-1",
+  "phase": "R1",
+  "roadmapPhase": "biomedical_evidence_datasets",
+  "generatedAt": "2026-11-08T15:30:00.000Z",
+  "engineeringScaffold": "CLEARED",
+  "scientificAcceptance": "BLOCKED",
+  "rightsAcceptance": "BLOCKED",
+  "humanCleared": 0,
+  "passageImported": 0,
+  "packetSlotsReserved": 12,
+  "packetSlotsRightsCleared": 0,
+  "ontologySlotsFilled": 0,
+  "contextSlotsFilled": 0,
+  "smeGoldFilled": false,
+  "gateCAutoApprove": false,
+  "legalBinding": false,
+  "n1RightsInventoryHash": "18378e0598e63f4b0ff33943501939fe9430ae55b94e16167f3393fae5be3086",
+  "n1ReceiptHash": "eb6b8a83c0b1b4d133f923c6a37cac16545949dfb6a5fe45601bafbb6e0b8fa9",
+  "engineeringChecksCleared": 7,
+  "humanChecksPending": 6,
+  "parkedHumanResiduals": [
+    "#2 N1 rights",
+    "#3 cite HITL",
+    "#4 SMEs",
+    "#5 staging",
+    "#8 MoU"
+  ],
+  "note": "Eng harness only. Reviewable rights-pending source packets. Do not invent licenceEvidenceUri, passage import, SME gold, MoU, or Gate C.",
+  "stopNote": "R1 eng scaffold complete. Scientific + rights acceptance remain BLOCKED. Human #2 N1 rights attestation is explicitly parked — do not invent licenceEvidenceUri or passage imports. SME gold is R2.",
+  "inventoryHash": "6a2ab7be0bfc8d3bcbe044d2d3ac7e6671729a1c0471622911fe2e8d06067c0c"
+}
