@@ -135,7 +135,7 @@ Honesty freeze: research decision support only · **no unrestricted central pati
 |-------|------------|----------|--------|---------|-------|
 | **0** Audit + data protection + validity | This document + M1–M13 rollup | — | `Verified operational` (audit) | Keep updated | this file |
 | **1** Clinical evidence / RWE contracts | Clinical scaffold · M9/M12/M13 ids · CDS boundary | `Missing` → **PR1 in-flight** ([#111](https://github.com/gnaneshwer23/hsi-core/pull/111)) — 7 focused tests + evaluation pack | Study · observation · exposure · outcome · analysis result | `src/realWorldEvidenceContracts.ts` · `test/realWorldEvidenceContracts.test.ts` · `scripts/real-world-evidence-contracts.ts` · `evaluation/real-world-evidence/` |
-| **2** Secure clinical data interoperability | FHIR strategy · Phase 3.7 bridge · PR1 RWE ids | `Missing` → **PR2 in-flight** (stacks on [#111](https://github.com/gnaneshwer23/hsi-core/pull/111)) — 7 focused tests + evaluation pack | Live FHIR/OMOP connectors · PHI ingestion | `src/secureClinicalDataInteropContracts.ts` · `test/secureClinicalDataInteropContracts.test.ts` · `scripts/secure-clinical-data-interop-contracts.ts` · `evaluation/secure-clinical-data-interop/` |
+| **2** Secure clinical data interoperability | FHIR strategy · Phase 3.7 bridge · PR1 RWE ids | `Missing` → **PR2 in-flight** ([#112](https://github.com/gnaneshwer23/hsi-core/pull/112), stacks on [#111](https://github.com/gnaneshwer23/hsi-core/pull/111)) — 7 focused tests + evaluation pack | Live FHIR/OMOP connectors · PHI ingestion | `src/secureClinicalDataInteropContracts.ts` · `test/secureClinicalDataInteropContracts.test.ts` · `scripts/secure-clinical-data-interop-contracts.ts` · `evaluation/secure-clinical-data-interop/` |
 | **3** Longitudinal clinical intelligence | PR1 observation time fields | `Missing` as engine | Trajectory analysis without leakage | later PR3 |
 | **4** Reproducible cohort builder | N5 criteria hooks | `Partial` hooks | Attrition + disclosure controls | later PR4 |
 | **5** Observational / causal research | — | `Missing` | Target-trial emulation with assumption checks | later PR5 |
@@ -244,7 +244,7 @@ Honesty freeze: research decision support only · **no unrestricted central pati
 
 | PR | Title | Branch | State |
 |----|-------|--------|-------|
-| (this PR) | M14 PR2 Secure Clinical Data Interoperability | `eng/m14-secure-clinical-data-interop` | **PR2 in-flight** — stacks on [#111](https://github.com/gnaneshwer23/hsi-core/pull/111); **do not auto-merge** |
+| [#112](https://github.com/gnaneshwer23/hsi-core/pull/112) | M14 PR2 Secure Clinical Data Interoperability | `eng/m14-secure-clinical-data-interop` | **PR2 in-flight** — stacks on [#111](https://github.com/gnaneshwer23/hsi-core/pull/111); **do not auto-merge** |
 | [#111](https://github.com/gnaneshwer23/hsi-core/pull/111) | M14 PR1 Clinical Evidence and RWE Contracts | `eng/m14-rwe-clinical-evidence-contracts` | **PR1 in-flight** — open for review; **do not auto-merge**; PR2 depends on it |
 | [#109](https://github.com/gnaneshwer23/hsi-core/pull/109) | M13 PR1 + M1–M13 rollup | merged → `344f450` | Substrate |
 | [#107](https://github.com/gnaneshwer23/hsi-core/pull/107) | M12 PR1 | merged → `7485bd4` | Substrate |
