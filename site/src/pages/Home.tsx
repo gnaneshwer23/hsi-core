@@ -1,11 +1,73 @@
 import {ArrowIcon} from "../components/ArrowIcon";
-import {Link} from 'react-router-dom';
-import {BiologyArtwork,EvidenceProcess,ResearchFeatureTabs,EditorialCTA} from '../components/editorial/Editorial';
-export function Home(){return <div className="ed-home">
- <header className="ed-home-hero"><div className="ed-hero-copy"><p className="ed-kicker">HUMAN SUPER INTELLIGENCE</p><h1>See the biology.<br/><em>Question the evidence.</em></h1><p className="ed-lead">Complex health questions need more than a confident answer. Connect biological context, source-linked evidence and human review to understand what deserves investigation next.</p><div className="ed-actions"><Link className="ed-button" to="/platform">Explore the platform <span aria-hidden="true"><ArrowIcon/></span></Link><Link className="ed-text-link" to="/contact">Research access <span aria-hidden="true"><ArrowIcon direction="right"/></span></Link></div><p className="ed-hero-note">Built for researchers. Grounded in evidence. Reviewed by people.</p></div><BiologyArtwork/></header>
- <div className="ed-domain-strip" aria-label="Connected research perspectives"><span>IMMUNOLOGY</span><i/><span>GUT & MICROBIOME</span><i/><span>METABOLISM</span><i/><span>NEUROSCIENCE</span></div>
- <section className="ed-intro"><p className="ed-kicker">THE PROBLEM WE WORK ON</p><h2>More information.<br/><em>Still too many missing connections.</em></h2><div><p>A lab result, a biological pathway and a research paper each tell part of a story. The difficult work is understanding how they relate—and whether the evidence holds in the context of your question.</p><p>HSI brings that work into one research journey, from the initial question to a source-bound brief that another scientist can examine.</p><Link className="ed-text-link" to="/research">Research at HSI <span aria-hidden="true"><ArrowIcon direction="right"/></span></Link></div></section>
- <section className="ed-research-section"><div className="ed-research-heading"><p className="ed-kicker">MADE FOR THE WORK OF RESEARCH</p><h2>Follow the evidence.<br/>Keep the context.</h2></div><div className="ed-research-grid"><EvidenceProcess/><ResearchFeatureTabs/></div></section>
- <section className="ed-outcome"><div><p className="ed-kicker">A CLEARER HAND-OFF</p><h2>Give the next person<br/><em>more than an answer.</em></h2><p>Share the question, the sources, the unresolved evidence and the review decision. A useful research brief should make the reasoning easier to inspect and the next experiment easier to frame.</p><Link className="ed-text-link" to="/how-it-works">From question to research brief <span aria-hidden="true"><ArrowIcon direction="right"/></span></Link></div><div className="ed-brief"><span>HSI / RESEARCH BRIEF</span><h3>The reasoning stays<br/>with the result.</h3><ul><li>Question & research scope</li><li>Sources & biological context</li><li>Competing explanations</li><li>Uncertainty & missing evidence</li><li>Independent review & version</li></ul><p>Research use. Human interpretation.</p></div></section>
- <section className="ed-ecosystem"><div><p className="ed-kicker">ONE FOUNDATION. DISTINCT EXPERIENCES.</p><h2>Start with the work<br/>you need to do.</h2></div><div className="ed-product-rows"><Link to="/for-aksh"><span>PERSONAL HEALTH CONTEXT</span><h3>Aksh Health</h3><p>Everyday health context within its own care and data setting.</p><b aria-hidden="true"><ArrowIcon/></b></Link><Link to="/for-isi"><span>IMMUNE-SCIENCE RESEARCH</span><h3>Immune Super Intelligence</h3><p>Explore immune biology and the evidence behind the connections.</p><b aria-hidden="true"><ArrowIcon/></b></Link><Link to="/platform"><span>SHARED RESEARCH TECHNOLOGY</span><h3>Human Super Intelligence</h3><p>Source-aware investigations, inspectable reasoning and accountable review.</p><b aria-hidden="true"><ArrowIcon/></b></Link></div></section><EditorialCTA/>
- </div>}
+import {Link} from "react-router-dom";
+import {BiologyArtwork,EditorialCTA} from "../components/editorial/Editorial";
+import {HomeEcosystem} from "../components/editorial/HomeEcosystem";
+import {HomeWorkbench} from "../components/editorial/HomeWorkbench";
+import {HomeKnowledgeGraph} from "../components/editorial/HomeKnowledgeGraph";
+import {PUBLIC_PLATFORM_CTA,PUBLIC_PRIMARY_CTA,PUBLIC_SECONDARY_CTA} from "../lib/ctaPolicy";
+
+const DOES_NOT=[
+  "Diagnose disease",
+  "Recommend treatment",
+  "Replace scientific judgement",
+  "Validate therapeutic targets",
+  "Guarantee research outcomes",
+  "Automatically approve scientific claims",
+  "Provide patient-specific clinical advice",
+  "Infer eligibility from association evidence",
+];
+
+export function Home(){
+  return <div className="ed-home">
+    <header className="ed-home-hero">
+      <div className="ed-hero-copy">
+        <p className="ed-kicker">CONNECTED BIOMEDICAL INTELLIGENCE</p>
+        <h1>Investigate disease mechanisms<br/><em>with evidence you can trace.</em></h1>
+        <p className="ed-lead">Explore biological relationships, examine supporting and conflicting evidence, identify research gaps, and develop the next scientific question.</p>
+        <div className="ed-actions">
+          <Link className="ed-button" to={PUBLIC_PRIMARY_CTA.to}>{PUBLIC_PRIMARY_CTA.label} <span aria-hidden="true"><ArrowIcon/></span></Link>
+          <Link className="ed-text-link" to={PUBLIC_SECONDARY_CTA.to}>{PUBLIC_SECONDARY_CTA.label} <span aria-hidden="true"><ArrowIcon direction="right"/></span></Link>
+        </div>
+        <p className="ed-hero-note">Built for researchers. Grounded in evidence. Reviewed by people. The anatomical figure is supporting context — the product is the research workflow.</p>
+      </div>
+      <BiologyArtwork/>
+    </header>
+
+    <HomeWorkbench/>
+    <HomeEcosystem/>
+    <HomeKnowledgeGraph/>
+
+    <section className="ed-intro ed-today" aria-labelledby="today-heading">
+      <p className="ed-kicker">WHAT HSI DOES TODAY</p>
+      <h2 id="today-heading">A research instrument.<br/><em>Not a regenerative-medicine brochure.</em></h2>
+      <div>
+        <p>HSI helps researchers move from a biological question to an inspectable brief: mechanism context, source-linked candidates, contradictions, gaps and human review requirements.</p>
+        <p>Authenticated workspace writes remain gated. Public pages show truthful capability status and clearly labelled illustrative demonstrations.</p>
+        <Link className="ed-text-link" to={PUBLIC_PLATFORM_CTA.to}>{PUBLIC_PLATFORM_CTA.label} <span aria-hidden="true"><ArrowIcon direction="right"/></span></Link>
+      </div>
+    </section>
+
+    <section className="ed-does-not" aria-labelledby="does-not-heading">
+      <div>
+        <p className="ed-kicker">SCIENTIFIC INTEGRITY</p>
+        <h2 id="does-not-heading">What HSI does not do</h2>
+        <p>Ambition without these limits would not be credible. Keeping them visible is part of the product.</p>
+      </div>
+      <ul>{DOES_NOT.map(item=><li key={item}>{item}</li>)}</ul>
+      <Link className="ed-text-link" to="/evidence-safety">Evidence &amp; safety <span aria-hidden="true"><ArrowIcon direction="right"/></span></Link>
+    </section>
+
+    <section className="ed-ecosystem">
+      <div>
+        <p className="ed-kicker">ONE FOUNDATION. DISTINCT EXPERIENCES.</p>
+        <h2>Start with the work<br/>you need to do.</h2>
+      </div>
+      <div className="ed-product-rows">
+        <Link to="/for-aksh"><span>PERSONAL HEALTH CONTEXT</span><h3>Aksh Health</h3><p>Everyday health context within its own care and data setting.</p><b aria-hidden="true"><ArrowIcon/></b></Link>
+        <Link to="/for-isi"><span>IMMUNE-SCIENCE RESEARCH</span><h3>Immune Super Intelligence</h3><p>Explore immune biology and the evidence behind the connections.</p><b aria-hidden="true"><ArrowIcon/></b></Link>
+        <Link to="/platform"><span>SHARED RESEARCH TECHNOLOGY</span><h3>Human Super Intelligence</h3><p>Source-aware investigations, inspectable reasoning and accountable review.</p><b aria-hidden="true"><ArrowIcon/></b></Link>
+      </div>
+    </section>
+    <EditorialCTA/>
+  </div>;
+}

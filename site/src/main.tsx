@@ -9,6 +9,8 @@ import "./styles/marketing-v2.css";
 import "./styles/experience.css";
 import "./styles/site-chrome.css";
 import "./styles/editorial-site.css";
+import "./styles/hsi-visual-tokens.css";
+import "./styles/home-instrument.css";
 
 const root=document.getElementById("root")!;
 const app=<StrictMode><BrowserRouter><App /></BrowserRouter></StrictMode>;
