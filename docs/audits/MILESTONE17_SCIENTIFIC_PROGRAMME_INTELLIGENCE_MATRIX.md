@@ -1,12 +1,12 @@
 # Milestone 17 — Autonomous Biomedical Discovery, Scientific Knowledge Evolution & Research Programme Intelligence
 
 **Brief:** HSI Milestone 17 — governed **scientific programme intelligence** contracts that organise research programmes, workstreams, programme milestones, and research decisions — composing existing orchestrator, KG, hypothesis/experiment, therapeutic/clinical/RWE/simulation, collaboration, and review services — **without** inventing a separate AI-agent platform, dozens of disconnected agents, auto-approval of plans/claims, fabricated discoveries, Gate C auto-approve, MoU invention, PHI/CDS, or claiming live autonomous closed-loop discovery.  
-**Status:** Phase 0 gap audit + **PR1 Scientific Programme Contracts** ([#131](https://github.com/gnaneshwer23/hsi-core/pull/131) in-flight) + **PR2 Research Objective and Workstream Planning** ([#134](https://github.com/gnaneshwer23/hsi-core/pull/134) stacked on #131 — open for review, do not auto-merge) — **not** autonomous discovery complete, **not** programme intelligence complete, **not** M17 complete.  
+**Status:** Phase 0 gap audit + **PR1 Scientific Programme Contracts** ([#131](https://github.com/gnaneshwer23/hsi-core/pull/131) in-flight) + **PR2 Research Objective and Workstream Planning** ([#134](https://github.com/gnaneshwer23/hsi-core/pull/134) stacked on #131) + **PR3 Continuous Evidence Investigation** ([#136](https://github.com/gnaneshwer23/hsi-core/pull/136) stacked on #134 — open for review, do not auto-merge) — **not** autonomous discovery complete, **not** programme intelligence complete, **not** M17 complete.  
 **Date:** 2026-11-09  
-**Audited `main` SHA:** `c993261513ae4b626ecb92de6576985199a746dd` (post-#130 tip; M17 stack rebased after concurrent M16 PR1 merge)  
-**Tip commit:** `c993261 M16 PR1 Human Systems Data Contracts (#130)`  
+**Audited `main` SHA:** `8e1530881f8097623f905993cf7fc1d29be12adb` (post-#132 tip; M17 stack rebased after concurrent M16 PR2 merge)  
+**Tip commit:** `8e15308 M16 PR2 Cross-Disease Mechanism Intelligence (#132)`  
 **HSI Neon:** red-wave only (`human super intelligence` / `red-wave-06625195` / `ep-restless-dew…`) — never autumn-snow / Akeno / DeliverX  
-**Dependency:** Compose IDs/refs already on `main` (M1–M15 eng substrate including M15 PR7 [#123](https://github.com/gnaneshwer23/hsi-core/pull/123) / PR8 [#128](https://github.com/gnaneshwer23/hsi-core/pull/128) and M16 PR1 [#130](https://github.com/gnaneshwer23/hsi-core/pull/130)). Remaining M16 [#124](https://github.com/gnaneshwer23/hsi-core/pull/124)/[#126](https://github.com/gnaneshwer23/hsi-core/pull/126)/[#127](https://github.com/gnaneshwer23/hsi-core/pull/127)/[#129](https://github.com/gnaneshwer23/hsi-core/pull/129) stay **in-flight** — optional later composition; **do not rewrite** those branches. **PR2 stacks on PR1 (#131)** — merge PR1 first or keep stacked. If further concurrent merges land mid-flight, rebase onto latest `main`.
+**Dependency:** Compose IDs/refs already on `main` (M1–M15 eng substrate including M15 PR7 [#123](https://github.com/gnaneshwer23/hsi-core/pull/123) / PR8 [#128](https://github.com/gnaneshwer23/hsi-core/pull/128), M16 PR1 [#130](https://github.com/gnaneshwer23/hsi-core/pull/130), M16 PR2 [#132](https://github.com/gnaneshwer23/hsi-core/pull/132)). Remaining M16 [#133](https://github.com/gnaneshwer23/hsi-core/pull/133)/[#129](https://github.com/gnaneshwer23/hsi-core/pull/129) stay **in-flight** — optional later composition; **do not rewrite** those branches. **PR2 stacks on PR1 (#131)**; **PR3 stacks on PR2 (#134)** — merge lower stack first or keep stacked. If further concurrent merges land mid-flight, rebase onto latest `main`.
 
 **Cross-links (do not contradict):**
 
@@ -29,7 +29,9 @@
 
 **Out of PR1:** Research objective / workstream planning engines (PR2), autonomous execution runtime (later), knowledge-evolution writers (later), programme intelligence analytics (later), workbench UI, Neon migration, auto-approval of plans/claims, fabricated discoveries / synthetic scientific evidence as acceptance, inventing a separate agent platform.
 
-**Out of PR2:** Continuous evidence investigation / authorised autonomous bounds (PR3), knowledge-evolution writers, programme intelligence analytics, workbench UI, Neon migration, auto-approval of plans/claims, agent self-approval, fabricated discoveries, inventing a separate agent platform.
+**Out of PR2:** Continuous evidence investigation (PR3), knowledge-evolution writers (PR4), programme intelligence analytics, workbench UI, Neon migration, auto-approval of plans/claims, agent self-approval, fabricated discoveries, inventing a separate agent platform.
+
+**Out of PR3:** Scientific knowledge evolution writers (PR4), authorised autonomous execution runners, programme intelligence analytics, workbench UI, Neon migration, auto-approval of extracted claims, treating new publications as consensus change, treating retractions as valid support, inventing a separate agent platform.
 
 ---
 
@@ -79,13 +81,13 @@ Honesty freeze: research programme intelligence only · **not a separate AI agen
 | **Auth / tenant** (M9 · ARCH-003) | `researchOrganisationTenantSecurity` | `Partial` | Optional `orgId` |
 | **Neon** | red-wave stores | `Partial` · staging `Blocked` (#5) | **No new migration in PR1** |
 | **Workbench** | Research Decision Workbench modules | `Partial` | **Out of PR1 UI** |
-| **Monitoring** (M8) | Incremental evidence monitoring (#98) | `Partial` | Later programme monitoring |
+| **Monitoring** (M8) | Incremental evidence monitoring (#98) | `Partial` | PR3 programme-scoped continuous evidence investigation composes M8 refs |
 | **Benchmarks** (M7) | Benchmark registry (#97) | `Partial` · science `Blocked` | Orthogonal; CI ≠ validity |
 | **M16 human systems** | #130 merged · #124/#126/#127/#129 `in-flight` | PR1 **merged** on audited tip; later M16 PRs optional | Optional later composition after remaining merges |
 | **M15 PR8 precision scenario** | #128 | **merged** on audited tip | Available for later composition; not required for PR1/PR2 |
 | Human #2 / #4 / #5 | PARKED | `Blocked` | Blocks live scientific E2E |
 
-**Verdict:** Eng substrate on `main` is sufficient for M17 **PR1 Scientific Programme Contracts** and stacked **PR2 Research Objective and Workstream Planning** (objectives · planning envelopes · history · human approval gates + thin memory store). Scientific path for real autonomous discovery / programme validation remains **Blocked** until authorised execution bounds, independent review, and non-fabricated evidence paths exist — **do not fabricate discoveries or use synthetic scientific evidence as acceptance**.
+**Verdict:** Eng substrate on `main` is sufficient for M17 **PR1 Scientific Programme Contracts**, stacked **PR2 Research Objective and Workstream Planning**, and stacked **PR3 Continuous Evidence Investigation** (programme source subscriptions · scheduled retrieval · dedupe · identity · classification · context · contradiction · retraction/correction · change · impact + thin memory store). Scientific path for real autonomous discovery / programme validation remains **Blocked** until authorised execution bounds, independent review, and non-fabricated evidence paths exist — **do not fabricate discoveries or use synthetic scientific evidence as acceptance**.
 
 ---
 
@@ -149,13 +151,14 @@ Honesty freeze: research programme intelligence only · **not a separate AI agen
 |----|-------|------------|-------------|
 | **PR1** | Scientific Programme Contracts | `main` (post-#123) | Programme · workstream · milestone · decision + thin store + tests + pack |
 | **PR2** | Research Objective and Workstream Planning | PR1 | Objectives, planning envelopes, workstream planning honesty — still no auto-approve |
-| **PR3** | Authorised Autonomous Investigation Bounds | PR2 | Explicit authorisation / resource / data-permission envelopes (no free runner) |
-| **PR4** | Programme Milestone & Decision Governance deepen | PR1–PR3 | Independent-reviewer assignment, decision audit trails |
-| **PR5** | Knowledge Evolution Proposals (non-promotable) | PR4 · ARCH-002 | Proposal envelopes only — Gate C human-only |
-| **PR6** | Orchestrator / registry composition deepen | PR5 · M6/M10/M12/M13 | Bind investigations / experiments / therapeutic ids |
-| **PR7** | Programme Intelligence Surfaces (analytics envelopes) | PR6 | Aggregate programme status — not discovery claims |
-| **PR8** | Workbench programme cockpit (thin) | PR7 | UI surfacing only |
-| **PR9** | Scientific / authorised-run validation | Authorised dataset + review | **Blocked** until real evidence path |
+| **PR3** | Continuous Evidence Investigation | PR2 · M8 monitoring | Programme-scoped subscriptions · scheduled retrieval · dedupe · identity · classification · context · contradiction · retraction/correction · change · impact — no auto-approve / no consensus claim |
+| **PR4** | Scientific Knowledge Evolution | PR3 · ARCH-002 | Non-promotable knowledge-evolution proposal envelopes — Gate C human-only |
+| **PR5** | Programme Milestone & Decision Governance deepen | PR1–PR4 | Independent-reviewer assignment, decision audit trails |
+| **PR6** | Authorised Autonomous Investigation Bounds | PR5 · M10 compute | Explicit authorisation / resource / data-permission envelopes (no free runner) |
+| **PR7** | Orchestrator / registry composition deepen | PR6 · M6/M10/M12/M13 | Bind investigations / experiments / therapeutic ids |
+| **PR8** | Programme Intelligence Surfaces (analytics envelopes) | PR7 | Aggregate programme status — not discovery claims |
+| **PR9** | Workbench programme cockpit (thin) | PR8 | UI surfacing only |
+| **PR10** | Scientific / authorised-run validation | Authorised dataset + review | **Blocked** until real evidence path |
 
 ---
 
@@ -201,13 +204,14 @@ Honesty freeze: research programme intelligence only · **not a separate AI agen
 | **0** Audit + reuse/governance/validation + PR sequence | This document + M1–M16 deps | — | `Verified operational` (audit) | Keep updated on merges | this file |
 | **1** Scientific programme contracts | M6/M9/M12/M13/M14/M15 ids · review honesty | **PR1 in-flight** ([#131](https://github.com/gnaneshwer23/hsi-core/pull/131)) — research programme · workstream · milestone · decision + thin store + 7 focused tests + evaluation pack · `Fixture-only` / scientific path `Blocked` | Live autonomous execution · auto-approve · fabricated discoveries | `src/scientificProgrammeIntelligenceContracts.ts` · `test/scientificProgrammeIntelligenceContracts.test.ts` · `scripts/scientific-programme-intelligence-contracts.ts` · `evaluation/scientific-programme-intelligence/` |
 | **2** Research objective / workstream planning | PR1 envelopes | **PR2 in-flight** ([#134](https://github.com/gnaneshwer23/hsi-core/pull/134) stacked on [#131](https://github.com/gnaneshwer23/hsi-core/pull/131)) — scientific objective · programme plan · research questions · dependencies · evidence gaps · capability availability · proposed workstreams · requirement estimates · planning history · human-only approve/revise/register + thin store + 7 focused tests + evaluation pack · `Fixture-only` / scientific path `Blocked` | Continuous evidence investigation · auto-approve · agent self-approval | `src/researchObjectiveWorkstreamPlanningContracts.ts` · `test/researchObjectiveWorkstreamPlanningContracts.test.ts` · `scripts/research-objective-workstream-planning-contracts.ts` · `evaluation/research-objective-workstream-planning/` |
-| **3** Authorised autonomous bounds / continuous evidence investigation | PR2 · M10 compute | `Missing` | Explicit authz / resources / data permissions · continuous evidence investigation | later PR3 |
-| **4** Decision governance deepen | PR1 decisions | `Partial` (PR1) | Independent-reviewer assignment deepen | later PR4 |
-| **5** Knowledge evolution proposals | ARCH-002 · Gate C | `Missing` | Non-promotable proposals only | later PR5 |
-| **6** Orchestrator / registry composition | M6/M10/M12/M13 | `Partial` | Deeper binds | later PR6 |
-| **7** Programme intelligence analytics | — | `Missing` | Status envelopes ≠ discovery claims | later PR7 |
-| **8** Workbench | Existing workbench | `Partial` | Thin UI | later PR8 |
-| **9** Scientific validation | Fixtures · human queue | `Fixture-only` · dataset **Blocked** | Real authorised path required | later PR9 |
+| **3** Continuous evidence investigation | PR2 · M8 monitoring | **PR3 in-flight** ([#136](https://github.com/gnaneshwer23/hsi-core/pull/136) stacked on [#134](https://github.com/gnaneshwer23/hsi-core/pull/134)) — programme source subscriptions · scheduled retrieval · dedupe · source identity · classification · context extraction · contradiction · retraction/correction · change detection · programme impact + thin store + 7 focused tests + evaluation pack · `Fixture-only` / scientific path `Blocked` | Knowledge evolution writers · auto-approve extracted claims · consensus-from-publication claims | `src/continuousEvidenceInvestigationContracts.ts` · `test/continuousEvidenceInvestigationContracts.test.ts` · `scripts/continuous-evidence-investigation-contracts.ts` · `evaluation/continuous-evidence-investigation/` |
+| **4** Scientific knowledge evolution | PR3 · ARCH-002 · Gate C | `Missing` | Non-promotable evolution proposals only | later PR4 |
+| **5** Decision governance deepen | PR1 decisions | `Partial` (PR1) | Independent-reviewer assignment deepen | later PR5 |
+| **6** Authorised autonomous bounds | PR5 · M10 compute | `Missing` | Explicit authz / resources / data permissions (no free runner) | later PR6 |
+| **7** Orchestrator / registry composition | M6/M10/M12/M13 | `Partial` | Deeper binds | later PR7 |
+| **8** Programme intelligence analytics | — | `Missing` | Status envelopes ≠ discovery claims | later PR8 |
+| **9** Workbench | Existing workbench | `Partial` | Thin UI | later PR9 |
+| **10** Scientific validation | Fixtures · human queue | `Fixture-only` · dataset **Blocked** | Real authorised path required | later PR10 |
 
 ---
 
@@ -226,6 +230,10 @@ Honesty freeze: research programme intelligence only · **not a separate AI agen
 | **Evidence gap** (PR2) | Declared required-evidence shortfall | Experiment or research decision |
 | **Programme plan** (PR2) | Planning envelope with propose-only workstreams | Auto-approved execution or discovery claim |
 | **Planning history** (PR2) | Complete immutable-style event trail | Silent overwrite of prior scope/priorities |
+| **Programme source subscription** (PR3) | Programme-scoped living-evidence source lane | Unscoped scrape / auto-approved claim feed |
+| **Scheduled retrieval** (PR3) | Bounded retrieval with snapshot + timestamp | Live unrestricted runner / consensus update |
+| **Programme evidence item** (PR3) | Retrieved / classified / deduped evidence row | Approved claim or KG fact |
+| **Evidence change / impact** (PR3) | Detected change + advisory programme impact | Consensus change or auto-approved plan revision |
 
 ---
 
@@ -258,7 +266,23 @@ Honesty freeze: research programme intelligence only · **not a separate AI agen
 - Honesty: not a separate agent platform; no PHI/CDS; non-graph-promotable; Gate C / MoU denied; Neon red-wave; migration deferred; continuous evidence investigation **not** claimed (PR3).  
 - Thin in-memory store + offline evaluation pack + focused tests.
 
-**Out of PR2:** Continuous evidence investigation / authorised autonomous bounds (PR3), workbench UI, Neon migration, auto-merge, fabricated discoveries as acceptance.
+**Out of PR2:** Continuous evidence investigation (PR3), workbench UI, Neon migration, auto-merge, fabricated discoveries as acceptance.
+
+---
+
+## PR3 deliverable (Continuous Evidence Investigation)
+
+**Continuous Evidence Investigation** — stacked on PR2 (#134); **#134 / #131 must merge first** (or keep this branch stacked on `eng/m17-research-objective-workstream-planning`).
+
+- Programme-scoped **source subscriptions** (`hsi-sp-psub-*`) composing M8 providers + declared omics / authorised datasets / clinical-experimental evidence services.  
+- **Scheduled evidence retrieval** (`hsi-sp-sret-*`) with bounded budgets, licence/limit respect, offline-fixture honesty, and preserved **snapshots + retrieval timestamps**.  
+- **Programme evidence items** (`hsi-sp-evid-*`) with deduplication, source-identity verification, classification, and fail-closed extracted-claim honesty (`extractedClaimsNotAutoApproved`).  
+- **Context extraction** (`hsi-sp-ctx-*`), **contradiction detection** (`hsi-sp-ctr-*`), **retraction/correction** (`hsi-sp-rtx-*`), **evidence change** (`hsi-sp-chg-*`), and **programme impact assessment** (`hsi-sp-imp-*`).  
+- Binding rules: new publication ≠ consensus change; no auto-approve extracted claims; retracted ≠ valid support; licences/limits respected; snapshots/timestamps preserved.  
+- Honesty: extends M8; depends on PR1/PR2; not a separate agent platform; no PHI/CDS; non-graph-promotable; Gate C / MoU denied; Neon red-wave; migration deferred; scientific knowledge evolution **not** claimed (PR4).  
+- Thin in-memory store + offline evaluation pack + focused tests.
+
+**Out of PR3:** Scientific knowledge evolution writers (PR4), free autonomous runners, workbench UI, Neon migration, auto-merge, fabricated discoveries as acceptance.
 
 ---
 
@@ -297,6 +321,25 @@ Honesty freeze: research programme intelligence only · **not a separate AI agen
 
 ---
 
+## PR3 status rows (update when PR opens / merges)
+
+| Item | Status | Notes |
+|------|--------|-------|
+| Contracts module | **PR3 in-flight** | `src/continuousEvidenceInvestigationContracts.ts` |
+| Focused tests | **PR3 in-flight** | `test/continuousEvidenceInvestigationContracts.test.ts` (7) |
+| Evaluation pack / script | **PR3 in-flight** | `evaluation/continuous-evidence-investigation/` · `scripts/continuous-evidence-investigation-contracts.ts` |
+| package.json prepare/check | **PR3 in-flight** | `spi:continuous-evidence-investigation:prepare` / `:check` |
+| PR against #134 stack | **in-flight** ([#136](https://github.com/gnaneshwer23/hsi-core/pull/136) — do not merge) | Base `#134` / `eng/m17-research-objective-workstream-planning` |
+| New publication = consensus | Refused | `newPublicationIsNotConsensusChange` |
+| Extracted claim auto-approve | Refused | `extractedClaimsNotAutoApproved` |
+| Retracted as valid support | Refused | `retractedIsNotValidSupport` |
+| Snapshot + retrieval timestamps | Required | Preserved on completed retrievals / evidence items |
+| Scientific knowledge evolution | Out of PR3 | PR4 |
+| Neon migration | Deferred | Explicit non-goal |
+| Workbench UI | Out of PR3 | — |
+
+---
+
 ## Concurrent merge note
 
-Phase 0 initially audited `d1fe2e4` (#123). Mid-flight, M15 PR8 [#128](https://github.com/gnaneshwer23/hsi-core/pull/128) merged → tip `449d714`; M17 PR1 rebased. Subsequently M16 PR1 [#130](https://github.com/gnaneshwer23/hsi-core/pull/130) merged → tip `c993261`; M17 PR1/#131 and stacked PR2 rebased onto that tip. Remaining M16 stack (#124/#126/#127/#129) stayed open and was **not** rewritten. If further merges land before M17 PR1/PR2 merge, rebase again and refresh the audited SHA.
+Phase 0 initially audited `d1fe2e4` (#123). Mid-flight, M15 PR8 [#128](https://github.com/gnaneshwer23/hsi-core/pull/128) merged → tip `449d714`; M17 PR1 rebased. Subsequently M16 PR1 [#130](https://github.com/gnaneshwer23/hsi-core/pull/130) merged → tip `c993261`; M17 PR1/#131 and stacked PR2 rebased onto that tip. Subsequently M16 PR2 [#132](https://github.com/gnaneshwer23/hsi-core/pull/132) merged → tip `8e15308`; M17 stack (#131/#134) and PR3 rebased onto that tip. Remaining M16 stack (#133/#129) stayed open and was **not** rewritten. If further merges land before M17 PR1–PR3 merge, rebase again and refresh the audited SHA.
