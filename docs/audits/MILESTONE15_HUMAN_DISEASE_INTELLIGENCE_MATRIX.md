@@ -1,12 +1,12 @@
 # Milestone 15 — Integrated Human Disease Intelligence, Digital Patient Models & Precision Research Simulation
 
 **Brief:** HSI Milestone 15 — governed disease-research intelligence contracts for disease context, observed vs inferred disease state, access-scoped digital patient **research** models, and research-only simulation scenarios — composing M14 RWE / longitudinal / (optional) cohort ids — **without** a separate digital-twin product, autonomous diagnosis/prescribing/treatment, unrestricted identifiable patients in the scientific KG, PHI/CDS, Gate C auto-approve, MoU invention, or claiming a live multiscale engine (M11 skipped).  
-**Status:** Phase 0 gap audit + PR1 (Integrated Disease Intelligence Contracts, [#116](https://github.com/gnaneshwer23/hsi-core/pull/116) merged) + PR2 (Clinical and Biological Context Integration, [#117](https://github.com/gnaneshwer23/hsi-core/pull/117) merged) + PR3 (Longitudinal Disease State Modelling, [#118](https://github.com/gnaneshwer23/hsi-core/pull/118) merged) + PR4 (Cross-Scale Ontology and Model Linkage, [#119](https://github.com/gnaneshwer23/hsi-core/pull/119) merged) + PR5 (Population and Cohort Disease Models, [#120](https://github.com/gnaneshwer23/hsi-core/pull/120) merged) + PR6 (Patient-Contextualised Research Models, [#122](https://github.com/gnaneshwer23/hsi-core/pull/122) merged) + PR7 (Multiscale Simulation Integration, [#123](https://github.com/gnaneshwer23/hsi-core/pull/123) in-flight) — **not** disease intelligence complete, **not** personalised treatment simulation authorised, **not** live digital patient validation, **not** M15 complete, **not** a live M11 multiscale engine.  
+**Status:** Phase 0 gap audit + PR1 (Integrated Disease Intelligence Contracts, [#116](https://github.com/gnaneshwer23/hsi-core/pull/116) merged) + PR2 (Clinical and Biological Context Integration, [#117](https://github.com/gnaneshwer23/hsi-core/pull/117) merged) + PR3 (Longitudinal Disease State Modelling, [#118](https://github.com/gnaneshwer23/hsi-core/pull/118) merged) + PR4 (Cross-Scale Ontology and Model Linkage, [#119](https://github.com/gnaneshwer23/hsi-core/pull/119) merged) + PR5 (Population and Cohort Disease Models, [#120](https://github.com/gnaneshwer23/hsi-core/pull/120) merged) + PR6 (Patient-Contextualised Research Models, [#122](https://github.com/gnaneshwer23/hsi-core/pull/122) merged) + PR7 (Multiscale Simulation Integration, [#123](https://github.com/gnaneshwer23/hsi-core/pull/123) in-flight) + PR8 (Precision Scenario and Missing-Information Intelligence, in-flight) — **not** disease intelligence complete, **not** personalised treatment simulation authorised, **not** live digital patient validation, **not** M15 complete, **not** a live M11 multiscale engine.  
 **Date:** 2026-11-09  
 **Audited `main` SHA:** `873ca494edf6280742309b0fc309142878f4fc43` (post-#122 tip)  
 **Tip commit:** `873ca49 Add M15 patient-contextualised research model contracts (#122)`  
 **HSI Neon:** red-wave only (`human super intelligence` / `red-wave-06625195` / `ep-restless-dew…`) — never autumn-snow / Akeno / DeliverX  
-**Dependency:** PR1–PR6 merged on `main` ([#116](https://github.com/gnaneshwer23/hsi-core/pull/116), [#117](https://github.com/gnaneshwer23/hsi-core/pull/117), [#118](https://github.com/gnaneshwer23/hsi-core/pull/118), [#119](https://github.com/gnaneshwer23/hsi-core/pull/119), [#120](https://github.com/gnaneshwer23/hsi-core/pull/120), [#122](https://github.com/gnaneshwer23/hsi-core/pull/122)); substrate includes M14 PR1–PR4 ([#111](https://github.com/gnaneshwer23/hsi-core/pull/111), [#113](https://github.com/gnaneshwer23/hsi-core/pull/113), [#114](https://github.com/gnaneshwer23/hsi-core/pull/114), [#115](https://github.com/gnaneshwer23/hsi-core/pull/115)). PR7 composes HDI simulation scenarios + PCRM + CSOL (PR4) with fixture/harness-only runs. Do not claim live EHR cohort queries, live prediction engines, complete biological replicas, treatment recommendations, invented parameters, validated individual outcome predictions, or a live M11 multiscale engine.
+**Dependency:** PR1–PR6 merged on `main` ([#116](https://github.com/gnaneshwer23/hsi-core/pull/116), [#117](https://github.com/gnaneshwer23/hsi-core/pull/117), [#118](https://github.com/gnaneshwer23/hsi-core/pull/118), [#119](https://github.com/gnaneshwer23/hsi-core/pull/119), [#120](https://github.com/gnaneshwer23/hsi-core/pull/120), [#122](https://github.com/gnaneshwer23/hsi-core/pull/122)); substrate includes M14 PR1–PR4 ([#111](https://github.com/gnaneshwer23/hsi-core/pull/111), [#113](https://github.com/gnaneshwer23/hsi-core/pull/113), [#114](https://github.com/gnaneshwer23/hsi-core/pull/114), [#115](https://github.com/gnaneshwer23/hsi-core/pull/115)). PR7 composes HDI simulation scenarios + PCRM + CSOL (PR4) with fixture/harness-only runs. PR8 stacks precision research scenarios + missing-information intelligence on HDI/PCRM/MSI. Do not claim live EHR cohort queries, live prediction engines, complete biological replicas, treatment recommendations, invented parameters, validated individual outcome predictions, invented info-gain probabilities, clinical dosing, specific-patient predictions without validation, or a live M11 multiscale engine.
 
 **Cross-links (do not contradict):**
 
@@ -36,6 +36,8 @@
 **Out of PR6:** Live digital-patient construction engines, complete biological replica / twin claims, treatment recommendations, clinical care without separate validation/governance, multiscale simulation integration (PR7), workbench UI, Neon clinical migrations, PHI ingestion, CDS / Gate C / MoU invention.
 
 **Out of PR7:** Live M11 multiscale / coupling engines, invented parameters, presenting mechanistic sims as validated individual outcome predictions, molecular→organ without validated coupling, precision scenario / missing-information intelligence (PR8), workbench UI, Neon clinical migrations, PHI ingestion, twin product, CDS / Gate C / MoU invention.
+
+**Out of PR8:** Personalised treatment effects, clinical dosing, specific-patient prediction claims unless validated for that purpose, invented info-gain probabilities, clinical orders for measurements, invasive testing without governance, model validation / continuous learning (PR9), workbench UI, Neon clinical migrations, PHI ingestion, twin product, CDS / Gate C / MoU invention.
 
 ---
 
@@ -163,8 +165,8 @@ Honesty freeze: research decision support only · **not a separate digital twin 
 | **5** Population / cohort disease models | M14 cohort (#115) · PR1–PR4 envelopes | **PR5 merged** ([#120](https://github.com/gnaneshwer23/hsi-core/pull/120) → `ebc96c8`) — 6 focused tests + evaluation pack · longitudinal outcome prediction · disease trajectory clustering (exploratory unless validated) · progression risk · phenotype stratification · organ-specific outcome modelling · biomarker association · methodology fields (cohort/index/horizon/predictors/train-val/missing/confounders/calibration/discrimination/external validation/subgroup) + thin store · `Fixture-only` / scientific path `Blocked` | Live prediction engines · prediction-as-causation · unsupervised=validated subtype · accuracy=clinical usefulness | `src/populationCohortDiseaseModelsContracts.ts` · `test/populationCohortDiseaseModelsContracts.test.ts` · `scripts/population-cohort-disease-models-contracts.ts` · `evaluation/population-cohort-disease-models/` |
 | **6** Patient-contextualised research models | PR1 HDI digital-patient · PR5 PCDM · M14 ids · M11 **Skipped** | **PR6 merged** ([#122](https://github.com/gnaneshwer23/hsi-core/pull/122) → `873ca49`; successor to closed [#121](https://github.com/gnaneshwer23/hsi-core/pull/121)) — 7 focused tests + evaluation pack · authorised longitudinal input · versioned observation set · disease state estimation · model applicability check · missing-information assessment · uncertainty estimation · research-only interpretation · audit history · out-of-scope outside validated population/input domain + thin store · `Fixture-only` / scientific path `Blocked` | Live digital-patient construction · complete biological replica · treatment recommendations · clinical care without separate validation | `src/patientContextualisedResearchModelsContracts.ts` · `test/patientContextualisedResearchModelsContracts.test.ts` · `scripts/patient-contextualised-research-models-contracts.ts` · `evaluation/patient-contextualised-research-models/` |
 | **7** Multiscale simulation integration / uncertainty envelopes | PR6 PCRM · PR4 CSOL · HDI simulation scenario · M11 **Skipped** | **PR7 in-flight** ([#123](https://github.com/gnaneshwer23/hsi-core/pull/123)) — 7 focused tests + evaluation pack · disease research question · validated model-component identification (or unavailable) · applicability · authorised input data refs · biological/clinical assumptions · simulation configuration · fixture/harness-only approved model run · uncertainty quantification · numerical/biological validity flags · reviewable research interpretation · model coupling (variables/units/time scales/assumptions/identifiability/validation evidence/known failure conditions) + thin store · `Fixture-only` / scientific path `Blocked` · live M11 **not claimed** | Live M11 engine · invented parameters · validated individual outcome predictions · molecular→organ without validated coupling | `src/multiscaleSimulationIntegrationContracts.ts` · `test/multiscaleSimulationIntegrationContracts.test.ts` · `scripts/multiscale-simulation-integration-contracts.ts` · `evaluation/multiscale-simulation-integration/` |
-| **8** Precision scenario / missing-information intelligence | PR7 MSI · PCRM missing-info | `Missing` | Precision research scenarios + missing-info intelligence | later PR8 Precision Scenario and Missing-Information Intelligence |
-| **9** Workbench surfaces | research workbench | `Partial` | UI deferred | later PR9 |
+| **8** Precision scenario / missing-information intelligence | PR7 MSI · PCRM missing-info · HDI | **PR8 in-flight** — 7 focused tests + evaluation pack · seven precision research scenario kinds · scenario outputs (definition/model version/biological context/predicted outputs/uncertainty/assumptions/sensitivity/limitations/validation) · missing-information intelligence (missing measurement IDs/quality gaps/input requirements/missing-var sensitivity/quantifiable info value only/follow-up comparison/experimental validation) · research measurement priorities ≠ clinical orders · no invasive testing without governance + thin store · `Fixture-only` / scientific path `Blocked` | Personalised Tx effects · clinical dosing · invented info-gain · clinical orders · invasive testing without governance | `src/precisionScenarioMissingInformationContracts.ts` · `test/precisionScenarioMissingInformationContracts.test.ts` · `scripts/precision-scenario-missing-information-contracts.ts` · `evaluation/precision-scenario-missing-information/` |
+| **9** Model validation / continuous learning | PR8 PSMI · MSI · PCRM | `Missing` | Model validation + continuous learning contracts | later PR9 Model Validation and Continuous Learning |
 | **10** Authorised-dataset scientific validation | — | `Blocked` | No synthetic-as-validation | later PR10 |
 
 ---
@@ -206,6 +208,14 @@ Honesty freeze: research decision support only · **not a separate digital twin 
 | **Uncertainty estimation** (PR6) | Declared uncertainty ordinal + sources | Certainty / individual clinical truth |
 | **Research-only interpretation** (PR6) | Research interpretation under applicability + uncertainty | Treatment recommendation / clinical care authorisation |
 | **Audit history** (PR6) | Append-only research audit envelope | Silent mutation of individual-context records |
+| **Precision research scenario** (PR8) | Bounded research scenario kind with assumptions | Personalised treatment effect / clinical dosing |
+| **Scenario model and context** (PR8) | Model version + supported biological context | Live engine / twin claim |
+| **Scenario predicted outputs** (PR8) | Research predicted outputs envelope | Specific-patient prediction unless validated for that purpose |
+| **Scenario uncertainty / sensitivity** (PR8) | Declared ordinals + drivers | Certainty / clinical usefulness |
+| **Scenario validation recommendation** (PR8) | Research validation steps | Clinical order |
+| **Missing-information assessment** (PR8) | Missing measurement IDs + quality gaps + input requirements | Invented values / clinical orders |
+| **Missing-variable research value** (PR8) | Sensitivity + quantifiable info value only when declared | Invented info-gain probabilities |
+| **Follow-up and experimental validation** (PR8) | Candidate follow-ups + experimental validation as research priorities | Clinical orders / invasive testing without governance |
 
 ---
 
@@ -343,6 +353,23 @@ Honesty freeze: research decision support only · **not a separate digital twin 
 
 ---
 
+
+## PR8 deliverable (Precision Scenario and Missing-Information Intelligence)
+
+**Precision Scenario and Missing-Information Intelligence**
+
+- Versioned **precision scenario / missing-information intelligence spec** composing PR1 `hsi-hdi-ctx-*` + optional `hsi-hdi-sim-*` / `hsi-hdi-dpm-*`, optional PR6 `hsi-pcrm-spec-*` / `hsi-pcrm-mia-*`, optional PR7 `hsi-msi-spec-*`, and optional PR2/PR3/PR5/M14 ids; closed review lifecycle; fail-closed when dataset blocked.  
+- **Seven precision research scenario kinds**: alternative biological mechanism assumptions · disease trajectory model comparison · biomarker measurement scenarios · model parameter sensitivity · cohort subgroup comparisons · hypothetical pathway perturbations · alternative monitoring schedules.  
+- Scenario outputs declare **definition**, **model version**, **supported biological context**, **predicted outputs**, **uncertainty**, **key assumptions**, **sensitivity**, **limitations**, and **recommended validation**.  
+- Restrictions: `notPersonalisedTreatmentEffect` · `noClinicalDosing` · no specific-patient prediction unless validated for that purpose (`validatedForSpecificPatientPurpose: false` in fixtures).  
+- **Missing-information intelligence**: missing measurement IDs · data quality gaps · model input requirements · sensitivity to missing variables · expected research info value only where quantifiable (`quantifiable_declared` / `unquantifiable_declared` — refuse invented info-gain probabilities) · candidate follow-up measurement comparison · experimental validation recommendations.  
+- Frame as **research measurement priorities**, not clinical orders; invasive testing requires governance (`governance_required_declared` / refuse `blocked_without_governance`).  
+- Thin in-memory store + offline evaluation pack + focused tests. No Neon migration; no workbench UI; no PHI/CDS; no Gate C / MoU; **no live M11 claim**.
+
+**Out of PR8:** Personalised treatment effects, clinical dosing, invented info-gain probabilities, clinical measurement orders, invasive testing without governance, PR9 Model Validation and Continuous Learning, workbench UI, Neon migration, PHI ingestion, auto-merge.
+
+---
+
 ## Dataset availability blocker
 
 | Item | Status |
@@ -390,6 +417,11 @@ Honesty freeze: research decision support only · **not a separate digital twin 
 - Inventing missing simulation parameters.  
 - Presenting mechanistic simulations as validated individual outcome predictions.  
 - Treating molecular pathway association as organ-level effect without validated coupling.  
+- Claiming personalised treatment effects or clinical dosing from research scenarios.
+- Claiming a scenario predicts a specific patient unless validated for that purpose.
+- Inventing info-gain probabilities for missing variables.
+- Framing research measurement priorities as clinical orders.
+- Recommending invasive testing without governance.
 - Gate C auto-approve, invented MoU, autumn-snow Neon, PHI→LLM.
 
 ---
@@ -419,6 +451,7 @@ Honesty freeze: research decision support only · **not a separate digital twin 
 
 | PR | Title | Branch | State |
 |----|-------|--------|-------|
+| PR8 (this) | M15 PR8 Precision Scenario and Missing-Information Intelligence | `eng/m15-precision-scenario-missing-info` | **PR8 in-flight** — stacks on [#123](https://github.com/gnaneshwer23/hsi-core/pull/123); 7 focused tests + evaluation pack; open for review; **do not auto-merge** |
 | [#123](https://github.com/gnaneshwer23/hsi-core/pull/123) | M15 PR7 Multiscale Simulation Integration | `eng/m15-multiscale-simulation-integration` | **PR7 in-flight** — targets `main` post-[#122](https://github.com/gnaneshwer23/hsi-core/pull/122); 7 focused tests + evaluation pack; open for review; **do not auto-merge** |
 | [#122](https://github.com/gnaneshwer23/hsi-core/pull/122) | M15 PR6 Patient-Contextualised Research Models | merged → `873ca49` | Substrate |
 | [#121](https://github.com/gnaneshwer23/hsi-core/pull/121) | M15 PR6 Patient-Contextualised Research Models (closed) | `eng/m15-patient-contextualised-research-models` | Closed after #120 squash deleted stacked base; restored as [#122](https://github.com/gnaneshwer23/hsi-core/pull/122) |
@@ -432,8 +465,8 @@ Honesty freeze: research decision support only · **not a separate digital twin 
 | [#113](https://github.com/gnaneshwer23/hsi-core/pull/113) | M14 PR2 Secure Clinical Data Interoperability | merged → `33843eb` | Substrate |
 | [#111](https://github.com/gnaneshwer23/hsi-core/pull/111) | M14 PR1 Clinical Evidence and RWE Contracts | merged → `19e0ff1` | Substrate |
 
-**Merge order:** PR6 [#122](https://github.com/gnaneshwer23/hsi-core/pull/122) merged → this PR7 [#123](https://github.com/gnaneshwer23/hsi-core/pull/123) Multiscale Simulation Integration → next PR8 Precision Scenario and Missing-Information Intelligence.
+**Merge order:** PR6 [#122](https://github.com/gnaneshwer23/hsi-core/pull/122) merged → PR7 [#123](https://github.com/gnaneshwer23/hsi-core/pull/123) Multiscale Simulation Integration → this PR8 Precision Scenario and Missing-Information Intelligence (stacked on #123 until #123 merges; rebase onto `main` if #123 lands first) → next PR9 Model Validation and Continuous Learning.
 
-**Suggested next:** PR8 Precision Scenario and Missing-Information Intelligence.
+**Suggested next:** PR9 Model Validation and Continuous Learning.
 
 **M14 left open after Step A:** none on the M14 eng track (PR4 [#115](https://github.com/gnaneshwer23/hsi-core/pull/115) squash-merged). Unrelated open PRs #71 / #61 / #60 / #34 / #15 left untouched.
