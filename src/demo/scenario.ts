@@ -117,7 +117,7 @@ export async function runDemoScenario() {
     similar,
     similarityIsEligibility: similaritySatisfiesEligibility("similarity_only"),
     prescreen: screen,
-    targets: prioritiseTargets(evidence.targets),
+    targets: evidence.openTargets.ok ? prioritiseTargets(evidence.targets) : [],
     repurposing: repurposingHypotheses(),
     phiBlocked: phi.blocked,
     reviewEvents: store.events().map((event) => ({ name: event.name, at: event.at })),
