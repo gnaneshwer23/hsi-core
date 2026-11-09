@@ -29,7 +29,30 @@ type ScenarioSnapshot = {
   };
   targets: { symbol: string; openTargetsScore: number; scoreFetchedAt?: string }[];
   repurposing: { text: string }[];
-  release: { releaseId: string };
+  release: { releaseId: string; version?: string; priorReleaseId?: string | null; approvedEdge?: string | null };
+  secondInvestigationReadRelease?: string | null;
+  secondMentionsApprovedEdge?: boolean;
+  learningLoop?: {
+    step8Label: string;
+    before: {
+      releaseId: string;
+      version: string;
+      approvedEdgeCount: number;
+      step8Detail: string | null;
+      releaseRead: string | null;
+    };
+    after: {
+      releaseId: string;
+      version: string;
+      priorReleaseId: string | null;
+      approvedEdgeId: string | null;
+      approvedEdgeCount: number;
+      step8Detail: string | null;
+      releaseRead: string | null;
+      mechanismMentionsRelease: boolean;
+    };
+    timeline: { label: string; at: string; releaseId?: string }[];
+  };
   reviewEvents: { name: string; at: string }[];
 };
 
@@ -235,13 +258,54 @@ function View({
       </article>
     );
   }
+  const loop = scenario?.learningLoop;
   return (
     <article>
-      <h2>Review queue</h2>
+      <h2>Step 8 · Learning loop</h2>
       <p>
-        A scientific reviewer question was approved in this environment and published graph release {scenario?.release.releaseId ?? "…"}.
-        A later investigation reads that release. Patient-facing questions are not sent.
+        {loop?.step8Label ??
+          "Review approved → release published → next investigation reads it."}{" "}
+        Patient-facing questions are not sent.
       </p>
+      {loop ? (
+        <>
+          <ol className="demo-learning-timeline">
+            {loop.timeline.map((item) => (
+              <li key={`${item.at}-${item.label}`}>
+                <strong>{item.label}</strong>
+                <span>{item.at.slice(11, 19)}{item.releaseId ? ` · ${item.releaseId}` : ""}</span>
+              </li>
+            ))}
+          </ol>
+          <div className="demo-learning-compare" aria-label="Before and after the approved release">
+            <section>
+              <h3>Before</h3>
+              <p>Release {loop.before.releaseId} ({loop.before.version})</p>
+              <p>Approved edges: {loop.before.approvedEdgeCount}</p>
+              <p>Step 8: {loop.before.step8Detail}</p>
+              <p>Release read by the first investigation: {loop.before.releaseRead}</p>
+            </section>
+            <section>
+              <h3>After</h3>
+              <p>Release {loop.after.releaseId} ({loop.after.version})</p>
+              <p>Prior release: {loop.after.priorReleaseId ?? "none"}</p>
+              <p>Approved edges: {loop.after.approvedEdgeCount}</p>
+              <p>Approved edge: {loop.after.approvedEdgeId ?? "none"}</p>
+              <p>Step 8: {loop.after.step8Detail}</p>
+              <p>
+                Next investigation reads {loop.after.releaseRead}
+                {loop.after.mechanismMentionsRelease ? " and cites the approved edge." : "."}
+              </p>
+            </section>
+          </div>
+        </>
+      ) : (
+        <p>
+          A scientific reviewer question was approved in this environment and published graph release{" "}
+          {scenario?.release.releaseId ?? "…"}. A later investigation reads that release.
+        </p>
+      )}
+      <h3>Review events</h3>
       <ul>
         {(scenario?.reviewEvents ?? []).slice(0, 12).map((event) => (
           <li key={`${event.at}-${event.name}`}>{event.at.slice(11, 19)} · {event.name}</li>

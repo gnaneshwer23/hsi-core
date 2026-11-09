@@ -32,6 +32,11 @@ describe("synthetic demonstration scenario", () => {
     expect(report.release.patientDataIncluded).toBe(false);
     expect(report.secondInvestigationReadRelease).toBe(report.release.releaseId);
     expect(report.secondMentionsApprovedEdge).toBe(true);
+    expect(report.learningLoop.before.releaseId).toBe("lhkg-demo-1.0.0");
+    expect(report.learningLoop.after.releaseId).toBe("lhkg-demo-1.0.1");
+    expect(report.learningLoop.after.version).toBe("1.0.1");
+    expect(report.learningLoop.after.mechanismMentionsRelease).toBe(true);
+    expect(report.learningLoop.after.approvedEdgeCount).toBeGreaterThan(report.learningLoop.before.approvedEdgeCount);
     expect(report.patientQuestionSent).toBe(false);
     expect(report.patientQuestionBlocked).toBe(true);
   });
