@@ -17,6 +17,10 @@ import {
   projectTranslationalFailurePersistenceLines,
   type TranslationalFailureInvestigationAssessment,
 } from "./translationalFailureTaxonomy";
+import {
+  projectPrecisionContractPersistenceLines,
+  type PrecisionEvidenceContractPack,
+} from "./precisionEvidenceContracts";
 
 export const RESEARCH_BRIEF_INTEGRATION_SCHEMA = "hsi-research-brief-integration-1" as const;
 export const RESEARCH_BRIEF_INTEGRATION_METHOD = "hsi.research_brief_integration.v1" as const;
@@ -75,6 +79,18 @@ export type IntegratedResearchBrief = {
     proprietaryProgrammesNotInvented: true;
     causalFailureExplanationsNotFabricated: true;
   } | null;
+  /** M5 PR1 precision evidence contracts (phenotype / molecular / subgroup / biomarker). */
+  precisionSummary: {
+    layersBound: number;
+    unknownFieldsRecorded: number;
+    omicsNotConnected: number;
+    biomarkerPerformanceInvented: false;
+    patientMeasurementsInvented: false;
+    metadataRetrievalIsNotAnalysis: true;
+    patientTreatmentRecommendation: false;
+    individualisedMedicalAdvice: false;
+    candidateSubgroupIsNotClinicalStrataProof: true;
+  } | null;
   candidatesRemainUnapproved: true;
   reviewGatesIntact: true;
   scientificValidityClaimed: false;
@@ -96,6 +112,8 @@ export type IntegrateResearchBriefInput = {
   translationalContracts?: TranslationalEvidenceContractPack | null;
   /** M4 Phase 2 failure-mode investigation taxonomy (labels, not conclusions). */
   translationalFailureInvestigation?: TranslationalFailureInvestigationAssessment | null;
+  /** M5 PR1 precision evidence contracts. */
+  precisionContracts?: PrecisionEvidenceContractPack | null;
   releaseAware?: ReleaseAwareRetrievalResult | null;
   /** Optional source locators from retrieval / living evidence. */
   sourceLocators?: readonly {kind: "pmid" | "doi" | "nct"; value: string}[];
@@ -197,6 +215,12 @@ export function integrateResearchBrief(input: IntegrateResearchBriefInput): Inte
           ),
         ]
       : []),
+    ...(input.precisionContracts
+      ? [
+          "M5 precision contracts: phenotype/molecular/subgroup/biomarker unknowns preserved; metadata retrieval ≠ analysis; biomarker performance and patient measurements not invented; no patient-facing treatment recommendations",
+          ...projectPrecisionContractPersistenceLines(input.precisionContracts).slice(0, 10),
+        ]
+      : []),
     ...(input.releaseAware
       ? [
           "Release-aware surface keeps draft candidates in a separate labelled channel; assessReleaseClaim remains fail-closed",
@@ -247,6 +271,17 @@ export function integrateResearchBrief(input: IntegrateResearchBriefInput): Inte
     throw new Error("Translational failure investigation refused honesty gates");
   }
 
+  if (
+    input.precisionContracts &&
+    (input.precisionContracts.honesty.biomarkerPerformanceNotInvented !== true ||
+      input.precisionContracts.honesty.patientMeasurementsNotInvented !== true ||
+      input.precisionContracts.honesty.metadataRetrievalIsNotAnalysis !== true ||
+      input.precisionContracts.honesty.patientTreatmentRecommendation !== false ||
+      input.precisionContracts.honesty.individualisedMedicalAdvice !== false)
+  ) {
+    throw new Error("Precision evidence contracts refused honesty gates");
+  }
+
   const translationalSummary =
     input.translational && input.translational.status !== "not_queried"
       ? {
@@ -264,6 +299,20 @@ export function integrateResearchBrief(input: IntegrateResearchBriefInput): Inte
         }
       : null;
 
+  const precisionSummary = input.precisionContracts
+    ? {
+        layersBound: input.precisionContracts.contracts.length,
+        unknownFieldsRecorded: input.precisionContracts.summary.unknownFieldsRecorded,
+        omicsNotConnected: input.precisionContracts.summary.omicsNotConnected,
+        biomarkerPerformanceInvented: false as const,
+        patientMeasurementsInvented: false as const,
+        metadataRetrievalIsNotAnalysis: true as const,
+        patientTreatmentRecommendation: false as const,
+        individualisedMedicalAdvice: false as const,
+        candidateSubgroupIsNotClinicalStrataProof: true as const,
+      }
+    : null;
+
   return {
     schemaVersion: RESEARCH_BRIEF_INTEGRATION_SCHEMA,
     method: RESEARCH_BRIEF_INTEGRATION_METHOD,
@@ -280,6 +329,7 @@ export function integrateResearchBrief(input: IntegrateResearchBriefInput): Inte
     },
     releaseAwareSurface,
     translationalSummary,
+    precisionSummary,
     candidatesRemainUnapproved: true,
     reviewGatesIntact: true,
     scientificValidityClaimed: false,

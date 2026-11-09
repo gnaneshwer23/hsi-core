@@ -1,10 +1,10 @@
 # Milestone 4 — Translational Failure Intelligence
 
 **Brief:** HSI Milestone 4 — programme / preclinical / human translational / clinical evidence contracts and failure honesty  
-**Status:** Phase 0–1 on `main` (#93); Phase 2 failure-mode taxonomy **in-flight** — **not** production readiness, **not** scientific validity, **not** M4 complete.  
+**Status:** Phase 0–2 on `main` (#93 / #94) — **not** production readiness, **not** scientific validity, **not** M4 complete.  
 **Date:** 2026-11-09  
-**Audited `main` SHA:** `915f0ca0f97cc31944a7f484d1cc7c78c7c7b9a8`  
-**Tip commit:** `915f0ca Add M4 Phase 0 matrix and translational evidence contracts. (#93)`  
+**Audited `main` SHA:** `868431cabf2120504c1a8ffbefb7bca036ddf5b4`  
+**Tip commit:** `868431c Add M4 Phase 2 translational failure-mode investigation taxonomy. (#94)`  
 **HSI Neon:** red-wave only (`human super intelligence` / `red-wave-06625195` / `ep-restless-dew…`) — never autumn-snow / Akeno / DeliverX  
 
 **Cross-links (do not contradict):**
@@ -14,6 +14,7 @@
 - [`DATA_TO_DISCOVERY_IMPLEMENTATION_MATRIX.md`](./DATA_TO_DISCOVERY_IMPLEMENTATION_MATRIX.md) — adapter / Technology status  
 - [`MILESTONE2_CONTEXTUAL_REASONING_MATRIX.md`](./MILESTONE2_CONTEXTUAL_REASONING_MATRIX.md) — M2 partial; structured comparison + contradiction investigation on `main` (#90 / #92)  
 - [`MILESTONE3_HYPOTHESIS_EXPERIMENT_MATRIX.md`](./MILESTONE3_HYPOTHESIS_EXPERIMENT_MATRIX.md) — M3 PR1 registry on `main` (#91); multi-hypothesis eval **not** started  
+- [`MILESTONE5_PRECISION_TRANSLATIONAL_MATRIX.md`](./MILESTONE5_PRECISION_TRANSLATIONAL_MATRIX.md) — M5 Phase 0 + PR1 (orthogonal precision contracts; do not contradict)  
 - [`../engineering/HUMAN_QUEUE_RESIDUALS.md`](../engineering/HUMAN_QUEUE_RESIDUALS.md) — #2 / #4 / #5 PARKED  
 - [`../CDS_PHI_BOUNDARY.md`](../CDS_PHI_BOUNDARY.md)  
 
@@ -73,7 +74,7 @@ Honesty freeze: no Gate C auto-approve · no invented MoU · no live CDS/PHI · 
 |-------|------------|----------|--------|---------|-------|
 | **0** Audit | This document | — | `connected` (audit) | Keep updated as PRs land | this file |
 | **1** Translational evidence contracts + thin identity | O-04 trial attach; OT/EPMC/CT.gov/UniProt lookups; ontology prefixes | `partial` → **PR1 on main (#93)** | Programme / preclinical / human-translational / clinical envelopes; unknowns preserved; failure honesty; thin ID resolve; ChEMBL/Reactome stub ids | `translationalEvidenceContracts.ts` |
-| **2** Failure-mode taxonomy deepen | Missing-outcome kinds on O-04; M2 investigation pattern | `partial` → **Phase 2 in-flight** | Structured translational failure **investigation labels** without inventing cause; registry status alone ≠ failure cause | `translationalFailureTaxonomy.ts` |
+| **2** Failure-mode taxonomy deepen | Missing-outcome kinds on O-04; M2 investigation pattern | `partial` → **Phase 2 on main (#94)** | Structured translational failure **investigation labels** without inventing cause; registry status alone ≠ failure cause | `translationalFailureTaxonomy.ts` |
 | **3** Cross-source programme join | Intervention↔target token overlap | `partial` | Curated programme identity without proprietary invention | future |
 | **4** Agent / brief bind | Brief translational summary + failure labels | `partial` | Deeper bounded-agent consume beyond thin brief bind | future thin |
 | **5** Workbench surfacing | O-04 planes in outcome panel | `partial` | No separate dashboard | site / outcome |
@@ -81,7 +82,7 @@ Honesty freeze: no Gate C auto-approve · no invented MoU · no live CDS/PHI · 
 
 ---
 
-## Phase 2 deliverable (this increment)
+## Phase 2 deliverable (shipped on `main` via #94)
 
 **Translational failure-mode taxonomy / investigation categories**
 
@@ -105,7 +106,7 @@ Binding rules:
 - Thin hooks to translational evidence contracts + structured comparison / contradiction investigation.  
 - Review gates intact; no patient treatment recommendations; Neon red-wave; no Gate C / MoU / PHI.  
 
-**Out of Phase 2:** Phases 3–8, multi-hypothesis M3 eval, separate dashboard.
+**Still open:** Phases 3–8, multi-hypothesis M3 eval, separate dashboard. M4 remains **partial**, not scientifically complete.
 
 ---
 
