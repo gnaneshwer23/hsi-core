@@ -1,0 +1,206 @@
+{
+  "schema": "hsi-protocol-intelligence-scientific-approval-1",
+  "method": "hsi.protocol_intelligence_scientific_approval.v1",
+  "version": "0.1.0",
+  "asOf": "2026-11-09T16:00:00.000Z",
+  "protocolDraftCount": 1,
+  "reviewerCommentCount": 1,
+  "changeControlCount": 3,
+  "honesty": {
+    "agentsProposeResearchersApprove": true,
+    "aiCannotSelfApproveExperiments": true,
+    "protocolsApprovedOnlyByAuthorisedResearchers": true,
+    "noAutomaticInstrumentInstructions": true,
+    "noUnjustifiedPowerSampleSizeClaims": true,
+    "fabricatedResults": false,
+    "pipelinesExecuted": false,
+    "labAdaptersWired": false,
+    "workbenchUiShipped": false,
+    "gateCAutoApprove": false,
+    "mouInvented": false,
+    "phiCdsWired": false,
+    "closedLoopDiscoveryComplete": false,
+    "scientificApprovalClaimedComplete": false,
+    "graphPromotable": false,
+    "neonProjectPolicy": "red-wave-only",
+    "migration": "deferred",
+    "dependsOnPr1LifecycleContracts": true,
+    "dependsOnPr2DesignPrioritisation": true
+  },
+  "drafts": [
+    {
+      "schema": "hsi-protocol-intelligence-scientific-approval-1",
+      "method": "hsi.protocol_intelligence_scientific_approval.v1",
+      "version": "0.1.0",
+      "id": "hsi-exp-pint-fixture-demo",
+      "title": "Fixture protocol intelligence draft",
+      "objective": "Document methods, controls, metadata, SAP, QC, and governance for scientific review without auto-execution.",
+      "protocolVersion": 2,
+      "parentProtocolVersion": 1,
+      "lifecycle": "researcher_approved",
+      "sourceProposalId": "hsi-exp-prop-fixture-demo",
+      "sourceDesignPackageId": "hsi-exp-des-fixture-demo",
+      "sourceApproachId": "hsi-exp-apr-fixture-invitro",
+      "linkedPr1ProtocolId": "hsi-exp-prot-fixture-v1",
+      "hypothesisId": "hyp-fixture-001",
+      "investigationId": "inv-fixture-001",
+      "methodControls": {
+        "methods": [
+          "Declare fixture procedure steps without wet-lab run claims.",
+          "Freeze prediction content hash before outcome attach."
+        ],
+        "controls": [
+          "vehicle_fixture"
+        ],
+        "negativeControls": [
+          "non_targeting_control"
+        ],
+        "measurements": [
+          "marker_readout_fixture"
+        ],
+        "proceduralLimitations": [
+          "Engineering fixture only — not an executable lab SOP."
+        ]
+      },
+      "requiredMetadata": [
+        {
+          "key": "dose",
+          "label": "Dose / concentration",
+          "required": true,
+          "value": "fixture_dose_declared",
+          "missingReason": null
+        },
+        {
+          "key": "tissue_context",
+          "label": "Tissue context",
+          "required": true,
+          "value": "fixture_culture",
+          "missingReason": null
+        }
+      ],
+      "statisticalAnalysisPlan": {
+        "objectives": [
+          "Discriminate pathway-X vs pathway-Y under fixture constraints."
+        ],
+        "endpoints": [
+          "marker_direction"
+        ],
+        "analysisMethods": [
+          "Qualitative direction concordance vs pre-declared competing explanations."
+        ],
+        "justificationKind": "qualitative_only",
+        "planSummary": "Exploratory fixture SAP: report directionality; do not invent power or sample size.",
+        "externalPlanRef": null,
+        "inventedPowerSampleSizeClaims": false
+      },
+      "qualityControlRequirements": [
+        {
+          "id": "qc-neg-control",
+          "description": "Negative control remains within fixture null band.",
+          "acceptanceCriterion": "Non-targeting control shows no activation claim."
+        }
+      ],
+      "safetyEthics": [
+        {
+          "kind": "none_declared",
+          "externalRef": null,
+          "summary": "Fixture engineering — no MoU or Gate C auto-approve invented.",
+          "mouInvented": false,
+          "gateCAutoApprove": false
+        }
+      ],
+      "executableInstrumentInstructions": null,
+      "instrumentInstructionsIssued": false,
+      "draftedBy": {
+        "principalId": "fixture-agent-protocol",
+        "actorKind": "ai_agent"
+      },
+      "approvedBy": {
+        "principalId": "fixture-researcher",
+        "actorKind": "human",
+        "approvedAt": "2026-11-09T16:00:00.000Z"
+      },
+      "rejectedBy": null,
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "agentsProposeResearchersApprove": true,
+        "aiCannotSelfApproveExperiments": true,
+        "protocolsApprovedOnlyByAuthorisedResearchers": true,
+        "noAutomaticInstrumentInstructions": true,
+        "noUnjustifiedPowerSampleSizeClaims": true,
+        "fabricatedResults": false,
+        "pipelinesExecuted": false,
+        "labAdaptersWired": false,
+        "workbenchUiShipped": false,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "closedLoopDiscoveryComplete": false,
+        "scientificApprovalClaimedComplete": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred",
+        "dependsOnPr1LifecycleContracts": true,
+        "dependsOnPr2DesignPrioritisation": true
+      },
+      "createdAt": "2026-11-09T16:00:00.000Z",
+      "updatedAt": "2026-11-09T16:00:00.000Z",
+      "note": "Addressed dose metadata gap."
+    }
+  ],
+  "comments": [
+    {
+      "id": "hsi-exp-pcom-fixture-dose",
+      "protocolDraftId": "hsi-exp-pint-fixture-demo",
+      "protocolVersion": 1,
+      "authorPrincipalId": "fixture-researcher",
+      "authorActorKind": "human",
+      "severity": "major",
+      "body": "Dose metadata still missing; revise before approval.",
+      "createdAt": "2026-11-09T16:00:00.000Z",
+      "resolved": false
+    }
+  ],
+  "changes": [
+    {
+      "id": "hsi-exp-pch-fixture-demo-created",
+      "protocolDraftId": "hsi-exp-pint-fixture-demo",
+      "fromVersion": null,
+      "toVersion": 1,
+      "kind": "created",
+      "summary": "Initial fixture protocol intelligence draft",
+      "actorPrincipalId": "fixture-agent-protocol",
+      "actorKind": "ai_agent",
+      "at": "2026-11-09T16:00:00.000Z"
+    },
+    {
+      "id": "hsi-exp-pch-fixture-demo-v2",
+      "protocolDraftId": "hsi-exp-pint-fixture-demo",
+      "fromVersion": 1,
+      "toVersion": 2,
+      "kind": "content_revised",
+      "summary": "Revised protocol to version 2",
+      "actorPrincipalId": "fixture-agent-protocol",
+      "actorKind": "ai_agent",
+      "at": "2026-11-09T16:00:00.000Z"
+    },
+    {
+      "id": "hsi-exp-pch-fixture-demo-approved",
+      "protocolDraftId": "hsi-exp-pint-fixture-demo",
+      "fromVersion": 2,
+      "toVersion": 2,
+      "kind": "approved",
+      "summary": "Authorised researcher approved fixture protocol",
+      "actorPrincipalId": "fixture-researcher",
+      "actorKind": "human",
+      "at": "2026-11-09T16:00:00.000Z"
+    }
+  ],
+  "dependency": {
+    "requiresPr1LifecycleContracts": true,
+    "requiresPr2DesignPrioritisation": true,
+    "pr1Status": "must_merge_or_stack_first",
+    "pr2Status": "must_merge_or_stack_first"
+  }
+}
