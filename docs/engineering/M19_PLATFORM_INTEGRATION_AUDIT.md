@@ -8,7 +8,7 @@
 **Phase 0 deepen:** Scope A/B explore receipts folded into §3 / §5 / §6 (auth API map, LHKG deny-by-default RLS, durable checkpoint wiring).  
 
 **Repo:** [gnaneshwer23/hsi-core](https://github.com/gnaneshwer23/hsi-core)  
-**HSI Neon:** red-wave only (`human super intelligence` / `red-wave-06625195` / `ep-restless-dew…`) — never autumn-snow / Akeno / DeliverX  
+**HSI Neon:** red-wave only (`human super intelligence` / `hsi-neon-project` / `ep-hsi-production…`) — never autumn-snow / Akeno / DeliverX  
 
 **Cross-links (do not contradict):**
 
@@ -179,7 +179,7 @@
 
 | Field | Finding |
 |-------|---------|
-| **Migrations** | `db/migrations/001`–`018` (+ `012_isi_research_review.sql`) |
+| **Migrations** | `db/migrations/001`–`018` (+ `019_hsi_isi_research_review.sql`) |
 | **Guard** | `neonGuard` refuses autumn-snow — **Verified operational** (policy) |
 | **Staging / prod separation** | Staging writes residual; production writes **not** claimed |
 | **Classification** | Schema **Partially implemented** · cross-tenant / restore / destructive-migration drills **Missing** / **Blocked** |

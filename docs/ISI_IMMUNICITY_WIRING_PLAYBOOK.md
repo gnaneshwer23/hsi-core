@@ -6,8 +6,8 @@
 |---------|------|
 | HSI substrate write target | **`~/Projects/hsi-core`** ([`AGENTS.md`](../AGENTS.md)) |
 | Immunecity | **Freeze lifted 2026-11-01** (user auth) for **ISI HSI-consume wiring only** — `~/Desktop/immune-city` / `github.com/gnaneshwer23/immunecity`. Still no DeliverX. |
-| HSI Neon | **`red-wave-06625195` only** |
-| ISI Neon | **`autumn-snow-67879321`** — product DB; Gate C approve+supports only; **never** HSI migrations / Gate C local from hsi-core |
+| HSI Neon | **`hsi-neon-project` only** |
+| ISI Neon | **`isi-neon-project`** — product DB; Gate C approve+supports only; **never** HSI migrations / Gate C local from hsi-core |
 | Shared evidence DB | **Forbidden** |
 
 **Companion machine spec:** [`hsi-isi-wiring-spec.json`](./hsi-isi-wiring-spec.json)  
@@ -192,12 +192,12 @@ See [`.env.example`](../.env.example):
 
 | Var | Value |
 |-----|--------|
-| `DATABASE_URL` | HSI Neon `ep-restless-dew…` / `red-wave` only |
-| `NEON_PROJECT_ID` | `red-wave-06625195` |
-| `NEON_BRANCH_ID` | `br-quiet-silence-zab1zvji` |
+| `DATABASE_URL` | HSI Neon `ep-hsi-production…` / `red-wave` only |
+| `NEON_PROJECT_ID` | `hsi-neon-project` |
+| `NEON_BRANCH_ID` | `hsi-production-branch` |
 | `NEON_DATABASE` | `neondb` |
 
-**Forbidden** as HSI `DATABASE_URL`: `autumn-snow` / `ep-blue-salad…`, Akeno, DeliverX.
+**Forbidden** as HSI `DATABASE_URL`: `autumn-snow` / `ep-isi-product…`, Akeno, DeliverX.
 
 ### 6.2 immunecity (apply in that repo — not here)
 
@@ -219,8 +219,8 @@ Do not point immunecity Gate C approve at red-wave. Do not point hsi-core migrat
 
 | Project | ID | Role |
 |---------|-----|------|
-| HSI | `red-wave-06625195` | Substrate / pending Gate C placeholders |
-| ISI / immunecity | `autumn-snow-67879321` | Product evidence + human Gate C approve |
+| HSI | `hsi-neon-project` | Substrate / pending Gate C placeholders |
+| ISI / immunecity | `isi-neon-project` | Product evidence + human Gate C approve |
 | Akeno / DeliverX | — | Out of scope / ignore for HSI |
 
 See [`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md). **No shared evidence DB.**

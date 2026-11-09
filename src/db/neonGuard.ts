@@ -1,34 +1,57 @@
 /**
  * Neon isolation guards for HSI substrate writes / migrations.
- * HSI only: red-wave-06625195 / ep-restless-dew…eu-west-2.
- * Refuse ISI autumn-snow / ep-blue-salad, Akeno, DeliverX.
+ *
+ * Tracked identifiers are public placeholders. Real project, branch and host
+ * values stay in the private environment and must not be committed:
+ *   HSI_NEON_CANONICAL_PROJECT_ID
+ *   HSI_NEON_HOST_ALLOWLIST          comma-separated endpoint prefixes
+ *   HSI_NEON_STAGING_BRANCH_PIN
+ *   HSI_NEON_STAGING_HOST_PIN
+ * Refuse other Neon projects. A project variable cannot authorise another host.
  */
+export function canonicalNeonProjectId(): string {
+  return process.env.HSI_NEON_CANONICAL_PROJECT_ID?.trim() || HSI_NEON_PROJECT_ID;
+}
 
-export const HSI_NEON_PROJECT_ID = "red-wave-06625195" as const;
+export function stagingBranchPin(): string {
+  return process.env.HSI_NEON_STAGING_BRANCH_PIN?.trim() || HSI_STAGING_BRANCH_ID;
+}
+
+export function stagingHostPin(): string {
+  return process.env.HSI_NEON_STAGING_HOST_PIN?.trim() || HSI_STAGING_HOST_PREFIX;
+}
+
+function hostAllowlist(): readonly string[] {
+  const raw = process.env.HSI_NEON_HOST_ALLOWLIST?.trim();
+  if (!raw) return [HSI_NEON_HOST_PREFIX, HSI_STAGING_HOST_PREFIX];
+  return raw.split(",").map((item) => item.trim()).filter((item) => item.length > 0);
+}
+
+export const HSI_NEON_PROJECT_ID = "hsi-neon-project" as const;
 /** Canonical production branch (quiet-silence). */
-export const HSI_NEON_BRANCH_ID = "br-quiet-silence-zab1zvji" as const;
+export const HSI_NEON_BRANCH_ID = "hsi-production-branch" as const;
 /** Approved research-write staging branch (rough-snow). Never treat as production. */
-export const HSI_STAGING_BRANCH_ID = "br-rough-snow-zagxbvjp" as const;
+export const HSI_STAGING_BRANCH_ID = "hsi-staging-branch" as const;
 /** Disposable non-production branch for unsafe experiments. */
-export const HSI_DISPOSABLE_BRANCH_ID = "br-morning-fog-zaobvjs0" as const;
+export const HSI_DISPOSABLE_BRANCH_ID = "hsi-disposable-branch" as const;
 export const HSI_NEON_DATABASE = "neondb" as const;
 /** Host prefix for the canonical HSI endpoint (no password / full URL). */
-export const HSI_NEON_HOST_PREFIX = "ep-restless-dew" as const;
+export const HSI_NEON_HOST_PREFIX = "ep-hsi-production" as const;
 /** Isolated HSI migration staging endpoint, verified against Neon project and branch. */
-export const HSI_STAGING_HOST_PREFIX = "ep-sweet-hill-zasb0lni" as const;
+export const HSI_STAGING_HOST_PREFIX = "ep-hsi-staging" as const;
 
 /** Detectable forbidden Neon host / project markers (never migrate here). */
 export const FORBIDDEN_NEON_MARKERS = [
   // ISI / immunecity product Neon
-  "ep-blue-salad",
-  "autumn-snow-67879321",
+  "ep-isi-product",
+  "isi-neon-project",
   "autumn-snow",
   // Akeno
-  "ep-weathered-mountain",
-  "silent-violet-81283547",
+  "ep-akeno-product",
+  "akeno-neon-project",
   "silent-violet",
   // DeliverX
-  "spring-wind-48457918",
+  "deliverx-neon-project",
   "spring-wind",
 ] as const;
 
@@ -57,12 +80,14 @@ export function isForbiddenNeonTarget(value: string): boolean {
 /** True when host looks like the canonical HSI endpoint. */
 export function isHsiNeonHost(host: string | null | undefined): boolean {
   if (!host) return false;
-  return /^(?:ep-restless-dew-zas989pv|ep-sweet-hill-zasb0lni)(?:-pooler)?(?:\.c-\d+)?\.eu-west-2\.aws\.neon\.tech$/i.test(host);
+  const prefixes = hostAllowlist().map((prefix) => prefix.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  if (prefixes.length === 0) return false;
+  return new RegExp(`^(?:${prefixes.join("|")})(?:-pooler)?(?:\\.c-\\d+)?\\.eu-west-2\\.aws\\.neon\\.tech$`, "i").test(host);
 }
 
 /**
  * Validate DATABASE_URL for HSI migrations / Gate C local writes.
- * Refuses known ISI/Akeno/DeliverX markers. Prefers ep-restless-dew host;
+ * Refuses known ISI/Akeno/DeliverX markers. Prefers ep-hsi-production host;
  * accepts only the canonical endpoint/database; a project variable cannot override the host.
  */
 export function assertHsiNeonDatabaseUrl(
@@ -101,10 +126,11 @@ export function assertHsiNeonDatabaseUrl(
   }
 
   const projectId = (opts?.neonProjectId ?? "").trim();
-  if (projectId && projectId !== HSI_NEON_PROJECT_ID) {
+  const canonical = canonicalNeonProjectId();
+  if (projectId && projectId !== canonical) {
     return {
       ok: false,
-      reason: `NEON_PROJECT_ID does not match HSI canonical ${HSI_NEON_PROJECT_ID}.`,
+      reason: "NEON_PROJECT_ID does not match the configured HSI project.",
       host,
     };
   }

@@ -53,8 +53,10 @@ export function Home(){
     <header className="ed-home-hero ed-home-hero-product ed-home-hero-instrument">
       <div className="ed-hero-copy">
         <p className="ed-kicker">Connecting human biology</p>
+        <p className="ed-tagline">Connecting human biology. Advancing scientific discovery. Transforming our understanding of health.</p>
         <h1>Investigate biological mechanisms<br/><em>across human systems.</em></h1>
         <p className="ed-lead">Immunology, microbiome, neuroimmune biology, metabolism, molecular science, clinical knowledge and trials — one evidence-grounded research workbench. Disease context is optional. Systemic sclerosis is a validation case, not the product boundary.</p>
+
         <div className="ed-actions">
           <Link className="ed-button" to={contactAccessHref({scenarioId})}>{PUBLIC_PRIMARY_CTA.label} <span aria-hidden="true"><ArrowIcon/></span></Link>
           <Link className="ed-text-link" to={PUBLIC_SECONDARY_CTA.to}>{PUBLIC_SECONDARY_CTA.label} <span aria-hidden="true"><ArrowIcon direction="right"/></span></Link>
@@ -95,40 +97,41 @@ export function Home(){
 
     <section className="ed-ecosystem ed-foundation-system" aria-labelledby="foundation-heading">
       <div>
-        <p className="ed-kicker">FOUR CONNECTED PRODUCTS</p>
-        <h2 id="foundation-heading">Independently governed.<br/><em>Interoperable by design.</em></h2>
-        <p className="ed-foundation-note">Shared research technology connects the ecosystem. Each product keeps its own data plane and permissions — private clinical information does not auto-enter the research knowledge graph.</p>
+        <p className="ed-kicker">ONE RESEARCH FOUNDATION</p>
+        <h2 id="foundation-heading">One platform.<br/><em>Four governed modules.</em></h2>
+        <p className="ed-foundation-note">Aksh Health, HSI Clinical, ISI and HSI Trials share the Living Health Knowledge Graph. Each module keeps its own permissions. Private patient records do not become research evidence on their own.</p>
+
       </div>
       <div className="ed-product-rows ed-product-system">
-        <Link to="/for-aksh">
+        <Link to="/modules/aksh-health">
           <span className="ed-product-system-index">01</span>
           <span>PATIENT INTELLIGENCE</span>
           <h3>Aksh Health</h3>
-          <p>Individual health trajectories within Aksh’s own care and data setting.</p>
+          <p>Symptoms, medications, labs, wearables and metabolic context.</p>
           <b aria-hidden="true"><ArrowIcon/></b>
         </Link>
         <div className="ed-product-system-rail" aria-hidden="true"/>
-        <Link to="/products">
+        <Link to="/modules/clinical">
           <span className="ed-product-system-index">02</span>
-          <span>LONGITUDINAL CLINICAL · IN DEVELOPMENT</span>
+          <span>CLINICAL INTELLIGENCE</span>
           <h3>HSI Clinical</h3>
-          <p>Authorised encounters and missing-information context — illustrative architecture, not a live hospital feed.</p>
+          <p>Longitudinal history and the information that is still missing.</p>
           <b aria-hidden="true"><ArrowIcon/></b>
         </Link>
         <div className="ed-product-system-rail" aria-hidden="true"/>
-        <Link to="/for-isi">
+        <Link to="/modules/isi">
           <span className="ed-product-system-index">03</span>
           <span>SCIENTIFIC DISCOVERY</span>
           <h3>Immune Super Intelligence</h3>
-          <p>Immune biology and cross-system evidence — cells, microbiome, neuro, metabolism and disease context.</p>
+          <p>Immune, nervous, microbiome, metabolic and molecular evidence.</p>
           <b aria-hidden="true"><ArrowIcon/></b>
         </Link>
         <div className="ed-product-system-rail" aria-hidden="true"/>
-        <Link to="/for-trials">
+        <Link to="/modules/trials">
           <span className="ed-product-system-index">04</span>
-          <span>TRANSLATIONAL &amp; TRIALS · PLANNED</span>
+          <span>TRIAL INTELLIGENCE</span>
           <h3>HSI Trials</h3>
-          <p>Biology, biomarkers and criteria for research — no live matching or enrolment today.</p>
+          <p>Studies, biomarkers and pre-screening that leaves unknowns unknown.</p>
           <b aria-hidden="true"><ArrowIcon/></b>
         </Link>
       </div>

@@ -145,7 +145,7 @@ function defaultAccountSlots(): StagingAccountSlot[] {
       researchAccessGranted: false,
       reviewerAuthorityGranted: false,
       notes:
-        "Distinct neon_auth principal on red-wave staging Auth (ep-sweet-hill). Fill only after real signup + email verify.",
+        "Distinct neon_auth principal on red-wave staging Auth (ep-hsi-staging). Fill only after real signup + email verify.",
     },
     {
       slotId: "STAGING-ACCT-REVIEWER",
@@ -202,11 +202,11 @@ export function assessWriteGateHonestySamples(): {
 } {
   const base = {
     HSI_PUBLIC_ORIGIN: "https://staging.example.invalid",
-    HSI_AUTH_BASE_URL: "https://ep-sweet-hill-zasb0lni.neonauth.c-2.eu-west-2.aws.neon.tech/neondb/auth",
+    HSI_AUTH_BASE_URL: "https://ep-hsi-staging.neonauth.c-2.eu-west-2.aws.neon.tech/neondb/auth",
     VITE_HSI_AUTH_BASE_URL:
-      "https://ep-sweet-hill-zasb0lni.neonauth.c-2.eu-west-2.aws.neon.tech/neondb/auth",
+      "https://ep-hsi-staging.neonauth.c-2.eu-west-2.aws.neon.tech/neondb/auth",
     HSI_DATABASE_URL:
-      "postgresql://test:never-used@ep-sweet-hill-zasb0lni.c-2.eu-west-2.aws.neon.tech/neondb?sslmode=require",
+      "postgresql://test:never-used@ep-hsi-staging.c-2.eu-west-2.aws.neon.tech/neondb?sslmode=require",
     HSI_NEON_PROJECT_ID: HSI_NEON_PROJECT_ID,
   };
   const staging = readResearchDeploymentConfig({
@@ -217,17 +217,17 @@ export function assessWriteGateHonestySamples(): {
   const production = readResearchDeploymentConfig({
     ...base,
     HSI_DATABASE_URL:
-      "postgresql://test:never-used@ep-restless-dew-zas989pv.c-2.eu-west-2.aws.neon.tech/neondb?sslmode=require",
+      "postgresql://test:never-used@ep-hsi-production.c-2.eu-west-2.aws.neon.tech/neondb?sslmode=require",
     HSI_AUTH_BASE_URL:
-      "https://ep-restless-dew-zas989pv.neonauth.c-2.eu-west-2.aws.neon.tech/neondb/auth",
+      "https://ep-hsi-production.neonauth.c-2.eu-west-2.aws.neon.tech/neondb/auth",
     VITE_HSI_AUTH_BASE_URL:
-      "https://ep-restless-dew-zas989pv.neonauth.c-2.eu-west-2.aws.neon.tech/neondb/auth",
+      "https://ep-hsi-production.neonauth.c-2.eu-west-2.aws.neon.tech/neondb/auth",
     HSI_RESEARCH_WRITES_ENABLED: "true",
     HSI_NEON_BRANCH_ID: HSI_STAGING_BRANCH_ID,
   });
   const defaults = readResearchDeploymentConfig(base);
   const autumn = assertHsiNeonDatabaseUrl(
-    "postgresql://x:y@ep-blue-salad-xxxxx.eu-west-2.aws.neon.tech/neondb?sslmode=require",
+    "postgresql://x:y@ep-isi-product-example.eu-west-2.aws.neon.tech/neondb?sslmode=require",
     {neonProjectId: HSI_NEON_PROJECT_ID},
   );
   if (!staging.ok || !staging.writesEnabled) {
@@ -239,8 +239,8 @@ export function assessWriteGateHonestySamples(): {
   if (!defaults.ok || defaults.writesEnabled) {
     throw new StagingTwoAccountAuthPrepError("Default config must keep writesEnabled=false");
   }
-  if (autumn.ok || !isForbiddenNeonTarget("autumn-snow-67879321")) {
-    throw new StagingTwoAccountAuthPrepError("autumn-snow / ep-blue-salad must remain refused");
+  if (autumn.ok || !isForbiddenNeonTarget("isi-neon-project")) {
+    throw new StagingTwoAccountAuthPrepError("autumn-snow / ep-isi-product must remain refused");
   }
   return {
     stagingWritesEnabled: true,
@@ -269,7 +269,7 @@ function buildChecks(): StagingPrepCheck[] {
     },
     {
       id: "autumn_snow_refused",
-      title: "ISI autumn-snow / ep-blue-salad refused for HSI substrate",
+      title: "ISI autumn-snow / ep-isi-product refused for HSI substrate",
       plane: "engineering",
       status: samples.autumnSnowRefused ? "CLEARED" : "BLOCKED",
       evidence: "neonGuard assertHsiNeonDatabaseUrl + FORBIDDEN_NEON_MARKERS.",
@@ -396,12 +396,12 @@ export function buildStagingTwoAccountAuthPrep(input: {
     },
     accountRosterSlots,
     founderMustFlip: [
-      "Align Vercel Preview HSI_* + VITE_HSI_* to red-wave staging branch br-rough-snow-zagxbvjp / ep-sweet-hill-zasb0lni (never autumn-snow).",
+      "Align Vercel Preview HSI_* + VITE_HSI_* to red-wave staging branch hsi-staging-branch / ep-hsi-staging (never autumn-snow).",
       "Set VITE_HSI_USE_AUTH_GATEWAY=true on that Preview deployment and redeploy.",
       "Create two distinct neon_auth accounts on staging Auth; complete email verification (no SQL emailVerified bypass). Auth signup polish for founder Gmail remains deferred.",
       "As grant operator, insert hsi_research_access only for verified immutable user ids (researcher vs independent reviewer).",
-      "After dry-run plan: set HSI_RESEARCH_WRITES_ENABLED=true and HSI_NEON_BRANCH_ID=br-rough-snow-zagxbvjp on Preview only.",
-      "Keep production (ep-restless-dew) writesEnabled=false; never grant production research access without a verified neon_auth principal on production Auth.",
+      "After dry-run plan: set HSI_RESEARCH_WRITES_ENABLED=true and HSI_NEON_BRANCH_ID=hsi-staging-branch on Preview only.",
+      "Keep production (ep-hsi-production) writesEnabled=false; never grant production research access without a verified neon_auth principal on production Auth.",
       "Record private evidence of the live two-account journey (self-review denial, wrong-owner denial, revoke rehearsal) without tokens or PHI.",
     ],
     codeCanAutomate: [

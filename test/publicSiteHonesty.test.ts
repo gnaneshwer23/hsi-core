@@ -43,12 +43,12 @@ describe("Public HSI site honesty", () => {
     expect(app).toContain('path="gateway"');
 
     const primaryNav = site("src/lib/primaryNav.ts");
-    for(const route of ["/platform","/solutions","/research","/evidence-safety","/pricing","/contact","/products","/technology","/science","/how-it-works"])expect(primaryNav).toContain(route);
+    for(const route of ["/platform","/solutions","/research","/evidence-safety","/pricing","/contact","/modules","/technology","/science","/how-it-works"])expect(primaryNav).toContain(route);
     expect(primaryNav).toContain('label: "Request access"');
     const primaryLinksBlock=primaryNav.match(/export const PRIMARY_NAV_LINKS = \[[\s\S]*?\] as const/)?.[0]??"";
-    for(const route of ["/platform","/research","/products","/science","/how-it-works"])expect(primaryLinksBlock).toContain(route);
+    for(const route of ["/platform","/research","/modules","/science","/how-it-works"])expect(primaryLinksBlock).toContain(route);
     for(const route of ["/curator","/gateway","/clinical-timeline","/trials-criteria","/status"])expect(primaryLinksBlock).not.toContain(route);
-    for(const route of ["/for-isi","/for-aksh","/for-trials"])expect(primaryNav).toContain(route);
+    for(const route of ["/modules/isi","/modules/aksh-health","/modules/trials","/modules/clinical"])expect(primaryNav).toContain(route);
     const nav=site("src/components/Nav.tsx");
     expect(nav).toContain("PRIMARY_NAV_LINKS");expect(nav).toContain("PRIMARY_NAV_CTA");expect(nav).not.toContain("ENGINEERING_LINKS");
     const home=site("src/pages/Home.tsx"),experience=site("src/components/Experience.tsx");

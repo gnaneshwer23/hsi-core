@@ -48,7 +48,7 @@ describe("backend-composed research outcomes",()=>{
   if(variant==="claim")t.claimId="RA-only-claim";if(variant==="source")t.sourceIds=["unknown"];
   if(variant==="review")t.reviewDecisionId="unknown";if(variant==="context")t.context.species="mouse";
   if(variant==="path")t.graphPath=["unknown"];if(variant==="kind")(t as {evidenceKind:string}).evidenceKind="established_evidence";
-  if(variant==="duplicate")b.package.investigation.branches[0]!.supporting.push(structuredClone(t));
+  if(variant==="duplicate")(b.package.investigation.branches[0]!.supporting as unknown[]).push(structuredClone(t));
   await rehash(b);await expect(buildResearchOutcome(b,digest)).rejects.toThrow();
  });
  test("verifies against the independent package and decision, not a self-declared output hash",async()=>{

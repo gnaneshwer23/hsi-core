@@ -117,7 +117,7 @@ export function Roadmap() {
           <ul className="checklist">
             <li>Outreach + lock one disease/question per docs/ISI_PILOT_BRIEF.md</li>
             <li>Feed the pilot from bun run outputs — evidence, provenance, uncertainty</li>
-            <li>Harden Aksh HITL stub without opening CDS; keep Akeno out of patient-level decisions</li>
+            <li>Harden the Aksh Health review stub without opening CDS or patient-level decisions</li>
             <li>Grow ISI REL maps for the pilot question; never auto-approve into a product KG</li>
             <li>Do not vendor AF3/Boltz until a written P3 plugin RFC lands here</li>
           </ul>

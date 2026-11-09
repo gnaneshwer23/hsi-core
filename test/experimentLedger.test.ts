@@ -39,6 +39,7 @@ function draftInput(overrides: Partial<ExperimentRecordInput> = {}): ExperimentR
     },
     createdAt: "2026-11-07T22:00:00.000Z",
     ...overrides,
+    programme: overrides.programme ?? "gut_immune_t2d",
   };
 }
 

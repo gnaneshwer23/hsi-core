@@ -79,7 +79,7 @@ describe("N6 usefulness pilot prep (audit Phase #7)", () => {
       generatedAt: pilotPrepGeneratedAt,
     });
     const bad = structuredClone(prep) as typeof prep & {usefulnessPilotGoNoGo: string};
-    bad.usefulnessPilotGoNoGo = "GO";
+    (bad as {usefulnessPilotGoNoGo: string}).usefulnessPilotGoNoGo = "GO";
     expect(() => parseN6UsefulnessPilotPrep(bad)).toThrow();
   });
 

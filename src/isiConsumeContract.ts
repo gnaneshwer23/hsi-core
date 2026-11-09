@@ -599,7 +599,7 @@ export function buildIsiConsumeContractBundle(opts?: {
       approveTargetNeon: "ISI product Neon autumn-snow (OUT OF REPO)",
       hsiNeonRole: "red-wave pending placeholders only (bun run db:gate-c-local)",
       neverWriteFromHsiWorkspace: [
-        "ISI Neon autumn-snow / ep-blue-salad",
+        "ISI Neon autumn-snow / ep-isi-product",
         "Akeno Neon",
         "DeliverX Neon",
       ],

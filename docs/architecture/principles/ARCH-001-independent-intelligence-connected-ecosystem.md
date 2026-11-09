@@ -3,16 +3,16 @@
 | Field | Value |
 | --- | --- |
 | ID | HSI-ARCH-001 |
-| Version | 1.1 |
-| Date | 2026-11-04 |
+| Version | 1.2 |
+| Date | 2026-11-09 |
 | Status | Adopted as target-state architecture principle; implementation not yet verified |
-| Scope | HSI Core, HSI Clinical, HSI Research, HSI Trials and optional Aksh/ISI integrations |
+| Scope | Human Super Intelligence: Aksh Health, HSI Clinical, ISI and HSI Trials as governed modules |
 
 ## 1. Foundational declaration
 
-**Health Super Intelligence (HSI) shall be an independent, comprehensive, evidence-grounded biomedical and healthcare intelligence platform.**
+**Human Super Intelligence (HSI) is one product: an evidence-grounded biomedical intelligence platform with four governed modules.**
 
-HSI must not require Aksh Health, Immune Super Intelligence (ISI), or another specialised product to operate its core knowledge, scientific research, clinical intelligence, trial discovery, AI orchestration, governance, and platform services. Cross-product connections enhance HSI; they must not become prerequisites for its core functionality.
+The modules are Aksh Health (patient intelligence), HSI Clinical (longitudinal authorised clinical intelligence), ISI / Immune Super Intelligence (scientific discovery) and HSI Trials (biology, biomarkers, targets, studies and governed pre-screening). ISI’s scientific work must not depend on the Aksh Health module. Private patient data must never enter the research graph automatically. A module being unavailable must not disable the others’ core services.
 
 This is a **target-state architectural requirement**, not a claim that all listed capabilities are currently implemented, clinically validated, or operational.
 
@@ -47,16 +47,18 @@ Four logical, governed layers (not necessarily a single physical database):
 
 HSI owns its authoritative knowledge model and curation workflow. Imported ISI claims must undergo HSI provenance, licence, mapping and review controls; AI drafts cannot silently enter approved evidence.
 
-## 5. Product boundaries
+## 5. Modules
 
-| Product | Primary responsibility | HSI relationship |
+| Module | Primary responsibility | Boundary |
 | --- | --- | --- |
-| **HSI** | Comprehensive biomedical, clinical, research and trial intelligence | Independent platform and authoritative governed knowledge |
-| **Aksh Health** | Patient engagement, diabetes/cardiometabolic monitoring and clinician workflows | Optional, authorised clinical integration; not HSI's sole patient-data source |
-| **Immune Super Intelligence (ISI)** | Specialist immunology research, education, exploration and community | Optional evidence and specialist capability contributor; not HSI's sole immune knowledge source |
-| **Future products** | Specialised experiences and vertical workflows | Contract-based, independently deployable integrations |
+| **Aksh Health** | Patient intelligence: symptoms, medications, labs, wearables, metabolic context | Consented patient-data plane. Not a source of automatic research-graph edges |
+| **HSI Clinical** | Longitudinal authorised clinical intelligence and missing information | Purpose-limited access. No EHR write-back from this repository |
+| **ISI / Immune Super Intelligence** | Scientific discovery across immune, nervous, microbiome, metabolic and molecular systems | Does not require Aksh Health in order to run |
+| **HSI Trials** | Biology, biomarkers, targets, studies, eligibility and governed pre-screening | Unknown stays unknown. Similarity never satisfies an eligibility criterion |
 
-No external product shall become a mandatory runtime dependency for HSI's core research, graph and trial discovery services. HSI clinical features may depend on authorised *clinical data sources* and must clearly indicate when such data are unavailable.
+The Living Health Knowledge Graph is the centre, not a fifth product. Every edge carries biological context, provenance, uncertainty and review state. Association is not a demonstrated causal mechanism.
+
+No module is a mandatory runtime dependency for another module’s core service. HSI Clinical may depend on an authorised clinical source and must say when that source is absent.
 
 ## 6. Mandatory engineering requirements
 

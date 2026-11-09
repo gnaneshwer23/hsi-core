@@ -314,7 +314,7 @@ describe("PR 3 dynamic evidence persistence — plan + honesty", () => {
     expect(sql).toContain("derived_not_independent");
 
     const productionUrl =
-      "postgresql://test:never-used@ep-restless-dew-zas989pv.c-2.eu-west-2.aws.neon.tech/neondb?sslmode=require";
+      "postgresql://test:never-used@ep-hsi-production.c-2.eu-west-2.aws.neon.tech/neondb?sslmode=require";
     expect(() => assertLedgerNeonWritable({databaseUrl: productionUrl, writesEnabled: true})).toThrow(
       /staging host/,
     );

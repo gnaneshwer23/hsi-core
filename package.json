@@ -1,7 +1,7 @@
 {
   "name": "hsi-core",
   "version": "0.1.0",
-  "description": "Human Systems Intelligence shared evidence-grade edge/claim substrate for Aksh Health + Immune Super Intelligence",
+  "description": "Human Super Intelligence substrate: one product, four governed modules, around the Living Health Knowledge Graph",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -93,6 +93,11 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json --noEmit",
+    "lint": "biome check scripts/generate-status.ts scripts/check-public-copy.ts src/db/migrate.ts src/db/neonGuard.ts test/foundations.test.ts site/src/pages/ClinicalModule.tsx",
+    "status:write": "bun scripts/generate-status.ts",
+    "status:check": "bun scripts/generate-status.ts --check",
+    "copy:check": "bun scripts/check-public-copy.ts",
     "sources:init": "bun src/cli/source-registry.ts init",
     "sources:import": "bun src/cli/source-registry.ts import",
     "test": "bun test ./test",
@@ -114,7 +119,7 @@
     "adapter:isi-agents": "bun run src/cli/isi-agents-adapter.ts",
     "db:migrate": "bun run src/cli/migrate.ts",
     "db:gate-c-local": "bun run src/cli/gate-c-local.ts",
-    "check": "bun run test && bun run validate && bun run evidence:check && bun run coverage:check && bun run validation:check && bun run readiness:check && bun run gold:check && bun run outputs && bun run build",
+    "check": "bun run copy:check && bun run status:check && bun run typecheck && bun run lint && bun run test && bun run validate && bun run evidence:check && bun run coverage:check && bun run validation:check && bun run readiness:check && bun run gold:check && bun run outputs && bun run build",
     "site:dev": "bun run --cwd site dev",
     "site:build": "bun run --cwd site build",
     "site:preview": "bun run --cwd site preview",
@@ -269,12 +274,15 @@
     "fixture:synthetic-e2e:honesty": "bun --no-env-file scripts/check-synthetic-e2e-honesty.ts",
     "research:seed-test-fixture": "bun scripts/seed-research-workspace-test-fixture.ts"
   },
+  "packageManager": "bun@1.3.14",
   "engines": {
-    "node": ">=20"
+    "node": ">=20",
+    "bun": "1.3.14"
   },
   "license": "UNLICENSED",
   "private": true,
   "devDependencies": {
+    "@biomejs/biome": "2.2.0",
     "@types/bun": "latest",
     "typescript": "^5.9.3"
   }

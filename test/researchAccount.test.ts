@@ -1,3 +1,4 @@
+import type { FetchLike } from "../src/fetchLike";
 import {test,expect} from "bun:test";
 import {handleInterrogativeApi} from "../src/server/interrogativeApi";
 import {parseResearchAccountAccess} from "../src/researchAccount";
@@ -9,16 +10,16 @@ const cookie="__Secure-better-auth.session_token=example-session-token-long-enou
 const base="https://hsi.example/api/research/account";
 const pending={principalId,researcher:false,scientificReviewer:false,investigations:[]};
 const services={load:async()=>({}),submit:async()=>({}),review:async()=>({}),account:async()=>pending};
-const mock=(fn:(...args:Parameters<typeof fetch>)=>ReturnType<typeof fetch>)=>fn as typeof fetch;
+const mock=(fn:(...args:Parameters<FetchLike>)=>ReturnType<FetchLike>)=>fn as FetchLike;
 test("account endpoint requires a backend cookie, not a browser principal or role header",async()=>{
  let calls=0;
  const r=await handleInterrogativeApi(new Request(base,{headers:{"x-principal-id":principalId,"x-role":"research_admin"}}),{...services,account:async()=>{calls++;return pending}});
  expect(r.status).toBe(401);expect(calls).toBe(0);
 });
 test("verified identity without grants is reported as pending with no records",async()=>{
- let seen:string|null=null;
- const r=await handleInterrogativeApi(new Request(base,{headers:{cookie}}),{...services,account:async input=>{seen=input.serverSessionToken;return pending}});
- expect(r.status).toBe(200);expect(seen).toBe("example-session-token-long-enough");expect(await r.json()).toEqual(pending);
+ let seen="";
+ const r=await handleInterrogativeApi(new Request(base,{headers:{cookie}}),{...services,account:async input=>{seen=input.serverSessionToken??"";return pending}});
+ expect(r.status).toBe(200);expect(seen).toEqual("example-session-token-long-enough");expect(await r.json()).toEqual(pending);
  expect(r.headers.get("cache-control")).toBe("no-store");expect(r.headers.get("vary")).toBe("Cookie");
 });
 test("account checks never provision roles and reject POST",async()=>{

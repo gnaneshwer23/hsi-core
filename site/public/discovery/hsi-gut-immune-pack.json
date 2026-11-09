@@ -2,7 +2,7 @@
   "schemaVersion": "hsi-gut-immune-pack-1",
   "notCds": true,
   "autoApproveIntoKg": false,
-  "generatedAt": "2026-11-09T13:44:31.630Z",
+  "generatedAt": "2026-11-09T21:48:40.218Z",
   "pathway": {
     "id": "gut-scfa-mucosal-treg-th17",
     "label": "Gut–immune · SCFA / butyrate ↔ mucosal Treg / Th17",

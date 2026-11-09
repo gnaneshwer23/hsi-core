@@ -5,7 +5,7 @@
 **Date:** 2026-11-09  
 **Audited `main` SHA:** `4d7e83a0a8ce0dcc419d2d45f3e32094ee37064d`  
 **Tip commit:** `4d7e83a Add M5 Phase 0 matrix and precision evidence contracts. (#95)`  
-**HSI Neon:** red-wave only (`human super intelligence` / `red-wave-06625195` / `ep-restless-dew…`) — never autumn-snow / Akeno / DeliverX  
+**HSI Neon:** red-wave only (`human super intelligence` / `hsi-neon-project` / `ep-hsi-production…`) — never autumn-snow / Akeno / DeliverX  
 
 **Cross-links (do not contradict):**
 

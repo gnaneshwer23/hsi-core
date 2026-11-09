@@ -9,7 +9,7 @@ const event = (sequence = 1, stage: ResearchRunEvent["stage"] = "context", statu
 });
 test("versioned shared context and bundle round-trip without inventing metadata", () => {
   const b = parseResearchBundle(JSON.stringify(fixture));
-  expect(b).toEqual(fixture); expect(parseResearchContext(b.context)).toBe(b.context);
+  expect(b).toEqual(fixture as typeof b); expect(parseResearchContext(b.context)).toBe(b.context);
   expect(researchRunState(b.runs[0]!)).toBe("pending");
 });
 test("strict boundaries reject unknown fields, identifiers, classes, clinical flags and oversize payloads", () => {

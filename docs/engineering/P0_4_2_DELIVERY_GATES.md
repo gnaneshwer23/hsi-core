@@ -3,7 +3,7 @@
 ## Code now present
 - Authenticated pinned ISI graph staging: `src/adapters/isiAuthenticatedStaging.ts`.
 - Scientific reviewer decision validation: `src/adapters/isiScientificReviewEvent.ts`.
-- HSI-only persistence proposal: `db/migrations/012_isi_research_review.sql`.
+- HSI-only persistence proposal: `db/migrations/019_hsi_isi_research_review.sql`.
 - Independent reviewer persistence service: `src/db/isiScientificReviewStore.ts`.
 - Tests: `test/isiScientificReviewEvent.test.ts`.
 

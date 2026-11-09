@@ -13,6 +13,7 @@
  * - Fixtures ≠ live evidence; offline/fixture mode must not be labelled live.
  * - Metadata-only; no passage / sequence / CDS / PHI surfaces.
  */
+import type { FetchLike } from "../fetchLike";
 import {createHash} from "node:crypto";
 import {validateHsiOntologyIdentifier} from "../hsiOntologyRegistry";
 
@@ -437,7 +438,7 @@ export function parseUniprotMetadataPayload(input: {
 }
 
 function resolveLookupMode(input: {
-  fetcher?: typeof fetch;
+  fetcher?: FetchLike;
   lookupMode?: UniprotLookupMode;
 }): UniprotLookupMode {
   if (input.lookupMode) return input.lookupMode;
@@ -453,7 +454,7 @@ function resolveLookupMode(input: {
  */
 export async function lookupUniprotMetadataByAccession(input: {
   accession: string;
-  fetcher?: typeof fetch;
+  fetcher?: FetchLike;
   now?: () => Date;
   signal?: AbortSignal;
   timeoutMs?: number;

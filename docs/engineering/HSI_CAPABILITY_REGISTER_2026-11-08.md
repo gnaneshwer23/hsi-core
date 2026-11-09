@@ -1,3 +1,5 @@
+> **Superseded.** Current capability status is generated in [../STATUS.md](../STATUS.md) from `operations/capability-register/capability-register.v1.json`. This document is historical and is not the status source of truth.
+
 # HSI Capability Register — 2026-11-08
 
 **Execution step:** 04 Agent intelligence and gap verification (deterministic classification + claim_verifier adapter)  

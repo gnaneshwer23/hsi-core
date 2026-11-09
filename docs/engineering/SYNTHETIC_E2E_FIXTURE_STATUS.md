@@ -32,7 +32,7 @@ Engineering **contract pin** only. Vendor path + SHA-256 pins for small contract
 
 ## External pack
 
-Full tree (do not modify from this repo): `/Users/gnaneshwerjadav/Downloads/hsi-synthetic-e2e/`  
+Full tree (do not modify from this repo): `<local-home>/Downloads/hsi-synthetic-e2e/`  
 Verify with digests in `MANIFEST.json` → `pin`.
 
 ## Verify locally

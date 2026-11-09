@@ -71,7 +71,7 @@ Separate environment bindings, credentials, roles and retention/access controls 
 
 For each app deployment, its Auth provider and intended research database must use the same approved HSI branch. A Vercel environment called **Production** identifies the website deployment configuration; it does not automatically select the correct Neon branch. Schema separation alone is not a tenant boundary.
 
-**Operational status:** production website Auth was observed baked as staging Neon Auth (`ep-sweet-hill-zasb0lni`) while research session lookup uses `HSI_DATABASE_URL` (must share that same host prefix). Align `HSI_AUTH_BASE_URL` / `VITE_HSI_AUTH_BASE_URL` / `HSI_DATABASE_URL` per [`VERCEL_RESEARCH_SETUP.md`](../VERCEL_RESEARCH_SETUP.md); `/api/research/health` now fails closed when Neon Auth and database endpoint prefixes diverge.
+**Operational status:** production website Auth was observed baked as staging Neon Auth (`ep-hsi-staging`) while research session lookup uses `HSI_DATABASE_URL` (must share that same host prefix). Align `HSI_AUTH_BASE_URL` / `VITE_HSI_AUTH_BASE_URL` / `HSI_DATABASE_URL` per [`VERCEL_RESEARCH_SETUP.md`](../VERCEL_RESEARCH_SETUP.md); `/api/research/health` now fails closed when Neon Auth and database endpoint prefixes diverge.
 
 ## 5. Separate product and clinical planes
 

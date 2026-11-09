@@ -75,7 +75,7 @@ export type AkenoConsumerBundle = {
     };
   };
   neonIsolation: {
-    hsiSubstrateOnly: "red-wave-06625195";
+    hsiSubstrateOnly: "hsi-neon-project";
     neverWire: ["akeno health / silent-violet", "ISI autumn-snow", "DeliverX"];
     akenoDbEnvPrefix: "AKENO_";
     akenoDbUsage: "optional_non_hsi_never_gate_c";
@@ -169,7 +169,7 @@ export function buildAkenoConsumerBundle(opts?: {
       },
     },
     neonIsolation: {
-      hsiSubstrateOnly: "red-wave-06625195",
+      hsiSubstrateOnly: "hsi-neon-project",
       neverWire: ["akeno health / silent-violet", "ISI autumn-snow", "DeliverX"],
       akenoDbEnvPrefix: "AKENO_",
       akenoDbUsage: "optional_non_hsi_never_gate_c",

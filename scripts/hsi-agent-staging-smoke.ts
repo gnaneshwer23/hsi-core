@@ -6,7 +6,7 @@ import {SQL} from "bun";
 import {assertHsiNeonDatabaseUrl,HSI_STAGING_HOST_PREFIX} from "../src/db/neonGuard";
 const url=process.env.HSI_STAGING_DATABASE_URL;
 if(!url)throw Error("HSI_STAGING_DATABASE_URL required");
-const guard=assertHsiNeonDatabaseUrl(url,{neonProjectId:"red-wave-06625195"});
+const guard=assertHsiNeonDatabaseUrl(url,{neonProjectId:"hsi-neon-project"});
 if(!guard.ok||!guard.host.includes(HSI_STAGING_HOST_PREFIX))throw Error("Refusing non-staging database");
 const sql=new SQL(url,{tls:{rejectUnauthorized:true},connectionTimeout:10});
 const key="hsi-smoke-"+crypto.randomUUID();

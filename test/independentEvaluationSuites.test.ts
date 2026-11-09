@@ -187,7 +187,7 @@ describe("PR 8 independent evaluation suites — live gate honesty", () => {
     const bad = structuredClone(manifest) as typeof manifest & {
       scientificAcceptance: string;
     };
-    bad.scientificAcceptance = "CLEARED";
+    (bad as {scientificAcceptance: string}).scientificAcceptance = "CLEARED";
     const {inventoryHash: _drop, ...body} = bad;
     void _drop;
     const sealed = {

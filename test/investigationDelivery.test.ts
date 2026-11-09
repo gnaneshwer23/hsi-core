@@ -58,6 +58,6 @@ test("older submissions and decisions remain unbound instead of acquiring new ac
  f.states.get(id)!.record.state="draft";f.states.get(id)!.legacyDecision=true;expect((await f.service.view("alice",id)).capabilities.canSubmit).toBe(false);
 });
 test("production writes and identity-bearing queue cursors are refused before database work",async()=>{
- await expect(withInvestigationDelivery({databaseUrl:"postgresql://test:never-used@ep-restless-dew-zas989pv.c-2.eu-west-2.aws.neon.tech/neondb?sslmode=require",neonProjectId:"red-wave-06625195",writesEnabled:true},true,async()=>"must not run")).rejects.toThrow("staging writes");
+ await expect(withInvestigationDelivery({databaseUrl:"postgresql://test:never-used@ep-hsi-production.c-2.eu-west-2.aws.neon.tech/neondb?sslmode=require",neonProjectId:"hsi-neon-project",writesEnabled:true},true,async()=>"must not run")).rejects.toThrow("staging writes");
  const cursor={at:"2026-11-05T04:00:00.123456Z",id:"submission-"+"a".repeat(32)};expect(parseReviewQueueCursor(cursor)).toEqual(cursor);expect(()=>parseReviewQueueCursor({...cursor,principal:"someone-else"})).toThrow();
 });

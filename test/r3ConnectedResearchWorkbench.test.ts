@@ -60,7 +60,7 @@ describe("R3 connected research workbench", () => {
   test("refuses claiming scientificAcceptance CLEARED", async () => {
     const manifest = await buildR3ConnectedResearchWorkbench({generatedAt, repoRoot: root});
     const bad = structuredClone(manifest) as typeof manifest & {scientificAcceptance: string};
-    bad.scientificAcceptance = "CLEARED";
+    (bad as {scientificAcceptance: string}).scientificAcceptance = "CLEARED";
     const {inventoryHash: _drop, ...body} = bad;
     void _drop;
     const sealed = {

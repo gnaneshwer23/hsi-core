@@ -120,7 +120,7 @@ type Props = {
 /** §02 ecosystem — one foundation, four experiences (founder HTML). */
 export function EcosystemGrid({
   headingLevel = 2,
-  footLink = { to: "/products", label: "Explore products ↗" },
+  footLink = { to: "/modules", label: "Explore products ↗" },
 }: Props) {
   const byId = Object.fromEntries(ECOSYSTEM_PRODUCTS.map((p) => [p.id, p])) as Record<
     EcosystemProduct["id"],

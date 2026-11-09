@@ -13,7 +13,7 @@ This directory vendors **small contract + sample payload files only**. The full 
 | Status receipt | [`STATUS.json`](./STATUS.json) · [`docs/engineering/SYNTHETIC_E2E_FIXTURE_STATUS.md`](../../../docs/engineering/SYNTHETIC_E2E_FIXTURE_STATUS.md) |
 | N4 evidence_lookup slice | [`outputs/sample_evidence_lookup_n4.json`](./outputs/sample_evidence_lookup_n4.json) |
 | Honesty oracles / quarantine | [`fixtures/oracle_cases.json`](./fixtures/oracle_cases.json) · [`fixtures/quarantine.jsonl`](./fixtures/quarantine.jsonl) |
-| External full pack (do not modify from here) | `/Users/gnaneshwerjadav/Downloads/hsi-synthetic-e2e/` |
+| External full pack (do not modify from here) | `<local-home>/Downloads/hsi-synthetic-e2e/` |
 
 ## Verify hashes
 

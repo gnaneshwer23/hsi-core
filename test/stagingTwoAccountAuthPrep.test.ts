@@ -57,7 +57,7 @@ describe("staging two-account Auth prep (audit Phase #5)", () => {
       generatedAt: "2026-11-08T11:00:00.000Z",
     });
     const bad = structuredClone(prep) as typeof prep & {opsAcceptance: string};
-    bad.opsAcceptance = "CLEARED";
+    (bad as {opsAcceptance: string}).opsAcceptance = "CLEARED";
     expect(() => parseStagingTwoAccountAuthPrep(bad)).toThrow();
   });
 

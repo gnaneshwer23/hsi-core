@@ -222,12 +222,12 @@ export function Systems() {
               <span className="title">Evidence grades & Gate C</span>
               <span className="arrow">↗</span>
             </Link>
-            <Link to="/for-isi">
+            <Link to="/modules/isi">
               <span className="idx">02</span>
               <span className="title">For ISI discovery</span>
               <span className="arrow">↗</span>
             </Link>
-            <Link to="/for-aksh">
+            <Link to="/modules/aksh-health">
               <span className="idx">03</span>
               <span className="title">For Aksh HITL</span>
               <span className="arrow">↗</span>

@@ -14,7 +14,7 @@
   "enginePyIsProductAuthority": false,
   "externalPack": {
     "note": "Full pack (JSONL, SQLite caches, learning sets, engine.py) stays outside git.",
-    "typicalAbsolutePath": "/Users/gnaneshwerjadav/Downloads/hsi-synthetic-e2e/",
+    "typicalAbsolutePath": "<local-home>/Downloads/hsi-synthetic-e2e/",
     "verify": "sha256sum (or shasum -a 256) the listed artifacts against pin.sha256 below; do not modify the Downloads tree from this repo."
   },
   "vendoredRelativeRoot": "research/fixtures/hsi-synthetic-e2e/",

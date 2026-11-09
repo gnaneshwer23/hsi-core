@@ -1,7 +1,8 @@
+import type { FetchLike } from "../src/fetchLike";
 import {test,expect} from "bun:test";
 import {createHsiAuthClient,parseAuthBaseUrl,parseAuthSession} from "../site/src/lib/hsiAuthClient";
 const response=(value:unknown,status=200)=>new Response(JSON.stringify(value),{status,headers:{"content-type":"application/json"}});
-const mock=(fn:(input:unknown,init?:RequestInit)=>Promise<Response>)=>fn as typeof fetch;
+const mock=(fn:(input:unknown,init?:RequestInit)=>Promise<Response>)=>fn as FetchLike;
 const valid={session:{id:"session-test",userId:"user-one",expiresAt:"2099-01-01T00:00:00.000Z"},user:{id:"user-one",email:"researcher@example.invalid",emailVerified:true}};
 test("auth URL rejects insecure, credential-bearing and malformed configurations",()=>{for(const value of [undefined,"http://auth.example","https://user:password@auth.example","https://auth.example/?secret=bad","https://auth.example/#token","not-a-url"])expect(parseAuthBaseUrl(value)).toBeNull();expect(parseAuthBaseUrl("https://auth.example/api/auth/")).toBe("https://auth.example/api/auth");});
 test("unconfigured auth never accepts credentials or sends a request",async()=>{let called=false;const c=createHsiAuthClient(undefined,mock(async()=>{called=true;return response({});}));expect((await c.signIn("researcher@example.invalid","dummy-not-a-real-password")).error?.code).toBe("auth_not_configured");expect(called).toBe(false);});

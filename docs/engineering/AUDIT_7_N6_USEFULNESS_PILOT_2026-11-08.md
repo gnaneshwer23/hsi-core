@@ -53,8 +53,8 @@ This receipt is **not** N6 pilot CLEARED, scientific usefulness vs baseline, or 
 | Gate | Behaviour |
 |------|-----------|
 | Readable | Any HSI red-wave host after `neonGuard` |
-| Writable | `writesEnabled=true` **and** staging host `ep-sweet-hill-zasb0lni` only |
-| Production | `ep-restless-dew` read-only for helpers |
+| Writable | `writesEnabled=true` **and** staging host `ep-hsi-staging` only |
+| Production | `ep-hsi-production` read-only for helpers |
 | Forbidden | autumn-snow / Akeno / DeliverX refused |
 | Authority | Offline N2/N7 JSON fixtures remain authority; helpers do not invent rows or clear science |
 

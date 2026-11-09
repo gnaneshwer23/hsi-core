@@ -56,8 +56,8 @@ describe("P1.4 first-class systems/ISI predicates on HSI_EDGE_TYPES", () => {
           ann.systemsPredicate,
         )
       ) {
-        expect(edge!.edgeType).toBe(ann.systemsPredicate);
-        expect(mapped).toBe(ann.systemsPredicate);
+        expect(edge!.edgeType as string).toBe(ann.systemsPredicate);
+        expect(mapped as string | undefined).toBe(ann.systemsPredicate);
       } else {
         // hypothesized_* keep Phase 0 directional edgeTypes
         expect(isHsiEdgeType(edge!.edgeType)).toBe(true);

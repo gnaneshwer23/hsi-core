@@ -5,7 +5,7 @@
 **Date:** 2026-11-09  
 **Audited `main` SHA:** `868431cabf2120504c1a8ffbefb7bca036ddf5b4`  
 **Tip commit:** `868431c Add M4 Phase 2 translational failure-mode investigation taxonomy. (#94)`  
-**HSI Neon:** red-wave only (`human super intelligence` / `red-wave-06625195` / `ep-restless-dew…`) — never autumn-snow / Akeno / DeliverX  
+**HSI Neon:** red-wave only (`human super intelligence` / `hsi-neon-project` / `ep-hsi-production…`) — never autumn-snow / Akeno / DeliverX  
 
 **Cross-links (do not contradict):**
 

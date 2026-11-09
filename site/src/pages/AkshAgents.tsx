@@ -75,7 +75,7 @@ export function AkshAgents() {
             <span className="accent">HITL inventory only.</span>
           </>
         }
-        lede="Structured copy of the Aksh Health agent directory and register from aksh-health-redesign — reference for HSI translation / Akeno HITL, not live CDS."
+        lede="Structured copy of the Aksh Health agent directory and register from aksh-health-redesign — reference for HSI translation review, not live CDS."
       />
 
       <section className="section section-ink">
@@ -83,10 +83,10 @@ export function AkshAgents() {
           <div className="dc-banner-stack" role="alert">
             <p className="dc-banner dc-banner-danger">
               NOT CLINICAL · catalog only · no diagnosis / treatment · no PHI ·
-              no EHR · no Aksh/Akeno Neon
+              no EHR · no separate clinic database
             </p>
             <p className="dc-banner dc-banner-warn">
-              Relates to <Link to="/akeno">/akeno</Link> HITL consumer ·
+              Relates to <Link to="/modules/clinical">/akeno</Link> HITL consumer ·
               autoApprove=false · clinicalActive=false
             </p>
           </div>
@@ -217,10 +217,10 @@ export function AkshAgents() {
               </ul>
 
               <p style={{ marginTop: "2rem" }}>
-                <Link to="/akeno" className="btn">
-                  Akeno HITL consumer <span className="arrow">↗</span>
+                <Link to="/modules/clinical" className="btn">
+                  HSI Clinical review <span className="arrow">↗</span>
                 </Link>{" "}
-                <Link to="/for-aksh" className="btn btn-ghost">
+                <Link to="/modules/aksh-health" className="btn btn-ghost">
                   For Aksh
                 </Link>{" "}
                 <Link to="/discovery" className="btn btn-ghost">

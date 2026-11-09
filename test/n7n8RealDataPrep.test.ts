@@ -69,7 +69,7 @@ describe("N7/N8 real-data prep (audit Phase #10)", () => {
       generatedAt: "2026-11-08T13:00:00.000Z",
     });
     const bad = structuredClone(prep) as typeof prep & {scientificAcceptance: string};
-    bad.scientificAcceptance = "CLEARED";
+    (bad as {scientificAcceptance: string}).scientificAcceptance = "CLEARED";
     expect(() => parseN7N8RealDataPrep(bad)).toThrow();
   });
 

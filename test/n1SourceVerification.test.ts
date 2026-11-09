@@ -1,3 +1,4 @@
+import type { FetchLike } from "../src/fetchLike";
 import {describe, expect, it} from "bun:test";
 import {readFileSync} from "node:fs";
 import {resolve} from "node:path";
@@ -109,7 +110,7 @@ describe("N1 identity checks", () => {
   });
 
   it("live probe maps HTTP 403 to provider_unavailable without inventing metadata", async () => {
-    const fetcher = (async () => new Response("Forbidden", {status: 403})) as typeof fetch;
+    const fetcher = (async () => new Response("Forbidden", {status: 403})) as FetchLike;
     const receipt = await verifyN1CandidatesLive({queue, fetcher, now: () => new Date("2026-11-07T21:20:00.000Z")});
     expect(receipt.liveAcceptance).toBe("blocked");
     expect(receipt.results.every((r) => r.outcome === "provider_unavailable")).toBe(true);

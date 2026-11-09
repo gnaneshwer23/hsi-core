@@ -111,7 +111,7 @@ export class HsiIsiConsumerClient {
     if (spec.gateC.autoApprove !== false) {
       throw new Error("wiring-spec: gateC.autoApprove must be false");
     }
-    if (spec.immunecityEditFromThisWorkspace === true) {
+    if ((spec.immunecityEditFromThisWorkspace as boolean) === true) {
       throw new Error("wiring-spec must keep immunecityEditFromThisWorkspace=false");
     }
     return spec;

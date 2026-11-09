@@ -2,6 +2,7 @@
  * N1 general biomedical bibliographic lookup via Europe PMC.
  * Not SSc-scoped authority. Metadata retrieval is not claim support, rights clearance or graph approval.
  */
+import type { FetchLike } from "../fetchLike";
 import {createHash} from "node:crypto";
 
 export const EUROPE_PMC_SEARCH_ENDPOINT = "https://www.ebi.ac.uk/europepmc/webservices/rest/search";
@@ -288,7 +289,7 @@ async function lookupEuropePmc(input: {
   query: string;
   pageSize: number;
   cursorMark: string;
-  fetcher?: typeof fetch;
+  fetcher?: FetchLike;
   now?: () => Date;
   signal?: AbortSignal;
 }): Promise<BibliographicLookupResult> {
@@ -340,7 +341,7 @@ export async function searchEuropePmcByQuery(input: {
   pageSize?: number;
   /** Cursor for this page; defaults to `*` (first page). */
   cursorMark?: string;
-  fetcher?: typeof fetch;
+  fetcher?: FetchLike;
   now?: () => Date;
   signal?: AbortSignal;
 }): Promise<BibliographicLookupResult> {
@@ -360,7 +361,7 @@ export async function searchEuropePmcByQuery(input: {
 /** Lookup by DOI. Does not grant claim support, rights or scientific approval. */
 export async function lookupEuropePmcByDoi(input: {
   doi: string;
-  fetcher?: typeof fetch;
+  fetcher?: FetchLike;
   now?: () => Date;
   signal?: AbortSignal;
 }): Promise<BibliographicLookupResult> {
@@ -378,7 +379,7 @@ export async function lookupEuropePmcByDoi(input: {
 /** Lookup by PubMed ID via Europe PMC. Metadata only — not claim support or rights clearance. */
 export async function lookupEuropePmcByPmid(input: {
   pmid: string;
-  fetcher?: typeof fetch;
+  fetcher?: FetchLike;
   now?: () => Date;
   signal?: AbortSignal;
 }): Promise<BibliographicLookupResult> {

@@ -909,7 +909,7 @@ function defaultResiduals(): HumanQueueResidual[] {
       worksheetPath: "operations/staging/ops-acceptance-worksheet.v1.json",
       verifyCommand: "bun run staging:auth-prep:check && bun run human-queue:check",
       onlyHumansCan: [
-        "Align Preview env to staging Auth + ep-sweet-hill",
+        "Align Preview env to staging Auth + ep-hsi-staging",
         "Create two verified neon_auth principals + grants",
         "Flip staging writes only; run live two-account journey; private ops receipt",
       ],

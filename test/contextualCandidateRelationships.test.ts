@@ -358,7 +358,7 @@ describe("PR 4 release-aware retrieval", () => {
     expect(withDraft.drafts.every((d) => d.reviewState === "draft")).toBe(true);
     expect(withDraft.drafts.every((d) => d.graphPromotable === false)).toBe(true);
     expect(withDraft.drafts.every((d) => d.warning.includes("not an approved"))).toBe(true);
-    expect(withDraft.drafts.some((d) => d.surfaceLabel === "approved_release")).toBe(false);
+    expect(withDraft.drafts.some((d) => (d.surfaceLabel as string) === "approved_release")).toBe(false);
   });
 
   test("fixture candidates require explicit allowFixtureCandidates", () => {

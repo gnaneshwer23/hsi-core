@@ -2,6 +2,7 @@
  * N1 source identity verification for the gut–immune–T2D candidate queue.
  * DOI/PMID/title conflicts fail closed. Metadata retrieval ≠ claim entailment ≠ rights clearance.
  */
+import type { FetchLike } from "../fetchLike";
 import {createHash} from "node:crypto";
 import {canonicalEvidenceJson} from "./researchEvidenceCorpus";
 import type {N1Candidate, N1CandidateQueue} from "./n1CandidateQueue";
@@ -343,7 +344,7 @@ export function verifyN1CandidatesFromLookups(input: {
 
 export async function verifyN1CandidatesLive(input: {
   queue: N1CandidateQueue;
-  fetcher?: typeof fetch;
+  fetcher?: FetchLike;
   now?: () => Date;
 }): Promise<N1ImportReceipt> {
   const queue = parseN1CandidateQueue(input.queue);

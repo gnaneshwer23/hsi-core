@@ -46,4 +46,4 @@ Aksh agents draft; clinicians decide. HSI `/akeno` remains the translation-hando
 
 ## Neon isolation
 
-HSI substrate stays **`red-wave-06625195` only**. Do not wire Aksh / Akeno product Neon into Gate C from this workspace.
+HSI substrate stays **`hsi-neon-project` only**. Do not wire Aksh / Akeno product Neon into Gate C from this workspace.
