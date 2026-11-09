@@ -8,6 +8,7 @@ async function ready(page:any){await page.goto('/research/knowledge-graph');awai
 const trial={protocolSection:{identificationModule:{nctId:'NCT01030861',briefTitle:'Browser test registry record, not independently verified'},conditionsModule:{conditions:['Diabetes Mellitus, Type 1']},statusModule:{overallStatus:'COMPLETED',lastUpdatePostDateStruct:{date:'2020-01-01'}},eligibilityModule:{minimumAge:'8 Years',maximumAge:'45 Years',eligibilityCriteria:'Test-only unparsed criteria. Investigator assessment required.'}}};
 test('the default graph connects domains and preserves the original source-corpus entry',async({page})=>{
  await ready(page);await expect(page.getByRole('navigation',{name:'Research workspace'}).getByRole('link',{name:'Knowledge graph',exact:true})).toHaveAttribute('aria-current','page');await expect(page.getByRole('complementary',{name:'Research snapshot scope'})).toContainText('153 concepts');await expect(page.getByRole('complementary',{name:'Research snapshot scope'})).toContainText('0 independently approved');
+ await expect(page.getByLabel('Investigation path')).toBeVisible();await expect(page.getByLabel('Graph legend')).toBeVisible();await expect(page.getByRole('button',{name:'Fit network',exact:true})).toBeVisible();
  await page.getByRole('button',{name:'All domains',exact:true}).click();await expect(page.locator('.kg-stage-head')).toContainText('153 concepts');
  await page.getByRole('link',{name:'RA/SSc source corpus',exact:true}).click();await expect(page.getByRole('heading',{name:'Claim-linked network',exact:true})).toBeVisible();
 });
@@ -60,7 +61,10 @@ test('cross-domain graph and each investigation view pass mobile/desktop accessi
 });
 
 test('pinned views restore model filters and Markdown briefs preserve source status and uncertainty',async({page})=>{
- await ready(page);await page.getByLabel('Study model',{exact:true}).selectOption('human_in_vivo');const pinned=await page.getByRole('link',{name:'Pinned investigation',exact:true}).getAttribute('href');await page.goto(pinned!);await expect(page.getByRole('heading',{name:'Connected research network',exact:true})).toBeVisible();await expect(page.getByLabel('Study model',{exact:true})).toHaveValue('human_in_vivo');
+ await ready(page);await page.getByLabel('Study model',{exact:true}).selectOption('human_in_vivo');
+ await page.getByLabel('Export and pin options',{exact:true}).click();
+ const pinned=await page.getByRole('link',{name:'Pinned investigation',exact:true}).getAttribute('href');await page.goto(pinned!);await expect(page.getByRole('heading',{name:'Connected research network',exact:true})).toBeVisible();await expect(page.getByLabel('Study model',{exact:true})).toHaveValue('human_in_vivo');
+ await page.getByLabel('Export and pin options',{exact:true}).click();
  const event=page.waitForEvent('download');await page.getByRole('button',{name:'Download Markdown brief',exact:true}).click();const text=await readFile((await (await event).path())!,'utf8');expect(text).toContain('# HSI Research Brief');expect(text).toContain(bundle.version);expect(text).toContain('bibliographic_candidate_not_retrieved');expect(text).toContain('Falsification:');
  await page.getByRole('tab',{name:'Research outcomes',exact:true}).click();await expect(page.getByRole('region',{name:'Evidence context comparison'})).toContainText('no pooled effect or confirmed contradiction');
 });

@@ -92,7 +92,7 @@ export default function App() {
         <Route path="research/scientific-review" element={<ScientificReviewerDecision />} />
         <Route path="science/body" element={<ScienceBody />} />
         <Route path="research/capabilities" element={<CapabilityLab/>} />
-        <Route path="research/knowledge-graph" element={<ClaimKnowledgeGraph />} />
+        <Route path="research/knowledge-graph" element={<Suspense fallback={<p role="status" style={{padding:"3rem 1.5rem"}}>Loading knowledge graph…</p>}><ClaimKnowledgeGraph /></Suspense>} />
         <Route path="science/graph" element={<ScienceGraph />} />
         <Route path="science/paths" element={<SciencePaths />} />
         <Route path="science/contradictions" element={<ScienceContradictions />} />
