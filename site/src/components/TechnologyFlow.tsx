@@ -32,7 +32,7 @@ function StageVisual({index}:{index:number}) {
       {visual.lines.map(([x1,y1,x2,y2],i)=><line key={i} x1={x1} y1={y1} x2={x2} y2={y2} className="tf-visual-line"/>)}
       {visual.nodes.map(([cx,cy],i)=><g key={i}><circle cx={cx} cy={cy} r="8.5" className="tf-visual-node"/><circle cx={cx} cy={cy} r="3" className="tf-visual-dot"/></g>)}
     </svg>
-    <span>{["MULTIMODAL INPUTS","TRUSTED CONNECTIONS","COORDINATED INTELLIGENCE","REVIEWABLE OUTPUTS","VALIDATED PATHWAYS"][index]}</span>
+    <span>{["MULTIMODAL INPUTS","TRUSTED CONNECTIONS","COORDINATED INTELLIGENCE","REVIEWABLE OUTPUTS","GOVERNED PATHWAYS"][index]}</span>
   </div>;
 }
 export function TechnologyFlow() {

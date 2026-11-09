@@ -15,7 +15,10 @@ test('desktop more menu closes with Escape/outside click and reaches secondary d
 });
 test('mobile menu uses a clear icon, touch targets and working account/navigation links',async({page})=>{
  await page.setViewportSize({width:320,height:800});await page.goto('/science/graph');const toggle=page.getByRole('button',{name:'Open menu',exact:true});await expect(toggle.locator('svg')).toBeVisible();const box=(await toggle.boundingBox())!;expect(box.width).toBeGreaterThanOrEqual(44);expect(box.height).toBeGreaterThanOrEqual(44);await toggle.click();
- const drawer=page.getByRole('navigation',{name:'Mobile navigation'});await expect(drawer.getByRole('link',{name:'Sign up',exact:true})).toBeVisible();await drawer.getByRole('link',{name:'Research access',exact:true}).click();await expect(page).toHaveURL(/contact$/);await expect(drawer).toBeHidden();
+ const drawer=page.getByRole('navigation',{name:'Mobile navigation'});
+ await expect(drawer.getByRole('link',{name:'Sign in',exact:true})).toHaveCount(0);
+ await expect(drawer.getByRole('link',{name:'Sign up',exact:true})).toHaveCount(0);
+ await drawer.getByRole('link',{name:'Research access',exact:true}).click();await expect(page).toHaveURL(/contact$/);await expect(drawer).toBeHidden();
 });
 test('footer has product navigation, clear project links and accessible touch targets',async({page})=>{
  for(const width of [320,768,1440]){
@@ -27,7 +30,7 @@ test('footer has product navigation, clear project links and accessible touch ta
  await page.getByRole('contentinfo').getByRole('link',{name:'All modules',exact:true}).click();await expect(page).toHaveURL(/modules$/);
 });
 test('primary and secondary actions remain readable and large enough on light and dark sections',async({page})=>{
- await page.goto('/');const heroActions=page.locator('.cl-actions a');const backgrounds=await heroActions.evaluateAll(els=>els.map(el=>getComputedStyle(el).backgroundColor));expect(backgrounds.length).toBeGreaterThan(1);const buttons=page.locator('.cl-arrow-link');
+ await page.goto('/');const heroActions=page.locator('.cl-actions a');await expect(heroActions).toHaveCount(1);const buttons=page.locator('.cl-arrow-link');
  for(const button of await buttons.all()){
   const b=(await button.boundingBox())!;expect(b.height).toBeGreaterThanOrEqual(44);
   const ratio=await button.evaluate(el=>{const toRgb=(s:string)=>(s.match(/[\d.]+/g)??[]).slice(0,3).map(Number);let bg=getComputedStyle(el).backgroundColor;let p=el.parentElement;while((bg==='rgba(0, 0, 0, 0)'||bg==='transparent')&&p){bg=getComputedStyle(p).backgroundColor;p=p.parentElement}const lum=(rgb:number[])=>rgb.map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4}).reduce((a,v,i)=>a+v*[.2126,.7152,.0722][i]!,0);const a=lum(toRgb(getComputedStyle(el).color)),b=lum(toRgb(bg));return (Math.max(a,b)+.05)/(Math.min(a,b)+.05)});

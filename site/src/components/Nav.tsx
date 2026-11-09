@@ -76,7 +76,11 @@ export function Nav() {
           <div className="nav-more" ref={moreRef}><button ref={moreButtonRef} type="button" aria-expanded={moreOpen} aria-controls="secondary-pages" onClick={()=>setMoreOpen(v=>!v)}>More<svg viewBox="0 0 16 16" width="12" height="12" fill="none" aria-hidden="true"><path d="m4 6 4 4 4-4" stroke="currentColor" strokeWidth="1.5"/></svg></button><div id="secondary-pages" hidden={!moreOpen}>{SECONDARY_NAV_LINKS.map(l=><NavLink key={l.to} to={l.to} onClick={()=>setMoreOpen(false)}>{l.label}</NavLink>)}</div></div>
         </nav>
 
-        <div className="nav-auth-actions"><Link to={signedIn?"/research/account":"/sign-in"} className="nav-sign-in">{signedIn?"Account":"Sign in"}</Link></div>
+        {signedIn ? (
+          <div className="nav-auth-actions">
+            <Link to="/research/account" className="nav-sign-in">Account</Link>
+          </div>
+        ) : null}
 
         <Link to={PRIMARY_NAV_CTA.to} className="nav-cta">
           <span className="nav-cta-label">
@@ -107,8 +111,9 @@ export function Nav() {
           </NavLink>
         ))}
         {SECONDARY_NAV_LINKS.map(l=><NavLink key={l.to} to={l.to} onClick={()=>setOpen(false)}>{l.label}</NavLink>)}
-        <NavLink to={signedIn?"/research/account":"/sign-in"} className="nav-drawer-sign-in" onClick={() => setOpen(false)}>{signedIn?"Account":"Sign in"}</NavLink>
-        {!signedIn&&<NavLink to="/sign-up" className="nav-drawer-sign-in" onClick={() => setOpen(false)}>Sign up</NavLink>}
+        {signedIn ? (
+          <NavLink to="/research/account" className="nav-drawer-sign-in" onClick={() => setOpen(false)}>Account</NavLink>
+        ) : null}
         <Link
           to={PRIMARY_NAV_CTA.to}
           className="nav-cta nav-drawer-cta"
