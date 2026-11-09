@@ -229,6 +229,8 @@
     "hdi:disease-intelligence:check": "bun --no-env-file scripts/human-disease-intelligence-contracts.ts --check",
     "hdi:clinical-biological-context:prepare": "bun --no-env-file scripts/clinical-biological-context-contracts.ts",
     "hdi:clinical-biological-context:check": "bun --no-env-file scripts/clinical-biological-context-contracts.ts --check",
+    "hdi:longitudinal-disease-state:prepare": "bun --no-env-file scripts/longitudinal-disease-state-modelling-contracts.ts",
+    "hdi:longitudinal-disease-state:check": "bun --no-env-file scripts/longitudinal-disease-state-modelling-contracts.ts --check",
     "gap-verification:expand": "bun --no-env-file scripts/gap-verification-check.ts",
     "gap-verification:check": "bun --no-env-file scripts/gap-verification-check.ts --check",
     "fixture:synthetic-e2e:check": "bun --no-env-file scripts/check-synthetic-e2e-fixture.ts",
