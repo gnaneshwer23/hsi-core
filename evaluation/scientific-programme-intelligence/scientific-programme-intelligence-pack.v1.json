@@ -1,0 +1,242 @@
+{
+  "schema": "hsi-scientific-programme-intelligence-1",
+  "method": "hsi.scientific_programme_intelligence.v1",
+  "version": "0.1.0",
+  "asOf": "2026-11-09T15:00:00.000Z",
+  "programmeCount": 1,
+  "workstreamCount": 1,
+  "milestoneCount": 1,
+  "decisionCount": 1,
+  "honesty": {
+    "notSeparateAgentPlatform": true,
+    "agentsInvestigateResearchersApprove": true,
+    "independentReviewersVerify": true,
+    "agentsMustNotApproveOwnFindings": true,
+    "noAutoApprovalOfPlansOrClaims": true,
+    "noFabricatedDiscoveries": true,
+    "autonomousExecutionRequiresExplicitBounds": true,
+    "noWorkbenchUi": true,
+    "researchDecisionSupportOnly": true,
+    "gateCAutoApprove": false,
+    "mouInvented": false,
+    "phiCdsWired": false,
+    "scientificApproval": false,
+    "graphPromotable": false,
+    "neonProjectPolicy": "red-wave-only",
+    "migration": "deferred",
+    "m11LiveMultiscaleClaimed": false
+  },
+  "programmes": [
+    {
+      "schema": "hsi-scientific-programme-intelligence-1",
+      "method": "hsi.scientific_programme_intelligence.v1",
+      "version": "0.1.0",
+      "id": "hsi-sp-prog-fixture-demo",
+      "name": "Fixture scientific programme",
+      "purpose": "Exercise programme / workstream / milestone / decision contracts without claiming discovery.",
+      "scopeSummary": "Engineering fixture only — not a separate agent platform and not autonomous closed-loop science.",
+      "authorisationClass": "fixture_engineering_only",
+      "resourceClass": "fixture_unbounded_not_claimed",
+      "dataPermissionClass": "fixture_engineering",
+      "notSeparateAgentPlatform": true,
+      "lifecycle": "active",
+      "investigationIds": [
+        "inv-fixture-001"
+      ],
+      "hypothesisIds": [
+        "hyp-fixture-001"
+      ],
+      "orgId": "org-fixture-1",
+      "therapeuticProgrammeId": "hsi-tx-prog-fixture-demo",
+      "translationalProgrammeId": "hsi-td-prog-ssc-tfh-fixture",
+      "identities": [],
+      "authoredBy": {
+        "principalId": "fixture-agent-sp",
+        "actorKind": "ai_agent"
+      },
+      "reviewedBy": {
+        "principalId": "fixture-researcher",
+        "actorKind": "human"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "notSeparateAgentPlatform": true,
+        "agentsInvestigateResearchersApprove": true,
+        "independentReviewersVerify": true,
+        "agentsMustNotApproveOwnFindings": true,
+        "noAutoApprovalOfPlansOrClaims": true,
+        "noFabricatedDiscoveries": true,
+        "autonomousExecutionRequiresExplicitBounds": true,
+        "noWorkbenchUi": true,
+        "researchDecisionSupportOnly": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred",
+        "m11LiveMultiscaleClaimed": false
+      },
+      "createdAt": "2026-11-09T15:00:00.000Z",
+      "updatedAt": "2026-11-09T15:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "workstreams": [
+    {
+      "schema": "hsi-scientific-programme-intelligence-1",
+      "method": "hsi.scientific_programme_intelligence.v1",
+      "version": "0.1.0",
+      "id": "hsi-sp-ws-fixture-demo",
+      "programmeId": "hsi-sp-prog-fixture-demo",
+      "name": "Fixture evidence workstream",
+      "objectiveSummary": "Propose public-evidence neighbourhoods for human review — not autonomous execution.",
+      "permittedActions": [
+        "investigate_and_propose_only",
+        "draft_plans_for_human_review",
+        "not_execute_autonomously"
+      ],
+      "agentsProposeOnly": true,
+      "notAutonomousExecution": true,
+      "lifecycle": "active",
+      "investigationId": "inv-fixture-001",
+      "hypothesisIds": [],
+      "authoredBy": {
+        "principalId": "fixture-agent-sp",
+        "actorKind": "ai_agent"
+      },
+      "reviewedBy": {
+        "principalId": "fixture-researcher",
+        "actorKind": "human"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "notSeparateAgentPlatform": true,
+        "agentsInvestigateResearchersApprove": true,
+        "independentReviewersVerify": true,
+        "agentsMustNotApproveOwnFindings": true,
+        "noAutoApprovalOfPlansOrClaims": true,
+        "noFabricatedDiscoveries": true,
+        "autonomousExecutionRequiresExplicitBounds": true,
+        "noWorkbenchUi": true,
+        "researchDecisionSupportOnly": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred",
+        "m11LiveMultiscaleClaimed": false
+      },
+      "createdAt": "2026-11-09T15:00:00.000Z",
+      "updatedAt": "2026-11-09T15:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "milestones": [
+    {
+      "schema": "hsi-scientific-programme-intelligence-1",
+      "method": "hsi.scientific_programme_intelligence.v1",
+      "version": "0.1.0",
+      "id": "hsi-sp-ms-fixture-demo",
+      "programmeId": "hsi-sp-prog-fixture-demo",
+      "workstreamId": "hsi-sp-ws-fixture-demo",
+      "name": "Fixture review milestone",
+      "exitCriteria": "Human review confirms uncertainties remain recorded — no fabricated discovery.",
+      "evidenceRequired": true,
+      "notAutoComplete": true,
+      "lifecycle": "accepted",
+      "authoredBy": {
+        "principalId": "fixture-agent-sp",
+        "actorKind": "ai_agent"
+      },
+      "reviewedBy": {
+        "principalId": "fixture-researcher",
+        "actorKind": "human"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "notSeparateAgentPlatform": true,
+        "agentsInvestigateResearchersApprove": true,
+        "independentReviewersVerify": true,
+        "agentsMustNotApproveOwnFindings": true,
+        "noAutoApprovalOfPlansOrClaims": true,
+        "noFabricatedDiscoveries": true,
+        "autonomousExecutionRequiresExplicitBounds": true,
+        "noWorkbenchUi": true,
+        "researchDecisionSupportOnly": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred",
+        "m11LiveMultiscaleClaimed": false
+      },
+      "createdAt": "2026-11-09T15:00:00.000Z",
+      "updatedAt": "2026-11-09T15:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "decisions": [
+    {
+      "schema": "hsi-scientific-programme-intelligence-1",
+      "method": "hsi.scientific_programme_intelligence.v1",
+      "version": "0.1.0",
+      "id": "hsi-sp-dec-fixture-demo",
+      "programmeId": "hsi-sp-prog-fixture-demo",
+      "workstreamId": "hsi-sp-ws-fixture-demo",
+      "milestoneId": "hsi-sp-ms-fixture-demo",
+      "decisionKind": "milestone_acceptance",
+      "summary": "Accept fixture milestone after human review — engineering only.",
+      "rationale": "Contract exercise confirming proposing agents are barred from acceptance and independent review differs.",
+      "subjectRefs": [
+        "inv-fixture-001"
+      ],
+      "proposingAgentPrincipalId": "fixture-agent-sp",
+      "lifecycle": "accepted",
+      "decidedBy": {
+        "principalId": "fixture-researcher",
+        "actorKind": "human"
+      },
+      "independentReviewer": {
+        "principalId": "fixture-reviewer",
+        "actorKind": "human"
+      },
+      "authoredBy": {
+        "principalId": "fixture-agent-sp",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "notSeparateAgentPlatform": true,
+        "agentsInvestigateResearchersApprove": true,
+        "independentReviewersVerify": true,
+        "agentsMustNotApproveOwnFindings": true,
+        "noAutoApprovalOfPlansOrClaims": true,
+        "noFabricatedDiscoveries": true,
+        "autonomousExecutionRequiresExplicitBounds": true,
+        "noWorkbenchUi": true,
+        "researchDecisionSupportOnly": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred",
+        "m11LiveMultiscaleClaimed": false
+      },
+      "createdAt": "2026-11-09T15:00:00.000Z",
+      "updatedAt": "2026-11-09T15:00:00.000Z",
+      "note": ""
+    }
+  ]
+}
