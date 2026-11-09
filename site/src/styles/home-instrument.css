@@ -192,6 +192,7 @@
 }
 .ed-ecosystem-board-simple{grid-template-columns:1.15fr .85fr}
 .ed-ecosystem-detail .ed-scope-line{margin-bottom:8px}
+.ed-tagline{font-size:1rem;line-height:1.45;color:#1f4f3f;margin:0 0 16px;max-width:36ch;font-weight:500}
 .ed-foundation-note{font-size:.92rem;color:#5b6f66;line-height:1.7;max-width:42ch;margin:14px 0 0}
 .ed-foundation-system{gap:48px;padding-block:72px}
 .ed-product-system{display:grid;gap:0}

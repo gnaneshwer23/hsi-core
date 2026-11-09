@@ -280,10 +280,10 @@ const JOURNEYS: Record<PersonaId, Journey> = {
 };
 
 const PERSPECTIVES: { id: PersonaId; label: string; productId: EcosystemProduct["id"]; href: string; scope: string }[] = [
-  { id: "patient", label: "Personal health", productId: "aksh", href: "/for-aksh", scope: "Illustrative Aksh journey. Available features depend on the product’s stated care scope and authorised data sources." },
-  { id: "researcher", label: "Research", productId: "isi", href: "/for-isi", scope: "Illustrative ISI Research journey. Evidence availability and permitted collections determine what an investigation can use." },
+  { id: "patient", label: "Personal health", productId: "aksh", href: "/modules/aksh-health", scope: "Illustrative Aksh journey. Available features depend on the product’s stated care scope and authorised data sources." },
+  { id: "researcher", label: "Research", productId: "isi", href: "/modules/isi", scope: "Illustrative ISI Research journey. Evidence availability and permitted collections determine what an investigation can use." },
   { id: "clinician", label: "Care teams", productId: "clinical", href: "/platform", scope: "Intended HSI Clinical journey, in development. This page does not connect to clinical records or provide clinical decision support." },
-  { id: "trial", label: "Trial research", productId: "trials", href: "/for-trials", scope: "Intended HSI Trials journey, planned. Live study matching, patient screening and eligibility confirmation are not available here." },
+  { id: "trial", label: "Trial research", productId: "trials", href: "/modules/trials", scope: "Intended HSI Trials journey, planned. Live study matching, patient screening and eligibility confirmation are not available here." },
 ];
 
 const PRINCIPLES = [
@@ -611,7 +611,7 @@ export function HowItWorks() {
               <p>
                 Live product entry points — including ISI Research and the wider {PRODUCT_SHORT} ecosystem — each with its own data boundary and maturity.
               </p>
-              <Link className="hsi-editorial-textlink" to="/products">
+              <Link className="hsi-editorial-textlink" to="/modules">
                 Explore the products ↗
               </Link>
             </article>
@@ -637,7 +637,7 @@ export function HowItWorks() {
             <a className="hsi-editorial-button" href="#journey-explorer">
               Follow a journey <span aria-hidden="true">↓</span>
             </a>
-            <Link className="hsi-editorial-textlink" to="/for-isi">
+            <Link className="hsi-editorial-textlink" to="/modules/isi">
               Meet ISI Research ↗
             </Link>
           </div>

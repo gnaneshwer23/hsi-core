@@ -4,7 +4,7 @@ export const EXPERIENCE_DOMAINS=[
  {id:"metabolic",label:"Metabolism",short:"Metabolism",description:"Explore glucose, lipid and metabolic research questions alongside immune and tissue context.",colour:"#9d5a20",to:"/solutions",x:650,y:155},
  {id:"gut",label:"Gut microbiome",short:"Microbiome",description:"See how microbial observations and immune context are organised, without assuming a causal link.",colour:"#44765b",to:"/science",x:160,y:370},
  {id:"brain",label:"Brain health",short:"Brain",description:"Explore educational neurological context and distinguish it from patient-specific interpretation.",colour:"#776099",to:"/science",x:610,y:385},
- {id:"trials",label:"Clinical research",short:"Trials",description:"Inspect trial topic overlap and missing criteria. Investigators retain eligibility decisions.",colour:"#526199",to:"/for-trials",x:400,y:470},
+ {id:"trials",label:"Clinical research",short:"Trials",description:"Inspect trial topic overlap and missing criteria. Investigators retain eligibility decisions.",colour:"#526199",to:"/modules/trials",x:400,y:470},
 ] as const;
 export const EXPERIENCE_STEPS=[
  {title:"Ask a research question",short:"Question",detail:"Define the question and intended research scope. Keep personal identifiers and clinical records out of the research plane.",output:"A bounded investigation plan",to:"/research/dashboard"},
@@ -19,8 +19,8 @@ export const EXPERIENCE_MODULES=[
  {title:"Biological knowledge graph",tag:"Research & education",detail:"Explore typed relationships and their context, sources and review state.",to:"/science/graph"},
  {title:"Evidence intelligence",tag:"Source foundation",detail:"Inspect a versioned working catalogue and the limits of each candidate claim.",to:"/evidence-safety"},
  {title:"Health-data context",tag:"Research context",detail:"Keep longitudinal observations, biological context and source permissions distinct.",to:"/platform"},
- {title:"Trial intelligence",tag:"Research direction",detail:"Inspect topic overlap and missing screening information; no enrolment decisions.",to:"/for-trials"},
- {title:"Clinical intelligence",tag:"Separate programme",detail:"Authorised clinical workflows belong to their own product and data governance.",to:"/for-aksh"},
+ {title:"Trial intelligence",tag:"Research direction",detail:"Inspect topic overlap and missing screening information; no enrolment decisions.",to:"/modules/trials"},
+ {title:"Clinical intelligence",tag:"Separate programme",detail:"Authorised clinical workflows belong to their own product and data governance.",to:"/modules/aksh-health"},
 ] as const;
 export const EVIDENCE_STATES=[
  {id:"supported",label:"Supported",meaning:"Direct evidence supports the scoped claim. Study context and independent review still matter.",tone:"green"},

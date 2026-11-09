@@ -15,7 +15,7 @@ Evidence folder: `docs/engineering/audit-evidence/live-2026-11-09/`
 |------|--------|
 | Production deploy on tip | **Pass** — tip SHA matches live deploy meta |
 | Custom domain / HTTPS / apex redirect | **Pass** — `www` verified; apex → www `308`; HTTP → HTTPS `308` |
-| Research API health | **Pass** — `GET /api/research/health` → `configuration_validated`, `writesEnabled=false`, auth/DB prefixes `ep-restless-dew…` match |
+| Research API health | **Pass** — `GET /api/research/health` → `configuration_validated`, `writesEnabled=false`, auth/DB prefixes `ep-hsi-production…` match |
 | Auth provider diagnostics | **Pass** — `GET /api/auth/diagnostics` → `provider_reachable` |
 | Fail-closed anonymous research | **Pass** — investigations / graph / session-diagnostics → `401` without provider session |
 | Public HTML routes (58 sampled) | **Pass** — all HTTP `200` |
@@ -49,7 +49,7 @@ Evidence folder: `docs/engineering/audit-evidence/live-2026-11-09/`
 
 Values were **not** decrypted or printed.
 
-- Live behaviour of `/api/research/health` proves production has a coherent `HSI_PUBLIC_ORIGIN`, auth base URL, and `HSI_DATABASE_URL` targeting **red-wave** host prefix `ep-restless-dew-zas989pv` (not ISI autumn-snow).
+- Live behaviour of `/api/research/health` proves production has a coherent `HSI_PUBLIC_ORIGIN`, auth base URL, and `HSI_DATABASE_URL` targeting **red-wave** host prefix `ep-hsi-production` (not ISI autumn-snow).
 - `writesEnabled=false` confirms production write gate remains closed (expected; Gate C / live writes parked).
 - Vercel MCP also lists Neon-integration preview-branch keys (`DATABASE_URL`, `DATABASE_URL_UNPOOLED`, `NEON_AUTH_BASE_URL`, `VITE_NEON_AUTH_URL`) on preview git branches. Those are **not** substitutes for HSI substrate keys; treat as hygiene to keep isolated from HSI red-wave contracts (see Suspected).
 
@@ -124,7 +124,7 @@ Anonymous fail-closed behaviour on research APIs is verified (see Phase 1.5).
 
 | Item | Status |
 |------|--------|
-| Neon red-wave alignment | **Verified via health prefixes** (`ep-restless-dew`) |
+| Neon red-wave alignment | **Verified via health prefixes** (`ep-hsi-production`) |
 | Production research writes | **Parked** (`writesEnabled=false`) — intentional |
 | Live SSc Tfh–IL-21–B-cell end-to-end with persistence | **Not run** — requires authorised staging/session + human review gates |
 | Scientific acceptance claims | **None** — engineering probes only |

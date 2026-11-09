@@ -770,7 +770,7 @@ describe("Gate C checklist + publish outputs", () => {
     expect(consumer.notCds).toBe(true);
     expect(consumer.autoSurfaceCds).toBe(false);
     expect(consumer.candidates.length).toBe(pack.candidates.length);
-    expect(consumer.neonIsolation.hsiSubstrateOnly).toBe("red-wave-06625195");
+    expect(consumer.neonIsolation.hsiSubstrateOnly).toBe("hsi-neon-project");
     expect(consumer.neonIsolation.akenoDbEnvPrefix).toBe("AKENO_");
     expect(consumer.provenance.akenohealth.commit.length).toBe(40);
     expect(consumer.provenance.akenoHealthAi.lovableUrl).toContain("lovable.dev");

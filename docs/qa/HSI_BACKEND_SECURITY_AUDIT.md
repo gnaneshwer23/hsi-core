@@ -27,7 +27,7 @@
 
 | Probe | Result | Evidence file |
 |-------|--------|---------------|
-| `GET /api/research/health` | 200 `configuration_validated`, `writesEnabled=false`, auth/DB `ep-restless-dew…` match | `evidence/prod-2026-11-09/research-health.json` |
+| `GET /api/research/health` | 200 `configuration_validated`, `writesEnabled=false`, auth/DB `ep-hsi-production…` match | `evidence/prod-2026-11-09/research-health.json` |
 | `GET /api/auth/diagnostics` | 200 `provider_reachable`, credentials not tested | `auth-diagnostics.json` |
 | `GET /api/research/investigations` | 401 `BACKEND_PROVIDER_SESSION_REQUIRED` | `investigations-anon.json` |
 | `GET /api/research/graph/ssc` | 401 | `_api_research_graph_ssc.json` |

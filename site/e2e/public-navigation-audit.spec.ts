@@ -66,7 +66,7 @@ test('all public body links are clickable and reach their intended destinations'
 });
 
 test('hero illustrations fit their pages and remain legible at mobile sizes',async({page},info)=>{
-  const artwork:Record<string,string>={'/platform':'platform','/technology':'technology','/products':'products','/research':'research','/science':'science','/how-it-works':'workflow','/solutions':'solutions','/evidence-safety':'evidence','/contact':'access','/for-aksh':'aksh','/for-isi':'immune','/for-trials':'trials'};
+  const artwork:Record<string,string>={'/platform':'platform','/technology':'technology','/modules':'products','/research':'research','/science':'science','/how-it-works':'workflow','/solutions':'solutions','/evidence-safety':'evidence','/contact':'access','/modules/aksh-health':'aksh','/modules/isi':'immune','/modules/trials':'trials'};
   for(const [path,kind] of Object.entries(artwork)){
     for(const width of [320,768,1440]){
       await page.setViewportSize({width,height:1000});await page.goto(path);
@@ -87,7 +87,7 @@ test('header and footer destinations can be clicked; product links open a separa
     if(!await link.count()){await page.getByRole('button',{name:'More',exact:true}).click();link=page.locator('#secondary-pages').locator(`a[href=${JSON.stringify(href)}]`)}
     await link.click();await expect(page).toHaveURL(new URL(href,'http://127.0.0.1:4178').href);await expect(page.getByRole('heading',{level:1})).toBeVisible();
   }
-  for(const path of ['/for-aksh','/for-isi']){
+  for(const path of ['/modules/aksh-health','/modules/isi']){
     await page.goto(path);const external=page.getByRole('main').locator('a[target="_blank"]');
     await expect(external).toHaveAttribute('href',/^https:\/\//);await expect(external).toHaveAttribute('rel','noopener noreferrer');
     // Verify the click/popup contract locally without depending on the external product's uptime.

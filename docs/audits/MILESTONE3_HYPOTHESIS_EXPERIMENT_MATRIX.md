@@ -5,7 +5,7 @@
 **Date:** 2026-11-09  
 **Audited `main` SHA:** `4145422278b3c052b8aafb8cf0def5ec419bff63`  
 **Tip commit:** `4145422 Document Backend SI brief status against shipped Phases 1–7. (#89)`  
-**HSI Neon:** red-wave only (`human super intelligence` / `red-wave-06625195` / `ep-restless-dew…`) — never autumn-snow / Akeno / DeliverX  
+**HSI Neon:** red-wave only (`human super intelligence` / `hsi-neon-project` / `ep-hsi-production…`) — never autumn-snow / Akeno / DeliverX  
 
 **Cross-links (do not contradict):**
 

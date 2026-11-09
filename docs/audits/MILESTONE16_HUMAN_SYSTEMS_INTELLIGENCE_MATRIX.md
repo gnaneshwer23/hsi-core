@@ -5,7 +5,7 @@
 **Date:** 2026-11-09  
 **Audited `main` SHA:** `873ca494edf6280742309b0fc309142878f4fc43` (post-#122 tip)  
 **Tip commit:** `873ca49 Add M15 patient-contextualised research model contracts (#122)`  
-**HSI Neon:** red-wave only (`human super intelligence` / `red-wave-06625195` / `ep-restless-dew…`) — never autumn-snow / Akeno / DeliverX  
+**HSI Neon:** red-wave only (`human super intelligence` / `hsi-neon-project` / `ep-hsi-production…`) — never autumn-snow / Akeno / DeliverX  
 **Dependency:** Prefer composing via IDs/refs already on `main` (M15 PR1–PR6 [#116](https://github.com/gnaneshwer23/hsi-core/pull/116)–[#122](https://github.com/gnaneshwer23/hsi-core/pull/122); M14 [#111](https://github.com/gnaneshwer23/hsi-core/pull/111)/[#113](https://github.com/gnaneshwer23/hsi-core/pull/113)/[#114](https://github.com/gnaneshwer23/hsi-core/pull/114)/[#115](https://github.com/gnaneshwer23/hsi-core/pull/115)) and M16 PR1–PR3 envelopes. **Stack PR4 on #127** while open. **Do not stack** on unmerged M15 PR7 ([#123](https://github.com/gnaneshwer23/hsi-core/pull/123)) or PR8 ([#125](https://github.com/gnaneshwer23/hsi-core/pull/125)).
 
 **Cross-links (do not contradict):**

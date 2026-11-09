@@ -3,11 +3,11 @@
 | Field | Value |
 | --- | --- |
 | ID | HSI-ARCH-002 |
-| Version | 1.0 |
-| Date | 2026-11-04 |
+| Version | 1.1 |
+| Date | 2026-11-09 |
 | Status | Adopted as target-state architecture principle; implementation and acceptance tests pending |
 | Owner | HSI architecture and scientific governance |
-| Scope | HSI Core, Research, Clinical, Trials, data ingestion, graph services, AI agents, optional Aksh and ISI integrations |
+| Scope | The Living Health Knowledge Graph at the centre of Human Super Intelligence. Aksh Health, HSI Clinical, ISI and HSI Trials are governed modules, not external products that own the graph |
 | Depends on | [HSI-ARCH-001 — Independent Intelligence, Connected Ecosystem](ARCH-001-independent-intelligence-connected-ecosystem.md) |
 
 ## 1. Foundational declaration
@@ -16,7 +16,7 @@
 
 The LHK-G is an evidence-grounded, time-aware, context-rich logical graph connecting human biology, patient observations (when lawfully authorised), biomedical research, disease mechanisms, therapies, outcomes and clinical trials.
 
-Aksh Health, Immune Super Intelligence (ISI), external biomedical databases and healthcare organisations may provide inputs through governed interfaces. No external product's graph, claim status, approval, identifiers or availability automatically becomes authoritative inside HSI.
+Aksh Health, HSI Clinical, ISI and HSI Trials may contribute through governed interfaces. ISI science does not depend on Aksh Health. Private patient data never enters the research graph automatically. No module’s claim status, approval or identifier becomes authoritative inside the graph without HSI provenance and review. Association stays separate from a demonstrated causal mechanism. Every accepted edge records biological context, provenance, uncertainty and review state.
 
 **Graph ownership does not mean owning the copyright, intellectual property, consent rights or legal control of third-party source data.** HSI must respect source licences, data rights, privacy and contractual constraints.
 

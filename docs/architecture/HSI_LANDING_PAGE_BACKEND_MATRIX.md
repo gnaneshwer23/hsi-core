@@ -3,7 +3,7 @@
 **Audited tip (branch base):** `864710a` + Phase 8 landing integration PR  
 **Production:** https://www.humansuperintelligence.tech/  
 **As of:** 2026-11-09  
-**Neon:** HSI red-wave only (`red-wave-06625195`). Never ISI autumn-snow.  
+**Neon:** HSI red-wave only (`hsi-neon-project`). Never ISI autumn-snow.  
 **Rule:** Fail-closed APIs; public demos keep `live_backend:false` until staging-verified. No live CDS/PHI.
 
 Companion maps: [`HSI_PAGE_AND_ROUTE_MAP.md`](./HSI_PAGE_AND_ROUTE_MAP.md), [`HSI_BACKEND_SERVICE_MAP.md`](./HSI_BACKEND_SERVICE_MAP.md), [`../capability-status.json`](../capability-status.json).

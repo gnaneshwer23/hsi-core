@@ -33,7 +33,7 @@ export const ECOSYSTEM_PRODUCTS: readonly EcosystemProduct[] = [
     chipDetail: "Available (scoped) — diabetes and metabolic health with clinician collaboration.",
     primaryCta: {
       label: "Explore Aksh Health",
-      href: "/for-aksh",
+      href: "/modules/aksh-health",
     },
     secondaryCta: { label: "How it works", href: "/how-it-works" },
     mustNot: [
@@ -62,7 +62,7 @@ export const ECOSYSTEM_PRODUCTS: readonly EcosystemProduct[] = [
     oneLine: "Biological and scientific discovery (research workspace).",
     chip: "available",
     chipDetail: "Available for research — Ask, Atlas, and Discovery on graded evidence.",
-    primaryCta: { label: "ISI Research entry", href: "/for-isi" },
+    primaryCta: { label: "ISI Research entry", href: "/modules/isi" },
     secondaryCta: { label: "Open Discovery", href: "/discovery" },
     mustNot: [
       "Not clinical decision support",
@@ -76,7 +76,7 @@ export const ECOSYSTEM_PRODUCTS: readonly EcosystemProduct[] = [
     oneLine: "Explainable trial screening and mechanism-linked discovery.",
     chip: "planned",
     chipDetail: "Planned — transparent study discovery with investigator-led decisions.",
-    primaryCta: { label: "Explore HSI Trials", href: "/for-trials" },
+    primaryCta: { label: "Explore HSI Trials", href: "/modules/trials" },
     secondaryCta: { label: "How it works", href: "/how-it-works" },
     mustNot: [
       "Never confirms eligibility",
@@ -160,7 +160,7 @@ export const ENGINEERING_LINKS = [
   { to: "/curator", label: "Curator" },
   { to: "/alignment", label: "Alignment" },
   { to: "/docs", label: "Technical docs" },
-  { to: "/aksh-agents", label: "Aksh agents (ref)" },
+  { to: "/modules/aksh-health", label: "Aksh agents (ref)" },
 ] as const;
 
 export const SHARED_CORE_NOTE =

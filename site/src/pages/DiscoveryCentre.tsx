@@ -329,7 +329,7 @@ export function DiscoveryCentre() {
             <Link to="/sources" className="btn btn-ghost">
               Source registry ↗
             </Link>
-            <Link to="/for-isi" className="btn btn-ghost">
+            <Link to="/modules/isi" className="btn btn-ghost">
               For researchers
             </Link>
           </div>
@@ -830,7 +830,7 @@ export function DiscoveryCentre() {
                     <p className="lede">
                       Phase 7 research validation from{" "}
                       <code>hsi-r2-validation.json</code>. Statuses are
-                      literature-grounded — not clinical protocols, not Akeno.
+                      literature-grounded — not clinical protocols.
                     </p>
                   </div>
 
@@ -1001,8 +1001,8 @@ export function DiscoveryCentre() {
                       <span className="panel-label">
                         Outside hsi-core (still gated)
                       </span>
-                      <Link to="/akeno" className="dc-pill">
-                        Akeno consumer →
+                      <Link to="/modules/clinical" className="dc-pill">
+                        HSI Clinical →
                       </Link>
                     </div>
                     <ul className="checklist" style={{ marginTop: "0.85rem" }}>
@@ -1036,7 +1036,7 @@ export function DiscoveryCentre() {
             </h2>
             <p className="lede">
               NOW = Discovery + R2 validation + translation substrate + in-repo
-              Akeno HITL consumer (clinicalActive=false). GATED = partner
+              HSI Clinical review consumer (clinicalActive=false). GATED = partner
               cohorts, HCP eval, regulatory CDS. Never implied by map presence
               alone.
             </p>
@@ -1054,10 +1054,10 @@ export function DiscoveryCentre() {
             </div>
             <div>
               <span className="dc-pill">NOW</span>
-              <strong>Akeno HITL</strong>
+              <strong>HSI Clinical review</strong>
               <p>
-                <Link to="/akeno">/akeno</Link> · not CDS · no Akeno Neon ·{" "}
-                <Link to="/aksh-agents">agent catalog</Link>
+                <Link to="/modules/clinical">HSI Clinical</Link> · not CDS ·{" "}
+                <Link to="/modules/aksh-health">agent catalog</Link>
               </p>
             </div>
           </div>

@@ -783,10 +783,10 @@ export function ScienceLanding() {
                 <li>Shared capability patterns</li>
               </ul>
               <div className="hsi-editorial-actions">
-                <Link className="hsi-editorial-button" to="/for-isi">
+                <Link className="hsi-editorial-button" to="/modules/isi">
                   Meet ISI Research <span aria-hidden="true">↗</span>
                 </Link>
-                <Link className="hsi-editorial-textlink" to="/products">
+                <Link className="hsi-editorial-textlink" to="/modules">
                   Explore products ↗
                 </Link>
                 <Link className="hsi-editorial-textlink" to="/platform">
@@ -813,10 +813,10 @@ export function ScienceLanding() {
             {PRODUCT_SHORT} Science introduces biological concepts. It is not clinical decision support, not a substitute for peer-reviewed findings and not access to a research workspace.
           </p>
           <div className="hsi-editorial-actions">
-            <Link className="hsi-editorial-button" to="/for-isi">
+            <Link className="hsi-editorial-button" to="/modules/isi">
               Continue to ISI Research <span aria-hidden="true">↗</span>
             </Link>
-            <Link className="hsi-editorial-textlink" to="/products">
+            <Link className="hsi-editorial-textlink" to="/modules">
               Explore products ↗
             </Link>
             <Link className="hsi-editorial-textlink" to="/how-it-works">

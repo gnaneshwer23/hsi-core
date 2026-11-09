@@ -9,7 +9,7 @@
 
 ## 1. Executive summary
 
-HSI production is a **credible public biomedical research website** with a **fail-closed research API shell** on Neon red-wave (`ep-restless-dew…`). It is **not** yet a complete operational scientific investigation platform for end-to-end researcher outcomes on production writes.
+HSI production is a **credible public biomedical research website** with a **fail-closed research API shell** on Neon red-wave (`ep-hsi-production…`). It is **not** yet a complete operational scientific investigation platform for end-to-end researcher outcomes on production writes.
 
 | Domain | Classification |
 |--------|----------------|

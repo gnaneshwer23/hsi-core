@@ -1,4 +1,5 @@
 /** ARCH-002: metadata-only Europe PMC ingestion. No claim approval, no full-text storage. */
+import type { FetchLike } from "./fetchLike";
 import { createHash } from "node:crypto";
 
 export const SSC_INITIAL_PMIDS = ["30760472","29514998","33175976","21314428","16339522"] as const;
@@ -25,7 +26,7 @@ export function parseEuropePmcMetadata(pmid: string, raw: unknown, retrievedAt: 
  const recordHash = createHash("sha256").update(JSON.stringify({pmid,title,doi,journal,published,status})).digest("hex");
  return {id:`pmid:${pmid}`,source_kind:"publication",external_id:pmid,title:title.trim(),source_url:`https://europepmc.org/article/MED/${pmid}`,doi,pmid,licence_status:"metadata_only",retraction_status:status,retrieved_at:retrievedAt,metadata:{provider:"europe_pmc",journal,published,recordHash}};
 }
-export async function fetchEuropePmcMetadata(pmid: string, fetcher: typeof fetch = fetch): Promise<EvidenceMetadata> {
+export async function fetchEuropePmcMetadata(pmid: string, fetcher: FetchLike = fetch): Promise<EvidenceMetadata> {
  if (!/^\d{1,9}$/.test(pmid)) throw new Error("Invalid PMID");
  const url = new URL("https://www.ebi.ac.uk/europepmc/webservices/rest/search");
  url.searchParams.set("query",`EXT_ID:${pmid} AND SRC:MED`);

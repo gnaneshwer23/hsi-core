@@ -4,7 +4,7 @@
 **Date:** 2026-11-08  
 **Audited `main` SHA:** `4452e14b7a40d8ebfec978d9cc9b63d1d7b23719`  
 **Tip commit:** `4452e14 Step 04: agent intelligence and gap verification (#70)`  
-**HSI Neon:** red-wave only (`human super intelligence` / `red-wave-06625195` / `ep-restless-dew…`) — never autumn-snow / Akeno / DeliverX  
+**HSI Neon:** red-wave only (`human super intelligence` / `hsi-neon-project` / `ep-hsi-production…`) — never autumn-snow / Akeno / DeliverX  
 **Companions:** [`HSI_CAPABILITY_REGISTER_2026-11-08.md`](./HSI_CAPABILITY_REGISTER_2026-11-08.md) · [`../product/HSI_DEFINITIVE_PRODUCT_SPEC.md`](../product/HSI_DEFINITIVE_PRODUCT_SPEC.md) · [`../CDS_PHI_BOUNDARY.md`](../CDS_PHI_BOUNDARY.md) · [`HUMAN_QUEUE_RESIDUALS.md`](./HUMAN_QUEUE_RESIDUALS.md)  
 **Refined-brief gap matrix (post #72–#83 tip + OT hardening):** [`../audits/BACKEND_INTEGRATION_MATRIX.md`](../audits/BACKEND_INTEGRATION_MATRIX.md) — uses refined status tokens; does not replace this engineering baseline.
 
@@ -181,7 +181,7 @@ Draft findings may surface **only** when explicitly labelled draft / candidate /
 | Investigations + reviewer authority + access | `004`–`006` | Research grants | **Connected** (schema) | Migration docs | Staging Unknown | — | Role provisioning |
 | Interrogative contracts + review audit | `007`–`008` | Review lock + decisions | **Connected** (schema) | authenticatedScientificReviewStore | Staging Unknown | — | — |
 | Agent checkpoints + fenced artifacts | `009`–`010` | Durable agent runs | **Partial** | Agent recovery tests | Local | — | — |
-| LHKG governed graph + dossiers + hardening | `011`–`013` (+ `012_isi_research_review`) | Graph read/security | **Partial** | ARCH-002 audits | Staging Unknown | — | Ops verify |
+| LHKG governed graph + dossiers + hardening | `011`–`013` (+ `019_hsi_isi_research_review`) | Graph read/security | **Partial** | ARCH-002 audits | Staging Unknown | — | Ops verify |
 | Investigation graph context + delivery | `014`–`015` | Graph-context + delivery APIs | **Connected** (schema/API) | delivery / graph-context tests | Staging Unknown | — | — |
 | Evidence + experiment ledgers | `016`–`017` | Ledger persistence | **Partial** | Audit #6 | Staging Unknown | — | Write gate |
 

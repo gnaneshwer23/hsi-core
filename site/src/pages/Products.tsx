@@ -144,15 +144,15 @@ export function Products() {
         <div className="hsi-editorial-wrap hsi-products-hero-grid">
           <div className="hsi-products-hero-copy">
             <p className="hsi-editorial-kicker">
-              <span className="hsi-coral-dot" /> {PRODUCT_NAME} / PRODUCTS
+              <span className="hsi-coral-dot" /> {PRODUCT_NAME} / MODULES
             </p>
             <h1 id="products-title">
-              Four specialised products.
+              Four governed modules.
               <br />
-              <em>One intelligence ecosystem.</em>
+              <em>One Human Super Intelligence.</em>
             </h1>
             <p className="hsi-editorial-lede">
-              From personal health to clinical context, immune discovery and trials research: explore what each product is designed to do, and how governed intelligence connects them.
+              Aksh Health, HSI Clinical, Immune Super Intelligence and HSI Trials. Each module has its own permissions. The Living Health Knowledge Graph connects them without copying private records into research.
             </p>
             <div className="hsi-editorial-actions">
               <a className="hsi-editorial-button" href="#product-collection">

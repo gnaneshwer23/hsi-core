@@ -9,5 +9,5 @@ test("session diagnostics distinguish every eligibility gate without returning s
 });
 test("diagnostics refuse unknown database targets and unverified empty identities before connecting",async()=>{
  await expect(inspectProviderDatabaseSession({databaseUrl:"postgresql://user:secret@unknown.example/neondb",sessionId:"session",userId:"user"})).rejects.toThrow("HSI database target rejected");
- await expect(inspectProviderDatabaseSession({databaseUrl:"postgresql://user:never-used@ep-sweet-hill-zasb0lni.c-2.eu-west-2.aws.neon.tech/neondb?sslmode=require",sessionId:"",userId:""})).rejects.toThrow("Verified session identity required");
+ await expect(inspectProviderDatabaseSession({databaseUrl:"postgresql://user:never-used@ep-hsi-staging.c-2.eu-west-2.aws.neon.tech/neondb?sslmode=require",sessionId:"",userId:""})).rejects.toThrow("Verified session identity required");
 });

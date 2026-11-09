@@ -26,4 +26,4 @@ Also noted (not copied): `data-akeno`, `0ne-Health/packages/akeno` (monorepo mir
 
 ## Neon isolation
 
-HSI substrate stays **`red-wave-06625195` only**. Akeno Neon (`silent-violet…`) is never used for Gate C, migrations, or HSI writes. Optional `AKENO_*` env keys in `akeno/.env.example` are documented as **non-HSI** and unused by the in-repo consumer.
+HSI substrate stays **`hsi-neon-project` only**. Akeno Neon (`silent-violet…`) is never used for Gate C, migrations, or HSI writes. Optional `AKENO_*` env keys in `akeno/.env.example` are documented as **non-HSI** and unused by the in-repo consumer.

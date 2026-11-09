@@ -2,6 +2,7 @@
  * PR 2 — Dynamic retrieval: query validation + failure taxonomy.
  * Uses injected fetchers; does not call live providers or invent science.
  */
+import type { FetchLike } from "../src/fetchLike";
 import {describe, expect, test} from "bun:test";
 import {readFileSync, existsSync} from "node:fs";
 import {resolve} from "node:path";
@@ -277,7 +278,7 @@ describe("dynamic retrieval — failure taxonomy + honesty", () => {
   test("cache key distinguishes cursorMark pages", async () => {
     let calls = 0;
     const cache = createMemoryRetrievalCache();
-    const fetcher: typeof fetch = async (url) => {
+    const fetcher: FetchLike = async (url) => {
       calls += 1;
       const u = String(url);
       if (u.includes("cursorMark=%2A") || u.includes("cursorMark=*")) {
@@ -348,7 +349,7 @@ describe("dynamic retrieval — failure taxonomy + honesty", () => {
   test("cache hit avoids a second provider call", async () => {
     let calls = 0;
     const cache = createMemoryRetrievalCache();
-    const fetcher: typeof fetch = async () => {
+    const fetcher: FetchLike = async () => {
       calls += 1;
       return new Response(epmcHitBody("18375541", "Cached hit", 1), {status: 200});
     };

@@ -7,6 +7,7 @@
  *
  * Not scientific acceptance · not Gate C · not MoU · not CDS/PHI · not O-04 trials attach.
  */
+import type { FetchLike } from "../fetchLike";
 import {createHash} from "node:crypto";
 import {canonicalEvidenceJson} from "./researchEvidenceCorpus";
 import {
@@ -733,7 +734,7 @@ async function sleep(ms: number): Promise<void> {
 }
 
 export async function runLivingEvidenceExpansionFromProviders(input?: {
-  fetcher?: typeof fetch;
+  fetcher?: FetchLike;
   now?: () => Date;
   minIntervalMs?: number;
 }): Promise<{snapshot: LivingEvidenceExpansionSnapshot; receipt: LivingEvidenceExpansionReceipt}> {

@@ -1,6 +1,7 @@
 /**
  * PR 7 — Research-brief product bind + release-aware surface honesty.
  */
+import type { FetchLike } from "../src/fetchLike";
 import {describe, expect, test} from "bun:test";
 import {
   integrateResearchBrief,
@@ -67,7 +68,7 @@ function otBody(): string {
   });
 }
 
-const mockFetcher: typeof fetch = async (url) => {
+const mockFetcher: FetchLike = async (url) => {
   const u = String(url);
   if (u.includes("opentargets")) return new Response(otBody(), {status: 200});
   if (u.includes("europepmc")) return new Response(epmcBody(), {status: 200});
@@ -146,8 +147,8 @@ const releaseAwareStub = {
   drafts: [
     {
       channel: "draft_candidate" as const,
-      relationship: {id: "cand-1", surfaceLabel: "draft_candidate"} as ReleaseAwareRetrievalResult["drafts"][number]["relationship"],
-      surfaceLabel: "draft_candidate" as const,
+      relationship: {id: "cand-1", surfaceLabel: "draft_candidate"} as unknown as ReleaseAwareRetrievalResult["drafts"][number]["relationship"],
+      surfaceLabel: "draft_candidate" as unknown as ReleaseAwareRetrievalResult["drafts"][number]["surfaceLabel"],
       reviewState: "draft" as const,
       graphPromotable: false as const,
       scientificApproval: false as const,
@@ -163,7 +164,7 @@ const releaseAwareStub = {
     gateCAutoApprove: false as const,
     cdsPhi: false as const,
   },
-} satisfies ReleaseAwareRetrievalResult;
+} as unknown as ReleaseAwareRetrievalResult;
 
 describe("research brief integration (PR 7)", () => {
   test("limitations are explicit; eligibility and efficacy stay uninferred", () => {

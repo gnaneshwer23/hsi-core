@@ -51,25 +51,25 @@ const productCopy: Record<ProductId, { label: string; description: string; data:
     label: "Health & care experience",
     description: "Organises health context and care work within Aksh’s own permissions and data environment. Shared Human Super Intelligence patterns support review without copying patient records into HSI.",
     data: "Aksh-owned records and access controls",
-    link: "/for-aksh",
+    link: "/modules/aksh-health",
   },
   clinical: {
     label: "Longitudinal clinical intelligence · In development",
     description: "The planned clinical experience will organise authorised encounters, laboratory trends and treatment history for professional review. The public architecture is illustrative, not a live hospital integration.",
     data: "Future clinical records remain subject to identity, authorisation, provenance and care-provider governance",
-    link: "/products",
+    link: "/modules",
   },
   isi: {
     label: "Specialist research experience",
     description: "Connects immune concepts, existing knowledge relationships and permitted evidence within ISI Research. Shared investigation tools help researchers inspect context and prepare work for human review—inside ISI Research’s own data boundary.",
     data: "ISI Research–owned research data and access controls",
-    link: "/for-isi",
+    link: "/modules/isi",
   },
   trials: {
     label: "Trial intelligence · Planned",
     description: "A proposed investigator-led experience for exploring study criteria, missing information and pre-screening questions. No live matching, eligibility confirmation or enrolment is available.",
     data: "Future trial capabilities require separate permissions, approved data pathways and investigator confirmation",
-    link: "/for-trials",
+    link: "/modules/trials",
   },
 };
 
@@ -164,22 +164,22 @@ const experienceEntries: readonly {
 }[] = [
   {
     id: "aksh",
-    href: "/for-aksh",
+    href: "/modules/aksh-health",
     ownership: "Aksh-owned health records and access controls",
   },
   {
     id: "isi",
-    href: "/for-isi",
+    href: "/modules/isi",
     ownership: "ISI Research–owned evidence and research data",
   },
   {
     id: "clinical",
-    href: "/products",
+    href: "/modules",
     ownership: "Care-provider governed clinical records — not a live hospital feed",
   },
   {
     id: "trials",
-    href: "/for-trials",
+    href: "/modules/trials",
     ownership: "Investigator-led pathways · separate permissions",
   },
 ];
@@ -525,7 +525,7 @@ export function Platform() {
           </div>
 
           <div className="hsi-platform-experiences-cta">
-            <Link className="hsi-editorial-button" to="/products">
+            <Link className="hsi-editorial-button" to="/modules">
               Open the products catalogue <span aria-hidden="true"><ArrowIcon/></span>
             </Link>
             <Link className="hsi-editorial-textlink" to="/how-it-works">
@@ -546,8 +546,8 @@ export function Platform() {
             Technology patterns can travel across products. Patient records, research collections and trial data stay behind each product’s permissions wall.
           </p>
           <div className="hsi-editorial-actions">
-            <Link className="hsi-editorial-button" to="/products">Explore the products <span aria-hidden="true"><ArrowIcon/></span></Link>
-            <Link className="hsi-editorial-textlink" to="/products#product-collection">Compare product scope <ArrowIcon/></Link>
+            <Link className="hsi-editorial-button" to="/modules">Explore the products <span aria-hidden="true"><ArrowIcon/></span></Link>
+            <Link className="hsi-editorial-textlink" to="/modules#product-collection">Compare product scope <ArrowIcon/></Link>
           </div>
           <small>
             Scientific research tools do not provide diagnosis, prescribing or confirmed trial eligibility. Clinical and trial capabilities are separately governed and subject to human validation. Human Super Intelligence does not operate a shared evidence database across products.

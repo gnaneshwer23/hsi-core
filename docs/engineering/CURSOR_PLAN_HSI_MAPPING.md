@@ -1,12 +1,12 @@
 # Cursor integration plan → HSI mapping
 
-**Reference:** `/Users/gnaneshwerjadav/Downloads/CURSOR_INTEGRATION_AND_AI_PLAN.md` (also under `hsi-synthetic-v3/`).  
+**Reference:** `<local-home>/Downloads/CURSOR_INTEGRATION_AND_AI_PLAN.md` (also under `hsi-synthetic-v3/`).  
 **Machine map:** `evaluation/gold-evaluation-suite/v1/cursor-plan-contract-map.v1.json` · `src/adapters/cursorSyntheticV3ContractMap.ts`
 
 ## Binding
 
 - Treat the plan as a **fixture reference**, not a replacement for HSI services.
-- HSI Neon stays **red-wave / ep-restless-dew only** — never autumn-snow.
+- HSI Neon stays **red-wave / ep-hsi-production only** — never autumn-snow.
 - No invented MoU / `legalBinding=true` / Gate C auto-approve / live CDS·PHI·EHR / auto graph promotion.
 - Full v3 JSONL/SQLite pack is **not** absorbed into git (explicit non-goal).
 

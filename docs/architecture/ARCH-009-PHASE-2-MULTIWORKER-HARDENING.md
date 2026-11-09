@@ -11,7 +11,7 @@ Status: Implemented, staging SQL smoke passed, latest CI pending.
 - Unit tests cover idempotency, stale-worker fencing and conflicting output.
 
 ## Staging execution
-- Migration 010 applied to HSI staging branch br-rough-snow-zagxbvjp, not production.
+- Migration 010 applied to HSI staging branch hsi-staging-branch, not production.
 - SQL rollback test: initial artifact insert, duplicate key ignored, checkpoint completed, stale artifact rejected, test records rolled back.
 - No patient-identifiable data used.
 

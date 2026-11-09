@@ -73,7 +73,7 @@ describe("R1 biomedical source packets", () => {
   test("refuses claiming scientificAcceptance CLEARED", () => {
     const inventory = buildR1BiomedicalSourcePackets({generatedAt, repoRoot: root});
     const bad = structuredClone(inventory) as typeof inventory & {scientificAcceptance: string};
-    bad.scientificAcceptance = "CLEARED";
+    (bad as {scientificAcceptance: string}).scientificAcceptance = "CLEARED";
     const {inventoryHash: _drop, ...body} = bad;
     void _drop;
     const sealed = {

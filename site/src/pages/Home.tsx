@@ -53,8 +53,9 @@ export function Home(){
     <header className="ed-home-hero ed-home-hero-product ed-home-hero-instrument">
       <div className="ed-hero-copy">
         <p className="ed-kicker">Connected biomedical intelligence</p>
+        <p className="ed-tagline">Connecting human biology. Advancing scientific discovery. Transforming our understanding of health.</p>
         <h1>Investigate biological mechanisms<br/><em>across human systems.</em></h1>
-        <p className="ed-lead">Immunology, microbiome, neuroimmune biology, metabolism, omics, evidence and trials — one research workbench. Disease context is optional. Systemic sclerosis is a validation case, not the product boundary.</p>
+        <p className="ed-lead">Immunology, microbiome, neuroimmune biology, metabolism, omics, evidence and trials — one research workbench. Disease context is optional. Systemic sclerosis is one validation case, not the product boundary.</p>
         <div className="ed-actions">
           <Link className="ed-button" to={contactAccessHref({scenarioId})}>{PUBLIC_PRIMARY_CTA.label} <span aria-hidden="true"><ArrowIcon/></span></Link>
           <Link className="ed-text-link" to={PUBLIC_SECONDARY_CTA.to}>{PUBLIC_SECONDARY_CTA.label} <span aria-hidden="true"><ArrowIcon direction="right"/></span></Link>
@@ -96,31 +97,39 @@ export function Home(){
     <section className="ed-ecosystem ed-foundation-system" aria-labelledby="foundation-heading">
       <div>
         <p className="ed-kicker">ONE RESEARCH FOUNDATION</p>
-        <h2 id="foundation-heading">Three ways to investigate.<br/><em>One connected system.</em></h2>
-        <p className="ed-foundation-note">Turn investigation into a research brief. Entry points share technology while keeping governance and audience boundaries clear — not three pricing tiers.</p>
+        <h2 id="foundation-heading">One platform.<br/><em>Four governed modules.</em></h2>
+        <p className="ed-foundation-note">Aksh Health, HSI Clinical, ISI and HSI Trials share the Living Health Knowledge Graph. Each module keeps its own permissions. Private patient records do not become research evidence on their own.</p>
       </div>
       <div className="ed-product-rows ed-product-system">
-        <Link to="/for-aksh">
+        <Link to="/modules/aksh-health">
           <span className="ed-product-system-index">01</span>
-          <span>PERSONAL HEALTH CONTEXT</span>
+          <span>PATIENT INTELLIGENCE</span>
           <h3>Aksh Health</h3>
-          <p>Everyday health context within its own care and data setting.</p>
+          <p>Symptoms, medications, labs, wearables and metabolic context.</p>
           <b aria-hidden="true"><ArrowIcon/></b>
         </Link>
         <div className="ed-product-system-rail" aria-hidden="true"/>
-        <Link to="/for-isi">
+        <Link to="/modules/clinical">
           <span className="ed-product-system-index">02</span>
-          <span>IMMUNE-SCIENCE RESEARCH</span>
-          <h3>Immune Super Intelligence</h3>
-          <p>Explore immune biology and the evidence behind the connections.</p>
+          <span>CLINICAL INTELLIGENCE</span>
+          <h3>HSI Clinical</h3>
+          <p>Longitudinal history and the information that is still missing.</p>
           <b aria-hidden="true"><ArrowIcon/></b>
         </Link>
         <div className="ed-product-system-rail" aria-hidden="true"/>
-        <Link to="/platform">
+        <Link to="/modules/isi">
           <span className="ed-product-system-index">03</span>
-          <span>SHARED RESEARCH TECHNOLOGY</span>
-          <h3>Human Super Intelligence</h3>
-          <p>Source-aware investigations, inspectable reasoning and accountable review.</p>
+          <span>SCIENTIFIC DISCOVERY</span>
+          <h3>Immune Super Intelligence</h3>
+          <p>Immune, nervous, microbiome, metabolic and molecular evidence.</p>
+          <b aria-hidden="true"><ArrowIcon/></b>
+        </Link>
+        <div className="ed-product-system-rail" aria-hidden="true"/>
+        <Link to="/modules/trials">
+          <span className="ed-product-system-index">04</span>
+          <span>TRIAL INTELLIGENCE</span>
+          <h3>HSI Trials</h3>
+          <p>Studies, biomarkers and pre-screening that leaves unknowns unknown.</p>
           <b aria-hidden="true"><ArrowIcon/></b>
         </Link>
       </div>

@@ -1,27 +1,22 @@
 # Agent instructions — hsi-core
 
-**`hsi-core` is the sole active codebase for HSI substrate.** Primary edit target: `~/Projects/hsi-core` (https://github.com/gnaneshwer23/hsi-core).
+**`hsi-core` is the sole active codebase for the HSI substrate.** Human Super Intelligence is one product. Aksh Health, HSI Clinical, ISI and HSI Trials are governed modules. ISI science must not depend on Aksh Health. Private patient data must not enter the research graph automatically. Edit this repository: https://github.com/gnaneshwer23/hsi-core.
 
 ## Neon isolation (binding)
 
-HSI is a **separate technology**. Use **only** the HSI Neon project for HSI substrate:
+Use **only** the HSI Neon project for HSI substrate migrations and local Gate C writes.
 
-- **Canonical:** `human super intelligence` / `red-wave-06625195` / `ep-restless-dew…eu-west-2` (`neondb` + HSI-owned `hsi_*` stub via `bun run db:migrate`)
+Tracked files store **placeholders** (`hsi-neon-project`, `ep-hsi-production`, `ep-hsi-staging`). Real project, branch and host values belong in the private environment (`HSI_NEON_CANONICAL_PROJECT_ID`, `HSI_NEON_HOST_ALLOWLIST`, `HSI_NEON_STAGING_BRANCH_PIN`, `HSI_NEON_STAGING_HOST_PIN`). Do not commit them.
 
-**Never** use for HSI substrate, migrations, or Gate C local writes from this workspace:
-
-- ISI / immunecity Neon: `autumn-snow-67879321` / `ep-blue-salad…` — ISI product DB only
-- Akeno Neon / DeliverX Neon — out of scope / ignore
-
-No shared evidence DB between HSI and immunecity. Details: [`docs/NEON_PROJECT_MAP.md`](docs/NEON_PROJECT_MAP.md). Do not commit secrets (see `.env.example`). **Never paste Neon passwords into chat** — use `neonctl` OAuth or gitignored `.env.local`; HSI URL must be red-wave only.
+**Never** point HSI substrate migrations at another product’s Neon project. No shared evidence database with immunecity. Details: [`docs/NEON_PROJECT_MAP.md`](docs/NEON_PROJECT_MAP.md). Do not commit secrets (see `.env.example`). **Never paste Neon passwords into chat** — use `neonctl` OAuth or gitignored `.env.local`.
 
 ## Immunecity edit policy (freeze lift)
 
 **Freeze lifted 2026-11-01** (user authorization) **for ISI HSI-consume wiring only**:
 
-- Allowed: edits in `~/Desktop/immune-city` or https://github.com/gnaneshwer23/immunecity that wire HSI Discovery JSON consume (client, honesty asserts, `/hsi-consume` or evidence/Discovery route mapping) per [`docs/ISI_IMMUNICITY_WIRING_PLAYBOOK.md`](docs/ISI_IMMUNICITY_WIRING_PLAYBOOK.md).
-- Still forbidden: DeliverX / `swift-deliveries`; shared Neon; pointing HSI migrations at `autumn-snow`; inventing Gate C auto-approve or production `legalBinding`.
-- HSI substrate, seeds, packs, and publish artifacts remain owned by **this** repo (`red-wave`).
+- Allowed: edits in the immunecity checkout or https://github.com/gnaneshwer23/immunecity that wire HSI Discovery JSON consume (client, honesty asserts, `/hsi-consume` or evidence/Discovery route mapping) per [`docs/ISI_IMMUNICITY_WIRING_PLAYBOOK.md`](docs/ISI_IMMUNICITY_WIRING_PLAYBOOK.md).
+- Still forbidden: DeliverX / `swift-deliveries`; shared Neon; pointing HSI migrations at another product database; inventing Gate C auto-approve or production `legalBinding`.
+- HSI substrate, seeds, packs, and publish artifacts remain owned by **this** repo.
 
 ## Ignore (irrelevant to HSI)
 

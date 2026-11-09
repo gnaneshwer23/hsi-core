@@ -2,7 +2,7 @@
 
 **Audited tip:** `864710a`  
 **Production probe:** 2026-11-09  
-**Neon isolation:** HSI red-wave only (`ep-restless-dew…` / project `red-wave-06625195`). Never autumn-snow (ISI).
+**Neon isolation:** HSI red-wave only (`ep-hsi-production…` / project `hsi-neon-project`). Never autumn-snow (ISI).
 
 ---
 

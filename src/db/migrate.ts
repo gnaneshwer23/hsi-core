@@ -30,6 +30,26 @@ function listMigrationFiles(dir: string): string[] {
     .sort();
 }
 
+/**
+ * Renamed files that must not be applied again when the old ledger id is present.
+ * 019 replaces the duplicate 012_isi_research_review prefix.
+ */
+export const MIGRATION_LEDGER_ALIASES: Record<string, readonly string[]> = {
+  "019_hsi_isi_research_review": ["012_isi_research_review"],
+};
+
+/**
+ * Committed but not applied. Operators remove an id from this set only after
+ * the security review named in the migration header.
+ */
+export const HELD_MIGRATION_IDS = ["020_hsi_lhkg_rls_policies"] as const;
+
+export function migrationAlreadyRecorded(id: string, recorded: readonly string[]): boolean {
+  if (recorded.includes(id)) return true;
+  const aliases = MIGRATION_LEDGER_ALIASES[id] ?? [];
+  return aliases.some((alias) => recorded.includes(alias));
+}
+
 export async function applyHsiMigrations(opts?: MigrateOptions): Promise<MigrateResult> {
   const cwd = resolve(opts?.cwd ?? process.cwd());
   const migrationsDir = resolve(opts?.migrationsDir ?? join(cwd, "db", "migrations"));
@@ -60,12 +80,16 @@ export async function applyHsiMigrations(opts?: MigrateOptions): Promise<Migrate
       throw new Error(`No .sql migrations in ${migrationsDir}`);
     }
 
+    const recordedRows = await sql`SELECT id FROM hsi_schema_migrations`;
+    const recorded = (Array.isArray(recordedRows) ? recordedRows : []).map((row) => String(row.id));
+
     for (const file of files) {
       const id = file.replace(/\.sql$/i, "");
-      const existing = await sql`
-        SELECT id FROM hsi_schema_migrations WHERE id = ${id} LIMIT 1
-      `;
-      if (Array.isArray(existing) && existing.length > 0) {
+      if ((HELD_MIGRATION_IDS as readonly string[]).includes(id)) {
+        skipped.push(id);
+        continue;
+      }
+      if (migrationAlreadyRecorded(id, recorded)) {
         skipped.push(id);
         continue;
       }
@@ -95,6 +119,7 @@ export async function applyHsiMigrations(opts?: MigrateOptions): Promise<Migrate
         ON CONFLICT (id) DO NOTHING
       `;
       applied.push(id);
+      recorded.push(id);
     }
   } finally {
     await sql.close();

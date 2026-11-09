@@ -1,6 +1,7 @@
 /** Same-origin, narrowly scoped Neon Better Auth gateway. No role provisioning.
  * Provider cookies stay HttpOnly; tokens and provider internals never enter JSON sent to the browser.
  */
+import type { FetchLike } from "../fetchLike";
 export type AuthGatewayConfig={authBaseUrl:string;publicOrigin:string};
 import {boundedRequestText,RequestBodyTooLarge,RequestBodyTimeout} from "./boundedRequestBody";
 import {knownAuthErrorCode} from "../authErrors";
@@ -29,11 +30,11 @@ export function parseProviderSession(value:unknown){
  if(!s||typeof s.id!=="string"||!s.id||s.id.length>256||typeof s.expiresAt!=="string"||!Number.isFinite(Date.parse(s.expiresAt))||Date.parse(s.expiresAt)<=Date.now()||s.userId!==user.id)throw Error("Invalid provider session");
  return {session:{id:s.id,userId:user.id,expiresAt:s.expiresAt},user};
 }
-export async function requestProvider(config:AuthGatewayConfig,request:Request,path:string,body:unknown,transport:typeof fetch=fetch):Promise<Response>{
+export async function requestProvider(config:AuthGatewayConfig,request:Request,path:string,body:unknown,transport:FetchLike=fetch):Promise<Response>{
  const cookies=providerCookies(request);
  return transport(config.authBaseUrl+path,{method:body===undefined?"GET":"POST",redirect:"error",cache:"no-store",signal:AbortSignal.timeout(6000),headers:{Accept:"application/json",Origin:config.publicOrigin,"x-neon-auth-middleware":"true",...(cookies?{Cookie:cookies}:{}),...(body===undefined?{}:{"Content-Type":"application/json"})},...(body===undefined?{}:{body:JSON.stringify(body)})});
 }
-export async function verifiedProviderSession(config:AuthGatewayConfig,request:Request,transport:typeof fetch=fetch){
+export async function verifiedProviderSession(config:AuthGatewayConfig,request:Request,transport:FetchLike=fetch){
  if(!providerCookies(request))return null;
  const response=await requestProvider(config,request,"/get-session",undefined,transport);
  if(response.status===401)return null;
@@ -49,7 +50,7 @@ function copyProviderCookies(source:Response,target:Response){
   target.headers.append("Set-Cookie",[pair,...expiry,"Path=/","HttpOnly","Secure","SameSite=Lax"].join("; "));
  }
 }
-async function requestVerificationEmail(config:AuthGatewayConfig,request:Request,email:string,transport:typeof fetch):Promise<boolean>{
+async function requestVerificationEmail(config:AuthGatewayConfig,request:Request,email:string,transport:FetchLike):Promise<boolean>{
  try{
   const response=await requestProvider(config,request,"/send-verification-email",{email,callbackURL:config.publicOrigin+"/sign-in"},transport);
   if(!(response.headers.get("content-type")??"").includes("application/json"))return false;
@@ -57,7 +58,7 @@ async function requestVerificationEmail(config:AuthGatewayConfig,request:Request
   return response.ok&&(value?.status===true||value?.success===true);
  }catch{return false}
 }
-export async function handleAuthGateway(request:Request,config:AuthGatewayConfig,transport:typeof fetch=fetch):Promise<Response>{
+export async function handleAuthGateway(request:Request,config:AuthGatewayConfig,transport:FetchLike=fetch):Promise<Response>{
  const path=new URL(request.url).pathname.slice("/api/auth".length);
  const method=path==="/get-session"?"GET":["/sign-in/email","/sign-up/email","/sign-out","/send-verification-email","/email-otp/verify-email","/request-password-reset","/reset-password"].includes(path)?"POST":null;
  if(!method)return gatewayJson({code:"NOT_FOUND"},404);
@@ -135,7 +136,7 @@ export async function handleAuthGateway(request:Request,config:AuthGatewayConfig
 }
 
 /** Anonymous GET-only provider check. Never forwards browser cookies or returns session data. */
-export async function diagnoseAuthProvider(request:Request,config:AuthGatewayConfig,transport:typeof fetch=fetch):Promise<Response>{
+export async function diagnoseAuthProvider(request:Request,config:AuthGatewayConfig,transport:FetchLike=fetch):Promise<Response>{
  if(request.method!=="GET")return gatewayJson({error:"Method not allowed"},405);
  try{
   const response=await requestProvider(config,new Request(config.publicOrigin+"/api/auth/diagnostics"),"/get-session",undefined,transport);

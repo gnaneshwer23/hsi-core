@@ -25,7 +25,7 @@ Authorised scope:
 2. Public science explorers as **research preview / educational draft**.
 3. Auth provider reachability and account request paths.
 4. Research APIs that **fail closed** without verified session.
-5. Neon red-wave configuration coherence (`ep-restless-dew…`).
+5. Neon red-wave configuration coherence (`ep-hsi-production…`).
 
 Explicit exclusions from LIMITED GO:
 

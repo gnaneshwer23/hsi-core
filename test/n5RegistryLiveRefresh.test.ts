@@ -89,7 +89,7 @@ describe("N5 live public-registry snapshot refresh (audit #9)", () => {
       generatedAt,
     });
     const bad = structuredClone(receipt) as typeof receipt & {confirmedEligible: boolean};
-    bad.confirmedEligible = true;
+    (bad as {confirmedEligible: boolean}).confirmedEligible = true;
     expect(() => parseN5LiveRefreshReceipt(bad)).toThrow(/honesty/);
   });
 
@@ -111,7 +111,7 @@ describe("N5 live public-registry snapshot refresh (audit #9)", () => {
       clinicalTrialsGovJson: wrapCtgovStudiesAsImportJson(studies),
     });
     const bad = structuredClone(snapshot) as typeof snapshot & {liveRegistryQueried: boolean};
-    bad.liveRegistryQueried = false;
+    (bad as {liveRegistryQueried: boolean}).liveRegistryQueried = false;
     expect(() => parseN5LiveRegistrySnapshot(bad)).toThrow(/honesty/);
   });
 

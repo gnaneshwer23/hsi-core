@@ -49,7 +49,7 @@ In **Settings → Environment Variables**:
 | Name | Value/source |
 | --- | --- |
 | `HSI_DATABASE_URL` | PostgreSQL connection string copied using **Connect** on the confirmed HSI branch; verified TLS required |
-| `HSI_NEON_PROJECT_ID` | `red-wave-06625195` |
+| `HSI_NEON_PROJECT_ID` | `hsi-neon-project` |
 | `HSI_PUBLIC_ORIGIN` | Exact HTTPS origin of the test website, for example its stable preview alias; no path |
 | `HSI_AUTH_BASE_URL` | Public Better Auth base URL copied from the **same HSI branch** as `HSI_DATABASE_URL` |
 | `VITE_HSI_AUTH_BASE_URL` | The same public Auth URL; retain this existing public setting |
@@ -64,21 +64,21 @@ above. Mixing a staging Auth host with a production database (or the reverse) yi
 
 | Deployment | Neon branch | Database host prefix | Auth host prefix (`*.neonauth.*`) |
 | --- | --- | --- | --- |
-| Production (`https://www.humansuperintelligence.tech`) | `production` / `br-quiet-silence-zab1zvji` | `ep-restless-dew-zas989pv` | `ep-restless-dew-zas989pv` |
-| Staging / research writes | `hsi-gateway-migrations-staging-20261104` / `br-rough-snow-zagxbvjp` | `ep-sweet-hill-zasb0lni` | `ep-sweet-hill-zasb0lni` |
+| Production (`https://www.humansuperintelligence.tech`) | `production` / `hsi-production-branch` | `ep-hsi-production` | `ep-hsi-production` |
+| Staging / research writes | `hsi-gateway-migrations-staging-20261104` / `hsi-staging-branch` | `ep-hsi-staging` | `ep-hsi-staging` |
 
-Never point HSI Auth or `HSI_DATABASE_URL` at ISI `autumn-snow` / `ep-blue-salad`.
+Never point HSI Auth or `HSI_DATABASE_URL` at ISI `autumn-snow` / `ep-isi-product`.
 After changing Auth URLs, redeploy so the Vite-built `VITE_HSI_AUTH_BASE_URL` matches,
 then sign out on that origin (branch cookies do not transfer).
 
 **Auth branch cutover — accounts do not migrate.** Neon Auth users live in
 `neon_auth."user"` / `session` / `account` on the **same** branch compute as the
-Auth URL. Switching production from staging Auth (`ep-sweet-hill-zasb0lni`) to
-production Auth (`ep-restless-dew-zas989pv`) leaves production `neon_auth` empty
+Auth URL. Switching production from staging Auth (`ep-hsi-staging`) to
+production Auth (`ep-hsi-production`) leaves production `neon_auth` empty
 until someone registers there. Sign-in with a password that only existed on the
 old Auth returns the normal “Email address or password is incorrect” response —
 that is expected, not a mis-pointed env, when `/api/research/health` already
-shows matching `ep-restless-dew-zas989pv` Auth and database prefixes.
+shows matching `ep-hsi-production` Auth and database prefixes.
 
 **Recovery:** create a new account on `/sign-up` against the current Auth (then
 verify email). Password reset cannot move or recreate users from a previous Auth
@@ -248,11 +248,11 @@ staging review submission/decision code only, configure both:
 
 ```text
 HSI_RESEARCH_WRITES_ENABLED=true
-HSI_NEON_BRANCH_ID=br-rough-snow-zagxbvjp
+HSI_NEON_BRANCH_ID=hsi-staging-branch
 ```
 
 The server additionally requires the confirmed staging endpoint
-`ep-sweet-hill-zasb0lni` (pooled variant accepted). A production endpoint cannot
+`ep-hsi-staging` (pooled variant accepted). A production endpoint cannot
 enable writes with those flags. No migrations are run on startup. Independent
 review authority and all evidence/release gates still apply.
 

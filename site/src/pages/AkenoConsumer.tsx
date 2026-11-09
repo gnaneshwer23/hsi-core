@@ -119,7 +119,7 @@ function CandidateReviewCard({
   );
 }
 
-export function AkenoConsumer() {
+export function LegacyClinicalConsumer() {
   const [handoff, setHandoff] = useState<TranslationHandoff | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [decisions, setDecisions] = useState<Record<string, LocalDecision>>({});
@@ -155,13 +155,13 @@ export function AkenoConsumer() {
               treatment · no PHI · no EHR
             </p>
             <p className="dc-banner dc-banner-warn">
-              Akeno in-repo HITL consumer · deferred_until_hitl ·
+              HSI Clinical review consumer · deferred_until_hitl ·
               autoApprove=false · cdsSurfacable=0 · HSI Neon red-wave only
             </p>
           </div>
 
           <div className="section-head" style={{ marginTop: "1.5rem" }}>
-            <span className="eyebrow">Akeno · clinical consumer</span>
+            <span className="eyebrow">HSI Clinical · review consumer</span>
             <h1 className="display display-lg">Translation handoff HITL</h1>
             <p className="lede">
               Consumes <code>hsi-translation-handoff.json</code> clinic pointers
@@ -170,7 +170,7 @@ export function AkenoConsumer() {
               claims.{" "}
               <Link to="/discovery">← Discovery TRANSLATE</Link>
               {" · "}
-              <Link to="/aksh-agents">Aksh agent catalog</Link>
+              <Link to="/modules/aksh-health">Aksh agent catalog</Link>
             </p>
           </div>
 

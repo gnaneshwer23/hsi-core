@@ -5,7 +5,7 @@
 **Date:** 2026-11-09  
 **Audited `main` SHA:** `13bfa91ea8be156ec9affc2220a5d6ca5466b1af`  
 **Tip commit:** `13bfa91 Add Data-to-Discovery audit matrix and Technology connection map (#87)`  
-**HSI Neon:** red-wave only (`human super intelligence` / `red-wave-06625195` / `ep-restless-dew…`) — never autumn-snow / Akeno / DeliverX  
+**HSI Neon:** red-wave only (`human super intelligence` / `hsi-neon-project` / `ep-hsi-production…`) — never autumn-snow / Akeno / DeliverX  
 
 **Cross-links (do not contradict):**
 

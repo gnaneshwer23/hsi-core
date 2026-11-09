@@ -4,7 +4,7 @@ Decision: CONDITIONAL / NOT SIGNED OFF FOR LIVE AGENT WORKLOADS
 
 ## Evidence verified
 - GitHub full CI passed for prior Phase 2 implementation (run 41850755211).
-- HSI staging branch br-rough-snow-zagxbvjp has migrations 009 and 010 tables installed.
+- HSI staging branch hsi-staging-branch has migrations 009 and 010 tables installed.
 - Prior rollback-contained staging SQL tests proved CAS version rejection, duplicate artifact-key rejection, immutable recovery decision trigger, and rejection of stale artifact inserts.
 - Additional unit tests exercise timeout AbortSignal propagation and pre-dispatch cancellation.
 - Production branch remains unchanged.

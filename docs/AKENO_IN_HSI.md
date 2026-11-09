@@ -24,8 +24,8 @@ See [`akeno/PROVENANCE.md`](../akeno/PROVENANCE.md).
 
 | DB | Use from hsi-core |
 |----|-------------------|
-| HSI `red-wave-06625195` | Sole substrate / migrations / Gate C local placeholders |
-| Akeno `silent-violet-81283547` | **Never** — optional `AKENO_*` docs only; unused by consumer |
+| HSI `hsi-neon-project` | Sole substrate / migrations / Gate C local placeholders |
+| Akeno `akeno-neon-project` | **Never** — optional `AKENO_*` docs only; unused by consumer |
 | ISI `autumn-snow` / DeliverX | **Never** for HSI |
 
 Hard gates on every candidate: `clinicalActive=false` · `clinicalUse=not_for_clinical_use` · `hitlRequired=true` · `autoApprove=false` · `cdsSurfacable=false`.

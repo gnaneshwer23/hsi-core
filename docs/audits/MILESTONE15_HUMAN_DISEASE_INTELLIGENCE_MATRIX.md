@@ -5,7 +5,7 @@
 **Date:** 2026-11-09  
 **Audited `main` SHA:** `873ca494edf6280742309b0fc309142878f4fc43` (post-#122 tip)  
 **Tip commit:** `873ca49 Add M15 patient-contextualised research model contracts (#122)`  
-**HSI Neon:** red-wave only (`human super intelligence` / `red-wave-06625195` / `ep-restless-dew…`) — never autumn-snow / Akeno / DeliverX  
+**HSI Neon:** red-wave only (`human super intelligence` / `hsi-neon-project` / `ep-hsi-production…`) — never autumn-snow / Akeno / DeliverX  
 **Dependency:** PR1–PR6 merged on `main` ([#116](https://github.com/gnaneshwer23/hsi-core/pull/116), [#117](https://github.com/gnaneshwer23/hsi-core/pull/117), [#118](https://github.com/gnaneshwer23/hsi-core/pull/118), [#119](https://github.com/gnaneshwer23/hsi-core/pull/119), [#120](https://github.com/gnaneshwer23/hsi-core/pull/120), [#122](https://github.com/gnaneshwer23/hsi-core/pull/122)); substrate includes M14 PR1–PR4 ([#111](https://github.com/gnaneshwer23/hsi-core/pull/111), [#113](https://github.com/gnaneshwer23/hsi-core/pull/113), [#114](https://github.com/gnaneshwer23/hsi-core/pull/114), [#115](https://github.com/gnaneshwer23/hsi-core/pull/115)). PR7 composes HDI simulation scenarios + PCRM + CSOL (PR4) with fixture/harness-only runs. PR8 stacks precision research scenarios + missing-information intelligence on HDI/PCRM/MSI. Do not claim live EHR cohort queries, live prediction engines, complete biological replicas, treatment recommendations, invented parameters, validated individual outcome predictions, invented info-gain probabilities, clinical dosing, specific-patient predictions without validation, or a live M11 multiscale engine.
 
 **Cross-links (do not contradict):**

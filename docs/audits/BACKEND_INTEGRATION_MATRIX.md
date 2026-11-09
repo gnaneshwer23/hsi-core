@@ -4,7 +4,7 @@
 **Date:** 2026-11-08  
 **Audited `main` SHA:** `1cd62f53eddd789e97967eda17cd2b415992670a`  
 **Tip commit:** `1cd62f5 Harden Open Targets GraphQL association retrieval with non-causal score honesty. (#84)`  
-**HSI Neon:** red-wave only (`human super intelligence` / `red-wave-06625195`) — never autumn-snow / Akeno / DeliverX  
+**HSI Neon:** red-wave only (`human super intelligence` / `hsi-neon-project`) — never autumn-snow / Akeno / DeliverX  
 
 **Cross-link (do not contradict):** the engineering Phase-1 matrix with execution evidence lives at  
 [`docs/engineering/BACKEND_SCIENTIFIC_INTELLIGENCE_INTEGRATION_MATRIX.md`](../engineering/BACKEND_SCIENTIFIC_INTELLIGENCE_INTEGRATION_MATRIX.md)  

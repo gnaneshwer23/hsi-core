@@ -1,6 +1,6 @@
 # ARCH-009 Phase 2 — Staging Integration Validation
 Date: 2026-11-04
-Environment: HSI Neon project red-wave-06625195, staging branch br-rough-snow-zagxbvjp (NOT production).
+Environment: HSI Neon project hsi-neon-project, staging branch hsi-staging-branch (NOT production).
 
 ## Executed
 1. Confirmed branch identity and checked schema before migration.
@@ -19,7 +19,7 @@ Environment: HSI Neon project red-wave-06625195, staging branch br-rough-snow-za
 - No process-kill/restart test, live authenticated admin recovery test, two-process race, or actual agent persistence E2E has been run.
 - Promise.race timeout alone does not terminate non-cooperative side effects. External-tool cancellation, lease/fencing at output sink, and idempotency remain outstanding.
 - A stale-running recovery is an administrator intervention, not automatic replay. No PHI, graph publication or autonomous scientific approval.
-- Production branch br-quiet-silence-zab1zvji untouched.
+- Production branch hsi-production-branch untouched.
 
 ## Next hardening gates
 - Full CI success.

@@ -14,6 +14,7 @@
  * - Metadata-only; no restricted full-text import without verified reuse rights.
  * - Graph promotion / Gate C / CDS-PHI remain closed.
  */
+import type { FetchLike } from "../fetchLike";
 import {createHash} from "node:crypto";
 import {canonicalEvidenceJson} from "./researchEvidenceCorpus";
 import {
@@ -789,7 +790,7 @@ function classifyOverall(input: {
  */
 export async function runDynamicEvidenceRetrieval(input: {
   query: ResearcherQueryInput;
-  fetcher?: typeof fetch;
+  fetcher?: FetchLike;
   now?: () => Date;
   signal?: AbortSignal;
   cache?: DynamicRetrievalCache;

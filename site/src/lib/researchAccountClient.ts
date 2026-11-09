@@ -1,6 +1,7 @@
+import type { FetchLike } from "../../../src/fetchLike";
 import {parseResearchAccountAccess,type ResearchAccountAccess} from "../../../src/researchAccount";
 export type AccountCheck={kind:"ready";account:ResearchAccountAccess}|{kind:"session_required"|"email_verification_required"|"unavailable"|"invalid_response"|"timeout";message:string};
-export async function checkResearchAccount(principalId:string,request:typeof fetch=fetch,timeoutMs=8000):Promise<AccountCheck>{
+export async function checkResearchAccount(principalId:string,request:FetchLike=fetch,timeoutMs=8000):Promise<AccountCheck>{
  const controller=new AbortController();
  const timeout=new Promise<AccountCheck>(resolve=>controller.signal.addEventListener("abort",()=>resolve({kind:"timeout",message:"The research access check timed out. Please retry."}),{once:true}));
  const timer=setTimeout(()=>controller.abort(),timeoutMs);

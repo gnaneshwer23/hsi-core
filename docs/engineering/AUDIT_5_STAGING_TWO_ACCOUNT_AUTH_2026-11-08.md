@@ -2,7 +2,7 @@
 
 **Date:** 2026-11-08  
 **Source:** `docs/engineering/PRODUCTION_READINESS_AUDIT_2026-11-08.md` next-build #5  
-**HSI substrate Neon:** red-wave only (`br-rough-snow-zagxbvjp` / `ep-sweet-hill-zasb0lni` for writes)  
+**HSI substrate Neon:** red-wave only (`hsi-staging-branch` / `ep-hsi-staging` for writes)  
 **Honesty:** no invented neon_auth principals · no production research grants without verified user id · `autoApprove=false` · **not CDS** · no MoU · no autumn-snow for HSI · Auth signup polish for founder Gmail **deferred**
 
 ## Verdict
@@ -11,7 +11,7 @@
 |-------|--------|
 | Engineering harness (write-gate honesty, checklist, roster slots, offline checks) | **ENG CLEARED** |
 | Live staging Auth / two-account acceptance / research writes | **OPS residual** — Auth A www path **user-confirmed** (session eligible + researcher grant + synthetic fixture for founder Gmail); full two-account + staging write journey still open; harness still keeps `accountSlotsFilled=0` / `liveAuthVerified=false` in git |
-| Production research writes | **Must stay disabled** (`writesEnabled=false` on `ep-restless-dew`) — **not claimed** by Auth A confirm |
+| Production research writes | **Must stay disabled** (`writesEnabled=false` on `ep-hsi-production`) — **not claimed** by Auth A confirm |
 | Invented principals / Gate C auto-approve / MoU / CDS-PHI | **Forbidden** (unchanged) |
 
 This receipt is **not** PRODUCTION_QA launch clearance, production `writesEnabled`, Gate C, or scientific readiness. Auth A user confirm (2026-11-08) stamps session/grant/fixture only.
@@ -42,13 +42,13 @@ This receipt is **not** PRODUCTION_QA launch clearance, production `writesEnable
 
 ## Founder must flip (residual ops)
 
-1. Align Vercel Preview `HSI_*` / `VITE_HSI_*` to red-wave staging (`br-rough-snow` / `ep-sweet-hill`); never autumn-snow.
+1. Align Vercel Preview `HSI_*` / `VITE_HSI_*` to red-wave staging (`br-rough-snow` / `ep-hsi-staging`); never autumn-snow.
 2. Set `VITE_HSI_USE_AUTH_GATEWAY=true` and redeploy; confirm `/api/research/health` (`writesEnabled=false` first).
 3. Create **two** distinct email-verified neon_auth accounts on staging Auth (no SQL verification bypass). Founder Gmail signup polish remains deferred.
 4. Provision `hsi_research_access` only for verified immutable user ids (researcher ≠ independent reviewer).
-5. Flip `HSI_RESEARCH_WRITES_ENABLED=true` + `HSI_NEON_BRANCH_ID=br-rough-snow-zagxbvjp` on Preview only.
+5. Flip `HSI_RESEARCH_WRITES_ENABLED=true` + `HSI_NEON_BRANCH_ID=hsi-staging-branch` on Preview only.
 6. Record live two-account journey + denial rehearsals privately (no tokens/PHI).
-7. Keep production (`ep-restless-dew`) `writesEnabled=false`.
+7. Keep production (`ep-hsi-production`) `writesEnabled=false`.
 
 ## Code can automate (already)
 

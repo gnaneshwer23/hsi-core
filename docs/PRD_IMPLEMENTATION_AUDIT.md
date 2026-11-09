@@ -1,3 +1,5 @@
+> **Superseded.** Current capability status is generated in [./STATUS.md](./STATUS.md) from `operations/capability-register/capability-register.v1.json`. This document is historical and is not the status source of truth.
+
 # PRD → hsi-core implementation audit
 
 **Audit date:** 1 November 2026  
@@ -143,11 +145,11 @@ Reproduce: `bun test && bun run outputs && bun run site:dev` → `/discovery`, `
 
 | Concern | Status | Evidence |
 |---------|--------|----------|
-| HSI owns substrate Neon | **DONE** | `red-wave-06625195` / `ep-restless-dew…` — [`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md) |
+| HSI owns substrate Neon | **DONE** | `hsi-neon-project` / `ep-hsi-production…` — [`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md) |
 | HSI-owned schema stub | **DONE** | `db/migrations/001_hsi_substrate.sql`; `bun run db:migrate` |
 | Refuse ISI / Akeno / DeliverX hosts | **DONE** | `src/db/neonGuard.ts` |
 | No shared evidence DB with immunecity | **DONE** (policy + guards) | AGENTS.md + Neon map |
-| Gate C **approve** writes | **OUT OF SCOPE** for HSI | Human-only in ISI product Neon `autumn-snow` / `ep-blue-salad…` |
+| Gate C **approve** writes | **OUT OF SCOPE** for HSI | Human-only in ISI product Neon `autumn-snow` / `ep-isi-product…` |
 | Akeno Neon from hsi-core | **OUT OF SCOPE** | Documented `AKENO_*` only; unused by consumer |
 | Duplicate canonical graph in ISI | **OUT OF SCOPE** / forbidden | Target PRD §7: HSI = system of record; ISI consumes |
 

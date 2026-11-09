@@ -25,10 +25,10 @@ describe("Neon ledger R/W helpers write-gate (audit Phase #7 companion)", () => 
 
   test("readable accepts HSI production host; writable requires staging + writesEnabled", () => {
     const productionUrl =
-      "postgresql://test:never-used@ep-restless-dew-zas989pv.c-2.eu-west-2.aws.neon.tech/neondb?sslmode=require";
+      "postgresql://test:never-used@ep-hsi-production.c-2.eu-west-2.aws.neon.tech/neondb?sslmode=require";
     const stagingUrl =
-      "postgresql://test:never-used@ep-sweet-hill-zasb0lni.c-2.eu-west-2.aws.neon.tech/neondb?sslmode=require";
-    expect(assertLedgerNeonReadable({databaseUrl: productionUrl}).hostPrefix).toBe("ep-restless-dew-zas989pv");
+      "postgresql://test:never-used@ep-hsi-staging.c-2.eu-west-2.aws.neon.tech/neondb?sslmode=require";
+    expect(assertLedgerNeonReadable({databaseUrl: productionUrl}).hostPrefix).toBe("ep-hsi-production");
     expect(assertLedgerNeonWritable({databaseUrl: stagingUrl, writesEnabled: true}).hostPrefix).toBe(
       HSI_STAGING_HOST_PREFIX,
     );

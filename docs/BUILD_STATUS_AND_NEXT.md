@@ -1,3 +1,5 @@
+> **Superseded.** Current capability status is generated in [./STATUS.md](./STATUS.md) from `operations/capability-register/capability-register.v1.json`. This document is historical and is not the status source of truth.
+
 # HSI build status and next
 
 **Graph-experience increment — 5 November:** [ISI/Obsidian-style graph workspace](HSI_GRAPH_EXPLORER_EXPERIENCE.md) replaces the circular overview with force-directed exploration, search/filter rails, global/local views, pointer drag/zoom, connected-concept navigation and typed evidence inspection. Existing public data and source/review boundaries remain unchanged.
@@ -151,7 +153,7 @@ hsi-core has shipped the **Stage 1 evidence backbone** (graded edges, provenance
 
 | Item | Status | Evidence |
 |------|--------|----------|
-| Canonical HSI Neon documented | **DONE** | `red-wave-06625195` / `ep-restless-dew…` — [`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md) |
+| Canonical HSI Neon documented | **DONE** | `hsi-neon-project` / `ep-hsi-production…` — [`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md) |
 | Neon pack density (seeds → `hsi_*`) | **DONE** | `db:gate-c-local` upserts 79 claims/edges + 8 markers; Gate C reviews stay mapped-REL (~13) |
 | `/discovery` product SPA (not JSON shadow) | **DONE** | UI at `/discovery`; machine `catalogue.json` + `/discovery.json`; `site/vercel.json` SPA rewrite |
 | Rubric licensing vs clearance | **PARTIAL** | Fixture: `x-4` → `blocked_on_partner` until real partner clearance |

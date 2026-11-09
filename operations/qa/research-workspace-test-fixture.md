@@ -26,7 +26,7 @@ bun --no-env-file test test/researchWorkspaceTestFixture.test.ts
 
 - Production `writesEnabled` stays **false** on www.
 - Do **not** set `HSI_SSC_RESEARCH_RELEASE_ID` to this test release on the live www deployment.
-- Create-new via UI still requires staging Preview with founder-gated writes (`HSI_RESEARCH_WRITES_ENABLED=true`, staging branch id, and write-gate host `ep-sweet-hill-zasb0lni`). As of 2026-11-08, Neon `br-rough-snow-zagxbvjp` connection strings still resolve to `ep-restless-dew…` — confirm/provision the sweet-hill endpoint before enabling writes.
+- Create-new via UI still requires staging Preview with founder-gated writes (`HSI_RESEARCH_WRITES_ENABLED=true`, staging branch id, and write-gate host `ep-hsi-staging`). As of 2026-11-08, Neon `hsi-staging-branch` connection strings still resolve to `ep-hsi-production…` — confirm/provision the sweet-hill endpoint before enabling writes.
 - Rollback deletes the fixed investigation then the fixed release IDs only.
 
 ## Where to click (www)

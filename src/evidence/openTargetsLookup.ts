@@ -9,6 +9,7 @@
  * - `enableIndirect` distinguishes direct vs ontology-propagated (indirect) association scope.
  * - Source identity ≠ claim support; fixtures ≠ live evidence; provider fail ≠ empty.
  */
+import type { FetchLike } from "../fetchLike";
 import {createHash} from "node:crypto";
 
 export const OPEN_TARGETS_GRAPHQL_ENDPOINT =
@@ -501,7 +502,7 @@ export async function lookupOpenTargetsDiseaseAssociations(input: {
   pageSize?: number;
   /** When true, OT propagates evidence via disease ontology descendants (indirect). */
   enableIndirect?: boolean;
-  fetcher?: typeof fetch;
+  fetcher?: FetchLike;
   now?: () => Date;
   signal?: AbortSignal;
 }): Promise<OpenTargetsLookupResult> {
