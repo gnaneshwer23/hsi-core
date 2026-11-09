@@ -213,6 +213,8 @@
     "experimental:protocol-intelligence:check": "bun --no-env-file scripts/protocol-intelligence-scientific-approval-contracts.ts --check",
     "experimental:governed-compute:prepare": "bun --no-env-file scripts/governed-computational-execution-contracts.ts",
     "experimental:governed-compute:check": "bun --no-env-file scripts/governed-computational-execution-contracts.ts --check",
+    "therapeutic:discovery-data:prepare": "bun --no-env-file scripts/therapeutic-discovery-data-contracts.ts",
+    "therapeutic:discovery-data:check": "bun --no-env-file scripts/therapeutic-discovery-data-contracts.ts --check",
     "gap-verification:expand": "bun --no-env-file scripts/gap-verification-check.ts",
     "gap-verification:check": "bun --no-env-file scripts/gap-verification-check.ts --check",
     "fixture:synthetic-e2e:check": "bun --no-env-file scripts/check-synthetic-e2e-fixture.ts",
