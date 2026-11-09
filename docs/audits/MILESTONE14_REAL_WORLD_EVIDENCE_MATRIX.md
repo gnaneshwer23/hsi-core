@@ -1,7 +1,7 @@
 # Milestone 14 — Real-World Evidence, Clinical Outcomes & Post-Study Learning Intelligence
 
 **Brief:** HSI Milestone 14 — governed RWE / clinical outcomes research contracts connecting authorised longitudinal health data concepts, observational analyses, safety-signal research envelopes, and post-study learning to M1–M13 — **without** an unrestricted central patient database, PHI/CDS, treatment directives, fabricating patient data, Gate C auto-approve, or MoU invention.  
-**Status:** Phase 0 gap audit + PR1 (Clinical Evidence and RWE Contracts, [#111](https://github.com/gnaneshwer23/hsi-core/pull/111)) + PR2 (Secure Clinical Data Interoperability, [#113](https://github.com/gnaneshwer23/hsi-core/pull/113)) + PR3 (Longitudinal Clinical Evidence Model) — **not** RWE complete, **not** observational causal claims authorised, **not** live clinical dataset analysis, **not** M14 complete.  
+**Status:** Phase 0 gap audit + PR1 (Clinical Evidence and RWE Contracts, [#111](https://github.com/gnaneshwer23/hsi-core/pull/111)) + PR2 (Secure Clinical Data Interoperability, [#113](https://github.com/gnaneshwer23/hsi-core/pull/113)) + PR3 (Longitudinal Clinical Evidence Model, [#114](https://github.com/gnaneshwer23/hsi-core/pull/114)) — **not** RWE complete, **not** observational causal claims authorised, **not** live clinical dataset analysis, **not** M14 complete.  
 **Date:** 2026-11-09  
 **Audited `main` SHA:** `33843eba6c2fa695bde1d292b7a2a64b2ba715ca` (post-#111 + #113 tip)  
 **Tip commit:** `33843eb Add M14 secure clinical data interoperability contracts (#113)`  
@@ -139,7 +139,7 @@ Honesty freeze: research decision support only · **no unrestricted central pati
 | **0** Audit + data protection + validity | This document + M1–M13 rollup | — | `Verified operational` (audit) | Keep updated | this file |
 | **1** Clinical evidence / RWE contracts | Clinical scaffold · M9/M12/M13 ids · CDS boundary | **PR1 merged** ([#111](https://github.com/gnaneshwer23/hsi-core/pull/111)) — 7 focused tests + evaluation pack · `Fixture-only` / scientific path `Blocked` | Live authorised dataset analysis | `src/realWorldEvidenceContracts.ts` · `test/realWorldEvidenceContracts.test.ts` · `scripts/real-world-evidence-contracts.ts` · `evaluation/real-world-evidence/` |
 | **2** Secure clinical data interoperability | FHIR strategy · Phase 3.7 bridge · PR1 RWE ids | **PR2 merged** ([#113](https://github.com/gnaneshwer23/hsi-core/pull/113)) — 7 focused tests + evaluation pack · `Fixture-only` / connectors `Missing` | Live FHIR/OMOP connectors · PHI ingestion | `src/secureClinicalDataInteropContracts.ts` · `test/secureClinicalDataInteropContracts.test.ts` · `scripts/secure-clinical-data-interop-contracts.ts` · `evaluation/secure-clinical-data-interop/` |
-| **3** Longitudinal clinical intelligence | PR1 observation time fields · PR2 temporal alignment ids | `Missing` → **PR3 in-flight** — analysis specs · observation series · temporal integrity · results + thin store + evaluation pack | Live longitudinal engine · fabricated trajectories | `src/longitudinalClinicalEvidenceContracts.ts` · `test/longitudinalClinicalEvidenceContracts.test.ts` · `scripts/longitudinal-clinical-evidence-contracts.ts` · `evaluation/longitudinal-clinical-evidence/` |
+| **3** Longitudinal clinical intelligence | PR1 observation time fields · PR2 temporal alignment ids | `Missing` → **PR3 in-flight** ([#114](https://github.com/gnaneshwer23/hsi-core/pull/114)) — analysis specs · observation series · temporal integrity · results + thin store + evaluation pack · `Fixture-only` | Live longitudinal engine · fabricated trajectories | `src/longitudinalClinicalEvidenceContracts.ts` · `test/longitudinalClinicalEvidenceContracts.test.ts` · `scripts/longitudinal-clinical-evidence-contracts.ts` · `evaluation/longitudinal-clinical-evidence/` |
 | **4** Reproducible cohort builder | N5 criteria hooks | `Partial` hooks | Attrition + disclosure controls | later PR4 |
 | **5** Observational / causal research | — | `Missing` | Target-trial emulation with assumption checks | later PR5 |
 | **6** Outcomes / safety intelligence | — | `Missing` | Signals ≠ ADR proof | later PR6 |
@@ -264,7 +264,7 @@ Honesty freeze: research decision support only · **no unrestricted central pati
 
 | PR | Title | Branch | State |
 |----|-------|--------|-------|
-| (open) | M14 PR3 Longitudinal Clinical Evidence Model | `eng/m14-longitudinal-clinical-evidence` | **PR3 in-flight** — open for review; **do not auto-merge** |
+| [#114](https://github.com/gnaneshwer23/hsi-core/pull/114) | M14 PR3 Longitudinal Clinical Evidence Model | `eng/m14-longitudinal-clinical-evidence` | **PR3 in-flight** — open for review; **do not auto-merge** |
 | [#113](https://github.com/gnaneshwer23/hsi-core/pull/113) | M14 PR2 Secure Clinical Data Interoperability | merged → `33843eb` | Substrate |
 | [#111](https://github.com/gnaneshwer23/hsi-core/pull/111) | M14 PR1 Clinical Evidence and RWE Contracts | merged → `19e0ff1` | Substrate |
 | [#109](https://github.com/gnaneshwer23/hsi-core/pull/109) | M13 PR1 + M1–M13 rollup | merged → `344f450` | Substrate |
