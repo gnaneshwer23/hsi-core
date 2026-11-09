@@ -1,0 +1,277 @@
+{
+  "schema": "hsi-experiment-design-prioritisation-1",
+  "method": "hsi.experiment_design_prioritisation.v1",
+  "version": "0.1.0",
+  "asOf": "2026-11-09T15:00:00.000Z",
+  "designPackageCount": 1,
+  "prioritisationCount": 1,
+  "honesty": {
+    "agentsProposeResearchersApprove": true,
+    "aiCannotSelfApproveExperiments": true,
+    "noInventedInformationGainProbability": true,
+    "noInventedPowerSampleSizeClaims": true,
+    "noOptimiseSolelyForPredictedPositives": true,
+    "fabricatedResults": false,
+    "pipelinesExecuted": false,
+    "labAdaptersWired": false,
+    "workbenchUiShipped": false,
+    "gateCAutoApprove": false,
+    "mouInvented": false,
+    "phiCdsWired": false,
+    "scientificApproval": false,
+    "graphPromotable": false,
+    "neonProjectPolicy": "red-wave-only",
+    "migration": "deferred",
+    "dependsOnPr1LifecycleContracts": true
+  },
+  "designPackages": [
+    {
+      "schema": "hsi-experiment-design-prioritisation-1",
+      "method": "hsi.experiment_design_prioritisation.v1",
+      "version": "0.1.0",
+      "id": "hsi-exp-des-fixture-demo",
+      "hypothesisId": "hyp-fixture-001",
+      "hypothesisStatement": "Fixture hypothesis: pathway X is a primary driver in the scoped research context.",
+      "hypothesisFalsifier": "If authorised pathway-X readouts remain null with intact controls, the primary-driver claim is not supported.",
+      "investigationId": "inv-fixture-001",
+      "lifecycle": "prioritised",
+      "falsifiablePredictions": [
+        {
+          "id": "pred-fixture-1",
+          "statement": "Authorised pathway-X perturbation changes declared markers.",
+          "falsifier": "No marker change under authorised perturbation with intact controls."
+        }
+      ],
+      "competingExplanations": [
+        {
+          "id": "ce-fixture-alt",
+          "statement": "Pathway Y dominates; pathway X is secondary.",
+          "evidenceRefIds": [
+            "gap-fixture-001"
+          ]
+        },
+        {
+          "id": "ce-fixture-epiphenomenon",
+          "statement": "Pathway X elevation is correlative only.",
+          "evidenceRefIds": []
+        }
+      ],
+      "discriminatingQuestions": [
+        {
+          "id": "dq-fixture-1",
+          "question": "Does pathway-X perturbation act independently of pathway Y?",
+          "targetsExplanationIds": [
+            "ce-fixture-alt",
+            "ce-fixture-epiphenomenon"
+          ]
+        }
+      ],
+      "candidateApproaches": [
+        {
+          "id": "hsi-exp-apr-fixture-reanalysis",
+          "title": "Fixture public reanalysis",
+          "category": "public_dataset_reanalysis",
+          "experimentalModel": "Authorised public cohort reanalysis (fixture).",
+          "controls": [
+            "matched_negative_signature"
+          ],
+          "negativeControls": [
+            "scrambled_null_set"
+          ],
+          "measurements": [
+            "enrichment_score"
+          ],
+          "confounders": [
+            "batch_effects"
+          ],
+          "methodologicalLimitations": [
+            "Public bulk data lacks tissue resolution."
+          ],
+          "feasibility": "high",
+          "feasibilityNotes": "Offline fixture / authorised public data only.",
+          "discriminationStrength": "moderate",
+          "distinguishesExplanationIds": [
+            "ce-fixture-alt"
+          ],
+          "resultsSupportHypothesis": "Consistent enrichment supports pathway-X framing.",
+          "resultsChallengeHypothesis": "Absent enrichment challenges pathway-X framing.",
+          "nullResultInterpretation": "Null enrichment may reflect cohort mismatch; does not auto-confirm pathway Y.",
+          "remainingUncertainties": [
+            "Tissue compartment unresolved."
+          ],
+          "infoRequiredBeforeExecution": [
+            "Confirm dataset licence and inclusion criteria."
+          ],
+          "reproducibilityNotes": [
+            "Pin accessions and script hashes."
+          ],
+          "linkedProposalId": "hsi-exp-prop-fixture-demo",
+          "note": "Fixture approach A"
+        },
+        {
+          "id": "hsi-exp-apr-fixture-invitro",
+          "title": "Fixture in vitro discrimination",
+          "category": "in_vitro_mechanistic",
+          "experimentalModel": "Culture perturbation vs pathway-Y controls (fixture design only).",
+          "controls": [
+            "vehicle"
+          ],
+          "negativeControls": [
+            "non_targeting_control"
+          ],
+          "measurements": [
+            "marker_readout"
+          ],
+          "confounders": [
+            "serum_batch"
+          ],
+          "methodologicalLimitations": [
+            "In vitro systems may not recapitulate tissue context.",
+            "Not a wet-lab authorisation."
+          ],
+          "feasibility": "moderate",
+          "feasibilityNotes": "Requires PR1 researcher-approved protocol before any run claim.",
+          "discriminationStrength": "strong",
+          "distinguishesExplanationIds": [
+            "ce-fixture-alt",
+            "ce-fixture-epiphenomenon"
+          ],
+          "resultsSupportHypothesis": "Pathway-X-specific marker dependence supports the hypothesis.",
+          "resultsChallengeHypothesis": "Pathway-Y-only dependence challenges the pathway-X primary-driver claim.",
+          "nullResultInterpretation": "Null across arms challenges both simple stories; revisit confounders.",
+          "remainingUncertainties": [
+            "Translation to human tissue unresolved."
+          ],
+          "infoRequiredBeforeExecution": [
+            "Researcher-approved PR1 protocol version.",
+            "Do not invent partner MoU."
+          ],
+          "reproducibilityNotes": [
+            "Queue independent replication if culture signal appears."
+          ],
+          "linkedProposalId": null,
+          "note": "Fixture approach B"
+        }
+      ],
+      "authoredBy": {
+        "principalId": "fixture-agent-designer",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "agentsProposeResearchersApprove": true,
+        "aiCannotSelfApproveExperiments": true,
+        "noInventedInformationGainProbability": true,
+        "noInventedPowerSampleSizeClaims": true,
+        "noOptimiseSolelyForPredictedPositives": true,
+        "fabricatedResults": false,
+        "pipelinesExecuted": false,
+        "labAdaptersWired": false,
+        "workbenchUiShipped": false,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred",
+        "dependsOnPr1LifecycleContracts": true
+      },
+      "createdAt": "2026-11-09T15:00:00.000Z",
+      "updatedAt": "2026-11-09T15:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "prioritisations": [
+    {
+      "schema": "hsi-experiment-design-prioritisation-1",
+      "method": "hsi.experiment_design_prioritisation.v1",
+      "version": "0.1.0",
+      "id": "hsi-exp-pri-fixture-demo",
+      "designPackageId": "hsi-exp-des-fixture-demo",
+      "hypothesisId": "hyp-fixture-001",
+      "rankingMethod": "discrimination_then_feasibility_ordinal",
+      "comparisons": [
+        {
+          "approachId": "hsi-exp-apr-fixture-invitro",
+          "rank": 1,
+          "testsWhat": "Fixture in vitro discrimination (in_vitro_mechanistic) via Culture perturbation vs pathway-Y controls (fixture design only).",
+          "distinguishesExplanationIds": [
+            "ce-fixture-alt",
+            "ce-fixture-epiphenomenon"
+          ],
+          "resultsSupportHypothesis": "Pathway-X-specific marker dependence supports the hypothesis.",
+          "resultsChallengeHypothesis": "Pathway-Y-only dependence challenges the pathway-X primary-driver claim.",
+          "nullResultInterpretation": "Null across arms challenges both simple stories; revisit confounders.",
+          "remainingUncertainties": [
+            "Translation to human tissue unresolved."
+          ],
+          "infoRequiredBeforeExecution": [
+            "Researcher-approved PR1 protocol version.",
+            "Do not invent partner MoU."
+          ],
+          "discriminationStrength": "strong",
+          "feasibility": "moderate",
+          "prioritisationRationale": "Ordinal rank 1 by discrimination_then_feasibility_ordinal. Discrimination=strong; feasibility=moderate. Distinguishes 2 competing explanation(s). No information-gain probability or power/sample-size claim invented. Does not approve execution — PR1 researcher approval required."
+        },
+        {
+          "approachId": "hsi-exp-apr-fixture-reanalysis",
+          "rank": 2,
+          "testsWhat": "Fixture public reanalysis (public_dataset_reanalysis) via Authorised public cohort reanalysis (fixture).",
+          "distinguishesExplanationIds": [
+            "ce-fixture-alt"
+          ],
+          "resultsSupportHypothesis": "Consistent enrichment supports pathway-X framing.",
+          "resultsChallengeHypothesis": "Absent enrichment challenges pathway-X framing.",
+          "nullResultInterpretation": "Null enrichment may reflect cohort mismatch; does not auto-confirm pathway Y.",
+          "remainingUncertainties": [
+            "Tissue compartment unresolved."
+          ],
+          "infoRequiredBeforeExecution": [
+            "Confirm dataset licence and inclusion criteria."
+          ],
+          "discriminationStrength": "moderate",
+          "feasibility": "high",
+          "prioritisationRationale": "Ordinal rank 2 by discrimination_then_feasibility_ordinal. Discrimination=moderate; feasibility=high. Distinguishes 1 competing explanation(s). No information-gain probability or power/sample-size claim invented. Does not approve execution — PR1 researcher approval required."
+        }
+      ],
+      "rankedApproachIds": [
+        "hsi-exp-apr-fixture-invitro",
+        "hsi-exp-apr-fixture-reanalysis"
+      ],
+      "inventedInformationGainProbability": false,
+      "inventedPowerSampleSizeClaims": false,
+      "optimisesSolelyForPredictedPositives": false,
+      "autoApprovedForExecution": false,
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "agentsProposeResearchersApprove": true,
+        "aiCannotSelfApproveExperiments": true,
+        "noInventedInformationGainProbability": true,
+        "noInventedPowerSampleSizeClaims": true,
+        "noOptimiseSolelyForPredictedPositives": true,
+        "fabricatedResults": false,
+        "pipelinesExecuted": false,
+        "labAdaptersWired": false,
+        "workbenchUiShipped": false,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred",
+        "dependsOnPr1LifecycleContracts": true
+      },
+      "createdAt": "2026-11-09T15:00:00.000Z",
+      "createdByPrincipalId": "fixture-researcher",
+      "note": ""
+    }
+  ],
+  "dependency": {
+    "requiresPr1LifecycleContracts": true,
+    "pr1Status": "must_merge_or_stack_first"
+  }
+}

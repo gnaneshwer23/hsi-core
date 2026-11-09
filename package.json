@@ -206,6 +206,8 @@
     "collab:investigation:check": "bun --no-env-file scripts/collaborative-investigation-contracts.ts --check",
     "experimental:lifecycle:prepare": "bun --no-env-file scripts/experimental-lifecycle-contracts.ts",
     "experimental:lifecycle:check": "bun --no-env-file scripts/experimental-lifecycle-contracts.ts --check",
+    "experimental:design:prepare": "bun --no-env-file scripts/experiment-design-prioritisation-contracts.ts",
+    "experimental:design:check": "bun --no-env-file scripts/experiment-design-prioritisation-contracts.ts --check",
     "gap-verification:expand": "bun --no-env-file scripts/gap-verification-check.ts",
     "gap-verification:check": "bun --no-env-file scripts/gap-verification-check.ts --check",
     "fixture:synthetic-e2e:check": "bun --no-env-file scripts/check-synthetic-e2e-fixture.ts",
