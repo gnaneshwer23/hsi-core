@@ -46,8 +46,13 @@ test("evidence overview explains source context without presenting unreviewed re
 test("public access paths lead to the real account process without a pretend submission",async({page})=>{
  const posts:string[]=[];page.on("request",r=>{if(r.method()==="POST")posts.push(r.url())});await page.goto("/pricing");await page.getByRole("main").getByRole("link",{name:"Research access",exact:true}).click();await expect(page).toHaveURL(/contact$/);
  await expect(page.getByRole("main")).toContainText("permissions are provisioned independently");
- await expect(page.getByRole("main")).toContainText("does not store an access request");
- await page.getByRole("link",{name:"Create an account",exact:true}).click();await expect(page).toHaveURL(/sign-up$/);expect(posts).toEqual([]);
+ await expect(page.getByRole("main")).toContainText("does not write an access request");
+ await expect(page.getByRole("heading",{name:/Describe the research you want to pursue/i})).toBeVisible();
+ await page.getByLabel(/Research question or investigation focus/i).fill("How might cytokine signalling vary across tissues in research models?");
+ await page.getByRole("button",{name:/Save browser draft/i}).click();
+ await expect(page.getByRole("status")).toContainText("Saved in this browser only");
+ expect(posts).toEqual([]);
+ await page.getByRole("link",{name:"Create an account",exact:true}).first().click();await expect(page).toHaveURL(/sign-up/);expect(posts).toEqual([]);
 });
 test("community drafts allow source-linked replies, flags and export without fake publication",async({page})=>{
  const posts:string[]=[];page.on("request",r=>{if(r.method()==="POST")posts.push(r.url())});await page.goto("/community");await page.getByLabel("Research question or claim challenge",{exact:true}).fill("Which tissue and assay details should travel with the source?");await page.getByLabel("Optional source URL",{exact:true}).fill("https://pubmed.ncbi.nlm.nih.gov/18375541/");

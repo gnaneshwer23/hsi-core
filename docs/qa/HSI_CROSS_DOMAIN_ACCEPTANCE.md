@@ -38,7 +38,8 @@ Production baseline (executed 2026-11-09): `writesEnabled=false`; anon investiga
 | Provenance | **LIMITED** — demo rows labelled curated; not release-bound public |
 | Persistence | **BLOCKED** — production writes off; create path still `planSscInterrogation` focus |
 | Output | **BLOCKED** on prod for live brief; illustrative `panel=brief` only |
-| **Overall** | **NOT_EXECUTED** (full checklist) / public path **LIMITED** illustrative |
+| Public entry (2026-11-09) | Navigable via `HomeJourneyEntries` → demo → `/science/graph` → evidence → `/contact` |
+| **Overall** | **NOT_EXECUTED** (full checklist) / public path **LIMITED** illustrative + **navigable** |
 
 **Run log:** No staging researcher session exercised in this phase. Public demo id `demo_ssc_fibrosis_001` / scenario `ssc_fibrosis` verified present with `live_backend:false` via unit tests.
 
@@ -58,7 +59,8 @@ Production baseline (executed 2026-11-09): `writesEnabled=false`; anon investiga
 | Provenance | illustrative |
 | Persistence | **BLOCKED** — writes off + disease enum / planner |
 | Output | **BLOCKED** live; illustrative brief panel **available** via `?scenario=gut_neuro&panel=brief` |
-| **Overall** | **NOT_EXECUTED** / **BLOCKED** for connected research spine |
+| Public entry (2026-11-09) | Navigable via journey entry `gut_neuro` → KG → evidence → contact |
+| **Overall** | **NOT_EXECUTED** / **BLOCKED** for connected research spine; public entry **navigable** |
 
 ---
 
@@ -76,7 +78,8 @@ Production baseline (executed 2026-11-09): `writesEnabled=false`; anon investiga
 | Provenance | illustrative |
 | Persistence | **BLOCKED** |
 | Output | **BLOCKED** live |
-| **Overall** | **NOT_EXECUTED** / **BLOCKED** for connected spine |
+| Public entry (2026-11-09) | Navigable via journey entry `metabolic_inflammation` → `/science/body` → evidence → contact |
+| **Overall** | **NOT_EXECUTED** / **BLOCKED** for connected spine; public entry **navigable** |
 
 ---
 

@@ -309,6 +309,20 @@
 }
 .ed-does-not .ed-text-link{align-self:end}
 
+.ed-journey-entries{display:grid;gap:22px}
+.ed-journey-entry-list{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+.ed-journey-entry{
+  display:grid;gap:12px;padding:22px 20px;border:1px solid #d7e3da;border-radius:10px;background:#fff;
+}
+.ed-journey-entry h3{margin:0;font-size:1.15rem;letter-spacing:-.02em;color:#173530}
+.ed-journey-entry .ed-actions{margin-top:4px}
+@media(max-width:800px){
+  .ed-journey-entries{padding-inline:30px}
+}
+@media(max-width:600px){
+  .ed-journey-entries{padding-inline:22px}
+}
+
 .experience-shell .site-footer .footer-contact{gap:10px}
 .experience-shell .nav .nav-cta-label{white-space:nowrap}
 

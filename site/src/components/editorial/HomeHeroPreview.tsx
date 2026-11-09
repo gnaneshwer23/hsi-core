@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {Link} from "react-router-dom";
 import {ArrowIcon} from "../ArrowIcon";
-import {homeDemoHref} from "../../lib/researchContext";
+import {DOMAIN_SCENARIO_HINT,homeDemoHref,withResearchContext} from "../../lib/researchContext";
 import {HOME_DOMAINS,STATUS_LABEL} from "./homeDomains";
 import {getHomeScenario,type HomeResearchScenario} from "./homeResearchScenarios";
 
@@ -49,8 +49,8 @@ export function HomeHeroPreview({scenario}:HomeHeroPreviewProps={}){
             {domain.path.slice(0,4).map((step,i)=><li key={step}><span>{String(i+1).padStart(2,"0")}</span><strong>{step}</strong></li>)}
           </ol>
           {domain.to&&domain.cta
-            ?<Link className="ed-text-link" to={domain.to}>{domain.cta} <span aria-hidden="true"><ArrowIcon direction="right"/></span></Link>
-            :<p className="ed-scope-line">{domain.action}</p>}
+            ?<Link className="ed-text-link" to={withResearchContext(domain.to,{domain:domain.id,scenario:DOMAIN_SCENARIO_HINT[domain.id]})}>{domain.cta} <span aria-hidden="true"><ArrowIcon direction="right"/></span></Link>
+            :<p className="ed-scope-line" role="status">{domain.action}</p>}
         </article>
       </section>
 

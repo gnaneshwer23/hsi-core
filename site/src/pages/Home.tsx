@@ -4,10 +4,11 @@ import {Link,useSearchParams} from "react-router-dom";
 import {EditorialCTA} from "../components/editorial/Editorial";
 import {HomeEcosystem} from "../components/editorial/HomeEcosystem";
 import {HomeHeroPreview} from "../components/editorial/HomeHeroPreview";
+import {HomeJourneyEntries} from "../components/editorial/HomeJourneyEntries";
 import {HomeProductDemo} from "../components/editorial/HomeProductDemo";
 import {DEFAULT_HOME_SCENARIO_ID,getHomeScenario,HOME_RESEARCH_SCENARIOS} from "../components/editorial/homeResearchScenarios";
 import {PUBLIC_PRIMARY_CTA,PUBLIC_SECONDARY_CTA} from "../lib/ctaPolicy";
-import {parseScenarioId,RESEARCH_CONTEXT_KEYS} from "../lib/researchContext";
+import {contactAccessHref,parseScenarioId,RESEARCH_CONTEXT_KEYS} from "../lib/researchContext";
 
 const AVAILABLE_TODAY=[
   "Explore biological relationships in curated graphs",
@@ -55,7 +56,7 @@ export function Home(){
         <h1>Investigate biological mechanisms<br/><em>across human systems.</em></h1>
         <p className="ed-lead">Immunology, microbiome, neuroimmune biology, metabolism, omics, evidence and trials — one research workbench. Disease context is optional. Systemic sclerosis is a validation case, not the product boundary.</p>
         <div className="ed-actions">
-          <Link className="ed-button" to={PUBLIC_PRIMARY_CTA.to}>{PUBLIC_PRIMARY_CTA.label} <span aria-hidden="true"><ArrowIcon/></span></Link>
+          <Link className="ed-button" to={contactAccessHref({scenarioId})}>{PUBLIC_PRIMARY_CTA.label} <span aria-hidden="true"><ArrowIcon/></span></Link>
           <Link className="ed-text-link" to={PUBLIC_SECONDARY_CTA.to}>{PUBLIC_SECONDARY_CTA.label} <span aria-hidden="true"><ArrowIcon direction="right"/></span></Link>
         </div>
         <p className="ed-hero-note">Built for researchers. Grounded in evidence. Reviewed by people. Coverage depth is unequal across domains.</p>
@@ -64,6 +65,7 @@ export function Home(){
     </header>
 
     <HomeProductDemo scenarioId={scenarioId} onScenarioChange={setScenarioId}/>
+    <HomeJourneyEntries/>
     <HomeEcosystem/>
 
     <section className="ed-intro ed-today ed-section-compact" aria-labelledby="today-heading">

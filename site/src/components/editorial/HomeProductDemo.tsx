@@ -1,8 +1,8 @@
 import {useEffect,useState} from "react";
 import {Link,useLocation,useSearchParams} from "react-router-dom";
 import {ArrowIcon} from "../ArrowIcon";
-import {PUBLIC_GRAPH_CTA,PUBLIC_PRIMARY_CTA,PUBLIC_SECONDARY_CTA} from "../../lib/ctaPolicy";
-import {RESEARCH_CONTEXT_KEYS,resolveDemoPanel,type DemoPanel} from "../../lib/researchContext";
+import {PUBLIC_GRAPH_CTA,PUBLIC_SECONDARY_CTA} from "../../lib/ctaPolicy";
+import {contactAccessHref,RESEARCH_CONTEXT_KEYS,resolveDemoPanel,type DemoPanel} from "../../lib/researchContext";
 import {
   DEFAULT_HOME_SCENARIO_ID,
   getHomeScenario,
@@ -132,7 +132,7 @@ export function HomeProductDemo({scenarioId,onScenarioChange}:HomeProductDemoPro
     </div>
     <div className="ed-demo-shell ed-demo-desk">
       <div className="ed-scenario-toolbar" role="tablist" aria-label="Research scenario">
-        {HOME_RESEARCH_SCENARIOS.map(s=>(
+        {HOME_RESEARCH_SCENARIOS.map((s,index)=>(
           <button
             key={s.id}
             type="button"
@@ -142,6 +142,19 @@ export function HomeProductDemo({scenarioId,onScenarioChange}:HomeProductDemoPro
             aria-controls="demo-question"
             tabIndex={activeId===s.id?0:-1}
             onClick={()=>selectScenario(s.id)}
+            onKeyDown={e=>{
+              const order=HOME_RESEARCH_SCENARIOS.map(item=>item.id);
+              let nextIndex:number|undefined;
+              if(e.key==="ArrowRight")nextIndex=(index+1)%order.length;
+              if(e.key==="ArrowLeft")nextIndex=(index+order.length-1)%order.length;
+              if(e.key==="Home")nextIndex=0;
+              if(e.key==="End")nextIndex=order.length-1;
+              if(nextIndex===undefined)return;
+              e.preventDefault();
+              const nextId=order[nextIndex]!;
+              selectScenario(nextId);
+              document.getElementById(`scenario-tab-${nextId}`)?.focus();
+            }}
           >{s.short_label}</button>
         ))}
       </div>
@@ -217,7 +230,7 @@ export function HomeProductDemo({scenarioId,onScenarioChange}:HomeProductDemoPro
       <div className="ed-actions">
         <Link className="ed-button" to={PUBLIC_SECONDARY_CTA.to}>Explore the Research Workflow <span aria-hidden="true"><ArrowIcon/></span></Link>
         <Link className="ed-text-link" to={PUBLIC_GRAPH_CTA.to}>{PUBLIC_GRAPH_CTA.label} <span aria-hidden="true"><ArrowIcon direction="right"/></span></Link>
-        <Link className="ed-text-link" to={PUBLIC_PRIMARY_CTA.to}>{PUBLIC_PRIMARY_CTA.label} <span aria-hidden="true"><ArrowIcon direction="right"/></span></Link>
+        <Link className="ed-text-link" to={contactAccessHref({scenarioId:demo.id,domain:demo.domains[0]})}>Continue with this question · request access <span aria-hidden="true"><ArrowIcon direction="right"/></span></Link>
       </div>
     </div>
   </section>;

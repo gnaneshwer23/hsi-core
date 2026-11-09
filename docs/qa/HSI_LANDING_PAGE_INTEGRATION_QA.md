@@ -14,7 +14,7 @@
 | D01 | “Open research brief” | Scrolled to demo; brief tab stayed closed | Hash `#product-demo` only; panel state defaulted to mechanism | P1 UX honesty |
 | D02 | “Open brief workflow” | Label promised brief; navigated to `/how-it-works` | Hardcoded label over `PUBLIC_SECONDARY_CTA` | P2 honesty |
 | D03 | Homepage scenario/domain | Lost on navigation; not shareable | `useState` only; no query contract | P2 context |
-| D04 | Access request CTA | `/contact` looks like a request sink | No form/API write; grants are admin-provisioned | P0 product honesty |
+| D04 | Access request CTA | `/contact` looks like a request sink | No form/API write; grants are admin-provisioned | P0 product honesty — **browser draft + blocked honesty shipped** |
 | D05 | Research nav “Investigation” | Landed on workbench without id | Link omitted `?investigation=` | P1 UX |
 | D06 | Dashboard “Decision workbench” | Same as D05 | Bare path | P1 UX |
 | D07 | `?view=briefs` | Looked like brief library | Headline switch only | P2 honesty |
@@ -32,13 +32,15 @@
 | D01 | `homeDemoHref({panel:"brief"})` + `HomeProductDemo` reads `?panel=` / hash | **Shipped** |
 | D02 | Brief artefact CTA uses `PUBLIC_SECONDARY_CTA.label` | **Shipped** |
 | D03 | `researchContext.ts` + Home `?scenario=` sync | **Shipped** (demo only; not forced onto KG/contact) |
-| D04 | Contact honesty: “This page does not store an access request…” | **Shipped** (persistence still BLOCKED) |
+| D04 | Contact honesty + AccessIntentPanel (sessionStorage browser_only) | **Shipped** (server persistence still BLOCKED) |
 | D05–D06 | Nav/dashboard → `#dashboard-workspace` until id exists | **Shipped** |
 | D07 | Briefs view footnote on dashboard | **Shipped** |
 | D08 | Research landing: SSc = validation case | **Shipped** |
 | D09 | Programme + gaps | **Deferred** — see `HSI_MISSING_INTEGRATIONS.md` PR-D/E |
-| D10 | SignIn/SignUp `next` | **Deferred** |
-| D11 | Build-time capability chip import | **Deferred** (avoid silent CTA rewrite without design pass) |
+| D10 | SignIn/SignUp `next` | **Shipped** (`safeNextPath`) |
+| D11 | Public `capability-status.json` at `/capability-status.json` | **Shipped** (static read; CTA chips still hand-maintained) |
+| — | Three journey entry paths + domain `?domain=` handoff | **Shipped** (illustrative; live spine still BLOCKED) |
+| — | Scenario tab keyboard arrows; omics honesty status | **Shipped** |
 
 ---
 

@@ -1,7 +1,8 @@
 import { useEffect, useState, type FormEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { AUTH_ERROR_MESSAGES } from "../../../src/authErrors";
 import { authBaseUrl, hsiAuth } from "../lib/hsiAuth";
+import { RESEARCH_CONTEXT_KEYS, safeNextPath, signUpHref } from "../lib/researchContext";
 import "../styles/sign-in.css";
 
 /** Sign-in is enabled only when an approved Neon Auth URL is supplied.
@@ -9,6 +10,8 @@ import "../styles/sign-in.css";
  */
 export function SignIn() {
  const navigate=useNavigate();
+ const [params]=useSearchParams();
+ const afterAuth=safeNextPath(params.get(RESEARCH_CONTEXT_KEYS.next))??"/research/account";
  const [email,setEmail]=useState("");
  const [password,setPassword]=useState("");
  const [pending,setPending]=useState(false);
@@ -27,14 +30,14 @@ export function SignIn() {
    if(!active)return;
    setChecking(false);
    if(result.error){setError(result.error.message);return}
-   if(result.data?.user?.id)navigate("/research/account",{replace:true});
+   if(result.data?.user?.id)navigate(afterAuth,{replace:true});
   }).catch(()=>{
    if(!active)return;
    setChecking(false);
    setError("Authentication service unavailable. Check the approved origin and network configuration.");
   });
   return()=>{active=false};
- },[navigate]);
+ },[navigate,afterAuth]);
  async function submit(event:FormEvent<HTMLFormElement>){
   event.preventDefault();if(pending||!authBaseUrl)return;
   setPending(true);setError("");setNeedsVerification(false);setVerificationNote("");setCodeError("");
@@ -47,7 +50,7 @@ export function SignIn() {
   }
   const session=await hsiAuth.session();
   if(!session.data?.user?.id){setError("Sign-in could not be verified. Please try again.");setPending(false);return}
-  navigate("/research/account",{replace:true});
+  navigate(afterAuth,{replace:true});
  }
  async function resendVerification(){
   if(resending||verifyingCode||!email.trim())return;
@@ -82,7 +85,7 @@ export function SignIn() {
     <label htmlFor="hsi-password">Password</label>
     <input id="hsi-password" type="password" autoComplete="current-password" required value={password} onChange={e=>setPassword(e.target.value)} disabled={pending||checking||verifyingCode||resending}/>
     {error&&<p role="alert" className="hsi-auth-error">{error}</p>}
-    {error===AUTH_ERROR_MESSAGES.INVALID_EMAIL_OR_PASSWORD&&<p className="hsi-auth-hint">If you have not registered on this authentication service yet, <Link to="/sign-up">create an account</Link>. Password reset only works for accounts that already exist here.</p>}
+    {error===AUTH_ERROR_MESSAGES.INVALID_EMAIL_OR_PASSWORD&&<p className="hsi-auth-hint">If you have not registered on this authentication service yet, <Link to={signUpHref({next:afterAuth})}>create an account</Link>. Password reset only works for accounts that already exist here.</p>}
     {needsVerification&&<>
      <p className="hsi-auth-hint">Verify the email for this account before signing in. Use the code or link from your inbox, or request another email.</p>
      {verificationNote&&<p role="status" aria-live="polite">{verificationNote}</p>}
@@ -98,7 +101,7 @@ export function SignIn() {
     <button type="submit" disabled={pending||checking||verifyingCode||resending}>{pending?"Signing in…":checking?"Checking session…":"Sign in securely"}</button>
    </form>:<div className="hsi-sign-in-status" role="status"><strong>Research sign-in is not enabled on this deployment.</strong><p>The authentication endpoint must be approved and configured before credentials can be accepted. Please contact the HSI administrator.</p></div>}
   <p className="hsi-auth-switch"><Link to="/forgot-password">Forgot your password?</Link></p>
-  <p className="hsi-auth-switch">New to HSI? <Link to="/sign-up">Create an account</Link></p>
+  <p className="hsi-auth-switch">New to HSI? <Link to={signUpHref({next:afterAuth})}>Create an account</Link></p>
   <Link className="hsi-sign-in-back" to="/science">Explore public science <span aria-hidden="true">↗</span></Link>
   <p className="hsi-sign-in-footnote">Signing in does not grant access to private research or clinical records.</p>
  </div></section>;
