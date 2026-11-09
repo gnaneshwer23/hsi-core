@@ -70,6 +70,16 @@ export type ScientificBenchmarkV1AliasManifest = {
     smeQueue4: "PARKED";
     liveJourneyQueue5: "PARKED";
   };
+  /** M7 PR1 registry under this alias path — not a parallel eval platform. */
+  benchmarkRegistry: {
+    relativePath: "evaluation/scientific_benchmark_v1/registry";
+    schemaVersion: "hsi-scientific-benchmark-registry-1";
+    manifestRelativePath: "registry-manifest.v1.json";
+    /** Null until registry prepare writes an inventory hash. */
+    inventoryHash: string | null;
+    wired: true;
+    noParallelEvalPlatform: true;
+  };
   honesty: {
     noParallelEvalPlatform: true;
     noInventedSmeGold: true;
@@ -78,6 +88,8 @@ export type ScientificBenchmarkV1AliasManifest = {
     noInventedMoU: true;
     noLiveCdsPhi: true;
     fixturesAreNotLiveScience: true;
+    m1ThroughM6NotScientificallyValidated: true;
+    llmJudgeNotSoleAuthority: true;
   };
   stopNote: string;
   inventoryHash: string;
@@ -98,6 +110,8 @@ export function buildScientificBenchmarkV1Alias(input: {
   generatedAt: string;
   repoRoot?: string;
   independentManifest?: IndependentEvaluationSuitesManifest;
+  /** Optional sealed M7 registry inventory hash when present on disk. */
+  benchmarkRegistryInventoryHash?: string | null;
 }): ScientificBenchmarkV1AliasManifest {
   const root = input.repoRoot ?? resolve(import.meta.dir, "../..");
   const independent =
@@ -181,6 +195,14 @@ export function buildScientificBenchmarkV1Alias(input: {
       smeQueue4: "PARKED",
       liveJourneyQueue5: "PARKED",
     },
+    benchmarkRegistry: {
+      relativePath: "evaluation/scientific_benchmark_v1/registry",
+      schemaVersion: "hsi-scientific-benchmark-registry-1",
+      manifestRelativePath: "registry-manifest.v1.json",
+      inventoryHash: input.benchmarkRegistryInventoryHash ?? null,
+      wired: true,
+      noParallelEvalPlatform: true,
+    },
     honesty: {
       noParallelEvalPlatform: true,
       noInventedSmeGold: true,
@@ -189,9 +211,11 @@ export function buildScientificBenchmarkV1Alias(input: {
       noInventedMoU: true,
       noLiveCdsPhi: true,
       fixturesAreNotLiveScience: true,
+      m1ThroughM6NotScientificallyValidated: true,
+      llmJudgeNotSoleAuthority: true,
     },
     stopNote:
-      "scientific_benchmark_v1 is an alias of independent-evaluation. Empty SME ratings; live gated; #2/#4/#5 PARKED. Not scientific validity or production readiness.",
+      "scientific_benchmark_v1 is an alias of independent-evaluation and hosts the M7 benchmark registry scaffold. Empty SME ratings; live gated; #2/#4/#5 PARKED. Not scientific validity or production readiness; M1–M6 not scientifically validated.",
   };
 
   return {...body, inventoryHash: digest(body)};
@@ -267,6 +291,24 @@ export function parseScientificBenchmarkV1Alias(
   }
   if (!manifest.honesty.noParallelEvalPlatform) {
     throw new ScientificBenchmarkV1Error("Alias must declare no parallel eval platform");
+  }
+  if (
+    !manifest.honesty.m1ThroughM6NotScientificallyValidated ||
+    !manifest.honesty.llmJudgeNotSoleAuthority
+  ) {
+    throw new ScientificBenchmarkV1Error(
+      "Alias must declare M1–M6 not scientifically validated and LLM judge not sole authority",
+    );
+  }
+  if (
+    !manifest.benchmarkRegistry?.wired ||
+    !manifest.benchmarkRegistry.noParallelEvalPlatform ||
+    manifest.benchmarkRegistry.relativePath !== "evaluation/scientific_benchmark_v1/registry" ||
+    manifest.benchmarkRegistry.schemaVersion !== "hsi-scientific-benchmark-registry-1"
+  ) {
+    throw new ScientificBenchmarkV1Error(
+      "Alias must wire M7 registry under scientific_benchmark_v1 without a parallel platform",
+    );
   }
 
   const {inventoryHash, ...body} = manifest;

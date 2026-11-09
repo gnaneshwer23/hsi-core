@@ -191,6 +191,8 @@
     "eval:independent:live": "bun --no-env-file scripts/independent-evaluation-suites.ts --live",
     "eval:scientific-benchmark:prepare": "bun --no-env-file scripts/scientific-benchmark-v1.ts",
     "eval:scientific-benchmark:check": "bun --no-env-file scripts/scientific-benchmark-v1.ts --check",
+    "eval:scientific-benchmark-registry:prepare": "bun --no-env-file scripts/scientific-benchmark-registry.ts",
+    "eval:scientific-benchmark-registry:check": "bun --no-env-file scripts/scientific-benchmark-registry.ts --check",
     "r3:prepare": "bun --no-env-file scripts/r3-connected-research-workbench.ts",
     "r3:check": "bun --no-env-file scripts/r3-connected-research-workbench.ts --check",
     "living-evidence:expand": "bun --no-env-file scripts/living-evidence-expand.ts",

@@ -60,6 +60,14 @@
     "smeQueue4": "PARKED",
     "liveJourneyQueue5": "PARKED"
   },
+  "benchmarkRegistry": {
+    "relativePath": "evaluation/scientific_benchmark_v1/registry",
+    "schemaVersion": "hsi-scientific-benchmark-registry-1",
+    "manifestRelativePath": "registry-manifest.v1.json",
+    "inventoryHash": "d5f1de8bcf5ccbb1773ce7e6250f12fd441bd4ed544739a9e2e9292849c93851",
+    "wired": true,
+    "noParallelEvalPlatform": true
+  },
   "honesty": {
     "noParallelEvalPlatform": true,
     "noInventedSmeGold": true,
@@ -67,8 +75,10 @@
     "noGateCAutoApprove": true,
     "noInventedMoU": true,
     "noLiveCdsPhi": true,
-    "fixturesAreNotLiveScience": true
+    "fixturesAreNotLiveScience": true,
+    "m1ThroughM6NotScientificallyValidated": true,
+    "llmJudgeNotSoleAuthority": true
   },
-  "stopNote": "scientific_benchmark_v1 is an alias of independent-evaluation. Empty SME ratings; live gated; #2/#4/#5 PARKED. Not scientific validity or production readiness.",
-  "inventoryHash": "6edf5c372a870592d07eb3f1df0cb77c732361eec84347ac4f6d9d50d1cd8ad2"
+  "stopNote": "scientific_benchmark_v1 is an alias of independent-evaluation and hosts the M7 benchmark registry scaffold. Empty SME ratings; live gated; #2/#4/#5 PARKED. Not scientific validity or production readiness; M1–M6 not scientifically validated.",
+  "inventoryHash": "9f274c7579e2c4183710bb66961511587a9fe7cea69fbb5feb9d23fb34147b2a"
 }

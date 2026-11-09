@@ -1,9 +1,10 @@
 {
   "schemaVersion": "hsi-scientific-benchmark-v1-status-1",
   "path": "evaluation/scientific_benchmark_v1",
-  "generatedAt": "2026-11-08T23:55:00.000Z",
+  "generatedAt": "2026-11-09T10:30:00.000Z",
   "aliasesCanonicalPath": "evaluation/independent-evaluation",
   "canonicalInventoryHash": "317ab621dafb4a4108593fff89e664c06334663415f80f2b2860c813dde014a7",
+  "benchmarkRegistryInventoryHash": "d5f1de8bcf5ccbb1773ce7e6250f12fd441bd4ed544739a9e2e9292849c93851",
   "engineeringScaffold": "CLEARED",
   "scientificAcceptance": "BLOCKED",
   "rightsAcceptance": "BLOCKED",
@@ -28,7 +29,7 @@
     "smeQueue4": "PARKED",
     "liveJourneyQueue5": "PARKED"
   },
-  "inventoryHash": "6edf5c372a870592d07eb3f1df0cb77c732361eec84347ac4f6d9d50d1cd8ad2",
-  "stopNote": "scientific_benchmark_v1 is an alias of independent-evaluation. Empty SME ratings; live gated; #2/#4/#5 PARKED. Not scientific validity or production readiness.",
-  "note": "Alias of independent-evaluation. Not a parallel eval platform. #2/#4/#5 PARKED."
+  "inventoryHash": "9f274c7579e2c4183710bb66961511587a9fe7cea69fbb5feb9d23fb34147b2a",
+  "stopNote": "scientific_benchmark_v1 is an alias of independent-evaluation and hosts the M7 benchmark registry scaffold. Empty SME ratings; live gated; #2/#4/#5 PARKED. Not scientific validity or production readiness; M1–M6 not scientifically validated.",
+  "note": "Alias of independent-evaluation + M7 registry scaffold. Not a parallel eval platform. #2/#4/#5 PARKED."
 }

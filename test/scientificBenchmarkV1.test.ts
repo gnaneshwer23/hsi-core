@@ -51,6 +51,10 @@ describe("scientific_benchmark_v1 alias scaffold", () => {
     expect(alias.humanQueueBlocked.smeQueue4).toBe("PARKED");
     expect(alias.humanQueueBlocked.liveJourneyQueue5).toBe("PARKED");
     expect(alias.honesty.noParallelEvalPlatform).toBe(true);
+    expect(alias.honesty.m1ThroughM6NotScientificallyValidated).toBe(true);
+    expect(alias.honesty.llmJudgeNotSoleAuthority).toBe(true);
+    expect(alias.benchmarkRegistry.wired).toBe(true);
+    expect(alias.benchmarkRegistry.noParallelEvalPlatform).toBe(true);
     expect(parseScientificBenchmarkV1Alias(alias).inventoryHash).toBe(alias.inventoryHash);
   });
 
