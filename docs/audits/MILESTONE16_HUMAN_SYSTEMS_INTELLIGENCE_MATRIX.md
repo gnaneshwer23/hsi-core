@@ -1,7 +1,7 @@
 # Milestone 16 — Human Systems Intelligence, Cross-Disease Mechanisms & Multimorbidity Discovery
 
 **Brief:** HSI Milestone 16 — governed **human systems** research-intelligence contracts for cross-disease investigation, cross-disease mechanism relationships, organ-system relationships, multimorbidity research context, and research-scoped systems simulation — composing M15 HDI / CSOL / (optional) PCRM ids and earlier ontology / provenance / RWE hooks — **without** diagnosis, treatment selection, clinical decision-making, whole-body simulation claims, auto-transfer of mechanisms across diseases, duplicate entity registries, PHI/CDS, Gate C auto-approve, MoU invention, or claiming a live M11 multiscale engine.  
-**Status:** Phase 0 gap audit + **PR1 Human Systems Data Contracts** (this branch) — **not** cross-disease mechanism intelligence complete, **not** multimorbidity discovery complete, **not** whole-body simulation authorised, **not** M16 complete.  
+**Status:** Phase 0 gap audit + **PR1 Human Systems Data Contracts** ([#124](https://github.com/gnaneshwer23/hsi-core/pull/124) in-flight) — **not** cross-disease mechanism intelligence complete, **not** multimorbidity discovery complete, **not** whole-body simulation authorised, **not** M16 complete.  
 **Date:** 2026-11-09  
 **Audited `main` SHA:** `873ca494edf6280742309b0fc309142878f4fc43` (post-#122 tip)  
 **Tip commit:** `873ca49 Add M15 patient-contextualised research model contracts (#122)`  
@@ -145,7 +145,7 @@ Honesty freeze: research intelligence only · **not diagnosis / treatment select
 | Phase | Capability | Existing | Status | Missing | Files |
 |-------|------------|----------|--------|---------|-------|
 | **0** Audit + scientific readiness | This document + M1–M15 deps | — | `Verified operational` (audit) | Keep updated | this file |
-| **1** Human systems data contracts | M15 HDI/CSOL ids · ontology registry · CDS boundary · M14 optional ids | **PR1 in-flight** — cross-disease investigation · cross-disease mechanism relationship (classifications) · organ-system relationship · multimorbidity research context · research-scoped systems simulation + thin store · `Fixture-only` / scientific path `Blocked` | Live mechanism transfer · whole-body sim · invented stats · workbench UI | `src/humanSystemsIntelligenceContracts.ts` · `test/humanSystemsIntelligenceContracts.test.ts` · `scripts/human-systems-intelligence-contracts.ts` · `evaluation/human-systems-intelligence/` |
+| **1** Human systems data contracts | M15 HDI/CSOL ids · ontology registry · CDS boundary · M14 optional ids | **PR1 in-flight** ([#124](https://github.com/gnaneshwer23/hsi-core/pull/124)) — 7 focused tests + evaluation pack · cross-disease investigation · cross-disease mechanism relationship (classifications) · organ-system relationship · multimorbidity research context · research-scoped systems simulation + thin store · `Fixture-only` / scientific path `Blocked` | Live mechanism transfer · whole-body sim · invented stats · workbench UI | `src/humanSystemsIntelligenceContracts.ts` · `test/humanSystemsIntelligenceContracts.test.ts` · `scripts/human-systems-intelligence-contracts.ts` · `evaluation/human-systems-intelligence/` |
 | **2** Cross-disease mechanism intelligence | PR1 relationship envelopes | `Missing` | Mechanism intelligence engines / comparison without auto-transfer | later PR2 Cross-Disease Mechanism Intelligence |
 | **3** Multimorbidity discovery analytics | PR1 multimorbidity context | `Missing` | Co-occurrence analytics with causation honesty | later |
 | **4** Organ-system coupling intelligence | PR1 organ-system relationships · CSOL | `Missing` | Coupling analysis without whole-body claim | later |
@@ -260,7 +260,7 @@ Honesty freeze: research intelligence only · **not diagnosis / treatment select
 
 | PR | Title | Branch | State |
 |----|-------|--------|-------|
-| (this PR) | M16 PR1 Human Systems Data Contracts | `eng/m16-human-systems-data-contracts` | **PR1 in-flight** — targets `origin/main` @ `873ca49`; not stacked on [#123](https://github.com/gnaneshwer23/hsi-core/pull/123); open for review; **do not auto-merge** |
+| [#124](https://github.com/gnaneshwer23/hsi-core/pull/124) | M16 PR1 Human Systems Data Contracts | `eng/m16-human-systems-data-contracts` | **PR1 in-flight** — targets `origin/main` @ `873ca49`; 7 focused tests + evaluation pack; not stacked on [#123](https://github.com/gnaneshwer23/hsi-core/pull/123); open for review; **do not auto-merge** |
 | [#123](https://github.com/gnaneshwer23/hsi-core/pull/123) | M15 PR7 Multiscale Simulation Integration | `eng/m15-multiscale-simulation-integration` | **Open / orthogonal** — avoid rewriting; M16 PR1 does not depend on it |
 | [#122](https://github.com/gnaneshwer23/hsi-core/pull/122) | M15 PR6 Patient-Contextualised Research Models | merged → `873ca49` | Substrate |
 | [#120](https://github.com/gnaneshwer23/hsi-core/pull/120) | M15 PR5 Population and Cohort Disease Models | merged → `ebc96c8` | Substrate |
