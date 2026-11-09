@@ -50,8 +50,14 @@ export function getSeoMetadata(pathname:string,noindex=false):SeoMetadata{
 }
 export function safeJsonLd(value:unknown){return JSON.stringify(value).replaceAll('<','\\u003c').replaceAll('>','\\u003e').replaceAll('&','\\u0026')}
 export function seoRobots(indexable:boolean){return indexable?'index, follow, max-image-preview:large':'noindex, follow'}
-export function renderSeoHead(pathname:string,noindex=false){
+/** Build-time Search Console HTML-tag token only. Prefer DNS TXT verification; never invent a token. */
+export function sanitizeGoogleSiteVerification(token:string|undefined|null){
+ const value=(token??'').trim();
+ return /^[A-Za-z0-9_-]{8,200}$/.test(value)?value:'';
+}
+export function renderSeoHead(pathname:string,noindex=false,opts?:{googleSiteVerification?:string}){
  const m=getSeoMetadata(pathname,noindex),escape=(s:string)=>s.replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;');
  const tags:Record<string,string>={'description':m.description,'robots':seoRobots(m.indexable),'og:type':'website','og:site_name':'Human Super Intelligence','og:title':m.title,'og:description':m.description,'og:url':m.canonical,'og:locale':'en_GB','og:image':SOCIAL_IMAGE,'og:image:width':'1200','og:image:height':'630','og:image:alt':'Human Super Intelligence — connected context, traceable evidence, human review','twitter:card':'summary_large_image','twitter:title':m.title,'twitter:description':m.description,'twitter:image':SOCIAL_IMAGE,'twitter:image:alt':'Human Super Intelligence research platform'};
- return '<title>'+escape(m.title)+'</title>\n'+Object.entries(tags).map(([key,value])=>'<meta '+(key.startsWith('og:')?'property':'name')+'="'+key+'" content="'+escape(value)+'" />').join('\n')+'\n<link rel="canonical" href="'+escape(m.canonical)+'" />\n'+(m.structuredData?'<script id="hsi-seo-schema" type="application/ld+json">'+safeJsonLd(m.structuredData)+'</script>':'');
+ const verification=sanitizeGoogleSiteVerification(opts?.googleSiteVerification);
+ return '<title>'+escape(m.title)+'</title>\n'+Object.entries(tags).map(([key,value])=>'<meta '+(key.startsWith('og:')?'property':'name')+'="'+key+'" content="'+escape(value)+'" />').join('\n')+'\n'+(verification?'<meta name="google-site-verification" content="'+escape(verification)+'" />\n':'')+'<link rel="canonical" href="'+escape(m.canonical)+'" />\n'+(m.structuredData?'<script id="hsi-seo-schema" type="application/ld+json">'+safeJsonLd(m.structuredData)+'</script>':'');
 }

@@ -156,7 +156,7 @@ Do **not** invent Gate C auto-approve, MoU, live CDS, or Neon cross-wiring. Pref
 | Blocker | Owner |
 | --- | --- |
 | Re-validate ChatGPT/Perplexity after production deploy of this PR | Founder / eng |
-| Search Console ownership + sitemap submission | Founder |
+| Search Console ownership + sitemap submission for **humansuperintelligence.tech** (not ISI.uk) | Founder — see [`docs/HSI_SEO.md`](../HSI_SEO.md) |
 | Home/Technology narrative P1 copy (design) | Next eng/design PR |
 | Any residual AI soft-blocks from medical safety policies | Outside eng control |
 
