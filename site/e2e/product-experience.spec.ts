@@ -13,24 +13,16 @@ test("public pages have a single main/title, working navigation and no narrow-sc
 });
 test("home communicates the research workflow and supports accessible capability navigation",async({page})=>{
  await page.goto("/");
- await expect(page.getByRole("heading",{level:1})).toContainText("Investigate biological mechanisms");
- await expect(page.getByRole("heading",{name:/From question to research decision/})).toBeVisible();
- await expect(page.locator("#product-demo")).toContainText("Illustrative research demonstration");
- await expect(page.locator("#product-demo")).toContainText("Not a live investigation");
- await expect(page.locator("#product-demo")).toContainText("live_backend=false");
- const tabs=page.getByRole("tablist",{name:"Research demonstration panels"}).first();
- await expect(page.locator("#product-demo")).toContainText("Supporting candidates");
- await expect(page.locator("#product-demo")).toContainText("Conflicting / opposing");
- await tabs.getByRole("tab",{name:"Graph"}).click();
- await expect(page.getByRole("tabpanel").filter({hasText:"Illustrative path"})).toBeVisible();
- await tabs.getByRole("tab",{name:"Research brief"}).click();
- await expect(page.getByRole("tabpanel").filter({hasText:"The reasoning stays with the result"})).toBeVisible();
- await expect(page.getByRole("tabpanel").filter({hasText:"Research brief · curated example"})).toBeVisible();
+ await expect(page.getByRole("heading",{level:1})).toContainText("Connecting human biology");
+ await expect(page.getByRole("heading",{name:/How an investigation proceeds/})).toBeVisible();
+ await expect(page.locator("#product-demo")).toContainText("illustrative");
+ await expect(page.locator("#product-demo")).toContainText("unvalidated");
+ const steps=page.getByRole("group",{name:"Investigation steps"});
+ await steps.getByRole("button",{name:/Gaps/}).click();
+ await expect(page.locator("#product-demo")).toContainText("contradictions");
  await expect(page.getByRole("link",{name:/See How It Works/i}).first()).toBeVisible();
- await page.getByRole("button",{name:/Evidence/}).first().click();
- await expect(page.getByRole("article").filter({hasText:"Explore Evidence Intelligence"})).toContainText("Source-linked claims");
- await page.getByRole("link",{name:"View demonstration on this page"}).first().click();
- await expect(page).toHaveURL(/#product-demo/);
+ await page.getByRole("link",{name:/See how this technology works/i}).click();
+ await expect(page).toHaveURL(/\/demo$/);
 });
 test("mobile menu opens, closes with Escape and connects public destinations",async({page})=>{
  await page.setViewportSize({width:390,height:844});await page.goto("/");const menu=page.locator(".nav-toggle");await menu.click();await expect(menu).toHaveAttribute("aria-expanded","true");
@@ -76,9 +68,9 @@ test("graph controls, bookmarks and SVG/PNG/JSON exports preserve draft scope",a
 test("reduced-motion mode retains functional capability navigation",async({page})=>{
  await page.emulateMedia({reducedMotion:"reduce"});
  await page.goto("/");
- await page.getByRole("button",{name:/Trials/}).first().click();
- await expect(page.getByRole("article").filter({hasText:"Read Trials scope"})).toContainText("Not currently available");
- await page.getByRole("link",{name:"Explore the Research Workflow"}).first().click();
+ await page.getByRole("button",{name:/Hypotheses/}).click();
+ await expect(page.locator("#product-demo")).toContainText("unvalidated");
+ await page.getByRole("link",{name:"See How It Works"}).click();
  await expect(page).toHaveURL(/how-it-works/);
 });
 

@@ -1,0 +1,162 @@
+.home-shell {
+  --cl-bg: #f3f6fb;
+  --cl-ink: #12253f;
+  --cl-body: #234864;
+  --cl-steel: #3e6d90;
+  --cl-aqua: #9aebfb;
+  --cl-panel: #e7f0fb;
+  --cl-card: #f7faff;
+  background: var(--cl-bg);
+  color: var(--cl-ink);
+  font-family: "Red Hat Display Variable", "Red Hat Display", var(--font-body), sans-serif;
+}
+.home-shell .site-main { background: var(--cl-bg); }
+.home-shell .nav { background: rgba(243, 246, 251, 0.92); color: var(--cl-ink); border-bottom: 1px solid rgba(18, 37, 63, 0.08); }
+.home-shell .nav .brand-name,
+.home-shell .nav .nav-links > a,
+.home-shell .nav .nav-more > button { color: #12253f !important; }
+.home-shell .nav .nav-sign-in { color: #12253f !important; border-color: #9fb4c9 !important; }
+.home-shell .site-footer { background: #12253f; color: #f3f6fb; }
+.home-shell ::selection { background: #9aebfb; color: #12253f; }
+
+.cl-page { width: min(1180px, calc(100% - 32px)); margin: 0 auto 4rem; }
+.cl-page section { scroll-margin-top: 5.5rem; }
+.cl-hero {
+  position: relative;
+  isolation: isolate;
+  min-height: 640px;
+  margin-top: 1rem;
+  padding: 2.2rem 2rem 6rem;
+  border-radius: 28px;
+  background: linear-gradient(180deg, #e7f1fb 0%, #d5e6f8 100%);
+  overflow: hidden;
+}
+.cl-ghost {
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  top: 38%;
+  margin: 0;
+  font-size: clamp(2.4rem, 8vw, 7.2rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 0.86;
+  color: #c5d8ee;
+  text-transform: uppercase;
+  pointer-events: none;
+  user-select: none;
+}
+.cl-hero-copy { position: relative; z-index: 2; max-width: 38rem; }
+.cl-hero h1 {
+  margin: 0 0 0.4rem;
+  font-size: clamp(2.6rem, 6vw, 4.6rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  font-weight: 650;
+  color: #12253f;
+  max-width: 12ch;
+}
+.cl-tagline { margin: 0 0 1rem; font-size: 1.15rem; font-weight: 600; color: #172d47; max-width: 28ch; }
+.cl-lead { margin: 0; max-width: 62ch; color: #234864; line-height: 1.6; }
+.cl-actions { display: flex; flex-wrap: wrap; gap: 0.8rem 1.2rem; margin-top: 1.4rem; }
+.cl-arrow-link, .cl-text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 48px;
+  color: #12253f;
+  font-weight: 650;
+  text-decoration: none;
+}
+.cl-arrow {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: #12253f;
+  color: #f3f6fb;
+  flex: none;
+}
+.cl-arrow-link-solid { background: #12253f; color: #f3f6fb; border-radius: 999px; padding: 0.2rem 0.3rem 0.2rem 1rem; }
+.cl-arrow-link-solid .cl-arrow { background: #9aebfb; color: #12253f; }
+.cl-cell { position: absolute; right: -2%; top: 4%; width: min(560px, 58%); margin: 0; z-index: 1; }
+.cl-float {
+  position: absolute;
+  z-index: 2;
+  width: min(280px, 42%);
+  padding: 1rem 1.1rem;
+  border-radius: 22px;
+  background: rgba(247, 250, 255, 0.9);
+  box-shadow: 0 16px 30px rgba(18, 37, 63, 0.08);
+  color: #234864;
+}
+.cl-float p, .cl-float ul { margin: 0; }
+.cl-float ul { padding: 0.5rem 0 0 1rem; }
+.cl-float-modules { right: 4%; bottom: 1.4rem; }
+.cl-float-note { left: 2rem; bottom: 1.4rem; width: min(320px, 46%); }
+
+.cl-mission, .cl-modules, .cl-different, .cl-steps, .cl-life, .cl-limits, .cl-cta { margin-top: 4.5rem; }
+.cl-page h2 {
+  margin: 0 0 0.8rem;
+  font-size: clamp(2rem, 4vw, 3.3rem);
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  font-weight: 650;
+  color: #12253f;
+  max-width: 18ch;
+}
+.cl-mission p, .cl-limits p, .cl-cta p, .cl-steps-intro p { max-width: 68ch; color: #234864; line-height: 1.65; }
+.cl-mission strong { color: #12253f; }
+
+.cl-module-grid, .cl-different-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.cl-module-grid article, .cl-different-grid article {
+  background: #f7faff;
+  border-radius: 22px;
+  padding: 1.2rem 1.25rem 1.3rem;
+  box-shadow: 0 10px 24px rgba(18, 37, 63, 0.05);
+}
+.cl-module-grid h3, .cl-different-grid h3 { margin: 0.2rem 0 0.4rem; color: #12253f; font-size: 1.35rem; letter-spacing: -0.03em; }
+.cl-module-grid p, .cl-different-grid p { margin: 0; color: #234864; }
+.cl-module-grid ul { display: flex; flex-wrap: wrap; gap: 0.4rem; list-style: none; padding: 0.8rem 0 0; margin: 0; }
+.cl-module-grid li { border: 1px solid #9fb4c9; border-radius: 999px; padding: 0.25rem 0.7rem; color: #12253f; font-size: 0.82rem; }
+
+.cl-steps { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 1.5rem; align-items: start; }
+.cl-step-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.cl-step-grid button {
+  text-align: left;
+  min-height: 92px;
+  border: 0;
+  border-radius: 20px;
+  background: #e7f1fb;
+  color: #12253f;
+  padding: 0.9rem 1rem;
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+}
+.cl-step-grid button[aria-pressed="true"] { background: #12253f; color: #f3f6fb; }
+.cl-step-grid button:focus-visible, .cl-arrow-link:focus-visible, .cl-text-link:focus-visible { outline: 3px solid #12253f; outline-offset: 3px; }
+.cl-step-grid span { display: block; font-size: 0.8rem; letter-spacing: 0.08em; margin-bottom: 0.25rem; color: #3e6d90; }
+.cl-step-grid button[aria-pressed="true"] span { color: #9aebfb; }
+
+.cl-life ol { display: flex; flex-wrap: wrap; gap: 0.6rem; list-style: none; padding: 0; margin: 0; }
+.cl-life li { background: #12253f; color: #f3f6fb; border-radius: 999px; padding: 0.7rem 1rem; min-height: 44px; }
+
+.cl-limits ul { padding-left: 1.1rem; color: #234864; }
+.cl-cta {
+  background: #e7f1fb;
+  border-radius: 28px;
+  padding: 2rem;
+}
+@media (max-width: 800px) {
+  .cl-hero { min-height: 0; padding: 1.4rem 1rem 1.2rem; display: flex; flex-direction: column; }
+  .cl-hero-copy { order: 1; }
+  .cl-cell { position: relative; width: 100%; right: auto; top: auto; order: 2; }
+  .cl-float { position: relative; width: auto; left: auto; right: auto; bottom: auto; margin-top: 0.8rem; order: 3; }
+  .cl-ghost { position: relative; top: auto; order: 4; font-size: 1.35rem; line-height: 1; margin: 0.6rem 0 0; }
+  .cl-module-grid, .cl-different-grid, .cl-steps, .cl-step-grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cl-page *, .home-shell .nav { animation: none !important; transition: none !important; }
+}

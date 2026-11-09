@@ -31,15 +31,15 @@ for(const path of ['/','/platform','/products','/research/dashboard','/science/g
 test('public pages load the existing typefaces locally without third-party font requests',async({page})=>{
  const fonts:string[]=[];page.on('request',r=>{if(/fonts\.(googleapis|gstatic)\.com/.test(r.url()))fonts.push(r.url())});
  await page.goto('/');await page.evaluate(()=>document.fonts.ready);
- expect(await page.evaluate(()=>[...document.fonts].some(f=>f.family==='Host Grotesk Variable'&&f.status==='loaded'))).toBe(true);expect(fonts).toEqual([]);
+ expect(await page.evaluate(()=>[...document.fonts].some(f=>f.family==='Red Hat Display Variable'&&f.status==='loaded'))).toBe(true);expect(fonts).toEqual([]);
 });
 
 test('mobile hero leads with the research workbench demonstration',async({page})=>{
  await page.setViewportSize({width:390,height:844});await page.goto('/');
- await expect(page.getByRole('heading',{level:1})).toContainText('Investigate biological mechanisms');
+ await expect(page.getByRole('heading',{level:1})).toContainText('Connecting human biology');
  await expect(page.locator('#product-demo')).toBeVisible();
- await expect(page.getByRole('tablist',{name:'Research demonstration panels'})).toBeVisible();
- await expect(page.getByRole('heading',{name:/How might immune activation contribute to fibrosis/})).toBeVisible();
+ await expect(page.getByRole('group',{name:'Investigation steps'})).toBeVisible();
+ await expect(page.getByRole('heading',{name:/What makes HSI different/})).toBeVisible();
 });
 
 test('editorial action arrows use scalable paths instead of platform symbol fonts',async({page})=>{
