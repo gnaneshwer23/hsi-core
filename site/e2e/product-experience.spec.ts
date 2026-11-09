@@ -13,7 +13,7 @@ test("public pages have a single main/title, working navigation and no narrow-sc
 });
 test("home communicates the research workflow and supports accessible capability navigation",async({page})=>{
  await page.goto("/");
- await expect(page.getByRole("heading",{level:1})).toContainText("Investigate disease mechanisms");
+ await expect(page.getByRole("heading",{level:1})).toContainText("Investigate biological mechanisms");
  await expect(page.getByRole("heading",{name:/From question to research decision/})).toBeVisible();
  await expect(page.locator("#product-demo")).toContainText("Illustrative research demonstration");
  await expect(page.locator("#product-demo")).toContainText("Not a live investigation");
@@ -26,7 +26,7 @@ test("home communicates the research workflow and supports accessible capability
  await tabs.getByRole("tab",{name:"Research brief"}).click();
  await expect(page.getByRole("tabpanel").filter({hasText:"The reasoning stays with the result"})).toBeVisible();
  await expect(page.getByRole("tabpanel").filter({hasText:"Research brief · curated example"})).toBeVisible();
- await expect(page.getByRole("link",{name:/Open brief workflow/})).toBeVisible();
+ await expect(page.getByRole("link",{name:/See How It Works/i}).first()).toBeVisible();
  await page.getByRole("button",{name:/Evidence/}).first().click();
  await expect(page.getByRole("article").filter({hasText:"Explore Evidence Intelligence"})).toContainText("Source-linked claims");
  await page.getByRole("link",{name:"View demonstration on this page"}).first().click();
@@ -45,7 +45,9 @@ test("evidence overview explains source context without presenting unreviewed re
 });
 test("public access paths lead to the real account process without a pretend submission",async({page})=>{
  const posts:string[]=[];page.on("request",r=>{if(r.method()==="POST")posts.push(r.url())});await page.goto("/pricing");await page.getByRole("main").getByRole("link",{name:"Research access",exact:true}).click();await expect(page).toHaveURL(/contact$/);
- await expect(page.getByRole("main")).toContainText("permissions are provisioned independently");await page.getByRole("link",{name:"Create an account",exact:true}).click();await expect(page).toHaveURL(/sign-up$/);expect(posts).toEqual([]);
+ await expect(page.getByRole("main")).toContainText("permissions are provisioned independently");
+ await expect(page.getByRole("main")).toContainText("does not store an access request");
+ await page.getByRole("link",{name:"Create an account",exact:true}).click();await expect(page).toHaveURL(/sign-up$/);expect(posts).toEqual([]);
 });
 test("community drafts allow source-linked replies, flags and export without fake publication",async({page})=>{
  const posts:string[]=[];page.on("request",r=>{if(r.method()==="POST")posts.push(r.url())});await page.goto("/community");await page.getByLabel("Research question or claim challenge",{exact:true}).fill("Which tissue and assay details should travel with the source?");await page.getByLabel("Optional source URL",{exact:true}).fill("https://pubmed.ncbi.nlm.nih.gov/18375541/");

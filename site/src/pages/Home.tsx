@@ -1,10 +1,13 @@
+import {useCallback} from "react";
 import {ArrowIcon} from "../components/ArrowIcon";
-import {Link} from "react-router-dom";
+import {Link,useSearchParams} from "react-router-dom";
 import {EditorialCTA} from "../components/editorial/Editorial";
 import {HomeEcosystem} from "../components/editorial/HomeEcosystem";
 import {HomeHeroPreview} from "../components/editorial/HomeHeroPreview";
 import {HomeProductDemo} from "../components/editorial/HomeProductDemo";
+import {DEFAULT_HOME_SCENARIO_ID,getHomeScenario,HOME_RESEARCH_SCENARIOS} from "../components/editorial/homeResearchScenarios";
 import {PUBLIC_PRIMARY_CTA,PUBLIC_SECONDARY_CTA} from "../lib/ctaPolicy";
+import {parseScenarioId,RESEARCH_CONTEXT_KEYS} from "../lib/researchContext";
 
 const AVAILABLE_TODAY=[
   "Explore biological relationships in curated graphs",
@@ -33,22 +36,34 @@ const DOES_NOT=[
 ];
 
 export function Home(){
+  const [params,setParams]=useSearchParams();
+  const knownIds=HOME_RESEARCH_SCENARIOS.map(s=>s.id);
+  const scenarioId=parseScenarioId(params.get(RESEARCH_CONTEXT_KEYS.scenario),knownIds)??DEFAULT_HOME_SCENARIO_ID;
+  const setScenarioId=useCallback((id:string)=>{
+    setParams(prev=>{
+      const next=new URLSearchParams(prev);
+      if(id===DEFAULT_HOME_SCENARIO_ID)next.delete(RESEARCH_CONTEXT_KEYS.scenario);
+      else next.set(RESEARCH_CONTEXT_KEYS.scenario,id);
+      return next;
+    },{replace:true});
+  },[setParams]);
+  const scenario=getHomeScenario(scenarioId);
   return <div className="ed-home">
     <header className="ed-home-hero ed-home-hero-product ed-home-hero-instrument">
       <div className="ed-hero-copy">
         <p className="ed-kicker">Connected biomedical intelligence</p>
-        <h1>Investigate disease mechanisms<br/><em>with evidence you can trace.</em></h1>
-        <p className="ed-lead">Explore biological relationships, examine supporting and conflicting evidence, identify research gaps, and develop the next scientific question.</p>
+        <h1>Investigate biological mechanisms<br/><em>across human systems.</em></h1>
+        <p className="ed-lead">Immunology, microbiome, neuroimmune biology, metabolism, omics, evidence and trials — one research workbench. Disease context is optional. Systemic sclerosis is a validation case, not the product boundary.</p>
         <div className="ed-actions">
           <Link className="ed-button" to={PUBLIC_PRIMARY_CTA.to}>{PUBLIC_PRIMARY_CTA.label} <span aria-hidden="true"><ArrowIcon/></span></Link>
           <Link className="ed-text-link" to={PUBLIC_SECONDARY_CTA.to}>{PUBLIC_SECONDARY_CTA.label} <span aria-hidden="true"><ArrowIcon direction="right"/></span></Link>
         </div>
-        <p className="ed-hero-note">Built for researchers. Grounded in evidence. Reviewed by people.</p>
+        <p className="ed-hero-note">Built for researchers. Grounded in evidence. Reviewed by people. Coverage depth is unequal across domains.</p>
       </div>
-      <HomeHeroPreview/>
+      <HomeHeroPreview scenario={scenario}/>
     </header>
 
-    <HomeProductDemo/>
+    <HomeProductDemo scenarioId={scenarioId} onScenarioChange={setScenarioId}/>
     <HomeEcosystem/>
 
     <section className="ed-intro ed-today ed-section-compact" aria-labelledby="today-heading">

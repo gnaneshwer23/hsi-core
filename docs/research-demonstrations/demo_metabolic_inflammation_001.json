@@ -1,0 +1,30 @@
+{
+  "demonstration_id": "demo_metabolic_inflammation_001",
+  "mode": "illustrative",
+  "data_class": "curated_example",
+  "live_backend": false,
+  "review_status": "not_reviewed",
+  "disease": null,
+  "domains": ["metabolic", "immunity"],
+  "question": "How might metabolic inflammation relate to insulin resistance?",
+  "mechanism_path": [
+    "Nutrient / energy stress",
+    "Innate immune activation",
+    "Inflammatory mediators",
+    "Insulin signalling interference",
+    "Insulin resistance context"
+  ],
+  "evidence": [],
+  "contradictions": [],
+  "gaps": [
+    "Live metabolic / omics connectors not claimed",
+    "Disease context optional — not required for this question"
+  ],
+  "disclaimer": "Illustrative metabolic–immune path. Not a claim of equal validation depth with systemic sclerosis packs.",
+  "ui_labels": [
+    "Illustrative research demonstration",
+    "Not a live investigation",
+    "Disease context optional"
+  ],
+  "notes": "Scenario D acceptance remains NOT_EXECUTED until staging E2E."
+}

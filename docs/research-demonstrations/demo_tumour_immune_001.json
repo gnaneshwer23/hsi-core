@@ -1,0 +1,30 @@
+{
+  "demonstration_id": "demo_tumour_immune_001",
+  "mode": "illustrative",
+  "data_class": "curated_example",
+  "live_backend": false,
+  "review_status": "not_reviewed",
+  "disease": null,
+  "domains": ["cancer_immunology", "immunity"],
+  "question": "How might tumour immune-cell states relate to treatment resistance?",
+  "mechanism_path": [
+    "Tumour microenvironment",
+    "Immune-cell states",
+    "Checkpoint / effector balance",
+    "Therapeutic pressure",
+    "Resistance context"
+  ],
+  "evidence": [],
+  "contradictions": [],
+  "gaps": [
+    "Cancer-immunology ontology coverage sparse on substrate",
+    "No live trial-matching claimed"
+  ],
+  "disclaimer": "Illustrative oncology–immune path. Shallower curated depth than SSc — honesty over completeness.",
+  "ui_labels": [
+    "Illustrative research demonstration",
+    "Not a live investigation",
+    "Unequal coverage"
+  ],
+  "notes": "Scenario E acceptance remains NOT_EXECUTED until staging E2E."
+}

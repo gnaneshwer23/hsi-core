@@ -117,6 +117,17 @@
 .ed-mechanism-path-compact strong{font-size:.8rem}
 .ed-ecosystem-row-8{grid-template-columns:repeat(4,minmax(0,1fr))}
 .ed-ecosystem-domain-related{border-color:var(--hsi-scientific-sky,#65CEE6);background:#f0fafc}
+.ed-scenario-toolbar{
+  display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;
+}
+.ed-scenario-toolbar>button{
+  min-height:36px;padding:6px 12px;border-radius:8px;border:1px solid #c9d8cc;
+  background:#eef4ef;color:#1d3a34;font-size:.72rem;font-weight:600;cursor:pointer;
+}
+.ed-scenario-toolbar>button[aria-selected=true]{
+  background:#1d3a34;border-color:#1d3a34;color:#f4faf7;
+}
+.ed-scenario-toolbar>button:focus-visible{outline:3px solid var(--hsi-focus,#a75032);outline-offset:3px}
 .ed-demo-toolbar{
   display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;
 }
