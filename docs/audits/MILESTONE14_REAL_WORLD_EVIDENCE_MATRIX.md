@@ -1,11 +1,12 @@
 # Milestone 14 — Real-World Evidence, Clinical Outcomes & Post-Study Learning Intelligence
 
 **Brief:** HSI Milestone 14 — governed RWE / clinical outcomes research contracts connecting authorised longitudinal health data concepts, observational analyses, safety-signal research envelopes, and post-study learning to M1–M13 — **without** an unrestricted central patient database, PHI/CDS, treatment directives, fabricating patient data, Gate C auto-approve, or MoU invention.  
-**Status:** Phase 0 gap audit + PR1 (Clinical Evidence and RWE Contracts) — **not** RWE complete, **not** observational causal claims authorised, **not** live clinical dataset analysis, **not** M14 complete.  
+**Status:** Phase 0 gap audit + PR1 (Clinical Evidence and RWE Contracts) + PR2 (Secure Clinical Data Interoperability) — **not** RWE complete, **not** observational causal claims authorised, **not** live clinical dataset analysis, **not** M14 complete.  
 **Date:** 2026-11-09  
 **Audited `main` SHA:** `c132abf65c1666e11f0a04d53ca087b4882348a8` (post-#109 M13 PR1 + #110 rollup tip)  
 **Tip commit:** `c132abf Mark M13 PR1 and #109 as merged in the milestone audit docs. (#110)`  
 **HSI Neon:** red-wave only (`human super intelligence` / `red-wave-06625195` / `ep-restless-dew…`) — never autumn-snow / Akeno / DeliverX  
+**Dependency:** PR2 stacks on [#111](https://github.com/gnaneshwer23/hsi-core/pull/111) (PR1 RWE contracts) until that lands on `main`.  
 
 **Cross-links (do not contradict):**
 
@@ -23,6 +24,8 @@
 - [`../engineering/HUMAN_QUEUE_RESIDUALS.md`](../engineering/HUMAN_QUEUE_RESIDUALS.md) — #2 / #4 / #5 PARKED  
 
 **Out of PR1:** Secure clinical data interoperability / FHIR–OMOP adapters (PR2), longitudinal analysis engine (PR3), cohort builder (PR4), observational causal engine (PR5), safety intelligence (PR6), biomarker/trial translation (PR7), post-study learning (PR8), workbench UI (PR9), SSc real-data validation (PR10), Neon clinical migrations, live PHI ingestion, fabricated patient counts/effects, treatment recommendations.
+
+**Out of PR2:** Live FHIR/OMOP/EHR connectors, longitudinal analysis engine (PR3), cohort builder (PR4+), workbench UI, Neon clinical migrations, PHI ingestion, fabricated clinical results, claiming federation operational.
 
 ---
 
@@ -84,8 +87,9 @@ Honesty freeze: research decision support only · **no unrestricted central pati
 | Identifiable facts → curated KG | **Refused** (ARCH-002 Phase 3.7) | `graphPromotable: false`; patient_context never public biomedical |
 | Pseudonymised ≠ non-personal | **Declared** | Honesty flag `pseudonymisedMayStillBePersonalData: true` |
 | Direct-care clinical bridge | `Implemented but unverified` / deferred ops | `hsiClinicalBiologyBridge.ts` — grant verification / real FHIR adapter deferred |
-| Federation / partner clinical connectors | `Missing` · partnerships `Blocked` | M9 federation not live |
-| Neon clinical PHI tables | **Not introduced** | PR1 contracts-first; red-wave only if/when authorised |
+| Federation / partner clinical connectors | `Missing` · partnerships `Blocked` | M9 federation not live; PR2 contracts declare `federationNotOperationalUnlessVerified` |
+| FHIR R4 / OMOP / terminology mapping contracts | **PR2 in-flight** — fixture/contract only | No live connector claim; authorised dataset still **Blocked** |
+| Neon clinical PHI tables | **Not introduced** | PR1/PR2 contracts-first; red-wave only if/when authorised |
 
 ---
 
@@ -114,8 +118,8 @@ Honesty freeze: research decision support only · **no unrestricted central pati
 | M12 therapeutic IDs | `therapeuticDiscoveryDataContracts.ts` | `Partial` (PR1) | Optional therapeutic refs |
 | M5 precision / biomarker | `precisionEvidenceContracts.ts` | `Partial` | Biomarker honesty later |
 | Org / tenant ACL (M9) | `researchOrganisationTenantSecurity.ts` | `Partial` | Optional orgId / access class |
-| Federation connectors | — | `Missing` | PR2+ |
-| FHIR R4 / OMOP adapters | strategy docs only | `Missing` as product adapters | PR2 |
+| Federation connectors | — | `Missing` | live connectors remain unverified |
+| FHIR R4 / OMOP adapters | strategy docs + **PR2 contracts** | `Fixture-only` / `Implemented but unverified` (no live adapter) | `src/secureClinicalDataInteropContracts.ts` |
 | Statistical analysis engine | governed compute (M10) orthogonal | `Partial` / not RWE | Analysis *result* envelopes in PR1 — no invented estimates |
 | Research Decision Workbench | research workbench modules | `Partial` | **Out of PR1 UI** |
 | Neon | red-wave; existing stores | `Partial` · staging `Blocked` (#5) | **No new migration in PR1** |
@@ -131,7 +135,7 @@ Honesty freeze: research decision support only · **no unrestricted central pati
 |-------|------------|----------|--------|---------|-------|
 | **0** Audit + data protection + validity | This document + M1–M13 rollup | — | `Verified operational` (audit) | Keep updated | this file |
 | **1** Clinical evidence / RWE contracts | Clinical scaffold · M9/M12/M13 ids · CDS boundary | `Missing` → **PR1 in-flight** ([#111](https://github.com/gnaneshwer23/hsi-core/pull/111)) — 7 focused tests + evaluation pack | Study · observation · exposure · outcome · analysis result | `src/realWorldEvidenceContracts.ts` · `test/realWorldEvidenceContracts.test.ts` · `scripts/real-world-evidence-contracts.ts` · `evaluation/real-world-evidence/` |
-| **2** Secure clinical data interoperability | FHIR strategy · Phase 3.7 bridge | `Missing` / stubs | FHIR/OMOP mapping + permission checks | later PR2 |
+| **2** Secure clinical data interoperability | FHIR strategy · Phase 3.7 bridge · PR1 RWE ids | `Missing` → **PR2 in-flight** ([#112](https://github.com/gnaneshwer23/hsi-core/pull/112), stacks on [#111](https://github.com/gnaneshwer23/hsi-core/pull/111)) — 7 focused tests + evaluation pack | Live FHIR/OMOP connectors · PHI ingestion | `src/secureClinicalDataInteropContracts.ts` · `test/secureClinicalDataInteropContracts.test.ts` · `scripts/secure-clinical-data-interop-contracts.ts` · `evaluation/secure-clinical-data-interop/` |
 | **3** Longitudinal clinical intelligence | PR1 observation time fields | `Missing` as engine | Trajectory analysis without leakage | later PR3 |
 | **4** Reproducible cohort builder | N5 criteria hooks | `Partial` hooks | Attrition + disclosure controls | later PR4 |
 | **5** Observational / causal research | — | `Missing` | Target-trial emulation with assumption checks | later PR5 |
@@ -168,6 +172,22 @@ Honesty freeze: research decision support only · **no unrestricted central pati
 - Thin in-memory store + offline evaluation pack + focused tests.
 
 **Out of PR1:** Live FHIR/OMOP, workbench UI, Neon migration, fabricated n/effects, merging this PR automatically (open for human review).
+
+---
+
+## PR2 deliverable (Secure Clinical Data Interoperability)
+
+**Secure Clinical Data Interoperability Contracts** (stacks on [#111](https://github.com/gnaneshwer23/hsi-core/pull/111))
+
+- **Data-source registration** for HL7 FHIR R4, OMOP CDM, clinical terminologies, research dataset schemas, and trial outcome formats — `liveConnectorOperational: false`; connector statuses stay contract/fixture/unverified/blocked.  
+- **Data-use permission checks** with legal basis, research authorisation refs, purpose limitation, minimisation, export restrictions; fail-closed when legal basis missing or authorised dataset blocked.  
+- **Schema mapping**, **terminology mapping**, **unit normalisation**, **temporal alignment** contracts — transforms/lookups/alignment marked non-operational.  
+- **Data quality validation** without fabricated clinical results; **source provenance**; **access enforcement** (permit/deny); **retention and deletion** handling.  
+- **Governance records**: legal basis / research authorisation; controller/processor roles; purpose limitation; access permissions; data minimisation; export restrictions; retention; audit history; `pseudonymisedMayStillBePersonalData: true`.  
+- Optional links to PR1 RWE study ids / M9 org ids. Honesty: no unrestricted patient DB; no PHI/CDS/EHR write-back; federation not operational unless verified; Neon red-wave; migration deferred.  
+- Thin in-memory store + offline evaluation pack + focused fail-closed tests.
+
+**Out of PR2:** Live connectors, workbench UI, Neon migration, fabricated clinical results, auto-merge.
 
 ---
 
@@ -224,9 +244,10 @@ Honesty freeze: research decision support only · **no unrestricted central pati
 
 | PR | Title | Branch | State |
 |----|-------|--------|-------|
-| [#111](https://github.com/gnaneshwer23/hsi-core/pull/111) | M14 PR1 Clinical Evidence and RWE Contracts | `eng/m14-rwe-clinical-evidence-contracts` | **PR1 in-flight** — open for review; **do not auto-merge** |
+| [#112](https://github.com/gnaneshwer23/hsi-core/pull/112) | M14 PR2 Secure Clinical Data Interoperability | `eng/m14-secure-clinical-data-interop` | **PR2 in-flight** — stacks on [#111](https://github.com/gnaneshwer23/hsi-core/pull/111); **do not auto-merge** |
+| [#111](https://github.com/gnaneshwer23/hsi-core/pull/111) | M14 PR1 Clinical Evidence and RWE Contracts | `eng/m14-rwe-clinical-evidence-contracts` | **PR1 in-flight** — open for review; **do not auto-merge**; PR2 depends on it |
 | [#109](https://github.com/gnaneshwer23/hsi-core/pull/109) | M13 PR1 + M1–M13 rollup | merged → `344f450` | Substrate |
 | [#107](https://github.com/gnaneshwer23/hsi-core/pull/107) | M12 PR1 | merged → `7485bd4` | Substrate |
 | [#110](https://github.com/gnaneshwer23/hsi-core/pull/110) | docs: mark M13 PR1 merged in rollup | merged → `c132abf` | Rollup tip honesty |
 
-**Suggested next:** PR2 Secure Clinical Data Interoperability.
+**Suggested next:** PR3 Longitudinal Clinical Evidence Model.
