@@ -1,0 +1,14 @@
+HTTP/2 404 
+cache-control: public, max-age=0, must-revalidate
+content-type: text/plain; charset=utf-8
+date: Mon, 09 Nov 2026 15:45:44 GMT
+permissions-policy: camera=(), microphone=(), geolocation=()
+referrer-policy: strict-origin-when-cross-origin
+server: Vercel
+strict-transport-security: max-age=31536000
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-vercel-error: NOT_FOUND
+x-vercel-id: lhr1::mmd6j-1794239144814-78f2530f7ae5
+content-length: 79
+
