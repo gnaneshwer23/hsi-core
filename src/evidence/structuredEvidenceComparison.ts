@@ -520,3 +520,332 @@ export function projectPotentialContradictionTraces(
     },
   };
 }
+
+/**
+ * Investigation categories for potential contradiction flows (Phases 4–6).
+ * These are candidate explanation bins for human review — not predetermined
+ * scientific conclusions and not LLM-verified truth.
+ */
+export type ContradictionInvestigationCategory =
+  | "context_mismatch"
+  | "population_or_phenotype_difference"
+  | "assay_or_experimental_system_difference"
+  | "methodological_difference"
+  | "genuine_conflict_candidate"
+  | "insufficient_evidence_to_adjudicate"
+  | "insufficient_comparability";
+
+export type ContradictionInvestigationItem = {
+  comparisonId: string;
+  outcome: StructuredComparisonOutcome;
+  category: ContradictionInvestigationCategory;
+  rationale: string;
+  leftId: string;
+  rightId: string;
+  evidenceSourceIds: readonly string[];
+  /** Explicit: category is an investigation bin, not a verified resolution. */
+  predeterminedConclusion: false;
+  llmRationaleAloneInsufficient: true;
+  needsHumanReview: true;
+  scientificallyVerified: false;
+};
+
+export type ContradictionInvestigationAssessment = {
+  schemaVersion: "hsi-contradiction-investigation-assessment-1";
+  method: "hsi.contradiction_investigation.v1";
+  version: "0.1.0";
+  generatedAt: string;
+  searchRecordId: string | null;
+  searchRecordHash: string | null;
+  comparisonPackId: string | null;
+  items: readonly ContradictionInvestigationItem[];
+  summary: {
+    genuineConflictCandidates: number;
+    contextMismatch: number;
+    methodologicalDifference: number;
+    insufficientEvidence: number;
+    insufficientComparability: number;
+  };
+  /** Persistable projection lines for gap / search-record appendices. */
+  persistenceLines: readonly string[];
+  honesty: {
+    categoriesAreNotPredeterminedConclusions: true;
+    explanationsNotVerifiedByLlmRationaleAlone: true;
+    insufficientEvidenceExplicit: true;
+    potentialContradictionIsNotProvenContradiction: true;
+    projectedFromStructuredComparison: true;
+    scientificApproval: false;
+    graphPromotable: false;
+    gateCAutoApprove: false;
+    cdsPhi: false;
+    autoPromotedToApprovedGraph: false;
+  };
+};
+
+function categoryForOutcome(
+  outcome: StructuredComparisonOutcome,
+): ContradictionInvestigationCategory {
+  switch (outcome) {
+    case "potential_contradiction":
+      return "genuine_conflict_candidate";
+    case "context_dependent":
+      return "context_mismatch";
+    case "methodological_difference":
+      return "methodological_difference";
+    case "insufficient_evidence":
+      return "insufficient_evidence_to_adjudicate";
+    case "insufficient_comparability":
+      return "insufficient_comparability";
+    case "consistent":
+      return "insufficient_evidence_to_adjudicate";
+    default: {
+      const _exhaustive: never = outcome;
+      void _exhaustive;
+      return "insufficient_evidence_to_adjudicate";
+    }
+  }
+}
+
+function refineCategory(
+  comparison: StructuredEvidenceComparison,
+): ContradictionInvestigationCategory {
+  const base = categoryForOutcome(comparison.outcome);
+  if (base === "context_mismatch") {
+    const diseaseDivergent = comparison.trace.contextAxes.some(
+      (a) =>
+        a.axis === "diseasePhenotype" && (a.onlyA.length > 0 || a.onlyB.length > 0),
+    );
+    if (diseaseDivergent) return "population_or_phenotype_difference";
+    const assayDivergent =
+      comparison.trace.methodologicalSignals.includes("experimental_system_disjoint") ||
+      comparison.trace.contextAxes.some(
+        (a) =>
+          a.axis === "experimentalSystemsSpecies" &&
+          (a.onlyA.length > 0 || a.onlyB.length > 0),
+      );
+    if (assayDivergent) return "assay_or_experimental_system_difference";
+  }
+  return base;
+}
+
+/**
+ * Build a contradiction-investigation assessment from a structured comparison pack.
+ * Records candidate explanation categories; never emits proven contradiction or
+ * scientific approval. Explicit insufficient_evidence when comparability fails.
+ */
+export function assessContradictionInvestigation(input: {
+  pack: StructuredEvidenceComparisonPack;
+  generatedAt?: string;
+  searchRecordId?: string | null;
+  searchRecordHash?: string | null;
+}): ContradictionInvestigationAssessment {
+  const generatedAt = input.generatedAt ?? input.pack.generatedAt;
+  const items: ContradictionInvestigationItem[] = input.pack.comparisons
+    .filter(
+      (c) =>
+        c.outcome === "potential_contradiction" ||
+        c.outcome === "context_dependent" ||
+        c.outcome === "methodological_difference" ||
+        c.outcome === "insufficient_evidence" ||
+        c.outcome === "insufficient_comparability",
+    )
+    .map((c) => {
+      const category = refineCategory(c);
+      return {
+        comparisonId: c.id,
+        outcome: c.outcome,
+        category,
+        rationale: c.rationale,
+        leftId: c.left.id,
+        rightId: c.right.id,
+        evidenceSourceIds: c.trace.evidenceSourceIds,
+        predeterminedConclusion: false as const,
+        llmRationaleAloneInsufficient: true as const,
+        needsHumanReview: true as const,
+        scientificallyVerified: false as const,
+      };
+    });
+
+  const summary = {
+    genuineConflictCandidates: items.filter((i) => i.category === "genuine_conflict_candidate")
+      .length,
+    contextMismatch: items.filter(
+      (i) =>
+        i.category === "context_mismatch" ||
+        i.category === "population_or_phenotype_difference" ||
+        i.category === "assay_or_experimental_system_difference",
+    ).length,
+    methodologicalDifference: items.filter((i) => i.category === "methodological_difference")
+      .length,
+    insufficientEvidence: items.filter((i) => i.category === "insufficient_evidence_to_adjudicate")
+      .length,
+    insufficientComparability: items.filter((i) => i.category === "insufficient_comparability")
+      .length,
+  };
+
+  const persistenceLines = items.map(
+    (i) =>
+      `contradiction_investigation:${i.category}:cmp=${i.comparisonId}:outcome=${i.outcome}:left=${i.leftId}:right=${i.rightId}`,
+  );
+
+  const assessment: ContradictionInvestigationAssessment = {
+    schemaVersion: "hsi-contradiction-investigation-assessment-1",
+    method: "hsi.contradiction_investigation.v1",
+    version: "0.1.0",
+    generatedAt,
+    searchRecordId: input.searchRecordId ?? null,
+    searchRecordHash: input.searchRecordHash ?? null,
+    comparisonPackId: `cmp-pack:${createHash("sha256")
+      .update(
+        canonicalEvidenceJson({
+          generatedAt,
+          ids: input.pack.comparisons.map((c) => c.id).sort(),
+        }),
+      )
+      .digest("hex")
+      .slice(0, 24)}`,
+    items,
+    summary,
+    persistenceLines,
+    honesty: {
+      categoriesAreNotPredeterminedConclusions: true,
+      explanationsNotVerifiedByLlmRationaleAlone: true,
+      insufficientEvidenceExplicit: true,
+      potentialContradictionIsNotProvenContradiction: true,
+      projectedFromStructuredComparison: true,
+      scientificApproval: false,
+      graphPromotable: false,
+      gateCAutoApprove: false,
+      cdsPhi: false,
+      autoPromotedToApprovedGraph: false,
+    },
+  };
+
+  if (assessment.honesty.scientificApproval !== false || assessment.honesty.graphPromotable !== false) {
+    fail("Contradiction investigation must stay unapproved / non-promotable");
+  }
+  return assessment;
+}
+
+/**
+ * Build a comparable unit from an opposing-search bibliographic finding.
+ * Title oppose signals map to opposing polarity hints; otherwise uncertain.
+ * Biological context stays empty unless the caller supplies declared context —
+ * empty context yields insufficient_evidence rather than invented agreement.
+ */
+export function comparableUnitFromOpposingFinding(input: {
+  finding: {
+    pmid: string | null;
+    doi: string | null;
+    title: string;
+    polarityHint: "opposing_title_signal" | "uncertain" | "unclassified";
+  };
+  subject: ComparableEvidenceUnit["subject"];
+  object: ComparableEvidenceUnit["object"];
+  predicate?: string;
+  biologicalContext?: CandidateBiologicalContext;
+  sourceProvider?: string;
+}): ComparableEvidenceUnit {
+  const id =
+    input.finding.pmid != null
+      ? `oppose-pmid:${input.finding.pmid}`
+      : input.finding.doi != null
+        ? `oppose-doi:${input.finding.doi}`
+        : `oppose-title:${createHash("sha256").update(input.finding.title).digest("hex").slice(0, 16)}`;
+  const findingPolarity: FindingPolarity =
+    input.finding.polarityHint === "opposing_title_signal" ? "opposing" : "uncertain";
+  return {
+    id,
+    label: input.finding.title.slice(0, 240) || id,
+    subject: input.subject,
+    predicate: input.predicate ?? "associated_with",
+    object: input.object,
+    findingPolarity,
+    biologicalContext:
+      input.biologicalContext ??
+      ({
+        diseasePhenotype: [],
+        organTissueCellState: [],
+        genesProteinsPathways: [],
+        experimentalSystemsSpecies: [],
+        interventionsTargets: [],
+      } satisfies CandidateBiologicalContext),
+    evidenceSourceIds: [
+      ...(input.finding.pmid ? [`pmid:${input.finding.pmid}`] : []),
+      ...(input.finding.doi ? [`doi:${input.finding.doi}`] : []),
+    ],
+    sourceProvider: input.sourceProvider ?? "europe_pmc_oppose",
+    responseIdentity: null,
+    methodologicalNote: "opposing_search_title_metadata_only",
+  };
+}
+
+/**
+ * Potential-contradiction flow: compare primary contextual candidates against
+ * opposing-search findings under shared subject/object anchors.
+ */
+export function compareCandidatesAgainstOpposingFindings(input: {
+  candidates: readonly ContextualCandidateRelationship[];
+  opposingFindings: readonly {
+    pmid: string | null;
+    doi: string | null;
+    title: string;
+    polarityHint: "opposing_title_signal" | "uncertain" | "unclassified";
+  }[];
+  generatedAt?: string;
+  maxPairs?: number;
+}): StructuredEvidenceComparisonPack {
+  const maxPairs = Math.min(100, Math.max(1, input.maxPairs ?? 25));
+  const leftUnits = input.candidates.map(comparableUnitFromContextualCandidate);
+  const comparisons: StructuredEvidenceComparison[] = [];
+  for (const left of leftUnits) {
+    for (const finding of input.opposingFindings) {
+      if (comparisons.length >= maxPairs) break;
+      const right = comparableUnitFromOpposingFinding({
+        finding,
+        subject: left.subject,
+        object: left.object,
+        predicate: left.predicate,
+        // Oppose hits are metadata-only unless curator declared context on the candidate side;
+        // reuse candidate disease/gene axes as investigation anchors only when present —
+        // still not claim-level adjudication.
+        biologicalContext: left.biologicalContext,
+      });
+      comparisons.push(compareEvidenceUnits({left, right}));
+    }
+    if (comparisons.length >= maxPairs) break;
+  }
+
+  const summary = {
+    consistent: comparisons.filter((c) => c.outcome === "consistent").length,
+    potentialContradiction: comparisons.filter((c) => c.outcome === "potential_contradiction")
+      .length,
+    contextDependent: comparisons.filter((c) => c.outcome === "context_dependent").length,
+    methodologicalDifference: comparisons.filter((c) => c.outcome === "methodological_difference")
+      .length,
+    insufficientComparability: comparisons.filter((c) => c.outcome === "insufficient_comparability")
+      .length,
+    insufficientEvidence: comparisons.filter((c) => c.outcome === "insufficient_evidence").length,
+  };
+
+  return {
+    schemaVersion: "hsi-structured-evidence-comparison-pack-1",
+    method: STRUCTURED_EVIDENCE_COMPARISON_METHOD,
+    version: STRUCTURED_EVIDENCE_COMPARISON_VERSION,
+    generatedAt: input.generatedAt ?? new Date().toISOString(),
+    comparisons,
+    summary,
+    honesty: {
+      metadataOrDeclaredContextOnly: true,
+      associationScoreIsNotCausation: true,
+      fixturesAreNotLiveEvidence: true,
+      incompleteSearchDistinctFromConsensus: true,
+      potentialContradictionIsNotProvenContradiction: true,
+      gateCAutoApprove: false,
+      cdsPhi: false,
+      autoPromotedToApprovedGraph: false,
+      pairwiseOnly: true,
+      notScientificValidity: true,
+    },
+  };
+}

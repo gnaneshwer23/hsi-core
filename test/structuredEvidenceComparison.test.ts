@@ -7,12 +7,18 @@ import type {
   ContextualCandidateRelationship,
 } from "../src/evidence/contextualCandidateRelationships";
 import {
+  assessContradictionInvestigation,
   comparableUnitFromContextualCandidate,
+  comparableUnitFromOpposingFinding,
+  compareCandidatesAgainstOpposingFindings,
   compareContextualCandidatePairs,
   compareEvidenceUnits,
   projectPotentialContradictionTraces,
   type ComparableEvidenceUnit,
 } from "../src/evidence/structuredEvidenceComparison";
+import {attachStructuredComparisonToOpposingSearch} from "../src/evidence/opposingEvidenceSearch";
+import {verifyRecordedGaps} from "../src/evidence/gapVerification";
+import {projectLivingEvidenceForOutcome} from "../src/evidence/livingEvidenceExpansion";
 
 const emptyContext: CandidateBiologicalContext = {
   diseasePhenotype: [],
@@ -188,5 +194,158 @@ describe("contextual candidate pack + projection", () => {
     expect(u.id).toBe("rel-1");
     expect(u.findingPolarity).toBe("supporting");
     expect(u.biologicalContext.diseasePhenotype[0]?.value).toBe("MONDO:0005100");
+  });
+});
+
+describe("contradiction investigation deepen (M2 phases 4–6)", () => {
+  const emptyLiving = projectLivingEvidenceForOutcome({sourcePmids: [], snapshot: null});
+
+  test("assessContradictionInvestigation records categories not predetermined conclusions", () => {
+    const pack = compareContextualCandidatePairs({
+      generatedAt: "2026-11-09T08:00:00.000Z",
+      relationships: [
+        draftRel({id: "rel-support", findingPolarity: "supporting", biologicalContext: sscContext}),
+        draftRel({id: "rel-oppose", findingPolarity: "opposing", biologicalContext: sscContext}),
+      ],
+    });
+    const assessment = assessContradictionInvestigation({
+      pack,
+      searchRecordId: "search:fixture",
+      searchRecordHash: "a".repeat(64),
+    });
+    expect(assessment.honesty.categoriesAreNotPredeterminedConclusions).toBe(true);
+    expect(assessment.honesty.explanationsNotVerifiedByLlmRationaleAlone).toBe(true);
+    expect(assessment.honesty.scientificApproval).toBe(false);
+    expect(assessment.honesty.graphPromotable).toBe(false);
+    expect(assessment.items.every((i) => i.predeterminedConclusion === false)).toBe(true);
+    expect(assessment.items.every((i) => i.scientificallyVerified === false)).toBe(true);
+    expect(assessment.summary.genuineConflictCandidates).toBeGreaterThanOrEqual(1);
+    expect(assessment.persistenceLines.some((l) => /genuine_conflict_candidate/.test(l))).toBe(true);
+  });
+
+  test("candidate×oppose compare + gap persists investigation categories; LLM-alone refused", () => {
+    const candidates = [
+      draftRel({id: "rel-support", findingPolarity: "supporting", biologicalContext: sscContext}),
+    ];
+    const pack = compareCandidatesAgainstOpposingFindings({
+      candidates,
+      opposingFindings: [
+        {
+          pmid: "99999999",
+          doi: null,
+          title: "Null finding: IL-21 not associated with fibrosis",
+          polarityHint: "opposing_title_signal",
+        },
+      ],
+      generatedAt: "2026-11-09T08:05:00.000Z",
+    });
+    expect(pack.comparisons.length).toBe(1);
+    expect(pack.summary.potentialContradiction).toBe(1);
+
+    const unit = comparableUnitFromOpposingFinding({
+      finding: {
+        pmid: "1",
+        doi: null,
+        title: "opposing title",
+        polarityHint: "opposing_title_signal",
+      },
+      subject: {system: "CL", value: "CL:0000844", label: "Tfh"},
+      object: {system: "UniProt", value: "Q9HBE4", label: "IL21"},
+    });
+    expect(unit.findingPolarity).toBe("opposing");
+    expect(unit.id).toBe("oppose-pmid:1");
+
+    const baseReport = {
+      schemaVersion: "hsi-opposing-evidence-search-1" as const,
+      method: "hsi.opposing_evidence_search.v1" as const,
+      version: "0.1.0" as const,
+      searchPerformed: true,
+      status: "completed_bounded" as const,
+      searchScope: {
+        providers: ["europe_pmc", "open_targets"] as const,
+        contentLevel: "metadata" as const,
+        dateOfSearch: "2026-11-09T08:05:00.000Z",
+        corpusNote: "fixture",
+        queryVariants: ["q"],
+        bounded: true as const,
+      },
+      findings: [
+        {
+          pmid: "99999999",
+          doi: null,
+          title: "Null finding: IL-21 not associated with fibrosis",
+          polarityHint: "opposing_title_signal" as const,
+          note: "fixture",
+          sourceIdentityDistinctFromClaimSupport: true as const,
+          claimSupport: "not_assessed" as const,
+        },
+      ],
+      recordedOpposingCandidateIds: [] as string[],
+      coverage: {
+        literatureAttempts: 1,
+        literatureHits: 1,
+        openTargetsAttempts: 0,
+        openTargetsHits: 0,
+        providerUnavailable: false,
+        successfulEmpty: false,
+        overallOutcome: "successful_hits" as const,
+      },
+      searchRecordId: "search:fixture",
+      searchRecordHash: "b".repeat(64),
+      limitations: ["fixture"],
+      structuredComparison: null,
+      contradictionInvestigation: null,
+      consensusEstablished: false as const,
+      providerUnavailableDistinctFromNoEvidence: true as const,
+      scientificApproval: false as const,
+      graphPromotable: false as const,
+    };
+
+    const enriched = attachStructuredComparisonToOpposingSearch({
+      report: baseReport,
+      candidates,
+      generatedAt: "2026-11-09T08:05:00.000Z",
+    });
+    expect(enriched.contradictionInvestigation).not.toBeNull();
+    expect(enriched.contradictionInvestigation!.honesty.categoriesAreNotPredeterminedConclusions).toBe(
+      true,
+    );
+
+    const gaps = verifyRecordedGaps({
+      asOf: "2026-11-09T08:05:00.000Z",
+      branches: [
+        {
+          id: "b-1",
+          assessment: "insufficient_evidence",
+          supportingClaimIds: ["rel-support"],
+          opposingClaimIds: [],
+          missingEvidence: [
+            "Independent contradictory or null findings — structured comparison recorded potential contradiction investigation categories",
+          ],
+          uncertainty: [],
+        },
+      ],
+      claimContexts: [],
+      localSourcePmids: [],
+      contradictions: {
+        recordedOpposingClaimIds: ["oppose-pmid:99999999"],
+        searchStatus: "completed_bounded",
+      },
+      livingEvidence: emptyLiving,
+      opposingSearch: enriched,
+      contradictionInvestigation: enriched.contradictionInvestigation,
+      semanticSupports: [
+        {
+          matchText:
+            "Independent contradictory or null findings — structured comparison recorded potential contradiction investigation categories",
+          reasoningRecord: "LLM-only rationale without supporting passage",
+        },
+      ],
+    });
+    const item = gaps.items[0]!;
+    expect(item.kind).toBe("contradictory_findings");
+    expect(item.trace.contradictionInvestigationCategories).toContain("genuine_conflict_candidate");
+    expect(item.semanticSupport.acceptedForSemanticAnalysis).toBe(false);
+    expect(item.scientificallyValidated).toBe(false);
   });
 });
