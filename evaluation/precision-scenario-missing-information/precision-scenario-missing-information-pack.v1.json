@@ -1,0 +1,1205 @@
+{
+  "schema": "hsi-precision-scenario-missing-information-1",
+  "method": "hsi.precision_scenario_missing_information.v1",
+  "version": "0.1.0",
+  "asOf": "2026-11-09T17:00:00.000Z",
+  "capabilityKindCount": 8,
+  "scenarioKindCount": 7,
+  "specCount": 2,
+  "precisionResearchScenarioCount": 7,
+  "scenarioModelAndContextCount": 1,
+  "scenarioPredictedOutputCount": 1,
+  "scenarioUncertaintySensitivityCount": 1,
+  "scenarioValidationRecommendationCount": 1,
+  "missingInformationAssessmentCount": 1,
+  "missingVariableResearchValueCount": 1,
+  "followUpAndExperimentalValidationCount": 1,
+  "bundleCount": 2,
+  "scenarioKindsCovered": 7,
+  "quantifiableInfoValueCount": 0,
+  "honesty": {
+    "researchDecisionSupportOnly": true,
+    "notPersonalisedTreatmentEffect": true,
+    "noClinicalDosing": true,
+    "notSpecificPatientPredictionUnlessValidated": true,
+    "researchMeasurementPrioritiesNotClinicalOrders": true,
+    "noInvasiveTestingWithoutGovernance": true,
+    "noInventedInfoGainProbabilities": true,
+    "notDigitalTwinProduct": true,
+    "notValidatedIndividualOutcomePrediction": true,
+    "liveMultiscaleEngineOperational": false,
+    "m11SimulationClaimed": false,
+    "populationAssociationIsNotIndividualTruth": true,
+    "observedIsNotInferred": true,
+    "noPhiIngestion": true,
+    "noAutonomousDiagnosisOrPrescribing": true,
+    "noWorkbenchUi": true,
+    "agentsDraftHumansReview": true,
+    "gateCAutoApprove": false,
+    "mouInvented": false,
+    "phiCdsWired": false,
+    "scientificApproval": false,
+    "graphPromotable": false,
+    "neonProjectPolicy": "red-wave-only",
+    "migration": "deferred"
+  },
+  "specs": [
+    {
+      "schema": "hsi-precision-scenario-missing-information-1",
+      "method": "hsi.precision_scenario_missing_information.v1",
+      "version": "0.1.0",
+      "id": "hsi-psmi-spec-blocked-demo",
+      "displayName": "Blocked precision scenario intelligence until authorised dataset",
+      "scientificQuestion": "Blocked scientific path for precision scenario missing-information intelligence until an authorised clinical dataset is supplied.",
+      "capabilityKinds": [
+        "precision_research_scenario",
+        "scenario_model_and_context",
+        "scenario_predicted_outputs",
+        "scenario_uncertainty_sensitivity",
+        "scenario_validation_recommendation",
+        "missing_information_assessment",
+        "missing_variable_research_value",
+        "follow_up_and_experimental_validation"
+      ],
+      "diseaseContextId": "hsi-hdi-ctx-blocked-demo",
+      "simulationScenarioId": null,
+      "digitalPatientModelId": null,
+      "patientContextualisedResearchSpecId": null,
+      "pcrmMissingInformationAssessmentId": null,
+      "multiscaleSimulationIntegrationSpecId": null,
+      "populationModellingSpecId": null,
+      "integratedDiseaseContextId": null,
+      "longitudinalModellingSpecId": null,
+      "cohortDefinitionId": null,
+      "rweStudyId": null,
+      "longitudinalClinicalEvidenceSpecId": null,
+      "datasetAvailability": "blocked_no_authorised_clinical_dataset",
+      "accessClassification": "restricted_not_ingested",
+      "containsIdentifiablePhi": false,
+      "notPersonalisedTreatmentEffect": true,
+      "noClinicalDosing": true,
+      "notSpecificPatientPredictionUnlessValidated": true,
+      "researchMeasurementPrioritiesNotClinicalOrders": true,
+      "noInvasiveTestingWithoutGovernance": true,
+      "noInventedInfoGainProbabilities": true,
+      "notDigitalTwinProduct": true,
+      "notValidatedIndividualOutcomePrediction": true,
+      "liveMultiscaleEngineOperational": false,
+      "m11SimulationClaimed": false,
+      "inventedInfoGainProbability": null,
+      "lifecycle": "blocked_awaiting_authorised_dataset",
+      "reviewedBy": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-psmi",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notPersonalisedTreatmentEffect": true,
+        "noClinicalDosing": true,
+        "notSpecificPatientPredictionUnlessValidated": true,
+        "researchMeasurementPrioritiesNotClinicalOrders": true,
+        "noInvasiveTestingWithoutGovernance": true,
+        "noInventedInfoGainProbabilities": true,
+        "notDigitalTwinProduct": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T17:00:00.000Z",
+      "updatedAt": "2026-11-09T17:00:00.000Z",
+      "note": ""
+    },
+    {
+      "schema": "hsi-precision-scenario-missing-information-1",
+      "method": "hsi.precision_scenario_missing_information.v1",
+      "version": "0.1.0",
+      "id": "hsi-psmi-spec-ssc-demo",
+      "displayName": "Fixture SSc precision scenario missing-information spec",
+      "scientificQuestion": "How can bounded research scenarios declare alternative mechanisms, trajectory comparisons, biomarker measurement, parameter sensitivity, subgroup comparisons, pathway perturbations, and monitoring schedules while missing-information intelligence stays research-priority framed?",
+      "capabilityKinds": [
+        "precision_research_scenario",
+        "scenario_model_and_context",
+        "scenario_predicted_outputs",
+        "scenario_uncertainty_sensitivity",
+        "scenario_validation_recommendation",
+        "missing_information_assessment",
+        "missing_variable_research_value",
+        "follow_up_and_experimental_validation"
+      ],
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "simulationScenarioId": "hsi-hdi-sim-ssc-demo",
+      "digitalPatientModelId": "hsi-hdi-dpm-ssc-demo",
+      "patientContextualisedResearchSpecId": "hsi-pcrm-spec-ssc-demo",
+      "pcrmMissingInformationAssessmentId": "hsi-pcrm-mia-ssc-demo",
+      "multiscaleSimulationIntegrationSpecId": "hsi-msi-spec-ssc-demo",
+      "populationModellingSpecId": "hsi-pcdm-spec-ssc-demo",
+      "integratedDiseaseContextId": "hsi-cbc-idc-ssc-demo",
+      "longitudinalModellingSpecId": "hsi-ldsm-spec-ssc-demo",
+      "cohortDefinitionId": "hsi-rcb-coh-ssc-demo",
+      "rweStudyId": "hsi-rwe-study-ssc-demo",
+      "longitudinalClinicalEvidenceSpecId": "hsi-lce-spec-ssc-demo",
+      "datasetAvailability": "fixture_only",
+      "accessClassification": "fixture_engineering",
+      "containsIdentifiablePhi": false,
+      "notPersonalisedTreatmentEffect": true,
+      "noClinicalDosing": true,
+      "notSpecificPatientPredictionUnlessValidated": true,
+      "researchMeasurementPrioritiesNotClinicalOrders": true,
+      "noInvasiveTestingWithoutGovernance": true,
+      "noInventedInfoGainProbabilities": true,
+      "notDigitalTwinProduct": true,
+      "notValidatedIndividualOutcomePrediction": true,
+      "liveMultiscaleEngineOperational": false,
+      "m11SimulationClaimed": false,
+      "inventedInfoGainProbability": null,
+      "lifecycle": "draft",
+      "reviewedBy": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-psmi",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notPersonalisedTreatmentEffect": true,
+        "noClinicalDosing": true,
+        "notSpecificPatientPredictionUnlessValidated": true,
+        "researchMeasurementPrioritiesNotClinicalOrders": true,
+        "noInvasiveTestingWithoutGovernance": true,
+        "noInventedInfoGainProbabilities": true,
+        "notDigitalTwinProduct": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T17:00:00.000Z",
+      "updatedAt": "2026-11-09T17:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "precisionResearchScenarios": [
+    {
+      "schema": "hsi-precision-scenario-missing-information-1",
+      "method": "hsi.precision_scenario_missing_information.v1",
+      "version": "0.1.0",
+      "id": "hsi-psmi-scn-ssc-1",
+      "intelligenceSpecId": "hsi-psmi-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "scenarioKind": "alternative_biological_mechanism_assumptions",
+      "scenarioDefinition": "Fixture alternative_biological_mechanism_assumptions research scenario for SSc evaluation.",
+      "keyAssumptions": [
+        "Fixture research assumption declared.",
+        "Not a personalised treatment effect framing."
+      ],
+      "notPersonalisedTreatmentEffect": true,
+      "noClinicalDosing": true,
+      "notSpecificPatientPredictionUnlessValidated": true,
+      "limitations": [
+        "Research scenario only.",
+        "Not clinical dosing.",
+        "Specific-patient prediction not authorised unless separately validated."
+      ],
+      "authoredBy": {
+        "principalId": "fixture-agent-psmi",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notPersonalisedTreatmentEffect": true,
+        "noClinicalDosing": true,
+        "notSpecificPatientPredictionUnlessValidated": true,
+        "researchMeasurementPrioritiesNotClinicalOrders": true,
+        "noInvasiveTestingWithoutGovernance": true,
+        "noInventedInfoGainProbabilities": true,
+        "notDigitalTwinProduct": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T17:00:00.000Z",
+      "updatedAt": "2026-11-09T17:00:00.000Z",
+      "note": ""
+    },
+    {
+      "schema": "hsi-precision-scenario-missing-information-1",
+      "method": "hsi.precision_scenario_missing_information.v1",
+      "version": "0.1.0",
+      "id": "hsi-psmi-scn-ssc-2",
+      "intelligenceSpecId": "hsi-psmi-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "scenarioKind": "disease_trajectory_model_comparison",
+      "scenarioDefinition": "Fixture disease_trajectory_model_comparison research scenario for SSc evaluation.",
+      "keyAssumptions": [
+        "Fixture research assumption declared.",
+        "Not a personalised treatment effect framing."
+      ],
+      "notPersonalisedTreatmentEffect": true,
+      "noClinicalDosing": true,
+      "notSpecificPatientPredictionUnlessValidated": true,
+      "limitations": [
+        "Research scenario only.",
+        "Not clinical dosing.",
+        "Specific-patient prediction not authorised unless separately validated."
+      ],
+      "authoredBy": {
+        "principalId": "fixture-agent-psmi",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notPersonalisedTreatmentEffect": true,
+        "noClinicalDosing": true,
+        "notSpecificPatientPredictionUnlessValidated": true,
+        "researchMeasurementPrioritiesNotClinicalOrders": true,
+        "noInvasiveTestingWithoutGovernance": true,
+        "noInventedInfoGainProbabilities": true,
+        "notDigitalTwinProduct": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T17:00:00.000Z",
+      "updatedAt": "2026-11-09T17:00:00.000Z",
+      "note": ""
+    },
+    {
+      "schema": "hsi-precision-scenario-missing-information-1",
+      "method": "hsi.precision_scenario_missing_information.v1",
+      "version": "0.1.0",
+      "id": "hsi-psmi-scn-ssc-3",
+      "intelligenceSpecId": "hsi-psmi-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "scenarioKind": "biomarker_measurement_scenarios",
+      "scenarioDefinition": "Fixture biomarker_measurement_scenarios research scenario for SSc evaluation.",
+      "keyAssumptions": [
+        "Fixture research assumption declared.",
+        "Not a personalised treatment effect framing."
+      ],
+      "notPersonalisedTreatmentEffect": true,
+      "noClinicalDosing": true,
+      "notSpecificPatientPredictionUnlessValidated": true,
+      "limitations": [
+        "Research scenario only.",
+        "Not clinical dosing.",
+        "Specific-patient prediction not authorised unless separately validated."
+      ],
+      "authoredBy": {
+        "principalId": "fixture-agent-psmi",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notPersonalisedTreatmentEffect": true,
+        "noClinicalDosing": true,
+        "notSpecificPatientPredictionUnlessValidated": true,
+        "researchMeasurementPrioritiesNotClinicalOrders": true,
+        "noInvasiveTestingWithoutGovernance": true,
+        "noInventedInfoGainProbabilities": true,
+        "notDigitalTwinProduct": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T17:00:00.000Z",
+      "updatedAt": "2026-11-09T17:00:00.000Z",
+      "note": ""
+    },
+    {
+      "schema": "hsi-precision-scenario-missing-information-1",
+      "method": "hsi.precision_scenario_missing_information.v1",
+      "version": "0.1.0",
+      "id": "hsi-psmi-scn-ssc-4",
+      "intelligenceSpecId": "hsi-psmi-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "scenarioKind": "model_parameter_sensitivity",
+      "scenarioDefinition": "Fixture model_parameter_sensitivity research scenario for SSc evaluation.",
+      "keyAssumptions": [
+        "Fixture research assumption declared.",
+        "Not a personalised treatment effect framing."
+      ],
+      "notPersonalisedTreatmentEffect": true,
+      "noClinicalDosing": true,
+      "notSpecificPatientPredictionUnlessValidated": true,
+      "limitations": [
+        "Research scenario only.",
+        "Not clinical dosing.",
+        "Specific-patient prediction not authorised unless separately validated."
+      ],
+      "authoredBy": {
+        "principalId": "fixture-agent-psmi",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notPersonalisedTreatmentEffect": true,
+        "noClinicalDosing": true,
+        "notSpecificPatientPredictionUnlessValidated": true,
+        "researchMeasurementPrioritiesNotClinicalOrders": true,
+        "noInvasiveTestingWithoutGovernance": true,
+        "noInventedInfoGainProbabilities": true,
+        "notDigitalTwinProduct": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T17:00:00.000Z",
+      "updatedAt": "2026-11-09T17:00:00.000Z",
+      "note": ""
+    },
+    {
+      "schema": "hsi-precision-scenario-missing-information-1",
+      "method": "hsi.precision_scenario_missing_information.v1",
+      "version": "0.1.0",
+      "id": "hsi-psmi-scn-ssc-5",
+      "intelligenceSpecId": "hsi-psmi-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "scenarioKind": "cohort_subgroup_comparisons",
+      "scenarioDefinition": "Fixture cohort_subgroup_comparisons research scenario for SSc evaluation.",
+      "keyAssumptions": [
+        "Fixture research assumption declared.",
+        "Not a personalised treatment effect framing."
+      ],
+      "notPersonalisedTreatmentEffect": true,
+      "noClinicalDosing": true,
+      "notSpecificPatientPredictionUnlessValidated": true,
+      "limitations": [
+        "Research scenario only.",
+        "Not clinical dosing.",
+        "Specific-patient prediction not authorised unless separately validated."
+      ],
+      "authoredBy": {
+        "principalId": "fixture-agent-psmi",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notPersonalisedTreatmentEffect": true,
+        "noClinicalDosing": true,
+        "notSpecificPatientPredictionUnlessValidated": true,
+        "researchMeasurementPrioritiesNotClinicalOrders": true,
+        "noInvasiveTestingWithoutGovernance": true,
+        "noInventedInfoGainProbabilities": true,
+        "notDigitalTwinProduct": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T17:00:00.000Z",
+      "updatedAt": "2026-11-09T17:00:00.000Z",
+      "note": ""
+    },
+    {
+      "schema": "hsi-precision-scenario-missing-information-1",
+      "method": "hsi.precision_scenario_missing_information.v1",
+      "version": "0.1.0",
+      "id": "hsi-psmi-scn-ssc-6",
+      "intelligenceSpecId": "hsi-psmi-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "scenarioKind": "hypothetical_pathway_perturbations",
+      "scenarioDefinition": "Fixture hypothetical_pathway_perturbations research scenario for SSc evaluation.",
+      "keyAssumptions": [
+        "Fixture research assumption declared.",
+        "Not a personalised treatment effect framing."
+      ],
+      "notPersonalisedTreatmentEffect": true,
+      "noClinicalDosing": true,
+      "notSpecificPatientPredictionUnlessValidated": true,
+      "limitations": [
+        "Research scenario only.",
+        "Not clinical dosing.",
+        "Specific-patient prediction not authorised unless separately validated."
+      ],
+      "authoredBy": {
+        "principalId": "fixture-agent-psmi",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notPersonalisedTreatmentEffect": true,
+        "noClinicalDosing": true,
+        "notSpecificPatientPredictionUnlessValidated": true,
+        "researchMeasurementPrioritiesNotClinicalOrders": true,
+        "noInvasiveTestingWithoutGovernance": true,
+        "noInventedInfoGainProbabilities": true,
+        "notDigitalTwinProduct": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T17:00:00.000Z",
+      "updatedAt": "2026-11-09T17:00:00.000Z",
+      "note": ""
+    },
+    {
+      "schema": "hsi-precision-scenario-missing-information-1",
+      "method": "hsi.precision_scenario_missing_information.v1",
+      "version": "0.1.0",
+      "id": "hsi-psmi-scn-ssc-7",
+      "intelligenceSpecId": "hsi-psmi-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "scenarioKind": "alternative_monitoring_schedules",
+      "scenarioDefinition": "Fixture alternative_monitoring_schedules research scenario for SSc evaluation.",
+      "keyAssumptions": [
+        "Fixture research assumption declared.",
+        "Not a personalised treatment effect framing."
+      ],
+      "notPersonalisedTreatmentEffect": true,
+      "noClinicalDosing": true,
+      "notSpecificPatientPredictionUnlessValidated": true,
+      "limitations": [
+        "Research scenario only.",
+        "Not clinical dosing.",
+        "Specific-patient prediction not authorised unless separately validated."
+      ],
+      "authoredBy": {
+        "principalId": "fixture-agent-psmi",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notPersonalisedTreatmentEffect": true,
+        "noClinicalDosing": true,
+        "notSpecificPatientPredictionUnlessValidated": true,
+        "researchMeasurementPrioritiesNotClinicalOrders": true,
+        "noInvasiveTestingWithoutGovernance": true,
+        "noInventedInfoGainProbabilities": true,
+        "notDigitalTwinProduct": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T17:00:00.000Z",
+      "updatedAt": "2026-11-09T17:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "scenarioModelAndContexts": [
+    {
+      "schema": "hsi-precision-scenario-missing-information-1",
+      "method": "hsi.precision_scenario_missing_information.v1",
+      "version": "0.1.0",
+      "id": "hsi-psmi-ctx-ssc-demo",
+      "intelligenceSpecId": "hsi-psmi-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "precisionResearchScenarioId": "hsi-psmi-scn-ssc-1",
+      "modelVersion": "fixture-model-v0.1.0",
+      "supportedBiologicalContext": "Fixture inflammatory pathway research context.",
+      "contextSummary": "Supported biological context for fixture scenario.",
+      "limitations": [
+        "Context is research framing only.",
+        "Fixture only."
+      ],
+      "authoredBy": {
+        "principalId": "fixture-agent-psmi",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notPersonalisedTreatmentEffect": true,
+        "noClinicalDosing": true,
+        "notSpecificPatientPredictionUnlessValidated": true,
+        "researchMeasurementPrioritiesNotClinicalOrders": true,
+        "noInvasiveTestingWithoutGovernance": true,
+        "noInventedInfoGainProbabilities": true,
+        "notDigitalTwinProduct": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T17:00:00.000Z",
+      "updatedAt": "2026-11-09T17:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "scenarioPredictedOutputs": [
+    {
+      "schema": "hsi-precision-scenario-missing-information-1",
+      "method": "hsi.precision_scenario_missing_information.v1",
+      "version": "0.1.0",
+      "id": "hsi-psmi-out-ssc-demo",
+      "intelligenceSpecId": "hsi-psmi-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "precisionResearchScenarioId": "hsi-psmi-scn-ssc-1",
+      "predictedOutputs": [
+        "Relative biomarker trajectory band under research assumptions.",
+        "Comparative sensitivity ranking across sampling schedules."
+      ],
+      "outputsSummary": "Fixture predicted research outputs — not specific-patient prediction.",
+      "notSpecificPatientPredictionUnlessValidated": true,
+      "notPersonalisedTreatmentEffect": true,
+      "validatedForSpecificPatientPurpose": false,
+      "limitations": [
+        "Predicted outputs are research envelopes only.",
+        "Specific-patient prediction not authorised."
+      ],
+      "authoredBy": {
+        "principalId": "fixture-agent-psmi",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notPersonalisedTreatmentEffect": true,
+        "noClinicalDosing": true,
+        "notSpecificPatientPredictionUnlessValidated": true,
+        "researchMeasurementPrioritiesNotClinicalOrders": true,
+        "noInvasiveTestingWithoutGovernance": true,
+        "noInventedInfoGainProbabilities": true,
+        "notDigitalTwinProduct": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T17:00:00.000Z",
+      "updatedAt": "2026-11-09T17:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "scenarioUncertaintySensitivities": [
+    {
+      "schema": "hsi-precision-scenario-missing-information-1",
+      "method": "hsi.precision_scenario_missing_information.v1",
+      "version": "0.1.0",
+      "id": "hsi-psmi-unc-ssc-demo",
+      "intelligenceSpecId": "hsi-psmi-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "precisionResearchScenarioId": "hsi-psmi-scn-ssc-1",
+      "uncertaintyOrdinal": "high_declared",
+      "sensitivityOrdinal": "moderate_declared",
+      "uncertaintySummary": "Fixture high uncertainty from sparse sampling.",
+      "sensitivitySummary": "Moderate sensitivity to sampling interval assumption.",
+      "sourcesOfUncertainty": [
+        "sparse sampling",
+        "fixture model version"
+      ],
+      "sensitivityDrivers": [
+        "sampling interval",
+        "assay noise band"
+      ],
+      "limitations": [
+        "Uncertainty is research framing only.",
+        "Fixture only."
+      ],
+      "authoredBy": {
+        "principalId": "fixture-agent-psmi",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notPersonalisedTreatmentEffect": true,
+        "noClinicalDosing": true,
+        "notSpecificPatientPredictionUnlessValidated": true,
+        "researchMeasurementPrioritiesNotClinicalOrders": true,
+        "noInvasiveTestingWithoutGovernance": true,
+        "noInventedInfoGainProbabilities": true,
+        "notDigitalTwinProduct": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T17:00:00.000Z",
+      "updatedAt": "2026-11-09T17:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "scenarioValidationRecommendations": [
+    {
+      "schema": "hsi-precision-scenario-missing-information-1",
+      "method": "hsi.precision_scenario_missing_information.v1",
+      "version": "0.1.0",
+      "id": "hsi-psmi-val-ssc-demo",
+      "intelligenceSpecId": "hsi-psmi-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "precisionResearchScenarioId": "hsi-psmi-scn-ssc-1",
+      "recommendedValidationSteps": [
+        "Compare fixture outputs against authorised research cohort when available."
+      ],
+      "scenarioLimitations": [
+        "Fixture scenario is not scientific validation."
+      ],
+      "validationSummary": "Recommended research validation steps — not a clinical order.",
+      "researchOnly": true,
+      "notClinicalOrder": true,
+      "limitations": [
+        "Research-only validation recommendations.",
+        "Not a clinical order."
+      ],
+      "authoredBy": {
+        "principalId": "fixture-agent-psmi",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notPersonalisedTreatmentEffect": true,
+        "noClinicalDosing": true,
+        "notSpecificPatientPredictionUnlessValidated": true,
+        "researchMeasurementPrioritiesNotClinicalOrders": true,
+        "noInvasiveTestingWithoutGovernance": true,
+        "noInventedInfoGainProbabilities": true,
+        "notDigitalTwinProduct": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T17:00:00.000Z",
+      "updatedAt": "2026-11-09T17:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "missingInformationAssessments": [
+    {
+      "schema": "hsi-precision-scenario-missing-information-1",
+      "method": "hsi.precision_scenario_missing_information.v1",
+      "version": "0.1.0",
+      "id": "hsi-psmi-mia-ssc-demo",
+      "intelligenceSpecId": "hsi-psmi-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "pcrmMissingInformationAssessmentId": "hsi-pcrm-mia-ssc-demo",
+      "missingMeasurementIds": [
+        "fixture-meas-il6",
+        "fixture-meas-crp-followup"
+      ],
+      "dataQualityGaps": [
+        "Sparse follow-up inflammatory markers."
+      ],
+      "modelInputRequirements": [
+        "Longitudinal inflammatory marker series required."
+      ],
+      "assessmentSummary": "Fixture missing-information assessment for research priorities.",
+      "inventedValues": null,
+      "researchMeasurementPrioritiesNotClinicalOrders": true,
+      "limitations": [
+        "Research measurement priorities only.",
+        "Not clinical orders."
+      ],
+      "authoredBy": {
+        "principalId": "fixture-agent-psmi",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notPersonalisedTreatmentEffect": true,
+        "noClinicalDosing": true,
+        "notSpecificPatientPredictionUnlessValidated": true,
+        "researchMeasurementPrioritiesNotClinicalOrders": true,
+        "noInvasiveTestingWithoutGovernance": true,
+        "noInventedInfoGainProbabilities": true,
+        "notDigitalTwinProduct": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T17:00:00.000Z",
+      "updatedAt": "2026-11-09T17:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "missingVariableResearchValues": [
+    {
+      "schema": "hsi-precision-scenario-missing-information-1",
+      "method": "hsi.precision_scenario_missing_information.v1",
+      "version": "0.1.0",
+      "id": "hsi-psmi-mrv-ssc-demo",
+      "intelligenceSpecId": "hsi-psmi-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "missingInformationAssessmentId": "hsi-psmi-mia-ssc-demo",
+      "missingVariableIds": [
+        "fixture-meas-il6"
+      ],
+      "sensitivityToMissingVariables": "high_declared",
+      "sensitivitySummary": "High sensitivity to missing IL-6 follow-up under fixture assumptions.",
+      "infoValueStatus": "unquantifiable_declared",
+      "quantifiableInfoValueSummary": null,
+      "inventedInfoGainProbability": null,
+      "limitations": [
+        "Info value unquantifiable — no invented probability.",
+        "Research framing only."
+      ],
+      "authoredBy": {
+        "principalId": "fixture-agent-psmi",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notPersonalisedTreatmentEffect": true,
+        "noClinicalDosing": true,
+        "notSpecificPatientPredictionUnlessValidated": true,
+        "researchMeasurementPrioritiesNotClinicalOrders": true,
+        "noInvasiveTestingWithoutGovernance": true,
+        "noInventedInfoGainProbabilities": true,
+        "notDigitalTwinProduct": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T17:00:00.000Z",
+      "updatedAt": "2026-11-09T17:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "followUpAndExperimentalValidations": [
+    {
+      "schema": "hsi-precision-scenario-missing-information-1",
+      "method": "hsi.precision_scenario_missing_information.v1",
+      "version": "0.1.0",
+      "id": "hsi-psmi-fuv-ssc-demo",
+      "intelligenceSpecId": "hsi-psmi-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "missingInformationAssessmentId": "hsi-psmi-mia-ssc-demo",
+      "candidateFollowUpMeasurements": [
+        "Fixture serum IL-6 follow-up comparison",
+        "Fixture CRP sampling-schedule comparison"
+      ],
+      "experimentalValidationRecommendations": [
+        "Validate scenario outputs on authorised research cohort when available."
+      ],
+      "researchMeasurementPriorities": [
+        "Prioritise non-invasive inflammatory marker follow-up for research evaluation."
+      ],
+      "comparisonSummary": "Candidate follow-up measurements framed as research priorities — not clinical orders.",
+      "researchMeasurementPrioritiesNotClinicalOrders": true,
+      "invasiveTestingGovernanceStatus": "governance_required_declared",
+      "noInvasiveTestingWithoutGovernance": true,
+      "limitations": [
+        "Research measurement priorities are not clinical orders.",
+        "Invasive testing requires governance."
+      ],
+      "authoredBy": {
+        "principalId": "fixture-agent-psmi",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notPersonalisedTreatmentEffect": true,
+        "noClinicalDosing": true,
+        "notSpecificPatientPredictionUnlessValidated": true,
+        "researchMeasurementPrioritiesNotClinicalOrders": true,
+        "noInvasiveTestingWithoutGovernance": true,
+        "noInventedInfoGainProbabilities": true,
+        "notDigitalTwinProduct": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T17:00:00.000Z",
+      "updatedAt": "2026-11-09T17:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "bundles": [
+    {
+      "schema": "hsi-precision-scenario-missing-information-1",
+      "method": "hsi.precision_scenario_missing_information.v1",
+      "version": "0.1.0",
+      "id": "hsi-psmi-bnd-blocked-demo",
+      "displayName": "Blocked precision scenario missing-information bundle",
+      "diseaseContextId": "hsi-hdi-ctx-blocked-demo",
+      "intelligenceSpecId": "hsi-psmi-spec-blocked-demo",
+      "precisionResearchScenarioIds": [],
+      "scenarioModelAndContextIds": [],
+      "scenarioPredictedOutputIds": [],
+      "scenarioUncertaintySensitivityIds": [],
+      "scenarioValidationRecommendationIds": [],
+      "missingInformationAssessmentIds": [],
+      "missingVariableResearchValueIds": [],
+      "followUpAndExperimentalValidationIds": [],
+      "scenarioKindIdsByKind": {
+        "alternative_biological_mechanism_assumptions": [],
+        "disease_trajectory_model_comparison": [],
+        "biomarker_measurement_scenarios": [],
+        "model_parameter_sensitivity": [],
+        "cohort_subgroup_comparisons": [],
+        "hypothetical_pathway_perturbations": [],
+        "alternative_monitoring_schedules": []
+      },
+      "bundleVersion": "0.1.0",
+      "limitations": [
+        "Blocked awaiting authorised research dataset — not scientific validation.",
+        "Fixtures only until authorised dataset exists."
+      ],
+      "datasetAvailability": "blocked_no_authorised_clinical_dataset",
+      "notPersonalisedTreatmentEffect": true,
+      "noClinicalDosing": true,
+      "notSpecificPatientPredictionUnlessValidated": true,
+      "researchMeasurementPrioritiesNotClinicalOrders": true,
+      "noInvasiveTestingWithoutGovernance": true,
+      "noInventedInfoGainProbabilities": true,
+      "notDigitalTwinProduct": true,
+      "notValidatedIndividualOutcomePrediction": true,
+      "liveMultiscaleEngineOperational": false,
+      "m11SimulationClaimed": false,
+      "inventedInfoGainProbability": null,
+      "graphPromotable": false,
+      "lifecycle": "blocked_awaiting_authorised_dataset",
+      "reviewedBy": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-psmi",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notPersonalisedTreatmentEffect": true,
+        "noClinicalDosing": true,
+        "notSpecificPatientPredictionUnlessValidated": true,
+        "researchMeasurementPrioritiesNotClinicalOrders": true,
+        "noInvasiveTestingWithoutGovernance": true,
+        "noInventedInfoGainProbabilities": true,
+        "notDigitalTwinProduct": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T17:00:00.000Z",
+      "updatedAt": "2026-11-09T17:00:00.000Z",
+      "note": ""
+    },
+    {
+      "schema": "hsi-precision-scenario-missing-information-1",
+      "method": "hsi.precision_scenario_missing_information.v1",
+      "version": "0.1.0",
+      "id": "hsi-psmi-bnd-ssc-demo",
+      "displayName": "Fixture SSc precision scenario missing-information bundle",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "intelligenceSpecId": "hsi-psmi-spec-ssc-demo",
+      "precisionResearchScenarioIds": [
+        "hsi-psmi-scn-ssc-1",
+        "hsi-psmi-scn-ssc-2",
+        "hsi-psmi-scn-ssc-3",
+        "hsi-psmi-scn-ssc-4",
+        "hsi-psmi-scn-ssc-5",
+        "hsi-psmi-scn-ssc-6",
+        "hsi-psmi-scn-ssc-7"
+      ],
+      "scenarioModelAndContextIds": [
+        "hsi-psmi-ctx-ssc-demo"
+      ],
+      "scenarioPredictedOutputIds": [
+        "hsi-psmi-out-ssc-demo"
+      ],
+      "scenarioUncertaintySensitivityIds": [
+        "hsi-psmi-unc-ssc-demo"
+      ],
+      "scenarioValidationRecommendationIds": [
+        "hsi-psmi-val-ssc-demo"
+      ],
+      "missingInformationAssessmentIds": [
+        "hsi-psmi-mia-ssc-demo"
+      ],
+      "missingVariableResearchValueIds": [
+        "hsi-psmi-mrv-ssc-demo"
+      ],
+      "followUpAndExperimentalValidationIds": [
+        "hsi-psmi-fuv-ssc-demo"
+      ],
+      "scenarioKindIdsByKind": {
+        "alternative_biological_mechanism_assumptions": [
+          "hsi-psmi-scn-ssc-1"
+        ],
+        "disease_trajectory_model_comparison": [
+          "hsi-psmi-scn-ssc-2"
+        ],
+        "biomarker_measurement_scenarios": [
+          "hsi-psmi-scn-ssc-3"
+        ],
+        "model_parameter_sensitivity": [
+          "hsi-psmi-scn-ssc-4"
+        ],
+        "cohort_subgroup_comparisons": [
+          "hsi-psmi-scn-ssc-5"
+        ],
+        "hypothetical_pathway_perturbations": [
+          "hsi-psmi-scn-ssc-6"
+        ],
+        "alternative_monitoring_schedules": [
+          "hsi-psmi-scn-ssc-7"
+        ]
+      },
+      "bundleVersion": "0.1.0",
+      "limitations": [
+        "Fixture precision scenario missing-information bundle — research decision support only.",
+        "Not personalised treatment effects.",
+        "Not clinical dosing.",
+        "Specific-patient prediction not authorised."
+      ],
+      "datasetAvailability": "fixture_only",
+      "notPersonalisedTreatmentEffect": true,
+      "noClinicalDosing": true,
+      "notSpecificPatientPredictionUnlessValidated": true,
+      "researchMeasurementPrioritiesNotClinicalOrders": true,
+      "noInvasiveTestingWithoutGovernance": true,
+      "noInventedInfoGainProbabilities": true,
+      "notDigitalTwinProduct": true,
+      "notValidatedIndividualOutcomePrediction": true,
+      "liveMultiscaleEngineOperational": false,
+      "m11SimulationClaimed": false,
+      "inventedInfoGainProbability": null,
+      "graphPromotable": false,
+      "lifecycle": "accepted_with_limitations",
+      "reviewedBy": {
+        "principalId": "fixture-researcher",
+        "actorKind": "human"
+      },
+      "authoredBy": {
+        "principalId": "fixture-agent-psmi",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notPersonalisedTreatmentEffect": true,
+        "noClinicalDosing": true,
+        "notSpecificPatientPredictionUnlessValidated": true,
+        "researchMeasurementPrioritiesNotClinicalOrders": true,
+        "noInvasiveTestingWithoutGovernance": true,
+        "noInventedInfoGainProbabilities": true,
+        "notDigitalTwinProduct": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T17:00:00.000Z",
+      "updatedAt": "2026-11-09T17:00:00.000Z",
+      "note": ""
+    }
+  ]
+}

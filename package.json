@@ -239,6 +239,8 @@
     "hdi:patient-contextualised-research-models:check": "bun --no-env-file scripts/patient-contextualised-research-models-contracts.ts --check",
     "hdi:multiscale-simulation-integration:prepare": "bun --no-env-file scripts/multiscale-simulation-integration-contracts.ts",
     "hdi:multiscale-simulation-integration:check": "bun --no-env-file scripts/multiscale-simulation-integration-contracts.ts --check",
+    "hdi:precision-scenario-missing-information:prepare": "bun --no-env-file scripts/precision-scenario-missing-information-contracts.ts",
+    "hdi:precision-scenario-missing-information:check": "bun --no-env-file scripts/precision-scenario-missing-information-contracts.ts --check",
     "gap-verification:expand": "bun --no-env-file scripts/gap-verification-check.ts",
     "gap-verification:check": "bun --no-env-file scripts/gap-verification-check.ts --check",
     "fixture:synthetic-e2e:check": "bun --no-env-file scripts/check-synthetic-e2e-fixture.ts",
