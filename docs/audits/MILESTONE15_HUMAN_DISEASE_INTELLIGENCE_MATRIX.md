@@ -3,10 +3,10 @@
 **Brief:** HSI Milestone 15 — governed disease-research intelligence contracts for disease context, observed vs inferred disease state, access-scoped digital patient **research** models, and research-only simulation scenarios — composing M14 RWE / longitudinal / (optional) cohort ids — **without** a separate digital-twin product, autonomous diagnosis/prescribing/treatment, unrestricted identifiable patients in the scientific KG, PHI/CDS, Gate C auto-approve, MoU invention, or claiming a live multiscale engine (M11 skipped).  
 **Status:** Phase 0 gap audit + PR1 (Integrated Disease Intelligence Contracts) — **not** disease intelligence complete, **not** personalised treatment simulation authorised, **not** live digital patient validation, **not** M15 complete.  
 **Date:** 2026-11-09  
-**Audited `main` SHA:** `64dae2943229c2ca4b37c74bbfc838987132514f` (post-#114 tip)  
-**Tip commit:** `64dae29 Add M14 longitudinal clinical evidence model contracts (#114)`  
+**Audited `main` SHA:** `02cf969ccc3ec7545637d53a010904061c0f7abd` (post-#114 + #115 tip)  
+**Tip commit:** `02cf969 Add M14 reproducible cohort builder contracts (#115)`  
 **HSI Neon:** red-wave only (`human super intelligence` / `red-wave-06625195` / `ep-restless-dew…`) — never autumn-snow / Akeno / DeliverX  
-**Dependency:** PR1 stacks on merged M14 PR1–PR3 ([#111](https://github.com/gnaneshwer23/hsi-core/pull/111), [#113](https://github.com/gnaneshwer23/hsi-core/pull/113), [#114](https://github.com/gnaneshwer23/hsi-core/pull/114)). M14 PR4 cohort builder **not on `main`** at audit — optional `hsi-rcb-*` id slots reserved; do not claim cohort builder operational.
+**Dependency:** PR1 stacks on merged M14 PR1–PR4 ([#111](https://github.com/gnaneshwer23/hsi-core/pull/111), [#113](https://github.com/gnaneshwer23/hsi-core/pull/113), [#114](https://github.com/gnaneshwer23/hsi-core/pull/114), [#115](https://github.com/gnaneshwer23/hsi-core/pull/115)). Optional `hsi-rcb-coh-*` composition links enabled; do not claim live EHR cohort queries.
 
 **Cross-links (do not contradict):**
 
@@ -54,7 +54,7 @@ Honesty freeze: research decision support only · **not a separate digital twin 
 
 ---
 
-## Phase 0 — M1–M14 dependency status (post-#114)
+## Phase 0 — M1–M14 dependency status (post-#115)
 
 | Milestone | On audited `main` | Status | M15 readiness |
 |-----------|-------------------|--------|---------------|
@@ -71,7 +71,7 @@ Honesty freeze: research decision support only · **not a separate digital twin 
 | **M11** Multiscale simulation | — | `Skipped` / `Missing` | **Do not claim live multiscale / twin engine** |
 | **M12** Therapeutic discovery | #107 | `Partial` (PR1) | Optional therapeutic programme/target refs |
 | **M13** Translational development | #109 | `Partial` (PR1) | Optional trial-concept / biomarker refs |
-| **M14** RWE / clinical outcomes | #111 / #113 / #114 | `Partial` (PR1–PR3 on `main`) · PR4 cohort **not on main** · PR5+ `Missing` | Compose RWE study + LCE ids; cohort id slots reserved |
+| **M14** RWE / clinical outcomes | #111 / #113 / #114 / #115 | `Partial` (PR1–PR4 on `main`) · PR5+ `Missing` | Compose RWE study + LCE + cohort definition ids |
 | Human #2 / #4 / #5 | PARKED | `Blocked` | Blocks live scientific E2E |
 
 **Verdict:** Eng substrate is sufficient for M15 **PR1 Integrated Disease Intelligence Contracts** (disease research context / observed state / inferred estimate / digital patient research model / research simulation scenario + thin memory store + honesty gates). Scientific path for real digital-patient or simulation validation remains **Blocked** until an authorised research dataset with verified data-use permissions exists — **do not fabricate timelines or use synthetic patients as validation**.
@@ -90,7 +90,7 @@ Honesty freeze: research decision support only · **not a separate digital twin 
 | Population association ≠ individual truth | **Declared** | Simulation / estimate honesty |
 | Synthetic patients as scientific validation | **Forbidden** when authorised dataset blocked | Fixtures = engineering only |
 | M11 live multiscale engine | **Not claimed** | M11 skipped/missing |
-| M14 cohort builder | **Not on main** at audit | Optional `hsi-rcb-coh-*` refs only |
+| M14 cohort builder | **PR4 merged** (#115) — fixture/contract only | Optional `hsi-rcb-coh-*` refs; no live EHR queries |
 | Neon clinical PHI tables | **Not introduced** | PR1 contracts-first; red-wave only if/when authorised |
 
 ---
@@ -120,7 +120,7 @@ Honesty freeze: research decision support only · **not a separate digital twin 
 | M14 RWE contracts | `realWorldEvidenceContracts.ts` | `Partial` (PR1) | Optional `hsi-rwe-study-*` / obs / exposure / outcome / analysis links |
 | M14 secure clinical interop | `secureClinicalDataInteropContracts.ts` | `Partial` (PR2) | Optional data-source / temporal-alignment ids |
 | M14 longitudinal clinical evidence | `longitudinalClinicalEvidenceContracts.ts` | `Partial` (PR3) | Optional `hsi-lce-spec-*` / series / result links |
-| M14 reproducible cohort builder | `reproducibleCohortBuilderContracts.ts` | **Not on audited main** (local/in-flight elsewhere) | Reserve `hsi-rcb-coh-*` optional ids; do not import until merged |
+| M14 reproducible cohort builder | `reproducibleCohortBuilderContracts.ts` | `Partial` (PR4) · live EHR `Missing` | Optional `hsi-rcb-coh-*` composition ids |
 | M13 translational / trial concept | `translationalDevelopmentContracts.ts` | `Partial` (PR1) | Optional programme / trial-concept id links |
 | M12 therapeutic IDs | `therapeuticDiscoveryDataContracts.ts` | `Partial` (PR1) | Optional therapeutic refs |
 | M5 precision / biomarker | `precisionEvidenceContracts.ts` | `Partial` | Biomarker honesty later |
@@ -140,12 +140,12 @@ Honesty freeze: research decision support only · **not a separate digital twin 
 | Phase | Capability | Existing | Status | Missing | Files |
 |-------|------------|----------|--------|---------|-------|
 | **0** Audit + data protection + validity | This document + M1–M14 deps | — | `Verified operational` (audit) | Keep updated | this file |
-| **1** Integrated disease intelligence contracts | M14 RWE/LCE ids · CDS boundary · M9/M12/M13 hooks | **PR1 in-flight** — disease research context · observed state · inferred estimate · digital patient research model · research simulation scenario + thin store + evaluation pack · `Fixture-only` / scientific path `Blocked` | Live digital patient validation · personalised Tx effects · workbench UI | `src/humanDiseaseIntelligenceContracts.ts` · `test/humanDiseaseIntelligenceContracts.test.ts` · `scripts/human-disease-intelligence-contracts.ts` · `evaluation/human-disease-intelligence/` |
+| **1** Integrated disease intelligence contracts | M14 RWE/LCE/cohort ids · CDS boundary · M9/M12/M13 hooks | **PR1 in-flight** — 7 focused tests + evaluation pack · disease research context · observed state · inferred estimate · digital patient research model · research simulation scenario + thin store · `Fixture-only` / scientific path `Blocked` | Live digital patient validation · personalised Tx effects · workbench UI | `src/humanDiseaseIntelligenceContracts.ts` · `test/humanDiseaseIntelligenceContracts.test.ts` · `scripts/human-disease-intelligence-contracts.ts` · `evaluation/human-disease-intelligence/` |
 | **2** Clinical and biological context integration | M2 contradiction · M5 biomarker · M14 longitudinal | `Missing` | Integrated clinical↔biology disease context without PHI promotion | later PR2 |
 | **3** Pathway / mechanism disease models | M12 / literature KG | `Missing` | Mechanism envelopes — not twin product | later PR3 |
 | **4** Digital patient construction engine | PR1 model contracts | `Missing` | Construction from authorised data only | later PR4 |
 | **5** Precision research simulation runner | PR1 scenarios · M11 **Skipped** | `Missing` | Research-only runner; no live multiscale claim | later PR5 |
-| **6** Population / subgroup disease intelligence | M14 cohort (when merged) | `Missing` | Aggregate honesty; small-cell disclosure | later PR6 |
+| **6** Population / subgroup disease intelligence | M14 cohort (#115) | `Missing` | Aggregate honesty; small-cell disclosure | later PR6 |
 | **7** Uncertainty / counterfactual research envelopes | — | `Missing` | Explicit assumptions; not individual truth | later PR7 |
 | **8** Workbench surfaces | research workbench | `Partial` | UI deferred | later PR8 |
 | **9** Authorised-dataset scientific validation | — | `Blocked` | No synthetic-as-validation | later PR9 |
@@ -187,7 +187,7 @@ Honesty freeze: research decision support only · **not a separate digital twin 
 | Authorised clinical/research dataset with verified data-use permission | **Not supplied** → scientific path **Blocked** |
 | Live digital patient construction from authorised data | **Missing** |
 | Live multiscale / twin simulation engine (M11) | **Skipped** / **Missing** |
-| M14 cohort builder on `main` | **Not merged** at Phase 0 audit |
+| M14 cohort builder on `main` | **Merged** (#115) — contracts only; live queries still Missing |
 
 **Rule:** If no suitable authorised dataset is available, report the blocker — do **not** fabricate disease timelines or present synthetic digital patients as scientific validation. Eng PR1 may still land contracts as fixture/engineering substrate.
 
@@ -225,7 +225,7 @@ Honesty freeze: research decision support only · **not a separate digital twin 
 | Need | Prefer | Avoid in PR1 |
 |------|--------|--------------|
 | PHI/CDS refuse | `cdsPhiBoundary` · `clinicalResearchScaffold` | Live CDS engines / twin SaaS |
-| M14 RWE / LCE ids | `realWorldEvidenceContracts` · `longitudinalClinicalEvidenceContracts` | Importing unmerged cohort module |
+| M14 RWE / LCE / cohort ids | `realWorldEvidenceContracts` · `longitudinalClinicalEvidenceContracts` · `reproducibleCohortBuilderContracts` (id refs) | Live EHR cohort queries |
 | Privacy bridge pattern | `hsiClinicalBiologyBridge` (reference) | Copying patient facts to KG |
 | Org ACL | M9 tenant security ids | Federation claims |
 | Trial / biomarker refs | M13 translational contracts | Invented protocols |
@@ -239,10 +239,11 @@ Honesty freeze: research decision support only · **not a separate digital twin 
 | PR | Title | Branch | State |
 |----|-------|--------|-------|
 | (this PR) | M15 PR1 Integrated Disease Intelligence Contracts | `eng/m15-disease-intelligence-contracts` | **PR1 in-flight** — open for review; **do not auto-merge** |
+| [#115](https://github.com/gnaneshwer23/hsi-core/pull/115) | M14 PR4 Reproducible Cohort Builder | merged → `02cf969` | Substrate |
 | [#114](https://github.com/gnaneshwer23/hsi-core/pull/114) | M14 PR3 Longitudinal Clinical Evidence Model | merged → `64dae29` | Substrate |
 | [#113](https://github.com/gnaneshwer23/hsi-core/pull/113) | M14 PR2 Secure Clinical Data Interoperability | merged → `33843eb` | Substrate |
 | [#111](https://github.com/gnaneshwer23/hsi-core/pull/111) | M14 PR1 Clinical Evidence and RWE Contracts | merged → `19e0ff1` | Substrate |
 
 **Suggested next:** PR2 Clinical and Biological Context Integration.
 
-**M14 left open at audit:** PR4 Reproducible Cohort Builder — **no GitHub PR open** at merge time (local branch `eng/m14-reproducible-cohort-builder` may still be in flight); unrelated open PRs #71 / #61 / #60 / #34 / #15 left untouched.
+**M14 left open after Step A:** none on the M14 eng track (PR4 [#115](https://github.com/gnaneshwer23/hsi-core/pull/115) squash-merged). Unrelated open PRs #71 / #61 / #60 / #34 / #15 left untouched.
