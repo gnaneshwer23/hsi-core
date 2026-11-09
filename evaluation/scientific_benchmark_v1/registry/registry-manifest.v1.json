@@ -1,0 +1,1867 @@
+{
+  "schemaVersion": "hsi-scientific-benchmark-registry-1",
+  "method": "hsi.scientific_benchmark_registry.v1",
+  "version": "0.1.0",
+  "path": "evaluation/scientific_benchmark_v1/registry",
+  "generatedAt": "2026-11-09T10:30:00.000Z",
+  "wiresTo": {
+    "scientificBenchmarkAliasPath": "evaluation/scientific_benchmark_v1",
+    "independentEvaluationCanonicalPath": "evaluation/independent-evaluation",
+    "noParallelEvalPlatform": true
+  },
+  "engineeringScaffold": "CLEARED",
+  "scientificAcceptance": "BLOCKED",
+  "rightsAcceptance": "BLOCKED",
+  "liveJourneyAcceptance": "BLOCKED",
+  "productionReadinessClaimed": false,
+  "scientificValidityClaimed": false,
+  "liveSuccessClaimed": false,
+  "ciGreenIsNotScientificValidity": true,
+  "inventSmeScoresPermitted": false,
+  "smeSlotsFilled": 0,
+  "heldOutFrozen": false,
+  "llmJudgeSoleAuthorityPermitted": false,
+  "liveSuiteGate": {
+    "envFlag": "HSI_LIVE_INTEGRATION_EVAL",
+    "requireExplicitOptIn": true,
+    "ciMustNotEnable": true,
+    "defaultStatus": "GATED_NOT_RUN"
+  },
+  "releaseGateClassification": "scientific_evaluation_pending",
+  "numericAcceptanceThresholdsInvented": false,
+  "categories": [
+    {
+      "categoryId": "literature_retrieval",
+      "ordinal": 1,
+      "taskType": "retrieval",
+      "label": "Literature retrieval",
+      "developmentCaseIds": [
+        "M7-DEV-01-literature_retrieval"
+      ],
+      "heldOutCaseIds": [
+        "M7-HO-01-literature_retrieval"
+      ],
+      "smeReferenceFilled": false,
+      "evaluationStatus": "scaffold"
+    },
+    {
+      "categoryId": "source_grounded_evidence_extraction",
+      "ordinal": 2,
+      "taskType": "extraction",
+      "label": "Source-grounded evidence extraction",
+      "developmentCaseIds": [
+        "M7-DEV-02-source_grounded_evidence_extraction"
+      ],
+      "heldOutCaseIds": [
+        "M7-HO-02-source_grounded_evidence_extraction"
+      ],
+      "smeReferenceFilled": false,
+      "evaluationStatus": "scaffold"
+    },
+    {
+      "categoryId": "biological_entity_resolution",
+      "ordinal": 3,
+      "taskType": "entity_resolution",
+      "label": "Biological entity resolution",
+      "developmentCaseIds": [
+        "M7-DEV-03-biological_entity_resolution"
+      ],
+      "heldOutCaseIds": [
+        "M7-HO-03-biological_entity_resolution"
+      ],
+      "smeReferenceFilled": false,
+      "evaluationStatus": "scaffold"
+    },
+    {
+      "categoryId": "contextual_mechanism_investigation",
+      "ordinal": 4,
+      "taskType": "mechanism",
+      "label": "Contextual mechanism investigation",
+      "developmentCaseIds": [
+        "M7-DEV-04-contextual_mechanism_investigation"
+      ],
+      "heldOutCaseIds": [
+        "M7-HO-04-contextual_mechanism_investigation"
+      ],
+      "smeReferenceFilled": false,
+      "evaluationStatus": "scaffold"
+    },
+    {
+      "categoryId": "contradiction_classification",
+      "ordinal": 5,
+      "taskType": "contradiction",
+      "label": "Contradiction classification",
+      "developmentCaseIds": [
+        "M7-DEV-05-contradiction_classification"
+      ],
+      "heldOutCaseIds": [
+        "M7-HO-05-contradiction_classification"
+      ],
+      "smeReferenceFilled": false,
+      "evaluationStatus": "scaffold"
+    },
+    {
+      "categoryId": "counterevidence_retrieval",
+      "ordinal": 6,
+      "taskType": "opposing_retrieval",
+      "label": "Counterevidence retrieval",
+      "developmentCaseIds": [
+        "M7-DEV-06-counterevidence_retrieval"
+      ],
+      "heldOutCaseIds": [
+        "M7-HO-06-counterevidence_retrieval"
+      ],
+      "smeReferenceFilled": false,
+      "evaluationStatus": "scaffold"
+    },
+    {
+      "categoryId": "hypothesis_evaluation",
+      "ordinal": 7,
+      "taskType": "hypothesis",
+      "label": "Hypothesis evaluation",
+      "developmentCaseIds": [
+        "M7-DEV-07-hypothesis_evaluation"
+      ],
+      "heldOutCaseIds": [
+        "M7-HO-07-hypothesis_evaluation"
+      ],
+      "smeReferenceFilled": false,
+      "evaluationStatus": "scaffold"
+    },
+    {
+      "categoryId": "experiment_discrimination",
+      "ordinal": 8,
+      "taskType": "experiment",
+      "label": "Experiment discrimination",
+      "developmentCaseIds": [
+        "M7-DEV-08-experiment_discrimination"
+      ],
+      "heldOutCaseIds": [
+        "M7-HO-08-experiment_discrimination"
+      ],
+      "smeReferenceFilled": false,
+      "evaluationStatus": "scaffold"
+    },
+    {
+      "categoryId": "translational_failure_investigation",
+      "ordinal": 9,
+      "taskType": "translational_failure",
+      "label": "Translational failure investigation",
+      "developmentCaseIds": [
+        "M7-DEV-09-translational_failure_investigation"
+      ],
+      "heldOutCaseIds": [
+        "M7-HO-09-translational_failure_investigation"
+      ],
+      "smeReferenceFilled": false,
+      "evaluationStatus": "scaffold"
+    },
+    {
+      "categoryId": "biomarker_subgroup_interpretation",
+      "ordinal": 10,
+      "taskType": "precision",
+      "label": "Biomarker and subgroup interpretation",
+      "developmentCaseIds": [
+        "M7-DEV-10-biomarker_subgroup_interpretation"
+      ],
+      "heldOutCaseIds": [
+        "M7-HO-10-biomarker_subgroup_interpretation"
+      ],
+      "smeReferenceFilled": false,
+      "evaluationStatus": "scaffold"
+    },
+    {
+      "categoryId": "end_to_end_scientific_investigation",
+      "ordinal": 11,
+      "taskType": "e2e_investigation",
+      "label": "End-to-end scientific investigation",
+      "developmentCaseIds": [
+        "M7-DEV-11-end_to_end_scientific_investigation"
+      ],
+      "heldOutCaseIds": [
+        "M7-HO-11-end_to_end_scientific_investigation"
+      ],
+      "smeReferenceFilled": false,
+      "evaluationStatus": "scaffold"
+    },
+    {
+      "categoryId": "abstention_uncertainty_handling",
+      "ordinal": 12,
+      "taskType": "abstention",
+      "label": "Abstention and uncertainty handling",
+      "developmentCaseIds": [
+        "M7-DEV-12-abstention_uncertainty_handling"
+      ],
+      "heldOutCaseIds": [
+        "M7-HO-12-abstention_uncertainty_handling"
+      ],
+      "smeReferenceFilled": false,
+      "evaluationStatus": "scaffold"
+    }
+  ],
+  "cases": [
+    {
+      "caseId": "M7-DEV-01-literature_retrieval",
+      "categoryId": "literature_retrieval",
+      "partition": "development",
+      "researchDomain": "biomedical_literature",
+      "diseaseOrBiologicalContext": "general_immune_translational",
+      "researchQuestion": "[scaffold] Literature retrieval — development slot; not gold; not scientifically validated.",
+      "taskType": "retrieval",
+      "sourceEvidenceRefs": [],
+      "evidenceCutoffDate": null,
+      "relevantEntities": [],
+      "experimentalContext": "not_specified_scaffold",
+      "knownAmbiguity": "Scaffold case — ambiguity and answerability not SME-assessed.",
+      "expectedAnswerability": "not_assessed",
+      "expertReferenceAssessment": {
+        "sealed": true,
+        "payload": null,
+        "injectableIntoPrompts": false,
+        "injectableIntoRetrievalIndexes": false,
+        "injectableIntoModelTuning": false,
+        "notes": "Held-out expert reference for literature_retrieval remains empty until SME (#4). Must not leak into prompts, indexes, or tuning."
+      },
+      "scoringRubric": {
+        "rubricId": "rubric-literature_retrieval-v0",
+        "dimensionIds": [],
+        "ordinalAnchorsDocumented": false,
+        "scoresInvented": false,
+        "llmJudgeSoleAuthority": false
+      },
+      "reviewerAssignments": [
+        {
+          "slotId": "literature_retrieval-sme-a",
+          "role": "sme_a",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "literature_retrieval-sme-b",
+          "role": "sme_b",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "literature_retrieval-adjudicator",
+          "role": "adjudicator",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        }
+      ],
+      "datasetAndLicence": {
+        "datasetId": "hsi-m7-registry-scaffold-v0",
+        "licence": "UNLICENSED-internal-scaffold",
+        "rightsCleared": "pending_human",
+        "note": "Structural development slot only. Not a licensed gold packet. #2 rights remain PARKED."
+      },
+      "version": "0.1.0",
+      "evaluationStatus": "scaffold",
+      "honesty": {
+        "fixturesAreNotLiveEvidence": true,
+        "expertReferenceHeldOut": true,
+        "noLeakageIntoPromptsIndexesOrTuning": true,
+        "smeScoresNotInvented": true,
+        "llmJudgeNotSoleAuthority": true
+      }
+    },
+    {
+      "caseId": "M7-HO-01-literature_retrieval",
+      "categoryId": "literature_retrieval",
+      "partition": "held_out",
+      "researchDomain": "biomedical_literature",
+      "diseaseOrBiologicalContext": "general_immune_translational",
+      "researchQuestion": "[held-out scaffold] Literature retrieval — empty expert reference; not frozen gold.",
+      "taskType": "retrieval",
+      "sourceEvidenceRefs": [],
+      "evidenceCutoffDate": null,
+      "relevantEntities": [],
+      "experimentalContext": "not_specified_scaffold",
+      "knownAmbiguity": "Held-out scaffold — sealed expert payload null; do not tune on this partition.",
+      "expectedAnswerability": "not_assessed",
+      "expertReferenceAssessment": {
+        "sealed": true,
+        "payload": null,
+        "injectableIntoPrompts": false,
+        "injectableIntoRetrievalIndexes": false,
+        "injectableIntoModelTuning": false,
+        "notes": "Held-out expert reference for literature_retrieval remains empty until SME (#4). Must not leak into prompts, indexes, or tuning."
+      },
+      "scoringRubric": {
+        "rubricId": "rubric-literature_retrieval-heldout-v0",
+        "dimensionIds": [],
+        "ordinalAnchorsDocumented": false,
+        "scoresInvented": false,
+        "llmJudgeSoleAuthority": false
+      },
+      "reviewerAssignments": [
+        {
+          "slotId": "literature_retrieval-sme-a",
+          "role": "sme_a",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "literature_retrieval-sme-b",
+          "role": "sme_b",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "literature_retrieval-adjudicator",
+          "role": "adjudicator",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        }
+      ],
+      "datasetAndLicence": {
+        "datasetId": "hsi-m7-registry-heldout-scaffold-v0",
+        "licence": "UNLICENSED-internal-scaffold",
+        "rightsCleared": "pending_human",
+        "note": "Held-out structural slot. frozenHeldOut remains false until SME + rights (#2/#4)."
+      },
+      "version": "0.1.0",
+      "evaluationStatus": "scaffold",
+      "honesty": {
+        "fixturesAreNotLiveEvidence": true,
+        "expertReferenceHeldOut": true,
+        "noLeakageIntoPromptsIndexesOrTuning": true,
+        "smeScoresNotInvented": true,
+        "llmJudgeNotSoleAuthority": true
+      }
+    },
+    {
+      "caseId": "M7-DEV-02-source_grounded_evidence_extraction",
+      "categoryId": "source_grounded_evidence_extraction",
+      "partition": "development",
+      "researchDomain": "evidence_extraction",
+      "diseaseOrBiologicalContext": "citation_support",
+      "researchQuestion": "[scaffold] Source-grounded evidence extraction — development slot; not gold; not scientifically validated.",
+      "taskType": "extraction",
+      "sourceEvidenceRefs": [],
+      "evidenceCutoffDate": null,
+      "relevantEntities": [],
+      "experimentalContext": "not_specified_scaffold",
+      "knownAmbiguity": "Scaffold case — ambiguity and answerability not SME-assessed.",
+      "expectedAnswerability": "not_assessed",
+      "expertReferenceAssessment": {
+        "sealed": true,
+        "payload": null,
+        "injectableIntoPrompts": false,
+        "injectableIntoRetrievalIndexes": false,
+        "injectableIntoModelTuning": false,
+        "notes": "Held-out expert reference for source_grounded_evidence_extraction remains empty until SME (#4). Must not leak into prompts, indexes, or tuning."
+      },
+      "scoringRubric": {
+        "rubricId": "rubric-source_grounded_evidence_extraction-v0",
+        "dimensionIds": [],
+        "ordinalAnchorsDocumented": false,
+        "scoresInvented": false,
+        "llmJudgeSoleAuthority": false
+      },
+      "reviewerAssignments": [
+        {
+          "slotId": "source_grounded_evidence_extraction-sme-a",
+          "role": "sme_a",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "source_grounded_evidence_extraction-sme-b",
+          "role": "sme_b",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "source_grounded_evidence_extraction-adjudicator",
+          "role": "adjudicator",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        }
+      ],
+      "datasetAndLicence": {
+        "datasetId": "hsi-m7-registry-scaffold-v0",
+        "licence": "UNLICENSED-internal-scaffold",
+        "rightsCleared": "pending_human",
+        "note": "Structural development slot only. Not a licensed gold packet. #2 rights remain PARKED."
+      },
+      "version": "0.1.0",
+      "evaluationStatus": "scaffold",
+      "honesty": {
+        "fixturesAreNotLiveEvidence": true,
+        "expertReferenceHeldOut": true,
+        "noLeakageIntoPromptsIndexesOrTuning": true,
+        "smeScoresNotInvented": true,
+        "llmJudgeNotSoleAuthority": true
+      }
+    },
+    {
+      "caseId": "M7-HO-02-source_grounded_evidence_extraction",
+      "categoryId": "source_grounded_evidence_extraction",
+      "partition": "held_out",
+      "researchDomain": "evidence_extraction",
+      "diseaseOrBiologicalContext": "citation_support",
+      "researchQuestion": "[held-out scaffold] Source-grounded evidence extraction — empty expert reference; not frozen gold.",
+      "taskType": "extraction",
+      "sourceEvidenceRefs": [],
+      "evidenceCutoffDate": null,
+      "relevantEntities": [],
+      "experimentalContext": "not_specified_scaffold",
+      "knownAmbiguity": "Held-out scaffold — sealed expert payload null; do not tune on this partition.",
+      "expectedAnswerability": "not_assessed",
+      "expertReferenceAssessment": {
+        "sealed": true,
+        "payload": null,
+        "injectableIntoPrompts": false,
+        "injectableIntoRetrievalIndexes": false,
+        "injectableIntoModelTuning": false,
+        "notes": "Held-out expert reference for source_grounded_evidence_extraction remains empty until SME (#4). Must not leak into prompts, indexes, or tuning."
+      },
+      "scoringRubric": {
+        "rubricId": "rubric-source_grounded_evidence_extraction-heldout-v0",
+        "dimensionIds": [],
+        "ordinalAnchorsDocumented": false,
+        "scoresInvented": false,
+        "llmJudgeSoleAuthority": false
+      },
+      "reviewerAssignments": [
+        {
+          "slotId": "source_grounded_evidence_extraction-sme-a",
+          "role": "sme_a",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "source_grounded_evidence_extraction-sme-b",
+          "role": "sme_b",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "source_grounded_evidence_extraction-adjudicator",
+          "role": "adjudicator",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        }
+      ],
+      "datasetAndLicence": {
+        "datasetId": "hsi-m7-registry-heldout-scaffold-v0",
+        "licence": "UNLICENSED-internal-scaffold",
+        "rightsCleared": "pending_human",
+        "note": "Held-out structural slot. frozenHeldOut remains false until SME + rights (#2/#4)."
+      },
+      "version": "0.1.0",
+      "evaluationStatus": "scaffold",
+      "honesty": {
+        "fixturesAreNotLiveEvidence": true,
+        "expertReferenceHeldOut": true,
+        "noLeakageIntoPromptsIndexesOrTuning": true,
+        "smeScoresNotInvented": true,
+        "llmJudgeNotSoleAuthority": true
+      }
+    },
+    {
+      "caseId": "M7-DEV-03-biological_entity_resolution",
+      "categoryId": "biological_entity_resolution",
+      "partition": "development",
+      "researchDomain": "entity_resolution",
+      "diseaseOrBiologicalContext": "gene_protein_cell_pathway",
+      "researchQuestion": "[scaffold] Biological entity resolution — development slot; not gold; not scientifically validated.",
+      "taskType": "entity_resolution",
+      "sourceEvidenceRefs": [],
+      "evidenceCutoffDate": null,
+      "relevantEntities": [],
+      "experimentalContext": "not_specified_scaffold",
+      "knownAmbiguity": "Scaffold case — ambiguity and answerability not SME-assessed.",
+      "expectedAnswerability": "not_assessed",
+      "expertReferenceAssessment": {
+        "sealed": true,
+        "payload": null,
+        "injectableIntoPrompts": false,
+        "injectableIntoRetrievalIndexes": false,
+        "injectableIntoModelTuning": false,
+        "notes": "Held-out expert reference for biological_entity_resolution remains empty until SME (#4). Must not leak into prompts, indexes, or tuning."
+      },
+      "scoringRubric": {
+        "rubricId": "rubric-biological_entity_resolution-v0",
+        "dimensionIds": [],
+        "ordinalAnchorsDocumented": false,
+        "scoresInvented": false,
+        "llmJudgeSoleAuthority": false
+      },
+      "reviewerAssignments": [
+        {
+          "slotId": "biological_entity_resolution-sme-a",
+          "role": "sme_a",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "biological_entity_resolution-sme-b",
+          "role": "sme_b",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "biological_entity_resolution-adjudicator",
+          "role": "adjudicator",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        }
+      ],
+      "datasetAndLicence": {
+        "datasetId": "hsi-m7-registry-scaffold-v0",
+        "licence": "UNLICENSED-internal-scaffold",
+        "rightsCleared": "pending_human",
+        "note": "Structural development slot only. Not a licensed gold packet. #2 rights remain PARKED."
+      },
+      "version": "0.1.0",
+      "evaluationStatus": "scaffold",
+      "honesty": {
+        "fixturesAreNotLiveEvidence": true,
+        "expertReferenceHeldOut": true,
+        "noLeakageIntoPromptsIndexesOrTuning": true,
+        "smeScoresNotInvented": true,
+        "llmJudgeNotSoleAuthority": true
+      }
+    },
+    {
+      "caseId": "M7-HO-03-biological_entity_resolution",
+      "categoryId": "biological_entity_resolution",
+      "partition": "held_out",
+      "researchDomain": "entity_resolution",
+      "diseaseOrBiologicalContext": "gene_protein_cell_pathway",
+      "researchQuestion": "[held-out scaffold] Biological entity resolution — empty expert reference; not frozen gold.",
+      "taskType": "entity_resolution",
+      "sourceEvidenceRefs": [],
+      "evidenceCutoffDate": null,
+      "relevantEntities": [],
+      "experimentalContext": "not_specified_scaffold",
+      "knownAmbiguity": "Held-out scaffold — sealed expert payload null; do not tune on this partition.",
+      "expectedAnswerability": "not_assessed",
+      "expertReferenceAssessment": {
+        "sealed": true,
+        "payload": null,
+        "injectableIntoPrompts": false,
+        "injectableIntoRetrievalIndexes": false,
+        "injectableIntoModelTuning": false,
+        "notes": "Held-out expert reference for biological_entity_resolution remains empty until SME (#4). Must not leak into prompts, indexes, or tuning."
+      },
+      "scoringRubric": {
+        "rubricId": "rubric-biological_entity_resolution-heldout-v0",
+        "dimensionIds": [],
+        "ordinalAnchorsDocumented": false,
+        "scoresInvented": false,
+        "llmJudgeSoleAuthority": false
+      },
+      "reviewerAssignments": [
+        {
+          "slotId": "biological_entity_resolution-sme-a",
+          "role": "sme_a",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "biological_entity_resolution-sme-b",
+          "role": "sme_b",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "biological_entity_resolution-adjudicator",
+          "role": "adjudicator",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        }
+      ],
+      "datasetAndLicence": {
+        "datasetId": "hsi-m7-registry-heldout-scaffold-v0",
+        "licence": "UNLICENSED-internal-scaffold",
+        "rightsCleared": "pending_human",
+        "note": "Held-out structural slot. frozenHeldOut remains false until SME + rights (#2/#4)."
+      },
+      "version": "0.1.0",
+      "evaluationStatus": "scaffold",
+      "honesty": {
+        "fixturesAreNotLiveEvidence": true,
+        "expertReferenceHeldOut": true,
+        "noLeakageIntoPromptsIndexesOrTuning": true,
+        "smeScoresNotInvented": true,
+        "llmJudgeNotSoleAuthority": true
+      }
+    },
+    {
+      "caseId": "M7-DEV-04-contextual_mechanism_investigation",
+      "categoryId": "contextual_mechanism_investigation",
+      "partition": "development",
+      "researchDomain": "mechanism_reasoning",
+      "diseaseOrBiologicalContext": "species_tissue_aware",
+      "researchQuestion": "[scaffold] Contextual mechanism investigation — development slot; not gold; not scientifically validated.",
+      "taskType": "mechanism",
+      "sourceEvidenceRefs": [],
+      "evidenceCutoffDate": null,
+      "relevantEntities": [],
+      "experimentalContext": "not_specified_scaffold",
+      "knownAmbiguity": "Scaffold case — ambiguity and answerability not SME-assessed.",
+      "expectedAnswerability": "not_assessed",
+      "expertReferenceAssessment": {
+        "sealed": true,
+        "payload": null,
+        "injectableIntoPrompts": false,
+        "injectableIntoRetrievalIndexes": false,
+        "injectableIntoModelTuning": false,
+        "notes": "Held-out expert reference for contextual_mechanism_investigation remains empty until SME (#4). Must not leak into prompts, indexes, or tuning."
+      },
+      "scoringRubric": {
+        "rubricId": "rubric-contextual_mechanism_investigation-v0",
+        "dimensionIds": [],
+        "ordinalAnchorsDocumented": false,
+        "scoresInvented": false,
+        "llmJudgeSoleAuthority": false
+      },
+      "reviewerAssignments": [
+        {
+          "slotId": "contextual_mechanism_investigation-sme-a",
+          "role": "sme_a",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "contextual_mechanism_investigation-sme-b",
+          "role": "sme_b",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "contextual_mechanism_investigation-adjudicator",
+          "role": "adjudicator",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        }
+      ],
+      "datasetAndLicence": {
+        "datasetId": "hsi-m7-registry-scaffold-v0",
+        "licence": "UNLICENSED-internal-scaffold",
+        "rightsCleared": "pending_human",
+        "note": "Structural development slot only. Not a licensed gold packet. #2 rights remain PARKED."
+      },
+      "version": "0.1.0",
+      "evaluationStatus": "scaffold",
+      "honesty": {
+        "fixturesAreNotLiveEvidence": true,
+        "expertReferenceHeldOut": true,
+        "noLeakageIntoPromptsIndexesOrTuning": true,
+        "smeScoresNotInvented": true,
+        "llmJudgeNotSoleAuthority": true
+      }
+    },
+    {
+      "caseId": "M7-HO-04-contextual_mechanism_investigation",
+      "categoryId": "contextual_mechanism_investigation",
+      "partition": "held_out",
+      "researchDomain": "mechanism_reasoning",
+      "diseaseOrBiologicalContext": "species_tissue_aware",
+      "researchQuestion": "[held-out scaffold] Contextual mechanism investigation — empty expert reference; not frozen gold.",
+      "taskType": "mechanism",
+      "sourceEvidenceRefs": [],
+      "evidenceCutoffDate": null,
+      "relevantEntities": [],
+      "experimentalContext": "not_specified_scaffold",
+      "knownAmbiguity": "Held-out scaffold — sealed expert payload null; do not tune on this partition.",
+      "expectedAnswerability": "not_assessed",
+      "expertReferenceAssessment": {
+        "sealed": true,
+        "payload": null,
+        "injectableIntoPrompts": false,
+        "injectableIntoRetrievalIndexes": false,
+        "injectableIntoModelTuning": false,
+        "notes": "Held-out expert reference for contextual_mechanism_investigation remains empty until SME (#4). Must not leak into prompts, indexes, or tuning."
+      },
+      "scoringRubric": {
+        "rubricId": "rubric-contextual_mechanism_investigation-heldout-v0",
+        "dimensionIds": [],
+        "ordinalAnchorsDocumented": false,
+        "scoresInvented": false,
+        "llmJudgeSoleAuthority": false
+      },
+      "reviewerAssignments": [
+        {
+          "slotId": "contextual_mechanism_investigation-sme-a",
+          "role": "sme_a",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "contextual_mechanism_investigation-sme-b",
+          "role": "sme_b",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "contextual_mechanism_investigation-adjudicator",
+          "role": "adjudicator",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        }
+      ],
+      "datasetAndLicence": {
+        "datasetId": "hsi-m7-registry-heldout-scaffold-v0",
+        "licence": "UNLICENSED-internal-scaffold",
+        "rightsCleared": "pending_human",
+        "note": "Held-out structural slot. frozenHeldOut remains false until SME + rights (#2/#4)."
+      },
+      "version": "0.1.0",
+      "evaluationStatus": "scaffold",
+      "honesty": {
+        "fixturesAreNotLiveEvidence": true,
+        "expertReferenceHeldOut": true,
+        "noLeakageIntoPromptsIndexesOrTuning": true,
+        "smeScoresNotInvented": true,
+        "llmJudgeNotSoleAuthority": true
+      }
+    },
+    {
+      "caseId": "M7-DEV-05-contradiction_classification",
+      "categoryId": "contradiction_classification",
+      "partition": "development",
+      "researchDomain": "contradiction_intelligence",
+      "diseaseOrBiologicalContext": "opposing_findings",
+      "researchQuestion": "[scaffold] Contradiction classification — development slot; not gold; not scientifically validated.",
+      "taskType": "contradiction",
+      "sourceEvidenceRefs": [],
+      "evidenceCutoffDate": null,
+      "relevantEntities": [],
+      "experimentalContext": "not_specified_scaffold",
+      "knownAmbiguity": "Scaffold case — ambiguity and answerability not SME-assessed.",
+      "expectedAnswerability": "not_assessed",
+      "expertReferenceAssessment": {
+        "sealed": true,
+        "payload": null,
+        "injectableIntoPrompts": false,
+        "injectableIntoRetrievalIndexes": false,
+        "injectableIntoModelTuning": false,
+        "notes": "Held-out expert reference for contradiction_classification remains empty until SME (#4). Must not leak into prompts, indexes, or tuning."
+      },
+      "scoringRubric": {
+        "rubricId": "rubric-contradiction_classification-v0",
+        "dimensionIds": [],
+        "ordinalAnchorsDocumented": false,
+        "scoresInvented": false,
+        "llmJudgeSoleAuthority": false
+      },
+      "reviewerAssignments": [
+        {
+          "slotId": "contradiction_classification-sme-a",
+          "role": "sme_a",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "contradiction_classification-sme-b",
+          "role": "sme_b",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "contradiction_classification-adjudicator",
+          "role": "adjudicator",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        }
+      ],
+      "datasetAndLicence": {
+        "datasetId": "hsi-m7-registry-scaffold-v0",
+        "licence": "UNLICENSED-internal-scaffold",
+        "rightsCleared": "pending_human",
+        "note": "Structural development slot only. Not a licensed gold packet. #2 rights remain PARKED."
+      },
+      "version": "0.1.0",
+      "evaluationStatus": "scaffold",
+      "honesty": {
+        "fixturesAreNotLiveEvidence": true,
+        "expertReferenceHeldOut": true,
+        "noLeakageIntoPromptsIndexesOrTuning": true,
+        "smeScoresNotInvented": true,
+        "llmJudgeNotSoleAuthority": true
+      }
+    },
+    {
+      "caseId": "M7-HO-05-contradiction_classification",
+      "categoryId": "contradiction_classification",
+      "partition": "held_out",
+      "researchDomain": "contradiction_intelligence",
+      "diseaseOrBiologicalContext": "opposing_findings",
+      "researchQuestion": "[held-out scaffold] Contradiction classification — empty expert reference; not frozen gold.",
+      "taskType": "contradiction",
+      "sourceEvidenceRefs": [],
+      "evidenceCutoffDate": null,
+      "relevantEntities": [],
+      "experimentalContext": "not_specified_scaffold",
+      "knownAmbiguity": "Held-out scaffold — sealed expert payload null; do not tune on this partition.",
+      "expectedAnswerability": "not_assessed",
+      "expertReferenceAssessment": {
+        "sealed": true,
+        "payload": null,
+        "injectableIntoPrompts": false,
+        "injectableIntoRetrievalIndexes": false,
+        "injectableIntoModelTuning": false,
+        "notes": "Held-out expert reference for contradiction_classification remains empty until SME (#4). Must not leak into prompts, indexes, or tuning."
+      },
+      "scoringRubric": {
+        "rubricId": "rubric-contradiction_classification-heldout-v0",
+        "dimensionIds": [],
+        "ordinalAnchorsDocumented": false,
+        "scoresInvented": false,
+        "llmJudgeSoleAuthority": false
+      },
+      "reviewerAssignments": [
+        {
+          "slotId": "contradiction_classification-sme-a",
+          "role": "sme_a",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "contradiction_classification-sme-b",
+          "role": "sme_b",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "contradiction_classification-adjudicator",
+          "role": "adjudicator",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        }
+      ],
+      "datasetAndLicence": {
+        "datasetId": "hsi-m7-registry-heldout-scaffold-v0",
+        "licence": "UNLICENSED-internal-scaffold",
+        "rightsCleared": "pending_human",
+        "note": "Held-out structural slot. frozenHeldOut remains false until SME + rights (#2/#4)."
+      },
+      "version": "0.1.0",
+      "evaluationStatus": "scaffold",
+      "honesty": {
+        "fixturesAreNotLiveEvidence": true,
+        "expertReferenceHeldOut": true,
+        "noLeakageIntoPromptsIndexesOrTuning": true,
+        "smeScoresNotInvented": true,
+        "llmJudgeNotSoleAuthority": true
+      }
+    },
+    {
+      "caseId": "M7-DEV-06-counterevidence_retrieval",
+      "categoryId": "counterevidence_retrieval",
+      "partition": "development",
+      "researchDomain": "opposing_evidence",
+      "diseaseOrBiologicalContext": "null_and_opposing",
+      "researchQuestion": "[scaffold] Counterevidence retrieval — development slot; not gold; not scientifically validated.",
+      "taskType": "opposing_retrieval",
+      "sourceEvidenceRefs": [],
+      "evidenceCutoffDate": null,
+      "relevantEntities": [],
+      "experimentalContext": "not_specified_scaffold",
+      "knownAmbiguity": "Scaffold case — ambiguity and answerability not SME-assessed.",
+      "expectedAnswerability": "not_assessed",
+      "expertReferenceAssessment": {
+        "sealed": true,
+        "payload": null,
+        "injectableIntoPrompts": false,
+        "injectableIntoRetrievalIndexes": false,
+        "injectableIntoModelTuning": false,
+        "notes": "Held-out expert reference for counterevidence_retrieval remains empty until SME (#4). Must not leak into prompts, indexes, or tuning."
+      },
+      "scoringRubric": {
+        "rubricId": "rubric-counterevidence_retrieval-v0",
+        "dimensionIds": [],
+        "ordinalAnchorsDocumented": false,
+        "scoresInvented": false,
+        "llmJudgeSoleAuthority": false
+      },
+      "reviewerAssignments": [
+        {
+          "slotId": "counterevidence_retrieval-sme-a",
+          "role": "sme_a",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "counterevidence_retrieval-sme-b",
+          "role": "sme_b",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "counterevidence_retrieval-adjudicator",
+          "role": "adjudicator",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        }
+      ],
+      "datasetAndLicence": {
+        "datasetId": "hsi-m7-registry-scaffold-v0",
+        "licence": "UNLICENSED-internal-scaffold",
+        "rightsCleared": "pending_human",
+        "note": "Structural development slot only. Not a licensed gold packet. #2 rights remain PARKED."
+      },
+      "version": "0.1.0",
+      "evaluationStatus": "scaffold",
+      "honesty": {
+        "fixturesAreNotLiveEvidence": true,
+        "expertReferenceHeldOut": true,
+        "noLeakageIntoPromptsIndexesOrTuning": true,
+        "smeScoresNotInvented": true,
+        "llmJudgeNotSoleAuthority": true
+      }
+    },
+    {
+      "caseId": "M7-HO-06-counterevidence_retrieval",
+      "categoryId": "counterevidence_retrieval",
+      "partition": "held_out",
+      "researchDomain": "opposing_evidence",
+      "diseaseOrBiologicalContext": "null_and_opposing",
+      "researchQuestion": "[held-out scaffold] Counterevidence retrieval — empty expert reference; not frozen gold.",
+      "taskType": "opposing_retrieval",
+      "sourceEvidenceRefs": [],
+      "evidenceCutoffDate": null,
+      "relevantEntities": [],
+      "experimentalContext": "not_specified_scaffold",
+      "knownAmbiguity": "Held-out scaffold — sealed expert payload null; do not tune on this partition.",
+      "expectedAnswerability": "not_assessed",
+      "expertReferenceAssessment": {
+        "sealed": true,
+        "payload": null,
+        "injectableIntoPrompts": false,
+        "injectableIntoRetrievalIndexes": false,
+        "injectableIntoModelTuning": false,
+        "notes": "Held-out expert reference for counterevidence_retrieval remains empty until SME (#4). Must not leak into prompts, indexes, or tuning."
+      },
+      "scoringRubric": {
+        "rubricId": "rubric-counterevidence_retrieval-heldout-v0",
+        "dimensionIds": [],
+        "ordinalAnchorsDocumented": false,
+        "scoresInvented": false,
+        "llmJudgeSoleAuthority": false
+      },
+      "reviewerAssignments": [
+        {
+          "slotId": "counterevidence_retrieval-sme-a",
+          "role": "sme_a",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "counterevidence_retrieval-sme-b",
+          "role": "sme_b",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "counterevidence_retrieval-adjudicator",
+          "role": "adjudicator",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        }
+      ],
+      "datasetAndLicence": {
+        "datasetId": "hsi-m7-registry-heldout-scaffold-v0",
+        "licence": "UNLICENSED-internal-scaffold",
+        "rightsCleared": "pending_human",
+        "note": "Held-out structural slot. frozenHeldOut remains false until SME + rights (#2/#4)."
+      },
+      "version": "0.1.0",
+      "evaluationStatus": "scaffold",
+      "honesty": {
+        "fixturesAreNotLiveEvidence": true,
+        "expertReferenceHeldOut": true,
+        "noLeakageIntoPromptsIndexesOrTuning": true,
+        "smeScoresNotInvented": true,
+        "llmJudgeNotSoleAuthority": true
+      }
+    },
+    {
+      "caseId": "M7-DEV-07-hypothesis_evaluation",
+      "categoryId": "hypothesis_evaluation",
+      "partition": "development",
+      "researchDomain": "hypothesis_intelligence",
+      "diseaseOrBiologicalContext": "falsifiability_and_grounding",
+      "researchQuestion": "[scaffold] Hypothesis evaluation — development slot; not gold; not scientifically validated.",
+      "taskType": "hypothesis",
+      "sourceEvidenceRefs": [],
+      "evidenceCutoffDate": null,
+      "relevantEntities": [],
+      "experimentalContext": "not_specified_scaffold",
+      "knownAmbiguity": "Scaffold case — ambiguity and answerability not SME-assessed.",
+      "expectedAnswerability": "not_assessed",
+      "expertReferenceAssessment": {
+        "sealed": true,
+        "payload": null,
+        "injectableIntoPrompts": false,
+        "injectableIntoRetrievalIndexes": false,
+        "injectableIntoModelTuning": false,
+        "notes": "Held-out expert reference for hypothesis_evaluation remains empty until SME (#4). Must not leak into prompts, indexes, or tuning."
+      },
+      "scoringRubric": {
+        "rubricId": "rubric-hypothesis_evaluation-v0",
+        "dimensionIds": [],
+        "ordinalAnchorsDocumented": false,
+        "scoresInvented": false,
+        "llmJudgeSoleAuthority": false
+      },
+      "reviewerAssignments": [
+        {
+          "slotId": "hypothesis_evaluation-sme-a",
+          "role": "sme_a",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "hypothesis_evaluation-sme-b",
+          "role": "sme_b",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "hypothesis_evaluation-adjudicator",
+          "role": "adjudicator",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        }
+      ],
+      "datasetAndLicence": {
+        "datasetId": "hsi-m7-registry-scaffold-v0",
+        "licence": "UNLICENSED-internal-scaffold",
+        "rightsCleared": "pending_human",
+        "note": "Structural development slot only. Not a licensed gold packet. #2 rights remain PARKED."
+      },
+      "version": "0.1.0",
+      "evaluationStatus": "scaffold",
+      "honesty": {
+        "fixturesAreNotLiveEvidence": true,
+        "expertReferenceHeldOut": true,
+        "noLeakageIntoPromptsIndexesOrTuning": true,
+        "smeScoresNotInvented": true,
+        "llmJudgeNotSoleAuthority": true
+      }
+    },
+    {
+      "caseId": "M7-HO-07-hypothesis_evaluation",
+      "categoryId": "hypothesis_evaluation",
+      "partition": "held_out",
+      "researchDomain": "hypothesis_intelligence",
+      "diseaseOrBiologicalContext": "falsifiability_and_grounding",
+      "researchQuestion": "[held-out scaffold] Hypothesis evaluation — empty expert reference; not frozen gold.",
+      "taskType": "hypothesis",
+      "sourceEvidenceRefs": [],
+      "evidenceCutoffDate": null,
+      "relevantEntities": [],
+      "experimentalContext": "not_specified_scaffold",
+      "knownAmbiguity": "Held-out scaffold — sealed expert payload null; do not tune on this partition.",
+      "expectedAnswerability": "not_assessed",
+      "expertReferenceAssessment": {
+        "sealed": true,
+        "payload": null,
+        "injectableIntoPrompts": false,
+        "injectableIntoRetrievalIndexes": false,
+        "injectableIntoModelTuning": false,
+        "notes": "Held-out expert reference for hypothesis_evaluation remains empty until SME (#4). Must not leak into prompts, indexes, or tuning."
+      },
+      "scoringRubric": {
+        "rubricId": "rubric-hypothesis_evaluation-heldout-v0",
+        "dimensionIds": [],
+        "ordinalAnchorsDocumented": false,
+        "scoresInvented": false,
+        "llmJudgeSoleAuthority": false
+      },
+      "reviewerAssignments": [
+        {
+          "slotId": "hypothesis_evaluation-sme-a",
+          "role": "sme_a",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "hypothesis_evaluation-sme-b",
+          "role": "sme_b",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "hypothesis_evaluation-adjudicator",
+          "role": "adjudicator",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        }
+      ],
+      "datasetAndLicence": {
+        "datasetId": "hsi-m7-registry-heldout-scaffold-v0",
+        "licence": "UNLICENSED-internal-scaffold",
+        "rightsCleared": "pending_human",
+        "note": "Held-out structural slot. frozenHeldOut remains false until SME + rights (#2/#4)."
+      },
+      "version": "0.1.0",
+      "evaluationStatus": "scaffold",
+      "honesty": {
+        "fixturesAreNotLiveEvidence": true,
+        "expertReferenceHeldOut": true,
+        "noLeakageIntoPromptsIndexesOrTuning": true,
+        "smeScoresNotInvented": true,
+        "llmJudgeNotSoleAuthority": true
+      }
+    },
+    {
+      "caseId": "M7-DEV-08-experiment_discrimination",
+      "categoryId": "experiment_discrimination",
+      "partition": "development",
+      "researchDomain": "experiment_decision",
+      "diseaseOrBiologicalContext": "discriminating_designs",
+      "researchQuestion": "[scaffold] Experiment discrimination — development slot; not gold; not scientifically validated.",
+      "taskType": "experiment",
+      "sourceEvidenceRefs": [],
+      "evidenceCutoffDate": null,
+      "relevantEntities": [],
+      "experimentalContext": "not_specified_scaffold",
+      "knownAmbiguity": "Scaffold case — ambiguity and answerability not SME-assessed.",
+      "expectedAnswerability": "not_assessed",
+      "expertReferenceAssessment": {
+        "sealed": true,
+        "payload": null,
+        "injectableIntoPrompts": false,
+        "injectableIntoRetrievalIndexes": false,
+        "injectableIntoModelTuning": false,
+        "notes": "Held-out expert reference for experiment_discrimination remains empty until SME (#4). Must not leak into prompts, indexes, or tuning."
+      },
+      "scoringRubric": {
+        "rubricId": "rubric-experiment_discrimination-v0",
+        "dimensionIds": [],
+        "ordinalAnchorsDocumented": false,
+        "scoresInvented": false,
+        "llmJudgeSoleAuthority": false
+      },
+      "reviewerAssignments": [
+        {
+          "slotId": "experiment_discrimination-sme-a",
+          "role": "sme_a",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "experiment_discrimination-sme-b",
+          "role": "sme_b",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "experiment_discrimination-adjudicator",
+          "role": "adjudicator",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        }
+      ],
+      "datasetAndLicence": {
+        "datasetId": "hsi-m7-registry-scaffold-v0",
+        "licence": "UNLICENSED-internal-scaffold",
+        "rightsCleared": "pending_human",
+        "note": "Structural development slot only. Not a licensed gold packet. #2 rights remain PARKED."
+      },
+      "version": "0.1.0",
+      "evaluationStatus": "scaffold",
+      "honesty": {
+        "fixturesAreNotLiveEvidence": true,
+        "expertReferenceHeldOut": true,
+        "noLeakageIntoPromptsIndexesOrTuning": true,
+        "smeScoresNotInvented": true,
+        "llmJudgeNotSoleAuthority": true
+      }
+    },
+    {
+      "caseId": "M7-HO-08-experiment_discrimination",
+      "categoryId": "experiment_discrimination",
+      "partition": "held_out",
+      "researchDomain": "experiment_decision",
+      "diseaseOrBiologicalContext": "discriminating_designs",
+      "researchQuestion": "[held-out scaffold] Experiment discrimination — empty expert reference; not frozen gold.",
+      "taskType": "experiment",
+      "sourceEvidenceRefs": [],
+      "evidenceCutoffDate": null,
+      "relevantEntities": [],
+      "experimentalContext": "not_specified_scaffold",
+      "knownAmbiguity": "Held-out scaffold — sealed expert payload null; do not tune on this partition.",
+      "expectedAnswerability": "not_assessed",
+      "expertReferenceAssessment": {
+        "sealed": true,
+        "payload": null,
+        "injectableIntoPrompts": false,
+        "injectableIntoRetrievalIndexes": false,
+        "injectableIntoModelTuning": false,
+        "notes": "Held-out expert reference for experiment_discrimination remains empty until SME (#4). Must not leak into prompts, indexes, or tuning."
+      },
+      "scoringRubric": {
+        "rubricId": "rubric-experiment_discrimination-heldout-v0",
+        "dimensionIds": [],
+        "ordinalAnchorsDocumented": false,
+        "scoresInvented": false,
+        "llmJudgeSoleAuthority": false
+      },
+      "reviewerAssignments": [
+        {
+          "slotId": "experiment_discrimination-sme-a",
+          "role": "sme_a",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "experiment_discrimination-sme-b",
+          "role": "sme_b",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "experiment_discrimination-adjudicator",
+          "role": "adjudicator",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        }
+      ],
+      "datasetAndLicence": {
+        "datasetId": "hsi-m7-registry-heldout-scaffold-v0",
+        "licence": "UNLICENSED-internal-scaffold",
+        "rightsCleared": "pending_human",
+        "note": "Held-out structural slot. frozenHeldOut remains false until SME + rights (#2/#4)."
+      },
+      "version": "0.1.0",
+      "evaluationStatus": "scaffold",
+      "honesty": {
+        "fixturesAreNotLiveEvidence": true,
+        "expertReferenceHeldOut": true,
+        "noLeakageIntoPromptsIndexesOrTuning": true,
+        "smeScoresNotInvented": true,
+        "llmJudgeNotSoleAuthority": true
+      }
+    },
+    {
+      "caseId": "M7-DEV-09-translational_failure_investigation",
+      "categoryId": "translational_failure_investigation",
+      "partition": "development",
+      "researchDomain": "translational_intelligence",
+      "diseaseOrBiologicalContext": "programme_outcome_labels",
+      "researchQuestion": "[scaffold] Translational failure investigation — development slot; not gold; not scientifically validated.",
+      "taskType": "translational_failure",
+      "sourceEvidenceRefs": [],
+      "evidenceCutoffDate": null,
+      "relevantEntities": [],
+      "experimentalContext": "not_specified_scaffold",
+      "knownAmbiguity": "Scaffold case — ambiguity and answerability not SME-assessed.",
+      "expectedAnswerability": "not_assessed",
+      "expertReferenceAssessment": {
+        "sealed": true,
+        "payload": null,
+        "injectableIntoPrompts": false,
+        "injectableIntoRetrievalIndexes": false,
+        "injectableIntoModelTuning": false,
+        "notes": "Held-out expert reference for translational_failure_investigation remains empty until SME (#4). Must not leak into prompts, indexes, or tuning."
+      },
+      "scoringRubric": {
+        "rubricId": "rubric-translational_failure_investigation-v0",
+        "dimensionIds": [],
+        "ordinalAnchorsDocumented": false,
+        "scoresInvented": false,
+        "llmJudgeSoleAuthority": false
+      },
+      "reviewerAssignments": [
+        {
+          "slotId": "translational_failure_investigation-sme-a",
+          "role": "sme_a",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "translational_failure_investigation-sme-b",
+          "role": "sme_b",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "translational_failure_investigation-adjudicator",
+          "role": "adjudicator",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        }
+      ],
+      "datasetAndLicence": {
+        "datasetId": "hsi-m7-registry-scaffold-v0",
+        "licence": "UNLICENSED-internal-scaffold",
+        "rightsCleared": "pending_human",
+        "note": "Structural development slot only. Not a licensed gold packet. #2 rights remain PARKED."
+      },
+      "version": "0.1.0",
+      "evaluationStatus": "scaffold",
+      "honesty": {
+        "fixturesAreNotLiveEvidence": true,
+        "expertReferenceHeldOut": true,
+        "noLeakageIntoPromptsIndexesOrTuning": true,
+        "smeScoresNotInvented": true,
+        "llmJudgeNotSoleAuthority": true
+      }
+    },
+    {
+      "caseId": "M7-HO-09-translational_failure_investigation",
+      "categoryId": "translational_failure_investigation",
+      "partition": "held_out",
+      "researchDomain": "translational_intelligence",
+      "diseaseOrBiologicalContext": "programme_outcome_labels",
+      "researchQuestion": "[held-out scaffold] Translational failure investigation — empty expert reference; not frozen gold.",
+      "taskType": "translational_failure",
+      "sourceEvidenceRefs": [],
+      "evidenceCutoffDate": null,
+      "relevantEntities": [],
+      "experimentalContext": "not_specified_scaffold",
+      "knownAmbiguity": "Held-out scaffold — sealed expert payload null; do not tune on this partition.",
+      "expectedAnswerability": "not_assessed",
+      "expertReferenceAssessment": {
+        "sealed": true,
+        "payload": null,
+        "injectableIntoPrompts": false,
+        "injectableIntoRetrievalIndexes": false,
+        "injectableIntoModelTuning": false,
+        "notes": "Held-out expert reference for translational_failure_investigation remains empty until SME (#4). Must not leak into prompts, indexes, or tuning."
+      },
+      "scoringRubric": {
+        "rubricId": "rubric-translational_failure_investigation-heldout-v0",
+        "dimensionIds": [],
+        "ordinalAnchorsDocumented": false,
+        "scoresInvented": false,
+        "llmJudgeSoleAuthority": false
+      },
+      "reviewerAssignments": [
+        {
+          "slotId": "translational_failure_investigation-sme-a",
+          "role": "sme_a",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "translational_failure_investigation-sme-b",
+          "role": "sme_b",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "translational_failure_investigation-adjudicator",
+          "role": "adjudicator",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        }
+      ],
+      "datasetAndLicence": {
+        "datasetId": "hsi-m7-registry-heldout-scaffold-v0",
+        "licence": "UNLICENSED-internal-scaffold",
+        "rightsCleared": "pending_human",
+        "note": "Held-out structural slot. frozenHeldOut remains false until SME + rights (#2/#4)."
+      },
+      "version": "0.1.0",
+      "evaluationStatus": "scaffold",
+      "honesty": {
+        "fixturesAreNotLiveEvidence": true,
+        "expertReferenceHeldOut": true,
+        "noLeakageIntoPromptsIndexesOrTuning": true,
+        "smeScoresNotInvented": true,
+        "llmJudgeNotSoleAuthority": true
+      }
+    },
+    {
+      "caseId": "M7-DEV-10-biomarker_subgroup_interpretation",
+      "categoryId": "biomarker_subgroup_interpretation",
+      "partition": "development",
+      "researchDomain": "precision_translational",
+      "diseaseOrBiologicalContext": "prognostic_vs_predictive",
+      "researchQuestion": "[scaffold] Biomarker and subgroup interpretation — development slot; not gold; not scientifically validated.",
+      "taskType": "precision",
+      "sourceEvidenceRefs": [],
+      "evidenceCutoffDate": null,
+      "relevantEntities": [],
+      "experimentalContext": "not_specified_scaffold",
+      "knownAmbiguity": "Scaffold case — ambiguity and answerability not SME-assessed.",
+      "expectedAnswerability": "not_assessed",
+      "expertReferenceAssessment": {
+        "sealed": true,
+        "payload": null,
+        "injectableIntoPrompts": false,
+        "injectableIntoRetrievalIndexes": false,
+        "injectableIntoModelTuning": false,
+        "notes": "Held-out expert reference for biomarker_subgroup_interpretation remains empty until SME (#4). Must not leak into prompts, indexes, or tuning."
+      },
+      "scoringRubric": {
+        "rubricId": "rubric-biomarker_subgroup_interpretation-v0",
+        "dimensionIds": [],
+        "ordinalAnchorsDocumented": false,
+        "scoresInvented": false,
+        "llmJudgeSoleAuthority": false
+      },
+      "reviewerAssignments": [
+        {
+          "slotId": "biomarker_subgroup_interpretation-sme-a",
+          "role": "sme_a",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "biomarker_subgroup_interpretation-sme-b",
+          "role": "sme_b",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "biomarker_subgroup_interpretation-adjudicator",
+          "role": "adjudicator",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        }
+      ],
+      "datasetAndLicence": {
+        "datasetId": "hsi-m7-registry-scaffold-v0",
+        "licence": "UNLICENSED-internal-scaffold",
+        "rightsCleared": "pending_human",
+        "note": "Structural development slot only. Not a licensed gold packet. #2 rights remain PARKED."
+      },
+      "version": "0.1.0",
+      "evaluationStatus": "scaffold",
+      "honesty": {
+        "fixturesAreNotLiveEvidence": true,
+        "expertReferenceHeldOut": true,
+        "noLeakageIntoPromptsIndexesOrTuning": true,
+        "smeScoresNotInvented": true,
+        "llmJudgeNotSoleAuthority": true
+      }
+    },
+    {
+      "caseId": "M7-HO-10-biomarker_subgroup_interpretation",
+      "categoryId": "biomarker_subgroup_interpretation",
+      "partition": "held_out",
+      "researchDomain": "precision_translational",
+      "diseaseOrBiologicalContext": "prognostic_vs_predictive",
+      "researchQuestion": "[held-out scaffold] Biomarker and subgroup interpretation — empty expert reference; not frozen gold.",
+      "taskType": "precision",
+      "sourceEvidenceRefs": [],
+      "evidenceCutoffDate": null,
+      "relevantEntities": [],
+      "experimentalContext": "not_specified_scaffold",
+      "knownAmbiguity": "Held-out scaffold — sealed expert payload null; do not tune on this partition.",
+      "expectedAnswerability": "not_assessed",
+      "expertReferenceAssessment": {
+        "sealed": true,
+        "payload": null,
+        "injectableIntoPrompts": false,
+        "injectableIntoRetrievalIndexes": false,
+        "injectableIntoModelTuning": false,
+        "notes": "Held-out expert reference for biomarker_subgroup_interpretation remains empty until SME (#4). Must not leak into prompts, indexes, or tuning."
+      },
+      "scoringRubric": {
+        "rubricId": "rubric-biomarker_subgroup_interpretation-heldout-v0",
+        "dimensionIds": [],
+        "ordinalAnchorsDocumented": false,
+        "scoresInvented": false,
+        "llmJudgeSoleAuthority": false
+      },
+      "reviewerAssignments": [
+        {
+          "slotId": "biomarker_subgroup_interpretation-sme-a",
+          "role": "sme_a",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "biomarker_subgroup_interpretation-sme-b",
+          "role": "sme_b",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "biomarker_subgroup_interpretation-adjudicator",
+          "role": "adjudicator",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        }
+      ],
+      "datasetAndLicence": {
+        "datasetId": "hsi-m7-registry-heldout-scaffold-v0",
+        "licence": "UNLICENSED-internal-scaffold",
+        "rightsCleared": "pending_human",
+        "note": "Held-out structural slot. frozenHeldOut remains false until SME + rights (#2/#4)."
+      },
+      "version": "0.1.0",
+      "evaluationStatus": "scaffold",
+      "honesty": {
+        "fixturesAreNotLiveEvidence": true,
+        "expertReferenceHeldOut": true,
+        "noLeakageIntoPromptsIndexesOrTuning": true,
+        "smeScoresNotInvented": true,
+        "llmJudgeNotSoleAuthority": true
+      }
+    },
+    {
+      "caseId": "M7-DEV-11-end_to_end_scientific_investigation",
+      "categoryId": "end_to_end_scientific_investigation",
+      "partition": "development",
+      "researchDomain": "investigation_orchestration",
+      "diseaseOrBiologicalContext": "m1_through_m6_workflow",
+      "researchQuestion": "[scaffold] End-to-end scientific investigation — development slot; not gold; not scientifically validated.",
+      "taskType": "e2e_investigation",
+      "sourceEvidenceRefs": [],
+      "evidenceCutoffDate": null,
+      "relevantEntities": [],
+      "experimentalContext": "not_specified_scaffold",
+      "knownAmbiguity": "Scaffold case — ambiguity and answerability not SME-assessed.",
+      "expectedAnswerability": "not_assessed",
+      "expertReferenceAssessment": {
+        "sealed": true,
+        "payload": null,
+        "injectableIntoPrompts": false,
+        "injectableIntoRetrievalIndexes": false,
+        "injectableIntoModelTuning": false,
+        "notes": "Held-out expert reference for end_to_end_scientific_investigation remains empty until SME (#4). Must not leak into prompts, indexes, or tuning."
+      },
+      "scoringRubric": {
+        "rubricId": "rubric-end_to_end_scientific_investigation-v0",
+        "dimensionIds": [],
+        "ordinalAnchorsDocumented": false,
+        "scoresInvented": false,
+        "llmJudgeSoleAuthority": false
+      },
+      "reviewerAssignments": [
+        {
+          "slotId": "end_to_end_scientific_investigation-sme-a",
+          "role": "sme_a",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "end_to_end_scientific_investigation-sme-b",
+          "role": "sme_b",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "end_to_end_scientific_investigation-adjudicator",
+          "role": "adjudicator",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        }
+      ],
+      "datasetAndLicence": {
+        "datasetId": "hsi-m7-registry-scaffold-v0",
+        "licence": "UNLICENSED-internal-scaffold",
+        "rightsCleared": "pending_human",
+        "note": "Structural development slot only. Not a licensed gold packet. #2 rights remain PARKED."
+      },
+      "version": "0.1.0",
+      "evaluationStatus": "scaffold",
+      "honesty": {
+        "fixturesAreNotLiveEvidence": true,
+        "expertReferenceHeldOut": true,
+        "noLeakageIntoPromptsIndexesOrTuning": true,
+        "smeScoresNotInvented": true,
+        "llmJudgeNotSoleAuthority": true
+      }
+    },
+    {
+      "caseId": "M7-HO-11-end_to_end_scientific_investigation",
+      "categoryId": "end_to_end_scientific_investigation",
+      "partition": "held_out",
+      "researchDomain": "investigation_orchestration",
+      "diseaseOrBiologicalContext": "m1_through_m6_workflow",
+      "researchQuestion": "[held-out scaffold] End-to-end scientific investigation — empty expert reference; not frozen gold.",
+      "taskType": "e2e_investigation",
+      "sourceEvidenceRefs": [],
+      "evidenceCutoffDate": null,
+      "relevantEntities": [],
+      "experimentalContext": "not_specified_scaffold",
+      "knownAmbiguity": "Held-out scaffold — sealed expert payload null; do not tune on this partition.",
+      "expectedAnswerability": "not_assessed",
+      "expertReferenceAssessment": {
+        "sealed": true,
+        "payload": null,
+        "injectableIntoPrompts": false,
+        "injectableIntoRetrievalIndexes": false,
+        "injectableIntoModelTuning": false,
+        "notes": "Held-out expert reference for end_to_end_scientific_investigation remains empty until SME (#4). Must not leak into prompts, indexes, or tuning."
+      },
+      "scoringRubric": {
+        "rubricId": "rubric-end_to_end_scientific_investigation-heldout-v0",
+        "dimensionIds": [],
+        "ordinalAnchorsDocumented": false,
+        "scoresInvented": false,
+        "llmJudgeSoleAuthority": false
+      },
+      "reviewerAssignments": [
+        {
+          "slotId": "end_to_end_scientific_investigation-sme-a",
+          "role": "sme_a",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "end_to_end_scientific_investigation-sme-b",
+          "role": "sme_b",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "end_to_end_scientific_investigation-adjudicator",
+          "role": "adjudicator",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        }
+      ],
+      "datasetAndLicence": {
+        "datasetId": "hsi-m7-registry-heldout-scaffold-v0",
+        "licence": "UNLICENSED-internal-scaffold",
+        "rightsCleared": "pending_human",
+        "note": "Held-out structural slot. frozenHeldOut remains false until SME + rights (#2/#4)."
+      },
+      "version": "0.1.0",
+      "evaluationStatus": "scaffold",
+      "honesty": {
+        "fixturesAreNotLiveEvidence": true,
+        "expertReferenceHeldOut": true,
+        "noLeakageIntoPromptsIndexesOrTuning": true,
+        "smeScoresNotInvented": true,
+        "llmJudgeNotSoleAuthority": true
+      }
+    },
+    {
+      "caseId": "M7-DEV-12-abstention_uncertainty_handling",
+      "categoryId": "abstention_uncertainty_handling",
+      "partition": "development",
+      "researchDomain": "uncertainty",
+      "diseaseOrBiologicalContext": "insufficient_evidence",
+      "researchQuestion": "[scaffold] Abstention and uncertainty handling — development slot; not gold; not scientifically validated.",
+      "taskType": "abstention",
+      "sourceEvidenceRefs": [],
+      "evidenceCutoffDate": null,
+      "relevantEntities": [],
+      "experimentalContext": "not_specified_scaffold",
+      "knownAmbiguity": "Scaffold case — ambiguity and answerability not SME-assessed.",
+      "expectedAnswerability": "not_assessed",
+      "expertReferenceAssessment": {
+        "sealed": true,
+        "payload": null,
+        "injectableIntoPrompts": false,
+        "injectableIntoRetrievalIndexes": false,
+        "injectableIntoModelTuning": false,
+        "notes": "Held-out expert reference for abstention_uncertainty_handling remains empty until SME (#4). Must not leak into prompts, indexes, or tuning."
+      },
+      "scoringRubric": {
+        "rubricId": "rubric-abstention_uncertainty_handling-v0",
+        "dimensionIds": [],
+        "ordinalAnchorsDocumented": false,
+        "scoresInvented": false,
+        "llmJudgeSoleAuthority": false
+      },
+      "reviewerAssignments": [
+        {
+          "slotId": "abstention_uncertainty_handling-sme-a",
+          "role": "sme_a",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "abstention_uncertainty_handling-sme-b",
+          "role": "sme_b",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "abstention_uncertainty_handling-adjudicator",
+          "role": "adjudicator",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        }
+      ],
+      "datasetAndLicence": {
+        "datasetId": "hsi-m7-registry-scaffold-v0",
+        "licence": "UNLICENSED-internal-scaffold",
+        "rightsCleared": "pending_human",
+        "note": "Structural development slot only. Not a licensed gold packet. #2 rights remain PARKED."
+      },
+      "version": "0.1.0",
+      "evaluationStatus": "scaffold",
+      "honesty": {
+        "fixturesAreNotLiveEvidence": true,
+        "expertReferenceHeldOut": true,
+        "noLeakageIntoPromptsIndexesOrTuning": true,
+        "smeScoresNotInvented": true,
+        "llmJudgeNotSoleAuthority": true
+      }
+    },
+    {
+      "caseId": "M7-HO-12-abstention_uncertainty_handling",
+      "categoryId": "abstention_uncertainty_handling",
+      "partition": "held_out",
+      "researchDomain": "uncertainty",
+      "diseaseOrBiologicalContext": "insufficient_evidence",
+      "researchQuestion": "[held-out scaffold] Abstention and uncertainty handling — empty expert reference; not frozen gold.",
+      "taskType": "abstention",
+      "sourceEvidenceRefs": [],
+      "evidenceCutoffDate": null,
+      "relevantEntities": [],
+      "experimentalContext": "not_specified_scaffold",
+      "knownAmbiguity": "Held-out scaffold — sealed expert payload null; do not tune on this partition.",
+      "expectedAnswerability": "not_assessed",
+      "expertReferenceAssessment": {
+        "sealed": true,
+        "payload": null,
+        "injectableIntoPrompts": false,
+        "injectableIntoRetrievalIndexes": false,
+        "injectableIntoModelTuning": false,
+        "notes": "Held-out expert reference for abstention_uncertainty_handling remains empty until SME (#4). Must not leak into prompts, indexes, or tuning."
+      },
+      "scoringRubric": {
+        "rubricId": "rubric-abstention_uncertainty_handling-heldout-v0",
+        "dimensionIds": [],
+        "ordinalAnchorsDocumented": false,
+        "scoresInvented": false,
+        "llmJudgeSoleAuthority": false
+      },
+      "reviewerAssignments": [
+        {
+          "slotId": "abstention_uncertainty_handling-sme-a",
+          "role": "sme_a",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "abstention_uncertainty_handling-sme-b",
+          "role": "sme_b",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        },
+        {
+          "slotId": "abstention_uncertainty_handling-adjudicator",
+          "role": "adjudicator",
+          "filled": false,
+          "reviewerId": null,
+          "ratings": null
+        }
+      ],
+      "datasetAndLicence": {
+        "datasetId": "hsi-m7-registry-heldout-scaffold-v0",
+        "licence": "UNLICENSED-internal-scaffold",
+        "rightsCleared": "pending_human",
+        "note": "Held-out structural slot. frozenHeldOut remains false until SME + rights (#2/#4)."
+      },
+      "version": "0.1.0",
+      "evaluationStatus": "scaffold",
+      "honesty": {
+        "fixturesAreNotLiveEvidence": true,
+        "expertReferenceHeldOut": true,
+        "noLeakageIntoPromptsIndexesOrTuning": true,
+        "smeScoresNotInvented": true,
+        "llmJudgeNotSoleAuthority": true
+      }
+    }
+  ],
+  "partitions": {
+    "developmentCaseCount": 12,
+    "heldOutCaseCount": 12,
+    "developmentAndHeldOutDisjoint": true,
+    "leakagePrevention": {
+      "expertReferenceSealed": true,
+      "heldOutNotInPrompts": true,
+      "heldOutNotInRetrievalIndexes": true,
+      "heldOutNotInModelTuning": true,
+      "documented": true
+    }
+  },
+  "humanQueueBlocked": {
+    "rightsQueue2": "PARKED",
+    "smeQueue4": "PARKED",
+    "liveJourneyQueue5": "PARKED"
+  },
+  "honesty": {
+    "noParallelEvalPlatform": true,
+    "noInventedSmeGold": true,
+    "noFakeLiveSuccess": true,
+    "noGateCAutoApprove": true,
+    "noInventedMoU": true,
+    "noLiveCdsPhi": true,
+    "fixturesAreNotLiveScience": true,
+    "m1ThroughM6NotScientificallyValidated": true,
+    "noPublicMarketingValidationClaim": true,
+    "llmJudgeNotSoleAuthority": true
+  },
+  "stopNote": "M7 PR1 Scientific Benchmark Registry scaffold under scientific_benchmark_v1 alias. Twelve category slots with empty SME/held-out references. Not scientific validation; M1–M6 not scientifically validated; no parallel eval platform; #2/#4/#5 PARKED.",
+  "inventoryHash": "d5f1de8bcf5ccbb1773ce7e6250f12fd441bd4ed544739a9e2e9292849c93851"
+}

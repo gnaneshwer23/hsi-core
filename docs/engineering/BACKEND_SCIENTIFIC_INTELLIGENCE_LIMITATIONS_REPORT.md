@@ -43,6 +43,7 @@ Deterministic PR 8 additions:
 - Unpinned representative walkthrough questions across autoimmune / inflammatory / translational / fibrosis / gut–immune–metabolic / contradiction / gap / abstention that do **not** embed living-evidence or SSC fixture PMIDs/NCTs/MONDO pins.
 - Researcher-workflow comparison scaffold: same questions, comparable information access; **quality and time budgets recorded separately** (slots empty).
 - Named path `evaluation/scientific_benchmark_v1/` is an **alias** of `evaluation/independent-evaluation/` — not a parallel evaluation platform. Science remains BLOCKED (`smeSlotsFilled=0`; `liveSuccessClaimed=false`).
+- M7 PR1 adds a **Scientific Benchmark Registry** under `evaluation/scientific_benchmark_v1/registry/` (12 category slots; development vs held-out partitions; empty SME/held-out expert references; release-gate classifications only). This is evaluation **infrastructure**, not scientific validation of M1–M6. See [`../audits/MILESTONE7_SCIENTIFIC_EVALUATION_MATRIX.md`](../audits/MILESTONE7_SCIENTIFIC_EVALUATION_MATRIX.md).
 
 ---
 

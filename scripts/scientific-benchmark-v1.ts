@@ -11,6 +11,10 @@ import {
   parseIndependentEvaluationSuites,
 } from "../src/evidence/independentEvaluationSuites";
 import {
+  parseScientificBenchmarkRegistry,
+  SCIENTIFIC_BENCHMARK_REGISTRY_RELATIVE_PATH,
+} from "../src/evidence/scientificBenchmarkRegistry";
+import {
   buildScientificBenchmarkV1Alias,
   parseScientificBenchmarkV1Alias,
   SCIENTIFIC_BENCHMARK_V1_PATH,
@@ -24,8 +28,13 @@ const independentManifestPath = resolve(
   root,
   "evaluation/independent-evaluation/suite-manifest.v1.json",
 );
+const registryManifestPath = resolve(
+  root,
+  SCIENTIFIC_BENCHMARK_REGISTRY_RELATIVE_PATH,
+  "registry-manifest.v1.json",
+);
 const checkOnly = process.argv.includes("--check");
-const generatedAt = "2026-11-08T23:55:00.000Z";
+const generatedAt = "2026-11-09T10:30:00.000Z";
 
 function writeJson(path: string, value: unknown): void {
   writeFileSync(path, `${JSON.stringify(value, null, 2)}\n`);
@@ -60,11 +69,17 @@ if (independent.inventoryHash !== rebuiltIndependent.inventoryHash) {
   );
 }
 
+const registryInventoryHash = existsSync(registryManifestPath)
+  ? parseScientificBenchmarkRegistry(JSON.parse(readFileSync(registryManifestPath, "utf8")))
+      .inventoryHash
+  : null;
+
 const alias = parseScientificBenchmarkV1Alias(
   buildScientificBenchmarkV1Alias({
     generatedAt,
     repoRoot: root,
     independentManifest: independent,
+    benchmarkRegistryInventoryHash: registryInventoryHash,
   }),
 );
 
@@ -74,6 +89,7 @@ const status = {
   generatedAt,
   aliasesCanonicalPath: alias.aliases.canonicalPath,
   canonicalInventoryHash: alias.aliases.inventoryHash,
+  benchmarkRegistryInventoryHash: alias.benchmarkRegistry.inventoryHash,
   engineeringScaffold: "CLEARED" as const,
   scientificAcceptance: "BLOCKED" as const,
   rightsAcceptance: "BLOCKED" as const,
@@ -87,7 +103,7 @@ const status = {
   humanQueueBlocked: alias.humanQueueBlocked,
   inventoryHash: alias.inventoryHash,
   stopNote: alias.stopNote,
-  note: "Alias of independent-evaluation. Not a parallel eval platform. #2/#4/#5 PARKED.",
+  note: "Alias of independent-evaluation + M7 registry scaffold. Not a parallel eval platform. #2/#4/#5 PARKED.",
 };
 
 if (checkOnly) {

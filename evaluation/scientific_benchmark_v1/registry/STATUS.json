@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "hsi-scientific-benchmark-registry-status-1",
+  "path": "evaluation/scientific_benchmark_v1/registry",
+  "generatedAt": "2026-11-09T10:30:00.000Z",
+  "categoryCount": 12,
+  "developmentCaseCount": 12,
+  "heldOutCaseCount": 12,
+  "heldOutFrozen": false,
+  "smeSlotsFilled": 0,
+  "engineeringScaffold": "CLEARED",
+  "scientificAcceptance": "BLOCKED",
+  "releaseGateClassification": "scientific_evaluation_pending",
+  "numericAcceptanceThresholdsInvented": false,
+  "wiresTo": {
+    "scientificBenchmarkAliasPath": "evaluation/scientific_benchmark_v1",
+    "independentEvaluationCanonicalPath": "evaluation/independent-evaluation",
+    "noParallelEvalPlatform": true
+  },
+  "humanQueueBlocked": {
+    "rightsQueue2": "PARKED",
+    "smeQueue4": "PARKED",
+    "liveJourneyQueue5": "PARKED"
+  },
+  "inventoryHash": "d5f1de8bcf5ccbb1773ce7e6250f12fd441bd4ed544739a9e2e9292849c93851",
+  "stopNote": "M7 PR1 Scientific Benchmark Registry scaffold under scientific_benchmark_v1 alias. Twelve category slots with empty SME/held-out references. Not scientific validation; M1–M6 not scientifically validated; no parallel eval platform; #2/#4/#5 PARKED.",
+  "note": "M7 PR1 registry scaffold. Empty SME/held-out references. Not scientific validation."
+}
