@@ -902,10 +902,8 @@ export function projectGapAssessmentRecordsFromDurableItems(input: {
   if (!investigation_id) throw Error("Gap assessment record requires investigation_id");
   if (!question) throw Error("Gap assessment record requires question");
 
-  const coverage = projectOpposingSearchCoverageForGap({
-    opposingSearch: input.opposingSearch,
-    resultBudget: input.resultBudget,
-  });
+  // Opposing-search coverage is applied inside projectGapAssessmentRecord
+  // (searched_sources / retrieved_records / result_budget / coverage_limitations).
   const defaultAction = input.nextResearchActions?.[0]?.trim();
 
   return input.items.map((row, index) => {
