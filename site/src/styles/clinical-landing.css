@@ -48,15 +48,14 @@
 }
 .cl-hero-copy { position: relative; z-index: 2; max-width: 38rem; }
 .cl-hero h1 {
-  margin: 0 0 0.4rem;
-  font-size: clamp(2.6rem, 6vw, 4.6rem);
-  line-height: 0.98;
+  margin: 0 0 1rem;
+  font-size: clamp(2.1rem, 4.6vw, 3.6rem);
+  line-height: 1.05;
   letter-spacing: -0.04em;
   font-weight: 650;
   color: #12253f;
-  max-width: 12ch;
+  max-width: 16ch;
 }
-.cl-tagline { margin: 0 0 1rem; font-size: 1.15rem; font-weight: 600; color: #172d47; max-width: 28ch; }
 .cl-lead { margin: 0; max-width: 62ch; color: #234864; line-height: 1.6; }
 .cl-actions { display: flex; flex-wrap: wrap; gap: 0.8rem 1.2rem; margin-top: 1.4rem; }
 .cl-arrow-link, .cl-text-link {
