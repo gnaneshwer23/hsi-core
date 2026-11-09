@@ -1,0 +1,170 @@
+{
+  "schema": "hsi-collaborative-investigation-1",
+  "method": "hsi.collaborative_investigation.v1",
+  "version": "0.1.0",
+  "asOf": "2026-11-09T14:00:00.000Z",
+  "collaborationCount": 1,
+  "honesty": {
+    "sharingDoesNotGrantRestrictedDatasetAccess": true,
+    "artifactLevelPermissionsRequired": true,
+    "federationDoesNotImplyCentralOwnership": true,
+    "institutionalDataRemainsTenantScoped": true,
+    "aiCannotActAsIndependentHumanReviewer": true,
+    "patientLevelFederatedRetrieval": false,
+    "realInstitutionalPartnershipClaimed": false,
+    "gateCAutoApprove": false,
+    "mouInvented": false,
+    "phiCdsWired": false,
+    "socialNetworkProduct": false,
+    "separateApp": false,
+    "workbenchUiDuplicated": false,
+    "federatedConnectorsImplemented": false,
+    "federatedQueryImplemented": false,
+    "discoveryNetworkUi": false,
+    "fullContributionModel": false,
+    "neonProjectPolicy": "red-wave-only",
+    "neonMigrationInThisPr": false
+  },
+  "collaborations": [
+    {
+      "schema": "hsi-collaborative-investigation-1",
+      "method": "hsi.collaborative_investigation.v1",
+      "version": "0.1.0",
+      "collaborationId": "hsi-collab-fixture-demo",
+      "investigationId": "hsi-inv-m9-collab-fixture",
+      "investigationSchema": "hsi-investigation-orchestration-1",
+      "ownerPrincipalId": "fixture-principal-owner",
+      "ownerOrgId": "hsi-org-fixture-demo",
+      "participatingOrgIds": [
+        "hsi-org-fixture-demo",
+        "hsi-org-fixture-partner"
+      ],
+      "collaborators": [
+        {
+          "principalId": "fixture-principal-owner",
+          "orgId": "hsi-org-fixture-demo",
+          "role": "owner",
+          "actorKind": "human",
+          "active": true,
+          "joinedAt": "2026-11-09T14:00:00.000Z",
+          "revokedAt": null
+        },
+        {
+          "principalId": "fixture-principal-collab",
+          "orgId": "hsi-org-fixture-partner",
+          "role": "contributor",
+          "actorKind": "human",
+          "active": true,
+          "joinedAt": "2026-11-09T15:00:00.000Z",
+          "revokedAt": null
+        }
+      ],
+      "invites": [
+        {
+          "inviteId": "hsi-invite-fixture-collab",
+          "collaborationId": "hsi-collab-fixture-demo",
+          "invitedPrincipalId": "fixture-principal-collab",
+          "invitedOrgId": "hsi-org-fixture-partner",
+          "proposedRole": "contributor",
+          "status": "accepted",
+          "invitedByPrincipalId": "fixture-principal-owner",
+          "createdAt": "2026-11-09T14:30:00.000Z",
+          "respondedAt": "2026-11-09T15:00:00.000Z"
+        }
+      ],
+      "scientificObjectives": [
+        {
+          "id": "obj-fixture",
+          "text": "Fixture objective for collaborative contract pack.",
+          "ownerPrincipalId": "fixture-principal-owner",
+          "hypothesisId": null
+        }
+      ],
+      "sharedPlan": null,
+      "taskAssignments": [],
+      "evidenceContributionRefs": [],
+      "hypothesisDiscussions": [],
+      "experimentProposals": [],
+      "reviewCheckpoints": [
+        {
+          "id": "cp-collab-scientific-review",
+          "kind": "scientific_review",
+          "required": true,
+          "status": "pending",
+          "note": "Human scientific review required; Gate C auto-approve refused.",
+          "gateCAutoApprove": false
+        }
+      ],
+      "decisionHistory": [
+        {
+          "decisionId": "dec-accept-hsi-invite-fixture-collab",
+          "kind": "invite_accepted",
+          "actorPrincipalId": "fixture-principal-collab",
+          "at": "2026-11-09T15:00:00.000Z",
+          "summary": "Accepted invite as contributor",
+          "relatedArtifactId": null
+        },
+        {
+          "decisionId": "dec-share-hsi-artifact-fixture-brief-fixture-principal-collab",
+          "kind": "artifact_shared",
+          "actorPrincipalId": "fixture-principal-owner",
+          "at": "2026-11-09T16:00:00.000Z",
+          "summary": "Shared artifact hsi-artifact-fixture-brief with selected grants",
+          "relatedArtifactId": "hsi-artifact-fixture-brief"
+        }
+      ],
+      "versionedArtifacts": [
+        {
+          "artifactId": "hsi-artifact-fixture-brief",
+          "kind": "shared_brief",
+          "version": 1,
+          "owningOrgId": "hsi-org-fixture-demo",
+          "dataClass": "synthetic_demo",
+          "label": "Fixture shared brief",
+          "grantsUnderlyingDatasetAccess": false,
+          "createdAt": "2026-11-09T15:30:00.000Z",
+          "createdByPrincipalId": "fixture-principal-owner"
+        }
+      ],
+      "artifactAcls": [
+        {
+          "artifactId": "hsi-artifact-fixture-brief",
+          "principalId": "fixture-principal-collab",
+          "grants": [
+            "read",
+            "comment"
+          ],
+          "grantedByPrincipalId": "fixture-principal-owner",
+          "grantedAt": "2026-11-09T16:00:00.000Z",
+          "revokedAt": null
+        }
+      ],
+      "comments": [],
+      "revisionProposals": [],
+      "lifecycle": "active",
+      "createdAt": "2026-11-09T14:00:00.000Z",
+      "updatedAt": "2026-11-09T16:00:00.000Z",
+      "honesty": {
+        "sharingDoesNotGrantRestrictedDatasetAccess": true,
+        "artifactLevelPermissionsRequired": true,
+        "federationDoesNotImplyCentralOwnership": true,
+        "institutionalDataRemainsTenantScoped": true,
+        "aiCannotActAsIndependentHumanReviewer": true,
+        "patientLevelFederatedRetrieval": false,
+        "realInstitutionalPartnershipClaimed": false,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "socialNetworkProduct": false,
+        "separateApp": false,
+        "workbenchUiDuplicated": false,
+        "federatedConnectorsImplemented": false,
+        "federatedQueryImplemented": false,
+        "discoveryNetworkUi": false,
+        "fullContributionModel": false,
+        "neonProjectPolicy": "red-wave-only",
+        "neonMigrationInThisPr": false
+      }
+    }
+  ]
+}

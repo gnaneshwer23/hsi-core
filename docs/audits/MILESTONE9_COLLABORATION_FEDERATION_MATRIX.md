@@ -1,7 +1,7 @@
 # Milestone 9 — Scientific Collaboration, Federated Research & Discovery Networks
 
 **Brief:** HSI Milestone 9 — extend existing auth, roles, Neon (red-wave), evidence/investigation contracts into **research organisations, tenant isolation, collaborative investigation contracts, and governed federation hooks**. Not a social network, not a separate app, not a new graph DB. Federation must **not** imply central ownership of institutional data.  
-**Status:** Phase 0 gap audit + PR1 (Research Organisations and Tenant Security) — **not** collaboration complete, **not** federated discovery validated, **not** real institutional partnerships claimed.  
+**Status:** Phase 0 gap audit + PR1 (Research Organisations and Tenant Security, #99 in-flight) + PR2 (Collaborative Investigation Contracts, in-flight) — **not** federation complete, **not** federated discovery validated, **not** real institutional partnerships claimed.  
 **Date:** 2026-11-09  
 **Audited `main` SHA:** `5ca518fcecbab365b02e7a3025914a38ab784b5b`  
 **Tip commit:** `5ca518f Add M8 Phase 0 matrix and incremental evidence monitoring. (#98)`  
@@ -25,7 +25,7 @@
 - [`../engineering/HUMAN_QUEUE_RESIDUALS.md`](../engineering/HUMAN_QUEUE_RESIDUALS.md) — #2 / #4 / #5 PARKED  
 - [`../CDS_PHI_BOUNDARY.md`](../CDS_PHI_BOUNDARY.md)  
 
-**Out of PR1:** Collaborative investigation contracts (PR2), federated query gateway, discovery-network UI, unrestricted patient-level federated retrieval, claiming real external institutional partnerships, Gate C auto-approve, MoU invention, PHI/CDS, new graph DB / social product surface.
+**Out of PR2:** Full scientific contribution / attribution model (PR3), federated query gateway, discovery-network UI, unrestricted patient-level federated retrieval, claiming real external institutional partnerships, Gate C auto-approve, MoU invention, PHI/CDS, social network / separate app / duplicated Research Decision Workbench UI, Neon org/collaboration migrations.
 
 ---
 
@@ -83,18 +83,19 @@ Honesty freeze: no Gate C auto-approve · no invented MoU · no live CDS/PHI · 
 | Research grants | `006_hsi_research_access.sql` · `researcher` / `research_admin` | `partial` | Bridge to org membership; do not replace grants silently |
 | Independent reviewer authority | `005_hsi_reviewer_authority.sql` · `scientific_reviewer` | `partial` | Maps toward org `independent_reviewer`; AI agents denied |
 | Account contract | `researchAccount.ts` · `researchAccountStore.ts` | `partial` | Read-only account surface; org membership extends, does not invent admin |
-| Investigation auth scope | `investigationOrchestrationContracts.ts` | `partial` (#96) | Add tenant / org ids in PR2 — not full gateway in PR1 |
-| Evidence ledger / review | `016` · review stores | `partial` | Artifact-level permissions later; no auto-approve |
+| Investigation auth scope | `investigationOrchestrationContracts.ts` | `partial` (#96) | Collaborative bind + artifact ACL in **PR2** — not full gateway |
+| Evidence ledger / review | `016` · review stores | `partial` | Artifact-level permissions in **PR2**; full contribution model → PR3; no auto-approve |
 | Governed graph read | ARCH-002 stores / LHKG | `partial` | HSI KG ownership preserved under federation |
 | Capability rehearsal | `capabilities/governance.ts` | `partial` | `live_patient` remains excluded |
-| Research organisations / teams | — | `missing` → **PR1** | Contracts + thin store; no social graph |
-| Tenant isolation helpers | Cross-principal checks in stores | `partial` → deepen **PR1** | Fail-closed cross-tenant denial |
-| Org Neon tables | — | `missing` | **Deferred** — prefer contracts + memory store until product write path needs columns |
-| Federated query gateway | — | `missing` | Later — not PR1 |
-| Discovery network UI | — | `missing` | Later — not PR1 |
+| Research organisations / teams | — | `missing` → **PR1 in-flight** (#99) | Contracts + thin store; no social graph |
+| Tenant isolation helpers | Cross-principal checks in stores | `partial` → deepen **PR1** / compose **PR2** | Fail-closed cross-tenant / cross-org denial |
+| Collaborative investigations | M6 contracts | `missing` → **PR2 in-flight** | Ownership · invites · artifact ACL · decision history |
+| Org / collaboration Neon tables | — | `missing` | **Deferred** — prefer contracts + memory store until product write path needs columns |
+| Federated query gateway | — | `missing` | Later — not PR1/PR2 |
+| Discovery network UI | — | `missing` | Later — not PR1/PR2 |
 | Patient-level federated retrieval | — | `out_of_scope` (current) | Explicit non-start |
 
-**Persistence decision (PR1):** Prefer **validated contracts + thin in-memory store** projecting onto existing `hsi_research_access` / `hsi_reviewer_authority` role vocabulary. No new Neon migration in PR1 — existing grants remain authoritative for live auth. A backwards-compatible org-table migration is deferred until a trusted write path needs durable org rows on red-wave.
+**Persistence decision (PR1–PR2):** Prefer **validated contracts + thin in-memory store** projecting onto existing `hsi_research_access` / `hsi_reviewer_authority` role vocabulary and M6 investigation ids. No new Neon migration in PR1/PR2 — existing grants remain authoritative for live auth. A backwards-compatible org/collaboration-table migration is deferred until a trusted write path needs durable rows on red-wave.
 
 ---
 
@@ -103,15 +104,15 @@ Honesty freeze: no Gate C auto-approve · no invented MoU · no live CDS/PHI · 
 | Phase | Capability | Existing | Status | Missing | Files |
 |-------|------------|----------|--------|---------|-------|
 | **0** Audit + dependency + security matrix | This document | — | `operational` (audit) | Keep updated as PRs land | this file |
-| **1** Research organisations + tenant security | Neon Auth · research access · reviewer authority · account contract | `partial` → **PR1 in-flight** (`eng/m9-research-org-tenant-security`) | Org / team / membership / roles · metadata · fail-closed isolation · escalation tests | `src/researchOrganisationTenantSecurity.ts` · `test/researchOrganisationTenantSecurity.test.ts` · `scripts/research-organisation-tenant-security.ts` · `evaluation/research-organisation-tenant/` |
-| **2** Collaborative investigation contracts | M6 investigation contracts | `missing` | Shared investigation ownership / artifact ACL without cross-tenant bleed | future PR2 |
+| **1** Research organisations + tenant security | Neon Auth · research access · reviewer authority · account contract | `partial` → **PR1 in-flight** (#99 / `eng/m9-research-org-tenant-security`) | Org / team / membership / roles · metadata · fail-closed isolation · escalation tests | `src/researchOrganisationTenantSecurity.ts` · `test/researchOrganisationTenantSecurity.test.ts` · `scripts/research-organisation-tenant-security.ts` · `evaluation/research-organisation-tenant/` |
+| **2** Collaborative investigation contracts | M6 investigation contracts · PR1 tenant helpers | `missing` → **PR2 in-flight** (`eng/m9-collaborative-investigation-contracts`; depends on #99) | Shared investigation ownership / invites / artifact ACL without restricted-dataset bleed | `src/collaborativeInvestigationContracts.ts` · `test/collaborativeInvestigationContracts.test.ts` · `scripts/collaborative-investigation-contracts.ts` · `evaluation/collaborative-investigation/` |
 | **3** Federated query / discovery hooks | Public adapters only | `missing` | Bounded, consented, non-patient federation | later |
 | **4** Discovery network UI | — | `missing` | Not a social product | later |
 | **5+** Partnership ops / MoU | — | `blocked` (honest) | Human legal — never invent MoU | human-gated |
 
 ---
 
-## PR1 deliverable (this increment)
+## PR1 deliverable (Research Organisations and Tenant Security — #99)
 
 **Research Organisations and Tenant Security**
 
@@ -125,6 +126,25 @@ Honesty freeze: no Gate C auto-approve · no invented MoU · no live CDS/PHI · 
 - Neon red-wave policy preserved; no new migration in PR1; no Gate C / MoU / PHI; fixtures ≠ live; no federated query gateway or discovery UI.
 
 **Out of PR1:** PR2 collaborative investigation contracts, federated query gateway, discovery-network UI, patient-level federated retrieval, real partnership claims.
+
+---
+
+## PR2 deliverable (this increment)
+
+**Collaborative Investigation Contracts** — stacked on PR1 (#99); prefer merge #99 first.
+
+- Investigation owner, participating organisations, research collaborators.  
+- Scientific objectives, shared investigation plan, task assignments.  
+- Evidence contribution **references** only (full contribution / attribution → PR3).  
+- Hypothesis discussion stubs + experiment proposal stubs.  
+- Review checkpoints, decision history, versioned research artifacts.  
+- Collaboration controls: invite, accept/decline, assign roles, share selected artifacts, comment, propose revision, request scientific review, approve/reject permitted actions, revoke access, archive.  
+- **Critical:** sharing an investigation does **not** grant access to underlying restricted datasets; artifact-level ACLs required.  
+- Fail-closed cross-org / outsider / revoked-access denial; AI cannot act as independent human reviewer.  
+- Binds M6 `ScientificInvestigationContract` ids; composes PR1 tenant isolation helpers.  
+- Thin in-memory store + evaluation pack; no Neon migration; no federated connectors/query; no discovery-network UI; no duplicated Research Decision Workbench UI; no Gate C / MoU / PHI/CDS.
+
+**Out of PR2:** PR3 scientific contributions and attribution, federated query gateway, discovery-network UI, patient-level federated retrieval, real partnership claims, Neon collaboration tables.
 
 ---
 
