@@ -1,0 +1,767 @@
+{
+  "schema": "hsi-reproducible-cohort-builder-1",
+  "method": "hsi.reproducible_cohort_builder.v1",
+  "version": "0.1.0",
+  "asOf": "2026-11-09T22:00:00.000Z",
+  "cohortCount": 2,
+  "attritionCount": 1,
+  "eligibilityCount": 1,
+  "missingDataCount": 1,
+  "populationCount": 1,
+  "measurementCount": 1,
+  "overlapCount": 1,
+  "searchResultCount": 2,
+  "disclosureCount": 1,
+  "honesty": {
+    "researchDecisionSupportOnly": true,
+    "noUnrestrictedCentralPatientDatabase": true,
+    "observationalCohortIsNotProvenTreatmentEffect": true,
+    "noIdentifiablePatientLevelExposureViaSearch": true,
+    "smallCellDisclosureControlsRequired": true,
+    "identifiableRecordsOutsideScientificKg": true,
+    "pseudonymisedMayStillBePersonalData": true,
+    "noPhiIngestion": true,
+    "noFabricatedPatientCountsAsReal": true,
+    "noPatientTreatmentDirectives": true,
+    "noWorkbenchUi": true,
+    "noLiveEhrQueryClaim": true,
+    "agentsDraftHumansReview": true,
+    "gateCAutoApprove": false,
+    "mouInvented": false,
+    "phiCdsWired": false,
+    "scientificApproval": false,
+    "causalIdentificationClaimed": false,
+    "graphPromotable": false,
+    "neonProjectPolicy": "red-wave-only",
+    "migration": "deferred"
+  },
+  "cohorts": [
+    {
+      "schema": "hsi-reproducible-cohort-builder-1",
+      "method": "hsi.reproducible_cohort_builder.v1",
+      "version": "0.1.0",
+      "id": "hsi-rcb-coh-blocked-demo",
+      "displayName": "Blocked cohort until authorised dataset",
+      "scientificQuestion": "Blocked scientific path for cohort building until an authorised clinical dataset is supplied.",
+      "cohortVersion": "blocked-v0",
+      "rweStudyId": "hsi-rwe-study-blocked-demo",
+      "interopDataSourceId": null,
+      "longitudinalAnalysisSpecId": null,
+      "dataSourceDescription": "Authorised clinical dataset not supplied",
+      "inclusionCriteria": [
+        {
+          "id": "hsi-rcb-crit-inc-diagnosis",
+          "polarity": "inclusion",
+          "domain": "diagnosis",
+          "description": "Fixture qualifying diagnosis code envelope",
+          "codeSystemRef": "fixture-icd10",
+          "codeValue": "FIX.01",
+          "lookbackDays": 365,
+          "note": "Inclusion fixture"
+        },
+        {
+          "id": "hsi-rcb-crit-inc-observation",
+          "polarity": "inclusion",
+          "domain": "observation_window",
+          "description": "Fixture continuous observation before index",
+          "codeSystemRef": null,
+          "codeValue": null,
+          "lookbackDays": 180,
+          "note": "Baseline observation fixture"
+        }
+      ],
+      "exclusionCriteria": [
+        {
+          "id": "hsi-rcb-crit-exc-prior-exposure",
+          "polarity": "exclusion",
+          "domain": "medication",
+          "description": "Fixture prior exposure washout exclusion",
+          "codeSystemRef": "fixture-atc",
+          "codeValue": "FIX-ATC",
+          "lookbackDays": 180,
+          "note": "Exclusion fixture"
+        }
+      ],
+      "indexDate": {
+        "kind": "cohort_entry_declared",
+        "description": "Declared cohort entry — blocked pending dataset",
+        "anchoredToCriterionId": null,
+        "note": ""
+      },
+      "baselineWindow": {
+        "startOffset": -90,
+        "endOffset": -1,
+        "unit": "days",
+        "note": ""
+      },
+      "exposure": {
+        "role": "exposure",
+        "displayName": "Blocked exposure",
+        "definition": "Exposure undefined without authorised dataset",
+        "rweExposureId": null,
+        "washoutDays": null,
+        "note": ""
+      },
+      "comparator": {
+        "role": "comparator",
+        "displayName": "Blocked comparator",
+        "definition": "Comparator undefined without authorised dataset",
+        "rweExposureId": null,
+        "washoutDays": null,
+        "note": ""
+      },
+      "followUpPeriod": {
+        "endKind": "administrative_censor",
+        "description": "Follow-up blocked pending dataset",
+        "maxDurationValue": null,
+        "maxDurationUnit": null,
+        "note": ""
+      },
+      "outcome": {
+        "displayName": "Blocked outcome",
+        "definition": "Outcome undefined without authorised dataset",
+        "rweOutcomeId": null,
+        "ascertainmentWindow": null,
+        "note": ""
+      },
+      "disclosurePolicy": {
+        "smallCellThreshold": 5,
+        "suppressSensitiveSubgroups": true,
+        "allowIdentifiablePatientLevelExport": false,
+        "allowIdentifiablePatientLevelSearch": false,
+        "note": "Small-cell and sensitive-subgroup suppression; no identifiable export/search"
+      },
+      "datasetAvailability": "blocked_no_authorised_clinical_dataset",
+      "accessClassification": "restricted_not_ingested",
+      "containsIdentifiablePhi": false,
+      "liveEhrQueryOperational": false,
+      "inventedPatientCount": null,
+      "lifecycle": "blocked_awaiting_authorised_dataset",
+      "reviewedBy": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-rcb",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "noUnrestrictedCentralPatientDatabase": true,
+        "observationalCohortIsNotProvenTreatmentEffect": true,
+        "noIdentifiablePatientLevelExposureViaSearch": true,
+        "smallCellDisclosureControlsRequired": true,
+        "identifiableRecordsOutsideScientificKg": true,
+        "pseudonymisedMayStillBePersonalData": true,
+        "noPhiIngestion": true,
+        "noFabricatedPatientCountsAsReal": true,
+        "noPatientTreatmentDirectives": true,
+        "noWorkbenchUi": true,
+        "noLiveEhrQueryClaim": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "causalIdentificationClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T22:00:00.000Z",
+      "updatedAt": "2026-11-09T22:00:00.000Z",
+      "note": ""
+    },
+    {
+      "schema": "hsi-reproducible-cohort-builder-1",
+      "method": "hsi.reproducible_cohort_builder.v1",
+      "version": "0.1.0",
+      "id": "hsi-rcb-coh-fixture-demo",
+      "displayName": "Fixture SSc observational cohort envelope",
+      "scientificQuestion": "Fixture reproducible cohort definition — observational association only.",
+      "cohortVersion": "fixture-cohort-v0",
+      "rweStudyId": "hsi-rwe-study-fixture-demo",
+      "interopDataSourceId": "hsi-scdi-src-fhir-r4-demo",
+      "longitudinalAnalysisSpecId": "hsi-lce-spec-lab-trend-demo",
+      "dataSourceDescription": "Engineering fixture synthetic cohort source",
+      "inclusionCriteria": [
+        {
+          "id": "hsi-rcb-crit-inc-diagnosis",
+          "polarity": "inclusion",
+          "domain": "diagnosis",
+          "description": "Fixture qualifying diagnosis code envelope",
+          "codeSystemRef": "fixture-icd10",
+          "codeValue": "FIX.01",
+          "lookbackDays": 365,
+          "note": "Inclusion fixture"
+        },
+        {
+          "id": "hsi-rcb-crit-inc-observation",
+          "polarity": "inclusion",
+          "domain": "observation_window",
+          "description": "Fixture continuous observation before index",
+          "codeSystemRef": null,
+          "codeValue": null,
+          "lookbackDays": 180,
+          "note": "Baseline observation fixture"
+        }
+      ],
+      "exclusionCriteria": [
+        {
+          "id": "hsi-rcb-crit-exc-prior-exposure",
+          "polarity": "exclusion",
+          "domain": "medication",
+          "description": "Fixture prior exposure washout exclusion",
+          "codeSystemRef": "fixture-atc",
+          "codeValue": "FIX-ATC",
+          "lookbackDays": 180,
+          "note": "Exclusion fixture"
+        }
+      ],
+      "indexDate": {
+        "kind": "first_qualifying_diagnosis",
+        "description": "First fixture qualifying diagnosis as index",
+        "anchoredToCriterionId": "hsi-rcb-crit-inc-diagnosis",
+        "note": "Index date fixture"
+      },
+      "baselineWindow": {
+        "startOffset": -180,
+        "endOffset": -1,
+        "unit": "days",
+        "note": "Baseline window before index"
+      },
+      "exposure": {
+        "role": "exposure",
+        "displayName": "Fixture exposure",
+        "definition": "Declared fixture exposure definition",
+        "rweExposureId": "hsi-rwe-exp-fixture-demo",
+        "washoutDays": 180,
+        "note": "Exposure fixture"
+      },
+      "comparator": {
+        "role": "comparator",
+        "displayName": "Fixture comparator",
+        "definition": "Declared fixture comparator definition",
+        "rweExposureId": "hsi-rwe-exp-fixture-comp",
+        "washoutDays": 180,
+        "note": "Comparator fixture"
+      },
+      "followUpPeriod": {
+        "endKind": "fixed_duration",
+        "description": "Fixed 12-month follow-up fixture",
+        "maxDurationValue": 12,
+        "maxDurationUnit": "months",
+        "note": "Follow-up fixture"
+      },
+      "outcome": {
+        "displayName": "Fixture outcome",
+        "definition": "Declared fixture outcome ascertainment",
+        "rweOutcomeId": "hsi-rwe-out-fixture-demo",
+        "ascertainmentWindow": {
+          "startOffset": 0,
+          "endOffset": 365,
+          "unit": "days",
+          "note": "Outcome window"
+        },
+        "note": "Outcome fixture"
+      },
+      "disclosurePolicy": {
+        "smallCellThreshold": 5,
+        "suppressSensitiveSubgroups": true,
+        "allowIdentifiablePatientLevelExport": false,
+        "allowIdentifiablePatientLevelSearch": false,
+        "note": "Small-cell and sensitive-subgroup suppression; no identifiable export/search"
+      },
+      "datasetAvailability": "fixture_only",
+      "accessClassification": "fixture_engineering",
+      "containsIdentifiablePhi": false,
+      "liveEhrQueryOperational": false,
+      "inventedPatientCount": null,
+      "lifecycle": "accepted_with_limitations",
+      "reviewedBy": {
+        "principalId": "fixture-researcher",
+        "actorKind": "human"
+      },
+      "authoredBy": {
+        "principalId": "fixture-agent-rcb",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "noUnrestrictedCentralPatientDatabase": true,
+        "observationalCohortIsNotProvenTreatmentEffect": true,
+        "noIdentifiablePatientLevelExposureViaSearch": true,
+        "smallCellDisclosureControlsRequired": true,
+        "identifiableRecordsOutsideScientificKg": true,
+        "pseudonymisedMayStillBePersonalData": true,
+        "noPhiIngestion": true,
+        "noFabricatedPatientCountsAsReal": true,
+        "noPatientTreatmentDirectives": true,
+        "noWorkbenchUi": true,
+        "noLiveEhrQueryClaim": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "causalIdentificationClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T22:00:00.000Z",
+      "updatedAt": "2026-11-09T22:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "attrition": [
+    {
+      "schema": "hsi-reproducible-cohort-builder-1",
+      "method": "hsi.reproducible_cohort_builder.v1",
+      "version": "0.1.0",
+      "id": "hsi-rcb-atr-demo",
+      "cohortDefinitionId": "hsi-rcb-coh-fixture-demo",
+      "cohortVersion": "fixture-cohort-v0",
+      "steps": [
+        {
+          "stepKind": "source_population",
+          "label": "Fixture source population",
+          "countDeclared": null,
+          "disclosureStatus": "not_assessed",
+          "removedReason": null,
+          "note": "n not invented"
+        },
+        {
+          "stepKind": "inclusion_applied",
+          "label": "Inclusion applied",
+          "countDeclared": null,
+          "disclosureStatus": "suppressed_small_cell",
+          "removedReason": null,
+          "note": "Small cell suppressed"
+        },
+        {
+          "stepKind": "final_analytic_cohort",
+          "label": "Final analytic cohort",
+          "countDeclared": 20,
+          "disclosureStatus": "released_aggregate",
+          "removedReason": null,
+          "note": "Disclosure-safe aggregate"
+        }
+      ],
+      "inventedPatientCount": null,
+      "containsIdentifiablePhi": false,
+      "authoredBy": {
+        "principalId": "fixture-agent-rcb",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "noUnrestrictedCentralPatientDatabase": true,
+        "observationalCohortIsNotProvenTreatmentEffect": true,
+        "noIdentifiablePatientLevelExposureViaSearch": true,
+        "smallCellDisclosureControlsRequired": true,
+        "identifiableRecordsOutsideScientificKg": true,
+        "pseudonymisedMayStillBePersonalData": true,
+        "noPhiIngestion": true,
+        "noFabricatedPatientCountsAsReal": true,
+        "noPatientTreatmentDirectives": true,
+        "noWorkbenchUi": true,
+        "noLiveEhrQueryClaim": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "causalIdentificationClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T22:00:00.000Z",
+      "updatedAt": "2026-11-09T22:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "eligibility": [
+    {
+      "schema": "hsi-reproducible-cohort-builder-1",
+      "method": "hsi.reproducible_cohort_builder.v1",
+      "version": "0.1.0",
+      "id": "hsi-rcb-elig-demo",
+      "cohortDefinitionId": "hsi-rcb-coh-fixture-demo",
+      "subjectOrCohortRef": "cohort-rcb-fixture-demo",
+      "subjectRefKind": "cohort_aggregate",
+      "decision": "eligible_declared",
+      "matchedInclusionCriterionIds": [
+        "hsi-rcb-crit-inc-diagnosis"
+      ],
+      "matchedExclusionCriterionIds": [],
+      "containsIdentifiablePhi": false,
+      "authoredBy": {
+        "principalId": "fixture-agent-rcb",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "noUnrestrictedCentralPatientDatabase": true,
+        "observationalCohortIsNotProvenTreatmentEffect": true,
+        "noIdentifiablePatientLevelExposureViaSearch": true,
+        "smallCellDisclosureControlsRequired": true,
+        "identifiableRecordsOutsideScientificKg": true,
+        "pseudonymisedMayStillBePersonalData": true,
+        "noPhiIngestion": true,
+        "noFabricatedPatientCountsAsReal": true,
+        "noPatientTreatmentDirectives": true,
+        "noWorkbenchUi": true,
+        "noLiveEhrQueryClaim": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "causalIdentificationClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T22:00:00.000Z",
+      "updatedAt": "2026-11-09T22:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "missingData": [
+    {
+      "schema": "hsi-reproducible-cohort-builder-1",
+      "method": "hsi.reproducible_cohort_builder.v1",
+      "version": "0.1.0",
+      "id": "hsi-rcb-miss-demo",
+      "cohortDefinitionId": "hsi-rcb-coh-fixture-demo",
+      "status": "partially_assessed",
+      "variablesAssessed": [
+        "baseline CRP",
+        "follow-up completeness"
+      ],
+      "summary": "Fixture missing-data envelope — rates not invented as real clinical missingness",
+      "inventedMissingnessRates": null,
+      "containsIdentifiablePhi": false,
+      "authoredBy": {
+        "principalId": "fixture-agent-rcb",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "noUnrestrictedCentralPatientDatabase": true,
+        "observationalCohortIsNotProvenTreatmentEffect": true,
+        "noIdentifiablePatientLevelExposureViaSearch": true,
+        "smallCellDisclosureControlsRequired": true,
+        "identifiableRecordsOutsideScientificKg": true,
+        "pseudonymisedMayStillBePersonalData": true,
+        "noPhiIngestion": true,
+        "noFabricatedPatientCountsAsReal": true,
+        "noPatientTreatmentDirectives": true,
+        "noWorkbenchUi": true,
+        "noLiveEhrQueryClaim": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "causalIdentificationClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T22:00:00.000Z",
+      "updatedAt": "2026-11-09T22:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "population": [
+    {
+      "schema": "hsi-reproducible-cohort-builder-1",
+      "method": "hsi.reproducible_cohort_builder.v1",
+      "version": "0.1.0",
+      "id": "hsi-rcb-pop-demo",
+      "cohortDefinitionId": "hsi-rcb-coh-fixture-demo",
+      "summary": "Fixture population description — observational association only",
+      "characteristics": [
+        "Adult fixture cohort aggregate",
+        "Baseline observation window declared"
+      ],
+      "aggregateNDeclared": 20,
+      "disclosureStatus": "released_aggregate",
+      "inventedPatientCount": null,
+      "containsIdentifiablePhi": false,
+      "authoredBy": {
+        "principalId": "fixture-agent-rcb",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "noUnrestrictedCentralPatientDatabase": true,
+        "observationalCohortIsNotProvenTreatmentEffect": true,
+        "noIdentifiablePatientLevelExposureViaSearch": true,
+        "smallCellDisclosureControlsRequired": true,
+        "identifiableRecordsOutsideScientificKg": true,
+        "pseudonymisedMayStillBePersonalData": true,
+        "noPhiIngestion": true,
+        "noFabricatedPatientCountsAsReal": true,
+        "noPatientTreatmentDirectives": true,
+        "noWorkbenchUi": true,
+        "noLiveEhrQueryClaim": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "causalIdentificationClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T22:00:00.000Z",
+      "updatedAt": "2026-11-09T22:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "measurement": [
+    {
+      "schema": "hsi-reproducible-cohort-builder-1",
+      "method": "hsi.reproducible_cohort_builder.v1",
+      "version": "0.1.0",
+      "id": "hsi-rcb-meas-demo",
+      "cohortDefinitionId": "hsi-rcb-coh-fixture-demo",
+      "measurementConcept": "Fixture CRP laboratory concept",
+      "status": "partially_available",
+      "summary": "Measurement availability declared for fixture only",
+      "containsIdentifiablePhi": false,
+      "authoredBy": {
+        "principalId": "fixture-agent-rcb",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "noUnrestrictedCentralPatientDatabase": true,
+        "observationalCohortIsNotProvenTreatmentEffect": true,
+        "noIdentifiablePatientLevelExposureViaSearch": true,
+        "smallCellDisclosureControlsRequired": true,
+        "identifiableRecordsOutsideScientificKg": true,
+        "pseudonymisedMayStillBePersonalData": true,
+        "noPhiIngestion": true,
+        "noFabricatedPatientCountsAsReal": true,
+        "noPatientTreatmentDirectives": true,
+        "noWorkbenchUi": true,
+        "noLiveEhrQueryClaim": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "causalIdentificationClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T22:00:00.000Z",
+      "updatedAt": "2026-11-09T22:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "overlap": [
+    {
+      "schema": "hsi-reproducible-cohort-builder-1",
+      "method": "hsi.reproducible_cohort_builder.v1",
+      "version": "0.1.0",
+      "id": "hsi-rcb-ovl-demo",
+      "cohortDefinitionId": "hsi-rcb-coh-fixture-demo",
+      "status": "overlap_plausible_declared",
+      "summary": "Fixture exposure/comparator overlap declared without causal identification",
+      "limitations": [
+        "Observational overlap only — confounding unresolved; not a proven treatment effect.",
+        "Comparability limited to fixture declarations."
+      ],
+      "causalIdentificationClaimed": false,
+      "containsIdentifiablePhi": false,
+      "authoredBy": {
+        "principalId": "fixture-agent-rcb",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "noUnrestrictedCentralPatientDatabase": true,
+        "observationalCohortIsNotProvenTreatmentEffect": true,
+        "noIdentifiablePatientLevelExposureViaSearch": true,
+        "smallCellDisclosureControlsRequired": true,
+        "identifiableRecordsOutsideScientificKg": true,
+        "pseudonymisedMayStillBePersonalData": true,
+        "noPhiIngestion": true,
+        "noFabricatedPatientCountsAsReal": true,
+        "noPatientTreatmentDirectives": true,
+        "noWorkbenchUi": true,
+        "noLiveEhrQueryClaim": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "causalIdentificationClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T22:00:00.000Z",
+      "updatedAt": "2026-11-09T22:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "searchResults": [
+    {
+      "schema": "hsi-reproducible-cohort-builder-1",
+      "method": "hsi.reproducible_cohort_builder.v1",
+      "version": "0.1.0",
+      "id": "hsi-rcb-src-demo",
+      "queryId": "hsi-rcb-q-demo",
+      "hits": [
+        {
+          "kind": "aggregate_count_released",
+          "cohortDefinitionId": "hsi-rcb-coh-fixture-demo",
+          "displayLabel": "Fixture SSc observational cohort envelope",
+          "aggregateCount": 20,
+          "disclosureStatus": "released_aggregate",
+          "containsIdentifiablePhi": false,
+          "note": "Aggregate cohort discovery hit — no patient-level rows"
+        }
+      ],
+      "blockedIdentifiableRequest": false,
+      "containsIdentifiablePhi": false,
+      "inventedPatientCount": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-rcb",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "noUnrestrictedCentralPatientDatabase": true,
+        "observationalCohortIsNotProvenTreatmentEffect": true,
+        "noIdentifiablePatientLevelExposureViaSearch": true,
+        "smallCellDisclosureControlsRequired": true,
+        "identifiableRecordsOutsideScientificKg": true,
+        "pseudonymisedMayStillBePersonalData": true,
+        "noPhiIngestion": true,
+        "noFabricatedPatientCountsAsReal": true,
+        "noPatientTreatmentDirectives": true,
+        "noWorkbenchUi": true,
+        "noLiveEhrQueryClaim": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "causalIdentificationClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T22:00:00.000Z",
+      "updatedAt": "2026-11-09T22:00:00.000Z",
+      "note": "Cohort discovery — aggregate / suppressed only"
+    },
+    {
+      "schema": "hsi-reproducible-cohort-builder-1",
+      "method": "hsi.reproducible_cohort_builder.v1",
+      "version": "0.1.0",
+      "id": "hsi-rcb-src-ident-demo",
+      "queryId": "hsi-rcb-q-ident-demo",
+      "hits": [
+        {
+          "kind": "blocked_identifiable",
+          "cohortDefinitionId": null,
+          "displayLabel": "Identifiable patient-level cohort search blocked",
+          "aggregateCount": null,
+          "disclosureStatus": "blocked_identifiable_request",
+          "containsIdentifiablePhi": false,
+          "note": "Fail-closed: cohort search must not expose identifiable patient-level data"
+        }
+      ],
+      "blockedIdentifiableRequest": true,
+      "containsIdentifiablePhi": false,
+      "inventedPatientCount": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-rcb",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "noUnrestrictedCentralPatientDatabase": true,
+        "observationalCohortIsNotProvenTreatmentEffect": true,
+        "noIdentifiablePatientLevelExposureViaSearch": true,
+        "smallCellDisclosureControlsRequired": true,
+        "identifiableRecordsOutsideScientificKg": true,
+        "pseudonymisedMayStillBePersonalData": true,
+        "noPhiIngestion": true,
+        "noFabricatedPatientCountsAsReal": true,
+        "noPatientTreatmentDirectives": true,
+        "noWorkbenchUi": true,
+        "noLiveEhrQueryClaim": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "causalIdentificationClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T22:00:00.000Z",
+      "updatedAt": "2026-11-09T22:00:00.000Z",
+      "note": "Blocked identifiable request"
+    }
+  ],
+  "disclosure": [
+    {
+      "schema": "hsi-reproducible-cohort-builder-1",
+      "method": "hsi.reproducible_cohort_builder.v1",
+      "version": "0.1.0",
+      "id": "hsi-rcb-disc-demo",
+      "cohortDefinitionId": "hsi-rcb-coh-fixture-demo",
+      "cellLabel": "Fixture age band cell",
+      "rawCountDeclared": 3,
+      "releasedCount": null,
+      "status": "suppressed_small_cell",
+      "smallCellThreshold": 5,
+      "containsIdentifiablePhi": false,
+      "authoredBy": {
+        "principalId": "fixture-agent-rcb",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "noUnrestrictedCentralPatientDatabase": true,
+        "observationalCohortIsNotProvenTreatmentEffect": true,
+        "noIdentifiablePatientLevelExposureViaSearch": true,
+        "smallCellDisclosureControlsRequired": true,
+        "identifiableRecordsOutsideScientificKg": true,
+        "pseudonymisedMayStillBePersonalData": true,
+        "noPhiIngestion": true,
+        "noFabricatedPatientCountsAsReal": true,
+        "noPatientTreatmentDirectives": true,
+        "noWorkbenchUi": true,
+        "noLiveEhrQueryClaim": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "causalIdentificationClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T22:00:00.000Z",
+      "updatedAt": "2026-11-09T22:00:00.000Z",
+      "note": ""
+    }
+  ]
+}
