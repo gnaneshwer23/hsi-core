@@ -12,6 +12,7 @@ export const HSI_ONTOLOGY_NAMESPACES:readonly HsiOntologyNamespace[]=[
  {prefix:"UniProt",label:"UniProt accession",uriBase:"https://identifiers.org/uniprot:",identifierPattern:/^[A-NR-Z][0-9][A-Z0-9]{3}[0-9](?:-[1-9][0-9]*)?$|^[OPQ][0-9][A-Z0-9]{3}[0-9](?:-[1-9][0-9]*)?$|^[A-NR-Z][0-9][A-Z0-9]{8}[0-9](?:-[1-9][0-9]*)?$/,domain:"biology"},
  {prefix:"GO",label:"Gene Ontology",uriBase:"https://identifiers.org/GO:",identifierPattern:/^GO:[0-9]{7}$/,domain:"biology"},
  {prefix:"Reactome",label:"Reactome pathways",uriBase:"https://reactome.org/content/detail/",identifierPattern:/^R-[A-Z]{3}-[0-9]+$/,domain:"biology"},
+ {prefix:"ChEMBL",label:"ChEMBL compound or target identifiers (stub; no live fetch)",uriBase:"https://www.ebi.ac.uk/chembl/compound_report_card/",identifierPattern:/^CHEMBL[0-9]+$/,domain:"biology"},
  {prefix:"MONDO",label:"MONDO disease ontology",uriBase:"https://identifiers.org/MONDO:",identifierPattern:/^MONDO:[0-9]{7}$/,domain:"biology"},
  {prefix:"UBERON",label:"Uberon anatomy ontology",uriBase:"https://identifiers.org/UBERON:",identifierPattern:/^UBERON:[0-9]{7}$/,domain:"biology"},
  {prefix:"CL",label:"Cell Ontology",uriBase:"https://identifiers.org/CL:",identifierPattern:/^CL:[0-9]{7}$/,domain:"biology"},

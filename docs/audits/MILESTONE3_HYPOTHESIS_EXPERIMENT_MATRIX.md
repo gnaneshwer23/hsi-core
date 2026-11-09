@@ -9,7 +9,8 @@
 
 **Cross-links (do not contradict):**
 
-- [`MILESTONE2_CONTEXTUAL_REASONING_MATRIX.md`](./MILESTONE2_CONTEXTUAL_REASONING_MATRIX.md) — M2 Phase 0 + structured comparison (**in-flight** PR [#90](https://github.com/gnaneshwer23/hsi-core/pull/90); **not** merged at this audit — treat M2 remainder as partial)  
+- [`MILESTONE2_CONTEXTUAL_REASONING_MATRIX.md`](./MILESTONE2_CONTEXTUAL_REASONING_MATRIX.md) — M2 Phase 3 on `main` (#90); deepen [#92](https://github.com/gnaneshwer23/hsi-core/pull/92) may be in-flight — treat M2 remainder as partial  
+- [`MILESTONE4_TRANSLATIONAL_FAILURE_MATRIX.md`](./MILESTONE4_TRANSLATIONAL_FAILURE_MATRIX.md) — M4 Phase 0 + PR1 (orthogonal; do not contradict)  
 - [`BACKEND_INTEGRATION_MATRIX.md`](./BACKEND_INTEGRATION_MATRIX.md) · [`DATA_TO_DISCOVERY_IMPLEMENTATION_MATRIX.md`](./DATA_TO_DISCOVERY_IMPLEMENTATION_MATRIX.md)  
 - [`../engineering/BACKEND_SCIENTIFIC_INTELLIGENCE_INTEGRATION_MATRIX.md`](../engineering/BACKEND_SCIENTIFIC_INTELLIGENCE_INTEGRATION_MATRIX.md)  
 - [`../engineering/N7_EXPERIMENT_LEDGER_STATUS.md`](../engineering/N7_EXPERIMENT_LEDGER_STATUS.md) · [`../engineering/N2_EVIDENCE_LEDGER_STATUS.md`](../engineering/N2_EVIDENCE_LEDGER_STATUS.md)  
