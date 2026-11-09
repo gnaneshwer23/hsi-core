@@ -25,6 +25,11 @@ import {
   projectInvestigationContractPersistenceLines,
   type ScientificInvestigationContract,
 } from "./investigationOrchestrationContracts";
+import {
+  projectMonitoringSubscriptionPersistenceLines,
+  validateResearchTopicSubscription,
+  type ResearchTopicSubscription,
+} from "./incrementalEvidenceMonitoring";
 
 export const RESEARCH_BRIEF_INTEGRATION_SCHEMA = "hsi-research-brief-integration-1" as const;
 export const RESEARCH_BRIEF_INTEGRATION_METHOD = "hsi.research_brief_integration.v1" as const;
@@ -107,6 +112,21 @@ export type IntegratedResearchBrief = {
     liveSscE2eSuccessClaimed: false;
     gateCAutoApprove: false;
   } | null;
+  /** M8 PR1 incremental evidence monitoring subscription (not validated continuous discovery). */
+  monitoringSummary: {
+    subscriptionId: string;
+    topicKind: ResearchTopicSubscription["topicKind"];
+    topicId: string;
+    scheduleInterval: ResearchTopicSubscription["schedule"]["interval"];
+    providerCount: number;
+    fullDatabaseScrape: false;
+    unreviewedNotAutoApproved: true;
+    changeDetectionPipelineNotImplemented: true;
+    continuousMonitoringIsNotValidatedScience: true;
+    graphPromotable: false;
+    scientificApproval: false;
+    gateCAutoApprove: false;
+  } | null;
   candidatesRemainUnapproved: true;
   reviewGatesIntact: true;
   scientificValidityClaimed: false;
@@ -132,6 +152,8 @@ export type IntegrateResearchBriefInput = {
   precisionContracts?: PrecisionEvidenceContractPack | null;
   /** M6 PR1 shared investigation orchestration contract. */
   investigationContract?: ScientificInvestigationContract | null;
+  /** M8 PR1 incremental evidence monitoring subscription. */
+  monitoringSubscription?: ResearchTopicSubscription | null;
   releaseAware?: ReleaseAwareRetrievalResult | null;
   /** Optional source locators from retrieval / living evidence. */
   sourceLocators?: readonly {kind: "pmid" | "doi" | "nct"; value: string}[];
@@ -245,6 +267,12 @@ export function integrateResearchBrief(input: IntegrateResearchBriefInput): Inte
           ...projectInvestigationContractPersistenceLines(input.investigationContract).slice(0, 8),
         ]
       : []),
+    ...(input.monitoringSubscription
+      ? [
+          "M8 incremental monitoring: bounded subscription refresh only; unreviewed hits not auto-approved; no full-DB scrape; change detection not implemented; continuous monitoring ≠ validated science",
+          ...projectMonitoringSubscriptionPersistenceLines(input.monitoringSubscription).slice(0, 8),
+        ]
+      : []),
     ...(input.releaseAware
       ? [
           "Release-aware surface keeps draft candidates in a separate labelled channel; assessReleaseClaim remains fail-closed",
@@ -317,6 +345,20 @@ export function integrateResearchBrief(input: IntegrateResearchBriefInput): Inte
     throw new Error("Investigation orchestration contract refused honesty gates");
   }
 
+  if (input.monitoringSubscription) {
+    validateResearchTopicSubscription(input.monitoringSubscription);
+    if (
+      input.monitoringSubscription.honesty.unreviewedNotAutoApproved !== true ||
+      input.monitoringSubscription.honesty.fullDatabaseScrape !== false ||
+      input.monitoringSubscription.honesty.changeDetectionPipelineNotImplemented !== true ||
+      input.monitoringSubscription.honesty.continuousMonitoringIsNotValidatedScience !== true ||
+      input.monitoringSubscription.honesty.graphPromotable !== false ||
+      input.monitoringSubscription.honesty.gateCAutoApprove !== false
+    ) {
+      throw new Error("Incremental monitoring subscription refused honesty gates");
+    }
+  }
+
   const translationalSummary =
     input.translational && input.translational.status !== "not_queried"
       ? {
@@ -364,6 +406,23 @@ export function integrateResearchBrief(input: IntegrateResearchBriefInput): Inte
       }
     : null;
 
+  const monitoringSummary = input.monitoringSubscription
+    ? {
+        subscriptionId: input.monitoringSubscription.subscriptionId,
+        topicKind: input.monitoringSubscription.topicKind,
+        topicId: input.monitoringSubscription.topicId,
+        scheduleInterval: input.monitoringSubscription.schedule.interval,
+        providerCount: input.monitoringSubscription.providers.length,
+        fullDatabaseScrape: false as const,
+        unreviewedNotAutoApproved: true as const,
+        changeDetectionPipelineNotImplemented: true as const,
+        continuousMonitoringIsNotValidatedScience: true as const,
+        graphPromotable: false as const,
+        scientificApproval: false as const,
+        gateCAutoApprove: false as const,
+      }
+    : null;
+
   return {
     schemaVersion: RESEARCH_BRIEF_INTEGRATION_SCHEMA,
     method: RESEARCH_BRIEF_INTEGRATION_METHOD,
@@ -382,6 +441,7 @@ export function integrateResearchBrief(input: IntegrateResearchBriefInput): Inte
     translationalSummary,
     precisionSummary,
     investigationSummary,
+    monitoringSummary,
     candidatesRemainUnapproved: true,
     reviewGatesIntact: true,
     scientificValidityClaimed: false,

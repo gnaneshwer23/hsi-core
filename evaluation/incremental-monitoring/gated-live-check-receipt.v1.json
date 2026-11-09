@@ -1,0 +1,111 @@
+{
+  "schemaVersion": "hsi-incremental-monitoring-check-receipt-1",
+  "method": "hsi.incremental_evidence_monitoring.v1",
+  "version": "0.1.0",
+  "subscriptionId": "hsi-mon-ssc-disease-demo",
+  "mode": "gated_live",
+  "status": "gated_not_run",
+  "generatedAt": "2026-11-09T12:30:00.000Z",
+  "startedAt": "2026-11-09T12:30:00.000Z",
+  "completedAt": "2026-11-09T12:30:00.000Z",
+  "providersProbed": [
+    "europe_pmc",
+    "open_targets"
+  ],
+  "cursorsAfter": [
+    {
+      "provider": "europe_pmc",
+      "cursorMark": "*",
+      "lastSeenExternalId": null,
+      "lastRetrievedAt": null,
+      "providerVersion": "europepmc_rest_search_cursor_v1",
+      "exhausted": false
+    },
+    {
+      "provider": "open_targets",
+      "cursorMark": null,
+      "lastSeenExternalId": null,
+      "lastRetrievedAt": null,
+      "providerVersion": "open_targets_platform_graphql_v4",
+      "exhausted": false
+    }
+  ],
+  "duplicates": [],
+  "freshness": {
+    "asOf": "2026-11-09T12:30:00.000Z",
+    "maxAgeHours": 24,
+    "stale": false,
+    "lastSuccessfulCheckAt": null
+  },
+  "sourceAvailability": [
+    {
+      "provider": "europe_pmc",
+      "probed": false,
+      "reachable": null,
+      "detail": "Gated live mode without explicit probe — status gated_not_run honest",
+      "rateLimited": false,
+      "retryHonesty": {
+        "maxAttempts": 2,
+        "attempted": 0,
+        "retriedOnTransient": false,
+        "infiniteRetryForbidden": true,
+        "lastTransientHttpStatus": null
+      }
+    },
+    {
+      "provider": "open_targets",
+      "probed": false,
+      "reachable": null,
+      "detail": "Gated live mode without explicit probe — status gated_not_run honest",
+      "rateLimited": false,
+      "retryHonesty": {
+        "maxAttempts": 2,
+        "attempted": 0,
+        "retriedOnTransient": false,
+        "infiniteRetryForbidden": true,
+        "lastTransientHttpStatus": null
+      }
+    }
+  ],
+  "dynamicRetrievalQuery": {
+    "question": "Incremental monitoring refresh for disease systemic sclerosis",
+    "entities": {
+      "freeTextTerms": [
+        "systemic sclerosis"
+      ],
+      "diseaseIds": [
+        "MONDO_0005100"
+      ]
+    },
+    "ordering": "date_desc",
+    "pageSize": 25,
+    "maxResults": 25,
+    "contentAccess": "metadata",
+    "openTargetsEnableIndirect": false
+  },
+  "investigationFreshnessProjection": null,
+  "hitCountBounded": 0,
+  "truncatedByBudget": false,
+  "engineeringHarness": "CLEARED",
+  "scientificAcceptance": "BLOCKED",
+  "honesty": {
+    "fixturesAreNotLiveEvidence": true,
+    "unreviewedNotAutoApproved": true,
+    "graphPromotable": false,
+    "scientificApproval": false,
+    "gateCAutoApprove": false,
+    "cdsPhi": false,
+    "fullDatabaseScrape": false,
+    "noKafka": true,
+    "noNewGraphDb": true,
+    "noSeparateEventPlatform": true,
+    "noNewAgentFramework": true,
+    "continuousMonitoringIsNotValidatedScience": true,
+    "reactomeLiveFetch": false,
+    "neonRedWaveOnly": true,
+    "changeDetectionPipelineNotImplemented": true,
+    "liveNetworkUsed": false,
+    "offlineStatusHonest": true
+  },
+  "receiptHash": "e66f8a4f48087224b7e64216ef44792ecb73302fd409bb9c374960c0ba73c17c"
+}
