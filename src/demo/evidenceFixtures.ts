@@ -142,7 +142,7 @@ export type DemoEvidenceResult =
       protein: {
         accession: string;
         name: string | null;
-        genes: string[];
+        genes: readonly string[];
       };
     }
   | {
@@ -165,7 +165,7 @@ export type DemoEvidenceResult =
       protein: {
         accession: string;
         name: string | null;
-        genes: string[];
+        genes: readonly string[];
       };
     };
 
@@ -201,7 +201,7 @@ export async function retrieveFixtureEvidence(now = "2026-11-09T12:00:00.000Z"):
   const proteinRow = {
     accession: protein.record.accession,
     name: protein.record.proteinName,
-    genes: protein.record.geneNames,
+    genes: [...protein.record.geneNames],
   };
 
   if (!targets.ok) {
