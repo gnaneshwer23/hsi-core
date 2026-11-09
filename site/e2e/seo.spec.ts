@@ -21,6 +21,7 @@ test('sitemap contains only public canonical pages and tool shells are noindex w
  const llms=await request.get('/llms.txt');expect(llms.status()).toBe(200);expect(await llms.text()).toContain('Human Super Intelligence');
  const shell=await readFile(new URL('_pages/research--dashboard.html',dist),'utf8');expect(shell).toContain('content="noindex, follow"');expect(shell).toContain('<div id="root"></div>');expect(shell).not.toContain('data-prerendered=');expect(shell).not.toContain('id="hsi-seo-schema"');
  const cover=await request.get('/social/hsi-research.png');expect(cover.status()).toBe(200);expect(cover.headers()['content-type']).toContain('image/png');
+ const indexNow=await request.get('/indexnow-key.txt');expect(indexNow.status()).toBe(200);const key=(await indexNow.text()).trim();expect(key).toMatch(/^[a-f0-9]{32}$/i);expect((await request.get('/'+key+'.txt')).status()).toBe(200);
 });
 test('direct HTML remains useful when JavaScript is disabled',async({browser})=>{
  const context=await browser.newContext({javaScriptEnabled:false});const page=await context.newPage();await page.route('**/research',async route=>route.fulfill({contentType:'text/html',body:await readFile(new URL('_pages/research.html',dist),'utf8')}));await page.goto('/research');await expect(page.getByRole('heading',{level:1})).toBeVisible();await expect(page.getByRole('main').getByRole('link',{name:'Research access',exact:true}).first()).toBeVisible();await context.close();

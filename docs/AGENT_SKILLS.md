@@ -18,9 +18,10 @@ Mirrored copies also under `~/.agents/skills/` and some under `~/.claude/skills/
 
 | When (task) | Load (personal skill) | Notes |
 |-------------|----------------------|--------|
-| ISI/HSI marketing SEO, keywords, SERP gaps | `seo-audit`, `keyword-research`, `competitive-landscape`, `seo-project-setup`, `seo-coach`, `seo-report`, `agency-seo-specialist` | OpenSEO skills from [every-app/open-seo](https://github.com/every-app/open-seo) at `~/.cursor/skills/` (source: `~/Projects/_skill-sources/open-seo`). Public site / content only; see immunecity `docs/SEO.md` |
+| HSI marketing SEO / Google discovery (`humansuperintelligence.tech`) | `seo-audit`, `keyword-research`, `competitive-landscape`, `seo-project-setup`, `seo-coach`, `seo-report`, `agency-seo-specialist` | OpenSEO pack at `~/.cursor/skills/` — diagnose **hsi-core** / `.tech` only; see [`HSI_SEO.md`](./HSI_SEO.md). Do **not** treat ISI.uk as the HSI site |
+| ISI marketing SEO (`immune-super-intelligence.co.uk`) | same OpenSEO pack | Separate product; live checklist in immunecity `docs/SEO.md` |
 | OpenSEO MCP / plugin connect | `setup-openseo` | Optional; do not invent Search Console access |
-| AI answer / AEO visibility for ISI brand | `ai-visibility-audit`, `agency-ai-citation-strategist` | Brand prompts — not clinical claims |
+| AI answer / AEO visibility for HSI or ISI brand | `ai-visibility-audit`, `agency-ai-citation-strategist` | Brand prompts — not clinical claims; keep product domains distinct |
 | React / TanStack / Vite UI performance | `vercel-react-best-practices`, `agency-frontend-developer` | Respect existing ISI design tokens |
 | Landing / page art direction (anti-slop) | `hallmark`, `taste-skill` / `design-taste-frontend`, `ui-ux-pro-max` | Prefer ISI `biotech.css` / `isi.css` over inventing a new theme |
 | UI polish / a11y / layout | `better-ui`, `better-accessibility`, `better-layout`, `web-design-guidelines`, `agency-accessibility-auditor` | |

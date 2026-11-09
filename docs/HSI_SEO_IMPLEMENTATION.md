@@ -1,6 +1,8 @@
 # HSI SEO audit and implementation — 6 November 2026
 
-Scope: source/build/deployment configuration audit and implementation for `https://www.humansuperintelligence.tech`. This is not a live search-ranking report or a completed Search Console submission. Current runtime network policy did not list the live HSI host; live deployment response headers and indexing were not verified in this pass.
+Scope: source/build/deployment configuration audit and implementation for `https://www.humansuperintelligence.tech`. This is not a live search-ranking report or a completed Search Console submission.
+
+**Live discovery diagnosis (2026-11-09):** prerender/robots/sitemap/canonical/www apex redirect are healthy on production; Google `site:` still empty — owner Search Console verify + sitemap submit remain the blocker. See [`HSI_SEO.md`](./HSI_SEO.md). Do not point HSI discovery work at `immune-super-intelligence.co.uk`.
 
 ## Findings and fixes
 
@@ -65,7 +67,7 @@ Verification result: **774 core tests and all 116 browser tests passed**. Reposi
 2. Open `/robots.txt`, `/sitemap.xml` and `/social/hsi-research.png` on the canonical `www` domain. Check that Vercel serves the generated files, with no SPA fallback or unexpected noindex on production public pages.
 3. Check `/sign-in` and a research tool response for noindex; confirm APIs/fixture JSON remain independently routed. Verify an unknown path still returns a genuine 404.
 4. In Vercel Domains, confirm the existing primary domain and apex/www redirects are consistent with `www`. This pass does not change authentication origin or domain ownership.
-5. In a verified Google Search Console property, submit `https://www.humansuperintelligence.tech/sitemap.xml`. Use URL Inspection for the homepage and research/platform hubs. Ownership verification and submission were not performed here; no verification token is invented.
+5. In a verified Google Search Console property, submit `https://www.humansuperintelligence.tech/sitemap.xml`. Use URL Inspection for the homepage and research/platform hubs. Ownership verification and submission were not performed here; no verification token is invented. Optional HTML-tag verification: set Vercel `GOOGLE_SITE_VERIFICATION` (sanitized at build). Optional Bing notify: `bun run seo:indexnow` after the IndexNow key files are live.
 6. Establish actual indexing, impressions, clicks, queries and Core Web Vitals baselines after deployment. The main bundle still exceeds the build's 500 KB warning threshold; route splitting is an improvement, not a measured Lighthouse or field-performance result.
 7. For future scientific content, publish only named, qualified reviewer-approved, rights-cleared work with real citations and update history. Do not generate disease landing pages from synthetic records or describe draft graph links as established biology.
 
