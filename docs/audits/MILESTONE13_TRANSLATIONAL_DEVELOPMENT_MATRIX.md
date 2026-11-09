@@ -1,10 +1,10 @@
 # Milestone 13 — Translational Development Strategy, Clinical Trial Design & Biomarker-Guided Research Intelligence
 
 **Brief:** HSI Milestone 13 — connect M1–M12 into governed translational development research decision support (programme → translational evidence assessment → biomarker development records → clinical trial concepts) without autonomous trial authorisation, Gate C auto-approve, MoU invention, PHI/CDS, patient eligibility from restricted records, fabricated trial outcomes, or invented sample sizes.  
-**Status:** Phase 0 gap audit + PR1 (Translational Development Contracts) — **not** translational readiness complete, **not** trial design complete, **not** clinical/regulatory authorisation, **not** M13 complete.  
+**Status:** Phase 0 gap audit + PR1 (Translational Development Contracts, [#109](https://github.com/gnaneshwer23/hsi-core/pull/109) **merged** → `344f450`) — **not** translational readiness complete, **not** trial design complete, **not** clinical/regulatory authorisation, **not** M13 complete.  
 **Date:** 2026-11-09  
-**Audited `main` SHA:** `7485bd4cc44d25cf499a4afe9165a91468851add`  
-**Tip commit:** `7485bd4 Add M12 Phase 0 matrix and therapeutic discovery data contracts (#107)` (M10 through governed compute on main; SEO #106/#108 also on main)  
+**Audited `main` SHA:** `344f4503244e991c15af196461a38832b551683a`  
+**Tip commit:** `344f450 Add M13 translational development contracts and M1–M13 status rollup. (#109)` (builds on M12 #107 `7485bd4`; M10 compute + SEO #106/#108 on main)  
 **HSI Neon:** red-wave only (`human super intelligence` / `red-wave-06625195` / `ep-restless-dew…`) — never autumn-snow / Akeno / DeliverX  
 
 **Cross-links (do not contradict):**
@@ -107,7 +107,7 @@ Honesty freeze: research decision support only · **not** autonomous clinical tr
 | Phase | Capability | Existing | Status | Missing | Files |
 |-------|------------|----------|--------|---------|-------|
 | **0** Audit + dependency + architecture plan | This document | — | `Verified operational` (audit) | Keep updated as PRs land | this file |
-| **1** Translational development contracts | M3/M4/M5/M6/M9/M10 ids · M12 IDs on main · CT.gov/N5 stubs | `Missing` → **PR1 in-flight** (this branch) — focused tests + evaluation pack | Development programme · translational evidence assessment · clinical trial concept · biomarker development record | `src/translationalDevelopmentContracts.ts` · `test/translationalDevelopmentContracts.test.ts` · `scripts/translational-development-contracts.ts` · `evaluation/translational-development/` |
+| **1** Translational development contracts | M3/M4/M5/M6/M9/M10 ids · M12 IDs on main · CT.gov/N5 stubs | **Partial** on `main` ([#109](https://github.com/gnaneshwer23/hsi-core/pull/109) → `344f450`) — 7 focused tests + evaluation pack | Development programme · translational evidence assessment · clinical trial concept · biomarker development record | `src/translationalDevelopmentContracts.ts` · `test/translationalDevelopmentContracts.test.ts` · `scripts/translational-development-contracts.ts` · `evaluation/translational-development/` |
 | **2** Translational readiness assessment | M4 failure · M10 · M12 · PR1 programme | `Missing` | Workflow readiness states (not regulatory) | future PR2 |
 | **3** Biomarker context-of-use intelligence | M5 precision · PR1 biomarker record | `Partial` substrate | Predictive rule + validation status deepen | later PR3 |
 | **4** Population / disease heterogeneity | M5 phenotype · subgroup | `Partial` | Exploratory ≠ validated clinical populations | later PR4 |
@@ -201,7 +201,7 @@ Honesty freeze: research decision support only · **not** autonomous clinical tr
 
 | PR | Title | Branch | State |
 |----|-------|--------|-------|
-| (this delivery) | M13 PR1 Translational Development Contracts + M1–M13 rollup | `eng/m13-pr1-and-milestones-rollup` | **PR1 in-flight** — merge when CI green |
+| [#109](https://github.com/gnaneshwer23/hsi-core/pull/109) | M13 PR1 Translational Development Contracts + M1–M13 rollup | `eng/m13-pr1-and-milestones-rollup` | **Merged** → `344f450` |
 | [#107](https://github.com/gnaneshwer23/hsi-core/pull/107) | M12 PR1 Therapeutic Discovery Data Contracts | merged → `7485bd4` | Dependency satisfied |
 | [#106](https://github.com/gnaneshwer23/hsi-core/pull/106) / [#108](https://github.com/gnaneshwer23/hsi-core/pull/108) | OpenSEO map + .tech Google discovery | merged | Orthogonal; GSC remains manual |
 | [#104](https://github.com/gnaneshwer23/hsi-core/pull/104) | M10 PR4 Governed Computational Execution | merged → `ebabd52` | Substrate on main |
