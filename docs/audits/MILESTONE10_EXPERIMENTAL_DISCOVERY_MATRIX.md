@@ -1,7 +1,7 @@
 # Milestone 10 — Autonomous Experimental Design, Laboratory Integration & Closed-Loop Discovery
 
 **Brief:** HSI Milestone 10 — extend M3 hypothesis/experiment ledger, M6 investigation orchestration, and M9 org/collaboration hooks into **experimental lifecycle contracts** (proposal → versioned protocol → execution → results layers) without inventing wet-lab observations, lab instrument control, closed-loop discovery completion, Gate C auto-approve, MoU, or PHI/CDS.  
-**Status:** Phase 0 gap audit + PR1 (Experimental Lifecycle Contracts, [#101](https://github.com/gnaneshwer23/hsi-core/pull/101) in-flight) + PR2 (Experiment Design and Prioritisation, in-flight) — **not** closed-loop discovery complete, **not** laboratory integration live, **not** autonomous experiment execution claimed.  
+**Status:** Phase 0 gap audit + PR1 (Experimental Lifecycle Contracts, [#101](https://github.com/gnaneshwer23/hsi-core/pull/101) in-flight) + PR2 (Experiment Design and Prioritisation, [#102](https://github.com/gnaneshwer23/hsi-core/pull/102) in-flight) — **not** closed-loop discovery complete, **not** laboratory integration live, **not** autonomous experiment execution claimed.  
 **Date:** 2026-11-09  
 **Audited `main` SHA:** `2388387071fcc798b15f86f9540b8d040afc3f75` (PR1 later rebased onto #100 → `6eb37fe`)  
 **Tip commit:** `2388387 Add M9 Phase 0 matrix and research organisation tenant security. (#99)`  
@@ -104,7 +104,7 @@ Honesty freeze: no Gate C auto-approve · no invented MoU · no live CDS/PHI · 
 |-------|------------|----------|--------|---------|-------|
 | **0** Audit + dependency + integration plan | This document | — | `Verified operational` (audit) | Keep updated as PRs land | this file |
 | **1** Experimental lifecycle contracts | N7 ledger · M3 hypothesis · M6 investigation | `Missing` → **PR1 in-flight** ([#101](https://github.com/gnaneshwer23/hsi-core/pull/101) / `eng/m10-experimental-lifecycle-contracts`) — 9 focused tests + evaluation pack | Proposal · versioned protocol · execution · results layers with honesty | `src/experimentalLifecycleContracts.ts` · `test/experimentalLifecycleContracts.test.ts` · `scripts/experimental-lifecycle-contracts.ts` · `evaluation/experimental-lifecycle/` |
-| **2** Experiment design and prioritisation | Hypothesis registry · gap/oppose · investigation objectives · PR1 proposals | `Missing` → **PR2 in-flight** (`eng/m10-experiment-design-prioritisation`; **depends on #101**) | Rank/discriminate approaches without LLM probability, invented info-gain, or auto-approve | `src/experimentDesignPrioritisationContracts.ts` · `test/experimentDesignPrioritisationContracts.test.ts` · `scripts/experiment-design-prioritisation-contracts.ts` · `evaluation/experiment-design-prioritisation/` |
+| **2** Experiment design and prioritisation | Hypothesis registry · gap/oppose · investigation objectives · PR1 proposals | `Missing` → **PR2 in-flight** ([#102](https://github.com/gnaneshwer23/hsi-core/pull/102) / `eng/m10-experiment-design-prioritisation`; **depends on #101**) — 7 focused tests + evaluation pack | Rank/discriminate approaches without LLM probability, invented info-gain, or auto-approve | `src/experimentDesignPrioritisationContracts.ts` · `test/experimentDesignPrioritisationContracts.test.ts` · `scripts/experiment-design-prioritisation-contracts.ts` · `evaluation/experiment-design-prioritisation/` |
 | **3** Lab adapter contracts (read-only first) | — | `Missing` | Verified connector stubs only when real interfaces exist | later |
 | **4** Computational experiment bind | Adapter proposals · durable checkpoints | `Partial` / `Missing` as lifecycle consumer | Record planned compute runs — do not invent outputs | later |
 | **5** Closed-loop feedback (human-gated) | N7 outcomes · review candidates · KG | `Missing` | Route authorised results → hypothesis update **with human approval** | later |
@@ -184,7 +184,7 @@ Honesty freeze: no Gate C auto-approve · no invented MoU · no live CDS/PHI · 
 
 | PR | Title | Branch | State |
 |----|-------|--------|-------|
-| (open after push) | M10 PR2 Experiment Design and Prioritisation | `eng/m10-experiment-design-prioritisation` | **PR2 in-flight** — stacked on #101; do **not** merge in this delivery |
+| [#102](https://github.com/gnaneshwer23/hsi-core/pull/102) | M10 PR2 Experiment Design and Prioritisation | `eng/m10-experiment-design-prioritisation` | **PR2 in-flight** — stacked on #101; do **not** merge in this delivery |
 | [#101](https://github.com/gnaneshwer23/hsi-core/pull/101) | M10 PR1 Experimental Lifecycle Contracts | `eng/m10-experimental-lifecycle-contracts` | **PR1 in-flight** — **must merge before PR2** (or keep PR2 stacked) |
 | #100 | M9 Collaborative Investigation Contracts | `eng/m9-collaborative-investigation-contracts` | **Merged** → `6eb37fe` |
 | #99 | M9 Research Organisations and Tenant Security | `eng/m9-research-org-tenant-security` | **Merged** → `2388387` |
