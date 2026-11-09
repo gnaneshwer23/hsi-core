@@ -101,7 +101,7 @@ Honesty freeze: no Gate C auto-approve · no invented MoU · no live CDS/PHI · 
 | Phase | Capability | Existing | Status | Missing | Files |
 |-------|------------|----------|--------|---------|-------|
 | **0** Audit + dependency + integration plan | This document | — | `Verified operational` (audit) | Keep updated as PRs land | this file |
-| **1** Experimental lifecycle contracts | N7 ledger · M3 hypothesis · M6 investigation | `Missing` → **PR1 in-flight** (`eng/m10-experimental-lifecycle-contracts`) — 9 focused tests + evaluation pack | Proposal · versioned protocol · execution · results layers with honesty | `src/experimentalLifecycleContracts.ts` · `test/experimentalLifecycleContracts.test.ts` · `scripts/experimental-lifecycle-contracts.ts` · `evaluation/experimental-lifecycle/` |
+| **1** Experimental lifecycle contracts | N7 ledger · M3 hypothesis · M6 investigation | `Missing` → **PR1 in-flight** ([#101](https://github.com/gnaneshwer23/hsi-core/pull/101) / `eng/m10-experimental-lifecycle-contracts`) — 9 focused tests + evaluation pack | Proposal · versioned protocol · execution · results layers with honesty | `src/experimentalLifecycleContracts.ts` · `test/experimentalLifecycleContracts.test.ts` · `scripts/experimental-lifecycle-contracts.ts` · `evaluation/experimental-lifecycle/` |
 | **2** Experiment design and prioritisation | Hypothesis registry · gap/oppose · investigation objectives | `Missing` | Rank/discriminate proposals without LLM probability or auto-approve | future PR2 |
 | **3** Lab adapter contracts (read-only first) | — | `Missing` | Verified connector stubs only when real interfaces exist | later |
 | **4** Computational experiment bind | Adapter proposals · durable checkpoints | `Partial` / `Missing` as lifecycle consumer | Record planned compute runs — do not invent outputs | later |
@@ -166,6 +166,6 @@ Honesty freeze: no Gate C auto-approve · no invented MoU · no live CDS/PHI · 
 
 | PR | Title | Branch | State |
 |----|-------|--------|-------|
-| (pending) | M10 PR1 Experimental Lifecycle Contracts | `eng/m10-experimental-lifecycle-contracts` | **PR1 in-flight** — do not merge until CI green + human review |
+| [#101](https://github.com/gnaneshwer23/hsi-core/pull/101) | M10 PR1 Experimental Lifecycle Contracts | `eng/m10-experimental-lifecycle-contracts` | **PR1 in-flight** — do **not** merge in this delivery |
 | #100 | M9 Collaborative Investigation Contracts | `eng/m9-collaborative-investigation-contracts` | Open · verify was in progress · mergeable CONFLICTING after #99 — left open |
 | #99 | M9 Research Organisations and Tenant Security | `eng/m9-research-org-tenant-security` | **Merged** → `2388387` |
