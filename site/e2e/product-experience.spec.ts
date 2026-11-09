@@ -15,11 +15,18 @@ test("home communicates the research workflow and supports accessible capability
  await page.goto("/");
  await expect(page.getByRole("heading",{level:1})).toContainText("Investigate disease mechanisms");
  await expect(page.getByRole("heading",{name:/From question to research decision/})).toBeVisible();
+ await expect(page.locator("#product-demo")).toContainText("Illustrative research demonstration");
+ await expect(page.locator("#product-demo")).toContainText("Not a live investigation");
+ await expect(page.locator("#product-demo")).toContainText("live_backend=false");
  const tabs=page.getByRole("tablist",{name:"Research demonstration panels"}).first();
+ await expect(page.locator("#product-demo")).toContainText("Supporting candidates");
+ await expect(page.locator("#product-demo")).toContainText("Conflicting / opposing");
  await tabs.getByRole("tab",{name:"Graph"}).click();
  await expect(page.getByRole("tabpanel").filter({hasText:"Illustrative path"})).toBeVisible();
  await tabs.getByRole("tab",{name:"Research brief"}).click();
  await expect(page.getByRole("tabpanel").filter({hasText:"The reasoning stays with the result"})).toBeVisible();
+ await expect(page.getByRole("tabpanel").filter({hasText:"Research brief · curated example"})).toBeVisible();
+ await expect(page.getByRole("link",{name:/Open brief workflow/})).toBeVisible();
  await page.getByRole("button",{name:/Evidence/}).first().click();
  await expect(page.getByRole("article").filter({hasText:"Explore Evidence Intelligence"})).toContainText("Source-linked claims");
  await page.getByRole("link",{name:"View demonstration on this page"}).first().click();
