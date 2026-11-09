@@ -12,9 +12,18 @@ test("public pages have a single main/title, working navigation and no narrow-sc
  }
 });
 test("home communicates the research workflow and supports accessible capability navigation",async({page})=>{
- await page.goto("/");await expect(page.getByRole("heading",{level:1})).toContainText("See the biology.");await expect(page.getByRole("img",{name:/Sculptural view of human anatomy/})).toBeVisible();
- const tabs=page.getByRole("tablist",{name:"Research capabilities"});await tabs.getByRole("tab",{name:"Evidence"}).focus();await page.keyboard.press("ArrowRight");await expect(tabs.getByRole("tab",{name:"Connections"})).toHaveAttribute("aria-selected","true");await expect(page.getByRole("tabpanel")).toContainText("Explore biology");
- await page.getByRole("tabpanel").getByRole("link",{name:/Explore the science/}).click();await expect(page).toHaveURL(/science$/);
+ await page.goto("/");
+ await expect(page.getByRole("heading",{level:1})).toContainText("See the biology.");
+ await expect(page.getByRole("heading",{name:/From question to research decision/})).toBeVisible();
+ const tabs=page.getByRole("tablist",{name:"Research demonstration panels"}).first();
+ await tabs.getByRole("tab",{name:"Graph"}).click();
+ await expect(page.getByRole("tabpanel").filter({hasText:"Illustrative path"})).toBeVisible();
+ await tabs.getByRole("tab",{name:"Research brief"}).click();
+ await expect(page.getByRole("tabpanel").filter({hasText:"The reasoning stays with the result"})).toBeVisible();
+ await page.getByRole("button",{name:/Evidence/}).first().click();
+ await expect(page.getByRole("article").filter({hasText:"Explore Evidence Intelligence"})).toContainText("Source-linked claims");
+ await page.getByRole("link",{name:"View demonstration on this page"}).first().click();
+ await expect(page).toHaveURL(/#product-demo/);
 });
 test("mobile menu opens, closes with Escape and connects public destinations",async({page})=>{
  await page.setViewportSize({width:390,height:844});await page.goto("/");const menu=page.locator(".nav-toggle");await menu.click();await expect(menu).toHaveAttribute("aria-expanded","true");
@@ -51,7 +60,12 @@ test("graph controls, bookmarks and SVG/PNG/JSON exports preserve draft scope",a
  for(const format of ["SVG","PNG","JSON"]){const event=page.waitForEvent("download");await frame.getByRole("button",{name:"Download graph "+format,exact:true}).click();const d=await event;expect(d.suggestedFilename()).toContain("."+format.toLowerCase());if(format==="JSON"){const p=JSON.parse(await readFile((await d.path())!,"utf8"));expect(p.scientificApproval).toBe(false);expect(p.scope).toBe("public_educational_draft")}}
 });
 test("reduced-motion mode retains functional capability navigation",async({page})=>{
- await page.emulateMedia({reducedMotion:"reduce"});await page.goto("/");await page.getByRole("tab",{name:"Review",exact:true}).click();await expect(page.getByRole("tabpanel")).toContainText("independent review");await expect(page.locator(".ed-brief")).toHaveCSS("transform","none");
+ await page.emulateMedia({reducedMotion:"reduce"});
+ await page.goto("/");
+ await page.getByRole("button",{name:/Trials/}).first().click();
+ await expect(page.getByRole("article").filter({hasText:"Read Trials scope"})).toContainText("Not currently available");
+ await page.getByRole("link",{name:"Explore the Research Workflow"}).first().click();
+ await expect(page).toHaveURL(/how-it-works/);
 });
 
 test("internal validation opens the actual trial view and PDF printing keeps labels and inert text",async({page})=>{
