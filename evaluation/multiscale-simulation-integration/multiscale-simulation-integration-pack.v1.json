@@ -1,0 +1,1017 @@
+{
+  "schema": "hsi-multiscale-simulation-integration-1",
+  "method": "hsi.multiscale_simulation_integration.v1",
+  "version": "0.1.0",
+  "asOf": "2026-11-09T16:00:00.000Z",
+  "capabilityKindCount": 10,
+  "specCount": 2,
+  "diseaseResearchQuestionCount": 1,
+  "validatedModelComponentCount": 2,
+  "modelApplicabilityCheckCount": 1,
+  "authorisedInputDataCount": 1,
+  "biologicalClinicalAssumptionCount": 1,
+  "modelCouplingDeclarationCount": 1,
+  "simulationConfigurationCount": 1,
+  "approvedComputationalModelRunCount": 1,
+  "uncertaintyQuantificationCount": 1,
+  "numericalBiologicalValidityEvaluationCount": 1,
+  "researchInterpretationEnvelopeCount": 1,
+  "bundleCount": 2,
+  "unavailableModelComponentCount": 1,
+  "fixtureHarnessRunCount": 1,
+  "honesty": {
+    "researchDecisionSupportOnly": true,
+    "notValidatedIndividualOutcomePrediction": true,
+    "notDigitalTwinProduct": true,
+    "notPersonalisedTreatmentEffect": true,
+    "molecularDoesNotEqualOrganWithoutValidatedCoupling": true,
+    "doNotInventMissingParameters": true,
+    "liveMultiscaleEngineOperational": false,
+    "m11SimulationClaimed": false,
+    "fixtureHarnessIsNotLiveEngine": true,
+    "populationAssociationIsNotIndividualTruth": true,
+    "observedIsNotInferred": true,
+    "noPhiIngestion": true,
+    "noAutonomousDiagnosisOrPrescribing": true,
+    "noWorkbenchUi": true,
+    "agentsDraftHumansReview": true,
+    "gateCAutoApprove": false,
+    "mouInvented": false,
+    "phiCdsWired": false,
+    "scientificApproval": false,
+    "graphPromotable": false,
+    "neonProjectPolicy": "red-wave-only",
+    "migration": "deferred"
+  },
+  "specs": [
+    {
+      "schema": "hsi-multiscale-simulation-integration-1",
+      "method": "hsi.multiscale_simulation_integration.v1",
+      "version": "0.1.0",
+      "id": "hsi-msi-spec-blocked-demo",
+      "displayName": "Blocked multiscale simulation integration until authorised dataset",
+      "scientificQuestion": "Blocked scientific path for multiscale simulation integration until an authorised clinical dataset is supplied.",
+      "capabilityKinds": [
+        "disease_research_question_selection",
+        "validated_model_component_identification",
+        "model_applicability_check",
+        "authorised_input_data_retrieval",
+        "biological_clinical_assumption_definition",
+        "simulation_configuration",
+        "approved_computational_model_run",
+        "uncertainty_quantification",
+        "numerical_biological_validity_evaluation",
+        "research_interpretation_envelope"
+      ],
+      "diseaseContextId": "hsi-hdi-ctx-blocked-demo",
+      "simulationScenarioId": null,
+      "digitalPatientModelId": null,
+      "patientContextualisedResearchSpecId": null,
+      "crossScaleOntologySpecId": null,
+      "populationModellingSpecId": null,
+      "integratedDiseaseContextId": null,
+      "longitudinalModellingSpecId": null,
+      "cohortDefinitionId": null,
+      "rweStudyId": null,
+      "longitudinalClinicalEvidenceSpecId": null,
+      "datasetAvailability": "blocked_no_authorised_clinical_dataset",
+      "accessClassification": "restricted_not_ingested",
+      "containsIdentifiablePhi": false,
+      "liveMultiscaleEngineOperational": false,
+      "m11SimulationClaimed": false,
+      "inventedParameters": null,
+      "notValidatedIndividualOutcomePrediction": true,
+      "notPersonalisedTreatmentEffect": true,
+      "notDigitalTwinProduct": true,
+      "molecularDoesNotEqualOrganWithoutValidatedCoupling": true,
+      "lifecycle": "blocked_awaiting_authorised_dataset",
+      "reviewedBy": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-msi",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "notDigitalTwinProduct": true,
+        "notPersonalisedTreatmentEffect": true,
+        "molecularDoesNotEqualOrganWithoutValidatedCoupling": true,
+        "doNotInventMissingParameters": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "fixtureHarnessIsNotLiveEngine": true,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T16:00:00.000Z",
+      "updatedAt": "2026-11-09T16:00:00.000Z",
+      "note": ""
+    },
+    {
+      "schema": "hsi-multiscale-simulation-integration-1",
+      "method": "hsi.multiscale_simulation_integration.v1",
+      "version": "0.1.0",
+      "id": "hsi-msi-spec-ssc-demo",
+      "displayName": "Fixture SSc multiscale simulation integration spec",
+      "scientificQuestion": "How can research-only multiscale simulation scenarios declare disease questions, model-component availability, applicability, fixture input refs, assumptions, configuration, fixture/harness runs, uncertainty, validity flags, and reviewable interpretation while keeping research envelopes distinct from engine or individual-prediction claims?",
+      "capabilityKinds": [
+        "disease_research_question_selection",
+        "validated_model_component_identification",
+        "model_applicability_check",
+        "authorised_input_data_retrieval",
+        "biological_clinical_assumption_definition",
+        "simulation_configuration",
+        "approved_computational_model_run",
+        "uncertainty_quantification",
+        "numerical_biological_validity_evaluation",
+        "research_interpretation_envelope"
+      ],
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "simulationScenarioId": "hsi-hdi-sim-ssc-demo",
+      "digitalPatientModelId": "hsi-hdi-dpm-ssc-demo",
+      "patientContextualisedResearchSpecId": "hsi-pcrm-spec-ssc-demo",
+      "crossScaleOntologySpecId": "hsi-csol-spec-ssc-demo",
+      "populationModellingSpecId": "hsi-pcdm-spec-ssc-demo",
+      "integratedDiseaseContextId": "hsi-cbc-idc-ssc-demo",
+      "longitudinalModellingSpecId": "hsi-ldsm-spec-ssc-demo",
+      "cohortDefinitionId": "hsi-rcb-coh-ssc-demo",
+      "rweStudyId": "hsi-rwe-study-ssc-demo",
+      "longitudinalClinicalEvidenceSpecId": "hsi-lce-spec-ssc-demo",
+      "datasetAvailability": "fixture_only",
+      "accessClassification": "fixture_engineering",
+      "containsIdentifiablePhi": false,
+      "liveMultiscaleEngineOperational": false,
+      "m11SimulationClaimed": false,
+      "inventedParameters": null,
+      "notValidatedIndividualOutcomePrediction": true,
+      "notPersonalisedTreatmentEffect": true,
+      "notDigitalTwinProduct": true,
+      "molecularDoesNotEqualOrganWithoutValidatedCoupling": true,
+      "lifecycle": "draft",
+      "reviewedBy": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-msi",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "notDigitalTwinProduct": true,
+        "notPersonalisedTreatmentEffect": true,
+        "molecularDoesNotEqualOrganWithoutValidatedCoupling": true,
+        "doNotInventMissingParameters": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "fixtureHarnessIsNotLiveEngine": true,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T16:00:00.000Z",
+      "updatedAt": "2026-11-09T16:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "diseaseResearchQuestions": [
+    {
+      "schema": "hsi-multiscale-simulation-integration-1",
+      "method": "hsi.multiscale_simulation_integration.v1",
+      "version": "0.1.0",
+      "id": "hsi-msi-drq-ssc-demo",
+      "integrationSpecId": "hsi-msi-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "researchQuestion": "Fixture research question on cross-scale inflammatory signalling under research-only simulation framing.",
+      "questionScopeSummary": "Research-only disease question selection — not clinical care.",
+      "notClinicalCareQuestion": true,
+      "limitations": [
+        "Research question is not clinical care.",
+        "Fixture framing only."
+      ],
+      "authoredBy": {
+        "principalId": "fixture-agent-msi",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "notDigitalTwinProduct": true,
+        "notPersonalisedTreatmentEffect": true,
+        "molecularDoesNotEqualOrganWithoutValidatedCoupling": true,
+        "doNotInventMissingParameters": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "fixtureHarnessIsNotLiveEngine": true,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T16:00:00.000Z",
+      "updatedAt": "2026-11-09T16:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "validatedModelComponents": [
+    {
+      "schema": "hsi-multiscale-simulation-integration-1",
+      "method": "hsi.multiscale_simulation_integration.v1",
+      "version": "0.1.0",
+      "id": "hsi-msi-vmc-ssc-available",
+      "integrationSpecId": "hsi-msi-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "diseaseResearchQuestionId": "hsi-msi-drq-ssc-demo",
+      "componentRefId": "fixture-model-component-il6-pathway",
+      "componentLabel": "Fixture IL-6 pathway component",
+      "availability": "validated_component_declared",
+      "crossScaleMappingId": "hsi-csol-map-ssc-demo",
+      "availabilitySummary": "Fixture validated model component declared for research coupling.",
+      "limitations": [
+        "Validated component declaration is research framing only.",
+        "Operational multiscale engine absent."
+      ],
+      "authoredBy": {
+        "principalId": "fixture-agent-msi",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "notDigitalTwinProduct": true,
+        "notPersonalisedTreatmentEffect": true,
+        "molecularDoesNotEqualOrganWithoutValidatedCoupling": true,
+        "doNotInventMissingParameters": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "fixtureHarnessIsNotLiveEngine": true,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T16:00:00.000Z",
+      "updatedAt": "2026-11-09T16:00:00.000Z",
+      "note": ""
+    },
+    {
+      "schema": "hsi-multiscale-simulation-integration-1",
+      "method": "hsi.multiscale_simulation_integration.v1",
+      "version": "0.1.0",
+      "id": "hsi-msi-vmc-ssc-unavailable",
+      "integrationSpecId": "hsi-msi-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "diseaseResearchQuestionId": "hsi-msi-drq-ssc-demo",
+      "componentRefId": "fixture-model-component-organ-coupling",
+      "componentLabel": "Unavailable organ-scale coupling component",
+      "availability": "unavailable_declared",
+      "crossScaleMappingId": null,
+      "availabilitySummary": "Organ-scale coupling component unavailable — recorded explicitly.",
+      "limitations": [
+        "Unavailable components must stay unavailable.",
+        "Molecular does not equal organ without validated coupling."
+      ],
+      "authoredBy": {
+        "principalId": "fixture-agent-msi",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "notDigitalTwinProduct": true,
+        "notPersonalisedTreatmentEffect": true,
+        "molecularDoesNotEqualOrganWithoutValidatedCoupling": true,
+        "doNotInventMissingParameters": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "fixtureHarnessIsNotLiveEngine": true,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T16:00:00.000Z",
+      "updatedAt": "2026-11-09T16:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "modelApplicabilityChecks": [
+    {
+      "schema": "hsi-multiscale-simulation-integration-1",
+      "method": "hsi.multiscale_simulation_integration.v1",
+      "version": "0.1.0",
+      "id": "hsi-msi-app-ssc-partial",
+      "integrationSpecId": "hsi-msi-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "diseaseResearchQuestionId": "hsi-msi-drq-ssc-demo",
+      "applicabilityOutcome": "partial_with_limitations",
+      "applicabilitySummary": "Fixture partial applicability declared with research limitations.",
+      "outsideValidatedPopulation": false,
+      "outsideInputDomain": false,
+      "missingValidatedCoupling": false,
+      "outOfScope": false,
+      "limitations": [
+        "Partial applicability is not clinical authorisation.",
+        "Research-only framing."
+      ],
+      "authoredBy": {
+        "principalId": "fixture-agent-msi",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "notDigitalTwinProduct": true,
+        "notPersonalisedTreatmentEffect": true,
+        "molecularDoesNotEqualOrganWithoutValidatedCoupling": true,
+        "doNotInventMissingParameters": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "fixtureHarnessIsNotLiveEngine": true,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T16:00:00.000Z",
+      "updatedAt": "2026-11-09T16:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "authorisedInputData": [
+    {
+      "schema": "hsi-multiscale-simulation-integration-1",
+      "method": "hsi.multiscale_simulation_integration.v1",
+      "version": "0.1.0",
+      "id": "hsi-msi-aid-ssc-demo",
+      "integrationSpecId": "hsi-msi-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "authorisationStatus": "fixture_declared",
+      "inputDataRefIds": [
+        "fixture-input-ref-il6",
+        "fixture-input-ref-crp"
+      ],
+      "inputSummary": "Fixture authorised input data refs for harness-only simulation.",
+      "containsIdentifiablePhi": false,
+      "inventedParameters": null,
+      "limitations": [
+        "Fixture input refs are not an authorised clinical feed.",
+        "Missing parameters stay undeclared."
+      ],
+      "authoredBy": {
+        "principalId": "fixture-agent-msi",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "notDigitalTwinProduct": true,
+        "notPersonalisedTreatmentEffect": true,
+        "molecularDoesNotEqualOrganWithoutValidatedCoupling": true,
+        "doNotInventMissingParameters": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "fixtureHarnessIsNotLiveEngine": true,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T16:00:00.000Z",
+      "updatedAt": "2026-11-09T16:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "biologicalClinicalAssumptions": [
+    {
+      "schema": "hsi-multiscale-simulation-integration-1",
+      "method": "hsi.multiscale_simulation_integration.v1",
+      "version": "0.1.0",
+      "id": "hsi-msi-asm-ssc-demo",
+      "integrationSpecId": "hsi-msi-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "assumptionStatements": [
+        "Fixture biological assumption declared without inventing parameters.",
+        "Clinical framing remains research-only."
+      ],
+      "assumptionSummary": "Fixture biological/clinical assumptions for simulation configuration.",
+      "inventedParameters": null,
+      "limitations": [
+        "Assumptions are research framing only.",
+        "Missing parameters stay undeclared."
+      ],
+      "authoredBy": {
+        "principalId": "fixture-agent-msi",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "notDigitalTwinProduct": true,
+        "notPersonalisedTreatmentEffect": true,
+        "molecularDoesNotEqualOrganWithoutValidatedCoupling": true,
+        "doNotInventMissingParameters": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "fixtureHarnessIsNotLiveEngine": true,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T16:00:00.000Z",
+      "updatedAt": "2026-11-09T16:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "modelCouplingDeclarations": [
+    {
+      "schema": "hsi-multiscale-simulation-integration-1",
+      "method": "hsi.multiscale_simulation_integration.v1",
+      "version": "0.1.0",
+      "id": "hsi-msi-cpl-ssc-demo",
+      "integrationSpecId": "hsi-msi-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "crossScaleOntologySpecId": "hsi-csol-spec-ssc-demo",
+      "crossScaleMappingId": "hsi-csol-map-ssc-demo",
+      "couplingSupportStatus": "uncertain_coupling_declared",
+      "coupledVariables": [
+        "il6_concentration"
+      ],
+      "units": [
+        "pg/mL"
+      ],
+      "timeScales": [
+        "hours"
+      ],
+      "assumptions": [
+        "Single-scale fixture coupling only."
+      ],
+      "identifiabilityStatus": "partially_identifiable_declared",
+      "validationEvidenceRefs": [],
+      "knownFailureConditions": [
+        "Fails if treated as organ-level causal effect.",
+        "Fails if treated as operational engine output."
+      ],
+      "molecularDoesNotEqualOrganWithoutValidatedCoupling": true,
+      "inventedParameters": null,
+      "couplingSummary": "Uncertain single-scale coupling for fixture harness — molecular ≠ organ without validated coupling.",
+      "limitations": [
+        "Uncertain coupling is not validated organ causal support.",
+        "Compose with PR4 coupling honesty."
+      ],
+      "authoredBy": {
+        "principalId": "fixture-agent-msi",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "notDigitalTwinProduct": true,
+        "notPersonalisedTreatmentEffect": true,
+        "molecularDoesNotEqualOrganWithoutValidatedCoupling": true,
+        "doNotInventMissingParameters": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "fixtureHarnessIsNotLiveEngine": true,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T16:00:00.000Z",
+      "updatedAt": "2026-11-09T16:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "simulationConfigurations": [
+    {
+      "schema": "hsi-multiscale-simulation-integration-1",
+      "method": "hsi.multiscale_simulation_integration.v1",
+      "version": "0.1.0",
+      "id": "hsi-msi-cfg-ssc-demo",
+      "integrationSpecId": "hsi-msi-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "diseaseResearchQuestionId": "hsi-msi-drq-ssc-demo",
+      "authorisedInputDataId": "hsi-msi-aid-ssc-demo",
+      "assumptionDefinitionId": "hsi-msi-asm-ssc-demo",
+      "modelCouplingDeclarationId": "hsi-msi-cpl-ssc-demo",
+      "configurationSummary": "Fixture simulation configuration for harness-only run.",
+      "configuredComponentRefIds": [
+        "fixture-model-component-il6-pathway"
+      ],
+      "liveMultiscaleEngineOperational": false,
+      "inventedParameters": null,
+      "limitations": [
+        "Configuration is research framing only.",
+        "Operational multiscale engine absent."
+      ],
+      "authoredBy": {
+        "principalId": "fixture-agent-msi",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "notDigitalTwinProduct": true,
+        "notPersonalisedTreatmentEffect": true,
+        "molecularDoesNotEqualOrganWithoutValidatedCoupling": true,
+        "doNotInventMissingParameters": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "fixtureHarnessIsNotLiveEngine": true,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T16:00:00.000Z",
+      "updatedAt": "2026-11-09T16:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "approvedComputationalModelRuns": [
+    {
+      "schema": "hsi-multiscale-simulation-integration-1",
+      "method": "hsi.multiscale_simulation_integration.v1",
+      "version": "0.1.0",
+      "id": "hsi-msi-run-ssc-demo",
+      "integrationSpecId": "hsi-msi-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "simulationConfigurationId": "hsi-msi-cfg-ssc-demo",
+      "runMode": "fixture_harness_only",
+      "runSummary": "Fixture/harness-only computational model run — operational engine absent.",
+      "harnessLabel": "msi-fixture-harness-v1",
+      "liveMultiscaleEngineOperational": false,
+      "m11SimulationClaimed": false,
+      "fixtureHarnessIsNotLiveEngine": true,
+      "notValidatedIndividualOutcomePrediction": true,
+      "inventedParameters": null,
+      "limitations": [
+        "Fixture harness is not a live engine.",
+        "Individual outcome prediction not authorised.",
+        "Operational multiscale engine remains skipped/missing."
+      ],
+      "authoredBy": {
+        "principalId": "fixture-agent-msi",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "notDigitalTwinProduct": true,
+        "notPersonalisedTreatmentEffect": true,
+        "molecularDoesNotEqualOrganWithoutValidatedCoupling": true,
+        "doNotInventMissingParameters": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "fixtureHarnessIsNotLiveEngine": true,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T16:00:00.000Z",
+      "updatedAt": "2026-11-09T16:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "uncertaintyQuantifications": [
+    {
+      "schema": "hsi-multiscale-simulation-integration-1",
+      "method": "hsi.multiscale_simulation_integration.v1",
+      "version": "0.1.0",
+      "id": "hsi-msi-unc-ssc-demo",
+      "integrationSpecId": "hsi-msi-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "approvedComputationalModelRunId": "hsi-msi-run-ssc-demo",
+      "uncertaintyOrdinal": "high_declared",
+      "uncertaintySummary": "Fixture high uncertainty from harness-only execution and unavailable organ-scale component.",
+      "sourcesOfUncertainty": [
+        "fixture harness only",
+        "unavailable organ-scale component"
+      ],
+      "limitations": [
+        "Uncertainty quantification is research framing only.",
+        "Not clinical care."
+      ],
+      "authoredBy": {
+        "principalId": "fixture-agent-msi",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "notDigitalTwinProduct": true,
+        "notPersonalisedTreatmentEffect": true,
+        "molecularDoesNotEqualOrganWithoutValidatedCoupling": true,
+        "doNotInventMissingParameters": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "fixtureHarnessIsNotLiveEngine": true,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T16:00:00.000Z",
+      "updatedAt": "2026-11-09T16:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "numericalBiologicalValidityEvaluations": [
+    {
+      "schema": "hsi-multiscale-simulation-integration-1",
+      "method": "hsi.multiscale_simulation_integration.v1",
+      "version": "0.1.0",
+      "id": "hsi-msi-val-ssc-demo",
+      "integrationSpecId": "hsi-msi-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "approvedComputationalModelRunId": "hsi-msi-run-ssc-demo",
+      "numericalValidityFlag": "numerically_plausible_declared",
+      "biologicalValidityFlag": "biologically_uncertain_declared",
+      "evaluationSummary": "Fixture numerical/biological validity flags — research envelope only.",
+      "notValidatedIndividualOutcomePrediction": true,
+      "limitations": [
+        "Validity flags stay research envelopes only.",
+        "Fixture research only."
+      ],
+      "authoredBy": {
+        "principalId": "fixture-agent-msi",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "notDigitalTwinProduct": true,
+        "notPersonalisedTreatmentEffect": true,
+        "molecularDoesNotEqualOrganWithoutValidatedCoupling": true,
+        "doNotInventMissingParameters": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "fixtureHarnessIsNotLiveEngine": true,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T16:00:00.000Z",
+      "updatedAt": "2026-11-09T16:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "researchInterpretationEnvelopes": [
+    {
+      "schema": "hsi-multiscale-simulation-integration-1",
+      "method": "hsi.multiscale_simulation_integration.v1",
+      "version": "0.1.0",
+      "id": "hsi-msi-int-ssc-demo",
+      "integrationSpecId": "hsi-msi-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "diseaseResearchQuestionId": "hsi-msi-drq-ssc-demo",
+      "approvedComputationalModelRunId": "hsi-msi-run-ssc-demo",
+      "modelApplicabilityCheckId": "hsi-msi-app-ssc-partial",
+      "uncertaintyQuantificationId": "hsi-msi-unc-ssc-demo",
+      "numericalBiologicalValidityEvaluationId": "hsi-msi-val-ssc-demo",
+      "modelCouplingDeclarationId": "hsi-msi-cpl-ssc-demo",
+      "interpretationSummary": "Fixture reviewable research interpretation under partial applicability, high uncertainty, and harness-only execution.",
+      "researchOnly": true,
+      "reviewable": true,
+      "notValidatedIndividualOutcomePrediction": true,
+      "notPersonalisedTreatmentEffect": true,
+      "liveMultiscaleEngineOperational": false,
+      "m11SimulationClaimed": false,
+      "limitations": [
+        "Research-only interpretation.",
+        "Not a personalised treatment effect.",
+        "Individual outcome prediction not authorised.",
+        "Operational multiscale engine not claimed."
+      ],
+      "authoredBy": {
+        "principalId": "fixture-agent-msi",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "notDigitalTwinProduct": true,
+        "notPersonalisedTreatmentEffect": true,
+        "molecularDoesNotEqualOrganWithoutValidatedCoupling": true,
+        "doNotInventMissingParameters": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "fixtureHarnessIsNotLiveEngine": true,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T16:00:00.000Z",
+      "updatedAt": "2026-11-09T16:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "bundles": [
+    {
+      "schema": "hsi-multiscale-simulation-integration-1",
+      "method": "hsi.multiscale_simulation_integration.v1",
+      "version": "0.1.0",
+      "id": "hsi-msi-bnd-blocked-demo",
+      "displayName": "Blocked multiscale simulation integration bundle",
+      "diseaseContextId": "hsi-hdi-ctx-blocked-demo",
+      "integrationSpecId": "hsi-msi-spec-blocked-demo",
+      "diseaseResearchQuestionIds": [],
+      "validatedModelComponentIds": [],
+      "modelApplicabilityCheckIds": [],
+      "authorisedInputDataIds": [],
+      "biologicalClinicalAssumptionIds": [],
+      "modelCouplingDeclarationIds": [],
+      "simulationConfigurationIds": [],
+      "approvedComputationalModelRunIds": [],
+      "uncertaintyQuantificationIds": [],
+      "numericalBiologicalValidityEvaluationIds": [],
+      "researchInterpretationEnvelopeIds": [],
+      "unavailableComponentIds": [],
+      "bundleVersion": "0.1.0",
+      "limitations": [
+        "Blocked awaiting authorised research dataset — not scientific validation.",
+        "Operational multiscale engine absent; fixtures only."
+      ],
+      "datasetAvailability": "blocked_no_authorised_clinical_dataset",
+      "liveMultiscaleEngineOperational": false,
+      "m11SimulationClaimed": false,
+      "inventedParameters": null,
+      "notValidatedIndividualOutcomePrediction": true,
+      "notPersonalisedTreatmentEffect": true,
+      "notDigitalTwinProduct": true,
+      "molecularDoesNotEqualOrganWithoutValidatedCoupling": true,
+      "graphPromotable": false,
+      "lifecycle": "blocked_awaiting_authorised_dataset",
+      "reviewedBy": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-msi",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "notDigitalTwinProduct": true,
+        "notPersonalisedTreatmentEffect": true,
+        "molecularDoesNotEqualOrganWithoutValidatedCoupling": true,
+        "doNotInventMissingParameters": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "fixtureHarnessIsNotLiveEngine": true,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T16:00:00.000Z",
+      "updatedAt": "2026-11-09T16:00:00.000Z",
+      "note": ""
+    },
+    {
+      "schema": "hsi-multiscale-simulation-integration-1",
+      "method": "hsi.multiscale_simulation_integration.v1",
+      "version": "0.1.0",
+      "id": "hsi-msi-bnd-ssc-demo",
+      "displayName": "Fixture SSc multiscale simulation integration bundle",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "integrationSpecId": "hsi-msi-spec-ssc-demo",
+      "diseaseResearchQuestionIds": [
+        "hsi-msi-drq-ssc-demo"
+      ],
+      "validatedModelComponentIds": [
+        "hsi-msi-vmc-ssc-available",
+        "hsi-msi-vmc-ssc-unavailable"
+      ],
+      "modelApplicabilityCheckIds": [
+        "hsi-msi-app-ssc-partial"
+      ],
+      "authorisedInputDataIds": [
+        "hsi-msi-aid-ssc-demo"
+      ],
+      "biologicalClinicalAssumptionIds": [
+        "hsi-msi-asm-ssc-demo"
+      ],
+      "modelCouplingDeclarationIds": [
+        "hsi-msi-cpl-ssc-demo"
+      ],
+      "simulationConfigurationIds": [
+        "hsi-msi-cfg-ssc-demo"
+      ],
+      "approvedComputationalModelRunIds": [
+        "hsi-msi-run-ssc-demo"
+      ],
+      "uncertaintyQuantificationIds": [
+        "hsi-msi-unc-ssc-demo"
+      ],
+      "numericalBiologicalValidityEvaluationIds": [
+        "hsi-msi-val-ssc-demo"
+      ],
+      "researchInterpretationEnvelopeIds": [
+        "hsi-msi-int-ssc-demo"
+      ],
+      "unavailableComponentIds": [
+        "hsi-msi-vmc-ssc-unavailable"
+      ],
+      "bundleVersion": "0.1.0",
+      "limitations": [
+        "Fixture multiscale simulation integration bundle — research decision support only.",
+        "Operational multiscale engine absent.",
+        "Individual outcome prediction not authorised.",
+        "Unavailable components preserved explicitly."
+      ],
+      "datasetAvailability": "fixture_only",
+      "liveMultiscaleEngineOperational": false,
+      "m11SimulationClaimed": false,
+      "inventedParameters": null,
+      "notValidatedIndividualOutcomePrediction": true,
+      "notPersonalisedTreatmentEffect": true,
+      "notDigitalTwinProduct": true,
+      "molecularDoesNotEqualOrganWithoutValidatedCoupling": true,
+      "graphPromotable": false,
+      "lifecycle": "accepted_with_limitations",
+      "reviewedBy": {
+        "principalId": "fixture-researcher",
+        "actorKind": "human"
+      },
+      "authoredBy": {
+        "principalId": "fixture-agent-msi",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notValidatedIndividualOutcomePrediction": true,
+        "notDigitalTwinProduct": true,
+        "notPersonalisedTreatmentEffect": true,
+        "molecularDoesNotEqualOrganWithoutValidatedCoupling": true,
+        "doNotInventMissingParameters": true,
+        "liveMultiscaleEngineOperational": false,
+        "m11SimulationClaimed": false,
+        "fixtureHarnessIsNotLiveEngine": true,
+        "populationAssociationIsNotIndividualTruth": true,
+        "observedIsNotInferred": true,
+        "noPhiIngestion": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T16:00:00.000Z",
+      "updatedAt": "2026-11-09T16:00:00.000Z",
+      "note": ""
+    }
+  ]
+}
