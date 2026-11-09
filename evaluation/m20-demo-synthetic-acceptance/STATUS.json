@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "hsi-m20-demo-status-1",
+  "engineering": "CLEARED",
+  "demoAcceptance": "CLEARED",
+  "scientificAcceptance": "BLOCKED",
+  "liveOpsAcceptance": "BLOCKED",
+  "launchDecision": "LIMITED_GO_SYNTHETIC_DEMO_ONLY",
+  "productionReadyClaimed": false,
+  "packHash": "62f5689752122abad4c068b453760a452b3f037fa562de30041fae63a263a93c",
+  "tipCommitHint": "2fd7007ee0e26a96fede2aef21eb08e7f948ae1c"
+}

@@ -145,6 +145,8 @@
     "partner:lock-prep:check": "bun --no-env-file scripts/partner-lock-prep.ts --check",
     "human-queue:prep": "bun --no-env-file scripts/human-queue-residual-prep.ts",
     "human-queue:check": "bun --no-env-file scripts/human-queue-residual-prep.ts --check",
+    "m20:demo": "bun --no-env-file scripts/m20-demo-synthetic-acceptance.ts",
+    "m20:demo:check": "bun --no-env-file scripts/m20-demo-synthetic-acceptance.ts --check",
     "validation:build": "bun --no-env-file scripts/build-synthetic-validation.ts",
     "validation:check": "bun --no-env-file scripts/build-synthetic-validation.ts --check",
     "readiness:prepare": "bun --no-env-file scripts/prepare-research-readiness.ts",

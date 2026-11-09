@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "hsi-m20-demo-accounts-1",
+  "honestyBanner": "SYNTHETIC DEMO REHEARSAL ONLY — not live neon_auth, not scientific acceptance, not production writes, not Gate C, not MoU, not PHI/CDS",
+  "passwordsInRepo": false,
+  "neonAuthProvisioned": false,
+  "accounts": [
+    {
+      "accountId": "DEMO-ACCT-RESEARCHER",
+      "role": "researcher",
+      "displayName": "Demo Biomedical Researcher",
+      "email": "demo.researcher@hsi.test",
+      "syntheticPrincipalId": "demo-researcher-00000000-0000-4000-8000-000000000001",
+      "passwordInRepo": false,
+      "neonAuthProvisioned": false,
+      "dataClass": "synthetic_demo",
+      "notes": "In-memory / fixture persona for M20 rehearsal. Sign-up on staging Auth is operator-owned; never commit passwords."
+    },
+    {
+      "accountId": "DEMO-ACCT-REVIEWER",
+      "role": "independent_reviewer",
+      "displayName": "Demo Independent Scientific Reviewer",
+      "email": "demo.reviewer@hsi.test",
+      "syntheticPrincipalId": "demo-reviewer-00000000-0000-4000-8000-000000000002",
+      "passwordInRepo": false,
+      "neonAuthProvisioned": false,
+      "dataClass": "synthetic_demo",
+      "notes": "Must remain distinct from researcher. Self-review of author output is refused in eng paths."
+    },
+    {
+      "accountId": "DEMO-ACCT-OPS",
+      "role": "grant_operator",
+      "displayName": "Demo Grant Operator",
+      "email": "demo.ops@hsi.test",
+      "syntheticPrincipalId": "demo-ops-00000000-0000-4000-8000-000000000003",
+      "passwordInRepo": false,
+      "neonAuthProvisioned": false,
+      "dataClass": "synthetic_demo",
+      "notes": "Documents grant workflow only; does not invent neon_auth user ids in git."
+    }
+  ],
+  "howToUse": "Offline: bun run m20:demo. Staging neon_auth (optional later): create accounts matching emails only on ep-sweet-hill; never commit passwords; never invent user ids into human-queue worksheets."
+}

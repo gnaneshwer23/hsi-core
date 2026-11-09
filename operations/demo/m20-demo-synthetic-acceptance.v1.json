@@ -1,0 +1,257 @@
+{
+  "schemaVersion": "hsi-m20-demo-synthetic-acceptance-1",
+  "generatedAt": "2026-11-09T15:32:54.255Z",
+  "tipCommitHint": "2fd7007ee0e26a96fede2aef21eb08e7f948ae1c",
+  "mode": "synthetic_demo_rehearsal",
+  "honestyBanner": "SYNTHETIC DEMO REHEARSAL ONLY — not live neon_auth, not scientific acceptance, not production writes, not Gate C, not MoU, not PHI/CDS",
+  "accounts": [
+    {
+      "accountId": "DEMO-ACCT-RESEARCHER",
+      "role": "researcher",
+      "displayName": "Demo Biomedical Researcher",
+      "email": "demo.researcher@hsi.test",
+      "syntheticPrincipalId": "demo-researcher-00000000-0000-4000-8000-000000000001",
+      "passwordInRepo": false,
+      "neonAuthProvisioned": false,
+      "dataClass": "synthetic_demo",
+      "notes": "In-memory / fixture persona for M20 rehearsal. Sign-up on staging Auth is operator-owned; never commit passwords."
+    },
+    {
+      "accountId": "DEMO-ACCT-REVIEWER",
+      "role": "independent_reviewer",
+      "displayName": "Demo Independent Scientific Reviewer",
+      "email": "demo.reviewer@hsi.test",
+      "syntheticPrincipalId": "demo-reviewer-00000000-0000-4000-8000-000000000002",
+      "passwordInRepo": false,
+      "neonAuthProvisioned": false,
+      "dataClass": "synthetic_demo",
+      "notes": "Must remain distinct from researcher. Self-review of author output is refused in eng paths."
+    },
+    {
+      "accountId": "DEMO-ACCT-OPS",
+      "role": "grant_operator",
+      "displayName": "Demo Grant Operator",
+      "email": "demo.ops@hsi.test",
+      "syntheticPrincipalId": "demo-ops-00000000-0000-4000-8000-000000000003",
+      "passwordInRepo": false,
+      "neonAuthProvisioned": false,
+      "dataClass": "synthetic_demo",
+      "notes": "Documents grant workflow only; does not invent neon_auth user ids in git."
+    }
+  ],
+  "programme": {
+    "programmeId": "hsi-demo-prog-ssc-tfh-il21-001",
+    "title": "Demo SSc Tfh–IL-21–B-cell investigation (synthetic)",
+    "focus": "systemic_sclerosis_tfh_il21_bcell",
+    "investigationId": "hsi-interrogative-test-fixture-ws-001",
+    "releaseId": "hsi-release-test-fixture-ssc-ws-001",
+    "dataClass": "synthetic_demo"
+  },
+  "journey": [
+    {
+      "step": 1,
+      "title": "Open HSI platform",
+      "status": "passed",
+      "evidenceRef": "synthetic-fixture:hsi-interrogative-test-fixture-ws-001:step-1",
+      "note": "Uses synthetic metadata / fixture evidence — not live literature passages."
+    },
+    {
+      "step": 2,
+      "title": "Sign in (demo researcher)",
+      "status": "passed",
+      "evidenceRef": "synthetic-fixture:hsi-interrogative-test-fixture-ws-001:step-2",
+      "note": "Uses synthetic metadata / fixture evidence — not live literature passages."
+    },
+    {
+      "step": 3,
+      "title": "Access research workspace",
+      "status": "passed",
+      "evidenceRef": "synthetic-fixture:hsi-interrogative-test-fixture-ws-001:step-3",
+      "note": "Uses synthetic metadata / fixture evidence — not live literature passages."
+    },
+    {
+      "step": 4,
+      "title": "Create or resume SSc programme",
+      "status": "passed",
+      "evidenceRef": "synthetic-fixture:hsi-interrogative-test-fixture-ws-001:step-4",
+      "note": "Uses synthetic metadata / fixture evidence — not live literature passages."
+    },
+    {
+      "step": 5,
+      "title": "Enter scientific research question",
+      "status": "passed",
+      "evidenceRef": "synthetic-fixture:hsi-interrogative-test-fixture-ws-001:step-5",
+      "note": "Uses synthetic metadata / fixture evidence — not live literature passages."
+    },
+    {
+      "step": 6,
+      "title": "Launch investigation",
+      "status": "passed",
+      "evidenceRef": "synthetic-fixture:hsi-interrogative-test-fixture-ws-001:step-6",
+      "note": "Uses synthetic metadata / fixture evidence — not live literature passages."
+    },
+    {
+      "step": 7,
+      "title": "Retrieve biomedical evidence",
+      "status": "passed",
+      "evidenceRef": "synthetic-fixture:hsi-interrogative-test-fixture-ws-001:step-7",
+      "note": "Uses synthetic metadata / fixture evidence — not live literature passages."
+    },
+    {
+      "step": 8,
+      "title": "Verify source identities",
+      "status": "passed",
+      "evidenceRef": "synthetic-fixture:hsi-interrogative-test-fixture-ws-001:step-8",
+      "note": "Uses synthetic metadata / fixture evidence — not live literature passages."
+    },
+    {
+      "step": 9,
+      "title": "Retrieve approved graph context",
+      "status": "passed",
+      "evidenceRef": "synthetic-fixture:hsi-interrogative-test-fixture-ws-001:step-9",
+      "note": "In-memory demo review path; generating agent cannot self-approve."
+    },
+    {
+      "step": 10,
+      "title": "Compare supporting vs contradictory findings",
+      "status": "passed",
+      "evidenceRef": "synthetic-fixture:hsi-interrogative-test-fixture-ws-001:step-10",
+      "note": "In-memory demo review path; generating agent cannot self-approve."
+    },
+    {
+      "step": 11,
+      "title": "Generate evidence-linked research summary",
+      "status": "passed",
+      "evidenceRef": "synthetic-fixture:hsi-interrogative-test-fixture-ws-001:step-11",
+      "note": "In-memory demo review path; generating agent cannot self-approve."
+    },
+    {
+      "step": 12,
+      "title": "Propose falsifiable hypothesis",
+      "status": "passed",
+      "evidenceRef": "synthetic-fixture:hsi-interrogative-test-fixture-ws-001:step-12",
+      "note": "In-memory demo review path; generating agent cannot self-approve."
+    },
+    {
+      "step": 13,
+      "title": "Propose discriminating experiment",
+      "status": "passed",
+      "evidenceRef": "synthetic-fixture:hsi-interrogative-test-fixture-ws-001:step-13",
+      "note": "In-memory demo review path; generating agent cannot self-approve."
+    },
+    {
+      "step": 14,
+      "title": "Save investigation",
+      "status": "passed",
+      "evidenceRef": "synthetic-fixture:hsi-interrogative-test-fixture-ws-001:step-14",
+      "note": "In-memory demo review path; generating agent cannot self-approve."
+    },
+    {
+      "step": 15,
+      "title": "Submit candidate claims for review",
+      "status": "passed",
+      "evidenceRef": "synthetic-fixture:hsi-interrogative-test-fixture-ws-001:step-15",
+      "note": "In-memory demo review path; generating agent cannot self-approve."
+    },
+    {
+      "step": 16,
+      "title": "Complete independent review",
+      "status": "passed",
+      "evidenceRef": "synthetic-fixture:hsi-interrogative-test-fixture-ws-001:step-16",
+      "note": "In-memory demo review path; generating agent cannot self-approve."
+    },
+    {
+      "step": 17,
+      "title": "Persist approved assertions",
+      "status": "passed",
+      "evidenceRef": "synthetic-fixture:hsi-interrogative-test-fixture-ws-001:step-17",
+      "note": "Fixture restore/export rehearsal; not a production restore drill."
+    },
+    {
+      "step": 18,
+      "title": "Inspect graph update",
+      "status": "passed",
+      "evidenceRef": "synthetic-fixture:hsi-interrogative-test-fixture-ws-001:step-18",
+      "note": "Fixture restore/export rehearsal; not a production restore drill."
+    },
+    {
+      "step": 19,
+      "title": "Sign out",
+      "status": "passed",
+      "evidenceRef": "synthetic-fixture:hsi-interrogative-test-fixture-ws-001:step-19",
+      "note": "Fixture restore/export rehearsal; not a production restore drill."
+    },
+    {
+      "step": 20,
+      "title": "Sign in again",
+      "status": "passed",
+      "evidenceRef": "synthetic-fixture:hsi-interrogative-test-fixture-ws-001:step-20",
+      "note": "Fixture restore/export rehearsal; not a production restore drill."
+    },
+    {
+      "step": 21,
+      "title": "Restore programme and history",
+      "status": "passed",
+      "evidenceRef": "synthetic-fixture:hsi-interrogative-test-fixture-ws-001:step-21",
+      "note": "Fixture restore/export rehearsal; not a production restore drill."
+    },
+    {
+      "step": 22,
+      "title": "Export reproducible research report",
+      "status": "passed",
+      "evidenceRef": "synthetic-fixture:hsi-interrogative-test-fixture-ws-001:step-22",
+      "note": "Fixture restore/export rehearsal; not a production restore drill."
+    }
+  ],
+  "gates": [
+    {
+      "id": "A_functional_demo",
+      "status": "PASS",
+      "evidence": "All 22 synthetic demo journey steps marked passed against fixture investigation."
+    },
+    {
+      "id": "B_scientific_live",
+      "status": "BLOCKED",
+      "evidence": "SME gold empty; passages rights PARKED; fixtures ≠ scientific acceptance."
+    },
+    {
+      "id": "C_reproducibility_live",
+      "status": "BLOCKED",
+      "evidence": "No independent live computational reproduction package accepted."
+    },
+    {
+      "id": "D_security_demo_boundary",
+      "status": "PASS",
+      "evidence": "Demo accounts are synthetic_demo only; passwordInRepo=false; neonAuthProvisioned=false; production writes not claimed."
+    },
+    {
+      "id": "E_governance_demo",
+      "status": "PASS",
+      "evidence": "Independent reviewer persona distinct from researcher; self-approval refused in eng contracts."
+    },
+    {
+      "id": "F_usability_pilot",
+      "status": "PENDING",
+      "evidence": "No human researchers enrolled; usability pilot not conducted."
+    },
+    {
+      "id": "G_operations_live",
+      "status": "BLOCKED",
+      "evidence": "Staging two-account opsAcceptance remains BLOCKED until real neon_auth principals."
+    },
+    {
+      "id": "H_research_value_pilot",
+      "status": "PENDING",
+      "evidence": "No baseline comparison study with enrolled researchers."
+    }
+  ],
+  "demoAcceptance": "CLEARED",
+  "scientificAcceptance": "BLOCKED",
+  "liveOpsAcceptance": "BLOCKED",
+  "productionReadyClaimed": false,
+  "writesEnabledClaimed": false,
+  "limitedGoRecommended": true,
+  "limitedGoScope": "Synthetic demo rehearsal of researcher + independent reviewer workflows using fixture evidence only. Excludes live neon_auth, production writes, passage import, SME-scored science, and public launch.",
+  "launchDecision": "LIMITED_GO_SYNTHETIC_DEMO_ONLY",
+  "packHash": "62f5689752122abad4c068b453760a452b3f037fa562de30041fae63a263a93c"
+}
