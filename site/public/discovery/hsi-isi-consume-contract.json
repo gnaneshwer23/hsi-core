@@ -15,7 +15,7 @@
   "testPilotMode": true,
   "testFixtureBanner": "TEST FIXTURE — replace before real pilot",
   "allowHypotheticalPartnerEnv": "ALLOW_HYPOTHETICAL_PARTNER",
-  "generatedAt": "2026-11-09T11:51:04.006Z",
+  "generatedAt": "2026-11-09T12:05:50.344Z",
   "package": "hsi-core",
   "outputsManifestSchema": "hsi-outputs-manifest-1",
   "compatibility": {
