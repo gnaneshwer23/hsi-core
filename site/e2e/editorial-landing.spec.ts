@@ -37,6 +37,6 @@ test('homepage investigation anchor opens the eight-step sequence',async({page})
  await page.goto('/#product-demo');
  await expect(page.locator('#product-demo')).toBeVisible();
  await expect(page.locator('#product-demo')).toContainText('unvalidated');
- await expect(page.getByRole('link',{name:/See How It Works/i}).first()).toHaveAttribute('href','/how-it-works');
+ await expect(page.locator('.cl-actions a')).toHaveCount(1);
  await expect(page.getByRole('link',{name:/See how this technology works/i})).toHaveAttribute('href','/demo');
 });

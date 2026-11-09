@@ -41,6 +41,23 @@ describe("synthetic demonstration scenario", () => {
     expect(report.patientQuestionBlocked).toBe(true);
   });
 
+  test("demo literature uses verified PubMed records and dated Open Targets scores", async () => {
+    const report = await runDemoScenario();
+    const pmids = report.evidence.literature.map((row) => row.pmid);
+    expect(pmids).toEqual(["27912057", "11298065"]);
+    expect(report.evidence.literature[0]?.title).toContain("Gut Microbiota Regulate Motor Deficits");
+    expect(report.evidence.literature[1]?.title).toContain("Anti-TNF agents for rheumatoid arthritis");
+    expect(report.evidence.literatureVerifiedAt).toBe("2026-11-09");
+    expect(report.evidence.openTargets.ok).toBe(true);
+    if (!report.evidence.openTargets.ok) throw new Error("expected Open Targets ok");
+    expect(report.evidence.openTargets.diseaseId).toBe("MONDO_0008383");
+    expect(report.evidence.openTargets.fetchedAt).toBe("2026-11-09");
+    expect(report.targets.map((row) => row.symbol)).toEqual(["TNF", "IL6", "FFAR2"]);
+    expect(report.targets[0]?.ensemblId).toBe("ENSG00000232810");
+    expect(report.targets.every((row) => row.scoreFetchedAt === "2026-11-09")).toBe(true);
+    expect(report.targets.every((row) => row.scoreIsNotCausation)).toBe(true);
+  });
+
   test("similarity never satisfies eligibility", () => {
     const cohort = generateSyntheticCohort();
     const index = cohort[20];

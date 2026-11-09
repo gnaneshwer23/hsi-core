@@ -51,40 +51,49 @@
   "evidence": {
     "mode": "fixture",
     "networkUsed": false,
+    "literatureVerifiedAt": "2026-11-09",
     "literature": [
       {
-        "pmid": "31180194",
-        "doi": "10.1038/s41586-019-1237-9",
-        "title": "Gut microbial metabolites and host inflammatory tone",
-        "year": 2019
+        "pmid": "27912057",
+        "doi": "10.1016/j.cell.2016.11.018",
+        "title": "Gut Microbiota Regulate Motor Deficits and Neuroinflammation in a Model of Parkinson's Disease.",
+        "year": 2016
       },
       {
-        "pmid": "33479220",
-        "doi": "10.1136/annrheumdis-2020-219000",
-        "title": "TNF blockade and systemic inflammation in rheumatoid arthritis",
-        "year": 2021
+        "pmid": "11298065",
+        "doi": "10.1046/j.1365-2125.2001.00321.x",
+        "title": "Anti-TNF agents for rheumatoid arthritis.",
+        "year": 2001
       }
     ],
     "targets": [
       {
         "symbol": "TNF",
-        "ensemblId": "ENSG00000174600",
-        "score": 0.82,
+        "ensemblId": "ENSG00000232810",
+        "score": 0.6368370219733271,
+        "scoreFetchedAt": "2026-11-09",
         "scoreIsNotCausation": true
       },
       {
         "symbol": "IL6",
         "ensemblId": "ENSG00000136244",
-        "score": 0.61,
+        "score": 0.5150541564338188,
+        "scoreFetchedAt": "2026-11-09",
         "scoreIsNotCausation": true
       },
       {
         "symbol": "FFAR2",
-        "ensemblId": "ENSG00000126266",
-        "score": 0.22,
+        "ensemblId": "ENSG00000126262",
+        "score": 0.0229406492832586,
+        "scoreFetchedAt": "2026-11-09",
         "scoreIsNotCausation": true
       }
     ],
+    "openTargets": {
+      "diseaseId": "MONDO_0008383",
+      "ok": true,
+      "fetchedAt": "2026-11-09"
+    },
     "protein": {
       "accession": "P01375",
       "name": "Tumor necrosis factor",
@@ -107,8 +116,8 @@
       "rheumatoid arthritis"
     ],
     "evidenceIds": [
-      "pmid:31180194",
-      "pmid:33479220",
+      "pmid:27912057",
+      "pmid:11298065",
       "opentargets:TNF",
       "opentargets:IL6",
       "opentargets:FFAR2",
@@ -136,8 +145,8 @@
         "label": "unvalidated_hypothesis",
         "epistemicType": "unvalidated_hypothesis",
         "supporting": [
-          "31180194",
-          "33479220"
+          "27912057",
+          "11298065"
         ],
         "opposing": [
           "contradiction:butyrate-null-studies"
@@ -195,7 +204,7 @@
     "releaseId": "lhkg-demo-1.0.1",
     "version": "1.0.1",
     "priorReleaseId": "lhkg-demo-1.0.0",
-    "manifestHash": "e171285461bba55ef6478e109c1da25b4fa05d86175fc2d6617f1203c5f1afa0",
+    "manifestHash": "89136391f776f5864c6a687fe7fcc48bc8f3f6f3e89aef55db0dc4b6a5e99c2a",
     "patientDataIncluded": false,
     "approvedEdge": "edge-butyrate-neuro-hypothesis"
   },
@@ -311,22 +320,25 @@
   "targets": [
     {
       "symbol": "TNF",
-      "ensemblId": "ENSG00000174600",
-      "openTargetsScore": 0.82,
+      "ensemblId": "ENSG00000232810",
+      "openTargetsScore": 0.6368370219733271,
+      "scoreFetchedAt": "2026-11-09",
       "rank": 1,
       "scoreIsNotCausation": true
     },
     {
       "symbol": "IL6",
       "ensemblId": "ENSG00000136244",
-      "openTargetsScore": 0.61,
+      "openTargetsScore": 0.5150541564338188,
+      "scoreFetchedAt": "2026-11-09",
       "rank": 2,
       "scoreIsNotCausation": true
     },
     {
       "symbol": "FFAR2",
-      "ensemblId": "ENSG00000126266",
-      "openTargetsScore": 0.22,
+      "ensemblId": "ENSG00000126262",
+      "openTargetsScore": 0.0229406492832586,
+      "scoreFetchedAt": "2026-11-09",
       "rank": 3,
       "scoreIsNotCausation": true
     }

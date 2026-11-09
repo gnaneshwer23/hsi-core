@@ -75,20 +75,26 @@
 }
 .cl-ghost {
   position: absolute;
-  left: 4%;
-  right: 4%;
-  top: 38%;
+  left: 3%;
+  right: 3%;
+  top: 0.35rem;
   margin: 0;
-  font-size: clamp(2.4rem, 8vw, 7.2rem);
+  font-size: clamp(1.6rem, 5.2vw, 4.4rem);
   font-weight: 700;
   letter-spacing: -0.045em;
-  line-height: 0.86;
+  line-height: 0.9;
   color: #c5d8ee;
   text-transform: uppercase;
   pointer-events: none;
   user-select: none;
+  z-index: 0;
+  opacity: 0.55;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: clip;
 }
-.cl-hero-copy { position: relative; z-index: 2; grid-area: copy; max-width: none; }
+.cl-hero-copy { position: relative; z-index: 2; grid-area: copy; max-width: none; padding-top: 1.6rem; }
 .cl-hero h1 {
   margin: 0 0 1rem;
   font-size: clamp(2.1rem, 4.6vw, 3.6rem);
@@ -98,7 +104,14 @@
   color: #12253f;
   max-width: 16ch;
 }
-.cl-lead { margin: 0; max-width: 62ch; color: #234864; line-height: 1.6; }
+.cl-lead {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  max-width: 62ch;
+  color: #234864;
+  line-height: 1.6;
+}
 .cl-actions { display: flex; flex-wrap: wrap; gap: 0.8rem 1.2rem; margin-top: 1.4rem; }
 .cl-arrow-link, .cl-text-link {
   display: inline-flex;

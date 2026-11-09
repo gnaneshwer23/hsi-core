@@ -6,6 +6,7 @@ export type DiscoveryTarget = {
   symbol: string;
   ensemblId: string;
   openTargetsScore: number;
+  scoreFetchedAt: string;
   rank: number;
   scoreIsNotCausation: true;
 };
@@ -17,13 +18,16 @@ export type RepurposingHypothesis = {
   adapters: readonly { name: "RDKit" | "ESM"; status: "proposal_only" }[];
 };
 
-export function prioritiseTargets(rows: readonly { symbol: string; ensemblId: string; score: number }[]): DiscoveryTarget[] {
+export function prioritiseTargets(
+  rows: readonly { symbol: string; ensemblId: string; score: number; scoreFetchedAt: string }[],
+): DiscoveryTarget[] {
   return [...rows]
     .sort((a, b) => b.score - a.score || a.symbol.localeCompare(b.symbol))
     .map((row, index) => ({
       symbol: row.symbol,
       ensemblId: row.ensemblId,
       openTargetsScore: row.score,
+      scoreFetchedAt: row.scoreFetchedAt,
       rank: index + 1,
       scoreIsNotCausation: true,
     }));
