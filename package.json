@@ -245,6 +245,8 @@
     "hsi:human-systems:check": "bun --no-env-file scripts/human-systems-intelligence-contracts.ts --check",
     "hsi:cross-disease-mechanism-intelligence:prepare": "bun --no-env-file scripts/cross-disease-mechanism-intelligence-contracts.ts",
     "hsi:cross-disease-mechanism-intelligence:check": "bun --no-env-file scripts/cross-disease-mechanism-intelligence-contracts.ts --check",
+    "hsi:cross-scale-biological-relationships:prepare": "bun --no-env-file scripts/cross-scale-biological-relationships-contracts.ts",
+    "hsi:cross-scale-biological-relationships:check": "bun --no-env-file scripts/cross-scale-biological-relationships-contracts.ts --check",
     "gap-verification:expand": "bun --no-env-file scripts/gap-verification-check.ts",
     "gap-verification:check": "bun --no-env-file scripts/gap-verification-check.ts --check",
     "fixture:synthetic-e2e:check": "bun --no-env-file scripts/check-synthetic-e2e-fixture.ts",
