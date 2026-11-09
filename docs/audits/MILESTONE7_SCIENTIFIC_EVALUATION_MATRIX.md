@@ -3,13 +3,14 @@
 **Brief:** HSI Milestone 7 — rigorous, reproducible, independently reviewable **evaluation infrastructure** for M1–M6 biomedical research intelligence (extend existing eval substrate; **no parallel eval platform**; **no public marketing claims** of scientific validation).  
 **Status:** Phase 0 gap audit + PR1 (Scientific Benchmark Registry) — **not** scientific validation complete, **not** M1–M6 scientifically validated, **not** production readiness.  
 **Date:** 2026-11-09  
-**Audited `main` SHA:** `4e4f9dbbeb4684808c1c66bb886245d3687b1ee2`  
-**Tip commit:** `4e4f9db Add M6 Phase 0 matrix and investigation orchestration contracts. (#96)`  
+**Audited `main` SHA:** `7777f6ddb42691e583dcfc49a2e508dd911ef10c`  
+**Tip commit:** `7777f6d Add M7 Phase 0 matrix and scientific benchmark registry. (#97)`  
 **HSI Neon:** red-wave only (`human super intelligence` / `red-wave-06625195` / `ep-restless-dew…`) — never autumn-snow / Akeno / DeliverX  
 
 **Cross-links (do not contradict):**
 
 - [`MILESTONE6_INVESTIGATION_ORCHESTRATION_MATRIX.md`](./MILESTONE6_INVESTIGATION_ORCHESTRATION_MATRIX.md) — M6 Phase 0 + PR1 on `main` (#96); planner/router/workspace deepen open  
+- [`MILESTONE8_LIVING_SCIENTIFIC_INTELLIGENCE_MATRIX.md`](./MILESTONE8_LIVING_SCIENTIFIC_INTELLIGENCE_MATRIX.md) — M8 continuous monitoring (orthogonal; do not claim living system complete from M7)  
 - [`MILESTONE5_PRECISION_TRANSLATIONAL_MATRIX.md`](./MILESTONE5_PRECISION_TRANSLATIONAL_MATRIX.md) — M5 Phase 0 + PR1 on `main` (#95)  
 - [`MILESTONE4_TRANSLATIONAL_FAILURE_MATRIX.md`](./MILESTONE4_TRANSLATIONAL_FAILURE_MATRIX.md)  
 - [`MILESTONE3_HYPOTHESIS_EXPERIMENT_MATRIX.md`](./MILESTONE3_HYPOTHESIS_EXPERIMENT_MATRIX.md)  

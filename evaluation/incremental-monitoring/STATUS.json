@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "hsi-incremental-monitoring-status-1",
+  "method": "hsi.incremental_evidence_monitoring.v1",
+  "version": "0.1.0",
+  "generatedAt": "2026-11-09T12:30:00.000Z",
+  "checkOnly": false,
+  "liveRequested": false,
+  "offlineStatus": "skipped_offline",
+  "liveStatus": "gated_not_run",
+  "scientificAcceptance": "BLOCKED",
+  "engineeringHarness": "CLEARED",
+  "honesty": {
+    "fixturesAreNotLiveEvidence": true,
+    "continuousMonitoringIsNotValidatedScience": true,
+    "changeDetectionPipelineNotImplemented": true,
+    "unreviewedNotAutoApproved": true,
+    "noKafka": true,
+    "liveNetworkUsed": false
+  },
+  "packHash": "65d91cf94271276b79ab43efe15ed7942d5dd40d976289158efc26af02ccf73f",
+  "offlineReceiptHash": "befed245a95bee612fdb9af626e24dbb5fd8de5ccd22d45e4030c6e9a075cb98",
+  "liveReceiptHash": "e66f8a4f48087224b7e64216ef44792ecb73302fd409bb9c374960c0ba73c17c"
+}

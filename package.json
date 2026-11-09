@@ -198,6 +198,8 @@
     "living-evidence:expand": "bun --no-env-file scripts/living-evidence-expand.ts",
     "living-evidence:check": "bun --no-env-file scripts/living-evidence-expand.ts --check",
     "living-evidence:live": "bun --no-env-file scripts/living-evidence-expand.ts --live",
+    "monitoring:incremental:prepare": "bun --no-env-file scripts/incremental-evidence-monitoring.ts",
+    "monitoring:incremental:check": "bun --no-env-file scripts/incremental-evidence-monitoring.ts --check",
     "gap-verification:expand": "bun --no-env-file scripts/gap-verification-check.ts",
     "gap-verification:check": "bun --no-env-file scripts/gap-verification-check.ts --check",
     "fixture:synthetic-e2e:check": "bun --no-env-file scripts/check-synthetic-e2e-fixture.ts",

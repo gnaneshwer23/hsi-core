@@ -1,0 +1,178 @@
+{
+  "schemaVersion": "hsi-incremental-monitoring-pack-1",
+  "method": "hsi.incremental_evidence_monitoring.v1",
+  "version": "0.1.0",
+  "generatedAt": "2026-11-09T12:30:00.000Z",
+  "subscriptions": [
+    {
+      "schemaVersion": "hsi-incremental-evidence-monitoring-1",
+      "method": "hsi.incremental_evidence_monitoring.v1",
+      "version": "0.1.0",
+      "subscriptionId": "hsi-mon-ssc-disease-demo",
+      "topicKind": "disease",
+      "topicId": "MONDO_0005100",
+      "topicLabel": "systemic sclerosis",
+      "investigationId": null,
+      "providers": [
+        "europe_pmc",
+        "open_targets"
+      ],
+      "schedule": {
+        "interval": "daily_bounded",
+        "nextCheckAt": null,
+        "liveRequiresExplicitGate": true
+      },
+      "cursors": [
+        {
+          "provider": "europe_pmc",
+          "cursorMark": "*",
+          "lastSeenExternalId": null,
+          "lastRetrievedAt": null,
+          "providerVersion": "europepmc_rest_search_cursor_v1",
+          "exhausted": false
+        },
+        {
+          "provider": "open_targets",
+          "cursorMark": null,
+          "lastSeenExternalId": null,
+          "lastRetrievedAt": null,
+          "providerVersion": "open_targets_platform_graphql_v4",
+          "exhausted": false
+        }
+      ],
+      "budgets": {
+        "maxExternalFetches": 8,
+        "maxResults": 25,
+        "maxEuropePmcPages": 4,
+        "rateLimitMs": 350,
+        "maxWallClockMs": 30000,
+        "fullDatabaseScrape": false
+      },
+      "freshness": {
+        "asOf": "2026-11-09T12:30:00.000Z",
+        "maxAgeHours": 24,
+        "stale": null,
+        "lastSuccessfulCheckAt": null
+      },
+      "reactomeStub": null,
+      "createdAt": "2026-11-09T12:30:00.000Z",
+      "updatedAt": "2026-11-09T12:30:00.000Z",
+      "note": "M8 PR1 incremental evidence monitoring subscription — change detection not implemented; fixtures ≠ live.",
+      "honesty": {
+        "fixturesAreNotLiveEvidence": true,
+        "unreviewedNotAutoApproved": true,
+        "graphPromotable": false,
+        "scientificApproval": false,
+        "gateCAutoApprove": false,
+        "cdsPhi": false,
+        "fullDatabaseScrape": false,
+        "noKafka": true,
+        "noNewGraphDb": true,
+        "noSeparateEventPlatform": true,
+        "noNewAgentFramework": true,
+        "continuousMonitoringIsNotValidatedScience": true,
+        "reactomeLiveFetch": false,
+        "neonRedWaveOnly": true,
+        "changeDetectionPipelineNotImplemented": true
+      },
+      "contentHash": "cca07f29d5a4ce8f302c470f4128a75e834e344e1976649694273bdf334c53a4"
+    },
+    {
+      "schemaVersion": "hsi-incremental-evidence-monitoring-1",
+      "method": "hsi.incremental_evidence_monitoring.v1",
+      "version": "0.1.0",
+      "subscriptionId": "hsi-mon-il21-pathway-demo",
+      "topicKind": "pathway",
+      "topicId": "R-HSA-6785807",
+      "topicLabel": "Interleukin-21 signaling (stub)",
+      "investigationId": null,
+      "providers": [
+        "reactome_stub",
+        "europe_pmc"
+      ],
+      "schedule": {
+        "interval": "weekly_bounded",
+        "nextCheckAt": null,
+        "liveRequiresExplicitGate": true
+      },
+      "cursors": [
+        {
+          "provider": "reactome_stub",
+          "cursorMark": null,
+          "lastSeenExternalId": null,
+          "lastRetrievedAt": null,
+          "providerVersion": "reactome_identifier_stub",
+          "exhausted": false
+        },
+        {
+          "provider": "europe_pmc",
+          "cursorMark": "*",
+          "lastSeenExternalId": null,
+          "lastRetrievedAt": null,
+          "providerVersion": "europepmc_rest_search_cursor_v1",
+          "exhausted": false
+        }
+      ],
+      "budgets": {
+        "maxExternalFetches": 8,
+        "maxResults": 25,
+        "maxEuropePmcPages": 4,
+        "rateLimitMs": 350,
+        "maxWallClockMs": 30000,
+        "fullDatabaseScrape": false
+      },
+      "freshness": {
+        "asOf": "2026-11-09T12:30:00.000Z",
+        "maxAgeHours": 24,
+        "stale": null,
+        "lastSuccessfulCheckAt": null
+      },
+      "reactomeStub": {
+        "system": "reactome",
+        "value": "R-HSA-6785807",
+        "label": null,
+        "resolution": "stub_only",
+        "sourceProvider": "reactome_identifier_stub",
+        "claimSupport": "not_assessed"
+      },
+      "createdAt": "2026-11-09T12:30:00.000Z",
+      "updatedAt": "2026-11-09T12:30:00.000Z",
+      "note": "M8 PR1 incremental evidence monitoring subscription — change detection not implemented; fixtures ≠ live.",
+      "honesty": {
+        "fixturesAreNotLiveEvidence": true,
+        "unreviewedNotAutoApproved": true,
+        "graphPromotable": false,
+        "scientificApproval": false,
+        "gateCAutoApprove": false,
+        "cdsPhi": false,
+        "fullDatabaseScrape": false,
+        "noKafka": true,
+        "noNewGraphDb": true,
+        "noSeparateEventPlatform": true,
+        "noNewAgentFramework": true,
+        "continuousMonitoringIsNotValidatedScience": true,
+        "reactomeLiveFetch": false,
+        "neonRedWaveOnly": true,
+        "changeDetectionPipelineNotImplemented": true
+      },
+      "contentHash": "c3aa7f545b9531d185550b1f26a7cba7a5b1e776afb147c12178765d9ce199b3"
+    }
+  ],
+  "honesty": {
+    "fixturesAreNotLiveEvidence": true,
+    "unreviewedNotAutoApproved": true,
+    "graphPromotable": false,
+    "scientificApproval": false,
+    "gateCAutoApprove": false,
+    "cdsPhi": false,
+    "fullDatabaseScrape": false,
+    "noKafka": true,
+    "noNewGraphDb": true,
+    "noSeparateEventPlatform": true,
+    "noNewAgentFramework": true,
+    "continuousMonitoringIsNotValidatedScience": true,
+    "reactomeLiveFetch": false,
+    "neonRedWaveOnly": true,
+    "changeDetectionPipelineNotImplemented": true
+  }
+}
