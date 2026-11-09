@@ -148,7 +148,7 @@ Anonymous fail-closed behaviour on research APIs is verified (see Phase 1.5).
 | **Backend dependency** | None (static asset) |
 | **Proposed correction** | Smallest safe: add `favicon.svg` copy of brand mark; add `apple-touch-icon` PNG or SVG-compatible link; rewrite or serve `/favicon.ico` → brand mark; extend `index.html` / SEO head links; add e2e/assert HTTP 200 for aliases |
 | **Acceptance test** | Production/preview: `/favicon.ico`, `/favicon.svg`, `/apple-touch-icon.png` (or documented SVG apple-touch) return 200; homepage head lists them; Playwright/asset smoke green |
-| **Resolution status** | **In progress** — fix on `eng/live-website-audit-favicon` (static aliases + SEO head links + e2e asset asserts) |
+| **Resolution status** | **Fix PR open** — https://github.com/gnaneshwer23/hsi-core/pull/145 (static aliases + SEO head links + e2e asset asserts); pending preview/production verify after merge |
 
 ### Suspected (not confirmed)
 
