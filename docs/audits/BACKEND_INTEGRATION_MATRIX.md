@@ -60,18 +60,18 @@ Honesty freeze: no Gate C auto-approve · no invented MoU / `legalBinding` · no
 
 | Capability | Implementation | Execution path | Status | Evidence | Deployment | Data / human dependency | Proposed change | Risk | Verification |
 |------------|----------------|----------------|--------|----------|------------|-------------------------|-----------------|------|--------------|
-| Contextual candidate relationships + axes | `contextualCandidateRelationships.ts` · living-evidence OT candidates | Persist plan → draft pack (`graphPromotable: false`) | `partially_connected` | Contextual tests | Local | #2 for deeper oppose | Preserve `curationReview` / `hsiGrade` / `teachingStatus` | Causal upgrade | Honesty asserts |
+| Contextual candidate relationships + axes | `contextualCandidateRelationships.ts` · living-evidence OT candidates · `projectCandidateRelationshipRecord` | Persist plan → draft pack (`graphPromotable: false`) → brief envelope | `partially_connected` | Contextual tests | Local | #2 for deeper oppose | Preserve `curationReview` / `hsiGrade` / `teachingStatus` | Causal upgrade | Honesty asserts |
 | Release-aware draft vs approved | `releaseAwareRetrieval.ts` · brief product surface | Approved channel vs labelled draft | `partially_connected` | Release-aware + brief tests | Local | #5 journey | Keep fail-closed | Draft as approved | Surface label tests |
-| Rich relationship JSON (species/tissue/assay…) | Partial biological context axes; not full brief schema | Candidate pack | `partially_connected` | Contextual module | Local | Curator / SME | Extend fields without parallel graph | Invented biology | Schema tests |
+| Rich relationship JSON (species/tissue/assay…) | `projectCandidateRelationshipRecord` → `relationship_id` / context / orthogonal axes | Candidate pack → refined-brief envelope | `partially_connected` | Contextual + bounded-agent tests | Local | Curator / SME | Keep axes orthogonal; no auto-promote | Invented biology | Schema tests |
 
 ### Agent execution / gaps / brief (Phases 4–6)
 
 | Capability | Implementation | Execution path | Status | Evidence | Deployment | Data / human dependency | Proposed change | Risk | Verification |
 |------------|----------------|----------------|--------|----------|------------|-------------------------|-----------------|------|--------------|
 | Bounded agent vertical stages | `boundedAgentExecution.ts` | Plan → retrieve → mechanism → oppose → gap → hypotheses → brief | `partially_connected` | Bounded agent tests | Local | #2/#4/#5 | Keep cancel/retry honesty | Silent approval | Stage status tests |
-| Opposing evidence + gap taxonomy | `opposingEvidenceSearch.ts` · `gapVerification.ts` | Oppose retrieve → gap classes | `partially_connected` | Oppose/gap tests | Local | SME #4 | Align gap JSON to brief shape | Coverage≠novelty collapse | Gap tests |
+| Opposing evidence + gap taxonomy | `opposingEvidenceSearch.ts` · `gapVerification.ts` · `projectGapAssessmentRecord` / `projectOpposingSearchCoverageForGap` | Oppose retrieve → gap classes → brief envelope | `partially_connected` | Oppose/gap tests | Local | SME #4 | Keep coverage≠novelty; expert before verified | Coverage≠novelty collapse | Gap tests |
 | Translational O-04 + research brief | `translationalEvidenceAttach.ts` · `researchBriefIntegration.ts` | CT.gov / OT → separated planes → brief | `partially_connected` | Translational + brief tests | Local | Optional live | Keep registration≠efficacy | Eligibility inference | Panel honesty |
-| Investigation execution record (brief JSON) | `projectInvestigationExecutionRecord` on `boundedAgentExecution` → `investigation_id` / `steps[]` / `artifacts[]` / `resource_budget` / `review_status` | Bounded run → refined-brief envelope projection | `partially_connected` | `test/boundedAgentExecution.test.ts` | Local | — | Deeper gap/relationship JSON shapes next | Trace gaps | Contract test |
+| Investigation execution record (brief JSON) | `projectInvestigationExecutionRecord` + gap/relationship projections on `boundedAgentExecution` | Bounded run → execution / gap / relationship envelopes | `partially_connected` | `test/boundedAgentExecution.test.ts` | Local | — | Live journey + SME still gated | Trace gaps | Contract test |
 
 ### Evaluation (Phase 7)
 
@@ -96,7 +96,7 @@ Honesty freeze: no Gate C auto-approve · no invented MoU / `legalBinding` · no
 1. **Europe PMC bibliographic `cursorMark` pagination** — addressed on `main` via PR #83.
 2. **Open Targets evidence-type / direct vs indirect / score ≠ causation** — addressed on `main` via PR #84.
 3. **`evaluation/scientific_benchmark_v1/`** alias scaffold shipped (points at independent-evaluation; empty SME; live gated) — science still `#4` blocked.
-4. **Gap / relationship JSON** shapes remain richer in the brief than durable artifacts (execution-record projection exists; gap/relationship envelope alignment next).
+4. **Gap / relationship JSON** envelope projections shipped (`projectGapAssessmentRecord` / `projectCandidateRelationshipRecord` + bounded-agent wiring) — eng shape closed; scientific verification / live E2E still human-gated.
 5. **Live authenticated vertical slice** (#5) and **rights (#2) / SME (#4)** remain human-blocked — eng cannot clear.
 
 ---
@@ -120,7 +120,7 @@ Research question → evidence retrieval → biological context → mechanism an
 | Traceable research brief | `partially_connected` |
 | Human review intact | `connected` (validators) · journey `blocked` (#5) |
 
-**Highest-leverage eng slice chosen for this PR:** `evaluation/scientific_benchmark_v1/` alias over independent-evaluation (expanded domain slots + null scorecard dims) plus bounded-agent → investigation execution-record projection.
+**Highest-leverage eng slice chosen for this PR:** gap-assessment + candidate-relationship refined-brief JSON envelope projections on existing modules (no parallel systems); bounded-agent projection wiring.
 
 ---
 

@@ -3,6 +3,9 @@ import {readFileSync, existsSync} from "node:fs";
 import {resolve} from "node:path";
 import {
   buildExpertReviewedGapAssessment,
+  GAP_ASSESSMENT_RECORD_SCHEMA,
+  projectGapAssessmentRecord,
+  projectGapAssessmentRecords,
   projectGapVerificationForOutcome,
   requireSemanticGapSupport,
   verifyRecordedGaps,
@@ -367,6 +370,97 @@ describe("gap verification (step 04)", () => {
     expect(report.items[0]!.scientificallyValidated).toBe(false);
     expect(report.honesty.scientificallyValidated).toBe(false);
     expect(report.honesty.smeGoldFilled).toBe(false);
+  });
+
+  test("projects refined-brief gap envelope without verifying novelty from empty search", () => {
+    const opposingSearch: OpposingEvidenceSearchReport = {
+      schemaVersion: "hsi-opposing-evidence-search-1",
+      method: "hsi.opposing_evidence_search.v1",
+      version: "0.1.0",
+      searchPerformed: true,
+      status: "successful_empty",
+      searchScope: {
+        providers: ["europe_pmc", "open_targets"],
+        contentLevel: "metadata",
+        dateOfSearch: asOf,
+        corpusNote: "Bounded Europe PMC + Open Targets only",
+        queryVariants: ["q oppose"],
+        bounded: true,
+      },
+      findings: [],
+      recordedOpposingCandidateIds: [],
+      coverage: {
+        literatureAttempts: 1,
+        literatureHits: 0,
+        openTargetsAttempts: 1,
+        openTargetsHits: 0,
+        providerUnavailable: false,
+        successfulEmpty: true,
+        overallOutcome: "successful_empty",
+      },
+      searchRecordId: null,
+      searchRecordHash: null,
+      limitations: ["No opposing bibliographic hits in this bounded search"],
+      consensusEstablished: false,
+      providerUnavailableDistinctFromNoEvidence: true,
+      scientificApproval: false,
+      graphPromotable: false,
+    };
+    const report = verifyRecordedGaps({
+      asOf,
+      branches: [
+        {
+          id: "b-1",
+          assessment: "insufficient_evidence",
+          supportingClaimIds: [],
+          opposingClaimIds: [],
+          missingEvidence: [
+            "no relevant study retrieved under bounded opposing-evidence literature coverage",
+          ],
+          uncertainty: [],
+        },
+      ],
+      claimContexts: [],
+      localSourcePmids: [],
+      contradictions: {recordedOpposingClaimIds: [], searchStatus: "successful_empty"},
+      livingEvidence: emptyLiving,
+      opposingSearch,
+    });
+    const records = projectGapAssessmentRecords({
+      investigationId: "inv_gap_brief",
+      question: "Does IL-6 contribute to insulin resistance in humans?",
+      report,
+      opposingSearch,
+      resultBudget: 100,
+    });
+    expect(records.length).toBe(1);
+    const gap = records[0]!;
+    expect(gap.schemaVersion).toBe(GAP_ASSESSMENT_RECORD_SCHEMA);
+    expect(gap.gap_id).toBe("gap-001");
+    expect(gap.investigation_id).toBe("inv_gap_brief");
+    expect(gap.gap_type).toBe("incomplete_literature_coverage");
+    expect(gap.searched_sources).toEqual(["europe_pmc", "open_targets"]);
+    expect(gap.retrieved_records).toBe(0);
+    expect(gap.result_budget).toBe(100);
+    expect(gap.verification_status).toBe("not_verified");
+    expect(gap.expert_review_required).toBe(true);
+    expect(gap.next_research_action.length).toBeGreaterThan(0);
+    expect(gap.honesty.searchCompletenessDistinctFromScientificNovelty).toBe(true);
+    expect(gap.honesty.notFoundInThisSearchDistinctFromNoEvidence).toBe(true);
+    expect(gap.coverage_limitations.some((l) => /Search completeness ≠ scientific novelty/i.test(l))).toBe(
+      true,
+    );
+
+    const single = projectGapAssessmentRecord({
+      investigationId: "inv_gap_brief",
+      question: "Does IL-6 contribute to insulin resistance in humans?",
+      item: report.items[0]!,
+      report,
+      opposingSearch,
+      resultBudget: 100,
+    });
+    expect(single.gap_id).toBe(gap.gap_id);
+    expect(single.verification_status).toBe("not_verified");
   });
 
   test("claim_verifier adapter persists gap verification without approving science", async () => {

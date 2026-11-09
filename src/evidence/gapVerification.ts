@@ -12,7 +12,10 @@
  * passage or explicit reasoning record — not a classifier label alone.
  */
 import type {LivingEvidenceOutcomeSection} from "./livingEvidenceExpansion";
-import type {OpposingEvidenceSearchReport} from "./opposingEvidenceSearch";
+import {
+  projectOpposingSearchCoverageForGap,
+  type OpposingEvidenceSearchReport,
+} from "./opposingEvidenceSearch";
 
 export const GAP_VERIFICATION_SCHEMA = "hsi-gap-verification-1" as const;
 export const GAP_VERIFICATION_METHOD = "hsi-deterministic-gap-classification-1" as const;
@@ -693,4 +696,319 @@ export function projectGapVerificationForOutcome(input: GapVerificationInput): G
       ? "classified_against_bound_evidence"
       : "classified_local_only";
   return {...report, status};
+}
+
+/** Refined-brief gap-assessment envelope (projection only — not a parallel classifier). */
+export const GAP_ASSESSMENT_RECORD_SCHEMA = "hsi-gap-assessment-record-1" as const;
+
+export type GapAssessmentVerificationStatus = "not_verified" | "expert_reviewed_labelled";
+
+export type GapAssessmentRecord = {
+  schemaVersion: typeof GAP_ASSESSMENT_RECORD_SCHEMA;
+  gap_id: string;
+  investigation_id: string;
+  gap_type: GapKind;
+  question: string;
+  searched_sources: readonly string[];
+  retrieved_records: number;
+  result_budget: number | null;
+  coverage_limitations: readonly string[];
+  contradictions: readonly string[];
+  missing_local_data: readonly string[];
+  unresolved_mechanisms: readonly string[];
+  verification_status: GapAssessmentVerificationStatus;
+  expert_review_required: true;
+  next_research_action: string;
+  honesty: {
+    searchCompletenessDistinctFromScientificNovelty: true;
+    notFoundInThisSearchDistinctFromNoEvidence: true;
+    scientificallyVerifiedForbiddenWithoutExpertReview: true;
+    projectedFromGapVerification: true;
+    notAParallelGapSystem: true;
+  };
+};
+
+function defaultNextResearchAction(item: GapVerificationItem): string {
+  switch (item.kind) {
+    case "incomplete_literature_coverage":
+    case "oppose_search_incomplete":
+      return "Expand bounded literature/oppose search (providers, date, content level) and re-assess; do not treat empty hits as worldwide absence";
+    case "missing_local_data":
+    case "passage_rights_blocked":
+      return "Clear passage/rights or bind approved local source-linked claims before re-classifying";
+    case "contradictory_findings":
+      return "Preserve contradiction traces for expert adjudication; do not silently resolve";
+    case "unresolved_biological_mechanism":
+      return "Seek expert-reviewed mechanistic evaluation with recorded search scope and date";
+    case "unverified_computational_hypothesis":
+      return "Keep computational hypothesis unverified pending experimental/expert review";
+    case "insufficient_evidence":
+    case "abstain_insufficient_evidence":
+    case "genuine_unresolved_question":
+      return "Record next retrieval or expert-review action; abstain rather than invent scientific novelty";
+    default: {
+      const _exhaustive: never = item.kind;
+      void _exhaustive;
+      return "Expert review required before any verified scientific-gap label";
+    }
+  }
+}
+
+function verificationStatusForItem(item: GapVerificationItem): GapAssessmentVerificationStatus {
+  if (item.scientificGapStatus === "scientifically_verified") {
+    throw Error("Gap assessment record refuses scientifically_verified without separate acceptance gate");
+  }
+  if (item.scientificGapStatus === "expert_reviewed_labelled") return "expert_reviewed_labelled";
+  return "not_verified";
+}
+
+/**
+ * Map one gap-verification item onto the refined brief's gap JSON envelope.
+ * Defaults verification_status to not_verified; expert review remains required.
+ */
+export function projectGapAssessmentRecord(input: {
+  investigationId: string;
+  question: string;
+  item: GapVerificationItem;
+  report: Pick<GapVerificationReport, "summary" | "items" | "honesty">;
+  opposingSearch?: OpposingEvidenceSearchReport | null;
+  resultBudget?: number | null;
+  nextResearchAction?: string | null;
+}): GapAssessmentRecord {
+  const investigation_id = input.investigationId.trim();
+  const question = input.question.trim();
+  if (!investigation_id) throw Error("Gap assessment record requires investigation_id");
+  if (!question) throw Error("Gap assessment record requires question");
+
+  const coverage = projectOpposingSearchCoverageForGap({
+    opposingSearch: input.opposingSearch,
+    resultBudget: input.resultBudget,
+  });
+
+  const contradictions: string[] = [];
+  if (input.item.kind === "contradictory_findings" || input.item.trace.opposingClaimIds.length > 0) {
+    contradictions.push(
+      ...input.item.trace.opposingClaimIds.map((id) => `opposing_claim:${id}`),
+      input.item.recordedText,
+    );
+  }
+  if (input.report.summary.contradictoryFindings > 0 && input.item.kind === "contradictory_findings") {
+    contradictions.push(input.item.rationale);
+  }
+
+  const missing_local_data =
+    input.item.kind === "missing_local_data" || input.item.kind === "passage_rights_blocked"
+      ? [input.item.recordedText]
+      : [];
+  const unresolved_mechanisms =
+    input.item.kind === "unresolved_biological_mechanism" ||
+    input.item.kind === "unverified_computational_hypothesis"
+      ? [input.item.recordedText]
+      : [];
+
+  const verification_status = verificationStatusForItem(input.item);
+
+  return {
+    schemaVersion: GAP_ASSESSMENT_RECORD_SCHEMA,
+    gap_id: input.item.id,
+    investigation_id,
+    gap_type: input.item.kind,
+    question,
+    searched_sources: coverage.searched_sources,
+    retrieved_records: coverage.retrieved_records,
+    result_budget: coverage.result_budget,
+    coverage_limitations: [
+      ...coverage.coverage_limitations,
+      input.item.searchCompleteness.coverageNote,
+      `search_completeness=${input.item.searchCompleteness.status}`,
+      "Search completeness ≠ scientific novelty",
+    ],
+    contradictions: unique(contradictions),
+    missing_local_data,
+    unresolved_mechanisms,
+    verification_status,
+    expert_review_required: true,
+    next_research_action: input.nextResearchAction?.trim() || defaultNextResearchAction(input.item),
+    honesty: {
+      searchCompletenessDistinctFromScientificNovelty: true,
+      notFoundInThisSearchDistinctFromNoEvidence: true,
+      scientificallyVerifiedForbiddenWithoutExpertReview: true,
+      projectedFromGapVerification: true,
+      notAParallelGapSystem: true,
+    },
+  };
+}
+
+/** Project every item in a gap-verification report onto refined-brief gap envelopes. */
+export function projectGapAssessmentRecords(input: {
+  investigationId: string;
+  question: string;
+  report: GapVerificationReport | GapVerificationOutcomeSection;
+  opposingSearch?: OpposingEvidenceSearchReport | null;
+  resultBudget?: number | null;
+}): GapAssessmentRecord[] {
+  return input.report.items.map((item) =>
+    projectGapAssessmentRecord({
+      investigationId: input.investigationId,
+      question: input.question,
+      item,
+      report: input.report,
+      opposingSearch: input.opposingSearch,
+      resultBudget: input.resultBudget,
+    }),
+  );
+}
+
+const GAP_KINDS: readonly GapKind[] = [
+  "missing_local_data",
+  "incomplete_literature_coverage",
+  "contradictory_findings",
+  "unresolved_biological_mechanism",
+  "unverified_computational_hypothesis",
+  "insufficient_evidence",
+  "genuine_unresolved_question",
+  "passage_rights_blocked",
+  "oppose_search_incomplete",
+  "abstain_insufficient_evidence",
+] as const;
+
+function asGapKind(value: string): GapKind {
+  if ((GAP_KINDS as readonly string[]).includes(value)) return value as GapKind;
+  return "insufficient_evidence";
+}
+
+/**
+ * Project durable gap-assessment stage rows (already classified) onto brief envelopes
+ * without re-running the classifier — avoids double-classification drift.
+ */
+export function projectGapAssessmentRecordsFromDurableItems(input: {
+  investigationId: string;
+  question: string;
+  items: readonly {
+    id: string;
+    classification: string;
+    rationale: string;
+    scientificGapStatus: string;
+    searchCompleteness: string;
+    scientificNovelty: string;
+  }[];
+  summary?: GapVerificationReport["summary"] | null;
+  opposingSearch?: OpposingEvidenceSearchReport | null;
+  resultBudget?: number | null;
+  nextResearchActions?: readonly string[];
+}): GapAssessmentRecord[] {
+  const investigation_id = input.investigationId.trim();
+  const question = input.question.trim();
+  if (!investigation_id) throw Error("Gap assessment record requires investigation_id");
+  if (!question) throw Error("Gap assessment record requires question");
+
+  const coverage = projectOpposingSearchCoverageForGap({
+    opposingSearch: input.opposingSearch,
+    resultBudget: input.resultBudget,
+  });
+  const defaultAction = input.nextResearchActions?.[0]?.trim();
+
+  return input.items.map((row, index) => {
+    const gap_type = asGapKind(row.classification);
+    const verification_status: GapAssessmentVerificationStatus =
+      row.scientificGapStatus === "expert_reviewed_labelled"
+        ? "expert_reviewed_labelled"
+        : "not_verified";
+    if (row.scientificGapStatus === "scientifically_verified") {
+      throw Error("Gap assessment record refuses scientifically_verified without separate acceptance gate");
+    }
+    const completenessStatus: SearchCompletenessAssessment["status"] = (
+      [
+        "not_assessed",
+        "search_not_performed",
+        "incomplete_bounded",
+        "provider_unavailable",
+        "bounded_completed",
+      ] as const
+    ).includes(row.searchCompleteness as SearchCompletenessAssessment["status"])
+      ? (row.searchCompleteness as SearchCompletenessAssessment["status"])
+      : "not_assessed";
+    const synthetic: GapVerificationItem = {
+      id: row.id,
+      branchId: null,
+      sourceField: "missingEvidence",
+      recordedText: row.rationale,
+      kind: gap_type,
+      rationale: row.rationale,
+      scientificGapStatus: verification_status,
+      searchCompleteness: {
+        status: completenessStatus,
+        finding: row.searchCompleteness,
+        coverageNote: `durable_search_completeness=${row.searchCompleteness}`,
+        impliesScientificNovelty: false,
+      },
+      scientificNovelty: {
+        status: "not_verified",
+        note: row.scientificNovelty,
+        expertReviewRequired: true,
+      },
+      semanticSupport: {
+        kind: "absent",
+        passageRef: null,
+        reasoningRecord: null,
+        acceptedForSemanticAnalysis: false,
+        refusalReason: null,
+      },
+      expertReview:
+        verification_status === "expert_reviewed_labelled"
+          ? {
+              ...defaultExpertReview(),
+              status: "expert_reviewed",
+              scientificGapStatus: "expert_reviewed_labelled",
+              note: "Expert-reviewed label carried from durable gap stage; scientifically verified remains false.",
+            }
+          : defaultExpertReview(),
+      trace: {
+        supportingClaimIds: [],
+        opposingClaimIds: [],
+        matchedLivingPmids: [],
+        openTargetsDiseaseIds: [],
+        localSourcePmids: [],
+        opposingSearchStatus: input.opposingSearch?.status ?? null,
+      },
+      expertLabelStatus: verification_status === "expert_reviewed_labelled" ? "recorded" : "unavailable",
+      scientificallyValidated: false,
+    };
+    // Prefer the shared projector so honesty / coverage mapping stay single-sourced.
+    return projectGapAssessmentRecord({
+      investigationId: investigation_id,
+      question,
+      item: synthetic,
+      report: {
+        summary: input.summary ?? {
+          missingLocalData: 0,
+          incompleteLiteratureCoverage: 0,
+          contradictoryFindings: 0,
+          unresolvedBiologicalMechanism: 0,
+          unverifiedComputationalHypothesis: 0,
+          insufficientEvidence: 0,
+          genuineUnresolved: 0,
+          passageRightsBlocked: 0,
+          opposeSearchIncomplete: 0,
+          abstain: 0,
+        },
+        items: [synthetic],
+        honesty: {
+          smeGoldFilled: false,
+          expertLabelsAvailable: verification_status === "expert_reviewed_labelled",
+          scientificallyValidated: false,
+          humanQueueBlocked: ["#4"],
+          passageImportAuthorized: false,
+          searchCompletenessDistinctFromScientificNovelty: true,
+          incompleteCoverageDoesNotVerifyNoveltyGap: true,
+        },
+      },
+      opposingSearch: input.opposingSearch,
+      resultBudget: input.resultBudget,
+      nextResearchAction:
+        input.nextResearchActions?.[index]?.trim() ||
+        defaultAction ||
+        defaultNextResearchAction(synthetic),
+    });
+  });
 }

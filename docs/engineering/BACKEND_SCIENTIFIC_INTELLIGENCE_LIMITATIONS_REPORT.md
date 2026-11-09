@@ -30,6 +30,7 @@ Connected or partial library paths from PRs 1–7, exercised by deterministic co
 - Bibliographic / Open Targets / CT.gov lookup libraries with typed failure taxonomy (`provider_unavailable` ≠ empty hits).
 - Dynamic retrieval + candidate persistence + identity-link axes (record / study / independence).
 - Contextual candidates + opposing-evidence search + gap taxonomy (coverage ≠ novelty).
+- Refined-brief gap / relationship JSON envelope projections (`projectGapAssessmentRecord` / `projectCandidateRelationshipRecord`) on existing modules — not parallel systems.
 - Bounded agent durable traces and research-brief / release-aware product bind.
 - Translational O-04 attach (registration ≠ efficacy; missing results ≠ failure).
 - Fail-closed `assessReleaseClaim` and authenticated scientific review validators (no Gate C auto-approve).

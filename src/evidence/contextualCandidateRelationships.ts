@@ -566,3 +566,186 @@ export function refuseAutoPromoteContextualCandidate(
   }
   return {promoted: false, reasons};
 }
+
+/** Refined-brief candidate relationship envelope (projection only — no parallel graph). */
+export const CANDIDATE_RELATIONSHIP_RECORD_SCHEMA = "hsi-candidate-relationship-record-1" as const;
+
+export type CandidateRelationshipType =
+  | "associative"
+  | "mechanistic"
+  | "therapeutic"
+  | "causal"
+  | "predictive";
+
+export type CandidateRelationshipDirectionality = "directed" | "undirected" | "bidirectional";
+
+export type CandidateEvidenceStatus =
+  | "supported"
+  | "context_limited"
+  | "contested"
+  | "insufficient";
+
+export type CandidateRelationshipBriefContext = {
+  species: string | null;
+  tissue: string | null;
+  cell_state: string | null;
+  disease: string | null;
+  assay: string | null;
+  study_design: string | null;
+};
+
+export type CandidateRelationshipRecord = {
+  schemaVersion: typeof CANDIDATE_RELATIONSHIP_RECORD_SCHEMA;
+  relationship_id: string;
+  subject_id: string;
+  predicate: string;
+  object_id: string;
+  relationship_type: CandidateRelationshipType;
+  directionality: CandidateRelationshipDirectionality;
+  evidence_status: CandidateEvidenceStatus;
+  /** Association index / calibrated internal score only — never scientific certainty. */
+  confidence: number | null;
+  context: CandidateRelationshipBriefContext;
+  source_ids: readonly string[];
+  claim_ids: readonly string[];
+  curation_review: Extract<HsiCurationReview, "draft">;
+  hsi_grade: Extract<HsiGrade, "unexplored">;
+  teaching_status: Extract<HsiTeachingStatus, "unknown">;
+  graph_version: string | null;
+  created_at: string;
+  graph_promotable: false;
+  scientific_approval: false;
+  honesty: {
+    axesPreservedOrthogonal: true;
+    confidenceDistinctFromScientificCertainty: true;
+    relationshipTypeDistinctFromEvidenceStatus: true;
+    autoPromotedToApprovedGraph: false;
+    projectedFromContextualCandidate: true;
+    notAParallelGraphSystem: true;
+  };
+};
+
+function entityId(ref: {system: string; value: string}): string {
+  return `${ref.system}:${ref.value}`;
+}
+
+function firstContextValue(
+  rows: readonly {system: string; value: string; label: string | null}[],
+): string | null {
+  if (!rows.length) return null;
+  const row = rows[0]!;
+  return row.label?.trim() || row.value;
+}
+
+function projectBriefContext(ctx: CandidateBiologicalContext): CandidateRelationshipBriefContext {
+  const experimental = firstContextValue(ctx.experimentalSystemsSpecies);
+  return {
+    species: experimental,
+    tissue: firstContextValue(ctx.organTissueCellState),
+    cell_state: ctx.organTissueCellState[1]
+      ? ctx.organTissueCellState[1]!.label?.trim() || ctx.organTissueCellState[1]!.value
+      : null,
+    disease: firstContextValue(ctx.diseasePhenotype),
+    assay: null,
+    study_design: null,
+  };
+}
+
+function relationshipTypeFor(rel: ContextualCandidateRelationship): CandidateRelationshipType {
+  if (/caus/i.test(rel.predicate)) return "causal";
+  if (/mechanis|pathway|signall?ing/i.test(rel.predicate)) return "mechanistic";
+  if (/treat|therap|indicat/i.test(rel.predicate)) return "therapeutic";
+  if (/predict|biomarker|prognos/i.test(rel.predicate)) return "predictive";
+  switch (rel.kind) {
+    case "disease_associated_target_metadata":
+    case "bibliographic_context_anchor":
+    case "declared_contextual_association":
+      return "associative";
+    default: {
+      const _exhaustive: never = rel.kind;
+      void _exhaustive;
+      return "associative";
+    }
+  }
+}
+
+function evidenceStatusFor(rel: ContextualCandidateRelationship): CandidateEvidenceStatus {
+  // claimSupport stays false on candidates — never emit "supported" from metadata alone.
+  if (rel.findingPolarity === "opposing") return "contested";
+  if (rel.findingPolarity === "supporting") return "context_limited";
+  if (rel.limitations.includes("association_index_not_claim") || rel.limitations.includes("metadata_only")) {
+    return "insufficient";
+  }
+  return "context_limited";
+}
+
+/**
+ * Map a contextual candidate onto the refined brief's relationship JSON envelope.
+ * Preserves curation_review / hsi_grade / teaching_status / relationship_type /
+ * evidence_status / confidence as orthogonal fields. Never auto-promotes.
+ */
+export function projectCandidateRelationshipRecord(input: {
+  relationship: ContextualCandidateRelationship;
+  createdAt?: string;
+  graphVersion?: string | null;
+  claimIds?: readonly string[];
+}): CandidateRelationshipRecord {
+  const rel = input.relationship;
+  assertDraftHonesty(rel);
+  const created_at = input.createdAt ?? new Date().toISOString();
+  if (!Number.isFinite(Date.parse(created_at))) fail("Invalid candidate relationship created_at");
+
+  return {
+    schemaVersion: CANDIDATE_RELATIONSHIP_RECORD_SCHEMA,
+    relationship_id: rel.id,
+    subject_id: entityId(rel.subject),
+    predicate: rel.predicate,
+    object_id: entityId(rel.object),
+    relationship_type: relationshipTypeFor(rel),
+    directionality: "directed",
+    evidence_status: evidenceStatusFor(rel),
+    confidence: rel.associationScore,
+    context: projectBriefContext(rel.biologicalContext),
+    source_ids: [...rel.evidenceSourceIds],
+    claim_ids: [...(input.claimIds ?? [])],
+    curation_review: rel.axes.curationReview,
+    hsi_grade: rel.axes.hsiGrade,
+    teaching_status: rel.axes.teachingStatus,
+    graph_version: input.graphVersion ?? null,
+    created_at,
+    graph_promotable: false,
+    scientific_approval: false,
+    honesty: {
+      axesPreservedOrthogonal: true,
+      confidenceDistinctFromScientificCertainty: true,
+      relationshipTypeDistinctFromEvidenceStatus: true,
+      autoPromotedToApprovedGraph: false,
+      projectedFromContextualCandidate: true,
+      notAParallelGraphSystem: true,
+    },
+  };
+}
+
+/** Project every relationship in a contextual candidate pack onto brief envelopes. */
+export function projectCandidateRelationshipRecords(input: {
+  pack: ContextualCandidatePack;
+  graphVersion?: string | null;
+  claimIdsByRelationshipId?: ReadonlyMap<string, readonly string[]> | Record<string, readonly string[]>;
+}): CandidateRelationshipRecord[] {
+  const claimLookup = input.claimIdsByRelationshipId;
+  const getClaims = (id: string): readonly string[] => {
+    if (!claimLookup) return [];
+    if (claimLookup instanceof Map) return claimLookup.get(id) ?? [];
+    return Object.prototype.hasOwnProperty.call(claimLookup, id)
+      ? (claimLookup as Record<string, readonly string[]>)[id] ?? []
+      : [];
+  };
+  return input.pack.relationships.map((relationship) =>
+    projectCandidateRelationshipRecord({
+      relationship,
+      createdAt: input.pack.generatedAt,
+      graphVersion: input.graphVersion,
+      claimIds: getClaims(relationship.id),
+    }),
+  );
+}

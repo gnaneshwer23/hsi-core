@@ -6,6 +6,9 @@ import {existsSync, readFileSync} from "node:fs";
 import {resolve} from "node:path";
 import {
   buildContextualCandidatePack,
+  CANDIDATE_RELATIONSHIP_RECORD_SCHEMA,
+  projectCandidateRelationshipRecord,
+  projectCandidateRelationshipRecords,
   refuseAutoPromoteContextualCandidate,
   type DeclaredContextualAssociation,
 } from "../src/evidence/contextualCandidateRelationships";
@@ -161,6 +164,51 @@ const approvedClaim: ReleaseClaim = {
 };
 
 describe("PR 4 contextual candidate relationships", () => {
+  test("projects refined-brief relationship envelope without collapsing axes or auto-promoting", () => {
+    const pack = buildContextualCandidatePack({
+      openTargetsRecords: [otRecord],
+      generatedAt: retrievedAt,
+      surfaceLabel: "candidate",
+    });
+    const records = projectCandidateRelationshipRecords({
+      pack,
+      graphVersion: "v42",
+    });
+    expect(records.length).toBe(1);
+    const row = records[0]!;
+    expect(row.schemaVersion).toBe(CANDIDATE_RELATIONSHIP_RECORD_SCHEMA);
+    expect(row.relationship_id).toBe(pack.relationships[0]!.id);
+    expect(row.subject_id).toContain("MONDO");
+    expect(row.object_id).toContain("ENSG00000105397");
+    expect(row.predicate).toBe("associated_with_target_metadata");
+    expect(row.relationship_type).toBe("associative");
+    expect(row.directionality).toBe("directed");
+    expect(row.evidence_status).toBe("insufficient");
+    expect(row.confidence).toBe(0.5);
+    expect(row.context.disease).toBeTruthy();
+    expect(row.source_ids.length).toBeGreaterThan(0);
+    expect(row.claim_ids).toEqual([]);
+    expect(row.curation_review).toBe("draft");
+    expect(row.hsi_grade).toBe("unexplored");
+    expect(row.teaching_status).toBe("unknown");
+    expect(row.graph_version).toBe("v42");
+    expect(row.created_at).toBe(retrievedAt);
+    expect(row.graph_promotable).toBe(false);
+    expect(row.scientific_approval).toBe(false);
+    expect(row.honesty.axesPreservedOrthogonal).toBe(true);
+    expect(row.honesty.confidenceDistinctFromScientificCertainty).toBe(true);
+    expect(row.honesty.autoPromotedToApprovedGraph).toBe(false);
+
+    const single = projectCandidateRelationshipRecord({
+      relationship: pack.relationships[0]!,
+      createdAt: retrievedAt,
+      graphVersion: "v42",
+    });
+    expect(single.relationship_id).toBe(row.relationship_id);
+    expect(single.curation_review).not.toBe(single.hsi_grade as string);
+    expect(single.relationship_type).not.toBe(single.evidence_status as string);
+  });
+
   test("builds disease/gene/target context from Open Targets without claim support", () => {
     const pack = buildContextualCandidatePack({
       openTargetsRecords: [otRecord],
