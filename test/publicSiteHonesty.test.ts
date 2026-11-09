@@ -185,7 +185,7 @@ describe("Stage A public security boundary audit", () => {
 describe("Homepage scientific visuals and product proof",()=>{
  it("leads with a product demonstration while preserving artwork and labelled validation components",()=>{
   const home=site("src/pages/Home.tsx"),preview=site("src/components/ValidationPreview.tsx"),art=site("src/components/Experience.tsx"),editorial=site("src/components/editorial/Editorial.tsx");
-  expect(home).toContain("HomeProductDemo");expect(home).toContain("HomeHeroPreview");expect(editorial).toContain("BiologyArtwork");expect(art).toContain('role="img"');expect(art).toContain("EXPERIENCE_DOMAINS");
+  expect(home).toContain("CellField");expect(home).toContain("What makes HSI different");expect(editorial).toContain("BiologyArtwork");expect(art).toContain('role="img"');expect(art).toContain("EXPERIENCE_DOMAINS");
   expect(preview).toContain("loadValidationCatalogue");expect(preview).toContain("loadValidationScenario");expect(preview).toContain("Synthetic validation");
   expect(preview).toContain("Reference intervals are not supplied");expect(home).not.toContain("PMID:12345678");
  });
