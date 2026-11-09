@@ -18,7 +18,8 @@ Mirrored copies also under `~/.agents/skills/` and some under `~/.claude/skills/
 
 | When (task) | Load (personal skill) | Notes |
 |-------------|----------------------|--------|
-| ISI/HSI marketing SEO, keywords, SERP gaps | `seo-audit`, `keyword-research`, `competitive-landscape`, `agency-seo-specialist` | Public site / content only |
+| ISI/HSI marketing SEO, keywords, SERP gaps | `seo-audit`, `keyword-research`, `competitive-landscape`, `seo-project-setup`, `seo-coach`, `seo-report`, `agency-seo-specialist` | OpenSEO skills from [every-app/open-seo](https://github.com/every-app/open-seo) at `~/.cursor/skills/` (source: `~/Projects/_skill-sources/open-seo`). Public site / content only; see immunecity `docs/SEO.md` |
+| OpenSEO MCP / plugin connect | `setup-openseo` | Optional; do not invent Search Console access |
 | AI answer / AEO visibility for ISI brand | `ai-visibility-audit`, `agency-ai-citation-strategist` | Brand prompts — not clinical claims |
 | React / TanStack / Vite UI performance | `vercel-react-best-practices`, `agency-frontend-developer` | Respect existing ISI design tokens |
 | Landing / page art direction (anti-slop) | `hallmark`, `taste-skill` / `design-taste-frontend`, `ui-ux-pro-max` | Prefer ISI `biotech.css` / `isi.css` over inventing a new theme |
