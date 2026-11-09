@@ -13,6 +13,7 @@
 - [`../engineering/BACKEND_SCIENTIFIC_INTELLIGENCE_INTEGRATION_MATRIX.md`](../engineering/BACKEND_SCIENTIFIC_INTELLIGENCE_INTEGRATION_MATRIX.md) — eng Phase 1–8 execution evidence  
 - [`../engineering/HUMAN_QUEUE_RESIDUALS.md`](../engineering/HUMAN_QUEUE_RESIDUALS.md) — #2 / #4 / #5 PARKED  
 - [`../CDS_PHI_BOUNDARY.md`](../CDS_PHI_BOUNDARY.md) — no live CDS/PHI  
+- Milestone 2 contextual / contradiction audit: [`MILESTONE2_CONTEXTUAL_REASONING_MATRIX.md`](./MILESTONE2_CONTEXTUAL_REASONING_MATRIX.md) (orthogonal follow-on; do not contradict)
 
 **Shipped after #87:** thin UniProt metadata-only adapter (`src/evidence/uniprotMetadataLookup.ts`) wired into dynamic retrieval + Technology status (`partially_implemented` / connected-metadata). Fixtures ≠ live.
 
