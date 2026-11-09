@@ -14,6 +14,7 @@
 - [`../engineering/HUMAN_QUEUE_RESIDUALS.md`](../engineering/HUMAN_QUEUE_RESIDUALS.md) — #2 / #4 / #5 PARKED  
 - [`../CDS_PHI_BOUNDARY.md`](../CDS_PHI_BOUNDARY.md) — no live CDS/PHI  
 - Milestone 2 contextual / contradiction audit: [`MILESTONE2_CONTEXTUAL_REASONING_MATRIX.md`](./MILESTONE2_CONTEXTUAL_REASONING_MATRIX.md) (orthogonal follow-on; do not contradict)
+- Milestone 3: [`MILESTONE3_HYPOTHESIS_EXPERIMENT_MATRIX.md`](./MILESTONE3_HYPOTHESIS_EXPERIMENT_MATRIX.md) · Milestone 4: [`MILESTONE4_TRANSLATIONAL_FAILURE_MATRIX.md`](./MILESTONE4_TRANSLATIONAL_FAILURE_MATRIX.md)
 
 **Shipped after #87:** thin UniProt metadata-only adapter (`src/evidence/uniprotMetadataLookup.ts`) wired into dynamic retrieval + Technology status (`partially_implemented` / connected-metadata). Fixtures ≠ live.
 

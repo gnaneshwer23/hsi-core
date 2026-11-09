@@ -9,6 +9,10 @@ import type {GapVerificationOutcomeSection} from "./gapVerification";
 import type {OpposingEvidenceSearchReport} from "./opposingEvidenceSearch";
 import type {ReleaseAwareRetrievalResult} from "./releaseAwareRetrieval";
 import type {TranslationalOutcomeSection} from "./translationalEvidenceAttach";
+import {
+  projectTranslationalContractPersistenceLines,
+  type TranslationalEvidenceContractPack,
+} from "./translationalEvidenceContracts";
 
 export const RESEARCH_BRIEF_INTEGRATION_SCHEMA = "hsi-research-brief-integration-1" as const;
 export const RESEARCH_BRIEF_INTEGRATION_METHOD = "hsi.research_brief_integration.v1" as const;
@@ -58,6 +62,11 @@ export type IntegratedResearchBrief = {
     trialCount: number;
     registrationIsNotEfficacy: true;
     missingResultsIsNotFailure: true;
+    /** M4 PR1 optional contract-pack bind. */
+    contractLayersBound: number;
+    recruitmentOrTerminationIsNotClinicalFailure: true;
+    absenceOfPublishedEvidenceIsNotAbsenceOfActivity: true;
+    proprietaryProgrammesNotInvented: true;
   } | null;
   candidatesRemainUnapproved: true;
   reviewGatesIntact: true;
@@ -76,6 +85,8 @@ export type IntegrateResearchBriefInput = {
   opposingSearch?: OpposingEvidenceSearchReport | null;
   gapVerification?: GapVerificationOutcomeSection | null;
   translational?: TranslationalOutcomeSection | null;
+  /** M4 PR1 translational evidence contracts (programme/preclinical/human/clinical). */
+  translationalContracts?: TranslationalEvidenceContractPack | null;
   releaseAware?: ReleaseAwareRetrievalResult | null;
   /** Optional source locators from retrieval / living evidence. */
   sourceLocators?: readonly {kind: "pmid" | "doi" | "nct"; value: string}[];
@@ -162,6 +173,12 @@ export function integrateResearchBrief(input: IntegrateResearchBriefInput): Inte
           "O-04 registry attach: registration is not efficacy; missing results are not therapy failure",
         ]
       : []),
+    ...(input.translationalContracts
+      ? [
+          "M4 translational contracts: unknowns preserved; recruitment/termination ≠ clinical failure; absence of published evidence ≠ absence of activity; proprietary programmes not invented",
+          ...projectTranslationalContractPersistenceLines(input.translationalContracts).slice(0, 8),
+        ]
+      : []),
     ...(input.releaseAware
       ? [
           "Release-aware surface keeps draft candidates in a separate labelled channel; assessReleaseClaim remains fail-closed",
@@ -207,6 +224,10 @@ export function integrateResearchBrief(input: IntegrateResearchBriefInput): Inte
           trialCount: input.translational.records.length,
           registrationIsNotEfficacy: true as const,
           missingResultsIsNotFailure: true as const,
+          contractLayersBound: input.translationalContracts?.contracts.length ?? 0,
+          recruitmentOrTerminationIsNotClinicalFailure: true as const,
+          absenceOfPublishedEvidenceIsNotAbsenceOfActivity: true as const,
+          proprietaryProgrammesNotInvented: true as const,
         }
       : null;
 
