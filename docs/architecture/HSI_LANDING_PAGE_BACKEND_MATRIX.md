@@ -3,6 +3,7 @@
 **Audited tip (branch base):** `864710a` + Phase 8 landing integration PR  
 **Production:** https://www.humansuperintelligence.tech/  
 **As of:** 2026-11-09  
+**Governing vision:** [`../strategy/HSI_VISION.md`](../strategy/HSI_VISION.md) — public copy and CTAs must align with doctrine **and** this matrix (no invented live write-spine).  
 **Neon:** HSI red-wave only (`red-wave-06625195`). Never ISI autumn-snow.  
 **Rule:** Fail-closed APIs; public demos keep `live_backend:false` until staging-verified. No live CDS/PHI.
 

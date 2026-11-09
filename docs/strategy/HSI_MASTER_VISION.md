@@ -1,13 +1,15 @@
 # Human Super Intelligence — Definitive Product Vision
 
+**Governing doctrine (preferred entry):** [`HSI_VISION.md`](./HSI_VISION.md) — adopted 9 November 2026. Use that document as the guiding vision for landing pages, backend services, knowledge-graph relationships, AI agents and product decisions. This file remains the longer historical §2 elaboration; **where wording conflicts, `HSI_VISION.md` wins**.
+
 **Naming clarification — 5 November 2026:** The founder-confirmed product name is **Human Super Intelligence (HSI)**. See the [new product direction](HSI_PRODUCT_DIRECTION.md) and [implementation crosswalk](HSI_PRODUCT_DIRECTION_IMPLEMENTATION.md) for its relationship to the existing research-first build. The target-state description below is not authorisation to add live CDS or PHI to `hsi-core`.
 
-**Document status:** Authoritative target-state product vision  
-**Adopted:** 2 November 2026  
+**Document status:** Detailed target-state product vision (elaboration of the governing doctrine)  
+**Adopted:** 2 November 2026 (superseded as primary pointer by `HSI_VISION.md` on 9 November 2026)  
 **Audience:** All architecture, graph, agent, UX, safety and delivery work  
-**Instruction:** Every subsequent design and implementation decision must align with this document. This is **not** a claim that these capabilities already exist.
+**Instruction:** Align with [`HSI_VISION.md`](./HSI_VISION.md) first. This elaboration is **not** a claim that these capabilities already exist.
 
-**Related:** [`HSI_CURRENT_STATE_INTELLIGENCE_REPORT.md`](./HSI_CURRENT_STATE_INTELLIGENCE_REPORT.md) (current vs target) · [`HSI_PRODUCT_ROADMAP.md`](./HSI_PRODUCT_ROADMAP.md) (phased delivery)
+**Related:** [`HSI_VISION.md`](./HSI_VISION.md) (canonical) · [`HSI_CURRENT_STATE_INTELLIGENCE_REPORT.md`](./HSI_CURRENT_STATE_INTELLIGENCE_REPORT.md) (current vs target) · [`HSI_PRODUCT_ROADMAP.md`](./HSI_PRODUCT_ROADMAP.md) (phased delivery)
 
 ---
 
