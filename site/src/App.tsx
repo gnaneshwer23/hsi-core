@@ -26,6 +26,7 @@ const DiscoveryCentre=lazy(()=>import("./pages/DiscoveryCentre").then(m=>({defau
 const Curator=lazy(()=>import("./pages/Curator").then(m=>({default:m.Curator})));
 import { Products } from "./pages/Products";
 import { ClinicalModule } from "./pages/ClinicalModule";
+import { DemoWalkthrough } from "./pages/DemoWalkthrough";
 const Status=lazy(()=>import("./pages/Status").then(m=>({default:m.Status})));
 const ClinicalTimeline=lazy(()=>import("./pages/ClinicalTimeline").then(m=>({default:m.ClinicalTimeline})));
 const TrialsCriteria=lazy(()=>import("./pages/TrialsCriteria").then(m=>({default:m.TrialsCriteria})));
@@ -103,6 +104,7 @@ export default function App() {
         <Route path="science/connections" element={<ScienceConnections />} />
         <Route path="science/disease" element={<ScienceDisease />} />
         <Route path="discovery-engine" element={<DiscoveryEngine />} />
+        <Route path="demo" element={<DemoWalkthrough />} />
         <Route path="modules" element={<Products />} />
         <Route path="modules/aksh-health" element={<ForAksh />} />
         <Route path="modules/clinical" element={<ClinicalModule />} />

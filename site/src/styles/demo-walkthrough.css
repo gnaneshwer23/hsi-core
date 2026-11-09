@@ -1,0 +1,25 @@
+.demo-walk { background: var(--cream); color: var(--ink); padding: 2.5rem 1.25rem 4rem; }
+.demo-walk-hero, .demo-walk-layout { max-width: 1100px; margin: 0 auto; }
+.demo-walk-kicker { letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.72rem; color: var(--teal); margin: 0 0 0.6rem; }
+.demo-walk-title-row { display: flex; flex-wrap: wrap; gap: 0.75rem 1rem; align-items: center; }
+.demo-walk h1 { font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.05; margin: 0; letter-spacing: -0.04em; }
+.demo-env { border: 1px solid var(--line-ink); border-radius: 999px; padding: 0.2rem 0.7rem; font-size: 0.75rem; color: var(--teal); }
+.demo-walk-hero p { max-width: 68ch; line-height: 1.6; }
+.demo-walk-layout { display: grid; grid-template-columns: 240px 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+.demo-walk aside { background: white; border: 1px solid var(--line-ink); border-radius: 16px; padding: 1rem; }
+.demo-walk aside h2, .demo-walk article h2 { font-size: 1rem; margin: 0 0 0.75rem; }
+.demo-walk aside ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.4rem; }
+.demo-walk aside button { width: 100%; text-align: left; background: transparent; border: 1px solid transparent; border-radius: 10px; padding: 0.55rem 0.6rem; cursor: pointer; color: inherit; }
+.demo-walk aside button[aria-pressed="true"] { border-color: var(--teal); background: rgba(47, 93, 69, 0.08); }
+.demo-walk aside button span { display: block; color: #5c6b62; font-size: 0.78rem; }
+.demo-tabs { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+.demo-tabs button { border: 1px solid var(--line-ink); background: white; border-radius: 999px; padding: 0.45rem 0.8rem; cursor: pointer; color: inherit; }
+.demo-tabs button[aria-selected="true"] { background: var(--ink); color: var(--cream); }
+.demo-walk article { background: white; border: 1px solid var(--line-ink); border-radius: 16px; padding: 1.25rem; }
+.demo-walk table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+.demo-walk th, .demo-walk td { text-align: left; padding: 0.4rem 0.3rem; border-bottom: 1px solid var(--line-ink); }
+.demo-walk caption { text-align: left; margin-bottom: 0.6rem; color: #5c6b62; }
+.demo-walk li { margin: 0.35rem 0; line-height: 1.45; }
+@media (max-width: 800px) {
+  .demo-walk-layout { grid-template-columns: 1fr; }
+}

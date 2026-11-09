@@ -209,6 +209,10 @@
       "destination": "/_pages/science--zoom.html"
     },
     {
+      "source": "/demo",
+      "destination": "/_pages/demo.html"
+    },
+    {
       "source": "/modules",
       "destination": "/_pages/modules.html"
     },
