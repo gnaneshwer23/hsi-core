@@ -13,7 +13,7 @@ test("public pages have a single main/title, working navigation and no narrow-sc
 });
 test("home communicates the research workflow and supports accessible capability navigation",async({page})=>{
  await page.goto("/");
- await expect(page.getByRole("heading",{level:1})).toContainText("See the biology.");
+ await expect(page.getByRole("heading",{level:1})).toContainText("Investigate disease mechanisms");
  await expect(page.getByRole("heading",{name:/From question to research decision/})).toBeVisible();
  const tabs=page.getByRole("tablist",{name:"Research demonstration panels"}).first();
  await tabs.getByRole("tab",{name:"Graph"}).click();

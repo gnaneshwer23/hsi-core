@@ -20,10 +20,19 @@ export function SignIn() {
  const [verifyingCode,setVerifyingCode]=useState(false);
  const [resending,setResending]=useState(false);
  const [verificationNote,setVerificationNote]=useState("");
- useEffect(()=>{
+  useEffect(()=>{
   if(!authBaseUrl)return;
   let active=true;
-  hsiAuth.session().then(result=>{if(!active)return;setChecking(false);if(result.error){setError(result.error.message);return}if(result.data?.user?.id)navigate("/research/account",{replace:true})});
+  hsiAuth.session().then(result=>{
+   if(!active)return;
+   setChecking(false);
+   if(result.error){setError(result.error.message);return}
+   if(result.data?.user?.id)navigate("/research/account",{replace:true});
+  }).catch(()=>{
+   if(!active)return;
+   setChecking(false);
+   setError("Authentication service unavailable. Check the approved origin and network configuration.");
+  });
   return()=>{active=false};
  },[navigate]);
  async function submit(event:FormEvent<HTMLFormElement>){

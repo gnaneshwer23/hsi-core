@@ -36,9 +36,10 @@ export function Home(){
   return <div className="ed-home">
     <header className="ed-home-hero ed-home-hero-product">
       <div className="ed-hero-copy">
-        <p className="ed-kicker">HUMAN SUPER INTELLIGENCE</p>
-        <h1>See the biology.<br/><em>Question the evidence.</em></h1>
-        <p className="ed-lead">Investigate disease mechanisms, examine conflicting evidence, and identify what deserves research next.</p>
+        <p className="ed-kicker">FOR BIOMEDICAL RESEARCHERS</p>
+        <h1>Investigate disease mechanisms<br/><em>with evidence you can trace.</em></h1>
+        <p className="ed-lead">HSI helps biomedical researchers explore biological relationships, examine conflicting evidence, identify research gaps and develop the next scientific question.</p>
+        <p className="ed-hero-note ed-hero-note-primary">See the biology. Question the evidence.</p>
         <div className="ed-actions">
           <Link className="ed-button" to={PUBLIC_PRIMARY_CTA.to}>{PUBLIC_PRIMARY_CTA.label} <span aria-hidden="true"><ArrowIcon/></span></Link>
           <Link className="ed-text-link" to={PUBLIC_SECONDARY_CTA.to}>{PUBLIC_SECONDARY_CTA.label} <span aria-hidden="true"><ArrowIcon direction="right"/></span></Link>

@@ -20,6 +20,9 @@
 .ed-home-hero-product{
   align-items:center;
 }
+.ed-hero-note-primary{
+  font-size:.92rem;font-weight:550;color:var(--hsi-ink,#152e2b);margin:0 0 8px;max-width:42ch;
+}
 .ed-hero-product{
   min-width:0;max-width:560px;justify-self:end;width:100%;
 }
