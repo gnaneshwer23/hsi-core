@@ -1,2 +1,2 @@
 // Generated research candidate identity; integrity is not scientific approval.
-export const DOMAIN_GRAPH_VERSION="7e7dbfccc502eb22f100c3eece15280a7b0e06ff0e17bc146943014079f84a37";
+export const DOMAIN_GRAPH_VERSION="d645b2c4660e23d9a71cd6c9f22e5659a8453aed20ae059cdfc2ff7d66e61095";

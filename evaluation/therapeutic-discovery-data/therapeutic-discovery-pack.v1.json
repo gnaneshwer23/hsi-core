@@ -1,0 +1,250 @@
+{
+  "schema": "hsi-therapeutic-discovery-data-1",
+  "method": "hsi.therapeutic_discovery_data.v1",
+  "version": "0.1.0",
+  "asOf": "2026-11-09T16:00:00.000Z",
+  "programmeCount": 1,
+  "targetCount": 1,
+  "interventionCount": 1,
+  "assessmentCount": 1,
+  "honesty": {
+    "associationIsNotCausation": true,
+    "associationIsNotEfficacy": true,
+    "associationIsNotSafety": true,
+    "associationIsNotClinicalSuitability": true,
+    "biologicalPlausibilityIsNotPredictiveValidity": true,
+    "noFabricatedTargetScores": true,
+    "noTreatmentRecommendations": true,
+    "noChemblLivePull": true,
+    "noRepurposingEngine": true,
+    "noWorkbenchUi": true,
+    "agentsDraftResearchersDecide": true,
+    "doesNotManufactureCertainty": true,
+    "gateCAutoApprove": false,
+    "mouInvented": false,
+    "phiCdsWired": false,
+    "scientificApproval": false,
+    "graphPromotable": false,
+    "neonProjectPolicy": "red-wave-only",
+    "migration": "deferred"
+  },
+  "programmes": [
+    {
+      "schema": "hsi-therapeutic-discovery-data-1",
+      "method": "hsi.therapeutic_discovery_data.v1",
+      "version": "0.1.0",
+      "id": "hsi-tx-prog-fixture-demo",
+      "name": "Fixture therapeutic discovery programme",
+      "researchQuestion": "Which fixture pathway targets deserve further investigation without claiming efficacy?",
+      "diseaseContext": "Fixture disease context",
+      "indicationScope": "Engineering fixture only — not a clinical programme.",
+      "lifecycle": "active_investigation",
+      "investigationId": "inv-fixture-001",
+      "hypothesisIds": [
+        "hyp-fixture-001"
+      ],
+      "orgId": "org-fixture-1",
+      "translationalProgrammeContractId": null,
+      "identities": [],
+      "authoredBy": {
+        "principalId": "fixture-agent-tx",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "associationIsNotCausation": true,
+        "associationIsNotEfficacy": true,
+        "associationIsNotSafety": true,
+        "associationIsNotClinicalSuitability": true,
+        "biologicalPlausibilityIsNotPredictiveValidity": true,
+        "noFabricatedTargetScores": true,
+        "noTreatmentRecommendations": true,
+        "noChemblLivePull": true,
+        "noRepurposingEngine": true,
+        "noWorkbenchUi": true,
+        "agentsDraftResearchersDecide": true,
+        "doesNotManufactureCertainty": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T16:00:00.000Z",
+      "updatedAt": "2026-11-09T16:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "targets": [
+    {
+      "schema": "hsi-therapeutic-discovery-data-1",
+      "method": "hsi.therapeutic_discovery_data.v1",
+      "version": "0.1.0",
+      "id": "hsi-tx-tgt-fixture-demo",
+      "programmeId": "hsi-tx-prog-fixture-demo",
+      "name": "FIXTURE1",
+      "geneSymbol": "FIXTURE1",
+      "proteinLabel": null,
+      "rationale": "Fixture associative neighbourhood for contract exercise.",
+      "biologicalPlausibilityNote": "Plausibility declared for engineering only — not predictive validity.",
+      "biologicalPlausibilityIsNotPredictiveValidity": true,
+      "inventedPriorityScore": null,
+      "evidenceStrength": "associative_only",
+      "lifecycle": "prioritised_for_investigation",
+      "identities": [
+        {
+          "system": "chembl",
+          "value": "CHEMBL25",
+          "label": "fixture chembl stub",
+          "resolution": "stub_only",
+          "claimSupport": "not_assessed"
+        }
+      ],
+      "hypothesisIds": [
+        "hyp-fixture-001"
+      ],
+      "investigationId": "inv-fixture-001",
+      "authoredBy": {
+        "principalId": "fixture-agent-tx",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "associationIsNotCausation": true,
+        "associationIsNotEfficacy": true,
+        "associationIsNotSafety": true,
+        "associationIsNotClinicalSuitability": true,
+        "biologicalPlausibilityIsNotPredictiveValidity": true,
+        "noFabricatedTargetScores": true,
+        "noTreatmentRecommendations": true,
+        "noChemblLivePull": true,
+        "noRepurposingEngine": true,
+        "noWorkbenchUi": true,
+        "agentsDraftResearchersDecide": true,
+        "doesNotManufactureCertainty": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T16:00:00.000Z",
+      "updatedAt": "2026-11-09T16:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "interventions": [
+    {
+      "schema": "hsi-therapeutic-discovery-data-1",
+      "method": "hsi.therapeutic_discovery_data.v1",
+      "version": "0.1.0",
+      "id": "hsi-tx-int-fixture-demo",
+      "programmeId": "hsi-tx-prog-fixture-demo",
+      "name": "Fixture molecular compound",
+      "interventionKind": "molecular_compound",
+      "publicSmiles": "CCO",
+      "modalityLabel": null,
+      "approvalJurisdictionNote": null,
+      "approvedMedicineIsNotTreatmentRecommendation": true,
+      "lifecycle": "proposed",
+      "identities": [],
+      "authoredBy": {
+        "principalId": "fixture-agent-tx",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "associationIsNotCausation": true,
+        "associationIsNotEfficacy": true,
+        "associationIsNotSafety": true,
+        "associationIsNotClinicalSuitability": true,
+        "biologicalPlausibilityIsNotPredictiveValidity": true,
+        "noFabricatedTargetScores": true,
+        "noTreatmentRecommendations": true,
+        "noChemblLivePull": true,
+        "noRepurposingEngine": true,
+        "noWorkbenchUi": true,
+        "agentsDraftResearchersDecide": true,
+        "doesNotManufactureCertainty": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T16:00:00.000Z",
+      "updatedAt": "2026-11-09T16:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "assessments": [
+    {
+      "schema": "hsi-therapeutic-discovery-data-1",
+      "method": "hsi.therapeutic_discovery_data.v1",
+      "version": "0.1.0",
+      "id": "hsi-tx-assess-fixture-demo",
+      "programmeId": "hsi-tx-prog-fixture-demo",
+      "targetCandidateId": "hsi-tx-tgt-fixture-demo",
+      "interventionId": "hsi-tx-int-fixture-demo",
+      "summary": "Fixture assessment: associative only; further investigation may be warranted.",
+      "evidenceStrength": "associative_only",
+      "conclusionKind": "further_investigation_warranted",
+      "efficacyClaimed": false,
+      "safetyClaimed": false,
+      "clinicalSuitabilityClaimed": false,
+      "treatmentRecommended": false,
+      "inventedNumericScore": null,
+      "supportingIdentityRefs": [],
+      "remainingUncertainties": [
+        "No authorised causal evidence."
+      ],
+      "infoRequiredBeforeFurtherWork": [
+        "Define discriminating experiment."
+      ],
+      "lifecycle": "accepted_for_further_investigation",
+      "reviewedBy": {
+        "principalId": "fixture-researcher",
+        "actorKind": "human"
+      },
+      "authoredBy": {
+        "principalId": "fixture-agent-tx",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "associationIsNotCausation": true,
+        "associationIsNotEfficacy": true,
+        "associationIsNotSafety": true,
+        "associationIsNotClinicalSuitability": true,
+        "biologicalPlausibilityIsNotPredictiveValidity": true,
+        "noFabricatedTargetScores": true,
+        "noTreatmentRecommendations": true,
+        "noChemblLivePull": true,
+        "noRepurposingEngine": true,
+        "noWorkbenchUi": true,
+        "agentsDraftResearchersDecide": true,
+        "doesNotManufactureCertainty": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T16:00:00.000Z",
+      "updatedAt": "2026-11-09T16:00:00.000Z",
+      "note": ""
+    }
+  ]
+}
