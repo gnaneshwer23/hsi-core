@@ -187,7 +187,7 @@
     {
       "id": 8,
       "name": "Await review",
-      "detail": "No approved release consumed yet."
+      "detail": "Await scientific review. An approved decision publishes a versioned release the next investigation can read."
     }
   ],
   "reviewStatus": "approved",
@@ -201,6 +201,42 @@
   },
   "secondInvestigationReadRelease": "lhkg-demo-1.0.1",
   "secondMentionsApprovedEdge": true,
+  "learningLoop": {
+    "step8Label": "Review approved → release published → next investigation reads it",
+    "before": {
+      "releaseId": "lhkg-demo-1.0.0",
+      "version": "1.0.0",
+      "approvedEdgeCount": 0,
+      "step8Detail": "Await scientific review. An approved decision publishes a versioned release the next investigation can read.",
+      "releaseRead": "lhkg-demo-1.0.0"
+    },
+    "after": {
+      "releaseId": "lhkg-demo-1.0.1",
+      "version": "1.0.1",
+      "priorReleaseId": "lhkg-demo-1.0.0",
+      "approvedEdgeId": "edge-butyrate-neuro-hypothesis",
+      "approvedEdgeCount": 1,
+      "step8Detail": "Review approved earlier → reading published release lhkg-demo-1.0.1 (1.0.1).",
+      "releaseRead": "lhkg-demo-1.0.1",
+      "mechanismMentionsRelease": true
+    },
+    "timeline": [
+      {
+        "label": "Scientific review approved",
+        "at": "2026-11-09T12:20:00.000Z"
+      },
+      {
+        "label": "Graph release 1.0.1 published",
+        "at": "2026-11-09T12:30:00.000Z",
+        "releaseId": "lhkg-demo-1.0.1"
+      },
+      {
+        "label": "Next investigation reads the published release",
+        "at": "2026-11-09T12:31:00.000Z",
+        "releaseId": "lhkg-demo-1.0.1"
+      }
+    ]
+  },
   "patientQuestionSent": false,
   "patientQuestionBlocked": true,
   "outboxChannels": [

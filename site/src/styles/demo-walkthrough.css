@@ -20,6 +20,24 @@
 .demo-walk th, .demo-walk td { text-align: left; padding: 0.4rem 0.3rem; border-bottom: 1px solid var(--line-ink); }
 .demo-walk caption { text-align: left; margin-bottom: 0.6rem; color: #5c6b62; }
 .demo-walk li { margin: 0.35rem 0; line-height: 1.45; }
+.demo-learning-timeline { margin: 0 0 1.25rem; padding-left: 1.1rem; }
+.demo-learning-timeline li { display: grid; gap: 0.15rem; }
+.demo-learning-timeline span { color: #5c6b62; font-size: 0.85rem; }
+.demo-learning-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+  margin: 0 0 1.25rem;
+}
+.demo-learning-compare section {
+  border: 1px solid var(--line-ink);
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  background: rgba(47, 93, 69, 0.04);
+}
+.demo-learning-compare h3 { margin: 0 0 0.55rem; font-size: 0.92rem; }
+.demo-learning-compare p { margin: 0.3rem 0; font-size: 0.9rem; line-height: 1.45; }
 @media (max-width: 800px) {
   .demo-walk-layout { grid-template-columns: 1fr; }
+  .demo-learning-compare { grid-template-columns: 1fr; }
 }

@@ -119,7 +119,14 @@ export async function runInvestigation(release: GraphRelease): Promise<Investiga
       { id: 5, name: "Find gaps and contradictions", detail: contradictions[0] ?? "No contradiction recorded" },
       { id: 6, name: "Generate hypotheses", detail: hypotheses.map((item) => item.id).join(", ") },
       { id: 7, name: "Write the brief", detail: "Evidence-linked brief saved for expert review." },
-      { id: 8, name: "Await review", detail: prior.length > 0 ? `Reading release ${release.releaseId}` : "No approved release consumed yet." },
+      {
+        id: 8,
+        name: prior.length > 0 ? "Learning loop" : "Await review",
+        detail:
+          prior.length > 0
+            ? `Review approved earlier → reading published release ${release.releaseId} (${release.version}).`
+            : "Await scientific review. An approved decision publishes a versioned release the next investigation can read.",
+      },
     ],
     brief,
     proposedEdges,
