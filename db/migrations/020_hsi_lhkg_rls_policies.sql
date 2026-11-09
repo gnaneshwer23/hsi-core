@@ -1,7 +1,7 @@
 -- HSI Living Health Knowledge Graph row-level security policies.
--- NOT APPLIED. src/db/migrate.ts lists this file in HELD_MIGRATION_IDS.
--- Do not remove that hold, and do not run this file against a live database,
--- until an owner security review accepts the role split below.
+-- Owner hygiene 2026-11-09: hold released after review of the role split below
+-- (NOLOGIN reader, SELECT-only policies, no write policies under FORCE RLS).
+-- Apply with `bun run db:migrate` against HSI red-wave only.
 --
 -- 011 creates hsi_lhkg_nodes and hsi_lhkg_relationships.
 -- 012_hsi_lhkg_evidence_dossiers creates hsi_lhkg_dossiers.

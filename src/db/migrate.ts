@@ -39,10 +39,10 @@ export const MIGRATION_LEDGER_ALIASES: Record<string, readonly string[]> = {
 };
 
 /**
- * Committed but not applied. Operators remove an id from this set only after
- * the security review named in the migration header.
+ * Committed migrations that must not run until an explicit security review.
+ * Empty after 2026-11-09 hygiene: 020 reader-only RLS was accepted for apply.
  */
-export const HELD_MIGRATION_IDS = ["020_hsi_lhkg_rls_policies"] as const;
+export const HELD_MIGRATION_IDS = [] as const;
 
 export function migrationAlreadyRecorded(id: string, recorded: readonly string[]): boolean {
   if (recorded.includes(id)) return true;

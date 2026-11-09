@@ -17,7 +17,7 @@ No private-key, credential, or database-URL rule fired. Entropy of the generic-a
 | `research/fixtures/hsi-synthetic-e2e` | 1 |
 | `research/domain-graph` | 2 |
 
-Those files are public research fixtures. The hits match the generic-api-key pattern inside JSON, not a password or a cloud credential. They were left in place.
+Those files are public research fixtures. The hits match the generic-api-key pattern inside JSON, not a password or a cloud credential. They were left in place. Path allowlisting for those research directories lives in [`.gitleaks.toml`](../../.gitleaks.toml) so `generic-api-key` noise does not bury real secret rules.
 
 ## Neon identifiers
 

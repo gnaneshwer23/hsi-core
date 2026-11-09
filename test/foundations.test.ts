@@ -22,13 +22,13 @@ describe("migration ledger", () => {
     expect(MIGRATION_LEDGER_ALIASES["019_hsi_isi_research_review"]).toEqual(["012_isi_research_review"]);
   });
 
-  test("RLS policies stay unapplied", () => {
-    expect(HELD_MIGRATION_IDS).toContain("020_hsi_lhkg_rls_policies");
+  test("RLS policies are ready to apply (reader-only)", () => {
+    expect(HELD_MIGRATION_IDS).not.toContain("020_hsi_lhkg_rls_policies");
     const sql = readFileSync(resolve("db/migrations/020_hsi_lhkg_rls_policies.sql"), "utf8");
     expect(sql).toContain("CREATE POLICY hsi_lhkg_nodes_reader_select");
     expect(sql).toContain("FOR SELECT");
     expect(sql).not.toMatch(/FOR INSERT/);
-    expect(sql).toContain("NOT APPLIED");
+    expect(sql).toContain("hsi_lhkg_reader");
   });
 });
 

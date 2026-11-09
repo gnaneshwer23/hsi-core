@@ -21,7 +21,7 @@ ISI science does not depend on the Aksh Health module. Private patient data neve
 
 **Current implementation vs target state:** This repository contains the evidence substrate, research contracts, a synthetic end-to-end demonstration cohort, and selected adapters. Some workflows are deterministic, stubbed, synthetic or unreviewed. Nothing here is clinical validation, regulatory approval, or a commercial care product. Preserve PHI isolation, human review and no-EHR-write-back.
 
-**Licence:** no `LICENSE` file is shipped. `package.json` says `UNLICENSED`. Choosing a public licence is an owner decision — see [docs/OWNER_DECISIONS.md](docs/OWNER_DECISIONS.md).
+**Licence:** [Apache-2.0](LICENSE). Third-party research pack source licences remain a separate human matrix — see [docs/OWNER_DECISIONS.md](docs/OWNER_DECISIONS.md).
 
 ## Pilot
 

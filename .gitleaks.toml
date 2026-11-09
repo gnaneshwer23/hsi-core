@@ -1,0 +1,14 @@
+# Gitleaks config for hsi-core.
+# Research fixture JSON trips generic-api-key (entropy ~3.55–3.84) without
+# being credentials. Allowlist those paths only — do not silence real secret rules.
+
+title = "hsi-core"
+
+[allowlist]
+description = "Public research / synthetic fixture JSON (gitleaks generic-api-key false positives)"
+paths = [
+  '''(^|/)site/public/research/''',
+  '''(^|/)research/fixtures/''',
+  '''(^|/)research/domain-graph/''',
+  '''(^|/)research/validation/''',
+]

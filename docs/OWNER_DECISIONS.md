@@ -1,13 +1,15 @@
 # Owner decisions
 
-These items are intentionally not decided in code.
+Closed items from the 2026-11-09 hygiene pass, plus what remains human-only.
 
-| Decision | Why it is still open |
-| --- | --- |
-| **LICENSE** | This public repository has no `LICENSE` file. `package.json` says `UNLICENSED`, which is not a public copyright grant. The owner chooses the licence. Do not add one on an agent’s initiative. |
-| **GitHub repository description** | The description still needs to say Human Super Intelligence, one product, four governed modules. Changing it is a GitHub settings action. |
-| **Branch protection** | `main` should require the `verify` and `site-deployment` jobs. That is a repository setting. |
-| **Neon identifier rotation** | Unique project, branch and host identifiers were removed from the tree. They remain in git history. If they are treated as sensitive, rotate or restrict them in the Neon console. Values are not repeated in this file. See `docs/security/GITLEAKS_REPORT.md`. |
-| **Real endpoint configuration** | Production and staging hosts now belong in the private environment: `HSI_NEON_CANONICAL_PROJECT_ID`, `HSI_NEON_HOST_ALLOWLIST`, `HSI_NEON_STAGING_BRANCH_PIN`, `HSI_NEON_STAGING_HOST_PIN`. Tracked code keeps placeholders and fails closed for any other host. |
-| **RLS migration 020** | `020_hsi_lhkg_rls_policies.sql` is held in `HELD_MIGRATION_IDS`. Apply it only after a security review of the `hsi_lhkg_reader` role. |
-| **Expert reviewers, source licences, DPIA, DCB0129/0160** | Human governance. Not claimed by the software. |
+| Decision | Status | Where |
+| --- | --- | --- |
+| **LICENSE** | **Closed — Apache-2.0** | Root [`LICENSE`](../LICENSE); `package.json` `license` field |
+| **GitHub repository description** | **Closed** | One-HSI wording + homepage `https://www.humansuperintelligence.tech/` |
+| **Branch protection on `main`** | **Closed** | Require PR; required checks `verify` + `site-deployment`; no force-push/delete; strict up-to-date — [`docs/engineering/BRANCH_PROTECTION_MAIN.md`](./engineering/BRANCH_PROTECTION_MAIN.md) |
+| **Neon identifier rotation** | **Closed — accept ID risk** | IDs in history only; no credential leak found — [`docs/security/NEON_HISTORY_ID_DECISION.md`](./security/NEON_HISTORY_ID_DECISION.md). Passwords/endpoints **not** rotated in this pass |
+| **Real endpoint configuration** | Still private-env only | `HSI_NEON_CANONICAL_PROJECT_ID`, `HSI_NEON_HOST_ALLOWLIST`, `HSI_NEON_STAGING_BRANCH_PIN`, `HSI_NEON_STAGING_HOST_PIN` |
+| **RLS migration 020** | Hold released for apply | Reader-only `hsi_lhkg_reader` policies accepted; apply when red-wave credentials available (`bun run db:migrate`). **No migration 021** in tree (019 = renumbered ISI review; 020 = RLS) |
+| **Expert reviewers, source licences, DPIA, clinical safety** | **OPEN (human)** | [`docs/security/OPEN_HUMAN_GOVERNANCE.md`](./security/OPEN_HUMAN_GOVERNANCE.md) |
+
+Third-party research pack source licences remain a separate human matrix — this Apache-2.0 grant covers the repository substrate, not every upstream dataset.

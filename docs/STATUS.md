@@ -25,7 +25,7 @@ These levels are derived from the register vocabulary (`implemented`, `connected
 - `writesEnabledClaimed`: false
 - `syntheticEqualsClinical`: false
 
-Database deployment is **not** asserted here. Older audits disagree about whether migrations have been applied. This repository commits the SQL. Applying it is an operator action against the private HSI database, and migration `020_hsi_lhkg_rls_policies` is held unapplied.
+Database deployment is **not** asserted here. Older audits disagree about whether migrations have been applied. This repository commits the SQL. Applying it is an operator action against the private HSI database (HSI red-wave only). Migration `020_hsi_lhkg_rls_policies` is released for apply; there is no migration `021`.
 
 ## Capabilities
 
