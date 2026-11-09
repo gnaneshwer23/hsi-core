@@ -255,6 +255,8 @@
     "spi:research-objective-planning:check": "bun --no-env-file scripts/research-objective-workstream-planning-contracts.ts --check",
     "spi:continuous-evidence-investigation:prepare": "bun --no-env-file scripts/continuous-evidence-investigation-contracts.ts",
     "spi:continuous-evidence-investigation:check": "bun --no-env-file scripts/continuous-evidence-investigation-contracts.ts --check",
+    "spi:scientific-knowledge-evolution:prepare": "bun --no-env-file scripts/scientific-knowledge-evolution-contracts.ts",
+    "spi:scientific-knowledge-evolution:check": "bun --no-env-file scripts/scientific-knowledge-evolution-contracts.ts --check",
     "gap-verification:expand": "bun --no-env-file scripts/gap-verification-check.ts",
     "gap-verification:check": "bun --no-env-file scripts/gap-verification-check.ts --check",
     "fixture:synthetic-e2e:check": "bun --no-env-file scripts/check-synthetic-e2e-fixture.ts",
