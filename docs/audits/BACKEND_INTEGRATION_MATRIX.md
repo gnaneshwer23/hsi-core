@@ -2,8 +2,8 @@
 
 **Status:** Gap audit against the refined Codex Backend Scientific Intelligence brief — **not** production readiness, **not** scientific validity.  
 **Date:** 2026-11-08  
-**Audited `main` SHA:** `c5c8c3299ce4879757cb0fd0633b80a281a09781`  
-**Tip commit:** `c5c8c32 Document fill-ready N1 #2 human principal attestation checklist. (#82)`  
+**Audited `main` SHA:** `1cd62f53eddd789e97967eda17cd2b415992670a`  
+**Tip commit:** `1cd62f5 Harden Open Targets GraphQL association retrieval with non-causal score honesty. (#84)`  
 **HSI Neon:** red-wave only (`human super intelligence` / `red-wave-06625195`) — never autumn-snow / Akeno / DeliverX  
 
 **Cross-link (do not contradict):** the engineering Phase-1 matrix with execution evidence lives at  
@@ -68,17 +68,17 @@ Honesty freeze: no Gate C auto-approve · no invented MoU / `legalBinding` · no
 
 | Capability | Implementation | Execution path | Status | Evidence | Deployment | Data / human dependency | Proposed change | Risk | Verification |
 |------------|----------------|----------------|--------|----------|------------|-------------------------|-----------------|------|--------------|
-| Bounded agent vertical stages | `boundedAgentExecution.ts` | Plan → retrieve → mechanism → oppose → gap → hypotheses → brief | `partially_connected` | Bounded agent tests | Local | #2/#4/#5 | Richer execution-record JSON next | Silent approval | Stage status tests |
+| Bounded agent vertical stages | `boundedAgentExecution.ts` | Plan → retrieve → mechanism → oppose → gap → hypotheses → brief | `partially_connected` | Bounded agent tests | Local | #2/#4/#5 | Keep cancel/retry honesty | Silent approval | Stage status tests |
 | Opposing evidence + gap taxonomy | `opposingEvidenceSearch.ts` · `gapVerification.ts` | Oppose retrieve → gap classes | `partially_connected` | Oppose/gap tests | Local | SME #4 | Align gap JSON to brief shape | Coverage≠novelty collapse | Gap tests |
 | Translational O-04 + research brief | `translationalEvidenceAttach.ts` · `researchBriefIntegration.ts` | CT.gov / OT → separated planes → brief | `partially_connected` | Translational + brief tests | Local | Optional live | Keep registration≠efficacy | Eligibility inference | Panel honesty |
-| Investigation execution record (brief JSON) | Durable checkpoints / stage artifacts; not identical to refined brief envelope | Orchestrator + fences | `partially_connected` | Bounded agent | Local | — | Map to brief `steps`/`artifacts` shape | Trace gaps | Contract test |
+| Investigation execution record (brief JSON) | `projectInvestigationExecutionRecord` on `boundedAgentExecution` → `investigation_id` / `steps[]` / `artifacts[]` / `resource_budget` / `review_status` | Bounded run → refined-brief envelope projection | `partially_connected` | `test/boundedAgentExecution.test.ts` | Local | — | Deeper gap/relationship JSON shapes next | Trace gaps | Contract test |
 
 ### Evaluation (Phase 7)
 
 | Capability | Implementation | Execution path | Status | Evidence | Deployment | Data / human dependency | Proposed change | Risk | Verification |
 |------------|----------------|----------------|--------|----------|------------|-------------------------|-----------------|------|--------------|
-| Independent evaluation suites | `independentEvaluationSuites.ts` · `evaluation/independent-evaluation/` | Deterministic / live-gated / SME slots | `partially_connected` (eng) · scientific `blocked` | PR #79; STATUS.json | Local | #4 SME · #5 live | Alias path `evaluation/scientific_benchmark_v1/` next PR | Fake SME scores | `eval:independent:check` |
-| `evaluation/scientific_benchmark_v1/` | **Missing** as named path; closest: independent-evaluation + gold suite | — | `missing` | Directory absent on audited tip | — | #4 | Scaffold pointing at independent suites; empty SME OK | Claiming benchmark validity | Manifest check |
+| Independent evaluation suites | `independentEvaluationSuites.ts` · `evaluation/independent-evaluation/` (v1.1) | Deterministic / live-gated / SME slots · 9 null scorecard dims · 8 domain slots | `partially_connected` (eng) · scientific `blocked` | STATUS.json; independent suite tests | Local | #4 SME · #5 live | Keep empty SME; no invented scores | Fake SME scores | `eval:independent:check` |
+| `evaluation/scientific_benchmark_v1/` | Alias scaffold → independent-evaluation (`scientificBenchmarkV1.ts`) | Alias manifest + STATUS; not a parallel platform | `partially_connected` (eng) · scientific `blocked` | `alias-manifest.v1.json`; `test/scientificBenchmarkV1.test.ts` | Local | #4 | SME labels still human-gated | Claiming benchmark validity | `eval:scientific-benchmark:check` |
 
 ### Review / privacy / out of scope
 
@@ -94,9 +94,9 @@ Honesty freeze: no Gate C auto-approve · no invented MoU / `legalBinding` · no
 ## Top gaps vs refined brief (audited tip)
 
 1. **Europe PMC bibliographic `cursorMark` pagination** — addressed on `main` via PR #83.
-2. **Open Targets evidence-type / direct vs indirect / score ≠ causation** — addressed in this companion PR (extend existing adapter; score honesty + datasource preservation + GraphQL partial/fail reporting).
-3. **`evaluation/scientific_benchmark_v1/`** path missing; independent-evaluation exists with empty SME slots — **next recommended eng slice**.
-4. **Investigation / gap / relationship JSON** shapes are richer in the brief than current durable artifacts (execution-record envelope, gap record, relationship context).
+2. **Open Targets evidence-type / direct vs indirect / score ≠ causation** — addressed on `main` via PR #84.
+3. **`evaluation/scientific_benchmark_v1/`** alias scaffold shipped (points at independent-evaluation; empty SME; live gated) — science still `#4` blocked.
+4. **Gap / relationship JSON** shapes remain richer in the brief than durable artifacts (execution-record projection exists; gap/relationship envelope alignment next).
 5. **Live authenticated vertical slice** (#5) and **rights (#2) / SME (#4)** remain human-blocked — eng cannot clear.
 
 ---
@@ -120,7 +120,7 @@ Research question → evidence retrieval → biological context → mechanism an
 | Traceable research brief | `partially_connected` |
 | Human review intact | `connected` (validators) · journey `blocked` (#5) |
 
-**Highest-leverage eng slice chosen for companion PR:** Open Targets GraphQL hardening on the existing `openTargetsLookup` → dynamic retrieval path (evidence types, direct vs indirect scope, score ≠ causation honesty, datasource preservation, bounded budgets, failure/partial reporting).
+**Highest-leverage eng slice chosen for this PR:** `evaluation/scientific_benchmark_v1/` alias over independent-evaluation (expanded domain slots + null scorecard dims) plus bounded-agent → investigation execution-record projection.
 
 ---
 

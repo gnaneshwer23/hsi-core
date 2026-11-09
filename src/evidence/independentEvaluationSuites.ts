@@ -22,7 +22,7 @@ import {SSC_INITIAL_PMIDS} from "../evidenceIngestion";
 
 export const INDEPENDENT_EVAL_PROGRAMME = "backend_scientific_intelligence" as const;
 export const INDEPENDENT_EVAL_PHASE = "PR8" as const;
-export const INDEPENDENT_EVAL_SUITE_VERSION = "1.0.0" as const;
+export const INDEPENDENT_EVAL_SUITE_VERSION = "1.1.0" as const;
 export const INDEPENDENT_EVAL_MANIFEST_SCHEMA =
   "hsi-independent-evaluation-suites-1" as const;
 
@@ -41,7 +41,12 @@ export type ScorecardDimensionId =
   | "contradiction_retrieval"
   | "gap_assessment_precision"
   | "abstention_quality"
+  | "unsupported_claim"
+  | "brief_completeness"
   | "expert_rated_research_usefulness";
+
+/** Expected sealed scorecard length — null values until SME (#4). */
+export const SCIENTIFIC_SCORECARD_DIMENSION_COUNT = 9 as const;
 
 /** Orthogonal failure modes — must stay distinct in suite design. */
 export type ScientificFailureModeId =
@@ -69,12 +74,19 @@ export type FailureModeContract = {
   scored: false;
 };
 
+export type WalkthroughQuestionDomain =
+  | "autoimmune"
+  | "inflammatory"
+  | "translational"
+  | "fibrosis"
+  | "gut_immune_metabolic"
+  | "contradiction"
+  | "gap"
+  | "abstention";
+
 export type WalkthroughQuestion = {
   questionId: string;
-  domain:
-    | "autoimmune"
-    | "inflammatory"
-    | "translational";
+  domain: WalkthroughQuestionDomain;
   question: string;
   /** Explicit: must not embed living-evidence / SSC fixture pins. */
   embedsPinnedFixtureIds: false;
@@ -82,6 +94,18 @@ export type WalkthroughQuestion = {
   tissueHint: string;
   notes: string;
 };
+
+/** Domains required by the refined-brief scientific_benchmark_v1 scaffold. */
+export const REQUIRED_BENCHMARK_QUESTION_DOMAINS: readonly WalkthroughQuestionDomain[] = [
+  "autoimmune",
+  "inflammatory",
+  "translational",
+  "fibrosis",
+  "gut_immune_metabolic",
+  "contradiction",
+  "gap",
+  "abstention",
+] as const;
 
 export type ResearcherWorkflowComparisonSlot = {
   questionId: string;
@@ -225,7 +249,7 @@ const PINNED_FIXTURE_IDS = new Set<string>([
   ...LIVING_EVIDENCE_DISEASE_PINS,
 ]);
 
-/** Representative walkthrough questions — deliberately unpinned. */
+/** Representative walkthrough questions — deliberately unpinned; one slot per benchmark domain. */
 export const REPRESENTATIVE_WALKTHROUGH_QUESTIONS: readonly WalkthroughQuestion[] = [
   {
     questionId: "IEW-AI-001",
@@ -258,18 +282,48 @@ export const REPRESENTATIVE_WALKTHROUGH_QUESTIONS: readonly WalkthroughQuestion[
     notes: "Translational registry-vs-publication question; registration ≠ efficacy.",
   },
   {
-    questionId: "IEW-AI-004",
-    domain: "autoimmune",
+    questionId: "IEW-FX-004",
+    domain: "fibrosis",
     question:
       "What evidence supports or contradicts fibroblast activation protein as a fibrosis-relevant target in systemic sclerosis interstitial lung disease, across human tissue versus mouse models?",
     embedsPinnedFixtureIds: false,
     speciesHint: "mixed_unspecified",
     tissueHint: "lung",
-    notes: "Species/tissue mismatch probe — distinct from citation identity correctness.",
+    notes: "Fibrosis / species-tissue mismatch probe — distinct from citation identity correctness.",
   },
   {
-    questionId: "IEW-IN-005",
-    domain: "inflammatory",
+    questionId: "IEW-GM-005",
+    domain: "gut_immune_metabolic",
+    question:
+      "Which human studies link gut barrier integrity, microbial metabolites, and mucosal immune signalling to type 2 diabetes risk, and which findings remain correlative only?",
+    embedsPinnedFixtureIds: false,
+    speciesHint: "human",
+    tissueHint: "gut_and_metabolic",
+    notes: "Gut–immune–metabolic programme slot; fixtures structural only — no SME ratings.",
+  },
+  {
+    questionId: "IEW-CX-006",
+    domain: "contradiction",
+    question:
+      "For anti-IL-6 pathway interventions in rheumatoid synovitis, which peer-reviewed findings report benefit versus null or opposing results that a researcher should surface side by side?",
+    embedsPinnedFixtureIds: false,
+    speciesHint: "human",
+    tissueHint: "synovium",
+    notes: "Contradiction-retrieval slot; opposing/null findings must stay distinct from citation identity.",
+  },
+  {
+    questionId: "IEW-GP-007",
+    domain: "gap",
+    question:
+      "After surveying human evidence on tissue-resident memory T cells in psoriasis, which coverage gaps remain, and which claims would incorrectly treat incomplete search as verified novelty?",
+    embedsPinnedFixtureIds: false,
+    speciesHint: "human",
+    tissueHint: "skin",
+    notes: "Gap-assessment precision slot; coverage incompleteness ≠ scientific novelty.",
+  },
+  {
+    questionId: "IEW-AB-008",
+    domain: "abstention",
     question:
       "In axial spondyloarthritis, which human studies associate IL-23 axis signalling with axial inflammation, and when should the system abstain for insufficient evidence?",
     embedsPinnedFixtureIds: false,
@@ -332,6 +386,22 @@ function emptyScorecard(): ScorecardField[] {
       thresholdApproved: false,
       scientificAccuracy: null,
       notes: "Appropriate abstention when evidence is insufficient — not overclaim.",
+    },
+    {
+      dimensionId: "unsupported_claim",
+      value: null,
+      labelledDenominator: 0,
+      thresholdApproved: false,
+      scientificAccuracy: null,
+      notes: "Substantive claims without source support — distinct from citation identity or abstention.",
+    },
+    {
+      dimensionId: "brief_completeness",
+      value: null,
+      labelledDenominator: 0,
+      thresholdApproved: false,
+      scientificAccuracy: null,
+      notes: "Research brief covers required output elements for the workflow — not scientific validity.",
     },
     {
       dimensionId: "expert_rated_research_usefulness",
@@ -408,6 +478,19 @@ export function assertQuestionsAvoidPinnedFixtures(
           `Walkthrough question ${q.questionId} must not embed pinned fixture id ${pin}`,
         );
       }
+    }
+  }
+}
+
+export function assertBenchmarkDomainCoverage(
+  questions: readonly WalkthroughQuestion[],
+): void {
+  const present = new Set(questions.map((q) => q.domain));
+  for (const domain of REQUIRED_BENCHMARK_QUESTION_DOMAINS) {
+    if (!present.has(domain)) {
+      throw new IndependentEvaluationSuitesError(
+        `Scientific benchmark requires a representative question slot for domain ${domain}`,
+      );
     }
   }
 }
@@ -555,6 +638,7 @@ export function buildIndependentEvaluationSuites(input: {
   void input.checklistPublished;
 
   assertQuestionsAvoidPinnedFixtures(REPRESENTATIVE_WALKTHROUGH_QUESTIONS);
+  assertBenchmarkDomainCoverage(REPRESENTATIVE_WALKTHROUGH_QUESTIONS);
 
   const liveGateOpen = input.liveGateOpen ?? false;
   const liveAttempt =
@@ -637,6 +721,13 @@ export function buildIndependentEvaluationSuites(input: {
           "PR 8 scorecard dimensions + orthogonal failure modes exist as contracts",
         ciRunnable: true,
         evidencePath: "test/independentEvaluationSuites.test.ts",
+      },
+      {
+        contractId: "scientific_benchmark_v1_alias",
+        description:
+          "evaluation/scientific_benchmark_v1 aliases independent-evaluation (no parallel platform)",
+        ciRunnable: true,
+        evidencePath: "test/scientificBenchmarkV1.test.ts",
       },
       {
         contractId: "limitations_report_published",
@@ -749,7 +840,7 @@ export function buildIndependentEvaluationSuites(input: {
       "#8 MoU",
     ],
     stopNote:
-      "PR 8 eng scaffold complete. Three suites stay separate. Deterministic CI ≠ live success ≠ scientific validity. SME gold slots empty; live integration gated; production readiness not claimed. Human queue #2/#4/#5 remain PARKED.",
+      "Independent evaluation v1.1 scaffold (scientific_benchmark_v1 alias). Three suites stay separate. Deterministic CI ≠ live success ≠ scientific validity. SME gold slots empty; live integration gated; production readiness not claimed. Human queue #2/#4/#5 remain PARKED.",
   };
 
   return {...body, inventoryHash: digest(body)};
@@ -825,8 +916,10 @@ export function parseIndependentEvaluationSuites(
   if (scientific.scorecard.some((s) => s.value !== null || s.scientificAccuracy !== null)) {
     throw new IndependentEvaluationSuitesError("Scorecard values must remain null placeholders");
   }
-  if (scientific.scorecard.length !== 7) {
-    throw new IndependentEvaluationSuitesError("Expected seven scorecard dimensions");
+  if (scientific.scorecard.length !== SCIENTIFIC_SCORECARD_DIMENSION_COUNT) {
+    throw new IndependentEvaluationSuitesError(
+      `Expected ${SCIENTIFIC_SCORECARD_DIMENSION_COUNT} scorecard dimensions`,
+    );
   }
   if (scientific.failureModeContracts.length !== 4) {
     throw new IndependentEvaluationSuitesError("Expected four orthogonal failure-mode contracts");
@@ -845,6 +938,7 @@ export function parseIndependentEvaluationSuites(
     }
   }
   assertQuestionsAvoidPinnedFixtures(scientific.representativeQuestions);
+  assertBenchmarkDomainCoverage(scientific.representativeQuestions);
   if (
     !manifest.suiteSeparation.deterministicIsNotLive ||
     !manifest.suiteSeparation.deterministicIsNotScientific ||

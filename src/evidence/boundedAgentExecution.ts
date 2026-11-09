@@ -476,6 +476,107 @@ export function reconstructBoundedArtifacts(
   return out;
 }
 
+/** Refined-brief investigation execution-record envelope (projection only). */
+export const INVESTIGATION_EXECUTION_RECORD_SCHEMA =
+  "hsi-investigation-execution-record-1" as const;
+
+export type InvestigationExecutionRecord = {
+  schemaVersion: typeof INVESTIGATION_EXECUTION_RECORD_SCHEMA;
+  investigation_id: string;
+  status: HsiOrchestrationResult["status"];
+  steps: readonly {
+    step_id: string;
+    stage_id: BoundedStageId;
+    status: BoundedStageStatus;
+    artifact_ref: string | null;
+    reason: string | null;
+  }[];
+  artifacts: readonly {
+    artifact_ref: string;
+    stage_id: BoundedStageId;
+    schema_version: string;
+  }[];
+  resource_budget: {
+    max_stages: number;
+    max_tool_calls_per_stage: number;
+    timeout_ms_per_stage: number;
+    page_size: number;
+  } | null;
+  review_status: {
+    curation_review: "draft";
+    graph_promotable: false;
+    scientific_approval: false;
+    gate_c_auto_approve: false;
+    scientific_validity_claimed: false;
+    cds_phi: false;
+  };
+  honesty: {
+    projectedFromBoundedAgent: true;
+    notAParallelOrchestrator: true;
+    scientificValidityClaimed: false;
+  };
+};
+
+/**
+ * Map durable bounded-agent traces onto the refined brief's investigation
+ * execution-record envelope. Extends existing execution — no new orchestrator.
+ */
+export function projectInvestigationExecutionRecord(
+  result: BoundedAgentExecutionResult,
+): InvestigationExecutionRecord {
+  const steps = result.stages.map((stage, index) => ({
+    step_id: `step-${String(index + 1).padStart(2, "0")}-${stage.stageId}`,
+    stage_id: stage.stageId,
+    status: stage.status,
+    artifact_ref: stage.artifactRef,
+    reason: stage.reason,
+  }));
+
+  const artifacts = result.stages.flatMap((stage) => {
+    if (!stage.artifactRef || !stage.artifact) return [];
+    return [
+      {
+        artifact_ref: stage.artifactRef,
+        stage_id: stage.stageId,
+        schema_version: stage.artifact.schemaVersion,
+      },
+    ];
+  });
+
+  const plan = result.stages.find((s) => s.stageId === "investigation-plan")?.artifact;
+  const resource_budget =
+    plan && "budgets" in plan
+      ? {
+          max_stages: plan.budgets.maxStages,
+          max_tool_calls_per_stage: plan.budgets.maxToolCallsPerStage,
+          timeout_ms_per_stage: plan.budgets.timeoutMsPerStage,
+          page_size: plan.budgets.pageSize,
+        }
+      : null;
+
+  return {
+    schemaVersion: INVESTIGATION_EXECUTION_RECORD_SCHEMA,
+    investigation_id: result.investigationId,
+    status: result.status,
+    steps,
+    artifacts,
+    resource_budget,
+    review_status: {
+      curation_review: "draft",
+      graph_promotable: false,
+      scientific_approval: false,
+      gate_c_auto_approve: false,
+      scientific_validity_claimed: false,
+      cds_phi: false,
+    },
+    honesty: {
+      projectedFromBoundedAgent: true,
+      notAParallelOrchestrator: true,
+      scientificValidityClaimed: false,
+    },
+  };
+}
+
 export async function runBoundedAgentExecution(input: {
   investigationId: string;
   question: string;

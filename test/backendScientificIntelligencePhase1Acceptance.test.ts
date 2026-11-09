@@ -34,7 +34,7 @@ const matrixPath = resolve(
 const refinedMatrixPath = resolve(root, "docs/audits/BACKEND_INTEGRATION_MATRIX.md");
 
 const AUDITED_MAIN_SHA = "4452e14b7a40d8ebfec978d9cc9b63d1d7b23719";
-const REFINED_AUDITED_MAIN_SHA = "c5c8c3299ce4879757cb0fd0633b80a281a09781";
+const REFINED_AUDITED_MAIN_SHA = "1cd62f53eddd789e97967eda17cd2b415992670a";
 
 describe("Phase 1 backend scientific intelligence — audit baseline", () => {
   test("integration matrix document exists with required audit fields", () => {

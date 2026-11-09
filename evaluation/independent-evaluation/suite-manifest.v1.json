@@ -2,7 +2,7 @@
   "schemaVersion": "hsi-independent-evaluation-suites-1",
   "phase": "PR8",
   "programme": "backend_scientific_intelligence",
-  "suiteVersion": "1.0.0",
+  "suiteVersion": "1.1.0",
   "generatedAt": "2026-11-08T22:20:00.000Z",
   "engineeringScaffold": "CLEARED",
   "scientificAcceptance": "BLOCKED",
@@ -59,6 +59,12 @@
           "description": "PR 8 scorecard dimensions + orthogonal failure modes exist as contracts",
           "ciRunnable": true,
           "evidencePath": "test/independentEvaluationSuites.test.ts"
+        },
+        {
+          "contractId": "scientific_benchmark_v1_alias",
+          "description": "evaluation/scientific_benchmark_v1 aliases independent-evaluation (no parallel platform)",
+          "ciRunnable": true,
+          "evidencePath": "test/scientificBenchmarkV1.test.ts"
         },
         {
           "contractId": "limitations_report_published",
@@ -168,6 +174,22 @@
           "thresholdApproved": false,
           "scientificAccuracy": null,
           "notes": "Appropriate abstention when evidence is insufficient — not overclaim."
+        },
+        {
+          "dimensionId": "unsupported_claim",
+          "value": null,
+          "labelledDenominator": 0,
+          "thresholdApproved": false,
+          "scientificAccuracy": null,
+          "notes": "Substantive claims without source support — distinct from citation identity or abstention."
+        },
+        {
+          "dimensionId": "brief_completeness",
+          "value": null,
+          "labelledDenominator": 0,
+          "thresholdApproved": false,
+          "scientificAccuracy": null,
+          "notes": "Research brief covers required output elements for the workflow — not scientific validity."
         },
         {
           "dimensionId": "expert_rated_research_usefulness",
@@ -293,7 +315,7 @@
             "recorder": null
           },
           {
-            "questionId": "IEW-AI-004",
+            "questionId": "IEW-FX-004",
             "arms": [
               "hsi_assisted",
               "conventional_researcher"
@@ -307,7 +329,49 @@
             "recorder": null
           },
           {
-            "questionId": "IEW-IN-005",
+            "questionId": "IEW-GM-005",
+            "arms": [
+              "hsi_assisted",
+              "conventional_researcher"
+            ],
+            "informationAccessComparable": true,
+            "reportQualitySeparately": true,
+            "reportTimeBudgetSeparately": true,
+            "qualityScore": null,
+            "timeBudgetMinutes": null,
+            "recordedAt": null,
+            "recorder": null
+          },
+          {
+            "questionId": "IEW-CX-006",
+            "arms": [
+              "hsi_assisted",
+              "conventional_researcher"
+            ],
+            "informationAccessComparable": true,
+            "reportQualitySeparately": true,
+            "reportTimeBudgetSeparately": true,
+            "qualityScore": null,
+            "timeBudgetMinutes": null,
+            "recordedAt": null,
+            "recorder": null
+          },
+          {
+            "questionId": "IEW-GP-007",
+            "arms": [
+              "hsi_assisted",
+              "conventional_researcher"
+            ],
+            "informationAccessComparable": true,
+            "reportQualitySeparately": true,
+            "reportTimeBudgetSeparately": true,
+            "qualityScore": null,
+            "timeBudgetMinutes": null,
+            "recordedAt": null,
+            "recorder": null
+          },
+          {
+            "questionId": "IEW-AB-008",
             "arms": [
               "hsi_assisted",
               "conventional_researcher"
@@ -351,17 +415,44 @@
           "notes": "Translational registry-vs-publication question; registration ≠ efficacy."
         },
         {
-          "questionId": "IEW-AI-004",
-          "domain": "autoimmune",
+          "questionId": "IEW-FX-004",
+          "domain": "fibrosis",
           "question": "What evidence supports or contradicts fibroblast activation protein as a fibrosis-relevant target in systemic sclerosis interstitial lung disease, across human tissue versus mouse models?",
           "embedsPinnedFixtureIds": false,
           "speciesHint": "mixed_unspecified",
           "tissueHint": "lung",
-          "notes": "Species/tissue mismatch probe — distinct from citation identity correctness."
+          "notes": "Fibrosis / species-tissue mismatch probe — distinct from citation identity correctness."
         },
         {
-          "questionId": "IEW-IN-005",
-          "domain": "inflammatory",
+          "questionId": "IEW-GM-005",
+          "domain": "gut_immune_metabolic",
+          "question": "Which human studies link gut barrier integrity, microbial metabolites, and mucosal immune signalling to type 2 diabetes risk, and which findings remain correlative only?",
+          "embedsPinnedFixtureIds": false,
+          "speciesHint": "human",
+          "tissueHint": "gut_and_metabolic",
+          "notes": "Gut–immune–metabolic programme slot; fixtures structural only — no SME ratings."
+        },
+        {
+          "questionId": "IEW-CX-006",
+          "domain": "contradiction",
+          "question": "For anti-IL-6 pathway interventions in rheumatoid synovitis, which peer-reviewed findings report benefit versus null or opposing results that a researcher should surface side by side?",
+          "embedsPinnedFixtureIds": false,
+          "speciesHint": "human",
+          "tissueHint": "synovium",
+          "notes": "Contradiction-retrieval slot; opposing/null findings must stay distinct from citation identity."
+        },
+        {
+          "questionId": "IEW-GP-007",
+          "domain": "gap",
+          "question": "After surveying human evidence on tissue-resident memory T cells in psoriasis, which coverage gaps remain, and which claims would incorrectly treat incomplete search as verified novelty?",
+          "embedsPinnedFixtureIds": false,
+          "speciesHint": "human",
+          "tissueHint": "skin",
+          "notes": "Gap-assessment precision slot; coverage incompleteness ≠ scientific novelty."
+        },
+        {
+          "questionId": "IEW-AB-008",
+          "domain": "abstention",
           "question": "In axial spondyloarthritis, which human studies associate IL-23 axis signalling with axial inflammation, and when should the system abstain for insufficient evidence?",
           "embedsPinnedFixtureIds": false,
           "speciesHint": "human",
@@ -397,6 +488,6 @@
     "#5 live researcher journey",
     "#8 MoU"
   ],
-  "stopNote": "PR 8 eng scaffold complete. Three suites stay separate. Deterministic CI ≠ live success ≠ scientific validity. SME gold slots empty; live integration gated; production readiness not claimed. Human queue #2/#4/#5 remain PARKED.",
-  "inventoryHash": "0b3a25b1c134bb3e3c5464206e8407b2835cc21129ff5eb7e55eb7d1696742a5"
+  "stopNote": "Independent evaluation v1.1 scaffold (scientific_benchmark_v1 alias). Three suites stay separate. Deterministic CI ≠ live success ≠ scientific validity. SME gold slots empty; live integration gated; production readiness not claimed. Human queue #2/#4/#5 remain PARKED.",
+  "inventoryHash": "317ab621dafb4a4108593fff89e664c06334663415f80f2b2860c813dde014a7"
 }
