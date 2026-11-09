@@ -1,0 +1,651 @@
+{
+  "schema": "hsi-immune-metabolic-microbiome-intelligence-1",
+  "method": "hsi.immune_metabolic_microbiome_intelligence.v1",
+  "version": "0.1.0",
+  "asOf": "2026-11-09T17:00:00.000Z",
+  "gutImmuneMetabolicGraphScopeCount": 2,
+  "immuneVsMetabolicPathwayComparisonCount": 1,
+  "metaboliteHostInteractionCount": 1,
+  "microbialFunctionHostPathwayMappingCount": 1,
+  "inflammationMetabolicPhenotypeRelationshipCount": 1,
+  "diseaseContextComparisonCount": 1,
+  "evidenceContradictionAnalysisCount": 1,
+  "profileCount": 2,
+  "axisBandCount": 5,
+  "capabilityKindCount": 6,
+  "evidenceDistinctionCount": 6,
+  "honesty": {
+    "researchIntelligenceOnly": true,
+    "notDiagnosisOrTreatmentSelection": true,
+    "notClinicalDecisionMaking": true,
+    "compositionCorrelationIsNotCausality": true,
+    "animalEvidenceIsNotAutomaticHumanTranslation": true,
+    "unsupportedLinksDoNotCompleteGutImmuneMetabolicChains": true,
+    "evidenceDistinctionsMustNotCollapse": true,
+    "noInventedMechanismsOrStatistics": true,
+    "noPhiIngestion": true,
+    "noWorkbenchUi": true,
+    "agentsDraftHumansReview": true,
+    "gateCAutoApprove": false,
+    "mouInvented": false,
+    "phiCdsWired": false,
+    "scientificApproval": false,
+    "completeUnsupportedChainClaimed": false,
+    "graphPromotable": false,
+    "neonProjectPolicy": "red-wave-only",
+    "migration": "deferred"
+  },
+  "gutImmuneMetabolicGraphScopes": [
+    {
+      "schema": "hsi-immune-metabolic-microbiome-intelligence-1",
+      "method": "hsi.immune_metabolic_microbiome_intelligence.v1",
+      "version": "0.1.0",
+      "id": "hsi-immi-scp-blocked-demo",
+      "displayName": "Blocked gut–immune–metabolic scope until authorised dataset",
+      "scientificQuestion": "Blocked scientific path until an authorised research dataset is supplied.",
+      "coveredAxisBands": [
+        "immune",
+        "metabolic",
+        "microbiome"
+      ],
+      "capabilityKinds": [
+        "immune_vs_metabolic_pathway_comparison",
+        "metabolite_host_interaction",
+        "microbial_function_host_pathway_mapping",
+        "inflammation_metabolic_phenotype_relationship",
+        "disease_context_comparison",
+        "evidence_contradiction_analysis"
+      ],
+      "evidenceDistinctions": [
+        "microbial_taxonomic_association",
+        "microbial_functional_evidence",
+        "metabolite_measurement",
+        "host_molecular_response",
+        "experimental_causal_evidence",
+        "human_observational_association"
+      ],
+      "diseaseContextIds": [],
+      "optionalCsbrScopeId": null,
+      "optionalHsysOrganSystemRelationshipId": null,
+      "optionalCdmiComparativeProfileId": null,
+      "optionalGutImmunePackSchema": null,
+      "datasetAvailability": "blocked_no_authorised_clinical_dataset",
+      "compositionCorrelationIsCausality": false,
+      "animalEvidenceAutoTranslatesToHuman": false,
+      "completeUnsupportedChainClaimed": false,
+      "containsIdentifiablePhi": false,
+      "authoredBy": {
+        "principalId": "fixture-agent-immi",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchIntelligenceOnly": true,
+        "notDiagnosisOrTreatmentSelection": true,
+        "notClinicalDecisionMaking": true,
+        "compositionCorrelationIsNotCausality": true,
+        "animalEvidenceIsNotAutomaticHumanTranslation": true,
+        "unsupportedLinksDoNotCompleteGutImmuneMetabolicChains": true,
+        "evidenceDistinctionsMustNotCollapse": true,
+        "noInventedMechanismsOrStatistics": true,
+        "noPhiIngestion": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "completeUnsupportedChainClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T17:00:00.000Z",
+      "updatedAt": "2026-11-09T17:00:00.000Z",
+      "note": ""
+    },
+    {
+      "schema": "hsi-immune-metabolic-microbiome-intelligence-1",
+      "method": "hsi.immune_metabolic_microbiome_intelligence.v1",
+      "version": "0.1.0",
+      "id": "hsi-immi-scp-gut-immune-metabolic-demo",
+      "displayName": "Fixture gut–immune–metabolic graph scope",
+      "scientificQuestion": "Which fixture immune–metabolic–microbiome associations can be reviewed without equating composition correlations with causality, auto-translating animal evidence to human, or completing unsupported gut–immune–metabolic chains?",
+      "coveredAxisBands": [
+        "immune",
+        "metabolic",
+        "microbiome",
+        "inflammation_phenotype",
+        "host_pathway"
+      ],
+      "capabilityKinds": [
+        "immune_vs_metabolic_pathway_comparison",
+        "metabolite_host_interaction",
+        "microbial_function_host_pathway_mapping",
+        "inflammation_metabolic_phenotype_relationship",
+        "disease_context_comparison",
+        "evidence_contradiction_analysis"
+      ],
+      "evidenceDistinctions": [
+        "microbial_taxonomic_association",
+        "microbial_functional_evidence",
+        "metabolite_measurement",
+        "host_molecular_response",
+        "experimental_causal_evidence",
+        "human_observational_association"
+      ],
+      "diseaseContextIds": [
+        "hsi-hdi-ctx-ibd-fixture",
+        "hsi-hdi-ctx-ra-fixture"
+      ],
+      "optionalCsbrScopeId": "hsi-csbr-scp-physio-fixture",
+      "optionalHsysOrganSystemRelationshipId": "hsi-hsys-osr-gut-immune",
+      "optionalCdmiComparativeProfileId": "hsi-cdmi-cmp-ibd-ra-fixture",
+      "optionalGutImmunePackSchema": "hsi-gut-immune-pack-1",
+      "datasetAvailability": "fixture_only",
+      "compositionCorrelationIsCausality": false,
+      "animalEvidenceAutoTranslatesToHuman": false,
+      "completeUnsupportedChainClaimed": false,
+      "containsIdentifiablePhi": false,
+      "authoredBy": {
+        "principalId": "fixture-agent-immi",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchIntelligenceOnly": true,
+        "notDiagnosisOrTreatmentSelection": true,
+        "notClinicalDecisionMaking": true,
+        "compositionCorrelationIsNotCausality": true,
+        "animalEvidenceIsNotAutomaticHumanTranslation": true,
+        "unsupportedLinksDoNotCompleteGutImmuneMetabolicChains": true,
+        "evidenceDistinctionsMustNotCollapse": true,
+        "noInventedMechanismsOrStatistics": true,
+        "noPhiIngestion": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "completeUnsupportedChainClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T17:00:00.000Z",
+      "updatedAt": "2026-11-09T17:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "immuneVsMetabolicPathwayComparisons": [
+    {
+      "schema": "hsi-immune-metabolic-microbiome-intelligence-1",
+      "method": "hsi.immune_metabolic_microbiome_intelligence.v1",
+      "version": "0.1.0",
+      "id": "hsi-immi-ipc-il6-scfa-demo",
+      "scopeId": "hsi-immi-scp-gut-immune-metabolic-demo",
+      "immunePathwayEntity": {
+        "id": "hsi-immi-ent-il6-pathway-demo",
+        "label": "Fixture IL6 immune pathway association",
+        "axisBand": "immune",
+        "ontologySystem": "ontology:pathway",
+        "ontologyValue": "IL6-IMMUNE-FIXTURE",
+        "note": ""
+      },
+      "metabolicPathwayEntity": {
+        "id": "hsi-immi-ent-scfa-pathway-demo",
+        "label": "Fixture SCFA metabolic pathway association",
+        "axisBand": "metabolic",
+        "ontologySystem": "ontology:pathway",
+        "ontologyValue": "SCFA-METABOLIC-FIXTURE",
+        "note": ""
+      },
+      "comparisonOutcome": "context_dependent_declared",
+      "evidenceDistinction": "host_molecular_response",
+      "comparisonSummary": "Fixture IL6 vs SCFA pathway comparison — overlap is context-dependent and not causal from composition alone.",
+      "compositionCorrelationIsCausality": false,
+      "authoredBy": {
+        "principalId": "fixture-agent-immi",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchIntelligenceOnly": true,
+        "notDiagnosisOrTreatmentSelection": true,
+        "notClinicalDecisionMaking": true,
+        "compositionCorrelationIsNotCausality": true,
+        "animalEvidenceIsNotAutomaticHumanTranslation": true,
+        "unsupportedLinksDoNotCompleteGutImmuneMetabolicChains": true,
+        "evidenceDistinctionsMustNotCollapse": true,
+        "noInventedMechanismsOrStatistics": true,
+        "noPhiIngestion": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "completeUnsupportedChainClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T17:00:00.000Z",
+      "updatedAt": "2026-11-09T17:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "metaboliteHostInteractions": [
+    {
+      "schema": "hsi-immune-metabolic-microbiome-intelligence-1",
+      "method": "hsi.immune_metabolic_microbiome_intelligence.v1",
+      "version": "0.1.0",
+      "id": "hsi-immi-mhi-butyrate-treg-demo",
+      "scopeId": "hsi-immi-scp-gut-immune-metabolic-demo",
+      "metaboliteEntity": {
+        "id": "hsi-immi-ent-butyrate-demo",
+        "label": "Fixture butyrate metabolite",
+        "axisBand": "metabolic",
+        "ontologySystem": "ontology:metabolite",
+        "ontologyValue": "BUTYRATE-FIXTURE",
+        "note": ""
+      },
+      "hostEntity": {
+        "id": "hsi-immi-ent-colonic-treg-demo",
+        "label": "Fixture colonic Treg host response",
+        "axisBand": "immune",
+        "ontologySystem": "ontology:cell",
+        "ontologyValue": "TREG-FIXTURE",
+        "note": ""
+      },
+      "interactionKind": "experimental_effect_declared",
+      "evidenceDistinction": "experimental_causal_evidence",
+      "translationStatus": "animal_only_declared",
+      "interactionSummary": "Fixture butyrate→colonic Treg experimental association in animal models — not automatic human translation.",
+      "animalEvidenceAutoTranslatesToHuman": false,
+      "compositionCorrelationIsCausality": false,
+      "authoredBy": {
+        "principalId": "fixture-agent-immi",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchIntelligenceOnly": true,
+        "notDiagnosisOrTreatmentSelection": true,
+        "notClinicalDecisionMaking": true,
+        "compositionCorrelationIsNotCausality": true,
+        "animalEvidenceIsNotAutomaticHumanTranslation": true,
+        "unsupportedLinksDoNotCompleteGutImmuneMetabolicChains": true,
+        "evidenceDistinctionsMustNotCollapse": true,
+        "noInventedMechanismsOrStatistics": true,
+        "noPhiIngestion": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "completeUnsupportedChainClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T17:00:00.000Z",
+      "updatedAt": "2026-11-09T17:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "microbialFunctionHostPathwayMappings": [
+    {
+      "schema": "hsi-immune-metabolic-microbiome-intelligence-1",
+      "method": "hsi.immune_metabolic_microbiome_intelligence.v1",
+      "version": "0.1.0",
+      "id": "hsi-immi-mfm-scfa-foxp3-demo",
+      "scopeId": "hsi-immi-scp-gut-immune-metabolic-demo",
+      "microbialEntity": {
+        "id": "hsi-immi-ent-clostridia-demo",
+        "label": "Fixture Clostridia taxonomic association",
+        "axisBand": "microbiome",
+        "ontologySystem": "ontology:taxon",
+        "ontologyValue": "CLOSTRIDIA-FIXTURE",
+        "note": ""
+      },
+      "hostPathwayEntity": {
+        "id": "hsi-immi-ent-foxp3-pathway-demo",
+        "label": "Fixture Foxp3 host pathway",
+        "axisBand": "host_pathway",
+        "ontologySystem": "ontology:pathway",
+        "ontologyValue": "FOXP3-HOST-FIXTURE",
+        "note": ""
+      },
+      "mappingOutcome": "supported",
+      "evidenceDistinction": "microbial_functional_evidence",
+      "chainStatus": "chain_partial_supported_links_only",
+      "mappingSummary": "Fixture microbial functional evidence linked to host Foxp3 pathway — partial chain only.",
+      "taxonomicAssociationCollapsedIntoFunctionalEvidence": false,
+      "completeUnsupportedChainClaimed": false,
+      "authoredBy": {
+        "principalId": "fixture-agent-immi",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchIntelligenceOnly": true,
+        "notDiagnosisOrTreatmentSelection": true,
+        "notClinicalDecisionMaking": true,
+        "compositionCorrelationIsNotCausality": true,
+        "animalEvidenceIsNotAutomaticHumanTranslation": true,
+        "unsupportedLinksDoNotCompleteGutImmuneMetabolicChains": true,
+        "evidenceDistinctionsMustNotCollapse": true,
+        "noInventedMechanismsOrStatistics": true,
+        "noPhiIngestion": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "completeUnsupportedChainClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T17:00:00.000Z",
+      "updatedAt": "2026-11-09T17:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "inflammationMetabolicPhenotypeRelationships": [
+    {
+      "schema": "hsi-immune-metabolic-microbiome-intelligence-1",
+      "method": "hsi.immune_metabolic_microbiome_intelligence.v1",
+      "version": "0.1.0",
+      "id": "hsi-immi-imp-inflam-scfa-demo",
+      "scopeId": "hsi-immi-scp-gut-immune-metabolic-demo",
+      "inflammationEntity": {
+        "id": "hsi-immi-ent-colonic-inflam-demo",
+        "label": "Fixture colonic inflammation phenotype",
+        "axisBand": "inflammation_phenotype",
+        "ontologySystem": "ontology:phenotype",
+        "ontologyValue": "COLONIC-INFLAM-FIXTURE",
+        "note": ""
+      },
+      "metabolicPhenotypeEntity": {
+        "id": "hsi-immi-ent-scfa-pathway-demo",
+        "label": "Fixture SCFA metabolic pathway association",
+        "axisBand": "metabolic",
+        "ontologySystem": "ontology:pathway",
+        "ontologyValue": "SCFA-METABOLIC-FIXTURE",
+        "note": ""
+      },
+      "mappingOutcome": "uncertain",
+      "evidenceDistinction": "human_observational_association",
+      "relationshipSummary": "Fixture inflammation–metabolic phenotype observational association — composition correlation is not causality.",
+      "compositionCorrelationIsCausality": false,
+      "authoredBy": {
+        "principalId": "fixture-agent-immi",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchIntelligenceOnly": true,
+        "notDiagnosisOrTreatmentSelection": true,
+        "notClinicalDecisionMaking": true,
+        "compositionCorrelationIsNotCausality": true,
+        "animalEvidenceIsNotAutomaticHumanTranslation": true,
+        "unsupportedLinksDoNotCompleteGutImmuneMetabolicChains": true,
+        "evidenceDistinctionsMustNotCollapse": true,
+        "noInventedMechanismsOrStatistics": true,
+        "noPhiIngestion": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "completeUnsupportedChainClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T17:00:00.000Z",
+      "updatedAt": "2026-11-09T17:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "diseaseContextComparisons": [
+    {
+      "schema": "hsi-immune-metabolic-microbiome-intelligence-1",
+      "method": "hsi.immune_metabolic_microbiome_intelligence.v1",
+      "version": "0.1.0",
+      "id": "hsi-immi-dcc-ibd-ra-demo",
+      "scopeId": "hsi-immi-scp-gut-immune-metabolic-demo",
+      "diseaseContextIds": [
+        "hsi-hdi-ctx-ibd-fixture",
+        "hsi-hdi-ctx-ra-fixture"
+      ],
+      "comparisonOutcome": "divergence_declared",
+      "evidenceDistinction": "human_observational_association",
+      "comparisonSummary": "Fixture IBD vs RA gut–immune–metabolic disease-context comparison — no auto-transfer.",
+      "autoTransferAcrossDiseases": false,
+      "authoredBy": {
+        "principalId": "fixture-agent-immi",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchIntelligenceOnly": true,
+        "notDiagnosisOrTreatmentSelection": true,
+        "notClinicalDecisionMaking": true,
+        "compositionCorrelationIsNotCausality": true,
+        "animalEvidenceIsNotAutomaticHumanTranslation": true,
+        "unsupportedLinksDoNotCompleteGutImmuneMetabolicChains": true,
+        "evidenceDistinctionsMustNotCollapse": true,
+        "noInventedMechanismsOrStatistics": true,
+        "noPhiIngestion": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "completeUnsupportedChainClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T17:00:00.000Z",
+      "updatedAt": "2026-11-09T17:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "evidenceContradictionAnalyses": [
+    {
+      "schema": "hsi-immune-metabolic-microbiome-intelligence-1",
+      "method": "hsi.immune_metabolic_microbiome_intelligence.v1",
+      "version": "0.1.0",
+      "id": "hsi-immi-eca-th17-competing-demo",
+      "scopeId": "hsi-immi-scp-gut-immune-metabolic-demo",
+      "relatedRecordIds": [
+        "hsi-immi-ipc-il6-scfa-demo",
+        "hsi-immi-imp-inflam-scfa-demo"
+      ],
+      "contradictionStatus": "competing_evidence_declared",
+      "evidenceDistinctionsCompared": [
+        "experimental_causal_evidence",
+        "human_observational_association"
+      ],
+      "analysisSummary": "Fixture competing evidence retained as distinct distinctions — not collapsed.",
+      "distinctionsCollapsed": false,
+      "authoredBy": {
+        "principalId": "fixture-agent-immi",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchIntelligenceOnly": true,
+        "notDiagnosisOrTreatmentSelection": true,
+        "notClinicalDecisionMaking": true,
+        "compositionCorrelationIsNotCausality": true,
+        "animalEvidenceIsNotAutomaticHumanTranslation": true,
+        "unsupportedLinksDoNotCompleteGutImmuneMetabolicChains": true,
+        "evidenceDistinctionsMustNotCollapse": true,
+        "noInventedMechanismsOrStatistics": true,
+        "noPhiIngestion": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "completeUnsupportedChainClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T17:00:00.000Z",
+      "updatedAt": "2026-11-09T17:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "profiles": [
+    {
+      "schema": "hsi-immune-metabolic-microbiome-intelligence-1",
+      "method": "hsi.immune_metabolic_microbiome_intelligence.v1",
+      "version": "0.1.0",
+      "id": "hsi-immi-prf-blocked-demo",
+      "displayName": "Blocked immune–metabolic–microbiome profile",
+      "scopeId": "hsi-immi-scp-blocked-demo",
+      "immuneVsMetabolicPathwayComparisonIds": [],
+      "metaboliteHostInteractionIds": [],
+      "microbialFunctionHostPathwayMappingIds": [],
+      "inflammationMetabolicPhenotypeRelationshipIds": [],
+      "diseaseContextComparisonIds": [],
+      "evidenceContradictionAnalysisIds": [],
+      "profileVersion": "0.1.0",
+      "lifecycle": "blocked_awaiting_authorised_dataset",
+      "reviewedBy": null,
+      "compositionCorrelationIsCausality": false,
+      "animalEvidenceAutoTranslatesToHuman": false,
+      "completeUnsupportedChainClaimed": false,
+      "containsIdentifiablePhi": false,
+      "limitations": [
+        "Blocked awaiting authorised research dataset — not scientific validation.",
+        "Composition correlations are not causality.",
+        "Animal evidence is not automatic human translation."
+      ],
+      "authoredBy": {
+        "principalId": "fixture-agent-immi",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchIntelligenceOnly": true,
+        "notDiagnosisOrTreatmentSelection": true,
+        "notClinicalDecisionMaking": true,
+        "compositionCorrelationIsNotCausality": true,
+        "animalEvidenceIsNotAutomaticHumanTranslation": true,
+        "unsupportedLinksDoNotCompleteGutImmuneMetabolicChains": true,
+        "evidenceDistinctionsMustNotCollapse": true,
+        "noInventedMechanismsOrStatistics": true,
+        "noPhiIngestion": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "completeUnsupportedChainClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T17:00:00.000Z",
+      "updatedAt": "2026-11-09T17:00:00.000Z",
+      "note": ""
+    },
+    {
+      "schema": "hsi-immune-metabolic-microbiome-intelligence-1",
+      "method": "hsi.immune_metabolic_microbiome_intelligence.v1",
+      "version": "0.1.0",
+      "id": "hsi-immi-prf-reviewable-demo",
+      "displayName": "Reviewable immune–metabolic–microbiome profile",
+      "scopeId": "hsi-immi-scp-gut-immune-metabolic-demo",
+      "immuneVsMetabolicPathwayComparisonIds": [
+        "hsi-immi-ipc-il6-scfa-demo"
+      ],
+      "metaboliteHostInteractionIds": [
+        "hsi-immi-mhi-butyrate-treg-demo"
+      ],
+      "microbialFunctionHostPathwayMappingIds": [
+        "hsi-immi-mfm-scfa-foxp3-demo"
+      ],
+      "inflammationMetabolicPhenotypeRelationshipIds": [
+        "hsi-immi-imp-inflam-scfa-demo"
+      ],
+      "diseaseContextComparisonIds": [
+        "hsi-immi-dcc-ibd-ra-demo"
+      ],
+      "evidenceContradictionAnalysisIds": [
+        "hsi-immi-eca-th17-competing-demo"
+      ],
+      "profileVersion": "0.1.0",
+      "lifecycle": "accepted_with_limitations",
+      "reviewedBy": {
+        "principalId": "fixture-human-reviewer",
+        "actorKind": "human"
+      },
+      "compositionCorrelationIsCausality": false,
+      "animalEvidenceAutoTranslatesToHuman": false,
+      "completeUnsupportedChainClaimed": false,
+      "containsIdentifiablePhi": false,
+      "limitations": [
+        "Fixtures are not scientific validation.",
+        "Composition correlations are not causality.",
+        "Animal evidence is not automatic human translation.",
+        "Unsupported links must not complete gut–immune–metabolic chains.",
+        "Evidence distinctions must not collapse."
+      ],
+      "authoredBy": {
+        "principalId": "fixture-agent-immi",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchIntelligenceOnly": true,
+        "notDiagnosisOrTreatmentSelection": true,
+        "notClinicalDecisionMaking": true,
+        "compositionCorrelationIsNotCausality": true,
+        "animalEvidenceIsNotAutomaticHumanTranslation": true,
+        "unsupportedLinksDoNotCompleteGutImmuneMetabolicChains": true,
+        "evidenceDistinctionsMustNotCollapse": true,
+        "noInventedMechanismsOrStatistics": true,
+        "noPhiIngestion": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "completeUnsupportedChainClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T17:00:00.000Z",
+      "updatedAt": "2026-11-09T17:00:00.000Z",
+      "note": ""
+    }
+  ]
+}
