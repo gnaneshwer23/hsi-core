@@ -14,6 +14,13 @@ import {
   type ResearcherQueryInput,
   type RetrievalOutcomeClass,
 } from "./dynamicEvidenceRetrieval";
+import type {ContextualCandidateRelationship} from "./contextualCandidateRelationships";
+import {
+  assessContradictionInvestigation,
+  compareCandidatesAgainstOpposingFindings,
+  type ContradictionInvestigationAssessment,
+  type StructuredEvidenceComparisonPack,
+} from "./structuredEvidenceComparison";
 
 export const OPPOSING_EVIDENCE_SEARCH_SCHEMA = "hsi-opposing-evidence-search-1" as const;
 export const OPPOSING_EVIDENCE_SEARCH_METHOD = "hsi.opposing_evidence_search.v1" as const;
@@ -68,6 +75,9 @@ export type OpposingEvidenceSearchReport = {
   searchRecordId: string | null;
   searchRecordHash: string | null;
   limitations: readonly string[];
+  /** Optional Phase 4–6 structured comparison bind (investigation categories, not conclusions). */
+  structuredComparison: StructuredEvidenceComparisonPack | null;
+  contradictionInvestigation: ContradictionInvestigationAssessment | null;
   consensusEstablished: false;
   providerUnavailableDistinctFromNoEvidence: true;
   scientificApproval: false;
@@ -218,6 +228,8 @@ export async function runOpposingEvidenceSearch(input: {
         "Skipped oppose ≠ consensus or absence of contradiction",
         "Provider unavailable is not claimed; search was not attempted",
       ],
+      structuredComparison: null,
+      contradictionInvestigation: null,
       consensusEstablished: false,
       providerUnavailableDistinctFromNoEvidence: true,
       scientificApproval: false,
@@ -314,9 +326,78 @@ export async function runOpposingEvidenceSearch(input: {
     searchRecordId: record.searchRecordHash ? `search:${record.searchRecordHash.slice(0, 24)}` : null,
     searchRecordHash: record.searchRecordHash ?? null,
     limitations,
+    structuredComparison: null,
+    contradictionInvestigation: null,
     consensusEstablished: false,
     providerUnavailableDistinctFromNoEvidence: true,
     scientificApproval: false,
     graphPromotable: false,
+  };
+}
+
+/**
+ * Wire structured evidence comparison into an opposing-search receipt.
+ * Retrieves comparable candidate records, compares context against oppose hits,
+ * and records investigation categories — not predetermined conclusions.
+ * LLM-only rationale is never treated as verification.
+ */
+export function attachStructuredComparisonToOpposingSearch(input: {
+  report: OpposingEvidenceSearchReport;
+  candidates: readonly ContextualCandidateRelationship[];
+  generatedAt?: string;
+  maxPairs?: number;
+}): OpposingEvidenceSearchReport {
+  const generatedAt = input.generatedAt ?? input.report.searchScope.dateOfSearch;
+  if (!input.candidates.length || !input.report.findings.length) {
+    const emptyPack = compareCandidatesAgainstOpposingFindings({
+      candidates: input.candidates,
+      opposingFindings: input.report.findings,
+      generatedAt,
+      maxPairs: input.maxPairs,
+    });
+    const investigation = assessContradictionInvestigation({
+      pack: emptyPack,
+      generatedAt,
+      searchRecordId: input.report.searchRecordId,
+      searchRecordHash: input.report.searchRecordHash,
+    });
+    return {
+      ...input.report,
+      structuredComparison: emptyPack,
+      contradictionInvestigation: investigation,
+      limitations: [
+        ...input.report.limitations,
+        input.candidates.length === 0
+          ? "Structured comparison abstained: no comparable candidate relationships supplied"
+          : "Structured comparison abstained: no opposing bibliographic findings to compare",
+        "Insufficient evidence for contradiction adjudication remains explicit — not LLM-verified",
+      ],
+    };
+  }
+
+  const pack = compareCandidatesAgainstOpposingFindings({
+    candidates: input.candidates,
+    opposingFindings: input.report.findings,
+    generatedAt,
+    maxPairs: input.maxPairs,
+  });
+  const investigation = assessContradictionInvestigation({
+    pack,
+    generatedAt,
+    searchRecordId: input.report.searchRecordId,
+    searchRecordHash: input.report.searchRecordHash,
+  });
+
+  return {
+    ...input.report,
+    structuredComparison: pack,
+    contradictionInvestigation: investigation,
+    limitations: [
+      ...input.report.limitations,
+      `Structured comparison pairs=${pack.comparisons.length}; potential_contradiction=${pack.summary.potentialContradiction}`,
+      "Investigation categories are candidate explanation bins — not predetermined conclusions",
+      "Explanations are not verified by LLM rationale alone; insufficient evidence stays explicit",
+      ...investigation.persistenceLines.slice(0, 12),
+    ],
   };
 }

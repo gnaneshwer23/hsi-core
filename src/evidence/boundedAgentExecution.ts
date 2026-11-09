@@ -69,10 +69,12 @@ import {
 } from "./gapVerification";
 import type {LivingEvidenceOutcomeSection} from "./livingEvidenceExpansion";
 import {
+  attachStructuredComparisonToOpposingSearch,
   opposingSearchStatusToContextual,
   runOpposingEvidenceSearch,
   type OpposingEvidenceSearchReport,
 } from "./opposingEvidenceSearch";
+import type {ContradictionInvestigationAssessment} from "./structuredEvidenceComparison";
 import {
   integrateResearchBrief,
   toBoundedResearchBriefArtifact,
@@ -183,6 +185,15 @@ export type OpposingEvidenceAssessmentArtifact = {
   searchScope: OpposingEvidenceSearchReport["searchScope"] | null;
   coverage: OpposingEvidenceSearchReport["coverage"] | null;
   limitations: readonly string[];
+  /** Thin M2 deepen hook — investigation categories, not conclusions. */
+  contradictionInvestigation: {
+    comparisonCount: number;
+    potentialContradictionCount: number;
+    categories: readonly string[];
+    persistenceLines: readonly string[];
+    predeterminedConclusions: false;
+    scientificallyVerified: false;
+  } | null;
   consensusEstablished: false;
   providerUnavailableDistinctFromNoEvidence: true;
 };
@@ -1147,7 +1158,7 @@ export async function runBoundedAgentExecution(input: {
         .filter((r) => r.findingPolarity === "opposing")
         .map((r) => r.id);
 
-      const report = await runOpposingEvidenceSearch({
+      const baseReport = await runOpposingEvidenceSearch({
         question,
         entities: input.entities,
         recordedOpposingCandidateIds: recordedOpposing,
@@ -1157,6 +1168,13 @@ export async function runBoundedAgentExecution(input: {
         signal: input.signal,
         pageSize: budgets.pageSize,
         skipForBudget: input.skipOpposingForBudget === true,
+      });
+      // M2 deepen: comparable candidates × oppose hits → investigation categories.
+      const report = attachStructuredComparisonToOpposingSearch({
+        report: baseReport,
+        candidates: pack?.relationships ?? [],
+        generatedAt: now(),
+        maxPairs: Math.min(25, budgets.pageSize * 5),
       });
       scratch.opposingReport = report;
 
@@ -1204,6 +1222,8 @@ export async function runBoundedAgentExecution(input: {
         }
       }
 
+      const investigation: ContradictionInvestigationAssessment | null =
+        report.contradictionInvestigation;
       const artifact: OpposingEvidenceAssessmentArtifact = {
         schemaVersion: "hsi-opposing-evidence-assessment-1",
         searchPerformed: report.searchPerformed,
@@ -1216,6 +1236,17 @@ export async function runBoundedAgentExecution(input: {
           "Passage-level contradiction adjudication remains rights-gated (human queue #2)",
           "Expert contradiction ranking unavailable (human queue #4)",
         ],
+        contradictionInvestigation: investigation
+          ? {
+              comparisonCount: report.structuredComparison?.comparisons.length ?? 0,
+              potentialContradictionCount:
+                report.structuredComparison?.summary.potentialContradiction ?? 0,
+              categories: [...new Set(investigation.items.map((i) => i.category))],
+              persistenceLines: investigation.persistenceLines.slice(0, 24),
+              predeterminedConclusions: false,
+              scientificallyVerified: false,
+            }
+          : null,
         consensusEstablished: false,
         providerUnavailableDistinctFromNoEvidence: true,
       };
@@ -1281,6 +1312,14 @@ export async function runBoundedAgentExecution(input: {
       if (missingEvidence.length === 0) {
         missingEvidence.push("Passage-backed entailment unavailable without rights clearance");
       }
+      if (
+        (opposeReport?.contradictionInvestigation?.summary.genuineConflictCandidates ?? 0) > 0 ||
+        (oppose?.contradictionInvestigation?.potentialContradictionCount ?? 0) > 0
+      ) {
+        missingEvidence.push(
+          "Independent contradictory or null findings — structured comparison recorded potential contradiction investigation categories (not predetermined conclusions)",
+        );
+      }
       const gaps = projectGapVerificationForOutcome({
         asOf,
         branches: [
@@ -1308,6 +1347,7 @@ export async function runBoundedAgentExecution(input: {
         },
         livingEvidence: emptyLivingEvidence(asOf),
         opposingSearch: opposeReport,
+        contradictionInvestigation: opposeReport?.contradictionInvestigation ?? null,
         semanticSupports: [
           {
             matchText: missingEvidence[0]!,

@@ -1,10 +1,10 @@
 # Milestone 2 — Contextual Biological Reasoning & Contradiction Intelligence
 
 **Brief:** HSI Milestone 2 — structured evidence comparison, biological context, contradiction intelligence  
-**Status:** Phase 0 gap audit + first eng slice selection — **not** production readiness, **not** scientific validity, **not** M2 complete.  
+**Status:** Phase 0 + Phase 3 structured comparison on `main` (#90) + **Phases 4–6 deepen in-flight** (contradiction investigation) — **not** production readiness, **not** scientific validity, **not** M2 complete.  
 **Date:** 2026-11-09  
-**Audited `main` SHA:** `4145422278b3c052b8aafb8cf0def5ec419bff63`  
-**Tip commit:** `4145422 Document Backend SI brief status against shipped Phases 1–7. (#89)`  
+**Audited `main` SHA:** `4056f1c4fa3b9122fc90fe79a0402f60f9b1496b`  
+**Tip commit:** `4056f1c Add M3 Phase 0 matrix and hypothesis registry contracts. (#91)`  
 **HSI Neon:** red-wave only (`human super intelligence` / `red-wave-06625195` / `ep-restless-dew…`) — never autumn-snow / Akeno / DeliverX  
 
 **Cross-links (do not contradict):**
@@ -65,28 +65,31 @@ Honesty freeze: no Gate C auto-approve · no invented MoU / `legalBinding` · no
 | Phase | Capability | Existing implementation | Status | Missing for M2 | Primary files |
 |-------|------------|-------------------------|--------|----------------|---------------|
 | **1** Biological context model | `CandidateBiologicalContext` on contextual candidates; brief context projection | `partial` | Deeper assay/study-design fill; curator-declared context still sparse | `contextualCandidateRelationships.ts` |
-| **2** Contradiction / oppose intelligence | Oppose search + gap `contradictory_findings` + site `contradictionEngine` | `partial` | Pairwise structured outcomes with rationale+trace | `opposingEvidenceSearch.ts` · `gapVerification.ts` · `contradictionEngine.ts` |
-| **3** Structured evidence comparison | **This PR slice** — pairwise outcome taxonomy | `partial` (after this PR) / was `missing` | Workbench O-02 bind; multi-evidence sets; live E2E | `structuredEvidenceComparison.ts` (new) |
-| **4** Context-aware retrieval ranking | Dynamic retrieve + release-aware drafts | `partial` | Context-weighted ranking beyond entity clarify | `dynamicEvidenceRetrieval.ts` · `releaseAwareRetrieval.ts` |
-| **5** Agent contradiction stage deepen | Bounded agent oppose/gap stages | `partial` | Consume structured comparison envelopes | `boundedAgentExecution.ts` |
-| **6** Provenance of comparison decisions | Search-record + gap assessment projections | `partial` | Persist comparison records without schema fork if possible | persistence / gap projectors |
-| **7** Workbench UI (O-02) | Outcome panel section 02 exists | `partial` | Thin hooks to structured outcomes | site workbench / `researchOutcome.ts` |
+| **2** Contradiction / oppose intelligence | Oppose search + gap `contradictory_findings` + site `contradictionEngine` | `partial` | Live passage adjudication (#2/#4) | `opposingEvidenceSearch.ts` · `gapVerification.ts` · `contradictionEngine.ts` |
+| **3** Structured evidence comparison | Pairwise outcome taxonomy (#90 on `main`) | `partial` | Workbench multi-evidence sets; live E2E | `structuredEvidenceComparison.ts` |
+| **4** Context-aware retrieval ranking + contradiction flow | Dynamic retrieve + **this deepen:** candidate×oppose compare → investigation categories | `partial` | Context-weighted ranking beyond entity clarify | `dynamicEvidenceRetrieval.ts` · `opposingEvidenceSearch.ts` · `structuredEvidenceComparison.ts` |
+| **5** Agent contradiction stage deepen | Bounded agent oppose/gap consume structured comparison | `partial` → deepen PR | Full multi-hypothesis eval is M3 | `boundedAgentExecution.ts` |
+| **6** Provenance of comparison decisions | Gap assessment + oppose limitations persist investigation category lines | `partial` → deepen PR | Dedicated Neon table not required | gap projectors · oppose receipt |
+| **7** Workbench UI (O-02) | Outcome panel + thin contradictionInvestigation option on research outcome | `partial` | Richer O-02 UI bind | `researchOutcome.ts` |
 | **8** SSc Tfh / IL-21 eval | Fixtures + workbench probes | `fixture-only` · live `blocked` | Human #2/#4/#5; checklist only — no invented success | human-queue · SSc checklists |
 
 ---
 
-## Highest-leverage first eng slice (this PR)
+## Highest-leverage first eng slice (landed #90)
 
-**Structured evidence comparison service (Phase 3 core)**
+**Structured evidence comparison service (Phase 3 core)** — on `main`.
 
-Why:
+## Next eng slice (this deepen PR)
 
-1. M1 already has polarity + biological context + oppose/gap — missing piece is a **governed pairwise outcome** with rationale and evidence trace.  
-2. Does not rebuild KG/agents; extends `contextualCandidateRelationships` types and can feed gap/workbench later.  
-3. Outcome vocabulary matches M2 brief: `consistent` · `potential_contradiction` · `context_dependent` · `methodological_difference` · `insufficient_comparability` · `insufficient_evidence`.  
-4. Honesty: never scientific approval, never graph promote, never collapse provider failure into “no contradiction.”
+**Wire structured comparison → opposing evidence / gap assessment (Phases 4–6 focused)**
 
-**Out of this PR:** full Phase 1 context enrichment, Phase 7 UI redesign, Phase 8 invented live SSc success, Reactome/GO adapters, Neon migrations (existing draft candidates suffice).
+1. Potential contradiction flow retrieves comparable records, compares context, records **investigation categories** (not predetermined conclusions).  
+2. Counterevidence / uncertainty: explanations **not** verified by LLM rationale alone; explicit `insufficient_evidence`.  
+3. Persist via existing oppose receipt limitations + gap assessment `contradictions` / investigation category lines — no new Neon migration.  
+4. Bounded agent oppose/gap stages + thin `researchOutcome` O-02 option bind.  
+5. Review state intact; no auto-approve graph edges.
+
+**Out of this PR:** full M3 multi-hypothesis eval, Phase 7 UI redesign, Phase 8 invented live SSc success, Reactome/GO adapters, Neon migrations.
 
 ---
 

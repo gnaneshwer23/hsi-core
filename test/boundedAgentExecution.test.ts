@@ -412,6 +412,9 @@ describe("bounded agent execution durable traces", () => {
       expect(oppose.artifact.searchScope?.dateOfSearch).toBe(retrievedAt);
       expect(oppose.artifact.limitations.length).toBeGreaterThan(0);
       expect(oppose.artifact.providerUnavailableDistinctFromNoEvidence).toBe(true);
+      expect(oppose.artifact.contradictionInvestigation).not.toBeNull();
+      expect(oppose.artifact.contradictionInvestigation?.predeterminedConclusions).toBe(false);
+      expect(oppose.artifact.contradictionInvestigation?.scientificallyVerified).toBe(false);
     }
     const gaps = result.stages.find((s) => s.stageId === "gap-assessment");
     expect(gaps?.artifact).not.toBeNull();
@@ -421,7 +424,8 @@ describe("bounded agent execution durable traces", () => {
       expect(gaps.artifact.items.every((i) => i.scientificGapStatus !== "scientifically_verified")).toBe(
         true,
       );
-      expect(gaps.artifact.items.some((i) => i.semanticSupportKind !== "absent")).toBe(true);
+      // With structured investigation attached, LLM-only rationale is refused for semantic analysis.
+      expect(gaps.artifact.items.every((i) => i.semanticSupportKind === "absent")).toBe(true);
     }
   });
 
