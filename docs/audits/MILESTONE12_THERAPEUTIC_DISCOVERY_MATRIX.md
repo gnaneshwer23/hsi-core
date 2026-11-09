@@ -1,7 +1,7 @@
 # Milestone 12 — Therapeutic Target Discovery, Drug Repurposing & Preclinical Decision Intelligence
 
 **Brief:** HSI Milestone 12 — therapeutic programme / target candidate / compound-or-intervention / target–intervention assessment contracts without claiming efficacy, safety, clinical suitability, treatment recommendations, Gate C auto-approve, MoU, or PHI/CDS.  
-**Status:** Phase 0 gap audit + PR1 (Therapeutic Discovery Data Contracts) — **not** drug discovery complete, **not** repurposing validated, **not** preclinical decision intelligence claimed.  
+**Status:** Phase 0 gap audit + PR1 (Therapeutic Discovery Data Contracts, [#107](https://github.com/gnaneshwer23/hsi-core/pull/107) in-flight) — **not** drug discovery complete, **not** repurposing validated, **not** preclinical decision intelligence claimed.  
 **Date:** 2026-11-09  
 **Audited `main` SHA:** `ebabd52c994fa1656d95bda096cd67e1ab90be6c` (post-#104 M10 stack on main)  
 **HSI Neon:** red-wave only (`human super intelligence` / `red-wave-06625195` / `ep-restless-dew…`) — never autumn-snow / Akeno / DeliverX  
@@ -100,7 +100,7 @@ Honesty freeze: no Gate C auto-approve · no invented MoU · no live CDS/PHI · 
 | Phase | Capability | Existing | Status | Missing | Files |
 |-------|------------|----------|--------|---------|-------|
 | **0** Audit + dependency + architecture plan | This document | — | `Verified operational` (audit) | Keep updated as PRs land | this file |
-| **1** Therapeutic discovery data contracts | M3/M4/M6/M9 ids · OT/UniProt/ChEMBL stubs | `Missing` → **PR1 in-flight** (`eng/m12-therapeutic-discovery-data-contracts`) | Programme · target · intervention-kind · assessment with honesty | `src/therapeuticDiscoveryDataContracts.ts` · `test/therapeuticDiscoveryDataContracts.test.ts` · `scripts/therapeutic-discovery-data-contracts.ts` · `evaluation/therapeutic-discovery-data/` |
+| **1** Therapeutic discovery data contracts | M3/M4/M6/M9 ids · OT/UniProt/ChEMBL stubs | `Missing` → **PR1 in-flight** ([#107](https://github.com/gnaneshwer23/hsi-core/pull/107) / `eng/m12-therapeutic-discovery-data-contracts`) — 7 focused tests + evaluation pack | Programme · target · intervention-kind · assessment with honesty | `src/therapeuticDiscoveryDataContracts.ts` · `test/therapeuticDiscoveryDataContracts.test.ts` · `scripts/therapeutic-discovery-data-contracts.ts` · `evaluation/therapeutic-discovery-data/` |
 | **2** Pharmacology and compound data integration | RDKit/TDC stubs · ChEMBL prefix | `Fixture-only` / stub | Bounded public chem metadata without live ChEMBL unless authorised | future PR2 |
 | **3** Target prioritisation / discrimination | M2 contradiction · M10 design | `Partial` substrate | Ordinal investigation priority without invented scores | later |
 | **4** Repurposing candidate envelopes | Approved-medicine kind in PR1 | `Missing` as engine | Catalogue + assessment only — never treatment recommend | later |
@@ -186,7 +186,7 @@ Honesty freeze: no Gate C auto-approve · no invented MoU · no live CDS/PHI · 
 
 | PR | Title | Branch | State |
 |----|-------|--------|-------|
-| (this delivery) | M12 PR1 Therapeutic Discovery Data Contracts | `eng/m12-therapeutic-discovery-data-contracts` | **PR1 in-flight** — do **not** merge in this delivery |
+| [#107](https://github.com/gnaneshwer23/hsi-core/pull/107) | M12 PR1 Therapeutic Discovery Data Contracts | `eng/m12-therapeutic-discovery-data-contracts` | **PR1 in-flight** — do **not** merge in this delivery |
 | #104 | M10 PR4 Governed Computational Execution | merged → `ebabd52` | Orthogonal substrate now on main |
 | #102 | M10 PR2 (original stacked) | closed without merge | **Abandoned** after base-branch delete; content restored via [#105](https://github.com/gnaneshwer23/hsi-core/pull/105) |
 | #105 | M10 PR2 Experiment Design and Prioritisation | merged | Restored PR2 |
