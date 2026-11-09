@@ -71,7 +71,7 @@ export function AccessIntentPanel(){
       Grants in <code>hsi_research_access</code> are provisioned by an administrator after you create a verified account.
       This form keeps a browser-only draft so you do not lose your question across sign-up.
     </p>
-    <form className="xp-form" onSubmit={save}>
+    <form className="xp-form" onSubmit={save} noValidate>
       <label htmlFor="access-intent-question">Research question or investigation focus</label>
       <textarea
         id="access-intent-question"
@@ -82,6 +82,7 @@ export function AccessIntentPanel(){
         value={question}
         onChange={e=>setQuestion(e.target.value)}
         aria-describedby="access-intent-hint"
+        aria-invalid={status.includes("at least 12")?true:undefined}
       />
       <p id="access-intent-hint" className="xp-small">
         Optional context carried from the site: domain={domain||"none"} · scenario={scenario||"none"}.

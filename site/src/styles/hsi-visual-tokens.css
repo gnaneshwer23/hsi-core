@@ -56,6 +56,7 @@
   color:#fff8f4;
   border-color:var(--hsi-burgundy-deep);
 }
+.ed-home .ed-instrument-selected small,
 .ed-home .ed-ecosystem-domain[aria-pressed=true] small,
 .ed-home .ed-ecosystem-domain[aria-pressed=true] span{
   color:#f6e4e0;

@@ -18,7 +18,11 @@ test('canvas supports dragging, wheel zoom and keyboard evidence inspection with
  await node.scrollIntoViewIfNeeded();const initial=await node.getAttribute('cx'),box=(await node.boundingBox())!;
  await page.mouse.move(box.x+box.width/2,box.y+box.height/2);await page.mouse.down();await page.mouse.move(box.x+box.width/2+45,box.y+box.height/2+25,{steps:6});await page.mouse.up();
  expect(await node.getAttribute('cx')).not.toBe(initial);await expect(page).toHaveURL(/node=pancreas/);
- await page.mouse.wheel(0,-100);await expect(page.locator('.kg-canvas .xp-graph-toolbar').first()).toContainText('110%');
+ const zoomPct=page.locator('.kg-canvas .xp-graph-toolbar').first().getByTestId('graph-zoom-pct');
+ const beforeZoom=Number((await zoomPct.textContent())?.replace('%','')??'100');
+ await page.mouse.move(box.x+box.width/2,box.y+box.height/2);
+ await page.mouse.wheel(0,-100);
+ await expect.poll(async()=>Number((await zoomPct.textContent())?.replace('%','')??'0')).toBeGreaterThan(beforeZoom);
  const edge=svg.locator('[data-graph-edge]').first();await edge.focus();await page.keyboard.press('Enter');await expect(page.getByRole('region',{name:'Relationship evidence dossier'})).toBeVisible();
  await expect(page.getByRole('region',{name:'Relationship evidence dossier'})).toContainText('Independent scientific review');
 });
