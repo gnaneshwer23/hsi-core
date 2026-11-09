@@ -1,0 +1,1076 @@
+{
+  "schema": "hsi-research-gap-hypothesis-portfolio-1",
+  "method": "hsi.research_gap_hypothesis_portfolio.v1",
+  "version": "0.1.0",
+  "asOf": "2026-11-09T19:00:00.000Z",
+  "portfolioCount": 1,
+  "gapCount": 10,
+  "hypothesisCount": 2,
+  "reassessmentCount": 1,
+  "gapCategories": [
+    "missing_mechanistic_evidence",
+    "contradictory_findings",
+    "missing_human_validation",
+    "incomplete_biomarker_validation",
+    "uncertain_therapeutic_target_evidence",
+    "missing_experimental_replication",
+    "limited_disease_context_coverage",
+    "insufficient_longitudinal_outcomes",
+    "model_validation_gaps",
+    "cross_disease_evidence_gaps"
+  ],
+  "hypothesisStates": [
+    "proposed",
+    "under_investigation",
+    "evidence_supported",
+    "challenged",
+    "experimentally_tested",
+    "inconclusive",
+    "rejected",
+    "superseded"
+  ],
+  "honesty": {
+    "dependsOnPr1ScientificProgrammeContracts": true,
+    "dependsOnPr2ResearchObjectivePlanning": true,
+    "dependsOnPr3ContinuousEvidenceInvestigation": true,
+    "dependsOnPr4ScientificKnowledgeEvolution": true,
+    "extendsM3HypothesisRegistryById": true,
+    "extendsGapInvestigation": true,
+    "noArbitraryImportanceScores": true,
+    "prioritisationExposesCriteriaAndAssumptions": true,
+    "hypothesisStateRequiresEvidenceAndReview": true,
+    "discussionVolumeAloneDoesNotConfirm": true,
+    "retainRejectedAndSupersededHypotheses": true,
+    "notSeparateAgentPlatform": true,
+    "agentsInvestigateResearchersApprove": true,
+    "independentReviewerNotAuthoringAgent": true,
+    "agentsCannotSelfApprove": true,
+    "noAutoApprovalOfPlansOrClaims": true,
+    "noFabricatedDiscoveries": true,
+    "noWorkbenchUi": true,
+    "gateCAutoApprove": false,
+    "mouInvented": false,
+    "phiCdsWired": false,
+    "scientificApproval": false,
+    "graphPromotable": false,
+    "neonProjectPolicy": "red-wave-only",
+    "migration": "deferred",
+    "researchGapHypothesisPortfolio": true,
+    "experimentPortfolioIntegration": false
+  },
+  "portfolios": [
+    {
+      "schema": "hsi-research-gap-hypothesis-portfolio-1",
+      "method": "hsi.research_gap_hypothesis_portfolio.v1",
+      "version": "0.1.0",
+      "id": "hsi-sp-rghp-fixture-demo",
+      "programmeId": "hsi-sp-prog-fixture-demo",
+      "label": "Fixture research-gap and hypothesis portfolio — engineering only; not discovery",
+      "linkedObjectiveIds": [
+        "hsi-sp-obj-fixture-demo"
+      ],
+      "authoredBy": {
+        "principalId": "fixture-agent-rghp",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "dependsOnPr1ScientificProgrammeContracts": true,
+        "dependsOnPr2ResearchObjectivePlanning": true,
+        "dependsOnPr3ContinuousEvidenceInvestigation": true,
+        "dependsOnPr4ScientificKnowledgeEvolution": true,
+        "extendsM3HypothesisRegistryById": true,
+        "extendsGapInvestigation": true,
+        "noArbitraryImportanceScores": true,
+        "prioritisationExposesCriteriaAndAssumptions": true,
+        "hypothesisStateRequiresEvidenceAndReview": true,
+        "discussionVolumeAloneDoesNotConfirm": true,
+        "retainRejectedAndSupersededHypotheses": true,
+        "notSeparateAgentPlatform": true,
+        "agentsInvestigateResearchersApprove": true,
+        "independentReviewerNotAuthoringAgent": true,
+        "agentsCannotSelfApprove": true,
+        "noAutoApprovalOfPlansOrClaims": true,
+        "noFabricatedDiscoveries": true,
+        "noWorkbenchUi": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred",
+        "researchGapHypothesisPortfolio": true,
+        "experimentPortfolioIntegration": false
+      },
+      "createdAt": "2026-11-09T19:00:00.000Z",
+      "updatedAt": "2026-11-09T19:00:00.000Z",
+      "note": "Fixture research-gap / hypothesis portfolio — not a discovery claim."
+    }
+  ],
+  "gaps": [
+    {
+      "schema": "hsi-research-gap-hypothesis-portfolio-1",
+      "method": "hsi.research_gap_hypothesis_portfolio.v1",
+      "version": "0.1.0",
+      "id": "hsi-sp-gap-fixture-1",
+      "portfolioId": "hsi-sp-rghp-fixture-demo",
+      "programmeId": "hsi-sp-prog-fixture-demo",
+      "category": "missing_mechanistic_evidence",
+      "scientificQuestion": "Fixture scientific question for missing mechanistic evidence?",
+      "evidenceSupportingTheGap": [
+        "Fixture evidence supporting the missing_mechanistic_evidence gap classification."
+      ],
+      "whyItMatters": "Fixture programme decision relevance for investigation planning — not a discovery claim.",
+      "alternativeExplanations": [
+        "Fixture alternative: coverage limits may explain the apparent gap."
+      ],
+      "availableInvestigationMethods": [
+        "Bounded public-evidence retrieval with human review"
+      ],
+      "expectedDecisionRelevance": "Informs whether to propose a workstream or pause pending evidence.",
+      "dataRequirements": "Public evidence refs only; no PHI.",
+      "uncertainty": "Fixture gap uncertainty — not scientifically verified.",
+      "reviewState": "accepted_human",
+      "linkedPlanEvidenceGapIds": [
+        "plan-gap-fixture-1"
+      ],
+      "supportingEvidenceRefs": [
+        "hsi-sp-evid-fixture-1"
+      ],
+      "prioritisation": {
+        "id": "hsi-sp-gpc-fixture-1",
+        "noArbitraryImportanceScore": true,
+        "criteriaSummary": "Prioritise gaps blocking declared milestone exit criteria — no bare importance score.",
+        "assumptions": [
+          "Milestone exit criteria are human-declared.",
+          "Fixture evidence bounds are incomplete."
+        ],
+        "ordinalRank": 1,
+        "note": "Criteria-bound ordinal rank only."
+      },
+      "authoredBy": {
+        "principalId": "fixture-agent-rghp",
+        "actorKind": "ai_agent"
+      },
+      "reviewedBy": {
+        "principalId": "fixture-researcher",
+        "actorKind": "human"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "dependsOnPr1ScientificProgrammeContracts": true,
+        "dependsOnPr2ResearchObjectivePlanning": true,
+        "dependsOnPr3ContinuousEvidenceInvestigation": true,
+        "dependsOnPr4ScientificKnowledgeEvolution": true,
+        "extendsM3HypothesisRegistryById": true,
+        "extendsGapInvestigation": true,
+        "noArbitraryImportanceScores": true,
+        "prioritisationExposesCriteriaAndAssumptions": true,
+        "hypothesisStateRequiresEvidenceAndReview": true,
+        "discussionVolumeAloneDoesNotConfirm": true,
+        "retainRejectedAndSupersededHypotheses": true,
+        "notSeparateAgentPlatform": true,
+        "agentsInvestigateResearchersApprove": true,
+        "independentReviewerNotAuthoringAgent": true,
+        "agentsCannotSelfApprove": true,
+        "noAutoApprovalOfPlansOrClaims": true,
+        "noFabricatedDiscoveries": true,
+        "noWorkbenchUi": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred",
+        "researchGapHypothesisPortfolio": true,
+        "experimentPortfolioIntegration": false
+      },
+      "createdAt": "2026-11-09T19:00:00.000Z",
+      "updatedAt": "2026-11-09T19:00:00.000Z",
+      "note": "Human research-gap review recorded — fixtures only; not scientific approval."
+    },
+    {
+      "schema": "hsi-research-gap-hypothesis-portfolio-1",
+      "method": "hsi.research_gap_hypothesis_portfolio.v1",
+      "version": "0.1.0",
+      "id": "hsi-sp-gap-fixture-2",
+      "portfolioId": "hsi-sp-rghp-fixture-demo",
+      "programmeId": "hsi-sp-prog-fixture-demo",
+      "category": "contradictory_findings",
+      "scientificQuestion": "Fixture scientific question for contradictory findings?",
+      "evidenceSupportingTheGap": [
+        "Fixture evidence supporting the contradictory_findings gap classification."
+      ],
+      "whyItMatters": "Fixture programme decision relevance for investigation planning — not a discovery claim.",
+      "alternativeExplanations": [
+        "Fixture alternative: coverage limits may explain the apparent gap."
+      ],
+      "availableInvestigationMethods": [
+        "Bounded public-evidence retrieval with human review"
+      ],
+      "expectedDecisionRelevance": "Informs whether to propose a workstream or pause pending evidence.",
+      "dataRequirements": "Public evidence refs only; no PHI.",
+      "uncertainty": "Fixture gap uncertainty — not scientifically verified.",
+      "reviewState": "draft",
+      "linkedPlanEvidenceGapIds": [
+        "plan-gap-fixture-2"
+      ],
+      "supportingEvidenceRefs": [
+        "hsi-sp-evid-fixture-2"
+      ],
+      "prioritisation": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-rghp",
+        "actorKind": "ai_agent"
+      },
+      "reviewedBy": null,
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "dependsOnPr1ScientificProgrammeContracts": true,
+        "dependsOnPr2ResearchObjectivePlanning": true,
+        "dependsOnPr3ContinuousEvidenceInvestigation": true,
+        "dependsOnPr4ScientificKnowledgeEvolution": true,
+        "extendsM3HypothesisRegistryById": true,
+        "extendsGapInvestigation": true,
+        "noArbitraryImportanceScores": true,
+        "prioritisationExposesCriteriaAndAssumptions": true,
+        "hypothesisStateRequiresEvidenceAndReview": true,
+        "discussionVolumeAloneDoesNotConfirm": true,
+        "retainRejectedAndSupersededHypotheses": true,
+        "notSeparateAgentPlatform": true,
+        "agentsInvestigateResearchersApprove": true,
+        "independentReviewerNotAuthoringAgent": true,
+        "agentsCannotSelfApprove": true,
+        "noAutoApprovalOfPlansOrClaims": true,
+        "noFabricatedDiscoveries": true,
+        "noWorkbenchUi": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred",
+        "researchGapHypothesisPortfolio": true,
+        "experimentPortfolioIntegration": false
+      },
+      "createdAt": "2026-11-09T19:00:00.000Z",
+      "updatedAt": "2026-11-09T19:00:00.000Z",
+      "note": "Fixture research-gap envelope — investigation proposal only."
+    },
+    {
+      "schema": "hsi-research-gap-hypothesis-portfolio-1",
+      "method": "hsi.research_gap_hypothesis_portfolio.v1",
+      "version": "0.1.0",
+      "id": "hsi-sp-gap-fixture-3",
+      "portfolioId": "hsi-sp-rghp-fixture-demo",
+      "programmeId": "hsi-sp-prog-fixture-demo",
+      "category": "missing_human_validation",
+      "scientificQuestion": "Fixture scientific question for missing human validation?",
+      "evidenceSupportingTheGap": [
+        "Fixture evidence supporting the missing_human_validation gap classification."
+      ],
+      "whyItMatters": "Fixture programme decision relevance for investigation planning — not a discovery claim.",
+      "alternativeExplanations": [
+        "Fixture alternative: coverage limits may explain the apparent gap."
+      ],
+      "availableInvestigationMethods": [
+        "Bounded public-evidence retrieval with human review"
+      ],
+      "expectedDecisionRelevance": "Informs whether to propose a workstream or pause pending evidence.",
+      "dataRequirements": "Public evidence refs only; no PHI.",
+      "uncertainty": "Fixture gap uncertainty — not scientifically verified.",
+      "reviewState": "draft",
+      "linkedPlanEvidenceGapIds": [
+        "plan-gap-fixture-3"
+      ],
+      "supportingEvidenceRefs": [
+        "hsi-sp-evid-fixture-3"
+      ],
+      "prioritisation": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-rghp",
+        "actorKind": "ai_agent"
+      },
+      "reviewedBy": null,
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "dependsOnPr1ScientificProgrammeContracts": true,
+        "dependsOnPr2ResearchObjectivePlanning": true,
+        "dependsOnPr3ContinuousEvidenceInvestigation": true,
+        "dependsOnPr4ScientificKnowledgeEvolution": true,
+        "extendsM3HypothesisRegistryById": true,
+        "extendsGapInvestigation": true,
+        "noArbitraryImportanceScores": true,
+        "prioritisationExposesCriteriaAndAssumptions": true,
+        "hypothesisStateRequiresEvidenceAndReview": true,
+        "discussionVolumeAloneDoesNotConfirm": true,
+        "retainRejectedAndSupersededHypotheses": true,
+        "notSeparateAgentPlatform": true,
+        "agentsInvestigateResearchersApprove": true,
+        "independentReviewerNotAuthoringAgent": true,
+        "agentsCannotSelfApprove": true,
+        "noAutoApprovalOfPlansOrClaims": true,
+        "noFabricatedDiscoveries": true,
+        "noWorkbenchUi": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred",
+        "researchGapHypothesisPortfolio": true,
+        "experimentPortfolioIntegration": false
+      },
+      "createdAt": "2026-11-09T19:00:00.000Z",
+      "updatedAt": "2026-11-09T19:00:00.000Z",
+      "note": "Fixture research-gap envelope — investigation proposal only."
+    },
+    {
+      "schema": "hsi-research-gap-hypothesis-portfolio-1",
+      "method": "hsi.research_gap_hypothesis_portfolio.v1",
+      "version": "0.1.0",
+      "id": "hsi-sp-gap-fixture-4",
+      "portfolioId": "hsi-sp-rghp-fixture-demo",
+      "programmeId": "hsi-sp-prog-fixture-demo",
+      "category": "incomplete_biomarker_validation",
+      "scientificQuestion": "Fixture scientific question for incomplete biomarker validation?",
+      "evidenceSupportingTheGap": [
+        "Fixture evidence supporting the incomplete_biomarker_validation gap classification."
+      ],
+      "whyItMatters": "Fixture programme decision relevance for investigation planning — not a discovery claim.",
+      "alternativeExplanations": [
+        "Fixture alternative: coverage limits may explain the apparent gap."
+      ],
+      "availableInvestigationMethods": [
+        "Bounded public-evidence retrieval with human review"
+      ],
+      "expectedDecisionRelevance": "Informs whether to propose a workstream or pause pending evidence.",
+      "dataRequirements": "Public evidence refs only; no PHI.",
+      "uncertainty": "Fixture gap uncertainty — not scientifically verified.",
+      "reviewState": "draft",
+      "linkedPlanEvidenceGapIds": [
+        "plan-gap-fixture-4"
+      ],
+      "supportingEvidenceRefs": [
+        "hsi-sp-evid-fixture-4"
+      ],
+      "prioritisation": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-rghp",
+        "actorKind": "ai_agent"
+      },
+      "reviewedBy": null,
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "dependsOnPr1ScientificProgrammeContracts": true,
+        "dependsOnPr2ResearchObjectivePlanning": true,
+        "dependsOnPr3ContinuousEvidenceInvestigation": true,
+        "dependsOnPr4ScientificKnowledgeEvolution": true,
+        "extendsM3HypothesisRegistryById": true,
+        "extendsGapInvestigation": true,
+        "noArbitraryImportanceScores": true,
+        "prioritisationExposesCriteriaAndAssumptions": true,
+        "hypothesisStateRequiresEvidenceAndReview": true,
+        "discussionVolumeAloneDoesNotConfirm": true,
+        "retainRejectedAndSupersededHypotheses": true,
+        "notSeparateAgentPlatform": true,
+        "agentsInvestigateResearchersApprove": true,
+        "independentReviewerNotAuthoringAgent": true,
+        "agentsCannotSelfApprove": true,
+        "noAutoApprovalOfPlansOrClaims": true,
+        "noFabricatedDiscoveries": true,
+        "noWorkbenchUi": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred",
+        "researchGapHypothesisPortfolio": true,
+        "experimentPortfolioIntegration": false
+      },
+      "createdAt": "2026-11-09T19:00:00.000Z",
+      "updatedAt": "2026-11-09T19:00:00.000Z",
+      "note": "Fixture research-gap envelope — investigation proposal only."
+    },
+    {
+      "schema": "hsi-research-gap-hypothesis-portfolio-1",
+      "method": "hsi.research_gap_hypothesis_portfolio.v1",
+      "version": "0.1.0",
+      "id": "hsi-sp-gap-fixture-5",
+      "portfolioId": "hsi-sp-rghp-fixture-demo",
+      "programmeId": "hsi-sp-prog-fixture-demo",
+      "category": "uncertain_therapeutic_target_evidence",
+      "scientificQuestion": "Fixture scientific question for uncertain therapeutic target evidence?",
+      "evidenceSupportingTheGap": [
+        "Fixture evidence supporting the uncertain_therapeutic_target_evidence gap classification."
+      ],
+      "whyItMatters": "Fixture programme decision relevance for investigation planning — not a discovery claim.",
+      "alternativeExplanations": [
+        "Fixture alternative: coverage limits may explain the apparent gap."
+      ],
+      "availableInvestigationMethods": [
+        "Bounded public-evidence retrieval with human review"
+      ],
+      "expectedDecisionRelevance": "Informs whether to propose a workstream or pause pending evidence.",
+      "dataRequirements": "Public evidence refs only; no PHI.",
+      "uncertainty": "Fixture gap uncertainty — not scientifically verified.",
+      "reviewState": "draft",
+      "linkedPlanEvidenceGapIds": [
+        "plan-gap-fixture-5"
+      ],
+      "supportingEvidenceRefs": [
+        "hsi-sp-evid-fixture-5"
+      ],
+      "prioritisation": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-rghp",
+        "actorKind": "ai_agent"
+      },
+      "reviewedBy": null,
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "dependsOnPr1ScientificProgrammeContracts": true,
+        "dependsOnPr2ResearchObjectivePlanning": true,
+        "dependsOnPr3ContinuousEvidenceInvestigation": true,
+        "dependsOnPr4ScientificKnowledgeEvolution": true,
+        "extendsM3HypothesisRegistryById": true,
+        "extendsGapInvestigation": true,
+        "noArbitraryImportanceScores": true,
+        "prioritisationExposesCriteriaAndAssumptions": true,
+        "hypothesisStateRequiresEvidenceAndReview": true,
+        "discussionVolumeAloneDoesNotConfirm": true,
+        "retainRejectedAndSupersededHypotheses": true,
+        "notSeparateAgentPlatform": true,
+        "agentsInvestigateResearchersApprove": true,
+        "independentReviewerNotAuthoringAgent": true,
+        "agentsCannotSelfApprove": true,
+        "noAutoApprovalOfPlansOrClaims": true,
+        "noFabricatedDiscoveries": true,
+        "noWorkbenchUi": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred",
+        "researchGapHypothesisPortfolio": true,
+        "experimentPortfolioIntegration": false
+      },
+      "createdAt": "2026-11-09T19:00:00.000Z",
+      "updatedAt": "2026-11-09T19:00:00.000Z",
+      "note": "Fixture research-gap envelope — investigation proposal only."
+    },
+    {
+      "schema": "hsi-research-gap-hypothesis-portfolio-1",
+      "method": "hsi.research_gap_hypothesis_portfolio.v1",
+      "version": "0.1.0",
+      "id": "hsi-sp-gap-fixture-6",
+      "portfolioId": "hsi-sp-rghp-fixture-demo",
+      "programmeId": "hsi-sp-prog-fixture-demo",
+      "category": "missing_experimental_replication",
+      "scientificQuestion": "Fixture scientific question for missing experimental replication?",
+      "evidenceSupportingTheGap": [
+        "Fixture evidence supporting the missing_experimental_replication gap classification."
+      ],
+      "whyItMatters": "Fixture programme decision relevance for investigation planning — not a discovery claim.",
+      "alternativeExplanations": [
+        "Fixture alternative: coverage limits may explain the apparent gap."
+      ],
+      "availableInvestigationMethods": [
+        "Bounded public-evidence retrieval with human review"
+      ],
+      "expectedDecisionRelevance": "Informs whether to propose a workstream or pause pending evidence.",
+      "dataRequirements": "Public evidence refs only; no PHI.",
+      "uncertainty": "Fixture gap uncertainty — not scientifically verified.",
+      "reviewState": "draft",
+      "linkedPlanEvidenceGapIds": [
+        "plan-gap-fixture-6"
+      ],
+      "supportingEvidenceRefs": [
+        "hsi-sp-evid-fixture-6"
+      ],
+      "prioritisation": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-rghp",
+        "actorKind": "ai_agent"
+      },
+      "reviewedBy": null,
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "dependsOnPr1ScientificProgrammeContracts": true,
+        "dependsOnPr2ResearchObjectivePlanning": true,
+        "dependsOnPr3ContinuousEvidenceInvestigation": true,
+        "dependsOnPr4ScientificKnowledgeEvolution": true,
+        "extendsM3HypothesisRegistryById": true,
+        "extendsGapInvestigation": true,
+        "noArbitraryImportanceScores": true,
+        "prioritisationExposesCriteriaAndAssumptions": true,
+        "hypothesisStateRequiresEvidenceAndReview": true,
+        "discussionVolumeAloneDoesNotConfirm": true,
+        "retainRejectedAndSupersededHypotheses": true,
+        "notSeparateAgentPlatform": true,
+        "agentsInvestigateResearchersApprove": true,
+        "independentReviewerNotAuthoringAgent": true,
+        "agentsCannotSelfApprove": true,
+        "noAutoApprovalOfPlansOrClaims": true,
+        "noFabricatedDiscoveries": true,
+        "noWorkbenchUi": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred",
+        "researchGapHypothesisPortfolio": true,
+        "experimentPortfolioIntegration": false
+      },
+      "createdAt": "2026-11-09T19:00:00.000Z",
+      "updatedAt": "2026-11-09T19:00:00.000Z",
+      "note": "Fixture research-gap envelope — investigation proposal only."
+    },
+    {
+      "schema": "hsi-research-gap-hypothesis-portfolio-1",
+      "method": "hsi.research_gap_hypothesis_portfolio.v1",
+      "version": "0.1.0",
+      "id": "hsi-sp-gap-fixture-7",
+      "portfolioId": "hsi-sp-rghp-fixture-demo",
+      "programmeId": "hsi-sp-prog-fixture-demo",
+      "category": "limited_disease_context_coverage",
+      "scientificQuestion": "Fixture scientific question for limited disease context coverage?",
+      "evidenceSupportingTheGap": [
+        "Fixture evidence supporting the limited_disease_context_coverage gap classification."
+      ],
+      "whyItMatters": "Fixture programme decision relevance for investigation planning — not a discovery claim.",
+      "alternativeExplanations": [
+        "Fixture alternative: coverage limits may explain the apparent gap."
+      ],
+      "availableInvestigationMethods": [
+        "Bounded public-evidence retrieval with human review"
+      ],
+      "expectedDecisionRelevance": "Informs whether to propose a workstream or pause pending evidence.",
+      "dataRequirements": "Public evidence refs only; no PHI.",
+      "uncertainty": "Fixture gap uncertainty — not scientifically verified.",
+      "reviewState": "draft",
+      "linkedPlanEvidenceGapIds": [
+        "plan-gap-fixture-7"
+      ],
+      "supportingEvidenceRefs": [
+        "hsi-sp-evid-fixture-7"
+      ],
+      "prioritisation": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-rghp",
+        "actorKind": "ai_agent"
+      },
+      "reviewedBy": null,
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "dependsOnPr1ScientificProgrammeContracts": true,
+        "dependsOnPr2ResearchObjectivePlanning": true,
+        "dependsOnPr3ContinuousEvidenceInvestigation": true,
+        "dependsOnPr4ScientificKnowledgeEvolution": true,
+        "extendsM3HypothesisRegistryById": true,
+        "extendsGapInvestigation": true,
+        "noArbitraryImportanceScores": true,
+        "prioritisationExposesCriteriaAndAssumptions": true,
+        "hypothesisStateRequiresEvidenceAndReview": true,
+        "discussionVolumeAloneDoesNotConfirm": true,
+        "retainRejectedAndSupersededHypotheses": true,
+        "notSeparateAgentPlatform": true,
+        "agentsInvestigateResearchersApprove": true,
+        "independentReviewerNotAuthoringAgent": true,
+        "agentsCannotSelfApprove": true,
+        "noAutoApprovalOfPlansOrClaims": true,
+        "noFabricatedDiscoveries": true,
+        "noWorkbenchUi": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred",
+        "researchGapHypothesisPortfolio": true,
+        "experimentPortfolioIntegration": false
+      },
+      "createdAt": "2026-11-09T19:00:00.000Z",
+      "updatedAt": "2026-11-09T19:00:00.000Z",
+      "note": "Fixture research-gap envelope — investigation proposal only."
+    },
+    {
+      "schema": "hsi-research-gap-hypothesis-portfolio-1",
+      "method": "hsi.research_gap_hypothesis_portfolio.v1",
+      "version": "0.1.0",
+      "id": "hsi-sp-gap-fixture-8",
+      "portfolioId": "hsi-sp-rghp-fixture-demo",
+      "programmeId": "hsi-sp-prog-fixture-demo",
+      "category": "insufficient_longitudinal_outcomes",
+      "scientificQuestion": "Fixture scientific question for insufficient longitudinal outcomes?",
+      "evidenceSupportingTheGap": [
+        "Fixture evidence supporting the insufficient_longitudinal_outcomes gap classification."
+      ],
+      "whyItMatters": "Fixture programme decision relevance for investigation planning — not a discovery claim.",
+      "alternativeExplanations": [
+        "Fixture alternative: coverage limits may explain the apparent gap."
+      ],
+      "availableInvestigationMethods": [
+        "Bounded public-evidence retrieval with human review"
+      ],
+      "expectedDecisionRelevance": "Informs whether to propose a workstream or pause pending evidence.",
+      "dataRequirements": "Public evidence refs only; no PHI.",
+      "uncertainty": "Fixture gap uncertainty — not scientifically verified.",
+      "reviewState": "draft",
+      "linkedPlanEvidenceGapIds": [
+        "plan-gap-fixture-8"
+      ],
+      "supportingEvidenceRefs": [
+        "hsi-sp-evid-fixture-8"
+      ],
+      "prioritisation": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-rghp",
+        "actorKind": "ai_agent"
+      },
+      "reviewedBy": null,
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "dependsOnPr1ScientificProgrammeContracts": true,
+        "dependsOnPr2ResearchObjectivePlanning": true,
+        "dependsOnPr3ContinuousEvidenceInvestigation": true,
+        "dependsOnPr4ScientificKnowledgeEvolution": true,
+        "extendsM3HypothesisRegistryById": true,
+        "extendsGapInvestigation": true,
+        "noArbitraryImportanceScores": true,
+        "prioritisationExposesCriteriaAndAssumptions": true,
+        "hypothesisStateRequiresEvidenceAndReview": true,
+        "discussionVolumeAloneDoesNotConfirm": true,
+        "retainRejectedAndSupersededHypotheses": true,
+        "notSeparateAgentPlatform": true,
+        "agentsInvestigateResearchersApprove": true,
+        "independentReviewerNotAuthoringAgent": true,
+        "agentsCannotSelfApprove": true,
+        "noAutoApprovalOfPlansOrClaims": true,
+        "noFabricatedDiscoveries": true,
+        "noWorkbenchUi": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred",
+        "researchGapHypothesisPortfolio": true,
+        "experimentPortfolioIntegration": false
+      },
+      "createdAt": "2026-11-09T19:00:00.000Z",
+      "updatedAt": "2026-11-09T19:00:00.000Z",
+      "note": "Fixture research-gap envelope — investigation proposal only."
+    },
+    {
+      "schema": "hsi-research-gap-hypothesis-portfolio-1",
+      "method": "hsi.research_gap_hypothesis_portfolio.v1",
+      "version": "0.1.0",
+      "id": "hsi-sp-gap-fixture-9",
+      "portfolioId": "hsi-sp-rghp-fixture-demo",
+      "programmeId": "hsi-sp-prog-fixture-demo",
+      "category": "model_validation_gaps",
+      "scientificQuestion": "Fixture scientific question for model validation gaps?",
+      "evidenceSupportingTheGap": [
+        "Fixture evidence supporting the model_validation_gaps gap classification."
+      ],
+      "whyItMatters": "Fixture programme decision relevance for investigation planning — not a discovery claim.",
+      "alternativeExplanations": [
+        "Fixture alternative: coverage limits may explain the apparent gap."
+      ],
+      "availableInvestigationMethods": [
+        "Bounded public-evidence retrieval with human review"
+      ],
+      "expectedDecisionRelevance": "Informs whether to propose a workstream or pause pending evidence.",
+      "dataRequirements": "Public evidence refs only; no PHI.",
+      "uncertainty": "Fixture gap uncertainty — not scientifically verified.",
+      "reviewState": "draft",
+      "linkedPlanEvidenceGapIds": [
+        "plan-gap-fixture-9"
+      ],
+      "supportingEvidenceRefs": [
+        "hsi-sp-evid-fixture-9"
+      ],
+      "prioritisation": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-rghp",
+        "actorKind": "ai_agent"
+      },
+      "reviewedBy": null,
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "dependsOnPr1ScientificProgrammeContracts": true,
+        "dependsOnPr2ResearchObjectivePlanning": true,
+        "dependsOnPr3ContinuousEvidenceInvestigation": true,
+        "dependsOnPr4ScientificKnowledgeEvolution": true,
+        "extendsM3HypothesisRegistryById": true,
+        "extendsGapInvestigation": true,
+        "noArbitraryImportanceScores": true,
+        "prioritisationExposesCriteriaAndAssumptions": true,
+        "hypothesisStateRequiresEvidenceAndReview": true,
+        "discussionVolumeAloneDoesNotConfirm": true,
+        "retainRejectedAndSupersededHypotheses": true,
+        "notSeparateAgentPlatform": true,
+        "agentsInvestigateResearchersApprove": true,
+        "independentReviewerNotAuthoringAgent": true,
+        "agentsCannotSelfApprove": true,
+        "noAutoApprovalOfPlansOrClaims": true,
+        "noFabricatedDiscoveries": true,
+        "noWorkbenchUi": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred",
+        "researchGapHypothesisPortfolio": true,
+        "experimentPortfolioIntegration": false
+      },
+      "createdAt": "2026-11-09T19:00:00.000Z",
+      "updatedAt": "2026-11-09T19:00:00.000Z",
+      "note": "Fixture research-gap envelope — investigation proposal only."
+    },
+    {
+      "schema": "hsi-research-gap-hypothesis-portfolio-1",
+      "method": "hsi.research_gap_hypothesis_portfolio.v1",
+      "version": "0.1.0",
+      "id": "hsi-sp-gap-fixture-10",
+      "portfolioId": "hsi-sp-rghp-fixture-demo",
+      "programmeId": "hsi-sp-prog-fixture-demo",
+      "category": "cross_disease_evidence_gaps",
+      "scientificQuestion": "Fixture scientific question for cross disease evidence gaps?",
+      "evidenceSupportingTheGap": [
+        "Fixture evidence supporting the cross_disease_evidence_gaps gap classification."
+      ],
+      "whyItMatters": "Fixture programme decision relevance for investigation planning — not a discovery claim.",
+      "alternativeExplanations": [
+        "Fixture alternative: coverage limits may explain the apparent gap."
+      ],
+      "availableInvestigationMethods": [
+        "Bounded public-evidence retrieval with human review"
+      ],
+      "expectedDecisionRelevance": "Informs whether to propose a workstream or pause pending evidence.",
+      "dataRequirements": "Public evidence refs only; no PHI.",
+      "uncertainty": "Fixture gap uncertainty — not scientifically verified.",
+      "reviewState": "draft",
+      "linkedPlanEvidenceGapIds": [
+        "plan-gap-fixture-10"
+      ],
+      "supportingEvidenceRefs": [
+        "hsi-sp-evid-fixture-10"
+      ],
+      "prioritisation": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-rghp",
+        "actorKind": "ai_agent"
+      },
+      "reviewedBy": null,
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "dependsOnPr1ScientificProgrammeContracts": true,
+        "dependsOnPr2ResearchObjectivePlanning": true,
+        "dependsOnPr3ContinuousEvidenceInvestigation": true,
+        "dependsOnPr4ScientificKnowledgeEvolution": true,
+        "extendsM3HypothesisRegistryById": true,
+        "extendsGapInvestigation": true,
+        "noArbitraryImportanceScores": true,
+        "prioritisationExposesCriteriaAndAssumptions": true,
+        "hypothesisStateRequiresEvidenceAndReview": true,
+        "discussionVolumeAloneDoesNotConfirm": true,
+        "retainRejectedAndSupersededHypotheses": true,
+        "notSeparateAgentPlatform": true,
+        "agentsInvestigateResearchersApprove": true,
+        "independentReviewerNotAuthoringAgent": true,
+        "agentsCannotSelfApprove": true,
+        "noAutoApprovalOfPlansOrClaims": true,
+        "noFabricatedDiscoveries": true,
+        "noWorkbenchUi": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred",
+        "researchGapHypothesisPortfolio": true,
+        "experimentPortfolioIntegration": false
+      },
+      "createdAt": "2026-11-09T19:00:00.000Z",
+      "updatedAt": "2026-11-09T19:00:00.000Z",
+      "note": "Fixture research-gap envelope — investigation proposal only."
+    }
+  ],
+  "hypotheses": [
+    {
+      "schema": "hsi-research-gap-hypothesis-portfolio-1",
+      "method": "hsi.research_gap_hypothesis_portfolio.v1",
+      "version": "0.1.0",
+      "id": "hsi-sp-hpf-fixture-primary",
+      "portfolioId": "hsi-sp-rghp-fixture-demo",
+      "programmeId": "hsi-sp-prog-fixture-demo",
+      "statement": "Fixture primary hypothesis linking Tfh/IL-21 neighbourhood signals under public-evidence bounds.",
+      "linkedObjectiveIds": [
+        "hsi-sp-obj-fixture-demo"
+      ],
+      "linkedM3HypothesisIds": [
+        "hyp-fixture-m3-001"
+      ],
+      "addressesGapIds": [
+        "hsi-sp-gap-fixture-1"
+      ],
+      "competingExplanations": [
+        {
+          "id": "hsi-sp-hcomp-fixture-1",
+          "summary": "Competing fixture explanation emphasises macrophage cytokine axes instead.",
+          "relationToPrimary": "competing",
+          "note": "Competing explanation retained."
+        }
+      ],
+      "evidenceLinks": [
+        {
+          "evidenceRef": "hsi-sp-evid-fixture-1",
+          "polarity": "supporting",
+          "note": "Fixture supporting evidence — not confirmation."
+        },
+        {
+          "evidenceRef": "hsi-sp-evid-fixture-oppose",
+          "polarity": "opposing",
+          "note": "Fixture opposing evidence retained."
+        },
+        {
+          "evidenceRef": "hsi-sp-evid-fixture-new",
+          "polarity": "opposing",
+          "note": "New evidence challenges the primary statement."
+        }
+      ],
+      "falsifiablePredictions": [
+        {
+          "id": "hsi-sp-hpred-fixture-1",
+          "prediction": "Fixture prediction: co-occurrence of Tfh and IL-21 markers under declared bounds.",
+          "falsifier": "Absence of co-occurrence after bounded search would challenge the hypothesis.",
+          "linkedExperimentIds": [
+            "exp-fixture-001"
+          ],
+          "note": "Falsifiable prediction — not a wet-lab outcome."
+        }
+      ],
+      "linkedExperimentIds": [
+        "exp-fixture-001"
+      ],
+      "state": "superseded",
+      "validationStatus": "superseded_after_review",
+      "discussionVolumeAloneDoesNotConfirm": true,
+      "retainedAfterRejectOrSupersede": true,
+      "supersededByHypothesisId": "hsi-sp-hpf-fixture-successor",
+      "authoredBy": {
+        "principalId": "fixture-agent-rghp",
+        "actorKind": "ai_agent"
+      },
+      "reviewedBy": {
+        "principalId": "fixture-reviewer",
+        "actorKind": "human"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "dependsOnPr1ScientificProgrammeContracts": true,
+        "dependsOnPr2ResearchObjectivePlanning": true,
+        "dependsOnPr3ContinuousEvidenceInvestigation": true,
+        "dependsOnPr4ScientificKnowledgeEvolution": true,
+        "extendsM3HypothesisRegistryById": true,
+        "extendsGapInvestigation": true,
+        "noArbitraryImportanceScores": true,
+        "prioritisationExposesCriteriaAndAssumptions": true,
+        "hypothesisStateRequiresEvidenceAndReview": true,
+        "discussionVolumeAloneDoesNotConfirm": true,
+        "retainRejectedAndSupersededHypotheses": true,
+        "notSeparateAgentPlatform": true,
+        "agentsInvestigateResearchersApprove": true,
+        "independentReviewerNotAuthoringAgent": true,
+        "agentsCannotSelfApprove": true,
+        "noAutoApprovalOfPlansOrClaims": true,
+        "noFabricatedDiscoveries": true,
+        "noWorkbenchUi": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred",
+        "researchGapHypothesisPortfolio": true,
+        "experimentPortfolioIntegration": false
+      },
+      "createdAt": "2026-11-09T19:00:00.000Z",
+      "updatedAt": "2026-11-09T19:00:00.000Z",
+      "note": "Hypothesis reassessed after new evidence — retained history; fixtures only."
+    },
+    {
+      "schema": "hsi-research-gap-hypothesis-portfolio-1",
+      "method": "hsi.research_gap_hypothesis_portfolio.v1",
+      "version": "0.1.0",
+      "id": "hsi-sp-hpf-fixture-successor",
+      "portfolioId": "hsi-sp-rghp-fixture-demo",
+      "programmeId": "hsi-sp-prog-fixture-demo",
+      "statement": "Fixture successor hypothesis with narrower disease-context scope.",
+      "linkedObjectiveIds": [
+        "hsi-sp-obj-fixture-demo"
+      ],
+      "linkedM3HypothesisIds": [],
+      "addressesGapIds": [],
+      "competingExplanations": [],
+      "evidenceLinks": [
+        {
+          "evidenceRef": "hsi-sp-evid-fixture-reject",
+          "polarity": "opposing",
+          "note": "Fixture opposing evidence after review."
+        }
+      ],
+      "falsifiablePredictions": [
+        {
+          "id": "hsi-sp-hpred-fixture-2",
+          "prediction": "Narrower context should improve agreement under declared bounds.",
+          "falsifier": "No improvement would challenge the successor hypothesis.",
+          "linkedExperimentIds": [
+            "exp-fixture-002"
+          ],
+          "note": "Successor falsifier — fixtures only."
+        }
+      ],
+      "linkedExperimentIds": [
+        "exp-fixture-002"
+      ],
+      "state": "rejected",
+      "validationStatus": "rejected_after_review",
+      "discussionVolumeAloneDoesNotConfirm": true,
+      "retainedAfterRejectOrSupersede": true,
+      "supersededByHypothesisId": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-rghp",
+        "actorKind": "ai_agent"
+      },
+      "reviewedBy": {
+        "principalId": "fixture-reviewer",
+        "actorKind": "human"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "dependsOnPr1ScientificProgrammeContracts": true,
+        "dependsOnPr2ResearchObjectivePlanning": true,
+        "dependsOnPr3ContinuousEvidenceInvestigation": true,
+        "dependsOnPr4ScientificKnowledgeEvolution": true,
+        "extendsM3HypothesisRegistryById": true,
+        "extendsGapInvestigation": true,
+        "noArbitraryImportanceScores": true,
+        "prioritisationExposesCriteriaAndAssumptions": true,
+        "hypothesisStateRequiresEvidenceAndReview": true,
+        "discussionVolumeAloneDoesNotConfirm": true,
+        "retainRejectedAndSupersededHypotheses": true,
+        "notSeparateAgentPlatform": true,
+        "agentsInvestigateResearchersApprove": true,
+        "independentReviewerNotAuthoringAgent": true,
+        "agentsCannotSelfApprove": true,
+        "noAutoApprovalOfPlansOrClaims": true,
+        "noFabricatedDiscoveries": true,
+        "noWorkbenchUi": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred",
+        "researchGapHypothesisPortfolio": true,
+        "experimentPortfolioIntegration": false
+      },
+      "createdAt": "2026-11-09T19:00:00.000Z",
+      "updatedAt": "2026-11-09T19:00:00.000Z",
+      "note": "Human rejection retained in portfolio history."
+    }
+  ],
+  "reassessments": [
+    {
+      "schema": "hsi-research-gap-hypothesis-portfolio-1",
+      "method": "hsi.research_gap_hypothesis_portfolio.v1",
+      "version": "0.1.0",
+      "id": "hsi-sp-hra-fixture-1",
+      "portfolioId": "hsi-sp-rghp-fixture-demo",
+      "programmeId": "hsi-sp-prog-fixture-demo",
+      "hypothesisId": "hsi-sp-hpf-fixture-primary",
+      "priorState": "under_investigation",
+      "nextState": "superseded",
+      "newEvidenceRefs": [
+        "hsi-sp-evid-fixture-new"
+      ],
+      "rationale": "New fixture evidence favours the successor hypothesis; prior entry retained as superseded.",
+      "evidenceAndReviewRequired": true,
+      "discussionVolumeAloneRefused": true,
+      "authoredBy": {
+        "principalId": "fixture-agent-rghp",
+        "actorKind": "ai_agent"
+      },
+      "reviewedBy": {
+        "principalId": "fixture-reviewer",
+        "actorKind": "human"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "dependsOnPr1ScientificProgrammeContracts": true,
+        "dependsOnPr2ResearchObjectivePlanning": true,
+        "dependsOnPr3ContinuousEvidenceInvestigation": true,
+        "dependsOnPr4ScientificKnowledgeEvolution": true,
+        "extendsM3HypothesisRegistryById": true,
+        "extendsGapInvestigation": true,
+        "noArbitraryImportanceScores": true,
+        "prioritisationExposesCriteriaAndAssumptions": true,
+        "hypothesisStateRequiresEvidenceAndReview": true,
+        "discussionVolumeAloneDoesNotConfirm": true,
+        "retainRejectedAndSupersededHypotheses": true,
+        "notSeparateAgentPlatform": true,
+        "agentsInvestigateResearchersApprove": true,
+        "independentReviewerNotAuthoringAgent": true,
+        "agentsCannotSelfApprove": true,
+        "noAutoApprovalOfPlansOrClaims": true,
+        "noFabricatedDiscoveries": true,
+        "noWorkbenchUi": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred",
+        "researchGapHypothesisPortfolio": true,
+        "experimentPortfolioIntegration": false
+      },
+      "createdAt": "2026-11-09T19:00:00.000Z",
+      "note": "Append-style reassessment record after new evidence — rejected/superseded retained."
+    }
+  ]
+}
