@@ -1,0 +1,33 @@
+{
+  "demonstration_id": "demo_ssc_fibrosis_001",
+  "mode": "illustrative",
+  "data_class": "curated_example",
+  "live_backend": false,
+  "review_status": "not_reviewed",
+  "disease": "systemic_sclerosis",
+  "question": "How might immune activation contribute to fibrosis?",
+  "mechanism_path": [
+    "Immune activation",
+    "Cytokine signalling",
+    "Fibroblast activation",
+    "Extracellular-matrix remodelling",
+    "Tissue fibrosis"
+  ],
+  "evidence": [],
+  "contradictions": [],
+  "gaps": [
+    "Live literature retrieval not bound in this demonstration",
+    "No independent scientific review of this illustrative path"
+  ],
+  "disclaimer": "Illustrative demonstration; not a live research investigation. Uses curated example data. Evidence and workflow are illustrative.",
+  "ui_labels": [
+    "Illustrative research demonstration",
+    "Not a live investigation",
+    "Uses curated example data",
+    "Evidence and workflow are illustrative"
+  ],
+  "related_eng_packs": [
+    "research/ssc-tfh-il21/"
+  ],
+  "notes": "When live_backend becomes true, update mode, evidence[], verification probes, and capability-status PUB-SSC-DEMO. Never silently flip labels."
+}
