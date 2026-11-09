@@ -4,6 +4,7 @@
  * Always keeps confirmedEligible=false · patientEligible=false · enrolmentEnabled=false.
  * Scientific acceptance stays BLOCKED. Never invents eligibility or enrolment claims.
  */
+import type { FetchLike } from "../fetchLike";
 import {createHash} from "node:crypto";
 import {importPublicStudies, assessCohortStudyOverlap} from "../knowledgeGraph/cohortTrials";
 import {canonicalEvidenceJson} from "./researchEvidenceCorpus";
@@ -501,7 +502,7 @@ function lookupRowFromResult(nctId: N5LiveRefreshNctId, result: CtgovLookupResul
 
 /** Live fetch pinned NCTs and build honesty-gated refresh receipt. */
 export async function runN5LiveRefreshFromProvider(input?: {
-  fetcher?: typeof fetch;
+  fetcher?: FetchLike;
   now?: () => Date;
   facts?: readonly SyntheticCohortFact[];
 }): Promise<{

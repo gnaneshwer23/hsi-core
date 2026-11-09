@@ -2,7 +2,7 @@
 
 **When:** 2026-11-01T22:20Z (UTC) — re-audit after Partial fixes  
 **Kind:** results truth (does it work / what is true in production & data) — not a feature laundry list.  
-**Canvas:** [hsi-outcomes-audit.canvas.tsx](/Users/gnaneshwerjadav/.cursor/projects/Users-gnaneshwerjadav-Projects-hsi-core/canvases/hsi-outcomes-audit.canvas.tsx)
+**Canvas:** local Cursor canvas `hsi-outcomes-audit.canvas.tsx` (not stored in this repo).
 
 ## Executive verdict
 
@@ -36,7 +36,7 @@
 
 ### Neon (red-wave only) — before → after
 
-Verified via `neonctl` OAuth → project `red-wave-06625195` / host `ep-restless-dew…eu-west-2` / database `neondb`.
+Verified via `neonctl` OAuth → project `hsi-neon-project` / host `ep-hsi-production…eu-west-2` / database `neondb`.
 
 | Table | Before | After |
 | --- | --- | --- |

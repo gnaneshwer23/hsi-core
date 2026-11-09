@@ -46,7 +46,7 @@ export function assertLedgerNeonReadable(config: LedgerNeonStoreConfig): {hostPr
 
 /**
  * Writes require writesEnabled=true and the approved staging host prefix.
- * Production (ep-restless-dew) stays read-only for ledger helpers.
+ * Production (ep-hsi-production) stays read-only for ledger helpers.
  */
 export function assertLedgerNeonWritable(config: LedgerNeonStoreConfig): {hostPrefix: string} {
   const readable = assertLedgerNeonReadable(config);
@@ -71,11 +71,11 @@ export function assessLedgerNeonWriteGateSamples(): {
   autumnSnowRefused: boolean;
 } {
   const stagingUrl =
-    "postgresql://test:never-used@ep-sweet-hill-zasb0lni.c-2.eu-west-2.aws.neon.tech/neondb?sslmode=require";
+    "postgresql://test:never-used@ep-hsi-staging.c-2.eu-west-2.aws.neon.tech/neondb?sslmode=require";
   const productionUrl =
-    "postgresql://test:never-used@ep-restless-dew-zas989pv.c-2.eu-west-2.aws.neon.tech/neondb?sslmode=require";
+    "postgresql://test:never-used@ep-hsi-production.c-2.eu-west-2.aws.neon.tech/neondb?sslmode=require";
   const autumnSnowUrl =
-    "postgresql://x:y@ep-blue-salad-xxxxx.eu-west-2.aws.neon.tech/neondb?sslmode=require";
+    "postgresql://x:y@ep-isi-product-example.eu-west-2.aws.neon.tech/neondb?sslmode=require";
 
   let stagingWritesEnabled = false;
   try {

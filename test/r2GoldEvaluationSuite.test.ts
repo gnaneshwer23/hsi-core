@@ -59,7 +59,7 @@ describe("R2 gold evaluation suite", () => {
   test("refuses claiming scientificAcceptance CLEARED", async () => {
     const manifest = await buildR2GoldEvaluationSuite({generatedAt, repoRoot: root});
     const bad = structuredClone(manifest) as typeof manifest & {scientificAcceptance: string};
-    bad.scientificAcceptance = "CLEARED";
+    (bad as {scientificAcceptance: string}).scientificAcceptance = "CLEARED";
     const {inventoryHash: _drop, ...body} = bad;
     void _drop;
     const sealed = {

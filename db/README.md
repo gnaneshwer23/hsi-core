@@ -4,9 +4,9 @@ Minimal Stage 1 substrate schema for the **HSI-canonical** Neon project. Not an 
 
 | Field | Value |
 |-------|--------|
-| Project | `human super intelligence` / `red-wave-06625195` |
-| Branch | `production` / `br-quiet-silence-zab1zvji` |
-| Host prefix | `ep-restless-dew…eu-west-2` |
+| Project | `human super intelligence` / `hsi-neon-project` |
+| Branch | `production` / `hsi-production-branch` |
+| Host prefix | `ep-hsi-production…eu-west-2` |
 | Database | `neondb` |
 
 See [`docs/NEON_PROJECT_MAP.md`](../docs/NEON_PROJECT_MAP.md) and [`docs/HSI_NEON_MIGRATIONS.md`](../docs/HSI_NEON_MIGRATIONS.md).
@@ -29,7 +29,7 @@ bun run db:migrate -- --from-neonctl
 bun run db:gate-c-local -- --from-neonctl
 ```
 
-The migrate / gate-c scripts **refuse** known ISI / Akeno / DeliverX hostnames and require an HSI host (`ep-restless-dew`) or `NEON_PROJECT_ID=red-wave-06625195`.
+The migrate / gate-c scripts **refuse** known ISI / Akeno / DeliverX hostnames and require an HSI host (`ep-hsi-production`) or `NEON_PROJECT_ID=hsi-neon-project`.
 
 ## Objects
 

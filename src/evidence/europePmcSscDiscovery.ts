@@ -3,6 +3,7 @@
  * No patient data, LLM inference, graph writes or claim auto-approval.
  * Results are bibliographic candidates, not evidence that a claim is supported.
  */
+import type { FetchLike } from "../fetchLike";
 export type LiteratureRecord = {
   source: "Europe PMC";
   sourceId: string;
@@ -45,7 +46,7 @@ export async function searchSscLiterature(input: {
   term?: string;
   pageSize?: number;
   cursorMark?: string;
-  fetcher?: typeof fetch;
+  fetcher?: FetchLike;
   now?: () => Date;
   signal?: AbortSignal;
 } = {}): Promise<LiteraturePage> {

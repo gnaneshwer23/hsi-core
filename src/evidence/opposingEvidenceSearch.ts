@@ -7,6 +7,7 @@
  *
  * Source identity ≠ claim support. No Gate C auto-approve / CDS-PHI / graph promote.
  */
+import type { FetchLike } from "../fetchLike";
 import {
   runDynamicEvidenceRetrieval,
   type DynamicRetrievalCache,
@@ -179,7 +180,7 @@ export async function runOpposingEvidenceSearch(input: {
   entities?: ResearcherQueryInput["entities"];
   recordedOpposingCandidateIds?: readonly string[];
   now?: () => string;
-  fetcher?: typeof fetch;
+  fetcher?: FetchLike;
   cache?: DynamicRetrievalCache;
   signal?: AbortSignal;
   pageSize?: number;

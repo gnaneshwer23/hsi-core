@@ -69,5 +69,5 @@ test("committed public copies and readiness/packet are reproducible from the can
   expect(read(dir+"/corpus.v1.json")).toEqual(corpus);expect(read(dir+"/readiness.v1.json")).toEqual(assessWorkingEvidence(corpus));expect(read(dir+"/review-packet.v1.json")).toEqual(buildEvidenceReviewPacket(corpus));
   expect(read(dir+"/versions/"+corpus.version+".json")).toEqual(corpus);
  }
- expect(WORKING_EVIDENCE_INDEX.version).toBe(corpus.version);expect(WORKING_EVIDENCE_INDEX.claims.map(c=>c.id)).toEqual(corpus.claims.map(c=>c.id));
+ expect(WORKING_EVIDENCE_INDEX.version as string).toBe(corpus.version as string);expect(WORKING_EVIDENCE_INDEX.claims.map(c=>c.id) as string[]).toEqual(corpus.claims.map(c=>c.id) as string[]);
 });

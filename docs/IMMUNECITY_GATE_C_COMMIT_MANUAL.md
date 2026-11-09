@@ -4,7 +4,7 @@
 
 This doc is the durable curator checklist: verified PMID ↔ REL maps for Gate C handoff.
 
-**Neon isolation:** HSI substrate DB is **only** `red-wave-06625195` (`human super intelligence` / `ep-restless-dew…`). Gate C **approve+supports** (if performed) is a human action in the **ISI product Neon** (`autumn-snow` / `ep-blue-salad…`) — **never** run those writes from hsi-core against ISI Neon, and **never** point HSI `DATABASE_URL` at ISI/Akeno/DeliverX. No shared evidence DB. See [`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md).
+**Neon isolation:** HSI substrate DB is **only** `hsi-neon-project` (`human super intelligence` / `ep-hsi-production…`). Gate C **approve+supports** (if performed) is a human action in the **ISI product Neon** (`autumn-snow` / `ep-isi-product…`) — **never** run those writes from hsi-core against ISI Neon, and **never** point HSI `DATABASE_URL` at ISI/Akeno/DeliverX. No shared evidence DB. See [`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md).
 
 ## Upstream artifacts (this repo)
 

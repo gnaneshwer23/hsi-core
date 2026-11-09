@@ -5,7 +5,7 @@
 **Date:** 2026-11-09  
 **Audited `main` SHA:** `344f4503244e991c15af196461a38832b551683a`  
 **Tip commit:** `344f450 Add M13 translational development contracts and M1–M13 status rollup. (#109)` (builds on M12 #107 `7485bd4`; M10 compute + SEO #106/#108 on main)  
-**HSI Neon:** red-wave only (`human super intelligence` / `red-wave-06625195` / `ep-restless-dew…`) — never autumn-snow / Akeno / DeliverX  
+**HSI Neon:** red-wave only (`human super intelligence` / `hsi-neon-project` / `ep-hsi-production…`) — never autumn-snow / Akeno / DeliverX  
 
 **Cross-links (do not contradict):**
 

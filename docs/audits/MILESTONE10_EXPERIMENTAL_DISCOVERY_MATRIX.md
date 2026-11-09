@@ -5,7 +5,7 @@
 **Date:** 2026-11-09  
 **Audited `main` SHA:** `2388387071fcc798b15f86f9540b8d040afc3f75` (PR1 later rebased onto #100 → `6eb37fe`)  
 **Tip commit:** `2388387 Add M9 Phase 0 matrix and research organisation tenant security. (#99)`  
-**HSI Neon:** red-wave only (`human super intelligence` / `red-wave-06625195` / `ep-restless-dew…`) — never autumn-snow / Akeno / DeliverX  
+**HSI Neon:** red-wave only (`human super intelligence` / `hsi-neon-project` / `ep-hsi-production…`) — never autumn-snow / Akeno / DeliverX  
 
 **Cross-links (do not contradict):**
 

@@ -35,7 +35,7 @@ describe("ISI immunecity wiring package (out-of-repo handoff)", () => {
     expect(spec.sharedEvidenceNeon).toBe(false);
     expect(spec.gateC.autoApprove).toBe(false);
     expect(spec.gateC.statusOnPublish).toBe("pending");
-    expect(spec.gateC.approveTargetNeon).toContain("autumn-snow");
+    expect(spec.gateC.approveTargetNeon).toContain("isi-neon-project");
     expect(spec.urlPatterns.githubRawDiscovery).toContain(
       "site/public/discovery/{fileName}",
     );

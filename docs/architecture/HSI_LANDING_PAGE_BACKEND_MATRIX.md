@@ -4,7 +4,8 @@
 **Production:** https://www.humansuperintelligence.tech/  
 **As of:** 2026-11-09  
 **Governing vision:** [`../strategy/HSI_VISION.md`](../strategy/HSI_VISION.md) — public copy and CTAs must align with doctrine **and** this matrix (no invented live write-spine).  
-**Neon:** HSI red-wave only (`red-wave-06625195`). Never ISI autumn-snow.  
+**Neon:** HSI red-wave only (`hsi-neon-project` placeholder in-repo; real id in private env). Never ISI autumn-snow.  
+
 **Rule:** Fail-closed APIs; public demos keep `live_backend:false` until staging-verified. No live CDS/PHI.
 
 Companion maps: [`HSI_PAGE_AND_ROUTE_MAP.md`](./HSI_PAGE_AND_ROUTE_MAP.md), [`HSI_BACKEND_SERVICE_MAP.md`](./HSI_BACKEND_SERVICE_MAP.md), [`../capability-status.json`](../capability-status.json).

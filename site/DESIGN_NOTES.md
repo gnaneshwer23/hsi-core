@@ -103,7 +103,7 @@ Live deployment confirmation is a separate check after the GitHub push.
 # Design notes — structure + style tokens
 
 Read-only reference: local Unkapped.ai saveweb2zip dump
-(`/Users/gnaneshwerjadav/Downloads/saveweb2zip-com-unkapped-ai/`) plus 15
+(`<local-home>/Downloads/saveweb2zip-com-unkapped-ai/`) plus 15
 screenshot references used for cadence (hero → climb → light grid → steps →
 dark band → workflows → stacked pipeline → co-worker cards → agent flows).
 

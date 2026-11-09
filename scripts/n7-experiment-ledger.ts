@@ -61,6 +61,7 @@ function buildFixtureLedger(): ExperimentLedger {
   // EXP-N7-001 — freeze N2-linked prediction; await real outcome (none invented).
   const awaiting: ExperimentRecordInput = {
     id: "EXP-N7-001",
+    programme: "gut_immune_t2d",
     dataBasis: "fixture_engineering",
     fixtureHonesty: true,
     prediction: {
@@ -102,6 +103,7 @@ function buildFixtureLedger(): ExperimentLedger {
   // EXP-N7-002 — fixture technical_failure (QC failed ≠ biology refuted) → review candidate.
   const techFail: ExperimentRecordInput = {
     id: "EXP-N7-002",
+    programme: "gut_immune_t2d",
     dataBasis: "fixture_engineering",
     fixtureHonesty: true,
     prediction: {
@@ -177,6 +179,7 @@ function buildFixtureLedger(): ExperimentLedger {
   // EXP-N7-003 — fixture negative_null (noEffectNotEstablished forced).
   const negNull: ExperimentRecordInput = {
     id: "EXP-N7-003",
+    programme: "gut_immune_t2d",
     dataBasis: "fixture_engineering",
     fixtureHonesty: true,
     prediction: {
@@ -247,6 +250,7 @@ function buildFixtureLedger(): ExperimentLedger {
   // this record is inconclusive; EXP-N7-005 covers inactive_assay; EXP-N7-006 covers supported (fixture).
   const inconclusive: ExperimentRecordInput = {
     id: "EXP-N7-004",
+    programme: "gut_immune_t2d",
     dataBasis: "fixture_engineering",
     fixtureHonesty: true,
     prediction: {
@@ -290,6 +294,7 @@ function buildFixtureLedger(): ExperimentLedger {
 
   const inactive: ExperimentRecordInput = {
     id: "EXP-N7-005",
+    programme: "gut_immune_t2d",
     dataBasis: "fixture_engineering",
     fixtureHonesty: true,
     prediction: {
@@ -334,6 +339,7 @@ function buildFixtureLedger(): ExperimentLedger {
 
   const supported: ExperimentRecordInput = {
     id: "EXP-N7-006",
+    programme: "gut_immune_t2d",
     dataBasis: "fixture_engineering",
     fixtureHonesty: true,
     prediction: {

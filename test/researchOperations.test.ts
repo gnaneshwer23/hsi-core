@@ -1,3 +1,4 @@
+import type { FetchLike } from "../src/fetchLike";
 import {test,expect} from "bun:test";
 import {mkdtempSync,rmSync,readFileSync,writeFileSync,mkdirSync,existsSync} from "node:fs";
 import {tmpdir} from "node:os";
@@ -37,14 +38,14 @@ test("oversized request target or headers do not reach services",async()=>{
  let calls=0;const handler=async()=>{calls++;return Response.json({})};expect((await withResearchRequestControls(new Request(origin+"/api/research/account?x="+"a".repeat(8200)),handler,controls())).status).toBe(414);expect((await withResearchRequestControls(new Request(origin+"/api/research/account",{headers:{Cookie:"x="+"a".repeat(25000)}}),handler,controls())).status).toBe(431);expect((await withResearchRequestControls(new Request(origin+"/api/research/account",{headers:{"X-Info":"é".repeat(13000)}}),handler,controls())).status).toBe(431);expect(calls).toBe(0);
 });
 test("auth requests enforce bytes while streaming, even with lying content length and multibyte input",async()=>{
- let calls=0;const r=await handleAuthGateway(new Request(origin+"/api/auth/sign-in/email",{method:"POST",headers:{Origin:origin,"content-type":"application/json","content-length":"1"},body:JSON.stringify({email:"test@example.invalid",password:"é".repeat(11000)})}),{authBaseUrl:"https://auth.example/neondb/auth",publicOrigin:origin},(async()=>{calls++;return Response.json({})}) as typeof fetch);expect(r.status).toBe(413);expect(calls).toBe(0);
+ let calls=0;const r=await handleAuthGateway(new Request(origin+"/api/auth/sign-in/email",{method:"POST",headers:{Origin:origin,"content-type":"application/json","content-length":"1"},body:JSON.stringify({email:"test@example.invalid",password:"é".repeat(11000)})}),{authBaseUrl:"https://auth.example/neondb/auth",publicOrigin:origin},(async()=>{calls++;return Response.json({})}) as FetchLike);expect(r.status).toBe(413);expect(calls).toBe(0);
  const req=new Request(origin,{method:"POST",body:"éé"});await expect(boundedRequestText(req,3)).rejects.toBeInstanceOf(RequestBodyTooLarge);
 });
 test("stalled streams are cancelled at the body deadline",async()=>{
  let cancelled=false;const stream=new ReadableStream<Uint8Array>({start(){},cancel(){cancelled=true}});const req=new Request(origin,{method:"POST",body:stream,duplex:"half"} as RequestInit);await expect(boundedRequestText(req,100,15)).rejects.toBeInstanceOf(RequestBodyTimeout);expect(cancelled).toBe(true);
 });
 test("maintenance leaves health honest and protected calls blocked without DB/provider work",async()=>{
- const env={HSI_DATABASE_URL:"postgresql://fixture:unused@ep-sweet-hill-zasb0lni.c-2.eu-west-2.aws.neon.tech/neondb",HSI_NEON_PROJECT_ID:"red-wave-06625195",HSI_AUTH_BASE_URL:"https://auth.example/neondb/auth",HSI_PUBLIC_ORIGIN:origin,HSI_RESEARCH_MAINTENANCE:"true"};const deps={controls:controls(),transport:(async()=>{throw Error("Must not call provider")}) as typeof fetch};const health=await handleVercelResearch(new Request(origin+"/api/research/health"),env,deps);expect(health.status).toBe(503);expect(await health.json()).toMatchObject({status:"maintenance",databaseConnectionTested:false,maintenance:true});expect((await handleVercelResearch(request(),env,deps)).status).toBe(503);
+ const env={HSI_DATABASE_URL:"postgresql://fixture:unused@ep-hsi-staging.c-2.eu-west-2.aws.neon.tech/neondb",HSI_NEON_PROJECT_ID:"hsi-neon-project",HSI_AUTH_BASE_URL:"https://auth.example/neondb/auth",HSI_PUBLIC_ORIGIN:origin,HSI_RESEARCH_MAINTENANCE:"true"};const deps={controls:controls(),transport:(async()=>{throw Error("Must not call provider")}) as FetchLike};const health=await handleVercelResearch(new Request(origin+"/api/research/health"),env,deps);expect(health.status).toBe(503);expect(await health.json()).toMatchObject({status:"maintenance",databaseConnectionTested:false,maintenance:true});expect((await handleVercelResearch(request(),env,deps)).status).toBe(503);
  expect((await handleVercelResearch(request(),{HSI_PILOT_REQUIRE_SHARED_LIMITER:"true"},deps)).status).toBe(503);
 });
 function temp<T>(fn:(d:string)=>T){const d=mkdtempSync(join(tmpdir(),"hsi-h-test-"));try{return fn(d)}finally{rmSync(d,{recursive:true,force:true})}}

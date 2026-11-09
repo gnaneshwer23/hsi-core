@@ -92,7 +92,7 @@ describe("P1.9 SSc/gut/neuro neighbourhood depth", () => {
       expect(row).toBeTruthy();
       expect(row?.partnerCleared).toBe(false);
       expect(row?.clearanceScope).toBe("uncleared");
-      expect(["ok_cite", "ok_oa", "restricted", "unknown"]).toContain(
+      expect(["ok_cite", "ok_oa", "restricted", "unknown"] as readonly (string | undefined)[]).toContain(
         row?.licenseStatus,
       );
     }

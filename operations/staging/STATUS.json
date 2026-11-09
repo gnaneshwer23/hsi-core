@@ -11,5 +11,5 @@
   "engineeringChecksCleared": 7,
   "opsChecksPending": 6,
   "note": "Eng harness only. Founder must flip staging env / create two verified neon_auth accounts / grant access. No production writes. Auth signup polish for founder Gmail deferred.",
-  "prepHash": "e0fc61271209873ddc3e7784869a10fb48a765a76e535651eb47941924e10ff6"
+  "prepHash": "70e57ac2f776b82369397ef1e981af8e791e34149364f722e11820096b120d3d"
 }

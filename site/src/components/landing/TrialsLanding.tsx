@@ -373,7 +373,7 @@ export function TrialsLanding() {
             <Link to="/how-it-works" className="btn btn-ghost land-btn-on-light">
               How HSI works
             </Link>
-            <Link to="/products" className="btn btn-ghost land-btn-on-light">
+            <Link to="/modules" className="btn btn-ghost land-btn-on-light">
               Four products
             </Link>
           </div>

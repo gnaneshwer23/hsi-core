@@ -57,7 +57,7 @@ export type CursorSyntheticV3ContractMap = {
   syntheticOnly: true;
   containsPhi: false;
   replacesHsiServices: false;
-  neonProjectRequired: "red-wave-06625195";
+  neonProjectRequired: "hsi-neon-project";
   autumnSnowForbidden: true;
   gateCAutoApprove: false;
   legalBinding: false;
@@ -200,14 +200,14 @@ export function buildCursorSyntheticV3ContractMap(): CursorSyntheticV3ContractMa
     schemaVersion: CURSOR_V3_CONTRACT_MAP_SCHEMA,
     planId: CURSOR_V3_PLAN_ID,
     planReferencePaths: [
-      "/Users/gnaneshwerjadav/Downloads/CURSOR_INTEGRATION_AND_AI_PLAN.md",
-      "/Users/gnaneshwerjadav/Downloads/hsi-synthetic-v3/CURSOR_INTEGRATION_AND_AI_PLAN.md",
+      "<local-home>/Downloads/CURSOR_INTEGRATION_AND_AI_PLAN.md",
+      "<local-home>/Downloads/hsi-synthetic-v3/CURSOR_INTEGRATION_AND_AI_PLAN.md",
     ],
     namespace: CURSOR_V3_NAMESPACE,
     syntheticOnly: true,
     containsPhi: false,
     replacesHsiServices: false,
-    neonProjectRequired: "red-wave-06625195",
+    neonProjectRequired: "hsi-neon-project",
     autumnSnowForbidden: true,
     gateCAutoApprove: false,
     legalBinding: false,

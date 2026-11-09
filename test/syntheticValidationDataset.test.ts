@@ -53,7 +53,7 @@ test("trial overlap never assesses eligibility or promotes recruiting status",()
 test("review rehearsal rejects self-review, scientific approval and excessive history",()=>{
  const request={actor:"demo-reviewer",author:"demo-author",outcome:"checked_for_ui_test",rationale:"The UI and source limitations were examined as test fixtures."};
  expect(()=>recordValidationReview({...request,actor:"demo-author"},[])).toThrow();expect(()=>recordValidationReview({...request,outcome:"supported"},[])).toThrow();expect(()=>recordValidationReview({...request,outcome:"approve"},[])).toThrow();expect(()=>recordValidationReview({...request,rationale:"Patient name and NHS number must never be part of this fixture."},[])).toThrow();
- const log=[];for(let n=0;n<20;n++)log.push(recordValidationReview(request,log));expect(()=>recordValidationReview(request,log)).toThrow();
+ const log: Array<Parameters<typeof recordValidationReview>[1][number]>=[];for(let n=0;n<20;n++)log.push(recordValidationReview(request,log));expect(()=>recordValidationReview(request,log)).toThrow();
  const brief=buildValidationBrief(p,c,log);expect(brief.hypotheses.every(h=>h.review_status==="pending"&&h.evidence_status==="ai_draft")).toBe(true);expect(brief.actualResearchReview).toBe("not_performed");expect(brief.contextMap.causalEdges).toEqual([]);
 });
 test("export reproduces the guarded observations and refuses forged scientific/eligibility content",()=>{

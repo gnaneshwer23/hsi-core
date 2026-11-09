@@ -16,6 +16,7 @@
  * provider failures ≠ empty evidence; retrieved text is untrusted input;
  * incomplete literature coverage ≠ verified scientific novelty gap.
  */
+import type { FetchLike } from "../fetchLike";
 import {createHash} from "node:crypto";
 import {HSI_CDS_PHI_INVARIANTS, rejectPhiPayload} from "../cdsPhiBoundary";
 import {
@@ -746,7 +747,7 @@ export async function runBoundedAgentExecution(input: {
   now?: () => string;
   signal?: AbortSignal;
   /** Injected retrieval fetcher (tests / offline). Live network only when supplied by caller. */
-  fetcher?: typeof fetch;
+  fetcher?: FetchLike;
   cache?: DynamicRetrievalCache;
   persistStore?: DynamicEvidencePersistStore;
   checkpointStore?: HsiCheckpointStore;

@@ -27,9 +27,9 @@
       "https://github.com/gnaneshwer23/immunecity"
     ],
     "doNotMutateNeon": [
-      "autumn-snow-67879321"
+      "isi-neon-project"
     ],
-    "hsiNeonOnly": "red-wave-06625195",
+    "hsiNeonOnly": "hsi-neon-project",
     "applyingWiresRequires": "immunecity repo session or explicit user override of freeze"
   },
   "urlPatterns": {
@@ -132,8 +132,8 @@
     "statusOnPublish": "pending",
     "autoApprove": false,
     "mayFlipHsiGradeFromChecklist": false,
-    "approveTargetNeon": "autumn-snow-67879321",
-    "hsiNeonPendingOnly": "red-wave-06625195",
+    "approveTargetNeon": "isi-neon-project",
+    "hsiNeonPendingOnly": "hsi-neon-project",
     "rules": [
       "Publish leaves every evidence-backed Gate C row as pending",
       "Approve+supports is human-only in ISI product Neon — never automated from hsi-core",
@@ -194,12 +194,12 @@
   ],
   "envVars": {
     "hsiCore": {
-      "DATABASE_URL": "HSI Neon ep-restless-dew / red-wave only",
-      "NEON_PROJECT_ID": "red-wave-06625195",
-      "NEON_BRANCH_ID": "br-quiet-silence-zab1zvji",
+      "DATABASE_URL": "HSI Neon ep-hsi-production / red-wave only",
+      "NEON_PROJECT_ID": "hsi-neon-project",
+      "NEON_BRANCH_ID": "hsi-production-branch",
       "NEON_DATABASE": "neondb",
       "forbiddenHosts": [
-        "ep-blue-salad (autumn-snow ISI)",
+        "ep-isi-product (autumn-snow ISI)",
         "Akeno silent-violet",
         "DeliverX spring-wind"
       ]
@@ -215,12 +215,12 @@
   "neonIsolation": {
     "hsi": {
       "name": "human super intelligence",
-      "projectId": "red-wave-06625195",
+      "projectId": "hsi-neon-project",
       "role": "HSI substrate + pending Gate C placeholders only"
     },
     "isi": {
       "name": "immunecity",
-      "projectId": "autumn-snow-67879321",
+      "projectId": "isi-neon-project",
       "role": "ISI product DB + human Gate C approve+supports"
     },
     "sharedEvidenceDb": false

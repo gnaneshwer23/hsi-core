@@ -1,5 +1,5 @@
 -- HSI Stage 1 substrate stub (owned by hsi-core).
--- Target: Neon project red-wave-06625195 / neondb only.
+-- Target: Neon project hsi-neon-project / neondb only.
 -- Not a copy of immunecity / ISI schema. No PHI. No auto-approve.
 
 -- Migration ledger

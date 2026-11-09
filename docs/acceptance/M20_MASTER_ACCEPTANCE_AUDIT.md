@@ -5,7 +5,7 @@
 **Date:** 2026-11-09  
 **Audited `main` SHA:** `aa20df8c690194ac54bffe7cccb518b07bbfd1c1` (`aa20df8` — M17 PR4 [#140](https://github.com/gnaneshwer23/hsi-core/pull/140))  
 **Live probe origin:** https://www.humansuperintelligence.tech  
-**Live health probe:** `2026-11-09T15:24Z` — `configuration_validated`, `writesEnabled=false`, red-wave auth/DB prefixes match (`ep-restless-dew`)  
+**Live health probe:** `2026-11-09T15:24Z` — `configuration_validated`, `writesEnabled=false`, red-wave auth/DB prefixes match (`ep-hsi-production`)  
 **Companion audits:** [`../engineering/M19_PLATFORM_INTEGRATION_AUDIT.md`](../engineering/M19_PLATFORM_INTEGRATION_AUDIT.md) (open [#142](https://github.com/gnaneshwer23/hsi-core/pull/142)) · canvas `hsi-e2e-production-readiness-2026-11-09` · [`../engineering/HUMAN_QUEUE_RESIDUALS.md`](../engineering/HUMAN_QUEUE_RESIDUALS.md) · [`../engineering/PRODUCTION_READINESS_AUDIT_2026-11-08.md`](../engineering/PRODUCTION_READINESS_AUDIT_2026-11-08.md)  
 
 **In-flight (not on tip):**

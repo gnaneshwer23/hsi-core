@@ -3,7 +3,7 @@ Date: 2026-11-04
 Disposition: PARTIAL E2E; runtime operational sign-off remains blocked.
 
 ## Isolation
-Neon project red-wave-06625195. Disposable child branch br-morning-fog-zaobvjs0, parent HSI staging br-rough-snow-zagxbvjp. No production changes. Test branch intentionally retained until explicit deletion approval.
+Neon project hsi-neon-project. Disposable child branch hsi-disposable-branch, parent HSI staging hsi-staging-branch. No production changes. Test branch intentionally retained until explicit deletion approval.
 
 ## Executed against isolated branch
 - First SQL connection claimed synthetic checkpoint e2e-disposable-20261104-a (1 inserted).

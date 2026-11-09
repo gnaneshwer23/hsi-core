@@ -10,7 +10,7 @@
 | Target | **Amazon RDS for PostgreSQL**, **dev-sized** |
 | ISI Auth / immunecity Neon | **Stay on Neon** — not in this pass |
 | Aksh / Akeno DBs | **Out of scope** |
-| Rollback | Keep **HSI Neon `red-wave-06625195`** intact |
+| Rollback | Keep **HSI Neon `hsi-neon-project`** intact |
 
 Related: [`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md) · [`HSI_NEON_MIGRATIONS.md`](./HSI_NEON_MIGRATIONS.md) · [`CDS_PHI_BOUNDARY.md`](./CDS_PHI_BOUNDARY.md)
 
@@ -29,7 +29,7 @@ Related: [`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md) · [`HSI_NEON_MIGRATIONS
 
 | Item | Why |
 |------|-----|
-| ISI / immunecity Auth + product Neon (`autumn-snow` / `ep-blue-salad`) | Stay on Neon; separate product |
+| ISI / immunecity Auth + product Neon (`autumn-snow` / `ep-isi-product`) | Stay on Neon; separate product |
 | Aksh Health / Akeno clinical DBs | Separate planes; CDS/PHI boundary |
 | Shared evidence DB between HSI and ISI | Forbidden — see AGENTS.md |
 | Production cutover / swapping live `DATABASE_URL` | Requires **founder approval** after staging green |
@@ -66,14 +66,14 @@ Match Neon’s documented engine where practical. Canonical HSI Neon is **Postgr
 
 Complete before any AWS create or dump/restore.
 
-- [ ] Confirm worktree is **hsi-core** and Neon target for rollback is still **`red-wave-06625195` / `ep-restless-dew…`** only
+- [ ] Confirm worktree is **hsi-core** and Neon target for rollback is still **`hsi-neon-project` / `ep-hsi-production…`** only
 - [ ] Confirm **no** intent to migrate ISI Auth or Aksh in this pass
 - [ ] Estimate dump size from red-wave (expect **small** — one migration stub + sparse Gate C pending rows):
 
   ```bash
   # Masked host only in logs; never paste passwords into chat
   bun run db:migrate -- --from-neonctl   # no-op if already applied; proves connectivity
-  npx neonctl psql --project-id red-wave-06625195 -c \
+  npx neonctl psql --project-id hsi-neon-project -c \
     "SELECT pg_size_pretty(pg_database_size(current_database()));
      SELECT id FROM hsi_schema_migrations ORDER BY id;
      SELECT count(*) AS gate_c_rows FROM hsi_gate_c_reviews;"
@@ -81,7 +81,7 @@ Complete before any AWS create or dump/restore.
 
 - [ ] Migration inventory: today **1** file — `db/migrations/001_hsi_substrate.sql` (ledger id `001_hsi_substrate`)
 - [ ] Prefer **replay migrations** on empty RDS over dump/restore unless red-wave has data you must keep
-- [ ] Note **neonGuard** currently **rejects** any non–`ep-restless-dew…neon.tech` host — RDS staging **requires** a code change before `bun run db:migrate` can target RDS (see §5)
+- [ ] Note **neonGuard** currently **rejects** any non–`ep-hsi-production…neon.tech` host — RDS staging **requires** a code change before `bun run db:migrate` can target RDS (see §5)
 - [ ] AWS account + IAM ready; `aws` CLI optional (not present on some founder machines — console UI is fine)
 - [ ] Decide VPC / subnet / SG; document CIDRs in a private note (not this repo)
 - [ ] Plan `.env.local` **staging** key name (e.g. keep `DATABASE_URL` pointed at red-wave; use a clearly named staging override only after guard lands — see §4)
@@ -171,7 +171,7 @@ Manual SQL checks (staging): tables `hsi_claims`, `hsi_markers`, `hsi_edges`, `h
 
 | Concern | Path | Role today |
 |---------|------|------------|
-| Host / project allowlist | [`src/db/neonGuard.ts`](../src/db/neonGuard.ts) | **Only** `ep-restless-dew-zas989pv…eu-west-2.aws.neon.tech` (+ pooler); DB path **`/neondb`**; forbids ISI/Akeno/DeliverX markers |
+| Host / project allowlist | [`src/db/neonGuard.ts`](../src/db/neonGuard.ts) | **Only** `ep-hsi-production…eu-west-2.aws.neon.tech` (+ pooler); DB path **`/neondb`**; forbids ISI/Akeno/DeliverX markers |
 | URL resolve | [`src/db/resolveDatabaseUrl.ts`](../src/db/resolveDatabaseUrl.ts) | Env `DATABASE_URL` or `--from-neonctl` for red-wave |
 | Migrate apply | [`src/db/migrate.ts`](../src/db/migrate.ts) + [`src/cli/migrate.ts`](../src/cli/migrate.ts) | Calls `assertHsiNeonDatabaseUrl` |
 | Gate C local | [`src/db/gateCLocal.ts`](../src/db/gateCLocal.ts) + `src/cli/gate-c-local.ts` | Same guard; pending-only |
@@ -199,7 +199,7 @@ Manual SQL checks (staging): tables `hsi_claims`, `hsi_markers`, `hsi_edges`, `h
 
 At any time before prod cutover:
 
-1. Restore `.env.local` / shell env to HSI Neon URL (`ep-restless-dew…` / `red-wave-06625195`) **or** use `bun run db:migrate -- --from-neonctl`.
+1. Restore `.env.local` / shell env to HSI Neon URL (`ep-hsi-production…` / `hsi-neon-project`) **or** use `bun run db:migrate -- --from-neonctl`.
 2. Leave RDS instance stopped or untouched; optional later delete **only** the staging RDS (never Neon).
 3. Confirm guards still accept red-wave; re-run `bun test`.
 4. Vercel / production env must still point at red-wave until §7.

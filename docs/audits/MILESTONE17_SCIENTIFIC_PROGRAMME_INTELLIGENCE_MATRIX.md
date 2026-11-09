@@ -5,7 +5,7 @@
 **Date:** 2026-11-09  
 **Audited `main` SHA:** `aa20df8c690194ac54bffe7cccb518b07bbfd1c1` (post-#140 tip; M17 PR1–PR4 merged)  
 **Tip commit:** `aa20df8 M17 PR4 Scientific Knowledge Evolution (#140)`  
-**HSI Neon:** red-wave only (`human super intelligence` / `red-wave-06625195` / `ep-restless-dew…`) — never autumn-snow / Akeno / DeliverX  
+**HSI Neon:** red-wave only (`human super intelligence` / `hsi-neon-project` / `ep-hsi-production…`) — never autumn-snow / Akeno / DeliverX  
 **Dependency:** Compose IDs/refs already on `main` (M1–M16 eng substrate including M17 PR1–PR4). **PR5** branches from latest `main` @ `aa20df8`. If further concurrent merges land mid-flight, rebase onto latest `main`.
 
 **Cross-links (do not contradict):**

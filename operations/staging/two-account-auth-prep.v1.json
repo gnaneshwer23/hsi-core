@@ -10,24 +10,24 @@
   "productionResearchAccessGranted": false,
   "inventedNeonAuthPrincipalsPermitted": false,
   "writeGate": {
-    "stagingBranchId": "br-rough-snow-zagxbvjp",
-    "stagingHostPrefix": "ep-sweet-hill-zasb0lni",
-    "productionHostPrefix": "ep-restless-dew",
-    "productionBranchId": "br-quiet-silence-zab1zvji",
-    "disposableBranchId": "br-morning-fog-zaobvjs0",
-    "neonProjectId": "red-wave-06625195",
+    "stagingBranchId": "hsi-staging-branch",
+    "stagingHostPrefix": "ep-hsi-staging",
+    "productionHostPrefix": "ep-hsi-production",
+    "productionBranchId": "hsi-production-branch",
+    "disposableBranchId": "hsi-disposable-branch",
+    "neonProjectId": "hsi-neon-project",
     "writesRequireExactTriple": [
       "HSI_RESEARCH_WRITES_ENABLED=true",
-      "HSI_NEON_BRANCH_ID=br-rough-snow-zagxbvjp",
-      "databaseEndpointPrefix=ep-sweet-hill-zasb0lni"
+      "HSI_NEON_BRANCH_ID=hsi-staging-branch",
+      "databaseEndpointPrefix=ep-hsi-staging"
     ],
     "productionWritesWithStagingFlags": false,
     "defaultWritesEnabled": false,
     "forbiddenMarkersSample": [
-      "ep-blue-salad",
-      "autumn-snow-67879321",
+      "ep-isi-product",
+      "isi-neon-project",
       "autumn-snow",
-      "ep-weathered-mountain"
+      "ep-akeno-product"
     ]
   },
   "honesty": {
@@ -52,7 +52,7 @@
       "emailVerified": false,
       "researchAccessGranted": false,
       "reviewerAuthorityGranted": false,
-      "notes": "Distinct neon_auth principal on red-wave staging Auth (ep-sweet-hill). Fill only after real signup + email verify."
+      "notes": "Distinct neon_auth principal on red-wave staging Auth (ep-hsi-staging). Fill only after real signup + email verify."
     },
     {
       "slotId": "STAGING-ACCT-REVIEWER",
@@ -78,12 +78,12 @@
     }
   ],
   "founderMustFlip": [
-    "Align Vercel Preview HSI_* + VITE_HSI_* to red-wave staging branch br-rough-snow-zagxbvjp / ep-sweet-hill-zasb0lni (never autumn-snow).",
+    "Align Vercel Preview HSI_* + VITE_HSI_* to red-wave staging branch hsi-staging-branch / ep-hsi-staging (never autumn-snow).",
     "Set VITE_HSI_USE_AUTH_GATEWAY=true on that Preview deployment and redeploy.",
     "Create two distinct neon_auth accounts on staging Auth; complete email verification (no SQL emailVerified bypass). Auth signup polish for founder Gmail remains deferred.",
     "As grant operator, insert hsi_research_access only for verified immutable user ids (researcher vs independent reviewer).",
-    "After dry-run plan: set HSI_RESEARCH_WRITES_ENABLED=true and HSI_NEON_BRANCH_ID=br-rough-snow-zagxbvjp on Preview only.",
-    "Keep production (ep-restless-dew) writesEnabled=false; never grant production research access without a verified neon_auth principal on production Auth.",
+    "After dry-run plan: set HSI_RESEARCH_WRITES_ENABLED=true and HSI_NEON_BRANCH_ID=hsi-staging-branch on Preview only.",
+    "Keep production (ep-hsi-production) writesEnabled=false; never grant production research access without a verified neon_auth principal on production Auth.",
     "Record private evidence of the live two-account journey (self-review denial, wrong-owner denial, revoke rehearsal) without tokens or PHI."
   ],
   "codeCanAutomate": [
@@ -107,11 +107,11 @@
       "title": "Production endpoint cannot enable research writes with staging flags",
       "plane": "engineering",
       "status": "CLEARED",
-      "evidence": "productionWritesEnabled=false; host ep-restless-dew."
+      "evidence": "productionWritesEnabled=false; host ep-hsi-production."
     },
     {
       "id": "autumn_snow_refused",
-      "title": "ISI autumn-snow / ep-blue-salad refused for HSI substrate",
+      "title": "ISI autumn-snow / ep-isi-product refused for HSI substrate",
       "plane": "engineering",
       "status": "CLEARED",
       "evidence": "neonGuard assertHsiNeonDatabaseUrl + FORBIDDEN_NEON_MARKERS."
@@ -170,7 +170,7 @@
       "title": "Staging-only HSI_RESEARCH_WRITES_ENABLED + HSI_NEON_BRANCH_ID flip",
       "plane": "ops",
       "status": "PENDING_OPS",
-      "evidence": "Only after two-account dry-run plan; branch br-rough-snow-zagxbvjp; host ep-sweet-hill-zasb0lni."
+      "evidence": "Only after two-account dry-run plan; branch hsi-staging-branch; host ep-hsi-staging."
     },
     {
       "id": "live_two_account_journey_recorded",
@@ -204,5 +204,5 @@
     "Leave production writes disabled; Auth signup polish for founder Gmail stays deferred.",
     "Re-run bun run staging:auth-prep:check; opsAcceptance stays BLOCKED until a human ops receipt replaces this scaffold."
   ],
-  "prepHash": "e0fc61271209873ddc3e7784869a10fb48a765a76e535651eb47941924e10ff6"
+  "prepHash": "70e57ac2f776b82369397ef1e981af8e791e34149364f722e11820096b120d3d"
 }

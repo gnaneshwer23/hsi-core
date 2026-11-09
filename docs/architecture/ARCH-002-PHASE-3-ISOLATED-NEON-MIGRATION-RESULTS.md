@@ -1,7 +1,7 @@
 # Phase 3 isolated Neon migration execution report — 2026-11-04
 
 ## Scope and approval
-User explicitly authorised migrations 011 and 012 on disposable Neon branch br-morning-fog-zaobvjs0 only, after security validation. HSI project red-wave-06625195, database neondb. Production br-quiet-silence-zab1zvji and staging br-rough-snow-zagxbvjp were not targeted.
+User explicitly authorised migrations 011 and 012 on disposable Neon branch hsi-disposable-branch only, after security validation. HSI project hsi-neon-project, database neondb. Production hsi-production-branch and staging hsi-staging-branch were not targeted.
 
 ## Preflight
 - Confirmed disposable branch exists, is ready, non-default and non-production.

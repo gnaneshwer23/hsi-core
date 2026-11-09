@@ -64,7 +64,7 @@ describe("partner-lock prep (audit Phase #8)", () => {
       generatedAt: "2026-11-08T12:00:00.000Z",
     });
     const bad = structuredClone(prep) as typeof prep & {founderAcceptance: string};
-    bad.founderAcceptance = "CLEARED";
+    (bad as {founderAcceptance: string}).founderAcceptance = "CLEARED";
     expect(() => parsePartnerLockPrep(bad)).toThrow();
   });
 

@@ -42,7 +42,7 @@ function main(): void {
     neonAuthProvisioned: false,
     accounts: report.accounts,
     howToUse:
-      "Offline: bun run m20:demo. Staging neon_auth (optional later): create accounts matching emails only on ep-sweet-hill; never commit passwords; never invent user ids into human-queue worksheets.",
+      "Offline: bun run m20:demo. Staging neon_auth (optional later): create accounts matching emails only on ep-hsi-staging; never commit passwords; never invent user ids into human-queue worksheets.",
   };
 
   if (checkOnly) {

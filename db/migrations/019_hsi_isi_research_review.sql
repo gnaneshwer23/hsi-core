@@ -1,3 +1,5 @@
+-- Renumbered from 012_isi_research_review.sql so each migration has one numeric prefix.
+-- If hsi_schema_migrations already records 012_isi_research_review, the runner skips this file.
 -- HSI P0.4.2 research-only staging tables. Apply only after security review.
 CREATE TABLE IF NOT EXISTS hsi_isi_intake (
  release_hash text PRIMARY KEY,

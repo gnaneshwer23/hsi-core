@@ -40,7 +40,7 @@ N6 pilot scoring **must wait** for Audit **#4** N3 human label freeze (`humanLab
 
 ## Companion eng (016/017 Neon helpers)
 
-Fail-closed Neon R/W helpers for ledger tables exist behind `neonGuard` + `writesEnabled` + staging host only. Offline N2/N7 JSON fixtures remain authority. Production (`ep-restless-dew`) stays read-only for ledger helpers. Helpers do **not** clear N6 usefulness.
+Fail-closed Neon R/W helpers for ledger tables exist behind `neonGuard` + `writesEnabled` + staging host only. Offline N2/N7 JSON fixtures remain authority. Production (`ep-hsi-production`) stays read-only for ledger helpers. Helpers do **not** clear N6 usefulness.
 
 ## Verify
 

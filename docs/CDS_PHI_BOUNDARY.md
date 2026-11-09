@@ -58,7 +58,7 @@ mhraApprovedCds: false
 phiToLlm: false
 ```
 
-Neon for HSI remains **`red-wave-06625195` only**. Never autumn-snow / Akeno / DeliverX.
+Neon for HSI remains **`hsi-neon-project` only**. Never autumn-snow / Akeno / DeliverX.
 
 ## How to verify
 

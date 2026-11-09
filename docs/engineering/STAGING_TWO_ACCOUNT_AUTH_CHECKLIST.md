@@ -8,17 +8,17 @@ Honesty: no invented `neon_auth` principals · no production research grants wit
 
 | Item | Value |
 |------|--------|
-| Neon project | `red-wave-06625195` |
-| Staging branch | `br-rough-snow-zagxbvjp` |
-| Staging host prefix | `ep-sweet-hill-zasb0lni` |
-| Production branch (writes must stay off) | `br-quiet-silence-zab1zvji` / `ep-restless-dew-zas989pv` |
-| Forbidden | ISI `autumn-snow` / `ep-blue-salad`, Akeno, DeliverX |
+| Neon project | `hsi-neon-project` |
+| Staging branch | `hsi-staging-branch` |
+| Staging host prefix | `ep-hsi-staging` |
+| Production branch (writes must stay off) | `hsi-production-branch` / `ep-hsi-production` |
+| Forbidden | ISI `autumn-snow` / `ep-isi-product`, Akeno, DeliverX |
 
 Authoritative setup: [`docs/VERCEL_RESEARCH_SETUP.md`](../VERCEL_RESEARCH_SETUP.md). Acceptance depth: [`docs/PHASE_D_BRIEFS_AND_INDEPENDENT_REVIEW.md`](../PHASE_D_BRIEFS_AND_INDEPENDENT_REVIEW.md), [`docs/engineering/HSI_STAGING_SCIENTIFIC_REVIEW_ACCEPTANCE.md`](./HSI_STAGING_SCIENTIFIC_REVIEW_ACCEPTANCE.md), [`docs/PRODUCTION_QA_2026-11-06.md`](../PRODUCTION_QA_2026-11-06.md).
 
 ## A. What engineering already automated
 
-- [x] Fail-closed write gate: `HSI_RESEARCH_WRITES_ENABLED=true` **and** `HSI_NEON_BRANCH_ID=br-rough-snow-zagxbvjp` **and** DB host prefix `ep-sweet-hill-zasb0lni`
+- [x] Fail-closed write gate: `HSI_RESEARCH_WRITES_ENABLED=true` **and** `HSI_NEON_BRANCH_ID=hsi-staging-branch` **and** DB host prefix `ep-hsi-staging`
 - [x] Production host refuses writes even when staging flags are set
 - [x] Default `writesEnabled=false`
 - [x] Auth ↔ DB endpoint-prefix mismatch fails closed
@@ -30,10 +30,10 @@ Authoritative setup: [`docs/VERCEL_RESEARCH_SETUP.md`](../VERCEL_RESEARCH_SETUP.
 
 ### B1 — Preview environment alignment
 
-- [ ] Vercel **Preview** (or stable staging alias) uses staging `HSI_DATABASE_URL` for `ep-sweet-hill-zasb0lni`
+- [ ] Vercel **Preview** (or stable staging alias) uses staging `HSI_DATABASE_URL` for `ep-hsi-staging`
 - [ ] `HSI_AUTH_BASE_URL` and `VITE_HSI_AUTH_BASE_URL` match that same staging Auth host (`…neonauth…/neondb/auth`)
 - [ ] `HSI_PUBLIC_ORIGIN` equals the exact HTTPS origin of the test site
-- [ ] `HSI_NEON_PROJECT_ID=red-wave-06625195`
+- [ ] `HSI_NEON_PROJECT_ID=hsi-neon-project`
 - [ ] `VITE_HSI_USE_AUTH_GATEWAY=true` after nested auth routes deploy
 - [ ] Redeploy; open `/api/research/health` → `configuration_validated`, `authUrlsMatch=true`, `endpointPrefixesMatch=true`, **`writesEnabled=false`**
 
@@ -54,7 +54,7 @@ Authoritative setup: [`docs/VERCEL_RESEARCH_SETUP.md`](../VERCEL_RESEARCH_SETUP.
 
 ### B4 — Staging write enablement
 
-- [ ] Only after B1–B3: set `HSI_RESEARCH_WRITES_ENABLED=true` and `HSI_NEON_BRANCH_ID=br-rough-snow-zagxbvjp` on Preview
+- [ ] Only after B1–B3: set `HSI_RESEARCH_WRITES_ENABLED=true` and `HSI_NEON_BRANCH_ID=hsi-staging-branch` on Preview
 - [ ] Confirm health now reports `writesEnabled=true` on staging origin only
 - [ ] Confirm production origin still `writesEnabled=false`
 

@@ -28,7 +28,7 @@ test("another researcher and reviewer cannot capture an owner's context",async()
  const f=serviceFixture();for(const token of [null,"bob","reviewer"])await expect(f.handler({serverSessionToken:token,investigationId:f.i.id,capture:true})).rejects.toThrow();expect(f.writes()).toBe(0);
 });
 test("direct adapter capture refuses the production host even with a true internal write flag",async()=>{
- await expect(loadOrCaptureInvestigationGraphContext({serverSessionToken:null,investigationId:investigation().id,capture:true,writesEnabled:true,neonProjectId:"red-wave-06625195",databaseUrl:"postgresql://test:never-used@ep-restless-dew-zas989pv.c-2.eu-west-2.aws.neon.tech/neondb?sslmode=require"})).rejects.toThrow("approved HSI staging writes");
+ await expect(loadOrCaptureInvestigationGraphContext({serverSessionToken:null,investigationId:investigation().id,capture:true,writesEnabled:true,neonProjectId:"hsi-neon-project",databaseUrl:"postgresql://test:never-used@ep-hsi-production.c-2.eu-west-2.aws.neon.tech/neondb?sslmode=require"})).rejects.toThrow("approved HSI staging writes");
 });
 test("staging writes remain required, and review readers cannot capture or change the context",async()=>{
  const readonly=serviceFixture(false),args={serverSessionToken:"alice",investigationId:readonly.i.id,capture:false};expect((await readonly.handler(args)).canCapture).toBe(false);await expect(readonly.handler({...args,capture:true})).rejects.toThrow("denied");expect(readonly.writes()).toBe(0);

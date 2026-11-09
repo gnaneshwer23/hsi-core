@@ -1,3 +1,4 @@
+import type { FetchLike } from "../src/fetchLike";
 import { test, expect } from "bun:test";
 import { fetchEuropePmcMetadata, parseEuropePmcMetadata } from "../src/evidenceIngestion";
 const record = {resultList:{result:[{id:"30760472",source:"MED",title:"Tfh and systemic sclerosis",doi:"10.1136/example",journalTitle:"Journal",firstPublicationDate:"2019-01-01"}]}};
@@ -14,6 +15,6 @@ test("rejects invalid PMID before network",async()=>{
  await expect(fetchEuropePmcMetadata("123;DROP")).rejects.toThrow("Invalid PMID");
 });
 test("handles provider HTTP failures",async()=>{
- const mock = (async()=>new Response("",{status:503})) as typeof fetch;
+ const mock = (async()=>new Response("",{status:503})) as FetchLike;
  await expect(fetchEuropePmcMetadata("30760472",mock)).rejects.toThrow("HTTP 503");
 });

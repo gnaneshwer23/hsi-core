@@ -2,6 +2,7 @@
  * ClinicalTrials.gov API v2 study lookup for N5 public-registry research.
  * Live fetch is metadata/criteria capture only — never eligibility, enrolment, CDS or PHI.
  */
+import type { FetchLike } from "../fetchLike";
 import {createHash} from "node:crypto";
 import {rejectPhiPayload} from "../cdsPhiBoundary";
 
@@ -203,7 +204,7 @@ export function parseClinicalTrialsGovStudyPayload(input: {
 /** Live NCT lookup. Does not assess eligibility, enrolment or scientific acceptance. */
 export async function lookupClinicalTrialsGovByNctId(input: {
   nctId: string;
-  fetcher?: typeof fetch;
+  fetcher?: FetchLike;
   now?: () => Date;
   signal?: AbortSignal;
 }): Promise<CtgovLookupResult> {

@@ -174,8 +174,8 @@ Build **ISI** as an immune-science discovery product on **HSI Core** (shared evi
 
 Blueprint §9 casually places “PostgreSQL/Neon” under KG projection and §8 pushes a joint immunecity + HSI discovery sprint. **Current binding rule is stricter:**
 
-- HSI substrate / migrations / Gate C *local placeholders* → **`red-wave-06625195` / `ep-restless-dew…` only**
-- Gate C *approve* (if any) → ISI product Neon **`autumn-snow` / `ep-blue-salad…`** only
+- HSI substrate / migrations / Gate C *local placeholders* → **`hsi-neon-project` / `ep-hsi-production…` only**
+- Gate C *approve* (if any) → ISI product Neon **`autumn-snow` / `ep-isi-product…`** only
 - **No shared evidence DB** between HSI and immunecity
 - Never Akeno / DeliverX Neon from this workspace
 

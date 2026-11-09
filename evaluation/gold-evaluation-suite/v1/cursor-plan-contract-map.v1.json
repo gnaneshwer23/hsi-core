@@ -2,14 +2,14 @@
   "schemaVersion": "hsi-cursor-synthetic-v3-contract-map-1",
   "planId": "CURSOR_INTEGRATION_AND_AI_PLAN.md",
   "planReferencePaths": [
-    "/Users/gnaneshwerjadav/Downloads/CURSOR_INTEGRATION_AND_AI_PLAN.md",
-    "/Users/gnaneshwerjadav/Downloads/hsi-synthetic-v3/CURSOR_INTEGRATION_AND_AI_PLAN.md"
+    "<local-home>/Downloads/CURSOR_INTEGRATION_AND_AI_PLAN.md",
+    "<local-home>/Downloads/hsi-synthetic-v3/CURSOR_INTEGRATION_AND_AI_PLAN.md"
   ],
   "namespace": "SYNTHETIC/HSI/v2",
   "syntheticOnly": true,
   "containsPhi": false,
   "replacesHsiServices": false,
-  "neonProjectRequired": "red-wave-06625195",
+  "neonProjectRequired": "hsi-neon-project",
   "autumnSnowForbidden": true,
   "gateCAutoApprove": false,
   "legalBinding": false,

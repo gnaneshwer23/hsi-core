@@ -182,7 +182,7 @@ describe("translational evidence O-04 attach", () => {
       scope: "research_only",
       graphPublicationApproved: false,
     };
-    const outcome = await buildResearchOutcome(brief, deliveryHash, {
+    const outcome = await buildResearchOutcome(brief, async (text) => deliveryHash(text), {
       translationalLandscape: landscape,
     });
     expect(outcome.trials.status).toBe("attached_registry_snapshot");

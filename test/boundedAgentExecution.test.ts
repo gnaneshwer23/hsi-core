@@ -1,6 +1,7 @@
 /**
  * PR 5 — Bounded agent execution with durable traces.
  */
+import type { FetchLike } from "../src/fetchLike";
 import {describe, expect, test} from "bun:test";
 import {
   createMemoryCheckpointStore,
@@ -70,7 +71,7 @@ function otBody(diseaseId: string, name: string): string {
   });
 }
 
-function mockFetcher(title = "Tfh IL-21 in SSc"): typeof fetch {
+function mockFetcher(title = "Tfh IL-21 in SSc"): FetchLike {
   return async (url) => {
     const u = String(url);
     if (u.includes("opentargets")) {
@@ -191,7 +192,7 @@ describe("bounded agent execution durable traces", () => {
   test("cancellation stops new work and leaves prior stage traces visible", async () => {
     const controller = new AbortController();
     let retrievalStarted = false;
-    const fetcher: typeof fetch = async (url) => {
+    const fetcher: FetchLike = async (url) => {
       retrievalStarted = true;
       controller.abort();
       return mockFetcher()(url, undefined as never);

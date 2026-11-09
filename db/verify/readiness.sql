@@ -1,4 +1,4 @@
--- Run only on HSI red-wave / br-quiet-silence-zab1zvji / neondb.
+-- Run only on HSI red-wave / hsi-production-branch / neondb.
 -- Read-only release evidence; never applies migrations or changes reviews.
 BEGIN TRANSACTION READ ONLY;
 

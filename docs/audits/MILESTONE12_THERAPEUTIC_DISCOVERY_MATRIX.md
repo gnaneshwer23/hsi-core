@@ -4,7 +4,7 @@
 **Status:** Phase 0 gap audit + PR1 (Therapeutic Discovery Data Contracts, [#107](https://github.com/gnaneshwer23/hsi-core/pull/107) **merged** → `7485bd4`) — **not** drug discovery complete, **not** repurposing validated, **not** preclinical decision intelligence claimed.  
 **Date:** 2026-11-09  
 **Audited `main` SHA:** `ebabd52c994fa1656d95bda096cd67e1ab90be6c` (post-#104 M10 stack on main)  
-**HSI Neon:** red-wave only (`human super intelligence` / `red-wave-06625195` / `ep-restless-dew…`) — never autumn-snow / Akeno / DeliverX  
+**HSI Neon:** red-wave only (`human super intelligence` / `hsi-neon-project` / `ep-hsi-production…`) — never autumn-snow / Akeno / DeliverX  
 
 **Cross-links (do not contradict):**
 

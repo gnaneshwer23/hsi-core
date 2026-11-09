@@ -1,3 +1,5 @@
+> **Superseded.** Current capability status is generated in [./STATUS.md](./STATUS.md) from `operations/capability-register/capability-register.v1.json`. This document is historical and is not the status source of truth.
+
 # HSI publishable outputs
 
 Consumers (Aksh Health, ISI / Immune Super Intelligence) pull **versioned artifacts** from this repo — not live edits in product apps.
@@ -116,7 +118,7 @@ PRD / brief four outputs (evidence map, entity slice, competing explanations, ex
 ## Invariants
 
 - `notCds` / `autoApproveIntoKg=false` / `autoSurfaceCds=false` on publish manifests
-- Gate C checklist rows with evidence are **`pending`** until a human approve+supports in the **ISI product Neon** (`autumn-snow` / `ep-blue-salad…`) — that DB is **not** HSI’s; HSI Neon is `red-wave` only ([`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md))
+- Gate C checklist rows with evidence are **`pending`** until a human approve+supports in the **ISI product Neon** (`autumn-snow` / `ep-isi-product…`) — that DB is **not** HSI’s; HSI Neon is `red-wave` only ([`NEON_PROJECT_MAP.md`](./NEON_PROJECT_MAP.md))
 - No PHI; no EHR write-back; no invented PMIDs / REL ids; no HSI writes into ISI/Akeno/DeliverX Neon
 - `scopeLocked=true` alone **never** implies a MoU; named Apolo path sets `partnerSigned` + `legalBinding` → `lockedPilot=true` (still not CDS; Gate C never auto-approves)
 - SLE/PsO/IBD contexts remain **illustrative only**

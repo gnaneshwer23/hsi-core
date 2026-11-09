@@ -1,3 +1,4 @@
+import type { FetchLike } from "../../../src/fetchLike";
 import {AUTH_ERROR_MESSAGES,knownAuthErrorCode} from "../../../src/authErrors";
 /** Pure browser authentication transport. No database credentials, sessions or role grants are stored here. */
 export type AuthError={message:string;code?:string};
@@ -22,7 +23,7 @@ export function parseAuthRegistration(value:unknown,submittedEmail:string):HsiRe
  if(typeof user.id!=="string"||!user.id.trim()||user.id.length>256||typeof user.email!=="string"||user.email.trim().toLowerCase()!==submittedEmail.trim().toLowerCase()||typeof user.emailVerified!=="boolean")throw Error("Invalid registration identity response");
  return {user:{id:user.id,email:user.email,emailVerified:user.emailVerified},...(typeof value.verificationEmailRequested==="boolean"?{verificationEmailRequested:value.verificationEmailRequested}:{})};
 }
-export function createHsiAuthClient(configured:unknown,request:typeof fetch=fetch,timeoutMs=8000,transportMode:"provider"|"same-origin"="provider"){
+export function createHsiAuthClient(configured:unknown,request:FetchLike=fetch,timeoutMs=8000,transportMode:"provider"|"same-origin"="provider"){
  const baseUrl=parseAuthBaseUrl(configured);
  if(!Number.isSafeInteger(timeoutMs)||timeoutMs<1||timeoutMs>30_000)throw Error("Invalid authentication timeout");
  async function authRequest<T>(path:string,body:unknown,parse:(value:unknown)=>T|null):Promise<AuthResult<T>>{

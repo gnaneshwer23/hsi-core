@@ -5,7 +5,7 @@
 **Date:** 2026-11-09  
 **Audited `main` SHA:** `13bfa91ea8be156ec9affc2220a5d6ca5466b1af`  
 **Tip commit:** `13bfa91 Add Data-to-Discovery audit matrix and Technology connection map (#87)`  
-**HSI Neon:** red-wave only (`human super intelligence` / `red-wave-06625195`) — never autumn-snow / Akeno / DeliverX  
+**HSI Neon:** red-wave only (`human super intelligence` / `hsi-neon-project`) — never autumn-snow / Akeno / DeliverX  
 
 **Explicit:** CI green ≠ scientific validity. Production readiness is **not** claimed. Live E2E and human queue #2 / #4 / #5 remain PARKED. Rights are **not** CLEARED.
 

@@ -1,3 +1,4 @@
+import type { FetchLike } from "../src/fetchLike";
 import {describe,expect,it} from "bun:test";
 import {searchSscLiterature} from "../src/evidence/europePmcSscDiscovery";
 
@@ -12,7 +13,7 @@ describe("ISI SSc literature discovery",()=>{
     resultList:{result:[{id:"30760472",source:"MED",pmid:"30760472",doi:"10.1136/annrheumdis-2018-214382",title:"Study of Tfh cells",pubYear:"2019",abstractText:"An observational study."}]}
    }),{status:200,headers:{"content-type":"application/json"}});
   };
-  const result=await searchSscLiterature({fetcher:fetcher as typeof fetch,now:fixed});
+  const result=await searchSscLiterature({fetcher:fetcher as FetchLike,now:fixed});
   expect(requested).toContain("europepmc");
   expect(new URL(requested).searchParams.get("resultType")).toBe("core");
   expect(result.totalHits).toBe(1);
@@ -28,10 +29,10 @@ describe("ISI SSc literature discovery",()=>{
  });
  it("fails closed on upstream errors",async()=>{
   const fetcher=async()=>new Response("failure",{status:503});
-  expect(searchSscLiterature({fetcher:fetcher as typeof fetch})).rejects.toThrow("HTTP 503");
+  expect(searchSscLiterature({fetcher:fetcher as FetchLike})).rejects.toThrow("HTTP 503");
  });
  it("rejects malformed API responses",async()=>{
   const fetcher=async()=>new Response(JSON.stringify({hitCount:1}),{status:200});
-  expect(searchSscLiterature({fetcher:fetcher as typeof fetch})).rejects.toThrow("result list missing");
+  expect(searchSscLiterature({fetcher:fetcher as FetchLike})).rejects.toThrow("result list missing");
  });
 });

@@ -5,7 +5,7 @@
 **Date:** 2026-11-09  
 **Audited `main` SHA:** `64dae2943229c2ca4b37c74bbfc838987132514f` (post-#111 + #113 + #114 tip)  
 **Tip commit:** `64dae29 Add M14 longitudinal clinical evidence model contracts (#114)`  
-**HSI Neon:** red-wave only (`human super intelligence` / `red-wave-06625195` / `ep-restless-dew…`) — never autumn-snow / Akeno / DeliverX  
+**HSI Neon:** red-wave only (`human super intelligence` / `hsi-neon-project` / `ep-hsi-production…`) — never autumn-snow / Akeno / DeliverX  
 **Dependency:** PR4 bases on `main` after merged [#114](https://github.com/gnaneshwer23/hsi-core/pull/114) (PR3). PR3 stacked on merged [#111](https://github.com/gnaneshwer23/hsi-core/pull/111) + [#113](https://github.com/gnaneshwer23/hsi-core/pull/113).  
 
 **Cross-links (do not contradict):**

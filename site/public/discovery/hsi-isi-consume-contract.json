@@ -15,7 +15,7 @@
   "testPilotMode": true,
   "testFixtureBanner": "TEST FIXTURE — replace before real pilot",
   "allowHypotheticalPartnerEnv": "ALLOW_HYPOTHETICAL_PARTNER",
-  "generatedAt": "2026-11-09T13:44:31.630Z",
+  "generatedAt": "2026-11-09T21:48:40.218Z",
   "package": "hsi-core",
   "outputsManifestSchema": "hsi-outputs-manifest-1",
   "compatibility": {
@@ -92,7 +92,7 @@
     "approveTargetNeon": "ISI product Neon autumn-snow (OUT OF REPO)",
     "hsiNeonRole": "red-wave pending placeholders only (bun run db:gate-c-local)",
     "neverWriteFromHsiWorkspace": [
-      "ISI Neon autumn-snow / ep-blue-salad",
+      "ISI Neon autumn-snow / ep-isi-product",
       "Akeno Neon",
       "DeliverX Neon"
     ],

@@ -1,22 +1,31 @@
 # hsi-core
 
-**Human Super Intelligence (HSI)** — independent, evidence-grounded biomedical and healthcare intelligence platform under active development.
+**Human Super Intelligence (HSI)** is one product with four governed modules around the Living Health Knowledge Graph:
 
 > **Governing vision:** [The Vision of Human Super Intelligence](docs/strategy/HSI_VISION.md) — connecting human biology, advancing scientific discovery, transforming our understanding of health. Doctrine for every landing page, backend, knowledge-graph relationship, AI agent and product decision; **not** a claim that every capability is production-ready.
 
-> **Foundational architecture:** [HSI-ARCH-001 — Independent Intelligence, Connected Ecosystem](docs/architecture/principles/ARCH-001-independent-intelligence-connected-ecosystem.md). HSI must own its core research, biology, clinical intelligence, trial intelligence, knowledge graph and agent orchestration capabilities. Aksh Health and Immune Super Intelligence (ISI) are **optional, governed integrations**, not prerequisites for HSI to function.
+| Module | Responsibility |
+| --- | --- |
+| **Aksh Health** | Patient intelligence: symptoms, medications, labs, wearables, metabolic context |
+| **HSI Clinical** | Longitudinal authorised clinical intelligence and missing information |
+| **ISI / Immune Super Intelligence** | Scientific discovery across immune, nervous, microbiome, metabolic and molecular systems |
+| **HSI Trials** | Biology, biomarkers, targets, studies, eligibility and governed pre-screening |
 
-> **Knowledge graph governance:** [HSI-ARCH-002 — Living Health Knowledge Graph Ownership](docs/architecture/principles/ARCH-002-living-health-knowledge-graph-ownership.md). HSI independently owns canonical graph models, source ingestion, provenance, review, versioned releases and privacy boundaries; external Aksh/ISI data are optional governed contributions.
+ISI science does not depend on the Aksh Health module. Private patient data never enters the research graph automatically. Association is kept separate from a demonstrated causal mechanism.
 
-> **ARCH-002 implementation audit:** [Graph gap assessment](docs/audits/ARCH-002-GAP-AUDIT-2026-11-04.md) and [additive evidence lineage schema](db/migrations/002_hsi_evidence_ownership.sql). Schema is committed but **not deployed**; source-backed SSc curation, authenticated review and release-aware retrieval remain open engineering work.
+> Connecting human biology. Advancing scientific discovery. Transforming our understanding of health.
 
-**Current implementation vs target state:** This repository presently contains a shared evidence/claim substrate, research contracts, pilot tooling and selected integration adapters. Some workflows are deterministic, stubbed, synthetic or unreviewed. The architecture principle sets the direction; it does **not** imply clinical validation, live patient interoperability, autonomous scientific discovery or production readiness. Preserve existing PHI isolation, human review and no-automatic-EHR-write safeguards.
+> **Foundational architecture:** [HSI-ARCH-001 v1.2](docs/architecture/principles/ARCH-001-independent-intelligence-connected-ecosystem.md). [HSI-ARCH-002 v1.1](docs/architecture/principles/ARCH-002-living-health-knowledge-graph-ownership.md).
 
-**Existing planning references:** [Vision/repository alignment](docs/VISION_REPO_ALIGNMENT.md) and [build status](docs/BUILD_STATUS_AND_NEXT.md) describe prior/current implementation scope; interpret any Aksh/ISI dependency framing in those documents as historical implementation detail rather than the target HSI architecture.
+> **Current status:** [docs/STATUS.md](docs/STATUS.md), generated from the capability register. Older status documents are superseded.
+
+**Current implementation vs target state:** This repository contains the evidence substrate, research contracts, a synthetic end-to-end demonstration cohort, and selected adapters. Some workflows are deterministic, stubbed, synthetic or unreviewed. Nothing here is clinical validation, regulatory approval, or a commercial care product. Preserve PHI isolation, human review and no-EHR-write-back.
+
+**Licence:** [Apache-2.0](LICENSE). Third-party research pack source licences remain a separate human matrix — see [docs/OWNER_DECISIONS.md](docs/OWNER_DECISIONS.md).
 
 ## Pilot
 
-Immediate next move: prove ISI helps one immune-disease **research intelligence** workflow — not another broad AI feature.
+The demonstration question is how gut microbial metabolites might influence neuroinflammation in metabolic disease, with an immune-mediated thread kept distinct from type 1 and type 2 diabetes. The cohort behind `bun run demo` is synthetic. It is not a patient registry.
 
 | Doc | Purpose |
 |-----|---------|
@@ -24,18 +33,18 @@ Immediate next move: prove ISI helps one immune-disease **research intelligence*
 | [`docs/ISI_PILOT_BRIEF.md`](docs/ISI_PILOT_BRIEF.md) | One-page pilot brief (purpose, non-goals, scope, outputs, metrics, decision gate) |
 | [`docs/ISI_PILOT_PRD_ALIGNMENT.md`](docs/ISI_PILOT_PRD_ALIGNMENT.md) | External pilot PRD v1.0 → build now vs defer + artifact coverage |
 | [`docs/ISI_TARGET_STATE_PRD_ALIGNMENT.md`](docs/ISI_TARGET_STATE_PRD_ALIGNMENT.md) | Full target-state vision → Stage 1 / 2 / 3 / out of scope (do not pull breadth into Stage 1) |
-| [`docs/ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md`](docs/ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md) | Product/technical blueprint → HSI vs ISI/Akeno ownership, status, Neon isolation + SSc-vs-RA conflict |
+| [`docs/ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md`](docs/ISI_TECHNICAL_BLUEPRINT_ALIGNMENT.md) | Product/technical blueprint → module ownership, status, Neon isolation + SSc-vs-RA conflict |
 | [`docs/ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md`](docs/ISI_WHOLE_IMMUNE_CELL_PRD_ALIGNMENT.md) | Whole-immune-cell PRD (v0.1) → spine + controlled relations + SSc MVP / RA R2 dual-track vs Stage 1 RA lock |
 | [`docs/HSI_SYSTEMS_VISION_MAP.md`](docs/HSI_SYSTEMS_VISION_MAP.md) | Expanded target graph: immune + gut–immune + neuroimmune + disease/tissue/biomarker + patient plane + AI/P3 — regenerable `hsi-systems-vision.json`; no forced SSc/RA pivot |
 | [`docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md`](docs/HSI_AI_NEURAL_FUTURE_HEALTHCARE.md) | NN/AI/future-tech position: proposers vs KG constraint, agent workbench vs HITL, patient plane, schema stubs — no auto Gate C |
 | [`docs/ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md`](docs/ISI_DISCOVERY_CENTRE_SITE_ALIGNMENT.md) | Discovery Centre concept site (HTML export) → Stage 1 posture; reference-only, not the pilot deliverable |
 | [`docs/ISI_PILOT_PARTNER_SHORTLIST.md`](docs/ISI_PILOT_PARTNER_SHORTLIST.md) | Outreach shortlist — partner types + UK/EU/US institution categories (candidates only) |
-| [`docs/NEON_PROJECT_MAP.md`](docs/NEON_PROJECT_MAP.md) | **HSI Neon = `red-wave` only**; ISI `autumn-snow` / Akeno / DeliverX never for HSI substrate — IDs + host prefixes, no secrets |
+| [`docs/NEON_PROJECT_MAP.md`](docs/NEON_PROJECT_MAP.md) | HSI Neon only. Other product databases are never the HSI substrate. Tracked files keep placeholders, not live project or host IDs |
 | [`docs/NEON_TO_AWS_RDS_RUNBOOK.md`](docs/NEON_TO_AWS_RDS_RUNBOOK.md) | **HSI-only** Neon → RDS staging plan (dev-sized); no prod cutover; ISI Auth stays on Neon |
 | [`docs/PRD_IMPLEMENTATION_AUDIT.md`](docs/PRD_IMPLEMENTATION_AUDIT.md) | Phases 0–8 vs Pilot + Target PRDs (what landed) |
 | [`docs/BUILD_STATUS_AND_NEXT.md`](docs/BUILD_STATUS_AND_NEXT.md) | **Current-state audit + prioritized next build** (P0/P1/P2; do-not-build list) |
 
-Disease + question lock **after** partner conversations. `bun run outputs` artifacts from this repo feed the pilot evidence layer. Target-state breadth (lab adapters, cohorts, Akeno clinical) stays deferred.
+`bun run outputs` artifacts from this repo feed the research evidence layer. Model adapters such as RDKit and ESM stay proposal-only.
 
 ## Why this name
 
@@ -58,22 +67,16 @@ Individual CLIs still available: `validate`, `export:isi`, `export:isi-map`, `ex
 
 ## Vision site
 
-The research-first implementation now includes a source registry at `/sources`,
-claim comparison and cited brief export in Discovery MAP, and separate Aksh/ISI
-consumer integrations. Start with [the vision audit](docs/HSI_VISION_AUDIT_2026-11-02.md),
-[source-registry workflow](docs/SOURCE_REGISTRY.md),
-[Aksh integration](docs/AKSH_PLATFORM_INTEGRATION.md) and
-[Immunecity integration](docs/IMMUNECITY_PLATFORM_INTEGRATION.md).
-Source metadata and linked identifiers are not independently verified claim support.
+The research implementation includes a source registry at `/sources` and claim comparison in the research views. Start with [the vision audit](docs/HSI_VISION_AUDIT_2026-11-02.md) and [source-registry workflow](docs/SOURCE_REGISTRY.md). Source metadata is not independently verified claim support.
 
-Marketing / IA site for HSI concepts (Vite + React) lives in [`site/`](site/).
+The public site (Vite + React) lives in [`site/`](site/). Module routes replace the old product catalogue: `/modules`, `/modules/aksh-health`, `/modules/clinical`, `/modules/isi`, `/modules/trials`. `/products`, `/for-isi`, `/for-aksh`, `/for-trials`, `/akeno` and `/aksh-agents` redirect there.
 
 ```bash
 bun run site:dev      # http://localhost:5173
 bun run site:build    # site/dist
 ```
 
-Pages: Home, Systems, Evidence & Gate C, For ISI, For Aksh, Roadmap, Repo alignment, Docs.
+Pages: Home, Platform, Modules, Science, How it works. The interactive walkthrough is a later route and is not a claim of live care.
 
 ## Consume
 
@@ -93,10 +96,10 @@ import {
 } from "hsi-core";
 ```
 
-| Product | Rules |
+| Module | Rules |
 |---------|--------|
 | **ISI** | Discovery / Ask / Radar only; honest grades; `buildIsiExportBundle()` / `bun run export:isi` |
-| **Aksh** | HITL suggestion cards only when `isCdsSurfacable(edge)`; `akshNodeId` is a map pointer only — never auto-apply to EHR |
+| **Aksh Health** | HITL suggestion cards only when `isCdsSurfacable(edge)`; `akshNodeId` is a map pointer only — never auto-apply to EHR |
 
 ### Aksh consumption (`akshNodeId`)
 
@@ -137,7 +140,7 @@ Stage 1 done vs remaining: [`docs/OUTPUTS.md`](docs/OUTPUTS.md) checklist. Neon:
 
 ## Active codebase (sole edit target)
 
-**`hsi-core` is the sole active codebase for HSI work.** Edit only this repository (`~/Projects/hsi-core`, https://github.com/gnaneshwer23/hsi-core). All substrate, seeds, maps, exports, docs, and curator checklists land here. Product apps (Aksh / ISI) and bio tools consume published artifacts — they are never HSI edit targets.
+**`hsi-core` is the sole active codebase for the HSI substrate.** Edit this repository (https://github.com/gnaneshwer23/hsi-core). Substrate, seeds, maps, exports, docs and curator checklists land here. Module apps consume published artifacts.
 
 | Repo / surface | Policy |
 |----------------|--------|
