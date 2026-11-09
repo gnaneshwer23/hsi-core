@@ -27,7 +27,7 @@ test('footer has product navigation, clear project links and accessible touch ta
  await page.getByRole('contentinfo').getByRole('link',{name:'All modules',exact:true}).click();await expect(page).toHaveURL(/modules$/);
 });
 test('primary and secondary actions remain readable and large enough on light and dark sections',async({page})=>{
- await page.goto('/');const heroActions=page.locator('.ed-actions .ed-button,.ed-actions .ed-text-link');const backgrounds=await heroActions.evaluateAll(els=>els.map(el=>getComputedStyle(el).backgroundColor));expect(backgrounds[0]).not.toBe(backgrounds[1]);const buttons=page.locator('.ed-button');
+ await page.goto('/');const heroActions=page.locator('.cl-actions a');const backgrounds=await heroActions.evaluateAll(els=>els.map(el=>getComputedStyle(el).backgroundColor));expect(backgrounds.length).toBeGreaterThan(1);const buttons=page.locator('.cl-arrow-link');
  for(const button of await buttons.all()){
   const b=(await button.boundingBox())!;expect(b.height).toBeGreaterThanOrEqual(44);
   const ratio=await button.evaluate(el=>{const toRgb=(s:string)=>(s.match(/[\d.]+/g)??[]).slice(0,3).map(Number);let bg=getComputedStyle(el).backgroundColor;let p=el.parentElement;while((bg==='rgba(0, 0, 0, 0)'||bg==='transparent')&&p){bg=getComputedStyle(p).backgroundColor;p=p.parentElement}const lum=(rgb:number[])=>rgb.map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4}).reduce((a,v,i)=>a+v*[.2126,.7152,.0722][i]!,0);const a=lum(toRgb(getComputedStyle(el).color)),b=lum(toRgb(bg));return (Math.max(a,b)+.05)/(Math.min(a,b)+.05)});

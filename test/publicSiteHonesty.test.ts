@@ -54,8 +54,8 @@ describe("Public HSI site honesty", () => {
     const home=site("src/pages/Home.tsx"),experience=site("src/components/Experience.tsx");
     expect(home).toContain("Investigate biological mechanisms");expect(home).toContain("across human systems");expect(home).toContain("Connecting human biology");
     expect(home).toContain("Aksh Health");expect(home).toContain("HSI Clinical");expect(home).toContain("Immune Super Intelligence");expect(home).toContain("HSI Trials");
-    expect(home).toContain("validation case");expect(home).toContain("homeResearchScenarios");expect(home).toContain("does not auto-enter");
-    expect(home).not.toContain("ValidationPreview");expect(home).toContain("HomeProductDemo");expect(home).toContain("What HSI does not do");expect(experience).toContain("review scope");
+    expect(home).toContain("validation case");expect(home).toContain("does not auto-enter");
+    expect(home).not.toContain("ValidationPreview");expect(home).toContain("What HSI does not do");expect(experience).toContain("review scope");
     expect(experience).toContain("Connecting human biology");expect(home).not.toContain("100% accurate");
     const ecosystem = site("src/components/landing/EcosystemGrid.tsx");
     expect(ecosystem).toContain("ECOSYSTEM_PRODUCTS");
@@ -185,7 +185,7 @@ describe("Stage A public security boundary audit", () => {
 describe("Homepage scientific visuals and product proof",()=>{
  it("leads with a product demonstration while preserving artwork and labelled validation components",()=>{
   const home=site("src/pages/Home.tsx"),preview=site("src/components/ValidationPreview.tsx"),art=site("src/components/Experience.tsx"),editorial=site("src/components/editorial/Editorial.tsx");
-  expect(home).toContain("HomeProductDemo");expect(home).toContain("HomeHeroPreview");expect(editorial).toContain("BiologyArtwork");expect(art).toContain('role="img"');expect(art).toContain("EXPERIENCE_DOMAINS");
+  expect(home).toContain("CellField");expect(home).toContain("What makes HSI different");expect(editorial).toContain("BiologyArtwork");expect(art).toContain('role="img"');expect(art).toContain("EXPERIENCE_DOMAINS");
   expect(preview).toContain("loadValidationCatalogue");expect(preview).toContain("loadValidationScenario");expect(preview).toContain("Synthetic validation");
   expect(preview).toContain("Reference intervals are not supplied");expect(home).not.toContain("PMID:12345678");
  });

@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot, hydrateRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
+import "@fontsource-variable/red-hat-display/wght.css";
 import "@fontsource-variable/host-grotesk/wght.css";
 import "@fontsource-variable/jetbrains-mono/wght.css";
 import "./styles/global.css";
@@ -11,6 +12,7 @@ import "./styles/site-chrome.css";
 import "./styles/editorial-site.css";
 import "./styles/hsi-visual-tokens.css";
 import "./styles/home-instrument.css";
+import "./styles/clinical-landing.css";
 
 const root=document.getElementById("root")!;
 const app=<StrictMode><BrowserRouter><App /></BrowserRouter></StrictMode>;

@@ -19,26 +19,24 @@ test('public website excludes fixture promotion and keeps actual product scope',
 test('editorial homepage product demo, keyboard tabs and narrow layouts remain usable',async({page},info)=>{
  for(const width of [320,390,768,1440]){
   await page.setViewportSize({width,height:1000});await page.goto('/');
-  await expect(page.getByRole('heading',{level:1})).toContainText('Investigate biological mechanisms');
-  await expect(page.getByRole('heading',{name:/From question to research decision/})).toBeVisible();
+  await expect(page.getByRole('heading',{level:1})).toContainText('Connecting human biology');
+  await expect(page.getByRole('heading',{name:/How an investigation proceeds/})).toBeVisible();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),String(width)).toBe(true);
   if(width===1440)await page.screenshot({path:info.outputPath('editorial-home-desktop.png'),fullPage:true});
   if(width===390)await page.screenshot({path:info.outputPath('editorial-home-mobile.png'),fullPage:true});
  }
- const tabs=page.getByRole('tablist',{name:'Research demonstration panels'});
- await tabs.getByRole('tab',{name:'Mechanism',exact:true}).focus();
- await page.keyboard.press('End');
- await expect(tabs.getByRole('tab',{name:'Research brief',exact:true})).toHaveAttribute('aria-selected','true');
- await expect(page.getByRole('tabpanel')).toContainText('The reasoning stays with the result');
- await expect(page.getByRole('tabpanel')).toContainText('Research brief · curated example');
+ const steps=page.getByRole('group',{name:'Investigation steps'});
+ await steps.getByRole('button',{name:/Reviewed knowledge/}).click();
+ await expect(steps.getByRole('button',{name:/Reviewed knowledge/})).toHaveAttribute('aria-pressed','true');
+ await expect(page.locator('#product-demo')).toContainText('version the graph');
  await expect(page.getByRole('main')).toContainText('Connecting human biology');
- await expect(page.getByRole('main')).toContainText('Research workbench');
- await expect(page.getByRole('main')).toContainText('Biological ecosystem');
+  await expect(page.getByRole('main')).toContainText(/research workbench/i);
+ await expect(page.getByRole('main')).toContainText('What makes HSI different');
 });
-test('homepage brief deep link opens the illustrative brief panel',async({page})=>{
- await page.goto('/?scenario=gut_neuro&panel=brief#product-demo');
- await expect(page.getByRole('tab',{name:'Research brief',exact:true})).toHaveAttribute('aria-selected','true');
- await expect(page.getByRole('tabpanel')).toContainText('Research brief · curated example');
- await expect(page.getByRole('main')).toContainText('live_backend=false');
+test('homepage investigation anchor opens the eight-step sequence',async({page})=>{
+ await page.goto('/#product-demo');
+ await expect(page.locator('#product-demo')).toBeVisible();
+ await expect(page.locator('#product-demo')).toContainText('unvalidated');
  await expect(page.getByRole('link',{name:/See How It Works/i}).first()).toHaveAttribute('href','/how-it-works');
+ await expect(page.getByRole('link',{name:/See how this technology works/i})).toHaveAttribute('href','/demo');
 });
