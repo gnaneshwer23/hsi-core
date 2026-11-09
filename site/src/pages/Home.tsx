@@ -60,6 +60,7 @@ export function Home(){
         <div className="ed-actions">
           <Link className="ed-button" to={contactAccessHref({scenarioId})}>{PUBLIC_PRIMARY_CTA.label} <span aria-hidden="true"><ArrowIcon/></span></Link>
           <Link className="ed-text-link" to={PUBLIC_SECONDARY_CTA.to}>{PUBLIC_SECONDARY_CTA.label} <span aria-hidden="true"><ArrowIcon direction="right"/></span></Link>
+          <Link className="ed-text-link" to="/demo">See an investigation <span aria-hidden="true"><ArrowIcon direction="right"/></span></Link>
         </div>
         <p className="ed-hero-note">Evidence, contradictions and gaps stay visible. Human review stays required. Coverage depth is unequal across domains — not universal biology.</p>
       </div>

@@ -1,0 +1,346 @@
+{
+  "synthetic": true,
+  "networkUsed": false,
+  "question": "How might changes in gut microbial metabolites influence neuroinflammation in metabolic disease?",
+  "cohortSize": 240,
+  "diabetesCounts": {
+    "t1d": 48,
+    "t2d": 96
+  },
+  "focus": {
+    "pseudonym": "HSI-DEMO-0008",
+    "consentScopes": [
+      "research_profile",
+      "trial_prescreen"
+    ],
+    "condition": {
+      "diabetes": "t2d",
+      "rheumatoidArthritis": true
+    },
+    "ageYears": 29,
+    "hba1c": 57.7,
+    "crpMissing": false,
+    "diet": {
+      "pattern": "mixed",
+      "selfReport": true,
+      "verified": false
+    },
+    "medications": [
+      {
+        "name": "metformin",
+        "status": "active"
+      },
+      {
+        "name": "methotrexate",
+        "status": "active"
+      },
+      {
+        "name": "adalimumab",
+        "status": "stopped"
+      }
+    ],
+    "microbiomeMissing": false
+  },
+  "fhirResourceTypes": [
+    "Patient",
+    "Condition",
+    "Observation",
+    "MedicationStatement",
+    "Encounter"
+  ],
+  "evidence": {
+    "mode": "fixture",
+    "networkUsed": false,
+    "literature": [
+      {
+        "pmid": "31180194",
+        "doi": "10.1038/s41586-019-1237-9",
+        "title": "Gut microbial metabolites and host inflammatory tone",
+        "year": 2019
+      },
+      {
+        "pmid": "33479220",
+        "doi": "10.1136/annrheumdis-2020-219000",
+        "title": "TNF blockade and systemic inflammation in rheumatoid arthritis",
+        "year": 2021
+      }
+    ],
+    "targets": [
+      {
+        "symbol": "TNF",
+        "ensemblId": "ENSG00000174600",
+        "score": 0.82,
+        "scoreIsNotCausation": true
+      },
+      {
+        "symbol": "IL6",
+        "ensemblId": "ENSG00000136244",
+        "score": 0.61,
+        "scoreIsNotCausation": true
+      },
+      {
+        "symbol": "FFAR2",
+        "ensemblId": "ENSG00000126266",
+        "score": 0.22,
+        "scoreIsNotCausation": true
+      }
+    ],
+    "protein": {
+      "accession": "P01375",
+      "name": "Tumor necrosis factor",
+      "genes": [
+        "TNF"
+      ]
+    }
+  },
+  "firstBrief": {
+    "question": "How might changes in gut microbial metabolites influence neuroinflammation in metabolic disease?",
+    "entities": [
+      "gut microbiome",
+      "butyrate",
+      "intestinal barrier",
+      "TNF",
+      "systemic inflammation",
+      "microglia",
+      "neuroinflammation",
+      "type 2 diabetes",
+      "rheumatoid arthritis"
+    ],
+    "evidenceIds": [
+      "pmid:31180194",
+      "pmid:33479220",
+      "opentargets:TNF",
+      "opentargets:IL6",
+      "opentargets:FFAR2",
+      "uniprot:P01375"
+    ],
+    "mechanisms": [
+      "Faecalibacterium-associated butyrate is linked, not proven, to barrier transcripts.",
+      "Barrier disruption is associated with circulating inflammatory mediators including TNF.",
+      "TNF is an association in rheumatoid arthritis drug response, kept distinct from a universal causal mechanism.",
+      "Systemic inflammatory mediators are hypothesised to reach microglia; that step is unvalidated."
+    ],
+    "gaps": [
+      "No direct human measurement connects a named microbial metabolite to a microglial state in this release.",
+      "Type 1 diabetes and type 2 diabetes are not interchangeable metabolic contexts.",
+      "Literature retrieval here is a two-record fixture, not a systematic review."
+    ],
+    "contradictions": [
+      "Some butyrate studies report lower inflammatory markers; others report no separation from diet and medication.",
+      "TNF association scores are not causation and do not rank a gut metabolite as a drug target."
+    ],
+    "hypotheses": [
+      {
+        "id": "hyp-butyrate-neuro",
+        "text": "In type 2 diabetes with systemic inflammation, lower butyrate-associated taxa may coincide with higher neuroinflammatory signalling. This is unvalidated.",
+        "label": "unvalidated_hypothesis",
+        "epistemicType": "unvalidated_hypothesis",
+        "supporting": [
+          "31180194",
+          "33479220"
+        ],
+        "opposing": [
+          "contradiction:butyrate-null-studies"
+        ]
+      }
+    ],
+    "releaseRead": "lhkg-demo-1.0.0",
+    "unvalidated": true,
+    "notClinicalAdvice": true
+  },
+  "firstSteps": [
+    {
+      "id": 1,
+      "name": "Parse the question",
+      "detail": "gut microbiome, butyrate, intestinal barrier, TNF, systemic inflammation, microglia, neuroinflammation, type 2 diabetes, rheumatoid arthritis"
+    },
+    {
+      "id": 2,
+      "name": "Retrieve evidence",
+      "detail": "2 bibliographic records, 3 target rows, fixture mode"
+    },
+    {
+      "id": 3,
+      "name": "Connect mechanisms",
+      "detail": "Faecalibacterium-associated butyrate is linked, not proven, to barrier transcripts."
+    },
+    {
+      "id": 4,
+      "name": "Evaluate evidence",
+      "detail": "Metadata retrieved. Scores are not causation. No SME calibration."
+    },
+    {
+      "id": 5,
+      "name": "Find gaps and contradictions",
+      "detail": "Some butyrate studies report lower inflammatory markers; others report no separation from diet and medication."
+    },
+    {
+      "id": 6,
+      "name": "Generate hypotheses",
+      "detail": "hyp-butyrate-neuro"
+    },
+    {
+      "id": 7,
+      "name": "Write the brief",
+      "detail": "Evidence-linked brief saved for expert review."
+    },
+    {
+      "id": 8,
+      "name": "Await review",
+      "detail": "No approved release consumed yet."
+    }
+  ],
+  "reviewStatus": "approved",
+  "release": {
+    "releaseId": "lhkg-demo-1.0.1",
+    "version": "1.0.1",
+    "priorReleaseId": "lhkg-demo-1.0.0",
+    "manifestHash": "e171285461bba55ef6478e109c1da25b4fa05d86175fc2d6617f1203c5f1afa0",
+    "patientDataIncluded": false,
+    "approvedEdge": "edge-butyrate-neuro-hypothesis"
+  },
+  "secondInvestigationReadRelease": "lhkg-demo-1.0.1",
+  "secondMentionsApprovedEdge": true,
+  "patientQuestionSent": false,
+  "patientQuestionBlocked": true,
+  "outboxChannels": [
+    "simulated_local_only"
+  ],
+  "similar": [
+    {
+      "pseudonym": "HSI-DEMO-0058",
+      "distance": 0.101,
+      "note": "similarity_is_not_eligibility"
+    },
+    {
+      "pseudonym": "HSI-DEMO-0038",
+      "distance": 0.153,
+      "note": "similarity_is_not_eligibility"
+    },
+    {
+      "pseudonym": "HSI-DEMO-0148",
+      "distance": 0.172,
+      "note": "similarity_is_not_eligibility"
+    },
+    {
+      "pseudonym": "HSI-DEMO-0088",
+      "distance": 0.207,
+      "note": "similarity_is_not_eligibility"
+    },
+    {
+      "pseudonym": "HSI-DEMO-0006",
+      "distance": 0.247,
+      "note": "similarity_is_not_eligibility"
+    }
+  ],
+  "similarityIsEligibility": false,
+  "prescreen": {
+    "pseudonym": "HSI-DEMO-0001",
+    "criteria": [
+      {
+        "id": "age",
+        "label": "Age 18 to 80 years",
+        "state": "met",
+        "basis": "project pseudonym attribute"
+      },
+      {
+        "id": "ra",
+        "label": "Rheumatoid arthritis recorded",
+        "state": "not_met",
+        "basis": "condition flag on the synthetic record"
+      },
+      {
+        "id": "crp",
+        "label": "CRP at or above 5 mg/L",
+        "state": "unknown",
+        "basis": "value absent; unknown stays unknown"
+      },
+      {
+        "id": "hba1c",
+        "label": "HbA1c recorded",
+        "state": "met",
+        "basis": "latest LOINC 4548-4"
+      },
+      {
+        "id": "diet",
+        "label": "Diet pattern",
+        "state": "unknown",
+        "basis": "patient answer is an unverified self-report and does not meet the criterion"
+      }
+    ],
+    "confirmedEligible": false,
+    "selfReportVerified": false,
+    "unknownRemainsUnknown": true
+  },
+  "targets": [
+    {
+      "symbol": "TNF",
+      "ensemblId": "ENSG00000174600",
+      "openTargetsScore": 0.82,
+      "rank": 1,
+      "scoreIsNotCausation": true
+    },
+    {
+      "symbol": "IL6",
+      "ensemblId": "ENSG00000136244",
+      "openTargetsScore": 0.61,
+      "rank": 2,
+      "scoreIsNotCausation": true
+    },
+    {
+      "symbol": "FFAR2",
+      "ensemblId": "ENSG00000126266",
+      "openTargetsScore": 0.22,
+      "rank": 3,
+      "scoreIsNotCausation": true
+    }
+  ],
+  "repurposing": [
+    {
+      "id": "hyp-ffar2-context",
+      "text": "FFAR2 appears in the Open Targets rheumatoid arthritis association list at a low score. A repurposing hypothesis that a butyrate-receptor ligand would alter neuroinflammation is unvalidated and is not a development candidate.",
+      "label": "unvalidated_hypothesis",
+      "adapters": [
+        {
+          "name": "RDKit",
+          "status": "proposal_only"
+        },
+        {
+          "name": "ESM",
+          "status": "proposal_only"
+        }
+      ]
+    }
+  ],
+  "phiBlocked": true,
+  "reviewEvents": [
+    {
+      "name": "job.draft",
+      "at": "2026-11-09T12:00:00.000Z"
+    },
+    {
+      "name": "job.awaiting_send_approval",
+      "at": "2026-11-09T12:00:00.000Z"
+    },
+    {
+      "name": "job.awaiting_answer",
+      "at": "2026-11-09T12:01:00.000Z"
+    },
+    {
+      "name": "delivery.simulated",
+      "at": "2026-11-09T12:02:00.000Z"
+    },
+    {
+      "name": "job.awaiting_review",
+      "at": "2026-11-09T12:10:00.000Z"
+    },
+    {
+      "name": "job.approved",
+      "at": "2026-11-09T12:20:00.000Z"
+    },
+    {
+      "name": "job.applied",
+      "at": "2026-11-09T12:30:00.000Z"
+    }
+  ]
+}

@@ -61,7 +61,13 @@ bun run outputs    # alias: bun run publish — versioned dist/outputs/ bundle
 bun run build      # TypeScript library under dist/
 ```
 
-Requires [Bun](https://bun.sh) (tests + CLI). **`bun run outputs`** (alias `publish`) writes a versioned consumer bundle to regenerable `dist/outputs/` (gitignored) and refreshes legacy `exports/*.json`. Small committed samples: [`examples/sample-outputs/`](examples/sample-outputs/). Consumer guide: [`docs/OUTPUTS.md`](docs/OUTPUTS.md).
+Requires [Bun](https://bun.sh) 1.3.14 (tests + CLI). **`bun run outputs`** (alias `publish`) writes a versioned consumer bundle to regenerable `dist/outputs/` (gitignored) and refreshes legacy `exports/*.json`. Small committed samples: [`examples/sample-outputs/`](examples/sample-outputs/). Consumer guide: [`docs/OUTPUTS.md`](docs/OUTPUTS.md).
+
+```bash
+bun run demo
+```
+
+`bun run demo` runs one offline investigation on a synthetic cohort: longitudinal labs, a FHIR R4 boundary, fixture evidence from Europe PMC, Open Targets and UniProt, a human review, and a versioned graph release. It does not use the network. The people in the cohort are not real patients.
 
 Individual CLIs still available: `validate`, `export:isi`, `export:isi-map`, `export:aksh-map`, `gap-report`.
 

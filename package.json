@@ -126,6 +126,7 @@
     "seo:indexnow": "bun scripts/ping-indexnow.ts",
     "research:api": "bun src/server/runInterrogativeApi.ts",
     "investigation:demo": "bun src/cli/investigation-demo.ts",
+    "demo": "bun src/cli/demo.ts",
     "ra:import": "python3 tools/import_ra_evidence.py",
     "ra:test-parser": "python3 -m unittest discover -s test/python -v",
     "ra:export-artifact": "bun scripts/export-ra-evidence-artifact.ts",
