@@ -1,12 +1,12 @@
 # Milestone 14 — Real-World Evidence, Clinical Outcomes & Post-Study Learning Intelligence
 
 **Brief:** HSI Milestone 14 — governed RWE / clinical outcomes research contracts connecting authorised longitudinal health data concepts, observational analyses, safety-signal research envelopes, and post-study learning to M1–M13 — **without** an unrestricted central patient database, PHI/CDS, treatment directives, fabricating patient data, Gate C auto-approve, or MoU invention.  
-**Status:** Phase 0 gap audit + PR1 (Clinical Evidence and RWE Contracts) + PR2 (Secure Clinical Data Interoperability) — **not** RWE complete, **not** observational causal claims authorised, **not** live clinical dataset analysis, **not** M14 complete.  
+**Status:** Phase 0 gap audit + PR1 (Clinical Evidence and RWE Contracts, [#111](https://github.com/gnaneshwer23/hsi-core/pull/111)) + PR2 (Secure Clinical Data Interoperability, [#113](https://github.com/gnaneshwer23/hsi-core/pull/113)) + PR3 (Longitudinal Clinical Evidence Model) — **not** RWE complete, **not** observational causal claims authorised, **not** live clinical dataset analysis, **not** M14 complete.  
 **Date:** 2026-11-09  
-**Audited `main` SHA:** `c132abf65c1666e11f0a04d53ca087b4882348a8` (post-#109 M13 PR1 + #110 rollup tip)  
-**Tip commit:** `c132abf Mark M13 PR1 and #109 as merged in the milestone audit docs. (#110)`  
+**Audited `main` SHA:** `33843eba6c2fa695bde1d292b7a2a64b2ba715ca` (post-#111 + #113 tip)  
+**Tip commit:** `33843eb Add M14 secure clinical data interoperability contracts (#113)`  
 **HSI Neon:** red-wave only (`human super intelligence` / `red-wave-06625195` / `ep-restless-dew…`) — never autumn-snow / Akeno / DeliverX  
-**Dependency:** PR2 stacks on [#111](https://github.com/gnaneshwer23/hsi-core/pull/111) (PR1 RWE contracts) until that lands on `main`.  
+**Dependency:** PR3 stacks on merged [#111](https://github.com/gnaneshwer23/hsi-core/pull/111) + [#113](https://github.com/gnaneshwer23/hsi-core/pull/113) on `main`.  
 
 **Cross-links (do not contradict):**
 
@@ -26,6 +26,8 @@
 **Out of PR1:** Secure clinical data interoperability / FHIR–OMOP adapters (PR2), longitudinal analysis engine (PR3), cohort builder (PR4), observational causal engine (PR5), safety intelligence (PR6), biomarker/trial translation (PR7), post-study learning (PR8), workbench UI (PR9), SSc real-data validation (PR10), Neon clinical migrations, live PHI ingestion, fabricated patient counts/effects, treatment recommendations.
 
 **Out of PR2:** Live FHIR/OMOP/EHR connectors, longitudinal analysis engine (PR3), cohort builder (PR4+), workbench UI, Neon clinical migrations, PHI ingestion, fabricated clinical results, claiming federation operational.
+
+**Out of PR3:** Live longitudinal engines, cohort builder (PR4), observational causal engine (PR5+), workbench UI, Neon clinical migrations, PHI ingestion, fabricated trajectories/effects/survival curves, claiming authorised-dataset analysis.
 
 ---
 
@@ -88,7 +90,8 @@ Honesty freeze: research decision support only · **no unrestricted central pati
 | Pseudonymised ≠ non-personal | **Declared** | Honesty flag `pseudonymisedMayStillBePersonalData: true` |
 | Direct-care clinical bridge | `Implemented but unverified` / deferred ops | `hsiClinicalBiologyBridge.ts` — grant verification / real FHIR adapter deferred |
 | Federation / partner clinical connectors | `Missing` · partnerships `Blocked` | M9 federation not live; PR2 contracts declare `federationNotOperationalUnlessVerified` |
-| FHIR R4 / OMOP / terminology mapping contracts | **PR2 in-flight** — fixture/contract only | No live connector claim; authorised dataset still **Blocked** |
+| FHIR R4 / OMOP / terminology mapping contracts | **PR2 merged** (#113) — fixture/contract only | No live connector claim; authorised dataset still **Blocked** |
+| Longitudinal analysis contracts | **PR3 in-flight** — fixture/contract only | Temporal fail-closed; no live engine; authorised dataset still **Blocked** |
 | Neon clinical PHI tables | **Not introduced** | PR1/PR2 contracts-first; red-wave only if/when authorised |
 
 ---
@@ -134,9 +137,9 @@ Honesty freeze: research decision support only · **no unrestricted central pati
 | Phase | Capability | Existing | Status | Missing | Files |
 |-------|------------|----------|--------|---------|-------|
 | **0** Audit + data protection + validity | This document + M1–M13 rollup | — | `Verified operational` (audit) | Keep updated | this file |
-| **1** Clinical evidence / RWE contracts | Clinical scaffold · M9/M12/M13 ids · CDS boundary | `Missing` → **PR1 in-flight** ([#111](https://github.com/gnaneshwer23/hsi-core/pull/111)) — 7 focused tests + evaluation pack | Study · observation · exposure · outcome · analysis result | `src/realWorldEvidenceContracts.ts` · `test/realWorldEvidenceContracts.test.ts` · `scripts/real-world-evidence-contracts.ts` · `evaluation/real-world-evidence/` |
-| **2** Secure clinical data interoperability | FHIR strategy · Phase 3.7 bridge · PR1 RWE ids | `Missing` → **PR2 in-flight** ([#112](https://github.com/gnaneshwer23/hsi-core/pull/112), stacks on [#111](https://github.com/gnaneshwer23/hsi-core/pull/111)) — 7 focused tests + evaluation pack | Live FHIR/OMOP connectors · PHI ingestion | `src/secureClinicalDataInteropContracts.ts` · `test/secureClinicalDataInteropContracts.test.ts` · `scripts/secure-clinical-data-interop-contracts.ts` · `evaluation/secure-clinical-data-interop/` |
-| **3** Longitudinal clinical intelligence | PR1 observation time fields | `Missing` as engine | Trajectory analysis without leakage | later PR3 |
+| **1** Clinical evidence / RWE contracts | Clinical scaffold · M9/M12/M13 ids · CDS boundary | **PR1 merged** ([#111](https://github.com/gnaneshwer23/hsi-core/pull/111)) — 7 focused tests + evaluation pack · `Fixture-only` / scientific path `Blocked` | Live authorised dataset analysis | `src/realWorldEvidenceContracts.ts` · `test/realWorldEvidenceContracts.test.ts` · `scripts/real-world-evidence-contracts.ts` · `evaluation/real-world-evidence/` |
+| **2** Secure clinical data interoperability | FHIR strategy · Phase 3.7 bridge · PR1 RWE ids | **PR2 merged** ([#113](https://github.com/gnaneshwer23/hsi-core/pull/113)) — 7 focused tests + evaluation pack · `Fixture-only` / connectors `Missing` | Live FHIR/OMOP connectors · PHI ingestion | `src/secureClinicalDataInteropContracts.ts` · `test/secureClinicalDataInteropContracts.test.ts` · `scripts/secure-clinical-data-interop-contracts.ts` · `evaluation/secure-clinical-data-interop/` |
+| **3** Longitudinal clinical intelligence | PR1 observation time fields · PR2 temporal alignment ids | `Missing` → **PR3 in-flight** — analysis specs · observation series · temporal integrity · results + thin store + evaluation pack | Live longitudinal engine · fabricated trajectories | `src/longitudinalClinicalEvidenceContracts.ts` · `test/longitudinalClinicalEvidenceContracts.test.ts` · `scripts/longitudinal-clinical-evidence-contracts.ts` · `evaluation/longitudinal-clinical-evidence/` |
 | **4** Reproducible cohort builder | N5 criteria hooks | `Partial` hooks | Attrition + disclosure controls | later PR4 |
 | **5** Observational / causal research | — | `Missing` | Target-trial emulation with assumption checks | later PR5 |
 | **6** Outcomes / safety intelligence | — | `Missing` | Signals ≠ ADR proof | later PR6 |
@@ -240,14 +243,32 @@ Honesty freeze: research decision support only · **no unrestricted central pati
 
 ---
 
+## PR3 deliverable (Longitudinal Clinical Evidence Model)
+
+**Longitudinal Clinical Evidence Model** (stacks on merged [#111](https://github.com/gnaneshwer23/hsi-core/pull/111) + [#113](https://github.com/gnaneshwer23/hsi-core/pull/113))
+
+- Versioned **analysis specs** for disease trajectories, laboratory trends, treatment timelines, clinical events, patient-reported outcomes, functional outcomes, organ-specific measures, and follow-up completeness.
+- **Temporal anchor sets** distinguishing event time, record creation, ingestion, treatment initiation, baseline, follow-up, and outcome ascertainment — roles must remain distinct.
+- **Fail-closed temporal integrity**: refuse using follow-up / outcome ascertainment (or later timestamps) to define earlier exposure or eligibility; refuse collapsed identical timestamps across roles.
+- **Observation series** with irregular/sparse intervals and missing-data handling declared explicitly; point-level event vs record-creation vs ingestion order enforced.
+- **Analysis results** with limitations; `observationalTrajectoryIsNotProvenTreatmentEffect: true`; `causalIdentificationClaimed: false`; invented n / effects / survival curves / fabricated trajectories always null.
+- Optional links to PR1 RWE study/observation/exposure/outcome/analysis ids and PR2 interop data-source / temporal-alignment ids.
+- Honesty: no unrestricted patient DB; no PHI/CDS; no live longitudinal engine claim; Neon red-wave; migration deferred.
+- Thin in-memory store + offline evaluation pack + focused fail-closed tests.
+
+**Out of PR3:** Live engines, workbench UI, Neon migration, fabricated trajectories/effects, cohort builder (PR4), auto-merge.
+
+---
+
 ## PR tracking
 
 | PR | Title | Branch | State |
 |----|-------|--------|-------|
-| [#112](https://github.com/gnaneshwer23/hsi-core/pull/112) | M14 PR2 Secure Clinical Data Interoperability | `eng/m14-secure-clinical-data-interop` | **PR2 in-flight** — stacks on [#111](https://github.com/gnaneshwer23/hsi-core/pull/111); **do not auto-merge** |
-| [#111](https://github.com/gnaneshwer23/hsi-core/pull/111) | M14 PR1 Clinical Evidence and RWE Contracts | `eng/m14-rwe-clinical-evidence-contracts` | **PR1 in-flight** — open for review; **do not auto-merge**; PR2 depends on it |
+| (open) | M14 PR3 Longitudinal Clinical Evidence Model | `eng/m14-longitudinal-clinical-evidence` | **PR3 in-flight** — open for review; **do not auto-merge** |
+| [#113](https://github.com/gnaneshwer23/hsi-core/pull/113) | M14 PR2 Secure Clinical Data Interoperability | merged → `33843eb` | Substrate |
+| [#111](https://github.com/gnaneshwer23/hsi-core/pull/111) | M14 PR1 Clinical Evidence and RWE Contracts | merged → `19e0ff1` | Substrate |
 | [#109](https://github.com/gnaneshwer23/hsi-core/pull/109) | M13 PR1 + M1–M13 rollup | merged → `344f450` | Substrate |
 | [#107](https://github.com/gnaneshwer23/hsi-core/pull/107) | M12 PR1 | merged → `7485bd4` | Substrate |
 | [#110](https://github.com/gnaneshwer23/hsi-core/pull/110) | docs: mark M13 PR1 merged in rollup | merged → `c132abf` | Rollup tip honesty |
 
-**Suggested next:** PR3 Longitudinal Clinical Evidence Model.
+**Suggested next:** PR4 Reproducible Cohort Builder.

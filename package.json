@@ -221,6 +221,8 @@
     "rwe:clinical-evidence:check": "bun --no-env-file scripts/real-world-evidence-contracts.ts --check",
     "rwe:secure-clinical-interop:prepare": "bun --no-env-file scripts/secure-clinical-data-interop-contracts.ts",
     "rwe:secure-clinical-interop:check": "bun --no-env-file scripts/secure-clinical-data-interop-contracts.ts --check",
+    "rwe:longitudinal-clinical-evidence:prepare": "bun --no-env-file scripts/longitudinal-clinical-evidence-contracts.ts",
+    "rwe:longitudinal-clinical-evidence:check": "bun --no-env-file scripts/longitudinal-clinical-evidence-contracts.ts --check",
     "gap-verification:expand": "bun --no-env-file scripts/gap-verification-check.ts",
     "gap-verification:check": "bun --no-env-file scripts/gap-verification-check.ts --check",
     "fixture:synthetic-e2e:check": "bun --no-env-file scripts/check-synthetic-e2e-fixture.ts",
