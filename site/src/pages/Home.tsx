@@ -99,7 +99,7 @@ export function Home(){
       <div>
         <p className="ed-kicker">ONE RESEARCH FOUNDATION</p>
         <h2 id="foundation-heading">One platform.<br/><em>Four governed modules.</em></h2>
-        <p className="ed-foundation-note">Aksh Health, HSI Clinical, ISI and HSI Trials share the Living Health Knowledge Graph. Each module keeps its own permissions. Private patient records do not become research evidence on their own.</p>
+        <p className="ed-foundation-note">Aksh Health, HSI Clinical, ISI and HSI Trials share the Living Health Knowledge Graph. Each module keeps its own permissions. Private clinical information does not auto-enter the research knowledge graph.</p>
 
       </div>
       <div className="ed-product-rows ed-product-system">
