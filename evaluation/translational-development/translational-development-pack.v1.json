@@ -1,0 +1,293 @@
+{
+  "schema": "hsi-translational-development-1",
+  "method": "hsi.translational_development.v1",
+  "version": "0.1.0",
+  "asOf": "2026-11-09T18:00:00.000Z",
+  "programmeCount": 1,
+  "assessmentCount": 1,
+  "trialConceptCount": 1,
+  "biomarkerCount": 1,
+  "honesty": {
+    "researchDecisionSupportOnly": true,
+    "notAutonomousTrialAuthorisation": true,
+    "trialConceptIsNotApprovedProtocol": true,
+    "exploratoryBiomarkerIsNotQualifiedOrClinicallyValidated": true,
+    "workflowStagesAreNotRegulatoryCategories": true,
+    "noInventedSampleSizes": true,
+    "noFabricatedTrialOutcomes": true,
+    "noPatientEligibilityFromRestrictedRecords": true,
+    "noTreatmentRecommendations": true,
+    "noWorkbenchUi": true,
+    "agentsDraftHumansReview": true,
+    "gateCAutoApprove": false,
+    "mouInvented": false,
+    "phiCdsWired": false,
+    "scientificApproval": false,
+    "graphPromotable": false,
+    "neonProjectPolicy": "red-wave-only",
+    "migration": "deferred",
+    "m12TherapeuticDiscoveryDependency": "id-pattern-compatible-107-merged"
+  },
+  "programmes": [
+    {
+      "schema": "hsi-translational-development-1",
+      "method": "hsi.translational_development.v1",
+      "version": "0.1.0",
+      "id": "hsi-td-prog-fixture-demo",
+      "name": "Fixture translational development programme",
+      "therapeuticHypothesis": "Fixture therapeutic hypothesis for contract exercise — not a treatment claim.",
+      "diseaseContext": "Fixture disease context",
+      "phenotypeContext": "Fixture phenotype context",
+      "intendedResearchIndication": "Engineering fixture only — not a regulatory indication.",
+      "developmentStage": "translational_evidence_review",
+      "workflowStagesAreNotRegulatoryCategories": true,
+      "evidenceCutoffAt": null,
+      "lifecycle": "accepted_for_further_research",
+      "hypothesisIds": [
+        "hyp-fixture-001"
+      ],
+      "investigationId": "inv-fixture-001",
+      "orgId": "org-fixture-1",
+      "translationalProgrammeContractId": null,
+      "therapeuticProgrammeId": "hsi-tx-prog-fixture-demo",
+      "therapeuticTargetIds": [
+        "hsi-tx-tgt-fixture-demo"
+      ],
+      "therapeuticInterventionIds": [
+        "hsi-tx-int-fixture-demo"
+      ],
+      "therapeuticAssessmentIds": [],
+      "identities": [],
+      "authoredBy": {
+        "principalId": "fixture-agent-td",
+        "actorKind": "ai_agent"
+      },
+      "reviewedBy": {
+        "principalId": "fixture-researcher",
+        "actorKind": "human"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notAutonomousTrialAuthorisation": true,
+        "trialConceptIsNotApprovedProtocol": true,
+        "exploratoryBiomarkerIsNotQualifiedOrClinicallyValidated": true,
+        "workflowStagesAreNotRegulatoryCategories": true,
+        "noInventedSampleSizes": true,
+        "noFabricatedTrialOutcomes": true,
+        "noPatientEligibilityFromRestrictedRecords": true,
+        "noTreatmentRecommendations": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred",
+        "m12TherapeuticDiscoveryDependency": "id-pattern-compatible-107-merged"
+      },
+      "createdAt": "2026-11-09T18:00:00.000Z",
+      "updatedAt": "2026-11-09T18:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "assessments": [
+    {
+      "schema": "hsi-translational-development-1",
+      "method": "hsi.translational_development.v1",
+      "version": "0.1.0",
+      "id": "hsi-td-assess-fixture-demo",
+      "programmeId": "hsi-td-prog-fixture-demo",
+      "summary": "Fixture assessment: associative/mechanistic signals with explicit gaps — not clinical readiness.",
+      "targetValidity": "associative_only",
+      "humanBiologicalRelevance": "mechanistic_hypothesis",
+      "preclinicalEvidence": "insufficient",
+      "pharmacologyEvidence": "not_assessed",
+      "targetEngagement": "not_assessed",
+      "safetyEvidence": "insufficient",
+      "modelRelevance": "conflicting",
+      "keyUncertainties": [
+        "Model-to-human relevance unresolved."
+      ],
+      "missingStudies": [
+        "Authorised pharmacology characterisation."
+      ],
+      "regulatoryReadinessClaimed": false,
+      "clinicalReadinessClaimed": false,
+      "efficacyClaimed": false,
+      "lifecycle": "accepted_with_gaps",
+      "reviewedBy": {
+        "principalId": "fixture-researcher",
+        "actorKind": "human"
+      },
+      "authoredBy": {
+        "principalId": "fixture-agent-td",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notAutonomousTrialAuthorisation": true,
+        "trialConceptIsNotApprovedProtocol": true,
+        "exploratoryBiomarkerIsNotQualifiedOrClinicallyValidated": true,
+        "workflowStagesAreNotRegulatoryCategories": true,
+        "noInventedSampleSizes": true,
+        "noFabricatedTrialOutcomes": true,
+        "noPatientEligibilityFromRestrictedRecords": true,
+        "noTreatmentRecommendations": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred",
+        "m12TherapeuticDiscoveryDependency": "id-pattern-compatible-107-merged"
+      },
+      "createdAt": "2026-11-09T18:00:00.000Z",
+      "updatedAt": "2026-11-09T18:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "trialConcepts": [
+    {
+      "schema": "hsi-translational-development-1",
+      "method": "hsi.translational_development.v1",
+      "version": "0.1.0",
+      "id": "hsi-td-trial-fixture-demo",
+      "programmeId": "hsi-td-prog-fixture-demo",
+      "researchQuestion": "Could a fixture exploratory research concept be reviewed without claiming approval?",
+      "investigationalIntervention": "Fixture intervention concept",
+      "intendedPopulation": "Fixture population considerations",
+      "comparatorConcept": "Fixture comparator concept",
+      "primaryObjective": "Concept review exercise only — not efficacy.",
+      "exploratoryObjectives": [
+        "Explore biomarker collection questions."
+      ],
+      "candidateEndpoints": [
+        "Fixture candidate endpoint"
+      ],
+      "biomarkerStrategy": "Exploratory only — not a validated selection test.",
+      "eligibilityConsiderations": [
+        "Population-level considerations only — not individual eligibility."
+      ],
+      "statisticalAssumptions": [
+        "Effect-size assumptions not yet defensible — statistical review required."
+      ],
+      "feasibilityAssumptions": [
+        "Recruitment rates unknown — do not invent."
+      ],
+      "ethicalAndRegulatoryConsiderations": [
+        "Qualified clinical, statistical, ethics and regulatory review required."
+      ],
+      "isNotApprovedProtocol": true,
+      "inventedSampleSize": null,
+      "inventedPowerCalculation": null,
+      "linkedNctIds": [],
+      "lifecycle": "accepted_as_concept_only",
+      "reviewedBy": {
+        "principalId": "fixture-researcher",
+        "actorKind": "human"
+      },
+      "authoredBy": {
+        "principalId": "fixture-agent-td",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notAutonomousTrialAuthorisation": true,
+        "trialConceptIsNotApprovedProtocol": true,
+        "exploratoryBiomarkerIsNotQualifiedOrClinicallyValidated": true,
+        "workflowStagesAreNotRegulatoryCategories": true,
+        "noInventedSampleSizes": true,
+        "noFabricatedTrialOutcomes": true,
+        "noPatientEligibilityFromRestrictedRecords": true,
+        "noTreatmentRecommendations": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred",
+        "m12TherapeuticDiscoveryDependency": "id-pattern-compatible-107-merged"
+      },
+      "createdAt": "2026-11-09T18:00:00.000Z",
+      "updatedAt": "2026-11-09T18:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "biomarkers": [
+    {
+      "schema": "hsi-translational-development-1",
+      "method": "hsi.translational_development.v1",
+      "version": "0.1.0",
+      "id": "hsi-td-bm-fixture-demo",
+      "programmeId": "hsi-td-prog-fixture-demo",
+      "name": "Fixture exploratory biomarker",
+      "biologicalIdentity": "Fixture biological identity",
+      "specimenAndAssay": "Fixture specimen/assay (availability unverified)",
+      "contextOfUse": "pharmacodynamic",
+      "validationStatus": "exploratory",
+      "analyticalValidity": "not_assessed",
+      "clinicalValidity": "not_assessed",
+      "clinicalUtilityEvidence": "not_assessed",
+      "replicationStatus": "not_assessed",
+      "confounders": [
+        "Disease activity confounding possible."
+      ],
+      "limitations": [
+        "Exploratory only — not a qualified or clinically validated biomarker."
+      ],
+      "exploratoryIsNotQualifiedOrClinicallyValidated": true,
+      "inventedPerformanceMetrics": null,
+      "predictiveClaimRequiresInteractionEvidence": true,
+      "identities": [],
+      "lifecycle": "accepted_as_exploratory",
+      "reviewedBy": {
+        "principalId": "fixture-researcher",
+        "actorKind": "human"
+      },
+      "authoredBy": {
+        "principalId": "fixture-agent-td",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "notAutonomousTrialAuthorisation": true,
+        "trialConceptIsNotApprovedProtocol": true,
+        "exploratoryBiomarkerIsNotQualifiedOrClinicallyValidated": true,
+        "workflowStagesAreNotRegulatoryCategories": true,
+        "noInventedSampleSizes": true,
+        "noFabricatedTrialOutcomes": true,
+        "noPatientEligibilityFromRestrictedRecords": true,
+        "noTreatmentRecommendations": true,
+        "noWorkbenchUi": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred",
+        "m12TherapeuticDiscoveryDependency": "id-pattern-compatible-107-merged"
+      },
+      "createdAt": "2026-11-09T18:00:00.000Z",
+      "updatedAt": "2026-11-09T18:00:00.000Z",
+      "note": ""
+    }
+  ]
+}
