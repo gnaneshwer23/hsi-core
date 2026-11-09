@@ -4,7 +4,9 @@
 **Status:** Phase 0 repository / deployment audit + **PR1 Architecture and Dependency Audit** — **not** M19 complete · **not** production-ready · **not** live SSc E2E cleared.  
 **Date:** 2026-11-09  
 **Audited `main` SHA:** `aa20df8c690194ac54bffe7cccb518b07bbfd1c1` (`aa20df8` — M17 PR4 Scientific Knowledge Evolution [#140](https://github.com/gnaneshwer23/hsi-core/pull/140))  
-**In-flight (not on audited tip):** M17 PR5 Research Gap / Hypothesis Portfolio [#141](https://github.com/gnaneshwer23/hsi-core/pull/141) (`eng/m17-research-gap-hypothesis-portfolio`)  
+**In-flight (not on audited tip):** M17 PR5 Research Gap / Hypothesis Portfolio [#141](https://github.com/gnaneshwer23/hsi-core/pull/141) (`eng/m17-research-gap-hypothesis-portfolio`) — eng complete + CI green; **do not auto-merge**  
+**Phase 0 deepen:** Scope A/B explore receipts folded into §3 / §5 / §6 (auth API map, LHKG deny-by-default RLS, durable checkpoint wiring).  
+
 **Repo:** [gnaneshwer23/hsi-core](https://github.com/gnaneshwer23/hsi-core)  
 **HSI Neon:** red-wave only (`human super intelligence` / `red-wave-06625195` / `ep-restless-dew…`) — never autumn-snow / Akeno / DeliverX  
 
@@ -20,7 +22,7 @@
 - [`../architecture/principles/ARCH-002-living-health-knowledge-graph-ownership.md`](../architecture/principles/ARCH-002-living-health-knowledge-graph-ownership.md)
 - [`../ARCH-003-AUTHENTICATED-API-INTEGRATION.md`](../ARCH-003-AUTHENTICATED-API-INTEGRATION.md)
 
-**Honesty freeze:** no Gate C auto-approve · no invented MoU · no live CDS/PHI · fixtures ≠ live evidence · CI green ≠ scientific validity · eng contracts ≠ operational platform · in-process orchestrator ≠ durable runtime · RLS-on-without-policies ≠ secure live graph · M18 **does not exist in repo** (brief overreach — audit M1–M17 + substrate only).
+**Honesty freeze:** no Gate C auto-approve · no invented MoU · no live CDS/PHI · fixtures ≠ live evidence · CI green ≠ scientific validity · eng contracts ≠ operational platform · in-process orchestrator ≠ durable runtime · LHKG RLS FORCE + **no SELECT policies** = intentional deny-by-default (not “forgotten RLS”) · M18 **does not exist in repo** (brief overreach — audit M1–M17 + substrate only).
 
 ---
 
@@ -141,7 +143,7 @@
 |-------|---------|
 | **Sources** | `src/livingHealthKnowledgeGraph.ts`, `src/graphRelease.ts`, `src/knowledgeGraph/`, LHKG migrations 011–014 |
 | **DB** | `hsi_lhkg_nodes`, `hsi_lhkg_relationships`, `hsi_lhkg_dossiers`, investigation graph contexts |
-| **RLS** | `ENABLE ROW LEVEL SECURITY` on LHKG tables (013) — **policies incomplete / ops Blocked** for live graph read path |
+| **RLS** | Migration 013: RLS **FORCE** on `hsi_lhkg_*` / dossiers; **intentionally no SELECT policies** (deny-by-default). `hsiNeonGraphReadRepository` needs least-privilege role + explicit policies before live traffic |
 | **Rule** | Candidates must never silently become approved facts — eng path preserves this; live promotion **Blocked** |
 | **Classification** | Logic **Partially implemented** · operational Neon graph **Blocked** |
 
@@ -157,10 +159,10 @@
 
 | Field | Finding |
 |-------|---------|
-| **In-process** | `src/hsiAgentOrchestrator.ts` — deterministic, **no** DB/LLM/network; limitations explicitly state no persisted trace |
+| **In-process** | `src/hsiAgentOrchestrator.ts` (+ `boundedAgentExecution.ts`) — deterministic, **no** DB/LLM/network; limitations explicitly state no persisted trace |
 | **Site local** | `site/src/features/science/researchOrchestrator.ts` — in-memory typed graph; `createdAt: "not persisted"` |
-| **Durable stack** | `hsiAgentDurableCheckpoint.ts`, `hsiNeonCheckpointStore.ts`, `hsiCheckpointedExecutor.ts`, migration 009 — **Implemented but unverified** / not wired to production orchestrator |
-| **Restart recovery** | Operator recovery service exists; **operational recovery Missing** |
+| **Durable stack** | `hsiAgentDurableCheckpoint.ts`, `hsiNeonCheckpointStore.ts`, `hsiCheckpointedExecutor.ts`, `hsiCheckpointRecoveryService.ts`, migration 009 — schema/adapters **Implemented**; **not wired** into `runHsiAgentOrchestration` |
+| **Restart recovery** | Operator recovery contract exists; **operational recovery Missing** (no restart-survival claim) |
 | **Classification** | Orchestration contracts **Partially implemented** · durable runtime **Not verified** · **do not** create a second orchestrator |
 
 ### 3.8 Therapeutic / clinical / RWE / simulation / programme intelligence
@@ -246,7 +248,7 @@
 | Durable vs in-process confusion | Checkpoint schema exists; in-process path claims no persistence | Harden **one** durable path; tests for restart/recovery before claiming durable |
 | Contract sprawl without APIs | ~30 `*Contracts.ts` (M9–M17) | Versioned composition map; unavailable states in UI/API |
 | Org contracts ≠ server enforcement | M9 tenant security module vs grant-only paths | Server + data-layer isolation tests |
-| LHKG RLS without usable policies | Migration 013 | P0 before live graph claims |
+| LHKG RLS deny-by-default (no SELECT policies) | Migration 013 intentional | Add least-privilege policies + roles before live graph claims |
 | Duplicate programme ID namespaces | `hsi-tx-prog-*`, `hsi-td-prog-*`, `hsi-sp-prog-*` | ID-ref composition only |
 | Public roadmap as product | `/roadmap`, experience pages | Demote eng roadmaps from primary authenticated UX |
 | M18 assumed by brief | No artifacts | Document **Missing**; do not invent M18 |
@@ -261,7 +263,7 @@
 |----|-------|--------|
 | P0-1 | Live authenticated Ask→Retrieve→…→Export + staging two-account (#5) | **Blocked** PARKED |
 | P0-2 | Cross-tenant / privilege escalation not fully proven | **Partially implemented** / unverified |
-| P0-3 | LHKG operational read/write with correct RLS policies | **Blocked** |
+| P0-3 | LHKG operational read/write: least-privilege roles + explicit SELECT/write policies (today: FORCE RLS, no policies) | **Blocked** |
 | P0-4 | Unauthorised graph promotion / Gate C bypass | Eng refuse intact; live HITL **Blocked** |
 | P0-5 | Passage rights (#2) — deeper evidence without clearance | **Blocked** PARKED |
 | P0-6 | Durable orchestration restart/recovery unverified | **Missing** operational proof |
@@ -332,7 +334,7 @@ Consolidate PRs where appropriate. **Do not auto-merge.**
 
 ## 9. Recommended immediate eng sequence
 
-1. **Merge M17 PR5 [#141](https://github.com/gnaneshwer23/hsi-core/pull/141)** when CI green (human-gated merge) — closes in-flight gap/hypothesis portfolio contracts.  
+1. **Merge M17 PR5 [#141](https://github.com/gnaneshwer23/hsi-core/pull/141)** — eng + CI already green; human-gated merge only — then rebase M19 if needed.  
 2. Land **M19 PR1** (this audit) on `main`.  
 3. **PR2–PR4** focus: UX honesty, auth/tenant server enforcement, API contract consolidation — not new science features.  
 4. **PR5 durable** only with restart/recovery tests — do not claim durable until then.  
