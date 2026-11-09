@@ -1,12 +1,12 @@
 # Milestone 15 — Integrated Human Disease Intelligence, Digital Patient Models & Precision Research Simulation
 
 **Brief:** HSI Milestone 15 — governed disease-research intelligence contracts for disease context, observed vs inferred disease state, access-scoped digital patient **research** models, and research-only simulation scenarios — composing M14 RWE / longitudinal / (optional) cohort ids — **without** a separate digital-twin product, autonomous diagnosis/prescribing/treatment, unrestricted identifiable patients in the scientific KG, PHI/CDS, Gate C auto-approve, MoU invention, or claiming a live multiscale engine (M11 skipped).  
-**Status:** Phase 0 gap audit + PR1 (Integrated Disease Intelligence Contracts, [#116](https://github.com/gnaneshwer23/hsi-core/pull/116) merged) + PR2 (Clinical and Biological Context Integration) — **not** disease intelligence complete, **not** personalised treatment simulation authorised, **not** live digital patient validation, **not** M15 complete.  
+**Status:** Phase 0 gap audit + PR1 (Integrated Disease Intelligence Contracts, [#116](https://github.com/gnaneshwer23/hsi-core/pull/116) merged) + PR2 (Clinical and Biological Context Integration, [#117](https://github.com/gnaneshwer23/hsi-core/pull/117) merged) + PR3 (Longitudinal Disease State Modelling) — **not** disease intelligence complete, **not** personalised treatment simulation authorised, **not** live digital patient validation, **not** M15 complete.  
 **Date:** 2026-11-09  
-**Audited `main` SHA:** `8fb6aaca1412f5ac7e613d14a9ffaa0234934105` (post-#116 tip)  
-**Tip commit:** `8fb6aac Add M15 integrated disease intelligence contracts (#116)`  
+**Audited `main` SHA:** `15b8f8f80e410cea5f0c65766a331d8c514ef60f` (post-#117 tip)  
+**Tip commit:** `15b8f8f Add M15 clinical and biological context integration (#117)`  
 **HSI Neon:** red-wave only (`human super intelligence` / `red-wave-06625195` / `ep-restless-dew…`) — never autumn-snow / Akeno / DeliverX  
-**Dependency:** PR1 merged on `main` ([#116](https://github.com/gnaneshwer23/hsi-core/pull/116)); substrate includes M14 PR1–PR4 ([#111](https://github.com/gnaneshwer23/hsi-core/pull/111), [#113](https://github.com/gnaneshwer23/hsi-core/pull/113), [#114](https://github.com/gnaneshwer23/hsi-core/pull/114), [#115](https://github.com/gnaneshwer23/hsi-core/pull/115)). PR2 targets `main` and composes PR1 HDI disease-context / observation ids + M14 RWE/LCE/interop temporal refs. Optional `hsi-rcb-coh-*` composition links enabled; do not claim live EHR cohort queries.
+**Dependency:** PR1–PR2 merged on `main` ([#116](https://github.com/gnaneshwer23/hsi-core/pull/116), [#117](https://github.com/gnaneshwer23/hsi-core/pull/117)); substrate includes M14 PR1–PR4 ([#111](https://github.com/gnaneshwer23/hsi-core/pull/111), [#113](https://github.com/gnaneshwer23/hsi-core/pull/113), [#114](https://github.com/gnaneshwer23/hsi-core/pull/114), [#115](https://github.com/gnaneshwer23/hsi-core/pull/115)). PR3 targets `main` post-#117 and composes HDI/CBC + M14 LCE/RWE temporal refs. Optional `hsi-rcb-coh-*` composition links enabled; do not claim live EHR cohort queries.
 
 **Cross-links (do not contradict):**
 
@@ -23,9 +23,11 @@
 - [`../ARCH-003-AUTHENTICATED-API-INTEGRATION.md`](../ARCH-003-AUTHENTICATED-API-INTEGRATION.md)  
 - [`../engineering/HUMAN_QUEUE_RESIDUALS.md`](../engineering/HUMAN_QUEUE_RESIDUALS.md) — #2 / #4 / #5 PARKED  
 
-**Out of PR1:** Clinical/biological context integration (PR2), pathway/mechanism disease models (PR3), digital patient construction engine (PR4), precision research simulation runner (PR5), workbench UI, Neon clinical migrations, live PHI ingestion, fabricated timelines, personalised treatment-effect claims, claiming M11 multiscale engine live.
+**Out of PR1:** Clinical/biological context integration (PR2), longitudinal disease state modelling (PR3), cross-scale ontology / model linkage (PR4), digital patient construction engine (later), precision research simulation runner (later), workbench UI, Neon clinical migrations, live PHI ingestion, fabricated timelines, personalised treatment-effect claims, claiming M11 multiscale engine live.
 
-**Out of PR2:** Live clinical/biology connectors, pathway/mechanism disease models (PR3), digital patient construction engine (PR4+), workbench UI, Neon clinical migrations, PHI ingestion, promoting restricted patient observations into the public graph, collapsing population association into individual inference, claiming live twin / multiscale.
+**Out of PR2:** Live clinical/biology connectors, longitudinal disease state modelling (PR3), digital patient construction engine (later), workbench UI, Neon clinical migrations, PHI ingestion, promoting restricted patient observations into the public graph, collapsing population association into individual inference, claiming live twin / multiscale.
+
+**Out of PR3:** Live longitudinal engines, invented continuous trajectories across clinically meaningful gaps, clinical care / diagnosis / prescribing, cross-scale ontology linkage (PR4), twin product, workbench UI, Neon clinical migrations, PHI ingestion, claiming live twin / multiscale.
 
 ---
 
@@ -122,6 +124,7 @@ Honesty freeze: research decision support only · **not a separate digital twin 
 | M14 RWE contracts | `realWorldEvidenceContracts.ts` | `Partial` (PR1) | Optional `hsi-rwe-study-*` / obs / exposure / outcome / analysis links |
 | M14 secure clinical interop | `secureClinicalDataInteropContracts.ts` | `Partial` (PR2) | Optional data-source / temporal-alignment ids |
 | M14 longitudinal clinical evidence | `longitudinalClinicalEvidenceContracts.ts` | `Partial` (PR3) | Optional `hsi-lce-spec-*` / series / result links |
+| M15 PR3 longitudinal disease-state | `longitudinalDiseaseStateModellingContracts.ts` | **PR3 in-flight** · `Fixture-only` | Trajectory / baseline-FU / events / organ / exposure / biomarker / missing / transitions |
 | M14 reproducible cohort builder | `reproducibleCohortBuilderContracts.ts` | `Partial` (PR4) · live EHR `Missing` | Optional `hsi-rcb-coh-*` composition ids |
 | M13 translational / trial concept | `translationalDevelopmentContracts.ts` | `Partial` (PR1) | Optional programme / trial-concept id links |
 | M12 therapeutic IDs | `therapeuticDiscoveryDataContracts.ts` | `Partial` (PR1) | Optional therapeutic refs |
@@ -143,10 +146,10 @@ Honesty freeze: research decision support only · **not a separate digital twin 
 |-------|------------|----------|--------|---------|-------|
 | **0** Audit + data protection + validity | This document + M1–M14 deps | — | `Verified operational` (audit) | Keep updated | this file |
 | **1** Integrated disease intelligence contracts | M14 RWE/LCE/cohort ids · CDS boundary · M9/M12/M13 hooks | **PR1 merged** ([#116](https://github.com/gnaneshwer23/hsi-core/pull/116) → `8fb6aac`) — 7 focused tests + evaluation pack · disease research context · observed state · inferred estimate · digital patient research model · research simulation scenario + thin store · `Fixture-only` / scientific path `Blocked` | Live digital patient validation · personalised Tx effects · workbench UI | `src/humanDiseaseIntelligenceContracts.ts` · `test/humanDiseaseIntelligenceContracts.test.ts` · `scripts/human-disease-intelligence-contracts.ts` · `evaluation/human-disease-intelligence/` |
-| **2** Clinical and biological context integration | PR1 HDI ids · M14 longitudinal / interop · `hsiClinicalBiologyBridge` privacy pattern | **PR2 in-flight** (targets `main` post-[#116](https://github.com/gnaneshwer23/hsi-core/pull/116)) — 7 focused tests + evaluation pack · authorised research-context resolution · permitted clinical observation retrieval · public biology retrieval · concept mapping · temporal alignment · quality · missingness · supported relationships · unsupported/uncertain preservation · versioned integrated disease context + thin store · `Fixture-only` / scientific path `Blocked` | Live clinical/biology connectors · PHI promotion to public graph · population→individual collapse | `src/clinicalBiologicalContextContracts.ts` · `test/clinicalBiologicalContextContracts.test.ts` · `scripts/clinical-biological-context-contracts.ts` · `evaluation/clinical-biological-context/` |
-| **3** Pathway / mechanism disease models | M12 / literature KG · PR2 integrated context | `Missing` | Mechanism envelopes — not twin product · Longitudinal Disease State Modelling | later PR3 |
-| **4** Digital patient construction engine | PR1 model contracts | `Missing` | Construction from authorised data only | later PR4 |
-| **5** Precision research simulation runner | PR1 scenarios · M11 **Skipped** | `Missing` | Research-only runner; no live multiscale claim | later PR5 |
+| **2** Clinical and biological context integration | PR1 HDI ids · M14 longitudinal / interop · `hsiClinicalBiologyBridge` privacy pattern | **PR2 merged** ([#117](https://github.com/gnaneshwer23/hsi-core/pull/117) → `15b8f8f`) — 7 focused tests + evaluation pack · authorised research-context resolution · permitted clinical observation retrieval · public biology retrieval · concept mapping · temporal alignment · quality · missingness · supported relationships · unsupported/uncertain preservation · versioned integrated disease context + thin store · `Fixture-only` / scientific path `Blocked` | Live clinical/biology connectors · PHI promotion to public graph · population→individual collapse | `src/clinicalBiologicalContextContracts.ts` · `test/clinicalBiologicalContextContracts.test.ts` · `scripts/clinical-biological-context-contracts.ts` · `evaluation/clinical-biological-context/` |
+| **3** Longitudinal disease state modelling | M14 LCE · PR1 HDI · PR2 CBC ids | **PR3 in-flight** ([#118](https://github.com/gnaneshwer23/hsi-core/pull/118); targets `main` post-[#117](https://github.com/gnaneshwer23/hsi-core/pull/117)) — 7 focused tests + evaluation pack · trajectory reconstruction · baseline/follow-up · clinical event timelines · organ outcome trends · treatment exposure context · biomarker trajectories · missing-data analysis · disease-state transitions · temporal integrity (event/measurement/ingestion/prediction) + thin store · `Fixture-only` / scientific path `Blocked` | Live longitudinal engine · invented continuous fill across gaps · clinical care | `src/longitudinalDiseaseStateModellingContracts.ts` · `test/longitudinalDiseaseStateModellingContracts.test.ts` · `scripts/longitudinal-disease-state-modelling-contracts.ts` · `evaluation/longitudinal-disease-state/` |
+| **4** Cross-scale ontology and model linkage | PR1–PR3 envelopes · M12/M13 refs | `Missing` | Ontology / model linkage envelopes — not twin product | later PR4 |
+| **5** Digital patient construction / precision research simulation | PR1 model/scenario contracts · M11 **Skipped** | `Missing` | Construction from authorised data only; research-only runner; no live multiscale claim | later PR5+ |
 | **6** Population / subgroup disease intelligence | M14 cohort (#115) | `Missing` | Aggregate honesty; small-cell disclosure | later PR6 |
 | **7** Uncertainty / counterfactual research envelopes | — | `Missing` | Explicit assumptions; not individual truth | later PR7 |
 | **8** Workbench surfaces | research workbench | `Partial` | UI deferred | later PR8 |
@@ -168,6 +171,9 @@ Honesty freeze: research decision support only · **not a separate digital twin 
 | **Established mechanism** (PR2) | Declared public biomedical mechanism concept | Patient-specific diagnosis |
 | **Computational inference** (PR2) | Declared model/algorithmic inference | Observed clinical fact |
 | **Unvalidated hypothesis** (PR2) | Explicitly unsupported/uncertain mapping candidate | Supported relationship or invented evidence |
+| **Disease trajectory reconstruction** (PR3) | Discrete longitudinal reconstruction with gap policy | Invented continuous fill / clinical care timeline |
+| **Disease state transition** (PR3) | Research transition envelope (observed or inferred) | Diagnosis / treatment directive |
+| **Treatment exposure context** (PR3) | Declared exposure framing for research | Proven treatment effect / prescribing |
 
 ---
 
@@ -202,7 +208,27 @@ Honesty freeze: research decision support only · **not a separate digital twin 
 - Fail-closed: population association ≠ individual inference; restricted patient observations ≠ public KG promotion.  
 - Thin in-memory store + offline evaluation pack + focused tests. No Neon migration; no workbench UI.
 
-**Out of PR2:** Live connectors, PR3 Longitudinal Disease State Modelling / pathway envelopes, workbench UI, Neon migration, PHI ingestion, auto-merge.
+**Out of PR2:** Live connectors, PR3 Longitudinal Disease State Modelling, workbench UI, Neon migration, PHI ingestion, auto-merge.
+
+---
+
+## PR3 deliverable (Longitudinal Disease State Modelling)
+
+**Longitudinal Disease State Modelling**
+
+- Versioned **modelling spec** composing PR1 `hsi-hdi-ctx-*`, optional PR2 `hsi-cbc-idc-*`, and M14 LCE/RWE ids; closed review lifecycle; fail-closed when dataset blocked.  
+- **Disease trajectory reconstruction** from discrete points; gap policy (`no_interpolation_across_gap` / declared model / uncertainty preserved); refuse invented continuous fill.  
+- **Baseline and follow-up comparison** with distinct baseline/follow-up times; no invented deltas or proven treatment-effect claims.  
+- **Clinical event timelines** distinguishing event / measurement / ingestion times; no fabricated timelines.  
+- **Organ-specific outcome trends** with uncertainty ordinal and optional RWE outcome / LCE series refs.  
+- **Treatment exposure context** — exposure framing only; `treatmentEffectClaimed: false`; no prescribing directive.  
+- **Biomarker trajectories** with sparse-uncertainty preservation.  
+- **Missing-data analysis** without inventing values.  
+- **Disease state transition modelling** with explicit `epistemicStatus` observed vs inferred; refuse collapsing observed into estimate; not clinical care.  
+- Temporal integrity: event / measurement / ingestion / prediction roles; refuse future-data leakage and prediction-before-measurement.  
+- Thin in-memory store + offline evaluation pack + focused tests. No Neon migration; no workbench UI; no twin/PHI/CDS.
+
+**Out of PR3:** Live longitudinal engine, PR4 Cross-Scale Ontology and Model Linkage, workbench UI, Neon migration, PHI ingestion, auto-merge.
 
 ---
 
@@ -248,11 +274,13 @@ Honesty freeze: research decision support only · **not a separate digital twin 
 
 ## Reusable libraries (contracts-first)
 
-| Need | Prefer | Avoid in PR1/PR2 |
+| Need | Prefer | Avoid in PR1/PR2/PR3 |
 |------|--------|------------------|
 | PHI/CDS refuse | `cdsPhiBoundary` · `clinicalResearchScaffold` | Live CDS engines / twin SaaS |
 | M14 RWE / LCE / cohort / interop ids | `realWorldEvidenceContracts` · `longitudinalClinicalEvidenceContracts` · `reproducibleCohortBuilderContracts` · `secureClinicalDataInteropContracts` (id refs) | Live EHR cohort / FHIR queries |
 | PR1 HDI disease context / observations | `humanDiseaseIntelligenceContracts` (id refs) | Collapsing observed/inferred |
+| PR2 integrated clinical↔biology context | `clinicalBiologicalContextContracts` (id refs) | PHI promotion to public graph |
+| PR3 longitudinal disease-state modelling | `longitudinalDiseaseStateModellingContracts` | Invented continuous trajectories / clinical care |
 | Privacy bridge pattern | `hsiClinicalBiologyBridge` (reference) | Copying patient facts to KG |
 | Org ACL | M9 tenant security ids | Federation claims |
 | Trial / biomarker refs | M13 translational contracts | Invented protocols |
@@ -265,13 +293,16 @@ Honesty freeze: research decision support only · **not a separate digital twin 
 
 | PR | Title | Branch | State |
 |----|-------|--------|-------|
-| (this PR) | M15 PR2 Clinical and Biological Context Integration | `eng/m15-clinical-biological-context` | **PR2 in-flight** — targets `main` post-[#116](https://github.com/gnaneshwer23/hsi-core/pull/116); 7 focused tests + evaluation pack; open for review; **do not auto-merge** |
+| [#118](https://github.com/gnaneshwer23/hsi-core/pull/118) | M15 PR3 Longitudinal Disease State Modelling | `eng/m15-longitudinal-disease-state` | **PR3 in-flight** — targets `main` post-[#117](https://github.com/gnaneshwer23/hsi-core/pull/117); 7 focused tests + evaluation pack; open for review; **do not auto-merge** |
+| [#117](https://github.com/gnaneshwer23/hsi-core/pull/117) | M15 PR2 Clinical and Biological Context Integration | merged → `15b8f8f` | Substrate |
 | [#116](https://github.com/gnaneshwer23/hsi-core/pull/116) | M15 PR1 Integrated Disease Intelligence Contracts | merged → `8fb6aac` | Substrate |
 | [#115](https://github.com/gnaneshwer23/hsi-core/pull/115) | M14 PR4 Reproducible Cohort Builder | merged → `02cf969` | Substrate |
 | [#114](https://github.com/gnaneshwer23/hsi-core/pull/114) | M14 PR3 Longitudinal Clinical Evidence Model | merged → `64dae29` | Substrate |
 | [#113](https://github.com/gnaneshwer23/hsi-core/pull/113) | M14 PR2 Secure Clinical Data Interoperability | merged → `33843eb` | Substrate |
 | [#111](https://github.com/gnaneshwer23/hsi-core/pull/111) | M14 PR1 Clinical Evidence and RWE Contracts | merged → `19e0ff1` | Substrate |
 
-**Suggested next:** PR3 Longitudinal Disease State Modelling.
+**Merge order:** this PR3 → next PR4 Cross-Scale Ontology and Model Linkage (#117 already on `main`).
+
+**Suggested next:** PR4 Cross-Scale Ontology and Model Linkage.
 
 **M14 left open after Step A:** none on the M14 eng track (PR4 [#115](https://github.com/gnaneshwer23/hsi-core/pull/115) squash-merged). Unrelated open PRs #71 / #61 / #60 / #34 / #15 left untouched.

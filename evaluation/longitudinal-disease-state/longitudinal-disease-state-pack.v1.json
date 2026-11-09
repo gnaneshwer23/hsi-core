@@ -1,0 +1,968 @@
+{
+  "schema": "hsi-longitudinal-disease-state-1",
+  "method": "hsi.longitudinal_disease_state.v1",
+  "version": "0.1.0",
+  "asOf": "2026-11-09T23:30:00.000Z",
+  "modellingKindCount": 8,
+  "specCount": 2,
+  "trajectoryCount": 1,
+  "baselineFollowUpCount": 1,
+  "eventTimelineCount": 1,
+  "organTrendCount": 1,
+  "treatmentExposureCount": 1,
+  "biomarkerTrajectoryCount": 1,
+  "missingDataAnalysisCount": 1,
+  "stateTransitionCount": 2,
+  "temporalCheckCount": 1,
+  "modelCount": 2,
+  "honesty": {
+    "researchDecisionSupportOnly": true,
+    "observedIsNotInferred": true,
+    "observationalTrajectoryIsNotProvenTreatmentEffect": true,
+    "noFutureDataLeakage": true,
+    "temporalRolesMustRemainDistinct": true,
+    "irregularFollowUpMustBeExplicit": true,
+    "uncertaintyPreservedWhenSparse": true,
+    "noInventedContinuousTrajectoryAcrossGaps": true,
+    "noPhiIngestion": true,
+    "noLiveTwinOrMultiscaleClaim": true,
+    "noAutonomousDiagnosisOrPrescribing": true,
+    "noFabricatedDiseaseTimelines": true,
+    "noWorkbenchUi": true,
+    "notClinicalCare": true,
+    "agentsDraftHumansReview": true,
+    "gateCAutoApprove": false,
+    "mouInvented": false,
+    "phiCdsWired": false,
+    "scientificApproval": false,
+    "graphPromotable": false,
+    "neonProjectPolicy": "red-wave-only",
+    "migration": "deferred"
+  },
+  "specs": [
+    {
+      "schema": "hsi-longitudinal-disease-state-1",
+      "method": "hsi.longitudinal_disease_state.v1",
+      "version": "0.1.0",
+      "id": "hsi-ldsm-spec-blocked-demo",
+      "modellingKind": "disease_state_transition",
+      "displayName": "Blocked disease-state modelling until authorised dataset",
+      "scientificQuestion": "Blocked scientific path for disease-state transitions until an authorised clinical dataset is supplied.",
+      "diseaseContextId": "hsi-hdi-ctx-blocked-demo",
+      "integratedDiseaseContextId": null,
+      "rweStudyId": null,
+      "longitudinalAnalysisSpecId": null,
+      "subjectRefKind": "cohort_aggregate",
+      "subjectOrCohortRef": "cohort-ldsm-blocked",
+      "temporalAnchors": {
+        "eventTime": {
+          "role": "event_time",
+          "timestamp": "2024-03-10T11:30:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture clinical event time"
+        },
+        "measurementTime": {
+          "role": "measurement_time",
+          "timestamp": "2024-03-10T12:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture measurement time"
+        },
+        "ingestionTime": {
+          "role": "ingestion_time",
+          "timestamp": "2024-06-16T08:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture ingestion time (after measurement)"
+        },
+        "predictionTime": {
+          "role": "prediction_time",
+          "timestamp": null,
+          "declaredAbsent": true,
+          "note": "No prediction time in fixture reconstruction"
+        },
+        "baselineTime": {
+          "role": "baseline_time",
+          "timestamp": "2024-01-15T10:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture baseline"
+        },
+        "followUpTime": {
+          "role": "follow_up_time",
+          "timestamp": "2024-06-15T10:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture follow-up"
+        }
+      },
+      "observationIntervalKind": "unknown_interval",
+      "irregularFollowUpNote": null,
+      "missingDataHandling": "explicitly_unresolved",
+      "gapPolicy": "gap_recorded_uncertainty_preserved",
+      "clinicallyMeaningfulGapDays": null,
+      "eligibilityDefinitionTimeRole": "baseline_time",
+      "exposureDefinitionTimeRole": "event_time",
+      "datasetAvailability": "blocked_no_authorised_clinical_dataset",
+      "accessClassification": "restricted_not_ingested",
+      "containsIdentifiablePhi": false,
+      "liveLongitudinalEngineOperational": false,
+      "notClinicalCare": true,
+      "lifecycle": "blocked_awaiting_authorised_dataset",
+      "reviewedBy": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-ldsm",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": false,
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "observedIsNotInferred": true,
+        "observationalTrajectoryIsNotProvenTreatmentEffect": true,
+        "noFutureDataLeakage": true,
+        "temporalRolesMustRemainDistinct": true,
+        "irregularFollowUpMustBeExplicit": true,
+        "uncertaintyPreservedWhenSparse": true,
+        "noInventedContinuousTrajectoryAcrossGaps": true,
+        "noPhiIngestion": true,
+        "noLiveTwinOrMultiscaleClaim": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noFabricatedDiseaseTimelines": true,
+        "noWorkbenchUi": true,
+        "notClinicalCare": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T23:30:00.000Z",
+      "updatedAt": "2026-11-09T23:30:00.000Z",
+      "note": ""
+    },
+    {
+      "schema": "hsi-longitudinal-disease-state-1",
+      "method": "hsi.longitudinal_disease_state.v1",
+      "version": "0.1.0",
+      "id": "hsi-ldsm-spec-ssc-demo",
+      "modellingKind": "disease_trajectory_reconstruction",
+      "displayName": "Fixture SSc longitudinal disease-state modelling spec",
+      "scientificQuestion": "How do declared fixture disease-state observations change over irregular follow-up without inventing continuous trajectories or proven treatment effects?",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "integratedDiseaseContextId": "hsi-cbc-idc-ssc-demo",
+      "rweStudyId": "hsi-rwe-study-fixture-demo",
+      "longitudinalAnalysisSpecId": "hsi-lce-spec-lab-trend-demo",
+      "subjectRefKind": "pseudonymous_subject",
+      "subjectOrCohortRef": "pseudo-subj-ldsm-demo",
+      "temporalAnchors": {
+        "eventTime": {
+          "role": "event_time",
+          "timestamp": "2024-03-10T11:30:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture clinical event time"
+        },
+        "measurementTime": {
+          "role": "measurement_time",
+          "timestamp": "2024-03-10T12:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture measurement time"
+        },
+        "ingestionTime": {
+          "role": "ingestion_time",
+          "timestamp": "2024-06-16T08:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture ingestion time (after measurement)"
+        },
+        "predictionTime": {
+          "role": "prediction_time",
+          "timestamp": null,
+          "declaredAbsent": true,
+          "note": "No prediction time in fixture reconstruction"
+        },
+        "baselineTime": {
+          "role": "baseline_time",
+          "timestamp": "2024-01-15T10:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture baseline"
+        },
+        "followUpTime": {
+          "role": "follow_up_time",
+          "timestamp": "2024-06-15T10:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture follow-up"
+        }
+      },
+      "observationIntervalKind": "sparse_declared",
+      "irregularFollowUpNote": "Fixture follow-up is sparse; clinically meaningful gaps declared without continuous fill.",
+      "missingDataHandling": "uncertainty_preserved_sparse",
+      "gapPolicy": "no_interpolation_across_gap",
+      "clinicallyMeaningfulGapDays": 90,
+      "eligibilityDefinitionTimeRole": "baseline_time",
+      "exposureDefinitionTimeRole": "event_time",
+      "datasetAvailability": "fixture_only",
+      "accessClassification": "fixture_engineering",
+      "containsIdentifiablePhi": false,
+      "liveLongitudinalEngineOperational": false,
+      "notClinicalCare": true,
+      "lifecycle": "draft",
+      "reviewedBy": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-ldsm",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "observedIsNotInferred": true,
+        "observationalTrajectoryIsNotProvenTreatmentEffect": true,
+        "noFutureDataLeakage": true,
+        "temporalRolesMustRemainDistinct": true,
+        "irregularFollowUpMustBeExplicit": true,
+        "uncertaintyPreservedWhenSparse": true,
+        "noInventedContinuousTrajectoryAcrossGaps": true,
+        "noPhiIngestion": true,
+        "noLiveTwinOrMultiscaleClaim": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noFabricatedDiseaseTimelines": true,
+        "noWorkbenchUi": true,
+        "notClinicalCare": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T23:30:00.000Z",
+      "updatedAt": "2026-11-09T23:30:00.000Z",
+      "note": ""
+    }
+  ],
+  "trajectories": [
+    {
+      "schema": "hsi-longitudinal-disease-state-1",
+      "method": "hsi.longitudinal_disease_state.v1",
+      "version": "0.1.0",
+      "id": "hsi-ldsm-trj-ssc-demo",
+      "modellingSpecId": "hsi-ldsm-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "clinicalConcept": "Fixture disease activity score",
+      "observationIntervalKind": "sparse_declared",
+      "gapPolicy": "no_interpolation_across_gap",
+      "missingDataHandling": "uncertainty_preserved_sparse",
+      "uncertaintyOrdinal": "high_sparse_preserved",
+      "points": [
+        {
+          "sequenceIndex": 0,
+          "measurementTime": "2024-01-15T10:00:00.000Z",
+          "eventTime": "2024-01-15T09:30:00.000Z",
+          "ingestionTime": "2024-01-16T08:00:00.000Z",
+          "valueDeclared": "baseline-declared",
+          "unit": "fixture-unit",
+          "missingnessDeclared": false,
+          "intervalDaysFromPrior": null,
+          "crossesClinicallyMeaningfulGap": false,
+          "interpolated": false,
+          "note": "Baseline fixture point"
+        },
+        {
+          "sequenceIndex": 1,
+          "measurementTime": "2024-06-15T10:00:00.000Z",
+          "eventTime": null,
+          "ingestionTime": "2024-06-16T08:00:00.000Z",
+          "valueDeclared": "follow-up-declared",
+          "unit": "fixture-unit",
+          "missingnessDeclared": false,
+          "intervalDaysFromPrior": 152,
+          "crossesClinicallyMeaningfulGap": true,
+          "interpolated": false,
+          "note": "Follow-up after clinically meaningful gap — discrete only"
+        }
+      ],
+      "hdiObservationIds": [
+        "hsi-hdi-obs-crp-demo"
+      ],
+      "longitudinalSeriesId": "hsi-lce-ser-lab-demo",
+      "continuousInterpolationInvented": null,
+      "fabricatedTrajectory": null,
+      "containsIdentifiablePhi": false,
+      "authoredBy": {
+        "principalId": "fixture-agent-ldsm",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "observedIsNotInferred": true,
+        "observationalTrajectoryIsNotProvenTreatmentEffect": true,
+        "noFutureDataLeakage": true,
+        "temporalRolesMustRemainDistinct": true,
+        "irregularFollowUpMustBeExplicit": true,
+        "uncertaintyPreservedWhenSparse": true,
+        "noInventedContinuousTrajectoryAcrossGaps": true,
+        "noPhiIngestion": true,
+        "noLiveTwinOrMultiscaleClaim": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noFabricatedDiseaseTimelines": true,
+        "noWorkbenchUi": true,
+        "notClinicalCare": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T23:30:00.000Z",
+      "updatedAt": "2026-11-09T23:30:00.000Z",
+      "note": ""
+    }
+  ],
+  "baselineFollowUps": [
+    {
+      "schema": "hsi-longitudinal-disease-state-1",
+      "method": "hsi.longitudinal_disease_state.v1",
+      "version": "0.1.0",
+      "id": "hsi-ldsm-cmp-ssc-demo",
+      "modellingSpecId": "hsi-ldsm-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "clinicalConcept": "Fixture FVC percent predicted",
+      "baselineTime": "2024-01-15T10:00:00.000Z",
+      "followUpTime": "2024-06-15T10:00:00.000Z",
+      "baselineValueDeclared": "72",
+      "followUpValueDeclared": "68",
+      "comparisonSummary": "Fixture baseline vs follow-up FVC comparison under declared limitations — not a proven treatment effect.",
+      "uncertaintyOrdinal": "high_sparse_preserved",
+      "missingDataHandling": "uncertainty_preserved_sparse",
+      "hdiObservationIds": [
+        "hsi-hdi-obs-fvc-demo"
+      ],
+      "inventedDelta": null,
+      "provenTreatmentEffectClaimed": false,
+      "authoredBy": {
+        "principalId": "fixture-agent-ldsm",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "observedIsNotInferred": true,
+        "observationalTrajectoryIsNotProvenTreatmentEffect": true,
+        "noFutureDataLeakage": true,
+        "temporalRolesMustRemainDistinct": true,
+        "irregularFollowUpMustBeExplicit": true,
+        "uncertaintyPreservedWhenSparse": true,
+        "noInventedContinuousTrajectoryAcrossGaps": true,
+        "noPhiIngestion": true,
+        "noLiveTwinOrMultiscaleClaim": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noFabricatedDiseaseTimelines": true,
+        "noWorkbenchUi": true,
+        "notClinicalCare": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T23:30:00.000Z",
+      "updatedAt": "2026-11-09T23:30:00.000Z",
+      "note": ""
+    }
+  ],
+  "eventTimelines": [
+    {
+      "schema": "hsi-longitudinal-disease-state-1",
+      "method": "hsi.longitudinal_disease_state.v1",
+      "version": "0.1.0",
+      "id": "hsi-ldsm-evt-ssc-demo",
+      "modellingSpecId": "hsi-ldsm-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "observationIntervalKind": "sparse_declared",
+      "entries": [
+        {
+          "sequenceIndex": 0,
+          "eventTime": "2024-03-10T11:30:00.000Z",
+          "measurementTime": "2024-03-10T12:00:00.000Z",
+          "ingestionTime": "2024-03-11T08:00:00.000Z",
+          "eventLabel": "Fixture clinic visit",
+          "missingnessDeclared": false,
+          "note": "Event/measurement/ingestion times distinct"
+        }
+      ],
+      "gapPolicy": "no_interpolation_across_gap",
+      "fabricatedTimeline": null,
+      "containsIdentifiablePhi": false,
+      "authoredBy": {
+        "principalId": "fixture-agent-ldsm",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "observedIsNotInferred": true,
+        "observationalTrajectoryIsNotProvenTreatmentEffect": true,
+        "noFutureDataLeakage": true,
+        "temporalRolesMustRemainDistinct": true,
+        "irregularFollowUpMustBeExplicit": true,
+        "uncertaintyPreservedWhenSparse": true,
+        "noInventedContinuousTrajectoryAcrossGaps": true,
+        "noPhiIngestion": true,
+        "noLiveTwinOrMultiscaleClaim": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noFabricatedDiseaseTimelines": true,
+        "noWorkbenchUi": true,
+        "notClinicalCare": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T23:30:00.000Z",
+      "updatedAt": "2026-11-09T23:30:00.000Z",
+      "note": ""
+    }
+  ],
+  "organTrends": [
+    {
+      "schema": "hsi-longitudinal-disease-state-1",
+      "method": "hsi.longitudinal_disease_state.v1",
+      "version": "0.1.0",
+      "id": "hsi-ldsm-org-lung-demo",
+      "modellingSpecId": "hsi-ldsm-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "organSystem": "pulmonary",
+      "outcomeConcept": "Fixture FVC trend",
+      "observationIntervalKind": "sparse_declared",
+      "trendSummary": "Fixture organ-specific FVC trend with sparse uncertainty preserved — no invented continuous curve.",
+      "uncertaintyOrdinal": "high_sparse_preserved",
+      "gapPolicy": "no_interpolation_across_gap",
+      "rweOutcomeId": "hsi-rwe-out-fixture-demo",
+      "longitudinalSeriesId": "hsi-lce-ser-lab-demo",
+      "inventedContinuousCurve": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-ldsm",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "observedIsNotInferred": true,
+        "observationalTrajectoryIsNotProvenTreatmentEffect": true,
+        "noFutureDataLeakage": true,
+        "temporalRolesMustRemainDistinct": true,
+        "irregularFollowUpMustBeExplicit": true,
+        "uncertaintyPreservedWhenSparse": true,
+        "noInventedContinuousTrajectoryAcrossGaps": true,
+        "noPhiIngestion": true,
+        "noLiveTwinOrMultiscaleClaim": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noFabricatedDiseaseTimelines": true,
+        "noWorkbenchUi": true,
+        "notClinicalCare": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T23:30:00.000Z",
+      "updatedAt": "2026-11-09T23:30:00.000Z",
+      "note": ""
+    }
+  ],
+  "treatmentExposures": [
+    {
+      "schema": "hsi-longitudinal-disease-state-1",
+      "method": "hsi.longitudinal_disease_state.v1",
+      "version": "0.1.0",
+      "id": "hsi-ldsm-exp-mmf-demo",
+      "modellingSpecId": "hsi-ldsm-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "exposureConcept": "Fixture mycophenolate exposure context",
+      "exposureStartTime": "2024-02-01T00:00:00.000Z",
+      "exposureEndTime": "2024-06-01T00:00:00.000Z",
+      "exposureSummary": "Fixture treatment exposure context for research framing only — not a prescribing directive.",
+      "rweExposureId": "hsi-rwe-exp-fixture-demo",
+      "treatmentEffectClaimed": false,
+      "prescribingDirective": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-ldsm",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "observedIsNotInferred": true,
+        "observationalTrajectoryIsNotProvenTreatmentEffect": true,
+        "noFutureDataLeakage": true,
+        "temporalRolesMustRemainDistinct": true,
+        "irregularFollowUpMustBeExplicit": true,
+        "uncertaintyPreservedWhenSparse": true,
+        "noInventedContinuousTrajectoryAcrossGaps": true,
+        "noPhiIngestion": true,
+        "noLiveTwinOrMultiscaleClaim": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noFabricatedDiseaseTimelines": true,
+        "noWorkbenchUi": true,
+        "notClinicalCare": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T23:30:00.000Z",
+      "updatedAt": "2026-11-09T23:30:00.000Z",
+      "note": ""
+    }
+  ],
+  "biomarkerTrajectories": [
+    {
+      "schema": "hsi-longitudinal-disease-state-1",
+      "method": "hsi.longitudinal_disease_state.v1",
+      "version": "0.1.0",
+      "id": "hsi-ldsm-bio-crp-demo",
+      "modellingSpecId": "hsi-ldsm-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "biomarkerConcept": "Fixture CRP laboratory concept",
+      "observationIntervalKind": "sparse_declared",
+      "gapPolicy": "no_interpolation_across_gap",
+      "uncertaintyOrdinal": "high_sparse_preserved",
+      "points": [
+        {
+          "sequenceIndex": 0,
+          "measurementTime": "2024-01-15T10:00:00.000Z",
+          "eventTime": "2024-01-15T09:30:00.000Z",
+          "ingestionTime": "2024-01-16T08:00:00.000Z",
+          "valueDeclared": "baseline-declared",
+          "unit": "fixture-unit",
+          "missingnessDeclared": false,
+          "intervalDaysFromPrior": null,
+          "crossesClinicallyMeaningfulGap": false,
+          "interpolated": false,
+          "note": "Baseline fixture point"
+        },
+        {
+          "sequenceIndex": 1,
+          "measurementTime": "2024-06-15T10:00:00.000Z",
+          "eventTime": null,
+          "ingestionTime": "2024-06-16T08:00:00.000Z",
+          "valueDeclared": "follow-up-declared",
+          "unit": "fixture-unit",
+          "missingnessDeclared": false,
+          "intervalDaysFromPrior": 152,
+          "crossesClinicallyMeaningfulGap": true,
+          "interpolated": false,
+          "note": "Follow-up after clinically meaningful gap — discrete only"
+        }
+      ],
+      "hdiObservationIds": [
+        "hsi-hdi-obs-crp-demo"
+      ],
+      "longitudinalSeriesId": "hsi-lce-ser-lab-demo",
+      "continuousInterpolationInvented": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-ldsm",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "observedIsNotInferred": true,
+        "observationalTrajectoryIsNotProvenTreatmentEffect": true,
+        "noFutureDataLeakage": true,
+        "temporalRolesMustRemainDistinct": true,
+        "irregularFollowUpMustBeExplicit": true,
+        "uncertaintyPreservedWhenSparse": true,
+        "noInventedContinuousTrajectoryAcrossGaps": true,
+        "noPhiIngestion": true,
+        "noLiveTwinOrMultiscaleClaim": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noFabricatedDiseaseTimelines": true,
+        "noWorkbenchUi": true,
+        "notClinicalCare": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T23:30:00.000Z",
+      "updatedAt": "2026-11-09T23:30:00.000Z",
+      "note": ""
+    }
+  ],
+  "missingDataAnalyses": [
+    {
+      "schema": "hsi-longitudinal-disease-state-1",
+      "method": "hsi.longitudinal_disease_state.v1",
+      "version": "0.1.0",
+      "id": "hsi-ldsm-mis-ssc-demo",
+      "modellingSpecId": "hsi-ldsm-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "missingConcepts": [
+        "Fixture DLCO",
+        "Fixture skin score"
+      ],
+      "missingDataHandling": "uncertainty_preserved_sparse",
+      "sparseUncertaintyPreserved": true,
+      "analysisSummary": "Missing concepts recorded without inventing values; sparse uncertainty preserved.",
+      "inventedValues": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-ldsm",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "observedIsNotInferred": true,
+        "observationalTrajectoryIsNotProvenTreatmentEffect": true,
+        "noFutureDataLeakage": true,
+        "temporalRolesMustRemainDistinct": true,
+        "irregularFollowUpMustBeExplicit": true,
+        "uncertaintyPreservedWhenSparse": true,
+        "noInventedContinuousTrajectoryAcrossGaps": true,
+        "noPhiIngestion": true,
+        "noLiveTwinOrMultiscaleClaim": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noFabricatedDiseaseTimelines": true,
+        "noWorkbenchUi": true,
+        "notClinicalCare": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T23:30:00.000Z",
+      "updatedAt": "2026-11-09T23:30:00.000Z",
+      "note": ""
+    }
+  ],
+  "stateTransitions": [
+    {
+      "schema": "hsi-longitudinal-disease-state-1",
+      "method": "hsi.longitudinal_disease_state.v1",
+      "version": "0.1.0",
+      "id": "hsi-ldsm-txn-obs-demo",
+      "modellingSpecId": "hsi-ldsm-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "fromStateLabel": "Fixture stable research state",
+      "toStateLabel": "Fixture progressed research state",
+      "transitionTime": "2024-06-15T10:00:00.000Z",
+      "transitionConfidence": "low",
+      "epistemicStatus": "observed",
+      "hdiObservationId": "hsi-hdi-obs-crp-demo",
+      "hdiEstimateId": null,
+      "limitations": [
+        "Observed transition envelope only — not clinical care.",
+        "Observed is not inferred."
+      ],
+      "clinicalCareDirective": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-ldsm",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "observedIsNotInferred": true,
+        "observationalTrajectoryIsNotProvenTreatmentEffect": true,
+        "noFutureDataLeakage": true,
+        "temporalRolesMustRemainDistinct": true,
+        "irregularFollowUpMustBeExplicit": true,
+        "uncertaintyPreservedWhenSparse": true,
+        "noInventedContinuousTrajectoryAcrossGaps": true,
+        "noPhiIngestion": true,
+        "noLiveTwinOrMultiscaleClaim": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noFabricatedDiseaseTimelines": true,
+        "noWorkbenchUi": true,
+        "notClinicalCare": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T23:30:00.000Z",
+      "updatedAt": "2026-11-09T23:30:00.000Z",
+      "note": ""
+    },
+    {
+      "schema": "hsi-longitudinal-disease-state-1",
+      "method": "hsi.longitudinal_disease_state.v1",
+      "version": "0.1.0",
+      "id": "hsi-ldsm-txn-inf-demo",
+      "modellingSpecId": "hsi-ldsm-spec-ssc-demo",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "fromStateLabel": "Fixture latent state A",
+      "toStateLabel": "Fixture latent state B",
+      "transitionTime": null,
+      "transitionConfidence": "insufficient",
+      "epistemicStatus": "inferred",
+      "hdiObservationId": null,
+      "hdiEstimateId": "hsi-hdi-est-demo",
+      "limitations": [
+        "Inferred transition research envelope only.",
+        "Not a diagnosis or clinical care directive."
+      ],
+      "clinicalCareDirective": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-ldsm",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "observedIsNotInferred": true,
+        "observationalTrajectoryIsNotProvenTreatmentEffect": true,
+        "noFutureDataLeakage": true,
+        "temporalRolesMustRemainDistinct": true,
+        "irregularFollowUpMustBeExplicit": true,
+        "uncertaintyPreservedWhenSparse": true,
+        "noInventedContinuousTrajectoryAcrossGaps": true,
+        "noPhiIngestion": true,
+        "noLiveTwinOrMultiscaleClaim": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noFabricatedDiseaseTimelines": true,
+        "noWorkbenchUi": true,
+        "notClinicalCare": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T23:30:00.000Z",
+      "updatedAt": "2026-11-09T23:30:00.000Z",
+      "note": ""
+    }
+  ],
+  "temporalChecks": [
+    {
+      "schema": "hsi-longitudinal-disease-state-1",
+      "method": "hsi.longitudinal_disease_state.v1",
+      "version": "0.1.0",
+      "id": "hsi-ldsm-tmp-ssc-demo",
+      "modellingSpecId": "hsi-ldsm-spec-ssc-demo",
+      "status": "passed_declared_checks",
+      "checksPerformed": [
+        "distinct_temporal_roles",
+        "eligibility_not_defined_by_follow_up_or_prediction",
+        "exposure_not_defined_by_follow_up_or_prediction",
+        "baseline_before_follow_up_when_both_present",
+        "prediction_not_before_measurement_when_both_present",
+        "ingestion_not_before_measurement_when_both_present"
+      ],
+      "failures": [],
+      "usedFutureInformationForEarlierWindow": false,
+      "collapsedTemporalRoles": false,
+      "predictionBeforeMeasurement": false,
+      "authoredBy": {
+        "principalId": "fixture-agent-ldsm",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "observedIsNotInferred": true,
+        "observationalTrajectoryIsNotProvenTreatmentEffect": true,
+        "noFutureDataLeakage": true,
+        "temporalRolesMustRemainDistinct": true,
+        "irregularFollowUpMustBeExplicit": true,
+        "uncertaintyPreservedWhenSparse": true,
+        "noInventedContinuousTrajectoryAcrossGaps": true,
+        "noPhiIngestion": true,
+        "noLiveTwinOrMultiscaleClaim": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noFabricatedDiseaseTimelines": true,
+        "noWorkbenchUi": true,
+        "notClinicalCare": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T23:30:00.000Z",
+      "updatedAt": "2026-11-09T23:30:00.000Z",
+      "note": ""
+    }
+  ],
+  "models": [
+    {
+      "schema": "hsi-longitudinal-disease-state-1",
+      "method": "hsi.longitudinal_disease_state.v1",
+      "version": "0.1.0",
+      "id": "hsi-ldsm-mdl-blocked-demo",
+      "displayName": "Blocked longitudinal disease-state model",
+      "diseaseContextId": "hsi-hdi-ctx-blocked-demo",
+      "modellingSpecId": "hsi-ldsm-spec-blocked-demo",
+      "trajectoryReconstructionIds": [],
+      "baselineFollowUpComparisonIds": [],
+      "clinicalEventTimelineIds": [],
+      "organSpecificOutcomeTrendIds": [],
+      "treatmentExposureContextIds": [],
+      "biomarkerTrajectoryIds": [],
+      "missingDataAnalysisIds": [],
+      "diseaseStateTransitionIds": [],
+      "temporalIntegrityCheckIds": [],
+      "modelVersion": "0.1.0",
+      "limitations": [
+        "Blocked awaiting authorised research dataset — not scientific validation.",
+        "Not clinical care; fixtures only."
+      ],
+      "temporalIntegrityStatus": "not_assessed",
+      "datasetAvailability": "blocked_no_authorised_clinical_dataset",
+      "liveTwinOperational": false,
+      "notClinicalCare": true,
+      "graphPromotable": false,
+      "lifecycle": "blocked_awaiting_authorised_dataset",
+      "reviewedBy": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-ldsm",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": false,
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "observedIsNotInferred": true,
+        "observationalTrajectoryIsNotProvenTreatmentEffect": true,
+        "noFutureDataLeakage": true,
+        "temporalRolesMustRemainDistinct": true,
+        "irregularFollowUpMustBeExplicit": true,
+        "uncertaintyPreservedWhenSparse": true,
+        "noInventedContinuousTrajectoryAcrossGaps": true,
+        "noPhiIngestion": true,
+        "noLiveTwinOrMultiscaleClaim": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noFabricatedDiseaseTimelines": true,
+        "noWorkbenchUi": true,
+        "notClinicalCare": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T23:30:00.000Z",
+      "updatedAt": "2026-11-09T23:30:00.000Z",
+      "note": ""
+    },
+    {
+      "schema": "hsi-longitudinal-disease-state-1",
+      "method": "hsi.longitudinal_disease_state.v1",
+      "version": "0.1.0",
+      "id": "hsi-ldsm-mdl-ssc-demo",
+      "displayName": "Fixture longitudinal SSc disease-state model",
+      "diseaseContextId": "hsi-hdi-ctx-ssc-demo",
+      "modellingSpecId": "hsi-ldsm-spec-ssc-demo",
+      "trajectoryReconstructionIds": [
+        "hsi-ldsm-trj-ssc-demo"
+      ],
+      "baselineFollowUpComparisonIds": [
+        "hsi-ldsm-cmp-ssc-demo"
+      ],
+      "clinicalEventTimelineIds": [
+        "hsi-ldsm-evt-ssc-demo"
+      ],
+      "organSpecificOutcomeTrendIds": [
+        "hsi-ldsm-org-lung-demo"
+      ],
+      "treatmentExposureContextIds": [
+        "hsi-ldsm-exp-mmf-demo"
+      ],
+      "biomarkerTrajectoryIds": [
+        "hsi-ldsm-bio-crp-demo"
+      ],
+      "missingDataAnalysisIds": [
+        "hsi-ldsm-mis-ssc-demo"
+      ],
+      "diseaseStateTransitionIds": [
+        "hsi-ldsm-txn-obs-demo",
+        "hsi-ldsm-txn-inf-demo"
+      ],
+      "temporalIntegrityCheckIds": [
+        "hsi-ldsm-tmp-ssc-demo"
+      ],
+      "modelVersion": "0.1.0",
+      "limitations": [
+        "Fixture disease-state model only — not clinical care.",
+        "Observed is not inferred; observational trajectory is not a proven treatment effect.",
+        "No invented continuous trajectories across clinically meaningful gaps."
+      ],
+      "temporalIntegrityStatus": "passed_declared_checks",
+      "datasetAvailability": "fixture_only",
+      "liveTwinOperational": false,
+      "notClinicalCare": true,
+      "graphPromotable": false,
+      "lifecycle": "accepted_with_limitations",
+      "reviewedBy": {
+        "principalId": "fixture-researcher",
+        "actorKind": "human"
+      },
+      "authoredBy": {
+        "principalId": "fixture-agent-ldsm",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "observedIsNotInferred": true,
+        "observationalTrajectoryIsNotProvenTreatmentEffect": true,
+        "noFutureDataLeakage": true,
+        "temporalRolesMustRemainDistinct": true,
+        "irregularFollowUpMustBeExplicit": true,
+        "uncertaintyPreservedWhenSparse": true,
+        "noInventedContinuousTrajectoryAcrossGaps": true,
+        "noPhiIngestion": true,
+        "noLiveTwinOrMultiscaleClaim": true,
+        "noAutonomousDiagnosisOrPrescribing": true,
+        "noFabricatedDiseaseTimelines": true,
+        "noWorkbenchUi": true,
+        "notClinicalCare": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T23:30:00.000Z",
+      "updatedAt": "2026-11-09T23:30:00.000Z",
+      "note": ""
+    }
+  ]
+}
