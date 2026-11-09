@@ -36,7 +36,7 @@ test('public pages load the existing typefaces locally without third-party font 
 
 test('mobile hero leads with the research workbench demonstration',async({page})=>{
  await page.setViewportSize({width:390,height:844});await page.goto('/');
- await expect(page.getByRole('heading',{level:1})).toContainText('See the biology.');
+ await expect(page.getByRole('heading',{level:1})).toContainText('Investigate disease mechanisms');
  await expect(page.locator('#product-demo')).toBeVisible();
  await expect(page.getByRole('tablist',{name:'Research demonstration panels'})).toBeVisible();
  await expect(page.getByRole('heading',{name:/How might immune activation contribute to fibrosis/})).toBeVisible();

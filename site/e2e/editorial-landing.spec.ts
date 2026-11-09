@@ -19,7 +19,7 @@ test('public website excludes fixture promotion and keeps actual product scope',
 test('editorial homepage product demo, keyboard tabs and narrow layouts remain usable',async({page},info)=>{
  for(const width of [320,390,768,1440]){
   await page.setViewportSize({width,height:1000});await page.goto('/');
-  await expect(page.getByRole('heading',{level:1})).toContainText('See the biology.');
+  await expect(page.getByRole('heading',{level:1})).toContainText('Investigate disease mechanisms');
   await expect(page.getByRole('heading',{name:/From question to research decision/})).toBeVisible();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),String(width)).toBe(true);
   if(width===1440)await page.screenshot({path:info.outputPath('editorial-home-desktop.png'),fullPage:true});
