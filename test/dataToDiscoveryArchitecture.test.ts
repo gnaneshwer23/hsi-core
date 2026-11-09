@@ -29,12 +29,11 @@ describe("Data-to-Discovery architecture status registry", () => {
     ]);
   });
 
-  it("labels newly asked biology sources as not connected", () => {
+  it("labels remaining biology sources as not connected (UniProt is metadata-partial)", () => {
     const missingLabels = DATA_TO_DISCOVERY_NODES.filter((node) => node.status === "missing").map(
       (node) => node.label,
     );
     for (const label of [
-      "UniProt",
       "Reactome",
       "Gene Ontology",
       "ChEMBL",
@@ -44,13 +43,17 @@ describe("Data-to-Discovery architecture status registry", () => {
     ]) {
       expect(missingLabels).toContain(label);
     }
+    expect(missingLabels).not.toContain("UniProt");
   });
 
-  it("keeps literature and registry libraries as partially implemented, not live-complete", () => {
-    for (const id of ["epmc", "ot", "ctgov", "dynamic-retrieve"]) {
+  it("keeps literature, registry, and UniProt metadata libraries as partially implemented, not live-complete", () => {
+    for (const id of ["epmc", "ot", "ctgov", "uniprot", "dynamic-retrieve"]) {
       const node = DATA_TO_DISCOVERY_NODES.find((item) => item.id === id);
       expect(node?.status).toBe("partially_implemented");
     }
+    const uniprot = DATA_TO_DISCOVERY_NODES.find((item) => item.id === "uniprot");
+    expect(uniprot?.evidence).toBe("src/evidence/uniprotMetadataLookup.ts");
+    expect(uniprot?.detail.toLowerCase()).toContain("metadata-only");
   });
 
   it("records human-gated blockers without inventing clearance", () => {
@@ -78,7 +81,7 @@ describe("Data-to-Discovery architecture status registry", () => {
     const counts = countByStatus();
     const total = DATA_TO_DISCOVERY_STATUS.reduce((sum, status) => sum + counts[status], 0);
     expect(total).toBe(DATA_TO_DISCOVERY_NODES.length);
-    expect(counts.missing).toBeGreaterThanOrEqual(7);
+    expect(counts.missing).toBeGreaterThanOrEqual(6);
   });
 });
 
