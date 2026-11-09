@@ -17,7 +17,7 @@
     "blockedUntilSignOff": false,
     "docsUrl": "https://github.com/rdkit/rdkit/blob/master/license.txt"
   },
-  "generatedAt": "2026-11-09T08:53:07.193Z",
+  "generatedAt": "2026-11-09T09:23:16.496Z",
   "descriptors": [
     {
       "fixtureId": "mtx",
@@ -59,7 +59,7 @@
         "axis:cheminformatics"
       ],
       "suggestedTeachingStatus": "hypothesized",
-      "createdAt": "2026-11-09T08:53:07.193Z"
+      "createdAt": "2026-11-09T09:23:16.496Z"
     },
     {
       "proposalId": "HSI-MP-RDKIT-BUTYRATE-001",
@@ -77,7 +77,7 @@
         "axis:cheminformatics"
       ],
       "suggestedTeachingStatus": "hypothesized",
-      "createdAt": "2026-11-09T08:53:07.193Z"
+      "createdAt": "2026-11-09T09:23:16.496Z"
     }
   ],
   "instructions": [

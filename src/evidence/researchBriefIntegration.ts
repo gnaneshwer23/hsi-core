@@ -13,6 +13,10 @@ import {
   projectTranslationalContractPersistenceLines,
   type TranslationalEvidenceContractPack,
 } from "./translationalEvidenceContracts";
+import {
+  projectTranslationalFailurePersistenceLines,
+  type TranslationalFailureInvestigationAssessment,
+} from "./translationalFailureTaxonomy";
 
 export const RESEARCH_BRIEF_INTEGRATION_SCHEMA = "hsi-research-brief-integration-1" as const;
 export const RESEARCH_BRIEF_INTEGRATION_METHOD = "hsi.research_brief_integration.v1" as const;
@@ -64,9 +68,12 @@ export type IntegratedResearchBrief = {
     missingResultsIsNotFailure: true;
     /** M4 PR1 optional contract-pack bind. */
     contractLayersBound: number;
+    /** M4 Phase 2 failure-mode investigation labels bound (not conclusions). */
+    failureInvestigationLabelsBound: number;
     recruitmentOrTerminationIsNotClinicalFailure: true;
     absenceOfPublishedEvidenceIsNotAbsenceOfActivity: true;
     proprietaryProgrammesNotInvented: true;
+    causalFailureExplanationsNotFabricated: true;
   } | null;
   candidatesRemainUnapproved: true;
   reviewGatesIntact: true;
@@ -87,6 +94,8 @@ export type IntegrateResearchBriefInput = {
   translational?: TranslationalOutcomeSection | null;
   /** M4 PR1 translational evidence contracts (programme/preclinical/human/clinical). */
   translationalContracts?: TranslationalEvidenceContractPack | null;
+  /** M4 Phase 2 failure-mode investigation taxonomy (labels, not conclusions). */
+  translationalFailureInvestigation?: TranslationalFailureInvestigationAssessment | null;
   releaseAware?: ReleaseAwareRetrievalResult | null;
   /** Optional source locators from retrieval / living evidence. */
   sourceLocators?: readonly {kind: "pmid" | "doi" | "nct"; value: string}[];
@@ -179,6 +188,15 @@ export function integrateResearchBrief(input: IntegrateResearchBriefInput): Inte
           ...projectTranslationalContractPersistenceLines(input.translationalContracts).slice(0, 8),
         ]
       : []),
+    ...(input.translationalFailureInvestigation
+      ? [
+          "M4 failure-mode taxonomy: investigation labels only — not predetermined conclusions; causal failure not fabricated from registry status",
+          ...projectTranslationalFailurePersistenceLines(input.translationalFailureInvestigation).slice(
+            0,
+            10,
+          ),
+        ]
+      : []),
     ...(input.releaseAware
       ? [
           "Release-aware surface keeps draft candidates in a separate labelled channel; assessReleaseClaim remains fail-closed",
@@ -217,6 +235,18 @@ export function integrateResearchBrief(input: IntegrateResearchBriefInput): Inte
       }
     : null;
 
+  if (
+    input.translationalFailureInvestigation &&
+    (input.translationalFailureInvestigation.honesty.categoriesAreInvestigationLabelsNotConclusions !==
+      true ||
+      input.translationalFailureInvestigation.honesty.causalFailureExplanationsNotFabricated !==
+        true ||
+      input.translationalFailureInvestigation.honesty.recruitmentOrTerminationIsNotClinicalFailure !==
+        true)
+  ) {
+    throw new Error("Translational failure investigation refused honesty gates");
+  }
+
   const translationalSummary =
     input.translational && input.translational.status !== "not_queried"
       ? {
@@ -225,9 +255,12 @@ export function integrateResearchBrief(input: IntegrateResearchBriefInput): Inte
           registrationIsNotEfficacy: true as const,
           missingResultsIsNotFailure: true as const,
           contractLayersBound: input.translationalContracts?.contracts.length ?? 0,
+          failureInvestigationLabelsBound:
+            input.translationalFailureInvestigation?.items.length ?? 0,
           recruitmentOrTerminationIsNotClinicalFailure: true as const,
           absenceOfPublishedEvidenceIsNotAbsenceOfActivity: true as const,
           proprietaryProgrammesNotInvented: true as const,
+          causalFailureExplanationsNotFabricated: true as const,
         }
       : null;
 
