@@ -2,51 +2,44 @@ import {useState} from "react";
 import {Link} from "react-router-dom";
 import {ArrowIcon} from "../ArrowIcon";
 
-type DomainStatus="available_and_verified"|"research_preview"|"in_development"|"not_currently_available";
+type DomainStatus="research_preview"|"in_development"|"not_currently_available";
 type Domain={
   id:string;
   label:string;
-  tier:"primary"|"supporting";
   status:DomainStatus;
   blurb:string;
-  to:string;
-  cta:string;
+  action:string;
+  /** Prefer product tools over manifesto landings; omit when the panel is enough. */
+  to?:string;
+  cta?:string;
 };
 
 const STATUS_LABEL:Record<DomainStatus,string>={
-  available_and_verified:"Available and verified",
   research_preview:"Research preview",
   in_development:"In development",
   not_currently_available:"Not currently available",
 };
 
+/** Primary domains only — supporting topics stay in the product architecture section to avoid bounce through similar pages. */
 const DOMAINS:Domain[]=[
-  {id:"biology",label:"Biology",tier:"primary",status:"research_preview",blurb:"Cells, tissues, pathways and molecular signals — inspect relationships before treating a path as a mechanism.",to:"/science",cta:"Explore biology"},
-  {id:"evidence",label:"Evidence",tier:"primary",status:"research_preview",blurb:"Source-linked claims, supporting and conflicting findings, context and review status — not a confidence score.",to:"/evidence-safety",cta:"Explore evidence intelligence"},
-  {id:"clinical",label:"Clinical context",tier:"primary",status:"research_preview",blurb:"Research and education context for clinical questions. Not patient-specific advice or live care connectivity.",to:"/research",cta:"Research at HSI"},
-  {id:"trials",label:"Trials",tier:"primary",status:"not_currently_available",blurb:"Therapeutic and registered-study context is planned. No live matching, eligibility confirmation or enrolment.",to:"/for-trials",cta:"Read HSI Trials scope"},
-  {id:"health",label:"Health",tier:"supporting",status:"research_preview",blurb:"Personal health context lives in separately governed Aksh experiences — not inside HSI research writes.",to:"/for-aksh",cta:"Aksh Health"},
-  {id:"immunity",label:"Immunity",tier:"supporting",status:"research_preview",blurb:"Immune biology and ISI research surfaces share technology while keeping product boundaries.",to:"/for-isi",cta:"ISI research"},
-  {id:"microbiome",label:"Microbiome",tier:"supporting",status:"research_preview",blurb:"Gut–immune and metabolic candidates appear in the knowledge graph with model and gap labels.",to:"/research/knowledge-graph",cta:"Open knowledge graph"},
-  {id:"omics",label:"Omics",tier:"supporting",status:"in_development",blurb:"Omics connectors remain developmental. No live multi-omics product surface is claimed here.",to:"/technology",cta:"Technology overview"},
+  {id:"biology",label:"Biology",status:"research_preview",blurb:"Cells, tissues, pathways and molecular signals. Inspect relationships before treating a path as a mechanism.",action:"Stay on this page to read the mechanism map, or open the biology graph tool.",to:"/science/graph",cta:"Open biology graph"},
+  {id:"evidence",label:"Evidence",status:"research_preview",blurb:"Source-linked claims, supporting and conflicting findings, context and review status — not a confidence score.",action:"The demonstration above shows illustrative evidence states. Deepen with the evidence approach page when ready.",to:"/evidence-safety",cta:"Explore Evidence Intelligence"},
+  {id:"clinical",label:"Clinical context",status:"research_preview",blurb:"Research and education context for clinical questions. Not patient-specific advice or live care connectivity.",action:"Clinical context is explained in Research — it does not open a care record or EHR.",to:"/research",cta:"Open Research overview"},
+  {id:"trials",label:"Trials",status:"not_currently_available",blurb:"Therapeutic and registered-study context is planned. No live matching, eligibility confirmation or enrolment.",action:"Read the Trials scope page for honesty labels — capability is not live.",to:"/for-trials",cta:"Read Trials scope"},
 ];
 
 export function HomeEcosystem(){
   const [active,setActive]=useState("biology");
   const domain=DOMAINS.find(d=>d.id===active)??DOMAINS[0]!;
-  const primary=DOMAINS.filter(d=>d.tier==="primary");
-  const supporting=DOMAINS.filter(d=>d.tier==="supporting");
   return <section className="ed-ecosystem-map" aria-labelledby="ecosystem-heading">
     <div className="ed-ecosystem-copy">
-      <p className="ed-kicker">HSI CONNECTED RESEARCH ECOSYSTEM</p>
-      <h2 id="ecosystem-heading">One instrument.<br/><em>Many research contexts.</em></h2>
-      <p>Select a domain to see what HSI can open today. Status comes from the public capability register — a rendered panel is not proof of a live backend.</p>
+      <p className="ed-kicker">EXPLORE A RESEARCH DOMAIN</p>
+      <h2 id="ecosystem-heading">Pick a lens.<br/><em>Stay with the same investigation.</em></h2>
+      <p>Domain buttons update this page first. They do not invent live clinical connectivity. Optional links go to a distinct product tool or honesty page — not another copy of the homepage manifesto.</p>
     </div>
-    <div className="ed-ecosystem-board">
+    <div className="ed-ecosystem-board ed-ecosystem-board-simple">
       <div className="ed-ecosystem-desktop" aria-label="Research domains">
-        <div className="ed-ecosystem-row">{primary.map(d=><button key={d.id} type="button" className="ed-ecosystem-domain" aria-pressed={active===d.id} onClick={()=>setActive(d.id)}><strong>{d.label}</strong><small>{STATUS_LABEL[d.status]}</small></button>)}</div>
-        <p className="ed-ecosystem-hub" aria-hidden="true">HSI knowledge graph</p>
-        <div className="ed-ecosystem-row">{supporting.map(d=><button key={d.id} type="button" className="ed-ecosystem-domain" aria-pressed={active===d.id} onClick={()=>setActive(d.id)}><strong>{d.label}</strong><small>{STATUS_LABEL[d.status]}</small></button>)}</div>
+        <div className="ed-ecosystem-row ed-ecosystem-row-4">{DOMAINS.map(d=><button key={d.id} type="button" className="ed-ecosystem-domain" aria-pressed={active===d.id} onClick={()=>setActive(d.id)}><strong>{d.label}</strong><small>{STATUS_LABEL[d.status]}</small></button>)}</div>
       </div>
       <div className="ed-ecosystem-mobile" aria-label="Explore HSI domains">
         {DOMAINS.map(d=><button key={d.id} type="button" className="ed-ecosystem-domain" aria-pressed={active===d.id} onClick={()=>setActive(d.id)}><strong>{d.label}</strong><span>{d.blurb}</span><small>{STATUS_LABEL[d.status]}</small></button>)}
@@ -56,7 +49,11 @@ export function HomeEcosystem(){
         <p className="ed-status-chip" data-status={domain.status}>{STATUS_LABEL[domain.status]}</p>
         <h3>{domain.label}</h3>
         <p>{domain.blurb}</p>
-        <Link className="ed-button" to={domain.to}>{domain.cta} <span aria-hidden="true"><ArrowIcon/></span></Link>
+        <p className="ed-scope-line">{domain.action}</p>
+        <div className="ed-actions">
+          <a className="ed-text-link" href="#product-demo">View demonstration on this page <span aria-hidden="true"><ArrowIcon direction="right"/></span></a>
+          {domain.to&&domain.cta?<Link className="ed-button" to={domain.to}>{domain.cta} <span aria-hidden="true"><ArrowIcon/></span></Link>:null}
+        </div>
       </article>
     </div>
   </section>;

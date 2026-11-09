@@ -9,6 +9,11 @@ const PRODUCT_LINKS = [
   { to: "/for-trials", label: "HSI Trials" },
 ] as const;
 
+const RESEARCH_LINKS = [
+  { to: "/evidence-safety", label: "Evidence & safety" },
+  { to: "/contact", label: "Research access" },
+] as const;
+
 const INFORMATION_LINKS = [
   { to: "/technology", label: "Technology" },
   { to: "/evidence-safety", label: "Evidence & safety" },
@@ -36,8 +41,7 @@ export function Footer() {
       <span>© {new Date().getFullYear()} {PRODUCT_NAME}</span>
       <span className="footer-scope">Research use · Human oversight</span>
       <nav aria-label="Research information">
-        <Link to="/evidence-safety">Evidence &amp; safety</Link>
-        <Link to="/contact">Research access</Link>
+        {RESEARCH_LINKS.map(l=><Link key={l.to} to={l.to}>{l.label}</Link>)}
       </nav>
     </div>
   </footer>;

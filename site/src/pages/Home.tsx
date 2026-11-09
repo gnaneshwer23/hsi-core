@@ -1,10 +1,25 @@
 import {ArrowIcon} from "../components/ArrowIcon";
 import {Link} from "react-router-dom";
-import {BiologyArtwork,EditorialCTA} from "../components/editorial/Editorial";
+import {EditorialCTA} from "../components/editorial/Editorial";
 import {HomeEcosystem} from "../components/editorial/HomeEcosystem";
-import {HomeWorkbench} from "../components/editorial/HomeWorkbench";
-import {HomeKnowledgeGraph} from "../components/editorial/HomeKnowledgeGraph";
-import {PUBLIC_PLATFORM_CTA,PUBLIC_PRIMARY_CTA,PUBLIC_SECONDARY_CTA} from "../lib/ctaPolicy";
+import {HomeHeroPreview} from "../components/editorial/HomeHeroPreview";
+import {HomeProductDemo} from "../components/editorial/HomeProductDemo";
+import {PUBLIC_PRIMARY_CTA,PUBLIC_SECONDARY_CTA} from "../lib/ctaPolicy";
+
+const AVAILABLE_TODAY=[
+  "Explore biological relationships in curated graphs",
+  "Review source-linked evidence states with context labels",
+  "Compare supporting and conflicting candidates in demos",
+  "Identify named research gaps in illustrative briefs",
+  "Assemble traceable research-brief structure for review",
+];
+
+const UNDER_DEVELOPMENT=[
+  "Broader biological coverage across tissues and systems",
+  "Expanded therapeutic and trial intelligence",
+  "Collaborative research workflows with shared briefs",
+  "Live clinical-data integrations (not authorised today)",
+];
 
 const DOES_NOT=[
   "Diagnose disease",
@@ -19,31 +34,35 @@ const DOES_NOT=[
 
 export function Home(){
   return <div className="ed-home">
-    <header className="ed-home-hero">
+    <header className="ed-home-hero ed-home-hero-product">
       <div className="ed-hero-copy">
-        <p className="ed-kicker">CONNECTED BIOMEDICAL INTELLIGENCE</p>
-        <h1>Investigate disease mechanisms<br/><em>with evidence you can trace.</em></h1>
-        <p className="ed-lead">Explore biological relationships, examine supporting and conflicting evidence, identify research gaps, and develop the next scientific question.</p>
+        <p className="ed-kicker">HUMAN SUPER INTELLIGENCE</p>
+        <h1>See the biology.<br/><em>Question the evidence.</em></h1>
+        <p className="ed-lead">Investigate disease mechanisms, examine conflicting evidence, and identify what deserves research next.</p>
         <div className="ed-actions">
           <Link className="ed-button" to={PUBLIC_PRIMARY_CTA.to}>{PUBLIC_PRIMARY_CTA.label} <span aria-hidden="true"><ArrowIcon/></span></Link>
           <Link className="ed-text-link" to={PUBLIC_SECONDARY_CTA.to}>{PUBLIC_SECONDARY_CTA.label} <span aria-hidden="true"><ArrowIcon direction="right"/></span></Link>
         </div>
-        <p className="ed-hero-note">Built for researchers. Grounded in evidence. Reviewed by people. The anatomical figure is supporting context — the product is the research workflow.</p>
+        <p className="ed-hero-note">Built for researchers. Grounded in evidence. Reviewed by people.</p>
       </div>
-      <BiologyArtwork/>
+      <HomeHeroPreview/>
     </header>
 
-    <HomeWorkbench/>
+    <HomeProductDemo/>
     <HomeEcosystem/>
-    <HomeKnowledgeGraph/>
 
     <section className="ed-intro ed-today" aria-labelledby="today-heading">
       <p className="ed-kicker">WHAT HSI DOES TODAY</p>
-      <h2 id="today-heading">A research instrument.<br/><em>Not a regenerative-medicine brochure.</em></h2>
-      <div>
-        <p>HSI helps researchers move from a biological question to an inspectable brief: mechanism context, source-linked candidates, contradictions, gaps and human review requirements.</p>
-        <p>Authenticated workspace writes remain gated. Public pages show truthful capability status and clearly labelled illustrative demonstrations.</p>
-        <Link className="ed-text-link" to={PUBLIC_PLATFORM_CTA.to}>{PUBLIC_PLATFORM_CTA.label} <span aria-hidden="true"><ArrowIcon direction="right"/></span></Link>
+      <h2 id="today-heading">Available capabilities.<br/><em>Honest development status.</em></h2>
+      <div className="ed-today-columns">
+        <div>
+          <h3>Available today</h3>
+          <ul>{AVAILABLE_TODAY.map(item=><li key={item}>{item}</li>)}</ul>
+        </div>
+        <div>
+          <h3>Under development</h3>
+          <ul>{UNDER_DEVELOPMENT.map(item=><li key={item}>{item}</li>)}</ul>
+        </div>
       </div>
     </section>
 
@@ -54,13 +73,14 @@ export function Home(){
         <p>Ambition without these limits would not be credible. Keeping them visible is part of the product.</p>
       </div>
       <ul>{DOES_NOT.map(item=><li key={item}>{item}</li>)}</ul>
-      <Link className="ed-text-link" to="/evidence-safety">Evidence &amp; safety <span aria-hidden="true"><ArrowIcon direction="right"/></span></Link>
+      <Link className="ed-text-link" to="/evidence-safety">Explore Evidence Intelligence <span aria-hidden="true"><ArrowIcon direction="right"/></span></Link>
     </section>
 
-    <section className="ed-ecosystem">
+    <section className="ed-ecosystem" aria-labelledby="foundation-heading">
       <div>
-        <p className="ed-kicker">ONE FOUNDATION. DISTINCT EXPERIENCES.</p>
-        <h2>Start with the work<br/>you need to do.</h2>
+        <p className="ed-kicker">ONE RESEARCH FOUNDATION</p>
+        <h2 id="foundation-heading">Three ways to investigate.<br/><em>Not three competing products.</em></h2>
+        <p className="ed-foundation-note">Entry points share technology while keeping governance and audience boundaries clear.</p>
       </div>
       <div className="ed-product-rows">
         <Link to="/for-aksh"><span>PERSONAL HEALTH CONTEXT</span><h3>Aksh Health</h3><p>Everyday health context within its own care and data setting.</p><b aria-hidden="true"><ArrowIcon/></b></Link>
