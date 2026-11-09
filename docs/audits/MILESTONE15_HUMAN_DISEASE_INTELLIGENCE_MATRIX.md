@@ -140,7 +140,7 @@ Honesty freeze: research decision support only · **not a separate digital twin 
 | Phase | Capability | Existing | Status | Missing | Files |
 |-------|------------|----------|--------|---------|-------|
 | **0** Audit + data protection + validity | This document + M1–M14 deps | — | `Verified operational` (audit) | Keep updated | this file |
-| **1** Integrated disease intelligence contracts | M14 RWE/LCE/cohort ids · CDS boundary · M9/M12/M13 hooks | **PR1 in-flight** — 7 focused tests + evaluation pack · disease research context · observed state · inferred estimate · digital patient research model · research simulation scenario + thin store · `Fixture-only` / scientific path `Blocked` | Live digital patient validation · personalised Tx effects · workbench UI | `src/humanDiseaseIntelligenceContracts.ts` · `test/humanDiseaseIntelligenceContracts.test.ts` · `scripts/human-disease-intelligence-contracts.ts` · `evaluation/human-disease-intelligence/` |
+| **1** Integrated disease intelligence contracts | M14 RWE/LCE/cohort ids · CDS boundary · M9/M12/M13 hooks | **PR1 in-flight** ([#116](https://github.com/gnaneshwer23/hsi-core/pull/116)) — 7 focused tests + evaluation pack · disease research context · observed state · inferred estimate · digital patient research model · research simulation scenario + thin store · `Fixture-only` / scientific path `Blocked` | Live digital patient validation · personalised Tx effects · workbench UI | `src/humanDiseaseIntelligenceContracts.ts` · `test/humanDiseaseIntelligenceContracts.test.ts` · `scripts/human-disease-intelligence-contracts.ts` · `evaluation/human-disease-intelligence/` |
 | **2** Clinical and biological context integration | M2 contradiction · M5 biomarker · M14 longitudinal | `Missing` | Integrated clinical↔biology disease context without PHI promotion | later PR2 |
 | **3** Pathway / mechanism disease models | M12 / literature KG | `Missing` | Mechanism envelopes — not twin product | later PR3 |
 | **4** Digital patient construction engine | PR1 model contracts | `Missing` | Construction from authorised data only | later PR4 |
@@ -238,7 +238,7 @@ Honesty freeze: research decision support only · **not a separate digital twin 
 
 | PR | Title | Branch | State |
 |----|-------|--------|-------|
-| (this PR) | M15 PR1 Integrated Disease Intelligence Contracts | `eng/m15-disease-intelligence-contracts` | **PR1 in-flight** — open for review; **do not auto-merge** |
+| [#116](https://github.com/gnaneshwer23/hsi-core/pull/116) | M15 PR1 Integrated Disease Intelligence Contracts | `eng/m15-disease-intelligence-contracts` | **PR1 in-flight** — 7 focused tests + evaluation pack; open for review; **do not auto-merge** |
 | [#115](https://github.com/gnaneshwer23/hsi-core/pull/115) | M14 PR4 Reproducible Cohort Builder | merged → `02cf969` | Substrate |
 | [#114](https://github.com/gnaneshwer23/hsi-core/pull/114) | M14 PR3 Longitudinal Clinical Evidence Model | merged → `64dae29` | Substrate |
 | [#113](https://github.com/gnaneshwer23/hsi-core/pull/113) | M14 PR2 Secure Clinical Data Interoperability | merged → `33843eb` | Substrate |
