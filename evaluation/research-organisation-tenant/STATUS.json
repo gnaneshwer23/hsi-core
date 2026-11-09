@@ -1,0 +1,37 @@
+{
+  "schema": "hsi-research-organisation-tenant-1",
+  "method": "hsi.research_organisation_tenant.v1",
+  "version": "0.1.0",
+  "asOf": "2026-11-09T12:00:00.000Z",
+  "organisationCount": 1,
+  "migration": "deferred",
+  "neon": "red-wave-only",
+  "honesty": {
+    "federationDoesNotImplyCentralOwnership": true,
+    "institutionalDataRemainsTenantScoped": true,
+    "aiCannotActAsIndependentHumanReviewer": true,
+    "patientLevelFederatedRetrieval": false,
+    "realInstitutionalPartnershipClaimed": false,
+    "gateCAutoApprove": false,
+    "mouInvented": false,
+    "phiCdsWired": false,
+    "socialNetworkProduct": false,
+    "separateApp": false,
+    "newGraphDb": false,
+    "neonProjectPolicy": "red-wave-only"
+  },
+  "persistenceLines": [
+    "schema=hsi-research-organisation-tenant-1",
+    "method=hsi.research_organisation_tenant.v1",
+    "version=0.1.0",
+    "orgId=hsi-org-fixture-demo",
+    "lifecycle=draft",
+    "members=2",
+    "teams=1",
+    "federationCentralOwnership=false",
+    "aiIndependentReviewer=false",
+    "patientFederatedRetrieval=false",
+    "neon=red-wave-only",
+    "migration=deferred"
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "schema": "hsi-research-organisation-tenant-1",
+  "method": "hsi.research_organisation_tenant.v1",
+  "version": "0.1.0",
+  "asOf": "2026-11-09T12:00:00.000Z",
+  "organisationCount": 1,
+  "honesty": {
+    "federationDoesNotImplyCentralOwnership": true,
+    "institutionalDataRemainsTenantScoped": true,
+    "aiCannotActAsIndependentHumanReviewer": true,
+    "patientLevelFederatedRetrieval": false,
+    "realInstitutionalPartnershipClaimed": false,
+    "gateCAutoApprove": false,
+    "mouInvented": false,
+    "phiCdsWired": false,
+    "socialNetworkProduct": false,
+    "separateApp": false,
+    "newGraphDb": false,
+    "neonProjectPolicy": "red-wave-only"
+  },
+  "organisations": [
+    {
+      "schema": "hsi-research-organisation-tenant-1",
+      "method": "hsi.research_organisation_tenant.v1",
+      "version": "0.1.0",
+      "id": "hsi-org-fixture-demo",
+      "name": "HSI Fixture Research Org",
+      "type": "independent_lab",
+      "verifiedDomainConfig": {
+        "domains": [
+          "fixture.example.invalid"
+        ],
+        "verificationStatus": "placeholder_unverified",
+        "liveDnsProofPresent": false,
+        "mouInvented": false
+      },
+      "membership": [
+        {
+          "membershipId": "hsi-org-member-fixture-admin",
+          "orgId": "hsi-org-fixture-demo",
+          "principalId": "fixture-principal-admin",
+          "actorKind": "human",
+          "roles": [
+            "org_admin"
+          ],
+          "teamIds": [],
+          "active": true,
+          "grantedAt": "2026-11-09T12:00:00.000Z",
+          "revokedAt": null
+        },
+        {
+          "membershipId": "hsi-org-member-fixture-reviewer",
+          "orgId": "hsi-org-fixture-demo",
+          "principalId": "fixture-principal-reviewer",
+          "actorKind": "human",
+          "roles": [
+            "independent_reviewer"
+          ],
+          "teamIds": [],
+          "active": true,
+          "grantedAt": "2026-11-09T12:00:00.000Z",
+          "revokedAt": null
+        }
+      ],
+      "teams": [
+        {
+          "teamId": "hsi-team-fixture",
+          "orgId": "hsi-org-fixture-demo",
+          "name": "Fixture team",
+          "memberPrincipalIds": [
+            "fixture-principal-admin"
+          ]
+        }
+      ],
+      "governanceContacts": [],
+      "dataSharingPolicyRefs": [
+        {
+          "policyId": "dsp-fixture-public",
+          "legalBinding": false,
+          "summary": "Fixture policy — not a live MoU"
+        }
+      ],
+      "approvedIntegrations": [
+        {
+          "integrationId": "fixture-public-adapter",
+          "kind": "public_biomedical_adapter",
+          "realInstitutionalPartnershipClaimed": false
+        }
+      ],
+      "auditSettings": {
+        "retainMembershipChanges": true,
+        "retainCrossTenantDenials": true,
+        "patientLevelFederatedRetrieval": false
+      },
+      "lifecycle": "draft",
+      "createdAt": "2026-11-09T12:00:00.000Z",
+      "updatedAt": "2026-11-09T12:00:00.000Z",
+      "honesty": {
+        "federationDoesNotImplyCentralOwnership": true,
+        "institutionalDataRemainsTenantScoped": true,
+        "aiCannotActAsIndependentHumanReviewer": true,
+        "patientLevelFederatedRetrieval": false,
+        "realInstitutionalPartnershipClaimed": false,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "socialNetworkProduct": false,
+        "separateApp": false,
+        "newGraphDb": false,
+        "neonProjectPolicy": "red-wave-only"
+      }
+    }
+  ]
+}
