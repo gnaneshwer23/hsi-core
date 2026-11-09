@@ -237,6 +237,8 @@
     "hdi:population-cohort-disease-models:check": "bun --no-env-file scripts/population-cohort-disease-models-contracts.ts --check",
     "hdi:patient-contextualised-research-models:prepare": "bun --no-env-file scripts/patient-contextualised-research-models-contracts.ts",
     "hdi:patient-contextualised-research-models:check": "bun --no-env-file scripts/patient-contextualised-research-models-contracts.ts --check",
+    "hsi:human-systems:prepare": "bun --no-env-file scripts/human-systems-intelligence-contracts.ts",
+    "hsi:human-systems:check": "bun --no-env-file scripts/human-systems-intelligence-contracts.ts --check",
     "gap-verification:expand": "bun --no-env-file scripts/gap-verification-check.ts",
     "gap-verification:check": "bun --no-env-file scripts/gap-verification-check.ts --check",
     "fixture:synthetic-e2e:check": "bun --no-env-file scripts/check-synthetic-e2e-fixture.ts",
