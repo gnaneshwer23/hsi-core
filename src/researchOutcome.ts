@@ -20,6 +20,7 @@ import {
   integrateResearchBrief,
   type IntegratedResearchBrief,
 } from "./evidence/researchBriefIntegration";
+import type {ContradictionInvestigationAssessment} from "./evidence/structuredEvidenceComparison";
 export const RESEARCH_OUTCOME_VERSION="hsi-research-outcome-1" as const;
 export const RESEARCH_OUTCOME_METHOD="hsi-bound-outcome-projection-1" as const;
 export type Digest=(text:string)=>Promise<string>;
@@ -29,6 +30,8 @@ export type ResearchOutcomeOptions={
   translationalLandscape?:TranslationalLandscapeSnapshot|null;
   /** Optional pre-built integrated brief; otherwise composed when translational is bound. */
   researchBrief?:IntegratedResearchBrief|null;
+  /** M2 deepen — thin O-02 hook for structured contradiction investigation categories. */
+  contradictionInvestigation?:ContradictionInvestigationAssessment|null;
 };
 const unique=<T>(values:readonly T[])=>[...new Set(values)];
 function exact(value:unknown,keys:string[]){if(!value||typeof value!=="object"||Array.isArray(value)||Object.keys(value).sort().join(",")!==[...keys].sort().join(","))throw Error("Invalid research outcome input fields")}
@@ -69,7 +72,11 @@ function projectResearchOutcome(brief:EvidenceBrief,options:ResearchOutcomeOptio
  const externalSearch=livingEvidence.status==="bound_metadata_refresh"
   ?{id:"external_search" as const,status:"living_evidence_metadata_bound" as const,detail:"Europe PMC / Open Targets / registry identity metadata bound for overlapping pins. Passage import remains fail-closed; not an exhaustive literature search."}
   :{id:"external_search" as const,status:"not_recorded" as const,detail:"This contract has no complete external literature or contradiction-search audit. Living evidence expansion may be available as a programme snapshot when source PMIDs overlap pins."};
- const contradictions={recordedOpposingClaimIds:opposingClaimIds,searchStatus:"not_recorded" as const,consensusEstablished:false,note:opposingClaimIds.length?"Recorded opposing references require context-specific expert interpretation. Their presence is not an exhaustive contradiction search.":"No opposing traces are recorded in this saved investigation. This does not establish that no contradictory evidence exists."};
+ const investigation=options.contradictionInvestigation??null;
+ const investigationNote=investigation
+  ?` Structured contradiction investigation attached (${investigation.items.length} categor${investigation.items.length===1?"y":"ies"}; predeterminedConclusions=false; not LLM-verified).`
+  :"";
+ const contradictions={recordedOpposingClaimIds:opposingClaimIds,searchStatus:"not_recorded" as const,consensusEstablished:false,note:(opposingClaimIds.length?"Recorded opposing references require context-specific expert interpretation. Their presence is not an exhaustive contradiction search.":"No opposing traces are recorded in this saved investigation. This does not establish that no contradictory evidence exists.")+investigationNote,investigationCategories:investigation?unique(investigation.items.map(i=>i.category)):[],structuredComparisonIds:investigation?unique(investigation.items.map(i=>i.comparisonId)):[],predeterminedConclusions:false as const,scientificallyVerified:false as const};
  const gapVerification:GapVerificationOutcomeSection=projectGapVerificationForOutcome({
   asOf:livingEvidence.asOf??p.context.capturedAt,
   branches,
@@ -77,6 +84,7 @@ function projectResearchOutcome(brief:EvidenceBrief,options:ResearchOutcomeOptio
   localSourcePmids:b.sources.map(s=>s.pmid),
   contradictions,
   livingEvidence,
+  contradictionInvestigation:investigation,
  });
  const trials=projectTrialsSection(options.translationalLandscape);
  const researchBrief=projectResearchBriefSection({
@@ -155,7 +163,7 @@ export function renderResearchOutcome(outcome:ResearchOutcome,format:"json"|"mar
  for(const c of o.evidence){lines.push("### "+md(c.claimId),"",md(c.statement),`Source review: ${c.sourceHumanReview.status}; decision ${md(c.sourceHumanReview.decisionId)}`,`Context: ${md(JSON.stringify(c.context))}`,`Supporting branches: ${c.supportingBranchIds.map(md).join(", ")||"none assigned"}; opposing branches: ${c.opposingBranchIds.map(md).join(", ")||"none assigned"}`);
   for(const id of c.passageIds){const p=o.passages.find(p=>p.id===id)!,s=o.sources.find(s=>s.id===p.sourceId)!;lines.push("",md(s.title),`PMID: ${s.pmid??"not recorded"}; DOI: ${md(s.doi??"not recorded")}`,`Source URL: ${md(s.url??"not recorded")}`,`Source version: ${md(p.sourceVersion)}; locator: ${md(p.locator)}`,`Passage SHA-256: ${p.sha256}`,"> "+md(p.text));}
  }
- lines.push("","## Conflicting evidence","",md(o.contradictions.note),...o.contradictions.recordedOpposingClaimIds.map(id=>"- "+md(id)),"","## Missing data","",...o.missingData.map(s=>"- "+md(s)),"","## Gap verification (step 04)","",`Status: ${o.gapVerification.status}`,md(o.gapVerification.note),`SME gold filled: ${o.gapVerification.honesty.smeGoldFilled}; scientifically validated: ${o.gapVerification.honesty.scientificallyValidated}.`,...o.gapVerification.items.map(g=>`- [${g.kind}] ${md(g.recordedText)} — ${md(g.rationale)}`),...o.gapVerification.unavailableCapabilities.map(s=>`- Unavailable: ${md(s)}`),"","## Investigation question tree","",...o.decisionTree.questions.map(q=>"  ".repeat(q.depth)+"- "+md(q.text)+` (${q.status}; ${q.purpose})`),"","## Candidate hypotheses and falsification","");
+ lines.push("","## Conflicting evidence","",md(o.contradictions.note),...o.contradictions.recordedOpposingClaimIds.map(id=>"- "+md(id)),...(o.contradictions.investigationCategories??[]).map(c=>`- investigation_category: ${md(c)}`),"","## Missing data","",...o.missingData.map(s=>"- "+md(s)),"","## Gap verification (step 04)","",`Status: ${o.gapVerification.status}`,md(o.gapVerification.note),`SME gold filled: ${o.gapVerification.honesty.smeGoldFilled}; scientifically validated: ${o.gapVerification.honesty.scientificallyValidated}.`,...o.gapVerification.items.map(g=>`- [${g.kind}] ${md(g.recordedText)} — ${md(g.rationale)}`),...o.gapVerification.unavailableCapabilities.map(s=>`- Unavailable: ${md(s)}`),"","## Investigation question tree","",...o.decisionTree.questions.map(q=>"  ".repeat(q.depth)+"- "+md(q.text)+` (${q.status}; ${q.purpose})`),"","## Candidate hypotheses and falsification","");
  for(const b of o.hypotheses)lines.push("### "+md(b.statement),`Assessment: ${b.assessment}; classification: ${b.classification}`,md(b.falsificationCriteria),"Predicted observation, experiment and controls: not specified in the saved record.",...b.uncertainty.map(s=>"- "+md(s)));
  lines.push("","## Next research work","",...o.nextResearchSteps.map(s=>"- "+md(s.action)+" "+md(s.falsificationQuestion)),"","## Living evidence metadata (step 03)","",`Status: ${o.livingEvidence.status}`,md(o.livingEvidence.note),...o.livingEvidence.bibliographic.map(r=>`- ${md(r.title)} · PMID ${r.pmid??"n/a"} · ${md(r.url)}`),...o.livingEvidence.unavailableCapabilities.map(s=>`- Unavailable: ${md(s)}`),"","## Clinical-trial / translational context (O-04)","",md(o.trials.note),`Status: ${o.trials.status}; eligibility assessed: ${o.trials.eligibilityAssessed}.`);
  if(o.trials.status!=="not_queried"){

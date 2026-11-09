@@ -16,6 +16,7 @@ import {
   projectOpposingSearchCoverageForGap,
   type OpposingEvidenceSearchReport,
 } from "./opposingEvidenceSearch";
+import type {ContradictionInvestigationAssessment} from "./structuredEvidenceComparison";
 
 export const GAP_VERIFICATION_SCHEMA = "hsi-gap-verification-1" as const;
 export const GAP_VERIFICATION_METHOD = "hsi-deterministic-gap-classification-1" as const;
@@ -106,6 +107,9 @@ export type GapVerificationItem = {
     openTargetsDiseaseIds: string[];
     localSourcePmids: string[];
     opposingSearchStatus: string | null;
+    /** Investigation categories from structured comparison — not conclusions. */
+    contradictionInvestigationCategories: readonly string[];
+    structuredComparisonIds: readonly string[];
   };
   expertLabelStatus: "unavailable" | "recorded";
   scientificallyValidated: false;
@@ -174,6 +178,8 @@ export type GapVerificationInput = {
   livingEvidence: LivingEvidenceOutcomeSection;
   /** Optional PR 6 opposing-evidence search receipt. */
   opposingSearch?: OpposingEvidenceSearchReport | null;
+  /** Optional M2 structured contradiction investigation (categories ≠ conclusions). */
+  contradictionInvestigation?: ContradictionInvestigationAssessment | null;
   /** Optional semantic supports keyed by recorded gap text or gap id. */
   semanticSupports?: readonly {
     matchText?: string;
@@ -404,6 +410,7 @@ function classifyGap(input: {
   livingEvidence: LivingEvidenceOutcomeSection;
   localSourcePmids: readonly string[];
   opposingSearch: OpposingEvidenceSearchReport | null | undefined;
+  contradictionInvestigation: ContradictionInvestigationAssessment | null | undefined;
   searchCompleteness: SearchCompletenessAssessment;
 }): {kind: GapKind; rationale: string} {
   const text = input.text;
@@ -411,6 +418,7 @@ function classifyGap(input: {
   const opposing = input.branch?.opposingClaimIds ?? [];
   const livingBound = input.livingEvidence.status === "bound_metadata_refresh";
   const livingPmids = input.livingEvidence.matchedPmids;
+  const investigation = input.contradictionInvestigation ?? input.opposingSearch?.contradictionInvestigation;
   const passageBlocked =
     livingBound &&
     (input.livingEvidence.licensing?.humanCleared === false ||
@@ -441,6 +449,30 @@ function classifyGap(input: {
   }
 
   if (/contradictor|opposing|null findings|contradictory findings/i.test(text)) {
+    const conflictCandidates =
+      investigation?.items.filter((i) => i.category === "genuine_conflict_candidate") ?? [];
+    const insufficientOnly =
+      investigation != null &&
+      investigation.items.length > 0 &&
+      investigation.items.every(
+        (i) =>
+          i.category === "insufficient_evidence_to_adjudicate" ||
+          i.category === "insufficient_comparability",
+      );
+    if (conflictCandidates.length > 0) {
+      return {
+        kind: "contradictory_findings",
+        rationale:
+          `Structured comparison recorded ${conflictCandidates.length} genuine_conflict_candidate investigation categor${conflictCandidates.length === 1 ? "y" : "ies"} (not predetermined conclusions; not LLM-verified). Expert adjudication required (#4 PARKED). Scientific-gap status remains not_verified.`,
+      };
+    }
+    if (insufficientOnly) {
+      return {
+        kind: "insufficient_evidence",
+        rationale:
+          "Structured comparison found only insufficient_evidence / insufficient_comparability bins. Explanations are not verified by LLM rationale alone — explicit insufficient evidence for contradiction adjudication.",
+      };
+    }
     if (opposing.length > 0 || input.contradictions.recordedOpposingClaimIds.length > 0) {
       return {
         kind: "contradictory_findings",
@@ -593,6 +625,8 @@ export function verifyRecordedGaps(input: GapVerificationInput): GapVerification
         contradictions: input.contradictions,
         text: recordedText,
       });
+      const investigation =
+        input.contradictionInvestigation ?? input.opposingSearch?.contradictionInvestigation ?? null;
       const {kind, rationale} = classifyGap({
         text: recordedText,
         branch,
@@ -601,29 +635,47 @@ export function verifyRecordedGaps(input: GapVerificationInput): GapVerification
         livingEvidence: input.livingEvidence,
         localSourcePmids,
         opposingSearch: input.opposingSearch,
+        contradictionInvestigation: investigation,
         searchCompleteness,
       });
       const scientificNovelty = assessScientificNovelty(searchCompleteness, kind);
       const semanticMatch = (input.semanticSupports ?? []).find(
         (s) => s.gapId === id || (s.matchText && s.matchText === recordedText),
       );
-      const semanticSupport = buildSemanticSupport({
-        supportingPassage: semanticMatch?.supportingPassage,
-        reasoningRecord: semanticMatch?.reasoningRecord,
-        passageRef: semanticMatch?.passageRef,
-      });
+      // Counterevidence / uncertainty: when structured contradiction investigation is
+      // attached, explanations are not accepted from LLM rationale alone — require a
+      // supporting passage for semantic analysis. Prior behaviour (reasoning record
+      // without an investigation bind) remains for engineering classification only.
+      const llmOnlyWithInvestigation =
+        investigation != null &&
+        Boolean(semanticMatch?.reasoningRecord?.trim()) &&
+        !semanticMatch?.supportingPassage?.trim();
+      const semanticSupport = llmOnlyWithInvestigation
+        ? buildSemanticSupport({
+            supportingPassage: null,
+            reasoningRecord: null,
+            passageRef: null,
+          })
+        : buildSemanticSupport({
+            supportingPassage: semanticMatch?.supportingPassage,
+            reasoningRecord: semanticMatch?.reasoningRecord,
+            passageRef: semanticMatch?.passageRef,
+          });
       const expertReview = expertByGapId.get(id) ?? defaultExpertReview();
       // Engineering path never emits scientifically_verified.
       if (expertReview.scientificGapStatus === ("scientifically_verified" as ScientificGapStatus)) {
         throw Error("Gap verification refuses scientifically_verified without separate acceptance gate");
       }
+      const rationaleFinal = llmOnlyWithInvestigation
+        ? `${rationale} Explanations are not verified by LLM rationale alone; structured comparison investigation remains explicit and scientifically unverified.`
+        : rationale;
       items.push({
         id,
         branchId: branch.id,
         sourceField,
         recordedText,
         kind,
-        rationale,
+        rationale: rationaleFinal,
         scientificGapStatus: expertReview.status === "expert_reviewed" ? "expert_reviewed_labelled" : "not_verified",
         searchCompleteness,
         scientificNovelty,
@@ -636,6 +688,12 @@ export function verifyRecordedGaps(input: GapVerificationInput): GapVerification
           openTargetsDiseaseIds,
           localSourcePmids,
           opposingSearchStatus: input.opposingSearch?.status ?? input.contradictions.searchStatus,
+          contradictionInvestigationCategories: [
+            ...new Set((investigation?.items ?? []).map((i) => i.category)),
+          ],
+          structuredComparisonIds: [
+            ...new Set((investigation?.items ?? []).map((i) => i.comparisonId)),
+          ],
         },
         expertLabelStatus: expertReview.status === "expert_reviewed" ? "recorded" : "unavailable",
         scientificallyValidated: false,
@@ -794,6 +852,12 @@ export function projectGapAssessmentRecord(input: {
   }
   if (input.report.summary.contradictoryFindings > 0 && input.item.kind === "contradictory_findings") {
     contradictions.push(input.item.rationale);
+  }
+  for (const category of input.item.trace.contradictionInvestigationCategories) {
+    contradictions.push(`investigation_category:${category}`);
+  }
+  for (const comparisonId of input.item.trace.structuredComparisonIds) {
+    contradictions.push(`structured_comparison:${comparisonId}`);
   }
 
   const missing_local_data =
@@ -968,6 +1032,13 @@ export function projectGapAssessmentRecordsFromDurableItems(input: {
         openTargetsDiseaseIds: [],
         localSourcePmids: [],
         opposingSearchStatus: input.opposingSearch?.status ?? null,
+        contradictionInvestigationCategories: [
+          ...(input.opposingSearch?.contradictionInvestigation?.items.map((i) => i.category) ?? []),
+        ],
+        structuredComparisonIds: [
+          ...(input.opposingSearch?.contradictionInvestigation?.items.map((i) => i.comparisonId) ??
+            []),
+        ],
       },
       expertLabelStatus: verification_status === "expert_reviewed_labelled" ? "recorded" : "unavailable",
       scientificallyValidated: false,
