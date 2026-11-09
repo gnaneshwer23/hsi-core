@@ -1,7 +1,7 @@
 # Milestones M1–M13 — Status Rollup
 
 **Date:** 2026-11-09  
-**Audited `main` tip:** `344f450` (includes M12 PR1 [#107](https://github.com/gnaneshwer23/hsi-core/pull/107) + M13 PR1/rollup [#109](https://github.com/gnaneshwer23/hsi-core/pull/109))  
+**Audited `main` tip:** `c132abf` (includes M12 [#107](https://github.com/gnaneshwer23/hsi-core/pull/107), M13 [#109](https://github.com/gnaneshwer23/hsi-core/pull/109), rollup tip [#110](https://github.com/gnaneshwer23/hsi-core/pull/110); M14 PR1 opened separately — see [`MILESTONE14_REAL_WORLD_EVIDENCE_MATRIX.md`](./MILESTONE14_REAL_WORLD_EVIDENCE_MATRIX.md))  
 **Repo:** [gnaneshwer23/hsi-core](https://github.com/gnaneshwer23/hsi-core)  
 **HSI Neon:** red-wave only — never autumn-snow / Akeno / DeliverX  
 
