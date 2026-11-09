@@ -5,6 +5,7 @@ import {
   DATA_TO_DISCOVERY_NODES,
   DATA_TO_DISCOVERY_STATUS,
   DATA_TO_DISCOVERY_STATUS_LABEL,
+  WORKBENCH_PUBLIC_LINKS,
   countByStatus,
   nodesForLayer,
   workbenchHref,
@@ -59,9 +60,16 @@ describe("Data-to-Discovery architecture status registry", () => {
     expect(DATA_TO_DISCOVERY_STATUS_LABEL.blocked).toBe("Blocked");
   });
 
-  it("links workbench sections 01–06 through shared investigation anchors", () => {
-    for (const section of INVESTIGATION_SECTIONS) {
-      expect(workbenchHref(section.id)).toBe(`/research/decision-workbench#${section.anchor}`);
+  it("uses public-safe status labels and public workbench routes without auth-only hashes", () => {
+    expect(DATA_TO_DISCOVERY_STATUS_LABEL.fixture_only).toBe("Seed-pack only");
+    expect(DATA_TO_DISCOVERY_STATUS_LABEL.fixture_only.toLowerCase()).not.toMatch(/\bfixtures?\b/);
+    expect(workbenchHref()).toBe("/research/decision-workbench");
+    expect(WORKBENCH_PUBLIC_LINKS.map((link) => link.id)).toEqual(
+      INVESTIGATION_SECTIONS.map((section) => section.id),
+    );
+    for (const link of WORKBENCH_PUBLIC_LINKS) {
+      expect(link.href).not.toContain("#inv-");
+      expect(link.href.startsWith("/")).toBe(true);
     }
     expect(nodesForLayer("outcomes").some((node) => node.workbenchSectionId === "01")).toBe(true);
   });
@@ -78,6 +86,7 @@ describe("Technology page Data-to-Discovery visualisation", () => {
   const page = read("../site/src/pages/Technology.tsx");
   const component = read("../site/src/components/DataToDiscoveryArchitecture.tsx");
   const css = read("../site/src/components/DataToDiscoveryArchitecture.css");
+  const lib = read("../site/src/lib/dataToDiscoveryArchitecture.ts");
 
   it("mounts the interactive architecture after TechnologyFlow", () => {
     expect(page).toContain('import { DataToDiscoveryArchitecture }');
@@ -87,13 +96,19 @@ describe("Technology page Data-to-Discovery visualisation", () => {
     expect(page).toContain('id="data-to-discovery-status"');
   });
 
-  it("exposes honest status chrome, workbench links and reduced-motion support", () => {
-    expect(component).toContain("DATA_TO_DISCOVERY_STATUS_LABEL");
-    expect(component).toContain("not connected");
-    expect(DATA_TO_DISCOVERY_STATUS_LABEL.missing).toBe("Not connected");
-    expect(component).toContain("RESEARCH WORKBENCH · SECTIONS 01–06");
-    expect(component).toContain("workbenchHref");
-    expect(component).toContain("Human queue #2");
+  it("avoids banned promo wording and auth-only inv anchors on the public surface", () => {
+    expect(component.toLowerCase()).not.toMatch(/\b(synthetic|demo|fixtures?|simulation)\b/);
+    expect(lib).toContain('fixture_only: "Seed-pack only"');
+    expect(component).toContain("seed-pack only");
+    expect(component).not.toMatch(/to=\{[^}]*#inv-/);
+    expect(component).toContain("WORKBENCH_PUBLIC_LINKS");
+  });
+
+  it("uses selects instead of exploding main button counts, with accessible contrast tokens", () => {
+    expect(component).toContain('className="d2d-select"');
+    expect(component).not.toContain('role="tablist"');
+    expect(component).not.toContain('role="button"');
+    expect(css).toContain("--d2d-coral-text");
     expect(css).toContain("--d2d-navy");
     expect(css).toContain("--d2d-cyan");
     expect(css).toContain("--d2d-violet");

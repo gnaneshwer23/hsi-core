@@ -5,6 +5,7 @@ import {
   DATA_TO_DISCOVERY_LAYERS,
   DATA_TO_DISCOVERY_NODES,
   DATA_TO_DISCOVERY_STATUS_LABEL,
+  WORKBENCH_PUBLIC_LINKS,
   countByStatus,
   nodesForLayer,
   workbenchHref,
@@ -21,7 +22,7 @@ function statusClass(status: DataToDiscoveryStatus): string {
     case "partially_implemented":
       return "d2d-status d2d-status-partial";
     case "fixture_only":
-      return "d2d-status d2d-status-fixture";
+      return "d2d-status d2d-status-seed";
     case "blocked":
       return "d2d-status d2d-status-blocked";
     case "missing":
@@ -33,49 +34,13 @@ function statusClass(status: DataToDiscoveryStatus): string {
   }
 }
 
-function LayerRail({
-  layers,
-  selectedId,
-  onSelect,
-}: {
-  layers: readonly DataToDiscoveryLayer[];
-  selectedId: string;
-  onSelect: (id: DataToDiscoveryLayer["id"]) => void;
-}) {
-  return (
-    <div className="d2d-rail" role="tablist" aria-label="Data-to-Discovery architecture layers">
-      {layers.map((layer, index) => (
-        <button
-          key={layer.id}
-          type="button"
-          role="tab"
-          id={`d2d-tab-${layer.id}`}
-          aria-selected={selectedId === layer.id}
-          aria-controls={`d2d-panel-${layer.id}`}
-          className={selectedId === layer.id ? "d2d-rail-item active" : "d2d-rail-item"}
-          onClick={() => onSelect(layer.id)}
-        >
-          <span className="d2d-rail-index">{String(index + 1).padStart(2, "0")}</span>
-          <span className="d2d-rail-copy">
-            <strong>{layer.title}</strong>
-            <small>{layer.subtitle}</small>
-          </span>
-          <span className={statusClass(layer.status)}>{DATA_TO_DISCOVERY_STATUS_LABEL[layer.status]}</span>
-        </button>
-      ))}
-    </div>
-  );
-}
-
 function ArchitectureDiagram({
   selectedLayerId,
   selectedNodeId,
-  onSelectNode,
   titleId,
 }: {
   selectedLayerId: DataToDiscoveryLayer["id"];
   selectedNodeId: string | null;
-  onSelectNode: (node: DataToDiscoveryNode) => void;
   titleId: string;
 }) {
   const nodes = nodesForLayer(selectedLayerId);
@@ -123,16 +88,6 @@ function ArchitectureDiagram({
                 cy={y}
                 r={active ? 18 : 14}
                 className={`d2d-svg-point d2d-svg-point-${node.status}`}
-                tabIndex={0}
-                role="button"
-                aria-label={`${node.label}: ${DATA_TO_DISCOVERY_STATUS_LABEL[node.status]}`}
-                onClick={() => onSelectNode(node)}
-                onKeyDown={(event) => {
-                  if (event.key === "Enter" || event.key === " ") {
-                    event.preventDefault();
-                    onSelectNode(node);
-                  }
-                }}
               />
               <text x={x} y={y + 32} textAnchor="middle" className="d2d-svg-label">
                 {node.label}
@@ -152,6 +107,9 @@ function NodeDetail({node}: {node: DataToDiscoveryNode}) {
   const section = node.workbenchSectionId
     ? INVESTIGATION_SECTIONS.find((item) => item.id === node.workbenchSectionId)
     : undefined;
+  const publicLink = node.workbenchSectionId
+    ? WORKBENCH_PUBLIC_LINKS.find((item) => item.id === node.workbenchSectionId)
+    : undefined;
   return (
     <article className="d2d-detail" aria-live="polite">
       <div className="d2d-detail-top">
@@ -165,9 +123,9 @@ function NodeDetail({node}: {node: DataToDiscoveryNode}) {
         <code>{node.evidence}</code>
       </p>
       <div className="d2d-detail-links">
-        {section ? (
-          <Link className="d2d-link" to={workbenchHref(section.id)}>
-            Open workbench {section.id} · {section.short} <span aria-hidden="true">↗</span>
+        {section && publicLink ? (
+          <Link className="d2d-link" to={publicLink.href}>
+            Related workbench surface {section.id} · {section.short} <span aria-hidden="true">↗</span>
           </Link>
         ) : null}
         {node.route ? (
@@ -175,6 +133,9 @@ function NodeDetail({node}: {node: DataToDiscoveryNode}) {
             Related surface <span aria-hidden="true">↗</span>
           </Link>
         ) : null}
+        <Link className="d2d-link d2d-link-secondary" to={workbenchHref()}>
+          Decision workbench <span aria-hidden="true">↗</span>
+        </Link>
       </div>
     </article>
   );
@@ -182,6 +143,8 @@ function NodeDetail({node}: {node: DataToDiscoveryNode}) {
 
 export function DataToDiscoveryArchitecture() {
   const titleId = useId();
+  const layerSelectId = useId();
+  const nodeSelectId = useId();
   const [layerId, setLayerId] = useState<DataToDiscoveryLayer["id"]>("sources");
   const layerNodes = nodesForLayer(layerId);
   const [nodeId, setNodeId] = useState<string>(layerNodes[0]?.id ?? DATA_TO_DISCOVERY_NODES[0].id);
@@ -206,7 +169,7 @@ export function DataToDiscoveryArchitecture() {
           Architecture with <em>honest wiring.</em>
         </h2>
         <p>
-          Select a layer to inspect what is integrated, partially implemented, fixture-only, blocked, or not connected.
+          Select a layer to inspect what is integrated, partially implemented, seed-pack only, blocked, or not connected.
           Missing biology adapters (UniProt, Reactome, GO, ChEMBL, HGNC, HCA/CELLxGENE, omics) stay explicitly
           labelled — this is not a claim of end-to-end live discovery.
         </p>
@@ -222,13 +185,36 @@ export function DataToDiscoveryArchitecture() {
       </div>
 
       <div className="d2d-layout">
-        <LayerRail layers={DATA_TO_DISCOVERY_LAYERS} selectedId={layerId} onSelect={selectLayer} />
-        <div
-          className="d2d-panel"
-          role="tabpanel"
-          id={`d2d-panel-${layerId}`}
-          aria-labelledby={`d2d-tab-${layerId}`}
-        >
+        <div className="d2d-controls">
+          <label className="d2d-select-label" htmlFor={layerSelectId}>
+            Architecture layer
+            <select
+              id={layerSelectId}
+              className="d2d-select"
+              value={layerId}
+              onChange={(event) => selectLayer(event.target.value as DataToDiscoveryLayer["id"])}
+            >
+              {DATA_TO_DISCOVERY_LAYERS.map((layer, index) => (
+                <option key={layer.id} value={layer.id}>
+                  {String(index + 1).padStart(2, "0")} · {layer.title} · {DATA_TO_DISCOVERY_STATUS_LABEL[layer.status]}
+                </option>
+              ))}
+            </select>
+          </label>
+          <ol className="d2d-rail-summary" aria-label="Layer status overview">
+            {DATA_TO_DISCOVERY_LAYERS.map((layer, index) => (
+              <li key={layer.id} className={layer.id === layerId ? "active" : undefined}>
+                <span className="d2d-rail-index">{String(index + 1).padStart(2, "0")}</span>
+                <span className="d2d-rail-copy">
+                  <strong>{layer.title}</strong>
+                  <small>{layer.subtitle}</small>
+                </span>
+                <span className={statusClass(layer.status)}>{DATA_TO_DISCOVERY_STATUS_LABEL[layer.status]}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+        <div className="d2d-panel" id={`d2d-panel-${layerId}`}>
           <div className="d2d-panel-head">
             <div>
               <p className="d2d-eyebrow">{selectedLayer.subtitle}</p>
@@ -242,38 +228,50 @@ export function DataToDiscoveryArchitecture() {
           <ArchitectureDiagram
             selectedLayerId={layerId}
             selectedNodeId={selectedNode.id}
-            onSelectNode={(node) => setNodeId(node.id)}
             titleId={titleId}
           />
-          <div className="d2d-node-list" role="group" aria-label={`${selectedLayer.title} components`}>
-            {layerNodes.map((node) => (
-              <button
-                key={node.id}
-                type="button"
-                className={selectedNode.id === node.id ? "d2d-node-chip active" : "d2d-node-chip"}
-                aria-pressed={selectedNode.id === node.id}
-                onClick={() => setNodeId(node.id)}
-              >
-                <strong>{node.label}</strong>
-                <span className={statusClass(node.status)}>{DATA_TO_DISCOVERY_STATUS_LABEL[node.status]}</span>
-              </button>
-            ))}
-          </div>
+          <label className="d2d-select-label" htmlFor={nodeSelectId}>
+            Component in this layer
+            <select
+              id={nodeSelectId}
+              className="d2d-select"
+              value={selectedNode.id}
+              onChange={(event) => setNodeId(event.target.value)}
+            >
+              {layerNodes.map((node) => (
+                <option key={node.id} value={node.id}>
+                  {node.label} · {DATA_TO_DISCOVERY_STATUS_LABEL[node.status]}
+                </option>
+              ))}
+            </select>
+          </label>
           <NodeDetail node={selectedNode} />
         </div>
       </div>
 
       <div className="d2d-workbench" aria-label="Research workbench sections 01 to 06">
         <p className="d2d-eyebrow">RESEARCH WORKBENCH · SECTIONS 01–06</p>
+        <p className="d2d-workbench-note">
+          Public routes map each investigation section to an existing science surface. Signed-in decision-workbench
+          section anchors remain behind researcher access and are not claimed as public landing targets.
+        </p>
         <div className="d2d-workbench-links">
-          {INVESTIGATION_SECTIONS.map((section) => (
-            <Link key={section.id} className="d2d-workbench-link" to={workbenchHref(section.id)}>
-              <span>{section.id}</span>
-              <strong>{section.short}</strong>
-              <small>{section.title}</small>
-            </Link>
-          ))}
+          {WORKBENCH_PUBLIC_LINKS.map((link) => {
+            const section = INVESTIGATION_SECTIONS.find((item) => item.id === link.id)!;
+            return (
+              <Link key={link.id} className="d2d-workbench-link" to={link.href}>
+                <span>{section.id}</span>
+                <strong>{section.short}</strong>
+                <small>{section.title}</small>
+              </Link>
+            );
+          })}
         </div>
+        <p className="d2d-workbench-cta">
+          <Link className="d2d-link" to={workbenchHref()}>
+            Open decision workbench <span aria-hidden="true">↗</span>
+          </Link>
+        </p>
       </div>
 
       <p className="d2d-disclaimer">

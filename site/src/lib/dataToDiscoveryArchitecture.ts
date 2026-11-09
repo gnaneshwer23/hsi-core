@@ -14,13 +14,30 @@ export const DATA_TO_DISCOVERY_STATUS = [
 
 export type DataToDiscoveryStatus = (typeof DATA_TO_DISCOVERY_STATUS)[number];
 
+/** Public labels avoid banned promo words (`fixture`/`demo`/`synthetic`) on marketing pages. */
 export const DATA_TO_DISCOVERY_STATUS_LABEL: Record<DataToDiscoveryStatus, string> = {
   integrated: "Integrated",
   partially_implemented: "Partially implemented",
-  fixture_only: "Fixture-only",
+  fixture_only: "Seed-pack only",
   blocked: "Blocked",
   missing: "Not connected",
 };
+
+/**
+ * Public Technology-page destinations for investigation sections 01–06.
+ * Avoid authenticated `#inv-0N` hashes here — those anchors only render after researcher sign-in.
+ */
+export const WORKBENCH_PUBLIC_LINKS = [
+  {id: "01", href: "/science/graph"},
+  {id: "02", href: "/science/literature"},
+  {id: "03", href: "/science/contradictions"},
+  {id: "04", href: "/science/clinical-trials"},
+  {id: "05", href: "/science/research-agents"},
+  {id: "06", href: "/research/decision-workbench"},
+] as const satisfies ReadonlyArray<{
+  id: (typeof INVESTIGATION_SECTIONS)[number]["id"];
+  href: string;
+}>;
 
 export type DataToDiscoveryLayerId =
   | "sources"
@@ -173,7 +190,7 @@ export const DATA_TO_DISCOVERY_NODES: readonly DataToDiscoveryNode[] = [
     id: "uniprot",
     layer: "sources",
     label: "UniProt",
-    detail: "Ontology prefix + public fragment fixtures only — no live adapter.",
+    detail: "Ontology prefix + public fragment samples only — no live adapter.",
     status: "missing",
     evidence: "src/hsiOntologyRegistry.ts",
   },
@@ -221,7 +238,7 @@ export const DATA_TO_DISCOVERY_NODES: readonly DataToDiscoveryNode[] = [
     id: "omics",
     layer: "sources",
     label: "Omics interfaces",
-    detail: "P3 model adapters use fixture fragments; no governed omics ingest plane.",
+    detail: "P3 model adapters use seeded public fragments; no governed omics ingest plane.",
     status: "missing",
     evidence: "src/adapters/",
   },
@@ -367,11 +384,9 @@ export function nodesForLayer(layerId: DataToDiscoveryLayerId): DataToDiscoveryN
   return DATA_TO_DISCOVERY_NODES.filter((node) => node.layer === layerId);
 }
 
-export function workbenchHref(sectionId: (typeof INVESTIGATION_SECTIONS)[number]["id"]): string {
-  const section = INVESTIGATION_SECTIONS.find((item) => item.id === sectionId);
-  return section
-    ? `/research/decision-workbench#${section.anchor}`
-    : "/research/decision-workbench";
+/** Authenticated workbench entry — no public `#inv-0N` hash (anchors require signed-in outcome panel). */
+export function workbenchHref(): string {
+  return "/research/decision-workbench";
 }
 
 export function countByStatus(
