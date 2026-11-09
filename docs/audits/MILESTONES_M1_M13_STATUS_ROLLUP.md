@@ -1,7 +1,7 @@
 # Milestones M1–M13 — Status Rollup
 
 **Date:** 2026-11-09  
-**Audited `main` tip:** `7485bd4` (includes M12 PR1 via [#107](https://github.com/gnaneshwer23/hsi-core/pull/107))  
+**Audited `main` tip:** `344f450` (includes M12 PR1 [#107](https://github.com/gnaneshwer23/hsi-core/pull/107) + M13 PR1/rollup [#109](https://github.com/gnaneshwer23/hsi-core/pull/109))  
 **Repo:** [gnaneshwer23/hsi-core](https://github.com/gnaneshwer23/hsi-core)  
 **HSI Neon:** red-wave only — never autumn-snow / Akeno / DeliverX  
 
@@ -25,7 +25,7 @@ Honesty freeze: no Gate C auto-approve · no invented MoU · no live CDS/PHI · 
 | **M10** | Experimental discovery | Lifecycle + design + protocol + governed compute | **Partial** · lab adapters **Missing** · closed-loop **Missing** | [#101](https://github.com/gnaneshwer23/hsi-core/pull/101), [#105](https://github.com/gnaneshwer23/hsi-core/pull/105), [#103](https://github.com/gnaneshwer23/hsi-core/pull/103), [#104](https://github.com/gnaneshwer23/hsi-core/pull/104) | Eng stack on main; not wet-lab / closed-loop |
 | **M11** | Multiscale / biological model registry | — | **Skipped** / **Missing** | none | No M11 PR opened; do not claim simulation validation |
 | **M12** | Therapeutic discovery | Phase 0 + data contracts (programme/target/intervention/assessment) | **Partial** (PR1 only) · later PRs **Missing** | [#107](https://github.com/gnaneshwer23/hsi-core/pull/107) **merged** → `7485bd4` | Not efficacy/repurposing/preclinical decision complete |
-| **M13** | Translational development / trial concept / biomarker | Phase 0 + PR1 contracts (this delivery) | **Partial** / **in-flight** until PR1 merges · PR2+ **Missing** | M13 PR1 on `eng/m13-pr1-and-milestones-rollup` | Research decision support only — not trial authorisation |
+| **M13** | Translational development / trial concept / biomarker | Phase 0 + PR1 contracts | **Partial** (PR1 on `main` via [#109](https://github.com/gnaneshwer23/hsi-core/pull/109) → `344f450`) · PR2+ **Missing** | [#109](https://github.com/gnaneshwer23/hsi-core/pull/109) | Research decision support only — not trial authorisation |
 
 ---
 
@@ -62,6 +62,7 @@ Honesty freeze: no Gate C auto-approve · no invented MoU · no live CDS/PHI · 
 | #101 / #105 / #103 / #104 | `90a2d70…` / `89821f2…` / `f980d47…` / `ebabd52…` | M10 PR1–PR4 |
 | #106 / #108 | `6cb780c…` / `5022fe4…` | OpenSEO map + .tech Google discovery |
 | **#107** | **`7485bd4`** | **M12 PR1 therapeutic discovery data contracts** (merged this audit) |
+| **#109** | **`344f450`** | **M13 PR1 translational development contracts + M1–M13 status rollup** (merged this audit) |
 
 Original #102 closed without merge; content restored via #105.
 
@@ -96,7 +97,7 @@ No `MILESTONE11_*` matrix — M11 **Skipped**.
 
 ## What remains
 
-1. **M13 PR1** — merge when CI green (this branch).  
+1. **M13 PR1** — **merged** ([#109](https://github.com/gnaneshwer23/hsi-core/pull/109) → `344f450`).  
 2. **M13 PR2+** — Translational Readiness Assessment, biomarker COU, population, CT.gov deepen, trial/statistical design, feasibility, strategy engine, workbench, SSc validation.  
 3. **M12 PR2+** — pharmacology integration, prioritisation, repurposing envelopes, preclinical decision bind.  
 4. **M11** — open only if/when biological model registry is intentionally started.  
