@@ -40,14 +40,15 @@
 
 | Decision field | Value |
 |----------------|-------|
-| **Recommendation** | **NO-GO** |
-| **Rationale** | Mandatory Gates B–H lack required live / human evidence; Gate A only partially evidenced (eng + public site). Human queue #2/#4/#5/#8 PARKED. Pilot not recruited. Independent SME review not conducted. |
-| **Pilot conducted?** | **No** |
+| **Recommendation** | **LIMITED GO — synthetic demo rehearsal only** · broader launch **NO-GO** |
+| **Rationale** | Offline demo accounts + 22-step fixture journey clear Gate A (demo) / D–E (demo boundary). Gates B/C/G remain **BLOCKED**; F/H **PENDING** (no enrolled researchers). Human queue #2/#4/#5/#8 PARKED for live science/ops. |
+| **Demo acceptance** | **CLEARED** via `bun run m20:demo` (`operations/demo/`) |
+| **Pilot conducted (humans)?** | **No** |
 | **Scientific acceptance?** | **BLOCKED** |
-| **productionReadyClaimed** | **false** (`r3:check`, pilot readiness) |
+| **productionReadyClaimed** | **false** (`r3:check`, pilot readiness, demo pack) |
 | **writesEnabled (www)** | **false** (correct for production until staging acceptance) |
 
-**Do not interpret this Phase 0 audit as GO or LIMITED GO.** LIMITED GO requires all mandatory security/governance/scope-scientific gates to pass with evidence — they do not.
+**LIMITED GO scope:** fixture-labelled researcher/reviewer rehearsal only — see [`M20_V1_SCOPE.md`](./M20_V1_SCOPE.md) · [`M20_RELEASE_READINESS_REPORT.md`](./M20_RELEASE_READINESS_REPORT.md). Do **not** market as scientific or production GO.
 
 ---
 
@@ -286,8 +287,8 @@ Consolidate where appropriate. **Do not auto-merge. Do not mark pilot complete w
 | Tip `main` pulled + SHA recorded | **Yes** |
 | M1–M19 classifications without doc-only inflation | **Yes** |
 | Live probes recorded | **Yes** (§1) |
-| Gates A–H preliminary with fail-closed missing evidence | **Yes** (§5) |
+| Gates A–H preliminary with fail-closed missing evidence | **Yes** (§5); demo Gate A updated via `m20:demo` |
 | P0/P1/P2 register | **Yes** (§6) |
-| Journey readiness without fake pass | **Yes** (§7) |
-| Launch recommendation evidence-backed | **Yes — NO-GO** |
-| Pilot / science reports with measured results | **No** — correctly deferred |
+| Journey readiness without fake pass | **Yes** (§7); synthetic 22-step CLEARED separately |
+| Launch recommendation evidence-backed | **Yes — LIMITED GO (synthetic demo) / NO-GO (live science & public launch)** |
+| Pilot / science reports with measured results | **No** for human pilot — correctly deferred |
