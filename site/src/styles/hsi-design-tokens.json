@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "hsi-design-tokens-1",
+  "governingPrinciple": "HSI has one recognisable premium biomedical identity; visual presentation accurately reflects functionality and scientific governance. Do not invent capability the backend does not provide.",
+  "color": {
+    "background": {
+      "page": "#F7F9FA",
+      "surface": "#FFFFFF",
+      "elevated": "#FFFFFF",
+      "deep": "#5E0808",
+      "dark": "#190505",
+      "instrument": "#0F2428"
+    },
+    "text": {
+      "primary": "#190505",
+      "secondary": "#4A5560",
+      "inverse": "#EBEBEA",
+      "instrument": "#E7F3EF"
+    },
+    "brand": {
+      "primary": "#BD1C1D",
+      "deep": "#5E0808",
+      "accent": "#D1AEAD"
+    },
+    "scientific": {
+      "primary": "#106C92",
+      "sky": "#65CEE6",
+      "ice": "#98EFFE",
+      "mist": "#D9E1E5"
+    },
+    "evidence": {
+      "supported": "#157F3D",
+      "contextLimited": "#B45309",
+      "contested": "#C2410C",
+      "notCurated": "#64748B",
+      "synthetic": "#7C3AED",
+      "aiDraft": "#4F46E5"
+    },
+    "graph": {
+      "node": "#106C92",
+      "selectedNode": "#BD1C1D",
+      "connection": "#65CEE6",
+      "highlightedConnection": "#BD1C1D"
+    }
+  },
+  "truthfulnessVocabulary": [
+    "live_backend_integration",
+    "cached_demonstration",
+    "curated_example",
+    "synthetic_data",
+    "illustrative_workflow",
+    "future_capability"
+  ],
+  "notes": {
+    "brandRed": "Emphasis, selection, or primary action — never alone for error, clinical risk, or low confidence.",
+    "evidenceStatus": "Separate semantic system from brand burgundy."
+  }
+}

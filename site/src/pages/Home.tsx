@@ -34,12 +34,11 @@ const DOES_NOT=[
 
 export function Home(){
   return <div className="ed-home">
-    <header className="ed-home-hero ed-home-hero-product">
+    <header className="ed-home-hero ed-home-hero-product ed-home-hero-instrument">
       <div className="ed-hero-copy">
-        <p className="ed-kicker">FOR BIOMEDICAL RESEARCHERS</p>
+        <p className="ed-kicker">Connected biomedical intelligence</p>
         <h1>Investigate disease mechanisms<br/><em>with evidence you can trace.</em></h1>
-        <p className="ed-lead">Evidence is scattered. Context gets lost. HSI keeps the research question, mechanism path and source-linked states together so you can decide what to examine next.</p>
-        <p className="ed-hero-note ed-hero-note-primary">See the mechanism. Decide what to test next.</p>
+        <p className="ed-lead">Explore biological relationships, examine supporting and conflicting evidence, identify research gaps, and develop the next scientific question.</p>
         <div className="ed-actions">
           <Link className="ed-button" to={PUBLIC_PRIMARY_CTA.to}>{PUBLIC_PRIMARY_CTA.label} <span aria-hidden="true"><ArrowIcon/></span></Link>
           <Link className="ed-text-link" to={PUBLIC_SECONDARY_CTA.to}>{PUBLIC_SECONDARY_CTA.label} <span aria-hidden="true"><ArrowIcon direction="right"/></span></Link>
