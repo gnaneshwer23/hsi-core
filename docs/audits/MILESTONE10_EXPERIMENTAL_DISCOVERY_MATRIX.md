@@ -1,7 +1,7 @@
 # Milestone 10 — Autonomous Experimental Design, Laboratory Integration & Closed-Loop Discovery
 
 **Brief:** HSI Milestone 10 — extend M3 hypothesis/experiment ledger, M6 investigation orchestration, and M9 org/collaboration hooks into **experimental lifecycle contracts** (proposal → versioned protocol → execution → results layers) without inventing wet-lab observations, lab instrument control, closed-loop discovery completion, Gate C auto-approve, MoU, or PHI/CDS.  
-**Status:** Phase 0 gap audit + PR1 (Experimental Lifecycle Contracts, [#101](https://github.com/gnaneshwer23/hsi-core/pull/101) in-flight) + PR2 (Experiment Design and Prioritisation, [#102](https://github.com/gnaneshwer23/hsi-core/pull/102) in-flight) + PR3 (Protocol Intelligence and Scientific Approval, [#103](https://github.com/gnaneshwer23/hsi-core/pull/103) in-flight) — **not** closed-loop discovery complete, **not** laboratory integration live, **not** autonomous experiment execution claimed.  
+**Status:** Phase 0 gap audit + PR1 (Experimental Lifecycle Contracts, [#101](https://github.com/gnaneshwer23/hsi-core/pull/101) in-flight) + PR2 (Experiment Design and Prioritisation, [#102](https://github.com/gnaneshwer23/hsi-core/pull/102) in-flight) + PR3 (Protocol Intelligence and Scientific Approval, [#103](https://github.com/gnaneshwer23/hsi-core/pull/103) in-flight) + PR4 (Governed Computational Execution, [#104](https://github.com/gnaneshwer23/hsi-core/pull/104) in-flight — stacks on #103) — **not** closed-loop discovery complete, **not** laboratory integration live, **not** autonomous experiment execution claimed; eng compute job ≠ scientific validation.  
 **Date:** 2026-11-09  
 **Audited `main` SHA:** `2388387071fcc798b15f86f9540b8d040afc3f75` (PR1 later rebased onto #100 → `6eb37fe`)  
 **Tip commit:** `2388387 Add M9 Phase 0 matrix and research organisation tenant security. (#99)`  
@@ -28,6 +28,8 @@
 **Out of PR2:** Protocol intelligence / scientific approval workflow (PR3), lab adapters / instrument control, computational pipeline execution, workbench UI, Neon migrations, inventing information-gain probabilities or unjustified power/sample-size claims, fabricating results, AI self-approval / auto-execution, Gate C auto-approve, MoU invention, PHI/CDS.
 
 **Out of PR3:** Computational execution pipelines (PR4), lab adapters / instrument control, result fabrication, workbench UI, Neon migrations, closed-loop claim, inventing unjustified power/n, AI self-approval, automatic instrument instructions, Gate C auto-approve, MoU invention, PHI/CDS.
+
+**Out of PR4:** Lab adapters / instrument control (PR5), live lab validation claims, fabricated biological discoveries, workbench UI, Neon migrations, closed-loop claim, AI self-approval of protocols/execution, Gate C auto-approve, MoU invention, PHI/CDS.
 
 ---
 
@@ -108,8 +110,8 @@ Honesty freeze: no Gate C auto-approve · no invented MoU · no live CDS/PHI · 
 | **1** Experimental lifecycle contracts | N7 ledger · M3 hypothesis · M6 investigation | `Missing` → **PR1 in-flight** ([#101](https://github.com/gnaneshwer23/hsi-core/pull/101) / `eng/m10-experimental-lifecycle-contracts`) — 9 focused tests + evaluation pack | Proposal · versioned protocol · execution · results layers with honesty | `src/experimentalLifecycleContracts.ts` · `test/experimentalLifecycleContracts.test.ts` · `scripts/experimental-lifecycle-contracts.ts` · `evaluation/experimental-lifecycle/` |
 | **2** Experiment design and prioritisation | Hypothesis registry · gap/oppose · investigation objectives · PR1 proposals | `Missing` → **PR2 in-flight** ([#102](https://github.com/gnaneshwer23/hsi-core/pull/102) / `eng/m10-experiment-design-prioritisation`; **depends on #101**) — 7 focused tests + evaluation pack | Rank/discriminate approaches without LLM probability, invented info-gain, or auto-approve | `src/experimentDesignPrioritisationContracts.ts` · `test/experimentDesignPrioritisationContracts.test.ts` · `scripts/experiment-design-prioritisation-contracts.ts` · `evaluation/experiment-design-prioritisation/` |
 | **3** Protocol intelligence and scientific approval | PR1 versioned protocol · PR2 design specs · M3 hypothesis | `Missing` → **PR3 in-flight** ([#103](https://github.com/gnaneshwer23/hsi-core/pull/103) / `eng/m10-protocol-intelligence-scientific-approval`; **depends on #101 + #102**) — 8 focused tests + evaluation pack | Protocol drafting from approved specs; methods/controls/metadata/SAP/QC/safety-ethics; versioning; reviewer comments; approve/reject; change control — no AI self-approval, no auto instrument instructions | `src/protocolIntelligenceScientificApprovalContracts.ts` · `test/protocolIntelligenceScientificApprovalContracts.test.ts` · `scripts/protocol-intelligence-scientific-approval-contracts.ts` · `evaluation/protocol-intelligence-scientific-approval/` |
-| **4** Governed computational execution | Adapter proposals · durable checkpoints · PR3 approved protocols | `Partial` / `Missing` as lifecycle consumer | Record planned compute runs — do not invent outputs | later (PR4) |
-| **5** Lab adapter contracts (read-only first) | — | `Missing` | Verified connector stubs only when real interfaces exist | later |
+| **4** Governed computational execution | Adapter proposals · durable checkpoints · PR3 approved protocols | `Missing` → **PR4 in-flight** ([#104](https://github.com/gnaneshwer23/hsi-core/pull/104) / `eng/m10-governed-computational-execution`; **depends on #101+#102+#103**) — 8 focused tests + evaluation pack | Approved analysis specs; dataset access verification; version pins; isolated harness with logs/QC/artifacts/reproducibility manifest; outcome classes without scientific-validation claim | `src/governedComputationalExecutionContracts.ts` · `test/governedComputationalExecutionContracts.test.ts` · `scripts/governed-computational-execution-contracts.ts` · `evaluation/governed-computational-execution/` |
+| **5** Lab adapter contracts (read-only first) | — | `Missing` | Verified connector stubs only when real interfaces exist | later (PR5) |
 | **6** Closed-loop feedback (human-gated) | N7 outcomes · review candidates · KG | `Missing` | Route authorised results → hypothesis update **with human approval** | later |
 | **7+** Workbench / instrument ops UI | Research Decision Workbench | `Partial` (existing) | Thin surfacing — not a new product | later |
 
@@ -159,7 +161,7 @@ Honesty freeze: no Gate C auto-approve · no invented MoU · no live CDS/PHI · 
 
 ---
 
-## PR3 deliverable (this increment)
+## PR3 deliverable
 
 **Protocol Intelligence and Scientific Approval** — stacked on PR2 (#102) / PR1 (#101); **#101 then #102 must merge first** (or keep this branch stacked on `eng/m10-experiment-design-prioritisation`).
 
@@ -179,15 +181,32 @@ Honesty freeze: no Gate C auto-approve · no invented MoU · no live CDS/PHI · 
 
 ---
 
+## PR4 deliverable (this increment)
+
+**Governed Computational Execution** — stacked on PR3 (#103) / PR2 (#102) / PR1 (#101); **#101 → #102 → #103 must merge first** (or keep this branch stacked on `eng/m10-protocol-intelligence-scientific-approval`).
+
+- First real execution pathway: governed **computational** reanalysis of an authorised public biomedical fixture dataset under reproducible pipeline contracts.  
+- Approved analysis specification bound to PR3 researcher-approved protocol; separate human **execution authorisation** (AI cannot self-authorise).  
+- Dataset access verification + dataset version; analysis code / dependency / container version pins; compute environment; resource limits; restricted network (`deny_all` default).  
+- Deterministic local harness produces real reproducible artifacts from public fixture data (descriptive summary / correlation) — clearly fixture-declared; not fabricated biology.  
+- Execution logs, QC outputs, result artifacts, reproducibility manifest; failure / cancellation / QC failure / null-result / awaiting-interpretation outcome classes.  
+- Honesty: completed eng job ≠ scientific validation; no lab adapters; no live lab validation claim; credentials kept out of model prompts; no arbitrary model-generated code without closed-set validation + authorisation; Gate C / MoU / PHI/CDS denied; Neon red-wave only; migration deferred.  
+- Thin in-memory store + offline evaluation pack + focused tests. Optional durable-checkpoint task id ref (ARCH-009) without claiming Temporal/lab runners.
+
+**Out of PR4:** Lab adapter contracts (PR5), instrument control, workbench UI, Neon migrations, closed-loop claims, fabricated discoveries.
+
+---
+
 ## Integration plan (post-PR1)
 
 1. **PR2 — Experiment Design and Prioritisation:** consume hypothesis + falsifier/competing-explanation signals; propose category-tagged approaches with controls/measurements/confounders/limitations/feasibility; rank by discrimination-then-feasibility ordinal without LLM-as-probability, invented info-gain, or auto-approve. **Stacks on #101** — merge PR1 first or keep stacked.  
-2. **PR3 — Protocol Intelligence and Scientific Approval (this increment):** deepen versioned protocol quality / scientific approval without AI self-approval or auto instrument instructions. **Stacks on #102** — merge #101 → #102 first or keep stacked.  
-3. **PR4 — Governed Computational Execution (next):** bind approved protocols to planned compute runs without inventing outputs.  
-4. Keep N7 as the prediction→outcome ledger; M10 lifecycle references N7 ids rather than duplicating outcome classes.  
-5. Lab adapters only after a verified connector exists — never claim instrument control from contracts alone.  
-6. Closed-loop feedback requires authorised observations + human review before hypothesis/KG updates.  
-7. Optional org/tenant scoping via #100 collaborative contracts — fail-closed cross-tenant denial retained.
+2. **PR3 — Protocol Intelligence and Scientific Approval:** deepen versioned protocol quality / scientific approval without AI self-approval or auto instrument instructions. **Stacks on #102** — merge #101 → #102 first or keep stacked.  
+3. **PR4 — Governed Computational Execution (this increment):** bind approved protocols to isolated compute jobs with dataset/version pins, harness artifacts, and honesty gates — without inventing biology or claiming scientific validation. **Stacks on #103** — merge #101 → #102 → #103 first or keep stacked.  
+4. **PR5 — Laboratory Adapter Contracts (next):** read-only connector stubs only when verified interfaces exist.  
+5. Keep N7 as the prediction→outcome ledger; M10 lifecycle references N7 ids rather than duplicating outcome classes.  
+6. Lab adapters only after a verified connector exists — never claim instrument control from contracts alone.  
+7. Closed-loop feedback requires authorised observations + human review before hypothesis/KG updates.  
+8. Optional org/tenant scoping via #100 collaborative contracts — fail-closed cross-tenant denial retained.
 
 ---
 
@@ -208,7 +227,8 @@ Honesty freeze: no Gate C auto-approve · no invented MoU · no live CDS/PHI · 
 
 | PR | Title | Branch | State |
 |----|-------|--------|-------|
-| [#103](https://github.com/gnaneshwer23/hsi-core/pull/103) | M10 PR3 Protocol Intelligence and Scientific Approval | `eng/m10-protocol-intelligence-scientific-approval` | **PR3 in-flight** — stacked on #102; depends on #101+#102; do **not** merge in this delivery |
+| [#104](https://github.com/gnaneshwer23/hsi-core/pull/104) | M10 PR4 Governed Computational Execution | `eng/m10-governed-computational-execution` | **PR4 in-flight** — stacked on #103; depends on #101→#102→#103; do **not** merge in this delivery |
+| [#103](https://github.com/gnaneshwer23/hsi-core/pull/103) | M10 PR3 Protocol Intelligence and Scientific Approval | `eng/m10-protocol-intelligence-scientific-approval` | **PR3 in-flight** — stacked on #102; depends on #101+#102; **must merge before PR4** |
 | [#102](https://github.com/gnaneshwer23/hsi-core/pull/102) | M10 PR2 Experiment Design and Prioritisation | `eng/m10-experiment-design-prioritisation` | **PR2 in-flight** — stacked on #101; **must merge before PR3** |
 | [#101](https://github.com/gnaneshwer23/hsi-core/pull/101) | M10 PR1 Experimental Lifecycle Contracts | `eng/m10-experimental-lifecycle-contracts` | **PR1 in-flight** — **must merge before PR2** (or keep stack) |
 | #100 | M9 Collaborative Investigation Contracts | `eng/m9-collaborative-investigation-contracts` | **Merged** → `6eb37fe` |
