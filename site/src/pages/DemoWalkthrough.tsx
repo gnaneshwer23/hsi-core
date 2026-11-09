@@ -23,7 +23,13 @@ type ScenarioSnapshot = {
   focus?: { pseudonym: string };
   firstSteps: { id: number; name: string; detail: string }[];
   firstBrief: { hypotheses: { text: string }[]; mechanisms?: string[] };
-  evidence: { literature: { pmid: string | null; title: string }[] };
+  evidence: {
+    literature: { pmid: string | null; title: string }[];
+    literatureVerifiedAt?: string;
+    openTargets?:
+      | { ok: true; fetchedAt: string; diseaseId: string }
+      | { ok: false; fetchedAt: null; diseaseId: string; label: string };
+  };
   targets: { symbol: string; openTargetsScore: number; scoreFetchedAt?: string }[];
   repurposing: { text: string }[];
   release: { releaseId: string; version?: string; priorReleaseId?: string | null; approvedEdge?: string | null };
@@ -264,6 +270,10 @@ function View({
           {scenario ? (
             <>
               <h3>Evidence used offline</h3>
+              <p className="demo-evidence-meta">
+                PubMed records verified {scenario.evidence.literatureVerifiedAt ?? "date not recorded"}. Titles
+                match the live PubMed records — not invented citations.
+              </p>
               <ul>
                 {scenario.evidence.literature.map((item) => (
                   <li key={item.title}>
@@ -405,24 +415,36 @@ function View({
         </article>
       );
     }
-    case "discovery":
+    case "discovery": {
+      const ot = scenario?.evidence.openTargets;
       return (
         <article>
           <h2>Discovery</h2>
           <p>Open Targets association scores for rheumatoid arthritis are ranks, not causation and not efficacy.</p>
-          <ol>
-            {(scenario?.targets ?? []).map((target) => (
-              <li key={target.symbol}>
-                {target.symbol} · score {target.openTargetsScore}
-                {target.scoreFetchedAt ? ` · fetched ${target.scoreFetchedAt}` : ""}
-              </li>
-            ))}
-          </ol>
+          {ot && !ot.ok ? (
+            <p role="status">{ot.label}</p>
+          ) : (
+            <ol>
+              {(scenario?.targets ?? []).map((target) => (
+                <li key={target.symbol}>
+                  {target.symbol} · score {target.openTargetsScore}
+                  {target.scoreFetchedAt ? ` · fetched ${target.scoreFetchedAt}` : ""}
+                </li>
+              ))}
+            </ol>
+          )}
+          {ot?.ok ? (
+            <p className="demo-evidence-meta">
+              Disease {ot.diseaseId} · Open Targets fetch date {ot.fetchedAt} (live capture pinned into the offline
+              fixture).
+            </p>
+          ) : null}
           <h3>Repurposing hypothesis</h3>
           <p>{scenario?.repurposing[0]?.text}</p>
           <p>RDKit and ESM adapters are proposal-only. They are not run, and they do not produce a molecule or a claim of activity.</p>
         </article>
       );
+    }
     default: {
       const _exhaustive: never = step;
       return _exhaustive;
