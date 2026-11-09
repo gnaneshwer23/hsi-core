@@ -150,12 +150,12 @@ describe("P3.2 REINVENT4 thin adapter spike", () => {
   test("publish writes hsi-reinvent4-adapter-proposals artifacts", () => {
     const result = publishOutputs({
       generatedAt: "2026-11-01T19:45:00.000Z",
+      syncSiteDiscovery: false,
     });
     expect(result.files).toContain("hsi-reinvent4-adapter-proposals.json");
     expect(result.files).toContain("hsi-reinvent4-adapter-proposals.md");
-    expect(result.discoverySynced).toContain(
-      "site/public/discovery/hsi-reinvent4-adapter-proposals.json",
-    );
+    expect(result.discoverySynced).toEqual([]);
+    expect(existsSync(join(result.outDir, "hsi-reinvent4-adapter-proposals.json"))).toBe(true);
 
     const jsonPath = join(
       result.outDir,

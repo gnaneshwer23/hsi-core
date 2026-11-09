@@ -309,7 +309,7 @@ describe("Aksh HITL read-only stub (P1)", () => {
 
   it("loads export:aksh-map and keeps cdsSurfacable false", () => {
     // Ensure legacy export exists on clean checkouts (gitignores exports/*.json).
-    publishOutputs({ generatedAt: "2026-11-01T12:00:00.000Z" });
+    publishOutputs({ generatedAt: "2026-11-01T12:00:00.000Z", syncExports: true, syncSiteDiscovery: false });
     const fromExport = loadAkshHitlStubFromExport("exports/hsi-aksh-node-map.json", {
       fallbackInMemory: false,
     });
@@ -595,7 +595,11 @@ describe("Gate C checklist + publish outputs", () => {
   });
 
   it("writes versioned dist/outputs bundle with required artifacts", () => {
-    const result = publishOutputs({ generatedAt: "2026-11-01T12:00:00.000Z" });
+    const result = publishOutputs({
+      generatedAt: "2026-11-01T12:00:00.000Z",
+      syncExports: true,
+      syncSiteDiscovery: false,
+    });
     expect(result.bundleId).toContain("hsi-core-0.1.0-");
     expect(result.files).toContain("hsi-isi-export.json");
     expect(result.files).toContain("hsi-isi-rel-map.json");
@@ -607,9 +611,7 @@ describe("Gate C checklist + publish outputs", () => {
     expect(result.files).toContain("gate-c-checklist.md");
     expect(result.files).toContain("hsi-curator-ux.json");
     expect(result.files).toContain("hsi-curator-ux.md");
-    expect(result.discoverySynced.some((p) => p.includes("hsi-curator-ux.json"))).toBe(
-      true,
-    );
+    expect(result.discoverySynced).toEqual([]);
     expect(result.files).toContain("hsi-pilot-evidence-pack.json");
     expect(result.files).toContain("hsi-pilot-evidence-pack.md");
     expect(result.files).toContain("hsi-pilot-review-rubric.json");
@@ -626,15 +628,10 @@ describe("Gate C checklist + publish outputs", () => {
     expect(result.files).toContain("hsi-translation-handoff.json");
     expect(result.files).toContain("hsi-translation-handoff.md");
     expect(result.files).toContain("MANIFEST.json");
-    expect(result.discoverySynced).toContain("site/public/discovery/hsi-r2-validation.json");
-    expect(result.discoverySynced).toContain("site/public/discovery/hsi-gut-immune-pack.json");
-    expect(result.discoverySynced).toContain("site/public/discovery/hsi-translation-handoff.json");
-    expect(existsSync(join(process.cwd(), "site/public/discovery/hsi-r2-validation.json"))).toBe(
-      true,
-    );
-    expect(
-      existsSync(join(process.cwd(), "site/public/discovery/hsi-translation-handoff.json")),
-    ).toBe(true);
+    expect(existsSync(join(result.outDir, "hsi-r2-validation.json"))).toBe(true);
+    expect(existsSync(join(result.outDir, "hsi-gut-immune-pack.json"))).toBe(true);
+    expect(existsSync(join(result.outDir, "hsi-translation-handoff.json"))).toBe(true);
+    expect(existsSync(join(result.outDir, "hsi-curator-ux.json"))).toBe(true);
 
     for (const name of result.files) {
       expect(existsSync(join(result.outDir, name)), name).toBe(true);

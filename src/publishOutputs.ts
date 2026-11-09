@@ -187,6 +187,14 @@ export type PublishOutputsOptions = {
   generatedAt?: string;
   /** Also write legacy exports/*.json (default true). */
   syncExports?: boolean;
+  /**
+   * Copy packs into tracked `site/public/discovery`.
+   * Default **false** so unit tests cannot rewrite committed site assets.
+   * `bun run outputs` / publish CLI opts in with `true`.
+   */
+  syncSiteDiscovery?: boolean;
+  /** Optional override directory for discovery packs (implies sync). */
+  discoveryPublicDir?: string;
   /** Package version override (default package.json version). */
   version?: string;
 };
@@ -263,6 +271,7 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
   const bundleId = `hsi-core-${version}-${stamp(generatedAt)}`;
   const outDir = join(cwd, "dist", "outputs", bundleId);
   const syncExports = opts?.syncExports !== false;
+  const syncSiteDiscovery = Boolean(opts?.discoveryPublicDir) || opts?.syncSiteDiscovery === true;
 
   const isiBundle = buildIsiExportBundle({ generatedAt });
   let failed = 0;
@@ -780,10 +789,9 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     }
   }
 
-  // Phase 6: refresh committed static copies for the Discovery Centre site surface.
+  // Phase 6: refresh static copies for the Discovery Centre site surface.
+  // Tests must opt out (`syncSiteDiscovery: false`) so they do not rewrite tracked site JSON.
   const discoverySynced: string[] = [];
-  const discoveryPublicDir = join(cwd, "site", "public", "discovery");
-  mkdirSync(discoveryPublicDir, { recursive: true });
   const discoveryFiles = [
     "hsi-pilot-evidence-pack.json",
     "hsi-partner-lock.json",
@@ -812,83 +820,97 @@ export function publishOutputs(opts?: PublishOutputsOptions): PublishOutputsResu
     "hsi-partner-flip-readiness.json",
     "hsi-source-licensing-stub.json",
   ] as const;
-  for (const name of discoveryFiles) {
-    const dest = join(discoveryPublicDir, name);
-    copyFileSync(join(outDir, name), dest);
-    discoverySynced.push(`site/public/discovery/${name}`);
-  }
-  const discoveryIndex = {
-    schemaVersion: "hsi-discovery-centre-public-1" as const,
-    notCds: true as const,
-    noPatientLevelActions: true as const,
-    autoApproveIntoKg: false as const,
-    clinicalActive: false as const,
-    clinicalUse: "not_for_clinical_use" as const,
-    surfaceRole: "site_product_surface" as const,
-    productSurfacePath: "/discovery",
-    framing: "ASK → MAP → REVIEW → VALIDATE → TRANSLATE",
-    phase: "8",
-    generatedAt,
-    bundleId,
-    disease: partnerLock.disease?.label ?? null,
-    researchQuestion: partnerLock.researchQuestion,
-    scopeLocked: partnerLock.scopeLocked,
-    partnerSigned: partnerLock.partnerSigned,
-    lockedPilot: partnerLock.lockedPilot,
-    agreementKind: partnerLock.agreementKind,
-    legalBinding: partnerLock.legalBinding,
-    isHypothetical: partnerLock.isHypothetical,
-    notALegalAgreement: partnerLock.notALegalAgreement,
-    testPilotMode: partnerLock.testPilotMode,
-    testFixtureBanner: partnerLock.testFixtureBanner,
-    partnerId: partnerLock.partner?.id ?? null,
-    partnerType: partnerLock.partner?.type ?? null,
-    verticalStrategy: partnerLock.verticalStrategy,
-    activeScope: partnerLock.activeScope,
-    prdMvpTarget: partnerLock.prdMvpTarget,
-    files: [...discoveryFiles],
-    notes: [
-      partnerLock.testFixtureBanner
-        ? `${partnerLock.testFixtureBanner} partner=${partnerLock.partner?.id}; agreementKind=${partnerLock.agreementKind}; legalBinding=${partnerLock.legalBinding}. Production ISI requires ALLOW_HYPOTHETICAL_PARTNER=true to trust fixture partnerSigned.`
-        : "No hypothetical partner fixture active.",
-      "Regenerate with bun run outputs — copies land here for the Vite site.",
-      "Not diagnostic / not for clinical use. clinicalActive=false.",
-      "ASK question stays RA / anti-TNF; SSc is dual-track secondary PRD target (hsi-ssc-pathway-pack.json).",
-      "Systems secondary axes: gut–immune (hsi-gut-immune-pack.json) + neuroimmune vagus/cholinergic (hsi-neuroimmune-pack.json) — do not replace ASK.",
-      "P2.2 embedding sidecars: hsi-embedding-sidecars.json — hash/ref only; doesNotSetHsiGrade; never auto-approve into KG.",
-      "P2.3 offline eval harness: hsi-model-eval-harness.json — frozen-pack checks only; no PHI / no training / no grade flips.",
-      "P2.4 ClinVar/TCGA pointers: hsi-external-genome-pointers.json — citation/ref only; reviewRequired; Gate C still required; no bulk dump / PHI.",
-      "P2.5 P3 adapter license matrix: hsi-p3-adapter-license-matrix.json — RFC + honest sign-off; no weight vendoring; proposals only.",
-      "P3.0 RDKit spike: hsi-rdkit-adapter-proposals.json — proposal-only; runtime stub|rdkit; Gate C pending; no grade flips.",
-      "P3.1 OpenMM spike: hsi-openmm-adapter-proposals.json — proposal-only; runtime stub|openmm; Gate C pending; MD ≠ Gate C evidence alone.",
-      "P3.2 REINVENT4 spike: hsi-reinvent4-adapter-proposals.json — proposal-only; runtime stub|reinvent; Gate C pending; never clinic path.",
-      "P3.3 FAIR ESM-2 stub: hsi-esm-adapter-proposals.json — proposal + sidecar refs; runtime stub|esm; Gate C pending; no weight vendoring.",
-      "AF3/TDC/ISI research sign-off fixtures + Boltz weights policy: hsi-af3|tdc|boltz|isi-agents-adapter-proposals.json — stub proposals; AF3 notCommercial; Boltz WEIGHTS_POLICY_ACK; no weight vendoring.",
-      "P0.2-HSI: hsi-isi-consume-contract.json + hsi-partner-flip-readiness.json — ISI load map + flip checklist; fixture path uses hypothetical_test_only (lockedPilot=false); real partner TBD.",
-      "P0.3 licensing: hsi-source-licensing-stub.json — pack PMIDs curator-reviewed; fixture path keeps partnerClearedCount=0 until a real named partner clearance.",
-      "P0.6 walkthrough hygiene: hsi-pilot-walkthrough.md + hsi-pilot-acceptance.* refreshed for named lock + clearance + lockedPilot.",
-      "Phase 7 done = R2 validation (hsi-r2-validation.json) on VALIDATE tab.",
-      "Phase 8 done = HSI translation substrate (hsi-translation-handoff.json) on TRANSLATE tab + in-repo Akeno HITL consumer at /akeno (not CDS).",
-    ],
-  };
-  // catalogue.json under /discovery/* (machine). Do NOT write discovery/index.json —
-  // that file shadows the SPA product route /discovery on Vercel static hosting.
-  writeJson(join(discoveryPublicDir, "catalogue.json"), discoveryIndex);
-  discoverySynced.push("site/public/discovery/catalogue.json");
-  // Machine index at /discovery.json (non-breaking for JSON consumers).
-  const sitePublicDir = join(process.cwd(), "site", "public");
-  writeJson(join(sitePublicDir, "discovery.json"), {
-    ...discoveryIndex,
-    productSurfacePath: "/discovery",
-    machineIndexPath: "/discovery.json",
-    packBasePath: "/discovery/",
-    note: "Product UI is /discovery (SPA). Pack JSON lives under /discovery/*.json. This file is the machine catalogue.",
-  });
-  discoverySynced.push("site/public/discovery.json");
-  // Remove legacy shadowing index if present from older publishes.
-  const legacyIndex = join(discoveryPublicDir, "index.json");
-  if (existsSync(legacyIndex)) {
-    unlinkSync(legacyIndex);
+  if (syncSiteDiscovery) {
+    const discoveryPublicDir = resolve(
+      opts?.discoveryPublicDir ?? join(cwd, "site", "public", "discovery"),
+    );
+    const trackedSiteRoot = resolve(join(cwd, "site", "public", "discovery"));
+    const writingTrackedSite = discoveryPublicDir === trackedSiteRoot;
+    mkdirSync(discoveryPublicDir, { recursive: true });
+    for (const name of discoveryFiles) {
+      const dest = join(discoveryPublicDir, name);
+      copyFileSync(join(outDir, name), dest);
+      discoverySynced.push(
+        writingTrackedSite ? `site/public/discovery/${name}` : dest,
+      );
+    }
+    const discoveryIndex = {
+      schemaVersion: "hsi-discovery-centre-public-1" as const,
+      notCds: true as const,
+      noPatientLevelActions: true as const,
+      autoApproveIntoKg: false as const,
+      clinicalActive: false as const,
+      clinicalUse: "not_for_clinical_use" as const,
+      surfaceRole: "site_product_surface" as const,
+      productSurfacePath: "/discovery",
+      framing: "ASK → MAP → REVIEW → VALIDATE → TRANSLATE",
+      phase: "8",
+      generatedAt,
+      bundleId,
+      disease: partnerLock.disease?.label ?? null,
+      researchQuestion: partnerLock.researchQuestion,
+      scopeLocked: partnerLock.scopeLocked,
+      partnerSigned: partnerLock.partnerSigned,
+      lockedPilot: partnerLock.lockedPilot,
+      agreementKind: partnerLock.agreementKind,
+      legalBinding: partnerLock.legalBinding,
+      isHypothetical: partnerLock.isHypothetical,
+      notALegalAgreement: partnerLock.notALegalAgreement,
+      testPilotMode: partnerLock.testPilotMode,
+      testFixtureBanner: partnerLock.testFixtureBanner,
+      partnerId: partnerLock.partner?.id ?? null,
+      partnerType: partnerLock.partner?.type ?? null,
+      verticalStrategy: partnerLock.verticalStrategy,
+      activeScope: partnerLock.activeScope,
+      prdMvpTarget: partnerLock.prdMvpTarget,
+      files: [...discoveryFiles],
+      notes: [
+        partnerLock.testFixtureBanner
+          ? `${partnerLock.testFixtureBanner} partner=${partnerLock.partner?.id}; agreementKind=${partnerLock.agreementKind}; legalBinding=${partnerLock.legalBinding}. Production ISI requires ALLOW_HYPOTHETICAL_PARTNER=true to trust fixture partnerSigned.`
+          : "No hypothetical partner fixture active.",
+        "Regenerate with bun run outputs — copies land here for the Vite site.",
+        "Not diagnostic / not for clinical use. clinicalActive=false.",
+        "ASK question stays RA / anti-TNF; SSc is dual-track secondary PRD target (hsi-ssc-pathway-pack.json).",
+        "Systems secondary axes: gut–immune (hsi-gut-immune-pack.json) + neuroimmune vagus/cholinergic (hsi-neuroimmune-pack.json) — do not replace ASK.",
+        "P2.2 embedding sidecars: hsi-embedding-sidecars.json — hash/ref only; doesNotSetHsiGrade; never auto-approve into KG.",
+        "P2.3 offline eval harness: hsi-model-eval-harness.json — frozen-pack checks only; no PHI / no training / no grade flips.",
+        "P2.4 ClinVar/TCGA pointers: hsi-external-genome-pointers.json — citation/ref only; reviewRequired; Gate C still required; no bulk dump / PHI.",
+        "P2.5 P3 adapter license matrix: hsi-p3-adapter-license-matrix.json — RFC + honest sign-off; no weight vendoring; proposals only.",
+        "P3.0 RDKit spike: hsi-rdkit-adapter-proposals.json — proposal-only; runtime stub|rdkit; Gate C pending; no grade flips.",
+        "P3.1 OpenMM spike: hsi-openmm-adapter-proposals.json — proposal-only; runtime stub|openmm; Gate C pending; MD ≠ Gate C evidence alone.",
+        "P3.2 REINVENT4 spike: hsi-reinvent4-adapter-proposals.json — proposal-only; runtime stub|reinvent; Gate C pending; never clinic path.",
+        "P3.3 FAIR ESM-2 stub: hsi-esm-adapter-proposals.json — proposal + sidecar refs; runtime stub|esm; Gate C pending; no weight vendoring.",
+        "AF3/TDC/ISI research sign-off fixtures + Boltz weights policy: hsi-af3|tdc|boltz|isi-agents-adapter-proposals.json — stub proposals; AF3 notCommercial; Boltz WEIGHTS_POLICY_ACK; no weight vendoring.",
+        "P0.2-HSI: hsi-isi-consume-contract.json + hsi-partner-flip-readiness.json — ISI load map + flip checklist; fixture path uses hypothetical_test_only (lockedPilot=false); real partner TBD.",
+        "P0.3 licensing: hsi-source-licensing-stub.json — pack PMIDs curator-reviewed; fixture path keeps partnerClearedCount=0 until a real named partner clearance.",
+        "P0.6 walkthrough hygiene: hsi-pilot-walkthrough.md + hsi-pilot-acceptance.* refreshed for named lock + clearance + lockedPilot.",
+        "Phase 7 done = R2 validation (hsi-r2-validation.json) on VALIDATE tab.",
+        "Phase 8 done = HSI translation substrate (hsi-translation-handoff.json) on TRANSLATE tab + in-repo Akeno HITL consumer at /akeno (not CDS).",
+      ],
+    };
+    // catalogue.json under /discovery/* (machine). Do NOT write discovery/index.json —
+    // that file shadows the SPA product route /discovery on Vercel static hosting.
+    writeJson(join(discoveryPublicDir, "catalogue.json"), discoveryIndex);
+    discoverySynced.push(
+      writingTrackedSite ? "site/public/discovery/catalogue.json" : join(discoveryPublicDir, "catalogue.json"),
+    );
+    if (writingTrackedSite) {
+      // Machine index at /discovery.json (non-breaking for JSON consumers).
+      const sitePublicDir = join(cwd, "site", "public");
+      writeJson(join(sitePublicDir, "discovery.json"), {
+        ...discoveryIndex,
+        productSurfacePath: "/discovery",
+        machineIndexPath: "/discovery.json",
+        packBasePath: "/discovery/",
+        note: "Product UI is /discovery (SPA). Pack JSON lives under /discovery/*.json. This file is the machine catalogue.",
+      });
+      discoverySynced.push("site/public/discovery.json");
+      // Remove legacy shadowing index if present from older publishes.
+      const legacyIndex = join(discoveryPublicDir, "index.json");
+      if (existsSync(legacyIndex)) {
+        unlinkSync(legacyIndex);
+      }
+    }
   }
 
   return {
