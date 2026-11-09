@@ -1,7 +1,7 @@
 # Milestone 17 — Autonomous Biomedical Discovery, Scientific Knowledge Evolution & Research Programme Intelligence
 
 **Brief:** HSI Milestone 17 — governed **scientific programme intelligence** contracts that organise research programmes, workstreams, programme milestones, and research decisions — composing existing orchestrator, KG, hypothesis/experiment, therapeutic/clinical/RWE/simulation, collaboration, and review services — **without** inventing a separate AI-agent platform, dozens of disconnected agents, auto-approval of plans/claims, fabricated discoveries, Gate C auto-approve, MoU invention, PHI/CDS, or claiming live autonomous closed-loop discovery.  
-**Status:** Phase 0 gap audit + **PR1 Scientific Programme Contracts** (this branch — open for review, do not auto-merge) — **not** autonomous discovery complete, **not** programme intelligence complete, **not** M17 complete.  
+**Status:** Phase 0 gap audit + **PR1 Scientific Programme Contracts** ([#131](https://github.com/gnaneshwer23/hsi-core/pull/131) in-flight — open for review, do not auto-merge) — **not** autonomous discovery complete, **not** programme intelligence complete, **not** M17 complete.  
 **Date:** 2026-11-09  
 **Audited `main` SHA:** `449d714d22a52a365998a9127fcf5beeaa8ec443` (post-#128 tip; rebased after concurrent M15 PR8 merge)  
 **Tip commit:** `449d714 M15 PR8 Precision Scenario and Missing-Information Intelligence (#128)`  
@@ -197,7 +197,7 @@ Honesty freeze: research programme intelligence only · **not a separate AI agen
 | Phase | Capability | Existing | Status | Missing | Files |
 |-------|------------|----------|--------|---------|-------|
 | **0** Audit + reuse/governance/validation + PR sequence | This document + M1–M16 deps | — | `Verified operational` (audit) | Keep updated on merges | this file |
-| **1** Scientific programme contracts | M6/M9/M12/M13/M14/M15 ids · review honesty | **PR1 in-flight** — research programme · workstream · milestone · decision + thin store + focused tests + evaluation pack · `Fixture-only` / scientific path `Blocked` | Live autonomous execution · auto-approve · fabricated discoveries | `src/scientificProgrammeIntelligenceContracts.ts` · `test/scientificProgrammeIntelligenceContracts.test.ts` · `scripts/scientific-programme-intelligence-contracts.ts` · `evaluation/scientific-programme-intelligence/` |
+| **1** Scientific programme contracts | M6/M9/M12/M13/M14/M15 ids · review honesty | **PR1 in-flight** ([#131](https://github.com/gnaneshwer23/hsi-core/pull/131)) — research programme · workstream · milestone · decision + thin store + 7 focused tests + evaluation pack · `Fixture-only` / scientific path `Blocked` | Live autonomous execution · auto-approve · fabricated discoveries | `src/scientificProgrammeIntelligenceContracts.ts` · `test/scientificProgrammeIntelligenceContracts.test.ts` · `scripts/scientific-programme-intelligence-contracts.ts` · `evaluation/scientific-programme-intelligence/` |
 | **2** Research objective / workstream planning | PR1 envelopes | `Missing` | Planning engines without auto-approve | later PR2 |
 | **3** Authorised autonomous bounds | PR2 · M10 compute | `Missing` | Explicit authz / resources / data permissions | later PR3 |
 | **4** Decision governance deepen | PR1 decisions | `Partial` (PR1) | Independent-reviewer assignment deepen | later PR4 |
@@ -246,7 +246,7 @@ Honesty freeze: research programme intelligence only · **not a separate AI agen
 | Focused tests | **PR1 in-flight** | `test/scientificProgrammeIntelligenceContracts.test.ts` (7) |
 | Evaluation pack / script | **PR1 in-flight** | `evaluation/scientific-programme-intelligence/` · `scripts/scientific-programme-intelligence-contracts.ts` |
 | package.json prepare/check | **PR1 in-flight** | `spi:scientific-programme:prepare` / `:check` |
-| PR against `main` | **in-flight** (do not merge) | Update URL on open |
+| PR against `main` | **in-flight** ([#131](https://github.com/gnaneshwer23/hsi-core/pull/131) — do not merge) | Open for human review |
 | Neon migration | Deferred | Explicit non-goal |
 | Workbench UI | Out of PR1 | — |
 | Auto-approval of plans/claims | Refused | Fail-closed |
