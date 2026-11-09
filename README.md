@@ -1,6 +1,8 @@
 # hsi-core
 
-**Health Super Intelligence (HSI)** — independent, evidence-grounded biomedical and healthcare intelligence platform under active development.
+**Human Super Intelligence (HSI)** — independent, evidence-grounded biomedical and healthcare intelligence platform under active development.
+
+> **Governing vision:** [The Vision of Human Super Intelligence](docs/strategy/HSI_VISION.md) — connecting human biology, advancing scientific discovery, transforming our understanding of health. Doctrine for every landing page, backend, knowledge-graph relationship, AI agent and product decision; **not** a claim that every capability is production-ready.
 
 > **Foundational architecture:** [HSI-ARCH-001 — Independent Intelligence, Connected Ecosystem](docs/architecture/principles/ARCH-001-independent-intelligence-connected-ecosystem.md). HSI must own its core research, biology, clinical intelligence, trial intelligence, knowledge graph and agent orchestration capabilities. Aksh Health and Immune Super Intelligence (ISI) are **optional, governed integrations**, not prerequisites for HSI to function.
 

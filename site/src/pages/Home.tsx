@@ -52,14 +52,14 @@ export function Home(){
   return <div className="ed-home">
     <header className="ed-home-hero ed-home-hero-product ed-home-hero-instrument">
       <div className="ed-hero-copy">
-        <p className="ed-kicker">Connected biomedical intelligence</p>
+        <p className="ed-kicker">Connecting human biology</p>
         <h1>Investigate biological mechanisms<br/><em>across human systems.</em></h1>
-        <p className="ed-lead">Immunology, microbiome, neuroimmune biology, metabolism, omics, evidence and trials — one research workbench. Disease context is optional. Systemic sclerosis is a validation case, not the product boundary.</p>
+        <p className="ed-lead">Immunology, microbiome, neuroimmune biology, metabolism, molecular science, clinical knowledge and trials — one evidence-grounded research workbench. Disease context is optional. Systemic sclerosis is a validation case, not the product boundary.</p>
         <div className="ed-actions">
           <Link className="ed-button" to={contactAccessHref({scenarioId})}>{PUBLIC_PRIMARY_CTA.label} <span aria-hidden="true"><ArrowIcon/></span></Link>
           <Link className="ed-text-link" to={PUBLIC_SECONDARY_CTA.to}>{PUBLIC_SECONDARY_CTA.label} <span aria-hidden="true"><ArrowIcon direction="right"/></span></Link>
         </div>
-        <p className="ed-hero-note">Built for researchers. Grounded in evidence. Reviewed by people. Coverage depth is unequal across domains.</p>
+        <p className="ed-hero-note">Evidence, contradictions and gaps stay visible. Human review stays required. Coverage depth is unequal across domains — not universal biology.</p>
       </div>
       <HomeHeroPreview scenario={scenario}/>
     </header>
@@ -95,32 +95,40 @@ export function Home(){
 
     <section className="ed-ecosystem ed-foundation-system" aria-labelledby="foundation-heading">
       <div>
-        <p className="ed-kicker">ONE RESEARCH FOUNDATION</p>
-        <h2 id="foundation-heading">Three ways to investigate.<br/><em>One connected system.</em></h2>
-        <p className="ed-foundation-note">Turn investigation into a research brief. Entry points share technology while keeping governance and audience boundaries clear — not three pricing tiers.</p>
+        <p className="ed-kicker">FOUR CONNECTED PRODUCTS</p>
+        <h2 id="foundation-heading">Independently governed.<br/><em>Interoperable by design.</em></h2>
+        <p className="ed-foundation-note">Shared research technology connects the ecosystem. Each product keeps its own data plane and permissions — private clinical information does not auto-enter the research knowledge graph.</p>
       </div>
       <div className="ed-product-rows ed-product-system">
         <Link to="/for-aksh">
           <span className="ed-product-system-index">01</span>
-          <span>PERSONAL HEALTH CONTEXT</span>
+          <span>PATIENT INTELLIGENCE</span>
           <h3>Aksh Health</h3>
-          <p>Everyday health context within its own care and data setting.</p>
+          <p>Individual health trajectories within Aksh’s own care and data setting.</p>
+          <b aria-hidden="true"><ArrowIcon/></b>
+        </Link>
+        <div className="ed-product-system-rail" aria-hidden="true"/>
+        <Link to="/products">
+          <span className="ed-product-system-index">02</span>
+          <span>LONGITUDINAL CLINICAL · IN DEVELOPMENT</span>
+          <h3>HSI Clinical</h3>
+          <p>Authorised encounters and missing-information context — illustrative architecture, not a live hospital feed.</p>
           <b aria-hidden="true"><ArrowIcon/></b>
         </Link>
         <div className="ed-product-system-rail" aria-hidden="true"/>
         <Link to="/for-isi">
-          <span className="ed-product-system-index">02</span>
-          <span>IMMUNE-SCIENCE RESEARCH</span>
+          <span className="ed-product-system-index">03</span>
+          <span>SCIENTIFIC DISCOVERY</span>
           <h3>Immune Super Intelligence</h3>
-          <p>Explore immune biology and the evidence behind the connections.</p>
+          <p>Immune biology and cross-system evidence — cells, microbiome, neuro, metabolism and disease context.</p>
           <b aria-hidden="true"><ArrowIcon/></b>
         </Link>
         <div className="ed-product-system-rail" aria-hidden="true"/>
-        <Link to="/platform">
-          <span className="ed-product-system-index">03</span>
-          <span>SHARED RESEARCH TECHNOLOGY</span>
-          <h3>Human Super Intelligence</h3>
-          <p>Source-aware investigations, inspectable reasoning and accountable review.</p>
+        <Link to="/for-trials">
+          <span className="ed-product-system-index">04</span>
+          <span>TRANSLATIONAL &amp; TRIALS · PLANNED</span>
+          <h3>HSI Trials</h3>
+          <p>Biology, biomarkers and criteria for research — no live matching or enrolment today.</p>
           <b aria-hidden="true"><ArrowIcon/></b>
         </Link>
       </div>

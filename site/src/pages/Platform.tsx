@@ -202,11 +202,11 @@ export function Platform() {
               <span className="hsi-coral-dot" /> {PRODUCT_NAME} / PLATFORM
             </p>
             <h1 id="platform-title">
-              Shared intelligence.<br />
-              <em>Distinct experiences.</em>
+              Connecting human biology.<br />
+              <em>Distinct product experiences.</em>
             </h1>
             <p className="hsi-editorial-lede">
-              The technology that helps connect health questions, biological knowledge and scientific evidence—while keeping each product in control of its own data.
+              Shared research technology across Aksh, HSI Clinical, ISI and HSI Trials—evidence, living knowledge-graph context, investigation and human review—while each product keeps its own data boundary. Ambition is not a claim of universal coverage or a live write-spine.
             </p>
             <div className="hsi-editorial-actions">
               <a className="hsi-editorial-button" href="#platform-architecture">Explore the architecture <span aria-hidden="true"><ArrowIcon/></span></a>

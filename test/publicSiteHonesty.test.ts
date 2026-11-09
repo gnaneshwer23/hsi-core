@@ -52,10 +52,11 @@ describe("Public HSI site honesty", () => {
     const nav=site("src/components/Nav.tsx");
     expect(nav).toContain("PRIMARY_NAV_LINKS");expect(nav).toContain("PRIMARY_NAV_CTA");expect(nav).not.toContain("ENGINEERING_LINKS");
     const home=site("src/pages/Home.tsx"),experience=site("src/components/Experience.tsx");
-    expect(home).toContain("Investigate biological mechanisms");expect(home).toContain("across human systems");expect(home).toContain("Aksh Health");expect(home).toContain("Immune Super Intelligence");
-    expect(home).toContain("validation case");expect(home).toContain("homeResearchScenarios");
+    expect(home).toContain("Investigate biological mechanisms");expect(home).toContain("across human systems");expect(home).toContain("Connecting human biology");
+    expect(home).toContain("Aksh Health");expect(home).toContain("HSI Clinical");expect(home).toContain("Immune Super Intelligence");expect(home).toContain("HSI Trials");
+    expect(home).toContain("validation case");expect(home).toContain("homeResearchScenarios");expect(home).toContain("does not auto-enter");
     expect(home).not.toContain("ValidationPreview");expect(home).toContain("HomeProductDemo");expect(home).toContain("What HSI does not do");expect(experience).toContain("review scope");
-    expect(home).not.toContain("100% accurate");
+    expect(experience).toContain("Connecting human biology");expect(home).not.toContain("100% accurate");
     const ecosystem = site("src/components/landing/EcosystemGrid.tsx");
     expect(ecosystem).toContain("ECOSYSTEM_PRODUCTS");
     expect(ecosystem).toContain("MATURITY_CHIP_LABEL");

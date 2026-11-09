@@ -31,7 +31,7 @@ test('editorial homepage product demo, keyboard tabs and narrow layouts remain u
  await expect(tabs.getByRole('tab',{name:'Research brief',exact:true})).toHaveAttribute('aria-selected','true');
  await expect(page.getByRole('tabpanel')).toContainText('The reasoning stays with the result');
  await expect(page.getByRole('tabpanel')).toContainText('Research brief · curated example');
- await expect(page.getByRole('main')).toContainText('Connected biomedical intelligence');
+ await expect(page.getByRole('main')).toContainText('Connecting human biology');
  await expect(page.getByRole('main')).toContainText('Research workbench');
  await expect(page.getByRole('main')).toContainText('Biological ecosystem');
 });

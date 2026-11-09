@@ -2,6 +2,10 @@
 
 **`hsi-core` is the sole active codebase for HSI substrate.** Primary edit target: `~/Projects/hsi-core` (https://github.com/gnaneshwer23/hsi-core).
 
+## Governing product vision (binding doctrine)
+
+Treat [`docs/strategy/HSI_VISION.md`](docs/strategy/HSI_VISION.md) as the guiding vision for landing pages, backend services, knowledge-graph relationships, AI agents and product decisions. It is **ambition doctrine**, not a claim that every capability is production-ready — preserve honesty labels, capability-status, fail-closed writes, cross-domain scope (SSc = validation case), four-product boundaries, and no live CDS/PHI in this repo.
+
 ## Neon isolation (binding)
 
 HSI is a **separate technology**. Use **only** the HSI Neon project for HSI substrate:

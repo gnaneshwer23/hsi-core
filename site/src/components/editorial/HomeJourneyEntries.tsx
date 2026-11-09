@@ -12,7 +12,7 @@ export function HomeJourneyEntries(){
   return <section className="ed-journey-entries ed-section-compact" aria-labelledby="journey-entries-heading">
     <p className="ed-kicker">CROSS-DOMAIN ENTRY PATHS</p>
     <h2 id="journey-entries-heading">Start from a real question.<br/><em>Stay on a continuous path.</em></h2>
-    <p>Each path opens the illustrative demonstration, an explore destination, evidence framing, then research access — without claiming live writes.</p>
+    <p>Aligned with the HSI investigation vision: open an illustrative demonstration, explore biology, review evidence framing, then request research access — without claiming a live write-spine.</p>
     <ul className="ed-journey-entry-list">
       {CROSS_DOMAIN_JOURNEY_ENTRIES.map(j=>(
         <li key={j.id}>

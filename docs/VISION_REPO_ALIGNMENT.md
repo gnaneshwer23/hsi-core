@@ -1,6 +1,8 @@
 # Vision ↔ repo alignment
 
-**Human Systems Intelligence (HSI)** is the shared evidence layer: graded edges
+**Governing product doctrine:** [`strategy/HSI_VISION.md`](./strategy/HSI_VISION.md) (9 Nov 2026). This file remains an engineering alignment map of substrates and consumers; interpret older “Human Systems Intelligence” naming as historical.
+
+**Human Super Intelligence (HSI)** is the shared evidence layer: graded edges
 (`established` / `uncertain` / `unexplored`), claim → marker (LOINC) → observation →
 action stubs, Gate C human-only curation, graph before agents, T2D / immuno-metabolic
 bridge first. **ISI** = **research intelligence** (not clinical intelligence): connect

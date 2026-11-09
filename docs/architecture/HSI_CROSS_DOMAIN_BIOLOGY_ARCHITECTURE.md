@@ -2,6 +2,7 @@
 
 **Audited tip:** `864710a` (docs authored 2026-11-09; implement via focused PRs)  
 **Production:** https://www.humansuperintelligence.tech/  
+**Governing vision:** [`../strategy/HSI_VISION.md`](../strategy/HSI_VISION.md) — cross-domain living intelligence; ambition ≠ production-ready.  
 **Governing clarification:** Systemic sclerosis is a **validation case**, not the product boundary. HSI is a connected, cross-disease, multi-system biomedical research intelligence ecosystem.
 
 ---

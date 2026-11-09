@@ -25,7 +25,8 @@ Strategic product reset: audit, architecture, and roadmap. **No feature implemen
 | [HSI_DESIGN_SYSTEM_AND_UX.md](./HSI_DESIGN_SYSTEM_AND_UX.md) | **Document 04** — Unified Design System and UX (Proposed / pending founder approval) |
 | [HSI_DOC02_03_RECONCILIATION.md](./HSI_DOC02_03_RECONCILIATION.md) | Open/Proposed (companions 02/03/04) vs Observed (Phase 0 audits) — do not upgrade Missing |
 
-**Authoritative vision:** [HSI_MASTER_VISION.md](./HSI_MASTER_VISION.md) (§2).  
+**Governing vision doctrine:** [HSI_VISION.md](./HSI_VISION.md) (9 Nov 2026 — landing pages, backends, KG, agents, product decisions; ambition ≠ production-ready).  
+**Detailed vision elaboration:** [HSI_MASTER_VISION.md](./HSI_MASTER_VISION.md) (§2; defers to `HSI_VISION.md` on conflict).  
 **Authoritative product architecture:** Document 02 companion above + [HSI_FOUR_PRODUCT_ECOSYSTEM.md](./HSI_FOUR_PRODUCT_ECOSYSTEM.md) (§3 — ownership, APIs, journeys, anti-duplication).  
 **Authoritative LHK-G:** [HSI_LIVING_HEALTH_KNOWLEDGE_GRAPH.md](./HSI_LIVING_HEALTH_KNOWLEDGE_GRAPH.md) (§4).  
 **Authoritative Intelligence Engine:** Document 03 Spec above; **§5** pack below elaborates agents/orchestration with audit classifications.  
@@ -43,7 +44,8 @@ Strategic product reset: audit, architecture, and roadmap. **No feature implemen
 | [HSI_DOC02_03_RECONCILIATION.md](./HSI_DOC02_03_RECONCILIATION.md) | Companion (02/03/04) vs Phase 0 audit honesty |
 | [HSI_FR_REQUIREMENTS_TRACEABILITY.md](./HSI_FR_REQUIREMENTS_TRACEABILITY.md) | HSI-FR-001–054 classifications + evidence |
 | [HSI_PRD_GAP_ANALYSIS_AND_MVP.md](./HSI_PRD_GAP_ANALYSIS_AND_MVP.md) | Goals G-01–G-07, Scientific MVP, §16 acceptance, HSI-D01–D10 |
-| [HSI_MASTER_VISION.md](./HSI_MASTER_VISION.md) | **Definitive** HSI vision (§2) |
+| [HSI_VISION.md](./HSI_VISION.md) | **Governing** HSI vision doctrine (problem, four products, LHKG, differentiation, investigation, ambition layers, vision statement) |
+| [HSI_MASTER_VISION.md](./HSI_MASTER_VISION.md) | Detailed HSI vision elaboration (§2; defers to `HSI_VISION.md`) |
 | [HSI_FOUR_PRODUCT_ECOSYSTEM.md](./HSI_FOUR_PRODUCT_ECOSYSTEM.md) | **Definitive** four-product architecture (§3) + D1–D10 deliverables |
 | [HSI_LIVING_HEALTH_KNOWLEDGE_GRAPH.md](./HSI_LIVING_HEALTH_KNOWLEDGE_GRAPH.md) | **Definitive** LHK-G (§4) — ISI audit, six domains, Q1–Q10, ADRs |
 | [HSI_CURRENT_STATE_INTELLIGENCE_REPORT.md](./HSI_CURRENT_STATE_INTELLIGENCE_REPORT.md) | Integrated current-state intelligence + first milestone |
