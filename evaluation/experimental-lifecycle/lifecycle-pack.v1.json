@@ -1,0 +1,191 @@
+{
+  "schema": "hsi-experimental-lifecycle-1",
+  "method": "hsi.experimental_lifecycle.v1",
+  "version": "0.1.0",
+  "asOf": "2026-11-09T14:00:00.000Z",
+  "proposalCount": 1,
+  "protocolCount": 1,
+  "executionCount": 1,
+  "resultCount": 3,
+  "honesty": {
+    "agentsProposeResearchersApprove": true,
+    "aiCannotSelfApproveExperiments": true,
+    "proposalDistinctFromApprovedPlan": true,
+    "approvedPlanDistinctFromExecution": true,
+    "executionDistinctFromObservation": true,
+    "observationDistinctFromDerivedResult": true,
+    "derivedResultDistinctFromInterpretation": true,
+    "fabricatedObservations": false,
+    "closedLoopDiscoveryComplete": false,
+    "labInstrumentControl": false,
+    "computationalPipelineExecuted": false,
+    "gateCAutoApprove": false,
+    "mouInvented": false,
+    "phiCdsWired": false,
+    "scientificApproval": false,
+    "graphPromotable": false,
+    "neonProjectPolicy": "red-wave-only",
+    "migration": "deferred"
+  },
+  "proposals": [
+    {
+      "schema": "hsi-experimental-lifecycle-1",
+      "method": "hsi.experimental_lifecycle.v1",
+      "version": "0.1.0",
+      "id": "hsi-exp-prop-fixture-demo",
+      "title": "Fixture experimental lifecycle demo",
+      "rationale": "Engineering fixture demonstrating proposal → protocol → execution → result layers.",
+      "falsifier": "If no authorised observation is attached, experimental validation remains not established.",
+      "proposedBy": {
+        "principalId": "fixture-agent-designer",
+        "actorKind": "ai_agent"
+      },
+      "approvedBy": {
+        "principalId": "fixture-researcher",
+        "actorKind": "human",
+        "approvedAt": "2026-11-09T14:00:00.000Z"
+      },
+      "lifecycle": "protocol_bound",
+      "links": {
+        "hypothesisIds": [
+          "hyp-fixture-001"
+        ],
+        "investigationId": "inv-fixture-001",
+        "n7ExperimentRecordIds": [
+          "EXP-N7-001"
+        ],
+        "evidenceLedgerRecordIds": []
+      },
+      "boundProtocolId": "hsi-exp-prot-fixture-demo",
+      "boundProtocolVersion": 1,
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "agentsProposeResearchersApprove": true,
+        "aiCannotSelfApproveExperiments": true,
+        "proposalDistinctFromApprovedPlan": true,
+        "approvedPlanDistinctFromExecution": true,
+        "executionDistinctFromObservation": true,
+        "observationDistinctFromDerivedResult": true,
+        "derivedResultDistinctFromInterpretation": true,
+        "fabricatedObservations": false,
+        "closedLoopDiscoveryComplete": false,
+        "labInstrumentControl": false,
+        "computationalPipelineExecuted": false,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T14:00:00.000Z",
+      "updatedAt": "2026-11-09T14:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "protocols": [
+    {
+      "protocolId": "hsi-exp-prot-fixture-demo",
+      "protocolVersion": 1,
+      "parentProtocolVersion": null,
+      "title": "Fixture protocol v1",
+      "objective": "Declare procedure steps without wet-lab claims.",
+      "procedureSteps": [
+        "Freeze prediction before outcome (N7).",
+        "Record fixture-only artifacts."
+      ],
+      "controls": [
+        "fixture_control"
+      ],
+      "materials": [],
+      "safetyNotes": [],
+      "deviations": [],
+      "n7ProtocolId": null,
+      "lifecycle": "active",
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "createdAt": "2026-11-09T14:00:00.000Z",
+      "createdByPrincipalId": "fixture-researcher",
+      "note": ""
+    }
+  ],
+  "executions": [
+    {
+      "id": "hsi-exp-exec-fixture-demo",
+      "proposalId": "hsi-exp-prop-fixture-demo",
+      "protocolId": "hsi-exp-prot-fixture-demo",
+      "protocolVersion": 1,
+      "lifecycle": "completed_fixture",
+      "observationsAttached": false,
+      "startedAt": null,
+      "completedAt": "2026-11-09T14:00:00.000Z",
+      "blockedReason": null,
+      "executedByPrincipalId": null,
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "realLabRunClaimed": false,
+      "n7ExperimentRecordId": null,
+      "createdAt": "2026-11-09T14:00:00.000Z",
+      "updatedAt": "2026-11-09T14:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "results": [
+    {
+      "id": "hsi-exp-res-fixture-raw",
+      "executionId": "hsi-exp-exec-fixture-demo",
+      "layer": "raw_observation",
+      "summary": "Fixture raw observation pointer — not live lab data.",
+      "artifactPointers": [
+        "fixture://experimental-lifecycle/raw-1"
+      ],
+      "dependsOnResultIds": [],
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "fabricated": false,
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "createdAt": "2026-11-09T14:00:00.000Z",
+      "createdByPrincipalId": "fixture-researcher",
+      "note": ""
+    },
+    {
+      "id": "hsi-exp-res-fixture-derived",
+      "executionId": "hsi-exp-exec-fixture-demo",
+      "layer": "derived_result",
+      "summary": "Fixture derived result from declared raw pointer.",
+      "artifactPointers": [],
+      "dependsOnResultIds": [
+        "hsi-exp-res-fixture-raw"
+      ],
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "fabricated": false,
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "createdAt": "2026-11-09T14:00:00.000Z",
+      "createdByPrincipalId": "fixture-researcher",
+      "note": ""
+    },
+    {
+      "id": "hsi-exp-res-fixture-interp",
+      "executionId": "hsi-exp-exec-fixture-demo",
+      "layer": "interpretation",
+      "summary": "Fixture interpretation — not graph-promotable.",
+      "artifactPointers": [],
+      "dependsOnResultIds": [
+        "hsi-exp-res-fixture-derived"
+      ],
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "fabricated": false,
+      "scientificApproval": false,
+      "graphPromotable": false,
+      "createdAt": "2026-11-09T14:00:00.000Z",
+      "createdByPrincipalId": "fixture-researcher",
+      "note": ""
+    }
+  ]
+}
