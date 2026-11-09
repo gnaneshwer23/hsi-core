@@ -1,4 +1,4 @@
-.home-shell {
+.site-shell.home-shell {
   --cl-bg: #f3f6fb;
   --cl-ink: #12253f;
   --cl-body: #234864;
@@ -10,23 +10,65 @@
   color: var(--cl-ink);
   font-family: "Red Hat Display Variable", "Red Hat Display", var(--font-body), sans-serif;
 }
-.home-shell .site-main { background: var(--cl-bg); }
-.home-shell .nav { background: rgba(243, 246, 251, 0.92); color: var(--cl-ink); border-bottom: 1px solid rgba(18, 37, 63, 0.08); }
-.home-shell .nav .brand-name,
-.home-shell .nav .nav-links > a,
-.home-shell .nav .nav-more > button { color: #12253f !important; }
-.home-shell .nav .nav-sign-in { color: #12253f !important; border-color: #9fb4c9 !important; }
-.home-shell .site-footer { background: #12253f; color: #f3f6fb; }
-.home-shell ::selection { background: #9aebfb; color: #12253f; }
+.site-shell.home-shell .site-main { background: var(--cl-bg); }
+.site-shell.home-shell .nav,
+.site-shell.home-shell .nav.home-nav,
+.site-shell.home-shell .nav.scrolled {
+  background: rgba(243, 246, 251, 0.94);
+  color: var(--cl-ink);
+  border-bottom: 1px solid rgba(18, 37, 63, 0.08);
+  backdrop-filter: none;
+}
+.site-shell.home-shell .nav-inner,
+.site-shell.home-shell .nav.scrolled .nav-inner {
+  background: rgba(243, 246, 251, 0.94);
+  border: 1px solid rgba(18, 37, 63, 0.08);
+  box-shadow: none;
+}
+.site-shell.home-shell .nav .brand,
+.site-shell.home-shell .nav .brand-name,
+.site-shell.home-shell .nav .brand-short,
+.site-shell.home-shell .nav .nav-links > a,
+.site-shell.home-shell .nav .nav-more > button,
+.site-shell.home-shell .nav .nav-sign-in,
+.site-shell.home-shell .nav .nav-toggle { color: #12253f !important; }
+.site-shell.home-shell .nav .nav-sign-in { border-color: #9fb4c9 !important; background: transparent !important; }
+.site-shell.home-shell .nav .brand-mark { background: #12253f !important; color: #f3f6fb !important; border-color: #12253f !important; }
+.site-shell.home-shell .nav .nav-links > a.active { border-color: #12253f; }
+.site-shell.home-shell .nav .nav-cta {
+  background: #12253f !important;
+  color: #f3f6fb !important;
+  border-radius: 999px !important;
+}
+.site-shell.home-shell .nav-drawer.open { background: #f3f6fb; }
+.site-shell.home-shell .nav-drawer a { color: #12253f; }
+.site-shell.home-shell .site-footer {
+  background: #12253f !important;
+  color: #f3f6fb;
+  border-top: 0;
+}
+.site-shell.home-shell .site-footer .footer-brand,
+.site-shell.home-shell .site-footer h4 { color: #f3f6fb !important; }
+.site-shell.home-shell .site-footer .footer-tagline,
+.site-shell.home-shell .site-footer .footer-honesty,
+.site-shell.home-shell .site-footer a,
+.site-shell.home-shell .site-footer .footer-bottom { color: #d5e4f2 !important; }
+.site-shell.home-shell ::selection { background: #9aebfb; color: #12253f; }
 
 .cl-page { width: min(1180px, calc(100% - 32px)); margin: 0 auto 4rem; }
 .cl-page section { scroll-margin-top: 5.5rem; }
 .cl-hero {
   position: relative;
   isolation: isolate;
-  min-height: 640px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(260px, 0.95fr);
+  grid-template-areas:
+    "copy cell"
+    "note modules";
+  gap: 1.25rem 1.5rem;
+  align-items: center;
   margin-top: 1rem;
-  padding: 2.2rem 2rem 6rem;
+  padding: 2.2rem;
   border-radius: 28px;
   background: linear-gradient(180deg, #e7f1fb 0%, #d5e6f8 100%);
   overflow: hidden;
@@ -46,7 +88,7 @@
   pointer-events: none;
   user-select: none;
 }
-.cl-hero-copy { position: relative; z-index: 2; max-width: 38rem; }
+.cl-hero-copy { position: relative; z-index: 2; grid-area: copy; max-width: none; }
 .cl-hero h1 {
   margin: 0 0 1rem;
   font-size: clamp(2.1rem, 4.6vw, 3.6rem);
@@ -79,21 +121,21 @@
 }
 .cl-arrow-link-solid { background: #12253f; color: #f3f6fb; border-radius: 999px; padding: 0.2rem 0.3rem 0.2rem 1rem; }
 .cl-arrow-link-solid .cl-arrow { background: #9aebfb; color: #12253f; }
-.cl-cell { position: absolute; right: -2%; top: 4%; width: min(560px, 58%); margin: 0; z-index: 1; }
+.cl-cell { position: relative; grid-area: cell; width: min(100%, 520px); margin: 0 auto; z-index: 1; justify-self: center; }
 .cl-float {
-  position: absolute;
+  position: relative;
   z-index: 2;
-  width: min(280px, 42%);
+  width: auto;
   padding: 1rem 1.1rem;
   border-radius: 22px;
-  background: rgba(247, 250, 255, 0.9);
+  background: rgba(247, 250, 255, 0.92);
   box-shadow: 0 16px 30px rgba(18, 37, 63, 0.08);
   color: #234864;
 }
 .cl-float p, .cl-float ul { margin: 0; }
 .cl-float ul { padding: 0.5rem 0 0 1rem; }
-.cl-float-modules { right: 4%; bottom: 1.4rem; }
-.cl-float-note { left: 2rem; bottom: 1.4rem; width: min(320px, 46%); }
+.cl-float-modules { grid-area: modules; }
+.cl-float-note { grid-area: note; }
 
 .cl-mission, .cl-modules, .cl-different, .cl-steps, .cl-life, .cl-limits, .cl-cta { margin-top: 4.5rem; }
 .cl-page h2 {
@@ -149,7 +191,7 @@
   padding: 2rem;
 }
 @media (max-width: 800px) {
-  .cl-hero { min-height: 0; padding: 1.4rem 1rem 1.2rem; display: flex; flex-direction: column; }
+  .cl-hero { min-height: 0; padding: 1.4rem 1rem 1.2rem; display: flex; flex-direction: column; grid-template-areas: none; }
   .cl-hero-copy { order: 1; }
   .cl-cell { position: relative; width: 100%; right: auto; top: auto; order: 2; }
   .cl-float { position: relative; width: auto; left: auto; right: auto; bottom: auto; margin-top: 0.8rem; order: 3; }

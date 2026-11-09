@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { CellField } from "../components/clinical/CellField";
-import "../styles/clinical-landing.css";
 
 const MODULES = [
   { name: "Aksh Health", role: "Patient intelligence", chips: ["Symptoms", "Medications", "Labs", "Wearables"], text: "Everyday health context stays in its own permission boundary." },
