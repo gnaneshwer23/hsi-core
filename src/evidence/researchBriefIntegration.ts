@@ -21,6 +21,10 @@ import {
   projectPrecisionContractPersistenceLines,
   type PrecisionEvidenceContractPack,
 } from "./precisionEvidenceContracts";
+import {
+  projectInvestigationContractPersistenceLines,
+  type ScientificInvestigationContract,
+} from "./investigationOrchestrationContracts";
 
 export const RESEARCH_BRIEF_INTEGRATION_SCHEMA = "hsi-research-brief-integration-1" as const;
 export const RESEARCH_BRIEF_INTEGRATION_METHOD = "hsi.research_brief_integration.v1" as const;
@@ -91,6 +95,18 @@ export type IntegratedResearchBrief = {
     individualisedMedicalAdvice: false;
     candidateSubgroupIsNotClinicalStrataProof: true;
   } | null;
+  /** M6 PR1 investigation orchestration contract (identity + lifecycle; planner not claimed). */
+  investigationSummary: {
+    investigationId: string;
+    status: ScientificInvestigationContract["status"];
+    planVersion: number;
+    reviewCheckpointsPending: number;
+    resumeUsesExistingCheckpoints: true;
+    plannerNotImplemented: true;
+    routerNotImplemented: true;
+    liveSscE2eSuccessClaimed: false;
+    gateCAutoApprove: false;
+  } | null;
   candidatesRemainUnapproved: true;
   reviewGatesIntact: true;
   scientificValidityClaimed: false;
@@ -114,6 +130,8 @@ export type IntegrateResearchBriefInput = {
   translationalFailureInvestigation?: TranslationalFailureInvestigationAssessment | null;
   /** M5 PR1 precision evidence contracts. */
   precisionContracts?: PrecisionEvidenceContractPack | null;
+  /** M6 PR1 shared investigation orchestration contract. */
+  investigationContract?: ScientificInvestigationContract | null;
   releaseAware?: ReleaseAwareRetrievalResult | null;
   /** Optional source locators from retrieval / living evidence. */
   sourceLocators?: readonly {kind: "pmid" | "doi" | "nct"; value: string}[];
@@ -221,6 +239,12 @@ export function integrateResearchBrief(input: IntegrateResearchBriefInput): Inte
           ...projectPrecisionContractPersistenceLines(input.precisionContracts).slice(0, 10),
         ]
       : []),
+    ...(input.investigationContract
+      ? [
+          "M6 investigation contract: lifecycle + resume via existing checkpoints; planner/router not implemented; no Gate C auto-approve; fixtures ≠ live; live SSc E2E success not claimed",
+          ...projectInvestigationContractPersistenceLines(input.investigationContract).slice(0, 8),
+        ]
+      : []),
     ...(input.releaseAware
       ? [
           "Release-aware surface keeps draft candidates in a separate labelled channel; assessReleaseClaim remains fail-closed",
@@ -282,6 +306,17 @@ export function integrateResearchBrief(input: IntegrateResearchBriefInput): Inte
     throw new Error("Precision evidence contracts refused honesty gates");
   }
 
+  if (
+    input.investigationContract &&
+    (input.investigationContract.honesty.plannerNotImplemented !== true ||
+      input.investigationContract.honesty.routerNotImplemented !== true ||
+      input.investigationContract.honesty.gateCAutoApprove !== false ||
+      input.investigationContract.honesty.liveSscE2eSuccessClaimed !== false ||
+      input.investigationContract.honesty.resumeUsesExistingCheckpoints !== true)
+  ) {
+    throw new Error("Investigation orchestration contract refused honesty gates");
+  }
+
   const translationalSummary =
     input.translational && input.translational.status !== "not_queried"
       ? {
@@ -313,6 +348,22 @@ export function integrateResearchBrief(input: IntegrateResearchBriefInput): Inte
       }
     : null;
 
+  const investigationSummary = input.investigationContract
+    ? {
+        investigationId: input.investigationContract.investigationId,
+        status: input.investigationContract.status,
+        planVersion: input.investigationContract.planVersion,
+        reviewCheckpointsPending: input.investigationContract.reviewCheckpoints.filter(
+          (c) => c.status === "pending",
+        ).length,
+        resumeUsesExistingCheckpoints: true as const,
+        plannerNotImplemented: true as const,
+        routerNotImplemented: true as const,
+        liveSscE2eSuccessClaimed: false as const,
+        gateCAutoApprove: false as const,
+      }
+    : null;
+
   return {
     schemaVersion: RESEARCH_BRIEF_INTEGRATION_SCHEMA,
     method: RESEARCH_BRIEF_INTEGRATION_METHOD,
@@ -330,6 +381,7 @@ export function integrateResearchBrief(input: IntegrateResearchBriefInput): Inte
     releaseAwareSurface,
     translationalSummary,
     precisionSummary,
+    investigationSummary,
     candidatesRemainUnapproved: true,
     reviewGatesIntact: true,
     scientificValidityClaimed: false,
