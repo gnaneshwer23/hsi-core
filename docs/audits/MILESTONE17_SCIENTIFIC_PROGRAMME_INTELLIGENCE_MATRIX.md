@@ -371,7 +371,7 @@ Honesty freeze: research programme intelligence only · **not a separate AI agen
 | Focused tests | **PR4 in-flight** | `test/scientificKnowledgeEvolutionContracts.test.ts` (7) |
 | Evaluation pack / script | **PR4 in-flight** | `evaluation/scientific-knowledge-evolution/` · `scripts/scientific-knowledge-evolution-contracts.ts` |
 | package.json prepare/check | **PR4 in-flight** | `spi:scientific-knowledge-evolution:prepare` / `:check` |
-| PR against #136 stack | **in-flight** (do not merge) | Base `#136` / `eng/m17-continuous-evidence-investigation` |
+| PR against #136 stack | **in-flight** ([#138](https://github.com/gnaneshwer23/hsi-core/pull/138) — do not merge) | Base `#136` / `eng/m17-continuous-evidence-investigation` |
 | Agent overwrite of approved claims | Refused | Fail-closed transition |
 | Append-only / tamper-evident audit | Required | No overwrite of audit event ids |
 | Source correction ≠ reinterpretation | Required | Distinct `changeKind` + note checks |
