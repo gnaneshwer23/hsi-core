@@ -2,7 +2,7 @@
   "schemaVersion": "hsi-neuroimmune-pack-1",
   "notCds": true,
   "autoApproveIntoKg": false,
-  "generatedAt": "2026-11-09T12:31:41.247Z",
+  "generatedAt": "2026-11-09T13:44:31.630Z",
   "pathway": {
     "id": "neuro-vagus-cholinergic-reflex",
     "label": "Neuroimmune · vagus / cholinergic anti-inflammatory reflex",
