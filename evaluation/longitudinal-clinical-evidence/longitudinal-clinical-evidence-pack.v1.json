@@ -1,0 +1,1088 @@
+{
+  "schema": "hsi-longitudinal-clinical-evidence-1",
+  "method": "hsi.longitudinal_clinical_evidence.v1",
+  "version": "0.1.0",
+  "asOf": "2026-11-09T21:00:00.000Z",
+  "specCount": 8,
+  "seriesCount": 1,
+  "temporalCheckCount": 1,
+  "resultCount": 1,
+  "honesty": {
+    "researchDecisionSupportOnly": true,
+    "noUnrestrictedCentralPatientDatabase": true,
+    "observationalTrajectoryIsNotProvenTreatmentEffect": true,
+    "noFutureInformationForEarlierExposureOrEligibility": true,
+    "temporalRolesMustRemainDistinct": true,
+    "irregularIntervalsAndMissingDataMustBeExplicit": true,
+    "identifiableRecordsOutsideScientificKg": true,
+    "pseudonymisedMayStillBePersonalData": true,
+    "noPhiIngestion": true,
+    "noFabricatedTrajectoriesOrEffects": true,
+    "noPatientTreatmentDirectives": true,
+    "noWorkbenchUi": true,
+    "noLiveLongitudinalEngineClaim": true,
+    "agentsDraftHumansReview": true,
+    "gateCAutoApprove": false,
+    "mouInvented": false,
+    "phiCdsWired": false,
+    "scientificApproval": false,
+    "causalIdentificationClaimed": false,
+    "graphPromotable": false,
+    "neonProjectPolicy": "red-wave-only",
+    "migration": "deferred"
+  },
+  "specs": [
+    {
+      "schema": "hsi-longitudinal-clinical-evidence-1",
+      "method": "hsi.longitudinal_clinical_evidence.v1",
+      "version": "0.1.0",
+      "id": "hsi-lce-spec-blocked-demo",
+      "analysisKind": "disease_trajectory",
+      "displayName": "Blocked disease trajectory until authorised dataset",
+      "scientificQuestion": "Blocked scientific path for disease trajectory until an authorised clinical dataset is supplied.",
+      "rweStudyId": "hsi-rwe-study-blocked-demo",
+      "rweObservationIds": [],
+      "rweExposureIds": [],
+      "rweOutcomeIds": [],
+      "rweAnalysisId": null,
+      "interopDataSourceId": null,
+      "interopTemporalAlignmentId": null,
+      "subjectRefKind": "cohort_aggregate",
+      "subjectOrCohortRef": "cohort-blocked-awaiting-dataset",
+      "temporalAnchors": {
+        "eventTime": {
+          "role": "event_time",
+          "timestamp": "2024-03-10T12:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture clinical event time"
+        },
+        "recordCreationTime": {
+          "role": "record_creation_time",
+          "timestamp": "2024-03-10T18:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture source-system record creation"
+        },
+        "ingestionTime": {
+          "role": "ingestion_time",
+          "timestamp": "2024-03-11T09:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture research ingestion time"
+        },
+        "treatmentInitiationTime": {
+          "role": "treatment_initiation_time",
+          "timestamp": "2024-02-01T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture treatment initiation"
+        },
+        "baselineTime": {
+          "role": "baseline_time",
+          "timestamp": "2024-01-15T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture baseline / eligibility window start"
+        },
+        "followUpTime": {
+          "role": "follow_up_time",
+          "timestamp": "2024-06-15T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture follow-up assessment"
+        },
+        "outcomeAscertainmentTime": {
+          "role": "outcome_ascertainment_time",
+          "timestamp": "2024-06-20T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture outcome ascertainment"
+        }
+      },
+      "observationIntervalKind": "unknown_interval",
+      "irregularIntervalNote": "Intervals unknown — authorised dataset not supplied",
+      "missingDataHandling": "explicitly_unresolved",
+      "missingDataNote": "Missingness unresolved without authorised dataset",
+      "eligibilityDefinitionTimeRole": "baseline_time",
+      "exposureDefinitionTimeRole": "treatment_initiation_time",
+      "datasetAvailability": "blocked_no_authorised_clinical_dataset",
+      "accessClassification": "restricted_not_ingested",
+      "containsIdentifiablePhi": false,
+      "liveLongitudinalEngineOperational": false,
+      "lifecycle": "blocked_awaiting_authorised_dataset",
+      "reviewedBy": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-lce",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "noUnrestrictedCentralPatientDatabase": true,
+        "observationalTrajectoryIsNotProvenTreatmentEffect": true,
+        "noFutureInformationForEarlierExposureOrEligibility": true,
+        "temporalRolesMustRemainDistinct": true,
+        "irregularIntervalsAndMissingDataMustBeExplicit": true,
+        "identifiableRecordsOutsideScientificKg": true,
+        "pseudonymisedMayStillBePersonalData": true,
+        "noPhiIngestion": true,
+        "noFabricatedTrajectoriesOrEffects": true,
+        "noPatientTreatmentDirectives": true,
+        "noWorkbenchUi": true,
+        "noLiveLongitudinalEngineClaim": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "causalIdentificationClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T21:00:00.000Z",
+      "updatedAt": "2026-11-09T21:00:00.000Z",
+      "note": ""
+    },
+    {
+      "schema": "hsi-longitudinal-clinical-evidence-1",
+      "method": "hsi.longitudinal_clinical_evidence.v1",
+      "version": "0.1.0",
+      "id": "hsi-lce-spec-lab-trend-demo",
+      "analysisKind": "laboratory_trend",
+      "displayName": "Fixture laboratory trend envelope",
+      "scientificQuestion": "Fixture laboratory trend over irregular intervals — not causal identification.",
+      "rweStudyId": "hsi-rwe-study-fixture-demo",
+      "rweObservationIds": [
+        "hsi-rwe-obs-fixture-demo"
+      ],
+      "rweExposureIds": [
+        "hsi-rwe-exp-fixture-demo"
+      ],
+      "rweOutcomeIds": [
+        "hsi-rwe-out-fixture-demo"
+      ],
+      "rweAnalysisId": "hsi-rwe-anl-fixture-demo",
+      "interopDataSourceId": "hsi-scdi-src-fhir-r4-demo",
+      "interopTemporalAlignmentId": "hsi-scdi-tmp-fixture-demo",
+      "subjectRefKind": "cohort_aggregate",
+      "subjectOrCohortRef": "cohort-lce-fixture-demo",
+      "temporalAnchors": {
+        "eventTime": {
+          "role": "event_time",
+          "timestamp": "2024-03-10T12:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture clinical event time"
+        },
+        "recordCreationTime": {
+          "role": "record_creation_time",
+          "timestamp": "2024-03-10T18:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture source-system record creation"
+        },
+        "ingestionTime": {
+          "role": "ingestion_time",
+          "timestamp": "2024-03-11T09:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture research ingestion time"
+        },
+        "treatmentInitiationTime": {
+          "role": "treatment_initiation_time",
+          "timestamp": "2024-02-01T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture treatment initiation"
+        },
+        "baselineTime": {
+          "role": "baseline_time",
+          "timestamp": "2024-01-15T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture baseline / eligibility window start"
+        },
+        "followUpTime": {
+          "role": "follow_up_time",
+          "timestamp": "2024-06-15T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture follow-up assessment"
+        },
+        "outcomeAscertainmentTime": {
+          "role": "outcome_ascertainment_time",
+          "timestamp": "2024-06-20T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture outcome ascertainment"
+        }
+      },
+      "observationIntervalKind": "irregular_declared",
+      "irregularIntervalNote": "Fixture irregular laboratory intervals",
+      "missingDataHandling": "declared_missing",
+      "missingDataNote": "Missing points declared in series",
+      "eligibilityDefinitionTimeRole": "baseline_time",
+      "exposureDefinitionTimeRole": "treatment_initiation_time",
+      "datasetAvailability": "fixture_only",
+      "accessClassification": "fixture_engineering",
+      "containsIdentifiablePhi": false,
+      "liveLongitudinalEngineOperational": false,
+      "lifecycle": "accepted_with_limitations",
+      "reviewedBy": {
+        "principalId": "fixture-researcher",
+        "actorKind": "human"
+      },
+      "authoredBy": {
+        "principalId": "fixture-agent-lce",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "noUnrestrictedCentralPatientDatabase": true,
+        "observationalTrajectoryIsNotProvenTreatmentEffect": true,
+        "noFutureInformationForEarlierExposureOrEligibility": true,
+        "temporalRolesMustRemainDistinct": true,
+        "irregularIntervalsAndMissingDataMustBeExplicit": true,
+        "identifiableRecordsOutsideScientificKg": true,
+        "pseudonymisedMayStillBePersonalData": true,
+        "noPhiIngestion": true,
+        "noFabricatedTrajectoriesOrEffects": true,
+        "noPatientTreatmentDirectives": true,
+        "noWorkbenchUi": true,
+        "noLiveLongitudinalEngineClaim": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "causalIdentificationClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T21:00:00.000Z",
+      "updatedAt": "2026-11-09T21:00:00.000Z",
+      "note": ""
+    },
+    {
+      "schema": "hsi-longitudinal-clinical-evidence-1",
+      "method": "hsi.longitudinal_clinical_evidence.v1",
+      "version": "0.1.0",
+      "id": "hsi-lce-spec-treatment-timeline",
+      "analysisKind": "treatment_timeline",
+      "displayName": "Fixture treatment_timeline envelope",
+      "scientificQuestion": "Fixture treatment_timeline contract exercise — observational only.",
+      "rweStudyId": "hsi-rwe-study-fixture-demo",
+      "rweObservationIds": [],
+      "rweExposureIds": [],
+      "rweOutcomeIds": [],
+      "rweAnalysisId": null,
+      "interopDataSourceId": null,
+      "interopTemporalAlignmentId": null,
+      "subjectRefKind": "cohort_aggregate",
+      "subjectOrCohortRef": "cohort-lce-treatment_timeline",
+      "temporalAnchors": {
+        "eventTime": {
+          "role": "event_time",
+          "timestamp": "2024-03-10T12:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture clinical event time"
+        },
+        "recordCreationTime": {
+          "role": "record_creation_time",
+          "timestamp": "2024-03-10T18:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture source-system record creation"
+        },
+        "ingestionTime": {
+          "role": "ingestion_time",
+          "timestamp": "2024-03-11T09:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture research ingestion time"
+        },
+        "treatmentInitiationTime": {
+          "role": "treatment_initiation_time",
+          "timestamp": "2024-02-01T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture treatment initiation"
+        },
+        "baselineTime": {
+          "role": "baseline_time",
+          "timestamp": "2024-01-15T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture baseline / eligibility window start"
+        },
+        "followUpTime": {
+          "role": "follow_up_time",
+          "timestamp": "2024-06-15T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture follow-up assessment"
+        },
+        "outcomeAscertainmentTime": {
+          "role": "outcome_ascertainment_time",
+          "timestamp": "2024-06-20T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture outcome ascertainment"
+        }
+      },
+      "observationIntervalKind": "regular_declared",
+      "irregularIntervalNote": null,
+      "missingDataHandling": "imputation_not_performed",
+      "missingDataNote": "Missing-data handling declared for fixture",
+      "eligibilityDefinitionTimeRole": "baseline_time",
+      "exposureDefinitionTimeRole": "treatment_initiation_time",
+      "datasetAvailability": "fixture_only",
+      "accessClassification": "fixture_engineering",
+      "containsIdentifiablePhi": false,
+      "liveLongitudinalEngineOperational": false,
+      "lifecycle": "draft",
+      "reviewedBy": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-lce",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "noUnrestrictedCentralPatientDatabase": true,
+        "observationalTrajectoryIsNotProvenTreatmentEffect": true,
+        "noFutureInformationForEarlierExposureOrEligibility": true,
+        "temporalRolesMustRemainDistinct": true,
+        "irregularIntervalsAndMissingDataMustBeExplicit": true,
+        "identifiableRecordsOutsideScientificKg": true,
+        "pseudonymisedMayStillBePersonalData": true,
+        "noPhiIngestion": true,
+        "noFabricatedTrajectoriesOrEffects": true,
+        "noPatientTreatmentDirectives": true,
+        "noWorkbenchUi": true,
+        "noLiveLongitudinalEngineClaim": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "causalIdentificationClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T21:00:00.000Z",
+      "updatedAt": "2026-11-09T21:00:00.000Z",
+      "note": ""
+    },
+    {
+      "schema": "hsi-longitudinal-clinical-evidence-1",
+      "method": "hsi.longitudinal_clinical_evidence.v1",
+      "version": "0.1.0",
+      "id": "hsi-lce-spec-clinical-event",
+      "analysisKind": "clinical_event",
+      "displayName": "Fixture clinical_event envelope",
+      "scientificQuestion": "Fixture clinical_event contract exercise — observational only.",
+      "rweStudyId": "hsi-rwe-study-fixture-demo",
+      "rweObservationIds": [],
+      "rweExposureIds": [],
+      "rweOutcomeIds": [],
+      "rweAnalysisId": null,
+      "interopDataSourceId": null,
+      "interopTemporalAlignmentId": null,
+      "subjectRefKind": "cohort_aggregate",
+      "subjectOrCohortRef": "cohort-lce-clinical_event",
+      "temporalAnchors": {
+        "eventTime": {
+          "role": "event_time",
+          "timestamp": "2024-03-10T12:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture clinical event time"
+        },
+        "recordCreationTime": {
+          "role": "record_creation_time",
+          "timestamp": "2024-03-10T18:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture source-system record creation"
+        },
+        "ingestionTime": {
+          "role": "ingestion_time",
+          "timestamp": "2024-03-11T09:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture research ingestion time"
+        },
+        "treatmentInitiationTime": {
+          "role": "treatment_initiation_time",
+          "timestamp": "2024-02-01T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture treatment initiation"
+        },
+        "baselineTime": {
+          "role": "baseline_time",
+          "timestamp": "2024-01-15T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture baseline / eligibility window start"
+        },
+        "followUpTime": {
+          "role": "follow_up_time",
+          "timestamp": "2024-06-15T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture follow-up assessment"
+        },
+        "outcomeAscertainmentTime": {
+          "role": "outcome_ascertainment_time",
+          "timestamp": "2024-06-20T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture outcome ascertainment"
+        }
+      },
+      "observationIntervalKind": "regular_declared",
+      "irregularIntervalNote": null,
+      "missingDataHandling": "imputation_not_performed",
+      "missingDataNote": "Missing-data handling declared for fixture",
+      "eligibilityDefinitionTimeRole": "baseline_time",
+      "exposureDefinitionTimeRole": "treatment_initiation_time",
+      "datasetAvailability": "fixture_only",
+      "accessClassification": "fixture_engineering",
+      "containsIdentifiablePhi": false,
+      "liveLongitudinalEngineOperational": false,
+      "lifecycle": "draft",
+      "reviewedBy": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-lce",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "noUnrestrictedCentralPatientDatabase": true,
+        "observationalTrajectoryIsNotProvenTreatmentEffect": true,
+        "noFutureInformationForEarlierExposureOrEligibility": true,
+        "temporalRolesMustRemainDistinct": true,
+        "irregularIntervalsAndMissingDataMustBeExplicit": true,
+        "identifiableRecordsOutsideScientificKg": true,
+        "pseudonymisedMayStillBePersonalData": true,
+        "noPhiIngestion": true,
+        "noFabricatedTrajectoriesOrEffects": true,
+        "noPatientTreatmentDirectives": true,
+        "noWorkbenchUi": true,
+        "noLiveLongitudinalEngineClaim": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "causalIdentificationClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T21:00:00.000Z",
+      "updatedAt": "2026-11-09T21:00:00.000Z",
+      "note": ""
+    },
+    {
+      "schema": "hsi-longitudinal-clinical-evidence-1",
+      "method": "hsi.longitudinal_clinical_evidence.v1",
+      "version": "0.1.0",
+      "id": "hsi-lce-spec-patient-reported-outcome",
+      "analysisKind": "patient_reported_outcome",
+      "displayName": "Fixture patient_reported_outcome envelope",
+      "scientificQuestion": "Fixture patient_reported_outcome contract exercise — observational only.",
+      "rweStudyId": "hsi-rwe-study-fixture-demo",
+      "rweObservationIds": [],
+      "rweExposureIds": [],
+      "rweOutcomeIds": [],
+      "rweAnalysisId": null,
+      "interopDataSourceId": null,
+      "interopTemporalAlignmentId": null,
+      "subjectRefKind": "cohort_aggregate",
+      "subjectOrCohortRef": "cohort-lce-patient_reported_outcome",
+      "temporalAnchors": {
+        "eventTime": {
+          "role": "event_time",
+          "timestamp": "2024-03-10T12:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture clinical event time"
+        },
+        "recordCreationTime": {
+          "role": "record_creation_time",
+          "timestamp": "2024-03-10T18:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture source-system record creation"
+        },
+        "ingestionTime": {
+          "role": "ingestion_time",
+          "timestamp": "2024-03-11T09:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture research ingestion time"
+        },
+        "treatmentInitiationTime": {
+          "role": "treatment_initiation_time",
+          "timestamp": "2024-02-01T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture treatment initiation"
+        },
+        "baselineTime": {
+          "role": "baseline_time",
+          "timestamp": "2024-01-15T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture baseline / eligibility window start"
+        },
+        "followUpTime": {
+          "role": "follow_up_time",
+          "timestamp": "2024-06-15T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture follow-up assessment"
+        },
+        "outcomeAscertainmentTime": {
+          "role": "outcome_ascertainment_time",
+          "timestamp": "2024-06-20T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture outcome ascertainment"
+        }
+      },
+      "observationIntervalKind": "regular_declared",
+      "irregularIntervalNote": null,
+      "missingDataHandling": "imputation_not_performed",
+      "missingDataNote": "Missing-data handling declared for fixture",
+      "eligibilityDefinitionTimeRole": "baseline_time",
+      "exposureDefinitionTimeRole": "treatment_initiation_time",
+      "datasetAvailability": "fixture_only",
+      "accessClassification": "fixture_engineering",
+      "containsIdentifiablePhi": false,
+      "liveLongitudinalEngineOperational": false,
+      "lifecycle": "draft",
+      "reviewedBy": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-lce",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "noUnrestrictedCentralPatientDatabase": true,
+        "observationalTrajectoryIsNotProvenTreatmentEffect": true,
+        "noFutureInformationForEarlierExposureOrEligibility": true,
+        "temporalRolesMustRemainDistinct": true,
+        "irregularIntervalsAndMissingDataMustBeExplicit": true,
+        "identifiableRecordsOutsideScientificKg": true,
+        "pseudonymisedMayStillBePersonalData": true,
+        "noPhiIngestion": true,
+        "noFabricatedTrajectoriesOrEffects": true,
+        "noPatientTreatmentDirectives": true,
+        "noWorkbenchUi": true,
+        "noLiveLongitudinalEngineClaim": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "causalIdentificationClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T21:00:00.000Z",
+      "updatedAt": "2026-11-09T21:00:00.000Z",
+      "note": ""
+    },
+    {
+      "schema": "hsi-longitudinal-clinical-evidence-1",
+      "method": "hsi.longitudinal_clinical_evidence.v1",
+      "version": "0.1.0",
+      "id": "hsi-lce-spec-functional-outcome",
+      "analysisKind": "functional_outcome",
+      "displayName": "Fixture functional_outcome envelope",
+      "scientificQuestion": "Fixture functional_outcome contract exercise — observational only.",
+      "rweStudyId": "hsi-rwe-study-fixture-demo",
+      "rweObservationIds": [],
+      "rweExposureIds": [],
+      "rweOutcomeIds": [],
+      "rweAnalysisId": null,
+      "interopDataSourceId": null,
+      "interopTemporalAlignmentId": null,
+      "subjectRefKind": "cohort_aggregate",
+      "subjectOrCohortRef": "cohort-lce-functional_outcome",
+      "temporalAnchors": {
+        "eventTime": {
+          "role": "event_time",
+          "timestamp": "2024-03-10T12:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture clinical event time"
+        },
+        "recordCreationTime": {
+          "role": "record_creation_time",
+          "timestamp": "2024-03-10T18:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture source-system record creation"
+        },
+        "ingestionTime": {
+          "role": "ingestion_time",
+          "timestamp": "2024-03-11T09:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture research ingestion time"
+        },
+        "treatmentInitiationTime": {
+          "role": "treatment_initiation_time",
+          "timestamp": "2024-02-01T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture treatment initiation"
+        },
+        "baselineTime": {
+          "role": "baseline_time",
+          "timestamp": "2024-01-15T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture baseline / eligibility window start"
+        },
+        "followUpTime": {
+          "role": "follow_up_time",
+          "timestamp": "2024-06-15T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture follow-up assessment"
+        },
+        "outcomeAscertainmentTime": {
+          "role": "outcome_ascertainment_time",
+          "timestamp": "2024-06-20T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture outcome ascertainment"
+        }
+      },
+      "observationIntervalKind": "regular_declared",
+      "irregularIntervalNote": null,
+      "missingDataHandling": "imputation_not_performed",
+      "missingDataNote": "Missing-data handling declared for fixture",
+      "eligibilityDefinitionTimeRole": "baseline_time",
+      "exposureDefinitionTimeRole": "treatment_initiation_time",
+      "datasetAvailability": "fixture_only",
+      "accessClassification": "fixture_engineering",
+      "containsIdentifiablePhi": false,
+      "liveLongitudinalEngineOperational": false,
+      "lifecycle": "draft",
+      "reviewedBy": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-lce",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "noUnrestrictedCentralPatientDatabase": true,
+        "observationalTrajectoryIsNotProvenTreatmentEffect": true,
+        "noFutureInformationForEarlierExposureOrEligibility": true,
+        "temporalRolesMustRemainDistinct": true,
+        "irregularIntervalsAndMissingDataMustBeExplicit": true,
+        "identifiableRecordsOutsideScientificKg": true,
+        "pseudonymisedMayStillBePersonalData": true,
+        "noPhiIngestion": true,
+        "noFabricatedTrajectoriesOrEffects": true,
+        "noPatientTreatmentDirectives": true,
+        "noWorkbenchUi": true,
+        "noLiveLongitudinalEngineClaim": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "causalIdentificationClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T21:00:00.000Z",
+      "updatedAt": "2026-11-09T21:00:00.000Z",
+      "note": ""
+    },
+    {
+      "schema": "hsi-longitudinal-clinical-evidence-1",
+      "method": "hsi.longitudinal_clinical_evidence.v1",
+      "version": "0.1.0",
+      "id": "hsi-lce-spec-organ-specific-measure",
+      "analysisKind": "organ_specific_measure",
+      "displayName": "Fixture organ_specific_measure envelope",
+      "scientificQuestion": "Fixture organ_specific_measure contract exercise — observational only.",
+      "rweStudyId": "hsi-rwe-study-fixture-demo",
+      "rweObservationIds": [],
+      "rweExposureIds": [],
+      "rweOutcomeIds": [],
+      "rweAnalysisId": null,
+      "interopDataSourceId": null,
+      "interopTemporalAlignmentId": null,
+      "subjectRefKind": "cohort_aggregate",
+      "subjectOrCohortRef": "cohort-lce-organ_specific_measure",
+      "temporalAnchors": {
+        "eventTime": {
+          "role": "event_time",
+          "timestamp": "2024-03-10T12:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture clinical event time"
+        },
+        "recordCreationTime": {
+          "role": "record_creation_time",
+          "timestamp": "2024-03-10T18:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture source-system record creation"
+        },
+        "ingestionTime": {
+          "role": "ingestion_time",
+          "timestamp": "2024-03-11T09:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture research ingestion time"
+        },
+        "treatmentInitiationTime": {
+          "role": "treatment_initiation_time",
+          "timestamp": "2024-02-01T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture treatment initiation"
+        },
+        "baselineTime": {
+          "role": "baseline_time",
+          "timestamp": "2024-01-15T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture baseline / eligibility window start"
+        },
+        "followUpTime": {
+          "role": "follow_up_time",
+          "timestamp": "2024-06-15T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture follow-up assessment"
+        },
+        "outcomeAscertainmentTime": {
+          "role": "outcome_ascertainment_time",
+          "timestamp": "2024-06-20T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture outcome ascertainment"
+        }
+      },
+      "observationIntervalKind": "regular_declared",
+      "irregularIntervalNote": null,
+      "missingDataHandling": "imputation_not_performed",
+      "missingDataNote": "Missing-data handling declared for fixture",
+      "eligibilityDefinitionTimeRole": "baseline_time",
+      "exposureDefinitionTimeRole": "treatment_initiation_time",
+      "datasetAvailability": "fixture_only",
+      "accessClassification": "fixture_engineering",
+      "containsIdentifiablePhi": false,
+      "liveLongitudinalEngineOperational": false,
+      "lifecycle": "draft",
+      "reviewedBy": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-lce",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "noUnrestrictedCentralPatientDatabase": true,
+        "observationalTrajectoryIsNotProvenTreatmentEffect": true,
+        "noFutureInformationForEarlierExposureOrEligibility": true,
+        "temporalRolesMustRemainDistinct": true,
+        "irregularIntervalsAndMissingDataMustBeExplicit": true,
+        "identifiableRecordsOutsideScientificKg": true,
+        "pseudonymisedMayStillBePersonalData": true,
+        "noPhiIngestion": true,
+        "noFabricatedTrajectoriesOrEffects": true,
+        "noPatientTreatmentDirectives": true,
+        "noWorkbenchUi": true,
+        "noLiveLongitudinalEngineClaim": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "causalIdentificationClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T21:00:00.000Z",
+      "updatedAt": "2026-11-09T21:00:00.000Z",
+      "note": ""
+    },
+    {
+      "schema": "hsi-longitudinal-clinical-evidence-1",
+      "method": "hsi.longitudinal_clinical_evidence.v1",
+      "version": "0.1.0",
+      "id": "hsi-lce-spec-follow-up-completeness",
+      "analysisKind": "follow_up_completeness",
+      "displayName": "Fixture follow_up_completeness envelope",
+      "scientificQuestion": "Fixture follow_up_completeness contract exercise — observational only.",
+      "rweStudyId": "hsi-rwe-study-fixture-demo",
+      "rweObservationIds": [],
+      "rweExposureIds": [],
+      "rweOutcomeIds": [],
+      "rweAnalysisId": null,
+      "interopDataSourceId": null,
+      "interopTemporalAlignmentId": null,
+      "subjectRefKind": "cohort_aggregate",
+      "subjectOrCohortRef": "cohort-lce-follow_up_completeness",
+      "temporalAnchors": {
+        "eventTime": {
+          "role": "event_time",
+          "timestamp": "2024-03-10T12:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture clinical event time"
+        },
+        "recordCreationTime": {
+          "role": "record_creation_time",
+          "timestamp": "2024-03-10T18:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture source-system record creation"
+        },
+        "ingestionTime": {
+          "role": "ingestion_time",
+          "timestamp": "2024-03-11T09:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture research ingestion time"
+        },
+        "treatmentInitiationTime": {
+          "role": "treatment_initiation_time",
+          "timestamp": "2024-02-01T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture treatment initiation"
+        },
+        "baselineTime": {
+          "role": "baseline_time",
+          "timestamp": "2024-01-15T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture baseline / eligibility window start"
+        },
+        "followUpTime": {
+          "role": "follow_up_time",
+          "timestamp": "2024-06-15T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture follow-up assessment"
+        },
+        "outcomeAscertainmentTime": {
+          "role": "outcome_ascertainment_time",
+          "timestamp": "2024-06-20T00:00:00.000Z",
+          "declaredAbsent": false,
+          "note": "Fixture outcome ascertainment"
+        }
+      },
+      "observationIntervalKind": "sparse_declared",
+      "irregularIntervalNote": "Sparse follow-up declared for completeness envelope",
+      "missingDataHandling": "complete_case_declared",
+      "missingDataNote": "Missing-data handling declared for fixture",
+      "eligibilityDefinitionTimeRole": "baseline_time",
+      "exposureDefinitionTimeRole": "treatment_initiation_time",
+      "datasetAvailability": "fixture_only",
+      "accessClassification": "fixture_engineering",
+      "containsIdentifiablePhi": false,
+      "liveLongitudinalEngineOperational": false,
+      "lifecycle": "draft",
+      "reviewedBy": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-lce",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "noUnrestrictedCentralPatientDatabase": true,
+        "observationalTrajectoryIsNotProvenTreatmentEffect": true,
+        "noFutureInformationForEarlierExposureOrEligibility": true,
+        "temporalRolesMustRemainDistinct": true,
+        "irregularIntervalsAndMissingDataMustBeExplicit": true,
+        "identifiableRecordsOutsideScientificKg": true,
+        "pseudonymisedMayStillBePersonalData": true,
+        "noPhiIngestion": true,
+        "noFabricatedTrajectoriesOrEffects": true,
+        "noPatientTreatmentDirectives": true,
+        "noWorkbenchUi": true,
+        "noLiveLongitudinalEngineClaim": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "causalIdentificationClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T21:00:00.000Z",
+      "updatedAt": "2026-11-09T21:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "series": [
+    {
+      "schema": "hsi-longitudinal-clinical-evidence-1",
+      "method": "hsi.longitudinal_clinical_evidence.v1",
+      "version": "0.1.0",
+      "id": "hsi-lce-ser-lab-demo",
+      "analysisSpecId": "hsi-lce-spec-lab-trend-demo",
+      "rweStudyId": "hsi-rwe-study-fixture-demo",
+      "clinicalConcept": "Fixture CRP laboratory concept",
+      "observationIntervalKind": "irregular_declared",
+      "missingDataHandling": "declared_missing",
+      "points": [
+        {
+          "sequenceIndex": 0,
+          "intendedRole": "baseline_time",
+          "eventTime": "2024-01-15T00:00:00.000Z",
+          "recordCreationTime": "2024-01-15T06:00:00.000Z",
+          "ingestionTime": "2024-01-16T09:00:00.000Z",
+          "valueDeclared": "declared-fixture-baseline",
+          "unit": "mg/L",
+          "missingnessDeclared": false,
+          "intervalDaysFromPrior": null,
+          "note": "Baseline"
+        },
+        {
+          "sequenceIndex": 1,
+          "intendedRole": "follow_up_time",
+          "eventTime": "2024-06-15T00:00:00.000Z",
+          "recordCreationTime": "2024-06-15T08:00:00.000Z",
+          "ingestionTime": "2024-06-16T09:00:00.000Z",
+          "valueDeclared": null,
+          "unit": null,
+          "missingnessDeclared": true,
+          "intervalDaysFromPrior": 152,
+          "note": "Missing follow-up declared"
+        }
+      ],
+      "containsIdentifiablePhi": false,
+      "fabricatedTrajectory": null,
+      "authoredBy": {
+        "principalId": "fixture-agent-lce",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "noUnrestrictedCentralPatientDatabase": true,
+        "observationalTrajectoryIsNotProvenTreatmentEffect": true,
+        "noFutureInformationForEarlierExposureOrEligibility": true,
+        "temporalRolesMustRemainDistinct": true,
+        "irregularIntervalsAndMissingDataMustBeExplicit": true,
+        "identifiableRecordsOutsideScientificKg": true,
+        "pseudonymisedMayStillBePersonalData": true,
+        "noPhiIngestion": true,
+        "noFabricatedTrajectoriesOrEffects": true,
+        "noPatientTreatmentDirectives": true,
+        "noWorkbenchUi": true,
+        "noLiveLongitudinalEngineClaim": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "causalIdentificationClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T21:00:00.000Z",
+      "updatedAt": "2026-11-09T21:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "temporalChecks": [
+    {
+      "schema": "hsi-longitudinal-clinical-evidence-1",
+      "method": "hsi.longitudinal_clinical_evidence.v1",
+      "version": "0.1.0",
+      "id": "hsi-lce-tmp-demo",
+      "analysisSpecId": "hsi-lce-spec-lab-trend-demo",
+      "status": "passed_declared_checks",
+      "checksPerformed": [
+        "distinct_temporal_roles",
+        "eligibility_not_defined_by_future_outcome",
+        "exposure_not_defined_by_future_outcome",
+        "baseline_before_follow_up_when_both_present",
+        "treatment_initiation_not_after_outcome_ascertainment_when_both_present"
+      ],
+      "failures": [],
+      "usedFutureInformationForEarlierExposureOrEligibility": false,
+      "collapsedTemporalRoles": false,
+      "authoredBy": {
+        "principalId": "fixture-agent-lce",
+        "actorKind": "ai_agent"
+      },
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "noUnrestrictedCentralPatientDatabase": true,
+        "observationalTrajectoryIsNotProvenTreatmentEffect": true,
+        "noFutureInformationForEarlierExposureOrEligibility": true,
+        "temporalRolesMustRemainDistinct": true,
+        "irregularIntervalsAndMissingDataMustBeExplicit": true,
+        "identifiableRecordsOutsideScientificKg": true,
+        "pseudonymisedMayStillBePersonalData": true,
+        "noPhiIngestion": true,
+        "noFabricatedTrajectoriesOrEffects": true,
+        "noPatientTreatmentDirectives": true,
+        "noWorkbenchUi": true,
+        "noLiveLongitudinalEngineClaim": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "causalIdentificationClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T21:00:00.000Z",
+      "updatedAt": "2026-11-09T21:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "results": [
+    {
+      "schema": "hsi-longitudinal-clinical-evidence-1",
+      "method": "hsi.longitudinal_clinical_evidence.v1",
+      "version": "0.1.0",
+      "id": "hsi-lce-res-lab-demo",
+      "analysisSpecId": "hsi-lce-spec-lab-trend-demo",
+      "rweStudyId": "hsi-rwe-study-fixture-demo",
+      "analysisKind": "laboratory_trend",
+      "summary": "Fixture laboratory trend envelope — descriptive association only",
+      "temporalIntegrityStatus": "passed_declared_checks",
+      "observationIntervalKind": "irregular_declared",
+      "missingDataHandling": "declared_missing",
+      "limitations": [
+        "Observational trajectory only — confounding unresolved; not a proven treatment effect.",
+        "Irregular intervals and declared missingness limit interpretation."
+      ],
+      "trajectoryNarrative": "Declared fixture narrative of irregular laboratory follow-up",
+      "observationalTrajectoryIsNotProvenTreatmentEffect": true,
+      "causalIdentificationClaimed": false,
+      "inventedPatientCount": null,
+      "inventedEffectEstimate": null,
+      "inventedSurvivalCurve": null,
+      "fabricatedTrajectory": null,
+      "lifecycle": "accepted_with_limitations",
+      "reviewedBy": {
+        "principalId": "fixture-researcher",
+        "actorKind": "human"
+      },
+      "authoredBy": {
+        "principalId": "fixture-agent-lce",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "researchDecisionSupportOnly": true,
+        "noUnrestrictedCentralPatientDatabase": true,
+        "observationalTrajectoryIsNotProvenTreatmentEffect": true,
+        "noFutureInformationForEarlierExposureOrEligibility": true,
+        "temporalRolesMustRemainDistinct": true,
+        "irregularIntervalsAndMissingDataMustBeExplicit": true,
+        "identifiableRecordsOutsideScientificKg": true,
+        "pseudonymisedMayStillBePersonalData": true,
+        "noPhiIngestion": true,
+        "noFabricatedTrajectoriesOrEffects": true,
+        "noPatientTreatmentDirectives": true,
+        "noWorkbenchUi": true,
+        "noLiveLongitudinalEngineClaim": true,
+        "agentsDraftHumansReview": true,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "scientificApproval": false,
+        "causalIdentificationClaimed": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred"
+      },
+      "createdAt": "2026-11-09T21:00:00.000Z",
+      "updatedAt": "2026-11-09T21:00:00.000Z",
+      "note": ""
+    }
+  ]
+}
