@@ -17,7 +17,7 @@
     "blockedUntilSignOff": false,
     "docsUrl": "https://github.com/openmm/openmm/blob/master/LICENSE"
   },
-  "generatedAt": "2026-11-09T07:32:11.361Z",
+  "generatedAt": "2026-11-09T07:26:15.716Z",
   "simulations": [
     {
       "fixtureId": "ach",
@@ -57,7 +57,7 @@
         "axis:molecular-dynamics"
       ],
       "suggestedTeachingStatus": "hypothesized",
-      "createdAt": "2026-11-09T07:32:11.361Z"
+      "createdAt": "2026-11-09T07:26:15.716Z"
     },
     {
       "proposalId": "HSI-MP-OPENMM-BUTYRATE-001",
@@ -75,7 +75,7 @@
         "axis:molecular-dynamics"
       ],
       "suggestedTeachingStatus": "hypothesized",
-      "createdAt": "2026-11-09T07:32:11.361Z"
+      "createdAt": "2026-11-09T07:26:15.716Z"
     }
   ],
   "instructions": [
