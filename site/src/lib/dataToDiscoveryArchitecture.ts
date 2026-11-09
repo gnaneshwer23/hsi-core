@@ -87,7 +87,7 @@ export const DATA_TO_DISCOVERY_LAYERS: readonly DataToDiscoveryLayer[] = [
     subtitle: "Governed providers",
     status: "partially_implemented",
     summary:
-      "Europe PMC, Open Targets and ClinicalTrials.gov libraries exist. UniProt, Reactome, GO, ChEMBL, HGNC live fetch, HCA/CELLxGENE and omics planes are not connected.",
+      "Europe PMC, Open Targets, ClinicalTrials.gov and a thin UniProt metadata-only adapter exist. Reactome, GO, ChEMBL, HGNC live fetch, HCA/CELLxGENE and omics planes are not connected.",
   },
   {
     id: "ingestion",
@@ -111,7 +111,7 @@ export const DATA_TO_DISCOVERY_LAYERS: readonly DataToDiscoveryLayer[] = [
     subtitle: "Draft ≠ approved",
     status: "partially_implemented",
     summary:
-      "Domain graph, contextual candidates and science explorers exist. Live ontology-backed edges from missing adapters are absent.",
+      "Domain graph, contextual candidates and science explorers exist. Broader ontology-backed edges from Reactome/GO and related adapters remain absent.",
   },
   {
     id: "agents",
@@ -190,9 +190,10 @@ export const DATA_TO_DISCOVERY_NODES: readonly DataToDiscoveryNode[] = [
     id: "uniprot",
     layer: "sources",
     label: "UniProt",
-    detail: "Ontology prefix + public fragment samples only — no live adapter.",
-    status: "missing",
-    evidence: "src/hsiOntologyRegistry.ts",
+    detail:
+      "Metadata-only accession lookup (name/genes/organism) with fixture-gated tests; live optional — not claim support.",
+    status: "partially_implemented",
+    evidence: "src/evidence/uniprotMetadataLookup.ts",
   },
   {
     id: "reactome",

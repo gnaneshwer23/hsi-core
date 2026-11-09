@@ -17,11 +17,13 @@ import {
   type DynamicSearchRecord,
   type PermittedBibliographicMetadata,
   type PermittedOpenTargetsMetadata,
+  type PermittedUniprotMetadata,
   type SourceIdentityState,
   type ClaimSupportState,
   type ContentAccessState,
 } from "./dynamicEvidenceRetrieval";
 import {OPEN_TARGETS_PROVIDER} from "./openTargetsLookup";
+import {UNIPROT_PROVIDER} from "./uniprotMetadataLookup";
 
 export const DYNAMIC_PERSISTENCE_SCHEMA = "hsi-dynamic-evidence-persistence-1" as const;
 export const DYNAMIC_PERSISTENCE_METHOD = "hsi.dynamic_evidence_persistence.v1" as const;
@@ -65,7 +67,7 @@ export type DynamicCandidateAxes = {
 
 export type DynamicCandidateSource = {
   id: string;
-  sourceKind: "publication" | "registry";
+  sourceKind: "publication" | "registry" | "protein_catalog";
   externalId: string;
   title: string;
   sourceUrl: string | null;
@@ -74,7 +76,7 @@ export type DynamicCandidateSource = {
   licenceStatus: "metadata_only";
   retractionStatus: "unknown";
   retrievedAt: string;
-  provider: "europe_pmc" | typeof OPEN_TARGETS_PROVIDER;
+  provider: "europe_pmc" | typeof OPEN_TARGETS_PROVIDER | typeof UNIPROT_PROVIDER;
   responseIdentity: string | null;
   sourceIdentity: SourceIdentityState;
   contentAccess: ContentAccessState;
@@ -91,7 +93,11 @@ export type DynamicCandidateSource = {
 
 export type DynamicCandidateBinding = {
   sourceId: string;
-  role: "bibliographic_candidate" | "open_targets_candidate" | "duplicate_retrieval";
+  role:
+    | "bibliographic_candidate"
+    | "open_targets_candidate"
+    | "uniprot_candidate"
+    | "duplicate_retrieval";
   responseIdentity: string | null;
   pmid: string | null;
   provider: string;
@@ -130,6 +136,8 @@ export type DynamicPersistencePlan = {
     cdsPhi: false;
     fixturesAreNotLiveEvidence: true;
     openTargetsNotIndependentEuropePmcCorroboration: true;
+    uniprotMetadataOnly: true;
+    uniprotNotClaimSupport: true;
     autoPromotedToApprovedGraph: false;
   };
 };
@@ -189,6 +197,10 @@ function bibliographicCandidateId(row: PermittedBibliographicMetadata): string {
 
 function openTargetsCandidateId(row: PermittedOpenTargetsMetadata): string {
   return `open_targets:disease:${row.diseaseId}`;
+}
+
+function uniprotCandidateId(row: PermittedUniprotMetadata): string {
+  return `uniprot:accession:${row.accession}`;
 }
 
 function toBibliographicCandidate(
@@ -286,6 +298,60 @@ function toOpenTargetsCandidate(
       scoreHonesty: row.scoreHonesty,
       responseIdentity: row.responseIdentity,
       independentCorroborationOfEuropePmc: false,
+      curationReview: DRAFT_AXES.curationReview,
+      hsiGrade: DRAFT_AXES.hsiGrade,
+      teachingStatus: DRAFT_AXES.teachingStatus,
+      searchRecordHash,
+    },
+  };
+}
+
+function toUniprotCandidate(
+  row: PermittedUniprotMetadata,
+  searchRecordHash: string,
+): DynamicCandidateSource {
+  if (row.claimSupport !== "not_assessed") fail("UniProt candidate fabricated claim support");
+  if (
+    row.scientificApproval !== false ||
+    row.graphPromotable !== false ||
+    row.passageImported !== false ||
+    row.sequenceRetrieved !== false
+  ) {
+    fail("UniProt candidate honesty flags violated");
+  }
+  return {
+    id: uniprotCandidateId(row),
+    sourceKind: "protein_catalog",
+    externalId: row.accession,
+    title: row.proteinName ?? row.accession,
+    sourceUrl: row.provenance.entryUrl,
+    doi: null,
+    pmid: null,
+    licenceStatus: "metadata_only",
+    retractionStatus: "unknown",
+    retrievedAt: row.retrievedAt,
+    provider: UNIPROT_PROVIDER,
+    responseIdentity: row.responseIdentity,
+    sourceIdentity: row.sourceIdentity,
+    contentAccess: "metadata",
+    claimSupport: "not_assessed",
+    identityLayer: "provider_record",
+    scientificApproval: false,
+    graphPromotable: false,
+    passageImported: false,
+    independentCorroborationOfEuropePmc: null,
+    axes: {...DRAFT_AXES},
+    searchRecordHash,
+    metadata: {
+      provider: UNIPROT_PROVIDER,
+      accession: row.accession,
+      proteinName: row.proteinName,
+      geneNames: row.geneNames,
+      organism: row.organism,
+      provenance: row.provenance,
+      responseIdentity: row.responseIdentity,
+      sequenceRetrieved: false,
+      retryHonesty: row.retryHonesty,
       curationReview: DRAFT_AXES.curationReview,
       hsiGrade: DRAFT_AXES.hsiGrade,
       teachingStatus: DRAFT_AXES.teachingStatus,
@@ -555,6 +621,21 @@ export function buildDynamicPersistencePlan(input: {
     });
   }
 
+  for (const row of record.retrievedUniprot) {
+    const candidate = toUniprotCandidate(row, searchRecordHash);
+    if (!seenCandidateIds.has(candidate.id)) {
+      candidates.push(candidate);
+      seenCandidateIds.add(candidate.id);
+    }
+    bindings.push({
+      sourceId: candidate.id,
+      role: "uniprot_candidate",
+      responseIdentity: row.responseIdentity,
+      pmid: null,
+      provider: UNIPROT_PROVIDER,
+    });
+  }
+
   const identityLinks = [
     ...buildDedupLinks(record),
     ...buildOpenTargetsIndependenceLinks(record),
@@ -582,6 +663,8 @@ export function buildDynamicPersistencePlan(input: {
       cdsPhi: false,
       fixturesAreNotLiveEvidence: true,
       openTargetsNotIndependentEuropePmcCorroboration: true,
+      uniprotMetadataOnly: true,
+      uniprotNotClaimSupport: true,
       autoPromotedToApprovedGraph: false,
     },
   };

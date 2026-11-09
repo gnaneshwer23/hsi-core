@@ -3,8 +3,8 @@
 **Brief:** CURSOR MASTER IMPLEMENTATION PROMPT — HSI End-to-End Data-to-Discovery Intelligence Architecture  
 **Status:** Gap audit + highest-leverage new slice selection — **not** production readiness, **not** scientific validity.  
 **Date:** 2026-11-09  
-**Audited `main` SHA:** `258489b7f678c5f04d9f27c358214ec3b6f98ed7`  
-**Tip commit:** `258489b Add scientific_benchmark_v1 alias scaffold and execution-record projection. (#85)`  
+**Audited `main` SHA:** `13bfa91ea8be156ec9affc2220a5d6ca5466b1af`  
+**Tip commit:** `13bfa91 Add Data-to-Discovery audit matrix and Technology connection map (#87)`  
 **HSI Neon:** red-wave only (`human super intelligence` / `red-wave-06625195` / `ep-restless-dew…`) — never autumn-snow / Akeno / DeliverX  
 
 **Cross-links (do not contradict):**
@@ -14,7 +14,7 @@
 - [`../engineering/HUMAN_QUEUE_RESIDUALS.md`](../engineering/HUMAN_QUEUE_RESIDUALS.md) — #2 / #4 / #5 PARKED  
 - [`../CDS_PHI_BOUNDARY.md`](../CDS_PHI_BOUNDARY.md) — no live CDS/PHI  
 
-**Concurrent:** PR [#86](https://github.com/gnaneshwer23/hsi-core/pull/86) (`eng/refined-brief-gap-relationship-records`) OPEN at audit time — **left alone**; this matrix bases on `main` tip above only.
+**Shipped after #87:** thin UniProt metadata-only adapter (`src/evidence/uniprotMetadataLookup.ts`) wired into dynamic retrieval + Technology status (`partially_implemented` / connected-metadata). Fixtures ≠ live.
 
 ---
 
@@ -55,7 +55,7 @@ Honesty freeze: no Gate C auto-approve · no invented MoU / `legalBinding` · no
 
 | Layer | Existing implementation | Working status | Missing functionality | Files to modify | Tests |
 |-------|------------------------|----------------|----------------------|-----------------|-------|
-| **Data sources** | Europe PMC bibliographic + SSC discovery; Open Targets GraphQL; ClinicalTrials.gov lookup; Crossref licence assist; curated PMID source registry; ontology ID prefixes (HGNC/UniProt/GO/Reactome) | `partially implemented` (literature/OT/CT.gov libraries) · identifier prefixes `implemented` · UniProt/Reactome/GO/ChEMBL/HGNC **live fetch** `missing` · HCA/CELLxGENE `missing` · clinical/Aksh planes `blocked` / out-of-scope for public research | Live UniProt / Reactome / GO / ChEMBL / HGNC adapters; HCA/CELLxGENE; rights-cleared omics packets | `src/evidence/*Lookup.ts`; future `src/adapters/` biology stubs only when scheduled | `test/dynamicEvidenceRetrieval.test.ts`; future adapter honesty tests |
+| **Data sources** | Europe PMC bibliographic + SSC discovery; Open Targets GraphQL; ClinicalTrials.gov lookup; Crossref licence assist; curated PMID source registry; ontology ID prefixes (HGNC/UniProt/GO/Reactome); **thin UniProt metadata-only adapter** (accession → name/genes/organism; dynamic-retrieval wire; fixture-gated + live-optional) | `partially implemented` (literature/OT/CT.gov + UniProt metadata) · identifier prefixes `implemented` · Reactome/GO/ChEMBL/HGNC **live fetch** `missing` · HCA/CELLxGENE `missing` · clinical/Aksh planes `blocked` / out-of-scope for public research | Live Reactome / GO / ChEMBL / HGNC adapters; HCA/CELLxGENE; rights-cleared omics packets | `src/evidence/uniprotMetadataLookup.ts`; `src/evidence/*Lookup.ts`; future biology stubs only when scheduled | `test/uniprotMetadataLookup.test.ts`; `test/dynamicEvidenceRetrieval.test.ts` |
 | **Ingestion** | `dynamicEvidenceRetrieval` → search records; SSC Europe PMC discovery; R1 biomedical source-packet quarantine scaffold | `partially implemented` · passage import `blocked` (#2) | Continuous ingest with provenance; omics/single-cell pipelines; rights-cleared full-text | `src/evidence/dynamicEvidenceRetrieval.ts`; `n1*` / R1 quarantine | Retrieval + n1/r1 checks |
 | **Evidence storage** | Neon red-wave migrations; `dynamicEvidencePersistence` identity dedup; experiment ledger `review_candidate`; source registry JSON | `partially implemented` · staging writes `blocked` (#5) · fixtures still power many surfaces | Production write-path acceptance; passage store after #2 | `src/evidence/dynamicEvidencePersistence.ts`; `src/db/*` | Persistence / ledger tests |
 | **Knowledge graph** | Domain graph + versions; living-evidence expansion metadata; contextual candidate relationships; typed science graph UI; gap/relationship envelopes (main tip; #86 may refine further) | `partially implemented` · draft≠approved · no auto-promote | Broader ontology-backed edges from live adapters; SME-verified novelty | `contextualCandidateRelationships.ts`; domain-graph packs | Contextual / bounded-agent / domain-graph sync |
@@ -82,16 +82,13 @@ Checklist template (records blockers only): [`SSC_TFH_IL21_LIVE_E2E_VALIDATION_C
 
 ## Highest-leverage missing deliverable chosen
 
-**Step 8 — Interactive Data-to-Discovery visualisation on the existing Technology page**
+**Shipped (#87):** Step 8 — Interactive Data-to-Discovery visualisation on the Technology page.
 
-Why this slice (audit evidence, not brief order):
+**Shipped (this slice):** Thin governed UniProt metadata-only adapter — extend evidence lookup patterns; Technology UniProt status → `partially_implemented` (connected-metadata); fixtures ≠ live.
 
-1. Distinctive **new** ask of this brief vs eng #72–#85 (backend already largely shipped).  
-2. User-visible on public `/technology` without inventing live E2E or new evidence stacks.  
-3. Existing `TechnologyFlow` is conceptual only — does not surface adapter connection honesty or workbench 01–06 links.  
-4. Frontend is not blocked; UniProt/HCA adapters and continuous refresh are larger and would compete with #86 / human queue.
+**Recommended next:** Reactome or GO stub (same metadata-only pattern) **or** continuous review-candidate refresh hook (Step 7) — both remain higher leverage than inventing live SSc E2E success.
 
-**Out of this PR:** Steps 1–7 full adapter builds, Step 9 invented live success, Gate C/MoU/CDS, fighting PR #86.
+**Out of scope still:** Steps 1–7 full multi-provider builds, Step 9 invented live success, Gate C/MoU/CDS, autumn-snow Neon.
 
 ---
 

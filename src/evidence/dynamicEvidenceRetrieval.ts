@@ -38,6 +38,13 @@ import {
   type OpenTargetsScoreHonesty,
   OPEN_TARGETS_PROVIDER,
 } from "./openTargetsLookup";
+import {
+  assertValidUniprotAccession,
+  lookupUniprotMetadataByAccession,
+  type UniprotLookupResult,
+  type UniprotRetryHonesty,
+  UNIPROT_PROVIDER,
+} from "./uniprotMetadataLookup";
 
 export const DYNAMIC_SEARCH_RECORD_SCHEMA = "hsi-dynamic-search-record-1" as const;
 export const DYNAMIC_RETRIEVAL_METHOD = "hsi.dynamic_evidence_retrieval.v1" as const;
@@ -70,7 +77,9 @@ export type RetrievalOutcomeClass =
   | "invalid_response"
   | "oversized_response"
   | "timeout_or_network"
-  | "disease_not_found";
+  | "disease_not_found"
+  | "accession_not_found"
+  | "empty_result";
 
 export type DynamicContentAccessRequest = "metadata" | "abstract" | "licensed_full_text";
 
@@ -83,6 +92,8 @@ export type ResearcherQueryInput = {
     freeTextTerms?: readonly string[];
     pmids?: readonly string[];
     dois?: readonly string[];
+    /** UniProtKB accessions for metadata-only identity lookup. */
+    uniprotAccessions?: readonly string[];
   };
   /** Ordering hint recorded in the search record (provider default if omitted). */
   ordering?: "relevance" | "date_desc" | "provider_default";
@@ -104,15 +115,21 @@ export type NormalisedEntityBundle = {
   freeTextTerms: string[];
   pmids: string[];
   dois: string[];
+  uniprotAccessions: string[];
   ambiguities: string[];
   /** True when no living-evidence / SSC pin set was required. */
   unpinned: true;
 };
 
 export type DynamicQueryAttempt = {
-  provider: "europe_pmc" | typeof OPEN_TARGETS_PROVIDER;
+  provider: "europe_pmc" | typeof OPEN_TARGETS_PROVIDER | typeof UNIPROT_PROVIDER;
   query: string;
-  purpose: "literature_search" | "pmid_identity" | "doi_identity" | "disease_associations";
+  purpose:
+    | "literature_search"
+    | "pmid_identity"
+    | "doi_identity"
+    | "disease_associations"
+    | "uniprot_accession_identity";
   requestedExternalId: string | null;
   sourceIdentity: SourceIdentityState;
   cacheStatus: "miss" | "hit";
@@ -188,6 +205,32 @@ export type PermittedOpenTargetsMetadata = {
   identityLayer: "provider_record";
 };
 
+/** Permitted UniProtKB catalog metadata — not mechanistic claim support. */
+export type PermittedUniprotMetadata = {
+  provider: typeof UNIPROT_PROVIDER;
+  accession: string;
+  proteinName: string | null;
+  geneNames: readonly string[];
+  organism: string | null;
+  retrievedAt: string;
+  responseIdentity: string;
+  provenance: {
+    endpoint: string;
+    fields: string;
+    entryUrl: string;
+    providerVersion: typeof UNIPROT_PROVIDER;
+  };
+  sourceIdentity: SourceIdentityState;
+  contentAccess: ContentAccessState;
+  claimSupport: ClaimSupportState;
+  scientificApproval: false;
+  graphPromotable: false;
+  passageImported: false;
+  sequenceRetrieved: false;
+  identityLayer: "provider_record";
+  retryHonesty: UniprotRetryHonesty;
+};
+
 export type DynamicSearchRecord = {
   schemaVersion: typeof DYNAMIC_SEARCH_RECORD_SCHEMA;
   method: typeof DYNAMIC_RETRIEVAL_METHOD;
@@ -218,10 +261,12 @@ export type DynamicSearchRecord = {
   providerVersions: {
     europePmc: typeof EUROPE_PMC_PROVIDER_VERSION;
     openTargets: typeof OPEN_TARGETS_PROVIDER;
+    uniprot: typeof UNIPROT_PROVIDER;
   };
   queriesSent: DynamicQueryAttempt[];
   retrievedBibliographic: PermittedBibliographicMetadata[];
   retrievedOpenTargets: PermittedOpenTargetsMetadata[];
+  retrievedUniprot: PermittedUniprotMetadata[];
   excluded: {reason: string; detail: string}[];
   deduped: {pmid: string; keptResponseIdentity: string; droppedCount: number}[];
   failures: {outcome: RetrievalOutcomeClass; provider: string; detail: string}[];
@@ -230,6 +275,8 @@ export type DynamicSearchRecord = {
     literatureHits: number;
     openTargetsAttempts: number;
     openTargetsHits: number;
+    uniprotAttempts: number;
+    uniprotHits: number;
     cacheHits: number;
     truncated: boolean;
     partial: boolean;
@@ -254,6 +301,8 @@ export type DynamicSearchRecord = {
     openTargetsScoreIsNotCausation: true;
     openTargetsScoreIsNotEfficacy: true;
     openTargetsScoreIsNotTargetValidation: true;
+    uniprotMetadataOnly: true;
+    uniprotNotClaimSupport: true;
   };
   searchRecordHash?: string;
 };
@@ -265,7 +314,7 @@ export type DynamicRetrievalResult = {
 
 type CacheEntry = {
   storedAtMs: number;
-  result: BibliographicLookupResult | OpenTargetsLookupResult;
+  result: BibliographicLookupResult | OpenTargetsLookupResult | UniprotLookupResult;
 };
 
 export type DynamicRetrievalCache = {
@@ -330,6 +379,32 @@ function extractDois(text: string): string[] {
       out.push(assertValidDoi(m[1]!));
     } catch {
       /* skip malformed */
+    }
+  }
+  return uniquePreserve(out);
+}
+
+/** Extract UniProt accessions from `UniProt:P01375` / `uniprot P01375` / bare catalog forms. */
+function extractUniprotAccessions(text: string): string[] {
+  const out: string[] = [];
+  const labelled = text.matchAll(
+    /\b(?:uniprot[:\s-]+)((?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9][A-Z0-9]{8}[0-9])(?:-[1-9][0-9]*)?)\b/gi,
+  );
+  for (const m of labelled) {
+    try {
+      out.push(assertValidUniprotAccession(m[1]!));
+    } catch {
+      /* skip */
+    }
+  }
+  const bare = text.matchAll(
+    /\b((?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9][A-Z0-9]{8}[0-9])(?:-[1-9][0-9]*)?)\b/g,
+  );
+  for (const m of bare) {
+    try {
+      out.push(assertValidUniprotAccession(m[1]!));
+    } catch {
+      /* skip */
     }
   }
   return uniquePreserve(out);
@@ -437,10 +512,12 @@ export function clarifyResearcherEntities(input: {
   const fromQuestionDisease = extractDiseaseIds(input.question);
   const fromQuestionPmid = extractPmids(input.question);
   const fromQuestionDoi = extractDois(input.question);
+  const fromQuestionUniprot = extractUniprotAccessions(input.question);
 
   const diseaseIds: string[] = [...fromQuestionDisease];
   const pmids: string[] = [...fromQuestionPmid];
   const dois: string[] = [...fromQuestionDoi];
+  const uniprotAccessions: string[] = [...fromQuestionUniprot];
   const freeTextTerms: string[] = [];
 
   const supplied = input.entities;
@@ -471,6 +548,15 @@ export function clarifyResearcherEntities(input: {
       }
     }
   }
+  if (supplied?.uniprotAccessions) {
+    for (const raw of supplied.uniprotAccessions.slice(0, DYNAMIC_MAX_ENTITY_IDS)) {
+      try {
+        uniprotAccessions.push(assertValidUniprotAccession(raw));
+      } catch {
+        ambiguities.push(`invalid_uniprot_accession:${raw}`);
+      }
+    }
+  }
   if (supplied?.freeTextTerms) {
     for (const raw of supplied.freeTextTerms.slice(0, DYNAMIC_MAX_ENTITY_IDS)) {
       const term = typeof raw === "string" ? raw.trim().replace(/\s+/g, " ") : "";
@@ -484,12 +570,13 @@ export function clarifyResearcherEntities(input: {
 
   // Strip known identifier tokens from residual free-text search seed.
   let residual = input.question;
-  for (const id of [...diseaseIds, ...pmids, ...dois]) {
+  for (const id of [...diseaseIds, ...pmids, ...dois, ...uniprotAccessions]) {
     residual = residual.replace(new RegExp(id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi"), " ");
   }
   residual = residual
     .replace(/\bPMID[:\s-]*[1-9]\d{0,8}\b/gi, " ")
     .replace(/\b(?:MONDO|EFO)[:_]\d{7}\b/gi, " ")
+    .replace(/\buniprot[:\s-]+/gi, " ")
     .replace(/[()]/g, " ")
     .replace(/\s+/g, " ")
     .trim();
@@ -503,7 +590,16 @@ export function clarifyResearcherEntities(input: {
   if (diseaseIds.length > DYNAMIC_MAX_ENTITY_IDS) {
     ambiguities.push("disease_ids_truncated");
   }
-  if (pmids.length === 0 && dois.length === 0 && diseaseIds.length === 0 && freeTextTerms.length === 0) {
+  if (uniprotAccessions.length > DYNAMIC_MAX_ENTITY_IDS) {
+    ambiguities.push("uniprot_accessions_truncated");
+  }
+  if (
+    pmids.length === 0 &&
+    dois.length === 0 &&
+    diseaseIds.length === 0 &&
+    uniprotAccessions.length === 0 &&
+    freeTextTerms.length === 0
+  ) {
     ambiguities.push("no_searchable_entities_or_terms");
   }
   if (/\b([1-9]\d{6,8})\b/.test(input.question) && fromQuestionPmid.length === 0) {
@@ -515,6 +611,7 @@ export function clarifyResearcherEntities(input: {
     freeTextTerms: uniquePreserve(freeTextTerms).slice(0, DYNAMIC_MAX_ENTITY_IDS),
     pmids: uniquePreserve(pmids).slice(0, DYNAMIC_MAX_ENTITY_IDS),
     dois: uniquePreserve(dois).slice(0, DYNAMIC_MAX_ENTITY_IDS),
+    uniprotAccessions: uniquePreserve(uniprotAccessions).slice(0, DYNAMIC_MAX_ENTITY_IDS),
     ambiguities,
     unpinned: true,
   };
@@ -522,6 +619,7 @@ export function clarifyResearcherEntities(input: {
 
 type BibliographicFailOutcome = Extract<BibliographicLookupResult, {ok: false}>["outcome"];
 type OpenTargetsFailOutcome = Extract<OpenTargetsLookupResult, {ok: false}>["outcome"];
+type UniprotFailOutcome = Extract<UniprotLookupResult, {ok: false}>["outcome"];
 
 /** Map provider fail codes onto the search-record taxonomy (exhaustive — new variants must compile). */
 function mapProviderFailOutcome(outcome: BibliographicFailOutcome): RetrievalOutcomeClass {
@@ -557,6 +655,31 @@ function mapOpenTargetsFailOutcome(outcome: OpenTargetsFailOutcome): RetrievalOu
       return "timeout_or_network";
     case "disease_not_found":
       return "disease_not_found";
+    default: {
+      const _exhaustive: never = outcome;
+      return _exhaustive;
+    }
+  }
+}
+
+function mapUniprotFailOutcome(outcome: UniprotFailOutcome): RetrievalOutcomeClass {
+  switch (outcome) {
+    case "provider_http_error":
+      return "provider_http_error";
+    case "provider_unavailable":
+      return "provider_unavailable";
+    case "invalid_query":
+      return "invalid_query";
+    case "invalid_response":
+      return "invalid_response";
+    case "oversized_response":
+      return "oversized_response";
+    case "timeout_or_network":
+      return "timeout_or_network";
+    case "accession_not_found":
+      return "accession_not_found";
+    case "empty_result":
+      return "empty_result";
     default: {
       const _exhaustive: never = outcome;
       return _exhaustive;
@@ -619,6 +742,7 @@ function classifyOverall(input: {
   attempts: DynamicQueryAttempt[];
   bibliographicCount: number;
   openTargetsCount: number;
+  uniprotCount: number;
   invalidQuery: boolean;
   permissionBlocked: boolean;
 }): RetrievalOutcomeClass {
@@ -627,15 +751,34 @@ function classifyOverall(input: {
   const outcomes = input.attempts.map((a) => a.outcome);
   if (outcomes.includes("provider_unavailable")) return "provider_unavailable";
   if (outcomes.some((o) => o === "timeout_or_network" || o === "provider_http_error" || o === "invalid_response" || o === "oversized_response")) {
-    if (input.bibliographicCount > 0 || input.openTargetsCount > 0) return "partial_retrieval";
-    return outcomes.find((o) => o !== "successful_empty" && o !== "successful_hits" && o !== "truncated_by_budget" && o !== "disease_not_found")
-      ?? "partial_retrieval";
+    if (input.bibliographicCount > 0 || input.openTargetsCount > 0 || input.uniprotCount > 0) {
+      return "partial_retrieval";
+    }
+    return outcomes.find((o) =>
+      o !== "successful_empty" &&
+      o !== "successful_hits" &&
+      o !== "truncated_by_budget" &&
+      o !== "disease_not_found" &&
+      o !== "accession_not_found" &&
+      o !== "empty_result"
+    ) ?? "partial_retrieval";
   }
   if (outcomes.includes("truncated_by_budget")) return "truncated_by_budget";
   if (outcomes.includes("partial_retrieval")) return "partial_retrieval";
-  if (input.bibliographicCount > 0 || input.openTargetsCount > 0) return "successful_hits";
-  if (outcomes.includes("disease_not_found") && outcomes.every((o) => o === "disease_not_found" || o === "successful_empty")) {
+  if (input.bibliographicCount > 0 || input.openTargetsCount > 0 || input.uniprotCount > 0) {
+    return "successful_hits";
+  }
+  if (
+    outcomes.includes("disease_not_found") &&
+    outcomes.every((o) => o === "disease_not_found" || o === "successful_empty" || o === "accession_not_found" || o === "empty_result")
+  ) {
     return "disease_not_found";
+  }
+  if (
+    outcomes.includes("accession_not_found") &&
+    outcomes.every((o) => o === "accession_not_found" || o === "successful_empty" || o === "empty_result" || o === "disease_not_found")
+  ) {
+    return "accession_not_found";
   }
   return "successful_empty";
 }
@@ -672,6 +815,7 @@ export async function runDynamicEvidenceRetrieval(input: {
         freeTextTerms: [],
         pmids: [],
         dois: [],
+        uniprotAccessions: [],
         ambiguities: [validated.detail],
         unpinned: true,
       },
@@ -687,10 +831,15 @@ export async function runDynamicEvidenceRetrieval(input: {
         europePmcPagesFetched: 0,
       },
       timestamps: {startedAt, completedAt},
-      providerVersions: {europePmc: EUROPE_PMC_PROVIDER_VERSION, openTargets: OPEN_TARGETS_PROVIDER},
+      providerVersions: {
+        europePmc: EUROPE_PMC_PROVIDER_VERSION,
+        openTargets: OPEN_TARGETS_PROVIDER,
+        uniprot: UNIPROT_PROVIDER,
+      },
       queriesSent: [],
       retrievedBibliographic: [],
       retrievedOpenTargets: [],
+      retrievedUniprot: [],
       excluded: [{reason: validated.outcome, detail: validated.detail}],
       deduped: [],
       failures: [{outcome: validated.outcome, provider: "local_validation", detail: validated.detail}],
@@ -699,6 +848,8 @@ export async function runDynamicEvidenceRetrieval(input: {
         literatureHits: 0,
         openTargetsAttempts: 0,
         openTargetsHits: 0,
+        uniprotAttempts: 0,
+        uniprotHits: 0,
         cacheHits: 0,
         truncated: false,
         partial: false,
@@ -723,6 +874,8 @@ export async function runDynamicEvidenceRetrieval(input: {
         openTargetsScoreIsNotCausation: true,
         openTargetsScoreIsNotEfficacy: true,
         openTargetsScoreIsNotTargetValidation: true,
+        uniprotMetadataOnly: true,
+        uniprotNotClaimSupport: true,
       },
     });
     return {ok: false, record};
@@ -736,6 +889,7 @@ export async function runDynamicEvidenceRetrieval(input: {
   const attempts: DynamicQueryAttempt[] = [];
   const bibliographic: PermittedBibliographicMetadata[] = [];
   const openTargetsMeta: PermittedOpenTargetsMetadata[] = [];
+  const uniprotMeta: PermittedUniprotMetadata[] = [];
   const excluded: {reason: string; detail: string}[] = [];
   const failures: {outcome: RetrievalOutcomeClass; provider: string; detail: string}[] = [];
   const seenPmids = new Map<string, string>();
@@ -1094,6 +1248,93 @@ export async function runDynamicEvidenceRetrieval(input: {
     });
   };
 
+  const runUniprot = async (accession: string) => {
+    const cacheKey = `uniprot:${UNIPROT_PROVIDER}:${accession}`;
+    const cached = cache.get(cacheKey);
+    let result: UniprotLookupResult;
+    let cacheStatus: "miss" | "hit" = "miss";
+    if (cached && nowMs() - cached.storedAtMs <= DYNAMIC_CACHE_TTL_MS) {
+      result = cached.result as UniprotLookupResult;
+      cacheStatus = "hit";
+      cacheHits += 1;
+    } else {
+      await pace();
+      result = await lookupUniprotMetadataByAccession({
+        accession,
+        fetcher: input.fetcher,
+        now,
+        signal: input.signal,
+        lookupMode: input.fetcher ? "fixture" : "live",
+      });
+      cache.set(cacheKey, {storedAtMs: nowMs(), result});
+    }
+
+    if (!result.ok) {
+      const outcome = mapUniprotFailOutcome(result.outcome);
+      attempts.push({
+        provider: UNIPROT_PROVIDER,
+        query: result.query,
+        purpose: "uniprot_accession_identity",
+        requestedExternalId: accession,
+        sourceIdentity: "unresolved",
+        cacheStatus,
+        outcome,
+        retrievedAt: result.retrievedAt,
+        httpStatus: result.httpStatus,
+        responseIdentity: null,
+        detail: result.detail,
+        hitCount: null,
+        returnedCount: 0,
+        truncatedByPageBudget: false,
+        pageSize: 1,
+        cursorMark: null,
+        nextCursorMark: null,
+      });
+      failures.push({outcome, provider: UNIPROT_PROVIDER, detail: result.detail});
+      return;
+    }
+
+    attempts.push({
+      provider: UNIPROT_PROVIDER,
+      query: result.query,
+      purpose: "uniprot_accession_identity",
+      requestedExternalId: accession,
+      sourceIdentity: result.sourceIdentity,
+      cacheStatus,
+      outcome: "successful_hits",
+      retrievedAt: result.retrievedAt,
+      httpStatus: result.httpStatus,
+      responseIdentity: result.responseIdentity,
+      detail: null,
+      hitCount: 1,
+      returnedCount: 1,
+      truncatedByPageBudget: false,
+      pageSize: 1,
+      cursorMark: null,
+      nextCursorMark: null,
+    });
+
+    uniprotMeta.push({
+      provider: UNIPROT_PROVIDER,
+      accession: result.record.accession,
+      proteinName: result.record.proteinName,
+      geneNames: result.record.geneNames,
+      organism: result.record.organism,
+      retrievedAt: result.record.retrievedAt,
+      responseIdentity: result.record.responseIdentity,
+      provenance: result.record.provenance,
+      sourceIdentity: result.sourceIdentity,
+      contentAccess: "metadata",
+      claimSupport: "not_assessed",
+      scientificApproval: false,
+      graphPromotable: false,
+      passageImported: false,
+      sequenceRetrieved: false,
+      identityLayer: "provider_record",
+      retryHonesty: result.retryHonesty,
+    });
+  };
+
   // Optional identity lookups when the question/entities name concrete ids.
   for (const pmid of entities.pmids) {
     await runEuropePmc({
@@ -1121,7 +1362,12 @@ export async function runDynamicEvidenceRetrieval(input: {
       pageSize: validated.pageSize,
       paginate: true,
     });
-  } else if (entities.pmids.length === 0 && entities.dois.length === 0 && entities.diseaseIds.length === 0) {
+  } else if (
+    entities.pmids.length === 0 &&
+    entities.dois.length === 0 &&
+    entities.diseaseIds.length === 0 &&
+    entities.uniprotAccessions.length === 0
+  ) {
     excluded.push({
       reason: "invalid_query",
       detail: "No searchable literature terms after entity clarification",
@@ -1141,6 +1387,10 @@ export async function runDynamicEvidenceRetrieval(input: {
     );
   }
 
+  for (const accession of entities.uniprotAccessions) {
+    await runUniprot(accession);
+  }
+
   for (const a of entities.ambiguities) {
     excluded.push({reason: "ambiguity", detail: a});
   }
@@ -1148,12 +1398,14 @@ export async function runDynamicEvidenceRetrieval(input: {
   const completedAt = now().toISOString();
   const literatureAttempts = attempts.filter((a) => a.provider === "europe_pmc").length;
   const openTargetsAttempts = attempts.filter((a) => a.provider === OPEN_TARGETS_PROVIDER).length;
+  const uniprotAttempts = attempts.filter((a) => a.provider === UNIPROT_PROVIDER).length;
   const invalidQuery = failures.some((f) => f.outcome === "invalid_query");
   const permissionBlocked = failures.some((f) => f.outcome === "permission_licence_restriction");
   const overallOutcome = classifyOverall({
     attempts,
     bibliographicCount: bibliographic.filter((b) => b.duplicateOfPmid === null).length,
     openTargetsCount: openTargetsMeta.length,
+    uniprotCount: uniprotMeta.length,
     invalidQuery,
     permissionBlocked,
   });
@@ -1175,10 +1427,15 @@ export async function runDynamicEvidenceRetrieval(input: {
       europePmcPagesFetched,
     },
     timestamps: {startedAt, completedAt},
-    providerVersions: {europePmc: EUROPE_PMC_PROVIDER_VERSION, openTargets: OPEN_TARGETS_PROVIDER},
+    providerVersions: {
+      europePmc: EUROPE_PMC_PROVIDER_VERSION,
+      openTargets: OPEN_TARGETS_PROVIDER,
+      uniprot: UNIPROT_PROVIDER,
+    },
     queriesSent: attempts,
     retrievedBibliographic: bibliographic,
     retrievedOpenTargets: openTargetsMeta,
+    retrievedUniprot: uniprotMeta,
     excluded,
     deduped,
     failures,
@@ -1187,6 +1444,8 @@ export async function runDynamicEvidenceRetrieval(input: {
       literatureHits: bibliographic.filter((b) => b.duplicateOfPmid === null).length,
       openTargetsAttempts,
       openTargetsHits: openTargetsMeta.length,
+      uniprotAttempts,
+      uniprotHits: uniprotMeta.length,
       cacheHits,
       truncated: attempts.some((a) => a.truncatedByPageBudget),
       partial: overallOutcome === "partial_retrieval",
@@ -1211,6 +1470,8 @@ export async function runDynamicEvidenceRetrieval(input: {
       openTargetsScoreIsNotCausation: true,
       openTargetsScoreIsNotEfficacy: true,
       openTargetsScoreIsNotTargetValidation: true,
+      uniprotMetadataOnly: true,
+      uniprotNotClaimSupport: true,
     },
   });
 
@@ -1218,7 +1479,10 @@ export async function runDynamicEvidenceRetrieval(input: {
     !record.coverage.providerUnavailable &&
     !record.coverage.invalidQuery &&
     !record.coverage.permissionBlocked &&
-    (record.coverage.literatureHits > 0 || record.coverage.openTargetsHits > 0 || record.coverage.overallOutcome === "successful_empty");
+    (record.coverage.literatureHits > 0 ||
+      record.coverage.openTargetsHits > 0 ||
+      record.coverage.uniprotHits > 0 ||
+      record.coverage.overallOutcome === "successful_empty");
 
   return {ok, record};
 }
