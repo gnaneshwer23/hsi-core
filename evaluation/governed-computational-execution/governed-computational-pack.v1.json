@@ -1,0 +1,443 @@
+{
+  "schema": "hsi-governed-computational-execution-1",
+  "method": "hsi.governed_computational_execution.v1",
+  "version": "0.1.0",
+  "asOf": "2026-11-09T17:00:00.000Z",
+  "analysisSpecCount": 1,
+  "jobCount": 1,
+  "artifactCount": 4,
+  "honesty": {
+    "agentsProposeResearchersApprove": true,
+    "aiCannotSelfApproveExperiments": true,
+    "aiCannotSelfAuthoriseExecution": true,
+    "noArbitraryModelGeneratedCodeWithoutAuthorisation": true,
+    "isolatedExecutionModel": true,
+    "credentialsSeparateFromModelPrompts": true,
+    "completedJobIsNotScientificValidation": true,
+    "fabricatedBiologicalDiscoveries": false,
+    "liveLabValidationClaimed": false,
+    "labAdaptersWired": false,
+    "workbenchUiShipped": false,
+    "gateCAutoApprove": false,
+    "mouInvented": false,
+    "phiCdsWired": false,
+    "closedLoopDiscoveryComplete": false,
+    "graphPromotable": false,
+    "neonProjectPolicy": "red-wave-only",
+    "migration": "deferred",
+    "dependsOnPr1LifecycleContracts": true,
+    "dependsOnPr2DesignPrioritisation": true,
+    "dependsOnPr3ProtocolIntelligence": true
+  },
+  "specs": [
+    {
+      "schema": "hsi-governed-computational-execution-1",
+      "method": "hsi.governed_computational_execution.v1",
+      "version": "0.1.0",
+      "id": "hsi-exp-cas-fixture-demo",
+      "title": "Fixture governed computational reanalysis",
+      "objective": "Run authorised public fixture expression reanalysis under isolated pipeline contracts without claiming scientific validation.",
+      "approvedProtocolDraftId": "hsi-exp-pint-fixture-demo",
+      "approvedProtocolVersion": 2,
+      "hypothesisId": "hyp-fixture-001",
+      "investigationId": "inv-fixture-001",
+      "linkedPr1ExecutionId": null,
+      "n7ExperimentRecordId": null,
+      "durableCheckpointTaskId": "task-fixture-compute-001",
+      "pipelineKind": "public_fixture_descriptive_summary_v1",
+      "dataset": {
+        "datasetId": "hsi-exp-cds-public-fixture-il6-001",
+        "datasetVersion": "1.0.0",
+        "accessStatus": "verified_authorised",
+        "licenceRef": "fixture-public-catalogue://il6-expression-matrix/1.0.0",
+        "verifiedAt": "2026-11-09T17:00:00.000Z",
+        "verifiedByPrincipalId": "fixture-researcher",
+        "containsPhi": false,
+        "publicOrAuthorised": true
+      },
+      "versionPins": {
+        "analysisCodeVersion": "0.1.0",
+        "dependencyVersions": [
+          {
+            "name": "hsi-governed-harness",
+            "version": "0.1.0"
+          },
+          {
+            "name": "bun",
+            "version": "1.2.0"
+          }
+        ],
+        "containerImage": null,
+        "containerDigest": null,
+        "computeEnvironment": "local-isolated-harness-deny-network"
+      },
+      "resourceLimits": {
+        "timeoutMs": 5000,
+        "maxMemoryMb": 256,
+        "maxCpuMillis": 10000,
+        "maxInputRows": 100,
+        "maxInputColumns": 100,
+        "networkPolicy": "deny_all",
+        "networkAllowlist": []
+      },
+      "qcAcceptanceCriteria": [
+        "All values finite",
+        "At least three samples",
+        "GAPDH housekeeping feature present"
+      ],
+      "executionAuthorisation": {
+        "principalId": "fixture-researcher",
+        "actorKind": "human",
+        "authorisedAt": "2026-11-09T17:00:00.000Z",
+        "note": "Authorise isolated fixture reanalysis under resource budgets."
+      },
+      "draftedBy": {
+        "principalId": "fixture-agent-compute",
+        "actorKind": "ai_agent"
+      },
+      "dataBasis": "fixture_engineering",
+      "fixtureHonesty": true,
+      "honesty": {
+        "agentsProposeResearchersApprove": true,
+        "aiCannotSelfApproveExperiments": true,
+        "aiCannotSelfAuthoriseExecution": true,
+        "noArbitraryModelGeneratedCodeWithoutAuthorisation": true,
+        "isolatedExecutionModel": true,
+        "credentialsSeparateFromModelPrompts": true,
+        "completedJobIsNotScientificValidation": true,
+        "fabricatedBiologicalDiscoveries": false,
+        "liveLabValidationClaimed": false,
+        "labAdaptersWired": false,
+        "workbenchUiShipped": false,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "closedLoopDiscoveryComplete": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred",
+        "dependsOnPr1LifecycleContracts": true,
+        "dependsOnPr2DesignPrioritisation": true,
+        "dependsOnPr3ProtocolIntelligence": true
+      },
+      "createdAt": "2026-11-09T17:00:00.000Z",
+      "updatedAt": "2026-11-09T17:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "jobs": [
+    {
+      "schema": "hsi-governed-computational-execution-1",
+      "method": "hsi.governed_computational_execution.v1",
+      "version": "0.1.0",
+      "id": "hsi-exp-cej-fixture-demo",
+      "analysisSpecId": "hsi-exp-cas-fixture-demo",
+      "lifecycle": "completed",
+      "outcome": "awaiting_scientific_interpretation",
+      "startedAt": "2026-11-09T17:00:00.000Z",
+      "finishedAt": "2026-11-09T17:00:00.000Z",
+      "cancelledAt": null,
+      "failureReason": null,
+      "logs": [
+        {
+          "at": "2026-11-09T17:00:00.000Z",
+          "level": "info",
+          "message": "Starting authorised pipeline public_fixture_descriptive_summary_v1 under isolated harness"
+        },
+        {
+          "at": "2026-11-09T17:00:00.000Z",
+          "level": "info",
+          "message": "Dataset hsi-exp-cds-public-fixture-il6-001@1.0.0 access verified_authorised"
+        },
+        {
+          "at": "2026-11-09T17:00:00.000Z",
+          "level": "info",
+          "message": "Network policy deny_all; timeout 5000ms"
+        },
+        {
+          "at": "2026-11-09T17:00:00.000Z",
+          "level": "info",
+          "message": "Pipeline finished outcome=awaiting_scientific_interpretation; scientific validation not claimed"
+        }
+      ],
+      "qcResults": [
+        {
+          "id": "qc-finite-values",
+          "description": "All fixture values must be finite",
+          "passed": true,
+          "detail": "Finite-value scan over fixture matrix"
+        },
+        {
+          "id": "qc-min-samples",
+          "description": "At least 3 samples required",
+          "passed": true,
+          "detail": "samples=4"
+        },
+        {
+          "id": "qc-housekeeping",
+          "description": "GAPDH housekeeping feature present",
+          "passed": true,
+          "detail": "GAPDH found"
+        }
+      ],
+      "artifactIds": [
+        "hsi-exp-car-fixture-demo-log",
+        "hsi-exp-car-fixture-demo-qc",
+        "hsi-exp-car-fixture-demo-result",
+        "hsi-exp-car-fixture-demo-manifest"
+      ],
+      "reproducibilityManifest": {
+        "analysisSpecId": "hsi-exp-cas-fixture-demo",
+        "jobId": "hsi-exp-cej-fixture-demo",
+        "pipelineKind": "public_fixture_descriptive_summary_v1",
+        "datasetId": "hsi-exp-cds-public-fixture-il6-001",
+        "datasetVersion": "1.0.0",
+        "analysisCodeVersion": "0.1.0",
+        "dependencyVersions": [
+          {
+            "name": "hsi-governed-harness",
+            "version": "0.1.0"
+          },
+          {
+            "name": "bun",
+            "version": "1.2.0"
+          }
+        ],
+        "containerImage": null,
+        "containerDigest": null,
+        "computeEnvironment": "local-isolated-harness-deny-network",
+        "inputFixtureSha256": "6812efbe564b6a89c88ef4b0124ca14313cfdc056324c40091c42784063da520",
+        "artifactSha256s": [
+          {
+            "artifactId": "hsi-exp-car-fixture-demo-log",
+            "sha256": "50b8bc080146657ef2cfc1a51234c1d3e765da551ae1d963d3a453f6bc032e6d"
+          },
+          {
+            "artifactId": "hsi-exp-car-fixture-demo-qc",
+            "sha256": "eef986ead0a60743fa9164e66ac7634ca0c9004f81585518864886829a947765"
+          },
+          {
+            "artifactId": "hsi-exp-car-fixture-demo-result",
+            "sha256": "799b10cb2b03fd5ca29bd30336ba0c17bc79f1c72d04e5bcc254679a5d366008"
+          }
+        ],
+        "resourceLimits": {
+          "timeoutMs": 5000,
+          "maxMemoryMb": 256,
+          "maxCpuMillis": 10000,
+          "maxInputRows": 100,
+          "maxInputColumns": 100,
+          "networkPolicy": "deny_all",
+          "networkAllowlist": []
+        },
+        "networkPolicy": "deny_all",
+        "producedAt": "2026-11-09T17:00:00.000Z",
+        "scientificValidationClaimed": false
+      },
+      "scientificValidationClaimed": false,
+      "awaitingScientificInterpretation": true,
+      "honesty": {
+        "agentsProposeResearchersApprove": true,
+        "aiCannotSelfApproveExperiments": true,
+        "aiCannotSelfAuthoriseExecution": true,
+        "noArbitraryModelGeneratedCodeWithoutAuthorisation": true,
+        "isolatedExecutionModel": true,
+        "credentialsSeparateFromModelPrompts": true,
+        "completedJobIsNotScientificValidation": true,
+        "fabricatedBiologicalDiscoveries": false,
+        "liveLabValidationClaimed": false,
+        "labAdaptersWired": false,
+        "workbenchUiShipped": false,
+        "gateCAutoApprove": false,
+        "mouInvented": false,
+        "phiCdsWired": false,
+        "closedLoopDiscoveryComplete": false,
+        "graphPromotable": false,
+        "neonProjectPolicy": "red-wave-only",
+        "migration": "deferred",
+        "dependsOnPr1LifecycleContracts": true,
+        "dependsOnPr2DesignPrioritisation": true,
+        "dependsOnPr3ProtocolIntelligence": true
+      },
+      "createdAt": "2026-11-09T17:00:00.000Z",
+      "updatedAt": "2026-11-09T17:00:00.000Z",
+      "note": ""
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "hsi-exp-car-fixture-demo-log",
+      "jobId": "hsi-exp-cej-fixture-demo",
+      "kind": "execution_log",
+      "label": "Isolated harness execution log",
+      "content": {
+        "entries": [
+          {
+            "at": "2026-11-09T17:00:00.000Z",
+            "level": "info",
+            "message": "Starting authorised pipeline public_fixture_descriptive_summary_v1 under isolated harness"
+          },
+          {
+            "at": "2026-11-09T17:00:00.000Z",
+            "level": "info",
+            "message": "Dataset hsi-exp-cds-public-fixture-il6-001@1.0.0 access verified_authorised"
+          },
+          {
+            "at": "2026-11-09T17:00:00.000Z",
+            "level": "info",
+            "message": "Network policy deny_all; timeout 5000ms"
+          }
+        ]
+      },
+      "contentSha256": "50b8bc080146657ef2cfc1a51234c1d3e765da551ae1d963d3a453f6bc032e6d",
+      "producedAt": "2026-11-09T17:00:00.000Z",
+      "fixtureDeclared": true,
+      "fabricatedBiology": false
+    },
+    {
+      "id": "hsi-exp-car-fixture-demo-qc",
+      "jobId": "hsi-exp-cej-fixture-demo",
+      "kind": "qc_report",
+      "label": "QC report",
+      "content": {
+        "checks": [
+          {
+            "id": "qc-finite-values",
+            "description": "All fixture values must be finite",
+            "passed": true,
+            "detail": "Finite-value scan over fixture matrix"
+          },
+          {
+            "id": "qc-min-samples",
+            "description": "At least 3 samples required",
+            "passed": true,
+            "detail": "samples=4"
+          },
+          {
+            "id": "qc-housekeeping",
+            "description": "GAPDH housekeeping feature present",
+            "passed": true,
+            "detail": "GAPDH found"
+          }
+        ],
+        "passed": true
+      },
+      "contentSha256": "eef986ead0a60743fa9164e66ac7634ca0c9004f81585518864886829a947765",
+      "producedAt": "2026-11-09T17:00:00.000Z",
+      "fixtureDeclared": true,
+      "fabricatedBiology": false
+    },
+    {
+      "id": "hsi-exp-car-fixture-demo-result",
+      "jobId": "hsi-exp-cej-fixture-demo",
+      "kind": "result_table",
+      "label": "Result table",
+      "content": {
+        "pipelineKind": "public_fixture_descriptive_summary_v1",
+        "summary": [
+          {
+            "feature": "IL6",
+            "mean": 2.15,
+            "variance": 0.0325,
+            "n": 4
+          },
+          {
+            "feature": "STAT3",
+            "mean": 1.85,
+            "variance": 0.0125,
+            "n": 4
+          },
+          {
+            "feature": "TGFB1",
+            "mean": 2.95,
+            "variance": 0.0125,
+            "n": 4
+          },
+          {
+            "feature": "COL1A1",
+            "mean": 2.55,
+            "variance": 0.0125,
+            "n": 4
+          },
+          {
+            "feature": "GAPDH",
+            "mean": 5,
+            "variance": 0.005,
+            "n": 4
+          }
+        ],
+        "note": "Deterministic descriptive summary of public fixture matrix — not a biological discovery claim."
+      },
+      "contentSha256": "799b10cb2b03fd5ca29bd30336ba0c17bc79f1c72d04e5bcc254679a5d366008",
+      "producedAt": "2026-11-09T17:00:00.000Z",
+      "fixtureDeclared": true,
+      "fabricatedBiology": false
+    },
+    {
+      "id": "hsi-exp-car-fixture-demo-manifest",
+      "jobId": "hsi-exp-cej-fixture-demo",
+      "kind": "reproducibility_manifest",
+      "label": "Reproducibility manifest",
+      "content": {
+        "analysisSpecId": "hsi-exp-cas-fixture-demo",
+        "jobId": "hsi-exp-cej-fixture-demo",
+        "pipelineKind": "public_fixture_descriptive_summary_v1",
+        "datasetId": "hsi-exp-cds-public-fixture-il6-001",
+        "datasetVersion": "1.0.0",
+        "analysisCodeVersion": "0.1.0",
+        "dependencyVersions": [
+          {
+            "name": "hsi-governed-harness",
+            "version": "0.1.0"
+          },
+          {
+            "name": "bun",
+            "version": "1.2.0"
+          }
+        ],
+        "containerImage": null,
+        "containerDigest": null,
+        "computeEnvironment": "local-isolated-harness-deny-network",
+        "inputFixtureSha256": "6812efbe564b6a89c88ef4b0124ca14313cfdc056324c40091c42784063da520",
+        "artifactSha256s": [
+          {
+            "artifactId": "hsi-exp-car-fixture-demo-log",
+            "sha256": "50b8bc080146657ef2cfc1a51234c1d3e765da551ae1d963d3a453f6bc032e6d"
+          },
+          {
+            "artifactId": "hsi-exp-car-fixture-demo-qc",
+            "sha256": "eef986ead0a60743fa9164e66ac7634ca0c9004f81585518864886829a947765"
+          },
+          {
+            "artifactId": "hsi-exp-car-fixture-demo-result",
+            "sha256": "799b10cb2b03fd5ca29bd30336ba0c17bc79f1c72d04e5bcc254679a5d366008"
+          }
+        ],
+        "resourceLimits": {
+          "timeoutMs": 5000,
+          "maxMemoryMb": 256,
+          "maxCpuMillis": 10000,
+          "maxInputRows": 100,
+          "maxInputColumns": 100,
+          "networkPolicy": "deny_all",
+          "networkAllowlist": []
+        },
+        "networkPolicy": "deny_all",
+        "producedAt": "2026-11-09T17:00:00.000Z",
+        "scientificValidationClaimed": false
+      },
+      "contentSha256": "a2c1e5e920808d6cee047064c7339e38aa7aa359ab1ef868baf75235052340af",
+      "producedAt": "2026-11-09T17:00:00.000Z",
+      "fixtureDeclared": true,
+      "fabricatedBiology": false
+    }
+  ],
+  "dependency": {
+    "requiresPr1LifecycleContracts": true,
+    "requiresPr2DesignPrioritisation": true,
+    "requiresPr3ProtocolIntelligence": true,
+    "pr1Status": "must_merge_or_stack_first",
+    "pr2Status": "must_merge_or_stack_first",
+    "pr3Status": "must_merge_or_stack_first"
+  }
+}
