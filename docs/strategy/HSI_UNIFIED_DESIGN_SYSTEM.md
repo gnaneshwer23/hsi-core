@@ -169,3 +169,46 @@ Design system must support WCAG 2.2 AA ([`HSI_RESPONSIVE_ACCESSIBILITY_PLAN.md`]
 | 4+ | Workspace skins adopt shared badges/drawers without rewriting product CSS wholesale |
 
 **Stop:** No redesign implementation without founder approval.
+
+---
+
+## 7. Refined governing rules (2026-11-09)
+
+**Governing principle:** HSI has one recognisable premium biomedical identity, and its visual presentation accurately reflects the functionality and scientific governance of the actual platform.
+
+**Do not let the visual system create the impression of scientific capability that the backend does not yet provide.**
+
+### 7.1 Hero hierarchy (product-led)
+
+1. Research question → 2. Mechanism map → 3. Evidence → 4. Contradictions → 5. Research gaps → 6. Research brief.  
+Eight-domain ecosystem is a **supporting** visual layer, not the hero alone.
+
+### 7.2 Brand vs evidence colour
+
+| Role | Rule |
+|------|------|
+| Brand burgundy (`#BD1C1D` / `#5E0808`) | Emphasis, selection, primary action |
+| Evidence status | Separate semantic system (supported / context-limited / contested / not curated / synthetic / AI draft) — never encode “bad” with brand red alone |
+| Scientific cyan (`#106C92` family) | Instrument chrome, graph nodes, CTAs |
+
+Machine-readable contract: `site/src/styles/hsi-design-tokens.json` (mirrored in `hsi-visual-tokens.css`).
+
+### 7.3 Truthfulness contract
+
+Every UI that implies capability must declare one of: live backend integration · cached demonstration · curated example · synthetic data · illustrative workflow · future capability.  
+No component may imply live clinical data, autonomous discovery, or validated science unless backend + governance support it. Derive public status from `docs/capability-status.json`.
+
+### 7.4 Eight-domain interaction
+
+Hover → highlight connected domains + short description.  
+Select → contextual panel + available capability + real route.  
+Unavailable → “In development” / “Not currently available” — never imply live functionality.
+
+### 7.5 Homepage acceptance (additive)
+
+1. Every public capability shows truthful status from the verified registry.  
+2. Research demonstration labelled live / cached / curated / synthetic / illustrative.  
+3. Every CTA leads to a real destination.  
+4. Keyboard reaches every interactive control; focus visible; reduced-motion respected.  
+5. Preview verified before production; production verified after release.  
+6. Final reports distinguish marketing QA, engineering QA, scientific validation, and production readiness.

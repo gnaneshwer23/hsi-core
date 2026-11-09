@@ -1,27 +1,36 @@
-/* HSI public visual tokens — premium biomedical instrument, not regenerative-medicine theatre.
-   Brand emphasis may use burgundy; scientific status colours stay separate from brand red. */
+/* HSI public visual tokens — premium biomedical instrument.
+   Brand burgundy = selection/emphasis only. Evidence status colours are separate. */
 :root{
   --hsi-burgundy-deep:#5E0808;
   --hsi-burgundy:#BD1C1D;
   --hsi-near-black:#190505;
   --hsi-rose:#D1AEAD;
   --hsi-offwhite:#EBEBEA;
-  --hsi-teal:#17645f;
-  --hsi-teal-deep:#0f4a40;
-  --hsi-ink:#152e2b;
-  --hsi-muted:#526561;
-  --hsi-paper:#fafbfa;
-  --hsi-surface:#ffffff;
-  --hsi-line:#d7e3da;
-  --hsi-status-supported:#2f7a4f;
-  --hsi-status-context:#b07a1a;
-  --hsi-status-contested:#c45c2c;
-  --hsi-status-uncurated:#5b6b73;
-  --hsi-status-synthetic:#6b4ea2;
-  --hsi-status-ai-draft:#3f4f9c;
-  --hsi-cta-bg:var(--hsi-teal);
+  --hsi-page:#F7F9FA;
+  --hsi-paper:#F7F9FA;
+  --hsi-surface:#FFFFFF;
+  --hsi-elevated:#FFFFFF;
+  --hsi-line:#D9E1E5;
+  --hsi-ink:#190505;
+  --hsi-muted:#4A5560;
+  --hsi-scientific:#106C92;
+  --hsi-scientific-sky:#65CEE6;
+  --hsi-scientific-ice:#98EFFE;
+  --hsi-scientific-mist:#D9E1E5;
+  --hsi-instrument:#0F2428;
+  --hsi-instrument-ink:#E7F3EF;
+  --hsi-instrument-muted:#9BB5B0;
+  --hsi-status-supported:#157F3D;
+  --hsi-status-context:#B45309;
+  --hsi-status-contested:#C2410C;
+  --hsi-status-uncurated:#64748B;
+  --hsi-status-synthetic:#7C3AED;
+  --hsi-status-ai-draft:#4F46E5;
+  --hsi-cta-bg:var(--hsi-scientific);
   --hsi-cta-fg:#fffdf8;
-  --hsi-focus:#a75032;
+  --hsi-focus:#BD1C1D;
+  --hsi-teal:var(--hsi-scientific);
+  --hsi-teal-deep:#0B4F6C;
 }
 .site-shell.editorial-site{
   --xp-paper:var(--hsi-paper);
@@ -40,7 +49,7 @@
   background:var(--hsi-teal-deep);
   border-color:var(--hsi-teal-deep);
 }
-/* Home instrument accent: burgundy for selected / emphasis only — never alone for error. */
+/* Brand red: selected / emphasis only — never alone for error. */
 .ed-home .ed-instrument-selected,
 .ed-home .ed-ecosystem-domain[aria-pressed=true]{
   background:var(--hsi-burgundy-deep);
@@ -52,5 +61,10 @@
   color:#f6e4e0;
 }
 .ed-home .ed-workbench-accent{color:var(--hsi-burgundy)}
-/* Status chips: keep brand red out of status; ensure AA contrast on chip surfaces. */
 .ed-status-chip[data-status=research_preview]{color:#6a4708}
+.ed-status-chip[data-evidence=supported]{color:var(--hsi-status-supported)}
+.ed-status-chip[data-evidence=context_limited]{color:var(--hsi-status-context)}
+.ed-status-chip[data-evidence=contested]{color:var(--hsi-status-contested)}
+.ed-status-chip[data-evidence=not_curated]{color:var(--hsi-status-uncurated)}
+.ed-status-chip[data-evidence=synthetic]{color:var(--hsi-status-synthetic)}
+.ed-status-chip[data-evidence=ai_draft]{color:var(--hsi-status-ai-draft)}
