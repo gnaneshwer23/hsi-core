@@ -6,12 +6,16 @@ import {
   createMemoryCheckpointStore,
   createMemoryFencedArtifactStore,
   inspectUntrustedRetrievedText,
+  projectCandidateRelationshipRecordsFromExecution,
+  projectGapAssessmentRecordsFromExecution,
   projectInvestigationExecutionRecord,
   reconstructBoundedArtifacts,
   runBoundedAgentExecution,
   BOUNDED_STAGE_IDS,
   INVESTIGATION_EXECUTION_RECORD_SCHEMA,
 } from "../src/evidence/boundedAgentExecution";
+import {GAP_ASSESSMENT_RECORD_SCHEMA} from "../src/evidence/gapVerification";
+import {CANDIDATE_RELATIONSHIP_RECORD_SCHEMA} from "../src/evidence/contextualCandidateRelationships";
 import {createMemoryDynamicEvidencePersistStore} from "../src/evidence/dynamicEvidencePersistence";
 import {createMemoryRetrievalCache} from "../src/evidence/dynamicEvidenceRetrieval";
 
@@ -152,6 +156,36 @@ describe("bounded agent execution durable traces", () => {
     expect(executionRecord.review_status.scientific_validity_claimed).toBe(false);
     expect(executionRecord.honesty.projectedFromBoundedAgent).toBe(true);
     expect(executionRecord.honesty.notAParallelOrchestrator).toBe(true);
+
+    const gapRecords = projectGapAssessmentRecordsFromExecution(result);
+    expect(gapRecords.length).toBeGreaterThan(0);
+    for (const gap of gapRecords) {
+      expect(gap.schemaVersion).toBe(GAP_ASSESSMENT_RECORD_SCHEMA);
+      expect(gap.investigation_id).toBe("inv-bounded-1");
+      expect(gap.verification_status).toBe("not_verified");
+      expect(gap.expert_review_required).toBe(true);
+      expect(gap.honesty.searchCompletenessDistinctFromScientificNovelty).toBe(true);
+      expect(gap.honesty.notAParallelGapSystem).toBe(true);
+    }
+
+    expect(mechanism.candidateRelationships.length).toBeGreaterThan(0);
+    const relationshipRecords = projectCandidateRelationshipRecordsFromExecution(result, {
+      graphVersion: graphRelease.version,
+      createdAt: retrievedAt,
+    });
+    expect(relationshipRecords.length).toBeGreaterThan(0);
+    for (const rel of relationshipRecords) {
+      expect(rel.schemaVersion).toBe(CANDIDATE_RELATIONSHIP_RECORD_SCHEMA);
+      expect(rel.curation_review).toBe("draft");
+      expect(rel.hsi_grade).toBe("unexplored");
+      expect(rel.teaching_status).toBe("unknown");
+      expect(rel.graph_version).toBe(graphRelease.version);
+      expect(rel.created_at).toBe(retrievedAt);
+      expect(rel.graph_promotable).toBe(false);
+      expect(rel.scientific_approval).toBe(false);
+      expect(rel.honesty.autoPromotedToApprovedGraph).toBe(false);
+      expect(rel.honesty.axesPreservedOrthogonal).toBe(true);
+    }
   });
 
   test("cancellation stops new work and leaves prior stage traces visible", async () => {

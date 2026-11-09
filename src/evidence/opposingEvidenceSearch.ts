@@ -125,6 +125,42 @@ export function opposingSearchStatusToContextual(
 }
 
 /**
+ * Project opposing-search receipt fields used by the refined-brief gap envelope.
+ * Empty / provider-unavailable remains scoped to this search — never “no evidence exists.”
+ */
+export function projectOpposingSearchCoverageForGap(input: {
+  opposingSearch?: OpposingEvidenceSearchReport | null;
+  resultBudget?: number | null;
+}): {
+  searched_sources: readonly string[];
+  retrieved_records: number;
+  result_budget: number | null;
+  coverage_limitations: readonly string[];
+  not_found_in_this_search_distinct_from_no_evidence: true;
+} {
+  const oppose = input.opposingSearch ?? null;
+  const searched_sources = oppose?.searchScope.providers ?? [];
+  const retrieved_records = oppose
+    ? oppose.coverage.literatureHits + oppose.coverage.openTargetsHits
+    : 0;
+  const coverage_limitations = oppose
+    ? [
+        ...oppose.limitations,
+        `contentLevel=${oppose.searchScope.contentLevel}`,
+        `dateOfSearch=${oppose.searchScope.dateOfSearch}`,
+        oppose.searchScope.corpusNote,
+      ]
+    : ["Opposing/literature search receipt not attached for this gap projection"];
+  return {
+    searched_sources: [...searched_sources],
+    retrieved_records,
+    result_budget: input.resultBudget ?? null,
+    coverage_limitations: [...new Set(coverage_limitations.filter(Boolean))],
+    not_found_in_this_search_distinct_from_no_evidence: true,
+  };
+}
+
+/**
  * Run a bounded opposing-evidence bibliographic/association search.
  * Does not invent consensus; does not treat provider failure as empty opposition.
  */

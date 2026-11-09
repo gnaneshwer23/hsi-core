@@ -39,7 +39,12 @@ import {
   type HsiOrchestrationResult,
 } from "../hsiAgentOrchestrator";
 import {commitHsiFencedArtifact, type HsiFencedArtifactStore} from "../hsiFencedArtifact";
-import {buildContextualCandidatePack, type ContextualCandidatePack} from "./contextualCandidateRelationships";
+import {
+  buildContextualCandidatePack,
+  projectCandidateRelationshipRecords,
+  type CandidateRelationshipRecord,
+  type ContextualCandidatePack,
+} from "./contextualCandidateRelationships";
 import {
   buildDynamicPersistencePlan,
   createMemoryDynamicEvidencePersistStore,
@@ -56,7 +61,12 @@ import {
   type DynamicSearchRecord,
   type ResearcherQueryInput,
 } from "./dynamicEvidenceRetrieval";
-import {projectGapVerificationForOutcome, type GapVerificationOutcomeSection} from "./gapVerification";
+import {
+  projectGapAssessmentRecordsFromDurableItems,
+  projectGapVerificationForOutcome,
+  type GapAssessmentRecord,
+  type GapVerificationOutcomeSection,
+} from "./gapVerification";
 import type {LivingEvidenceOutcomeSection} from "./livingEvidenceExpansion";
 import {
   opposingSearchStatusToContextual,
@@ -70,6 +80,7 @@ import {
 import {canonicalEvidenceJson} from "./researchEvidenceCorpus";
 import type {TranslationalOutcomeSection} from "./translationalEvidenceAttach";
 import type {ReleaseAwareRetrievalResult} from "./releaseAwareRetrieval";
+import type {OpenTargetsDiseaseRecord} from "./openTargetsLookup";
 
 export const BOUNDED_AGENT_EXECUTION_SCHEMA = "hsi-bounded-agent-execution-1" as const;
 export const BOUNDED_AGENT_EXECUTION_METHOD = "hsi.bounded_agent_execution.v1" as const;
@@ -438,6 +449,36 @@ function contextSummary(packRel: ContextualCandidatePack["relationships"][number
   return bits.slice(0, 8).join(", ") || "context_not_declared";
 }
 
+/** Map permitted OT retrieval metadata onto contextual-candidate Open Targets records. */
+function openTargetsRecordsFromSearch(
+  record: DynamicSearchRecord | null | undefined,
+): OpenTargetsDiseaseRecord[] {
+  if (!record?.retrievedOpenTargets.length) return [];
+  return record.retrievedOpenTargets.map((ot) => ({
+    provider: ot.provider,
+    diseaseId: ot.diseaseId,
+    diseaseName: ot.diseaseName,
+    associationCount: ot.associationCount,
+    associations: ot.associations.map((a) => ({
+      targetEnsemblId: a.targetEnsemblId,
+      approvedSymbol: a.approvedSymbol,
+      score: a.score,
+      datatypeScores: a.evidenceTypes.map((id) => ({id, score: a.score})),
+      datasourceScores: a.evidenceSources.map((id) => ({id, score: a.score})),
+    })),
+    associationScope: ot.associationScope,
+    enableIndirect: ot.enableIndirect,
+    scoreHonesty: ot.scoreHonesty,
+    retrievedAt: ot.retrievedAt,
+    responseIdentity: ot.responseIdentity,
+    verificationState: "metadata_retrieved_not_claim_verified" as const,
+    reviewState: "unreviewed" as const,
+    scientificApproval: false as const,
+    graphPromotable: false as const,
+    passageImportAuthorized: false as const,
+  }));
+}
+
 async function persistStageArtifact(input: {
   store: HsiFencedArtifactStore;
   checkpoint: HsiDurableCheckpoint;
@@ -575,6 +616,115 @@ export function projectInvestigationExecutionRecord(
       scientificValidityClaimed: false,
     },
   };
+}
+
+/**
+ * Project refined-brief gap envelopes from durable gap-assessment stage rows.
+ * Extends existing gapVerification — no parallel gap system / re-classifier.
+ */
+export function projectGapAssessmentRecordsFromExecution(
+  result: BoundedAgentExecutionResult,
+  input?: {
+    opposingReport?: OpposingEvidenceSearchReport | null;
+    resultBudget?: number | null;
+  },
+): GapAssessmentRecord[] {
+  const plan = result.stages.find((s) => s.stageId === "investigation-plan")?.artifact;
+  const brief = result.stages.find((s) => s.stageId === "research-brief")?.artifact;
+  const question =
+    plan && "question" in plan
+      ? plan.question
+      : brief && "question" in brief
+        ? brief.question
+        : "";
+  if (!question.trim()) return [];
+
+  const gapsArtifact = result.stages.find((s) => s.stageId === "gap-assessment")?.artifact as
+    | GapAssessmentArtifact
+    | null
+    | undefined;
+  if (!gapsArtifact || !gapsArtifact.items.length) return [];
+
+  const pageSize = plan && "budgets" in plan ? plan.budgets.pageSize : null;
+  const nextResearchActions =
+    brief && "nextResearchActions" in brief ? brief.nextResearchActions : undefined;
+
+  return projectGapAssessmentRecordsFromDurableItems({
+    investigationId: result.investigationId,
+    question,
+    items: gapsArtifact.items,
+    summary: gapsArtifact.summary,
+    opposingSearch: input?.opposingReport ?? null,
+    resultBudget: input?.resultBudget ?? pageSize,
+    nextResearchActions,
+  });
+}
+
+/**
+ * Project durable mechanism candidate relationships onto refined-brief
+ * relationship envelopes. Rebuilds from mechanism stage rows when no pack is
+ * supplied — never invents a second graph store.
+ */
+export function projectCandidateRelationshipRecordsFromExecution(
+  result: BoundedAgentExecutionResult,
+  input?: {
+    pack?: ContextualCandidatePack | null;
+    graphVersion?: string | null;
+    createdAt?: string;
+  },
+): CandidateRelationshipRecord[] {
+  const createdAt = input?.createdAt ?? new Date().toISOString();
+  if (input?.pack) {
+    return projectCandidateRelationshipRecords({
+      pack: input.pack,
+      graphVersion: input.graphVersion ?? null,
+    });
+  }
+  const mechanism = result.stages.find((s) => s.stageId === "mechanism-analysis")?.artifact as
+    | MechanismAssessmentArtifact
+    | null
+    | undefined;
+  if (!mechanism?.candidateRelationships.length) return [];
+
+  // Reconstruct minimal declared associations from durable mechanism rows so the
+  // brief envelope is available without inventing a second graph store.
+  const pack = buildContextualCandidatePack({
+    declaredAssociations: mechanism.candidateRelationships.map((rel) => {
+      const [subjectSystem, ...subjectRest] = rel.subject.split(":");
+      const [objectSystem, ...objectRest] = rel.object.split(":");
+      const subjectValue = subjectRest.join(":") || rel.subject;
+      const objectValue = objectRest.join(":") || rel.object;
+      const findingPolarity =
+        rel.findingPolarity === "supporting" || rel.findingPolarity === "opposing"
+          ? rel.findingPolarity
+          : "uncertain";
+      return {
+        id: rel.id,
+        subject: {
+          system: subjectSystem || "entity",
+          value: subjectValue,
+          label: null,
+        },
+        predicate: rel.predicate,
+        object: {
+          system: objectSystem || "entity",
+          value: objectValue,
+          label: null,
+        },
+        findingPolarity,
+        evidenceSourceIds: rel.evidenceSourceIds,
+        note: rel.biologicalContextSummary,
+      };
+    }),
+    surfaceLabel: "candidate",
+    generatedAt: createdAt,
+    opposingSearchStatus: "recorded_traces_only",
+  });
+
+  return projectCandidateRelationshipRecords({
+    pack,
+    graphVersion: input?.graphVersion ?? null,
+  });
 }
 
 export async function runBoundedAgentExecution(input: {
@@ -725,6 +875,7 @@ export async function runBoundedAgentExecution(input: {
                 : "not_executed";
       scratch.candidatePack = buildContextualCandidatePack({
         plan: scratch.persistencePlan,
+        openTargetsRecords: openTargetsRecordsFromSearch(record),
         surfaceLabel: "candidate",
         generatedAt: now(),
         opposingSearchStatus: opposeContextual,
@@ -955,6 +1106,7 @@ export async function runBoundedAgentExecution(input: {
       if (!scratch.persistencePlan) fail("Mechanism analysis requires persistence plan");
       const pack = buildContextualCandidatePack({
         plan: scratch.persistencePlan,
+        openTargetsRecords: openTargetsRecordsFromSearch(scratch.searchRecord),
         surfaceLabel: "candidate",
         generatedAt: now(),
         opposingSearchStatus: "not_executed",
@@ -1072,6 +1224,7 @@ export async function runBoundedAgentExecution(input: {
       if (scratch.persistencePlan) {
         scratch.candidatePack = buildContextualCandidatePack({
           plan: scratch.persistencePlan,
+          openTargetsRecords: openTargetsRecordsFromSearch(scratch.searchRecord),
           surfaceLabel: "candidate",
           generatedAt: now(),
           opposingSearchStatus: opposingSearchStatusToContextual(report.status),

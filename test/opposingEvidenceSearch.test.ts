@@ -4,6 +4,7 @@
 import {describe, expect, test} from "bun:test";
 import {
   opposingSearchStatusToContextual,
+  projectOpposingSearchCoverageForGap,
   runOpposingEvidenceSearch,
 } from "../src/evidence/opposingEvidenceSearch";
 import {createMemoryRetrievalCache} from "../src/evidence/dynamicEvidenceRetrieval";
@@ -130,5 +131,31 @@ describe("opposing evidence search", () => {
     expect(report.status).toBe("skipped_budget");
     expect(report.findings).toEqual([]);
     expect(report.limitations.some((l) => /Skipped oppose/i.test(l))).toBe(true);
+  });
+
+  test("projects searched_sources / retrieved_records for gap envelope without collapsing empty to no-evidence", async () => {
+    const report = await runOpposingEvidenceSearch({
+      question: "Tfh IL-21 systemic sclerosis fibrosis",
+      now: () => asOf,
+      cache: createMemoryRetrievalCache(),
+      fetcher: async (url) => {
+        const u = String(url);
+        if (u.includes("opentargets")) {
+          return new Response(otBody("MONDO_0005100"), {status: 200});
+        }
+        if (u.includes("europepmc")) {
+          return new Response(epmcBody([]), {status: 200});
+        }
+        return new Response("unexpected", {status: 500});
+      },
+    });
+    const coverage = projectOpposingSearchCoverageForGap({
+      opposingSearch: report,
+      resultBudget: 50,
+    });
+    expect(coverage.searched_sources).toEqual(["europe_pmc", "open_targets"]);
+    expect(coverage.result_budget).toBe(50);
+    expect(coverage.not_found_in_this_search_distinct_from_no_evidence).toBe(true);
+    expect(coverage.coverage_limitations.length).toBeGreaterThan(0);
   });
 });
