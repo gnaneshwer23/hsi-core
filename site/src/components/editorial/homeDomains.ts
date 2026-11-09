@@ -1,4 +1,4 @@
-import {HOME_DEMO} from "./HomeProductDemo";
+import {HOME_DEMO} from "./homeResearchScenarios";
 
 export type DomainStatus="research_preview"|"in_development"|"not_currently_available";
 

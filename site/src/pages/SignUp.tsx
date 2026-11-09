@@ -1,12 +1,16 @@
 import {useState,type FormEvent} from "react";
-import {Link,useNavigate} from "react-router-dom";
+import {Link,useNavigate,useSearchParams} from "react-router-dom";
 import {authBaseUrl,hsiAuth} from "../lib/hsiAuth";
 import {REGISTRATION_PASSWORD_MIN,REGISTRATION_PASSWORD_MAX,validateRegistration,type RegistrationErrors} from "../lib/registrationValidation";
 import type {HsiRegistration} from "../lib/hsiAuthClient";
+import {RESEARCH_CONTEXT_KEYS,safeNextPath,signInHref} from "../lib/researchContext";
 import "../styles/sign-in.css";
 
 export function SignUp(){
  const navigate=useNavigate();
+ const [params]=useSearchParams();
+ const afterAuth=safeNextPath(params.get(RESEARCH_CONTEXT_KEYS.next))??"/research/account";
+ const signInWithNext=signInHref(afterAuth);
  const [name,setName]=useState("");const [email,setEmail]=useState("");const [password,setPassword]=useState("");
  const [pending,setPending]=useState(false);const [error,setError]=useState("");const [fieldErrors,setFieldErrors]=useState<RegistrationErrors>({});
  const [registration,setRegistration]=useState<HsiRegistration|null>(null);
@@ -38,7 +42,7 @@ export function SignUp(){
      :"A verification email was requested. Check your inbox and spam folder for a code or link, then verify below before signing in.");
    }
    const session=await hsiAuth.session();
-   if(session.data?.user?.id&&session.data.user.emailVerified){navigate("/research/account",{replace:true});return;}
+   if(session.data?.user?.id&&session.data.user.emailVerified){navigate(afterAuth,{replace:true});return;}
   }catch{setError("Account creation could not be completed. Please try again or contact the HSI administrator.");}
   finally{setPending(false);}
  }
@@ -60,7 +64,7 @@ export function SignUp(){
   try{
    const result=await hsiAuth.verifyEmailCode(otp,registration.user.email);
    if(result.error){setCodeError(result.error.message);return;}
-   navigate("/sign-in",{replace:true});
+   navigate(signInWithNext,{replace:true});
   }catch{setCodeError("The code could not be verified. Please try again.");}
   finally{setVerifyingCode(false);}
  }
@@ -77,7 +81,7 @@ export function SignUp(){
    <button type="submit" disabled={verifyingCode||resending}>{verifyingCode?"Verifying code…":"Verify email"}</button>
   </form>
   <button className="hsi-auth-signout" type="button" disabled={resending||verifyingCode} onClick={resendVerification}>{resending?"Requesting verification…":"Resend verification email"}</button>
-  <p>If no email arrives, ask the HSI administrator to check provider email delivery.</p></>}<p>Researcher and scientific reviewer access still require separate backend approval.</p><Link className="hsi-sign-in-back" to="/sign-in">Continue to sign in →</Link></div>:<>
+  <p>If no email arrives, ask the HSI administrator to check provider email delivery.</p></>}<p>Researcher and scientific reviewer access still require separate backend approval.</p><Link className="hsi-sign-in-back" to={signInWithNext}>Continue to sign in →</Link></div>:<>
   <p className="hsi-sign-in-description">Register for an HSI account. Researcher access is granted separately after approval.</p>
   {authBaseUrl?<form className="hsi-auth-form" onSubmit={submit} noValidate aria-busy={pending}>
    <label htmlFor="hsi-name">Full name</label><input id="hsi-name" autoComplete="name" required maxLength={120} value={name} onChange={e=>{setName(e.target.value);clearFieldError("name");}} disabled={pending} aria-invalid={!!fieldErrors.name} aria-describedby={fieldErrors.name?"hsi-name-error":undefined}/>
@@ -92,7 +96,7 @@ export function SignUp(){
    {pending&&<p role="status" className="hsi-auth-hint">Contacting the secure authentication service… The request will time out if the service does not respond.</p>}
    <button type="submit" disabled={pending}>{pending?"Creating account…":"Create account"}</button>
   </form>:<div className="hsi-sign-in-status" role="status"><strong>Registration is not enabled on this deployment.</strong><p>The HSI administrator needs to configure the approved Neon Auth URL in Vercel and enable account registration in the authentication provider. Rebuilding the site is required after changing its public auth URL.</p></div>}
-  <p className="hsi-sign-in-footnote">Already have an account? <Link to="/sign-in">Sign in</Link></p>
+  <p className="hsi-sign-in-footnote">Already have an account? <Link to={signInWithNext}>Sign in</Link></p>
   </>}
  </div></section>;
 }

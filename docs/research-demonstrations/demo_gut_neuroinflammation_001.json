@@ -1,0 +1,31 @@
+{
+  "demonstration_id": "demo_gut_neuroinflammation_001",
+  "mode": "illustrative",
+  "data_class": "curated_example",
+  "live_backend": false,
+  "review_status": "not_reviewed",
+  "disease": null,
+  "domains": ["microbiome", "neuroimmune", "immunity"],
+  "question": "How might gut microbial metabolites influence neuroinflammation?",
+  "mechanism_path": [
+    "Microbial community",
+    "Metabolite signal",
+    "Peripheral immune tone",
+    "CNS immune cells",
+    "Neuroinflammation context"
+  ],
+  "evidence": [],
+  "contradictions": [],
+  "gaps": [
+    "Cross-tissue causal evidence not established in this demo",
+    "Ontology bridges for microbe→glia remain incomplete on substrate"
+  ],
+  "disclaimer": "Illustrative cross-domain path. Coverage is shallower than the SSc validation case — not equal evidence depth.",
+  "ui_labels": [
+    "Illustrative research demonstration",
+    "Not a live investigation",
+    "Uses curated example data",
+    "Unequal coverage vs SSc validation case"
+  ],
+  "notes": "Scenario B acceptance remains NOT_EXECUTED until staging E2E. Never flip live_backend without verification."
+}

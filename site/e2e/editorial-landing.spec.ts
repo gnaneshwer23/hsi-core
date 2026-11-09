@@ -19,7 +19,7 @@ test('public website excludes fixture promotion and keeps actual product scope',
 test('editorial homepage product demo, keyboard tabs and narrow layouts remain usable',async({page},info)=>{
  for(const width of [320,390,768,1440]){
   await page.setViewportSize({width,height:1000});await page.goto('/');
-  await expect(page.getByRole('heading',{level:1})).toContainText('Investigate disease mechanisms');
+  await expect(page.getByRole('heading',{level:1})).toContainText('Investigate biological mechanisms');
   await expect(page.getByRole('heading',{name:/From question to research decision/})).toBeVisible();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),String(width)).toBe(true);
   if(width===1440)await page.screenshot({path:info.outputPath('editorial-home-desktop.png'),fullPage:true});
@@ -34,4 +34,11 @@ test('editorial homepage product demo, keyboard tabs and narrow layouts remain u
  await expect(page.getByRole('main')).toContainText('Connected biomedical intelligence');
  await expect(page.getByRole('main')).toContainText('Research workbench');
  await expect(page.getByRole('main')).toContainText('Biological ecosystem');
+});
+test('homepage brief deep link opens the illustrative brief panel',async({page})=>{
+ await page.goto('/?scenario=gut_neuro&panel=brief#product-demo');
+ await expect(page.getByRole('tab',{name:'Research brief',exact:true})).toHaveAttribute('aria-selected','true');
+ await expect(page.getByRole('tabpanel')).toContainText('Research brief · curated example');
+ await expect(page.getByRole('main')).toContainText('live_backend=false');
+ await expect(page.getByRole('link',{name:/See How It Works/i}).first()).toHaveAttribute('href','/how-it-works');
 });

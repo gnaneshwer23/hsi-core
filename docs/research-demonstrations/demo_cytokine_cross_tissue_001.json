@@ -1,0 +1,30 @@
+{
+  "demonstration_id": "demo_cytokine_cross_tissue_001",
+  "mode": "illustrative",
+  "data_class": "curated_example",
+  "live_backend": false,
+  "review_status": "not_reviewed",
+  "disease": null,
+  "domains": ["molecular_signalling", "multi_tissue"],
+  "question": "How does the same cytokine signalling axis behave across distinct tissues?",
+  "mechanism_path": [
+    "Ligand / receptor pair",
+    "Tissue A context",
+    "Tissue B context",
+    "Shared pathway nodes",
+    "Context-dependent outcomes"
+  ],
+  "evidence": [],
+  "contradictions": [],
+  "gaps": [
+    "Disease identifier intentionally omitted",
+    "Substrate create path still disease-narrow — demo is illustrative only"
+  ],
+  "disclaimer": "Disease-independent illustrative question. Backend investigation create must accept null disease before this can be staging-verified.",
+  "ui_labels": [
+    "Illustrative research demonstration",
+    "Disease-independent",
+    "Not staging-verified"
+  ],
+  "notes": "Scenario F is BLOCKED on substrate until diseaseContext is optional. Do not mark PASS."
+}

@@ -50,11 +50,12 @@
 .ed-hero-workbench .ed-mechanism-path strong{color:var(--hsi-instrument-ink,#E7F3EF)}
 .ed-hero-workbench .ed-mechanism-path span{color:var(--hsi-scientific-ice,#98EFFE)}
 .ed-hero-workbench .ed-text-link{color:var(--hsi-scientific-ice,#98EFFE)}
-.ed-question-bar-instrument{
+.ed-question-bar.ed-question-bar-instrument{
   border-color:#2a4a4c;background:#143034;
 }
-.ed-question-bar-instrument>span:first-child{color:var(--hsi-instrument-muted,#9BB5B0)}
-.ed-question-bar-instrument .ed-question-bar-value{color:var(--hsi-instrument-ink,#E7F3EF)!important}
+.ed-question-bar.ed-question-bar-instrument>span:first-child{color:var(--hsi-instrument-muted,#9BB5B0)}
+.ed-question-bar.ed-question-bar-instrument .ed-question-bar-value{color:var(--hsi-instrument-ink,#E7F3EF)!important}
+.ed-question-bar.ed-question-bar-instrument .ed-workbench-meta{color:var(--hsi-instrument-muted,#9BB5B0)}
 .ed-hero-domain-grid{
   list-style:none;margin:0 0 12px;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;
 }
@@ -117,6 +118,17 @@
 .ed-mechanism-path-compact strong{font-size:.8rem}
 .ed-ecosystem-row-8{grid-template-columns:repeat(4,minmax(0,1fr))}
 .ed-ecosystem-domain-related{border-color:var(--hsi-scientific-sky,#65CEE6);background:#f0fafc}
+.ed-scenario-toolbar{
+  display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;
+}
+.ed-scenario-toolbar>button{
+  min-height:36px;padding:6px 12px;border-radius:8px;border:1px solid #c9d8cc;
+  background:#eef4ef;color:#1d3a34;font-size:.72rem;font-weight:600;cursor:pointer;
+}
+.ed-scenario-toolbar>button[aria-selected=true]{
+  background:#1d3a34;border-color:#1d3a34;color:#f4faf7;
+}
+.ed-scenario-toolbar>button:focus-visible{outline:3px solid var(--hsi-focus,#a75032);outline-offset:3px}
 .ed-demo-toolbar{
   display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;
 }
@@ -297,6 +309,20 @@
   font-size:.86rem;color:#2a3f39;padding:12px 14px;border:1px solid #e0d2cf;border-radius:6px;background:#fff;
 }
 .ed-does-not .ed-text-link{align-self:end}
+
+.ed-journey-entries{display:grid;gap:22px}
+.ed-journey-entry-list{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+.ed-journey-entry{
+  display:grid;gap:12px;padding:22px 20px;border:1px solid #d7e3da;border-radius:10px;background:#fff;
+}
+.ed-journey-entry h3{margin:0;font-size:1.15rem;letter-spacing:-.02em;color:#173530}
+.ed-journey-entry .ed-actions{margin-top:4px}
+@media(max-width:800px){
+  .ed-journey-entries{padding-inline:30px}
+}
+@media(max-width:600px){
+  .ed-journey-entries{padding-inline:22px}
+}
 
 .experience-shell .site-footer .footer-contact{gap:10px}
 .experience-shell .nav .nav-cta-label{white-space:nowrap}

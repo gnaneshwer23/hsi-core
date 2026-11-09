@@ -1,0 +1,141 @@
+{
+  "schemaVersion": "hsi-public-capability-status-1",
+  "asOf": "2026-11-09",
+  "engRegister": "operations/capability-register/capability-register.v1.json",
+  "brief": "docs/strategy/HSI_PUBLIC_WEBSITE_IMPROVEMENT_BRIEF.md",
+  "honesty": {
+    "scientificallyValidatedClaimed": false,
+    "writesEnabledClaimed": false,
+    "gateCAutoApprove": false,
+    "cdsPhiInHsi": false,
+    "polishedUiImpliesCapability": false
+  },
+  "statusVocabulary": [
+    "available_and_verified",
+    "research_preview",
+    "in_development",
+    "not_currently_available"
+  ],
+  "ctaPolicy": {
+    "rule": "workspace_requires_approval",
+    "primary": { "label": "Request Research Access", "to": "/contact" },
+    "secondary": { "label": "Explore the platform", "to": "/platform" },
+    "lastDerivedAt": "2026-11-09",
+    "derivationNotes": "Production research writes parked; anonymous workspace unavailable; auth provider reachable. Do not promote Explore as if authenticated tools are open."
+  },
+  "capabilities": [
+    {
+      "capability_id": "PUB-HOME-NARRATIVE",
+      "public_label": "Public research narrative and honesty labels",
+      "status": "available_and_verified",
+      "evidence": [
+        "https://www.humansuperintelligence.tech/",
+        "docs/engineering/HSI_LIVE_WEBSITE_AUDIT.md"
+      ],
+      "route_or_component": "/",
+      "backend_dependency": "none",
+      "data_dependency": "none",
+      "human_review_dependency": "none",
+      "last_verified_at": "2026-11-09",
+      "verification_method": "http_200_browser_snapshot",
+      "owner": "hsi-site"
+    },
+    {
+      "capability_id": "PUB-PLATFORM-OVERVIEW",
+      "public_label": "Platform overview",
+      "status": "available_and_verified",
+      "evidence": ["site/src/pages/Platform.tsx", "docs/engineering/HSI_LIVE_WEBSITE_AUDIT.md"],
+      "route_or_component": "/platform",
+      "backend_dependency": "none",
+      "data_dependency": "none",
+      "human_review_dependency": "none",
+      "last_verified_at": "2026-11-09",
+      "verification_method": "http_200",
+      "owner": "hsi-site"
+    },
+    {
+      "capability_id": "PUB-RESEARCH-ACCESS",
+      "public_label": "Research account sign-in and access request",
+      "status": "research_preview",
+      "evidence": [
+        "GET /api/auth/diagnostics → provider_reachable",
+        "site/src/pages/SignIn.tsx"
+      ],
+      "route_or_component": "/sign-in|/contact",
+      "backend_dependency": "Neon Auth gateway",
+      "data_dependency": "provider session",
+      "human_review_dependency": "admin research grant",
+      "last_verified_at": "2026-11-09",
+      "verification_method": "auth_diagnostics_anonymous_session_null",
+      "owner": "hsi-auth"
+    },
+    {
+      "capability_id": "PUB-RESEARCH-WORKSPACE",
+      "public_label": "Authenticated research workspace",
+      "status": "not_currently_available",
+      "evidence": [
+        "GET /api/research/health writesEnabled=false",
+        "GET /api/research/investigations → 401 without session"
+      ],
+      "route_or_component": "/research/dashboard",
+      "backend_dependency": "HSI_DATABASE_URL red-wave + research grants",
+      "data_dependency": "authorised investigations",
+      "human_review_dependency": "human queue #5 and grants",
+      "last_verified_at": "2026-11-09",
+      "verification_method": "anonymous_fail_closed",
+      "owner": "hsi-research"
+    },
+    {
+      "capability_id": "PUB-SSC-DEMO",
+      "public_label": "Systemic sclerosis illustrative research demonstration",
+      "status": "research_preview",
+      "evidence": ["docs/research-demonstrations/demo_ssc_fibrosis_001.json"],
+      "route_or_component": "homepage_or_how-it-works_demo",
+      "backend_dependency": "none when illustrative",
+      "data_dependency": "curated_example",
+      "human_review_dependency": "not_reviewed",
+      "last_verified_at": "2026-11-09",
+      "verification_method": "contract_present_live_backend_false",
+      "owner": "hsi-site"
+    },
+    {
+      "capability_id": "PUB-SCIENCE-EXPLORER",
+      "public_label": "Public science / biology explorer",
+      "status": "research_preview",
+      "evidence": ["site/src/pages/Science.tsx", "HTTP 200 /science"],
+      "route_or_component": "/science",
+      "backend_dependency": "optional graph reads when authorised",
+      "data_dependency": "draft educational graph",
+      "human_review_dependency": "draft knowledge labelled",
+      "last_verified_at": "2026-11-09",
+      "verification_method": "http_200",
+      "owner": "hsi-site"
+    },
+    {
+      "capability_id": "PUB-HSI-TRIALS",
+      "public_label": "HSI Trials matching and enrolment",
+      "status": "not_currently_available",
+      "evidence": ["docs/strategy/HSI_PUBLIC_WEBSITE_SPECIFICATION.md", "/for-trials copy"],
+      "route_or_component": "/for-trials",
+      "backend_dependency": "none live",
+      "data_dependency": "none",
+      "human_review_dependency": "planned programme",
+      "last_verified_at": "2026-11-09",
+      "verification_method": "product_copy_planned",
+      "owner": "hsi-product"
+    },
+    {
+      "capability_id": "PUB-CLINICAL-CDS",
+      "public_label": "Clinical decision support inside HSI",
+      "status": "not_currently_available",
+      "evidence": ["docs/CDS_PHI_BOUNDARY.md"],
+      "route_or_component": "none",
+      "backend_dependency": "forbidden in hsi-core",
+      "data_dependency": "PHI forbidden",
+      "human_review_dependency": "n/a",
+      "last_verified_at": "2026-11-09",
+      "verification_method": "policy_boundary",
+      "owner": "hsi-governance"
+    }
+  ]
+}

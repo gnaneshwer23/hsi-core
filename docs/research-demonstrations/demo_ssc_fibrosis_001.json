@@ -29,5 +29,5 @@
   "related_eng_packs": [
     "research/ssc-tfh-il21/"
   ],
-  "notes": "When live_backend becomes true, update mode, evidence[], verification probes, and capability-status PUB-SSC-DEMO. Never silently flip labels."
+  "notes": "When live_backend becomes true, update mode, evidence[], verification probes, and capability-status PUB-SSC-DEMO. Never silently flip labels. Systemic sclerosis is a scientific validation case — not the HSI product boundary. See docs/architecture/HSI_CROSS_DOMAIN_BIOLOGY_ARCHITECTURE.md."
 }
