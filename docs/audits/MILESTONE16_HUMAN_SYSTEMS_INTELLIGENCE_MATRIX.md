@@ -1,12 +1,12 @@
 # Milestone 16 — Human Systems Intelligence, Cross-Disease Mechanisms & Multimorbidity Discovery
 
 **Brief:** HSI Milestone 16 — governed **human systems** research-intelligence contracts for cross-disease investigation, cross-disease mechanism relationships, organ-system relationships, multimorbidity research context, and research-scoped systems simulation — composing M15 HDI / CSOL / (optional) PCRM ids and earlier ontology / provenance / RWE hooks — **without** diagnosis, treatment selection, clinical decision-making, whole-body simulation claims, auto-transfer of mechanisms across diseases, duplicate entity registries, PHI/CDS, Gate C auto-approve, MoU invention, or claiming a live M11 multiscale engine.  
-**Status:** Phase 0 gap audit + **PR1 Human Systems Data Contracts** ([#124](https://github.com/gnaneshwer23/hsi-core/pull/124) in-flight) — **not** cross-disease mechanism intelligence complete, **not** multimorbidity discovery complete, **not** whole-body simulation authorised, **not** M16 complete.  
+**Status:** Phase 0 gap audit + **PR1 Human Systems Data Contracts** ([#124](https://github.com/gnaneshwer23/hsi-core/pull/124) in-flight) + **PR2 Cross-Disease Mechanism Intelligence** ([#126](https://github.com/gnaneshwer23/hsi-core/pull/126) stacked on #124) — **not** multimorbidity discovery complete, **not** whole-body simulation authorised, **not** M16 complete.  
 **Date:** 2026-11-09  
 **Audited `main` SHA:** `873ca494edf6280742309b0fc309142878f4fc43` (post-#122 tip)  
 **Tip commit:** `873ca49 Add M15 patient-contextualised research model contracts (#122)`  
 **HSI Neon:** red-wave only (`human super intelligence` / `red-wave-06625195` / `ep-restless-dew…`) — never autumn-snow / Akeno / DeliverX  
-**Dependency:** Prefer composing via IDs/refs already on `main` (M15 PR1–PR6 [#116](https://github.com/gnaneshwer23/hsi-core/pull/116)–[#122](https://github.com/gnaneshwer23/hsi-core/pull/122); M14 [#111](https://github.com/gnaneshwer23/hsi-core/pull/111)/[#113](https://github.com/gnaneshwer23/hsi-core/pull/113)/[#114](https://github.com/gnaneshwer23/hsi-core/pull/114)/[#115](https://github.com/gnaneshwer23/hsi-core/pull/115)). **Do not stack** on unmerged M15 PR7 ([#123](https://github.com/gnaneshwer23/hsi-core/pull/123)) or PR8 unless types are required — they are not required for PR1.
+**Dependency:** Prefer composing via IDs/refs already on `main` (M15 PR1–PR6 [#116](https://github.com/gnaneshwer23/hsi-core/pull/116)–[#122](https://github.com/gnaneshwer23/hsi-core/pull/122); M14 [#111](https://github.com/gnaneshwer23/hsi-core/pull/111)/[#113](https://github.com/gnaneshwer23/hsi-core/pull/113)/[#114](https://github.com/gnaneshwer23/hsi-core/pull/114)/[#115](https://github.com/gnaneshwer23/hsi-core/pull/115)) and M16 PR1 envelopes. **Stack PR2 on #124** while open. **Do not stack** on unmerged M15 PR7 ([#123](https://github.com/gnaneshwer23/hsi-core/pull/123)) or PR8.
 
 **Cross-links (do not contradict):**
 
@@ -22,6 +22,8 @@
 - [`../engineering/HUMAN_QUEUE_RESIDUALS.md`](../engineering/HUMAN_QUEUE_RESIDUALS.md) — #2 / #4 / #5 PARKED  
 
 **Out of PR1:** Cross-disease mechanism intelligence engines (PR2), multimorbidity discovery analytics (later), organ-system coupling engines, workbench UI, Neon migration, invented mechanisms/statistics, whole-body simulation claims, auto-transfer of mechanisms across diseases, diagnosis / treatment selection / CDS.
+
+**Out of PR2:** Multimorbidity discovery analytics (PR3+), organ-system coupling engines, live mechanism transfer, workbench UI, Neon migration, invented mechanisms/statistics, whole-body simulation claims, diagnosis / treatment selection / CDS.
 
 ---
 
@@ -146,12 +148,13 @@ Honesty freeze: research intelligence only · **not diagnosis / treatment select
 |-------|------------|----------|--------|---------|-------|
 | **0** Audit + scientific readiness | This document + M1–M15 deps | — | `Verified operational` (audit) | Keep updated | this file |
 | **1** Human systems data contracts | M15 HDI/CSOL ids · ontology registry · CDS boundary · M14 optional ids | **PR1 in-flight** ([#124](https://github.com/gnaneshwer23/hsi-core/pull/124)) — 7 focused tests + evaluation pack · cross-disease investigation · cross-disease mechanism relationship (classifications) · organ-system relationship · multimorbidity research context · research-scoped systems simulation + thin store · `Fixture-only` / scientific path `Blocked` | Live mechanism transfer · whole-body sim · invented stats · workbench UI | `src/humanSystemsIntelligenceContracts.ts` · `test/humanSystemsIntelligenceContracts.test.ts` · `scripts/human-systems-intelligence-contracts.ts` · `evaluation/human-systems-intelligence/` |
-| **2** Cross-disease mechanism intelligence | PR1 relationship envelopes | `Missing` | Mechanism intelligence engines / comparison without auto-transfer | later PR2 Cross-Disease Mechanism Intelligence |
-| **3** Multimorbidity discovery analytics | PR1 multimorbidity context | `Missing` | Co-occurrence analytics with causation honesty | later |
-| **4** Organ-system coupling intelligence | PR1 organ-system relationships · CSOL | `Missing` | Coupling analysis without whole-body claim | later |
-| **5** Systems simulation runner (research) | PR1 systems simulation · M11 **Skipped** | `Missing` | Fixture/harness runner only; no whole-body | later |
-| **6** Workbench surfaces | research workbench | `Partial` | UI deferred | later |
-| **7** Authorised-dataset scientific validation | — | `Blocked` | No invented mechanisms/stats as validation | later |
+| **2** Cross-disease mechanism intelligence | PR1 investigation / CMR envelopes · HDI disease contexts | **PR2 in-flight** ([#126](https://github.com/gnaneshwer23/hsi-core/pull/126) stacked on [#124](https://github.com/gnaneshwer23/hsi-core/pull/124)) — 7 focused tests + evaluation pack · 10-step comparative workflow · mechanism classifications · thin store · `Fixture-only` / scientific path `Blocked` | Live mechanism transfer · invented stats · workbench UI | `src/crossDiseaseMechanismIntelligenceContracts.ts` · `test/crossDiseaseMechanismIntelligenceContracts.test.ts` · `scripts/cross-disease-mechanism-intelligence-contracts.ts` · `evaluation/cross-disease-mechanism-intelligence/` |
+| **3** Cross-scale biological relationships | PR1 organ-system · PR2 comparative profiles · CSOL | `Missing` | Cross-scale relationship intelligence without whole-body claim | later PR3 Cross-Scale Biological Relationships |
+| **4** Multimorbidity discovery analytics | PR1 multimorbidity context | `Missing` | Co-occurrence analytics with causation honesty | later |
+| **5** Organ-system coupling intelligence | PR1 organ-system relationships · CSOL | `Missing` | Coupling analysis without whole-body claim | later |
+| **6** Systems simulation runner (research) | PR1 systems simulation · M11 **Skipped** | `Missing` | Fixture/harness runner only; no whole-body | later |
+| **7** Workbench surfaces | research workbench | `Partial` | UI deferred | later |
+| **8** Authorised-dataset scientific validation | — | `Blocked` | No invented mechanisms/stats as validation | later |
 
 ---
 
@@ -183,6 +186,26 @@ Honesty freeze: research intelligence only · **not diagnosis / treatment select
 - Thin in-memory store + offline evaluation pack + focused tests.
 
 **Out of PR1:** PR2 Cross-Disease Mechanism Intelligence, workbench UI, Neon migration, invented mechanisms/stats, auto-merge.
+
+---
+
+## PR2 deliverable (Cross-Disease Mechanism Intelligence)
+
+**Cross-Disease Mechanism Intelligence**
+
+- Define **diseases being compared** (≥2 `hsi-hdi-ctx-*`) composing PR1 `hsi-hsys-inv-*` investigation ids; refuse single-disease comparisons and auto-transfer.  
+- **Resolve disease identifiers** with closed resolution statuses; fail-closed when dataset blocked.  
+- **Retrieve approved mechanisms** with preserved species / tissue / cell state / disease stage / experimental context; optional PR1 `hsi-hsys-cmr-*` composition.  
+- **Identify shared genes/proteins/pathways** under closed mechanism-intelligence classifications (`shared_molecular_association` · `shared_pathway_involvement` · `shared_functional_mechanism` · `disease_specific` · `context_dependent` · `computational_similarity` · `unvalidated_mechanistic_hypothesis`).  
+- **Compare cell/tissue contexts** without collapsing context-dependent differences.  
+- **Retrieve supporting** and **opposing** evidence as distinct polarities; refuse invented statistics.  
+- **Evaluate directionality** without claiming proven causation / causal mechanism.  
+- **Identify disease-specific differences** (`disease_specific` / `context_dependent`) — not auto-transferred across diseases.  
+- Produce **reviewable comparative mechanism profile** with closed lifecycle and human acceptance gate.  
+- Binding honesty: shared gene ≠ shared causal mechanism; pathway enrichment ≠ activation; no auto-transfer; experimental context preserved; fixtures ≠ scientific validation.  
+- Thin in-memory store + offline evaluation pack + focused tests. No Neon migration; no workbench UI.
+
+**Out of PR2:** PR3 Cross-Scale Biological Relationships, multimorbidity discovery analytics, workbench UI, Neon migration, invented mechanisms/stats, auto-merge.
 
 ---
 
@@ -260,8 +283,9 @@ Honesty freeze: research intelligence only · **not diagnosis / treatment select
 
 | PR | Title | Branch | State |
 |----|-------|--------|-------|
+| [#126](https://github.com/gnaneshwer23/hsi-core/pull/126) | M16 PR2 Cross-Disease Mechanism Intelligence | `eng/m16-cross-disease-mechanism-intelligence` | **PR2 in-flight** — stacked on [#124](https://github.com/gnaneshwer23/hsi-core/pull/124); 7 focused tests + evaluation pack; not stacked on [#123](https://github.com/gnaneshwer23/hsi-core/pull/123); open for review; **do not auto-merge** |
 | [#124](https://github.com/gnaneshwer23/hsi-core/pull/124) | M16 PR1 Human Systems Data Contracts | `eng/m16-human-systems-data-contracts` | **PR1 in-flight** — targets `origin/main` @ `873ca49`; 7 focused tests + evaluation pack; not stacked on [#123](https://github.com/gnaneshwer23/hsi-core/pull/123); open for review; **do not auto-merge** |
-| [#123](https://github.com/gnaneshwer23/hsi-core/pull/123) | M15 PR7 Multiscale Simulation Integration | `eng/m15-multiscale-simulation-integration` | **Open / orthogonal** — avoid rewriting; M16 PR1 does not depend on it |
+| [#123](https://github.com/gnaneshwer23/hsi-core/pull/123) | M15 PR7 Multiscale Simulation Integration | `eng/m15-multiscale-simulation-integration` | **Open / orthogonal** — avoid rewriting; M16 PR1/PR2 do not depend on it |
 | [#122](https://github.com/gnaneshwer23/hsi-core/pull/122) | M15 PR6 Patient-Contextualised Research Models | merged → `873ca49` | Substrate |
 | [#120](https://github.com/gnaneshwer23/hsi-core/pull/120) | M15 PR5 Population and Cohort Disease Models | merged → `ebc96c8` | Substrate |
 | [#119](https://github.com/gnaneshwer23/hsi-core/pull/119) | M15 PR4 Cross-Scale Ontology and Model Linkage | merged → `fae37c6` | Substrate |
@@ -269,8 +293,8 @@ Honesty freeze: research intelligence only · **not diagnosis / treatment select
 | [#117](https://github.com/gnaneshwer23/hsi-core/pull/117) | M15 PR2 Clinical and Biological Context Integration | merged → `15b8f8f` | Substrate |
 | [#116](https://github.com/gnaneshwer23/hsi-core/pull/116) | M15 PR1 Integrated Disease Intelligence Contracts | merged → `8fb6aac` | Substrate |
 
-**Merge order:** M16 PR1 against `main` (independent of M15 #123) → next **PR2 Cross-Disease Mechanism Intelligence**.
+**Merge order:** M16 PR1 against `main` (independent of M15 #123) → **PR2 Cross-Disease Mechanism Intelligence** (this branch, stacked on #124) → next **PR3 Cross-Scale Biological Relationships**.
 
-**Suggested next:** PR2 Cross-Disease Mechanism Intelligence.
+**Suggested next:** PR3 Cross-Scale Biological Relationships.
 
 **M15 left open:** [#123](https://github.com/gnaneshwer23/hsi-core/pull/123) PR7 (orthogonal). Unrelated open PRs #71 / #61 / #60 / #34 / #15 left untouched. Local/unmerged M15 PR8 precision-scenario work (if any) left untouched — not rewritten.
