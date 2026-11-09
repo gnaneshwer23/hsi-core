@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/technology.css";
 import { ExperienceHero } from "../components/Experience";
+import { DataToDiscoveryArchitecture } from "../components/DataToDiscoveryArchitecture";
 import { TechnologyFlow } from "../components/TechnologyFlow";
 
 const sourceSystems = [
@@ -59,7 +60,10 @@ export function Technology() {
     <section className="nx-flow-hero" aria-label="Human Super Intelligence data flow to discovery">
       <div className="nx-wrap">
         <TechnologyFlow />
-        <div className="nx-flow-actions"><a className="nx-cta" href="#nexus">Explore HSI NEXUS <span aria-hidden="true">↗</span></a><a className="nx-text-link" href="#sources">Explore the data sources <span aria-hidden="true">↗</span></a></div>
+        <div id="data-to-discovery-status">
+          <DataToDiscoveryArchitecture />
+        </div>
+        <div className="nx-flow-actions"><a className="nx-cta" href="#nexus">Explore HSI NEXUS <span aria-hidden="true">↗</span></a><a className="nx-text-link" href="#data-to-discovery-status">Inspect connection status <span aria-hidden="true">↗</span></a><a className="nx-text-link" href="#sources">Explore the data sources <span aria-hidden="true">↗</span></a></div>
       </div>
     </section>
 
