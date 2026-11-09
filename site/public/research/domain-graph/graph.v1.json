@@ -1,10 +1,10 @@
 {
   "schemaVersion": "hsi-domain-graph-1",
-  "parentVersion": "d016a900b688a6e318b9e5daec2b40ee07217f493a0bc06d559a25525d290960",
+  "parentVersion": "95a58e69ffb35fb558d5593d6df647986c46d8656953bfdb38ad797bf25d0d04",
   "inputs": [
     {
       "path": "site/public/discovery/hsi-pilot-evidence-pack.json",
-      "sha256": "59f745c109bd8041e4c8b0bd3e7ee6dd96ff0f3cc486d1a69b89b7002d07a456"
+      "sha256": "291304ece92763d7c498f3281b0ccb90de56fb3b320025ae5598143ac9eb2fda"
     },
     {
       "path": "research/claim-graph/graph.v1.json",
@@ -9596,5 +9596,5 @@
   "clinicalAdvice": false,
   "graphPromotable": false,
   "scientificApproval": false,
-  "version": "95a58e69ffb35fb558d5593d6df647986c46d8656953bfdb38ad797bf25d0d04"
+  "version": "5d0c5a1d26aad1a274b3901cad93cf1b2be71c28d99fac438427ba801993ee8d"
 }
