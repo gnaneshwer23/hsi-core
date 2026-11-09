@@ -88,9 +88,22 @@ export function HomeProductDemo(){
             })}
             {NODES.map(n=>{
               const active=selected===n.id;
-              return <g key={n.id} role="button" tabIndex={0} aria-pressed={active} aria-label={`Select ${n.label}`} onClick={()=>setSelected(n.id)} onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();setSelected(n.id)}}}>
-                <circle cx={n.x} cy={n.y} r={active?14:10} fill={active?"#BD1C1D":"#9bcac0"} stroke={active?"#fff6df":"#0f2421"} strokeWidth={active?2.5:1.5}/>
-                <text x={n.x} y={n.y+34} textAnchor="middle" fill="#e7f3ef" fontSize="12" fontFamily="Arial,sans-serif">{n.label}</text>
+              return <g key={n.id}>
+                <circle
+                  cx={n.x}
+                  cy={n.y}
+                  r={active?14:10}
+                  fill={active?"#BD1C1D":"#9bcac0"}
+                  stroke={active?"#fff6df":"#0f2421"}
+                  strokeWidth={active?2.5:1.5}
+                  role="button"
+                  tabIndex={0}
+                  aria-pressed={active}
+                  aria-label={`Select ${n.label}`}
+                  onClick={()=>setSelected(n.id)}
+                  onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();setSelected(n.id)}}}
+                />
+                <text x={n.x} y={n.y+34} textAnchor="middle" fill="#e7f3ef" fontSize="12" fontFamily="Arial,sans-serif" aria-hidden="true">{n.label}</text>
               </g>;
             })}
           </svg>

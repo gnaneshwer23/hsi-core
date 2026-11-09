@@ -34,11 +34,12 @@ test('public pages load the existing typefaces locally without third-party font 
  expect(await page.evaluate(()=>[...document.fonts].some(f=>f.family==='Host Grotesk Variable'&&f.status==='loaded'))).toBe(true);expect(fonts).toEqual([]);
 });
 
-test('mobile hero chooses compressed responsive artwork and reserves its dimensions',async({page})=>{
+test('mobile hero leads with the research workbench demonstration',async({page})=>{
  await page.setViewportSize({width:390,height:844});await page.goto('/');
- const art=page.getByRole('img',{name:/Sculptural view of human anatomy/});await expect(art).toBeVisible();
- expect(await art.evaluate(el=>(el as HTMLImageElement).currentSrc)).toContain('hsi-anatomy-480.webp');
- await expect(art).toHaveAttribute('width','1024');await expect(art).toHaveAttribute('height','1536');
+ await expect(page.getByRole('heading',{level:1})).toContainText('See the biology.');
+ await expect(page.locator('#product-demo')).toBeVisible();
+ await expect(page.getByRole('tablist',{name:'Research demonstration panels'})).toBeVisible();
+ await expect(page.getByRole('heading',{name:/How might immune activation contribute to fibrosis/})).toBeVisible();
 });
 
 test('editorial action arrows use scalable paths instead of platform symbol fonts',async({page})=>{

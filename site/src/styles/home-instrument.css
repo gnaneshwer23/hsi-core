@@ -10,7 +10,7 @@
   font-size:.68rem;letter-spacing:.04em;text-transform:uppercase;color:#34553e;
 }
 .ed-status-chip[data-status=available_and_verified]{background:#e5f3ea;border-color:#9fc5ad;color:var(--hsi-status-supported)}
-.ed-status-chip[data-status=research_preview]{background:#f7f1df;border-color:#e0c88a;color:var(--hsi-status-context)}
+.ed-status-chip[data-status=research_preview]{background:#f7f1df;border-color:#e0c88a;color:#6a4708}
 .ed-status-chip[data-status=in_development]{background:#eef0f6;border-color:#c5cbe0;color:var(--hsi-status-ai-draft)}
 .ed-status-chip[data-status=not_currently_available]{background:#eef1f2;border-color:#c5ced2;color:var(--hsi-status-uncurated)}
 
@@ -101,9 +101,9 @@
 
 .ed-ecosystem-map{display:grid;gap:28px}
 .ed-ecosystem-board{display:grid;grid-template-columns:1.2fr .9fr;gap:24px;align-items:start}
-.ed-ecosystem-desktop{display:grid;gap:18px;padding:22px;border:1px solid #d7e3da;border-radius:10px;background:linear-gradient(180deg,#f8fbf8,#f2f6f2)}
-.ed-ecosystem-mobile{display:none}
+.ed-ecosystem-chooser{display:grid;gap:18px;padding:22px;border:1px solid #d7e3da;border-radius:10px;background:linear-gradient(180deg,#f8fbf8,#f2f6f2)}
 .ed-ecosystem-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.ed-ecosystem-domain-blurb{display:none}
 .ed-ecosystem-hub{
   margin:0;text-align:center;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
   color:#fff8f4;background:var(--hsi-burgundy-deep,#5E0808);border-radius:999px;padding:12px 16px;
@@ -169,9 +169,10 @@
 }
 @media(max-width:800px){
   .ed-workbench,.ed-ecosystem-map,.ed-home-graph,.ed-does-not,.ed-today,.ed-product-demo{padding:70px 30px}
-  .ed-ecosystem-desktop{display:none}
-  .ed-ecosystem-mobile{display:grid;gap:10px}
-  .ed-ecosystem-mobile .ed-ecosystem-domain{min-height:0;padding:16px}
+  .ed-ecosystem-row{grid-template-columns:1fr}
+  .ed-ecosystem-domain{min-height:0;padding:16px}
+  .ed-ecosystem-domain-blurb{display:block;font-size:.78rem;line-height:1.45;color:#526561}
+  .ed-home .ed-ecosystem-domain[aria-pressed=true] .ed-ecosystem-domain-blurb{color:#f6e4e0}
   .ed-hero-product{display:none}
 }
 @media(max-width:600px){

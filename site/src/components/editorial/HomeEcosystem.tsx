@@ -9,7 +9,6 @@ type Domain={
   status:DomainStatus;
   blurb:string;
   action:string;
-  /** Prefer product tools over manifesto landings; omit when the panel is enough. */
   to?:string;
   cta?:string;
 };
@@ -20,7 +19,7 @@ const STATUS_LABEL:Record<DomainStatus,string>={
   not_currently_available:"Not currently available",
 };
 
-/** Primary domains only — supporting topics stay in the product architecture section to avoid bounce through similar pages. */
+/** Primary domains only — supporting topics stay in the product architecture section. */
 const DOMAINS:Domain[]=[
   {id:"biology",label:"Biology",status:"research_preview",blurb:"Cells, tissues, pathways and molecular signals. Inspect relationships before treating a path as a mechanism.",action:"Stay on this page to read the mechanism map, or open the biology graph tool.",to:"/science/graph",cta:"Open biology graph"},
   {id:"evidence",label:"Evidence",status:"research_preview",blurb:"Source-linked claims, supporting and conflicting findings, context and review status — not a confidence score.",action:"The demonstration above shows illustrative evidence states. Deepen with the evidence approach page when ready.",to:"/evidence-safety",cta:"Explore Evidence Intelligence"},
@@ -38,11 +37,8 @@ export function HomeEcosystem(){
       <p>Domain buttons update this page first. They do not invent live clinical connectivity. Optional links go to a distinct product tool or honesty page — not another copy of the homepage manifesto.</p>
     </div>
     <div className="ed-ecosystem-board ed-ecosystem-board-simple">
-      <div className="ed-ecosystem-desktop" aria-label="Research domains">
-        <div className="ed-ecosystem-row ed-ecosystem-row-4">{DOMAINS.map(d=><button key={d.id} type="button" className="ed-ecosystem-domain" aria-pressed={active===d.id} onClick={()=>setActive(d.id)}><strong>{d.label}</strong><small>{STATUS_LABEL[d.status]}</small></button>)}</div>
-      </div>
-      <div className="ed-ecosystem-mobile" aria-label="Explore HSI domains">
-        {DOMAINS.map(d=><button key={d.id} type="button" className="ed-ecosystem-domain" aria-pressed={active===d.id} onClick={()=>setActive(d.id)}><strong>{d.label}</strong><span>{d.blurb}</span><small>{STATUS_LABEL[d.status]}</small></button>)}
+      <div className="ed-ecosystem-chooser" aria-label="Research domains">
+        <div className="ed-ecosystem-row ed-ecosystem-row-4">{DOMAINS.map(d=><button key={d.id} type="button" className="ed-ecosystem-domain" aria-pressed={active===d.id} onClick={()=>setActive(d.id)}><strong>{d.label}</strong><span className="ed-ecosystem-domain-blurb">{d.blurb}</span><small>{STATUS_LABEL[d.status]}</small></button>)}</div>
       </div>
       <article className="ed-ecosystem-detail" aria-live="polite">
         <p className="ed-kicker">{domain.label}</p>
