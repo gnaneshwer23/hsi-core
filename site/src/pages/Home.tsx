@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { CellField } from "../components/clinical/CellField";
+import { HomeBiologyNetwork } from "../components/editorial/HomeBiologyNetwork";
+import { HomeHero } from "../components/editorial/HomeHero";
 import {
   CROSS_DOMAIN_JOURNEY_ENTRIES,
   contactAccessHref,
@@ -43,38 +44,32 @@ export function Home() {
   const active = STEPS[step] ?? STEPS[0];
   return (
     <div className="cl-page">
-      <section className="cl-hero cl-chapter" aria-labelledby="home-title">
-        <div className="cl-hero-frame">
-          <div className="cl-hero-copy">
-            <p className="cl-brand">Human Super Intelligence</p>
-            <h1 id="home-title">Connecting human biology. Advancing scientific discovery. Transforming our understanding of health.</h1>
-            <p className="cl-lead">One evidence-grounded research workbench across immunology, microbiome, neuroimmune biology, metabolism, molecular science, clinical knowledge and trials.</p>
-            <p className="cl-supporting">Disease context is optional. Systemic sclerosis is one scientific validation case used to pressure-test the substrate — not a product boundary and not a claim of universal biology coverage.</p>
-            <div className="cl-actions">
-              <Link className="cl-arrow-link" to="/demo">See how this technology works <Arrow /></Link>
-            </div>
-          </div>
-          <div className="cl-hero-visual" aria-hidden="true">
-            <div className="cl-hero-stage">
-              <CellField />
-            </div>
-          </div>
-        </div>
-      </section>
+      <HomeHero />
+      <HomeBiologyNetwork />
 
       <section className="cl-mission cl-chapter" aria-labelledby="mission-title">
         <h2 id="mission-title">Investigate biological mechanisms across human systems.</h2>
-        <p>Human Super Intelligence connects <strong>patient context</strong>, <strong>clinical history</strong>, <strong>scientific evidence</strong> and <strong>trial questions</strong> without copying private records into research. The graph records provenance, uncertainty and review state. An illustrative question can be followed through the walkthrough. This is not a clinical service and not a commercial product.</p>
+        <p>
+          Human Super Intelligence connects <strong>patient context</strong>, <strong>clinical history</strong>,{" "}
+          <strong>scientific evidence</strong> and <strong>trial questions</strong> without copying private records
+          into research. The graph records provenance, uncertainty and review state. An illustrative question can be
+          followed through the walkthrough. This is not a clinical service and not a commercial product.
+        </p>
       </section>
 
       <section className="cl-modules cl-chapter cl-chapter-instrument" aria-labelledby="modules-title">
         <div className="cl-chapter-inner">
           <h2 id="modules-title">One platform. Four governed modules.</h2>
-          <p className="cl-chapter-lead">Independently governed products share one Living Health Knowledge Graph. Coverage across domains is unequal by design.</p>
+          <p className="cl-chapter-lead">
+            Independently governed products share one Living Health Knowledge Graph. Coverage across domains is unequal
+            by design.
+          </p>
           <ol className="cl-module-list">
             {MODULES.map((item, index) => (
               <li key={item.name}>
-                <span className="cl-module-index" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                <span className="cl-module-index" aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
                 <div>
                   <p className="cl-module-role">{item.role}</p>
                   <h3>{item.name}</h3>
@@ -101,12 +96,25 @@ export function Home() {
       <section className="cl-steps cl-chapter" id="product-demo" aria-labelledby="steps-title">
         <div className="cl-steps-intro">
           <h2 id="steps-title">How an investigation proceeds</h2>
-          <p>Eight steps through an illustrative research workbench. New proposals stay unvalidated until a person reviews them. Coverage is illustrative, not a completed literature review.</p>
-          <p className="cl-step-detail" aria-live="polite"><strong>{active.n} {active.title}.</strong> {active.text}</p>
+          <p>
+            Eight steps through an illustrative research workbench. New proposals stay unvalidated until a person
+            reviews them. Coverage is illustrative, not a completed literature review.
+          </p>
+          <p className="cl-step-detail" aria-live="polite">
+            <strong>
+              {active.n} {active.title}.
+            </strong>{" "}
+            {active.text}
+          </p>
         </div>
         <div className="cl-step-grid" role="group" aria-label="Investigation steps">
           {STEPS.map((item, index) => (
-            <button key={item.n} type="button" aria-pressed={index === step} onClick={() => setStep(index)}>
+            <button
+              key={item.n}
+              type="button"
+              aria-pressed={index === step}
+              onClick={() => setStep(index)}
+            >
               <span>{item.n}</span>
               {item.title}
             </button>
@@ -116,20 +124,41 @@ export function Home() {
 
       <section className="cl-journeys cl-chapter" aria-labelledby="journeys-title">
         <h2 id="journeys-title">Start from a real question</h2>
-        <p className="cl-chapter-lead">Explore biology, review evidence framing, then request research access — each path stays labelled live_backend=false.</p>
+        <p className="cl-chapter-lead">
+          Explore biology, review evidence framing, then request research access — each path stays labelled
+          live_backend=false.
+        </p>
         <ul className="cl-journey-list">
           {CROSS_DOMAIN_JOURNEY_ENTRIES.map((journey) => (
             <li key={journey.id}>
               <h3>{journey.label}</h3>
-              <p className="cl-journey-meta">scenario={journey.scenarioId} · domain={journey.domain} · live_backend=false</p>
+              <p className="cl-journey-meta">
+                scenario={journey.scenarioId} · domain={journey.domain} · live_backend=false
+              </p>
               <div className="cl-journey-actions">
-                <Link to={homeDemoHref({ scenarioId: journey.scenarioId, panel: "mechanism", domain: journey.domain })}>
+                <Link
+                  to={homeDemoHref({
+                    scenarioId: journey.scenarioId,
+                    panel: "mechanism",
+                    domain: journey.domain,
+                  })}
+                >
                   Investigate
                 </Link>
-                <Link to={withResearchContext(journey.exploreTo, { domain: journey.domain, scenario: journey.scenarioId })}>
+                <Link
+                  to={withResearchContext(journey.exploreTo, {
+                    domain: journey.domain,
+                    scenario: journey.scenarioId,
+                  })}
+                >
                   Explore Biology
                 </Link>
-                <Link to={withResearchContext(journey.evidenceTo, { domain: journey.domain, scenario: journey.scenarioId })}>
+                <Link
+                  to={withResearchContext(journey.evidenceTo, {
+                    domain: journey.domain,
+                    scenario: journey.scenarioId,
+                  })}
+                >
                   Evidence
                 </Link>
                 <Link to={contactAccessHref({ scenarioId: journey.scenarioId, domain: journey.domain })}>
@@ -151,7 +180,9 @@ export function Home() {
           </div>
         </div>
         <ol className="cl-life-list">
-          {LIFECYCLE.map((item) => <li key={item}>{item}</li>)}
+          {LIFECYCLE.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
         </ol>
       </section>
 
@@ -164,14 +195,27 @@ export function Home() {
           <li>Confirm trial eligibility</li>
           <li>Let private clinical information auto-enter the research graph</li>
         </ul>
-        <p>Private clinical information does not auto-enter the research knowledge graph. Evidence, contradictions and gaps stay visible. Human review stays required.</p>
+        <p>
+          Private clinical information does not auto-enter the research knowledge graph. Evidence, contradictions and
+          gaps stay visible. Human review stays required.
+        </p>
       </section>
 
       <section className="cl-cta cl-chapter cl-chapter-cta" aria-labelledby="cta-title">
         <div className="cl-chapter-inner">
-          <h2 id="cta-title">Follow one question through the workbench.</h2>
-          <p>The walkthrough shows the investigation, the review queue, and the boundary around patient context.</p>
-          <Link className="cl-arrow-link cl-arrow-link-solid" to="/demo">Open the walkthrough <Arrow /></Link>
+          <h2 id="cta-title">Advance research through connected scientific intelligence.</h2>
+          <p>
+            HSI is developing an evidence-grounded environment for researchers investigating complex human biology.
+            Request access, or explore how the platform works.
+          </p>
+          <div className="cl-actions">
+            <Link className="cl-arrow-link cl-arrow-link-solid" to="/contact">
+              Request Research Access <Arrow />
+            </Link>
+            <Link className="cl-text-link cl-text-link-on-deep" to="/how-it-works">
+              Explore How HSI Works
+            </Link>
+          </div>
         </div>
       </section>
     </div>
@@ -182,7 +226,14 @@ function Arrow() {
   return (
     <span className="cl-arrow" aria-hidden="true">
       <svg viewBox="0 0 20 20" width="16" height="16">
-        <path d="M4 10h12M11 5l5 5-5 5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+        <path
+          d="M4 10h12M11 5l5 5-5 5"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </svg>
     </span>
   );
