@@ -1,6 +1,7 @@
 import {test,expect} from 'bun:test';
-import {filterExplorerGraph,forceGraphPositions} from '../site/src/features/science/graphExplorer';
+import {filterExplorerGraph,forceGraphPositions,graphStartingPoints,neighboursGroupedByKind,GRAPH_HONESTY,countNodesByKind} from '../site/src/features/science/graphExplorer';
 import {SCIENCE_GRAPH} from '../site/src/features/science/knowledgeGraph';
+import {typedGraphNeighbours} from '../site/src/features/science/typedGraphData';
 const all={query:'',kind:'all',domain:'all',review:'all',evidence:'all'};
 test('graph filters preserve endpoint integrity and never invent evidence',()=>{
  const status=new Map(SCIENCE_GRAPH.edges.map(e=>[e.id,'not_curated']));
@@ -12,6 +13,33 @@ test('graph filters preserve endpoint integrity and never invent evidence',()=>{
  expect(filterExplorerGraph(SCIENCE_GRAPH,{...all,evidence:'supported'},status).nodes).toEqual([]);
  expect(filterExplorerGraph(SCIENCE_GRAPH,{...all,query:'no-such-concept'},status).nodes).toEqual([]);
  expect(filterExplorerGraph(SCIENCE_GRAPH,{...all,query:'pancreas'},status).nodes.some(n=>n.id==='pancreas')).toBe(true);
+});
+test('flagship honesty contract stays educational and non-clinical',()=>{
+ expect(GRAPH_HONESTY.scientificApproval).toBe(false);
+ expect(GRAPH_HONESTY.clinicalAdvice).toBe(false);
+ expect(GRAPH_HONESTY.layoutMeansBiology).toBe(false);
+ expect(GRAPH_HONESTY.emptyFilterIsFinding).toBe(false);
+ expect(SCIENCE_GRAPH.reviewed).toBe(false);
+});
+test('starting points are real catalogue nodes ranked by degree',()=>{
+ const starters=graphStartingPoints(SCIENCE_GRAPH);
+ expect(starters.length).toBeGreaterThan(0);
+ const ids=new Set(SCIENCE_GRAPH.nodes.map(n=>n.id));
+ for(const s of starters){
+  expect(ids.has(s.id)).toBe(true);
+  expect(s.degree).toBeGreaterThan(0);
+ }
+ expect(starters[0]!.degree).toBeGreaterThanOrEqual(starters.at(-1)!.degree);
+});
+test('neighbours group by kind without inventing endpoints',()=>{
+ const groups=neighboursGroupedByKind('pancreas',typedGraphNeighbours('pancreas'));
+ const kinds=new Set(groups.map(g=>g.kind));
+ expect(kinds.size).toBe(groups.length);
+ for(const g of groups)for(const item of g.items){
+  expect(SCIENCE_GRAPH.nodes.some(n=>n.id===item.id)).toBe(true);
+  expect(['in','out']).toContain(item.direction);
+ }
+ expect(Object.values(countNodesByKind(SCIENCE_GRAPH)).reduce((a,b)=>a+b,0)).toBe(SCIENCE_GRAPH.nodes.length);
 });
 test('force layout is deterministic, bounded and does not mutate scientific records',()=>{
  const before=JSON.stringify(SCIENCE_GRAPH),first=forceGraphPositions(SCIENCE_GRAPH),second=forceGraphPositions(SCIENCE_GRAPH);

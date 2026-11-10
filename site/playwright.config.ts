@@ -12,7 +12,8 @@ export default defineConfig({
     command: "bun run preview --host 127.0.0.1 --port 4178",
     url: "http://127.0.0.1:4178",
     // Preview cold-start on CI / constrained agents often exceeds 30s after homepage asset growth.
-    timeout: 180_000,
+    // Flagship graph e2e expects a fresh `vite build` dist; allow longer cold preview boot.
+    timeout: 240_000,
     reuseExistingServer: !process.env.CI,
   },
 });

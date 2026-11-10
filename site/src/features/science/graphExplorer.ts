@@ -1,4 +1,4 @@
-import type {GraphDataset} from './knowledgeGraph';
+import type {GraphDataset,GraphNode} from './knowledgeGraph';
 export type ExplorerFilters={query:string;kind:string;domain:string;review:string;evidence:string};
 /** Filter both endpoints before rendering links. Empty evidence slices are not evidence of absence. */
 export function filterExplorerGraph(graph:GraphDataset,filters:ExplorerFilters,statuses:ReadonlyMap<string,string>):GraphDataset{
@@ -9,7 +9,68 @@ export function filterExplorerGraph(graph:GraphDataset,filters:ExplorerFilters,s
  if(filters.evidence!=='all'){const linked=new Set(edges.flatMap(e=>[e.subjectId,e.objectId]));nodes=nodes.filter(n=>linked.has(n.id))}
  return {...graph,nodes,edges};
 }
-export const GRAPH_KIND_COLOURS:Record<string,string>={organ:'#62c6c0',tissue:'#d4b376',cell:'#a4a1ee',molecule:'#f197ab',pathway:'#86c69d',process:'#91b5e5',disease:'#ef9d69'};
+/** Kind colours for the instrument canvas — distinct from brand burgundy (selection only). */
+export const GRAPH_KIND_COLOURS:Record<string,string>={
+ organ:'#65CEE6',
+ tissue:'#D4B376',
+ cell:'#A4A1EE',
+ molecule:'#E8A0B0',
+ pathway:'#7BC9A0',
+ process:'#91B5E5',
+ disease:'#E89B6E',
+};
+export const GRAPH_HONESTY={
+ surface:'educational_topic_map',
+ scientificApproval:false as const,
+ clinicalAdvice:false as const,
+ layoutMeansBiology:false as const,
+ emptyFilterIsFinding:false as const,
+};
+export type GraphStarter={family:string;id:string;label:string;kind:string;system?:string;degree:number};
+/** Highest-degree real nodes per biological system — never placeholders. */
+export function graphStartingPoints(graph:GraphDataset,limit=6):GraphStarter[]{
+ const degree=new Map<string,number>();
+ for(const e of graph.edges){
+  degree.set(e.subjectId,(degree.get(e.subjectId)??0)+1);
+  degree.set(e.objectId,(degree.get(e.objectId)??0)+1);
+ }
+ const bySystem=new Map<string,GraphNode>();
+ for(const n of graph.nodes){
+  const family=n.system??n.kind;
+  const prev=bySystem.get(family);
+  const d=degree.get(n.id)??0;
+  if(!prev||d>(degree.get(prev.id)??0))bySystem.set(family,n);
+ }
+ return [...bySystem.entries()]
+  .map(([family,n])=>({family,id:n.id,label:n.label,kind:n.kind,system:n.system,degree:degree.get(n.id)??0}))
+  .sort((a,b)=>b.degree-a.degree||a.label.localeCompare(b.label))
+  .slice(0,limit);
+}
+export type NeighbourGroup={kind:string;items:Array<{id:string;label:string;direction:'out'|'in';edgeId:string;evidenceStatus:string}>};
+/** Group unique neighbours by entity kind, preserving edge direction. */
+export function neighboursGroupedByKind(
+ selectedId:string,
+ neighbours:ReadonlyArray<{edge:{id:string;subjectId:string;objectId:string;evidenceStatus:string};other:{id:string;label:string;kind:string}}>
+):NeighbourGroup[]{
+ const seen=new Set<string>();
+ const buckets=new Map<string,NeighbourGroup['items']>();
+ for(const {edge,other} of neighbours){
+  if(seen.has(other.id))continue;
+  seen.add(other.id);
+  const direction=edge.subjectId===selectedId?'out':'in';
+  const list=buckets.get(other.kind)??[];
+  list.push({id:other.id,label:other.label,direction,edgeId:edge.id,evidenceStatus:edge.evidenceStatus});
+  buckets.set(other.kind,list);
+ }
+ return [...buckets.entries()]
+  .map(([kind,items])=>({kind,items:items.sort((a,b)=>a.label.localeCompare(b.label))}))
+  .sort((a,b)=>a.kind.localeCompare(b.kind));
+}
+export function countNodesByKind(graph:GraphDataset):Record<string,number>{
+ const counts:Record<string,number>={};
+ for(const n of graph.nodes)counts[n.kind]=(counts[n.kind]??0)+1;
+ return counts;
+}
 function hash(s:string){let h=2166136261;for(const c of s)h=Math.imul(h^c.charCodeAt(0),16777619);return h>>>0}
 /** Bounded deterministic force layout: visual proximity never asserts a scientific relationship. */
 export function forceGraphPositions(graph:{nodes:readonly {id:string;kind:string;system?:string}[];edges:readonly {subjectId:string;objectId:string}[]}):Map<string,{x:number;y:number}>{
