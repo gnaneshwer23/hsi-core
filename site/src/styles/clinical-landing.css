@@ -455,6 +455,109 @@
   outline-offset: 2px;
 }
 
+/* —— Intelligence flow (section 3) —— */
+.cl-flow {
+  background: color-mix(in srgb, var(--cl-lavender) 28%, var(--cl-bg));
+  color: var(--cl-ink);
+}
+.cl-flow-rail {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin: 1.75rem 0 1.25rem;
+}
+.cl-flow-rail button {
+  text-align: left;
+  min-height: 96px;
+  border: 1px solid color-mix(in srgb, var(--cl-ink) 12%, transparent);
+  background: var(--cl-surface, #fff);
+  color: var(--cl-ink);
+  padding: 0.85rem 0.95rem;
+  font: inherit;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  cursor: pointer;
+  transition:
+    background-color var(--cl-duration-fast) var(--cl-ease-move),
+    color var(--cl-duration-fast) var(--cl-ease-move),
+    border-color var(--cl-duration-fast) var(--cl-ease-move);
+}
+.cl-flow-rail button[aria-selected="true"] {
+  background: var(--cl-instrument);
+  border-color: var(--cl-instrument);
+  color: var(--cl-instrument-ink);
+}
+.cl-flow-rail button:focus-visible {
+  outline: 3px solid var(--cl-focus);
+  outline-offset: 2px;
+}
+.cl-flow-status {
+  display: block;
+  margin-bottom: 0.45rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--cl-burgundy);
+}
+.cl-flow-rail button[aria-selected="true"] .cl-flow-status { color: var(--cl-sky); }
+.cl-flow-status-partial { color: var(--cl-burgundy); }
+.cl-flow-status-ok { color: var(--hsi-status-supported, #157F3D); }
+.cl-flow-status-blocked,
+.cl-flow-status-missing { color: var(--cl-body); }
+.cl-flow-status-seed { color: var(--hsi-status-context, #B45309); }
+.cl-flow-panel {
+  border-top: 1px solid color-mix(in srgb, var(--cl-ink) 12%, transparent);
+  padding-top: 1.25rem;
+}
+.cl-flow-panel h3 {
+  margin: 0 0 0.55rem;
+  font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+  letter-spacing: -0.03em;
+}
+.cl-flow-panel > p {
+  margin: 0 0 1rem;
+  max-width: 46rem;
+  color: var(--cl-body);
+  line-height: 1.65;
+}
+.cl-flow-panel ul {
+  margin: 0 0 1.25rem;
+  padding-left: 1.15rem;
+  max-width: 40rem;
+  color: var(--cl-ink);
+  line-height: 1.7;
+}
+.cl-flow-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.2rem;
+}
+.cl-flow-actions a {
+  color: var(--cl-scientific);
+  font-weight: 650;
+  text-decoration: none;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.cl-flow-actions a:focus-visible {
+  outline: 3px solid var(--cl-focus);
+  outline-offset: 2px;
+}
+
+/* —— Workspace preview (section 4) —— */
+.cl-workspace {
+  background: var(--cl-bg);
+  color: var(--cl-ink);
+  padding-bottom: 0;
+}
+.cl-workspace-intro { margin-bottom: 0.5rem; }
+.cl-workspace-demo .ed-product-demo {
+  background: color-mix(in srgb, var(--cl-cream) 35%, var(--cl-bg));
+  border-top: 1px solid color-mix(in srgb, var(--cl-ink) 8%, transparent);
+}
+
 /* —— Mission —— */
 .cl-mission,
 .cl-different,
@@ -795,10 +898,14 @@
   .cl-brand { max-width: none; }
   .cl-network-layout,
   .cl-network-board,
-  .cl-network-chooser {
+  .cl-network-chooser,
+  .cl-flow-rail {
     grid-template-columns: 1fr;
   }
   .cl-network-chooser {
+    grid-template-columns: 1fr 1fr;
+  }
+  .cl-flow-rail {
     grid-template-columns: 1fr 1fr;
   }
   .cl-steps,

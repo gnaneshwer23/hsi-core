@@ -28,15 +28,15 @@ test('editorial homepage product demo, keyboard tabs and narrow layouts remain u
  const steps=page.getByRole('group',{name:'Investigation steps'});
  await steps.getByRole('button',{name:/Reviewed knowledge/}).click();
  await expect(steps.getByRole('button',{name:/Reviewed knowledge/})).toHaveAttribute('aria-pressed','true');
- await expect(page.locator('#product-demo')).toContainText('version the graph');
+ await expect(page.locator('#investigation-workflow')).toContainText('version the graph');
  await expect(page.getByRole('main')).toContainText('Explore the connections');
   await expect(page.getByRole('main')).toContainText(/research workbench/i);
  await expect(page.getByRole('main')).toContainText('What makes HSI different');
 });
 test('homepage investigation anchor opens the eight-step sequence',async({page})=>{
- await page.goto('/#product-demo');
- await expect(page.locator('#product-demo')).toBeVisible();
- await expect(page.locator('#product-demo')).toContainText('unvalidated');
+ await page.goto('/#investigation-workflow');
+ await expect(page.locator('#investigation-workflow')).toBeVisible();
+ await expect(page.locator('#investigation-workflow')).toContainText('unvalidated');
  await expect(page.locator('.cl-hero .cl-actions a')).toHaveCount(2);
  await expect(page.getByRole('link',{name:/Explore the Platform/i}).first()).toHaveAttribute('href','/platform');
  await expect(page.getByRole('link',{name:/Request Research Access/i}).first()).toHaveAttribute('href','/contact');
