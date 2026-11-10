@@ -47,7 +47,7 @@ Premium biomedical homepage redesign (10 sections). Do **not** merge until previ
 | `bun run copy:check` | pass |
 | `bun test test/publicSiteHonesty.test.ts` | 8 pass |
 | `site` `tsc --noEmit` | pass |
-| Playwright local | preview webServer timeout in agent env — rely on CI |
+| Playwright local | `webServer.timeout` raised to 180s in `site/playwright.config.ts` |
 
 ## Screenshots
 
@@ -63,5 +63,5 @@ Attach from Playwright output or Vercel preview:
 1. Guest Sign In remains hidden until auth capability is `available_and_verified`.  
 2. Authenticated research APIs stay BLOCKED anonymously (`writesEnabled=false`).  
 3. Omics / some discipline destinations are honesty-labelled in development.  
-4. Local Playwright webServer timed out in agent environment; confirm CI verify on PR5.  
-5. Stacked PRs #168/#169 failed verify on missing tagline before PR5 fix — tip PR5 must be green before merge order.
+4. Playwright `webServer.timeout` is 180s (`site/playwright.config.ts`); confirm CI verify on PR5 after tagline merge-up.  
+5. Tagline restored on #168 and merged up through #169–#171 — expect `copy:check` green on the full stack; do not merge until tip preview + verify are reviewed.

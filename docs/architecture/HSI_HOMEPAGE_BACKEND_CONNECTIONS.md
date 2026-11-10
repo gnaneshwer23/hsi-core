@@ -44,5 +44,5 @@
 - [x] CTA destinations are real public routes  
 - [x] No PHI / CDS claims on homepage  
 - [x] copy:check / honesty tests updated for composed hero  
-- [ ] Playwright full suite on Vercel preview (run in CI)  
+- [ ] Playwright full suite on Vercel preview (run in CI; `webServer.timeout` 180s)  
 - [ ] Desktop + mobile screenshots attached to PR5  
