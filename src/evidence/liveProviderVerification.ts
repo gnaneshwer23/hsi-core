@@ -3,6 +3,7 @@
  * No scientific assertions: this checks response shape, source identifiers and
  * draft-only governance against real upstream APIs.
  */
+import type {FetchLike} from "../fetchLike";
 import {lookupReactomePathway} from "./reactomePathwayLookup";
 import {lookupUniProtProtein} from "./uniProtProteinLookup";
 import {reactomePathwayDraftNode} from "./reactomeOntologyBridge";
@@ -28,7 +29,7 @@ export type LiveProviderReport={
 export async function verifyLiveBiomedicalProviders(input:{
   proteinAccession:string;
   reactomeStableId:string;
-  fetcher?:typeof fetch;
+  fetcher?:FetchLike;
 }):Promise<LiveProviderReport>{
   const [protein,pathway]=await Promise.all([
     lookupUniProtProtein({accession:input.proteinAccession,fetcher:input.fetcher}),
