@@ -14,7 +14,7 @@ test("public pages have a single main/title, working navigation and no narrow-sc
 test("home communicates the research workflow and supports accessible capability navigation",async({page})=>{
  await page.goto("/");
  await expect(page.getByRole("heading",{level:1})).toContainText("Explore the connections");
- await expect(page.getByRole("heading",{name:/How an investigation proceeds/})).toBeVisible();
+ await expect(page.getByRole("heading",{name:/Follow the evidence|How an investigation proceeds/})).toBeVisible();
  await expect(page.locator("#product-demo")).toContainText("illustrative");
  await expect(page.locator("#investigation-workflow")).toContainText("unvalidated");
  const steps=page.getByRole("group",{name:"Investigation steps"});
