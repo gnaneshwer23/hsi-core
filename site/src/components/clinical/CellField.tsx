@@ -17,13 +17,13 @@ export function CellField() {
         <title>Translucent cell</title>
         <defs>
           <radialGradient id="cl-membrane" cx="38%" cy="34%" r="68%">
-            <stop offset="0%" stopColor="#f7fdff" stopOpacity="0.96" />
-            <stop offset="48%" stopColor="#b7e7f6" stopOpacity="0.7" />
-            <stop offset="100%" stopColor="#6eafd4" stopOpacity="0.22" />
+            <stop offset="0%" stopColor="#f7fcfd" stopOpacity="0.96" />
+            <stop offset="48%" stopColor="#98EFFE" stopOpacity="0.55" />
+            <stop offset="100%" stopColor="#106C92" stopOpacity="0.2" />
           </radialGradient>
           <radialGradient id="cl-nucleus" cx="40%" cy="35%" r="60%">
-            <stop offset="0%" stopColor="#9aebfb" />
-            <stop offset="100%" stopColor="#3e6d90" stopOpacity="0.55" />
+            <stop offset="0%" stopColor="#65CEE6" />
+            <stop offset="100%" stopColor="#0F2428" stopOpacity="0.55" />
           </radialGradient>
         </defs>
         {VESICLES.map((vesicle) => (
@@ -34,8 +34,8 @@ export function CellField() {
         ))}
         <circle cx="286" cy="300" r="46" fill="url(#cl-nucleus)" />
         <circle cx="274" cy="288" r="14" fill="#f4fcff" fillOpacity="0.85" />
-        <circle cx="392" cy="268" r="22" fill="#9aebfb" fillOpacity="0.55" />
-        <circle cx="360" cy="390" r="16" fill="#d7f4fb" />
+        <circle cx="392" cy="268" r="22" fill="#65CEE6" fillOpacity="0.55" />
+        <circle cx="360" cy="390" r="16" fill="#D9E1E5" />
       </svg>
     </figure>
   );
