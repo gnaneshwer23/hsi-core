@@ -1,7 +1,8 @@
+import type {FetchLike} from "../src/fetchLike";
 import {describe,expect,test} from "bun:test";
 import {verifyLiveBiomedicalProviders} from "../src/evidence/liveProviderVerification";
 const response=(data:unknown)=>new Response(JSON.stringify(data),{status:200});
-const fetcher:typeof fetch=async(input)=>{
+const fetcher:FetchLike=async(input)=>{
   const url=String(input);
   if(url.includes("uniprotkb"))return response({
     primaryAccession:"P01375",proteinDescription:{recommendedName:{fullName:{value:"Tumor necrosis factor"}}},
