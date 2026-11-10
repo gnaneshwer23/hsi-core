@@ -28,3 +28,4 @@ __pycache__/
 
 # Temporary server bundle for public SEO prerendering
 site/.seo-render/
+.vercel
