@@ -31,7 +31,7 @@ for(const path of ['/','/platform','/products','/research/dashboard','/science/g
 test('public pages load the existing typefaces locally without third-party font requests',async({page})=>{
  const fonts:string[]=[];page.on('request',r=>{if(/fonts\.(googleapis|gstatic)\.com/.test(r.url()))fonts.push(r.url())});
  await page.goto('/');await page.evaluate(()=>document.fonts.ready);
- expect(await page.evaluate(()=>[...document.fonts].some(f=>f.family==='Red Hat Display Variable'&&f.status==='loaded'))).toBe(true);expect(fonts).toEqual([]);
+ expect(await page.evaluate(()=>[...document.fonts].some(f=>f.family==='Host Grotesk Variable'&&f.status==='loaded'))).toBe(true);expect(fonts).toEqual([]);
 });
 
 test('mobile hero leads with the research workbench demonstration',async({page})=>{

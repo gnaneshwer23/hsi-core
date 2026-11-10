@@ -1,12 +1,18 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { CellField } from "../components/clinical/CellField";
+import {
+  CROSS_DOMAIN_JOURNEY_ENTRIES,
+  contactAccessHref,
+  homeDemoHref,
+  withResearchContext,
+} from "../lib/researchContext";
 
 const MODULES = [
-  { name: "Aksh Health", role: "Patient intelligence", chips: ["Symptoms", "Medications", "Labs", "Wearables"], text: "Everyday health context stays in its own permission boundary." },
-  { name: "HSI Clinical", role: "Longitudinal context", chips: ["Encounters", "Missing information", "Provenance"], text: "Authorised history is reviewed with the gaps left visible." },
-  { name: "Immune Super Intelligence", role: "Scientific discovery", chips: ["Immune", "Microbiome", "Metabolic", "Molecular"], text: "ISI investigates mechanisms without depending on the patient module." },
-  { name: "HSI Trials", role: "Governed pre-screening", chips: ["Criteria", "Unknowns", "Human confirmation"], text: "A planned module. Live matching and enrolment are not offered." },
+  { name: "Aksh Health", role: "Patient intelligence", text: "Everyday health context stays in its own permission boundary." },
+  { name: "HSI Clinical", role: "Longitudinal context", text: "Authorised history is reviewed with the gaps left visible." },
+  { name: "Immune Super Intelligence", role: "Scientific discovery", text: "ISI investigates mechanisms without depending on the patient module." },
+  { name: "HSI Trials", role: "Governed pre-screening", text: "A planned module. Live matching and enrolment are not offered." },
 ] as const;
 
 const STEPS = [
@@ -37,62 +43,60 @@ export function Home() {
   const active = STEPS[step] ?? STEPS[0];
   return (
     <div className="cl-page">
-      <section className="cl-hero" aria-labelledby="home-title">
-        <p className="cl-ghost" aria-hidden="true">HUMAN SUPER INTELLIGENCE</p>
+      <section className="cl-hero cl-chapter" aria-labelledby="home-title">
+        <div className="cl-hero-visual" aria-hidden="true">
+          <CellField />
+        </div>
         <div className="cl-hero-copy">
+          <p className="cl-brand">Human Super Intelligence</p>
           <h1 id="home-title">Connecting human biology. Advancing scientific discovery. Transforming our understanding of health.</h1>
           <p className="cl-lead">One evidence-grounded research workbench for immunology, microbiome, neuroimmune biology, metabolism, molecular science, clinical knowledge and trials. Disease context is optional. Systemic sclerosis is one scientific validation case used to pressure-test the substrate — not a product boundary and not a claim of universal biology coverage.</p>
           <div className="cl-actions">
             <Link className="cl-arrow-link" to="/demo">See how this technology works <Arrow /></Link>
           </div>
         </div>
-        <CellField />
-        <aside className="cl-float cl-float-modules">
-          <p>Four governed modules share one Living Health Knowledge Graph.</p>
-          <ul>
-            {MODULES.map((item) => <li key={item.name}>{item.name}</li>)}
-          </ul>
-        </aside>
-        <aside className="cl-float cl-float-note">
-          <p>Association is kept apart from a demonstrated causal mechanism. Human review stays required.</p>
-        </aside>
       </section>
 
-      <section className="cl-mission" aria-labelledby="mission-title">
+      <section className="cl-mission cl-chapter" aria-labelledby="mission-title">
         <h2 id="mission-title">Investigate biological mechanisms across human systems.</h2>
         <p>Human Super Intelligence connects <strong>patient context</strong>, <strong>clinical history</strong>, <strong>scientific evidence</strong> and <strong>trial questions</strong> without copying private records into research. The graph records provenance, uncertainty and review state. An illustrative question can be followed through the walkthrough. This is not a clinical service and not a commercial product.</p>
       </section>
 
-      <section className="cl-modules" aria-labelledby="modules-title">
-        <h2 id="modules-title">One platform. Four governed modules.</h2>
-        <div className="cl-module-grid">
-          {MODULES.map((item) => (
-            <article key={item.name}>
-              <p>{item.role}</p>
-              <h3>{item.name}</h3>
-              <p>{item.text}</p>
-              <ul>{item.chips.map((chip) => <li key={chip}>{chip}</li>)}</ul>
-            </article>
-          ))}
+      <section className="cl-modules cl-chapter cl-chapter-instrument" aria-labelledby="modules-title">
+        <div className="cl-chapter-inner">
+          <h2 id="modules-title">One platform. Four governed modules.</h2>
+          <p className="cl-chapter-lead">Independently governed products share one Living Health Knowledge Graph. Coverage across domains is unequal by design.</p>
+          <ol className="cl-module-list">
+            {MODULES.map((item, index) => (
+              <li key={item.name}>
+                <span className="cl-module-index" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                <div>
+                  <p className="cl-module-role">{item.role}</p>
+                  <h3>{item.name}</h3>
+                  <p>{item.text}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
-      <section className="cl-different" aria-labelledby="different-title">
+      <section className="cl-different cl-chapter" aria-labelledby="different-title">
         <h2 id="different-title">What makes HSI different</h2>
-        <div className="cl-different-grid">
+        <ul className="cl-different-list">
           {DIFFERENT.map((item) => (
-            <article key={item.title}>
+            <li key={item.title}>
               <h3>{item.title}</h3>
               <p>{item.text}</p>
-            </article>
+            </li>
           ))}
-        </div>
+        </ul>
       </section>
 
-      <section className="cl-steps" id="product-demo" aria-labelledby="steps-title">
+      <section className="cl-steps cl-chapter" id="product-demo" aria-labelledby="steps-title">
         <div className="cl-steps-intro">
           <h2 id="steps-title">How an investigation proceeds</h2>
-          <p>Eight steps, in order. New proposals stay unvalidated until a person reviews them. Coverage is illustrative, not a completed literature review.</p>
+          <p>Eight steps through an illustrative research workbench. New proposals stay unvalidated until a person reviews them. Coverage is illustrative, not a completed literature review.</p>
           <p className="cl-step-detail" aria-live="polite"><strong>{active.n} {active.title}.</strong> {active.text}</p>
         </div>
         <div className="cl-step-grid" role="group" aria-label="Investigation steps">
@@ -105,14 +109,48 @@ export function Home() {
         </div>
       </section>
 
-      <section className="cl-life" aria-labelledby="life-title">
+      <section className="cl-journeys cl-chapter" aria-labelledby="journeys-title">
+        <h2 id="journeys-title">Start from a real question</h2>
+        <p className="cl-chapter-lead">Explore biology, review evidence framing, then request research access — each path stays labelled live_backend=false.</p>
+        <ul className="cl-journey-list">
+          {CROSS_DOMAIN_JOURNEY_ENTRIES.map((journey) => (
+            <li key={journey.id}>
+              <h3>{journey.label}</h3>
+              <p className="cl-journey-meta">scenario={journey.scenarioId} · domain={journey.domain} · live_backend=false</p>
+              <div className="cl-journey-actions">
+                <Link to={homeDemoHref({ scenarioId: journey.scenarioId, panel: "mechanism", domain: journey.domain })}>
+                  Investigate
+                </Link>
+                <Link to={withResearchContext(journey.exploreTo, { domain: journey.domain, scenario: journey.scenarioId })}>
+                  Explore Biology
+                </Link>
+                <Link to={withResearchContext(journey.evidenceTo, { domain: journey.domain, scenario: journey.scenarioId })}>
+                  Evidence
+                </Link>
+                <Link to={contactAccessHref({ scenarioId: journey.scenarioId, domain: journey.domain })}>
+                  Access
+                </Link>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="cl-life cl-chapter" aria-labelledby="life-title">
         <h2 id="life-title">From a question to a governed handoff</h2>
-        <ol>
+        <div className="cl-life-track" aria-hidden="true">
+          <div className="cl-life-marquee">
+            {[...LIFECYCLE, ...LIFECYCLE].map((item, index) => (
+              <span key={`${item}-${index}`}>{item}</span>
+            ))}
+          </div>
+        </div>
+        <ol className="cl-life-list">
           {LIFECYCLE.map((item) => <li key={item}>{item}</li>)}
         </ol>
       </section>
 
-      <section className="cl-limits" aria-labelledby="limits-title">
+      <section className="cl-limits cl-chapter" aria-labelledby="limits-title">
         <h2 id="limits-title">What HSI does not do</h2>
         <ul>
           <li>Diagnose disease or recommend treatment</li>
@@ -124,10 +162,12 @@ export function Home() {
         <p>Private clinical information does not auto-enter the research knowledge graph. Evidence, contradictions and gaps stay visible. Human review stays required.</p>
       </section>
 
-      <section className="cl-cta" aria-labelledby="cta-title">
-        <h2 id="cta-title">Follow one question through the workbench.</h2>
-        <p>The walkthrough shows the investigation, the review queue, and the boundary around patient context.</p>
-        <Link className="cl-arrow-link cl-arrow-link-solid" to="/demo">Open the walkthrough <Arrow /></Link>
+      <section className="cl-cta cl-chapter cl-chapter-cta" aria-labelledby="cta-title">
+        <div className="cl-chapter-inner">
+          <h2 id="cta-title">Follow one question through the workbench.</h2>
+          <p>The walkthrough shows the investigation, the review queue, and the boundary around patient context.</p>
+          <Link className="cl-arrow-link cl-arrow-link-solid" to="/demo">Open the walkthrough <Arrow /></Link>
+        </div>
       </section>
     </div>
   );
