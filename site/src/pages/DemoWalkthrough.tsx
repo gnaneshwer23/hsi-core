@@ -3,6 +3,7 @@ import { generateSyntheticCohort, latestLab, type SyntheticPatient } from "@hsi/
 import { toFhirBundle } from "@hsi/demo/fhir";
 import { prescreen } from "@hsi/demo/trials";
 import { similarPatients } from "@hsi/demo/similarity";
+import { reviewEventLabel } from "../lib/reviewEventLabel";
 import { MarketingJourney, MarketingPage } from "../components/marketing/MarketingPage";
 import "../styles/demo-walkthrough.css";
 
@@ -110,7 +111,7 @@ export function DemoWalkthrough() {
         <p className="demo-walk-kicker">Illustrative walkthrough</p>
         <div className="demo-walk-title-row">
           <h1>Follow one rheumatoid arthritis record through the workbench.</h1>
-          <span className="demo-env">Illustrative environment</span>
+          <span className="demo-env">Demo environment</span>
         </div>
         <p>
           Start with a synthetic RA patient, then move through clinician context, research, review, the graph release, trials and discovery.
@@ -359,7 +360,7 @@ function View({
           <ul>
             {(scenario?.reviewEvents ?? []).slice(0, 12).map((event) => (
               <li key={`${event.at}-${event.name}`}>
-                {event.at.slice(11, 19)} · {event.name}
+                {event.at.slice(11, 19)} · {reviewEventLabel(event.name)}
               </li>
             ))}
           </ul>

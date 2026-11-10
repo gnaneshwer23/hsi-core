@@ -32,7 +32,8 @@ const NOINDEX_PAGES:Record<string,{name:string;title:string;description:string}>
  '/science/graph':{name:'Knowledge graph',title:'Knowledge Graph Explorer | Human Super Intelligence',description:'Explore HSI draft biological topic connections with filters, neighbourhood navigation and inspectable evidence states. Not a validated causal graph.'},
  '/research/investigate':{name:'Research investigation',title:'Start a Research Investigation | Human Super Intelligence',description:'Demo investigation from a research question through evidence, contradictions, gaps, hypotheses, human review and export. Curated examples only — not clinical validation.'},
  '/research/home':{name:'Research workspace',title:'Your Research Workspace | Human Super Intelligence',description:'Example researcher workspace for saved investigations, interests and in-app notifications. Not a live deployment.'},
- '/research/community-feed':{name:'Research community',title:'Research Community Examples | Human Super Intelligence',description:'Example community posts with evidence tiers and provenance. Sharing is opt-in. No outbound messages.'}
+ '/research/community-feed':{name:'Research community',title:'Research Community Examples | Human Super Intelligence',description:'Example community posts with evidence tiers and provenance. Sharing is opt-in. No outbound messages.'},
+ '/demo':{name:'Illustrative walkthrough',title:'Illustrative Research Walkthrough | Human Super Intelligence',description:'Guided walkthrough of one research record. Not a diagnosis, a prescription, or confirmed trial eligibility.'}
 };
 export type SeoMetadata={title:string;description:string;canonical:string;indexable:boolean;name:string;structuredData:Record<string,unknown>|null};
 export function getSeoMetadata(pathname:string,noindex=false):SeoMetadata{
