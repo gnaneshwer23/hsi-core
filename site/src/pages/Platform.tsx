@@ -6,6 +6,7 @@ import {
   PlatformConnectionMap,
   SharedSoftwareArt,
 } from "../components/platform/PlatformArt";
+import { JOURNEY_BY_PATH, MarketingJourney, MarketingPage } from "../components/marketing/MarketingPage";
 import { PRODUCT_NAME, PRODUCT_SHORT } from "../lib/brand";
 import { ECOSYSTEM_PRODUCTS, MATURITY_CHIP_LABEL, type EcosystemProduct } from "../lib/productMaturity";
 import "../styles/hsi-editorial.css";
@@ -194,7 +195,7 @@ export function Platform() {
   const lens = methodLenses[lensIndex];
 
   return (
-    <div className="hsi-editorial">
+    <MarketingPage bridgeExperience={false} className="hsi-editorial">
       <section className="hsi-platform-hero" aria-labelledby="platform-title">
         <div className="hsi-editorial-wrap hsi-platform-hero-grid">
           <div className="hsi-platform-hero-copy">
@@ -211,6 +212,7 @@ export function Platform() {
             <div className="hsi-editorial-actions">
               <a className="hsi-editorial-button" href="#platform-architecture">Explore the architecture <span aria-hidden="true"><ArrowIcon/></span></a>
               <Link className="hsi-editorial-textlink" to="/how-it-works">See how investigations work <ArrowIcon/></Link>
+              <Link className="hsi-editorial-textlink" to="/contact">Request Research Access <ArrowIcon/></Link>
             </div>
           </div>
           <HeroArtwork kind="platform"/>
@@ -554,6 +556,7 @@ export function Platform() {
           </small>
         </div>
       </section>
-    </div>
+      <MarketingJourney links={JOURNEY_BY_PATH["/platform"]!} />
+    </MarketingPage>
   );
 }

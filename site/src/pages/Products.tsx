@@ -2,6 +2,7 @@ import {ArrowIcon} from "../components/ArrowIcon";
 import {HeroArtwork} from "../components/editorial/HeroArtwork";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { JOURNEY_BY_PATH, MarketingJourney, MarketingPage } from "../components/marketing/MarketingPage";
 import { PRODUCT_NAME, PRODUCT_SHORT } from "../lib/brand";
 import { ECOSYSTEM_PRODUCTS, MATURITY_CHIP_LABEL, type EcosystemProduct } from "../lib/productMaturity";
 import "../styles/hsi-editorial.css";
@@ -139,7 +140,7 @@ export function Products() {
   const showcaseProduct = ECOSYSTEM_PRODUCTS.find((p) => p.id === showcaseId)!;
 
   return (
-    <div className="hsi-editorial">
+    <MarketingPage bridgeExperience={false} className="hsi-editorial">
       <section className="hsi-products-hero" aria-labelledby="products-title">
         <div className="hsi-editorial-wrap hsi-products-hero-grid">
           <div className="hsi-products-hero-copy">
@@ -405,6 +406,7 @@ export function Products() {
           </small>
         </div>
       </section>
-    </div>
+      <MarketingJourney links={JOURNEY_BY_PATH["/modules"]!} />
+    </MarketingPage>
   );
 }

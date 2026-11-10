@@ -3,7 +3,7 @@
 **Status:** Skeleton (PR1) — tokens and section map; visual implementation follows in PR2–PR4.  
 **Production:** https://www.humansuperintelligence.tech/  
 **Governing vision:** [`../strategy/HSI_VISION.md`](../strategy/HSI_VISION.md)  
-**Companion:** [`HSI_HOMEPAGE_COMPONENT_MAP.md`](./HSI_HOMEPAGE_COMPONENT_MAP.md)
+**Companion:** [`HSI_HOMEPAGE_COMPONENT_MAP.md`](./HSI_HOMEPAGE_COMPONENT_MAP.md) · Public IA: [`HSI_PUBLIC_SITE_IA_AND_PAGE_SYSTEM.md`](./HSI_PUBLIC_SITE_IA_AND_PAGE_SYSTEM.md)
 
 ## Principle
 

@@ -5,7 +5,7 @@ export const PRIMARY_NAV_LINKS = [
 ] as const;
 export const SECONDARY_NAV_LINKS=[
  { to: "/solutions", label: "Solutions"},{ to: "/technology", label: "Technology"},{ to: "/evidence-safety", label: "Evidence & safety"},
- { to: "/pricing", label: "Access options"},{ to: "/contact", label: "Research access"}
+ { to: "/pricing", label: "Access options"},{ to: "/demo", label: "Illustrative walkthrough"},{ to: "/contact", label: "Research access"}
 ] as const;
 export const PUBLIC_MARKETING_PATHS=[
  "/","/platform","/technology","/modules","/solutions","/research","/evidence-safety","/pricing","/contact",

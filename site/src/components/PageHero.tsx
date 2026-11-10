@@ -6,15 +6,20 @@ type Props = {
   lede: string;
 };
 
+/** Lightweight hero for secondary/status pages — premium tokens, no glow overlays. */
 export function PageHero({ eyebrow, title, lede }: Props) {
   return (
-    <section className="page-hero">
-      <div className="hero-glow" aria-hidden />
-      <div className="container page-hero-inner">
-        <span className="eyebrow">{eyebrow}</span>
-        <h1 className="display display-lg">{title}</h1>
-        <p className="lede">{lede}</p>
+    <header className="mp-hero cl-hero page-hero">
+      <div className="mp-hero-frame page-hero-inner">
+        <div className="mp-hero-copy">
+          <p className="mp-eyebrow">
+            <span aria-hidden="true" />
+            {eyebrow}
+          </p>
+          <h1 className="display display-lg">{title}</h1>
+          <p className="mp-lead lede">{lede}</p>
+        </div>
       </div>
-    </section>
+    </header>
   );
 }
