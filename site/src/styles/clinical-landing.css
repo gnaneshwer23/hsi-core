@@ -198,7 +198,7 @@
   animation: cl-cell-drift 22s var(--cl-ease-move) infinite alternate;
 }
 .cl-brand {
-  margin: 0 0 1rem;
+  margin: 0 0 0.55rem;
   font-size: clamp(2.55rem, 7vw, 5.6rem);
   font-weight: 650;
   letter-spacing: -0.055em;
@@ -984,6 +984,17 @@
 .cl-cta p { color: color-mix(in srgb, #fff8f4 82%, transparent); margin-bottom: 1.5rem; }
 .cl-cta .cl-text-link-on-deep { color: #fff8f4; }
 .cl-cta .cl-text-link-on-deep:hover { color: #fff; }
+.cl-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 
 @keyframes cl-rise {
   from { opacity: 0; transform: translateY(16px); }

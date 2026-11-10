@@ -9,7 +9,6 @@ import { HomeHero } from "../components/editorial/HomeHero";
 import { HomeIntegrity } from "../components/editorial/HomeIntegrity";
 import { HomeIntelligenceFlow } from "../components/editorial/HomeIntelligenceFlow";
 import { HomeWorkspacePreview } from "../components/editorial/HomeWorkspacePreview";
-
 const STEPS = [
   { n: "01", title: "Define", text: "Frame the scientific question and keep disease context optional but distinct." },
   { n: "02", title: "Retrieve", text: "Collect source-linked evidence. A missing source stays missing." },
