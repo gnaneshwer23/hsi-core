@@ -213,6 +213,10 @@
       "destination": "/_pages/demo.html"
     },
     {
+      "source": "/research/investigate",
+      "destination": "/_pages/research--investigate.html"
+    },
+    {
       "source": "/modules",
       "destination": "/_pages/modules.html"
     },

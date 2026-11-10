@@ -29,7 +29,8 @@ const NOINDEX_PAGES:Record<string,{name:string;title:string;description:string}>
  '/research/account':{name:'Research account',title:'Research Account | Human Super Intelligence',description:'Check your HSI account and independently verified research permissions.'},
  '/research/dashboard':{name:'Research dashboard',title:'Research Dashboard | Human Super Intelligence',description:'Create and reopen authorised source-bound investigations, inspect evidence and access independent review.'},
  '/research/mechanism-workflow':{name:'Connected research workbench',title:'Connected Research Workbench | Human Super Intelligence',description:'Ask → retrieve → investigate → verify → review → export on real research APIs with inspectable passages. Fixture data only — not scientific gold or Gate C approval.'},
- '/science/graph':{name:'Knowledge graph',title:'Knowledge Graph Explorer | Human Super Intelligence',description:'Explore HSI draft biological topic connections with filters, neighbourhood navigation and inspectable evidence states. Not a validated causal graph.'}
+ '/science/graph':{name:'Knowledge graph',title:'Knowledge Graph Explorer | Human Super Intelligence',description:'Explore HSI draft biological topic connections with filters, neighbourhood navigation and inspectable evidence states. Not a validated causal graph.'},
+ '/research/investigate':{name:'Research investigation',title:'Start a Research Investigation | Human Super Intelligence',description:'Demo investigation from a research question through evidence, contradictions, gaps, hypotheses, human review and export. Curated examples only — not clinical validation.'}
 };
 export type SeoMetadata={title:string;description:string;canonical:string;indexable:boolean;name:string;structuredData:Record<string,unknown>|null};
 export function getSeoMetadata(pathname:string,noindex=false):SeoMetadata{
