@@ -449,7 +449,7 @@ export function ScienceGraph() {
           </p>
         </div>
         <nav aria-label="Graph navigation">
-          <Link to="/research/knowledge-graph">Deeper research graph</Link>
+          <Link to="/research/knowledge-graph">Claim-linked research graph</Link>
           <Link to="/research/dashboard">Research</Link>
           <Link to="/science/body">Body Explorer</Link>
           <Link to="/science/disease">Disease mechanisms</Link>

@@ -115,9 +115,24 @@
 .kg-filters h3{font-size:.78rem;margin:18px 0 10px}
 .kg-filters h3 span{float:right;color:var(--hsi-muted,#4A5560)}
 .kg-search-results{display:grid;margin:0;gap:3px;max-height:250px;overflow-y:auto}
-.kg-search-results button{width:100%;text-align:left;border:0;border-radius:5px;padding:10px;background:transparent;font-size:.77rem;color:var(--hsi-ink,#162331)}
-.kg-search-results button[aria-pressed=true]{background:var(--hsi-cream,#FAECDD)}
-.kg-search-results button small{font-size:.64rem;color:var(--hsi-muted,#4A5560)}
+/* Beat .science-graph-nodes pressed teal so meta text keeps WCAG contrast on cream. */
+.kg-page .science-graph-nodes.kg-search-results button,
+.kg-page .kg-search-results button{
+  width:100%;text-align:left;border:0;border-radius:5px;padding:10px;
+  background:transparent;font-size:.77rem;color:var(--hsi-ink,#162331);
+}
+.kg-page .science-graph-nodes.kg-search-results button[aria-pressed=true],
+.kg-page .kg-search-results button[aria-pressed=true]{
+  background:var(--hsi-cream,#FAECDD);color:var(--hsi-ink,#162331);
+}
+.kg-page .science-graph-nodes.kg-search-results button small,
+.kg-page .kg-search-results button small{
+  font-size:.64rem;color:#3d4a54;
+}
+.kg-page .science-graph-nodes.kg-search-results button[aria-pressed=true] small,
+.kg-page .kg-search-results button[aria-pressed=true] small{
+  color:#3d4a54;
+}
 
 .kg-stage-column{background:var(--hsi-instrument,#0F2428);min-width:0;min-height:850px;color:var(--hsi-instrument-ink,#E7F3EF)}
 .kg-stage-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:18px 20px;border-bottom:1px solid #2a3d42}
