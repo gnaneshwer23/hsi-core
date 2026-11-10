@@ -4,10 +4,13 @@
    See docs/design/ASTRYX_HOMEPAGE_DIRECTION.md */
 
 .site-shell.home-shell {
-  --cl-bg: var(--hsi-page, #F7F9FA);
-  --cl-ink: var(--hsi-ink, #190505);
+  --cl-bg: var(--hsi-page, #FAF8F5);
+  --cl-ivory: var(--hsi-ivory, #FAF8F5);
+  --cl-cream: var(--hsi-cream, #FAECDD);
+  --cl-lavender: var(--hsi-lavender, #E8D8E8);
+  --cl-ink: var(--hsi-ink, #162331);
   --cl-body: var(--hsi-muted, #4A5560);
-  --cl-paper: var(--hsi-offwhite, #EBEBEA);
+  --cl-paper: var(--hsi-cream, #FAECDD);
   --cl-instrument: var(--hsi-instrument, #0F2428);
   --cl-instrument-ink: var(--hsi-instrument-ink, #E7F3EF);
   --cl-instrument-muted: var(--hsi-instrument-muted, #9BB5B0);

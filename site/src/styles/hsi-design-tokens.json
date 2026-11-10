@@ -3,15 +3,18 @@
   "governingPrinciple": "HSI has one recognisable premium biomedical identity; visual presentation accurately reflects functionality and scientific governance. Do not invent capability the backend does not provide.",
   "color": {
     "background": {
-      "page": "#F7F9FA",
+      "page": "#FAF8F5",
+      "ivory": "#FAF8F5",
+      "cream": "#FAECDD",
+      "lavender": "#E8D8E8",
       "surface": "#FFFFFF",
       "elevated": "#FFFFFF",
       "deep": "#5E0808",
-      "dark": "#190505",
+      "dark": "#162331",
       "instrument": "#0F2428"
     },
     "text": {
-      "primary": "#190505",
+      "primary": "#162331",
       "secondary": "#4A5560",
       "inverse": "#EBEBEA",
       "instrument": "#E7F3EF"

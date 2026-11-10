@@ -1,17 +1,21 @@
 /* HSI public visual tokens — premium biomedical instrument.
-   Brand burgundy = selection/emphasis only. Evidence status colours are separate. */
+   Brand burgundy = selection/emphasis only. Evidence status colours are separate.
+   Homepage redesign palette: ivory / cream / lavender / burgundy / ink. */
 :root{
   --hsi-burgundy-deep:#5E0808;
   --hsi-burgundy:#BD1C1D;
-  --hsi-near-black:#190505;
+  --hsi-near-black:#162331;
   --hsi-rose:#D1AEAD;
+  --hsi-ivory:#FAF8F5;
+  --hsi-cream:#FAECDD;
+  --hsi-lavender:#E8D8E8;
   --hsi-offwhite:#EBEBEA;
-  --hsi-page:#F7F9FA;
-  --hsi-paper:#F7F9FA;
+  --hsi-page:#FAF8F5;
+  --hsi-paper:#FAF8F5;
   --hsi-surface:#FFFFFF;
   --hsi-elevated:#FFFFFF;
   --hsi-line:#D9E1E5;
-  --hsi-ink:#190505;
+  --hsi-ink:#162331;
   --hsi-muted:#4A5560;
   --hsi-scientific:#106C92;
   --hsi-scientific-sky:#65CEE6;
