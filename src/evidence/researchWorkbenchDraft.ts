@@ -11,6 +11,7 @@ import {uniProtProteinDraftNode} from "./uniProtOntologyBridge";
 import {buildProteinPathwayCandidate,type ProteinPathwayContext} from "./proteinPathwayMechanismCandidates";
 import {compareMechanismLeads,type MechanismEvidenceLead} from "./contextualMechanismComparison";
 import {proposeFalsifiableExperiment,type ExperimentProposal} from "./falsifiableExperimentProposals";
+import {assertWorkbenchContextConsistency} from "./researchWorkbenchValidation";
 
 export type ResearchWorkbenchInput = {
   proteinAccession:string;
@@ -48,6 +49,7 @@ export async function prepareResearchWorkbenchDraft(input:ResearchWorkbenchInput
   }
   let comparison:ReturnType<typeof compareMechanismLeads>;
   try {
+    assertWorkbenchContextConsistency(input);
     comparison=compareMechanismLeads(input.leftLead,input.rightLead);
     if(input.leftLead.proteinAccession!==proteinLookup.protein.accession ||
        input.rightLead.proteinAccession!==proteinLookup.protein.accession ||
