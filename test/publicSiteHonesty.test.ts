@@ -59,7 +59,9 @@ describe("Public HSI site honesty", () => {
     const homeSurface=[home,homeHero,homeEcosystem,homeApps,site("src/components/editorial/HomeIntegrity.tsx"),site("src/lib/brand.ts"),site("src/lib/productMaturity.ts")].join("\n");
     expect(homeSurface).toContain("Investigate biological mechanisms");expect(homeSurface).toContain("across human systems");expect(homeSurface).toContain("Connecting human biology");
     expect(homeHero).toContain("cl-hero-domains");expect(homeHero).toContain("Immunity");expect(homeHero).toContain("Microbiome");
-    expect(homeHero).toContain("/science/graph?q=neuro");expect(homeHero).toContain("validation case");
+    expect(homeHero).toContain("/science/graph?q=neuro");expect(homeHero).toContain("first scientific investigation");
+    expect(homeHero).toContain('to="/research/investigate"');expect(homeHero).toContain("Start an investigation");
+    expect(homeHero).not.toMatch(/validation case|clinically validated|clinically proven|clinical validation|scientifically validated/i);
     expect(homeSurface).toContain("Aksh Health");expect(homeSurface).toContain("HSI Clinical");expect(homeSurface).toContain("Immune Super Intelligence");expect(homeSurface).toContain("HSI Trials");
     expect(homeSurface).toContain("does not auto-enter");
     expect(home).not.toContain("ValidationPreview");expect(home).toContain("What HSI does not do");expect(experience).toContain("review scope");
