@@ -41,7 +41,9 @@ export function HomeHero() {
           </p>
           <p className="cl-supporting">
             From immunity and the microbiome to neurobiology, metabolism and therapeutic
-            research—explore human biology as an interconnected system.
+            research—explore human biology as an interconnected system. Disease context is optional.
+            Systemic sclerosis is one scientific validation case used to pressure-test the
+            substrate — not a product boundary.
           </p>
           <div className="cl-actions">
             <Link className="cl-arrow-link cl-arrow-link-solid" to={PUBLIC_PLATFORM_CTA.to}>
