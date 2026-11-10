@@ -53,8 +53,8 @@ export function Home() {
         <div className="cl-steps-intro">
           <h2 id="steps-title">Follow the evidence. Understand the mechanism. Investigate what comes next.</h2>
           <p className="cl-chapter-lead cl-steps-lead">
-            Illustrative steps through a research workbench. Detail lives on{" "}
-            <Link to="/how-it-works">How it works</Link>.
+            Illustrative steps through a research workbench. Hypotheses stay unvalidated until a person
+            reviews them. Detail lives on <Link to="/how-it-works">How it works</Link>.
           </p>
           <p className="cl-step-detail" aria-live="polite">
             <strong>

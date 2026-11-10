@@ -140,18 +140,20 @@
 .kg-stage-head p{font-size:.68rem;margin:0;color:var(--hsi-instrument-muted,#9BB5B0)}
 .kg-stage-head a{font-size:.65rem;color:#add3cc;max-width:120px}
 .kg-canvas{background:var(--hsi-instrument,#0F2428)}
+/* Dual-class frame: beat .xp-graph-frame cream so toolbar/caption contrast on instrument chrome. */
+.xp-graph-frame.kg-canvas{background:var(--hsi-instrument,#0F2428);padding:0;border-color:#2a3d42}
 .kg-canvas>svg{display:block;width:100%;height:620px;max-height:none!important;touch-action:none;cursor:grab;background:var(--hsi-instrument,#0F2428)!important;border-radius:0}
 .kg-canvas>svg:active{cursor:grabbing}
 .kg-canvas svg [data-graph-node]{cursor:pointer}
-.kg-canvas .xp-graph-toolbar{padding:10px 12px;gap:5px}
+.kg-canvas .xp-graph-toolbar{padding:10px 12px;gap:5px;background:var(--hsi-instrument,#0F2428)}
 .kg-canvas .xp-graph-toolbar button{
   border:1px solid #3c515b;background:#1d2a32;color:#d5e4e5;padding:7px 9px;font-size:.65rem;min-height:32px;border-radius:4px;
 }
 .kg-canvas .xp-graph-toolbar button:hover{background:#30464e}
-.kg-canvas .xp-graph-toolbar span{color:#a8c0c7;font-size:.7rem}
+.kg-canvas .xp-graph-toolbar span{color:#c5d6dc;font-size:.7rem}
 .kg-canvas .xp-graph-toolbar button:disabled{opacity:.4}
-.kg-canvas-bottom{border-top:1px solid #2a3d42}
-.kg-canvas-bottom>span{display:block;padding:10px 16px 0;font-size:.66rem;color:#9eb5be}
+.kg-canvas-bottom{border-top:1px solid #2a3d42;background:var(--hsi-instrument,#0F2428)}
+.kg-canvas-bottom>span{display:block;padding:10px 16px 0;font-size:.66rem;color:#c5d6dc}
 .kg-scope-note{padding:8px 18px 20px;font-size:.68rem;line-height:1.6;color:#a5bac0;margin:0}
 .kg-filter-notice{padding:10px 16px;background:#344338;color:#e0dec5;font-size:.72rem;margin:0}
 .kg-empty{display:grid;place-content:center;text-align:center;min-height:650px;padding:30px}

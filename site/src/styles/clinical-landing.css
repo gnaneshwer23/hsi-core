@@ -572,6 +572,14 @@
   min-width: 0;
   border: 1px solid color-mix(in srgb, var(--cl-instrument-ink) 14%, transparent);
 }
+.cl-home-kg-stage .xp-graph-frame.kg-canvas {
+  background: var(--cl-instrument, #0F2428);
+  padding: 0;
+}
+.cl-home-kg-stage .kg-canvas .xp-graph-toolbar,
+.cl-home-kg-stage .kg-canvas-bottom {
+  background: var(--cl-instrument, #0F2428);
+}
 .cl-home-kg-stage .kg-canvas > svg {
   height: min(52vh, 460px);
 }
@@ -1280,9 +1288,10 @@
   border: 0;
 }
 
+/* Transform-only entrance — opacity fades fail WCAG mid-animation and race axe scans. */
 @keyframes cl-rise {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { transform: translateY(16px); }
+  to { transform: translateY(0); }
 }
 @keyframes cl-cell-drift {
   from { transform: translate3d(0, 0, 0) scale(1); }
