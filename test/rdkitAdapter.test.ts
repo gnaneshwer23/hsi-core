@@ -148,12 +148,12 @@ describe("P3.0 RDKit thin adapter spike", () => {
   test("publish writes hsi-rdkit-adapter-proposals artifacts", () => {
     const result = publishOutputs({
       generatedAt: "2026-11-01T19:20:00.000Z",
+      syncSiteDiscovery: false,
     });
     expect(result.files).toContain("hsi-rdkit-adapter-proposals.json");
     expect(result.files).toContain("hsi-rdkit-adapter-proposals.md");
-    expect(result.discoverySynced).toContain(
-      "site/public/discovery/hsi-rdkit-adapter-proposals.json",
-    );
+    expect(result.discoverySynced).toEqual([]);
+    expect(existsSync(join(result.outDir, "hsi-rdkit-adapter-proposals.json"))).toBe(true);
 
     const jsonPath = join(result.outDir, "hsi-rdkit-adapter-proposals.json");
     expect(existsSync(jsonPath)).toBe(true);

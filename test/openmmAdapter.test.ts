@@ -148,12 +148,12 @@ describe("P3.1 OpenMM thin adapter spike", () => {
   test("publish writes hsi-openmm-adapter-proposals artifacts", () => {
     const result = publishOutputs({
       generatedAt: "2026-11-01T19:30:00.000Z",
+      syncSiteDiscovery: false,
     });
     expect(result.files).toContain("hsi-openmm-adapter-proposals.json");
     expect(result.files).toContain("hsi-openmm-adapter-proposals.md");
-    expect(result.discoverySynced).toContain(
-      "site/public/discovery/hsi-openmm-adapter-proposals.json",
-    );
+    expect(result.discoverySynced).toEqual([]);
+    expect(existsSync(join(result.outDir, "hsi-openmm-adapter-proposals.json"))).toBe(true);
 
     const jsonPath = join(result.outDir, "hsi-openmm-adapter-proposals.json");
     expect(existsSync(jsonPath)).toBe(true);

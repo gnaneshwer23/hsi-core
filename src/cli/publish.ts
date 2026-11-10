@@ -7,7 +7,11 @@
 import { publishOutputs } from "../publishOutputs";
 
 const cwdArg = process.argv[2];
-const result = publishOutputs(cwdArg ? { cwd: cwdArg } : undefined);
+const result = publishOutputs({
+  ...(cwdArg ? { cwd: cwdArg } : {}),
+  syncSiteDiscovery: true,
+  syncExports: true,
+});
 
 console.log(
   JSON.stringify(

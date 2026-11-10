@@ -168,12 +168,12 @@ describe("P3.3 FAIR ESM-2 thin embedding stub", () => {
   test("publish writes hsi-esm-adapter-proposals artifacts + merges sidecars", () => {
     const result = publishOutputs({
       generatedAt: "2026-11-01T20:00:00.000Z",
+      syncSiteDiscovery: false,
     });
     expect(result.files).toContain("hsi-esm-adapter-proposals.json");
     expect(result.files).toContain("hsi-esm-adapter-proposals.md");
-    expect(result.discoverySynced).toContain(
-      "site/public/discovery/hsi-esm-adapter-proposals.json",
-    );
+    expect(result.discoverySynced).toEqual([]);
+    expect(existsSync(join(result.outDir, "hsi-esm-adapter-proposals.json"))).toBe(true);
 
     const jsonPath = join(result.outDir, "hsi-esm-adapter-proposals.json");
     expect(existsSync(jsonPath)).toBe(true);

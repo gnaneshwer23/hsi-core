@@ -1,10 +1,16 @@
 /**
  * Offline end-to-end demonstration.
  * The cohort is synthetic. No network calls and no database writes.
+ *
+ * By default writes only to a temp file so tests/local runs do not rewrite tracked
+ * `site/public/demo/scenario.json`. Pass `--write-site` to refresh the committed asset.
  */
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { runDemoScenario } from "../demo/scenario";
 
+const writeSite = process.argv.includes("--write-site");
 const report = await runDemoScenario();
 const summary = {
   synthetic: report.synthetic,
@@ -26,9 +32,12 @@ const summary = {
   phiBlocked: report.phiBlocked,
   adapters: report.repurposing[0]?.adapters ?? [],
 };
-mkdirSync("site/public/demo", { recursive: true });
-writeFileSync("site/public/demo/scenario.json", `${JSON.stringify(report, null, 2)}\n`);
-console.log(JSON.stringify(summary, null, 2));
+const outPath = writeSite
+  ? "site/public/demo/scenario.json"
+  : join(mkdtempSync(join(tmpdir(), "hsi-demo-")), "scenario.json");
+if (writeSite) mkdirSync("site/public/demo", { recursive: true });
+writeFileSync(outPath, `${JSON.stringify(report, null, 2)}\n`);
+console.log(JSON.stringify({ ...summary, scenarioPath: outPath, wroteTrackedSite: writeSite }, null, 2));
 if (!report.secondMentionsApprovedEdge || report.patientQuestionSent || report.prescreen.confirmedEligible || !report.phiBlocked) {
   console.error("Demonstration invariants failed");
   process.exit(1);
