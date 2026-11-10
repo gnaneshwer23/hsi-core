@@ -35,9 +35,9 @@ export function HomeHero() {
           <p className="cl-tagline">{PRODUCT_TAGLINE}</p>
           <h1 id="home-title">Explore the connections behind human health and disease.</h1>
           <p className="cl-lead">
-            Human Super Intelligence connects biological systems, molecular mechanisms and scientific
-            evidence to help researchers investigate complex disease biology and identify new directions
-            for discovery.
+            Investigate biological mechanisms across human systems. Human Super Intelligence connects
+            biological systems, molecular mechanisms and scientific evidence to help researchers
+            investigate complex disease biology and identify new directions for discovery.
           </p>
           <p className="cl-supporting">
             From immunity and the microbiome to neurobiology, metabolism and therapeutic
