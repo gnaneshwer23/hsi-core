@@ -208,6 +208,14 @@
   overflow-wrap: break-word;
   min-width: 0;
 }
+.cl-tagline {
+  margin: 0 0 1rem;
+  max-width: 36ch;
+  color: var(--cl-body);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  font-weight: 550;
+}
 .cl-hero h1 {
   margin: 0 0 1rem;
   font-size: clamp(1.28rem, 2.4vw, 1.72rem);
