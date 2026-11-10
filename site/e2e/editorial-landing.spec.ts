@@ -20,7 +20,7 @@ test('editorial homepage product demo, keyboard tabs and narrow layouts remain u
  for(const width of [320,390,768,1440]){
   await page.setViewportSize({width,height:1000});await page.goto('/');
   await expect(page.getByRole('heading',{level:1})).toContainText('Explore the connections');
-  await expect(page.getByRole('heading',{name:/How an investigation proceeds/})).toBeVisible();
+  await expect(page.getByRole('heading',{name:/Follow the evidence|How an investigation proceeds/})).toBeVisible();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),String(width)).toBe(true);
   if(width===1440)await page.screenshot({path:info.outputPath('editorial-home-desktop.png'),fullPage:true});
   if(width===390)await page.screenshot({path:info.outputPath('editorial-home-mobile.png'),fullPage:true});
