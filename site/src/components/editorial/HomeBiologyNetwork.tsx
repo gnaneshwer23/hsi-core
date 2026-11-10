@@ -55,7 +55,7 @@ export function HomeBiologyNetwork() {
   }, [domainFromUrl]);
 
   return (
-    <section className="cl-network cl-chapter" aria-labelledby="network-title">
+    <section id="biology-network" className="cl-network cl-chapter" aria-labelledby="network-title">
       <div className="cl-chapter-inner cl-network-layout">
         <div className="cl-network-copy">
           <h2 id="network-title">Human biology is connected. Research should be too.</h2>

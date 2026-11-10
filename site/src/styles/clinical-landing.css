@@ -144,14 +144,14 @@
   width: var(--cl-measure);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
   gap: clamp(1.75rem, 4vw, 3.5rem);
   align-items: center;
 }
 .cl-hero-copy {
   position: relative;
   z-index: 2;
-  max-width: 36rem;
+  max-width: 34rem;
   min-width: 0;
   animation: cl-rise var(--cl-duration-slow) var(--cl-ease-entrance) both;
 }
@@ -228,9 +228,9 @@
 }
 .cl-lead {
   margin: 0;
-  max-width: 42ch;
+  max-width: 38ch;
   color: var(--cl-body);
-  line-height: 1.65;
+  line-height: 1.55;
   font-size: 1.02rem;
 }
 .cl-supporting {
@@ -241,11 +241,58 @@
   font-size: 0.9rem;
   opacity: 0.92;
 }
+.cl-hero-domains {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 1.15rem 0 0;
+  max-width: 36rem;
+}
+.cl-hero-domain {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  padding: 0.35rem 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--cl-ink) 14%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--cl-surface, #fff) 72%, var(--cl-cream));
+  color: var(--cl-ink);
+  font-size: 0.84rem;
+  font-weight: 550;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  text-decoration: none;
+  transition:
+    background-color var(--cl-duration-fast) var(--cl-ease-move),
+    border-color var(--cl-duration-fast) var(--cl-ease-move),
+    color var(--cl-duration-fast) var(--cl-ease-move),
+    transform 150ms ease-out;
+}
+.cl-hero-domain:hover {
+  border-color: color-mix(in srgb, var(--cl-burgundy) 42%, var(--cl-mist));
+  background: color-mix(in srgb, var(--cl-cream) 70%, #fff);
+  color: var(--cl-burgundy-deep);
+}
+.cl-hero-domain:active {
+  transform: scale(0.96);
+}
+.cl-hero-domain:focus-visible {
+  outline: 3px solid var(--cl-focus);
+  outline-offset: 3px;
+}
+.cl-hero-scope {
+  margin: 0.85rem 0 0;
+  max-width: 36ch;
+  color: var(--cl-body);
+  font-size: 0.78rem;
+  line-height: 1.45;
+  opacity: 0.88;
+}
 .cl-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.8rem 1.2rem;
-  margin-top: 1.6rem;
+  margin-top: 1.35rem;
 }
 .cl-arrow-link,
 .cl-text-link {
