@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { PRODUCT_TAGLINE } from "../../lib/brand";
-import { PUBLIC_PLATFORM_CTA, PUBLIC_PRIMARY_CTA } from "../../lib/ctaPolicy";
+import { PUBLIC_PRIMARY_CTA } from "../../lib/ctaPolicy";
 import {
   HERO_ALT_DESKTOP,
   HERO_ALT_MOBILE,
@@ -88,11 +88,11 @@ export function HomeHero() {
             ))}
           </nav>
           <p className="cl-hero-scope">
-            Systemic sclerosis is one scientific validation case — not a product boundary.
+            Systemic sclerosis is our first scientific investigation — not a product boundary.
           </p>
           <div className="cl-actions">
-            <Link className="cl-arrow-link cl-arrow-link-solid" to={PUBLIC_PLATFORM_CTA.to}>
-              Explore the Platform <Arrow />
+            <Link className="cl-arrow-link cl-arrow-link-solid" to="/research/investigate">
+              Start an investigation <Arrow />
             </Link>
             <Link className="cl-text-link" to={PUBLIC_PRIMARY_CTA.to}>
               Request Research Access
