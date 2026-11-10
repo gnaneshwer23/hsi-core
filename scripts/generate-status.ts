@@ -74,7 +74,7 @@ ${Object.entries(register.honesty)
   .map(([key, value]) => `- \`${key}\`: ${JSON.stringify(value)}`)
   .join("\n")}
 
-Database deployment is **not** asserted here. Older audits disagree about whether migrations have been applied. This repository commits the SQL. Applying it is an operator action against the private HSI database (HSI red-wave only). Migrations \`020_hsi_lhkg_rls_policies\` and \`021_hsi_hitl_questions_outbox\` are released for apply; applying them remains an operator action and is not claimed here.
+Database deployment is **not** asserted here. Older audits disagree about whether migrations have been applied. This repository commits the SQL. Applying it is an operator action against the private HSI database (HSI red-wave only). Migrations \`020_hsi_lhkg_rls_policies\` and \`021_hsi_hitl_questions_outbox\` are released for apply; applying them remains an operator action and is not claimed here. Migrations \`022_hsi_scientific_investigation_records\` and \`023_hsi_researcher_workspace_community\` are committed and held in \`HELD_MIGRATION_IDS\`. They have not been applied.
 
 ## Capabilities
 
