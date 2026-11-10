@@ -33,7 +33,7 @@ export const BIOLOGY_ENTITIES: BiologyEntity[]=[
  organ("liver","Liver","digestive",116,218,"Processes nutrients, stores glycogen and helps regulate circulating glucose and lipids.","Hepatocytes and glucose metabolism","digest"),
  organ("pancreas","Pancreas","endocrine",168,244,"Endocrine islets release insulin, glucagon and other hormones. Exocrine tissue produces digestive enzymes.","Islets → beta cells → insulin secretion","endocrine"),
  organ("kidneys","Kidneys","urinary",196,267,"Filter blood, regulate fluid and electrolyte balance, and contribute to blood pressure and endocrine control.","Nephrons and filtration","renal"),
- organ("intestine","Intestine","digestive",150,321,"Absorbs nutrients and interfaces with microbial communities, epithelial barriers and mucosal immunity.","Intestinal epithelium and microbiome","digest"),
+ organ("intestine","Intestine","digestive",150,278,"Absorbs nutrients and interfaces with microbial communities, epithelial barriers and mucosal immunity.","Intestinal epithelium and microbiome","digest"),
  organ("spleen","Spleen","immune",205,225,"Filters blood and contributes to immune surveillance and responses to blood-borne antigens.","Immune cells and splenic tissue","immune"),
  organ("muscle","Skeletal muscle","endocrine",91,369,"Supports movement and is a major site of insulin-stimulated glucose disposal.","Myocytes and glucose transport","endocrine"),
  organ("adipose","Adipose tissue","endocrine",209,365,"Stores energy and releases signals that interact with metabolic and immune regulation.","Adipocytes and endocrine signalling","endocrine")
