@@ -692,7 +692,13 @@
 .cl-steps-intro { max-width: 36rem; }
 .cl-steps-intro h2 { max-width: 22ch; }
 .cl-steps-lead { margin-bottom: 1rem; }
-.cl-steps-continue { margin-top: 1.25rem; grid-column: 1 / -1; }
+/* opacity:1 — parent .cl-chapter-lead opacity would wash scientific links below 4.5:1 */
+.cl-steps-continue {
+  margin-top: 1.25rem;
+  grid-column: 1 / -1;
+  opacity: 1;
+  color: var(--cl-body);
+}
 .cl-steps-continue a {
   color: var(--cl-scientific);
   font-weight: 650;
