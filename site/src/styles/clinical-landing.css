@@ -1,6 +1,7 @@
 /* Homepage colour chapters — scientific instrument on HSI tokens.
-   Direction: colour-chapters (taste-skill) · brand palette kept · Host Grotesk.
-   Idea: governed product planes become full-bleed colour chapters; the live thing is the investigation sequence. */
+   Direction: Astryx side-gallery + stone/gothic motion mapped onto --hsi-* · Host Grotesk kept.
+   Idea: asymmetric hero (copy | instrument stage); governed planes as colour chapters; investigation is the live surface.
+   See docs/design/ASTRYX_HOMEPAGE_DIRECTION.md */
 
 .site-shell.home-shell {
   --cl-bg: var(--hsi-page, #F7F9FA);
@@ -20,6 +21,12 @@
   --cl-radius: 0;
   --cl-gutter: clamp(1.25rem, 4vw, 3.5rem);
   --cl-measure: min(72rem, calc(100% - (2 * var(--cl-gutter))));
+  /* Astryx duration/ease bands (gothic-slower tempo for continuous drift) */
+  --cl-duration-fast: 175ms;
+  --cl-duration-medium: 410ms;
+  --cl-duration-slow: 975ms;
+  --cl-ease-entrance: cubic-bezier(0.24, 1, 0.4, 1);
+  --cl-ease-move: cubic-bezier(0.24, 1, 0.4, 1);
   background: var(--cl-bg);
   color: var(--cl-ink);
   font-family: var(--font-display), "Host Grotesk Variable", sans-serif;
@@ -96,50 +103,78 @@
   font-size: 1.05rem;
 }
 
-/* —— Hero: one composition, brand first, full-bleed visual —— */
+/* —— Hero: Astryx side-gallery asymmetry — brand + one CTA | instrument stage —— */
 .cl-hero {
   position: relative;
   isolation: isolate;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  align-items: end;
   min-height: min(92svh, 56rem);
-  padding: clamp(5.5rem, 12vw, 8rem) var(--cl-gutter) clamp(2.5rem, 6vw, 4rem);
+  padding: clamp(5.5rem, 12vw, 8rem) var(--cl-gutter) clamp(2.75rem, 6vw, 4.25rem);
   background:
-    radial-gradient(ellipse 70% 55% at 78% 42%, color-mix(in srgb, var(--cl-ice) 55%, transparent), transparent 70%),
-    radial-gradient(ellipse 50% 45% at 12% 78%, color-mix(in srgb, var(--cl-sky) 28%, transparent), transparent 65%),
-    linear-gradient(165deg, var(--cl-bg) 0%, var(--cl-mist) 48%, color-mix(in srgb, var(--cl-sky) 22%, var(--cl-paper)) 100%);
+    radial-gradient(ellipse 58% 48% at 88% 36%, color-mix(in srgb, var(--cl-ice) 48%, transparent), transparent 72%),
+    radial-gradient(ellipse 42% 40% at 8% 82%, color-mix(in srgb, var(--cl-sky) 22%, transparent), transparent 68%),
+    linear-gradient(168deg, var(--cl-bg) 0%, color-mix(in srgb, var(--cl-mist) 70%, var(--cl-bg)) 52%, color-mix(in srgb, var(--cl-sky) 16%, var(--cl-paper)) 100%);
   overflow: clip;
 }
-.cl-hero-visual {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
+.cl-hero-frame {
+  width: var(--cl-measure);
+  margin: 0 auto;
   display: grid;
-  place-items: center end;
-  padding: 0;
-}
-.cl-hero-visual .cl-cell {
-  width: min(72vw, 46rem);
-  max-width: none;
-  margin: 0;
-  margin-right: -4vw;
-  opacity: 0.92;
-  animation: cl-cell-drift 18s ease-in-out infinite alternate;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(1.75rem, 4vw, 3.5rem);
+  align-items: center;
 }
 .cl-hero-copy {
   position: relative;
   z-index: 2;
-  width: var(--cl-measure);
-  margin: 0 auto;
-  max-width: 38rem;
-  justify-self: start;
-  animation: cl-rise 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  max-width: 36rem;
+  min-width: 0;
+  animation: cl-rise var(--cl-duration-slow) var(--cl-ease-entrance) both;
+}
+.cl-hero-visual {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  animation: cl-rise var(--cl-duration-slow) var(--cl-ease-entrance) both;
+  animation-delay: 120ms;
+}
+.cl-hero-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: min(52svh, 28rem);
+  padding: clamp(1rem, 2.5vw, 1.75rem);
+  background:
+    radial-gradient(ellipse 70% 65% at 42% 38%, color-mix(in srgb, var(--cl-scientific) 55%, transparent), transparent 70%),
+    linear-gradient(155deg, var(--cl-instrument) 0%, #16363c 55%, #0b1c20 100%);
+  border: 1px solid color-mix(in srgb, var(--cl-sky) 28%, transparent);
+  overflow: clip;
+}
+.cl-hero-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--cl-ice) 12%, transparent), transparent 42%),
+    repeating-linear-gradient(
+      -18deg,
+      transparent 0,
+      transparent 11px,
+      color-mix(in srgb, var(--cl-sky) 7%, transparent) 11px,
+      color-mix(in srgb, var(--cl-sky) 7%, transparent) 12px
+    );
+  pointer-events: none;
+}
+.cl-hero-visual .cl-cell {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 28rem);
+  margin: 0;
+  opacity: 0.96;
+  animation: cl-cell-drift 22s var(--cl-ease-move) infinite alternate;
 }
 .cl-brand {
   margin: 0 0 1rem;
-  font-size: clamp(2.4rem, 7.2vw, 5.4rem);
+  font-size: clamp(2.55rem, 7vw, 5.6rem);
   font-weight: 650;
   letter-spacing: -0.055em;
   line-height: 0.92;
@@ -149,13 +184,14 @@
   min-width: 0;
 }
 .cl-hero h1 {
-  margin: 0 0 1.15rem;
-  font-size: clamp(1.35rem, 2.6vw, 1.85rem);
-  line-height: 1.2;
+  margin: 0 0 1rem;
+  font-size: clamp(1.28rem, 2.4vw, 1.72rem);
+  line-height: 1.22;
   letter-spacing: -0.03em;
   font-weight: 550;
   color: var(--cl-ink);
   max-width: 28ch;
+  text-wrap: balance;
 }
 .cl-lead {
   margin: 0;
@@ -164,11 +200,19 @@
   line-height: 1.65;
   font-size: 1.02rem;
 }
+.cl-supporting {
+  margin: 0.85rem 0 0;
+  max-width: 44ch;
+  color: var(--cl-body);
+  line-height: 1.6;
+  font-size: 0.9rem;
+  opacity: 0.92;
+}
 .cl-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.8rem 1.2rem;
-  margin-top: 1.75rem;
+  margin-top: 1.6rem;
 }
 .cl-arrow-link,
 .cl-text-link {
@@ -196,7 +240,7 @@
   background: var(--cl-ink);
   color: var(--cl-bg);
   flex: none;
-  transition: transform 180ms ease;
+  transition: transform var(--cl-duration-fast) var(--cl-ease-move);
 }
 .cl-arrow-link:hover .cl-arrow { transform: translateX(3px); }
 .cl-arrow-link-solid {
@@ -370,7 +414,10 @@
   font: inherit;
   font-weight: 650;
   cursor: pointer;
-  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+  transition:
+    background-color var(--cl-duration-fast) var(--cl-ease-move),
+    color var(--cl-duration-fast) var(--cl-ease-move),
+    border-color var(--cl-duration-fast) var(--cl-ease-move);
 }
 .cl-step-grid button[aria-pressed="true"] {
   background: var(--cl-instrument);
@@ -410,8 +457,10 @@
 }
 .cl-journey-meta {
   margin: 0 0 0.9rem;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
+  line-height: 1.55;
   color: var(--cl-body);
+  opacity: 0.9;
 }
 .cl-journey-actions {
   display: flex;
@@ -505,12 +554,12 @@
 .cl-cta p { color: color-mix(in srgb, #fff8f4 82%, transparent); margin-bottom: 1.5rem; }
 
 @keyframes cl-rise {
-  from { opacity: 0; transform: translateY(18px); }
+  from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 }
 @keyframes cl-cell-drift {
   from { transform: translate3d(0, 0, 0) scale(1); }
-  to { transform: translate3d(-2%, 2.5%, 0) scale(1.03); }
+  to { transform: translate3d(-1.5%, 2%, 0) scale(1.025); }
 }
 @keyframes cl-marquee {
   from { transform: translateX(0); }
@@ -521,20 +570,24 @@
   .cl-hero {
     min-height: 0;
     padding-top: clamp(4.5rem, 18vw, 6rem);
-    align-items: start;
   }
-  .cl-hero-visual {
-    place-items: start center;
-    opacity: 0.55;
-  }
-  .cl-hero-visual .cl-cell {
-    width: min(110%, 28rem);
-    margin: 2rem auto 0;
-    margin-right: auto;
+  .cl-hero-frame {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
   }
   .cl-hero-copy {
     max-width: none;
-    padding-bottom: 1rem;
+    order: 1;
+  }
+  .cl-hero-visual {
+    order: 2;
+    animation-delay: 0ms;
+  }
+  .cl-hero-stage {
+    min-height: min(42svh, 22rem);
+  }
+  .cl-hero-visual .cl-cell {
+    width: min(100%, 22rem);
   }
   .cl-brand { max-width: none; }
   .cl-steps,
@@ -548,6 +601,11 @@
     animation: none !important;
     transition: none !important;
   }
-  .cl-hero-copy { opacity: 1; transform: none; }
+  .cl-hero-copy,
+  .cl-hero-visual {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
   .cl-life-marquee { transform: none; }
 }

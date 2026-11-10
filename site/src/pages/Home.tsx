@@ -44,15 +44,20 @@ export function Home() {
   return (
     <div className="cl-page">
       <section className="cl-hero cl-chapter" aria-labelledby="home-title">
-        <div className="cl-hero-visual" aria-hidden="true">
-          <CellField />
-        </div>
-        <div className="cl-hero-copy">
-          <p className="cl-brand">Human Super Intelligence</p>
-          <h1 id="home-title">Connecting human biology. Advancing scientific discovery. Transforming our understanding of health.</h1>
-          <p className="cl-lead">One evidence-grounded research workbench for immunology, microbiome, neuroimmune biology, metabolism, molecular science, clinical knowledge and trials. Disease context is optional. Systemic sclerosis is one scientific validation case used to pressure-test the substrate — not a product boundary and not a claim of universal biology coverage.</p>
-          <div className="cl-actions">
-            <Link className="cl-arrow-link" to="/demo">See how this technology works <Arrow /></Link>
+        <div className="cl-hero-frame">
+          <div className="cl-hero-copy">
+            <p className="cl-brand">Human Super Intelligence</p>
+            <h1 id="home-title">Connecting human biology. Advancing scientific discovery. Transforming our understanding of health.</h1>
+            <p className="cl-lead">One evidence-grounded research workbench across immunology, microbiome, neuroimmune biology, metabolism, molecular science, clinical knowledge and trials.</p>
+            <p className="cl-supporting">Disease context is optional. Systemic sclerosis is one scientific validation case used to pressure-test the substrate — not a product boundary and not a claim of universal biology coverage.</p>
+            <div className="cl-actions">
+              <Link className="cl-arrow-link" to="/demo">See how this technology works <Arrow /></Link>
+            </div>
+          </div>
+          <div className="cl-hero-visual" aria-hidden="true">
+            <div className="cl-hero-stage">
+              <CellField />
+            </div>
           </div>
         </div>
       </section>
