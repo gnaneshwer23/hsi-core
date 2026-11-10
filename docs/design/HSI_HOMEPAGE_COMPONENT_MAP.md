@@ -7,7 +7,7 @@
 |---------|-----------|--------|---------------------|-------|
 | 1 Hero | `HomeHero` | `homepageAssets`, `PRODUCT_TAGLINE`, `PUBLIC_*_CTA` | `/platform`, `/contact` | Brand-first; desktop panorama / mobile portrait |
 | 2 Biology network | `HomeBiologyNetwork` | `HOME_DOMAINS`, `researchContext` | domain `.to` + `#product-demo` | 8-domain taxonomy + deeper ontology labels; no fabricated edges |
-| 3 Data→intelligence | `HomeIntelligenceFlow` | status vocabulary from `dataToDiscoveryArchitecture` | `/technology`, `/research` | Honest partially_implemented labels |
+| 3 Data→intelligence | `HomeIntelligenceFlow` | status vocabulary from `dataToDiscoveryArchitecture` | `/platform`, `/science/graph`, `/evidence-safety`, `/research`, `/technology` | Four stage cards (sources→graph hub→intelligence→outcomes); honest partially_implemented labels |
 | 4 Research workspace | `HomeWorkspacePreview` → `HomeProductDemo` | curated scenarios | `#product-demo`, `/how-it-works`, graph CTA | Illustrative; `live_backend=false` |
 | 5 Domain cards | `HomeDisciplineCards` + `disciplineCardRegistry` | `withResearchContext` | science/research/module routes | Central registry |
 | 6 Investigation workflow | `#investigation-workflow` in `Home.tsx` | step buttons | `/how-it-works`, `#product-demo` | Nine illustrative steps |
