@@ -59,7 +59,9 @@ export function assessCrossImmunologyBenchmark(
   }
   const missingCaseIds=CROSS_IMMUNOLOGY_BENCHMARK.filter(c=>!ids.has(c.id)).map(c=>c.id);
   const readyForExpertReview=missingCaseIds.length===0&&failedCaseIds.length===0;
-  // Fail closed: caller-supplied reviewer fields are not trusted attestation.\n  // Only an authenticated, independently audited review service may issue approval.\n  const scientificallyValidated=false as const;
+  // Fail closed: caller-supplied reviewer fields are not trusted attestation.
+  // Only an authenticated, independently audited review service may issue approval.
+  const scientificallyValidated=false as const;
   return {coverage:assessments.length,readyForExpertReview,scientificallyValidated,
     missingCaseIds,failedCaseIds};
 }
