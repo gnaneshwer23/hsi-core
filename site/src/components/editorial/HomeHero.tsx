@@ -7,6 +7,48 @@ import {
   homepageHeroDesktopSources,
   homepageHeroMobileSources,
 } from "../../lib/homepageAssets";
+import { DOMAIN_SCENARIO_HINT, withResearchContext } from "../../lib/researchContext";
+
+/** Compact domain entry points — routes mirror discipline / HOME_DOMAINS destinations. */
+const HERO_DOMAIN_CHIPS = [
+  {
+    id: "immunity",
+    label: "Immunity",
+    to: withResearchContext("/modules/isi", {
+      domain: "immunity",
+      scenario: DOMAIN_SCENARIO_HINT.immunity,
+    }),
+  },
+  {
+    id: "microbiome",
+    label: "Microbiome",
+    to: withResearchContext("/research/knowledge-graph", {
+      domain: "microbiome",
+      scenario: DOMAIN_SCENARIO_HINT.microbiome,
+    }),
+  },
+  {
+    id: "neurobiology",
+    label: "Neurobiology",
+    to: "/science/graph?q=neuro",
+  },
+  {
+    id: "metabolism",
+    label: "Metabolism",
+    to: withResearchContext("/science/body", {
+      domain: "clinical",
+      scenario: DOMAIN_SCENARIO_HINT.clinical,
+    }),
+  },
+  {
+    id: "therapeutics",
+    label: "Therapeutics",
+    to: withResearchContext("/modules/trials", {
+      domain: "trials",
+      scenario: DOMAIN_SCENARIO_HINT.trials,
+    }),
+  },
+] as const;
 
 function Arrow() {
   return (
@@ -35,15 +77,18 @@ export function HomeHero() {
           <p className="cl-tagline">{PRODUCT_TAGLINE}</p>
           <h1 id="home-title">Explore the connections behind human health and disease.</h1>
           <p className="cl-lead">
-            Investigate biological mechanisms across human systems. Human Super Intelligence connects
-            biological systems, molecular mechanisms and scientific evidence to help researchers
-            investigate complex disease biology and identify new directions for discovery.
+            Investigate biological mechanisms across human systems — connected evidence, not isolated
+            claims.
           </p>
-          <p className="cl-supporting">
-            From immunity and the microbiome to neurobiology, metabolism and therapeutic
-            research—explore human biology as an interconnected system. Disease context is optional.
-            Systemic sclerosis is one scientific validation case used to pressure-test the
-            substrate — not a product boundary.
+          <nav className="cl-hero-domains" aria-label="Research domains">
+            {HERO_DOMAIN_CHIPS.map((chip) => (
+              <Link key={chip.id} className="cl-hero-domain" to={chip.to}>
+                {chip.label}
+              </Link>
+            ))}
+          </nav>
+          <p className="cl-hero-scope">
+            Systemic sclerosis is one scientific validation case — not a product boundary.
           </p>
           <div className="cl-actions">
             <Link className="cl-arrow-link cl-arrow-link-solid" to={PUBLIC_PLATFORM_CTA.to}>

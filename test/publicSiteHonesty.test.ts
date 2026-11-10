@@ -58,8 +58,10 @@ describe("Public HSI site honesty", () => {
     const marketingPage=site("src/components/marketing/MarketingPage.tsx");
     const homeSurface=[home,homeHero,homeEcosystem,homeApps,site("src/components/editorial/HomeIntegrity.tsx"),site("src/lib/brand.ts"),site("src/lib/productMaturity.ts")].join("\n");
     expect(homeSurface).toContain("Investigate biological mechanisms");expect(homeSurface).toContain("across human systems");expect(homeSurface).toContain("Connecting human biology");
+    expect(homeHero).toContain("cl-hero-domains");expect(homeHero).toContain("Immunity");expect(homeHero).toContain("Microbiome");
+    expect(homeHero).toContain("/science/graph?q=neuro");expect(homeHero).toContain("validation case");
     expect(homeSurface).toContain("Aksh Health");expect(homeSurface).toContain("HSI Clinical");expect(homeSurface).toContain("Immune Super Intelligence");expect(homeSurface).toContain("HSI Trials");
-    expect(homeSurface).toContain("validation case");expect(homeSurface).toContain("does not auto-enter");
+    expect(homeSurface).toContain("does not auto-enter");
     expect(home).not.toContain("ValidationPreview");expect(home).toContain("What HSI does not do");expect(experience).toContain("review scope");
     expect(experience).toContain("MarketingCTA");expect(marketingPage).toContain("Connecting human biology");expect(homeSurface).not.toContain("100% accurate");
     expect(marketingPage).toContain("JOURNEY_BY_PATH");expect(marketingPage).toContain("PUBLIC_PRIMARY_CTA");
