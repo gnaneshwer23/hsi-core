@@ -13,16 +13,16 @@ test("public pages have a single main/title, working navigation and no narrow-sc
 });
 test("home communicates the research workflow and supports accessible capability navigation",async({page})=>{
  await page.goto("/");
- await expect(page.getByRole("heading",{level:1})).toContainText("Connecting human biology");
+ await expect(page.getByRole("heading",{level:1})).toContainText("Explore the connections");
  await expect(page.getByRole("heading",{name:/How an investigation proceeds/})).toBeVisible();
  await expect(page.locator("#product-demo")).toContainText("illustrative");
  await expect(page.locator("#product-demo")).toContainText("unvalidated");
  const steps=page.getByRole("group",{name:"Investigation steps"});
  await steps.getByRole("button",{name:/Gaps/}).click();
  await expect(page.locator("#product-demo")).toContainText("contradictions");
- await expect(page.locator(".cl-actions a")).toHaveCount(1);
- await page.getByRole("link",{name:/See how this technology works/i}).click();
- await expect(page).toHaveURL(/\/demo$/);
+ await expect(page.locator(".cl-hero .cl-actions a")).toHaveCount(2);
+ await page.getByRole("link",{name:/Explore the Platform/i}).first().click();
+ await expect(page).toHaveURL(/\/platform$/);
 });
 test("mobile menu opens, closes with Escape and connects public destinations",async({page})=>{
  await page.setViewportSize({width:390,height:844});await page.goto("/");const menu=page.locator(".nav-toggle");await menu.click();await expect(menu).toHaveAttribute("aria-expanded","true");
@@ -70,8 +70,8 @@ test("reduced-motion mode retains functional capability navigation",async({page}
  await page.goto("/");
  await page.getByRole("button",{name:/Hypotheses/}).click();
  await expect(page.locator("#product-demo")).toContainText("unvalidated");
- await page.getByRole("link",{name:/See how this technology works/i}).click();
- await expect(page).toHaveURL(/\/demo$/);
+ await page.getByRole("link",{name:/Explore the Platform/i}).first().click();
+ await expect(page).toHaveURL(/\/platform$/);
 });
 
 test("internal validation opens the actual trial view and PDF printing keeps labels and inert text",async({page})=>{

@@ -47,8 +47,12 @@ export function findPublicCopyIssues(cwd = process.cwd()): string[] {
   const readme = readFileSync(resolve(cwd, "README.md"), "utf8");
   if (!/\bsynthetic\b/i.test(readme)) issues.push("README.md must state that demonstration data is synthetic");
   const home = readFileSync(resolve(cwd, "site/src/pages/Home.tsx"), "utf8");
+  const homeHero = readFileSync(resolve(cwd, "site/src/components/editorial/HomeHero.tsx"), "utf8");
+  const brand = readFileSync(resolve(cwd, "site/src/lib/brand.ts"), "utf8");
   const tagline = "Connecting human biology. Advancing scientific discovery. Transforming our understanding of health.";
-  if (!home.includes(tagline)) issues.push("Home.tsx is missing the landing tagline");
+  const homeSurface = `${home}\n${homeHero}\n${brand}`;
+  if (!homeSurface.includes(tagline)) issues.push("Home.tsx is missing the landing tagline");
+  if (!home.includes("HomeHero")) issues.push("Home.tsx must compose HomeHero for the landing tagline");
   return issues;
 }
 

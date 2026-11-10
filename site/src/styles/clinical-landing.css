@@ -11,6 +11,7 @@
   --cl-ink: var(--hsi-ink, #162331);
   --cl-body: var(--hsi-muted, #4A5560);
   --cl-paper: var(--hsi-cream, #FAECDD);
+  --cl-surface: var(--hsi-surface, #FFFFFF);
   --cl-instrument: var(--hsi-instrument, #0F2428);
   --cl-instrument-ink: var(--hsi-instrument-ink, #E7F3EF);
   --cl-instrument-muted: var(--hsi-instrument-muted, #9BB5B0);
@@ -106,18 +107,39 @@
   font-size: 1.05rem;
 }
 
-/* —— Hero: Astryx side-gallery asymmetry — brand + one CTA | instrument stage —— */
+/* —— Hero: premium biomedical — brand + dual CTAs | responsive anatomy picture —— */
 .cl-hero {
   position: relative;
   isolation: isolate;
   min-height: min(92svh, 56rem);
   padding: clamp(5.5rem, 12vw, 8rem) var(--cl-gutter) clamp(2.75rem, 6vw, 4.25rem);
   background:
-    radial-gradient(ellipse 58% 48% at 88% 36%, color-mix(in srgb, var(--cl-ice) 48%, transparent), transparent 72%),
-    radial-gradient(ellipse 42% 40% at 8% 82%, color-mix(in srgb, var(--cl-sky) 22%, transparent), transparent 68%),
-    linear-gradient(168deg, var(--cl-bg) 0%, color-mix(in srgb, var(--cl-mist) 70%, var(--cl-bg)) 52%, color-mix(in srgb, var(--cl-sky) 16%, var(--cl-paper)) 100%);
+    radial-gradient(ellipse 55% 50% at 92% 28%, color-mix(in srgb, var(--cl-lavender) 55%, transparent), transparent 70%),
+    radial-gradient(ellipse 40% 42% at 6% 88%, color-mix(in srgb, var(--cl-cream) 70%, transparent), transparent 68%),
+    linear-gradient(168deg, var(--cl-ivory, var(--cl-bg)) 0%, color-mix(in srgb, var(--cl-cream) 55%, var(--cl-bg)) 48%, color-mix(in srgb, var(--cl-lavender) 28%, var(--cl-bg)) 100%);
   overflow: clip;
 }
+.cl-hero-premium .cl-hero-stage-photo {
+  min-height: min(52svh, 30rem);
+  padding: 0;
+  background: color-mix(in srgb, var(--cl-cream) 40%, var(--cl-bg));
+  border: 1px solid color-mix(in srgb, var(--cl-ink) 10%, transparent);
+}
+.cl-hero-picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+.cl-hero-picture img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 28%;
+}
+.cl-hero-picture-mobile { display: none; }
+.cl-hero-picture-desktop { display: block; }
 .cl-hero-frame {
   width: var(--cl-measure);
   margin: 0 auto;
@@ -185,6 +207,14 @@
   max-width: 12ch;
   overflow-wrap: break-word;
   min-width: 0;
+}
+.cl-tagline {
+  margin: 0 0 1rem;
+  max-width: 36ch;
+  color: var(--cl-body);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  font-weight: 550;
 }
 .cl-hero h1 {
   margin: 0 0 1rem;
@@ -262,6 +292,168 @@
   margin: 0;
 }
 .cl-cell svg { display: block; width: 100%; height: auto; }
+
+/* —— Biology network (section 2) —— */
+.cl-network {
+  background: var(--cl-bg);
+  color: var(--cl-ink);
+}
+.cl-network-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: center;
+  margin-bottom: clamp(2rem, 5vw, 3.5rem);
+}
+.cl-network-deeper-label {
+  margin: 1.25rem 0 0.55rem;
+  font-size: 0.88rem;
+  color: var(--cl-body);
+}
+.cl-network-deeper {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  max-width: 40rem;
+}
+.cl-network-deeper li {
+  border: 1px solid color-mix(in srgb, var(--cl-ink) 14%, transparent);
+  padding: 0.4rem 0.7rem;
+  font-size: 0.82rem;
+  color: var(--cl-body);
+  background: color-mix(in srgb, var(--cl-lavender) 35%, var(--cl-bg));
+}
+.cl-network-figure {
+  margin: 0;
+  min-width: 0;
+}
+.cl-network-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid color-mix(in srgb, var(--cl-ink) 10%, transparent);
+}
+.cl-network-figure figcaption {
+  margin-top: 0.65rem;
+  font-size: 0.82rem;
+  color: var(--cl-body);
+  line-height: 1.5;
+}
+.cl-network-board {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  align-items: start;
+}
+.cl-network-chooser {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+.cl-network-domain {
+  text-align: left;
+  min-height: 72px;
+  border: 1px solid color-mix(in srgb, var(--cl-ink) 12%, transparent);
+  background: var(--cl-surface, #fff);
+  color: var(--cl-ink);
+  padding: 0.75rem 0.85rem;
+  font: inherit;
+  cursor: pointer;
+  transition:
+    background-color var(--cl-duration-fast) var(--cl-ease-move),
+    color var(--cl-duration-fast) var(--cl-ease-move),
+    border-color var(--cl-duration-fast) var(--cl-ease-move);
+}
+.cl-network-domain strong {
+  display: block;
+  font-size: 0.98rem;
+  letter-spacing: -0.02em;
+}
+.cl-network-domain span {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--cl-body);
+}
+.cl-network-domain-related {
+  border-color: color-mix(in srgb, var(--cl-burgundy) 45%, var(--cl-mist));
+  background: color-mix(in srgb, var(--cl-cream) 55%, #fff);
+}
+.cl-network-domain[aria-pressed="true"] {
+  background: var(--cl-burgundy-deep);
+  border-color: var(--cl-burgundy-deep);
+  color: #fff8f4;
+}
+.cl-network-domain[aria-pressed="true"] span { color: #f6e4e0; }
+.cl-network-domain:focus-visible {
+  outline: 3px solid var(--cl-focus);
+  outline-offset: 2px;
+}
+.cl-network-detail {
+  border-top: 1px solid var(--cl-mist);
+  padding-top: 0.35rem;
+}
+.cl-network-status {
+  margin: 0 0 0.45rem;
+  font-size: 0.82rem;
+  color: var(--cl-burgundy);
+  font-weight: 600;
+}
+.cl-network-detail h3 {
+  margin: 0 0 0.55rem;
+  font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+  letter-spacing: -0.03em;
+}
+.cl-network-detail > p {
+  margin: 0 0 0.85rem;
+  color: var(--cl-body);
+  line-height: 1.65;
+  max-width: 42ch;
+}
+.cl-network-meta {
+  font-size: 0.88rem !important;
+}
+.cl-network-path {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+.cl-network-path li {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  gap: 0.55rem;
+  align-items: baseline;
+  font-size: 0.92rem;
+  color: var(--cl-ink);
+}
+.cl-network-path span {
+  font-size: 0.75rem;
+  font-weight: 650;
+  color: var(--cl-burgundy);
+}
+.cl-network-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.15rem;
+}
+.cl-network-actions a {
+  color: var(--cl-scientific);
+  font-weight: 650;
+  text-decoration: none;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.cl-network-actions a:hover { color: var(--cl-burgundy-deep); }
+.cl-network-actions a:focus-visible {
+  outline: 3px solid var(--cl-focus);
+  outline-offset: 2px;
+}
 
 /* —— Mission —— */
 .cl-mission,
@@ -555,6 +747,8 @@
 }
 .cl-cta h2 { color: #fff8f4; max-width: 14ch; }
 .cl-cta p { color: color-mix(in srgb, #fff8f4 82%, transparent); margin-bottom: 1.5rem; }
+.cl-cta .cl-text-link-on-deep { color: #fff8f4; }
+.cl-cta .cl-text-link-on-deep:hover { color: #fff; }
 
 @keyframes cl-rise {
   from { opacity: 0; transform: translateY(16px); }
@@ -589,10 +783,24 @@
   .cl-hero-stage {
     min-height: min(42svh, 22rem);
   }
+  .cl-hero-stage-photo {
+    min-height: min(58svh, 28rem);
+  }
+  .cl-hero-picture-desktop { display: none; }
+  .cl-hero-picture-mobile { display: block; }
+  .cl-hero-picture-mobile img { object-position: center 18%; }
   .cl-hero-visual .cl-cell {
     width: min(100%, 22rem);
   }
   .cl-brand { max-width: none; }
+  .cl-network-layout,
+  .cl-network-board,
+  .cl-network-chooser {
+    grid-template-columns: 1fr;
+  }
+  .cl-network-chooser {
+    grid-template-columns: 1fr 1fr;
+  }
   .cl-steps,
   .cl-step-grid { grid-template-columns: 1fr; }
   .cl-module-list > li { grid-template-columns: auto minmax(0, 1fr); }

@@ -19,7 +19,7 @@ test('public website excludes fixture promotion and keeps actual product scope',
 test('editorial homepage product demo, keyboard tabs and narrow layouts remain usable',async({page},info)=>{
  for(const width of [320,390,768,1440]){
   await page.setViewportSize({width,height:1000});await page.goto('/');
-  await expect(page.getByRole('heading',{level:1})).toContainText('Connecting human biology');
+  await expect(page.getByRole('heading',{level:1})).toContainText('Explore the connections');
   await expect(page.getByRole('heading',{name:/How an investigation proceeds/})).toBeVisible();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),String(width)).toBe(true);
   if(width===1440)await page.screenshot({path:info.outputPath('editorial-home-desktop.png'),fullPage:true});
@@ -29,7 +29,7 @@ test('editorial homepage product demo, keyboard tabs and narrow layouts remain u
  await steps.getByRole('button',{name:/Reviewed knowledge/}).click();
  await expect(steps.getByRole('button',{name:/Reviewed knowledge/})).toHaveAttribute('aria-pressed','true');
  await expect(page.locator('#product-demo')).toContainText('version the graph');
- await expect(page.getByRole('main')).toContainText('Connecting human biology');
+ await expect(page.getByRole('main')).toContainText('Explore the connections');
   await expect(page.getByRole('main')).toContainText(/research workbench/i);
  await expect(page.getByRole('main')).toContainText('What makes HSI different');
 });
@@ -37,6 +37,7 @@ test('homepage investigation anchor opens the eight-step sequence',async({page})
  await page.goto('/#product-demo');
  await expect(page.locator('#product-demo')).toBeVisible();
  await expect(page.locator('#product-demo')).toContainText('unvalidated');
- await expect(page.locator('.cl-actions a')).toHaveCount(1);
- await expect(page.getByRole('link',{name:/See how this technology works/i})).toHaveAttribute('href','/demo');
+ await expect(page.locator('.cl-hero .cl-actions a')).toHaveCount(2);
+ await expect(page.getByRole('link',{name:/Explore the Platform/i}).first()).toHaveAttribute('href','/platform');
+ await expect(page.getByRole('link',{name:/Request Research Access/i}).first()).toHaveAttribute('href','/contact');
 });
