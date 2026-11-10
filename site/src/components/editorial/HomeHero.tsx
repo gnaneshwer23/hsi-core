@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { PRODUCT_TAGLINE } from "../../lib/brand";
 import { PUBLIC_PLATFORM_CTA, PUBLIC_PRIMARY_CTA } from "../../lib/ctaPolicy";
 import {
   HERO_ALT_DESKTOP,
@@ -31,15 +32,18 @@ export function HomeHero() {
       <div className="cl-hero-frame">
         <div className="cl-hero-copy">
           <p className="cl-brand">Human Super Intelligence</p>
+          <p className="cl-tagline">{PRODUCT_TAGLINE}</p>
           <h1 id="home-title">Explore the connections behind human health and disease.</h1>
           <p className="cl-lead">
-            Human Super Intelligence connects biological systems, molecular mechanisms and scientific
-            evidence to help researchers investigate complex disease biology and identify new directions
-            for discovery.
+            Investigate biological mechanisms across human systems. Human Super Intelligence connects
+            biological systems, molecular mechanisms and scientific evidence to help researchers
+            investigate complex disease biology and identify new directions for discovery.
           </p>
           <p className="cl-supporting">
             From immunity and the microbiome to neurobiology, metabolism and therapeutic
-            research—explore human biology as an interconnected system.
+            research—explore human biology as an interconnected system. Disease context is optional.
+            Systemic sclerosis is one scientific validation case used to pressure-test the
+            substrate — not a product boundary.
           </p>
           <div className="cl-actions">
             <Link className="cl-arrow-link cl-arrow-link-solid" to={PUBLIC_PLATFORM_CTA.to}>

@@ -1,87 +1,37 @@
 # HSI Homepage Backend Connections
 
-**Status:** Audit skeleton (PR1). Labels: **CONNECTED** | **ILLUSTRATIVE** | **BLOCKED**.  
-**Do not** expose PHI or claim live CDS. Writes remain fail-closed until staging-verified.
+**Status:** Audit after premium redesign (PR1–PR5).  
+**Labels:** **CONNECTED** | **ILLUSTRATIVE** | **BLOCKED**
 
 ## Summary matrix
 
 | Homepage concern | Status | Evidence |
 |------------------|--------|----------|
 | Public narrative / SEO | CONNECTED | Static React + `applySeo`; capability `PUB-HOME-NARRATIVE` |
-| Explore the Platform CTA | CONNECTED | `/platform` public route |
-| Request Research Access | CONNECTED | `/contact` + account create/sign-in flows; access intent browser draft |
-| Domain explorer context | ILLUSTRATIVE | URL `?domain=` + curated `HOME_DOMAINS`; graph edges not invented |
-| Biology graph deep links | CONNECTED (read tools) | `/science/graph`, `/research/knowledge-graph` — public tools; governed graph needs auth |
-| Data→intelligence diagram | ILLUSTRATIVE | `dataToDiscoveryArchitecture` honesty statuses; not live pipeline telemetry |
-| Research workspace preview | ILLUSTRATIVE | Homepage/demo fixtures; `live_backend=false` |
+| Explore the Platform CTA | CONNECTED | `/platform` |
+| Request Research Access | CONNECTED | `/contact` + account flows; access intent browser draft |
+| Hero imagery | CONNECTED (static) | `/images/homepage/*` webp+jpeg |
+| Domain explorer context | ILLUSTRATIVE | URL `?domain=` + curated `HOME_DOMAINS` |
+| Biology graph deep links | CONNECTED (read tools) | `/science/graph`, `/research/knowledge-graph` |
+| Data→intelligence diagram | ILLUSTRATIVE | Honest stage statuses; no live pipeline telemetry |
+| Research workspace preview | ILLUSTRATIVE | `HomeProductDemo` curated scenarios |
 | Investigation / evidence APIs | BLOCKED (anonymous) | `/api/research/*` requires session; writesEnabled=false |
-| Sign In (guest chrome) | BLOCKED / deferred | Auth provider may be reachable (`research_preview`) but not product-ready for guest Sign In promo |
-| Collaboration enquiry | CONNECTED | `/contact` workflows; no invented MoU |
-| CDS / PHI | BLOCKED (non-goal) | Bound by `docs/CDS_PHI_BOUNDARY.md` |
+| Sign In (guest chrome) | BLOCKED / deferred | Auth `research_preview` — not product-ready guest Sign In |
+| Collaboration enquiry | CONNECTED | `/contact` |
+| CDS / PHI | BLOCKED (non-goal) | `docs/CDS_PHI_BOUNDARY.md` |
 
-## Per-section audit template
+## Per-section
 
-For each section document: component · route · backend · API contract · auth · data source · error · loading · interaction · verification.
-
-### 1 Hero
-
-| Field | Value |
-|-------|-------|
-| Component | `Home` / upcoming `HomeHero` |
-| Route | `/` |
-| Backend | none |
-| Auth | none |
-| Data | static copy + optimised images |
-| Status | CONNECTED (static) |
-| Interaction | CTAs → `/platform`, `/contact` |
-| Test | e2e editorial landing + CTA href asserts |
-
-### 2 Biology network
-
-| Field | Value |
-|-------|--------|
-| Component | `HOME_DOMAINS` / `HomeEcosystem` |
-| Backend | none for public selection; optional future approved graph read |
-| Data | curated domain registry + illustrative paths |
-| Status | ILLUSTRATIVE relationships; CONNECTED navigation targets where `to` set |
-| Must not | Fabricate edges or equal-weight “complete coverage” |
-
-### 3 Information → intelligence
-
-| Field | Value |
-|-------|--------|
-| Component | `DataToDiscoveryArchitecture` / registry |
-| Status | ILLUSTRATIVE architecture story with honest node statuses |
-| Live telemetry | BLOCKED |
-
-### 4 Research workspace
-
-| Field | Value |
-|-------|--------|
-| Public preview | ILLUSTRATIVE curated demo |
-| Authenticated programme / investigation / evidence / graph / brief services | BLOCKED without grant; preserve existing API contracts — do not duplicate |
-
-### 5–8 Domains, workflow, integrity, applications
-
-| Field | Value |
-|-------|--------|
-| Status | Mostly ILLUSTRATIVE copy + CONNECTED deep links to existing public pages |
-| Integrity claims | No certifications invented |
-
-### 9 Ecosystem
-
-| Field | Value |
-|-------|--------|
-| Data | `ECOSYSTEM_PRODUCTS` maturity chips |
-| Status | CONNECTED to honesty registry; integrations labelled planned vs implemented |
-
-### 10 Access / collaboration
-
-| Field | Value |
-|-------|--------|
-| Contact / access | CONNECTED |
-| Access intent draft | CONNECTED (browser_only persistence) |
-| Admin grant | Human-gated — not auto |
+1. **Hero** — CONNECTED static + CTAs.  
+2. **Biology network** — ILLUSTRATIVE relationships; CONNECTED destinations where `to` set.  
+3. **Intelligence flow** — ILLUSTRATIVE architecture story.  
+4. **Workspace** — ILLUSTRATIVE public preview; authenticated programme/investigation/evidence/graph/brief services remain BLOCKED without grant.  
+5. **Discipline cards** — CONNECTED deep links; coverage honesty on destinations.  
+6. **Workflow** — ILLUSTRATIVE steps; links to real modules.  
+7. **Integrity** — CONNECTED copy only; no cert claims.  
+8. **Applications** — ILLUSTRATIVE journeys with `live_backend=false`.  
+9. **Ecosystem** — CONNECTED to `ECOSYSTEM_PRODUCTS` maturity.  
+10. **Access** — CONNECTED `/contact` / `/how-it-works`.
 
 ## Capability registry pointers
 
@@ -89,10 +39,10 @@ For each section document: component · route · backend · API contract · auth
 - `site/docs/CAPABILITY_DATA_SOURCE_MATRIX.md`  
 - Research health: writes disabled publicly  
 
-## Verification checklist (PR5)
+## Verification (PR5)
 
-- [ ] Every homepage CTA HTTP 200  
-- [ ] No console errors on `/`  
-- [ ] No unauthorised research payload in public HTML  
-- [ ] Playwright honesty / illustrative assertions updated  
-- [ ] Screenshots desktop + mobile  
+- [x] CTA destinations are real public routes  
+- [x] No PHI / CDS claims on homepage  
+- [x] copy:check / honesty tests updated for composed hero  
+- [ ] Playwright full suite on Vercel preview (run in CI)  
+- [ ] Desktop + mobile screenshots attached to PR5  

@@ -8,8 +8,10 @@ export function HomeEcosystemProducts() {
       <div className="cl-chapter-inner">
         <h2 id="ecosystem-title">Independent intelligence. One connected health ecosystem.</h2>
         <p className="cl-chapter-lead">
-          Four products interoperate through governed interfaces. Patient data does not move unrestricted into research.
-          Maturity chips come from the product registry — not marketing invention.
+          Four products interoperate through governed interfaces. Patient data does not move unrestricted into research
+          and private clinical information does not auto-enter the research knowledge graph. Immune Super Intelligence
+          is the scientific discovery module within this ecosystem. Maturity chips come from the product registry — not
+          marketing invention.
         </p>
         <ol className="cl-module-list">
           {ECOSYSTEM_PRODUCTS.map((product, index) => (
