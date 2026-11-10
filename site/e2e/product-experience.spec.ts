@@ -20,7 +20,7 @@ test("home communicates the research workflow and supports accessible capability
  const steps=page.getByRole("group",{name:"Investigation steps"});
  await steps.getByRole("button",{name:/Gaps/}).click();
  await expect(page.locator("#product-demo")).toContainText("contradictions");
- await expect(page.getByRole("link",{name:/See How It Works/i}).first()).toBeVisible();
+ await expect(page.locator(".cl-actions a")).toHaveCount(1);
  await page.getByRole("link",{name:/See how this technology works/i}).click();
  await expect(page).toHaveURL(/\/demo$/);
 });
@@ -70,8 +70,8 @@ test("reduced-motion mode retains functional capability navigation",async({page}
  await page.goto("/");
  await page.getByRole("button",{name:/Hypotheses/}).click();
  await expect(page.locator("#product-demo")).toContainText("unvalidated");
- await page.getByRole("link",{name:"See How It Works"}).click();
- await expect(page).toHaveURL(/how-it-works/);
+ await page.getByRole("link",{name:/See how this technology works/i}).click();
+ await expect(page).toHaveURL(/\/demo$/);
 });
 
 test("internal validation opens the actual trial view and PDF printing keeps labels and inert text",async({page})=>{
