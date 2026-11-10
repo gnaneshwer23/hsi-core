@@ -26,12 +26,12 @@ describe("Phase 9.4 cross-immunology benchmark",()=>{
     expect(result.readyForExpertReview).toBe(false);
     expect(result.failedCaseIds).toContain(CROSS_IMMUNOLOGY_BENCHMARK[1]!.id);
   });
-  test("requires independent reviewer decisions and notes",()=>{
+  test("does not accept self-declared reviewer approval",()=>{
     const result=assessCrossImmunologyBenchmark(CROSS_IMMUNOLOGY_BENCHMARK.map(c=>({
       ...pass(c.id),independentReviewerId:"expert-reviewer-1",
       independentReviewerDecision:"accepted" as const,reviewerNotes:"Evidence reviewed independently",
     })));
-    expect(result.scientificallyValidated).toBe(true);
+    expect(result.scientificallyValidated).toBe(false);
   });
   test("rejects duplicate assessments",()=>{
     expect(()=>assessCrossImmunologyBenchmark([
