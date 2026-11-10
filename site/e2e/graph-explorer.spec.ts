@@ -2,16 +2,21 @@ import {test,expect} from '@playwright/test';
 test('graph-first workspace filters, navigates neighbours and restores URL state',async({page})=>{
  await page.goto('/science/graph?node=pancreas');
  const workspace=page.getByRole('region',{name:'Knowledge graph workspace'});await expect(workspace).toBeVisible();
+ await expect(page.locator('.kg-honesty-banner')).toContainText('educational topic map');
  await expect(page.getByRole('button',{name:'Global graph',exact:true})).toHaveAttribute('aria-pressed','true');
- await page.getByLabel('Entity type',{exact:true}).selectOption('organ');await expect(page).toHaveURL(/type=organ/);
- await page.reload();await expect(page.getByLabel('Entity type',{exact:true})).toHaveValue('organ');
+ await page.getByRole('group',{name:'Entity type filters'}).getByRole('button',{name:/^organ/}).click();
+ await expect(page).toHaveURL(/type=organ/);
+ await page.reload();
+ await expect(page.getByRole('group',{name:'Entity type filters'}).getByRole('button',{name:/^organ/})).toHaveAttribute('aria-pressed','true');
  await page.getByRole('button',{name:'Local graph',exact:true}).click();await page.getByLabel('Depth',{exact:true}).selectOption('2');
  await expect(page).toHaveURL(/depth=2/);
  await page.getByRole('button',{name:'Clear filters',exact:true}).click();
- await page.getByRole('searchbox',{name:'Search',exact:true}).fill('no-such-concept');await expect(page.getByRole('status').filter({hasText:'No concepts match'})).toBeVisible();
+ await page.getByRole('searchbox',{name:'Search',exact:true}).fill('no-such-concept');
+ await expect(page.locator('.kg-empty')).toContainText('No concepts match these filters');
  await page.getByRole('button',{name:'Clear filters and explore',exact:true}).click();
  const inspector=page.getByRole('complementary',{name:'Concept and evidence inspector'});await inspector.locator('.kg-connections button').first().click();await expect(page).not.toHaveURL(/node=pancreas(?:&|$)/);
- await expect(inspector).toContainText('not_curated');await expect(page.getByRole('heading',{name:'Scientific knowledge graph',exact:true})).toBeVisible();
+ await expect(inspector).toContainText('not_curated');await expect(page.getByRole('heading',{name:'Living health knowledge graph',exact:true})).toBeVisible();
+ await expect(page.getByRole('heading',{name:'Connected concepts by type',exact:true})).toBeVisible();
 });
 test('canvas supports dragging, wheel zoom and keyboard evidence inspection without losing draft scope',async({page})=>{
  await page.goto('/science/graph?node=pancreas');const svg=page.getByRole('group',{name:'Interactive graph of biological entities'}),node=svg.locator('[data-graph-node="pancreas"] circle').first();

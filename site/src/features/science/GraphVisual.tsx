@@ -64,8 +64,8 @@ function NodeLabel({label,x,y,active,near,compact,index,id,focusPoint}:{label:st
  const left=place.anchor==="middle"?x+place.dx-width/2:place.anchor==="start"?x+place.dx-2:x+place.dx-width+2;
  const showChip=active||(near&&!compact);
  return <g className={active?"kg-node-label kg-node-label-active":near?"kg-node-label kg-node-label-near":"kg-node-label"} pointerEvents="none">
-  {showChip&&<rect x={left} y={top-10} width={width} height={blockHeight+8} rx="4" fill="#0f2421" fillOpacity={active?".88":".72"} stroke={active?"#fff6df":"#2a524a"} strokeOpacity=".55"/>}
-  <text x={x+place.dx} y={top} textAnchor={place.anchor} fontSize={active?"12.5":compact?"10":"11"} fontFamily="Arial,sans-serif" fill={active?"#fff8f0":"#e7f3ef"} stroke={showChip?"none":"#122826"} strokeWidth={showChip?0:2.5} paintOrder="stroke" fontWeight={active?"700":"500"}>
+  {showChip&&<rect x={left} y={top-10} width={width} height={blockHeight+8} rx="4" fill="#0F2428" fillOpacity={active?".88":".72"} stroke={active?"#BD1C1D":"#2a524a"} strokeOpacity={active?".7":".55"}/>}
+  <text x={x+place.dx} y={top} textAnchor={place.anchor} fontSize={active?"12.5":compact?"10":"11"} fontFamily="var(--font-body,'Host Grotesk Variable',system-ui,sans-serif)" fill={active?"#fff8f0":"#e7f3ef"} stroke={showChip?"none":"#0F2428"} strokeWidth={showChip?0:2.5} paintOrder="stroke" fontWeight={active?"700":"500"}>
    {lines.map((line,i)=><tspan key={i} x={x+place.dx} dy={i===0?0:lineHeight}>{line}</tspan>)}
   </text>
  </g>;
@@ -111,7 +111,7 @@ export function GraphVisual({graph,selected,onSelect,onSelectEdge,edgeDetails,ca
    if(format==="json"){blobDownload(new Blob([JSON.stringify({scope:exportMetadata?.scope??"public_educational_draft",scientificApproval:false,clinicalAdvice:false,selected,zoom,pan,exportMetadata:exportMetadata??null,edgeDetails:edgeDetails??null,layout:{method:"bounded_force_v1",positions:Object.fromEntries(points)},graph},null,2)+"\n"],{type:"application/json"}),"json");return}
    if(!ref.current)throw Error();const svg=ref.current.cloneNode(true) as SVGSVGElement;svg.setAttribute("xmlns","http://www.w3.org/2000/svg");svg.setAttribute("width","1800");svg.setAttribute("height","1300");const title=document.createElementNS("http://www.w3.org/2000/svg","title");title.textContent=caption;const metadata=document.createElementNS("http://www.w3.org/2000/svg","metadata");metadata.textContent=JSON.stringify({scientificApproval:false,exportMetadata:exportMetadata??null,edgeDetails:edgeDetails??null});svg.prepend(metadata);svg.prepend(title);const xml=new XMLSerializer().serializeToString(svg),blob=new Blob([xml],{type:"image/svg+xml;charset=utf-8"});
    if(format==="svg"){blobDownload(blob,"svg");return}
-   const url=URL.createObjectURL(blob);try{const img=new Image();await new Promise<void>((resolve,reject)=>{img.onload=()=>resolve();img.onerror=()=>reject(Error());img.src=url});const canvas=document.createElement("canvas");canvas.width=1800;canvas.height=1300;const ctx=canvas.getContext("2d");if(!ctx)throw Error();ctx.fillStyle="#122826";ctx.fillRect(0,0,1800,1300);ctx.drawImage(img,0,0);const png=await new Promise<Blob>((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(Error()),"image/png"));blobDownload(png,"png")}finally{URL.revokeObjectURL(url)}
+   const url=URL.createObjectURL(blob);try{const img=new Image();await new Promise<void>((resolve,reject)=>{img.onload=()=>resolve();img.onerror=()=>reject(Error());img.src=url});const canvas=document.createElement("canvas");canvas.width=1800;canvas.height=1300;const ctx=canvas.getContext("2d");if(!ctx)throw Error();ctx.fillStyle="#0F2428";ctx.fillRect(0,0,1800,1300);ctx.drawImage(img,0,0);const png=await new Promise<Blob>((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(Error()),"image/png"));blobDownload(png,"png")}finally{URL.revokeObjectURL(url)}
   }catch{setMessage("The graph export could not be produced. Try JSON or retry the view.")}
  }
  const shift=(x:number,y:number)=>setPan(p=>({x:p.x+x,y:p.y+y}));
@@ -121,8 +121,8 @@ export function GraphVisual({graph,selected,onSelect,onSelectEdge,edgeDetails,ca
  <svg ref={ref} viewBox="0 0 900 650" role="group" aria-label="Interactive graph of biological entities" onPointerDown={start} onPointerMove={move} onPointerUp={end} onPointerCancel={()=>{drag.current=null}}>
  <defs>
   <marker id={markerId} viewBox="0 0 10 10" refX="18" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#9fd6cb"/></marker>
-  <radialGradient id={markerId+'-glow'} cx="50%" cy="45%" r="65%"><stop offset="0%" stopColor="#1d4a43"/><stop offset="100%" stopColor="#122826"/></radialGradient>
-  <pattern id={markerId+'-dots'} width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1" fill="#2a524a" fillOpacity=".55"/></pattern>
+   <radialGradient id={markerId+'-glow'} cx="50%" cy="45%" r="65%"><stop offset="0%" stopColor="#1a3a3c"/><stop offset="100%" stopColor="#0F2428"/></radialGradient>
+  <pattern id={markerId+'-dots'} width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1" fill="#2a524a" fillOpacity=".45"/></pattern>
  </defs>
  <rect width="900" height="650" fill={'url(#'+markerId+'-glow)'}/>
  <rect width="900" height="650" fill={'url(#'+markerId+'-dots)'}/>
@@ -140,13 +140,13 @@ export function GraphVisual({graph,selected,onSelect,onSelectEdge,edgeDetails,ca
   const tiny=dense&&labels&&!active&&!near;
   return <g key={n.id} data-graph-node={n.id} role="button" tabIndex={0} aria-label={"Select "+n.label} aria-pressed={active} onPointerEnter={()=>{if(!drag.current)setHover(n.id)}} onPointerLeave={()=>setHover(null)} onClick={event=>{if(event.detail===0&&!moved.current)onSelect(n.id)}} onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();onSelect(n.id)}}} opacity={!hasFocus||active||near?1:.34}>
    <circle cx={p.x} cy={p.y} r={active?18:11} fill={(GRAPH_KIND_COLOURS[n.kind]??'#9bcac0')} fillOpacity=".22"/>
-   <circle cx={p.x} cy={p.y} r={active?13:9} fill={GRAPH_KIND_COLOURS[n.kind]??'#9bcac0'} stroke={active?'#fff6df':'#0f2421'} strokeWidth={active?2.5:1.6}/>
-   {active&&<circle cx={p.x} cy={p.y} r="22" fill="none" stroke="#d8efe8" strokeOpacity=".45"/>}
+   <circle cx={p.x} cy={p.y} r={active?13:9} fill={GRAPH_KIND_COLOURS[n.kind]??'#9bcac0'} stroke={active?'#BD1C1D':'#0F2428'} strokeWidth={active?2.8:1.6}/>
+   {active&&<circle cx={p.x} cy={p.y} r="22" fill="none" stroke="#BD1C1D" strokeOpacity=".35"/>}
    {show&&!tiny&&<NodeLabel label={n.label} x={p.x} y={p.y} active={active} near={near||active} compact={compact} index={index} id={n.id} focusPoint={focusPoint}/>}
-   {show&&tiny&&<text x={p.x} y={p.y+22} textAnchor="middle" fontSize="9" fontFamily="Arial,sans-serif" fill="#b7cfc7" fillOpacity=".7">{wrapLabel(n.label,12,1)[0]}</text>}
+   {show&&tiny&&<text x={p.x} y={p.y+22} textAnchor="middle" fontSize="9" fontFamily="var(--font-body,'Host Grotesk Variable',system-ui,sans-serif)" fill="#b7cfc7" fillOpacity=".7">{wrapLabel(n.label,12,1)[0]}</text>}
    <title>{n.label} · {n.kind} · {n.reviewState}</title>
   </g>;
  })}</g>
- <text x="450" y="636" textAnchor="middle" fontSize="10" fontFamily="Arial,sans-serif" fill="#a8c4bc">{caption}</text></svg>
+ <text x="450" y="636" textAnchor="middle" fontSize="10" fontFamily="var(--font-body,'Host Grotesk Variable',system-ui,sans-serif)" fill="#a8c4bc">{caption}</text></svg>
  <div className="kg-canvas-bottom"><span>{dense?"Dense network · selection labelled · hover or inspect for neighbour names · Fit network recentres":"Drag a node to arrange · drag space to pan · scroll to zoom · Fit network recentres the current view"}</span><div className="xp-graph-toolbar">{(["svg","png","json"] as const).map(f=><button key={f} type="button" onClick={()=>void download(f)}>Download graph {f.toUpperCase()}</button>)}</div></div>{message&&<p role="status">{message}</p>}</div>;
 }
