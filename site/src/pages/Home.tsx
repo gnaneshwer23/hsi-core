@@ -1,34 +1,42 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { HomeAccess } from "../components/editorial/HomeAccess";
-import { HomeApplications } from "../components/editorial/HomeApplications";
-import { HomeBiologyNetwork } from "../components/editorial/HomeBiologyNetwork";
-import { HomeDisciplineCards } from "../components/editorial/HomeDisciplineCards";
 import { HomeEcosystemProducts } from "../components/editorial/HomeEcosystemProducts";
 import { HomeHero } from "../components/editorial/HomeHero";
 import { HomeIntegrity } from "../components/editorial/HomeIntegrity";
 import { HomeIntelligenceFlow } from "../components/editorial/HomeIntelligenceFlow";
+import { HomeKnowledgeGraph } from "../components/editorial/HomeKnowledgeGraph";
 import { HomeWorkspacePreview } from "../components/editorial/HomeWorkspacePreview";
+
 const STEPS = [
-  { n: "01", title: "Define", text: "Frame the scientific question and keep disease context optional but distinct." },
+  { n: "01", title: "Define", text: "Frame the scientific question; keep disease context optional but distinct." },
   { n: "02", title: "Retrieve", text: "Collect source-linked evidence. A missing source stays missing." },
   { n: "03", title: "Resolve", text: "Resolve biological entities before treating names as interchangeable." },
   { n: "04", title: "Mechanisms", text: "Explore candidate mechanisms across the Living Health Knowledge Graph." },
-  { n: "05", title: "Compare", text: "Compare scientific findings without collapsing disagreement." },
-  { n: "06", title: "Gaps", text: "Identify contradictions and the information the record does not contain." },
-  { n: "07", title: "Hypotheses", text: "Develop candidate hypotheses and label every new proposal as unvalidated." },
-  { n: "08", title: "Brief", text: "Generate an evidence-linked research brief for a person to review." },
-  { n: "09", title: "Reviewed knowledge", text: "Submit findings for scientific review where required — only approved review can version the graph." },
+  { n: "05", title: "Compare", text: "Compare findings without collapsing disagreement." },
+  { n: "06", title: "Gaps", text: "Name contradictions and information the record does not contain." },
+  { n: "07", title: "Hypotheses", text: "Label every new proposal as unvalidated until a person reviews it." },
+  { n: "08", title: "Brief", text: "Produce an evidence-linked research brief for human review." },
+  { n: "09", title: "Reviewed knowledge", text: "Only approved review can version the graph." },
 ] as const;
 
 const DIFFERENT = [
-  { title: "Connected biology", text: "Immune, nervous, microbiome, metabolic and molecular context stay on one graph." },
-  { title: "Evidence-traced claims", text: "A statement keeps its source, or it is not presented as evidence." },
-  { title: "Living reviewed graph", text: "The knowledge graph changes only through a versioned human review." },
-  { title: "Contradiction and gap discovery", text: "Opposing findings and missing measurements stay attached to the question." },
-  { title: "Human scientific governance", text: "People approve, reject, or leave a claim unreviewed. Nothing auto-approves." },
-  { title: "Patient-data barrier", text: "Private clinical information does not auto-enter the research knowledge graph." },
-  { title: "Translation toward trials", text: "Study criteria can be inspected. Eligibility is never confirmed here." },
+  {
+    title: "Connected biology",
+    text: "Immune, nervous, microbiome, metabolic and molecular context stay on one graph.",
+  },
+  {
+    title: "Evidence-traced claims",
+    text: "A statement keeps its source, or it is not presented as evidence.",
+  },
+  {
+    title: "Human scientific governance",
+    text: "People approve, reject, or leave a claim unreviewed. Nothing auto-approves.",
+  },
+  {
+    title: "Patient-data barrier",
+    text: "Private clinical information does not auto-enter the research knowledge graph.",
+  },
 ] as const;
 
 export function Home() {
@@ -37,17 +45,16 @@ export function Home() {
   return (
     <div className="cl-page">
       <HomeHero />
-      <HomeBiologyNetwork />
+      <HomeKnowledgeGraph />
       <HomeIntelligenceFlow />
       <HomeWorkspacePreview />
-      <HomeDisciplineCards />
 
       <section className="cl-steps cl-chapter" id="investigation-workflow" aria-labelledby="steps-title">
         <div className="cl-steps-intro">
           <h2 id="steps-title">Follow the evidence. Understand the mechanism. Investigate what comes next.</h2>
           <p className="cl-chapter-lead cl-steps-lead">
-            How an investigation proceeds — illustrative steps through a research workbench that connect to real research
-            modules. New proposals stay unvalidated until a person reviews them.
+            Illustrative steps through a research workbench. Detail lives on{" "}
+            <Link to="/how-it-works">How it works</Link>.
           </p>
           <p className="cl-step-detail" aria-live="polite">
             <strong>
@@ -69,13 +76,7 @@ export function Home() {
             </button>
           ))}
         </div>
-        <p className="cl-chapter-lead cl-steps-continue">
-          Continue in <Link to="/how-it-works">How it works</Link> or open the{" "}
-          <Link to="/#product-demo">illustrative workspace</Link>.
-        </p>
       </section>
-
-      <HomeIntegrity />
 
       <section className="cl-different cl-chapter" aria-labelledby="different-title">
         <h2 id="different-title">What makes HSI different</h2>
@@ -89,7 +90,7 @@ export function Home() {
         </ul>
       </section>
 
-      <HomeApplications />
+      <HomeIntegrity />
       <HomeEcosystemProducts />
 
       <section className="cl-limits cl-chapter" aria-labelledby="limits-title">

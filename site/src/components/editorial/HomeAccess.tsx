@@ -25,8 +25,7 @@ export function HomeAccess() {
       <div className="cl-chapter-inner">
         <h2 id="access-title">Advance research through connected scientific intelligence.</h2>
         <p>
-          HSI is developing an evidence-grounded environment for researchers, biomedical innovators and scientific
-          institutions investigating complex human biology.
+          Evidence-grounded environment for researchers and institutions investigating complex human biology.
         </p>
         <div className="cl-actions">
           <Link className="cl-arrow-link cl-arrow-link-solid" to={PUBLIC_PRIMARY_CTA.to}>

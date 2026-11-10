@@ -22,15 +22,9 @@ const SOURCES: FlowStage = {
   step: "01",
   title: "Scientific sources",
   role: "Evidence inputs",
-  items: [
-    "Scientific literature",
-    "Biomedical ontologies",
-    "Omics datasets",
-    "Clinical research evidence",
-    "Trial registries",
-  ],
+  items: ["Literature", "Ontologies", "Omics", "Clinical research", "Trial registries"],
   status: "partially_implemented",
-  note: "Public adapters cover some providers; broader ontology and omics planes remain incomplete.",
+  note: "Public adapters cover some providers; broader planes remain incomplete.",
   cta: { to: "/platform", label: "Explore the platform" },
 };
 
@@ -39,15 +33,9 @@ const GRAPH: FlowStage = {
   step: "02",
   title: "Living Health Knowledge Graph",
   role: "Connected biology",
-  items: [
-    "Entity resolution",
-    "Typed relationships",
-    "Evidence provenance",
-    "Uncertainty labels",
-    "Human scientific review",
-  ],
+  items: ["Entity resolution", "Typed relationships", "Provenance", "Uncertainty", "Human review"],
   status: "partially_implemented",
-  note: "Draft graph tooling is public; governed writes stay fail-closed and human-reviewed.",
+  note: "Draft graph tooling is public; governed writes stay fail-closed.",
   cta: { to: "/science/graph", label: "Open the science graph" },
   emphasis: "hub",
 };
@@ -57,15 +45,9 @@ const INTEL: FlowStage = {
   step: "03",
   title: "Scientific intelligence",
   role: "Investigation",
-  items: [
-    "Evidence investigation",
-    "Mechanism analysis",
-    "Contradiction analysis",
-    "Research gap identification",
-    "Hypothesis development",
-  ],
+  items: ["Evidence", "Mechanisms", "Contradictions", "Gaps", "Hypotheses"],
   status: "partially_implemented",
-  note: "Bounded agent stages and explorers exist; anonymous live investigation is not claimed.",
+  note: "Bounded explorers exist; anonymous live investigation is not claimed.",
   cta: { to: "/research", label: "Research intelligence" },
 };
 
@@ -74,15 +56,9 @@ const OUTCOMES: FlowStage = {
   step: "04",
   title: "Research outcomes",
   role: "Artefacts",
-  items: [
-    "Evidence maps",
-    "Mechanism investigations",
-    "Research briefs",
-    "Candidate hypotheses",
-    "Experiment planning",
-  ],
+  items: ["Evidence maps", "Investigations", "Briefs", "Hypotheses", "Experiment planning"],
   status: "partially_implemented",
-  note: "Outcome artefacts are illustrative on the public homepage until research grants and writes are verified.",
+  note: "Public artefacts stay illustrative until research grants and writes are verified.",
   cta: { to: "/evidence-safety", label: "Evidence & safety" },
 };
 
@@ -107,7 +83,7 @@ function statusTone(status: DataToDiscoveryStatus): string {
   }
 }
 
-/** Section 3 — architecture storytelling with honest capability statuses. */
+/** Architecture tease — sources → graph hub → intelligence → outcomes. */
 export function HomeIntelligenceFlow() {
   const titleId = useId();
 
@@ -117,8 +93,8 @@ export function HomeIntelligenceFlow() {
         <header className="cl-flow-head">
           <h2 id={titleId}>Connecting evidence across the complexity of biology.</h2>
           <p className="cl-chapter-lead">
-            Sources feed a living knowledge graph that supports scientific intelligence and research outcomes.
-            Status labels describe engineering wiring — not scientific validation or open anonymous execution.
+            Sources feed a living knowledge graph that supports scientific intelligence and research outcomes. Status
+            labels describe engineering wiring — not scientific validation.
           </p>
         </header>
 
@@ -126,9 +102,7 @@ export function HomeIntelligenceFlow() {
           {STAGES.map((stage, index) => (
             <li
               key={stage.id}
-              className={
-                "cl-flow-card" + (stage.emphasis === "hub" ? " cl-flow-card-hub" : "")
-              }
+              className={"cl-flow-card" + (stage.emphasis === "hub" ? " cl-flow-card-hub" : "")}
             >
               {index > 0 ? (
                 <span className="cl-flow-connector" aria-hidden="true">
@@ -161,8 +135,8 @@ export function HomeIntelligenceFlow() {
             Coverage is unequal across sources and domains. Capabilities shown here are illustrative where not live.
           </p>
           <div className="cl-flow-actions">
-            <Link to="/technology">Technology architecture</Link>
-            <Link to="/research">Research overview</Link>
+            <Link to="/technology">Technology</Link>
+            <Link to="/platform">Platform</Link>
           </div>
         </div>
       </div>

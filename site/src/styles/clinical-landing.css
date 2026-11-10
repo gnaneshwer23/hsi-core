@@ -502,7 +502,143 @@
   outline-offset: 2px;
 }
 
-/* —— Intelligence flow (section 3) —— */
+/* —— Homepage knowledge graph (interactive educational map) —— */
+.cl-home-kg {
+  background: var(--cl-instrument);
+  color: var(--cl-instrument-ink);
+}
+.cl-home-kg-head {
+  max-width: 46rem;
+  margin-bottom: 1rem;
+}
+.cl-home-kg .cl-chapter-lead {
+  color: var(--cl-instrument-muted);
+  opacity: 1;
+}
+.cl-home-kg-banner {
+  margin: 1rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--cl-instrument-muted);
+}
+.cl-home-kg-board {
+  display: grid;
+  gap: 1.25rem;
+}
+.cl-home-kg-starters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+.cl-home-kg-starter {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.1rem 0.55rem;
+  align-items: center;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--cl-instrument-ink) 18%, transparent);
+  background: color-mix(in srgb, var(--cl-instrument-ink) 6%, transparent);
+  color: var(--cl-instrument-ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.cl-home-kg-starter i {
+  display: inline-block;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  grid-row: 1 / span 2;
+}
+.cl-home-kg-starter span {
+  grid-column: 2;
+  font-size: 0.68rem;
+  color: var(--cl-instrument-muted);
+}
+.cl-home-kg-starter strong {
+  grid-column: 2;
+  font-size: 0.9rem;
+  font-weight: 650;
+}
+.cl-home-kg-starter[aria-pressed="true"] {
+  border-color: var(--cl-burgundy);
+  background: color-mix(in srgb, var(--cl-burgundy) 22%, transparent);
+}
+.cl-home-kg-starter:focus-visible {
+  outline: 3px solid var(--cl-focus);
+  outline-offset: 2px;
+}
+.cl-home-kg-stage {
+  min-width: 0;
+  border: 1px solid color-mix(in srgb, var(--cl-instrument-ink) 14%, transparent);
+}
+.cl-home-kg-stage .kg-canvas > svg {
+  height: min(52vh, 460px);
+}
+.cl-home-kg-inspect {
+  display: grid;
+  gap: 0.55rem;
+  padding: 1.1rem 0 0;
+  border-top: 1px solid color-mix(in srgb, var(--cl-instrument-ink) 16%, transparent);
+  max-width: 42rem;
+}
+.cl-home-kg-inspect-kicker {
+  margin: 0;
+  font-size: 0.72rem;
+  color: var(--cl-sky);
+  font-weight: 650;
+}
+.cl-home-kg-inspect h3 {
+  margin: 0;
+  font-size: clamp(1.25rem, 2.2vw, 1.7rem);
+  letter-spacing: -0.03em;
+  color: var(--cl-instrument-ink);
+}
+.cl-home-kg-meta,
+.cl-home-kg-inspect p {
+  margin: 0;
+  color: var(--cl-instrument-muted);
+  line-height: 1.55;
+  font-size: 0.92rem;
+}
+.cl-home-kg-honesty {
+  font-size: 0.8rem !important;
+}
+.cl-home-kg-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  margin-top: 0.35rem;
+}
+.cl-home-kg-actions a {
+  color: var(--cl-ice);
+  font-weight: 650;
+  text-decoration: none;
+}
+.cl-home-kg-actions a:hover { color: #fff; }
+.cl-home-kg-actions a:focus-visible {
+  outline: 3px solid var(--cl-focus);
+  outline-offset: 2px;
+}
+@media (min-width: 1100px) {
+  .cl-home-kg-board {
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 20rem);
+    grid-template-areas:
+      "starters starters"
+      "stage inspect";
+    align-items: start;
+  }
+  .cl-home-kg-starters { grid-area: starters; }
+  .cl-home-kg-stage { grid-area: stage; }
+  .cl-home-kg-inspect {
+    grid-area: inspect;
+    border-top: 0;
+    border-left: 1px solid color-mix(in srgb, var(--cl-instrument-ink) 16%, transparent);
+    padding: 0 0 0 1.25rem;
+  }
+}
+
+/* —— Intelligence flow —— */
 .cl-flow {
   background: color-mix(in srgb, var(--cl-lavender) 28%, var(--cl-bg));
   color: var(--cl-ink);

@@ -127,7 +127,7 @@ export function HomeProductDemo({scenarioId,onScenarioChange}:HomeProductDemoPro
     <div className="ed-workbench-head">
       <p className="ed-kicker">Illustrative research workspace</p>
       <h2 id="product-demo-heading">Question, evidence, mechanism, brief — one desk.</h2>
-      <p>One workbench across immunology, microbiome, metabolism, neuroimmune biology and more — disease context is optional. Coverage depth is unequal; labels stay honest.</p>
+      <p>Illustrative desk across domains. Disease context is optional; coverage is unequal.</p>
       <p className="ed-demo-banner" role="note">Illustrative research demonstration · Not a live investigation · live_backend={String(demo.live_backend)} · coverage={demo.coverage}</p>
     </div>
     <div className="ed-demo-shell ed-demo-desk">

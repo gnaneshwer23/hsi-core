@@ -2,48 +2,31 @@ import { Link } from "react-router-dom";
 
 const PILLARS = [
   {
-    title: "Traceable scientific sources",
+    title: "Traceable sources",
     text: "Claims keep provenance, or they are not presented as evidence.",
   },
   {
-    title: "Evidence provenance",
-    text: "Supporting and conflicting findings stay attached to the question.",
-  },
-  {
-    title: "Biological context",
-    text: "Population, tissue, assay and timepoint context travel with the record when known.",
-  },
-  {
     title: "Scientific uncertainty",
-    text: "Association, inference and established evidence are kept distinct.",
-  },
-  {
-    title: "Reproducible investigations",
-    text: "Public demonstrations use curated examples with explicit live_backend labels.",
+    text: "Association, inference and established evidence stay distinct.",
   },
   {
     title: "Independent human review",
     text: "Nothing auto-approves. People approve, reject, or leave claims unreviewed.",
   },
   {
-    title: "Versioned scientific records",
-    text: "Only approved review can version knowledge that later questions read.",
-  },
-  {
-    title: "Secure research environments",
+    title: "Patient-data barrier",
     text: "Private clinical information does not auto-enter the research knowledge graph.",
   },
 ] as const;
 
-/** Section 7 — integrity without invented certifications. */
+/** Compact integrity tease — full policy lives on Evidence & safety / governance. */
 export function HomeIntegrity() {
   return (
     <section className="cl-integrity cl-chapter" aria-labelledby="integrity-title">
       <div className="cl-chapter-inner">
-        <h2 id="integrity-title">Scientific intelligence built around evidence and human judgement.</h2>
+        <h2 id="integrity-title">Evidence handling stays visible. Human judgement stays required.</h2>
         <p className="cl-chapter-lead">
-          Trust comes from transparent evidence handling and human governance — not from claimed certifications that
-          have not been established.
+          Trust comes from transparent governance — not from certifications that have not been established.
         </p>
         <ul className="cl-integrity-list">
           {PILLARS.map((item) => (
