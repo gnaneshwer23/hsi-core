@@ -13,6 +13,8 @@ describe("migration ledger", () => {
     expect(new Set(prefixes).size).toBe(prefixes.length);
     expect(files).toContain("019_hsi_isi_research_review.sql");
     expect(files).toContain("020_hsi_lhkg_rls_policies.sql");
+    expect(files).toContain("022_hsi_scientific_investigation_records.sql");
+    expect(files).toContain("023_hsi_researcher_workspace_community.sql");
     expect(files).not.toContain("012_isi_research_review.sql");
   });
 
@@ -24,6 +26,16 @@ describe("migration ledger", () => {
 
   test("RLS policies are ready to apply (reader-only)", () => {
     expect(HELD_MIGRATION_IDS).not.toContain("020_hsi_lhkg_rls_policies");
+    expect(HELD_MIGRATION_IDS).toContain("022_hsi_scientific_investigation_records");
+    expect(HELD_MIGRATION_IDS).toContain("023_hsi_researcher_workspace_community");
+    const investigationSql = readFileSync(resolve("db/migrations/022_hsi_scientific_investigation_records.sql"), "utf8");
+    const communitySql = readFileSync(resolve("db/migrations/023_hsi_researcher_workspace_community.sql"), "utf8");
+    expect(investigationSql).toContain("DROP TABLE IF EXISTS hsi_scientific_investigation_records");
+    expect(investigationSql).toContain("scientific_truth_established = false");
+    expect(communitySql).toContain("external_delivery = 'disabled'");
+    expect(communitySql).toContain("email_enabled = false");
+    expect(communitySql).toContain("contains_patient_data = false");
+    expect(communitySql).toContain("DROP TABLE IF EXISTS hsi_community_posts");
     const sql = readFileSync(resolve("db/migrations/020_hsi_lhkg_rls_policies.sql"), "utf8");
     expect(sql).toContain("CREATE POLICY hsi_lhkg_nodes_reader_select");
     expect(sql).toContain("FOR SELECT");

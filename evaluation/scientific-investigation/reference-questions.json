@@ -1,0 +1,42 @@
+{
+  "status": "DRAFT - awaiting expert review",
+  "reviewerName": null,
+  "approved": false,
+  "scoresRecorded": false,
+  "questions": [
+    {
+      "id": "rq-gut-neuro",
+      "question": "How might gut microbial metabolites influence neuroinflammation?",
+      "role": "Demonstration question. Not a scored gold answer.",
+      "criteria": [
+        "Butyrate–Treg and vagus–TNF findings stay uncertain associations, not verified evidence.",
+        "Th17 promotion and Th17 inhibition stay an unresolved contradiction.",
+        "The cross-tissue step is a computational inference or an unvalidated hypothesis, not a causal mechanism.",
+        "A testable suggestion names tissue, system, assay and timepoint without becoming a protocol.",
+        "Passage text is absent until source-rights clearance."
+      ]
+    },
+    {
+      "id": "rq-ssc-tfh-il21",
+      "question": "Investigate whether Tfh-cell-IL-21-B-cell interactions contribute to particular systemic sclerosis phenotypes; compare evidence across tissues and datasets, identify contradictions, evaluate intervention targets, propose experiments.",
+      "role": "Reference question only. Not a product boundary and not a second disease pivot.",
+      "criteria": [
+        "Association is separated from causation for each tissue and dataset that is actually cited.",
+        "Contradictions are shown rather than averaged away.",
+        "Intervention targets remain unvalidated hypotheses until an independent reviewer accepts them.",
+        "Proposed experiments are suggestions, not protocols and not clinical instructions.",
+        "No phenotype claim is marked verified without a human scientific review of the cited source."
+      ]
+    },
+    {
+      "id": "rq-metabolic",
+      "question": "How might metabolic inflammation relate to insulin resistance?",
+      "role": "Existing metabolic demonstration. Rows whose cited paper supports a different disease object must not be promoted.",
+      "criteria": [
+        "A mismatched locator is recorded as a gap, not as evidence for insulin resistance.",
+        "No governed population dataset is described as already analysed.",
+        "The answer does not claim clinical validation."
+      ]
+    }
+  ]
+}
