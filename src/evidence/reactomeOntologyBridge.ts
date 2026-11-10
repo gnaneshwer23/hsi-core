@@ -20,7 +20,7 @@ export function reactomePathwayDraftNode(pathway: ReactomePathwayMetadata): HsiG
     layer: "biomedical_evidence",
     preferredLabel: pathway.displayName,
     aliases: [],
-    sourceIdentifiers: [{system:"Reactome", value:pathway.stableId, mapping:"exact"}],
+    sourceIdentifiers: [{system:"Reactome", value:pathway.stableId, mapping:"unreviewed"}],
     version: "1.0.0",
     visibility: "governed_research",
     reviewState: "draft",
