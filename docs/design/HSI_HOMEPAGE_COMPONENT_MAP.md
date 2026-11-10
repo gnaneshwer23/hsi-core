@@ -1,22 +1,28 @@
 # HSI Homepage Component Map
 
-**Status:** Implemented across PR2–PR4; QA in PR5.  
+**Status:** Slim homepage — tease + link; detail on destination routes.  
 **Shell:** `site/src/pages/Home.tsx` + `clinical-landing.css` / `home-instrument.css`
 
 | Section | Component | Reuses | Route / CTA targets | Notes |
 |---------|-----------|--------|---------------------|-------|
-| 1 Hero | `HomeHero` | `homepageAssets`, `PRODUCT_TAGLINE`, `PUBLIC_*_CTA` | `/platform`, `/contact` | Brand-first; desktop panorama / mobile portrait |
-| 2 Biology network | `HomeBiologyNetwork` | `HOME_DOMAINS`, `researchContext` | domain `.to` + `#product-demo` | 8-domain taxonomy + deeper ontology labels; no fabricated edges |
-| 3 Data→intelligence | `HomeIntelligenceFlow` | status vocabulary from `dataToDiscoveryArchitecture` | `/technology`, `/research` | Honest partially_implemented labels |
-| 4 Research workspace | `HomeWorkspacePreview` → `HomeProductDemo` | curated scenarios | `#product-demo`, `/how-it-works`, graph CTA | Illustrative; `live_backend=false` |
-| 5 Domain cards | `HomeDisciplineCards` + `disciplineCardRegistry` | `withResearchContext` | science/research/module routes | Central registry |
-| 6 Investigation workflow | `#investigation-workflow` in `Home.tsx` | step buttons | `/how-it-works`, `#product-demo` | Nine illustrative steps |
-| 7 Integrity | `HomeIntegrity` | honesty pillars | `/evidence-safety`, `/research/governance` | No invented certifications |
-| Differentiation | inline in `Home.tsx` | prior “What makes HSI different” | — | Retained for honesty/e2e |
-| 8 Applications | `HomeApplications` | `CROSS_DOMAIN_JOURNEY_ENTRIES` | demo / explore / evidence / access | Cross-domain; SSc validation case |
-| 9 Ecosystem | `HomeEcosystemProducts` | `ECOSYSTEM_PRODUCTS` | `/modules/*` | Maturity chips truthful |
-| Limits | inline in `Home.tsx` | brief “does not” list | — | Required trust copy |
+| 1 Hero | `HomeHero` | `homepageAssets`, `PRODUCT_TAGLINE`, `PUBLIC_*_CTA` | `/platform`, `/contact` | Brand-first; domain chips; desktop panorama / mobile portrait |
+| 2 Knowledge graph | `HomeKnowledgeGraph` | `SCIENCE_GRAPH`, `GraphVisual`, `graphExplorer` | `/science/graph`, `/science` | Interactive educational map; honesty labels; not SSc-only |
+| 3 Data→intelligence | `HomeIntelligenceFlow` | status vocabulary from `dataToDiscoveryArchitecture` | `/platform`, `/science/graph`, `/evidence-safety`, `/research`, `/technology` | Four stage cards; honest `partially_implemented` labels |
+| 4 Research workspace | `HomeWorkspacePreview` → `HomeProductDemo` | curated scenarios | `#product-demo`, `/how-it-works` | Illustrative; `live_backend=false` |
+| 5 Investigation workflow | `#investigation-workflow` in `Home.tsx` | step buttons | `/how-it-works` | Nine illustrative steps; detail on How it works |
+| 6 Differentiation | inline in `Home.tsx` | “What makes HSI different” | — | Four pillars |
+| 7 Integrity | `HomeIntegrity` | honesty pillars | `/evidence-safety`, `/research/governance` | Compact tease; no invented certifications |
+| 8 Ecosystem | `HomeEcosystemProducts` | `ECOSYSTEM_PRODUCTS` | `/modules/*` | Maturity chips truthful |
+| 9 Limits | inline in `Home.tsx` | brief “does not” list | — | Required trust copy |
 | 10 Access | `HomeAccess` | `PUBLIC_PRIMARY_CTA` | `/contact`, `/how-it-works` | Working enquiry path |
+
+## Removed from homepage (still available on destination pages)
+
+| Former section | Prefer instead |
+|----------------|----------------|
+| `HomeBiologyNetwork` | Hero domain chips + `/science` / `/science/graph` |
+| `HomeDisciplineCards` | `/science`, `/research`, module routes |
+| `HomeApplications` | `/solutions`, `/research`, journey entries elsewhere |
 
 ## Auth / Sign In rule
 
