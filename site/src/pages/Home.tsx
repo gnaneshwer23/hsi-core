@@ -46,8 +46,8 @@ export function Home() {
         <div className="cl-steps-intro">
           <h2 id="steps-title">Follow the evidence. Understand the mechanism. Investigate what comes next.</h2>
           <p className="cl-chapter-lead cl-steps-lead">
-            How an investigation proceeds — illustrative steps that connect to real research modules. New proposals stay
-            unvalidated until a person reviews them.
+            How an investigation proceeds — illustrative steps through a research workbench that connect to real research
+            modules. New proposals stay unvalidated until a person reviews them.
           </p>
           <p className="cl-step-detail" aria-live="polite">
             <strong>
