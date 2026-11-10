@@ -1,0 +1,85 @@
+.inv-page {
+  overflow-x: clip;
+  --inv-ink: #12253f;
+  --inv-body: #234864;
+  --inv-line: rgba(18, 37, 63, 0.14);
+  --inv-panel: #f7faff;
+  --inv-bg: #f3f6fb;
+  --inv-accent: #1f4f46;
+  background: var(--inv-bg);
+  color: var(--inv-ink);
+  padding: 1.25rem 1rem 4rem;
+  font-family: "Red Hat Display Variable", "Red Hat Display", var(--font-body), sans-serif;
+}
+.inv-wrap { max-width: 880px; margin: 0 auto; }
+.inv-kicker {
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  color: var(--inv-accent);
+  margin: 0 0 0.5rem;
+}
+.inv-title-row { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: flex-start; }
+.inv-page h1 {
+  font-size: clamp(1.7rem, 5vw, 2.6rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  margin: 0;
+  max-width: 18ch;
+}
+.inv-badge, .inv-tier {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--inv-line);
+  border-radius: 999px;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.78rem;
+  background: white;
+}
+.inv-tier { margin: 0 0.35rem 0.35rem 0; }
+.inv-tier-verified_evidence { background: #e7f2ea; }
+.inv-tier-uncertain_association { background: #fff6df; }
+.inv-tier-computational_inference { background: #e7eef8; }
+.inv-tier-unvalidated_hypothesis { background: #f8e9e4; }
+.inv-lead { color: var(--inv-body); font-size: 1.05rem; max-width: 62ch; }
+.inv-rail { display: flex; gap: 0.4rem; overflow-x: auto; max-width: 100%; padding: 0.2rem 0 0.8rem; margin: 0; list-style: none; }
+.inv-rail button, .inv-actions button, .inv-choice, .inv-nav button {
+  min-height: 44px;
+  border-radius: 999px;
+  border: 1px solid var(--inv-line);
+  background: white;
+  color: var(--inv-ink);
+  padding: 0.45rem 0.9rem;
+  font: inherit;
+}
+.inv-rail button[aria-current="step"], .inv-choice[aria-pressed="true"], .inv-nav .inv-next {
+  background: var(--inv-accent);
+  color: white;
+  border-color: var(--inv-accent);
+}
+.inv-card {
+  background: var(--inv-panel);
+  border: 1px solid var(--inv-line);
+  border-radius: 16px;
+  padding: 1rem;
+  margin: 0 0 0.8rem;
+}
+.inv-card h2 { margin: 0 0 0.4rem; font-size: 1.25rem; }
+.inv-card p, .inv-card li { color: var(--inv-body); }
+.inv-actions, .inv-nav { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
+.inv-nav { justify-content: space-between; margin-top: 1rem; }
+.inv-status { margin: 0.6rem 0 0; }
+.inv-field { display: flex; flex-direction: column; gap: 0.3rem; margin: 0.6rem 0; font-size: 0.95rem; }
+.inv-field textarea, .inv-field input {
+  font: inherit;
+  min-height: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--inv-line);
+  padding: 0.6rem 0.75rem;
+}
+.inv-field textarea { min-height: 7rem; }
+@media print {
+  .inv-rail, .inv-nav, .inv-actions, .site-header, .site-footer, .nav { display: none !important; }
+  .inv-page { background: white; padding: 0; }
+  .inv-card { break-inside: avoid; }
+}
