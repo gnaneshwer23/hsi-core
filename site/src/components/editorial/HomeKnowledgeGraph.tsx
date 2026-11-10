@@ -1,4 +1,4 @@
-import { useId, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { GraphVisual } from "../../features/science/GraphVisual";
 import {
@@ -16,6 +16,12 @@ export function HomeKnowledgeGraph() {
   const titleId = useId();
   const defaultId = STARTERS[0]?.id ?? SCIENCE_GRAPH.nodes[0]!.id;
   const [selectedId, setSelectedId] = useState(defaultId);
+  // Force layout floats can diverge between Node prerender and the browser; mount the canvas
+  // after hydration so `/` does not throw React #418 during hydrateRoot.
+  const [canvasReady, setCanvasReady] = useState(false);
+  useEffect(() => {
+    setCanvasReady(true);
+  }, []);
   const selected = useMemo(
     () => SCIENCE_GRAPH.nodes.find((n) => n.id === selectedId) ?? SCIENCE_GRAPH.nodes[0]!,
     [selectedId],
@@ -60,17 +66,23 @@ export function HomeKnowledgeGraph() {
         </div>
 
         <div className="cl-home-kg-stage">
-          <GraphVisual
-            graph={SCIENCE_GRAPH}
-            selected={selected.id}
-            onSelect={setSelectedId}
-            caption="Homepage educational draft · no scientific approval or clinical advice"
-            exportMetadata={{
-              scope: "homepage_educational_topic_map",
-              surface: GRAPH_HONESTY.surface,
-              graphVersion: SCIENCE_GRAPH.version,
-            }}
-          />
+          {canvasReady ? (
+            <GraphVisual
+              graph={SCIENCE_GRAPH}
+              selected={selected.id}
+              onSelect={setSelectedId}
+              caption="Homepage educational draft · no scientific approval or clinical advice"
+              exportMetadata={{
+                scope: "homepage_educational_topic_map",
+                surface: GRAPH_HONESTY.surface,
+                graphVersion: SCIENCE_GRAPH.version,
+              }}
+            />
+          ) : (
+            <p className="cl-home-kg-canvas-pending" role="status">
+              Preparing the interactive educational graph…
+            </p>
+          )}
         </div>
 
         <aside className="cl-home-kg-inspect" aria-live="polite">
