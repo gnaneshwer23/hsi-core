@@ -27,10 +27,11 @@ export function Layout() {
     previousPathname.current=pathname;
   }, [pathname]);
 
+  // Premium homepage tokens (home-shell) extend across public marketing pages for one journey.
   const shellClass = [
     "site-shell experience-shell",
     isPublicPage ? "editorial-site" : "",
-    isHome ? "home-shell" : "",
+    isPublicPage || isHome ? "home-shell" : "",
     isPublicPage && !isHome ? "platform-shell" : "",
     isPublicPage || isAccountPage ? "public-site-v2" : "",
     isAccountPage ? "account-shell" : "",

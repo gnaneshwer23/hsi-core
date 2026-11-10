@@ -3,6 +3,7 @@ import { generateSyntheticCohort, latestLab, type SyntheticPatient } from "@hsi/
 import { toFhirBundle } from "@hsi/demo/fhir";
 import { prescreen } from "@hsi/demo/trials";
 import { similarPatients } from "@hsi/demo/similarity";
+import { MarketingJourney, MarketingPage } from "../components/marketing/MarketingPage";
 import "../styles/demo-walkthrough.css";
 
 /** Ordered guided story — plain labels, phone-first. */
@@ -104,12 +105,12 @@ export function DemoWalkthrough() {
   }
 
   return (
-    <div className="demo-walk demo-walk-guided">
+    <MarketingPage bridgeExperience={false} className="demo-walk demo-walk-guided">
       <header className="demo-walk-hero">
-        <p className="demo-walk-kicker">Guided demo</p>
+        <p className="demo-walk-kicker">Illustrative walkthrough</p>
         <div className="demo-walk-title-row">
           <h1>Follow one rheumatoid arthritis record through the workbench.</h1>
-          <span className="demo-env">Demo environment</span>
+          <span className="demo-env">Illustrative environment</span>
         </div>
         <p>
           Start with a synthetic RA patient, then move through clinician context, research, review, the graph release, trials and discovery.
@@ -173,7 +174,16 @@ export function DemoWalkthrough() {
           </div>
         </section>
       </div>
-    </div>
+      <MarketingJourney
+        title="Continue from this walkthrough"
+        links={[
+          { to: "/how-it-works", label: "How it works", note: "Workflow narrative" },
+          { to: "/platform", label: "Platform", note: "Shared technology" },
+          { to: "/research", label: "Research", note: "Investigations" },
+          { to: "/contact", label: "Request access", note: "Collaboration" },
+        ]}
+      />
+    </MarketingPage>
   );
 }
 

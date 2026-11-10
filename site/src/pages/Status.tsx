@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { PageHero } from "../components/PageHero";
+import { MarketingJourney, MarketingPage } from "../components/marketing/MarketingPage";
 import {
   DEMO_LINKS,
   ECOSYSTEM_PRODUCTS,
@@ -10,7 +11,7 @@ import {
 
 export function Status() {
   return (
-    <>
+    <MarketingPage bridgeExperience={false}>
       <PageHero
         eyebrow="Living status · source of truth for CTAs"
         title={
@@ -140,8 +141,21 @@ export function Status() {
             <Link to="/roadmap">roadmap</Link> · <Link to="/docs">docs</Link> ·{" "}
             <Link to="/curator">curator</Link>
           </p>
+          <p className="muted" style={{ marginTop: "1rem" }}>
+            Public journey:{" "}
+            <Link to="/platform">Platform</Link> · <Link to="/modules">Modules</Link> ·{" "}
+            <Link to="/contact">Request access</Link>
+          </p>
         </div>
       </section>
-    </>
+      <MarketingJourney
+        links={[
+          { to: "/platform", label: "Platform", note: "Shared technology" },
+          { to: "/modules", label: "Modules", note: "Four products" },
+          { to: "/evidence-safety", label: "Evidence & safety", note: "Integrity" },
+          { to: "/contact", label: "Request access", note: "Collaboration" },
+        ]}
+      />
+    </MarketingPage>
   );
 }

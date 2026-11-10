@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/technology.css";
 import { ExperienceHero } from "../components/Experience";
+import { JOURNEY_BY_PATH, MarketingJourney, MarketingPage } from "../components/marketing/MarketingPage";
 import { DataToDiscoveryArchitecture } from "../components/DataToDiscoveryArchitecture";
 import { TechnologyFlow } from "../components/TechnologyFlow";
 
@@ -56,7 +57,7 @@ export function Technology() {
   const [applicationIndex, setApplicationIndex] = useState(0);
   const [governanceIndex, setGovernanceIndex] = useState(0);
   const source = sourceSystems[sourceIndex];
-  return <div className="nx-page xp-page"><ExperienceHero eyebrow="TECHNOLOGY" title="Connected knowledge." emphasis="Accountable reasoning." visual={<HeroArtwork kind="technology"/>} description="Explore the shared research technology behind HSI: source-aware connections, evidence inspection and independent human review. Product data and permissions remain separate."/>
+  return <MarketingPage className="nx-page"><ExperienceHero eyebrow="TECHNOLOGY" title="Connected knowledge." emphasis="Accountable reasoning." visual={<HeroArtwork kind="technology"/>} description="Explore the shared research technology behind HSI: source-aware connections, evidence inspection and independent human review. Product data and permissions remain separate."/>
     <section className="nx-flow-hero" aria-label="Human Super Intelligence data flow to discovery">
       <div className="nx-wrap">
         <TechnologyFlow />
@@ -175,6 +176,7 @@ export function Technology() {
         <p className="nx-governance-disclaimer">This is the intended governance model, not certification of a deployed clinical system. UK GDPR, applicable clinical safety standards, research ethics, MHRA software requirements and independent evaluation must be assessed for each intended use. Trial pre-screening does not confirm eligibility. No autonomous diagnosis or prescribing.</p>
       </div>
     </section>
-    <section className="nx-section nx-end"><div className="nx-wrap"><p className="nx-kicker">EXPLORE THE CONNECTED ECOSYSTEM</p><h2>One ambition.<br/><em>Many governed pathways.</em></h2><div className="nx-actions"><Link className="nx-cta" to="/platform">Explore the platform <span aria-hidden="true">↗</span></Link><Link className="nx-text-link" to="/modules/isi">Explore immune research <span aria-hidden="true">↗</span></Link></div></div></section>
-  </div>;
+    <section className="nx-section nx-end"><div className="nx-wrap"><p className="nx-kicker">EXPLORE THE CONNECTED ECOSYSTEM</p><h2>One ambition.<br/><em>Many governed pathways.</em></h2><div className="nx-actions"><Link className="nx-cta" to="/platform">Explore the platform <span aria-hidden="true">↗</span></Link><Link className="nx-text-link" to="/modules/isi">Explore immune research <span aria-hidden="true">↗</span></Link><Link className="nx-text-link" to="/contact">Request Research Access <span aria-hidden="true">↗</span></Link></div></div></section>
+    <MarketingJourney links={JOURNEY_BY_PATH["/technology"]!} />
+  </MarketingPage>;
 }

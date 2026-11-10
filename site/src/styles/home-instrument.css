@@ -89,7 +89,7 @@
   border:1px solid #d5e2d7;border-radius:8px;background:#f7faf7;
 }
 .ed-question-bar>span:first-child{
-  font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:#61786e;font-weight:650;
+  font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:#5a7167;font-weight:650;
 }
 .ed-question-bar-value,.ed-hero-preview-title{
   margin:0!important;font-size:1.02rem!important;font-weight:550;letter-spacing:-.02em;line-height:1.35;
@@ -157,7 +157,7 @@
 }
 .ed-rail-panel-conflict li{border-color:#ead9d1;background:#fff}
 .ed-rail-panel strong{font-size:.82rem;font-weight:550;color:#1d3a34}
-.ed-rail-panel span{font-size:.7rem;color:#61786e;line-height:1.45}
+.ed-rail-panel span{font-size:.7rem;color:#5a7167;line-height:1.45}
 .ed-rail-panel .ed-scope-line{margin-top:12px}
 .ed-brief-artefact{
   background:#fff;border:1px solid #d7e3da;border-radius:10px;padding:22px 20px;
@@ -174,7 +174,7 @@
   font-size:1rem;font-weight:550;line-height:1.4;color:#1d3a34;
 }
 .ed-brief-artefact-q>span{
-  display:block;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;font-weight:650;color:#61786e;margin-bottom:6px;
+  display:block;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;font-weight:650;color:#5a7167;margin-bottom:6px;
 }
 .ed-brief-artefact-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:14px}
 .ed-brief-artefact-actions{margin-top:8px}
@@ -235,7 +235,7 @@
   box-shadow:0 14px 36px #456c4b08;
 }
 .ed-workbench-card h3{font-size:1.35rem;font-weight:550;letter-spacing:-.03em;line-height:1.35;margin:0 0 10px;color:var(--hsi-ink,#152e2b)}
-.ed-workbench-meta{font-size:.78rem;color:#61786e;margin:0 0 22px}
+.ed-workbench-meta{font-size:.78rem;color:#5a7167;margin:0 0 22px}
 .ed-mechanism-path{list-style:none;margin:0;padding:0;display:grid;gap:10px}
 .ed-mechanism-path li{
   display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;
@@ -249,9 +249,9 @@
 .ed-evidence-stats span{font-size:.84rem;color:#5b6f66;line-height:1.5}
 .ed-evidence-status{display:grid;gap:10px;margin:0 0 16px}
 .ed-evidence-status>div{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid #e5eee6}
-.ed-evidence-status dt{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#61786e}
+.ed-evidence-status dt{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#5a7167}
 .ed-evidence-status dd{margin:0;font-size:.86rem;color:#1d3a34;font-weight:550;text-align:right}
-.ed-scope-line{font-size:.78rem;color:#61786e;line-height:1.65;margin:0}
+.ed-scope-line{font-size:.78rem;color:#5a7167;line-height:1.65;margin:0}
 .ed-workbench .ed-actions{display:flex;flex-wrap:wrap;gap:18px;align-items:center}
 
 .ed-ecosystem-map{display:grid;gap:28px}
