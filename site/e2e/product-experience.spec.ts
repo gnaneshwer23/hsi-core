@@ -16,10 +16,10 @@ test("home communicates the research workflow and supports accessible capability
  await expect(page.getByRole("heading",{level:1})).toContainText("Explore the connections");
  await expect(page.getByRole("heading",{name:/How an investigation proceeds/})).toBeVisible();
  await expect(page.locator("#product-demo")).toContainText("illustrative");
- await expect(page.locator("#product-demo")).toContainText("unvalidated");
+ await expect(page.locator("#investigation-workflow")).toContainText("unvalidated");
  const steps=page.getByRole("group",{name:"Investigation steps"});
  await steps.getByRole("button",{name:/Gaps/}).click();
- await expect(page.locator("#product-demo")).toContainText("contradictions");
+ await expect(page.locator("#investigation-workflow")).toContainText("contradictions");
  await expect(page.locator(".cl-hero .cl-actions a")).toHaveCount(2);
  await page.getByRole("link",{name:/Explore the Platform/i}).first().click();
  await expect(page).toHaveURL(/\/platform$/);
@@ -69,7 +69,7 @@ test("reduced-motion mode retains functional capability navigation",async({page}
  await page.emulateMedia({reducedMotion:"reduce"});
  await page.goto("/");
  await page.getByRole("button",{name:/Hypotheses/}).click();
- await expect(page.locator("#product-demo")).toContainText("unvalidated");
+ await expect(page.locator("#investigation-workflow")).toContainText("unvalidated");
  await page.getByRole("link",{name:/Explore the Platform/i}).first().click();
  await expect(page).toHaveURL(/\/platform$/);
 });

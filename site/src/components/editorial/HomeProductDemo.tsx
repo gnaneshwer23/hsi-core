@@ -125,8 +125,8 @@ export function HomeProductDemo({scenarioId,onScenarioChange}:HomeProductDemoPro
 
   return <section className="ed-product-demo" id="product-demo" aria-labelledby="product-demo-heading">
     <div className="ed-workbench-head">
-      <p className="ed-kicker">PRODUCT DEMONSTRATION</p>
-      <h2 id="product-demo-heading">From question to research decision.</h2>
+      <p className="ed-kicker">Illustrative research workspace</p>
+      <h2 id="product-demo-heading">Question, evidence, mechanism, brief — one desk.</h2>
       <p>One workbench across immunology, microbiome, metabolism, neuroimmune biology and more — disease context is optional. Coverage depth is unequal; labels stay honest.</p>
       <p className="ed-demo-banner" role="note">Illustrative research demonstration · Not a live investigation · live_backend={String(demo.live_backend)} · coverage={demo.coverage}</p>
     </div>

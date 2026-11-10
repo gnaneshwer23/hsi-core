@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { HomeBiologyNetwork } from "../components/editorial/HomeBiologyNetwork";
 import { HomeHero } from "../components/editorial/HomeHero";
+import { HomeIntelligenceFlow } from "../components/editorial/HomeIntelligenceFlow";
+import { HomeWorkspacePreview } from "../components/editorial/HomeWorkspacePreview";
 import {
   CROSS_DOMAIN_JOURNEY_ENTRIES,
   contactAccessHref,
@@ -46,16 +48,8 @@ export function Home() {
     <div className="cl-page">
       <HomeHero />
       <HomeBiologyNetwork />
-
-      <section className="cl-mission cl-chapter" aria-labelledby="mission-title">
-        <h2 id="mission-title">Investigate biological mechanisms across human systems.</h2>
-        <p>
-          Human Super Intelligence connects <strong>patient context</strong>, <strong>clinical history</strong>,{" "}
-          <strong>scientific evidence</strong> and <strong>trial questions</strong> without copying private records
-          into research. The graph records provenance, uncertainty and review state. An illustrative question can be
-          followed through the walkthrough. This is not a clinical service and not a commercial product.
-        </p>
-      </section>
+      <HomeIntelligenceFlow />
+      <HomeWorkspacePreview />
 
       <section className="cl-modules cl-chapter cl-chapter-instrument" aria-labelledby="modules-title">
         <div className="cl-chapter-inner">
@@ -93,7 +87,7 @@ export function Home() {
         </ul>
       </section>
 
-      <section className="cl-steps cl-chapter" id="product-demo" aria-labelledby="steps-title">
+      <section className="cl-steps cl-chapter" id="investigation-workflow" aria-labelledby="steps-title">
         <div className="cl-steps-intro">
           <h2 id="steps-title">How an investigation proceeds</h2>
           <p>
