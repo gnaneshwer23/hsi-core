@@ -38,6 +38,7 @@ test('homepage investigation anchor opens the eight-step sequence',async({page})
  await expect(page.locator('#investigation-workflow')).toBeVisible();
  await expect(page.locator('#investigation-workflow')).toContainText('unvalidated');
  await expect(page.locator('.cl-hero .cl-actions a')).toHaveCount(2);
- await expect(page.getByRole('link',{name:/Explore the Platform/i}).first()).toHaveAttribute('href','/platform');
+ await expect(page.locator('.cl-hero .cl-actions a').first()).toHaveAttribute('href','/research/investigate');
+ await expect(page.locator('.cl-hero .cl-actions a').nth(1)).toHaveAttribute('href','/contact');
  await expect(page.getByRole('link',{name:/Request Research Access/i}).first()).toHaveAttribute('href','/contact');
 });
