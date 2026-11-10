@@ -1,7 +1,7 @@
 {
   "schemaVersion": "hsi-capability-register-1",
   "registerId": "hsi-capability-register-2026-11-08",
-  "asOf": "2026-11-08",
+  "asOf": "2026-11-10",
   "masterSpec": "docs/product/HSI_DEFINITIVE_PRODUCT_SPEC.md",
   "humanDoc": "docs/engineering/HSI_CAPABILITY_REGISTER_2026-11-08.md",
   "honesty": {
@@ -508,6 +508,58 @@
       ],
       "gap": "UI journey 01\u201306 continuous; researcherJourneyCompleteClaimed=false; needs #5 for live writes",
       "nextAction": "Keep probe path; live Ask\u2192export parked"
+    },
+    {
+      "id": "J-INV",
+      "group": "research_journey",
+      "name": "Gut–immune–metabolic–neuroinflammation investigation",
+      "status": ["implemented", "synthetic_only"],
+      "evidence": [
+        "src/scientificInvestigation.ts",
+        "site/src/pages/ScientificInvestigation.tsx",
+        "test/scientificInvestigation.test.ts"
+      ],
+      "gap": "Fixture composition of curated seeds. Workspace save stays fail-closed. Not scientifically scored. researcherJourneyCompleteClaimed stays false.",
+      "nextAction": "Independent scientific review and source-rights clearance before any verified-evidence label"
+    },
+    {
+      "id": "J-EVAL",
+      "group": "research_journey",
+      "name": "Scientific accuracy evaluation harness",
+      "status": ["implemented", "blocked"],
+      "evidence": [
+        "src/scientificAccuracyHarness.ts",
+        "evaluation/scientific-investigation/reference-questions.json",
+        "test/scientificAccuracyHarness.test.ts"
+      ],
+      "gap": "Scores remain not_yet_scored. Reference questions are DRAFT - awaiting expert review. No reviewer is named.",
+      "nextAction": "An expert reviews the draft question set before any score is recorded"
+    },
+    {
+      "id": "J-WORK",
+      "group": "research_journey",
+      "name": "Personal workspace, interests and in-app notifications",
+      "status": ["implemented", "synthetic_only", "blocked"],
+      "evidence": [
+        "src/researcherWorkspace.ts",
+        "site/src/pages/ResearcherHome.tsx",
+        "db/migrations/023_hsi_researcher_workspace_community.sql"
+      ],
+      "gap": "Example researcher only. Migration 023 is held and not applied. No email or SMS is sent.",
+      "nextAction": "Owner applies 023 on the HSI Neon project after review. Staging writes stay a separate decision."
+    },
+    {
+      "id": "J-COMM",
+      "group": "research_journey",
+      "name": "Opt-in research community",
+      "status": ["implemented", "synthetic_only", "blocked"],
+      "evidence": [
+        "src/researcherWorkspace.ts",
+        "src/server/researcherWorkspaceApi.ts",
+        "site/src/pages/ResearchCommunityFeed.tsx"
+      ],
+      "gap": "Example post only. Writes fail closed. A report does not notify a moderator. Schema is not applied.",
+      "nextAction": "Do not enable community writes until 023 is applied and a human moderator is named"
     }
   ],
   "duplicatesAndDisconnects": [

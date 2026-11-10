@@ -6,6 +6,7 @@ import {resolveProviderSessionToken} from "../db/providerSessionToken";
 import {inspectProviderDatabaseSession} from "../db/providerSessionDiagnostics";
 import {createNeonInterrogativeApiServices,handleInterrogativeApi} from "./interrogativeApi";
 import {gatewayJson,handleAuthGateway,verifiedProviderSession,diagnoseAuthProvider} from "./neonAuthGateway";
+import {handleResearcherWorkspaceApi} from "./researcherWorkspaceApi";
 type Environment=Record<string,string|undefined>;
 function httpsUrl(value:string|undefined,originOnly=false):string|null{
  try{const u=new URL(value?.trim()??"");if(u.protocol!=="https:"||u.username||u.password||u.search||u.hash||(originOnly&&u.pathname!=="/"))return null;return originOnly?u.origin:u.href.replace(/\/+$/,"")}catch{return null}
@@ -51,6 +52,8 @@ export async function handleVercelResearch(request:Request,env:Environment,depen
 async function handleVercelResearchCore(request:Request,env:Environment,dependencies:VercelResearchDependencies):Promise<Response>{
  const path=new URL(request.url).pathname;
  const config=readResearchDeploymentConfig(env);
+ const workspaceResponse=handleResearcherWorkspaceApi(request,{writesEnabled:config.ok&&config.writesEnabled});
+ if(workspaceResponse)return workspaceResponse;
  if(path==="/api/research/health"){
   if(request.method!=="GET")return gatewayJson({error:"Method not allowed"},405);
   const requestOrigin=new URL(request.url).origin;

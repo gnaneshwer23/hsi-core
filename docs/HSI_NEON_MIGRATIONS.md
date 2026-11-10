@@ -6,6 +6,19 @@
 
 **RDS staging (planned, not cut over):** see [`NEON_TO_AWS_RDS_RUNBOOK.md`](./NEON_TO_AWS_RDS_RUNBOOK.md). Production / Vercel `DATABASE_URL` stays red-wave until founder approval; ISI Auth is not part of that pass.
 
+## Held, not applied (2026-11-10)
+
+`022_hsi_scientific_investigation_records.sql` and `023_hsi_researcher_workspace_community.sql` are in the repository and listed in `HELD_MIGRATION_IDS`. `bun run db:migrate` skips them. They have not been applied to staging or production.
+
+Owner steps, HSI Neon project only:
+
+1. Read the SQL and the rollback comments at the top of each file.
+2. Remove those two ids from `HELD_MIGRATION_IDS` in `src/db/migrate.ts` after review.
+3. Apply with `bun run db:migrate` using gitignored HSI credentials or `neonctl` OAuth. Do not pass a password on the command line and do not point the URL at another product.
+4. Do not change Vercel environment variables or deploy settings as part of applying the SQL.
+
+Rollback statements are in the SQL comments. Take a backup before dropping tables.
+
 ## What shipped
 
 | Piece | Location |

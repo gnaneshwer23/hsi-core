@@ -217,6 +217,14 @@
       "destination": "/_pages/research--investigate.html"
     },
     {
+      "source": "/research/home",
+      "destination": "/_pages/research--home.html"
+    },
+    {
+      "source": "/research/community-feed",
+      "destination": "/_pages/research--community-feed.html"
+    },
+    {
       "source": "/modules",
       "destination": "/_pages/modules.html"
     },
