@@ -26,7 +26,7 @@ export function createHsiEvidenceSessionGateway(input:{
   return {
     async verifySession(sessionToken){
       if(typeof sessionToken!=="string"||sessionToken.length<16||
-        sessionToken.length>4096||/\\s/.test(sessionToken))return null;
+        sessionToken.length>4096||/\s/.test(sessionToken))return null;
       const verified=await input.verifyProviderSession(sessionToken);
       if(!verified?.actor?.authenticated||!verified.actor.principalId?.trim()||
         !verified.sessionId?.trim())return null;
