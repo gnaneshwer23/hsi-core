@@ -3,7 +3,7 @@
  * policy are prerequisites. The owner context is transaction-local.
  */
 import {SQL} from "bun";
-import {assertHsiNeonDatabaseUrl} from "./neonGuard";
+import {assertHsiNeonDatabaseUrl,stagingHostPin} from "./neonGuard";
 import {authenticateHsiNeonIdentity} from "./neonAuthResearchActor";
 import type {LiveApiDependencies,LiveSession} from "../liveEvidenceApi";
 import type {LiveSql} from "../liveEvidenceRepository";
@@ -33,6 +33,9 @@ export function createNeonLiveEvidenceDependencies(config:{
    if(!actor.authenticated||!actor.roles.some(r=>r==="researcher"||r==="research_admin"))throw Error("Research access denied");
    const guard=assertHsiNeonDatabaseUrl(config.runtimeDatabaseUrl,{neonProjectId:config.neonProjectId});
    if(!guard.ok)throw Error("HSI live database guard rejected runtime target");
+   // A-01 is preview/staging only. Never permit the canonical production host.
+   const pin=stagingHostPin();
+   if(!pin||pin==="hsi-staging-host"||!guard.host?.startsWith(pin+"."))throw Error("A-01 requires an explicitly pinned staging host");
    const sql=new SQL(config.runtimeDatabaseUrl,{tls:{rejectUnauthorized:true},connectionTimeout:10});
    try{
     const role=await sql.unsafe("SELECT current_user AS name, rolbypassrls AS bypass, rolsuper AS superuser FROM pg_roles WHERE rolname=current_user");
