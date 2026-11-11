@@ -4,6 +4,7 @@
  * The output conforms to existing research contracts; durable backend integration follows.
  */
 import {randomUUID} from "node:crypto";
+import {normalizePubmed} from "./bibliographyNormalization";
 import {retrievePubmedBibliography,type PubmedResult} from "./scientificPubmedRetrieval";
 import {parseResearchBundle,parseResearchContext,researchRunState,type ResearchBundle,type ResearchRunEvent,type ResearchRun} from "./researchContracts";
 export type LiveInvestigationTrace={id:string;question:string;createdAt:string;status:"retrieved"|"no_results";bibliography:PubmedResult;bundle:ResearchBundle;limitations:string[];persistence:"not_persisted";reviewStatus:"unreviewed"};
@@ -20,7 +21,7 @@ export async function createLiveInvestigationTrace(question:string,fetcher:typeo
   {id:"snapshot-"+runId,kind:"context_snapshot",version:"1",sha256:null,producedByEventId:events[1]!.id},
   {id:"bibliography-"+runId,kind:"retrieval_result",version:"1",sha256:null,producedByEventId:events[3]!.id}
  ],history:events};
- const sources=bibliography.hits.map(hit=>({id:"pmid-"+hit.pmid,title:hit.title,kind:"publication" as const,dataClass:"public_real" as const,pmid:hit.pmid,doi:null,url:hit.url,licence:{status:"unknown" as const,identifier:null,passageUsePermitted:false},provenance:{...provenance,datasetId:"pubmed-"+hit.pmid}}));
+ const sources=normalizePubmed(bibliography).sources;
  const bundle=parseResearchBundle({schemaVersion:"hsi-research-contract-1",containsPhi:false,clinicalAdvice:false,kgWrite:false,context,sources,passages:[],entities:[],relationships:[],claims:[],runs:[run]});
  if(researchRunState(bundle.runs[0]!)!=="running")throw new Error("Unexpected research trace state");
  return {id:runId,question:bibliography.query,createdAt:now,status:bibliography.status,bibliography,bundle,limitations:["Bibliography is a discovery lead, not verified scientific evidence.","No abstract passages were persisted or licensed for reuse.","No mechanisms, contradictions, hypotheses, scientific review or graph writes were executed.","This response is not durably persisted. Database-backed resume and recovery remain a separate integration gate."],persistence:"not_persisted",reviewStatus:"unreviewed"};
