@@ -17,8 +17,8 @@ function finish(provider:"pubmed"|"europepmc",rows:Array<{pmid:string;title:stri
  const map=new Map<string,ResearchSource>();let duplicates=0;
  for(const row of rows){if(map.has(row.pmid)){duplicates++;continue}map.set(row.pmid,source(provider,row.pmid,row.title,row.doi,when))}
  const sources=[...map.values()];
- const sourceHashes:Object=Object.fromEntries(sources.map(s=>[s.id,digest(JSON.stringify({pmid:s.pmid,doi:s.doi,title:s.title,provider,version:s.provenance.version}))]));
- return {sources,sourceHashes:sourceHashes as Record<string,string>,duplicates,rejected,retrievedAt:when,provider};
+ const sourceHashes:Record<string,string>=Object.fromEntries(sources.map(s=>[s.id,digest(JSON.stringify({pmid:s.pmid,doi:s.doi,title:s.title,provider,version:s.provenance.version}))]));
+ return {sources,sourceHashes,duplicates,rejected,retrievedAt:when,provider};
 }
 export function normalizePubmed(result:PubmedResult):NormalizedBibliography{
  if(!result||!Array.isArray(result.hits))throw Error("Malformed PubMed result");
