@@ -7,6 +7,7 @@ import {assertHsiNeonDatabaseUrl,stagingHostPin} from "./neonGuard";
 import {authenticateHsiNeonIdentity} from "./neonAuthResearchActor";
 import type {LiveApiDependencies,LiveSession} from "../liveEvidenceApi";
 import type {LiveSql} from "../liveEvidenceRepository";
+import {assertNoForgeableOwnerPolicy} from "./liveEvidencePolicyGate";
 
 type Queryable={unsafe:(statement:string,params?:unknown[])=>Promise<Array<Record<string,unknown>>>};
 function queryable(tx:Queryable):LiveSql{
@@ -42,6 +43,8 @@ export function createNeonLiveEvidenceDependencies(config:{
     if(role.length!==1||role[0]?.name!=="hsi_live_runtime"||role[0]?.bypass!==false||role[0]?.superuser!==false)throw Error("RLS-bypassing runtime role denied");
     const policy=await sql.unsafe("SELECT relrowsecurity AS enabled, relforcerowsecurity AS forced FROM pg_class WHERE oid=to_regclass('public.hsi_live_investigations')");
     if(policy.length!==1||policy[0]?.enabled!==true||policy[0]?.forced!==true)throw Error("Live table RLS not ready");
+    const policies=await sql.unsafe("SELECT policyname,qual,with_check FROM pg_policies WHERE schemaname=$1 AND tablename=$2",["public","hsi_live_investigations"]);
+    assertNoForgeableOwnerPolicy(policies);
    }catch(e){await sql.close();throw e}
    // Every operation executes inside a transaction, with a local, server-derived
    // identity. Never use session-wide SET on pooled connections.
