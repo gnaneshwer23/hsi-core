@@ -12,6 +12,12 @@ describe("A-01 preview-only preflight",()=>{
   expect(report.readyForIndependentReview).toBe(false);
   expect(report.readyForLiveWrites).toBe(false);
  });
+ it("rejects a missing row for each individual check",async()=>{
+  const report=await inspectA01Preview({query:async sql=>sql.includes("FROM pg_roles")?[{rolname:"hsi_live_runtime",rolcanlogin:true,rolinherit:false,rolbypassrls:false,rolsuper:false,rolcreaterole:false,rolcreatedb:false}]:[]});
+  expect(report.checks.find(c=>c.id==="runtime-role")?.pass).toBe(true);
+  expect(report.checks.filter(c=>!c.pass)).toHaveLength(report.checks.length-1);
+  expect(report.readyForIndependentReview).toBe(false);
+ });
  it("rejects an RLS-bypassing runtime role",async()=>{
   const report=await inspectA01Preview({query:async sql=>sql.includes("FROM pg_roles")?[{rolname:"hsi_live_runtime",rolcanlogin:true,rolinherit:false,rolbypassrls:true,rolsuper:false,rolcreaterole:false,rolcreatedb:false}]:[]});
   expect(report.checks.find(c=>c.id==="runtime-role")?.pass).toBe(false);
