@@ -21,11 +21,11 @@ REVOKE ALL ON public.hsi_live_investigations FROM PUBLIC;
 -- No blanket RLS policy. Service must use reviewed owner-scoped database role/
 -- verified session context and fail closed until policy is explicitly approved.
 
--- Draft RLS policy. The runtime role still requires a separately reviewed,
+-- The dedicated hsi_live_runtime role must exist before this held migration is applied.\n-- Draft RLS policy. The runtime role still requires a separately reviewed,
 -- explicit table grant; PUBLIC privileges remain revoked. No policy is a
 -- substitute for least-privilege credentials and server-side session checks.
 CREATE POLICY hsi_live_owner_isolation ON public.hsi_live_investigations
- FOR ALL TO PUBLIC
+ FOR ALL TO hsi_live_runtime
  USING (owner_id = NULLIF(current_setting('hsi.live_owner_id',true),''))
  WITH CHECK (owner_id = NULLIF(current_setting('hsi.live_owner_id',true),''));
 -- Operational approval must verify runtime role is not owner, SUPERUSER,
