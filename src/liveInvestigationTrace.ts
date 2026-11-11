@@ -15,9 +15,9 @@ export async function createLiveInvestigationTrace(question:string,fetcher:typeo
  const event=(sequence:number,stage:"context"|"retrieval",status:"started"|"completed",outputRefs:string[]):ResearchRunEvent=>({
   id:"event-"+randomUUID(),sequence,stage,status,at:now,provider:{id:stage==="context"?"hsi-question":"pubmed-eutils",version:"1"},execution:"deterministic",actorRef:null,modelRef:null,inputRefs:[],outputRefs,reason:null
  });
- const events=[event(1,"context","started",[]),event(2,"context","completed",[contextId]),event(3,"retrieval","started",[]),event(4,"retrieval","completed",["bibliography-"+runId])];
+ const events=[event(1,"context","started",[]),event(2,"context","completed",["snapshot-"+runId]),event(3,"retrieval","started",[]),event(4,"retrieval","completed",["bibliography-"+runId])];
  const run:ResearchRun={id:runId,contextId,dataClass:"public_real",createdAt:now,artifacts:[
-  {id:contextId,kind:"context_snapshot",version:"1",sha256:null,producedByEventId:events[1]!.id},
+  {id:"snapshot-"+runId,kind:"context_snapshot",version:"1",sha256:null,producedByEventId:events[1]!.id},
   {id:"bibliography-"+runId,kind:"retrieval_result",version:"1",sha256:null,producedByEventId:events[3]!.id}
  ],history:events};
  const sources=bibliography.hits.map(hit=>({id:"pmid-"+hit.pmid,title:hit.title,kind:"publication" as const,dataClass:"public_real" as const,pmid:hit.pmid,doi:null,url:hit.url,licence:{status:"unknown" as const,identifier:null,passageUsePermitted:false},provenance:{...provenance,datasetId:"pubmed-"+hit.pmid}}));
