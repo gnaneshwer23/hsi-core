@@ -7,13 +7,13 @@ import {parseResearchBundle,type ResearchBundle} from "./researchContracts";
 export type LiveRecord={id:string;ownerId:string;requestId:string;question:string;revision:number;bundle:ResearchBundle;createdAt:string;updatedAt:string};
 export interface LiveSql{query(sql:string,params:unknown[]):Promise<Array<Record<string,unknown>>>;transaction<T>(work:(tx:LiveSql)=>Promise<T>):Promise<T>}
 export class LiveConflict extends Error{}
-export class LiveDenied extends Error{}
+export class LiveDenied extends Error{}\n/** Retry identity is bound to the original question, not a freshly generated retrieval run ID. */\nexport class LiveRetryMismatch extends LiveConflict{}
 const idPattern=/^hsi-live-[a-f0-9]{32}$/;
 const uuid=/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/;
 const hash=(v:string)=>createHash("sha256").update(v).digest("hex");
 function ownerId(owner:string){if(!/^[A-Za-z0-9][A-Za-z0-9:_.-]{0,127}$/.test(owner))throw new LiveDenied();return owner}
-function record(row:Record<string,unknown>):LiveRecord{
- const bundle=parseResearchBundle(typeof row.bundle==="string"?JSON.parse(row.bundle):row.bundle);
+function validateLiveBundle(value:unknown):ResearchBundle{\n const bundle=parseResearchBundle(value);\n if(bundle.context.dataClass!=="public_real"||bundle.containsPhi||bundle.clinicalAdvice||bundle.kgWrite||bundle.claims.length||bundle.passages.length||bundle.relationships.length||bundle.entities.length||bundle.runs.length!==1||bundle.sources.some(s=>s.dataClass!=="public_real"||s.licence.passageUsePermitted||s.licence.status!=="unknown"||s.kind!=="publication"))throw new LiveDenied();\n if(bundle.context.question.length<5||bundle.context.question.length>400)throw new LiveDenied();\n return bundle;\n}\nfunction record(row:Record<string,unknown>):LiveRecord{
+ const bundle=validateLiveBundle(typeof row.bundle==="string"?JSON.parse(row.bundle):row.bundle);
  const item={id:String(row.id),ownerId:String(row.owner_id),requestId:String(row.request_id),question:String(row.question),revision:Number(row.revision),bundle,createdAt:new Date(String(row.created_at)).toISOString(),updatedAt:new Date(String(row.updated_at)).toISOString()};
  if(!idPattern.test(item.id)||!Number.isSafeInteger(item.revision)||item.revision<1||bundle.context.question!==item.question)throw new LiveDenied();
  return item;
@@ -33,7 +33,7 @@ export function createLiveEvidenceRepository(db:LiveSql,authenticatedOwner:strin
     const existing=rows[0]??(await tx.query("SELECT * FROM public.hsi_live_investigations WHERE owner_id=$1 AND request_id=$2",[owner,requestId]))[0];
     if(!existing)throw new LiveDenied();
     const saved=record(existing);
-    if(hash(JSON.stringify(saved.bundle))!==hash(JSON.stringify(bundle)))throw new LiveConflict("Idempotency key reused with different evidence");
+    if(saved.question!==question)throw new LiveRetryMismatch("Idempotency key reused with a different research question");\n    // Live retrieval creates fresh run IDs and timestamps. Never overwrite the first committed snapshot on retry.
     return {record:saved,created:rows.length===1};
    });
   },
