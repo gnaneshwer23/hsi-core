@@ -11,12 +11,12 @@
 - Prior staging SQL tests validated cross-tenant isolation, duplicate suppression and failed-transaction rollback, but were executed using the owner connection with `SET LOCAL ROLE`.
 
 ## Mandatory prerequisites before live execution
-1. Staging-only restricted LOGIN credentials in the server secret store. The previously provisioned `hsi_evidence_staging_login` has **PASSWORD NULL** and cannot perform password authentication. Do not use the database owner, `SET ROLE`, production credentials, or secrets in commits.
+1. **Database credential gate satisfied on staging (2026-11-11):** dedicated `hsi_evidence_beta_app` login was verified directly, and an encrypted branch-scoped Vercel preview variable was configured. The legacy `hsi_evidence_staging_login` still has PASSWORD NULL and is not used. This does not prove application integration or live E2E acceptance. Do not use the database owner, `SET ROLE`, production credentials, or secrets in commits.
 2. A real, server-controlled organisation membership resolver and reviewer role source. Neither may accept tenant/role claims from browser JSON.
 3. A staging-only, guarded API route that wires `authenticateEvidenceRequest`, `createAuthenticatedEvidenceService`, `createNeonEvidenceDatabase` and `createRestrictedNeonEvidencePool`. Explicit feature flag off by default.
 4. Two verified staging identities with distinct subjects: researcher and independent reviewer in the same test organisation. Do not create or claim real identities without confirming the provider supports them.
 5. Confirm the Bun SQL driver executes BEGIN, tenant setting, evidence queries and COMMIT on the same physical connection, including concurrent requests. Confirm connection close/release semantics.
-6. Confirm role privilege inheritance and schema/table grants through **direct login** as the dedicated restricted role; prove RLS denies cross-tenant reads and writes.
+6. **Direct login privilege check satisfied:** restricted role can read/insert evidence snapshots and insert review events, cannot delete review events or read unrelated claims. **Still pending:** cross-tenant RLS tests performed through the new direct login, not only owner-mediated `SET LOCAL ROLE`.
 
 ## Synthetic acceptance scenarios (all required)
 - Anonymous request rejected; expired/revoked session rejected; unverified email rejected.
