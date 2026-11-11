@@ -14,7 +14,7 @@ export async function runModelEntailment(input:ModelChallengeInput,verifierId:st
  if(!raw||typeof raw!=="object"||Array.isArray(raw))throw Error("Invalid model response");
  const x=raw as Record<string,unknown>;
  const verdict:EntailmentVerdict=x.verdict==="supports"||x.verdict==="contradicts"||x.verdict==="insufficient"?x.verdict:"not_assessed";
- const evidenceSpan=typeof x.evidenceSpan==="string"&&x.evidenceSpan.length<=1000&&input.passage.includes(x.evidenceSpan)?x.evidenceSpan:null;
+ const evidenceSpan=typeof x.evidenceSpan==="string"&&x.evidenceSpan.trim().length>0&&x.evidenceSpan.length<=1000&&input.passage.includes(x.evidenceSpan)?x.evidenceSpan:null;
  const reason=typeof x.reason==="string"?x.reason.slice(0,1000):"Invalid explanation";
  // Missing exact evidence cannot be counted as model support.
  const safeVerdict=verdict==="supports"&&!evidenceSpan?"insufficient":verdict;
