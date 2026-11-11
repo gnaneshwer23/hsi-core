@@ -5,6 +5,7 @@ import {investigateDiscoveryCandidates} from "../features/science/discoveryInves
 import {projectMechanismTraces} from "../features/science/mechanismTrace";
 import {ResearchEvidenceQueue,validateScientificVerification,type ScientificVerification} from "../components/ResearchEvidenceQueue";
 import {InvestigationWorkspace} from "../components/InvestigationWorkspace";
+import {BiomedicalMetadataPanel} from "../components/BiomedicalMetadataPanel";
 import {SscGovernedDiscovery} from "../components/SscGovernedDiscovery";
 type Node={id:string;preferredLabel:string;kind:string};
 type Edge={id:string;subjectId:string;objectId:string;predicate:string;reviewState:string;sourceEvidenceIds:string[];context:{studyContext?:string;limitations?:string;sourceLocator?:string}};
@@ -31,6 +32,7 @@ export function ScientificResearchWorkbench(){
  <p>Systemic sclerosis · Tfh–IL-21–B-cell responses · Research candidates only. This view does not approve scientific claims.</p>
  <div className="science-body-actions"><Link to="/research/evidence-readiness">Evidence catalogue</Link><Link to="/research/coverage">Research coverage</Link><Link to="/science/literature">Literature discovery</Link><Link to="/science/graph">Full graph explorer</Link><Link to="/research/account">Researcher sign-in</Link></div>
  </div></header><div className="science-body-wrap" style={{paddingBlock:"2rem"}}>
+ <BiomedicalMetadataPanel/>
  <InvestigationWorkspace/>
  <p><Link to="/research/validation">Open synthetic validation lab →</Link> · Test connected profiles and exports separately from scientific evidence.</p>
  <section aria-label="Authenticated governed graph" style={{padding:"1.25rem",border:"1px solid #aab3c0",borderRadius:12,marginBottom:24}}>
