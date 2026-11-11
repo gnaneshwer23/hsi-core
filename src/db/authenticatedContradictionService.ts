@@ -12,7 +12,7 @@ export type AuthenticatedContradictionConfig = {
  databaseUrl:string;neonProjectId?:string|null;serverSessionToken:string|null|undefined;
 };
 export type VerifiedContradictionActor = {
- principalId:string;roles:string[];authenticated:true;
+ principalId:string;roles:readonly string[];authenticated:true;
 };
 export async function verifyContradictionActor(
  input:AuthenticatedContradictionConfig,requiredRole:"researcher"|"scientific_reviewer"
