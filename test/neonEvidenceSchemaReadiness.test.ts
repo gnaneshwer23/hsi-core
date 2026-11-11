@@ -2,7 +2,12 @@ import {describe,expect,test} from "bun:test";
 import {inspectNeonEvidenceSchema,type ReadonlySqlClient}
  from "../src/evidence/neonEvidenceSchemaReadiness";
 const names=["hsi_research_evidence_snapshots","hsi_research_evidence_review_events"];
-const constraints=[\n {tablename:names[0],constraint_type:"p",definition:"PRIMARY KEY (organization_id, snapshot_id)"},\n {tablename:names[0],constraint_type:"u",definition:"UNIQUE (organization_id, idempotency_key)"},\n {tablename:names[1],constraint_type:"p",definition:"PRIMARY KEY (event_id)"},\n {tablename:names[1],constraint_type:"u",definition:"UNIQUE (organization_id, snapshot_id)"},\n];
+const constraints=[
+ {tablename:names[0],constraint_type:"p",definition:"PRIMARY KEY (organization_id, snapshot_id)"},
+ {tablename:names[0],constraint_type:"u",definition:"UNIQUE (organization_id, idempotency_key)"},
+ {tablename:names[1],constraint_type:"p",definition:"PRIMARY KEY (event_id)"},
+ {tablename:names[1],constraint_type:"u",definition:"UNIQUE (organization_id, snapshot_id)"},
+];
 describe("P1.6 Neon schema readiness",()=>{
  test("fails closed on absent staging tables",async()=>{
   const db:ReadonlySqlClient={query:async()=>[]};
