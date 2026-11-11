@@ -67,6 +67,14 @@ BEGIN
         lower(trim(snapshot->'right'->'context'->'disease'->>'value'))
  INTO v_scope,v_right_scope
  FROM public.hsi_contradiction_records WHERE id=p_contradiction AND tenant_id=p_tenant;
+ IF NOT EXISTS (
+  SELECT 1 FROM public.hsi_contradiction_records d
+  WHERE d.id=p_contradiction AND d.tenant_id=p_tenant
+   AND d.snapshot->'left'->'context'->'disease'->>'status'='reported'
+   AND d.snapshot->'right'->'context'->'disease'->>'status'='reported'
+   AND length(trim(coalesce(d.snapshot->'left'->'context'->'disease'->>'sourceLocator','')))>0
+   AND length(trim(coalesce(d.snapshot->'right'->'context'->'disease'->>'sourceLocator','')))>0
+ ) THEN RAISE EXCEPTION 'Disease evidence context missing provenance'; END IF;
  IF v_scope IS NULL OR v_right_scope IS NULL OR v_scope<>v_right_scope
     OR v_scope NOT IN ('ssc','ra') THEN
   RAISE EXCEPTION 'Unverified or unsupported disease scope';
