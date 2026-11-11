@@ -1,0 +1,49 @@
+name: P0 repository history and generated status gates
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/p0-repository-hygiene.yml'
+      - 'operations/capability-register/**'
+      - 'scripts/generate-status.ts'
+      - 'docs/STATUS.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/p0-repository-hygiene.yml'
+      - 'operations/capability-register/**'
+      - 'scripts/generate-status.ts'
+      - 'docs/STATUS.md'
+
+permissions:
+  contents: read
+
+jobs:
+  full-history-secret-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout complete Git history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Scan all available refs and history
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Coverage note
+        if: always()
+        run: |
+          echo 'Gitleaks scanned fetched Git history; review whether all remote refs were fetched.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'A clean scan does not prove no secret was ever committed.' >> "$GITHUB_STEP_SUMMARY"
+
+  generated-status-consistency:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - name: Regenerate from canonical capability register
+        run: bun run status:write
+      - name: Ensure checked-in status matches generated output
+        run: git diff --exit-code -- docs/STATUS.md
