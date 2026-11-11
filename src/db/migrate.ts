@@ -46,6 +46,7 @@ export const MIGRATION_LEDGER_ALIASES: Record<string, readonly string[]> = {
 export const HELD_MIGRATION_IDS = [
   "022_hsi_scientific_investigation_records",
   "023_hsi_researcher_workspace_community",
+  "024_hsi_scientific_contradiction_ledger",
 ] as const;
 
 export function migrationAlreadyRecorded(id: string, recorded: readonly string[]): boolean {
