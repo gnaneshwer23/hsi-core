@@ -3,6 +3,7 @@
  * Never accept identity, session tokens or roles from request bodies.
  */
 import {handleLiveEvidenceApi,type LiveApiDependencies} from "../liveEvidenceApi";
+import {createNeonLiveEvidenceDependencies} from "../db/neonLiveEvidenceStore";
 import {renderResearchOutcome,type ResearchOutcome} from "../researchOutcome";
 import {deliveryHash} from "./investigationDeliveryService";
 import {loadAuthenticatedInterrogativeInvestigation} from "../db/authenticatedInterrogativeStore";
@@ -212,9 +213,10 @@ function workspaceError(error:unknown):Response{
  if(error instanceof InvestigationWorkspaceError)return json({code:error.code,error:error.publicMessage},error.status);
  return json({error:"Research workspace unavailable or operation denied"},403);
 }
-export function createNeonInterrogativeApiServices(config:{databaseUrl:string;neonProjectId?:string|null;writesEnabled?:boolean;sscReleaseId?:string;raComparisonReleaseId?:string}):ApiServices{
+export function createNeonInterrogativeApiServices(config:{databaseUrl:string;neonProjectId?:string|null;writesEnabled?:boolean;sscReleaseId?:string;raComparisonReleaseId?:string;liveEvidenceRuntimeDatabaseUrl?:string;liveEvidenceWritesEnabled?:boolean}):ApiServices{
  const workspace=createNeonInvestigationWorkspace(config);
  return {
+  liveEvidence:config.liveEvidenceRuntimeDatabaseUrl?createNeonLiveEvidenceDependencies({databaseUrl:config.databaseUrl,runtimeDatabaseUrl:config.liveEvidenceRuntimeDatabaseUrl,neonProjectId:config.neonProjectId,writesEnabled:config.liveEvidenceWritesEnabled===true}):undefined,
   graphContext:args=>loadOrCaptureInvestigationGraphContext({...config,...args}),
   workspace:args=>workspace.list(args),
   create:args=>workspace.create(args),
