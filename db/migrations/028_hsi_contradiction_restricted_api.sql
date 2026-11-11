@@ -12,12 +12,12 @@ CREATE POLICY hsi_contradiction_owner_review_read ON public.hsi_contradiction_re
 CREATE POLICY hsi_contradiction_owner_review_insert ON public.hsi_contradiction_review_events FOR INSERT TO hsi_contradiction_function_owner WITH CHECK (true);
 CREATE POLICY hsi_contradiction_owner_membership_read ON public.hsi_contradiction_tenant_memberships FOR SELECT TO hsi_contradiction_function_owner USING (true);
 GRANT EXECUTE ON FUNCTION public.hsi_contradiction_session_principal(text) TO hsi_contradiction_function_owner;
+GRANT EXECUTE ON FUNCTION public.hsi_contradiction_create(text,text,text,text,text,text,text,jsonb,jsonb) TO hsi_contradiction_runtime;
+GRANT EXECUTE ON FUNCTION public.hsi_contradiction_review(text,text,text,text,text,text) TO hsi_contradiction_runtime;
 GRANT CREATE ON SCHEMA public TO hsi_contradiction_function_owner;
 GRANT hsi_contradiction_function_owner TO neondb_owner WITH SET TRUE;
 ALTER FUNCTION public.hsi_contradiction_create(text,text,text,text,text,text,text,jsonb,jsonb) OWNER TO hsi_contradiction_function_owner;
 ALTER FUNCTION public.hsi_contradiction_review(text,text,text,text,text,text) OWNER TO hsi_contradiction_function_owner;
 REVOKE hsi_contradiction_function_owner FROM neondb_owner;
 REVOKE CREATE ON SCHEMA public FROM hsi_contradiction_function_owner;
-GRANT EXECUTE ON FUNCTION public.hsi_contradiction_create(text,text,text,text,text,text,text,jsonb,jsonb) TO hsi_contradiction_runtime;
-GRANT EXECUTE ON FUNCTION public.hsi_contradiction_review(text,text,text,text,text,text) TO hsi_contradiction_runtime;
 REVOKE ALL ON FUNCTION public.hsi_contradiction_session_principal(text) FROM hsi_contradiction_runtime;
