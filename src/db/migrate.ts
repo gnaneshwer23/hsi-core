@@ -47,6 +47,7 @@ export const HELD_MIGRATION_IDS = [
   "022_hsi_scientific_investigation_records",
   "023_hsi_researcher_workspace_community",
   "024_hsi_scientific_contradiction_ledger",
+  "025_hsi_contradiction_tenant_isolation",
 ] as const;
 
 export function migrationAlreadyRecorded(id: string, recorded: readonly string[]): boolean {
