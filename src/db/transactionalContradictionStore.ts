@@ -9,13 +9,21 @@ import {assertHsiNeonDatabaseUrl} from "./neonGuard";
 import {authenticateHsiNeonSession} from "./neonAuthResearchActor";
 import {prepareContradictionSnapshot} from "./scientificContradictionLedger";
 import type {EvidenceInput} from "../evidence/canonicalEvidenceWorkflow";
-type Config={databaseUrl:string;neonProjectId?:string|null;serverSessionToken:string|null|undefined};
+type Config={databaseUrl:string;neonProjectId?:string|null;serverSessionToken:string|null|undefined;runtimeDatabaseUrl:string};
 const valid=(s:string)=>typeof s==="string"&&s.trim().length>0;
 const db=(input:Config)=>{
- const guard=assertHsiNeonDatabaseUrl(input.databaseUrl,{neonProjectId:input.neonProjectId});
+ const guard=assertHsiNeonDatabaseUrl(input.runtimeDatabaseUrl,{neonProjectId:input.neonProjectId});
  if(!guard.ok)throw Error("HSI database guard: "+guard.reason);
- return new SQL(input.databaseUrl,{tls:{rejectUnauthorized:true},connectionTimeout:10});
+ return new SQL(input.runtimeDatabaseUrl,{tls:{rejectUnauthorized:true},connectionTimeout:10});
 };
+async function assertRestrictedRuntime(sql:SQL){
+ const rows=await sql`SELECT current_user AS role_name,
+  pg_has_role(current_user,'hsi_contradiction_runtime','member') AS is_runtime,
+  r.rolbypassrls AS bypass_rls, r.rolsuper AS is_super
+  FROM pg_roles r WHERE r.rolname=current_user`;
+ if(rows.length!==1||rows[0]?.is_runtime!==true||rows[0]?.bypass_rls!==false||rows[0]?.is_super!==false)
+  throw Error("Restricted contradiction runtime connection required");
+}
 async function actor(input:Config,role:"researcher"|"scientific_reviewer"){
  const a=await authenticateHsiNeonSession({sessionToken:input.serverSessionToken,
   databaseUrl:input.databaseUrl,neonProjectId:input.neonProjectId});
@@ -39,6 +47,7 @@ export async function createContradictionRecord(input:Config&{
   submittedBy:principal,left:input.left,right:input.right});
  const sql=db(input);
  try{
+  await assertRestrictedRuntime(sql);
   await sql`SELECT public.hsi_contradiction_create(
    ${input.serverSessionToken},${input.tenantId},${snapshot.id},${snapshot.leftEdgeId},
    ${snapshot.rightEdgeId},${snapshot.schemaVersion},${snapshot.classification},
@@ -53,9 +62,9 @@ export async function appendIndependentContradictionReview(input:Config&{
 }){
  requireActivation(input);
  if(!valid(input.contradictionId)||!valid(input.tenantId))throw Error("Invalid record or tenant");
- const principal=await actor(input,"scientific_reviewer");
  const sql=db(input);
  try{
+  await assertRestrictedRuntime(sql);
   await sql`SELECT public.hsi_contradiction_review(
    ${input.serverSessionToken},${input.tenantId},${input.contradictionId},
    ${input.decision},${input.rationale},${input.sourceLocator})`;
