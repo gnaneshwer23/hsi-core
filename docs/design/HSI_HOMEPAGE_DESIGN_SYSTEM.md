@@ -64,7 +64,7 @@ Sources: `site/src/lib/homepageAssets.ts` (`<picture>` webp+jpeg). Alt text is s
 
 - No live CDS/PHI; fail-closed writes.  
 - No fabricated evidence, certs, study counts, or MoU.  
-- Sign In chrome only when auth is product-ready; Request Research Access always real (`/contact`).  
+- Sign In chrome only when auth is product-ready; Research access (`/contact`) is a browser draft plus an administrator grant, not a submitted request.  
 - Preserve Vercel, Neon red-wave, research services, existing routes.
 
 ## Inspiration (not copies)

@@ -65,7 +65,7 @@ export function AccessIntentPanel(){
   const continueSignIn=signInHref("/research/account");
 
   return <section className="xp-access-intent" aria-labelledby="access-intent-heading">
-    <h3 id="access-intent-heading">Describe the research you want to pursue</h3>
+    <h3 id="access-intent-heading">Keep a browser draft of your question</h3>
     <p className="ed-scope-line" role="note">
       Server-side access-request storage is not available on the public site.
       Grants in <code>hsi_research_access</code> are provisioned by an administrator after you create a verified account.

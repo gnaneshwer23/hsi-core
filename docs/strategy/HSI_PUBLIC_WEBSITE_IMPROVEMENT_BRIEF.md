@@ -203,16 +203,17 @@ If authenticated workspace is available_and_verified or research_preview and use
     primary CTA = Explore the Platform  → real public platform route
 
 If workspace requires approval / grant:
-    primary CTA = Request Research Access → /contact (or equivalent working access path)
+    primary CTA = See a curated investigation → /research/investigate (labelled demo; writes stay closed)
+    access CTA = Research access → /contact (browser draft only; no submitted request)
 
 If neither is available:
     primary CTA = Request Updates / Join the Research Community
     → only if that destination is real and useful
 ```
 
-**Never** show a CTA that leads to a broken, empty, or inaccessible destination. Nav “Request access” must match the same rule.
+**Never** show a CTA that leads to a broken, empty, or inaccessible destination. Nav “Research access” must match the same rule.
 
-Current live default (until registry says otherwise): workspace requires approval → primary **Request Research Access** / **Research access**; secondary **Explore the platform**.
+Current live default (until registry says otherwise): workspace requires approval → primary **See a curated investigation**; **Research access** opens a browser draft, not a submitted request.
 
 ---
 

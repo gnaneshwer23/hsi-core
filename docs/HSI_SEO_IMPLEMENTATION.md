@@ -36,7 +36,7 @@ The homepage and public pages hydrate only when the embedded route matches the r
 | `/for-aksh` | Aksh Health and shared HSI technology |
 | `/for-isi` | Immune Super Intelligence and immunology research |
 | `/for-trials` | Planned HSI Trials product and current research previews |
-| `/pricing` | Research access and scoped team pilots, without invented paid plans |
+| `/pricing` | Access options. Registration does not grant research permission. No team-pilot offer |
 | `/contact` | Account/access process and collaboration preparation |
 
 Noindex intentionally covers account routes, synthetic validation, saved/reviewer workspaces, local community drafts and exploratory tool pages. Their public explanatory hubs remain discoverable. Robots rules do not block all of `/research/`, because search engines must be able to read the public research page and the noindex directives on tool HTML. Noindex is a discovery policy, never an access-control mechanism.

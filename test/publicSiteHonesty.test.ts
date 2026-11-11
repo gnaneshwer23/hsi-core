@@ -44,7 +44,8 @@ describe("Public HSI site honesty", () => {
 
     const primaryNav = site("src/lib/primaryNav.ts");
     for(const route of ["/platform","/solutions","/research","/evidence-safety","/pricing","/contact","/modules","/technology","/science","/how-it-works"])expect(primaryNav).toContain(route);
-    expect(primaryNav).toContain('label: "Request access"');
+    expect(primaryNav).toContain('label: "Research access"');
+    expect(primaryNav).not.toContain('label: "Request access"');
     const primaryLinksBlock=primaryNav.match(/export const PRIMARY_NAV_LINKS = \[[\s\S]*?\] as const/)?.[0]??"";
     for(const route of ["/platform","/research","/modules","/science","/how-it-works"])expect(primaryLinksBlock).toContain(route);
     for(const route of ["/curator","/gateway","/clinical-timeline","/trials-criteria","/status"])expect(primaryLinksBlock).not.toContain(route);
@@ -60,7 +61,7 @@ describe("Public HSI site honesty", () => {
     expect(homeSurface).toContain("Investigate biological mechanisms");expect(homeSurface).toContain("across human systems");expect(homeSurface).toContain("Connecting human biology");
     expect(homeHero).toContain("cl-hero-domains");expect(homeHero).toContain("Immunity");expect(homeHero).toContain("Microbiome");
     expect(homeHero).toContain("/science/graph?q=neuro");expect(homeHero).toContain("first scientific investigation");
-    expect(homeHero).toContain('to="/research/investigate"');expect(homeHero).toContain("Start an investigation");
+    expect(homeHero).toContain('to="/research/investigate"');expect(homeHero).toContain("See a curated investigation");
     expect(homeHero).not.toMatch(/validation case|clinically validated|clinically proven|clinical validation|scientifically validated/i);
     expect(homeSurface).toContain("Aksh Health");expect(homeSurface).toContain("HSI Clinical");expect(homeSurface).toContain("Immune Super Intelligence");expect(homeSurface).toContain("HSI Trials");
     expect(homeSurface).toContain("does not auto-enter");

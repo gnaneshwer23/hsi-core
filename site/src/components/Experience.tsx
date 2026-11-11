@@ -13,7 +13,7 @@ export function ExperienceCTA({journey}:{journey?:readonly JourneyLink[]}){
   {to:PUBLIC_SECONDARY_CTA.to,label:PUBLIC_SECONDARY_CTA.label,note:"Workflow"},
   {to:"/science",label:"Science",note:"Biology entry"},
   {to:"/modules",label:"Modules",note:"Four products"},
-  {to:PUBLIC_PRIMARY_CTA.to,label:"Request access",note:"Collaboration"},
+  {to:PUBLIC_PRIMARY_CTA.to,label:PUBLIC_PRIMARY_CTA.label,note:"Browser draft, then an administrator grant"},
  ]}/></>;
 }
 export function LivingContextMap(){

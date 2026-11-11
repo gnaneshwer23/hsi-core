@@ -144,7 +144,7 @@ export function Status() {
           <p className="muted" style={{ marginTop: "1rem" }}>
             Public journey:{" "}
             <Link to="/platform">Platform</Link> · <Link to="/modules">Modules</Link> ·{" "}
-            <Link to="/contact">Request access</Link>
+            <Link to="/contact">Research access</Link>
           </p>
         </div>
       </section>
@@ -153,7 +153,7 @@ export function Status() {
           { to: "/platform", label: "Platform", note: "Shared technology" },
           { to: "/modules", label: "Modules", note: "Four products" },
           { to: "/evidence-safety", label: "Evidence & safety", note: "Integrity" },
-          { to: "/contact", label: "Request access", note: "Collaboration" },
+          { to: "/contact", label: "Research access", note: "Browser draft only" },
         ]}
       />
     </MarketingPage>

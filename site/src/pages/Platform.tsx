@@ -212,7 +212,7 @@ export function Platform() {
             <div className="hsi-editorial-actions">
               <a className="hsi-editorial-button" href="#platform-architecture">Explore the architecture <span aria-hidden="true"><ArrowIcon/></span></a>
               <Link className="hsi-editorial-textlink" to="/how-it-works">See how investigations work <ArrowIcon/></Link>
-              <Link className="hsi-editorial-textlink" to="/contact">Request Research Access <ArrowIcon/></Link>
+              <Link className="hsi-editorial-textlink" to="/contact">Research access <ArrowIcon/></Link>
             </div>
           </div>
           <HeroArtwork kind="platform"/>
