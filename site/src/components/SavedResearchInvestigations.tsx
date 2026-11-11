@@ -10,7 +10,7 @@ export function SavedResearchInvestigations({question}:{question:string}){
  const [cursor,setCursor]=useState<{createdAt:string;id:string}|null>(null);
  const [items,setItems]=useState<InvestigationSummary[]>([]);
  async function load(next:{createdAt:string;id:string}|null=null){
-  setBusy(true);setError("");setNotice("");
+  setBusy(true);setError("");
   try{
    const url="/api/research/investigations"+(next?"?cursor="+encodeURIComponent(JSON.stringify(next)):"");
    const response=await fetch(url,{credentials:"same-origin",headers:{Accept:"application/json"},cache:"no-store"});
