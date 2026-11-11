@@ -7,8 +7,7 @@
 import {SQL} from "bun";
 import {assertHsiNeonDatabaseUrl} from "./neonGuard";
 import {authenticateHsiNeonSession} from "./neonAuthResearchActor";
-import {prepareContradictionSnapshot,validateIndependentContradictionReview} from "./scientificContradictionLedger";
-import {verifyHsiReviewerAuthority} from "./reviewerAuthority";
+import {prepareContradictionSnapshot} from "./scientificContradictionLedger";
 import type {EvidenceInput} from "../evidence/canonicalEvidenceWorkflow";
 type Config={databaseUrl:string;neonProjectId?:string|null;serverSessionToken:string|null|undefined};
 const valid=(s:string)=>typeof s==="string"&&s.trim().length>0;
@@ -40,19 +39,10 @@ export async function createContradictionRecord(input:Config&{
   submittedBy:principal,left:input.left,right:input.right});
  const sql=db(input);
  try{
-  await sql.begin(async tx=>{
-   // This membership query is necessary but not sufficient: database RLS must
-   // independently enforce tenant scope on every operation.
-   const membership=await tx`SELECT 1 FROM hsi_contradiction_tenant_memberships
-    WHERE tenant_id=${input.tenantId} AND principal_id=${principal}
-    AND member_role='researcher' AND granted_at<=now() AND revoked_at IS NULL`;
-   if(membership.length!==1)throw Error("Tenant researcher membership required");
-   await tx`INSERT INTO hsi_contradiction_records
-    (id,tenant_id,submitted_by,left_edge_id,right_edge_id,schema_version,classification,snapshot,source_evidence_ids)
-    VALUES (${snapshot.id},${snapshot.tenantId},${principal},${snapshot.leftEdgeId},
-     ${snapshot.rightEdgeId},${snapshot.schemaVersion},${snapshot.classification},
-     ${snapshot},${snapshot.sourceEvidenceIds})`;
-  });
+  await sql`SELECT public.hsi_contradiction_create(
+   ${input.serverSessionToken},${input.tenantId},${snapshot.id},${snapshot.leftEdgeId},
+   ${snapshot.rightEdgeId},${snapshot.schemaVersion},${snapshot.classification},
+   ${JSON.stringify(snapshot)}::jsonb,${JSON.stringify(snapshot.sourceEvidenceIds)}::jsonb)`;
   return {id:snapshot.id,reviewStatus:"pending" as const};
  }finally{await sql.close();}
 }
@@ -64,27 +54,11 @@ export async function appendIndependentContradictionReview(input:Config&{
  requireActivation(input);
  if(!valid(input.contradictionId)||!valid(input.tenantId))throw Error("Invalid record or tenant");
  const principal=await actor(input,"scientific_reviewer");
- if(!await verifyHsiReviewerAuthority({principal,reviewedAt:input.reviewedAt,
-  databaseUrl:input.databaseUrl,neonProjectId:input.neonProjectId,scope:input.scope}))
-  throw Error("Reviewer authority required");
  const sql=db(input);
  try{
-  await sql.begin(async tx=>{
-   const membership=await tx`SELECT 1 FROM hsi_contradiction_tenant_memberships
-    WHERE tenant_id=${input.tenantId} AND principal_id=${principal}
-    AND member_role='scientific_reviewer' AND granted_at<=now() AND revoked_at IS NULL`;
-   if(membership.length!==1)throw Error("Tenant reviewer membership required");
-   const rows=await tx`SELECT submitted_by FROM hsi_contradiction_records
-    WHERE id=${input.contradictionId} AND tenant_id=${input.tenantId} FOR UPDATE`;
-   if(rows.length!==1)throw Error("Contradiction not found in tenant");
-   const submittedBy=String(rows[0]!.submitted_by);
-   validateIndependentContradictionReview({submittedBy,reviewerPrincipal:principal,
-    decision:input.decision,rationale:input.rationale,sourceLocator:input.sourceLocator});
-   await tx`INSERT INTO hsi_contradiction_review_events
-    (contradiction_id,tenant_id,submitted_by,reviewer_principal,decision,rationale,source_locator)
-    VALUES (${input.contradictionId},${input.tenantId},${submittedBy},${principal},
-     ${input.decision},${input.rationale},${input.sourceLocator})`;
-  });
+  await sql`SELECT public.hsi_contradiction_review(
+   ${input.serverSessionToken},${input.tenantId},${input.contradictionId},
+   ${input.decision},${input.rationale},${input.sourceLocator})`;
   return {recorded:true as const};
  }finally{await sql.close();}
 }
