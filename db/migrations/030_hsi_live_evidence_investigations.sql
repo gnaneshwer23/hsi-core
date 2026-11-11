@@ -10,9 +10,9 @@ CREATE TABLE IF NOT EXISTS public.hsi_live_investigations(
  created_at timestamptz NOT NULL DEFAULT now(),
  updated_at timestamptz NOT NULL DEFAULT now(),
  UNIQUE(owner_id,request_id),
- CHECK(bundle->>'containsPhi'='false' AND bundle->>'clinicalAdvice'='false' AND bundle->>'kgWrite'='false'),
- CHECK(bundle->'context'->>'dataClass'='public_real'),
- CHECK(bundle->'context'->>'question'=question)
+ CHECK(bundle ? 'containsPhi' AND bundle ? 'clinicalAdvice' AND bundle ? 'kgWrite' AND bundle->>'containsPhi'='false' AND bundle->>'clinicalAdvice'='false' AND bundle->>'kgWrite'='false'),
+ CHECK(bundle ? 'context' AND bundle->'context' ? 'dataClass' AND bundle->'context'->>'dataClass'='public_real'),
+ CHECK(bundle->'context' ? 'question' AND bundle->'context'->>'question'=question)
 );
 CREATE INDEX IF NOT EXISTS hsi_live_investigations_owner_created ON public.hsi_live_investigations(owner_id,created_at DESC,id DESC);
 ALTER TABLE public.hsi_live_investigations ENABLE ROW LEVEL SECURITY;
