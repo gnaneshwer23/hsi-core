@@ -23,14 +23,21 @@ export function createNeonLiveEvidenceDependencies(config:{
  writesEnabled?:boolean;
 }):LiveApiDependencies{
  const allowed=config.writesEnabled===true;
+ const verifiedSessions=new WeakMap<LiveSession,string>();
  return {
   writesEnabled:allowed,
   authenticate:async token=>{
    const actor=await authenticateHsiNeonIdentity({...config,sessionToken:token});
-   return actor?.authenticated?actor as LiveSession:null;
+   if(!actor?.authenticated)return null;
+   const session=actor as LiveSession;
+   verifiedSessions.set(session,token);
+   return session;
   },
   database:async actor=>{
    if(!allowed)throw Error("Live persistence disabled");
+   const verifiedToken=verifiedSessions.get(actor);
+   if(!verifiedToken)throw Error("A-01 denied: unverified actor object");
+   verifiedSessions.delete(actor);
    if(!actor.authenticated||!actor.roles.some(r=>r==="researcher"||r==="research_admin"))throw Error("Research access denied");
    const guard=assertHsiNeonDatabaseUrl(config.runtimeDatabaseUrl,{neonProjectId:config.neonProjectId});
    if(!guard.ok)throw Error("HSI live database guard rejected runtime target");
@@ -45,16 +52,18 @@ export function createNeonLiveEvidenceDependencies(config:{
     if(policy.length!==1||policy[0]?.enabled!==true||policy[0]?.forced!==true)throw Error("Live table RLS not ready");
     const policies=await sql.unsafe("SELECT policyname,qual,with_check FROM pg_policies WHERE schemaname=$1 AND tablename=$2",["public","hsi_live_investigations"]);
     assertNoForgeableOwnerPolicy(policies);
+    const approved=policies.filter((p:Record<string,unknown>)=>p.policyname==="hsi_live_verified_session_isolation");
+    if(approved.length!==1||policies.length!==1||!String(approved[0]?.qual??"").includes("hsi_live_verified_owner()")||!String(approved[0]?.with_check??"").includes("hsi_live_verified_owner()"))throw Error("A-01 denied: unapproved RLS policy");
    }catch(e){await sql.close();throw e}
    // Every operation executes inside a transaction, with a local, server-derived
    // identity. Never use session-wide SET on pooled connections.
    const db:LiveSql={
     query:async(statement,params)=>sql.begin(async tx=>{
-     await tx.unsafe("SELECT set_config('hsi.live_owner_id', $1, true)",[actor.principalId]);
+     await tx.unsafe("SELECT set_config('hsi.live_session_token', $1, true)",[verifiedToken]);
      return tx.unsafe(statement,params);
     }),
     transaction:async work=>sql.begin(async tx=>{
-     await tx.unsafe("SELECT set_config('hsi.live_owner_id', $1, true)",[actor.principalId]);
+     await tx.unsafe("SELECT set_config('hsi.live_session_token', $1, true)",[verifiedToken]);
      return work(queryable(tx));
     })
    };
