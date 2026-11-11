@@ -54,7 +54,7 @@ CREATE OR REPLACE FUNCTION public.hsi_contradiction_review(
  p_rationale text,p_source_locator text)
 RETURNS uuid LANGUAGE plpgsql SECURITY DEFINER
 SET search_path = pg_catalog, public AS $$
-DECLARE v_principal text;v_submitter text;v_event uuid;v_scope text;
+DECLARE v_principal text;v_submitter text;v_event uuid;v_scope text;v_right_scope text;
 BEGIN
  v_principal:=public.hsi_contradiction_session_principal(p_token);
  IF NOT EXISTS (
@@ -63,9 +63,20 @@ BEGIN
    AND m.member_role='scientific_reviewer' AND m.revoked_at IS NULL
    AND m.granted_at<=now()
  ) THEN RAISE EXCEPTION 'Tenant reviewer access denied'; END IF;
- SELECT lower(trim(snapshot->'left'->'context'->'disease'->>'value')) INTO v_scope
+ SELECT lower(trim(snapshot->'left'->'context'->'disease'->>'value')),
+        lower(trim(snapshot->'right'->'context'->'disease'->>'value'))
+ INTO v_scope,v_right_scope
  FROM public.hsi_contradiction_records WHERE id=p_contradiction AND tenant_id=p_tenant;
- IF v_scope IS NULL OR v_scope NOT IN ('ssc','ra') THEN
+ IF NOT EXISTS (
+  SELECT 1 FROM public.hsi_contradiction_records d
+  WHERE d.id=p_contradiction AND d.tenant_id=p_tenant
+   AND d.snapshot->'left'->'context'->'disease'->>'status'='reported'
+   AND d.snapshot->'right'->'context'->'disease'->>'status'='reported'
+   AND length(trim(coalesce(d.snapshot->'left'->'context'->'disease'->>'sourceLocator','')))>0
+   AND length(trim(coalesce(d.snapshot->'right'->'context'->'disease'->>'sourceLocator','')))>0
+ ) THEN RAISE EXCEPTION 'Disease evidence context missing provenance'; END IF;
+ IF v_scope IS NULL OR v_right_scope IS NULL OR v_scope<>v_right_scope
+    OR v_scope NOT IN ('ssc','ra') THEN
   RAISE EXCEPTION 'Unverified or unsupported disease scope';
  END IF;
  IF NOT EXISTS (
@@ -85,6 +96,7 @@ BEGIN
 END $$;
 REVOKE ALL ON FUNCTION public.hsi_contradiction_review(text,text,text,text,text,text) FROM PUBLIC;
 -- Disease scope is derived from persisted evidence, not a caller argument.
+-- Both canonical edges must have the same explicitly supported disease scope.
 -- This candidate path is intentionally fail-closed for unknown evidence shapes.
 -- No EXECUTE grants. Deployment must explicitly review SECURITY DEFINER owner
 -- privileges, FORCE RLS implications, and restricted runtime role before grants.
