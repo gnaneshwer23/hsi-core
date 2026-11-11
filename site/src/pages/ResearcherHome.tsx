@@ -21,7 +21,7 @@ export function ResearcherHome() {
         <section className="inv-card">
           <h2>Saved investigations</h2>
           {workspace.savedInvestigationIds.length === 0 ? <p>No saved investigations for Example researcher.</p> : null}
-          <Link to="/research/investigate">Start an investigation</Link>
+          <Link to="/research/discovery-experience">Open the Scientific Discovery Experience</Link>
         </section>
         <section className="inv-card">
           <h2>Followed interests</h2>
