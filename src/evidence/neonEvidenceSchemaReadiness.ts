@@ -26,17 +26,25 @@ export async function inspectNeonEvidenceSchema(db:ReadonlySqlClient):Promise<Ne
     AND c.relname=ANY($1::text[])
  `,[[...TABLES]]);
  const constraints=await db.query<{tablename:string;constraint_type:string;definition:string}>(`
-  SELECT c.relname AS tablename,con.contype AS constraint_type,\n         pg_get_constraintdef(con.oid) AS definition FROM pg_constraint con
+  SELECT c.relname AS tablename,con.contype AS constraint_type,
+         pg_get_constraintdef(con.oid) AS definition FROM pg_constraint con
   JOIN pg_class c ON c.oid=con.conrelid
   JOIN pg_namespace n ON n.oid=c.relnamespace
   WHERE n.nspname=current_schema() AND c.relname=ANY($1::text[])
  `,[[...TABLES]]);
  const found=new Map(rows.map(r=>[r.tablename,r]));
- const hasConstraint=(table:string,type:string,columns:string)=>constraints.some(c=>\n   c.tablename===table&&c.constraint_type===type&&\n   c.definition.includes(`(${columns})`));
+ const hasConstraint=(table:string,type:string,columns:string)=>constraints.some(c=>
+   c.tablename===table&&c.constraint_type===type&&
+   c.definition.includes(`(${columns})`));
  const tables=Object.fromEntries(TABLES.map(t=>[t,found.has(t)]));
  const rowLevelSecurityEnabled=Object.fromEntries(TABLES.map(t=>[t,found.get(t)?.rowsecurity===true]));
  const rowLevelSecurityForced=Object.fromEntries(TABLES.map(t=>[t,found.get(t)?.forcerowsecurity===true]));
- const requiredConstraintsPresent={\n   snapshots_primary_key:hasConstraint(TABLES[0],"p","organization_id, snapshot_id"),\n   snapshots_idempotency_unique:hasConstraint(TABLES[0],"u","organization_id, idempotency_key"),\n   review_events_primary_key:hasConstraint(TABLES[1],"p","event_id"),\n   review_events_snapshot_unique:hasConstraint(TABLES[1],"u","organization_id, snapshot_id"),\n };
+ const requiredConstraintsPresent={
+   snapshots_primary_key:hasConstraint(TABLES[0],"p","organization_id, snapshot_id"),
+   snapshots_idempotency_unique:hasConstraint(TABLES[0],"u","organization_id, idempotency_key"),
+   review_events_primary_key:hasConstraint(TABLES[1],"p","event_id"),
+   review_events_snapshot_unique:hasConstraint(TABLES[1],"u","organization_id, snapshot_id"),
+ };
  return {tables,rowLevelSecurityEnabled,rowLevelSecurityForced,requiredConstraintsPresent,
    readyForIntegrationTests:Object.values(tables).every(Boolean)&&
     Object.values(rowLevelSecurityEnabled).every(Boolean)&&
