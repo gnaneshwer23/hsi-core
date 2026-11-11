@@ -15,7 +15,7 @@ export interface EvidenceDatabase{
 }
 type SnapshotRow={snapshot_id:string;content_sha256:string;idempotency_key:string;
   submitted_by:string;status:EvidenceReviewRecord["status"];
-  reviewer_id:string|null;review_decision_id:string|null;reviewer_notes:string|null};
+  reviewer_id?:string|null;review_decision_id?:string|null;reviewer_notes?:string|null};
 const assertKey=(key:string)=>{
  if(!/^[A-Za-z0-9][A-Za-z0-9._:-]{7,127}$/.test(key))
    throw new Error("Invalid idempotency key");
@@ -64,7 +64,7 @@ export async function persistIndependentReview(input:{
    throw new Error("Invalid snapshot ID");
  return db.transaction(principal.organizationId,async tx=>{
    const rows=await tx.query<SnapshotRow>(`
-     SELECT snapshot_id,submitted_by,status,reviewer_id,review_decision_id,reviewer_notes
+     SELECT snapshot_id,submitted_by,status
      FROM hsi_research_evidence_snapshots
      WHERE organization_id=$1 AND snapshot_id=$2 FOR UPDATE
    `,[principal.organizationId,snapshotId]);
@@ -73,8 +73,8 @@ export async function persistIndependentReview(input:{
    const record:EvidenceReviewRecord={
      snapshotId,organizationId:principal.organizationId,
      submittedBy:found.submitted_by,status:found.status,
-     reviewerId:found.reviewer_id,reviewDecisionId:found.review_decision_id,
-     reviewerNotes:found.reviewer_notes};
+     reviewerId:null,reviewDecisionId:null,
+     reviewerNotes:null};
    const next=authorizeReviewDecision({principal,record,decision,decisionId,notes});
    const inserted=await tx.query<{event_id:string}>(`
      INSERT INTO hsi_research_evidence_review_events
