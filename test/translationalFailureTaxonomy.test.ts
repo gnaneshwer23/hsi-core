@@ -243,7 +243,7 @@ describe("translational failure taxonomy (M4 Phase 2)", () => {
     const comparisonPack: StructuredEvidenceComparisonPack = {
       schemaVersion: "hsi-structured-evidence-comparison-pack-1",
       method: "hsi.structured_evidence_comparison.v1",
-      version: "0.1.0",
+      version: comparison.version,
       generatedAt: asOf,
       comparisons: [comparison],
       summary: {

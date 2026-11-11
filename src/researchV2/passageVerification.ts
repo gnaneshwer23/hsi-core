@@ -23,6 +23,14 @@ export type PassageResult={
 };
 const id=/^[A-Za-z0-9][A-Za-z0-9:_.-]{0,127}$/;
 const validId=(s:unknown)=>typeof s==="string"&&id.test(s);
+export const PASSAGE_CHECK_KEYS=["sourceIdentity","sourceStatus","rights","passageHash","exactSpan","biologicalContext"] as const;
+/** A disposition label alone never establishes successful passage grounding. */
+export function isGroundedPassageResult(receipt:PassageResult|null|undefined):boolean{
+ return !!receipt&&validId(receipt.claimId)&&validId(receipt.sourceId)&&receipt.disposition==="grounded_candidate"&&!!receipt.checks&&Object.keys(receipt.checks).sort().join(",")===[...PASSAGE_CHECK_KEYS].sort().join(",")&&PASSAGE_CHECK_KEYS.every(key=>receipt.checks[key]===true)&&receipt.scientificTruthEstablished===false&&receipt.graphPromotable===false&&receipt.humanApproval===false;
+}
+export function requiresScientificException(predicate:string):boolean{
+ return ["causes","treats","cures","prevents"].includes(predicate.trim().toLowerCase());
+}
 const sha=/^[a-f0-9]{64}$/;
 const bytes=(s:string)=>new TextEncoder().encode(s);
 async function digest(s:string):Promise<string>{
@@ -30,7 +38,8 @@ async function digest(s:string):Promise<string>{
  return [...new Uint8Array(result)].map(x=>x.toString(16).padStart(2,"0")).join("");
 }
 export async function verifyPassageClaim(source:VerifiedSourceEnvelope,claim:EvidenceClaim):Promise<PassageResult>{
- if(!source||!claim||!validId(source.sourceId)||!validId(claim.id)||!validId(claim.sourceId)||!validId(claim.subjectId)||!validId(claim.objectId)||claim.sourceId!==source.sourceId)throw Error("Invalid source/claim contract");
+ source=structuredClone(source);claim=structuredClone(claim);
+ if(!source||!claim||!validId(source.sourceId)||!validId(claim.id)||!validId(claim.sourceId)||!validId(claim.subjectId)||!validId(claim.objectId)||claim.sourceId!==source.sourceId||typeof claim.predicate!=="string"||!claim.predicate.trim()||claim.predicate.length>128)throw Error("Invalid source/claim contract");
  const findings:string[]=[];
  const identity=source.identityChecked===true&&source.sourceKind==="publication"&&((source.identifierKind==="PMID"&&/^PMID:[0-9]+$/.test(source.canonicalId))||(source.identifierKind==="DOI"&&/^DOI:10\.[^\s]{3,180}$/.test(source.canonicalId)))&&/^https:\/\//.test(source.sourceUrl)&&Number.isFinite(Date.parse(source.retrievedAt));
  if(!identity)findings.push("Source identity has not been independently checked");
@@ -45,7 +54,7 @@ export async function verifyPassageClaim(source:VerifiedSourceEnvelope,claim:Evi
  if(!span)findings.push("Claim quotation does not match the declared source span");
  const context=Array.isArray(claim.context?.diseaseIds)&&claim.context.diseaseIds.every(validId)&&new Set(claim.context.diseaseIds).size===claim.context.diseaseIds.length&&[claim.context.species,claim.context.tissueId,claim.context.cellId,claim.context.method].every(v=>v===null||(typeof v==="string"&&v.length>0&&v.length<=128));
  if(!context)findings.push("Biological context invalid or missing");
- const highRisk=["causes","treats","cures","prevents"].includes(claim.predicate);
+ const highRisk=requiresScientificException(claim.predicate);
  if(highRisk)findings.push("Causal or therapeutic claim requires independent scientific adjudication");
  const checks={sourceIdentity:identity,sourceStatus:status,rights,passageHash:hash,exactSpan:span,biologicalContext:context};
  const disposition=highRisk||!status?"exception_review":Object.values(checks).every(Boolean)?"grounded_candidate":"needs_evidence";

@@ -1,5 +1,6 @@
 /** B-04.4.5: bounded claim challenge protocol; no model is a source of truth. */
 import type {PassageResult} from "./passageVerification";
+import {isGroundedPassageResult} from "./passageVerification";
 export type EntailmentVerdict="supports"|"contradicts"|"insufficient"|"not_assessed";
 export interface IndependentChallenge{claimId:string;verifierId:string;modelOrMethod:string;verdict:EntailmentVerdict;evidenceSpan:string|null;reason:string;independentEvidenceSourceIds:string[];}
 export interface Adjudication{claimId:string;disposition:"candidate_only"|"exception_review"|"insufficient_evidence";agreement:"concordant"|"disputed"|"unassessed";humanEscalation:boolean;scientificApproval:false;graphPromotable:false;reasons:string[];}
@@ -9,7 +10,7 @@ export function adjudicateClaim(receipt:PassageResult,challenges:IndependentChal
  const distinct=new Set(challenges.map(c=>c.verifierId));
  if(distinct.size!==challenges.length)throw Error("Duplicate verifier identities");
  const reasons:string[]=[];
- if(receipt.disposition!=="grounded_candidate")reasons.push("Passage verification did not pass");
+ if(!isGroundedPassageResult(receipt))reasons.push("Passage verification did not pass");
  if(challenges.length<minIndependent)reasons.push("Insufficient independent challenges");
  if(challenges.some(c=>c.verdict==="contradicts"))reasons.push("Contradictory scientific assessment");
  if(challenges.some(c=>c.verdict==="insufficient"||c.verdict==="not_assessed"))reasons.push("Scientific evidence is insufficient or not assessed");
