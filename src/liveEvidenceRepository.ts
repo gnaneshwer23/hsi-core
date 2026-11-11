@@ -31,8 +31,7 @@ export function createLiveEvidenceRepository(db:LiveSql,authenticatedOwner:strin
  return {
   async create(requestId:string,bundleInput:unknown):Promise<{record:LiveRecord;created:boolean}>{
    if(!uuid.test(requestId))throw new LiveDenied();
-   const bundle=parseResearchBundle(bundleInput);
-   if(bundle.context.dataClass!=="public_real"||bundle.containsPhi||bundle.clinicalAdvice||bundle.kgWrite||bundle.claims.length||bundle.passages.length||bundle.relationships.length||bundle.entities.length||bundle.runs.length!==1)throw new LiveDenied();
+   const bundle=validateLiveBundle(bundleInput);
    const question=bundle.context.question;
    if(question.length<5||question.length>400)throw new LiveDenied();
    const id="hsi-live-"+hash(owner+"\u0000"+requestId).slice(0,32);
