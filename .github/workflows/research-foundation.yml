@@ -4,7 +4,7 @@ permissions:
   contents: read
 jobs:
   site-deployment:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
@@ -20,7 +20,7 @@ jobs:
       - run: bun run build
         working-directory: site
   verify:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
@@ -41,7 +41,7 @@ jobs:
       - run: bun audit --json
         working-directory: site
       - run: bun run site:build
-      - run: bunx --no-install playwright install --with-deps chromium
+      - run: bunx --no-install playwright install chromium
         working-directory: site
       - run: bun run test:e2e
         working-directory: site
