@@ -1,7 +1,7 @@
 # P1.12.5 staging acceptance evidence — 2026-11-11
 
 ## Scope
-Read/write SQL tests ran only on HSI Neon project `red-wave-06625195`, staging branch `br-patient-wind-zaqag54x`. Production was not accessed or modified.
+Read/write SQL tests ran only on HSI Neon project `<HSI_NEON_PROJECT_ID>`, staging branch `<HSI_STAGING_BRANCH_ID>`. Production was not accessed or modified.
 
 ## Observed database checks
 - FORCE RLS enabled on evidence snapshots and review events.
