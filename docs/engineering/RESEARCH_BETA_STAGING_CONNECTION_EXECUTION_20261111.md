@@ -1,7 +1,7 @@
 # HSI Research Beta — Staging integration execution (2026-11-11)
 
 ## Verified actions
-- Created restricted LOGIN role `hsi_evidence_beta_app` on Neon project `red-wave-06625195`, staging branch `br-patient-wind-zaqag54x` only.
+- Created restricted LOGIN role `hsi_evidence_beta_app` on Neon project `<HSI_NEON_PROJECT_ID>`, staging branch `<HSI_STAGING_BRANCH_ID>` only.
 - Role is NOSUPERUSER, NOBYPASSRLS, and LOGIN.
 - Revoked the broad schema-wide SELECT grants and future default table SELECT grants created by Neon read_only provisioning.
 - Granted membership in the existing scoped `hsi_evidence_app` role with INHERIT TRUE and SET FALSE.
