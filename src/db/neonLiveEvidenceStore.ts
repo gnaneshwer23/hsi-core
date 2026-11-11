@@ -52,7 +52,7 @@ export function createNeonLiveEvidenceDependencies(config:{
     if(policy.length!==1||policy[0]?.enabled!==true||policy[0]?.forced!==true)throw Error("Live table RLS not ready");
     const policies=await sql.unsafe("SELECT policyname,qual,with_check FROM pg_policies WHERE schemaname=$1 AND tablename=$2",["public","hsi_live_investigations"]);
     assertNoForgeableOwnerPolicy(policies);
-    const approved=policies.filter(p=>p.policyname==="hsi_live_verified_session_isolation");
+    const approved=policies.filter((p:Record<string,unknown>)=>p.policyname==="hsi_live_verified_session_isolation");
     if(approved.length!==1||policies.length!==1||!String(approved[0]?.qual??"").includes("hsi_live_verified_owner()")||!String(approved[0]?.with_check??"").includes("hsi_live_verified_owner()"))throw Error("A-01 denied: unapproved RLS policy");
    }catch(e){await sql.close();throw e}
    // Every operation executes inside a transaction, with a local, server-derived
