@@ -18,7 +18,7 @@ test('mobile menu uses a clear icon, touch targets and working account/navigatio
  const drawer=page.getByRole('navigation',{name:'Mobile navigation'});
  await expect(drawer.getByRole('link',{name:'Sign in',exact:true})).toHaveCount(0);
  await expect(drawer.getByRole('link',{name:'Sign up',exact:true})).toHaveCount(0);
- await drawer.getByRole('link',{name:'Research access',exact:true}).click();await expect(page).toHaveURL(/contact$/);await expect(drawer).toBeHidden();
+ await expect(drawer.locator('a.nav-drawer-cta')).toHaveText(/Research access/);await drawer.locator('a.nav-drawer-cta').click();await expect(page).toHaveURL(/contact$/);await expect(drawer).toBeHidden();
 });
 test('footer has product navigation, clear project links and accessible touch targets',async({page})=>{
  for(const width of [320,768,1440]){

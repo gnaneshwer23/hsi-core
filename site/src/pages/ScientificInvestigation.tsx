@@ -120,7 +120,7 @@ export function ScientificInvestigationPage() {
         <header>
           <p className="inv-kicker">Research demonstration</p>
           <div className="inv-title-row">
-            <h1>Start an investigation</h1>
+            <h1>A curated investigation</h1>
             <span className="inv-badge">Demo environment</span>
           </div>
           <p className="inv-lead">

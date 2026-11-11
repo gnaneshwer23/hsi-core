@@ -33,6 +33,7 @@ const TrialsCriteria=lazy(()=>import("./pages/TrialsCriteria").then(m=>({default
 const GatewayDemo=lazy(()=>import("./pages/GatewayDemo").then(m=>({default:m.GatewayDemo})));
 const Sources=lazy(()=>import("./pages/Sources").then(m=>({default:m.Sources})));
 import { Science } from "./pages/Science";
+import { ScienceBody } from "./pages/ScienceBody";
 const ScienceLiterature=lazy(()=>import("./pages/ScienceLiterature").then(m=>({default:m.ScienceLiterature})));
 const ResearchCoverage=lazy(()=>import("./pages/ResearchCoverage").then(m=>({default:m.ResearchCoverage})));
 const ResearchEvidenceCatalogue=lazy(()=>import("./pages/ResearchEvidenceCatalogue").then(m=>({default:m.ResearchEvidenceCatalogue})));
@@ -41,7 +42,6 @@ const ScienceStudyComparison=lazy(()=>import("./pages/ScienceStudyComparison").t
 const ScienceReviewPreparation=lazy(()=>import("./pages/ScienceReviewPreparation").then(m=>({default:m.ScienceReviewPreparation})));
 const ScientificReviewerDecision=lazy(()=>import("./pages/ScientificReviewerDecision").then(m=>({default:m.ScientificReviewerDecision})));
 const ScienceDisease=lazy(()=>import("./pages/ScienceDisease").then(m=>({default:m.ScienceDisease})));
-const ScienceBody=lazy(()=>import("./pages/ScienceBody").then(m=>({default:m.ScienceBody})));
 const ScienceGraph=lazy(()=>import("./pages/ScienceGraph").then(m=>({default:m.ScienceGraph})));
 const SciencePaths=lazy(()=>import("./pages/SciencePaths").then(m=>({default:m.SciencePaths})));
 const ScienceContradictions=lazy(()=>import("./pages/ScienceContradictions").then(m=>({default:m.ScienceContradictions})));

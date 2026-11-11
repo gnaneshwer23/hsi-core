@@ -73,7 +73,7 @@ Home → How it works → Research → Evidence & safety → Contact
 Home → Science → Body / Graph → Research
 Home → Modules → Aksh / Clinical / ISI / Trials → Platform
 Platform → Modules / Science / How it works / Contact
-Any marketing page → Contact (Request Research Access)
+Any marketing page → Contact (Research access: browser draft, then an administrator grant)
 ```
 
 Research context query keys (`scenario`, `panel`, `domain`, `investigation`, `next`) stay preserved where already used (`researchContext.ts`).

@@ -8,8 +8,8 @@
 | Homepage concern | Status | Evidence |
 |------------------|--------|----------|
 | Public narrative / SEO | CONNECTED | Static React + `applySeo`; capability `PUB-HOME-NARRATIVE` |
-| Explore the Platform CTA | CONNECTED | `/platform` |
-| Request Research Access | CONNECTED | `/contact` + account flows; access intent browser draft |
+| Curated investigation CTA | CONNECTED | `/research/investigate` demo; writes stay closed |
+| Research access | CONNECTED | `/contact` browser draft only; no access-request write |
 | Hero imagery | CONNECTED (static) | `/images/homepage/*` webp+jpeg |
 | Domain explorer context | ILLUSTRATIVE | URL `?domain=` + curated `HOME_DOMAINS` |
 | Biology graph deep links | CONNECTED (read tools) | `/science/graph`, `/research/knowledge-graph` |

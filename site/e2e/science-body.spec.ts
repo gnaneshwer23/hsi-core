@@ -25,6 +25,17 @@ test("URL context, schematic selection and pancreas learning pathway",async({pag
  await page.reload();
  await expect(page.getByRole("heading",{name:"Pancreas",exact:true})).toBeVisible();
 });
+test("Biology Zoom follows only organs that have a pathway",async({page})=>{
+ await page.goto("/science/body?organ=liver");
+ await expect(page.getByRole("heading",{name:"Liver",exact:true})).toBeVisible();
+ await expect(page.getByRole("link",{name:/Open Biology Zoom/})).toHaveCount(0);
+ await expect(page.getByText(/This organ stays on the body explorer/)).toBeVisible();
+ await page.getByRole("button",{name:/Heart/}).first().click();
+ await expect(page.getByRole("link",{name:/Open Biology Zoom/})).toHaveAttribute("href","/science/zoom?organ=heart");
+ await page.goto("/science/zoom?organ=liver");
+ await expect(page.getByRole("heading",{name:"Pancreas",exact:true})).toHaveCount(0);
+ await expect(page.getByText(/does not open the pancreas pathway/)).toBeVisible();
+});
 test("filters and keyboard markers",async({page})=>{
  await page.goto("/science/body");
  await page.getByLabel("Biological system").selectOption("immune");

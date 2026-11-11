@@ -11,7 +11,7 @@ export const PUBLIC_MARKETING_PATHS=[
  "/","/platform","/technology","/modules","/solutions","/research","/evidence-safety","/pricing","/contact",
  "/science","/how-it-works","/modules/aksh-health","/modules/clinical","/modules/isi","/modules/trials"
 ] as const;
-/** Compact chrome label; hero/body copy may use the longer “Request Research Access”. */
-export const PRIMARY_NAV_CTA={ to: "/contact", label: "Request access"} as const;
+/** Contact stores a browser draft. It does not submit an access request or start an investigation. */
+export const PRIMARY_NAV_CTA={ to: "/contact", label: "Research access"} as const;
 export function isPublicMarketingPath(pathname:string){return (PUBLIC_MARKETING_PATHS as readonly string[]).includes(pathname)}
 export function isAccountPath(pathname:string){return ["/sign-in","/sign-up","/forgot-password","/reset-password","/research/account"].includes(pathname)}

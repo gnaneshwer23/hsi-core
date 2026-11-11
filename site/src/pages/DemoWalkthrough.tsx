@@ -181,7 +181,7 @@ export function DemoWalkthrough() {
           { to: "/how-it-works", label: "How it works", note: "Workflow narrative" },
           { to: "/platform", label: "Platform", note: "Shared technology" },
           { to: "/research", label: "Research", note: "Investigations" },
-          { to: "/contact", label: "Request access", note: "Collaboration" },
+          { to: "/contact", label: "Research access", note: "Browser draft only" },
         ]}
       />
     </MarketingPage>
