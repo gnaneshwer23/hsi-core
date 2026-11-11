@@ -2,6 +2,8 @@
  * Deploy only behind a same-origin reverse proxy and secure HTTPS session cookies.
  * Never accept identity, session tokens or roles from request bodies.
  */
+import {handleLiveEvidenceApi,type LiveApiDependencies} from "../liveEvidenceApi";
+import {createNeonLiveEvidenceDependencies} from "../db/neonLiveEvidenceStore";
 import {renderResearchOutcome,type ResearchOutcome} from "../researchOutcome";
 import {deliveryHash} from "./investigationDeliveryService";
 import {loadAuthenticatedInterrogativeInvestigation} from "../db/authenticatedInterrogativeStore";
@@ -20,6 +22,7 @@ import {parseCreateInvestigation,parseInvestigationCursor,type InvestigationCurs
 import {loadOrCaptureInvestigationGraphContext} from "../db/investigationGraphContextStore";
 
 type ApiServices={
+ liveEvidence?:LiveApiDependencies;
  outcome?:(input:{serverSessionToken:string|null;investigationId:string})=>Promise<ResearchOutcome>;
  deliveryView?:(input:{serverSessionToken:string|null;investigationId:string})=>Promise<unknown>;
  brief?:(input:{serverSessionToken:string|null;investigationId:string;format:"json"|"markdown"})=>Promise<{content:string;hash:string;packageHash:string;mime:string;filename:string}>;
@@ -51,6 +54,9 @@ function json(data:unknown,status=200):Response{
 }
 export async function handleInterrogativeApi(req:Request,services:ApiServices):Promise<Response>{
  const url=new URL(req.url);
+ if(url.pathname==="/api/research/live-investigations"||url.pathname.startsWith("/api/research/live-investigations/")){
+  return services.liveEvidence?handleLiveEvidenceApi(req,services.liveEvidence):json({error:"Live evidence persistence disabled"},503);
+ }
  const outcome=/^\/api\/research\/interrogative\/(hsi-interrogative-[a-zA-Z0-9-]{8,100})\/outcome$/.exec(url.pathname);
  if(outcome){
   if(req.method!=="GET")return json({error:"Method not allowed"},405);
@@ -207,9 +213,10 @@ function workspaceError(error:unknown):Response{
  if(error instanceof InvestigationWorkspaceError)return json({code:error.code,error:error.publicMessage},error.status);
  return json({error:"Research workspace unavailable or operation denied"},403);
 }
-export function createNeonInterrogativeApiServices(config:{databaseUrl:string;neonProjectId?:string|null;writesEnabled?:boolean;sscReleaseId?:string;raComparisonReleaseId?:string}):ApiServices{
+export function createNeonInterrogativeApiServices(config:{databaseUrl:string;neonProjectId?:string|null;writesEnabled?:boolean;sscReleaseId?:string;raComparisonReleaseId?:string;liveEvidenceRuntimeDatabaseUrl?:string;liveEvidenceWritesEnabled?:boolean}):ApiServices{
  const workspace=createNeonInvestigationWorkspace(config);
  return {
+  liveEvidence:config.liveEvidenceRuntimeDatabaseUrl?createNeonLiveEvidenceDependencies({databaseUrl:config.databaseUrl,runtimeDatabaseUrl:config.liveEvidenceRuntimeDatabaseUrl,neonProjectId:config.neonProjectId,writesEnabled:config.liveEvidenceWritesEnabled===true}):undefined,
   graphContext:args=>loadOrCaptureInvestigationGraphContext({...config,...args}),
   workspace:args=>workspace.list(args),
   create:args=>workspace.create(args),
