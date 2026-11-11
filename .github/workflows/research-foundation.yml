@@ -41,7 +41,7 @@ jobs:
       - run: bun audit --json
         working-directory: site
       - run: bun run site:build
-      - run: bunx --no-install playwright install --with-deps chromium
+      - run: bunx --no-install playwright install chromium
         working-directory: site
       - run: bun run test:e2e
         working-directory: site
