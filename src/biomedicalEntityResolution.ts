@@ -5,12 +5,13 @@ import type {ResearchSource} from "./researchContracts";
 export type BiomedicalKind="cell"|"cytokine"|"process"|"disease";
 export type OntologyTerm={id:string;label:string;kind:BiomedicalKind;aliases:readonly string[]};
 export type EntityMention={sourceId:string;termId:string;label:string;kind:BiomedicalKind;matchedText:string;start:number;end:number;resolution:"exact_label"|"curated_alias"};
+/** Local provisional identifiers; do not claim external ontology equivalence without curator verification. */
 export const SSC_TERMS:readonly OntologyTerm[]=[
- {id:"MONDO:0005100",label:"systemic sclerosis",kind:"disease",aliases:["scleroderma"]},
- {id:"CL:0002038",label:"T follicular helper cell",kind:"cell",aliases:["Tfh cell","Tfh cells"]},
- {id:"IL21",label:"interleukin-21",kind:"cytokine",aliases:["IL-21"]},
- {id:"CL:0000236",label:"B cell",kind:"cell",aliases:["B cells"]},
- {id:"GO:0048143",label:"astrocyte activation",kind:"process",aliases:[]}
+ {id:"HSI:SSc",label:"systemic sclerosis",kind:"disease",aliases:["scleroderma"]},
+ {id:"HSI:Tfh",label:"T follicular helper cell",kind:"cell",aliases:["Tfh cell","Tfh cells"]},
+ {id:"HSI:IL21",label:"interleukin-21",kind:"cytokine",aliases:["IL-21"]},
+ {id:"HSI:BCell",label:"B cell",kind:"cell",aliases:["B cells"]},
+ {id:"HSI:AstrocyteActivation",label:"astrocyte activation",kind:"process",aliases:[]}
 ];
 const escapeRegExp=(s:string)=>s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
 export function resolveBibliographicEntities(sources:readonly ResearchSource[],terms:readonly OntologyTerm[]=SSC_TERMS):EntityMention[]{
