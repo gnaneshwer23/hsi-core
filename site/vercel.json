@@ -363,15 +363,43 @@
     {
       "source": "/research/scientific-review",
       "destination": "/_pages/research--scientific-review.html"
+    },
+    {
+      "source": "/research/discovery-experience",
+      "destination": "/_pages/research--discovery-experience.html"
     }
   ],
   "redirects": [
-    { "source": "/products", "destination": "/modules", "permanent": false },
-    { "source": "/for-isi", "destination": "/modules/isi", "permanent": false },
-    { "source": "/for-aksh", "destination": "/modules/aksh-health", "permanent": false },
-    { "source": "/for-trials", "destination": "/modules/trials", "permanent": false },
-    { "source": "/akeno", "destination": "/modules/clinical", "permanent": false },
-    { "source": "/aksh-agents", "destination": "/modules/aksh-health", "permanent": false }
+    {
+      "source": "/products",
+      "destination": "/modules",
+      "permanent": false
+    },
+    {
+      "source": "/for-isi",
+      "destination": "/modules/isi",
+      "permanent": false
+    },
+    {
+      "source": "/for-aksh",
+      "destination": "/modules/aksh-health",
+      "permanent": false
+    },
+    {
+      "source": "/for-trials",
+      "destination": "/modules/trials",
+      "permanent": false
+    },
+    {
+      "source": "/akeno",
+      "destination": "/modules/clinical",
+      "permanent": false
+    },
+    {
+      "source": "/aksh-agents",
+      "destination": "/modules/aksh-health",
+      "permanent": false
+    }
   ],
   "trailingSlash": false
 }
