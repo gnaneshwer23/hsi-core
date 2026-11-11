@@ -51,10 +51,10 @@ REVOKE ALL ON FUNCTION public.hsi_contradiction_create(text,text,text,text,text,
 
 CREATE OR REPLACE FUNCTION public.hsi_contradiction_review(
  p_token text,p_tenant text,p_contradiction text,p_decision text,
- p_rationale text,p_source_locator text,p_scope text)
+ p_rationale text,p_source_locator text)
 RETURNS uuid LANGUAGE plpgsql SECURITY DEFINER
 SET search_path = pg_catalog, public AS $$
-DECLARE v_principal text;v_submitter text;v_event uuid;
+DECLARE v_principal text;v_submitter text;v_event uuid;v_scope text;
 BEGIN
  v_principal:=public.hsi_contradiction_session_principal(p_token);
  IF NOT EXISTS (
@@ -63,10 +63,15 @@ BEGIN
    AND m.member_role='scientific_reviewer' AND m.revoked_at IS NULL
    AND m.granted_at<=now()
  ) THEN RAISE EXCEPTION 'Tenant reviewer access denied'; END IF;
+ SELECT lower(trim(snapshot->'left'->'context'->'disease'->>'value')) INTO v_scope
+ FROM public.hsi_contradiction_records WHERE id=p_contradiction AND tenant_id=p_tenant;
+ IF v_scope IS NULL OR v_scope NOT IN ('ssc','ra') THEN
+  RAISE EXCEPTION 'Unverified or unsupported disease scope';
+ END IF;
  IF NOT EXISTS (
   SELECT 1 FROM public.hsi_reviewer_authority r
   WHERE r.principal_id=v_principal AND r.reviewer_role='scientific_reviewer'
-   AND r.scope=p_scope AND r.revoked_at IS NULL AND r.granted_at<=now()
+   AND r.scope=v_scope AND r.revoked_at IS NULL AND r.granted_at<=now()
  ) THEN RAISE EXCEPTION 'Reviewer authority denied'; END IF;
  SELECT submitted_by INTO v_submitter FROM public.hsi_contradiction_records
  WHERE id=p_contradiction AND tenant_id=p_tenant FOR UPDATE;
@@ -78,6 +83,8 @@ BEGIN
  RETURNING event_id INTO v_event;
  RETURN v_event;
 END $$;
-REVOKE ALL ON FUNCTION public.hsi_contradiction_review(text,text,text,text,text,text,text) FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.hsi_contradiction_review(text,text,text,text,text,text) FROM PUBLIC;
+-- Disease scope is derived from persisted evidence, not a caller argument.
+-- This candidate path is intentionally fail-closed for unknown evidence shapes.
 -- No EXECUTE grants. Deployment must explicitly review SECURITY DEFINER owner
 -- privileges, FORCE RLS implications, and restricted runtime role before grants.
