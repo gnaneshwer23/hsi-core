@@ -5,7 +5,13 @@
  */
 import {CANONICAL_EDGE_SCHEMA_VERSION, REQUIRED_CONTEXT, validateCanonicalEdge,
   type CanonicalEvidenceEdge, type CanonicalContext, type ContextKey, type ContextValue} from "./canonicalContextualEdge";
-import type {ScientificEdge, EvidenceRecord} from "../../site/src/features/science/typedGraphSchema";
+/** Structural legacy contract kept within the backend rootDir. */
+export type LegacyScientificEdge = {
+  id:string; subjectId:string; predicate:string; objectId:string;
+  evidenceIds:string[]; context:{disease?:string;tissue?:string;species?:string;assay?:string;experimentalSetting?:string};
+  reviewStatus:string;
+};
+export type LegacyEvidenceRecord = {id:string;context?:{disease?:string}};
 import type {ContextualCandidateRelationship} from "./contextualCandidateRelationships";
 import type {MechanismEvidenceLead} from "./contextualMechanismComparison";
 
@@ -35,7 +41,7 @@ function draft(input: {id:string;subjectId:string;predicate:string;objectId:stri
   return edge;
 }
 /** Typed graph evidence requires an actual source record; review state is deliberately reset to draft. */
-export function fromTypedGraphEdge(edge: ScientificEdge, source: EvidenceRecord, proof: SourceProof,
+export function fromTypedGraphEdge(edge: LegacyScientificEdge, source: LegacyEvidenceRecord, proof: SourceProof,
   overrides: AdapterOverrides = {}): CanonicalEvidenceEdge {
   if (!edge.evidenceIds.includes(source.id)) throw new Error("Evidence source not linked to edge");
   const legacy = edge.context;
