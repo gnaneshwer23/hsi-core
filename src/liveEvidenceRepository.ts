@@ -58,8 +58,12 @@ export function createLiveEvidenceRepository(db:LiveSql,authenticatedOwner:strin
   },
   async revise(id:string,expectedRevision:number,bundleInput:unknown):Promise<LiveRecord>{
    if(!idPattern.test(id)||!Number.isSafeInteger(expectedRevision)||expectedRevision<1)throw new LiveDenied();
-   const bundle=parseResearchBundle(bundleInput);
-   if(bundle.containsPhi||bundle.kgWrite||bundle.clinicalAdvice||bundle.claims.length||bundle.passages.length||bundle.relationships.length||bundle.entities.length||bundle.context.dataClass!=="public_real")throw new LiveDenied();
+   const bundle=validateLiveBundle(bundleInput);
+   // No source or provenance replacement through the revision endpoint.
+   const current=await this.get(id);
+   if(!current)throw new LiveConflict("Missing or inaccessible investigation");
+   if(current.revision!==expectedRevision)throw new LiveConflict("Stale investigation revision");
+   if(JSON.stringify(current.bundle)!==JSON.stringify(bundle))throw new LiveDenied();
    const rows=await db.query("UPDATE public.hsi_live_investigations SET bundle=$4::jsonb,revision=revision+1,updated_at=now() WHERE owner_id=$1 AND id=$2 AND revision=$3 AND question=$5 RETURNING *",[owner,id,expectedRevision,JSON.stringify(bundle),bundle.context.question]);
    if(rows.length!==1)throw new LiveConflict("Stale revision or inaccessible investigation");
    return record(rows[0]!);
