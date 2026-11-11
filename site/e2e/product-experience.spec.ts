@@ -21,8 +21,10 @@ test("home communicates the research workflow and supports accessible capability
  await steps.getByRole("button",{name:/Gaps/}).click();
  await expect(page.locator("#investigation-workflow")).toContainText("contradictions");
  await expect(page.locator(".cl-hero .cl-actions a")).toHaveCount(2);
- await page.getByRole("link",{name:/Explore the Platform/i}).first().click();
- await expect(page).toHaveURL(/\/platform$/);
+ await page.getByRole("link",{name:/See a curated investigation/i}).click();
+ await expect(page).toHaveURL(/\/research\/investigate$/);
+ await expect(page.getByText("Demo environment")).toBeVisible();
+ await expect(page.getByText(/Curated examples only/)).toBeVisible();
 });
 test("mobile menu opens, closes with Escape and connects public destinations",async({page})=>{
  await page.setViewportSize({width:390,height:844});await page.goto("/");const menu=page.locator(".nav-toggle");await menu.click();await expect(menu).toHaveAttribute("aria-expanded","true");
@@ -36,10 +38,10 @@ test("evidence overview explains source context without presenting unreviewed re
  await page.getByRole("link",{name:"Follow the research workflow",exact:true}).click();await expect(page).toHaveURL(/how-it-works$/);
 });
 test("public access paths lead to the real account process without a pretend submission",async({page})=>{
- const posts:string[]=[];page.on("request",r=>{if(r.method()==="POST")posts.push(r.url())});await page.goto("/pricing");await page.getByRole("main").getByRole("link",{name:"Research access",exact:true}).click();await expect(page).toHaveURL(/contact$/);
+ const posts:string[]=[];page.on("request",r=>{if(r.method()==="POST")posts.push(r.url())});await page.goto("/pricing");await page.getByRole("main").getByRole("link",{name:"Research access",exact:true}).first().click();await expect(page).toHaveURL(/contact$/);
  await expect(page.getByRole("main")).toContainText("permissions are provisioned independently");
  await expect(page.getByRole("main")).toContainText("does not write an access request");
- await expect(page.getByRole("heading",{name:/Describe the research you want to pursue/i})).toBeVisible();
+ await expect(page.getByRole("heading",{name:/Keep a browser draft of your question/i})).toBeVisible();
  await page.getByLabel(/Research question or investigation focus/i).fill("How might cytokine signalling vary across tissues in research models?");
  await page.getByRole("button",{name:/Save browser draft/i}).click();
  await expect(page.getByRole("status")).toContainText("Saved in this browser only");
@@ -70,8 +72,9 @@ test("reduced-motion mode retains functional capability navigation",async({page}
  await page.goto("/");
  await page.getByRole("button",{name:/Hypotheses/}).click();
  await expect(page.locator("#investigation-workflow")).toContainText("unvalidated");
- await page.getByRole("link",{name:/Explore the Platform/i}).first().click();
- await expect(page).toHaveURL(/\/platform$/);
+ await page.getByRole("link",{name:/See a curated investigation/i}).click();
+ await expect(page).toHaveURL(/\/research\/investigate$/);
+ await expect(page.getByText("Demo environment")).toBeVisible();
 });
 
 test("internal validation opens the actual trial view and PDF printing keeps labels and inert text",async({page})=>{

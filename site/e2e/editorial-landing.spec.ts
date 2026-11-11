@@ -40,5 +40,6 @@ test('homepage investigation anchor opens the eight-step sequence',async({page})
  await expect(page.locator('.cl-hero .cl-actions a')).toHaveCount(2);
  await expect(page.locator('.cl-hero .cl-actions a').first()).toHaveAttribute('href','/research/investigate');
  await expect(page.locator('.cl-hero .cl-actions a').nth(1)).toHaveAttribute('href','/contact');
- await expect(page.getByRole('link',{name:/Request Research Access/i}).first()).toHaveAttribute('href','/contact');
+ await expect(page.locator('.cl-hero')).toContainText('See a curated investigation');
+ await expect(page.getByRole('link',{name:/Research access/i}).first()).toHaveAttribute('href','/contact');
 });

@@ -29,7 +29,7 @@ export function HomeAccess() {
         </p>
         <div className="cl-actions">
           <Link className="cl-arrow-link cl-arrow-link-solid" to={PUBLIC_PRIMARY_CTA.to}>
-            Request Research Access <Arrow />
+            {PUBLIC_PRIMARY_CTA.label} <Arrow />
           </Link>
           <Link className="cl-text-link cl-text-link-on-deep" to="/how-it-works">
             Explore How HSI Works

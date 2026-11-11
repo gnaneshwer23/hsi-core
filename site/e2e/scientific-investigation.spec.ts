@@ -4,7 +4,7 @@ test("a researcher can walk the demo investigation without an account", async ({
   test.setTimeout(60_000);
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto("/research/investigate");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Start an investigation");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("A curated investigation");
   await expect(page.getByText("Demo environment", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: /gut microbial metabolites/i }).click();
   await page.getByRole("button", { name: "Next" }).click();

@@ -1,7 +1,9 @@
 # HSI landing pages — UX audit
 
 **Date:** 2026-11-10  
-**Scope:** Public marketing and landing surfaces. Audit only. No redesign, no feature build, no fix PR.  
+**Scope:** Public marketing and landing surfaces. Audit only. No redesign, no feature build, no fix PR.
+
+**Fix status (2026-11-10, branch `fix/landing-ux-audit-p0-p1`):** P0-1 canonicals, sitemap, robots and env examples already used `https://www.humansuperintelligence.tech`. No repository citation of the non-resolving `human-super-intelligence.co.uk` host remained; `.env.example` now names the live origin explicitly. P0-2 homepage primary action is “See a curated investigation” and opens `/research/investigate`, which stays labelled a demo with writes closed. P0-3 contact copy and site CTAs say research access is a browser draft plus an administrator grant, not a submitted request and not the start of an investigation. P1 pricing metadata is “Access options” with no team-pilot offer. P1 `/science/body` is indexed as the human body explorer, and Biology Zoom no longer sends other organs to the pancreas pathway.  
 **Workspace:** `hsi-core` `site/` (routes, nav, footer, page copy).  
 **Live host that answered:** https://www.humansuperintelligence.tech  
 **Host named in the task:** https://www.human-super-intelligence.co.uk — DNS does not resolve (`nodename nor servname`).  

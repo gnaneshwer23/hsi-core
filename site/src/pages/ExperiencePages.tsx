@@ -287,7 +287,7 @@ export function Contact() {
         eyebrow="RESEARCH ACCESS"
         title="Bring your next"
         emphasis="research question."
-        description="Create your HSI account to begin the access process. Researcher, source and scientific-review permissions are provisioned independently."
+        description="Create an HSI account if you need one. The question form on this page saves a browser draft only and does not submit an access request or start an investigation. Researcher, source and scientific-review permissions are provisioned independently."
         visual={<HeroArtwork kind="access" />}
       >
         <div className="xp-actions">
@@ -310,8 +310,8 @@ export function Contact() {
                 "An administrator provisions the appropriate permissions. The research backend checks your identity, role and permitted source access.",
               ],
               [
-                "Begin an investigation",
-                "Once your access is confirmed, open the research workspace to create or reopen a source-bound investigation.",
+                "Check what you can open",
+                "After you sign in, the research account page shows permissions an administrator has provisioned. This page does not start an investigation, and research writes stay closed until an administrator enables them.",
               ],
             ] as const
           ).map(([title, text]) => (
@@ -526,7 +526,7 @@ export function Community() {
           { to: "/science", label: "Science", note: "Biology entry" },
           { to: "/research", label: "Research", note: "Investigations" },
           { to: "/evidence-safety", label: "Evidence & safety", note: "Integrity" },
-          { to: "/contact", label: "Request access", note: "Collaboration" },
+          { to: "/contact", label: "Research access", note: "Browser draft only" },
         ]}
       />
     </MarketingPage>

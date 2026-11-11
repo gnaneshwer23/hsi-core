@@ -92,10 +92,10 @@ export function HomeHero() {
           </p>
           <div className="cl-actions">
             <Link className="cl-arrow-link cl-arrow-link-solid" to="/research/investigate">
-              Start an investigation <Arrow />
+              See a curated investigation <Arrow />
             </Link>
             <Link className="cl-text-link" to={PUBLIC_PRIMARY_CTA.to}>
-              Request Research Access
+              {PUBLIC_PRIMARY_CTA.label}
             </Link>
           </div>
         </div>

@@ -21,8 +21,9 @@ Robots: https://www.humansuperintelligence.tech/robots.txt
 - [Solutions](https://www.humansuperintelligence.tech/solutions): Translational and discovery workflows
 - [Evidence & safety](https://www.humansuperintelligence.tech/evidence-safety): Provenance, uncertainty, human review
 - [How it works](https://www.humansuperintelligence.tech/how-it-works): Question to research brief
-- [Access options](https://www.humansuperintelligence.tech/pricing): Research access and pilots
-- [Research access](https://www.humansuperintelligence.tech/contact): Request account / access
+- [Access options](https://www.humansuperintelligence.tech/pricing): Public access options. Registration does not grant research permission
+- [Research access](https://www.humansuperintelligence.tech/contact): Account guidance and a browser-only draft. Does not submit an access request
+- [Human body](https://www.humansuperintelligence.tech/science/body): Educational organ explorer. Illustrative positions; draft relationships
 
 ## Governed modules
 
