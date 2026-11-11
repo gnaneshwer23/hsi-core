@@ -5,7 +5,7 @@ const example:EvaluationExample={id:"e1",claim:{id:"c1",sourceId:"s1",exactQuote
 describe("B-04.4 operational evaluation harness",()=>{
  it("never sends unlicensed passages to models",async()=>{
   let called=0;const runner=async()=>{called++;return {verdict:"supports",evidenceSpan:"Human cells",reason:"synthetic"}};
-  const result=await evaluateWithTwoModels([example],{verifierId:"v1",modelId:"m1",runner},{verifierId:"v2",modelId:"m2",runner:async p=>runner(p)});
+  const result=await evaluateWithTwoModels([example],{verifierId:"v1",modelId:"m1",runner},{verifierId:"v2",modelId:"m2",runner:async()=>runner()});
   expect(called).toBe(0);expect(result.cases[0]?.prediction).toBe("not_assessed");expect(result.releaseEligible).toBe(false);
  });
  it("counts model errors as abstentions on cleared synthetic input",async()=>{
