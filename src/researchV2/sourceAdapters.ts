@@ -8,16 +8,17 @@ export interface PublicSourceRecord {
 export interface PublicSourceAdapter {
  id:string;search(terms:string[],limit?:number):Promise<PublicSourceRecord[]>;
 }
-type Fetcher=typeof fetch;
+/** Callable fetch subset, compatible with Bun and injected test doubles. */
+export type SourceFetcher=(input: string | URL | Request, init?: RequestInit)=>Promise<Response>;
 function termsOk(terms:string[],limit:number){
  if(!Array.isArray(terms)||terms.length===0||terms.length>8||terms.some(x=>typeof x!=="string"||!x.trim()||x.length>160)||!Number.isInteger(limit)||limit<1||limit>50)throw Error("Invalid source search");
 }
-async function json(url:string,fetcher:Fetcher):Promise<any>{
+async function json(url:string,fetcher:SourceFetcher):Promise<any>{
  const response=await fetcher(url,{headers:{Accept:"application/json"},signal:AbortSignal.timeout(15000)});
  if(!response.ok)throw Error("Biomedical source HTTP "+response.status);
  return response.json();
 }
-export function europePmcAdapter(fetcher:Fetcher=fetch):PublicSourceAdapter {
+export function europePmcAdapter(fetcher:SourceFetcher=fetch):PublicSourceAdapter {
  return {id:"europe-pmc",async search(terms,limit=20){
   termsOk(terms,limit);
   const url=new URL("https://www.ebi.ac.uk/europepmc/webservices/rest/search");
@@ -36,7 +37,7 @@ export function europePmcAdapter(fetcher:Fetcher=fetch):PublicSourceAdapter {
  }};
 }
 /** Open Targets GraphQL requires canonical disease EFO/MONDO identifiers, not free-text names. */
-export function openTargetsAdapter(fetcher:Fetcher=fetch):PublicSourceAdapter {
+export function openTargetsAdapter(fetcher:SourceFetcher=fetch):PublicSourceAdapter {
  return {id:"open-targets",async search(diseaseIds,limit=20){
   termsOk(diseaseIds,limit);
   if(diseaseIds.some(x=>!/^(EFO|MONDO|Orphanet|HP)_[0-9]+$/.test(x)))throw Error("Canonical disease identifier required");
