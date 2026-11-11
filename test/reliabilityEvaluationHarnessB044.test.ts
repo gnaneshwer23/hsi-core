@@ -65,4 +65,19 @@ describe("B-04.4 operational evaluation harness",()=>{
   const result=await evaluateWithTwoModels([cleared()],a,b,policy(async()=>++checks>1));
   expect(calls).toBe(0);expect(result.cases[0]?.sourceIdentityVerified).toBe(false);
  });
+ it("blocks normalized causal predicates before authority or model calls",async()=>{
+  let calls=0,lookups=0;const [a,b]=pair(async()=>{calls++;return {}});
+  for(const predicate of ["Causes"," TREATS ","CURES","Prevents"]){
+   const input=cleared();input.claim.predicate=predicate;
+   const result=await evaluateWithTwoModels([input],a,b,{clearance:{authorize:async()=>{lookups++;return true}}});
+   expect(result.cases[0]?.prediction).toBe("not_assessed");
+  }
+  expect(calls).toBe(0);expect(lookups).toBe(0);
+ });
+ it("records malformed model outputs as technical abstention, not scientific insufficiency",async()=>{
+  const [a,b]=pair(async()=>({verdict:"supports",evidenceSpan:"Human cells"}));
+  const result=await evaluateWithTwoModels([cleared()],a,b,policy());
+  expect(result.modelFailures).toBe(2);expect(result.cases[0]?.prediction).toBe("not_assessed");
+  expect(result.report.technicalAbstentionRate).toBe(1);expect(result.report.insufficientEvidenceRate).toBe(0);
+ });
 });

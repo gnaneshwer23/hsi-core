@@ -41,4 +41,4 @@ These findings supersede the original audit's database-discovery limitation. The
 
 ## Release boundary
 
-`releaseEligible:false`, human scientific approval and no silent graph promotion remain mandatory. No production writes, migrations, grants, release switches or merges are part of this increment. P1's comparator alignment defect and complete three-role live investigation remain separate work. Source-policy, security and scientific owners must accept the external dependencies above before production activation is considered.
+`releaseEligible:false`, human scientific approval and no silent graph promotion remain mandatory. No production writes, migrations, grants, release switches or merges are part of this increment. The audit follow-up repairs the comparator's entity/predicate alignment defect; independently validated context extraction/classification and the complete three-role live investigation remain separate work. Source-policy, security and scientific owners must accept the external dependencies above before production activation is considered.

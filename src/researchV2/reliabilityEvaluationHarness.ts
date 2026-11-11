@@ -3,6 +3,7 @@ import {randomUUID} from "node:crypto";
 import {evaluateScientificReliability,validateBenchmarkCases,type BenchmarkCase,type ReliabilityReport} from "./scientificReliabilityGate";
 import {executeDualModelChallenge,type ModelVerifier} from "./dualModelChallenge";
 import type {EvidenceClaim,PassageResult} from "./passageVerification";
+import {isGroundedPassageResult,PASSAGE_CHECK_KEYS,requiresScientificException} from "./passageVerification";
 import type {SourceClearanceVerifier} from "./sourceClearanceReceipt";
 export interface EvaluationExample{
  id:string;claim:EvidenceClaim;passage:string;receipt:PassageResult;
@@ -13,7 +14,7 @@ export interface EvaluationExample{
 }
 export interface EvaluationExecution {runId:string;caseId:string;verifierId:string;modelId:string;status:"assessed"|"not_assessed";providerRequestId:null;}
 export interface EvaluationOutput{report:ReliabilityReport;cases:BenchmarkCase[];modelFailures:number;executions:EvaluationExecution[];blockedReasons:Record<string,string>;releaseEligible:false;}
-const checkKeys=["sourceIdentity","sourceStatus","rights","passageHash","exactSpan","biologicalContext"];
+const checkKeys=PASSAGE_CHECK_KEYS;
 function preflight(example:EvaluationExample):BenchmarkCase{
  const c=example?.claim,r=example?.receipt;
  if(!c||!r||r.claimId!==c.id||r.sourceId!==c.sourceId||typeof example.passage!=="string"||!example.passage.trim()||example.passage.length>3000||typeof c.exactQuote!=="string"||!c.exactQuote.trim()||!example.passage.includes(c.exactQuote)||[c.id,c.subjectId,c.predicate,c.objectId].some(s=>typeof s!=="string"||!s.trim()||s.length>128)||!c.context||!Array.isArray(c.context.diseaseIds)||c.context.diseaseIds.some(s=>typeof s!=="string"||!s.trim()||s.length>128)||new Set(c.context.diseaseIds).size!==c.context.diseaseIds.length||[c.context.species,c.context.tissueId,c.context.cellId,c.context.method].some(s=>s!==null&&(typeof s!=="string"||!s.trim()||s.length>128))||!r.checks||Object.keys(r.checks).sort().join(",")!==[...checkKeys].sort().join(",")||Object.values(r.checks).some(v=>typeof v!=="boolean")||!["grounded_candidate","needs_evidence","exception_review"].includes(r.disposition)||r.scientificTruthEstablished!==false||r.graphPromotable!==false||r.humanApproval!==false||example.goldAdjudicated!==true||[example.sourceIdentityVerified,example.rightsVerified,example.retractionCleared].some(v=>typeof v!=="boolean"))throw Error("Invalid benchmark example");
@@ -30,7 +31,7 @@ export async function evaluateWithTwoModels(examples:EvaluationExample[],first:M
  const authorize=options.clearance?.authorize;
  for(let i=0;i<batch.length;i++){
   const example=batch[i]!,record=cases[i]!;
-  if(example.receipt.disposition!=="grounded_candidate"||!Object.values(example.receipt.checks).every(v=>v===true)||["causes","treats","cures","prevents"].includes(example.claim.predicate)){
+  if(!isGroundedPassageResult(example.receipt)||requiresScientificException(example.claim.predicate)){
    blockedReasons[record.id]="Passage grounding requires evidence or independent exception review";continue;
   }
   let cleared=false;

@@ -27,3 +27,9 @@ This increment adds an executable benchmark harness for **injected** model runne
 - Source receipts are canonical JSON signed by an independent authority using Ed25519. The research backend pins public keys and requires a bounded, current revocation lookup that fails closed. No signing key or trusted source authority is provisioned by this PR. The default maximum freshness is 24 hours (policy may tighten it); revocation lookups default to a one-second deadline.
 
 All scientific release, human review, HSI-only isolation and migration holds remain unchanged. See `P0_IMPLEMENTATION_AND_ACCEPTANCE.md` for remaining external acceptance work.
+
+## Audit follow-up
+
+Configuration, request, model response and claim inputs are snapshotted before validation/use. Malformed model response schemas fail as technical abstentions; both support and contradiction require an exact nonblank passage span. Direct dual-challenge execution and adjudication also check the full grounding receipt, using the same helper as the harness. Causal predicate casing/whitespace is normalized before the existing exception list is applied. These lower-level injected-runner functions are not substitutes for the server's signed-source authorization boundary.
+
+Structured evidence comparison `0.1.1` abstains on unaligned subject/object pairs or predicates even when disease/context overlaps. It still compares supplied metadata, not independently extracted experimental truth. No old saved comparison is rewritten. The external repository proposal and outdated #274/#275 status text are corrected in `docs/audits/HSI_PASTED_REVIEW_CORRECTIONS.md`; no new framework, dependency or clinical dataset is imported.

@@ -25,7 +25,7 @@ export const STRUCTURED_EVIDENCE_COMPARISON_SCHEMA =
   "hsi-structured-evidence-comparison-1" as const;
 export const STRUCTURED_EVIDENCE_COMPARISON_METHOD =
   "hsi.structured_evidence_comparison.v1" as const;
-export const STRUCTURED_EVIDENCE_COMPARISON_VERSION = "0.1.0" as const;
+export const STRUCTURED_EVIDENCE_COMPARISON_VERSION = "0.1.1" as const;
 
 export type StructuredComparisonOutcome =
   | "consistent"
@@ -256,11 +256,11 @@ function decideOutcome(input: {
     };
   }
 
-  if (!input.sharedSubjectObject && input.sharedContextAxisCount === 0) {
+  if (!input.sharedSubjectObject || input.methodologicalSignals.some(s=>s.startsWith("predicate_diff:"))) {
     return {
       outcome: "insufficient_comparability",
       rationale:
-        "Subject/object pairs differ and no shared biological-context axis values were recorded — records are not comparable without curator-declared alignment.",
+        "Subject/object pairs or predicates differ. Shared disease or other context does not align different biological claims; explicit curator-declared alignment is required before comparison.",
     };
   }
 

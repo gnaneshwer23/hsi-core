@@ -98,6 +98,25 @@ const mouseContext = ctx({
 });
 
 describe("structured evidence comparison outcomes", () => {
+  test("shared disease does not align different biological claims", () => {
+    for(const findingPolarity of ["supporting","opposing"] as const){
+      const result=compareEvidenceUnits({
+        left:unit({id:"a",findingPolarity:"supporting",biologicalContext:sscContext}),
+        right:unit({id:"b",findingPolarity,biologicalContext:sscContext,subject:{system:"CL",value:"CL:0000236",label:"B cell"}}),
+      });
+      expect(result.trace.sharedSubjectObject).toBe(false);
+      expect(result.outcome).toBe("insufficient_comparability");
+      expect(result.scientificApproval).toBe(false);
+    }
+  });
+  test("shared entities/context do not make different predicates equivalent", () => {
+    const result=compareEvidenceUnits({
+      left:unit({id:"a",findingPolarity:"supporting",biologicalContext:sscContext,predicate:"associated_with"}),
+      right:unit({id:"b",findingPolarity:"supporting",biologicalContext:sscContext,predicate:"causes"}),
+    });
+    expect(result.outcome).toBe("insufficient_comparability");
+    expect(result.version).toBe("0.1.1");
+  });
   test("matching polarities + shared context → consistent (not scientific approval)", () => {
     const result = compareEvidenceUnits({
       left: unit({id: "a", findingPolarity: "supporting", biologicalContext: sscContext}),

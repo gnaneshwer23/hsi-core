@@ -12,14 +12,19 @@ export type ProviderPayload={instruction:string;claim:string;passage:string};
  */
 export type ProviderTransport=(config:Readonly<ProviderConfig>,payload:ProviderPayload,options:{signal:AbortSignal;redirect:"error"})=>Promise<Response>;
 export function validateProviderConfig(config:ProviderConfig):Readonly<ProviderConfig>{
+ if(!config||typeof config!=="object"||Array.isArray(config))throw Error("Invalid provider config");
+ // Read each input property once; validation and transmission must use the same values.
+ config={providerId:config.providerId,modelId:config.modelId,endpoint:config.endpoint,timeoutMs:config.timeoutMs,maxResponseBytes:config.maxResponseBytes};
  if(!config||typeof config.providerId!=="string"||typeof config.modelId!=="string"||!config.modelId.trim()||config.modelId.length>128||!Number.isInteger(config.timeoutMs)||config.timeoutMs<1000||config.timeoutMs>30000||!Number.isInteger(config.maxResponseBytes)||config.maxResponseBytes<256||config.maxResponseBytes>65536)throw Error("Invalid provider config");
  if(!Object.hasOwn(ENDPOINTS,config.providerId)||!ENDPOINTS[config.providerId]!.includes(config.endpoint))throw Error("Unapproved provider endpoint");
- return Object.freeze({...config});
+ return Object.freeze(config);
 }
 export function createProviderRunner(config:ProviderConfig,transport:ProviderTransport):EntailmentModelRunner{
  const checked=validateProviderConfig(config);
  if(typeof transport!=="function")throw Error("Trusted provider transport required");
  return async payload=>{
+  if(!payload||typeof payload!=="object"||Array.isArray(payload))throw Error("Invalid model request");
+  payload={instruction:payload.instruction,claim:payload.claim,passage:payload.passage};
   if(!payload||[payload.instruction,payload.claim,payload.passage].some(s=>typeof s!=="string"||!s.trim())||payload.passage.length>3000||payload.claim.length>2000||payload.instruction.length>2000)throw Error("Invalid model request");
   const controller=new AbortController();
   let reader:ReadableStreamDefaultReader<Uint8Array>|undefined;
