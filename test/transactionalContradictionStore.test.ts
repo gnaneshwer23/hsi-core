@@ -1,6 +1,6 @@
 import {expect,it} from "bun:test";
 import {createContradictionRecord,appendIndependentContradictionReview} from "../src/db/transactionalContradictionStore";
-const config={databaseUrl:"postgres://invalid",serverSessionToken:null,stagingActivationApproved:false};
+const config={databaseUrl:"postgres://invalid",runtimeDatabaseUrl:"postgres://invalid-runtime",serverSessionToken:null,stagingActivationApproved:false};
 it("denies contradiction creation before touching database",async()=>{
  await expect(createContradictionRecord({...config,id:"x",tenantId:"t",left:{} as never,right:{} as never}))
  .rejects.toThrow("not activated");
