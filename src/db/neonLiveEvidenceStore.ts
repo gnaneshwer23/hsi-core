@@ -39,7 +39,7 @@ export function createNeonLiveEvidenceDependencies(config:{
    const sql=new SQL(config.runtimeDatabaseUrl,{tls:{rejectUnauthorized:true},connectionTimeout:10});
    try{
     const role=await sql.unsafe("SELECT current_user AS name, rolbypassrls AS bypass, rolsuper AS superuser FROM pg_roles WHERE rolname=current_user");
-    if(role.length!==1||role[0]?.bypass!==false||role[0]?.superuser!==false)throw Error("RLS-bypassing runtime role denied");
+    if(role.length!==1||role[0]?.name!=="hsi_live_runtime"||role[0]?.bypass!==false||role[0]?.superuser!==false)throw Error("RLS-bypassing runtime role denied");
     const policy=await sql.unsafe("SELECT relrowsecurity AS enabled, relforcerowsecurity AS forced FROM pg_class WHERE oid=to_regclass('public.hsi_live_investigations')");
     if(policy.length!==1||policy[0]?.enabled!==true||policy[0]?.forced!==true)throw Error("Live table RLS not ready");
    }catch(e){await sql.close();throw e}
