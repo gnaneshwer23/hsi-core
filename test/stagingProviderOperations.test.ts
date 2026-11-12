@@ -37,6 +37,11 @@ describe("P0-B isolated staging operations",()=>{
    f.denyApproval();await expect(f.service().run({deploymentId:f.deployment.id,source:f.source,payload})).rejects.toThrow("not approved");expect(f.calls).toBe(0);
   }finally{await f.close()}
  });
+ it("rejects existing PHI markers before source lookup or dispatch",async()=>{
+  const f=await fixture();try{
+   await expect(f.service().run({deploymentId:f.deployment.id,source:f.source,payload:{...payload,claim:"NHS number: 1234567890"}})).rejects.toThrow("data boundary");expect(f.calls).toBe(0);expect(f.authorityCalls).toBe(0);
+  }finally{await f.close()}
+ });
  it("records all required independent source states without turning unknown into clearance",async()=>{
   const f=await fixture();try{
    for(const state of ["cleared","unknown","expired","corrected","retracted","withdrawn","identifier_conflict","revoked"] as const){f.setState(state);expect((await f.sources.decide(f.source)).state).toBe(state);}

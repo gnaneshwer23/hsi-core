@@ -1,5 +1,6 @@
 /** Opt-in isolated-staging provider smoke service. No HTTP route, credentials or approval defaults. */
 import {canonicalEvidenceJson} from "../evidence/researchEvidenceCorpus";
+import {rejectPhiPayload} from "../cdsPhiBoundary";
 import {createHash,randomUUID} from "node:crypto";
 import {createProviderRunner,validateProviderConfig,type ProviderConfig,type ProviderPayload,type ProviderTransport} from "./providerReliability";
 import {createPinnedProviderTransport,type ProviderWireEncoder} from "./pinnedProviderTransport";
@@ -58,6 +59,7 @@ export function createStagingProviderOperations(options:{
   const {deploymentId,source,payload}=structuredClone({deploymentId:input.deploymentId,source:input.source,payload:input.payload}),signal=input.signal;
   const d=deployments.find(d=>d.id===deploymentId);if(!d||signal?.aborted)throw Error("Staging deployment unavailable");
   if(!payload||payload.passage!==source.passage||[payload.instruction,payload.claim,payload.passage].some(s=>typeof s!=="string"||!s.trim())||payload.instruction.length>2000||payload.claim.length>2000||payload.passage.length>3000)throw Error("Invalid staging payload");
+  if(!rejectPhiPayload({textBlobs:[payload.instruction,payload.claim,payload.passage]}).ok)throw Error("Prohibited staging data boundary");
   const configurationHash=hash(canonicalEvidenceJson(d));
   let approved=false;
   try{approved=await approve({deploymentId,configurationHash,termsRef:d.termsRef,sourcePolicyRef:d.sourcePolicyRef})===true;}catch{/* fail closed without copying authority errors */}
