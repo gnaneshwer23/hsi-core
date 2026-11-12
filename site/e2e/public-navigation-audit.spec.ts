@@ -68,7 +68,7 @@ test('all public body links are clickable and reach their intended destinations'
 });
 
 test('hero illustrations fit their pages and remain legible at mobile sizes',async({page},info)=>{
-  const artwork:Record<string,string>={'/platform':'platform','/technology':'technology','/modules':'products','/research':'research','/science':'science','/how-it-works':'workflow','/solutions':'solutions','/evidence-safety':'evidence','/contact':'access','/modules/aksh-health':'aksh','/modules/isi':'immune','/modules/trials':'trials'};
+  const artwork:Record<string,string>={'/technology':'technology','/modules':'products','/how-it-works':'workflow','/solutions':'solutions','/evidence-safety':'evidence','/contact':'access','/modules/aksh-health':'aksh','/modules/isi':'immune','/modules/trials':'trials'};
   for(const [path,kind] of Object.entries(artwork)){
     for(const width of [320,768,1440]){
       await page.setViewportSize({width,height:1000});await page.goto(path);

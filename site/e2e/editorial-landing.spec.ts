@@ -25,7 +25,7 @@ test('editorial homepage product demo, keyboard tabs and narrow layouts remain u
  await expect(steps.getByRole('button',{name:/Review/})).toHaveAttribute('aria-pressed','true');
  await expect(page.locator('#investigation-workflow')).toContainText('graph publication are separate');
  await expect(page.getByRole('main')).toContainText('See why the evidence conflicts.');
-  await expect(page.getByRole('main')).toContainText(/research workbench/i);
+  await expect(page.getByRole('main')).toContainText(/research brief/i);
  await expect(page.getByRole('main')).toContainText('A plausible explanation is not a validated mechanism.');
 });
 test('homepage investigation anchor opens the eight-step sequence',async({page})=>{

@@ -1,17 +1,16 @@
 import {lazy,Suspense} from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout";
-import {ResearchLanding,Solutions,EvidenceSafety,Pricing,Contact,Community} from "./pages/ExperiencePages";
+import {Solutions,EvidenceSafety,Pricing,Contact,Community} from "./pages/ExperiencePages";
 const GovernanceDashboard=lazy(()=>import("./pages/GovernanceDashboard").then(m=>({default:m.GovernanceDashboard})));
 const ResearchDashboard=lazy(()=>import("./pages/ResearchDashboard").then(m=>({default:m.ResearchDashboard})));
 import {ContextConflictAuditPage,EvidenceIntelligencePage,ResearchBriefsPage} from "./pages/PublicResearchPages";
-import {PublicNotices} from "./components/public/PublicNotices";
+import {PlatformPublicPage,ResearchPublicPage,SciencePublicPage,ApplicationsPublicPage,TrustPublicPage,AboutPublicPage} from "./pages/PublicFoundationPages";
 import { Home } from "./pages/Home";
 import {PasswordRecovery} from "./pages/PasswordRecovery";
 import { SignIn } from "./pages/SignIn";
 import { SignUp } from "./pages/SignUp";
 import { ResearchAccount } from "./pages/ResearchAccount";
-import { Platform } from "./pages/Platform";
 import { Technology } from "./pages/Technology";
 const Explore=lazy(()=>import("./pages/Explore").then(m=>({default:m.Explore})));
 const DiscoveryEngine=lazy(()=>import("./pages/DiscoveryEngine").then(m=>({default:m.DiscoveryEngine})));
@@ -34,7 +33,6 @@ const ClinicalTimeline=lazy(()=>import("./pages/ClinicalTimeline").then(m=>({def
 const TrialsCriteria=lazy(()=>import("./pages/TrialsCriteria").then(m=>({default:m.TrialsCriteria})));
 const GatewayDemo=lazy(()=>import("./pages/GatewayDemo").then(m=>({default:m.GatewayDemo})));
 const Sources=lazy(()=>import("./pages/Sources").then(m=>({default:m.Sources})));
-import { Science } from "./pages/Science";
 import { ScienceBody } from "./pages/ScienceBody";
 const ScienceLiterature=lazy(()=>import("./pages/ScienceLiterature").then(m=>({default:m.ScienceLiterature})));
 const ResearchCoverage=lazy(()=>import("./pages/ResearchCoverage").then(m=>({default:m.ResearchCoverage})));
@@ -65,13 +63,12 @@ const ClaimKnowledgeGraph=lazy(()=>import("./pages/ClaimKnowledgeGraph").then(m=
 
 const CapabilityLab=lazy(()=>import("./pages/CapabilityLab").then(m=>({default:m.CapabilityLab})));
 
-function AboutPublic(){return <div className="hsi-public"><header className="hsi-page-hero hsi-content"><p>Human Super Intelligence</p><h1>Building a more connected understanding of human health.</h1><p>Connect scientific evidence, biological context and independent human judgement across disciplines.</p></header><section className="hsi-section hsi-content" id="collaboration"><h2>Research collaboration</h2><p>HSI begins with evidence-grounded scientific investigation. Independent expert recruitment, source permissions and reviewer roles require separate agreement. No institutional partnerships are claimed.</p><a className="hsi-text-link" href="/contact">Connect with HSI</a></section></div>}
 export default function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path="research" element={<ResearchLanding/>}/>
+        <Route path="research" element={<ResearchPublicPage/>}/>
         <Route path="solutions" element={<Solutions/>}/>
         <Route path="evidence-safety" element={<EvidenceSafety/>}/>
         <Route path="community" element={<Community/>}/>
@@ -84,17 +81,17 @@ export default function App() {
         <Route path="reset-password" element={<PasswordRecovery key="reset" mode="reset" />} />
         <Route path="sign-up" element={<SignUp />} />
         <Route path="research/account" element={<ResearchAccount />} />
-        <Route path="platform" element={<Platform />} />
+        <Route path="platform" element={<PlatformPublicPage />} />
         <Route path="context-conflict-audit" element={<ContextConflictAuditPage />} />
         <Route path="evidence-intelligence" element={<EvidenceIntelligencePage />} />
         <Route path="research-briefs" element={<ResearchBriefsPage />} />
-        <Route path="applications" element={<Solutions />} />
-        <Route path="trust" element={<><EvidenceSafety /><PublicNotices /></>} />
-        <Route path="about" element={<AboutPublic />} />
+        <Route path="applications" element={<ApplicationsPublicPage />} />
+        <Route path="trust" element={<TrustPublicPage />} />
+        <Route path="about" element={<AboutPublicPage />} />
         <Route path="technology" element={<Technology />} />
         <Route path="how-it-works" element={<HowItWorks />} />
         <Route path="explore" element={<Explore />} />
-        <Route path="science" element={<Science />} />
+        <Route path="science" element={<SciencePublicPage />} />
         <Route path="science/literature" element={<ScienceLiterature />} />
         <Route path="research/scientific-workbench" element={<ScientificResearchWorkbench />} />
         <Route path="research/validation" element={<Suspense fallback={<p role="status">Loading validation workspace…</p>}><SyntheticValidationWorkbench/></Suspense>} />

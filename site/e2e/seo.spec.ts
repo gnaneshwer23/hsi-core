@@ -28,5 +28,5 @@ test('sitemap contains only public canonical pages and tool shells are noindex w
  const indexNow=await request.get('/indexnow-key.txt');expect(indexNow.status()).toBe(200);const key=(await indexNow.text()).trim();expect(key).toMatch(/^[a-f0-9]{32}$/i);expect((await request.get('/'+key+'.txt')).status()).toBe(200);
 });
 test('direct HTML remains useful when JavaScript is disabled',async({browser})=>{
- const context=await browser.newContext({javaScriptEnabled:false});const page=await context.newPage();await page.route('**/research',async route=>route.fulfill({contentType:'text/html',body:await readFile(new URL('_pages/research.html',dist),'utf8')}));await page.goto('/research');await expect(page.getByRole('heading',{level:1})).toBeVisible();await expect(page.getByRole('main').getByRole('link',{name:'Research access',exact:true}).first()).toBeVisible();await context.close();
+ const context=await browser.newContext({javaScriptEnabled:false});const page=await context.newPage();await page.route('**/research',async route=>route.fulfill({contentType:'text/html',body:await readFile(new URL('_pages/research.html',dist),'utf8')}));await page.goto('/research');await expect(page.getByRole('heading',{level:1})).toBeVisible();await expect(page.getByRole('main').getByRole('link',{name:'Research Sign In',exact:true}).first()).toBeVisible();await context.close();
 });
