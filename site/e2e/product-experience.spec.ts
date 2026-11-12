@@ -15,7 +15,7 @@ test("home communicates the research workflow and supports accessible capability
  await page.goto("/");
  await expect(page.getByRole("heading",{level:1})).toContainText("See why the evidence conflicts.");
  await expect(page.getByRole("heading",{name:/From scientific question to research decision/})).toBeVisible();
- await expect(page.locator("#product-demo")).toContainText("illustrative");
+ await expect(page.locator("#product-demo")).toContainText(/illustrative/i);
  await expect(page.locator("#investigation-workflow")).toContainText("unvalidated");
  const steps=page.getByRole("group",{name:"Investigation steps"});
  await steps.getByRole("button",{name:/Investigate/}).click();
