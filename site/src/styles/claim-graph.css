@@ -3,3 +3,7 @@
 @media(prefers-reduced-motion:reduce){.cg-page *{scroll-behavior:auto!important;transition:none!important}}
 
 .cg-hash{font-size:.7rem;overflow-wrap:anywhere}.cg-release details{font-size:.76rem;line-height:1.8}.cg-release summary{cursor:pointer}.cg-release details a{display:block;margin:10px 0}
+/* Keep complete targets visible after focus-induced page scrolling. The finite working corpus
+   must not clip concept or inspector actions at nested-scroll boundaries. */
+.cg-page .cg-workspace .kg-filters,.cg-page .cg-workspace .cg-inspector{max-height:none;overflow:visible}
+.cg-page .cg-workspace .cg-concepts{max-height:none;overflow:visible}
