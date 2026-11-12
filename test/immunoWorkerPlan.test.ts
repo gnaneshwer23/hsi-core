@@ -1,0 +1,18 @@
+/** Synthetic locked benchmark -> real durable coordinator plan; no model/provider calls. */
+import {test,expect} from "bun:test";
+import {fixtureCases,fixturePolicy,TEST_GOLD,hash} from "./fixtures/immunoBenchmark";
+import {prepareImmunoFreeze,buildImmunoProtocol,benchmarkDigest} from "../src/evidence/immunoBenchmark";
+import {IMMUNO_CONFIGURATIONS} from "../src/evidence/immunoBenchmarkScoring";
+import type {ImmunoRunLock} from "../src/evidence/immunoBenchmarkAcceptance";
+import {prepareImmunoWorkerPlan} from "../src/operations/immunoWorkerPlan";
+import {opsFixture,ALICE,receipt,TEST_POLICY} from "./fixtures/pilotOperations";
+import {createPilotWorker} from "../src/operations/pilotOperationsService";
+async function fixture(){const cases=fixtureCases(),policy=fixturePolicy(cases),freeze=await prepareImmunoFreeze({cases,protocolHash:buildImmunoProtocol().protocolHash,rubricHash:hash("rubric"),thresholdPolicyHash:benchmarkDigest(policy),disputeRuleHash:hash("dispute"),contaminationReceiptHash:hash("contamination")},{loadGold:async()=>TEST_GOLD,expertReview:async()=>true,sourceUse:async()=>true,approveProtocol:async()=>true});
+ const lock:ImmunoRunLock={freezeHash:freeze.freezeHash,thresholdPolicyHash:freeze.thresholdPolicyHash,retrievalPolicyHash:hash("retrieval"),budgetPolicyHash:hash("budget"),approvalReceiptHash:hash("approval"),lockedAt:"2026-11-12T12:00:00Z",executionNotBefore:"2026-11-12T13:00:00Z",configurations:Object.fromEntries(IMMUNO_CONFIGURATIONS.map(c=>[c,{deploymentRef:"TEST_COMPOSITION_"+c,configurationHash:hash(c)}])) as ImmunoRunLock["configurations"]};
+ return {cases,policy,freeze,lock};}
+test("120-case three-arm evaluation has 841 separately resumable stages with equal single/dual configuration caps",async()=>{
+ const v=await fixture(),options={investigationId:"TEST-benchmark",artifactSha:"a".repeat(40),configurationHash:hash("config"),planRef:"TEST-benchmark-plan",clearanceBatchRef:"TEST-clearance-batch",configurationCap:{inputTokens:10,outputTokens:10,costMicros:100}},authority={authorize:async()=>true,authorizeCaps:async()=>true,resolveModels:async(c:string)=>c==="deterministic_current_baseline"?[]:c==="single_verifier"?["TEST-model-A"]:["TEST-model-A","TEST-model-B"]};
+ const p=await prepareImmunoWorkerPlan(v,options,authority);expect(p.steps).toHaveLength(841);expect(p.steps.filter(s=>s.kind==="model")).toHaveLength(360);expect(p.steps.filter(s=>s.kind==="verification")).toHaveLength(360);expect(p.maxTokens).toBe(120*2*20);expect(p.maxCostMicros).toBe(120*2*100);expect(JSON.stringify(p)).not.toContain(TEST_GOLD.rationale);
+ await expect(prepareImmunoWorkerPlan(v,options,{...authority,authorizeCaps:async()=>false})).rejects.toThrow("budget");await expect(prepareImmunoWorkerPlan(v,options,{...authority,resolveModels:async()=>["same","same"]})).rejects.toThrow("independent");
+ const f=opsFixture({...TEST_POLICY,userTokens:100000,organizationTokens:100000,userCostMicros:1000000,organizationCostMicros:1000000});try{f.enable();const j=f.store.enqueue(ALICE,"benchmark",p).job;let calls=0;const worker=createPilotWorker({enabled:true,store:f.store,authorizeStep:async()=>true,execute:async t=>{calls++;return receipt(t.operationId,{inputTokens:t.step.kind==="model"?1:0,outputTokens:0,costMicros:0})},verifyReceipt:async()=>true});await worker.tick();await worker.tick();expect(calls).toBe(2);expect(f.store.steps(j.id).filter(s=>s.state==="completed")).toHaveLength(2);expect(f.store.enqueue(ALICE,"benchmark",p).created).toBe(false)}finally{f.close()}
+});

@@ -1,3 +1,4 @@
+import {createSharedAdmissionClient} from "../operations/pilotOperationsService";
 import type { FetchLike } from "../fetchLike";
 import {withResearchRequestControls,researchOperationalLogger,type ResearchControls} from "./researchRequestControls";
 /** Vercel Bun Web-handler adapter. No listener, migrations, automatic grants or client identity trust. */
@@ -41,13 +42,18 @@ export function readResearchDeploymentConfig(env:Environment){
 }
 export type VercelResearchDependencies={
  controls?:ResearchControls;
+ pilotJobApi?:(request:Request)=>Promise<Response|null>;
+ pilotHealth?:(request:Request)=>Promise<Response>;
  transport?:FetchLike;
  resolveToken?:typeof resolveProviderSessionToken;
  inspectSession?:typeof inspectProviderDatabaseSession;
  services?:ReturnType<typeof createNeonInterrogativeApiServices>;
 };
 export async function handleVercelResearch(request:Request,env:Environment,dependencies:VercelResearchDependencies={}):Promise<Response>{
- return withResearchRequestControls(request,()=>handleVercelResearchCore(request,env,dependencies),{...dependencies.controls,requireShared:env.HSI_PILOT_REQUIRE_SHARED_LIMITER==="true"||dependencies.controls?.requireShared===true,emit:dependencies.controls?.emit??researchOperationalLogger(env.HSI_OPERATIONAL_LOGGING==="true")});
+ if(new URL(request.url).pathname==="/api/research/live")return withResearchRequestControls(request,async()=>gatewayJson({live:true,databaseConnectionTested:false,providerTested:false},request.method==="GET"?200:405),{processAdmission:dependencies.controls?.processAdmission,emit:dependencies.controls?.emit});
+ let sharedAdmission=dependencies.controls?.sharedAdmission;
+ if(!sharedAdmission&&env.HSI_SHARED_ADMISSION_URL){try{sharedAdmission=createSharedAdmissionClient({endpoint:env.HSI_SHARED_ADMISSION_URL,serviceCredential:()=>env.HSI_SHARED_ADMISSION_SERVICE_KEY??""})}catch{sharedAdmission=async()=>{throw Error("Shared admission configuration invalid")}}}
+ return withResearchRequestControls(request,()=>handleVercelResearchCore(request,env,dependencies),{...dependencies.controls,sharedAdmission,requireShared:env.HSI_PILOT_REQUIRE_SHARED_LIMITER==="true"||dependencies.controls?.requireShared===true,emit:dependencies.controls?.emit??researchOperationalLogger(env.HSI_OPERATIONAL_LOGGING==="true")});
 }
 async function handleVercelResearchCore(request:Request,env:Environment,dependencies:VercelResearchDependencies):Promise<Response>{
  const path=new URL(request.url).pathname;
@@ -62,9 +68,11 @@ async function handleVercelResearchCore(request:Request,env:Environment,dependen
   return gatewayJson({service:"hsi-research",status:!config.ok?"configuration_required":originMatches?(maintenance?"maintenance":"configuration_validated"):"origin_mismatch",...(config.ok?{writesEnabled:config.writesEnabled,publicOrigin:config.publicOrigin,requestOrigin,originMatches}:{missing:config.missing}),authUrlsMatch:config.authUrlsMatch,authEndpointPrefix:config.authEndpointPrefix,databaseEndpointPrefix:config.databaseEndpointPrefix,endpointPrefixesMatch:config.endpointPrefixesMatch,maintenance,databaseConnectionTested:false},config.ok&&originMatches&&!maintenance?200:503);
  }
  if(!path.startsWith("/api/auth/")&&!path.startsWith("/api/research/"))return gatewayJson({error:"Not found"},404);
- if(path.startsWith("/api/research/")&&path!=="/api/research/investigations"&&path!=="/api/research/account"&&path!=="/api/research/session-diagnostics"&&path!=="/api/research/scientific-review/queue"&&path!=="/api/research/scientific-review/history"&&path!=="/api/research/graph/ssc"&&path!=="/api/research/discovery/ssc"&&!/^\/api\/research\/interrogative\/hsi-interrogative-[a-zA-Z0-9-]{8,100}(?:\/(?:submit-review|decision|graph-context|review-package|brief|revision|outcome))?$/.test(path))return gatewayJson({error:"Not found"},404);
+ if(path.startsWith("/api/research/")&&!(dependencies.pilotJobApi&&/^\/api\/research\/jobs(?:\/job-[a-f0-9-]{36})?$/.test(path))&&!(dependencies.pilotHealth&&["/api/research/configuration","/api/research/ready"].includes(path))&&path!=="/api/research/investigations"&&path!=="/api/research/account"&&path!=="/api/research/session-diagnostics"&&path!=="/api/research/scientific-review/queue"&&path!=="/api/research/scientific-review/history"&&path!=="/api/research/graph/ssc"&&path!=="/api/research/discovery/ssc"&&!/^\/api\/research\/interrogative\/hsi-interrogative-[a-zA-Z0-9-]{8,100}(?:\/(?:submit-review|decision|graph-context|review-package|brief|revision|outcome))?$/.test(path))return gatewayJson({error:"Not found"},404);
  if(!config.ok)return gatewayJson({code:"AUTH_GATEWAY_NOT_CONFIGURED",error:"Research service requires deployment configuration"},503);
  if(new URL(request.url).origin!==config.publicOrigin)return gatewayJson({code:"DEPLOYMENT_ORIGIN_MISMATCH",error:"Deployment origin mismatch"},403);
+ if(dependencies.pilotHealth&&["/api/research/configuration","/api/research/ready"].includes(path))return dependencies.pilotHealth(request);
+ if(dependencies.pilotJobApi&&path.startsWith("/api/research/jobs")){if(env.HSI_RESEARCH_MAINTENANCE==="true")return gatewayJson({code:"RESEARCH_MAINTENANCE"},503);return await dependencies.pilotJobApi(request)??gatewayJson({code:"NOT_FOUND"},404)}
  if(path==="/api/auth/diagnostics")return diagnoseAuthProvider(request,config,dependencies.transport);
  if(path.startsWith("/api/auth/"))return handleAuthGateway(request,config,dependencies.transport);
  if(env.HSI_RESEARCH_MAINTENANCE==="true")return gatewayJson({code:"RESEARCH_MAINTENANCE",error:"Research access temporarily unavailable"},503);

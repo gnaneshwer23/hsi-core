@@ -31,3 +31,6 @@ export function assessResearchPilotReadiness(value:unknown){
   gates:RESEARCH_PILOT_GATES.map(g=>({...g,...e.records.find(r=>r.gateId===g.id)!,trustedAcceptanceVerified:false})),
   blockers:["Verified staging identity, database and source prerequisites remain required.","Operator-reported receipts need independent authority, scope and freshness verification.","Public artifact recovery does not demonstrate database restore or role/session isolation.","Shared admission, deployment rollback, observability ownership and real-team acceptance require live evidence.","Scientific review and pilot data terms must be signed off by accountable humans."]};
 }
+
+/** P1-C detailed operating/release evidence, still subject to all existing pilot gates. */
+export const OPERATIONAL_PILOT_ACCEPTANCE_PATH="evaluation/independent-evaluation/operations-pilot" as const;

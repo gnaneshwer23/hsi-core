@@ -1,3 +1,4 @@
+import {createSharedAdmissionClient} from "../operations/pilotOperationsService";
 import {withResearchRequestControls,researchOperationalLogger} from "./researchRequestControls";
 /** ARCH-003 standalone Bun API server. Deploy behind a trusted same-origin
  * reverse proxy forwarding /api/research/account and /api/research/interrogative/*.
@@ -12,7 +13,8 @@ if(!databaseUrl||!publicOrigin||!/^https:\/\//.test(publicOrigin)||!Number.isInt
  throw Error("HSI_DATABASE_URL, HTTPS HSI_PUBLIC_ORIGIN and valid HSI_API_PORT required");
 const origin=new URL(publicOrigin).origin;
 const deployment=readResearchDeploymentConfig(process.env);
-if(process.env.HSI_PILOT_REQUIRE_SHARED_LIMITER==="true")throw Error("A shared admission adapter is required before enabling the pilot on this server");
+const sharedAdmission=process.env.HSI_SHARED_ADMISSION_URL?createSharedAdmissionClient({endpoint:process.env.HSI_SHARED_ADMISSION_URL,serviceCredential:()=>process.env.HSI_SHARED_ADMISSION_SERVICE_KEY??""}):undefined;
+if(process.env.HSI_PILOT_REQUIRE_SHARED_LIMITER==="true"&&!sharedAdmission)throw Error("A shared admission adapter is required before enabling the pilot on this server");
 const services=createNeonInterrogativeApiServices({databaseUrl,neonProjectId:process.env.HSI_NEON_PROJECT_ID,
  writesEnabled:deployment.ok&&deployment.writesEnabled,sscReleaseId:process.env.HSI_SSC_RESEARCH_RELEASE_ID,raComparisonReleaseId:process.env.HSI_RA_COMPARISON_RELEASE_ID});
 Bun.serve({hostname:"127.0.0.1",port,fetch(request){
@@ -23,5 +25,5 @@ Bun.serve({hostname:"127.0.0.1",port,fetch(request){
  if(forwardedProto!=="https"||forwardedHost!==new URL(origin).host)
   return Response.json({error:"Trusted HTTPS proxy required"},{status:403});
  const publicRequest=new Request(origin+url.pathname+url.search,request);
- return withResearchRequestControls(publicRequest,()=>process.env.HSI_RESEARCH_MAINTENANCE==="true"?Promise.resolve(Response.json({code:"RESEARCH_MAINTENANCE"},{status:503})):handleInterrogativeApi(publicRequest,services),{emit:researchOperationalLogger(process.env.HSI_OPERATIONAL_LOGGING==="true")});
+ return withResearchRequestControls(publicRequest,()=>process.env.HSI_RESEARCH_MAINTENANCE==="true"?Promise.resolve(Response.json({code:"RESEARCH_MAINTENANCE"},{status:503})):handleInterrogativeApi(publicRequest,services),{sharedAdmission,requireShared:process.env.HSI_PILOT_REQUIRE_SHARED_LIMITER==="true",emit:researchOperationalLogger(process.env.HSI_OPERATIONAL_LOGGING==="true")});
 }});
