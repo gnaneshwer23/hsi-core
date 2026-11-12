@@ -1,0 +1,73 @@
+{
+  "date": "2026-11-12",
+  "repository": "gnaneshwer23/hsi-core",
+  "production": {
+    "sha": "016536671a1fdf1db99c135a6b559727a60597b4",
+    "deploymentId": "dpl_5BgUZGpNgKkj8r4as1JgDxLLQi53",
+    "domain": "https://www.humansuperintelligence.tech",
+    "observedH1": "Explore the connections behind human health and disease."
+  },
+  "testedWebsiteCandidate": {
+    "sha": "f9abfbf736b7de45db67b53ededd70d4533569e1",
+    "ciRun": 43324880618,
+    "expectedH1": "See why the evidence conflicts."
+  },
+  "prs": [
+    {
+      "number": 291,
+      "merged": true,
+      "base": "main",
+      "headSha": "6692bfa1c7d4c28d32f33c73373adc765f098eb2",
+      "mergeSha": "016536671a1fdf1db99c135a6b559727a60597b4"
+    },
+    {
+      "number": 292,
+      "merged": true,
+      "base": "feat/website-01-foundation",
+      "headSha": "a1a1d93811f05a46ff7b8c2d20b666ef5d57c768",
+      "mergeSha": "5ff37314798cd0df3e4d597c786a20caa9618165"
+    },
+    {
+      "number": 293,
+      "merged": true,
+      "base": "feat/website-02-homepage",
+      "headSha": "22f2b5be5e8dcd6ffcd962a86418381e0b7ce252",
+      "mergeSha": "d9ce40ff714b869a36c40b6a71b576a284072934"
+    },
+    {
+      "number": 294,
+      "merged": true,
+      "base": "feat/website-03-research-pages",
+      "headSha": "b3cabb3e4ba92e63d4a1cabedbf9deef49d381ed",
+      "mergeSha": "53ba52cf730f5771e1dd1463aa1cbe6bf1fb86da"
+    },
+    {
+      "number": 295,
+      "merged": true,
+      "base": "feat/website-04-supporting",
+      "headSha": "f9abfbf736b7de45db67b53ededd70d4533569e1",
+      "mergeSha": "4191575f9b2eab48fb482da1b8d82b1ad5355727"
+    }
+  ],
+  "liveReadOnlyProbes": {
+    "health": {
+      "httpStatus": 200,
+      "status": "configuration_validated",
+      "writesEnabled": false,
+      "databaseConnectionTested": false
+    },
+    "graphSsc": {
+      "httpStatus": 401,
+      "code": "BACKEND_PROVIDER_SESSION_REQUIRED"
+    },
+    "investigations": {
+      "httpStatus": 401,
+      "code": "BACKEND_PROVIDER_SESSION_REQUIRED"
+    }
+  },
+  "limits": [
+    "Read-only public HTTP and deployment/source inspection; no real-account journey or SQL ledger inspection.",
+    "No source/model dispatch, production changes, merges or deployment promotion.",
+    "Browser automation failed to open the public tab; live content verified from served HTML and deployment metadata, not a new visual screenshot."
+  ]
+}
