@@ -57,7 +57,7 @@ export async function loadAuthenticatedInterrogativeInvestigation(input:{
  try{
   const reviewerAccess=actor.roles.includes("scientific_reviewer")&&await (async()=>{
   const {verifyHsiReviewerAuthority}=await import("./reviewerAuthority");
-  return verifyHsiReviewerAuthority({principal:actor.principalId,reviewedAt:new Date().toISOString(),databaseUrl:input.databaseUrl,neonProjectId:input.neonProjectId});
+  return verifyHsiReviewerAuthority({principal:actor.principalId,reviewedAt:new Date().toISOString(),databaseUrl:input.databaseUrl,neonProjectId:input.neonProjectId,scope:"ssc"});
  })();
  let deliverySigner=false;
  if(reviewerAccess){

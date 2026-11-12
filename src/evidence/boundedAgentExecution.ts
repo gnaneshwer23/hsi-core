@@ -259,7 +259,8 @@ export type BoundedStageTrace = {
   artifact: BoundedStageArtifact | null;
   checkpoint: HsiDurableCheckpoint | null;
   reason: string | null;
-  toolCalls: readonly {tool: HsiToolId; status: "success" | "denied" | "failed"}[];
+  toolCallEvidence: "authorization_checks_only";
+  toolCalls: readonly {tool: HsiToolId; status: "authorized" | "success" | "denied" | "failed"}[];
 };
 
 export type BoundedAgentExecutionResult = {
@@ -1520,6 +1521,7 @@ export async function runBoundedAgentExecution(input: {
       artifact: scratch.stageArtifacts.get(stageId) ?? null,
       checkpoint,
       reason: result?.reason ?? null,
+      toolCallEvidence: "authorization_checks_only",
       toolCalls: (run?.toolCalls ?? []).map((c) => ({tool: c.tool, status: c.status})),
     });
   }

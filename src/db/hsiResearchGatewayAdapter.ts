@@ -42,7 +42,6 @@ export async function executeHsiAuthenticatedResearch(input:{
    sessionToken:input.serverSessionToken,databaseUrl:input.databaseUrl,neonProjectId:input.neonProjectId,
   }),
   verifyReviewer:(principal,reviewedAt)=>verifyHsiReviewerAuthority({
-   principal,reviewedAt,databaseUrl:input.databaseUrl,neonProjectId:input.neonProjectId,
-  }),
+   principal,reviewedAt,databaseUrl:input.databaseUrl,neonProjectId:input.neonProjectId,scope:"ssc"}),
  });
 }

@@ -48,7 +48,7 @@ export async function recordAuthenticatedScientificReview(input:Config&{decision
  if(!actor.roles.includes("scientific_reviewer"))throw Error("Scientific reviewer grant required");
  const d=input.decision;
  if(d.reviewerPrincipal!==actor.principalId)throw Error("Reviewer principal mismatch");
- if(!await verifyHsiReviewerAuthority({principal:actor.principalId,reviewedAt:d.reviewedAt,databaseUrl:input.databaseUrl,neonProjectId:input.neonProjectId}))throw Error("Current SSc reviewer authority required");
+ if(!await verifyHsiReviewerAuthority({principal:actor.principalId,reviewedAt:d.reviewedAt,databaseUrl:input.databaseUrl,neonProjectId:input.neonProjectId,scope:"ssc"}))throw Error("Current SSc reviewer authority required");
  const reviewer:VerifiedScientificReviewer={principalId:actor.principalId,authenticated:true,role:"scientific_reviewer",scope:"ssc",authorityVerifiedAt:new Date().toISOString()};
  const sql=connection(input);
  try{

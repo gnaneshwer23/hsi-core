@@ -20,7 +20,8 @@ jobs:
       # Vercel installs from site; root dependencies must not mask missing API types.
       - run: bun install --frozen-lockfile
         working-directory: site
-      - run: bun run build
+      - name: Build local site and API (does not deploy)
+        run: bun run build
         working-directory: site
   verify:
     runs-on: ubuntu-24.04
@@ -36,7 +37,15 @@ jobs:
       - run: bun install --frozen-lockfile
       - run: bun audit --json
       - run: bun run check
-      - run: bun --no-env-file run pilot:check --out /tmp/hsi-pilot-engineering-report.json
+      - name: Generate local engineering evidence (not live acceptance)
+        run: bun --no-env-file run pilot:check --out /tmp/hsi-pilot-engineering-report.json
+      - name: Retain local engineering evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: pilot-engineering-evidence
+          path: /tmp/hsi-pilot-engineering-report.json
+          retention-days: 14
+          if-no-files-found: error
       - run: bun run ra:test-parser
       - run: bun install --frozen-lockfile
         working-directory: site
@@ -46,7 +55,8 @@ jobs:
       - run: bun run site:build
       - run: bunx --no-install playwright install chromium
         working-directory: site
-      - run: bun run test:e2e
+      - name: Test local browser contracts (no live DB/provider acceptance)
+        run: bun run test:e2e
         working-directory: site
       - uses: actions/upload-artifact@v4
         if: always()
