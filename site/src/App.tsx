@@ -4,6 +4,7 @@ import { Layout } from "./components/Layout";
 import {ResearchLanding,Solutions,EvidenceSafety,Pricing,Contact,Community} from "./pages/ExperiencePages";
 const GovernanceDashboard=lazy(()=>import("./pages/GovernanceDashboard").then(m=>({default:m.GovernanceDashboard})));
 const ResearchDashboard=lazy(()=>import("./pages/ResearchDashboard").then(m=>({default:m.ResearchDashboard})));
+import {ContextConflictAuditPage,EvidenceIntelligencePage,ResearchBriefsPage} from "./pages/PublicResearchPages";
 import {PublicNotices} from "./components/public/PublicNotices";
 import { Home } from "./pages/Home";
 import {PasswordRecovery} from "./pages/PasswordRecovery";
@@ -84,9 +85,9 @@ export default function App() {
         <Route path="sign-up" element={<SignUp />} />
         <Route path="research/account" element={<ResearchAccount />} />
         <Route path="platform" element={<Platform />} />
-        <Route path="context-conflict-audit" element={<EvidenceSafety />} />
-        <Route path="evidence-intelligence" element={<EvidenceSafety />} />
-        <Route path="research-briefs" element={<DemoWalkthrough />} />
+        <Route path="context-conflict-audit" element={<ContextConflictAuditPage />} />
+        <Route path="evidence-intelligence" element={<EvidenceIntelligencePage />} />
+        <Route path="research-briefs" element={<ResearchBriefsPage />} />
         <Route path="applications" element={<Solutions />} />
         <Route path="trust" element={<><EvidenceSafety /><PublicNotices /></>} />
         <Route path="about" element={<AboutPublic />} />
