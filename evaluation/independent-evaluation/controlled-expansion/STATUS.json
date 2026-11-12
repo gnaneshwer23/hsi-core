@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "hsi-p2-controlled-expansion-status-1",
+  "asOf": "2026-11-12",
+  "status": "prepared_but_blocked_pending_p1c_acceptance_and_pilot_learning",
+  "p1cAcceptanceVerified": false,
+  "observedPilotFailureLedgerVerified": false,
+  "actualExpansionAuthorized": false,
+  "actualSourcePacksAdded": 0,
+  "actualScopedReviewerGrantsIssued": 0,
+  "optionalPlannerExperimentRun": false,
+  "optionalPlannerEnabled": false,
+  "defaultPlanningMode": "deterministic_falsification_fields",
+  "agentCountIncrease": 0,
+  "communityLaunched": false,
+  "moderationDeliveryAndResponseOwnershipVerified": false,
+  "trialEligibilityAssessed": false,
+  "clinicalPhiIntegrationEnabled": false,
+  "scientificApproval": false,
+  "graphPromotable": false,
+  "prerequisiteOrder": [
+    "P0-A then P0-B; P0-C alongside source/provider preparation",
+    "P0-A/B/C actual acceptance then P1-A integrated journey",
+    "Benchmark protocol/labels in parallel; P1-A plus locked gold then P1-B",
+    "All prerequisite acceptance plus operational evidence then P1-C",
+    "P1-C actual acceptance plus independently resolved observed pilot failures then P2"
+  ],
+  "criticalPath": [
+    "Human source-policy availability and current rights/retraction clearance",
+    "Independent domain SME authoring, adjudication and reviewer grants",
+    "Named security/operations ownership, keys and verified pilot evidence",
+    "Actual moderation delivery and response ownership if community is requested"
+  ]
+}

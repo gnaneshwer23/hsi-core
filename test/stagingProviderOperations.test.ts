@@ -19,11 +19,11 @@ function receipt():SourceClearanceReceipt{
 }
 const result={verdict:"supports",evidenceSpan:"Synthetic passage",reason:"MODEL_REASON_MUST_NOT_LOG"};
 const response=(provider="openai",model="fixture-model-a")=>Response.json(provider==="openai"?{id:"resp_fixture",model,status:"completed",usage:{input_tokens:10,output_tokens:10},output:[{type:"message",status:"completed",content:[{type:"output_text",text:JSON.stringify(result)}]}]}:{id:"msg_fixture",model,stop_reason:"end_turn",usage:{input_tokens:10,output_tokens:10},content:[{type:"text",text:JSON.stringify(result)}]},{headers:{"x-request-id":"request_fixture"}});
-async function fixture(){
+async function fixture(onInvalidation?:Parameters<typeof createOperationalSourceClearance>[0]["onInvalidation"]){
  const directory=await mkdtemp(join(tmpdir(),"hsi-p0b-")),file=join(directory,"protected.jsonl"),store=await openStagingOperationStore(file);
  let state:SourceDecisionState="cleared",revoked=false,authorityCalls=0;
  const signed=receipt(),source={sourceId:signed.sourceId,sourceVersion:signed.sourceVersion,passage,receipt:null};
- const sources=createOperationalSourceClearance({store,verifier:createSourceClearanceVerifier({authorities:[{issuer:signed.issuer,keyId:signed.keyId,publicKey}],isRevoked:async()=>revoked}),authority:{lookup:async()=>{authorityCalls++;return {state,policyRef:"fixture-public-policy",receipt:signed}}}});
+ const sources=createOperationalSourceClearance({onInvalidation,store,verifier:createSourceClearanceVerifier({authorities:[{issuer:signed.issuer,keyId:signed.keyId,publicKey}],isRevoked:async()=>revoked}),authority:{lookup:async()=>{authorityCalls++;return {state,policyRef:"fixture-public-policy",receipt:signed}}}});
  const deployment:StagingDeployment={id:"fixture-openai",config:{providerId:"openai",modelId:"fixture-model-a",endpoint:"https://api.openai.com/v1/responses",timeoutMs:1000,maxResponseBytes:4096},termsRef:"fixture-terms",sourcePolicyRef:"fixture-public-policy",maxOutputTokens:64,inputUnitPrice:1,outputUnitPrice:1,budgetUnits:1000000};
  let calls=0,approved=true;
  const service=(transport:ProviderTransport=async()=>response(),enabled=true,deployments=[deployment])=>createStagingProviderOperations({enabled,deployments,store,sources,approve:async()=>approved,credential:()=>secret,transportFactory:encode=>async(c,p,o)=>{calls++;const wire=encode(c,p);expect(JSON.stringify(wire.headers)).toContain(secret);return transport(c,p,o)}});
@@ -170,4 +170,14 @@ describe("P0-B isolated staging operations",()=>{
    await writeFile(f.file,disk.trimEnd());await expect(openStagingOperationStore(f.file)).rejects.toThrow("Incomplete");
   }finally{await f.close()}
  });
+});
+
+it("source refresh observer propagates invalidations and observer failure never permits model egress",async()=>{
+ const events:unknown[]=[];let unavailable=false;const f=await fixture(async e=>{events.push(e);if(unavailable)throw Error("TEST-rereview-store-down")});try{
+ await f.sources.decide(f.source);expect(events).toEqual([]);f.setState("corrected");await f.sources.refresh(f.source.sourceId);expect(events[0]).toMatchObject({sourceId:f.source.sourceId,sourceVersion:"v1",state:"corrected"});unavailable=true;f.setState("withdrawn");await expect(f.service().run({deploymentId:f.deployment.id,source:f.source,payload})).rejects.toThrow("authority unavailable");expect(f.calls).toBe(0);
+ }finally{await f.close()}
+});
+
+it("a stalled source invalidation observer is bounded and aborted before model dispatch",async()=>{
+ let signal:AbortSignal|undefined;const f=await fixture(async(_e,s)=>{signal=s;return new Promise<void>(()=>{})});try{f.setState("retracted");await expect(f.service().run({deploymentId:f.deployment.id,source:f.source,payload})).rejects.toThrow("authority unavailable");expect(f.calls).toBe(0);expect(signal?.aborted).toBe(true)}finally{await f.close()}
 });
