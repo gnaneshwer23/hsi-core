@@ -225,7 +225,7 @@ export function ContextAuditInstrument({ id = "public-audit" }: { id?: string })
       </label>
       <div className="hsi-audit-result" aria-live="polite">
         <span>Illustrative evidence relationship</span>
-        <h3>{result.outcome}</h3>
+        <h3>{result.outcome ?? "No opposing findings in this example"}</h3>
         <p>{result.reason}</p>
         <p>
           <strong>Next decision:</strong> inspect source versions, sample size, dose, timing, controls and
