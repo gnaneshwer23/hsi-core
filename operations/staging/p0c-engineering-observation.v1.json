@@ -12,7 +12,6 @@
   "sourceInspectionConnection": "connector_database_owner_not_application_runtime",
   "sourceLedgerRows": 18,
   "sourceLedgerLastMigration": "017_hsi_experiment_ledger",
-  "unappliedSourceMigrations": "018 onward absent; legacy 012 alias exists",
   "productionHsiRuntimeRolesFound": [],
   "sourceAndRestoredPublicTableColumnRlsFingerprint": "525ce18aa8ee4337b26cb4bc937f36f923da525186cdfcde2f9d4cb7be1c12f2",
   "restoredLedgerMatched": true,
@@ -73,5 +72,6 @@
     "030_hsi_live_evidence_investigations": "2730cea35ead0f32f448713f84d3eaa42bfa9074c9e86e6d598176edfcbe8480"
   },
   "scientificApproval": false,
-  "productionActivationApproved": false
+  "productionActivationApproved": false,
+  "sourceLedgerUnrecordedMigrations": "018 onward not recorded; schema presence is a separate catalogue observation"
 }
