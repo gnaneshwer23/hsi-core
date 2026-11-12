@@ -8,5 +8,5 @@ test("public synthetic teaching classes never collapse missingness, context or c
  expect(illustrativeAuditOutcome(a,{...b,context:{...b.context,tissue:"Lung"}},true,true).outcome).toBe("Contextual difference");
  expect(illustrativeAuditOutcome(a,b,true,false).outcome).toBe("Unresolved disagreement");
  expect(illustrativeAuditOutcome(a,b,true,true).reason).toContain("fictional controlled scenario");
- expect(illustrativeAuditOutcome(a,a,true,true).outcome).not.toBe("Genuine contradiction");
+ expect(illustrativeAuditOutcome(a,a,true,true).outcome).toBeNull();
 });
