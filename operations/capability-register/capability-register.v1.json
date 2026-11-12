@@ -1,9 +1,9 @@
 {
   "schemaVersion": "hsi-capability-register-1",
   "registerId": "hsi-capability-register-2026-11-08",
-  "asOf": "2026-11-10",
+  "asOf": "2026-11-12",
   "masterSpec": "docs/product/HSI_DEFINITIVE_PRODUCT_SPEC.md",
-  "humanDoc": "docs/engineering/HSI_CAPABILITY_REGISTER_2026-11-08.md",
+  "humanDoc": "docs/STATUS.md",
   "honesty": {
     "scientificallyValidatedClaimed": false,
     "mouInvented": false,
@@ -19,7 +19,9 @@
     ],
     "researcherJourneyCompleteClaimed": false,
     "writesEnabledClaimed": false,
-    "syntheticEqualsClinical": false
+    "syntheticEqualsClinical": false,
+    "mergedPrEqualsProductionAcceptance": false,
+    "documentationAuthorizesRuntime": false
   },
   "statusVocabulary": [
     "implemented",
@@ -75,10 +77,17 @@
         "src/evidence/evidenceLedger.ts",
         "src/db/evidenceLedgerStore.ts",
         "src/researchOutcome.ts",
-        "site/src/components/ResearchOutcomePanel.tsx"
+        "site/src/components/ResearchOutcomePanel.tsx",
+        "src/researchV2/sourceClearanceReceipt.ts",
+        "src/researchV2/operationalSourceClearance.ts",
+        "src/expansion/sourceRereview.ts"
       ],
-      "gap": "Reverse trace first-class in outcome 01\u201306; not every specialist science page",
-      "nextAction": "Keep passage\u2192claim\u2192branch exposure; broaden later"
+      "gap": "Signed receipt/action checks and versioned invalidation/re-review metadata exist; real clearance authority, protected live propagation and independent review acceptance remain unverified.",
+      "nextAction": "Deploy and verify the actual curator/receipt and scoped re-review adapters; do not infer rights from source URLs.",
+      "acceptance": {
+        "deployment": "not_verified",
+        "scientific": "not_accepted"
+      }
     },
     {
       "id": "F-04",
@@ -100,17 +109,25 @@
       "group": "foundations",
       "name": "Saved investigation and research outcome APIs",
       "status": [
-        "connected"
+        "implemented",
+        "blocked"
       ],
       "evidence": [
         "src/server/interrogativeApi.ts",
         "src/researchOutcome.ts",
         "src/investigationDelivery.ts",
         "site/src/components/ResearchOutcomePanel.tsx",
-        "site/src/lib/investigationSections.ts"
+        "site/src/lib/investigationSections.ts",
+        "src/server/boundOutcomeAttachments.ts",
+        "src/expansion/rereviewOutcomeGuard.ts",
+        "test/boundContextAuditOutcome.test.ts"
       ],
-      "gap": "Composes saved evidence; no new scientific generation; powers continuous 01\u201306 UI",
-      "nextAction": "Preserve APIs; do not replace"
+      "gap": "Saved-outcome and server-owned attachment bindings are tested; real restricted persistence, audit-hash human review and live reopen/export journeys remain unaccepted.",
+      "nextAction": "Complete scoped real-account HTTP acceptance and durable audit-specific review before enabling pilot writes.",
+      "acceptance": {
+        "deployment": "not_verified",
+        "scientific": "not_accepted"
+      }
     },
     {
       "id": "F-06",
@@ -149,15 +166,22 @@
       "name": "Trial and therapeutic scaffolding",
       "status": [
         "implemented",
-        "planned"
+        "blocked"
       ],
       "evidence": [
         "src/trialsCriteriaMvp.ts",
         "src/clinicalResearchScaffold.ts",
-        "src/evidence/n5RegistryLiveRefresh.ts"
+        "src/evidence/n5RegistryLiveRefresh.ts",
+        "src/evidence/translationalEvidenceAttach.ts",
+        "src/expansion/controlledExpansion.ts",
+        "test/translationalEvidenceAttach.test.ts"
       ],
-      "gap": "Not attached to investigation translational section",
-      "nextAction": "Connect versioned registry data (step 05)"
+      "gap": "O-04 registry projection and saved attachment path exist. Current real registry/source binding and pilot acceptance remain unverified; eligibility/efficacy are not assessed.",
+      "nextAction": "Verify governed same-investigation/source-release metadata through the protected outcome path; retain eligibility=false.",
+      "acceptance": {
+        "deployment": "not_verified",
+        "scientific": "not_accepted"
+      }
     },
     {
       "id": "F-09",
@@ -170,10 +194,19 @@
       "evidence": [
         "src/goldEvaluationSuite.ts",
         "src/modelEvalHarness.ts",
-        "docs/engineering/GOLD_EVALUATION_SUITE_V1.md"
+        "docs/engineering/GOLD_EVALUATION_SUITE_V1.md",
+        "src/researchV2/reliabilityEvaluationHarness.ts",
+        "src/evidence/immunoBenchmark.ts",
+        "src/evidence/immunoBenchmarkScoring.ts",
+        "src/evidence/immunoBenchmarkAcceptance.ts",
+        "evaluation/independent-evaluation/immuno-v1/protocol.v1.json"
       ],
-      "gap": "SME labels empty; no scientific scores",
-      "nextAction": "Do not invent labels; await #4"
+      "gap": "Guarded full-batch evaluation and canonical 120-slot protocol/reporting exist. There are no real 120 adjudicated cases, approved scientific floors or accepted provider benchmark results.",
+      "nextAction": "Author and independently adjudicate real cases in a restricted vault; lock rubric/splits/thresholds before final tuning/evaluation.",
+      "acceptance": {
+        "deployment": "not_verified",
+        "scientific": "not_accepted"
+      }
     },
     {
       "id": "F-10",
@@ -181,16 +214,22 @@
       "name": "AI orchestration and agent contracts",
       "status": [
         "implemented",
-        "connected"
+        "blocked"
       ],
       "evidence": [
         "src/hsiAgentIntelligenceContracts.ts",
         "src/hsiAgentOrchestrator.ts",
         "src/hsiArch003AgentAdapters.ts",
-        "site/src/features/science/researchOrchestrator.ts"
+        "site/src/features/science/researchOrchestrator.ts",
+        "src/evidence/contextConflictAudit.ts",
+        "src/operations/immunoWorkerPlan.ts"
       ],
-      "gap": "Gap verification adapter on claim_verifier; live literature/LLM tools still unused",
-      "nextAction": "Keep claim_verifier adapter; no new catalogue"
+      "gap": "Three-role bounded adapters and resumable worker plans exist, not evidence of completed live external actions. Protected runtime/provider/scoped review composition remains unaccepted.",
+      "nextAction": "Compose the three core roles with approved source/provider/review services and receipt-backed execution; add no agents.",
+      "acceptance": {
+        "deployment": "not_verified",
+        "scientific": "not_accepted"
+      }
     },
     {
       "id": "O-01",
@@ -215,15 +254,23 @@
       "group": "investigation_output",
       "name": "Evidence comparison",
       "status": [
-        "connected"
+        "implemented",
+        "blocked"
       ],
       "evidence": [
         "src/interrogativeContracts.ts",
         "site/src/features/science/contradictionEngine.ts",
-        "site/src/components/ResearchOutcomePanel.tsx"
+        "site/src/components/ResearchOutcomePanel.tsx",
+        "src/evidence/passageLinkedContext.ts",
+        "src/evidence/contextConflictAudit.ts",
+        "test/passageLinkedContext.test.ts"
       ],
-      "gap": "Oppose + context shown in outcome 02 with reverse trace; cross-species depth still limited",
-      "nextAction": "Bind richer oppose searches when rights clear"
+      "gap": "Seventeen passage-linked context fields, estimand/comparability gates and five-class reporting are implemented. Scientist-reviewed gold and full SSc plus RA/SLE staging journeys remain unaccepted.",
+      "nextAction": "Run authorised reviewed staging audits and the locked immunology benchmark; missing context must remain explicit.",
+      "acceptance": {
+        "deployment": "not_verified",
+        "scientific": "not_accepted"
+      }
     },
     {
       "id": "O-03",
@@ -247,14 +294,22 @@
       "group": "investigation_output",
       "name": "Translational intelligence",
       "status": [
-        "planned"
+        "implemented",
+        "blocked"
       ],
       "evidence": [
         "src/trialsCriteriaMvp.ts",
-        "site/src/pages/ScienceClinicalTrials.tsx"
+        "site/src/pages/ScienceClinicalTrials.tsx",
+        "src/evidence/translationalEvidenceAttach.ts",
+        "src/expansion/controlledExpansion.ts",
+        "test/controlledExpansion.test.ts"
       ],
-      "gap": "Outcome reports trials not_queried",
-      "nextAction": "Attach registry snapshot (step 05)"
+      "gap": "Registry metadata can attach through independently authorised saved outcomes; default trials remain not_queried. No live trial-context acceptance, eligibility decision or efficacy inference.",
+      "nextAction": "Accept the governed registry/source-binding journey without introducing clinical eligibility.",
+      "acceptance": {
+        "deployment": "not_verified",
+        "scientific": "not_accepted"
+      }
     },
     {
       "id": "O-05",
@@ -292,14 +347,21 @@
       "group": "nexus_agent",
       "name": "Research Orchestrator",
       "status": [
-        "implemented"
+        "implemented",
+        "blocked"
       ],
       "evidence": [
         "src/hsiAgentOrchestrator.ts",
-        "site/src/features/science/researchOrchestrator.ts"
+        "site/src/features/science/researchOrchestrator.ts",
+        "src/evidence/contextConflictAudit.ts",
+        "src/operations/pilotOperationsService.ts"
       ],
-      "gap": "Deterministic/local or contract-only; not full Nexus runtime",
-      "nextAction": "Reuse; wire journey stages"
+      "gap": "Bounded orchestration and local durable stage checkpoints are available. Production source/model execution and human acceptance are not established by injected permission callbacks.",
+      "nextAction": "Use verified provider completion receipts and exact-artifact staging acceptance.",
+      "acceptance": {
+        "deployment": "not_verified",
+        "scientific": "not_accepted"
+      }
     },
     {
       "id": "A-EVID",
@@ -376,14 +438,21 @@
       "group": "nexus_agent",
       "name": "Contradiction Investigator",
       "status": [
-        "implemented"
+        "implemented",
+        "blocked"
       ],
       "evidence": [
         "src/hsiAgentIntelligenceContracts.ts",
-        "site/src/features/science/contradictionEngine.ts"
+        "site/src/features/science/contradictionEngine.ts",
+        "src/evidence/passageLinkedContext.ts",
+        "src/evidence/contextConflictAudit.ts"
       ],
-      "gap": "Helpers/contracts; not full oppose-search service",
-      "nextAction": "First-class oppose audit in journey"
+      "gap": "Structured context/estimand comparisons and candidate conflict reports exist; live support/oppose search, scientist adjudication and accepted integrated journey remain pending.",
+      "nextAction": "Wire accepted retrieval and scoped audit review; do not treat polarity alone as conflict.",
+      "acceptance": {
+        "deployment": "not_verified",
+        "scientific": "not_accepted"
+      }
     },
     {
       "id": "A-GAP",
@@ -406,43 +475,63 @@
       "group": "nexus_agent",
       "name": "Therapeutic / Trial Investigator",
       "status": [
-        "planned"
+        "implemented",
+        "blocked"
       ],
       "evidence": [
         "src/trialsCriteriaMvp.ts",
-        "src/evidence/n5RegistryLiveRefresh.ts"
+        "src/evidence/n5RegistryLiveRefresh.ts",
+        "src/evidence/translationalEvidenceAttach.ts",
+        "src/expansion/controlledExpansion.ts"
       ],
-      "gap": "Scaffold depth only",
-      "nextAction": "Translational landscape (step 05)"
+      "gap": "Governed registry-context adapters exist; no autonomous therapeutic investigator, patient eligibility or independently accepted trial workflow.",
+      "nextAction": "Reuse O-04 with current source rights and separate human review.",
+      "acceptance": {
+        "deployment": "not_verified",
+        "scientific": "not_accepted"
+      }
     },
     {
       "id": "A-PLAN",
       "group": "nexus_agent",
       "name": "Research Planning Agent",
       "status": [
-        "connected"
+        "implemented",
+        "blocked"
       ],
       "evidence": [
         "src/interrogativeFalsificationEngine.ts",
-        "src/researchOutcome.ts"
+        "src/researchOutcome.ts",
+        "src/expansion/plannerComparison.ts",
+        "test/plannerComparison.test.ts"
       ],
-      "gap": "Recorded fields only",
-      "nextAction": "No invented experimental protocols"
+      "gap": "Default planning is saved deterministic falsification fields. Optional paired planner evaluation/adoption preparation exists; no real experiment or runtime planner is enabled.",
+      "nextAction": "Keep deterministic planning unless preregistered equal-evidence/equal-cap independent usefulness and safety/context gates pass.",
+      "acceptance": {
+        "deployment": "not_verified",
+        "scientific": "not_accepted"
+      }
     },
     {
       "id": "A-VERIFY",
       "group": "nexus_agent",
       "name": "Evidence Verifier",
       "status": [
-        "connected",
+        "implemented",
         "blocked"
       ],
       "evidence": [
         "src/researchOutcome.ts",
-        "src/gateCChecklist.ts"
+        "src/gateCChecklist.ts",
+        "src/researchV2/trustedEvaluationGrounding.ts",
+        "src/researchV2/scientificReliabilityGate.ts"
       ],
-      "gap": "Hash integrity \u2260 scientific truth; Gate C human",
-      "nextAction": "Await human #2/#3/#4"
+      "gap": "Trusted grounding, dual-verifier and acknowledged receipt boundaries exist. Hashes/fixture callbacks do not establish independent scientific accuracy or real provider completion.",
+      "nextAction": "Accept real provider/grounding execution and adjudicated benchmark evidence; keep approval/promotion false.",
+      "acceptance": {
+        "deployment": "not_verified",
+        "scientific": "not_accepted"
+      }
     },
     {
       "id": "E-FWD",
@@ -482,14 +571,22 @@
       "group": "evidence_trace",
       "name": "Continuous evidence re-verification",
       "status": [
-        "planned"
+        "implemented",
+        "blocked"
       ],
       "evidence": [
         "src/evidence/evidenceLedger.ts",
-        "src/hsiEvidenceTemporalDossier.ts"
+        "src/hsiEvidenceTemporalDossier.ts",
+        "src/researchV2/operationalSourceClearance.ts",
+        "src/expansion/sourceRereview.ts",
+        "src/expansion/rereviewOutcomeGuard.ts"
       ],
-      "gap": "No automatic conclusion revision product",
-      "nextAction": "Step 07; human approval for promoted claims"
+      "gap": "Versioned invalidation/re-review and stale saved-attachment denial are tested on the staging coordinator; deployed refresh, actual scoped review and source-rights rechecks remain unaccepted.",
+      "nextAction": "Compose and test real refresh/retraction propagation and versioned re-review before P2.",
+      "acceptance": {
+        "deployment": "not_verified",
+        "scientific": "not_accepted"
+      }
     },
     {
       "id": "J-R3",
@@ -512,8 +609,11 @@
     {
       "id": "J-INV",
       "group": "research_journey",
-      "name": "Gut–immune–metabolic–neuroinflammation investigation",
-      "status": ["implemented", "synthetic_only"],
+      "name": "Gut\u2013immune\u2013metabolic\u2013neuroinflammation investigation",
+      "status": [
+        "implemented",
+        "synthetic_only"
+      ],
       "evidence": [
         "src/scientificInvestigation.ts",
         "site/src/pages/ScientificInvestigation.tsx",
@@ -526,40 +626,128 @@
       "id": "J-EVAL",
       "group": "research_journey",
       "name": "Scientific accuracy evaluation harness",
-      "status": ["implemented", "blocked"],
+      "status": [
+        "implemented",
+        "blocked"
+      ],
       "evidence": [
         "src/scientificAccuracyHarness.ts",
         "evaluation/scientific-investigation/reference-questions.json",
-        "test/scientificAccuracyHarness.test.ts"
+        "test/scientificAccuracyHarness.test.ts",
+        "src/evidence/immunoBenchmark.ts",
+        "src/evidence/immunoBenchmarkAcceptance.ts"
       ],
-      "gap": "Scores remain not_yet_scored. Reference questions are DRAFT - awaiting expert review. No reviewer is named.",
-      "nextAction": "An expert reviews the draft question set before any score is recorded"
+      "gap": "Canonical 120 authoring slots and guarded scoring exist; no real adjudicated gold/final benchmark. Dr. Gnaneshwer Jadav is designated scientific release owner, not a substitute for independent domain raters/adjudicators.",
+      "nextAction": "Assign actual independent experts and curate/freeze real source-backed cases before final evaluation.",
+      "acceptance": {
+        "deployment": "not_verified",
+        "scientific": "not_accepted"
+      }
     },
     {
       "id": "J-WORK",
       "group": "research_journey",
       "name": "Personal workspace, interests and in-app notifications",
-      "status": ["implemented", "synthetic_only", "blocked"],
+      "status": [
+        "implemented",
+        "synthetic_only",
+        "blocked"
+      ],
       "evidence": [
         "src/researcherWorkspace.ts",
         "site/src/pages/ResearcherHome.tsx",
-        "db/migrations/023_hsi_researcher_workspace_community.sql"
+        "db/migrations/023_hsi_researcher_workspace_community.sql",
+        "docs/audits/HSI_P0_C_PERSISTENCE_AND_AUTHORITY.md"
       ],
-      "gap": "Example researcher only. Migration 023 is held and not applied. No email or SMS is sent.",
-      "nextAction": "Owner applies 023 on the HSI Neon project after review. Staging writes stay a separate decision."
+      "gap": "Workspace/notification code remains preview/fixture-scoped; migration 023 is held by repository policy. Current remote application state is not inferred from this inventory; no real email/SMS delivery accepted.",
+      "nextAction": "Keep community/workspace activation scopes separate and obtain real authenticated isolation evidence.",
+      "acceptance": {
+        "deployment": "not_verified",
+        "scientific": "not_accepted"
+      }
     },
     {
       "id": "J-COMM",
       "group": "research_journey",
       "name": "Opt-in research community",
-      "status": ["implemented", "synthetic_only", "blocked"],
+      "status": [
+        "implemented",
+        "synthetic_only",
+        "blocked"
+      ],
       "evidence": [
         "src/researcherWorkspace.ts",
         "src/server/researcherWorkspaceApi.ts",
-        "site/src/pages/ResearchCommunityFeed.tsx"
+        "site/src/pages/ResearchCommunityFeed.tsx",
+        "docs/P2_CONTROLLED_EXPANSION.md"
       ],
-      "gap": "Example post only. Writes fail closed. A report does not notify a moderator. Schema is not applied.",
-      "nextAction": "Do not enable community writes until 023 is applied and a human moderator is named"
+      "gap": "Optional community remains blocked: real moderation delivery, response ownership and privacy/isolation acceptance are absent. Migration holds are not a fresh remote-ledger observation.",
+      "nextAction": "Do not launch community until actual staffed moderation and scope-specific security evidence pass.",
+      "acceptance": {
+        "deployment": "not_verified",
+        "scientific": "not_accepted"
+      }
+    },
+    {
+      "id": "E-IMMUNO",
+      "group": "production_acceptance",
+      "name": "HSI-BENCH-IMMUNO canonical acceptance profile",
+      "status": [
+        "implemented",
+        "blocked"
+      ],
+      "evidence": [
+        "src/evidence/immunoBenchmark.ts",
+        "src/evidence/immunoBenchmarkScoring.ts",
+        "src/evidence/immunoBenchmarkAcceptance.ts"
+      ],
+      "gap": "120 slots are authoring allocation only; real gold, independent adjudication and approved floors are missing.",
+      "nextAction": "Complete restricted human authoring/lock and an accepted baseline/single/dual worker run.",
+      "acceptance": {
+        "deployment": "not_verified",
+        "scientific": "not_accepted"
+      }
+    },
+    {
+      "id": "OPS-PILOT",
+      "group": "production_acceptance",
+      "name": "Durable staging operations and signed pilot release gates",
+      "status": [
+        "implemented",
+        "blocked"
+      ],
+      "evidence": [
+        "src/operations/pilotOperationsStore.ts",
+        "src/operations/pilotOperationsService.ts",
+        "src/operations/pilotRelease.ts",
+        "docs/P1_C_OPERATIONAL_RELEASE.md"
+      ],
+      "gap": "Same-host coordinator and local crash/restore/signature tests exist; actual host/adapters, 14-day soak, real alerts, full restore/rollback and signed release remain blocked.",
+      "nextAction": "Name security/operations owners, pin keys and alert destination; complete live prerequisites and release evidence.",
+      "acceptance": {
+        "deployment": "not_verified",
+        "scientific": "not_accepted"
+      }
+    },
+    {
+      "id": "P2-GATE",
+      "group": "production_acceptance",
+      "name": "Controlled post-pilot expansion and optional-planner gates",
+      "status": [
+        "implemented",
+        "blocked"
+      ],
+      "evidence": [
+        "src/expansion/controlledExpansion.ts",
+        "src/expansion/plannerComparison.ts",
+        "docs/P2_CONTROLLED_EXPANSION.md"
+      ],
+      "gap": "No P2 scope, source pack, reviewer grant, community or optional planner has been activated.",
+      "nextAction": "Require actual P1-C acceptance and a complete independently resolved pilot failure ledger before any expansion.",
+      "acceptance": {
+        "deployment": "not_verified",
+        "scientific": "not_accepted"
+      }
     }
   ],
   "duplicatesAndDisconnects": [
@@ -600,5 +788,7 @@
       "cds_phi",
       "autumn_snow_for_hsi"
     ]
-  }
+  },
+  "governingVision": "docs/strategy/HSI_VISION.md",
+  "acceptanceCrosswalk": "docs/audits/HSI_IMPLEMENTATION_TRUTH_AND_NEXT_PRS.md"
 }

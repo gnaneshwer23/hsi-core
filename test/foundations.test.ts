@@ -76,3 +76,18 @@ describe("public copy", () => {
     expect(findPublicCopyIssues()).toEqual([]);
   });
 });
+
+describe("status acceptance boundaries", () => {
+  test("engineering labels cannot imply deployment/science acceptance and every current hold is rendered", () => {
+    const output = renderStatusMarkdown({
+      registerId: "test-only",
+      asOf: "2026-11-12",
+      honesty: {},
+      capabilities: [{ id: "TEST", group: "test", name: "Guarded code", status: ["implemented", "connected", "scientifically_validated"], evidence: [], gap: "No independent live packet", nextAction: "Verify" }],
+    });
+    expect(output).toContain("| not_assessed | not_assessed |");
+    for (const id of HELD_MIGRATION_IDS) expect(output).toContain(id);
+    expect(output).toContain("not** proof that SQL was never manually applied");
+    expect(output).not.toContain("They have not been applied.");
+  });
+});

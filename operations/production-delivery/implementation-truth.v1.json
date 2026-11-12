@@ -1,0 +1,376 @@
+{
+  "schemaVersion": "hsi-production-delivery-truth-1",
+  "asOf": "2026-11-12",
+  "reviewedBaselineSha": "3415601322f3b313e1b9aadb14ef65b7c546fece",
+  "governingVision": "docs/strategy/HSI_VISION.md",
+  "register": "operations/capability-register/capability-register.v1.json",
+  "status": "engineering_reconciled_live_acceptance_blocked",
+  "originalOrderNumbersAreNotGithubPrNumbers": true,
+  "mergedEngineeringDoesNotEqualAcceptance": true,
+  "documentationAuthorizesRuntime": false,
+  "productionPromotionAuthorized": false,
+  "pilotInvitationsAuthorized": false,
+  "scientificApproval": false,
+  "graphPromotable": false,
+  "items": [
+    {
+      "proposalOrder": 1,
+      "priority": "P0",
+      "scope": "B-04.4 full-batch evaluation and scoring",
+      "existingMergedPrs": [
+        279,
+        280
+      ],
+      "implementationEvidence": [
+        "src/researchV2/reliabilityEvaluationHarness.ts",
+        "src/researchV2/scientificReliabilityGate.ts",
+        "src/researchV2/dualModelChallenge.ts",
+        "src/researchV2/trustedEvaluationGrounding.ts"
+      ],
+      "regressionEvidence": [
+        "test/reliabilityEvaluationHarnessB044.test.ts",
+        "test/linkedDualChallengeB044.test.ts"
+      ],
+      "engineeringStatus": "implemented_guarded",
+      "deploymentAcceptance": "not_verified",
+      "scientificAcceptance": "not_accepted",
+      "truth": "Guarded preflight/grounding/receipt acknowledgement and scoring boundaries are implemented; actual provider/grounding/receipt service acceptance remains unverified.",
+      "nextWork": "Bind approved live adapters and independently verify durable execution receipts; do not reopen a duplicate harness-repair PR.",
+      "signedLiveAcceptanceArtifacts": []
+    },
+    {
+      "proposalOrder": 2,
+      "priority": "P0",
+      "scope": "Approved-provider transport hardening",
+      "existingMergedPrs": [
+        280,
+        281
+      ],
+      "implementationEvidence": [
+        "src/researchV2/providerReliability.ts",
+        "src/researchV2/pinnedProviderTransport.ts",
+        "src/researchV2/stagingProviderOperations.ts"
+      ],
+      "regressionEvidence": [
+        "test/providerReliability.test.ts",
+        "test/pinnedProviderTransport.test.ts",
+        "test/stagingProviderOperations.test.ts"
+      ],
+      "engineeringStatus": "implemented_guarded",
+      "deploymentAcceptance": "not_verified",
+      "scientificAcceptance": "not_accepted",
+      "truth": "Pinned transport/codecs, bounds and failure tests exist; two approved deployment requests/real receipts and operational terms are not accepted.",
+      "nextWork": "Complete approved-provider staging integration and fault evidence; retain disabled defaults.",
+      "signedLiveAcceptanceArtifacts": []
+    },
+    {
+      "proposalOrder": 3,
+      "priority": "P0",
+      "scope": "Vision/capability crosswalk and canonical benchmark schema",
+      "existingMergedPrs": [
+        279,
+        284,
+        286
+      ],
+      "implementationEvidence": [
+        "docs/strategy/HSI_VISION.md",
+        "scripts/generate-status.ts",
+        "operations/capability-register/capability-register.v1.json",
+        "src/evidence/scientificBenchmarkRegistry.ts",
+        "src/evidence/immunoBenchmark.ts",
+        "evaluation/independent-evaluation/immuno-v1/protocol.v1.json"
+      ],
+      "regressionEvidence": [
+        "test/foundations.test.ts",
+        "test/immunoBenchmark.test.ts"
+      ],
+      "engineeringStatus": "partial_metadata_and_schema",
+      "deploymentAcceptance": "not_verified",
+      "scientificAcceptance": "not_accepted",
+      "truth": "Crosswalk and 120-slot profile exist; this reconciliation fixes stale capability/generator claims. Slots and documentation are not real gold, approved floors or runtime authority.",
+      "nextWork": "Keep one canonical case profile/aliases and independent engineering/deployment/scientific status; author real private cases separately.",
+      "signedLiveAcceptanceArtifacts": []
+    },
+    {
+      "proposalOrder": 4,
+      "priority": "P0",
+      "scope": "Trusted source-clearance receipt verification",
+      "existingMergedPrs": [
+        281,
+        286
+      ],
+      "implementationEvidence": [
+        "src/researchV2/sourceClearanceReceipt.ts",
+        "src/researchV2/operationalSourceClearance.ts",
+        "src/expansion/sourceRereview.ts"
+      ],
+      "regressionEvidence": [
+        "test/sourceClearanceReceipt.test.ts",
+        "test/stagingProviderOperations.test.ts",
+        "test/sourceRereview.test.ts"
+      ],
+      "engineeringStatus": "implemented_guarded",
+      "deploymentAcceptance": "not_verified",
+      "scientificAcceptance": "not_accepted",
+      "truth": "Signed passage/version/action/freshness/revocation checks and invalidation hooks exist; real independent curator/authority operation remains unaccepted. The legacy sourceClearance helper is not a signed rights authority.",
+      "nextWork": "Provision the independently operated policy/receipt service and current permission evidence before real model egress.",
+      "signedLiveAcceptanceArtifacts": []
+    },
+    {
+      "proposalOrder": 5,
+      "priority": "P0",
+      "scope": "Staging isolation and separate migration-scope acceptance",
+      "existingMergedPrs": [
+        282
+      ],
+      "implementationEvidence": [
+        "src/db/persistenceSecurityAcceptance.ts",
+        "src/db/migrationRehearsal.ts",
+        "src/db/migrationHolds.ts",
+        "src/db/neonLiveEvidenceStore.ts",
+        "docs/audits/HSI_P0_C_PERSISTENCE_AND_AUTHORITY.md"
+      ],
+      "regressionEvidence": [
+        "test/persistenceSecurityAcceptance.test.ts",
+        "test/migrationRehearsal.test.ts"
+      ],
+      "engineeringStatus": "partial_rehearsal_and_verifier_only",
+      "deploymentAcceptance": "not_verified",
+      "scientificAcceptance": "not_accepted",
+      "truth": "Scope-specific signed evidence verification and selected historical SQL/restore rehearsals exist; real two-researcher/reviewer pooled HTTP isolation and signed activation packets remain unaccepted.",
+      "nextWork": "Build/execute the authorised real-account HTTP acceptance runner; inspect the current actual ledger/roles; retain all holds until each reviewed scope is accepted.",
+      "signedLiveAcceptanceArtifacts": []
+    },
+    {
+      "proposalOrder": 6,
+      "priority": "P1",
+      "scope": "Comparability and detailed context contract",
+      "existingMergedPrs": [
+        280,
+        283
+      ],
+      "implementationEvidence": [
+        "src/evidence/structuredEvidenceComparison.ts",
+        "src/evidence/passageLinkedContext.ts",
+        "src/evidence/contextConflictAudit.ts",
+        "src/researchOutcome.ts"
+      ],
+      "regressionEvidence": [
+        "test/passageLinkedContext.test.ts",
+        "test/structuredEvidenceComparison.test.ts",
+        "test/contextConflictAudit.test.ts"
+      ],
+      "engineeringStatus": "implemented_guarded",
+      "deploymentAcceptance": "not_verified",
+      "scientificAcceptance": "not_accepted",
+      "truth": "Entity/estimand/context gates, seventeen fields and five classes are tested; expert examples, actual corpus normalization authority and integrated staging science remain unaccepted.",
+      "nextWork": "Supply independently reviewed examples and accepted source/context extraction; no more duplicate comparison engine.",
+      "signedLiveAcceptanceArtifacts": []
+    },
+    {
+      "proposalOrder": 7,
+      "priority": "P1",
+      "scope": "Three-role investigation to saved reviewed outcome",
+      "existingMergedPrs": [
+        283,
+        285,
+        286
+      ],
+      "implementationEvidence": [
+        "src/hsiAgentOrchestrator.ts",
+        "src/evidence/contextConflictAudit.ts",
+        "src/server/investigationDeliveryService.ts",
+        "src/server/boundOutcomeAttachments.ts",
+        "src/expansion/rereviewOutcomeGuard.ts",
+        "docs/P1_A_CONTEXT_CONFLICT_AUDIT.md"
+      ],
+      "regressionEvidence": [
+        "test/boundContextAuditOutcome.test.ts",
+        "test/rereviewOutcomeGuard.test.ts"
+      ],
+      "engineeringStatus": "partial_integration",
+      "deploymentAcceptance": "not_verified",
+      "scientificAcceptance": "not_accepted",
+      "truth": "Bounded/injected three-role and protected saved-outcome contracts exist. Actual live retrieval/provider/persistence, audit-specific independent review, RA/SLE primary scope and authenticated reopened/exported journeys remain unaccepted.",
+      "nextWork": "Implement protected audit persistence/review and compose the real approved three-role staging journey with explicit domain/tenant authority.",
+      "signedLiveAcceptanceArtifacts": []
+    },
+    {
+      "proposalOrder": 8,
+      "priority": "P1",
+      "scope": "Locked benchmark worker evaluation and release evidence",
+      "existingMergedPrs": [
+        284,
+        285
+      ],
+      "implementationEvidence": [
+        "src/evidence/immunoBenchmarkAcceptance.ts",
+        "src/evidence/immunoBenchmarkScoring.ts",
+        "src/operations/immunoWorkerPlan.ts",
+        "src/operations/pilotOperationsStore.ts",
+        "src/operations/pilotRelease.ts"
+      ],
+      "regressionEvidence": [
+        "test/immunoBenchmarkAcceptance.test.ts",
+        "test/immunoBenchmarkScoring.test.ts",
+        "test/immunoWorkerPlan.test.ts"
+      ],
+      "engineeringStatus": "partial_authoring_and_worker_infrastructure",
+      "deploymentAcceptance": "not_verified",
+      "scientificAcceptance": "not_accepted",
+      "truth": "Canonical slots/reporting, 841-stage worker plan and signed-release contracts exist; no real 120-case independent adjudication, scientific floors, accepted comparison or signed release packet.",
+      "nextWork": "Author/lock actual expert gold and statistical policy, then run a protected resumable baseline/single/dual evaluation with redacted independent receipts.",
+      "signedLiveAcceptanceArtifacts": []
+    },
+    {
+      "proposalOrder": 9,
+      "priority": "P1",
+      "scope": "Operational gate and controlled researcher pilot",
+      "existingMergedPrs": [
+        285,
+        286
+      ],
+      "implementationEvidence": [
+        "src/server/researchRequestControls.ts",
+        "src/operations/pilotOperationsService.ts",
+        "src/operations/pilotMonitoring.ts",
+        "src/operations/pilotRelease.ts",
+        "docs/P1_C_OPERATIONAL_RELEASE.md"
+      ],
+      "regressionEvidence": [
+        "test/pilotOperationsStore.test.ts",
+        "test/pilotOperationsService.test.ts",
+        "test/pilotMonitoring.test.ts",
+        "test/pilotRelease.test.ts"
+      ],
+      "engineeringStatus": "partial_local_staging_reference",
+      "deploymentAcceptance": "not_verified",
+      "scientificAcceptance": "not_accepted",
+      "truth": "Same-host durable staging coordinator, quotas, checkpoint/recovery, alert/release and proposed-soak checks exist. Actual coordinator/adapters/owners/on-call delivery, 14-day soak, full restore/rollback and exact tested artifact acceptance remain absent.",
+      "nextWork": "Complete real operations acceptance and signed release before any production write/pilot invitation; P2 stays disabled.",
+      "signedLiveAcceptanceArtifacts": []
+    }
+  ],
+  "proposedNextPrs": [
+    {
+      "id": "NEXT-A",
+      "priority": "P0",
+      "scope": "Trusted source/provider operations and protected receipt integration",
+      "dependsOn": [],
+      "humanPrerequisites": [
+        "Independent source-policy owner and approved public/provider terms",
+        "Two approved deployment/credential references and redacted real receipts"
+      ],
+      "state": "proposed_not_opened",
+      "githubPrNumber": null
+    },
+    {
+      "id": "NEXT-B",
+      "priority": "P0",
+      "scope": "Real-account staging HTTP runner and per-scope migration acceptance",
+      "dependsOn": [],
+      "humanPrerequisites": [
+        "Approved staging identity/runtime scope",
+        "Two real researchers, independent reviewer and security signer"
+      ],
+      "state": "proposed_not_opened",
+      "githubPrNumber": null
+    },
+    {
+      "id": "NEXT-C",
+      "priority": "P1",
+      "scope": "Protected audit persistence/scoped review and SSc plus RA/SLE saved-outcome journey",
+      "dependsOn": [
+        "NEXT-A",
+        "NEXT-B"
+      ],
+      "humanPrerequisites": [
+        "Approved source packs",
+        "Explicit primary-disease planning and reviewer authority"
+      ],
+      "state": "proposed_not_opened",
+      "githubPrNumber": null
+    },
+    {
+      "id": "NEXT-D",
+      "priority": "P1",
+      "scope": "Real benchmark authoring, external vault and independently approved freeze",
+      "dependsOn": [],
+      "humanPrerequisites": [
+        "Two independent domain experts plus adjudication",
+        "Scientific/methodology approval before final tuning/evaluation"
+      ],
+      "state": "proposed_not_opened",
+      "githubPrNumber": null
+    },
+    {
+      "id": "NEXT-E",
+      "priority": "P1",
+      "scope": "Approved worker/coordinator/provider composition and locked benchmark execution",
+      "dependsOn": [
+        "NEXT-A",
+        "NEXT-B",
+        "NEXT-C",
+        "NEXT-D"
+      ],
+      "humanPrerequisites": [
+        "Exact artifact/config/cap and actual provider completion evidence"
+      ],
+      "state": "proposed_not_opened",
+      "githubPrNumber": null
+    },
+    {
+      "id": "NEXT-F",
+      "priority": "P1",
+      "scope": "Live operations soak, recovery, alert acknowledgement and signed pilot release",
+      "dependsOn": [
+        "NEXT-E"
+      ],
+      "humanPrerequisites": [
+        "Named security/operations owners, key pins and alert destination",
+        "14-day evidence and whole-platform restore/rollback/kill drills"
+      ],
+      "state": "proposed_not_opened",
+      "githubPrNumber": null
+    },
+    {
+      "id": "NEXT-G",
+      "priority": "P2",
+      "scope": "One controlled post-pilot domain/source increment; optional planner study only if justified",
+      "dependsOn": [
+        "NEXT-F"
+      ],
+      "humanPrerequisites": [
+        "Actual P1-C acceptance and resolved complete pilot failure ledger",
+        "Source packs and domain/tenant reviewers; moderation evidence if requested"
+      ],
+      "state": "proposed_not_opened",
+      "githubPrNumber": null
+    }
+  ],
+  "benchmarkProfile": {
+    "canonicalPath": "evaluation/independent-evaluation/immuno-v1",
+    "protocolManifestPath": "evaluation/independent-evaluation/immuno-v1/protocol.v1.json",
+    "finalCaseCount": 120,
+    "quotas": {
+      "core": 50,
+      "disease": 30,
+      "cross_domain": 20,
+      "governance": 20
+    },
+    "dimensions": [
+      "retrieval",
+      "mechanism_accuracy",
+      "context_preservation",
+      "conflict_classification",
+      "explanation",
+      "uncertainty",
+      "gap_quality",
+      "brief_usefulness"
+    ],
+    "realAdjudicatedCasesSuppliedByTheseChanges": 0,
+    "scientificFloorsApproved": false,
+    "legacyNineDimensionScorecardIsDiagnosticOnly": true,
+    "oldLabelsOrScoresNumericallyCopied": false
+  }
+}
