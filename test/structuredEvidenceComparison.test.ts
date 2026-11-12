@@ -141,7 +141,7 @@ describe("structured evidence comparison outcomes", () => {
       right:unit({id:"b",findingPolarity:"supporting",biologicalContext:sscContext,predicate:"causes"}),
     });
     expect(result.outcome).toBe("insufficient_comparability");
-    expect(result.version).toBe("0.2.0");
+    expect(result.version).toBe("0.3.0");
   });
   test("matching polarities + shared context → consistent (not scientific approval)", () => {
     const result = compareEvidenceUnits({

@@ -7,7 +7,8 @@ export interface SourceClearanceReceipt {
  identity:"matched";rights:"verified";retraction:"clear";
  checkedAt:string;expiresAt:string;signature:string;
 }
-export type ClearanceBinding={receipt:unknown;sourceId:string;sourceVersion:string;passage:string};
+export type SourceUseAction="model_transmission"|"storage"|"display"|"comparison"|"export";
+export type ClearanceBinding={receipt:unknown;sourceId:string;sourceVersion:string;passage:string;requiredActions?:readonly SourceUseAction[]};
 export interface SourceClearanceVerifier {authorize:(binding:ClearanceBinding)=>Promise<boolean>;}
 const fields=["schemaVersion","id","issuer","keyId","sourceId","sourceVersion","canonicalId","passageSha256","permittedActions","licenceId","attribution","identity","rights","retraction","checkedAt","expiresAt","signature"];
 /** Canonical signed bytes for the independent authority, excluding only signature. */
@@ -17,6 +18,7 @@ export function sourceClearanceSigningText(receipt:Omit<SourceClearanceReceipt,"
 export function createSourceClearanceVerifier(config:{
  authorities:readonly {issuer:string;keyId:string;publicKey:KeyObject}[];
  isRevoked:(receiptId:string,issuer:string,signal:AbortSignal)=>Promise<boolean>;
+ requiredActions?:readonly SourceUseAction[];
  now?:()=>number;maxAgeMs?:number;revocationTimeoutMs?:number;
 }):SourceClearanceVerifier{
  const maxAge=config.maxAgeMs??86400000;
@@ -24,16 +26,22 @@ export function createSourceClearanceVerifier(config:{
  if(!Number.isSafeInteger(maxAge)||maxAge<1||maxAge>86400000||!Number.isSafeInteger(timeoutMs)||timeoutMs<1000||timeoutMs>10000||typeof config.isRevoked!=="function")throw Error("Invalid clearance policy");
  const authorities=config.authorities.map(a=>({...a}));
  if(!authorities.length||authorities.some(a=>!a.issuer.trim()||!a.keyId.trim()||a.publicKey.type!=="public"||a.publicKey.asymmetricKeyType!=="ed25519")||new Set(authorities.map(a=>JSON.stringify([a.issuer,a.keyId]))).size!==authorities.length)throw Error("Pinned Ed25519 source authorities required");
+ const actions:readonly SourceUseAction[]=[...(config.requiredActions??["model_transmission"])];
+ const allowedActions=["model_transmission","storage","display","comparison","export"];
+ if(!actions.length||new Set(actions).size!==actions.length||actions.some(a=>!allowedActions.includes(a)))throw Error("Invalid source action policy");
  const now=config.now??Date.now;
  const isRevoked=config.isRevoked;
  return {async authorize(binding){
   try{
    // Snapshot untrusted input across awaits to prevent caller mutation.
+   binding=structuredClone(binding);
+   const required=[...new Set([...actions,...(binding.requiredActions??[])])];
+   if(required.some(a=>!allowedActions.includes(a)))return false;
    const r=structuredClone(binding.receipt) as SourceClearanceReceipt;
    if(!r||typeof r!=="object"||Array.isArray(r)||Object.keys(r).sort().join(",")!==[...fields].sort().join(","))return false;
    if(fields.filter(k=>k!=="permittedActions").some(k=>typeof r[k as keyof SourceClearanceReceipt]!=="string"||!(r[k as keyof SourceClearanceReceipt] as string).trim()||(r[k as keyof SourceClearanceReceipt] as string).length>2048))return false;
    if(r.schemaVersion!=="hsi-source-clearance-1"||r.identity!=="matched"||r.rights!=="verified"||r.retraction!=="clear"||!/^PMID:[1-9]\d*$|^DOI:10\.[^\s]+$/.test(r.canonicalId))return false;
-   if(!Array.isArray(r.permittedActions)||r.permittedActions.length>10||r.permittedActions.some(a=>typeof a!=="string"||a.length>100)||!r.permittedActions.includes("model_transmission"))return false;
+   if(!Array.isArray(r.permittedActions)||r.permittedActions.length>10||r.permittedActions.some(a=>typeof a!=="string"||a.length>100)||required.some(a=>!r.permittedActions.includes(a)))return false;
    if(!binding.sourceVersion||r.sourceId!==binding.sourceId||r.sourceVersion!==binding.sourceVersion||!/^[a-f0-9]{64}$/.test(r.passageSha256)||r.passageSha256!==createHash("sha256").update(binding.passage).digest("hex"))return false;
    const checked=Date.parse(r.checkedAt),expiry=Date.parse(r.expiresAt),current=now();
    if(!Number.isFinite(current)||!Number.isFinite(checked)||!Number.isFinite(expiry)||checked>current||expiry<=current||expiry<=checked||expiry-checked>maxAge||current-checked>maxAge)return false;

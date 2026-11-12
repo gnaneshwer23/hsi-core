@@ -1,3 +1,4 @@
+import type {OutcomeAttachmentResolver} from "./boundOutcomeAttachments";
 /** ARCH-003 trusted Bun API entrypoint (separate from static Vite hosting).
  * Deploy only behind a same-origin reverse proxy and secure HTTPS session cookies.
  * Never accept identity, session tokens or roles from request bodies.
@@ -213,7 +214,7 @@ function workspaceError(error:unknown):Response{
  if(error instanceof InvestigationWorkspaceError)return json({code:error.code,error:error.publicMessage},error.status);
  return json({error:"Research workspace unavailable or operation denied"},403);
 }
-export function createNeonInterrogativeApiServices(config:{databaseUrl:string;neonProjectId?:string|null;writesEnabled?:boolean;sscReleaseId?:string;raComparisonReleaseId?:string;liveEvidenceRuntimeDatabaseUrl?:string;liveEvidenceWritesEnabled?:boolean}):ApiServices{
+export function createNeonInterrogativeApiServices(config:{outcomeAttachments?:OutcomeAttachmentResolver;databaseUrl:string;neonProjectId?:string|null;writesEnabled?:boolean;sscReleaseId?:string;raComparisonReleaseId?:string;liveEvidenceRuntimeDatabaseUrl?:string;liveEvidenceWritesEnabled?:boolean}):ApiServices{
  const workspace=createNeonInvestigationWorkspace(config);
  return {
   liveEvidence:config.liveEvidenceRuntimeDatabaseUrl?createNeonLiveEvidenceDependencies({databaseUrl:config.databaseUrl,runtimeDatabaseUrl:config.liveEvidenceRuntimeDatabaseUrl,neonProjectId:config.neonProjectId,writesEnabled:config.liveEvidenceWritesEnabled===true}):undefined,
