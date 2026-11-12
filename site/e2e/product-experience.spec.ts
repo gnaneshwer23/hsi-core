@@ -27,9 +27,9 @@ test("home communicates the research workflow and supports accessible capability
  await expect(page.getByText(/Curated examples only/)).toBeVisible();
 });
 test("mobile menu opens, closes with Escape and connects public destinations",async({page})=>{
- await page.setViewportSize({width:390,height:844});await page.goto("/");const menu=page.locator(".nav-toggle");await menu.click();await expect(menu).toHaveAttribute("aria-expanded","true");
+ await page.setViewportSize({width:390,height:844});await page.goto("/");const menu=page.getByRole("button",{name:"Open menu",exact:true});await menu.click();await expect(menu).toHaveAttribute("aria-expanded","true");
  await page.keyboard.press("Escape");await expect(menu).toHaveAttribute("aria-expanded","false");await expect(menu).toBeFocused();
- await menu.click();await page.locator("#primary-menu").getByRole("link",{name:"Evidence & safety",exact:true}).click();await expect(page).toHaveURL(/evidence-safety$/);
+ await menu.click();await page.locator("#public-menu").getByRole("link",{name:"Evidence Intelligence",exact:true}).click();await expect(page).toHaveURL(/evidence-intelligence$/);
  await expect(page.getByRole("heading",{level:1})).toContainText("Confidence begins");
 });
 test("evidence overview explains source context without presenting unreviewed records as results",async({page})=>{

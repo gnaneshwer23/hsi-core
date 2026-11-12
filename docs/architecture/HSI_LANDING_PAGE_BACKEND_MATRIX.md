@@ -127,3 +127,7 @@ Write gate: `HSI_RESEARCH_WRITES_ENABLED` + staging branch id + staging host —
 - Add unrestricted DB/graph query endpoints for the public site.
 - Claim `/contact` persists access requests without a verified write path.
 - Hardcode disease lists as product boundaries (SSc remains a validation case).
+
+## Approved public narrative restructure — 12 November 2026
+
+Ten canonical public destinations: `/`, `/platform`, `/context-conflict-audit`, `/evidence-intelligence`, `/research`, `/research-briefs`, `/science`, `/applications`, `/trust`, `/about`. Existing routes remain available as secondary resources; authenticated tool routes and API contracts are preserved. `/contact` still saves a browser-only draft, not a delivered/persisted access request. New public content cannot grant source rights, provider activation, reviewer authority, scientific validation or graph publication. Implementation sequence and component audit: `docs/website/HSI_WEBSITE_RESTRUCTURE.md`.

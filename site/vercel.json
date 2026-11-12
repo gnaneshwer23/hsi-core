@@ -367,6 +367,30 @@
     {
       "source": "/research/discovery-experience",
       "destination": "/_pages/research--discovery-experience.html"
+    },
+    {
+      "source": "/context-conflict-audit",
+      "destination": "/_pages/context-conflict-audit.html"
+    },
+    {
+      "source": "/evidence-intelligence",
+      "destination": "/_pages/evidence-intelligence.html"
+    },
+    {
+      "source": "/research-briefs",
+      "destination": "/_pages/research-briefs.html"
+    },
+    {
+      "source": "/applications",
+      "destination": "/_pages/applications.html"
+    },
+    {
+      "source": "/trust",
+      "destination": "/_pages/trust.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/_pages/about.html"
     }
   ],
   "redirects": [

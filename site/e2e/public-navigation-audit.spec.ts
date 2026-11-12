@@ -20,7 +20,7 @@ test('all public links and selector states resolve, without linking older engine
         if(!link.href.startsWith('/')&&!link.href.startsWith('#'))continue;
         const url=new URL(link.href,'http://127.0.0.1:4178'+path);
         expect(routes.has(url.pathname),`${path}: ${link.name} → ${link.href}`).toBe(true);
-        expect(['/status','/docs','/gateway','/clinical-timeline','/trials-criteria','/roadmap','/alignment','/curator','/systems','/discovery-engine','/explore']).not.toContain(url.pathname);
+        expect(['/docs','/gateway','/clinical-timeline','/trials-criteria','/roadmap','/alignment','/curator','/systems','/discovery-engine','/explore']).not.toContain(url.pathname);
         if(url.hash||!PUBLIC_MARKETING_PATHS.includes(url.pathname as typeof path))destinations.add(url.pathname+url.search+url.hash);
         if(url.pathname===path&&url.hash)expect(await page.locator(`[id=${JSON.stringify(decodeURIComponent(url.hash.slice(1)))}]`).count(),`${path}: ${link.href}`).toBe(1);
       }
@@ -82,11 +82,11 @@ test('hero illustrations fit their pages and remain legible at mobile sizes',asy
 
 test('header and footer destinations can be clicked; product links open a separate tab',async({page})=>{
   await page.setViewportSize({width:1440,height:1000});await page.goto('/');
-  const hrefs=await page.locator('.nav-inner,#secondary-pages,.site-footer').locator('a[href]').evaluateAll(as=>as.map(a=>a.getAttribute('href')!).filter(h=>h.startsWith('/')));
+  const hrefs=await page.locator('.hsi-nav-inner,#research-pages,.hsi-footer').locator('a[href]').evaluateAll(as=>as.map(a=>a.getAttribute('href')!).filter(h=>h.startsWith('/')));
   for(const href of new Set(hrefs)){
     await page.goto('/');
-    let link=page.locator('.nav,.site-footer').locator(`a[href=${JSON.stringify(href)}]:visible`).first();
-    if(!await link.count()){await page.getByRole('button',{name:'More',exact:true}).click();link=page.locator('#secondary-pages').locator(`a[href=${JSON.stringify(href)}]`)}
+    let link=page.locator('.hsi-nav,.hsi-footer').locator(`a[href=${JSON.stringify(href)}]:visible`).first();
+    if(!await link.count()){await page.getByRole('button',{name:'Research',exact:true}).click();link=page.locator('#research-pages').locator(`a[href=${JSON.stringify(href)}]`)}
     await link.click();await expect(page).toHaveURL(new URL(href,'http://127.0.0.1:4178').href);await expect(page.getByRole('heading',{level:1})).toBeVisible();
   }
   for(const path of ['/modules/aksh-health','/modules/isi']){
