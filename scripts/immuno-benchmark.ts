@@ -10,4 +10,4 @@ if(canonicalEvidenceJson(JSON.parse(readFileSync(path,"utf8")))!==canonicalEvide
 // Defense in depth for structured private gold accidentally copied to public JSON.
 function scan(path:string){if(!existsSync(path))return;for(const name of readdirSync(path)){const file=join(path,name);if(statSync(file).isDirectory())scan(file);else if(file.endsWith(".json"))assertNoStructuredBenchmarkGold(JSON.parse(readFileSync(file,"utf8")))}}
 scan(resolve(root,"site/public"));scan(resolve(root,"site/dist"));
-console.log(JSON.stringify({benchmark:expected.benchmark,protocolHash:expected.protocolHash,slots:expected.slots.length,authoredCases:0,adjudicatedCases:0,scientificAcceptance:"BLOCKED",publicArtifactScan:"passed_structured_fields_only",scanHash:benchmarkDigest({protocolHash:expected.protocolHash,ruleVersion:1})}));
+console.log(JSON.stringify({benchmark:expected.benchmark,protocolHash:expected.protocolHash,slots:expected.slots.length,authoredCases:0,adjudicatedCases:0,scientificAcceptance:"BLOCKED",publicArtifactScan:"passed_structured_fields_only",scanHash:benchmarkDigest({protocolHash:expected.protocolHash,ruleVersion:2})}));
