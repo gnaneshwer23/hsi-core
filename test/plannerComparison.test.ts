@@ -1,0 +1,21 @@
+/** All rows/approvals are TEST-ONLY. No actual planner experiment or scientific decision is invented. */
+import {test,expect} from "bun:test";
+import {fixtureCases,hash} from "./fixtures/immunoBenchmark";
+import {DETAILED_CONTEXT_FIELDS} from "../src/evidence/passageLinkedContext";
+import {benchmarkDigest} from "../src/evidence/immunoBenchmark";
+import {assessOptionalPlanner,preparePlannerAdoption,plannerComparisonInventoryHash,type PlannerPolicy,type PlannerTrialLock,type PlannerCaseComparison,type PlannerArm} from "../src/expansion/plannerComparison";
+const policy:PlannerPolicy={minimumCases:4,minimumIndependentFamilies:4,minimumUsefulnessGain:0,maxExtraLatencyMs:1000,maxExtraCostMicros:100,caseTokenCap:100,caseCostCapMicros:1000,bootstrapResamples:500};
+function input(){const cases=fixtureCases().slice(0,4),lock:PlannerTrialLock={inventoryHash:plannerComparisonInventoryHash(cases),policyHash:benchmarkDigest(policy),baselineConfigurationHash:hash("TEST-baseline"),plannerConfigurationHash:hash("TEST-planner"),retrievalPolicyHash:hash("TEST-retrieval"),evidenceBudgetHash:hash("TEST-budget"),registeredAt:"2026-11-12T12:00:00Z",executionNotBefore:"2026-11-12T13:00:00Z",registrationReceiptHash:hash("TEST-registration"),unseenHoldoutReceiptHash:hash("TEST-unseen")};
+ const arm:PlannerArm={usefulness:3,provenanceFailures:0,safetyFailures:0,contextCorrect:17,contextEvaluated:17,contextByField:Object.fromEntries(DETAILED_CONTEXT_FIELDS.map(f=>[f,true])) as PlannerArm["contextByField"],latencyMs:1000,costMicros:100,tokens:50,retrievalSnapshotHash:hash("TEST-shared-retrieval"),evidenceSnapshotHash:hash("TEST-shared-evidence"),executionReceiptHash:hash("TEST-execution")};
+ const rows:PlannerCaseComparison[]=cases.map(c=>({caseId:c.caseId,baseline:structuredClone(arm),planner:{...structuredClone(arm),usefulness:4,latencyMs:1500,costMicros:150},independentAssessmentReceiptHash:hash("TEST-rating-"+c.caseId)}));return {cases,rows,policy:structuredClone(policy),lock}}
+const authority={verifyPreregistration:async()=>true,verifyObservation:async()=>true};
+test("optional planner stays disabled even when paired evidence clears preregistered criteria",async()=>{
+ const report=await assessOptionalPlanner(input(),authority);expect(report.engineeringCriteriaMet).toBe(true);expect(report.meanUsefulnessGain).toBe(1);expect(report.plannerEnabled).toBe(false);expect(report.defaultPlanningMode).toBe("deterministic_falsification_fields");
+ await expect(preparePlannerAdoption({report,expansionCandidateHash:hash("TEST-expansion"),decisionReceiptHash:hash("TEST-adoption")},async()=>false)).rejects.toThrow("Independent");const decision=await preparePlannerAdoption({report,expansionCandidateHash:hash("TEST-expansion"),decisionReceiptHash:hash("TEST-adoption")},async()=>true);expect(decision.plannerEnabled).toBe(false);expect(decision.automaticAgentAddition).toBe(false);
+});
+test("same retrieval/evidence, actual receipt validation and unchanged preregistration are mandatory",async()=>{
+ const changed=input();changed.rows[0]!.planner.retrievalSnapshotHash=hash("TEST-extra-retrieval");await expect(assessOptionalPlanner(changed,authority)).rejects.toThrow("same retrieval");await expect(assessOptionalPlanner(input(),{...authority,verifyObservation:async()=>false})).rejects.toThrow("Blinded");const late=input();late.lock.registeredAt="2026-11-13T12:00:00Z";await expect(assessOptionalPlanner(late,authority)).rejects.toThrow("preregistration");
+});
+test("small/unchanged usefulness, missing cases, safety/provenance/context harm or extra cost/latency keeps deterministic planning",async()=>{
+ for(const mutate of [(v:ReturnType<typeof input>)=>{v.rows.forEach(r=>r.planner.usefulness=3)},(v:ReturnType<typeof input>)=>{v.rows.pop()},(v:ReturnType<typeof input>)=>{v.rows[0]!.planner.safetyFailures=1},(v:ReturnType<typeof input>)=>{v.rows[0]!.planner.provenanceFailures=1},(v:ReturnType<typeof input>)=>{v.rows[0]!.planner.contextCorrect=16;v.rows[0]!.planner.contextByField.species=false},(v:ReturnType<typeof input>)=>{v.rows[0]!.planner.costMicros=201},(v:ReturnType<typeof input>)=>{v.rows[0]!.planner.latencyMs=2001}]){const v=input();mutate(v);const r=await assessOptionalPlanner(v,authority);expect(r.engineeringCriteriaMet).toBe(false);expect(r.plannerEnabled).toBe(false)}
+});
