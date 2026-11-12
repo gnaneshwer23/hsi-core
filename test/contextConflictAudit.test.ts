@@ -39,3 +39,9 @@ test("deadline fences a non-cooperative search before extraction or append",asyn
 test("atomic append contract rejects concurrent attempts to overwrite a version",async()=>{
  const f=harness(),first=await f.runner.run(target),results=await Promise.allSettled([f.runner.run(target,first),f.runner.run(target,first)]);expect(results.filter(r=>r.status==="fulfilled")).toHaveLength(1);expect(results.filter(r=>r.status==="rejected")).toHaveLength(1);expect(f.stored.map(a=>a.version)).toEqual([1,2]);
 });
+test("malformed later hit is rejected before any clearance/extraction callback",async()=>{
+ const f=contextUnit("a");let calls=0;const runner=createContextConflictAuditRunner({enabled:true,
+ search:async(_target,intent)=>({intent,status:"completed_bounded",queriedAt:"2026-11-12T12:00:00Z",queryHash:fixtureHash(intent),sourceIds:[f.source.id],hits:[{id:"hit-"+intent,source:f.source,passage:intent==="support"?f.passage:{...f.passage,text:f.passage.text+"tampered"},clearanceReceiptId:"synthetic-clearance"}]}),
+ authorizePassage:async()=>{calls++;return true},extract:async()=>{calls++;return f.unit},verify:async()=>{calls++;return {status:"not_executed",receiptId:null}},append:async()=>{calls++}});
+ await expect(runner.run(target)).rejects.toThrow();expect(calls).toBe(0);
+});

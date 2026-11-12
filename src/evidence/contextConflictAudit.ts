@@ -6,7 +6,7 @@ import type {OpposingSearchExecutionStatus} from "./opposingEvidenceSearch";
 import type {ResearchSource,ResearchPassage} from "../researchContracts";
 import {requiresScientificException} from "../researchV2/passageVerification";
 import {rejectPhiPayload} from "../cdsPhiBoundary";
-import {validatePassageLinkedContext} from "./passageLinkedContext";
+import {buildPassageLinkedContext,validatePassageLinkedContext} from "./passageLinkedContext";
 export type ContextConflictClass="consistent"|"potential_conflict"|"context_dependent"|"methodological_difference"|"insufficient_evidence";
 const hash=(v:unknown)=>createHash("sha256").update(canonicalEvidenceJson(v)).digest("hex");
 export function reportContextConflict(comparison:StructuredEvidenceComparison):{classification:ContextConflictClass;comparisonId:string;reasons:string[];scientificApproval:false;graphPromotable:false}{
@@ -33,7 +33,7 @@ export function createContextConflictAuditRunner(deps:{
  extract:(hit:Readonly<ContextAuditHit>,target:Readonly<ContextAuditTarget>,signal:AbortSignal)=>Promise<ComparableEvidenceUnit>;
  verify:(material:Readonly<{target:ContextAuditTarget;comparisons:StructuredEvidenceComparison[];gaps:string[]}>,signal:AbortSignal)=>Promise<ContextConflictAudit["verifier"]>;
  /** Append must atomically compare the previous hash and retain immutable versions. */
- append:(artifact:Readonly<ContextConflictAudit>,expectedPrevious:string|null)=>Promise<void>;
+ append:(artifact:Readonly<ContextConflictAudit>,expectedPrevious:string|null,signal:AbortSignal)=>Promise<void>;
  approvedNormalizerHashes?:readonly string[];
  timeoutMs?:number;now?:()=>string;
 }){
@@ -58,6 +58,7 @@ export function createContextConflictAuditRunner(deps:{
    const hits=new Map<string,ContextAuditHit>();let blockedReason:string|null=null;
    for(const s of searches)for(const hit of s.hits){
     if(!hit.id?.trim()||!hit.clearanceReceiptId?.trim()||hit.source.id!==hit.passage.sourceId||hit.source.provenance.version!==hit.passage.sourceVersion)throw Error("Unbound audit hit");
+    buildPassageLinkedContext({source:hit.source,passage:hit.passage,clearanceReceiptId:hit.clearanceReceiptId,extractions:{}});
     const key=JSON.stringify([hit.source.id,hit.passage.sourceVersion,hit.passage.id]),old=hits.get(key);
     if(old&&hash(old)!==hash(hit))throw Error("Conflicting source versions in audit batch");hits.set(key,hit);
    }
@@ -90,10 +91,10 @@ export function createContextConflictAuditRunner(deps:{
    }
    const body={schemaVersion:"hsi-context-conflict-audit-1" as const,...target,version:(parent?.version??0)+1,parentAuditHash:parent?.auditHash??null,searches:searches.map(({hits:_,...metadata})=>metadata),units,comparisons,report,gaps,blockedReason,verifier,humanReview:{status:"required" as const},consensusEstablished:false as const,scientificApproval:false as const,graphPromotable:false as const};
    checkpoint();
-   if(canonicalEvidenceJson(body).length>2_000_000)throw Error("Audit artifact budget exceeded");
+   if(new TextEncoder().encode(canonicalEvidenceJson(body)).byteLength>2_000_000)throw Error("Audit artifact budget exceeded");
    const auditHash=hash(body),artifact={...body,id:"context-audit-"+auditHash.slice(0,32),auditHash};
    validateContextConflictAudit(artifact);
-   await append(structuredClone(artifact),parent?.auditHash??null);
+   await append(structuredClone(artifact),parent?.auditHash??null,controller.signal);
    checkpoint();return artifact;
   };
   try{
@@ -111,7 +112,7 @@ export function validateContextConflictAudit(value:ContextConflictAudit):void{
  if(!Array.isArray(value.searches)||value.searches.length!==2||value.searches.some((s,n)=>s.intent!==(n===0?"support":"oppose")||!["completed_bounded","partial","provider_unavailable","successful_empty","skipped_budget","not_executed","invalid_query"].includes(s.status)||!Number.isFinite(Date.parse(s.queriedAt))||!/^[a-f0-9]{64}$/.test(s.queryHash)||!Array.isArray(s.sourceIds)||s.sourceIds.length>32||new Set(s.sourceIds).size!==s.sourceIds.length||s.sourceIds.some(id=>typeof id!=="string"||!id.trim())))throw Error("Invalid audit search metadata");
  if(!Array.isArray(value.gaps)||value.gaps.some(g=>typeof g!=="string"||g.length>2000)||value.blockedReason!==null&&(typeof value.blockedReason!=="string"||!value.blockedReason.trim())||!value.verifier||!["checked_with_limitations","needs_evidence","failed","not_executed"].includes(value.verifier.status)||value.verifier.receiptId!==null&&(typeof value.verifier.receiptId!=="string"||!value.verifier.receiptId.trim())||value.verifier.status==="checked_with_limitations"&&!value.verifier.receiptId)throw Error("Invalid audit limits or verifier receipt");
  const {auditHash,id,...body}=value;
- if(hash(body)!==auditHash||id!=="context-audit-"+auditHash.slice(0,32)||canonicalEvidenceJson(body).length>2_000_000)throw Error("Context audit content hash mismatch");
+ if(hash(body)!==auditHash||id!=="context-audit-"+auditHash.slice(0,32)||new TextEncoder().encode(canonicalEvidenceJson(body)).byteLength>2_000_000)throw Error("Context audit content hash mismatch");
  const comparisons:StructuredEvidenceComparison[]=[];
  for(const unit of value.units){if(!unit.detailedContext)throw Error("Detailed context required in audit");validatePassageLinkedContext(unit.detailedContext);}
  for(let a=0;a<value.units.length;a++)for(let b=a+1;b<value.units.length;b++)comparisons.push(compareEvidenceUnits({left:value.units[a]!,right:value.units[b]!}));
