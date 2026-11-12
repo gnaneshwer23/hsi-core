@@ -19,10 +19,12 @@ export function validateProviderConfig(config:ProviderConfig):Readonly<ProviderC
  if(!Object.hasOwn(ENDPOINTS,config.providerId)||!ENDPOINTS[config.providerId]!.includes(config.endpoint))throw Error("Unapproved provider endpoint");
  return Object.freeze(config);
 }
-export function createProviderRunner(config:ProviderConfig,transport:ProviderTransport):EntailmentModelRunner{
+export function createProviderRunner(config:ProviderConfig,transport:ProviderTransport,options:{signal?:AbortSignal}={}):EntailmentModelRunner{
  const checked=validateProviderConfig(config);
  if(typeof transport!=="function")throw Error("Trusted provider transport required");
+ const externalSignal=options.signal;
  return async payload=>{
+  if(externalSignal?.aborted)throw Error("Provider cancelled");
   if(!payload||typeof payload!=="object"||Array.isArray(payload))throw Error("Invalid model request");
   payload={instruction:payload.instruction,claim:payload.claim,passage:payload.passage};
   if(!payload||[payload.instruction,payload.claim,payload.passage].some(s=>typeof s!=="string"||!s.trim())||payload.passage.length>3000||payload.claim.length>2000||payload.instruction.length>2000)throw Error("Invalid model request");
@@ -31,7 +33,12 @@ export function createProviderRunner(config:ProviderConfig,transport:ProviderTra
   let body:ReadableStream<Uint8Array>|null=null;
   let timer:ReturnType<typeof setTimeout>|undefined;
   const cancel=()=>{controller.abort();void (reader?reader.cancel():body?.cancel())?.catch(()=>{});};
+  let onAbort:(()=>void)|undefined;
+  const cancellation=new Promise<never>((_,reject)=>{
+   if(externalSignal){onAbort=()=>{cancel();reject(Error("Provider cancelled"));};externalSignal.addEventListener("abort",onAbort,{once:true});if(externalSignal.aborted)onAbort();}
+  });
   const execution=(async()=>{
+   if(controller.signal.aborted)throw Error("Provider cancelled");
    const response=await transport(checked,{...payload},{signal:controller.signal,redirect:"error"});
    if(!(response instanceof Response))throw Error("Invalid provider response");
    body=response.body;
@@ -55,9 +62,9 @@ export function createProviderRunner(config:ProviderConfig,transport:ProviderTra
    return result;
   })();
   try{
-   return await Promise.race([execution,new Promise<never>((_,reject)=>{
+   return await Promise.race([execution,cancellation,new Promise<never>((_,reject)=>{
     timer=setTimeout(()=>{cancel();reject(Error("Provider deadline exceeded"));},checked.timeoutMs);
    })]);
-  }finally{if(timer)clearTimeout(timer);cancel();}
+  }finally{if(timer)clearTimeout(timer);if(onAbort)externalSignal?.removeEventListener("abort",onAbort);cancel();}
  };
 }
