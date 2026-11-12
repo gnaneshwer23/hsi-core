@@ -23,7 +23,7 @@ export function illustrativeAuditOutcome(
   b: AuditStudy,
   complete: boolean,
   controlledSyntheticAssumption: boolean,
-): { outcome: AuditTeachingOutcome; reason: string } {
+): { outcome: AuditTeachingOutcome | null; reason: string } {
   if (!complete)
     return {
       outcome: "Insufficient evidence",
@@ -49,7 +49,13 @@ export function illustrativeAuditOutcome(
       reason:
         "Tissue, cell state or disease stage differs. A change in biological context may explain the observations; it does not prove why they differ.",
     };
-  if (a.finding !== b.finding && controlledSyntheticAssumption)
+  if (a.finding === b.finding)
+    return {
+      outcome: null,
+      reason:
+        "The chosen observations agree in direction. No disagreement classification is needed, but this exercise does not establish consensus or scientific support.",
+    };
+  if (controlledSyntheticAssumption)
     return {
       outcome: "Genuine contradiction",
       reason:
@@ -58,8 +64,6 @@ export function illustrativeAuditOutcome(
   return {
     outcome: "Unresolved disagreement",
     reason:
-      a.finding === b.finding
-        ? "The chosen observations now agree in direction, but this exercise does not establish consensus or scientific support. Independent evidence review is still absent."
-        : "Opposing observations in apparently matched contexts remain unresolved until study quality, uncertainty and independent review are assessed.",
+      "Opposing observations in apparently matched contexts remain unresolved until study quality, uncertainty and independent review are assessed.",
   };
 }
