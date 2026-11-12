@@ -2,14 +2,15 @@
 import {SQL} from "bun";
 import {createHash} from "node:crypto";
 import {loadHsiPublishedRelease} from "./authoritativeReleaseStore";
-import {verifyHsiReviewerAuthority} from "./reviewerAuthority";
+import {verifyHsiReviewerAuthority,reviewerScopeForDisease} from "./reviewerAuthority";
 import type {TrustedResearchActor} from "./researchInvestigationStore";
 import {parseResearchBundle,type ResearchBundle,type ResearchEntity} from "../researchContracts";
 import {validateReleasedEvidence,type ReleasedEvidenceBundle} from "../investigationGraphContext";
 import type {InvestigationRelease} from "../interrogativeWorkspace";
 const hash=(s:string)=>createHash("sha256").update(s).digest("hex");
 export async function loadInvestigationReleasedEvidence(input:{actor:TrustedResearchActor;release:InvestigationRelease;question:string;disease:ReleasedEvidenceBundle["disease"];databaseUrl:string;neonProjectId?:string|null}):Promise<ReleasedEvidenceBundle>{
- const scope=input.disease==="systemic_sclerosis"?"ssc":"ra";
+ const scope=reviewerScopeForDisease(input.disease);
+ if(!scope)throw Error("Unsupported scientific review scope");
  const snapshot=await loadHsiPublishedRelease({...input,version:input.release.version,verifyReviewer:(principal,reviewedAt)=>verifyHsiReviewerAuthority({...input,principal,reviewedAt,scope})});
  if(snapshot.manifest.releaseId!==input.release.id||snapshot.manifest.manifestHash!==input.release.manifestHash||snapshot.claims.length>100)throw Error("Pinned release mismatch or graph budget exceeded");
  const provenance={product:"hsi" as const,datasetId:input.release.id,version:input.release.version,retrievedAt:snapshot.manifest.generatedAt};
@@ -45,7 +46,7 @@ export async function loadInvestigationReleasedEvidence(input:{actor:TrustedRese
     if(meta?.dataClass!=="public_biomedical"||row.licence_status!=="passage_permitted"||row.retraction_status!=="none_reported"||!row.rights_verified_by||!row.rights_verified_at||typeof meta.licenceIdentifier!=="string"||claim.sources.find(s=>s.id===sourceId)?.sourceVersion!==version||typeof row.passage_text!=="string"||hash(row.passage_text)!==row.passage_hash)throw Error("Source rights, version or passage integrity not verified");
     if(!Number.isFinite(Date.parse(String(row.rights_verified_at)))||Date.parse(String(row.rights_verified_at))>Date.now()||row.passage_text.length>20000)throw Error("Invalid rights attestation time or passage budget");
     const licence=new URL(meta.licenceIdentifier);if(licence.protocol!=="https:"||licence.username||licence.password)throw Error("Rights evidence URI required");
-    const authority=await sql`SELECT 1 FROM hsi_research_access a JOIN neon_auth."user" u ON u.id=a.principal_id
+    const authority=await sql`SELECT 1 FROM hsi_research_access a JOIN neon_auth."user" u ON u.id::text=a.principal_id
      WHERE a.principal_id=${String(row.rights_verified_by)} AND a.access_role='research_admin'
       AND a.granted_at<=${new Date(String(row.rights_verified_at)).toISOString()}::timestamptz AND a.revoked_at IS NULL AND u."emailVerified"=true AND COALESCE(u.banned,false)=false LIMIT 1`;
     if(authority.length!==1)throw Error("Source-rights authority not verified");

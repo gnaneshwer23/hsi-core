@@ -360,7 +360,7 @@ describe("bounded agent execution durable traces", () => {
     expect(result.status).toBe("completed");
     // No stage may successfully call patient.context.get.
     for (const stage of result.stages) {
-      expect(stage.toolCalls.some((c) => c.tool === "patient.context.get" && c.status === "success")).toBe(
+      expect(stage.toolCalls.some((c) => c.tool === "patient.context.get" && ["authorized","success"].includes(c.status))).toBe(
         false,
       );
     }

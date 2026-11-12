@@ -9,7 +9,7 @@ export function parseReviewQueueCursor(value:unknown):ReviewQueueCursor|null{
 }
 export async function loadIndependentReviewQueue(input:{serverSessionToken:string|null;databaseUrl:string;neonProjectId?:string|null;cursor:ReviewQueueCursor|null}){
  const cursor=parseReviewQueueCursor(input.cursor),actor=await authenticateHsiNeonSession({...input,sessionToken:input.serverSessionToken});
- if(!actor?.roles.includes("scientific_reviewer")||!await verifyHsiReviewerAuthority({...input,principal:actor.principalId,reviewedAt:new Date().toISOString()}))throw Error("Active independent SSc reviewer required");
+ if(!actor?.roles.includes("scientific_reviewer")||!await verifyHsiReviewerAuthority({...input,principal:actor.principalId,reviewedAt:new Date().toISOString(),scope:"ssc"}))throw Error("Active independent SSc reviewer required");
  const sql=new SQL(input.databaseUrl,{tls:{rejectUnauthorized:true},connectionTimeout:10});
  try{
   const rows=await sql`SELECT s.submission_id,s.investigation_id,s.package_hash,s.context_hash,s.submitted_at,

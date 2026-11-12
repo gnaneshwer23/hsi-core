@@ -33,17 +33,19 @@ function failure(code:string,status:number,retry=0){return Response.json({code,e
 export async function withResearchRequestControls(request:Request,handler:()=>Promise<Response>,controls:ResearchControls={}):Promise<Response>{
  const requestId=randomUUID(),routeGroup=researchRouteGroup(request),now=controls.now??performance.now.bind(performance),started=now();let reason:ResearchOperationalEvent["admission"]="allowed",scope:ResearchOperationalEvent["limiterScope"]="process_only",response:Response;
  const entry=(controls.processAdmission??defaultAdmission).enter(routeGroup);
+ let headerBytes=0;const encoder=new TextEncoder();request.headers.forEach((value,key)=>{headerBytes+=encoder.encode(key+value).byteLength});
  try{
   if(!entry.allowed){reason=entry.reason;response=failure(reason==="rate_limited"?"RATE_LIMITED":"OVER_CAPACITY",reason==="rate_limited"?429:503,entry.retryAfterSeconds)}
+  else if(request.url.length>8192)response=failure("REQUEST_URI_TOO_LONG",414);
+  else if(headerBytes>24576)response=failure("REQUEST_HEADERS_TOO_LARGE",431);
   else if(controls.requireShared&&!controls.sharedAdmission){reason="shared_limiter_required";response=failure("SHARED_REQUEST_LIMITER_REQUIRED",503,30)}
   else{
    let permitted=true;
    if(controls.sharedAdmission){scope="shared_and_process";try{const abort=new AbortController();let timer:ReturnType<typeof setTimeout>|undefined;
     let shared:Admission;
-    try{shared=await Promise.race([controls.sharedAdmission(routeGroup,abort.signal),new Promise<never>((_resolve,reject)=>{timer=setTimeout(()=>{abort.abort();reject(Error("Shared admission deadline"))},1000)})])}finally{clearTimeout(timer)}if(typeof shared?.allowed!=="boolean"||!Number.isSafeInteger(shared.retryAfterSeconds)||shared.retryAfterSeconds<0||shared.retryAfterSeconds>86400)throw Error();if(!shared.allowed){reason="rate_limited";response=failure("RATE_LIMITED",429,Math.max(1,shared.retryAfterSeconds));permitted=false}}catch{reason="shared_limiter_unavailable";response=failure("SHARED_REQUEST_LIMITER_UNAVAILABLE",503,30);permitted=false}}
+    try{const raw=await Promise.race([controls.sharedAdmission(routeGroup,abort.signal),new Promise<never>((_resolve,reject)=>{timer=setTimeout(()=>{abort.abort();reject(Error("Shared admission deadline"))},1000)})]);shared={allowed:raw?.allowed,retryAfterSeconds:raw?.retryAfterSeconds}}finally{clearTimeout(timer);abort.abort()}if(typeof shared?.allowed!=="boolean"||!Number.isSafeInteger(shared.retryAfterSeconds)||shared.retryAfterSeconds<0||shared.retryAfterSeconds>86400)throw Error();if(!shared.allowed){reason="rate_limited";response=failure("RATE_LIMITED",429,Math.max(1,shared.retryAfterSeconds));permitted=false}}catch{reason="shared_limiter_unavailable";response=failure("SHARED_REQUEST_LIMITER_UNAVAILABLE",503,30);permitted=false}}
    if(permitted){
-    let headerBytes=0;const encoder=new TextEncoder();request.headers.forEach((value,key)=>{headerBytes+=encoder.encode(key+value).byteLength});
-    response=request.url.length>8192?failure("REQUEST_URI_TOO_LONG",414):headerBytes>24576?failure("REQUEST_HEADERS_TOO_LARGE",431):await handler();
+    response=await handler();
    }
   }
  }catch{response=failure("RESEARCH_SERVICE_UNAVAILABLE",503)}finally{entry.release()}

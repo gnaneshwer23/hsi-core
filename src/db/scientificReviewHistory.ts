@@ -7,7 +7,7 @@ export type ReviewHistoryItem={decisionId:string;investigationId:string;outcome:
 export async function loadScientificReviewHistory(input:{serverSessionToken:string|null;databaseUrl:string;neonProjectId?:string|null;limit?:number}):Promise<{items:ReviewHistoryItem[]}>{
  const actor=await authenticateHsiNeonSession({sessionToken:input.serverSessionToken,databaseUrl:input.databaseUrl,neonProjectId:input.neonProjectId});
  if(!actor?.authenticated||!actor.roles.includes("scientific_reviewer"))throw Error("Verified scientific reviewer required");
- if(!await verifyHsiReviewerAuthority({principal:actor.principalId,reviewedAt:new Date().toISOString(),databaseUrl:input.databaseUrl,neonProjectId:input.neonProjectId}))throw Error("Active SSc reviewer authority required");
+ if(!await verifyHsiReviewerAuthority({principal:actor.principalId,reviewedAt:new Date().toISOString(),databaseUrl:input.databaseUrl,neonProjectId:input.neonProjectId,scope:"ssc"}))throw Error("Active SSc reviewer authority required");
  const guard=assertHsiNeonDatabaseUrl(input.databaseUrl,{neonProjectId:input.neonProjectId});
  if(!guard.ok)throw Error("HSI database target denied");
  const sql=new SQL(input.databaseUrl,{tls:{rejectUnauthorized:true},connectionTimeout:10});

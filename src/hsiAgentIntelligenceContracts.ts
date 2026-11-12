@@ -45,13 +45,19 @@ export type HsiAgentRunEnvelope={
  manifest:HsiAgentManifest;graphRelease:{id:string;version:string;manifestHash:string};
  dataClass:Exclude<HsiDataClass,"identifiable_clinical">;
  status:"created"|"running"|"completed"|"blocked"|"failed"|"cancelled";
- toolCalls:readonly {tool:HsiToolId;invocationId:string;status:"success"|"denied"|"failed"}[];
+ /** Legacy success records do not prove external execution. New orchestrator receipts mark checks explicitly. */
+ toolCallEvidence?:"authorization_checks_only";
+ toolCalls:readonly {tool:HsiToolId;invocationId:string;status:"authorized"|"success"|"denied"|"failed"}[];
  startedAt:string;completedAt:string|null;
 };
 export function validateHsiAgentRunEnvelope(e:HsiAgentRunEnvelope):void{
+ if(!e||e.schemaVersion!=="hsi-agent-run-1")throw Error("Invalid run schema");
  validateHsiAgentManifest(e.manifest);
  if(!e.investigationId?.trim()||!e.runId?.trim()||!e.graphRelease?.id?.trim()||!/^\d+\.\d+\.\d+$/.test(e.graphRelease.version)||!/^[a-f0-9]{64}$/.test(e.graphRelease.manifestHash))throw Error("Invalid run identity or graph provenance");
  if(!e.manifest.dataClasses.includes(e.dataClass)||!Number.isFinite(Date.parse(e.startedAt))||(e.completedAt!==null&&!Number.isFinite(Date.parse(e.completedAt))))throw Error("Invalid run context");
- if(e.toolCalls.length>e.manifest.maxToolCalls||e.toolCalls.some(c=>!c.invocationId?.trim()||(!isOneOf(c.tool,e.manifest.allowedTools)&&c.status!=="denied")))throw Error("Invalid tool execution trace");
+ if(e.toolCallEvidence!==undefined&&e.toolCallEvidence!=="authorization_checks_only")throw Error("Invalid tool evidence meaning");
+ if(!Array.isArray(e.toolCalls)||e.toolCalls.length>e.manifest.maxToolCalls||new Set(e.toolCalls.map(c=>c.invocationId)).size!==e.toolCalls.length||e.toolCalls.some(c=>!c||!c.invocationId?.trim()||!isOneOf(c.tool,HSI_TOOL_IDS)||!["authorized","success","denied","failed"].includes(c.status)||(!isOneOf(c.tool,e.manifest.allowedTools)&&c.status!=="denied")||(c.status==="authorized"&&e.toolCallEvidence!=="authorization_checks_only")||(c.status==="success"&&e.toolCallEvidence==="authorization_checks_only")))throw Error("Invalid tool authorization trace");
  if(!["created","running","completed","blocked","failed","cancelled"].includes(e.status))throw Error("Invalid run status");
+ const terminal=["completed","blocked","failed","cancelled"].includes(e.status);
+ if(terminal&&e.completedAt===null||!terminal&&e.completedAt!==null||e.completedAt!==null&&Date.parse(e.completedAt)<Date.parse(e.startedAt))throw Error("Invalid run completion time");
 }
