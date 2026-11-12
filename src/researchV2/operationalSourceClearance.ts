@@ -5,9 +5,13 @@ import type {StagingOperationStore} from "./stagingOperationStore";
 export type SourceDecisionState="cleared"|"unknown"|"expired"|"corrected"|"retracted"|"withdrawn"|"identifier_conflict"|"revoked";
 export type SourceAuthorityAdapter={lookup:(binding:{sourceId:string;sourceVersion:string;passageSha256:string},signal:AbortSignal)=>Promise<{state:SourceDecisionState;policyRef:string;receipt?:unknown}>};
 const id=(v:unknown):v is string=>typeof v==="string"&&/^[A-Za-z0-9][A-Za-z0-9:_.\/-]{0,255}$/.test(v);
-export function createOperationalSourceClearance(config:{authority:SourceAuthorityAdapter;verifier:SourceClearanceVerifier;store:StagingOperationStore;now?:()=>number;timeoutMs?:number;onInvalidation?:(event:Readonly<{sourceId:string;sourceVersion:string;state:SourceDecisionState;policyRef:string}>)=>Promise<void>}){
+export function createOperationalSourceClearance(config:{authority:SourceAuthorityAdapter;verifier:SourceClearanceVerifier;store:StagingOperationStore;now?:()=>number;timeoutMs?:number;onInvalidation?:(event:Readonly<{sourceId:string;sourceVersion:string;state:SourceDecisionState;policyRef:string}>,signal:AbortSignal)=>Promise<void>}){
  const authority={lookup:config.authority.lookup.bind(config.authority)},verifier={authorize:config.verifier.authorize.bind(config.verifier)},store={append:config.store.append.bind(config.store),read:config.store.read.bind(config.store)},onInvalidation=config.onInvalidation,now=config.now??Date.now,timeoutMs=config.timeoutMs??2000;
  if(!authority||typeof authority.lookup!=="function"||!verifier||typeof verifier.authorize!=="function"||!Number.isInteger(timeoutMs)||timeoutMs<1000||timeoutMs>10000)throw Error("Invalid source authority configuration");
+ async function notifyInvalidation(event:{sourceId:string;sourceVersion:string;state:SourceDecisionState;policyRef:string}){
+  if(!onInvalidation)return;const controller=new AbortController();let timer:ReturnType<typeof setTimeout>|undefined;
+  try{await Promise.race([onInvalidation(structuredClone(event),controller.signal),new Promise<never>((_,reject)=>{timer=setTimeout(()=>{controller.abort();reject(Error("Source invalidation persistence deadline"))},timeoutMs)})])}finally{if(timer)clearTimeout(timer);controller.abort()}
+ }
  async function flags(sourceId:string,state:SourceDecisionState){
   const rows=store.read();
   for(const dependency of rows.filter(e=>e.type==="source_dependency"&&e.sourceId===sourceId)){
@@ -43,7 +47,7 @@ export function createOperationalSourceClearance(config:{authority:SourceAuthori
   }
   await store.append({type:"source_decision",sourceId:binding.sourceId,sourceVersion:binding.sourceVersion,passageSha256,state,policyRef:decision.policyRef,at:new Date(now()).toISOString(),scientificApproval:false,graphPromotable:false});
   if(receipt)await store.append({type:"source_receipt",sourceId:binding.sourceId,sourceVersion:binding.sourceVersion,passageSha256,receipt});
-  else {await flags(binding.sourceId,state);await onInvalidation?.({sourceId:binding.sourceId,sourceVersion:binding.sourceVersion,state,policyRef:decision.policyRef});}
+  else {await flags(binding.sourceId,state);await notifyInvalidation({sourceId:binding.sourceId,sourceVersion:binding.sourceVersion,state,policyRef:decision.policyRef});}
   return {state,receipt,policyRef:decision.policyRef};
  }
  return {
@@ -62,7 +66,7 @@ export function createOperationalSourceClearance(config:{authority:SourceAuthori
    }
    if(state!=="cleared"){
     await store.append({type:"source_decision",sourceId,sourceVersion:r.sourceVersion,passageSha256:r.passageSha256,state,policyRef:decision.policyRef,at:new Date(now()).toISOString(),scientificApproval:false,graphPromotable:false});
-    await flags(sourceId,state);await onInvalidation?.({sourceId,sourceVersion:r.sourceVersion,state,policyRef:decision.policyRef});
+    await flags(sourceId,state);await notifyInvalidation({sourceId,sourceVersion:r.sourceVersion,state,policyRef:decision.policyRef});
    }
    return {state,automaticArtifactReapproval:false as const};
   },

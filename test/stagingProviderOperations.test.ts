@@ -177,3 +177,7 @@ it("source refresh observer propagates invalidations and observer failure never 
  await f.sources.decide(f.source);expect(events).toEqual([]);f.setState("corrected");await f.sources.refresh(f.source.sourceId);expect(events[0]).toMatchObject({sourceId:f.source.sourceId,sourceVersion:"v1",state:"corrected"});unavailable=true;f.setState("withdrawn");await expect(f.service().run({deploymentId:f.deployment.id,source:f.source,payload})).rejects.toThrow("authority unavailable");expect(f.calls).toBe(0);
  }finally{await f.close()}
 });
+
+it("a stalled source invalidation observer is bounded and aborted before model dispatch",async()=>{
+ let signal:AbortSignal|undefined;const f=await fixture(async(_e,s)=>{signal=s;return new Promise<void>(()=>{})});try{f.setState("retracted");await expect(f.service().run({deploymentId:f.deployment.id,source:f.source,payload})).rejects.toThrow("authority unavailable");expect(f.calls).toBe(0);expect(signal?.aborted).toBe(true)}finally{await f.close()}
+});

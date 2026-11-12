@@ -19,3 +19,7 @@ test("same retrieval/evidence, actual receipt validation and unchanged preregist
 test("small/unchanged usefulness, missing cases, safety/provenance/context harm or extra cost/latency keeps deterministic planning",async()=>{
  for(const mutate of [(v:ReturnType<typeof input>)=>{v.rows.forEach(r=>r.planner.usefulness=3)},(v:ReturnType<typeof input>)=>{v.rows.pop()},(v:ReturnType<typeof input>)=>{v.rows[0]!.planner.safetyFailures=1},(v:ReturnType<typeof input>)=>{v.rows[0]!.planner.provenanceFailures=1},(v:ReturnType<typeof input>)=>{v.rows[0]!.planner.contextCorrect=16;v.rows[0]!.planner.contextByField.species=false},(v:ReturnType<typeof input>)=>{v.rows[0]!.planner.costMicros=201},(v:ReturnType<typeof input>)=>{v.rows[0]!.planner.latencyMs=2001}]){const v=input();mutate(v);const r=await assessOptionalPlanner(v,authority);expect(r.engineeringCriteriaMet).toBe(false);expect(r.plannerEnabled).toBe(false)}
 });
+
+test("paired analysis is reproducible under input row reordering",async()=>{
+ const v=input();v.rows.forEach((r,n)=>r.planner.usefulness=3+n%3);const a=await assessOptionalPlanner(v,authority),b=await assessOptionalPlanner({...v,rows:[...v.rows].reverse()},authority);expect(a.reportHash).toBe(b.reportHash);expect(a.usefulnessGain95).toEqual(b.usefulnessGain95);
+});
