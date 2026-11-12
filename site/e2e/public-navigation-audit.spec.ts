@@ -12,7 +12,7 @@ test('all public links and selector states resolve, without linking older engine
   for(const path of PUBLIC_MARKETING_PATHS){
     await page.goto(path);await expect(page.getByRole('heading',{level:1})).toBeVisible();
     // Homepage graph mounts after hydration to avoid React #418 float-layout mismatches.
-    if(path==='/')await expect(page.getByRole('group',{name:'Graph view controls'})).toBeVisible();
+    if(path==='/')await expect(page.getByRole('group',{name:'Explore the five teaching outcomes'})).toBeVisible();
     async function inspectLinks(){
       const links=await page.locator('a[href]').evaluateAll(as=>as.map(a=>({href:a.getAttribute('href')!,name:(a.textContent||a.getAttribute('aria-label')||'').trim()})));
       for(const link of links){

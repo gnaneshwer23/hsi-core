@@ -1,0 +1,5 @@
+# Original website hero asset
+
+Built-in imagegen generated one conceptual biological illustration for this project. Selected original: exec-975e8b73-02a6-461a-b190-2125e6937e6b.png. It was visually inspected and converted to responsive WebP at 640/960/1600 pixels under `site/public/images/research/tissue-context-*.webp`. It is conceptual artwork, not microscopy, a real study, established signalling or scientific evidence. No external reference images were incorporated. Existing unapproved visual-reference URLs were not downloaded/reused.
+
+Final prompt: Original wide cinematic scientific editorial illustration for Human Super Intelligence; deep navy #101D2A background, subdued teal #297E80, sage #C8D7D3 and ivory detail. Right-weighted layered tissue matrix, two textured immune cells with restrained nuclei, extracellular fibres and a molecular structure; left third dark for typography. Precision biological-illustration/macro-microscopy aesthetic with quiet side lighting. No text, logos, human body/face, brain, robot, neon network, particle cloud, dashboard or scientific-causality arrows. Conceptual scientific illustration, not experimental imagery.

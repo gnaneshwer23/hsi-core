@@ -65,10 +65,10 @@ describe("Public HSI site honesty", () => {
     expect(homeHero).not.toMatch(/validation case|clinically validated|clinically proven|clinical validation|scientifically validated/i);
     expect(homeSurface).toContain("Aksh Health");expect(homeSurface).toContain("HSI Clinical");expect(homeSurface).toContain("Immune Super Intelligence");expect(homeSurface).toContain("HSI Trials");
     expect(homeSurface).toContain("does not auto-enter");
-    expect(home).not.toContain("ValidationPreview");expect(home).toContain("What HSI does not do");expect(experience).toContain("review scope");
+    expect(home).not.toContain("ValidationPreview");expect(home).toContain("Independent validation remains pending");expect(experience).toContain("review scope");
     expect(experience).toContain("MarketingCTA");expect(marketingPage).toContain("Connecting human biology");expect(homeSurface).not.toContain("100% accurate");
     expect(marketingPage).toContain("JOURNEY_BY_PATH");expect(marketingPage).toContain("PUBLIC_PRIMARY_CTA");
-    expect(home).toContain("HomeHero");expect(home).toContain("HomeEcosystemProducts");
+    expect(home).toContain("ContextAuditInstrument");expect(home).toContain("ResearchBriefPreview");
     const layout=site("src/components/Layout.tsx");
     expect(layout).toContain("home-shell");expect(layout).toMatch(/isPublicPage \|\| isHome/);
     const ecosystem = site("src/components/landing/EcosystemGrid.tsx");
@@ -200,7 +200,7 @@ describe("Homepage scientific visuals and product proof",()=>{
  it("leads with a product demonstration while preserving artwork and labelled validation components",()=>{
   const home=site("src/pages/Home.tsx"),preview=site("src/components/ValidationPreview.tsx"),art=site("src/components/Experience.tsx"),editorial=site("src/components/editorial/Editorial.tsx");
   const homeHero=site("src/components/editorial/HomeHero.tsx");
-  expect(home).toContain("HomeHero");expect(home).toContain("HomeWorkspacePreview");expect(home).toContain("What makes HSI different");
+  expect(home).toContain("tissue-context-1600.webp");expect(home).toContain("ResearchBriefPreview");expect(home).toContain("A plausible explanation is not a validated mechanism");
   expect(homeHero).toContain("homepageHeroDesktopSources");expect(homeHero).toContain("homepageHeroMobileSources");
   expect(editorial).toContain("BiologyArtwork");expect(art).toContain('role="img"');expect(art).toContain("EXPERIENCE_DOMAINS");
   expect(preview).toContain("loadValidationCatalogue");expect(preview).toContain("loadValidationScenario");expect(preview).toContain("Synthetic validation");
