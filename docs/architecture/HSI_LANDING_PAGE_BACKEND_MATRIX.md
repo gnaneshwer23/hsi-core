@@ -131,3 +131,13 @@ Write gate: `HSI_RESEARCH_WRITES_ENABLED` + staging branch id + staging host —
 ## Approved public narrative restructure — 12 November 2026
 
 Ten canonical public destinations: `/`, `/platform`, `/context-conflict-audit`, `/evidence-intelligence`, `/research`, `/research-briefs`, `/science`, `/applications`, `/trust`, `/about`. Existing routes remain available as secondary resources; authenticated tool routes and API contracts are preserved. `/contact` still saves a browser-only draft, not a delivered/persisted access request. New public content cannot grant source rights, provider activation, reviewer authority, scientific validation or graph publication. Implementation sequence and component audit: `docs/website/HSI_WEBSITE_RESTRUCTURE.md`.
+
+| New public surface | Actual behaviour | Backend/release boundary |
+|---|---|---|
+| Context-Conflict Audit | Deterministic synthetic six-dimension teaching comparison, explicit fictional assumptions and five display outcomes | No provider/model/source calls; no backend taxonomy mutation or scientific approval |
+| Evidence Intelligence | Original fictional source/passages, missingness, context and permission explanation | No fabricated DOI/PMID, clearance or external-source authority |
+| Research Briefs | Expandable source-free example and actual JSON/Markdown downloads | Every export retains not-reviewed/no-source/no-scientific-or-graph-approval status |
+| Platform/Research/Science | Layered architecture, six-step workflow, candidate biology and links to retained tools | Describes intended workflow and current demonstrations; no live service acceptance is implied |
+| Applications | Three research applications with explicit Demonstration/Restricted/Planned labels | No live patient integration, clinical decision support, trial matching or eligibility |
+| Trust/About | Separate review/publication lifecycle, current boundaries, supplied scientific ownership and collaboration information | No invented expert appointments, partnerships, certification or legal policy approval |
+| Header/footer/access | Ten canonical destinations, keyboard/mobile navigation, working notice anchors and existing account/contact routes | Contact remains browser-draft only; no request delivery, reviewer permissions or write activation |

@@ -12,11 +12,11 @@ try{
  if(!ready)throw Error('Local preview not ready');
  chrome=await chromeLauncher.launch({chromePath:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE??'/usr/bin/chromium',chromeFlags:['--headless','--no-sandbox']});
  await mkdir(output,{recursive:true});const pages=[];
- for(const path of ['/','/platform','/research']){
+ for(const path of ['/','/context-conflict-audit','/platform','/research']){
   const result=await lighthouse(origin+path,{port:chrome.port,output:'json',onlyCategories:['performance','accessibility','best-practices','seo'],logLevel:'error'});
   const lhr=result.lhr;await writeFile(output+'/'+(path==='/'?'home':path.slice(1))+'.json',JSON.stringify(lhr,null,2));
   pages.push({path,scores:Object.fromEntries(Object.entries(lhr.categories).map(([k,v])=>[k,v.score])),lcpMs:lhr.audits['largest-contentful-paint'].numericValue,cls:lhr.audits['cumulative-layout-shift'].numericValue,totalBlockingTimeMs:lhr.audits['total-blocking-time'].numericValue,warnings:lhr.runWarnings});
  }
- const summary={kind:'local_mobile_lab_only',fieldCwvVerified:false,recordedAt:new Date().toISOString(),lighthouseVersion:'13.6.0',pages};
+ const summary={kind:'local_mobile_lab_only',fieldCwvVerified:false,recordedAt:new Date().toISOString(),lighthouseVersion:pages.length?'reported_in_page_artifacts':null,pages};
  await writeFile(output+'/summary.json',JSON.stringify(summary,null,2)+'\n');console.log(JSON.stringify(summary,null,2));
 }finally{if(chrome)await chrome.kill();preview.kill('SIGTERM')}
