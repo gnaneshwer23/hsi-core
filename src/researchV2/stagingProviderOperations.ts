@@ -66,7 +66,7 @@ export function createStagingProviderOperations(options:{
   if(!approved)throw Error("Staging deployment not approved");
   let decision:Awaited<ReturnType<typeof decide>>;
   try{decision=await decide(source);}catch{throw Error("Staging source authority unavailable");}
-  if(decision.state!=="cleared"||decision.policyRef!==d.sourcePolicyRef||signal?.aborted)throw Error("Source not cleared for deployment");
+  if(decision.state!=="cleared"||!decision.receipt?.permittedActions.includes("model_transmission")||decision.policyRef!==d.sourcePolicyRef||signal?.aborted)throw Error("Source not cleared for deployment");
   const wire=providerWireBody(d,payload),inputBound=Buffer.byteLength(wire)+4096,reservation=inputBound*d.inputUnitPrice+d.maxOutputTokens*d.outputUnitPrice;
   if(!Number.isSafeInteger(reservation)||reservation>1e12)throw Error("Invalid staging budget");
   const runId=randomUUID();
@@ -81,7 +81,7 @@ export function createStagingProviderOperations(options:{
   try{
    // Revalidate after durable reservation/start; revoked or withdrawn clearance prevents dispatch.
    const current=await decide({...source,receipt:decision.receipt});
-   if(current.state!=="cleared"||current.policyRef!==d.sourcePolicyRef||signal?.aborted)throw Error("clearance_changed");
+   if(current.state!=="cleared"||!current.receipt?.permittedActions.includes("model_transmission")||current.policyRef!==d.sourcePolicyRef||signal?.aborted)throw Error("clearance_changed");
    let stillApproved=false;
    try{stillApproved=await approve({deploymentId,configurationHash,termsRef:d.termsRef,sourcePolicyRef:d.sourcePolicyRef})===true;}catch{/* fail closed */}
    if(!stillApproved||signal?.aborted)throw Error("deployment_approval_changed");

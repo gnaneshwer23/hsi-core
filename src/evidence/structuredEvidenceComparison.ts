@@ -15,6 +15,7 @@
  */
 import {createHash} from "node:crypto";
 import {canonicalEvidenceJson} from "./researchEvidenceCorpus";
+import {comparePassageLinkedContexts,validatePassageLinkedContext,type PassageLinkedContext,type DetailedComparability} from "./passageLinkedContext";
 import type {
   CandidateBiologicalContext,
   ContextualCandidateRelationship,
@@ -25,7 +26,7 @@ export const STRUCTURED_EVIDENCE_COMPARISON_SCHEMA =
   "hsi-structured-evidence-comparison-1" as const;
 export const STRUCTURED_EVIDENCE_COMPARISON_METHOD =
   "hsi.structured_evidence_comparison.v1" as const;
-export const STRUCTURED_EVIDENCE_COMPARISON_VERSION = "0.2.0" as const;
+export const STRUCTURED_EVIDENCE_COMPARISON_VERSION = "0.3.0" as const;
 
 export type StructuredComparisonOutcome =
   | "consistent"
@@ -48,6 +49,7 @@ export type ComparableEvidenceUnit = {
   responseIdentity: string | null;
   /** Optional free-text method/assay note when not modelled in context axes. */
   methodologicalNote: string | null;
+  detailedContext?:PassageLinkedContext|null;
 };
 
 export type ContextAxisOverlap = {
@@ -72,6 +74,8 @@ export type StructuredComparisonTrace = {
   divergentContextAxisCount: number;
   methodologicalSignals: readonly string[];
   missingContextAxes: readonly string[];
+  contextDepth:"passage_linked"|"coarse_metadata_only";
+  detailedComparability:DetailedComparability|null;
   evidenceSourceIds: readonly string[];
 };
 
@@ -381,7 +385,7 @@ export function compareEvidenceUnits(input: {
   const leftHasContext = hasAnyContext(input.left.biologicalContext);
   const rightHasContext = hasAnyContext(input.right.biologicalContext);
 
-  const decided = decideOutcome({
+  let decided = decideOutcome({
     sharedSubjectObject,
     polarityA: input.left.findingPolarity,
     polarityB: input.right.findingPolarity,
@@ -393,6 +397,17 @@ export function compareEvidenceUnits(input: {
     oneSidedMissingContext: CONTEXT_AXES.some(axis=>(input.left.biologicalContext[axis].length===0)!==(input.right.biologicalContext[axis].length===0)),
     hasEvidenceSources:input.left.evidenceSourceIds.length>0&&input.right.evidenceSourceIds.length>0,
   });
+  const a=input.left.detailedContext,b=input.right.detailedContext;
+  for(const [unit,context] of [[input.left,a],[input.right,b]] as const)if(context){
+   validatePassageLinkedContext(context);
+   if(!unit.evidenceSourceIds.includes(context.sourceId))fail("Detailed context source is outside the compared unit");
+  }
+  const detailedComparability=a&&b?comparePassageLinkedContexts(a,b):null;
+  if((a||b)&&sharedSubjectObject&&!methodSignals.some(s=>s.startsWith("predicate_diff:"))){
+   const status=detailedComparability?.status;
+   const outcome:StructuredComparisonOutcome=!status||status==="insufficient_evidence"?"insufficient_evidence":status==="not_comparable"?"insufficient_comparability":status==="method_difference"?"methodological_difference":status==="context_difference"?"context_dependent":divergentContextAxisCount?"insufficient_comparability":input.left.findingPolarity==="uncertain"||input.right.findingPolarity==="uncertain"?"insufficient_evidence":input.left.findingPolarity===input.right.findingPolarity?"consistent":"potential_contradiction";
+   decided={outcome,rationale:"Passage-linked context and estimand comparability precede polarity. Missing/unresolved context abstains; context or method differences remain candidates for independent review. No scientific conclusion is established."};
+  }
 
   const evidenceSourceIds = [
     ...new Set([...input.left.evidenceSourceIds, ...input.right.evidenceSourceIds]),
@@ -417,6 +432,8 @@ export function compareEvidenceUnits(input: {
       divergentContextAxisCount,
       methodologicalSignals: methodSignals,
       missingContextAxes: CONTEXT_AXES.filter(axis=>!input.left.biologicalContext[axis].length||!input.right.biologicalContext[axis].length),
+      contextDepth:a&&b?"passage_linked":"coarse_metadata_only",
+      detailedComparability,
       evidenceSourceIds,
     },
     claimSupport: "not_assessed",

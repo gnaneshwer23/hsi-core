@@ -1,3 +1,4 @@
+import {resolveBoundOutcomeAttachments,type OutcomeAttachmentResolver} from "./boundOutcomeAttachments";
 /** Phase D trusted orchestration. Identity/time/decision IDs come from the backend. */
 import {buildResearchOutcome} from "../researchOutcome";
 import {createHash} from "node:crypto";
@@ -9,6 +10,7 @@ import type {InterrogativeInvestigation} from "../interrogativeValidation";
 export const deliveryHash=(s:string)=>createHash("sha256").update(s).digest("hex");
 export type DeliveryState={record:InterrogativeInvestigation;submission:DeliverySubmission|null;package:ReviewPackage|null;decision:DeliveryDecision|null;revision:RevisionLink|null;successor:{id:string;number:number}|null;legacyDecision:boolean};
 export type DeliveryDependencies={
+ outcomeAttachments?:OutcomeAttachmentResolver;
  authenticate:(token:string|null)=>Promise<TrustedResearchActor|null>;reviewer:(principal:string)=>Promise<boolean>;
  load:(actor:TrustedResearchActor,id:string)=>Promise<DeliveryState>;
  context:(token:string,id:string)=>Promise<InvestigationGraphContext|null>;
@@ -18,6 +20,7 @@ export type DeliveryDependencies={
  writesEnabled:boolean;now?:()=>string;
 };
 export function createInvestigationDeliveryService(deps:DeliveryDependencies){
+ const outcomeAttachments=deps.outcomeAttachments?Object.freeze({...deps.outcomeAttachments}):undefined;
  async function load(token:string|null,id:string){
   const actor=await deps.authenticate(token);if(!token||!actor?.authenticated||!actor.principalId||!actor.roles.some(r=>["researcher","research_admin","scientific_reviewer"].includes(r)))throw Error("Verified research access required");
   const state=await deps.load(actor,id),isOwner=state.record.actorPrincipal===actor.principalId;
@@ -69,9 +72,10 @@ export function createInvestigationDeliveryService(deps:DeliveryDependencies){
    return deps.revise(actor,state,child,request.requestId,deliveryHash(canonicalGraphContext(request)),link);
   },
   async outcome(token:string|null,id:string){
-   const {state,p}=await load(token,id);
+   const {actor,state,p}=await load(token,id);
    if(!p||!state.submission&&(state.legacyDecision||state.record.state!=="draft"))throw Error("A verified, release-bound context is required");
-   return buildResearchOutcome({schemaVersion:"hsi-investigation-brief-1",package:p,submission:state.submission,decision:state.decision,scope:"research_only",graphPublicationApproved:false},async s=>deliveryHash(s));
+   const attachments=await resolveBoundOutcomeAttachments(outcomeAttachments,actor,p,deliveryHash);
+   return buildResearchOutcome({schemaVersion:"hsi-investigation-brief-1",package:p,submission:state.submission,decision:state.decision,scope:"research_only",graphPublicationApproved:false},async s=>deliveryHash(s),attachments.options,attachments.authority);
   },
   async brief(token:string|null,id:string,format:"json"|"markdown"){
    const {state,p}=await load(token,id);if(!p||!state.submission&&(state.legacyDecision||state.record.state!=="draft"))throw Error("A verified, release-bound evidence context is required for this brief");

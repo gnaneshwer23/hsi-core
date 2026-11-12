@@ -37,6 +37,16 @@ describe("P0-B isolated staging operations",()=>{
    f.denyApproval();await expect(f.service().run({deploymentId:f.deployment.id,source:f.source,payload})).rejects.toThrow("not approved");expect(f.calls).toBe(0);
   }finally{await f.close()}
  });
+ it("never treats comparison-only source clearance as permission for model transmission",async()=>{
+  const f=await fixture();try{
+   f.signed.permittedActions=["comparison"];
+   f.signed.signature=sign(null,Buffer.from(sourceClearanceSigningText(f.signed)),privateKey).toString("base64url");
+   const sources=createOperationalSourceClearance({store:f.store,verifier:createSourceClearanceVerifier({requiredActions:["comparison"],authorities:[{issuer:f.signed.issuer,keyId:f.signed.keyId,publicKey}],isRevoked:async()=>false}),authority:{lookup:async()=>({state:"cleared",policyRef:"fixture-public-policy",receipt:f.signed})}});
+   expect((await sources.decide(f.source)).state).toBe("cleared");let calls=0;
+   const service=createStagingProviderOperations({enabled:true,deployments:[f.deployment],store:f.store,sources,approve:async()=>true,credential:()=>secret,transportFactory:()=>async()=>{calls++;return response()}});
+   await expect(service.run({deploymentId:f.deployment.id,source:f.source,payload})).rejects.toThrow("not cleared");expect(calls).toBe(0);
+  }finally{await f.close()}
+ });
  it("rejects existing PHI markers before source lookup or dispatch",async()=>{
   const f=await fixture();try{
    await expect(f.service().run({deploymentId:f.deployment.id,source:f.source,payload:{...payload,claim:"NHS number: 1234567890"}})).rejects.toThrow("data boundary");expect(f.calls).toBe(0);expect(f.authorityCalls).toBe(0);

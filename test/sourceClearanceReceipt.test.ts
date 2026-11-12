@@ -39,3 +39,14 @@ describe("trusted source clearance receipts",()=>{
   expect(await v.authorize(binding(receipt()))).toBe(false);expect(signal?.aborted).toBe(true);
  });
 });
+
+describe("consumer-specific source actions",()=>{
+ it("requires every artifact action and cannot weaken a configured transmission requirement",async()=>{
+  const actions=["storage","display","comparison","export"] as const,r=receipt({permittedActions:[...actions]});
+  const v=createSourceClearanceVerifier({authorities:[{issuer:"test-authority",keyId:"test-key",publicKey}],isRevoked:async()=>false,now:()=>time,requiredActions:actions});
+  expect(await v.authorize(binding(r))).toBe(true);
+  expect(await v.authorize({...binding(r),requiredActions:["model_transmission"]})).toBe(false);
+  expect(await verifier().authorize({...binding(r),requiredActions:["comparison"]})).toBe(false);
+  expect(await v.authorize(binding(receipt({permittedActions:["storage","display","comparison"]})))).toBe(false);
+ });
+});

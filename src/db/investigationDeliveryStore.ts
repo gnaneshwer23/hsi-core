@@ -1,3 +1,4 @@
+import type {OutcomeAttachmentResolver} from "../server/boundOutcomeAttachments";
 /** HSI-only delivery transactions; no migrations, grants, clinical writes or publication. */
 import {SQL} from "bun";
 import {assertHsiNeonDatabaseUrl,HSI_STAGING_HOST_PREFIX} from "./neonGuard";
@@ -8,14 +9,14 @@ import {createInvestigationDeliveryService,deliveryHash,type DeliveryState} from
 import {canonicalInvestigationRecord,type ReviewPackage,type DeliveryDecision,type DeliverySubmission,type RevisionLink} from "../investigationDelivery";
 import {canonicalGraphContext} from "../investigationGraphContext";
 import {validateInterrogativeInvestigation,type InterrogativeInvestigation} from "../interrogativeValidation";
-export type DeliveryConfig={databaseUrl:string;neonProjectId?:string|null;writesEnabled?:boolean;sscReleaseId?:string;raComparisonReleaseId?:string};
+export type DeliveryConfig={outcomeAttachments?:OutcomeAttachmentResolver;databaseUrl:string;neonProjectId?:string|null;writesEnabled?:boolean;sscReleaseId?:string;raComparisonReleaseId?:string};
 export async function withInvestigationDelivery<T>(config:DeliveryConfig,write:boolean,run:(service:ReturnType<typeof createInvestigationDeliveryService>)=>Promise<T>):Promise<T>{
  const guard=assertHsiNeonDatabaseUrl(config.databaseUrl,{neonProjectId:config.neonProjectId});if(!guard.ok)throw Error("HSI database required");
  if(write&&(!config.writesEnabled||new URL(config.databaseUrl).hostname.split(".")[0]?.replace(/-pooler$/,"")!==HSI_STAGING_HOST_PREFIX))throw Error("Approved staging writes required");
  let sql:SQL|null=null;const db=()=>sql??=new SQL(config.databaseUrl,{tls:{rejectUnauthorized:true},connectionTimeout:10});
  const recordHash=(value:unknown)=>deliveryHash(canonicalInvestigationRecord(value));
  const stateOf=(row:Record<string,unknown>)=>{const i=row.payload as InterrogativeInvestigation;validateInterrogativeInvestigation(i);if(recordHash(i)!==String(row.content_hash)||i.state!==row.state||i.actorPrincipal!==row.actor_principal)throw Error("Investigation integrity failure");return i};
- const service=createInvestigationDeliveryService({writesEnabled:config.writesEnabled===true,
+ const service=createInvestigationDeliveryService({outcomeAttachments:config.outcomeAttachments,writesEnabled:config.writesEnabled===true,
   authenticate:token=>authenticateHsiNeonSession({...config,sessionToken:token}),
   reviewer:principal=>verifyHsiReviewerAuthority({...config,principal,reviewedAt:new Date().toISOString(),scope:"ssc"}),
   load:async(actor,id):Promise<DeliveryState>=>{

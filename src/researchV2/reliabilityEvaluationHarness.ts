@@ -50,7 +50,7 @@ export async function evaluateWithTwoModels(examples:EvaluationExample[],first:M
    blockedReasons[record.id]="Passage grounding requires evidence or independent exception review";continue;
   }
   let cleared=false;
-  try{cleared=!!authorize&&await authorize({receipt:example.clearanceReceipt,sourceId:example.claim.sourceId,sourceVersion:example.sourceVersion??"",passage:example.passage})===true;}catch{/* deny closed */}
+  try{cleared=!!authorize&&await authorize({requiredActions:["model_transmission"],receipt:example.clearanceReceipt,sourceId:example.claim.sourceId,sourceVersion:example.sourceVersion??"",passage:example.passage})===true;}catch{/* deny closed */}
   let grounded=false;
   try{grounded=await ground({sourceVersion:example.sourceVersion??"",canonicalId:typeof (example.clearanceReceipt as {canonicalId?:unknown}|null)?.canonicalId==="string"?(example.clearanceReceipt as {canonicalId:string}).canonicalId:"",claim:structuredClone(example.claim),passage:example.passage,receipt:structuredClone(example.receipt)})===true;}catch{/* deny closed */}
   if(!cleared||!grounded){blockedReasons[record.id]="Current trusted source clearance and grounding required";continue;}
@@ -65,7 +65,7 @@ export async function evaluateWithTwoModels(examples:EvaluationExample[],first:M
   const example=batch[i]!,record=cases[i]!;
   // Clearance can expire/revoke during a long evaluation; recheck immediately before egress.
   let cleared=false;
-  try{cleared=!!authorize&&await authorize({receipt:example.clearanceReceipt,sourceId:example.claim.sourceId,sourceVersion:example.sourceVersion??"",passage:example.passage})===true;}catch{/* deny closed */}
+  try{cleared=!!authorize&&await authorize({requiredActions:["model_transmission"],receipt:example.clearanceReceipt,sourceId:example.claim.sourceId,sourceVersion:example.sourceVersion??"",passage:example.passage})===true;}catch{/* deny closed */}
   if(!cleared){record.sourceIdentityVerified=record.rightsVerified=record.retractionCleared=false;blockedReasons[record.id]="Source clearance expired, revoked or unavailable";continue;}
   const runs=[first,second].map(v=>({runId:randomUUID(),caseId:example.id,verifierId:v.verifierId,modelId:v.modelId,status:"not_assessed" as const,providerRequestId:null}));
   const inputSha256=createHash("sha256").update(JSON.stringify({claim:example.claim,passage:example.passage,sourceVersion:example.sourceVersion})).digest("hex");
@@ -76,7 +76,7 @@ export async function evaluateWithTwoModels(examples:EvaluationExample[],first:M
   let stillGrounded=false,stillCleared=false;
   try{
    stillGrounded=await ground({sourceVersion:example.sourceVersion??"",canonicalId:typeof (example.clearanceReceipt as {canonicalId?:unknown}|null)?.canonicalId==="string"?(example.clearanceReceipt as {canonicalId:string}).canonicalId:"",claim:structuredClone(example.claim),passage:example.passage,receipt:structuredClone(example.receipt)})===true;
-   stillCleared=!!authorize&&await authorize({receipt:example.clearanceReceipt,sourceId:example.claim.sourceId,sourceVersion:example.sourceVersion??"",passage:example.passage})===true;
+   stillCleared=!!authorize&&await authorize({requiredActions:["model_transmission"],receipt:example.clearanceReceipt,sourceId:example.claim.sourceId,sourceVersion:example.sourceVersion??"",passage:example.passage})===true;
   }catch{/* deny closed */}
   if(!stillGrounded||!stillCleared){
    record.sourceIdentityVerified=record.rightsVerified=record.retractionCleared=false;

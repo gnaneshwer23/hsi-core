@@ -1,3 +1,4 @@
+import {validateContextConflictAudit,renderContextConflictAudit,contextAuditInvestigation,type ContextConflictAudit} from "./evidence/contextConflictAudit";
 /** Deterministic composition of a saved, verified research package. No new scientific inference or approval. */
 import {canonicalGraphContext} from "./investigationGraphContext";
 import {verifyReviewPackage,verifyDeliveryDecision,type EvidenceBrief} from "./investigationDelivery";
@@ -25,6 +26,7 @@ export const RESEARCH_OUTCOME_VERSION="hsi-research-outcome-1" as const;
 export const RESEARCH_OUTCOME_METHOD="hsi-bound-outcome-projection-1" as const;
 export type Digest=(text:string)=>Promise<string>;
 export type ResearchOutcomeOptions={
+  contextConflictAudit?:ContextConflictAudit|null;
   livingEvidenceSnapshot?:LivingEvidenceExpansionSnapshot|null;
   /** PR 7 / O-04 translational landscape bind. */
   translationalLandscape?:TranslationalLandscapeSnapshot|null;
@@ -72,14 +74,18 @@ function projectResearchOutcome(brief:EvidenceBrief,options:ResearchOutcomeOptio
   sourcePmids:b.sources.map(s=>s.pmid),
   snapshot:options.livingEvidenceSnapshot??null,
  });
- const externalSearch=livingEvidence.status==="bound_metadata_refresh"
+ const externalSearch=options.contextConflictAudit
+  ?{id:"external_search" as const,status:"bounded_context_audit_recorded" as const,detail:"Bounded support/oppose search receipts attached. Inspect failed/empty searches and missing context; no exhaustive search or consensus is established."}
+  :livingEvidence.status==="bound_metadata_refresh"
   ?{id:"external_search" as const,status:"living_evidence_metadata_bound" as const,detail:"Europe PMC / Open Targets / registry identity metadata bound for overlapping pins. Passage import remains fail-closed; not an exhaustive literature search."}
   :{id:"external_search" as const,status:"not_recorded" as const,detail:"This contract has no complete external literature or contradiction-search audit. Living evidence expansion may be available as a programme snapshot when source PMIDs overlap pins."};
- const investigation=options.contradictionInvestigation??null;
+ const derivedInvestigation=options.contextConflictAudit?contextAuditInvestigation(options.contextConflictAudit):null;
+ if(derivedInvestigation&&options.contradictionInvestigation&&canonicalGraphContext(derivedInvestigation)!==canonicalGraphContext(options.contradictionInvestigation))throw Error("Contradiction assessment differs from the bound context audit");
+ const investigation=derivedInvestigation??options.contradictionInvestigation??null;
  const investigationNote=investigation
   ?` Structured contradiction investigation attached (${investigation.items.length} categor${investigation.items.length===1?"y":"ies"}; predeterminedConclusions=false; not LLM-verified).`
   :"";
- const contradictions={recordedOpposingClaimIds:opposingClaimIds,searchStatus:"not_recorded" as const,consensusEstablished:false,note:(opposingClaimIds.length?"Recorded opposing references require context-specific expert interpretation. Their presence is not an exhaustive contradiction search.":"No opposing traces are recorded in this saved investigation. This does not establish that no contradictory evidence exists.")+investigationNote,investigationCategories:investigation?unique(investigation.items.map(i=>i.category)):[],structuredComparisonIds:investigation?unique(investigation.items.map(i=>i.comparisonId)):[],predeterminedConclusions:false as const,scientificallyVerified:false as const};
+ const contradictions={recordedOpposingClaimIds:opposingClaimIds,searchStatus:options.contextConflictAudit?"bounded_context_audit_recorded" as const:"not_recorded" as const,consensusEstablished:false,note:(opposingClaimIds.length?"Recorded opposing references require context-specific expert interpretation. Their presence is not an exhaustive contradiction search.":"No opposing traces are recorded in this saved investigation. This does not establish that no contradictory evidence exists.")+investigationNote,investigationCategories:investigation?unique(investigation.items.map(i=>i.category)):[],structuredComparisonIds:investigation?unique(investigation.items.map(i=>i.comparisonId)):[],predeterminedConclusions:false as const,scientificallyVerified:false as const};
  const gapVerification:GapVerificationOutcomeSection=projectGapVerificationForOutcome({
   asOf:livingEvidence.asOf??p.context.capturedAt,
   branches,
@@ -107,6 +113,7 @@ function projectResearchOutcome(brief:EvidenceBrief,options:ResearchOutcomeOptio
   sources:b.sources.map(s=>({id:s.id,title:s.title,pmid:s.pmid,doi:s.doi,url:s.url,sourceVersion:s.provenance.version,licence:{...s.licence}})),
   passages:b.passages.map(p=>({id:p.id,sourceId:p.sourceId,sourceVersion:p.sourceVersion,text:p.text,locator:p.locator,sha256:p.sha256!})),
   contradictions,
+  ...(options.contextConflictAudit?{contextConflictAudit:options.contextConflictAudit}:{}),
   missingData:unique(branches.flatMap(b=>b.missingEvidence)),decisionTree:{kind:"saved_investigation_questions" as const,diagnosticDecisionSupport:false,questions},hypotheses:branches,
   nextResearchSteps:branches.map(b=>({branchId:b.id,action:"Retrieve and independently assess evidence addressing the recorded falsification question; define population, specimen, assay, timepoint and controls before proposing an experiment.",falsificationQuestion:b.falsificationCriteria,experimentSpecified:false,patientMeasurementOrder:false})),
   trials,
@@ -151,7 +158,7 @@ export type ResearchOutcome=ReturnType<typeof projectResearchOutcome>&{outcomeHa
 /** Trusted backend must authorise the current source read before invoking this pure compiler. */
 export async function buildResearchOutcome(value:EvidenceBrief,digest:Digest,options:ResearchOutcomeOptions={},authority?:OutcomeAttachmentAuthority):Promise<ResearchOutcome>{
  value=structuredClone(value);options=structuredClone(options);
- if(Object.keys(options).some(k=>!["livingEvidenceSnapshot","translationalLandscape","researchBrief","contradictionInvestigation"].includes(k)))throw Error("Unknown outcome attachment field");
+ if(Object.keys(options).some(k=>!["livingEvidenceSnapshot","translationalLandscape","researchBrief","contradictionInvestigation","contextConflictAudit"].includes(k)))throw Error("Unknown outcome attachment field");
  const authorize=authority?.authorize;
  exact(value,["schemaVersion","package","submission","decision","scope","graphPublicationApproved"]);
  if(value.schemaVersion!=="hsi-investigation-brief-1"||value.scope!=="research_only"||value.graphPublicationApproved!==false)throw Error("Research-only brief required");
@@ -159,6 +166,14 @@ export async function buildResearchOutcome(value:EvidenceBrief,digest:Digest,opt
  if(s){exact(s,["id","packageHash","submittedAt","submittedBy"]);if(s.packageHash!==p.packageHash||s.submittedBy!==p.investigation.actorPrincipal||!/^submission-[a-f0-9]{32}$/.test(s.id)||!Number.isFinite(Date.parse(s.submittedAt))||p.investigation.state!=="awaiting_scientific_review")throw Error("Unbound outcome submission")}
  else if(value.decision||p.investigation.state!=="draft")throw Error("A submitted investigation requires its bound submission");
  if(value.decision)await verifyDeliveryDecision(value.decision,p,s!,digest);
+ if(options.contextConflictAudit){
+  const audit=options.contextConflictAudit;validateContextConflictAudit(audit);
+  const expectedScope=p.context.primary.disease==="systemic_sclerosis"?"ssc":"ra";
+  if(audit.investigationId!==p.investigation.id||audit.question!==p.investigation.question||audit.diseaseScope!==expectedScope||canonicalGraphContext(audit.release)!==canonicalGraphContext(p.context.primary.release))throw Error("Context audit belongs to another investigation or source release");
+  for(const unit of audit.units){const c=unit.detailedContext!;
+   if(!p.context.primary.bundle.passages.some(row=>row.id===c.passageId&&row.sourceId===c.sourceId&&row.sourceVersion===c.sourceVersion&&row.sha256===c.passageSha256&&row.text===c.passageText))throw Error("Audit passage is outside the captured release");
+  }
+ }
  let attachmentBinding:OutcomeAttachmentBinding|null=null;
  if(Object.values(options).some(v=>v!==null&&v!==undefined)){
   if(typeof authorize!=="function")throw Error("Trusted outcome attachment authority required");
@@ -189,5 +204,6 @@ export function renderResearchOutcome(outcome:ResearchOutcome,format:"json"|"mar
  if(o.researchBrief){
   lines.push("","## Integrated research brief (PR 7)","",`Question: ${md(o.researchBrief.question)}`,`Scientific validity claimed: ${o.researchBrief.scientificValidityClaimed}; candidates unapproved: ${o.researchBrief.candidatesRemainUnapproved}.`,"","### Source-linked claims",...o.researchBrief.claims.map(c=>`- ${md(c.text)} · support=${c.support} · traces: ${c.traceRefs.map(md).join(", ")}`),"","### Explicit limitations",...o.researchBrief.limitations.map(s=>`- ${md(s)}`),"","### Next research actions",...o.researchBrief.nextResearchActions.map(s=>`- ${md(s)}`));
  }
+ if(o.contextConflictAudit)lines.push("",renderContextConflictAudit(o.contextConflictAudit,"markdown"));
  lines.push("","## Human review","",`Recorded outcome: ${o.review.status}; scope: evidence brief only.`,md(o.review.rationale??"No independent decision recorded."),...o.review.limitations.map(s=>"- "+md(s)),"","## Methods and provenance","",...o.provenance.methods.map(m=>"- "+md(`${m.agentId} v${m.version}; recorded model ${m.modelVersion}; prompt ${m.promptVersion}; tool-call count ${m.toolCallCount}`)),"No new model call, live patient connection or exhaustive literature search is performed by this projection.","",o.disclaimer,"");return lines.join("\n");
 }

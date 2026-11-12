@@ -4,11 +4,11 @@ import {createInvestigationDeliveryService,type DeliveryState,type DeliveryDepen
 import {canonicalGraphContext,type InvestigationGraphContext} from "../../src/investigationGraphContext";
 import type {ReviewDecisionRequest,ReviewOutcome,RevisionLink} from "../../src/investigationDelivery";
 import type {InterrogativeInvestigation} from "../../src/interrogativeValidation";
-export function deliveryHarness(options:{writesEnabled?:boolean;lostDecisionAck?:boolean;lostRevisionAck?:boolean}={}){
+export function deliveryHarness(options:{writesEnabled?:boolean;lostDecisionAck?:boolean;lostRevisionAck?:boolean;outcomeAttachments?:DeliveryDependencies["outcomeAttachments"]}={}){
  const initial=investigation(),states=new Map<string,DeliveryState>(),contexts=new Map<string,InvestigationGraphContext>();
  let authority=true,sourceAccess=true,decisionWrites=0,revisionWrites=0,submissionWrites=0;
  const empty=(record:InterrogativeInvestigation):DeliveryState=>({record,package:null,submission:null,decision:null,revision:null,successor:null,legacyDecision:false});states.set(initial.id,empty(initial));contexts.set(initial.id,contextFixture());
- const deps:DeliveryDependencies={writesEnabled:options.writesEnabled??true,now:()=>"2026-11-05T04:00:00.000Z",
+ const deps:DeliveryDependencies={outcomeAttachments:options.outcomeAttachments,writesEnabled:options.writesEnabled??true,now:()=>"2026-11-05T04:00:00.000Z",
   authenticate:async token=>token&&["alice","reviewer","bob","ungranted"].includes(token)?{authenticated:true,principalId:token,roles:token==="reviewer"?["scientific_reviewer"]:token==="alice"?["researcher","scientific_reviewer"]:token==="ungranted"?[]:["researcher"]}:null,
   reviewer:async principal=>authority&&(principal==="reviewer"||principal==="alice"),
   load:async(_actor,id)=>{const s=states.get(id);if(!s)throw Error("Record unavailable");return structuredClone(s)},
