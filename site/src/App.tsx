@@ -86,7 +86,7 @@ export default function App() {
         <Route path="platform" element={<Platform />} />
         <Route path="context-conflict-audit" element={<EvidenceSafety />} />
         <Route path="evidence-intelligence" element={<EvidenceSafety />} />
-        <Route path="research-briefs" element={<DemoWalkthrough />} />
+        <Route path="research-briefs" element={<div className="hsi-public"><header className="hsi-page-hero hsi-content"><h1>Research decisions deserve an evidence trail.</h1><p>A research brief brings the question, evidence inventory, biological context, uncertainty, proposed experiments and independent review status together.</p><p>No real source packet or scientific approval is attached to this public introduction.</p><a className="hsi-text-link" href="/research">Explore the Research Workflow</a></header></div>} />
         <Route path="applications" element={<Solutions />} />
         <Route path="trust" element={<><EvidenceSafety /><PublicNotices /></>} />
         <Route path="about" element={<AboutPublic />} />
