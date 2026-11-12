@@ -25,7 +25,7 @@ export type GateEvidence = {
 };
 const nonempty=(v:unknown):v is string=>typeof v==="string"&&v.trim().length>0;
 export function evaluateContradictionActivationGate(evidence:readonly GateEvidence[]):{
-  ready:boolean;missing:GateCheck[];invalid:GateCheck[]
+  ready:false;structurallyComplete:boolean;missing:GateCheck[];invalid:GateCheck[]
 } {
  const missing:GateCheck[]=[],invalid:GateCheck[]=[];
  for(const check of REQUIRED_ACTIVATION_CHECKS) {
@@ -36,5 +36,6 @@ export function evaluateContradictionActivationGate(evidence:readonly GateEviden
     !nonempty(matches[0]!.verifiedBy)||
     !Number.isFinite(Date.parse(matches[0]!.verifiedAt))) invalid.push(check);
  }
- return {ready:missing.length===0&&invalid.length===0,missing,invalid};
+ // Descriptive unsigned checklist rows cannot establish independent security acceptance.
+ return {ready:false,structurallyComplete:missing.length===0&&invalid.length===0,missing,invalid};
 }

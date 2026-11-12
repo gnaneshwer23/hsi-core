@@ -1,6 +1,18 @@
 import {describe,expect,test} from "bun:test";
-import {assertNoForgeableOwnerPolicy} from "../src/db/liveEvidencePolicyGate";
+import {assertNoForgeableOwnerPolicy,assertVerifiedLiveOwnerPolicy,assertRestrictedLiveRuntime} from "../src/db/liveEvidencePolicyGate";
 describe("A-01 policy fail-closed checks",()=>{
+ test("rejects owner login hidden behind SET ROLE and privileged memberships",()=>{
+  const role={name:"hsi_live_runtime",login:"hsi_live_runtime",canlogin:true,inherit:false,bypass:false,superuser:false,createrole:false,createdb:false,table_exists:true,table_owner:false,auth_session_read:false,auth_user_read:false,schema_create:false,can_delete:false,can_truncate:false};
+  expect(()=>assertRestrictedLiveRuntime([role],[])).not.toThrow();
+  for(const change of [{login:"migration_owner"},{bypass:true},{inherit:true},{createrole:true},{table_owner:true},{auth_session_read:true},{auth_user_read:true},{schema_create:true},{can_truncate:true},{canlogin:false}])expect(()=>assertRestrictedLiveRuntime([{...role,...change}],[])).toThrow();
+  expect(()=>assertRestrictedLiveRuntime([role],[{rolname:"privileged_owner_group"}])).toThrow();
+ });
+ const row={policyname:"hsi_live_verified_session_isolation",roles:["hsi_live_runtime"],cmd:"ALL",qual:"(owner_id = public.hsi_live_verified_owner())",with_check:"(owner_id = public.hsi_live_verified_owner())"};
+ test("accepts only the exact reviewed owner equality and single runtime role",()=>{
+  expect(()=>assertVerifiedLiveOwnerPolicy([row])).not.toThrow();
+  for(const change of [{qual:row.qual+" OR true"},{with_check:"true OR "+row.with_check},{roles:["public"]},{cmd:"SELECT"},{qual:"owner_id = hsi_live_verified_owner"}])expect(()=>assertVerifiedLiveOwnerPolicy([{...row,...change}])).toThrow();
+  expect(()=>assertVerifiedLiveOwnerPolicy([row,{...row,policyname:"extra_policy",qual:"true"}])).toThrow();
+ });
  test("rejects owner GUC policy",()=>{
   expect(()=>assertNoForgeableOwnerPolicy([{policyname:"owner",qual:"owner_id = current_setting('hsi.live_owner_id')",with_check:null}])).toThrow("forgeable");
  });

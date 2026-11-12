@@ -1,0 +1,77 @@
+{
+  "schemaVersion": "hsi-p0c-engineering-observation-1",
+  "observedDate": "2026-11-12",
+  "kind": "catalogue_and_database_rehearsal_only",
+  "independentlySigned": false,
+  "acceptedForScope": false,
+  "liveAuthenticatedHttpExecuted": false,
+  "realAccountRosterVerified": false,
+  "applicationPooledLoginVerified": false,
+  "productionWritesEnabledObserved": false,
+  "productionHealthDatabaseConnectionTested": false,
+  "sourceInspectionConnection": "connector_database_owner_not_application_runtime",
+  "sourceLedgerRows": 18,
+  "sourceLedgerLastMigration": "017_hsi_experiment_ledger",
+  "unappliedSourceMigrations": "018 onward absent; legacy 012 alias exists",
+  "productionHsiRuntimeRolesFound": [],
+  "sourceAndRestoredPublicTableColumnRlsFingerprint": "525ce18aa8ee4337b26cb4bc937f36f923da525186cdfcde2f9d4cb7be1c12f2",
+  "restoredLedgerMatched": true,
+  "restoreValidationCompute": "new_read_only_compute_on_unfinalized_restored_branch",
+  "restoreFinalized": false,
+  "productionComputeSwapped": false,
+  "rehearsalResourcesExpireAt": "2026-11-12T20:19:55Z",
+  "privatePinsIncluded": false,
+  "normalMigrationHoldsChanged": false,
+  "communityWritesExercised": false,
+  "scopes": {
+    "interrogative_workspace": {
+      "catalogueInspected": true,
+      "tablesInspected": 4,
+      "allForceRls": false,
+      "accepted": false
+    },
+    "scientific_records": {
+      "migration": "022",
+      "ddlCompiled": true,
+      "forceRlsObserved": true,
+      "transactionRollbackVerified": true,
+      "accepted": false
+    },
+    "contradiction_ledger": {
+      "migrationOrder": [
+        "024",
+        "025",
+        "026",
+        "027",
+        "028",
+        "029"
+      ],
+      "ddlCompiled": true,
+      "forceRlsObserved": true,
+      "runtimeDirectSelectInsertDenied": true,
+      "fakeSessionDeniedAsNoLoginRuntimeRole": true,
+      "transactionRollbackVerified": true,
+      "accepted": false,
+      "actualDirectSelectInsertAttemptsDeniedAsRuntimeRole": true
+    },
+    "live_evidence": {
+      "migration": "030",
+      "ddlCompiled": true,
+      "ownerGucSpoofObservedInTemporaryGrantedFixture": true,
+      "transactionRollbackVerified": true,
+      "accepted": false
+    }
+  },
+  "migrationFileSha256": {
+    "022_hsi_scientific_investigation_records": "4016e5ed683527a2dcd255b7d19c97e398f160c7d058aa61ae243e3626a4ef4d",
+    "024_hsi_scientific_contradiction_ledger": "90f50a53705d33b544611c7267dee5b02816ac98fa4ad1f1e4f212f3c530dd45",
+    "025_hsi_contradiction_tenant_isolation": "bbaf6bf261fd2b35f1a185b49928ae06784d79874ab1e4e7d3b4881ff9804e24",
+    "026_hsi_contradiction_review_integrity": "31f852ef0f70be19683218d59110eca9c747defd30c734a1392270728a221cad",
+    "027_hsi_contradiction_authenticated_procedures": "690119bd2a75f27ec4d81a8f0fb0aca190c58327a20ae41f0b2d91e7f08f348c",
+    "028_hsi_contradiction_restricted_api": "21e4a14cede5031ca74611bcfb4143d0b3a536500eac226c95fb2be172584973",
+    "029_hsi_contradiction_scoped_read_integrity": "f62688674e2cd3b23c671ab15b5fa6db8c6582ffb5ec30648bed95b7098a89ee",
+    "030_hsi_live_evidence_investigations": "2730cea35ead0f32f448713f84d3eaa42bfa9074c9e86e6d598176edfcbe8480"
+  },
+  "scientificApproval": false,
+  "productionActivationApproved": false
+}

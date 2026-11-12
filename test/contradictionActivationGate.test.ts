@@ -5,6 +5,10 @@ it("fails closed with no independent security evidence",()=>{
  expect(result.ready).toBe(false);
  expect(result.missing).toEqual([...REQUIRED_ACTIVATION_CHECKS]);
 });
+it("does not activate from a complete but unsigned checklist",()=>{
+ const evidence=REQUIRED_ACTIVATION_CHECKS.map(check=>({check,passed:true,artifactUrl:"https://example.org/fixture/"+check,verifiedBy:"caller-asserted-reviewer",verifiedAt:"2026-11-12T00:00:00Z"}));
+ const result=evaluateContradictionActivationGate(evidence);expect(result.structurallyComplete).toBe(true);expect(result.ready).toBe(false);
+});
 it("rejects self-attested or invalid evidence records",()=>{
  const result=evaluateContradictionActivationGate([{check:"self_review_denied",passed:true,
  artifactUrl:"local://test",verifiedBy:"",verifiedAt:"not-a-date"}]);
