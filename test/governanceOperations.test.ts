@@ -108,6 +108,7 @@ test("secret scan workflow covers ordinary source changes, not only register edi
  const workflow=readFileSync(".github/workflows/p0-repository-hygiene.yml","utf8");
  const trigger=workflow.slice(workflow.indexOf("on:"),workflow.indexOf("permissions:"));
  expect(trigger).not.toContain("paths:");expect(trigger).toContain("pull_request:");expect(trigger).toContain("branches: [main]");
+ expect(workflow).toContain("--log-opts=--all");
 });
 test("CI retains pilot engineering receipts and does not relabel browser fixtures as live acceptance",()=>{
  const workflow=readFileSync(".github/workflows/research-foundation.yml","utf8");
