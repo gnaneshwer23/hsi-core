@@ -6,7 +6,7 @@ export type ResearchOperationalEvent={schemaVersion:"hsi-research-http-event-1";
 export type SharedResearchAdmission=(group:ResearchRouteGroup,signal:AbortSignal)=>Promise<Admission>;
 export function researchRouteGroup(request:Request):ResearchRouteGroup{
  const p=new URL(request.url).pathname;
- if(p==="/api/research/health")return "health";
+ if(["/api/research/health","/api/research/live","/api/research/configuration","/api/research/ready"].includes(p))return "health";
  if(p==="/api/auth/diagnostics"||p==="/api/research/session-diagnostics")return "diagnostics";
  if(p.startsWith("/api/auth/"))return "auth";
  if(p.startsWith("/api/research/"))return request.method==="GET"?"research_read":"research_write";

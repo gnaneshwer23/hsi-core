@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "hsi-operational-pilot-status-1",
+  "asOf": "2026-11-12",
+  "phase": "P1-C",
+  "status": "engineering_candidate_live_release_blocked",
+  "scientificOwner": {
+    "name": "Dr. Gnaneshwer Jadav",
+    "designationSource": "user_instruction",
+    "signingKeyPinned": false,
+    "releaseSignatureVerified": false
+  },
+  "securityOwner": null,
+  "operationsOnCallOwner": null,
+  "approvedAlertDestination": null,
+  "productionPromotionAuthorized": false,
+  "pilotInvitationsIssued": 0,
+  "actualSoakDaysVerified": 0,
+  "realOnCallDeliveryVerified": false,
+  "fullPlatformRpoRtoVerified": false,
+  "wholePlatformRollbackVerified": false,
+  "signedReleasePacketVerified": false,
+  "scientificApproval": false,
+  "graphPromotionApproved": false,
+  "proposedOperatingObjectives": {
+    "soakDays": 14,
+    "authorizedRequestSuccessRate": 0.995,
+    "p95ReadMsExclusive": 2000,
+    "p95AcceptedJobAckMsExclusive": 1000,
+    "rpoMsMaximum": 86400000,
+    "rtoMsMaximum": 14400000
+  },
+  "blockedDependencies": [
+    "P0-A/B/C live acceptance and P1-A/B scientific/integrated acceptance",
+    "Security and operations owner designations; actual signing-key pins for all release owners",
+    "Approved staging coordinator host, durable volume, authenticated TLS service and real invitation/membership adapter",
+    "Approved on-call destination and demonstrable transport delivery plus human acknowledgement",
+    "Approved cap/quota/load/monitoring policy and 14 days of trusted soak evidence",
+    "Provider reconciliation, full Neon/vault/coordinator backup restore, rollback and kill-switch exercises",
+    "Purpose-bound signed release packet for the exact tested artifact/configuration/cohort"
+  ]
+}

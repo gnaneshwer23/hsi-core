@@ -1,0 +1,10 @@
+/** Isolated engineering fixture. No real invitations, owners, provider calls or scientific release. */
+import {mkdtempSync,rmSync} from "node:fs";
+import {tmpdir} from "node:os";
+import {join} from "node:path";
+import {openPilotOperationsStore,opsHash,type OpsPolicy,type OpsPlan,type OpsReceipt} from "../../src/operations/pilotOperationsStore";
+export const TEST_POLICY:OpsPolicy={windowMs:86400000,userJobs:3,organizationJobs:4,userTokens:100,organizationTokens:150,userCostMicros:1000,organizationCostMicros:1500,routeLimits:{health:20,auth:20,diagnostics:20,research_read:3,research_write:3,other:3}};
+export const ALICE={userRef:"TEST-user-a",organizationRef:"TEST-org-a"},BOB={userRef:"TEST-user-b",organizationRef:"TEST-org-a"},OTHER={userRef:"TEST-user-a",organizationRef:"TEST-org-b"};
+export function plan(n=1):OpsPlan{return {investigationId:"TEST-investigation",artifactSha:"a".repeat(40),configurationHash:opsHash("config"),planRef:"TEST-plan",freezeHash:null,maxTokens:20*n,maxCostMicros:100*n,steps:Array.from({length:n},(_,i)=>({id:"stage-"+i,kind:"model",inputRef:"task:"+i,toolRef:null,modelRef:"TEST-model",sourceReleaseRef:"TEST-source-release",clearanceRef:"TEST-clearance",maxInputTokens:10,maxOutputTokens:10,maxCostMicros:100,maxAttempts:2}))}}
+export function receipt(operationId:string,changes:Partial<OpsReceipt>={}):OpsReceipt{return {receiptRef:"TEST-receipt-"+operationId,operationId,outcome:"completed",outputRef:"vault:TEST-output",outputHash:opsHash(operationId),inputTokens:3,outputTokens:2,costMicros:20,latencyMs:10,decisionRef:null,errorCode:"none",retryDelayMs:0,...changes}}
+export function opsFixture(policy=TEST_POLICY){const directory=mkdtempSync(join(tmpdir(),"hsi-p1c-")),file=join(directory,"operations.sqlite");let clock=1000000000;const store=openPilotOperationsStore(file,policy,()=>clock);return {directory,file,store,now:()=>clock,advance:(ms:number)=>{clock+=ms},enable:()=>store.setSwitches({jobsEnabled:true,providersEnabled:true,writesEnabled:false},"TEST-operator-receipt"),close:()=>{store.close();rmSync(directory,{recursive:true,force:true})}}}

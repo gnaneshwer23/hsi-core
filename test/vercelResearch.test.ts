@@ -264,3 +264,12 @@ test("outcome Vercel route uses the trusted session bridge with writes disabled"
  expect((await handleVercelResearch(post(path),env,{transport:noCalls})).status).toBe(403);
  expect((await handleVercelResearch(req(path),env,{transport:noCalls})).status).toBe(401);
 });
+
+test("separate liveness survives shared-admission outage without claiming database readiness",async()=>{
+ const r=await handleVercelResearch(req("/api/research/live"),{HSI_PILOT_REQUIRE_SHARED_LIMITER:"true"},{transport:noCalls,controls:{sharedAdmission:async()=>{throw Error("offline")}}});expect(r.status).toBe(200);expect(await r.json()).toMatchObject({live:true,databaseConnectionTested:false});
+ expect((await handleVercelResearch(req("/api/research/health"),{...env,HSI_PILOT_REQUIRE_SHARED_LIMITER:"true"},{transport:noCalls,controls:{sharedAdmission:async()=>{throw Error("offline")}}})).status).toBe(503);
+});
+test("pilot job routes are unavailable by default and injected handlers still require configured same-origin deployment",async()=>{
+ const path="/api/research/jobs";expect((await handleVercelResearch(post(path),env,{transport:noCalls})).status).toBe(404);let calls=0;const pilotJobApi=async()=>{calls++;return Response.json({id:"TEST_JOB"},{status:202})};
+ expect((await handleVercelResearch(post(path),env,{transport:noCalls,pilotJobApi})).status).toBe(202);expect(calls).toBe(1);expect((await handleVercelResearch(new Request("https://attacker.test"+path,{method:"POST"}),env,{transport:noCalls,pilotJobApi})).status).toBe(403);expect(calls).toBe(1);
+});
