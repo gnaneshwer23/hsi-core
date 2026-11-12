@@ -4,6 +4,7 @@
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { HELD_MIGRATION_IDS } from "../src/db/migrationHolds";
 
 export type CapabilityLevel = "implemented" | "partial" | "stub" | "absent";
 
@@ -15,6 +16,7 @@ export type CapabilityRow = {
   evidence: string[];
   gap: string;
   nextAction: string;
+  acceptance?: { deployment: "not_assessed" | "not_verified" | "blocked" | "not_applicable"; scientific: "not_assessed" | "not_accepted" | "not_applicable" };
 };
 
 const REGISTER = "operations/capability-register/capability-register.v1.json";
@@ -50,8 +52,10 @@ export function renderStatusMarkdown(register: {
   const lines = register.capabilities.map((row) => {
     const level = capabilityLevel(row.status);
     counts[level] += 1;
+    const deployment = row.acceptance?.deployment ?? "not_assessed";
+    const scientific = row.acceptance?.scientific ?? "not_assessed";
     const evidence = row.evidence.map((item) => `\`${item}\``).join(", ");
-    return `| ${row.id} | ${row.group} | ${row.name} | ${level} | ${row.status.join(", ")} | ${evidence} | ${row.gap} |`;
+    return `| ${row.id} | ${row.group} | ${row.name} | ${level} | ${row.status.join(", ")} | ${deployment} | ${scientific} | ${evidence} | ${row.gap} |`;
   });
   return `# HSI status
 
@@ -66,6 +70,8 @@ Register \`${register.registerId}\` as of ${register.asOf}.
 | stub | ${counts.stub} | Types, fixtures or proposal-only adapters |
 | absent | ${counts.absent} | Planned or not present |
 
+Deployment and scientific columns are independently recorded acceptance states; missing values mean **not assessed**, never accepted. Engineering vocabulary, including a historic \`scientifically_validated\` flag, cannot fill either column automatically.
+
 These levels are derived from the register vocabulary (\`implemented\`, \`connected\`, \`blocked\`, \`synthetic_only\`, \`planned\`, \`scientifically_validated\`). A row that is both implemented and blocked is **partial**. Nothing in this table is a claim of clinical validation, regulatory approval or a live patient deployment.
 
 ## Honesty
@@ -74,12 +80,18 @@ ${Object.entries(register.honesty)
   .map(([key, value]) => `- \`${key}\`: ${JSON.stringify(value)}`)
   .join("\n")}
 
-Database deployment is **not** asserted here. Older audits disagree about whether migrations have been applied. This repository commits the SQL. Applying it is an operator action against the private HSI database (HSI red-wave only). Migrations \`020_hsi_lhkg_rls_policies\` and \`021_hsi_hitl_questions_outbox\` are released for apply; applying them remains an operator action and is not claimed here. Migrations \`022_hsi_scientific_investigation_records\` and \`023_hsi_researcher_workspace_community\` are committed and held in \`HELD_MIGRATION_IDS\`. They have not been applied.
+Database deployment is **not** inferred from repository labels, merged PRs or CI. Current deployment, source/science and scope-specific security acceptance need independently verified artifacts. Historical database observations must retain their target, time and limitations; they do not establish the current ledger.
+
+Normal migration execution skips the following ids from the shared, side-effect-free \`HELD_MIGRATION_IDS\` source (\`src/db/migrationHolds.ts\`). This is a repository hold policy, **not** proof that SQL was never manually applied to any database. No hold is removed or release authorised by this document. Apply/rehearse only the exact independently reviewed scope against HSI's approved project.
+
+${HELD_MIGRATION_IDS.map((id) => `- \`${id}\``).join("\n")}
+
+Current implementation-to-acceptance reconciliation: \`docs/audits/HSI_IMPLEMENTATION_TRUTH_AND_NEXT_PRS.md\` and \`operations/production-delivery/implementation-truth.v1.json\`. These metadata documents cannot authorise runtime activation.
 
 ## Capabilities
 
-| ID | Group | Name | Level | Register status | Evidence | Gap |
-| --- | --- | --- | --- | --- | --- | --- |
+| ID | Group | Name | Engineering level | Register status | Deployment acceptance | Scientific acceptance | Evidence | Gap |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
 ${lines.join("\n")}
 
 ## Superseded status documents
