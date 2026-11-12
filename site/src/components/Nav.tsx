@@ -1,130 +1,220 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import {authBaseUrl,hsiAuth} from "../lib/hsiAuth";
-import { PRODUCT_NAME } from "../lib/brand";
-import { PRIMARY_NAV_CTA, PRIMARY_NAV_LINKS, SECONDARY_NAV_LINKS, isPublicMarketingPath, isAccountPath } from "../lib/primaryNav";
-
-const ctaArrow = (
-  <svg className="nav-link-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-    <path d="M4 16 16 4M4 4h12v12" stroke="currentColor" strokeWidth="1.5" />
-  </svg>
-);
-
+import { authBaseUrl, hsiAuth } from "../lib/hsiAuth";
+import {
+  PRIMARY_NAV_LINKS,
+  PRIMARY_NAV_CTA,
+  RESEARCH_NAV_LINKS,
+  isPublicMarketingPath,
+  isAccountPath,
+} from "../lib/primaryNav";
 export function Nav() {
-  const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [moreOpen,setMoreOpen]=useState(false);
-  const moreRef=useRef<HTMLDivElement>(null);
-  const moreButtonRef=useRef<HTMLButtonElement>(null);
-  const [signedIn,setSignedIn]=useState(false);
+  const [open, setOpen] = useState(false),
+    [researchOpen, setResearchOpen] = useState(false),
+    [scrolled, setScrolled] = useState(false),
+    [signedIn, setSignedIn] = useState(false);
+  const toggle = useRef<HTMLButtonElement>(null),
+    drawer = useRef<HTMLDivElement>(null),
+    dropdown = useRef<HTMLDivElement>(null),
+    researchButton = useRef<HTMLButtonElement>(null);
   const { pathname } = useLocation();
-  useEffect(()=>{let active=true;if(!authBaseUrl){setSignedIn(false);return}hsiAuth.session().then(r=>{if(active)setSignedIn(!!r.data&&!r.error)}).catch(()=>{if(active)setSignedIn(false)});return()=>{active=false}},[pathname]);
-  const isHome = pathname === "/";
-  const creamMasthead = isPublicMarketingPath(pathname) || isAccountPath(pathname);
-
+  const workspace = !isPublicMarketingPath(pathname) && !isAccountPath(pathname);
+  useEffect(() => {
+    setOpen(false);
+    setResearchOpen(false);
+  }, [pathname]);
+  useEffect(() => {
+    let active = true;
+    if (authBaseUrl)
+      hsiAuth
+        .session()
+        .then((r) => {
+          if (active) setSignedIn(!!r.data && !r.error);
+        })
+        .catch(() => {
+          if (active) setSignedIn(false);
+        });
+    return () => {
+      active = false;
+    };
+  }, [pathname]);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
   useEffect(() => {
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setOpen(false);
-        document.querySelector<HTMLButtonElement>(".nav-toggle")?.focus();
+    if (!researchOpen) return;
+    const close = (e: PointerEvent) => {
+      if (!dropdown.current?.contains(e.target as Node)) setResearchOpen(false);
+    };
+    const key = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setResearchOpen(false);
+        researchButton.current?.focus();
       }
     };
-    if (open) document.addEventListener("keydown", closeOnEscape);
-    return () => document.removeEventListener("keydown", closeOnEscape);
-  }, [open]);
-
+    document.addEventListener("pointerdown", close);
+    document.addEventListener("keydown", key);
+    return () => {
+      document.removeEventListener("pointerdown", close);
+      document.removeEventListener("keydown", key);
+    };
+  }, [researchOpen]);
   useEffect(() => {
-    setOpen(false);setMoreOpen(false);
-  }, [pathname]);
-
-  useEffect(()=>{if(!moreOpen)return;const outside=(e:PointerEvent)=>{if(!moreRef.current?.contains(e.target as Node))setMoreOpen(false)};const escape=(e:KeyboardEvent)=>{if(e.key==="Escape"){setMoreOpen(false);moreButtonRef.current?.focus()}};document.addEventListener("pointerdown",outside);document.addEventListener("keydown",escape);return()=>{document.removeEventListener("pointerdown",outside);document.removeEventListener("keydown",escape)}},[moreOpen]);
-  useEffect(()=>{const media=window.matchMedia("(min-width:1151px)");const reset=()=>{setOpen(false);setMoreOpen(false)};media.addEventListener("change",reset);return()=>media.removeEventListener("change",reset)},[]);
-
+    if (!open) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const outside = [document.querySelector("main"), document.querySelector("footer.hsi-footer")].filter(
+      Boolean,
+    ) as HTMLElement[];
+    const old = outside.map((el) => el.inert);
+    outside.forEach((el) => {
+      el.inert = true;
+    });
+    drawer.current?.querySelector<HTMLElement>("button,a")?.focus();
+    const key = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setOpen(false);
+        toggle.current?.focus();
+      }
+      if (e.key === "Tab") {
+        const items = [...drawer.current!.querySelectorAll<HTMLElement>("button,a[href]")];
+        const first = items[0],
+          last = items.at(-1);
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last?.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first?.focus();
+        }
+      }
+    };
+    document.addEventListener("keydown", key);
+    return () => {
+      document.body.style.overflow = previous;
+      outside.forEach((el, n) => {
+        el.inert = old[n] ?? false;
+      });
+      document.removeEventListener("keydown", key);
+    };
+  }, [open]);
+  useEffect(() => {
+    const media = window.matchMedia("(min-width:1151px)");
+    const close = () => {
+      if (media.matches) setOpen(false);
+    };
+    media.addEventListener("change", close);
+    return () => media.removeEventListener("change", close);
+  }, []);
   return (
-    <header className={`nav${isHome ? " home-nav" : ""}${scrolled ? " scrolled" : ""}`}>
-      <div className="nav-inner">
-        <Link
-          to="/"
-          className={`brand${creamMasthead ? " brand-expanded" : ""}`}
-          aria-label={`${PRODUCT_NAME} home`}
-        >
-          <span className="brand-mark" aria-hidden="true">
+    <header className={`hsi-nav${scrolled ? " is-scrolled" : ""}${workspace ? " hsi-nav-workspace" : ""}`}>
+      <div className="hsi-nav-inner">
+        <Link to="/" className="hsi-wordmark" aria-label="Human Super Intelligence home">
+          <span aria-hidden="true" className="hsi-brand-symbol">
             H
           </span>
-          <span className="brand-wordmark">
-            <span className="brand-name">{PRODUCT_NAME}</span><span className="brand-short" aria-hidden="true">HSI</span>
+          <span>
+            HSI<small>Human Super Intelligence</small>
           </span>
         </Link>
-
-        <nav className="nav-links" aria-label="Primary">
-          {PRIMARY_NAV_LINKS.map((l) => (
-            <NavLink
-              key={l.to}
-              to={l.to}
-              className={({ isActive }) => (isActive ? "active" : undefined)}
-            >
-              {l.label}
-            </NavLink>
-          ))}
-          <div className="nav-more" ref={moreRef}><button ref={moreButtonRef} type="button" aria-expanded={moreOpen} aria-controls="secondary-pages" onClick={()=>setMoreOpen(v=>!v)}>More<svg viewBox="0 0 16 16" width="12" height="12" fill="none" aria-hidden="true"><path d="m4 6 4 4 4-4" stroke="currentColor" strokeWidth="1.5"/></svg></button><div id="secondary-pages" hidden={!moreOpen}>{SECONDARY_NAV_LINKS.map(l=><NavLink key={l.to} to={l.to} onClick={()=>setMoreOpen(false)}>{l.label}</NavLink>)}</div></div>
+        <nav aria-label="Primary" className="hsi-desktop-nav">
+          {PRIMARY_NAV_LINKS.map((l) =>
+            l.to === "/research" ? (
+              <div className="hsi-research-menu" ref={dropdown} key={l.to}>
+                <button
+                  ref={researchButton}
+                  type="button"
+                  aria-expanded={researchOpen}
+                  aria-controls="research-pages"
+                  className={RESEARCH_NAV_LINKS.some((r) => r.to === pathname) ? "active" : ""}
+                  onClick={() => setResearchOpen((v) => !v)}
+                >
+                  Research <span aria-hidden="true">⌄</span>
+                </button>
+                <div id="research-pages" hidden={!researchOpen}>
+                  {RESEARCH_NAV_LINKS.map((r) => (
+                    <NavLink key={r.to} to={r.to} onClick={() => setResearchOpen(false)}>
+                      {r.label}
+                    </NavLink>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <NavLink key={l.to} to={l.to}>
+                {l.label}
+              </NavLink>
+            ),
+          )}
         </nav>
-
-        {signedIn ? (
-          <div className="nav-auth-actions">
-            <Link to="/research/account" className="nav-sign-in">Account</Link>
-          </div>
-        ) : null}
-
-        <Link to={PRIMARY_NAV_CTA.to} className="nav-cta">
-          <span className="nav-cta-label">
+        <div className="hsi-header-actions">
+          <Link className="hsi-signin" to={signedIn ? "/research/account" : "/sign-in"}>
+            {signedIn ? "Account" : "Sign in"}
+          </Link>
+          <Link className="hsi-header-cta" to={PRIMARY_NAV_CTA.to}>
             {PRIMARY_NAV_CTA.label}
-          </span>
-          {ctaArrow}
-        </Link>
-
-        <button
-          type="button"
-          className="nav-toggle"
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-controls="primary-menu"
-          aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
-        >
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true">{open?<path d="m6 6 12 12M6 18 18 6" stroke="currentColor" strokeWidth="1.7"/>:<path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" strokeWidth="1.7"/>}</svg>
-        </button>
+          </Link>
+          <button
+            className="hsi-menu-toggle"
+            ref={toggle}
+            aria-label="Open menu"
+            aria-controls="public-menu"
+            aria-expanded={open}
+            onClick={() => setOpen(true)}
+          >
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true">
+              <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="1.5" />
+            </svg>
+          </button>
+        </div>
       </div>
-
-      <nav aria-label="Mobile navigation" id="primary-menu" hidden={!open} className={`nav-drawer${open ? " open" : ""}`}>
-        <NavLink to="/" onClick={() => setOpen(false)}>
-          Home
-        </NavLink>
-        {PRIMARY_NAV_LINKS.map((l) => (
-          <NavLink key={l.to} to={l.to} onClick={() => setOpen(false)}>
-            {l.label}
-          </NavLink>
-        ))}
-        {SECONDARY_NAV_LINKS.map(l=><NavLink key={l.to} to={l.to} onClick={()=>setOpen(false)}>{l.label}</NavLink>)}
-        {signedIn ? (
-          <NavLink to="/research/account" className="nav-drawer-sign-in" onClick={() => setOpen(false)}>Account</NavLink>
-        ) : null}
-        <Link
-          to={PRIMARY_NAV_CTA.to}
-          className="nav-cta nav-drawer-cta"
-          onClick={() => setOpen(false)}
+      {open && (
+        <div
+          id="public-menu"
+          className="hsi-mobile-dialog"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Public navigation"
+          ref={drawer}
         >
-          <span className="nav-cta-label">
-            {PRIMARY_NAV_CTA.label}
-          </span>
-          {ctaArrow}
-        </Link>
-      </nav>
+          <div className="hsi-mobile-top">
+            <span>Explore HSI</span>
+            <button
+              type="button"
+              aria-label="Close menu"
+              onClick={() => {
+                setOpen(false);
+                toggle.current?.focus();
+              }}
+            >
+              Close ×
+            </button>
+          </div>
+          <nav aria-label="Mobile navigation">
+            <NavLink to="/">Home</NavLink>
+            {PRIMARY_NAV_LINKS.map((l) => (
+              <NavLink key={l.to} to={l.to}>
+                {l.label}
+              </NavLink>
+            ))}
+            <div className="hsi-mobile-research">
+              <span>Research</span>
+              {RESEARCH_NAV_LINKS.filter((l) => l.to !== "/research").map((l) => (
+                <NavLink key={l.to} to={l.to}>
+                  {l.label}
+                </NavLink>
+              ))}
+            </div>
+            <NavLink to={signedIn ? "/research/account" : "/sign-in"}>
+              {signedIn ? "Account" : "Sign in"}
+            </NavLink>
+            <Link to="/contact">Request access</Link>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }

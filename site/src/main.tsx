@@ -14,6 +14,7 @@ import "./styles/hsi-visual-tokens.css";
 import "./styles/home-instrument.css";
 import "./styles/clinical-landing.css";
 import "./styles/marketing-page.css";
+import "./styles/research-public.css";
 
 const root=document.getElementById("root")!;
 const app=<StrictMode><BrowserRouter><App /></BrowserRouter></StrictMode>;

@@ -12,7 +12,7 @@ test('public route hydrates from generated HTML without losing content or mismat
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
  await page.route('**/platform',async route=>route.fulfill({contentType:'text/html',body:await readFile(new URL('_pages/platform.html',dist),'utf8')}));
  await page.goto('/platform');await expect(page.getByRole('heading',{level:1})).toBeVisible();await expect(page).toHaveTitle(SEO_PAGES['/platform']!.title);expect(errors).toEqual([]);
- await page.getByRole('button',{name:'More',exact:true}).click();await page.locator('#secondary-pages').getByRole('link',{name:'Evidence & safety',exact:true}).click();await expect(page.locator('link[rel=canonical]')).toHaveAttribute('href',SITE_ORIGIN+'/evidence-safety');await expect(page.locator('meta[property="og:url"]')).toHaveAttribute('content',SITE_ORIGIN+'/evidence-safety');
+ await page.getByRole('button',{name:'Research',exact:true}).click();await page.locator('#research-pages').getByRole('link',{name:'Evidence Intelligence',exact:true}).click();await expect(page.locator('link[rel=canonical]')).toHaveAttribute('href',SITE_ORIGIN+'/evidence-intelligence');await expect(page.locator('meta[property="og:url"]')).toHaveAttribute('content',SITE_ORIGIN+'/evidence-intelligence');
  await page.goto('/research/account');await expect(page.locator('meta[name=robots]')).toHaveAttribute('content','noindex, follow');await expect(page.locator('#hsi-seo-schema')).toHaveCount(0);
 });
 test('sitemap contains only public canonical pages and tool shells are noindex without saved data',async({request})=>{

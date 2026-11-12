@@ -44,10 +44,10 @@ describe("Public HSI site honesty", () => {
 
     const primaryNav = site("src/lib/primaryNav.ts");
     for(const route of ["/platform","/solutions","/research","/evidence-safety","/pricing","/contact","/modules","/technology","/science","/how-it-works"])expect(primaryNav).toContain(route);
-    expect(primaryNav).toContain('label: "Research access"');
-    expect(primaryNav).not.toContain('label: "Request access"');
+    expect(primaryNav).toContain('label: "Request access"');
+    expect(primaryNav).toContain('to: "/contact"');
     const primaryLinksBlock=primaryNav.match(/export const PRIMARY_NAV_LINKS = \[[\s\S]*?\] as const/)?.[0]??"";
-    for(const route of ["/platform","/research","/modules","/science","/how-it-works"])expect(primaryLinksBlock).toContain(route);
+    for(const route of ["/platform","/research","/science","/applications","/trust","/about"])expect(primaryLinksBlock).toContain(route);
     for(const route of ["/curator","/gateway","/clinical-timeline","/trials-criteria","/status"])expect(primaryLinksBlock).not.toContain(route);
     for(const route of ["/modules/isi","/modules/aksh-health","/modules/trials","/modules/clinical"])expect(primaryNav).toContain(route);
     const nav=site("src/components/Nav.tsx");
@@ -79,12 +79,12 @@ describe("Public HSI site honesty", () => {
     expect(roadmap).toContain('to="/status"');
 
     const footer = site("src/components/Footer.tsx");
-    expect(footer).toContain("RESEARCH_LINKS");
+    expect(footer).toContain("RESEARCH_NAV_LINKS");
     expect(footer).not.toContain('to: "/roadmap"');
     expect(footer).not.toContain('to: "/status"');
-    expect(footer).toContain('to: "/evidence-safety"');
+    expect(footer).toContain('/trust');
     expect(footer).not.toContain('to: "/docs"');
-    expect(footer).toContain('to: "/contact"');
+    expect(footer).toContain('/contact');
     expect(footer).toContain("For research and education");
   });
 

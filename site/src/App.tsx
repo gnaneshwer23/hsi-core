@@ -4,6 +4,7 @@ import { Layout } from "./components/Layout";
 import {ResearchLanding,Solutions,EvidenceSafety,Pricing,Contact,Community} from "./pages/ExperiencePages";
 const GovernanceDashboard=lazy(()=>import("./pages/GovernanceDashboard").then(m=>({default:m.GovernanceDashboard})));
 const ResearchDashboard=lazy(()=>import("./pages/ResearchDashboard").then(m=>({default:m.ResearchDashboard})));
+import {PublicNotices} from "./components/public/PublicNotices";
 import { Home } from "./pages/Home";
 import {PasswordRecovery} from "./pages/PasswordRecovery";
 import { SignIn } from "./pages/SignIn";
@@ -63,6 +64,7 @@ const ClaimKnowledgeGraph=lazy(()=>import("./pages/ClaimKnowledgeGraph").then(m=
 
 const CapabilityLab=lazy(()=>import("./pages/CapabilityLab").then(m=>({default:m.CapabilityLab})));
 
+function AboutPublic(){return <div className="hsi-public"><header className="hsi-page-hero hsi-content"><p>Human Super Intelligence</p><h1>Building a more connected understanding of human health.</h1><p>Connect scientific evidence, biological context and independent human judgement across disciplines.</p></header><section className="hsi-section hsi-content" id="collaboration"><h2>Research collaboration</h2><p>HSI begins with evidence-grounded scientific investigation. Independent expert recruitment, source permissions and reviewer roles require separate agreement. No institutional partnerships are claimed.</p><a className="hsi-text-link" href="/contact">Connect with HSI</a></section></div>}
 export default function App() {
   return (
     <Routes>
@@ -82,6 +84,12 @@ export default function App() {
         <Route path="sign-up" element={<SignUp />} />
         <Route path="research/account" element={<ResearchAccount />} />
         <Route path="platform" element={<Platform />} />
+        <Route path="context-conflict-audit" element={<EvidenceSafety />} />
+        <Route path="evidence-intelligence" element={<EvidenceSafety />} />
+        <Route path="research-briefs" element={<div className="hsi-public"><header className="hsi-page-hero hsi-content"><h1>Research decisions deserve an evidence trail.</h1><p>A research brief brings the question, evidence inventory, biological context, uncertainty, proposed experiments and independent review status together.</p><p>No real source packet or scientific approval is attached to this public introduction.</p><a className="hsi-text-link" href="/research">Explore the Research Workflow</a></header></div>} />
+        <Route path="applications" element={<Solutions />} />
+        <Route path="trust" element={<><EvidenceSafety /><PublicNotices /></>} />
+        <Route path="about" element={<AboutPublic />} />
         <Route path="technology" element={<Technology />} />
         <Route path="how-it-works" element={<HowItWorks />} />
         <Route path="explore" element={<Explore />} />
