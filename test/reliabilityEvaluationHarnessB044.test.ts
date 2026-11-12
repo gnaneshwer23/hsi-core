@@ -3,6 +3,8 @@ import {evaluateWithTwoModels} from "../src/researchV2/reliabilityEvaluationHarn
 import type {EvaluationExample} from "../src/researchV2/reliabilityEvaluationHarness";
 import {createHash,generateKeyPairSync,sign} from "node:crypto";
 import {createSourceClearanceVerifier,sourceClearanceSigningText,type SourceClearanceReceipt} from "../src/researchV2/sourceClearanceReceipt";
+import {createEvaluationGroundingVerifier} from "../src/researchV2/trustedEvaluationGrounding";
+import type {EvaluationExecutionReceipt} from "../src/researchV2/reliabilityEvaluationHarness";
 const example:EvaluationExample={id:"e1",claim:{id:"c1",sourceId:"s1",exactQuote:"Human cells express a marker.",subjectId:"CL:1",predicate:"associated_with",objectId:"GO:1",context:{diseaseIds:["EFO_1"],species:"human",tissueId:null,cellId:null,method:null}},passage:"Human cells express a marker.",receipt:{claimId:"c1",sourceId:"s1",disposition:"grounded_candidate",checks:{sourceIdentity:true,sourceStatus:true,rights:true,passageHash:true,exactSpan:true,biologicalContext:true},findings:[],scientificTruthEstablished:false,graphPromotable:false,humanApproval:false},gold:"insufficient",goldReviewerIds:["reviewer1","reviewer2"],goldAdjudicated:true,sourceIdentityVerified:false,rightsVerified:false,retractionCleared:false};
 const {publicKey,privateKey}=generateKeyPairSync("ed25519");
 const now=Date.parse("2026-11-11T12:00:00Z");
@@ -11,9 +13,68 @@ function cleared():EvaluationExample{
  r.signature=sign(null,Buffer.from(sourceClearanceSigningText(r)),privateKey).toString("base64url");
  return {...structuredClone(example),sourceIdentityVerified:true,rightsVerified:true,retractionCleared:true,sourceVersion:"v1",clearanceReceipt:r};
 }
-const policy=(isRevoked=async()=>false)=>({clearance:createSourceClearanceVerifier({authorities:[{issuer:"synthetic-authority",keyId:"key1",publicKey}],now:()=>now,isRevoked})});
+const policy=(isRevoked=async()=>false)=>({grounding:{authorize:async()=>true},receipts:{append:async()=>{}},clearance:createSourceClearanceVerifier({authorities:[{issuer:"synthetic-authority",keyId:"key1",publicKey}],now:()=>now,isRevoked})});
 const pair=(run:()=>Promise<unknown>)=>[{verifierId:"v1",modelId:"m1",runner:run},{verifierId:"v2",modelId:"m2",runner:async()=>run()}] as const;
 describe("B-04.4 operational evaluation harness",()=>{
+ it("requires trusted grounding and a receipt adapter before any egress",async()=>{
+  let calls=0;const [a,b]=pair(async()=>{calls++;return {}});
+  for(const missing of [{grounding:undefined},{receipts:undefined}]){
+   const result=await evaluateWithTwoModels([cleared()],a,b,{...policy(),...missing});
+   expect(result.cases[0]?.prediction).toBe("not_assessed");
+  }
+  expect(calls).toBe(0);
+ });
+ it("recomputes grounding from trusted versioned source content rather than declared flags",async()=>{
+  const input=cleared();
+  const source={sourceId:"s1",canonicalId:"PMID:123",sourceUrl:"https://example.org/source",retrievedAt:new Date(now).toISOString(),sourceKind:"publication" as const,identifierKind:"PMID" as const,identityChecked:true,correctionStatus:"clear" as const,rights:{passageUsePermitted:true,licenceId:"TEST-ONLY",basis:"synthetic"},passage:{text:input.passage,sha256:createHash("sha256").update(input.passage).digest("hex"),start:0,end:input.passage.length}};
+  let calls=0;const [a,b]=pair(async()=>{calls++;return {verdict:"supports",evidenceSpan:"Human cells",reason:"synthetic"}});
+  const grounding=createEvaluationGroundingVerifier(async()=>({sourceVersion:"v1",source:structuredClone(source)}));
+  expect((await evaluateWithTwoModels([input],a,b,{...policy(),grounding})).cases[0]?.prediction).toBe("supports");
+  calls=0;
+  source.canonicalId="PMID:456";
+  expect((await evaluateWithTwoModels([input],a,b,{...policy(),grounding})).cases[0]?.prediction).toBe("not_assessed");
+  expect(calls).toBe(0);source.canonicalId="PMID:123";
+  for(const corrupt of [()=>{source.passage.start=1},()=>{source.passage.start=0;source.passage.sha256="0".repeat(64)},()=>{source.passage.sha256=createHash("sha256").update(input.passage).digest("hex");source.passage.text+=" changed"}]){
+   corrupt();expect((await evaluateWithTwoModels([input],a,b,{...policy(),grounding})).cases[0]?.prediction).toBe("not_assessed");
+  }
+  expect(calls).toBe(0);
+ });
+ it("blocks an entire mixed batch when trusted grounding rejects a later case",async()=>{
+  let calls=0;const [a,b]=pair(async()=>{calls++;return {}});const bad=cleared();bad.id="second";bad.claim.id="untrusted";bad.receipt.claimId="untrusted";
+  const result=await evaluateWithTwoModels([cleared(),bad],a,b,{...policy(),grounding:{authorize:async b=>b.claim.id!=="untrusted"}});
+  expect(calls).toBe(0);expect(result.executions).toHaveLength(0);
+ });
+ it("blocks stale and mismatched source clearance across the entire corpus",async()=>{
+  let calls=0;const [a,b]=pair(async()=>{calls++;return {}});
+  for(const change of ["stale","version","passage"]){
+   const bad=cleared();bad.id="second";
+   if(change==="stale"){
+    const r=bad.clearanceReceipt as SourceClearanceReceipt;r.expiresAt=new Date(now-1).toISOString();
+    r.signature=sign(null,Buffer.from(sourceClearanceSigningText(r)),privateKey).toString("base64url");
+   }else if(change==="version")bad.sourceVersion="v2";else bad.passage+=" changed";
+   expect((await evaluateWithTwoModels([cleared(),bad],a,b,policy())).cases.every(c=>c.prediction==="not_assessed")).toBe(true);
+  }
+  expect(calls).toBe(0);
+ });
+ it("rechecks grounding after receipt acknowledgement before dispatch",async()=>{
+  let groundCalls=0,calls=0;const [a,b]=pair(async()=>{calls++;return {}});
+  const result=await evaluateWithTwoModels([cleared()],a,b,{...policy(),grounding:{authorize:async()=>++groundCalls===1}});
+  expect(calls).toBe(0);expect(result.cases[0]?.prediction).toBe("not_assessed");
+ });
+ it("acknowledges both starts before dispatch and terminal receipts before scoring",async()=>{
+  const stored:EvaluationExecutionReceipt[]=[];const [a,b]=pair(async()=>{expect(stored.filter(r=>r.status==="started")).toHaveLength(2);return {verdict:"supports",evidenceSpan:"Human cells",reason:"synthetic"}});
+  const result=await evaluateWithTwoModels([cleared()],a,b,{...policy(),receipts:{append:async r=>{stored.push(structuredClone(r))}}});
+  expect(stored.map(r=>r.status)).toEqual(["started","started","assessed","assessed"]);
+  expect(new Set(stored.map(r=>r.runId)).size).toBe(2);expect(result.cases[0]?.modelRunIds).toHaveLength(2);
+  for(const r of stored){expect(r.inputSha256).toMatch(/^[a-f0-9]{64}$/);expect(r.promptSha256).toMatch(/^[a-f0-9]{64}$/);expect(r.scientificApproval).toBe(false);expect(r.graphPromotable).toBe(false);expect(r.providerRequestId).toBeNull();}
+ });
+ it("denies dispatch on receipt start failure and denies scoring on terminal failure",async()=>{
+  for(const failAt of [1,3]){
+   let calls=0,appends=0;const [a,b]=pair(async()=>{calls++;return {verdict:"supports",evidenceSpan:"Human cells",reason:"synthetic"}});
+   const result=await evaluateWithTwoModels([cleared()],a,b,{...policy(),receipts:{append:async()=>{if(++appends===failAt)throw Error("store offline")}}});
+   expect(calls).toBe(failAt===1?0:2);expect(result.cases[0]?.prediction).toBe("not_assessed");expect(result.cases[0]?.modelRunIds).toHaveLength(0);
+  }
+ });
  it("never sends unlicensed passages to models",async()=>{
   let called=0;const runner=async()=>{called++;return {verdict:"supports",evidenceSpan:"Human cells",reason:"synthetic"}};
   const result=await evaluateWithTwoModels([example],{verifierId:"v1",modelId:"m1",runner},{verifierId:"v2",modelId:"m2",runner:async()=>runner()});
