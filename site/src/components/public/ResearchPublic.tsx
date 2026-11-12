@@ -1,5 +1,7 @@
 import {useId,useState,type ReactNode} from "react";
 import {Link} from "react-router-dom";
+import {illustrativeAuditOutcome,AUDIT_TEACHING_OUTCOMES,type AuditTeachingOutcome} from "../../lib/publicAuditDemo";
+export {AUDIT_TEACHING_OUTCOMES} from "../../lib/publicAuditDemo";
 export function PublicAction({to,children,secondary=false}:{to:string;children:ReactNode;secondary?:boolean}){return <Link className={`hsi-action${secondary?" hsi-action-secondary":""}`} to={to}>{children}</Link>}
 export function PublicSection({id,title,description,children,dark=false}:{id?:string;title:string;description?:string;children?:ReactNode;dark?:boolean}){return <section id={id} className={`hsi-section${dark?" hsi-dark":""}`}><div className="hsi-content"><div className="hsi-section-intro"><h2>{title}</h2>{description&&<p>{description}</p>}</div>{children}</div></section>}
 export function PublicHero({title,description,children}:{title:string;description:string;children?:ReactNode}){return <header className="hsi-page-hero hsi-content"><p className="hsi-product-name">Human Super Intelligence</p><h1>{title}</h1><p className="hsi-lead">{description}</p>{children}</header>}
@@ -10,17 +12,7 @@ const contextOptions={species:["Human","Mouse"],tissue:["Skin","Lung"],cellState
 type ContextKey=keyof typeof contextOptions;
 const contextLabels:Record<ContextKey,string>={species:"Species",tissue:"Tissue",cellState:"Cell state",stage:"Disease stage",assay:"Assay",outcome:"Outcome"};
 type Study={context:Record<ContextKey,string>;finding:"Increase"|"Decrease"};
-export type AuditTeachingOutcome="Genuine contradiction"|"Contextual difference"|"Insufficient evidence"|"Unresolved disagreement"|"Not directly comparable";
-export const AUDIT_TEACHING_OUTCOMES:AuditTeachingOutcome[]=["Genuine contradiction","Contextual difference","Insufficient evidence","Unresolved disagreement","Not directly comparable"];
 const baseline=():Study=>({context:{species:"Human",tissue:"Skin",cellState:"Activated B cell",stage:"Early disease",assay:"Flow cytometry",outcome:"Cell activation"},finding:"Increase"});
-/** Public teaching taxonomy only. Never upgrades the backend's potential-conflict scientific state. */
-export function illustrativeAuditOutcome(a:Study,b:Study,complete:boolean,controlledSyntheticAssumption:boolean):{outcome:AuditTeachingOutcome;reason:string}{
- if(!complete)return {outcome:"Insufficient evidence",reason:"Required context is missing. Do not fill gaps with an inferred match."};
- if(a.context.species!==b.context.species||a.context.assay!==b.context.assay||a.context.outcome!==b.context.outcome)return {outcome:"Not directly comparable",reason:"Species, measurement or outcome differ. Align the estimand before comparing the direction of a finding."};
- if(a.context.tissue!==b.context.tissue||a.context.cellState!==b.context.cellState||a.context.stage!==b.context.stage)return {outcome:"Contextual difference",reason:"Tissue, cell state or disease stage differs. A change in biological context may explain the observations; it does not prove why they differ."};
- if(a.finding!==b.finding&&controlledSyntheticAssumption)return {outcome:"Genuine contradiction",reason:"Only within this fictional controlled scenario, comparability and alternative explanations are stipulated as resolved. This is a teaching assumption, not an actual scientific determination."};
- return {outcome:"Unresolved disagreement",reason:a.finding===b.finding?"The chosen observations now agree in direction, but this exercise does not establish consensus or scientific support. Independent evidence review is still absent.":"Opposing observations in apparently matched contexts remain unresolved until study quality, uncertainty and independent review are assessed."};
-}
 export function ContextAuditInstrument({id="public-audit"}:{id?:string}){
  const uid=useId(),[a,setA]=useState<Study>(baseline),[b,setB]=useState<Study>(()=>({...baseline(),context:{...baseline().context,species:"Mouse"},finding:"Decrease"})),[complete,setComplete]=useState(true),[controlled,setControlled]=useState(false),[preset,setPreset]=useState<AuditTeachingOutcome|null>("Not directly comparable");
  const result=illustrativeAuditOutcome(a,b,complete,controlled);

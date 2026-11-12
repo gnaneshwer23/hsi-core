@@ -1,5 +1,5 @@
 import {test,expect} from "bun:test";
-import {illustrativeAuditOutcome} from "../site/src/components/public/ResearchPublic";
+import {illustrativeAuditOutcome} from "../site/src/lib/publicAuditDemo";
 const study=()=>({context:{species:"Human",tissue:"Skin",cellState:"Activated B cell",stage:"Early disease",assay:"Flow cytometry",outcome:"Cell activation"},finding:"Increase" as "Increase"|"Decrease"});
 test("public synthetic teaching classes never collapse missingness, context or comparability",()=>{
  const a=study(),b={...study(),finding:"Decrease" as const};
