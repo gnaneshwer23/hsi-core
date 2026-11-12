@@ -23,3 +23,8 @@ export function assertRestrictedLiveRuntime(rows:readonly Record<string,unknown>
  const role=rows[0];
  if(rows.length!==1||!role||role.name!=="hsi_live_runtime"||role.login!=="hsi_live_runtime"||role.canlogin!==true||role.inherit!==false||role.bypass!==false||role.superuser!==false||role.createrole!==false||role.createdb!==false||role.table_exists!==true||role.table_owner!==false||role.auth_session_read!==false||role.auth_user_read!==false||role.schema_create!==false||role.can_delete!==false||role.can_truncate!==false||privilegedMemberships.length!==0)throw Error("A-01 denied: runtime login or inherited privilege is unsafe");
 }
+/** Compare exact compute labels while allowing its pooled runtime form. */
+export function assertAlignedLiveStagingHosts(identityHost:string,runtimeHost:string,pin:string):void{
+ const label=(host:string)=>host.split(".")[0]?.replace(/-pooler$/,"");
+ if(!/^ep-[a-z0-9-]+$/.test(pin)||pin==="ep-hsi-staging"||pin.endsWith("-pooler")||label(identityHost)!==pin||label(runtimeHost)!==pin)throw Error("A-01 denied: identity and runtime must share an explicitly pinned staging compute");
+}

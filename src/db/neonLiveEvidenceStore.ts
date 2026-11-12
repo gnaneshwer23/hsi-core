@@ -7,7 +7,7 @@ import {assertHsiNeonDatabaseUrl,stagingHostPin} from "./neonGuard";
 import {authenticateHsiNeonIdentity} from "./neonAuthResearchActor";
 import type {LiveApiDependencies,LiveSession} from "../liveEvidenceApi";
 import type {LiveSql} from "../liveEvidenceRepository";
-import {assertVerifiedLiveOwnerPolicy,assertRestrictedLiveRuntime} from "./liveEvidencePolicyGate";
+import {assertVerifiedLiveOwnerPolicy,assertRestrictedLiveRuntime,assertAlignedLiveStagingHosts} from "./liveEvidencePolicyGate";
 
 type Queryable={unsafe:(statement:string,params?:unknown[])=>Promise<Array<Record<string,unknown>>>};
 function queryable(tx:Queryable):LiveSql{
@@ -22,11 +22,21 @@ export function createNeonLiveEvidenceDependencies(config:{
  neonProjectId?:string|null;
  writesEnabled?:boolean;
 }):LiveApiDependencies{
+ config=Object.freeze({...config});
  const allowed=config.writesEnabled===true;
+ const pin=stagingHostPin();
+ function verifyTargets(){
+  const identity=assertHsiNeonDatabaseUrl(config.databaseUrl,{neonProjectId:config.neonProjectId});
+  const runtime=assertHsiNeonDatabaseUrl(config.runtimeDatabaseUrl,{neonProjectId:config.neonProjectId});
+  if(!identity.ok||!runtime.ok)throw Error("A-01 denied: invalid HSI staging identity/runtime target");
+  assertAlignedLiveStagingHosts(identity.host,runtime.host,pin);
+ }
  const verifiedSessions=new WeakMap<LiveSession,string>();
  return {
   writesEnabled:allowed,
   authenticate:async token=>{
+   if(!allowed)return null;
+   verifyTargets();
    const actor=await authenticateHsiNeonIdentity({...config,sessionToken:token});
    if(!actor?.authenticated)return null;
    const session=actor as LiveSession;
@@ -42,8 +52,7 @@ export function createNeonLiveEvidenceDependencies(config:{
    const guard=assertHsiNeonDatabaseUrl(config.runtimeDatabaseUrl,{neonProjectId:config.neonProjectId});
    if(!guard.ok)throw Error("HSI live database guard rejected runtime target");
    // A-01 is preview/staging only. Never permit the canonical production host.
-   const pin=stagingHostPin();
-   if(!pin||pin==="hsi-staging-host"||!guard.host?.startsWith(pin+"."))throw Error("A-01 requires an explicitly pinned staging host");
+   verifyTargets();
    const sql=new SQL(config.runtimeDatabaseUrl,{tls:{rejectUnauthorized:true},connectionTimeout:10});
    try{
     const role=await sql.unsafe(`SELECT current_user AS name,session_user AS login,rolcanlogin AS canlogin,rolinherit AS inherit,rolbypassrls AS bypass,rolsuper AS superuser,rolcreaterole AS createrole,rolcreatedb AS createdb,

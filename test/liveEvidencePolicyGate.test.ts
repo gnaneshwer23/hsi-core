@@ -1,6 +1,10 @@
 import {describe,expect,test} from "bun:test";
-import {assertNoForgeableOwnerPolicy,assertVerifiedLiveOwnerPolicy,assertRestrictedLiveRuntime} from "../src/db/liveEvidencePolicyGate";
+import {assertNoForgeableOwnerPolicy,assertVerifiedLiveOwnerPolicy,assertRestrictedLiveRuntime,assertAlignedLiveStagingHosts} from "../src/db/liveEvidencePolicyGate";
 describe("A-01 policy fail-closed checks",()=>{
+ test("accepts a pooled form of the same staging compute and rejects split identity/runtime targets",()=>{
+  expect(()=>assertAlignedLiveStagingHosts("ep-fixture-stage.eu-west-2.aws.neon.tech","ep-fixture-stage-pooler.eu-west-2.aws.neon.tech","ep-fixture-stage")).not.toThrow();
+  for(const [identity,runtime,pin] of [["ep-fixture-production.host","ep-fixture-stage-pooler.host","ep-fixture-stage"],["ep-fixture-stage.host","ep-fixture-stageevil.host","ep-fixture-stage"],["ep-hsi-staging.host","ep-hsi-staging-pooler.host","ep-hsi-staging"]])expect(()=>assertAlignedLiveStagingHosts(identity!,runtime!,pin!)).toThrow();
+ });
  test("rejects owner login hidden behind SET ROLE and privileged memberships",()=>{
   const role={name:"hsi_live_runtime",login:"hsi_live_runtime",canlogin:true,inherit:false,bypass:false,superuser:false,createrole:false,createdb:false,table_exists:true,table_owner:false,auth_session_read:false,auth_user_read:false,schema_create:false,can_delete:false,can_truncate:false};
   expect(()=>assertRestrictedLiveRuntime([role],[])).not.toThrow();
