@@ -23,7 +23,7 @@ test("evidence explorer retains explicit missingness and permissions",async({pag
  await page.goto("/evidence-intelligence");await page.getByRole("button",{name:/Missing source/}).click();await page.getByRole("button",{name:"Passage",exact:true}).click();await expect(page.locator(".hsi-evidence-inspector")).toContainText("No passage is available");await page.getByRole("button",{name:"Permissions",exact:true}).click();await expect(page.locator(".hsi-evidence-inspector")).toContainText("No real source-use approval");
 });
 test("brief exports carry source-free and non-approved status",async({page})=>{
- await page.goto("/research-briefs");await page.getByText("Evidence inventory and provenance",{exact:true}).click();await expect(page.locator("#example-brief")).toContainText("No source-cleared study packet");
+ await page.goto("/research-briefs");await page.locator("#example-brief summary").filter({hasText:"Evidence inventory and provenance"}).click();await expect(page.locator("#example-brief")).toContainText("No source-cleared study packet");
  const waiting=page.waitForEvent("download");await page.getByRole("button",{name:"Download illustrative JSON",exact:true}).click();const d=await waiting,payload=JSON.parse(await readFile((await d.path())!,"utf8"));expect(payload.scientificApproval).toBe(false);expect(payload.graphPublicationApproved).toBe(false);expect(payload.sourcePacket).toBeNull();expect(payload.reviewStatus).toBe("not_reviewed");
  const mdWaiting=page.waitForEvent("download");await page.getByRole("button",{name:"Download illustrative Markdown",exact:true}).click();const md=await mdWaiting;expect(await readFile((await md.path())!,"utf8")).toContain("No scientific or graph approval");
 });
