@@ -463,6 +463,14 @@ export function BiologyDomains() {
       </div>
       <div className="hsi-domain-detail" aria-live="polite">
         <Maturity>{BIOLOGY_DOMAINS[selected]!.status}</Maturity>
+        <svg viewBox="0 0 420 245" role="img" aria-label="Illustrative cross-domain research map: immune, microbial, neural, molecular, tissue and translational questions connect around one research question; these are candidate links, not causal evidence">
+          {[{x:80,y:45,label:"Immune"},{x:210,y:25,label:"Microbial"},{x:340,y:45,label:"Neural"},{x:80,y:190,label:"Molecular"},{x:210,y:215,label:"Tissue"},{x:340,y:190,label:"Translation"}].map((node,n)=><g key={node.label}>
+            <path d={`M210 120L${node.x} ${node.y}`} fill="none" stroke={selected===n?"#297e80":"#91aaa6"} strokeWidth={selected===n?2:1} strokeDasharray="4 5"/>
+            <circle cx={node.x} cy={node.y} r="23" fill={selected===n?"#297e80":"#f4f6f3"} stroke="#297e80"/>
+            <text x={node.x} y={node.y+4} fill={selected===n?"#ffffff":"#182d38"} textAnchor="middle" fontSize="10" fontFamily="sans-serif">{node.label}</text>
+          </g>)}
+          <circle cx="210" cy="120" r="41" fill="#101d2a"/><text x="210" y="116" textAnchor="middle" fontSize="11" fill="#f4f6f3" fontFamily="sans-serif"><tspan x="210">Research</tspan><tspan x="210" dy="16">question</tspan></text>
+        </svg>
         <h3>{BIOLOGY_DOMAINS[selected]!.name}</h3>
         <p>{BIOLOGY_DOMAINS[selected]!.detail}</p>
         <p>
