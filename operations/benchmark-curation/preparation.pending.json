@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "hsi-benchmark-curation-preparation-1",
+  "status": "ENGINEERING_PREPARATION_ONLY",
+  "canonicalProtocol": "evaluation/independent-evaluation/immuno-v1/protocol.v1.json",
+  "privateDraftQuestionsCommitted": false,
+  "recruitedExperts": 0,
+  "adjudicatedCases": 0,
+  "sourceClearedCases": 0,
+  "recruitmentOwnerRef": null,
+  "budgetApprovalRef": null,
+  "approvedRecipientsRef": null,
+  "workspaceApprovalRef": null,
+  "workspaceSecurityAcceptanceRef": null,
+  "outreachAuthorized": false,
+  "caseSharingAuthorized": false,
+  "liveReviewEnabled": false,
+  "scientificApproval": false,
+  "freezeApproved": false,
+  "productionActivationApproved": false
+}

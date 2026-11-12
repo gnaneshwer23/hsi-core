@@ -37,3 +37,7 @@ test("legacy intake preserves its question and single alias but never imports a 
  const c=fixtureCases()[0]!,{researchQuestion,aliases,...enrichment}=c,legacy=REPRESENTATIVE_WALKTHROUGH_QUESTIONS[0]!;
  const adapted=adaptLegacyImmunoCase({namespace:"independent_evaluation",row:legacy},enrichment);expect(adapted.researchQuestion).toBe(legacy.question);expect(adapted.aliases).toEqual([{namespace:"independent_evaluation",id:legacy.questionId}]);expect(adapted.gold).toEqual(enrichment.gold);
 });
+
+test("private draft and blind-review records cannot enter public JSON or site assets",()=>{
+ for(const value of [{schemaVersion:"hsi-immuno-authoring-drafts-1"},{schemaVersion:"hsi-private-benchmark-curation-1"},{nested:{draftQuestion:"Private authoring task"}}])expect(()=>assertNoStructuredBenchmarkGold(value)).toThrow("public artifact");
+});

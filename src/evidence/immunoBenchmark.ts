@@ -99,8 +99,9 @@ export async function prepareImmunoFreeze(input:{cases:readonly ImmunoCase[];pro
 /** Structured leakage tripwire, supplemented by a vault-derived fingerprint scan of every exposure inventory. */
 export function assertNoStructuredBenchmarkGold(value:unknown):void{
  if(!value||typeof value!=="object")return;
+ if("schemaVersion" in value&&["hsi-immuno-authoring-drafts-1","hsi-private-benchmark-curation-1"].includes(String(value.schemaVersion)))throw Error("Private benchmark authoring/review record in public artifact");
  for(const [key,v] of Object.entries(value)){
-  if(["goldRationale","privateGold","acceptableAnswer","adjudicatedLabel"].includes(key)&&v!==null&&v!==""&&!(Array.isArray(v)&&!v.length))throw Error("Non-null private gold in public artifact");
+  if(["goldRationale","privateGold","acceptableAnswer","adjudicatedLabel","draftQuestion"].includes(key)&&v!==null&&v!==""&&!(Array.isArray(v)&&!v.length))throw Error("Non-null private gold in public artifact");
   if(key==="expertReferenceAssessment"&&v&&typeof v==="object"&&"payload" in v&&v.payload!==null)throw Error("Non-null expert reference in public artifact");
   assertNoStructuredBenchmarkGold(v);
  }
