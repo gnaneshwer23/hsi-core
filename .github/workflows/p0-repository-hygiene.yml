@@ -18,15 +18,18 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      - name: Scan all available refs and history
-        uses: gitleaks/gitleaks-action@v2
+      - name: Install scanner and scan event commit range
+        uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_VERSION: '8.24.3'
+      - name: Scan all fetched history explicitly
+        run: gitleaks detect --redact --exit-code=2 --log-opts=--all --report-format=sarif --report-path=results.full-history.sarif
       - name: Coverage note
         if: always()
         run: |
-          echo 'Gitleaks scanned fetched Git history; review whether all remote refs were fetched.' >> "$GITHUB_STEP_SUMMARY"
-          echo 'A clean scan does not prove no secret was ever committed.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'The action scans the event range; the explicit full-history step requests --all. Inspect both step outcomes and scan logs.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Coverage is limited to fetched refs. A clean scan does not prove no secret was ever committed or removed from unavailable history.' >> "$GITHUB_STEP_SUMMARY"
 
   generated-status-consistency:
     runs-on: ubuntu-latest
