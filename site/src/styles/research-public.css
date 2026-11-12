@@ -7,3 +7,6 @@
 @media(max-width:1150px){.hsi-desktop-nav{display:none}.hsi-menu-toggle{display:grid;place-items:center}.hsi-header-actions{margin-left:auto}.hsi-nav-inner{min-height:76px}.hsi-footer-grid{grid-template-columns:repeat(4,1fr)}.hsi-footer-brand{grid-column:1/-1;max-width:480px}}
 @media(max-width:650px){.hsi-nav-inner{gap:12px;padding-inline:5%;min-height:72px}.hsi-nav .hsi-wordmark small,.hsi-nav .hsi-signin{display:none}.hsi-header-actions{gap:10px}.hsi-header-cta{font-size:.72rem!important;padding:10px!important}.hsi-footer{padding:48px 6% 0}.hsi-footer-grid{grid-template-columns:1fr 1fr;gap:28px}.hsi-footer-bottom{flex-direction:column;align-items:start;margin-top:30px;gap:12px}.hsi-section{padding-block:64px}.hsi-page-hero{padding-block:64px}.hsi-public h1{font-size:clamp(2.25rem,10vw,3.5rem)}}
 @media(prefers-reduced-motion:reduce){.hsi-public *, .hsi-nav *, .hsi-footer *{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* Public pages retain their sticky masthead; research tools use a non-obscuring reading header. */
+.hsi-nav.hsi-nav-workspace{position:relative;top:auto}
