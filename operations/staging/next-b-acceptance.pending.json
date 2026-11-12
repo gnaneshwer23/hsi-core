@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "hsi-next-b-pending-1",
+  "status": "BLOCKED",
+  "liveExecutionAuthorized": false,
+  "productionActivationApproved": false,
+  "references": {
+    "staging_target_ref": "NOT_APPROVED",
+    "private_config_ref": "UNASSIGNED",
+    "researcher_a_ref": "UNASSIGNED",
+    "researcher_b_ref": "UNASSIGNED",
+    "reviewer_ref": "UNASSIGNED",
+    "security_signer_ref": "UNASSIGNED",
+    "approval_record_ref": "NOT_APPROVED"
+  },
+  "scopes": {
+    "interrogative_workspace": {
+      "status": "NOT_ACCEPTED",
+      "evidenceRefs": [],
+      "signedPacketRef": null
+    },
+    "scientific_records": {
+      "status": "NOT_ACCEPTED",
+      "evidenceRefs": [],
+      "signedPacketRef": null
+    },
+    "contradiction_ledger": {
+      "status": "NOT_ACCEPTED",
+      "evidenceRefs": [],
+      "signedPacketRef": null
+    },
+    "live_evidence": {
+      "status": "NOT_ACCEPTED",
+      "evidenceRefs": [],
+      "signedPacketRef": null
+    }
+  },
+  "communityWrites": "DEFERRED",
+  "migrationHoldsChanged": false
+}
