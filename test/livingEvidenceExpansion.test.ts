@@ -148,7 +148,7 @@ describe("living evidence expansion (step 03)", () => {
       scope: "research_only" as const,
       graphPublicationApproved: false as const,
     };
-    const withSnapshot = await buildResearchOutcome(brief, async (text) => deliveryHash(text), {livingEvidenceSnapshot: snapshot});
+    const withSnapshot = await buildResearchOutcome(brief, async (text) => deliveryHash(text), {livingEvidenceSnapshot: snapshot}, {authorize:async()=>true});
     expect(withSnapshot.livingEvidence.status).toBe("not_attached");
   });
 });

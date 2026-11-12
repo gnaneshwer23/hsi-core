@@ -159,7 +159,7 @@ describe("gap verification (step 04)", () => {
       asOf,
       generatedAt,
     });
-    const withSnapshot = await buildResearchOutcome(brief, async (text) => deliveryHash(text), {livingEvidenceSnapshot: snapshot});
+    const withSnapshot = await buildResearchOutcome(brief, async (text) => deliveryHash(text), {livingEvidenceSnapshot: snapshot}, {authorize:async()=>true});
     expect(withSnapshot.gapVerification.honesty.passageImportAuthorized).toBe(false);
     expect(withSnapshot.gapVerification.unavailableCapabilities.some((s) => /#4/.test(s))).toBe(true);
   });

@@ -184,7 +184,7 @@ describe("translational evidence O-04 attach", () => {
     };
     const outcome = await buildResearchOutcome(brief, async (text) => deliveryHash(text), {
       translationalLandscape: landscape,
-    });
+    }, {authorize:async()=>true});
     expect(outcome.trials.status).toBe("attached_registry_snapshot");
     expect(outcome.trials.eligibilityAssessed).toBe(false);
     expect(outcome.trials.confirmedEligible).toBe(false);

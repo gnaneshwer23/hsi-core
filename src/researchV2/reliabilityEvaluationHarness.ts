@@ -52,7 +52,7 @@ export async function evaluateWithTwoModels(examples:EvaluationExample[],first:M
   let cleared=false;
   try{cleared=!!authorize&&await authorize({receipt:example.clearanceReceipt,sourceId:example.claim.sourceId,sourceVersion:example.sourceVersion??"",passage:example.passage})===true;}catch{/* deny closed */}
   let grounded=false;
-  try{grounded=await ground({sourceVersion:example.sourceVersion??"",claim:structuredClone(example.claim),passage:example.passage,receipt:structuredClone(example.receipt)})===true;}catch{/* deny closed */}
+  try{grounded=await ground({sourceVersion:example.sourceVersion??"",canonicalId:typeof (example.clearanceReceipt as {canonicalId?:unknown}|null)?.canonicalId==="string"?(example.clearanceReceipt as {canonicalId:string}).canonicalId:"",claim:structuredClone(example.claim),passage:example.passage,receipt:structuredClone(example.receipt)})===true;}catch{/* deny closed */}
   if(!cleared||!grounded){blockedReasons[record.id]="Current trusted source clearance and grounding required";continue;}
   record.sourceIdentityVerified=record.rightsVerified=record.retractionCleared=true;
  }
@@ -75,7 +75,7 @@ export async function evaluateWithTwoModels(examples:EvaluationExample[],first:M
   catch{blockedReasons[record.id]="Execution receipt start acknowledgement failed";continue;}
   let stillGrounded=false,stillCleared=false;
   try{
-   stillGrounded=await ground({sourceVersion:example.sourceVersion??"",claim:structuredClone(example.claim),passage:example.passage,receipt:structuredClone(example.receipt)})===true;
+   stillGrounded=await ground({sourceVersion:example.sourceVersion??"",canonicalId:typeof (example.clearanceReceipt as {canonicalId?:unknown}|null)?.canonicalId==="string"?(example.clearanceReceipt as {canonicalId:string}).canonicalId:"",claim:structuredClone(example.claim),passage:example.passage,receipt:structuredClone(example.receipt)})===true;
    stillCleared=!!authorize&&await authorize({receipt:example.clearanceReceipt,sourceId:example.claim.sourceId,sourceVersion:example.sourceVersion??"",passage:example.passage})===true;
   }catch{/* deny closed */}
   if(!stillGrounded||!stillCleared){

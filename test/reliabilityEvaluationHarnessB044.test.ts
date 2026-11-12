@@ -31,6 +31,9 @@ describe("B-04.4 operational evaluation harness",()=>{
   const grounding=createEvaluationGroundingVerifier(async()=>({sourceVersion:"v1",source:structuredClone(source)}));
   expect((await evaluateWithTwoModels([input],a,b,{...policy(),grounding})).cases[0]?.prediction).toBe("supports");
   calls=0;
+  source.canonicalId="PMID:456";
+  expect((await evaluateWithTwoModels([input],a,b,{...policy(),grounding})).cases[0]?.prediction).toBe("not_assessed");
+  expect(calls).toBe(0);source.canonicalId="PMID:123";
   for(const corrupt of [()=>{source.passage.start=1},()=>{source.passage.start=0;source.passage.sha256="0".repeat(64)},()=>{source.passage.sha256=createHash("sha256").update(input.passage).digest("hex");source.passage.text+=" changed"}]){
    corrupt();expect((await evaluateWithTwoModels([input],a,b,{...policy(),grounding})).cases[0]?.prediction).toBe("not_assessed");
   }
