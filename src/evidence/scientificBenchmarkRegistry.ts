@@ -752,3 +752,6 @@ export function classifyReleaseGate(input: {
   // Scientific acceptance cleared is a future human decision — never auto-promote to pilot here.
   return "scientific_evaluation_pending";
 }
+
+/** Canonical 120-case acceptance profile; old R2/M7 inventories are authoring aliases, not additional final cases. */
+export const IMMUNO_ACCEPTANCE_PROFILE_PATH="evaluation/independent-evaluation/immuno-v1" as const;

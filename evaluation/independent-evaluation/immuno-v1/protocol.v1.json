@@ -1,0 +1,761 @@
+{
+  "schemaVersion": "hsi-bench-immuno-protocol-1",
+  "benchmark": "HSI-BENCH-IMMUNO",
+  "version": "1.0",
+  "canonicalPath": "evaluation/independent-evaluation/immuno-v1",
+  "aliases": [
+    "R2",
+    "M7",
+    "evaluation/scientific_benchmark_v1",
+    "evaluation/independent-evaluation"
+  ],
+  "allocationStatus": "authoring_slots_only",
+  "scientificAcceptance": "BLOCKED",
+  "adjudicatedCaseCount": 0,
+  "finalCaseCount": 120,
+  "developmentSet": "separately_authored_not_counted_in_120",
+  "goldLocation": "external_access_controlled_vault_only",
+  "numericFloors": null,
+  "configurations": [
+    "deterministic_current_baseline",
+    "single_verifier",
+    "dual_verifier"
+  ],
+  "dimensions": [
+    "retrieval",
+    "mechanism_accuracy",
+    "context_preservation",
+    "conflict_classification",
+    "explanation",
+    "uncertainty",
+    "gap_quality",
+    "brief_usefulness"
+  ],
+  "slots": [
+    {
+      "slotId": "IMMUNO-innate_adaptive_cells-01",
+      "layer": "core",
+      "domain": "innate_adaptive_cells",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-innate_adaptive_cells-02",
+      "layer": "core",
+      "domain": "innate_adaptive_cells",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-innate_adaptive_cells-03",
+      "layer": "core",
+      "domain": "innate_adaptive_cells",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-innate_adaptive_cells-04",
+      "layer": "core",
+      "domain": "innate_adaptive_cells",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-innate_adaptive_cells-05",
+      "layer": "core",
+      "domain": "innate_adaptive_cells",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-innate_adaptive_cells-06",
+      "layer": "core",
+      "domain": "innate_adaptive_cells",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-innate_adaptive_cells-07",
+      "layer": "core",
+      "domain": "innate_adaptive_cells",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-innate_adaptive_cells-08",
+      "layer": "core",
+      "domain": "innate_adaptive_cells",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-innate_adaptive_cells-09",
+      "layer": "core",
+      "domain": "innate_adaptive_cells",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-innate_adaptive_cells-10",
+      "layer": "core",
+      "domain": "innate_adaptive_cells",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-innate_adaptive_cells-11",
+      "layer": "core",
+      "domain": "innate_adaptive_cells",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-innate_adaptive_cells-12",
+      "layer": "core",
+      "domain": "innate_adaptive_cells",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-innate_adaptive_cells-13",
+      "layer": "core",
+      "domain": "innate_adaptive_cells",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-innate_adaptive_cells-14",
+      "layer": "core",
+      "domain": "innate_adaptive_cells",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-innate_adaptive_cells-15",
+      "layer": "core",
+      "domain": "innate_adaptive_cells",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-activation_tolerance_memory-01",
+      "layer": "core",
+      "domain": "activation_tolerance_memory",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-activation_tolerance_memory-02",
+      "layer": "core",
+      "domain": "activation_tolerance_memory",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-activation_tolerance_memory-03",
+      "layer": "core",
+      "domain": "activation_tolerance_memory",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-activation_tolerance_memory-04",
+      "layer": "core",
+      "domain": "activation_tolerance_memory",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-activation_tolerance_memory-05",
+      "layer": "core",
+      "domain": "activation_tolerance_memory",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-activation_tolerance_memory-06",
+      "layer": "core",
+      "domain": "activation_tolerance_memory",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-activation_tolerance_memory-07",
+      "layer": "core",
+      "domain": "activation_tolerance_memory",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-activation_tolerance_memory-08",
+      "layer": "core",
+      "domain": "activation_tolerance_memory",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-activation_tolerance_memory-09",
+      "layer": "core",
+      "domain": "activation_tolerance_memory",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-activation_tolerance_memory-10",
+      "layer": "core",
+      "domain": "activation_tolerance_memory",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-activation_tolerance_memory-11",
+      "layer": "core",
+      "domain": "activation_tolerance_memory",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-activation_tolerance_memory-12",
+      "layer": "core",
+      "domain": "activation_tolerance_memory",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-activation_tolerance_memory-13",
+      "layer": "core",
+      "domain": "activation_tolerance_memory",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-activation_tolerance_memory-14",
+      "layer": "core",
+      "domain": "activation_tolerance_memory",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-activation_tolerance_memory-15",
+      "layer": "core",
+      "domain": "activation_tolerance_memory",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-cytokines_resolution-01",
+      "layer": "core",
+      "domain": "cytokines_resolution",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-cytokines_resolution-02",
+      "layer": "core",
+      "domain": "cytokines_resolution",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-cytokines_resolution-03",
+      "layer": "core",
+      "domain": "cytokines_resolution",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-cytokines_resolution-04",
+      "layer": "core",
+      "domain": "cytokines_resolution",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-cytokines_resolution-05",
+      "layer": "core",
+      "domain": "cytokines_resolution",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-cytokines_resolution-06",
+      "layer": "core",
+      "domain": "cytokines_resolution",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-cytokines_resolution-07",
+      "layer": "core",
+      "domain": "cytokines_resolution",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-cytokines_resolution-08",
+      "layer": "core",
+      "domain": "cytokines_resolution",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-cytokines_resolution-09",
+      "layer": "core",
+      "domain": "cytokines_resolution",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-cytokines_resolution-10",
+      "layer": "core",
+      "domain": "cytokines_resolution",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-mechanism_context-01",
+      "layer": "core",
+      "domain": "mechanism_context",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-mechanism_context-02",
+      "layer": "core",
+      "domain": "mechanism_context",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-mechanism_context-03",
+      "layer": "core",
+      "domain": "mechanism_context",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-mechanism_context-04",
+      "layer": "core",
+      "domain": "mechanism_context",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-mechanism_context-05",
+      "layer": "core",
+      "domain": "mechanism_context",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-mechanism_context-06",
+      "layer": "core",
+      "domain": "mechanism_context",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-mechanism_context-07",
+      "layer": "core",
+      "domain": "mechanism_context",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-mechanism_context-08",
+      "layer": "core",
+      "domain": "mechanism_context",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-mechanism_context-09",
+      "layer": "core",
+      "domain": "mechanism_context",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-mechanism_context-10",
+      "layer": "core",
+      "domain": "mechanism_context",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-ssc-01",
+      "layer": "disease",
+      "domain": "ssc",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-ssc-02",
+      "layer": "disease",
+      "domain": "ssc",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-ssc-03",
+      "layer": "disease",
+      "domain": "ssc",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-ssc-04",
+      "layer": "disease",
+      "domain": "ssc",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-ssc-05",
+      "layer": "disease",
+      "domain": "ssc",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-ssc-06",
+      "layer": "disease",
+      "domain": "ssc",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-ra-01",
+      "layer": "disease",
+      "domain": "ra",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-ra-02",
+      "layer": "disease",
+      "domain": "ra",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-ra-03",
+      "layer": "disease",
+      "domain": "ra",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-ra-04",
+      "layer": "disease",
+      "domain": "ra",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-ra-05",
+      "layer": "disease",
+      "domain": "ra",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-sle-01",
+      "layer": "disease",
+      "domain": "sle",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-sle-02",
+      "layer": "disease",
+      "domain": "sle",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-sle-03",
+      "layer": "disease",
+      "domain": "sle",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-sle-04",
+      "layer": "disease",
+      "domain": "sle",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-sle-05",
+      "layer": "disease",
+      "domain": "sle",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-ibd-01",
+      "layer": "disease",
+      "domain": "ibd",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-ibd-02",
+      "layer": "disease",
+      "domain": "ibd",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-ibd-03",
+      "layer": "disease",
+      "domain": "ibd",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-ms-01",
+      "layer": "disease",
+      "domain": "ms",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-ms-02",
+      "layer": "disease",
+      "domain": "ms",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-ms-03",
+      "layer": "disease",
+      "domain": "ms",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-asthma-01",
+      "layer": "disease",
+      "domain": "asthma",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-asthma-02",
+      "layer": "disease",
+      "domain": "asthma",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-asthma-03",
+      "layer": "disease",
+      "domain": "asthma",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-atopic_dermatitis-01",
+      "layer": "disease",
+      "domain": "atopic_dermatitis",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-atopic_dermatitis-02",
+      "layer": "disease",
+      "domain": "atopic_dermatitis",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-atopic_dermatitis-03",
+      "layer": "disease",
+      "domain": "atopic_dermatitis",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-atherosclerosis-01",
+      "layer": "disease",
+      "domain": "atherosclerosis",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-atherosclerosis-02",
+      "layer": "disease",
+      "domain": "atherosclerosis",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-gut_immune-01",
+      "layer": "cross_domain",
+      "domain": "gut_immune",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-gut_immune-02",
+      "layer": "cross_domain",
+      "domain": "gut_immune",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-gut_immune-03",
+      "layer": "cross_domain",
+      "domain": "gut_immune",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-gut_immune-04",
+      "layer": "cross_domain",
+      "domain": "gut_immune",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-gut_immune-05",
+      "layer": "cross_domain",
+      "domain": "gut_immune",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-neuroimmune-01",
+      "layer": "cross_domain",
+      "domain": "neuroimmune",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-neuroimmune-02",
+      "layer": "cross_domain",
+      "domain": "neuroimmune",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-neuroimmune-03",
+      "layer": "cross_domain",
+      "domain": "neuroimmune",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-neuroimmune-04",
+      "layer": "cross_domain",
+      "domain": "neuroimmune",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-neuroimmune-05",
+      "layer": "cross_domain",
+      "domain": "neuroimmune",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-metabolic_immune-01",
+      "layer": "cross_domain",
+      "domain": "metabolic_immune",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-metabolic_immune-02",
+      "layer": "cross_domain",
+      "domain": "metabolic_immune",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-metabolic_immune-03",
+      "layer": "cross_domain",
+      "domain": "metabolic_immune",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-metabolic_immune-04",
+      "layer": "cross_domain",
+      "domain": "metabolic_immune",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-metabolic_immune-05",
+      "layer": "cross_domain",
+      "domain": "metabolic_immune",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-immune_fibrosis-01",
+      "layer": "cross_domain",
+      "domain": "immune_fibrosis",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-immune_fibrosis-02",
+      "layer": "cross_domain",
+      "domain": "immune_fibrosis",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-immune_fibrosis-03",
+      "layer": "cross_domain",
+      "domain": "immune_fibrosis",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-immune_fibrosis-04",
+      "layer": "cross_domain",
+      "domain": "immune_fibrosis",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-immune_fibrosis-05",
+      "layer": "cross_domain",
+      "domain": "immune_fibrosis",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-rights_retraction-01",
+      "layer": "governance",
+      "domain": "rights_retraction",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-rights_retraction-02",
+      "layer": "governance",
+      "domain": "rights_retraction",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-rights_retraction-03",
+      "layer": "governance",
+      "domain": "rights_retraction",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-rights_retraction-04",
+      "layer": "governance",
+      "domain": "rights_retraction",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-absent_evidence-01",
+      "layer": "governance",
+      "domain": "absent_evidence",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-absent_evidence-02",
+      "layer": "governance",
+      "domain": "absent_evidence",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-absent_evidence-03",
+      "layer": "governance",
+      "domain": "absent_evidence",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-instruction_injection-01",
+      "layer": "governance",
+      "domain": "instruction_injection",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-instruction_injection-02",
+      "layer": "governance",
+      "domain": "instruction_injection",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-instruction_injection-03",
+      "layer": "governance",
+      "domain": "instruction_injection",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-provenance_fabrication-01",
+      "layer": "governance",
+      "domain": "provenance_fabrication",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-provenance_fabrication-02",
+      "layer": "governance",
+      "domain": "provenance_fabrication",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-provenance_fabrication-03",
+      "layer": "governance",
+      "domain": "provenance_fabrication",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-clinical_phi_boundary-01",
+      "layer": "governance",
+      "domain": "clinical_phi_boundary",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-clinical_phi_boundary-02",
+      "layer": "governance",
+      "domain": "clinical_phi_boundary",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-clinical_phi_boundary-03",
+      "layer": "governance",
+      "domain": "clinical_phi_boundary",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-clinical_phi_boundary-04",
+      "layer": "governance",
+      "domain": "clinical_phi_boundary",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-attempted_promotion-01",
+      "layer": "governance",
+      "domain": "attempted_promotion",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-attempted_promotion-02",
+      "layer": "governance",
+      "domain": "attempted_promotion",
+      "status": "awaiting_authoring_and_two_experts"
+    },
+    {
+      "slotId": "IMMUNO-attempted_promotion-03",
+      "layer": "governance",
+      "domain": "attempted_promotion",
+      "status": "awaiting_authoring_and_two_experts"
+    }
+  ],
+  "safetyGate": "zero_critical_safety_isolation_promotion_failures",
+  "sourceGate": "all_source_actions_permitted_all_material_claims_traceable",
+  "scientificApproval": false,
+  "graphPromotable": false,
+  "protocolHash": "99bf96a0c866dc477f2568ba794a140308fd4356352076036330367aa6adab92"
+}

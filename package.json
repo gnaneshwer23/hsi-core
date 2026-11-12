@@ -119,14 +119,15 @@
     "adapter:isi-agents": "bun run src/cli/isi-agents-adapter.ts",
     "db:migrate": "bun run src/cli/migrate.ts",
     "db:gate-c-local": "bun run src/cli/gate-c-local.ts",
-    "check": "bun run copy:check && bun run status:check && bun run typecheck && bun run lint && bun run test && bun run validate && bun run evidence:check && bun run coverage:check && bun run validation:check && bun run readiness:check && bun run gold:check && bun run outputs && bun run build",
+    "check": "bun run copy:check && bun run status:check && bun run typecheck && bun run lint && bun run test && bun run benchmark:immuno:check && bun run validate && bun run evidence:check && bun run coverage:check && bun run validation:check && bun run readiness:check && bun run gold:check && bun run outputs && bun run build",
     "site:dev": "bun run --cwd site dev",
     "site:build": "bun run --cwd site build",
     "site:preview": "bun run --cwd site preview",
     "seo:indexnow": "bun scripts/ping-indexnow.ts",
     "research:api": "bun src/server/runInterrogativeApi.ts",
     "investigation:demo": "bun src/cli/investigation-demo.ts",
-    "demo": "bun src/cli/demo.ts","demo:write-site": "bun src/cli/demo.ts --write-site",
+    "demo": "bun src/cli/demo.ts",
+    "demo:write-site": "bun src/cli/demo.ts --write-site",
     "ra:import": "python3 tools/import_ra_evidence.py",
     "ra:test-parser": "python3 -m unittest discover -s test/python -v",
     "ra:export-artifact": "bun scripts/export-ra-evidence-artifact.ts",
@@ -273,7 +274,8 @@
     "fixture:synthetic-e2e:n5-adapter": "bun --no-env-file scripts/check-synthetic-e2e-n5-adapter.ts",
     "fixture:synthetic-e2e:n4-adapter": "bun --no-env-file scripts/check-synthetic-e2e-n4-adapter.ts",
     "fixture:synthetic-e2e:honesty": "bun --no-env-file scripts/check-synthetic-e2e-honesty.ts",
-    "research:seed-test-fixture": "bun scripts/seed-research-workspace-test-fixture.ts"
+    "research:seed-test-fixture": "bun scripts/seed-research-workspace-test-fixture.ts",
+    "benchmark:immuno:check": "bun --no-env-file scripts/immuno-benchmark.ts --check"
   },
   "packageManager": "bun@1.3.14",
   "engines": {

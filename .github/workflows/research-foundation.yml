@@ -23,6 +23,8 @@ jobs:
       - name: Build local site and API (does not deploy)
         run: bun run build
         working-directory: site
+      - name: Check public benchmark artifacts after build
+        run: bun --no-env-file scripts/immuno-benchmark.ts --check
   verify:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
@@ -53,6 +55,8 @@ jobs:
       - run: bun audit --json
         working-directory: site
       - run: bun run site:build
+      - name: Check public benchmark artifacts after build
+        run: bun --no-env-file scripts/immuno-benchmark.ts --check
       - run: bunx --no-install playwright install chromium
         working-directory: site
       - name: Test local browser contracts (no live DB/provider acceptance)
