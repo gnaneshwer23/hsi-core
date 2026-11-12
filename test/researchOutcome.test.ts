@@ -5,11 +5,28 @@ import {buildResearchOutcome,verifyResearchOutcome,renderResearchOutcome} from "
 import type {EvidenceBrief} from "../src/investigationDelivery";
 import {canonicalGraphContext} from "../src/investigationGraphContext";
 import {handleInterrogativeApi} from "../src/server/interrogativeApi";
+import {assessContradictionInvestigation,compareContextualCandidatePairs} from "../src/evidence/structuredEvidenceComparison";
 const digest=async(s:string)=>deliveryHash(s);
 async function brief(f=deliveryHarness()):Promise<EvidenceBrief>{const v=await f.service.view("alice",f.initial.id);return {schemaVersion:"hsi-investigation-brief-1",package:v.package!,submission:v.submission,decision:v.decision,scope:"research_only",graphPublicationApproved:false}}
 async function rehash(b:EvidenceBrief){const p=b.package;p.investigationHash=deliveryHash(canonicalGraphContext(p.investigation));const {packageHash,...body}=p;p.packageHash=deliveryHash(canonicalGraphContext(body));return b}
 function binding(b:EvidenceBrief){const c=b.package.context.primary.bundle.claims[0]!;return {claimId:c.id,sourceIds:["pmid:123"],reviewDecisionId:c.review!.decisionId,polarity:"supports" as const,evidenceKind:"association" as const,context:{species:"human"},graphPath:[c.relationshipId]}}
 describe("backend-composed research outcomes",()=>{
+ test("requires independent attachment authority bound to the exact package and payload",async()=>{
+  const b=await brief(),options={contradictionInvestigation:assessContradictionInvestigation({pack:compareContextualCandidatePairs({relationships:[],generatedAt:"2026-11-12T00:00:00Z"})})};
+  await expect(buildResearchOutcome(b,digest,options)).rejects.toThrow("authority required");
+  await expect(buildResearchOutcome(b,digest,options,{authorize:async()=>false})).rejects.toThrow("outside");
+  const o=await buildResearchOutcome(b,digest,options,{authorize:async binding=>binding.packageHash===b.package.packageHash&&binding.investigationId===b.package.investigation.id&&binding.attachmentsHash===deliveryHash(canonicalGraphContext(options))});
+  expect(o.provenance.attachmentBinding?.manifestHash).toBe(b.package.context.primary.release.manifestHash);
+  await expect(verifyResearchOutcome(o,b,digest,options)).rejects.toThrow("authority required");
+ });
+ test("snapshots the reviewed package before asynchronous verification",async()=>{
+  const b=await brief(),question=b.package.investigation.question;
+  const o=await buildResearchOutcome(b,async text=>{b.package.investigation.question="Caller replacement after verification began";return deliveryHash(text)});
+  expect(o.question).toBe(question);
+ });
+ test("refuses prebuilt brief injection even with a package attachment acknowledgement",async()=>{
+  const b=await brief();await expect(buildResearchOutcome(b,digest,{researchBrief:{} as never},{authorize:async()=>true})).rejects.toThrow("composition inputs");
+ });
  test("composes the saved record deterministically without mutating it or inventing outputs",async()=>{
   const f=deliveryHarness(),before=JSON.stringify([...f.states]),o=await f.service.outcome("alice",f.initial.id);
   expect(await f.service.outcome("alice",f.initial.id)).toEqual(o);expect(JSON.stringify([...f.states])).toBe(before);expect(f.counts()).toEqual({decisionWrites:0,revisionWrites:0,submissionWrites:0});

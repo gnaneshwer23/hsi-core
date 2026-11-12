@@ -25,7 +25,7 @@ export const STRUCTURED_EVIDENCE_COMPARISON_SCHEMA =
   "hsi-structured-evidence-comparison-1" as const;
 export const STRUCTURED_EVIDENCE_COMPARISON_METHOD =
   "hsi.structured_evidence_comparison.v1" as const;
-export const STRUCTURED_EVIDENCE_COMPARISON_VERSION = "0.1.1" as const;
+export const STRUCTURED_EVIDENCE_COMPARISON_VERSION = "0.2.0" as const;
 
 export type StructuredComparisonOutcome =
   | "consistent"
@@ -71,6 +71,7 @@ export type StructuredComparisonTrace = {
   sharedContextAxisCount: number;
   divergentContextAxisCount: number;
   methodologicalSignals: readonly string[];
+  missingContextAxes: readonly string[];
   evidenceSourceIds: readonly string[];
 };
 
@@ -133,7 +134,7 @@ function fail(message: string): never {
 }
 
 function entityKey(entity: {system: string; value: string}): string {
-  return `${entity.system.trim().toLowerCase()}::${entity.value.trim().toLowerCase()}`;
+  return `${entity.system.trim().toLowerCase()}::${entity.value.trim()}`;
 }
 
 function contextValueKeys(
@@ -142,7 +143,7 @@ function contextValueKeys(
   return [
     ...new Set(
       rows
-        .map((r) => `${r.system.trim().toLowerCase()}::${r.value.trim().toLowerCase()}`)
+        .map((r) => `${r.system.trim().toLowerCase()}::${r.value.trim()}`)
         .filter((k) => k !== "::"),
     ),
   ];
@@ -166,6 +167,9 @@ function hasAnyContext(ctx: CandidateBiologicalContext): boolean {
 }
 
 function assertUnit(unit: ComparableEvidenceUnit, side: "left" | "right"): void {
+  const bounded=(value:unknown,max=256)=>typeof value==="string"&&value.trim().length>0&&value.length<=max;
+  if(!unit||!bounded(unit.id)||!bounded(unit.label,2000)||!bounded(unit.predicate,128)||!unit.biologicalContext||!Array.isArray(unit.evidenceSourceIds)||unit.evidenceSourceIds.length>64||unit.evidenceSourceIds.some(id=>!bounded(id))||CONTEXT_AXES.some(axis=>!Array.isArray(unit.biologicalContext[axis])||unit.biologicalContext[axis].length>64||unit.biologicalContext[axis].some(row=>!row||!bounded(row.system)||!bounded(row.value))))fail(`Unbounded comparable unit ${side}`);
+  if(unit.methodologicalNote!==null&&!bounded(unit.methodologicalNote,2000))fail("Invalid methodological note");
   if (!unit.id.trim()) fail(`Comparable unit ${side} requires id`);
   if (!unit.subject.system.trim() || !unit.subject.value.trim()) {
     fail(`Comparable unit ${side} requires subject`);
@@ -176,6 +180,11 @@ function assertUnit(unit: ComparableEvidenceUnit, side: "left" | "right"): void 
   if (!["supporting", "opposing", "uncertain"].includes(unit.findingPolarity)) {
     fail(`Comparable unit ${side} has invalid findingPolarity`);
   }
+}
+function pairBudget(value:number|undefined):number{
+ const budget=value??25;
+ if(!Number.isSafeInteger(budget)||budget<1||budget>100)fail("Invalid comparison pair budget");
+ return budget;
 }
 
 /**
@@ -203,8 +212,8 @@ export function comparableUnitFromContextualCandidate(
   };
 }
 
-function comparisonId(leftId: string, rightId: string, outcome: StructuredComparisonOutcome): string {
-  const [a, b] = [leftId, rightId].sort();
+function comparisonId(left: ComparableEvidenceUnit, right: ComparableEvidenceUnit, outcome: StructuredComparisonOutcome): string {
+  const [a, b] = [canonicalEvidenceJson(left), canonicalEvidenceJson(right)].sort();
   return `cmp:${createHash("sha256")
     .update(canonicalEvidenceJson({a, b, outcome, v: STRUCTURED_EVIDENCE_COMPARISON_VERSION}))
     .digest("hex")
@@ -239,6 +248,8 @@ function decideOutcome(input: {
   leftHasContext: boolean;
   rightHasContext: boolean;
   methodologicalSignals: readonly string[];
+  oneSidedMissingContext: boolean;
+  hasEvidenceSources: boolean;
 }): {outcome: StructuredComparisonOutcome; rationale: string} {
   const {polarityA, polarityB} = input;
   const bothUncertain = polarityA === "uncertain" && polarityB === "uncertain";
@@ -247,6 +258,8 @@ function decideOutcome(input: {
     (polarityA === "opposing" && polarityB === "supporting");
   const samePolarity =
     polarityA === polarityB && (polarityA === "supporting" || polarityA === "opposing");
+
+  if(!input.hasEvidenceSources)return {outcome:"insufficient_evidence",rationale:"At least one declared finding has no evidence source locator. Polarity alone cannot establish agreement or conflict."};
 
   if (!input.leftHasContext && !input.rightHasContext && bothUncertain) {
     return {
@@ -270,6 +283,13 @@ function decideOutcome(input: {
       rationale:
         "At least one side lacks biological context axes needed for governed comparison. Incomplete context ≠ proven consistency or contradiction.",
     };
+  }
+
+  if (input.oneSidedMissingContext) {
+    return {outcome:"insufficient_comparability",rationale:"A context axis is recorded on only one side. Missing context is unknown, not a biological difference or evidence of agreement."};
+  }
+  if (input.methodologicalSignals.some(s=>s.startsWith("method_note_diff:"))) {
+    return {outcome:"methodological_difference",rationale:"Declared methods differ; method comparability requires expert review before interpreting polarity as agreement or contradiction."};
   }
 
   if (opposingPair && input.sharedContextAxisCount > 0 && input.divergentContextAxisCount === 0) {
@@ -342,6 +362,7 @@ export function compareEvidenceUnits(input: {
   left: ComparableEvidenceUnit;
   right: ComparableEvidenceUnit;
 }): StructuredEvidenceComparison {
+  input=structuredClone(input);
   assertUnit(input.left, "left");
   assertUnit(input.right, "right");
 
@@ -369,6 +390,8 @@ export function compareEvidenceUnits(input: {
     leftHasContext,
     rightHasContext,
     methodologicalSignals: methodSignals,
+    oneSidedMissingContext: CONTEXT_AXES.some(axis=>(input.left.biologicalContext[axis].length===0)!==(input.right.biologicalContext[axis].length===0)),
+    hasEvidenceSources:input.left.evidenceSourceIds.length>0&&input.right.evidenceSourceIds.length>0,
   });
 
   const evidenceSourceIds = [
@@ -377,7 +400,7 @@ export function compareEvidenceUnits(input: {
 
   const comparison: StructuredEvidenceComparison = {
     schemaVersion: STRUCTURED_EVIDENCE_COMPARISON_SCHEMA,
-    id: comparisonId(input.left.id, input.right.id, decided.outcome),
+    id: comparisonId(input.left, input.right, decided.outcome),
     method: STRUCTURED_EVIDENCE_COMPARISON_METHOD,
     version: STRUCTURED_EVIDENCE_COMPARISON_VERSION,
     left: input.left,
@@ -393,6 +416,7 @@ export function compareEvidenceUnits(input: {
       sharedContextAxisCount,
       divergentContextAxisCount,
       methodologicalSignals: methodSignals,
+      missingContextAxes: CONTEXT_AXES.filter(axis=>!input.left.biologicalContext[axis].length||!input.right.biologicalContext[axis].length),
       evidenceSourceIds,
     },
     claimSupport: "not_assessed",
@@ -427,7 +451,8 @@ export function compareContextualCandidatePairs(input: {
   generatedAt?: string;
   maxPairs?: number;
 }): StructuredEvidenceComparisonPack {
-  const maxPairs = Math.min(100, Math.max(1, input.maxPairs ?? 25));
+  const maxPairs = pairBudget(input.maxPairs);
+  if(!Array.isArray(input.relationships)||input.relationships.length>200||new Set(input.relationships.map(r=>r.id)).size!==input.relationships.length)fail("Invalid or duplicate comparison candidates");
   const units = input.relationships.map(comparableUnitFromContextualCandidate);
   const comparisons: StructuredEvidenceComparison[] = [];
   for (let i = 0; i < units.length; i++) {
@@ -795,7 +820,8 @@ export function compareCandidatesAgainstOpposingFindings(input: {
   generatedAt?: string;
   maxPairs?: number;
 }): StructuredEvidenceComparisonPack {
-  const maxPairs = Math.min(100, Math.max(1, input.maxPairs ?? 25));
+  const maxPairs = pairBudget(input.maxPairs);
+  if(!Array.isArray(input.candidates)||input.candidates.length>200||!Array.isArray(input.opposingFindings)||input.opposingFindings.length>200||new Set(input.candidates.map(c=>c.id)).size!==input.candidates.length)fail("Invalid opposing comparison inventory");
   const leftUnits = input.candidates.map(comparableUnitFromContextualCandidate);
   const comparisons: StructuredEvidenceComparison[] = [];
   for (const left of leftUnits) {

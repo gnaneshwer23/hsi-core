@@ -33,13 +33,16 @@ export type ResearchOutcomeOptions={
   /** M2 deepen — thin O-02 hook for structured contradiction investigation categories. */
   contradictionInvestigation?:ContradictionInvestigationAssessment|null;
 };
+export type OutcomeAttachmentBinding={investigationId:string;packageHash:string;contextHash:string;releaseId:string;manifestHash:string;attachmentsHash:string};
+/** Trusted backend authority must bind independently stored attachments to this exact package. */
+export type OutcomeAttachmentAuthority={authorize:(binding:Readonly<OutcomeAttachmentBinding>)=>Promise<boolean>};
 const unique=<T>(values:readonly T[])=>[...new Set(values)];
 function exact(value:unknown,keys:string[]){if(!value||typeof value!=="object"||Array.isArray(value)||Object.keys(value).sort().join(",")!==[...keys].sort().join(","))throw Error("Invalid research outcome input fields")}
 function contextFor(brief:EvidenceBrief,relationshipId:string){
  const e=brief.package.context.primary,r=e.bundle.relationships.find(r=>r.id===relationshipId)!;
  return {disease:e.disease,studyContext:e.studyContexts[r.id]!,species:r.context.species,experimentalSystem:r.context.experimentalSystem,tissueId:r.context.tissueId,assay:r.context.assay,timepoint:r.context.timepoint,diseaseStage:null,cellState:null,dose:null,cohort:null};
 }
-function projectResearchOutcome(brief:EvidenceBrief,options:ResearchOutcomeOptions={}){
+function projectResearchOutcome(brief:EvidenceBrief,options:ResearchOutcomeOptions={},attachmentBinding:OutcomeAttachmentBinding|null=null){
  const p=brief.package,i=p.investigation,e=p.context.primary,b=e.bundle;
  const claimById=new Map(b.claims.map(c=>[c.id,c])),relationshipById=new Map(b.relationships.map(r=>[r.id,r]));
  const sourceIdsFor=(claimId:string)=>unique(claimById.get(claimId)!.passageIds.map(id=>b.passages.find(p=>p.id===id)!.sourceId));
@@ -112,7 +115,7 @@ function projectResearchOutcome(brief:EvidenceBrief,options:ResearchOutcomeOptio
   researchBrief,
   review:{status:d?d.outcome:"not_independently_reviewed" as const,scope:"evidence_brief_only" as const,decisionId:d?.id??null,decisionHash:d?.decisionHash??null,reviewedAt:d?.reviewedAt??null,rationale:d?.rationale??null,limitations:d?[...d.limitations]:[],scientificApprovalTransferred:false},
   comparison:{available:p.context.comparison!==null,releaseId:p.context.comparison?.release.id??null,manifestHash:p.context.comparison?.release.manifestHash??null,role:"separate_disease_context_not_branch_evidence" as const},
-  provenance:{methods,declaredRetrievalReferenceCount:i.provenance.retrievalIds.length,projectionInvokesModel:false,sourceSearchCompletenessVerified:false,deterministic:true},
+  provenance:{attachmentBinding,methods,declaredRetrievalReferenceCount:i.provenance.retrievalIds.length,projectionInvokesModel:false,sourceSearchCompletenessVerified:false,deterministic:true},
   disclaimer:"Research use only. Not a diagnosis, treatment recommendation, patient measurement order or trial-eligibility decision."
  };
 }
@@ -126,35 +129,48 @@ function projectResearchBriefSection(input:{
  gapVerification:GapVerificationOutcomeSection;
  livingEvidence:LivingEvidenceOutcomeSection;
 }):IntegratedResearchBrief|null{
- if(input.options.researchBrief)return input.options.researchBrief;
  // Auto-compose a product brief when O-04 is bound so the outcome carries source-linked limitations.
- if(input.trials.status==="not_queried")return null;
+ if(input.trials.status==="not_queried"){
+  if(input.options.researchBrief)throw Error("Prebuilt brief has no bound composition inputs");
+  return null;
+ }
  const sourceLocators=[
   ...input.livingEvidence.bibliographic.flatMap(r=>r.pmid?[{kind:"pmid" as const,value:r.pmid}]:[]),
   ...input.trials.records.map(r=>({kind:"nct" as const,value:r.nctId})),
  ];
- return integrateResearchBrief({
+ const composed=integrateResearchBrief({
   question:input.question,
   translational:input.trials,
   gapVerification:input.gapVerification,
   sourceLocators,
  });
+ if(input.options.researchBrief&&canonicalGraphContext(input.options.researchBrief)!==canonicalGraphContext(composed))throw Error("Prebuilt brief differs from bound composition inputs");
+ return composed;
 }
 export type ResearchOutcome=ReturnType<typeof projectResearchOutcome>&{outcomeHash:string};
 /** Trusted backend must authorise the current source read before invoking this pure compiler. */
-export async function buildResearchOutcome(value:EvidenceBrief,digest:Digest,options:ResearchOutcomeOptions={}):Promise<ResearchOutcome>{
+export async function buildResearchOutcome(value:EvidenceBrief,digest:Digest,options:ResearchOutcomeOptions={},authority?:OutcomeAttachmentAuthority):Promise<ResearchOutcome>{
+ value=structuredClone(value);options=structuredClone(options);
+ if(Object.keys(options).some(k=>!["livingEvidenceSnapshot","translationalLandscape","researchBrief","contradictionInvestigation"].includes(k)))throw Error("Unknown outcome attachment field");
+ const authorize=authority?.authorize;
  exact(value,["schemaVersion","package","submission","decision","scope","graphPublicationApproved"]);
  if(value.schemaVersion!=="hsi-investigation-brief-1"||value.scope!=="research_only"||value.graphPublicationApproved!==false)throw Error("Research-only brief required");
  const p=await verifyReviewPackage(value.package,digest),s=value.submission;
  if(s){exact(s,["id","packageHash","submittedAt","submittedBy"]);if(s.packageHash!==p.packageHash||s.submittedBy!==p.investigation.actorPrincipal||!/^submission-[a-f0-9]{32}$/.test(s.id)||!Number.isFinite(Date.parse(s.submittedAt))||p.investigation.state!=="awaiting_scientific_review")throw Error("Unbound outcome submission")}
  else if(value.decision||p.investigation.state!=="draft")throw Error("A submitted investigation requires its bound submission");
  if(value.decision)await verifyDeliveryDecision(value.decision,p,s!,digest);
- const body=projectResearchOutcome(value,options),text=canonicalGraphContext(body);if(new TextEncoder().encode(text).byteLength>2_000_000)throw Error("Research outcome exceeds export budget");
+ let attachmentBinding:OutcomeAttachmentBinding|null=null;
+ if(Object.values(options).some(v=>v!==null&&v!==undefined)){
+  if(typeof authorize!=="function")throw Error("Trusted outcome attachment authority required");
+  attachmentBinding={investigationId:p.investigation.id,packageHash:p.packageHash,contextHash:p.context.contentHash,releaseId:p.context.primary.release.id,manifestHash:p.context.primary.release.manifestHash,attachmentsHash:await digest(canonicalGraphContext(options))};
+  if(await authorize(Object.freeze({...attachmentBinding}))!==true)throw Error("Outcome attachments are outside the authorized investigation release");
+ }
+ const body=projectResearchOutcome(value,options,attachmentBinding),text=canonicalGraphContext(body);if(new TextEncoder().encode(text).byteLength>2_000_000)throw Error("Research outcome exceeds export budget");
  return {...body,outcomeHash:await digest(text)};
 }
 /** Recomputes a serialization projection to check binding; it performs no scientific inference. */
-export async function verifyResearchOutcome(value:unknown,expected:EvidenceBrief,digest:Digest,options:ResearchOutcomeOptions={}):Promise<ResearchOutcome>{
- const checked=await buildResearchOutcome(expected,digest,options);if(canonicalGraphContext(value)!==canonicalGraphContext(checked))throw Error("Outcome differs from the independently loaded evidence package or decision");return checked;
+export async function verifyResearchOutcome(value:unknown,expected:EvidenceBrief,digest:Digest,options:ResearchOutcomeOptions={},authority?:OutcomeAttachmentAuthority):Promise<ResearchOutcome>{
+ const checked=await buildResearchOutcome(expected,digest,options,authority);if(canonicalGraphContext(value)!==canonicalGraphContext(checked))throw Error("Outcome differs from the independently loaded evidence package or decision");return checked;
 }
 const md=(text:string)=>text.replace(/\\/g,"\\\\").replace(/[<>\[\]*_`#|]/g,c=>"\\"+c).replace(/\r/g,"").replace(/\n/g," ");
 export function renderResearchOutcome(outcome:ResearchOutcome,format:"json"|"markdown"):string{

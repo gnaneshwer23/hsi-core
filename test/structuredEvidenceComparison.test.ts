@@ -98,6 +98,32 @@ const mouseContext = ctx({
 });
 
 describe("structured evidence comparison outcomes", () => {
+  test("declared polarity without a source locator cannot establish conflict",()=>{
+    const result=compareEvidenceUnits({left:unit({id:"a",findingPolarity:"supporting",biologicalContext:sscContext}),right:unit({id:"b",findingPolarity:"opposing",biologicalContext:sscContext,evidenceSourceIds:[]})});
+    expect(result.outcome).toBe("insufficient_evidence");
+  });
+  test("rejects invalid budgets and duplicate candidates before pair work",()=>{
+    for(const maxPairs of [NaN,Infinity,-1,0,1.5,101])expect(()=>compareContextualCandidatePairs({relationships:[],maxPairs})).toThrow("budget");
+    const r=draftRel({id:"duplicate",findingPolarity:"supporting"});expect(()=>compareContextualCandidatePairs({relationships:[r,r]})).toThrow("duplicate");
+  });
+  test("method differences take precedence over matching coarse context",()=>{
+    for(const polarity of ["supporting","opposing"] as const){
+      const result=compareEvidenceUnits({left:unit({id:"a",findingPolarity:"supporting",biologicalContext:sscContext,methodologicalNote:"flow cytometry"}),right:unit({id:"b",findingPolarity:polarity,biologicalContext:sscContext,methodologicalNote:"bulk RNA sequencing"})});
+      expect(result.outcome).toBe("methodological_difference");expect(result.graphPromotable).toBe(false);
+    }
+  });
+  test("one-sided missing context is unknown rather than a biological difference",()=>{
+    const partial=structuredClone(sscContext);partial.experimentalSystemsSpecies=[];
+    const result=compareEvidenceUnits({left:unit({id:"a",findingPolarity:"supporting",biologicalContext:sscContext}),right:unit({id:"b",findingPolarity:"opposing",biologicalContext:partial})});
+    expect(result.outcome).toBe("insufficient_comparability");expect(result.trace.missingContextAxes).toContain("experimentalSystemsSpecies");
+  });
+  test("identifiers preserve case and comparison IDs bind content and survive pair order",()=>{
+    const a=unit({id:"a",findingPolarity:"supporting",biologicalContext:sscContext}),b=unit({id:"b",findingPolarity:"opposing",biologicalContext:sscContext});
+    const first=compareEvidenceUnits({left:a,right:b});expect(compareEvidenceUnits({left:b,right:a}).id).toBe(first.id);
+    b.responseIdentity="different-source-version";expect(compareEvidenceUnits({left:a,right:b}).id).not.toBe(first.id);
+    b.object.value=b.object.value.toLowerCase();expect(compareEvidenceUnits({left:a,right:b}).outcome).toBe("insufficient_comparability");
+    a.label="caller mutated";expect(first.left.label).not.toBe(a.label);
+  });
   test("shared disease does not align different biological claims", () => {
     for(const findingPolarity of ["supporting","opposing"] as const){
       const result=compareEvidenceUnits({
@@ -115,7 +141,7 @@ describe("structured evidence comparison outcomes", () => {
       right:unit({id:"b",findingPolarity:"supporting",biologicalContext:sscContext,predicate:"causes"}),
     });
     expect(result.outcome).toBe("insufficient_comparability");
-    expect(result.version).toBe("0.1.1");
+    expect(result.version).toBe("0.2.0");
   });
   test("matching polarities + shared context → consistent (not scientific approval)", () => {
     const result = compareEvidenceUnits({
