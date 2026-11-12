@@ -1,10 +1,10 @@
 # HSI landing page → backend matrix
 
-**Audited tip (branch base):** `864710a` + Phase 8 landing integration PR  
-**Production:** https://www.humansuperintelligence.tech/  
-**As of:** 2026-11-09  
-**Governing vision:** [`../strategy/HSI_VISION.md`](../strategy/HSI_VISION.md) — public copy and CTAs must align with doctrine **and** this matrix (no invented live write-spine).  
-**Neon:** HSI red-wave only (`hsi-neon-project` placeholder in-repo; real id in private env). Never ISI autumn-snow.  
+**Website candidate:** approved five-PR public restructure (#291–#295); exact tested SHAs and CI evidence are recorded in the website handoff.
+**Canonical public URL:** https://www.humansuperintelligence.tech/ — this change is not asserted deployed.
+**Website mapping updated:** 2026-11-12. Backend/production observations retained below are historical 2026-11-09 observations, not fresh runtime or live-acceptance evidence.
+**Governing vision:** [`../strategy/HSI_VISION.md`](../strategy/HSI_VISION.md) — public copy and CTAs must align with doctrine **and** this matrix (no invented live write-spine).
+**Neon:** HSI red-wave only (`hsi-neon-project` placeholder in-repo; real id in private env). Never ISI autumn-snow.
 
 **Rule:** Fail-closed APIs; public demos keep `live_backend:false` until staging-verified. No live CDS/PHI.
 
@@ -21,17 +21,18 @@ Companion maps: [`HSI_PAGE_AND_ROUTE_MAP.md`](./HSI_PAGE_AND_ROUTE_MAP.md), [`HS
 
 ---
 
-## 1. Inventory counts
+## 1. Current website candidate inventory
 
-| Bucket | Count | Notes |
-|--------|------:|-------|
-| App `<Route>` destinations (excl. `*`) | **59** | From `site/src/App.tsx` |
-| Logical 32-template map | 32 | See page route map |
-| **connected** (production probe) | **3** | Auth provider reachable; `/api/research/health` 200 `writesEnabled=false`; public static assets |
-| **static** public/marketing/science explorers | **~40** | Render without research write spine |
-| **disconnected / honesty-repaired** | **~8** | Access request non-persist; bare decision-workbench; briefs headline; brief CTA labels (repaired this PR); programme/gaps missing |
-| **restricted** research APIs | **all research mutations + most GETs** | Anon **401**; writes **403** when `writesEnabled=false` |
-| Fully connected research-write spine | **0** | Staging writes not proven on production |
+| Bucket | Count | Evidence / limit |
+|---|---:|---|
+| Registered route destinations, including home and excluding catch-all | **75** | Actual distinct `App.tsx` paths; existing routes retained |
+| Primary canonical public story | **10** | Home, Platform, Audit, Evidence Intelligence, Research, Briefs, Science, Applications, Trust, About |
+| Pre-rendered public SEO pages | **22** | Ten canonical destinations plus retained secondary resources; build output |
+| Noindex account/tool/secondary/redirect shells | **53** | Build output; no claim all are authenticated or private |
+| Public source/model execution added | **0** | Synthetic local interactions only |
+| New scientific/production activation authority | **0** | Website content and passing UI tests grant no authority |
+
+Historic production observations in later sections are retained for traceability. Current runtime identity, write switches, providers and scientific acceptance cannot be inferred from them or from this website build.
 
 ---
 
@@ -39,17 +40,17 @@ Companion maps: [`HSI_PAGE_AND_ROUTE_MAP.md`](./HSI_PAGE_AND_ROUTE_MAP.md), [`HS
 
 | Route | Audience | Content | Interactive | API / DB / auth | Backend availability | Error / loading | Acceptance tests |
 |-------|----------|---------|-------------|-----------------|----------------------|-----------------|------------------|
-| `/` | Public | Product instrument + multi-scenario demo | Scenario tabs, panels, domain buttons | None for demo; `live_backend:false` | static / illustrative | Demo banner honesty | `homeResearchScenarios`, editorial e2e, brief deep-link |
-| `/platform` | Public | Platform overview | Links | none | static | n/a | editorial + nav audit |
+| `/` | Public | Approved ten-section research narrative | Synthetic context comparison, six-step workflow, domains, layers and expandable brief | None for demonstrations | static / demonstration | Synthetic/source-free/not-reviewed labels | approved-website, editorial, axe and navigation suites |
+| `/platform` | Public | Shared research foundation and three core roles | Selectable architecture layers and links | none | static / demonstration | Independent acceptance remains gated | approved-website + navigation + axe |
 | `/technology` | Public | Architecture narrative | Links | none | static | n/a | nav audit |
 | `/how-it-works` | Public | Workflow narrative | Links | none | static | n/a | CTA secondary destination |
 | `/products` | Public | Product directory | Links | none | static | n/a | publicSiteHonesty |
 | `/solutions` | Public | Audience panels | Local audience state | none | static | n/a | nav audit |
-| `/research` | Public | Research overview | Links | none | static | honesty: SSc = validation case | nav audit |
+| `/research` | Public | One question through investigation and brief | Six-step workflow, candidate diagram and brief | none for public example | static / demonstration | SSc is a validation example; actual review not implied | approved-website + navigation + axe |
 | `/evidence-safety` | Public | Evidence approach | Links | none | static | n/a | nav audit |
 | `/pricing` | Public | Access framing | Links | none | static | grant not automatic | nav audit |
-| `/contact` | Public | Access guidance | Account links only | **No access-request write** | static + honesty | Explicit: page does not store a request | contact copy + capability PUB-RESEARCH-ACCESS |
-| `/science` | Public | Science hub | Links | none | static | n/a | editorial |
+| `/contact` | Public | Access guidance | Browser-only draft and account links | **No access-request write or delivery** | static + honesty | Explicit local-draft status | contact e2e + capability PUB-RESEARCH-ACCESS |
+| `/science` | Public | Biological scales and cross-domain questions | Selectable scales/domains; retained graph/body tools | none for public page | static / demonstration | Unequal maturity and candidate relationships explicit | approved-website + body/graph + axe |
 | `/community` | Public | Discussion rehearsal | Local comments | none (local only) | static / disconnected from moderation | Flag notifies nobody | honesty in UI |
 | `/status` | Public | Status surface | none | optional health | static / connected health | fail soft | production QA |
 | `/for-isi` `/for-aksh` `/for-trials` | Public | Boundary pages | Links | none | static | Trials: no live matching | editorial |
@@ -58,7 +59,9 @@ Companion maps: [`HSI_PAGE_AND_ROUTE_MAP.md`](./HSI_PAGE_AND_ROUTE_MAP.md), [`HS
 | `/explore` `/docs` `/roadmap` `/alignment` `/sources` | Public | Supporting content | Links | none / static JSON | static | n/a | load smoke |
 | `/discovery-engine` `/discovery` `/gateway` `/systems` `/evidence` `/curator` `/akeno` `/aksh-agents` `/clinical-timeline` `/trials-criteria` | Public demos | Boundary / thin demos | Local or static | discovery JSON under `site/public/discovery/` | static | honesty banners required | science / products e2e |
 
-**Static-only + disconnected controls (public):**
+**Historical public-control repairs (precede the approved website restructure):**
+
+The former scenario-driven homepage component is no longer the canonical homepage. Its helper contracts remain for retained legacy components; the new homepage audit/brief has its own explicit illustrative controls. These historical bullets are not claims about the new homepage URL state.
 
 - Homepage scenario/domain state was local-only → **repaired** with `?scenario=` / `?panel=` via `site/src/lib/researchContext.ts` (still illustrative; does not enable backends).
 - “Open research brief” → `#product-demo` without opening brief panel → **repaired** (`panel=brief`).
@@ -94,7 +97,7 @@ Companion maps: [`HSI_PAGE_AND_ROUTE_MAP.md`](./HSI_PAGE_AND_ROUTE_MAP.md), [`HS
 
 ---
 
-## 5. API dependency summary
+## 5. Historical API dependency observations (9 November; not revalidated by website QA)
 
 | Surface | Auth | Prod behaviour |
 |---------|------|----------------|
