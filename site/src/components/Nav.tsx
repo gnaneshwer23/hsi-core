@@ -1,7 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { authBaseUrl, hsiAuth } from "../lib/hsiAuth";
-import { PRIMARY_NAV_LINKS, PRIMARY_NAV_CTA, RESEARCH_NAV_LINKS } from "../lib/primaryNav";
+import {
+  PRIMARY_NAV_LINKS,
+  PRIMARY_NAV_CTA,
+  RESEARCH_NAV_LINKS,
+  isPublicMarketingPath,
+  isAccountPath,
+} from "../lib/primaryNav";
 export function Nav() {
   const [open, setOpen] = useState(false),
     [researchOpen, setResearchOpen] = useState(false),
@@ -12,6 +18,7 @@ export function Nav() {
     dropdown = useRef<HTMLDivElement>(null),
     researchButton = useRef<HTMLButtonElement>(null);
   const { pathname } = useLocation();
+  const workspace = !isPublicMarketingPath(pathname) && !isAccountPath(pathname);
   useEffect(() => {
     setOpen(false);
     setResearchOpen(false);
@@ -104,7 +111,7 @@ export function Nav() {
     return () => media.removeEventListener("change", close);
   }, []);
   return (
-    <header className={`hsi-nav${scrolled ? " is-scrolled" : ""}`}>
+    <header className={`hsi-nav${scrolled ? " is-scrolled" : ""}${workspace ? " hsi-nav-workspace" : ""}`}>
       <div className="hsi-nav-inner">
         <Link to="/" className="hsi-wordmark" aria-label="Human Super Intelligence home">
           <span aria-hidden="true" className="hsi-brand-symbol">
