@@ -121,6 +121,12 @@ describe("P0-B isolated staging operations",()=>{
    expect(await readFile(f.file,"utf8")).not.toContain(secret);
   }finally{await f.close()}
  });
+ it("does not persist a credential echoed into otherwise valid provider identifiers",async()=>{
+  const f=await fixture();try{
+   const transport:ProviderTransport=async()=>{const raw=await response().json() as any;raw.id=secret;return Response.json(raw,{headers:{"x-request-id":secret}})};
+   await expect(f.service(transport).run({deploymentId:f.deployment.id,source:f.source,payload})).rejects.toThrow("invalid_response");expect(await readFile(f.file,"utf8")).not.toContain(secret);
+  }finally{await f.close()}
+ });
  it("settles cancellation even when transport ignores it and retains the charged reservation",async()=>{
   const f=await fixture();try{
    const controller=new AbortController(),operation=f.service(async()=>{controller.abort();return new Promise<Response>(()=>{})}).run({deploymentId:f.deployment.id,source:f.source,payload,signal:controller.signal});

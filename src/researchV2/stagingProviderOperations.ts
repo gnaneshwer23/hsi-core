@@ -75,7 +75,7 @@ export function createStagingProviderOperations(options:{
   if(!reserved)throw Error("Staging budget exhausted");
   const base={runId,deploymentId,configurationHash,termsRef:d.termsRef,sourcePolicyRef:d.sourcePolicyRef,sourceId:source.sourceId,sourceVersion:source.sourceVersion,requestedModelId:d.config.modelId,wireHash:hash(wire),instructionHash:hash(payload.instruction),clearanceReceiptId:decision.receipt!.id,inputHash:hash(canonicalEvidenceJson(payload)),passageSha256:hash(source.passage),reservedUnits:reservation,scientificApproval:false,graphPromotable:false};
   try{await store.append({type:"provider_run_start",...base,at:new Date().toISOString()});}catch{throw Error("Staging start receipt unavailable");}
-  let status="failed",httpStatus:number|null=null,providerRequestId:string|null=null,responseId:string|null=null;
+  let status="failed",httpStatus:number|null=null,providerRequestId:string|null=null,responseId:string|null=null,credentialValue:string|null=null;
   let usage:{inputTokens:number;outputTokens:number}|null=null,outputHash:string|null=null,resolvedModelId:string|null=null;
   const started=Date.now();let dispatchAttempted=false;
   try{
@@ -87,6 +87,7 @@ export function createStagingProviderOperations(options:{
    if(!stillApproved||signal?.aborted)throw Error("deployment_approval_changed");
    const encode:ProviderWireEncoder=()=>{
     const key=credential(d.config.providerId);if(typeof key!=="string"||!key.trim()||/[\r\n]/.test(key))throw Error("credential_unavailable");
+    credentialValue=key;
     return {body:wire,headers:{"content-type":"application/json",...(d.config.providerId==="openai"?{authorization:"Bearer "+key}:{"x-api-key":key,"anthropic-version":d.anthropicVersion!})}};
    };
    const native=factory(encode);
@@ -95,10 +96,11 @@ export function createStagingProviderOperations(options:{
     const combined=signal?AbortSignal.any([signal,transportOptions.signal]):transportOptions.signal;
     dispatchAttempted=true;const response=await native(c,p,{...transportOptions,signal:combined});
     httpStatus=response.status;const requestId=response.headers.get("x-request-id")??response.headers.get("request-id");
-    if(identifier(requestId))providerRequestId=requestId;
+    if(identifier(requestId)&&(!credentialValue||!requestId.includes(credentialValue)))providerRequestId=requestId;
     return response;
    },{signal});
    const raw=await runner(payload);
+   if(credentialValue&&JSON.stringify(raw).includes(credentialValue))throw Error("provider_schema");
    if((providerRequestId as string|null)===null)throw Error("provider_schema");
    const decoded=decodeProviderResult(d.config.providerId,raw);responseId=decoded.responseId;resolvedModelId=decoded.resolvedModelId;
    if(resolvedModelId!==d.config.modelId)throw Error("provider_schema");
