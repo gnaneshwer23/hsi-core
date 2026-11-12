@@ -36,5 +36,5 @@ test('homepage investigation anchor opens the eight-step sequence',async({page})
  await expect(page.locator('.hsi-home-hero .hsi-actions a').first()).toHaveAttribute('href','/context-conflict-audit');
  await expect(page.locator('.hsi-home-hero .hsi-actions a').nth(1)).toHaveAttribute('href','/research');
  await expect(page.locator('.hsi-home-hero')).toContainText('Explore the Context-Conflict Audit');
- await expect(page.getByRole('link',{name:/Request access/i}).first()).toHaveAttribute('href','/research');
+ await expect(page.getByRole('link',{name:/Request access/i}).first()).toHaveAttribute('href','/contact');
 });
