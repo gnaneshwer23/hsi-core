@@ -1,4 +1,5 @@
-import {validateContextConflictAudit,renderContextConflictAudit,contextAuditInvestigation,type ContextConflictAudit} from "./evidence/contextConflictAudit";
+import {verifyContextAuditReview,type ContextAuditReview} from "./evidence/contextAuditReview";
+import {validateContextConflictAudit,renderValidatedContextConflictAudit,contextAuditInvestigation,type ContextConflictAudit} from "./evidence/contextConflictAudit";
 /** Deterministic composition of a saved, verified research package. No new scientific inference or approval. */
 import {canonicalGraphContext} from "./investigationGraphContext";
 import {verifyReviewPackage,verifyDeliveryDecision,type EvidenceBrief} from "./investigationDelivery";
@@ -27,6 +28,7 @@ export const RESEARCH_OUTCOME_METHOD="hsi-bound-outcome-projection-1" as const;
 export type Digest=(text:string)=>Promise<string>;
 export type ResearchOutcomeOptions={
   contextConflictAudit?:ContextConflictAudit|null;
+  contextConflictAuditReview?:ContextAuditReview|null;
   livingEvidenceSnapshot?:LivingEvidenceExpansionSnapshot|null;
   /** PR 7 / O-04 translational landscape bind. */
   translationalLandscape?:TranslationalLandscapeSnapshot|null;
@@ -114,6 +116,7 @@ function projectResearchOutcome(brief:EvidenceBrief,options:ResearchOutcomeOptio
   passages:b.passages.map(p=>({id:p.id,sourceId:p.sourceId,sourceVersion:p.sourceVersion,text:p.text,locator:p.locator,sha256:p.sha256!})),
   contradictions,
   ...(options.contextConflictAudit?{contextConflictAudit:options.contextConflictAudit}:{}),
+  ...(options.contextConflictAuditReview?{contextConflictAuditReview:options.contextConflictAuditReview}:{}),
   missingData:unique(branches.flatMap(b=>b.missingEvidence)),decisionTree:{kind:"saved_investigation_questions" as const,diagnosticDecisionSupport:false,questions},hypotheses:branches,
   nextResearchSteps:branches.map(b=>({branchId:b.id,action:"Retrieve and independently assess evidence addressing the recorded falsification question; define population, specimen, assay, timepoint and controls before proposing an experiment.",falsificationQuestion:b.falsificationCriteria,experimentSpecified:false,patientMeasurementOrder:false})),
   trials,
@@ -155,10 +158,21 @@ function projectResearchBriefSection(input:{
  return composed;
 }
 export type ResearchOutcome=ReturnType<typeof projectResearchOutcome>&{outcomeHash:string};
+/** Reused by trusted audit storage and outcome compilation; unsupported diseases do not fall through to RA. */
+export function assertContextAuditPackageBinding(audit:ContextConflictAudit,p:EvidenceBrief["package"]){
+ validateContextConflictAudit(audit);
+ const d=p.context.primary.disease,scope=d==="systemic_sclerosis"?"ssc":d==="rheumatoid_arthritis"?"ra":null;
+ if(!scope||audit.investigationId!==p.investigation.id||audit.question!==p.investigation.question||audit.diseaseScope!==scope||canonicalGraphContext(audit.release)!==canonicalGraphContext(p.context.primary.release))throw Error("Context audit belongs to another investigation or source release");
+ const sources=new Set(p.context.primary.bundle.sources.map(s=>s.id));
+ if(audit.searches.some(s=>s.sourceIds.some(id=>!sources.has(id))))throw Error("Audit search references another source release");
+ for(const unit of audit.units){const c=unit.detailedContext!;
+  if(!p.context.primary.bundle.passages.some(row=>row.id===c.passageId&&row.sourceId===c.sourceId&&row.sourceVersion===c.sourceVersion&&row.sha256===c.passageSha256&&row.text===c.passageText))throw Error("Audit passage is outside the captured release");
+ }
+}
 /** Trusted backend must authorise the current source read before invoking this pure compiler. */
 export async function buildResearchOutcome(value:EvidenceBrief,digest:Digest,options:ResearchOutcomeOptions={},authority?:OutcomeAttachmentAuthority):Promise<ResearchOutcome>{
  value=structuredClone(value);options=structuredClone(options);
- if(Object.keys(options).some(k=>!["livingEvidenceSnapshot","translationalLandscape","researchBrief","contradictionInvestigation","contextConflictAudit"].includes(k)))throw Error("Unknown outcome attachment field");
+ if(Object.keys(options).some(k=>!["livingEvidenceSnapshot","translationalLandscape","researchBrief","contradictionInvestigation","contextConflictAudit","contextConflictAuditReview"].includes(k)))throw Error("Unknown outcome attachment field");
  const authorize=authority?.authorize;
  exact(value,["schemaVersion","package","submission","decision","scope","graphPublicationApproved"]);
  if(value.schemaVersion!=="hsi-investigation-brief-1"||value.scope!=="research_only"||value.graphPublicationApproved!==false)throw Error("Research-only brief required");
@@ -166,13 +180,12 @@ export async function buildResearchOutcome(value:EvidenceBrief,digest:Digest,opt
  if(s){exact(s,["id","packageHash","submittedAt","submittedBy"]);if(s.packageHash!==p.packageHash||s.submittedBy!==p.investigation.actorPrincipal||!/^submission-[a-f0-9]{32}$/.test(s.id)||!Number.isFinite(Date.parse(s.submittedAt))||p.investigation.state!=="awaiting_scientific_review")throw Error("Unbound outcome submission")}
  else if(value.decision||p.investigation.state!=="draft")throw Error("A submitted investigation requires its bound submission");
  if(value.decision)await verifyDeliveryDecision(value.decision,p,s!,digest);
- if(options.contextConflictAudit){
-  const audit=options.contextConflictAudit;validateContextConflictAudit(audit);
-  const expectedScope=p.context.primary.disease==="systemic_sclerosis"?"ssc":"ra";
-  if(audit.investigationId!==p.investigation.id||audit.question!==p.investigation.question||audit.diseaseScope!==expectedScope||canonicalGraphContext(audit.release)!==canonicalGraphContext(p.context.primary.release))throw Error("Context audit belongs to another investigation or source release");
-  for(const unit of audit.units){const c=unit.detailedContext!;
-   if(!p.context.primary.bundle.passages.some(row=>row.id===c.passageId&&row.sourceId===c.sourceId&&row.sourceVersion===c.sourceVersion&&row.sha256===c.passageSha256&&row.text===c.passageText))throw Error("Audit passage is outside the captured release");
-  }
+ if(options.contextConflictAudit)assertContextAuditPackageBinding(options.contextConflictAudit,p);
+ if(options.contextConflictAuditReview){
+  if(!options.contextConflictAudit)throw Error("Audit review requires its exact audit");
+  const review=options.contextConflictAuditReview;
+  await verifyContextAuditReview(review,{auditHash:options.contextConflictAudit.auditHash,investigationId:p.investigation.id,packageHash:p.packageHash,contextHash:p.context.contentHash,diseaseScope:options.contextConflictAudit.diseaseScope},digest);
+  if(review.ownerPrincipal!==p.investigation.actorPrincipal)throw Error("Audit review owner mismatch");
  }
  let attachmentBinding:OutcomeAttachmentBinding|null=null;
  if(Object.values(options).some(v=>v!==null&&v!==undefined)){
@@ -186,6 +199,20 @@ export async function buildResearchOutcome(value:EvidenceBrief,digest:Digest,opt
 /** Recomputes a serialization projection to check binding; it performs no scientific inference. */
 export async function verifyResearchOutcome(value:unknown,expected:EvidenceBrief,digest:Digest,options:ResearchOutcomeOptions={},authority?:OutcomeAttachmentAuthority):Promise<ResearchOutcome>{
  const checked=await buildResearchOutcome(expected,digest,options,authority);if(canonicalGraphContext(value)!==canonicalGraphContext(checked))throw Error("Outcome differs from the independently loaded evidence package or decision");return checked;
+}
+export type OutcomeVerificationReceipt={schemaVersion:'hsi-outcome-receipt-1';investigationId:string;packageHash:string;contextHash:string;attachmentsHash:string|null;outcomeHash:string};
+/** Only expose after the backend freshly authenticates and reauthorizes stored source attachments. */
+export function outcomeVerificationReceipt(outcome:ResearchOutcome):OutcomeVerificationReceipt{return {schemaVersion:'hsi-outcome-receipt-1',investigationId:outcome.investigationId,packageHash:outcome.binding.packageHash,contextHash:outcome.binding.contextHash,attachmentsHash:outcome.provenance.attachmentBinding?.attachmentsHash??null,outcomeHash:outcome.outcomeHash};}
+/** Browser verification of a separately fetched authenticated server receipt. This is not browser scientific adjudication. */
+export async function verifyReceiptedResearchOutcome(value:unknown,receipt:OutcomeVerificationReceipt,expected:EvidenceBrief,digest:Digest):Promise<ResearchOutcome>{
+ exact(receipt,['schemaVersion','investigationId','packageHash','contextHash','attachmentsHash','outcomeHash']);
+ const baseline=await buildResearchOutcome(expected,digest),o=value as ResearchOutcome;
+ if(!o||receipt.schemaVersion!=='hsi-outcome-receipt-1'||receipt.investigationId!==baseline.investigationId||receipt.packageHash!==baseline.binding.packageHash||receipt.contextHash!==baseline.binding.contextHash||receipt.outcomeHash!==o.outcomeHash)throw Error('Outcome receipt binding mismatch');
+ if(receipt.attachmentsHash===null){if(canonicalGraphContext(o)!==canonicalGraphContext(baseline))throw Error('Unattached outcome differs from its package');return baseline;}
+ if(!o.provenance?.attachmentBinding||!/^[a-f0-9]{64}$/.test(receipt.attachmentsHash)||receipt.attachmentsHash!==o.provenance.attachmentBinding.attachmentsHash)throw Error('Outcome attachment receipt mismatch');
+ for(const key of ['schemaVersion','method','investigationId','question','binding','scope','comparison'] as const)if(canonicalGraphContext(o[key])!==canonicalGraphContext(baseline[key]))throw Error('Receipted outcome changed saved provenance');
+ const {outcomeHash,...body}=o;if(await digest(canonicalGraphContext(body))!==outcomeHash)throw Error('Receipted outcome content changed');
+ return o;
 }
 const md=(text:string)=>text.replace(/\\/g,"\\\\").replace(/[<>\[\]*_`#|]/g,c=>"\\"+c).replace(/\r/g,"").replace(/\n/g," ");
 export function renderResearchOutcome(outcome:ResearchOutcome,format:"json"|"markdown"):string{
@@ -204,6 +231,7 @@ export function renderResearchOutcome(outcome:ResearchOutcome,format:"json"|"mar
  if(o.researchBrief){
   lines.push("","## Integrated research brief (PR 7)","",`Question: ${md(o.researchBrief.question)}`,`Scientific validity claimed: ${o.researchBrief.scientificValidityClaimed}; candidates unapproved: ${o.researchBrief.candidatesRemainUnapproved}.`,"","### Source-linked claims",...o.researchBrief.claims.map(c=>`- ${md(c.text)} · support=${c.support} · traces: ${c.traceRefs.map(md).join(", ")}`),"","### Explicit limitations",...o.researchBrief.limitations.map(s=>`- ${md(s)}`),"","### Next research actions",...o.researchBrief.nextResearchActions.map(s=>`- ${md(s)}`));
  }
- if(o.contextConflictAudit)lines.push("",renderContextConflictAudit(o.contextConflictAudit,"markdown"));
+ if(o.contextConflictAudit)lines.push("",renderValidatedContextConflictAudit(o.contextConflictAudit,"markdown"));
+ if(o.contextConflictAuditReview){const r=o.contextConflictAuditReview;lines.push("","## Independent context-audit review",`Audit ${r.auditHash}; decision ${r.decisionHash}; scope context audit only.`,md(r.decision),md(r.rationale),...r.limitations.map(x=>"- "+md(x)),"Evidence-brief acceptance and graph publication remain separate. No scientific approval is transferred.");}
  lines.push("","## Human review","",`Recorded outcome: ${o.review.status}; scope: evidence brief only.`,md(o.review.rationale??"No independent decision recorded."),...o.review.limitations.map(s=>"- "+md(s)),"","## Methods and provenance","",...o.provenance.methods.map(m=>"- "+md(`${m.agentId} v${m.version}; recorded model ${m.modelVersion}; prompt ${m.promptVersion}; tool-call count ${m.toolCallCount}`)),"No new model call, live patient connection or exhaustive literature search is performed by this projection.","",o.disclaimer,"");return lines.join("\n");
 }

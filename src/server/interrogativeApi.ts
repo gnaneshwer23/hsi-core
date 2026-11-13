@@ -1,3 +1,5 @@
+import type {ContextAuditArchiveService} from "./contextAuditArchiveService";
+import type {OutcomeVerificationReceipt} from "../researchOutcome";
 import type {OutcomeAttachmentResolver} from "./boundOutcomeAttachments";
 /** ARCH-003 trusted Bun API entrypoint (separate from static Vite hosting).
  * Deploy only behind a same-origin reverse proxy and secure HTTPS session cookies.
@@ -23,6 +25,8 @@ import {parseCreateInvestigation,parseInvestigationCursor,type InvestigationCurs
 import {loadOrCaptureInvestigationGraphContext} from "../db/investigationGraphContextStore";
 
 type ApiServices={
+ auditArchive?:Pick<ContextAuditArchiveService,"view"|"decide">;
+ outcomeReceipt?:(input:{serverSessionToken:string|null;investigationId:string})=>Promise<OutcomeVerificationReceipt>;
  liveEvidence?:LiveApiDependencies;
  outcome?:(input:{serverSessionToken:string|null;investigationId:string})=>Promise<ResearchOutcome>;
  deliveryView?:(input:{serverSessionToken:string|null;investigationId:string})=>Promise<unknown>;
@@ -57,6 +61,22 @@ export async function handleInterrogativeApi(req:Request,services:ApiServices):P
  const url=new URL(req.url);
  if(url.pathname==="/api/research/live-investigations"||url.pathname.startsWith("/api/research/live-investigations/")){
   return services.liveEvidence?handleLiveEvidenceApi(req,services.liveEvidence):json({error:"Live evidence persistence disabled"},503);
+ }
+ const auditRoute=/^\/api\/research\/interrogative\/(hsi-interrogative-[a-zA-Z0-9-]{8,100})\/(context-audit|context-audit-review|outcome-receipt)$/.exec(url.pathname);
+ if(auditRoute){
+  const action=auditRoute[2]!,id=auditRoute[1]!,token=sessionFromCookie(req);
+  if(!token)return json({error:"Authentication required"},401);
+  if(url.search)return json({error:"Query overrides refused"},400);
+  if(req.method!==(action==="context-audit-review"?"POST":"GET"))return json({error:"Method not allowed"},405);
+  try{
+   if(action==="outcome-receipt")return services.outcomeReceipt?json(await services.outcomeReceipt({serverSessionToken:token,investigationId:id})):json({error:"Outcome receipt unavailable"},503);
+   if(!services.auditArchive)return json({error:"Context audit archive not configured"},503);
+   if(action==="context-audit")return json(await services.auditArchive.view(token,id));
+   if(req.headers.get("origin")!==url.origin)return json({error:"Origin verification failed"},403);
+   if((req.headers.get("content-type")??"").split(";")[0]?.trim().toLowerCase()!=="application/json")return json({error:"JSON required"},415);
+   const text=await boundedRequestText(req,16000);let value:unknown;try{value=JSON.parse(text)}catch{return json({error:"Invalid JSON"},400)}
+   return json(await services.auditArchive.decide(token,id,value));
+  }catch(e){if(e instanceof RequestBodyTooLarge)return json({error:"Payload too large"},413);if(e instanceof RequestBodyTimeout)return json({error:"Request body timed out"},408);return json({error:"Audit or receipt unavailable, changed or access denied"},403)}
  }
  const outcome=/^\/api\/research\/interrogative\/(hsi-interrogative-[a-zA-Z0-9-]{8,100})\/outcome$/.exec(url.pathname);
  if(outcome){
@@ -214,9 +234,11 @@ function workspaceError(error:unknown):Response{
  if(error instanceof InvestigationWorkspaceError)return json({code:error.code,error:error.publicMessage},error.status);
  return json({error:"Research workspace unavailable or operation denied"},403);
 }
-export function createNeonInterrogativeApiServices(config:{outcomeAttachments?:OutcomeAttachmentResolver;databaseUrl:string;neonProjectId?:string|null;writesEnabled?:boolean;sscReleaseId?:string;raComparisonReleaseId?:string;liveEvidenceRuntimeDatabaseUrl?:string;liveEvidenceWritesEnabled?:boolean}):ApiServices{
+export function createNeonInterrogativeApiServices(config:{auditArchive?:Pick<ContextAuditArchiveService,"view"|"decide">;outcomeAttachments?:OutcomeAttachmentResolver;databaseUrl:string;neonProjectId?:string|null;writesEnabled?:boolean;sscReleaseId?:string;raComparisonReleaseId?:string;liveEvidenceRuntimeDatabaseUrl?:string;liveEvidenceWritesEnabled?:boolean}):ApiServices{
  const workspace=createNeonInvestigationWorkspace(config);
  return {
+  auditArchive:config.auditArchive,
+  outcomeReceipt:args=>withInvestigationDelivery(config,false,s=>s.outcomeReceipt(args.serverSessionToken,args.investigationId)),
   liveEvidence:config.liveEvidenceRuntimeDatabaseUrl?createNeonLiveEvidenceDependencies({databaseUrl:config.databaseUrl,runtimeDatabaseUrl:config.liveEvidenceRuntimeDatabaseUrl,neonProjectId:config.neonProjectId,writesEnabled:config.liveEvidenceWritesEnabled===true}):undefined,
   graphContext:args=>loadOrCaptureInvestigationGraphContext({...config,...args}),
   workspace:args=>workspace.list(args),

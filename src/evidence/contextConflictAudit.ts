@@ -120,7 +120,11 @@ export function validateContextConflictAudit(value:ContextConflictAudit):void{
  if(value.blockedReason&&value.units.length)throw Error("Blocked source text cannot enter an audit artifact");
 }
 export function renderContextConflictAudit(audit:ContextConflictAudit,format:"json"|"markdown"):string{
- validateContextConflictAudit(audit);if(format==="json")return JSON.stringify(audit,null,2)+"\n";
+ validateContextConflictAudit(audit);return renderValidatedContextConflictAudit(audit,format);
+}
+/** Serialization only; callers must first verify the audit or its authenticated outcome receipt. */
+export function renderValidatedContextConflictAudit(audit:ContextConflictAudit,format:"json"|"markdown"):string{
+ if(format==="json")return JSON.stringify(audit,null,2)+"\n";
  const md=(s:string)=>s.replace(/[\\<>\[\]*_`#|]/g,c=>"\\"+c).replace(/[\r\n]/g," ");
  const lines=["# Context-Conflict Audit",md(audit.question),`Version ${audit.version}; SHA-256 ${audit.auditHash}; parent ${audit.parentAuditHash??"none"}.`,"Research use only; independent human review required. No scientific approval or graph promotion.","## Search coverage",...audit.searches.map(s=>`- ${s.intent}: ${s.status}. No consensus is inferred.`),"## Candidate comparison",...audit.report.map(r=>`- ${r.classification}: ${md(r.comparisonId)}. ${r.reasons.map(md).join(" ")}`),"## Passage-linked context"];
  for(const unit of audit.units){const c=unit.detailedContext;if(!c)continue;lines.push(`### ${md(unit.id)}`,`Source ${md(c.sourceId)}; version ${md(c.sourceVersion)}; passage ${md(c.passageId)}; digest ${c.passageSha256}; clearance ${md(c.clearanceReceiptId)}.`);for(const [field,v] of Object.entries(c.fields))lines.push(`- ${field}: ${v.status}; ${md(v.originalText??v.missingReason??"unknown")}${v.span?` [${v.span.start},${v.span.end})`:""}; normalized: ${md(v.normalized?JSON.stringify(v.normalized):"unresolved")}`);}

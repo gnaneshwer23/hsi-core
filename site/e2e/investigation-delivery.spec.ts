@@ -14,6 +14,7 @@ async function wire(page:Page,f:ReturnType<typeof deliveryHarness>,actor:string)
   const url=new URL(route.request().url()),match=/\/interrogative\/(hsi-interrogative-[a-zA-Z0-9-]+)(?:\/([^/]+))?$/.exec(url.pathname);if(!match)return route.fulfill({status:404});const id=match[1]!,action=match[2];
   try{
    if(!action){await f.service.view(actor,id);return route.fulfill({json:f.states.get(id)!.record})}
+   if(action==="outcome-receipt")return route.fulfill({json:await f.service.outcomeReceipt(actor,id)});
    if(action==="outcome"){
     const o=await f.service.outcome(actor,id),format=url.searchParams.get("format");
     if(!format)return route.fulfill({json:o});
