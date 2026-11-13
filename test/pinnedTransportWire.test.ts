@@ -49,7 +49,8 @@ describe("pinned transport: connection contract",()=>{
  });
  it("refuses server-controlled framing headers, an empty body and an oversize body, with no connection",async()=>{
   const f=fake({status:200});
-  for(const headers of [{host:"x"},{"Content-Length":"1"},{connection:"keep-alive"},{"transfer-encoding":"chunked"},{"proxy-authorization":"x"}])
+  const framing:Record<string,string>[]=[{host:"x"},{"Content-Length":"1"},{connection:"keep-alive"},{"transfer-encoding":"chunked"},{"proxy-authorization":"x"}];
+  for(const headers of framing)
    await expect(createPinnedProviderTransport(()=>({body:"{}",headers}),PUBLIC,f.request)(config,payload,ctx())).rejects.toThrow("framing");
   await expect(createPinnedProviderTransport(()=>({body:"",headers:{}}),PUBLIC,f.request)(config,payload,ctx())).rejects.toThrow("wire body");
   await expect(createPinnedProviderTransport(()=>({body:"x".repeat(65537),headers:{}}),PUBLIC,f.request)(config,payload,ctx())).rejects.toThrow("wire body");
