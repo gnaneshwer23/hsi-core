@@ -20,8 +20,8 @@ test('one snapshot, question and selected assertion survive home to Science to r
     if (r.method() === 'POST') posts.push(r.url());
   });
   await page.goto('/');
-  await page.getByRole('button', { name: 'Open the investigation graph', exact: true }).click();
-  const graph = page.getByRole('region', { name: 'Versioned investigation graph', exact: true });
+  await page.getByRole('link', { name: 'Open full explorer ↗', exact: true }).click();
+  const graph = page.locator('.ig-experience');
   await expect(graph).toBeVisible();
   await graph.getByText("Question and filters", {exact:true}).click();
   await graph
@@ -151,7 +151,7 @@ test('unmatched snapshot, path, entity, comparison and model parameters reject w
 test('tampered snapshot cannot present reviewed relationships or fall back to educational data', async ({
   page,
 }) => {
-  await page.route('**/research/domain-graph/versions/*.json', (r) =>
+  await page.route('**/api/research/graph-snapshot?*', (r) =>
     r.fulfill({ json: { ...bundle, scientificApproval: true } }),
   );
   await page.goto('/science/graph');

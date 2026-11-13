@@ -61,6 +61,7 @@ export function PlatformPublicPage() {
         dark
       >
         <GovernanceChain />
+        <p><Link to="/intelligence">Meet the Intelligence Collective →</Link> — proposed specialist capabilities, responsibilities and current maturity.</p>
         <p>
           Specialist biological tools support these roles. An optional planner remains restricted until an
           independently reviewed comparison demonstrates benefit. More agents are not a substitute for better

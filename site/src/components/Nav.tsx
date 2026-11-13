@@ -1,27 +1,23 @@
+import {HsiIdentity} from "./HsiIdentity";
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { authBaseUrl, hsiAuth } from "../lib/hsiAuth";
 import {
   PRIMARY_NAV_LINKS,
   PRIMARY_NAV_CTA,
-  RESEARCH_NAV_LINKS,
   isPublicMarketingPath,
   isAccountPath,
 } from "../lib/primaryNav";
 export function Nav() {
   const [open, setOpen] = useState(false),
-    [researchOpen, setResearchOpen] = useState(false),
     [scrolled, setScrolled] = useState(false),
     [signedIn, setSignedIn] = useState(false);
   const toggle = useRef<HTMLButtonElement>(null),
-    drawer = useRef<HTMLDivElement>(null),
-    dropdown = useRef<HTMLDivElement>(null),
-    researchButton = useRef<HTMLButtonElement>(null);
+    drawer = useRef<HTMLDivElement>(null);
   const { pathname } = useLocation();
   const workspace = !isPublicMarketingPath(pathname) && !isAccountPath(pathname);
   useEffect(() => {
     setOpen(false);
-    setResearchOpen(false);
   }, [pathname]);
   useEffect(() => {
     let active = true;
@@ -44,24 +40,6 @@ export function Nav() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-  useEffect(() => {
-    if (!researchOpen) return;
-    const close = (e: PointerEvent) => {
-      if (!dropdown.current?.contains(e.target as Node)) setResearchOpen(false);
-    };
-    const key = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setResearchOpen(false);
-        researchButton.current?.focus();
-      }
-    };
-    document.addEventListener("pointerdown", close);
-    document.addEventListener("keydown", key);
-    return () => {
-      document.removeEventListener("pointerdown", close);
-      document.removeEventListener("keydown", key);
-    };
-  }, [researchOpen]);
   useEffect(() => {
     if (!open) return;
     const previous = document.body.style.overflow;
@@ -114,41 +92,10 @@ export function Nav() {
     <header className={`hsi-nav${scrolled ? " is-scrolled" : ""}${workspace ? " hsi-nav-workspace" : ""}`}>
       <div className="hsi-nav-inner">
         <Link to="/" className="hsi-wordmark" aria-label="Human Super Intelligence home">
-          <span aria-hidden="true" className="hsi-brand-symbol">
-            H
-          </span>
-          <span>
-            HSI<small>Human Super Intelligence</small>
-          </span>
+          <HsiIdentity/>
         </Link>
         <nav aria-label="Primary" className="hsi-desktop-nav">
-          {PRIMARY_NAV_LINKS.map((l) =>
-            l.to === "/research" ? (
-              <div className="hsi-research-menu" ref={dropdown} key={l.to}>
-                <button
-                  ref={researchButton}
-                  type="button"
-                  aria-expanded={researchOpen}
-                  aria-controls="research-pages"
-                  className={RESEARCH_NAV_LINKS.some((r) => r.to === pathname) ? "active" : ""}
-                  onClick={() => setResearchOpen((v) => !v)}
-                >
-                  Research <span aria-hidden="true">⌄</span>
-                </button>
-                <div id="research-pages" hidden={!researchOpen}>
-                  {RESEARCH_NAV_LINKS.map((r) => (
-                    <NavLink key={r.to} to={r.to} onClick={() => setResearchOpen(false)}>
-                      {r.label}
-                    </NavLink>
-                  ))}
-                </div>
-              </div>
-            ) : (
-              <NavLink key={l.to} to={l.to}>
-                {l.label}
-              </NavLink>
-            ),
-          )}
+          {PRIMARY_NAV_LINKS.map(l=><NavLink key={l.to} to={l.to} end={l.to==='/'}>{l.label}</NavLink>)}
         </nav>
         <div className="hsi-header-actions">
           <Link className="hsi-signin" to={signedIn ? "/research/account" : "/sign-in"}>
@@ -194,24 +141,15 @@ export function Nav() {
             </button>
           </div>
           <nav aria-label="Mobile navigation">
-            <NavLink to="/">Home</NavLink>
             {PRIMARY_NAV_LINKS.map((l) => (
               <NavLink key={l.to} to={l.to}>
                 {l.label}
               </NavLink>
             ))}
-            <div className="hsi-mobile-research">
-              <span>Research</span>
-              {RESEARCH_NAV_LINKS.filter((l) => l.to !== "/research").map((l) => (
-                <NavLink key={l.to} to={l.to}>
-                  {l.label}
-                </NavLink>
-              ))}
-            </div>
             <NavLink to={signedIn ? "/research/account" : "/sign-in"}>
               {signedIn ? "Account" : "Sign in"}
             </NavLink>
-            <Link to="/contact">Request access</Link>
+            <Link to="/sign-up">Sign up</Link>
           </nav>
         </div>
       )}

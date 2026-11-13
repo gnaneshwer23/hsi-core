@@ -71,7 +71,7 @@ function NodeLabel({label,x,y,active,near,compact,index,id,focusPoint}:{label:st
  </g>;
 }
 
-export function GraphVisual({graph,selected,onSelect,onSelectEdge,edgeDetails,caption="Educational draft · no scientific approval or clinical advice",exportMetadata}:{graph:CanvasGraph;selected:string;onSelect:(id:string)=>void;onSelectEdge?:(id:string)=>void;edgeDetails?:Record<string,{negated:boolean;contextual:boolean;label:string}>;caption?:string;exportMetadata?:Record<string,string>}){
+export function GraphVisual({embedded=false,graph,selected,onSelect,onSelectEdge,edgeDetails,caption="Educational draft · no scientific approval or clinical advice",exportMetadata}:{embedded?:boolean;graph:CanvasGraph;selected:string;onSelect:(id:string)=>void;onSelectEdge?:(id:string)=>void;edgeDetails?:Record<string,{negated:boolean;contextual:boolean;label:string}>;caption?:string;exportMetadata?:Record<string,string>}){
  const markerId=useId().replaceAll(':','')+'-arrow';
  const [zoom,setZoom]=useState(1),[pan,setPan]=useState({x:0,y:0}),[message,setMessage]=useState(""),ref=useRef<SVGSVGElement|null>(null);
  const dense=graph.nodes.length>36;
@@ -118,7 +118,7 @@ export function GraphVisual({graph,selected,onSelect,onSelectEdge,edgeDetails,ca
  const resetView=()=>{setPositions({});const next=fitGraphView(initial);setZoom(next.zoom);setPan(next.pan);setMessage(`View fitted · offset ${Math.round(next.pan.x)}, ${Math.round(next.pan.y)}`)};
  if(oversized)return <p role="status">This view supports up to 500 nodes. Narrow the graph filters to view a smaller network; use the text view to inspect connections.</p>;
  return <div className="xp-graph-frame kg-canvas"><div className="xp-graph-toolbar" role="group" aria-label="Graph view controls"><button type="button" aria-label="Zoom in graph" disabled={zoom>=3} onClick={()=>changeZoom(.2)}>+</button><button type="button" aria-label="Zoom out graph" disabled={zoom<=.4} onClick={()=>changeZoom(-.2)}>−</button><span data-testid="graph-zoom-pct">{Math.round(zoom*100)}%</span>{[["Pan graph left",-25,0],["Pan graph right",25,0],["Pan graph up",0,-25],["Pan graph down",0,25]].map(([label,x,y],i)=><button type="button" key={label} aria-label={String(label)} onClick={()=>shift(Number(x),Number(y))}>{["←","→","↑","↓"][i]}</button>)}<button type="button" onClick={resetView}>Fit network</button><button type="button" aria-pressed={labels} aria-label={dense?"Toggle all concept labels. Dense networks wrap and stagger labels.":"Toggle all concept labels"} onClick={()=>setLabels(v=>!v)}>{labels?(dense?"Focus labels":"Fewer labels"):"All labels"}</button></div>
- <svg ref={ref} viewBox="0 0 900 650" role="group" aria-label="Interactive graph of biological entities" onPointerDown={start} onPointerMove={move} onPointerUp={end} onPointerCancel={()=>{drag.current=null}}>
+ <svg ref={ref} viewBox={embedded?"120 60 660 530":"0 0 900 650"} role="group" aria-label="Interactive graph of biological entities" onPointerDown={start} onPointerMove={move} onPointerUp={end} onPointerCancel={()=>{drag.current=null}}>
  <defs>
   <marker id={markerId} viewBox="0 0 10 10" refX="18" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#9fd6cb"/></marker>
    <radialGradient id={markerId+'-glow'} cx="50%" cy="45%" r="65%"><stop offset="0%" stopColor="#1a3a3c"/><stop offset="100%" stopColor="#0F2428"/></radialGradient>

@@ -1,8 +1,9 @@
+import {intelligenceCapabilities} from "../intelligenceCollective";
 /** One public metadata policy for generated HTML and client navigation. No scientific endorsement implied. */
 export const SITE_ORIGIN='https://www.humansuperintelligence.tech';
 export const SOCIAL_IMAGE=SITE_ORIGIN+'/social/hsi-research.png';
 export const SEO_PAGES:Record<string,{title:string;description:string;name:string}>={
- '/':{name:'Home',title:'See Why the Evidence Conflicts | Human Super Intelligence',description:'Investigate complex disease mechanisms with traceable evidence, inspectable biological context and explicit uncertainty. Explore the illustrative Context-Conflict Audit and independent research governance.'},
+ '/':{name:'Home',title:'Connected Evidence and Biological Context | Human Super Intelligence',description:'Investigate complex disease mechanisms with traceable evidence, inspectable biological context and explicit uncertainty. Explore the illustrative Context-Conflict Audit and independent research governance.'},
  '/platform':{name:'Platform',title:'Connected Biomedical Research Platform | HSI',description:'The intelligence behind connected biomedical research: governed evidence, biological knowledge, contextual investigation and independent scientific review.'},
  '/how-it-works':{name:'How it works',title:'How HSI Works: Question to Research Brief | HSI',description:'HSI investigation journey: understand the question, retrieve evidence, connect mechanisms, evaluate conflict and gaps, label hypotheses, obtain independent review and export a traceable brief.'},
  '/technology':{name:'Technology',title:'Knowledge Graph & Research Technology | Human Super Intelligence',description:'How HSI links source provenance, biological knowledge graphs, research workflows and accountable review while each product keeps its own data, permissions and interfaces.'},
@@ -42,6 +43,8 @@ const NOINDEX_PAGES:Record<string,{name:string;title:string;description:string}>
  '/research/community-feed':{name:'Research community',title:'Research Community Examples | Human Super Intelligence',description:'Example community posts with evidence tiers and provenance. Sharing is opt-in. No outbound messages.'},
  '/demo':{name:'Illustrative walkthrough',title:'Illustrative Research Walkthrough | Human Super Intelligence',description:'Guided walkthrough of one research record. Not a diagnosis, a prescription, or confirmed trial eligibility.'}
 };
+SEO_PAGES['/intelligence']={name:'Intelligence Collective',title:'The HSI Intelligence Collective | Evidence, Context and Review',description:'Explore the proposed HSI capabilities for source integrity, biological investigation and accountable review. A capability architecture, not a claim of live scientific validation.'};
+for(const a of intelligenceCapabilities)SEO_PAGES['/intelligence/'+a.slug]={name:a.name,title:a.name+' — '+a.role+' | HSI',description:a.purpose+' Proposed capability architecture; live execution and independent scientific acceptance remain gated.'};
 export type SeoMetadata={title:string;description:string;canonical:string;indexable:boolean;name:string;structuredData:Record<string,unknown>|null};
 export function getSeoMetadata(pathname:string,noindex=false):SeoMetadata{
  const page=Object.hasOwn(SEO_PAGES,pathname)?SEO_PAGES[pathname]:undefined;
