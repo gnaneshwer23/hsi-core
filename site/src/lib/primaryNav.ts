@@ -1,8 +1,7 @@
 /** Canonical public research story. All existing tools and secondary resources retain their routes. */
 export const PRIMARY_NAV_LINKS = [
- { to: "/platform", label: "Platform"}, { to: "/research", label: "Research"},
- { to: "/science", label: "Science"}, { to: "/applications", label: "Applications"},
- { to: "/trust", label: "Trust"}, { to: "/about", label: "About"}
+ {to:"/",label:"Home"},{to:"/how-it-works",label:"How it works"},
+ {to:"/research",label:"Research"},{to:"/evidence-intelligence",label:"Evidence intelligence"}
 ] as const;
 export const RESEARCH_NAV_LINKS=[
  {to:"/context-conflict-audit",label:"Context-Conflict Audit"},
@@ -21,6 +20,6 @@ export const PUBLIC_MARKETING_PATHS=[
  "/context-conflict-audit","/evidence-intelligence","/research-briefs","/applications","/trust","/about"
 ] as const;
 /** Destination explains browser-only drafting; this CTA does not claim that a request was delivered. */
-export const PRIMARY_NAV_CTA={ to: "/contact", label: "Request access"} as const;
+export const PRIMARY_NAV_CTA={ to: "/sign-up", label: "Sign up"} as const;
 export function isPublicMarketingPath(pathname:string){return pathname.startsWith("/intelligence/") || (PUBLIC_MARKETING_PATHS as readonly string[]).includes(pathname)}
 export function isAccountPath(pathname:string){return ["/sign-in","/sign-up","/forgot-password","/reset-password","/research/account"].includes(pathname)}
