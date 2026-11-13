@@ -217,6 +217,11 @@ test('legacy educational bookmarks and advanced domain tools remain explicitly a
   await expect(
     page.getByRole('heading', { name: 'Living health knowledge graph', exact: true }),
   ).toBeVisible();
+  await page.goto('/research/knowledge-graph?scope=all&condition=Type+2+diabetes');
+  await expect(
+    page.getByRole('heading', { name: 'Connected research network', exact: true }),
+  ).toBeVisible();
+  await expect(page.getByLabel('Disease context', { exact: true })).toHaveValue('Type 2 diabetes');
   await page.goto('/science/graph?dataset=educational');
   await expect(page.locator('.kg-honesty-banner')).toContainText('educational topic map');
   await ready(page);
