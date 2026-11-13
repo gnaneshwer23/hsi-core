@@ -20,6 +20,6 @@ let fixture:unknown;
 try{fixture=JSON.parse(readFileSync(path,"utf8"))}catch{console.error("Cannot read a JSON fixture at "+path);process.exit(2)}
 try{
  const result=await runFixtureInvestigation({fixture,storeDirectory:resolve(flag("--out")??"out/investigations")});
- console.log(args.includes("--json")?JSON.stringify({notice:result.notice,auditHash:result.audit.auditHash,version:result.audit.version,scope:result.audit.diseaseScope,verifier:result.audit.verifier,report:result.audit.report,rejections:result.rejections},null,1):result.brief);
+ console.log(args.includes("--json")?JSON.stringify({notice:result.notice,auditHash:result.audit.auditHash,version:result.audit.version,scope:result.audit.diseaseScope,verifier:result.audit.verifier,report:result.audit.report,rejections:result.rejections,orientation:result.orientation?{entities:result.orientation.entities,searchTerms:result.orientation.searchTerms,navigationOnly:true}:null},null,1):result.brief);
 }catch(error){console.error("Run failed: "+(error instanceof Error?error.message:"unknown error"));process.exit(1)}
 export {};
