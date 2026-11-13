@@ -776,6 +776,11 @@ export function InvestigationGraphExperience({ embedded = false }: { embedded?: 
                   not recorded in this schema. No confirmed contradiction, pooled effect, causal
                   bridge or scientific approval is produced.
                 </p>
+                <p>
+                  Cell state, phenotype/stage, sample size, controls and quantitative uncertainty
+                  are not extracted as structured fields in this snapshot. Absence of a recorded
+                  difference is not context equivalence.
+                </p>
               </>
             )}
           </section>
@@ -822,6 +827,20 @@ export function InvestigationGraphExperience({ embedded = false }: { embedded?: 
                 ))}
                 <dt>Dose / units</dt>
                 <dd>Not extracted in this snapshot</dd>
+                <dt>Cell type / state context</dt>
+                <dd>
+                  Not extracted as structured study context; graph entity labels do not supply it.
+                </dd>
+                <dt>Phenotype / disease stage</dt>
+                <dd>Not extracted in this snapshot</dd>
+                <dt>Sample size / cohort size</dt>
+                <dd>Not extracted in this snapshot</dd>
+                <dt>Controls</dt>
+                <dd>Not extracted in this snapshot</dd>
+                <dt>Quantitative uncertainty</dt>
+                <dd>
+                  Not extracted; no effect estimate, interval or calibrated confidence is inferred.
+                </dd>
                 <dt>Annotation basis</dt>
                 <dd>{pretty(edge.contextStatus)}</dd>
                 <dt>Limits</dt>

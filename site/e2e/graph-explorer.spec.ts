@@ -32,6 +32,6 @@ test('canvas supports dragging, wheel zoom and keyboard evidence inspection with
  await expect(page.getByRole('region',{name:'Relationship evidence dossier'})).toContainText('Independent scientific review');
 });
 test('graph explorer fits narrow screens and keeps source-linked SSc graph separately navigable',async({page})=>{
- await page.setViewportSize({width:320,height:800});await page.goto('/science/graph');expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
+ await page.setViewportSize({width:320,height:800});await page.goto('/science/graph?dataset=educational');expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
  await page.getByText('Systemic sclerosis · separate source-linked research dataset',{exact:true}).click();await expect(page.getByRole('heading',{name:'Systemic sclerosis · Tfh–IL-21–B-cell evidence map',exact:true})).toBeVisible();
 });
