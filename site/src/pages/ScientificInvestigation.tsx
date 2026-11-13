@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+import { RESEARCH_CONTEXT_KEYS, parseInvestigationQuestionId } from "../lib/researchContext";
 import {
   EVIDENCE_TIERS,
   EVIDENCE_TIER_LABEL,
@@ -44,7 +45,14 @@ function download(filename: string, content: string, type: string) {
 }
 
 export function ScientificInvestigationPage() {
-  const [questionId, setQuestionId] = useState<(typeof EXAMPLE_QUESTIONS)[number]["id"]>("gut-neuro");
+  const [searchParams] = useSearchParams();
+  const [questionId, setQuestionId] = useState<(typeof EXAMPLE_QUESTIONS)[number]["id"]>(
+    () =>
+      parseInvestigationQuestionId(
+        searchParams.get(RESEARCH_CONTEXT_KEYS.question),
+        EXAMPLE_QUESTIONS.map((item) => item.id),
+      ) ?? "gut-neuro",
+  );
   const [stepIndex, setStepIndex] = useState(0);
   const [comment, setComment] = useState("");
   const [reviewNote, setReviewNote] = useState("");

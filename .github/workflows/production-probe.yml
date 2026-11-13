@@ -1,0 +1,25 @@
+name: Production probe
+# Read-only. Sends only requests the handlers reject before any upstream call (bad input, wrong method,
+# missing session) and checks the public health response exposes no endpoint ids.
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.3.14'
+      - name: Wait for the production deployment after a push
+        if: github.event_name == 'push'
+        run: sleep 240
+      - name: Probe production
+        run: bun scripts/probe-deploy.ts https://www.humansuperintelligence.tech
