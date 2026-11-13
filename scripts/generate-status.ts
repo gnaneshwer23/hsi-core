@@ -42,11 +42,59 @@ export function capabilityLevel(status: readonly string[]): CapabilityLevel {
   return "absent";
 }
 
+export type CollectiveAgent = {
+  name: string;
+  displayName: string;
+  layer: string;
+  fullName: string;
+  priority: string;
+  manifestRole: string | null;
+  purpose: string;
+  nonResponsibilities: string[];
+  registerIds: string[];
+  modules: string[];
+  modelBacked: boolean;
+  humanApproval: string;
+  dependsOn: string[];
+  governedPublicationBy: string[] | null;
+  nameCollision: string | null;
+  mayApproveScience: boolean;
+  mayPromoteGraph: boolean;
+};
+export type CollectiveMap = { schemaVersion: string; status: string; rules: string[]; agents: CollectiveAgent[] };
+
+export function renderCollectiveSection(register: { capabilities: CapabilityRow[]; collective?: CollectiveMap }): string {
+  const collective = register.collective;
+  if (!collective) return "";
+  const byId = new Map(register.capabilities.map((row) => [row.id, row]));
+  const rows = collective.agents.map((a) => {
+    const levels = a.registerIds.length
+      ? a.registerIds.map((id) => `${id}: ${byId.has(id) ? capabilityLevel(byId.get(id)!.status) : "missing"}`).join(", ")
+      : "no register row yet";
+    const modules = a.modules.map((m) => `\`${m}\``).join(", ");
+    return `| ${a.displayName} | ${a.priority} | ${a.layer} | ${a.manifestRole ?? "none"} | ${levels} | ${a.modelBacked ? "yes" : "no"} | ${a.dependsOn.join(", ") || "none"} | ${modules} | ${a.humanApproval} |`;
+  });
+  return `
+## Collective map
+
+${collective.status}
+
+${collective.rules.map((rule) => `- ${rule}`).join("\n")}
+
+| Name | Priority | Layer | Agent role contract | Register rows (engineering level) | Model-backed | Depends on | Modules | Human approval needed |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+${rows.join("\n")}
+
+Name collisions with Aksh Health agents: ${collective.agents.filter((a) => a.nameCollision).map((a) => `${a.name} (${a.nameCollision})`).join(" ")}
+`;
+}
+
 export function renderStatusMarkdown(register: {
   registerId: string;
   asOf: string;
   honesty: Record<string, unknown>;
   capabilities: CapabilityRow[];
+  collective?: CollectiveMap;
 }): string {
   const counts: Record<CapabilityLevel, number> = { implemented: 0, partial: 0, stub: 0, absent: 0 };
   const lines = register.capabilities.map((row) => {
@@ -93,7 +141,7 @@ Current implementation-to-acceptance reconciliation: \`docs/audits/HSI_IMPLEMENT
 | ID | Group | Name | Engineering level | Register status | Deployment acceptance | Scientific acceptance | Evidence | Gap |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 ${lines.join("\n")}
-
+${renderCollectiveSection(register)}
 ## Superseded status documents
 
 The following documents are historical. They are not the current status:
@@ -116,6 +164,7 @@ function main(): void {
     asOf: string;
     honesty: Record<string, unknown>;
     capabilities: CapabilityRow[];
+    collective?: CollectiveMap;
   };
   const markdown = renderStatusMarkdown(register);
   const check = process.argv.includes("--check");
