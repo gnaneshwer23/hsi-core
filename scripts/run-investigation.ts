@@ -28,7 +28,7 @@ if(flag("--mode")==="live"||args.includes("--live")){
   console.log(`- Hosts: ${plan.hosts.join(", ")}; at most ${plan.maxRequests} requests; search terms: ${plan.terms.join(", ")}; ranking terms: ${plan.rankingTerms.join(", ")}; passages go to a model only after a signed clearance permits it`);
   process.exit(0);
  }
- console.error("Live execution is not available: the open items above must be closed first.");
+ console.error("Live execution is refused from this CLI: it also needs the source integrity gate (managed signer) and injected provider wiring; see src/liveRun.ts runLiveInvestigation.");
  process.exit(2);
 }
 const fixtureArg=flag("--fixture");
