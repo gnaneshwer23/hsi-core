@@ -19,6 +19,7 @@ import {
   neighboursGroupedByKind,
   countNodesByKind,
 } from "../features/science/graphExplorer";
+import {InvestigationGraphExperience} from "../components/InvestigationGraphExperience";
 import "../styles/science-body.css";
 import "../styles/science-graph.css";
 import "../styles/graph-explorer.css";
@@ -83,6 +84,12 @@ function GraphGuide({onDismiss}: {onDismiss: () => void}) {
 }
 
 export function ScienceGraph() {
+  const [params] = useSearchParams();
+  const legacySelection = !params.has("domainVersion") && SCIENCE_GRAPH.nodes.some(n => n.id === params.get("node"));
+  return params.get("dataset") === "educational" || legacySelection ? <EducationalScienceGraph/> : <InvestigationGraphExperience/>;
+}
+
+function EducationalScienceGraph() {
   const [ssc, setSsc] = useState<SscDraft | null>(null);
   const [sscError, setSscError] = useState("");
   const [sscSearch, setSscSearch] = useState("");

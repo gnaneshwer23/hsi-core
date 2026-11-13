@@ -4,7 +4,7 @@ import {readFile} from 'node:fs/promises';
 const graph=JSON.parse(await readFile(new URL('../public/research/claim-graph/graph.v1.json',import.meta.url),'utf8'));
 async function ready(page:any){await page.goto('/research/knowledge-graph?dataset=source-corpus');await expect(page.getByRole('heading',{name:'Claim-linked network',exact:true})).toBeVisible()}
 test('claim graph is connected to the topic explorer and shows actual source counts without approval',async({page})=>{
- await page.goto('/science/graph');await page.getByRole('link',{name:'Claim-linked research graph',exact:true}).click();await page.getByRole('link',{name:'RA/SSc source corpus',exact:true}).click();await expect(page.getByRole('heading',{name:'Claim-linked network',exact:true})).toBeVisible();
+ await page.goto('/science/graph?dataset=educational');await page.getByRole('link',{name:'Claim-linked research graph',exact:true}).click();await page.getByRole('link',{name:'RA/SSc source corpus',exact:true}).click();await expect(page.getByRole('heading',{name:'Claim-linked network',exact:true})).toBeVisible();
  await expect(page.locator('.cg-release')).toContainText('15 concepts · 7 claims · 5 sources');await expect(page.locator('.cg-release')).toContainText('0 human-reviewed');await expect(page.getByRole('button',{name:'Approve',exact:true})).toHaveCount(0);
  await expect(page.locator('meta[name=robots]')).toHaveAttribute('content','noindex, follow');
 });
