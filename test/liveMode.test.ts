@@ -27,10 +27,10 @@ describe("live readiness gate",()=>{
  test("nothing configured: not ready, every owner listed, never throws",()=>{
   for(const bad of [undefined,null,"x",42,[],{}]){const r=assessLiveReadiness(bad,{});expect(r.ready).toBe(false);expect(r.blocking.length).toBeGreaterThan(5);expect(Object.keys(r.byOwner)).toContain("source-policy owner")}
  });
- test("a fully populated configuration is still NOT ready while engineering gaps remain, and only those remain",()=>{
+ test("a fully populated configuration is still NOT ready while engineering gaps remain, and only those remain (the source authority tool now exists)",()=>{
   const r=assessLiveReadiness(validConfig(),env);
-  expect(open(validConfig())).toEqual(["engineering-sourceAuthorityService","engineering-extractionTask","engineering-liveRunPath"]);
-  expect(r.ready).toBe(false);expect(Object.values(ENGINEERING_GAPS).every(g=>g.implemented===false)).toBe(true);
+  expect(open(validConfig())).toEqual(["engineering-extractionTask","engineering-liveRunPath"]);
+  expect(r.ready).toBe(false);expect(ENGINEERING_GAPS.sourceAuthorityService.implemented).toBe(true);expect(ENGINEERING_GAPS.extractionTask.implemented).toBe(false);expect(ENGINEERING_GAPS.liveRunPath.implemented).toBe(false);
   expect(r.items.filter(i=>i.heldBy!=="engineering").every(i=>i.status==="met")).toBe(true);
  });
  test("each human-held requirement fails closed when wrong",()=>{
