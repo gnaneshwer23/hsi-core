@@ -1284,6 +1284,7 @@
           "E-CONT"
         ],
         "modules": [
+          "src/sentinel.ts",
           "src/evidence/incrementalEvidenceMonitoring.ts",
           "src/evidence/livingEvidenceExpansion.ts",
           "src/expansion/sourceRereview.ts",
