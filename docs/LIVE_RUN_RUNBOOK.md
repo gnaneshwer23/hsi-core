@@ -40,9 +40,15 @@ Read the cue coverage. If few passages carry every cue, expect most pairs to abs
 
 ## 3. The run
 
+First keep SENTINEL fresh. A live run needs a successful re-evaluation within two intervals; schedule this (cron or a job runner you own):
+
+```bash
+bun scripts/sentinel-tick.ts --config live.json --integrity-config integrity.json --sentinel-dir out/sentinel --interval-minutes 60
+```
+
 ```bash
 bun scripts/run-investigation.ts --mode live --config live.json --integrity-config integrity.json \
-  --execute --question "..." --scope gut-immune-metabolic --reviewer user:<your-name> --out out/live
+  --execute --question "..." --scope gut-immune-metabolic --reviewer user:<your-name> --sentinel-dir out/sentinel --out out/live
 ```
 
 `--execute` refuses unless: a named human reviewer (`user:<name>`) is given; the scope is valid; the offline preflight passes; `maxModelCallsPerRun` is 40 or less and `maxArticlesPerIntent` is 3 or less; and a human types `EXECUTE <job id>` at an interactive terminal (no terminal, no run). The run is a durable job (one at a time, never re-run once complete) and re-checks both readiness gates, the kill switch and the daily cap. Integrity config needs `signer.keyVersionName` (an exact Cloud KMS key version) and `signer.publicKeyEnv`. Approvals are read from `approvals/<deploymentId>.json` next to the operation store.
