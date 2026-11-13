@@ -409,6 +409,10 @@
       "destination": "/_pages/intelligence--scout.html"
     },
     {
+      "source": "/intelligence/lantern",
+      "destination": "/_pages/intelligence--lantern.html"
+    },
+    {
       "source": "/intelligence/prism",
       "destination": "/_pages/intelligence--prism.html"
     },
@@ -423,6 +427,10 @@
     {
       "source": "/intelligence/parallax",
       "destination": "/_pages/intelligence--parallax.html"
+    },
+    {
+      "source": "/intelligence/vantage",
+      "destination": "/_pages/intelligence--vantage.html"
     },
     {
       "source": "/intelligence/horizon",
@@ -450,6 +458,16 @@
     }
   ],
   "redirects": [
+    {
+      "source": "/intelligence/prism",
+      "destination": "/intelligence/lantern",
+      "permanent": true
+    },
+    {
+      "source": "/intelligence/horizon",
+      "destination": "/intelligence/vantage",
+      "permanent": true
+    },
     {
       "source": "/products",
       "destination": "/modules",
