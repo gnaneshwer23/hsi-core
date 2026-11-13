@@ -3,6 +3,7 @@ import type { DomainBundle } from '../../../src/knowledgeGraph/domainGraph';
 import { networkProjection, connectionGroups } from '../../../src/knowledgeGraph/networkExplorer';
 import { GraphVisual, type CanvasGraph } from '../features/science/GraphVisual';
 import '../styles/research-network.css';
+import { GRAPH_KIND_COLOURS } from '../features/science/graphExplorer';
 const pretty = (s: string) => s.replaceAll('_', ' ');
 export const NETWORK_KEYS = [
   'netQuery',
@@ -196,6 +197,22 @@ export function ResearchNetworkExplorer({
             Show unconnected concepts
           </label>
           <button onClick={reset}>Reset network filters</button>
+          <details className="rn-groups">
+            <summary>Entity colour groups</summary>
+            <div>
+              {[...new Set(bundle.nodes.map((n) => n.kind))].sort().map((kind) => (
+                <button
+                  key={kind}
+                  aria-pressed={f.kind === kind}
+                  onClick={() => update({ netKind: f.kind === kind ? '' : kind })}
+                >
+                  <i style={{ background: GRAPH_KIND_COLOURS[kind] ?? '#9bcac0' }} />
+                  {pretty(kind)}
+                  <small>{bundle.nodes.filter((n) => n.kind === kind).length}</small>
+                </button>
+              ))}
+            </div>
+          </details>
           <details>
             <summary>Visible concepts ({slice.nodes.length})</summary>
             <div className="rn-concepts">

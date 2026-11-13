@@ -11,6 +11,18 @@ export function filterExplorerGraph(graph:GraphDataset,filters:ExplorerFilters,s
 }
 /** Kind colours for the instrument canvas — distinct from brand burgundy (selection only). */
 export const GRAPH_KIND_COLOURS:Record<string,string>={
+ 'biological concept':'#65CEE6',
+ 'cell state':'#A4A1EE',
+ cytokine:'#E8A0B0',
+ metabolite:'#D4B376',
+ 'metabolite class':'#D4B376',
+ 'metabolite mixture':'#D4B376',
+ 'microbial community':'#7BC9A0',
+ intervention:'#91B5E5',
+ medication:'#91B5E5',
+ phenotype:'#E89B6E',
+ outcome:'#B4CF83',
+ 'research process':'#B5BBC4',
  organ:'#65CEE6',
  tissue:'#D4B376',
  cell:'#A4A1EE',
