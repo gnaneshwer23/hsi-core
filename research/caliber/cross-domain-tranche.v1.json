@@ -1,0 +1,208 @@
+{
+  "schemaVersion": "hsi-caliber-tranche-1",
+  "id": "cross-domain-tranche-v1",
+  "status": "awaiting_scientist",
+  "note": "Slots only. Characteristics were proposed by engineering to cover failure modes; a scientist must choose the real public passages, adjudicate with at least two independent experts and replace this file. No labels are invented here.",
+  "cases": [
+    {
+      "id": "caliber-01",
+      "kind": "awaiting_scientist",
+      "scope": "ssc",
+      "requiredCharacteristic": "species mismatch explains divergence",
+      "passages": null,
+      "adjudication": {
+        "status": "unadjudicated"
+      }
+    },
+    {
+      "id": "caliber-02",
+      "kind": "awaiting_scientist",
+      "scope": "ra",
+      "requiredCharacteristic": "tissue compartment mismatch",
+      "passages": null,
+      "adjudication": {
+        "status": "unadjudicated"
+      }
+    },
+    {
+      "id": "caliber-03",
+      "kind": "awaiting_scientist",
+      "scope": "gut-immune-metabolic",
+      "requiredCharacteristic": "timepoint mismatch",
+      "passages": null,
+      "adjudication": {
+        "status": "unadjudicated"
+      }
+    },
+    {
+      "id": "caliber-04",
+      "kind": "awaiting_scientist",
+      "scope": "ssc",
+      "requiredCharacteristic": "assay or method difference",
+      "passages": null,
+      "adjudication": {
+        "status": "unadjudicated"
+      }
+    },
+    {
+      "id": "caliber-05",
+      "kind": "awaiting_scientist",
+      "scope": "ra",
+      "requiredCharacteristic": "same context, true conflict",
+      "passages": null,
+      "adjudication": {
+        "status": "unadjudicated"
+      }
+    },
+    {
+      "id": "caliber-06",
+      "kind": "awaiting_scientist",
+      "scope": "gut-immune-metabolic",
+      "requiredCharacteristic": "missing sample size",
+      "passages": null,
+      "adjudication": {
+        "status": "unadjudicated"
+      }
+    },
+    {
+      "id": "caliber-07",
+      "kind": "awaiting_scientist",
+      "scope": "ssc",
+      "requiredCharacteristic": "cell state difference",
+      "passages": null,
+      "adjudication": {
+        "status": "unadjudicated"
+      }
+    },
+    {
+      "id": "caliber-08",
+      "kind": "awaiting_scientist",
+      "scope": "ra",
+      "requiredCharacteristic": "dose or intervention difference",
+      "passages": null,
+      "adjudication": {
+        "status": "unadjudicated"
+      }
+    },
+    {
+      "id": "caliber-09",
+      "kind": "awaiting_scientist",
+      "scope": "gut-immune-metabolic",
+      "requiredCharacteristic": "retracted source (must be blocked)",
+      "passages": null,
+      "adjudication": {
+        "status": "unadjudicated"
+      }
+    },
+    {
+      "id": "caliber-10",
+      "kind": "awaiting_scientist",
+      "scope": "ssc",
+      "requiredCharacteristic": "identical context, consistent",
+      "passages": null,
+      "adjudication": {
+        "status": "unadjudicated"
+      }
+    },
+    {
+      "id": "caliber-11",
+      "kind": "awaiting_scientist",
+      "scope": "ra",
+      "requiredCharacteristic": "phenotype definition differs",
+      "passages": null,
+      "adjudication": {
+        "status": "unadjudicated"
+      }
+    },
+    {
+      "id": "caliber-12",
+      "kind": "awaiting_scientist",
+      "scope": "gut-immune-metabolic",
+      "requiredCharacteristic": "human vs organoid",
+      "passages": null,
+      "adjudication": {
+        "status": "unadjudicated"
+      }
+    },
+    {
+      "id": "caliber-13",
+      "kind": "awaiting_scientist",
+      "scope": "ssc",
+      "requiredCharacteristic": "single-source only",
+      "passages": null,
+      "adjudication": {
+        "status": "unadjudicated"
+      }
+    },
+    {
+      "id": "caliber-14",
+      "kind": "awaiting_scientist",
+      "scope": "ra",
+      "requiredCharacteristic": "two verifiers disagree",
+      "passages": null,
+      "adjudication": {
+        "status": "unadjudicated"
+      }
+    },
+    {
+      "id": "caliber-15",
+      "kind": "awaiting_scientist",
+      "scope": "gut-immune-metabolic",
+      "requiredCharacteristic": "passage quote not found (extraction failure)",
+      "passages": null,
+      "adjudication": {
+        "status": "unadjudicated"
+      }
+    },
+    {
+      "id": "caliber-16",
+      "kind": "awaiting_scientist",
+      "scope": "ssc",
+      "requiredCharacteristic": "unit normalisation needed",
+      "passages": null,
+      "adjudication": {
+        "status": "unadjudicated"
+      }
+    },
+    {
+      "id": "caliber-17",
+      "kind": "awaiting_scientist",
+      "scope": "ra",
+      "requiredCharacteristic": "abstract-only source (must be excluded)",
+      "passages": null,
+      "adjudication": {
+        "status": "unadjudicated"
+      }
+    },
+    {
+      "id": "caliber-18",
+      "kind": "awaiting_scientist",
+      "scope": "gut-immune-metabolic",
+      "requiredCharacteristic": "negative result vs positive result",
+      "passages": null,
+      "adjudication": {
+        "status": "unadjudicated"
+      }
+    },
+    {
+      "id": "caliber-19",
+      "kind": "awaiting_scientist",
+      "scope": "ssc",
+      "requiredCharacteristic": "cohort size very small",
+      "passages": null,
+      "adjudication": {
+        "status": "unadjudicated"
+      }
+    },
+    {
+      "id": "caliber-20",
+      "kind": "awaiting_scientist",
+      "scope": "ra",
+      "requiredCharacteristic": "paywalled full text (must not be retrieved)",
+      "passages": null,
+      "adjudication": {
+        "status": "unadjudicated"
+      }
+    }
+  ]
+}
