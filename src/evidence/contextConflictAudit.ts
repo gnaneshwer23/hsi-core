@@ -7,14 +7,17 @@ import type {ResearchSource,ResearchPassage} from "../researchContracts";
 import {isInvestigationScopeId,type InvestigationScopeId} from "../investigationScope";
 import {requiresScientificException} from "../researchV2/passageVerification";
 import {rejectPhiPayload} from "../cdsPhiBoundary";
-import {buildPassageLinkedContext,validatePassageLinkedContext} from "./passageLinkedContext";
+import {buildPassageLinkedContext,validatePassageLinkedContext,validateComparabilityPolicy,type ComparabilityPolicy} from "./passageLinkedContext";
 export type ContextConflictClass="consistent"|"potential_conflict"|"context_dependent"|"methodological_difference"|"insufficient_evidence";
 const hash=(v:unknown)=>createHash("sha256").update(canonicalEvidenceJson(v)).digest("hex");
 export function reportContextConflict(comparison:StructuredEvidenceComparison):{classification:ContextConflictClass;comparisonId:string;reasons:string[];scientificApproval:false;graphPromotable:false}{
  const incomplete=comparison.trace.contextDepth!=="passage_linked"||!comparison.trace.detailedComparability||["insufficient_evidence","not_comparable"].includes(comparison.trace.detailedComparability.status);
  const causal=requiresScientificException(comparison.left.predicate)||requiresScientificException(comparison.right.predicate);
- const classification:ContextConflictClass=incomplete||causal||comparison.outcome==="insufficient_comparability"||comparison.outcome==="insufficient_evidence"?"insufficient_evidence":comparison.outcome==="potential_contradiction"?"potential_conflict":comparison.outcome;
- return {classification,comparisonId:comparison.id,reasons:[...(incomplete?["Detailed context/estimand is missing, unresolved or not comparable"]:[]),...(causal?["Causal or therapeutic bridge requires independent evidence and review"]:[]),comparison.rationale],scientificApproval:false,graphPromotable:false};
+ const limited=(comparison.trace.detailedComparability?.nonBlockingMissing?.length??0)>0;
+ const base:ContextConflictClass=incomplete||causal||comparison.outcome==="insufficient_comparability"||comparison.outcome==="insufficient_evidence"?"insufficient_evidence":comparison.outcome==="potential_contradiction"?"potential_conflict":comparison.outcome;
+ // Consistency cannot be confirmed while optional context is unknown; a possible conflict is still surfaced for review.
+ const classification:ContextConflictClass=limited&&base==="consistent"?"insufficient_evidence":base;
+ return {classification,comparisonId:comparison.id,reasons:[...(limited?["Limited comparison: optional context fields are unreported ("+(comparison.trace.detailedComparability?.nonBlockingMissing??[]).join(", ")+")"]:[]),...(incomplete?["Detailed context/estimand is missing, unresolved or not comparable"]:[]),...(causal?["Causal or therapeutic bridge requires independent evidence and review"]:[]),comparison.rationale],scientificApproval:false,graphPromotable:false};
 }
 export type ContextAuditHit={id:string;source:ResearchSource;passage:ResearchPassage;clearanceReceiptId:string};
 export type ContextAuditSearch={intent:"support"|"oppose";status:OpposingSearchExecutionStatus;queriedAt:string;queryHash:string;sourceIds:string[];hits:ContextAuditHit[]};
@@ -25,6 +28,8 @@ export type ContextConflictAudit={
  report:ReturnType<typeof reportContextConflict>[];gaps:string[];blockedReason:string|null;
  verifier:{status:"checked_with_limitations"|"needs_evidence"|"failed"|"not_executed";receiptId:string|null};
  humanReview:{status:"required"};consensusEstablished:false;scientificApproval:false;graphPromotable:false;
+ /** Present only when a scientist-reviewed comparability policy governed the comparisons. */
+ comparabilityPolicy?:ComparabilityPolicy;
 };
 export type ContextAuditTarget={investigationId:string;diseaseScope:InvestigationScopeId;question:string;release:ContextConflictAudit["release"]};
 export function createContextConflictAuditRunner(deps:{
@@ -36,8 +41,11 @@ export function createContextConflictAuditRunner(deps:{
  /** Append must atomically compare the previous hash and retain immutable versions. */
  append:(artifact:Readonly<ContextConflictAudit>,expectedPrevious:string|null,signal:AbortSignal)=>Promise<void>;
  approvedNormalizerHashes?:readonly string[];
+ /** Scientist-reviewed comparability policy. Recorded in the audit so it can be re-derived and reviewed. */
+ comparabilityPolicy?:ComparabilityPolicy;
  timeoutMs?:number;now?:()=>string;
 }){
+ if(deps.comparabilityPolicy)validateComparabilityPolicy(deps.comparabilityPolicy);
  const {search,authorizePassage,extract,verify,append}=deps,enabled=deps.enabled===true,timeoutMs=deps.timeoutMs??30000,now=deps.now??(()=>new Date().toISOString());
  const normalizers=new Set([hash({version:"hsi-basic-units-taxa-1",aliases:[]}),...(deps.approvedNormalizerHashes??[])]);
  if([search,authorizePassage,extract,verify,append].some(fn=>typeof fn!=="function")||!Number.isInteger(timeoutMs)||timeoutMs<1000||timeoutMs>120000)throw Error("Trusted bounded audit dependencies required");
@@ -78,7 +86,7 @@ export function createContextConflictAuditRunner(deps:{
    }
    if(new Set(units.map(u=>u.id)).size!==units.length)throw Error("Duplicate extracted claim identity");
    const comparisons:StructuredEvidenceComparison[]=[];
-   for(let a=0;a<units.length;a++)for(let b=a+1;b<units.length;b++)comparisons.push(compareEvidenceUnits({left:units[a]!,right:units[b]!}));
+   for(let a=0;a<units.length;a++)for(let b=a+1;b<units.length;b++)comparisons.push(compareEvidenceUnits({left:units[a]!,right:units[b]!,policy:deps.comparabilityPolicy}));
    const report=comparisons.map(reportContextConflict),gaps=[...new Set([...(blockedReason?[blockedReason]:[]),...searches.filter(s=>s.status!=="completed_bounded").map(s=>`${s.intent}: ${s.status}; search completeness and consensus are not established`),...(units.length<2?["Fewer than two evidence units; pairwise conflict is not assessed"]:[]),...units.flatMap(u=>Object.entries(u.detailedContext!.fields).filter(([,v])=>!["reported","not_applicable"].includes(v.status)||v.status==="reported"&&!v.normalized).map(([k,v])=>u.id+": "+k+" "+v.status)),...report.flatMap(r=>r.classification==="insufficient_evidence"?r.reasons:[])])];
    let verifier:ContextConflictAudit["verifier"]={status:"not_executed",receiptId:null};
    if(units.length&&!blockedReason){
@@ -90,7 +98,7 @@ export function createContextConflictAuditRunner(deps:{
    for(const hit of blockedReason?[]:hits.values()){
     checkpoint();if(await authorizePassage(structuredClone(hit),["storage","display","comparison","export"],controller.signal)!==true)throw Error("Source clearance changed before artifact storage");
    }
-   const body={schemaVersion:"hsi-context-conflict-audit-1" as const,...target,version:(parent?.version??0)+1,parentAuditHash:parent?.auditHash??null,searches:searches.map(({hits:_,...metadata})=>metadata),units,comparisons,report,gaps,blockedReason,verifier,humanReview:{status:"required" as const},consensusEstablished:false as const,scientificApproval:false as const,graphPromotable:false as const};
+   const body={schemaVersion:"hsi-context-conflict-audit-1" as const,...target,version:(parent?.version??0)+1,parentAuditHash:parent?.auditHash??null,searches:searches.map(({hits:_,...metadata})=>metadata),units,comparisons,report,gaps,blockedReason,verifier,...(deps.comparabilityPolicy?{comparabilityPolicy:structuredClone(deps.comparabilityPolicy)}:{}),humanReview:{status:"required" as const},consensusEstablished:false as const,scientificApproval:false as const,graphPromotable:false as const};
    checkpoint();
    if(new TextEncoder().encode(canonicalEvidenceJson(body)).byteLength>2_000_000)throw Error("Audit artifact budget exceeded");
    const auditHash=hash(body),artifact={...body,id:"context-audit-"+auditHash.slice(0,32),auditHash};
@@ -116,7 +124,7 @@ export function validateContextConflictAudit(value:ContextConflictAudit):void{
  if(hash(body)!==auditHash||id!=="context-audit-"+auditHash.slice(0,32)||new TextEncoder().encode(canonicalEvidenceJson(body)).byteLength>2_000_000)throw Error("Context audit content hash mismatch");
  const comparisons:StructuredEvidenceComparison[]=[];
  for(const unit of value.units){if(!unit.detailedContext)throw Error("Detailed context required in audit");validatePassageLinkedContext(unit.detailedContext);}
- for(let a=0;a<value.units.length;a++)for(let b=a+1;b<value.units.length;b++)comparisons.push(compareEvidenceUnits({left:value.units[a]!,right:value.units[b]!}));
+ for(let a=0;a<value.units.length;a++)for(let b=a+1;b<value.units.length;b++)comparisons.push(compareEvidenceUnits({left:value.units[a]!,right:value.units[b]!,policy:value.comparabilityPolicy}));
  if(canonicalEvidenceJson(comparisons)!==canonicalEvidenceJson(value.comparisons)||canonicalEvidenceJson(comparisons.map(reportContextConflict))!==canonicalEvidenceJson(value.report))throw Error("Context audit comparison was not derived from its evidence");
  if(value.blockedReason&&value.units.length)throw Error("Blocked source text cannot enter an audit artifact");
 }

@@ -82,13 +82,30 @@ export function validatePassageLinkedContext(value:PassageLinkedContext):void{
   }else if(!["not_extracted","not_reported","not_applicable"].includes(v.status)||v.originalText!==null||v.span!==null||v.normalized!==null||!v.missingReason?.trim()||v.status==="not_applicable"&&critical.has(field))throw Error("Invalid detailed missingness");
  }
 }
-export type DetailedComparability={status:"aligned"|"context_difference"|"method_difference"|"not_comparable"|"insufficient_evidence";missing:DetailedContextField[];differences:DetailedContextField[];estimandAligned:boolean};
-export function comparePassageLinkedContexts(a:PassageLinkedContext,b:PassageLinkedContext):DetailedComparability{
- validatePassageLinkedContext(a);validatePassageLinkedContext(b);
- const missing=DETAILED_CONTEXT_FIELDS.filter(k=>!["reported","not_applicable"].includes(a.fields[k].status)||!["reported","not_applicable"].includes(b.fields[k].status)||a.fields[k].status==="reported"&&!a.fields[k].normalized||b.fields[k].status==="reported"&&!b.fields[k].normalized);
- const differences=DETAILED_CONTEXT_FIELDS.filter(k=>canonicalEvidenceJson(a.fields[k].normalized)!==canonicalEvidenceJson(b.fields[k].normalized)||a.fields[k].status!==b.fields[k].status);
+export type DetailedComparability={status:"aligned"|"context_difference"|"method_difference"|"not_comparable"|"insufficient_evidence";missing:DetailedContextField[];differences:DetailedContextField[];estimandAligned:boolean;
+ /** Present only when a reviewed comparability policy was applied. */
+ policyDigest?:string;nonBlockingMissing?:DetailedContextField[]};
+/** A scientist-reviewed statement of which context fields must be known before two findings may be compared at all. */
+export type ComparabilityPolicy={id:string;version:number;criticalFields:readonly DetailedContextField[];reviewRef:string;reviewers:readonly string[]};
+const POLICY_FLOOR:readonly DetailedContextField[]=["species","estimand"];
+export function validateComparabilityPolicy(p:ComparabilityPolicy):void{
+ const ok=p&&/^[a-z0-9][a-z0-9-]{2,63}$/.test(p.id)&&Number.isInteger(p.version)&&p.version>=1&&Array.isArray(p.criticalFields)&&new Set(p.criticalFields).size===p.criticalFields.length
+  &&p.criticalFields.every(f=>(DETAILED_CONTEXT_FIELDS as readonly string[]).includes(f))&&POLICY_FLOOR.every(f=>p.criticalFields.includes(f))
+  &&/^[A-Za-z0-9][A-Za-z0-9:_./-]{2,200}$/.test(p.reviewRef)&&Array.isArray(p.reviewers)&&p.reviewers.length>=1&&new Set(p.reviewers).size===p.reviewers.length
+  &&p.reviewers.every(r=>typeof r==="string"&&/^[A-Za-z0-9][A-Za-z0-9:_.@-]{2,100}$/.test(r)&&!/^(system|model|bot)/i.test(r));
+ if(!ok)throw Error("Invalid comparability policy: needs a floor of species and estimand, known fields, a review reference and at least one named human reviewer");
+}
+export const comparabilityPolicyDigest=(p:ComparabilityPolicy)=>sha(canonicalEvidenceJson({id:p.id,version:p.version,criticalFields:[...p.criticalFields].sort(),reviewRef:p.reviewRef,reviewers:[...p.reviewers].sort()}));
+export function comparePassageLinkedContexts(a:PassageLinkedContext,b:PassageLinkedContext,policy?:ComparabilityPolicy):DetailedComparability{
+ validatePassageLinkedContext(a);validatePassageLinkedContext(b);if(policy)validateComparabilityPolicy(policy);
+ const allMissing=DETAILED_CONTEXT_FIELDS.filter(k=>!["reported","not_applicable"].includes(a.fields[k].status)||!["reported","not_applicable"].includes(b.fields[k].status)||a.fields[k].status==="reported"&&!a.fields[k].normalized||b.fields[k].status==="reported"&&!b.fields[k].normalized);
+ const missing=policy?allMissing.filter(k=>policy.criticalFields.includes(k)):allMissing;
+ const nonBlocking=policy?allMissing.filter(k=>!policy.criticalFields.includes(k)):[];
+ // An unknown optional field is not a difference: unknown never counts as different or as equal.
+ const differences=DETAILED_CONTEXT_FIELDS.filter(k=>!nonBlocking.includes(k)&&(canonicalEvidenceJson(a.fields[k].normalized)!==canonicalEvidenceJson(b.fields[k].normalized)||a.fields[k].status!==b.fields[k].status));
  const estimandAligned=!missing.includes("estimand")&&!differences.includes("estimand");
  const incompatibleUnits=["dose","timing","sampleSize"].some(k=>{const left=a.fields[k as DetailedContextField].normalized,right=b.fields[k as DetailedContextField].normalized;return left?.kind==="quantity"&&right?.kind==="quantity"&&left.unit!==right.unit});
  const methodDifference=differences.some(k=>["assay","readout","controls","sampleSize"].includes(k));
- return {status:missing.length?"insufficient_evidence":!estimandAligned||incompatibleUnits?"not_comparable":methodDifference?"method_difference":differences.some(k=>k!=="uncertainty")?"context_difference":"aligned",missing,differences,estimandAligned};
+ const status=missing.length?"insufficient_evidence":!estimandAligned||incompatibleUnits?"not_comparable":methodDifference?"method_difference":differences.some(k=>k!=="uncertainty")?"context_difference":"aligned";
+ return {status,missing,differences,estimandAligned,...(policy?{policyDigest:comparabilityPolicyDigest(policy),nonBlockingMissing:nonBlocking}:{})};
 }
