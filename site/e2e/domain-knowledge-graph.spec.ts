@@ -45,7 +45,7 @@ test('pinned snapshots and altered scope flags fail closed',async({page})=>{
  await page.goto('/research/knowledge-graph?experience=advanced&domainVersion='+retiredAdapterVersion);await expect(page.getByRole('alert')).toContainText('could not be verified');
  await page.goto('/research/knowledge-graph?experience=advanced&domainVersion='+'f'.repeat(64));await expect(page.getByRole('alert')).toContainText('could not be verified');
  await page.goto('/research/knowledge-graph?experience=advanced&domainVersion='+bundle.version);await expect(page.getByRole('heading',{name:'Connected research network',exact:true})).toBeVisible();
- await page.route('**/research/domain-graph/versions/*.json',r=>r.fulfill({json:{...bundle,scientificApproval:true}}));await page.reload();await expect(page.getByRole('alert')).toContainText('could not be verified');await expect(page.locator('.dg-workspace')).toHaveCount(0);
+ await page.route('**/api/research/graph-snapshot?*',r=>r.fulfill({json:{...bundle,scientificApproval:true}}));await page.reload();await expect(page.getByRole('alert')).toContainText('could not be verified');await expect(page.locator('.dg-workspace')).toHaveCount(0);
 });
 test('cross-domain graph and each investigation view pass mobile/desktop accessibility checks',async({page},info)=>{
  test.setTimeout(90000);const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));

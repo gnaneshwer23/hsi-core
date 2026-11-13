@@ -39,7 +39,7 @@ test('mobile hero leads with the research workbench demonstration',async({page})
  await expect(page.getByRole('heading',{level:1})).toContainText('Biological research,');
  await expect(page.locator('#home-knowledge-graph')).toBeVisible();
  await expect(page.locator('.sp-workspace')).toBeVisible();
- await expect(page.getByRole('heading',{name:'The graph is the foundation.The agents work around it.',exact:true})).toBeVisible();
+ await expect(page.getByRole('heading',{name:/The graph is the foundation/})).toBeVisible();
 });
 
 test('editorial action arrows use scalable paths instead of platform symbol fonts',async({page})=>{

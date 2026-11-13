@@ -61,14 +61,12 @@ test("graph controls, bookmarks and SVG/PNG/JSON exports preserve draft scope",a
  await frame.getByRole("button",{name:"Pan graph right",exact:true}).click();await page.getByLabel("Depth",{exact:true}).selectOption("2");await expect(page).toHaveURL(/depth=2/);await page.reload();await expect(page.getByLabel("Depth",{exact:true})).toHaveValue("2");
  for(const format of ["SVG","PNG","JSON"]){const event=page.waitForEvent("download");await frame.getByRole("button",{name:"Download graph "+format,exact:true}).click();const d=await event;expect(d.suggestedFilename()).toContain("."+format.toLowerCase());if(format==="JSON"){const p=JSON.parse(await readFile((await d.path())!,"utf8"));expect(p.scientificApproval).toBe(false);expect(p.scope).toBe("public_educational_draft")}}
 });
-test("reduced-motion mode retains functional capability navigation",async({page})=>{
- await page.emulateMedia({reducedMotion:"reduce"});
- await page.goto("/");
- await page.getByRole("button",{name:/Verify/}).click();
- await expect(page.locator("#investigation-workflow")).toContainText("unvalidated");
- await page.getByRole("link",{name:/Explore the Investigation/i}).click();
- await expect(page).toHaveURL(/\/research\/investigate(\?.*)?$/);
- await expect(page.getByText("Demo environment")).toBeVisible();
+test("reduced-motion mode retains functional graph and verifier navigation",async({page})=>{
+ await page.emulateMedia({reducedMotion:'reduce'});await page.goto('/');
+ const workspace=page.locator('.sp-workspace');await workspace.getByRole('button',{name:/Challenge the interpretation/}).click();
+ await expect(workspace).toContainText('VERITAS');await expect(workspace).toContainText('simulated');
+ await page.getByRole('link',{name:'Open full explorer ↗',exact:true}).click();await expect(page).toHaveURL(/domainVersion=[a-f0-9]{64}/);
+ await expect(page.getByRole('heading',{level:1})).toHaveText('Investigate a biological connection.');
 });
 
 test("internal validation opens the actual trial view and PDF printing keeps labels and inert text",async({page})=>{
