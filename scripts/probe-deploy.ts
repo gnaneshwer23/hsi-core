@@ -1,4 +1,5 @@
 /** Read-only post-deploy probe. Usage: bun scripts/probe-deploy.ts <base-url>
+ * Protected preview deployments: export VERCEL_AUTOMATION_BYPASS_SECRET (never pass it as an argument or commit it).
  * Sends only GET/POST requests that the handlers reject before any upstream call (bad input, wrong method,
  * missing session). No literature or model request is triggered; no data is written.
  */
@@ -16,13 +17,16 @@ const probes:Probe[]=[
 ];
 const base=process.argv[2]?.replace(/\/$/,"");
 if(!base||!/^https:\/\//.test(base)){console.error("Usage: bun scripts/probe-deploy.ts https://<deployment>");process.exit(2)}
+const bypass=process.env.VERCEL_AUTOMATION_BYPASS_SECRET;
+const headers:Record<string,string>=bypass?{"x-vercel-protection-bypass":bypass}:{};
 let failed=0;
 for(const p of probes){
  try{
-  const response=await fetch(base+p.path,{method:p.method,signal:AbortSignal.timeout(20000),redirect:"manual"});
+  const response=await fetch(base+p.path,{method:p.method,headers,signal:AbortSignal.timeout(20000),redirect:"manual"});
   const body=await response.text();
   const statusOk=p.status.includes(response.status);
   const bodyOk=!p.bodyMustNotMatch||!p.bodyMustNotMatch.test(body);
+  if(response.status>=300&&response.status<400&&/vercel\.com\/(sso|login)/.test(response.headers.get("location")??"")){failed++;console.log("FAIL "+p.name+" -> deployment protection redirect; set VERCEL_AUTOMATION_BYPASS_SECRET");continue}
   const crashed=/FUNCTION_INVOCATION_FAILED/.test(body);
   const ok=statusOk&&bodyOk&&!crashed;
   if(!ok)failed++;
