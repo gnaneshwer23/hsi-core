@@ -6,7 +6,9 @@ const bundle = JSON.parse(
 );
 const title = 'Investigate a biological connection.';
 async function ready(page: any, search = '') {
-  await page.goto('/research/knowledge-graph' + search);
+  const state = new URLSearchParams(search);
+  if (!state.has('lens')) state.set('lens','path');
+  await page.goto('/research/knowledge-graph?' + state);
   await expect(page.getByRole('heading', { level: 1, name: title })).toBeVisible();
 }
 
@@ -27,6 +29,7 @@ test('one snapshot, question and selected assertion survive home to Science to r
       exact: true,
     })
     .click();
+  await graph.getByRole('button', {name:'Evidence path',exact:true}).click();
   await graph.locator('.ig-steps button').first().click();
   await expect(graph.getByRole('region', { name: 'Selected assertion evidence' })).toBeVisible();
   const handoff = await graph
@@ -173,7 +176,7 @@ test('all three views preserve mobile/desktop accessibility, keyboard path inspe
       await expect(page.getByLabel('Starting concept', { exact: true })).toBeVisible();
       await page.getByText('Question and filters', { exact: true }).click();
     }
-    for (const lens of ['Evidence path', 'Neighbourhood', 'Shared connections']) {
+    for (const lens of ['Network explorer', 'Evidence path', 'Neighbourhood', 'Shared connections']) {
       await page.getByRole('button', { name: lens, exact: true }).click();
       expect(
         await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1),

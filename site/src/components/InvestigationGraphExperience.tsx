@@ -17,6 +17,7 @@ import {
 import { loadDomainGraph } from '../lib/claimGraphClient';
 import { GraphVisual, type CanvasGraph } from '../features/science/GraphVisual';
 import '../styles/investigation-graph.css';
+import {ResearchNetworkExplorer} from './ResearchNetworkExplorer';
 
 const pretty = (value: string) => value.replaceAll('_', ' ');
 const models: Record<string, string> = {
@@ -171,7 +172,7 @@ export function InvestigationGraphExperience({ embedded = false }: { embedded?: 
   const [params, setParams] = useSearchParams();
   const [controlsOpen, setControlsOpen] = useState(false);
   useEffect(() => {
-    setControlsOpen(window.matchMedia('(min-width: 701px)').matches);
+    setControlsOpen(params.get('lens') === 'path' && window.matchMedia('(min-width: 701px)').matches);
   }, []);
   const version = params.get('domainVersion');
   const [bundle, setBundle] = useState<DomainBundle | null>(null),
@@ -210,7 +211,7 @@ export function InvestigationGraphExperience({ embedded = false }: { embedded?: 
   const model = params.get('model') ?? '',
     hops = params.has('hops') ? Number(params.get('hops')) : 4;
   const depth = params.has('depth') ? Number(params.get('depth')) : 1;
-  const lens = params.get('lens') ?? 'path';
+  const lens = params.get('lens') ?? 'network';
   const selectionValid =
     !!bundle &&
     !!question &&
@@ -219,7 +220,7 @@ export function InvestigationGraphExperience({ embedded = false }: { embedded?: 
     (!model || (DOMAIN_MODELS as readonly string[]).includes(model)) &&
     [1, 2, 3, 4, 5, 6].includes(hops) &&
     [1, 2].includes(depth) &&
-    ['path', 'neighbourhood', 'shared'].includes(lens);
+    ['network', 'path', 'neighbourhood', 'shared'].includes(lens);
   const paths = useMemo(
     () => (selectionValid ? investigationPaths(bundle!, from, target, model, hops) : []),
     [bundle, selectionValid, from, target, model, hops],
@@ -386,7 +387,7 @@ export function InvestigationGraphExperience({ embedded = false }: { embedded?: 
           <p className="ig-eyebrow">Living Health Knowledge Graph / research candidates</p>
           <Heading>Investigate a biological connection.</Heading>
           <p>
-            Start with a question. Follow a directed path. Inspect what each study actually
+            Explore the network. Focus a concept or follow a directed path. Inspect what each study actually
             contributes—and where the connection stops.
           </p>
         </div>
@@ -421,7 +422,7 @@ export function InvestigationGraphExperience({ embedded = false }: { embedded?: 
         Science and research workspace links preserve this snapshot and selection. The educational
         map and RA/SSc corpus are separate datasets, not additional evidence for this path.
       </p>
-      <div className="ig-workspace">
+      <div className={"ig-workspace" + (lens === "network" ? " ig-network-mode" : "")}>
         <aside className="ig-rail" aria-label="Investigation selection">
           <details
             className="ig-controls"
@@ -543,6 +544,7 @@ export function InvestigationGraphExperience({ embedded = false }: { embedded?: 
         <div className="ig-stage">
           <div className="ig-lenses" role="group" aria-label="Investigation graph view">
             {[
+              ['network', 'Network explorer'],
               ['path', 'Evidence path'],
               ['neighbourhood', 'Neighbourhood'],
               ['shared', 'Shared connections'],
@@ -556,6 +558,7 @@ export function InvestigationGraphExperience({ embedded = false }: { embedded?: 
               </button>
             ))}
           </div>
+          {lens === 'network' && <ResearchNetworkExplorer bundle={bundle} selected={selectedId} params={params} update={update} inspectEdge={inspectEdge}/>}
           {lens === 'path' && (
             <section aria-label="Directed evidence paths">
               <h2>Examine the path, step by step.</h2>
@@ -944,7 +947,7 @@ export function InvestigationGraphExperience({ embedded = false }: { embedded?: 
         <button
           onClick={() => {
             const ids = new Set([
-              ...(path?.edgeIds ?? []),
+              ...(lens === 'path' ? path?.edgeIds ?? [] : []),
               ...(edge ? [edge.id] : []),
               ...comparisonIds,
             ]);
@@ -956,7 +959,7 @@ export function InvestigationGraphExperience({ embedded = false }: { embedded?: 
               questionTemplateId: questionId,
               selection: Object.fromEntries(pin),
               handoff: investigationHandoff('/research/knowledge-graph', pin, bundle.version),
-              path: path ?? null,
+              path: lens === 'path' ? path ?? null : null,
               assertions: edges,
               sources: bundle.sources.filter((s) => sourceIds.has(s.id)),
               gaps: bundle.gaps.filter((g) => question!.gapIds.includes(g.id)),
