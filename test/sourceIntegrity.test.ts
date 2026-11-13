@@ -338,10 +338,10 @@ describe("10. the clearance decision gates the retrieval path and model processi
 });
 
 describe("12. existing gates are preserved; readiness and demonstration",()=>{
- test("readiness lists what humans must still provide and keeps the managed signing gap open",()=>{
-  const none=assessSourceIntegrityReadiness(undefined,{});expect(none.ready).toBe(false);expect(Object.keys(none.byOwner)).toEqual(expect.arrayContaining(["source-policy owner","security signer","engineering"]));
+ test("readiness lists what humans must still provide and lists only human-held items once the signing adapter exists",()=>{
+  const none=assessSourceIntegrityReadiness(undefined,{});expect(none.ready).toBe(false);expect(Object.keys(none.byOwner)).not.toContain("engineering");expect(Object.keys(none.byOwner)).toEqual(expect.arrayContaining(["source-policy owner","security signer"]));
   const full=assessSourceIntegrityReadiness({policyFile:"/etc/hsi/policy.json",policyApprovalRef:"approval:2026-11-13",policyApprover:{issuer:"approver:owner",keyId:"k1",publicKeyEnv:"HSI_POLICY_APPROVER_KEY"},signer:{serviceRef:"kms:key/abc",issuer:"svc",keyId:"k2"},requestedUses:["storage"]},{HSI_POLICY_APPROVER_KEY:"-----pem-----"});
-  expect(full.blocking.map(i=>i.id)).toEqual(["engineering-managedSigningAdapter"]);expect(JSON.stringify(full)).not.toContain("-----pem-----");
+  expect(full.blocking.map(i=>i.id)).toEqual([]);expect(full.ready).toBe(true);expect(JSON.stringify(full)).not.toContain("-----pem-----");
  });
  test("the demonstration labels itself synthetic, runs without a network, and prints the expected decisions",async()=>{
   const p=Bun.spawn(["bun","scripts/assess-source.ts","--json"],{cwd:join(import.meta.dir,".."),stdout:"pipe",stderr:"pipe"});
