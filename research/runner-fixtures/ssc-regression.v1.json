@@ -1,0 +1,139 @@
+{
+ "schemaVersion": "hsi-runner-fixture-1",
+ "id": "ssc-regression",
+ "scope": "ssc",
+ "question": "What evidence connects Cytokine Beta signalling and Cell Type Gamma activation in systemic sclerosis?",
+ "notice": "Synthetic fixture: fictional entities and invented passages for engineering verification only. Not evidence, not a real publication, not a scientific result.",
+ "searches": {
+  "support": [
+   {
+    "id": "s1",
+    "title": "Cytokine Beta in synthetic human skin biopsies",
+    "locator": "Synthetic results ¶1",
+    "text": "In human skin biopsies from a synthetic cohort, Cytokine Beta signalling was associated with activation of Cell Type Gamma in fibrotic tissue (flow cytometry, n=12)."
+   }
+  ],
+  "oppose": [
+   {
+    "id": "o1",
+    "title": "Cytokine Beta in a synthetic mouse model",
+    "locator": "Synthetic results ¶1",
+    "text": "In a synthetic mouse model of skin fibrosis, Cytokine Beta signalling was not associated with activation of Cell Type Gamma in lung tissue (RNA sequencing, n=8)."
+   }
+  ]
+ },
+ "recorded": {
+  "extraction": {
+   "s1": {
+    "claim": {
+     "subject": {
+      "system": "FIXTURE",
+      "value": "cytokine-beta-signalling",
+      "label": "Cytokine Beta signalling"
+     },
+     "predicate": "associated_with",
+     "object": {
+      "system": "FIXTURE",
+      "value": "cell-type-gamma-activation",
+      "label": "Cell Type Gamma activation"
+     },
+     "polarity": "supporting",
+     "quote": "Cytokine Beta signalling was associated with activation of Cell Type Gamma"
+    },
+    "context": {
+     "species": {
+      "quote": "human"
+     },
+     "experimentalSystem": {
+      "quote": "skin biopsies"
+     },
+     "tissueCompartment": {
+      "quote": "fibrotic tissue"
+     },
+     "cellType": {
+      "quote": "Cell Type Gamma"
+     },
+     "assay": {
+      "quote": "flow cytometry"
+     },
+     "sampleSize": {
+      "quote": "n=12"
+     },
+     "timing": {
+      "status": "not_reported",
+      "reason": "No timepoint is stated in the passage."
+     }
+    },
+    "note": null
+   },
+   "o1": {
+    "claim": {
+     "subject": {
+      "system": "FIXTURE",
+      "value": "cytokine-beta-signalling",
+      "label": "Cytokine Beta signalling"
+     },
+     "predicate": "associated_with",
+     "object": {
+      "system": "FIXTURE",
+      "value": "cell-type-gamma-activation",
+      "label": "Cell Type Gamma activation"
+     },
+     "polarity": "opposing",
+     "quote": "Cytokine Beta signalling was not associated with activation of Cell Type Gamma"
+    },
+    "context": {
+     "species": {
+      "quote": "mouse"
+     },
+     "experimentalSystem": {
+      "quote": "mouse model"
+     },
+     "tissueCompartment": {
+      "quote": "lung tissue"
+     },
+     "cellType": {
+      "quote": "Cell Type Gamma"
+     },
+     "assay": {
+      "quote": "RNA sequencing"
+     },
+     "sampleSize": {
+      "quote": "n=8"
+     },
+     "timing": {
+      "status": "not_reported",
+      "reason": "No timepoint is stated in the passage."
+     }
+    },
+    "note": null
+   }
+  },
+  "entailment": {
+   "verifier-a": {
+    "s1": {
+     "verdict": "supports",
+     "evidenceSpan": "Cytokine Beta signalling was associated with activation of Cell Type Gamma",
+     "reason": "The passage directly states this finding in the stated context."
+    },
+    "o1": {
+     "verdict": "supports",
+     "evidenceSpan": "Cytokine Beta signalling was not associated with activation of Cell Type Gamma",
+     "reason": "The passage directly states this finding in the stated context."
+    }
+   },
+   "verifier-b": {
+    "s1": {
+     "verdict": "supports",
+     "evidenceSpan": "Cytokine Beta signalling was associated with activation of Cell Type Gamma",
+     "reason": "The passage directly states this finding in the stated context."
+    },
+    "o1": {
+     "verdict": "supports",
+     "evidenceSpan": "Cytokine Beta signalling was not associated with activation of Cell Type Gamma",
+     "reason": "The passage directly states this finding in the stated context."
+    }
+   }
+  }
+ }
+}

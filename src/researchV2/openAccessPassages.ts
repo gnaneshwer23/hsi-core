@@ -7,17 +7,20 @@ export interface OpenAccessExcerpt {
  pmcid:string;url:string;retrievedAt:string;licenceUrl:string|null;
  passage:string;sha256:string;reuseRightsVerified:false;correctionStatusVerified:false;
 }
-const validPmcid=/^PMC[1-9][0-9]{0,11}$/;
-const MAX_BYTES=2_000_000;
+export const validPmcid=/^PMC[1-9][0-9]{0,11}$/;
+export const MAX_BYTES=2_000_000;
+/** Shared guard for every Europe PMC full-text read: XML content type, size cap, article root, no DTD/entities. */
+export function assertSafeArticleXml(contentType:string,xml:string):void{
+ if(!/xml/i.test(contentType))throw Error("Unexpected full text content type");
+ if(xml.length===0||new TextEncoder().encode(xml).length>MAX_BYTES||!/<article(?:\s|>)/.test(xml)||/<!DOCTYPE|<!ENTITY/i.test(xml))throw Error("Unsafe or invalid article XML");
+}
 export async function retrieveOpenAccessExcerpt(pmcid:string,fetcher:SourceFetcher=fetch):Promise<OpenAccessExcerpt>{
  if(!validPmcid.test(pmcid))throw Error("Invalid PMCID");
  const url="https://www.ebi.ac.uk/europepmc/webservices/rest/"+pmcid+"/fullTextXML";
  const response=await fetcher(url,{headers:{Accept:"application/xml"},signal:AbortSignal.timeout(15000)});
  if(!response.ok)throw Error("Full text unavailable: "+response.status);
- const contentType=response.headers.get("content-type")??"";
- if(!/xml/i.test(contentType))throw Error("Unexpected full text content type");
  const xml=await response.text();
- if(xml.length===0||new TextEncoder().encode(xml).length>MAX_BYTES||!/<article(?:\s|>)/.test(xml)||/<!DOCTYPE|<!ENTITY/i.test(xml))throw Error("Unsafe or invalid article XML");
+ assertSafeArticleXml(response.headers.get("content-type")??"",xml);
  // Extract only plain text from the first abstract paragraph. No XML parser or arbitrary HTML rendering.
  const abstract=xml.match(/<abstract(?:\s[^>]*)?>([\s\S]{0,150000}?)<\/abstract>/i)?.[1];
  if(!abstract)throw Error("No bounded abstract found");

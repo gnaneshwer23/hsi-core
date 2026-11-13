@@ -1,0 +1,140 @@
+{
+ "schemaVersion": "hsi-runner-fixture-1",
+ "id": "gut-immune-metabolic-crossdomain",
+ "scope": "gut-immune-metabolic",
+ "question": "How might gut microbial metabolites influence immune signalling and insulin resistance?",
+ "notice": "Synthetic fixture: fictional entities and invented passages for engineering verification only. Not evidence, not a real publication, not a scientific result.",
+ "searches": {
+  "support": [
+   {
+    "id": "g1",
+    "title": "Metabolite M1 in synthetic mouse colon",
+    "locator": "Synthetic results ¶1",
+    "text": "In a synthetic mouse study, colonic Metabolite M1 levels were positively associated with Cytokine B production by regulatory T cells after 7 days (flow cytometry, n=10)."
+   }
+  ],
+  "oppose": [
+   {
+    "id": "g2",
+    "title": "Metabolite M1 in a synthetic human cohort",
+    "locator": "Synthetic results ¶1",
+    "text": "In a synthetic human cohort, serum Metabolite M1 was not associated with Cytokine B production by circulating monocytes (ELISA, n=40)."
+   }
+  ]
+ },
+ "recorded": {
+  "extraction": {
+   "g1": {
+    "claim": {
+     "subject": {
+      "system": "FIXTURE",
+      "value": "metabolite-m1",
+      "label": "Metabolite M1"
+     },
+     "predicate": "associated_with",
+     "object": {
+      "system": "FIXTURE",
+      "value": "cytokine-b-production",
+      "label": "Cytokine B production"
+     },
+     "polarity": "supporting",
+     "quote": "colonic Metabolite M1 levels were positively associated with Cytokine B production by regulatory T cells"
+    },
+    "context": {
+     "species": {
+      "quote": "mouse"
+     },
+     "tissueCompartment": {
+      "quote": "colonic"
+     },
+     "cellType": {
+      "quote": "regulatory T cells"
+     },
+     "timing": {
+      "quote": "after 7 days"
+     },
+     "assay": {
+      "quote": "flow cytometry"
+     },
+     "sampleSize": {
+      "quote": "n=10"
+     },
+     "phenotype": {
+      "status": "not_reported",
+      "reason": "Insulin resistance is not measured in this passage."
+     }
+    },
+    "note": null
+   },
+   "g2": {
+    "claim": {
+     "subject": {
+      "system": "FIXTURE",
+      "value": "metabolite-m1",
+      "label": "Metabolite M1"
+     },
+     "predicate": "associated_with",
+     "object": {
+      "system": "FIXTURE",
+      "value": "cytokine-b-production",
+      "label": "Cytokine B production"
+     },
+     "polarity": "opposing",
+     "quote": "serum Metabolite M1 was not associated with Cytokine B production by circulating monocytes"
+    },
+    "context": {
+     "species": {
+      "quote": "human"
+     },
+     "tissueCompartment": {
+      "quote": "serum"
+     },
+     "cellType": {
+      "quote": "circulating monocytes"
+     },
+     "assay": {
+      "quote": "ELISA"
+     },
+     "sampleSize": {
+      "quote": "n=40"
+     },
+     "timing": {
+      "status": "not_reported",
+      "reason": "No timepoint is stated in the passage."
+     },
+     "phenotype": {
+      "status": "not_reported",
+      "reason": "Insulin resistance is not measured in this passage."
+     }
+    },
+    "note": null
+   }
+  },
+  "entailment": {
+   "verifier-a": {
+    "g1": {
+     "verdict": "supports",
+     "evidenceSpan": "colonic Metabolite M1 levels were positively associated with Cytokine B production",
+     "reason": "The passage directly states this finding in the stated context."
+    },
+    "g2": {
+     "verdict": "supports",
+     "evidenceSpan": "serum Metabolite M1 was not associated with Cytokine B production",
+     "reason": "The passage directly states this finding in the stated context."
+    }
+   },
+   "verifier-b": {
+    "g1": {
+     "verdict": "supports",
+     "evidenceSpan": "colonic Metabolite M1 levels were positively associated with Cytokine B production",
+     "reason": "The passage directly states this finding in the stated context."
+    },
+    "g2": {
+     "verdict": "supports",
+     "evidenceSpan": "serum Metabolite M1 was not associated with Cytokine B production",
+     "reason": "The passage directly states this finding in the stated context."
+    }
+   }
+  }
+ }
+}
