@@ -1,0 +1,983 @@
+{
+  "auditDate": "2026-11-13",
+  "auditedMain": "84d7b5a02ceaa82bdc099c8d45fb98d014ff2998",
+  "testedEquivalentTree": "7446f2e493ef4c32f0c73aca695fd93e8e9bb38f",
+  "mergedPRs": [
+    {
+      "number": 297,
+      "state": "closed",
+      "merged": true,
+      "head": "ac6d55a46030324e21a1f7b54993c7433eeae2b1",
+      "merge": "d7ffc4b89df1e17bff74a663b96219abce53e41c"
+    },
+    {
+      "number": 298,
+      "state": "closed",
+      "merged": true,
+      "head": "6bcf16b1fc2915fe2cf39e1c016c45b82d2cccf5",
+      "merge": "68fbbb0347d02cbc32c17c828e43c0cc4f025c9d"
+    },
+    {
+      "number": 299,
+      "state": "closed",
+      "merged": true,
+      "head": "e51d74d68e229360892356dae2ee89d73012a03f",
+      "merge": "3f40067c9abb61e082bafa6d2ee318a972eba60f"
+    },
+    {
+      "number": 300,
+      "state": "closed",
+      "merged": true,
+      "head": "7446f2e493ef4c32f0c73aca695fd93e8e9bb38f",
+      "merge": "84d7b5a02ceaa82bdc099c8d45fb98d014ff2998"
+    }
+  ],
+  "openPRs": [
+    {
+      "number": 251,
+      "title": "A-01: verified HSI staging schema and durable investigation acceptance matrix",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/251"
+    },
+    {
+      "number": 232,
+      "title": "P0.2.5: read-only PostgreSQL authorization audit (activation still blocked)",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/232"
+    },
+    {
+      "number": 228,
+      "title": "P0.2.2: verified-session contradiction service boundary (persistence held)",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/228"
+    },
+    {
+      "number": 210,
+      "title": "P1.11: verified restricted-role tenant isolation in Neon staging",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/210"
+    },
+    {
+      "number": 209,
+      "title": "P1.11: verify restricted Neon grants and repair migration ledger CI",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/209"
+    },
+    {
+      "number": 208,
+      "title": "P1.10: fail-closed Neon staging security acceptance gate",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/208"
+    },
+    {
+      "number": 207,
+      "title": "P1.9: proposed tenant-scoped Neon RLS security and CI repair",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/207"
+    },
+    {
+      "number": 206,
+      "title": "P1.8: trusted evidence session boundary and P1.4 schema alignment",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/206"
+    },
+    {
+      "number": 205,
+      "title": "P1.7: Neon transaction bridge and P1.6 CI repair",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/205"
+    },
+    {
+      "number": 203,
+      "title": "P1.6: Neon staging schema readiness and RLS verification",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/203"
+    },
+    {
+      "number": 202,
+      "title": "P1.5: transactional evidence submission and independent review adapter",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/202"
+    },
+    {
+      "number": 201,
+      "title": "P1.4: tenant-scoped evidence persistence schema and independent review policy",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/201"
+    },
+    {
+      "number": 200,
+      "title": "P1.3: governed, content-addressed biomedical evidence staging",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/200"
+    },
+    {
+      "number": 199,
+      "title": "P1.2: governed biomedical source metadata bundle",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/199"
+    },
+    {
+      "number": 198,
+      "title": "P1: four-department evidence readiness and research verification gates",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/198"
+    },
+    {
+      "number": 197,
+      "title": "P0: fail closed on unverified scientific approval",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/197"
+    },
+    {
+      "number": 196,
+      "title": "Phase 9: establish four-department HSI scientific coverage and acceptance gates",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/196"
+    },
+    {
+      "number": 195,
+      "title": "Phase 9.5: fix provider typecheck blocker and record release NO-GO",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/195"
+    },
+    {
+      "number": 194,
+      "title": "Phase 9.4: cross-immunology benchmark and scientific validation protocol",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/194"
+    },
+    {
+      "number": 193,
+      "title": "Phase 9.3: public biomedical metadata panel in existing researcher workbench",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/193"
+    },
+    {
+      "number": 192,
+      "title": "Phase 9.2: opt-in live Reactome and UniProt provider verification",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/192"
+    },
+    {
+      "number": 191,
+      "title": "Phase 9.1: consolidate Reactome adapter with UniProt research workbench",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/191"
+    },
+    {
+      "number": 190,
+      "title": "Phase 9: integration dependency audit and scientific release gates",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/190"
+    },
+    {
+      "number": 189,
+      "title": "Step 8: harden research workbench provenance and context integrity",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/189"
+    },
+    {
+      "number": 188,
+      "title": "Step 7: compose governed scientific research workbench draft workflow",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/188"
+    },
+    {
+      "number": 187,
+      "title": "Step 6: falsifiable experiment proposals with scientific review gate",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/187"
+    },
+    {
+      "number": 186,
+      "title": "Step 5: contextual evidence comparison and contradiction candidates",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/186"
+    },
+    {
+      "number": 185,
+      "title": "Step 4: context-bound protein\u2013pathway hypothesis candidates",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/185"
+    },
+    {
+      "number": 183,
+      "title": "feat: introduce governed Reactome pathway metadata adapter",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/183"
+    },
+    {
+      "number": 71,
+      "title": "Redesign HSI landings with content spec and reference visuals",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/71"
+    },
+    {
+      "number": 61,
+      "title": "P1.4: RA evidence intake quarantine and reproducible scientific dossier foundation",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/61"
+    },
+    {
+      "number": 60,
+      "title": "P1.3: authenticated SSc\u2013RA evidence comparison in research workbench",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/60"
+    },
+    {
+      "number": 34,
+      "title": "Science 2.0 Phase 1: interactive Human Body Explorer",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/34"
+    },
+    {
+      "number": 15,
+      "title": "Stage B B1: SSc source intake and isolated investigation preflight",
+      "url": "https://github.com/gnaneshwer23/hsi-core/pull/15"
+    }
+  ],
+  "openPRCount": 34,
+  "production": {
+    "deploymentId": "dpl_8haHmj8inceEMmNNM8LnyYtk4YQy",
+    "state": "READY",
+    "target": "production",
+    "sha": "84d7b5a02ceaa82bdc099c8d45fb98d014ff2998",
+    "domain": "https://www.humansuperintelligence.tech/"
+  },
+  "ci": {
+    "researchRun": 43405450769,
+    "historyRun": 43405450902,
+    "corePassed": 1848,
+    "optionalLiveSkipped": 1,
+    "coreFailed": 0,
+    "browserPassed": 230,
+    "browserArtifact": 14026299642,
+    "performanceArtifact": 14027366382,
+    "mergeShaRunsReturnedByConnector": 0
+  },
+  "http": {
+    "declaredUiEntries": 75,
+    "discoveryDocuments": 2,
+    "followedGet200": 77,
+    "authenticationSubmitted": false,
+    "productionWritesPerformed": false,
+    "externalLiteratureModelSearchPerformed": false,
+    "source": "Direct read-only curl HTTPS GETs with redirects followed; individual statuses observed in execution output; HTML metadata extracted into companion matrix"
+  },
+  "liveBrowser": {
+    "pages": [
+      "/",
+      "/contact",
+      "/science/graph"
+    ],
+    "graphVersion": "e06d43438e382a6d1f52c932420bd189014d8449b09c2d3113b5a34fde076d03",
+    "global": {
+      "visibleConcepts": 138,
+      "totalConcepts": 153,
+      "relationships": 131
+    },
+    "localFocus": {
+      "concepts": 9,
+      "relationships": 10
+    },
+    "scopeUrl": "netScope=local"
+  },
+  "limitations": [
+    "No fresh private DB ledger/effective RLS/runtime-role/restore inspection",
+    "No real account/login/email/review acceptance",
+    "No full per-route four-breakpoint manual or screen-reader acceptance",
+    "No field INP/CWV or API p95 measurement",
+    "No outreach or external source/model search",
+    "Read-only audit; no runtime/config/grant/migration changes"
+  ],
+  "apiObservations": [
+    {
+      "route": "/api/research/live",
+      "status": 200,
+      "safeFields": {
+        "live": true,
+        "databaseConnectionTested": false,
+        "providerTested": false
+      }
+    },
+    {
+      "route": "/api/research/health",
+      "status": 200,
+      "safeFields": {
+        "status": "configuration_validated",
+        "writesEnabled": false,
+        "originMatches": true,
+        "databaseConnectionTested": false
+      }
+    },
+    {
+      "route": "/api/research/account",
+      "status": 401,
+      "safeFields": {
+        "code": "BACKEND_PROVIDER_SESSION_REQUIRED",
+        "error": "A provider-verified session cookie is required"
+      }
+    },
+    {
+      "route": "/api/research/investigations",
+      "status": 401,
+      "safeFields": {
+        "code": "BACKEND_PROVIDER_SESSION_REQUIRED",
+        "error": "A provider-verified session cookie is required"
+      }
+    },
+    {
+      "route": "/api/research/graph/ssc",
+      "status": 401,
+      "safeFields": {
+        "code": "BACKEND_PROVIDER_SESSION_REQUIRED",
+        "error": "A provider-verified session cookie is required"
+      }
+    },
+    {
+      "route": "/api/research/scientific-review/queue",
+      "status": 401,
+      "safeFields": {
+        "code": "BACKEND_PROVIDER_SESSION_REQUIRED",
+        "error": "A provider-verified session cookie is required"
+      }
+    },
+    {
+      "route": "/api/research/ready",
+      "status": 404,
+      "safeFields": {
+        "error": "Not found"
+      }
+    }
+  ],
+  "performanceLab": {
+    "kind": "local_mobile_lab_only",
+    "fieldCwvVerified": false,
+    "recordedAt": "2026-11-13T10:02:19.881Z",
+    "lighthouseVersion": "13.6.0",
+    "pages": [
+      {
+        "path": "/",
+        "scores": {
+          "performance": 0.94,
+          "accessibility": 1,
+          "best-practices": 1,
+          "seo": 1
+        },
+        "lcpMs": 3034.0832,
+        "cls": 0.001143304367424834,
+        "totalBlockingTimeMs": 9.5,
+        "warnings": []
+      },
+      {
+        "path": "/context-conflict-audit",
+        "scores": {
+          "performance": 0.94,
+          "accessibility": 1,
+          "best-practices": 1,
+          "seo": 1
+        },
+        "lcpMs": 3035.1791999999996,
+        "cls": 0,
+        "totalBlockingTimeMs": 23,
+        "warnings": []
+      },
+      {
+        "path": "/platform",
+        "scores": {
+          "performance": 0.94,
+          "accessibility": 1,
+          "best-practices": 1,
+          "seo": 1
+        },
+        "lcpMs": 3033.9101,
+        "cls": 0.001143304367424834,
+        "totalBlockingTimeMs": 12.5,
+        "warnings": []
+      },
+      {
+        "path": "/research",
+        "scores": {
+          "performance": 0.94,
+          "accessibility": 1,
+          "best-practices": 1,
+          "seo": 1
+        },
+        "lcpMs": 3035.8831999999998,
+        "cls": 0.001143304367424834,
+        "totalBlockingTimeMs": 13.5,
+        "warnings": []
+      }
+    ]
+  },
+  "seoStaticObservations": [
+    {
+      "route": "/",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/research",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/solutions",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/evidence-safety",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/community",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/pricing",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/contact",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/research/dashboard",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/research/governance",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/sign-in",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/forgot-password",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/reset-password",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/sign-up",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/research/account",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/platform",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/context-conflict-audit",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/evidence-intelligence",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/research-briefs",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/applications",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/trust",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/about",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/technology",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/how-it-works",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/explore",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/science",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/science/literature",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/research/scientific-workbench",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/research/validation",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/research/coverage",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/research/evidence-readiness",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/science/study-comparison",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/science/review-preparation",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/research/scientific-review",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/science/body",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/research/capabilities",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/research/knowledge-graph",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/science/graph",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/science/paths",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/science/contradictions",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/research/decision-workbench",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/research/mechanism-workflow",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/research/discovery-experience",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/research/investigate",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/research/home",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/research/community-feed",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/science/clinical-trials",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/science/research-agents",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/science/zoom",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/science/connections",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/science/disease",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/discovery-engine",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/demo",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/modules",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/modules/aksh-health",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/modules/clinical",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/modules/isi",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/modules/trials",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/products",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/status",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/sources",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/clinical-timeline",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/trials-criteria",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/gateway",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/systems",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/evidence",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/discovery",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/curator",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/akeno",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/aksh-agents",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/for-isi",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/for-aksh",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/for-trials",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/roadmap",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/alignment",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    },
+    {
+      "route": "/docs",
+      "canonicalPresent": true,
+      "ogTitle": true,
+      "ogDescription": true,
+      "ogImage": true,
+      "imagesWithoutAlt": 0
+    }
+  ]
+}
