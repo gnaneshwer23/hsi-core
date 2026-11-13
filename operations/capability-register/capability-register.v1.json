@@ -1066,6 +1066,7 @@
           "F-02"
         ],
         "modules": [
+          "src/atlasProposals.ts",
           "src/livingHealthKnowledgeGraph.ts",
           "src/hsiOntologyRegistry.ts",
           "src/graphRelease.ts",
