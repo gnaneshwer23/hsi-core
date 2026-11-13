@@ -12,7 +12,7 @@ import { createContextAuditArchiveService } from '../../src/server/contextAuditA
 import type { ArchivedContextAudit } from '../../src/evidence/contextAuditArchive';
 import type { ContextAuditReview } from '../../src/evidence/contextAuditReview';
 import { canonicalGraphContext } from '../../src/investigationGraphContext';
-import { renderResearchOutcome } from '../../src/researchOutcome';
+import { buildResearchOutcome, renderResearchOutcome } from '../../src/researchOutcome';
 import { deliveryHash } from '../../src/server/investigationDeliveryService';
 async function fixture() {
   const rows: ArchivedContextAudit[] = [],
@@ -290,6 +290,28 @@ test('self-resealed outcome is rejected without a matching freshly authorized re
   const panel = page.getByRole('region', { name: 'Unified research outcome', exact: true });
   await expect(panel).toContainText('could not be verified');
   await expect(panel).not.toContainText('Forged self-resealed');
+  await page.unroute('**/outcome');
+  // A valid-looking baseline must not suppress the audit the backend actually stores.
+  await page.route('**/outcome', async (route) => {
+    const view = await t.f.service.view('alice', t.f.initial.id);
+    const stripped = await buildResearchOutcome(
+      {
+        schemaVersion: 'hsi-investigation-brief-1',
+        package: view.package!,
+        submission: view.submission,
+        decision: view.decision,
+        scope: 'research_only',
+        graphPublicationApproved: false,
+      },
+      async (s) => deliveryHash(s),
+    );
+    return route.fulfill({ json: stripped });
+  });
+  await panel.getByRole('button', { name: 'Refresh outcome', exact: true }).click();
+  await expect(panel).toContainText('could not be verified');
+  await expect(
+    panel.getByRole('button', { name: 'Download outcome JSON', exact: true }),
+  ).toHaveCount(0);
   await page.unroute('**/outcome');
   await panel.getByRole('button', { name: 'Refresh outcome', exact: true }).click();
   await expect(panel).toContainText('Not calibrated');

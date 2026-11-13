@@ -12,7 +12,7 @@
 
 ## Browser integration corrected
 
-The previous client rebuilt only the attachment-free outcome and therefore rejected legitimate attached audits. Some audit validation also uses server-only synchronous hashing. The browser now fetches a separate, authenticated `/outcome-receipt` when attachments are present. That endpoint recompiles the outcome only after fresh backend access/source checks.
+The previous client rebuilt only the attachment-free outcome and therefore rejected legitimate attached audits. Some audit validation also uses server-only synchronous hashing. The browser now always fetches a separate, authenticated `/outcome-receipt`, including when a response claims there are no attachments. This prevents silent audit suppression/downgrade. That endpoint recompiles the outcome only after fresh backend access/source checks.
 
 The client verifies the saved package independently, matches package/context/attachment/outcome bindings, and recomputes the complete outcome content hash with Web Crypto. A self-resealed response without a matching fresh server receipt is rejected. This is a trusted-backend verification receipt, **not** an independent scientific verifier or a signed cross-service clearance grant. There is no fallback when the receipt is absent, changed or denied.
 
@@ -40,6 +40,6 @@ Authorization callbacks are rechecked before/after operations and on every reope
 
 Durable tests use actual isolated files and two connections. They cover restart/reopen/export, parent continuity, same-content retry, one independent immutable decision, no assessment transfer to a rerun, cross-tenant/self/agent/wrong-disease denial, revocation, forged release/package/request bindings, failure artifacts, symlink refusal and authenticated HTTP boundaries.
 
-Browser tests use synthetic HTTP/UI fixtures with the actual compiler and archive service. They cover attached-outcome receipt verification, owner read-only behaviour, an independent assessment, lost-acknowledgement retry, source revocation, self-resealed response rejection, JSON/Markdown downloads and mobile/desktop accessibility. These fixtures do not certify provider login, Neon persistence, real scientific reviewers or expert adjudication.
+Browser tests use synthetic HTTP/UI fixtures with the actual compiler and archive service. They cover attached-outcome receipt verification, owner read-only behaviour, an independent assessment, lost-acknowledgement retry, source revocation, self-resealed response and stripped-audit downgrade rejection, JSON/Markdown downloads and mobile/desktop accessibility. These fixtures do not certify provider login, Neon persistence, real scientific reviewers or expert adjudication.
 
 Actual SSc plus RA/SLE login→cleared live retrieval→saved audit→independent review→reopened/exported brief acceptance still requires NEXT-A/B, current primary-domain source packs and scoped reviewers. SLE authority is not invented: the present audit contract supports only SSc/RA. The full independently adjudicated benchmark and operational release packet remain separate requirements.

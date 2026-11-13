@@ -6,7 +6,7 @@ import { join } from 'node:path';
 import { auditArchiveFixture } from './fixtures/contextAuditArchive';
 import { contextArchiveHash, openContextAuditArchive } from '../src/db/contextAuditArchiveStore';
 import { createContextAuditArchiveService } from '../src/server/contextAuditArchiveService';
-import { verifyReceiptedResearchOutcome, renderResearchOutcome } from '../src/researchOutcome';
+import { buildResearchOutcome, verifyReceiptedResearchOutcome, renderResearchOutcome } from '../src/researchOutcome';
 import { deliveryHash } from '../src/server/investigationDeliveryService';
 
 test('audit persists, reopens and exports the same package/version after process-style restart', async () => {
@@ -39,6 +39,10 @@ test('audit persists, reopens and exports the same package/version after process
         brief,
         async (s) => deliveryHash(s),
       ),
+    ).rejects.toThrow();
+    const stripped = await buildResearchOutcome(brief, async (s) => deliveryHash(s));
+    await expect(
+      verifyReceiptedResearchOutcome(stripped, receipt, brief, async (s) => deliveryHash(s)),
     ).rejects.toThrow();
     expect(after.provenance.attachmentBinding?.packageHash).toBe(t.p.packageHash);
   } finally {

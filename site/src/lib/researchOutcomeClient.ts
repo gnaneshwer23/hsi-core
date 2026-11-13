@@ -1,4 +1,4 @@
-import {verifyResearchOutcome,verifyReceiptedResearchOutcome,renderResearchOutcome,type ResearchOutcome} from "../../../src/researchOutcome";
+import {verifyReceiptedResearchOutcome,renderResearchOutcome,type ResearchOutcome} from "../../../src/researchOutcome";
 import type {EvidenceBrief} from "../../../src/investigationDelivery";
 import {deliveryDigest} from "./investigationDeliveryClient";
 export async function readResearchOutcomeResponse(response:Response){
@@ -11,11 +11,9 @@ function url(brief:EvidenceBrief){return "/api/research/interrogative/"+encodeUR
 export async function fetchResearchOutcome(brief:EvidenceBrief,signal:AbortSignal):Promise<ResearchOutcome>{
  const response=await fetch(url(brief),{credentials:"same-origin",cache:"no-store",redirect:"error",signal,headers:{Accept:"application/json"}});
  const value=JSON.parse(await readResearchOutcomeResponse(response));
- if(value?.provenance?.attachmentBinding){
-  const receipt=await fetch(url(brief).replace(/\/outcome$/,"/outcome-receipt"),{credentials:"same-origin",cache:"no-store",redirect:"error",signal,headers:{Accept:"application/json"}});
-  return verifyReceiptedResearchOutcome(value,JSON.parse(await readResearchOutcomeResponse(receipt)),brief,deliveryDigest);
- }
- return verifyResearchOutcome(value,brief,deliveryDigest);
+ // A separate receipt is mandatory even when the response claims no attachments.
+ const receipt=await fetch(url(brief).replace(/\/outcome$/,"/outcome-receipt"),{credentials:"same-origin",cache:"no-store",redirect:"error",signal,headers:{Accept:"application/json"}});
+ return verifyReceiptedResearchOutcome(value,JSON.parse(await readResearchOutcomeResponse(receipt)),brief,deliveryDigest);
 }
 export async function downloadResearchOutcome(brief:EvidenceBrief,outcome:ResearchOutcome,format:"json"|"markdown"){
  const response=await fetch(url(brief)+"?format="+format,{credentials:"same-origin",cache:"no-store",redirect:"error",signal:AbortSignal.timeout(20000)});

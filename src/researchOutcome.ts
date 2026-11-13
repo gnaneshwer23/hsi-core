@@ -207,7 +207,9 @@ export function outcomeVerificationReceipt(outcome:ResearchOutcome):OutcomeVerif
 export async function verifyReceiptedResearchOutcome(value:unknown,receipt:OutcomeVerificationReceipt,expected:EvidenceBrief,digest:Digest):Promise<ResearchOutcome>{
  exact(receipt,['schemaVersion','investigationId','packageHash','contextHash','attachmentsHash','outcomeHash']);
  const baseline=await buildResearchOutcome(expected,digest),o=value as ResearchOutcome;
- if(!o||!o.provenance?.attachmentBinding||receipt.schemaVersion!=='hsi-outcome-receipt-1'||receipt.investigationId!==baseline.investigationId||receipt.packageHash!==baseline.binding.packageHash||receipt.contextHash!==baseline.binding.contextHash||!/^[a-f0-9]{64}$/.test(receipt.attachmentsHash??'')||receipt.attachmentsHash!==o.provenance.attachmentBinding.attachmentsHash||receipt.outcomeHash!==o.outcomeHash)throw Error('Outcome receipt binding mismatch');
+ if(!o||receipt.schemaVersion!=='hsi-outcome-receipt-1'||receipt.investigationId!==baseline.investigationId||receipt.packageHash!==baseline.binding.packageHash||receipt.contextHash!==baseline.binding.contextHash||receipt.outcomeHash!==o.outcomeHash)throw Error('Outcome receipt binding mismatch');
+ if(receipt.attachmentsHash===null){if(canonicalGraphContext(o)!==canonicalGraphContext(baseline))throw Error('Unattached outcome differs from its package');return baseline;}
+ if(!o.provenance?.attachmentBinding||!/^[a-f0-9]{64}$/.test(receipt.attachmentsHash)||receipt.attachmentsHash!==o.provenance.attachmentBinding.attachmentsHash)throw Error('Outcome attachment receipt mismatch');
  for(const key of ['schemaVersion','method','investigationId','question','binding','scope','comparison'] as const)if(canonicalGraphContext(o[key])!==canonicalGraphContext(baseline[key]))throw Error('Receipted outcome changed saved provenance');
  const {outcomeHash,...body}=o;if(await digest(canonicalGraphContext(body))!==outcomeHash)throw Error('Receipted outcome content changed');
  return o;
