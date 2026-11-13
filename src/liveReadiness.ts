@@ -29,7 +29,7 @@ export const LIVE_ALLOWED_HOSTS:readonly string[]=Object.freeze(["www.ebi.ac.uk"
 export const LIVE_HARD_LIMITS=Object.freeze({maxArticlesPerIntent:5,maxHitsPerIntent:8,maxModelCallsPerRun:60,maxRunsPerDay:20});
 /** Engineering gaps found while preparing live mode. Flip a flag only together with the code and tests that close it. */
 export const ENGINEERING_GAPS:Readonly<Record<"sourceAuthorityService"|"extractionTask"|"liveRunPath",{implemented:boolean;detail:string}>>=Object.freeze({
- sourceAuthorityService:{implemented:false,detail:"Only the SourceAuthorityAdapter interface and the receipt verifier exist. A service or offline signing tool that lets an independent person issue signed clearance receipts (Ed25519) has not been built."},
+ sourceAuthorityService:{implemented:true,detail:"Built: scripts/clearance-authority.ts lets an independent person issue and revoke Ed25519 receipts, and createFileSourceAuthority serves them to the runtime. This does not name or appoint that person: the authority identity and keys remain human-held items."},
  extractionTask:{implemented:false,detail:"createStagingProviderOperations supports the entailment schema only. A strict extraction schema for the approved providers needs security review and a provider smoke run."},
  liveRunPath:{implemented:false,detail:"The CLI composes live search and provider runners only after the items above exist; fixture mode is the only executable path."},
 });
