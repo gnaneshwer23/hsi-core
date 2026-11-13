@@ -1247,6 +1247,7 @@
           "F-05"
         ],
         "modules": [
+          "src/reviewPacket.ts",
           "src/interrogativeScientificReview.ts",
           "src/db/independentReviewQueue.ts",
           "src/db/authenticatedScientificReviewStore.ts",
