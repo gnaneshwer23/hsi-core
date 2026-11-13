@@ -1296,11 +1296,12 @@
           "E-CONT"
         ],
         "modules": [
-          "src/sentinel.ts",
           "src/evidence/incrementalEvidenceMonitoring.ts",
           "src/evidence/livingEvidenceExpansion.ts",
           "src/expansion/sourceRereview.ts",
-          "src/researchV2/sourceIntegrityService.ts"
+          "src/liveExecute.ts",
+          "src/researchV2/sourceIntegrityService.ts",
+          "src/sentinel.ts"
         ],
         "modelBacked": false,
         "humanApproval": "A scheduler, an owner and a place for the policy-revocation list.",

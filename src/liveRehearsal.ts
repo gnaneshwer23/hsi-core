@@ -13,6 +13,7 @@ import {tmpdir} from "node:os";
 import {join} from "node:path";
 import {runLiveExecute,makeFileDepsLoader,type ExecuteOptions} from "./liveExecute";
 import {runLivePreflight} from "./livePreflight";
+import {createSentinel} from "./sentinel";
 import {stagingConfigurationHash} from "./liveWiring";
 import {crc32c,type CloudKmsClient} from "./researchV2/cloudKmsSigner";
 import {stagingApprovalSigningText,type StagingDeploymentApproval} from "./researchV2/stagingDeploymentApproval";
@@ -90,7 +91,7 @@ export async function rehearse():Promise<RehearsalReport>{
    const body=extraction?extractionFor(payload.passage):{verdict:"supports",evidenceSpan:QUOTES[payload.passage]!.claim,reason:"The passage states this directly."};
    return Response.json({id:"msg_"+providerCalls.n,model:(config as {modelId:string}).modelId,usage:{input_tokens:200,output_tokens:100},stop_reason:"end_turn",content:[{type:"text",text:JSON.stringify(body)}]},{headers:{"x-request-id":"req_rehearsal_"+providerCalls.n}});
   }) as never;
-  const opts:ExecuteOptions={configPath:"config.json",integrityConfigPath:"integrity.json",question:"How might gut microbial metabolites influence immune signalling?",scope:"gut-immune-metabolic",reviewer:"user:rehearsal-reviewer",outDir:join(root,"out")};
+  const opts:ExecuteOptions={configPath:"config.json",integrityConfigPath:"integrity.json",question:"How might gut microbial metabolites influence immune signalling?",scope:"gut-immune-metabolic",reviewer:"user:rehearsal-reviewer",outDir:join(root,"out"),sentinel:{directory:join(root,"sentinel"),intervalMs:3_600_000}};
   const ioFor=(typed:string|null|"auto")=>({env,now:()=>NOW,readJson:(p:string)=>{if(!(p in files))throw Error("missing");return files[p]},
    confirm:async(prompt:string)=>typed==="auto"?`EXECUTE ${/EXECUTE (live-[a-f0-9]{16})/.exec(prompt)![1]}`:typed,
    loadDeps:async(ctx:Parameters<ReturnType<typeof makeFileDepsLoader>>[0])=>{
@@ -100,6 +101,10 @@ export async function rehearse():Promise<RehearsalReport>{
     return loaded;
    }});
 
+  const stale=await runLiveExecute(opts,ioFor("auto"));
+  step("a run is refused while SENTINEL has no recent re-evaluation",!stale.ok&&stale.refusals.join().includes("SENTINEL")&&providerCalls.n===0,"refused before any model call");
+  const loaded=await ioFor("auto").loadDeps({config:config as never,integrityConfig:integrity,env,target:{investigationId:"sentinel-tick",diseaseScope:"gut-immune-metabolic",question:"sentinel",release:{id:"r",version:"1",manifestHash:sha("r")}},auditDirectory:join(root,"audit-unused"),runsToday:()=>0});
+  try{const tick=await createSentinel({service:loaded.service!,directory:opts.sentinel.directory,intervalMs:opts.sentinel.intervalMs,now:()=>NOW}).tick();step("SENTINEL re-evaluates through the real service",tick.ran&&tick.record.outcome==="ok",tick.ran?`outcome ${tick.record.outcome}, ${tick.record.checked??0} receipts checked`:"slot taken")}finally{await loaded.close()}
   const refused=await runLiveExecute(opts,ioFor(null));
   step("no terminal means no run",!refused.ok&&providerCalls.n===0&&kmsCalls.n===0,"refused before loading anything");
   const out=await runLiveExecute(opts,ioFor("auto"));

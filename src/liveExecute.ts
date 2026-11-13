@@ -16,6 +16,7 @@ import {createJobJournal,runDurable} from "./nexusJobs";
 import {buildReviewPacket} from "./reviewPacket";
 import {assertProposalOnly,proposeEdgesFromAudit} from "./atlasProposals";
 import {proposeGaps} from "./vantageGaps";
+import {createSentinel,StaleClearanceError} from "./sentinel";
 import {isInvestigationScopeId} from "./investigationScope";
 import type {LiveRunConfig} from "./liveReadiness";
 import type {SourceIntegrityConfig} from "./sourceIntegrityReadiness";
@@ -25,8 +26,10 @@ import {openStagingOperationStore} from "./researchV2/stagingOperationStore";
 import {createFileReceiptPublisher} from "./researchV2/clearanceAuthority";
 
 export const FIRST_RUN_LIMITS=Object.freeze({maxModelCallsPerRun:40,maxArticlesPerIntent:3});
-export type ExecuteOptions={configPath:string;integrityConfigPath:string;question:string;scope:string;reviewer:string;outDir:string};
-export type LoadedDeps={deps:LiveRunDeps;close:()=>Promise<void>};
+export type ExecuteOptions={configPath:string;integrityConfigPath:string;question:string;scope:string;reviewer:string;outDir:string;
+ /** Where SENTINEL records its re-evaluations, and its cadence. A live run needs a recent successful tick (within two intervals). */
+ sentinel:{directory:string;intervalMs:number}};
+export type LoadedDeps={deps:LiveRunDeps;close:()=>Promise<void>;/** The source integrity service, so SENTINEL can re-evaluate its receipts. */service?:ReturnType<typeof buildLiveRunDeps>["service"]};
 export type ExecuteIo={
  env:Record<string,string|undefined>;now?:()=>number;
  readJson:(path:string)=>unknown;
@@ -51,6 +54,11 @@ export async function runLiveExecute(opts:ExecuteOptions,io:ExecuteIo):Promise<E
  const c=config as LiveRunConfig;
  if(c.limits.maxModelCallsPerRun>FIRST_RUN_LIMITS.maxModelCallsPerRun||c.limits.maxArticlesPerIntent>FIRST_RUN_LIMITS.maxArticlesPerIntent)
   return {ok:false,refusals:[`first-run caps: maxModelCallsPerRun <= ${FIRST_RUN_LIMITS.maxModelCallsPerRun} and maxArticlesPerIntent <= ${FIRST_RUN_LIMITS.maxArticlesPerIntent}`],preflight};
+
+ try{
+  createSentinel({service:{reevaluate:async()=>{throw Error("read-only")}},directory:opts.sentinel.directory,intervalMs:opts.sentinel.intervalMs,now:io.now}).assertFresh();
+ }catch(e){return {ok:false,refusals:[e instanceof StaleClearanceError?"SENTINEL has no recent successful re-evaluation: run scripts/sentinel-tick.ts, then retry":"SENTINEL configuration is invalid"],preflight}}
+
  const jobId="live-"+sha([opts.scope,opts.question,opts.reviewer].join("|")).slice(0,16);
  const typed=await io.confirm(`This will contact Europe PMC and Crossref and send cleared passages to the configured models, spending up to ${c.limits.maxModelCallsPerRun} model calls. Type: EXECUTE ${jobId}`);
  if(typed===null)return {ok:false,refusals:["no interactive terminal: execution needs a human to type the confirmation"],preflight};
@@ -109,6 +117,6 @@ async function loadFromFiles(ctx:Parameters<ExecuteIo["loadDeps"]>[0],seams:Para
    resolveApproval:async b=>{if(!safe.test(b.deploymentId))throw Error("invalid deployment id");return JSON.parse(await readFile(join(approvalsDir,`${b.deploymentId}.json`),"utf8"))},
    isApprovalRevoked:async(id,issuer)=>{const f=join(approvalsDir,"revocations.jsonl");if(!existsSync(f))return false;return readFileSync(f,"utf8").split("\n").filter(Boolean).some(l=>{try{const r=JSON.parse(l);return r.id===id&&r.issuer===issuer}catch{return true}})},
    fetcher:seams.fetcher??fetch,transportFactory:seams.transportFactory,store,publisher:createFileReceiptPublisher(join(root,"published")),auditDirectory:ctx.auditDirectory,target:ctx.target,runsToday:ctx.runsToday});
-  return {deps:built.deps,close:()=>store.close()};
+  return {deps:built.deps,service:built.service,close:()=>store.close()};
  }catch(error){await store.close();throw error}
 }
