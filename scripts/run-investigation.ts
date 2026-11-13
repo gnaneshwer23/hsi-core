@@ -23,6 +23,16 @@ if(flag("--mode")==="live"||args.includes("--live")){
   const report=await runLivePreflight({config,integrityConfig,env:process.env});
   console.log(renderPreflight(report));process.exit(report.ready?0:3);
  }
+ if(args.includes("--execute")){
+  const {runLiveExecute,loadFileDeps}=await import("../src/liveExecute");
+  const need=(n:string)=>{const v=flag(n);if(!v){console.error(`--execute needs ${n}`);process.exit(2)}return v};
+  const readline=await import("node:readline/promises");
+  const outcome=await runLiveExecute({configPath:resolve(need("--config")),integrityConfigPath:resolve(need("--integrity-config")),question:need("--question"),scope:need("--scope"),reviewer:need("--reviewer"),outDir:resolve(flag("--out")??"out/live")},{
+   env:process.env,readJson:p=>JSON.parse(readFileSync(p,"utf8")),loadDeps:loadFileDeps,
+   confirm:async prompt=>{if(!process.stdin.isTTY)return null;const rl=readline.createInterface({input:process.stdin,output:process.stdout});try{return await rl.question(prompt+"\n> ")}finally{rl.close()}},
+  });
+  console.log(JSON.stringify(outcome,null,2));process.exit(outcome.ok?0:3);
+ }
  const readiness=assessLiveReadiness(config,process.env);
  console.log(renderReadiness(readiness));
  if(args.includes("--dry-run")){
@@ -35,7 +45,7 @@ if(flag("--mode")==="live"||args.includes("--live")){
   console.log(`- Hosts: ${plan.hosts.join(", ")}; at most ${plan.maxRequests} requests; search terms: ${plan.terms.join(", ")}; ranking terms: ${plan.rankingTerms.join(", ")}; passages go to a model only after a signed clearance permits it`);
   process.exit(0);
  }
- console.error("Live execution is refused from this CLI: it also needs the source integrity gate (managed signer) and injected provider wiring; see src/liveRun.ts runLiveInvestigation.");
+ console.error("Live execution needs --execute with --integrity-config, --question, --scope and --reviewer user:<name>; see docs/LIVE_RUN_RUNBOOK.md.");
  process.exit(2);
 }
 const fixtureArg=flag("--fixture");

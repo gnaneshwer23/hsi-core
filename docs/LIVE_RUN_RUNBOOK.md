@@ -32,9 +32,14 @@ Read the cue coverage. If few passages carry every cue, expect most pairs to abs
 
 ## 3. The run
 
-Not yet wired in the CLI. `runLiveInvestigation` (src/liveRun.ts) refuses unless both readiness gates are ready, the kill switch is clear and the daily cap allows it, and spends one shared model-call budget. Execution needs explicit provider wiring supplied by the operator and is a separate, reviewed change.
+```bash
+bun scripts/run-investigation.ts --mode live --config live.json --integrity-config integrity.json \
+  --execute --question "..." --scope gut-immune-metabolic --reviewer user:<your-name> --out out/live
+```
 
-Before it: arm the kill switch variable (named in `limits.killSwitchEnv`) and know how to set it. Keep `maxModelCallsPerRun` at or below 40 for the first run.
+`--execute` refuses unless: a named human reviewer (`user:<name>`) is given; the scope is valid; the offline preflight passes; `maxModelCallsPerRun` is 40 or less and `maxArticlesPerIntent` is 3 or less; and a human types `EXECUTE <job id>` at an interactive terminal (no terminal, no run). The run is a durable job (one at a time, never re-run once complete) and re-checks both readiness gates, the kill switch and the daily cap. Integrity config needs `signer.keyVersionName` (an exact Cloud KMS key version) and `signer.publicKeyEnv`. Approvals are read from `approvals/<deploymentId>.json` next to the operation store.
+
+Keep the kill switch variable (named in `limits.killSwitchEnv`) ready to set. Install `@google-cloud/kms` (exact version) where this runs.
 
 ## 4. After the run
 
