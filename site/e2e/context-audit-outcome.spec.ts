@@ -223,9 +223,10 @@ test('saved audit reopens with source/context binding, owner cannot self-review 
   expect(data.contextConflictAudit.graphPromotable).toBe(false);
   await page.reload();
   panel = page.getByRole('region', { name: 'Unified research outcome', exact: true });
-  await expect(panel).toContainText('Not calibrated');
-  await panel.getByRole('button', { name: '02 Evidence', exact: true }).click();
-  await expect(panel).toContainText(t.audit.auditHash);
+  // Reload restores the Evidence section from its URL anchor, not the Landscape tab.
+  await expect(
+    panel.getByRole('region', { name: 'Saved context-conflict audit', exact: true }),
+  ).toContainText(t.audit.auditHash);
   const md = page.waitForEvent('download');
   await panel.getByRole('button', { name: 'Download research outcome', exact: true }).click();
   expect(await readFile((await (await md).path())!, 'utf8')).toContain(

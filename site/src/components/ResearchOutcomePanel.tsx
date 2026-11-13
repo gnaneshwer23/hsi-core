@@ -411,6 +411,7 @@ export function ResearchOutcomePanel({brief}: {brief: EvidenceBrief}) {
                   <ul>{outcome.contextConflictAudit.report.map(r => <li key={r.comparisonId}>{human(r.classification)} · {r.reasons.join(' ')}</li>)}</ul>
                   <details><summary>Missing context and evidence gaps</summary><ul>{outcome.contextConflictAudit.gaps.map((g,i) => <li key={i}>{g}</li>)}</ul></details>
                   {outcome.contextConflictAuditReview ? <div><h4>Independent audit assessment</h4><p>{human(outcome.contextConflictAuditReview.decision)} · {outcome.contextConflictAuditReview.reviewedAt}</p><p>{outcome.contextConflictAuditReview.rationale}</p><ul>{outcome.contextConflictAuditReview.limitations.map((s,i) => <li key={i}>{s}</li>)}</ul><p>Decision {outcome.contextConflictAuditReview.decisionHash}. Scope: this audit hash only.</p></div> : <p>Independent audit assessment is still required. An evidence-brief decision does not approve this audit.</p>}
+                  <p>Evidence-brief assessment: {human(outcome.review.status)}. The audit assessment does not change that separate decision.</p>
                   <p>No scientific approval or graph publication is transferred. Rerunning creates a new audit version requiring its own assessment.</p>
                   <ContextAuditReviewPanel investigationId={outcome.investigationId} packageHash={outcome.binding.packageHash} audit={outcome.contextConflictAudit} onReviewed={()=>setAttempt(n=>n+1)}/>
                 </section>}
