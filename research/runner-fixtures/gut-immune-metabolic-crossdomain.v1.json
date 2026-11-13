@@ -135,6 +135,32 @@
      "reason": "The passage directly states this finding in the stated context."
     }
    }
+  },
+  "reactome": {
+   "P00002": [
+    {
+     "stId": "R-HSA-9990003",
+     "displayName": "Synthetic immune cytokine production (fixture)",
+     "speciesName": "Homo sapiens",
+     "schemaClass": "Pathway"
+    },
+    {
+     "stId": "R-HSA-9990004",
+     "displayName": "Synthetic metabolic signalling (fixture)",
+     "speciesName": "Homo sapiens",
+     "schemaClass": "Pathway"
+    }
+   ]
   }
- }
+ },
+ "entities": [
+  {
+   "label": "Cytokine B",
+   "uniprot": "P00002"
+  },
+  {
+   "label": "Receptor R",
+   "uniprot": "P00003"
+  }
+ ]
 }

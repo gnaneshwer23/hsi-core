@@ -134,6 +134,34 @@
      "reason": "The passage directly states this finding in the stated context."
     }
    }
+  },
+  "reactome": {
+   "P00001": [
+    {
+     "stId": "R-HSA-9990001",
+     "displayName": "Synthetic Cytokine Beta signalling (fixture)",
+     "speciesName": "Homo sapiens",
+     "schemaClass": "Pathway"
+    },
+    {
+     "stId": "R-HSA-9990002",
+     "displayName": "Synthetic Cell Type Gamma activation (fixture)",
+     "speciesName": "Homo sapiens",
+     "schemaClass": "Pathway"
+    },
+    {
+     "stId": "R-HSA-9990001",
+     "displayName": "Synthetic Cytokine Beta signalling (fixture)",
+     "speciesName": "Homo sapiens",
+     "schemaClass": "Pathway"
+    }
+   ]
   }
- }
+ },
+ "entities": [
+  {
+   "label": "Cytokine Beta",
+   "uniprot": "P00001"
+  }
+ ]
 }

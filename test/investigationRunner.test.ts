@@ -7,6 +7,7 @@ import {extractOpenAccessSections,retrieveOpenAccessSections,sectionsToPassages,
 import {createModelEvidenceExtractor,type ExtractionRejection} from "../src/evidence/modelEvidenceExtraction";
 import {createEntailmentVerifier} from "../src/evidence/entailmentVerifier";
 import {createAuditFileStore,AuditChainConflictError} from "../src/evidence/auditFileStore";
+import {buildSearchTerms,orientByPathways,validateOrientationEntities} from "../src/investigationOrientation";
 import {FIXTURE_NOTICE,runFixtureInvestigation,validateRunnerFixture,type RunnerFixture} from "../src/investigationRunner";
 import {createContextConflictAuditRunner,type ContextAuditHit,type ContextAuditTarget} from "../src/evidence/contextConflictAudit";
 import {contextUnit,fixtureHash} from "./fixtures/contextConflictAudit";
@@ -186,5 +187,63 @@ describe("fixture-mode investigations (two unlike scopes, one code path)",()=>{
  test("the audit runner still rejects a target scope that is not registered",async()=>{
   const runner=createContextConflictAuditRunner({enabled:true,search:async()=>{throw Error("no")},authorizePassage:async()=>true,extract:async()=>{throw Error("no")},verify:async()=>({status:"not_executed",receiptId:null}),append:async()=>{}});
   await expect(runner.run({...target,diseaseScope:"sle" as never})).rejects.toThrow();
+ });
+});
+
+describe("pathway orientation step",()=>{
+ const listing=(rows:{id:string;name:string}[])=>async()=>new Response(JSON.stringify(rows.map(r=>({stId:r.id,displayName:r.name,speciesName:"Homo sapiens",schemaClass:"Pathway"}))),{status:200});
+ test("lists pathways per entity, de-duplicates draft nodes shared by entities, and stays non-promotable navigation only",async()=>{
+  const fetcher=listing([{id:"R-HSA-1",name:"Pathway one"},{id:"R-HSA-2",name:"Pathway two"}]);
+  const o=await orientByPathways({entities:[{label:"Protein A",uniprot:"p00001"},{label:"Protein B",uniprot:"P00002"}],fetcher});
+  expect(o.entities.map(e=>e.status)).toEqual(["listed","listed"]);expect(o.entities[0]!.accession).toBe("P00001");
+  expect(o.draftNodes.map(n=>n.id)).toEqual(["pathway.reactome.R-HSA-1","pathway.reactome.R-HSA-2"]);
+  expect(o.draftNodes.every(n=>n.reviewState==="draft")).toBe(true);
+  expect(o.navigationOnly).toBe(true);expect(o.claimSupport).toBe(false);expect(o.graphPromotable).toBe(false);expect(o.membershipInterpretation).toBe("listed_by_provider_not_context_specific");
+ });
+ test("one failing lookup is recorded and does not stop the others or throw",async()=>{
+  const fetcher=async(url:unknown)=>String(url).includes("/P00001/")?new Response("{}",{status:503}):listing([{id:"R-HSA-9",name:"Pathway nine"}])();
+  const o=await orientByPathways({entities:[{label:"Protein A",uniprot:"P00001"},{label:"Protein B",uniprot:"P00002"}],fetcher});
+  expect(o.entities[0]!.status).toBe("unavailable");expect(o.entities[0]!.reason).toContain("provider_error");expect(o.entities[1]!.status).toBe("listed");
+  const bad=await orientByPathways({entities:[{label:"Protein A",uniprot:"P00001"}],fetcher:async()=>{throw Error("offline")}});
+  expect(bad.entities[0]!.status).toBe("unavailable");expect(bad.draftNodes).toEqual([]);
+ });
+ test("entity input is validated: shape, label safety, duplicates and count",()=>{
+  expect(()=>validateOrientationEntities([{label:"A",uniprot:"P00001",extra:1}])).toThrow();
+  expect(()=>validateOrientationEntities([{label:"<script>",uniprot:"P00001"}])).toThrow();
+  expect(()=>validateOrientationEntities([{label:"A",uniprot:"P00001"},{label:"B",uniprot:"p00001"}])).toThrow();
+  expect(()=>validateOrientationEntities(Array.from({length:9},(_,i)=>({label:"E"+i,uniprot:"P0000"+i})))).toThrow();
+  expect(validateOrientationEntities([{label:" Protein A ",uniprot:"p00001"}])).toEqual([{label:"Protein A",uniprot:"P00001"}]);
+ });
+ test("search terms are bounded, de-duplicated, safe, and put entity labels before pathway names",async()=>{
+  const many=Array.from({length:20},(_,i)=>({id:"R-HSA-"+(i+1),name:"Pathway "+(i+1)}));
+  const o=await orientByPathways({entities:[{label:"Protein A",uniprot:"P00001"}],fetcher:listing(many),maxPathwaysPerEntity:20});
+  const terms=buildSearchTerms("How might protein A matter?",o);
+  expect(terms.length).toBeLessThanOrEqual(8);expect(terms[0]).toBe("How might protein A matter?");expect(terms[1]).toBe("Protein A");
+  expect(new Set(terms.map(t=>t.toLowerCase())).size).toBe(terms.length);expect(terms.every(t=>t.length<=120&&!/[<>]/.test(t))).toBe(true);
+ });
+ for(const name of ["ssc-regression","gut-immune-metabolic-crossdomain"]){
+  test(name+": orientation is recorded in the result and brief, and uses no network",async()=>{
+   const original=globalThis.fetch;globalThis.fetch=(()=>{throw Error("network call attempted")}) as unknown as typeof fetch;
+   try{
+    const r=await runFixtureInvestigation({fixture:fixtureNamed(name)});
+    expect(r.orientation).not.toBeNull();expect(r.orientation!.entities.length).toBeGreaterThan(0);expect(r.orientation!.entities.some(e=>e.status==="listed")).toBe(true);
+    expect(r.brief).toContain("Pathway orientation (navigation aid, not evidence)");expect(r.brief).toContain("not part of the audit");
+    expect(r.orientation!.graphPromotable).toBe(false);expect(r.orientation!.claimSupport).toBe(false);
+   }finally{globalThis.fetch=original}
+  });
+ }
+ test("the audit does not depend on orientation: same units, comparisons and verifier without entities; an unavailable lookup never blocks",async()=>{
+  const withEntities=await runFixtureInvestigation({fixture:fixtureNamed("gut-immune-metabolic-crossdomain")});
+  expect(withEntities.orientation!.entities.some(e=>e.status==="unavailable")).toBe(true);
+  const stripped=fixtureNamed("gut-immune-metabolic-crossdomain");delete stripped.entities;
+  const without=await runFixtureInvestigation({fixture:stripped});
+  expect(without.orientation).toBeNull();expect(without.brief).not.toContain("Pathway orientation");
+  expect(withEntities.audit.units.map(u=>u.id)).toEqual(without.audit.units.map(u=>u.id));
+  expect(withEntities.audit.report.map(r=>r.classification)).toEqual(without.audit.report.map(r=>r.classification));
+  expect(withEntities.audit.verifier.status).toBe(without.audit.verifier.status);
+ });
+ test("invalid fixture entities are rejected before any run",()=>{
+  const f=fixtureNamed("ssc-regression");
+  expect(()=>validateRunnerFixture({...f,entities:[{label:"A",uniprot:"P00001"},{label:"B",uniprot:"P00001"}]})).toThrow();
  });
 });
