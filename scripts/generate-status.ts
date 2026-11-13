@@ -71,9 +71,11 @@ export function renderCollectiveSection(register: { capabilities: CapabilityRow[
     const levels = a.registerIds.length
       ? a.registerIds.map((id) => `${id}: ${byId.has(id) ? capabilityLevel(byId.get(id)!.status) : "missing"}`).join(", ")
       : "no register row yet";
-    const modules = a.modules.map((m) => `\`${m}\``).join(", ");
-    return `| ${a.displayName} | ${a.priority} | ${a.layer} | ${a.manifestRole ?? "none"} | ${levels} | ${a.modelBacked ? "yes" : "no"} | ${a.dependsOn.join(", ") || "none"} | ${modules} | ${a.humanApproval} |`;
+    return `| ${a.displayName} | ${a.priority} | ${a.layer} | ${a.manifestRole ?? "none"} | ${levels} | ${a.modelBacked ? "yes" : "no"} | ${a.dependsOn.join(", ") || "none"} | ${a.humanApproval} |`;
   });
+  const modulesByAgent = collective.agents
+    .map((a) => `**${a.displayName}**\n${[...a.modules].sort().map((m) => `- \`${m}\``).join("\n")}`)
+    .join("\n\n");
   return `
 ## Collective map
 
@@ -81,9 +83,15 @@ ${collective.status}
 
 ${collective.rules.map((rule) => `- ${rule}`).join("\n")}
 
-| Name | Priority | Layer | Agent role contract | Register rows (engineering level) | Model-backed | Depends on | Modules | Human approval needed |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Name | Priority | Layer | Agent role contract | Register rows (engineering level) | Model-backed | Depends on | Human approval needed |
+| --- | --- | --- | --- | --- | --- | --- | --- |
 ${rows.join("\n")}
+
+### Modules by agent
+
+One module per line, sorted, so concurrent changes to different modules do not conflict.
+
+${modulesByAgent}
 
 Name collisions with Aksh Health agents: ${collective.agents.filter((a) => a.nameCollision).map((a) => `${a.name} (${a.nameCollision})`).join(" ")}
 `;
