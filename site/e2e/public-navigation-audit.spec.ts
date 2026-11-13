@@ -26,7 +26,9 @@ test('all public links and selector states resolve, without linking older engine
       }
       return links.length;
     }
-    const links=await inspectLinks(),buttons=page.getByRole('main').locator('button');
+    // The lazy graph has its own complete navigation/a11y suite. Its drawer and
+    // growing network controls must not invalidate positional marketing selectors.
+    const links=await inspectLinks(),buttons=page.getByRole('main').locator('button:not(.ig-experience button):not(.hsi-graph-entry button)');
     const count=await buttons.count();
     for(let i=0;i<count;i++){
       const button=buttons.nth(i),label=await button.innerText();

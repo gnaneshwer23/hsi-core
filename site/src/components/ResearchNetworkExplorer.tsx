@@ -106,7 +106,7 @@ export function ResearchNetworkExplorer({
   const facet = (label: string, key: string, value: string, options: string[]) => (
     <label>
       {label}
-      <select value={value} onChange={(e) => update({ [key]: e.target.value })}>
+      <select aria-label={label} value={value} onChange={(e) => update({ [key]: e.target.value })}>
         <option value="">All</option>
         {options.sort().map((v) => (
           <option key={v} value={v}>
