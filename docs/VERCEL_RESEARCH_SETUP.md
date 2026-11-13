@@ -115,8 +115,9 @@ Expected after configuration:
 This validates configuration only. It does not query the database, authenticate a
 user, confirm migrations, verify privileges or prove scientific readiness.
 The response also reports the non-secret `publicOrigin`, `requestOrigin`,
-`originMatches`, `authEndpointPrefix`, `databaseEndpointPrefix` and
-`endpointPrefixesMatch` fields. An origin mismatch returns 503 with `origin_mismatch`:
+`originMatches` and `endpointPrefixesMatch` fields. The public health response
+deliberately omits Neon endpoint prefixes; they remain visible only in the
+authenticated session diagnostics. An origin mismatch returns 503 with `origin_mismatch`:
 open the exact configured domain or correct `HSI_PUBLIC_ORIGIN` and redeploy.
 `https://www.humansuperintelligence.tech` and
 `https://humansuperintelligence.tech` are distinct origins. The matching origin

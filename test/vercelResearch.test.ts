@@ -23,7 +23,7 @@ test("Vercel health reports missing configuration without querying a DB or echoi
  const missing=await handleVercelResearch(req("/api/research/health"),{}, {transport:noCalls});
  expect(missing.status).toBe(503);expect((await missing.json()).missing).toContain("HSI_DATABASE_URL");
  const configured=await handleVercelResearch(req("/api/research/health"),env,{transport:noCalls});
- expect(await configured.json()).toEqual({service:"hsi-research",status:"configuration_validated",writesEnabled:false,publicOrigin:origin,requestOrigin:origin,originMatches:true,authUrlsMatch:true,authEndpointPrefix:null,databaseEndpointPrefix:"ep-hsi-staging",endpointPrefixesMatch:true,maintenance:false,databaseConnectionTested:false});
+ expect(await configured.json()).toEqual({service:"hsi-research",status:"configuration_validated",writesEnabled:false,publicOrigin:origin,requestOrigin:origin,originMatches:true,authUrlsMatch:true,endpointPrefixesMatch:true,maintenance:false,databaseConnectionTested:false});
  expect(configured.headers.get("cache-control")).toBe("no-store");
  expect(readResearchDeploymentConfig({...env,HSI_DATABASE_URL:"postgresql://secret@attacker.example/neondb"}).ok).toBe(false);
  expect(readResearchDeploymentConfig({...env,HSI_AUTH_BASE_URL:origin+"/api/auth"}).ok).toBe(false);
