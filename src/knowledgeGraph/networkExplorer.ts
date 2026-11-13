@@ -1,6 +1,8 @@
+import {projectAtlasDepartment,validAtlasDepartment,searchAtlasRecords} from './atlasDepartments';
 import {matchesRecordedContext,validRecordedContext,type RecordedResearchFilters} from './recordedResearchContext';
 import type { DomainBundle, DomainEdge } from './domainGraph';
 export type NetworkFilters = RecordedResearchFilters & {
+  department?: string;
   query: string;
   kind: string;
   domain: string;
@@ -14,20 +16,16 @@ export type NetworkFilters = RecordedResearchFilters & {
 };
 /** Apply facets before undirected local expansion. Connectivity is navigation, never causal inference. */
 export function networkProjection(bundle: DomainBundle, focus: string, f: NetworkFilters) {
-  if(!validRecordedContext(bundle,f))return {nodes:[],edges:[]};
+  if(!validRecordedContext(bundle,f)||!validAtlasDepartment(f.department)||![1,2,3].includes(f.depth)||!['local','global'].includes(f.scope)||f.query.length>200)return {nodes:[],edges:[]};
+  const department=projectAtlasDepartment(bundle,f.department??'');
   const q = f.query.normalize('NFKC').trim().toLowerCase();
-  const matches = new Set(
-    bundle.nodes
-      .filter((n) =>
-        [n.name, n.id, ...n.aliases].some((v) => v.normalize('NFKC').toLowerCase().includes(q)),
-      )
-      .map((n) => n.id),
-  );
-  let nodes = bundle.nodes.filter(
+  const search=searchAtlasRecords(bundle,f.query);
+  const matches=new Set(search.entityIds),matchedEdges=new Set(search.relationshipIds);
+  let nodes = department.nodes.filter(
     (n) => (!f.kind || n.kind === f.kind) && (!f.domain || n.domains.includes(f.domain)),
   );
   const allowed = new Set(nodes.map((n) => n.id));
-  let edges = bundle.edges.filter(
+  let edges = department.edges.filter(
     (e) =>
       matchesRecordedContext(e,f) &&
       allowed.has(e.subjectId) &&
@@ -39,7 +37,7 @@ export function networkProjection(bundle: DomainBundle, focus: string, f: Networ
       (f.polarity !== 'nonnegative' || (e.kind === 'source_candidate' && !e.negated)),
   );
   if (q) {
-    edges = edges.filter((e) => matches.has(e.subjectId) || matches.has(e.objectId));
+    edges = edges.filter((e) => matchedEdges.has(e.id));
     const ids = new Set(edges.flatMap((e) => [e.subjectId, e.objectId]));
     nodes = nodes.filter((n) => matches.has(n.id) || ids.has(n.id));
   }

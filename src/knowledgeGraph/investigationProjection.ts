@@ -94,7 +94,7 @@ export function investigationHandoff(
     'compare',
     'netQuery', 'netKind', 'netDomain', 'netPredicate', 'netPolarity',
     'netGaps', 'netOrphans', 'netScope', 'netDepth',
-    'netCondition','netCompareCondition','netTissue','netAssay','netEvidenceKind',
+    'netDepartment','netCondition','netCompareCondition','netTissue','netAssay','netEvidenceKind',
   ]) {
     const value = state.get(key);
     if (value) params.set(key, value);

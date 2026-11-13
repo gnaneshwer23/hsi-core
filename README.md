@@ -4,6 +4,8 @@
 
 > **Governing vision:** [The Vision of Human Super Intelligence](docs/strategy/HSI_VISION.md) — connecting human biology, advancing scientific discovery, transforming our understanding of health. Doctrine for every landing page, backend, knowledge-graph relationship, AI agent and product decision; **not** a claim that every capability is production-ready.
 
+**Scientific Discovery Atlas:** [Current implementation truth and prioritised gaps](docs/atlas/01_PRODUCT_REQUIREMENTS.md) · [Researcher flows](docs/atlas/03_WEBSITE_USER_FLOWS.md) · [Verification and release gates](docs/atlas/08_DEPLOYMENT_TESTING_RUNBOOK.md). The six-department local increment reuses the candidate snapshot; live investigation, scientific acceptance and production activation remain separately gated.
+
 | Module | Responsibility |
 | --- | --- |
 | **Aksh Health** | Patient intelligence: symptoms, medications, labs, wearables, metabolic context |

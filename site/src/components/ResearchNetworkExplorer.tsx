@@ -1,3 +1,5 @@
+import {AtlasDepartmentNavigation} from './AtlasDepartmentNavigation';
+import {validAtlasDepartment} from '../../../src/knowledgeGraph/atlasDepartments';
 import {MISSING_CONTEXT,recordedContextOptions,recordedContextCoverage,validRecordedContext} from '../../../src/knowledgeGraph/recordedResearchContext';
 import { useEffect, useMemo, useState, useId } from 'react';
 import type { DomainBundle } from '../../../src/knowledgeGraph/domainGraph';
@@ -9,6 +11,7 @@ export const NETWORK_KEYS = [
   'netQuery',
   'netKind',
   'netDomain',
+  'netDepartment',
   'netPredicate',
   'netPolarity',
   'netGaps',
@@ -49,6 +52,7 @@ export function ResearchNetworkExplorer({
   }, [selected]);
   const options=recordedContextOptions(bundle);
   const f = {
+    department:params.get('netDepartment')??'',
     conditions:[params.get('netCondition'),params.get('netCompareCondition')].filter((c):c is string=>!!c),
     tissue:params.get('netTissue')??'',assay:params.get('netAssay')??'',evidenceKind:params.get('netEvidenceKind')??'',
     query: params.get('netQuery') ?? '',
@@ -62,13 +66,13 @@ export function ResearchNetworkExplorer({
     depth: Number(params.get('netDepth') ?? 1),
     model: params.get('model') ?? '',
   };
-  const valid = (!params.get('netCompareCondition')||!!params.get('netCondition'))&&validRecordedContext(bundle,f)&&
+  const valid = (!params.get('netCompareCondition')||!!params.get('netCondition'))&&validRecordedContext(bundle,f)&&validAtlasDepartment(f.department)&&
     (!f.kind || bundle.nodes.some((n) => n.kind === f.kind)) &&
     (!f.domain || bundle.nodes.some((n) => n.domains.includes(f.domain))) &&
     (!f.predicate || bundle.edges.some((e) => e.predicate === f.predicate)) &&
     ['', 'negative', 'nonnegative'].includes(f.polarity) &&
     ['local', 'global'].includes(f.scope) &&
-    [1, 2].includes(f.depth) &&
+    [1, 2, 3].includes(f.depth) &&
     f.query.length <= 200 &&
     (!params.has('netGaps') || ['hide', 'show'].includes(params.get('netGaps')!)) &&
     (!params.has('netOrphans') || ['hide', 'show'].includes(params.get('netOrphans')!));
@@ -154,14 +158,15 @@ export function ResearchNetworkExplorer({
       <div className="rn-layout">
         <aside id={filterPanelId} className={'rn-filters'+(filtersOpen?' rn-filters-open':'')} aria-label="Network filters">
           <h2>Explore the network</h2>
-          <p>Filter the same snapshot. Follow connections without losing the source.</p>
+          <p>Filter the same snapshot. Follow connections without losing the source. Department filters apply to this network view; path tools retain their own question scope.</p>
+          <AtlasDepartmentNavigation compact bundle={bundle} value={f.department} onChange={id=>update({netDepartment:id,netScope:'global'})}/>
           <label>
             Search network
             <input
               type="search"
               maxLength={200}
               value={f.query}
-              placeholder="Concept, alias or identifier"
+              placeholder="Entity, disease, publication or identifier"
               onChange={(e) => applyContext({ netQuery: e.target.value })}
             />
           </label>
@@ -169,6 +174,7 @@ export function ResearchNetworkExplorer({
           {(f.kind||f.domain||f.predicate||f.polarity||f.assay)&&<p className="rn-scope-note">This saved link includes additional filters. Use reset to return to the simple view.</p>}
           <p className="rn-scope-note">Start with a concept and follow its recorded evidence. Conditions use the annotations in this snapshot.</p>
           <details className="rn-refine"><summary>Refine this view</summary>
+          <label className="rn-hops">Neighbourhood depth<select aria-label="Neighbourhood depth" value={f.depth} onChange={e=>update({netDepth:e.target.value,netScope:'local'})}>{[1,2,3].map(n=><option key={n} value={n}>{n} hop{n>1?'s':''}</option>)}</select></label>
           {facet('Compare with','netCompareCondition',params.get('netCompareCondition')??'',options.conditions.filter(c=>c!==params.get('netCondition')))}
           <label>Tissue context<select aria-label="Tissue context" value={f.tissue} onChange={e=>applyContext({netTissue:e.target.value})}><option value="">All recorded tissues</option><option value={MISSING_CONTEXT}>Tissue not recorded</option>{options.tissues.map(t=><option key={t} value={t}>{t}</option>)}</select></label>
           <label>Relationship evidence<select aria-label="Relationship evidence" value={f.evidenceKind} onChange={e=>applyContext({netEvidenceKind:e.target.value})}><option value="">Candidates and gaps</option><option value="source_candidate">Source candidates / unreviewed</option><option value="research_gap">Research gaps / unverified</option></select></label>
@@ -209,7 +215,7 @@ export function ResearchNetworkExplorer({
           ) : !slice.nodes.length ? (
             <div className="rn-empty" role="status">
               <h3>No concepts match these filters.</h3>
-              <p>This is a filtered view, not evidence of biological absence.</p>
+              <p>This is a coverage limitation under the active department and filters, not evidence of biological absence. Your selected context remains in the inspector.</p>
               <button onClick={reset}>Reset network filters</button>
             </div>
           ) : (

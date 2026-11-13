@@ -26,7 +26,8 @@ test('homepage graph and workspace remain usable at narrow widths',async({page},
 test('public graph search filters real snapshot records and retains a versioned handoff',async({page})=>{
  await page.goto('/');const graph=page.locator('#home-knowledge-graph');
  await graph.getByRole('searchbox',{name:'Search graph'}).fill('IL-21');
- await expect(graph.locator('[data-graph-node]')).toHaveCount(9);
+ await expect(graph.locator('[data-graph-node]')).not.toHaveCount(0);
+ await expect(graph.locator('.hd-canvas-meta')).toContainText('11 concepts / 11 connections');
  await expect(graph.getByRole('link',{name:'Open this selection in the research workspace ↗'})).toHaveAttribute('href',/netQuery=IL-21/);
  await graph.getByRole('searchbox',{name:'Search graph'}).fill('no-such-scientific-concept');await expect(graph).toContainText('No records match this view');
  await graph.getByRole('button',{name:'Reset search'}).click();await expect(graph.locator('[data-graph-node]')).not.toHaveCount(0);

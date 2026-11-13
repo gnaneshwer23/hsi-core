@@ -20,7 +20,8 @@ test('global/local exploration, connection navigation and back/forward retain ex
     new URL(page.url()).searchParams.get('node') ??
     bundle.questions.find((q: any) => q.id === 'gut-immune').fromId;
   await network.getByRole('button', { name: 'Focus local graph', exact: true }).click();
-  await expect(network.getByLabel('Local depth')).toHaveValue('1');
+  await network.locator('.rn-refine>summary').click();
+  await expect(network.getByLabel('Neighbourhood depth')).toHaveValue('1');
   await network.locator('.rn-links>summary').click();
   const link = network.locator('.rn-link button').first();
   await expect(link).toBeVisible();
