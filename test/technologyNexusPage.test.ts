@@ -1,42 +1,15 @@
-import { describe, expect, it } from "bun:test";
-import { readFileSync } from "node:fs";
-const read = (path: string) => readFileSync(new URL(path, import.meta.url), "utf8");
-describe("HSI NEXUS technology page", () => {
-  const page = read("../site/src/pages/Technology.tsx");
-  it("is accessible from a dedicated public route and navigation", () => {
-    expect(read("../site/src/App.tsx")).toContain('path="technology" element={<Technology />}');
-    expect(read("../site/src/lib/primaryNav.ts")).toContain('to: "/technology"');
-  });
-  it("shows the four independent information domains and six intelligence functions", () => {
-    for (const name of ["Authorised care systems", "Aksh Health", "Immune Super Intelligence", "External research & trials", "Context", "Biology", "Evidence", "Reasoning", "Discovery", "Governance"]) expect(page).toContain(name);
-  });
-  it("explains four governed logical graph layers and source-specific trust boundaries", () => {
-    for (const name of ["Patient context", "Human biology", "Gut–immune–metabolic", "Biomedical evidence", "POTENTIAL DATA CONTRACT", "TRUST BOUNDARY"]) expect(page).toContain(name);
-    expect(page).toContain("not a claim that every source is currently integrated");
-  });
-  it("shows the NEXUS collaboration visual and reviewable engine contracts", () => {
-    for (const label of ["Six engines.", "nx-nexus-orbit", "nx-nexus-contract", "REVIEWABLE OUTPUT", "SAFETY BOUNDARY", "Scientific review"]) expect(page).toContain(label);
-    expect(page).toContain("Agents never self-approve claims");
-  });
-  it("shows distinct research and clinical applications with explicit maturity and safety boundaries", () => {
-    for (const name of ["Evidence-led immune research", "Longitudinal clinical intelligence", "Clinical trial pre-screening", "Biomarker and therapeutic discovery", "REVIEWABLE OUTPUT", "Interpretation boundary", "not a claim of live clinical integrations"]) expect(page).toContain(name);
-  });
-  it("shows the six-step SSc investigation with explicit review and uncertainty", () => {
-    for (const name of ["RESEARCH INVESTIGATION · SYSTEMIC SCLEROSIS", "Frame the SSc question", "Compare conflicting findings", "Draft testable hypotheses", "Review and decide", "REVIEWABLE ARTIFACT", "INTERPRETATION LIMIT"]) expect(page).toContain(name);
-    expect(page).toContain("No patient data, actual study results");
-  });
-  it("shows accountable governance controls and a separate human approval gate", () => {
-    for (const label of ["GOVERNANCE, VALIDATION & SCIENTIFIC REVIEW", "Human scientific review", "STOP CONDITION", "REQUIRED REVIEW RECORD", "Unvalidated hypothesis", "Agents may retrieve, compare and propose"]) expect(page).toContain(label);
-    expect(page).toContain("setGovernanceIndex(i)");
-  });
-  it("keeps interactive journeys keyboard-operable and research boundaries explicit", () => {
-    expect(page).toContain("setSourceIndex(index)");
-    expect(page).toContain("setEngineIndex(i)");
-    expect(page).toContain("setJourneyIndex(index)");
-    expect(page).toContain("setApplicationIndex(i)");
-    expect(page).toContain('aria-live="polite"');
-    expect(read("../site/src/components/TechnologyFlow.tsx")).toContain("Data remains under the source system's authorisation and access controls.");
-    expect(page).toContain("No autonomous diagnosis or prescribing");
-    expect(read("../site/src/styles/technology.css")).toContain("focus-visible");
-  });
+import {test,expect} from 'bun:test';
+import {readFileSync} from 'node:fs';
+import {findPublicCopyIssues} from '../scripts/check-public-copy';
+const retired=/Aksh Health|HSI Clinical|Immune Super Intelligence|HSI Trials|four governed modules|four products/i;
+test('current public copy enforces one HSI technology without the retired portfolio',()=>{
+ expect(findPublicCopyIssues()).toEqual([]);
+ for(const path of ['ScientificPublic','PublicFoundationPages','ExperiencePages','Technology'])expect(readFileSync('site/src/pages/'+path+'.tsx','utf8')).not.toMatch(retired);
+});
+test('technology retains source, experimental-context and independent-review boundaries',()=>{
+ const page=readFileSync('site/src/pages/PublicFoundationPages.tsx','utf8');expect(page).toContain('experimental context');expect(page).toContain('independent scientific acceptance');expect(page).toContain('No live matching');expect(page).toContain('independently reviewed comparison');
+});
+test('retired product routes have hosting redirects to the unified HSI platform',()=>{
+ const config=JSON.parse(readFileSync('site/vercel.json','utf8'));
+ for(const path of ['/modules','/modules/aksh-health','/modules/clinical','/modules/isi','/modules/trials','/products','/for-aksh','/for-isi','/for-trials'])expect(config.redirects.find((r:{source:string})=>r.source===path)?.destination).toBe('/platform');
 });
