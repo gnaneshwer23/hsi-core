@@ -50,12 +50,12 @@ test('facets, empty states and handoff preserve pinned snapshot without adding a
   await network.getByRole('searchbox', { name: 'Search network' }).fill('nonexistent-in-snapshot');
   await expect(network).toContainText('not evidence of biological absence');
   await network.getByRole('button', { name: 'Reset network filters', exact: true }).first().click();
-  await network.getByLabel('Entity type', { exact: true }).selectOption('cell');
+  await network.getByLabel('Entity type', { exact: true }).selectOption('cytokine');
   await page.getByRole('link', { name: 'Continue in Science', exact: true }).click();
   await expect(page).toHaveURL(/domainVersion=/);
-  await expect(page.getByLabel('Entity type', { exact: true })).toHaveValue('cell');
+  await expect(page.getByLabel('Entity type', { exact: true })).toHaveValue('cytokine');
   await page.reload();
-  await expect(page.getByLabel('Entity type', { exact: true })).toHaveValue('cell');
+  await expect(page.getByLabel('Entity type', { exact: true })).toHaveValue('cytokine');
   await expect(
     page.getByText('0 independently approved relationships.', { exact: false }),
   ).toHaveCount(1);
