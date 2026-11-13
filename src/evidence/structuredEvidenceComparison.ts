@@ -15,7 +15,7 @@
  */
 import {createHash} from "node:crypto";
 import {canonicalEvidenceJson} from "./researchEvidenceCorpus";
-import {comparePassageLinkedContexts,validatePassageLinkedContext,type PassageLinkedContext,type DetailedComparability} from "./passageLinkedContext";
+import {comparePassageLinkedContexts,validatePassageLinkedContext,type ComparabilityPolicy,type PassageLinkedContext,type DetailedComparability} from "./passageLinkedContext";
 import type {
   CandidateBiologicalContext,
   ContextualCandidateRelationship,
@@ -365,6 +365,8 @@ function decideOutcome(input: {
 export function compareEvidenceUnits(input: {
   left: ComparableEvidenceUnit;
   right: ComparableEvidenceUnit;
+  /** Optional scientist-reviewed policy; without it every unreported context field blocks comparison. */
+  policy?: ComparabilityPolicy;
 }): StructuredEvidenceComparison {
   input=structuredClone(input);
   assertUnit(input.left, "left");
@@ -402,7 +404,7 @@ export function compareEvidenceUnits(input: {
    validatePassageLinkedContext(context);
    if(!unit.evidenceSourceIds.includes(context.sourceId))fail("Detailed context source is outside the compared unit");
   }
-  const detailedComparability=a&&b?comparePassageLinkedContexts(a,b):null;
+  const detailedComparability=a&&b?comparePassageLinkedContexts(a,b,input.policy):null;
   if((a||b)&&sharedSubjectObject&&!methodSignals.some(s=>s.startsWith("predicate_diff:"))){
    const status=detailedComparability?.status;
    const outcome:StructuredComparisonOutcome=!status||status==="insufficient_evidence"?"insufficient_evidence":status==="not_comparable"?"insufficient_comparability":status==="method_difference"?"methodological_difference":status==="context_difference"?"context_dependent":divergentContextAxisCount?"insufficient_comparability":input.left.findingPolarity==="uncertain"||input.right.findingPolarity==="uncertain"?"insufficient_evidence":input.left.findingPolarity===input.right.findingPolarity?"consistent":"potential_contradiction";

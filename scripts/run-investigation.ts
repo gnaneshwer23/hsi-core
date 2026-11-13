@@ -16,6 +16,13 @@ if(flag("--mode")==="live"||args.includes("--live")){
  const configPath=flag("--config");
  let config:unknown;
  if(configPath){try{config=JSON.parse(readFileSync(resolve(configPath),"utf8"))}catch{console.error(`Cannot read a JSON configuration at ${configPath}`);process.exit(2)}}
+ if(args.includes("--preflight")){
+  const icPath=flag("--integrity-config");let integrityConfig:unknown;
+  if(icPath){try{integrityConfig=JSON.parse(readFileSync(resolve(icPath),"utf8"))}catch{console.error(`Cannot read a JSON integrity configuration at ${icPath}`);process.exit(2)}}
+  const {runLivePreflight,renderPreflight}=await import("../src/livePreflight");
+  const report=await runLivePreflight({config,integrityConfig,env:process.env});
+  console.log(renderPreflight(report));process.exit(report.ready?0:3);
+ }
  const readiness=assessLiveReadiness(config,process.env);
  console.log(renderReadiness(readiness));
  if(args.includes("--dry-run")){
@@ -28,7 +35,7 @@ if(flag("--mode")==="live"||args.includes("--live")){
   console.log(`- Hosts: ${plan.hosts.join(", ")}; at most ${plan.maxRequests} requests; search terms: ${plan.terms.join(", ")}; ranking terms: ${plan.rankingTerms.join(", ")}; passages go to a model only after a signed clearance permits it`);
   process.exit(0);
  }
- console.error("Live execution is not available: the open items above must be closed first.");
+ console.error("Live execution is refused from this CLI: it also needs the source integrity gate (managed signer) and injected provider wiring; see src/liveRun.ts runLiveInvestigation.");
  process.exit(2);
 }
 const fixtureArg=flag("--fixture");
@@ -36,6 +43,15 @@ if(!fixtureArg){console.error("Usage: bun scripts/run-investigation.ts --fixture
 const path=/[\\/]/.test(fixtureArg)?resolve(fixtureArg):resolve(import.meta.dir,"..","research","runner-fixtures",`${fixtureArg}.v1.json`);
 let fixture:unknown;
 try{fixture=JSON.parse(readFileSync(path,"utf8"))}catch{console.error(`Cannot read a JSON fixture at ${path}`);process.exit(2)}
+if(args.includes("--pipeline")){
+ try{
+  const {runCollectivePipeline}=await import("../src/collectivePipeline");
+  const out=resolve(flag("--out")??"out/investigations");
+  const r=await runCollectivePipeline({fixture,storeDirectory:out,jobDirectory:resolve(out,"jobs")});
+  console.log(JSON.stringify({notice:r.notice,job:r.job,auditHash:r.run?.audit.auditHash??null,packetFlags:r.packet?.flags.map(f=>f.code)??[],proposals:r.proposals?.proposals.length??0,refused:r.proposals?.refused.length??0,gaps:r.vantage?.gaps.length??0,followUps:r.vantage?.followUps.length??0},null,2));
+  process.exit(0);
+ }catch(error){console.error(`Pipeline refused: ${error instanceof Error?error.message:"unknown error"}`);process.exit(1)}
+}
 try{
  const result=await runFixtureInvestigation({fixture,storeDirectory:resolve(flag("--out")??"out/investigations")});
  console.log(args.includes("--json")?JSON.stringify({notice:result.notice,auditHash:result.audit.auditHash,version:result.audit.version,scope:result.audit.diseaseScope,verifier:result.audit.verifier,report:result.audit.report,rejections:result.rejections,orientation:result.orientation?{entities:result.orientation.entities,searchTerms:result.orientation.searchTerms,navigationOnly:true}:null},null,1):result.brief);

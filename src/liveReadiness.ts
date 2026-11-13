@@ -23,6 +23,10 @@ export type LiveRunConfig={
 export type LiveDeploymentConfig={
  deploymentId:string;providerId:string;modelId:string;endpoint:string;timeoutMs:number;maxResponseBytes:number;
  termsRef:string;sourcePolicyRef:string;maxOutputTokens:number;budgetUnits:number;credentialEnv:string;
+ /** Abstract cost units per input and output token (default 1). Required by the budget reservation. */
+ inputUnitPrice?:number;outputUnitPrice?:number;
+ /** Required for Anthropic deployments (YYYY-MM-DD). */
+ anthropicVersion?:string;
 };
 /** Hosts a live run may contact. Anything else is invalid; this list changes only through code and security review. */
 export const LIVE_ALLOWED_HOSTS:readonly string[]=Object.freeze(["www.ebi.ac.uk","reactome.org"]);
@@ -31,7 +35,7 @@ export const LIVE_HARD_LIMITS=Object.freeze({maxArticlesPerIntent:5,maxHitsPerIn
 export const ENGINEERING_GAPS:Readonly<Record<"sourceAuthorityService"|"extractionTask"|"liveRunPath",{implemented:boolean;detail:string}>>=Object.freeze({
  sourceAuthorityService:{implemented:true,detail:"Built: scripts/clearance-authority.ts lets an independent person issue and revoke Ed25519 receipts, and createFileSourceAuthority serves them to the runtime. This does not name or appoint that person: the authority identity and keys remain human-held items."},
  extractionTask:{implemented:true,detail:"Built: createStagingProviderOperations supports a strict extraction task (strict-mode schema, decoder, task recorded in receipts) and createProviderBackedRunners binds each call to its cleared source. A security review of the wire schema and a provider smoke run are still human-held (extraction-task-review)."},
- liveRunPath:{implemented:false,detail:"The CLI composes live search and provider runners only after the items above exist; fixture mode is the only executable path."},
+ liveRunPath:{implemented:true,detail:"Built: src/liveRun.ts composes live search, clearance, extraction and independent verification behind both readiness gates, a kill switch, a daily run cap and a model call budget. It stays refused while the source integrity gate (including the managed signing adapter) is open."},
 });
 const ID=/^[A-Za-z0-9][A-Za-z0-9:_./-]{0,255}$/,ENV=/^[A-Z][A-Z0-9_]{2,63}$/;
 const isObj=(v:unknown):v is Record<string,unknown>=>!!v&&typeof v==="object"&&!Array.isArray(v);
@@ -67,6 +71,8 @@ export function assessLiveReadiness(config:unknown,env:Record<string,string|unde
   mk("terms","terms and source-policy references",[d.deploymentId,d.termsRef,d.sourcePolicyRef].every(v=>typeof v==="string"&&ID.test(v))&&d.sourcePolicyRef===sp.policyRef,"termsRef and sourcePolicyRef issued by the owner; sourcePolicyRef must equal the source policy");
   const n=(v:unknown,max:number)=>Number.isSafeInteger(v)&&(v as number)>0&&(v as number)<=max;
   mk("budget","a token and unit budget",n(d.maxOutputTokens,4096)&&n(d.budgetUnits,1e12),"maxOutputTokens up to 4096 and a positive budgetUnits");
+  const price=(v:unknown)=>v===undefined||(Number.isSafeInteger(v)&&(v as number)>0&&(v as number)<=1e9);
+  mk("pricing","valid cost units and, for Anthropic, an API version date",price(d.inputUnitPrice)&&price(d.outputUnitPrice)&&(d.providerId!=="anthropic"||(typeof d.anthropicVersion==="string"&&/^\d{4}-\d{2}-\d{2}$/.test(d.anthropicVersion))),"inputUnitPrice and outputUnitPrice optional positive integers; anthropicVersion required for anthropic");
   mk("credential","a credential in the environment (name only, value never read)",present(env,d.credentialEnv),typeof d.credentialEnv==="string"?d.credentialEnv+(present(env,d.credentialEnv)?" is set":" is not set"):"credentialEnv not set");
   return out;
  };
