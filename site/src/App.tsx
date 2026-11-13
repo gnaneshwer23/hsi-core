@@ -84,7 +84,19 @@ export default function App() {
         <Route path="research/account" element={<ResearchAccount />} />
         <Route path="platform" element={<PlatformPublicPage />} />
         <Route path="intelligence" element={<IntelligenceCollectiveLanding />} />
-        <Route path="intelligence/:slug" element={<IntelligenceCapabilityLanding />} />
+        <Route path="intelligence/nexus" element={<IntelligenceCapabilityLanding slug="nexus" />} />
+        <Route path="intelligence/aegis" element={<IntelligenceCapabilityLanding slug="aegis" />} />
+        <Route path="intelligence/scout" element={<IntelligenceCapabilityLanding slug="scout" />} />
+        <Route path="intelligence/prism" element={<IntelligenceCapabilityLanding slug="prism" />} />
+        <Route path="intelligence/atlas" element={<IntelligenceCapabilityLanding slug="atlas" />} />
+        <Route path="intelligence/helix" element={<IntelligenceCapabilityLanding slug="helix" />} />
+        <Route path="intelligence/parallax" element={<IntelligenceCapabilityLanding slug="parallax" />} />
+        <Route path="intelligence/horizon" element={<IntelligenceCapabilityLanding slug="horizon" />} />
+        <Route path="intelligence/veritas" element={<IntelligenceCapabilityLanding slug="veritas" />} />
+        <Route path="intelligence/arbiter" element={<IntelligenceCapabilityLanding slug="arbiter" />} />
+        <Route path="intelligence/sentinel" element={<IntelligenceCapabilityLanding slug="sentinel" />} />
+        <Route path="intelligence/caliber" element={<IntelligenceCapabilityLanding slug="caliber" />} />
+        <Route path="intelligence/warden" element={<IntelligenceCapabilityLanding slug="warden" />} />
         <Route path="context-conflict-audit" element={<ContextConflictAuditPage />} />
         <Route path="evidence-intelligence" element={<EvidenceIntelligencePage />} />
         <Route path="research-briefs" element={<ResearchBriefsPage />} />
