@@ -55,3 +55,10 @@ Visual revision uses the locally loaded Host Grotesk Variable font, a quieter vi
 This is a file-backed public snapshot API, **not a live Neon database connection**, persisted investigation, approved agent execution or graph publication. The existing authenticated SSc Neon service remains separate. No DB credentials are consumed by this route. No migrations, permissions, sessions or providers were enabled.
 
 Validation: three backend tests with 25 assertions; actual local browser HTTP response contained 153 nodes, 131 edges, 75 source records, the expected SHA, scientificApproval=false and graphPromotable=false. Homepage loaded through the API. Site build/API typecheck passed. Private staging/Neon acceptance remains gated by the previously recorded missing authorisation and account references.
+
+
+## Deployment adapter verification
+
+The public snapshot is packaged as an explicit JSON import in the existing research catch-all function, avoiding an unverified serverless filesystem root. Only the bundled pinned version is served; unavailable historic versions fail closed. Local dev/preview uses the same validation handler with bounded file reads. Vercel routing metadata (`...path`) is validated as the fixed route name; preview protection metadata is ignored and never retained or reflected. The public route does not consume Neon credentials. The real API adapter has a regression test with no database configuration.
+
+During release preparation, browser CI reported 242 passes and one remaining contrast issue shared by three scans. Its evidence-note badge foreground was darkened without relaxing the accessibility gate. Earlier navigation/tamper tests were updated to exercise the new homepage and API route. Deployment must still pass the exact final head checks and actual API smoke test before merge.

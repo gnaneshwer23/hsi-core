@@ -3,8 +3,7 @@
   "bunVersion": "1.x",
   "functions": {
     "api/**/*.ts": {
-      "maxDuration": 30,
-      "includeFiles": "public/research/domain-graph/versions/*.json"
+      "maxDuration": 30
     }
   },
   "headers": [

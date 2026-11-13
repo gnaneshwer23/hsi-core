@@ -1,3 +1,4 @@
+import deployedResearchApi from '../site/api/research/[...path]';
 import {test,expect} from 'bun:test';
 import {readFile} from 'node:fs/promises';
 import {createPublicGraphSnapshotHandler} from '../src/server/publicGraphSnapshotService';
@@ -25,4 +26,11 @@ test('corrupt, oversized, unavailable and mismatched snapshots fail closed witho
 test('Vercel preview share metadata never changes graph selection or reflects a token',async()=>{
  const handler=createPublicGraphSnapshotHandler({currentVersion:version,readPublishedSnapshot:async()=>bytes});
  const r=await handler(request('?version='+version+'&_vercel_share=private-preview-placeholder&...path=graph-snapshot&x-vercel-protection-bypass=private-preview-placeholder&x-vercel-set-bypass-cookie=true'));expect(r.status).toBe(200);expect(await r.text()).not.toContain('private-preview-placeholder');
+});
+
+test('actual deployed research adapter packages the pinned snapshot without database configuration',async()=>{
+ const response=await deployedResearchApi.fetch(new Request('https://preview.example/api/research/graph-snapshot?version='+version+'&...path=graph-snapshot'));
+ expect(response.status).toBe(200);expect(response.headers.get('X-HSI-Graph-Version')).toBe(version);
+ const graph=await response.json();expect(graph.scientificApproval).toBe(false);expect(graph.graphPromotable).toBe(false);
+ const missing=await deployedResearchApi.fetch(new Request('https://preview.example/api/research/graph-snapshot?version='+'f'.repeat(64)));expect(missing.status).toBe(503);
 });
