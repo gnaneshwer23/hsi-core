@@ -12,7 +12,7 @@ const dep=(id:string,model:string)=>({deploymentId:id,providerId:"anthropic",mod
 
 test("nothing configured: not ready, every check reported, no throw, no secret",async()=>{
  const r=await runLivePreflight({config:undefined,integrityConfig:undefined,env:{}});
- expect(r.ready).toBe(false);expect(r.checks.length).toBe(7);expect(renderPreflight(r)).toContain("NOT READY");
+ expect(r.ready).toBe(false);expect(r.checks.length).toBe(8);expect(renderPreflight(r)).toContain("NOT READY");
 });
 test("an engaged kill switch, a missing store and absent credentials are each reported with an owner",async()=>{
  const r=await runLivePreflight({config:{limits:{killSwitchEnv:"HSI_KILL"},operationStore:{path:"/nonexistent/dir/ops.jsonl"},extractor:dep("ext","m-ext"),verifiers:[dep("va","m-a")]},integrityConfig:{},env:{HSI_KILL:"1"}});

@@ -14,7 +14,10 @@ import {INTEGRITY_ALLOWED_HOSTS,resolveSourceEvidence,type SourceRef} from "./re
 import {createSourceIntegrityService,type ReceiptSigner} from "./researchV2/sourceIntegrityService";
 import {createSourceClearanceVerifier} from "./researchV2/sourceClearanceReceipt";
 import {createOperationalSourceClearance} from "./researchV2/operationalSourceClearance";
+import {createHash} from "node:crypto";
 import {createStagingProviderOperations,type StagingDeployment} from "./researchV2/stagingProviderOperations";
+import {validateProviderConfig} from "./researchV2/providerReliability";
+import {canonicalEvidenceJson} from "./evidence/researchEvidenceCorpus";
 import {createStagingDeploymentApprovalVerifier,type DeploymentApprovalBinding} from "./researchV2/stagingDeploymentApproval";
 import type {StagingOperationStore} from "./researchV2/stagingOperationStore";
 import type {ReceiptPublisher} from "./researchV2/clearanceAuthority";
@@ -28,7 +31,8 @@ import type {LiveRunDeps} from "./liveRun";
 import type {ContextAuditTarget} from "./evidence/contextConflictAudit";
 
 export type LiveWiringInput={
- config:LiveRunConfig;integrityConfig:{requestedUses:readonly string[]};env:Record<string,string|undefined>;
+ config:LiveRunConfig;/** The FULL integrity configuration: the run gate re-assesses it, so it must not be trimmed. */
+ integrityConfig:{requestedUses:readonly string[]}&Record<string,unknown>;env:Record<string,string|undefined>;
  policy:unknown;policyAuthorities:readonly PolicyAuthority[];
  signer:ReceiptSigner;signerPublicKey:KeyObject;
  approvalAuthorities:readonly {issuer:string;keyId:string;publicKey:KeyObject}[];
@@ -45,6 +49,12 @@ const toStagingDeployment=(d:LiveDeploymentConfig):StagingDeployment=>({
  termsRef:d.termsRef,sourcePolicyRef:d.sourcePolicyRef,maxOutputTokens:d.maxOutputTokens,inputUnitPrice:d.inputUnitPrice??1,outputUnitPrice:d.outputUnitPrice??1,budgetUnits:d.budgetUnits,
  ...(d.anthropicVersion?{anthropicVersion:d.anthropicVersion}:{}),
 });
+
+/** The configuration hash a deployment approval must bind to: the same recipe the provider operations use. */
+export function stagingConfigurationHash(d:LiveDeploymentConfig):string{
+ const sd=structuredClone(toStagingDeployment(d));sd.config={...validateProviderConfig(sd.config)};
+ return createHash("sha256").update(canonicalEvidenceJson(sd)).digest("hex");
+}
 
 export function buildLiveRunDeps(input:LiveWiringInput):{deps:LiveRunDeps;service:ReturnType<typeof createSourceIntegrityService>;clearance:ReturnType<typeof createOperationalSourceClearance>}{
  const now=input.now??Date.now,{config}=input;
