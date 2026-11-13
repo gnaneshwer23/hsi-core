@@ -8,7 +8,9 @@ export function createPublicGraphSnapshotHandler(config:{currentVersion:string;r
  return async(request:Request):Promise<Response>=>{
   if(request.method!=='GET')return fail(405,'Method not allowed',{Allow:'GET'});
   const url=new URL(request.url),values=url.searchParams.getAll('version');
-  if(values.length>1||[...url.searchParams.keys()].some(k=>k!=='version'&&k!=='_vercel_share'))return fail(400,'Invalid graph request');
+  // Vercel catch-all routing may attach the matched path; it is not a data selector.
+  const routedPath=url.searchParams.getAll('path');
+  if(routedPath.length>1||routedPath.some(p=>p!=='graph-snapshot')||values.length>1||[...url.searchParams.keys()].some(k=>k!=='version'&&k!=='_vercel_share'&&k!=='path'))return fail(400,'Invalid graph request');
   const version=values[0]??config.currentVersion;
   if(!/^[a-f0-9]{64}$/.test(version))return fail(400,'Invalid graph version');
   if(request.signal.aborted)return fail(499,'Request cancelled');
