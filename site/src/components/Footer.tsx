@@ -1,3 +1,4 @@
+import {HsiIdentity} from "./HsiIdentity";
 import { Link } from "react-router-dom";
 import { RESEARCH_NAV_LINKS } from "../lib/primaryNav";
 const groups = [
@@ -7,6 +8,8 @@ const groups = [
       { to: "/platform", label: "Platform" },
       { to: "/science", label: "Science" },
       { to: "/applications", label: "Applications" },
+      {to:"/intelligence",label:"Intelligence Collective"},
+      {to:"/how-it-works",label:"How it works"},
     ],
   },
   { name: "Research", links: RESEARCH_NAV_LINKS },
@@ -35,7 +38,7 @@ export function Footer() {
       <div className="hsi-footer-grid">
         <div className="hsi-footer-brand">
           <Link className="hsi-wordmark" to="/">
-            HSI<span className="hsi-footer-fullname">Human Super Intelligence</span>
+            <HsiIdentity/>
           </Link>
           <p>Connecting human biology through evidence, context and independent scientific judgement.</p>
           <Link className="hsi-text-link" to="/contact">

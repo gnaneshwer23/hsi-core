@@ -36,10 +36,10 @@ test('public pages load the existing typefaces locally without third-party font 
 
 test('mobile hero leads with the research workbench demonstration',async({page})=>{
  await page.setViewportSize({width:390,height:844});await page.goto('/');
- await expect(page.getByRole('heading',{level:1})).toContainText('See why the evidence conflicts.');
- await expect(page.locator('#product-demo')).toBeVisible();
- await expect(page.getByRole('group',{name:'Investigation steps'})).toBeVisible();
- await expect(page.getByRole('heading',{name:/A plausible explanation is not a validated mechanism/})).toBeVisible();
+ await expect(page.getByRole('heading',{level:1})).toContainText('Biological research,');
+ await expect(page.locator('#home-knowledge-graph')).toBeVisible();
+ await expect(page.locator('.sp-workspace')).toBeVisible();
+ await expect(page.getByRole('heading',{name:/The graph is the foundation/})).toBeVisible();
 });
 
 test('editorial action arrows use scalable paths instead of platform symbol fonts',async({page})=>{

@@ -10,9 +10,21 @@
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "noEmit": true,
-    "types": ["bun"],
-    "jsx": "react-jsx"
+    "types": [
+      "bun"
+    ],
+    "jsx": "react-jsx",
+    "resolveJsonModule": true
   },
-  "include": ["types/**/*.d.ts", "src/**/*.ts", "test/**/*.ts", "scripts/**/*.ts"],
-  "exclude": ["dist", "node_modules", "site"]
+  "include": [
+    "types/**/*.d.ts",
+    "src/**/*.ts",
+    "test/**/*.ts",
+    "scripts/**/*.ts"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules",
+    "site"
+  ]
 }

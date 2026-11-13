@@ -227,3 +227,6 @@
 @media(prefers-reduced-motion:reduce){
   .kg-page *{animation:none!important;transition:none!important}
 }
+
+/* Selected label controls retain contrast when investigation styles tint their background. */
+.kg-canvas .xp-graph-toolbar button[aria-pressed="true"]{background:#dce9e3;color:#173b38}

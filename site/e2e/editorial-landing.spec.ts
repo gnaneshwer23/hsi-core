@@ -5,36 +5,29 @@ test('public website excludes fixture promotion and keeps actual product scope',
  for(const path of publicPaths){
   await page.goto(path);await expect(page.getByRole('heading',{level:1})).toHaveCount(1);
   const text=await page.getByRole('main').innerText();
-  if(path==='/')expect(text).toMatch(/Synthetic studies/);
+  if(path==='/')expect(text).toMatch(/Research preview/);
   expect(text,path).not.toMatch(/clinically proven platform|100% accurate/i);
   await expect(page.getByRole('main').locator('a[href*="/research/validation"]')).toHaveCount(0);
  }
  expect(fixtureLoads).toEqual([]);await page.goto('/for-trials');await expect(page.getByRole('main')).toContainText('planned product');await expect(page.getByRole('main')).toContainText('Live matching and enrolment are not currently offered');
 });
-test('editorial homepage product demo, keyboard tabs and narrow layouts remain usable',async({page},info)=>{
+test('homepage graph and workspace remain usable at narrow widths',async({page},info)=>{
  for(const width of [320,390,768,1440]){
-  await page.setViewportSize({width,height:1000});await page.goto('/');
-  await expect(page.getByRole('heading',{level:1})).toContainText('See why the evidence conflicts.');
-  await expect(page.getByRole('heading',{name:/From scientific question to research decision/})).toBeVisible();
-  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),String(width)).toBe(true);
-  if(width===1440)await page.screenshot({path:info.outputPath('editorial-home-desktop.png'),fullPage:true});
-  if(width===390)await page.screenshot({path:info.outputPath('editorial-home-mobile.png'),fullPage:true});
+ await page.setViewportSize({width,height:1000});await page.goto('/');
+ await expect(page.getByRole('heading',{level:1})).toContainText('Biological research,');
+ await expect(page.locator('#home-knowledge-graph')).toContainText('153 concepts');
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),String(width)).toBe(true);
+ if(width===390||width===1440)await page.screenshot({path:info.outputPath(`graph-home-${width}.png`),fullPage:true});
  }
- const steps=page.getByRole('group',{name:'Investigation steps'});
- await steps.getByRole('button',{name:/Review/}).click();
- await expect(steps.getByRole('button',{name:/Review/})).toHaveAttribute('aria-pressed','true');
- await expect(page.locator('#investigation-workflow')).toContainText('graph publication are separate');
- await expect(page.getByRole('main')).toContainText('See why the evidence conflicts.');
-  await expect(page.getByRole('main')).toContainText(/research brief/i);
- await expect(page.getByRole('main')).toContainText('A plausible explanation is not a validated mechanism.');
+ const workspace=page.locator('.sp-workspace');await workspace.getByRole('button',{name:/Review, version/}).click();
+ await expect(workspace).toContainText('Graph promotion is a separate governed decision');
+ await expect(workspace).toContainText('simulated');
 });
-test('homepage investigation anchor opens the eight-step sequence',async({page})=>{
- await page.goto('/#investigation-workflow');
- await expect(page.locator('#investigation-workflow')).toBeVisible();
- await expect(page.locator('#investigation-workflow')).toContainText('unvalidated');
- await expect(page.locator('.hsi-home-hero .hsi-actions a')).toHaveCount(2);
- await expect(page.locator('.hsi-home-hero .hsi-actions a').first()).toHaveAttribute('href','/context-conflict-audit');
- await expect(page.locator('.hsi-home-hero .hsi-actions a').nth(1)).toHaveAttribute('href','/research');
- await expect(page.locator('.hsi-home-hero')).toContainText('Explore the Context-Conflict Audit');
- await expect(page.getByRole('link',{name:/Request access/i}).first()).toHaveAttribute('href','/contact');
+test('public graph search filters real snapshot records and retains a versioned handoff',async({page})=>{
+ await page.goto('/');const graph=page.locator('#home-knowledge-graph');
+ await graph.getByRole('searchbox',{name:'Search graph'}).fill('IL-21');
+ await expect(graph.locator('[data-graph-node]')).toHaveCount(9);
+ await expect(graph.getByRole('link',{name:'Open full explorer ↗'})).toHaveAttribute('href',/netQuery=IL-21/);
+ await graph.getByRole('searchbox',{name:'Search graph'}).fill('no-such-scientific-concept');await expect(graph).toContainText('No matching concepts');
+ await graph.getByRole('button',{name:'Reset filters'}).click();await expect(graph).toContainText('138 concepts');
 });

@@ -1,12 +1,14 @@
+import {IdentityStudy} from "./pages/IdentityStudy";
 import {lazy,Suspense} from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import {Solutions,EvidenceSafety,Pricing,Contact,Community} from "./pages/ExperiencePages";
 const GovernanceDashboard=lazy(()=>import("./pages/GovernanceDashboard").then(m=>({default:m.GovernanceDashboard})));
 const ResearchDashboard=lazy(()=>import("./pages/ResearchDashboard").then(m=>({default:m.ResearchDashboard})));
-import {ContextConflictAuditPage,EvidenceIntelligencePage,ResearchBriefsPage} from "./pages/PublicResearchPages";
-import {PlatformPublicPage,ResearchPublicPage,SciencePublicPage,ApplicationsPublicPage,TrustPublicPage,AboutPublicPage} from "./pages/PublicFoundationPages";
-import { Home } from "./pages/Home";
+import {ContextConflictAuditPage,ResearchBriefsPage} from "./pages/PublicResearchPages";
+import {PlatformPublicPage,SciencePublicPage,ApplicationsPublicPage,TrustPublicPage,AboutPublicPage} from "./pages/PublicFoundationPages";
+import {ScientificHome as Home,ScientificHow as HowItWorks,ScientificResearch as ResearchPublicPage,ScientificEvidence as EvidenceIntelligencePage} from "./pages/ScientificPublic";
+import { IntelligenceCollectiveLanding, IntelligenceCapabilityLanding } from "./pages/IntelligenceCollective";
 import {PasswordRecovery} from "./pages/PasswordRecovery";
 import { SignIn } from "./pages/SignIn";
 import { SignUp } from "./pages/SignUp";
@@ -19,7 +21,7 @@ const Evidence=lazy(()=>import("./pages/Evidence").then(m=>({default:m.Evidence}
 import { ForIsi } from "./pages/ForIsi";
 import { ForAksh } from "./pages/ForAksh";
 import { ForTrials } from "./pages/ForTrials";
-import { HowItWorks } from "./pages/HowItWorks";
+
 const Roadmap=lazy(()=>import("./pages/Roadmap").then(m=>({default:m.Roadmap})));
 const Alignment=lazy(()=>import("./pages/Alignment").then(m=>({default:m.Alignment})));
 const Docs=lazy(()=>import("./pages/Docs").then(m=>({default:m.Docs})));
@@ -82,6 +84,21 @@ export default function App() {
         <Route path="sign-up" element={<SignUp />} />
         <Route path="research/account" element={<ResearchAccount />} />
         <Route path="platform" element={<PlatformPublicPage />} />
+        {import.meta.env.DEV && <Route path={"design/identity"} element={<IdentityStudy/>}/> }
+        <Route path="intelligence" element={<IntelligenceCollectiveLanding />} />
+        <Route path="intelligence/nexus" element={<IntelligenceCapabilityLanding slug="nexus" />} />
+        <Route path="intelligence/aegis" element={<IntelligenceCapabilityLanding slug="aegis" />} />
+        <Route path="intelligence/scout" element={<IntelligenceCapabilityLanding slug="scout" />} />
+        <Route path="intelligence/prism" element={<IntelligenceCapabilityLanding slug="prism" />} />
+        <Route path="intelligence/atlas" element={<IntelligenceCapabilityLanding slug="atlas" />} />
+        <Route path="intelligence/helix" element={<IntelligenceCapabilityLanding slug="helix" />} />
+        <Route path="intelligence/parallax" element={<IntelligenceCapabilityLanding slug="parallax" />} />
+        <Route path="intelligence/horizon" element={<IntelligenceCapabilityLanding slug="horizon" />} />
+        <Route path="intelligence/veritas" element={<IntelligenceCapabilityLanding slug="veritas" />} />
+        <Route path="intelligence/arbiter" element={<IntelligenceCapabilityLanding slug="arbiter" />} />
+        <Route path="intelligence/sentinel" element={<IntelligenceCapabilityLanding slug="sentinel" />} />
+        <Route path="intelligence/caliber" element={<IntelligenceCapabilityLanding slug="caliber" />} />
+        <Route path="intelligence/warden" element={<IntelligenceCapabilityLanding slug="warden" />} />
         <Route path="context-conflict-audit" element={<ContextConflictAuditPage />} />
         <Route path="evidence-intelligence" element={<EvidenceIntelligencePage />} />
         <Route path="research-briefs" element={<ResearchBriefsPage />} />

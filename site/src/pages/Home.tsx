@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { HomeIntelligenceCollective } from "../components/editorial/HomeIntelligenceCollective";
 import { withResearchContext } from "../lib/researchContext";
 import {
   BiologyDomains,
@@ -50,15 +51,15 @@ export function Home() {
           <p className="hsi-product-name">HUMAN SUPER INTELLIGENCE</p>
           <h1 id="home-title">See why the evidence conflicts.</h1>
           <p className="hsi-hero-lead">
-            Investigate complex disease mechanisms with evidence you can trace, biological context you can
-            inspect, and uncertainty you can act on.
+            Explore biological mechanisms across human systems with evidence you can trace, context you can
+            inspect, and uncertainty you can evaluate.
           </p>
           <p>
             HSI connects biomedical research, biological relationships and scientific reasoning to help
             researchers move from fragmented findings toward clearer, testable research decisions.
           </p>
           <div className="hsi-actions">
-            <PublicAction to="/context-conflict-audit">Explore the Context-Conflict Audit</PublicAction>
+            <PublicAction to="/research">Explore Scientific Research</PublicAction>
             <PublicAction to="/research" secondary>
               See How It Works
             </PublicAction>
@@ -68,6 +69,7 @@ export function Home() {
           </p>
         </div>
       </section>
+      <HomeIntelligenceCollective />
       <PublicSection
         id="fragmented-evidence"
         title="Biology is connected. Its evidence is fragmented."
