@@ -14,6 +14,8 @@ import {runLiveInvestigation,type LiveRunDeps,type LiveRunResult,type LiveRunRef
 import {buildLiveRunDeps} from "./liveWiring";
 import {createJobJournal,runDurable} from "./nexusJobs";
 import {buildReviewPacket} from "./reviewPacket";
+import {assertProposalOnly,proposeEdgesFromAudit} from "./atlasProposals";
+import {proposeGaps} from "./vantageGaps";
 import {isInvestigationScopeId} from "./investigationScope";
 import type {LiveRunConfig} from "./liveReadiness";
 import type {SourceIntegrityConfig} from "./sourceIntegrityReadiness";
@@ -71,6 +73,12 @@ export async function runLiveExecute(opts:ExecuteOptions,io:ExecuteIo):Promise<E
   const packet=buildReviewPacket({audit:box.result.audit,entailments:box.result.entailments,rejections:box.result.rejections});
   writeFileSync(join(dir,"brief.md"),box.result.brief+`\n\nExecuted under named reviewer: ${opts.reviewer}\n`);
   writeFileSync(join(dir,"review-packet.json"),JSON.stringify(packet,null,2));
+  // ATLAS: draft edge proposals only (never approved, never promotable); VANTAGE: unvalidated gaps and falsifiable follow-ups.
+  const sourceUrls=Object.fromEntries(box.result.audit.units.flatMap(u=>u.evidenceSourceIds).flatMap(id=>{const m=/^europepmc:(PMC[1-9]\d{0,11})$/.exec(id);return m?[[id,`https://europepmc.org/article/PMC/${m[1]}`]]:[]}));
+  const proposals=proposeEdgesFromAudit({audit:box.result.audit,submitterId:"atlas:proposer",sourceUrls});
+  for(const p of proposals.proposals)assertProposalOnly(p);
+  writeFileSync(join(dir,"atlas-proposals.json"),JSON.stringify(proposals,null,2));
+  writeFileSync(join(dir,"vantage.json"),JSON.stringify(proposeGaps(box.result.audit),null,2));
   return {ok:true,jobId,job:job.status,outputDir:dir,auditHash:job.auditHash};
  }finally{await loaded.close()}
 }

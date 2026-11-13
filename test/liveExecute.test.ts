@@ -75,5 +75,7 @@ test("a confirmed run loads deps once, is a durable job, writes a brief and an u
  expect(packet.scientificApproval).toBe(false);expect(packet.graphPromotable).toBe(false);expect(packet.units).toEqual([]);
  const brief=readFileSync(join(r.outputDir!,"brief.md"),"utf8");expect(brief).toContain("user:scientist-1");expect(brief).toContain("Not approved, not promotable");
  expect(brief).not.toContain("SECRET-PROVIDER-KEY");
+ const atlas=JSON.parse(readFileSync(join(r.outputDir!,"atlas-proposals.json"),"utf8")),vantage=JSON.parse(readFileSync(join(r.outputDir!,"vantage.json"),"utf8"));
+ expect(atlas.proposals).toEqual([]);expect(atlas.graphPromotable).toBe(false);expect(vantage.gaps).toEqual([]);expect(vantage.notice).toContain("unvalidated");
  const again=await runLiveExecute(w.opts,io(w));expect(again.ok&&again.job).toBe("already_completed");
 });

@@ -1076,13 +1076,14 @@
         ],
         "modules": [
           "src/atlasProposals.ts",
-          "src/livingHealthKnowledgeGraph.ts",
-          "src/hsiOntologyRegistry.ts",
-          "src/graphRelease.ts",
-          "src/governedGraphRead.ts",
           "src/evidence/canonicalContextualEdge.ts",
           "src/evidence/reactomeOntologyBridge.ts",
-          "src/evidence/uniProtOntologyBridge.ts"
+          "src/evidence/uniProtOntologyBridge.ts",
+          "src/governedGraphRead.ts",
+          "src/graphRelease.ts",
+          "src/hsiOntologyRegistry.ts",
+          "src/liveExecute.ts",
+          "src/livingHealthKnowledgeGraph.ts"
         ],
         "modelBacked": false,
         "humanApproval": "Canonical investigation store decision; held migrations; publication only after ARBITER and a human decision.",
@@ -1189,11 +1190,12 @@
           "O-05"
         ],
         "modules": [
-          "src/vantageGaps.ts",
           "src/evidence/falsifiableExperimentProposals.ts",
-          "src/evidence/hypothesisRegistry.ts",
           "src/evidence/gapVerification.ts",
-          "src/interrogativeFalsificationEngine.ts"
+          "src/evidence/hypothesisRegistry.ts",
+          "src/interrogativeFalsificationEngine.ts",
+          "src/liveExecute.ts",
+          "src/vantageGaps.ts"
         ],
         "modelBacked": false,
         "humanApproval": "A model-backed proposer needs model approval and a preregistered comparison; today it is deterministic.",
