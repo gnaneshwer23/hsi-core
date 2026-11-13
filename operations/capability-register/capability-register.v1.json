@@ -893,6 +893,7 @@
           "F-13"
         ],
         "modules": [
+          "src/collectivePipeline.ts",
           "src/hsiAgentOrchestrator.ts",
           "src/hsiCheckpointedExecutor.ts",
           "src/hsiAgentDurableCheckpoint.ts",

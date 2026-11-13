@@ -36,6 +36,15 @@ if(!fixtureArg){console.error("Usage: bun scripts/run-investigation.ts --fixture
 const path=/[\\/]/.test(fixtureArg)?resolve(fixtureArg):resolve(import.meta.dir,"..","research","runner-fixtures",`${fixtureArg}.v1.json`);
 let fixture:unknown;
 try{fixture=JSON.parse(readFileSync(path,"utf8"))}catch{console.error(`Cannot read a JSON fixture at ${path}`);process.exit(2)}
+if(args.includes("--pipeline")){
+ try{
+  const {runCollectivePipeline}=await import("../src/collectivePipeline");
+  const out=resolve(flag("--out")??"out/investigations");
+  const r=await runCollectivePipeline({fixture,storeDirectory:out,jobDirectory:resolve(out,"jobs")});
+  console.log(JSON.stringify({notice:r.notice,job:r.job,auditHash:r.run?.audit.auditHash??null,packetFlags:r.packet?.flags.map(f=>f.code)??[],proposals:r.proposals?.proposals.length??0,refused:r.proposals?.refused.length??0,gaps:r.vantage?.gaps.length??0,followUps:r.vantage?.followUps.length??0},null,2));
+  process.exit(0);
+ }catch(error){console.error(`Pipeline refused: ${error instanceof Error?error.message:"unknown error"}`);process.exit(1)}
+}
 try{
  const result=await runFixtureInvestigation({fixture,storeDirectory:resolve(flag("--out")??"out/investigations")});
  console.log(args.includes("--json")?JSON.stringify({notice:result.notice,auditHash:result.audit.auditHash,version:result.audit.version,scope:result.audit.diseaseScope,verifier:result.audit.verifier,report:result.audit.report,rejections:result.rejections,orientation:result.orientation?{entities:result.orientation.entities,searchTerms:result.orientation.searchTerms,navigationOnly:true}:null},null,1):result.brief);
