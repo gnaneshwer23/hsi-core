@@ -1,5 +1,5 @@
 import {retrieveAbstractContext} from "../../src/scientificAbstractContext";
-export default async function handler(request:Request):Promise<Response>{
+async function handler(request:Request):Promise<Response>{
  const headers={"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store","X-Content-Type-Options":"nosniff"};
  if(request.method!=="GET")return new Response(JSON.stringify({error:"Method not allowed"}),{status:405,headers:{...headers,Allow:"GET"}});
  const pmid=new URL(request.url).searchParams.get("pmid")??"";
@@ -9,3 +9,4 @@ export default async function handler(request:Request):Promise<Response>{
  catch{return new Response(JSON.stringify({error:"Abstract retrieval unavailable. No scientific claims were generated."}),{status:502,headers});}
  finally{clearTimeout(timeout);}
 }
+export default {fetch:handler};

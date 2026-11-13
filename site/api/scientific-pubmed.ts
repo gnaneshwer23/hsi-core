@@ -1,5 +1,5 @@
 import {retrievePubmedBibliography} from "../../src/scientificPubmedRetrieval";
-export default async function handler(request:Request):Promise<Response>{
+async function handler(request:Request):Promise<Response>{
  const headers={"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store","X-Content-Type-Options":"nosniff"};
  if(request.method!=="GET")return new Response(JSON.stringify({error:"Method not allowed"}),{status:405,headers:{...headers,Allow:"GET"}});
  const url=new URL(request.url);const query=url.searchParams.get("q")??"";
@@ -10,3 +10,4 @@ export default async function handler(request:Request):Promise<Response>{
   finally{clearTimeout(timeout);}
  }catch(e){return new Response(JSON.stringify({error:"PubMed retrieval unavailable. No findings were generated."}),{status:502,headers});}
 }
+export default {fetch:handler};
