@@ -17,7 +17,7 @@ export type LiveRunConfig={
  extractor:LiveDeploymentConfig;
  verifiers:LiveDeploymentConfig[];
  limits:{maxArticlesPerIntent:number;maxHitsPerIntent:number;maxModelCallsPerRun:number;maxRunsPerDay:number;killSwitchEnv:string};
- review:{normalizerReviewRef:string;questionReviewRef:string};
+ review:{normalizerReviewRef:string;questionReviewRef:string;extractionTaskReviewRef:string};
  operationStore:{path:string};
 };
 export type LiveDeploymentConfig={
@@ -30,7 +30,7 @@ export const LIVE_HARD_LIMITS=Object.freeze({maxArticlesPerIntent:5,maxHitsPerIn
 /** Engineering gaps found while preparing live mode. Flip a flag only together with the code and tests that close it. */
 export const ENGINEERING_GAPS:Readonly<Record<"sourceAuthorityService"|"extractionTask"|"liveRunPath",{implemented:boolean;detail:string}>>=Object.freeze({
  sourceAuthorityService:{implemented:true,detail:"Built: scripts/clearance-authority.ts lets an independent person issue and revoke Ed25519 receipts, and createFileSourceAuthority serves them to the runtime. This does not name or appoint that person: the authority identity and keys remain human-held items."},
- extractionTask:{implemented:false,detail:"createStagingProviderOperations supports the entailment schema only. A strict extraction schema for the approved providers needs security review and a provider smoke run."},
+ extractionTask:{implemented:true,detail:"Built: createStagingProviderOperations supports a strict extraction task (strict-mode schema, decoder, task recorded in receipts) and createProviderBackedRunners binds each call to its cleared source. A security review of the wire schema and a provider smoke run are still human-held (extraction-task-review)."},
  liveRunPath:{implemented:false,detail:"The CLI composes live search and provider runners only after the items above exist; fixture mode is the only executable path."},
 });
 const ID=/^[A-Za-z0-9][A-Za-z0-9:_./-]{0,255}$/,ENV=/^[A-Z][A-Z0-9_]{2,63}$/;
@@ -83,6 +83,7 @@ export function assessLiveReadiness(config:unknown,env:Record<string,string|unde
  const rv=isObj(c.review)?c.review:{};
  add("normalizer-review","A scientist's review of the context normalizer registry","scientist",typeof rv.normalizerReviewRef==="string"&&ID.test(rv.normalizerReviewRef)?true:rv.normalizerReviewRef===undefined?"missing":false,"normalizerReviewRef");
  add("question-review","A scientist's review of the question wording and pathway terms","scientist",typeof rv.questionReviewRef==="string"&&ID.test(rv.questionReviewRef)?true:rv.questionReviewRef===undefined?"missing":false,"questionReviewRef");
+ add("extraction-task-review","A security review of the extraction wire schema and a provider smoke run","security signer",typeof rv.extractionTaskReviewRef==="string"&&ID.test(rv.extractionTaskReviewRef)?true:rv.extractionTaskReviewRef===undefined?"missing":false,"extractionTaskReviewRef");
  const os=isObj(c.operationStore)?c.operationStore:{};
  add("operation-store","A path for the append-only operation and receipt store","operator",typeof os.path==="string"&&os.path.trim().length>0&&os.path.length<=512?true:os.path===undefined?"missing":false,"operationStore.path");
  for(const [key,gap] of Object.entries(ENGINEERING_GAPS))add(`engineering-${key}`,key,"engineering",gap.implemented?true:"missing",gap.detail);
