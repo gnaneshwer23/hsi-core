@@ -16,6 +16,7 @@ import type {IndependentChallenge} from "./researchV2/scientificEntailment";
 import {isInvestigationScopeId,type InvestigationScopeId} from "./investigationScope";
 import {orientByPathways,validateOrientationEntities,type OrientationEntity,type PathwayOrientation} from "./investigationOrientation";
 import type {FetchLike} from "./fetchLike";
+import type {ComparabilityPolicy} from "./evidence/passageLinkedContext";
 
 export const FIXTURE_NOTICE="FIXTURE RUN: synthetic passages and recorded model outputs. This is not evidence, not a scientific result and not an approved or promotable claim.";
 export type RunnerFixtureHit={id:string;title:string;locator:string;text:string};
@@ -76,7 +77,7 @@ function replayReactome(fixture:RunnerFixture):FetchLike{
  };
 }
 
-export async function runFixtureInvestigation(input:{fixture:unknown;storeDirectory?:string;verifierIds?:readonly string[];now?:()=>string}):Promise<InvestigationRunResult>{
+export async function runFixtureInvestigation(input:{fixture:unknown;storeDirectory?:string;verifierIds?:readonly string[];now?:()=>string;comparabilityPolicy?:ComparabilityPolicy}):Promise<InvestigationRunResult>{
  const fixture=validateRunnerFixture(input.fixture);
  const hitsByIntent={support:fixture.searches.support.map(h=>toHit(fixture,h)),oppose:fixture.searches.oppose.map(h=>toHit(fixture,h))};
  const all=[...fixture.searches.support,...fixture.searches.oppose];
@@ -87,7 +88,7 @@ export async function runFixtureInvestigation(input:{fixture:unknown;storeDirect
  const memory:ContextConflictAudit[]=[];
  const verifierIds=input.verifierIds??Object.keys(fixture.recorded.entailment);
  const runner=createContextConflictAuditRunner({
-  enabled:true,now:input.now,
+  enabled:true,now:input.now,comparabilityPolicy:input.comparabilityPolicy,
   search:async(_target,intent):Promise<ContextAuditSearch>=>{
    const hits=hitsByIntent[intent];
    return {intent,status:hits.length?"completed_bounded":"successful_empty",queriedAt:"2026-11-13T00:00:00Z",queryHash:sha(intent+"|"+fixture.question),sourceIds:hits.map(h=>h.source.id),hits:structuredClone(hits)};
