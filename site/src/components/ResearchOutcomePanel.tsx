@@ -1,3 +1,4 @@
+import {ContextAuditReviewPanel} from "./ContextAuditReviewPanel";
 import {printResearchDocument} from "../lib/printResearchDocument";
 import {renderResearchOutcome} from "../../../src/researchOutcome";
 import {useEffect, useState} from "react";
@@ -402,6 +403,17 @@ export function ResearchOutcomePanel({brief}: {brief: EvidenceBrief}) {
                 )}
                 <h4>Conflicting evidence</h4>
                 <p>{outcome.contradictions.note}</p>
+                {outcome.contextConflictAudit && <section aria-label="Saved context-conflict audit">
+                  <h4>Versioned Context-Conflict Audit</h4>
+                  <p>Version {outcome.contextConflictAudit.version} · audit {outcome.contextConflictAudit.auditHash}</p>
+                  <p>Parent: {outcome.contextConflictAudit.parentAuditHash ?? 'First version'}. Verifier: {human(outcome.contextConflictAudit.verifier.status)}.</p>
+                  {outcome.contextConflictAudit.searches.map(s => <p key={s.intent}>{s.intent}: {human(s.status)}. Search completeness and consensus are not established.</p>)}
+                  <ul>{outcome.contextConflictAudit.report.map(r => <li key={r.comparisonId}>{human(r.classification)} · {r.reasons.join(' ')}</li>)}</ul>
+                  <details><summary>Missing context and evidence gaps</summary><ul>{outcome.contextConflictAudit.gaps.map((g,i) => <li key={i}>{g}</li>)}</ul></details>
+                  {outcome.contextConflictAuditReview ? <div><h4>Independent audit assessment</h4><p>{human(outcome.contextConflictAuditReview.decision)} · {outcome.contextConflictAuditReview.reviewedAt}</p><p>{outcome.contextConflictAuditReview.rationale}</p><ul>{outcome.contextConflictAuditReview.limitations.map((s,i) => <li key={i}>{s}</li>)}</ul><p>Decision {outcome.contextConflictAuditReview.decisionHash}. Scope: this audit hash only.</p></div> : <p>Independent audit assessment is still required. An evidence-brief decision does not approve this audit.</p>}
+                  <p>No scientific approval or graph publication is transferred. Rerunning creates a new audit version requiring its own assessment.</p>
+                  <ContextAuditReviewPanel investigationId={outcome.investigationId} packageHash={outcome.binding.packageHash} audit={outcome.contextConflictAudit} onReviewed={()=>setAttempt(n=>n+1)}/>
+                </section>}
                 <ul>
                   {outcome.contradictions.recordedOpposingClaimIds.map((id) => (
                     <li key={id}>{id}</li>

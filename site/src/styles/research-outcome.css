@@ -24,3 +24,5 @@
 .outcome-disclaimer{padding:0 2rem 1.5rem;font-size:.85rem}
 .research-outcome button:focus-visible,.research-outcome select:focus-visible,.research-outcome summary:focus-visible{outline:3px solid #17645f;outline-offset:4px}
 @media(max-width:640px){.outcome-top{flex-direction:column}.outcome-facts,.outcome-context{grid-template-columns:1fr}.outcome-downloads,.outcome-disclaimer{padding-left:1rem;padding-right:1rem}.outcome-navigation button{flex:1 1 7rem}}
+
+.context-audit-review{border-top:1px solid #b7cec3;margin-top:24px;padding-top:18px}.context-audit-review form{display:grid;gap:16px;max-width:650px}.context-audit-review label{display:grid;gap:8px;font-size:.85rem}.context-audit-review :is(select,textarea){font:inherit;padding:10px;min-height:44px;max-width:100%;width:100%;border:1px solid #658779;background:#fff;color:#183e35}.context-audit-review textarea{min-height:100px}.context-audit-review input[type=checkbox]{width:24px;height:24px}.context-audit-review button{min-height:44px;justify-self:start}

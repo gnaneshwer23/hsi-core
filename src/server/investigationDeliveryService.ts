@@ -1,6 +1,6 @@
 import {resolveBoundOutcomeAttachments,type OutcomeAttachmentResolver} from "./boundOutcomeAttachments";
 /** Phase D trusted orchestration. Identity/time/decision IDs come from the backend. */
-import {buildResearchOutcome} from "../researchOutcome";
+import {buildResearchOutcome,outcomeVerificationReceipt} from "../researchOutcome";
 import {createHash} from "node:crypto";
 import {planSscInterrogation} from "../interrogativeQuestionEngine";
 import {canonicalGraphContext,verifyInvestigationGraphContext,type InvestigationGraphContext} from "../investigationGraphContext";
@@ -44,6 +44,12 @@ export function createInvestigationDeliveryService(deps:DeliveryDependencies){
    limitations:["Evidence brief review only; candidate branches remain unvalidated unless explicitly supported and independently assessed.","Source associations and shared graph patterns do not establish causality or equivalent biology.","No patient eligibility, treatment advice or knowledge-graph publication is authorised.","Unreviewed working-catalogue candidates remain excluded from scientific approval."]};
   if(Buffer.byteLength(canonicalGraphContext(body))>2_000_000)throw Error("Evidence package exceeds export budget");return {...body,packageHash:deliveryHash(canonicalGraphContext(body))};
  }
+ async function compiledOutcome(token:string|null,id:string){
+   const {actor,state,p}=await load(token,id);
+   if(!p||!state.submission&&(state.legacyDecision||state.record.state!=="draft"))throw Error("A verified, release-bound context is required");
+   const attachments=await resolveBoundOutcomeAttachments(outcomeAttachments,actor,p,deliveryHash);
+   return buildResearchOutcome({schemaVersion:"hsi-investigation-brief-1",package:p,submission:state.submission,decision:state.decision,scope:"research_only",graphPublicationApproved:false},async s=>deliveryHash(s),attachments.options,attachments.authority);
+ }
  return {
   async view(token:string|null,id:string):Promise<DeliveryView>{const {state,p,capabilities}=await load(token,id);return {status:!state.submission&&(state.legacyDecision||state.record.state!=="draft")?"legacy_unbound":state.decision?(state.decision.outcome==="approve_with_limitations"?"reviewed":state.decision.outcome==="reject"?"rejected":"revision_requested"):state.submission?"awaiting_review":"draft",package:p,submission:state.submission,decision:state.decision,revision:state.revision,successor:state.successor,capabilities}},
   async submit(token:string|null,id:string){
@@ -71,12 +77,8 @@ export function createInvestigationDeliveryService(deps:DeliveryDependencies){
    const link={parentId:id,rootId:state.revision?.rootId??id,number:(state.revision?.number??1)+1,decisionId:state.decision.id,reason:request.reason};
    return deps.revise(actor,state,child,request.requestId,deliveryHash(canonicalGraphContext(request)),link);
   },
-  async outcome(token:string|null,id:string){
-   const {actor,state,p}=await load(token,id);
-   if(!p||!state.submission&&(state.legacyDecision||state.record.state!=="draft"))throw Error("A verified, release-bound context is required");
-   const attachments=await resolveBoundOutcomeAttachments(outcomeAttachments,actor,p,deliveryHash);
-   return buildResearchOutcome({schemaVersion:"hsi-investigation-brief-1",package:p,submission:state.submission,decision:state.decision,scope:"research_only",graphPublicationApproved:false},async s=>deliveryHash(s),attachments.options,attachments.authority);
-  },
+  outcome:compiledOutcome,
+  async outcomeReceipt(token:string|null,id:string){return outcomeVerificationReceipt(await compiledOutcome(token,id));},
   async brief(token:string|null,id:string,format:"json"|"markdown"){
    const {state,p}=await load(token,id);if(!p||!state.submission&&(state.legacyDecision||state.record.state!=="draft"))throw Error("A verified, release-bound evidence context is required for this brief");
    const brief:EvidenceBrief={schemaVersion:"hsi-investigation-brief-1",package:p,submission:state.submission,decision:state.decision,scope:"research_only",graphPublicationApproved:false};

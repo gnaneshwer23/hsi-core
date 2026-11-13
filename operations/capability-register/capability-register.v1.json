@@ -1,7 +1,7 @@
 {
   "schemaVersion": "hsi-capability-register-1",
   "registerId": "hsi-capability-register-2026-11-08",
-  "asOf": "2026-11-12",
+  "asOf": "2026-11-13",
   "masterSpec": "docs/product/HSI_DEFINITIVE_PRODUCT_SPEC.md",
   "humanDoc": "docs/STATUS.md",
   "honesty": {
@@ -120,10 +120,16 @@
         "site/src/lib/investigationSections.ts",
         "src/server/boundOutcomeAttachments.ts",
         "src/expansion/rereviewOutcomeGuard.ts",
-        "test/boundContextAuditOutcome.test.ts"
+        "test/boundContextAuditOutcome.test.ts",
+        "src/db/contextAuditArchiveStore.ts",
+        "src/server/contextAuditArchiveService.ts",
+        "src/evidence/contextAuditReview.ts",
+        "site/src/components/ContextAuditReviewPanel.tsx",
+        "test/contextAuditArchive.test.ts",
+        "docs/research/NEXT_C_SAVED_AUDIT_INTEGRATION.md"
       ],
-      "gap": "Saved-outcome and server-owned attachment bindings are tested; real restricted persistence, audit-hash human review and live reopen/export journeys remain unaccepted.",
-      "nextAction": "Complete scoped real-account HTTP acceptance and durable audit-specific review before enabling pilot writes.",
+      "gap": "Versioned audit storage, audit-hash independent assessment and receipted saved-outcome/browser integration have an isolated same-host reference and fixture tests. Real Neon persistence/isolation, source authority, scoped human reviewers and live SSc plus RA/SLE reopen/export acceptance remain unverified.",
+      "nextAction": "Complete NEXT-A/B, implement and independently accept the protected production storage/authority adapter, then run real-account saved-audit journeys before pilot writes.",
       "acceptance": {
         "deployment": "not_verified",
         "scientific": "not_accepted"
