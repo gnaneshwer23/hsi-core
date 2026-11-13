@@ -13,7 +13,7 @@ for(const width of [320,390,768,1440]){
   expect(overflow).toBe(false);
  });
 }
-test("Science landing opens Body Explorer",async({page})=>{await page.goto("/science");await page.getByRole("link",{name:/Explore the human body/}).click();await expect(page).toHaveURL(/\/science\/body/);});
+test("Science landing opens Body Explorer",async({page})=>{await page.goto("/science");await page.getByRole("link",{name:/Explore Organ and Tissue Context/}).click();await expect(page).toHaveURL(/\/science\/body/);});
 
 test("URL context, schematic selection and pancreas learning pathway",async({page})=>{
  await page.goto("/science/body?organ=liver");

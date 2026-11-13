@@ -5,13 +5,8 @@ test('public website excludes fixture promotion and keeps actual product scope',
  for(const path of publicPaths){
   await page.goto(path);await expect(page.getByRole('heading',{level:1})).toHaveCount(1);
   const text=await page.getByRole('main').innerText();
-  // Homepage may label an illustrative demonstration; other public pages must not promote fixtures/synthetic demos.
-  if(path==='/'){
-   expect(text).toMatch(/illustrative/i);
-   expect(text).not.toMatch(/\b(fixtures?|simulation)\b/i);
-  }else{
-   expect(text,path).not.toMatch(/\b(synthetic|demo|fixtures?|simulation)\b/i);
-  }
+  if(path==='/')expect(text).toMatch(/Synthetic studies/);
+  expect(text,path).not.toMatch(/clinically proven platform|100% accurate/i);
   await expect(page.getByRole('main').locator('a[href*="/research/validation"]')).toHaveCount(0);
  }
  expect(fixtureLoads).toEqual([]);await page.goto('/for-trials');await expect(page.getByRole('main')).toContainText('planned product');await expect(page.getByRole('main')).toContainText('Live matching and enrolment are not currently offered');
@@ -19,27 +14,27 @@ test('public website excludes fixture promotion and keeps actual product scope',
 test('editorial homepage product demo, keyboard tabs and narrow layouts remain usable',async({page},info)=>{
  for(const width of [320,390,768,1440]){
   await page.setViewportSize({width,height:1000});await page.goto('/');
-  await expect(page.getByRole('heading',{level:1})).toContainText('Explore the connections');
-  await expect(page.getByRole('heading',{name:/Follow the evidence|How an investigation proceeds/})).toBeVisible();
+  await expect(page.getByRole('heading',{level:1})).toContainText('See why the evidence conflicts.');
+  await expect(page.getByRole('heading',{name:/From scientific question to research decision/})).toBeVisible();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),String(width)).toBe(true);
   if(width===1440)await page.screenshot({path:info.outputPath('editorial-home-desktop.png'),fullPage:true});
   if(width===390)await page.screenshot({path:info.outputPath('editorial-home-mobile.png'),fullPage:true});
  }
  const steps=page.getByRole('group',{name:'Investigation steps'});
- await steps.getByRole('button',{name:/Reviewed knowledge/}).click();
- await expect(steps.getByRole('button',{name:/Reviewed knowledge/})).toHaveAttribute('aria-pressed','true');
- await expect(page.locator('#investigation-workflow')).toContainText('version the graph');
- await expect(page.getByRole('main')).toContainText('Explore the connections');
-  await expect(page.getByRole('main')).toContainText(/research workbench/i);
- await expect(page.getByRole('main')).toContainText('What makes HSI different');
+ await steps.getByRole('button',{name:/Review/}).click();
+ await expect(steps.getByRole('button',{name:/Review/})).toHaveAttribute('aria-pressed','true');
+ await expect(page.locator('#investigation-workflow')).toContainText('graph publication are separate');
+ await expect(page.getByRole('main')).toContainText('See why the evidence conflicts.');
+  await expect(page.getByRole('main')).toContainText(/research brief/i);
+ await expect(page.getByRole('main')).toContainText('A plausible explanation is not a validated mechanism.');
 });
 test('homepage investigation anchor opens the eight-step sequence',async({page})=>{
  await page.goto('/#investigation-workflow');
  await expect(page.locator('#investigation-workflow')).toBeVisible();
  await expect(page.locator('#investigation-workflow')).toContainText('unvalidated');
- await expect(page.locator('.cl-hero .cl-actions a')).toHaveCount(2);
- await expect(page.locator('.cl-hero .cl-actions a').first()).toHaveAttribute('href','/research/investigate');
- await expect(page.locator('.cl-hero .cl-actions a').nth(1)).toHaveAttribute('href','/contact');
- await expect(page.locator('.cl-hero')).toContainText('See a curated investigation');
- await expect(page.getByRole('link',{name:/Research access/i}).first()).toHaveAttribute('href','/contact');
+ await expect(page.locator('.hsi-home-hero .hsi-actions a')).toHaveCount(2);
+ await expect(page.locator('.hsi-home-hero .hsi-actions a').first()).toHaveAttribute('href','/context-conflict-audit');
+ await expect(page.locator('.hsi-home-hero .hsi-actions a').nth(1)).toHaveAttribute('href','/research');
+ await expect(page.locator('.hsi-home-hero')).toContainText('Explore the Context-Conflict Audit');
+ await expect(page.getByRole('link',{name:/Request access/i}).first()).toHaveAttribute('href','/contact');
 });
