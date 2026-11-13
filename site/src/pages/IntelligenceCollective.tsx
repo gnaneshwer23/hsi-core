@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { intelligenceCapabilities as agents, intelligenceLayers } from "../lib/intelligenceCollective";
 import "../styles/intelligence-collective.css";
 
@@ -34,8 +34,7 @@ export function IntelligenceCollectiveLanding(){
   <section className="ic-close"><div className="ic-shell"><p className="ic-eyebrow">THE RESEARCH MISSION</p><h2>Understand the mechanism.<br/>Preserve the evidence.<br/><em>Explain the uncertainty.</em></h2><div className="ic-actions"><Link className="ic-primary" to="/research">Explore research ↗</Link><Link className="ic-secondary" to="/trust">Review scientific safeguards ↗</Link></div></div></section>
  </main>;
 }
-export function IntelligenceCapabilityLanding(){
- const {slug}=useParams(); const a=agents.find(x=>x.slug===slug);
+export function IntelligenceCapabilityLanding({slug}:{slug:string}){ const a=agents.find(x=>x.slug===slug);
  if(!a)return <main className="ic-page ic-shell ic-missing"><h1>Capability not found</h1><Link to="/intelligence">Return to the collective →</Link></main>;
  return <main className="ic-page"><section className="ic-detail-hero"><div className="ic-shell">
  <Link className="ic-back" to="/intelligence">← Intelligence Collective</Link>
