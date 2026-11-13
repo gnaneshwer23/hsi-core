@@ -13,6 +13,7 @@ import {createProviderBackedRunners,type ProviderOperations,type VerifierDeploym
 import {createContextConflictAuditRunner,renderContextConflictAudit,type ContextAuditTarget,type ContextConflictAudit} from "./evidence/contextConflictAudit";
 import {createModelEvidenceExtractor,type ExtractionRejection} from "./evidence/modelEvidenceExtraction";
 import {createEntailmentVerifier} from "./evidence/entailmentVerifier";
+import {createWarden} from "./warden";
 import {createAuditFileStore} from "./evidence/auditFileStore";
 import type {IndependentChallenge} from "./researchV2/scientificEntailment";
 
@@ -50,12 +51,14 @@ export async function composeLiveRun(deps:LiveRunDeps):Promise<LiveRunResult>{
  const verifierDeployments:VerifierDeployment[]=config.verifiers.map((v,i)=>({verifierId:"verifier-"+(i+1),deploymentId:v.deploymentId}));
  const runners=createProviderBackedRunners({ops:deps.ops,extractorDeploymentId:config.extractor.deploymentId,verifierDeployments,maxModelCalls:Math.min(limits.maxModelCallsPerRun,LIVE_HARD_LIMITS.maxModelCallsPerRun),signal:deps.signal});
  const rejections:ExtractionRejection[]=[],entailments:IndependentChallenge[]=[];
- const killed=()=>!!deps.env[limits.killSwitchEnv]?.trim();
- const search=createLiveSearch({fetcher:deps.fetcher,clearance:deps.clearance,maxArticlesPerIntent:limits.maxArticlesPerIntent,maxHitsPerIntent:limits.maxHitsPerIntent,now:deps.now,sleep:deps.sleep});
+ const warden=createWarden({limits:{maxModelCalls:Math.min(limits.maxModelCallsPerRun,LIVE_HARD_LIMITS.maxModelCallsPerRun),maxRunsPerDay:Math.min(limits.maxRunsPerDay,LIVE_HARD_LIMITS.maxRunsPerDay),maxRequestsPerWindow:30,windowMs:60_000},killed:()=>!!deps.env[limits.killSwitchEnv]?.trim(),runsToday:deps.runsToday});
+ warden.admitRun();
+ const guardedFetcher:typeof deps.fetcher=((input:never,init:never)=>{warden.admitRequest();return (deps.fetcher as never as (a:unknown,b:unknown)=>Promise<Response>)(input,init)}) as never;
+ const search=createLiveSearch({fetcher:guardedFetcher,clearance:deps.clearance,maxArticlesPerIntent:limits.maxArticlesPerIntent,maxHitsPerIntent:limits.maxHitsPerIntent,now:deps.now,sleep:deps.sleep});
  const store=createAuditFileStore(deps.auditDirectory);
- const extract=createModelEvidenceExtractor({runner:async r=>{if(killed())throw Error("Kill switch engaged");return runners.extraction(r)},onRejection:r=>rejections.push(r)});
- const verify=createEntailmentVerifier({verifiers:verifierDeployments.map(v=>({verifierId:v.verifierId,modelId:v.deploymentId,runner:runners.entailment(v.verifierId)})),onChallenges:c=>entailments.push(...c)});
- const runner=createContextConflictAuditRunner({enabled:true,now:deps.now,search:async(t,intent,signal)=>{if(killed())throw Error("Kill switch engaged");return search(t,intent,signal)},authorizePassage:createLiveAuthorizePassage(deps.clearance),extract,verify,append:(artifact,previous)=>store.append(artifact,previous)});
+ const extract=createModelEvidenceExtractor({runner:async r=>{warden.spendModelCall();return runners.extraction(r)},onRejection:r=>rejections.push(r)});
+ const verify=createEntailmentVerifier({verifiers:verifierDeployments.map(v=>({verifierId:v.verifierId,modelId:v.deploymentId,runner:(r=>{const run=runners.entailment(v.verifierId);return async(req:Parameters<typeof run>[0])=>{warden.spendModelCall();return run(req)}})()})),onChallenges:c=>entailments.push(...c)});
+ const runner=createContextConflictAuditRunner({enabled:true,now:deps.now,search:async(t,intent,signal)=>search(t,intent,signal),authorizePassage:createLiveAuthorizePassage(deps.clearance),extract,verify,append:(artifact,previous)=>store.append(artifact,previous)});
  const previous=await store.latest(deps.target.investigationId);
  const audit=await runner.run(deps.target,previous??undefined);
  const brief=["# "+LIVE_NOTICE,"",renderContextConflictAudit(audit,"markdown"),"","## Independent entailment challenges",
