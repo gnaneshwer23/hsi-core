@@ -5,19 +5,54 @@ import {createHash,randomUUID} from "node:crypto";
 import {createProviderRunner,validateProviderConfig,type ProviderConfig,type ProviderPayload,type ProviderTransport} from "./providerReliability";
 import {createPinnedProviderTransport,type ProviderWireEncoder} from "./pinnedProviderTransport";
 import type {ClearanceBinding} from "./sourceClearanceReceipt";
+import {DETAILED_CONTEXT_FIELDS} from "../evidence/passageLinkedContext";
 import type {createOperationalSourceClearance} from "./operationalSourceClearance";
 import type {StagingOperationStore} from "./stagingOperationStore";
 export type StagingDeployment={id:string;config:ProviderConfig;termsRef:string;sourcePolicyRef:string;maxOutputTokens:number;inputUnitPrice:number;outputUnitPrice:number;budgetUnits:number;anthropicVersion?:string};
 const hash=(s:string)=>createHash("sha256").update(s).digest("hex");
 const identifier=(v:unknown):v is string=>typeof v==="string"&&/^[A-Za-z0-9][A-Za-z0-9:_.\/-]{0,255}$/.test(v);
 const schema={type:"object",properties:{verdict:{type:"string",enum:["supports","contradicts","insufficient"]},evidenceSpan:{type:["string","null"]},reason:{type:"string"}},required:["verdict","evidenceSpan","reason"],additionalProperties:false};
-export function providerWireBody(deployment:StagingDeployment,payload:ProviderPayload):string{
+export type ProviderTask="entailment"|"extraction";
+const POLARITIES=["supporting","opposing","uncertain"] as const,GAP_STATUSES=["not_reported","not_applicable","not_extracted"] as const;
+const nullableString={type:["string","null"]};
+const entitySchema={type:"object",properties:{system:{type:"string"},value:{type:"string"},label:nullableString},required:["system","value","label"],additionalProperties:false};
+/** Strict-mode compatible: every object lists all of its properties as required and forbids extras; optional values are nullable. */
+export const extractionSchema={type:"object",properties:{
+ claim:{type:"object",properties:{subject:entitySchema,predicate:{type:"string"},object:entitySchema,polarity:{type:"string",enum:[...POLARITIES]},quote:{type:"string"}},required:["subject","predicate","object","polarity","quote"],additionalProperties:false},
+ context:{type:"object",properties:Object.fromEntries(DETAILED_CONTEXT_FIELDS.map(f=>[f,{type:"object",properties:{quote:nullableString,status:{type:["string","null"],enum:[...GAP_STATUSES,null]},reason:nullableString},required:["quote","status","reason"],additionalProperties:false}])),required:[...DETAILED_CONTEXT_FIELDS],additionalProperties:false},
+ note:nullableString,
+},required:["claim","context","note"],additionalProperties:false};
+export function providerWireBody(deployment:StagingDeployment,payload:ProviderPayload,task:ProviderTask="entailment"):string{
  if(!["openai","anthropic"].includes(deployment.config.providerId))throw Error("Unsupported staging provider");
- const evidence=JSON.stringify({claim:payload.claim,passage:payload.passage});
- if(deployment.config.providerId==="openai")return JSON.stringify({model:deployment.config.modelId,instructions:payload.instruction,input:evidence,max_output_tokens:deployment.maxOutputTokens,store:false,text:{format:{type:"json_schema",name:"hsi_entailment",strict:true,schema}}});
+ if(!["entailment","extraction"].includes(task))throw Error("Unsupported staging task");
+ const evidence=JSON.stringify(task==="extraction"?{question:payload.claim,passage:payload.passage}:{claim:payload.claim,passage:payload.passage});
+ if(deployment.config.providerId==="openai")return JSON.stringify({model:deployment.config.modelId,instructions:payload.instruction,input:evidence,max_output_tokens:deployment.maxOutputTokens,store:false,text:{format:{type:"json_schema",name:task==="extraction"?"hsi_extraction":"hsi_entailment",strict:true,schema:task==="extraction"?extractionSchema:schema}}});
  return JSON.stringify({model:deployment.config.modelId,system:payload.instruction,messages:[{role:"user",content:evidence}],max_tokens:deployment.maxOutputTokens});
 }
-export function decodeProviderResult(provider:string,raw:unknown){
+const boundedText=(v:unknown,max:number):v is string=>typeof v==="string"&&v.trim().length>0&&v.length<=max;
+const nullOrText=(v:unknown,max:number):v is string|null=>v===null||boundedText(v,max);
+function decodeEntity(v:any){
+ if(!v||typeof v!=="object"||Object.keys(v).sort().join(",")!=="label,system,value"||typeof v.system!=="string"||!/^[A-Za-z][A-Za-z0-9_.-]{0,31}$/.test(v.system)||typeof v.value!=="string"||!/^[A-Za-z0-9][A-Za-z0-9:_.-]{0,127}$/.test(v.value)||!nullOrText(v.label,200))throw Error("provider_schema");
+ return {system:v.system,value:v.value,label:v.label as string|null};
+}
+/** Validates the strict extraction object and returns it in the shape the evidence extractor consumes (quote or gap per field). */
+export function decodeExtractionResult(result:any){
+ if(!result||typeof result!=="object"||Object.keys(result).sort().join(",")!=="claim,context,note"||!nullOrText(result.note,500))throw Error("provider_schema");
+ const c=result.claim;
+ if(!c||typeof c!=="object"||Object.keys(c).sort().join(",")!=="object,polarity,predicate,quote,subject"||typeof c.predicate!=="string"||!/^[a-z][a-z0-9_]{2,63}$/.test(c.predicate)||!(POLARITIES as readonly string[]).includes(c.polarity)||!boundedText(c.quote,300))throw Error("provider_schema");
+ const ctx=result.context;
+ if(!ctx||typeof ctx!=="object"||Object.keys(ctx).sort().join(",")!==[...DETAILED_CONTEXT_FIELDS].sort().join(","))throw Error("provider_schema");
+ const context:Record<string,{quote:string}|{status:string;reason:string}>={};
+ for(const field of DETAILED_CONTEXT_FIELDS){
+  const e=ctx[field];
+  if(!e||typeof e!=="object"||Object.keys(e).sort().join(",")!=="quote,reason,status")throw Error("provider_schema");
+  if(e.quote!==null&&e.status===null&&e.reason===null&&boundedText(e.quote,300))context[field]={quote:e.quote};
+  else if(e.quote===null&&(GAP_STATUSES as readonly string[]).includes(e.status)&&boundedText(e.reason,300))context[field]={status:e.status,reason:e.reason};
+  else throw Error("provider_schema");
+ }
+ return {claim:{subject:decodeEntity(c.subject),predicate:c.predicate as string,object:decodeEntity(c.object),polarity:c.polarity as string,quote:c.quote as string},context,note:result.note as string|null};
+}
+export function decodeProviderResult(provider:string,raw:unknown,task:ProviderTask="entailment"):{result:any;responseId:string;resolvedModelId:string;inputTokens:number;outputTokens:number}{
  if(!["openai","anthropic"].includes(provider))throw Error("provider_schema");
  const x=raw as Record<string,any>;
  if(!x||!identifier(x.id)||!identifier(x.model)||!x.usage||![x.usage.input_tokens,x.usage.output_tokens].every(n=>Number.isSafeInteger(n)&&n>=0))throw Error("provider_schema");
@@ -33,8 +68,9 @@ export function decodeProviderResult(provider:string,raw:unknown){
   if(x.stop_reason!=="end_turn"||!Array.isArray(x.content)||x.content.length!==1||x.content[0].type!=="text")throw Error("provider_incomplete");
   text=x.content[0].text;
  }
- if(typeof text!=="string"||text.length>6000)throw Error("provider_schema");
+ if(typeof text!=="string"||text.length>(task==="extraction"?12000:6000))throw Error("provider_schema");
  const result=JSON.parse(text);
+ if(task==="extraction")return {result:decodeExtractionResult(result),responseId:x.id as string,resolvedModelId:x.model as string,inputTokens:x.usage.input_tokens+cacheCreation+cacheRead as number,outputTokens:x.usage.output_tokens as number};
  if(!result||typeof result!=="object"||Object.keys(result).sort().join(",")!=="evidenceSpan,reason,verdict"||!["supports","contradicts","insufficient"].includes(result.verdict)||typeof result.reason!=="string"||!result.reason.trim()||result.reason.length>1000||(result.evidenceSpan!==null&&(typeof result.evidenceSpan!=="string"||result.evidenceSpan.length>1000)))throw Error("provider_schema");
  return {result,responseId:x.id as string,resolvedModelId:x.model as string,inputTokens:x.usage.input_tokens+cacheCreation+cacheRead as number,outputTokens:x.usage.output_tokens as number};
 }
@@ -54,10 +90,12 @@ export function createStagingProviderOperations(options:{
   d.config={...validateProviderConfig(d.config)};
   if(![d.id,d.termsRef,d.sourcePolicyRef].every(identifier)||![d.maxOutputTokens,d.inputUnitPrice,d.outputUnitPrice,d.budgetUnits].every(n=>Number.isSafeInteger(n)&&n>0&&n<=1e12)||d.maxOutputTokens>4096||d.config.providerId==="openai"&&d.config.endpoint!=="https://api.openai.com/v1/responses"||d.config.providerId==="anthropic"&&!/^\d{4}-\d{2}-\d{2}$/.test(d.anthropicVersion??""))throw Error("Invalid staging deployment policy");
  }
- return {async run(input:{deploymentId:string;source:ClearanceBinding;payload:ProviderPayload;signal?:AbortSignal}){
+ return {async run(input:{deploymentId:string;source:ClearanceBinding;payload:ProviderPayload;task?:ProviderTask;signal?:AbortSignal}){
   if(!enabled)throw Error("Staging provider execution disabled");
-  const {deploymentId,source,payload}=structuredClone({deploymentId:input.deploymentId,source:input.source,payload:input.payload}),signal=input.signal;
+  const {deploymentId,source,payload}=structuredClone({deploymentId:input.deploymentId,source:input.source,payload:input.payload}),signal=input.signal,task:ProviderTask=input.task??"entailment";
+  if(task!=="entailment"&&task!=="extraction")throw Error("Unsupported staging task");
   const d=deployments.find(d=>d.id===deploymentId);if(!d||signal?.aborted)throw Error("Staging deployment unavailable");
+  if(task==="extraction"&&d.maxOutputTokens<512)throw Error("Deployment output budget too small for extraction");
   if(!payload||payload.passage!==source.passage||[payload.instruction,payload.claim,payload.passage].some(s=>typeof s!=="string"||!s.trim())||payload.instruction.length>2000||payload.claim.length>2000||payload.passage.length>3000)throw Error("Invalid staging payload");
   if(!rejectPhiPayload({textBlobs:[payload.instruction,payload.claim,payload.passage]}).ok)throw Error("Prohibited staging data boundary");
   const configurationHash=hash(canonicalEvidenceJson(d));
@@ -67,13 +105,13 @@ export function createStagingProviderOperations(options:{
   let decision:Awaited<ReturnType<typeof decide>>;
   try{decision=await decide(source);}catch{throw Error("Staging source authority unavailable");}
   if(decision.state!=="cleared"||!decision.receipt?.permittedActions.includes("model_transmission")||decision.policyRef!==d.sourcePolicyRef||signal?.aborted)throw Error("Source not cleared for deployment");
-  const wire=providerWireBody(d,payload),inputBound=Buffer.byteLength(wire)+4096,reservation=inputBound*d.inputUnitPrice+d.maxOutputTokens*d.outputUnitPrice;
+  const wire=providerWireBody(d,payload,task),inputBound=Buffer.byteLength(wire)+4096,reservation=inputBound*d.inputUnitPrice+d.maxOutputTokens*d.outputUnitPrice;
   if(!Number.isSafeInteger(reservation)||reservation>1e12)throw Error("Invalid staging budget");
   const runId=randomUUID();
   let reserved=false;
   try{reserved=await store.reserve(d.id,runId,reservation,d.budgetUnits);}catch{throw Error("Staging budget store unavailable");}
   if(!reserved)throw Error("Staging budget exhausted");
-  const base={runId,deploymentId,configurationHash,termsRef:d.termsRef,sourcePolicyRef:d.sourcePolicyRef,sourceId:source.sourceId,sourceVersion:source.sourceVersion,requestedModelId:d.config.modelId,wireHash:hash(wire),instructionHash:hash(payload.instruction),clearanceReceiptId:decision.receipt!.id,inputHash:hash(canonicalEvidenceJson(payload)),passageSha256:hash(source.passage),reservedUnits:reservation,scientificApproval:false,graphPromotable:false};
+  const base={runId,deploymentId,task,configurationHash,termsRef:d.termsRef,sourcePolicyRef:d.sourcePolicyRef,sourceId:source.sourceId,sourceVersion:source.sourceVersion,requestedModelId:d.config.modelId,wireHash:hash(wire),instructionHash:hash(payload.instruction),clearanceReceiptId:decision.receipt!.id,inputHash:hash(canonicalEvidenceJson(payload)),passageSha256:hash(source.passage),reservedUnits:reservation,scientificApproval:false,graphPromotable:false};
   try{await store.append({type:"provider_run_start",...base,at:new Date().toISOString()});}catch{throw Error("Staging start receipt unavailable");}
   let status="failed",httpStatus:number|null=null,providerRequestId:string|null=null,responseId:string|null=null,credentialValue:string|null=null;
   let usage:{inputTokens:number;outputTokens:number}|null=null,outputHash:string|null=null,resolvedModelId:string|null=null;
@@ -102,13 +140,13 @@ export function createStagingProviderOperations(options:{
    const raw=await runner(payload);
    if(credentialValue&&JSON.stringify(raw).includes(credentialValue))throw Error("provider_schema");
    if((providerRequestId as string|null)===null)throw Error("provider_schema");
-   const decoded=decodeProviderResult(d.config.providerId,raw);responseId=decoded.responseId;resolvedModelId=decoded.resolvedModelId;
+   const decoded=decodeProviderResult(d.config.providerId,raw,task);responseId=decoded.responseId;resolvedModelId=decoded.resolvedModelId;
    if(resolvedModelId!==d.config.modelId)throw Error("provider_schema");
    usage={inputTokens:decoded.inputTokens,outputTokens:decoded.outputTokens};
    if(decoded.inputTokens>inputBound||decoded.outputTokens>d.maxOutputTokens)throw Error("budget_usage_exceeded");
    if(signal?.aborted)throw Error("cancelled");
    // The schema adapter does not establish entailment; exact-span failure downgrades to insufficiency.
-   if(decoded.result.verdict!=="insufficient"&&(!decoded.result.evidenceSpan?.trim()||!payload.passage.includes(decoded.result.evidenceSpan))){decoded.result.verdict="insufficient";decoded.result.evidenceSpan=null;}
+   if(task==="entailment"){if(decoded.result.verdict!=="insufficient"&&(!decoded.result.evidenceSpan?.trim()||!payload.passage.includes(decoded.result.evidenceSpan))){decoded.result.verdict="insufficient";decoded.result.evidenceSpan=null;}}
    outputHash=hash(canonicalEvidenceJson(decoded.result));status="completed";
    return {runId,result:decoded.result,providerRequestId:providerRequestId as string|null,responseId,usage,scientificApproval:false as const,graphPromotable:false as const};
   }catch(error){
