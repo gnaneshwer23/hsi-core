@@ -5,7 +5,7 @@
  */
 import type {HsiGraphNode} from "../livingHealthKnowledgeGraph";
 import {HSI_ONTOLOGY_NAMESPACES, resolveHsiOntologyIdentity, validateHsiOntologyIdentifier} from "../hsiOntologyRegistry";
-import type {ReactomePathwayMetadata} from "./reactomePathwayLookup";
+import type {ReactomePathwayMetadata, ReactomePathwaysForProtein} from "./reactomePathwayLookup";
 
 export function reactomePathwayDraftNode(pathway: ReactomePathwayMetadata): HsiGraphNode {
   if (pathway.provider !== "reactome" || pathway.reviewState !== "unreviewed" ||
@@ -38,4 +38,13 @@ export function resolveReactomePathwayDraft(
     system:"Reactome", value:pathway.stableId, nodes:existingNodes,
   });
   return {draft, resolution, needsHumanReview:true as const, graphPromotable:false as const};
+}
+
+/** Draft pathway nodes for every pathway Reactome lists for a protein. Reuses the single-pathway mapper. */
+export function reactomeProteinPathwayDraftNodes(listing: ReactomePathwaysForProtein): HsiGraphNode[] {
+  if (listing.provider !== "reactome" || listing.reviewState !== "unreviewed" ||
+      listing.graphPromotable !== false || listing.claimSupport !== false) {
+    throw new Error("Only unreviewed, non-promotable Reactome listings may be mapped");
+  }
+  return listing.pathways.map(reactomePathwayDraftNode);
 }
