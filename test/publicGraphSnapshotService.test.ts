@@ -24,5 +24,5 @@ test('corrupt, oversized, unavailable and mismatched snapshots fail closed witho
 
 test('Vercel preview share metadata never changes graph selection or reflects a token',async()=>{
  const handler=createPublicGraphSnapshotHandler({currentVersion:version,readPublishedSnapshot:async()=>bytes});
- const r=await handler(request('?version='+version+'&_vercel_share=private-preview-placeholder&path=graph-snapshot&x-vercel-protection-bypass=private-preview-placeholder&x-vercel-set-bypass-cookie=true'));expect(r.status).toBe(200);expect(await r.text()).not.toContain('private-preview-placeholder');
+ const r=await handler(request('?version='+version+'&_vercel_share=private-preview-placeholder&...path=graph-snapshot&x-vercel-protection-bypass=private-preview-placeholder&x-vercel-set-bypass-cookie=true'));expect(r.status).toBe(200);expect(await r.text()).not.toContain('private-preview-placeholder');
 });
