@@ -238,6 +238,74 @@
       }
     },
     {
+      "id": "F-11",
+      "group": "foundations",
+      "name": "Source integrity and clearance service (AEGIS)",
+      "status": [
+        "implemented",
+        "blocked"
+      ],
+      "evidence": [
+        "src/researchV2/sourceIntegrityService.ts",
+        "src/researchV2/sourceIntegrityAssessor.ts",
+        "src/researchV2/sourceEvidence.ts",
+        "src/researchV2/clearancePolicy.ts",
+        "src/researchV2/clearanceAuthority.ts",
+        "scripts/assess-source.ts"
+      ],
+      "gap": "No clearance policy is approved or shipped, no managed signer exists, no clearance authority is appointed, and retraction detection was not checked against live providers. Synthetic demonstration only.",
+      "nextAction": "Name the policy approver and clearance authority; provision a managed signer; run one approved live verification of Crossref and Europe PMC handling",
+      "acceptance": {
+        "deployment": "not_assessed",
+        "scientific": "not_assessed"
+      }
+    },
+    {
+      "id": "F-12",
+      "group": "foundations",
+      "name": "Live retrieval, extraction and verification path (SCOUT, PRISM, VERITAS)",
+      "status": [
+        "implemented",
+        "blocked"
+      ],
+      "evidence": [
+        "src/liveSearch.ts",
+        "src/researchV2/openAccessSections.ts",
+        "src/evidence/modelEvidenceExtraction.ts",
+        "src/evidence/entailmentVerifier.ts",
+        "src/liveModels.ts",
+        "src/liveReadiness.ts"
+      ],
+      "gap": "Tested only with mocked network and mocked models. No source terms, model deployments or approvals exist; the composed live run path is not built.",
+      "nextAction": "Compose the live run path behind the readiness gate; obtain source terms and two distinct approved verifier deployments",
+      "acceptance": {
+        "deployment": "not_assessed",
+        "scientific": "not_assessed"
+      }
+    },
+    {
+      "id": "F-13",
+      "group": "foundations",
+      "name": "Investigation runner and audit store, fixture mode (NEXUS composition)",
+      "status": [
+        "implemented",
+        "synthetic_only"
+      ],
+      "evidence": [
+        "src/investigationRunner.ts",
+        "src/evidence/auditFileStore.ts",
+        "src/investigationOrientation.ts",
+        "scripts/run-investigation.ts",
+        "research/runner-fixtures/"
+      ],
+      "gap": "Runs on recorded synthetic inputs only; local single-host store; no durable job runner; real passages mostly classify insufficient_evidence until the context normalizer registry grows.",
+      "nextAction": "Durable execution and a live mode behind the readiness gate",
+      "acceptance": {
+        "deployment": "not_assessed",
+        "scientific": "not_assessed"
+      }
+    },
+    {
       "id": "O-01",
       "group": "investigation_output",
       "name": "Scientific landscape",
@@ -796,5 +864,470 @@
     ]
   },
   "governingVision": "docs/strategy/HSI_VISION.md",
-  "acceptanceCrosswalk": "docs/audits/HSI_IMPLEMENTATION_TRUTH_AND_NEXT_PRS.md"
+  "acceptanceCrosswalk": "docs/audits/HSI_IMPLEMENTATION_TRUTH_AND_NEXT_PRS.md",
+  "collective": {
+    "schemaVersion": "hsi-collective-map-1",
+    "status": "Product naming proposal mapped onto existing modules. It is not deployment status: maturity comes from the linked register rows, and several capabilities have no row yet.",
+    "rules": [
+      "Every agent has bounded authority: none may approve science or promote to the graph; publication needs ARBITER and an authorised human decision.",
+      "Every handoff preserves source id, passage digest, context, uncertainty, policy status and run version.",
+      "Verification is independent of investigation: VERITAS checks original passages with separately configured models."
+    ],
+    "agents": [
+      {
+        "name": "NEXUS",
+        "displayName": "HSI NEXUS",
+        "layer": "orchestration",
+        "fullName": "Research orchestration",
+        "priority": "P0",
+        "manifestRole": null,
+        "purpose": "Coordinates an investigation: scope, task order, dependencies, bounded execution, recovery.",
+        "nonResponsibilities": [
+          "approve scientific conclusions",
+          "clear sources",
+          "publish to the graph"
+        ],
+        "registerIds": [
+          "A-ORCH",
+          "F-10",
+          "F-13"
+        ],
+        "modules": [
+          "src/hsiAgentOrchestrator.ts",
+          "src/hsiCheckpointedExecutor.ts",
+          "src/hsiAgentDurableCheckpoint.ts",
+          "src/hsiAgentRecoveryReconciliation.ts",
+          "src/hsiAgentIntelligenceContracts.ts",
+          "src/evidence/investigationOrchestrationContracts.ts"
+        ],
+        "modelBacked": false,
+        "humanApproval": "Durable job runner decision and the held-migration decision before hosted persistence.",
+        "dependsOn": [],
+        "nameCollision": "An Aksh Health clinical agent has the same name (docs/AKSH_AGENTS_IN_HSI.md). Always write HSI NEXUS.",
+        "mayApproveScience": false,
+        "mayPromoteGraph": false,
+        "governedPublicationBy": null
+      },
+      {
+        "name": "AEGIS",
+        "displayName": "AEGIS",
+        "layer": "trust_and_acquisition",
+        "fullName": "Automated Evidence Governance & Integrity Service",
+        "priority": "P0",
+        "manifestRole": null,
+        "purpose": "Decides CLEAR, REVIEW or BLOCK for a source and use inside a human-approved policy, and issues signed receipts through a signer.",
+        "nonResponsibilities": [
+          "approve a policy",
+          "hold a private key",
+          "approve science",
+          "clear unknown or ambiguous rights"
+        ],
+        "registerIds": [
+          "F-11"
+        ],
+        "modules": [
+          "src/researchV2/sourceIntegrityService.ts",
+          "src/researchV2/sourceIntegrityAssessor.ts",
+          "src/researchV2/sourceEvidence.ts",
+          "src/researchV2/clearancePolicy.ts",
+          "src/researchV2/sourceClearanceReceipt.ts",
+          "src/researchV2/operationalSourceClearance.ts",
+          "src/researchV2/clearanceAuthority.ts",
+          "src/researchV2/clearanceSigning.ts",
+          "src/sourceIntegrityReadiness.ts",
+          "scripts/assess-source.ts"
+        ],
+        "modelBacked": false,
+        "humanApproval": "A named human signs the clearance policy; a managed signer and an independent clearance authority are appointed.",
+        "dependsOn": [
+          "SCOUT"
+        ],
+        "nameCollision": null,
+        "mayApproveScience": false,
+        "mayPromoteGraph": false,
+        "governedPublicationBy": null
+      },
+      {
+        "name": "WARDEN",
+        "displayName": "WARDEN",
+        "layer": "continuous_and_operations",
+        "fullName": "Runtime reliability, security and cost control",
+        "priority": "P0",
+        "manifestRole": null,
+        "purpose": "Enforces budgets, rate limits, kill switches and fail-closed containment around provider and source calls.",
+        "nonResponsibilities": [
+          "approve science",
+          "grant access",
+          "raise its own limits"
+        ],
+        "registerIds": [
+          "OPS-PILOT"
+        ],
+        "modules": [
+          "src/researchV2/providerReliability.ts",
+          "src/researchV2/stagingOperationStore.ts",
+          "src/operations/pilotOperationsService.ts",
+          "src/liveReadiness.ts"
+        ],
+        "modelBacked": false,
+        "humanApproval": "Operators, budgets, a shared rate limiter and alerting infrastructure.",
+        "dependsOn": [],
+        "nameCollision": null,
+        "mayApproveScience": false,
+        "mayPromoteGraph": false,
+        "governedPublicationBy": null
+      },
+      {
+        "name": "SCOUT",
+        "displayName": "SCOUT",
+        "layer": "trust_and_acquisition",
+        "fullName": "Scientific source discovery",
+        "priority": "P1",
+        "manifestRole": "evidence_retriever",
+        "purpose": "Searches approved providers, resolves identifiers and prepares candidate sources and passages, only through the host allow-list and request budget.",
+        "nonResponsibilities": [
+          "declare a source cleared",
+          "fetch outside the allow-list",
+          "store uncleared text"
+        ],
+        "registerIds": [
+          "A-EVID",
+          "E-FWD",
+          "F-12"
+        ],
+        "modules": [
+          "src/evidence/dynamicEvidenceRetrieval.ts",
+          "src/liveSearch.ts",
+          "src/researchV2/sourceAdapters.ts",
+          "src/evidence/opposingEvidenceSearch.ts",
+          "src/investigationOrientation.ts",
+          "src/evidence/reactomePathwayLookup.ts",
+          "src/evidence/uniProtProteinLookup.ts"
+        ],
+        "modelBacked": false,
+        "humanApproval": "Source-policy owner approves hosts, terms and quotas.",
+        "dependsOn": [
+          "NEXUS"
+        ],
+        "nameCollision": null,
+        "mayApproveScience": false,
+        "mayPromoteGraph": false,
+        "governedPublicationBy": null
+      },
+      {
+        "name": "PRISM",
+        "displayName": "HSI PRISM",
+        "layer": "trust_and_acquisition",
+        "fullName": "Passage-referenced information and scientific mapping",
+        "priority": "P1",
+        "manifestRole": null,
+        "purpose": "Extracts one evidence unit from one cleared passage; every context value must be an exact quote stored as a span, otherwise a gap.",
+        "nonResponsibilities": [
+          "see uncleared text",
+          "infer unstated context",
+          "promote claims"
+        ],
+        "registerIds": [
+          "F-12"
+        ],
+        "modules": [
+          "src/evidence/modelEvidenceExtraction.ts",
+          "src/researchV2/openAccessSections.ts",
+          "src/evidence/passageLinkedContext.ts",
+          "src/liveModels.ts",
+          "src/researchV2/stagingProviderOperations.ts"
+        ],
+        "modelBacked": true,
+        "humanApproval": "An approved model deployment and terms; a scientist reviews the normalizer registry.",
+        "dependsOn": [
+          "AEGIS"
+        ],
+        "nameCollision": "An Aksh Health imaging agent has the same name. Consider renaming; otherwise always write HSI PRISM.",
+        "mayApproveScience": false,
+        "mayPromoteGraph": false,
+        "governedPublicationBy": null
+      },
+      {
+        "name": "ATLAS",
+        "displayName": "HSI ATLAS",
+        "layer": "biological_intelligence",
+        "fullName": "Biological knowledge graph",
+        "priority": "P2",
+        "manifestRole": "entity_resolver",
+        "purpose": "Holds typed, versioned, evidence-linked entities and relationships; accepts candidate edges as proposals only.",
+        "nonResponsibilities": [
+          "publish without an authorised review decision",
+          "treat proximity as causation",
+          "hold patient data"
+        ],
+        "registerIds": [
+          "F-01",
+          "F-02"
+        ],
+        "modules": [
+          "src/livingHealthKnowledgeGraph.ts",
+          "src/hsiOntologyRegistry.ts",
+          "src/graphRelease.ts",
+          "src/governedGraphRead.ts",
+          "src/evidence/canonicalContextualEdge.ts",
+          "src/evidence/reactomeOntologyBridge.ts",
+          "src/evidence/uniProtOntologyBridge.ts"
+        ],
+        "modelBacked": false,
+        "humanApproval": "Canonical investigation store decision; held migrations; publication only after ARBITER and a human decision.",
+        "dependsOn": [
+          "PRISM"
+        ],
+        "governedPublicationBy": [
+          "ARBITER"
+        ],
+        "nameCollision": "An Aksh Health agent has the same name. Always write HSI ATLAS.",
+        "mayApproveScience": false,
+        "mayPromoteGraph": false
+      },
+      {
+        "name": "HELIX",
+        "displayName": "HELIX",
+        "layer": "biological_intelligence",
+        "fullName": "Mechanism investigation",
+        "priority": "P2",
+        "manifestRole": "interrogator",
+        "purpose": "Investigates mechanisms across domains from evidence units and graph context, and proposes candidate mechanisms.",
+        "nonResponsibilities": [
+          "approve its own conclusions",
+          "claim causation from association",
+          "cite evidence it was not given"
+        ],
+        "registerIds": [
+          "A-MECH",
+          "A-MICRO",
+          "A-CELL",
+          "J-INV"
+        ],
+        "modules": [
+          "src/immuneMechanismInvestigation.ts",
+          "src/scientificInvestigation.ts",
+          "src/evidence/proteinPathwayMechanismCandidates.ts",
+          "src/researchMechanismWorkflow.ts",
+          "src/investigationRunner.ts"
+        ],
+        "modelBacked": true,
+        "humanApproval": "Model deployment approval; the model-backed step is not built yet, today it is deterministic.",
+        "dependsOn": [
+          "PRISM",
+          "ATLAS",
+          "PARALLAX"
+        ],
+        "nameCollision": null,
+        "mayApproveScience": false,
+        "mayPromoteGraph": false,
+        "governedPublicationBy": null
+      },
+      {
+        "name": "PARALLAX",
+        "displayName": "PARALLAX",
+        "layer": "biological_intelligence",
+        "fullName": "Experimental context and contradiction analysis",
+        "priority": "P2",
+        "manifestRole": "contradiction_analyst",
+        "purpose": "Decides whether findings agree, genuinely conflict, are not comparable or lack evidence, from structured context and deterministic rules.",
+        "nonResponsibilities": [
+          "assert consensus",
+          "treat an empty search as agreement",
+          "compare across unresolved context"
+        ],
+        "registerIds": [
+          "A-CONTRA",
+          "O-02"
+        ],
+        "modules": [
+          "src/evidence/structuredEvidenceComparison.ts",
+          "src/evidence/contextConflictAudit.ts",
+          "src/evidence/contextualMechanismComparison.ts",
+          "src/investigationScope.ts",
+          "src/evidence/passageLinkedContext.ts"
+        ],
+        "modelBacked": false,
+        "humanApproval": "Scientist review of the context normalizer registry.",
+        "dependsOn": [
+          "PRISM"
+        ],
+        "nameCollision": null,
+        "mayApproveScience": false,
+        "mayPromoteGraph": false,
+        "governedPublicationBy": null
+      },
+      {
+        "name": "HORIZON",
+        "displayName": "HSI HORIZON",
+        "layer": "biological_intelligence",
+        "fullName": "Research gaps and hypotheses",
+        "priority": "P3",
+        "manifestRole": "hypothesis_generator",
+        "purpose": "Identifies missing evidence and proposes falsifiable experiments, always labelled unvalidated.",
+        "nonResponsibilities": [
+          "present a hypothesis as knowledge",
+          "approve itself",
+          "skip verification"
+        ],
+        "registerIds": [
+          "A-GAP",
+          "A-PLAN",
+          "O-03",
+          "O-05"
+        ],
+        "modules": [
+          "src/evidence/falsifiableExperimentProposals.ts",
+          "src/evidence/hypothesisRegistry.ts",
+          "src/evidence/gapVerification.ts",
+          "src/interrogativeFalsificationEngine.ts"
+        ],
+        "modelBacked": false,
+        "humanApproval": "A model-backed proposer needs model approval and a preregistered comparison; today it is deterministic.",
+        "dependsOn": [
+          "HELIX",
+          "PARALLAX"
+        ],
+        "nameCollision": "An Aksh Health metabolic agent has the same name. Consider renaming; otherwise always write HSI HORIZON.",
+        "mayApproveScience": false,
+        "mayPromoteGraph": false,
+        "governedPublicationBy": null
+      },
+      {
+        "name": "VERITAS",
+        "displayName": "VERITAS",
+        "layer": "verification_and_governance",
+        "fullName": "Independent scientific verification",
+        "priority": "P1",
+        "manifestRole": "claim_verifier",
+        "purpose": "Challenges each claim against its own source passage with independent verifiers; abstains rather than agreeing.",
+        "nonResponsibilities": [
+          "publish to the graph",
+          "see the investigator's narrative instead of the passage",
+          "count a single model as independent"
+        ],
+        "registerIds": [
+          "A-VERIFY",
+          "F-12"
+        ],
+        "modules": [
+          "src/researchV2/modelEntailment.ts",
+          "src/researchV2/dualModelChallenge.ts",
+          "src/researchV2/scientificEntailment.ts",
+          "src/evidence/entailmentVerifier.ts",
+          "src/researchV2/scientificReliabilityGate.ts",
+          "src/researchV2/passageVerification.ts"
+        ],
+        "modelBacked": true,
+        "humanApproval": "At least two distinct approved verifier deployments, separate from the extractor.",
+        "dependsOn": [
+          "PRISM",
+          "HELIX"
+        ],
+        "nameCollision": null,
+        "mayApproveScience": false,
+        "mayPromoteGraph": false,
+        "governedPublicationBy": null
+      },
+      {
+        "name": "ARBITER",
+        "displayName": "ARBITER",
+        "layer": "verification_and_governance",
+        "fullName": "Scientific review coordination",
+        "priority": "P3",
+        "manifestRole": null,
+        "purpose": "Assembles review packets and routes them to authenticated, scoped, independent human reviewers; records immutable decisions.",
+        "nonResponsibilities": [
+          "self-authorise publication",
+          "review its own packet",
+          "widen a reviewer's scope"
+        ],
+        "registerIds": [
+          "F-05"
+        ],
+        "modules": [
+          "src/interrogativeScientificReview.ts",
+          "src/db/independentReviewQueue.ts",
+          "src/db/authenticatedScientificReviewStore.ts",
+          "src/evidence/contextAuditReview.ts",
+          "src/db/reviewerAuthority.ts"
+        ],
+        "modelBacked": false,
+        "humanApproval": "Reviewer appointments, scoped authority and the held-migration decision.",
+        "dependsOn": [
+          "VERITAS",
+          "AEGIS"
+        ],
+        "nameCollision": null,
+        "mayApproveScience": false,
+        "mayPromoteGraph": false,
+        "governedPublicationBy": null
+      },
+      {
+        "name": "SENTINEL",
+        "displayName": "SENTINEL",
+        "layer": "continuous_and_operations",
+        "fullName": "Continuous evidence surveillance",
+        "priority": "P4",
+        "manifestRole": null,
+        "purpose": "Re-checks sources and policy on a schedule, revokes receipts that no longer hold and flags affected claims.",
+        "nonResponsibilities": [
+          "reapprove automatically",
+          "edit the graph",
+          "hide a failed check"
+        ],
+        "registerIds": [
+          "E-CONT"
+        ],
+        "modules": [
+          "src/evidence/incrementalEvidenceMonitoring.ts",
+          "src/evidence/livingEvidenceExpansion.ts",
+          "src/expansion/sourceRereview.ts",
+          "src/researchV2/sourceIntegrityService.ts"
+        ],
+        "modelBacked": false,
+        "humanApproval": "A scheduler, an owner and a place for the policy-revocation list.",
+        "dependsOn": [
+          "AEGIS"
+        ],
+        "nameCollision": null,
+        "mayApproveScience": false,
+        "mayPromoteGraph": false,
+        "governedPublicationBy": null
+      },
+      {
+        "name": "CALIBER",
+        "displayName": "CALIBER",
+        "layer": "continuous_and_operations",
+        "fullName": "Scientific evaluation and calibration",
+        "priority": "P3",
+        "manifestRole": null,
+        "purpose": "Runs expert-adjudicated benchmarks and baselines; reports accuracy, abstention and reproducibility with separate provenance and safety gates.",
+        "nonResponsibilities": [
+          "invent gold labels",
+          "report results without denominators",
+          "tune to the benchmark"
+        ],
+        "registerIds": [
+          "J-EVAL",
+          "E-IMMUNO",
+          "F-09"
+        ],
+        "modules": [
+          "src/evidence/immunoBenchmark.ts",
+          "src/evidence/immunoBenchmarkScoring.ts",
+          "src/scientificAccuracyHarness.ts",
+          "src/modelEvalHarness.ts",
+          "src/evidence/independentEvaluationSuites.ts"
+        ],
+        "modelBacked": false,
+        "humanApproval": "Appointed experts, a private vault and conflict declarations.",
+        "dependsOn": [],
+        "nameCollision": null,
+        "mayApproveScience": false,
+        "mayPromoteGraph": false,
+        "governedPublicationBy": null
+      }
+    ]
+  }
 }
