@@ -998,6 +998,7 @@
           "F-12"
         ],
         "modules": [
+          "src/retrievalDryRun.ts",
           "src/evidence/dynamicEvidenceRetrieval.ts",
           "src/liveSearch.ts",
           "src/researchV2/sourceAdapters.ts",
