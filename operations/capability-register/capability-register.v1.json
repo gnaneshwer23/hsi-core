@@ -413,7 +413,7 @@
         "src/investigationDelivery.ts",
         "research/connected-workbench/r3/"
       ],
-      "gap": "Live Ask\u2192export completion needs human #5",
+      "gap": "Live Ask→export completion needs human #5",
       "nextAction": "Keep export path; do not fake completion"
     },
     {
@@ -461,7 +461,7 @@
       "evidence": [
         "src/immuneCellSpine.ts"
       ],
-      "gap": "Vocabulary/spine \u2260 autonomous investigator service",
+      "gap": "Vocabulary/spine ≠ autonomous investigator service",
       "nextAction": "Expand curation"
     },
     {
@@ -638,7 +638,7 @@
         "site/src/components/ResearchOutcomePanel.tsx"
       ],
       "gap": "Reverse trace exposed in outcome sections; not every science surface",
-      "nextAction": "Maintain claim\u2192passage\u2192source in journey UI"
+      "nextAction": "Maintain claim→passage→source in journey UI"
     },
     {
       "id": "E-CONT",
@@ -665,7 +665,7 @@
     {
       "id": "J-R3",
       "group": "research_journey",
-      "name": "R3 Ask\u2192export connected workbench",
+      "name": "R3 Ask→export connected workbench",
       "status": [
         "connected",
         "blocked"
@@ -677,13 +677,13 @@
         "site/src/pages/ResearchMechanismWorkflow.tsx",
         "site/src/components/InvestigationProgress.tsx"
       ],
-      "gap": "UI journey 01\u201306 continuous; researcherJourneyCompleteClaimed=false; needs #5 for live writes",
-      "nextAction": "Keep probe path; live Ask\u2192export parked"
+      "gap": "UI journey 01–06 continuous; researcherJourneyCompleteClaimed=false; needs #5 for live writes",
+      "nextAction": "Keep probe path; live Ask→export parked"
     },
     {
       "id": "J-INV",
       "group": "research_journey",
-      "name": "Gut\u2013immune\u2013metabolic\u2013neuroinflammation investigation",
+      "name": "Gut–immune–metabolic–neuroinflammation investigation",
       "status": [
         "implemented",
         "synthetic_only"
@@ -844,13 +844,13 @@
   ],
   "step02Plan": {
     "completedInThisPr": [
-      "Map outcome DTO to investigation sections 01\u201306 in ResearchOutcomePanel",
+      "Map outcome DTO to investigation sections 01–06 in ResearchOutcomePanel",
       "Demote synthetic profiles from research dashboard hero",
       "Shared InvestigationProgress chrome on decision-workbench + mechanism-workflow",
-      "Reverse trace claim\u2192passage\u2192source in outcome sections"
+      "Reverse trace claim→passage→source in outcome sections"
     ],
     "parked": [
-      "Live Ask\u2192export production writes (human #5)",
+      "Live Ask→export production writes (human #5)",
       "Gate C / MoU / SME gold / CDS-PHI"
     ],
     "forbidden": [
@@ -898,7 +898,8 @@
           "src/hsiAgentDurableCheckpoint.ts",
           "src/hsiAgentRecoveryReconciliation.ts",
           "src/hsiAgentIntelligenceContracts.ts",
-          "src/evidence/investigationOrchestrationContracts.ts"
+          "src/evidence/investigationOrchestrationContracts.ts",
+          "src/nexusJobs.ts"
         ],
         "modelBacked": false,
         "humanApproval": "Durable job runner decision and the held-migration decision before hosted persistence.",
