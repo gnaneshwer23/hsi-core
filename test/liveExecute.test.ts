@@ -6,10 +6,12 @@ import {generateKeyPairSync} from "node:crypto";
 import {FIRST_RUN_LIMITS,runLiveExecute,type ExecuteIo,type ExecuteOptions} from "../src/liveExecute";
 import {buildDemoPolicy} from "../src/sourceIntegrityDemo";
 import type {LiveRunDeps} from "../src/liveRun";
+import {createSentinel} from "../src/sentinel";
 
 const dirs:string[]=[];const dir=()=>{const d=mkdtempSync(join(tmpdir(),"hsi-exec-"));chmodSync(d,0o700);dirs.push(d);return d};
 afterAll(()=>{for(const d of dirs)rmSync(d,{recursive:true,force:true})});
 const NOW=Date.parse("2026-11-13T12:00:00Z");
+async function freshSentinel(opts:ExecuteOptions,at=NOW){await createSentinel({service:{reevaluate:async()=>({checked:0,revoked:[]})},directory:opts.sentinel.directory,intervalMs:opts.sentinel.intervalMs,now:()=>at}).tick()}
 const dep=(id:string,model:string)=>({deploymentId:id,providerId:"anthropic",modelId:model,endpoint:"https://api.anthropic.com/v1/messages",timeoutMs:20000,maxResponseBytes:60000,termsRef:"terms:m",sourcePolicyRef:"demo-policy:v1",maxOutputTokens:1024,budgetUnits:100000,credentialEnv:"HSI_KEY_PROVIDER",anthropicVersion:"2023-06-01"});
 
 function world(over:{config?:(c:any)=>void}={}){
@@ -24,7 +26,7 @@ function world(over:{config?:(c:any)=>void}={}){
  const integrity={policyFile:join(d,"policy.json"),policyApprovalRef:"approval:x",policyApprover:{issuer:"demo:policy-approver",keyId:"demo-key",publicKeyEnv:"HSI_POLICY_KEY"},signer:{serviceRef:"gcpkms:r/c",issuer:"demo:integrity-service",keyId:"demo-signer",keyVersionName:"v",publicKeyEnv:"HSI_SIGNER_KEY"},requestedUses:["storage","display","comparison","export","model_transmission"]};
  const files:Record<string,unknown>={"config.json":config,"integrity.json":integrity};
  const env={HSI_POLICY_KEY:pem(approver),HSI_APPROVAL_KEY:pem(approvalKey),HSI_SIGNER_KEY:pem(generateKeyPairSync("ed25519")),HSI_KEY_PROVIDER:"SECRET-PROVIDER-KEY"};
- const opts:ExecuteOptions={configPath:"config.json",integrityConfigPath:"integrity.json",question:"How might gut microbial metabolites influence immune signalling?",scope:"gut-immune-metabolic",reviewer:"user:scientist-1",outDir:join(d,"out")};
+ const opts:ExecuteOptions={configPath:"config.json",integrityConfigPath:"integrity.json",question:"How might gut microbial metabolites influence immune signalling?",scope:"gut-immune-metabolic",reviewer:"user:scientist-1",outDir:join(d,"out"),sentinel:{directory:join(d,"sentinel"),intervalMs:3_600_000}};
  return {d,opts,files,env};
 }
 const fakeAudit=(over:Record<string,unknown>={})=>({schemaVersion:"hsi-context-conflict-audit-1",id:"context-audit-x",auditHash:"a".repeat(64),investigationId:"j",diseaseScope:"gut-immune-metabolic",question:"q",release:{id:"r",version:"1",manifestHash:"0".repeat(64)},version:1,parentAuditHash:null,searches:[],units:[],comparisons:[],report:[],gaps:[],blockedReason:null,verifier:{status:"not_executed",receiptId:null},humanReview:{status:"required"},consensusEstablished:false,scientificApproval:false,graphPromotable:false,...over});
@@ -54,7 +56,7 @@ test("first-run caps: more than 40 model calls or 3 articles per intent is refus
  expect((await runLiveExecute(wide.opts,io(wide))).ok).toBe(false);
 });
 test("no interactive terminal, or a wrong confirmation, runs nothing",async()=>{
- const w=world();
+ const w=world();await freshSentinel(w.opts);
  const a=io(w,{typed:null});expect((await runLiveExecute(w.opts,a)).ok).toBe(false);expect(a.loads.n).toBe(0);
  const b=io(w,{typed:"EXECUTE live-0000000000000000"});const r=await runLiveExecute(w.opts,b);expect(r.ok).toBe(false);expect(!r.ok&&r.refusals[0]).toContain("confirmation did not match");expect(b.loads.n).toBe(0);
  const c=io(w,{typed:"yes"});expect((await runLiveExecute(w.opts,c)).ok).toBe(false);expect(c.loads.n).toBe(0);
@@ -65,7 +67,7 @@ test("with everything passing, a refusal from the run gates (kill switch) is rep
  expect(existsSync(join(w.opts.outDir,"live-x"))).toBe(false);
 });
 test("a confirmed run loads deps once, is a durable job, writes a brief and an unapproved packet naming the reviewer, and is not re-run",async()=>{
- const w=world(),i=io(w);
+ const w=world(),i=io(w);await freshSentinel(w.opts);
  // The injected deps cannot reach any source (HTTP 500, no clearance), so the real composition yields an audit with no units.
  // That is the point: no source means no passage, no model call and no claim, and the job still completes and is recorded.
  const r=await runLiveExecute(w.opts,i);
@@ -76,4 +78,20 @@ test("a confirmed run loads deps once, is a durable job, writes a brief and an u
  const brief=readFileSync(join(r.outputDir!,"brief.md"),"utf8");expect(brief).toContain("user:scientist-1");expect(brief).toContain("Not approved, not promotable");
  expect(brief).not.toContain("SECRET-PROVIDER-KEY");
  const again=await runLiveExecute(w.opts,io(w));expect(again.ok&&again.job).toBe("already_completed");
+});
+
+test("without a recent SENTINEL re-evaluation the run is refused before the confirmation, loading or any spend",async()=>{
+ const w=world(),i=io(w);
+ const r=await runLiveExecute(w.opts,i);expect(r.ok).toBe(false);expect(!r.ok&&r.refusals[0]).toContain("SENTINEL");expect(i.loads.n).toBe(0);
+});
+test("a SENTINEL tick older than two intervals is stale; a failed or skipped tick does not count",async()=>{
+ const w=world();
+ await freshSentinel(w.opts,NOW-3*3_600_000);
+ const old=await runLiveExecute(w.opts,io(w));expect(!old.ok&&old.refusals[0]).toContain("SENTINEL");
+ const w2=world();
+ await createSentinel({service:{reevaluate:async()=>{throw Error("down")}},directory:w2.opts.sentinel.directory,intervalMs:w2.opts.sentinel.intervalMs,now:()=>NOW}).tick();
+ const failed=await runLiveExecute(w2.opts,io(w2));expect(!failed.ok&&failed.refusals[0]).toContain("SENTINEL");
+ const w3=world();
+ await createSentinel({service:{reevaluate:async()=>({checked:0,revoked:[]})},directory:w3.opts.sentinel.directory,intervalMs:w3.opts.sentinel.intervalMs,killed:()=>true,now:()=>NOW}).tick();
+ const skipped=await runLiveExecute(w3.opts,io(w3));expect(!skipped.ok&&skipped.refusals[0]).toContain("SENTINEL");
 });
