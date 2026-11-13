@@ -13,14 +13,14 @@ export const RESEARCH_NAV_LINKS=[
 export const SECONDARY_NAV_LINKS=[
  { to: "/solutions", label: "Solutions"},{ to: "/technology", label: "Technology"},{ to: "/evidence-safety", label: "Evidence & safety"},
  { to: "/pricing", label: "Access options"},{ to: "/demo", label: "Illustrative walkthrough"},{ to: "/contact", label: "Research access"},
- { to: "/modules", label: "Modules"},{ to: "/how-it-works", label: "How it works"}
+ { to: "/modules", label: "Modules"},{ to: "/intelligence", label: "Intelligence Collective"},{ to: "/how-it-works", label: "How it works"}
 ] as const;
 export const PUBLIC_MARKETING_PATHS=[
  "/","/platform","/technology","/modules","/solutions","/research","/evidence-safety","/pricing","/contact",
- "/science","/how-it-works","/modules/aksh-health","/modules/clinical","/modules/isi","/modules/trials",
+ "/science","/intelligence","/how-it-works","/modules/aksh-health","/modules/clinical","/modules/isi","/modules/trials",
  "/context-conflict-audit","/evidence-intelligence","/research-briefs","/applications","/trust","/about"
 ] as const;
 /** Destination explains browser-only drafting; this CTA does not claim that a request was delivered. */
 export const PRIMARY_NAV_CTA={ to: "/contact", label: "Request access"} as const;
-export function isPublicMarketingPath(pathname:string){return (PUBLIC_MARKETING_PATHS as readonly string[]).includes(pathname)}
+export function isPublicMarketingPath(pathname:string){return pathname.startsWith("/intelligence/") || (PUBLIC_MARKETING_PATHS as readonly string[]).includes(pathname)}
 export function isAccountPath(pathname:string){return ["/sign-in","/sign-up","/forgot-password","/reset-password","/research/account"].includes(pathname)}
