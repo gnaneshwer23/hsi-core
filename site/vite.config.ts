@@ -16,7 +16,7 @@ export default defineConfig({
     configureServer(server){
       const handler=createPublicGraphSnapshotHandler({currentVersion:DOMAIN_GRAPH_VERSION,readPublishedSnapshot:version=>readPublishedGraphSnapshot(path.join(rootDir,'public/research/domain-graph/versions'),version)});
       server.middlewares.use(async(req,res,next)=>{
-        if((req.url??'').split('?')[0]!=='/api/research/graph/snapshot')return next();
+        if((req.url??'').split('?')[0]!=='/api/research/graph-snapshot')return next();
         const controller=new AbortController();req.on('aborted',()=>controller.abort());
         const result=await handler(new Request('http://localhost'+req.url,{method:req.method??'GET',signal:controller.signal}));
         res.statusCode=result.status;result.headers.forEach((value,key)=>res.setHeader(key,value));res.end(new Uint8Array(await result.arrayBuffer()));
@@ -25,7 +25,7 @@ export default defineConfig({
     configurePreviewServer(server){
       const handler=createPublicGraphSnapshotHandler({currentVersion:DOMAIN_GRAPH_VERSION,readPublishedSnapshot:version=>readPublishedGraphSnapshot(path.join(rootDir,'public/research/domain-graph/versions'),version)});
       server.middlewares.use(async(req,res,next)=>{
-        if((req.url??'').split('?')[0]!=='/api/research/graph/snapshot')return next();
+        if((req.url??'').split('?')[0]!=='/api/research/graph-snapshot')return next();
         const controller=new AbortController();req.on('aborted',()=>controller.abort());
         const result=await handler(new Request('http://localhost'+req.url,{method:req.method??'GET',signal:controller.signal}));
         res.statusCode=result.status;result.headers.forEach((value,key)=>res.setHeader(key,value));res.end(new Uint8Array(await result.arrayBuffer()));

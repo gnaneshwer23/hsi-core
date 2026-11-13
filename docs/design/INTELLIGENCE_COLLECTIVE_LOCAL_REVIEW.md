@@ -50,7 +50,7 @@ Visual revision uses the locally loaded Host Grotesk Variable font, a quieter vi
 
 ## Read-only backend connection
 
-`loadDomainGraph` now calls `/api/research/graph/snapshot?version=<sha>` for the homepage and existing research explorers. The API serves published candidate snapshots only, with server-side content-hash/schema verification, a 2 MB file/response limit, strict query and method validation, no-store responses, and no substitute data on failure. The client independently verifies the same pinned identity. Local Vite middleware invokes the same handler; a Vercel API adapter and snapshot packaging rule are prepared but not deployed or deployment-verified.
+`loadDomainGraph` now calls `/api/research/graph-snapshot?version=<sha>` for the homepage and existing research explorers. The API serves published candidate snapshots only, with server-side content-hash/schema verification, a 2 MB file/response limit, strict query and method validation, no-store responses, and no substitute data on failure. The client independently verifies the same pinned identity. Local Vite middleware invokes the same handler; a Vercel API adapter and snapshot packaging rule are prepared but not deployed or deployment-verified.
 
 This is a file-backed public snapshot API, **not a live Neon database connection**, persisted investigation, approved agent execution or graph publication. The existing authenticated SSc Neon service remains separate. No DB credentials are consumed by this route. No migrations, permissions, sessions or providers were enabled.
 

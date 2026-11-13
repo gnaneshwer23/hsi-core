@@ -3,7 +3,7 @@ import {readFile} from 'node:fs/promises';
 import {createPublicGraphSnapshotHandler} from '../src/server/publicGraphSnapshotService';
 import {DOMAIN_GRAPH_VERSION as version} from '../site/src/features/science/generatedDomainGraphVersion';
 const bytes=await readFile(new URL('../site/public/research/domain-graph/versions/'+version+'.json',import.meta.url));
-const request=(suffix='',method='GET')=>new Request('http://localhost/api/research/graph/snapshot'+suffix,{method});
+const request=(suffix='',method='GET')=>new Request('http://localhost/api/research/graph-snapshot'+suffix,{method});
 test('serves the existing public snapshot with verified identity and all approval gates false',async()=>{
  const handler=createPublicGraphSnapshotHandler({currentVersion:version,readPublishedSnapshot:async()=>bytes});
  const r=await handler(request());expect(r.status).toBe(200);expect(r.headers.get('X-HSI-Graph-Version')).toBe(version);expect(r.headers.get('Cache-Control')).toBe('no-store');
