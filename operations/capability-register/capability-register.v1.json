@@ -1315,6 +1315,7 @@
           "F-09"
         ],
         "modules": [
+          "src/caliberHarness.ts",
           "src/evidence/immunoBenchmark.ts",
           "src/evidence/immunoBenchmarkScoring.ts",
           "src/scientificAccuracyHarness.ts",
