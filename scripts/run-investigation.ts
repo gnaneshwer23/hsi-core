@@ -27,7 +27,7 @@ if(flag("--mode")==="live"||args.includes("--live")){
   const {runLiveExecute,loadFileDeps}=await import("../src/liveExecute");
   const need=(n:string)=>{const v=flag(n);if(!v){console.error(`--execute needs ${n}`);process.exit(2)}return v};
   const readline=await import("node:readline/promises");
-  const outcome=await runLiveExecute({configPath:resolve(need("--config")),integrityConfigPath:resolve(need("--integrity-config")),question:need("--question"),scope:need("--scope"),reviewer:need("--reviewer"),outDir:resolve(flag("--out")??"out/live")},{
+  const outcome=await runLiveExecute({configPath:resolve(need("--config")),integrityConfigPath:resolve(need("--integrity-config")),question:need("--question"),scope:need("--scope"),reviewer:need("--reviewer"),outDir:resolve(flag("--out")??"out/live"),sentinel:{directory:resolve(need("--sentinel-dir")),intervalMs:Number(flag("--sentinel-interval-minutes")??60)*60_000}},{
    env:process.env,readJson:p=>JSON.parse(readFileSync(p,"utf8")),loadDeps:loadFileDeps,
    confirm:async prompt=>{if(!process.stdin.isTTY)return null;const rl=readline.createInterface({input:process.stdin,output:process.stdout});try{return await rl.question(prompt+"\n> ")}finally{rl.close()}},
   });

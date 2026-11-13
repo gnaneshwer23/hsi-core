@@ -223,6 +223,7 @@ One module per line, sorted, so concurrent changes to different modules do not c
 - `src/evidence/incrementalEvidenceMonitoring.ts`
 - `src/evidence/livingEvidenceExpansion.ts`
 - `src/expansion/sourceRereview.ts`
+- `src/liveExecute.ts`
 - `src/researchV2/sourceIntegrityService.ts`
 - `src/sentinel.ts`
 
