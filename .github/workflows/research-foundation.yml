@@ -49,6 +49,13 @@ jobs:
           retention-days: 14
           if-no-files-found: error
       - run: bun run ra:test-parser
+      # Root checks exercise publication generation. Vercel builds the committed
+      # inputs instead; browser verification must use that same snapshot identity.
+      - name: Restore committed website inputs after publication checks
+        run: |
+          git restore --worktree -- site/public/discovery.json site/public/discovery research/domain-graph/graph.v1.json site/public/research/domain-graph/graph.v1.json site/src/features/science/generatedDomainGraphVersion.ts
+          git clean -f -- research/domain-graph/versions site/public/research/domain-graph/versions
+          git diff --exit-code
       - run: bun install --frozen-lockfile
         working-directory: site
       - run: bunx --no-install tsc -p site/tsconfig.json

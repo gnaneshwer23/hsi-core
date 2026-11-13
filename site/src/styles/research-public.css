@@ -18,3 +18,21 @@
 
 /* Public pages keep their sticky masthead; research tools use a non-obscuring reading header. */
 .hsi-nav.hsi-nav-workspace{position:relative;top:auto}
+
+/* Visible before the optional investigation chunk is loaded. */
+.hsi-graph-entry {
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid #c8d7d3;
+}
+.hsi-graph-entry > h3 {
+  font-size: clamp(1.4rem, 2vw, 2rem);
+  letter-spacing: -0.025em;
+}
+.hsi-graph-entry > p {
+  max-width: 68ch;
+}
+.hsi-graph-entry > .hsi-action {
+  cursor: pointer;
+  font: inherit;
+}

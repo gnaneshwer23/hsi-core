@@ -1,4 +1,5 @@
 import {DomainKnowledgeGraph} from './DomainKnowledgeGraph';
+import {InvestigationGraphExperience} from '../components/InvestigationGraphExperience';
 import {useEffect,useMemo,useState} from 'react';
 import {flushSync} from 'react-dom';
 import {Link,useSearchParams} from 'react-router-dom';
@@ -12,7 +13,7 @@ import '../styles/graph-explorer.css';
 import '../styles/claim-graph.css';
 const pretty=(s:string)=>s.replaceAll('_',' ');
 function download(value:unknown,filename:string){const url=URL.createObjectURL(new Blob([JSON.stringify(value,null,2)+'\n'],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
-export function ClaimKnowledgeGraph(){const [p]=useSearchParams();return p.get('dataset')==='source-corpus'||p.has('version')?<WorkingClaimKnowledgeGraph/>:<DomainKnowledgeGraph/>}
+export function ClaimKnowledgeGraph(){const [p]=useSearchParams();return p.get('dataset')==='source-corpus'||p.has('version')?<WorkingClaimKnowledgeGraph/>:p.get('experience')==='advanced'||['domain','condition','basis','gaps','scope','network'].some(key=>p.has(key))?<DomainKnowledgeGraph/>:<InvestigationGraphExperience/>}
 function WorkingClaimKnowledgeGraph(){
  const [params,setParams]=useSearchParams(),version=params.get('version'),[graph,setGraph]=useState<ClaimGraph|null>(null),[error,setError]=useState(''),[retry,setRetry]=useState(0),[notice,setNotice]=useState(''),[path,setPath]=useState<ClaimPath|null>(null),[versionInput,setVersionInput]=useState(''),[saved,setSaved]=useState<{name:string;search:string}[]>([]);
  useEffect(()=>{let active=true;const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),12000);setGraph(null);setError('');setPath(null);

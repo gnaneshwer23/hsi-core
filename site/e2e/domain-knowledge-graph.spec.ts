@@ -4,9 +4,9 @@ import {readFile} from 'node:fs/promises';
 const bundle=JSON.parse(await readFile(new URL('../public/research/domain-graph/graph.v1.json',import.meta.url),'utf8'));
 /** Immutable retired v1 adapter snapshot still published for lineage; interactive client must refuse it. parentVersion is now a loadable v2 tip after regen, so it is no longer a fail-closed pin. */
 const retiredAdapterVersion='ee23b6545a0d3dfdc3eab81002655d47b39dddb1b94a1b89a5d796d68a27d050';
-async function ready(page:any){await page.goto('/research/knowledge-graph');await expect(page.getByRole('heading',{name:'Connected research network',exact:true})).toBeVisible()}
+async function ready(page:any){await page.goto('/research/knowledge-graph?experience=advanced');await expect(page.getByRole('heading',{name:'Connected research network',exact:true})).toBeVisible()}
 const trial={protocolSection:{identificationModule:{nctId:'NCT01030861',briefTitle:'Browser test registry record, not independently verified'},conditionsModule:{conditions:['Diabetes Mellitus, Type 1']},statusModule:{overallStatus:'COMPLETED',lastUpdatePostDateStruct:{date:'2020-01-01'}},eligibilityModule:{minimumAge:'8 Years',maximumAge:'45 Years',eligibilityCriteria:'Test-only unparsed criteria. Investigator assessment required.'}}};
-test('the default graph connects domains and preserves the original source-corpus entry',async({page})=>{
+test('the advanced domain graph preserves connected domains and the original source-corpus entry',async({page})=>{
  await ready(page);await expect(page.getByRole('navigation',{name:'Research workspace'}).getByRole('link',{name:'Knowledge graph',exact:true})).toHaveAttribute('aria-current','page');await expect(page.getByRole('complementary',{name:'Research snapshot scope'})).toContainText('153 concepts');await expect(page.getByRole('complementary',{name:'Research snapshot scope'})).toContainText('0 independently approved');
  await expect(page.getByLabel('Investigation path')).toBeVisible();await expect(page.getByLabel('Graph legend')).toBeVisible();await expect(page.getByRole('button',{name:'Fit network',exact:true})).toBeVisible();
  await page.getByRole('button',{name:'All domains',exact:true}).click();await expect(page.locator('.kg-stage-head')).toContainText('153 concepts');
@@ -41,10 +41,10 @@ test('future AI capabilities are proposals with evaluation criteria and make no 
  const posts:string[]=[];page.on('request',r=>{if(r.method()==='POST')posts.push(r.url())});await ready(page);await page.getByRole('tab',{name:'Future discovery',exact:true}).click();await expect(page.getByRole('tabpanel')).toContainText('not running services');await expect(page.getByRole('tabpanel')).toContainText('Independent wet-lab replication');await expect(page.locator('.dg-future .dg-card')).toHaveCount(5);expect(posts).toEqual([]);
 });
 test('pinned snapshots and altered scope flags fail closed',async({page})=>{
- await page.goto('/research/knowledge-graph?domainVersion='+bundle.version);await expect(page.getByRole('heading',{name:'Connected research network',exact:true})).toBeVisible();
- await page.goto('/research/knowledge-graph?domainVersion='+retiredAdapterVersion);await expect(page.getByRole('alert')).toContainText('could not be verified');
- await page.goto('/research/knowledge-graph?domainVersion='+'f'.repeat(64));await expect(page.getByRole('alert')).toContainText('could not be verified');
- await page.goto('/research/knowledge-graph?domainVersion='+bundle.version);await expect(page.getByRole('heading',{name:'Connected research network',exact:true})).toBeVisible();
+ await page.goto('/research/knowledge-graph?experience=advanced&domainVersion='+bundle.version);await expect(page.getByRole('heading',{name:'Connected research network',exact:true})).toBeVisible();
+ await page.goto('/research/knowledge-graph?experience=advanced&domainVersion='+retiredAdapterVersion);await expect(page.getByRole('alert')).toContainText('could not be verified');
+ await page.goto('/research/knowledge-graph?experience=advanced&domainVersion='+'f'.repeat(64));await expect(page.getByRole('alert')).toContainText('could not be verified');
+ await page.goto('/research/knowledge-graph?experience=advanced&domainVersion='+bundle.version);await expect(page.getByRole('heading',{name:'Connected research network',exact:true})).toBeVisible();
  await page.route('**/research/domain-graph/versions/*.json',r=>r.fulfill({json:{...bundle,scientificApproval:true}}));await page.reload();await expect(page.getByRole('alert')).toContainText('could not be verified');await expect(page.locator('.dg-workspace')).toHaveCount(0);
 });
 test('cross-domain graph and each investigation view pass mobile/desktop accessibility checks',async({page},info)=>{
