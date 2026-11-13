@@ -10,7 +10,7 @@ export function createPublicGraphSnapshotHandler(config:{currentVersion:string;r
   const url=new URL(request.url),values=url.searchParams.getAll('version');
   // Vercel catch-all routing may attach the matched path; it is not a data selector.
   const routedPath=url.searchParams.getAll('path');
-  if(routedPath.length>1||routedPath.some(p=>p!=='graph-snapshot')||values.length>1||[...url.searchParams.keys()].some(k=>k!=='version'&&k!=='_vercel_share'&&k!=='x-vercel-protection-bypass'&&k!=='x-vercel-set-bypass-cookie'&&k!=='path'))return fail(400,'Invalid graph request');
+  if(routedPath.length>1||routedPath.some(p=>p!=='graph-snapshot')||values.length>1||[...url.searchParams.keys()].some(k=>k!=='version'&&k!=='_vercel_share'&&k!=='x-vercel-protection-bypass'&&k!=='x-vercel-set-bypass-cookie'&&k!=='path'))return fail(400,'Invalid graph request',{'X-HSI-Graph-Query-Fields':[...url.searchParams.keys()].map(k=>k.replace(/[^a-zA-Z0-9_.\[\]-]/g,'?').slice(0,48)).slice(0,12).join(',')});
   const version=values[0]??config.currentVersion;
   if(!/^[a-f0-9]{64}$/.test(version))return fail(400,'Invalid graph version');
   if(request.signal.aborted)return fail(499,'Request cancelled');
