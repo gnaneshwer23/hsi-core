@@ -1,4 +1,5 @@
 /** Audit-specific human assessment. Never evidence-brief or graph-publication approval. */
+import {isInvestigationScopeId,type InvestigationScopeId} from "../investigationScope";
 import { canonicalEvidenceJson } from './researchEvidenceCorpus';
 import { rejectPhiPayload } from '../cdsPhiBoundary';
 export type ContextAuditReviewRequest = {
@@ -21,7 +22,7 @@ export type ContextAuditReview = ContextAuditReviewRequest & {
   tenantId: string;
   ownerPrincipal: string;
   reviewerPrincipal: string;
-  diseaseScope: 'ssc' | 'ra';
+  diseaseScope: InvestigationScopeId;
   reviewedAt: string;
   scope: 'context_audit_only';
   scientificApproval: false;
@@ -71,7 +72,7 @@ export async function verifyContextAuditReview(
     investigationId: string;
     packageHash: string;
     contextHash: string;
-    diseaseScope: 'ssc' | 'ra';
+    diseaseScope: InvestigationScopeId;
   },
   digest: (s: string) => Promise<string>,
 ) {

@@ -4,11 +4,13 @@
  */
 import {SQL} from "bun";
 import {assertHsiNeonDatabaseUrl} from "./neonGuard";
+import {reviewerScopeFor,scopeIdForDisease} from "../investigationScope";
 export const HSI_REVIEWER_SCOPES=Object.freeze(["ssc","ra"] as const);
 export type HsiReviewerScope=typeof HSI_REVIEWER_SCOPES[number];
 /** No default disease-to-authority mapping; unsupported domains require separate acceptance. */
 export function reviewerScopeForDisease(disease:unknown):HsiReviewerScope|null{
- return disease==="systemic_sclerosis"?"ssc":disease==="rheumatoid_arthritis"?"ra":null;
+ const scope=scopeIdForDisease(disease);
+ return scope===null?null:reviewerScopeFor(scope);
 }
 export async function verifyHsiReviewerAuthority(input:{
  principal:string;reviewedAt:string;databaseUrl:string;neonProjectId?:string|null;scope:HsiReviewerScope;

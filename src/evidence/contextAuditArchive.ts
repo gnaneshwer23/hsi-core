@@ -1,3 +1,4 @@
+import {isInvestigationScopeId,type InvestigationScopeId} from "../investigationScope";
 import { createHash } from 'node:crypto';
 import { canonicalEvidenceJson } from './researchEvidenceCorpus';
 import { validateContextConflictAudit, type ContextConflictAudit } from './contextConflictAudit';
@@ -14,7 +15,7 @@ export type AuditArchiveBinding = {
   releaseId: string;
   releaseVersion: string;
   manifestHash: string;
-  diseaseScope: 'ssc' | 'ra';
+  diseaseScope: InvestigationScopeId;
 };
 export type ArchivedContextAudit = {
   schemaVersion: 'hsi-context-audit-archive-1';
