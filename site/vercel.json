@@ -391,6 +391,62 @@
     {
       "source": "/about",
       "destination": "/_pages/about.html"
+    },
+    {
+      "source": "/intelligence",
+      "destination": "/_pages/intelligence.html"
+    },
+    {
+      "source": "/intelligence/nexus",
+      "destination": "/_pages/intelligence--nexus.html"
+    },
+    {
+      "source": "/intelligence/aegis",
+      "destination": "/_pages/intelligence--aegis.html"
+    },
+    {
+      "source": "/intelligence/scout",
+      "destination": "/_pages/intelligence--scout.html"
+    },
+    {
+      "source": "/intelligence/prism",
+      "destination": "/_pages/intelligence--prism.html"
+    },
+    {
+      "source": "/intelligence/atlas",
+      "destination": "/_pages/intelligence--atlas.html"
+    },
+    {
+      "source": "/intelligence/helix",
+      "destination": "/_pages/intelligence--helix.html"
+    },
+    {
+      "source": "/intelligence/parallax",
+      "destination": "/_pages/intelligence--parallax.html"
+    },
+    {
+      "source": "/intelligence/horizon",
+      "destination": "/_pages/intelligence--horizon.html"
+    },
+    {
+      "source": "/intelligence/veritas",
+      "destination": "/_pages/intelligence--veritas.html"
+    },
+    {
+      "source": "/intelligence/arbiter",
+      "destination": "/_pages/intelligence--arbiter.html"
+    },
+    {
+      "source": "/intelligence/sentinel",
+      "destination": "/_pages/intelligence--sentinel.html"
+    },
+    {
+      "source": "/intelligence/caliber",
+      "destination": "/_pages/intelligence--caliber.html"
+    },
+    {
+      "source": "/intelligence/warden",
+      "destination": "/_pages/intelligence--warden.html"
     }
   ],
   "redirects": [
