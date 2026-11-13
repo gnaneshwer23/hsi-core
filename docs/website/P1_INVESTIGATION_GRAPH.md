@@ -31,6 +31,8 @@ Unit regressions cover directed parallel assertions, negative findings, gap/stud
 
 Legacy regression suites still exercise their full original functionality through explicit educational/advanced entry points. The new suite exercises the primary default experience. Passing tests are engineering evidence; scientist review of source mappings/context and human task/design acceptance remain outstanding.
 
+The root check exercises publication generation, which can produce a new public snapshot hash. CI restores the committed publication inputs and removes only untracked generated domain-version files in its disposable checkout before building/testing the site. A remaining tracked diff fails the job. Thus browser handoff tests and screenshots use the same committed snapshot identity as the Vercel site build, rather than silently certifying regenerated scratch data.
+
 ## Reference and remaining boundaries
 
 [obra/knowledge-graph](https://github.com/obra/knowledge-graph) informed the search→neighbourhood→path→shared-connection interaction pattern. No code or dependencies were copied. HSI retains its typed directed scientific assertions, existing loaders and snapshot store rather than replacing them with untyped note links or an undirected graph index.
