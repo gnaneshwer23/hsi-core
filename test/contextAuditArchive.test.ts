@@ -262,3 +262,36 @@ test('audit HTTP routes require current sessions, same-origin JSON and fixed ser
     t.close();
   }
 });
+
+test('caller-owned configuration and callback objects cannot widen actor identity or enable an archive', async () => {
+  const t = await auditArchiveFixture();
+  try {
+    const deps = { ...t.deps(), enabled: false };
+    const disabled = createContextAuditArchiveService(deps);
+    deps.enabled = true;
+    await expect(disabled.view('alice', t.f.initial.id)).rejects.toThrow();
+    const original = t.deps();
+    const mutating = createContextAuditArchiveService({
+      ...original,
+      context: async (actor, id) => {
+        (actor as { principalId: string }).principalId = 'alice';
+        return original.context(actor, id);
+      },
+    });
+    await expect(mutating.view('bob', t.f.initial.id)).rejects.toThrow('access denied');
+    const originalAudit = t.audit.auditHash;
+    const isolated = createContextAuditArchiveService({
+      ...original,
+      authorizeSources: async (actor, audit) => {
+        (actor as { principalId: string }).principalId = 'forged';
+        (audit as { auditHash: string }).auditHash = '0'.repeat(64);
+        return true;
+      },
+    });
+    expect((await isolated.view('alice', t.f.initial.id)).artifact?.audit.auditHash).toBe(
+      originalAudit,
+    );
+  } finally {
+    t.close();
+  }
+});

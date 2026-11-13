@@ -45,6 +45,7 @@ export type ContextAuditArchiveDependencies = {
   now?: () => string;
 };
 export function createContextAuditArchiveService(deps: ContextAuditArchiveDependencies) {
+  deps = Object.freeze({ ...deps, store: Object.freeze({ ...deps.store }) });
   const digest = async (s: string) => contextArchiveDigest(s);
   async function access(actor: TrustedResearchActor | null, id: string) {
     if (
@@ -55,7 +56,7 @@ export function createContextAuditArchiveService(deps: ContextAuditArchiveDepend
     )
       throw Error('Audit archive unavailable');
     actor = structuredClone(actor);
-    const c = structuredClone(await deps.context(actor, id));
+    const c = structuredClone(await deps.context(structuredClone(actor), id));
     const p = await verifyReviewPackage(c.package, digest),
       d = p.context.primary.disease,
       scope = d === 'systemic_sclerosis' ? 'ssc' : d === 'rheumatoid_arthritis' ? 'ra' : null;
@@ -99,7 +100,7 @@ export function createContextAuditArchiveService(deps: ContextAuditArchiveDepend
       throw Error('Audit is outside this saved package');
     assertContextAuditPackageBinding(row.audit, a.p);
     if (
-      (await deps.authorizeSources(a.actor, structuredClone(row.audit), [
+      (await deps.authorizeSources(structuredClone(a.actor), structuredClone(row.audit), [
         'storage',
         'display',
         'comparison',
