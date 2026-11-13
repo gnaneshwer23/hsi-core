@@ -478,6 +478,7 @@ export function InvestigationGraphExperience({ embedded = false }: { embedded?: 
             <label>
               Starting concept
               <select
+                aria-label="Starting concept"
                 value={from}
                 onChange={(e) => update({ from: e.target.value, node: e.target.value }, true)}
               >
