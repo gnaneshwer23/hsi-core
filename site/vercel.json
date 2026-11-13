@@ -3,9 +3,6 @@
   "bunVersion": "1.x",
   "functions": {
     "api/**/*.ts": {
-      "maxDuration": 30
-    },
-    "api/research/graph/snapshot.ts": {
       "maxDuration": 30,
       "includeFiles": "public/research/domain-graph/versions/*.json"
     }

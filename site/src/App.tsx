@@ -84,7 +84,7 @@ export default function App() {
         <Route path="sign-up" element={<SignUp />} />
         <Route path="research/account" element={<ResearchAccount />} />
         <Route path="platform" element={<PlatformPublicPage />} />
-        {import.meta.env.DEV && <Route path="design/identity" element={<IdentityStudy/>}/> }
+        {import.meta.env.DEV && <Route path={"design/identity"} element={<IdentityStudy/>}/> }
         <Route path="intelligence" element={<IntelligenceCollectiveLanding />} />
         <Route path="intelligence/nexus" element={<IntelligenceCapabilityLanding slug="nexus" />} />
         <Route path="intelligence/aegis" element={<IntelligenceCapabilityLanding slug="aegis" />} />
