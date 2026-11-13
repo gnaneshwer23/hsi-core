@@ -83,3 +83,19 @@ export async function createFileSourceAuthority(config:{publishDir:string;policy
  }};
  return {authority,info,publicKey,isRevoked:async(receiptId:string,issuer:string)=>issuer===info.issuer&&(await revokedIds()).has(receiptId)};
 }
+
+/** Write side of the publish directory, for services that issue receipts through a signer (same layout the file adapter reads). */
+export function createFileReceiptPublisher(publishDir:string){
+ return {
+  async putReceipt(r:SourceClearanceReceipt):Promise<void>{
+   await mkdir(join(publishDir,"receipts"),{recursive:true});
+   await writeAtomic(join(publishDir,"receipts",receiptFileName(r.sourceId,r.sourceVersion,r.passageSha256)),JSON.stringify(r),0o644);
+  },
+  async getReceipt(sourceId:string,sourceVersion:string,passageSha256:string):Promise<SourceClearanceReceipt|null>{
+   try{return JSON.parse(await readFile(join(publishDir,"receipts",receiptFileName(sourceId,sourceVersion,passageSha256)),"utf8")) as SourceClearanceReceipt}
+   catch(e){if((e as NodeJS.ErrnoException).code==="ENOENT")return null;throw e}
+  },
+  async putRevocation(r:Revocation):Promise<void>{await mkdir(publishDir,{recursive:true});await appendFile(join(publishDir,"revocations.jsonl"),JSON.stringify(r)+"\n",{mode:0o644})},
+ };
+}
+export type ReceiptPublisher=ReturnType<typeof createFileReceiptPublisher>;

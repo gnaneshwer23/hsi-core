@@ -20,9 +20,9 @@ const sha=(s:string)=>createHash("sha256").update(s).digest("hex");
 const STOP=new Set(["how","might","what","which","with","from","that","this","does","between","into","about","their","there","evidence","influence","relate","relates","related","connect","connects","could","would","should","where","when","also","than","these","those"]);
 
 /** Fetch wrapper: https only, allow-listed hosts only, and a hard cap on the number of requests. */
-export function createAllowlistedFetcher(fetcher:SourceFetcher,options:{hosts?:readonly string[];maxRequests:number}){
+export function createAllowlistedFetcher(fetcher:SourceFetcher,options:{hosts?:readonly string[];maxRequests:number;/** The code-reviewed universe the hosts must come from. Defaults to the retrieval list. */universe?:readonly string[]}){
  const hosts=options.hosts??LIVE_ALLOWED_HOSTS;let count=0;
- if(!Number.isInteger(options.maxRequests)||options.maxRequests<1||options.maxRequests>64||hosts.some(h=>!LIVE_ALLOWED_HOSTS.includes(h)))throw Error("Invalid fetch policy");
+ if(!Number.isInteger(options.maxRequests)||options.maxRequests<1||options.maxRequests>64||hosts.some(h=>!(options.universe??LIVE_ALLOWED_HOSTS).includes(h)))throw Error("Invalid fetch policy");
  const guarded:SourceFetcher=async(input,init)=>{
   const url=new URL(typeof input==="string"||input instanceof URL?input.toString():input.url);
   if(url.protocol!=="https:"||!hosts.includes(url.hostname)||url.username||url.password)throw Error("Request host is not allowed");

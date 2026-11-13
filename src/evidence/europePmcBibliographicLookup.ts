@@ -36,6 +36,8 @@ export type BibliographicRecord = {
   journal: string | null;
   publicationYear: number | null;
   isRetracted: boolean | null;
+  /** Provider publication types (for example a published erratum); used by source integrity checks. Empty when absent. */
+  publicationTypes: string[];
   rightsSignals: BibliographicRightsSignals;
   url: string;
   retrievedAt: string;
@@ -97,6 +99,7 @@ type EpmcResult = {
   journalTitle?: unknown;
   pubYear?: unknown;
   isRetracted?: unknown;
+  pubTypeList?: unknown;
   isOpenAccess?: unknown;
   inEPMC?: unknown;
   inPMC?: unknown;
@@ -115,6 +118,12 @@ function publicationYear(v: unknown): number | null {
 function ynFlag(v: unknown): BibliographicYn {
   if (v === "Y" || v === "N") return v;
   return null;
+}
+
+function publicationTypesOf(v: unknown): string[] {
+  const list = (v as {pubType?: unknown} | null | undefined)?.pubType;
+  const items = Array.isArray(list) ? list : typeof list === "string" ? [list] : [];
+  return items.filter((t): t is string => typeof t === "string" && t.trim().length > 0 && t.length <= 100).map((t) => t.trim()).slice(0, 20);
 }
 
 function providerLicenseLabel(v: unknown): string | null {
@@ -170,6 +179,7 @@ function parseRecords(list: unknown[], retrievedAt: string, responseIdentity: st
       journal: stringOrNull(item.journalTitle),
       publicationYear: publicationYear(item.pubYear),
       isRetracted: retracted,
+      publicationTypes: publicationTypesOf(item.pubTypeList),
       rightsSignals: rightsSignalsOf(item),
       url: `https://europepmc.org/article/${encodeURIComponent(sourceType)}/${encodeURIComponent(sourceId)}`,
       retrievedAt,
