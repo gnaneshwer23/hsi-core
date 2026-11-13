@@ -41,6 +41,11 @@ export function checkLiveRunGate(deps:Pick<LiveRunDeps,"config"|"integrityConfig
 
 export async function runLiveInvestigation(deps:LiveRunDeps):Promise<LiveRunResult|LiveRunRefusal>{
  const refusal=checkLiveRunGate(deps);if(refusal)return refusal;
+ return composeLiveRun(deps);
+}
+
+/** Composition only, with NO readiness gate. Exported so tests can exercise the pipeline with mocks; production callers use runLiveInvestigation. */
+export async function composeLiveRun(deps:LiveRunDeps):Promise<LiveRunResult>{
  const config=deps.config as LiveRunConfig,limits=config.limits;
  const verifierDeployments:VerifierDeployment[]=config.verifiers.map((v,i)=>({verifierId:"verifier-"+(i+1),deploymentId:v.deploymentId}));
  const runners=createProviderBackedRunners({ops:deps.ops,extractorDeploymentId:config.extractor.deploymentId,verifierDeployments,maxModelCalls:Math.min(limits.maxModelCallsPerRun,LIVE_HARD_LIMITS.maxModelCallsPerRun),signal:deps.signal});
