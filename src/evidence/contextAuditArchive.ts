@@ -1,4 +1,4 @@
-import {isInvestigationScopeId,type InvestigationScopeId} from "../investigationScope";
+import type {InvestigationScopeId} from "../investigationScope";
 import { createHash } from 'node:crypto';
 import { canonicalEvidenceJson } from './researchEvidenceCorpus';
 import { validateContextConflictAudit, type ContextConflictAudit } from './contextConflictAudit';

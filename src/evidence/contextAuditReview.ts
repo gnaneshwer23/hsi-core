@@ -1,5 +1,5 @@
 /** Audit-specific human assessment. Never evidence-brief or graph-publication approval. */
-import {isInvestigationScopeId,type InvestigationScopeId} from "../investigationScope";
+import type {InvestigationScopeId} from "../investigationScope";
 import { canonicalEvidenceJson } from './researchEvidenceCorpus';
 import { rejectPhiPayload } from '../cdsPhiBoundary';
 export type ContextAuditReviewRequest = {
