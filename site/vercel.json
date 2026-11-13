@@ -397,6 +397,34 @@
       "destination": "/_pages/intelligence.html"
     },
     {
+      "source": "/departments",
+      "destination": "/_pages/departments.html"
+    },
+    {
+      "source": "/departments/immunology",
+      "destination": "/_pages/departments--immunology.html"
+    },
+    {
+      "source": "/departments/neuroscience",
+      "destination": "/_pages/departments--neuroscience.html"
+    },
+    {
+      "source": "/departments/microbiome",
+      "destination": "/_pages/departments--microbiome.html"
+    },
+    {
+      "source": "/departments/metabolism",
+      "destination": "/_pages/departments--metabolism.html"
+    },
+    {
+      "source": "/departments/genomics-multi-omics",
+      "destination": "/_pages/departments--genomics-multi-omics.html"
+    },
+    {
+      "source": "/departments/human-physiology",
+      "destination": "/_pages/departments--human-physiology.html"
+    },
+    {
       "source": "/intelligence/nexus",
       "destination": "/_pages/intelligence--nexus.html"
     },
