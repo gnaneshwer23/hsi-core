@@ -1,5 +1,7 @@
 # HSI Strategy Pack (2026-11-02)
 
+**Current execution roadmap (13 November 2026):** [Audited next implementation phases, product gates and reviewable PR slices](HSI_NEXT_IMPLEMENTATION_PHASES_2026-11-13.md) — reconciles the latest production/graph/research audit with the cross-domain HSI vision; proposals are not runtime or scientific acceptance.
+
 **Current build assessment — 5 November 2026:** [Implemented work, verification limits and remaining gaps](../audits/HSI_BUILD_AUDIT_2026-11-05.md) · [Delivery phases A–H and first implementation package](HSI_PHASED_BUILD_PLAN.md).
 
 **Naming clarification — 5 November 2026:** HSI means **Human Super Intelligence**. The master vision, PRD and active companion documents use this name. Older dated audits retain their historical wording. “Living Health Knowledge Graph” and health-data terminology describe the application domain, not a different company/product name.
