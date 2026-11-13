@@ -34,7 +34,8 @@ export function pinnedProviderLookup(hostname:string,address:Readonly<{address:s
  * The native connection uses a pinned lookup result while TLS verifies the original hostname.
  * Responses stay streamed through createProviderRunner's deadline and byte limit.
  */
-export function createPinnedProviderTransport(encode:ProviderWireEncoder,resolve?:ProviderDnsResolver):ProviderTransport{
+/** `httpsRequest` is a test seam for asserting the connection options; production passes none. */
+export function createPinnedProviderTransport(encode:ProviderWireEncoder,resolve?:ProviderDnsResolver,httpsRequest:typeof request=request):ProviderTransport{
  if(typeof encode!=="function")throw Error("Trusted provider wire encoder required");
  return async(config,payload,options)=>{
   const checked=validateProviderConfig(config),url=new URL(checked.endpoint);
@@ -46,7 +47,7 @@ export function createPinnedProviderTransport(encode:ProviderWireEncoder,resolve
   const headers={...wire.headers};
   if(Object.keys(headers).some(k=>["host","connection","transfer-encoding","content-length","proxy-authorization"].includes(k.toLowerCase())))throw Error("Provider framing headers are server controlled");
   return new Promise<Response>((accept,reject)=>{
-   const req=request(url,{
+   const req=httpsRequest(url,{
     method:"POST",agent:false,signal:options.signal,servername:url.hostname,rejectUnauthorized:true,
     family:pinned.family,
     lookup:pinnedProviderLookup(url.hostname,pinned),
