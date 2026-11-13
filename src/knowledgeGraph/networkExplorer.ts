@@ -1,5 +1,6 @@
+import {matchesRecordedContext,validRecordedContext,type RecordedResearchFilters} from './recordedResearchContext';
 import type { DomainBundle, DomainEdge } from './domainGraph';
-export type NetworkFilters = {
+export type NetworkFilters = RecordedResearchFilters & {
   query: string;
   kind: string;
   domain: string;
@@ -13,6 +14,7 @@ export type NetworkFilters = {
 };
 /** Apply facets before undirected local expansion. Connectivity is navigation, never causal inference. */
 export function networkProjection(bundle: DomainBundle, focus: string, f: NetworkFilters) {
+  if(!validRecordedContext(bundle,f))return {nodes:[],edges:[]};
   const q = f.query.normalize('NFKC').trim().toLowerCase();
   const matches = new Set(
     bundle.nodes
@@ -27,6 +29,7 @@ export function networkProjection(bundle: DomainBundle, focus: string, f: Networ
   const allowed = new Set(nodes.map((n) => n.id));
   let edges = bundle.edges.filter(
     (e) =>
+      matchesRecordedContext(e,f) &&
       allowed.has(e.subjectId) &&
       allowed.has(e.objectId) &&
       (!f.model || e.model === f.model) &&
@@ -54,7 +57,7 @@ export function networkProjection(bundle: DomainBundle, focus: string, f: Networ
     edges = edges.filter((e) => ids.has(e.subjectId) && ids.has(e.objectId));
   }
   const linked = new Set(edges.flatMap((e) => [e.subjectId, e.objectId]));
-  if (!f.orphans) nodes = nodes.filter((n) => linked.has(n.id));
+  if (!f.orphans||f.conditions?.length||f.tissue||f.assay||f.evidenceKind) nodes = nodes.filter((n) => linked.has(n.id));
   return { nodes, edges };
 }
 export function connectionGroups(edges: DomainEdge[], focus: string) {

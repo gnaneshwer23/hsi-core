@@ -106,3 +106,27 @@ test('network is keyboard accessible and fits mobile and desktop', async ({ page
   }
   expect(errors).toEqual([]);
 });
+
+test('recorded disease context filters exact records and survives Science handoff without stale selection',async({page})=>{
+ const network=await ready(page);const edge=bundle.edges[0];
+ await page.goto('/research/knowledge-graph?node='+encodeURIComponent(edge.subjectId)+'&edge='+encodeURIComponent(edge.id));
+ await network.getByLabel('Condition',{exact:true}).selectOption('Rheumatoid arthritis');
+ await expect(page).toHaveURL(/netCondition=Rheumatoid/);expect(new URL(page.url()).searchParams.has('edge')).toBe(false);
+ await expect(network.locator('.rn-network>header')).toContainText('18 of 131 relationships');
+ await network.getByLabel('Compare with',{exact:true}).selectOption('Systemic sclerosis');
+ await expect(network.locator('.rn-coverage')).toContainText('28 visible records');
+ await network.getByLabel('Tissue context',{exact:true}).selectOption('__not_recorded__');
+ await expect(network.locator('.rn-coverage')).toContainText('23 visible records; 23 without recorded tissue');
+ await page.reload();await expect(network.getByLabel('Tissue context',{exact:true})).toHaveValue('__not_recorded__');
+ await page.getByRole('link',{name:'Continue in Science',exact:true}).click();
+ await expect(page).toHaveURL(/netCompareCondition=Systemic/);await expect(network.locator('.rn-coverage')).toContainText('23 visible records');
+ await network.getByRole('button',{name:'Reset network filters',exact:true}).click();
+ await expect(network.getByLabel('Condition',{exact:true})).toHaveValue('');await expect(network.getByLabel('Compare with',{exact:true})).toBeDisabled();
+});
+
+test('mobile context controls can be revealed without pushing the graph behind all filters',async({page})=>{
+ await page.setViewportSize({width:390,height:900});const network=await ready(page);const toggle=network.getByRole('button',{name:'Filters and research context',exact:true});
+ await expect(toggle).toHaveAttribute('aria-expanded','false');await expect(network.getByLabel('Condition',{exact:true})).toBeHidden();
+ await toggle.click();await expect(network.getByLabel('Condition',{exact:true})).toBeVisible();await network.getByLabel('Condition',{exact:true}).selectOption('Rheumatoid arthritis');
+ await network.getByRole('button',{name:'Hide filters and research context',exact:true}).click();await expect(network.locator('.rn-network>header')).toContainText('18 of 131 relationships');
+});

@@ -32,3 +32,6 @@
 .rn-groups>div{display:grid;gap:4px;margin-top:10px}.rn-groups button{display:flex;gap:7px;align-items:center;text-align:left;font-size:.75rem}.rn-groups i{width:10px;height:10px;border-radius:50%;flex:none;border:1px solid #52675f}.rn-groups small{margin-left:auto}
 .ig-experience .rn-network>header button:hover,.ig-experience .rn-network>header button:focus-visible{background:#315e64;color:#f1faf6}
 .ig-experience .rn-network>header button[aria-pressed=true]{background:#315e64;color:#f1faf6;border-color:#8cafa8}
+.rn-context{min-width:0;margin:18px 0;padding:12px 10px;border:1px solid #b7cbc5;border-radius:5px}.rn-context legend{font-size:.78rem;font-weight:600;color:#244d48;padding:0 5px}.rn-context p{font-size:.7rem;line-height:1.6;color:#48605d}.rn-explorer .rn-coverage{font-size:.75rem;line-height:1.7;padding:14px 18px;margin:0;background:#edf3f0;color:#354f49;border-block:1px solid #c6d6cf}
+
+.rn-mobile-filters{display:none}@media(max-width:700px){.rn-explorer>.rn-mobile-filters{display:block;width:calc(100% - 24px);margin:12px;text-align:left;min-height:44px;background:#e8efed;color:#244d48;border:1px solid #a8c1b9;border-radius:5px;padding:12px}.rn-filters:not(.rn-filters-open){display:none}}

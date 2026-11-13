@@ -1,3 +1,4 @@
+import {recordedContextCoverage} from '../src/knowledgeGraph/recordedResearchContext';
 import { test, expect } from 'bun:test';
 import { readFileSync } from 'node:fs';
 import type { DomainBundle } from '../src/knowledgeGraph/domainGraph';
@@ -97,4 +98,37 @@ test('dense candidate layout does not stack concepts against artificial rectangu
  const rows=new Map<number,number>(),columns=new Map<number,number>();
  for(const p of points.values()){expect(Number.isFinite(p.x)&&Number.isFinite(p.y)).toBe(true);rows.set(Math.round(p.y),(rows.get(Math.round(p.y))??0)+1);columns.set(Math.round(p.x),(columns.get(Math.round(p.x))??0)+1)}
  expect(Math.max(...rows.values())).toBeLessThan(g.nodes.length/5);expect(Math.max(...columns.values())).toBeLessThan(g.nodes.length/5);
+});
+
+test('recorded condition filters retain exact study attribution and prune unrelated orphan nodes',()=>{
+ const ra=networkProjection(g,g.nodes[0].id,{...f,conditions:['Rheumatoid arthritis']});
+ expect(ra.edges.length).toBeGreaterThan(0);expect(ra.edges.every(e=>e.conditions.includes('Rheumatoid arthritis'))).toBe(true);
+ const endpoints=new Set(ra.edges.flatMap(e=>[e.subjectId,e.objectId]));expect(ra.nodes.every(n=>endpoints.has(n.id))).toBe(true);
+ expect(ra.edges.every(e=>g.edges.find(x=>x.id===e.id)===e)).toBe(true);
+ const both=networkProjection(g,g.nodes[0].id,{...f,conditions:['Rheumatoid arthritis','Systemic sclerosis']});
+ expect(both.edges.length).toBeGreaterThan(ra.edges.length);expect(both.edges.every(e=>e.conditions.some(c=>['Rheumatoid arthritis','Systemic sclerosis'].includes(c)))).toBe(true);
+ expect(both.edges.every(e=>e.reviewStatus==='unreviewed'&&!e.scientificClaimAllowed)).toBe(true);
+});
+test('unavailable or duplicate disease/context facets fail closed rather than imply ontology expansion',()=>{
+ for(const extra of [{conditions:['unrecorded disease']},{conditions:['Rheumatoid arthritis','Rheumatoid arthritis']},{conditions:['Rheumatoid arthritis','Systemic sclerosis','unrecorded disease']},{tissue:'unrecorded tissue'},{assay:'unrecorded assay'},{evidenceKind:'approved'}]){
+ expect(networkProjection(g,g.nodes[0].id,{...f,...extra})).toEqual({nodes:[],edges:[]});
+ }
+});
+test('explicit missing tissue and assay reflect original nulls; candidates and gaps remain distinct',()=>{
+ const missing=networkProjection(g,g.nodes[0].id,{...f,tissue:'__not_recorded__',assay:'__not_recorded__'});
+ expect(missing.edges.length).toBeGreaterThan(0);expect(missing.edges.every(e=>e.tissue===null&&e.assay===null)).toBe(true);
+ const tissue=g.edges.find(e=>e.tissue!==null)!.tissue!;
+ expect(networkProjection(g,g.nodes[0].id,{...f,tissue}).edges.every(e=>e.tissue===tissue)).toBe(true);
+ expect(networkProjection(g,g.nodes[0].id,{...f,evidenceKind:'research_gap'}).edges.every(e=>e.kind==='research_gap')).toBe(true);
+});
+test('recorded context survives pinned handoff without retaining user identity parameters',()=>{
+ const p=new URLSearchParams({netCondition:'Rheumatoid arthritis',netCompareCondition:'Systemic sclerosis',netTissue:'__not_recorded__',netAssay:'__not_recorded__',netEvidenceKind:'source_candidate',owner:'forged',session:'secret'});
+ const out=new URL(investigationHandoff('/research/knowledge-graph',p,g.version),'https://example.test').searchParams;
+ for(const key of ['netCondition','netCompareCondition','netTissue','netAssay','netEvidenceKind'])expect(out.get(key)).toBe(p.get(key));
+ expect(out.get('owner')).toBeNull();expect(out.get('session')).toBeNull();expect(out.get('domainVersion')).toBe(g.version);
+});
+
+test('coverage reports missing annotations without upgrading candidates to reviewed knowledge',()=>{
+ const edges=g.edges.filter(e=>e.conditions.includes('Rheumatoid arthritis'));const c=recordedContextCoverage(edges);
+ expect(c.records).toBe(edges.length);expect(c.missingTissue).toBe(edges.filter(e=>e.tissue===null).length);expect(c.missingAssay).toBe(edges.filter(e=>e.assay===null).length);expect(c.independentlyReviewed).toBe(0);expect(c.pooledEffectAllowed).toBe(false);
 });

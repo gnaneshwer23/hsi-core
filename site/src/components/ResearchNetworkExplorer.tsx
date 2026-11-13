@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
+import {MISSING_CONTEXT,recordedContextOptions,recordedContextCoverage,validRecordedContext} from '../../../src/knowledgeGraph/recordedResearchContext';
+import { useEffect, useMemo, useState, useId } from 'react';
 import type { DomainBundle } from '../../../src/knowledgeGraph/domainGraph';
 import { networkProjection, connectionGroups } from '../../../src/knowledgeGraph/networkExplorer';
 import { GraphVisual, type CanvasGraph } from '../features/science/GraphVisual';
@@ -15,6 +16,7 @@ export const NETWORK_KEYS = [
   'netOrphans',
   'netScope',
   'netDepth',
+  'netCondition','netCompareCondition','netTissue','netAssay','netEvidenceKind',
 ] as const;
 export function ResearchNetworkExplorer({
   bundle,
@@ -29,6 +31,8 @@ export function ResearchNetworkExplorer({
   update: (v: Record<string, string>) => void;
   inspectEdge: (id: string) => void;
 }) {
+  const filterPanelId=useId();
+  const [filtersOpen,setFiltersOpen]=useState(false);
   const [history, setHistory] = useState({ ids: [selected], index: 0 }),
     [list, setList] = useState(false);
   useEffect(() => {
@@ -44,7 +48,10 @@ export function ResearchNetworkExplorer({
           },
     );
   }, [selected]);
+  const options=recordedContextOptions(bundle);
   const f = {
+    conditions:[params.get('netCondition'),params.get('netCompareCondition')].filter((c):c is string=>!!c),
+    tissue:params.get('netTissue')??'',assay:params.get('netAssay')??'',evidenceKind:params.get('netEvidenceKind')??'',
     query: params.get('netQuery') ?? '',
     kind: params.get('netKind') ?? '',
     domain: params.get('netDomain') ?? '',
@@ -56,7 +63,7 @@ export function ResearchNetworkExplorer({
     depth: Number(params.get('netDepth') ?? 1),
     model: params.get('model') ?? '',
   };
-  const valid =
+  const valid = (!params.get('netCompareCondition')||!!params.get('netCondition'))&&validRecordedContext(bundle,f)&&
     (!f.kind || bundle.nodes.some((n) => n.kind === f.kind)) &&
     (!f.domain || bundle.nodes.some((n) => n.domains.includes(f.domain))) &&
     (!f.predicate || bundle.edges.some((e) => e.predicate === f.predicate)) &&
@@ -94,6 +101,7 @@ export function ResearchNetworkExplorer({
     })),
   };
   const name = (id: string) => bundle.nodes.find((n) => n.id === id)?.name ?? id;
+  const coverage=recordedContextCoverage(slice.edges);
   const groups = connectionGroups(slice.edges, selected);
   const visit = (id: string) => update({ node: id, edge: '' });
   function move(index: number) {
@@ -103,11 +111,19 @@ export function ResearchNetworkExplorer({
     visit(id);
   }
   const reset = () => update(Object.fromEntries(NETWORK_KEYS.map((k) => [k, ''])));
+  function applyContext(values:Record<string,string>){
+    const next=new URLSearchParams(params);for(const [key,value] of Object.entries(values)){if(value)next.set(key,value);else next.delete(key)}
+    const filters={...f,scope:'global',conditions:[next.get('netCondition'),next.get('netCompareCondition')].filter((c):c is string=>!!c),tissue:next.get('netTissue')??'',assay:next.get('netAssay')??'',evidenceKind:next.get('netEvidenceKind')??''};
+    const eligible=networkProjection(bundle,selected,filters);
+    const node=eligible.nodes.find(n=>n.id===selected)?.id??eligible.nodes[0]?.id??selected;
+    update({...values,netScope:'global',node,edge:'',compare:'',path:''});
+  }
   const facet = (label: string, key: string, value: string, options: string[]) => (
     <label>
       {label}
-      <select aria-label={label} value={value} onChange={(e) => update({ [key]: e.target.value })}>
-        <option value="">All</option>
+      <select aria-label={label} value={value} disabled={key==='netCompareCondition'&&!params.get('netCondition')} onChange={e=>['netCondition','netCompareCondition'].includes(key)?applyContext({[key]:e.target.value,...(key==='netCondition'?{netCompareCondition:''}:{})}):update({[key]:e.target.value})}>
+
+        <option value="">{key==='netCompareCondition'?'No comparison':key==='netCondition'?'All recorded conditions':'All'}</option>
         {options.sort().map((v) => (
           <option key={v} value={v}>
             {pretty(v)}
@@ -135,8 +151,9 @@ export function ResearchNetworkExplorer({
           {f.scope === 'local' ? 'Open global graph' : 'Focus local graph'}
         </button>
       </nav>
+      <button className="rn-mobile-filters" aria-expanded={filtersOpen} aria-controls={filterPanelId} onClick={()=>setFiltersOpen(v=>!v)}>{filtersOpen?'Hide filters and research context':'Filters and research context'}</button>
       <div className="rn-layout">
-        <aside className="rn-filters" aria-label="Network filters">
+        <aside id={filterPanelId} className={'rn-filters'+(filtersOpen?' rn-filters-open':'')} aria-label="Network filters">
           <h2>Explore the network</h2>
           <p>Filter the same snapshot. Follow connections without losing the source.</p>
           <label>
@@ -165,6 +182,15 @@ export function ResearchNetworkExplorer({
               </select>
             </label>
           )}
+          <fieldset className="rn-context"><legend>Recorded research context</legend>
+          <p>Exact source annotations for this network view. No disease ontology expansion is applied. Path views use their separate question controls.</p>
+          {facet('Condition','netCondition',params.get('netCondition')??'',options.conditions)}
+          {facet('Compare with','netCompareCondition',params.get('netCompareCondition')??'',options.conditions.filter(c=>c!==params.get('netCondition')))}
+          <p>Two conditions show separate records together, not a pooled effect. Conditions absent from this snapshot are not inferred.</p>
+          <label>Tissue context<select aria-label="Tissue context" value={f.tissue} onChange={e=>applyContext({netTissue:e.target.value})}><option value="">All recorded tissues</option><option value={MISSING_CONTEXT}>Tissue not recorded</option>{options.tissues.map(t=><option key={t} value={t}>{t}</option>)}</select></label>
+          <label>Assay context<select aria-label="Assay context" value={f.assay} onChange={e=>applyContext({netAssay:e.target.value})}><option value="">All recorded assays</option><option value={MISSING_CONTEXT}>Assay not recorded</option>{options.assays.map(t=><option key={t} value={t}>{t}</option>)}</select></label>
+          <label>Relationship evidence<select aria-label="Relationship evidence" value={f.evidenceKind} onChange={e=>applyContext({netEvidenceKind:e.target.value})}><option value="">Candidates and gaps</option><option value="source_candidate">Source candidates / unreviewed</option><option value="research_gap">Research gaps / unverified</option></select></label>
+          </fieldset>
           {facet('Entity type', 'netKind', f.kind, [...new Set(bundle.nodes.map((n) => n.kind))])}
           {facet('Biological domain', 'netDomain', f.domain, [
             ...new Set(bundle.nodes.flatMap((n) => n.domains)),
@@ -310,6 +336,7 @@ export function ResearchNetworkExplorer({
               )}
             </>
           )}
+          <p className="rn-coverage" role="status">Context coverage: {coverage.records} visible records; {coverage.missingTissue} without recorded tissue; {coverage.missingAssay} without recorded assay; {coverage.unassignedCondition} without a condition annotation. Independently reviewed: {coverage.independentlyReviewed}. Missing metadata is not evidence of biological absence.</p>
           <p className="rn-legend">
             Solid: source candidate. Dashed: negative finding. Dotted: research gap or study
             context. No relationship is independently approved in this snapshot.
