@@ -7,6 +7,7 @@ const ResearchDashboard=lazy(()=>import("./pages/ResearchDashboard").then(m=>({d
 import {ContextConflictAuditPage,EvidenceIntelligencePage,ResearchBriefsPage} from "./pages/PublicResearchPages";
 import {PlatformPublicPage,ResearchPublicPage,SciencePublicPage,ApplicationsPublicPage,TrustPublicPage,AboutPublicPage} from "./pages/PublicFoundationPages";
 import { Home } from "./pages/Home";
+import { IntelligenceCollectiveLanding, IntelligenceCapabilityLanding } from "./pages/IntelligenceCollective";
 import {PasswordRecovery} from "./pages/PasswordRecovery";
 import { SignIn } from "./pages/SignIn";
 import { SignUp } from "./pages/SignUp";
@@ -82,6 +83,8 @@ export default function App() {
         <Route path="sign-up" element={<SignUp />} />
         <Route path="research/account" element={<ResearchAccount />} />
         <Route path="platform" element={<PlatformPublicPage />} />
+        <Route path="intelligence" element={<IntelligenceCollectiveLanding />} />
+        <Route path="intelligence/:slug" element={<IntelligenceCapabilityLanding />} />
         <Route path="context-conflict-audit" element={<ContextConflictAuditPage />} />
         <Route path="evidence-intelligence" element={<EvidenceIntelligencePage />} />
         <Route path="research-briefs" element={<ResearchBriefsPage />} />
