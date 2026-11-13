@@ -22,7 +22,7 @@ test("home communicates the research workflow and supports accessible capability
  await expect(page.locator("#investigation-workflow")).toContainText("competing explanations");
  await expect(page.locator(".hsi-home-hero .hsi-actions a")).toHaveCount(2);
  await page.getByRole("link",{name:/Explore the Investigation/i}).click();
- await expect(page).toHaveURL(/\/research\/investigate$/);
+ await expect(page).toHaveURL(/\/research\/investigate(\?.*)?$/);
  await expect(page.getByText("Demo environment")).toBeVisible();
  await expect(page.getByText(/Curated examples only/)).toBeVisible();
 });
@@ -73,7 +73,7 @@ test("reduced-motion mode retains functional capability navigation",async({page}
  await page.getByRole("button",{name:/Verify/}).click();
  await expect(page.locator("#investigation-workflow")).toContainText("unvalidated");
  await page.getByRole("link",{name:/Explore the Investigation/i}).click();
- await expect(page).toHaveURL(/\/research\/investigate$/);
+ await expect(page).toHaveURL(/\/research\/investigate(\?.*)?$/);
  await expect(page.getByText("Demo environment")).toBeVisible();
 });
 
@@ -85,4 +85,11 @@ test("internal validation opens the actual trial view and PDF printing keeps lab
  expect(await page.evaluate(()=>(window as unknown as {printCalled:boolean}).printCalled)).toBe(true);
  await expect(page.locator("#hsi-print-document")).toContainText("Synthetic software-validation output only");await expect(page.locator("#hsi-print-document")).toContainText("No scientific conclusion");
  await page.evaluate(()=>window.dispatchEvent(new Event("afterprint")));await expect(page.locator("#hsi-print-document")).toHaveCount(0);
+});
+
+test("investigation opens on the question carried in the URL and ignores unknown ids",async({page})=>{
+ await page.goto("/research/investigate?question=metabolic");
+ await expect(page.getByRole("button",{name:/metabolic inflammation relate to insulin resistance/i})).toHaveAttribute("aria-pressed","true");
+ await page.goto("/research/investigate?question=not-a-question");
+ await expect(page.getByRole("button",{name:/gut microbial metabolites influence neuroinflammation/i})).toHaveAttribute("aria-pressed","true");
 });

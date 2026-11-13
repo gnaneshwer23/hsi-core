@@ -4,6 +4,7 @@ import {canonicalEvidenceJson} from "./researchEvidenceCorpus";
 import {compareEvidenceUnits,compareContextualCandidatePairs,assessContradictionInvestigation,type ComparableEvidenceUnit,type StructuredEvidenceComparison} from "./structuredEvidenceComparison";
 import type {OpposingSearchExecutionStatus} from "./opposingEvidenceSearch";
 import type {ResearchSource,ResearchPassage} from "../researchContracts";
+import {isInvestigationScopeId,type InvestigationScopeId} from "../investigationScope";
 import {requiresScientificException} from "../researchV2/passageVerification";
 import {rejectPhiPayload} from "../cdsPhiBoundary";
 import {buildPassageLinkedContext,validatePassageLinkedContext} from "./passageLinkedContext";
@@ -18,14 +19,14 @@ export function reportContextConflict(comparison:StructuredEvidenceComparison):{
 export type ContextAuditHit={id:string;source:ResearchSource;passage:ResearchPassage;clearanceReceiptId:string};
 export type ContextAuditSearch={intent:"support"|"oppose";status:OpposingSearchExecutionStatus;queriedAt:string;queryHash:string;sourceIds:string[];hits:ContextAuditHit[]};
 export type ContextConflictAudit={
- schemaVersion:"hsi-context-conflict-audit-1";id:string;auditHash:string;investigationId:string;diseaseScope:"ssc"|"ra";question:string;
+ schemaVersion:"hsi-context-conflict-audit-1";id:string;auditHash:string;investigationId:string;diseaseScope:InvestigationScopeId;question:string;
  release:{id:string;version:string;manifestHash:string};version:number;parentAuditHash:string|null;
  searches:Omit<ContextAuditSearch,"hits">[];units:ComparableEvidenceUnit[];comparisons:StructuredEvidenceComparison[];
  report:ReturnType<typeof reportContextConflict>[];gaps:string[];blockedReason:string|null;
  verifier:{status:"checked_with_limitations"|"needs_evidence"|"failed"|"not_executed";receiptId:string|null};
  humanReview:{status:"required"};consensusEstablished:false;scientificApproval:false;graphPromotable:false;
 };
-export type ContextAuditTarget={investigationId:string;diseaseScope:"ssc"|"ra";question:string;release:ContextConflictAudit["release"]};
+export type ContextAuditTarget={investigationId:string;diseaseScope:InvestigationScopeId;question:string;release:ContextConflictAudit["release"]};
 export function createContextConflictAuditRunner(deps:{
  enabled?:boolean;
  search:(target:Readonly<ContextAuditTarget>,intent:"support"|"oppose",signal:AbortSignal)=>Promise<ContextAuditSearch>;
@@ -43,7 +44,7 @@ export function createContextConflictAuditRunner(deps:{
  return {async run(input:ContextAuditTarget,previous?:Pick<ContextConflictAudit,"auditHash"|"version"|"investigationId"|"diseaseScope"|"release">,signal?:AbortSignal):Promise<ContextConflictAudit>{
   if(!enabled)throw Error("Context-conflict audit execution disabled");
   const target=structuredClone(input),parent=previous?structuredClone(previous):null;
-  if(!target.investigationId?.trim()||target.investigationId.length>128||!target.question?.trim()||target.question.length>500||!["ssc","ra"].includes(target.diseaseScope)||!target.release?.id?.trim()||!target.release.version?.trim()||!/^[a-f0-9]{64}$/.test(target.release.manifestHash)||parent&&(!/^[a-f0-9]{64}$/.test(parent.auditHash)||!Number.isSafeInteger(parent.version)||parent.version<1||parent.investigationId!==target.investigationId||parent.diseaseScope!==target.diseaseScope||canonicalEvidenceJson(parent.release)!==canonicalEvidenceJson(target.release))||!rejectPhiPayload({textBlobs:[target.question]}).ok)throw Error("Invalid research audit target");
+  if(!target.investigationId?.trim()||target.investigationId.length>128||!target.question?.trim()||target.question.length>500||!isInvestigationScopeId(target.diseaseScope)||!target.release?.id?.trim()||!target.release.version?.trim()||!/^[a-f0-9]{64}$/.test(target.release.manifestHash)||parent&&(!/^[a-f0-9]{64}$/.test(parent.auditHash)||!Number.isSafeInteger(parent.version)||parent.version<1||parent.investigationId!==target.investigationId||parent.diseaseScope!==target.diseaseScope||canonicalEvidenceJson(parent.release)!==canonicalEvidenceJson(target.release))||!rejectPhiPayload({textBlobs:[target.question]}).ok)throw Error("Invalid research audit target");
   const controller=new AbortController(),abort=()=>controller.abort();signal?.addEventListener("abort",abort,{once:true});
   let timer:ReturnType<typeof setTimeout>|undefined;
   const checkpoint=()=>{if(controller.signal.aborted)throw Error("Audit cancelled");};
@@ -108,7 +109,7 @@ export function createContextConflictAuditRunner(deps:{
 }
 export function validateContextConflictAudit(value:ContextConflictAudit):void{
  if(!value||value.schemaVersion!=="hsi-context-conflict-audit-1"||value.scientificApproval!==false||value.graphPromotable!==false||value.consensusEstablished!==false||value.humanReview?.status!=="required"||!Number.isSafeInteger(value.version)||value.version<1||value.version===1&&value.parentAuditHash!==null||value.version>1&&!/^[a-f0-9]{64}$/.test(value.parentAuditHash??"")||!Array.isArray(value.units)||value.units.length>16||new Set(value.units.map(u=>u.id)).size!==value.units.length)throw Error("Invalid context audit artifact");
- if(!value.investigationId?.trim()||value.investigationId.length>128||!value.question?.trim()||value.question.length>500||!["ssc","ra"].includes(value.diseaseScope)||!value.release?.id?.trim()||!value.release.version?.trim()||!/^[a-f0-9]{64}$/.test(value.release.manifestHash)||!rejectPhiPayload({textBlobs:[value.question]}).ok)throw Error("Invalid audit target binding");
+ if(!value.investigationId?.trim()||value.investigationId.length>128||!value.question?.trim()||value.question.length>500||!isInvestigationScopeId(value.diseaseScope)||!value.release?.id?.trim()||!value.release.version?.trim()||!/^[a-f0-9]{64}$/.test(value.release.manifestHash)||!rejectPhiPayload({textBlobs:[value.question]}).ok)throw Error("Invalid audit target binding");
  if(!Array.isArray(value.searches)||value.searches.length!==2||value.searches.some((s,n)=>s.intent!==(n===0?"support":"oppose")||!["completed_bounded","partial","provider_unavailable","successful_empty","skipped_budget","not_executed","invalid_query"].includes(s.status)||!Number.isFinite(Date.parse(s.queriedAt))||!/^[a-f0-9]{64}$/.test(s.queryHash)||!Array.isArray(s.sourceIds)||s.sourceIds.length>32||new Set(s.sourceIds).size!==s.sourceIds.length||s.sourceIds.some(id=>typeof id!=="string"||!id.trim())))throw Error("Invalid audit search metadata");
  if(!Array.isArray(value.gaps)||value.gaps.some(g=>typeof g!=="string"||g.length>2000)||value.blockedReason!==null&&(typeof value.blockedReason!=="string"||!value.blockedReason.trim())||!value.verifier||!["checked_with_limitations","needs_evidence","failed","not_executed"].includes(value.verifier.status)||value.verifier.receiptId!==null&&(typeof value.verifier.receiptId!=="string"||!value.verifier.receiptId.trim())||value.verifier.status==="checked_with_limitations"&&!value.verifier.receiptId)throw Error("Invalid audit limits or verifier receipt");
  const {auditHash,id,...body}=value;

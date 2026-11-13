@@ -1,3 +1,4 @@
+import {scopeIdForDisease} from "./investigationScope";
 import {verifyContextAuditReview,type ContextAuditReview} from "./evidence/contextAuditReview";
 import {validateContextConflictAudit,renderValidatedContextConflictAudit,contextAuditInvestigation,type ContextConflictAudit} from "./evidence/contextConflictAudit";
 /** Deterministic composition of a saved, verified research package. No new scientific inference or approval. */
@@ -161,7 +162,7 @@ export type ResearchOutcome=ReturnType<typeof projectResearchOutcome>&{outcomeHa
 /** Reused by trusted audit storage and outcome compilation; unsupported diseases do not fall through to RA. */
 export function assertContextAuditPackageBinding(audit:ContextConflictAudit,p:EvidenceBrief["package"]){
  validateContextConflictAudit(audit);
- const d=p.context.primary.disease,scope=d==="systemic_sclerosis"?"ssc":d==="rheumatoid_arthritis"?"ra":null;
+ const scope=scopeIdForDisease(p.context.primary.disease);
  if(!scope||audit.investigationId!==p.investigation.id||audit.question!==p.investigation.question||audit.diseaseScope!==scope||canonicalGraphContext(audit.release)!==canonicalGraphContext(p.context.primary.release))throw Error("Context audit belongs to another investigation or source release");
  const sources=new Set(p.context.primary.bundle.sources.map(s=>s.id));
  if(audit.searches.some(s=>s.sourceIds.some(id=>!sources.has(id))))throw Error("Audit search references another source release");
