@@ -40,7 +40,7 @@ export function createEntailmentVerifier(deps:{verifiers:readonly EntailmentVeri
    if(isUnresolved(unit)){allSupported=false;continue}
    const passage=unit.detailedContext!.passageText,claim=claimForUnit(unit);
    for(const v of deps.verifiers){
-    const challenge=await runModelEntailment({claim,passage,sourceId:claim.sourceId},v.verifierId,v.modelId,v.runner);
+    const challenge=await runModelEntailment({claim,passage,sourceId:claim.sourceId,sourceVersion:unit.detailedContext!.sourceVersion},v.verifierId,v.modelId,v.runner);
     challenges.push(challenge);if(challenge.verdict!=="supports")allSupported=false;
    }
   }

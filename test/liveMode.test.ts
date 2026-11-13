@@ -17,7 +17,7 @@ const validConfig=():LiveRunConfig=>({
  deploymentApproval:{issuer:"approver:security",keyId:"key-a",publicKeyEnv:"HSI_APPROVAL_PUBLIC_KEY"},
  extractor:deployment("ext") as never,verifiers:[deployment("va"),deployment("vb")] as never,
  limits:{maxArticlesPerIntent:3,maxHitsPerIntent:6,maxModelCallsPerRun:40,maxRunsPerDay:5,killSwitchEnv:"HSI_LIVE_KILL"},
- review:{normalizerReviewRef:"review:normalizer-1",questionReviewRef:"review:question-1"},
+ review:{normalizerReviewRef:"review:normalizer-1",questionReviewRef:"review:question-1",extractionTaskReviewRef:"review:extraction-1"},
  operationStore:{path:"/var/hsi/ops.jsonl"},
 });
 const env={HSI_APPROVAL_PUBLIC_KEY:"-----pem-----",HSI_TEST_KEY_EXT:"SECRET-VALUE-EXT",HSI_TEST_KEY_VA:"SECRET-VALUE-VA",HSI_TEST_KEY_VB:"SECRET-VALUE-VB"};
@@ -27,10 +27,10 @@ describe("live readiness gate",()=>{
  test("nothing configured: not ready, every owner listed, never throws",()=>{
   for(const bad of [undefined,null,"x",42,[],{}]){const r=assessLiveReadiness(bad,{});expect(r.ready).toBe(false);expect(r.blocking.length).toBeGreaterThan(5);expect(Object.keys(r.byOwner)).toContain("source-policy owner")}
  });
- test("a fully populated configuration is still NOT ready while engineering gaps remain, and only those remain (the source authority tool now exists)",()=>{
+ test("a fully populated configuration is still NOT ready while engineering gaps remain, and only those remain (the source authority tool and the extraction task now exist)",()=>{
   const r=assessLiveReadiness(validConfig(),env);
-  expect(open(validConfig())).toEqual(["engineering-extractionTask","engineering-liveRunPath"]);
-  expect(r.ready).toBe(false);expect(ENGINEERING_GAPS.sourceAuthorityService.implemented).toBe(true);expect(ENGINEERING_GAPS.extractionTask.implemented).toBe(false);expect(ENGINEERING_GAPS.liveRunPath.implemented).toBe(false);
+  expect(open(validConfig())).toEqual(["engineering-liveRunPath"]);
+  expect(r.ready).toBe(false);expect(ENGINEERING_GAPS.sourceAuthorityService.implemented).toBe(true);expect(ENGINEERING_GAPS.extractionTask.implemented).toBe(true);expect(ENGINEERING_GAPS.liveRunPath.implemented).toBe(false);
   expect(r.items.filter(i=>i.heldBy!=="engineering").every(i=>i.status==="met")).toBe(true);
  });
  test("each human-held requirement fails closed when wrong",()=>{
@@ -52,6 +52,7 @@ describe("live readiness gate",()=>{
   expect(mut(()=>{},{...env,HSI_LIVE_KILL:"true"})).toContain("limits");
   expect(mut(c=>{delete c.review.questionReviewRef})).toContain("question-review");
   expect(mut(c=>{delete c.review.normalizerReviewRef})).toContain("normalizer-review");
+  expect(mut(c=>{delete c.review.extractionTaskReviewRef})).toContain("extraction-task-review");
   expect(mut(c=>{c.operationStore.path=""})).toContain("operation-store");
  });
  test("only the names of environment variables appear in output, never their values",()=>{
