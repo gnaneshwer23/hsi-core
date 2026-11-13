@@ -23,6 +23,7 @@ test('one snapshot, question and selected assertion survive home to Science to r
   await page.getByRole('button', { name: 'Open the investigation graph', exact: true }).click();
   const graph = page.getByRole('region', { name: 'Versioned investigation graph', exact: true });
   await expect(graph).toBeVisible();
+  await graph.getByText("Question and filters", {exact:true}).click();
   await graph
     .getByRole('button', {
       name: 'Gut metabolites → islet autoimmunity → type 1 diabetes',
