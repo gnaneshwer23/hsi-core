@@ -13,15 +13,15 @@ test("public pages have a single main/title, working navigation and no narrow-sc
 });
 test("home communicates the research workflow and supports accessible capability navigation",async({page})=>{
  await page.goto("/");
- await expect(page.getByRole("heading",{level:1})).toContainText("Explore the connections");
- await expect(page.getByRole("heading",{name:/Follow the evidence|How an investigation proceeds/})).toBeVisible();
- await expect(page.locator("#product-demo")).toContainText("illustrative");
+ await expect(page.getByRole("heading",{level:1})).toContainText("See why the evidence conflicts.");
+ await expect(page.getByRole("heading",{name:/From scientific question to research decision/})).toBeVisible();
+ await expect(page.locator("#product-demo")).toContainText(/illustrative/i);
  await expect(page.locator("#investigation-workflow")).toContainText("unvalidated");
  const steps=page.getByRole("group",{name:"Investigation steps"});
- await steps.getByRole("button",{name:/Gaps/}).click();
- await expect(page.locator("#investigation-workflow")).toContainText("contradictions");
- await expect(page.locator(".cl-hero .cl-actions a")).toHaveCount(2);
- await page.getByRole("link",{name:/See a curated investigation/i}).click();
+ await steps.getByRole("button",{name:/Investigate/}).click();
+ await expect(page.locator("#investigation-workflow")).toContainText("competing explanations");
+ await expect(page.locator(".hsi-home-hero .hsi-actions a")).toHaveCount(2);
+ await page.getByRole("link",{name:/Explore the Investigation/i}).click();
  await expect(page).toHaveURL(/\/research\/investigate$/);
  await expect(page.getByText("Demo environment")).toBeVisible();
  await expect(page.getByText(/Curated examples only/)).toBeVisible();
@@ -30,7 +30,7 @@ test("mobile menu opens, closes with Escape and connects public destinations",as
  await page.setViewportSize({width:390,height:844});await page.goto("/");const menu=page.getByRole("button",{name:"Open menu",exact:true});await menu.click();await expect(menu).toHaveAttribute("aria-expanded","true");
  await page.keyboard.press("Escape");await expect(menu).toHaveAttribute("aria-expanded","false");await expect(menu).toBeFocused();
  await menu.click();await page.locator("#public-menu").getByRole("link",{name:"Evidence Intelligence",exact:true}).click();await expect(page).toHaveURL(/evidence-intelligence$/);
- await expect(page.getByRole("heading",{level:1})).toContainText("Confidence begins");
+ await expect(page.getByRole("heading",{level:1})).toContainText("Evidence without context");
 });
 test("evidence overview explains source context without presenting unreviewed records as results",async({page})=>{
  await page.goto("/evidence-safety");await expect(page.getByRole("main")).toContainText("Sources and candidate claims require appropriate reuse rights");
@@ -70,9 +70,9 @@ test("graph controls, bookmarks and SVG/PNG/JSON exports preserve draft scope",a
 test("reduced-motion mode retains functional capability navigation",async({page})=>{
  await page.emulateMedia({reducedMotion:"reduce"});
  await page.goto("/");
- await page.getByRole("button",{name:/Hypotheses/}).click();
+ await page.getByRole("button",{name:/Verify/}).click();
  await expect(page.locator("#investigation-workflow")).toContainText("unvalidated");
- await page.getByRole("link",{name:/See a curated investigation/i}).click();
+ await page.getByRole("link",{name:/Explore the Investigation/i}).click();
  await expect(page).toHaveURL(/\/research\/investigate$/);
  await expect(page.getByText("Demo environment")).toBeVisible();
 });

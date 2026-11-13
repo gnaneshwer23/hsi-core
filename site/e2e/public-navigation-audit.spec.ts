@@ -12,7 +12,7 @@ test('all public links and selector states resolve, without linking older engine
   for(const path of PUBLIC_MARKETING_PATHS){
     await page.goto(path);await expect(page.getByRole('heading',{level:1})).toBeVisible();
     // Homepage graph mounts after hydration to avoid React #418 float-layout mismatches.
-    if(path==='/')await expect(page.getByRole('group',{name:'Graph view controls'})).toBeVisible();
+    if(path==='/')await expect(page.getByRole('group',{name:'Explore the five teaching outcomes'})).toBeVisible();
     async function inspectLinks(){
       const links=await page.locator('a[href]').evaluateAll(as=>as.map(a=>({href:a.getAttribute('href')!,name:(a.textContent||a.getAttribute('aria-label')||'').trim()})));
       for(const link of links){
@@ -68,7 +68,7 @@ test('all public body links are clickable and reach their intended destinations'
 });
 
 test('hero illustrations fit their pages and remain legible at mobile sizes',async({page},info)=>{
-  const artwork:Record<string,string>={'/platform':'platform','/technology':'technology','/modules':'products','/research':'research','/science':'science','/how-it-works':'workflow','/solutions':'solutions','/evidence-safety':'evidence','/contact':'access','/modules/aksh-health':'aksh','/modules/isi':'immune','/modules/trials':'trials'};
+  const artwork:Record<string,string>={'/technology':'technology','/modules':'products','/how-it-works':'workflow','/solutions':'solutions','/evidence-safety':'evidence','/contact':'access','/modules/aksh-health':'aksh','/modules/isi':'immune','/modules/trials':'trials'};
   for(const [path,kind] of Object.entries(artwork)){
     for(const width of [320,768,1440]){
       await page.setViewportSize({width,height:1000});await page.goto(path);

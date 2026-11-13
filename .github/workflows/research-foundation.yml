@@ -62,6 +62,20 @@ jobs:
       - name: Test local browser contracts (no live DB/provider acceptance)
         run: bun run test:e2e
         working-directory: site
+      - name: Measure public website lab performance (not field or release acceptance)
+        working-directory: site
+        env:
+          HSI_QA_OUTPUT: ${{ runner.temp }}/hsi-website-performance
+        run: |
+          HSI_QA_CHROME="$(bun -e 'import {chromium} from "@playwright/test"; console.log(chromium.executablePath())')"
+          PLAYWRIGHT_CHROMIUM_EXECUTABLE="$HSI_QA_CHROME" bun run qa:lighthouse
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: website-performance-lab
+          path: ${{ runner.temp }}/hsi-website-performance/
+          retention-days: 14
+          if-no-files-found: ignore
       - uses: actions/upload-artifact@v4
         if: always()
         with:

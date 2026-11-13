@@ -1,41 +1,28 @@
 # Human Super Intelligence (HSI)
 
-> Connecting human biology. Advancing scientific discovery. Transforming our understanding of health.
+HSI is being developed as one connected biomedical intelligence platform for evidence-grounded scientific discovery. Its initial public research story is understanding why evidence conflicts, preserving biological context and preparing a reviewable research decision. Public instruments use clearly labelled original synthetic examples; they make no live source/model requests and establish no scientific validation.
 
-Human Super Intelligence is one product. Four governed modules share the Living Health Knowledge Graph: Aksh Health (patient intelligence), HSI Clinical (longitudinal authorised clinical intelligence), ISI / Immune Super Intelligence (scientific discovery) and HSI Trials (studies, biomarkers and governed pre-screening). ISI science does not depend on Aksh Health. Private patient data does not enter the research graph automatically.
+## Canonical public pages
+- / — See why the evidence conflicts.
+- /platform — The shared evidence, biological graph, context, verification and governance foundation.
+- /context-conflict-audit — Interactive synthetic study comparison and five teaching outcomes; not a live audit.
+- /evidence-intelligence — Illustrative provenance, passage, context, missingness and source permissions.
+- /research — Question, retrieval, connection, investigation, verification and human review.
+- /research-briefs — An expandable source-free example brief; labelled JSON/Markdown downloads, not reviewed or approved.
+- /science — Biological scales and cross-domain research, with unequal maturity and explicit uncertainty.
+- /applications — Discovery, clinical research and trial/translational intelligence, with distinct maturity boundaries.
+- /trust — Observation, inference, independent review and graph publication remain separate.
+- /about — Mission, supplied scientific ownership and collaboration boundaries; no invented partnerships.
 
-For research and education. Not a clinical decision system, not a regulatory approval, and not a commercial care service.
+## Access and secondary resources
+- /contact prepares a browser-only draft; it does not deliver or persist an access request.
+- /sign-in and /sign-up are account routes; account creation grants no research, source, reviewer or publication permission.
+- Existing /technology, /how-it-works, /evidence-safety, /modules and science/tool routes remain secondary resources.
+- /status describes capability maturity. Engineering implementation, deployment and scientific acceptance are different states.
 
-Canonical site: https://www.humansuperintelligence.tech/
-Sitemap: https://www.humansuperintelligence.tech/sitemap.xml
-Robots: https://www.humansuperintelligence.tech/robots.txt
+## Scientific and data boundaries
+SSc is an initial validation example, not the platform scope. The three core logical roles are orchestrator, evidence/context investigator and scientific verifier. An optional planner remains gated. Private patient information must not auto-enter the research graph. No live clinical decision support, patient-level integration, trial matching, eligibility confirmation or automatic graph promotion is offered here.
 
-## Public marketing pages
+The public five-outcome teaching taxonomy does not silently replace backend scientific reporting or turn potential conflict into proven contradiction. Public examples contain no real source packet, scientific approval or expert judgement. Source/provider operations, researcher isolation, the actual 120-case expert-adjudicated benchmark and operational release require independent acceptance. Never infer a recruited panel, cleared source or scientific accuracy result from the website.
 
-- [Home](https://www.humansuperintelligence.tech/): How this technology works
-- [Platform](https://www.humansuperintelligence.tech/platform): One platform and the Living Health Knowledge Graph
-- [Modules](https://www.humansuperintelligence.tech/modules): Aksh Health, HSI Clinical, ISI and HSI Trials
-- [Technology](https://www.humansuperintelligence.tech/technology): Knowledge graph and research technology
-- [Science](https://www.humansuperintelligence.tech/science): Educational human biology and evidence explorer
-- [Research](https://www.humansuperintelligence.tech/research): Evidence-linked research workbench overview
-- [Solutions](https://www.humansuperintelligence.tech/solutions): Translational and discovery workflows
-- [Evidence & safety](https://www.humansuperintelligence.tech/evidence-safety): Provenance, uncertainty, human review
-- [How it works](https://www.humansuperintelligence.tech/how-it-works): Question to research brief
-- [Access options](https://www.humansuperintelligence.tech/pricing): Public access options. Registration does not grant research permission
-- [Research access](https://www.humansuperintelligence.tech/contact): Account guidance and a browser-only draft. Does not submit an access request
-- [Human body](https://www.humansuperintelligence.tech/science/body): Educational organ explorer. Illustrative positions; draft relationships
-
-## Governed modules
-
-- [Aksh Health](https://www.humansuperintelligence.tech/modules/aksh-health): Patient intelligence inside HSI
-- [HSI Clinical](https://www.humansuperintelligence.tech/modules/clinical): Longitudinal clinical intelligence
-- [ISI](https://www.humansuperintelligence.tech/modules/isi): Immune and cross-system scientific discovery
-- [HSI Trials](https://www.humansuperintelligence.tech/modules/trials): Governed pre-screening. Live matching and enrolment are not currently offered
-
-## Honesty / non-goals
-
-- No live clinical decision support and no patient PHI in the research graph
-- Gate C / scientific promotion remains human-gated
-- Account signup does not grant research write or reviewer permissions
-- APIs under `/api/` and internal `/_pages/` HTML are not public discovery surfaces
-- This site does not claim real patients, clinical validation, regulatory approval or commercial availability
+Private benchmark questions, source packets, reviewer identities and gold answers are not public resources. Do not use public demos as a model tuning corpus or as scientific evidence. Governed modules Aksh Health, HSI Clinical, Immune Super Intelligence and HSI Trials retain separate responsibilities.

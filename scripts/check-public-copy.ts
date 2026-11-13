@@ -1,6 +1,6 @@
 /**
  * User-facing copy must use one product name: Human Super Intelligence.
- * Landing and marketing sources must not say the data is synthetic.
+ * Public demonstrations must state their synthetic nature; no scientific acceptance is implied.
  */
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
@@ -42,7 +42,7 @@ export function findPublicCopyIssues(cwd = process.cwd()): string[] {
   }
   for (const relative of LANDING_FILES) {
     const text = readFileSync(resolve(cwd, relative), "utf8");
-    if (/\bsynthetic\b/i.test(text)) issues.push(`${relative} uses the word synthetic on a marketing surface`);
+    if (/100% accurate|clinically proven platform/i.test(text)) issues.push(`${relative} contains an unsupported accuracy claim`);
   }
   const readme = readFileSync(resolve(cwd, "README.md"), "utf8");
   if (!/\bsynthetic\b/i.test(readme)) issues.push("README.md must state that demonstration data is synthetic");
@@ -52,7 +52,9 @@ export function findPublicCopyIssues(cwd = process.cwd()): string[] {
   const tagline = "Connecting human biology. Advancing scientific discovery. Transforming our understanding of health.";
   const homeSurface = `${home}\n${homeHero}\n${brand}`;
   if (!homeSurface.includes(tagline)) issues.push("Home.tsx is missing the landing tagline");
-  if (!home.includes("HomeHero")) issues.push("Home.tsx must compose HomeHero for the landing tagline");
+  if (!home.includes("See why the evidence conflicts.")) issues.push("Home.tsx must preserve the approved evidence-conflict headline");
+  const instrument=readFileSync(resolve(cwd,"site/src/components/public/ResearchPublic.tsx"),"utf8");
+  if(!instrument.includes("Synthetic studies. No real study, live audit or scientific approval."))issues.push("Public audit must disclose its synthetic, non-approved status");
   return issues;
 }
 
