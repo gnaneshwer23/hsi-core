@@ -1,3 +1,5 @@
+import type { HsiReviewerScope } from '../db/reviewerAuthority';
+import {reviewerScopeFor, scopeIdForDisease, type InvestigationScopeId} from '../investigationScope';
 import { canonicalGraphContext } from '../investigationGraphContext';
 import { verifyReviewPackage, type ReviewPackage } from '../investigationDelivery';
 import type { TrustedResearchActor } from '../db/researchInvestigationStore';
@@ -36,7 +38,7 @@ export type ContextAuditArchiveDependencies = {
     actor: Readonly<TrustedResearchActor>,
     investigationId: string,
   ) => Promise<ContextAuditAccess>;
-  reviewer: (principal: string, tenantId: string, scope: 'ssc' | 'ra') => Promise<boolean>;
+  reviewer: (principal: string, tenantId: string, scope: HsiReviewerScope) => Promise<boolean>;
   authorizeSources: (
     actor: Readonly<TrustedResearchActor>,
     audit: Readonly<ContextConflictAudit>,
@@ -47,6 +49,11 @@ export type ContextAuditArchiveDependencies = {
 export function createContextAuditArchiveService(deps: ContextAuditArchiveDependencies) {
   deps = Object.freeze({ ...deps, store: Object.freeze({ ...deps.store }) });
   const digest = async (s: string) => contextArchiveDigest(s);
+  /** A scope without accepted reviewer authority never authorises human review (fails closed). */
+  const reviewerAuthorised = async (principal: string, tenantId: string, scopeId: InvestigationScopeId) => {
+    const reviewerScope = reviewerScopeFor(scopeId);
+    return reviewerScope !== null && (await deps.reviewer(principal, tenantId, reviewerScope));
+  };
   async function access(actor: TrustedResearchActor | null, id: string) {
     if (
       deps.enabled !== true ||
@@ -58,8 +65,7 @@ export function createContextAuditArchiveService(deps: ContextAuditArchiveDepend
     actor = structuredClone(actor);
     const c = structuredClone(await deps.context(structuredClone(actor), id));
     const p = await verifyReviewPackage(c.package, digest),
-      d = p.context.primary.disease,
-      scope = d === 'systemic_sclerosis' ? 'ssc' : d === 'rheumatoid_arthritis' ? 'ra' : null;
+      scope = scopeIdForDisease(p.context.primary.disease);
     if (
       !scope ||
       !c.tenantId?.trim() ||
@@ -75,7 +81,7 @@ export function createContextAuditArchiveService(deps: ContextAuditArchiveDepend
       !owner &&
       actor.principalId !== p.investigation.actorPrincipal &&
       actor.roles.includes('scientific_reviewer') &&
-      (await deps.reviewer(actor.principalId, c.tenantId, scope));
+      (await reviewerAuthorised(actor.principalId, c.tenantId, scope));
     if (!owner && !independent) throw Error('Audit access denied');
     const binding: AuditArchiveBinding = {
       tenantId: c.tenantId,
@@ -129,7 +135,7 @@ export function createContextAuditArchiveService(deps: ContextAuditArchiveDepend
         review.archiveHash !== row.archiveHash ||
         review.tenantId !== a.binding.tenantId ||
         review.ownerPrincipal !== a.binding.ownerPrincipal ||
-        !(await deps.reviewer(review.reviewerPrincipal, a.binding.tenantId, a.binding.diseaseScope))
+        !(await reviewerAuthorised(review.reviewerPrincipal, a.binding.tenantId, a.binding.diseaseScope))
       )
         throw Error('Audit review authority revoked or unbound');
     }
