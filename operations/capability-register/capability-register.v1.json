@@ -1015,8 +1015,8 @@
         "governedPublicationBy": null
       },
       {
-        "name": "PRISM",
-        "displayName": "HSI PRISM",
+        "name": "LANTERN",
+        "displayName": "LANTERN",
         "layer": "trust_and_acquisition",
         "fullName": "Passage-referenced information and scientific mapping",
         "priority": "P1",
@@ -1042,7 +1042,7 @@
         "dependsOn": [
           "AEGIS"
         ],
-        "nameCollision": "An Aksh Health imaging agent has the same name. Consider renaming; otherwise always write HSI PRISM.",
+        "nameCollision": null,
         "mayApproveScience": false,
         "mayPromoteGraph": false,
         "governedPublicationBy": null
@@ -1076,7 +1076,7 @@
         "modelBacked": false,
         "humanApproval": "Canonical investigation store decision; held migrations; publication only after ARBITER and a human decision.",
         "dependsOn": [
-          "PRISM"
+          "LANTERN"
         ],
         "governedPublicationBy": [
           "ARBITER"
@@ -1114,7 +1114,7 @@
         "modelBacked": true,
         "humanApproval": "Model deployment approval; the model-backed step is not built yet, today it is deterministic.",
         "dependsOn": [
-          "PRISM",
+          "LANTERN",
           "ATLAS",
           "PARALLAX"
         ],
@@ -1150,7 +1150,7 @@
         "modelBacked": false,
         "humanApproval": "Scientist review of the context normalizer registry.",
         "dependsOn": [
-          "PRISM"
+          "LANTERN"
         ],
         "nameCollision": null,
         "mayApproveScience": false,
@@ -1158,8 +1158,8 @@
         "governedPublicationBy": null
       },
       {
-        "name": "HORIZON",
-        "displayName": "HSI HORIZON",
+        "name": "VANTAGE",
+        "displayName": "VANTAGE",
         "layer": "biological_intelligence",
         "fullName": "Research gaps and hypotheses",
         "priority": "P3",
@@ -1188,7 +1188,7 @@
           "HELIX",
           "PARALLAX"
         ],
-        "nameCollision": "An Aksh Health metabolic agent has the same name. Consider renaming; otherwise always write HSI HORIZON.",
+        "nameCollision": null,
         "mayApproveScience": false,
         "mayPromoteGraph": false,
         "governedPublicationBy": null
@@ -1221,7 +1221,7 @@
         "modelBacked": true,
         "humanApproval": "At least two distinct approved verifier deployments, separate from the extractor.",
         "dependsOn": [
-          "PRISM",
+          "LANTERN",
           "HELIX"
         ],
         "nameCollision": null,

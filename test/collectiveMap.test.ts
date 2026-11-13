@@ -6,7 +6,7 @@ import {HSI_AGENT_ROLES} from "../src/hsiAgentIntelligenceContracts";
 
 const register=JSON.parse(readFileSync(resolve("operations/capability-register/capability-register.v1.json"),"utf8")) as {capabilities:CapabilityRow[];collective:CollectiveMap;registerId:string;asOf:string;honesty:Record<string,unknown>};
 const agents=register.collective.agents,byName=new Map(agents.map(a=>[a.name,a]));
-const NAMES=["NEXUS","AEGIS","SCOUT","PRISM","ATLAS","HELIX","PARALLAX","HORIZON","VERITAS","ARBITER","SENTINEL","CALIBER","WARDEN"];
+const NAMES=["NEXUS","AEGIS","SCOUT","LANTERN","ATLAS","HELIX","PARALLAX","VANTAGE","VERITAS","ARBITER","SENTINEL","CALIBER","WARDEN"];
 
 describe("collective map (names mapped onto existing modules, not deployment status)",()=>{
  test("all thirteen names are present exactly once, with a purpose and explicit non-responsibilities",()=>{
@@ -34,9 +34,9 @@ describe("collective map (names mapped onto existing modules, not deployment sta
   expect(byName.get("SCOUT")!.nonResponsibilities.join(" ")).toContain("declare a source cleared");
  });
  test("only the capabilities that need a model are model-backed; verification is separate from investigation",()=>{
-  expect(agents.filter(a=>a.modelBacked).map(a=>a.name).sort()).toEqual(["HELIX","PRISM","VERITAS"]);
+  expect(agents.filter(a=>a.modelBacked).map(a=>a.name).sort()).toEqual(["HELIX","LANTERN","VERITAS"]);
   for(const a of agents.filter(x=>x.modelBacked))expect(a.humanApproval.toLowerCase()).toMatch(/model|verifier/);
-  expect(byName.get("VERITAS")!.dependsOn).toContain("PRISM");
+  expect(byName.get("VERITAS")!.dependsOn).toContain("LANTERN");
  });
  test("the dependency graph is acyclic and references only known names",()=>{
   const state=new Map<string,0|1|2>();
@@ -46,6 +46,12 @@ describe("collective map (names mapped onto existing modules, not deployment sta
   };
   for(const a of agents)visit(a.name);
   expect(byName.get("NEXUS")!.dependsOn).toEqual([]);
+ });
+ test("the renamed agents use names that exist nowhere in the Aksh catalogue",()=>{
+  const aksh=readFileSync(resolve("docs/AKSH_AGENTS_IN_HSI.md"),"utf8");
+  for(const n of ["LANTERN","VANTAGE"]){expect(byName.has(n)).toBe(true);expect(new RegExp(`\\b${n}\\b`,"i").test(aksh)).toBe(false);expect(byName.get(n)!.nameCollision).toBeNull()}
+  expect(byName.has("PRISM")).toBe(false);expect(byName.has("HORIZON")).toBe(false);
+  expect(agents.filter(a=>a.nameCollision!==null).map(a=>a.name).sort()).toEqual(["ATLAS","NEXUS"]);
  });
  test("names that already belong to Aksh Health agents are flagged and namespaced so the four-product boundary stays clear",()=>{
   const aksh=readFileSync(resolve("docs/AKSH_AGENTS_IN_HSI.md"),"utf8");
