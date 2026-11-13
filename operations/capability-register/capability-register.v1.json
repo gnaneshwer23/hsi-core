@@ -967,6 +967,7 @@
           "OPS-PILOT"
         ],
         "modules": [
+          "src/livePreflight.ts",
           "src/warden.ts",
           "src/researchV2/providerReliability.ts",
           "src/researchV2/stagingOperationStore.ts",
