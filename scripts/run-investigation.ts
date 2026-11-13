@@ -16,6 +16,13 @@ if(flag("--mode")==="live"||args.includes("--live")){
  const configPath=flag("--config");
  let config:unknown;
  if(configPath){try{config=JSON.parse(readFileSync(resolve(configPath),"utf8"))}catch{console.error(`Cannot read a JSON configuration at ${configPath}`);process.exit(2)}}
+ if(args.includes("--preflight")){
+  const icPath=flag("--integrity-config");let integrityConfig:unknown;
+  if(icPath){try{integrityConfig=JSON.parse(readFileSync(resolve(icPath),"utf8"))}catch{console.error(`Cannot read a JSON integrity configuration at ${icPath}`);process.exit(2)}}
+  const {runLivePreflight,renderPreflight}=await import("../src/livePreflight");
+  const report=await runLivePreflight({config,integrityConfig,env:process.env});
+  console.log(renderPreflight(report));process.exit(report.ready?0:3);
+ }
  const readiness=assessLiveReadiness(config,process.env);
  console.log(renderReadiness(readiness));
  if(args.includes("--dry-run")){
