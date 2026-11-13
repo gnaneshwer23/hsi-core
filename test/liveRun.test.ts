@@ -85,9 +85,11 @@ test("an exhausted model call budget stops model calls rather than overspending"
  const live=await composeLiveRun(deps);
  expect(log.sent.length).toBeLessThanOrEqual(1);expect(live.modelCalls).toBeLessThanOrEqual(1);expect(live.audit.graphPromotable).toBe(false);
 });
-test("an engaged kill switch stops the run before any model call",async()=>{
+test("an engaged kill switch stops the run before any request or model call",async()=>{
  const log={sent:[] as string[]};
- const deps=liveDeps({env:{HSI_LIVE_KILL:"1"}},log);
- let outcome:"threw"|"returned";try{await composeLiveRun(deps);outcome="returned"}catch{outcome="threw"}
- expect(log.sent).toEqual([]);expect(["threw","returned"]).toContain(outcome);
+ await expect(composeLiveRun(liveDeps({env:{HSI_LIVE_KILL:"1"}},log))).rejects.toThrow("kill_switch");
+ expect(log.sent).toEqual([]);
+});
+test("the daily cap stops a composed run before any work",async()=>{
+ await expect(composeLiveRun(liveDeps({runsToday:()=>5}))).rejects.toThrow("daily_cap");
 });

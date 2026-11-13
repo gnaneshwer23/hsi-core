@@ -965,6 +965,7 @@
           "OPS-PILOT"
         ],
         "modules": [
+          "src/warden.ts",
           "src/researchV2/providerReliability.ts",
           "src/researchV2/stagingOperationStore.ts",
           "src/operations/pilotOperationsService.ts",
