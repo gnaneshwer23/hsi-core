@@ -9,7 +9,7 @@ test('public website excludes fixture promotion and keeps actual product scope',
   expect(text,path).not.toMatch(/clinically proven platform|100% accurate/i);
   await expect(page.getByRole('main').locator('a[href*="/research/validation"]')).toHaveCount(0);
  }
- expect(fixtureLoads).toEqual([]);await page.goto('/for-trials');await expect(page.getByRole('main')).toContainText('planned product');await expect(page.getByRole('main')).toContainText('Live matching and enrolment are not currently offered');
+ expect(fixtureLoads).toEqual([]);await page.goto('/for-trials');await expect(page).toHaveURL(/\/platform$/);await expect(page.getByRole('main')).not.toContainText('HSI Trials');
 });
 test('homepage graph and workspace remain usable at narrow widths',async({page},info)=>{
  for(const width of [320,390,768,1440]){

@@ -17,7 +17,7 @@ HSI is being developed as one connected biomedical intelligence platform for evi
 ## Access and secondary resources
 - /contact prepares a browser-only draft; it does not deliver or persist an access request.
 - /sign-in and /sign-up are account routes; account creation grants no research, source, reviewer or publication permission.
-- Existing /technology, /how-it-works, /evidence-safety, /modules and science/tool routes remain secondary resources.
+- Existing /technology, /how-it-works, /evidence-safety and science/tool routes remain secondary resources.
 - /status describes capability maturity. Engineering implementation, deployment and scientific acceptance are different states.
 
 ## Scientific and data boundaries
@@ -25,4 +25,4 @@ SSc is an initial validation example, not the platform scope. The three core log
 
 The public five-outcome teaching taxonomy does not silently replace backend scientific reporting or turn potential conflict into proven contradiction. Public examples contain no real source packet, scientific approval or expert judgement. Source/provider operations, researcher isolation, the actual 120-case expert-adjudicated benchmark and operational release require independent acceptance. Never infer a recruited panel, cleared source or scientific accuracy result from the website.
 
-Private benchmark questions, source packets, reviewer identities and gold answers are not public resources. Do not use public demos as a model tuning corpus or as scientific evidence. Governed modules Aksh Health, HSI Clinical, Immune Super Intelligence and HSI Trials retain separate responsibilities.
+Private benchmark questions, source packets, reviewer identities and gold answers are not public resources. Do not use public demos as a model tuning corpus or as scientific evidence. HSI is one scientific intelligence technology built around a Living Knowledge Graph, evidence, experimental context and independent scientific review.

@@ -1,5 +1,7 @@
 # The Vision of Human Super Intelligence (HSI)
 
+**Public positioning correction — 13 November 2026 (explicit user direction):** HSI is one scientific intelligence technology. Do not market it as a portfolio, four-product ecosystem or collection of named product modules. The homepage, platform, navigation, public diagrams and search metadata must present the Living Knowledge Graph, evidence, context and scientific investigation under HSI alone. Older product-naming sections below are historical architectural context and do not authorise public promotion. Existing data isolation, source permissions, no-PHI/no-CDS and independent human-review boundaries remain binding.
+
 **Document status:** Canonical governing product doctrine  
 **Adopted:** 9 November 2026  
 **Audience:** Every landing page, backend service, knowledge-graph relationship, AI agent and product decision in the HSI ecosystem  

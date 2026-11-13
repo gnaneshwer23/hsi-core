@@ -451,33 +451,58 @@
   ],
   "redirects": [
     {
-      "source": "/products",
-      "destination": "/modules",
+      "source": "/modules",
+      "destination": "/platform",
       "permanent": false
     },
     {
-      "source": "/for-isi",
-      "destination": "/modules/isi",
+      "source": "/modules/aksh-health",
+      "destination": "/platform",
+      "permanent": false
+    },
+    {
+      "source": "/modules/clinical",
+      "destination": "/platform",
+      "permanent": false
+    },
+    {
+      "source": "/modules/isi",
+      "destination": "/platform",
+      "permanent": false
+    },
+    {
+      "source": "/modules/trials",
+      "destination": "/platform",
+      "permanent": false
+    },
+    {
+      "source": "/products",
+      "destination": "/platform",
       "permanent": false
     },
     {
       "source": "/for-aksh",
-      "destination": "/modules/aksh-health",
+      "destination": "/platform",
+      "permanent": false
+    },
+    {
+      "source": "/for-isi",
+      "destination": "/platform",
       "permanent": false
     },
     {
       "source": "/for-trials",
-      "destination": "/modules/trials",
+      "destination": "/platform",
       "permanent": false
     },
     {
       "source": "/akeno",
-      "destination": "/modules/clinical",
+      "destination": "/platform",
       "permanent": false
     },
     {
       "source": "/aksh-agents",
-      "destination": "/modules/aksh-health",
+      "destination": "/platform",
       "permanent": false
     }
   ],
