@@ -89,3 +89,12 @@ test('handoff preserves network state and pinned identity while stripping unrela
   expect(out.get('token')).toBeNull();
   expect(out.get('domainVersion')).toBe(g.version);
 });
+
+
+test('dense candidate layout does not stack concepts against artificial rectangular walls', async()=>{
+ const {forceGraphPositions}=await import('../site/src/features/science/graphExplorer');
+ const points=forceGraphPositions({nodes:g.nodes.map(n=>({id:n.id,kind:n.kind,system:n.domains[0]})),edges:g.edges});
+ const rows=new Map<number,number>(),columns=new Map<number,number>();
+ for(const p of points.values()){expect(Number.isFinite(p.x)&&Number.isFinite(p.y)).toBe(true);rows.set(Math.round(p.y),(rows.get(Math.round(p.y))??0)+1);columns.set(Math.round(p.x),(columns.get(Math.round(p.x))??0)+1)}
+ expect(Math.max(...rows.values())).toBeLessThan(g.nodes.length/5);expect(Math.max(...columns.values())).toBeLessThan(g.nodes.length/5);
+});
