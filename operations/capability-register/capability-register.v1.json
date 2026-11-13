@@ -893,6 +893,8 @@
           "F-13"
         ],
         "modules": [
+          "src/liveExecute.ts",
+          "src/liveWiring.ts",
           "src/collectivePipeline.ts",
           "src/hsiAgentOrchestrator.ts",
           "src/hsiCheckpointedExecutor.ts",
@@ -928,6 +930,7 @@
           "F-11"
         ],
         "modules": [
+          "src/researchV2/cloudKmsSigner.ts",
           "src/researchV2/managedSigner.ts",
           "src/researchV2/sourceIntegrityService.ts",
           "src/researchV2/sourceIntegrityAssessor.ts",
@@ -967,6 +970,7 @@
           "OPS-PILOT"
         ],
         "modules": [
+          "src/liveRehearsal.ts",
           "src/livePreflight.ts",
           "src/warden.ts",
           "src/researchV2/providerReliability.ts",
