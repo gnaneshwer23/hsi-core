@@ -4,6 +4,7 @@ import {
   contactAccessHref,
   homeDemoHref,
   parseDemoPanel,
+  parseInvestigationQuestionId,
   parseScenarioId,
   resolveDemoPanel,
   safeNextPath,
@@ -97,5 +98,16 @@ describe("researchContext contracts", () => {
     expect(readAccessIntent()?.question).toContain("microbial metabolites");
     clearAccessIntent();
     expect(readAccessIntent()).toBeNull();
+  });
+
+  it("carries a runnable question id and rejects unknown ones", () => {
+    const known = ["gut-neuro", "metabolic"] as const;
+    expect(withResearchContext("/research/investigate", { question: "gut-neuro", domain: "microbiome" })).toBe(
+      "/research/investigate?domain=microbiome&question=gut-neuro",
+    );
+    expect(parseInvestigationQuestionId("Metabolic", known)).toBe("metabolic");
+    expect(parseInvestigationQuestionId("ssc", known)).toBeNull();
+    expect(parseInvestigationQuestionId(null, known)).toBeNull();
+    expect(parseInvestigationQuestionId("<script>", known)).toBeNull();
   });
 });

@@ -11,6 +11,7 @@ export const RESEARCH_CONTEXT_KEYS = {
   panel: "panel",
   domain: "domain",
   investigation: "investigation",
+  question: "question",
   next: "next",
 } as const;
 
@@ -84,6 +85,16 @@ export function resolveDemoPanel(search: string, hash: string): DemoPanel | null
   return null;
 }
 
+/** Runnable example-question id from `?question=`; unknown values fall back to the caller's default. */
+export function parseInvestigationQuestionId<T extends string>(
+  value: string | null | undefined,
+  knownIds: readonly T[],
+): T | null {
+  if (!value) return null;
+  const normalized = value.trim().toLowerCase();
+  return (knownIds as readonly string[]).includes(normalized) ? (normalized as T) : null;
+}
+
 export function parseScenarioId(
   value: string | null | undefined,
   knownIds: readonly string[],
@@ -119,6 +130,7 @@ export function withResearchContext(
     domain?: string;
     scenario?: string;
     investigation?: string;
+    question?: string;
     next?: string;
     panel?: DemoPanel;
   },
@@ -132,6 +144,7 @@ export function withResearchContext(
   if (ctx.scenario) params.set(RESEARCH_CONTEXT_KEYS.scenario, ctx.scenario);
   if (ctx.panel) params.set(RESEARCH_CONTEXT_KEYS.panel, ctx.panel);
   if (ctx.investigation) params.set(RESEARCH_CONTEXT_KEYS.investigation, ctx.investigation);
+  if (ctx.question) params.set(RESEARCH_CONTEXT_KEYS.question, ctx.question);
   if (ctx.next) {
     const next = safeNextPath(ctx.next);
     if (next) params.set(RESEARCH_CONTEXT_KEYS.next, next);
