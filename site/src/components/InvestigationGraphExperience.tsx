@@ -237,7 +237,8 @@ export function InvestigationGraphExperience({ embedded = false }: { embedded?: 
     () => (selectionValid ? sharedInvestigationConnections(bundle!, from, target, model) : []),
     [bundle, selectionValid, from, target, model],
   );
-  const edge = bundle?.edges.find((e) => e.id === params.get('edge'));
+  const initialEdge = !params.has('node') && lens === 'path' ? path?.edgeIds[0] : null;
+  const edge = bundle?.edges.find((e) => e.id === (params.get('edge') ?? initialEdge));
   const source = bundle?.sources.find((s) => s.id === edge?.sourceId);
   const comparisonIds = (params.get('compare') ?? '').split('|').filter(Boolean);
   const comparison =
@@ -343,6 +344,7 @@ export function InvestigationGraphExperience({ embedded = false }: { embedded?: 
   }))
     pin.set(k, v);
   if (path && lens === 'path') pin.set('path', investigationPathKey(path));
+  if (edge) pin.set('edge', edge.id);
   const related = neighbourhood.edges.filter(
     (e) => e.subjectId === selected.id || e.objectId === selected.id,
   );

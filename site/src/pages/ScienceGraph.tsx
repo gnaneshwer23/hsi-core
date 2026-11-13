@@ -86,7 +86,7 @@ function GraphGuide({onDismiss}: {onDismiss: () => void}) {
 export function ScienceGraph() {
   const [params] = useSearchParams();
   const legacySelection = !params.has("domainVersion") && SCIENCE_GRAPH.nodes.some(n => n.id === params.get("node"));
-  return params.get("dataset") === "educational" || legacySelection ? <EducationalScienceGraph/> : <InvestigationGraphExperience/>;
+  return (params.get("dataset") === "educational" && !params.has("domainVersion")) || legacySelection ? <EducationalScienceGraph/> : <InvestigationGraphExperience/>;
 }
 
 function EducationalScienceGraph() {

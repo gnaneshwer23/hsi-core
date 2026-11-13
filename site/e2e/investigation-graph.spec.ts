@@ -139,6 +139,9 @@ test('unmatched snapshot, path, entity, comparison and model parameters reject w
   await page.goto('/science/graph?domainVersion=invalid');
   await expect(page.getByRole('alert')).toContainText('could not be verified');
   await expect(page.locator('.ig-steps')).toHaveCount(0);
+  await page.goto('/science/graph?domainVersion=invalid&dataset=educational&node=pancreas');
+  await expect(page.getByRole('alert')).toContainText('could not be verified');
+  await expect(page.locator('.kg-honesty-banner')).toHaveCount(0);
 });
 
 test('tampered snapshot cannot present reviewed relationships or fall back to educational data', async ({
