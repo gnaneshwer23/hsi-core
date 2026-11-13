@@ -9,7 +9,7 @@ import {createEntailmentVerifier} from "../src/evidence/entailmentVerifier";
 import type {SourceClearanceReceipt} from "../src/researchV2/sourceClearanceReceipt";
 
 const sha=(s:string)=>createHash("sha256").update(s).digest("hex");
-const deployment=(id:string,over:Record<string,unknown>={})=>({deploymentId:id,providerId:"anthropic",modelId:"model-"+id,endpoint:"https://api.anthropic.com/v1/messages",timeoutMs:20000,maxResponseBytes:32768,termsRef:"terms:"+id,sourcePolicyRef:"policy:public-oa-v1",maxOutputTokens:1024,budgetUnits:1000000,credentialEnv:"HSI_TEST_KEY_"+id.toUpperCase(),...over});
+const deployment=(id:string,over:Record<string,unknown>={})=>({deploymentId:id,providerId:"anthropic",anthropicVersion:"2023-06-01",modelId:"model-"+id,endpoint:"https://api.anthropic.com/v1/messages",timeoutMs:20000,maxResponseBytes:32768,termsRef:"terms:"+id,sourcePolicyRef:"policy:public-oa-v1",maxOutputTokens:1024,budgetUnits:1000000,credentialEnv:"HSI_TEST_KEY_"+id.toUpperCase(),...over});
 const validConfig=():LiveRunConfig=>({
  environment:"isolated_staging",
  sourcePolicy:{ownerRef:"owner:source-policy",termsRef:"terms:europepmc-oa",policyRef:"policy:public-oa-v1",allowedHosts:["www.ebi.ac.uk"]},
@@ -29,8 +29,8 @@ describe("live readiness gate",()=>{
  });
  test("a fully populated configuration is still NOT ready while engineering gaps remain, and only those remain (the source authority tool and the extraction task now exist)",()=>{
   const r=assessLiveReadiness(validConfig(),env);
-  expect(open(validConfig())).toEqual(["engineering-liveRunPath"]);
-  expect(r.ready).toBe(false);expect(ENGINEERING_GAPS.sourceAuthorityService.implemented).toBe(true);expect(ENGINEERING_GAPS.extractionTask.implemented).toBe(true);expect(ENGINEERING_GAPS.liveRunPath.implemented).toBe(false);
+  expect(open(validConfig())).toEqual([]);
+  expect(r.ready).toBe(true);expect(ENGINEERING_GAPS.sourceAuthorityService.implemented).toBe(true);expect(ENGINEERING_GAPS.extractionTask.implemented).toBe(true);expect(ENGINEERING_GAPS.liveRunPath.implemented).toBe(true);
   expect(r.items.filter(i=>i.heldBy!=="engineering").every(i=>i.status==="met")).toBe(true);
  });
  test("each human-held requirement fails closed when wrong",()=>{
