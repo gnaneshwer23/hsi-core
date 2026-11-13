@@ -15,19 +15,19 @@ test('homepage graph and workspace remain usable at narrow widths',async({page},
  for(const width of [320,390,768,1440]){
  await page.setViewportSize({width,height:1000});await page.goto('/');
  await expect(page.getByRole('heading',{level:1})).toContainText('Biological research,');
- await expect(page.locator('#home-knowledge-graph')).toContainText('153 concepts');
+ await expect(page.locator('#home-knowledge-graph')).toContainText('Public research snapshot');
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),String(width)).toBe(true);
  if(width===390||width===1440)await page.screenshot({path:info.outputPath(`graph-home-${width}.png`),fullPage:true});
  }
- const workspace=page.locator('.sp-workspace');await workspace.getByRole('button',{name:/Review, version/}).click();
- await expect(workspace).toContainText('Graph promotion is a separate governed decision');
- await expect(workspace).toContainText('simulated');
+ await page.getByRole('button',{name:'Inspect this evidence',exact:true}).click();
+ await page.locator('.hd-inspector').getByRole('button',{name:'Create draft brief',exact:true}).click();
+ await expect(page.getByRole('article',{name:'Homepage research brief'})).toContainText('Unreviewed / no scientific approval');
 });
 test('public graph search filters real snapshot records and retains a versioned handoff',async({page})=>{
  await page.goto('/');const graph=page.locator('#home-knowledge-graph');
  await graph.getByRole('searchbox',{name:'Search graph'}).fill('IL-21');
  await expect(graph.locator('[data-graph-node]')).toHaveCount(9);
- await expect(graph.getByRole('link',{name:'Open full explorer ↗'})).toHaveAttribute('href',/netQuery=IL-21/);
- await graph.getByRole('searchbox',{name:'Search graph'}).fill('no-such-scientific-concept');await expect(graph).toContainText('No matching concepts');
- await graph.getByRole('button',{name:'Reset filters'}).click();await expect(graph).toContainText('138 concepts');
+ await expect(graph.getByRole('link',{name:'Open this selection in the research workspace ↗'})).toHaveAttribute('href',/netQuery=IL-21/);
+ await graph.getByRole('searchbox',{name:'Search graph'}).fill('no-such-scientific-concept');await expect(graph).toContainText('No records match this view');
+ await graph.getByRole('button',{name:'Reset search'}).click();await expect(graph.locator('[data-graph-node]')).not.toHaveCount(0);
 });

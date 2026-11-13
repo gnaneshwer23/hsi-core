@@ -69,3 +69,11 @@ Local review branch only. No remote push, PR merge or deployment for this increm
 The active design supersedes the earlier expanded sidebar: search plus one condition selector are visible by default. Start from a one-hop neighbourhood; search expands only the matching recorded network. A single refinement disclosure holds condition comparison, tissue and candidate/gap selection. Assay/type/domain/predicate/polarity controls are retained only for compatible saved URLs and deterministic contracts, not shown as a new control wall. Reset clears these inherited filters.
 
 Graph controls show zoom and fit. Space remains draggable; a focused graph supports arrow-key panning. Exports and evidence-coverage detail use disclosures. Existing unreviewed status, actual source inspection, missingness and exact snapshot continuity remain. This improves navigation and reduces clutter; it is not evidence of improved scientific accuracy.
+
+## Homepage evidence journey (local increment)
+
+The homepage now exposes the shared version-verified graph as one continuous public journey: explore connections, inspect the original assertion/source/experimental context, export a pinned inspection draft, and reopen the same version/selection in the research workspace. Recorded-condition filtering resets stale drafts. Evidence Intelligence retains source reading without a duplicate graph.
+
+The export uses the existing inspection schema and original records. Clearance verification, scientific approval, graph promotion and live provider execution remain false. This public journey does not perform live investigation, independent review or authenticated persistence.
+
+Manual browser acceptance covered desktop/mobile layout, condition reset, evidence inspection and a real Markdown download retaining mouse context and explicit missing fields. Type checks and site build pass. Browser regression specifications were updated and added; the automated browser suite has not been run for this increment. No production activation is included.

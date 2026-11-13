@@ -13,11 +13,11 @@ test("public pages have a single main/title, working navigation and no narrow-sc
 });
 test("home opens the existing versioned graph and preserves selected context",async({page})=>{
  await page.goto('/');await expect(page.getByRole('heading',{level:1})).toContainText('Biological research,');
- await expect(page.locator('#home-knowledge-graph')).toContainText('153 concepts');
+ await expect(page.locator('#home-knowledge-graph')).toContainText('Public research snapshot');
  await page.locator('#home-knowledge-graph [data-graph-edge]').first().press('Enter');
- await expect(page.locator('.sp-live-inspector')).toContainText('Source candidate / unreviewed');
+ await expect(page.locator('.hd-inspector')).toContainText('Unreviewed source candidate');
  await expect(page.locator('.sp-live-inspector a').first()).toHaveAttribute('href',/^https:/);
- await page.getByRole('link',{name:'Continue in the research workspace ↗',exact:true}).click();
+ await page.getByRole('link',{name:'Open this selection in the research workspace ↗',exact:true}).click();
  await expect(page).toHaveURL(/domainVersion=[a-f0-9]{64}/);await expect(page.getByRole('heading',{level:1})).toContainText('Investigate a biological connection');
 });
 test("mobile menu opens, closes with Escape and connects public destinations",async({page})=>{
@@ -63,9 +63,8 @@ test("graph controls, bookmarks and SVG/PNG/JSON exports preserve draft scope",a
 });
 test("reduced-motion mode retains functional graph and verifier navigation",async({page})=>{
  await page.emulateMedia({reducedMotion:'reduce'});await page.goto('/');
- const workspace=page.locator('.sp-workspace');await workspace.getByRole('button',{name:/Challenge the interpretation/}).click();
- await expect(workspace).toContainText('VERITAS');await expect(workspace).toContainText('simulated');
- await page.getByRole('link',{name:'Open full explorer ↗',exact:true}).click();await expect(page).toHaveURL(/domainVersion=[a-f0-9]{64}/);
+ await page.getByRole('button',{name:'Inspect this evidence',exact:true}).click();await expect(page.locator('.hd-inspector')).toContainText('Unreviewed source candidate');
+ await page.getByRole('link',{name:'Open this selection in the research workspace ↗',exact:true}).click();await expect(page).toHaveURL(/domainVersion=[a-f0-9]{64}/);
  await expect(page.getByRole('heading',{level:1})).toHaveText('Investigate a biological connection.');
 });
 
