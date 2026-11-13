@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { withResearchContext } from "../lib/researchContext";
 import {
   BiologyDomains,
   CandidateMechanism,
@@ -144,9 +145,12 @@ export function Home() {
             </p>
             <p>
               This is HSI’s initial scientific validation example, not the limit of the platform’s scope.
-              Independent validation remains pending.
+              Independent validation remains pending. The runnable investigation opens on a cross-domain
+              question (gut microbial metabolites and neuroinflammation).
             </p>
-            <PublicAction to="/research/investigate">Explore the Investigation</PublicAction>
+            <PublicAction to={withResearchContext("/research/investigate", { question: "gut-neuro", domain: "microbiome" })}>
+              Explore the Investigation
+            </PublicAction>
           </div>
           <CandidateMechanism />
         </div>
