@@ -14,9 +14,10 @@ test("an unconfigured live run is refused, lists both gates, and touches nothing
  expect("refused" in r&&r.refused).toBe(true);
  if("refused" in r){expect(r.reasons.join(" ")).toContain("live readiness");expect(r.reasons.join(" ")).toContain("source integrity readiness")}
 });
-test("the managed signing gap alone keeps a run refused",()=>{
+test("an unconfigured integrity gate keeps a run refused on the human-held items, not on engineering",()=>{
  const g=checkLiveRunGate(base());
- expect(g?.reasons.some(x=>x.includes("engineering-managedSigningAdapter"))).toBe(true);
+ expect(g?.reasons.join(" ")).toContain("policy-approval");expect(g?.reasons.join(" ")).toContain("managed-signer");
+ expect(g?.reasons.join(" ")).not.toContain("engineering-");
 });
 test("engaged kill switch and exhausted daily cap are reported as reasons",()=>{
  const cfg={limits:{killSwitchEnv:"HSI_LIVE_KILL",maxRunsPerDay:2}};
