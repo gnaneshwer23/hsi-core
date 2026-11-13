@@ -14,13 +14,21 @@ Scope: one question, a small hard budget, a human reading the output. Nothing in
 | A private (0700) directory for the operation store and audit files | Operator |
 | A named reviewer authority for the scope (otherwise the review packet is unroutable) | Scientific lead |
 
+## 0b. Rehearsal (offline, throwaway keys)
+
+```bash
+bun scripts/rehearse-live.ts
+```
+
+Runs the real loader and the guarded `--execute` path end to end with throwaway keys, a fake KMS client, a synthetic network and synthetic provider responses. It proves the wiring interlocks (signed policy and approvals on disk, receipts signed and verified, provider operations, durable job, credential handling). It proves nothing about science. Run it after any change to the live path.
+
 ## 1. Preflight (offline: no network, no model, nothing written)
 
 ```bash
 bun scripts/run-investigation.ts --mode live --config live.json --integrity-config integrity.json --preflight
 ```
 
-Exit 0 means every configured piece exists and verifies. Exit 3 lists what is open and who holds it. A pass does not start a run.
+Exit 0 means every configured piece exists and verifies. Exit 3 lists what is open and who holds it. A pass does not start a run. Deployments' `sourcePolicyRef` must equal the signed policy's `<policyId>:v<version>`; the preflight checks it, because a mismatch makes provider operations refuse every source.
 
 ## 2. Retrieval-only dry run (no model)
 

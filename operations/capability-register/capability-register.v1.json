@@ -970,6 +970,7 @@
           "OPS-PILOT"
         ],
         "modules": [
+          "src/liveRehearsal.ts",
           "src/livePreflight.ts",
           "src/warden.ts",
           "src/researchV2/providerReliability.ts",

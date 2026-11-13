@@ -10,13 +10,13 @@ import type {LiveRunDeps} from "../src/liveRun";
 const dirs:string[]=[];const dir=()=>{const d=mkdtempSync(join(tmpdir(),"hsi-exec-"));chmodSync(d,0o700);dirs.push(d);return d};
 afterAll(()=>{for(const d of dirs)rmSync(d,{recursive:true,force:true})});
 const NOW=Date.parse("2026-11-13T12:00:00Z");
-const dep=(id:string,model:string)=>({deploymentId:id,providerId:"anthropic",modelId:model,endpoint:"https://api.anthropic.com/v1/messages",timeoutMs:20000,maxResponseBytes:60000,termsRef:"terms:m",sourcePolicyRef:"policy:public-oa-v1",maxOutputTokens:1024,budgetUnits:100000,credentialEnv:"HSI_KEY_PROVIDER",anthropicVersion:"2023-06-01"});
+const dep=(id:string,model:string)=>({deploymentId:id,providerId:"anthropic",modelId:model,endpoint:"https://api.anthropic.com/v1/messages",timeoutMs:20000,maxResponseBytes:60000,termsRef:"terms:m",sourcePolicyRef:"demo-policy:v1",maxOutputTokens:1024,budgetUnits:100000,credentialEnv:"HSI_KEY_PROVIDER",anthropicVersion:"2023-06-01"});
 
 function world(over:{config?:(c:any)=>void}={}){
  const d=dir(),approver=generateKeyPairSync("ed25519"),approvalKey=generateKeyPairSync("ed25519");
  const pem=(k:ReturnType<typeof generateKeyPairSync>)=>(k.publicKey as import("node:crypto").KeyObject).export({type:"spki",format:"pem"}).toString();
  writeFileSync(join(d,"policy.json"),JSON.stringify(buildDemoPolicy({now:NOW,privateKey:approver.privateKey})));
- const config:any={environment:"isolated_staging",sourcePolicy:{ownerRef:"owner:sp",termsRef:"terms:epmc",policyRef:"policy:public-oa-v1",allowedHosts:["www.ebi.ac.uk"]},sourceAuthority:{issuer:"authority:independent",keyIds:["key-1"]},
+ const config:any={environment:"isolated_staging",sourcePolicy:{ownerRef:"owner:sp",termsRef:"terms:epmc",policyRef:"demo-policy:v1",allowedHosts:["www.ebi.ac.uk"]},sourceAuthority:{issuer:"authority:independent",keyIds:["key-1"]},
   deploymentApproval:{issuer:"approver:sec",keyId:"k",publicKeyEnv:"HSI_APPROVAL_KEY"},extractor:dep("ext","m-ext"),verifiers:[dep("va","m-a"),dep("vb","m-b")],
   limits:{maxArticlesPerIntent:2,maxHitsPerIntent:4,maxModelCallsPerRun:30,maxRunsPerDay:5,killSwitchEnv:"HSI_KILL"},
   review:{normalizerReviewRef:"review:n",questionReviewRef:"review:q",extractionTaskReviewRef:"review:e"},operationStore:{path:join(d,"ops.jsonl")}};

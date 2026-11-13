@@ -18,7 +18,7 @@ import {isInvestigationScopeId} from "./investigationScope";
 import type {LiveRunConfig} from "./liveReadiness";
 import type {SourceIntegrityConfig} from "./sourceIntegrityReadiness";
 import {createManagedSigner} from "./researchV2/managedSigner";
-import {createCloudKmsSignMessage,loadCloudKmsClient} from "./researchV2/cloudKmsSigner";
+import {createCloudKmsSignMessage,loadCloudKmsClient,type CloudKmsClient} from "./researchV2/cloudKmsSigner";
 import {openStagingOperationStore} from "./researchV2/stagingOperationStore";
 import {createFileReceiptPublisher} from "./researchV2/clearanceAuthority";
 
@@ -76,25 +76,31 @@ export async function runLiveExecute(opts:ExecuteOptions,io:ExecuteIo):Promise<E
 }
 
 /** Production loader: reads the signed policy, pinned public keys (from the environment), approvals and store from disk, and signs through Cloud KMS. */
-export async function loadFileDeps(ctx:Parameters<ExecuteIo["loadDeps"]>[0]):Promise<LoadedDeps>{
+export const loadFileDeps:ExecuteIo["loadDeps"]=ctx=>makeFileDepsLoader()(ctx);
+
+/** Test and rehearsal seams: a KMS client, a fetcher and a provider transport can be injected. Production passes none. */
+export function makeFileDepsLoader(seams:{kmsClient?:CloudKmsClient;fetcher?:LiveRunDeps["fetcher"];transportFactory?:Parameters<typeof buildLiveRunDeps>[0]["transportFactory"]}={}):ExecuteIo["loadDeps"]{
+ return ctx=>loadFromFiles(ctx,seams);
+}
+async function loadFromFiles(ctx:Parameters<ExecuteIo["loadDeps"]>[0],seams:Parameters<typeof makeFileDepsLoader>[0]={}):Promise<LoadedDeps>{
  const c=ctx.config,ic=ctx.integrityConfig as SourceIntegrityConfig&{signer:{keyVersionName?:string;publicKeyEnv?:string}};
  const pem=(name:string|undefined,what:string)=>{const v=name?ctx.env[name]:undefined;if(!v?.trim())throw Error(`${what} is not in the environment`);return createPublicKey(v)};
  const policy=JSON.parse(readFileSync(ic.policyFile,"utf8"));
  const signerPublicKey=pem(ic.signer.publicKeyEnv,"signer public key");
  if(!ic.signer.keyVersionName)throw Error("signer.keyVersionName is required");
  const signer=createManagedSigner({serviceRef:ic.signer.serviceRef,issuer:ic.signer.issuer,keyId:ic.signer.keyId,publicKey:signerPublicKey,
-  signMessage:createCloudKmsSignMessage({keyVersionName:ic.signer.keyVersionName,client:await loadCloudKmsClient()})});
+  signMessage:createCloudKmsSignMessage({keyVersionName:ic.signer.keyVersionName,client:seams.kmsClient??await loadCloudKmsClient()})});
  const root=dirname(resolve(c.operationStore.path)),approvalsDir=join(root,"approvals");
  const safe=/^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/;
  const store=await openStagingOperationStore(c.operationStore.path);
  try{
-  const built=buildLiveRunDeps({config:c,integrityConfig:{requestedUses:ic.requestedUses},env:ctx.env,
+  const built=buildLiveRunDeps({config:c,integrityConfig:ic as unknown as {requestedUses:readonly string[]}&Record<string,unknown>,env:ctx.env,
    policy,policyAuthorities:[{issuer:ic.policyApprover.issuer,keyId:ic.policyApprover.keyId,publicKey:pem(ic.policyApprover.publicKeyEnv,"policy approver public key")}],
    signer,signerPublicKey,
    approvalAuthorities:[{issuer:c.deploymentApproval.issuer,keyId:c.deploymentApproval.keyId,publicKey:pem(c.deploymentApproval.publicKeyEnv,"deployment approval public key")}],
    resolveApproval:async b=>{if(!safe.test(b.deploymentId))throw Error("invalid deployment id");return JSON.parse(await readFile(join(approvalsDir,`${b.deploymentId}.json`),"utf8"))},
    isApprovalRevoked:async(id,issuer)=>{const f=join(approvalsDir,"revocations.jsonl");if(!existsSync(f))return false;return readFileSync(f,"utf8").split("\n").filter(Boolean).some(l=>{try{const r=JSON.parse(l);return r.id===id&&r.issuer===issuer}catch{return true}})},
-   fetcher:fetch,store,publisher:createFileReceiptPublisher(join(root,"published")),auditDirectory:ctx.auditDirectory,target:ctx.target,runsToday:ctx.runsToday});
+   fetcher:seams.fetcher??fetch,transportFactory:seams.transportFactory,store,publisher:createFileReceiptPublisher(join(root,"published")),auditDirectory:ctx.auditDirectory,target:ctx.target,runsToday:ctx.runsToday});
   return {deps:built.deps,close:()=>store.close()};
  }catch(error){await store.close();throw error}
 }

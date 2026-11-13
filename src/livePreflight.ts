@@ -25,7 +25,7 @@ export async function runLivePreflight(input:{config:unknown;integrityConfig:unk
  const store=cfg.operationStore?.path;let storeOk=false,storeDetail="no operation store path configured";
  if(typeof store==="string"){try{const d=lstatSync(dirname(resolve(store)));storeOk=d.isDirectory()&&!d.isSymbolicLink()&&(d.mode&0o077)===0&&d.uid===process.geteuid?.();storeDetail=storeOk?"private operation store directory exists":"operation store directory must be a private (0700) directory owned by this user, not a symlink"}catch{storeDetail="operation store directory does not exist"}}
  add("operation-store",storeOk,"operator",storeDetail);
- let policyOk=false,policyDetail="no policy file configured";
+ let policyOk=false,policyDetail="no policy file configured",policyRef:string|null=null;
  if(typeof icfg.policyFile==="string"){
   try{
    if(!existsSync(icfg.policyFile))policyDetail="policy file does not exist";
@@ -35,12 +35,14 @@ export async function runLivePreflight(input:{config:unknown;integrityConfig:unk
     else{
      const key:KeyObject=createPublicKey(pem);
      const v=await verifyPolicyApproval(JSON.parse(readFileSync(icfg.policyFile,"utf8")),{authorities:[{issuer:pa.issuer,keyId:pa.keyId,publicKey:key}],now:(input.now??Date.now)()});
-     policyOk=v.ok;policyDetail=v.ok?`policy ${v.policy.policyId} v${v.policy.version} verifies against the pinned approver and is in its window`:`policy does not verify: ${v.code}`;
+     policyOk=v.ok;if(v.ok)policyRef=`${v.policy.policyId}:v${v.policy.version}`;policyDetail=v.ok?`policy ${v.policy.policyId} v${v.policy.version} verifies against the pinned approver and is in its window`:`policy does not verify: ${v.code}`;
     }
    }
   }catch{policyDetail="policy file could not be read or verified"}
  }
  add("policy-verifies",policyOk,"source-policy owner",policyDetail);
+ const refs=[cfg.extractor,...(cfg.verifiers??[])].filter(Boolean).map(d=>d!.sourcePolicyRef);
+ add("deployments-bind-policy",policyRef!==null&&refs.length>0&&refs.every(r=>r===policyRef),"model owner",policyRef===null?"needs a verified policy to compare against":refs.every(r=>r===policyRef)?`every deployment's sourcePolicyRef is ${policyRef}`:`every deployment's sourcePolicyRef must equal the signed policy's id and version (${policyRef}); a mismatch makes provider operations refuse every source`);
  const creds=[cfg.extractor,...(cfg.verifiers??[])].filter(Boolean).map(d=>d!.credentialEnv);
  add("credentials-present",creds.length>=2&&creds.every(n=>typeof n==="string"&&!!input.env[n]?.trim()),"security signer",creds.length>=2?"credential variables present (values never read or printed)":"extractor and at least one verifier needed");
  add("distinct-verifiers",(()=>{const ids=(cfg.verifiers??[]).map(v=>v.deploymentId),models=(cfg.verifiers??[]).map(v=>v.modelId);return ids.length>=2&&new Set(ids).size===ids.length&&new Set(models).size===models.length&&!models.includes(cfg.extractor?.modelId??"")})(),"model owner","at least two verifiers with distinct deployments and models, none the extractor's model");
