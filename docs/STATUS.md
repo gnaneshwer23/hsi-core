@@ -179,6 +179,7 @@ One module per line, sorted, so concurrent changes to different modules do not c
 - `src/governedGraphRead.ts`
 - `src/graphRelease.ts`
 - `src/hsiOntologyRegistry.ts`
+- `src/liveExecute.ts`
 - `src/livingHealthKnowledgeGraph.ts`
 
 **HELIX**
@@ -201,6 +202,7 @@ One module per line, sorted, so concurrent changes to different modules do not c
 - `src/evidence/gapVerification.ts`
 - `src/evidence/hypothesisRegistry.ts`
 - `src/interrogativeFalsificationEngine.ts`
+- `src/liveExecute.ts`
 - `src/vantageGaps.ts`
 
 **VERITAS**
