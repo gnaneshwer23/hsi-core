@@ -99,21 +99,138 @@ Product naming proposal mapped onto existing modules. It is not deployment statu
 - Every handoff preserves source id, passage digest, context, uncertainty, policy status and run version.
 - Verification is independent of investigation: VERITAS checks original passages with separately configured models.
 
-| Name | Priority | Layer | Agent role contract | Register rows (engineering level) | Model-backed | Depends on | Modules | Human approval needed |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| HSI NEXUS | P0 | orchestration | none | A-ORCH: partial, F-10: partial, F-13: partial | no | none | `src/liveWiring.ts`, `src/collectivePipeline.ts`, `src/hsiAgentOrchestrator.ts`, `src/hsiCheckpointedExecutor.ts`, `src/hsiAgentDurableCheckpoint.ts`, `src/hsiAgentRecoveryReconciliation.ts`, `src/hsiAgentIntelligenceContracts.ts`, `src/evidence/investigationOrchestrationContracts.ts`, `src/nexusJobs.ts` | Durable job runner decision and the held-migration decision before hosted persistence. |
-| AEGIS | P0 | trust_and_acquisition | none | F-11: partial | no | SCOUT | `src/researchV2/cloudKmsSigner.ts`, `src/researchV2/managedSigner.ts`, `src/researchV2/sourceIntegrityService.ts`, `src/researchV2/sourceIntegrityAssessor.ts`, `src/researchV2/sourceEvidence.ts`, `src/researchV2/clearancePolicy.ts`, `src/researchV2/sourceClearanceReceipt.ts`, `src/researchV2/operationalSourceClearance.ts`, `src/researchV2/clearanceAuthority.ts`, `src/researchV2/clearanceSigning.ts`, `src/sourceIntegrityReadiness.ts`, `scripts/assess-source.ts` | A named human signs the clearance policy; a managed signer and an independent clearance authority are appointed. |
-| WARDEN | P0 | continuous_and_operations | none | OPS-PILOT: partial | no | none | `src/livePreflight.ts`, `src/warden.ts`, `src/researchV2/providerReliability.ts`, `src/researchV2/stagingOperationStore.ts`, `src/operations/pilotOperationsService.ts`, `src/liveReadiness.ts` | Operators, budgets, a shared rate limiter and alerting infrastructure. |
-| SCOUT | P1 | trust_and_acquisition | evidence_retriever | A-EVID: implemented, E-FWD: implemented, F-12: partial | no | NEXUS | `src/retrievalDryRun.ts`, `src/evidence/dynamicEvidenceRetrieval.ts`, `src/liveSearch.ts`, `src/researchV2/sourceAdapters.ts`, `src/evidence/opposingEvidenceSearch.ts`, `src/investigationOrientation.ts`, `src/evidence/reactomePathwayLookup.ts`, `src/evidence/uniProtProteinLookup.ts` | Source-policy owner approves hosts, terms and quotas. |
-| LANTERN | P1 | trust_and_acquisition | none | F-12: partial | yes | AEGIS | `src/evidence/modelEvidenceExtraction.ts`, `src/researchV2/openAccessSections.ts`, `src/evidence/passageLinkedContext.ts`, `src/liveModels.ts`, `src/researchV2/stagingProviderOperations.ts` | An approved model deployment and terms; a scientist reviews the normalizer registry. |
-| HSI ATLAS | P2 | biological_intelligence | entity_resolver | F-01: implemented, F-02: implemented | no | LANTERN | `src/atlasProposals.ts`, `src/livingHealthKnowledgeGraph.ts`, `src/hsiOntologyRegistry.ts`, `src/graphRelease.ts`, `src/governedGraphRead.ts`, `src/evidence/canonicalContextualEdge.ts`, `src/evidence/reactomeOntologyBridge.ts`, `src/evidence/uniProtOntologyBridge.ts` | Canonical investigation store decision; held migrations; publication only after ARBITER and a human decision. |
-| HELIX | P2 | biological_intelligence | interrogator | A-MECH: implemented, A-MICRO: implemented, A-CELL: implemented, J-INV: partial | yes | LANTERN, ATLAS, PARALLAX | `src/helixMechanism.ts`, `src/immuneMechanismInvestigation.ts`, `src/scientificInvestigation.ts`, `src/evidence/proteinPathwayMechanismCandidates.ts`, `src/researchMechanismWorkflow.ts`, `src/investigationRunner.ts` | Model deployment approval; the model-backed step is not built yet, today it is deterministic. |
-| PARALLAX | P2 | biological_intelligence | contradiction_analyst | A-CONTRA: partial, O-02: partial | no | LANTERN | `src/evidence/structuredEvidenceComparison.ts`, `src/evidence/contextConflictAudit.ts`, `src/evidence/contextualMechanismComparison.ts`, `src/investigationScope.ts`, `src/evidence/passageLinkedContext.ts` | Scientist review of the context normalizer registry. |
-| VANTAGE | P3 | biological_intelligence | hypothesis_generator | A-GAP: partial, A-PLAN: partial, O-03: implemented, O-05: implemented | no | HELIX, PARALLAX | `src/vantageGaps.ts`, `src/evidence/falsifiableExperimentProposals.ts`, `src/evidence/hypothesisRegistry.ts`, `src/evidence/gapVerification.ts`, `src/interrogativeFalsificationEngine.ts` | A model-backed proposer needs model approval and a preregistered comparison; today it is deterministic. |
-| VERITAS | P1 | verification_and_governance | claim_verifier | A-VERIFY: partial, F-12: partial | yes | LANTERN, HELIX | `src/researchV2/modelEntailment.ts`, `src/researchV2/dualModelChallenge.ts`, `src/researchV2/scientificEntailment.ts`, `src/evidence/entailmentVerifier.ts`, `src/researchV2/scientificReliabilityGate.ts`, `src/researchV2/passageVerification.ts` | At least two distinct approved verifier deployments, separate from the extractor. |
-| ARBITER | P3 | verification_and_governance | none | F-05: partial | no | VERITAS, AEGIS | `src/reviewPacket.ts`, `src/interrogativeScientificReview.ts`, `src/db/independentReviewQueue.ts`, `src/db/authenticatedScientificReviewStore.ts`, `src/evidence/contextAuditReview.ts`, `src/db/reviewerAuthority.ts` | Reviewer appointments, scoped authority and the held-migration decision. |
-| SENTINEL | P4 | continuous_and_operations | none | E-CONT: partial | no | AEGIS | `src/sentinel.ts`, `src/evidence/incrementalEvidenceMonitoring.ts`, `src/evidence/livingEvidenceExpansion.ts`, `src/expansion/sourceRereview.ts`, `src/researchV2/sourceIntegrityService.ts` | A scheduler, an owner and a place for the policy-revocation list. |
-| CALIBER | P3 | continuous_and_operations | none | J-EVAL: partial, E-IMMUNO: partial, F-09: partial | no | none | `src/caliberHarness.ts`, `src/evidence/immunoBenchmark.ts`, `src/evidence/immunoBenchmarkScoring.ts`, `src/scientificAccuracyHarness.ts`, `src/modelEvalHarness.ts`, `src/evidence/independentEvaluationSuites.ts` | Appointed experts, a private vault and conflict declarations. |
+| Name | Priority | Layer | Agent role contract | Register rows (engineering level) | Model-backed | Depends on | Human approval needed |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| HSI NEXUS | P0 | orchestration | none | A-ORCH: partial, F-10: partial, F-13: partial | no | none | Durable job runner decision and the held-migration decision before hosted persistence. |
+| AEGIS | P0 | trust_and_acquisition | none | F-11: partial | no | SCOUT | A named human signs the clearance policy; a managed signer and an independent clearance authority are appointed. |
+| WARDEN | P0 | continuous_and_operations | none | OPS-PILOT: partial | no | none | Operators, budgets, a shared rate limiter and alerting infrastructure. |
+| SCOUT | P1 | trust_and_acquisition | evidence_retriever | A-EVID: implemented, E-FWD: implemented, F-12: partial | no | NEXUS | Source-policy owner approves hosts, terms and quotas. |
+| LANTERN | P1 | trust_and_acquisition | none | F-12: partial | yes | AEGIS | An approved model deployment and terms; a scientist reviews the normalizer registry. |
+| HSI ATLAS | P2 | biological_intelligence | entity_resolver | F-01: implemented, F-02: implemented | no | LANTERN | Canonical investigation store decision; held migrations; publication only after ARBITER and a human decision. |
+| HELIX | P2 | biological_intelligence | interrogator | A-MECH: implemented, A-MICRO: implemented, A-CELL: implemented, J-INV: partial | yes | LANTERN, ATLAS, PARALLAX | Model deployment approval; the model-backed step is not built yet, today it is deterministic. |
+| PARALLAX | P2 | biological_intelligence | contradiction_analyst | A-CONTRA: partial, O-02: partial | no | LANTERN | Scientist review of the context normalizer registry. |
+| VANTAGE | P3 | biological_intelligence | hypothesis_generator | A-GAP: partial, A-PLAN: partial, O-03: implemented, O-05: implemented | no | HELIX, PARALLAX | A model-backed proposer needs model approval and a preregistered comparison; today it is deterministic. |
+| VERITAS | P1 | verification_and_governance | claim_verifier | A-VERIFY: partial, F-12: partial | yes | LANTERN, HELIX | At least two distinct approved verifier deployments, separate from the extractor. |
+| ARBITER | P3 | verification_and_governance | none | F-05: partial | no | VERITAS, AEGIS | Reviewer appointments, scoped authority and the held-migration decision. |
+| SENTINEL | P4 | continuous_and_operations | none | E-CONT: partial | no | AEGIS | A scheduler, an owner and a place for the policy-revocation list. |
+| CALIBER | P3 | continuous_and_operations | none | J-EVAL: partial, E-IMMUNO: partial, F-09: partial | no | none | Appointed experts, a private vault and conflict declarations. |
+
+### Modules by agent
+
+One module per line, sorted, so concurrent changes to different modules do not conflict.
+
+**HSI NEXUS**
+- `src/collectivePipeline.ts`
+- `src/evidence/investigationOrchestrationContracts.ts`
+- `src/hsiAgentDurableCheckpoint.ts`
+- `src/hsiAgentIntelligenceContracts.ts`
+- `src/hsiAgentOrchestrator.ts`
+- `src/hsiAgentRecoveryReconciliation.ts`
+- `src/hsiCheckpointedExecutor.ts`
+- `src/liveWiring.ts`
+- `src/nexusJobs.ts`
+
+**AEGIS**
+- `scripts/assess-source.ts`
+- `src/researchV2/clearanceAuthority.ts`
+- `src/researchV2/clearancePolicy.ts`
+- `src/researchV2/clearanceSigning.ts`
+- `src/researchV2/cloudKmsSigner.ts`
+- `src/researchV2/managedSigner.ts`
+- `src/researchV2/operationalSourceClearance.ts`
+- `src/researchV2/sourceClearanceReceipt.ts`
+- `src/researchV2/sourceEvidence.ts`
+- `src/researchV2/sourceIntegrityAssessor.ts`
+- `src/researchV2/sourceIntegrityService.ts`
+- `src/sourceIntegrityReadiness.ts`
+
+**WARDEN**
+- `src/livePreflight.ts`
+- `src/liveReadiness.ts`
+- `src/operations/pilotOperationsService.ts`
+- `src/researchV2/providerReliability.ts`
+- `src/researchV2/stagingOperationStore.ts`
+- `src/warden.ts`
+
+**SCOUT**
+- `src/evidence/dynamicEvidenceRetrieval.ts`
+- `src/evidence/opposingEvidenceSearch.ts`
+- `src/evidence/reactomePathwayLookup.ts`
+- `src/evidence/uniProtProteinLookup.ts`
+- `src/investigationOrientation.ts`
+- `src/liveSearch.ts`
+- `src/researchV2/sourceAdapters.ts`
+- `src/retrievalDryRun.ts`
+
+**LANTERN**
+- `src/evidence/modelEvidenceExtraction.ts`
+- `src/evidence/passageLinkedContext.ts`
+- `src/liveModels.ts`
+- `src/researchV2/openAccessSections.ts`
+- `src/researchV2/stagingProviderOperations.ts`
+
+**HSI ATLAS**
+- `src/atlasProposals.ts`
+- `src/evidence/canonicalContextualEdge.ts`
+- `src/evidence/reactomeOntologyBridge.ts`
+- `src/evidence/uniProtOntologyBridge.ts`
+- `src/governedGraphRead.ts`
+- `src/graphRelease.ts`
+- `src/hsiOntologyRegistry.ts`
+- `src/livingHealthKnowledgeGraph.ts`
+
+**HELIX**
+- `src/evidence/proteinPathwayMechanismCandidates.ts`
+- `src/helixMechanism.ts`
+- `src/immuneMechanismInvestigation.ts`
+- `src/investigationRunner.ts`
+- `src/researchMechanismWorkflow.ts`
+- `src/scientificInvestigation.ts`
+
+**PARALLAX**
+- `src/evidence/contextConflictAudit.ts`
+- `src/evidence/contextualMechanismComparison.ts`
+- `src/evidence/passageLinkedContext.ts`
+- `src/evidence/structuredEvidenceComparison.ts`
+- `src/investigationScope.ts`
+
+**VANTAGE**
+- `src/evidence/falsifiableExperimentProposals.ts`
+- `src/evidence/gapVerification.ts`
+- `src/evidence/hypothesisRegistry.ts`
+- `src/interrogativeFalsificationEngine.ts`
+- `src/vantageGaps.ts`
+
+**VERITAS**
+- `src/evidence/entailmentVerifier.ts`
+- `src/researchV2/dualModelChallenge.ts`
+- `src/researchV2/modelEntailment.ts`
+- `src/researchV2/passageVerification.ts`
+- `src/researchV2/scientificEntailment.ts`
+- `src/researchV2/scientificReliabilityGate.ts`
+
+**ARBITER**
+- `src/db/authenticatedScientificReviewStore.ts`
+- `src/db/independentReviewQueue.ts`
+- `src/db/reviewerAuthority.ts`
+- `src/evidence/contextAuditReview.ts`
+- `src/interrogativeScientificReview.ts`
+- `src/reviewPacket.ts`
+
+**SENTINEL**
+- `src/evidence/incrementalEvidenceMonitoring.ts`
+- `src/evidence/livingEvidenceExpansion.ts`
+- `src/expansion/sourceRereview.ts`
+- `src/researchV2/sourceIntegrityService.ts`
+- `src/sentinel.ts`
+
+**CALIBER**
+- `src/caliberHarness.ts`
+- `src/evidence/immunoBenchmark.ts`
+- `src/evidence/immunoBenchmarkScoring.ts`
+- `src/evidence/independentEvaluationSuites.ts`
+- `src/modelEvalHarness.ts`
+- `src/scientificAccuracyHarness.ts`
 
 Name collisions with Aksh Health agents: NEXUS (An Aksh Health clinical agent has the same name (docs/AKSH_AGENTS_IN_HSI.md). Always write HSI NEXUS.) ATLAS (An Aksh Health agent has the same name. Always write HSI ATLAS.)
 
