@@ -49,7 +49,7 @@ export function Home() {
         <div className="hsi-hero-shade" />
         <div className="hsi-content hsi-hero-content">
           <p className="hsi-product-name">HUMAN SUPER INTELLIGENCE</p>
-          <h1 id="home-title">Understand the connections behind human biology.</h1>
+          <h1 id="home-title">See why the evidence conflicts.</h1>
           <p className="hsi-hero-lead">
             Explore biological mechanisms across human systems with evidence you can trace, context you can
             inspect, and uncertainty you can evaluate.
