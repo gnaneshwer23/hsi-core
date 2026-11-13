@@ -1108,6 +1108,7 @@
           "J-INV"
         ],
         "modules": [
+          "src/helixMechanism.ts",
           "src/immuneMechanismInvestigation.ts",
           "src/scientificInvestigation.ts",
           "src/evidence/proteinPathwayMechanismCandidates.ts",
@@ -1180,6 +1181,7 @@
           "O-05"
         ],
         "modules": [
+          "src/vantageGaps.ts",
           "src/evidence/falsifiableExperimentProposals.ts",
           "src/evidence/hypothesisRegistry.ts",
           "src/evidence/gapVerification.ts",
@@ -1284,6 +1286,7 @@
           "E-CONT"
         ],
         "modules": [
+          "src/sentinel.ts",
           "src/evidence/incrementalEvidenceMonitoring.ts",
           "src/evidence/livingEvidenceExpansion.ts",
           "src/expansion/sourceRereview.ts",
