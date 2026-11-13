@@ -168,6 +168,11 @@ test('all three views preserve mobile/desktop accessibility, keyboard path inspe
     await page.setViewportSize({ width, height: 1000 });
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await ready(page);
+    if (width < 701) {
+      await page.getByText('Question and filters', { exact: true }).click();
+      await expect(page.getByLabel('Starting concept', { exact: true })).toBeVisible();
+      await page.getByText('Question and filters', { exact: true }).click();
+    }
     for (const lens of ['Evidence path', 'Neighbourhood', 'Shared connections']) {
       await page.getByRole('button', { name: lens, exact: true }).click();
       expect(
@@ -182,6 +187,10 @@ test('all three views preserve mobile/desktop accessibility, keyboard path inspe
           nodes: v.nodes.map((n) => ({ target: n.target, reason: n.failureSummary })),
         })),
       ).toEqual([]);
+      await page.evaluate(() => {
+        (document.activeElement as HTMLElement)?.blur();
+        window.scrollTo(0, 0);
+      });
       if (width !== 320)
         await page.screenshot({
           path: info.outputPath(

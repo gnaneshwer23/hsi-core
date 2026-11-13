@@ -169,6 +169,10 @@ function PathDiagram({
 /** Shared read-only view. URL state and snapshot identity survive public/research handoffs. */
 export function InvestigationGraphExperience({ embedded = false }: { embedded?: boolean }) {
   const [params, setParams] = useSearchParams();
+  const [controlsOpen, setControlsOpen] = useState(false);
+  useEffect(() => {
+    setControlsOpen(window.matchMedia('(min-width: 701px)').matches);
+  }, []);
   const version = params.get('domainVersion');
   const [bundle, setBundle] = useState<DomainBundle | null>(null),
     [error, setError] = useState(''),
@@ -419,112 +423,121 @@ export function InvestigationGraphExperience({ embedded = false }: { embedded?: 
       </p>
       <div className="ig-workspace">
         <aside className="ig-rail" aria-label="Investigation selection">
-          <h2>Choose the question</h2>
-          <div className="ig-questions">
-            {bundle.questions.map((q) => (
-              <button
-                key={q.id}
-                aria-pressed={questionId === q.id}
-                onClick={() => chooseQuestion(q.id)}
-              >
-                {q.title}
-              </button>
-            ))}
-          </div>
-          <label>
-            Find a concept
-            <input
-              type="search"
-              maxLength={200}
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Name, alias or identifier"
-            />
-          </label>
-          {query && (
-            <div className="ig-search-results" aria-label="Concept search results">
-              {searchResults.length ? (
-                searchResults.map((n) => (
-                  <button
-                    key={n.id}
-                    onClick={() => {
-                      update({ from: n.id, node: n.id }, true);
-                      setQuery('');
-                    }}
-                  >
-                    {n.name}
-                    <small>{pretty(n.kind)} · use as starting concept</small>
-                  </button>
-                ))
-              ) : (
-                <p role="status">
-                  No matching concept in this snapshot. This is not evidence of scientific absence.
-                </p>
-              )}
-            </div>
-          )}
-          <label>
-            Starting concept
-            <select
-              value={from}
-              onChange={(e) => update({ from: e.target.value, node: e.target.value }, true)}
-            >
-              {bundle.nodes.map((n) => (
-                <option key={n.id} value={n.id}>
-                  {n.name}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label>
-            Destination concept
-            <select value={target} onChange={(e) => update({ target: e.target.value }, true)}>
-              {bundle.nodes.map((n) => (
-                <option key={n.id} value={n.id}>
-                  {n.name}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label>
-            Study model filter
-            <select
-              value={model}
-              onChange={(e) => update({ model: e.target.value, compare: '' }, true)}
-            >
-              <option value="">All represented models</option>
-              {DOMAIN_MODELS.map((m) => (
-                <option key={m} value={m}>
-                  {models[m]}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label>
-            Maximum path steps
-            <select value={hops} onChange={(e) => update({ hops: e.target.value }, true)}>
-              {[1, 2, 3, 4, 5, 6].map((n) => (
-                <option key={n}>{n}</option>
-              ))}
-            </select>
-          </label>
-          <p>
-            Paths follow outgoing source-candidate assertions only. Gaps and study-membership links
-            cannot complete a mechanism.
-          </p>
-          <Link
-            to={
-              '/research/knowledge-graph?' +
-              new URLSearchParams({
-                domainVersion: bundle.version,
-                investigation: questionId,
-                node: selected.id,
-                experience: 'advanced',
-              })
-            }
+          <details
+            className="ig-controls"
+            open={controlsOpen}
+            onToggle={(e) => setControlsOpen(e.currentTarget.open)}
           >
-            Open advanced domain tools
-          </Link>
+            <summary>Question and filters</summary>
+
+            <h2>Choose the question</h2>
+            <div className="ig-questions">
+              {bundle.questions.map((q) => (
+                <button
+                  key={q.id}
+                  aria-pressed={questionId === q.id}
+                  onClick={() => chooseQuestion(q.id)}
+                >
+                  {q.title}
+                </button>
+              ))}
+            </div>
+            <label>
+              Find a concept
+              <input
+                type="search"
+                maxLength={200}
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Name, alias or identifier"
+              />
+            </label>
+            {query && (
+              <div className="ig-search-results" aria-label="Concept search results">
+                {searchResults.length ? (
+                  searchResults.map((n) => (
+                    <button
+                      key={n.id}
+                      onClick={() => {
+                        update({ from: n.id, node: n.id }, true);
+                        setQuery('');
+                      }}
+                    >
+                      {n.name}
+                      <small>{pretty(n.kind)} · use as starting concept</small>
+                    </button>
+                  ))
+                ) : (
+                  <p role="status">
+                    No matching concept in this snapshot. This is not evidence of scientific
+                    absence.
+                  </p>
+                )}
+              </div>
+            )}
+            <label>
+              Starting concept
+              <select
+                value={from}
+                onChange={(e) => update({ from: e.target.value, node: e.target.value }, true)}
+              >
+                {bundle.nodes.map((n) => (
+                  <option key={n.id} value={n.id}>
+                    {n.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Destination concept
+              <select value={target} onChange={(e) => update({ target: e.target.value }, true)}>
+                {bundle.nodes.map((n) => (
+                  <option key={n.id} value={n.id}>
+                    {n.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Study model filter
+              <select
+                value={model}
+                onChange={(e) => update({ model: e.target.value, compare: '' }, true)}
+              >
+                <option value="">All represented models</option>
+                {DOMAIN_MODELS.map((m) => (
+                  <option key={m} value={m}>
+                    {models[m]}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Maximum path steps
+              <select value={hops} onChange={(e) => update({ hops: e.target.value }, true)}>
+                {[1, 2, 3, 4, 5, 6].map((n) => (
+                  <option key={n}>{n}</option>
+                ))}
+              </select>
+            </label>
+            <p>
+              Paths follow outgoing source-candidate assertions only. Gaps and study-membership
+              links cannot complete a mechanism.
+            </p>
+            <Link
+              to={
+                '/research/knowledge-graph?' +
+                new URLSearchParams({
+                  domainVersion: bundle.version,
+                  investigation: questionId,
+                  node: selected.id,
+                  experience: 'advanced',
+                })
+              }
+            >
+              Open advanced domain tools
+            </Link>
+          </details>
         </aside>
         <div className="ig-stage">
           <div className="ig-lenses" role="group" aria-label="Investigation graph view">
