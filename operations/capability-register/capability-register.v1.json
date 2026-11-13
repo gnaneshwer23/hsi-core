@@ -898,7 +898,8 @@
           "src/hsiAgentDurableCheckpoint.ts",
           "src/hsiAgentRecoveryReconciliation.ts",
           "src/hsiAgentIntelligenceContracts.ts",
-          "src/evidence/investigationOrchestrationContracts.ts"
+          "src/evidence/investigationOrchestrationContracts.ts",
+          "src/nexusJobs.ts"
         ],
         "modelBacked": false,
         "humanApproval": "Durable job runner decision and the held-migration decision before hosted persistence.",
@@ -1249,6 +1250,7 @@
           "F-05"
         ],
         "modules": [
+          "src/reviewPacket.ts",
           "src/interrogativeScientificReview.ts",
           "src/db/independentReviewQueue.ts",
           "src/db/authenticatedScientificReviewStore.ts",
