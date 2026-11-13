@@ -927,6 +927,7 @@
           "F-11"
         ],
         "modules": [
+          "src/researchV2/managedSigner.ts",
           "src/researchV2/sourceIntegrityService.ts",
           "src/researchV2/sourceIntegrityAssessor.ts",
           "src/researchV2/sourceEvidence.ts",

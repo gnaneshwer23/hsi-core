@@ -12,7 +12,7 @@ export type SourceIntegrityConfig={
  requestedUses:string[];
 };
 export const INTEGRITY_ENGINEERING_GAPS=Object.freeze({
- managedSigningAdapter:{implemented:false,detail:"ReceiptSigner is an interface. An adapter to a managed signing service (for example a cloud KMS Ed25519 sign operation) is not built or provisioned; in-process signing exists for tests and demonstrations only and must never hold a real key."},
+ managedSigningAdapter:{implemented:true,detail:"Built: src/researchV2/managedSigner.ts adapts a provider sign function to ReceiptSigner and verifies each signature against the pinned public key. The signing service itself, its key and the pinned public key are provisioned by the security signer (see the managed-signer item)."},
 });
 const ID=/^[A-Za-z0-9][A-Za-z0-9:_./-]{0,255}$/,ENV=/^[A-Z][A-Z0-9_]{2,63}$/;
 const isObj=(v:unknown):v is Record<string,unknown>=>!!v&&typeof v==="object"&&!Array.isArray(v);
