@@ -127,6 +127,7 @@ One module per line, sorted, so concurrent changes to different modules do not c
 - `src/hsiAgentOrchestrator.ts`
 - `src/hsiAgentRecoveryReconciliation.ts`
 - `src/hsiCheckpointedExecutor.ts`
+- `src/liveExecute.ts`
 - `src/liveWiring.ts`
 - `src/nexusJobs.ts`
 
@@ -147,6 +148,7 @@ One module per line, sorted, so concurrent changes to different modules do not c
 **WARDEN**
 - `src/livePreflight.ts`
 - `src/liveReadiness.ts`
+- `src/liveRehearsal.ts`
 - `src/operations/pilotOperationsService.ts`
 - `src/researchV2/providerReliability.ts`
 - `src/researchV2/stagingOperationStore.ts`

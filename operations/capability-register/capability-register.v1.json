@@ -900,6 +900,7 @@
           "src/hsiAgentOrchestrator.ts",
           "src/hsiAgentRecoveryReconciliation.ts",
           "src/hsiCheckpointedExecutor.ts",
+          "src/liveExecute.ts",
           "src/liveWiring.ts",
           "src/nexusJobs.ts"
         ],
@@ -971,6 +972,7 @@
         "modules": [
           "src/livePreflight.ts",
           "src/liveReadiness.ts",
+          "src/liveRehearsal.ts",
           "src/operations/pilotOperationsService.ts",
           "src/researchV2/providerReliability.ts",
           "src/researchV2/stagingOperationStore.ts",
