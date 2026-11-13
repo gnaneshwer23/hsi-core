@@ -62,3 +62,10 @@ The new facets constrain the **network view**. Path views retain their existing 
 | 13 website | PR #313 already released. This increment does not change or redeploy marketing pages |
 
 Local review branch only. No remote push, PR merge or deployment for this increment. The production release remains the separately verified #313 revision.
+
+
+## Simplification following user review
+
+The active design supersedes the earlier expanded sidebar: search plus one condition selector are visible by default. Start from a one-hop neighbourhood; search expands only the matching recorded network. A single refinement disclosure holds condition comparison, tissue and candidate/gap selection. Assay/type/domain/predicate/polarity controls are retained only for compatible saved URLs and deterministic contracts, not shown as a new control wall. Reset clears these inherited filters.
+
+Graph controls show zoom and fit. Space remains draggable; a focused graph supports arrow-key panning. Exports and evidence-coverage detail use disclosures. Existing unreviewed status, actual source inspection, missingness and exact snapshot continuity remain. This improves navigation and reduces clutter; it is not evidence of improved scientific accuracy.

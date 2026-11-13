@@ -4,7 +4,6 @@ import type { DomainBundle } from '../../../src/knowledgeGraph/domainGraph';
 import { networkProjection, connectionGroups } from '../../../src/knowledgeGraph/networkExplorer';
 import { GraphVisual, type CanvasGraph } from '../features/science/GraphVisual';
 import '../styles/research-network.css';
-import { GRAPH_KIND_COLOURS } from '../features/science/graphExplorer';
 const pretty = (s: string) => s.replaceAll('_', ' ');
 export const NETWORK_KEYS = [
   'netQuery',
@@ -59,7 +58,7 @@ export function ResearchNetworkExplorer({
     polarity: params.get('netPolarity') ?? '',
     gaps: params.get('netGaps') !== 'hide',
     orphans: params.get('netOrphans') === 'show',
-    scope: params.get('netScope') ?? 'global',
+    scope: params.get('netScope') ?? 'local',
     depth: Number(params.get('netDepth') ?? 1),
     model: params.get('model') ?? '',
   };
@@ -113,7 +112,7 @@ export function ResearchNetworkExplorer({
   const reset = () => update(Object.fromEntries(NETWORK_KEYS.map((k) => [k, ''])));
   function applyContext(values:Record<string,string>){
     const next=new URLSearchParams(params);for(const [key,value] of Object.entries(values)){if(value)next.set(key,value);else next.delete(key)}
-    const filters={...f,scope:'global',conditions:[next.get('netCondition'),next.get('netCompareCondition')].filter((c):c is string=>!!c),tissue:next.get('netTissue')??'',assay:next.get('netAssay')??'',evidenceKind:next.get('netEvidenceKind')??''};
+    const filters={...f,query:next.get('netQuery')??'',scope:'global',conditions:[next.get('netCondition'),next.get('netCompareCondition')].filter((c):c is string=>!!c),tissue:next.get('netTissue')??'',assay:next.get('netAssay')??'',evidenceKind:next.get('netEvidenceKind')??''};
     const eligible=networkProjection(bundle,selected,filters);
     const node=eligible.nodes.find(n=>n.id===selected)?.id??eligible.nodes[0]?.id??selected;
     update({...values,netScope:'global',node,edge:'',compare:'',path:''});
@@ -163,82 +162,19 @@ export function ResearchNetworkExplorer({
               maxLength={200}
               value={f.query}
               placeholder="Concept, alias or identifier"
-              onChange={(e) => update({ netQuery: e.target.value })}
+              onChange={(e) => applyContext({ netQuery: e.target.value })}
             />
           </label>
-          <div className="rn-scope" role="group" aria-label="Network scope">
-            {['global', 'local'].map((s) => (
-              <button key={s} aria-pressed={f.scope === s} onClick={() => update({ netScope: s })}>
-                {pretty(s)}
-              </button>
-            ))}
-          </div>
-          {f.scope === 'local' && (
-            <label>
-              Local depth
-              <select value={f.depth} onChange={(e) => update({ netDepth: e.target.value })}>
-                <option value="1">One hop</option>
-                <option value="2">Two hops</option>
-              </select>
-            </label>
-          )}
-          <fieldset className="rn-context"><legend>Recorded research context</legend>
-          <p>Exact source annotations for this network view. No disease ontology expansion is applied. Path views use their separate question controls.</p>
           {facet('Condition','netCondition',params.get('netCondition')??'',options.conditions)}
+          {(f.kind||f.domain||f.predicate||f.polarity||f.assay)&&<p className="rn-scope-note">This saved link includes additional filters. Use reset to return to the simple view.</p>}
+          <p className="rn-scope-note">Start with a concept and follow its recorded evidence. Conditions use the annotations in this snapshot.</p>
+          <details className="rn-refine"><summary>Refine this view</summary>
           {facet('Compare with','netCompareCondition',params.get('netCompareCondition')??'',options.conditions.filter(c=>c!==params.get('netCondition')))}
-          <p>Two conditions show separate records together, not a pooled effect. Conditions absent from this snapshot are not inferred.</p>
           <label>Tissue context<select aria-label="Tissue context" value={f.tissue} onChange={e=>applyContext({netTissue:e.target.value})}><option value="">All recorded tissues</option><option value={MISSING_CONTEXT}>Tissue not recorded</option>{options.tissues.map(t=><option key={t} value={t}>{t}</option>)}</select></label>
-          <label>Assay context<select aria-label="Assay context" value={f.assay} onChange={e=>applyContext({netAssay:e.target.value})}><option value="">All recorded assays</option><option value={MISSING_CONTEXT}>Assay not recorded</option>{options.assays.map(t=><option key={t} value={t}>{t}</option>)}</select></label>
           <label>Relationship evidence<select aria-label="Relationship evidence" value={f.evidenceKind} onChange={e=>applyContext({netEvidenceKind:e.target.value})}><option value="">Candidates and gaps</option><option value="source_candidate">Source candidates / unreviewed</option><option value="research_gap">Research gaps / unverified</option></select></label>
-          </fieldset>
-          {facet('Entity type', 'netKind', f.kind, [...new Set(bundle.nodes.map((n) => n.kind))])}
-          {facet('Biological domain', 'netDomain', f.domain, [
-            ...new Set(bundle.nodes.flatMap((n) => n.domains)),
-          ])}
-          {facet('Relationship', 'netPredicate', f.predicate, [
-            ...new Set(bundle.edges.map((e) => e.predicate)),
-          ])}
-          <label>
-            Finding direction
-            <select value={f.polarity} onChange={(e) => update({ netPolarity: e.target.value })}>
-              <option value="">All findings and gaps</option>
-              <option value="negative">Negative findings</option>
-              <option value="nonnegative">Non-negated candidates</option>
-            </select>
-          </label>
-          <label className="rn-check">
-            <input
-              type="checkbox"
-              checked={f.gaps}
-              onChange={(e) => update({ netGaps: e.target.checked ? 'show' : 'hide' })}
-            />
-            Show research gaps
-          </label>
-          <label className="rn-check">
-            <input
-              type="checkbox"
-              checked={f.orphans}
-              onChange={(e) => update({ netOrphans: e.target.checked ? 'show' : 'hide' })}
-            />
-            Show unconnected concepts
-          </label>
-          <button onClick={reset}>Reset network filters</button>
-          <details className="rn-groups">
-            <summary>Entity colour groups</summary>
-            <div>
-              {[...new Set(bundle.nodes.map((n) => n.kind))].sort().map((kind) => (
-                <button
-                  key={kind}
-                  aria-pressed={f.kind === kind}
-                  onClick={() => update({ netKind: f.kind === kind ? '' : kind })}
-                >
-                  <i style={{ background: GRAPH_KIND_COLOURS[kind] ?? '#9bcac0' }} />
-                  {pretty(kind)}
-                  <small>{bundle.nodes.filter((n) => n.kind === kind).length}</small>
-                </button>
-              ))}
-            </div>
+          <p>Comparison keeps study records separate. No pooled effect or ontology expansion is inferred.</p>
           </details>
+          <button onClick={reset}>Reset network filters</button>
           <details>
             <summary>Visible concepts ({slice.nodes.length})</summary>
             <div className="rn-concepts">
@@ -286,6 +222,7 @@ export function ResearchNetworkExplorer({
               )}
               <div hidden={list}>
                 <GraphVisual
+                  minimalControls
                   graph={graph}
                   selected={selected}
                   onSelect={visit}
@@ -336,13 +273,13 @@ export function ResearchNetworkExplorer({
               )}
             </>
           )}
-          <p className="rn-coverage" role="status">Context coverage: {coverage.records} visible records; {coverage.missingTissue} without recorded tissue; {coverage.missingAssay} without recorded assay; {coverage.unassignedCondition} without a condition annotation. Independently reviewed: {coverage.independentlyReviewed}. Missing metadata is not evidence of biological absence.</p>
+          <details className="rn-quality"><summary>Evidence coverage and limits</summary><p className="rn-coverage" role="status">Context coverage: {coverage.records} visible records; {coverage.missingTissue} without recorded tissue; {coverage.missingAssay} without recorded assay; {coverage.unassignedCondition} without a condition annotation. Independently reviewed: {coverage.independentlyReviewed}. Missing metadata is not evidence of biological absence.</p></details>
           <p className="rn-legend">
             Solid: source candidate. Dashed: negative finding. Dotted: research gap or study
             context. No relationship is independently approved in this snapshot.
           </p>
-          <section className="rn-links" aria-label="Navigate connected concepts">
-            <h3>Connections for {name(selected)}</h3>
+          <details className="rn-links" aria-label="Navigate connected concepts">
+            <summary>Connected evidence ({groups.incoming.length+groups.outgoing.length})</summary>
             <p>
               Connections below follow the active filters. Incoming and outgoing describe recorded
               assertion direction.
@@ -373,7 +310,7 @@ export function ResearchNetworkExplorer({
                 ))}
               </div>
             ))}
-          </section>
+          </details>
         </div>
       </div>
     </section>

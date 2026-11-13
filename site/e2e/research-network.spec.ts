@@ -5,7 +5,8 @@ const bundle = JSON.parse(
   await readFile(new URL('../public/research/domain-graph/graph.v1.json', import.meta.url), 'utf8'),
 );
 async function ready(page: any, query = '') {
-  await page.goto('/research/knowledge-graph' + query);
+  const state=new URLSearchParams(query);if(!state.has('netScope'))state.set('netScope','global');
+  await page.goto('/research/knowledge-graph?' + state);
   await expect(
     page.getByRole('region', { name: 'Research network explorer', exact: true }),
   ).toBeVisible();
@@ -20,6 +21,7 @@ test('global/local exploration, connection navigation and back/forward retain ex
     bundle.questions.find((q: any) => q.id === 'gut-immune').fromId;
   await network.getByRole('button', { name: 'Focus local graph', exact: true }).click();
   await expect(network.getByLabel('Local depth')).toHaveValue('1');
+  await network.locator('.rn-links>summary').click();
   const link = network.locator('.rn-link button').first();
   await expect(link).toBeVisible();
   const destination = await link.textContent();
@@ -40,7 +42,7 @@ test('facets, empty states and handoff preserve pinned snapshot without adding a
   page,
 }) => {
   const network = await ready(page);
-  await network.getByLabel('Finding direction').selectOption('negative');
+  await page.goto('/research/knowledge-graph?netScope=global&netPolarity=negative');
   await network.getByRole('button', { name: 'Show relationship list', exact: true }).click();
   const rows = network.getByRole('list', { name: 'Visible network relationships' });
   await expect(rows).toContainText('Negative finding');
@@ -50,12 +52,12 @@ test('facets, empty states and handoff preserve pinned snapshot without adding a
   await network.getByRole('searchbox', { name: 'Search network' }).fill('nonexistent-in-snapshot');
   await expect(network).toContainText('not evidence of biological absence');
   await network.getByRole('button', { name: 'Reset network filters', exact: true }).first().click();
-  await network.getByLabel('Entity type', { exact: true }).selectOption('cytokine');
+  await network.getByLabel('Condition', { exact: true }).selectOption('Rheumatoid arthritis');
   await page.getByRole('link', { name: 'Continue in Science', exact: true }).click();
   await expect(page).toHaveURL(/domainVersion=/);
-  await expect(page.getByLabel('Entity type', { exact: true })).toHaveValue('cytokine');
+  await expect(page.getByLabel('Condition', { exact: true })).toHaveValue('Rheumatoid arthritis');
   await page.reload();
-  await expect(page.getByLabel('Entity type', { exact: true })).toHaveValue('cytokine');
+  await expect(page.getByLabel('Condition', { exact: true })).toHaveValue('Rheumatoid arthritis');
   await expect(
     page.getByText('0 independently approved relationships.', { exact: false }),
   ).toHaveCount(1);
@@ -113,7 +115,7 @@ test('recorded disease context filters exact records and survives Science handof
  await network.getByLabel('Condition',{exact:true}).selectOption('Rheumatoid arthritis');
  await expect(page).toHaveURL(/netCondition=Rheumatoid/);expect(new URL(page.url()).searchParams.has('edge')).toBe(false);
  await expect(network.locator('.rn-network>header')).toContainText('18 of 131 relationships');
- await network.getByLabel('Compare with',{exact:true}).selectOption('Systemic sclerosis');
+ await network.getByText('Refine this view',{exact:true}).click();await network.getByLabel('Compare with',{exact:true}).selectOption('Systemic sclerosis');
  await expect(network.locator('.rn-coverage')).toContainText('28 visible records');
  await network.getByLabel('Tissue context',{exact:true}).selectOption('__not_recorded__');
  await expect(network.locator('.rn-coverage')).toContainText('23 visible records; 23 without recorded tissue');
@@ -129,4 +131,11 @@ test('mobile context controls can be revealed without pushing the graph behind a
  await expect(toggle).toHaveAttribute('aria-expanded','false');await expect(network.getByLabel('Condition',{exact:true})).toBeHidden();
  await toggle.click();await expect(network.getByLabel('Condition',{exact:true})).toBeVisible();await network.getByLabel('Condition',{exact:true}).selectOption('Rheumatoid arthritis');
  await network.getByRole('button',{name:'Hide filters and research context',exact:true}).click();await expect(network.locator('.rn-network>header')).toContainText('18 of 131 relationships');
+});
+
+test('default graph keeps a small neighbourhood and minimal visible controls',async({page})=>{
+ await page.goto('/research/knowledge-graph');const network=page.getByRole('region',{name:'Research network explorer',exact:true});await expect(network).toBeVisible();
+ await expect(network.locator('.rn-filters select:visible')).toHaveCount(1);await expect(network.locator('.kg-canvas>.xp-graph-toolbar button')).toHaveText(['+','−','Fit network']);
+ await expect(network.getByLabel('Compare with',{exact:true})).toBeHidden();await expect(network.locator('.rn-network>header')).toContainText('Local connections');
+ const graph=network.getByRole('group',{name:'Interactive graph of biological entities',exact:true});await graph.press('ArrowRight');await expect(network.getByRole('status').filter({hasText:'View offset'})).toBeVisible();
 });
