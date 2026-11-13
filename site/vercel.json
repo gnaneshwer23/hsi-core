@@ -401,6 +401,10 @@
       "destination": "/_pages/departments.html"
     },
     {
+      "source": "/connected-intelligence",
+      "destination": "/_pages/connected-intelligence.html"
+    },
+    {
       "source": "/departments/immunology",
       "destination": "/_pages/departments--immunology.html"
     },
