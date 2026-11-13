@@ -20,7 +20,7 @@ test('one snapshot, question and selected assertion survive home to Science to r
     if (r.method() === 'POST') posts.push(r.url());
   });
   await page.goto('/');
-  await page.getByRole('link', { name: 'Open full explorer ↗', exact: true }).click();
+  await page.getByRole('link', { name: 'Open this selection in the research workspace ↗', exact: true }).click();
   const graph = page.locator('.ig-experience');
   await expect(graph).toBeVisible();
   await graph.getByText("Question and filters", {exact:true}).click();

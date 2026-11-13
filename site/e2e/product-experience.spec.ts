@@ -16,7 +16,8 @@ test("home opens the existing versioned graph and preserves selected context",as
  await expect(page.locator('#home-knowledge-graph')).toContainText('Public research snapshot');
  await page.locator('#home-knowledge-graph [data-graph-edge]').first().press('Enter');
  await expect(page.locator('.hd-inspector')).toContainText('Unreviewed source candidate');
- await expect(page.locator('.sp-live-inspector a').first()).toHaveAttribute('href',/^https:/);
+ await page.locator('.hd-inspector').getByText('Source passages and permissions',{exact:true}).click();
+ await expect(page.locator('.hd-inspector a').first()).toHaveAttribute('href',/^https:/);
  await page.getByRole('link',{name:'Open this selection in the research workspace ↗',exact:true}).click();
  await expect(page).toHaveURL(/domainVersion=[a-f0-9]{64}/);await expect(page.getByRole('heading',{level:1})).toContainText('Investigate a biological connection');
 });
