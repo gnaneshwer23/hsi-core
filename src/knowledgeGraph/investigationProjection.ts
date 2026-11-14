@@ -94,9 +94,21 @@ export function investigationHandoff(
     'compare',
     'netQuery', 'netKind', 'netDomain', 'netPredicate', 'netPolarity',
     'netGaps', 'netOrphans', 'netScope', 'netDepth',
+    'netDepartment','netCondition','netCompareCondition','netTissue','netAssay','netEvidenceKind',
   ]) {
     const value = state.get(key);
     if (value) params.set(key, value);
   }
   return path + '?' + params.toString();
 }
+
+/** Export an inspected connection from the current visible working set, never scientific approval. */
+export function createConnectionInspection(bundle:DomainBundle,input:{nodeId:string;edgeId:string;visibleEdgeIds:readonly string[];state:URLSearchParams}){
+ const node=bundle.nodes.find(n=>n.id===input.nodeId),edge=bundle.edges.find(e=>e.id===input.edgeId);
+ if(!node||!edge||!input.visibleEdgeIds.includes(edge.id)||![edge.subjectId,edge.objectId].includes(node.id))throw Error('Selection is outside the inspected graph context');
+ const selection=new URLSearchParams(input.state);selection.set('node',node.id);selection.set('edge',edge.id);
+ const handoff=investigationHandoff('/research/knowledge-graph',selection,bundle.version);
+ const subject=bundle.nodes.find(n=>n.id===edge.subjectId)!,object=bundle.nodes.find(n=>n.id===edge.objectId)!;
+ return {schemaVersion:'hsi-inspected-investigation-1' as const,graphVersion:bundle.version,questionTemplateId:null,question:`What evidence connects ${subject.name} and ${object.name}?`,selection:Object.fromEntries(new URL(handoff,'https://hsi.invalid').searchParams),handoff,path:null,assertions:[edge],sources:bundle.sources.filter(s=>s.id===edge.sourceId),gaps:bundle.gaps.filter(g=>g.id===edge.id),sourceClearanceVerified:false as const,scientificApproval:false as const,graphPromotable:false as const,liveProviderExecution:false as const};
+}
+export function renderConnectionInspection(brief:ReturnType<typeof createConnectionInspection>){const e=brief.assertions[0]!;return ['# Research inspection draft',brief.question,`Graph version: ${brief.graphVersion}`,'## Recorded candidate',e.assertion,`Status: ${e.reviewStatus}; ${e.kind}. Confidence: ${e.confidence}.`,'## Experimental context',`Model: ${e.model}\nTissue: ${e.tissue??'Not recorded'}\nAssay: ${e.assay??'Not recorded'}\nPopulation: ${e.population??'Not recorded'}\nTiming: ${e.timepoint??'Not recorded'}\nIntervention: ${e.intervention??'Not recorded'}\nOutcome: ${e.outcome??'Not recorded'}`,'## Sources',...brief.sources.map(s=>`${s.title}\n${s.url}\nIdentity: ${s.identityStatus}; rights: ${s.rights}.`),'## Limits and uncertainty',e.limitations,...e.scopeWarnings,'## Reopen the same selection',brief.handoff,'## Approval boundary','Snapshot inspection only. No new search, model execution, independent verification, human scientific approval or graph promotion occurred. Account persistence is not established by this download.',''].join('\n\n');}
