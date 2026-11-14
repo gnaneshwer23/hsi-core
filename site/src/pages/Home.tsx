@@ -241,7 +241,7 @@ export function Home() {
         dark
       >
         <div className="hsi-actions">
-          <PublicAction to="/contact">Request Research Access</PublicAction>
+          <PublicAction to="/contact">Research access options</PublicAction>
           <PublicAction to="/context-conflict-audit" secondary>
             Explore the Audit
           </PublicAction>

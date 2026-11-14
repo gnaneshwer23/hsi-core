@@ -1,5 +1,7 @@
+import {Link} from "react-router-dom";
 import { HeroArtwork } from "../components/editorial/HeroArtwork";
 import { useState, type FormEvent } from "react";
+import "../styles/research-access.css";
 import { AccessIntentPanel } from "../components/AccessIntentPanel";
 import {
   BlueprintSection,
@@ -276,65 +278,11 @@ export function Pricing() {
   );
 }
 
-export function Contact() {
-  return (
-    <MarketingPage>
-      <ExperienceHero
-        eyebrow="RESEARCH ACCESS"
-        title="Bring your next"
-        emphasis="research question."
-        description="Create an HSI account if you need one. The question form on this page saves a browser draft only and does not submit an access request or start an investigation. Researcher, source and scientific-review permissions are provisioned independently."
-        visual={<HeroArtwork kind="access" />}
-      >
-        <div className="xp-actions">
-          <ExperienceLink to={signUpHref()}>Create an account</ExperienceLink>
-          <ExperienceLink to={signInHref()} secondary>
-            Sign in
-          </ExperienceLink>
-        </div>
-      </ExperienceHero>
-      <BlueprintSection kicker="GETTING STARTED" title="One account. Clear responsibilities.">
-        <div className="ed-principle-rows">
-          {(
-            [
-              [
-                "Create and verify your account",
-                "Register with your email address and complete the verification process through the configured authentication provider.",
-              ],
-              [
-                "Confirm research access",
-                "An administrator provisions the appropriate permissions. The research backend checks your identity, role and permitted source access.",
-              ],
-              [
-                "Check what you can open",
-                "After you sign in, the research account page shows permissions an administrator has provisioned. This page does not start an investigation, and research writes stay closed until an administrator enables them.",
-              ],
-            ] as const
-          ).map(([title, text]) => (
-            <article key={title}>
-              <h3>{title}</h3>
-              <p>{text}</p>
-            </article>
-          ))}
-        </div>
-        <AccessIntentPanel />
-        <p className="ed-scope-line" role="note">
-          This page does not write an access request to HSI servers. Browser drafts are optional. Create an account,
-          then an administrator grants research access. Check status on your research account after sign-in.
-        </p>
-        <div className="xp-actions">
-          <ExperienceLink to="/research/account" secondary>
-            Check your research account
-          </ExperienceLink>
-          <ExperienceLink to="/evidence-safety" secondary>
-            Evidence &amp; safety
-          </ExperienceLink>
-        </div>
-      </BlueprintSection>
-      <ExperienceCTA journey={JOURNEY_BY_PATH["/contact"]} />
-    </MarketingPage>
-  );
-}
+export function Contact(){return <div className="sp-page research-access-page">
+ <header className="sp-intro rai-hero"><p className="sp-kicker">Research access</p><h1>Start with a question.<br/>Know what happens next.</h1><p>Explore the public workspace now, check your account permissions or prepare a personal research draft.</p><p className="rai-boundary">This page does not write an access request or deliver an enquiry. Researcher, source and scientific-review permissions are provisioned independently.</p><div className="sp-actions"><Link className="sp-button" to="/research/knowledge-graph">Open public workspace</Link><Link to="/research/account">Check research account</Link></div></header>
+ <section className="sp-section rai-paths" aria-labelledby="rai-options"><h2 id="rai-options">Choose the right starting point.</h2><div><article><h3>Explore without an account.</h3><p>Inspect the public candidate graph, source records and experimental context. Public exploration does not establish scientific approval.</p><Link to="/research">See the research workspace</Link></article><article><h3>Create or open your account.</h3><p>An account provides an identity. It does not automatically grant investigation, source-use, reviewer or publication permissions.</p><div className="sp-actions"><Link to={signUpHref()}>Create an account</Link><Link to={signInHref()}>Sign in</Link></div></article><article><h3>Plan a governed evaluation.</h3><p>Named owners, permitted sources, scoped research access and independent review must be agreed before live execution. No public collaboration submission channel is available here.</p><Link to="/trust">Read the governance requirements</Link></article></div></section>
+ <section className="sp-section rai-preparation" aria-labelledby="rai-prepare"><aside><h2 id="rai-prepare">Prepare a useful research question.</h2><p>Keep the scientific goal and its limits together.</p><ul><li>The biological claim or mechanism to investigate.</li><li>Species, tissue, cell state and experimental setting.</li><li>Sources you intend to use and any reuse restrictions.</li><li>The decision or uncertainty the work should clarify.</li></ul><p>There is no automatic transfer from this draft to an account, investigation or reviewer. Keep your own copy until an authorised channel is agreed.</p></aside><AccessIntentPanel/></section>
+ </div>}
 
 export function Community() {
   const [topic, setTopic] = useState<string>(DISCUSSION_TOPICS[0]!.id);

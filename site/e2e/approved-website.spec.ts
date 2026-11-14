@@ -1,11 +1,12 @@
 import {test,expect} from "@playwright/test";
 import {readFile} from "node:fs/promises";
-const pages={"/":"Biological research,connected by evidence.","/platform":"The intelligence behind connected biomedical research.","/context-conflict-audit":"Different findings. Deeper understanding.","/evidence-intelligence":"A connection is a starting point. Inspect what supports it.","/research":"Built around questions the literature makes visible.","/research-briefs":"Research decisions deserve an evidence trail.","/science":"Explore the biological context behind disease mechanisms.","/applications":"One research foundation. Three connected applications.","/trust":"No silent promotion.","/about":"Building a more connected understanding of human health."};
+const pages={"/":"See why theevidence differs.","/platform":"The intelligence behind connected biomedical research.","/context-conflict-audit":"Different findings. Deeper understanding.","/evidence-intelligence":"Scientific evidence is more than a confidence score.","/research":"A connected workspace for scientific investigation.","/research-briefs":"Research decisions deserve an evidence trail.","/science":"Explore the biological context behind disease mechanisms.","/applications":"One research foundation. Three connected applications.","/trust":"No silent promotion.","/about":"Building a more connected understanding of human health."};
 for(const [path,title] of Object.entries(pages))test(`approved public page, image and responsive layout ${path}`,async({page},info)=>{
  test.setTimeout(60000);const errors:string[]=[];page.on("pageerror",e=>errors.push(e.message));
  for(const width of [320,390,768,1440]){
   await page.setViewportSize({width,height:1000});await page.goto(path);await expect(page.getByRole("heading",{level:1})).toHaveText(title);await page.evaluate(()=>document.fonts.ready);
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`${path} at ${width}`).toBe(true);
+  for(const image of await page.locator("main img").all())await image.scrollIntoViewIfNeeded();
   await expect.poll(()=>page.locator("main img").evaluateAll(imgs=>imgs.filter(i=>!(i as HTMLImageElement).complete||(i as HTMLImageElement).naturalWidth===0).map(i=>(i as HTMLImageElement).src))).toEqual([]);
   if(width===390||width===1440)await page.screenshot({path:info.outputPath((path==="/"?"home":path.slice(1))+`-${width}.png`),fullPage:true});
  }
@@ -22,7 +23,7 @@ test("audit context changes and all five fictional scenarios preserve the no-liv
 test("evidence page connects the actual graph and original publications without implying approval",async({page})=>{
  await page.goto('/evidence-intelligence');await expect(page.locator('#home-knowledge-graph')).toHaveCount(0);
  await expect(page.getByRole('link',{name:/T follicular helper-like cells contribute/})).toHaveAttribute('href','https://pubmed.ncbi.nlm.nih.gov/29514998/');
- await expect(page.getByRole('main')).toContainText('does not validate HSI');
+ await expect(page.getByRole('main')).toContainText('not an automated investigation');
 });
 test("brief exports carry source-free and non-approved status",async({page})=>{
  await page.goto("/research-briefs");await page.locator("#example-brief summary").filter({hasText:"Evidence inventory and provenance"}).click();await expect(page.locator("#example-brief")).toContainText("No source-cleared study packet");

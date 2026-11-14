@@ -26,9 +26,10 @@ test('all public links and selector states resolve, without linking older engine
       }
       return links.length;
     }
+    // Draft forms have dedicated save/download/validation tests; they do not behave as selectors.
     // The lazy graph has its own complete navigation/a11y suite. Its drawer and
     // growing network controls must not invalidate positional marketing selectors.
-    const links=await inspectLinks(),buttons=page.getByRole('main').locator('button:not(.ig-experience button):not(.hsi-graph-entry button):not(.sp-live-graph button):not(.sp-workspace button):not(.hd-discovery button)');
+    const links=await inspectLinks(),buttons=page.getByRole('main').locator('button:not(.rai-draft button):not(.ig-experience button):not(.hsi-graph-entry button):not(.sp-live-graph button):not(.sp-workspace button):not(.hd-discovery button)');
     const count=await buttons.count();
     for(let i=0;i<count;i++){
       const button=buttons.nth(i),label=await button.innerText();
@@ -75,7 +76,7 @@ test('header and footer destinations can be clicked',async({page})=>{
   for(const href of new Set(hrefs)){
     await page.goto('/');
     let link=page.locator('.hsi-nav,.hsi-footer').locator(`a[href=${JSON.stringify(href)}]:visible`).first();
-    if(!await link.count()){await page.getByRole('button',{name:'Research',exact:true}).click();link=page.locator('#research-pages').locator(`a[href=${JSON.stringify(href)}]`)}
+    if(!await link.count()){await page.getByRole('button',{name:'Explore Science',exact:true}).click();link=page.locator('#science-links').locator(`a[href=${JSON.stringify(href)}]`)}
     await link.click();await expect(page).toHaveURL(new URL(href,'http://127.0.0.1:4178').href);await expect(page.getByRole('heading',{level:1})).toBeVisible();
   }
 });

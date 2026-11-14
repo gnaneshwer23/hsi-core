@@ -2,7 +2,7 @@ import {useEffect,useMemo,useState,useRef} from 'react';
 import {AtlasDepartmentNavigation} from './AtlasDepartmentNavigation';
 import {atlasDepartment} from '../../../src/knowledgeGraph/atlasDepartments';
 import {Link} from 'react-router-dom';
-import type {DomainBundle} from '../../../src/knowledgeGraph/domainGraph';
+import type {DomainBundle,DomainEdge,DomainSource} from '../../../src/knowledgeGraph/domainGraph';
 import {networkProjection} from '../../../src/knowledgeGraph/networkExplorer';
 import {recordedContextOptions} from '../../../src/knowledgeGraph/recordedResearchContext';
 import {createConnectionInspection,renderConnectionInspection} from '../../../src/knowledgeGraph/investigationProjection';
@@ -13,7 +13,8 @@ import '../styles/home-discovery.css';
 const pretty=(s:string)=>s.replaceAll('_',' ');
 function download(text:string,name:string,type:string){const url=URL.createObjectURL(new Blob([text],{type})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
 /** One homepage journey over the existing verified candidate snapshot. No live model or write activation. */
-export function HomeResearchGraph(){
+export type HomeEvidenceSelection={version:string;edge:DomainEdge;source:DomainSource|null};
+export function HomeResearchGraph({onEvidenceChange}:{onEvidenceChange?:(selection:HomeEvidenceSelection|null)=>void}={}){
  const [bundle,setBundle]=useState<DomainBundle|null>(null),[error,setError]=useState(false),[retry,setRetry]=useState(0),[selected,setSelected]=useState(''),[edgeId,setEdgeId]=useState(''),[department,setDepartment]=useState(''),[condition,setCondition]=useState(''),[query,setQuery]=useState(''),[scope,setScope]=useState('local'),[stage,setStage]=useState<'explore'|'evidence'|'brief'>('explore'),[notice,setNotice]=useState('');
  const stageHeading=useRef<HTMLHeadingElement>(null);
  useEffect(()=>{if(stage!=='explore')stageHeading.current?.focus()},[stage]);
@@ -21,6 +22,7 @@ export function HomeResearchGraph(){
  const filters={department,query,conditions:condition?[condition]:[],domain:'',kind:'',predicate:'',polarity:'',gaps:true,orphans:false,scope,depth:1,model:''};
  const slice=useMemo(()=>bundle?networkProjection(bundle,selected,filters):null,[bundle,selected,query,condition,scope,department]);
  const edge=slice?.edges.find(e=>e.id===edgeId),node=bundle?.nodes.find(n=>n.id===selected),source=bundle?.sources.find(s=>s.id===edge?.sourceId);
+ useEffect(()=>{onEvidenceChange?.(bundle&&edge?{version:bundle.version,edge,source:source??null}:null)},[bundle,edge,source,onEvidenceChange]);
  const graph=useMemo<CanvasGraph|null>(()=>bundle&&slice?{version:bundle.version,generatedFrom:'Existing versioned research candidate snapshot',reviewed:false,nodes:slice.nodes.map(n=>({id:n.id,label:n.name,kind:n.kind,system:n.domains[0],description:n.aliases.join(', '),reviewState:'draft',sourceRefs:[]})),edges:slice.edges.map(e=>({id:e.id,subjectId:e.subjectId,objectId:e.objectId,predicate:e.predicate,assertionType:e.kind,evidenceRefs:e.sourceId?[e.sourceId]:[],reviewState:'draft'}))}:null,[bundle,slice]);
  const state=new URLSearchParams({node:selected,lens:'network',netScope:scope,netDepth:'1'});if(department)state.set('netDepartment',department);if(query)state.set('netQuery',query);if(condition)state.set('netCondition',condition);if(edge)state.set('edge',edge.id);
  const brief=bundle&&edge?createConnectionInspection(bundle,{nodeId:selected,edgeId:edge.id,visibleEdgeIds:slice!.edges.map(e=>e.id),state}):null;

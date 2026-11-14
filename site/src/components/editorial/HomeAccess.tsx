@@ -35,7 +35,7 @@ export function HomeAccess() {
             Explore How HSI Works
           </Link>
           <Link className="cl-text-link cl-text-link-on-deep" to="/contact">
-            Contact for Collaboration
+            Research access options
           </Link>
         </div>
       </div>

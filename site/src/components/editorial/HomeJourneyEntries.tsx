@@ -30,7 +30,7 @@ export function HomeJourneyEntries(){
                 Review evidence approach <span aria-hidden="true"><ArrowIcon direction="right"/></span>
               </Link>
               <Link className="ed-text-link" to={contactAccessHref({scenarioId:j.scenarioId,domain:j.domain})}>
-                Request research access <span aria-hidden="true"><ArrowIcon direction="right"/></span>
+                Research access options <span aria-hidden="true"><ArrowIcon direction="right"/></span>
               </Link>
             </div>
           </article>

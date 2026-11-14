@@ -18,6 +18,8 @@ import "./styles/research-public.css";
 import "./styles/public-system.css";
 import "./styles/collective-system.css";
 
+import "./styles/premium-science.css";
+
 const root=document.getElementById("root")!;
 const app=<StrictMode><BrowserRouter><App /></BrowserRouter></StrictMode>;
 // Query-driven screens render afresh; public static pages hydrate only their exact route.

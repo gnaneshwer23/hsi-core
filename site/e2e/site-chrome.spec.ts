@@ -8,10 +8,10 @@ test('shared header stays usable without overlap across mobile and desktop width
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`Overflow at ${width}`).toBe(true);
  }
 });
-test('desktop header has five direct navigation links',async({page})=>{
+test('desktop header keeps three direct links and scientific exploration',async({page})=>{
  await page.setViewportSize({width:1440,height:900});await page.goto('/');
  const nav=page.getByRole('navigation',{name:'Primary',exact:true});
- await expect(nav.getByRole('link')).toHaveText(['Home','Knowledge graph','How it works','Research','Evidence intelligence']);
+ await expect(nav.getByRole('link')).toHaveText(['How it works','Research','Evidence intelligence']);
  await nav.getByRole('link',{name:'Research',exact:true}).click();await expect(page).toHaveURL(/research$/);
  await nav.getByRole('link',{name:'Evidence intelligence',exact:true}).click();await expect(page).toHaveURL(/evidence-intelligence$/);
 });
@@ -32,7 +32,7 @@ test('footer has product navigation, clear project links and accessible touch ta
  await page.getByRole('contentinfo').getByRole('link',{name:'Context-Conflict Audit',exact:true}).click();await expect(page).toHaveURL(/context-conflict-audit$/);
 });
 test('primary and secondary actions remain readable and large enough on light and dark sections',async({page})=>{
- await page.goto('/');const heroActions=page.locator('.hx-hero .sp-actions a');await expect(heroActions).toHaveCount(2);const buttons=heroActions;
+ await page.goto('/');const heroActions=page.locator('.ps-hero .sp-actions a');await expect(heroActions).toHaveCount(2);const buttons=heroActions;
  for(const button of await buttons.all()){
   const b=(await button.boundingBox())!;expect(b.height).toBeGreaterThanOrEqual(44);
   const ratio=await button.evaluate(el=>{const toRgb=(s:string)=>(s.match(/[\d.]+/g)??[]).slice(0,3).map(Number);let bg=getComputedStyle(el).backgroundColor;let p=el.parentElement;while((bg==='rgba(0, 0, 0, 0)'||bg==='transparent')&&p){bg=getComputedStyle(p).backgroundColor;p=p.parentElement}const lum=(rgb:number[])=>rgb.map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4}).reduce((a,v,i)=>a+v*[.2126,.7152,.0722][i]!,0);const a=lum(toRgb(getComputedStyle(el).color)),b=lum(toRgb(bg));return (Math.max(a,b)+.05)/(Math.min(a,b)+.05)});

@@ -235,7 +235,7 @@ export function ResearchBriefsPage() {
         <div className="hsi-actions">
           <PublicAction to="/research">Explore the Research Workflow</PublicAction>
           <PublicAction to="/contact" secondary>
-            Request Research Access
+            Research access options
           </PublicAction>
         </div>
         <p>

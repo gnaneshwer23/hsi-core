@@ -12,7 +12,7 @@ export function ConnectedIntelligence(){
    <h1>One foundation. Connected intelligence.</h1>
    <p className="dept-lead">HSI is built around a shared, evidence-linked scientific foundation. Over time the same foundation is intended to support clinical context, patient-reported health and translational study questions, each under its own governance. This page describes that direction and, for each capability, what exists today.</p>
    <p className="dept-coverage">Everything below other than scientific discovery is not available. Labels show maturity: <strong>Research preview</strong>, <strong>In development</strong> or <strong>Planned</strong>.</p>
-   <div className="dept-actions"><Link className="dept-button" to="/departments">Explore the science<Arrow/></Link><Link className="dept-link" to="/contact">Request collaboration<Arrow/></Link></div>
+   <div className="dept-actions"><Link className="dept-button" to="/departments">Explore the science<Arrow/></Link><Link className="dept-link" to="/contact">Research access options<Arrow/></Link></div>
   </div></section>
 
   <section className="dept-shell dept-section" aria-labelledby="ci-caps"><h2 id="ci-caps">Four capabilities, one platform</h2>

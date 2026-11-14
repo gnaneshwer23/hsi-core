@@ -12,7 +12,7 @@ test("public pages have a single main/title, working navigation and no narrow-sc
  }
 });
 test("home opens the existing versioned graph and preserves selected context",async({page})=>{
- await page.goto('/');await expect(page.getByRole('heading',{level:1})).toContainText('Biological research,');
+ await page.goto('/');await expect(page.getByRole('heading',{level:1})).toContainText('See why the');
  await expect(page.locator('#home-knowledge-graph')).toContainText('Public research snapshot');
  await page.locator('#home-knowledge-graph [data-graph-edge]').first().press('Enter');
  await expect(page.locator('.hd-inspector')).toContainText('Unreviewed source candidate');
@@ -25,7 +25,7 @@ test("mobile menu opens, closes with Escape and connects public destinations",as
  await page.setViewportSize({width:390,height:844});await page.goto("/");const menu=page.getByRole("button",{name:"Open menu",exact:true});await menu.click();await expect(menu).toHaveAttribute("aria-expanded","true");
  await page.keyboard.press("Escape");await expect(menu).toHaveAttribute("aria-expanded","false");await expect(menu).toBeFocused();
  await menu.click();await page.locator("#public-menu").getByRole("link",{name:"Evidence intelligence",exact:true}).click();await expect(page).toHaveURL(/evidence-intelligence$/);
- await expect(page.getByRole("heading",{level:1})).toContainText("A connection is a starting point");
+ await expect(page.getByRole("heading",{level:1})).toContainText("Scientific evidence is more than a confidence score");
 });
 test("public access paths lead to the real account process without a pretend submission",async({page})=>{
  const posts:string[]=[];page.on("request",r=>{if(r.method()==="POST")posts.push(r.url())});await page.goto("/pricing");await expect(page).toHaveURL(/contact$/);
@@ -79,4 +79,29 @@ test("investigation opens on the question carried in the URL and ignores unknown
  await expect(page.getByRole("button",{name:/metabolic inflammation relate to insulin resistance/i})).toHaveAttribute("aria-pressed","true");
  await page.goto("/research/investigate?question=not-a-question");
  await expect(page.getByRole("button",{name:/gut microbial metabolites influence neuroinflammation/i})).toHaveAttribute("aria-pressed","true");
+});
+
+test("access draft restores, downloads and clears without submission",async({page})=>{
+ const posts:string[]=[];page.on('request',r=>{if(r.method()==='POST')posts.push(r.url())});
+ await page.goto('/contact');await page.getByRole('button',{name:'Save browser draft',exact:true}).click();
+ await expect(page.getByRole('status')).toContainText('at least 12 characters');
+ const question='How does cytokine signalling differ across experimental tissue compartments?';
+ await page.getByLabel('Research question or investigation focus',{exact:true}).fill(question);
+ await page.getByRole('button',{name:'Save browser draft',exact:true}).click();await page.reload();
+ await expect(page.getByLabel('Research question or investigation focus',{exact:true})).toHaveValue(question);
+ await page.getByLabel('Research question or investigation focus',{exact:true}).fill(question+' Compare assays.');
+ await expect(page.getByRole('main')).toContainText('latest edits have not been saved');
+ const event=page.waitForEvent('download');await page.getByRole('button',{name:'Download text draft',exact:true}).click();
+ const file=await event;const text=await readFile((await file.path())!,'utf8');expect(text).toContain(question+' Compare assays.');expect(text).toContain('Not submitted to HSI');
+ await page.getByRole('button',{name:'Clear draft',exact:true}).click();await page.reload();
+ await expect(page.getByLabel('Research question or investigation focus',{exact:true})).toHaveValue('');
+ expect(posts).toEqual([]);
+});
+test("blocked browser storage never reports a successful save",async({page})=>{
+ await page.addInitScript(()=>{Storage.prototype.setItem=()=>{throw new DOMException('Blocked','SecurityError')}});
+ await page.goto('/contact');await page.getByLabel('Research question or investigation focus',{exact:true}).fill('Compare immune cell states across tissue compartments.');
+ await page.getByRole('button',{name:'Save browser draft',exact:true}).click();
+ await expect(page.getByRole('status')).toContainText('could not save your draft');
+ await expect(page.getByLabel('Research question or investigation focus',{exact:true})).toHaveValue('Compare immune cell states across tissue compartments.');
+ await expect(page.getByRole('status')).not.toContainText('Saved in this browser only');
 });
