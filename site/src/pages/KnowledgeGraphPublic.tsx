@@ -3,6 +3,7 @@ import "../styles/scientific-public.css";
 import "../styles/knowledge-graph-public.css";
 import "../styles/home-redesign.css";
 import {useGraphSnapshot} from "../components/home/useGraphSnapshot";
+import {NeighbourhoodDiagram,ChartsPair} from "../components/graph/GraphCharts";
 
 /** Public entry to the HSI knowledge graph. It links only to surfaces that exist and states what each one is. */
 const ways = [
@@ -32,15 +33,6 @@ const ways = [
   },
 ] as const;
 
-const carried = [
-  ["Entities", "Cells, molecules, tissues, pathways and conditions, each with an identifier."],
-  ["Relationships", "A stated connection between two entities, with direction and polarity where the source gives one."],
-  ["Provenance", "The publication and passage the relationship came from, and what the source does not say."],
-  ["Experimental context", "Species, tissue, cell state, assay, intervention and timing, kept attached to the claim."],
-  ["Uncertainty and gaps", "Missing information and open questions are recorded, not smoothed over."],
-  ["Review status", "Every item is unreviewed until an authorised human reviews it. Graph promotion is a separate decision."],
-] as const;
-
 const extending = [
   ["Ontology grounding", "Candidate links from graph concepts to pinned releases of public ontologies. A curator can record a recommendation; it is not an approved mapping."],
   ["Researcher-owned investigations", "Saving an investigation as a digest-chained, unreviewed record. Storage is designed and held; it is not enabled."],
@@ -50,7 +42,6 @@ const extending = [
 
 
 const fmt=(n:number)=>n.toLocaleString("en-GB");
-const clip=(t:string,n=200)=>t.length>n?t.slice(0,n-1).trimEnd()+"…":t;
 
 /** Figure 2: one relationship from the published snapshot, followed from the wider graph back to its source. */
 function WalkFigure(){
@@ -87,34 +78,23 @@ function WalkFigure(){
   );
 }
 
-/** Figure 3: what the graph records for a few real relationships, including a negated one. */
-function ReportedTable(){
-  const {snapshot:s}=useGraphSnapshot();
-  if(!s)return null;
+/** Figure 1: a real neighbourhood of the snapshot. */
+function NeighbourhoodFigure(){
   return (
-    <section className="fg-block kg-reported" aria-labelledby="kg-rep">
-      <h2 id="kg-rep">What is recorded, and how.</h2>
-      <div>
-        <p>A recorded relationship describes what a source is annotated as reporting. Direction is kept as written, and a finding that does not support a relationship is recorded as negated, not dropped.</p>
-        <figure className="fg-table">
-          <table>
-            <caption className="sp-sr">Recorded relationships from the published snapshot</caption>
-            <thead><tr><th scope="col">Recorded assertion</th><th scope="col">Recorded as</th><th scope="col">Context</th><th scope="col">Verification</th></tr></thead>
-            <tbody>
-              {s.examples.map(x=>(
-                <tr key={x.id}>
-                  <td>{clip(x.assertion)}</td>
-                  <th scope="row">{x.subject} {x.negated?"does not ":""}{x.predicate} {x.object}{x.negated?" (negated)":""}</th>
-                  <td>{x.model}; {x.design}</td>
-                  <td>{x.context}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <figcaption><b>Figure 3.</b> Four relationships from the published snapshot. Verification shows that the annotation is still pending checks against the source passage.</figcaption>
-        </figure>
-      </div>
-    </section>
+    <figure className="fg kg-fig" aria-labelledby="kg-f1">
+      <div className="kg-fig-body"><NeighbourhoodDiagram/></div>
+      <figcaption id="kg-f1" className="fg-cap"><b>Figure 1.</b> A neighbourhood of the published snapshot: one concept and the concepts it is recorded as connected to. Layout and distance are not biology. Every relationship is a candidate and unreviewed.</figcaption>
+    </figure>
+  );
+}
+
+/** Figure 3: coverage and vocabulary of the snapshot. */
+function ChartsFigure(){
+  return (
+    <figure className="fg kg-fig" aria-labelledby="kg-f3">
+      <div className="kg-fig-body"><ChartsPair/></div>
+      <figcaption id="kg-f3" className="fg-cap"><b>Figure 3.</b> What the snapshot covers and how it describes relationships. Counts are read from the published snapshot and the department tags, and they will change as the graph is extended.</figcaption>
+    </figure>
   );
 }
 
@@ -142,7 +122,7 @@ export function KnowledgeGraphPublicPage() {
       <header className="fg-hook">
         <h1>Relationships between biological entities, with the evidence attached.</h1>
         <div>
-          <p className="fg-lead">The HSI graph connects what research reports about cells, molecules, tissues and conditions, and keeps each connection tied to its source, its experimental context and its review status.</p>
+          <p className="fg-lead">A graph of what research reports about cells, molecules, tissues and conditions, with every connection tied to its source, context and review status.</p>
           <div className="sp-actions">
             <Link className="sp-button" to="/#home-knowledge-graph">Explore the graph <span aria-hidden="true">→</span></Link>
             <Link to="/evidence-intelligence">Inspect the evidence →</Link>
@@ -151,8 +131,9 @@ export function KnowledgeGraphPublicPage() {
         </div>
       </header>
 
+      <NeighbourhoodFigure />
       <WalkFigure />
-      <ReportedTable />
+      <ChartsFigure />
 
       <section className="kg-section" aria-labelledby="kg-ways">
         <h2 id="kg-ways">Choose how deep to go.</h2>
@@ -165,18 +146,6 @@ export function KnowledgeGraphPublicPage() {
             </li>
           ))}
         </ul>
-      </section>
-
-      <section className="kg-section" aria-labelledby="kg-carries">
-        <h2 id="kg-carries">A connection is a starting point, not a conclusion.</h2>
-        <dl className="kg-facts">
-          {carried.map(([term, text]) => (
-            <div key={term}>
-              <dt>{term}</dt>
-              <dd>{text}</dd>
-            </div>
-          ))}
-        </dl>
       </section>
 
       <section className="kg-section" aria-labelledby="kg-limits">
