@@ -2,18 +2,20 @@ import {useMemo,useState} from "react";
 import type {DomainBundle,DomainEdge} from "../../../src/knowledgeGraph/domainGraph";
 import {DEPARTMENT_SLUGS,crossDepartmentPaths,departmentCoverage,projectDepartment,verifyPathReconstruction,type CrossDepartmentPath,type DepartmentSlug} from "../../../src/knowledgeGraph/departments";
 import {departmentBySlug} from "../lib/departments";
+import {GraphInvestigation} from "./GraphInvestigation";
 import "../styles/department-lens.css";
+import "../styles/graph-investigation.css";
 
 const pretty=(s:string)=>s.replaceAll("_"," ");
 const MODEL_LABEL:Record<string,string>={human_in_vivo:"Human participants",human_ex_vivo:"Human cells (ex vivo)",human_cell_line:"Human cell line",mouse:"Mouse",rodent:"Rodent",mixed:"Mixed models",unspecified:"Model not specified"};
 function download(value:unknown,name:string){const url=URL.createObjectURL(new Blob([JSON.stringify(value,null,2)+"\n"],{type:"application/json"}));const a=document.createElement("a");a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
 
 /** The relationship dossier: everything the graph records about one edge, with its limits stated, not implied. */
-function Dossier({bundle,edge,onClose}:{bundle:DomainBundle;edge:DomainEdge;onClose:()=>void}){
+function Dossier({bundle,edge,onClose,onAdd,added}:{bundle:DomainBundle;edge:DomainEdge;onClose:()=>void;onAdd:(id:string)=>void;added:boolean}){
  const name=(id:string)=>bundle.nodes.find(n=>n.id===id)?.name??id,source=bundle.sources.find(s=>s.id===edge.sourceId);
  const others=bundle.edges.filter(e=>e.id!==edge.id&&((e.subjectId===edge.subjectId&&e.objectId===edge.objectId)||(e.subjectId===edge.objectId&&e.objectId===edge.subjectId)));
  return <section className="dl-dossier" aria-label="Relationship dossier">
-  <div className="dl-dossier-head"><div><p className="dl-kicker">RELATIONSHIP DOSSIER</p><h3>{name(edge.subjectId)} <span aria-hidden="true">→</span><span className="dl-sr"> to </span> {name(edge.objectId)}</h3></div><button className="dl-btn" onClick={onClose}>Close dossier</button></div>
+  <div className="dl-dossier-head"><div><p className="dl-kicker">RELATIONSHIP DOSSIER</p><h3>{name(edge.subjectId)} <span aria-hidden="true">→</span><span className="dl-sr"> to </span> {name(edge.objectId)}</h3></div><div className="dl-dossier-actions"><button className="dl-btn" onClick={()=>onAdd(edge.id)} disabled={added}>{added?"In the investigation":"Add to investigation"}</button><button className="dl-btn" onClick={onClose}>Close dossier</button></div></div>
   <p className="dl-assertion">{edge.assertion}</p>
   <dl className="dl-facts">
    <div><dt>Recorded as</dt><dd>{edge.kind==="research_gap"?"Unresolved research connection (a question, not evidence)":"Source-linked candidate"}</dd></div>
@@ -37,7 +39,7 @@ function Dossier({bundle,edge,onClose}:{bundle:DomainBundle;edge:DomainEdge;onCl
  </section>;
 }
 
-function PathCard({bundle,path,index,onInspect}:{bundle:DomainBundle;path:CrossDepartmentPath;index:number;onInspect:(edgeId:string)=>void}){
+function PathCard({bundle,path,index,onInspect,onAdd}:{bundle:DomainBundle;path:CrossDepartmentPath;index:number;onInspect:(edgeId:string)=>void;onAdd:(id:string)=>void}){
  const name=(id:string)=>bundle.nodes.find(n=>n.id===id)?.name??id,ok=verifyPathReconstruction(bundle,path);
  const supported=path.boundaries.length===0;
  return <article className="dl-path" aria-label={`Path ${index+1}`}>
@@ -47,7 +49,7 @@ function PathCard({bundle,path,index,onInspect}:{bundle:DomainBundle;path:CrossD
    <p><strong>{name(h.fromId)}</strong> <span aria-hidden="true">{h.direction==="forward"?"→":"←"}</span><span className="dl-sr">{h.direction==="forward"?" leads to ":" is read in reverse from "}</span> <strong>{name(h.toId)}</strong></p>
    <p className="dl-meta">{pretty(h.predicate)}{h.direction==="reverse"?" (read in reverse)":""} · {MODEL_LABEL[h.model]??h.model}{h.tissue?` · ${h.tissue}`:""}{h.conditions.length?` · ${h.conditions.slice(0,2).join(", ")}`:""}</p>
    {h.evidenceStops&&<p className="dl-stop"><span aria-hidden="true">■ </span>Evidence stops here: {h.evidence==="research_gap"?"an unresolved research gap, not a finding":h.negated?"a negative finding":"no source is attached"}.</p>}
-   <button className="dl-btn" onClick={()=>onInspect(h.edgeId)} aria-label={`Inspect relationship ${i+1}: ${name(h.fromId)} and ${name(h.toId)}`}>Inspect relationship</button>
+   <button className="dl-btn" onClick={()=>onInspect(h.edgeId)} aria-label={`Inspect relationship ${i+1}: ${name(h.fromId)} and ${name(h.toId)}`}>Inspect relationship</button> <button className="dl-btn" onClick={()=>onAdd(h.edgeId)} aria-label={`Add to investigation: relationship ${i+1}`}>Add to investigation</button>
   </li>)}</ol>
   <ul className="dl-warnings">{path.warnings.map(w=><li key={w}>{w}</li>)}</ul>
   <footer><span className="dl-verified">{ok?`Reconstructable from graph version ${bundle.version.slice(0,8)}`:"Does not reconstruct from this graph version"}</span>
@@ -57,6 +59,7 @@ function PathCard({bundle,path,index,onInspect}:{bundle:DomainBundle;path:CrossD
 
 export function DepartmentLens({bundle,selectedId,onShowInGraph}:{bundle:DomainBundle;selectedId?:string;onShowInGraph:(id:string)=>void}){
  const coverage=useMemo(()=>departmentCoverage(bundle),[bundle]);
+ const [invNodes,setInvNodes]=useState<string[]>([]),[invEdges,setInvEdges]=useState<string[]>([]);
  const [dept,setDept]=useState<DepartmentSlug>("microbiome"),[query,setQuery]=useState(""),[start,setStart]=useState(selectedId??""),[target,setTarget]=useState<DepartmentSlug>("neuroscience"),[hops,setHops]=useState(4),[edgeId,setEdgeId]=useState("");
  const projection=useMemo(()=>projectDepartment(bundle,dept),[bundle,dept]);
  const concepts=useMemo(()=>projection.nodes.filter(n=>!query.trim()||n.name.toLowerCase().includes(query.trim().toLowerCase())).slice(0,12),[projection,query]);
@@ -64,6 +67,8 @@ export function DepartmentLens({bundle,selectedId,onShowInGraph}:{bundle:DomainB
  const result=useMemo(()=>startNode?crossDepartmentPaths(bundle,startNode.id,target,{maxHops:hops,maxPaths:8}):null,[bundle,startNode,target,hops]);
  const edge=bundle.edges.find(e=>e.id===edgeId);
  const info=departmentBySlug(dept);
+ const addEdge=(id:string)=>setInvEdges(v=>v.includes(id)||v.length>=12?v:[...v,id]);
+ const addNode=(id:string)=>setInvNodes(v=>v.includes(id)||v.length>=12?v:[...v,id]);
  return <div className="dl-page">
   <p className="dl-banner" role="note">Candidate relationships from the public research graph. All are unreviewed, none is validated knowledge, and a path is an association chain, not a causal mechanism. Graph version {bundle.version.slice(0,8)}.</p>
   <section aria-labelledby="dl-rail"><h2 id="dl-rail">Six departments, one graph</h2>
@@ -78,7 +83,7 @@ export function DepartmentLens({bundle,selectedId,onShowInGraph}:{bundle:DomainB
   </section>
   <section aria-labelledby="dl-paths"><h2 id="dl-paths">Follow a connection into another department</h2>
    <div className="dl-controls">
-    <p className="dl-start"><span>Starting concept</span><strong>{startNode?.name??"Choose a concept above"}</strong>{startNode&&<button className="dl-btn" onClick={()=>onShowInGraph(startNode.id)}>Show in graph</button>}</p>
+    <p className="dl-start"><span>Starting concept</span><strong>{startNode?.name??"Choose a concept above"}</strong>{startNode&&<span className="dl-start-actions"><button className="dl-btn" onClick={()=>onShowInGraph(startNode.id)}>Show in graph</button> <button className="dl-btn" onClick={()=>addNode(startNode.id)} disabled={invNodes.includes(startNode.id)}>{invNodes.includes(startNode.id)?"In the investigation":"Add to investigation"}</button></span>}</p>
     <label className="dl-field">Into department<select value={target} onChange={e=>{setTarget(e.target.value as DepartmentSlug);setEdgeId("")}}>{DEPARTMENT_SLUGS.map(s=><option key={s} value={s}>{departmentBySlug(s)?.name??s}</option>)}</select></label>
     <label className="dl-field">At most<select value={hops} onChange={e=>setHops(Number(e.target.value))}>{[2,3,4,5].map(n=><option key={n} value={n}>{n} hops</option>)}</select></label>
    </div>
@@ -88,8 +93,9 @@ export function DepartmentLens({bundle,selectedId,onShowInGraph}:{bundle:DomainB
     {result?.status==="no_path_within_bound"&&<p>No path of {hops} hops or fewer connects this concept to that department in the current graph. That reflects coverage in this graph, not proof that no connection exists.</p>}
     {result?.status==="paths_found"&&<p>{result.paths.length} {result.paths.length===1?"path":"paths"} found{result.truncated?" (more exist; results are bounded)":""}. Paths with complete candidate evidence are listed first.</p>}
    </div>
-   {result?.paths.map((p,i)=><PathCard key={p.reconstruct.edgeIds.join("|")} bundle={bundle} path={p} index={i} onInspect={setEdgeId}/>)}
+   {result?.paths.map((p,i)=><PathCard key={p.reconstruct.edgeIds.join("|")} bundle={bundle} path={p} index={i} onInspect={setEdgeId} onAdd={addEdge}/>)}
   </section>
-  {edge&&<Dossier bundle={bundle} edge={edge} onClose={()=>setEdgeId("")}/>}
+  {edge&&<Dossier bundle={bundle} edge={edge} onClose={()=>setEdgeId("")} onAdd={addEdge} added={invEdges.includes(edge.id)}/>}
+  <GraphInvestigation bundle={bundle} nodeIds={invNodes} edgeIds={invEdges} department={result?target:null} onRemoveNode={id=>setInvNodes(v=>v.filter(x=>x!==id))} onRemoveEdge={id=>setInvEdges(v=>v.filter(x=>x!==id))}/>
  </div>;
 }
