@@ -306,6 +306,73 @@
       }
     },
     {
+      "id": "F-14",
+      "group": "foundations",
+      "name": "Department projections and cross-department traversal",
+      "status": [
+        "implemented",
+        "connected"
+      ],
+      "evidence": [
+        "src/knowledgeGraph/departments.ts",
+        "site/src/components/DepartmentLens.tsx",
+        "test/graphDepartments.test.ts"
+      ],
+      "gap": "Candidate relationships only (all unreviewed); genomics and human-physiology have no tagged coverage; traversal untested at large graph scale",
+      "nextAction": "Curated, reviewed edges; scale test before the graph grows"
+    },
+    {
+      "id": "F-15",
+      "group": "foundations",
+      "name": "Graph-scoped agent investigations (deterministic)",
+      "status": [
+        "implemented",
+        "connected"
+      ],
+      "evidence": [
+        "src/knowledgeGraph/graphAgents.ts",
+        "site/src/components/GraphInvestigation.tsx",
+        "test/graphAgents.test.ts"
+      ],
+      "gap": "PARALLAX, VANTAGE and HELIX run deterministic logic only; HELIX model-backed interpretation is not enabled; identifier refusal is a heuristic, not de-identification",
+      "nextAction": "Optional model-backed HELIX after live evidence and verifier acceptance; every output stays a candidate"
+    },
+    {
+      "id": "F-16",
+      "group": "foundations",
+      "name": "Saved investigations and curator mapping recommendations (device-local)",
+      "status": [
+        "implemented",
+        "connected",
+        "blocked"
+      ],
+      "evidence": [
+        "src/knowledgeGraph/investigationStore.ts",
+        "src/ontology/mappingReview.ts",
+        "site/src/pages/OntologyMappingReview.tsx",
+        "db/migrations/031_hsi_graph_workspace_storage.sql"
+      ],
+      "gap": "Records live in one browser only; reviewer identity is self-declared and unverified; shared storage is held migration 031, never applied",
+      "nextAction": "Approve role design and rehearse 031 on a disposable Neon branch; add verified-session adapters"
+    },
+    {
+      "id": "F-17",
+      "group": "foundations",
+      "name": "Ontology import and candidate concept mappings",
+      "status": [
+        "implemented"
+      ],
+      "evidence": [
+        "src/ontology/oboTerms.ts",
+        "src/ontology/ontologyImport.ts",
+        "src/ontology/conceptMapping.ts",
+        "research/ontology/import-manifest.v1.json",
+        "research/ontology/candidate-mappings.v1.json"
+      ],
+      "gap": "23 of 153 concepts have an unreviewed candidate; none is an approved mapping; term tables live in a gitignored cache; HPO skipped by decision",
+      "nextAction": "Curator review of candidates; add ChEBI and NCBITaxon after licence confirmation"
+    },
+    {
       "id": "O-01",
       "group": "investigation_output",
       "name": "Scientific landscape",
