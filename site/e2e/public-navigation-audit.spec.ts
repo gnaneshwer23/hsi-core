@@ -88,7 +88,7 @@ test('header and footer destinations can be clicked',async({page})=>{
   for(const href of new Set(hrefs)){
     await page.goto('/');
     let link=page.locator('.hsi-nav,.hsi-footer').locator(`a[href=${JSON.stringify(href)}]:visible`).first();
-    if(!await link.count()){await page.getByRole('button',{name:'Research',exact:true}).click();link=page.locator('#research-pages').locator(`a[href=${JSON.stringify(href)}]`)}
+    if(!await link.count()){await page.getByRole('button',{name:'Explore Science',exact:true}).click();link=page.locator('#science-links').locator(`a[href=${JSON.stringify(href)}]`)}
     await link.click();await expect(page).toHaveURL(new URL(href,'http://127.0.0.1:4178').href);await expect(page.getByRole('heading',{level:1})).toBeVisible();
   }
 });

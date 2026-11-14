@@ -1,6 +1,6 @@
 /** Canonical public research story. All existing tools and secondary resources retain their routes. */
 export const PRIMARY_NAV_LINKS = [
- {to:"/",label:"Home"},{to:"/how-it-works",label:"How it works"},
+ {to:"/how-it-works",label:"How it works"},
  {to:"/research",label:"Research"},{to:"/evidence-intelligence",label:"Evidence intelligence"}
 ] as const;
 export const RESEARCH_NAV_LINKS=[

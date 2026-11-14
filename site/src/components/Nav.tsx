@@ -1,3 +1,5 @@
+import {ScienceNavigation} from './ScienceNavigation';
+import {Fragment} from 'react';
 import {HsiIdentity} from "./HsiIdentity";
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
@@ -60,8 +62,9 @@ export function Nav() {
       }
       if (e.key === "Tab") {
         const items = [...drawer.current!.querySelectorAll<HTMLElement>("button,a[href]")];
-        const first = items[0],
-          last = items.at(-1);
+        const visible = items.filter(el=>el.getClientRects().length>0);
+        const first = visible[0],
+          last = visible.at(-1);
         if (e.shiftKey && document.activeElement === first) {
           e.preventDefault();
           last?.focus();
@@ -95,7 +98,7 @@ export function Nav() {
           <HsiIdentity/>
         </Link>
         <nav aria-label="Primary" className="hsi-desktop-nav">
-          {PRIMARY_NAV_LINKS.map(l=><NavLink key={l.to} to={l.to} end={l.to==='/'}>{l.label}</NavLink>)}
+          {PRIMARY_NAV_LINKS.map(l=><Fragment key={l.to}><NavLink to={l.to} end>{l.label}</NavLink>{l.to==='/how-it-works'&&<ScienceNavigation/>}</Fragment>)}
         </nav>
         <div className="hsi-header-actions">
           <Link className="hsi-signin" to={signedIn ? "/research/account" : "/sign-in"}>
@@ -142,9 +145,7 @@ export function Nav() {
           </div>
           <nav aria-label="Mobile navigation">
             {PRIMARY_NAV_LINKS.map((l) => (
-              <NavLink key={l.to} to={l.to}>
-                {l.label}
-              </NavLink>
+              <Fragment key={l.to}><NavLink to={l.to} end>{l.label}</NavLink>{l.to==='/how-it-works'&&<ScienceNavigation mobile/>}</Fragment>
             ))}
             <NavLink to={signedIn ? "/research/account" : "/sign-in"}>
               {signedIn ? "Account" : "Sign in"}
