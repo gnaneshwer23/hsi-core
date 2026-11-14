@@ -3,8 +3,10 @@ import AxeBuilder from '@axe-core/playwright';
 test('knowledge graph landing states its limits and links only to real surfaces',async({page})=>{
  await page.goto('/knowledge-graph');
  await expect(page.getByRole('heading',{level:1})).toContainText('Relationships between biological entities');
+ await page.getByText('Has anything been reviewed?',{exact:true}).click();
  await expect(page.getByText('Nothing here has scientific approval',{exact:false})).toBeVisible();
- await expect(page.getByText('Being extended / not live',{exact:true})).toBeVisible();
+ await expect(page.getByRole('heading',{name:'One relationship'})).toBeVisible();
+ await expect(page.getByRole('heading',{name:'Where the graph is being developed.'})).toBeVisible();
  for(const [name,href] of [['Browse the educational map','/science/graph'],['Inspect claims and sources','/research/knowledge-graph'],['Ask a question over a selection','/research/investigate']] as const)
   await expect(page.getByRole('link',{name,exact:true})).toHaveAttribute('href',href);
  const results=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa']).analyze();

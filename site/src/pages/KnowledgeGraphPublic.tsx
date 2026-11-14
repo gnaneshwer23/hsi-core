@@ -1,6 +1,8 @@
 import {Link} from "react-router-dom";
 import "../styles/scientific-public.css";
 import "../styles/knowledge-graph-public.css";
+import "../styles/home-redesign.css";
+import {useGraphSnapshot} from "../components/home/useGraphSnapshot";
 
 /** Public entry to the HSI knowledge graph. It links only to surfaces that exist and states what each one is. */
 const ways = [
@@ -46,60 +48,117 @@ const extending = [
   ["Beyond one disease", "The Context-Conflict Audit generalised across systems. Systemic sclerosis is one validation case, not the boundary."],
 ] as const;
 
-/** Schematic of one relationship and what travels with it. Illustrative; it shows structure, not a finding. */
-function RelationshipSchematic() {
+
+const fmt=(n:number)=>n.toLocaleString("en-GB");
+const clip=(t:string,n=200)=>t.length>n?t.slice(0,n-1).trimEnd()+"…":t;
+
+/** Figure 2: one relationship from the published snapshot, followed from the wider graph back to its source. */
+function WalkFigure(){
+  const {snapshot:s,failed}=useGraphSnapshot();
+  const e=s?.examples[0];
   return (
-    <figure className="kg-figure">
-      <svg viewBox="0 0 520 150" role="img" aria-labelledby="kg-fig-title kg-fig-desc">
-        <title id="kg-fig-title">One relationship between two entities</title>
-        <desc id="kg-fig-desc">Two entities joined by a relationship. A structural schematic, not a scientific finding.</desc>
-        <g className="kg-edge">
-          <line x1="130" y1="64" x2="388" y2="64" />
-          <path d="M378 56L390 64L378 72" fill="none" />
-        </g>
-        <circle className="kg-node" cx="100" cy="64" r="34" />
-        <circle className="kg-node" cx="420" cy="64" r="34" />
-        <text className="kg-label" x="100" y="132" textAnchor="middle">Entity</text>
-        <text className="kg-label" x="420" y="132" textAnchor="middle">Entity</text>
-        <text className="kg-label kg-label-mid" x="259" y="48" textAnchor="middle">relationship</text>
-      </svg>
-      <p className="kg-attach">Every relationship carries:</p>
-      <ul className="kg-chips">
-        <li><b>Source</b> publication and passage</li>
-        <li><b>Context</b> species · tissue · assay</li>
-        <li><b>Status</b> unreviewed</li>
-      </ul>
-      <figcaption>Schematic of structure. It is not a scientific finding.</figcaption>
+    <figure className="fg kg-walk" aria-labelledby="kg-walk-cap">
+      <div className="fg-panels kg-walk-panels">
+        <section aria-labelledby="kw-a">
+          <span className="fg-letter" aria-hidden="true">A</span>
+          <h2 id="kw-a">The wider picture</h2>
+          {s?<p className="fg-big"><b>{fmt(s.concepts)}</b> concepts, <b>{fmt(s.relationships)}</b> candidate relationships</p>:<p className="fg-wait">{failed?"Snapshot unavailable. No substitute figures are shown.":"Verifying snapshot…"}</p>}
+          <p>Every line is a recorded connection between two concepts. Select one in the explorer to open the rest of this chain.</p>
+          <Link to="/#home-knowledge-graph">Open the explorer →</Link>
+        </section>
+        <section aria-labelledby="kw-b">
+          <span className="fg-letter" aria-hidden="true">B</span>
+          <h2 id="kw-b">One relationship</h2>
+          {e?<><p className="fg-big">{e.subject} <span className="kg-pred">{e.predicate}</span> {e.object}</p><p>{e.assertion}</p></>:<p className="fg-wait">{failed?"Unavailable.":"Verifying snapshot…"}</p>}
+        </section>
+        <section aria-labelledby="kw-c">
+          <span className="fg-letter" aria-hidden="true">C</span>
+          <h2 id="kw-c">Its source</h2>
+          {e?.source?<><p className="fg-big kg-title">{e.source.title}</p><p>{e.source.pmid?`PubMed ${e.source.pmid}. `:""}Status: {e.source.identity}.{e.source.locator?` ${e.source.locator}.`:""}</p></>:<p className="fg-wait">{failed?"Unavailable.":"Verifying snapshot…"}</p>}
+        </section>
+        <section aria-labelledby="kw-d">
+          <span className="fg-letter" aria-hidden="true">D</span>
+          <h2 id="kw-d">Context and limits</h2>
+          {e?<><p>Model: {e.model}. Design: {e.design}.{e.tissue?` Tissue: ${e.tissue}.`:""}</p><p>{e.limits}</p>{e.warnings.map(w=><p key={w}>{w}</p>)}</>:<p className="fg-wait">{failed?"Unavailable.":"Verifying snapshot…"}</p>}
+        </section>
+      </div>
+      <figcaption id="kg-walk-cap" className="fg-cap"><b>Figure 2.</b> One relationship from the published snapshot{s?` (${s.version})`:""}, followed back to its source. It is a candidate and unreviewed. The assertion is an editorial annotation pending source verification, and the source is a bibliographic record whose passage has not been retrieved.</figcaption>
     </figure>
+  );
+}
+
+/** Figure 3: what the graph records for a few real relationships, including a negated one. */
+function ReportedTable(){
+  const {snapshot:s}=useGraphSnapshot();
+  if(!s)return null;
+  return (
+    <section className="fg-block kg-reported" aria-labelledby="kg-rep">
+      <h2 id="kg-rep">What is recorded, and how.</h2>
+      <div>
+        <p>A recorded relationship describes what a source is annotated as reporting. Direction is kept as written, and a finding that does not support a relationship is recorded as negated, not dropped.</p>
+        <figure className="fg-table">
+          <table>
+            <caption className="sp-sr">Recorded relationships from the published snapshot</caption>
+            <thead><tr><th scope="col">Recorded assertion</th><th scope="col">Recorded as</th><th scope="col">Context</th><th scope="col">Verification</th></tr></thead>
+            <tbody>
+              {s.examples.map(x=>(
+                <tr key={x.id}>
+                  <td>{clip(x.assertion)}</td>
+                  <th scope="row">{x.subject} {x.negated?"does not ":""}{x.predicate} {x.object}{x.negated?" (negated)":""}</th>
+                  <td>{x.model}; {x.design}</td>
+                  <td>{x.context}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <figcaption><b>Figure 3.</b> Four relationships from the published snapshot. Verification shows that the annotation is still pending checks against the source passage.</figcaption>
+        </figure>
+      </div>
+    </section>
+  );
+}
+
+const faq:[string,string][]=[
+  ["Does a line prove causation?","No. A line is a recorded connection. Study design, species and context still decide what it can support."],
+  ["Does more than one source mean more certainty?","No. Several records can come from one study, and source count supports navigation, not conclusions."],
+  ["Has anything been reviewed?","Nothing here has scientific approval. The graph holds candidates for independent review, and graph promotion is a separate decision."],
+  ["Is the layout meaningful?","No. Layout and distance on screen are not biology, and coverage is unequal across systems."],
+  ["Does it use patient data or give clinical advice?","No. No patient data enters the research graph, and nothing here is clinical advice."],
+];
+function FaqList(){
+  return (
+    <div className="kg-faq">
+      {faq.map(([q,a])=>(
+        <details key={q}><summary>{q}</summary><p>{a}</p></details>
+      ))}
+      <p className="kg-note">See <Link to="/trust">how evidence, inference and approval stay separate</Link>.</p>
+    </div>
   );
 }
 
 export function KnowledgeGraphPublicPage() {
   return (
-    <div className="sp-page kg-page">
-      <header className="kg-hero">
+    <div className="sp-page fg-page kg-page">
+      <header className="fg-hook">
+        <h1>Relationships between biological entities, with the evidence attached.</h1>
         <div>
-          <p className="sp-kicker">Knowledge graph</p>
-          <h1>Relationships between biological entities, with the evidence attached.</h1>
-          <p className="kg-lead">
-            The HSI graph connects what research reports about cells, molecules, tissues and conditions, and keeps each
-            connection tied to its source, its experimental context and its review status. It is the foundation the
-            rest of the platform works around.
-          </p>
-          <div className="kg-actions">
+          <p className="fg-lead">The HSI graph connects what research reports about cells, molecules, tissues and conditions, and keeps each connection tied to its source, its experimental context and its review status.</p>
+          <div className="sp-actions">
             <Link className="sp-button" to="/#home-knowledge-graph">Explore the graph <span aria-hidden="true">→</span></Link>
-            <Link className="kg-link" to="/evidence-intelligence">Inspect the evidence →</Link>
+            <Link to="/evidence-intelligence">Inspect the evidence →</Link>
           </div>
+          <p className="fg-status">Published snapshot · candidate-only · unreviewed</p>
         </div>
-        <RelationshipSchematic />
       </header>
 
+      <WalkFigure />
+      <ReportedTable />
+
       <section className="kg-section" aria-labelledby="kg-ways">
-        <p className="sp-kicker">Four ways in</p>
         <h2 id="kg-ways">Choose how deep to go.</h2>
-        <ul className="kg-cards">
+        <ul className="kg-index">
           {ways.map((w) => (
-            <li key={w.to} className="kg-card">
+            <li key={w.to}>
               <h3><Link to={w.to}>{w.title}</Link></h3>
               <p>{w.text}</p>
               <p className="kg-status"><span aria-hidden="true" className="kg-dot" />{w.status}</p>
@@ -109,7 +168,6 @@ export function KnowledgeGraphPublicPage() {
       </section>
 
       <section className="kg-section" aria-labelledby="kg-carries">
-        <p className="sp-kicker">What every relationship carries</p>
         <h2 id="kg-carries">A connection is a starting point, not a conclusion.</h2>
         <dl className="kg-facts">
           {carried.map(([term, text]) => (
@@ -122,22 +180,11 @@ export function KnowledgeGraphPublicPage() {
       </section>
 
       <section className="kg-section" aria-labelledby="kg-limits">
-        <div className="kg-callout">
-          <p className="sp-kicker">What the graph does not claim</p>
-          <h2 id="kg-limits">Plain limits.</h2>
-          <ul className="kg-limits">
-            <li>Lines are recorded connections, not validated causality.</li>
-            <li>Layout and distance on screen are not biology.</li>
-            <li>Coverage is unequal across systems, and some areas have none yet.</li>
-            <li>Nothing here has scientific approval. The graph holds candidates for independent review.</li>
-            <li>No patient data enters the research graph, and nothing here is clinical advice.</li>
-          </ul>
-          <p className="kg-note">See <Link to="/trust">how evidence, inference and approval stay separate</Link>.</p>
-        </div>
+        <h2 id="kg-limits">Plain answers about what a line means.</h2>
+        <FaqList />
       </section>
 
       <section className="kg-section" aria-labelledby="kg-next">
-        <p className="sp-kicker">Being extended / not live</p>
         <h2 id="kg-next">Where the graph is being developed.</h2>
         <dl className="kg-facts">
           {extending.map(([term, text]) => (

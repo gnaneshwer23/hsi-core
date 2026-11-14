@@ -14,7 +14,6 @@ function Coverage({d}:{d:Department}){
 export function DepartmentsIndex(){
  return <div className="dept-page">
   <section className="dept-hero"><div className="dept-shell">
-   <p className="dept-kicker">Six departments, one connected foundation</p>
    <h1>Biology does not respect departmental lines.</h1>
    <p className="dept-lead">HSI organises scientific investigation around six interconnected perspectives. They share one evidence-linked graph, so a question that starts in one department can follow the biology into the others without losing its sources or its context.</p>
   </div></section>
@@ -36,7 +35,6 @@ export function DepartmentPage({slug}:{slug:string}){
  return <div className="dept-page">
   <section className="dept-hero"><div className="dept-shell">
    <nav className="dept-crumb" aria-label="Breadcrumb"><Link to="/departments">Departments</Link><span aria-hidden="true">/</span><span>{d.name}</span></nav>
-   <p className="dept-kicker">Department {String(i+1).padStart(2,"0")} of 06</p>
    <h1>{d.name}</h1>
    <p className="dept-tagline">{d.tagline}</p>
    <p className="dept-lead">{d.summary}</p>
