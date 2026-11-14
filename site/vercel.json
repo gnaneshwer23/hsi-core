@@ -145,6 +145,10 @@
       "destination": "/_pages/research.html"
     },
     {
+      "source": "/research/ontology-review",
+      "destination": "/_pages/research--ontology-review.html"
+    },
+    {
       "source": "/research/validation",
       "destination": "/_pages/research--validation.html"
     },
