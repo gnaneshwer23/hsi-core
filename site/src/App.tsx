@@ -56,6 +56,7 @@ const ScientificInvestigationPage=lazy(()=>import("./pages/ScientificInvestigati
 const ResearcherHomePage=lazy(()=>import("./pages/ResearcherHome").then(m=>({default:m.ResearcherHome})));
 const ResearchCommunityFeedPage=lazy(()=>import("./pages/ResearchCommunityFeed").then(m=>({default:m.ResearchCommunityFeed})));
 
+const OntologyMappingReview=lazy(()=>import("./pages/OntologyMappingReview").then(m=>({default:m.OntologyMappingReview})));
 const SyntheticValidationWorkbench=lazy(()=>import("./pages/SyntheticValidationWorkbench").then(m=>({default:m.SyntheticValidationWorkbench})));
 
 const ClaimKnowledgeGraph=lazy(()=>import("./pages/ClaimKnowledgeGraph").then(m=>({default:m.ClaimKnowledgeGraph})));
@@ -94,11 +95,13 @@ export default function App() {
         <Route path="intelligence/nexus" element={<IntelligenceCapabilityLanding slug="nexus" />} />
         <Route path="intelligence/aegis" element={<IntelligenceCapabilityLanding slug="aegis" />} />
         <Route path="intelligence/scout" element={<IntelligenceCapabilityLanding slug="scout" />} />
-        <Route path="intelligence/prism" element={<IntelligenceCapabilityLanding slug="prism" />} />
+        <Route path="intelligence/lantern" element={<IntelligenceCapabilityLanding slug="lantern" />} />
+        <Route path="intelligence/prism" element={<Navigate to="/intelligence/lantern" replace />} />
         <Route path="intelligence/atlas" element={<IntelligenceCapabilityLanding slug="atlas" />} />
         <Route path="intelligence/helix" element={<IntelligenceCapabilityLanding slug="helix" />} />
         <Route path="intelligence/parallax" element={<IntelligenceCapabilityLanding slug="parallax" />} />
-        <Route path="intelligence/horizon" element={<IntelligenceCapabilityLanding slug="horizon" />} />
+        <Route path="intelligence/vantage" element={<IntelligenceCapabilityLanding slug="vantage" />} />
+        <Route path="intelligence/horizon" element={<Navigate to="/intelligence/vantage" replace />} />
         <Route path="intelligence/veritas" element={<IntelligenceCapabilityLanding slug="veritas" />} />
         <Route path="intelligence/arbiter" element={<IntelligenceCapabilityLanding slug="arbiter" />} />
         <Route path="intelligence/sentinel" element={<IntelligenceCapabilityLanding slug="sentinel" />} />
@@ -116,6 +119,7 @@ export default function App() {
         <Route path="science" element={<SciencePublicPage />} />
         <Route path="science/literature" element={<ScienceLiterature />} />
         <Route path="research/scientific-workbench" element={<ScientificResearchWorkbench />} />
+        <Route path="research/ontology-review" element={<Suspense fallback={<p role="status">Loading mapping review…</p>}><OntologyMappingReview/></Suspense>} />
         <Route path="research/validation" element={<Suspense fallback={<p role="status">Loading validation workspace…</p>}><SyntheticValidationWorkbench/></Suspense>} />
         <Route path="research/coverage" element={<ResearchCoverage />} />
         <Route path="research/evidence-readiness" element={<ResearchEvidenceCatalogue />} />
