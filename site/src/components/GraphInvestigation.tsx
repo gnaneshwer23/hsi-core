@@ -1,6 +1,7 @@
-import {useMemo,useState} from "react";
+import {useEffect,useMemo,useState} from "react";
 import type {DomainBundle} from "../../../src/knowledgeGraph/domainGraph";
 import {buildInvestigationRecord,buildSelectionContext,investigateSelection,proposeFromFinding,verifyInvestigationRecord,type AgentName,type AgentProposal,type AgentResponse,type Finding} from "../../../src/knowledgeGraph/graphAgents";
+import {browserStore,listInvestigations,loadInvestigation,saveInvestigation,type LoadResult} from "../../../src/knowledgeGraph/investigationStore";
 import type {DepartmentSlug} from "../../../src/knowledgeGraph/departments";
 
 const ROLE:Record<AgentName,{label:string;action:string;blurb:string}>={
@@ -27,8 +28,17 @@ function ResponseCard({r,onPropose}:{r:AgentResponse;onPropose:(r:AgentResponse,
  </article>;
 }
 
-export function GraphInvestigation({bundle,nodeIds,edgeIds,department,onRemoveNode,onRemoveEdge}:{bundle:DomainBundle;nodeIds:string[];edgeIds:string[];department:DepartmentSlug|null;onRemoveNode:(id:string)=>void;onRemoveEdge:(id:string)=>void}){
+export function GraphInvestigation({bundle,nodeIds,edgeIds,department,onRemoveNode,onRemoveEdge,onRestore}:{bundle:DomainBundle;nodeIds:string[];edgeIds:string[];department:DepartmentSlug|null;onRemoveNode:(id:string)=>void;onRemoveEdge:(id:string)=>void;onRestore:(nodeIds:string[],edgeIds:string[])=>void}){
  const [question,setQuestion]=useState("What does the graph record about this selection?"),[responses,setResponses]=useState<AgentResponse[]>([]),[error,setError]=useState(""),[proposal,setProposal]=useState<AgentProposal|null>(null);
+ const store=useMemo(()=>browserStore(),[]),[saved,setSaved]=useState(()=>store?listInvestigations(store):[]),[saveMsg,setSaveMsg]=useState(""),[opened,setOpened]=useState<LoadResult|null>(null);
+ const refresh=()=>setSaved(store?listInvestigations(store):[]);
+ useEffect(()=>{refresh()},[store]);
+ async function save(rec:NonNullable<typeof record>){
+  if(!store){setSaveMsg("This browser is blocking local storage, so nothing can be saved here. Export the record instead.");return}
+  try{const r=await saveInvestigation(bundle,store,rec);setSaveMsg(r.status==="unchanged"?`Already saved as revision ${r.saved.revision}.`:`Saved as revision ${r.saved.revision} on this device only.`);refresh()}
+  catch(e){setSaveMsg(e instanceof Error?e.message:"Could not save")}
+ }
+ async function open(id:string,rev:number){if(store)setOpened(await loadInvestigation(store,id,rev,bundle))}
  const name=(id:string)=>bundle.nodes.find(n=>n.id===id)?.name??id;
  const built=useMemo(()=>{
   try{return {ctx:buildSelectionContext(bundle,{investigationId:`inv-${bundle.version.slice(0,8)}-${nodeIds.length}n${edgeIds.length}e`,graphVersion:bundle.version,question,department,nodeIds,edgeIds}),err:""}}
@@ -64,6 +74,19 @@ export function GraphInvestigation({bundle,nodeIds,edgeIds,department,onRemoveNo
   <div aria-live="polite">{responses.map(r=><ResponseCard key={r.agent} r={r} onPropose={(resp,f)=>setProposal(proposeFromFinding(resp,f))}/>)}</div>
   {proposal&&<section className="gi-proposal" aria-label="Agent proposal"><h3>Proposal (unreviewed)</h3><p>{proposal.summary}</p><p>Proposed by {proposal.proposedBy}. Status: <strong>proposed, unreviewed</strong>. It requires independent human review and cannot be applied to the graph from here.</p></section>}
   {record&&<footer className="gi-export"><p className={problems.length?"gi-error":"gi-verified"}>{problems.length?`Record does not reproduce: ${problems.join("; ")}`:`This record reproduces from graph version ${bundle.version.slice(0,8)}.`}</p>
-   <button className="gi-btn" onClick={()=>download(record,`hsi-investigation-${record.context.investigationId}.json`)}>Export investigation</button></footer>}
+   <div className="gi-actions"><button className="gi-btn" onClick={()=>save(record)}>Save on this device</button><button className="gi-btn" onClick={()=>download(record,`hsi-investigation-${record.context.investigationId}.json`)}>Export investigation</button></div></footer>}
+  {saveMsg&&<p className="gi-note" role="status">{saveMsg}</p>}
+  <section className="gi-saved" aria-labelledby="gi-saved-h"><h3 id="gi-saved-h">Saved investigations</h3>
+   <p className="gi-note">Saved on this device only, unreviewed, append-only. Saving does not approve anything, and clearing browser data removes them.</p>
+   {!store?<p className="gi-note">Local storage is not available in this browser.</p>:saved.length===0?<p className="gi-note">Nothing saved yet.</p>:<ul>{saved.map(x=><li key={x.investigationId}><span>{x.question} <small>· revision {x.latestRevision} · {x.savedAt.slice(0,10)} · graph {x.graphVersion.slice(0,8)}</small></span> <button className="gi-btn" onClick={()=>open(x.investigationId,x.latestRevision)} aria-label={`Open saved investigation ${x.investigationId}`}>Open</button></li>)}</ul>}
+   {opened&&<div className="gi-card" role="region" aria-label="Opened saved investigation">
+    <h4>{opened.saved.record.context.question}</h4>
+    <p className="gi-scope">Revision {opened.saved.revision} · graph version {opened.saved.record.graphVersion.slice(0,8)} · {opened.saved.record.context.nodeIds.length} concepts · {opened.saved.record.context.edgeIds.length} relationships</p>
+    <p className={opened.intact?"gi-verified":"gi-error"}>{opened.intact?"Stored content is intact.":`Stored content failed its integrity check: ${opened.problems.join("; ")}`}</p>
+    <p className={opened.reproducible?"gi-verified":"gi-error"}>{opened.reproducible?"Reproduces from the current graph.":"Does not reproduce from the current graph; the graph has changed since it was saved."}</p>
+    <ul>{opened.saved.record.responses.map(r=><li key={r.agent}><strong>{r.agent}</strong>: {r.status}, {r.findings.length} candidate findings</li>)}</ul>
+    <button className="gi-btn" onClick={()=>{onRestore(opened.saved.record.context.nodeIds,opened.saved.record.context.edgeIds);setQuestion(opened.saved.record.context.question);setOpened(null)}}>Use this selection again</button>
+   </div>}
+  </section>
  </section>;
 }

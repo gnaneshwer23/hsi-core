@@ -75,6 +75,39 @@ test.describe("Investigating a selection with the collective's agents",()=>{
   await expect(p.getByRole("article",{name:"VANTAGE response"})).toHaveCount(0);
  });
 
+ test("an investigation can be saved on this device, reopened, verified and reused; nothing is approved",async({page})=>{
+  await open(page);await pick(page,"Butyrate");
+  await page.getByRole("button",{name:"Add to investigation"}).first().click();
+  const p=panel(page);
+  await expect(p).toContainText("Nothing saved yet");
+  await p.getByRole("button",{name:"Identify gaps"}).click();
+  await p.getByRole("button",{name:"Save on this device"}).click();
+  await expect(p.getByRole("status")).toContainText("Saved as revision 1 on this device only");
+  await p.getByRole("button",{name:"Save on this device"}).click();
+  await expect(p.getByRole("status")).toContainText("Already saved as revision 1");
+  await page.reload();await page.getByRole("tab",{name:"Departments",exact:true}).click();
+  await p.getByRole("button",{name:/Open saved investigation/}).click();
+  const o=p.getByRole("region",{name:"Opened saved investigation"});
+  await expect(o).toContainText("Stored content is intact.");
+  await expect(o).toContainText("Reproduces from the current graph.");
+  await o.getByRole("button",{name:"Use this selection again"}).click();
+  await expect(p).toContainText("Concepts (1)");
+  const stored=await page.evaluate(()=>Object.entries(localStorage).filter(([k])=>k.startsWith("hsi-inv:")).map(([,v])=>JSON.parse(v)));
+  expect(stored.length).toBe(1);expect(stored[0].scientificApproval).toBe(false);expect(stored[0].reviewStatus).toBe("unreviewed");
+ });
+
+ test("a tampered saved record is reported as failing its integrity check",async({page})=>{
+  await open(page);await pick(page,"Butyrate");
+  await page.getByRole("button",{name:"Add to investigation"}).first().click();
+  const p=panel(page);
+  await p.getByRole("button",{name:"Identify gaps"}).click();
+  await p.getByRole("button",{name:"Save on this device"}).click();
+  await page.evaluate(()=>{const k=Object.keys(localStorage).find(x=>x.startsWith("hsi-inv:"))!;const v=JSON.parse(localStorage.getItem(k)!);v.record.context.question="Edited after saving";localStorage.setItem(k,JSON.stringify(v))});
+  await page.reload();await page.getByRole("tab",{name:"Departments",exact:true}).click();
+  await p.getByRole("button",{name:/Open saved investigation/}).click();
+  await expect(p.getByRole("region",{name:"Opened saved investigation"})).toContainText("failed its integrity check");
+ });
+
  test("has no axe violations and does not overflow at 320, 390, 768 and 1440",async({page})=>{
   await open(page);await pick(page,"Butyrate");
   await page.getByRole("button",{name:"Add to investigation"}).first().click();
