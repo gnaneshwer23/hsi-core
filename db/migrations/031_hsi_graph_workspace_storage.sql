@@ -3,8 +3,10 @@
 -- (3) curator mapping recommendations. Nothing here stores patient data, approves a mapping, or writes the
 -- scientific graph. Public reference data and owner-scoped, append-only records only.
 --
--- Prerequisites (not created here): a dedicated least-privilege role named hsi_graph_runtime, and a server that sets
--- hsi.graph_owner_id from a VERIFIED session inside the transaction. Until both exist the policies match no rows.
+-- Access: the tables have NO policies and NO runtime grants. Ordinary reads and writes are denied. The runtime reaches
+-- them only through the SECURITY DEFINER procedures in held migration 032, which validate the caller's session token
+-- inside the same transaction. No session or owner GUC is trusted (an earlier draft of this file used one; a forged
+-- GUC exposed another owner's row in the P0-C audit, so it was removed).
 --
 -- ROLLBACK (take a backup first; this drops data):
 --   DROP TABLE IF EXISTS public.hsi_ontology_mapping_recommendations, public.hsi_graph_investigations,
@@ -66,11 +68,14 @@ CREATE TABLE IF NOT EXISTS public.hsi_graph_investigations(
  PRIMARY KEY(owner_id,investigation_id,revision),
  UNIQUE(owner_id,investigation_id,digest),
  CHECK((revision=1)=(previous_digest IS NULL)),
- CHECK(record->>'schemaVersion'='hsi-graph-investigation-1'),
- CHECK(record->>'graphVersion'=graph_version AND record->'context'->>'graphVersion'=graph_version),
- CHECK(record->'context'->>'investigationId'=investigation_id),
- CHECK(record->>'scientificApproval'='false'),
- CHECK(record->'checks'->>'candidateOnly'='true' AND record->'checks'->>'scopedToSnapshot'='true'),
+ -- A CHECK passes when its expression is NULL, so each test is wrapped in COALESCE(...,false): a missing key or a
+ -- jsonb scalar (for example a double-encoded string) must fail, not slip through.
+ CHECK(jsonb_typeof(record)='object'),
+ CHECK(COALESCE(record->>'schemaVersion'='hsi-graph-investigation-1',false)),
+ CHECK(COALESCE(record->>'graphVersion'=graph_version AND record->'context'->>'graphVersion'=graph_version,false)),
+ CHECK(COALESCE(record->'context'->>'investigationId'=investigation_id,false)),
+ CHECK(COALESCE(record->>'scientificApproval'='false',false)),
+ CHECK(COALESCE(record->'checks'->>'candidateOnly'='true' AND record->'checks'->>'scopedToSnapshot'='true',false)),
  CHECK(pg_column_size(record)<=1048576)
 );
 CREATE OR REPLACE FUNCTION public.hsi_graph_investigation_chain() RETURNS trigger LANGUAGE plpgsql AS $f$
@@ -158,22 +163,4 @@ ALTER TABLE public.hsi_graph_investigations FORCE ROW LEVEL SECURITY;
 ALTER TABLE public.hsi_ontology_mapping_recommendations ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.hsi_ontology_mapping_recommendations FORCE ROW LEVEL SECURITY;
 REVOKE ALL ON public.hsi_ontology_releases,public.hsi_ontology_terms,public.hsi_graph_investigations,public.hsi_ontology_mapping_recommendations FROM PUBLIC;
-
--- Draft policies for the runtime role. The role still needs separately reviewed table grants (SELECT, INSERT only;
--- never UPDATE, DELETE or TRUNCATE). A policy is not a substitute for server-side session verification.
-DO $p$ BEGIN
- IF EXISTS(SELECT 1 FROM pg_roles WHERE rolname='hsi_graph_runtime') THEN
-  DROP POLICY IF EXISTS hsi_ontology_releases_read ON public.hsi_ontology_releases;
-  CREATE POLICY hsi_ontology_releases_read ON public.hsi_ontology_releases FOR SELECT TO hsi_graph_runtime USING (true);
-  DROP POLICY IF EXISTS hsi_ontology_terms_read ON public.hsi_ontology_terms;
-  CREATE POLICY hsi_ontology_terms_read ON public.hsi_ontology_terms FOR SELECT TO hsi_graph_runtime USING (true);
-  DROP POLICY IF EXISTS hsi_graph_investigations_owner_read ON public.hsi_graph_investigations;
-  CREATE POLICY hsi_graph_investigations_owner_read ON public.hsi_graph_investigations FOR SELECT TO hsi_graph_runtime USING (owner_id=NULLIF(current_setting('hsi.graph_owner_id',true),''));
-  DROP POLICY IF EXISTS hsi_graph_investigations_owner_insert ON public.hsi_graph_investigations;
-  CREATE POLICY hsi_graph_investigations_owner_insert ON public.hsi_graph_investigations FOR INSERT TO hsi_graph_runtime WITH CHECK (owner_id=NULLIF(current_setting('hsi.graph_owner_id',true),''));
-  DROP POLICY IF EXISTS hsi_mapping_recommendations_owner_read ON public.hsi_ontology_mapping_recommendations;
-  CREATE POLICY hsi_mapping_recommendations_owner_read ON public.hsi_ontology_mapping_recommendations FOR SELECT TO hsi_graph_runtime USING (owner_id=NULLIF(current_setting('hsi.graph_owner_id',true),''));
-  DROP POLICY IF EXISTS hsi_mapping_recommendations_owner_insert ON public.hsi_ontology_mapping_recommendations;
-  CREATE POLICY hsi_mapping_recommendations_owner_insert ON public.hsi_ontology_mapping_recommendations FOR INSERT TO hsi_graph_runtime WITH CHECK (owner_id=NULLIF(current_setting('hsi.graph_owner_id',true),''));
- END IF;
-END $p$;
+-- No policies: deny by default. See 032 for the only access path.

@@ -19,17 +19,16 @@ Owner steps, HSI Neon project only:
 
 Rollback statements are in the SQL comments. Take a backup before dropping tables.
 
-## Draft 031: graph workspace storage (held, not applied)
+## Drafts 031 and 032: graph workspace storage (held, not applied)
 
-`031_hsi_graph_workspace_storage.sql` drafts shared storage for pinned ontology releases and terms, saved graph investigations, and curator mapping recommendations. It is in `HELD_MIGRATION_IDS`, so `bun run db:migrate` skips it. It has **not** been applied to any Neon branch.
+`031_hsi_graph_workspace_storage.sql` and `032_hsi_graph_workspace_procedures.sql` are in `HELD_MIGRATION_IDS`, so `bun run db:migrate` skips them. **Neither has been applied to any Neon branch.** No runtime code imports the adapter that calls them.
 
-- **Ontology releases and terms**: reference data written only by the import role; immutable once recorded; release URLs must be pinned (no `latest` or `current`).
-- **Investigations**: append-only, digest-chained revisions scoped to an owner; the database enforces the chain, graph-version scope and the non-approval flags. The application still recomputes digests and reproducibility on read.
-- **Mapping recommendations**: append-only; a recommendation must name a live term from a recorded release; it cannot be marked approved (there is deliberately no approval column).
-- **Security**: RLS forced, `PUBLIC` revoked, deny by default. Draft owner policies target a `hsi_graph_runtime` role that must be created separately and granted SELECT and INSERT only. They read `hsi.graph_owner_id`, which a server must set from a verified session. Without that server, the policies match nothing.
-- **Verified against**: a throwaway local PostgreSQL 14 only (apply twice, behavioural checks, rollback). Neon runs a newer major version; rehearse on a disposable Neon child branch before any real apply.
+- **031, tables:** pinned ontology releases and terms (immutable once recorded); owner-scoped, append-only, digest-chained saved investigations; owner-scoped, append-only curator recommendations (no approval column). Row-level security is forced, `PUBLIC` is revoked, there are **no policies and no runtime grants**. CHECKs are wrapped in `COALESCE(...,false)` because a CHECK passes on NULL (a double-encoded jsonb string or a missing key would otherwise slip through; found by the local integration run).
+- **032, the only access path:** six `SECURITY DEFINER` procedures that validate the caller's session token against `neon_auth.session` inside the same transaction, derive the principal, require an active researcher grant, and scope every row to it. No session or owner GUC is trusted (the earlier GUC-policy draft was removed: a forged setting exposed another owner's row in the P0-C audit). The runtime role needs only EXECUTE on those procedures. The function owner must be a non-superuser: policies for it are created explicitly, because forced RLS applies to table owners too.
+- **Verified against** a throwaway local PostgreSQL 14 only: `db/verify/031_*` and `db/verify/032_*` (all pass, rolled back), seven deliberate mutations of 032 (missing policies, dropped owner scoping on list, get and recommendations, dropped expiry, dropped backdating bound, forged identity flag) each caught, and `scripts/verify-graph-workspace-local.ts` end to end through the TypeScript adapter as the least-privilege role (16 checks, including refusing a record edited underneath the application). Neon runs a newer major version; rehearse on a disposable Neon child branch before any real apply.
+- **Not verified:** a real Neon Auth schema (the checks use a stand-in with only the columns read), real roles and pooling, ontology import role and its write policy (reference data is written by a separate role that does not exist yet), concurrency under load.
 
-Owner steps if you choose to proceed, HSI Neon project only: read the SQL and rollback comments; create the `hsi_graph_runtime` role through a reviewed process; rehearse `db/verify/031_graph_workspace_storage_checks.sql` on a disposable child branch; then remove the id from `src/db/migrationHolds.ts` and apply. No application code reads or writes these tables yet.
+Owner steps if you proceed, HSI Neon project only: read both files and the rollback comments; create the `hsi_graph_runtime` role through a reviewed process; create the separate ontology import role and policy; rehearse the two verify scripts on a disposable child branch; then remove the ids from `src/db/migrationHolds.ts` and apply. Wiring the adapter into a route is a separate, later change.
 
 ## What shipped
 
