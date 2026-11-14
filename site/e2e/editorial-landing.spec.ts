@@ -44,3 +44,23 @@ test('research offers a genuine workspace preview, bounded journeys and explicit
  await foundations.locator('summary').click();await expect(foundations).toHaveAttribute('open','');
  await page.getByRole('link',{name:'Open public workspace ↗',exact:true}).click();await expect(page).toHaveURL(/research\/knowledge-graph/);
 });
+test('evidence dossier preserves study arms, missingness and source boundaries',async({page})=>{
+ await page.goto('/evidence-intelligence');
+ await expect(page.getByRole('heading',{level:1})).toHaveText('Scientific evidence is more than a confidence score.');
+ await expect(page.locator('#home-knowledge-graph')).toHaveCount(0);
+ await expect(page.locator('.eid-source a')).toHaveCount(2);
+ await expect(page.locator('.eid-source a').first()).toHaveAttribute('href','https://pubmed.ncbi.nlm.nih.gov/29514998/');
+ await expect(page.locator('.eid-source a').last()).toHaveAttribute('href','https://pubmed.ncbi.nlm.nih.gov/30760472/');
+ await expect(page.getByRole('radio',{name:'Human skin observation'})).toBeChecked();
+ await expect(page.locator('.eid-comparison')).toContainText('Different compartments and outcomes.');
+ await page.getByRole('radio',{name:'Mouse intervention'}).check();
+ await expect(page.locator('.eid-comparison')).toContainText('Different species, intervention and outcome.');
+ await expect(page.getByRole('table')).toContainText('Mouse GVHD');
+ await expect(page.getByRole('table')).toContainText('Not extracted from the abstract');
+ await page.locator('.eid-details summary').click();
+ await expect(page.locator('.eid-details')).toContainText('Contradicting studies have not been assessed');
+ await expect(page.locator('.eid-details')).toContainText('No approved-knowledge or graph-promotion decision');
+ for(const width of [320,390,1440]){await page.setViewportSize({width,height:900});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);}
+ await page.getByRole('radio',{name:'Human skin observation'}).check();
+ await expect(page.locator('.eid-comparison')).toContainText('Different compartments and outcomes.');
+});
