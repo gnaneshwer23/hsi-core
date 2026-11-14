@@ -484,32 +484,57 @@
   "redirects": [
     {
       "source": "/products",
-      "destination": "/modules",
+      "destination": "/connected-intelligence",
       "permanent": false
     },
     {
       "source": "/for-isi",
-      "destination": "/modules/isi",
+      "destination": "/connected-intelligence",
       "permanent": false
     },
     {
       "source": "/for-aksh",
-      "destination": "/modules/aksh-health",
+      "destination": "/connected-intelligence",
       "permanent": false
     },
     {
       "source": "/for-trials",
-      "destination": "/modules/trials",
+      "destination": "/connected-intelligence",
       "permanent": false
     },
     {
       "source": "/akeno",
-      "destination": "/modules/clinical",
+      "destination": "/connected-intelligence",
       "permanent": false
     },
     {
       "source": "/aksh-agents",
-      "destination": "/modules/aksh-health",
+      "destination": "/connected-intelligence",
+      "permanent": false
+    },
+    {
+      "source": "/modules",
+      "destination": "/connected-intelligence",
+      "permanent": false
+    },
+    {
+      "source": "/modules/aksh-health",
+      "destination": "/connected-intelligence",
+      "permanent": false
+    },
+    {
+      "source": "/modules/clinical",
+      "destination": "/connected-intelligence",
+      "permanent": false
+    },
+    {
+      "source": "/modules/isi",
+      "destination": "/connected-intelligence",
+      "permanent": false
+    },
+    {
+      "source": "/modules/trials",
+      "destination": "/connected-intelligence",
       "permanent": false
     }
   ],

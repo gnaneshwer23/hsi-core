@@ -17,7 +17,7 @@ describe("public product-name guard",()=>{
   expect(findProductNames('<script type="module" src="/assets/Aksh-chunk.js"></script><p>ok</p>')).toEqual([]);
   expect(findProductNames("<script>window.__d={a:'Aksh Health'}</script>")).toContain("Aksh Health");
  });
- test("only the five modules pages are exempt, pending the redirect step",()=>{
-  expect([...ALLOWED_PAGES].sort()).toEqual(["modules--aksh-health.html","modules--clinical.html","modules--isi.html","modules--trials.html","modules.html"]);
+ test("no page is exempt from the guard",()=>{
+  expect([...ALLOWED_PAGES]).toEqual([]);
  });
 });
