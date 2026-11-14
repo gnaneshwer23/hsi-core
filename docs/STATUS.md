@@ -179,6 +179,7 @@ One module per line, sorted, so concurrent changes to different modules do not c
 - `src/governedGraphRead.ts`
 - `src/graphRelease.ts`
 - `src/hsiOntologyRegistry.ts`
+- `src/knowledgeGraph/departments.ts`
 - `src/liveExecute.ts`
 - `src/livingHealthKnowledgeGraph.ts`
 

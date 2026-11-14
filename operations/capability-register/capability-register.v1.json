@@ -1082,6 +1082,7 @@
           "src/governedGraphRead.ts",
           "src/graphRelease.ts",
           "src/hsiOntologyRegistry.ts",
+          "src/knowledgeGraph/departments.ts",
           "src/liveExecute.ts",
           "src/livingHealthKnowledgeGraph.ts"
         ],
