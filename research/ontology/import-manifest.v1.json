@@ -1,0 +1,74 @@
+{
+ "schemaVersion": "hsi-ontology-import-manifest-1",
+ "approvedOn": "2026-11-14",
+ "approvedBy": "user, in chat (Approve, skip HPO)",
+ "skipped": [
+  {
+   "prefix": "HP",
+   "reason": "The HPO licence forbids altering content or logical relationships; not imported by decision."
+  }
+ ],
+ "storesIn": "gitignored .ontology-cache/ only; no database write (a migration needs separate approval)",
+ "sources": [
+  {
+   "prefix": "MONDO",
+   "name": "Mondo Disease Ontology",
+   "licence": "CC BY 4.0",
+   "release": "v2026-11-03",
+   "format": "obo-json",
+   "url": "https://github.com/monarch-initiative/mondo/releases/download/v2026-11-03/mondo.json",
+   "sha256": "bb1c6b4f7210980126f9997daaadcc134d70907fbddbfd49b9a4d5cffba9b304",
+   "bytes": 108100423,
+   "termCount": 36168,
+   "dataVersion": "http://purl.obolibrary.org/obo/mondo/releases/2026-11-03/mondo.owl"
+  },
+  {
+   "prefix": "UBERON",
+   "name": "Uberon anatomy ontology",
+   "licence": "CC BY 3.0",
+   "release": "v2026-11-05",
+   "format": "obo-json",
+   "url": "https://github.com/obophenotype/uberon/releases/download/v2026-11-05/uberon.json",
+   "sha256": "69f03d9f8abf6171e9814815e768e7635b3064a7cde34a4265144dd0b8ea17dd",
+   "bytes": 55433878,
+   "termCount": 16434,
+   "dataVersion": "http://purl.obolibrary.org/obo/uberon/releases/2026-11-05/uberon.json"
+  },
+  {
+   "prefix": "CL",
+   "name": "Cell Ontology",
+   "licence": "CC BY 4.0",
+   "release": "v2026-06-08",
+   "format": "obo-json",
+   "url": "https://github.com/obophenotype/cell-ontology/releases/download/v2026-06-08/cl.json",
+   "sha256": "77e008e52f54d8f9b3209755fe01264a92c913a65e6d3d3634def0e6a8a997df",
+   "bytes": 39861005,
+   "termCount": 3607,
+   "dataVersion": "http://purl.obolibrary.org/obo/cl/releases/2026-06-08/cl.json"
+  },
+  {
+   "prefix": "GO",
+   "name": "Gene Ontology",
+   "licence": "CC BY 4.0",
+   "release": "2026-08-05",
+   "format": "obo-json",
+   "url": "https://release.geneontology.org/2026-08-05/ontology/go-basic.json",
+   "sha256": "531d85b2e7a6d4b91290093b487f228994123cec3f45a50136cad2c4b91862ac",
+   "bytes": 71156277,
+   "termCount": 51986,
+   "dataVersion": "http://purl.obolibrary.org/obo/go/releases/2026-07-26/go.owl"
+  },
+  {
+   "prefix": "ECO",
+   "name": "Evidence and Conclusion Ontology",
+   "licence": "CC0 1.0",
+   "release": "v2026-07-10",
+   "format": "obo",
+   "url": "https://raw.githubusercontent.com/evidenceontology/evidenceontology/v2026-07-10/eco-basic.obo",
+   "sha256": "e834383535b3c43deee52b8b5814b594f6dd7933413c58442d99d3e4931fc08e",
+   "bytes": 1141550,
+   "termCount": 2254,
+   "dataVersion": "eco/releases/2026-07-10/eco-basic.owl"
+  }
+ ]
+}

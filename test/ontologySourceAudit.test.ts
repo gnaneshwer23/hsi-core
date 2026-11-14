@@ -5,7 +5,16 @@ import {HSI_ONTOLOGY_NAMESPACES} from "../src/hsiOntologyRegistry";
 const audit=JSON.parse(readFileSync("research/ontology/ontology-sources.v1.json","utf8")) as {importAuthorised:boolean;sources:{prefix:string;licence:string;verification:string;inRegistry:boolean;recommendation:string;release:string}[]};
 const RECS=["import_first","import_later","identifiers_only","decision_needed","verify_before_use","exclude_from_hsi_core","out_of_scope_for_hsi_core"];
 
-test("the audit does not authorise any import",()=>{expect(audit.importAuthorised).toBe(false)});
+const approved=(audit as unknown as {approvedPrefixes:string[];skippedByDecision:string[]});
+test("import is authorised only for the approved prefixes, and HPO is skipped by decision",()=>{
+ expect(audit.importAuthorised).toBe(true);
+ expect(approved.approvedPrefixes.slice().sort()).toEqual(["CL","ECO","GO","MONDO","UBERON"]);
+ expect(approved.skippedByDecision).toEqual(["HP"]);
+ expect(approved.approvedPrefixes).not.toContain("HP");
+});
+test("every approved prefix was verified and recommended for first import",()=>{
+ for(const p of approved.approvedPrefixes){const s=audit.sources.find(x=>x.prefix===p)!;expect(s.recommendation,p).toBe("import_first");expect(s.verification.startsWith("verified")||s.verification.startsWith("licence verified"),p).toBe(true)}
+});
 test("every registered ontology namespace is audited or is a non-ontology identifier",()=>{
  const audited=new Set(audit.sources.map(s=>s.prefix)),skip=new Set(["NCT","PMID"]);
  const missing=HSI_ONTOLOGY_NAMESPACES.map(n=>n.prefix).filter(p=>!audited.has(p)&&!skip.has(p));
