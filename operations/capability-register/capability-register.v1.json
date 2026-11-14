@@ -379,6 +379,22 @@
       "nextAction": "Curator review of candidates; add ChEBI and NCBITaxon after licence confirmation"
     },
     {
+      "id": "F-18",
+      "group": "foundations",
+      "name": "Evidence by context (no blended score)",
+      "status": [
+        "implemented",
+        "connected"
+      ],
+      "evidence": [
+        "src/knowledgeGraph/contextBreakdown.ts",
+        "site/src/components/ContextBreakdownView.tsx",
+        "test/contextBreakdown.test.ts"
+      ],
+      "gap": "Strata come from unreviewed candidate records; most state no study system or tissue; effect size, independence of replication, retraction status and study quality are not assessed",
+      "nextAction": "Fill context from verified passages (live evidence path); add species, subset and replication fields as they are extracted"
+    },
+    {
       "id": "O-01",
       "group": "investigation_output",
       "name": "Scientific landscape",
@@ -1243,6 +1259,7 @@
           "src/evidence/passageLinkedContext.ts",
           "src/evidence/structuredEvidenceComparison.ts",
           "src/investigationScope.ts",
+          "src/knowledgeGraph/contextBreakdown.ts",
           "src/knowledgeGraph/graphAgents.ts"
         ],
         "modelBacked": false,
