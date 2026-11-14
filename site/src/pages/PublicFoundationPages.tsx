@@ -69,12 +69,12 @@ export function PlatformPublicPage() {
         </p>
       </PublicSection>
       <PublicSection
-        title="One technology for connected scientific investigation."
-        description="HSI connects biological relationships, scientific evidence and context in one research technology."
+        title="Interoperable research. Separate responsibilities."
+        description="The scientific, clinical, patient-reported and study-related capabilities retain their own governance, data and interfaces."
       >
         <p>
-          The Living Knowledge Graph connects evidence, experimental context and research questions. Private
-          patient records are outside this research system. No live matching, eligibility confirmation or
+          The shared foundation connects governed research artifacts, not patient-record transfers. Scientific
+          research does not depend on a live care system. No live matching, eligibility confirmation or
           enrolment is offered here.
         </p>
         <p>
@@ -84,8 +84,8 @@ export function PlatformPublicPage() {
         </p>
         <div className="hsi-actions">
           <PublicAction to="/applications">Explore Applications</PublicAction>
-          <PublicAction to="/research/knowledge-graph" secondary>
-            Explore the Knowledge Graph
+          <PublicAction to="/connected-intelligence" secondary>
+            See how capabilities connect
           </PublicAction>
           <PublicAction to="/trust" secondary>
             Review the Boundaries
@@ -311,8 +311,8 @@ export function ApplicationsPublicPage() {
               No live patient-level integration, clinical decision support or hospital record feed is offered
               here.
             </p>
-            <Link className="hsi-text-link" to="/trust">
-              Inspect research boundaries
+            <Link className="hsi-text-link" to="/connected-intelligence">
+              Inspect the clinical context boundary
             </Link>
           </article>
           <article>
@@ -326,15 +326,15 @@ export function ApplicationsPublicPage() {
               Governed metadata attachment has engineering support. Live matching, eligibility confirmation
               and enrolment are not available.
             </p>
-            <Link className="hsi-text-link" to="/evidence-intelligence">
-              Inspect trial research scope
+            <Link className="hsi-text-link" to="/connected-intelligence">
+              Inspect study intelligence scope
             </Link>
           </article>
         </div>
       </PublicSection>
       <PublicSection
-        title="Scientific intelligence with explicit data boundaries."
-        description="One scientific intelligence technology. Source permissions, researcher access and independent review remain explicit."
+        title="Shared foundations do not erase data boundaries."
+        description="The clinical, patient-reported and study-related capabilities are independently governed."
         dark
       >
         <p>

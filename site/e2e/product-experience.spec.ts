@@ -1,6 +1,6 @@
 import {test,expect} from "@playwright/test";
 import {readFile} from "node:fs/promises";
-const routes=["/","/platform","/technology","/products","/solutions","/research","/evidence-safety","/community","/pricing","/contact","/how-it-works","/science","/for-aksh","/for-isi","/for-trials"];
+const routes=["/","/platform","/technology","/connected-intelligence","/departments","/solutions","/research","/evidence-safety","/community","/pricing","/contact","/how-it-works","/science"];
 test("public pages have a single main/title, working navigation and no narrow-screen overflow",async({page},info)=>{
  test.setTimeout(90000);
  for(const route of routes){

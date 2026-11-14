@@ -20,7 +20,7 @@ Provenance detail: [`aksh/PROVENANCE.md`](../aksh/PROVENANCE.md).
 | `aksh/agent-catalog.json` | Durable JSON catalog |
 | `aksh/source/*.ts` | Read-only registry snapshots (not compiled) |
 | `src/akshAgents.ts` | Typed package API |
-| `site/public/aksh/agent-catalog.json` | Site fetch copy |
+| ~~`site/public/aksh/agent-catalog.json`~~ | Removed: the public site no longer names the separately governed products; the durable catalog above remains the source |
 | `site/` route **`/aksh-agents`** | Browse names / roles |
 | This doc | Human index |
 

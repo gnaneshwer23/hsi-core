@@ -145,6 +145,10 @@
       "destination": "/_pages/research.html"
     },
     {
+      "source": "/research/ontology-review",
+      "destination": "/_pages/research--ontology-review.html"
+    },
+    {
       "source": "/research/validation",
       "destination": "/_pages/research--validation.html"
     },
@@ -397,6 +401,38 @@
       "destination": "/_pages/intelligence.html"
     },
     {
+      "source": "/departments",
+      "destination": "/_pages/departments.html"
+    },
+    {
+      "source": "/connected-intelligence",
+      "destination": "/_pages/connected-intelligence.html"
+    },
+    {
+      "source": "/departments/immunology",
+      "destination": "/_pages/departments--immunology.html"
+    },
+    {
+      "source": "/departments/neuroscience",
+      "destination": "/_pages/departments--neuroscience.html"
+    },
+    {
+      "source": "/departments/microbiome",
+      "destination": "/_pages/departments--microbiome.html"
+    },
+    {
+      "source": "/departments/metabolism",
+      "destination": "/_pages/departments--metabolism.html"
+    },
+    {
+      "source": "/departments/genomics-multi-omics",
+      "destination": "/_pages/departments--genomics-multi-omics.html"
+    },
+    {
+      "source": "/departments/human-physiology",
+      "destination": "/_pages/departments--human-physiology.html"
+    },
+    {
       "source": "/intelligence/nexus",
       "destination": "/_pages/intelligence--nexus.html"
     },
@@ -407,6 +443,10 @@
     {
       "source": "/intelligence/scout",
       "destination": "/_pages/intelligence--scout.html"
+    },
+    {
+      "source": "/intelligence/lantern",
+      "destination": "/_pages/intelligence--lantern.html"
     },
     {
       "source": "/intelligence/prism",
@@ -423,6 +463,10 @@
     {
       "source": "/intelligence/parallax",
       "destination": "/_pages/intelligence--parallax.html"
+    },
+    {
+      "source": "/intelligence/vantage",
+      "destination": "/_pages/intelligence--vantage.html"
     },
     {
       "source": "/intelligence/horizon",
@@ -451,58 +495,68 @@
   ],
   "redirects": [
     {
-      "source": "/modules",
-      "destination": "/platform",
-      "permanent": false
+      "source": "/intelligence/prism",
+      "destination": "/intelligence/lantern",
+      "permanent": true
     },
     {
-      "source": "/modules/aksh-health",
-      "destination": "/platform",
-      "permanent": false
-    },
-    {
-      "source": "/modules/clinical",
-      "destination": "/platform",
-      "permanent": false
-    },
-    {
-      "source": "/modules/isi",
-      "destination": "/platform",
-      "permanent": false
-    },
-    {
-      "source": "/modules/trials",
-      "destination": "/platform",
-      "permanent": false
+      "source": "/intelligence/horizon",
+      "destination": "/intelligence/vantage",
+      "permanent": true
     },
     {
       "source": "/products",
-      "destination": "/platform",
-      "permanent": false
-    },
-    {
-      "source": "/for-aksh",
-      "destination": "/platform",
+      "destination": "/connected-intelligence",
       "permanent": false
     },
     {
       "source": "/for-isi",
-      "destination": "/platform",
+      "destination": "/connected-intelligence",
+      "permanent": false
+    },
+    {
+      "source": "/for-aksh",
+      "destination": "/connected-intelligence",
       "permanent": false
     },
     {
       "source": "/for-trials",
-      "destination": "/platform",
+      "destination": "/connected-intelligence",
       "permanent": false
     },
     {
       "source": "/akeno",
-      "destination": "/platform",
+      "destination": "/connected-intelligence",
       "permanent": false
     },
     {
       "source": "/aksh-agents",
-      "destination": "/platform",
+      "destination": "/connected-intelligence",
+      "permanent": false
+    },
+    {
+      "source": "/modules",
+      "destination": "/connected-intelligence",
+      "permanent": false
+    },
+    {
+      "source": "/modules/aksh-health",
+      "destination": "/connected-intelligence",
+      "permanent": false
+    },
+    {
+      "source": "/modules/clinical",
+      "destination": "/connected-intelligence",
+      "permanent": false
+    },
+    {
+      "source": "/modules/isi",
+      "destination": "/connected-intelligence",
+      "permanent": false
+    },
+    {
+      "source": "/modules/trials",
+      "destination": "/connected-intelligence",
       "permanent": false
     }
   ],

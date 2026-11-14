@@ -1,13 +1,14 @@
+import {DEPARTMENT_TAGS} from './departments';
 import type {DomainBundle} from './domainGraph';
 
 /** Navigation taxonomy only. Domain tags are recorded annotations, never ontology equivalence or scientific approval. */
 export const ATLAS_DEPARTMENTS = [
-  {id:'immunology',label:'Immunology',description:'Cells, signalling and immune regulation.',recordedDomains:['immune','autoimmune']},
-  {id:'neuroscience',label:'Neuroscience',description:'Neural systems and immune interactions.',recordedDomains:['brain','neuro','neuroimmune','gut_brain']},
-  {id:'microbiome',label:'Microbiome',description:'Microbial communities and host response.',recordedDomains:['gut','gut_brain']},
-  {id:'metabolism',label:'Metabolism',description:'Metabolic pathways and inflammation.',recordedDomains:['metabolic']},
-  {id:'genomics',label:'Genomics & Multi-omics',description:'Molecular evidence across biological scales.',recordedDomains:['genomics','multi_omics']},
-  {id:'physiology',label:'Human Physiology',description:'Mechanisms across tissues and systems.',recordedDomains:['physiology','liver']},
+  {id:'immunology',label:'Immunology',description:'Cells, signalling and immune regulation.',recordedDomains:DEPARTMENT_TAGS.immunology},
+  {id:'neuroscience',label:'Neuroscience',description:'Neural systems and immune interactions.',recordedDomains:DEPARTMENT_TAGS.neuroscience},
+  {id:'microbiome',label:'Microbiome',description:'Microbial communities and host response.',recordedDomains:DEPARTMENT_TAGS.microbiome},
+  {id:'metabolism',label:'Metabolism',description:'Metabolic pathways and inflammation.',recordedDomains:DEPARTMENT_TAGS.metabolism},
+  {id:'genomics-multi-omics',label:'Genomics & Multi-omics',description:'Molecular evidence across biological scales.',recordedDomains:DEPARTMENT_TAGS['genomics-multi-omics']},
+  {id:'human-physiology',label:'Human Physiology',description:'Mechanisms across tissues and systems.',recordedDomains:DEPARTMENT_TAGS['human-physiology']},
 ] as const;
 export type AtlasDepartmentId=typeof ATLAS_DEPARTMENTS[number]['id'];
 export function atlasDepartment(id:string){return ATLAS_DEPARTMENTS.find(d=>d.id===id)}

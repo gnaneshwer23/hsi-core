@@ -8,7 +8,7 @@ const g=JSON.parse(readFileSync('research/domain-graph/graph.v1.json','utf8')) a
 const filters:NetworkFilters={query:'',kind:'',domain:'',predicate:'',polarity:'',gaps:true,orphans:false,scope:'global',depth:1,model:''};
 
 test('six stable departments use one snapshot and preserve original entity, relationship and evidence identity',()=>{
- expect(ATLAS_DEPARTMENTS.map(d=>d.id)).toEqual(['immunology','neuroscience','microbiome','metabolism','genomics','physiology']);
+ expect(ATLAS_DEPARTMENTS.map(d=>d.id)).toEqual(['immunology','neuroscience','microbiome','metabolism','genomics-multi-omics','human-physiology']);
  const ids=new Set<string>();
  for(const d of ATLAS_DEPARTMENTS){const v=projectAtlasDepartment(g,d.id);for(const n of v.nodes){expect(n).toBe(g.nodes.find(x=>x.id===n.id)!);ids.add(n.id)}for(const e of v.edges){expect(e).toBe(g.edges.find(x=>x.id===e.id)!);expect(v.nodes.some(n=>n.id===e.subjectId)).toBe(true);expect(v.nodes.some(n=>n.id===e.objectId)).toBe(true);expect(e.scientificClaimAllowed).toBe(false)}}
  const immune=projectAtlasDepartment(g,'immunology'),gut=projectAtlasDepartment(g,'microbiome');
@@ -16,12 +16,12 @@ test('six stable departments use one snapshot and preserve original entity, rela
  expect(ids.size).toBeLessThanOrEqual(g.nodes.length);
 });
 test('missing departmental coverage stays empty; unknown department and excessive traversal fail closed',()=>{
- const rows=atlasDepartmentCoverage(g);expect(rows.find(d=>d.id==='genomics')!.relationships).toBe(0);expect(rows.every(d=>d.independentlyReviewed===0)).toBe(true);
+ const rows=atlasDepartmentCoverage(g);expect(rows.find(d=>d.id==='genomics-multi-omics')!.relationships).toBe(0);expect(rows.every(d=>d.independentlyReviewed===0)).toBe(true);
  for(const department of ['invented','genomics'])expect(networkProjection(g,g.nodes[0]!.id,{...filters,department}).edges).toEqual([]);
  for(const depth of [0,4,Infinity,NaN])expect(networkProjection(g,g.nodes[0]!.id,{...filters,depth}).edges).toEqual([]);
 });
 test('synthetic fixtures exercise all six departments without adding production relationships',()=>{
- for(const department of ATLAS_DEPARTMENTS){const base=g.edges.find(e=>e.kind==='source_candidate')!;const edge={...base,domains:[department.recordedDomains[0]]};const fixture={...g,edges:[edge]};const view=projectAtlasDepartment(fixture,department.id);expect(view.edges).toEqual([edge]);expect(view.edges[0]!.sourceId).toBe(base.sourceId);expect(view.edges[0]!.reviewStatus).toBe('unreviewed')}
+ for(const department of ATLAS_DEPARTMENTS){const base=g.edges.find(e=>e.kind==='source_candidate')!;const edge={...base,domains:department.recordedDomains.length?[department.recordedDomains[0]!]:[]};const fixture={...g,edges:[edge]};const view=projectAtlasDepartment(fixture,department.id);expect(view.edges).toEqual(department.recordedDomains.length?[edge]:[]);if(view.edges.length){expect(view.edges[0]!.sourceId).toBe(base.sourceId);expect(view.edges[0]!.reviewStatus).toBe('unreviewed')}}
 });
 test('condition and publication lookup are data-derived, bounded and filtered without ontology invention',()=>{
  const edge=g.edges.find(e=>e.sourceId)!;const source=g.sources.find(s=>s.id===edge.sourceId)!;

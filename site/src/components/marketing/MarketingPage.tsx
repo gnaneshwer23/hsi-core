@@ -207,7 +207,7 @@ export const JOURNEY_BY_PATH: Record<string, JourneyLink[]> = {
   "/platform": [
     { to: "/science", label: "Science", note: "Biology entry" },
     { to: "/how-it-works", label: "How it works", note: "Investigation steps" },
-    { to: "/platform", label: "Platform", note: "Scientific technology" },
+    { to: "/connected-intelligence", label: "Connected intelligence", note: "Wider vision" },
     { to: "/technology", label: "Technology", note: "Architecture" },
     { to: "/contact", label: "Research access", note: "Research collaboration" },
   ],
@@ -240,14 +240,14 @@ export const JOURNEY_BY_PATH: Record<string, JourneyLink[]> = {
   ],
   "/solutions": [
     { to: "/research", label: "Research", note: "Investigations" },
-    { to: "/modules", label: "Modules", note: "Products" },
+    { to: "/connected-intelligence", label: "Connected intelligence", note: "Wider vision" },
     { to: "/platform", label: "Platform", note: "Technology" },
     { to: "/contact", label: "Research access", note: "Collaboration" },
   ],
   "/technology": [
     { to: "/platform", label: "Platform", note: "Product view" },
     { to: "/science", label: "Science", note: "Biology" },
-    { to: "/platform", label: "Platform", note: "Scientific technology" },
+    { to: "/connected-intelligence", label: "Connected intelligence", note: "Wider vision" },
     { to: "/how-it-works", label: "How it works", note: "Workflow" },
     { to: "/contact", label: "Research access", note: "Collaboration" },
   ],

@@ -1,0 +1,1596 @@
+{
+ "schemaVersion": "hsi-ontology-candidate-mappings-1",
+ "note": "Unreviewed label-match suggestions only. No mapping is approved; exact mappings need human review (hsiOntologyRegistry).",
+ "ontologies": [
+  {
+   "prefix": "MONDO",
+   "release": "v2026-11-03"
+  },
+  {
+   "prefix": "UBERON",
+   "release": "v2026-11-05"
+  },
+  {
+   "prefix": "CL",
+   "release": "v2026-06-08"
+  },
+  {
+   "prefix": "GO",
+   "release": "2026-08-05"
+  },
+  {
+   "prefix": "ECO",
+   "release": "v2026-07-10"
+  }
+ ],
+ "conceptCount": 153,
+ "summary": {
+  "candidate": 23,
+  "ambiguous": 0,
+  "obsolete_only": 0,
+  "unmapped": 130
+ },
+ "mappings": [
+  {
+   "conceptId": "concept:-7-nachr-jak2-stat3-macrophage-programme-cf54f78",
+   "conceptName": "α7 nAChR–Jak2–STAT3 macrophage programme",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:acetylcholine-synthesizing-memory-t-cells-58096d9",
+   "conceptName": "Acetylcholine-synthesizing memory T cells",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:adipose-tissue-macrophages-93d12fb",
+   "conceptName": "Adipose tissue macrophages",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:alzheimer-s-disease-985ba83",
+   "conceptName": "Alzheimer's disease",
+   "status": "candidate",
+   "candidates": [
+    {
+     "ontology": "MONDO",
+     "id": "MONDO:0004975",
+     "label": "Alzheimer disease",
+     "matchedOn": "exact_synonym",
+     "matchedText": "Alzheimer's disease"
+    }
+   ],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:anti-ccp-antibodies-8eae71e",
+   "conceptName": "Anti-CCP antibodies",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:anti-drug-antibodies-to-anti-tnf-ada--4cc4410",
+   "conceptName": "Anti-drug antibodies to anti-TNF (ADA)",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:anti-tnf-immunogenicity-bioavailability-monitoring-7fe7ca0",
+   "conceptName": "Anti-TNF immunogenicity / bioavailability monitoring",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:anti-tnf-refractory-ra-phenotype-3df0409",
+   "conceptName": "Anti-TNF refractory RA phenotype",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:anti-tnf-response-heterogeneity-41bd793",
+   "conceptName": "Anti-TNF response heterogeneity",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:anti-tnf-therapy-139914b",
+   "conceptName": "Anti-TNF therapy",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:anti-tnf-treatment-response-9be5939",
+   "conceptName": "Anti-TNF treatment response",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:antinuclear-antibodies-ana--382388b",
+   "conceptName": "Antinuclear antibodies (ANA)",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:anxiety-disorders-dff9e0e",
+   "conceptName": "Anxiety disorders",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:asthma-d83cf5e",
+   "conceptName": "Asthma",
+   "status": "candidate",
+   "candidates": [
+    {
+     "ontology": "MONDO",
+     "id": "MONDO:0004979",
+     "label": "asthma",
+     "matchedOn": "label",
+     "matchedText": "asthma"
+    }
+   ],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:atopic-dermatitis-7a37755",
+   "conceptName": "Atopic dermatitis",
+   "status": "candidate",
+   "candidates": [
+    {
+     "ontology": "MONDO",
+     "id": "MONDO:0004980",
+     "label": "atopic eczema",
+     "matchedOn": "exact_synonym",
+     "matchedText": "atopic dermatitis"
+    }
+   ],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:autoimmune-metabolic-comorbidity-8d426ca",
+   "conceptName": "Autoimmune–metabolic comorbidity",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:autoimmune-t-cell-responses-622b4e6",
+   "conceptName": "Autoimmune T-cell responses",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:autoreactive-cd8-t-cells-4135353",
+   "conceptName": "Autoreactive CD8 T cells",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:b-cell-11311d8",
+   "conceptName": "B cell",
+   "status": "candidate",
+   "candidates": [
+    {
+     "ontology": "CL",
+     "id": "CL:0000236",
+     "label": "B cell",
+     "matchedOn": "label",
+     "matchedText": "B cell"
+    }
+   ],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:baff-antagonist-experimental--d0ecbbc",
+   "conceptName": "BAFF antagonist (experimental)",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:baff-b-cell-activating-factor--455a5c5",
+   "conceptName": "BAFF (B-cell activating factor)",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:beta-cell-injury-74547c6",
+   "conceptName": "Beta-cell injury",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:blood-brain-barrier-39d59f6",
+   "conceptName": "Blood–brain barrier",
+   "status": "candidate",
+   "candidates": [
+    {
+     "ontology": "UBERON",
+     "id": "UBERON:0000120",
+     "label": "blood brain barrier",
+     "matchedOn": "exact_synonym",
+     "matchedText": "blood-brain barrier"
+    }
+   ],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:blood-brain-barrier-neuroimmune-interface--5e837ae",
+   "conceptName": "Blood–brain barrier (neuroimmune interface)",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:brain-parenchyma-immune-surveillance-ff492d6",
+   "conceptName": "Brain parenchyma immune surveillance",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:butyrate-ec227cb",
+   "conceptName": "Butyrate",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:cerebral-microglia-6b4fb28",
+   "conceptName": "Cerebral microglia",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:cgm-time-in-range-e61cf99",
+   "conceptName": "CGM time-in-range",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:cholinergic-anti-inflammatory-pathway-0a7dc97",
+   "conceptName": "Cholinergic anti-inflammatory pathway",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:cholinergic-neural-signals-to-the-spleen-959eefc",
+   "conceptName": "Cholinergic neural signals to the spleen",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:circulating-interleukin-1--5a2989a",
+   "conceptName": "Circulating interleukin-1α",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:circulating-tfh-cells-dfe74c0",
+   "conceptName": "circulating Tfh cells",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:circulating-tfh1-subset-c3af0f9",
+   "conceptName": "circulating Tfh1 subset",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:clinical-trial-research-b7d4dba",
+   "conceptName": "Clinical trial research",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:clostridium-clusters-iv-xiva-gut--ce3795e",
+   "conceptName": "Clostridium clusters IV / XIVa (gut)",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:cns-inflammatory-neurodegenerative-tone-939f891",
+   "conceptName": "CNS inflammatory / neurodegenerative tone",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:coeliac-disease-5b416be",
+   "conceptName": "Coeliac disease",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:colonic-inflammation-tone-b58a1c3",
+   "conceptName": "Colonic inflammation tone",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:colonic-mucosal-foxp3-treg-0c3a354",
+   "conceptName": "Colonic / mucosal Foxp3+ Treg",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:commensal-bacterial-metabolites-scfa-neighbourhood--6bed04a",
+   "conceptName": "Commensal bacterial metabolites (SCFA neighbourhood)",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:crohn-s-disease-2c67a98",
+   "conceptName": "Crohn's disease",
+   "status": "candidate",
+   "candidates": [
+    {
+     "ontology": "MONDO",
+     "id": "MONDO:0005011",
+     "label": "Crohn disease",
+     "matchedOn": "exact_synonym",
+     "matchedText": "Crohn's disease"
+    }
+   ],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:cxcl13-tfh-like-t-cells-ssc-skin--5256845",
+   "conceptName": "CXCL13+ Tfh-like T cells (SSc skin)",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:cxcl4-pf4--e580b6f",
+   "conceptName": "CXCL4 (PF4)",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:dermal-fibrosis-1f478c1",
+   "conceptName": "dermal fibrosis",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:dietary-fibre-intervention-e764683",
+   "conceptName": "Dietary fibre intervention",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:efferent-vagus-nerve-stimulation-e06c196",
+   "conceptName": "Efferent vagus nerve stimulation",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:endotoxin-exposure-7ec78bf",
+   "conceptName": "Endotoxin exposure",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:epstein-barr-virus-ebv--cf0a9d6",
+   "conceptName": "Epstein-Barr virus (EBV)",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:fasting-plasma-glucose-897a5f4",
+   "conceptName": "Fasting plasma glucose",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:fibre-responsive-gut-bacteria-ab26ae7",
+   "conceptName": "Fibre-responsive gut bacteria",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:glp-1-receptor-agonists-a739770",
+   "conceptName": "GLP-1 receptor agonists",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:glycaemic-control-037c7e6",
+   "conceptName": "Glycaemic control",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:gpr109a-hcar2-butyrate-niacin-receptor-c67d9fd",
+   "conceptName": "GPR109A (HCAR2) — butyrate / niacin receptor",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:gut-microbiome-composition-28d8105",
+   "conceptName": "Gut microbiome composition",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:hba1c-edb1995",
+   "conceptName": "HbA1c",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:hs-crp-dec08db",
+   "conceptName": "hs-CRP",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:human-dendritic-cell-conditioning-3b26e7b",
+   "conceptName": "Human dendritic-cell conditioning",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:human-microbiota-clostridia-mix-17-strain-class--2c89ed6",
+   "conceptName": "Human microbiota Clostridia mix (17-strain class)",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:hyperglycemia-8cde24e",
+   "conceptName": "Hyperglycemia",
+   "status": "candidate",
+   "candidates": [
+    {
+     "ontology": "MONDO",
+     "id": "MONDO:0002909",
+     "label": "hyperglycemia",
+     "matchedOn": "label",
+     "matchedText": "hyperglycemia"
+    }
+   ],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:ibs-99d908e",
+   "conceptName": "IBS",
+   "status": "candidate",
+   "candidates": [
+    {
+     "ontology": "MONDO",
+     "id": "MONDO:0005052",
+     "label": "irritable bowel syndrome",
+     "matchedOn": "exact_synonym",
+     "matchedText": "IBS"
+    }
+   ],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:icos-tfh-like-cells-29d292b",
+   "conceptName": "ICOS+ Tfh-like cells",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:icos-tfh-like-cells-il-21-77c4827",
+   "conceptName": "ICOS+ Tfh-like cells / IL-21",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:il-1-pathway-blockade-787dcc0",
+   "conceptName": "IL-1 pathway blockade",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:il-10-type-1-regulatory-t-cells-tr1-like--cd5f9c9",
+   "conceptName": "IL-10+ type-1 regulatory T cells (Tr1-like)",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:il-17-pathway-50a2203",
+   "conceptName": "IL-17 pathway",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:il-21-9b74211",
+   "conceptName": "IL-21",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:il-21-dependent-plasmablast-differentiation-8e9dc00",
+   "conceptName": "IL-21-dependent plasmablast differentiation",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:il-23-pathway-105f13a",
+   "conceptName": "IL-23 pathway",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:il-6-d48d6c0",
+   "conceptName": "IL-6",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:il-6-pathway-axis-e32d873",
+   "conceptName": "IL-6 pathway axis",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:il-6-pathway-blockade-tocilizumab-class--64403dd",
+   "conceptName": "IL-6 pathway blockade (tocilizumab class)",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:imidazole-propionate-385ef75",
+   "conceptName": "Imidazole propionate",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:immune-checkpoint-therapy-f09182c",
+   "conceptName": "Immune checkpoint therapy",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:immune-related-adverse-events-34312cf",
+   "conceptName": "Immune-related adverse events",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:implantable-vagus-nerve-stimulator-experimental--27b5f4f",
+   "conceptName": "Implantable vagus nerve stimulator (experimental)",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:infection-susceptibility-480bf88",
+   "conceptName": "Infection susceptibility",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:inflammatory-bowel-disease-54fdad6",
+   "conceptName": "Inflammatory bowel disease",
+   "status": "candidate",
+   "candidates": [
+    {
+     "ontology": "MONDO",
+     "id": "MONDO:0005265",
+     "label": "inflammatory bowel disease",
+     "matchedOn": "label",
+     "matchedText": "inflammatory bowel disease"
+    }
+   ],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:inflammatory-reflex-70557c1",
+   "conceptName": "Inflammatory reflex",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:inflammatory-reflex-cholinergic-axis--f501cba",
+   "conceptName": "Inflammatory reflex (cholinergic axis)",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:innate-immune-dysfunction-5b7692e",
+   "conceptName": "Innate immune dysfunction",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:insulin-resistance-9408d6b",
+   "conceptName": "Insulin resistance",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:insulin-sensitivity-e2ac9c3",
+   "conceptName": "Insulin sensitivity",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:intestinal-epithelial-barrier-tight-junctions-9125cbb",
+   "conceptName": "Intestinal epithelial barrier / tight junctions",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:intestinal-epithelial-hif-supported-barrier-function-5a19f26",
+   "conceptName": "Intestinal epithelial HIF-supported barrier function",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:intestinal-macrophage-hdac-activity-inflammatory-tone-fc020ff",
+   "conceptName": "Intestinal macrophage HDAC activity / inflammatory tone",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:ischemia-reperfusion-tnf-response-0f01359",
+   "conceptName": "Ischemia–reperfusion TNF response",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:islet-autoantibodies-5e2bdcb",
+   "conceptName": "Islet autoantibodies",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:lada-latent-autoimmune-diabetes-8a43cd2",
+   "conceptName": "LADA / latent autoimmune diabetes",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:leukocyte-trafficking-via-cd11b-909d19b",
+   "conceptName": "Leukocyte trafficking via CD11b",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:long-covid-46c3d30",
+   "conceptName": "Long COVID",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:low-grade-chronic-inflammation-6c0133c",
+   "conceptName": "Low-grade chronic inflammation",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:macrophage-tnf-release-5d462bc",
+   "conceptName": "Macrophage TNF release",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:macrophage-tnf-synthesis-release-f701603",
+   "conceptName": "Macrophage TNF synthesis / release",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:major-depressive-disorder-3f5fc4a",
+   "conceptName": "Major depressive disorder",
+   "status": "candidate",
+   "candidates": [
+    {
+     "ontology": "MONDO",
+     "id": "MONDO:0002009",
+     "label": "major depressive disorder",
+     "matchedOn": "label",
+     "matchedText": "major depressive disorder"
+    }
+   ],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:mash-77b846f",
+   "conceptName": "MASH",
+   "status": "candidate",
+   "candidates": [
+    {
+     "ontology": "MONDO",
+     "id": "MONDO:0007027",
+     "label": "metabolic dysfunction-associated steatohepatitis",
+     "matchedOn": "exact_synonym",
+     "matchedText": "MASH"
+    }
+   ],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:metabolic-inflammation-1d9030c",
+   "conceptName": "Metabolic inflammation",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:metformin-ca31e3f",
+   "conceptName": "Metformin",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:methotrexate-anti-tnf-combination-therapy-7ff456a",
+   "conceptName": "Methotrexate + anti-TNF combination therapy",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:microbial-acetate-and-butyrate-c745bf9",
+   "conceptName": "Microbial acetate and butyrate",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:microbial-bcaa-biosynthesis-91233db",
+   "conceptName": "Microbial BCAA biosynthesis",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:microbiota-tryptophan-catabolites-ahr-ligands--0a8d9c1",
+   "conceptName": "Microbiota tryptophan catabolites (AhR ligands)",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:migraine-d6c8001",
+   "conceptName": "Migraine",
+   "status": "candidate",
+   "candidates": [
+    {
+     "ontology": "MONDO",
+     "id": "MONDO:0005277",
+     "label": "migraine disorder",
+     "matchedOn": "exact_synonym",
+     "matchedText": "migraine"
+    }
+   ],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:monocyte-recruitment-into-brain-e98204c",
+   "conceptName": "Monocyte recruitment into brain",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:mtorc1-insulin-signalling-pathway-fba9add",
+   "conceptName": "mTORC1 insulin-signalling pathway",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:mucosal-il-22-reactivity-balance-2163840",
+   "conceptName": "Mucosal IL-22 / reactivity balance",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:mucosal-th17-cells-6e82afc",
+   "conceptName": "Mucosal Th17 cells",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:multiple-sclerosis-142dd82",
+   "conceptName": "Multiple sclerosis",
+   "status": "candidate",
+   "candidates": [
+    {
+     "ontology": "MONDO",
+     "id": "MONDO:0005301",
+     "label": "multiple sclerosis",
+     "matchedOn": "label",
+     "matchedText": "multiple sclerosis"
+    }
+   ],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:nicotinic-ach-receptor-7-subunit-macrophage--cc70e7b",
+   "conceptName": "Nicotinic ACh receptor α7 subunit (macrophage)",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:nlrp3-inflammasome-7d58a9b",
+   "conceptName": "NLRP3 inflammasome",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:obesity-035d696",
+   "conceptName": "Obesity",
+   "status": "candidate",
+   "candidates": [
+    {
+     "ontology": "MONDO",
+     "id": "MONDO:0011122",
+     "label": "obesity disorder",
+     "matchedOn": "exact_synonym",
+     "matchedText": "obesity"
+    }
+   ],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:pancreatic-cell-dysfunction-d3ac2d4",
+   "conceptName": "Pancreatic β-cell dysfunction",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:parkinson-s-disease-6e0335a",
+   "conceptName": "Parkinson's disease",
+   "status": "candidate",
+   "candidates": [
+    {
+     "ontology": "MONDO",
+     "id": "MONDO:0005180",
+     "label": "Parkinson disease",
+     "matchedOn": "exact_synonym",
+     "matchedText": "Parkinson's disease"
+    }
+   ],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:pd-1-46233b0",
+   "conceptName": "PD-1",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:peripheral-foxp3-regulatory-t-cells-d531a07",
+   "conceptName": "Peripheral Foxp3+ regulatory T cells",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:peripheral-immune-cns-communication-axis-ba2f15c",
+   "conceptName": "Peripheral immune ↔ CNS communication axis",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:peripheral-systemic-tnf-inflammatory-tone-2b6d2c9",
+   "conceptName": "Peripheral / systemic TNF inflammatory tone",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:pharmacologic-cholinergic-anti-inflammatory-stimulation-8646711",
+   "conceptName": "Pharmacologic cholinergic anti-inflammatory stimulation",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:plasmablast-907cb01",
+   "conceptName": "Plasmablast",
+   "status": "candidate",
+   "candidates": [
+    {
+     "ontology": "CL",
+     "id": "CL:0000980",
+     "label": "plasmablast",
+     "matchedOn": "label",
+     "matchedText": "plasmablast"
+    }
+   ],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:prediabetes-593656f",
+   "conceptName": "Prediabetes",
+   "status": "candidate",
+   "candidates": [
+    {
+     "ontology": "MONDO",
+     "id": "MONDO:0006920",
+     "label": "prediabetes syndrome",
+     "matchedOn": "exact_synonym",
+     "matchedText": "prediabetes"
+    }
+   ],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:psoriasis-psoriatic-disease-bb7ad40",
+   "conceptName": "Psoriasis / psoriatic disease",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:resting-surveying-microglia-1b0204f",
+   "conceptName": "Resting / surveying microglia",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:rf-acpa-seropositive-ra-phenotype-aaf4649",
+   "conceptName": "RF/ACPA seropositive RA phenotype",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:rheumatoid-arthritis-d138360",
+   "conceptName": "Rheumatoid arthritis",
+   "status": "candidate",
+   "candidates": [
+    {
+     "ontology": "MONDO",
+     "id": "MONDO:0008383",
+     "label": "rheumatoid arthritis",
+     "matchedOn": "label",
+     "matchedText": "rheumatoid arthritis"
+    }
+   ],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:rheumatoid-factor-ac0f1e7",
+   "conceptName": "Rheumatoid factor",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:rituximab-b-cell-depletion-experimental-in-ssc--0f5ddd9",
+   "conceptName": "Rituximab B-cell depletion (experimental in SSc)",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:segmented-filamentous-bacteria-sfb--a0cda1b",
+   "conceptName": "Segmented filamentous bacteria (SFB)",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:sglt2-inhibitors-d4fdd6f",
+   "conceptName": "SGLT2 inhibitors",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:short-chain-fatty-acids-9ea4a92",
+   "conceptName": "Short-chain fatty acids",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:skin-fibrosis-2366785",
+   "conceptName": "Skin fibrosis",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:spleen-innate-cytokine-reservoir--69a2683",
+   "conceptName": "Spleen (innate cytokine reservoir)",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:splenic-nerve-catecholaminergic--eb1a1d9",
+   "conceptName": "Splenic nerve (catecholaminergic)",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:ssc-circulating-tfh-cells-e2491dc",
+   "conceptName": "SSc circulating Tfh cells",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:ssc-cohort-b1d52a8",
+   "conceptName": "SSc cohort",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:ssc-cohort-versus-healthy-controls-faf9aad",
+   "conceptName": "SSc cohort versus healthy controls",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:ssc-dermal-fibrosis-2ebbae7",
+   "conceptName": "SSc dermal fibrosis",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:ssc-fibroblast-tgf-fibrotic-programme-309501e",
+   "conceptName": "SSc fibroblast / TGF-β fibrotic programme",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:ssc-vasculopathy-endothelial-injury-cb0607d",
+   "conceptName": "SSc vasculopathy / endothelial injury",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:synovial-macrophages-0de30b3",
+   "conceptName": "Synovial macrophages",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:systemic-glucocorticoids-0d278f1",
+   "conceptName": "Systemic glucocorticoids",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:systemic-infection-peripheral-inflammation-4ac39b1",
+   "conceptName": "Systemic infection / peripheral inflammation",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:systemic-lupus-erythematosus-dcfe297",
+   "conceptName": "Systemic lupus erythematosus",
+   "status": "candidate",
+   "candidates": [
+    {
+     "ontology": "MONDO",
+     "id": "MONDO:0007915",
+     "label": "systemic lupus erythematosus",
+     "matchedOn": "label",
+     "matchedText": "systemic lupus erythematosus"
+    }
+   ],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:systemic-sclerosis-694222f",
+   "conceptName": "Systemic sclerosis",
+   "status": "candidate",
+   "candidates": [
+    {
+     "ontology": "MONDO",
+     "id": "MONDO:0005100",
+     "label": "systemic sclerosis",
+     "matchedOn": "label",
+     "matchedText": "systemic sclerosis"
+    }
+   ],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:t-cell-exhaustion-d697e97",
+   "conceptName": "T-cell exhaustion",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:t-follicular-helper-tfh-cells-15bf43d",
+   "conceptName": "T follicular helper (Tfh) cells",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:teplizumab-6d96cad",
+   "conceptName": "Teplizumab",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:tfh1-skewed-follicular-helper-cells-8088be3",
+   "conceptName": "Tfh1-skewed follicular helper cells",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:tgf-pathway-activation-in-dermal-fibroblasts-b4ec1ce",
+   "conceptName": "TGF-β pathway activation in dermal fibroblasts",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:tnf--401d122",
+   "conceptName": "TNF-α",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:type-1-diabetes-c567d4c",
+   "conceptName": "Type 1 diabetes",
+   "status": "candidate",
+   "candidates": [
+    {
+     "ontology": "MONDO",
+     "id": "MONDO:0005147",
+     "label": "type 1 diabetes mellitus",
+     "matchedOn": "exact_synonym",
+     "matchedText": "type 1 diabetes"
+    }
+   ],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:type-1-diabetes-progression-c0a34f7",
+   "conceptName": "Type 1 diabetes progression",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:type-2-diabetes-30b80b0",
+   "conceptName": "Type 2 diabetes",
+   "status": "candidate",
+   "candidates": [
+    {
+     "ontology": "MONDO",
+     "id": "MONDO:0005148",
+     "label": "type 2 diabetes mellitus",
+     "matchedOn": "exact_synonym",
+     "matchedText": "type 2 diabetes"
+    }
+   ],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:type-i-interferon-pathway-fd8a109",
+   "conceptName": "Type I interferon pathway",
+   "status": "unmapped",
+   "candidates": [],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  },
+  {
+   "conceptId": "concept:ulcerative-colitis-dd5ccca",
+   "conceptName": "Ulcerative colitis",
+   "status": "candidate",
+   "candidates": [
+    {
+     "ontology": "MONDO",
+     "id": "MONDO:0005101",
+     "label": "ulcerative colitis",
+     "matchedOn": "label",
+     "matchedText": "ulcerative colitis"
+    }
+   ],
+   "obsoleteMatches": [],
+   "reviewStatus": "unreviewed",
+   "exactMappingApproved": false
+  }
+ ]
+}

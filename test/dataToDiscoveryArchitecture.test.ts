@@ -91,9 +91,12 @@ describe("Technology page Data-to-Discovery visualisation", () => {
   const css = read("../site/src/components/DataToDiscoveryArchitecture.css");
   const lib = read("../site/src/lib/dataToDiscoveryArchitecture.ts");
 
-  it("keeps the historical architecture separate from current public positioning", () => {
-    expect(page).not.toContain("<DataToDiscoveryArchitecture");
-    expect(page).toContain("PlatformPublicPage as Technology");
+  it("mounts the interactive architecture after TechnologyFlow", () => {
+    expect(page).toContain('import { DataToDiscoveryArchitecture }');
+    expect(page.indexOf("<TechnologyFlow />")).toBeLessThan(
+      page.indexOf("<DataToDiscoveryArchitecture />"),
+    );
+    expect(page).toContain('id="data-to-discovery-status"');
   });
 
   it("avoids banned promo wording and auth-only inv anchors on the public surface", () => {

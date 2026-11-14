@@ -1,0 +1,14 @@
+.ci-page .ci-grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))}
+.ci-card{padding:26px;border:1px solid var(--line);border-radius:14px;background:#f6f9fa;display:grid;gap:14px;align-content:start}
+.ci-card-head{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;justify-content:space-between}.ci-card h3{margin:0;font-size:24px;letter-spacing:-.03em;font-weight:500;color:var(--navy)}
+.ci-card p{margin:0;color:var(--ink)}
+.ci-card .dept-status{margin:0;background:rgba(20,59,67,.1);color:var(--teal)}.ci-card .dept-status-dev{background:rgba(196,78,73,.12);color:var(--signal-text)}.ci-card .ci-planned{background:rgba(74,90,100,.14);color:var(--muted)}
+.ci-connects{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}.ci-connects li{padding:6px 12px;border:1px solid var(--line);border-radius:999px;font-size:14px;background:#fff}
+.ci-facts{display:grid;gap:12px;margin:0}.ci-facts div{display:grid;gap:2px;padding-top:12px;border-top:1px solid var(--line)}.ci-facts dt{font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--teal);font-weight:600}.ci-facts dd{margin:0;color:var(--muted);font-size:15px}
+.ci-flow{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));counter-reset:f;margin:0;padding:0;list-style:none}
+.ci-flow li{counter-increment:f;display:grid;gap:6px;padding:20px;border:1px solid var(--line);border-radius:12px;background:#f6f9fa;position:relative}
+.ci-flow li::before{content:counter(f,decimal-leading-zero);font-weight:600;color:var(--teal)}.ci-flow strong{font-size:18px;color:var(--navy)}.ci-flow span{color:var(--muted);font-size:15px}
+.ci-flow li:first-child{border-color:var(--teal)}
+.ci-principles{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin:0 0 22px;padding:0;list-style:none}
+.ci-principles li{display:grid;gap:6px;padding:20px;border:1px solid var(--line);border-left:3px solid var(--signal);border-radius:12px;background:#f6f9fa}.ci-principles strong{color:var(--navy);font-size:18px}.ci-principles span{color:var(--muted);font-size:15px}
+.ci-page .dept-integrity p{border-left:0;padding-left:0}
