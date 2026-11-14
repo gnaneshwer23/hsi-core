@@ -40,3 +40,7 @@
 .hsi-public .hsi-dark .hsi-actions{gap:12px}
 .hsi-public .hsi-mechanism figcaption{font-size:14px;line-height:1.6}
 .hsi-public .hsi-dark .hsi-actions+p,.hsi-public .hsi-dark .hsi-action+p{margin-top:16px}
+.hsi-public .hsi-domain-map button[aria-pressed=true]{background:#f4f2f9}
+.hsi-public .hsi-evidence-list button[aria-pressed=true]{background:#fff;border-color:var(--pb-violet)}
+.hsi-public .hsi-evidence-inspector button[aria-pressed=true]{border-bottom-color:var(--pb-violet);color:#49405e}
+.hsi-public .hsi-action{padding-inline:24px}

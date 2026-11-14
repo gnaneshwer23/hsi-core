@@ -90,3 +90,18 @@
 .fg-block .fg-table figcaption{padding:12px 16px 16px;border-top:1px solid var(--fg-line)}
 @media(max-width:1000px){.fg-block{width:calc(100% - 64px);grid-template-columns:1fr}.fg-block>h2{max-width:none}}
 @media(max-width:640px){.fg-block{width:calc(100% - 40px);padding:40px 0}.fg-table table,.fg-table thead,.fg-table tbody,.fg-table tr,.fg-table th,.fg-table td{display:block;width:auto}.fg-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}.fg-table tr{border-bottom:1px solid var(--fg-line);padding:8px 0}.fg-table th,.fg-table td{border:0;padding:6px 12px}.fg-table tbody th{width:auto}}
+/* How it works: the workflow as an ordered figure. The numbers carry the sequence. */
+.fg-block-wide{grid-template-columns:1fr}
+.fg-block-wide>h2{max-width:none}
+.fg-steps{list-style:none;margin:0;padding:0}
+.fg-steps>li{display:grid;grid-template-columns:56px minmax(0,1.5fr) minmax(0,.8fr);gap:8px 24px;align-items:start;padding:22px 28px;border-top:1px solid var(--fg-line);margin:0}
+.fg-steps>li:first-child{border-top:0}
+.fg-step-n{font-size:15px;font-weight:600;color:var(--fg-violet);font-variant-numeric:tabular-nums;padding-top:4px}
+.fg-steps h2{font-size:22px;line-height:1.25;letter-spacing:-.02em;margin:0 0 6px;max-width:none}
+.fg-steps p{font-size:16px;line-height:1.6;color:var(--fg-body);margin:0;max-width:60ch}
+.fg-steps ul{list-style:none;display:flex;flex-wrap:wrap;gap:4px 18px;margin:0;padding:0}
+.fg-steps ul li{margin:0}
+.fg-steps ul a{display:inline-flex;align-items:center;min-height:44px;font-size:15px;font-weight:600;color:var(--fg-ink);text-decoration:none;border-bottom:1px solid transparent}
+.fg-steps ul a:hover{color:var(--fg-violet);border-bottom-color:var(--fg-violet)}
+.fg-flow>li{}
+@media(max-width:800px){.fg-steps>li{grid-template-columns:40px minmax(0,1fr);padding:20px}.fg-steps ul{grid-column:2}}
