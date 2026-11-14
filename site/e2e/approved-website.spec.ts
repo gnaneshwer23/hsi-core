@@ -22,7 +22,7 @@ test("audit context changes and all five fictional scenarios preserve the no-liv
 test("evidence page connects the actual graph and original publications without implying approval",async({page})=>{
  await page.goto('/evidence-intelligence');await expect(page.locator('#home-knowledge-graph')).toHaveCount(0);
  await expect(page.getByRole('link',{name:/T follicular helper-like cells contribute/})).toHaveAttribute('href','https://pubmed.ncbi.nlm.nih.gov/29514998/');
- await expect(page.getByRole('main')).toContainText('do not validate HSI');
+ await expect(page.getByRole('main')).toContainText('does not validate HSI');
 });
 test("brief exports carry source-free and non-approved status",async({page})=>{
  await page.goto("/research-briefs");await page.locator("#example-brief summary").filter({hasText:"Evidence inventory and provenance"}).click();await expect(page.locator("#example-brief")).toContainText("No source-cleared study packet");
