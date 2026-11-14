@@ -3,6 +3,8 @@ import {readFile} from 'node:fs/promises';
 test('homepage carries an actual graph connection through evidence to a pinned draft and reopen',async({page})=>{
  await page.goto('/');const discovery=page.getByRole('region',{name:'Homepage scientific discovery'});
  await expect(discovery.locator('[data-graph-node]')).not.toHaveCount(0);
+ await expect(page.getByRole('article',{name:'Selected graph evidence record'})).toContainText('DIAB-001');
+ await expect(page.getByRole('article',{name:'Selected graph evidence record'})).toContainText('mouse');
  await discovery.getByRole('button',{name:'Inspect this evidence',exact:true}).click();
  await expect(discovery.locator('.hd-inspector dl')).toContainText('mouse');
  await expect(discovery.locator('.hd-inspector')).toContainText('Not recorded');

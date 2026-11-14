@@ -32,11 +32,11 @@ describe("connected intelligence: the wider vision, by capability, with no produ
  test("no product names in the page data, the page, or the home strip it replaced",()=>{
   for(const f of ["site/src/lib/connectedIntelligence.ts","site/src/pages/ConnectedIntelligence.tsx","site/src/styles/connected-intelligence.css","site/src/pages/ScientificPublic.tsx"])expect(NAMES.test(read(f)),f).toBe(false);
  });
- test("the page is routed, prerendered, in the SEO map, and linked from the home page",()=>{
+ test("the secondary page remains routed, prerendered and in the SEO map",()=>{
   expect(read("site/src/App.tsx")).toContain('path="connected-intelligence"');
   expect(vercel.rewrites.find(r=>r.source==="/connected-intelligence")?.destination).toBe("/_pages/connected-intelligence.html");
   const seo=read("site/src/lib/seo/siteSeo.ts");expect(seo).toContain("'/connected-intelligence'");
   expect(NAMES.test(seo.slice(seo.indexOf("'/connected-intelligence'"),seo.indexOf("'/connected-intelligence'")+400))).toBe(false);
-  expect(read("site/src/pages/ScientificPublic.tsx")).toContain('to="/connected-intelligence"');
+
  });
 });
