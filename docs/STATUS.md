@@ -181,6 +181,8 @@ One module per line, sorted, so concurrent changes to different modules do not c
 - `src/hsiOntologyRegistry.ts`
 - `src/knowledgeGraph/departments.ts`
 - `src/knowledgeGraph/graphAgents.ts`
+- `src/knowledgeGraph/investigationFileStore.ts`
+- `src/knowledgeGraph/investigationStore.ts`
 - `src/liveExecute.ts`
 - `src/livingHealthKnowledgeGraph.ts`
 

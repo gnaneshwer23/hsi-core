@@ -1084,6 +1084,8 @@
           "src/hsiOntologyRegistry.ts",
           "src/knowledgeGraph/departments.ts",
           "src/knowledgeGraph/graphAgents.ts",
+          "src/knowledgeGraph/investigationFileStore.ts",
+          "src/knowledgeGraph/investigationStore.ts",
           "src/liveExecute.ts",
           "src/livingHealthKnowledgeGraph.ts"
         ],

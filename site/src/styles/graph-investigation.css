@@ -19,3 +19,4 @@
 .gi-proposal{margin-top:14px;padding:14px 18px;border:1px dashed #a43d38;border-radius:10px;background:#fcf4f3}.gi-export{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;margin-top:16px}
 .dl-dossier-actions{display:flex;flex-wrap:wrap;gap:8px}.dl-start-actions{display:flex;flex-wrap:wrap;gap:8px}
 @media (max-width:640px){.gi-panel{padding:16px}.gi-card{padding:14px}}
+.gi-saved{margin-top:28px;border-top:1px solid var(--line,#c9d4d9);padding-top:12px}.gi-saved ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}.gi-saved li{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;justify-content:space-between}.gi-saved small{color:#3d4d57}

@@ -96,6 +96,6 @@ export function DepartmentLens({bundle,selectedId,onShowInGraph}:{bundle:DomainB
    {result?.paths.map((p,i)=><PathCard key={p.reconstruct.edgeIds.join("|")} bundle={bundle} path={p} index={i} onInspect={setEdgeId} onAdd={addEdge}/>)}
   </section>
   {edge&&<Dossier bundle={bundle} edge={edge} onClose={()=>setEdgeId("")} onAdd={addEdge} added={invEdges.includes(edge.id)}/>}
-  <GraphInvestigation bundle={bundle} nodeIds={invNodes} edgeIds={invEdges} department={result?target:null} onRemoveNode={id=>setInvNodes(v=>v.filter(x=>x!==id))} onRemoveEdge={id=>setInvEdges(v=>v.filter(x=>x!==id))}/>
+  <GraphInvestigation bundle={bundle} nodeIds={invNodes} edgeIds={invEdges} department={result?target:null} onRemoveNode={id=>setInvNodes(v=>v.filter(x=>x!==id))} onRemoveEdge={id=>setInvEdges(v=>v.filter(x=>x!==id))} onRestore={(n,e)=>{setInvNodes(n);setInvEdges(e)}}/>
  </div>;
 }
