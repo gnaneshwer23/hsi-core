@@ -1,36 +1,24 @@
 import {HsiIdentity} from "./HsiIdentity";
 import { Link } from "react-router-dom";
-import { RESEARCH_NAV_LINKS } from "../lib/primaryNav";
+import {RESEARCH_NAV_LINKS} from "../lib/primaryNav";
+import {departments,departmentPath} from "../lib/departments";
+import "../styles/scientific-footer.css";
 const groups = [
-  {
-    name: "Explore",
-    links: [
-      { to: "/platform", label: "Platform" },
-      { to: "/science", label: "Science" },
-      { to: "/applications", label: "Applications" },
-      {to:"/intelligence",label:"Intelligence Collective"},
-      {to:"/how-it-works",label:"How it works"},
-    ],
-  },
-  { name: "Research", links: RESEARCH_NAV_LINKS },
-  {
-    name: "Company",
-    links: [
-      { to: "/about", label: "About" },
-      { to: "/contact", label: "Contact" },
-      { to: "/about#collaboration", label: "Collaboration" },
-    ],
-  },
-  {
-    name: "Trust",
-    links: [
-      { to: "/trust", label: "Governance" },
-      { to: "/trust#privacy", label: "Privacy information" },
-      { to: "/trust#terms", label: "Research use information" },
-      { to: "/trust#accessibility", label: "Accessibility" },
-      { to: "/trust#security", label: "Security information" },
-    ],
-  },
+  {name:"Science",links:departments.map(d=>({to:departmentPath(d.slug),label:d.name}))},
+  {name:"Research",links:[{to:"/research/knowledge-graph",label:"Knowledge Graph"},...RESEARCH_NAV_LINKS]},
+  {name:"Technology",links:[
+    {to:"/platform",label:"Platform overview"},
+    {to:"/how-it-works",label:"How it works"},
+    {to:"/technology",label:"Technology"},
+    {to:"/intelligence",label:"Intelligence Collective"},
+  ]},
+  {name:"Trust",links:[
+    {to:"/trust",label:"Scientific governance"},
+    {to:"/trust#privacy",label:"Privacy information"},
+    {to:"/trust#terms",label:"Research use information"},
+    {to:"/trust#accessibility",label:"Accessibility"},
+    {to:"/trust#security",label:"Security information"},
+  ]},
 ];
 export function Footer() {
   return (
@@ -40,10 +28,12 @@ export function Footer() {
           <Link className="hsi-wordmark" to="/">
             <HsiIdentity/>
           </Link>
-          <p>Connecting human biology through evidence, context and independent scientific judgement.</p>
+          <p className="hsi-footer-principle">Understand the connections.<br/>Preserve the differences.</p>
+          <p>Evidence-grounded intelligence for connected human biology.</p>
           <Link className="hsi-text-link" to="/contact">
-            Request research access
+            Research access options
           </Link>
+          <Link className="hsi-footer-about" to="/about">About HSI</Link>
         </div>
         {groups.map((g) => (
           <nav aria-label={`Footer ${g.name.toLowerCase()}`} key={g.name}>
