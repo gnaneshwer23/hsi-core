@@ -182,6 +182,8 @@ One module per line, sorted, so concurrent changes to different modules do not c
 - `src/liveExecute.ts`
 - `src/livingHealthKnowledgeGraph.ts`
 - `src/ontology/conceptMapping.ts`
+- `src/ontology/looksIdentifying.ts`
+- `src/ontology/mappingReview.ts`
 - `src/ontology/oboTerms.ts`
 - `src/ontology/ontologyImport.ts`
 
