@@ -85,3 +85,28 @@ test("investigation opens on the question carried in the URL and ignores unknown
  await page.goto("/research/investigate?question=not-a-question");
  await expect(page.getByRole("button",{name:/gut microbial metabolites influence neuroinflammation/i})).toHaveAttribute("aria-pressed","true");
 });
+
+test("access draft restores, downloads and clears without submission",async({page})=>{
+ const posts:string[]=[];page.on('request',r=>{if(r.method()==='POST')posts.push(r.url())});
+ await page.goto('/contact');await page.getByRole('button',{name:'Save browser draft',exact:true}).click();
+ await expect(page.getByRole('status')).toContainText('at least 12 characters');
+ const question='How does cytokine signalling differ across experimental tissue compartments?';
+ await page.getByLabel('Research question or investigation focus',{exact:true}).fill(question);
+ await page.getByRole('button',{name:'Save browser draft',exact:true}).click();await page.reload();
+ await expect(page.getByLabel('Research question or investigation focus',{exact:true})).toHaveValue(question);
+ await page.getByLabel('Research question or investigation focus',{exact:true}).fill(question+' Compare assays.');
+ await expect(page.getByRole('main')).toContainText('latest edits have not been saved');
+ const event=page.waitForEvent('download');await page.getByRole('button',{name:'Download text draft',exact:true}).click();
+ const file=await event;const text=await readFile((await file.path())!,'utf8');expect(text).toContain(question+' Compare assays.');expect(text).toContain('Not submitted to HSI');
+ await page.getByRole('button',{name:'Clear draft',exact:true}).click();await page.reload();
+ await expect(page.getByLabel('Research question or investigation focus',{exact:true})).toHaveValue('');
+ expect(posts).toEqual([]);
+});
+test("blocked browser storage never reports a successful save",async({page})=>{
+ await page.addInitScript(()=>{Storage.prototype.setItem=()=>{throw new DOMException('Blocked','SecurityError')}});
+ await page.goto('/contact');await page.getByLabel('Research question or investigation focus',{exact:true}).fill('Compare immune cell states across tissue compartments.');
+ await page.getByRole('button',{name:'Save browser draft',exact:true}).click();
+ await expect(page.getByRole('status')).toContainText('could not save your draft');
+ await expect(page.getByLabel('Research question or investigation focus',{exact:true})).toHaveValue('Compare immune cell states across tissue compartments.');
+ await expect(page.getByRole('status')).not.toContainText('Saved in this browser only');
+});

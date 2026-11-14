@@ -230,7 +230,7 @@ export function HomeProductDemo({scenarioId,onScenarioChange}:HomeProductDemoPro
       <div className="ed-actions">
         <Link className="ed-button" to={PUBLIC_SECONDARY_CTA.to}>Explore the Research Workflow <span aria-hidden="true"><ArrowIcon/></span></Link>
         <Link className="ed-text-link" to={PUBLIC_GRAPH_CTA.to}>{PUBLIC_GRAPH_CTA.label} <span aria-hidden="true"><ArrowIcon direction="right"/></span></Link>
-        <Link className="ed-text-link" to={contactAccessHref({scenarioId:demo.id,domain:demo.domains[0]})}>Continue with this question · request access <span aria-hidden="true"><ArrowIcon direction="right"/></span></Link>
+        <Link className="ed-text-link" to={contactAccessHref({scenarioId:demo.id,domain:demo.domains[0]})}>Prepare this research question <span aria-hidden="true"><ArrowIcon direction="right"/></span></Link>
       </div>
     </div>
   </section>;

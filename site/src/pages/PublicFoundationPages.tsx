@@ -162,7 +162,7 @@ export function ResearchPublicPage() {
         <div className="hsi-actions">
           <PublicAction to="/research-briefs">Examine the Research Brief</PublicAction>
           <PublicAction to="/contact" secondary>
-            Request Research Access
+            Research access options
           </PublicAction>
         </div>
         <p>
@@ -352,7 +352,7 @@ export function ApplicationsPublicPage() {
         title="Discuss the question before the integration."
         description="Start with biological scope, source permissions, expected research output and the evidence needed to evaluate it."
       >
-        <PublicAction to="/contact">Prepare a Research Access Enquiry</PublicAction>
+        <PublicAction to="/contact">Prepare a research question</PublicAction>
         <p>The contact page saves a browser-only draft. It does not send an application or confirm access.</p>
       </PublicSection>
     </div>
@@ -433,7 +433,7 @@ export function AboutPublicPage() {
         title="Building a more connected understanding of human health."
         description="Connect scientific evidence, biological context and human judgement so researchers can understand what is known, what conflicts and what to investigate next."
       >
-        <PublicAction to="/about#collaboration">Connect With HSI</PublicAction>
+        <PublicAction to="/about#collaboration">Research access options</PublicAction>
       </PublicHero>
       <PublicSection
         title="Biology crosses disciplines. Research should be able to follow."
@@ -481,7 +481,7 @@ export function AboutPublicPage() {
           demonstration.
         </p>
         <div className="hsi-actions">
-          <PublicAction to="/contact">Connect With HSI</PublicAction>
+          <PublicAction to="/contact">Research access options</PublicAction>
           <PublicAction to="/research">Explore the Research Workflow</PublicAction>
         </div>
         <p>The contact page prepares a local browser draft; no message or access request is delivered.</p>
