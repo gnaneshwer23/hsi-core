@@ -78,14 +78,14 @@ export function memoryStore():KeyValueStore{
  return {get:k=>m.get(k)??null,create:(k,v)=>{if(m.has(k))throw Error("Revision already exists");m.set(k,v)},keys:()=>[...m.keys()]};
 }
 /** Device-local storage. Returns null when the browser blocks storage (private window, blocked site data). */
-export function browserStore(storage?:Storage):KeyValueStore|null{
+export function browserStore(storage?:Storage,prefix:string=PREFIX):KeyValueStore|null{
  try{
   const s=storage??globalThis.localStorage;if(!s)return null;
-  s.setItem("hsi-inv:probe","1");s.removeItem("hsi-inv:probe");
+  s.setItem(prefix+"probe","1");s.removeItem(prefix+"probe");
   return {
    get:k=>{try{return s.getItem(k)}catch{return null}},
    create:(k,v)=>{if(s.getItem(k)!==null)throw Error("Revision already exists");s.setItem(k,v)},
-   keys:()=>{const o:string[]=[];for(let i=0;i<s.length;i++){const k=s.key(i);if(k&&k.startsWith(PREFIX))o.push(k)}return o},
+   keys:()=>{const o:string[]=[];for(let i=0;i<s.length;i++){const k=s.key(i);if(k&&k.startsWith(prefix))o.push(k)}return o},
   };
  }catch{return null}
 }

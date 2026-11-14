@@ -38,7 +38,7 @@ test('mobile hero leads with the research workbench demonstration',async({page})
  await page.setViewportSize({width:390,height:844});await page.goto('/');
  await expect(page.getByRole('heading',{level:1})).toContainText('Biological research,');
  await expect(page.locator('#home-knowledge-graph')).toBeVisible();
- await expect(page.locator('.sp-workspace')).toBeVisible();
+ await expect(page.locator('.hd-steps')).toBeVisible();
  await expect(page.getByRole('heading',{name:/The graph is the foundation/})).toBeVisible();
 });
 

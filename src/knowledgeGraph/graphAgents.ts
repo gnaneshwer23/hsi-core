@@ -11,6 +11,7 @@
  * model, a network or a database.
  */
 import {rejectPhiPayload} from "../cdsPhiBoundary";
+import {looksIdentifying} from "../identifyingText";
 import {canonicalEvidenceJson} from "../evidence/researchEvidenceCorpus";
 import {compareDomainEvidence,domainPaths,type DomainBundle,type DomainEdge} from "./domainGraph";
 import {crossDepartmentPaths,isDepartmentSlug,type DepartmentSlug,projectDepartment} from "./departments";
@@ -27,8 +28,6 @@ export type GraphSelectionInput={investigationId:string;graphVersion:string;ques
 
 /** Heuristic only (the repository's own guard is a marker list, not a de-identification engine): an email address, a UK NHS-number
  * shape, a phone-like digit run, a day/month/year date or a UK postcode in a free-text question is refused outright. */
-const IDENTIFYING=[/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/,/\b\d{3}[ -]?\d{3}[ -]?\d{4}\b/,/(?:\+\d{1,3}[ -]?)?\(?\d{2,5}\)?[ -]?\d{3,4}[ -]?\d{3,4}\b(?=\D|$)/,/\b\d{1,2}[/.-]\d{1,2}[/.-](?:\d{2}|\d{4})\b/,/\b[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}\b/i];
-const looksIdentifying=(t:string)=>IDENTIFYING.some(r=>r.test(t));
 const ID=/^[A-Za-z0-9][A-Za-z0-9:_.-]{2,120}$/,INV=/^[A-Za-z0-9][A-Za-z0-9:_-]{2,80}$/;
 export function buildSelectionContext(g:DomainBundle,input:GraphSelectionInput):GraphSelectionContext{
  if(!INV.test(input.investigationId??""))throw Error("Invalid investigation id");
