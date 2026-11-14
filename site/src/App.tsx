@@ -6,7 +6,8 @@ import {Solutions,EvidenceSafety,Pricing,Contact,Community} from "./pages/Experi
 const GovernanceDashboard=lazy(()=>import("./pages/GovernanceDashboard").then(m=>({default:m.GovernanceDashboard})));
 const ResearchDashboard=lazy(()=>import("./pages/ResearchDashboard").then(m=>({default:m.ResearchDashboard})));
 import {ContextConflictAuditPage,ResearchBriefsPage} from "./pages/PublicResearchPages";
-import {PlatformPublicPage,SciencePublicPage,ApplicationsPublicPage,TrustPublicPage,AboutPublicPage} from "./pages/PublicFoundationPages";
+import {SciencePublicPage,ApplicationsPublicPage,TrustPublicPage,AboutPublicPage} from "./pages/PublicFoundationPages";
+import {PlatformPublicPage} from "./pages/PlatformPublic";
 import {ScientificHome as Home,ScientificHow as HowItWorks,ScientificResearch as ResearchPublicPage,ScientificEvidence as EvidenceIntelligencePage} from "./pages/ScientificPublic";
 import {KnowledgeGraphPublicPage} from "./pages/KnowledgeGraphPublic";
 import { IntelligenceCollectiveLanding, IntelligenceCapabilityLanding } from "./pages/IntelligenceCollective";

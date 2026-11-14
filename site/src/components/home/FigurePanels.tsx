@@ -1,30 +1,12 @@
-import {useEffect,useState} from "react";
 import {Link} from "react-router-dom";
-import {loadDomainGraph} from "../../lib/claimGraphClient";
 import {agentSummary,PIPELINE} from "../../lib/agentDashboard";
+import {useGraphSnapshot} from "./useGraphSnapshot";
 
-type Snapshot={concepts:number;relationships:number;gaps:{question:string;missing:string}[];sources:number;notRetrieved:number;reviewed:number;version:string};
 const clip=(s:string,n=150)=>s.length>n?s.slice(0,n-1).trimEnd()+"…":s;
 
 /** Panels C to E and the caption of Figure 1. Every figure is read from the published, digest-verified snapshot or the capability records. */
 export function FigurePanels(){
-  const [s,setS]=useState<Snapshot|null>(null),[failed,setFailed]=useState(false);
-  useEffect(()=>{
-    const c=new AbortController();let active=true;const t=setTimeout(()=>c.abort(),12000);
-    loadDomainGraph(null,c.signal).then(g=>{
-      if(!active)return;
-      setS({
-        concepts:g.nodes.length,
-        relationships:g.edges.filter(e=>e.kind==="source_candidate").length,
-        gaps:g.gaps.map(x=>({question:x.question,missing:x.missing})),
-        sources:g.sources.length,
-        notRetrieved:g.sources.filter(x=>x.identityStatus==="bibliographic_candidate_not_retrieved").length,
-        reviewed:g.edges.filter(e=>(e.reviewStatus as string)!=="unreviewed").length,
-        version:g.version.slice(0,8),
-      });
-    }).catch(()=>{if(active)setFailed(true)}).finally(()=>clearTimeout(t));
-    return()=>{active=false;c.abort();clearTimeout(t)};
-  },[]);
+  const {snapshot:s,failed}=useGraphSnapshot();
   const a=agentSummary();
   const fmt=(n:number)=>n.toLocaleString("en-GB");
   return (
