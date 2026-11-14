@@ -1,6 +1,6 @@
 # Graph workspace rehearsal runbook (migrations 031 to 033)
 
-**Status: steps 1 to 6 executed on 14 November 2026 on a disposable branch; not accepted.** The result is in [GRAPH_WORKSPACE_REHEARSAL_RESULT_20261114.md](GRAPH_WORKSPACE_REHEARSAL_RESULT_20261114.md). The role design and the disposable branch were approved by the owner for rehearsal only. Step 7 (real-account acceptance) has not been run. Applying anything to the production branch is not approved and is outside this runbook.
+**Status: steps 1 to 6 executed on 14 November 2026 on a disposable branch; not accepted.** The result is in [GRAPH_WORKSPACE_REHEARSAL_RESULT_20261114.md](GRAPH_WORKSPACE_REHEARSAL_RESULT_20261114.md). The role design and the disposable branch were approved by the owner for rehearsal only. Step 7 (real-account acceptance) ran once the same day: see [GRAPH_WORKSPACE_ACCEPTANCE_RUN_20261114.md](GRAPH_WORKSPACE_ACCEPTANCE_RUN_20261114.md) (47 of 47, not accepted without an independent signer). Applying anything to the production branch is not approved and is outside this runbook.
 
 ## What is approved and what is not
 | Item | State |
@@ -34,7 +34,7 @@ A child of the production branch is a copy-on-write copy of production data, inc
 4. **Check prerequisites on the branch**: that migration 006 is applied (`hsi_research_access` exists) and that Neon Auth has the columns the procedures read: `neon_auth."user"(id, "emailVerified", banned)` and `neon_auth.session(token, "userId", "expiresAt", "impersonatedBy")`. If any differs, **stop and report**; do not edit the procedures on the branch.
 5. **Apply** `031`, `032`, `033` in order as `hsi_graph_function_owner` (connection string from the private environment, not echoed). Save the full output.
 6. **Run the SQL checks that are safe on a real schema**: `db/verify/031_graph_workspace_storage_checks.sql` (self-contained, rolls back). Do **not** run `032_*`, `033_*` or the integration setup on Neon: they create a stand-in `neon_auth` schema and cluster roles and are for throwaway local databases only.
-7. **Real-account acceptance** (needs a runner that does not exist yet; I can build it behind `neonGuard` and the disposable-target assertion). With two test researchers and one account without a grant, using real sessions, it must show:
+7. **Real-account acceptance** (runner: `scripts/verify-graph-workspace-neon.ts`; it refuses any target that is not the confirmed disposable endpoint). With two test researchers and one account without a grant, using real sessions, it must show:
    - each researcher sees only their own investigations and recommendations;
    - a forged, expired, impersonated, unverified, banned or revoked session is refused;
    - a researcher without an active grant is refused;

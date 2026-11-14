@@ -79,6 +79,6 @@ describe("graph workspace adapter",()=>{
  test("the module is not imported by any runtime entry point",()=>{
   const {execSync}=require("node:child_process") as typeof import("node:child_process");
   const hits=execSync("grep -rl graphWorkspaceStore src site/src site/api scripts --include=*.ts --include=*.tsx || true",{encoding:"utf8"}).split("\n").filter(Boolean);
-  expect(hits.sort()).toEqual(["scripts/verify-graph-workspace-local.ts"]);
+  expect(hits.sort()).toEqual(["scripts/verify-graph-workspace-local.ts","scripts/verify-graph-workspace-neon.ts"]);
  });
 });
