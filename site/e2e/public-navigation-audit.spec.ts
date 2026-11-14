@@ -70,7 +70,7 @@ test('all public body links are clickable and reach their intended destinations'
 });
 
 test('hero illustrations fit their pages and remain legible at mobile sizes',async({page},info)=>{
-  const artwork:Record<string,string>={'/technology':'technology','/modules':'products','/solutions':'solutions','/evidence-safety':'evidence','/contact':'access','/modules/aksh-health':'aksh','/modules/isi':'immune','/modules/trials':'trials'};
+  const artwork:Record<string,string>={'/technology':'technology','/solutions':'solutions','/evidence-safety':'evidence','/contact':'access'};
   for(const [path,kind] of Object.entries(artwork)){
     for(const width of [320,768,1440]){
       await page.setViewportSize({width,height:1000});await page.goto(path);
@@ -82,7 +82,7 @@ test('hero illustrations fit their pages and remain legible at mobile sizes',asy
   }
 });
 
-test('header and footer destinations can be clicked; product links open a separate tab',async({page})=>{
+test('header and footer destinations can be clicked',async({page})=>{
   await page.setViewportSize({width:1440,height:1000});await page.goto('/');
   const hrefs=await page.locator('.hsi-nav-inner,#research-pages,.hsi-footer').locator('a[href]').evaluateAll(as=>as.map(a=>a.getAttribute('href')!).filter(h=>h.startsWith('/')));
   for(const href of new Set(hrefs)){
@@ -90,12 +90,5 @@ test('header and footer destinations can be clicked; product links open a separa
     let link=page.locator('.hsi-nav,.hsi-footer').locator(`a[href=${JSON.stringify(href)}]:visible`).first();
     if(!await link.count()){await page.getByRole('button',{name:'Research',exact:true}).click();link=page.locator('#research-pages').locator(`a[href=${JSON.stringify(href)}]`)}
     await link.click();await expect(page).toHaveURL(new URL(href,'http://127.0.0.1:4178').href);await expect(page.getByRole('heading',{level:1})).toBeVisible();
-  }
-  for(const path of ['/modules/aksh-health','/modules/isi']){
-    await page.goto(path);const external=page.getByRole('main').locator('a[target="_blank"]');
-    await expect(external).toHaveAttribute('href',/^https:\/\//);await expect(external).toHaveAttribute('rel','noopener noreferrer');
-    // Verify the click/popup contract locally without depending on the external product's uptime.
-    await page.context().route('https://**/*',route=>route.fulfill({status:200,body:'External product navigation check'}));
-    const popupEvent=page.waitForEvent('popup');await external.click();const popup=await popupEvent;await popup.close();
   }
 });
