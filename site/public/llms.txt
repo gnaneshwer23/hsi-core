@@ -18,7 +18,7 @@ HSI is being developed as one connected biomedical intelligence platform for evi
 ## Access and secondary resources
 - /contact prepares a browser-only draft; it does not deliver or persist an access request.
 - /sign-in and /sign-up are account routes; account creation grants no research, source, reviewer or publication permission.
-- Existing /technology, /how-it-works, /evidence-safety, /modules and science/tool routes remain secondary resources.
+- /how-it-works, /connected-intelligence, /departments, /intelligence and science/tool routes remain secondary resources. The former /technology, /solutions, /pricing and /evidence-safety pages permanently redirect to /platform, /applications, /contact and /trust.
 - /status describes capability maturity. Engineering implementation, deployment and scientific acceptance are different states.
 
 ## Scientific and data boundaries
