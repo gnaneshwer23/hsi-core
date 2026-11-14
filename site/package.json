@@ -9,7 +9,7 @@
   "scripts": {
     "test:e2e": "playwright test",
     "dev": "vite",
-    "build": "bun run check:coverage && bun run check:evidence && bun run check:api && bun run check:validation && bun run check:graph && bun run check:domain-graph && vite build && vite build --ssr scripts/prerender-entry.tsx --outDir .seo-render && bun --no-env-file scripts/build-seo.ts && bun --no-env-file scripts/check-public-names.ts",
+    "build": "bun run check:coverage && bun run check:evidence && bun run check:api && bun run check:validation && bun run check:graph && bun run check:domain-graph && vite build && vite build --ssr scripts/prerender-entry.tsx --outDir .seo-render && bun --no-env-file scripts/build-seo.ts && bun --no-env-file scripts/check-public-names.ts && bun --no-env-file scripts/check-bundle-budget.ts",
     "check:api": "tsc --noEmit -p api/tsconfig.json",
     "preview": "vite preview",
     "check:evidence": "bun ../scripts/build-evidence-corpus.ts --check",
