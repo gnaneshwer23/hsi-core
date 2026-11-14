@@ -39,5 +39,5 @@ Licences and release dates for the OBO ontologies come from the OBO Foundry regi
 5. Add an attribution page listing each ontology, licence and version.
 6. Storing ontology terms in the database needs a migration, which needs separate approval.
 
-## Not decided here
-No import, mapping, or database write has been approved. This document does not change the graph.
+## Decision (2026-11-14)
+Approved: Mondo, Uberon, Cell Ontology, Gene Ontology and ECO. HPO is skipped. Imported terms are described in [ONTOLOGY_ATTRIBUTION.md](ONTOLOGY_ATTRIBUTION.md). No database write has been approved; that needs a migration and separate approval.
