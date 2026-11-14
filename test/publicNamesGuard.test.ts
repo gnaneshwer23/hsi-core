@@ -1,5 +1,8 @@
 import {describe,expect,test} from "bun:test";
-import {ALLOWED_PAGES,findProductNames} from "../site/scripts/check-public-names";
+import {mkdtempSync,mkdirSync,rmSync,writeFileSync,readFileSync} from "node:fs";
+import {tmpdir} from "node:os";
+import {join,resolve} from "node:path";
+import {ALLOWED_PAGES,findProductNames,scanDist} from "../site/scripts/check-public-names";
 
 describe("public product-name guard",()=>{
  test("finds each separately governed product name in text, attributes and metadata",()=>{
@@ -19,5 +22,20 @@ describe("public product-name guard",()=>{
  });
  test("no page is exempt from the guard",()=>{
   expect([...ALLOWED_PAGES]).toEqual([]);
+ });
+
+ test("top-level static files are scanned too, not only pages",async()=>{
+  const d=mkdtempSync(join(tmpdir(),"hsi-names-"));
+  try{
+   mkdirSync(join(d,"_pages"));writeFileSync(join(d,"index.html"),"<p>clean</p>");writeFileSync(join(d,"_pages","a.html"),"<p>clean</p>");
+   writeFileSync(join(d,"llms.txt"),"Governed modules Aksh Health retain separate responsibilities.");writeFileSync(join(d,"capability-status.json"),'{"public_label":"HSI Trials matching"}');
+   writeFileSync(join(d,"sitemap.xml"),"<urlset/>");
+   const found=await scanDist(d);
+   expect(found.map(f=>f.file).sort()).toEqual(["capability-status.json","llms.txt"]);
+  }finally{rmSync(d,{recursive:true,force:true})}
+ });
+ test("the real crawler-facing files in the repo are free of product names",()=>{
+  for(const f of ["site/public/llms.txt","site/public/capability-status.json","docs/capability-status.json"])expect(findProductNames(readFileSync(resolve(f),"utf8")),f).toEqual([]);
+  expect(readFileSync(resolve("site/public/capability-status.json"),"utf8")).toBe(readFileSync(resolve("docs/capability-status.json"),"utf8"));
  });
 });

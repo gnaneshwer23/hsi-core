@@ -1,4 +1,5 @@
-/** Fails the site build if a public page names one of the separately governed products. Runs on the prerendered HTML, so it
+/** Also scans the top-level static files (llms.txt, capability-status.json, sitemap, manifest). Data folders such as /research/domain-graph (hash-pinned scientific data) and /aksh (an agent catalog pending a separate decision) are not scanned.
+ * Fails the site build if a public page names one of the separately governed products. Runs on the prerendered HTML, so it
  * checks what visitors and crawlers actually receive (text, attributes and metadata), not just source files.
  * No page is exempt: the /modules pages now redirect to /connected-intelligence. */
 import {readdir,readFile} from "node:fs/promises";
@@ -13,6 +14,8 @@ export function findProductNames(html:string):string[]{
 export async function scanDist(dist:string):Promise<{file:string;names:string[]}[]>{
  const files=[{file:"index.html",path:resolve(dist,"index.html")},...(await readdir(resolve(dist,"_pages"))).filter(f=>f.endsWith(".html")).map(f=>({file:f,path:resolve(dist,"_pages",f)}))];
  const found:{file:string;names:string[]}[]=[];
+ const top=(await readdir(dist)).filter(f=>/\.(txt|json|xml|webmanifest)$/.test(f));
+ for(const f of top){const names=findProductNames(await readFile(resolve(dist,f),"utf8"));if(names.length)found.push({file:f,names:[...new Set(names)]})}
  for(const f of files){if(ALLOWED_PAGES.has(f.file))continue;const names=findProductNames(await readFile(f.path,"utf8"));if(names.length)found.push({file:f.file,names:[...new Set(names)]})}
  return found;
 }
