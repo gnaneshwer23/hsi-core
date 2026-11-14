@@ -2,11 +2,13 @@ import {IdentityStudy} from "./pages/IdentityStudy";
 import {lazy,Suspense} from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout";
-import {Solutions,EvidenceSafety,Pricing,Contact,Community} from "./pages/ExperiencePages";
+import {Community} from "./pages/ExperiencePages";
+import {ContactPublicPage as Contact} from "./pages/ContactPublic";
 const GovernanceDashboard=lazy(()=>import("./pages/GovernanceDashboard").then(m=>({default:m.GovernanceDashboard})));
 const ResearchDashboard=lazy(()=>import("./pages/ResearchDashboard").then(m=>({default:m.ResearchDashboard})));
 import {ContextConflictAuditPage,ResearchBriefsPage} from "./pages/PublicResearchPages";
-import {PlatformPublicPage,SciencePublicPage,ApplicationsPublicPage,TrustPublicPage,AboutPublicPage} from "./pages/PublicFoundationPages";
+import {SciencePublicPage,ApplicationsPublicPage,TrustPublicPage,AboutPublicPage} from "./pages/PublicFoundationPages";
+import {PlatformPublicPage} from "./pages/PlatformPublic";
 import {ScientificHome as Home,ScientificHow as HowItWorks,ScientificResearch as ResearchPublicPage,ScientificEvidence as EvidenceIntelligencePage} from "./pages/ScientificPublic";
 import {KnowledgeGraphPublicPage} from "./pages/KnowledgeGraphPublic";
 import { IntelligenceCollectiveLanding, IntelligenceCapabilityLanding } from "./pages/IntelligenceCollective";
@@ -16,7 +18,6 @@ import {PasswordRecovery} from "./pages/PasswordRecovery";
 import { SignIn } from "./pages/SignIn";
 import { SignUp } from "./pages/SignUp";
 import { ResearchAccount } from "./pages/ResearchAccount";
-import { Technology } from "./pages/Technology";
 const Explore=lazy(()=>import("./pages/Explore").then(m=>({default:m.Explore})));
 const DiscoveryEngine=lazy(()=>import("./pages/DiscoveryEngine").then(m=>({default:m.DiscoveryEngine})));
 const Systems=lazy(()=>import("./pages/Systems").then(m=>({default:m.Systems})));
@@ -70,10 +71,10 @@ export default function App() {
       <Route element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="research" element={<ResearchPublicPage/>}/>
-        <Route path="solutions" element={<Solutions/>}/>
-        <Route path="evidence-safety" element={<EvidenceSafety/>}/>
+        <Route path="solutions" element={<Navigate to="/applications" replace />} />
+        <Route path="evidence-safety" element={<Navigate to="/trust" replace />} />
         <Route path="community" element={<Community/>}/>
-        <Route path="pricing" element={<Pricing/>}/>
+        <Route path="pricing" element={<Navigate to="/contact" replace />} />
         <Route path="contact" element={<Contact/>}/>
         <Route path="research/dashboard" element={<ResearchDashboard/>}/>
         <Route path="research/governance" element={<GovernanceDashboard/>}/>
@@ -115,7 +116,7 @@ export default function App() {
         <Route path="knowledge-graph" element={<KnowledgeGraphPublicPage />} />
         <Route path="trust" element={<TrustPublicPage />} />
         <Route path="about" element={<AboutPublicPage />} />
-        <Route path="technology" element={<Technology />} />
+        <Route path="technology" element={<Navigate to="/platform" replace />} />
         <Route path="how-it-works" element={<HowItWorks />} />
         <Route path="explore" element={<Explore />} />
         <Route path="science" element={<SciencePublicPage />} />

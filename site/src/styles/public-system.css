@@ -1,0 +1,46 @@
+/* Brings the hsi-public pages (Audit, Briefs, Science, Applications, Trust, About) onto the Figure system.
+   Same ground, ink, hairlines and one violet accent as the homepage; Host Grotesk throughout. Loaded after research-public.css. */
+.hsi-public{--hsi-ivory:#fff;--hsi-navy:#141720;--hsi-ink:#202638;--hsi-muted:#4a5565;--hsi-line:#d6dce2;--hsi-teal:#292d42;--hsi-sage:#e9e6f3;--hsi-focus:#6753a1;--pb-violet:#6753a1;--pb-ease:cubic-bezier(.16,1,.3,1);background:#fff;font-family:"Host Grotesk Variable",system-ui,sans-serif;line-height:1.65}
+.hsi-public :is(h1,h2,h3,h4){font-family:inherit;font-weight:470;letter-spacing:-.04em;color:var(--hsi-ink);text-wrap:balance}
+.hsi-public h1{font-size:clamp(40px,4.4vw,60px);line-height:1.06;max-width:16ch;margin:0}
+.hsi-public h2{font-size:clamp(28px,2.8vw,38px);line-height:1.15;max-width:22ch;margin:0}
+.hsi-public h3{font-size:20px;line-height:1.3;letter-spacing:-.02em;font-weight:520}
+.hsi-public p{color:var(--hsi-muted);font-size:17px;line-height:1.7;max-width:64ch}
+.hsi-public .hsi-content{width:min(1280px,calc(100% - 112px))}
+.hsi-public .hsi-page-hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:56px;align-items:end;padding:56px 0 48px}
+.hsi-public .hsi-lead{font-size:19px;line-height:1.6;color:#3d4756;margin:0 0 8px}
+.hsi-public .hsi-section{padding-block:64px;border-top:1px solid var(--hsi-line)}
+.hsi-public .hsi-section-intro{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:8px 56px;align-items:start;margin-bottom:36px}
+.hsi-public .hsi-section-intro p{margin:0}
+.hsi-public .hsi-actions{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;margin-block:24px 0}
+.hsi-public .hsi-action{background:#292d42;border-color:#292d42;color:#fff;border-radius:6px;min-height:48px;font-size:15px;font-weight:550}
+.hsi-public .hsi-action:hover{background:#49405e;border-color:#49405e}
+.hsi-public .hsi-action-secondary{background:transparent;border-color:transparent;color:var(--pb-violet);min-height:44px;padding-inline:0}
+.hsi-public .hsi-action-secondary:hover{background:transparent;color:#49405e;text-decoration:underline}
+.hsi-public .hsi-text-link,.hsi-public p a{color:var(--pb-violet)}
+.hsi-public .hsi-dark{background:var(--hsi-navy);border-top-color:var(--hsi-navy)}
+.hsi-public .hsi-dark :is(h2,h3,h4){color:#f2f0fa}
+.hsi-public .hsi-dark p,.hsi-public .hsi-dark li{color:#c9cee0}
+.hsi-public .hsi-dark a{color:#d6c4f6}
+.hsi-public .hsi-dark .hsi-action{background:#b69bdf;border-color:#b69bdf;color:#141720}
+.hsi-public :is(a,button,input,select,textarea,summary):focus-visible{outline:3px solid var(--pb-violet);outline-offset:3px;border-radius:4px}
+.hsi-public .hsi-dark :is(a,button):focus-visible{outline-color:#cdbaf2}
+.hsi-public .hsi-principles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:1px solid var(--hsi-line);margin:0}
+.hsi-public .hsi-principles article{padding:22px 28px 22px 0;border-bottom:1px solid var(--hsi-line);background:transparent;border-radius:0;box-shadow:none}
+.hsi-public .hsi-dark .hsi-principles,.hsi-public .hsi-dark .hsi-principles article{border-color:#2b2f3d}
+@media(max-width:1000px){.hsi-public .hsi-content{width:calc(100% - 64px)}.hsi-public .hsi-page-hero{grid-template-columns:1fr;gap:20px;align-items:start;padding:40px 0 32px}.hsi-public .hsi-section-intro{grid-template-columns:1fr}.hsi-public .hsi-principles{grid-template-columns:1fr}}
+@media(max-width:640px){.hsi-public .hsi-content{width:calc(100% - 40px)}.hsi-public .hsi-section{padding-block:44px}}
+/* Retire the green-grey tints and thick coloured borders of the earlier teal skin. */
+.hsi-public .hsi-section:nth-of-type(2n+1):not(.hsi-dark){background:#fff}
+.hsi-public :is(.hsi-audit-result,.hsi-domain-detail,.hsi-evidence-list,.hsi-passage){background:#f4f2f9;border:1px solid var(--hsi-line);border-radius:6px}
+.hsi-public .hsi-workflow button[aria-pressed=true]{background:#f4f2f9;border-bottom-color:var(--pb-violet)}
+.hsi-public .hsi-scale-explorer button[aria-pressed=true]{background:#f4f2f9;border-left-color:var(--pb-violet)}
+.hsi-public .hsi-platform-layers button{border-color:var(--hsi-line)}
+.hsi-public .hsi-dark .hsi-action{margin-right:12px}
+.hsi-public .hsi-dark .hsi-actions{gap:12px}
+.hsi-public .hsi-mechanism figcaption{font-size:14px;line-height:1.6}
+.hsi-public .hsi-dark .hsi-actions+p,.hsi-public .hsi-dark .hsi-action+p{margin-top:16px}
+.hsi-public .hsi-domain-map button[aria-pressed=true]{background:#f4f2f9}
+.hsi-public .hsi-evidence-list button[aria-pressed=true]{background:#fff;border-color:var(--pb-violet)}
+.hsi-public .hsi-evidence-inspector button[aria-pressed=true]{border-bottom-color:var(--pb-violet);color:#49405e}
+.hsi-public .hsi-action{padding-inline:24px}

@@ -9,7 +9,6 @@ const badgeClass:Record<CapabilityStatus,string>={research_preview:"dept-status"
 export function ConnectedIntelligence(){
  return <div className="dept-page ci-page">
   <section className="dept-hero"><div className="dept-shell">
-   <p className="dept-kicker">The wider HSI vision</p>
    <h1>One foundation. Connected intelligence.</h1>
    <p className="dept-lead">HSI is built around a shared, evidence-linked scientific foundation. Over time the same foundation is intended to support clinical context, patient-reported health and translational study questions, each under its own governance. This page describes that direction and, for each capability, what exists today.</p>
    <p className="dept-coverage">Everything below other than scientific discovery is not available. Labels show maturity: <strong>Research preview</strong>, <strong>In development</strong> or <strong>Planned</strong>.</p>

@@ -1,0 +1,24 @@
+/* Contact: the access path as Figure 5, then the browser-draft form in the shared block layout. */
+.ct-path{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:0;padding:0}
+.ct-path li{position:relative;padding:28px 28px 24px;border-left:1px solid var(--fg-line);margin:0}
+.ct-path li:first-child{border-left:0}
+.ct-path li::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--fg-violet);transform-origin:left;animation:fg-rule .9s var(--fg-ease) backwards}
+.ct-path li:nth-child(2)::before{animation-delay:.15s}.ct-path li:nth-child(3)::before{animation-delay:.3s}
+.ct-path .fg-letter{position:absolute;right:20px;top:20px}
+.ct-path h2{font-size:19px;line-height:1.3;letter-spacing:-.02em;margin:0 0 10px;max-width:20ch;padding-right:40px}
+.ct-path p{font-size:16px;line-height:1.65;color:var(--fg-body);margin:0}
+.ct-page .ct-draft .xp-access-intent{margin:0;padding:0;border:0;background:transparent;box-shadow:none}
+.ct-page .ct-draft .xp-access-intent h3{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.ct-page .ct-draft .xp-form{display:grid;gap:10px;max-width:640px}
+.ct-page .ct-draft label{font-size:15px;font-weight:600;color:var(--fg-ink)}
+.ct-page .ct-draft textarea,.ct-page .ct-draft input[type=email]{width:100%;font:inherit;font-size:16px;color:var(--fg-ink);background:#fff!important;border:1px solid #8b95a3;border-radius:6px;padding:12px 14px;min-height:48px}
+.ct-page .ct-draft textarea:focus-visible,.ct-page .ct-draft input:focus-visible{outline:3px solid var(--fg-violet);outline-offset:2px}
+.ct-page .ct-draft .xp-small,.ct-page .ct-draft .ed-scope-line,.ct-scope{font-size:15px;line-height:1.6;color:var(--fg-muted)}
+.ct-page .ct-draft .xp-actions{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center;margin:10px 0}
+.ct-page .ct-draft .xp-button{display:inline-flex;align-items:center;min-height:48px;padding:0 22px;border-radius:6px!important;background:#292d42!important;color:#fff!important;border:1px solid #292d42!important;font:550 15px 'Host Grotesk Variable',system-ui,sans-serif;cursor:pointer}
+.ct-page .ct-draft .xp-button:hover{background:#49405e!important;border-color:#49405e!important}
+.ct-page .ct-draft .xp-button-secondary{background:#fff!important;color:#292d42!important}
+.ct-page .ct-draft .xp-actions a{display:inline-flex;align-items:center;min-height:44px;font-weight:550}
+.ct-page .ct-draft code{font-size:14px}
+@media(max-width:1000px){.ct-path{grid-template-columns:1fr}.ct-path li{border-left:0;border-top:1px solid var(--fg-line)}.ct-path li:first-child{border-top:0}}
+@media(prefers-reduced-motion:reduce){.ct-path li::before{animation:none}}

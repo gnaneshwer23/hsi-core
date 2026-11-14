@@ -69,19 +69,6 @@ test('all public body links are clickable and reach their intended destinations'
   }
 });
 
-test('hero illustrations fit their pages and remain legible at mobile sizes',async({page},info)=>{
-  const artwork:Record<string,string>={'/technology':'technology','/solutions':'solutions','/evidence-safety':'evidence','/contact':'access'};
-  for(const [path,kind] of Object.entries(artwork)){
-    for(const width of [320,768,1440]){
-      await page.setViewportSize({width,height:1000});await page.goto(path);
-      const art=page.locator(`[data-artwork="${kind}"]`);await expect(art).toBeVisible();await expect(art.getByRole('img')).toHaveAccessibleName(/.+/);
-      await expect(page.locator('img[src*="hsi-anatomy"]')).toHaveCount(0);
-      expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`${path} at ${width}`).toBe(true);
-      if(width!==768)await page.screenshot({path:info.outputPath(`${kind}-${width}.png`)});
-    }
-  }
-});
-
 test('header and footer destinations can be clicked',async({page})=>{
   await page.setViewportSize({width:1440,height:1000});await page.goto('/');
   const hrefs=await page.locator('.hsi-nav-inner,#research-pages,.hsi-footer').locator('a[href]').evaluateAll(as=>as.map(a=>a.getAttribute('href')!).filter(h=>h.startsWith('/')));

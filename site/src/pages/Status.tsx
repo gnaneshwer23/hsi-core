@@ -152,7 +152,7 @@ export function Status() {
         links={[
           { to: "/platform", label: "Platform", note: "Shared technology" },
           { to: "/connected-intelligence", label: "Connected intelligence", note: "Wider vision" },
-          { to: "/evidence-safety", label: "Evidence & safety", note: "Integrity" },
+          { to: "/trust", label: "Trust and governance", note: "Integrity" },
           { to: "/contact", label: "Research access", note: "Browser draft only" },
         ]}
       />

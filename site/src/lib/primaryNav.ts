@@ -10,12 +10,11 @@ export const RESEARCH_NAV_LINKS=[
  {to:"/research-briefs",label:"Research Briefs"}
 ] as const;
 export const SECONDARY_NAV_LINKS=[
- { to: "/solutions", label: "Solutions"},{ to: "/technology", label: "Technology"},{ to: "/evidence-safety", label: "Evidence & safety"},
- { to: "/pricing", label: "Access options"},{ to: "/demo", label: "Illustrative walkthrough"},{ to: "/contact", label: "Research access"},
+ { to: "/demo", label: "Illustrative walkthrough"},{ to: "/contact", label: "Research access"},
 { to: "/intelligence", label: "Intelligence Collective"},{ to: "/how-it-works", label: "How it works"}
 ] as const;
 export const PUBLIC_MARKETING_PATHS=[
- "/","/platform","/technology","/solutions","/research","/evidence-safety","/pricing","/contact",
+ "/","/platform","/research","/contact",
  "/science","/intelligence","/how-it-works","/knowledge-graph",
  "/context-conflict-audit","/evidence-intelligence","/research-briefs","/applications","/trust","/about"
 ] as const;

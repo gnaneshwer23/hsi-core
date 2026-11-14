@@ -129,20 +129,24 @@
       "destination": "/_pages/contact.html"
     },
     {
-      "source": "/pricing",
-      "destination": "/_pages/pricing.html"
+      "source": "/technology",
+      "destination": "/_pages/technology.html"
     },
     {
-      "source": "/community",
-      "destination": "/_pages/community.html"
+      "source": "/solutions",
+      "destination": "/_pages/solutions.html"
+    },
+    {
+      "source": "/pricing",
+      "destination": "/_pages/pricing.html"
     },
     {
       "source": "/evidence-safety",
       "destination": "/_pages/evidence-safety.html"
     },
     {
-      "source": "/solutions",
-      "destination": "/_pages/solutions.html"
+      "source": "/community",
+      "destination": "/_pages/community.html"
     },
     {
       "source": "/research",
@@ -183,10 +187,6 @@
     {
       "source": "/platform",
       "destination": "/_pages/platform.html"
-    },
-    {
-      "source": "/technology",
-      "destination": "/_pages/technology.html"
     },
     {
       "source": "/how-it-works",
@@ -502,6 +502,26 @@
     }
   ],
   "redirects": [
+    {
+      "source": "/technology",
+      "destination": "/platform",
+      "permanent": true
+    },
+    {
+      "source": "/solutions",
+      "destination": "/applications",
+      "permanent": true
+    },
+    {
+      "source": "/pricing",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/evidence-safety",
+      "destination": "/trust",
+      "permanent": true
+    },
     {
       "source": "/intelligence/prism",
       "destination": "/intelligence/lantern",

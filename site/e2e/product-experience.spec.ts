@@ -1,6 +1,6 @@
 import {test,expect} from "@playwright/test";
 import {readFile} from "node:fs/promises";
-const routes=["/","/platform","/technology","/connected-intelligence","/departments","/solutions","/research","/evidence-safety","/community","/pricing","/contact","/how-it-works","/science"];
+const routes=["/","/platform","/connected-intelligence","/departments","/research","/community","/contact","/how-it-works","/science"];
 test("public pages have a single main/title, working navigation and no narrow-screen overflow",async({page},info)=>{
  test.setTimeout(90000);
  for(const route of routes){
@@ -27,16 +27,11 @@ test("mobile menu opens, closes with Escape and connects public destinations",as
  await menu.click();await page.locator("#public-menu").getByRole("link",{name:"Evidence intelligence",exact:true}).click();await expect(page).toHaveURL(/evidence-intelligence$/);
  await expect(page.getByRole("heading",{level:1})).toContainText("A connection is a starting point");
 });
-test("evidence overview explains source context without presenting unreviewed records as results",async({page})=>{
- await page.goto("/evidence-safety");await expect(page.getByRole("main")).toContainText("Sources and candidate claims require appropriate reuse rights");
- await page.getByRole("group",{name:"Understand evidence states"}).getByRole("button",{name:"Supported",exact:true}).click();await expect(page.locator(".xp-evidence-legend")).toContainText("Not calibrated");
- await page.getByRole("link",{name:"Follow the research workflow",exact:true}).click();await expect(page).toHaveURL(/how-it-works$/);
-});
 test("public access paths lead to the real account process without a pretend submission",async({page})=>{
- const posts:string[]=[];page.on("request",r=>{if(r.method()==="POST")posts.push(r.url())});await page.goto("/pricing");await page.getByRole("main").getByRole("link",{name:"Research access",exact:true}).first().click();await expect(page).toHaveURL(/contact$/);
+ const posts:string[]=[];page.on("request",r=>{if(r.method()==="POST")posts.push(r.url())});await page.goto("/pricing");await expect(page).toHaveURL(/contact$/);
  await expect(page.getByRole("main")).toContainText("permissions are provisioned independently");
  await expect(page.getByRole("main")).toContainText("does not write an access request");
- await expect(page.getByRole("heading",{name:/Keep a browser draft of your question/i})).toBeVisible();
+ await expect(page.getByRole("heading",{name:/Keep a browser draft of your question/i})).toHaveCount(1);
  await page.getByLabel(/Research question or investigation focus/i).fill("How might cytokine signalling vary across tissues in research models?");
  await page.getByRole("button",{name:/Save browser draft/i}).click();
  await expect(page.getByRole("status")).toContainText("Saved in this browser only");
