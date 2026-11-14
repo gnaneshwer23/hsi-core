@@ -79,7 +79,6 @@ export function KnowledgeGraphPublicPage() {
     <div className="sp-page kg-page">
       <header className="kg-hero">
         <div>
-          <p className="sp-kicker">Knowledge graph</p>
           <h1>Relationships between biological entities, with the evidence attached.</h1>
           <p className="kg-lead">
             The HSI graph connects what research reports about cells, molecules, tissues and conditions, and keeps each
@@ -95,11 +94,10 @@ export function KnowledgeGraphPublicPage() {
       </header>
 
       <section className="kg-section" aria-labelledby="kg-ways">
-        <p className="sp-kicker">Four ways in</p>
         <h2 id="kg-ways">Choose how deep to go.</h2>
-        <ul className="kg-cards">
+        <ul className="kg-index">
           {ways.map((w) => (
-            <li key={w.to} className="kg-card">
+            <li key={w.to}>
               <h3><Link to={w.to}>{w.title}</Link></h3>
               <p>{w.text}</p>
               <p className="kg-status"><span aria-hidden="true" className="kg-dot" />{w.status}</p>
@@ -109,7 +107,6 @@ export function KnowledgeGraphPublicPage() {
       </section>
 
       <section className="kg-section" aria-labelledby="kg-carries">
-        <p className="sp-kicker">What every relationship carries</p>
         <h2 id="kg-carries">A connection is a starting point, not a conclusion.</h2>
         <dl className="kg-facts">
           {carried.map(([term, text]) => (
@@ -123,7 +120,6 @@ export function KnowledgeGraphPublicPage() {
 
       <section className="kg-section" aria-labelledby="kg-limits">
         <div className="kg-callout">
-          <p className="sp-kicker">What the graph does not claim</p>
           <h2 id="kg-limits">Plain limits.</h2>
           <ul className="kg-limits">
             <li>Lines are recorded connections, not validated causality.</li>
@@ -137,7 +133,6 @@ export function KnowledgeGraphPublicPage() {
       </section>
 
       <section className="kg-section" aria-labelledby="kg-next">
-        <p className="sp-kicker">Being extended / not live</p>
         <h2 id="kg-next">Where the graph is being developed.</h2>
         <dl className="kg-facts">
           {extending.map(([term, text]) => (
