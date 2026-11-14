@@ -70,3 +70,10 @@ test("the role checks assert unsafe attributes, no passwords and idempotence",()
  const v=readFileSync("db/verify/033_roles_and_import_checks.sql","utf8");
  for(const k of ["unsafe attribute","must not set a password","Idempotent","import update release","runtime principal helper","import orphan term"])expect(v).toContain(k);expect(v.trimEnd().endsWith("ROLLBACK;")).toBe(true);
 });
+
+test("031 keeps PUBLIC away from the trigger functions, and the rehearsal result is recorded without real identifiers",()=>{
+ expect(sql).toContain("REVOKE EXECUTE ON FUNCTION public.hsi_graph_block_mutation()");
+ const result=readFileSync("docs/GRAPH_WORKSPACE_REHEARSAL_RESULT_20261114.md","utf8");
+ expect(result).toContain("NOT accepted");expect(result).toContain("was **not** worked around");
+ expect(/br-[a-z]+-[a-z]+-[a-z0-9]{6,}|red-wave-\d+|ep-[a-z]+-[a-z0-9-]+/.test(result)).toBe(false);
+});

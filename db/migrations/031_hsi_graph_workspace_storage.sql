@@ -163,4 +163,6 @@ ALTER TABLE public.hsi_graph_investigations FORCE ROW LEVEL SECURITY;
 ALTER TABLE public.hsi_ontology_mapping_recommendations ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.hsi_ontology_mapping_recommendations FORCE ROW LEVEL SECURITY;
 REVOKE ALL ON public.hsi_ontology_releases,public.hsi_ontology_terms,public.hsi_graph_investigations,public.hsi_ontology_mapping_recommendations FROM PUBLIC;
+-- Trigger functions are not meant to be called; a rehearsal on Neon showed PUBLIC could EXECUTE them by default. Triggers still fire.
+REVOKE EXECUTE ON FUNCTION public.hsi_graph_block_mutation(),public.hsi_graph_investigation_chain(),public.hsi_mapping_recommendation_chain() FROM PUBLIC;
 -- No policies: deny by default. See 032 for the only access path.

@@ -35,7 +35,7 @@ DECLARE want text:=CASE why
  WHEN 'import select investigations' THEN 'permission denied' WHEN 'import update release' THEN 'permission denied' WHEN 'import delete term' THEN 'permission denied'
  WHEN 'import select terms' THEN 'permission denied' WHEN 'import call procedure' THEN 'permission denied' WHEN 'runtime insert release' THEN 'permission denied'
  WHEN 'runtime select terms' THEN 'permission denied' WHEN 'runtime principal helper' THEN 'permission denied' WHEN 'import duplicate release' THEN 'duplicate key'
- WHEN 'import orphan term' THEN 'foreign key' END;
+ WHEN 'import orphan term' THEN 'foreign key' WHEN 'owner truncate' THEN 'append-only' END;
 BEGIN
  IF want IS NULL THEN RAISE EXCEPTION 'no expected reason registered for %',why; END IF;
  BEGIN EXECUTE sql; EXCEPTION WHEN OTHERS THEN
@@ -71,6 +71,18 @@ DO $$ DECLARE r jsonb; BEGIN
   jsonb_build_object('schemaVersion','hsi-graph-investigation-1','graphVersion',repeat('b',64),'context',jsonb_build_object('graphVersion',repeat('b',64),'investigationId','inv-role-001','question','Q'),'checks',jsonb_build_object('candidateOnly',true,'scopedToSnapshot',true),'scientificApproval',false));
  IF jsonb_array_length(public.hsi_graph_list_investigations('tokenAAAAAAAAAAAAAAAA'))<>1 THEN RAISE EXCEPTION 'save and list through the runtime role failed'; END IF;
 END $$;
+RESET ROLE;
+-- Trigger functions are not callable by PUBLIC, and the triggers still fire (append-only holds for the function owner).
+DO $$ BEGIN
+ IF EXISTS(SELECT 1 FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='public' AND p.proname LIKE 'hsi\_graph\_%' AND p.prokind='f' AND has_function_privilege('public',p.oid,'EXECUTE')) THEN
+  RAISE EXCEPTION 'PUBLIC can execute a graph workspace function';
+ END IF;
+ IF EXISTS(SELECT 1 FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='public' AND p.proname='hsi_mapping_recommendation_chain' AND has_function_privilege('public',p.oid,'EXECUTE')) THEN
+  RAISE EXCEPTION 'PUBLIC can execute a trigger function';
+ END IF;
+END $$;
+SET LOCAL ROLE hsi_graph_function_owner;
+SELECT pg_temp.expect_fail($q$TRUNCATE public.hsi_graph_investigations$q$,'owner truncate');
 RESET ROLE;
 SELECT 'ALL 033 ROLE CHECKS PASSED' AS result;
 ROLLBACK;

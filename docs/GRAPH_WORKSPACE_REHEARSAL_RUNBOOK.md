@@ -1,12 +1,12 @@
 # Graph workspace rehearsal runbook (migrations 031 to 033)
 
-**Status: prepared, not run.** Nothing here has been executed against Neon. The role design (below) was approved by the owner on 14 November 2026 for rehearsal only. **Creating the disposable branch is a separate approval that has not been given.** Applying anything to the production branch is not approved and is outside this runbook.
+**Status: steps 1 to 6 executed on 14 November 2026 on a disposable branch; not accepted.** The result is in [GRAPH_WORKSPACE_REHEARSAL_RESULT_20261114.md](GRAPH_WORKSPACE_REHEARSAL_RESULT_20261114.md). The role design and the disposable branch were approved by the owner for rehearsal only. Step 7 (real-account acceptance) has not been run. Applying anything to the production branch is not approved and is outside this runbook.
 
 ## What is approved and what is not
 | Item | State |
 |---|---|
 | Role design: `hsi_graph_function_owner`, `hsi_graph_runtime` (+ login), `hsi_ontology_import` (+ login) | Approved for rehearsal (owner, 14 Nov 2026) |
-| Creating a disposable Neon child branch | **Not approved yet** |
+| Creating a disposable Neon child branch | Approved and used (14 Nov 2026) |
 | Applying 031 to 033 to the production branch | Not approved |
 | Removing 031 to 033 from `HELD_MIGRATION_IDS` | Not approved; only after an accepted rehearsal |
 | Wiring `src/db/graphWorkspaceStore.ts` into any route | Not approved; a later change |
