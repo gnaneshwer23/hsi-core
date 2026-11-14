@@ -3,8 +3,10 @@ import type {DomainBundle,DomainEdge} from "../../../src/knowledgeGraph/domainGr
 import {DEPARTMENT_SLUGS,crossDepartmentPaths,departmentCoverage,projectDepartment,verifyPathReconstruction,type CrossDepartmentPath,type DepartmentSlug} from "../../../src/knowledgeGraph/departments";
 import {departmentBySlug} from "../lib/departments";
 import {GraphInvestigation} from "./GraphInvestigation";
+import {ContextBreakdownView} from "./ContextBreakdownView";
 import "../styles/department-lens.css";
 import "../styles/graph-investigation.css";
+import "../styles/context-breakdown.css";
 
 const pretty=(s:string)=>s.replaceAll("_"," ");
 const MODEL_LABEL:Record<string,string>={human_in_vivo:"Human participants",human_ex_vivo:"Human cells (ex vivo)",human_cell_line:"Human cell line",mouse:"Mouse",rodent:"Rodent",mixed:"Mixed models",unspecified:"Model not specified"};
@@ -34,6 +36,7 @@ function Dossier({bundle,edge,onClose,onAdd,added}:{bundle:DomainBundle;edge:Dom
   {source?<p><a href={source.url} target="_blank" rel="noopener noreferrer">{source.title}</a><br/>{source.pmid?`PMID ${source.pmid}`:source.doi} · {pretty(source.identityStatus)} · rights {pretty(source.rights)}</p>:<p>No source record is attached. This is a recorded question, not a finding.</p>}
   <h4>Review and uncertainty</h4>
   <ul className="dl-status"><li>Review status: <strong>Unreviewed</strong></li><li>Confidence: <strong>Not calibrated</strong></li><li>Scientific claim: <strong>Not allowed</strong></li><li>Context: {pretty(edge.contextStatus)}</li></ul>
+  <ContextBreakdownView bundle={bundle} scope={{kind:"pair",subjectId:edge.subjectId,objectId:edge.objectId}} heading="Evidence by context for this pair"/>
   <h4>Other records for this pair</h4>
   {others.length?<ul>{others.map(o=><li key={o.id}><strong>{o.id}</strong>: {pretty(o.predicate)}{o.negated?" — negative finding":""} · {MODEL_LABEL[o.model]??o.model} · {o.kind==="research_gap"?"unresolved gap":"source candidate"}</li>)}</ul>:<p>No other record for this pair. Absence of a record is not evidence of absence.</p>}
  </section>;
@@ -87,6 +90,7 @@ export function DepartmentLens({bundle,selectedId,onShowInGraph}:{bundle:DomainB
     <label className="dl-field">Into department<select value={target} onChange={e=>{setTarget(e.target.value as DepartmentSlug);setEdgeId("")}}>{DEPARTMENT_SLUGS.map(s=><option key={s} value={s}>{departmentBySlug(s)?.name??s}</option>)}</select></label>
     <label className="dl-field">At most<select value={hops} onChange={e=>setHops(Number(e.target.value))}>{[2,3,4,5].map(n=><option key={n} value={n}>{n} hops</option>)}</select></label>
    </div>
+  {startNode&&<ContextBreakdownView bundle={bundle} scope={{kind:"concept",nodeId:startNode.id}} heading={`Evidence by context for ${startNode.name}`} headingLevel={3}/>}
    <div aria-live="polite" className="dl-result">
     {!startNode&&<p>Select a starting concept from a department above, or from the graph tab.</p>}
     {result?.status==="target_has_no_graph_coverage"&&<p>The target department has no concept in the graph yet. Nothing is inferred; this is a coverage gap, not evidence of absence.</p>}
