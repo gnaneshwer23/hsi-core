@@ -105,3 +105,5 @@
 .fg-steps ul a:hover{color:var(--fg-violet);border-bottom-color:var(--fg-violet)}
 .fg-flow>li{}
 @media(max-width:800px){.fg-steps>li{grid-template-columns:40px minmax(0,1fr);padding:20px}.fg-steps ul{grid-column:2}}
+
+.ag-fine a{display:inline-flex;align-items:center;min-height:44px}

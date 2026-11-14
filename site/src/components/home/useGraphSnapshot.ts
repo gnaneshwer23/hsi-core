@@ -1,13 +1,14 @@
-import {useEffect,useState} from "react";
+import {createContext,createElement,useContext,useEffect,useState,type ReactNode} from "react";
 import {loadDomainGraph} from "../../lib/claimGraphClient";
 
 export type Example={id:string;subject:string;object:string;predicate:string;negated:boolean;assertion:string;model:string;design:string;tissue:string|null;limits:string;warnings:string[];context:string;source:{title:string;pmid:string|null;identity:string;locator:string|null}|null};
 export type Snapshot={examples:Example[];concepts:number;relationships:number;gaps:{question:string;missing:string}[];sources:number;notRetrieved:number;reviewed:number;version:string};
 
-/** Reads counts from the published, digest-verified graph snapshot. Nothing is typed in; failure shows no substitute figures. */
-export function useGraphSnapshot(){
+/** Fetches the published, digest-verified graph snapshot. Nothing is typed in; failure shows no substitute figures. */
+function useSnapshotFetch(enabled:boolean){
   const [snapshot,setSnapshot]=useState<Snapshot|null>(null),[failed,setFailed]=useState(false);
   useEffect(()=>{
+    if(!enabled)return;
     const c=new AbortController();let active=true;const t=setTimeout(()=>c.abort(),12000);
     loadDomainGraph(null,c.signal).then(g=>{
       if(!active)return;
@@ -28,6 +29,18 @@ export function useGraphSnapshot(){
       });
     }).catch(()=>{if(active)setFailed(true)}).finally(()=>clearTimeout(t));
     return()=>{active=false;c.abort();clearTimeout(t)};
-  },[]);
+  },[enabled]);
   return {snapshot,failed};
+}
+type Value={snapshot:Snapshot|null;failed:boolean};
+const SnapshotContext=createContext<Value|null>(null);
+/** One fetch for a whole page: components below read it through useGraphSnapshot. */
+export function GraphSnapshotProvider({children}:{children:ReactNode}){
+  const value=useSnapshotFetch(true);
+  return createElement(SnapshotContext.Provider,{value},children);
+}
+export function useGraphSnapshot():Value{
+  const shared=useContext(SnapshotContext);
+  const own=useSnapshotFetch(shared===null);
+  return shared??own;
 }
