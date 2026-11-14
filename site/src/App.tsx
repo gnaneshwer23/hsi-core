@@ -9,6 +9,7 @@ import {ContextConflictAuditPage,ResearchBriefsPage} from "./pages/PublicResearc
 import {PlatformPublicPage,SciencePublicPage,ApplicationsPublicPage,TrustPublicPage,AboutPublicPage} from "./pages/PublicFoundationPages";
 import {ScientificHome as Home,ScientificHow as HowItWorks,ScientificResearch as ResearchPublicPage,ScientificEvidence as EvidenceIntelligencePage} from "./pages/ScientificPublic";
 import { IntelligenceCollectiveLanding, IntelligenceCapabilityLanding } from "./pages/IntelligenceCollective";
+import { DepartmentsIndex, DepartmentPage } from "./pages/Departments";
 import {PasswordRecovery} from "./pages/PasswordRecovery";
 import { SignIn } from "./pages/SignIn";
 import { SignUp } from "./pages/SignUp";
@@ -86,6 +87,13 @@ export default function App() {
         <Route path="platform" element={<PlatformPublicPage />} />
         {import.meta.env.DEV && <Route path={"design/identity"} element={<IdentityStudy/>}/> }
         <Route path="intelligence" element={<IntelligenceCollectiveLanding />} />
+        <Route path="departments" element={<DepartmentsIndex />} />
+        <Route path="departments/immunology" element={<DepartmentPage slug="immunology" />} />
+        <Route path="departments/neuroscience" element={<DepartmentPage slug="neuroscience" />} />
+        <Route path="departments/microbiome" element={<DepartmentPage slug="microbiome" />} />
+        <Route path="departments/metabolism" element={<DepartmentPage slug="metabolism" />} />
+        <Route path="departments/genomics-multi-omics" element={<DepartmentPage slug="genomics-multi-omics" />} />
+        <Route path="departments/human-physiology" element={<DepartmentPage slug="human-physiology" />} />
         <Route path="intelligence/nexus" element={<IntelligenceCapabilityLanding slug="nexus" />} />
         <Route path="intelligence/aegis" element={<IntelligenceCapabilityLanding slug="aegis" />} />
         <Route path="intelligence/scout" element={<IntelligenceCapabilityLanding slug="scout" />} />

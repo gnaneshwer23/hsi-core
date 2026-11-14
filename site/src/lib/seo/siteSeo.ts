@@ -1,4 +1,5 @@
 import {intelligenceCapabilities} from "../intelligenceCollective";
+import {departments} from "../departments";
 /** One public metadata policy for generated HTML and client navigation. No scientific endorsement implied. */
 export const SITE_ORIGIN='https://www.humansuperintelligence.tech';
 export const SOCIAL_IMAGE=SITE_ORIGIN+'/social/hsi-research.png';
@@ -44,6 +45,8 @@ const NOINDEX_PAGES:Record<string,{name:string;title:string;description:string}>
  '/demo':{name:'Illustrative walkthrough',title:'Illustrative Research Walkthrough | Human Super Intelligence',description:'Guided walkthrough of one research record. Not a diagnosis, a prescription, or confirmed trial eligibility.'}
 };
 SEO_PAGES['/intelligence']={name:'Intelligence Collective',title:'The HSI Intelligence Collective | Evidence, Context and Review',description:'Explore the proposed HSI capabilities for source integrity, biological investigation and accountable review. A capability architecture, not a claim of live scientific validation.'};
+SEO_PAGES['/departments']={name:'Departments',title:'Six Connected Scientific Departments | HSI',description:'Immunology, neuroscience, microbiome, metabolism, genomics and multi-omics, and human physiology: six connected perspectives on one evidence-linked research graph.'};
+for(const d of departments)SEO_PAGES['/departments/'+d.slug]={name:d.name,title:d.name+': '+d.tagline.replace(/\.$/,'')+' | HSI',description:d.summary+' Candidate relationships only; not validated knowledge.'};
 for(const a of intelligenceCapabilities)SEO_PAGES['/intelligence/'+a.slug]={name:a.name,title:a.name+' — '+a.role+' | HSI',description:a.purpose+' Proposed capability architecture; live execution and independent scientific acceptance remain gated.'};
 export type SeoMetadata={title:string;description:string;canonical:string;indexable:boolean;name:string;structuredData:Record<string,unknown>|null};
 export function getSeoMetadata(pathname:string,noindex=false):SeoMetadata{

@@ -9,3 +9,5 @@
 .sp-live-graph .kg-canvas>svg{height:420px}.sp-live-graph .kg-canvas .xp-graph-toolbar button{border-radius:4px;font-family:inherit}.sp-home-hero .sp-actions{flex-wrap:wrap}.sp-home-hero .sp-actions>a:first-child{font-size:12px}@media(max-width:600px){.sp-live-graph .kg-canvas>svg{height:330px}}
 
 .sp-actions a{min-height:44px;display:inline-flex;align-items:center}
+
+.sp-domains article{position:relative}.sp-dept-link{color:inherit;text-decoration:none}.sp-dept-link::after{content:'';position:absolute;inset:0}.sp-dept-link:hover{text-decoration:underline;text-underline-offset:4px}.sp-dept-link:focus-visible{outline:3px solid #6753a1;outline-offset:4px;border-radius:6px}
