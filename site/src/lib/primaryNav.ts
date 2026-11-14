@@ -1,6 +1,6 @@
 /** Canonical public research story. All existing tools and secondary resources retain their routes. */
 export const PRIMARY_NAV_LINKS = [
- {to:"/",label:"Home"},{to:"/how-it-works",label:"How it works"},
+ {to:"/",label:"Home"},{to:"/knowledge-graph",label:"Knowledge graph"},{to:"/how-it-works",label:"How it works"},
  {to:"/research",label:"Research"},{to:"/evidence-intelligence",label:"Evidence intelligence"}
 ] as const;
 export const RESEARCH_NAV_LINKS=[
@@ -16,7 +16,7 @@ export const SECONDARY_NAV_LINKS=[
 ] as const;
 export const PUBLIC_MARKETING_PATHS=[
  "/","/platform","/technology","/solutions","/research","/evidence-safety","/pricing","/contact",
- "/science","/intelligence","/how-it-works",
+ "/science","/intelligence","/how-it-works","/knowledge-graph",
  "/context-conflict-audit","/evidence-intelligence","/research-briefs","/applications","/trust","/about"
 ] as const;
 /** Destination explains browser-only drafting; this CTA does not claim that a request was delivered. */

@@ -48,7 +48,7 @@ describe("Public HSI site honesty", () => {
     expect(primaryNav).toContain('label: "Sign up"');
     expect(primaryNav).toContain('to: "/contact"');
     const primaryLinksBlock=primaryNav.match(/export const PRIMARY_NAV_LINKS = \[[\s\S]*?\] as const/)?.[0]??"";
-    for(const route of ["/","/how-it-works","/research","/evidence-intelligence"])expect(primaryLinksBlock).toContain(route);
+    for(const route of ["/","/knowledge-graph","/how-it-works","/research","/evidence-intelligence"])expect(primaryLinksBlock).toContain(route);
     for(const route of ["/trust","/about","/applications"])expect(primaryLinksBlock).not.toContain(route);
     for(const route of ["/curator","/gateway","/clinical-timeline","/trials-criteria","/status"])expect(primaryLinksBlock).not.toContain(route);
     // product module paths are no longer in the public path list

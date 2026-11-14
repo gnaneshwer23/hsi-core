@@ -37,6 +37,6 @@ describe("connected intelligence: the wider vision, by capability, with no produ
   expect(vercel.rewrites.find(r=>r.source==="/connected-intelligence")?.destination).toBe("/_pages/connected-intelligence.html");
   const seo=read("site/src/lib/seo/siteSeo.ts");expect(seo).toContain("'/connected-intelligence'");
   expect(NAMES.test(seo.slice(seo.indexOf("'/connected-intelligence'"),seo.indexOf("'/connected-intelligence'")+400))).toBe(false);
-  expect(read("site/src/pages/ScientificPublic.tsx")).toContain('to="/connected-intelligence"');
+  expect(read("site/src/pages/ScientificPublic.tsx")+read("site/src/components/home/AgentDashboard.tsx")).toContain('to="/connected-intelligence"');
  });
 });

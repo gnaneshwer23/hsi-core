@@ -1,10 +1,12 @@
 import {HsiIdentity} from "./HsiIdentity";
 import { Link } from "react-router-dom";
 import { RESEARCH_NAV_LINKS } from "../lib/primaryNav";
+import "../styles/chrome-redesign.css";
 const groups = [
   {
     name: "Explore",
     links: [
+      { to: "/knowledge-graph", label: "Knowledge graph" },
       { to: "/platform", label: "Platform" },
       { to: "/science", label: "Science" },
       { to: "/applications", label: "Applications" },
@@ -35,6 +37,11 @@ const groups = [
 export function Footer() {
   return (
     <footer className="hsi-footer" aria-label="Site footer">
+      <ul className="hsi-footer-status" aria-label="Current status">
+        <li>Research preview</li>
+        <li>Candidate-only graph, nothing scientifically approved</li>
+        <li>No clinical advice or patient data</li>
+      </ul>
       <div className="hsi-footer-grid">
         <div className="hsi-footer-brand">
           <Link className="hsi-wordmark" to="/">
