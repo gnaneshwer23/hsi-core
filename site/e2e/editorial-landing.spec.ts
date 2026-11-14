@@ -32,3 +32,15 @@ test('public graph search filters real snapshot records and retains a versioned 
  await graph.getByRole('searchbox',{name:'Search graph'}).fill('no-such-scientific-concept');await expect(graph).toContainText('No records match this view');
  await graph.getByRole('button',{name:'Reset search'}).click();await expect(graph.locator('[data-graph-node]')).not.toHaveCount(0);
 });
+
+test('research offers a genuine workspace preview, bounded journeys and explicit access states',async({page})=>{
+ await page.goto('/research');
+ await expect(page.getByRole('heading',{level:1})).toContainText('A connected workspace');
+ const preview=page.getByRole('img',{name:/Actual HSI public graph workspace/});
+ await expect(preview).toBeVisible();expect(await preview.evaluate((image:HTMLImageElement)=>image.complete&&image.naturalWidth>0)).toBe(true);
+ await expect(page.locator('.rlp-journeys article')).toHaveCount(3);
+ await expect(page.locator('.rlp-access')).toContainText('Creating an account does not grant');
+ const foundations=page.locator('.rlp-foundations details');await expect(foundations).not.toHaveAttribute('open','');
+ await foundations.locator('summary').click();await expect(foundations).toHaveAttribute('open','');
+ await page.getByRole('link',{name:'Open public workspace ↗',exact:true}).click();await expect(page).toHaveURL(/research\/knowledge-graph/);
+});
