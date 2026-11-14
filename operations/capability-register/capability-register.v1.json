@@ -1083,7 +1083,10 @@
           "src/graphRelease.ts",
           "src/hsiOntologyRegistry.ts",
           "src/liveExecute.ts",
-          "src/livingHealthKnowledgeGraph.ts"
+          "src/livingHealthKnowledgeGraph.ts",
+          "src/ontology/conceptMapping.ts",
+          "src/ontology/oboTerms.ts",
+          "src/ontology/ontologyImport.ts"
         ],
         "modelBacked": false,
         "humanApproval": "Canonical investigation store decision; held migrations; publication only after ARBITER and a human decision.",

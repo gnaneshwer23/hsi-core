@@ -181,6 +181,9 @@ One module per line, sorted, so concurrent changes to different modules do not c
 - `src/hsiOntologyRegistry.ts`
 - `src/liveExecute.ts`
 - `src/livingHealthKnowledgeGraph.ts`
+- `src/ontology/conceptMapping.ts`
+- `src/ontology/oboTerms.ts`
+- `src/ontology/ontologyImport.ts`
 
 **HELIX**
 - `src/evidence/proteinPathwayMechanismCandidates.ts`

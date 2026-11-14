@@ -16,6 +16,7 @@ export const HSI_ONTOLOGY_NAMESPACES:readonly HsiOntologyNamespace[]=[
  {prefix:"MONDO",label:"MONDO disease ontology",uriBase:"https://identifiers.org/MONDO:",identifierPattern:/^MONDO:[0-9]{7}$/,domain:"biology"},
  {prefix:"UBERON",label:"Uberon anatomy ontology",uriBase:"https://identifiers.org/UBERON:",identifierPattern:/^UBERON:[0-9]{7}$/,domain:"biology"},
  {prefix:"CL",label:"Cell Ontology",uriBase:"https://identifiers.org/CL:",identifierPattern:/^CL:[0-9]{7}$/,domain:"biology"},
+ {prefix:"ECO",label:"Evidence and Conclusion Ontology",uriBase:"https://identifiers.org/ECO:",identifierPattern:/^ECO:[0-9]{7}$/,domain:"biology"},
  {prefix:"LOINC",label:"LOINC codes",uriBase:"https://loinc.org/",identifierPattern:/^[0-9]{1,7}-[0-9]$/,domain:"clinical"},
  {prefix:"NCT",label:"ClinicalTrials.gov study identifiers",uriBase:"https://clinicaltrials.gov/study/",identifierPattern:/^NCT[0-9]{8}$/,domain:"trial"},
  {prefix:"PMID",label:"PubMed publication identifiers",uriBase:"https://pubmed.ncbi.nlm.nih.gov/",identifierPattern:/^[1-9][0-9]*$/,domain:"publication"}
