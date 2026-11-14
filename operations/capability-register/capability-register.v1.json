@@ -1345,6 +1345,7 @@
         ],
         "modules": [
           "src/caliberHarness.ts",
+          "src/evidence/benchmarkV11Profiles.ts",
           "src/evidence/immunoBenchmark.ts",
           "src/evidence/immunoBenchmarkScoring.ts",
           "src/evidence/independentEvaluationSuites.ts",
