@@ -101,6 +101,7 @@ export function Nav() {
           {PRIMARY_NAV_LINKS.map(l=><Fragment key={l.to}><NavLink to={l.to} end>{l.label}</NavLink>{l.to==='/how-it-works'&&<ScienceNavigation/>}</Fragment>)}
         </nav>
         <div className="hsi-header-actions">
+          <Link className="hsi-atlas-cta" to="/research/knowledge-graph">Explore Atlas <span aria-hidden="true">↗</span></Link>
           <Link className="hsi-signin" to={signedIn ? "/research/account" : "/sign-in"}>
             {signedIn ? "Account" : "Sign in"}
           </Link>

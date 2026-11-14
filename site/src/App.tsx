@@ -3,7 +3,7 @@ import {lazy,Suspense} from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import {Community} from "./pages/ExperiencePages";
-import {ContactPublicPage as Contact} from "./pages/ContactPublic";
+import {Contact} from "./pages/ExperiencePages";
 const GovernanceDashboard=lazy(()=>import("./pages/GovernanceDashboard").then(m=>({default:m.GovernanceDashboard})));
 const ResearchDashboard=lazy(()=>import("./pages/ResearchDashboard").then(m=>({default:m.ResearchDashboard})));
 import {ContextConflictAuditPage,ResearchBriefsPage} from "./pages/PublicResearchPages";

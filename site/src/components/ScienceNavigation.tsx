@@ -3,7 +3,7 @@ import {NavLink,useLocation} from 'react-router-dom';
 import {departments,departmentPath} from '../lib/departments';
 import '../styles/science-navigation.css';
 
-const links=[{to:'/science',label:'Science overview'},...departments.map(d=>({to:departmentPath(d.slug),label:d.name})),{to:'/research/knowledge-graph',label:'Explore Atlas'}];
+const links=[{to:'/science',label:'Science overview'},{to:'/knowledge-graph',label:'The knowledge foundation'},...departments.map(d=>({to:departmentPath(d.slug),label:d.name})),{to:'/research/knowledge-graph',label:'Explore Atlas'}];
 export function ScienceNavigation({mobile=false}:{mobile?:boolean}){
  const [open,setOpen]=useState(false),root=useRef<HTMLDivElement>(null),trigger=useRef<HTMLButtonElement>(null);
  const {pathname}=useLocation(),active=pathname==='/science'||pathname.startsWith('/departments')||pathname==='/research/knowledge-graph';

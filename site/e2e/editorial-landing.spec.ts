@@ -14,7 +14,7 @@ test('public website excludes fixture promotion and keeps actual product scope',
 test('homepage graph and workspace remain usable at narrow widths',async({page},info)=>{
  for(const width of [320,390,768,1440]){
  await page.setViewportSize({width,height:1000});await page.goto('/');
- await expect(page.getByRole('heading',{level:1})).toContainText('Biological research,');
+ await expect(page.getByRole('heading',{level:1})).toContainText('See why the');
  await expect(page.locator('#home-knowledge-graph')).toContainText('Public research snapshot');
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),String(width)).toBe(true);
  if(width===390||width===1440)await page.screenshot({path:info.outputPath(`graph-home-${width}.png`),fullPage:true});
