@@ -1082,6 +1082,8 @@
           "src/governedGraphRead.ts",
           "src/graphRelease.ts",
           "src/hsiOntologyRegistry.ts",
+          "src/knowledgeGraph/departments.ts",
+          "src/knowledgeGraph/graphAgents.ts",
           "src/liveExecute.ts",
           "src/livingHealthKnowledgeGraph.ts"
         ],
@@ -1121,6 +1123,7 @@
           "src/helixMechanism.ts",
           "src/immuneMechanismInvestigation.ts",
           "src/investigationRunner.ts",
+          "src/knowledgeGraph/graphAgents.ts",
           "src/researchMechanismWorkflow.ts",
           "src/scientificInvestigation.ts"
         ],
@@ -1158,7 +1161,8 @@
           "src/evidence/contextualMechanismComparison.ts",
           "src/evidence/passageLinkedContext.ts",
           "src/evidence/structuredEvidenceComparison.ts",
-          "src/investigationScope.ts"
+          "src/investigationScope.ts",
+          "src/knowledgeGraph/graphAgents.ts"
         ],
         "modelBacked": false,
         "humanApproval": "Scientist review of the context normalizer registry.",
@@ -1194,6 +1198,7 @@
           "src/evidence/gapVerification.ts",
           "src/evidence/hypothesisRegistry.ts",
           "src/interrogativeFalsificationEngine.ts",
+          "src/knowledgeGraph/graphAgents.ts",
           "src/liveExecute.ts",
           "src/vantageGaps.ts"
         ],
