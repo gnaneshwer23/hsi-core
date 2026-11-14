@@ -45,7 +45,7 @@ export function ContactPublicPage(){
           <AccessIntentPanel />
           <p className="ct-scope" role="note">Browser drafts are optional. Create an account, then an administrator grants research access. Check status on your research account after sign-in.</p>
           <p><Link to="/research/account">Check your research account →</Link></p>
-          <p><Link to="/evidence-safety">Evidence and safety →</Link></p>
+          <p><Link to="/trust">Evidence, review and safety boundaries →</Link></p>
         </div>
       </section>
     </div>

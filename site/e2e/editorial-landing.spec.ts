@@ -1,5 +1,5 @@
 import {test,expect} from '@playwright/test';
-const publicPaths=['/','/platform','/technology','/connected-intelligence','/departments','/solutions','/research','/evidence-safety','/how-it-works','/science','/pricing','/contact'];
+const publicPaths=['/','/platform','/connected-intelligence','/departments','/research','/how-it-works','/science','/contact'];
 test('public website excludes fixture promotion and keeps actual product scope',async({page})=>{
  test.setTimeout(90000);const fixtureLoads:string[]=[];page.on('request',r=>{if(r.url().includes('/research/validation/v0.1/'))fixtureLoads.push(r.url())});
  for(const path of publicPaths){

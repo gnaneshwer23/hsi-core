@@ -3,9 +3,9 @@ import { readFileSync } from "node:fs";
 const read = (path: string) => readFileSync(new URL(path, import.meta.url), "utf8");
 describe("HSI NEXUS technology page", () => {
   const page = read("../site/src/pages/Technology.tsx");
-  it("is accessible from a dedicated public route and navigation", () => {
-    expect(read("../site/src/App.tsx")).toContain('path="technology" element={<Technology />}');
-    expect(read("../site/src/lib/primaryNav.ts")).toContain('to: "/technology"');
+  it("is retired from the public site: the route redirects to the platform page and leaves navigation", () => {
+    expect(read("../site/src/App.tsx")).toContain('path="technology" element={<Navigate to="/platform" replace />}');
+    expect(read("../site/src/lib/primaryNav.ts")).not.toContain("/technology");
   });
   it("shows the four independent information domains and six intelligence functions", () => {
     for (const name of ["Authorised care systems", "Patient-reported health", "Scientific discovery", "External research & trials", "Context", "Biology", "Evidence", "Reasoning", "Discovery", "Governance"]) expect(page).toContain(name);

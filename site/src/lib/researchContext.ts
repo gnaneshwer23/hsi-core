@@ -37,7 +37,7 @@ export const CROSS_DOMAIN_JOURNEY_ENTRIES = [
     scenarioId: "ssc_fibrosis",
     domain: "immunity",
     exploreTo: "/science/graph",
-    evidenceTo: "/evidence-safety",
+    evidenceTo: "/trust",
   },
   {
     id: "gut_brain_immune",
@@ -45,7 +45,7 @@ export const CROSS_DOMAIN_JOURNEY_ENTRIES = [
     scenarioId: "gut_neuro",
     domain: "microbiome",
     exploreTo: "/research/knowledge-graph",
-    evidenceTo: "/evidence-safety",
+    evidenceTo: "/trust",
   },
   {
     id: "metabolic_immunology",
@@ -53,7 +53,7 @@ export const CROSS_DOMAIN_JOURNEY_ENTRIES = [
     scenarioId: "metabolic_inflammation",
     domain: "clinical",
     exploreTo: "/science/body",
-    evidenceTo: "/evidence-safety",
+    evidenceTo: "/trust",
   },
 ] as const;
 
