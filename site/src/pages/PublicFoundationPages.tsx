@@ -70,7 +70,7 @@ export function PlatformPublicPage() {
       </PublicSection>
       <PublicSection
         title="Interoperable research. Separate responsibilities."
-        description="Aksh Health, HSI Clinical, Immune Super Intelligence and HSI Trials retain their own governance, data and interfaces."
+        description="The scientific, clinical, patient-reported and study-related capabilities retain their own governance, data and interfaces."
       >
         <p>
           The shared foundation connects governed research artifacts, not patient-record transfers. Scientific
@@ -334,7 +334,7 @@ export function ApplicationsPublicPage() {
       </PublicSection>
       <PublicSection
         title="Shared foundations do not erase data boundaries."
-        description="Aksh Health, HSI Clinical, ISI and HSI Trials are independently governed products."
+        description="The clinical, patient-reported and study-related capabilities are independently governed."
         dark
       >
         <p>
