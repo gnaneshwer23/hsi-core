@@ -10,6 +10,7 @@ import {PlatformPublicPage,SciencePublicPage,ApplicationsPublicPage,TrustPublicP
 import {ScientificHome as Home,ScientificHow as HowItWorks,ScientificResearch as ResearchPublicPage,ScientificEvidence as EvidenceIntelligencePage} from "./pages/ScientificPublic";
 import { IntelligenceCollectiveLanding, IntelligenceCapabilityLanding } from "./pages/IntelligenceCollective";
 import { DepartmentsIndex, DepartmentPage } from "./pages/Departments";
+import { ConnectedIntelligence } from "./pages/ConnectedIntelligence";
 import {PasswordRecovery} from "./pages/PasswordRecovery";
 import { SignIn } from "./pages/SignIn";
 import { SignUp } from "./pages/SignUp";
@@ -87,6 +88,7 @@ export default function App() {
         <Route path="platform" element={<PlatformPublicPage />} />
         {import.meta.env.DEV && <Route path={"design/identity"} element={<IdentityStudy/>}/> }
         <Route path="intelligence" element={<IntelligenceCollectiveLanding />} />
+        <Route path="connected-intelligence" element={<ConnectedIntelligence />} />
         <Route path="departments" element={<DepartmentsIndex />} />
         <Route path="departments/immunology" element={<DepartmentPage slug="immunology" />} />
         <Route path="departments/neuroscience" element={<DepartmentPage slug="neuroscience" />} />
