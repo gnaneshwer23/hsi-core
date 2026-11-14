@@ -393,6 +393,10 @@
       "destination": "/_pages/applications.html"
     },
     {
+      "source": "/knowledge-graph",
+      "destination": "/_pages/knowledge-graph.html"
+    },
+    {
       "source": "/trust",
       "destination": "/_pages/trust.html"
     },

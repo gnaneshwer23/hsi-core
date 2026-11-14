@@ -5,6 +5,7 @@ const groups = [
   {
     name: "Explore",
     links: [
+      { to: "/knowledge-graph", label: "Knowledge graph" },
       { to: "/platform", label: "Platform" },
       { to: "/science", label: "Science" },
       { to: "/applications", label: "Applications" },

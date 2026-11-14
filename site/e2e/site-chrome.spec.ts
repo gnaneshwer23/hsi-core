@@ -8,10 +8,10 @@ test('shared header stays usable without overlap across mobile and desktop width
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`Overflow at ${width}`).toBe(true);
  }
 });
-test('desktop header has four direct navigation links',async({page})=>{
+test('desktop header has five direct navigation links',async({page})=>{
  await page.setViewportSize({width:1440,height:900});await page.goto('/');
  const nav=page.getByRole('navigation',{name:'Primary',exact:true});
- await expect(nav.getByRole('link')).toHaveText(['Home','How it works','Research','Evidence intelligence']);
+ await expect(nav.getByRole('link')).toHaveText(['Home','Knowledge graph','How it works','Research','Evidence intelligence']);
  await nav.getByRole('link',{name:'Research',exact:true}).click();await expect(page).toHaveURL(/research$/);
  await nav.getByRole('link',{name:'Evidence intelligence',exact:true}).click();await expect(page).toHaveURL(/evidence-intelligence$/);
 });
