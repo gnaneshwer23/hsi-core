@@ -42,6 +42,7 @@ Normal migration execution skips the following ids from the shared, side-effect-
 - `028_hsi_contradiction_restricted_api`
 - `029_hsi_contradiction_scoped_read_integrity`
 - `030_hsi_live_evidence_investigations`
+- `031_hsi_graph_workspace_storage`
 
 Current implementation-to-acceptance reconciliation: `docs/audits/HSI_IMPLEMENTATION_TRUTH_AND_NEXT_PRS.md` and `operations/production-delivery/implementation-truth.v1.json`. These metadata documents cannot authorise runtime activation.
 
