@@ -1,4 +1,3 @@
-import {Link} from "react-router-dom";
 import {useGraphSnapshot} from "./useGraphSnapshot";
 
 const clip=(s:string,n:number)=>s.length>n?s.slice(0,n-1).trimEnd()+"…":s;
@@ -9,7 +8,7 @@ export function AnatomyDiagram(){
   const e=s?.examples[0];
   const items:[string,string,string][]=e?[
     ["Entities",`${e.subject} and ${e.object}`,"Each concept keeps an identifier in the graph."],
-    ["Relationship",e.predicate,"Direction is kept as the source states it."],
+    ["Relationship",e.predicate,"Direction is recorded as annotated. Checking it against the source is still pending."],
     ["Source",e.source?clip(e.source.title,90):"None recorded",e.source?`Status: ${e.source.identity}.`:""],
     ["Context",`${e.model}; ${clip(e.design,60)}`,"Species, design and tissue stay with the claim."],
     ["Limits",clip(e.limits,110),"Named, not smoothed over."],
@@ -43,7 +42,7 @@ export function AnatomyDiagram(){
         </svg>
         <p className="hv-note">Layout is schematic. Labels are fields recorded in the published snapshot{s?` (${s.version})`:""}. Candidate, unreviewed.</p>
       </div>
-      <ol className="hv-legend">
+      <ol className={"hv-legend"+(!e&&!failed?" hv-loading":"")}>
         {e?items.map(([k,v,n],i)=>(
           <li key={k}><span className="hv-pin-n" aria-hidden="true">{i+1}</span><div><strong>{k}</strong><span>{v}</span>{n&&<small>{n}</small>}</div></li>
         )):<li className="hv-wait">{failed?"Snapshot unavailable. No substitute figures are shown.":"Verifying snapshot…"}</li>}
@@ -52,4 +51,3 @@ export function AnatomyDiagram(){
     </figure>
   );
 }
-export function AnatomyLink(){return <Link to="/knowledge-graph">How a relationship is recorded →</Link>}

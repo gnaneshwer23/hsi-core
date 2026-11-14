@@ -100,7 +100,7 @@
 @media(prefers-reduced-motion:reduce){.hv-rail::after{animation:none;opacity:0}}
 
 /* Reserve space while the snapshot loads so the page does not jump after a hash scroll. */
-.hv-legend{min-height:600px}
+.hv-legend.hv-loading{min-height:600px}
 .hv-grid-skeleton{min-height:1180px}
-@media(max-width:1100px){.hv-legend{min-height:0}.hv-grid-skeleton{min-height:1500px}}
+@media(max-width:1100px){.hv-legend.hv-loading{min-height:0}.hv-grid-skeleton{min-height:1500px}}
 @media(max-width:760px){.hv-grid-skeleton{min-height:2200px}}
