@@ -2,6 +2,10 @@
 
 **`hsi-core` is the sole active codebase for the HSI substrate.** Human Super Intelligence is one product. Aksh Health, HSI Clinical, ISI and HSI Trials are governed modules. ISI science must not depend on Aksh Health. Private patient data must not enter the research graph automatically. Edit this repository: https://github.com/gnaneshwer23/hsi-core.
 
+## Public positioning (explicit user correction, 13 November 2026)
+
+Present HSI as one scientific intelligence technology built around the Living Knowledge Graph, evidence, experimental context and scientific investigation. Do not reintroduce the historical named-product portfolio in public pages, diagrams, navigation or metadata. Historical integration names in backend contracts do not authorise marketing them. See the public-positioning correction at the top of `docs/strategy/HSI_VISION.md`; retain all scientific, source, security and no-PHI/no-CDS boundaries.
+
 ## Governing product vision (binding doctrine)
 
 Treat [`docs/strategy/HSI_VISION.md`](docs/strategy/HSI_VISION.md) as the guiding vision for landing pages, backend services, knowledge-graph relationships, AI agents and product decisions. It is **ambition doctrine**, not a claim that every capability is production-ready — preserve honesty labels, capability-status, fail-closed writes, cross-domain scope (SSc = validation case), four-product boundaries, and no live CDS/PHI in this repo.

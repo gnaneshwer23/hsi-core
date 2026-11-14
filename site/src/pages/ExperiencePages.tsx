@@ -109,26 +109,22 @@ export function Solutions() {
       cta: "Our approach to evidence",
     },
     {
-      name: "Product teams",
+      name: "Research teams",
       title: "Connect capabilities. Preserve control of the data.",
       description:
-        "Reuse research technology across product-owned experiences, with source permissions, identity and review remaining explicit.",
-      tools: ["Versioned research artifacts", "Product-owned interfaces and data", "Purpose-specific access and acceptance"],
+        "Connect research workflows through one scientific intelligence technology, with source permissions, identity and review remaining explicit.",
+      tools: ["Versioned research artifacts", "Scoped research access", "Purpose-specific access and acceptance"],
       to: "/platform",
       cta: "Explore the shared platform",
     },
     {
-      name: "Personal health",
-      title: "Put everyday context in the right care setting.",
+      name: "Cross-domain researchers",
+      title: "Follow mechanisms across biological systems.",
       description:
-        "Aksh Health is the separate personal-health product in the ecosystem. Care records and clinical decisions remain within its own professional setting.",
-      tools: [
-        "Person-centred longitudinal context",
-        "Separate care and research responsibilities",
-        "Professional interpretation of care decisions",
-      ],
-      to: "/modules/aksh-health",
-      cta: "Meet Aksh Health",
+        "Investigate immune, neural, microbial, metabolic and molecular relationships while preserving the evidence and experimental differences.",
+      tools: ["Source-linked relationships", "Experimental context and uncertainty", "Independent scientific review"],
+      to: "/research/knowledge-graph",
+      cta: "Explore the knowledge graph",
     },
   ];
   const a = audiences[index]!;
