@@ -1,0 +1,294 @@
+{
+ "schemaVersion": "hsi-ontology-source-audit-1",
+ "auditedOn": "2026-11-14",
+ "importAuthorised": true,
+ "note": "Import approved on 2026-11-14 for MONDO, UBERON, CL, GO and ECO only; HP is skipped by decision. Terms are stored in the gitignored .ontology-cache/ and in no database (a migration needs separate approval). See import-manifest.v1.json.",
+ "evidenceBasis": {
+  "obo": "OBO Foundry registry (obofoundry.org/registry/ontologies.jsonld) licence field, and the HTTP headers of the OBO PURL downloads, read on 2026-11-14",
+  "hpo": "https://hpo.jax.org/license page text read on 2026-11-14 (the page returned content with a 404 status; the OBO registry points at https://hpo.jax.org/app/license, so re-read before relying on it)",
+  "reactome": "https://reactome.org/license search excerpt, 2026-11-14",
+  "uniprot": "https://www.uniprot.org/help/license search excerpt, 2026-11-14",
+  "who": "https://www.who.int/about/policies/publishing/copyright search excerpt, 2026-11-14",
+  "snomed": "SNOMED International and NHS TRUD licence pages (search excerpts only), 2026-11-14"
+ },
+ "sources": [
+  {
+   "prefix": "MONDO",
+   "name": "Mondo Disease Ontology",
+   "licence": "CC BY 4.0",
+   "release": "v2026-11-03",
+   "releaseUrl": "https://github.com/monarch-initiative/mondo/releases/tag/v2026-11-03",
+   "downloadBytes": 255163272,
+   "verification": "verified",
+   "inRegistry": true,
+   "recommendation": "import_first",
+   "conditions": [
+    "attribution",
+    "record release tag and file sha256"
+   ],
+   "notes": "Disease concepts. Large OWL; import a pinned subset or the OBO JSON edition, not the OWL, if size matters."
+  },
+  {
+   "prefix": "UBERON",
+   "name": "Uberon anatomy ontology",
+   "licence": "CC BY 3.0",
+   "release": "v2026-11-05",
+   "releaseUrl": "https://github.com/obophenotype/uberon/releases/tag/v2026-11-05",
+   "downloadBytes": 96362958,
+   "verification": "verified",
+   "inRegistry": true,
+   "recommendation": "import_first",
+   "conditions": [
+    "attribution (CC BY 3.0 wording differs from 4.0)",
+    "record release tag and file sha256"
+   ],
+   "notes": "Tissue and organ context for PARALLAX comparability."
+  },
+  {
+   "prefix": "CL",
+   "name": "Cell Ontology",
+   "licence": "CC BY 4.0",
+   "release": "v2026-06-08",
+   "releaseUrl": "https://github.com/obophenotype/cell-ontology/releases/tag/v2026-06-08",
+   "downloadBytes": 66012941,
+   "verification": "verified",
+   "inRegistry": true,
+   "recommendation": "import_first",
+   "conditions": [
+    "attribution",
+    "record release tag and file sha256"
+   ],
+   "notes": "Immune and other cell types. Latest release is five months old; check cadence before treating as stale."
+  },
+  {
+   "prefix": "GO",
+   "name": "Gene Ontology",
+   "licence": "CC BY 4.0",
+   "release": "2026-08-05 archive (file data-version 2026-07-26)",
+   "releaseUrl": "https://current.geneontology.org/ontology/go.owl",
+   "downloadBytes": 129926009,
+   "verification": "verified",
+   "inRegistry": true,
+   "recommendation": "import_first",
+   "conditions": [
+    "attribution",
+    "pin a dated release, not 'current'",
+    "record file sha256"
+   ],
+   "notes": "'current' is a moving pointer; pin a dated release from the GO release archive before import."
+  },
+  {
+   "prefix": "ECO",
+   "name": "Evidence and Conclusion Ontology",
+   "licence": "CC0 1.0",
+   "release": "v2026-07-10",
+   "releaseUrl": "https://www.evidenceontology.org",
+   "downloadBytes": null,
+   "verification": "verified (CC0 statement in the file header and repository LICENSE)",
+   "inRegistry": true,
+   "recommendation": "import_first",
+   "conditions": [
+    "none required; attribution still good practice"
+   ],
+   "notes": "Typed evidence codes. Not in the namespace registry yet."
+  },
+  {
+   "prefix": "NCBITaxon",
+   "name": "NCBI organismal classification",
+   "licence": "CC0 1.0",
+   "release": "not fetched",
+   "releaseUrl": "https://github.com/obophenotype/ncbitaxon",
+   "downloadBytes": null,
+   "verification": "licence verified; release not checked",
+   "inRegistry": false,
+   "recommendation": "import_later",
+   "conditions": [
+    "none required"
+   ],
+   "notes": "Species for study models and microbiome taxa. Not in the namespace registry yet."
+  },
+  {
+   "prefix": "ChEBI",
+   "name": "Chemical Entities of Biological Interest",
+   "licence": "CC BY 4.0",
+   "release": "file last modified 2026-11-05",
+   "releaseUrl": "http://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi.owl",
+   "downloadBytes": 895864911,
+   "verification": "verified",
+   "inRegistry": false,
+   "recommendation": "import_later",
+   "conditions": [
+    "attribution",
+    "import only a referenced subset"
+   ],
+   "notes": "Metabolites such as butyrate. About 896 MB; import a subset of the terms the graph actually references."
+  },
+  {
+   "prefix": "HP",
+   "name": "Human Phenotype Ontology",
+   "licence": "HPO custom licence (not an open Creative Commons licence)",
+   "release": "v2026-09-01",
+   "releaseUrl": "https://github.com/obophenotype/human-phenotype-ontology/releases/tag/v2026-09-01",
+   "downloadBytes": 76854086,
+   "verification": "verified (page returned 404 status with content; re-read)",
+   "inRegistry": false,
+   "recommendation": "decision_needed",
+   "conditions": [
+    "acknowledge and cite the HPO Consortium",
+    "show dates or version numbers wherever HPO files are shown publicly",
+    "content and logical relationships must not be altered; changes go through the HPO issue tracker",
+    "add the required 'uses the Human Phenotype Ontology (version)' statement"
+   ],
+   "notes": "Use is allowed but a published subset or remapped hierarchy could count as altering content. Needs your decision on whether subsetting is acceptable before import.",
+   "decision": "skip (2026-11-14)"
+  },
+  {
+   "prefix": "HGNC",
+   "name": "HGNC gene nomenclature",
+   "licence": "not verified in this audit",
+   "release": "not checked",
+   "releaseUrl": "https://www.genenames.org",
+   "downloadBytes": null,
+   "verification": "not verified",
+   "inRegistry": true,
+   "recommendation": "verify_before_use",
+   "conditions": [
+    "confirm licence text from genenames.org"
+   ],
+   "notes": "Already an identifier namespace. Licence not read here; do not assume."
+  },
+  {
+   "prefix": "UniProt",
+   "name": "UniProt Knowledgebase",
+   "licence": "CC BY 4.0 (copyrightable parts); cross-references can carry their own terms",
+   "release": "not checked",
+   "releaseUrl": "https://www.uniprot.org/help/license",
+   "downloadBytes": null,
+   "verification": "verified",
+   "inRegistry": true,
+   "recommendation": "identifiers_only",
+   "conditions": [
+    "attribution"
+   ],
+   "notes": "Used for protein identifiers and lookups already."
+  },
+  {
+   "prefix": "Reactome",
+   "name": "Reactome pathways",
+   "licence": "CC BY 4.0; some exports CC0",
+   "release": "not checked",
+   "releaseUrl": "https://reactome.org/license",
+   "downloadBytes": null,
+   "verification": "verified",
+   "inRegistry": true,
+   "recommendation": "identifiers_only",
+   "conditions": [
+    "attribution",
+    "preserve pathway provenance"
+   ],
+   "notes": "Used for pathway identifiers already."
+  },
+  {
+   "prefix": "ChEMBL",
+   "name": "ChEMBL",
+   "licence": "not verified in this audit",
+   "release": "not checked",
+   "releaseUrl": "https://www.ebi.ac.uk/chembl/",
+   "downloadBytes": null,
+   "verification": "not verified",
+   "inRegistry": true,
+   "recommendation": "verify_before_use",
+   "conditions": [
+    "confirm licence text"
+   ],
+   "notes": "Registered as a stub with no live fetch."
+  },
+  {
+   "prefix": "LOINC",
+   "name": "LOINC",
+   "licence": "not verified in this audit (own licence)",
+   "release": "not checked",
+   "releaseUrl": "https://loinc.org",
+   "downloadBytes": null,
+   "verification": "not verified",
+   "inRegistry": true,
+   "recommendation": "out_of_scope_for_hsi_core",
+   "conditions": [
+    "clinical vocabulary; belongs to the clinical products, not the research graph"
+   ],
+   "notes": "hsi-core carries no clinical or patient data."
+  },
+  {
+   "prefix": "SNOMEDCT",
+   "name": "SNOMED CT",
+   "licence": "SNOMED International affiliate licence; UK edition through NHS TRUD",
+   "release": "not applicable",
+   "releaseUrl": "https://www.snomed.org/get-snomed",
+   "downloadBytes": null,
+   "verification": "partial (excerpts only)",
+   "inRegistry": false,
+   "recommendation": "exclude_from_hsi_core",
+   "conditions": [
+    "licence required; derivatives and cross-maps are covered by the licence",
+    "clinical use sits with the clinical products"
+   ],
+   "notes": "Not an open ontology. Do not import into the research graph."
+  },
+  {
+   "prefix": "ICD",
+   "name": "WHO ICD classifications",
+   "licence": "CC BY-ND 3.0 IGO for WHO classifications (no adaptation of the codes)",
+   "release": "not applicable",
+   "releaseUrl": "https://www.who.int/about/policies/publishing/copyright",
+   "downloadBytes": null,
+   "verification": "partial (excerpt only)",
+   "inRegistry": false,
+   "recommendation": "exclude_from_hsi_core",
+   "conditions": [
+    "no adaptation of codes",
+    "cite appropriately"
+   ],
+   "notes": "The no-derivatives term conflicts with remapping codes into a graph. Use Mondo for disease concepts instead."
+  },
+  {
+   "prefix": "MeSH",
+   "name": "Medical Subject Headings",
+   "licence": "not verified in this audit",
+   "release": "not checked",
+   "releaseUrl": "https://www.nlm.nih.gov/mesh/meshhome.html",
+   "downloadBytes": null,
+   "verification": "not verified",
+   "inRegistry": false,
+   "recommendation": "verify_before_use",
+   "conditions": [
+    "read NLM terms before any use"
+   ],
+   "notes": "Search returned the home page only."
+  },
+  {
+   "prefix": "RxNorm",
+   "name": "RxNorm",
+   "licence": "not verified in this audit (distributed via UMLS)",
+   "release": "not checked",
+   "releaseUrl": "https://www.nlm.nih.gov/research/umls/",
+   "downloadBytes": null,
+   "verification": "not verified",
+   "inRegistry": false,
+   "recommendation": "out_of_scope_for_hsi_core",
+   "conditions": [
+    "UMLS licence; some vocabularies add restrictions"
+   ],
+   "notes": "Clinical drug vocabulary; not part of the research graph."
+  }
+ ],
+ "approvedPrefixes": [
+  "MONDO",
+  "UBERON",
+  "CL",
+  "GO",
+  "ECO"
+ ],
+ "skippedByDecision": [
+  "HP"
+ ]
+}

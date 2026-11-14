@@ -9,6 +9,8 @@ import {ContextConflictAuditPage,ResearchBriefsPage} from "./pages/PublicResearc
 import {PlatformPublicPage,SciencePublicPage,ApplicationsPublicPage,TrustPublicPage,AboutPublicPage} from "./pages/PublicFoundationPages";
 import {ScientificHome as Home,ScientificHow as HowItWorks,ScientificResearch as ResearchPublicPage,ScientificEvidence as EvidenceIntelligencePage} from "./pages/ScientificPublic";
 import { IntelligenceCollectiveLanding, IntelligenceCapabilityLanding } from "./pages/IntelligenceCollective";
+import { DepartmentsIndex, DepartmentPage } from "./pages/Departments";
+import { ConnectedIntelligence } from "./pages/ConnectedIntelligence";
 import {PasswordRecovery} from "./pages/PasswordRecovery";
 import { SignIn } from "./pages/SignIn";
 import { SignUp } from "./pages/SignUp";
@@ -18,17 +20,12 @@ const Explore=lazy(()=>import("./pages/Explore").then(m=>({default:m.Explore})))
 const DiscoveryEngine=lazy(()=>import("./pages/DiscoveryEngine").then(m=>({default:m.DiscoveryEngine})));
 const Systems=lazy(()=>import("./pages/Systems").then(m=>({default:m.Systems})));
 const Evidence=lazy(()=>import("./pages/Evidence").then(m=>({default:m.Evidence})));
-import { ForIsi } from "./pages/ForIsi";
-import { ForAksh } from "./pages/ForAksh";
-import { ForTrials } from "./pages/ForTrials";
 
 const Roadmap=lazy(()=>import("./pages/Roadmap").then(m=>({default:m.Roadmap})));
 const Alignment=lazy(()=>import("./pages/Alignment").then(m=>({default:m.Alignment})));
 const Docs=lazy(()=>import("./pages/Docs").then(m=>({default:m.Docs})));
 const DiscoveryCentre=lazy(()=>import("./pages/DiscoveryCentre").then(m=>({default:m.DiscoveryCentre})));
 const Curator=lazy(()=>import("./pages/Curator").then(m=>({default:m.Curator})));
-import { Products } from "./pages/Products";
-import { ClinicalModule } from "./pages/ClinicalModule";
 import { DemoWalkthrough } from "./pages/DemoWalkthrough";
 const Status=lazy(()=>import("./pages/Status").then(m=>({default:m.Status})));
 const ClinicalTimeline=lazy(()=>import("./pages/ClinicalTimeline").then(m=>({default:m.ClinicalTimeline})));
@@ -59,6 +56,7 @@ const ScientificInvestigationPage=lazy(()=>import("./pages/ScientificInvestigati
 const ResearcherHomePage=lazy(()=>import("./pages/ResearcherHome").then(m=>({default:m.ResearcherHome})));
 const ResearchCommunityFeedPage=lazy(()=>import("./pages/ResearchCommunityFeed").then(m=>({default:m.ResearchCommunityFeed})));
 
+const OntologyMappingReview=lazy(()=>import("./pages/OntologyMappingReview").then(m=>({default:m.OntologyMappingReview})));
 const SyntheticValidationWorkbench=lazy(()=>import("./pages/SyntheticValidationWorkbench").then(m=>({default:m.SyntheticValidationWorkbench})));
 
 const ClaimKnowledgeGraph=lazy(()=>import("./pages/ClaimKnowledgeGraph").then(m=>({default:m.ClaimKnowledgeGraph})));
@@ -86,6 +84,14 @@ export default function App() {
         <Route path="platform" element={<PlatformPublicPage />} />
         {import.meta.env.DEV && <Route path={"design/identity"} element={<IdentityStudy/>}/> }
         <Route path="intelligence" element={<IntelligenceCollectiveLanding />} />
+        <Route path="connected-intelligence" element={<ConnectedIntelligence />} />
+        <Route path="departments" element={<DepartmentsIndex />} />
+        <Route path="departments/immunology" element={<DepartmentPage slug="immunology" />} />
+        <Route path="departments/neuroscience" element={<DepartmentPage slug="neuroscience" />} />
+        <Route path="departments/microbiome" element={<DepartmentPage slug="microbiome" />} />
+        <Route path="departments/metabolism" element={<DepartmentPage slug="metabolism" />} />
+        <Route path="departments/genomics-multi-omics" element={<DepartmentPage slug="genomics-multi-omics" />} />
+        <Route path="departments/human-physiology" element={<DepartmentPage slug="human-physiology" />} />
         <Route path="intelligence/nexus" element={<IntelligenceCapabilityLanding slug="nexus" />} />
         <Route path="intelligence/aegis" element={<IntelligenceCapabilityLanding slug="aegis" />} />
         <Route path="intelligence/scout" element={<IntelligenceCapabilityLanding slug="scout" />} />
@@ -113,6 +119,7 @@ export default function App() {
         <Route path="science" element={<SciencePublicPage />} />
         <Route path="science/literature" element={<ScienceLiterature />} />
         <Route path="research/scientific-workbench" element={<ScientificResearchWorkbench />} />
+        <Route path="research/ontology-review" element={<Suspense fallback={<p role="status">Loading mapping review…</p>}><OntologyMappingReview/></Suspense>} />
         <Route path="research/validation" element={<Suspense fallback={<p role="status">Loading validation workspace…</p>}><SyntheticValidationWorkbench/></Suspense>} />
         <Route path="research/coverage" element={<ResearchCoverage />} />
         <Route path="research/evidence-readiness" element={<ResearchEvidenceCatalogue />} />
@@ -138,12 +145,12 @@ export default function App() {
         <Route path="science/disease" element={<ScienceDisease />} />
         <Route path="discovery-engine" element={<DiscoveryEngine />} />
         <Route path="demo" element={<DemoWalkthrough />} />
-        <Route path="modules" element={<Products />} />
-        <Route path="modules/aksh-health" element={<ForAksh />} />
-        <Route path="modules/clinical" element={<ClinicalModule />} />
-        <Route path="modules/isi" element={<ForIsi />} />
-        <Route path="modules/trials" element={<ForTrials />} />
-        <Route path="products" element={<Navigate to="/modules" replace />} />
+        <Route path="modules" element={<Navigate to="/connected-intelligence" replace />} />
+        <Route path="modules/aksh-health" element={<Navigate to="/connected-intelligence" replace />} />
+        <Route path="modules/clinical" element={<Navigate to="/connected-intelligence" replace />} />
+        <Route path="modules/isi" element={<Navigate to="/connected-intelligence" replace />} />
+        <Route path="modules/trials" element={<Navigate to="/connected-intelligence" replace />} />
+        <Route path="products" element={<Navigate to="/connected-intelligence" replace />} />
         <Route path="status" element={<Status />} />
         <Route path="sources" element={<Sources />} />
         <Route path="clinical-timeline" element={<ClinicalTimeline />} />
@@ -153,11 +160,11 @@ export default function App() {
         <Route path="evidence" element={<Evidence />} />
         <Route path="discovery" element={<DiscoveryCentre />} />
         <Route path="curator" element={<Curator />} />
-        <Route path="akeno" element={<Navigate to="/modules/clinical" replace />} />
-        <Route path="aksh-agents" element={<Navigate to="/modules/aksh-health" replace />} />
-        <Route path="for-isi" element={<Navigate to="/modules/isi" replace />} />
-        <Route path="for-aksh" element={<Navigate to="/modules/aksh-health" replace />} />
-        <Route path="for-trials" element={<Navigate to="/modules/trials" replace />} />
+        <Route path="akeno" element={<Navigate to="/connected-intelligence" replace />} />
+        <Route path="aksh-agents" element={<Navigate to="/connected-intelligence" replace />} />
+        <Route path="for-isi" element={<Navigate to="/connected-intelligence" replace />} />
+        <Route path="for-aksh" element={<Navigate to="/connected-intelligence" replace />} />
+        <Route path="for-trials" element={<Navigate to="/connected-intelligence" replace />} />
         <Route path="roadmap" element={<Roadmap />} />
         <Route path="alignment" element={<Alignment />} />
         <Route path="docs" element={<Docs />} />

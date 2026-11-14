@@ -145,6 +145,10 @@
       "destination": "/_pages/research.html"
     },
     {
+      "source": "/research/ontology-review",
+      "destination": "/_pages/research--ontology-review.html"
+    },
+    {
       "source": "/research/validation",
       "destination": "/_pages/research--validation.html"
     },
@@ -397,6 +401,38 @@
       "destination": "/_pages/intelligence.html"
     },
     {
+      "source": "/departments",
+      "destination": "/_pages/departments.html"
+    },
+    {
+      "source": "/connected-intelligence",
+      "destination": "/_pages/connected-intelligence.html"
+    },
+    {
+      "source": "/departments/immunology",
+      "destination": "/_pages/departments--immunology.html"
+    },
+    {
+      "source": "/departments/neuroscience",
+      "destination": "/_pages/departments--neuroscience.html"
+    },
+    {
+      "source": "/departments/microbiome",
+      "destination": "/_pages/departments--microbiome.html"
+    },
+    {
+      "source": "/departments/metabolism",
+      "destination": "/_pages/departments--metabolism.html"
+    },
+    {
+      "source": "/departments/genomics-multi-omics",
+      "destination": "/_pages/departments--genomics-multi-omics.html"
+    },
+    {
+      "source": "/departments/human-physiology",
+      "destination": "/_pages/departments--human-physiology.html"
+    },
+    {
       "source": "/intelligence/nexus",
       "destination": "/_pages/intelligence--nexus.html"
     },
@@ -470,32 +506,57 @@
     },
     {
       "source": "/products",
-      "destination": "/modules",
+      "destination": "/connected-intelligence",
       "permanent": false
     },
     {
       "source": "/for-isi",
-      "destination": "/modules/isi",
+      "destination": "/connected-intelligence",
       "permanent": false
     },
     {
       "source": "/for-aksh",
-      "destination": "/modules/aksh-health",
+      "destination": "/connected-intelligence",
       "permanent": false
     },
     {
       "source": "/for-trials",
-      "destination": "/modules/trials",
+      "destination": "/connected-intelligence",
       "permanent": false
     },
     {
       "source": "/akeno",
-      "destination": "/modules/clinical",
+      "destination": "/connected-intelligence",
       "permanent": false
     },
     {
       "source": "/aksh-agents",
-      "destination": "/modules/aksh-health",
+      "destination": "/connected-intelligence",
+      "permanent": false
+    },
+    {
+      "source": "/modules",
+      "destination": "/connected-intelligence",
+      "permanent": false
+    },
+    {
+      "source": "/modules/aksh-health",
+      "destination": "/connected-intelligence",
+      "permanent": false
+    },
+    {
+      "source": "/modules/clinical",
+      "destination": "/connected-intelligence",
+      "permanent": false
+    },
+    {
+      "source": "/modules/isi",
+      "destination": "/connected-intelligence",
+      "permanent": false
+    },
+    {
+      "source": "/modules/trials",
+      "destination": "/connected-intelligence",
       "permanent": false
     }
   ],

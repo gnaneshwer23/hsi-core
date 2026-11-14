@@ -32,3 +32,6 @@ site/.seo-render/
 
 # Private benchmark authoring/holdout material belongs in an external restricted vault.
 .hsi-private-benchmark/
+
+# Downloaded ontology releases and extracted term tables (regenerate with scripts/import-ontologies.ts)
+.ontology-cache/

@@ -1,0 +1,37 @@
+/* Department pages. Palette: deep navy, scientific teal, soft white, and signal red used only as a marker for differences. */
+.dept-page{--navy:#09131d;--teal:#143b43;--teal-lit:#5cc6bd;--paper:#e9eef0;--ink:#12212b;--muted:#4a5a64;--line:#c9d4d9;--signal:#c44e49;--signal-text:#a43d38;background:var(--paper);color:var(--ink);font-family:var(--font-body,'Host Grotesk Variable',system-ui,sans-serif);line-height:1.65}
+.dept-page *{box-sizing:border-box}.dept-page h1,.dept-page h2,.dept-page p,.dept-page ul,.dept-page ol{margin:0}.dept-page ul,.dept-page ol{padding:0;list-style:none}
+.dept-shell{width:min(1120px,calc(100% - 48px));margin-inline:auto}
+.dept-page a{color:inherit;text-decoration:none}.dept-page :is(a,button):focus-visible{outline:3px solid var(--teal-lit);outline-offset:4px}
+.dept-hero{background:var(--navy);color:#eef3f4;padding:72px 0 64px;background-image:radial-gradient(900px 420px at 85% -10%,rgba(92,198,189,.16),transparent 70%)}
+.dept-kicker{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--teal-lit);font-weight:600}
+.dept-hero h1{font-size:clamp(40px,6vw,76px);line-height:1.05;letter-spacing:-.04em;font-weight:480;margin:14px 0 10px;text-wrap:balance;max-width:20ch}
+.dept-tagline{font-size:clamp(20px,2.4vw,28px);color:#cfe3e4;letter-spacing:-.02em;margin-bottom:18px}
+.dept-lead{font-size:18px;color:#c4d3d6;max-width:62ch}
+.dept-crumb{display:flex;gap:10px;align-items:center;font-size:14px;color:#9fb4b8;margin-bottom:28px}.dept-crumb a{display:inline-flex;align-items:center;min-height:44px;color:#cfe3e4;text-decoration:underline;text-underline-offset:3px}
+.dept-coverage{margin-top:26px;max-width:62ch;font-size:15px;color:#b8cacd;border-left:3px solid var(--signal);padding-left:16px}
+.dept-status{display:inline-block;margin-right:10px;padding:2px 10px;border-radius:999px;background:rgba(92,198,189,.16);color:var(--teal-lit);font-size:12px;font-weight:600;letter-spacing:.03em;text-transform:uppercase}
+.dept-status-dev{background:rgba(196,78,73,.2);color:#f0b6b2}
+.dept-actions{display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center;margin-top:34px}
+.dept-page .dept-button{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 22px;border-radius:999px;background:var(--teal-lit);color:var(--navy);font-weight:600}
+.dept-page .dept-button:hover{background:#7fd6ce;color:var(--navy)}
+.dept-link{display:inline-flex;align-items:center;gap:8px;min-height:48px;color:#e3eef0;border-bottom:1px solid rgba(227,238,240,.4)}
+.dept-section{padding:56px 0 0}.dept-section h2,.dept-grid-section h2{font-size:clamp(26px,3vw,36px);letter-spacing:-.03em;font-weight:480;margin-bottom:20px;color:var(--navy)}
+.dept-aside{color:var(--muted);max-width:64ch;margin:-8px 0 18px;font-size:15px}
+.dept-chips{display:flex;flex-wrap:wrap;gap:10px}.dept-chips li{padding:10px 16px;border:1px solid var(--line);border-radius:999px;background:#f6f9fa;font-size:15px}
+.dept-questions{display:grid;gap:14px;counter-reset:q}.dept-questions li{counter-increment:q;position:relative;padding:20px 22px 20px 64px;background:#f6f9fa;border:1px solid var(--line);border-radius:12px;font-size:18px;max-width:72ch}
+.dept-questions li::before{content:counter(q,decimal-leading-zero);position:absolute;left:22px;top:20px;font-weight:600;color:var(--teal)}
+.dept-connections{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+.dept-connections a{display:grid;gap:6px;padding:20px;border:1px solid var(--line);border-radius:12px;background:#f6f9fa;min-height:44px;transition:border-color .18s,transform .18s}
+.dept-connections a:hover{border-color:var(--teal);transform:translateY(-2px)}.dept-connections strong{font-size:18px;color:var(--navy)}.dept-connections span{color:var(--muted);font-size:15px}.dept-connections svg{color:var(--teal)}
+.dept-integrity{padding-bottom:8px}.dept-integrity p{max-width:70ch;color:var(--muted);border-left:3px solid var(--signal);padding-left:18px}.dept-integrity a,.dept-note a{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+.dept-next{padding:48px 0 72px}.dept-next a{display:inline-flex;align-items:center;gap:10px;min-height:48px;font-size:18px;font-weight:550;color:var(--teal)}
+.dept-grid-section{padding:56px 0 72px}.dept-grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.dept-card{display:grid;gap:8px;height:100%;min-height:44px;padding:26px;border:1px solid var(--line);border-radius:14px;background:#f6f9fa;transition:border-color .18s,transform .18s}
+.dept-card:hover{border-color:var(--teal);transform:translateY(-2px)}
+.dept-card-name{font-size:24px;letter-spacing:-.03em;color:var(--navy);font-weight:500}.dept-card-tag{color:var(--muted)}.dept-card-cov{font-size:14px;color:var(--signal-text)}
+.dept-card-go{display:inline-flex;align-items:center;gap:8px;margin-top:6px;color:var(--teal);font-weight:600}
+.dept-note{margin-top:28px;max-width:68ch;color:var(--muted)}.dept-missing{padding:96px 0}
+.dept-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){.dept-card,.dept-connections a{transition:none}.dept-card:hover,.dept-connections a:hover{transform:none}}
+@media (max-width:640px){.dept-hero{padding:48px 0 44px}.dept-questions li{padding:18px 18px 18px 54px;font-size:17px}.dept-questions li::before{left:18px;top:18px}}

@@ -42,6 +42,7 @@ Normal migration execution skips the following ids from the shared, side-effect-
 - `028_hsi_contradiction_restricted_api`
 - `029_hsi_contradiction_scoped_read_integrity`
 - `030_hsi_live_evidence_investigations`
+- `031_hsi_graph_workspace_storage`
 
 Current implementation-to-acceptance reconciliation: `docs/audits/HSI_IMPLEMENTATION_TRUTH_AND_NEXT_PRS.md` and `operations/production-delivery/implementation-truth.v1.json`. These metadata documents cannot authorise runtime activation.
 
@@ -179,14 +180,24 @@ One module per line, sorted, so concurrent changes to different modules do not c
 - `src/governedGraphRead.ts`
 - `src/graphRelease.ts`
 - `src/hsiOntologyRegistry.ts`
+- `src/knowledgeGraph/departments.ts`
+- `src/knowledgeGraph/graphAgents.ts`
+- `src/knowledgeGraph/investigationFileStore.ts`
+- `src/knowledgeGraph/investigationStore.ts`
 - `src/liveExecute.ts`
 - `src/livingHealthKnowledgeGraph.ts`
+- `src/ontology/conceptMapping.ts`
+- `src/ontology/looksIdentifying.ts`
+- `src/ontology/mappingReview.ts`
+- `src/ontology/oboTerms.ts`
+- `src/ontology/ontologyImport.ts`
 
 **HELIX**
 - `src/evidence/proteinPathwayMechanismCandidates.ts`
 - `src/helixMechanism.ts`
 - `src/immuneMechanismInvestigation.ts`
 - `src/investigationRunner.ts`
+- `src/knowledgeGraph/graphAgents.ts`
 - `src/researchMechanismWorkflow.ts`
 - `src/scientificInvestigation.ts`
 
@@ -196,12 +207,14 @@ One module per line, sorted, so concurrent changes to different modules do not c
 - `src/evidence/passageLinkedContext.ts`
 - `src/evidence/structuredEvidenceComparison.ts`
 - `src/investigationScope.ts`
+- `src/knowledgeGraph/graphAgents.ts`
 
 **VANTAGE**
 - `src/evidence/falsifiableExperimentProposals.ts`
 - `src/evidence/gapVerification.ts`
 - `src/evidence/hypothesisRegistry.ts`
 - `src/interrogativeFalsificationEngine.ts`
+- `src/knowledgeGraph/graphAgents.ts`
 - `src/liveExecute.ts`
 - `src/vantageGaps.ts`
 

@@ -19,6 +19,18 @@ Owner steps, HSI Neon project only:
 
 Rollback statements are in the SQL comments. Take a backup before dropping tables.
 
+## Draft 031: graph workspace storage (held, not applied)
+
+`031_hsi_graph_workspace_storage.sql` drafts shared storage for pinned ontology releases and terms, saved graph investigations, and curator mapping recommendations. It is in `HELD_MIGRATION_IDS`, so `bun run db:migrate` skips it. It has **not** been applied to any Neon branch.
+
+- **Ontology releases and terms**: reference data written only by the import role; immutable once recorded; release URLs must be pinned (no `latest` or `current`).
+- **Investigations**: append-only, digest-chained revisions scoped to an owner; the database enforces the chain, graph-version scope and the non-approval flags. The application still recomputes digests and reproducibility on read.
+- **Mapping recommendations**: append-only; a recommendation must name a live term from a recorded release; it cannot be marked approved (there is deliberately no approval column).
+- **Security**: RLS forced, `PUBLIC` revoked, deny by default. Draft owner policies target a `hsi_graph_runtime` role that must be created separately and granted SELECT and INSERT only. They read `hsi.graph_owner_id`, which a server must set from a verified session. Without that server, the policies match nothing.
+- **Verified against**: a throwaway local PostgreSQL 14 only (apply twice, behavioural checks, rollback). Neon runs a newer major version; rehearse on a disposable Neon child branch before any real apply.
+
+Owner steps if you choose to proceed, HSI Neon project only: read the SQL and rollback comments; create the `hsi_graph_runtime` role through a reviewed process; rehearse `db/verify/031_graph_workspace_storage_checks.sql` on a disposable child branch; then remove the id from `src/db/migrationHolds.ts` and apply. No application code reads or writes these tables yet.
+
 ## What shipped
 
 | Piece | Location |

@@ -59,10 +59,10 @@ export function FoundationArt() {
 /** Cream idea-panel art: shared HSI core with four permission-walled product silos — not Home’s connection map. */
 export function SharedSoftwareArt() {
   const silos = [
-    { x: 48, y: 48, title: "AKSH HEALTH", sub: "Own records", short: "AKSH" },
-    { x: 372, y: 48, title: "HSI CLINICAL", sub: "Own records", short: "CLIN" },
-    { x: 48, y: 318, title: "ISI RESEARCH", sub: "Own evidence", short: "ISI" },
-    { x: 372, y: 318, title: "HSI TRIALS", sub: "Own studies", short: "TRIAL" },
+    { x: 48, y: 48, title: "PATIENT-REPORTED", sub: "Own records", short: "PATIENT" },
+    { x: 372, y: 48, title: "CLINICAL CONTEXT", sub: "Own records", short: "CLIN" },
+    { x: 48, y: 318, title: "SCIENTIFIC DISCOVERY", sub: "Own evidence", short: "SCIENCE" },
+    { x: 372, y: 318, title: "STUDY CONTEXT", sub: "Own studies", short: "STUDY" },
   ] as const;
 
   return (
@@ -182,16 +182,16 @@ export function PlatformConnectionMap() {
       <div
         className="hsi-editorial-connection-map hsi-platform-connection-map"
         role="img"
-        aria-label="Connection map: Human Super Intelligence shared technology at the centre. Aksh Health, HSI Clinical, ISI Research and HSI Trials each keep their own data. Technology is shared; records are never shared."
+        aria-label="Connection map: Human Super Intelligence shared technology at the centre. The patient-reported, clinical, scientific and study capabilities each keep their own data. Technology is shared; records are never shared."
       >
         <div className="hsi-editorial-map-core">
           {PRODUCT_SHORT}
           <small>SHARED TECH</small>
         </div>
-        <span>AKSH · OWN DATA</span>
+        <span>PATIENT-REPORTED · OWN DATA</span>
         <span>CLINICAL · OWN DATA</span>
-        <span>ISI RESEARCH · OWN DATA</span>
-        <span>TRIALS · OWN DATA</span>
+        <span>SCIENTIFIC · OWN DATA</span>
+        <span>STUDIES · OWN DATA</span>
       </div>
       <p className="hsi-platform-connection-legend">
         <b>Technology shared</b>

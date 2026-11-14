@@ -143,7 +143,7 @@ export function Status() {
           </p>
           <p className="muted" style={{ marginTop: "1rem" }}>
             Public journey:{" "}
-            <Link to="/platform">Platform</Link> · <Link to="/modules">Modules</Link> ·{" "}
+            <Link to="/platform">Platform</Link> · <Link to="/connected-intelligence">Connected intelligence</Link> ·{" "}
             <Link to="/contact">Research access</Link>
           </p>
         </div>
@@ -151,7 +151,7 @@ export function Status() {
       <MarketingJourney
         links={[
           { to: "/platform", label: "Platform", note: "Shared technology" },
-          { to: "/modules", label: "Modules", note: "Four products" },
+          { to: "/connected-intelligence", label: "Connected intelligence", note: "Wider vision" },
           { to: "/evidence-safety", label: "Evidence & safety", note: "Integrity" },
           { to: "/contact", label: "Research access", note: "Browser draft only" },
         ]}
