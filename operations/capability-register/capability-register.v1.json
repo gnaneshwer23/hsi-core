@@ -349,13 +349,16 @@
       "evidence": [
         "db/migrations/031_hsi_graph_workspace_storage.sql",
         "db/migrations/032_hsi_graph_workspace_procedures.sql",
+        "db/migrations/033_hsi_ontology_import_role.sql",
+        "db/roles/hsi_graph_roles.sql",
+        "docs/GRAPH_WORKSPACE_REHEARSAL_RUNBOOK.md",
         "site/src/pages/OntologyMappingReview.tsx",
         "src/db/graphWorkspaceStore.ts",
         "src/knowledgeGraph/investigationStore.ts",
         "src/ontology/mappingReview.ts"
       ],
-      "gap": "Records live in one browser only; shared storage is held migrations 031 and 032, never applied to any database; the server adapter is verified only against a throwaway local PostgreSQL 14 and is imported by nothing",
-      "nextAction": "Approve the runtime role; rehearse 031 and 032 on a disposable Neon child branch; wire the adapter behind a verified-session route"
+      "gap": "Records live in one browser only; shared storage is held migrations 031 to 033, never applied to any database; role design approved for rehearsal only; the adapter is verified against a throwaway local PostgreSQL 14 and is imported by nothing",
+      "nextAction": "Owner approves a disposable Neon child branch; build the real-account acceptance runner; rehearse per the runbook; independent signer accepts or rejects"
     },
     {
       "id": "F-17",

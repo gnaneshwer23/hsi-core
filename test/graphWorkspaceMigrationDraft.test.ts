@@ -53,3 +53,20 @@ test("the procedure checks cover forged tokens, scoping, expiry, backdating and 
  expect(v).toContain("NOSUPERUSER NOBYPASSRLS");expect(v.trimEnd()).toContain("ROLLBACK;");
  for(const k of ["forged guc still denied","expired","impersonated","revoked grant","backdated","B must not read A","B must see none"])expect(v).toContain(k);
 });
+
+const IMPORT="033_hsi_ontology_import_role",imp=readFileSync(`db/migrations/${IMPORT}.sql`,"utf8"),roles=readFileSync("db/roles/hsi_graph_roles.sql","utf8");
+test("033 is a held draft that lets the import role insert reference data and nothing else",()=>{
+ expect((HELD_MIGRATION_IDS as readonly string[]).includes(IMPORT)).toBe(true);expect(imp.split("\n")[0]).toContain("DRAFT ONLY");expect(imp).toContain("ROLLBACK");
+ expect(/GRANT\s+(SELECT|UPDATE|DELETE|TRUNCATE|ALL)/i.test(imp)).toBe(false);expect(imp).toContain("GRANT INSERT ON public.hsi_ontology_releases,public.hsi_ontology_terms TO hsi_ontology_import");
+ expect([...imp.matchAll(/CREATE POLICY (\w+) ON public\.(\w+) FOR (\w+) TO (\w+)/g)].map(m=>m.slice(1).join(" ")).sort()).toEqual(["hsi_ontology_import_insert hsi_ontology_releases INSERT hsi_ontology_import","hsi_ontology_import_insert hsi_ontology_terms INSERT hsi_ontology_import"]);
+});
+test("the roles file is an owner step, sets no password and never creates a privileged role",()=>{
+ expect(roles.split("\n")[0]).toContain("NOT A MIGRATION");expect(/PASSWORD/i.test(roles.replace(/sets no passwords|Neon console|never in SQL/gi,"").replace(/--.*$/gm,""))).toBe(false);
+ expect(roles.match(/NOSUPERUSER NOBYPASSRLS NOCREATEDB NOCREATEROLE NOREPLICATION/g)?.length).toBe(2);expect(/\bBYPASSRLS\b/.test(roles.replace(/--.*$/gm,"").replace(/NOBYPASSRLS/g,""))).toBe(false);
+ for(const r of ["hsi_graph_function_owner","hsi_graph_runtime","hsi_graph_runtime_login","hsi_ontology_import","hsi_ontology_import_login"])expect(roles).toContain(r);
+ expect(roles).not.toContain("GRANT ALL");
+});
+test("the role checks assert unsafe attributes, no passwords and idempotence",()=>{
+ const v=readFileSync("db/verify/033_roles_and_import_checks.sql","utf8");
+ for(const k of ["unsafe attribute","must not set a password","Idempotent","import update release","runtime principal helper","import orphan term"])expect(v).toContain(k);expect(v.trimEnd().endsWith("ROLLBACK;")).toBe(true);
+});
