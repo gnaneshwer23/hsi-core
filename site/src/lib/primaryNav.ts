@@ -16,7 +16,7 @@ export const SECONDARY_NAV_LINKS=[
 ] as const;
 export const PUBLIC_MARKETING_PATHS=[
  "/","/platform","/technology","/solutions","/research","/evidence-safety","/pricing","/contact",
- "/science","/intelligence","/how-it-works",
+ "/science","/intelligence","/how-it-works","/knowledge-graph",
  "/context-conflict-audit","/evidence-intelligence","/research-briefs","/applications","/trust","/about"
 ] as const;
 /** Destination explains browser-only drafting; this CTA does not claim that a request was delivered. */

@@ -43,15 +43,21 @@ export function validateDecision(f:CandidateMappingsFile,i:DecisionInput):Concep
  if(m.candidates.length===0)throw Error("This concept has no candidate to review");
  return m;
 }
-export async function recordDecision(f:CandidateMappingsFile,store:KeyValueStore,i:DecisionInput,now:()=>Date=()=>new Date()):Promise<{status:"saved"|"unchanged";decision:CuratorDecision}>{
- const m=validateDecision(f,i),revs=revisionsOf(store,i.conceptId),last=revs.length?parse(store.get(keyOf(i.conceptId,revs[revs.length-1]!))):null;
- if(revs.length&&!last)throw Error("The latest recorded decision is unreadable; refusing to extend the history");
- const reason=i.reason.trim(),label=i.reviewerLabel.trim();
+/** Pure step shared by every store: validate and build the next decision revision (or report it unchanged). */
+export async function composeDecision(f:CandidateMappingsFile,i:DecisionInput,last:CuratorDecision|null,now:()=>Date=()=>new Date()):Promise<{status:"saved"|"unchanged";decision:CuratorDecision}>{
+ const m=validateDecision(f,i),reason=i.reason.trim(),label=i.reviewerLabel.trim();
  if(last&&last.decision===i.decision&&last.ontologyId===i.ontologyId&&last.reason===reason&&last.reviewerLabel===label)return {status:"unchanged",decision:last};
- const base:Omit<CuratorDecision,"digest">={schemaVersion:"hsi-curator-decision-1",conceptId:i.conceptId,conceptName:m.conceptName,decision:i.decision,ontologyId:i.ontologyId,reason,reviewerLabel:label,reviewerVerified:false,decidedAt:now().toISOString(),revision:(revs[revs.length-1]??0)+1,previousDigest:last?.digest??null,mappingsDigest:await mappingsDigest(f),status:"curator_recommendation_unverified",exactMappingApproved:false};
+ const base:Omit<CuratorDecision,"digest">={schemaVersion:"hsi-curator-decision-1",conceptId:i.conceptId,conceptName:m.conceptName,decision:i.decision,ontologyId:i.ontologyId,reason,reviewerLabel:label,reviewerVerified:false,decidedAt:now().toISOString(),revision:(last?.revision??0)+1,previousDigest:last?.digest??null,mappingsDigest:await mappingsDigest(f),status:"curator_recommendation_unverified",exactMappingApproved:false};
  const decision:CuratorDecision={...base,digest:await sha(canonicalEvidenceJson(base))};
- store.create(keyOf(i.conceptId,decision.revision),JSON.stringify(decision));
  return {status:"saved",decision};
+}
+export async function recordDecision(f:CandidateMappingsFile,store:KeyValueStore,i:DecisionInput,now:()=>Date=()=>new Date()):Promise<{status:"saved"|"unchanged";decision:CuratorDecision}>{
+ validateDecision(f,i);
+ const revs=revisionsOf(store,i.conceptId),last=revs.length?parse(store.get(keyOf(i.conceptId,revs[revs.length-1]!))):null;
+ if(revs.length&&!last)throw Error("The latest recorded decision is unreadable; refusing to extend the history");
+ const r=await composeDecision(f,i,last,now);
+ if(r.status==="saved")store.create(keyOf(i.conceptId,r.decision.revision),JSON.stringify(r.decision));
+ return r;
 }
 export function history(store:KeyValueStore,conceptId:string):CuratorDecision[]{
  return revisionsOf(store,conceptId).map(r=>parse(store.get(keyOf(conceptId,r)))).filter((d):d is CuratorDecision=>d!==null);

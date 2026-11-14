@@ -6,8 +6,8 @@ Register `hsi-capability-register-2026-11-08` as of 2026-11-13.
 
 | Level | Count | Meaning |
 | --- | --- | --- |
-| implemented | 13 | Working code, not only a contract |
-| partial | 26 | Real code with a blocker, a fixture limit, or incomplete coverage |
+| implemented | 17 | Working code, not only a contract |
+| partial | 27 | Real code with a blocker, a fixture limit, or incomplete coverage |
 | stub | 2 | Types, fixtures or proposal-only adapters |
 | absent | 0 | Planned or not present |
 
@@ -43,6 +43,8 @@ Normal migration execution skips the following ids from the shared, side-effect-
 - `029_hsi_contradiction_scoped_read_integrity`
 - `030_hsi_live_evidence_investigations`
 - `031_hsi_graph_workspace_storage`
+- `032_hsi_graph_workspace_procedures`
+- `033_hsi_ontology_import_role`
 
 Current implementation-to-acceptance reconciliation: `docs/audits/HSI_IMPLEMENTATION_TRUTH_AND_NEXT_PRS.md` and `operations/production-delivery/implementation-truth.v1.json`. These metadata documents cannot authorise runtime activation.
 
@@ -63,6 +65,11 @@ Current implementation-to-acceptance reconciliation: `docs/audits/HSI_IMPLEMENTA
 | F-11 | foundations | Source integrity and clearance service (AEGIS) | partial | implemented, blocked | not_assessed | not_assessed | `src/researchV2/sourceIntegrityService.ts`, `src/researchV2/sourceIntegrityAssessor.ts`, `src/researchV2/sourceEvidence.ts`, `src/researchV2/clearancePolicy.ts`, `src/researchV2/clearanceAuthority.ts`, `scripts/assess-source.ts` | No clearance policy is approved or shipped, no managed signer exists, no clearance authority is appointed, and retraction detection was not checked against live providers. Synthetic demonstration only. |
 | F-12 | foundations | Live retrieval, extraction and verification path (SCOUT, PRISM, VERITAS) | partial | implemented, blocked | not_assessed | not_assessed | `src/liveSearch.ts`, `src/researchV2/openAccessSections.ts`, `src/evidence/modelEvidenceExtraction.ts`, `src/evidence/entailmentVerifier.ts`, `src/liveModels.ts`, `src/liveReadiness.ts` | Tested only with mocked network and mocked models. No source terms, model deployments or approvals exist; the composed live run path is not built. |
 | F-13 | foundations | Investigation runner and audit store, fixture mode (NEXUS composition) | partial | implemented, synthetic_only | not_assessed | not_assessed | `src/investigationRunner.ts`, `src/evidence/auditFileStore.ts`, `src/investigationOrientation.ts`, `scripts/run-investigation.ts`, `research/runner-fixtures/` | Runs on recorded synthetic inputs only; local single-host store; no durable job runner; real passages mostly classify insufficient_evidence until the context normalizer registry grows. |
+| F-14 | foundations | Department projections and cross-department traversal | implemented | implemented, connected | not_assessed | not_assessed | `src/knowledgeGraph/departments.ts`, `site/src/components/DepartmentLens.tsx`, `test/graphDepartments.test.ts` | Candidate relationships only (all unreviewed); genomics and human-physiology have no tagged coverage; traversal untested at large graph scale |
+| F-15 | foundations | Graph-scoped agent investigations (deterministic) | implemented | implemented, connected | not_assessed | not_assessed | `src/knowledgeGraph/graphAgents.ts`, `site/src/components/GraphInvestigation.tsx`, `test/graphAgents.test.ts` | PARALLAX, VANTAGE and HELIX run deterministic logic only; HELIX model-backed interpretation is not enabled; identifier refusal is a heuristic, not de-identification |
+| F-16 | foundations | Saved investigations and curator mapping recommendations (device-local) | partial | implemented, connected, blocked | not_assessed | not_assessed | `db/migrations/031_hsi_graph_workspace_storage.sql`, `db/migrations/032_hsi_graph_workspace_procedures.sql`, `db/migrations/033_hsi_ontology_import_role.sql`, `db/roles/hsi_graph_roles.sql`, `docs/GRAPH_WORKSPACE_REHEARSAL_RESULT_20261114.md`, `docs/GRAPH_WORKSPACE_REHEARSAL_RUNBOOK.md`, `site/src/pages/OntologyMappingReview.tsx`, `src/db/graphWorkspaceStore.ts`, `src/knowledgeGraph/investigationStore.ts`, `src/ontology/mappingReview.ts` | Records live in one browser only; shared storage is held migrations 031 to 033. Rehearsed on a disposable Neon branch with synthetic sessions (not independently accepted); never applied to production; the adapter is imported by nothing |
+| F-17 | foundations | Ontology import and candidate concept mappings | implemented | implemented | not_assessed | not_assessed | `src/ontology/oboTerms.ts`, `src/ontology/ontologyImport.ts`, `src/ontology/conceptMapping.ts`, `research/ontology/import-manifest.v1.json`, `research/ontology/candidate-mappings.v1.json` | 23 of 153 concepts have an unreviewed candidate; none is an approved mapping; term tables live in a gitignored cache; HPO skipped by decision |
+| F-18 | foundations | Evidence by context (no blended score) | implemented | implemented, connected | not_assessed | not_assessed | `src/knowledgeGraph/contextBreakdown.ts`, `site/src/components/ContextBreakdownView.tsx`, `test/contextBreakdown.test.ts` | Strata come from unreviewed candidate records; most state no study system or tissue; effect size, independence of replication, retraction status and study quality are not assessed |
 | O-01 | investigation_output | Scientific landscape | implemented | connected | not_assessed | not_assessed | `src/immuneMechanismInvestigation.ts`, `src/interrogativeQuestionEngine.ts`, `src/researchOutcome.ts`, `src/evidence/livingEvidenceExpansion.ts`, `site/src/components/ResearchOutcomePanel.tsx`, `site/src/lib/investigationSections.ts` | Landscape + bound livingEvidence metadata; not curated synthesis for arbitrary questions |
 | O-02 | investigation_output | Evidence comparison | partial | implemented, blocked | not_verified | not_accepted | `src/interrogativeContracts.ts`, `site/src/features/science/contradictionEngine.ts`, `site/src/components/ResearchOutcomePanel.tsx`, `src/evidence/passageLinkedContext.ts`, `src/evidence/contextConflictAudit.ts`, `test/passageLinkedContext.test.ts` | Seventeen passage-linked context fields, estimand/comparability gates and five-class reporting are implemented. Scientist-reviewed gold and full SSc plus RA/SLE staging journeys remain unaccepted. |
 | O-03 | investigation_output | Gap intelligence | implemented | implemented, connected | not_assessed | not_assessed | `src/evidence/gapVerification.ts`, `src/researchOutcome.ts`, `src/gapReport.ts`, `site/src/components/ResearchOutcomePanel.tsx` | Engineering gap classes connected; SME gold / scientist ranking still blocked (#4) |
@@ -174,6 +181,7 @@ One module per line, sorted, so concurrent changes to different modules do not c
 
 **HSI ATLAS**
 - `src/atlasProposals.ts`
+- `src/db/graphWorkspaceStore.ts`
 - `src/evidence/canonicalContextualEdge.ts`
 - `src/evidence/reactomeOntologyBridge.ts`
 - `src/evidence/uniProtOntologyBridge.ts`
@@ -207,6 +215,7 @@ One module per line, sorted, so concurrent changes to different modules do not c
 - `src/evidence/passageLinkedContext.ts`
 - `src/evidence/structuredEvidenceComparison.ts`
 - `src/investigationScope.ts`
+- `src/knowledgeGraph/contextBreakdown.ts`
 - `src/knowledgeGraph/graphAgents.ts`
 
 **VANTAGE**

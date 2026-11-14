@@ -32,19 +32,26 @@ function parse(raw:string|null):SavedInvestigation|null{
  try{const v=JSON.parse(raw) as SavedInvestigation;return v&&v.schemaVersion==="hsi-saved-investigation-1"?v:null}catch{return null}
 }
 
-/** Saves a record only if it reproduces from the supplied graph. Saving the same record again is a no-op. */
-export async function saveInvestigation(g:DomainBundle,store:KeyValueStore,record:InvestigationRecord,now:()=>Date=()=>new Date()):Promise<SaveResult>{
+/** Pure step shared by every store: verify the record and build the next revision (or report it unchanged). */
+export async function composeSavedInvestigation(g:DomainBundle,record:InvestigationRecord,last:SavedInvestigation|null,now:()=>Date=()=>new Date()):Promise<SaveResult>{
  const id=record.context.investigationId;
  if(!ID.test(id))throw Error("Invalid investigation id");
  const problems=verifyInvestigationRecord(g,record);
  if(problems.length)throw Error("Only a reproducible record can be saved: "+problems.join("; "));
- const digest=await recordDigest(record),revs=revisionsOf(store,id),last=revs.length?parse(store.get(keyOf(id,revs[revs.length-1]!))):null;
- if(revs.length&&!last)throw Error("The latest saved revision is unreadable; refusing to extend the history");
+ const digest=await recordDigest(record);
  if(last&&last.digest===digest)return {status:"unchanged",saved:last};
- const revision=(revs[revs.length-1]??0)+1;
- const saved:SavedInvestigation={schemaVersion:"hsi-saved-investigation-1",investigationId:id,revision,savedAt:now().toISOString(),digest,previousDigest:last?.digest??null,record,scientificApproval:false,reviewStatus:"unreviewed"};
- store.create(keyOf(id,revision),JSON.stringify(saved));
+ const saved:SavedInvestigation={schemaVersion:"hsi-saved-investigation-1",investigationId:id,revision:(last?.revision??0)+1,savedAt:now().toISOString(),digest,previousDigest:last?.digest??null,record,scientificApproval:false,reviewStatus:"unreviewed"};
  return {status:"saved",saved};
+}
+/** Saves a record only if it reproduces from the supplied graph. Saving the same record again is a no-op. */
+export async function saveInvestigation(g:DomainBundle,store:KeyValueStore,record:InvestigationRecord,now:()=>Date=()=>new Date()):Promise<SaveResult>{
+ const id=record.context.investigationId;
+ if(!ID.test(id))throw Error("Invalid investigation id");
+ const revs=revisionsOf(store,id),last=revs.length?parse(store.get(keyOf(id,revs[revs.length-1]!))):null;
+ if(revs.length&&!last)throw Error("The latest saved revision is unreadable; refusing to extend the history");
+ const r=await composeSavedInvestigation(g,record,last,now);
+ if(r.status==="saved")store.create(keyOf(id,r.saved.revision),JSON.stringify(r.saved));
+ return r;
 }
 
 export function listInvestigations(store:KeyValueStore):{investigationId:string;latestRevision:number;savedAt:string;question:string;graphVersion:string}[]{

@@ -23,6 +23,11 @@ const groups = [
 export function Footer() {
   return (
     <footer className="hsi-footer" aria-label="Site footer">
+      <ul className="hsi-footer-status" aria-label="Current status">
+        <li>Research preview</li>
+        <li>Candidate-only graph, nothing scientifically approved</li>
+        <li>No clinical advice or patient data</li>
+      </ul>
       <div className="hsi-footer-grid">
         <div className="hsi-footer-brand">
           <Link className="hsi-wordmark" to="/">

@@ -4,6 +4,7 @@ HSI is being developed as one connected biomedical intelligence platform for evi
 
 ## Canonical public pages
 - / — See why the evidence conflicts.
+- /knowledge-graph — Recorded biological relationships with source, experimental context and review status; candidates, not approved findings.
 - /platform — The shared evidence, biological graph, context, verification and governance foundation.
 - /context-conflict-audit — Interactive synthetic study comparison and five teaching outcomes; not a live audit.
 - /evidence-intelligence — Illustrative provenance, passage, context, missingness and source permissions.

@@ -1,0 +1,10 @@
+/* Header and footer refinement. Layout and tokens are unchanged; this raises legibility and adds a plain status band. */
+.hsi-nav .hsi-desktop-nav a{font-size:14px!important}
+.hsi-nav{border-bottom:1px solid #e1dfe8}
+.hsi-nav :is(a,button):focus-visible{outline:3px solid #a794d9;outline-offset:4px;border-radius:4px}
+.hsi-footer .hsi-footer-status{list-style:none;display:flex;flex-wrap:wrap;gap:10px 28px;margin:0 0 40px;padding:0 0 28px;border-bottom:1px solid #3a3d52;font-size:14px;color:#cfd2e2}
+.hsi-footer .hsi-footer-status li{display:flex;align-items:center;gap:10px;margin:0;font-size:14px;line-height:1.5;color:#cfd2e2}
+.hsi-footer .hsi-footer-status li::before{content:"";width:8px;height:8px;border-radius:50%;border:2px solid #b69bdf;flex:none}
+.hsi-footer nav h2{font-size:14px;font-weight:600;letter-spacing:0;color:#e9e6f3}
+.hsi-footer nav a{font-size:15px}
+.hsi-footer-bottom{border-top:1px solid #3a3d52}
