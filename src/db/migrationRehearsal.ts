@@ -19,12 +19,13 @@ export function splitPostgresStatements(sql:string):string[]{
  if(quote||dollar||block)throw Error("Unterminated rehearsal SQL");
  push(sql.length);return statements;
 }
-export type PersistenceScope="interrogative_workspace"|"scientific_records"|"contradiction_ledger"|"live_evidence";
+export type PersistenceScope="interrogative_workspace"|"scientific_records"|"contradiction_ledger"|"live_evidence"|"graph_workspace";
 export const PERSISTENCE_SCOPE_MIGRATIONS:Readonly<Record<PersistenceScope,readonly string[]>>=Object.freeze({
  interrogative_workspace:Object.freeze(["007_hsi_interrogative_contracts","008_hsi_interrogative_review_audit","014_hsi_investigation_graph_context","015_hsi_review_delivery"]),
  scientific_records:Object.freeze(["022_hsi_scientific_investigation_records"]),
  contradiction_ledger:Object.freeze(["024_hsi_scientific_contradiction_ledger","025_hsi_contradiction_tenant_isolation","026_hsi_contradiction_review_integrity","027_hsi_contradiction_authenticated_procedures","028_hsi_contradiction_restricted_api","029_hsi_contradiction_scoped_read_integrity"]),
  live_evidence:Object.freeze(["030_hsi_live_evidence_investigations"]),
+ graph_workspace:Object.freeze(["031_hsi_graph_workspace_storage","032_hsi_graph_workspace_procedures","033_hsi_ontology_import_role"]),
 });
 export function assertDisposableRehearsalTarget(target:{projectId:string;branchId:string;parentId:string|null;isDefault:boolean;isPrimary:boolean;expiresAt:string|null},pins:{projectId:string;productionBranchId:string;disposableBranchId:string},now=Date.now()){
  const expiry=Date.parse(target.expiresAt??"");
