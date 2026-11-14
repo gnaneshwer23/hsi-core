@@ -31,14 +31,14 @@ Landed on `main`: department projections and cross-department traversal (#344, #
 | Authenticated flows untested with real accounts | **[NV]** I did not sign in |
 
 ### 1.4 Findings to fix (engineering, no approvals needed)
-1. **No Content-Security-Policy.** Add `Content-Security-Policy-Report-Only`, then enforce. Also decide `includeSubDomains` and `preload` for HSTS. **[LIVE]**
-2. **Tool pages share one title** ("Research Tools & Account Access"), e.g. `/research/ontology-review`. Give each a distinct title for tab, history and screen-reader users. **[LIVE]**
-3. **404 is plain text.** Serve a branded not-found page with navigation. **[LIVE]**
-4. **`bun test` at the repo root collects Playwright specs.** Scope it in `bunfig.toml` so a casual run is not alarming. **[RAN]**
-5. **Two copies of the identifier heuristic** (`graphAgents.ts`, `ontology/looksIdentifying.ts`) and a duplicated key-value store; merge them. **[CODE]**
+1. **No Content-Security-Policy.** Report-only policy proposed in #355 (zero violations on 29 built routes); enforce after real-traffic observation. Also decide `includeSubDomains` and `preload` for HSTS. **[LIVE]**
+2. **Tool pages share one title** (fixed in #356: 46 of 99 routes had it) ("Research Tools & Account Access"), e.g. `/research/ontology-review`. Give each a distinct title for tab, history and screen-reader users. **[LIVE]**
+3. **404 is plain text.** Fixed in #356 and verified on its Vercel preview (404 status, noindex). **[LIVE]**
+4. **`bun test` at the repo root collects Playwright specs.** Fixed in #357. **[RAN]**
+5. **Two copies of the identifier heuristic** and a duplicated key-value store: merged in #357. **[CODE]**
 6. **Stale branches and PRs**: about 60 unmerged remote branches in tiers B to D, and #335. Close or salvage (`docs/atlas/*` exists only on #335). **[DOC]**
 7. **Ontology term tables are not in the repository** (gitignored cache); a new machine cannot use the mappings without a 275 MB download. Publish the hashed tables as a release asset or document the one-command rebuild in onboarding. **[CODE]**
-8. **Mapping decisions are not checked against a changed candidate file** until export; surface that in the page. **[CODE]**
+8. ~~Mapping decisions are not checked against a changed candidate file~~ **Corrected:** the review page verifies stored decisions on load and flags a recommendation whose term is no longer a candidate. No change needed. **[CODE]**
 9. **Health endpoint**: add an authenticated, internal-only database probe; keep the public one boring. **[LIVE]**
 
 ---
