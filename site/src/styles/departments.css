@@ -21,12 +21,12 @@
 .dept-chips{display:flex;flex-wrap:wrap;gap:10px}.dept-chips li{padding:10px 16px;border:1px solid var(--line);border-radius:999px;background:#f6f9fa;font-size:15px}
 .dept-questions{display:grid;gap:14px;counter-reset:q}.dept-questions li{counter-increment:q;position:relative;padding:20px 22px 20px 64px;background:#f6f9fa;border:1px solid var(--line);border-radius:12px;font-size:18px;max-width:72ch}
 .dept-questions li::before{content:counter(q,decimal-leading-zero);position:absolute;left:22px;top:20px;font-weight:600;color:var(--teal)}
-.dept-connections{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.dept-connections{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
 .dept-connections a{display:grid;gap:6px;padding:20px;border:1px solid var(--line);border-radius:12px;background:#f6f9fa;min-height:44px;transition:border-color .18s,transform .18s}
 .dept-connections a:hover{border-color:var(--teal);transform:translateY(-2px)}.dept-connections strong{font-size:18px;color:var(--navy)}.dept-connections span{color:var(--muted);font-size:15px}.dept-connections svg{color:var(--teal)}
 .dept-integrity{padding-bottom:8px}.dept-integrity p{max-width:70ch;color:var(--muted);border-left:3px solid var(--signal);padding-left:18px}.dept-integrity a,.dept-note a{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
 .dept-next{padding:48px 0 72px}.dept-next a{display:inline-flex;align-items:center;gap:10px;min-height:48px;font-size:18px;font-weight:550;color:var(--teal)}
-.dept-grid-section{padding:56px 0 72px}.dept-grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.dept-grid-section{padding:56px 0 72px}.dept-grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
 .dept-card{display:grid;gap:8px;height:100%;min-height:44px;padding:26px;border:1px solid var(--line);border-radius:14px;background:#f6f9fa;transition:border-color .18s,transform .18s}
 .dept-card:hover{border-color:var(--teal);transform:translateY(-2px)}
 .dept-card-name{font-size:24px;letter-spacing:-.03em;color:var(--navy);font-weight:500}.dept-card-tag{color:var(--muted)}.dept-card-cov{font-size:14px;color:var(--signal-text)}
