@@ -26,9 +26,10 @@ test('all public links and selector states resolve, without linking older engine
       }
       return links.length;
     }
+    // Draft forms have dedicated save/download/validation tests; they do not behave as selectors.
     // The lazy graph has its own complete navigation/a11y suite. Its drawer and
     // growing network controls must not invalidate positional marketing selectors.
-    const links=await inspectLinks(),buttons=page.getByRole('main').locator('button:not(.ig-experience button):not(.hsi-graph-entry button):not(.sp-live-graph button):not(.sp-workspace button):not(.hd-discovery button)');
+    const links=await inspectLinks(),buttons=page.getByRole('main').locator('button:not(.rai-draft button):not(.ig-experience button):not(.hsi-graph-entry button):not(.sp-live-graph button):not(.sp-workspace button):not(.hd-discovery button)');
     const count=await buttons.count();
     for(let i=0;i<count;i++){
       const button=buttons.nth(i),label=await button.innerText();
