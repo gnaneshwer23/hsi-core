@@ -113,7 +113,7 @@
     },
     {
       "capability_id": "PUB-HSI-TRIALS",
-      "public_label": "HSI Trials matching and enrolment",
+      "public_label": "Study matching and enrolment",
       "status": "not_currently_available",
       "evidence": ["docs/strategy/HSI_PUBLIC_WEBSITE_SPECIFICATION.md", "/for-trials copy"],
       "route_or_component": "/for-trials",
