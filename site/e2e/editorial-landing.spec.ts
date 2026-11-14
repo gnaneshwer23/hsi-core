@@ -19,7 +19,7 @@ test('homepage graph and workspace remain usable at narrow widths',async({page},
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),String(width)).toBe(true);
  if(width===390||width===1440)await page.screenshot({path:info.outputPath(`graph-home-${width}.png`),fullPage:true});
  }
- const workspace=page.locator('.sp-workspace');await workspace.getByRole('button',{name:/Review, version/}).click();
+ await page.goto('/how-it-works');const workspace=page.locator('.sp-workspace');await workspace.getByRole('button',{name:/Review, version/}).click();
  await expect(workspace).toContainText('Graph promotion is a separate governed decision');
  await expect(workspace).toContainText('simulated');
 });
