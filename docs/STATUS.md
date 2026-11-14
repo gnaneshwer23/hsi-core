@@ -238,6 +238,7 @@ One module per line, sorted, so concurrent changes to different modules do not c
 
 **CALIBER**
 - `src/caliberHarness.ts`
+- `src/evidence/benchmarkV11Profiles.ts`
 - `src/evidence/immunoBenchmark.ts`
 - `src/evidence/immunoBenchmarkScoring.ts`
 - `src/evidence/independentEvaluationSuites.ts`
