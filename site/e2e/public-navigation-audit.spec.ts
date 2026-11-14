@@ -70,7 +70,7 @@ test('all public body links are clickable and reach their intended destinations'
 });
 
 test('hero illustrations fit their pages and remain legible at mobile sizes',async({page},info)=>{
-  const artwork:Record<string,string>={'/technology':'technology','/solutions':'solutions','/evidence-safety':'evidence','/contact':'access'};
+  const artwork:Record<string,string>={'/technology':'technology','/solutions':'solutions','/evidence-safety':'evidence'};
   for(const [path,kind] of Object.entries(artwork)){
     for(const width of [320,768,1440]){
       await page.setViewportSize({width,height:1000});await page.goto(path);

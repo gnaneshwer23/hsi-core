@@ -58,10 +58,11 @@ export function PublicHero({
 }) {
   return (
     <header className="hsi-page-hero hsi-content">
-      <p className="hsi-product-name">Human Super Intelligence</p>
       <h1>{title}</h1>
-      <p className="hsi-lead">{description}</p>
-      {children}
+      <div>
+        <p className="hsi-lead">{description}</p>
+        {children}
+      </div>
     </header>
   );
 }
@@ -280,27 +281,27 @@ export function CandidateMechanism() {
             markerHeight="6"
             orient="auto-start-reverse"
           >
-            <path d="M0 0 10 5 0 10" fill="#297e80" />
+            <path d="M0 0 10 5 0 10" fill="#6753a1" />
           </marker>
         </defs>
         <path
           d="M180 120h180M500 120h180"
           fill="none"
-          stroke="#297e80"
+          stroke="#6753a1"
           strokeWidth="2"
           strokeDasharray="5 6"
           markerEnd="url(#candidate-arrow)"
         />
-        <circle cx="110" cy="120" r="64" fill="#d9e7df" stroke="#297e80" />
-        <circle cx="95" cy="112" r="29" fill="#93b8b3" />
-        <g fill="#297e80">
+        <circle cx="110" cy="120" r="64" fill="#ede9f6" stroke="#6753a1" />
+        <circle cx="95" cy="112" r="29" fill="#b6a8d8" />
+        <g fill="#6753a1">
           {[0, 1, 2, 3, 4].map((n) => (
             <circle key={n} cx={400 + (n % 2) * 20} cy={95 + n * 12} r="7" />
           ))}
         </g>
-        <circle cx="755" cy="120" r="64" fill="#e7ede5" stroke="#297e80" />
-        <path d="M735 100q45-20 40 30t-42 3z" fill="#9ebeb6" />
-        <g fill="#182d38" fontSize="19" textAnchor="middle" fontFamily="sans-serif">
+        <circle cx="755" cy="120" r="64" fill="#f4f2f9" stroke="#6753a1" />
+        <path d="M735 100q45-20 40 30t-42 3z" fill="#cfc6e6" />
+        <g fill="#202638" fontSize="19" textAnchor="middle" fontFamily="Host Grotesk Variable, system-ui, sans-serif">
           <text x="110" y="224">
             Tfh cell state
           </text>
