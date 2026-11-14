@@ -1,5 +1,5 @@
 import {describe,expect,test} from "bun:test";
-import {mkdtempSync,mkdirSync,rmSync,writeFileSync,readFileSync} from "node:fs";
+import {existsSync,mkdtempSync,mkdirSync,rmSync,writeFileSync,readFileSync} from "node:fs";
 import {tmpdir} from "node:os";
 import {join,resolve} from "node:path";
 import {ALLOWED_PAGES,DATA_FEEDS,findProductNames,scanDist} from "../site/scripts/check-public-names";
@@ -38,5 +38,9 @@ describe("public product-name guard",()=>{
  test("the real crawler-facing files in the repo are free of product names",()=>{
   for(const f of ["site/public/llms.txt","site/public/capability-status.json","docs/capability-status.json"])expect(findProductNames(readFileSync(resolve(f),"utf8")),f).toEqual([]);
   expect(readFileSync(resolve("site/public/capability-status.json"),"utf8")).toBe(readFileSync(resolve("docs/capability-status.json"),"utf8"));
+ });
+ test("the Aksh agent catalog is not published on the public site",()=>{
+  expect(existsSync(resolve("site/public/aksh"))).toBe(false);
+  expect(existsSync(resolve("aksh/agent-catalog.json"))).toBe(true); // the durable catalog stays in the repo
  });
 });
