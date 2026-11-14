@@ -176,7 +176,7 @@ export function Technology() {
         <p className="nx-governance-disclaimer">This is the intended governance model, not certification of a deployed clinical system. UK GDPR, applicable clinical safety standards, research ethics, MHRA software requirements and independent evaluation must be assessed for each intended use. Trial pre-screening does not confirm eligibility. No autonomous diagnosis or prescribing.</p>
       </div>
     </section>
-    <section className="nx-section nx-end"><div className="nx-wrap"><p className="nx-kicker">EXPLORE THE CONNECTED ECOSYSTEM</p><h2>One ambition.<br/><em>Many governed pathways.</em></h2><div className="nx-actions"><Link className="nx-cta" to="/platform">Explore the platform <span aria-hidden="true">↗</span></Link><Link className="nx-text-link" to="/modules/isi">Explore immune research <span aria-hidden="true">↗</span></Link><Link className="nx-text-link" to="/contact">Research access <span aria-hidden="true">↗</span></Link></div></div></section>
+    <section className="nx-section nx-end"><div className="nx-wrap"><p className="nx-kicker">EXPLORE THE CONNECTED ECOSYSTEM</p><h2>One ambition.<br/><em>Many governed pathways.</em></h2><div className="nx-actions"><Link className="nx-cta" to="/platform">Explore the platform <span aria-hidden="true">↗</span></Link><Link className="nx-text-link" to="/departments/immunology">Explore immunology research <span aria-hidden="true">↗</span></Link><Link className="nx-text-link" to="/contact">Research access <span aria-hidden="true">↗</span></Link></div></div></section>
     <MarketingJourney links={JOURNEY_BY_PATH["/technology"]!} />
   </MarketingPage>;
 }

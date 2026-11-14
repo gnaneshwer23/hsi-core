@@ -1,11 +1,11 @@
 /** Fails the site build if a public page names one of the separately governed products. Runs on the prerendered HTML, so it
  * checks what visitors and crawlers actually receive (text, attributes and metadata), not just source files.
- * The five /modules pages are the only allowed exceptions until their redirect step lands; remove them from ALLOWED_PAGES then. */
+ * No page is exempt: the /modules pages now redirect to /connected-intelligence. */
 import {readdir,readFile} from "node:fs/promises";
 import {resolve} from "node:path";
 
 export const PRODUCT_NAME_PATTERN=/Aksh Health|Aksh|AKSH|HSI Clinical|HSI Trials|HSI TRIALS|\bISI\b|Immune Super Intelligence|Akeno/g;
-export const ALLOWED_PAGES:ReadonlySet<string>=new Set(["modules.html","modules--aksh-health.html","modules--clinical.html","modules--isi.html","modules--trials.html"]);
+export const ALLOWED_PAGES:ReadonlySet<string>=new Set<string>();
 /** Names found in a page's HTML, ignoring external script tags (bundled code is not page copy). */
 export function findProductNames(html:string):string[]{
  return [...html.replace(/<script[^>]*\bsrc=[^>]*><\/script>/g,"").matchAll(PRODUCT_NAME_PATTERN)].map(m=>m[0]);

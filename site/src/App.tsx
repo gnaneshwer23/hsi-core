@@ -20,17 +20,12 @@ const Explore=lazy(()=>import("./pages/Explore").then(m=>({default:m.Explore})))
 const DiscoveryEngine=lazy(()=>import("./pages/DiscoveryEngine").then(m=>({default:m.DiscoveryEngine})));
 const Systems=lazy(()=>import("./pages/Systems").then(m=>({default:m.Systems})));
 const Evidence=lazy(()=>import("./pages/Evidence").then(m=>({default:m.Evidence})));
-import { ForIsi } from "./pages/ForIsi";
-import { ForAksh } from "./pages/ForAksh";
-import { ForTrials } from "./pages/ForTrials";
 
 const Roadmap=lazy(()=>import("./pages/Roadmap").then(m=>({default:m.Roadmap})));
 const Alignment=lazy(()=>import("./pages/Alignment").then(m=>({default:m.Alignment})));
 const Docs=lazy(()=>import("./pages/Docs").then(m=>({default:m.Docs})));
 const DiscoveryCentre=lazy(()=>import("./pages/DiscoveryCentre").then(m=>({default:m.DiscoveryCentre})));
 const Curator=lazy(()=>import("./pages/Curator").then(m=>({default:m.Curator})));
-import { Products } from "./pages/Products";
-import { ClinicalModule } from "./pages/ClinicalModule";
 import { DemoWalkthrough } from "./pages/DemoWalkthrough";
 const Status=lazy(()=>import("./pages/Status").then(m=>({default:m.Status})));
 const ClinicalTimeline=lazy(()=>import("./pages/ClinicalTimeline").then(m=>({default:m.ClinicalTimeline})));
@@ -146,12 +141,12 @@ export default function App() {
         <Route path="science/disease" element={<ScienceDisease />} />
         <Route path="discovery-engine" element={<DiscoveryEngine />} />
         <Route path="demo" element={<DemoWalkthrough />} />
-        <Route path="modules" element={<Products />} />
-        <Route path="modules/aksh-health" element={<ForAksh />} />
-        <Route path="modules/clinical" element={<ClinicalModule />} />
-        <Route path="modules/isi" element={<ForIsi />} />
-        <Route path="modules/trials" element={<ForTrials />} />
-        <Route path="products" element={<Navigate to="/modules" replace />} />
+        <Route path="modules" element={<Navigate to="/connected-intelligence" replace />} />
+        <Route path="modules/aksh-health" element={<Navigate to="/connected-intelligence" replace />} />
+        <Route path="modules/clinical" element={<Navigate to="/connected-intelligence" replace />} />
+        <Route path="modules/isi" element={<Navigate to="/connected-intelligence" replace />} />
+        <Route path="modules/trials" element={<Navigate to="/connected-intelligence" replace />} />
+        <Route path="products" element={<Navigate to="/connected-intelligence" replace />} />
         <Route path="status" element={<Status />} />
         <Route path="sources" element={<Sources />} />
         <Route path="clinical-timeline" element={<ClinicalTimeline />} />
@@ -161,11 +156,11 @@ export default function App() {
         <Route path="evidence" element={<Evidence />} />
         <Route path="discovery" element={<DiscoveryCentre />} />
         <Route path="curator" element={<Curator />} />
-        <Route path="akeno" element={<Navigate to="/modules/clinical" replace />} />
-        <Route path="aksh-agents" element={<Navigate to="/modules/aksh-health" replace />} />
-        <Route path="for-isi" element={<Navigate to="/modules/isi" replace />} />
-        <Route path="for-aksh" element={<Navigate to="/modules/aksh-health" replace />} />
-        <Route path="for-trials" element={<Navigate to="/modules/trials" replace />} />
+        <Route path="akeno" element={<Navigate to="/connected-intelligence" replace />} />
+        <Route path="aksh-agents" element={<Navigate to="/connected-intelligence" replace />} />
+        <Route path="for-isi" element={<Navigate to="/connected-intelligence" replace />} />
+        <Route path="for-aksh" element={<Navigate to="/connected-intelligence" replace />} />
+        <Route path="for-trials" element={<Navigate to="/connected-intelligence" replace />} />
         <Route path="roadmap" element={<Roadmap />} />
         <Route path="alignment" element={<Alignment />} />
         <Route path="docs" element={<Docs />} />
