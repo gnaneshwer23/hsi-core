@@ -6,11 +6,13 @@
  */
 import {rejectPhiPayload} from "../cdsPhiBoundary";
 import {canonicalEvidenceJson} from "../evidence/researchEvidenceCorpus";
-import {looksIdentifying} from "./looksIdentifying";
+import {looksIdentifying} from "../identifyingText";
+import {browserStore as baseBrowserStore,memoryStore,type KeyValueStore} from "../knowledgeGraph/investigationStore";
 import type {ConceptMapping} from "./conceptMapping";
 
 export type CandidateMappingsFile={schemaVersion:"hsi-ontology-candidate-mappings-1";ontologies:{prefix:string;release:string}[];conceptCount:number;summary:Record<string,number>;mappings:ConceptMapping[]};
-export interface KeyValueStore{get(key:string):string|null;/** Must refuse to replace an existing key. */create(key:string,value:string):void;keys():string[]}
+export type {KeyValueStore};
+export {memoryStore};
 export type ReviewDecision="accept_candidate"|"reject_candidate"|"defer";
 export type CuratorDecision={schemaVersion:"hsi-curator-decision-1";conceptId:string;conceptName:string;decision:ReviewDecision;ontologyId:string|null;reason:string;reviewerLabel:string;reviewerVerified:false;decidedAt:string;revision:number;previousDigest:string|null;digest:string;mappingsDigest:string;status:"curator_recommendation_unverified";exactMappingApproved:false};
 export type DecisionInput={conceptId:string;decision:ReviewDecision;ontologyId:string|null;reason:string;reviewerLabel:string};
@@ -84,13 +86,5 @@ export async function exportDecisions(f:CandidateMappingsFile,store:KeyValueStor
   counts:{concepts:f.mappings.length,withCandidates:reviewable.length,decided:latest.size,accept_candidate:n("accept_candidate"),reject_candidate:n("reject_candidate"),defer:n("defer"),pending:reviewable.length-latest.size},
   decisions:all,statement:"Curator recommendations by self-declared, unverified reviewers. None is an approved mapping; each still needs independent human review before it can be used as an exact mapping."};
 }
-export function memoryStore():KeyValueStore{
- const m=new Map<string,string>();return {get:k=>m.get(k)??null,create:(k,v)=>{if(m.has(k))throw Error("Revision already exists");m.set(k,v)},keys:()=>[...m.keys()]};
-}
-/** Device-local storage; null when the browser blocks it. */
-export function browserStore(storage?:Storage):KeyValueStore|null{
- try{
-  const s=storage??globalThis.localStorage;if(!s)return null;s.setItem(PREFIX+"probe","1");s.removeItem(PREFIX+"probe");
-  return {get:k=>{try{return s.getItem(k)}catch{return null}},create:(k,v)=>{if(s.getItem(k)!==null)throw Error("Revision already exists");s.setItem(k,v)},keys:()=>{const o:string[]=[];for(let i=0;i<s.length;i++){const k=s.key(i);if(k&&k.startsWith(PREFIX))o.push(k)}return o}};
- }catch{return null}
-}
+/** Device-local storage under this module's own key prefix; null when the browser blocks it. */
+export const browserStore=(storage?:Storage):KeyValueStore|null=>baseBrowserStore(storage,PREFIX);
