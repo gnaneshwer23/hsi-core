@@ -9,7 +9,7 @@ const groups = [
   {name:"Technology",links:[
     {to:"/platform",label:"Platform overview"},
     {to:"/how-it-works",label:"How it works"},
-    {to:"/technology",label:"Technology"},
+    {to:"/knowledge-graph",label:"Knowledge graph"},
     {to:"/intelligence",label:"Intelligence Collective"},
   ]},
   {name:"Trust",links:[
