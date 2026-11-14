@@ -347,13 +347,19 @@
         "blocked"
       ],
       "evidence": [
-        "src/knowledgeGraph/investigationStore.ts",
-        "src/ontology/mappingReview.ts",
+        "db/migrations/031_hsi_graph_workspace_storage.sql",
+        "db/migrations/032_hsi_graph_workspace_procedures.sql",
+        "db/migrations/033_hsi_ontology_import_role.sql",
+        "db/roles/hsi_graph_roles.sql",
+        "docs/GRAPH_WORKSPACE_REHEARSAL_RESULT_20261114.md",
+        "docs/GRAPH_WORKSPACE_REHEARSAL_RUNBOOK.md",
         "site/src/pages/OntologyMappingReview.tsx",
-        "db/migrations/031_hsi_graph_workspace_storage.sql"
+        "src/db/graphWorkspaceStore.ts",
+        "src/knowledgeGraph/investigationStore.ts",
+        "src/ontology/mappingReview.ts"
       ],
-      "gap": "Records live in one browser only; reviewer identity is self-declared and unverified; shared storage is held migration 031, never applied",
-      "nextAction": "Approve role design and rehearse 031 on a disposable Neon branch; add verified-session adapters"
+      "gap": "Records live in one browser only; shared storage is held migrations 031 to 033. Rehearsed on a disposable Neon branch with synthetic sessions (not independently accepted); never applied to production; the adapter is imported by nothing",
+      "nextAction": "Set login passwords; name an independent security signer; build and run the real-account runner; then decide on production activation"
     },
     {
       "id": "F-17",
@@ -1159,6 +1165,7 @@
         ],
         "modules": [
           "src/atlasProposals.ts",
+          "src/db/graphWorkspaceStore.ts",
           "src/evidence/canonicalContextualEdge.ts",
           "src/evidence/reactomeOntologyBridge.ts",
           "src/evidence/uniProtOntologyBridge.ts",

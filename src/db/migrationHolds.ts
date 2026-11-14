@@ -14,4 +14,6 @@ export const HELD_MIGRATION_IDS = [
   "029_hsi_contradiction_scoped_read_integrity",
   "030_hsi_live_evidence_investigations",
   "031_hsi_graph_workspace_storage",
+  "032_hsi_graph_workspace_procedures",
+  "033_hsi_ontology_import_role",
 ] as const;
