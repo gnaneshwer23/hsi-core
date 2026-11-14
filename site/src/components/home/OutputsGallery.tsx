@@ -13,7 +13,7 @@ export function OutputsGallery(){
       <div className="hv-inner">
         <h2 id="hv-out-title">What you get.</h2>
         <p className="hv-sub">Four outputs, each with its source, context and review status attached. Shown here from the published snapshot.</p>
-        {!s?<div className="hv-grid-skeleton"><p className="hv-wait">{failed?"Snapshot unavailable. No substitute figures are shown.":"Verifying snapshot…"}</p></div>:(
+        {!s?<div className={failed?undefined:"hv-grid-skeleton"}><p className="hv-wait">{failed?"Snapshot unavailable. No substitute figures are shown.":"Verifying snapshot…"}</p></div>:(
         <div className="hv-grid">
           <article className="hv-card" aria-labelledby="o1">
             <h3 id="o1">Evidence record</h3>
