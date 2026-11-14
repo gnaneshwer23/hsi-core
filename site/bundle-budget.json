@@ -1,0 +1,6 @@
+{
+ "note": "Gzip bytes. Measured 14 Nov 2026: entry 200474, CSS 102555, largest lazy chunk 39070. Budgets are about 10 percent above that. Raising one is a deliberate change that needs a reason in the PR.",
+ "entryJsGzipBytes": 220000,
+ "totalCssGzipBytes": 115000,
+ "largestLazyChunkGzipBytes": 45000
+}
