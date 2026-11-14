@@ -17,6 +17,8 @@ for(const pathname of routes){
  const html=template.replace(/<!--hsi-seo:start-->[\s\S]*?<!--hsi-seo:end-->/,'<!--hsi-seo:start-->\n'+renderSeoHead(pathname,noindex,{googleSiteVerification})+'\n<!--hsi-seo:end-->').replace('<html lang="en">','<html lang="en-GB"'+(noindex?' data-seo-noindex="true"':'')+'>').replace('<div id="root"></div>','<div id="root"'+(indexed?' data-prerendered="'+pathname+'"':'')+'>'+body+'</div>');
  const file=pathname==='/'?'index.html':'_pages/'+pathname.slice(1).replaceAll('/','--')+'.html';await mkdir(dirname(resolve(dist,file)),{recursive:true});await writeFile(resolve(dist,file),html);
 }
+// Vercel serves a top-level 404.html, with a 404 status, for any unmatched path; the client router then renders the not-found page.
+{const html=template.replace(/<!--hsi-seo:start-->[\s\S]*?<!--hsi-seo:end-->/,'<!--hsi-seo:start-->\n'+renderSeoHead('/404',true,{googleSiteVerification})+'\n<!--hsi-seo:end-->').replace('<html lang="en">','<html lang="en-GB" data-seo-noindex="true">');await writeFile(resolve(dist,'404.html'),html)}
 const sitemap='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+Object.keys(SEO_PAGES).map(path=>'  <url><loc>'+SITE_ORIGIN+(path==='/'?'/':path)+'</loc></url>').join('\n')+'\n</urlset>\n';
 await writeFile(resolve(dist,'sitemap.xml'),sitemap);
 // Explicit Allow for major search + AI crawlers. Marketing HTML stays public; /api and /_pages stay disallowed.
