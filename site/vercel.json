@@ -245,6 +245,10 @@
       "destination": "/_pages/research--ledger.html"
     },
     {
+      "source": "/research/cohort",
+      "destination": "/_pages/research--cohort.html"
+    },
+    {
       "source": "/research/workspace",
       "destination": "/_pages/research--workspace.html"
     },
