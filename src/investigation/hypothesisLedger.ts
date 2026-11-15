@@ -9,16 +9,18 @@ export const LEDGER_STATUSES:readonly LedgerStatus[]=["proposed","planning","tes
 export type LedgerOutcome="none"|"consistent"|"inconsistent"|"inconclusive";
 export const LEDGER_OUTCOMES:readonly LedgerOutcome[]=["none","consistent","inconsistent","inconclusive"];
 export type LedgerOrigin={kind:"researcher"}|{kind:"model_proposal";scenarioId:string;runHash:string;proposalId:string;proposedBy:string};
-export type LedgerEvent={at:string;type:"created"|"status"|"outcome"|"edited"|"linked";detail:string};
+export type LedgerEvent={at:string;type:"created"|"status"|"outcome"|"edited"|"linked"|"observation";detail:string};
+/** A released aggregate from the synthetic clinical plane, attached to a hypothesis as an illustration. Never evidence, never an outcome. */
+export type CohortObservation={at:string;definitionId:string;definitionTitle:string;graphVersion:string;aggregateDigest:string;evaluated:number|null;matched:number|null;suppressedCells:number;dataClass:"synthetic"};
 export type LedgerEntry={
  id:string;statement:string;origin:LedgerOrigin;createdAt:string;
  rationale:string;prediction:string;experiment:string;falsifier:string;limits:string;
- citedClaimIds:string[];citedSourceIds:string[];linkedGapIds:string[];cohortDefinitionId:string|null;
+ citedClaimIds:string[];citedSourceIds:string[];linkedGapIds:string[];cohortDefinitionId:string|null;cohortObservations:CohortObservation[];
  status:LedgerStatus;outcome:LedgerOutcome;outcomeNote:string;history:LedgerEvent[];
  /** Always true. Nothing in this ledger validates a hypothesis. */
  unvalidated:true;
 };
-export const LIMITS={statement:400,field:600,note:400,entries:200,history:100,gaps:10,cited:20};
+export const LIMITS={statement:400,field:600,note:400,entries:200,history:100,gaps:10,cited:20,observations:20};
 const clip=(s:unknown,n:number)=>typeof s==="string"?s.trim().slice(0,n):"";
 export const entryId=(origin:LedgerOrigin,statement:string)=>"hyp:"+fnv(origin.kind==="model_proposal"?`${origin.scenarioId}|${origin.runHash}|${origin.proposalId}`:`r|${statement.trim().toLowerCase()}`);
 function fnv(s:string){let h=0x811c9dc5;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,0x01000193)>>>0}return h.toString(16).padStart(8,"0")}
@@ -29,7 +31,7 @@ export function createEntry(input:NewEntry,at:string):{ok:true;entry:LedgerEntry
  if(statement.length<10)return {ok:false,error:"State the hypothesis in at least 10 characters."};
  const f=(v:unknown)=>clip(v,LIMITS.field),ids=(v:unknown,n:number)=>Array.isArray(v)?[...new Set(v.filter((x):x is string=>typeof x==="string"&&x.length>0&&x.length<=220))].slice(0,n):[];
  const entry:LedgerEntry={id:entryId(input.origin,statement),statement,origin:input.origin,createdAt:at,rationale:f(input.rationale),prediction:f(input.prediction),experiment:f(input.experiment),falsifier:f(input.falsifier),limits:f(input.limits),
-  citedClaimIds:ids(input.citedClaimIds,LIMITS.cited),citedSourceIds:ids(input.citedSourceIds,LIMITS.cited),linkedGapIds:ids(input.linkedGapIds,LIMITS.gaps),cohortDefinitionId:typeof input.cohortDefinitionId==="string"&&input.cohortDefinitionId.length<=120?input.cohortDefinitionId:null,
+  citedClaimIds:ids(input.citedClaimIds,LIMITS.cited),citedSourceIds:ids(input.citedSourceIds,LIMITS.cited),linkedGapIds:ids(input.linkedGapIds,LIMITS.gaps),cohortDefinitionId:typeof input.cohortDefinitionId==="string"&&input.cohortDefinitionId.length<=120?input.cohortDefinitionId:null,cohortObservations:[],
   status:"proposed",outcome:"none",outcomeNote:"",history:[{at,type:"created",detail:input.origin.kind==="model_proposal"?"Added from a model proposal in a run":"Written by the researcher"}],unvalidated:true};
  return {ok:true,entry};
 }
@@ -63,6 +65,21 @@ export function edit(e:LedgerEntry,patch:Partial<Pick<LedgerEntry,"rationale"|"p
  const linked=patch.linkedGapIds!==undefined||patch.cohortDefinitionId!==undefined;
  return push(next,{at,type:linked?"linked":"edited",detail:linked?"Links changed":"Details edited"});
 }
+export type NewObservation=Omit<CohortObservation,"at"|"dataClass"|"suppressedCells">&{suppressedCells?:number;dataClass:string};
+const num=(v:unknown)=>v===null||(typeof v==="number"&&Number.isInteger(v)&&v>=0&&v<1e7);
+/**
+ * Attach a released synthetic cohort aggregate to a hypothesis. Allowed only for synthetic data and only for the definition the
+ * hypothesis is linked to. It adds an observation to the record; it never changes status, never sets an outcome, and is not evidence.
+ */
+export function addCohortObservation(e:LedgerEntry,o:NewObservation,at:string):{ok:true;entry:LedgerEntry}|{ok:false;error:string}{
+ if(o.dataClass!=="synthetic")return {ok:false,error:"Only synthetic cohort results can be attached while real data is not enabled."};
+ if(!e.cohortDefinitionId||e.cohortDefinitionId!==o.definitionId)return {ok:false,error:"Link this hypothesis to the same cohort definition first."};
+ if(!/^[a-f0-9]{64}$/.test(o.aggregateDigest)||!num(o.evaluated)||!num(o.matched)||!/^[a-f0-9]{8,64}$/.test(o.graphVersion))return {ok:false,error:"The released result is malformed."};
+ if(e.cohortObservations.some(x=>x.aggregateDigest===o.aggregateDigest))return {ok:false,error:"This released result is already attached."};
+ if(e.cohortObservations.length>=LIMITS.observations)return {ok:false,error:`At most ${LIMITS.observations} cohort observations per hypothesis.`};
+ const obs:CohortObservation={at,definitionId:o.definitionId,definitionTitle:clip(o.definitionTitle,160),graphVersion:o.graphVersion,aggregateDigest:o.aggregateDigest,evaluated:o.evaluated,matched:o.matched,suppressedCells:Number.isInteger(o.suppressedCells)?Math.max(0,o.suppressedCells!):0,dataClass:"synthetic"};
+ return {ok:true,entry:push({...e,cohortObservations:[...e.cohortObservations,obs]},{at,type:"observation",detail:`Synthetic cohort result attached (${o.matched===null?"matched count suppressed":o.matched+" matched"} of ${o.evaluated===null?"a suppressed total":o.evaluated}); digest ${o.aggregateDigest.slice(0,12)}. Illustrative, not evidence.`})};
+}
 /** Maps one model proposal from a live run. The proposal's own text is kept; nothing is added. */
 export function fromRunHypothesis(run:{scenarioId:string;briefHash:string;candidates:{id:string;sourceId:string}[]},h:{id:string;statement:string;rationale:string;prediction:string;experiment:string;falsifier:string;limits:string;citedClaimIds:string[];generatedBy:{verifier:string;model:string}},at:string,linkedGapIds:string[]=[]){
  const src=run.candidates.filter(c=>h.citedClaimIds.includes(c.id)).map(c=>c.sourceId);
@@ -82,8 +99,9 @@ export function parseLedger(raw:string|null):Ledger{
    const outcome=LEDGER_OUTCOMES.includes(v.outcome)?v.outcome as LedgerOutcome:"none";
    // A stored "testing" entry must still satisfy the falsifier rule; anything that does not is returned to "proposed".
    const safeStatus=status==="testing"&&missingForTest(e).length>0?"proposed":status;
-   const history=Array.isArray(v.history)?v.history.filter((h:any)=>h&&typeof h.at==="string"&&["created","status","outcome","edited","linked"].includes(h.type)&&typeof h.detail==="string").slice(-LIMITS.history).map((h:any)=>({at:h.at.slice(0,40),type:h.type,detail:h.detail.slice(0,500)})):e.history;
-   out[e.id]={...e,status:safeStatus,outcome:safeStatus==="testing"||safeStatus==="parked"||safeStatus==="retired"?outcome:"none",outcomeNote:clip(v.outcomeNote,LIMITS.note),history:history.length?history:e.history};
+   const history=Array.isArray(v.history)?v.history.filter((h:any)=>h&&typeof h.at==="string"&&["created","status","outcome","edited","linked","observation"].includes(h.type)&&typeof h.detail==="string").slice(-LIMITS.history).map((h:any)=>({at:h.at.slice(0,40),type:h.type,detail:h.detail.slice(0,500)})):e.history;
+   const obs:CohortObservation[]=Array.isArray(v.cohortObservations)?v.cohortObservations.slice(0,LIMITS.observations).filter((o:any)=>o&&o.dataClass==="synthetic"&&typeof o.at==="string"&&typeof o.definitionId==="string"&&typeof o.aggregateDigest==="string"&&/^[a-f0-9]{64}$/.test(o.aggregateDigest)&&typeof o.graphVersion==="string"&&/^[a-f0-9]{8,64}$/.test(o.graphVersion)&&num(o.evaluated)&&num(o.matched)).map((o:any)=>({at:o.at.slice(0,40),definitionId:o.definitionId.slice(0,120),definitionTitle:clip(o.definitionTitle,160),graphVersion:o.graphVersion,aggregateDigest:o.aggregateDigest,evaluated:o.evaluated,matched:o.matched,suppressedCells:Number.isInteger(o.suppressedCells)&&o.suppressedCells>=0?o.suppressedCells:0,dataClass:"synthetic" as const})):[];
+   out[e.id]={...e,cohortObservations:obs,status:safeStatus,outcome:safeStatus==="testing"||safeStatus==="parked"||safeStatus==="retired"?outcome:"none",outcomeNote:clip(v.outcomeNote,LIMITS.note),history:history.length?history:e.history};
   }
   return out;
  }catch{return {}}

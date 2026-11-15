@@ -17,3 +17,9 @@ export const raisedHbA1cAdults=(graphVersion:string):PhenotypeDefinition=>({
  summariseLabs:["HbA1c","hs-CRP"],
  note:"Illustrative definition on synthetic profiles only; spans conditions."
 });
+
+/** The illustrative definitions a hypothesis can be linked to. Ids are stable; builders take the current graph version. */
+export const DEFINITION_REGISTRY:{id:string;label:string;build:(graphVersion:string)=>PhenotypeDefinition}[]=[
+ {id:"phenotype:raised-hba1c-adults-illustrative",label:"Adults with raised HbA1c (illustrative)",build:raisedHbA1cAdults},
+ {id:"phenotype:t2d-glycaemic-response-illustrative",label:"Type 2 diabetes subset (illustrative)",build:diabetesGlycaemicResponse},
+];

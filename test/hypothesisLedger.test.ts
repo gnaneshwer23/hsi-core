@@ -1,5 +1,5 @@
 import {describe,expect,test} from "bun:test";
-import {addEntry,createEntry,edit,fromRunHypothesis,LIMITS,missingForTest,parseLedger,recordOutcome,setStatus,type LedgerEntry} from "../src/investigation/hypothesisLedger";
+import {addCohortObservation,addEntry,createEntry,edit,fromRunHypothesis,LIMITS,missingForTest,parseLedger,recordOutcome,setStatus,type LedgerEntry} from "../src/investigation/hypothesisLedger";
 
 const T="2026-11-15T10:00:00Z";
 const full={statement:"Blocking IL-21 reduces Tfh expansion in systemic sclerosis cells.",prediction:"Lower Tfh fraction after blockade",experiment:"Ex vivo blockade with matched controls",falsifier:"No change in Tfh fraction versus control",origin:{kind:"researcher" as const}};
@@ -72,5 +72,39 @@ describe("parseLedger",()=>{
  });
  test("round-trips a valid ledger",()=>{
   const e=mk(),l=addEntry({},e).ledger;expect(Object.values(parseLedger(JSON.stringify(l)))[0]).toEqual(e);
+ });
+});
+
+describe("cohort observations",()=>{
+ const DIG="a".repeat(64),GV="b".repeat(64);
+ const obs={definitionId:"phenotype:x",definitionTitle:"Illustrative",graphVersion:GV,aggregateDigest:DIG,evaluated:200,matched:78,suppressedCells:17,dataClass:"synthetic"};
+ const linked=()=>edit(mk(),{cohortDefinitionId:"phenotype:x"},T);
+ test("attaches a synthetic released result to a linked hypothesis without changing status or outcome",()=>{
+  const e=linked(),r=addCohortObservation(e,obs,T);expect(r.ok).toBe(true);if(!r.ok)return;
+  expect(r.entry.status).toBe(e.status);expect(r.entry.outcome).toBe("none");expect(r.entry.cohortObservations).toHaveLength(1);
+  expect(r.entry.history.at(-1)!.type).toBe("observation");expect(r.entry.history.at(-1)!.detail).toContain("not evidence");
+ });
+ test("a suppressed matched count is recorded as suppressed, not as zero",()=>{
+  const r=addCohortObservation(linked(),{...obs,matched:null},T);expect(r.ok&&r.entry.cohortObservations[0]!.matched).toBeNull();expect(r.ok&&r.entry.history.at(-1)!.detail).toContain("suppressed");
+ });
+ test("refuses real data, an unlinked or different definition, malformed digests and duplicates",()=>{
+  expect(addCohortObservation(linked(),{...obs,dataClass:"real"},T).ok).toBe(false);
+  expect(addCohortObservation(mk(),obs,T).ok).toBe(false);
+  expect(addCohortObservation(linked(),{...obs,definitionId:"phenotype:other"},T).ok).toBe(false);
+  expect(addCohortObservation(linked(),{...obs,aggregateDigest:"nothex"},T).ok).toBe(false);
+  expect(addCohortObservation(linked(),{...obs,matched:-1},T).ok).toBe(false);
+  const once=addCohortObservation(linked(),obs,T);if(!once.ok)throw Error();
+  const dup=addCohortObservation(once.entry,obs,T);expect(dup.ok).toBe(false);if(!dup.ok)expect(dup.error).toContain("already attached");
+ });
+ test("caps observations and survives a round trip; hostile stored observations are dropped",()=>{
+  let e=linked();for(let i=0;i<20;i++){const r=addCohortObservation(e,{...obs,aggregateDigest:String(i).padStart(64,"c")},T);if(!r.ok)throw Error(r.error);e=r.entry}
+  const full=addCohortObservation(e,{...obs,aggregateDigest:"d".repeat(64)},T);expect(full.ok).toBe(false);if(!full.ok)expect(full.error).toContain("At most");
+  const l=addEntry({},e).ledger;expect(Object.values(parseLedger(JSON.stringify(l)))[0]!.cohortObservations).toHaveLength(20);
+  const bad=JSON.stringify({x:{...e,cohortObservations:[{...e.cohortObservations[0],dataClass:"real"},{...e.cohortObservations[0],aggregateDigest:"zz"},e.cohortObservations[0]]}});
+  expect(Object.values(parseLedger(bad))[0]!.cohortObservations).toHaveLength(1);
+ });
+ test("entries stored before this field existed load with no observations",()=>{
+  const {cohortObservations,...old}=mk() as LedgerEntry;void cohortObservations;
+  expect(Object.values(parseLedger(JSON.stringify({a:old})))[0]!.cohortObservations).toEqual([]);
  });
 });

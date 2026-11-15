@@ -1,10 +1,12 @@
 import {useEffect,useMemo,useState} from "react";
-import {Link} from "react-router-dom";
+import {Link,useSearchParams} from "react-router-dom";
 import type {DomainBundle} from "../../../src/knowledgeGraph/domainGraph";
 import {appendAudit,emptyAudit,verifyAudit,type AuditLog} from "../../../src/clinicalPlane/auditChain";
 import {evaluateCohort,labelOf,validateDefinition,type CohortAggregate,type PhenotypeDefinition,type PlanePatient} from "../../../src/clinicalPlane/phenotype";
 import {release,type Approval,type RefusalReason,type ReleaseRequest,type ReleasedFinding} from "../../../src/clinicalPlane/releaseGate";
-import {diabetesGlycaemicResponse,raisedHbA1cAdults} from "../../../src/clinicalPlane/definitions";
+import {DEFINITION_REGISTRY} from "../../../src/clinicalPlane/definitions";
+import {addCohortObservation} from "../../../src/investigation/hypothesisLedger";
+import {useLedger} from "../lib/useLedger";
 import {loadDomainGraph} from "../lib/claimGraphClient";
 import {loadSyntheticCohort} from "../lib/syntheticCohortClient";
 import {ResearchAppShell} from "../components/home/ResearchAppShell";
@@ -20,15 +22,17 @@ const cell=(v:number|null|undefined)=>v===null||v===undefined?<span className="c
 const REQUESTER="researcher-demo",REVIEWER:Approval={approverId:"reviewer-demo",role:"release_reviewer",decision:"approve",at:""};
 
 export function CohortPlanePage(){
- const [patients,setPatients]=useState<PlanePatient[]|null>(null),[bundle,setBundle]=useState<DomainBundle|null>(null),[err,setErr]=useState(""),[defId,setDefId]=useState("raised"),[audit,setAudit]=useState<AuditLog>(emptyAudit()),
+ const [patients,setPatients]=useState<PlanePatient[]|null>(null),[bundle,setBundle]=useState<DomainBundle|null>(null),[err,setErr]=useState(""),[params]=useSearchParams(),[defId,setDefId]=useState(()=>DEFINITION_REGISTRY.find(d=>d.id===params.get("definition"))?.id??DEFINITION_REGISTRY[0]!.id),ledger=useLedger(),[recorded,setRecorded]=useState(""),[audit,setAudit]=useState<AuditLog>(emptyAudit()),
   [agg,setAgg]=useState<CohortAggregate|null>(null),[finding,setFinding]=useState<ReleasedFinding|null>(null),[msg,setMsg]=useState<{ok:boolean;text:string}|null>(null),[tamper,setTamper]=useState(false);
  useEffect(()=>{const c=new AbortController(),t=setTimeout(()=>c.abort(),15000);
   loadSyntheticCohort(c.signal).then(setPatients).catch(()=>{if(!c.signal.aborted)setErr("The synthetic cohort could not be loaded or verified. Nothing is shown.")});
   loadDomainGraph(null,c.signal).then(setBundle).catch(()=>{}).finally(()=>clearTimeout(t));return()=>{c.abort();clearTimeout(t)}},[]);
- const def=useMemo<PhenotypeDefinition|null>(()=>{if(!bundle)return null;const d=defId==="raised"?raisedHbA1cAdults(bundle.version):diabetesGlycaemicResponse(bundle.version);const v=validateDefinition(d);return v.ok?v.def:null},[bundle,defId]);
+ const def=useMemo<PhenotypeDefinition|null>(()=>{if(!bundle)return null;const d=(DEFINITION_REGISTRY.find(x=>x.id===defId)??DEFINITION_REGISTRY[0]!).build(bundle.version);const v=validateDefinition(d);return v.ok?v.def:null},[bundle,defId]);
  const gap=def&&bundle?bundle.gaps.find(g=>g.id===def.origin.ref):null;
  const ids=useMemo(()=>({matched:[] as string[]}),[]);
- const reset=()=>{setAgg(null);setFinding(null);setMsg(null)};
+ const reset=()=>{setAgg(null);setFinding(null);setMsg(null);setRecorded("")};
+ const hyp=ledger.ledger[params.get("hypothesis")??""]??null;
+ const record=()=>{if(!hyp||!finding||!def)return;const r=addCohortObservation(hyp,{definitionId:def.id,definitionTitle:def.title,graphVersion:finding.graphVersion,aggregateDigest:finding.aggregateDigest,evaluated:finding.aggregate.counts.evaluated,matched:finding.aggregate.counts.matched,suppressedCells:finding.aggregate.suppression.cellsSuppressed,dataClass:finding.dataClass},new Date().toISOString());if(!r.ok){setRecorded(r.error);return}ledger.update(hyp.id,()=>r.entry);setRecorded("Attached to your hypothesis as a synthetic observation. It is not evidence and did not change the hypothesis status.")};
  const evaluate=()=>{if(!def||!patients)return;const r=evaluateCohort(def,patients);ids.matched=r.matchedIds;setAgg(r.aggregate);setFinding(null);setMsg(null);
   setAudit(a=>appendAudit(a,{at:new Date().toISOString(),actor:REQUESTER,action:"cohort_evaluated",subject:def.id,detail:`${r.aggregate.counts.matched} matched of ${r.aggregate.counts.evaluated}; aggregate only held`}))};
  const attempt=(kind:"noapproval"|"approved"|"rowlevel")=>{
@@ -53,11 +57,11 @@ export function CohortPlanePage(){
      {!patients&&!err&&<div className="rh-skel" aria-hidden="true"/>}
     </section>
 
+    {hyp&&<p className="co-ctx" role="note">Exploring for your hypothesis: <b>{hyp.statement}</b> · <Link to="/research/ledger">back to the ledger</Link>{hyp.cohortDefinitionId&&hyp.cohortDefinitionId!==defId&&<> · This hypothesis is linked to a different definition, so a result from this one cannot be attached.</>}</p>}
     <section className="rh-card" aria-labelledby="co-def-h">
      <h2 id="co-def-h">1. Definition</h2>
      <div className="rh-choices co-defs" role="group" aria-label="Choose a definition">
-      <button type="button" aria-pressed={defId==="raised"} onClick={()=>{setDefId("raised");reset()}}>Adults with raised HbA1c</button>
-      <button type="button" aria-pressed={defId==="t2d"} onClick={()=>{setDefId("t2d");reset()}}>Type 2 diabetes subset</button>
+      {DEFINITION_REGISTRY.map(d=><button key={d.id} type="button" aria-pressed={defId===d.id} onClick={()=>{setDefId(d.id);reset()}}>{d.label}</button>)}
      </div>
      {def?<>
       <p><b>{def.title}</b></p>
@@ -92,6 +96,9 @@ export function CohortPlanePage(){
       <div className="co-tablewrap"><table className="co-table"><caption>Matched by sex and by condition</caption><thead><tr><th scope="col">Group</th><th scope="col">Matched</th></tr></thead><tbody>{Object.entries(rel.matchedBySex).map(([k,v])=><tr key={"s"+k}><th scope="row">Sex: {k}</th><td>{cell(v)}</td></tr>)}{Object.entries(rel.matchedByCondition).map(([k,v])=><tr key={"c"+k}><th scope="row">{k}</th><td>{cell(v)}</td></tr>)}</tbody></table></div>
       <div className="co-tablewrap"><table className="co-table"><caption>Laboratory summary of matched profiles</caption><thead><tr><th scope="col">Test</th><th scope="col">n</th><th scope="col">Median</th><th scope="col">IQR</th></tr></thead><tbody>{rel.labSummary.map(l=><tr key={l.test}><th scope="row">{l.test}</th><td>{cell(l.n)}</td><td>{cell(l.median)}</td><td>{l.p25===null||l.p75===null?cell(null):`${l.p25} to ${l.p75}`}</td></tr>)}</tbody></table></div>
      </div>}
+     {finding&&<div className="co-attach"><h3>Use this result</h3>
+      {hyp?<><p className="rh-note">Attach the released aggregate to your hypothesis as an illustration. It does not change the hypothesis status or set an outcome, and synthetic data is not evidence.</p><div className="rh-row"><button type="button" className="rh-ghost" onClick={record} disabled={hyp.cohortDefinitionId!==defId}>Attach to “{hyp.statement.slice(0,60)}{hyp.statement.length>60?"…":""}”</button></div></>:<p className="rh-note">Open this page from a hypothesis in <Link to="/research/ledger">your ledger</Link> to attach a released result to it.</p>}
+      <div role="status" aria-live="polite">{recorded&&<p className="rh-note">{recorded}</p>}</div></div>}
     </section>
 
     <section className="rh-card" aria-labelledby="co-au-h">
