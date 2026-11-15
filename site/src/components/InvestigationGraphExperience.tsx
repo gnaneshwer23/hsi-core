@@ -17,6 +17,8 @@ import {
 } from '../../../src/knowledgeGraph/investigationProjection';
 import { loadDomainGraph } from '../lib/claimGraphClient';
 import { anchorsFor } from '../lib/program';
+import { NodeIntelligence, useGapIndex } from './NodeIntelligence';
+import '../styles/gap-intelligence.css';
 import { loadProfile } from '../lib/researchHome';
 import { GraphVisual, type CanvasGraph } from '../features/science/GraphVisual';
 import '../styles/investigation-graph.css';
@@ -244,6 +246,7 @@ export function InvestigationGraphExperience({ embedded = false }: { embedded?: 
     : paths[0];
   const selectedId = params.get('node') ?? from;
   const selected = bundle?.nodes.find((n) => n.id === selectedId);
+  const gapIdx = useGapIndex(bundle);
   const neighbourhood = useMemo(
     () =>
       selectionValid && selected
@@ -927,6 +930,17 @@ export function InvestigationGraphExperience({ embedded = false }: { embedded?: 
               Select a path step or relationship to inspect its source, context, uncertainty and
               missing fields.
             </p>
+          )}
+          {bundle && (
+            <NodeIntelligence
+              bundle={bundle}
+              nodeId={selected.id}
+              gaps={gapIdx.gaps}
+              gapError={gapIdx.error}
+              onInspectEdge={inspectEdge}
+              onCompare={compareEdge}
+              onSelectNode={(id) => update({ node: id, edge: '' })}
+            />
           )}
           <details>
             <summary>Incoming and outgoing connections ({related.length})</summary>

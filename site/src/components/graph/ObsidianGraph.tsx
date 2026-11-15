@@ -1,10 +1,11 @@
 import {useCallback,useEffect,useMemo,useRef,useState} from "react";
 
 export type OGNode={id:string;label:string;kind:string;domain:string};
+export type OGGap={id:string;a:string;b:string;score:number};
 export type OGEdge={id:string;s:string;o:string;predicate:string;negated:boolean;contextual:boolean;model:string};
 type GroupBy="domain"|"kind"|"model";
-type Settings={text:number;size:number;link:number;center:number;repel:number;strength:number;dist:number;arrows:boolean;animate:boolean;groupBy:GroupBy};
-const DEFAULTS:Settings={text:.5,size:1,link:1,center:.55,repel:.45,strength:.5,dist:.45,arrows:false,animate:true,groupBy:"domain"};
+type Settings={text:number;size:number;link:number;center:number;repel:number;strength:number;dist:number;arrows:boolean;animate:boolean;groupBy:GroupBy;gaps:boolean};
+const DEFAULTS:Settings={text:.5,size:1,link:1,center:.55,repel:.45,strength:.5,dist:.45,arrows:false,animate:true,groupBy:"domain",gaps:true};
 const PALETTE=["#65CEE6","#A4A1EE","#E8A0B0","#D4B376","#8FD9A8","#F2A65A","#7FB2F0","#C9A0DC","#9AA5B8"];
 const MAX_NODES=500,pretty=(s:string)=>s.replaceAll("_"," ");
 type Sim={x:Float64Array;y:Float64Array;vx:Float64Array;vy:Float64Array;pin:Uint8Array;alpha:number};
@@ -12,7 +13,7 @@ const hash=(s:string)=>[...s].reduce((a,c)=>(a*31+c.charCodeAt(0))>>>0,17);
 
 /** An Obsidian-style graph: live force simulation, drag nodes, pan and zoom, hover to isolate a neighbourhood, labels that appear as you zoom.
  *  Colour is a scientific choice (department, concept type or evidence model); dashed lines are findings recorded as not holding. */
-export function ObsidianGraph({nodes,edges,selected,highlight,onSelect,onSelectEdge,caption,exportName="hsi-graph"}:{nodes:OGNode[];edges:OGEdge[];selected:string;highlight?:ReadonlySet<string>;onSelect:(id:string)=>void;onSelectEdge:(id:string)=>void;caption:string;exportName?:string}){
+export function ObsidianGraph({nodes,edges,selected,highlight,onSelect,onSelectEdge,caption,exportName="hsi-graph",gaps=[],gapSel=null,onGap,focusIds,focusTick=0}:{nodes:OGNode[];edges:OGEdge[];selected:string;highlight?:ReadonlySet<string>;onSelect:(id:string)=>void;onSelectEdge:(id:string)=>void;caption:string;exportName?:string;gaps?:OGGap[];gapSel?:string|null;onGap?:(id:string)=>void;focusIds?:string[];focusTick?:number}){
  const wrap=useRef<HTMLDivElement|null>(null),cv=useRef<HTMLCanvasElement|null>(null);
  const [cfg,setCfg]=useState<Settings>(DEFAULTS),[panel,setPanel]=useState(false),[hidden,setHidden]=useState<string[]>([]),[paused,setPaused]=useState(false),[zoomPct,setZoomPct]=useState(100),[msg,setMsg]=useState("");
  const cfgRef=useRef(cfg);cfgRef.current=cfg;
@@ -27,8 +28,9 @@ export function ObsidianGraph({nodes,edges,selected,highlight,onSelect,onSelectE
  const idx=useMemo(()=>new Map(shown.map((n,i)=>[n.id,i])),[shown]);
  const sig=shown.map(n=>n.id).join("|")+";"+links.length;
  const st=useRef({sim:null as Sim|null,k:1,tx:0,ty:0,w:900,h:640,dpr:1,hover:-1,touched:false,drag:null as null|{mode:"node"|"pan";i:number;sx:number;sy:number;tx:number;ty:number;moved:boolean},raf:0,dirty:true,running:false,fitFor:""});
- const data=useRef({shown,links,deg,idx,colour,groupOf,selected,highlight,cfg});
- data.current={shown,links,deg,idx,colour,groupOf,selected,highlight,cfg};
+ const gapsShown=useMemo(()=>gaps.filter(g=>idx.has(g.a)&&idx.has(g.b)),[gaps,idx]);
+ const data=useRef({shown,links,deg,idx,colour,groupOf,selected,highlight,cfg,gaps:gapsShown,gapSel,hoverGap:-1});
+ data.current={...data.current,shown,links,deg,idx,colour,groupOf,selected,highlight,cfg,gaps:gapsShown,gapSel};
  const radius=(i:number)=>{const d=data.current;return (3+Math.sqrt(d.deg.get(d.shown[i]!.id)??0)*1.6)*d.cfg.size};
 
  const fit=useCallback(()=>{
@@ -83,6 +85,14 @@ export function ObsidianGraph({nodes,edges,selected,highlight,onSelect,onSelectE
    if(dim)ctx.globalAlpha=.12;ctx.lineWidth=(on?1.8:.9)*d.cfg.link;ctx.setLineDash(e.negated?[6,4]:e.contextual?[1.5,4]:[]);ctx.stroke();ctx.globalAlpha=1;ctx.setLineDash([]);
    if(d.cfg.arrows&&!dim){const x1=X(i),y1=Y(i),x2=X(j),y2=Y(j),ang=Math.atan2(y2-y1,x2-x1),r=radius(j)*s.k+3;const ax=x2-Math.cos(ang)*r,ay=y2-Math.sin(ang)*r;ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(ax-Math.cos(ang-.45)*7,ay-Math.sin(ang-.45)*7);ctx.lineTo(ax-Math.cos(ang+.45)*7,ay-Math.sin(ang+.45)*7);ctx.closePath();ctx.fillStyle=ctx.strokeStyle as string;ctx.fill()}
   }
+  // research gaps: amber dashed arcs with a marker; endpoints of the selected gap are ringed
+  if(d.cfg.gaps)d.gaps.forEach((g,gi)=>{
+   const i=d.idx.get(g.a)!,j=d.idx.get(g.b)!,x1=X(i),y1=Y(i),x2=X(j),y2=Y(j),mx=(x1+x2)/2-(y2-y1)*.12,my=(y1+y2)/2+(x2-x1)*.12,on=g.id===d.gapSel,hov=gi===d.hoverGap;
+   ctx.beginPath();ctx.moveTo(x1,y1);ctx.quadraticCurveTo(mx,my,x2,y2);ctx.strokeStyle=on?"#FFD58A":"rgba(242,180,90,.75)";ctx.lineWidth=(on?3:1.4)+g.score/70;ctx.setLineDash([7,5]);ctx.stroke();ctx.setLineDash([]);
+   if(on)for(const k of [i,j]){ctx.beginPath();ctx.arc(X(k),Y(k),Math.max(2.5,radius(k)*Math.sqrt(s.k))+7,0,7);ctx.strokeStyle="rgba(255,213,138,.9)";ctx.lineWidth=2;ctx.stroke()}
+   ctx.beginPath();ctx.arc(mx,my,on||hov?12:9,0,7);ctx.fillStyle=on?"#FFD58A":"#F2B45A";ctx.fill();ctx.fillStyle="#1a1405";ctx.font="700 12px system-ui,sans-serif";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText("?",mx,my+.5);
+   if(hov||on){ctx.font="600 12px 'Host Grotesk Variable',system-ui,sans-serif";const t=`Research gap · triage ${g.score}`,w=ctx.measureText(t).width+14;ctx.fillStyle="rgba(14,17,24,.94)";ctx.fillRect(mx-w/2,my-34,w,20);ctx.fillStyle="#FFD58A";ctx.fillText(t,mx,my-24)}
+  });
   // nodes
   const order=d.shown.map((_,i)=>i).sort((a,b)=>Number(near.has(a))-Number(near.has(b)));
   for(const i of order){
@@ -131,6 +141,15 @@ export function ObsidianGraph({nodes,edges,selected,highlight,onSelect,onSelectE
  const idxPrev=useRef(idx);
 
  useEffect(()=>{st.current.dirty=true;draw()},[selected,highlight,cfg.size,cfg.link,cfg.text,cfg.arrows,cfg.groupBy,hidden]); // eslint-disable-line react-hooks/exhaustive-deps
+useEffect(()=>{st.current.dirty=true;draw()},[gapSel,gapsShown,cfg.gaps]); // eslint-disable-line react-hooks/exhaustive-deps
+ useEffect(()=>{
+  const s=st.current,sim=s.sim;if(!focusTick||!focusIds?.length||!sim)return;
+  const pts=focusIds.map(id=>idx.get(id)).filter((i):i is number=>i!==undefined).map(i=>[sim.x[i]!,sim.y[i]!]);if(!pts.length)return;
+  const xs=pts.map(p=>p[0]!),ys=pts.map(p=>p[1]!),a=Math.min(...xs),b=Math.max(...xs),c=Math.min(...ys),d=Math.max(...ys);
+  const nk=Math.max(.4,Math.min(2.4,Math.min((s.w-260)/Math.max(80,b-a),(s.h-200)/Math.max(80,d-c)))),ntx=s.w/2-((a+b)/2)*nk,nty=s.h/2-((c+d)/2)*nk,k0=s.k,x0=s.tx,y0=s.ty,t0=performance.now();s.touched=true;
+  const go=(t:number)=>{const u=Math.min(1,(t-t0)/380),e=1-Math.pow(1-u,3);s.k=k0+(nk-k0)*e;s.tx=x0+(ntx-x0)*e;s.ty=y0+(nty-y0)*e;s.dirty=true;draw();if(u<1)requestAnimationFrame(go);else setZoomPct(Math.round(s.k*100))};
+  if(reduce()){s.k=nk;s.tx=ntx;s.ty=nty;draw();setZoomPct(Math.round(nk*100))}else requestAnimationFrame(go);
+ },[focusTick]); // eslint-disable-line react-hooks/exhaustive-deps
  useEffect(()=>{kick(.5)},[cfg.center,cfg.repel,cfg.strength,cfg.dist]); // eslint-disable-line react-hooks/exhaustive-deps
  useEffect(()=>{if(!cfg.animate||paused){cancelAnimationFrame(st.current.raf);st.current.running=false}else kick(.3)},[cfg.animate,paused]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -155,14 +174,20 @@ export function ObsidianGraph({nodes,edges,selected,highlight,onSelect,onSelectE
   for(const e of d.links){const i=d.idx.get(e.s)!,j=d.idx.get(e.o)!,x1=sim.x[i]!*s.k+s.tx,y1=sim.y[i]!*s.k+s.ty,x2=sim.x[j]!*s.k+s.tx,y2=sim.y[j]!*s.k+s.ty,l2=(x2-x1)**2+(y2-y1)**2||1,t=Math.max(0,Math.min(1,((px-x1)*(x2-x1)+(py-y1)*(y2-y1))/l2));if(Math.hypot(px-(x1+t*(x2-x1)),py-(y1+t*(y2-y1)))<5)return e.id}
   return null;
  }
+ function pickGap(px:number,py:number){
+  const s=st.current,sim=s.sim,d=data.current;if(!sim||!d.cfg.gaps)return -1;
+  for(let gi=0;gi<d.gaps.length;gi++){const g=d.gaps[gi]!,i=d.idx.get(g.a)!,j=d.idx.get(g.b)!,x1=sim.x[i]!*s.k+s.tx,y1=sim.y[i]!*s.k+s.ty,x2=sim.x[j]!*s.k+s.tx,y2=sim.y[j]!*s.k+s.ty,mx=(x1+x2)/2-(y2-y1)*.12,my=(y1+y2)/2+(x2-x1)*.12;if(Math.hypot(px-mx,py-my)<14)return gi}
+  return -1;
+ }
  const local=(e:React.PointerEvent)=>{const r=cv.current!.getBoundingClientRect();return {x:e.clientX-r.left,y:e.clientY-r.top}};
  function down(e:React.PointerEvent<HTMLCanvasElement>){
-  if(e.button!==0)return;const p=local(e),i=pick(p.x,p.y),s=st.current;
+  if(e.button!==0)return;const p=local(e),gi=pickGap(p.x,p.y),i=gi>=0?-1:pick(p.x,p.y),s=st.current;
+  if(gi>=0){onGap?.(data.current.gaps[gi]!.id);return}
   s.drag={mode:i>=0?"node":"pan",i,sx:p.x,sy:p.y,tx:s.tx,ty:s.ty,moved:false};e.currentTarget.setPointerCapture(e.pointerId);
  }
  function move(e:React.PointerEvent<HTMLCanvasElement>){
   const s=st.current,p=local(e),dr=s.drag,sim=s.sim;
-  if(!dr){const i=pick(p.x,p.y);if(i!==s.hover){s.hover=i;cv.current!.style.cursor=i>=0?"pointer":"grab";s.dirty=true;if(!s.running)draw()}return}
+  if(!dr){const gi=pickGap(p.x,p.y),i=gi>=0?-1:pick(p.x,p.y);if(i!==s.hover||gi!==data.current.hoverGap){s.hover=i;data.current.hoverGap=gi;cv.current!.style.cursor=i>=0||gi>=0?"pointer":"grab";s.dirty=true;if(!s.running)draw()}return}
   if(Math.hypot(p.x-dr.sx,p.y-dr.sy)>4)dr.moved=true;
   if(dr.mode==="node"&&sim&&dr.moved){sim.x[dr.i]=(p.x-s.tx)/s.k;sim.y[dr.i]=(p.y-s.ty)/s.k;sim.pin[dr.i]=1;sim.vx[dr.i]=0;sim.vy[dr.i]=0;kick(.35);s.dirty=true;if(!s.running)draw()}
   else if(dr.mode==="pan"){s.touched=true;s.tx=dr.tx+(p.x-dr.sx);s.ty=dr.ty+(p.y-dr.sy);s.dirty=true;draw()}
@@ -203,6 +228,7 @@ export function ObsidianGraph({nodes,edges,selected,highlight,onSelect,onSelectE
     <label className="og-row"><span>Colour by</span><select value={cfg.groupBy} onChange={e=>{setHidden([]);set("groupBy",e.target.value as GroupBy)}} aria-label="Colour concepts by"><option value="domain">Department</option><option value="kind">Concept type</option><option value="model">Evidence model</option></select></label>
     {slider("text","Labels appear",0,1,.05)}{slider("size","Node size",.5,2.2,.05)}{slider("link","Link thickness",.4,3,.05)}
     <label className="og-row og-check"><input type="checkbox" checked={cfg.arrows} onChange={e=>set("arrows",e.target.checked)}/> Arrows</label>
+    <label className="og-row og-check"><input type="checkbox" checked={cfg.gaps} onChange={e=>set("gaps",e.target.checked)}/> Research gap markers</label>
     <label className="og-row og-check"><input type="checkbox" checked={cfg.animate} onChange={e=>set("animate",e.target.checked)}/> Animate</label>
     <h3>Forces</h3>
     {slider("center","Centre force",0,1,.05)}{slider("repel","Repel force",0,1,.05)}{slider("strength","Link force",0,1,.05)}{slider("dist","Link distance",0,1,.05)}

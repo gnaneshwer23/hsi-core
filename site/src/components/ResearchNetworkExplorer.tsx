@@ -5,6 +5,9 @@ import { useEffect, useMemo, useState, useId } from 'react';
 import type { DomainBundle } from '../../../src/knowledgeGraph/domainGraph';
 import { networkProjection, connectionGroups } from '../../../src/knowledgeGraph/networkExplorer';
 import { ObsidianGraph } from './graph/ObsidianGraph';
+import { GapCard } from './GapCard';
+import { useGapIndex } from './NodeIntelligence';
+import '../styles/gap-intelligence.css';
 import '../styles/obsidian-graph.css';
 import '../styles/research-network.css';
 const pretty = (s: string) => s.replaceAll('_', ' ');
@@ -36,6 +39,7 @@ export function ResearchNetworkExplorer({
 }) {
   const filterPanelId=useId();
   const [filtersOpen,setFiltersOpen]=useState(false);
+  const [gapId,setGapId]=useState<string|null>(null),[focus,setFocus]=useState({ids:[] as string[],tick:0});
   const [history, setHistory] = useState({ ids: [selected], index: 0 }),
     [list, setList] = useState(false);
   useEffect(() => {
@@ -87,6 +91,18 @@ export function ResearchNetworkExplorer({
   const kindCounts = useMemo(() => { const m = new Map<string, number>(); for (const n of bundle.nodes) m.set(n.kind, (m.get(n.kind) ?? 0) + 1); return [...m].sort((a, b) => b[1] - a[1]); }, [bundle]);
   const modelCounts = useMemo(() => { const m = new Map<string, number>(); for (const e of bundle.edges) if (e.kind === 'source_candidate') m.set(e.model, (m.get(e.model) ?? 0) + 1); return [...m].sort((a, b) => b[1] - a[1]); }, [bundle]);
   const activeCount = [f.department, f.conditions[0], f.kind, f.model, f.polarity, f.tissue, f.evidenceKind, f.gaps ? '' : 'x', f.orphans ? 'x' : '', f.query].filter(Boolean).length;
+  const gapIdx = useGapIndex(bundle);
+  const inSlice = new Set(slice.nodes.map((n) => n.id));
+  const gaps = useMemo(() => [...gapIdx.gaps].sort((a, b) => Number(b.entityIds.includes(selected)) - Number(a.entityIds.includes(selected)) || b.priorityScore - a.priorityScore || a.id.localeCompare(b.id)), [gapIdx.gaps, selected]);
+  const gap = gaps.find((g) => g.id === gapId) ?? null;
+  const gapHidden = gap ? !gap.entityIds.every((id) => inSlice.has(id)) : false;
+  function chooseGap(id: string) {
+    const g = gapIdx.gaps.find((x) => x.id === id);
+    if (!g) return;
+    setGapId(id);
+    if (!g.entityIds.every((e) => inSlice.has(e))) { update({ node: g.entityIds[0], netScope: 'global' }); }
+    setFocus((f) => ({ ids: [...g.entityIds], tick: f.tick + 1 }));
+  }
   const name = (id: string) => bundle.nodes.find((n) => n.id === id)?.name ?? id;
   const coverage=recordedContextCoverage(slice.edges);
   const groups = connectionGroups(slice.edges, selected);
@@ -220,8 +236,13 @@ export function ResearchNetworkExplorer({
                   highlight={matches}
                   onSelect={visit}
                   onSelectEdge={inspectEdge}
-                  caption="Candidate network · proximity is layout, not biological evidence"
+                  caption="Candidate network · proximity is layout, not biological evidence · an amber ? marks a research gap between two concepts"
                   exportName={'hsi-network-' + bundle.version}
+                  gaps={gapIdx.gaps.map((g) => ({ id: g.id, a: g.entityIds[0], b: g.entityIds[1], score: g.priorityScore }))}
+                  gapSel={gapId}
+                  onGap={chooseGap}
+                  focusIds={focus.ids}
+                  focusTick={focus.tick}
                 />
               </div>
               {list && (
@@ -246,6 +267,23 @@ export function ResearchNetworkExplorer({
               )}
             </>
           )}
+          <section className="rn-gaps" aria-label="Research gaps">
+            <h3>Research gaps ({gaps.length})</h3>
+            {gapIdx.error && <p className="ni-warn" role="alert">The gap index could not be built, so no gaps are shown: {gapIdx.error}</p>}
+            {!gapIdx.error && gaps.length === 0 && <p>No gaps are recorded in this snapshot.</p>}
+            <ul className="rn-gap-list">
+              {gaps.map((g) => (
+                <li key={g.id}>
+                  <button type="button" aria-pressed={g.id === gapId} onClick={() => chooseGap(g.id)}>
+                    <span>{g.question}</span>
+                    <small>Triage {g.priorityScore} · {g.entityIds.map(name).join(' ↔ ')}{g.entityIds.includes(selected) ? ' · touches the selected concept' : ''}</small>
+                  </button>
+                </li>
+              ))}
+            </ul>
+            {gap && gapHidden && <p className="ni-warn" role="status">One or both concepts of this gap are outside the current filters. Reset the filters to see it on the graph.</p>}
+            {gap && <GapCard gap={gap} bundle={bundle} onInspectEdge={inspectEdge} onSelectNode={visit} onFocus={() => setFocus((f) => ({ ids: [...gap.entityIds], tick: f.tick + 1 }))} />}
+          </section>
           <details className="rn-quality"><summary>Evidence coverage and limits</summary><p className="rn-coverage" role="status">Context coverage: {coverage.records} visible records; {coverage.missingTissue} without recorded tissue; {coverage.missingAssay} without recorded assay; {coverage.unassignedCondition} without a condition annotation. Independently reviewed: {coverage.independentlyReviewed}. Missing metadata is not evidence of biological absence.</p></details>
           <p className="rn-legend">
             Solid: source candidate. Dashed: negative finding. Dotted: research gap or study
