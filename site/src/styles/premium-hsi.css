@@ -1,0 +1,42 @@
+/* Premium layer for the shared public components (Trust, About, Contact-style pages).
+   Same "quiet laboratory" world as the landing page: pale cool ground, deep ink, indigo accent, pastel tints. */
+.hsi-public{--pm-ink:#0f1b2d;--pm-body:#38455a;--pm-muted:#566377;--pm-line:#dde3ec;--pm-accent:#5240bd;--pm-mint:#e0f3ea;--pm-lav:#ebe7fb;--pm-peach:#fde9da;--pm-sky:#e0edf9;
+ background:#f3f5f9;color:var(--pm-ink)}
+.hsi-public :is(h1,h2,h3){font-family:'Host Grotesk Variable',system-ui,sans-serif;font-weight:650;letter-spacing:-.03em;text-wrap:balance}
+.hsi-public h1{font-size:clamp(2.5rem,5vw,4.4rem);line-height:1.04}
+.hsi-public h2{font-size:clamp(1.9rem,3vw,2.9rem);line-height:1.08}
+.hsi-public p{color:var(--pm-body)}
+.hsi-public .hsi-page-hero{width:min(1240px,calc(100% - 64px));margin:32px auto 0;padding:72px 64px;border-radius:40px;background:linear-gradient(135deg,#fff 0,#ece8fb 60%,#e1f3ee 125%);border:1px solid #fff;box-shadow:0 2px 4px rgba(53,45,110,.05),0 30px 70px rgba(53,45,110,.1);align-items:center}
+.hsi-public .hsi-page-hero h1{margin:0}
+.hsi-public .hsi-lead{font-size:1.15rem;line-height:1.65;color:var(--pm-body)}
+.hsi-public .hsi-section{padding-block:72px}
+.hsi-public .hsi-section-intro p{font-size:1.06rem}
+.hsi-public .hsi-action{border-radius:999px;min-height:52px;padding:0 26px;background:var(--pm-ink);border-color:var(--pm-ink);font-size:1rem;font-weight:650}
+.hsi-public .hsi-action:hover{background:var(--pm-accent);border-color:var(--pm-accent)}
+.hsi-public .hsi-action-secondary{background:transparent;color:var(--pm-ink);border-color:#b9c2d1}
+.hsi-public .hsi-action-secondary:hover{background:#fff;color:var(--pm-accent);border-color:var(--pm-accent)}
+.hsi-public .hsi-text-link{color:var(--pm-accent)}
+/* governance chain as a row of pastel steps */
+.hsi-public .hsi-governance-chain{list-style:none;margin:32px 0 8px;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;counter-reset:gc}
+.hsi-public .hsi-governance-chain li{counter-increment:gc;padding:22px 20px;border:0;border-radius:24px;background:var(--tint,#fff);display:grid;gap:8px;align-content:start}
+.hsi-public .hsi-governance-chain li::before{content:counter(gc);font-size:34px;font-weight:300;letter-spacing:-.04em;line-height:1;color:var(--pm-accent)}
+.hsi-public .hsi-governance-chain li:nth-child(1){--tint:var(--pm-mint)}.hsi-public .hsi-governance-chain li:nth-child(2){--tint:var(--pm-lav)}.hsi-public .hsi-governance-chain li:nth-child(3){--tint:var(--pm-peach)}.hsi-public .hsi-governance-chain li:nth-child(4){--tint:var(--pm-sky)}.hsi-public .hsi-governance-chain li:nth-child(5){--tint:#fff}
+.hsi-public .hsi-governance-chain :is(h3,strong,b){font-size:1.05rem;margin:0;letter-spacing:-.01em}
+.hsi-public .hsi-governance-chain p{margin:0;font-size:.95rem;line-height:1.55}
+.hsi-trust-statements{margin-top:28px;display:grid;gap:10px}
+.hsi-public .hsi-trust-statements p{margin:0;padding:16px 20px;border-radius:18px;background:#fff;border:1px solid var(--pm-line);color:var(--pm-ink);font-weight:550;max-width:none}
+/* principles as tinted cards */
+.hsi-public .hsi-principles{border-top:0;gap:18px}
+.hsi-public .hsi-principles article{padding:28px;border:0;border-radius:28px;background:var(--pm-mint)}
+.hsi-public .hsi-principles article:nth-child(2){background:var(--pm-lav)}.hsi-public .hsi-principles article:nth-child(3){background:var(--pm-peach)}
+.hsi-public .hsi-principles h3{font-size:1.3rem}.hsi-public .hsi-principles p{margin:0;font-size:1rem;line-height:1.65}
+/* dark closing band becomes a rounded navy panel */
+.hsi-public .hsi-dark{width:min(1240px,calc(100% - 64px));margin:24px auto;border-radius:40px;background:linear-gradient(135deg,#101c33,#2a2468);border:0;padding-block:64px}
+.hsi-public .hsi-dark .hsi-content{width:calc(100% - 96px)}
+.hsi-public .hsi-dark .hsi-action{background:#fff;border-color:#fff;color:var(--pm-ink)}
+.hsi-public .hsi-dark .hsi-action:hover{background:var(--pm-lav)}
+.hsi-public .hsi-dark .hsi-action-secondary{background:transparent;color:#fff;border-color:#8f95c9}
+.hsi-public .hsi-dark .hsi-action-secondary:hover{background:rgba(255,255,255,.12);color:#fff}
+.hsi-public :is(.hsi-outcome-list article){border-top:0;padding:26px;border-radius:24px;background:#fff}
+@media(max-width:1000px){.hsi-public .hsi-page-hero{width:calc(100% - 40px);padding:36px 26px;border-radius:28px;margin-top:20px}.hsi-public .hsi-governance-chain{grid-template-columns:1fr 1fr}.hsi-public .hsi-dark{width:calc(100% - 40px);border-radius:28px}.hsi-public .hsi-dark .hsi-content{width:calc(100% - 40px)}}
+@media(max-width:560px){.hsi-public .hsi-governance-chain{grid-template-columns:1fr}}

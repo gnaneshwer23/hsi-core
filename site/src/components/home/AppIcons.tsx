@@ -26,6 +26,11 @@ const P:Record<string,string>={
  check:"M5 12.5l4.5 4.5L19 7.5",
  palette:"M12 3a9 9 0 1 0 0 18c1.4 0 2-1 2-2 0-1.5-1.2-1.7-1.2-3 0-1 .8-1.8 1.9-1.8H17a4 4 0 0 0 4-4c0-3.9-4-7.2-9-7.2ZM7.5 11a1 1 0 1 0 0-.01M10 7.5a1 1 0 1 0 0-.01M14.5 7.5a1 1 0 1 0 0-.01",
  trend:"M4 17l6-6 4 4 6-8M15 7h5v5",
+ target:"M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM12 16.5a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM12 12h.01",
+ compass:"M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM15.5 8.5l-2 5-5 2 2-5 5-2Z",
+ users:"M9 12a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7ZM2.5 20a6.5 6.5 0 0 1 13 0M16 5.3a3.5 3.5 0 0 1 0 6.4M17.5 14a6.5 6.5 0 0 1 4 6",
+ chart:"M4 20V4M4 20h16M8 16v-5M12 16V8M16 16v-3",
+ clipboard:"M9 4h6v3H9V4ZM7 5.5H5.5v15h13v-15H17M9 12h6M9 16h4",
 };
 export function Icon({name,size=20}:{name:string;size?:number}){
  return <svg className="rh-ico" viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false"><path d={P[name]??P.graph}/></svg>;
