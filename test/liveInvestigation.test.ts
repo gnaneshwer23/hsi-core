@@ -329,3 +329,39 @@ describe("hypothesis step",()=>{
   expect(late.hypotheses.status).toBe("skipped_time");expect(calls.includes("gen")).toBe(false);
  });
 });
+
+describe("production guards for the model step",()=>{
+ const env=(o:Record<string,string>={})=>({HSI_LIVE_MODEL_STEP_ENABLED:"true",OPENAI_API_KEY:"sk-test-secret",HSI_OPENAI_MODEL:"model-a",HSI_OPENAI_MODEL_2:"model-b",...o});
+ const f=(async(u:any,i:any)=>{const url=String(u);
+  if(url.includes("openai.com"))return ok({choices:[{message:{content:JSON.stringify({direction:"insufficient",reason:"r",evidenceSpan:null})}}],usage:{prompt_tokens:10,completion_tokens:5}});
+  return (fakeFetch().f as any)(u,i)}) as any;
+ const run=(e:any,now?:()=>number,ip="3.3.3.3")=>handleLiveInvestigation(new Request("https://x.test/api/research/live-investigation",{method:"POST",headers:{"content-type":"application/json","x-forwarded-for":ip},body:JSON.stringify({scenarioId:"il21-autoimmune"})}),e,{fetcher:f,now});
+ test("a daily ceiling per instance stops model checks but retrieval still runs; a new UTC day resets it",async()=>{
+  resetLiveInvestigationLimiter();
+  const d1=()=>Date.parse("2026-11-15T10:00:00Z"),d2=()=>Date.parse("2026-11-16T10:00:00Z");
+  const a:any=await (await run(env({HSI_LIVE_MODEL_DAILY_RUNS:"1"}),d1,"1.1.1.1")).json();
+  expect(a.verification.status).not.toBe("not_configured");
+  const b:any=await (await run(env({HSI_LIVE_MODEL_DAILY_RUNS:"1"}),d1,"2.2.2.2")).json();
+  expect(b.verification.status).toBe("not_configured");expect(b.verification.reason).toContain("daily limit");expect(b.records.length).toBeGreaterThan(0);
+  const c:any=await (await run(env({HSI_LIVE_MODEL_DAILY_RUNS:"1"}),d2,"4.4.4.4")).json();
+  expect(c.verification.status).not.toBe("not_configured");
+ });
+ test("a ceiling of 0 disables model checks without turning the endpoint off, and a bad value falls back to the default",async()=>{
+  resetLiveInvestigationLimiter();
+  const z:any=await (await run(env({HSI_LIVE_MODEL_DAILY_RUNS:"0"}))).json();expect(z.verification.status).toBe("not_configured");
+  resetLiveInvestigationLimiter();
+  const bad:any=await (await run(env({HSI_LIVE_MODEL_DAILY_RUNS:"lots"}))).json();expect(bad.verification.status).not.toBe("not_configured");
+ });
+ test("the usage log line carries counts only: no key, question, passage or IP",async()=>{
+  resetLiveInvestigationLimiter();const lines:string[]=[];const orig=console.log;console.log=(...a:any[])=>{lines.push(a.join(" "))};
+  try{await run(env());}finally{console.log=orig}
+  const l=lines.find(x=>x.includes("live_investigation"))!;expect(l).toBeTruthy();
+  const j=JSON.parse(l);expect(Object.keys(j).sort()).toEqual(["calls","event","inputTokens","modelChecked","ms","outputTokens","refused","scenario"]);
+  expect(l).not.toContain("sk-test-secret");expect(l).not.toContain("3.3.3.3");expect(l).not.toContain("IL-21 signalling");
+ });
+ test("the model step stays off unless explicitly enabled, even with keys present",async()=>{
+  resetLiveInvestigationLimiter();
+  const off:any=await (await run({OPENAI_API_KEY:"k",HSI_OPENAI_MODEL:"a",HSI_OPENAI_MODEL_2:"b"})).json();
+  expect(off.verification.status).toBe("not_configured");expect(off.verification.reason).toContain("disabled");
+ });
+});

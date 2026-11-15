@@ -25,7 +25,7 @@ export function StoryHero(){
 }
 
 type Row={id:string;tag:string;title:string;points:string[];shot:{name:string;w:number;h:number;alt:string};note:string;link:{to:string;label:string}};
-const ROWS:Row[]=[
+export const ROWS:Row[]=[
  {id:"radar",tag:"Live now · no account",title:"See what is new in your area.",points:["New papers for each of your topics in the last 2, 7 or 30 days, with journal, date and retraction flags.","A ten-year publication trend, so you can tell a growing field from a settled one.","Your own papers from your ORCID iD, and a digest you can download."],
   shot:{name:"radar",w:1092,h:386,alt:"The research radar: IL-21 with 6 new papers in 7 days and systemic sclerosis with 22, each with a small publication trend line and an expandable list of the latest papers."},note:"Europe PMC and OpenAlex, generated when you open it. Counts are volume, not quality.",link:{to:"/welcome",label:"Set up your radar"}},
  {id:"gaps",tag:"Live now · heuristic",title:"Find where the literature is thin.",points:["Gaps recorded in the verified graph appear on their own, with their source and a possible next study.","Under-explored intersections come from literature counts: both topics well studied, few papers on both.","Every row shows its counts and links to the exact search, so you can check it before you rely on it."],
@@ -77,6 +77,42 @@ export function StoryCompare(){
     <thead><tr><th scope="col">Capability</th><th scope="col">Answer engines</th><th scope="col">Alert and discovery tools</th><th scope="col">Enterprise knowledge graphs</th><th scope="col">HSI today</th></tr></thead>
     <tbody>{CMP.map(r=><tr key={r[0]}><th scope="row">{r[0]}</th>{r.slice(1).map((c,i)=><td key={i} data-m={c}>{MARK[c]}</td>)}</tr>)}</tbody></table></div>
    <p className="ps-note">HSI does not have licensed full text, patents or a proprietary graph at the scale of enterprise platforms, and has no customers, benchmarks or accuracy figures to show yet.</p>
+  </section>
+ );
+}
+
+/** Three real screens as compact cards, for pages that describe the platform. Every card states its true status. */
+export function ProductTour({heading="In the product today."}:{heading?:string}){
+ return (
+  <section className="ps-tour" aria-labelledby="ps-tour-h">
+   <h2 id="ps-tour-h" className="ps-h2">{heading}</h2>
+   <ul className="ps-cards">{ROWS.map(r=>(
+    <li key={r.id}><Link to={r.link.to} className="ps-card" aria-label={`${r.title} ${r.link.label}`}>
+     <img src={`${IMG}${r.shot.name}.webp`} width={r.shot.w} height={r.shot.h} alt="" loading="lazy" decoding="async"/>
+     <span className="ps-tag">{r.tag}</span><b>{r.title}</b><span className="ps-note">{r.note}</span><span className="ps-link">{r.link.label} <span aria-hidden="true">→</span></span></Link></li>))}</ul>
+  </section>
+ );
+}
+
+const STEPS:[string,string,string,string][]=[
+ ["Plan","The scenario fixes the question, the entities and the disease contexts to examine.","The scenario record: entities, relationships, contexts.","Free-text questions are not run yet, so a caller cannot steer model spend."],
+ ["Retrieve","Searches Europe PMC and OpenAlex for each disease context, and reads Open Targets associations.","Every search, with its count or its failure.","A failed source is reported as failed, never as nothing found. Abstracts are not redistributed."],
+ ["Connect","Finds sentences where two scenario concepts appear together and ranks them: states an effect, concepts close together, disease named, a full sentence.","Why each sentence was ranked where it was.","Ranking only chooses what to check first. It never decides a finding."],
+ ["Compare","Groups candidates by disease context and relationship.","The relationship map and the evidence list, filterable by relationship.","Layout and distance are not biology."],
+ ["Verify","Two models independently state the direction (positive, negative, none, linked only, or cannot tell) and must quote the passage. Both must agree.","Each model's verdict, its reason and its quoted span.","Agreement is not proof. With one provider this is independent execution, not independent providers."],
+ ["Hypothesise","From findings both checks agreed on, one model proposes testable hypotheses with a prediction, an experiment and a falsifier; a second model challenges each.","Which findings each hypothesis cites, and the challenge verdict.","Hypotheses are unvalidated. Nothing is promoted to the graph or recommended."],
+ ["Brief","Assembles a Markdown or JSON brief with sources, quotes, limits and the run record.","Provenance for every claim, plus what was not covered.","Needs human review before anyone relies on it."],
+];
+export function HowToday(){
+ return (
+  <section className="ps-how" aria-labelledby="ps-how-h">
+   <h2 id="ps-how-h" className="ps-h2">What runs today, step by step.</h2>
+   <div className="ps-how-grid">
+    <ol className="ps-steps">{STEPS.map((s,i)=>(
+     <li key={s[0]}><span className="ps-n" aria-hidden="true">{i+1}</span><div><h3>{s[0]}</h3><p>{s[1]}</p><p className="ps-insp"><b>You can inspect:</b> {s[2]}</p><p className="ps-lim"><b>Limit:</b> {s[3]}</p></div></li>))}</ol>
+    <figure className="ps-fig ps-sticky"><Shot name="workspace" w={1172} h={1480} alt="The investigation workspace after a live run: totals, a seven-stage rail from Plan to Brief all marked done, evidence filters, a relationship map around IL-21 and a verification panel quoting the passage behind a positive finding."/>
+     <figcaption>A real run, captured 15 November 2026 with model checks enabled. <Link to="/research/workspace">Open the workspace</Link>.</figcaption></figure>
+   </div>
   </section>
  );
 }

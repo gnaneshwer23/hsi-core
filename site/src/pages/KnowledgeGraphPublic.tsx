@@ -2,6 +2,8 @@ import {Link} from "react-router-dom";
 import "../styles/scientific-public.css";
 import "../styles/knowledge-graph-public.css";
 import "../styles/home-redesign.css";
+import {ProductTour} from "../components/home/ProductStory";
+import "../styles/home-story.css";
 import {useGraphSnapshot} from "../components/home/useGraphSnapshot";
 import {NeighbourhoodDiagram,ChartsPair} from "../components/graph/GraphCharts";
 
@@ -134,6 +136,8 @@ export function KnowledgeGraphPublicPage() {
       <NeighbourhoodFigure />
       <WalkFigure />
       <ChartsFigure />
+
+      <ProductTour heading="Your own area of the graph."/>
 
       <section className="kg-section" aria-labelledby="kg-ways">
         <h2 id="kg-ways">Choose how deep to go.</h2>
