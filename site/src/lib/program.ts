@@ -24,6 +24,16 @@ export function anchorsFor(p:Profile,b:DomainBundle|null):Anchor[]{
  if(!out.length){const r=recommend(p,b,1)[0];if(r)add(r.id,r.name,r.reason)}
  return out;
 }
+/** Concepts the researcher named in free text (background, question). Exact name or alias matches only, longest phrase first. */
+export function detectTopics(nodes:DomainBundle["nodes"],text:string,limit=6):{id:string;name:string}[]{
+ const words=text.split(/[^A-Za-z0-9\-\/]+/).filter(Boolean),out:{id:string;name:string}[]=[],seen=new Set<string>(),done=new Set<string>();
+ for(let i=0;i<words.length;i++)for(const n of [4,3,2,1]){
+  const t=words.slice(i,i+n).join(" ");if(t.length<3||done.has(t.toLowerCase()))continue;done.add(t.toLowerCase());
+  const h=searchEntities(nodes,t,1)[0];
+  if(h&&h.score===100&&!seen.has(h.id)){seen.add(h.id);out.push({id:h.id,name:h.name})}
+ }
+ return out.slice(0,limit);
+}
 const cands=(b:DomainBundle)=>b.edges.filter(e=>e.kind==="source_candidate");
 /** Concepts and edges within `depth` hops of the anchors. hop 0 = anchors. */
 export function expand(b:DomainBundle,ids:readonly string[],depth:1|2|3){
