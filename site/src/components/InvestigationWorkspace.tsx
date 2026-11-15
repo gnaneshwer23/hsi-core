@@ -10,7 +10,7 @@ export function InvestigationWorkspace({onSnapshot}:{onSnapshot?:(value:Workspac
  const navigate=useNavigate();
  const [workspace,setWorkspace]=useState<Workspace|null>(null),[items,setItems]=useState<InvestigationSummary[]>([]);
  const [loading,setLoading]=useState(true),[saving,setSaving]=useState(false),[error,setError]=useState("");
- const [question,setQuestion]=useState(""),[releaseId,setReleaseId]=useState("");
+ const [question,setQuestion]=useState(()=>{try{return (new URLSearchParams(window.location.search).get("q")??"").slice(0,500)}catch{return ""}}),[releaseId,setReleaseId]=useState("");
  const [saveError,setSaveError]=useState("");
  const requestKey=useRef<{question:string;releaseId:string;id:string}|null>(null);
  const controller=useRef<AbortController|null>(null),saveController=useRef<AbortController|null>(null);

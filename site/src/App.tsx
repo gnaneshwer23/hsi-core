@@ -55,7 +55,7 @@ const AuthenticatedInterrogativeWorkbench=lazy(()=>import("./pages/Authenticated
 const ResearchMechanismWorkflowPage=lazy(()=>import("./pages/ResearchMechanismWorkflow").then(m=>({default:m.ResearchMechanismWorkflowPage})));
 const ScientificDiscoveryExperience=lazy(()=>import("./pages/ScientificDiscoveryExperience").then(m=>({default:m.ScientificDiscoveryExperience})));
 const ScientificInvestigationPage=lazy(()=>import("./pages/ScientificInvestigation").then(m=>({default:m.ScientificInvestigationPage})));
-const ResearcherHomePage=lazy(()=>import("./pages/ResearcherHome").then(m=>({default:m.ResearcherHome})));
+const ResearcherHomePage=lazy(()=>import("./pages/ResearchHome").then(m=>({default:m.ResearchHome})));
 const ResearchCommunityFeedPage=lazy(()=>import("./pages/ResearchCommunityFeed").then(m=>({default:m.ResearchCommunityFeed})));
 
 const OntologyMappingReview=lazy(()=>import("./pages/OntologyMappingReview").then(m=>({default:m.OntologyMappingReview})));
@@ -64,10 +64,12 @@ const SyntheticValidationWorkbench=lazy(()=>import("./pages/SyntheticValidationW
 const ClaimKnowledgeGraph=lazy(()=>import("./pages/ClaimKnowledgeGraph").then(m=>({default:m.ClaimKnowledgeGraph})));
 
 const CapabilityLab=lazy(()=>import("./pages/CapabilityLab").then(m=>({default:m.CapabilityLab})));
+const InvestorWorkspace=lazy(()=>import('./pages/demo/InvestorWorkspace').then(m=>({default:m.InvestorWorkspace})));
 
 export default function App() {
   return (
     <Routes>
+      <Route path="demo" element={<Suspense fallback={<p>Loading discovery workspace…</p>}><InvestorWorkspace/></Suspense>}/>
       <Route element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="research" element={<ResearchPublicPage/>}/>

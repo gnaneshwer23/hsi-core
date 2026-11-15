@@ -1,4 +1,4 @@
-import {useGraphSnapshot} from "../home/useGraphSnapshot";
+import {useGraphSnapshot,type Network} from "../home/useGraphSnapshot";
 import {departments} from "../../lib/departments";
 
 const clip=(s:string,n:number)=>s.length>n?s.slice(0,n-1).trimEnd()+"…":s;
@@ -8,22 +8,27 @@ const R=150,CX=380,CY=222;
 export function NeighbourhoodDiagram(){
   const {snapshot:s,failed}=useGraphSnapshot();
   if(!s)return <p className="kg-wait">{failed?"Snapshot unavailable. No substitute figures are shown.":"Verifying snapshot…"}</p>;
-  const n=s.network,others=n.nodes.filter(x=>x.id!==n.center);
+  return <NetworkView n={s.network}/>;
+}
+
+/** Draws any bounded network drawn from the published graph. Shared by the Knowledge graph page and the Research home preview. */
+export function NetworkView({n,uid="kg"}:{n:Network;uid?:string}){
+  const others=n.nodes.filter(x=>x.id!==n.center);
   const pos=new Map<string,{x:number;y:number;r:number}>([[n.center,{x:CX,y:CY,r:40}]]);
   others.forEach((x,i)=>{const a=(-90+360*i/others.length)*Math.PI/180;pos.set(x.id,{x:CX+R*Math.cos(a),y:CY+R*Math.sin(a),r:28})});
   const name=(id:string)=>n.nodes.find(x=>x.id===id)?.name??id;
   return (
     <div className="kg-net">
-      <svg viewBox="0 0 760 444" role="img" aria-labelledby="kg-net-t kg-net-d">
-        <title id="kg-net-t">A neighbourhood of the published knowledge graph</title>
-        <desc id="kg-net-d">{`${n.nodes.length} concepts and ${n.edges.length} recorded relationships around ${name(n.center)}. Solid lines are recorded relationships; dashed lines are findings recorded as negated. The same connections are listed in text beside the diagram.`}</desc>
+      <svg viewBox="0 0 760 444" role="img" aria-labelledby={uid+"-net-t "+uid+"-net-d"}>
+        <title id={uid+"-net-t"}>A neighbourhood of the published knowledge graph</title>
+        <desc id={uid+"-net-d"}>{`${n.nodes.length} concepts and ${n.edges.length} recorded relationships around ${name(n.center)}. Solid lines are recorded relationships; dashed lines are findings recorded as negated. The same connections are listed in text beside the diagram.`}</desc>
         <defs>
-          <marker id="kg-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" className="kg-arrow"/></marker>
+          <marker id={uid+"-arr"} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" className="kg-arrow"/></marker>
         </defs>
         {n.edges.map(e=>{
           const a=pos.get(e.s),b=pos.get(e.o);if(!a||!b)return null;
           const dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy)||1,ux=dx/len,uy=dy/len;
-          return <line key={e.id} className={"kg-line"+(e.negated?" kg-neg":"")} x1={a.x+ux*(a.r+2)} y1={a.y+uy*(a.r+2)} x2={b.x-ux*(b.r+6)} y2={b.y-uy*(b.r+6)} markerEnd="url(#kg-arr)"/>;
+          return <line key={e.id} className={"kg-line"+(e.negated?" kg-neg":"")} x1={a.x+ux*(a.r+2)} y1={a.y+uy*(a.r+2)} x2={b.x-ux*(b.r+6)} y2={b.y-uy*(b.r+6)} markerEnd={`url(#${uid}-arr)`}/>;
         })}
         {n.nodes.map(x=>{
           const p=pos.get(x.id)!,center=x.id===n.center;
