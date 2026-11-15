@@ -17,7 +17,7 @@ export function StoryHero(){
     <p className="ps-micro">No account needed to start. Your set-up is saved on your device.</p>
    </div>
    <figure className="ps-hero-shot">
-    <Shot name="home" w={1440} h={900} eager alt="The HSI research home: a search box, a research radar showing 6 new papers on IL-21 and 22 on systemic sclerosis in seven days with a ten-year publication trend, and a gap finder below."/>
+    <Shot name="home" w={1440} h={900} eager alt="The HSI research home: a glass sidebar, a search box and four overview tiles for concepts, recorded relationships, gaps and your loop progress."/>
     <figcaption>The research home, with live results for two example topics.</figcaption>
    </figure>
   </section>
@@ -27,9 +27,9 @@ export function StoryHero(){
 type Row={id:string;tag:string;title:string;points:string[];shot:{name:string;w:number;h:number;alt:string};note:string;link:{to:string;label:string}};
 export const ROWS:Row[]=[
  {id:"radar",tag:"Live now · no account",title:"See what is new in your area.",points:["New papers for each of your topics in the last 2, 7 or 30 days, with journal, date and retraction flags.","A ten-year publication trend, so you can tell a growing field from a settled one.","Your own papers from your ORCID iD, and a digest you can download."],
-  shot:{name:"radar",w:1092,h:386,alt:"The research radar: IL-21 with 6 new papers in 7 days and systemic sclerosis with 22, each with a small publication trend line and an expandable list of the latest papers."},note:"Europe PMC and OpenAlex, generated when you open it. Counts are volume, not quality.",link:{to:"/welcome",label:"Set up your radar"}},
+  shot:{name:"radar",w:1072,h:405,alt:"The research radar: IL-21 with 6 new papers in 7 days and systemic sclerosis with 22, each with a small publication trend line and an expandable list of the latest papers."},note:"Europe PMC and OpenAlex, generated when you open it. Counts are volume, not quality.",link:{to:"/welcome",label:"Set up your radar"}},
  {id:"gaps",tag:"Live now · heuristic",title:"Find where the literature is thin.",points:["Gaps recorded in the verified graph appear on their own, with their source and a possible next study.","Under-explored intersections come from literature counts: both topics well studied, few papers on both.","Every row shows its counts and links to the exact search, so you can check it before you rely on it."],
-  shot:{name:"gaps",w:1092,h:760,alt:"The gap finder: systemic sclerosis with T follicular helper cells flagged as an under-explored intersection with 7 papers mentioning both, against 22,733 and 1,576 for each alone; IL-21 with B cells and T follicular helper cells shown as well covered."},note:"A low overlap can be a real gap, different wording, or little interest. It is a prompt to look, not a finding.",link:{to:"/knowledge-graph",label:"How the graph records gaps"}},
+  shot:{name:"gaps",w:1072,h:972,alt:"The gap finder: systemic sclerosis with T follicular helper cells flagged as an under-explored intersection with 7 papers mentioning both, against 22,733 and 1,576 for each alone; IL-21 with B cells and T follicular helper cells shown as well covered."},note:"A low overlap can be a real gap, different wording, or little interest. It is a prompt to look, not a finding.",link:{to:"/knowledge-graph",label:"How the graph records gaps"}},
  {id:"workspace",tag:"Preview · model checks are switched on per deployment",title:"Investigate with proof.",points:["Retrieval from Europe PMC, OpenAlex and Open Targets. A failed source is shown as failed, never as nothing found.","Two models check the direction of the best claims and must quote the passage. If they disagree or cannot tell, the claim stays unresolved.","Hypotheses are proposed only from agreed findings, challenged by a second model, and labelled unvalidated."],
   shot:{name:"workspace",w:1172,h:1480,alt:"The investigation workspace after a live run: 46 sources, 21 candidates and 2 key findings; evidence filters, a relationship map around IL-21, and a verification panel quoting the passage behind a positive finding that microRNA-155 increases IL-21 mediated STAT3 signalling in lupus."},note:"Screenshot from a run with model checks enabled. Everything stays candidate-only and unreviewed.",link:{to:"/research/workspace",label:"Open the workspace"}},
 ];
@@ -54,7 +54,7 @@ export function StoryStart(){
     <ul><li>Say what you are researching, add topics, genes or diseases.</li><li>Optionally add your ORCID iD or paste DOIs and PubMed IDs, so HSI can find your own papers.</li><li>Choose light or dark and an accent colour. No health information is asked for.</li></ul>
     <p className="ps-note">Everything is saved on this device. Account storage and email updates are not available yet, and the page says so.</p>
     <Link className="sp-button" to="/welcome">Set up your research home <span aria-hidden="true">→</span></Link></div>
-   <figure className="ps-fig"><Shot name="welcome" w={1200} h={860} alt="The set-up page, step two of four: a box for your research question and a field to add topics such as IL-21 and systemic sclerosis."/></figure>
+   <figure className="ps-fig"><Shot name="welcome" w={1440} h={900} alt="The set-up page: a summary panel showing what your home will start with, beside a short optional form about your role and research."/></figure>
   </section>
  );
 }

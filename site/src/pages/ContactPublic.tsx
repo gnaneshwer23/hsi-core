@@ -2,6 +2,7 @@ import {Link} from "react-router-dom";
 import "../styles/scientific-public.css";
 import "../styles/home-redesign.css";
 import "../styles/contact-figure.css";
+import "../styles/premium-public.css";
 import {AccessIntentPanel} from "../components/AccessIntentPanel";
 import {signInHref,signUpHref} from "../lib/researchContext";
 
@@ -14,19 +15,19 @@ const path=[
 /** Contact: research access. A browser draft only; it never submits a request. */
 export function ContactPublicPage(){
   return (
-    <div className="sp-page fg-page ct-page">
-      <header className="fg-hook">
+    <div className="sp-page fg-page ct-page pg-page pg-sub">
+      <header className="pg-phero">
         <h1>Bring your next research question.</h1>
         <div>
-          <p className="fg-lead">Create an HSI account if you need one. The question form on this page saves a browser draft only and does not submit an access request or start an investigation. Researcher, source and scientific-review permissions are provisioned independently.</p>
-          <div className="sp-actions">
-            <Link className="sp-button" to={signUpHref()}>Create an account <span aria-hidden="true">→</span></Link>
-            <Link to={signInHref()}>Sign in →</Link>
+          <p className="pg-lead">Create an HSI account if you need one. The question form on this page saves a browser draft only and does not submit an access request or start an investigation. Researcher, source and scientific-review permissions are provisioned independently.</p>
+          <div className="pg-cta">
+            <Link className="pg-btn" to={signUpHref()}>Create an account <span aria-hidden="true">→</span></Link>
+            <Link className="pg-link" to={signInHref()}>Sign in <span aria-hidden="true">→</span></Link>
           </div>
         </div>
       </header>
 
-      <figure className="fg ct-figure" aria-labelledby="ct-cap">
+      <figure className="fg ct-figure pg-block" aria-labelledby="ct-cap">
         <ol className="ct-path">
           {path.map(([t,d],i)=>(
             <li key={t}>
@@ -39,7 +40,7 @@ export function ContactPublicPage(){
         <figcaption id="ct-cap" className="fg-cap"><b>Figure 5.</b> The access path. Each step is separate: an account does not grant research access, and an administrator's grant does not enable research writes. This page does not write an access request to HSI servers.</figcaption>
       </figure>
 
-      <section className="fg-block ct-draft" aria-labelledby="ct-draft">
+      <section className="fg-block ct-draft pg-block" aria-labelledby="ct-draft">
         <h2 id="ct-draft">Keep your question while you sign up.</h2>
         <div>
           <AccessIntentPanel />
