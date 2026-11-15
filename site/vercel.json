@@ -261,6 +261,10 @@
       "destination": "/_pages/research--journey.html"
     },
     {
+      "source": "/research/methods",
+      "destination": "/_pages/research--methods.html"
+    },
+    {
       "source": "/research/workspace",
       "destination": "/_pages/research--workspace.html"
     },
