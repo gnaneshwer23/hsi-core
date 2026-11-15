@@ -68,9 +68,12 @@ export function LiveInvestigationPanel(){
        <button type="button" aria-pressed={ctx==="all"} onClick={()=>setCtx("all")}>All</button>
        {Object.entries(result.byContext).map(([k,v])=><button key={k} type="button" aria-pressed={ctx===k} onClick={()=>setCtx(k)}>{v.label} ({v.supporting.length+v.opposing.length+v.uncertain.length})</button>)}
       </div>
-      {(["supporting","opposing","uncertain"] as const).map(p=>{
-       const list=cands.filter(c=>c.polarity===p);
-       return <div key={p} className={"li-group li-"+p}><h4>{p==="uncertain"&&!assessed?"Direction not assessed":p==="uncertain"?"Uncertain or abstained":p==="supporting"?"Supporting":"Opposing"} <span>({list.length})</span></h4>
+      {(["supporting","opposing","abstained","unchecked"] as const).map(p=>{
+       const list=cands.filter(c=>p==="abstained"?c.polarity==="uncertain"&&c.verification!=="not_run":p==="unchecked"?c.verification==="not_run":c.polarity===p&&c.verification!=="not_run");
+       if(p==="unchecked"&&!list.length)return null;
+       if(p==="abstained"&&!assessed)return null;
+       const title=p==="supporting"?"Supporting":p==="opposing"?"Opposing":p==="abstained"?"Checked, no direction established":assessed?"Not checked (ranked lower)":"Direction not assessed";
+       return <div key={p} className={"li-group li-"+(p==="supporting"?"supporting":p==="opposing"?"opposing":"uncertain")}><h4>{title} <span>({list.length})</span></h4>
         {list.length===0?<p className="li-none">{p==="opposing"?(assessed?"None found in these sources. This does not establish consensus.":"Not assessed: the model challenge did not run."):p==="supporting"&&!assessed?"Not assessed: the model challenge did not run.":"None in this view."}</p>:
          <ul>{list.map(c=><li key={c.id}><button type="button" aria-pressed={sel===c.id} onClick={()=>setSel(c.id)}><b>{c.subject} ~ {c.object}{c.direction!=="not_assessed"&&<em className="li-dir"> · {(DIRLABEL[c.direction]??c.direction).split(":")[0]}</em>}</b><span>{c.sentence}</span></button></li>)}</ul>}
        </div>;
