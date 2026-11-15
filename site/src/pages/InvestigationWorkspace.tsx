@@ -6,6 +6,8 @@ import {Icon} from "../components/home/AppIcons";
 import {deriveRunGaps} from "../../../src/investigation/runGaps";
 import {RunGapList} from "../components/home/RunGapList";
 import {useRunGapTracking} from "../lib/useRunGapTracking";
+import {useLedger} from "../lib/useLedger";
+import {fromRunHypothesis} from "../../../src/investigation/hypothesisLedger";
 import {useLiveRun} from "../lib/useLiveRun";
 import {BUCKET_LABEL,bucketOf,buildGraph,counts,filterCandidates,headline,stageRail,yearOf,type Bucket,type Cand,type EdgeState,type Run} from "../lib/workspaceView";
 import "../styles/investigation-workspace-app.css";
@@ -51,7 +53,7 @@ export function InvestigationWorkspacePage(){
  const first=useRef(true);
  useEffect(()=>{setSaved(lr.hasSaved());if(first.current){first.current=false;if(new URLSearchParams(loc.search).get("reopen")==="1")lr.reopen()}},[]); // eslint-disable-line react-hooks/exhaustive-deps
  const c=run?counts(run):null,h=run?headline(run):null;
- const runGaps=useMemo(()=>run?deriveRunGaps(run):[],[run]),gapTrack=useRunGapTracking(run?.briefHash??"");
+ const runGaps=useMemo(()=>run?deriveRunGaps(run):[],[run]),gapTrack=useRunGapTracking(run?.briefHash??""),ledger=useLedger(),[ledgerMsg,setLedgerMsg]=useState("");
  const list=useMemo(()=>run?filterCandidates(run.candidates,{bucket,pair}):[],[run,bucket,pair]);
  const picked:Cand|null=run?.candidates.find(x=>x.id===sel)??null;
  const rec=picked?run?.records.find(r=>r.sourceId===picked.sourceId)??null:null;
@@ -127,10 +129,12 @@ export function InvestigationWorkspacePage(){
        <details className="ws-acc" open={run.hypotheses.items.length>0}><summary><Icon name="flask" size={16}/>Hypotheses <b>{run.hypotheses.items.length}</b></summary>
         {run.hypotheses.items.length===0?<p>{run.hypotheses.reason??"None proposed."}</p>:<>
          <p className="ws-warn">Unvalidated model proposals from {run.hypotheses.basis.findings} agreed findings. Not findings, not recommendations, not reviewed.</p>
+         <p className="ws-muted" role="status">{ledgerMsg} <a href="/research/ledger">Open the ledger</a></p>
          <ul className="ws-hyps">{run.hypotheses.items.map(hy=>(
           <li key={hy.id}><span className="ws-tagline">Unvalidated hypothesis</span><b>{hy.statement}</b>
            <div className="ws-cites" role="group" aria-label={`Findings behind ${hy.id}`}>{hy.citedClaimIds.map(id=>{const cc=run.candidates.find(x=>x.id===id);return cc?<button key={id} type="button" onClick={()=>setSel(id)}>{cc.subject} ~ {cc.object}</button>:null})}</div>
            <p className="ws-chal" data-v={hy.challenge?.verdict??"none"}>{hy.challenge?`Second model: ${hy.challenge.verdict}. ${hy.challenge.reason}`:hy.challengeNote??"Not challenged."}</p>
+           <div className="ws-row-actions"><button type="button" className="ws-btn" onClick={()=>{const r=fromRunHypothesis(run,hy,new Date().toISOString(),runGaps.filter(g=>g.scope==="scientific").map(g=>g.id));if(!r.ok){setLedgerMsg(r.error);return}const a=ledger.add(r.entry);setLedgerMsg(a.added?"Added to your Hypothesis Ledger.":a.error??"Already in your Hypothesis Ledger.")}}>Add to Hypothesis Ledger</button></div>
            <details><summary>Rationale, prediction, experiment, falsifier</summary>
             <dl><dt>Why</dt><dd>{hy.rationale}</dd><dt>Prediction if true</dt><dd>{hy.prediction}</dd><dt>Experiment</dt><dd>{hy.experiment}</dd><dt>Would be falsified by</dt><dd>{hy.falsifier}</dd><dt>Limits</dt><dd>{hy.limits}</dd><dt>Proposed by</dt><dd>{hy.generatedBy.verifier} ({hy.generatedBy.model})</dd></dl></details></li>))}</ul></>}
        </details>

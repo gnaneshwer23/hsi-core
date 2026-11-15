@@ -178,3 +178,11 @@
 .gr-run{padding:12px 14px;border:1px solid var(--line);border-radius:12px;display:grid;gap:6px}.gr-run h4{margin:0;font-size:15px;line-height:1.4;display:flex;gap:10px;justify-content:space-between;align-items:flex-start}.gr-run p{margin:0}
 .gr-note{padding:10px 12px;border:1px solid var(--line-2);border-radius:10px;background:var(--surface);color:var(--ink);font:400 14px 'Host Grotesk Variable',system-ui,sans-serif;min-height:44px;box-sizing:border-box}.gr-note:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 .ws-gaps .gr-run{background:var(--surface)}
+.hl-entry h3{margin:0;font-size:18px;line-height:1.35}.hl-entry header{display:flex;gap:12px;justify-content:space-between;align-items:flex-start}.hl-entry summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:600}
+.hl-tags{display:flex;flex-wrap:wrap;gap:8px;margin:0}.hl-tags span{padding:3px 10px;border:1px solid var(--line-2);border-radius:999px;font-size:13px;color:var(--muted)}
+.hl-dl{display:grid;grid-template-columns:minmax(120px,max-content) 1fr;gap:4px 16px;margin:0;font-size:14.5px;line-height:1.55}.hl-dl dt{font-weight:600;color:var(--muted)}.hl-dl dd{margin:0}
+.hl-form,.hl-outcome{display:grid;gap:10px}.hl-field{display:grid;gap:4px}.hl-field label{font-weight:600;font-size:14px}
+.hl-field textarea{width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid var(--line-2);border-radius:10px;background:var(--surface);color:var(--ink);font:400 14.5px/1.5 'Host Grotesk Variable',system-ui,sans-serif;resize:vertical}.hl-field textarea:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.hl-gaps{border:1px solid var(--line);border-radius:12px;padding:10px 14px;display:grid;gap:6px}.hl-gaps legend{font-weight:600;font-size:14px;padding:0 6px}.hl-gaps label{display:flex;gap:10px;align-items:flex-start;min-height:44px;align-items:center;font-size:14px}
+.hl-outcome{border:1px solid var(--line);border-radius:12px;padding:12px 14px}.hl-outcome legend{font-weight:600;padding:0 6px}
+@media(max-width:600px){.hl-dl{grid-template-columns:1fr}}

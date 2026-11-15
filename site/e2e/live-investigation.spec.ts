@@ -156,3 +156,20 @@ test('Gap Register shows gaps from the run saved in this browser',async({page})=
  await expect(page.getByRole('heading',{name:'From your latest investigation'})).toBeVisible();
  await expect(page.getByRole('region',{name:'Limits of this search'})).toContainText('Search failed: openalex');
 });
+
+test('a model proposal in a run can be added to the Hypothesis Ledger once, keeping its text and origin',async({page})=>{
+ await mock(page,checked);
+ await page.goto('/research/workspace');
+ await page.getByRole('button',{name:/Run/}).first().click();
+ const add=page.getByRole('button',{name:'Add to Hypothesis Ledger'}).first();
+ await add.click();
+ await expect(page.getByText('Added to your Hypothesis Ledger.')).toBeVisible();
+ await add.click();
+ await expect(page.getByText(/Already in your Hypothesis Ledger/)).toBeVisible();
+ await page.goto('/research/ledger');
+ const card=page.getByRole('list',{name:'Hypotheses'}).getByRole('listitem');
+ await expect(card).toHaveCount(1);
+ await expect(card.first()).toContainText('Blocking IL-21 reduces Tfh expansion');
+ await expect(card.first()).toContainText('Model proposal');
+ await expect(card.first()).toContainText('Unvalidated hypothesis');
+});
