@@ -43,6 +43,11 @@ describe("research home logic",()=>{
   expect(f.every(x=>x.id!=="a"&&x.reason.includes("Interleukin 6"))).toBe(true);
   const dis=recommend({...EMPTY_PROFILE,interests:[dept.slug],dismissed:r.map(x=>x.id)},bundle);expect(dis.some(x=>r.some(y=>y.id===x.id))).toBe(false);
  });
+ test("a free-text topic matches concepts by name or alias",()=>{
+  const r=recommend({...EMPTY_PROFILE,interests:["IL6"]},bundle);
+  expect(r[0]!.id).toBe("a");expect(r[0]!.reason).toContain("IL6");
+  expect(recommend({...EMPTY_PROFILE,interests:["nonexistent topic"]},bundle)).toEqual([]);
+ });
  test("focus network keeps only recorded candidate edges",()=>{
   const n=focusNetwork(bundle,"a")!;
   expect(n.nodes.map(x=>x.id).sort()).toEqual(["a","b","c"]);

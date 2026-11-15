@@ -12,6 +12,8 @@ export function Layout() {
   const isPublicPage = isPublicMarketingPath(pathname);
   const isAccountPage = isAccountPath(pathname);
   const isHome = pathname === "/";
+  // The researcher home is an app shell with its own header and navigation.
+  const isApp = pathname === "/research/home";
 
   useEffect(() => {
     // React Router does not scroll cross-page fragment links by itself.
@@ -29,7 +31,7 @@ export function Layout() {
 
   // Premium homepage tokens (home-shell) extend across public marketing pages for one journey.
   const shellClass = [
-    "site-shell experience-shell",
+    "site-shell experience-shell",isApp?"app-shell-page":"",
     isPublicPage ? "editorial-site" : "",
     isPublicPage || isHome ? "home-shell" : "",
     isPublicPage && !isHome ? "platform-shell" : "",
@@ -44,12 +46,12 @@ export function Layout() {
       <a className="home-skip" href="#main-content">
         Skip to content
       </a>
-      <Nav />
+      {!isApp&&<Nav />}
       <main className="site-main" id="main-content" tabIndex={-1}>
         {(["/research/capabilities","/research/knowledge-graph","/research/governance","/research/scientific-workbench","/research/mechanism-workflow","/research/decision-workbench","/research/scientific-review","/research/evidence-readiness","/science/graph","/science/clinical-trials"].includes(pathname))&&<ResearchNavigation/>}
         <Suspense fallback={<p role="status" style={{padding:"3rem 1.5rem"}}>Loading research tools…</p>}><Outlet /></Suspense>
       </main>
-      <Footer />
+      {!isApp&&<Footer />}
     </div>
   );
 }
