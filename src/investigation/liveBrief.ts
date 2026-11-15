@@ -27,6 +27,12 @@ export function renderLiveBriefMarkdown(b:LiveInvestigation):string{
   ...part("Supporting (both checks agree)",checked.filter(c=>c.polarity==="supporting"),"None."),"",
   ...part("Opposing (both checks agree)",checked.filter(c=>c.polarity==="opposing"),v.status==="not_configured"?"Not assessed: the model challenge did not run.":"None found in these sources. This does not establish consensus."),"",
   ...part("Checked, no direction established",checked.filter(c=>c.polarity==="uncertain"),"None."),"",
+  `## Hypotheses (unvalidated model proposals) (${b.hypotheses.items.length})`,
+  ...(b.hypotheses.items.length?["Proposed from findings both checks agreed on. They are not findings, not recommendations and have not been reviewed.",...b.hypotheses.items.flatMap(h=>[
+   `- **${safe(h.statement)}**`,
+   `  - Based on: ${h.citedClaimIds.map(id=>{const c=b.candidates.find(x=>x.id===id);return c?`${safe(c.subject)} ~ ${safe(c.object)} (${safe(rec.get(c.sourceId)?.title??c.sourceId)})`:safe(id)}).join("; ")}`,
+   `  - Rationale: ${safe(h.rationale)}`,`  - Prediction if true: ${safe(h.prediction)}`,`  - Experiment: ${safe(h.experiment)}`,`  - Would be falsified by: ${safe(h.falsifier)}`,`  - Limits: ${safe(h.limits)}`,
+   `  - Proposed by ${safe(h.generatedBy.verifier)} (${safe(h.generatedBy.model)}). ${h.challenge?`Challenged by ${safe(h.challenge.verifier)} (${safe(h.challenge.model)}): ${h.challenge.verdict}. ${safe(h.challenge.reason)}`:"Not challenged by a second model."}`])]:[`- ${safe(b.hypotheses.reason??b.hypotheses.status)}`]),"",
   `## Not checked (${b.candidates.length-checked.length} lower-priority candidates, directions not assessed)`,
   ...b.candidates.filter(c=>c.verification==="not_run").map(c=>`- ${safe(c.subject)} ~ ${safe(c.object)} (${c.contexts.map(ctx).map(safe).join(", ")||"context not stated"}): "${safe(c.sentence)}" ${c.sourceUrl}`),"",
   "## Missing evidence and limits",...b.gaps.map(g=>"- "+safe(g)),
