@@ -241,6 +241,26 @@
       "destination": "/_pages/research--gaps.html"
     },
     {
+      "source": "/research/ledger",
+      "destination": "/_pages/research--ledger.html"
+    },
+    {
+      "source": "/research/cohort",
+      "destination": "/_pages/research--cohort.html"
+    },
+    {
+      "source": "/research/targets",
+      "destination": "/_pages/research--targets.html"
+    },
+    {
+      "source": "/research/prescreen",
+      "destination": "/_pages/research--prescreen.html"
+    },
+    {
+      "source": "/research/journey",
+      "destination": "/_pages/research--journey.html"
+    },
+    {
       "source": "/research/workspace",
       "destination": "/_pages/research--workspace.html"
     },
