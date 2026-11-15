@@ -1,5 +1,5 @@
 import {describe,expect,test} from "bun:test";
-import {classifyIntent,EMPTY_PROFILE,focusNetwork,loadProfile,parseProfile,recommend,resetProfile,saveProfile,searchEntities,looksLikeTrialId} from "../site/src/lib/researchHome";
+import {summariseSavedLiveRun,classifyIntent,EMPTY_PROFILE,focusNetwork,loadProfile,parseProfile,recommend,resetProfile,saveProfile,searchEntities,looksLikeTrialId} from "../site/src/lib/researchHome";
 import {departments} from "../site/src/lib/departments";
 
 const dept=departments[0]!,tag=dept.graphTags[0]!;
@@ -48,5 +48,13 @@ describe("research home logic",()=>{
   expect(n.nodes.map(x=>x.id).sort()).toEqual(["a","b","c"]);
   expect(n.edges.some(e=>e.id==="g")).toBe(false);expect(n.edges.find(e=>e.id==="e3")!.negated).toBe(true);
   expect(focusNetwork(bundle,"missing")).toBeNull();
+ });
+});
+
+describe("saved live run summary",()=>{
+ test("counts only model-checked findings and rejects malformed data",()=>{
+  const run=JSON.stringify({question:"q",candidates:[{polarity:"supporting",verification:"agree_directional"},{polarity:"supporting",verification:"not_run"},{polarity:"opposing",verification:"agree_directional"},{polarity:"uncertain",verification:"disputed"}]});
+  expect(summariseSavedLiveRun(run)).toEqual({question:"q",candidates:4,supporting:1,opposing:1,checked:3});
+  expect(summariseSavedLiveRun("{bad")).toBeNull();expect(summariseSavedLiveRun(null)).toBeNull();expect(summariseSavedLiveRun(JSON.stringify({question:1}))).toBeNull();
  });
 });

@@ -4,6 +4,7 @@ import {searchEuropePmc,searchOpenAlex} from "../src/evidence/liveSources";
 import {extractCandidates,priorityOf,renderLiveBriefMarkdown,runLiveInvestigation} from "../src/investigation/liveRun";
 import {LIVE_SCENARIOS} from "../src/investigation/scenarios";
 import {combineDirections,DIRECTION_INSTRUCTION,runDirectionalChallenge} from "../src/investigation/directionalChallenge";
+import {matchScenario} from "../src/investigation/scenarios";
 import {handleLiveInvestigation,resetLiveInvestigationLimiter} from "../src/server/liveInvestigationHandler";
 
 const SENT="Serum IL-21 was increased in patients with systemic sclerosis and promoted T follicular helper cell expansion.";
@@ -205,5 +206,16 @@ describe("candidate ranking before checking",()=>{
   const r=await runLiveInvestigation({scenario,fetcher:f,now,maxVerified:1,verifiers:[slotSpy("a"),slotSpy("b")]});
   expect(r.verification.checked).toBe(1);expect(sent.length).toBe(2);expect(new Set(sent).size).toBe(1);
   expect(r.candidates[0]!.priority.score).toBe(Math.max(...r.candidates.map(x=>x.priority.score)));
+ });
+});
+
+describe("scenario matching for Deep Investigate",()=>{
+ test("a question naming the lead entity and a disease context matches; others do not",()=>{
+  expect(matchScenario("Why might IL-21 signalling differ across autoimmune diseases?")).toBe("il21-autoimmune");
+  expect(matchScenario("What does interleukin-21 do in systemic sclerosis?")).toBe("il21-autoimmune");
+  expect(matchScenario("IL-21 in rheumatoid arthritis")).toBe("il21-autoimmune");
+  expect(matchScenario("IL-21")).toBeNull();
+  expect(matchScenario("How do microbial metabolites influence brain inflammation?")).toBeNull();
+  expect(matchScenario("IL-210 in lupus")).toBeNull();
  });
 });

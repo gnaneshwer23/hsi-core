@@ -92,3 +92,16 @@ export function focusNetwork(bundle:DomainBundle,centerId:string,max=9){
  const edges=cands.filter(e=>keep.has(e.subjectId)&&keep.has(e.objectId)).slice(0,16).map(e=>({id:e.id,s:e.subjectId,o:e.objectId,predicate:e.predicate.replaceAll("_"," "),negated:e.negated}));
  return {center:centerId,nodes:[...keep].map(id=>({id,name:names.get(id)??id})),edges};
 }
+
+export const LIVE_RUN_KEY="hsi-live-investigation-v1";
+export type SavedLiveRun={question:string;candidates:number;supporting:number;opposing:number;checked:number};
+/** Summarises a browser-saved live run for Continue researching. Returns null for anything malformed. */
+export function summariseSavedLiveRun(raw:string|null):SavedLiveRun|null{
+ if(!raw||raw.length>2_000_000)return null;
+ try{
+  const x=JSON.parse(raw);
+  if(!x||typeof x.question!=="string"||!Array.isArray(x.candidates))return null;
+  const c=x.candidates as {polarity?:string;verification?:string}[];
+  return {question:x.question.slice(0,500),candidates:c.length,supporting:c.filter(y=>y.polarity==="supporting"&&y.verification!=="not_run").length,opposing:c.filter(y=>y.polarity==="opposing"&&y.verification!=="not_run").length,checked:c.filter(y=>y.verification&&y.verification!=="not_run").length};
+ }catch{return null}
+}

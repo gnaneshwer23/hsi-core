@@ -116,3 +116,14 @@ export const LIVE_SCENARIOS:Readonly<Record<string,LiveScenario>>=Object.freeze(
  ]
 } as LiveScenario
 });
+
+const esc=(x:string)=>x.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+const mentions=(text:string,terms:readonly string[])=>terms.some(t=>new RegExp("(^|[^A-Za-z0-9])"+esc(t)+"($|[^A-Za-z0-9])","i").test(text));
+/** Live runs cover curated scenarios only. A question matches when it names the scenario's lead entity and one of its disease contexts. */
+export function matchScenario(query:string):string|null{
+ for(const s of Object.values(LIVE_SCENARIOS)){
+  const lead=s.entities.find(e=>e.key===s.relations[0]?.subject);
+  if(lead&&mentions(query,lead.terms)&&(s.contexts.some(c=>mentions(query,c.terms))||/autoimmun/i.test(query)))return s.id;
+ }
+ return null;
+}

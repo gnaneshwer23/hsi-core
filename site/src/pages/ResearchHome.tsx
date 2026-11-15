@@ -4,7 +4,8 @@ import type {DomainBundle} from "../../../src/knowledgeGraph/domainGraph";
 import {loadDomainGraph} from "../lib/claimGraphClient";
 import {departments} from "../lib/departments";
 import {NetworkView} from "../components/graph/GraphCharts";
-import {EMPTY_PROFILE,classifyIntent,focusNetwork,GOALS,INVESTIGATION_STATUS,loadProfile,looksLikeTrialId,recommend,resetProfile,ROLES,saveProfile,searchEntities,type Profile} from "../lib/researchHome";
+import {matchScenario} from "../../../src/investigation/scenarios";
+import {EMPTY_PROFILE,LIVE_RUN_KEY,summariseSavedLiveRun,type SavedLiveRun,classifyIntent,focusNetwork,GOALS,INVESTIGATION_STATUS,loadProfile,looksLikeTrialId,recommend,resetProfile,ROLES,saveProfile,searchEntities,type Profile} from "../lib/researchHome";
 import "../styles/research-home.css";
 
 type Saved={id:string;question:string;createdAt:string;state:string};
@@ -57,7 +58,7 @@ function UniversalSearch({bundle,profile,follow}:{bundle:DomainBundle|null;profi
  const [q,setQ]=useState("");
  const hits=useMemo(()=>bundle?searchEntities(bundle.nodes,q):[],[bundle,q]);
  const intent=classifyIntent(q,hits),trial=looksLikeTrialId(q);
- const followed=new Set(profile.followed.map(f=>f.id));
+ const followed=new Set(profile.followed.map(f=>f.id)),live=matchScenario(q);
  return (
   <section className="rh-search" aria-labelledby="rh-search-h">
    <h2 id="rh-search-h" className="rh-vh">Search and investigate</h2>
@@ -75,9 +76,10 @@ function UniversalSearch({bundle,profile,follow}:{bundle:DomainBundle|null;profi
       {intent!=="investigation"&&<p>You can also treat this as a question:</p>}
       <div className="rh-row">
        <Link className="rh-primary" to={graphHref(q.trim())}>Quick Explore in the graph</Link>
-       <Link className="rh-primary" to={investigateHref(intent==="investigation"?q.trim():`What does the evidence say about ${q.trim()}?`)}>Deep Investigate (saved question)</Link>
+       {live&&<Link className="rh-primary" to="/research/investigate#live-investigation">Deep Investigate: run live</Link>}
+       <Link className={live?"rh-ghost":"rh-primary"} to={investigateHref(intent==="investigation"?q.trim():`What does the evidence say about ${q.trim()}?`)}>{live?"Save question for review":"Deep Investigate (saved question)"}</Link>
       </div>
-      <p className="rh-note">Quick Explore reads the published graph. Deep Investigate saves a bounded question for scientific review and needs a research account; it does not run live retrieval by itself.</p>
+      <p className="rh-note">{live?"This matches a curated scenario, so a live run is available: it searches Europe PMC, OpenAlex and Open Targets now, then two models check the direction of the best claims. Nothing starts until you press Run on the next page.":"Live runs cover curated scenarios only (currently IL-21 across autoimmune diseases). Your question can be saved for scientific review, which needs a research account."} Quick Explore reads the published graph.</p>
      </div>
     </>}
    </div>
@@ -98,6 +100,8 @@ export function ResearchHome(){
  const centre=profile.followed[0]?.id??recs[0]?.id??null;
  const net=useMemo(()=>bundle&&centre?focusNetwork(bundle,centre):null,[bundle,centre]);
  const toggleInterest=(slug:string)=>update(p=>({...p,interests:p.interests.includes(slug)?p.interests.filter(x=>x!==slug):[...p.interests,slug]}));
+ const [liveRun,setLiveRun]=useState<SavedLiveRun|null>(null);
+ useEffect(()=>{try{setLiveRun(summariseSavedLiveRun(localStorage.getItem(LIVE_RUN_KEY)))}catch{setLiveRun(null)}},[]);
  const hasSaved=saved.kind==="ok"&&saved.items.length>0;
  return (
   <div className="rh-page">
@@ -133,6 +137,7 @@ export function ResearchHome(){
 
     <section className="rh-card" aria-labelledby="rh-cont-h">
      <div className="rh-card-head"><h2 id="rh-cont-h">Continue researching</h2><Link to="/research/dashboard#dashboard-workspace">All investigations</Link></div>
+     {liveRun&&<ul className="rh-cards rh-live"><li><b>{liveRun.question}</b><span>Live investigation · saved in this browser</span><small>{liveRun.checked} claims checked by two models · {liveRun.supporting} supporting · {liveRun.opposing} opposing · {liveRun.candidates} candidates, all unreviewed</small><Link to="/research/investigate?reopen=1#live-investigation">Reopen</Link></li></ul>}
      {saved.kind==="loading"&&<div className="rh-skel" aria-hidden="true"/>}
      {saved.kind==="blocked"&&<p>{saved.message} <Link to="/sign-in">Sign in</Link></p>}
      {saved.kind==="error"&&<p>Saved investigations are temporarily unavailable.</p>}

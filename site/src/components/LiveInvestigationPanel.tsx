@@ -1,4 +1,6 @@
-import {useState} from "react";
+import {useEffect,useState} from "react";
+import {useLocation} from "react-router-dom";
+import {LIVE_RUN_KEY} from "../lib/researchHome";
 import "../styles/live-investigation.css";
 
 /** Live mode: real public-literature retrieval through the server route. Curated examples below stay separate and labelled. */
@@ -12,7 +14,7 @@ type Result={question:string;scenarioId:string;version:number;briefHash:string;s
 const SCENARIO="il21-autoimmune";
 
 const DIRLABEL:Record<string,string>={positive:"Positive: rise or act together, or promotes",negative:"Negative: inverse, or suppresses",none:"No relationship stated",association_only:"Linked, direction not stated",unresolved:"Unresolved: the checks disagreed or could not tell",not_assessed:"Not assessed"};
-const STORE="hsi-live-investigation-v1";
+const STORE=LIVE_RUN_KEY;
 
 function download(name:string,text:string,type:string){
  const url=URL.createObjectURL(new Blob([text],{type}));const a=document.createElement("a");a.href=url;a.download=name;a.click();URL.revokeObjectURL(url);
@@ -35,13 +37,20 @@ export function LiveInvestigationPanel(){
  }
  function saveLocal(){if(!result)return;try{localStorage.setItem(STORE,JSON.stringify(result));setSaved("Saved in this browser only. It is not stored on a server.")}catch{setSaved("This browser blocked local saving.")}}
  function reopen(){try{const t=localStorage.getItem(STORE);if(t){setResult(JSON.parse(t) as Result);setSaved("Reopened the browser-saved run.")}}catch{setSaved("Could not reopen the saved run.")}}
+ const loc=useLocation();
+ // Deep links from Research Home: scroll to the panel; "reopen" restores the run saved in this browser. A run never starts without a click.
+ useEffect(()=>{
+  if(new URLSearchParams(loc.search).get("reopen")==="1")reopen();
+  if(loc.hash==="#live-investigation")requestAnimationFrame(()=>document.getElementById("live-investigation")?.scrollIntoView({block:"start"}));
+ // eslint-disable-next-line react-hooks/exhaustive-deps
+ },[loc.search,loc.hash]);
  const cands=(result?.candidates??[]).filter(c=>ctx==="all"||c.contexts.includes(ctx));
  const assessed=result?.verification.status==="completed"||result?.verification.status==="partial";
  const picked=result?.candidates.find(c=>c.id===sel)??null;
  const rec=picked?result?.records.find(r=>r.sourceId===picked.sourceId)??null:null;
 
  return (
-  <section className="li-panel" aria-labelledby="li-h">
+  <section className="li-panel" id="live-investigation" aria-labelledby="li-h">
    <div className="li-head">
     <div>
      <h2 id="li-h">Live investigation</h2>
