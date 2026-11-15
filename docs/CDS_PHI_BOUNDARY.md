@@ -1,6 +1,6 @@
 # CDS / PHI boundary (HSI)
 
-**Status:** Binding non-goal for hsi-core. HSI lifts **governance + reject patterns** from Aksh Health — not live clinical decision support and not protected health information.
+**Status:** Binding non-goal for hsi-core (the scientific plane). Amended by [ADR-0010](architecture/ADR-0010-TWO-PLANE-CLINICAL-ARCHITECTURE.md): patient and clinical intelligence is a separate clinical plane; only synthetic, lift-ready code lives here. HSI lifts **governance + reject patterns** from Aksh Health — not live clinical decision support and not protected health information.
 
 ## Source repo
 
