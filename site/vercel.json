@@ -233,6 +233,10 @@
       "destination": "/_pages/research--home.html"
     },
     {
+      "source": "/welcome",
+      "destination": "/_pages/welcome.html"
+    },
+    {
       "source": "/research/workspace",
       "destination": "/_pages/research--workspace.html"
     },

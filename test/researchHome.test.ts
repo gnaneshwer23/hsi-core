@@ -1,5 +1,5 @@
 import {describe,expect,test} from "bun:test";
-import {summariseSavedLiveRun,classifyIntent,EMPTY_PROFILE,focusNetwork,loadProfile,parseProfile,recommend,resetProfile,saveProfile,searchEntities,looksLikeTrialId} from "../site/src/lib/researchHome";
+import {parseOrcid,parsePaperIds,STAGES,summariseSavedLiveRun,classifyIntent,EMPTY_PROFILE,focusNetwork,loadProfile,parseProfile,recommend,resetProfile,saveProfile,searchEntities,looksLikeTrialId} from "../site/src/lib/researchHome";
 import {departments} from "../site/src/lib/departments";
 
 const dept=departments[0]!,tag=dept.graphTags[0]!;
@@ -61,5 +61,22 @@ describe("saved live run summary",()=>{
   const run=JSON.stringify({question:"q",candidates:[{polarity:"supporting",verification:"agree_directional"},{polarity:"supporting",verification:"not_run"},{polarity:"opposing",verification:"agree_directional"},{polarity:"uncertain",verification:"disputed"}]});
   expect(summariseSavedLiveRun(run)).toEqual({question:"q",candidates:4,supporting:1,opposing:1,checked:3});
   expect(summariseSavedLiveRun("{bad")).toBeNull();expect(summariseSavedLiveRun(null)).toBeNull();expect(summariseSavedLiveRun(JSON.stringify({question:1}))).toBeNull();
+ });
+});
+
+describe("researcher profile inputs",()=>{
+ test("ORCID iDs are validated including the check digit, and URLs are accepted",()=>{
+  expect(parseOrcid("0000-0002-1825-0097")).toBe("0000-0002-1825-0097");
+  expect(parseOrcid("https://orcid.org/0000-0002-1825-0097")).toBe("0000-0002-1825-0097");
+  expect(parseOrcid("0000-0002-1825-0098")).toBeNull();expect(parseOrcid("1234")).toBeNull();expect(parseOrcid("")).toBeNull();
+ });
+ test("pasted DOIs and PMIDs are normalised, de-duplicated and capped; junk is reported",()=>{
+  const r=parsePaperIds("10.1186/s13075-015-0660-z, https://doi.org/10.1186/S13075-015-0660-Z\nPMID:26055806 26055806 https://pubmed.ncbi.nlm.nih.gov/12345/ nonsense");
+  expect(r.ids).toEqual(["doi:10.1186/s13075-015-0660-z","pmid:26055806","pmid:12345"]);expect(r.rejected).toEqual(["nonsense"]);
+  expect(parsePaperIds(Array.from({length:40},(_,i)=>String(1000+i)).join(" ")).ids.length).toBe(20);
+ });
+ test("an old stored profile without the new fields loads with safe defaults, and bad values are dropped",()=>{
+  const p=parseProfile(JSON.stringify({v:1,role:"Academic",interests:["immunology"],onboarded:true,orcid:"nope",cadence:"hourly",background:"x".repeat(900)}));
+  expect(p).toMatchObject({role:"Academic",stage:null,orcid:null,cadence:"off",papers:[],question:""});expect(p.background.length).toBe(600);expect(STAGES.length).toBeGreaterThan(3);
  });
 });

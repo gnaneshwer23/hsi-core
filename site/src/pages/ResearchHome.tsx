@@ -60,7 +60,7 @@ function Onboarding({profile,onDone}:{profile:Profile;onDone:(p:Profile)=>void})
  );
 }
 
-function SearchHero({bundle,profile,follow,inputRef}:{bundle:DomainBundle|null;profile:Profile;follow:(id:string,name:string)=>void;inputRef:React.RefObject<HTMLInputElement|null>}){
+function SearchHero({bundle,profile,follow,inputRef,ready}:{bundle:DomainBundle|null;profile:Profile;follow:(id:string,name:string)=>void;inputRef:React.RefObject<HTMLInputElement|null>;ready:boolean}){
  const nav=useNavigate(),[q,setQ]=useState("");
  const hits=useMemo(()=>bundle?searchEntities(bundle.nodes,q):[],[bundle,q]);
  const intent=classifyIntent(q,hits),trial=looksLikeTrialId(q);
@@ -77,6 +77,7 @@ function SearchHero({bundle,profile,follow,inputRef}:{bundle:DomainBundle|null;p
      <input id="rh-q" ref={inputRef} type="search" value={q} maxLength={500} autoComplete="off" onChange={e=>setQ(e.target.value)} placeholder="Investigate a gene, pathway, disease, biological mechanism or research question…" aria-describedby="rh-q-help"/>
      <button type="button" className="rh-go" onClick={()=>{const t=q.trim();if(!t){inputRef.current?.focus();return}nav(live?"/research/workspace":investigateHref(intent==="investigation"?t:`What does the evidence say about ${t}?`))}}><Icon name="spark" size={18}/> Investigate</button>
     </div>
+    {ready&&!profile.question&&!profile.orcid&&<p className="rh-note"><Link to="/welcome">Tell us about your research</Link> (2 minutes, optional) so suggestions fit your area.</p>}
     <p id="rh-q-help" className="rh-note">{bundle?`Searching ${n(bundle.nodes.length)} concepts in the published graph (candidates, unreviewed). Entities outside it are not searched yet.`:"Verifying the published graph…"}</p>
     <div role="status" aria-live="polite" className="rh-results">
      {intent!=="empty"&&<div className="rh-panel">
@@ -121,7 +122,7 @@ export function ResearchHome(){
  return (
   <ResearchAppShell where="Research Home" active="home" onSearch={()=>inputRef.current?.focus()}>
     <main className="rh-main" id="rh-main" tabIndex={-1}>
-     <SearchHero bundle={bundle} profile={profile} follow={follow} inputRef={inputRef}/>
+     <SearchHero bundle={bundle} profile={profile} follow={follow} inputRef={inputRef} ready={ready}/>
      {failed&&<p className="rh-err" role="alert">The published graph could not be loaded, so concept search and suggestions are unavailable. No substitute results are shown.</p>}
      {noStore&&<p className="rh-err" role="status">This browser blocked local storage, so preferences will not be kept.</p>}
      {ready&&!profile.onboarded&&<Onboarding profile={profile} onDone={p=>setProfile(p)}/>}
