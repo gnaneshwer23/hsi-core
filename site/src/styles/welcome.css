@@ -10,9 +10,9 @@
 .wl fieldset{border:0;margin:0;padding:0;display:grid;gap:10px}.wl legend{font-weight:650;font-size:16px;margin-bottom:8px}.wl legend small,.wl-f small{font-weight:400;color:var(--muted);font-size:13.5px}
 .wl-f{font-weight:650;font-size:16px}
 .rh-chips2{display:flex;flex-wrap:wrap;gap:8px}
-.rh-chips2 button{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);font:550 15px inherit;cursor:pointer}
+.rh-chips2 button{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);font:550 15px 'Host Grotesk Variable',system-ui,sans-serif;cursor:pointer}
 .rh-chips2 button[aria-pressed=true]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-ink);font-weight:650}
-.wl textarea,.wl-in,.wl-add input{width:100%;box-sizing:border-box;padding:12px 14px;border:1.5px solid var(--line-2);border-radius:12px;background:var(--surface);color:var(--ink);font:500 16px inherit;line-height:1.5}
+.wl textarea,.wl-in,.wl-add input{width:100%;box-sizing:border-box;padding:12px 14px;border:1.5px solid var(--line-2);border-radius:12px;background:var(--surface);color:var(--ink);font:500 16px 'Host Grotesk Variable',system-ui,sans-serif;line-height:1.5}
 .wl-in,.wl-add input{min-height:48px;padding-top:0;padding-bottom:0}
 .wl textarea:focus-visible,.wl-in:focus-visible,.wl-add input:focus-visible{outline:3px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
 .wl-in[aria-invalid=true]{border-color:var(--bad)}
