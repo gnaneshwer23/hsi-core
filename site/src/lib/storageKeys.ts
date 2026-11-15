@@ -3,3 +3,6 @@ export const LEDGER_KEY="hsi-hypothesis-ledger-v1";
 export const RUN_GAPS_KEY="hsi-run-gaps-v1";
 export const GAP_REGISTER_KEY="hsi-gap-register-v1";
 export const NOTEBOOK_KEY="hsi-methods-notebook-v1";
+export const EVAL_ITEMS_KEY="hsi-eval-items-v1";
+export const EVAL_RATER_KEY="hsi-eval-rater-v1";
+export const EVAL_RATINGS_KEY="hsi-eval-ratings-v1";
