@@ -130,3 +130,29 @@ test('mobile: the workspace stacks without horizontal scroll',async({page})=>{
  expect(wide).toEqual([]);
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+1)).toBe(true);
 });
+
+test('gaps in a run: search limits and unrun checks are kept apart from scientific gaps; status persists in this browser',async({page})=>{
+ await mock(page,unchecked);
+ await page.goto('/research/workspace');
+ await page.getByRole('button',{name:/Run/}).first().click();
+ const gaps=page.getByRole('region',{name:/Gaps in this run|Gaps in this run/}).or(page.locator('.ws-gaps'));
+ await expect(gaps.getByRole('region',{name:'Limits of this search'})).toContainText('Search failed: openalex');
+ await expect(gaps.getByRole('region',{name:'Checks that did not run'})).toContainText('not assessed');
+ await expect(gaps.getByRole('region',{name:'Scientific gaps'})).toHaveCount(0);
+ const group=gaps.getByRole('group',{name:/Status for: Search failed/});
+ await group.getByRole('button',{name:'Investigating'}).click();
+ await expect(group.getByRole('button',{name:'Investigating'})).toHaveAttribute('aria-pressed','true');
+ await page.reload();
+ await mock(page,unchecked);
+ await page.getByRole('button',{name:/Run/}).first().click();
+ await expect(page.getByRole('group',{name:/Status for: Search failed/}).getByRole('button',{name:'Investigating'})).toHaveAttribute('aria-pressed','true');
+ const r=await new AxeBuilder({page}).analyze();
+ expect(r.violations.filter(v=>['serious','critical'].includes(v.impact??''))).toEqual([]);
+});
+
+test('Gap Register shows gaps from the run saved in this browser',async({page})=>{
+ await page.addInitScript(run=>{localStorage.setItem('hsi-live-investigation-v1',JSON.stringify(run))},unchecked);
+ await page.goto('/research/gaps');
+ await expect(page.getByRole('heading',{name:'From your latest investigation'})).toBeVisible();
+ await expect(page.getByRole('region',{name:'Limits of this search'})).toContainText('Search failed: openalex');
+});
