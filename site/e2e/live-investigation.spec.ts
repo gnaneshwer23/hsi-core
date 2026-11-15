@@ -28,7 +28,7 @@ test('a failed run says no findings were generated',async({page})=>{
  await page.route('**/api/research/live-investigation',r=>r.fulfill({status:502,json:{error:'Investigation could not run. No findings were generated.'}}));
  await page.goto('/research/investigate');
  await page.getByRole('button',{name:'Run live investigation'}).click();
- await expect(page.getByRole('status').filter({hasText:'No findings were generated'}).first()).toBeVisible();
+ await expect(page.getByRole('alert').filter({hasText:'No findings were generated'}).first()).toBeVisible();
 });
 
 test('Home to live run to saved run: a matching question offers a live run that needs a click, and Home resumes it',async({page})=>{

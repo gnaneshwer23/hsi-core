@@ -64,7 +64,7 @@ export function LiveInvestigationPanel(){
     </div>
    </div>
    <p className="li-mode">Mode: <b>Live</b> (real sources). The curated example below is a separate, scripted demonstration.</p>
-   <div role="status" aria-live="polite">{state==="error"&&<p className="li-err">{error} No findings were generated.</p>}</div>
+   {state==="error"&&<p className="li-err" role="alert">{error} No findings were generated.</p>}
 
    {result&&(<div className="li-body">
     <ol className="li-events" aria-label="What this run actually did">
