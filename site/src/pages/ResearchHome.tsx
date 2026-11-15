@@ -9,6 +9,7 @@ import {ResearchAppShell} from "../components/home/ResearchAppShell";
 import {RadarCard} from "../components/home/RadarCard";
 import {GapCard} from "../components/home/GapCard";
 import {AskCard} from "../components/home/AskCard";
+import {Overview} from "../components/home/Overview";
 import {DEPT_ICON,HeroNetwork,Icon} from "../components/home/AppIcons";
 import {EMPTY_PROFILE,LIVE_RUN_KEY,summariseSavedLiveRun,type SavedLiveRun,classifyIntent,focusNetwork,GOALS,INVESTIGATION_STATUS,loadProfile,looksLikeTrialId,recommend,resetProfile,ROLES,saveProfile,searchEntities,type Profile} from "../lib/researchHome";
 import "../styles/research-home.css";
@@ -130,6 +131,7 @@ export function ResearchHome(){
      {noStore&&<p className="rh-err" role="status">This browser blocked local storage, so preferences will not be kept.</p>}
      {ready&&!profile.onboarded&&<Onboarding profile={profile} onDone={p=>setProfile(p)}/>}
 
+     <Overview bundle={bundle}/>
      <AskCard/>
      <RadarCard profile={profile} ready={ready}/>
      {ready&&<GapCard profile={profile} bundle={bundle}/>}

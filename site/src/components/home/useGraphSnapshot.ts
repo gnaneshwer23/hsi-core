@@ -16,9 +16,16 @@ function useSnapshotFetch(enabled:boolean){
       const names=new Map(g.nodes.map(n=>[n.id,n.name]));
       const sources=new Map(g.sources.map(x=>[x.id,x]));
       const cands=g.edges.filter(e=>e.kind==="source_candidate"&&e.sourceId);
-      const picked=cands.slice(0,3);const neg=cands.find(e=>e.negated&&!picked.includes(e));if(neg)picked.push(neg);else if(cands[3])picked.push(cands[3]);
+      /* Lead with the published systemic-sclerosis / IL-21 / Tfh evidence (human models first), then one negated record so a contrary finding is always shown. */
+      const FOCUS=/IL-21|Tfh|T follicular/i,HUMAN=/^human/;
+      const label=(e:typeof cands[number])=>`${names.get(e.subjectId)??""} ${names.get(e.objectId)??""}`;
+      const focus=cands.filter(e=>FOCUS.test(label(e))&&!e.negated).sort((a,b)=>Number(HUMAN.test(b.model))-Number(HUMAN.test(a.model)));
+      const lead=focus.length>=3?focus:cands;
+      const picked=lead.filter((e,i,a)=>a.findIndex(x=>x.assertion===e.assertion)===i).slice(0,3);
+      const neg=cands.find(e=>e.negated&&!picked.includes(e));if(neg)picked.push(neg);else if(lead[3])picked.push(lead[3]);
       const examples:Example[]=picked.map(e=>{const src=sources.get(e.sourceId!);return {id:e.id,subject:names.get(e.subjectId)??e.subjectId,object:names.get(e.objectId)??e.objectId,predicate:e.predicate.replaceAll("_"," "),negated:e.negated,assertion:e.assertion,model:e.model,design:e.design,tissue:e.tissue,limits:e.limitations,warnings:e.scopeWarnings,context:e.contextStatus.replaceAll("_"," "),source:src?{title:src.title,pmid:src.pmid,identity:src.identityStatus.replaceAll("_"," "),locator:src.passages[0]?.locator??null}:null}});
-      const centerId=picked[0]?.subjectId??g.nodes[0]!.id;
+      const il21=focus.length>=3?g.nodes.find(n=>n.name==='IL-21')?.id:undefined;
+      const centerId=il21??picked[0]?.subjectId??g.nodes[0]!.id;
       const touching=(id:string)=>cands.filter(e=>e.subjectId===id||e.objectId===id);
       const keep=new Set<string>([centerId]);
       for(const e of touching(centerId)){if(keep.size<8)keep.add(e.subjectId===centerId?e.objectId:e.subjectId)}
