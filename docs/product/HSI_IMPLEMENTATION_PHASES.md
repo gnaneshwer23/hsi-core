@@ -4,6 +4,8 @@
 
 **Direction taken from the owner:** no beachhead wedge. The six departments, their interconnections, and patient, clinical, translational and patient-trial intelligence are core architecture, not add-ons. Ship every phase as a thin end-to-end slice across all six, not as a depth-first vertical.
 
+**Update 15 Nov 2026 (HSI 2.0 review):** section 10 folds in the owner's refined vision and reorders the roadmap. Where section 10 and sections 5 to 6 differ, section 10 governs.
+
 ## 1. Blockers first
 
 | # | Blocker | Why it blocks | Who clears it |
@@ -184,3 +186,31 @@ Goal: patient evidence feeds discovery; discovery refines patient stratification
 3. Authorise Phase 0 as the next engineering block.
 4. Choose where the clinical plane is built: new private repo (recommended) versus a protected subdirectory here.
 5. Confirm "research-use-only pre-screening for a clinical research team" as the first clinical intended purpose, for adviser review.
+
+## 10. HSI 2.0 refinement: what changes and what I would hold
+
+**Adopted.**
+- Positioning centre: autonomous gap discovery plus biology-to-patient translation, with the feedback loop as the defining capability. Stated as a hypothesis to prove, not a market lead.
+- Phase order becomes P0 secure and connect, P1 autonomous scientific discovery (Gap Register, hypothesis ledger, verifier), P2 patient-to-biology on synthetic FHIR through the governed bridge, P3 drug, biomarker, stratification and trial workflows as distinct journeys, P4 living reassessment, P5 validated real deployment. Sections 5 and 6 map onto these; P3 splits into four workflows rather than one.
+- **Gap Register as a first-class object** (missing knowledge, context, supporting and opposing evidence, relevance, candidate experiments, uncertainty, priority, status, history). Starts from the existing gap finder and the nine snapshot gaps.
+- The knowledge graph is a connected model over separate evidence, investigation, clinical and governance stores, not one database. Consistent with the two-plane ADR.
+- Three separate approvals: engineering, scientific review, clinical/regulatory. Scientific promotion stays human-only (Gate C); routine investigation steps may become more autonomous.
+- One connected eight-step demo journey (investigate, biology, gaps, synthetic cohort, hypotheses, therapeutics, trial pre-screening, close the loop), built from real connected records and labelled synthetic where it is.
+- Measurement table (gap relevance, claim-to-source accuracy, hypothesis plausibility, criterion-level trial accuracy, workload, cost per investigation) becomes the P1 to P3 evaluation plan. No superiority claim until measured.
+
+**Held or changed, with reasons.**
+1. **Four "environments" stay internal lenses, not public product names.** `PRODUCT.md` and your 13 November correction say one technology, never a catalogue. In the app they are workspace modes inside one shell. Public pages keep one HSI.
+2. **The ten named capabilities stay behind the scenes.** You decided agents are not named in the dashboard. The table is an internal design of tools behind three coordinating roles; the UI shows capabilities as questions answered and a "How this was produced" trace.
+3. **The 30-day plan depends on owner-held blockers.** Week 1 persistence needs the named independent reviewer (B2); live execution needs keys and a spend cap (B3). Without them, weeks 1 to 2 can only run on stateless APIs and a clearly labelled demo environment. Week 4 "investor-ready" means a functional synthetic demonstration, not validated performance.
+4. **Parallel investor workstream is acceptable only if isolated and honest.** Separate environment, synthetic data labelled on every screen, no clinical-effectiveness claims, no regulatory language, and it must run on real records from the connected workflows, not mocked outputs.
+5. **Patient-outcome feedback into the graph passes the release gate** (de-identification, small-cell suppression, human sign-off, append-only log). "Closing the loop" in the demo records gaps, hypotheses and opportunities; it does not auto-promote anything.
+6. **The clinical-plane decisions are still open:** ADR approval, clinical safety officer, DPIA, intended purpose (section 9).
+
+**Revised 30-day targets (subject to the blockers above).**
+
+| Week | Focus | Outcome | Depends on |
+|------|-------|---------|------------|
+| 1 | Auth and limits on model endpoint, observability, CSP enforcement, capability register reconciliation, persistence design | Reliable, authenticated investigation run | B3 keys and cap; B2 reviewer for saving |
+| 2 | Gap Register, hypothesis ledger, verifier over evidence and graph | Question to brief plus Gap Register | Week 1 |
+| 3 | Synthetic clinical plane (own scaffold), phenotype definitions down, aggregate results up through the gate | Synthetic cohort explored against a hypothesis | ADR approval |
+| 4 | Target and biomarker workflow, synthetic trial pre-screening, connected workspace, browser and a11y tests | End-to-end demo with every record traceable | Weeks 2 to 3 |
