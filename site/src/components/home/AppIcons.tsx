@@ -24,6 +24,7 @@ const P:Record<string,string>={
  x:"M6 6l12 12M18 6 6 18",
  arrow:"M5 12h14M13 6l6 6-6 6",
  check:"M5 12.5l4.5 4.5L19 7.5",
+ palette:"M12 3a9 9 0 1 0 0 18c1.4 0 2-1 2-2 0-1.5-1.2-1.7-1.2-3 0-1 .8-1.8 1.9-1.8H17a4 4 0 0 0 4-4c0-3.9-4-7.2-9-7.2ZM7.5 11a1 1 0 1 0 0-.01M10 7.5a1 1 0 1 0 0-.01M14.5 7.5a1 1 0 1 0 0-.01",
  trend:"M4 17l6-6 4 4 6-8M15 7h5v5",
 };
 export function Icon({name,size=20}:{name:string;size?:number}){

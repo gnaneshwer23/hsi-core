@@ -54,7 +54,7 @@ export function InvestigationWorkspacePage(){
  const supporting=run?.candidates.filter(x=>bucketOf(x)==="supporting")??[],opposing=run?.candidates.filter(x=>bucketOf(x)==="opposing"||x.verification==="disputed")??[];
  const ctxLabel=(k:string)=>run?.byContext[k]?.label??k;
  return (
-  <ResearchAppShell where="Investigation workspace" whereIcon="flask" active="investigations" theme="dark">
+  <ResearchAppShell where="Investigation workspace" whereIcon="flask" active="investigations">
    <main className="ws" id="rh-main" tabIndex={-1}>
     <nav className="ws-crumb" aria-label="Breadcrumb"><Link to="/research/home">Research Home</Link><span aria-hidden="true">/</span><span>Live investigation</span></nav>
     <header className="ws-head">

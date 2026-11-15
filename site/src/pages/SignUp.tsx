@@ -9,7 +9,7 @@ import "../styles/sign-in.css";
 export function SignUp(){
  const navigate=useNavigate();
  const [params]=useSearchParams();
- const afterAuth=safeNextPath(params.get(RESEARCH_CONTEXT_KEYS.next))??"/research/account";
+ const afterAuth=safeNextPath(params.get(RESEARCH_CONTEXT_KEYS.next))??"/welcome";
  const signInWithNext=signInHref(afterAuth);
  const [name,setName]=useState("");const [email,setEmail]=useState("");const [password,setPassword]=useState("");
  const [pending,setPending]=useState(false);const [error,setError]=useState("");const [fieldErrors,setFieldErrors]=useState<RegistrationErrors>({});

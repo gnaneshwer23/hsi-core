@@ -11,7 +11,7 @@ import "../styles/sign-in.css";
 export function SignIn() {
  const navigate=useNavigate();
  const [params]=useSearchParams();
- const afterAuth=safeNextPath(params.get(RESEARCH_CONTEXT_KEYS.next))??"/research/account";
+ const afterAuth=safeNextPath(params.get(RESEARCH_CONTEXT_KEYS.next))??"/research/home";
  const [email,setEmail]=useState("");
  const [password,setPassword]=useState("");
  const [pending,setPending]=useState(false);
