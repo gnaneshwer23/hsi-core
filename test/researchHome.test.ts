@@ -1,0 +1,52 @@
+import {describe,expect,test} from "bun:test";
+import {classifyIntent,EMPTY_PROFILE,focusNetwork,loadProfile,parseProfile,recommend,resetProfile,saveProfile,searchEntities,looksLikeTrialId} from "../site/src/lib/researchHome";
+import {departments} from "../site/src/lib/departments";
+
+const dept=departments[0]!,tag=dept.graphTags[0]!;
+const node=(id:string,name:string,domains:string[]=[tag],aliases:string[]=[])=>({id,name,kind:"biological concept",aliases,domains});
+const edge=(id:string,s:string,o:string,negated=false)=>({id,subjectId:s,objectId:o,predicate:"associated_with",kind:"source_candidate" as const,negated,sourceId:null,assertion:"",domains:[tag],conditions:[]});
+const bundle:any={nodes:[node("a","Interleukin 6",[tag],["IL6"]),node("b","STAT3"),node("c","Microglia"),node("d","Isolated")],edges:[edge("e1","a","b"),edge("e2","b","c"),edge("e3","a","c",true),{...edge("g","a","d"),kind:"research_gap"}]};
+const mem=()=>{const m=new Map<string,string>();return {getItem:(k:string)=>m.get(k)??null,setItem:(k:string,v:string)=>{m.set(k,v)},removeItem:(k:string)=>{m.delete(k)}}};
+
+describe("research home logic",()=>{
+ test("entity search ranks exact, prefix and alias matches and ignores 1-char queries",()=>{
+  expect(searchEntities(bundle.nodes,"IL6")[0]!.name).toBe("Interleukin 6");
+  expect(searchEntities(bundle.nodes,"stat")[0]!.id).toBe("b");
+  expect(searchEntities(bundle.nodes,"s")).toEqual([]);
+  expect(searchEntities(bundle.nodes,"zzzz")).toEqual([]);
+ });
+ test("intent separates entities, exploration and investigations",()=>{
+  const hit=searchEntities(bundle.nodes,"IL6");
+  expect(classifyIntent("IL6",hit)).toBe("entity");
+  expect(classifyIntent("gut microbiome neuroinflammation",[])).toBe("exploratory");
+  expect(classifyIntent("How do microbial metabolites influence immune signalling and brain inflammation?",[])).toBe("investigation");
+  expect(classifyIntent(" ",[])).toBe("empty");
+  expect(looksLikeTrialId("nct01234567")).toBe(true);
+ });
+ test("profile storage is defensive: corrupt, oversized and unavailable storage never throw",()=>{
+  expect(parseProfile("{not json")).toEqual(EMPTY_PROFILE);
+  expect(parseProfile(JSON.stringify({v:2}))).toEqual(EMPTY_PROFILE);
+  const p=parseProfile(JSON.stringify({v:1,role:"Academic",goals:["x","x",5],interests:Array(40).fill("a").map((_,i)=>"t"+i),followed:[{id:"a",name:"A"},{id:1}],dismissed:[],onboarded:true}));
+  expect(p.goals).toEqual(["x"]);expect(p.interests.length).toBe(20);expect(p.followed).toEqual([{id:"a",name:"A"}]);
+  const s=mem();expect(saveProfile({...EMPTY_PROFILE,interests:["immunology"]},s)).toBe(true);expect(loadProfile(s).interests).toEqual(["immunology"]);
+  expect(resetProfile(s)).toEqual(EMPTY_PROFILE);expect(loadProfile(s)).toEqual(EMPTY_PROFILE);
+  const broken={getItem:()=>{throw Error("x")},setItem:()=>{throw Error("x")},removeItem:()=>{throw Error("x")}};
+  expect(loadProfile(broken)).toEqual(EMPTY_PROFILE);expect(saveProfile(EMPTY_PROFILE,broken)).toBe(false);expect(saveProfile(EMPTY_PROFILE,null)).toBe(false);
+ });
+ test("recommendations are real concepts, explained, deduplicated and respect follow/dismiss",()=>{
+  const none=recommend(EMPTY_PROFILE,bundle);expect(none).toEqual([]);
+  const r=recommend({...EMPTY_PROFILE,interests:[dept.slug]},bundle);
+  expect(r.length).toBeGreaterThan(0);
+  expect(r.every(x=>bundle.nodes.some((n:any)=>n.id===x.id)&&x.reason.includes(dept.name))).toBe(true);
+  expect(r.some(x=>x.id==="d")).toBe(false); // only a research gap touches it
+  const f=recommend({...EMPTY_PROFILE,followed:[{id:"a",name:"Interleukin 6"}]},bundle);
+  expect(f.every(x=>x.id!=="a"&&x.reason.includes("Interleukin 6"))).toBe(true);
+  const dis=recommend({...EMPTY_PROFILE,interests:[dept.slug],dismissed:r.map(x=>x.id)},bundle);expect(dis.some(x=>r.some(y=>y.id===x.id))).toBe(false);
+ });
+ test("focus network keeps only recorded candidate edges",()=>{
+  const n=focusNetwork(bundle,"a")!;
+  expect(n.nodes.map(x=>x.id).sort()).toEqual(["a","b","c"]);
+  expect(n.edges.some(e=>e.id==="g")).toBe(false);expect(n.edges.find(e=>e.id==="e3")!.negated).toBe(true);
+  expect(focusNetwork(bundle,"missing")).toBeNull();
+ });
+});
