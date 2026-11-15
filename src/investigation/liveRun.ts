@@ -19,9 +19,10 @@ export type LiveScenario={schemaVersion:"hsi-live-scenario-1";id:string;title:st
 export type RunEvent={stage:"scoped"|"searched"|"retrieved"|"mapped"|"compared"|"challenged"|"brief";at:string;status:"ok"|"partial"|"failed"|"skipped";detail:string};
 export type SearchOutcome={provider:string;context:string;status:"ok"|"failed";count:number;error:string|null;query:string};
 export type VerifierVerdict=DirectionalVerdict;
+export type Priority={score:number;reasons:string[]};
 export type Candidate={id:string;relationId:string;subject:string;object:string;contexts:string[];species:string|null;sourceId:string;sourceUrl:string;
  sentence:string;state:"extracted_candidate";lexicalPolarity:"supporting"|"opposing"|"uncertain";polarity:"supporting"|"opposing"|"uncertain";
- polarityBasis:"not_assessed"|"two_model_challenge";direction:"not_assessed"|"positive"|"negative"|"none"|"association_only"|"unresolved";verification:"not_run"|"agree_directional"|"agree_association_only"|"disputed"|"insufficient_abstain"|"check_failed";verdicts:VerifierVerdict[];retraction:LiveEvidenceRecord["retraction"]};
+ polarityBasis:"not_assessed"|"two_model_challenge";direction:"not_assessed"|"positive"|"negative"|"none"|"association_only"|"unresolved";priority:Priority;verification:"not_run"|"agree_directional"|"agree_association_only"|"disputed"|"insufficient_abstain"|"check_failed";verdicts:VerifierVerdict[];retraction:LiveEvidenceRecord["retraction"]};
 export type VerifierSlot={verifierId:string;modelId:string;runner:EntailmentModelRunner;/** Provider behind the runner. Defaults to verifierId. */providerId?:string};
 export type LiveRunInput={scenario:LiveScenario;fetcher?:FetchLike;now?:()=>string;signal?:AbortSignal;mailto?:string;
  verifiers?:readonly [VerifierSlot,VerifierSlot]|null;verifierReason?:string;budget?:Budget;perSearch?:number;maxVerified?:number};
@@ -35,24 +36,47 @@ const sentences=(t:string)=>t.split(/(?<=[.!?])\s+(?=[A-Z0-9(])/).map(s=>s.trim(
 const digest=(v:unknown)=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 const safeErr=(e:unknown)=>(e instanceof Error?e.message:"failed").replace(/https?:\/\/\S+/g,"[url]").slice(0,120);
 
+const firstAt=(text:string,terms:readonly string[])=>{let best=-1;for(const t of terms){const m=new RegExp("(^|[^A-Za-z0-9])"+esc(t)+"($|[^A-Za-z0-9])","i").exec(text);if(m){const i=m.index+(m[1]?.length??0);if(best<0||i<best)best=i}}return best};
+/** Deterministic and explainable: which sentences are worth a (paid) model check first. It never decides a finding. */
+export function priorityOf(i:{sentence:string;fromTitle:boolean;a:readonly string[];b:readonly string[];namesContext:boolean;anyContext:boolean;species:string|null;retracted:boolean}):Priority{
+ const reasons:string[]=[];let score=0;const add=(n:number,r:string)=>{score+=n;reasons.push(r)};
+ if(i.retracted)return {score:-100,reasons:["The provider flags this record as retracted; it is never sent for checking"]};
+ if(OPPOSE.test(i.sentence)||SUPPORT.test(i.sentence))add(3,"States an effect or direction");
+ const d=Math.abs(firstAt(i.sentence,i.a)-firstAt(i.sentence,i.b));
+ if(d<=80)add(2,"Both concepts close together");else if(d<=160)add(1,"Both concepts in the same stretch");
+ if(i.namesContext)add(2,"Names the disease in the sentence");else if(!i.anyContext)add(-1,"No disease context found");
+ if(i.fromTitle)add(-2,"Title only, no results text");
+ if(i.species)add(1,"States species or participants");
+ if(i.sentence.length>=80&&i.sentence.length<=400)add(1,"A full sentence of findings");
+ return {score,reasons};
+}
 export function extractCandidates(records:readonly LiveEvidenceRecord[],s:LiveScenario,max=24):Candidate[]{
- const ent=new Map(s.entities.map(e=>[e.key,e]));const out:Candidate[]=[];
+ const ent=new Map(s.entities.map(e=>[e.key,e]));const found=new Map<string,Candidate>();
  for(const r of records){
   const whole=r.title+". "+(r.abstract??"");
-  const ctx=s.contexts.filter(c=>has(whole,c.terms)).map(c=>c.key);
+  const recordCtx=s.contexts.filter(c=>has(whole,c.terms)).map(c=>c.key);
   for(const sent of sentences(whole)){
+   const inSentence=s.contexts.filter(c=>has(sent,c.terms)).map(c=>c.key);
    for(const rel of s.relations){
     const a=ent.get(rel.subject)!,b=ent.get(rel.object)!;
     if(!has(sent,a.terms)||!has(sent,b.terms))continue;
     const lex=OPPOSE.test(sent)?"opposing":SUPPORT.test(sent)?"supporting":"uncertain";
-    out.push({id:"c"+digest([r.sourceId,rel.id,sent]).slice(0,12),relationId:rel.id,subject:a.label,object:b.label,contexts:ctx,species:species(sent)??species(whole),sourceId:r.sourceId,sourceUrl:r.sourceUrl,
-     sentence:sent,state:"extracted_candidate",lexicalPolarity:lex,polarity:"uncertain",polarityBasis:"not_assessed",direction:"not_assessed",verification:"not_run",verdicts:[],retraction:r.retraction});
+    const ctx=[...new Set([...inSentence,...recordCtx])];
+    const sp=species(sent)??species(whole);
+    const c:Candidate={id:"c"+digest([r.sourceId,rel.id,sent]).slice(0,12),relationId:rel.id,subject:a.label,object:b.label,contexts:ctx,species:sp,sourceId:r.sourceId,sourceUrl:r.sourceUrl,
+     sentence:sent,state:"extracted_candidate",lexicalPolarity:lex,polarity:"uncertain",polarityBasis:"not_assessed",direction:"not_assessed",
+     priority:priorityOf({sentence:sent,fromTitle:r.title.includes(sent.replace(/[.!?]$/,"")),a:a.terms,b:b.terms,namesContext:inSentence.length>0,anyContext:ctx.length>0,species:sp,retracted:r.retraction==="flagged"}),
+     verification:"not_run",verdicts:[],retraction:r.retraction};
+    // One sentence per paper and relationship, so a paper cannot use up several checks.
+    const key=r.sourceId+"|"+rel.id,prev=found.get(key);
+    if(!prev||c.priority.score>prev.priority.score)found.set(key,c);
    }
   }
  }
- // Round-robin across disease contexts so one context cannot fill the cap.
+ const ranked=[...found.values()].sort((x,y)=>y.priority.score-x.priority.score||x.id.localeCompare(y.id));
+ // Best first within each disease context, then interleave contexts so none crowds out the others.
  const buckets=new Map<string,Candidate[]>();
- for(const c of out){const k=c.contexts[0]??"none";(buckets.get(k)??buckets.set(k,[]).get(k)!).push(c)}
+ for(const c of ranked){const k=c.contexts[0]??"none";(buckets.get(k)??buckets.set(k,[]).get(k)!).push(c)}
  const picked:Candidate[]=[];
  for(let i=0;picked.length<max&&[...buckets.values()].some(b=>i<b.length);i++)for(const b of buckets.values())if(i<b.length&&picked.length<max)picked.push(b[i]!);
  return picked;
@@ -105,7 +129,8 @@ export async function runLiveInvestigation(input:LiveRunInput){
  if(!v){verification={status:"not_configured",reason:input.verifierReason??"Two distinct model providers are not configured.",checked:0,independence:null};ev("challenged","skipped",verification.reason!)}
  else{
   let checked=0,errors=0;
-  for(const c of candidates.slice(0,input.maxVerified??6)){
+  const toCheck=candidates.filter(c=>c.priority.score>0).slice(0,input.maxVerified??6);
+  for(const c of toCheck){
    if(input.signal?.aborted)break;
    const ctxLabel=c.contexts.map(k=>s.contexts.find(x=>x.key===k)?.label).filter(Boolean).join(", ");
    const res=await Promise.allSettled(v.map(x=>runDirectionalChallenge({subject:c.subject,object:c.object,context:ctxLabel,passage:c.sentence,sourceId:c.sourceId},x.verifierId,x.modelId,x.runner)));
@@ -120,7 +145,7 @@ export async function runLiveInvestigation(input:LiveRunInput){
   }
   const distinct=(v[0].providerId??v[0].verifierId)!==(v[1].providerId??v[1].verifierId);
   verification={status:errors?"partial":"completed",reason:null,checked,independence:distinct?"separate_providers_unverified":"independent_execution_only"};
-  ev("challenged",errors?"partial":"ok",`${checked} candidates checked by two models for direction; agreement is not scientific proof. ${errors} model calls failed.`);
+  ev("challenged",errors?"partial":"ok",`${checked} highest-priority candidates (of ${candidates.length}) checked by two models for direction; agreement is not scientific proof. ${errors} model calls failed.`);
  }
  const byContext=Object.fromEntries(s.contexts.map(c=>[c.key,{label:c.label,records:records.filter(r=>(r as any).__ctx===c.key).length,
   supporting:candidates.filter(x=>x.contexts.includes(c.key)&&x.polarity==="supporting").map(x=>x.id),

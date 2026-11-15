@@ -1,7 +1,7 @@
 import {describe,expect,test} from "bun:test";
 import {BudgetExceeded,createAnthropicRunner,createBudget,createOpenAiRunner,providerStatus} from "../src/modelProviders";
 import {searchEuropePmc,searchOpenAlex} from "../src/evidence/liveSources";
-import {renderLiveBriefMarkdown,runLiveInvestigation} from "../src/investigation/liveRun";
+import {extractCandidates,priorityOf,renderLiveBriefMarkdown,runLiveInvestigation} from "../src/investigation/liveRun";
 import {LIVE_SCENARIOS} from "../src/investigation/scenarios";
 import {combineDirections,DIRECTION_INSTRUCTION,runDirectionalChallenge} from "../src/investigation/directionalChallenge";
 import {handleLiveInvestigation,resetLiveInvestigationLimiter} from "../src/server/liveInvestigationHandler";
@@ -171,5 +171,39 @@ describe("directional challenge",()=>{
   expect(combineDirections([v("positive"),v("association_only")])).toMatchObject({verification:"insufficient_abstain"});
   expect(combineDirections([v("positive"),v("insufficient")])).toMatchObject({verification:"insufficient_abstain"});
   expect(combineDirections([v("positive"),v("not_assessed")])).toMatchObject({verification:"check_failed"});
+ });
+});
+
+describe("candidate ranking before checking",()=>{
+ const scenario=LIVE_SCENARIOS["il21-autoimmune"]!;
+ const rec=(id:string,title:string,abstract:string|null,retraction:any="not_flagged_by_provider")=>({provider:"europe-pmc" as const,sourceId:id,title,abstract,doi:null,pmid:null,publicationDate:null,sourceUrl:"https://x/"+id,retrievedAt:now(),licenceStatus:"not_assessed" as const,retraction,studyTypes:[],verificationState:"metadata_retrieved_not_claim_verified" as const,reviewState:"unreviewed" as const});
+ const STRONG="In patients with systemic sclerosis, serum IL-21 was increased and expanded T follicular helper cells.";
+ const BARE="We review IL-21 and also discuss other topics such as T follicular helper cells in general terms at length here.";
+ test("a sentence that states an effect and names the disease outranks a bare co-mention and a title-only match",()=>{
+  const c=extractCandidates([rec("weak","A regulatory effect of IL-21 on Tfh cells.",null),rec("bare","Review",BARE),rec("strong","Study",STRONG)],scenario);
+  expect(c[0]!.sourceId).toBe("strong");
+  const byId=Object.fromEntries(c.map(x=>[x.sourceId,x.priority.score]));
+  expect(byId.strong).toBeGreaterThan(byId.bare!);expect(byId.bare).toBeGreaterThan(byId.weak!);
+  expect(c[0]!.priority.reasons.join(" ")).toContain("States an effect");
+ });
+ test("one sentence per paper and relationship; retracted records rank last and are never checked",async()=>{
+  const two=rec("p","Study",STRONG+" "+STRONG.replace("increased","elevated"));
+  expect(extractCandidates([two],scenario).filter(x=>x.relationId==="il21-tfh").length).toBe(1);
+  const retracted=rec("r","Study",STRONG,"flagged");
+  expect(priorityOf({sentence:STRONG,fromTitle:false,a:["IL-21"],b:["Tfh"],namesContext:true,anyContext:true,species:"human",retracted:true}).score).toBeLessThan(0);
+  const calls:string[]=[];
+  const runner={verifierId:"a",modelId:"m",runner:async(r:any)=>{calls.push(r.passage);return {direction:"positive",reason:"r",evidenceSpan:STRONG.slice(0,10)}}};
+  const f=(async(u:any)=>{const url=String(u);
+   if(url.includes("europepmc"))return ok({resultList:{result:[{id:"1",source:"MED",title:"Study",abstractText:STRONG,pubTypeList:{pubType:["Retracted Publication"]}}]}});
+   if(url.includes("openalex"))return ok({results:[]});return ok(ot)}) as any;
+  const r=await runLiveInvestigation({scenario,fetcher:f,now,verifiers:[runner,{...runner,verifierId:"b",modelId:"m2"}]});
+  expect(calls.length).toBe(0);expect(r.candidates.every(x=>x.priority.score<0)).toBe(true);expect(r.verification.checked).toBe(0);
+ });
+ test("only the top-ranked, context-balanced candidates are sent to the models",async()=>{
+  const {f}=fakeFetch();const sent:string[]=[];
+  const slotSpy=(id:string)=>({verifierId:id,modelId:id+"-m",runner:async(q:any)=>{sent.push(q.passage);return {direction:"positive",reason:"r",evidenceSpan:null}}});
+  const r=await runLiveInvestigation({scenario,fetcher:f,now,maxVerified:1,verifiers:[slotSpy("a"),slotSpy("b")]});
+  expect(r.verification.checked).toBe(1);expect(sent.length).toBe(2);expect(new Set(sent).size).toBe(1);
+  expect(r.candidates[0]!.priority.score).toBe(Math.max(...r.candidates.map(x=>x.priority.score)));
  });
 });
