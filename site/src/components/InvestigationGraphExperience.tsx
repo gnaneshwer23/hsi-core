@@ -207,8 +207,16 @@ export function InvestigationGraphExperience({ embedded = false }: { embedded?: 
   }, [version, retry]);
   const questionId = params.get('investigation') ?? 'gut-immune';
   const question = bundle?.questions.find((q) => q.id === questionId);
-  const from = params.get('from') ?? question?.fromId ?? '',
-    target = params.get('target') ?? question?.toId ?? '';
+  /* With no explicit question, open on the published IL-21 to systemic sclerosis neighbourhood rather than a gut-metabolite template. */
+  const nodeId = (name: string) => bundle?.nodes.find((n) => n.name === name)?.id;
+  const il21 = nodeId('IL-21'),
+    ssc = nodeId('Systemic sclerosis'),
+    useFlagship = !params.has('investigation') && !!il21 && !!ssc;
+  const shownGaps = !bundle || !question ? [] : useFlagship
+    ? bundle.gaps.filter((g) => [g.subjectId, g.objectId].some((id) => id === params.get('from') || id === params.get('target') || id === il21 || id === ssc))
+    : bundle.gaps.filter((g) => question.gapIds.includes(g.id));
+  const from = params.get('from') ?? (useFlagship ? il21 : question?.fromId) ?? '',
+    target = params.get('target') ?? (useFlagship ? ssc : question?.toId) ?? '';
   const model = params.get('model') ?? '',
     hops = params.has('hops') ? Number(params.get('hops')) : 4;
   const depth = params.has('depth') ? Number(params.get('depth')) : 1;
@@ -930,20 +938,24 @@ export function InvestigationGraphExperience({ embedded = false }: { embedded?: 
       <section className="ig-gaps" aria-label="Investigation gaps">
         <h2>What would we need to learn next?</h2>
         <p>
-          Recorded gaps for the selected question template, not a fresh literature search. Changing
-          endpoints does not create new gap findings.
+          {useFlagship
+            ? 'Gaps recorded in the published graph that touch this selection, not a fresh literature search.'
+            : 'Recorded gaps for the selected question template, not a fresh literature search. Changing endpoints does not create new gap findings.'}
         </p>
-        {bundle.gaps
-          .filter((g) => question!.gapIds.includes(g.id))
-          .map((g) => (
-            <article key={g.id}>
-              <h3>{g.question}</h3>
-              <p>{g.missing}</p>
-              <p>
-                <strong>Proposed next study:</strong> {g.nextStudy}
-              </p>
-            </article>
-          ))}
+        {shownGaps.length === 0 && (
+          <p role="status">
+            No gap recorded in the published graph touches this selection. That is a coverage limit, not a finding. Choose a question template above to see its recorded gaps.
+          </p>
+        )}
+        {shownGaps.map((g) => (
+          <article key={g.id}>
+            <h3>{g.question}</h3>
+            <p>{g.missing}</p>
+            <p>
+              <strong>Proposed next study:</strong> {g.nextStudy}
+            </p>
+          </article>
+        ))}
       </section>
       <footer className="ig-footer">
         <button
@@ -964,7 +976,7 @@ export function InvestigationGraphExperience({ embedded = false }: { embedded?: 
               path: lens === 'path' ? path ?? null : null,
               assertions: edges,
               sources: bundle.sources.filter((s) => sourceIds.has(s.id)),
-              gaps: bundle.gaps.filter((g) => question!.gapIds.includes(g.id)),
+              gaps: shownGaps,
               evidenceReadiness: graphEvidenceReadiness(bundle,edges.map(e=>e.id)),
               sourceClearanceVerified: false,
               scientificApproval: false,

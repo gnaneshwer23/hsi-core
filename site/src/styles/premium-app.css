@@ -62,6 +62,66 @@
 .pm-day[data-on=true]{background:var(--accent);color:#fff;font-weight:700}
 .pm-day[data-today=true]:not([data-on=true]){box-shadow:inset 0 0 0 2px var(--accent-link);font-weight:700}
 @media(max-width:1180px){.pm-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.pm-pair{grid-template-columns:1fr}}
-@media(max-width:1000px){.rh-body{grid-template-columns:1fr}.rh-nav{margin:0;border-radius:0 24px 24px 0;top:64px;height:auto;inset:64px auto 0 0;background:rgba(255,255,255,.94)}.rh-app[data-theme=dark] .rh-nav{background:rgba(22,27,46,.97)}}
+@media(max-width:1000px){.rh-body{grid-template-columns:minmax(0,1fr)}.rh-nav{margin:0;border-radius:0 24px 24px 0;top:64px;height:auto;inset:64px auto 0 0;background:rgba(255,255,255,.94)}.rh-app[data-theme=dark] .rh-nav{background:rgba(22,27,46,.97)}}
 @media(max-width:560px){.pm-tiles{grid-template-columns:1fr}.pm-tile{min-height:0}.pm-loop ol{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.pm-tile,.rh-nav a{transition:none}.pm-tile:hover{transform:none}}
+/* research knowledge graph inside the app shell: same family as the dashboard */
+.rh-kg{max-width:1360px;padding:28px 36px 72px}
+.rh-kg :is(.ig-experience,.cg-page,.dg-page){background:transparent;max-width:none;width:100%;margin:0;padding:0;color:var(--ink);font-family:'Host Grotesk Variable',system-ui,sans-serif}
+.rh-kg .ig-heading{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:28px;align-items:start;padding:40px 44px;margin:0 0 20px;border-radius:32px;background:linear-gradient(135deg,#fff 0,#ece8fb 62%,#e1f3ee 130%);border:1px solid #fff;box-shadow:0 2px 4px rgba(53,45,110,.05),0 24px 60px rgba(53,45,110,.1)}
+.rh-kg .ig-heading h1{font-size:clamp(32px,3.6vw,48px);line-height:1.05;letter-spacing:-.03em;font-weight:650;margin:0 0 14px;max-width:16ch;text-wrap:balance}
+.rh-kg .ig-heading p{font-size:17px;line-height:1.65;color:var(--body);max-width:56ch}
+.rh-kg .ig-eyebrow{display:none}
+.rh-kg .ig-handoff{display:flex;flex-wrap:wrap;gap:8px 12px;margin-top:16px}
+.rh-kg .ig-handoff a{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:999px;background:#fff;border:1px solid var(--line);color:var(--accent-ink);font-weight:650;text-decoration:none;font-size:14.5px}
+.rh-kg .ig-handoff a:hover{background:var(--lav)}
+.rh-kg .ig-note{font-size:13.5px;line-height:1.55;color:var(--muted);max-width:none}
+.rh-kg details{border-radius:18px}
+.rh-kg .ig-snapshot,.rh-kg .ig-heading details{background:rgba(255,255,255,.72);border:0;border-radius:20px;padding:14px 18px}
+.rh-kg .ig-workspace{display:grid;gap:20px;padding:0;border:0;background:transparent;grid-template-columns:minmax(0,1fr) 320px}
+.rh-kg .ig-workspace.ig-network-mode{grid-template-columns:minmax(0,1fr) 320px}
+.rh-kg .ig-rail{padding:6px;border-radius:22px;background:rgba(255,255,255,.7);border:0}
+.rh-kg .ig-lenses{display:inline-flex;gap:6px;padding:6px;border-radius:999px;background:#fff;border:0;box-shadow:0 4px 14px rgba(53,45,110,.08)}
+.rh-kg .ig-lenses button{min-height:44px;padding:0 20px;border-radius:999px;border:0;background:transparent;font:650 15px 'Host Grotesk Variable',system-ui,sans-serif;color:var(--body);cursor:pointer}
+.rh-kg .ig-lenses button[aria-selected=true],.rh-kg .ig-lenses button[aria-pressed=true]{background:var(--ink);color:#fff}
+.rh-kg .ig-stage,.rh-kg .ig-inspector{background:#fff;border:0;border-radius:28px;box-shadow:0 1px 2px rgba(53,45,110,.04),0 20px 50px rgba(53,45,110,.08);padding:22px}
+.rh-kg .ig-inspector h2,.rh-kg .ig-inspector h3{letter-spacing:-.02em}
+.rh-kg .ig-inspector h2{font-size:30px;line-height:1.1}
+.rh-kg .rn-explorer{border:0;border-radius:24px;background:var(--surface-2)}
+.rh-kg .rn-layout{grid-template-columns:230px minmax(0,1fr);gap:0}
+.rh-kg .rn-filters{background:transparent;padding:16px}
+.rh-kg .rn-network{border-radius:22px;overflow:hidden}
+.rh-kg .xp-graph-frame.kg-canvas{background:radial-gradient(560px 360px at 50% 45%,#2c2870 0,#171a3d 72%)}
+.rh-kg .xp-graph-frame svg{height:620px;background:transparent}
+.rh-kg .rn-network>header{background:rgba(255,255,255,.06)}
+.rh-kg :is(button,.rh-kg input,select){border-radius:14px}
+.rh-kg .ig-controls button,.rh-kg .rn-explorer>header button,.rh-kg .ig-footer button{border-radius:999px;border:1px solid var(--line-2);background:#fff;color:var(--ink);min-height:44px;padding:0 18px;font:650 14.5px 'Host Grotesk Variable',system-ui,sans-serif}
+.rh-kg .ig-footer button{background:var(--ink);color:#fff;border-color:var(--ink)}
+.rh-kg .ig-gaps,.rh-kg .ig-comparison{margin-top:20px;padding:26px 28px;border-radius:28px;background:#fff;border:0;box-shadow:0 1px 2px rgba(53,45,110,.04),0 20px 50px rgba(53,45,110,.07)}
+.rh-kg .ig-gaps article{padding:16px 18px;margin-top:12px;border-radius:20px;background:var(--peach);border:0}
+.rh-kg h2{letter-spacing:-.02em}
+.rh-kg .ig-footer{margin-top:20px;display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+@media(max-width:1180px){.rh-kg .ig-heading{grid-template-columns:1fr;padding:28px}.rh-kg .ig-workspace,.rh-kg .ig-workspace.ig-network-mode{grid-template-columns:1fr}.rh-kg .rn-layout{grid-template-columns:1fr}}
+@media(max-width:1000px){.rh-kg{padding:18px 16px 56px}}
+.rh-kg .rn-layout{grid-template-columns:1fr}
+.rh-kg .rn-filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px 20px;align-items:start;padding:16px 18px}
+.rh-kg .rn-filters>:is(h2,p,.atlas-departments,.rn-scope-note,details){grid-column:1/-1}
+.rh-kg .atlas-departments :is(ul,div,nav){display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;list-style:none;padding:0;margin:0}
+.rh-kg .atlas-departments button{width:100%;min-height:52px;border-radius:16px;border:1px solid var(--line-2);background:#fff;text-align:left;padding:8px 14px}
+.rh-kg .atlas-departments button[aria-pressed=true]{background:var(--lav);border-color:var(--accent);color:var(--lav-ink)}
+.rh-kg .rn-network{background:#fff;border-radius:22px;overflow:hidden}
+.rh-kg .rn-network>header{background:#171a3d;color:#e9e6fb}
+.rh-kg .rn-network .xp-graph-frame.kg-canvas{background:radial-gradient(620px 380px at 50% 50%,#2c2870 0,#171a3d 78%)}
+.rh-kg .rn-network .xp-graph-frame svg{background:transparent}
+.rh-kg .rn-network :is(.xp-graph-toolbar,.kg-canvas-bottom){background:rgba(23,26,61,.85);color:#e9e6fb}
+.rh-kg .rn-network>header :is(h2,p,small){color:#e9e6fb}
+.rh-kg nav.atlas-departments{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;margin:0;padding:0}
+.rh-kg nav.atlas-departments button{min-height:52px}
+.rh-kg .rn-network .xp-graph-frame svg{background:transparent!important}
+.rh-kg .xp-graph-frame.kg-canvas{background:radial-gradient(620px 380px at 50% 50%,#2c2870 0,#171a3d 78%)!important}
+.rh-kg{min-width:0}
+.rh-kg :is(.cg-page,.dg-page,.ig-experience)>*{min-width:0}
+.rh-kg .dg-tabs{display:flex;flex-wrap:wrap;gap:6px}
+.rh-kg .kg-stage-head a:not(.x):not(.y):not(.z),.rh-kg .kg-canvas a:not(.x):not(.y):not(.z){color:#e0d8fa}
+.rh-kg{overflow-x:auto}
+.rh-kg{position:relative}
