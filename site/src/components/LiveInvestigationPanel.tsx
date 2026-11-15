@@ -3,14 +3,15 @@ import "../styles/live-investigation.css";
 
 /** Live mode: real public-literature retrieval through the server route. Curated examples below stay separate and labelled. */
 type Search={provider:string;context:string;status:"ok"|"failed";count:number;error:string|null};
-type Verdict={verifier:string;model:string;verdict:string;evidenceSpan:string|null;reason:string};
-type Candidate={id:string;subject:string;object:string;contexts:string[];species:string|null;sourceId:string;sourceUrl:string;sentence:string;lexicalPolarity:string;polarity:"supporting"|"opposing"|"uncertain";polarityBasis:string;verification:string;verdicts:Verdict[];retraction:string};
+type Verdict={verifier:string;model:string;direction:string;evidenceSpan:string|null;reason:string};
+type Candidate={id:string;subject:string;object:string;contexts:string[];species:string|null;sourceId:string;sourceUrl:string;sentence:string;lexicalPolarity:string;direction:string;polarity:"supporting"|"opposing"|"uncertain";polarityBasis:string;verification:string;verdicts:Verdict[];retraction:string};
 type Rec={sourceId:string;title:string;doi:string|null;pmid:string|null;publicationDate:string|null;sourceUrl:string;retrievedAt:string;provider:string;abstract:string|null;retraction:string};
 type Result={question:string;scenarioId:string;version:number;briefHash:string;searches:Search[];records:Rec[];candidates:Candidate[];targets:{context:string;disease:string|null;rows:{symbol:string;score:number}[];error:string|null}[];
  byContext:Record<string,{label:string;records:number;supporting:string[];opposing:string[];uncertain:string[]}>;
  verification:{status:string;reason:string|null;checked:number;independence:string|null};gaps:string[];events:{stage:string;at:string;status:string;detail:string}[];budget:unknown};
 const SCENARIO="il21-autoimmune";
 
+const DIRLABEL:Record<string,string>={positive:"Positive: rise or act together, or promotes",negative:"Negative: inverse, or suppresses",none:"No relationship stated",association_only:"Linked, direction not stated",unresolved:"Unresolved: the checks disagreed or could not tell",not_assessed:"Not assessed"};
 const STORE="hsi-live-investigation-v1";
 
 function download(name:string,text:string,type:string){
@@ -71,7 +72,7 @@ export function LiveInvestigationPanel(){
        const list=cands.filter(c=>c.polarity===p);
        return <div key={p} className={"li-group li-"+p}><h4>{p==="uncertain"&&!assessed?"Direction not assessed":p==="uncertain"?"Uncertain or abstained":p==="supporting"?"Supporting":"Opposing"} <span>({list.length})</span></h4>
         {list.length===0?<p className="li-none">{p==="opposing"?(assessed?"None found in these sources. This does not establish consensus.":"Not assessed: the model challenge did not run."):p==="supporting"&&!assessed?"Not assessed: the model challenge did not run.":"None in this view."}</p>:
-         <ul>{list.map(c=><li key={c.id}><button type="button" aria-pressed={sel===c.id} onClick={()=>setSel(c.id)}><b>{c.subject} ~ {c.object}</b><span>{c.sentence}</span></button></li>)}</ul>}
+         <ul>{list.map(c=><li key={c.id}><button type="button" aria-pressed={sel===c.id} onClick={()=>setSel(c.id)}><b>{c.subject} ~ {c.object}{c.direction!=="not_assessed"&&<em className="li-dir"> · {(DIRLABEL[c.direction]??c.direction).split(":")[0]}</em>}</b><span>{c.sentence}</span></button></li>)}</ul>}
        </div>;
       })}
      </div>
@@ -84,10 +85,10 @@ export function LiveInvestigationPanel(){
        <dl>
         <dt>Disease context</dt><dd>{picked.contexts.map(k=>result.byContext[k]?.label).join(", ")||"Not stated in the abstract"}</dd>
         <dt>Species cue</dt><dd>{picked.species??"Not stated"}</dd>
-        <dt>Direction basis</dt><dd>{picked.polarityBasis==="two_model_challenge"?`Two-model challenge: ${picked.verification.replaceAll("_"," ")}`:`Not assessed. A keyword hint says “${picked.lexicalPolarity}” but it is not a finding.`}</dd>
+        <dt>Direction basis</dt><dd>{picked.polarityBasis==="two_model_challenge"?`${DIRLABEL[picked.direction]??picked.direction} (two-model check: ${picked.verification.replaceAll("_"," ")})`:`Not assessed. A keyword hint says “${picked.lexicalPolarity}” but it is not a finding.`}</dd>
         <dt>Source</dt><dd><a href={picked.sourceUrl} target="_blank" rel="noreferrer noopener">{rec?.title??picked.sourceId}</a>{rec&&<><br/>{rec.provider} · {rec.doi?`DOI ${rec.doi} · `:""}{rec.pmid?`PMID ${rec.pmid} · `:""}{rec.publicationDate??"date not given"}<br/>Retrieved {rec.retrievedAt} · retraction: {rec.retraction.replaceAll("_"," ")} · licence not assessed</>}</dd>
        </dl>
-       {picked.verdicts.length>0&&<div className="li-verdicts"><h4>Verifier challenges</h4>{picked.verdicts.map(v=><p key={v.verifier}><b>{v.verifier}</b> ({v.model}): {v.verdict}. {v.reason}{v.evidenceSpan&&<><br/>Span: “{v.evidenceSpan}”</>}</p>)}</div>}
+       {picked.verdicts.length>0&&<div className="li-verdicts"><h4>Verifier challenges</h4>{picked.verdicts.map(v=><p key={v.verifier}><b>{v.verifier}</b> ({v.model}): {v.direction.replaceAll("_"," ")}. {v.reason}{v.evidenceSpan&&<><br/>Span: “{v.evidenceSpan}”</>}</p>)}</div>}
        <p className="li-state">Candidate · unreviewed · not promotable to the graph</p>
       </div>}
      </aside>

@@ -39,3 +39,4 @@
 .li-export{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:18px;font-size:14px;color:#566274}
 @media(max-width:900px){.li-cols{grid-template-columns:1fr}.li-detail{position:static}.li-panel{padding:18px}}
 @media(prefers-reduced-motion:reduce){.li-panel *{transition:none!important;animation:none!important}}
+.li-dir{font-weight:500;font-style:normal;color:#566274}

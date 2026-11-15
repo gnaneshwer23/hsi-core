@@ -70,7 +70,8 @@ async function withRetry<T>(fn:()=>Promise<Response>,read:(r:Response)=>Promise<
 }
 export type RunnerDeps={env:Env;budget:Budget;fetcher?:FetchLike;sleeper?:(ms:number)=>Promise<void>;timeoutMs?:number};
 const compose=(r:{instruction:string;claim:string;passage:string})=>{
- const system=r.instruction+" Reply with only a JSON object with exactly the keys verdict, reason, evidenceSpan. evidenceSpan must be an exact quotation from the passage or null.";
+ // Callers that define their own output keys say "Return JSON with"; the older entailment instruction gets the keys appended.
+ const system=/Return JSON with direction/.test(r.instruction)?r.instruction+" Reply with only that JSON object and no other text.":r.instruction+" Reply with only a JSON object with exactly the keys verdict, reason, evidenceSpan. evidenceSpan must be an exact quotation from the passage or null.";
  // The passage is data inside a JSON string, never part of the instructions.
  return {system,user:JSON.stringify({claim:r.claim,passage:r.passage})};
 };

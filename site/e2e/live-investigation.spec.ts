@@ -3,7 +3,7 @@ import AxeBuilder from '@axe-core/playwright';
 const result={question:'q',scenarioId:'il21-autoimmune',version:1,briefHash:'a'.repeat(64),
  searches:[{provider:'europe-pmc',context:'ssc',status:'ok',count:1,error:null},{provider:'openalex',context:'ssc',status:'failed',count:0,error:'HTTP 500'}],
  records:[{sourceId:'s1',title:'IL-21 in SSc',doi:'10.1/x',pmid:'1',publicationDate:'2020-01-01',sourceUrl:'https://europepmc.org/article/MED/1',retrievedAt:'2026-11-15T00:00:00Z',provider:'europe-pmc',abstract:'a',retraction:'not_flagged_by_provider'}],
- candidates:[{id:'c1',subject:'IL-21',object:'T follicular helper cells',contexts:['ssc'],species:'human',sourceId:'s1',sourceUrl:'https://europepmc.org/article/MED/1',sentence:'IL-21 was increased and Tfh cells expanded in patients.',lexicalPolarity:'supporting',polarity:'uncertain',polarityBasis:'not_assessed',verification:'not_run',verdicts:[],retraction:'not_flagged_by_provider'}],
+ candidates:[{id:'c1',subject:'IL-21',object:'T follicular helper cells',contexts:['ssc'],species:'human',sourceId:'s1',sourceUrl:'https://europepmc.org/article/MED/1',sentence:'IL-21 was increased and Tfh cells expanded in patients.',lexicalPolarity:'supporting',direction:'not_assessed',polarity:'uncertain',polarityBasis:'not_assessed',verification:'not_run',verdicts:[],retraction:'not_flagged_by_provider'}],
  targets:[],byContext:{ssc:{label:'Systemic sclerosis',records:1,supporting:[],opposing:[],uncertain:['c1']}},
  verification:{status:'not_configured',reason:'The model step is disabled on this deployment.',checked:0,independence:null},
  gaps:['Search failed: openalex for ssc (HTTP 500). Absence of results there is not evidence of absence.'],

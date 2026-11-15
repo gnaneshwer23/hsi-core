@@ -9,9 +9,8 @@ import type {FetchLike} from "../fetchLike";
 import {rejectPhiPayload} from "../cdsPhiBoundary";
 import {searchEuropePmc,searchOpenAlex,type LiveEvidenceRecord} from "../evidence/liveSources";
 import {openTargetsAdapter} from "../researchV2/sourceAdapters";
-import {runModelEntailment} from "../researchV2/modelEntailment";
+import {combineDirections,runDirectionalChallenge,type DirectionalVerdict} from "./directionalChallenge";
 import type {EntailmentModelRunner} from "../researchV2/modelEntailment";
-import type {EvidenceClaim} from "../researchV2/passageVerification";
 import type {Budget} from "../modelProviders";
 
 export type LiveScenario={schemaVersion:"hsi-live-scenario-1";id:string;title:string;question:string;
@@ -19,10 +18,10 @@ export type LiveScenario={schemaVersion:"hsi-live-scenario-1";id:string;title:st
  contexts:{key:string;label:string;terms:string[];openTargetsId?:string}[]};
 export type RunEvent={stage:"scoped"|"searched"|"retrieved"|"mapped"|"compared"|"challenged"|"brief";at:string;status:"ok"|"partial"|"failed"|"skipped";detail:string};
 export type SearchOutcome={provider:string;context:string;status:"ok"|"failed";count:number;error:string|null;query:string};
-export type VerifierVerdict={verifier:string;model:string;verdict:"supports"|"contradicts"|"insufficient"|"not_assessed";evidenceSpan:string|null;reason:string};
+export type VerifierVerdict=DirectionalVerdict;
 export type Candidate={id:string;relationId:string;subject:string;object:string;contexts:string[];species:string|null;sourceId:string;sourceUrl:string;
  sentence:string;state:"extracted_candidate";lexicalPolarity:"supporting"|"opposing"|"uncertain";polarity:"supporting"|"opposing"|"uncertain";
- polarityBasis:"not_assessed"|"two_model_challenge";verification:"not_run"|"both_support"|"disputed"|"insufficient_abstain"|"check_failed";verdicts:VerifierVerdict[];retraction:LiveEvidenceRecord["retraction"]};
+ polarityBasis:"not_assessed"|"two_model_challenge";direction:"not_assessed"|"positive"|"negative"|"none"|"association_only"|"unresolved";verification:"not_run"|"agree_directional"|"agree_association_only"|"disputed"|"insufficient_abstain"|"check_failed";verdicts:VerifierVerdict[];retraction:LiveEvidenceRecord["retraction"]};
 export type VerifierSlot={verifierId:string;modelId:string;runner:EntailmentModelRunner;/** Provider behind the runner. Defaults to verifierId. */providerId?:string};
 export type LiveRunInput={scenario:LiveScenario;fetcher?:FetchLike;now?:()=>string;signal?:AbortSignal;mailto?:string;
  verifiers?:readonly [VerifierSlot,VerifierSlot]|null;verifierReason?:string;budget?:Budget;perSearch?:number;maxVerified?:number};
@@ -47,7 +46,7 @@ export function extractCandidates(records:readonly LiveEvidenceRecord[],s:LiveSc
     if(!has(sent,a.terms)||!has(sent,b.terms))continue;
     const lex=OPPOSE.test(sent)?"opposing":SUPPORT.test(sent)?"supporting":"uncertain";
     out.push({id:"c"+digest([r.sourceId,rel.id,sent]).slice(0,12),relationId:rel.id,subject:a.label,object:b.label,contexts:ctx,species:species(sent)??species(whole),sourceId:r.sourceId,sourceUrl:r.sourceUrl,
-     sentence:sent,state:"extracted_candidate",lexicalPolarity:lex,polarity:"uncertain",polarityBasis:"not_assessed",verification:"not_run",verdicts:[],retraction:r.retraction});
+     sentence:sent,state:"extracted_candidate",lexicalPolarity:lex,polarity:"uncertain",polarityBasis:"not_assessed",direction:"not_assessed",verification:"not_run",verdicts:[],retraction:r.retraction});
    }
   }
  }
@@ -108,22 +107,20 @@ export async function runLiveInvestigation(input:LiveRunInput){
   let checked=0,errors=0;
   for(const c of candidates.slice(0,input.maxVerified??6)){
    if(input.signal?.aborted)break;
-   const claim:EvidenceClaim={id:c.id,sourceId:c.sourceId,exactQuote:c.sentence,subjectId:c.subject,predicate:"is associated with",objectId:c.object,context:{diseaseIds:c.contexts,species:c.species,tissueId:null,cellId:null,method:null}};
-   const res=await Promise.allSettled(v.map(x=>runModelEntailment({claim,passage:c.sentence,sourceId:c.sourceId},x.verifierId,x.modelId,x.runner)));
+   const ctxLabel=c.contexts.map(k=>s.contexts.find(x=>x.key===k)?.label).filter(Boolean).join(", ");
+   const res=await Promise.allSettled(v.map(x=>runDirectionalChallenge({subject:c.subject,object:c.object,context:ctxLabel,passage:c.sentence,sourceId:c.sourceId},x.verifierId,x.modelId,x.runner)));
    res.forEach((r,i)=>{
     const slot=v[i]!;
-    if(r.status==="fulfilled")c.verdicts.push({verifier:slot.verifierId,model:slot.modelId,verdict:r.value.verdict,evidenceSpan:r.value.evidenceSpan,reason:r.value.reason});
-    else{errors++;c.verdicts.push({verifier:slot.verifierId,model:slot.modelId,verdict:"not_assessed",evidenceSpan:null,reason:safeErr(r.reason)})}
+    if(r.status==="fulfilled")c.verdicts.push(r.value);
+    else{errors++;c.verdicts.push({verifier:slot.verifierId,model:slot.modelId,direction:"not_assessed",evidenceSpan:null,reason:safeErr(r.reason)})}
    });
-   const vs=c.verdicts.map(x=>x.verdict);
-   c.verification=vs.includes("not_assessed")?"check_failed":vs.every(x=>x==="supports")?"both_support":vs.includes("contradicts")?"disputed":"insufficient_abstain";
-   c.polarityBasis="two_model_challenge";
-   c.polarity=c.verification==="both_support"?"supporting":c.verification==="disputed"?"opposing":"uncertain";
+   const combined=combineDirections(c.verdicts);
+   c.direction=combined.direction;c.verification=combined.verification;c.polarity=combined.polarity;c.polarityBasis="two_model_challenge";
    checked++;
   }
   const distinct=(v[0].providerId??v[0].verifierId)!==(v[1].providerId??v[1].verifierId);
   verification={status:errors?"partial":"completed",reason:null,checked,independence:distinct?"separate_providers_unverified":"independent_execution_only"};
-  ev("challenged",errors?"partial":"ok",`${checked} candidates checked by two models; model agreement is not scientific proof. ${errors} model calls failed.`);
+  ev("challenged",errors?"partial":"ok",`${checked} candidates checked by two models for direction; agreement is not scientific proof. ${errors} model calls failed.`);
  }
  const byContext=Object.fromEntries(s.contexts.map(c=>[c.key,{label:c.label,records:records.filter(r=>(r as any).__ctx===c.key).length,
   supporting:candidates.filter(x=>x.contexts.includes(c.key)&&x.polarity==="supporting").map(x=>x.id),
@@ -152,7 +149,7 @@ export function renderLiveBriefMarkdown(b:LiveInvestigation){
  return ["# Live investigation brief (unreviewed)",safe(b.question),`Version ${b.version} · ${b.briefHash.slice(0,16)}`,
   "Candidate-only. Not reviewed, not scientific approval, not graph-promotable, no clinical advice.",
   "## Searches",...b.searches.map(x=>`- ${x.provider} / ${x.context}: ${x.status}, ${x.count} records${x.error?` (${safe(x.error)})`:""}`),
-  "## Candidates",...b.candidates.map(c=>`- [${c.polarity}] ${safe(c.subject)} ~ ${safe(c.object)} (${c.contexts.join(", ")||"context not stated"}): ${safe(c.sentence)} ${c.sourceUrl}`),
+  "## Candidates",...b.candidates.map(c=>`- [${c.direction}] ${safe(c.subject)} ~ ${safe(c.object)} (${c.contexts.join(", ")||"context not stated"}): ${safe(c.sentence)} ${c.sourceUrl}`),
   "## Missing evidence and limits",...b.gaps.map(g=>"- "+safe(g)),
   "## Execution",...b.events.map(e=>`- ${e.at} ${e.stage}: ${e.status}. ${safe(e.detail)}`)].join("\n");
 }
