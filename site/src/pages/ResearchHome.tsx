@@ -5,7 +5,7 @@ import {matchScenario} from "../../../src/investigation/scenarios";
 import {loadDomainGraph} from "../lib/claimGraphClient";
 import {departments} from "../lib/departments";
 import {NetworkView} from "../components/graph/GraphCharts";
-import {HsiIdentity} from "../components/HsiIdentity";
+import {ResearchAppShell} from "../components/home/ResearchAppShell";
 import {DEPT_ICON,HeroNetwork,Icon} from "../components/home/AppIcons";
 import {EMPTY_PROFILE,LIVE_RUN_KEY,summariseSavedLiveRun,type SavedLiveRun,classifyIntent,focusNetwork,GOALS,INVESTIGATION_STATUS,loadProfile,looksLikeTrialId,recommend,resetProfile,ROLES,saveProfile,searchEntities,type Profile} from "../lib/researchHome";
 import "../styles/research-home.css";
@@ -75,7 +75,7 @@ function SearchHero({bundle,profile,follow,inputRef}:{bundle:DomainBundle|null;p
     <div className="rh-searchbar">
      <Icon name="search" size={22}/>
      <input id="rh-q" ref={inputRef} type="search" value={q} maxLength={500} autoComplete="off" onChange={e=>setQ(e.target.value)} placeholder="Investigate a gene, pathway, disease, biological mechanism or research question…" aria-describedby="rh-q-help"/>
-     <button type="button" className="rh-go" onClick={()=>{const t=q.trim();if(!t){inputRef.current?.focus();return}nav(live?"/research/investigate#live-investigation":investigateHref(intent==="investigation"?t:`What does the evidence say about ${t}?`))}}><Icon name="spark" size={18}/> Investigate</button>
+     <button type="button" className="rh-go" onClick={()=>{const t=q.trim();if(!t){inputRef.current?.focus();return}nav(live?"/research/workspace":investigateHref(intent==="investigation"?t:`What does the evidence say about ${t}?`))}}><Icon name="spark" size={18}/> Investigate</button>
     </div>
     <p id="rh-q-help" className="rh-note">{bundle?`Searching ${n(bundle.nodes.length)} concepts in the published graph (candidates, unreviewed). Entities outside it are not searched yet.`:"Verifying the published graph…"}</p>
     <div role="status" aria-live="polite" className="rh-results">
@@ -88,7 +88,7 @@ function SearchHero({bundle,profile,follow,inputRef}:{bundle:DomainBundle|null;p
        <p>{intent==="investigation"?"This reads as a research question. Choose how to work on it:":"You can also treat this as a question:"}</p>
        <div className="rh-row">
         <Link className="rh-ghost" to={graphHref(q.trim())}>Quick Explore in the graph</Link>
-        {live&&<Link className="rh-primary" to="/research/investigate#live-investigation"><Icon name="spark" size={16}/> Deep Investigate: run live</Link>}
+        {live&&<Link className="rh-primary" to="/research/workspace"><Icon name="spark" size={16}/> Deep Investigate: run live</Link>}
         <Link className={live?"rh-ghost":"rh-primary"} to={investigateHref(intent==="investigation"?q.trim():`What does the evidence say about ${q.trim()}?`)}>{live?"Save question for review":"Deep Investigate (saved question)"}</Link>
        </div>
        <p className="rh-note">{live?"This matches a curated scenario, so a live run is available: it searches Europe PMC, OpenAlex and Open Targets now, then two models check the direction of the best claims. Nothing starts until you press Run on the next page.":"Live runs cover curated scenarios only (currently IL-21 across autoimmune diseases). Your question can be saved for scientific review, which needs a research account."} Quick Explore reads the published graph.</p>
@@ -101,7 +101,7 @@ function SearchHero({bundle,profile,follow,inputRef}:{bundle:DomainBundle|null;p
 }
 
 export function ResearchHome(){
- const [profile,setProfile]=useState<Profile>(EMPTY_PROFILE),[ready,setReady]=useState(false),[noStore,setNoStore]=useState(false),[menu,setMenu]=useState(false),[adding,setAdding]=useState(false),[topic,setTopic]=useState("");
+ const [profile,setProfile]=useState<Profile>(EMPTY_PROFILE),[ready,setReady]=useState(false),[noStore,setNoStore]=useState(false),[adding,setAdding]=useState(false),[topic,setTopic]=useState("");
  const {bundle,failed}=useBundle(),saved=useSaved(),inputRef=useRef<HTMLInputElement|null>(null);
  const [liveRun,setLiveRun]=useState<SavedLiveRun|null>(null);
  // Read device storage after mount so server and client render the same first frame.
@@ -119,31 +119,7 @@ export function ResearchHome(){
  const savedItems=saved.kind==="ok"?saved.items:[];
  const edges=bundle?bundle.edges.filter(e=>e.kind==="source_candidate").length:0;
  return (
-  <div className="rh-app">
-   <a className="rh-skip" href="#rh-main">Skip to the research home</a>
-   <header className="rh-top">
-    <button type="button" className="rh-menu" aria-expanded={menu} aria-controls="rh-nav" onClick={()=>setMenu(m=>!m)}><Icon name={menu?"x":"menu"} size={20}/><span className="rh-vh">Menu</span></button>
-    <Link to="/" className="rh-brand" aria-label="Human Super Intelligence, public site"><HsiIdentity/></Link>
-    <span className="rh-sep" aria-hidden="true"/>
-    <span className="rh-where"><Icon name="home" size={18}/> Research Home</span>
-    <button type="button" className="rh-kbd" onClick={()=>inputRef.current?.focus()} aria-label="Focus search (Command K)"><Icon name="search" size={16}/> Search <kbd>⌘K</kbd></button>
-    <a className="rh-iconbtn" href="#rh-updates" aria-label="Scientific updates: none connected"><Icon name="bell" size={19}/></a>
-    <Link className="rh-iconbtn" to="/research/account" aria-label="Profile and access"><Icon name="user" size={19}/></Link>
-   </header>
-   <div className="rh-body">
-    <aside className="rh-nav" id="rh-nav" data-open={menu} aria-label="Research navigation">
-     <nav aria-label="Primary"><ul>
-      <li><Link to="/research/home" aria-current="page"><Icon name="home"/>Home</Link></li>
-      <li><Link to="/research/dashboard#dashboard-workspace"><Icon name="flask"/>Investigations</Link></li>
-      <li><Link to="/research/knowledge-graph"><Icon name="graph"/>Knowledge Graph</Link></li>
-      <li><Link to="/evidence-intelligence"><Icon name="layers"/>Evidence Intelligence</Link></li>
-      <li><a href="#rh-library"><Icon name="book"/>Research Library</a></li>
-      <li><a href="#rh-updates"><Icon name="bell"/>Scientific Updates</a></li></ul></nav>
-     <nav aria-label="Explore science"><h2>Explore science</h2><ul>{departments.map(d=><li key={d.slug}><Link to={"/research/knowledge-graph?netDepartment="+d.slug}><Icon name={deptIcon(d.slug)}/>{d.name}</Link></li>)}</ul></nav>
-     <nav aria-label="Account"><h2>Account</h2><ul><li><Link to="/research/account"><Icon name="user"/>Profile and access</Link></li><li><a href="#rh-interests"><Icon name="spark"/>Preferences</a></li></ul></nav>
-     <div className="rh-status"><b>Research preview</b><span>Candidate-only graph. Nothing is scientifically approved. No clinical advice.</span></div>
-    </aside>
-
+  <ResearchAppShell where="Research Home" active="home" onSearch={()=>inputRef.current?.focus()}>
     <main className="rh-main" id="rh-main" tabIndex={-1}>
      <SearchHero bundle={bundle} profile={profile} follow={follow} inputRef={inputRef}/>
      {failed&&<p className="rh-err" role="alert">The published graph could not be loaded, so concept search and suggestions are unavailable. No substitute results are shown.</p>}
@@ -163,7 +139,7 @@ export function ResearchHome(){
      <div className="rh-grid">
       <section className="rh-card" aria-labelledby="rh-cont-h">
        <header className="rh-card-top"><span className="rh-tile rh-t-teal"><Icon name="layers" size={22}/></span><div><h2 id="rh-cont-h">Continue researching</h2><p className="rh-sub">Pick up where you left off.</p></div><Link className="rh-arrow" to="/research/dashboard#dashboard-workspace" aria-label="All investigations"><Icon name="chevron" size={18}/></Link></header>
-       {liveRun&&<ul className="rh-rows rh-live"><li><div><b>{liveRun.question}</b><span>Live investigation · saved in this browser</span><small>{liveRun.checked} claims checked by two models · {liveRun.supporting} supporting · {liveRun.opposing} opposing · {liveRun.candidates} candidates, all unreviewed</small></div><Link to="/research/investigate?reopen=1#live-investigation">Reopen</Link></li></ul>}
+       {liveRun&&<ul className="rh-rows rh-live"><li><div><b>{liveRun.question}</b><span>Live investigation · saved in this browser</span><small>{liveRun.checked} claims checked by two models · {liveRun.supporting} supporting · {liveRun.opposing} opposing · {liveRun.candidates} candidates, all unreviewed</small></div><Link to="/research/workspace?reopen=1">Reopen</Link></li></ul>}
        {saved.kind==="loading"&&<div className="rh-skel" aria-hidden="true"/>}
        {saved.kind==="blocked"&&<p className="rh-empty">{saved.message} <Link to="/sign-in">Sign in</Link></p>}
        {saved.kind==="error"&&<p className="rh-empty">Saved investigations are temporarily unavailable.</p>}
@@ -207,7 +183,6 @@ export function ResearchHome(){
       <p className="rh-note"><Link to="/research/dashboard?view=briefs">Research briefs</Link> · <Link to="/research/dashboard#dashboard-workspace">Saved investigations</Link></p>
      </section>
     </main>
-   </div>
-  </div>
+  </ResearchAppShell>
  );
 }
