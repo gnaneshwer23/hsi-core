@@ -138,3 +138,17 @@
 .pg-page .ct-figure .fg-cap{border:0;padding:0;background:transparent}
 .pg-page .ct-path li{border-top:0}
 .pg-page .ct-path li::before,.pg-page .ct-path li::after{display:none}
+
+/* Landing hero: the live graph is the product, so it leads. */
+.pg-page .pg-hero.pg-hero-dark{margin:20px auto 0;max-width:1320px;padding:clamp(28px,4vw,56px);border-radius:36px;background-color:#11143a;background-image:linear-gradient(135deg,#0b1020 0%,#161a45 62%,#231f63 100%);color:#e9ecf8;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(20px,3vw,48px);align-items:center;box-shadow:0 40px 90px rgba(18,20,60,.28)}
+.pg-hero-dark h1{color:#fff;font-size:clamp(2.1rem,3.9vw,3.6rem)}
+.pg-hero-dark .pg-lead{color:#c9d0ea}
+.pg-hero-dark .pg-micro{color:#9fa9cc}
+.pg-hero-dark .pg-link-light{color:#dcd7ff}
+.lg{margin:0;min-width:0}
+.lg .og{height:clamp(380px,52vh,560px);border-radius:26px;background:radial-gradient(ellipse at 50% 45%,#1d2350 0%,#0c1030 78%);border-color:#2b3470}
+.lg .og-cap,.lg-wait{color:#a9b4d8;font-size:13px}
+.lg .og-cap{margin:10px 4px 0}
+.lg-wait{display:grid;place-items:center;min-height:380px;border-radius:26px;border:1px dashed #3a4580}
+.og-showcase .og-tools button{min-height:44px}
+@media(max-width:980px){.pg-page .pg-hero.pg-hero-dark{grid-template-columns:1fr;border-radius:28px;margin-inline:12px}}

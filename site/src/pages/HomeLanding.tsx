@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 import {GraphSnapshotProvider,useGraphSnapshot} from "../components/home/useGraphSnapshot";
-import {HeroGraph} from "../components/home/HeroGraph";
+import {LiveGraphHero} from "../components/home/LiveGraphHero";
 import "../styles/premium-public.css";
 
 const LOOP=[
@@ -25,14 +25,14 @@ export function HomeLanding(){
  return (
   <div className="pg-page">
    <GraphSnapshotProvider>
-    <section className="pg-hero" aria-labelledby="home-title">
+    <section className="pg-hero pg-hero-dark" aria-labelledby="home-title">
      <div className="pg-hero-copy">
       <h1 id="home-title">Connect biology. Find the gaps. Translate evidence into human impact.</h1>
       <p className="pg-lead">HSI links open literature and a verified knowledge graph to what researchers should investigate next, then to patient groups, targets and trials under governance. Every claim keeps its source, context and review status.</p>
-      <div className="pg-cta"><Link className="pg-btn" to="/welcome">Set up your research home <span aria-hidden="true">→</span></Link><Link className="pg-link" to="/how-it-works">See how it works</Link></div>
+      <div className="pg-cta"><Link className="pg-btn pg-btn-light" to="/welcome">Set up your research home <span aria-hidden="true">→</span></Link><Link className="pg-link pg-link-light" to="/how-it-works">See how it works</Link></div>
       <p className="pg-micro">Research preview. Candidate-only: nothing here is scientifically approved. No account is needed to start, public evidence is live, and patient data is synthetic.</p>
      </div>
-     <HeroGraph/>
+     <LiveGraphHero/>
     </section>
     <div className="pg-strip"><Status/></div>
 
