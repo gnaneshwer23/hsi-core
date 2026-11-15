@@ -1,5 +1,5 @@
 import {describe,expect,test} from "bun:test";
-import {addCohortObservation,addEntry,createEntry,edit,fromRunHypothesis,LIMITS,missingForTest,parseLedger,recordOutcome,setStatus,type LedgerEntry} from "../src/investigation/hypothesisLedger";
+import {addCohortObservation,addTargetPick,removeTargetPick,addEntry,createEntry,edit,fromRunHypothesis,LIMITS,missingForTest,parseLedger,recordOutcome,setStatus,type LedgerEntry} from "../src/investigation/hypothesisLedger";
 
 const T="2026-11-15T10:00:00Z";
 const full={statement:"Blocking IL-21 reduces Tfh expansion in systemic sclerosis cells.",prediction:"Lower Tfh fraction after blockade",experiment:"Ex vivo blockade with matched controls",falsifier:"No change in Tfh fraction versus control",origin:{kind:"researcher" as const}};
@@ -106,5 +106,32 @@ describe("cohort observations",()=>{
  test("entries stored before this field existed load with no observations",()=>{
   const {cohortObservations,...old}=mk() as LedgerEntry;void cohortObservations;
   expect(Object.values(parseLedger(JSON.stringify({a:old})))[0]!.cohortObservations).toEqual([]);
+ });
+});
+
+describe("target shortlist",()=>{
+ const pick={ensemblId:"ENSG00000000001",symbol:"TARGA",diseaseId:"MONDO_0005100",diseaseName:"systemic sclerosis",score:0.8,retrievedAt:"2026-11-15T00:00:00Z",reason:"Human genetic evidence and clinical precedence"};
+ test("shortlists a target with a required reason and changes neither status nor outcome",()=>{
+  const e=mk(),r=addTargetPick(e,pick,T);expect(r.ok).toBe(true);if(!r.ok)return;
+  expect(r.entry.targetShortlist).toHaveLength(1);expect(r.entry.status).toBe(e.status);expect(r.entry.outcome).toBe("none");
+  expect(r.entry.history.at(-1)!.detail).toContain("not a recommendation");
+  expect(addTargetPick(e,{...pick,reason:"short"},T).ok).toBe(false);
+ });
+ test("rejects malformed targets, duplicates and over-cap; removal is recorded",()=>{
+  const e=mk();
+  for(const bad of [{...pick,ensemblId:"ENSG1"},{...pick,diseaseId:"drop"},{...pick,score:2},{...pick,symbol:""}])expect(addTargetPick(e,bad,T).ok).toBe(false);
+  const once=addTargetPick(e,pick,T);if(!once.ok)throw Error();
+  const dup=addTargetPick(once.entry,pick,T);expect(dup.ok).toBe(false);if(!dup.ok)expect(dup.error).toContain("already shortlisted");
+  let cur=e;for(let i=0;i<10;i++){const r=addTargetPick(cur,{...pick,ensemblId:"ENSG"+String(i).padStart(11,"0")},T);if(!r.ok)throw Error(r.error);cur=r.entry}
+  const full=addTargetPick(cur,{...pick,ensemblId:"ENSG99999999999"},T);expect(full.ok).toBe(false);if(!full.ok)expect(full.error).toContain("At most");
+  const gone=removeTargetPick(once.entry,pick.ensemblId,pick.diseaseId,T);expect(gone.targetShortlist).toHaveLength(0);expect(gone.history.at(-1)!.detail).toContain("Removed");
+  expect(removeTargetPick(e,"ENSG00000000009",pick.diseaseId,T)).toBe(e);
+ });
+ test("round-trips and drops hostile stored picks; older entries load empty",()=>{
+  const r=addTargetPick(mk(),pick,T);if(!r.ok)throw Error();const l=addEntry({},r.entry).ledger;
+  expect(Object.values(parseLedger(JSON.stringify(l)))[0]!.targetShortlist).toHaveLength(1);
+  const bad=JSON.stringify({x:{...r.entry,targetShortlist:[{...pick,at:T},{...pick,at:T,ensemblId:"nope"},{...pick,at:T,reason:"x"},{...pick,at:T,score:7}]}});
+  expect(Object.values(parseLedger(bad))[0]!.targetShortlist).toHaveLength(1);
+  const {targetShortlist,...old}=mk() as LedgerEntry;void targetShortlist;expect(Object.values(parseLedger(JSON.stringify({a:old})))[0]!.targetShortlist).toEqual([]);
  });
 });

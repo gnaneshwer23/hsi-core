@@ -249,6 +249,10 @@
       "destination": "/_pages/research--cohort.html"
     },
     {
+      "source": "/research/targets",
+      "destination": "/_pages/research--targets.html"
+    },
+    {
       "source": "/research/workspace",
       "destination": "/_pages/research--workspace.html"
     },
