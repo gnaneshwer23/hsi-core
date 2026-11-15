@@ -161,7 +161,7 @@ export async function runLiveInvestigation(input:LiveRunInput){
   "Mechanistic interpretation and testable hypotheses are not generated in this version."
  ];
  const body={schemaVersion:"hsi-live-investigation-1" as const,mode:"live" as const,scenarioId:s.id,question:s.question,version:1,
-  entities:s.entities.map(e=>e.label),searches,records:records.map(r=>{const {__ctx,...rest}=r as any;return rest}),targets,candidates,byContext,verification,gaps,
+  entities:s.entities.map(e=>e.label),searches,records:records.map(r=>{const {__ctx,abstract,...rest}=r as any;/* Abstracts are used for extraction only and are not redistributed in the brief; licence not assessed. */return {...rest,hasAbstract:!!abstract}}),targets,candidates,byContext,verification,gaps,
   budget:input.budget?.usage()??null,
   flags:{scientificApproval:false as const,graphPromotable:false as const,consensusEstablished:false as const,humanReview:"required" as const,clinicalAdvice:false as const,containsPhi:false as const}};
  ev("brief","ok",`Brief assembled: ${candidates.length} candidates, ${gaps.length} stated gaps.`);
@@ -169,12 +169,4 @@ export async function runLiveInvestigation(input:LiveRunInput){
  return {...brief,briefHash:digest({...body,events:events.map(e=>[e.stage,e.status])})};
 }
 export type LiveInvestigation=Awaited<ReturnType<typeof runLiveInvestigation>>;
-export function renderLiveBriefMarkdown(b:LiveInvestigation){
- const safe=(s:string)=>s.replace(/[<>&`*_\[\]#]/g,c=>"&#"+c.charCodeAt(0)+";").replace(/[\r\n]+/g," ");
- return ["# Live investigation brief (unreviewed)",safe(b.question),`Version ${b.version} · ${b.briefHash.slice(0,16)}`,
-  "Candidate-only. Not reviewed, not scientific approval, not graph-promotable, no clinical advice.",
-  "## Searches",...b.searches.map(x=>`- ${x.provider} / ${x.context}: ${x.status}, ${x.count} records${x.error?` (${safe(x.error)})`:""}`),
-  "## Candidates",...b.candidates.map(c=>`- [${c.direction}] ${safe(c.subject)} ~ ${safe(c.object)} (${c.contexts.join(", ")||"context not stated"}): ${safe(c.sentence)} ${c.sourceUrl}`),
-  "## Missing evidence and limits",...b.gaps.map(g=>"- "+safe(g)),
-  "## Execution",...b.events.map(e=>`- ${e.at} ${e.stage}: ${e.status}. ${safe(e.detail)}`)].join("\n");
-}
+export {renderLiveBriefMarkdown} from "./liveBrief";

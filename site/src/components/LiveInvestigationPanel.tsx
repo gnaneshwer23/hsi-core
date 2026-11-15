@@ -1,13 +1,14 @@
 import {useEffect,useState} from "react";
 import {useLocation} from "react-router-dom";
 import {LIVE_RUN_KEY} from "../lib/researchHome";
+import {renderLiveBriefMarkdown} from "../../../src/investigation/liveBrief";
 import "../styles/live-investigation.css";
 
 /** Live mode: real public-literature retrieval through the server route. Curated examples below stay separate and labelled. */
 type Search={provider:string;context:string;status:"ok"|"failed";count:number;error:string|null};
 type Verdict={verifier:string;model:string;direction:string;evidenceSpan:string|null;reason:string};
 type Candidate={id:string;subject:string;object:string;contexts:string[];species:string|null;sourceId:string;sourceUrl:string;sentence:string;lexicalPolarity:string;direction:string;priority?:{score:number;reasons:string[]};polarity:"supporting"|"opposing"|"uncertain";polarityBasis:string;verification:string;verdicts:Verdict[];retraction:string};
-type Rec={sourceId:string;title:string;doi:string|null;pmid:string|null;publicationDate:string|null;sourceUrl:string;retrievedAt:string;provider:string;abstract:string|null;retraction:string};
+type Rec={sourceId:string;title:string;doi:string|null;pmid:string|null;publicationDate:string|null;sourceUrl:string;retrievedAt:string;provider:string;hasAbstract?:boolean;retraction:string};
 type Result={question:string;scenarioId:string;version:number;briefHash:string;searches:Search[];records:Rec[];candidates:Candidate[];targets:{context:string;disease:string|null;rows:{symbol:string;score:number}[];error:string|null}[];
  byContext:Record<string,{label:string;records:number;supporting:string[];opposing:string[];uncertain:string[]}>;
  verification:{status:string;reason:string|null;checked:number;independence:string|null};gaps:string[];events:{stage:string;at:string;status:string;detail:string}[];budget:unknown};
@@ -116,6 +117,7 @@ export function LiveInvestigationPanel(){
      <p className="li-verif">Model challenge: {result.verification.status==="not_configured"?`not run. ${result.verification.reason}`:`${result.verification.checked} claims checked. ${result.verification.independence==="separate_providers_unverified"?"Separate providers, independence unverified.":"Independent execution only."} Agreement is not scientific proof.`}</p></div>
 
     <div className="li-export">
+     <button type="button" onClick={()=>download("hsi-live-brief.md",renderLiveBriefMarkdown(result as never),"text/markdown")}>Export brief (Markdown)</button>
      <button type="button" onClick={()=>download("hsi-live-investigation.json",JSON.stringify(result,null,2),"application/json")}>Export JSON</button>
      <button type="button" onClick={saveLocal}>Save in this browser</button>
      <span>Version {result.version} · {result.briefHash.slice(0,12)}</span>

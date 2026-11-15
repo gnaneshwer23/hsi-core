@@ -219,3 +219,28 @@ describe("scenario matching for Deep Investigate",()=>{
   expect(matchScenario("IL-210 in lupus")).toBeNull();
  });
 });
+
+describe("brief export",()=>{
+ const scenario=LIVE_SCENARIOS["il21-autoimmune"]!;
+ test("the export carries provenance and verdicts but no abstracts, and the Markdown separates findings from the unchecked",async()=>{
+  const REST="Methods: unrelated second sentence that must never be exported.";
+  const f=(async(u:any,i:any)=>String(u).includes("europepmc")?ok({resultList:{result:[{id:"111",source:"MED",pmid:"111",title:"IL-21 in systemic sclerosis",abstractText:SENT+" "+REST,pubTypeList:{pubType:[]}}]}}):(fakeFetch().f as any)(u,i)) as any;
+  const r=await runLiveInvestigation({scenario,fetcher:f,now,verifiers:[slot("openai","positive"),slot("anthropic","positive")]});
+  expect(JSON.stringify(r)).not.toContain("never be exported");   // abstract text beyond the quoted candidate sentence is not redistributed
+  expect(r.records.every((x:any)=>!("abstract" in x)&&typeof x.hasAbstract==="boolean")).toBe(true);
+  const md=renderLiveBriefMarkdown(r);
+  for(const h of ["## Execution","## Searches","## Supporting (both checks agree)","## Opposing (both checks agree)","## Checked, no direction established","## Not checked","## Missing evidence and limits"])expect(md).toContain(h);
+  expect(md).toContain("independence unverified");expect(md).toContain("licence not assessed");expect(md).toContain("openai (openai-model): positive");expect(md).toContain("Quoted:");
+  expect(md).toContain("Abstracts are not included");
+ });
+ test("Markdown neutralises markup in provider-controlled text",async()=>{
+  const evil={resultList:{result:[{id:"9",source:"MED",title:"IL-21 in systemic sclerosis [click](javascript:alert(1)) <script>",abstractText:"IL-21 increased Tfh cells in patients with systemic sclerosis [x](http://evil) <b>bold</b>.",pubTypeList:{pubType:[]}}]}};
+  const f=(async(u:any)=>String(u).includes("europepmc")?ok(evil):String(u).includes("openalex")?ok({results:[]}):ok(ot)) as any;
+  const md=renderLiveBriefMarkdown(await runLiveInvestigation({scenario,fetcher:f,now}));
+  expect(md).not.toContain("<script>");expect(md).not.toContain("<b>");expect(md).not.toContain("](http://evil)");expect(md).not.toContain("](javascript");
+ });
+ test("OpenAlex ids that are not openalex.org works are dropped",async()=>{
+  const f=(async()=>ok({results:[{id:"https://evil.test/W1",title:"x",publication_date:"2020-01-01",ids:{},abstract_inverted_index:null},{id:"https://openalex.org/W42",title:"ok",ids:{}}]})) as any;
+  const rs=await searchOpenAlex("IL-21",5,f,now);expect(rs.map(x=>x.sourceId)).toEqual(["openalex:W42"]);
+ });
+});

@@ -47,7 +47,7 @@ export async function searchOpenAlex(query:string,limit:number,f:FetchLike=fetch
  const b=await getJson(u.toString(),f,opts.timeoutMs??15000);
  if(!Array.isArray(b?.results))throw Error("Unexpected OpenAlex response");
  const at=now();
- return b.results.filter((r:any)=>typeof r?.id==="string"&&clean(r.title)).map((r:any):LiveEvidenceRecord=>{
+ return b.results.filter((r:any)=>typeof r?.id==="string"&&/^https:\/\/openalex\.org\/W\d{1,15}$/.test(r.id)&&clean(r.title)).map((r:any):LiveEvidenceRecord=>{
   const pm=typeof r.ids?.pmid==="string"?r.ids.pmid.replace(/^.*\//,""):null;
   return {provider:"openalex",sourceId:"openalex:"+r.id.replace(/^.*\//,""),title:clean(r.title,500)!,abstract:abstractFromIndex(r.abstract_inverted_index),doi:tidyDoi(r.doi),pmid:pm&&/^[0-9]+$/.test(pm)?pm:null,
    publicationDate:typeof r.publication_date==="string"?r.publication_date:null,sourceUrl:r.id,retrievedAt:at,licenceStatus:"not_assessed",
