@@ -4,7 +4,8 @@ import {MISSING_CONTEXT,recordedContextOptions,recordedContextCoverage,validReco
 import { useEffect, useMemo, useState, useId } from 'react';
 import type { DomainBundle } from '../../../src/knowledgeGraph/domainGraph';
 import { networkProjection, connectionGroups } from '../../../src/knowledgeGraph/networkExplorer';
-import { GraphVisual, type CanvasGraph } from '../features/science/GraphVisual';
+import { ObsidianGraph } from './graph/ObsidianGraph';
+import '../styles/obsidian-graph.css';
 import '../styles/research-network.css';
 const pretty = (s: string) => s.replaceAll('_', ' ');
 export const NETWORK_KEYS = [
@@ -80,29 +81,12 @@ export function ResearchNetworkExplorer({
     () => (valid ? networkProjection(bundle, selected, f) : { nodes: [], edges: [] }),
     [bundle, selected, params.toString(), valid],
   );
-  const graph: CanvasGraph = {
-    version: bundle.version,
-    generatedFrom: 'Versioned candidate snapshot; filtered navigation only',
-    reviewed: false,
-    nodes: slice.nodes.map((n) => ({
-      id: n.id,
-      label: n.name,
-      kind: n.kind,
-      system: n.domains[0],
-      description: n.aliases.join(', '),
-      reviewState: 'draft',
-      sourceRefs: [],
-    })),
-    edges: slice.edges.map((e) => ({
-      id: e.id,
-      subjectId: e.subjectId,
-      objectId: e.objectId,
-      predicate: e.predicate,
-      assertionType: e.kind,
-      evidenceRefs: e.sourceId ? [e.sourceId] : [],
-      reviewState: 'draft',
-    })),
-  };
+  const ogNodes = slice.nodes.map((n) => ({ id: n.id, label: n.name, kind: n.kind, domain: n.domains[0] ?? '' }));
+  const ogEdges = slice.edges.map((e) => ({ id: e.id, s: e.subjectId, o: e.objectId, predicate: e.predicate, negated: e.negated, contextual: e.kind === 'research_gap' || e.predicate === 'studied_in', model: e.model }));
+  const matches = useMemo(() => { const q = f.query.trim().toLowerCase(); return q.length > 1 ? new Set(slice.nodes.filter((n) => [n.name, ...n.aliases].some((x) => x.toLowerCase().includes(q))).map((n) => n.id)) : undefined; }, [slice, f.query]);
+  const kindCounts = useMemo(() => { const m = new Map<string, number>(); for (const n of bundle.nodes) m.set(n.kind, (m.get(n.kind) ?? 0) + 1); return [...m].sort((a, b) => b[1] - a[1]); }, [bundle]);
+  const modelCounts = useMemo(() => { const m = new Map<string, number>(); for (const e of bundle.edges) if (e.kind === 'source_candidate') m.set(e.model, (m.get(e.model) ?? 0) + 1); return [...m].sort((a, b) => b[1] - a[1]); }, [bundle]);
+  const activeCount = [f.department, f.conditions[0], f.kind, f.model, f.polarity, f.tissue, f.evidenceKind, f.gaps ? '' : 'x', f.orphans ? 'x' : '', f.query].filter(Boolean).length;
   const name = (id: string) => bundle.nodes.find((n) => n.id === id)?.name ?? id;
   const coverage=recordedContextCoverage(slice.edges);
   const groups = connectionGroups(slice.edges, selected);
@@ -154,24 +138,26 @@ export function ResearchNetworkExplorer({
           {f.scope === 'local' ? 'Open global graph' : 'Focus local graph'}
         </button>
       </nav>
-      <button className="rn-mobile-filters" aria-expanded={filtersOpen} aria-controls={filterPanelId} onClick={()=>setFiltersOpen(v=>!v)}>{filtersOpen?'Hide filters and research context':'Filters and research context'}</button>
+      <div className="rn-bar">
+        <label className="rn-search">
+          <span>Search network</span>
+          <input type="search" maxLength={200} value={f.query} placeholder="Entity, disease, publication or identifier" onChange={(e) => applyContext({ netQuery: e.target.value })} />
+        </label>
+        <button type="button" className="rn-filter-toggle" aria-expanded={filtersOpen} aria-controls={filterPanelId} onClick={() => setFiltersOpen((v) => !v)}>Filters{activeCount ? ` (${activeCount})` : ''}</button>
+        {activeCount > 0 && <button type="button" className="rn-filter-reset" onClick={reset}>Reset</button>}
+      </div>
       <div className="rn-layout">
         <aside id={filterPanelId} className={'rn-filters'+(filtersOpen?' rn-filters-open':'')} aria-label="Network filters">
           <h2>Explore the network</h2>
           <p>Filter the same snapshot. Follow connections without losing the source. Department filters apply to this network view; path tools retain their own question scope.</p>
           <AtlasDepartmentNavigation compact bundle={bundle} value={f.department} onChange={id=>update({netDepartment:id,netScope:'global'})}/>
-          <label>
-            Search network
-            <input
-              type="search"
-              maxLength={200}
-              value={f.query}
-              placeholder="Entity, disease, publication or identifier"
-              onChange={(e) => applyContext({ netQuery: e.target.value })}
-            />
-          </label>
           {facet('Condition','netCondition',params.get('netCondition')??'',options.conditions)}
-          {(f.kind||f.domain||f.predicate||f.polarity||f.assay)&&<p className="rn-scope-note">This saved link includes additional filters. Use reset to return to the simple view.</p>}
+          {(f.domain||f.predicate||f.assay)&&<p className="rn-scope-note">This saved link includes additional filters. Use reset to return to the simple view.</p>}
+          <fieldset className="rn-chipset"><legend>Concept type</legend><div className="rn-chips">{kindCounts.map(([k, c]) => <button key={k} type="button" aria-pressed={f.kind === k} onClick={() => update({ netKind: f.kind === k ? '' : k, netScope: 'global' })}>{pretty(k)} <span>{c}</span></button>)}</div><small>None selected shows all.</small></fieldset>
+          <fieldset className="rn-chipset"><legend>Evidence model</legend><div className="rn-chips">{modelCounts.map(([m, c]) => <button key={m} type="button" aria-pressed={f.model === m} onClick={() => update({ model: f.model === m ? '' : m, netScope: 'global' })}>{pretty(m)} <span>{c}</span></button>)}</div></fieldset>
+          <fieldset className="rn-chipset"><legend>Findings</legend><div className="rn-chips">{([['', 'All'], ['nonnegative', 'Positive only'], ['negative', 'Did not hold only']] as const).map(([v, l]) => <button key={v} type="button" aria-pressed={f.polarity === v} onClick={() => update({ netPolarity: v })}>{l}</button>)}</div></fieldset>
+          <label className="rn-check"><input type="checkbox" checked={f.gaps} onChange={(e) => update({ netGaps: e.target.checked ? '' : 'hide' })} /> Show research gaps</label>
+          <label className="rn-check"><input type="checkbox" checked={f.orphans} onChange={(e) => update({ netOrphans: e.target.checked ? 'show' : '' })} /> Show concepts with no relationships</label>
           <p className="rn-scope-note">Start with a concept and follow its recorded evidence. Conditions use the annotations in this snapshot.</p>
           <details className="rn-refine"><summary>Refine this view</summary>
           <label className="rn-hops">Neighbourhood depth<select aria-label="Neighbourhood depth" value={f.depth} onChange={e=>update({netDepth:e.target.value,netScope:'local'})}>{[1,2,3].map(n=><option key={n} value={n}>{n} hop{n>1?'s':''}</option>)}</select></label>
@@ -227,34 +213,15 @@ export function ResearchNetworkExplorer({
                 </p>
               )}
               <div hidden={list}>
-                <GraphVisual
-                  minimalControls
-                  graph={graph}
+                <ObsidianGraph
+                  nodes={ogNodes}
+                  edges={ogEdges}
                   selected={selected}
+                  highlight={matches}
                   onSelect={visit}
                   onSelectEdge={inspectEdge}
-                  edgeDetails={Object.fromEntries(
-                    slice.edges.map((e) => [
-                      e.id,
-                      {
-                        negated: e.negated,
-                        contextual: e.kind === 'research_gap' || e.predicate === 'studied_in',
-                        label:
-                          pretty(e.predicate) +
-                          ' · ' +
-                          (e.kind === 'research_gap'
-                            ? 'Research gap'
-                            : e.negated
-                              ? 'Negative finding'
-                              : 'Unreviewed candidate'),
-                      },
-                    ]),
-                  )}
                   caption="Candidate network · proximity is layout, not biological evidence"
-                  exportMetadata={{
-                    scope: 'filtered_candidate_network',
-                    graphVersion: bundle.version,
-                  }}
+                  exportName={'hsi-network-' + bundle.version}
                 />
               </div>
               {list && (
