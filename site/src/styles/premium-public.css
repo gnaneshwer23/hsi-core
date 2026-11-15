@@ -122,3 +122,19 @@
 .pg-page .hd-steps button[aria-current=step]{background:var(--lav);color:var(--lav-ink)}
 .pg-page .hd-inspector h3{font-size:30px;letter-spacing:-.025em}
 @media(max-width:1000px){.pg-page .hd-discovery{width:calc(100% - 40px);border-radius:24px}}
+/* contact: access path as pastel steps, draft form on a clean card */
+.pg-page .ct-path{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:0;padding:0;list-style:none;border:0}
+.pg-page .ct-path li{padding:26px;border:0;border-radius:28px;background:var(--mint);display:grid;gap:10px;align-content:start}
+.pg-page .ct-path li:nth-child(2){background:var(--lav)}.pg-page .ct-path li:nth-child(3){background:var(--peach)}
+.pg-page .ct-path h2{font-size:22px;letter-spacing:-.02em;margin:0}.pg-page .ct-path p{font-size:16px;line-height:1.6;color:var(--body);margin:0}
+.pg-page .ct-path .fg-letter{background:var(--ink);border-radius:50%;min-width:30px;height:30px}
+.pg-page .ct-figure .fg-cap{margin-top:16px;color:var(--muted);font-size:14px}
+.pg-page .ct-draft{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:56px;align-items:start}
+.pg-page .ct-draft>div{padding:32px;border-radius:32px;background:#fff;box-shadow:0 1px 2px rgba(53,45,110,.04),0 24px 60px rgba(53,45,110,.08)}
+.pg-page .ct-page .xp-button,.pg-page.ct-page .ct-draft .xp-button{border-radius:999px!important;background:var(--ink)!important;border-color:var(--ink)!important}
+@media(max-width:1000px){.pg-page .ct-path{grid-template-columns:1fr}.pg-page .ct-draft{grid-template-columns:1fr;gap:24px}.pg-page .ct-draft>div{padding:22px}}
+.pg-page .ct-figure{border:0;background:transparent;box-shadow:none;padding:48px 0 0;margin-block:0}
+.pg-page .ct-figure::before,.pg-page .ct-figure::after,.pg-page .ct-path::before{display:none}
+.pg-page .ct-figure .fg-cap{border:0;padding:0;background:transparent}
+.pg-page .ct-path li{border-top:0}
+.pg-page .ct-path li::before,.pg-page .ct-path li::after{display:none}
