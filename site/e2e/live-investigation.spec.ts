@@ -7,11 +7,12 @@ const base={schemaVersion:'hsi-live-investigation-1',mode:'live',scenarioId:'il2
  records:[{provider:'europe-pmc',sourceId:'s1',title:'IL-21 in SSc',doi:'10.1/x',pmid:'1',publicationDate:'2020-01-01',sourceUrl:'https://europepmc.org/article/MED/1',retrievedAt:'2026-11-15T00:00:00Z',licenceStatus:'not_assessed',retraction:'not_flagged_by_provider',studyTypes:[],verificationState:'metadata_retrieved_not_claim_verified',reviewState:'unreviewed',hasAbstract:true}],
  targets:[],byContext:{ssc:{label:'Systemic sclerosis',records:1,supporting:[],opposing:[],uncertain:['c1']}},
  verification:{status:'not_configured',reason:'The model step is disabled on this deployment.',checked:0,independence:null},
+ hypotheses:{status:'not_configured',reason:'Hypotheses need the two-model check, which did not run.',items:[],dropped:0,basis:{findings:0}},
  gaps:['Search failed: openalex for ssc (HTTP 500). Absence of results there is not evidence of absence.'],budget:null,
  flags:{scientificApproval:false,graphPromotable:false,consensusEstablished:false,humanReview:'required',clinicalAdvice:false,containsPhi:false},
  events:[{stage:'scoped',at:'t',status:'ok',detail:'scoped'},{stage:'searched',at:'t',status:'partial',detail:'1 of 2 searches returned; 1 failed.'},{stage:'retrieved',at:'t',status:'ok',detail:'1 record'},{stage:'mapped',at:'t',status:'ok',detail:'mapped'},{stage:'compared',at:'t',status:'ok',detail:'1 candidate'},{stage:'challenged',at:'t',status:'skipped',detail:'The model step is disabled on this deployment.'},{stage:'brief',at:'t',status:'ok',detail:'brief'}]};
 const unchecked={...base,candidates:[cand({})]};
-const checked={...base,verification:{status:'completed',reason:null,checked:1,independence:'independent_execution_only'},
+const checked={...base,hypotheses:{status:'generated',reason:null,dropped:0,basis:{findings:2},items:[{id:'h1',statement:'Blocking IL-21 reduces Tfh expansion in systemic sclerosis cells.',rationale:'The cited finding links IL-21 to Tfh expansion.',citedClaimIds:['c1'],prediction:'Fewer Tfh cells with blockade.',experiment:'Culture cells with an IL-21 blocking antibody.',falsifier:'No change in Tfh numbers.',limits:'Human systemic sclerosis, association only.',state:'unvalidated_hypothesis',generatedBy:{verifier:'openai-a',model:'m1'},challenge:{verifier:'openai-b',model:'m2',verdict:'overreach',reason:'Blockade is not in the findings.'},challengeNote:null}]},verification:{status:'completed',reason:null,checked:1,independence:'independent_execution_only'},
  byContext:{ssc:{label:'Systemic sclerosis',records:1,supporting:['c1'],opposing:[],uncertain:[]}},
  candidates:[cand({direction:'positive',polarity:'supporting',polarityBasis:'two_model_challenge',verification:'agree_directional',verdicts:[{verifier:'openai-a',model:'m1',direction:'positive',evidenceSpan:'IL-21 was increased',reason:'States an increase.'},{verifier:'openai-b',model:'m2',direction:'positive',evidenceSpan:'IL-21 was increased',reason:'States an increase.'}]}),cand({id:'c2',object:'B-cell responses',sentence:'IL-21 is linked to B cells in lupus.',contexts:['sle']})]};
 const mock=(page:any,body:unknown,status=200)=>page.route('**/api/research/live-investigation',(r:any)=>r.fulfill({status,json:body}));
@@ -59,6 +60,23 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await expect(page.getByLabel('Research brief text')).toContainText('Supporting (both checks agree) (1)');
  const axe=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();
  expect(axe.violations.map(v=>v.id+': '+v.nodes.length)).toEqual([]);
+});
+
+test('hypotheses are labelled unvalidated, cite findings, show the second model challenge and appear in the brief',async({page})=>{
+ await mock(page,checked);
+ await page.goto('/research/workspace');
+ await page.getByRole('button',{name:'Run live investigation'}).click();
+ const vf=page.getByRole('region',{name:'Scientific verification'});
+ await expect(page.getByRole('list',{name:/Investigation stages/})).toContainText('Hypothesise');
+ await expect(vf).toContainText('Unvalidated model proposals from 2 agreed findings');
+ await expect(vf).toContainText('Unvalidated hypothesis');
+ await expect(vf).toContainText('Second model: overreach. Blockade is not in the findings.');
+ await vf.getByRole('group',{name:'Findings behind h1'}).getByRole('button',{name:/IL-21 ~ T follicular helper cells/}).click();
+ await expect(page.getByLabel('Selected claim')).toContainText('openai-a');
+ await vf.getByText('Rationale, prediction, experiment, falsifier').click();
+ await expect(vf).toContainText('Would be falsified by');
+ await page.getByRole('button',{name:'Open research brief'}).click();
+ await expect(page.getByLabel('Research brief text')).toContainText('Hypotheses (unvalidated model proposals) (1)');
 });
 
 test('a failed run says no findings were generated',async({page})=>{
