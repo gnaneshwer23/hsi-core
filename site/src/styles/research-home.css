@@ -152,3 +152,18 @@
 .rh-spark{width:100%;height:44px}
 .rh-rtile summary{min-height:44px;display:flex;align-items:center;cursor:pointer;color:var(--accent-link);font-weight:600;font-size:14px}
 .rh-plist{list-style:none;margin:0;padding:0;display:grid;gap:10px}.rh-plist li{font-size:14px;line-height:1.4}.rh-plist a{color:var(--accent-link);font-weight:600}.rh-plist span{display:block;color:var(--muted);font-size:12.5px}
+
+.rh-gsec{display:grid;gap:10px}.rh-gsec h3{margin:0;font-size:16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.rh-chip{padding:3px 10px;border-radius:999px;background:var(--tag-bg);color:var(--tag-fg);font-size:12px;font-weight:700}
+.rh-glist,.rh-grows{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.rh-glist li{display:grid;gap:6px;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--surface-2)}.rh-glist span,.rh-glist small{font-size:13.5px;color:var(--muted);line-height:1.5}
+.rh-grows li{display:grid;gap:8px;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--surface-2)}
+.rh-gtop{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
+.rh-sig{padding:4px 12px;border-radius:999px;font-size:12.5px;font-weight:700;background:var(--surface-3);color:var(--body)}
+.rh-sig[data-signal=under_explored]{background:var(--tag-bg);color:var(--tag-fg)}
+.rh-gbar{height:10px;border-radius:999px;background:var(--surface-3);overflow:hidden}.rh-gbar i{display:block;height:100%;border-radius:999px;background:var(--accent)}
+.rh-grows details summary{min-height:44px;display:flex;align-items:center;cursor:pointer;color:var(--accent-link);font-weight:600;font-size:14px}
+.rh-grows dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:0 0 8px;font-size:14px}.rh-grows dt{color:var(--muted)}.rh-grows dd{margin:0;font-variant-numeric:tabular-nums}
+/* The shared graph diagram follows the app theme. */
+.rh-app .kg-conn span{color:var(--accent-link)}.rh-app .kg-conn li,.rh-app .kg-legend li,.rh-app .kg-net-key h3{color:var(--ink)}.rh-app .kg-conn,.rh-app .kg-conn li{border-color:var(--line)}
+.rh-app[data-theme=dark] .kg-nl{fill:var(--ink);stroke:var(--surface)}.rh-app[data-theme=dark] .kg-nl-c{fill:#fff}.rh-app[data-theme=dark] .kg-nd{fill:var(--surface-2);stroke:var(--ink)}.rh-app[data-theme=dark] .kg-nd-c{fill:var(--accent)}

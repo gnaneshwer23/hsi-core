@@ -7,6 +7,7 @@ import {departments} from "../lib/departments";
 import {NetworkView} from "../components/graph/GraphCharts";
 import {ResearchAppShell} from "../components/home/ResearchAppShell";
 import {RadarCard} from "../components/home/RadarCard";
+import {GapCard} from "../components/home/GapCard";
 import {DEPT_ICON,HeroNetwork,Icon} from "../components/home/AppIcons";
 import {EMPTY_PROFILE,LIVE_RUN_KEY,summariseSavedLiveRun,type SavedLiveRun,classifyIntent,focusNetwork,GOALS,INVESTIGATION_STATUS,loadProfile,looksLikeTrialId,recommend,resetProfile,ROLES,saveProfile,searchEntities,type Profile} from "../lib/researchHome";
 import "../styles/research-home.css";
@@ -129,6 +130,7 @@ export function ResearchHome(){
      {ready&&!profile.onboarded&&<Onboarding profile={profile} onDone={p=>setProfile(p)}/>}
 
      <RadarCard profile={profile} ready={ready}/>
+     {ready&&<GapCard profile={profile} bundle={bundle}/>}
 
      <section className="rh-interests" id="rh-interests" aria-labelledby="rh-int-h">
       <div className="rh-line"><h2 id="rh-int-h">Research interests</h2><span className="rh-note">On this device only</span></div>
