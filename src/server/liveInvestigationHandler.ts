@@ -6,7 +6,7 @@
  */
 import {LIVE_SCENARIOS} from "../investigation/scenarios";
 import {runLiveInvestigation,type VerifierSlot} from "../investigation/liveRun";
-import {createAnthropicRunner,createBudget,createOpenAiRunner,providerStatus,DEFAULT_BUDGET} from "../modelProviders";
+import {createAnthropicRunner,createBudget,createOpenAiRunner,openAiSecondModel,providerStatus,DEFAULT_BUDGET} from "../modelProviders";
 import type {FetchLike} from "../fetchLike";
 
 type Env=Readonly<Record<string,string|undefined>>;
@@ -36,11 +36,13 @@ export async function handleLiveInvestigation(request:Request,env:Env,deps:{fetc
  let verifiers:readonly [VerifierSlot,VerifierSlot]|null=null,verifierReason="The model step is disabled on this deployment.";
  const budget=createBudget(DEFAULT_BUDGET);
  if(env.HSI_LIVE_MODEL_STEP_ENABLED==="true"){
-  const st=providerStatus(env),missing=st.filter(p=>!p.configured);
-  if(missing.length)verifierReason="Two providers are required; not configured: "+missing.map(m=>m.provider+" ("+m.reason+")").join("; ")+".";
-  else{
-   verifiers=[{verifierId:"openai",modelId:st[0]!.model!,runner:createOpenAiRunner({env,budget,fetcher:deps.fetcher})},{verifierId:"anthropic",modelId:st[1]!.model!,runner:createAnthropicRunner({env,budget,fetcher:deps.fetcher})}];
-  }
+  const st=providerStatus(env),second=openAiSecondModel(env);
+  if(st[0]!.configured&&st[1]!.configured){
+   verifiers=[{verifierId:"openai",providerId:"openai",modelId:st[0]!.model!,runner:createOpenAiRunner({env,budget,fetcher:deps.fetcher})},{verifierId:"anthropic",providerId:"anthropic",modelId:st[1]!.model!,runner:createAnthropicRunner({env,budget,fetcher:deps.fetcher})}];
+  }else if(st[0]!.configured&&second){
+   // One provider: two different models. Independent execution, not independent providers.
+   verifiers=[{verifierId:"openai-a",providerId:"openai",modelId:st[0]!.model!,runner:createOpenAiRunner({env,budget,fetcher:deps.fetcher})},{verifierId:"openai-b",providerId:"openai",modelId:second,runner:createOpenAiRunner({env,budget,fetcher:deps.fetcher},"second")}];
+  }else verifierReason="Two verifiers are required: either OpenAI and Anthropic, or OpenAI with a different HSI_OPENAI_MODEL_2. Not configured: "+st.filter(p=>!p.configured).map(p=>p.provider+" ("+p.reason+")").join("; ")+".";
  }
  const ac=new AbortController();const timer=setTimeout(()=>ac.abort(),25_000);
  try{

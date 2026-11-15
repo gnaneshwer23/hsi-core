@@ -121,9 +121,23 @@ describe("live investigation endpoint",()=>{
   for(let i=0;i<4;i++)await handleLiveInvestigation(post({scenarioId:"il21-autoimmune"}),{},{fetcher:f});
   expect((await handleLiveInvestigation(post({scenarioId:"il21-autoimmune"}),{},{fetcher:f})).status).toBe(429);
  });
+ test("OpenAI only: two different models run as independent execution, not independent providers",async()=>{
+  resetLiveInvestigationLimiter();
+  const models:string[]=[];
+  const f=(async(u:any,init:any)=>{const url=String(u);
+   if(url.includes("openai.com")){models.push(JSON.parse(init.body).model);return ok({choices:[{message:{content:JSON.stringify({verdict:"supports",reason:"r",evidenceSpan:SENT.slice(0,20)})}}],usage:{prompt_tokens:5,completion_tokens:5}})}
+   return (fakeFetch().f as any)(u,init)}) as any;
+  const env={HSI_LIVE_MODEL_STEP_ENABLED:"true",OPENAI_API_KEY:"k",HSI_OPENAI_MODEL:"model-a",HSI_OPENAI_MODEL_2:"model-b"};
+  const b:any=await (await handleLiveInvestigation(post({scenarioId:"il21-autoimmune"}),env,{fetcher:f})).json();
+  expect(b.verification.independence).toBe("independent_execution_only");expect(new Set(models)).toEqual(new Set(["model-a","model-b"]));
+  expect(b.candidates.some((c:any)=>c.verification==="both_support")).toBe(true);
+  resetLiveInvestigationLimiter();
+  const same:any=await (await handleLiveInvestigation(post({scenarioId:"il21-autoimmune"}),{...env,HSI_OPENAI_MODEL_2:"model-a"},{fetcher:f})).json();
+  expect(same.verification.status).toBe("not_configured");
+ });
  test("enabled model step with one provider missing says which",async()=>{
   resetLiveInvestigationLimiter();
   const r=await handleLiveInvestigation(post({scenarioId:"il21-autoimmune"}),{HSI_LIVE_MODEL_STEP_ENABLED:"true",OPENAI_API_KEY:"k",HSI_OPENAI_MODEL:"m"},{fetcher:fakeFetch().f});
-  const b:any=await r.json();expect(b.verification.reason).toContain("anthropic");
+  const b:any=await r.json();expect(b.verification.reason).toContain("HSI_OPENAI_MODEL_2");
  });
 });

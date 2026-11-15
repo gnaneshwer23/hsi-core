@@ -23,7 +23,7 @@ export type VerifierVerdict={verifier:string;model:string;verdict:"supports"|"co
 export type Candidate={id:string;relationId:string;subject:string;object:string;contexts:string[];species:string|null;sourceId:string;sourceUrl:string;
  sentence:string;state:"extracted_candidate";lexicalPolarity:"supporting"|"opposing"|"uncertain";polarity:"supporting"|"opposing"|"uncertain";
  polarityBasis:"not_assessed"|"two_model_challenge";verification:"not_run"|"both_support"|"disputed"|"insufficient_abstain"|"check_failed";verdicts:VerifierVerdict[];retraction:LiveEvidenceRecord["retraction"]};
-export type VerifierSlot={verifierId:string;modelId:string;runner:EntailmentModelRunner};
+export type VerifierSlot={verifierId:string;modelId:string;runner:EntailmentModelRunner;/** Provider behind the runner. Defaults to verifierId. */providerId?:string};
 export type LiveRunInput={scenario:LiveScenario;fetcher?:FetchLike;now?:()=>string;signal?:AbortSignal;mailto?:string;
  verifiers?:readonly [VerifierSlot,VerifierSlot]|null;verifierReason?:string;budget?:Budget;perSearch?:number;maxVerified?:number};
 
@@ -121,7 +121,7 @@ export async function runLiveInvestigation(input:LiveRunInput){
    c.polarity=c.verification==="both_support"?"supporting":c.verification==="disputed"?"opposing":"uncertain";
    checked++;
   }
-  const distinct=v[0].verifierId!==v[1].verifierId;
+  const distinct=(v[0].providerId??v[0].verifierId)!==(v[1].providerId??v[1].verifierId);
   verification={status:errors?"partial":"completed",reason:null,checked,independence:distinct?"separate_providers_unverified":"independent_execution_only"};
   ev("challenged",errors?"partial":"ok",`${checked} candidates checked by two models; model agreement is not scientific proof. ${errors} model calls failed.`);
  }

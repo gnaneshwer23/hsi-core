@@ -75,9 +75,17 @@ const compose=(r:{instruction:string;claim:string;passage:string})=>{
  return {system,user:JSON.stringify({claim:r.claim,passage:r.passage})};
 };
 
-export function createOpenAiRunner(d:RunnerDeps):EntailmentModelRunner{
- const st=providerStatus(d.env)[0]!;
- if(!st.configured)throw Error("OpenAI is not configured: "+st.reason);
+/** A second, different OpenAI model for the verifier when only one provider key exists. Execution is independent; the provider is not. */
+export function openAiSecondModel(env:Env):string|null{
+ const a=providerStatus(env)[0]!,m=env.HSI_OPENAI_MODEL_2?.trim();
+ return a.configured&&m&&ID_RE.test(m)&&m!==a.model?m:null;
+}
+export function createOpenAiRunner(d:RunnerDeps,which:"primary"|"second"="primary"):EntailmentModelRunner{
+ const base=providerStatus(d.env)[0]!;
+ if(!base.configured)throw Error("OpenAI is not configured: "+base.reason);
+ const second=which==="second"?openAiSecondModel(d.env):null;
+ if(which==="second"&&!second)throw Error("HSI_OPENAI_MODEL_2 must be set to a model different from HSI_OPENAI_MODEL");
+ const st={...base,model:second??base.model};
  const f=d.fetcher??fetch;
  return async req=>{
   const {system,user}=compose(req);d.budget.reserve(system.length+user.length);
