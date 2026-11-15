@@ -2,9 +2,10 @@ import {useMemo,useState} from "react";
 import {Link} from "react-router-dom";
 import type {DomainBundle} from "../../../../src/knowledgeGraph/domainGraph";
 import type {Profile} from "../../lib/researchHome";
-import {answerFromGraph,programNetwork,programView,DEMO_PROFILE,type Reply} from "../../lib/program";
+import {answerFromGraph,programView,isFiltered,NO_FILTER,DEMO_PROFILE,type GraphFilter,type Reply} from "../../lib/program";
 import {DEMO_NOTE,demoDigest,demoEvents,demoOrgs} from "../../lib/demoProgram";
-import {NetworkView} from "../graph/GraphCharts";
+import {ProgramGraph} from "./ProgramGraph";
+import {GraphFilters} from "./GraphFilters";
 import {Icon} from "./AppIcons";
 
 type Tab="graph"|"focus"|"ask"|"landscape"|"updates";
@@ -12,7 +13,6 @@ const TABS:{id:Tab;label:string;icon:string}[]=[
  {id:"graph",label:"Knowledge graph",icon:"graph"},{id:"focus",label:"Gaps and methods",icon:"target"},{id:"ask",label:"Ask the graph",icon:"search"},
  {id:"landscape",label:"Landscape",icon:"users"},{id:"updates",label:"Updates",icon:"bell"},
 ];
-const graphHref=(q:string)=>"/research/knowledge-graph?netQuery="+encodeURIComponent(q);
 const Demo=()=><span className="pr-demo">Demo</span>;
 const SUGGEST=(a:string[])=>[a[0]?`What is ${a[0]} connected to?`:"",a.length>1?`How are ${a[0]} and ${a[1]} connected?`:"",a[0]?`Which methods are used for ${a[0]}?`:""].filter(Boolean);
 
@@ -20,8 +20,9 @@ const SUGGEST=(a:string[])=>[a[0]?`What is ${a[0]} connected to?`:"",a.length>1?
 export function Program({profile,bundle,onProfile}:{profile:Profile;bundle:DomainBundle|null;onProfile:(p:Profile)=>void}){
  const [tab,setTab]=useState<Tab>("graph"),[depth,setDepth]=useState<1|2|3>(1),[cohort,setCohort]=useState(false);
  const [q,setQ]=useState(""),[reply,setReply]=useState<{q:string;r:Reply}|null>(null);
- const view=useMemo(()=>bundle?programView(profile,bundle,depth):null,[bundle,profile,depth]);
- const net=useMemo(()=>bundle&&view?programNetwork(bundle,view):null,[bundle,view]);
+ const [f,setF]=useState<GraphFilter>(NO_FILTER);
+ const base=useMemo(()=>bundle?programView(profile,bundle,depth,{...NO_FILTER,extra:f.extra}):null,[bundle,profile,depth,f.extra]);
+ const view=useMemo(()=>bundle?programView(profile,bundle,depth,f):null,[bundle,profile,depth,f]);
  const names=view?.anchors.map(a=>a.name)??[];
  if(!bundle)return <section className="pm-card pr" aria-labelledby="pr-h"><h2 id="pr-h">Your knowledge graph</h2><p className="rh-empty">Verifying the published graph…</p></section>;
  if(!view||!view.anchors.length)return (
@@ -42,10 +43,10 @@ export function Program({profile,bundle,onProfile}:{profile:Profile;bundle:Domai
    <div className="pr-tabs" role="group" aria-label="Program sections">{TABS.map(t=><button key={t.id} type="button" aria-pressed={tab===t.id} onClick={()=>setTab(t.id)}><Icon name={t.icon} size={16}/>{t.label}</button>)}</div>
 
    {tab==="graph"&&<div className="pr-pane">
-    {net&&net.nodes.length>1?<NetworkView n={net} uid="pr"/>:<p className="rh-empty">Your anchors have no recorded relationships yet.</p>}
+    {base&&<GraphFilters bundle={bundle} base={base} f={f} setF={setF}/>}
+    {view.edges.length>0?<ProgramGraph bundle={bundle} view={view}/>:<p className="rh-empty" role="status">{isFiltered(f)?"No relationships match the current filters. That is a filter result, not evidence of absence. Reset or widen them.":"Your anchors have no recorded relationships yet."}</p>}
     <label className="pr-check"><input type="checkbox" checked={cohort} onChange={e=>setCohort(e.target.checked)}/> Connect synthetic patient data <Demo/></label>
     {cohort&&<p className="pr-box">Of the {view.edges.length} recorded relationships in your area, <b>{view.human}</b> already rest on human evidence. A phenotype built from your anchors would be evaluated in the separate, governed cohort plane, which returns only small-group-protected totals after approval, and patient data here is synthetic. This shows the flow, not a clinical result. <Link to="/research/cohort">Open the synthetic cohort</Link></p>}
-    <p className="pm-note">Showing the best-connected {net?.nodes.length??0} of {view.hop.size} concepts. <Link to={graphHref(names[0]!)}>Open the full graph</Link></p>
    </div>}
 
    {tab==="focus"&&<div className="pr-pane pr-two">
