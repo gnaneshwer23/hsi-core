@@ -3,6 +3,9 @@ import {Link,useLocation} from "react-router-dom";
 import {renderLiveBriefMarkdown} from "../../../src/investigation/liveBrief";
 import {ResearchAppShell} from "../components/home/ResearchAppShell";
 import {Icon} from "../components/home/AppIcons";
+import {deriveRunGaps} from "../../../src/investigation/runGaps";
+import {RunGapList} from "../components/home/RunGapList";
+import {useRunGapTracking} from "../lib/useRunGapTracking";
 import {useLiveRun} from "../lib/useLiveRun";
 import {BUCKET_LABEL,bucketOf,buildGraph,counts,filterCandidates,headline,stageRail,yearOf,type Bucket,type Cand,type EdgeState,type Run} from "../lib/workspaceView";
 import "../styles/investigation-workspace-app.css";
@@ -48,6 +51,7 @@ export function InvestigationWorkspacePage(){
  const first=useRef(true);
  useEffect(()=>{setSaved(lr.hasSaved());if(first.current){first.current=false;if(new URLSearchParams(loc.search).get("reopen")==="1")lr.reopen()}},[]); // eslint-disable-line react-hooks/exhaustive-deps
  const c=run?counts(run):null,h=run?headline(run):null;
+ const runGaps=useMemo(()=>run?deriveRunGaps(run):[],[run]),gapTrack=useRunGapTracking(run?.briefHash??"");
  const list=useMemo(()=>run?filterCandidates(run.candidates,{bucket,pair}):[],[run,bucket,pair]);
  const picked:Cand|null=run?.candidates.find(x=>x.id===sel)??null;
  const rec=picked?run?.records.find(r=>r.sourceId===picked.sourceId)??null:null;
@@ -139,6 +143,13 @@ export function InvestigationWorkspacePage(){
       </>}
      </section>
     </div>
+    <section className="ws-card ws-gaps" aria-labelledby="ws-gp-h">
+     <header><h2 id="ws-gp-h"><Icon name="layers" size={18}/>Gaps in this run <small>({run?runGaps.length:"none yet"})</small></h2></header>
+     {!run?<p className="ws-muted">Gaps appear after a run. They are derived from the run itself, not generated, and a limit of the search is shown apart from a gap in the science.</p>:<>
+      <RunGapList gaps={runGaps} track={gapTrack.track} onSet={(id,s,n)=>gapTrack.set(id,s,n,runGaps.find(g=>g.id===id)?.candidateIds.length??0)}/>
+      {gapTrack.blocked&&<p className="ws-err" role="status">This browser blocked local storage, so your status was not kept.</p>}
+      <p className="ws-muted">Status is kept in this browser only. <a href="/research/gaps">Open the Gap Register</a></p></>}
+    </section>
    </main>
   </ResearchAppShell>
  );
