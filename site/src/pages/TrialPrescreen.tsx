@@ -7,6 +7,7 @@ import {release,type Approval,type RefusalReason,type ReleaseRequest} from "../.
 import {TRIALS,criterionLabel,summarisePrescreen,trialDefinition,type PrescreenSummary} from "../../../src/clinicalPlane/trials";
 import {loadDomainGraph} from "../lib/claimGraphClient";
 import {loadSyntheticCohort} from "../lib/syntheticCohortClient";
+import {SOURCES,generatedCohort,type CohortSource} from "../lib/cohortSource";
 import {ResearchAppShell} from "../components/home/ResearchAppShell";
 import {Icon} from "../components/home/AppIcons";
 import "../styles/research-home.css";
@@ -16,16 +17,16 @@ const cell=(v:number|null)=>v===null?<span className="co-sup" title="Hidden to p
 const REQUESTER="coordinator-demo",REVIEWER:Approval={approverId:"reviewer-demo",role:"release_reviewer",decision:"approve",at:""};
 
 export function TrialPrescreenPage(){
- const [patients,setPatients]=useState<PlanePatient[]|null>(null),[bundle,setBundle]=useState<DomainBundle|null>(null),[err,setErr]=useState(""),[trialId,setTrialId]=useState(TRIALS[0]!.id),
+ const [dataset,setPatients]=useState<PlanePatient[]|null>(null),[source,setSource]=useState<CohortSource>("dataset"),[bundle,setBundle]=useState<DomainBundle|null>(null),[err,setErr]=useState(""),[trialId,setTrialId]=useState(TRIALS[0]!.id),
   [audit,setAudit]=useState<AuditLog>(emptyAudit()),[agg,setAgg]=useState<CohortAggregate|null>(null),[summary,setSummary]=useState<PrescreenSummary|null>(null),[msg,setMsg]=useState<{ok:boolean;text:string}|null>(null);
  useEffect(()=>{const c=new AbortController(),t=setTimeout(()=>c.abort(),15000);
   loadSyntheticCohort(c.signal).then(setPatients).catch(()=>{if(!c.signal.aborted)setErr("The synthetic cohort could not be loaded or verified. Nothing is shown.")});
   loadDomainGraph(null,c.signal).then(setBundle).catch(()=>{}).finally(()=>clearTimeout(t));return()=>{c.abort();clearTimeout(t)}},[]);
- const trial=TRIALS.find(t=>t.id===trialId)!;
+ const trial=TRIALS.find(t=>t.id===trialId)!,patients=source==="generated"?generatedCohort():dataset,srcNote=SOURCES.find(x=>x.id===source)!;
  const def=useMemo(()=>{if(!bundle)return null;const v=validateDefinition(trialDefinition(trial,bundle.version));return v.ok?v.def:null},[bundle,trial]);
  const reset=()=>{setAgg(null);setSummary(null);setMsg(null)};
  const run=()=>{if(!def||!patients)return;const r=evaluateCohort(def,patients);setAgg(r.aggregate);setSummary(null);setMsg(null);
-  setAudit(a=>appendAudit(a,{at:new Date().toISOString(),actor:REQUESTER,action:"prescreen_evaluated",subject:def.id,detail:"Computable criteria evaluated inside the plane; counts held, nothing released"}))};
+  setAudit(a=>appendAudit(a,{at:new Date().toISOString(),actor:REQUESTER,action:"prescreen_evaluated",subject:def.id,detail:`Computable criteria evaluated inside the plane over ${srcNote.label}; counts held, nothing released`}))};
  const attempt=(approved:boolean)=>{
   if(!def||!agg||!bundle)return;const now=new Date().toISOString();
   const request:ReleaseRequest={definitionId:def.id,requestedBy:REQUESTER,purpose:"Illustrative synthetic trial pre-screening feasibility",dataClass:"synthetic"};
@@ -45,6 +46,11 @@ export function TrialPrescreenPage(){
      {!patients&&!err&&<div className="rh-skel" aria-hidden="true"/>}
     </section>
 
+    <section className="rh-card" aria-labelledby="ps-s-h">
+     <h2 id="ps-s-h">Synthetic cohort</h2>
+     <div className="rh-choices co-defs" role="group" aria-label="Choose a synthetic cohort">{SOURCES.map(s=><button key={s.id} type="button" aria-pressed={source===s.id} onClick={()=>{setSource(s.id);reset()}}>{s.label}</button>)}</div>
+     <p className="rh-note">{srcNote.note}</p>
+    </section>
     <section className="rh-card" aria-labelledby="ps-t-h">
      <h2 id="ps-t-h">1. Trial</h2>
      <div className="rh-choices co-defs" role="group" aria-label="Choose a trial">{TRIALS.map(t=><button key={t.id} type="button" aria-pressed={trialId===t.id} onClick={()=>{setTrialId(t.id);reset()}}>{t.area}: {t.title.replace(/^Illustrative phase \d: /,"").slice(0,48)}</button>)}</div>

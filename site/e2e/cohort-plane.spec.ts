@@ -36,3 +36,17 @@ test("cohort page refuses a cohort file that fails its integrity check",async({p
  await expect(page.getByRole("alert")).toContainText("could not be loaded or verified");
  await expect(page.getByRole("button",{name:/Evaluate cohort/})).toBeDisabled();
 });
+
+test("cohort page: the generated cohort gives a meaningful released aggregate and strata, still with no ids",async({page})=>{
+ await page.goto("/research/cohort");
+ await page.getByRole("group",{name:"Choose a synthetic cohort"}).getByRole("button",{name:/Generated cohort/}).click();
+ await expect(page.getByText(/Seeded, so it is identical every time/)).toBeVisible();
+ await page.getByRole("button",{name:/Evaluate cohort \(5000 synthetic profiles\)/}).click();
+ await page.getByRole("button",{name:/Release with reviewer approval/}).click();
+ await expect(page.getByRole("heading",{name:"Released aggregate"})).toBeVisible();
+ const counts=page.locator(".co-counts");
+ await expect(counts).toContainText("5000");
+ await expect(counts.locator(".co-sup")).toHaveCount(0);
+ await expect(page.getByRole("table",{name:"Matched by sex and by condition"}).locator("td").filter({hasText:/^\d+$/}).first()).toBeVisible();
+ await expect(page.locator("body")).not.toContainText(/SYN-[A-Z]-\d{6}/);
+});
