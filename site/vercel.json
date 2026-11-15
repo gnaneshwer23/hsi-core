@@ -265,6 +265,10 @@
       "destination": "/_pages/research--methods.html"
     },
     {
+      "source": "/research/evaluation",
+      "destination": "/_pages/research--evaluation.html"
+    },
+    {
       "source": "/research/workspace",
       "destination": "/_pages/research--workspace.html"
     },
