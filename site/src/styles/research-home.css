@@ -167,3 +167,10 @@
 /* The shared graph diagram follows the app theme. */
 .rh-app .kg-conn span{color:var(--accent-link)}.rh-app .kg-conn li,.rh-app .kg-legend li,.rh-app .kg-net-key h3{color:var(--ink)}.rh-app .kg-conn,.rh-app .kg-conn li{border-color:var(--line)}
 .rh-app[data-theme=dark] .kg-nl{fill:var(--ink);stroke:var(--surface)}.rh-app[data-theme=dark] .kg-nl-c{fill:#fff}.rh-app[data-theme=dark] .kg-nd{fill:var(--surface-2);stroke:var(--ink)}.rh-app[data-theme=dark] .kg-nd-c{fill:var(--accent)}
+.gr-list{list-style:none;margin:0;padding:0;display:grid;gap:16px}.gr-entry h3{margin:0;font-size:18px;line-height:1.35}.gr-entry header{display:flex;gap:12px;justify-content:space-between;align-items:flex-start}
+.gr-entry summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:600}.gr-entry details ul,.gr-entry details ol{margin:4px 0 8px;padding-left:20px;font-size:14px;line-height:1.6;color:var(--muted)}
+.gr-status{flex:none;padding:4px 10px;border-radius:999px;border:1px solid var(--line-2);font-size:13px;font-weight:600}.gr-status[data-s=investigating]{background:var(--accent-wash)}
+.gr-track{border:0;padding:0;margin:8px 0 0;display:grid;gap:8px}.gr-track legend{font-weight:600;font-size:14px;padding:0}.gr-track label{font-size:13.5px;color:var(--muted)}
+.gr-track input{padding:10px 12px;border:1px solid var(--line-2);border-radius:10px;background:var(--surface);color:var(--ink);font:400 14px 'Host Grotesk Variable',system-ui,sans-serif;min-height:44px;box-sizing:border-box}
+.gr-track input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.rh-choices.gr-filter{display:flex;flex-wrap:wrap;gap:8px}.gr-filter button{width:auto;min-width:0;padding:0 16px}
