@@ -31,3 +31,11 @@ The service prepares input context only. It does not establish search completene
 ## Remaining human and environment acceptance
 
 Real source rights and independently operated authority; approved model deployments/terms; actual passage curation; independent expert assessments; 120 adjudicated benchmark cases and preregistered thresholds; authorised two-account staging isolation, persisted run/review acceptance, restore and on-call evidence. No production flags or migration holds were changed.
+
+## P1: curator context-comparison brief
+
+`createGraphContextBriefService` composes preparation with the existing structured comparison and five-class reporting engines. Supply one curator-selected finding span and explicit polarity per relationship; graph summaries and negation flags are not silently treated as passage extraction. Snapshot-local entity IDs retain their namespace and do not claim ontology equivalence. Finding annotations remain unreviewed, even when their spans and source permissions validate.
+
+The service validates all finding spans before authority lookups, prepares the full batch, and retains detailed context, source/version/passage IDs, missingness and all pairwise comparisons. JSON and escaped Markdown include an investigation ID, snapshot/packet/preparation hashes, content hash, version and parent hash. A rerun against the same investigation, question and snapshot creates a successor; it never mutates the supplied previous artifact. Current clearance is checked again on every service export. Low-level rendering and hashes establish reproducibility only, never authorization or scientific acceptance.
+
+This is an offline curation composition, **not** an accepted end-to-end Context-Conflict Audit. It executes no support/oppose search or independent verifier; both are explicitly `not_executed`, human review is required, consensus and promotion remain false. It does not persist artifacts or make hash chains tamper-proof: the protected audit store and scoped review service must enforce immutable append, ownership, reviewer authority and source reauthorization during a separately authorised integration. No new HTTP route, public source passages, migrations or runtime activation are included.
