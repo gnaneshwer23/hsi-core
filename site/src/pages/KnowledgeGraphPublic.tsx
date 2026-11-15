@@ -4,13 +4,14 @@ import "../styles/knowledge-graph-public.css";
 import "../styles/home-redesign.css";
 import {ProductTour} from "../components/home/ProductStory";
 import "../styles/home-story.css";
-import {useGraphSnapshot} from "../components/home/useGraphSnapshot";
+import {useGraphSnapshot,GraphSnapshotProvider} from "../components/home/useGraphSnapshot";
+import {HomeResearchGraph as Explorer} from "../components/HomeResearchGraph";
 import {NeighbourhoodDiagram,ChartsPair} from "../components/graph/GraphCharts";
 
 /** Public entry to the HSI knowledge graph. It links only to surfaces that exist and states what each one is. */
 const ways = [
   {
-    to: "/#home-knowledge-graph",
+    to: "#home-knowledge-graph",
     title: "Explore the connections",
     text: "Start from a biological system, pick a connection, then read its source and experimental context.",
     status: "Preview · recorded candidate snapshot",
@@ -35,12 +36,6 @@ const ways = [
   },
 ] as const;
 
-const extending = [
-  ["Ontology grounding", "Candidate links from graph concepts to pinned releases of public ontologies. A curator can record a recommendation; it is not an approved mapping."],
-  ["Researcher-owned investigations", "Saving an investigation as a digest-chained, unreviewed record. Storage is designed and held; it is not enabled."],
-  ["Candidate-only agents", "Roles that propose relationships and context over the graph. They produce candidates for review, never approvals."],
-  ["Beyond one disease", "The Context-Conflict Audit generalised across systems. Systemic sclerosis is one validation case, not the boundary."],
-] as const;
 
 
 const fmt=(n:number)=>n.toLocaleString("en-GB");
@@ -57,7 +52,7 @@ function WalkFigure(){
           <h2 id="kw-a">The wider picture</h2>
           {s?<p className="fg-big"><b>{fmt(s.concepts)}</b> concepts, <b>{fmt(s.relationships)}</b> candidate relationships</p>:<p className="fg-wait">{failed?"Snapshot unavailable. No substitute figures are shown.":"Verifying snapshot…"}</p>}
           <p>Every line is a recorded connection between two concepts. Select one in the explorer to open the rest of this chain.</p>
-          <Link to="/#home-knowledge-graph">Open the explorer →</Link>
+          <Link to="#home-knowledge-graph">Open the explorer →</Link>
         </section>
         <section aria-labelledby="kw-b">
           <span className="fg-letter" aria-hidden="true">B</span>
@@ -120,13 +115,13 @@ function FaqList(){
 
 export function KnowledgeGraphPublicPage() {
   return (
-    <div className="sp-page fg-page kg-page">
+    <GraphSnapshotProvider><div className="sp-page fg-page kg-page">
       <header className="fg-hook">
         <h1>Relationships between biological entities, with the evidence attached.</h1>
         <div>
           <p className="fg-lead">A graph of what research reports about cells, molecules, tissues and conditions, with every connection tied to its source, context and review status.</p>
           <div className="sp-actions">
-            <Link className="sp-button" to="/#home-knowledge-graph">Explore the graph <span aria-hidden="true">→</span></Link>
+            <Link className="sp-button" to="#home-knowledge-graph">Explore the graph <span aria-hidden="true">→</span></Link>
             <Link to="/evidence-intelligence">Inspect the evidence →</Link>
           </div>
           <p className="fg-status">Published snapshot · candidate-only · unreviewed</p>
@@ -136,6 +131,8 @@ export function KnowledgeGraphPublicPage() {
       <NeighbourhoodFigure />
       <WalkFigure />
       <ChartsFigure />
+
+      <Explorer />
 
       <ProductTour heading="Your own area of the graph."/>
 
@@ -157,24 +154,12 @@ export function KnowledgeGraphPublicPage() {
         <FaqList />
       </section>
 
-      <section className="kg-section" aria-labelledby="kg-next">
-        <h2 id="kg-next">Where the graph is being developed.</h2>
-        <dl className="kg-facts">
-          {extending.map(([term, text]) => (
-            <div key={term}>
-              <dt>{term}</dt>
-              <dd>{text}</dd>
-            </div>
-          ))}
-        </dl>
-        <p className="kg-note">No dates are promised. Each of these needs independent review before it changes what the graph says.</p>
-      </section>
 
       <section className="kg-section kg-close">
         <h2>Follow a connection back to its evidence.</h2>
         <p>Start with a system, pick a relationship and read the source behind it.</p>
-        <Link className="sp-button" to="/#home-knowledge-graph">Explore the graph <span aria-hidden="true">↗</span></Link>
+        <Link className="sp-button" to="#home-knowledge-graph">Explore the graph <span aria-hidden="true">↗</span></Link>
       </section>
-    </div>
+    </div></GraphSnapshotProvider>
   );
 }

@@ -101,10 +101,6 @@
   ],
   "rewrites": [
     {
-      "source": "/demo",
-      "destination": "/_pages/demo.html"
-    },
-    {
       "source": "/research/capabilities",
       "destination": "/_pages/research--capabilities.html"
     },
@@ -149,14 +145,6 @@
       "destination": "/_pages/evidence-safety.html"
     },
     {
-      "source": "/community",
-      "destination": "/_pages/community.html"
-    },
-    {
-      "source": "/research",
-      "destination": "/_pages/research.html"
-    },
-    {
       "source": "/research/ontology-review",
       "destination": "/_pages/research--ontology-review.html"
     },
@@ -189,10 +177,6 @@
       "destination": "/_pages/sign-in.html"
     },
     {
-      "source": "/platform",
-      "destination": "/_pages/platform.html"
-    },
-    {
       "source": "/how-it-works",
       "destination": "/_pages/how-it-works.html"
     },
@@ -201,16 +185,8 @@
       "destination": "/_pages/explore.html"
     },
     {
-      "source": "/science",
-      "destination": "/_pages/science.html"
-    },
-    {
       "source": "/discovery-engine",
       "destination": "/_pages/discovery-engine.html"
-    },
-    {
-      "source": "/science/body",
-      "destination": "/_pages/science--body.html"
     },
     {
       "source": "/science/connections",
@@ -219,10 +195,6 @@
     {
       "source": "/science/zoom",
       "destination": "/_pages/science--zoom.html"
-    },
-    {
-      "source": "/demo",
-      "destination": "/_pages/demo.html"
     },
     {
       "source": "/research/investigate",
@@ -429,14 +401,6 @@
       "destination": "/_pages/evidence-intelligence.html"
     },
     {
-      "source": "/research-briefs",
-      "destination": "/_pages/research-briefs.html"
-    },
-    {
-      "source": "/applications",
-      "destination": "/_pages/applications.html"
-    },
-    {
       "source": "/knowledge-graph",
       "destination": "/_pages/knowledge-graph.html"
     },
@@ -449,16 +413,28 @@
       "destination": "/_pages/about.html"
     },
     {
+      "source": "/research",
+      "destination": "/_pages/research.html"
+    },
+    {
+      "source": "/community",
+      "destination": "/_pages/community.html"
+    },
+    {
+      "source": "/platform",
+      "destination": "/_pages/platform.html"
+    },
+    {
       "source": "/intelligence",
       "destination": "/_pages/intelligence.html"
     },
     {
-      "source": "/departments",
-      "destination": "/_pages/departments.html"
-    },
-    {
       "source": "/connected-intelligence",
       "destination": "/_pages/connected-intelligence.html"
+    },
+    {
+      "source": "/departments",
+      "destination": "/_pages/departments.html"
     },
     {
       "source": "/departments/immunology",
@@ -543,17 +519,122 @@
     {
       "source": "/intelligence/warden",
       "destination": "/_pages/intelligence--warden.html"
+    },
+    {
+      "source": "/research-briefs",
+      "destination": "/_pages/research-briefs.html"
+    },
+    {
+      "source": "/applications",
+      "destination": "/_pages/applications.html"
+    },
+    {
+      "source": "/science",
+      "destination": "/_pages/science.html"
+    },
+    {
+      "source": "/science/body",
+      "destination": "/_pages/science--body.html"
+    },
+    {
+      "source": "/demo",
+      "destination": "/_pages/demo.html"
     }
   ],
   "redirects": [
     {
       "source": "/technology",
-      "destination": "/platform",
+      "destination": "/how-it-works",
       "permanent": true
     },
     {
       "source": "/solutions",
-      "destination": "/applications",
+      "destination": "/how-it-works",
+      "permanent": true
+    },
+    {
+      "source": "/platform",
+      "destination": "/how-it-works",
+      "permanent": true
+    },
+    {
+      "source": "/applications",
+      "destination": "/how-it-works",
+      "permanent": true
+    },
+    {
+      "source": "/research",
+      "destination": "/how-it-works",
+      "permanent": true
+    },
+    {
+      "source": "/research-briefs",
+      "destination": "/how-it-works",
+      "permanent": true
+    },
+    {
+      "source": "/connected-intelligence",
+      "destination": "/how-it-works",
+      "permanent": true
+    },
+    {
+      "source": "/intelligence",
+      "destination": "/how-it-works",
+      "permanent": true
+    },
+    {
+      "source": "/products",
+      "destination": "/how-it-works",
+      "permanent": true
+    },
+    {
+      "source": "/for-isi",
+      "destination": "/how-it-works",
+      "permanent": true
+    },
+    {
+      "source": "/for-aksh",
+      "destination": "/how-it-works",
+      "permanent": true
+    },
+    {
+      "source": "/for-trials",
+      "destination": "/how-it-works",
+      "permanent": true
+    },
+    {
+      "source": "/akeno",
+      "destination": "/how-it-works",
+      "permanent": true
+    },
+    {
+      "source": "/aksh-agents",
+      "destination": "/how-it-works",
+      "permanent": true
+    },
+    {
+      "source": "/modules",
+      "destination": "/how-it-works",
+      "permanent": true
+    },
+    {
+      "source": "/modules/aksh-health",
+      "destination": "/how-it-works",
+      "permanent": true
+    },
+    {
+      "source": "/modules/clinical",
+      "destination": "/how-it-works",
+      "permanent": true
+    },
+    {
+      "source": "/modules/isi",
+      "destination": "/how-it-works",
+      "permanent": true
+    },
+    {
+      "source": "/modules/trials",
+      "destination": "/how-it-works",
       "permanent": true
     },
     {
@@ -567,69 +648,64 @@
       "permanent": true
     },
     {
-      "source": "/intelligence/prism",
-      "destination": "/intelligence/lantern",
+      "source": "/science",
+      "destination": "/knowledge-graph",
       "permanent": true
     },
     {
-      "source": "/intelligence/horizon",
-      "destination": "/intelligence/vantage",
+      "source": "/science/body",
+      "destination": "/knowledge-graph",
       "permanent": true
     },
     {
-      "source": "/products",
-      "destination": "/connected-intelligence",
-      "permanent": false
+      "source": "/departments",
+      "destination": "/knowledge-graph",
+      "permanent": true
     },
     {
-      "source": "/for-isi",
-      "destination": "/connected-intelligence",
-      "permanent": false
+      "source": "/community",
+      "destination": "/research/home",
+      "permanent": true
     },
     {
-      "source": "/for-aksh",
-      "destination": "/connected-intelligence",
-      "permanent": false
+      "source": "/demo",
+      "destination": "/research/journey",
+      "permanent": true
     },
     {
-      "source": "/for-trials",
-      "destination": "/connected-intelligence",
-      "permanent": false
+      "source": "/departments/immunology",
+      "destination": "/research/knowledge-graph?netDepartment=immunology",
+      "permanent": true
     },
     {
-      "source": "/akeno",
-      "destination": "/connected-intelligence",
-      "permanent": false
+      "source": "/departments/neuroscience",
+      "destination": "/research/knowledge-graph?netDepartment=neuroscience",
+      "permanent": true
     },
     {
-      "source": "/aksh-agents",
-      "destination": "/connected-intelligence",
-      "permanent": false
+      "source": "/departments/microbiome",
+      "destination": "/research/knowledge-graph?netDepartment=microbiome",
+      "permanent": true
     },
     {
-      "source": "/modules",
-      "destination": "/connected-intelligence",
-      "permanent": false
+      "source": "/departments/metabolism",
+      "destination": "/research/knowledge-graph?netDepartment=metabolism",
+      "permanent": true
     },
     {
-      "source": "/modules/aksh-health",
-      "destination": "/connected-intelligence",
-      "permanent": false
+      "source": "/departments/genomics-multi-omics",
+      "destination": "/research/knowledge-graph?netDepartment=genomics-multi-omics",
+      "permanent": true
     },
     {
-      "source": "/modules/clinical",
-      "destination": "/connected-intelligence",
-      "permanent": false
+      "source": "/departments/human-physiology",
+      "destination": "/research/knowledge-graph?netDepartment=human-physiology",
+      "permanent": true
     },
     {
-      "source": "/modules/isi",
-      "destination": "/connected-intelligence",
-      "permanent": false
-    },
-    {
-      "source": "/modules/trials",
-      "destination": "/connected-intelligence",
-      "permanent": false
+      "source": "/intelligence/:slug",
+      "destination": "/how-it-works",
+      "permanent": true
     }
   ],
   "trailingSlash": false

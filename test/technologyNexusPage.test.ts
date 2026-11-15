@@ -3,8 +3,8 @@ import { readFileSync } from "node:fs";
 const read = (path: string) => readFileSync(new URL(path, import.meta.url), "utf8");
 describe("HSI NEXUS technology page", () => {
   const page = read("../site/src/pages/Technology.tsx");
-  it("is retired from the public site: the route redirects to the platform page and leaves navigation", () => {
-    expect(read("../site/src/App.tsx")).toContain('path="technology" element={<Navigate to="/platform" replace />}');
+  it("is retired from the public site: the route redirects to how it works and leaves navigation", () => {
+    expect(read("../site/src/App.tsx")).toContain('path="technology" element={<Navigate to="/how-it-works" replace />}');
     expect(read("../site/src/lib/primaryNav.ts")).not.toContain("/technology");
   });
   it("shows the four independent information domains and six intelligence functions", () => {

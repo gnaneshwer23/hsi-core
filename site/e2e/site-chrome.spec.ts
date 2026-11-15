@@ -8,12 +8,12 @@ test('shared header stays usable without overlap across mobile and desktop width
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`Overflow at ${width}`).toBe(true);
  }
 });
-test('desktop header has six direct navigation links, the last opening the research home',async({page})=>{
+test('desktop header has five direct navigation links to the public pages',async({page})=>{
  await page.setViewportSize({width:1440,height:900});await page.goto('/');
  const nav=page.getByRole('navigation',{name:'Primary',exact:true});
- await expect(nav.getByRole('link')).toHaveText(['Home','Knowledge graph','How it works','Research','Evidence intelligence','Research home']);
- await nav.getByRole('link',{name:'Research',exact:true}).click();await expect(page).toHaveURL(/research$/);
- await nav.getByRole('link',{name:'Evidence intelligence',exact:true}).click();await expect(page).toHaveURL(/evidence-intelligence$/);
+ await expect(nav.getByRole('link')).toHaveText(['Home','How it works','Knowledge graph','Trust','About']);
+ await nav.getByRole('link',{name:'How it works',exact:true}).click();await expect(page).toHaveURL(/how-it-works$/);
+ await nav.getByRole('link',{name:'Trust',exact:true}).click();await expect(page).toHaveURL(/trust$/);
 });
 test('mobile menu uses a clear icon, touch targets and working account/navigation links',async({page})=>{
  await page.setViewportSize({width:320,height:800});await page.goto('/science/graph');const toggle=page.getByRole('button',{name:'Open menu',exact:true});await expect(toggle.locator('svg')).toBeVisible();const box=(await toggle.boundingBox())!;expect(box.width).toBeGreaterThanOrEqual(44);expect(box.height).toBeGreaterThanOrEqual(44);await toggle.click();
@@ -22,14 +22,16 @@ test('mobile menu uses a clear icon, touch targets and working account/navigatio
  await expect(drawer.getByRole('link',{name:'Sign up',exact:true})).toBeVisible();
  await expect(drawer.getByRole('link',{name:'Sign up',exact:true})).toHaveText(/Sign up/);await drawer.getByRole('link',{name:'Sign up',exact:true}).click();await expect(page).toHaveURL(/sign-up$/);await expect(drawer).toBeHidden();
 });
-test('footer has product navigation, clear project links and accessible touch targets',async({page})=>{
+test('footer has product, company and trust navigation with accessible touch targets',async({page})=>{
  for(const width of [320,768,1440]){
   await page.setViewportSize({width,height:900});await page.goto('/');const footer=page.getByRole('contentinfo');await footer.scrollIntoViewIfNeeded();
-  await expect(footer.getByRole('navigation',{name:'Footer research'})).toBeVisible();await expect(footer.getByRole('link',{name:'Context-Conflict Audit',exact:true})).toHaveAttribute('href','/context-conflict-audit');await expect(footer.getByRole('navigation',{name:'Footer trust'})).toBeVisible();
+  for(const name of ['Footer product','Footer company','Footer trust'])await expect(footer.getByRole('navigation',{name})).toBeVisible();
+  await expect(footer.getByRole('link',{name:'How it works',exact:true})).toHaveAttribute('href','/how-it-works');
+  for(const gone of ['Platform','Science','Applications','Intelligence Collective'])await expect(footer.getByRole('link',{name:gone,exact:true})).toHaveCount(0);
   for(const a of await footer.locator('nav a').all())expect((await a.boundingBox())!.height).toBeGreaterThanOrEqual(44);
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
  }
- await page.getByRole('contentinfo').getByRole('link',{name:'Context-Conflict Audit',exact:true}).click();await expect(page).toHaveURL(/context-conflict-audit$/);
+ await page.getByRole('contentinfo').getByRole('link',{name:'Knowledge graph',exact:true}).click();await expect(page).toHaveURL(/knowledge-graph$/);
 });
 test('primary and secondary actions remain readable and large enough on light and dark sections',async({page})=>{
  await page.goto('/');const heroActions=page.locator('.ps-hero .ps-cta a');await expect(heroActions).toHaveCount(2);const buttons=heroActions;
