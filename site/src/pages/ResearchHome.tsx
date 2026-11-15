@@ -6,6 +6,7 @@ import {loadDomainGraph} from "../lib/claimGraphClient";
 import {departments} from "../lib/departments";
 import {NetworkView} from "../components/graph/GraphCharts";
 import {ResearchAppShell} from "../components/home/ResearchAppShell";
+import {RadarCard} from "../components/home/RadarCard";
 import {DEPT_ICON,HeroNetwork,Icon} from "../components/home/AppIcons";
 import {EMPTY_PROFILE,LIVE_RUN_KEY,summariseSavedLiveRun,type SavedLiveRun,classifyIntent,focusNetwork,GOALS,INVESTIGATION_STATUS,loadProfile,looksLikeTrialId,recommend,resetProfile,ROLES,saveProfile,searchEntities,type Profile} from "../lib/researchHome";
 import "../styles/research-home.css";
@@ -126,6 +127,8 @@ export function ResearchHome(){
      {failed&&<p className="rh-err" role="alert">The published graph could not be loaded, so concept search and suggestions are unavailable. No substitute results are shown.</p>}
      {noStore&&<p className="rh-err" role="status">This browser blocked local storage, so preferences will not be kept.</p>}
      {ready&&!profile.onboarded&&<Onboarding profile={profile} onDone={p=>setProfile(p)}/>}
+
+     <RadarCard profile={profile} ready={ready}/>
 
      <section className="rh-interests" id="rh-interests" aria-labelledby="rh-int-h">
       <div className="rh-line"><h2 id="rh-int-h">Research interests</h2><span className="rh-note">On this device only</span></div>
