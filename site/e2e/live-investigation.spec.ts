@@ -125,7 +125,8 @@ test('mobile: the workspace stacks without horizontal scroll',async({page})=>{
  await page.goto('/research/workspace');
  await page.getByRole('button',{name:'Run live investigation'}).click();
  await expect(page.getByLabel('Run totals')).toContainText('Key findings');
- const wide=await page.evaluate(()=>[...document.querySelectorAll('body *')].filter(e=>e.getBoundingClientRect().right>window.innerWidth+1).slice(0,5).map(e=>e.tagName+'.'+String(e.className).slice(0,40)));
+ await page.evaluate(()=>document.fonts.ready);await page.waitForTimeout(300); // settle fonts and transitions before measuring
+ const wide=await page.evaluate(()=>[...document.querySelectorAll('body *')].filter(e=>e.getBoundingClientRect().right>window.innerWidth+1).slice(0,6).map(e=>e.tagName+'.'+String(e.className).slice(0,40)));
  expect(wide).toEqual([]);
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+1)).toBe(true);
 });
