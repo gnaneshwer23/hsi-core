@@ -1,7 +1,7 @@
 import {useEffect,useMemo,useState} from "react";
 import {Link,useSearchParams} from "react-router-dom";
 import type {DomainBundle} from "../../../src/knowledgeGraph/domainGraph";
-import {LEDGER_OUTCOMES,LEDGER_STATUSES,LIMITS,createEntry,edit,missingForTest,recordOutcome,setStatus,type LedgerEntry,type LedgerOutcome,type LedgerStatus} from "../../../src/investigation/hypothesisLedger";
+import {LEDGER_OUTCOMES,LEDGER_STATUSES,LIMITS,createEntry,edit,missingForTest,recordOutcome,removeTargetPick,setStatus,type LedgerEntry,type LedgerOutcome,type LedgerStatus} from "../../../src/investigation/hypothesisLedger";
 import {DEFINITION_REGISTRY} from "../../../src/clinicalPlane/definitions";
 import {loadDomainGraph} from "../lib/claimGraphClient";
 import {useLedger} from "../lib/useLedger";
@@ -40,6 +40,8 @@ function Card({e,gaps,update}:{e:LedgerEntry;gaps:Map<string,string>;update:(id:
    <div className="hl-field"><label htmlFor={e.id+"-def"}>Synthetic cohort definition to explore (illustrative)</label>
     <select id={e.id+"-def"} className="gr-note" value={e.cohortDefinitionId??""} onChange={x=>update(e.id,y=>edit(y,{cohortDefinitionId:x.target.value||null},new Date().toISOString()))}><option value="">None linked</option>{DEFINITION_REGISTRY.map(d=><option key={d.id} value={d.id}>{d.label}</option>)}</select></div>
    {e.cohortDefinitionId&&<p className="rh-note"><Link to={`/research/cohort?definition=${encodeURIComponent(e.cohortDefinitionId)}&hypothesis=${encodeURIComponent(e.id)}`}>Explore this definition on the synthetic cohort</Link> (synthetic data only).</p>}
+   <p className="rh-note"><Link to={`/research/targets?hypothesis=${encodeURIComponent(e.id)}`}>Find candidate targets for this hypothesis</Link> (public Open Targets metadata).</p>
+   {e.targetShortlist.length>0&&<details open><summary>Candidate targets ({e.targetShortlist.length})</summary><ul className="hl-targets">{e.targetShortlist.map(t=><li key={t.ensemblId+t.diseaseId}><b>{t.symbol}</b> for {t.diseaseName} · association score {t.score.toFixed(2)} · {t.reason}<br/><small>A candidate to investigate, not a recommendation. Read {t.retrievedAt.slice(0,10)}.</small> <button type="button" className="rh-link" onClick={()=>update(e.id,y=>removeTargetPick(y,t.ensemblId,t.diseaseId,new Date().toISOString()))}>Remove {t.symbol}</button></li>)}</ul></details>}
    {e.cohortObservations.length>0&&<details open><summary>Synthetic cohort observations ({e.cohortObservations.length})</summary><ul className="hl-obs">{e.cohortObservations.map(o=><li key={o.aggregateDigest}>{o.at.slice(0,10)} · {o.definitionTitle} · matched {o.matched===null?"suppressed":o.matched} of {o.evaluated===null?"suppressed":o.evaluated} · digest {o.aggregateDigest.slice(0,10)}<br/><small>Illustrative synthetic result, not evidence. It did not change this hypothesis.</small></li>)}</ul></details>}
    <details><summary>History ({e.history.length})</summary><ol className="gr-hist">{[...e.history].reverse().map((h,i)=><li key={i}>{h.at.slice(0,10)} · {h.type} · {h.detail}</li>)}</ol></details>
   </li>
