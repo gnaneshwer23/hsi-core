@@ -237,6 +237,10 @@
       "destination": "/_pages/welcome.html"
     },
     {
+      "source": "/research/gaps",
+      "destination": "/_pages/research--gaps.html"
+    },
+    {
       "source": "/research/workspace",
       "destination": "/_pages/research--workspace.html"
     },
