@@ -5,6 +5,7 @@ import {departments} from "../../lib/departments";
 import {DEPT_ICON,Icon} from "./AppIcons";
 import {ACCENTS,DEFAULT_APPEARANCE,loadAppearance,saveAppearance,type Appearance} from "../../lib/appearance";
 import {readBrowserRecord} from "../../lib/journey";
+import {loadProfile,type Profile} from "../../lib/researchHome";
 import "../../styles/research-home.css";
 import "../../styles/premium-app.css";
 
@@ -50,9 +51,14 @@ function AppearanceMenu({ap,set}:{ap:Appearance;set:(a:Appearance)=>void}){
 export function ResearchAppShell({where,whereIcon="home",active,onSearch,children}:{where:string;whereIcon?:string;active:ShellNav;onSearch?:()=>void;children:ReactNode}){
  const [menu,setMenu]=useState(false),[ap,setAp]=useState<Appearance>(DEFAULT_APPEARANCE);
  const [badges,setBadges]=useState<Record<"ledger"|"gaps",number>>({ledger:0,gaps:0});
- useEffect(()=>{setAp(loadAppearance());try{const r=readBrowserRecord(localStorage);setBadges({ledger:r.ledgerEntries,gaps:r.gapStatuses})}catch{}},[]);
+ const [prof,setProf]=useState<Profile|null>(null);
+ useEffect(()=>{setProf(loadProfile());setAp(loadAppearance());try{const r=readBrowserRecord(localStorage);setBadges({ledger:r.ledgerEntries,gaps:r.gapStatuses})}catch{}},[]);
  const change=(a:Appearance)=>{setAp(a);saveAppearance(a)};
  const theme=ap.theme;
+ const isArea=(i:string)=>departments.some(d=>d.slug===i);
+ const mine=prof?.onboarded?prof.interests.filter(i=>!isArea(i)).slice(0,5):[];
+ const myAreas=prof?.onboarded?departments.filter(d=>prof.interests.includes(d.slug)):[];
+ const sci=myAreas.length?myAreas:departments;
  const cur=(k:ShellNav)=>active===k?"page":undefined;
  return (
   <div className="rh-app" data-theme={theme} data-accent={ap.accent}>
@@ -62,6 +68,7 @@ export function ResearchAppShell({where,whereIcon="home",active,onSearch,childre
     <Link to="/" className="rh-brand" aria-label="Human Super Intelligence, public site"><HsiIdentity/></Link>
     <span className="rh-sep" aria-hidden="true"/>
     <span className="rh-where"><Icon name={whereIcon} size={18}/> {where}</span>
+    {mine.length>0&&<Link className="rh-prog" to="/research/home#pr-h" aria-label={`Your research program: ${mine.slice(0,2).join(", ")}`}><Icon name="target" size={15}/><span>{mine.slice(0,2).join(" · ")}{mine.length>2?` +${mine.length-2}`:""}</span></Link>}
     {onSearch?<button type="button" className="rh-kbd" onClick={onSearch} aria-label="Focus search (Command K)"><Icon name="search" size={16}/> Search <kbd>⌘K</kbd></button>:<Link className="rh-kbd" to="/research/home#rh-q" aria-label="Search from Research Home"><Icon name="search" size={16}/> Search</Link>}
     <AppearanceMenu ap={ap} set={change}/>
     <a className="rh-iconbtn" href="/research/home#rh-updates" aria-label="Scientific updates: none connected"><Icon name="bell" size={19}/></a>
@@ -69,9 +76,12 @@ export function ResearchAppShell({where,whereIcon="home",active,onSearch,childre
    </header>
    <div className="rh-body">
     <aside className="rh-nav" id="rh-nav" data-open={menu} aria-label="Research navigation">
+     {mine.length>0&&<nav aria-label="My research"><h2>My research</h2><ul>
+      <li><Link to="/research/home#pr-h"><Icon name="target"/><span>My program</span></Link></li>
+      {mine.map(t=><li key={t}><Link to={"/research/knowledge-graph?netQuery="+encodeURIComponent(t)}><Icon name="spark"/><span>{t}</span></Link></li>)}</ul></nav>}
      {GROUPS.map(g=><nav key={g.label} aria-label={g.label}><h2>{g.label}</h2><ul>{g.items.map(i=>(
       <li key={i.label}><Link to={i.to} aria-current={i.key&&cur(i.key)}><Icon name={i.icon}/><span>{i.label}</span>{i.badge&&badges[i.badge]>0&&<em className="rh-count" aria-hidden="true">{badges[i.badge]}</em>}</Link></li>))}</ul></nav>)}
-     <nav aria-label="Explore science"><h2>Explore science</h2><ul>{departments.map(d=><li key={d.slug}><Link to={"/research/knowledge-graph?netDepartment="+d.slug}><Icon name={deptIcon(d.slug)}/>{d.name}</Link></li>)}</ul></nav>
+     <nav aria-label="Explore science"><h2>{myAreas.length?"My areas":"Explore science"}</h2><ul>{sci.map(d=><li key={d.slug}><Link to={"/research/knowledge-graph?netDepartment="+d.slug}><Icon name={deptIcon(d.slug)}/>{d.name}</Link></li>)}</ul></nav>
      <nav aria-label="Account"><h2>Account</h2><ul><li><Link to="/research/account"><Icon name="user"/>Profile and access</Link></li><li><Link to="/research/home#rh-interests"><Icon name="spark"/>Preferences</Link></li></ul></nav>
      <div className="rh-status"><b>Research preview</b><span>Candidate-only graph. Nothing is scientifically approved. No clinical advice.</span></div>
     </aside>
