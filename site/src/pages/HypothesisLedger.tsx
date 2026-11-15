@@ -1,7 +1,8 @@
 import {useEffect,useMemo,useState} from "react";
-import {Link} from "react-router-dom";
+import {Link,useSearchParams} from "react-router-dom";
 import type {DomainBundle} from "../../../src/knowledgeGraph/domainGraph";
 import {LEDGER_OUTCOMES,LEDGER_STATUSES,LIMITS,createEntry,edit,missingForTest,recordOutcome,setStatus,type LedgerEntry,type LedgerOutcome,type LedgerStatus} from "../../../src/investigation/hypothesisLedger";
+import {DEFINITION_REGISTRY} from "../../../src/clinicalPlane/definitions";
 import {loadDomainGraph} from "../lib/claimGraphClient";
 import {useLedger} from "../lib/useLedger";
 import {ResearchAppShell} from "../components/home/ResearchAppShell";
@@ -36,7 +37,10 @@ function Card({e,gaps,update}:{e:LedgerEntry;gaps:Map<string,string>;update:(id:
     <input id={e.id+"-note"} className="gr-note" maxLength={LIMITS.note} value={note} onChange={x=>setNote(x.target.value)}/>
     <div className="rh-row"><button type="button" className="rh-primary" onClick={()=>{const r=recordOutcome(e,oc,note,at());if(!r.ok){setErr(r.error);return}setErr("");setNote("");update(e.id,()=>r.entry)}}>Record outcome</button></div>
    </fieldset>}
-   <p className="rh-note"><Link to="/research/cohort">Explore a related phenotype on the synthetic cohort</Link> (illustrative, synthetic data only).</p>
+   <div className="hl-field"><label htmlFor={e.id+"-def"}>Synthetic cohort definition to explore (illustrative)</label>
+    <select id={e.id+"-def"} className="gr-note" value={e.cohortDefinitionId??""} onChange={x=>update(e.id,y=>edit(y,{cohortDefinitionId:x.target.value||null},new Date().toISOString()))}><option value="">None linked</option>{DEFINITION_REGISTRY.map(d=><option key={d.id} value={d.id}>{d.label}</option>)}</select></div>
+   {e.cohortDefinitionId&&<p className="rh-note"><Link to={`/research/cohort?definition=${encodeURIComponent(e.cohortDefinitionId)}&hypothesis=${encodeURIComponent(e.id)}`}>Explore this definition on the synthetic cohort</Link> (synthetic data only).</p>}
+   {e.cohortObservations.length>0&&<details open><summary>Synthetic cohort observations ({e.cohortObservations.length})</summary><ul className="hl-obs">{e.cohortObservations.map(o=><li key={o.aggregateDigest}>{o.at.slice(0,10)} · {o.definitionTitle} · matched {o.matched===null?"suppressed":o.matched} of {o.evaluated===null?"suppressed":o.evaluated} · digest {o.aggregateDigest.slice(0,10)}<br/><small>Illustrative synthetic result, not evidence. It did not change this hypothesis.</small></li>)}</ul></details>}
    <details><summary>History ({e.history.length})</summary><ol className="gr-hist">{[...e.history].reverse().map((h,i)=><li key={i}>{h.at.slice(0,10)} · {h.type} · {h.detail}</li>)}</ol></details>
   </li>
  );
@@ -44,7 +48,7 @@ function Card({e,gaps,update}:{e:LedgerEntry;gaps:Map<string,string>;update:(id:
 
 export function HypothesisLedgerPage(){
  const {ledger,ready,blocked,add,update}=useLedger(),[bundle,setBundle]=useState<DomainBundle|null>(null),[filter,setFilter]=useState<LedgerStatus|"all">("all"),[msg,setMsg]=useState("");
- const [f,setF]=useState({statement:"",prediction:"",experiment:"",falsifier:"",limits:""}),[picked,setPicked]=useState<string[]>([]);
+ const [f,setF]=useState({statement:"",prediction:"",experiment:"",falsifier:"",limits:""}),[params]=useSearchParams(),[picked,setPicked]=useState<string[]>(()=>{const g=params.get("gap");return g&&g.length<=220?[g]:[]});
  useEffect(()=>{const c=new AbortController(),t=setTimeout(()=>c.abort(),12000);loadDomainGraph(null,c.signal).then(setBundle).catch(()=>{}).finally(()=>clearTimeout(t));return()=>{c.abort();clearTimeout(t)}},[]);
  const gaps=useMemo(()=>new Map((bundle?.gaps??[]).map(g=>[g.id,g.question])),[bundle]);
  const entries=Object.values(ledger).sort((a,b)=>b.createdAt.localeCompare(a.createdAt)).filter(e=>filter==="all"||e.status===filter);
