@@ -3,7 +3,7 @@ import type {LiveInvestigation} from "../../../src/investigation/liveRun";
 export type Run=LiveInvestigation;
 export type Cand=Run["candidates"][number];
 
-export type StageKey="plan"|"retrieve"|"connect"|"compare"|"verify"|"brief";
+export type StageKey="plan"|"retrieve"|"connect"|"compare"|"verify"|"hypothesise"|"brief";
 export type StageState="pending"|"running"|"done"|"partial"|"failed"|"skipped";
 const STAGES:{key:StageKey;label:string;events:string[]}[]=[
  {key:"plan",label:"Plan",events:["scoped"]},
@@ -11,6 +11,7 @@ const STAGES:{key:StageKey;label:string;events:string[]}[]=[
  {key:"connect",label:"Connect",events:["mapped"]},
  {key:"compare",label:"Compare",events:["compared"]},
  {key:"verify",label:"Verify",events:["challenged"]},
+ {key:"hypothesise",label:"Hypothesise",events:["hypothesised"]},
  {key:"brief",label:"Brief",events:["brief"]},
 ];
 const rank:Record<string,number>={failed:4,partial:3,skipped:2,ok:1};

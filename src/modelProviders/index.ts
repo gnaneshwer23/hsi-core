@@ -3,14 +3,13 @@
  * never logged, returned or placed in prompts. A provider whose key or model id is unset reports "not_configured";
  * nothing is faked. Runners match `EntailmentModelRunner` so they plug into the existing verifier seam.
  */
-import type {EntailmentModelRunner} from "../researchV2/modelEntailment";
 import type {FetchLike} from "../fetchLike";
 
 export type ProviderId="openai"|"anthropic";
 export type BudgetLimits={maxCalls:number;maxInputChars:number;maxOutputTokens:number;/** Optional. Cost is computed only when both prices are supplied; otherwise it is reported unknown. */maxUsd?:number;usdPer1kInput?:number;usdPer1kOutput?:number};
 export type BudgetUsage={calls:number;inputChars:number;outputTokens:number;inputTokens:number;usd:number|null;refused:number};
 export class BudgetExceeded extends Error{constructor(readonly reason:string){super("Model budget exceeded: "+reason)}}
-export const DEFAULT_BUDGET:BudgetLimits={maxCalls:12,maxInputChars:60_000,maxOutputTokens:400};
+export const DEFAULT_BUDGET:BudgetLimits={maxCalls:16,maxInputChars:60_000,maxOutputTokens:400};
 
 export function createBudget(limits:BudgetLimits=DEFAULT_BUDGET){
  const u:BudgetUsage={calls:0,inputChars:0,outputTokens:0,inputTokens:0,usd:limits.usdPer1kInput!==undefined&&limits.usdPer1kOutput!==undefined?0:null,refused:0};
@@ -69,19 +68,25 @@ async function withRetry<T>(fn:()=>Promise<Response>,read:(r:Response)=>Promise<
  throw last instanceof Error?new Error("Provider unavailable: "+last.message.replace(/(sk-|key-)[A-Za-z0-9_-]+/g,"[redacted]")):Error("Provider unavailable");
 }
 export type RunnerDeps={env:Env;budget:Budget;fetcher?:FetchLike;sleeper?:(ms:number)=>Promise<void>;timeoutMs?:number};
-const compose=(r:{instruction:string;claim:string;passage:string})=>{
- // Callers that define their own output keys say "Return JSON with"; the older entailment instruction gets the keys appended.
- const system=/Return JSON with direction/.test(r.instruction)?r.instruction+" Reply with only that JSON object and no other text.":r.instruction+" Reply with only a JSON object with exactly the keys verdict, reason, evidenceSpan. evidenceSpan must be an exact quotation from the passage or null.";
+/** Request accepted by every runner. `maxOutputTokens` may only lower or raise the cap up to a hard ceiling. */
+export type ModelRequest={instruction:string;claim:string;passage:string;sourceId?:string;sourceVersion?:string;maxOutputTokens?:number;/** The instruction defines its own JSON keys, so no legacy output keys are appended. */ownFormat?:boolean};
+export type ModelRunner=(request:ModelRequest)=>Promise<unknown>;
+const HARD_OUTPUT_CEILING=1800;
+const compose=(r:ModelRequest)=>{
+ // Instructions that define their own output keys say "Return JSON with"; the legacy entailment instruction gets the keys appended.
+ const own=r.ownFormat===true||/Return JSON with direction/.test(r.instruction);
+ const system=own?r.instruction+" Reply with only that JSON object and no other text.":r.instruction+" Reply with only a JSON object with exactly the keys verdict, reason, evidenceSpan. evidenceSpan must be an exact quotation from the passage or null.";
  // The passage is data inside a JSON string, never part of the instructions.
  return {system,user:JSON.stringify({claim:r.claim,passage:r.passage})};
 };
+const cap=(d:{budget:{limits:BudgetLimits}},r:ModelRequest)=>Math.max(50,Math.min(r.maxOutputTokens??d.budget.limits.maxOutputTokens,HARD_OUTPUT_CEILING));
 
 /** A second, different OpenAI model for the verifier when only one provider key exists. Execution is independent; the provider is not. */
 export function openAiSecondModel(env:Env):string|null{
  const a=providerStatus(env)[0]!,m=env.HSI_OPENAI_MODEL_2?.trim();
  return a.configured&&m&&ID_RE.test(m)&&m!==a.model?m:null;
 }
-export function createOpenAiRunner(d:RunnerDeps,which:"primary"|"second"="primary"):EntailmentModelRunner{
+export function createOpenAiRunner(d:RunnerDeps,which:"primary"|"second"="primary"):ModelRunner{
  const base=providerStatus(d.env)[0]!;
  if(!base.configured)throw Error("OpenAI is not configured: "+base.reason);
  const second=which==="second"?openAiSecondModel(d.env):null;
@@ -91,18 +96,18 @@ export function createOpenAiRunner(d:RunnerDeps,which:"primary"|"second"="primar
  return async req=>{
   const {system,user}=compose(req);d.budget.reserve(system.length+user.length);
   return withRetry(()=>f("https://api.openai.com/v1/chat/completions",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+d.env.OPENAI_API_KEY},
-   body:JSON.stringify({model:st.model,temperature:0,max_tokens:d.budget.limits.maxOutputTokens,response_format:{type:"json_object"},messages:[{role:"system",content:system},{role:"user",content:user}]}),signal:AbortSignal.timeout(d.timeoutMs??20000)}),
+   body:JSON.stringify({model:st.model,temperature:0,max_tokens:cap(d,req),response_format:{type:"json_object"},messages:[{role:"system",content:system},{role:"user",content:user}]}),signal:AbortSignal.timeout(d.timeoutMs??20000)}),
    async res=>{const b=await res.json() as any;d.budget.record(b?.usage?.prompt_tokens??null,b?.usage?.completion_tokens??null);return parseJsonObject(String(b?.choices?.[0]?.message?.content??""))},d.sleeper??sleep);
  };
 }
-export function createAnthropicRunner(d:RunnerDeps):EntailmentModelRunner{
+export function createAnthropicRunner(d:RunnerDeps):ModelRunner{
  const st=providerStatus(d.env)[1]!;
  if(!st.configured)throw Error("Anthropic is not configured: "+st.reason);
  const f=d.fetcher??fetch;
  return async req=>{
   const {system,user}=compose(req);d.budget.reserve(system.length+user.length);
   return withRetry(()=>f("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json","x-api-key":d.env.ANTHROPIC_API_KEY!,"anthropic-version":"2023-06-01"},
-   body:JSON.stringify({model:st.model,temperature:0,max_tokens:d.budget.limits.maxOutputTokens,system,messages:[{role:"user",content:user}]}),signal:AbortSignal.timeout(d.timeoutMs??20000)}),
+   body:JSON.stringify({model:st.model,temperature:0,max_tokens:cap(d,req),system,messages:[{role:"user",content:user}]}),signal:AbortSignal.timeout(d.timeoutMs??20000)}),
    async res=>{const b=await res.json() as any;d.budget.record(b?.usage?.input_tokens??null,b?.usage?.output_tokens??null);return parseJsonObject(String(b?.content?.find((c:any)=>c?.type==="text")?.text??""))},d.sleeper??sleep);
  };
 }
