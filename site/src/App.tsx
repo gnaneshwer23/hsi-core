@@ -61,6 +61,7 @@ const GapRegisterRoute=lazy(()=>import("./pages/GapRegister").then(m=>({default:
 const HypothesisLedgerRoute=lazy(()=>import("./pages/HypothesisLedger").then(m=>({default:m.HypothesisLedgerPage})));
 const CohortPlaneRoute=lazy(()=>import("./pages/CohortPlane").then(m=>({default:m.CohortPlanePage})));
 const TargetWorkflowRoute=lazy(()=>import("./pages/TargetWorkflow").then(m=>({default:m.TargetWorkflowPage})));
+const TrialPrescreenRoute=lazy(()=>import("./pages/TrialPrescreen").then(m=>({default:m.TrialPrescreenPage})));
 const ResearcherHomePage=lazy(()=>import("./pages/ResearchHome").then(m=>({default:m.ResearchHome})));
 const ResearchCommunityFeedPage=lazy(()=>import("./pages/ResearchCommunityFeed").then(m=>({default:m.ResearchCommunityFeed})));
 
@@ -153,6 +154,7 @@ export default function App() {
         <Route path="research/ledger" element={<Suspense fallback={<p role="status">Loading ledger…</p>}><HypothesisLedgerRoute/></Suspense>} />
         <Route path="research/cohort" element={<Suspense fallback={<p role="status">Loading cohort…</p>}><CohortPlaneRoute/></Suspense>} />
         <Route path="research/targets" element={<Suspense fallback={<p role="status">Loading targets…</p>}><TargetWorkflowRoute/></Suspense>} />
+        <Route path="research/prescreen" element={<Suspense fallback={<p role="status">Loading pre-screening…</p>}><TrialPrescreenRoute/></Suspense>} />
         <Route path="research/home" element={<Suspense fallback={<p role="status">Loading workspace…</p>}><ResearcherHomePage/></Suspense>} />
         <Route path="research/community-feed" element={<Suspense fallback={<p role="status">Loading community…</p>}><ResearchCommunityFeedPage/></Suspense>} />
         <Route path="science/clinical-trials" element={<ScienceClinicalTrials />} />
