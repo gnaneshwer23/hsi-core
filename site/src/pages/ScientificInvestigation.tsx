@@ -13,6 +13,7 @@ import {
   type ScientificInvestigation,
 } from "@hsi/scientificInvestigation";
 import "../styles/scientific-investigation.css";
+import {LiveInvestigationPanel} from "../components/LiveInvestigationPanel";
 
 const STEPS = [
   { id: "start", label: "Start" },
@@ -136,6 +137,7 @@ export function ScientificInvestigationPage() {
             Nothing here is clinical validation.
           </p>
         </header>
+        <LiveInvestigationPanel />
         <ol className="inv-rail" aria-label="Investigation steps">
           {STEPS.map((item, index) => (
             <li key={item.id}>
