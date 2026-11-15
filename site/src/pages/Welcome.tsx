@@ -5,6 +5,7 @@ import {Icon} from "../components/home/AppIcons";
 import {departments} from "../lib/departments";
 import {loadDomainGraph} from "../lib/claimGraphClient";
 import {DEMO_PROFILE,detectTopics} from "../lib/program";
+import {ACCEPT,MAX_FILES,readEvidenceFile,refsFrom,type EvidenceFile} from "../lib/evidenceFiles";
 import type {DomainBundle} from "../../../src/knowledgeGraph/domainGraph";
 import {ACCENTS,DEFAULT_APPEARANCE,loadAppearance,saveAppearance,type Appearance} from "../lib/appearance";
 import {CADENCES,EMPTY_PROFILE,GOALS,loadProfile,parseOrcid,parsePaperIds,ROLES,saveProfile,STAGES,type Profile} from "../lib/researchHome";
@@ -21,6 +22,7 @@ export function WelcomePage(){
  const nav=useNavigate();
  const [step,setStep]=useState(0),[p,setP]=useState<Profile>(EMPTY_PROFILE),[ap,setAp]=useState<Appearance>(DEFAULT_APPEARANCE);
  const [topic,setTopic]=useState(""),[orcid,setOrcid]=useState(""),[papers,setPapers]=useState(""),[note,setNote]=useState("");
+ const [files,setFiles]=useState<EvidenceFile[]>([]),[linked,setLinked]=useState(""),[busy,setBusy]=useState(false);
  const [bundle,setBundle]=useState<DomainBundle|null>(null);
  useEffect(()=>{const c=new AbortController(),t=setTimeout(()=>c.abort(),12000);loadDomainGraph(null,c.signal).then(setBundle).catch(()=>{}).finally(()=>clearTimeout(t));return()=>{c.abort();clearTimeout(t)}},[]);
  useEffect(()=>{const x=loadProfile();setP(x);setOrcid(x.orcid??"");setPapers(x.papers.map(i=>i.replace(/^(doi|pmid):/,"")).join("\n"));setAp(loadAppearance())},[]);
@@ -43,11 +45,21 @@ export function WelcomePage(){
  const orc=orcid.trim()?parseOrcid(orcid):null,orcBad=!!orcid.trim()&&!orc;
  const pp=parsePaperIds(papers);
  const found=useMemo(()=>bundle?detectTopics(bundle.nodes,p.background+" "+p.question):[],[bundle,p.background,p.question]);
- const ok0=!!p.role&&p.background.trim().length>=BG_MIN,ok1=custom.length>0,ok2=(!!orc||pp.ids.length>0)&&!orcBad0(orcid),ok3=p.goals.length>0,can=[ok0,ok1,ok2,ok3][step]!;
+ const docText=files.map(f=>f.text).join("\n")+"\n"+linked;
+ const foundDocs=useMemo(()=>bundle?detectTopics(bundle.nodes,docText,8).filter(f=>!found.some(g=>g.id===f.id)):[],[bundle,docText,found]);
+ const ok0=!!p.role&&p.background.trim().length>=BG_MIN,ok1=custom.length>0,evChars=files.reduce((a,f)=>a+f.chars,0)+linked.trim().length,ok2=(!!orc||pp.ids.length>0||evChars>=200)&&!orcBad0(orcid),ok3=p.goals.length>0,can=[ok0,ok1,ok2,ok3][step]!;
  function finish(){
   const next:Profile={...p,orcid:orc,papers:pp.ids,onboarded:true};
   if(!saveProfile(next)){setNote("This browser blocked local storage, so your answers will not be kept.");return}
   nav("/research/home");
+ }
+ async function addFiles(list:FileList|null){
+  if(!list)return;setBusy(true);
+  const read:EvidenceFile[]=[];for(const f of [...list].slice(0,MAX_FILES-files.length))read.push(await readEvidenceFile(f));
+  setFiles(x=>[...x,...read].slice(0,MAX_FILES));
+  const refs=refsFrom(read.map(r=>r.text).join("\n"));
+  if(refs.length)setPapers(cur=>{const have=new Set(parsePaperIds(cur).ids.map(i=>i.replace(/^(doi|pmid):/,"")));const add=refs.filter(r=>!have.has(r));return [cur.trim(),...add].filter(Boolean).join("\n")});
+  setBusy(false);
  }
  const changeAp=(a:Appearance)=>{setAp(a);saveAppearance(a)};
  return (
@@ -87,12 +99,20 @@ export function WelcomePage(){
       <fieldset><legend>Broad areas <small>Optional, up to {MAX_AREAS}. {areas.length} chosen.</small></legend><div className="rh-chips2">{departments.map(d=><button key={d.slug} type="button" aria-pressed={p.interests.includes(d.slug)} disabled={!p.interests.includes(d.slug)&&areas.length>=MAX_AREAS} onClick={()=>toggle("interests",d.slug)}>{d.name}</button>)}</div></fieldset>
      </>}
      {step===2&&<>
-      <p className="wl-note">Required: an ORCID iD or at least one paper. This lets HSI find your own papers and suggest what is new around them. Your ORCID iD and paper IDs are used only to query public sources (OpenAlex, Europe PMC) and are not stored on our servers.</p>
+      <p className="wl-note">Required: an ORCID iD, a paper, or an uploaded document. This lets HSI find your own papers and suggest what is new around them. Your ORCID iD and paper IDs are used only to query public sources (OpenAlex, Europe PMC) and are not stored on our servers.</p>
       <label className="wl-f" htmlFor="wl-orcid">ORCID iD</label>
       <input id="wl-orcid" className="wl-in" value={orcid} maxLength={40} onChange={e=>setOrcid(e.target.value)} placeholder="0000-0000-0000-0000" aria-invalid={orcBad} aria-describedby="wl-orcid-h"/>
       <p id="wl-orcid-h" className={orcBad?"wl-bad":"wl-note"} role={orcBad?"alert":undefined}>{orcBad?"That is not a valid ORCID iD (check the digits).":orc?"Valid ORCID iD.":"Find yours at orcid.org."}</p>
       <label className="wl-f" htmlFor="wl-papers">Papers <small>Paste DOIs or PubMed IDs, one per line. Up to 20.</small></label>
       <textarea id="wl-papers" rows={4} value={papers} onChange={e=>setPapers(e.target.value)} placeholder={"10.1186/s13075-015-0660-z\n26055806"}/>
+      <fieldset className="wl-up"><legend>Evidence of your work <small>Papers, a CV, or your LinkedIn profile saved as PDF. Up to {MAX_FILES} files, 10 MB each.</small></legend>
+       <label className="rh-ghost wl-file" htmlFor="wl-files">{busy?"Reading…":"Choose files"}<input id="wl-files" className="rh-vh" type="file" multiple accept={ACCEPT} disabled={busy||files.length>=MAX_FILES} onChange={e=>{void addFiles(e.target.files);e.target.value=""}}/></label>
+       <p className="wl-note">Files are read in your browser and never uploaded. We keep only the DOIs and concept names you choose to save, on this device. PDF reading is best effort.</p>
+       {files.length>0&&<ul className="wl-files">{files.map(f=><li key={f.name}><b>{f.name}</b><span>{f.chars?`${f.chars.toLocaleString("en-GB")} characters read`:"Nothing read"}{f.note?`. ${f.note}`:""}</span><button type="button" className="rh-ghost" aria-label={`Remove ${f.name}`} onClick={()=>setFiles(x=>x.filter(y=>y!==f))}>Remove</button></li>)}</ul>}
+       <label className="wl-f" htmlFor="wl-li">LinkedIn <small>LinkedIn does not allow automated reading. Paste your About and Experience text here, or upload the PDF from More, then Save to PDF.</small></label>
+       <textarea id="wl-li" rows={3} maxLength={6000} value={linked} onChange={e=>setLinked(e.target.value)} placeholder="Paste text from your LinkedIn profile"/>
+       {foundDocs.length>0&&<><p className="wl-note" role="status">Concepts recognised in your documents. Select to add to your focus.</p><div className="rh-chips2">{foundDocs.map(f=><button key={f.id} type="button" aria-pressed={p.interests.includes(f.name)} disabled={!p.interests.includes(f.name)&&custom.length>=MAX_TOPICS} onClick={()=>toggle("interests",f.name)}>{f.name}</button>)}</div></>}
+      </fieldset>
       <p className="wl-note" role="status">{pp.ids.length?`${pp.ids.length} paper${pp.ids.length===1?"":"s"} recognised.`:""}{pp.rejected.length?` Not recognised: ${pp.rejected.join(", ")}.`:""}</p>
      </>}
      {step===3&&<>
@@ -106,7 +126,7 @@ export function WelcomePage(){
      <div className="rh-row wl-actions">
       {step>0&&<button type="button" className="rh-ghost" onClick={()=>setStep(step-1)}>Back</button>}
       {step<3?<button type="button" className="rh-primary" onClick={()=>setStep(step+1)} disabled={!can}>Next <Icon name="arrow" size={16}/></button>:<button type="button" className="rh-primary" onClick={()=>finish()} disabled={!can}>Finish and open my home <Icon name="arrow" size={16}/></button>}
-            {!can&&<span className="wl-note" role="status">{[ "Choose your role and write a short background to continue.","Add at least one specific topic, gene or disease to continue.","Add a valid ORCID iD or at least one paper to continue.","Choose at least one goal to continue."][step]}</span>}
+            {!can&&<span className="wl-note" role="status">{[ "Choose your role and write a short background to continue.","Add at least one specific topic, gene or disease to continue.","Add an ORCID iD, a paper ID, or upload a document to continue.","Choose at least one goal to continue."][step]}</span>}
      </div>
     </section>
     </div>

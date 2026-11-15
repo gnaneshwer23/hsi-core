@@ -11,6 +11,7 @@ import {GapCard} from "../components/home/GapCard";
 import {AskCard} from "../components/home/AskCard";
 import {Overview} from "../components/home/Overview";
 import {Program} from "../components/home/Program";
+import {programView} from "../lib/program";
 import {DEPT_ICON,HeroNetwork,Icon} from "../components/home/AppIcons";
 import {EMPTY_PROFILE,LIVE_RUN_KEY,summariseSavedLiveRun,type SavedLiveRun,classifyIntent,focusNetwork,GOALS,INVESTIGATION_STATUS,loadProfile,looksLikeTrialId,recommend,resetProfile,ROLES,saveProfile,searchEntities,type Profile} from "../lib/researchHome";
 import "../styles/research-home.css";
@@ -82,7 +83,7 @@ function SearchHero({bundle,profile,follow,inputRef,ready}:{bundle:DomainBundle|
      <input id="rh-q" ref={inputRef} type="search" value={q} maxLength={500} autoComplete="off" onChange={e=>setQ(e.target.value)} placeholder="Investigate a gene, pathway, disease, biological mechanism or research question…" aria-describedby="rh-q-help"/>
      <button type="button" className="rh-go" onClick={()=>{const t=q.trim();if(!t){inputRef.current?.focus();return}nav(live?"/research/workspace":investigateHref(intent==="investigation"?t:`What does the evidence say about ${t}?`))}}><Icon name="spark" size={18}/> Investigate</button>
     </div>
-    {ready&&!profile.question&&!profile.orcid&&<p className="rh-note"><Link to="/welcome">Tell us about your research</Link> (2 minutes, optional) so suggestions fit your area.</p>}
+    {ready&&!profile.onboarded&&<p className="rh-note"><Link to="/welcome">Tell us about your research</Link> (2 minutes) so your home is built around your area.</p>}
     <p id="rh-q-help" className="rh-note">{bundle?`Searching ${n(bundle.nodes.length)} concepts in the published graph (candidates, unreviewed). Entities outside it are not searched yet.`:"Verifying the published graph…"}</p>
     <div role="status" aria-live="polite" className="rh-results">
      {intent!=="empty"&&<div className="rh-panel">
@@ -122,6 +123,7 @@ export function ResearchHome(){
  const toggleInterest=(slug:string)=>update(p=>({...p,interests:p.interests.includes(slug)?p.interests.filter(x=>x!==slug):[...p.interests,slug]}));
  const addTopic=()=>{const t=topic.trim().slice(0,80);if(t)update(p=>p.interests.includes(t)?p:{...p,interests:[...p.interests,t].slice(0,20)});setTopic("");setAdding(false)};
  const custom=profile.interests.filter(i=>!departments.some(d=>d.slug===i));
+ const myView=useMemo(()=>{const v=bundle&&profile.onboarded?programView(profile,bundle,1):null;return v&&v.anchors.length?v:null},[bundle,profile]);
  const savedItems=saved.kind==="ok"?saved.items:[];
  const edges=bundle?bundle.edges.filter(e=>e.kind==="source_candidate").length:0;
  return (
@@ -133,7 +135,7 @@ export function ResearchHome(){
      {ready&&!profile.onboarded&&<Onboarding profile={profile} onDone={p=>setProfile(p)}/>}
 
      {ready&&<Program profile={profile} bundle={bundle} onProfile={setProfile}/>}
-     <Overview bundle={bundle}/>
+     <Overview bundle={bundle} view={myView}/>
      <AskCard/>
      <RadarCard profile={profile} ready={ready}/>
      {ready&&<GapCard profile={profile} bundle={bundle}/>}

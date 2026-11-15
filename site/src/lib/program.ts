@@ -59,7 +59,7 @@ export function programView(p:Profile,b:DomainBundle,depth:1|2|3):ProgramView{
  return {anchors,hop,edges,counts,gaps,methods:[...m.values()].sort((a,c)=>c.count-a.count).slice(0,6),human,opposing:edges.filter(e=>e.negated)};
 }
 /** A small network for the existing NetworkView: anchors in the centre, the best-connected neighbours around them. */
-export function programNetwork(b:DomainBundle,v:ProgramView,max=12){
+export function programNetwork(b:DomainBundle,v:ProgramView,max=10){
  const name=new Map(b.nodes.map(n=>[n.id,n.name])),deg=new Map<string,number>();
  for(const e of v.edges){deg.set(e.subjectId,(deg.get(e.subjectId)??0)+1);deg.set(e.objectId,(deg.get(e.objectId)??0)+1)}
  const centre=v.anchors[0]?.id;if(!centre)return null;
