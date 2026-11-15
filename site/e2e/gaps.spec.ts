@@ -48,7 +48,7 @@ test('results are cached on this device and the card passes axe in light and dar
  await page.goto('/research/home');
  await page.getByRole('region',{name:'Gap finder'}).getByRole('button',{name:'Find gaps'}).click();
  await expect(page.getByRole('region',{name:'Gap finder'})).toContainText('Under-explored');
- const axe=async()=>{const r=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();expect(r.violations.map(v=>v.id+': '+v.nodes.map(n=>n.html.slice(0,90)+' '+JSON.stringify((n.any[0]?.data as any)?.fgColor)+JSON.stringify((n.any[0]?.data as any)?.bgColor)).join(' | '))).toEqual([])};
+ const axe=async()=>{await page.evaluate(()=>window.scrollTo(0,0));const r=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();expect(r.violations.map(v=>v.id+': '+v.nodes.map(n=>n.html.slice(0,90)+' '+JSON.stringify((n.any[0]?.data as any)?.fgColor)+JSON.stringify((n.any[0]?.data as any)?.bgColor)).join(' | '))).toEqual([])};
  await axe();
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+1)).toBe(true);
  await page.getByRole('button',{name:'Appearance'}).click();await page.getByRole('button',{name:'Dark',exact:true}).click();await page.getByRole('button',{name:'Appearance'}).click();

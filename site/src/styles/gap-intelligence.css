@@ -42,3 +42,9 @@
 .st button:disabled{opacity:.5;cursor:default}
 .st-path button{border-radius:14px;text-align:left}
 .st-actions{display:flex;flex-wrap:wrap;gap:8px}
+.gc-badges span[data-signal]{background:var(--mint,#e0f3ea);color:var(--mint-ink,#0d6b50)}
+.gc-badges .gc-na{background:var(--surface,#fff);color:var(--muted,#566377);border:1px dashed var(--line-2,#cfd5e3)}
+.gc-live{display:grid;gap:8px;padding:12px 14px;border-radius:14px;background:var(--surface,#fff);border:1px solid var(--line,#e3e7ef)}
+.gc-live h4,.gc-live p{margin:0}.gc-live ul{margin:0;padding-left:20px}
+.si{display:grid;gap:6px;justify-items:start}.si small{color:var(--muted,#566377)}.si-bad{color:var(--peach-ink,#9a4a13)}
+.si button{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line-2,#cfd5e3);background:var(--surface,#fff);color:inherit;font:inherit;font-weight:600;cursor:pointer}

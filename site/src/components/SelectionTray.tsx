@@ -2,6 +2,7 @@ import {useEffect,useMemo} from "react";
 import {Link} from "react-router-dom";
 import type {DomainBundle} from "../../../src/knowledgeGraph/domainGraph";
 import type {GapSignal} from "../../../src/knowledgeGraph/gapIndex";
+import {SaveInvestigation} from "./SaveInvestigation";
 import {selectionBrief,shortestPath} from "../../../src/knowledgeGraph/selectionBrief";
 
 const pretty=(s:string)=>s.replaceAll("_"," ");
@@ -29,6 +30,7 @@ export function SelectionTray({bundle,picked,setPicked,current,edges,gaps,depth,
     {picked.length>0&&<Link to={"/research/dashboard?q="+encodeURIComponent(question.slice(0,500))+"#dashboard-workspace"}>Investigate with live sources</Link>}
     <button type="button" disabled={!picked.length} onClick={()=>setPicked([])}>Clear</button>
    </div>
+   {picked.length>0&&<SaveInvestigation question={question.slice(0,500)}/>}
    {picked.length===2&&path===null&&<p className="st-note" role="status">No route of up to four recorded relationships joins {name(picked[0]!)} and {name(picked[1]!)} in this view. That is a coverage limit of the view and its filters, not evidence they are unrelated.</p>}
    {path&&path.length>0&&<div role="status"><p className="st-note">Route of {path.length} recorded relationship{path.length===1?"":"s"}, highlighted on the graph. It is a path through unreviewed candidates, not evidence of a causal chain.</p>
     <ol className="st-path">{path.map(p=>{const e=edge(p.edgeId);return <li key={p.edgeId}><button type="button" onClick={()=>onInspectEdge(p.edgeId)}>{name(p.from)} {e?.negated?"(did not hold) ":""}{e?pretty(e.predicate):"to"} {name(p.to)}</button></li>})}</ol></div>}
