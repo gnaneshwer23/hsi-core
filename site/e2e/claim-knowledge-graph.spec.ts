@@ -43,6 +43,8 @@ test('graph fits mobile, keyboard inspection works, and automatic accessibility 
  for(const width of [390,1440]){
   await page.setViewportSize({width,height:900});await page.emulateMedia({reducedMotion:'reduce'});await ready(page);expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
   const candidate=page.locator('.cg-text-view button').first();await candidate.focus();await page.keyboard.press('Enter');await expect(page.getByRole('region',{name:'Claim provenance chain'})).toBeVisible();
+  // Scan from a fixed scroll position: the sticky header covers different targets at different offsets, which made this check depend on where focus happened to scroll the page.
+  await page.evaluate(()=>window.scrollTo(0,0));
   const result=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();expect(result.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>({target:n.target,reason:n.failureSummary}))}))).toEqual([]);
   await page.screenshot({path:info.outputPath('claim-graph-'+width+'.png'),fullPage:true});
  }
