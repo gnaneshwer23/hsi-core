@@ -1,10 +1,12 @@
-# Restructured vision: researcher-first, with agents as visible assistants
+# Restructured vision: researcher-first, with agents working in the background
 
 **Date:** 15 November 2026. **Status:** proposal for the owner. It proposes how to present the existing doctrine ([`HSI_VISION.md`](./HSI_VISION.md), which still governs) and what to build next. It does not change the binding constraints: cross-domain, candidate-only, no PHI or live CDS, human review before promotion, no invented claims.
 
+> **Update:** methods sharing is specified in [`../product/METHODS_SHARING.md`](../product/METHODS_SHARING.md).
+
 ## 1. Verdict in five lines
 1. The foundations are right: evidence with provenance, context-aware conflict, review state on every claim, abstention. Keep them.
-2. The structure is wrong for a researcher: thirteen named agents and four products describe how we built it, not what a scientist does. The cast should be small, named by job, and appear where the work happens.
+2. The structure is wrong for a researcher: thirteen named agents and four products describe how we built it, not what a scientist does. The agents should work in the background; researchers see actions, answers and an honest trace of how each result was produced.
 3. The register is stale. It says 13 capabilities, **0 live runs**, while the live investigation now exercises retrieval, ranking, two-model direction checks and hypothesis proposals. Public claims and reality disagree in the cautious direction, which is safer than the reverse, but it hides real progress and breaks the story "agents that show their work".
 4. The knowledge graph is a 153-concept static snapshot. "Living" is still a promise. The biggest product lever is a personal candidate layer that grows around a researcher's own topics.
 5. The binding constraint is not code. Account storage (held migrations 022-033, unnamed independent reviewer) gates sync, email digests, teams, saved investigations and sign-in for any spend-bearing endpoint.
@@ -52,29 +54,29 @@
 
 Five proof points, each testable on the live product: (1) every claim keeps source, context and review state; (2) the system abstains and shows disagreement instead of a consensus score; (3) retraction-aware by design (provider flags today; Retraction Watch-based checks are the next step and need verification of the data source before claiming); (4) a personal radar and gap view from open data, with the counts and the search shown; (5) an open record of what each assistant did, with budget, models and limits. What HSI must not claim: customers, accuracy, coverage at enterprise scale, regulatory status, independent validation.
 
-## 6. Restructured model: three surfaces, one memory, a small cast
+## 6. Restructured model: three surfaces, one memory, background roles
 
 **Surfaces.** *Home* (radar, gaps, updates, continue), *Graph* (explore, ask, expand), *Workspace* (investigate and brief).
 **Memory.** The published graph (read-only, reviewed over time), plus the researcher's **personal candidate layer** and saved investigations. Assistants write only to the candidate layer; promotion is a human review decision.
-**Cast (user-facing).** Six assistants, each mapped to register capabilities, named by job:
+**Background roles (not named in the product).** Update 15 November 2026 (owner direction): the dashboard and graph do **not** show agent names. Researchers see questions, actions and results; the roles below work in the background and are named only on the capability pages for traceability.
 
-| Assistant | Job in one line | Register capabilities behind it |
+| Background role | Job | Register capabilities |
 |---|---|---|
-| **Scout** | Finds and tracks papers, trials and data for a topic | SCOUT, SENTINEL |
-| **Mapper** | Turns text into candidate concepts and relationships with sources | LANTERN, ATLAS |
-| **Comparer** | Explains why findings disagree: species, tissue, method | PARALLAX |
-| **Verifier** | Checks direction and quotes; flags retractions; abstains | VERITAS, AEGIS |
-| **Strategist** | Proposes gaps, hypotheses and experiments, all unvalidated | VANTAGE, HELIX |
-| **Steward** | Budgets, limits, evaluation, review hand-off | NEXUS, WARDEN, CALIBER, ARBITER |
+| Find and watch | Finds and tracks papers, trials and data for a topic | SCOUT, SENTINEL |
+| Map | Turns text into candidate concepts and relationships with sources | LANTERN, ATLAS |
+| Compare | Explains why findings disagree: species, tissue, method | PARALLAX |
+| Verify | Checks direction and quotes; flags retractions; abstains | VERITAS, AEGIS |
+| Propose | Proposes gaps, hypotheses and experiments, all unvalidated | VANTAGE, HELIX |
+| Govern | Budgets, limits, evaluation, review hand-off | NEXUS, WARDEN, CALIBER, ARBITER |
 
-Public pages keep the thirteen names as the traceable layer ("Scout is SCOUT and SENTINEL") so nothing in the doctrine is lost.
-
-## 7. Agents in the dashboard and the graph (the concrete UX)
-1. **Assistants appear where the work is, not in a list.** On a graph node: *Ask Scout what is new*, *Ask Mapper to expand around this*. On a claim: *Ask Verifier to check*. On a gap card: *Ask Strategist for a testable hypothesis*. On a topic chip: *Ask Scout to follow*. Each action starts a bounded run on click, never silently.
-2. **Plan before run, trace after.** Show the plan (steps, sources, budget, models) and let the researcher edit or cancel; afterwards show the real record: what each assistant did, when, with which source and model, and what it could not do. Reads the run record that already exists; nothing simulated.
-3. **Autonomy dial per assistant:** *Suggest only* (default), *Run when I click*, later *Run on a schedule* (needs account storage). Autonomy never includes promotion.
-4. **Activity panel on Home:** recent assistant runs, what each produced as candidates, what is waiting for the researcher's review. Honest empty state when nothing ran.
-5. **Trust strip on every result:** status labels (live in preview, heuristic, unvalidated), the budget used, and a link to the capability page and its maturity record.
+## 7. How help appears without naming agents (the concrete UX)
+1. **One Ask box, routed in the background.** A question goes to whichever capability fits: an entity opens its graph card; "what is new" opens the radar; "are A and B linked" returns a graph path with evidence; "why do these disagree" opens the conflict view; "which method" opens the methods comparison; "what is untested" opens gaps; an open scientific question becomes a bounded investigation. Routing is deterministic first (patterns and the graph), with a model only as a fallback, over an allow-list of tools, and it fails closed: an unrecognised request says what HSI can do instead of guessing.
+2. **Actions, not agents.** On a graph node: *What is new*, *Expand around this*. On a claim: *Check this claim*. On a gap card: *Suggest a testable hypothesis*. On a topic: *Follow*. Each starts a bounded run on click, never silently.
+3. **"How this was produced" on every result.** Plain steps from the real run record, e.g. *Searched 3 sources · read 12 methods sections · compared 5 parameters · checked quotes with 2 independent checks · could not determine: tissue for 3 studies*. No agent names, no simulated progress. A *Details* link opens the capability page and its maturity record.
+4. **Plan before run.** For anything that spends model budget, show the steps, sources and budget first; the researcher can edit or cancel.
+5. **Autonomy stays with the researcher:** *suggest only* (default), *run when I click*, later *run on a schedule* (needs account storage). Nothing is ever promoted without human review.
+6. **Activity on Home:** what ran, what it produced as candidates, what awaits review. Honest empty state otherwise.
+7. **Trust strip on every result:** status labels (live in preview, heuristic, unvalidated), budget used, link to the maturity record.
 
 ## 8. Knowledge graph: basics to advanced, and personal suggestions
 **Search ladder.** (1) Entity search with identifiers. (2) Neighbourhood: what is recorded around it, with source and review state. (3) Path: how is A connected to B, with every hop's evidence. (4) Disagreement: where findings conflict and the context that differs. (5) Absence: what is not recorded, with the literature signal and the search shown. (6) Natural-language questions that a model translates into these queries and answers only from returned records.
@@ -82,13 +84,13 @@ Public pages keep the thirteen names as the traceable layer ("Scout is SCOUT and
 **Aggregate field view.** Institutions, journals, countries and topic trends from OpenAlex for the researcher's area; recent papers as normal records. No ranking of named people.
 
 ## 9. Roadmap
-**Now (small, honest, mostly front-end):** reconcile the register with reality using the table in section 2 and a new maturity level "live in preview, not independently accepted"; build the activity panel and the plan/trace view on the existing run record; add the in-context assistant actions on graph nodes and gap cards.
+**Now (small, honest, mostly front-end):** reconcile the register with reality using the table in section 2 and a new maturity level "live in preview, not independently accepted"; build the routed Ask box, the "How this was produced" trace and the activity panel on the existing run record; add the in-context actions on graph nodes and gap cards.
 **Next:** personal candidate layer; retraction-aware verification (verify the data source and licence first); aggregate field view; the narrow immunology wedge on the homepage.
 **Gated:** account storage, sign-in for spend-bearing routes, scheduled runs, weekly email, teams. Unblock by naming the independent reviewer for migrations 031-033 and deciding lawful basis for email.
 **Earn the right to claim:** the 120-case benchmark with adjudicated cases, and a second provider for verification.
 
 ## 10. Decisions for the owner
-1. Approve the six-assistant presentation (with the thirteen names kept as the traceable layer).
+1. Confirm background roles with no agent names in the product (the thirteen names stay on the capability pages as the traceable layer).
 2. Choose the first user: confirm translational immunology as the wedge.
 3. Name the independent security reviewer and the email sender and consent text.
 4. Approve spend for model checks in production (see `docs/research/LIVE_MODEL_STEP_PRODUCTION.md`).
