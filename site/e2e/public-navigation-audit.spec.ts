@@ -6,13 +6,15 @@ test('all public links and selector states resolve, without linking older engine
   test.setTimeout(180000);
   const app=await readFile(new URL('../src/App.tsx',import.meta.url),'utf8');
   const routes=new Set(['/',...Array.from(app.matchAll(/<Route path="([^"]+)"/g),m=>'/'+m[1])]);
+  // Retired pages only redirect. No public page may still link to one.
+  const retired=new Set(Array.from(app.matchAll(/<Route path="([^"]+)" element=\{<Navigate/g),m=>'/'+m[1]));
   const destinations=new Set<string>();const report:{path:string;buttons:number;links:number}[]=[];
   const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
   await page.setViewportSize({width:1440,height:1000});
   for(const path of PUBLIC_MARKETING_PATHS){
     await page.goto(path);await expect(page.getByRole('heading',{level:1})).toBeVisible();
     // Homepage graph mounts after hydration to avoid React #418 float-layout mismatches.
-    if(path==='/')await expect(page.locator('#home-knowledge-graph')).toBeVisible();
+    if(path==='/knowledge-graph')await expect(page.locator('#home-knowledge-graph')).toBeVisible();
     async function inspectLinks(){
       const links=await page.locator('a[href]').evaluateAll(as=>as.map(a=>({href:a.getAttribute('href')!,name:(a.textContent||a.getAttribute('aria-label')||'').trim()})));
       for(const link of links){
@@ -20,6 +22,7 @@ test('all public links and selector states resolve, without linking older engine
         if(!link.href.startsWith('/')&&!link.href.startsWith('#'))continue;
         const url=new URL(link.href,'http://127.0.0.1:4178'+path);
         expect(routes.has(url.pathname),`${path}: ${link.name} → ${link.href}`).toBe(true);
+        expect(retired.has(url.pathname),`${path}: ${link.name} links to a retired page ${link.href}`).toBe(false);
         expect(['/docs','/gateway','/clinical-timeline','/trials-criteria','/roadmap','/alignment','/curator','/systems','/discovery-engine','/explore']).not.toContain(url.pathname);
         if(url.hash||!PUBLIC_MARKETING_PATHS.includes(url.pathname as typeof path))destinations.add(url.pathname+url.search+url.hash);
         if(url.pathname===path&&url.hash)expect(await page.locator(`[id=${JSON.stringify(decodeURIComponent(url.hash.slice(1)))}]`).count(),`${path}: ${link.href}`).toBe(1);

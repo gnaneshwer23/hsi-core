@@ -43,3 +43,19 @@
 .ps-insp{color:#202638!important}.ps-lim{font-size:14.5px!important;color:#566274!important}
 .ps-sticky{position:sticky;top:96px}.ps-sticky figcaption{margin-top:10px;font-size:13.5px;color:#566274}.ps-sticky figcaption a{color:#6753a1;font-weight:600}
 @media(max-width:1000px){.ps-cards{grid-template-columns:1fr}.ps-how-grid{grid-template-columns:1fr}.ps-sticky{position:static}.ps-tour,.ps-how{width:calc(100% - 40px)}}
+
+/* Simplified landing (home and how it works). */
+.hl-page{--hl-ink:#202638;--hl-body:#3d4756;--hl-muted:#566274;--hl-line:#d6dce2;--hl-violet:#6753a1;--hl-tint:#f4f2f9}
+.hl-section,.hl-close{border-top:1px solid var(--hl-line)}.hl-inner{width:min(1180px,calc(100% - 64px));margin:0 auto;padding:56px 0}
+.hl-inner h2{margin:0 0 18px;font-size:clamp(26px,3vw,36px);line-height:1.12;letter-spacing:-.02em;color:var(--hl-ink);max-width:24ch}
+.hl-loop{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;counter-reset:none}
+.hl-loop li{padding:18px;border:1px solid var(--hl-line);border-radius:14px;background:#fff;display:grid;gap:10px;align-content:start}
+.hl-loop h3{margin:0;font-size:20px;line-height:1.25;color:var(--hl-ink)}.hl-loop p{margin:0;font-size:16px;line-height:1.6;color:var(--hl-body)}.hl-loop .ps-tag{justify-self:start}
+.hl-n{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--hl-tint);color:#4a3f8a;font-weight:700}
+.hl-return{margin:22px 0 18px;font-size:17px;color:var(--hl-body)}
+.hl-honest{margin:8px 0 18px;padding-left:22px;display:grid;gap:12px;font-size:17px;line-height:1.65;color:var(--hl-body);max-width:72ch}.hl-honest b{color:var(--hl-ink)}.hl-honest a{color:var(--hl-violet);font-weight:600}
+.hl-stats{margin:0 0 20px;font-size:20px;color:var(--hl-ink)}.hl-stats b{font-size:26px}
+.hl-table{width:100%;border-collapse:collapse;min-width:560px;font-size:16px}.hl-table th,.hl-table td{padding:14px 16px;text-align:left;border-bottom:1px solid #e3e7ef;vertical-align:top}.hl-table tbody th{width:28%;font-weight:600;color:var(--hl-ink)}.hl-table td{color:var(--hl-body)}.hl-table tbody tr:last-child :is(th,td){border-bottom:0}
+.hl-page .jr-steps{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+@media(max-width:1000px){.hl-loop{grid-template-columns:repeat(2,minmax(0,1fr))}.hl-inner{width:calc(100% - 40px)}}
+@media(max-width:600px){.hl-loop{grid-template-columns:1fr}.hl-inner{padding:40px 0}}

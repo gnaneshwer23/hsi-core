@@ -4,7 +4,11 @@ import {fileURLToPath} from "node:url";
 import {getSeoMetadata} from "../src/lib/seo/siteSeo";
 
 const config=JSON.parse(readFileSync(fileURLToPath(new URL("../vercel.json",import.meta.url)),"utf8")) as {rewrites:{source:string;destination:string}[]};
-const routes=[...new Set(config.rewrites.filter(r=>r.destination.startsWith("/_pages/")).map(r=>r.source))];
+const redirected=new Set(JSON.parse(readFileSync(fileURLToPath(new URL("../vercel.json",import.meta.url)),"utf8")).redirects.map((r:{source:string})=>r.source));
+const app=readFileSync(fileURLToPath(new URL("../src/App.tsx",import.meta.url)),"utf8");
+// A route that only redirects (a retired page) never renders, so it has no title of its own.
+const clientRedirects=new Set([...app.matchAll(/path="([^"]+)" element=\{<Navigate/g)].map(m=>"/"+m[1]));
+const routes=[...new Set(config.rewrites.filter(r=>r.destination.startsWith("/_pages/")).map(r=>r.source))].filter(r=>!redirected.has(r)&&!clientRedirects.has(r));
 
 test("every routed page has its own title, and none is the old shared fallback",()=>{
  const generic=getSeoMetadata("/zz-not-a-route").title,seen=new Map<string,string>();

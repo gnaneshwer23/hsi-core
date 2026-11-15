@@ -2,7 +2,7 @@ import {Link} from "react-router-dom";
 
 /** Real screens from the research preview, captured 15 November 2026 from a live run. Not mock-ups: figures in them are live results. */
 const IMG="/images/product/";
-function Shot({name,w,h,alt,eager=false}:{name:string;w:number;h:number;alt:string;eager?:boolean}){
+export function Shot({name,w,h,alt,eager=false}:{name:string;w:number;h:number;alt:string;eager?:boolean}){
  return <div className="ps-frame"><div className="ps-chrome" aria-hidden="true"><i/><i/><i/></div><img src={`${IMG}${name}.webp`} width={w} height={h} alt={alt} loading={eager?"eager":"lazy"} decoding="async" {...(eager?{fetchPriority:"high" as const}:{})}/></div>;
 }
 

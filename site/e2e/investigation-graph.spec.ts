@@ -19,7 +19,7 @@ test('one snapshot, question and selected assertion survive home to Science to r
   page.on('request', (r) => {
     if (r.method() === 'POST') posts.push(r.url());
   });
-  await page.goto('/');
+  await page.goto('/knowledge-graph');
   await page.getByRole('link', { name: 'Open this selection in the research workspace ↗', exact: true }).click();
   const graph = page.locator('.ig-experience');
   await expect(graph).toBeVisible();

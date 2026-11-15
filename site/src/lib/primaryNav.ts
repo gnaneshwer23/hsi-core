@@ -1,24 +1,18 @@
 /** Canonical public research story. All existing tools and secondary resources retain their routes. */
 export const PRIMARY_NAV_LINKS = [
- {to:"/",label:"Home"},{to:"/knowledge-graph",label:"Knowledge graph"},{to:"/how-it-works",label:"How it works"},
- {to:"/research",label:"Research"},{to:"/evidence-intelligence",label:"Evidence intelligence"},{to:"/research/home",label:"Research home"}
+ {to:"/",label:"Home"},{to:"/how-it-works",label:"How it works"},{to:"/knowledge-graph",label:"Knowledge graph"},
+ {to:"/trust",label:"Trust"},{to:"/about",label:"About"}
 ] as const;
+/** Pages that are part of the research app, not the public site. They stay reachable but are not in the public navigation. */
 export const RESEARCH_NAV_LINKS=[
- {to:"/context-conflict-audit",label:"Context-Conflict Audit"},
- {to:"/evidence-intelligence",label:"Evidence Intelligence"},
- {to:"/research",label:"Research Workflow"},
- {to:"/research-briefs",label:"Research Briefs"}
+ {to:"/evidence-intelligence",label:"Evidence intelligence"},
+ {to:"/context-conflict-audit",label:"Context-Conflict Audit"}
 ] as const;
-export const SECONDARY_NAV_LINKS=[
- { to: "/demo", label: "Illustrative walkthrough"},{ to: "/contact", label: "Research access"},
-{ to: "/intelligence", label: "Intelligence Collective"},{ to: "/how-it-works", label: "How it works"}
-] as const;
+/** The only public (indexed) pages. */
 export const PUBLIC_MARKETING_PATHS=[
- "/","/platform","/research","/contact",
- "/science","/intelligence","/how-it-works","/knowledge-graph",
- "/context-conflict-audit","/evidence-intelligence","/research-briefs","/applications","/trust","/about"
+ "/","/how-it-works","/knowledge-graph","/trust","/about","/contact"
 ] as const;
 /** Destination explains browser-only drafting; this CTA does not claim that a request was delivered. */
 export const PRIMARY_NAV_CTA={ to: "/sign-up", label: "Sign up"} as const;
-export function isPublicMarketingPath(pathname:string){return pathname.startsWith("/intelligence/") || (PUBLIC_MARKETING_PATHS as readonly string[]).includes(pathname)}
+export function isPublicMarketingPath(pathname:string){return (PUBLIC_MARKETING_PATHS as readonly string[]).includes(pathname)}
 export function isAccountPath(pathname:string){return ["/sign-in","/sign-up","/forgot-password","/reset-password","/research/account"].includes(pathname)}

@@ -10,7 +10,7 @@ web
 Translational researchers in immunology, microbiome, neuroscience and multi-omics who judge a tool by whether evidence, biological context and uncertainty stay attached to every claim. They arrive from a paper, a collaborator or a search, ask whether HSI can be trusted with a mechanism question, and decide in the first screens. Secondary audiences (drug-discovery teams, funders, collaborators) are not the lead audience of the landing pages.
 
 ## Product Purpose
-Human Super Intelligence (HSI) is one scientific intelligence technology that connects biomedical evidence, biological relationships and context across human systems, and lets a researcher see why findings conflict and what to investigate next. Success on the landing pages is a researcher inspecting the real published knowledge graph and the real status of the agents, and leaving with an accurate picture of what exists today and what does not.
+Human Super Intelligence (HSI) is one scientific intelligence technology that connects biomedical evidence, biological relationships and context across human systems, and lets a researcher see why findings conflict and what to investigate next. Success on the landing pages is a researcher understanding the one loop (investigate, find gaps, connect to synthetic patient groups, targets and trials, record and reassess), seeing the real published knowledge graph, and leaving with an accurate picture of what exists today and what does not.
 
 ## Positioning
 A knowledge graph in which every relationship keeps its source, experimental context, uncertainty and review status, with no silent promotion of extracted claims to approved knowledge. A neighbouring literature-search or AI-assistant product cannot truthfully claim an inspectable, digest-verified graph whose current review count is shown as zero.
@@ -22,8 +22,8 @@ Visitors read primary literature and weigh methods, species, tissue, cell state 
 - HSI is cross-domain. Systemic sclerosis is one validation example, never the product boundary.
 - Public positioning is one HSI technology. It is not marketed as a portfolio, a four-product ecosystem or named product modules (explicit direction, 13 November 2026).
 - All graph content is candidate-only and unreviewed; scientific approval is none. No clinical advice, no clinical decision support, no patient data on this site.
-- Agents propose candidates and never approve anything. As recorded today: 13 capabilities, 0 live runs, 0 independently accepted, 1 disabled model step.
-- Primary action on the landing pages: explore the live graph. "Request research access" is secondary and must stay honest about being a browser draft.
+- Agents work in the background and are not named on the landing pages or in the dashboard. They propose candidates and never approve anything. Model checks are off in the prototype.
+- The public site is six pages: Home, How it works, Knowledge graph, Trust, About, Contact. Everything else is the research app or backend, and retired marketing URLs redirect. Primary action: set up your research home (a two-minute, optional onboarding). Secondary: see how it works, explore the graph. "Request research access" must stay honest about being a browser draft.
 - Existing stack: React 19, Vite, TypeScript, React Router, Host Grotesk Variable; prerendered public pages, Vercel rewrites, Playwright and axe checks, bundle budgets.
 - Undecided: whether a public pilot, pricing or case-study content will ever exist. None exists now.
 

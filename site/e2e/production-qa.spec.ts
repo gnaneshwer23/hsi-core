@@ -19,7 +19,7 @@ test('recovery navigation, absent-token error and query removal never expose tok
  await expect(page.locator('meta[name=robots]')).toHaveAttribute('content','noindex, follow');
 });
 
-for(const path of ['/','/platform','/connected-intelligence','/research/dashboard','/science/graph','/research/validation']){
+for(const path of ['/','/how-it-works','/knowledge-graph','/research/dashboard','/science/graph','/research/validation']){
  test('mobile WCAG scan '+path,async({page},info)=>{
   await page.setViewportSize({width:390,height:844});await page.emulateMedia({reducedMotion:'reduce'});await page.goto(path);await expect(page.getByRole('heading',{level:1})).toBeVisible();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
@@ -34,15 +34,11 @@ test('public pages load the existing typefaces locally without third-party font 
  expect(await page.evaluate(()=>[...document.fonts].some(f=>f.family==='Host Grotesk Variable'&&f.status==='loaded'))).toBe(true);expect(fonts).toEqual([]);
 });
 
-test('mobile hero leads with the research workbench demonstration',async({page})=>{
+test('mobile hero leads with the vision and one clear action',async({page})=>{
  await page.setViewportSize({width:390,height:844});await page.goto('/');
- await expect(page.getByRole('heading',{level:1})).toContainText('Know what the evidence says');
- await expect(page.locator('#home-knowledge-graph')).toBeVisible();
- await expect(page.locator('.hd-steps')).toBeVisible();
- await expect(page.getByRole('heading',{name:/The graph is the foundation/})).toBeVisible();
+ await expect(page.getByRole('heading',{level:1})).toContainText('Connect biology. Find the gaps.');
+ await expect(page.getByRole('link',{name:/Set up your research home/}).first()).toBeVisible();
+ await expect(page.getByRole('list',{name:'The research loop'})).toBeAttached();
 });
 
-test('editorial action arrows use scalable paths instead of platform symbol fonts',async({page})=>{
- await page.goto('/');
- for(const item of await page.locator('.ed-actions a,.ed-feature-tablist button,.ed-product-rows a').all())await expect(item.locator('svg.hsi-arrow-icon path')).toHaveCount(1);
-});
+

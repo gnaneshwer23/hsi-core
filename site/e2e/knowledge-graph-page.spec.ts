@@ -6,7 +6,7 @@ test('knowledge graph landing states its limits and links only to real surfaces'
  await page.getByText('Has anything been reviewed?',{exact:true}).click();
  await expect(page.getByText('Nothing here has scientific approval',{exact:false})).toBeVisible();
  await expect(page.getByRole('heading',{name:'One relationship'})).toBeVisible();
- await expect(page.getByRole('heading',{name:'Where the graph is being developed.'})).toBeVisible();
+ await expect(page.locator('#home-knowledge-graph')).toContainText('Public research snapshot');
  for(const [name,href] of [['Browse the educational map','/science/graph'],['Inspect claims and sources','/research/knowledge-graph'],['Ask a question over a selection','/research/investigate']] as const)
   await expect(page.getByRole('link',{name,exact:true})).toHaveAttribute('href',href);
  const results=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa']).analyze();
