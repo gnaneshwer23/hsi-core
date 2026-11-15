@@ -2,18 +2,15 @@ import {IdentityStudy} from "./pages/IdentityStudy";
 import {lazy,Suspense} from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout";
-import {Community} from "./pages/ExperiencePages";
 import {ContactPublicPage as Contact} from "./pages/ContactPublic";
 const GovernanceDashboard=lazy(()=>import("./pages/GovernanceDashboard").then(m=>({default:m.GovernanceDashboard})));
 const ResearchDashboard=lazy(()=>import("./pages/ResearchDashboard").then(m=>({default:m.ResearchDashboard})));
-import {ContextConflictAuditPage,ResearchBriefsPage} from "./pages/PublicResearchPages";
-import {SciencePublicPage,ApplicationsPublicPage,TrustPublicPage,AboutPublicPage} from "./pages/PublicFoundationPages";
-import {PlatformPublicPage} from "./pages/PlatformPublic";
-import {ScientificHome as Home,ScientificHow as HowItWorks,ScientificResearch as ResearchPublicPage,ScientificEvidence as EvidenceIntelligencePage} from "./pages/ScientificPublic";
+import {ContextConflictAuditPage} from "./pages/PublicResearchPages";
+import {TrustPublicPage,AboutPublicPage} from "./pages/PublicFoundationPages";
+import {HomeLanding as Home} from "./pages/HomeLanding";
+import {HowItWorksPage as HowItWorks} from "./pages/HowItWorksPage";
+import {ScientificEvidence as EvidenceIntelligencePage} from "./pages/ScientificPublic";
 import {KnowledgeGraphPublicPage} from "./pages/KnowledgeGraphPublic";
-import { IntelligenceCollectiveLanding, IntelligenceCapabilityLanding } from "./pages/IntelligenceCollective";
-import { DepartmentsIndex, DepartmentPage } from "./pages/Departments";
-import { ConnectedIntelligence } from "./pages/ConnectedIntelligence";
 import {PasswordRecovery} from "./pages/PasswordRecovery";
 import { SignIn } from "./pages/SignIn";
 import { SignUp } from "./pages/SignUp";
@@ -28,13 +25,11 @@ const Alignment=lazy(()=>import("./pages/Alignment").then(m=>({default:m.Alignme
 const Docs=lazy(()=>import("./pages/Docs").then(m=>({default:m.Docs})));
 const DiscoveryCentre=lazy(()=>import("./pages/DiscoveryCentre").then(m=>({default:m.DiscoveryCentre})));
 const Curator=lazy(()=>import("./pages/Curator").then(m=>({default:m.Curator})));
-import { DemoWalkthrough } from "./pages/DemoWalkthrough";
 const Status=lazy(()=>import("./pages/Status").then(m=>({default:m.Status})));
 const ClinicalTimeline=lazy(()=>import("./pages/ClinicalTimeline").then(m=>({default:m.ClinicalTimeline})));
 const TrialsCriteria=lazy(()=>import("./pages/TrialsCriteria").then(m=>({default:m.TrialsCriteria})));
 const GatewayDemo=lazy(()=>import("./pages/GatewayDemo").then(m=>({default:m.GatewayDemo})));
 const Sources=lazy(()=>import("./pages/Sources").then(m=>({default:m.Sources})));
-import { ScienceBody } from "./pages/ScienceBody";
 const ScienceLiterature=lazy(()=>import("./pages/ScienceLiterature").then(m=>({default:m.ScienceLiterature})));
 const ResearchCoverage=lazy(()=>import("./pages/ResearchCoverage").then(m=>({default:m.ResearchCoverage})));
 const ResearchEvidenceCatalogue=lazy(()=>import("./pages/ResearchEvidenceCatalogue").then(m=>({default:m.ResearchEvidenceCatalogue})));
@@ -74,18 +69,16 @@ const SyntheticValidationWorkbench=lazy(()=>import("./pages/SyntheticValidationW
 const ClaimKnowledgeGraph=lazy(()=>import("./pages/ClaimKnowledgeGraph").then(m=>({default:m.ClaimKnowledgeGraph})));
 
 const CapabilityLab=lazy(()=>import("./pages/CapabilityLab").then(m=>({default:m.CapabilityLab})));
-const InvestorWorkspace=lazy(()=>import('./pages/demo/InvestorWorkspace').then(m=>({default:m.InvestorWorkspace})));
 
 export default function App() {
   return (
     <Routes>
-      <Route path="demo" element={<Suspense fallback={<p>Loading discovery workspace…</p>}><InvestorWorkspace/></Suspense>}/>
       <Route element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path="research" element={<ResearchPublicPage/>}/>
-        <Route path="solutions" element={<Navigate to="/applications" replace />} />
+        <Route path="research" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="solutions" element={<Navigate to="/how-it-works" replace />} />
         <Route path="evidence-safety" element={<Navigate to="/trust" replace />} />
-        <Route path="community" element={<Community/>}/>
+        <Route path="community" element={<Navigate to="/research/home" replace />} />
         <Route path="pricing" element={<Navigate to="/contact" replace />} />
         <Route path="contact" element={<Contact/>}/>
         <Route path="research/dashboard" element={<ResearchDashboard/>}/>
@@ -95,43 +88,43 @@ export default function App() {
         <Route path="reset-password" element={<PasswordRecovery key="reset" mode="reset" />} />
         <Route path="sign-up" element={<SignUp />} />
         <Route path="research/account" element={<ResearchAccount />} />
-        <Route path="platform" element={<PlatformPublicPage />} />
+        <Route path="platform" element={<Navigate to="/how-it-works" replace />} />
         {import.meta.env.DEV && <Route path={"design/identity"} element={<IdentityStudy/>}/> }
-        <Route path="intelligence" element={<IntelligenceCollectiveLanding />} />
-        <Route path="connected-intelligence" element={<ConnectedIntelligence />} />
-        <Route path="departments" element={<DepartmentsIndex />} />
-        <Route path="departments/immunology" element={<DepartmentPage slug="immunology" />} />
-        <Route path="departments/neuroscience" element={<DepartmentPage slug="neuroscience" />} />
-        <Route path="departments/microbiome" element={<DepartmentPage slug="microbiome" />} />
-        <Route path="departments/metabolism" element={<DepartmentPage slug="metabolism" />} />
-        <Route path="departments/genomics-multi-omics" element={<DepartmentPage slug="genomics-multi-omics" />} />
-        <Route path="departments/human-physiology" element={<DepartmentPage slug="human-physiology" />} />
-        <Route path="intelligence/nexus" element={<IntelligenceCapabilityLanding slug="nexus" />} />
-        <Route path="intelligence/aegis" element={<IntelligenceCapabilityLanding slug="aegis" />} />
-        <Route path="intelligence/scout" element={<IntelligenceCapabilityLanding slug="scout" />} />
-        <Route path="intelligence/lantern" element={<IntelligenceCapabilityLanding slug="lantern" />} />
-        <Route path="intelligence/prism" element={<Navigate to="/intelligence/lantern" replace />} />
-        <Route path="intelligence/atlas" element={<IntelligenceCapabilityLanding slug="atlas" />} />
-        <Route path="intelligence/helix" element={<IntelligenceCapabilityLanding slug="helix" />} />
-        <Route path="intelligence/parallax" element={<IntelligenceCapabilityLanding slug="parallax" />} />
-        <Route path="intelligence/vantage" element={<IntelligenceCapabilityLanding slug="vantage" />} />
-        <Route path="intelligence/horizon" element={<Navigate to="/intelligence/vantage" replace />} />
-        <Route path="intelligence/veritas" element={<IntelligenceCapabilityLanding slug="veritas" />} />
-        <Route path="intelligence/arbiter" element={<IntelligenceCapabilityLanding slug="arbiter" />} />
-        <Route path="intelligence/sentinel" element={<IntelligenceCapabilityLanding slug="sentinel" />} />
-        <Route path="intelligence/caliber" element={<IntelligenceCapabilityLanding slug="caliber" />} />
-        <Route path="intelligence/warden" element={<IntelligenceCapabilityLanding slug="warden" />} />
+        <Route path="intelligence" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="connected-intelligence" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="departments" element={<Navigate to="/knowledge-graph" replace />} />
+        <Route path="departments/immunology" element={<Navigate to="/research/knowledge-graph?netDepartment=immunology" replace />} />
+        <Route path="departments/neuroscience" element={<Navigate to="/research/knowledge-graph?netDepartment=neuroscience" replace />} />
+        <Route path="departments/microbiome" element={<Navigate to="/research/knowledge-graph?netDepartment=microbiome" replace />} />
+        <Route path="departments/metabolism" element={<Navigate to="/research/knowledge-graph?netDepartment=metabolism" replace />} />
+        <Route path="departments/genomics-multi-omics" element={<Navigate to="/research/knowledge-graph?netDepartment=genomics-multi-omics" replace />} />
+        <Route path="departments/human-physiology" element={<Navigate to="/research/knowledge-graph?netDepartment=human-physiology" replace />} />
+        <Route path="intelligence/nexus" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="intelligence/aegis" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="intelligence/scout" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="intelligence/lantern" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="intelligence/prism" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="intelligence/atlas" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="intelligence/helix" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="intelligence/parallax" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="intelligence/vantage" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="intelligence/horizon" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="intelligence/veritas" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="intelligence/arbiter" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="intelligence/sentinel" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="intelligence/caliber" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="intelligence/warden" element={<Navigate to="/how-it-works" replace />} />
         <Route path="context-conflict-audit" element={<ContextConflictAuditPage />} />
         <Route path="evidence-intelligence" element={<EvidenceIntelligencePage />} />
-        <Route path="research-briefs" element={<ResearchBriefsPage />} />
-        <Route path="applications" element={<ApplicationsPublicPage />} />
+        <Route path="research-briefs" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="applications" element={<Navigate to="/how-it-works" replace />} />
         <Route path="knowledge-graph" element={<KnowledgeGraphPublicPage />} />
         <Route path="trust" element={<TrustPublicPage />} />
         <Route path="about" element={<AboutPublicPage />} />
-        <Route path="technology" element={<Navigate to="/platform" replace />} />
+        <Route path="technology" element={<Navigate to="/how-it-works" replace />} />
         <Route path="how-it-works" element={<HowItWorks />} />
         <Route path="explore" element={<Explore />} />
-        <Route path="science" element={<SciencePublicPage />} />
+        <Route path="science" element={<Navigate to="/knowledge-graph" replace />} />
         <Route path="science/literature" element={<ScienceLiterature />} />
         <Route path="research/scientific-workbench" element={<ScientificResearchWorkbench />} />
         <Route path="research/ontology-review" element={<Suspense fallback={<p role="status">Loading mapping review…</p>}><OntologyMappingReview/></Suspense>} />
@@ -141,7 +134,7 @@ export default function App() {
         <Route path="science/study-comparison" element={<ScienceStudyComparison />} />
         <Route path="science/review-preparation" element={<ScienceReviewPreparation />} />
         <Route path="research/scientific-review" element={<ScientificReviewerDecision />} />
-        <Route path="science/body" element={<ScienceBody />} />
+        <Route path="science/body" element={<Navigate to="/knowledge-graph" replace />} />
         <Route path="research/capabilities" element={<CapabilityLab/>} />
         <Route path="research/knowledge-graph" element={<Suspense fallback={<p role="status" style={{padding:"3rem 1.5rem"}}>Loading knowledge graph…</p>}><ClaimKnowledgeGraph /></Suspense>} />
         <Route path="science/graph" element={<ScienceGraph />} />
@@ -169,7 +162,7 @@ export default function App() {
         <Route path="science/connections" element={<ScienceConnections />} />
         <Route path="science/disease" element={<ScienceDisease />} />
         <Route path="discovery-engine" element={<DiscoveryEngine />} />
-        <Route path="demo" element={<DemoWalkthrough />} />
+        <Route path="demo" element={<Navigate to="/research/journey" replace />} />
         <Route path="modules" element={<Navigate to="/connected-intelligence" replace />} />
         <Route path="modules/aksh-health" element={<Navigate to="/connected-intelligence" replace />} />
         <Route path="modules/clinical" element={<Navigate to="/connected-intelligence" replace />} />

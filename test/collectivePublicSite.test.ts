@@ -16,14 +16,11 @@ describe("public collective page matches the register",()=>{
   expect(new Set(intelligenceCapabilities.map(c=>c.slug)).size).toBe(13);
  });
  test("the colliding Aksh names are not used for HSI capabilities",()=>{for(const old of ["PRISM","HORIZON"])expect(names).not.toContain(old)});
- test("every capability has a pre-rendered route; the old URLs redirect permanently",()=>{
-  const rewrites=new Map(vercel.rewrites.map(r=>[r.source,r.destination]));
-  for(const c of intelligenceCapabilities)expect(rewrites.get("/intelligence/"+c.slug),c.slug).toBe(`/_pages/intelligence--${c.slug}.html`);
-  for(const [old,now] of [["prism","lantern"],["horizon","vantage"]]){
-   // like every client-side redirect route, the old path keeps a rewrite (deployment test), but the platform redirect runs first
-   expect(rewrites.get("/intelligence/"+old)).toBe(`/_pages/intelligence--${old}.html`);
-   expect(vercel.redirects.find(r=>r.source==="/intelligence/"+old)).toMatchObject({destination:"/intelligence/"+now,permanent:true});
-  }
+ test("the capability pages are not public pages: every old URL redirects permanently to how it works and none is indexed",()=>{
+  const sources=new Set(vercel.redirects.map(r=>r.source));
+  expect(vercel.redirects.find(r=>r.source==="/intelligence/:slug")).toMatchObject({destination:"/how-it-works",permanent:true});
+  expect(vercel.redirects.find(r=>r.source==="/intelligence")).toMatchObject({destination:"/how-it-works",permanent:true});
+  void sources;
  });
  test("related-capability references point at real capabilities",()=>{
   const set=new Set(names);

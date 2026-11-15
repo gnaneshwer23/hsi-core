@@ -1,21 +1,16 @@
 import {HsiIdentity} from "./HsiIdentity";
 import { Link } from "react-router-dom";
-import { RESEARCH_NAV_LINKS } from "../lib/primaryNav";
 import "../styles/chrome-redesign.css";
 const groups = [
   {
-    name: "Explore",
+    name: "Product",
     links: [
-      { to: "/research/home", label: "Research home" },
+      { to: "/welcome", label: "Set up your research home" },
+      { to: "/research/home", label: "Research app" },
+      { to: "/how-it-works", label: "How it works" },
       { to: "/knowledge-graph", label: "Knowledge graph" },
-      { to: "/platform", label: "Platform" },
-      { to: "/science", label: "Science" },
-      { to: "/applications", label: "Applications" },
-      {to:"/intelligence",label:"Intelligence Collective"},
-      {to:"/how-it-works",label:"How it works"},
     ],
   },
-  { name: "Research", links: RESEARCH_NAV_LINKS },
   {
     name: "Company",
     links: [
@@ -41,7 +36,7 @@ export function Footer() {
       <ul className="hsi-footer-status" aria-label="Current status">
         <li>Research preview</li>
         <li>Candidate-only graph, nothing scientifically approved</li>
-        <li>No clinical advice or patient data</li>
+        <li>No clinical advice. Patient data in this preview is synthetic</li>
       </ul>
       <div className="hsi-footer-grid">
         <div className="hsi-footer-brand">
@@ -69,10 +64,8 @@ export function Footer() {
       <div className="hsi-footer-bottom">
         <span>© {new Date().getFullYear()} Human Super Intelligence</span>
         <p>
-          For research and education. No clinical decision support or patient-level integration is offered
-          here.
+          For research and education. No clinical decision support is offered here, and no real patient data is held.
         </p>
-        <Link to="/status">Capability status</Link>
       </div>
     </footer>
   );

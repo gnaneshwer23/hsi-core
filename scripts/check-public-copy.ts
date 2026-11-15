@@ -45,7 +45,7 @@ export function findPublicCopyIssues(cwd = process.cwd()): string[] {
     if (/100% accurate|clinically proven platform/i.test(text)) issues.push(`${relative} contains an unsupported accuracy claim`);
   }
   // Current public positioning: one HSI technology, never the retired product portfolio.
-  for (const relative of ["site/src/pages/ScientificPublic.tsx", "site/src/pages/PublicFoundationPages.tsx", "site/src/pages/ExperiencePages.tsx", "site/src/pages/Technology.tsx", "site/src/lib/seo/siteSeo.ts", "site/public/llms.txt"]) {
+  for (const relative of ["site/src/pages/ScientificPublic.tsx", "site/src/pages/PublicFoundationPages.tsx", "site/src/pages/Technology.tsx", "site/src/lib/seo/siteSeo.ts", "site/public/llms.txt"]) {
     if (/Aksh Health|HSI Clinical|Immune Super Intelligence|HSI Trials|four governed modules|four products/i.test(readFileSync(resolve(cwd, relative), "utf8"))) issues.push(`${relative} reintroduces retired public product positioning`);
   }
   const readme = readFileSync(resolve(cwd, "README.md"), "utf8");

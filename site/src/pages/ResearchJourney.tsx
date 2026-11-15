@@ -1,13 +1,12 @@
 import {useEffect,useState} from "react";
-import {Link} from "react-router-dom";
-import {STEPS,progressFor,readBrowserRecord,type BrowserRecord,type StatusKind} from "../lib/journey";
+import {progressFor,readBrowserRecord,type BrowserRecord} from "../lib/journey";
+import {JourneySteps} from "../components/home/JourneySteps";
 import {useGraphSnapshot} from "../components/home/useGraphSnapshot";
 import {ResearchAppShell} from "../components/home/ResearchAppShell";
 import {Icon} from "../components/home/AppIcons";
 import "../styles/research-home.css";
 
 const EMPTY:BrowserRecord={savedRun:false,gapStatuses:0,ledgerEntries:0,withCohortObservation:0,withTargets:0,linkedToGaps:0,loopClosed:0};
-const KIND:Record<StatusKind,string>={live:"Live public source",published:"Published, unreviewed",synthetic:"Synthetic data",derived:"Derived from records",manual:"Written by you",local:"This browser only"};
 const GATES=["Approval of the two-plane architecture decision","An independent security review of the account-storage design","A named clinical safety officer and a clinical safety case","A data protection impact assessment and a lawful basis","A data-sharing agreement with a data controller"];
 
 export function ResearchJourneyPage(){
@@ -35,16 +34,7 @@ export function ResearchJourneyPage(){
      </tbody></table></div>
     </section>
 
-    <ol className="jr-steps" aria-label="Walkthrough steps">
-     {STEPS.map(s=>{const p=prog[s.n]!;return (
-      <li key={s.id} className="rh-card jr-step" data-state={p.state}>
-       <header><span className="jr-n" aria-hidden="true">{s.n}</span><div><h2>{s.title}</h2><p className="rh-sub">{s.question}</p></div><span className="jr-kind" data-k={s.status.kind}>{KIND[s.status.kind]}</span></header>
-       <p className="rh-note">{s.status.label}</p>
-       <dl className="hl-dl"><dt>What it shows</dt><dd>{s.proves}</dd><dt>What it does not</dt><dd>{s.doesNot}</dd></dl>
-       <p className="jr-prog" data-state={p.state}><span className="jr-state">{p.state==="done"?"Done":p.state==="todo"?"Not yet":"Not tracked"}</span> {p.text}</p>
-       <div className="rh-row"><Link className="rh-primary" to={s.to}>{s.cta} <Icon name="arrow" size={16}/></Link></div>
-      </li>);})}
-    </ol>
+    <JourneySteps progress={prog}/>
 
     <section className="rh-card" aria-labelledby="jr-gate-h">
      <h2 id="jr-gate-h">Before any real patient data</h2>
