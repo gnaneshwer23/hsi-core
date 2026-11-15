@@ -32,3 +32,13 @@
 .rn-gap-list button{width:100%;min-height:44px;text-align:left;padding:10px 14px;border-radius:14px;border:1px solid var(--line-2,#cfd5e3);background:var(--surface,#fff);color:inherit;font:inherit;cursor:pointer;display:grid;gap:2px}
 .rn-gap-list button[aria-pressed=true]{border-color:#c77d12;box-shadow:inset 0 0 0 2px #f2b45a}
 .rn-gap-list small{color:var(--muted,#566377)}
+.st{display:grid;gap:10px;margin:12px 0;padding:14px 16px;border-radius:18px;background:var(--surface-2,#f6f8fd);border:1px solid var(--line,#e3e7ef)}
+.st-head{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline}.st-head h3{margin:0}
+.st-hint,.st-note{margin:0;font-size:14px;color:var(--muted,#566377);line-height:1.5}
+.st-chips,.st-path{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
+.st-path{flex-direction:column}
+.st button,.st-actions a{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line-2,#cfd5e3);background:var(--surface,#fff);color:inherit;font:inherit;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;text-decoration:none}
+.st-chips button{background:#dff6ee;color:#0b5a45;border-color:transparent}
+.st button:disabled{opacity:.5;cursor:default}
+.st-path button{border-radius:14px;text-align:left}
+.st-actions{display:flex;flex-wrap:wrap;gap:8px}
