@@ -13,7 +13,6 @@ import {
   type ScientificInvestigation,
 } from "@hsi/scientificInvestigation";
 import "../styles/scientific-investigation.css";
-import {LiveInvestigationPanel} from "../components/LiveInvestigationPanel";
 
 const STEPS = [
   { id: "start", label: "Start" },
@@ -137,7 +136,11 @@ export function ScientificInvestigationPage() {
             Nothing here is clinical validation.
           </p>
         </header>
-        <LiveInvestigationPanel />
+        <section className="inv-card" aria-labelledby="inv-live">
+          <h2 id="inv-live">Live investigation</h2>
+          <p>Run a real search over public literature and see the evidence, relationships and verification in one workspace. Candidate-only and unreviewed. The example below is a separate, scripted demonstration.</p>
+          <Link to="/research/workspace">Open the investigation workspace</Link>
+        </section>
         <ol className="inv-rail" aria-label="Investigation steps">
           {STEPS.map((item, index) => (
             <li key={item.id}>

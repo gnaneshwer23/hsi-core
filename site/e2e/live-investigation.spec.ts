@@ -1,41 +1,76 @@
 import {test,expect} from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-const result={question:'q',scenarioId:'il21-autoimmune',version:1,briefHash:'a'.repeat(64),
- searches:[{provider:'europe-pmc',context:'ssc',status:'ok',count:1,error:null},{provider:'openalex',context:'ssc',status:'failed',count:0,error:'HTTP 500'}],
- records:[{sourceId:'s1',title:'IL-21 in SSc',doi:'10.1/x',pmid:'1',publicationDate:'2020-01-01',sourceUrl:'https://europepmc.org/article/MED/1',retrievedAt:'2026-11-15T00:00:00Z',provider:'europe-pmc',abstract:'a',retraction:'not_flagged_by_provider'}],
- candidates:[{id:'c1',subject:'IL-21',object:'T follicular helper cells',contexts:['ssc'],species:'human',sourceId:'s1',sourceUrl:'https://europepmc.org/article/MED/1',sentence:'IL-21 was increased and Tfh cells expanded in patients.',lexicalPolarity:'supporting',direction:'not_assessed',polarity:'uncertain',polarityBasis:'not_assessed',verification:'not_run',verdicts:[],retraction:'not_flagged_by_provider'}],
+const cand=(o:any)=>({id:'c1',relationId:'il21-tfh',subject:'IL-21',object:'T follicular helper cells',contexts:['ssc'],species:'human',sourceId:'s1',sourceUrl:'https://europepmc.org/article/MED/1',sentence:'IL-21 was increased and Tfh cells expanded in patients with systemic sclerosis.',state:'extracted_candidate',lexicalPolarity:'supporting',polarityBasis:'not_assessed',direction:'not_assessed',polarity:'uncertain',priority:{score:7,reasons:['States an effect or direction']},verification:'not_run',verdicts:[],retraction:'not_flagged_by_provider',...o});
+const base={schemaVersion:'hsi-live-investigation-1',mode:'live',scenarioId:'il21-autoimmune',question:'Why might IL-21 signalling have different biological consequences across autoimmune disease contexts?',version:1,briefHash:'a'.repeat(64),
+ entities:['IL-21','T follicular helper cells','B-cell responses'],
+ searches:[{provider:'europe-pmc',context:'ssc',status:'ok',count:1,error:null,query:'q'},{provider:'openalex',context:'ssc',status:'failed',count:0,error:'HTTP 500',query:'q'}],
+ records:[{provider:'europe-pmc',sourceId:'s1',title:'IL-21 in SSc',doi:'10.1/x',pmid:'1',publicationDate:'2020-01-01',sourceUrl:'https://europepmc.org/article/MED/1',retrievedAt:'2026-11-15T00:00:00Z',licenceStatus:'not_assessed',retraction:'not_flagged_by_provider',studyTypes:[],verificationState:'metadata_retrieved_not_claim_verified',reviewState:'unreviewed',hasAbstract:true}],
  targets:[],byContext:{ssc:{label:'Systemic sclerosis',records:1,supporting:[],opposing:[],uncertain:['c1']}},
  verification:{status:'not_configured',reason:'The model step is disabled on this deployment.',checked:0,independence:null},
- gaps:['Search failed: openalex for ssc (HTTP 500). Absence of results there is not evidence of absence.'],
- events:[{stage:'scoped',at:'t',status:'ok',detail:'scoped'},{stage:'challenged',at:'t',status:'skipped',detail:'The model step is disabled on this deployment.'}],budget:null};
-test('live investigation shows failures, keeps direction unassessed and labels the claim as a candidate',async({page})=>{
- await page.route('**/api/research/live-investigation',r=>r.fulfill({json:result}));
- await page.goto('/research/investigate');
+ gaps:['Search failed: openalex for ssc (HTTP 500). Absence of results there is not evidence of absence.'],budget:null,
+ flags:{scientificApproval:false,graphPromotable:false,consensusEstablished:false,humanReview:'required',clinicalAdvice:false,containsPhi:false},
+ events:[{stage:'scoped',at:'t',status:'ok',detail:'scoped'},{stage:'searched',at:'t',status:'partial',detail:'1 of 2 searches returned; 1 failed.'},{stage:'retrieved',at:'t',status:'ok',detail:'1 record'},{stage:'mapped',at:'t',status:'ok',detail:'mapped'},{stage:'compared',at:'t',status:'ok',detail:'1 candidate'},{stage:'challenged',at:'t',status:'skipped',detail:'The model step is disabled on this deployment.'},{stage:'brief',at:'t',status:'ok',detail:'brief'}]};
+const unchecked={...base,candidates:[cand({})]};
+const checked={...base,verification:{status:'completed',reason:null,checked:1,independence:'independent_execution_only'},
+ byContext:{ssc:{label:'Systemic sclerosis',records:1,supporting:['c1'],opposing:[],uncertain:[]}},
+ candidates:[cand({direction:'positive',polarity:'supporting',polarityBasis:'two_model_challenge',verification:'agree_directional',verdicts:[{verifier:'openai-a',model:'m1',direction:'positive',evidenceSpan:'IL-21 was increased',reason:'States an increase.'},{verifier:'openai-b',model:'m2',direction:'positive',evidenceSpan:'IL-21 was increased',reason:'States an increase.'}]}),cand({id:'c2',object:'B-cell responses',sentence:'IL-21 is linked to B cells in lupus.',contexts:['sle']})]};
+const mock=(page:any,body:unknown,status=200)=>page.route('**/api/research/live-investigation',(r:any)=>r.fulfill({status,json:body}));
+
+test('workspace before a run states that nothing has started and shows no figures',async({page})=>{
+ await page.goto('/research/workspace');
+ await expect(page.getByRole('heading',{level:1})).toContainText('IL-21');
+ await expect(page.getByText('Nothing starts until you press Run')).toBeVisible();
+ await expect(page.getByRole('list',{name:/Investigation stages/})).toContainText('Not run');
+ await expect(page.getByLabel('Run totals')).toContainText('—');
+});
+
+test('an unchecked run keeps direction unassessed, shows the failed search and labels claims as candidates',async({page})=>{
+ await mock(page,unchecked);
+ await page.goto('/research/workspace');
  await page.getByRole('button',{name:'Run live investigation'}).click();
- const panel=page.locator('.li-panel');
- await expect(panel).toContainText('failed (HTTP 500)');
- await expect(panel).toContainText('Direction not assessed');
- await expect(panel).toContainText('Not assessed: the model challenge did not run.');
- await panel.getByRole('button',{name:/IL-21 ~ T follicular helper cells/}).click();
- const inspector=panel.getByLabel('Selected claim');
- await expect(inspector).toContainText('Candidate · unreviewed · not promotable to the graph');
- await expect(inspector).toContainText('Not assessed');
- await expect(inspector).toContainText('licence not assessed');
- const axe=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).include('.li-panel').analyze();
+ const ev=page.getByRole('region',{name:/Evidence/});
+ await expect(ev).toContainText('Not checked (1)');
+ await expect(page.getByRole('list',{name:/Investigation stages/})).toContainText('Partial');
+ await expect(page.getByRole('list',{name:/Investigation stages/})).toContainText('Skipped');
+ await ev.getByRole('button',{name:/IL-21 ~ T follicular helper cells/}).click();
+ const insp=page.getByLabel('Selected claim');
+ await expect(insp).toContainText('Candidate · unreviewed · not promotable to the graph');
+ await expect(insp).toContainText('Not assessed');await expect(insp).toContainText('licence not assessed');
+ await expect(page.getByRole('region',{name:'Scientific verification'})).toContainText('Not assessed: the model check did not run.');
+});
+
+test('a checked run shows findings, a relationship map that filters evidence, verifier quotes and the brief; axe is clean',async({page})=>{
+ await mock(page,checked);
+ await page.goto('/research/workspace');
+ await page.getByRole('button',{name:'Run live investigation'}).click();
+ await expect(page.getByLabel('Run totals')).toContainText('Key findings');
+ const ev=page.getByRole('region',{name:/Evidence/});
+ await ev.getByRole('button',{name:'Supporting (1)'}).click();
+ await expect(ev.getByRole('list').first()).not.toContainText('B cells in lupus');
+ await ev.getByRole('button',{name:'All (2)'}).click();
+ await page.getByRole('group',{name:'Relationships found'}).getByRole('button',{name:/B-cell responses/}).click();
+ await expect(ev).toContainText('Showing IL-21 → B-cell responses');
+ await expect(ev).not.toContainText('Tfh cells expanded');
+ await ev.getByRole('button',{name:'Clear'}).click();
+ await ev.getByRole('button',{name:/IL-21 ~ T follicular helper cells/}).click();
+ const insp=page.getByLabel('Selected claim');
+ await expect(insp).toContainText('openai-a');await expect(insp).toContainText('Quoted: “IL-21 was increased”');
+ await page.getByRole('button',{name:'Open research brief'}).click();
+ await expect(page.getByLabel('Research brief text')).toContainText('Supporting (both checks agree) (1)');
+ const axe=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();
  expect(axe.violations.map(v=>v.id+': '+v.nodes.length)).toEqual([]);
 });
+
 test('a failed run says no findings were generated',async({page})=>{
- await page.route('**/api/research/live-investigation',r=>r.fulfill({status:502,json:{error:'Investigation could not run. No findings were generated.'}}));
- await page.goto('/research/investigate');
+ await mock(page,{error:'Investigation could not run. No findings were generated.'},502);
+ await page.goto('/research/workspace');
  await page.getByRole('button',{name:'Run live investigation'}).click();
  await expect(page.getByRole('alert').filter({hasText:'No findings were generated'}).first()).toBeVisible();
 });
 
-test('Home to live run to saved run: a matching question offers a live run that needs a click, and Home resumes it',async({page})=>{
+test('Home to workspace to saved run: a matching question needs a click to run, and Home resumes the saved run without calling the sources',async({page})=>{
  let calls=0;
- await page.route('**/api/research/live-investigation',r=>{calls++;return r.fulfill({json:{...result,question:'Why might IL-21 signalling have different biological consequences across autoimmune disease contexts?',
-  candidates:[{...result.candidates[0],id:'c2',direction:'positive',polarity:'supporting',verification:'agree_directional',polarityBasis:'two_model_challenge',verdicts:[{verifier:'a',model:'m',direction:'positive',evidenceSpan:'IL-21 was increased',reason:'r'},{verifier:'b',model:'m2',direction:'positive',evidenceSpan:'IL-21 was increased',reason:'r'}],priority:{score:7,reasons:['States an effect or direction']}}],
-  byContext:{ssc:{label:'Systemic sclerosis',records:1,supporting:['c2'],opposing:[],uncertain:[]}},verification:{status:'completed',reason:null,checked:1,independence:'independent_execution_only'}}})});
+ await page.route('**/api/research/live-investigation',r=>{calls++;return r.fulfill({json:checked})});
  await page.route('**/api/research/investigations',r=>r.fulfill({status:401,json:{}}));
  await page.goto('/research/home');
  await page.getByRole('button',{name:'Skip for now'}).click();
@@ -43,19 +78,20 @@ test('Home to live run to saved run: a matching question offers a live run that 
  await expect(page.getByText('This matches a curated scenario')).toBeVisible();
  expect(calls).toBe(0);
  await page.getByRole('link',{name:'Deep Investigate: run live'}).click();
- await expect(page).toHaveURL(/\/research\/investigate#live-investigation/);
- expect(calls).toBe(0); // nothing runs until the researcher presses Run
+ await expect(page).toHaveURL(/\/research\/workspace/);
+ expect(calls).toBe(0);
  await page.getByRole('button',{name:'Run live investigation'}).click();
- await expect(page.locator('.li-panel')).toContainText('Supporting');
+ await expect(page.getByLabel('Run totals')).toContainText('Key findings');
  await page.getByRole('button',{name:'Save in this browser'}).click();
  await page.goto('/research/home');
  const cont=page.getByRole('region',{name:'Continue researching'});
  await expect(cont).toContainText('Live investigation · saved in this browser');
  await expect(cont).toContainText('1 supporting');
  await cont.getByRole('link',{name:'Reopen'}).click();
- await expect(page.locator('.li-panel')).toContainText('Supporting');
- expect(calls).toBe(1); // reopening reads the saved run and does not call the sources again
+ await expect(page.getByLabel('Run totals')).toContainText('Key findings');
+ expect(calls).toBe(1);
 });
+
 test('a question outside the curated scenarios offers only the saved-question path',async({page})=>{
  await page.route('**/api/research/investigations',r=>r.fulfill({status:401,json:{}}));
  await page.goto('/research/home');
@@ -63,4 +99,13 @@ test('a question outside the curated scenarios offers only the saved-question pa
  await page.locator('#rh-q').fill('How do microbial metabolites influence immune signalling and brain inflammation?');
  await expect(page.getByRole('link',{name:'Deep Investigate: run live'})).toHaveCount(0);
  await expect(page.getByText('Live runs cover curated scenarios only')).toBeVisible();
+});
+
+test('mobile: the workspace stacks without horizontal scroll',async({page})=>{
+ await mock(page,checked);
+ await page.setViewportSize({width:390,height:844});
+ await page.goto('/research/workspace');
+ await page.getByRole('button',{name:'Run live investigation'}).click();
+ await expect(page.getByLabel('Run totals')).toContainText('Key findings');
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+1)).toBe(true);
 });

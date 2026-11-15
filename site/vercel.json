@@ -233,6 +233,10 @@
       "destination": "/_pages/research--home.html"
     },
     {
+      "source": "/research/workspace",
+      "destination": "/_pages/research--workspace.html"
+    },
+    {
       "source": "/research/community-feed",
       "destination": "/_pages/research--community-feed.html"
     },
