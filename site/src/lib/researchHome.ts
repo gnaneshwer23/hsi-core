@@ -75,7 +75,11 @@ export function recommend(profile:Profile,bundle:DomainBundle,limit=6):Recommend
   for(const n of near)push(n,"Connected to "+f.name+", which you follow");
  }
  for(const i of profile.interests){
-  const d=deptByInterest(i);if(!d)continue;
+  const d=deptByInterest(i);
+  if(!d){ // a free-text topic: match concepts by name or alias
+   for(const h of searchEntities(bundle.nodes,i,6)){const n=byId.get(h.id);if(n&&(deg.get(n.id)??0)>0)push(n,"Matches your topic \u201c"+i+"\u201d")}
+   continue;
+  }
   const tags=new Set<string>(d.graphTags);
   const inDept=bundle.nodes.filter(n=>n.domains.some(t=>tags.has(t))&&(deg.get(n.id)??0)>0).sort((a,b)=>(deg.get(b.id)??0)-(deg.get(a.id)??0)||a.name.localeCompare(b.name));
   for(const n of inDept)push(n,"Matches your interest in "+d.name);

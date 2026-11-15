@@ -83,3 +83,22 @@ test('mobile layout has no horizontal scroll',async({page})=>{
  await page.getByRole('button',{name:'Skip for now'}).click();
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+1)).toBe(true);
 });
+
+test('app shell: custom topics drive suggestions, Cmd+K focuses search, and the mobile menu opens',async({page})=>{
+ await page.route('**/api/research/investigations',r=>r.fulfill({status:401,json:{}}));
+ await page.goto('/research/home');
+ await page.getByRole('button',{name:'Skip for now'}).click();
+ await page.getByRole('button',{name:'Add interest'}).click();
+ await page.getByLabel('New research topic').fill('systemic sclerosis');
+ await page.getByRole('button',{name:'Add',exact:true}).click();
+ await expect(page.getByRole('region',{name:'Recommended research'})).toContainText('Matches your topic');
+ await page.locator('#rh-q').blur();
+ await page.keyboard.press('Control+k');
+ await expect(page.locator('#rh-q')).toBeFocused();
+ await page.setViewportSize({width:390,height:844});
+ const menu=page.getByRole('button',{name:'Menu'});
+ await expect(page.locator('#rh-nav')).toHaveAttribute('data-open','false');
+ await menu.click();
+ await expect(page.locator('#rh-nav')).toHaveAttribute('data-open','true');
+ await expect(page.getByRole('link',{name:'Knowledge Graph',exact:true})).toBeVisible();
+});
