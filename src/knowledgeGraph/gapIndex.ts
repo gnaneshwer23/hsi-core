@@ -12,7 +12,11 @@ export type GapSignal = {
   entityIds: [string, string];
   domains: string[];
   conditions: string[];
+  /** Candidate edges that directly connect the two gap concepts. */
   supportingCandidateEdgeIds: string[];
+  /** Candidate edges that touch either concept (adjacent evidence). */
+  touchingCandidateEdgeIds: string[];
+  /** Sources of the direct edges, or of the touching edges when none connect the pair. */
   sourceIds: string[];
   unresolvedContextFields: string[];
   reasons: string[];
@@ -22,8 +26,13 @@ export type GapSignal = {
   clinicalDecisionAllowed: false;
 };
 
+const VERIFIED_IDENTITY = new Set<string>();
 const CONTEXT_FIELDS = ['tissue', 'population', 'assay', 'timepoint', 'intervention', 'outcome'] as const;
 const ordered = (values: Iterable<string>) => [...new Set(values)].sort();
+
+function touches(edge: DomainEdge, gap: DomainGap) {
+  return [edge.subjectId, edge.objectId].some(id => id === gap.subjectId || id === gap.objectId);
+}
 
 function relevant(edge: DomainEdge, gap: DomainGap) {
   return (edge.subjectId === gap.subjectId && edge.objectId === gap.objectId) ||
@@ -52,15 +61,22 @@ export function buildGapIndex(graph: Pick<DomainBundle, 'nodes' | 'edges' | 'sou
     if (!nodeIds.has(gap.subjectId) || !nodeIds.has(gap.objectId)) {
       throw new Error('Dangling gap entity reference');
     }
-    const edges = graph.edges.filter(e => e.kind === 'source_candidate' && relevant(e, gap));
+    const candidates = graph.edges.filter(e => e.kind === 'source_candidate');
+    const direct = candidates.filter(e => relevant(e, gap));
+    const touching = candidates.filter(e => touches(e, gap));
+    // Evidence is judged on the direct edges when there are any, otherwise on the edges adjacent to either concept.
+    const edges = direct.length ? direct : touching;
     const sources = ordered(edges.flatMap(e => e.sourceId === null ? [] : [e.sourceId]));
     const unresolvedContextFields = CONTEXT_FIELDS.filter(field => edges.length === 0 ||
       edges.some(edge => edge[field] === null));
     const distinctModels = new Set(edges.map(e => e.model));
     const hasNegative = edges.some(e => e.negated);
-    const unverifiedSource = sources.some(id => graph.sources.find(s => s.id === id)?.identityStatus !== 'repository_locator_not_reverified');
+    // Both identity statuses in the bundle mean "not verified"; only a future verified status clears the flag.
+    const unverifiedSource = sources.some(id => !VERIFIED_IDENTITY.has(graph.sources.find(s => s.id === id)?.identityStatus ?? ''));
     const reasons = [
-      ...(edges.length === 0 ? ['No directly connected source-candidate relationship in the supplied graph'] : []),
+      ...(direct.length === 0 ? ['No candidate relationship directly connects the two concepts'] : []),
+      ...(direct.length === 0 && touching.length > 0 ? [`${touching.length} candidate relationship${touching.length === 1 ? '' : 's'} touch either concept; judged on those`] : []),
+      ...(edges.length === 0 ? ['No candidate relationship touches either concept in the supplied graph'] : []),
       ...(unresolvedContextFields.length ? ['Experimental or population context is incomplete'] : []),
       ...(distinctModels.size > 1 ? ['Evidence spans different biological models'] : []),
       ...(hasNegative ? ['Includes negative source-candidate findings'] : []),
@@ -68,10 +84,12 @@ export function buildGapIndex(graph: Pick<DomainBundle, 'nodes' | 'edges' | 'sou
       ...(sources.length < 2 ? ['Fewer than two distinct source records on the entity pair'] : []),
     ];
     // Deterministic triage score; not a model-derived probability or validated importance measure.
-    const priorityScore = Math.min(100,
-      15 + (edges.length === 0 ? 25 : 0) + unresolvedContextFields.length * 5 +
+    // Higher means less recorded evidence around the gap; adjacent evidence lowers it so gaps do not all tie.
+    const priorityScore = Math.max(5, Math.min(100,
+      15 + (direct.length === 0 ? 15 : 0) + (edges.length === 0 ? 10 : 0) + unresolvedContextFields.length * 5 +
       (distinctModels.size > 1 ? 10 : 0) + (hasNegative ? 10 : 0) +
-      (unverifiedSource ? 10 : 0) + (sources.length < 2 ? 10 : 0));
+      (unverifiedSource ? 10 : 0) + (sources.length < 2 ? 10 : 0) -
+      Math.min(25, touching.length * 3)));
     return {
       id: gap.id,
       question: gap.question,
@@ -80,7 +98,8 @@ export function buildGapIndex(graph: Pick<DomainBundle, 'nodes' | 'edges' | 'sou
       entityIds: [gap.subjectId, gap.objectId] as [string, string],
       domains: ordered(gap.domains),
       conditions: ordered(gap.conditions),
-      supportingCandidateEdgeIds: ordered(edges.map(e => e.id)),
+      supportingCandidateEdgeIds: ordered(direct.map(e => e.id)),
+      touchingCandidateEdgeIds: ordered(touching.map(e => e.id)),
       sourceIds: sources,
       unresolvedContextFields: [...unresolvedContextFields],
       reasons,

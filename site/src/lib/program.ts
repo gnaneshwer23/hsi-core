@@ -36,8 +36,8 @@ export function detectTopics(nodes:DomainBundle["nodes"],text:string,limit=6):{i
 }
 const cands=(b:DomainBundle)=>b.edges.filter(e=>e.kind==="source_candidate");
 /** Concepts and edges within `depth` hops of the anchors. hop 0 = anchors. */
-export function expand(b:DomainBundle,ids:readonly string[],depth:1|2|3){
- const hop=new Map<string,number>(ids.map(i=>[i,0])),all=cands(b);
+export function expand(b:DomainBundle,ids:readonly string[],depth:1|2|3,pool?:readonly DomainEdge[]){
+ const hop=new Map<string,number>(ids.map(i=>[i,0])),all=pool??cands(b);
  for(let d=1;d<=depth;d++){
   const frontier=[...hop].filter(([,h])=>h===d-1).map(([i])=>i);
   for(const e of all)for(const f of frontier){
@@ -49,24 +49,23 @@ export function expand(b:DomainBundle,ids:readonly string[],depth:1|2|3){
  return {hop,edges};
 }
 export type ProgramView={anchors:Anchor[];hop:Map<string,number>;edges:DomainEdge[];counts:number[];gaps:GapRegisterEntry[];methods:{model:string;design:string;count:number}[];human:number;opposing:DomainEdge[]};
-export function programView(p:Profile,b:DomainBundle,depth:1|2|3):ProgramView{
- const anchors=anchorsFor(p,b),{hop,edges}=expand(b,anchors.map(a=>a.id),depth);
+/** Which parts of the neighbourhood to draw. An empty list means "all". Filters narrow the picture; they never change the record. */
+export type GraphFilter={kinds:string[];domains:string[];models:string[];conditions:string[];negated:boolean;extra:string[]};
+export const NO_FILTER:GraphFilter={kinds:[],domains:[],models:[],conditions:[],negated:true,extra:[]};
+export const isFiltered=(f:GraphFilter)=>!!(f.kinds.length||f.domains.length||f.models.length||f.conditions.length||!f.negated);
+export function programView(p:Profile,b:DomainBundle,depth:1|2|3,f:GraphFilter=NO_FILTER):ProgramView{
+ const base=anchorsFor(p,b),anchors=[...base];
+ for(const id of f.extra){const n=b.nodes.find(x=>x.id===id);if(n&&!anchors.some(a=>a.id===id)&&anchors.length<8)anchors.push({id,name:n.name,why:"Added in this view"})}
+ const byId=new Map(b.nodes.map(n=>[n.id,n])),isA=new Set(anchors.map(a=>a.id));
+ const okNode=(id:string)=>{const n=byId.get(id);return !!n&&(isA.has(id)||((!f.kinds.length||f.kinds.includes(n.kind))&&(!f.domains.length||n.domains.some(d=>f.domains.includes(d)))))};
+ const pool=cands(b).filter(e=>(f.negated||!e.negated)&&(!f.models.length||f.models.includes(e.model))&&(!f.conditions.length||e.conditions.some(c=>f.conditions.includes(c)))&&okNode(e.subjectId)&&okNode(e.objectId));
+ const {hop,edges}=expand(b,anchors.map(a=>a.id),depth,pool);
  const counts=[0,0,0,0];for(const h of hop.values())counts[h]!++;
  const gaps=buildGapRegister(b).filter(g=>hop.has(g.subject.id)||hop.has(g.object.id));
  const m=new Map<string,{model:string;design:string;count:number}>();
  for(const e of edges){const k=e.model+"|"+e.design;const r=m.get(k)??{model:e.model.replaceAll("_"," "),design:e.design,count:0};r.count++;m.set(k,r)}
  const human=edges.filter(e=>/^human/.test(e.model)).length;
  return {anchors,hop,edges,counts,gaps,methods:[...m.values()].sort((a,c)=>c.count-a.count).slice(0,6),human,opposing:edges.filter(e=>e.negated)};
-}
-/** A small network for the existing NetworkView: anchors in the centre, the best-connected neighbours around them. */
-export function programNetwork(b:DomainBundle,v:ProgramView,max=10){
- const name=new Map(b.nodes.map(n=>[n.id,n.name])),deg=new Map<string,number>();
- for(const e of v.edges){deg.set(e.subjectId,(deg.get(e.subjectId)??0)+1);deg.set(e.objectId,(deg.get(e.objectId)??0)+1)}
- const centre=v.anchors[0]?.id;if(!centre)return null;
- const keep=new Set<string>(v.anchors.map(a=>a.id));
- [...v.hop.keys()].filter(i=>!keep.has(i)).sort((a,c)=>(v.hop.get(a)!-v.hop.get(c)!)||((deg.get(c)??0)-(deg.get(a)??0))).forEach(i=>{if(keep.size<max)keep.add(i)});
- const edges=v.edges.filter(e=>keep.has(e.subjectId)&&keep.has(e.objectId)).slice(0,24).map(e=>({id:e.id,s:e.subjectId,o:e.objectId,predicate:e.predicate.replaceAll("_"," "),negated:e.negated}));
- return {center:centre,nodes:[...keep].map(id=>({id,name:name.get(id)??id})),edges};
 }
 /** Shortest path (up to 3 hops) between two concepts through candidate relationships. */
 export function pathBetween(b:DomainBundle,a:string,z:string):DomainEdge[]|null{
@@ -102,4 +101,11 @@ export function answerFromGraph(b:DomainBundle,q:string):Reply{
  }
  const id=ids[0]!,near=cands(b).filter(e=>e.subjectId===id||e.objectId===id);
  return {text:near.length?`${hits.get(id)} has ${near.length} recorded relationship${near.length===1?"":"s"} in the published graph. Showing the first ${Math.min(5,near.length)}.`:`${hits.get(id)} is in the graph but has no recorded relationships yet.`,lines:near.slice(0,5).map(src),links:[{to:"/research/knowledge-graph?netQuery="+encodeURIComponent(hits.get(id)!),label:"Open in the graph"}]};
+}
+
+/** Counts for the filter panel, from the unfiltered neighbourhood so every option shows what it would add. */
+export function facets(b:DomainBundle,v:ProgramView){
+ const byId=new Map(b.nodes.map(n=>[n.id,n])),count=(xs:string[])=>[...xs.reduce((m,x)=>m.set(x,(m.get(x)??0)+1),new Map<string,number>())].sort((a,c)=>c[1]-a[1]||a[0].localeCompare(c[0]));
+ const nodes=[...v.hop.keys()].map(i=>byId.get(i)).filter((n):n is NonNullable<typeof n>=>!!n);
+ return {kinds:count(nodes.map(n=>n.kind)),domains:count(nodes.flatMap(n=>n.domains)),models:count(v.edges.map(e=>e.model)),conditions:count(v.edges.flatMap(e=>e.conditions)),negated:v.edges.filter(e=>e.negated).length};
 }

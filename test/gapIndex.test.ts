@@ -37,4 +37,17 @@ describe('candidate graph gap index', () => {
     const items = buildGapIndex({ ...base, gaps: [{ ...gap, id: 'gap:z' }, { ...gap, id: 'gap:a' }] });
     expect(items.map(x => x.id)).toEqual(['gap:a','gap:z']);
   });
+  test('judges a gap with no direct edge on the relationships that touch either concept, so gaps differ', () => {
+    const sources = [{ id: 's1', title: 'S1', url: 'u', doi: null, pmid: null, identityStatus: 'repository_locator_not_reverified', rights: 'unverified', retrievedAt: null, passages: [] }];
+    const edge = { id: 'e1', subjectId: 'gene:1', objectId: 'other', predicate: 'p', kind: 'source_candidate', sourceId: 's1', model: 'mouse', negated: false,
+      tissue: null, population: null, assay: null, timepoint: null, intervention: null, outcome: null };
+    const g = { ...base, nodes: [...nodes, { id: 'other', name: 'O', kind: 'gene', aliases: [], domains: [] }], edges: [edge], sources } as any;
+    const [item] = buildGapIndex(g);
+    expect(item.supportingCandidateEdgeIds).toEqual([]);
+    expect(item.touchingCandidateEdgeIds).toEqual(['e1']);
+    expect(item.sourceIds).toEqual(['s1']);
+    expect(item.reasons.join(' ')).toContain('judged on those');
+    expect(item.reasons.join(' ')).toContain('verification remains incomplete');
+    expect(item.priorityScore).toBeLessThan(buildGapIndex(base)[0].priorityScore);
+  });
 });
