@@ -29,7 +29,7 @@ const GROUPS:{label:string;items:NavItem[]}[]=[
   {label:"Trial pre-screening",to:"/research/prescreen",icon:"clipboard",key:"prescreen"}]},
  {label:"Library",items:[
   {label:"Research Library",to:"/research/home#rh-library",icon:"book"},
-  {label:"Scientific Updates",to:"/research/home#rh-updates",icon:"bell"}]},
+  {label:"Scientific Updates",to:"/research/home#rh-radar",icon:"bell"}]},
 ];
 const deptIcon=(slug:string)=>DEPT_ICON[slug]??"graph";
 function AppearanceMenu({ap,set}:{ap:Appearance;set:(a:Appearance)=>void}){
@@ -71,7 +71,7 @@ export function ResearchAppShell({where,whereIcon="home",active,onSearch,childre
     {mine.length>0&&<Link className="rh-prog" to="/research/home#pr-h" aria-label={`Your research program: ${mine.slice(0,2).join(", ")}`}><Icon name="target" size={15}/><span>{mine.slice(0,2).join(" · ")}{mine.length>2?` +${mine.length-2}`:""}</span></Link>}
     {onSearch?<button type="button" className="rh-kbd" onClick={onSearch} aria-label="Focus search (Command K)"><Icon name="search" size={16}/> Search <kbd>⌘K</kbd></button>:<Link className="rh-kbd" to="/research/home#rh-q" aria-label="Search from Research Home"><Icon name="search" size={16}/> Search</Link>}
     <AppearanceMenu ap={ap} set={change}/>
-    <a className="rh-iconbtn" href="/research/home#rh-updates" aria-label="Scientific updates: none connected"><Icon name="bell" size={19}/></a>
+    <a className="rh-iconbtn" href="/research/home#rh-radar" aria-label="Scientific updates: none connected"><Icon name="bell" size={19}/></a>
     <Link className="rh-iconbtn" to="/research/account" aria-label="Profile and access"><Icon name="user" size={19}/></Link>
    </header>
    <div className="rh-body">

@@ -1,11 +1,11 @@
-import {useEffect,useMemo,useState} from "react";
+import {useEffect,useMemo,useState,type ReactNode} from "react";
 import {Link} from "react-router-dom";
 import type {DomainBundle} from "../../../../src/knowledgeGraph/domainGraph";
-import {buildGapRegister,parseTracking} from "../../../../src/knowledgeGraph/gapRegister";
-import {GAP_REGISTER_KEY,RUN_GAPS_KEY} from "../../lib/storageKeys";
+import {buildGapRegister} from "../../../../src/knowledgeGraph/gapRegister";
 import {STEPS,progressFor,readBrowserRecord,type BrowserRecord} from "../../lib/journey";
 import {Icon} from "./AppIcons";
 import type {ProgramView} from "../../lib/program";
+import type {Profile} from "../../lib/researchHome";
 
 const n=(x:number)=>x.toLocaleString("en-GB");
 const HUMAN=new Set(["human_in_vivo","human_ex_vivo","human_cell_line"]);
@@ -43,21 +43,25 @@ function tiles(b:DomainBundle|null,rec:BrowserRecord|null,v:ProgramView|null):Ti
  ];
 }
 
-/** Month grid that marks only days on which the researcher really set a gap status. Nothing is simulated. */
-function Activity({days}:{days:Set<string>}){
- const now=new Date(),y=now.getFullYear(),m=now.getMonth();
- const first=new Date(y,m,1),lead=(first.getDay()+6)%7,total=new Date(y,m+1,0).getDate();
- const cells=[...Array(lead).fill(null),...Array.from({length:total},(_,i)=>i+1)];
- const key=(d:number)=>`${y}-${String(m+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
- const marked=[...days].filter(d=>d.startsWith(`${y}-${String(m+1).padStart(2,"0")}`)).length;
+type Move={title:string;why:string;to:string};
+/** Next moves: derived only from the program's records and this browser's progress. Nothing is generated. */
+function moves(p:Profile,v:ProgramView|null,rec:BrowserRecord|null):Move[]{
+ const out:Move[]=[];
+ if(v&&v.anchors.length>=2)out.push({title:`Trace how ${v.anchors[0]!.name} connects to ${v.anchors[1]!.name}`,why:`${v.edges.length} recorded relationships sit within one hop of your anchors. Open the path and inspect each source.`,to:"/research/knowledge-graph"});
+ if(v){
+  out.push(v.gaps.length?{title:`Review ${v.gaps.length} recorded gap${v.gaps.length===1?"":"s"} in your area`,why:"Each lists what is missing and a possible next study.",to:"/research/gaps"}
+   :{title:"Find literature gaps for your topics",why:"No gap in the published graph touches your area. That is a coverage limit, so count literature co-mentions instead.",to:"/research/home#rh-gaps"});
+  if(v.human===0&&v.edges.length>0)out.push({title:"No human evidence in your area yet",why:"Every recorded relationship here rests on non-human models. That is where a human cohort question would add the most.",to:"/research/cohort"});
+ }
+ if(!p.orcid&&p.papers.length===0)out.push({title:"Add your own papers",why:"Your radar then follows the literature around your work.",to:"/welcome"});
+ if(rec){const next=STEPS.find(s=>progressFor(rec)[s.n]?.state!=="done");if(next)out.push({title:`Next in the loop: ${next.title}`,why:"The first step you have not recorded yet.",to:next.to})}
+ return out.slice(0,4);
+}
+function NextMoves({list}:{list:Move[]}){
  return (
-  <section className="pm-card pm-cal" aria-labelledby="pm-cal-h">
-   <header><h2 id="pm-cal-h">{now.toLocaleString("en-GB",{month:"long",year:"numeric"})}</h2><span className="pm-pill">{marked?`${marked} day${marked===1?"":"s"} with activity`:"No activity yet"}</span></header>
-   <ul className="pm-grid7" aria-label="Days this month on which you recorded work">
-    {["M","T","W","T","F","S","S"].map((d,i)=><li key={i} className="pm-dow" aria-hidden="true">{d}</li>)}
-    {cells.map((d,i)=>d===null?<li key={"e"+i} aria-hidden="true"/>:<li key={d} className="pm-day" data-on={days.has(key(d))} data-today={d===now.getDate()} aria-label={`${d} ${now.toLocaleString("en-GB",{month:"long"})}${days.has(key(d))?", you recorded work":""}`}>{d}</li>)}
-   </ul>
-   <p className="pm-note">Days appear when you set a status in the Gap Register. Kept in this browser only.</p>
+  <section className="pm-card pm-moves" aria-labelledby="pm-moves-h">
+   <header><h2 id="pm-moves-h">Next moves</h2></header>
+   {list.length===0?<p className="pm-note">Complete setup to see next moves for your area.</p>:<ol>{list.map(m=><li key={m.title}><Link to={m.to}><b>{m.title}</b><span>{m.why}</span></Link></li>)}</ol>}
   </section>
  );
 }
@@ -76,14 +80,11 @@ function Loop({rec}:{rec:BrowserRecord|null}){
 }
 
 /** The researcher's overview: real counts from the published graph and from this browser, no invented activity. */
-export function Overview({bundle,view=null}:{bundle:DomainBundle|null;view?:ProgramView|null}){
- const [rec,setRec]=useState<BrowserRecord|null>(null),[days,setDays]=useState<Set<string>>(new Set());
+export function Overview({bundle,view=null,profile,children}:{bundle:DomainBundle|null;view?:ProgramView|null;profile:Profile;children?:ReactNode}){
+ const [rec,setRec]=useState<BrowserRecord|null>(null);
  useEffect(()=>{
   try{
    setRec(readBrowserRecord(localStorage));
-   const d=new Set<string>();
-   for(const k of [GAP_REGISTER_KEY,RUN_GAPS_KEY])for(const v of Object.values(parseTracking(localStorage.getItem(k))))for(const h of v.history){const t=new Date(h.at);if(!Number.isNaN(t.getTime()))d.add(`${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,"0")}-${String(t.getDate()).padStart(2,"0")}`)}
-   setDays(d);
   }catch{setRec(null)}
  },[]);
  const list=useMemo(()=>tiles(bundle,rec,view),[bundle,rec,view]);
@@ -99,7 +100,8 @@ export function Overview({bundle,view=null}:{bundle:DomainBundle|null;view?:Prog
      </Link>
     ))}
    </section>
-   <div className="pm-pair"><Loop rec={rec}/><Activity days={days}/></div>
+   {children}
+   <div className="pm-pair"><Loop rec={rec}/><NextMoves list={moves(profile,view,rec)}/></div>
   </>
  );
 }

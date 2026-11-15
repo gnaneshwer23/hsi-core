@@ -39,7 +39,7 @@ test('cross-domain search returns typed graph concepts, follows, previews and op
  const hits=page.getByRole('list',{name:'Matching concepts'});
  await expect(hits).toContainText('Systemic sclerosis');
  await hits.getByRole('button',{name:'Follow'}).first().click();
- await expect(page.getByRole('region',{name:'Knowledge graph preview'})).toContainText('recorded relationships');
+ await expect(page.getByRole('region',{name:'Your knowledge graph'})).toContainText('recorded relationships');
  await expect(page.getByRole('region',{name:'Research library'})).toContainText('Systemic sclerosis');
  await expect(hits.getByRole('link',{name:'Open in graph'}).first()).toHaveAttribute('href',/netQuery=Systemic%20sclerosis/);
  await page.locator('#rh-q').fill('qqqzzzxx');
@@ -66,12 +66,11 @@ test('returning researcher sees saved investigations with an honest status and a
  await expect(cont.getByRole('link',{name:'Resume'})).toHaveAttribute('href','/research/decision-workbench?investigation='+item.id);
 });
 
-test('API failure and empty updates are stated, not simulated; axe is clean',async({page})=>{
+test('API failure is stated, not simulated; axe is clean',async({page})=>{
  await saved(page,500,{});
  await page.goto('/research/home');
  await page.getByRole('button',{name:'Skip for now'}).click();
  await expect(page.getByText('Saved investigations are temporarily unavailable.')).toBeVisible();
- await expect(page.getByRole('region',{name:'Scientific updates'})).toContainText('Nothing is simulated');
  const axe=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();
  expect(axe.violations.map(v=>v.id+': '+v.nodes.length)).toEqual([]);
 });
