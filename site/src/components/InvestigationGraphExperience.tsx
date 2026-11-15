@@ -1,3 +1,4 @@
+import {graphEvidenceReadiness} from "../../../src/knowledgeGraph/evidenceReadiness";
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import {
@@ -821,6 +822,7 @@ export function InvestigationGraphExperience({ embedded = false }: { embedded?: 
                   : 'Source-candidate finding'}
               </h3>
               <p className="ig-assertion">{edge.assertion}</p>
+              <details><summary>Evidence preparation requirements</summary><p>Graph annotations are not a verified passage extraction. This record still requires source-version binding, current permitted use, independent review and evaluation.</p><p>Missing recorded context: {graphEvidenceReadiness(bundle,[edge.id]).records[0]!.missingContext.join(', ')||'none'}.</p><p>Dose, cell state, sample size, controls and estimand require passage-linked curation. This view grants no scientific approval or model-transmission permission.</p></details>
               <code>{edge.id}</code>
               <p>
                 {edge.negated
@@ -963,6 +965,7 @@ export function InvestigationGraphExperience({ embedded = false }: { embedded?: 
               assertions: edges,
               sources: bundle.sources.filter((s) => sourceIds.has(s.id)),
               gaps: bundle.gaps.filter((g) => question!.gapIds.includes(g.id)),
+              evidenceReadiness: graphEvidenceReadiness(bundle,edges.map(e=>e.id)),
               sourceClearanceVerified: false,
               scientificApproval: false,
               graphPromotable: false,

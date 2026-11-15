@@ -275,7 +275,9 @@
     "fixture:synthetic-e2e:n4-adapter": "bun --no-env-file scripts/check-synthetic-e2e-n4-adapter.ts",
     "fixture:synthetic-e2e:honesty": "bun --no-env-file scripts/check-synthetic-e2e-honesty.ts",
     "research:seed-test-fixture": "bun scripts/seed-research-workspace-test-fixture.ts",
-    "benchmark:immuno:check": "bun --no-env-file scripts/immuno-benchmark.ts --check"
+    "benchmark:immuno:check": "bun --no-env-file scripts/immuno-benchmark.ts --check",
+    "graph:evidence:readiness": "bun scripts/graph-evidence-readiness.ts",
+    "graph:evidence:packet": "bun scripts/graph-evidence-readiness.ts --packet"
   },
   "packageManager": "bun@1.3.14",
   "engines": {

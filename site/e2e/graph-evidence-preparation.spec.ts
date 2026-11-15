@@ -1,0 +1,17 @@
+import {test,expect} from '@playwright/test';
+import {readFile} from 'node:fs/promises';
+test('research inspector and export preserve selected evidence-preparation blockers',async({page})=>{
+ await page.goto('/research/knowledge-graph?edge=DIAB-001');
+ await expect(page.locator('h1')).toHaveText('Investigate a biological connection.');
+ const assertion=page.getByRole('region',{name:'Selected assertion evidence'});
+ await assertion.getByText('Evidence preparation requirements',{exact:true}).click();
+ await expect(assertion).toContainText('current permitted use');
+ await expect(assertion).toContainText('controls and estimand require passage-linked curation');
+ const event=page.waitForEvent('download');await page.getByRole('button',{name:'Export inspected evidence JSON',exact:true}).click();
+ const out=JSON.parse(await readFile((await(await event).path())!,'utf8'));
+ expect(out.evidenceReadiness.graphVersion).toBe(out.graphVersion);
+ expect(out.evidenceReadiness.records.map((r:{edgeId:string})=>r.edgeId)).toEqual(out.assertions.map((r:{id:string})=>r.id));
+ expect(out.evidenceReadiness.liveExecutionAllowed).toBe(false);
+ expect(out.evidenceReadiness.sourceClearanceVerified).toBe(false);
+ expect(out.evidenceReadiness.records.find((r:{edgeId:string})=>r.edgeId==='DIAB-001').blockers).toContain('source_clearance_unverified');
+});

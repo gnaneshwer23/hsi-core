@@ -66,10 +66,10 @@ export type ComparabilityClass="not_comparable"|"insufficient_context"|"potentia
 const CRITICAL=new Set(["model","tissue","population","intervention","outcome measurement","subject","outcome entity","predicate"]);
 export function classifyComparability(g:DomainBundle,leftId:string,rightId:string):{class:ComparabilityClass;reason:string;differing:string[];missing:string[]}|null{
  const c=compareDomainEvidence(g,leftId,rightId);if(!c)return null;
- const missing=c.missingContext.filter(m=>m!=="dose"),differing=c.differences.map(d=>d.dimension).filter(d=>CRITICAL.has(d));
+ const missing=[...c.missingContext,...(c.left.model==="unspecified"||c.right.model==="unspecified"?["study system"]:[])],differing=c.differences.map(d=>d.dimension).filter(d=>CRITICAL.has(d));
  if(!c.sameEntityPair)return {class:"not_comparable",reason:"The two findings concern different concept pairs, so they cannot disagree with each other.",differing,missing};
- if(missing.length)return {class:"insufficient_context",reason:`Context is not recorded for ${missing.join(", ")}, so comparability cannot be judged. This is not evidence of agreement or disagreement.`,differing,missing};
  if(differing.length)return {class:"not_comparable",reason:`The experiments differ in ${differing.join(", ")}; a difference in result may reflect the difference in context.`,differing,missing};
+ if(missing.length)return {class:"insufficient_context",reason:`Context is not recorded for ${missing.join(", ")}, so comparability cannot be judged. This is not evidence of agreement or disagreement. Use passage-linked context to assess dose or document its applicability.`,differing,missing};
  if(c.left.negated!==c.right.negated)return {class:"potential_disagreement",reason:"Same concept pair, same recorded context, opposite findings. This needs independent review; it is not a confirmed contradiction.",differing,missing};
  return {class:"consistent_context",reason:"Same concept pair and recorded context with the same direction of finding. Agreement between two candidate records is not validation.",differing,missing};
 }

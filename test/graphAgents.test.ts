@@ -47,9 +47,9 @@ describe("PARALLAX: comparable disagreement is not the same as a non-comparable 
  });
  const cloneWith=(over:Record<string,unknown>)=>{const b=structuredClone(g) as DomainBundle;const e=candidates.find(x=>x.sourceId)!;const e2={...structuredClone(e),id:"TEST-CLONE-001",...over};b.edges.push(e2 as never);
   for(const x of b.edges.filter(x=>x.id===e.id||x.id==="TEST-CLONE-001"))Object.assign(x,{tissue:"colon",population:"adult",assay:"ELISA",timepoint:"day 7",intervention:"x",outcome:"y"});return {b,e};};
- test("identical recorded context with opposite findings is a potential disagreement needing review, not a contradiction",()=>{
+ test("matching graph annotations cannot bypass unrepresented dose to claim potential disagreement",()=>{
   const {b,e}=cloneWith({negated:!candidates.find(x=>x.sourceId)!.negated});
-  const k=classifyComparability(b,e.id,"TEST-CLONE-001")!;expect(k.class).toBe("potential_disagreement");expect(k.reason).toContain("not a confirmed contradiction");
+  const k=classifyComparability(b,e.id,"TEST-CLONE-001")!;expect(k.class).toBe("insufficient_context");expect(k.missing).toContain("dose");expect(k.reason).toContain("passage-linked context");
  });
  test("a different model or tissue makes the pair non-comparable and names the difference",()=>{
   const {b,e}=cloneWith({model:e0().model==="mouse"?"human_in_vivo":"mouse"});
