@@ -13,7 +13,7 @@ export function Layout() {
   const isAccountPage = isAccountPath(pathname);
   const isHome = pathname === "/";
   // The researcher home is an app shell with its own header and navigation.
-  const isApp = pathname === "/research/home" || pathname === "/research/workspace" || pathname === "/welcome";
+  const isApp = pathname === "/research/home" || pathname === "/research/workspace" || pathname === "/research/cohort" || pathname === "/welcome";
 
   useEffect(() => {
     // React Router does not scroll cross-page fragment links by itself.

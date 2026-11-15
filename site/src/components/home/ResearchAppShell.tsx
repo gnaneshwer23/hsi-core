@@ -6,7 +6,7 @@ import {DEPT_ICON,Icon} from "./AppIcons";
 import {ACCENTS,DEFAULT_APPEARANCE,loadAppearance,saveAppearance,type Appearance} from "../../lib/appearance";
 import "../../styles/research-home.css";
 
-export type ShellNav="home"|"investigations"|"graph"|"evidence"|"library"|"updates";
+export type ShellNav="home"|"investigations"|"cohort"|"graph"|"evidence"|"library"|"updates";
 const deptIcon=(slug:string)=>DEPT_ICON[slug]??"graph";
 function AppearanceMenu({ap,set}:{ap:Appearance;set:(a:Appearance)=>void}){
  const [open,setOpen]=useState(false);
@@ -48,6 +48,7 @@ export function ResearchAppShell({where,whereIcon="home",active,onSearch,childre
      <nav aria-label="Primary"><ul>
       <li><Link to="/research/home" aria-current={cur("home")}><Icon name="home"/>Home</Link></li>
       <li><Link to="/research/workspace" aria-current={cur("investigations")}><Icon name="flask"/>Investigations</Link></li>
+      <li><Link to="/research/cohort" aria-current={cur("cohort")}><Icon name="shield"/>Cohort (synthetic)</Link></li>
       <li><Link to="/research/knowledge-graph" aria-current={cur("graph")}><Icon name="graph"/>Knowledge Graph</Link></li>
       <li><Link to="/evidence-intelligence" aria-current={cur("evidence")}><Icon name="layers"/>Evidence Intelligence</Link></li>
       <li><Link to="/research/home#rh-library"><Icon name="book"/>Research Library</Link></li>
