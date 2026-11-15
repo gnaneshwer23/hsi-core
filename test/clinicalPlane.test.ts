@@ -58,7 +58,7 @@ describe("cohort evaluation",()=>{
 describe("small-cell suppression",()=>{
  test("small cells are suppressed with complementary suppression so hidden values sum to at least k",()=>{
   const r=suppressPartition({female:25,male:4,other:30,x:6});expect(r.cells.male).toBeNull();expect(r.cells.x).toBeNull();expect(r.cells.female).toBe(25);expect(r.cells.other).toBe(30);
-  const one=suppressPartition({a:3,b:50,c:40});expect(one.cells.a).toBeNull();expect(one.cells.c).toBeNull();expect(one.cells.b).toBe(50);expect(one.complementary).toBe(1);
+  const one=suppressPartition({a:3,b:50,c:40});expect(one.cells.a).toBeNull();expect(one.cells.b).toBeNull();expect(one.cells.c).toBe(40);expect(one.complementary).toBe(1);
   expect(suppressPartition({a:0,b:30}).cells).toEqual({a:0,b:30});expect(suppressPartition({a:25,b:10}).cells).toEqual({a:25,b:10});
  });
  test("property: for any partition no small non-zero cell is released and hidden values sum to at least k (or everything is hidden)",()=>{

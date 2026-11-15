@@ -41,3 +41,17 @@ test("pre-screening refuses an altered synthetic cohort file",async({page})=>{
  await expect(page.getByRole("alert")).toContainText("could not be loaded or verified");
  await expect(page.getByRole("button",{name:/Pre-screen/})).toBeDisabled();
 });
+
+test("pre-screening: the generated cohort releases counts for the small trial, with an illustrative notice, and shows no ids",async({page})=>{
+ await page.goto("/research/prescreen");
+ await page.getByRole("group",{name:"Choose a synthetic cohort"}).getByRole("button",{name:/Generated cohort \(5,000 profiles\)/}).click();
+ await expect(page.getByText(/Not calibrated to any real population/)).toBeVisible();
+ await page.getByRole("button",{name:/Immune:/}).click();
+ await page.getByRole("button",{name:/Pre-screen 5000 synthetic profiles/}).click();
+ await page.getByRole("button",{name:/Release with reviewer approval/}).click();
+ await expect(page.getByText(/Released\. A reviewer approved/)).toBeVisible();
+ await expect(page.getByText(/synthetic profiles are possibly eligible against a target of 12/)).toBeVisible();
+ await expect(page.getByText(/hidden to protect small groups, so no feasibility figure/)).toHaveCount(0);
+ await expect(page.locator("body")).not.toContainText(/SYN-[A-Z]-\d{6}/);
+ await expect(page.getByRole("table",{name:"Audit entries"})).toContainText("Generated cohort");
+});

@@ -9,6 +9,7 @@ import {addCohortObservation} from "../../../src/investigation/hypothesisLedger"
 import {useLedger} from "../lib/useLedger";
 import {loadDomainGraph} from "../lib/claimGraphClient";
 import {loadSyntheticCohort} from "../lib/syntheticCohortClient";
+import {SOURCES,generatedCohort,type CohortSource} from "../lib/cohortSource";
 import {ResearchAppShell} from "../components/home/ResearchAppShell";
 import {Icon} from "../components/home/AppIcons";
 import "../styles/research-home.css";
@@ -22,11 +23,12 @@ const cell=(v:number|null|undefined)=>v===null||v===undefined?<span className="c
 const REQUESTER="researcher-demo",REVIEWER:Approval={approverId:"reviewer-demo",role:"release_reviewer",decision:"approve",at:""};
 
 export function CohortPlanePage(){
- const [patients,setPatients]=useState<PlanePatient[]|null>(null),[bundle,setBundle]=useState<DomainBundle|null>(null),[err,setErr]=useState(""),[params]=useSearchParams(),[defId,setDefId]=useState(()=>DEFINITION_REGISTRY.find(d=>d.id===params.get("definition"))?.id??DEFINITION_REGISTRY[0]!.id),ledger=useLedger(),[recorded,setRecorded]=useState(""),[audit,setAudit]=useState<AuditLog>(emptyAudit()),
+ const [dataset,setPatients]=useState<PlanePatient[]|null>(null),[source,setSource]=useState<CohortSource>("dataset"),[bundle,setBundle]=useState<DomainBundle|null>(null),[err,setErr]=useState(""),[params]=useSearchParams(),[defId,setDefId]=useState(()=>DEFINITION_REGISTRY.find(d=>d.id===params.get("definition"))?.id??DEFINITION_REGISTRY[0]!.id),ledger=useLedger(),[recorded,setRecorded]=useState(""),[audit,setAudit]=useState<AuditLog>(emptyAudit()),
   [agg,setAgg]=useState<CohortAggregate|null>(null),[finding,setFinding]=useState<ReleasedFinding|null>(null),[msg,setMsg]=useState<{ok:boolean;text:string}|null>(null),[tamper,setTamper]=useState(false);
  useEffect(()=>{const c=new AbortController(),t=setTimeout(()=>c.abort(),15000);
   loadSyntheticCohort(c.signal).then(setPatients).catch(()=>{if(!c.signal.aborted)setErr("The synthetic cohort could not be loaded or verified. Nothing is shown.")});
   loadDomainGraph(null,c.signal).then(setBundle).catch(()=>{}).finally(()=>clearTimeout(t));return()=>{c.abort();clearTimeout(t)}},[]);
+ const patients=source==="generated"?generatedCohort():dataset,srcNote=SOURCES.find(x=>x.id===source)!;
  const def=useMemo<PhenotypeDefinition|null>(()=>{if(!bundle)return null;const d=(DEFINITION_REGISTRY.find(x=>x.id===defId)??DEFINITION_REGISTRY[0]!).build(bundle.version);const v=validateDefinition(d);return v.ok?v.def:null},[bundle,defId]);
  const gap=def&&bundle?bundle.gaps.find(g=>g.id===def.origin.ref):null;
  const ids=useMemo(()=>({matched:[] as string[]}),[]);
@@ -34,7 +36,7 @@ export function CohortPlanePage(){
  const hyp=ledger.ledger[params.get("hypothesis")??""]??null;
  const record=()=>{if(!hyp||!finding||!def)return;const r=addCohortObservation(hyp,{definitionId:def.id,definitionTitle:def.title,graphVersion:finding.graphVersion,aggregateDigest:finding.aggregateDigest,evaluated:finding.aggregate.counts.evaluated,matched:finding.aggregate.counts.matched,suppressedCells:finding.aggregate.suppression.cellsSuppressed,dataClass:finding.dataClass},new Date().toISOString());if(!r.ok){setRecorded(r.error);return}ledger.update(hyp.id,()=>r.entry);setRecorded("Attached to your hypothesis as a synthetic observation. It is not evidence and did not change the hypothesis status.")};
  const evaluate=()=>{if(!def||!patients)return;const r=evaluateCohort(def,patients);ids.matched=r.matchedIds;setAgg(r.aggregate);setFinding(null);setMsg(null);
-  setAudit(a=>appendAudit(a,{at:new Date().toISOString(),actor:REQUESTER,action:"cohort_evaluated",subject:def.id,detail:`${r.aggregate.counts.matched} matched of ${r.aggregate.counts.evaluated}; aggregate only held`}))};
+  setAudit(a=>appendAudit(a,{at:new Date().toISOString(),actor:REQUESTER,action:"cohort_evaluated",subject:def.id,detail:`${r.aggregate.counts.matched} matched of ${r.aggregate.counts.evaluated} (${srcNote.label}); aggregate only held`}))};
  const attempt=(kind:"noapproval"|"approved"|"rowlevel")=>{
   if(!def||!agg)return;const now=new Date().toISOString();
   const request:ReleaseRequest={definitionId:def.id,requestedBy:REQUESTER,purpose:"Illustrative synthetic cohort exploration",dataClass:"synthetic"};
@@ -58,6 +60,11 @@ export function CohortPlanePage(){
     </section>
 
     {hyp&&<p className="co-ctx" role="note">Exploring for your hypothesis: <b>{hyp.statement}</b> · <Link to="/research/ledger">back to the ledger</Link>{hyp.cohortDefinitionId&&hyp.cohortDefinitionId!==defId&&<> · This hypothesis is linked to a different definition, so a result from this one cannot be attached.</>}</p>}
+    <section className="rh-card" aria-labelledby="co-src-h">
+     <h2 id="co-src-h">Synthetic cohort</h2>
+     <div className="rh-choices co-defs" role="group" aria-label="Choose a synthetic cohort">{SOURCES.map(s=><button key={s.id} type="button" aria-pressed={source===s.id} onClick={()=>{setSource(s.id);reset()}}>{s.label}</button>)}</div>
+     <p className="rh-note">{srcNote.note}</p>
+    </section>
     <section className="rh-card" aria-labelledby="co-def-h">
      <h2 id="co-def-h">1. Definition</h2>
      <div className="rh-choices co-defs" role="group" aria-label="Choose a definition">
