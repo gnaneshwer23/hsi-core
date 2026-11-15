@@ -4,7 +4,7 @@ import {buildGraph,bucketOf,counts,filterCandidates,headline,pairKey,stageRail,y
 const cand=(id:string,subject:string,object:string,polarity:string,verification:string)=>({id,subject,object,polarity,verification,contexts:[],direction:"x",sentence:"s",sourceId:"s"+id}) as any;
 const run:any={entities:["IL-21","Tfh","B cells","Fibrosis"],records:[{sourceId:"s1"},{sourceId:"s2"}],
  candidates:[cand("1","IL-21","Tfh","supporting","agree_directional"),cand("2","IL-21","Tfh","uncertain","not_run"),cand("3","IL-21","B cells","opposing","agree_directional"),cand("4","IL-21","B cells","supporting","agree_directional"),cand("5","IL-21","Fibrosis","uncertain","disputed")],
- events:[{stage:"scoped",status:"ok",detail:"a"},{stage:"searched",status:"partial",detail:"b"},{stage:"retrieved",status:"ok",detail:"c"},{stage:"challenged",status:"skipped",detail:"d"}]};
+ events:[{stage:"scoped",status:"ok",detail:"a"},{stage:"searched",status:"partial",detail:"b"},{stage:"retrieved",status:"ok",detail:"c"},{stage:"challenged",status:"skipped",detail:"d"},{stage:"hypothesised",status:"skipped",detail:"e"}]};
 
 describe("workspace view logic",()=>{
  test("buckets and counts are derived from the candidates",()=>{
@@ -27,7 +27,7 @@ describe("workspace view logic",()=>{
  });
  test("the stage rail reflects recorded events only, takes the worst status per stage, and never invents progress",()=>{
   const r=stageRail(run,false),by=Object.fromEntries(r.map(x=>[x.key,x.state]));
-  expect(by).toMatchObject({plan:"done",retrieve:"partial",connect:"pending",compare:"pending",verify:"skipped",brief:"pending"});
+  expect(by).toMatchObject({plan:"done",retrieve:"partial",connect:"pending",compare:"pending",verify:"skipped",hypothesise:"skipped",brief:"pending"});
   expect(stageRail(null,false).every(s=>s.state==="pending")).toBe(true);
   const running=stageRail(null,true);expect(running.every(s=>s.state==="running"&&s.detail.includes("server"))).toBe(true);
  });

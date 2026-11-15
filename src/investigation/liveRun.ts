@@ -10,22 +10,22 @@ import {rejectPhiPayload} from "../cdsPhiBoundary";
 import {searchEuropePmc,searchOpenAlex,type LiveEvidenceRecord} from "../evidence/liveSources";
 import {openTargetsAdapter} from "../researchV2/sourceAdapters";
 import {combineDirections,runDirectionalChallenge,type DirectionalVerdict} from "./directionalChallenge";
-import type {EntailmentModelRunner} from "../researchV2/modelEntailment";
-import type {Budget} from "../modelProviders";
+import type {Budget,ModelRunner} from "../modelProviders";
+import {findingsFor,proposeHypotheses,type HypothesisOutcome} from "./hypotheses";
 
 export type LiveScenario={schemaVersion:"hsi-live-scenario-1";id:string;title:string;question:string;
  entities:{key:string;label:string;terms:string[]}[];relations:{id:string;subject:string;object:string}[];
  contexts:{key:string;label:string;terms:string[];openTargetsId?:string}[]};
-export type RunEvent={stage:"scoped"|"searched"|"retrieved"|"mapped"|"compared"|"challenged"|"brief";at:string;status:"ok"|"partial"|"failed"|"skipped";detail:string};
+export type RunEvent={stage:"scoped"|"searched"|"retrieved"|"mapped"|"compared"|"challenged"|"hypothesised"|"brief";at:string;status:"ok"|"partial"|"failed"|"skipped";detail:string};
 export type SearchOutcome={provider:string;context:string;status:"ok"|"failed";count:number;error:string|null;query:string};
 export type VerifierVerdict=DirectionalVerdict;
 export type Priority={score:number;reasons:string[]};
 export type Candidate={id:string;relationId:string;subject:string;object:string;contexts:string[];species:string|null;sourceId:string;sourceUrl:string;
  sentence:string;state:"extracted_candidate";lexicalPolarity:"supporting"|"opposing"|"uncertain";polarity:"supporting"|"opposing"|"uncertain";
  polarityBasis:"not_assessed"|"two_model_challenge";direction:"not_assessed"|"positive"|"negative"|"none"|"association_only"|"unresolved";priority:Priority;verification:"not_run"|"agree_directional"|"agree_association_only"|"disputed"|"insufficient_abstain"|"check_failed";verdicts:VerifierVerdict[];retraction:LiveEvidenceRecord["retraction"]};
-export type VerifierSlot={verifierId:string;modelId:string;runner:EntailmentModelRunner;/** Provider behind the runner. Defaults to verifierId. */providerId?:string};
+export type VerifierSlot={verifierId:string;modelId:string;runner:ModelRunner;/** Provider behind the runner. Defaults to verifierId. */providerId?:string};
 export type LiveRunInput={scenario:LiveScenario;fetcher?:FetchLike;now?:()=>string;signal?:AbortSignal;mailto?:string;
- verifiers?:readonly [VerifierSlot,VerifierSlot]|null;verifierReason?:string;budget?:Budget;perSearch?:number;maxVerified?:number};
+ verifiers?:readonly [VerifierSlot,VerifierSlot]|null;/** Hypotheses are skipped when the run has already used this many ms. Default 15000. */hypothesisBeforeMs?:number;verifierReason?:string;budget?:Budget;perSearch?:number;maxVerified?:number};
 
 const esc=(s:string)=>s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
 const has=(text:string,terms:readonly string[])=>terms.some(t=>new RegExp("(^|[^A-Za-z0-9])"+esc(t)+"($|[^A-Za-z0-9])","i").test(text));
@@ -87,7 +87,7 @@ function dedupe(rs:LiveEvidenceRecord[]){
  return out;
 }
 export async function runLiveInvestigation(input:LiveRunInput){
- const s=input.scenario,now=input.now??(()=>new Date().toISOString()),f=input.fetcher??fetch,events:RunEvent[]=[];
+ const t0=Date.now(),s=input.scenario,now=input.now??(()=>new Date().toISOString()),f=input.fetcher??fetch,events:RunEvent[]=[];
  const ev=(stage:RunEvent["stage"],status:RunEvent["status"],detail:string)=>events.push({stage,at:now(),status,detail});
  if(!rejectPhiPayload({textBlobs:[s.question]}).ok||s.question.length>500)throw Error("Invalid investigation question");
  ev("scoped","ok",`${s.entities.length} entities, ${s.contexts.length} disease contexts, ${s.relations.length} relationships to examine (scenario record ${s.id}).`);
@@ -147,6 +147,16 @@ export async function runLiveInvestigation(input:LiveRunInput){
   verification={status:errors?"partial":"completed",reason:null,checked,independence:distinct?"separate_providers_unverified":"independent_execution_only"};
   ev("challenged",errors?"partial":"ok",`${checked} highest-priority candidates (of ${candidates.length}) checked by two models for direction; agreement is not scientific proof. ${errors} model calls failed.`);
  }
+ // Hypotheses: only from findings both checks agreed on, by one model and challenged by the other. Unvalidated.
+ let hypotheses:HypothesisOutcome;
+ if(!v){hypotheses={status:"not_configured",reason:"Hypotheses need the two-model check, which did not run.",items:[],dropped:0,basis:{findings:0}};ev("hypothesised","skipped",hypotheses.reason!)}
+ else if(Date.now()-t0>(input.hypothesisBeforeMs??15000)||input.signal?.aborted){hypotheses={status:"skipped_time",reason:"The run had little time left, so hypotheses were skipped to stay within the request limit.",items:[],dropped:0,basis:{findings:0}};ev("hypothesised","skipped",hypotheses.reason!)}
+ else{
+  const recs=new Map(records.map(r=>[r.sourceId,r]));
+  const findings=findingsFor(candidates,id=>recs.get(id)?.title??id,id=>recs.get(id)?.publicationDate?.slice(0,4)??"n.d.",k=>s.contexts.find(c=>c.key===k)?.label??k);
+  hypotheses=await proposeHypotheses({findings,gen:v[0],critic:v[1],shouldStop:()=>!!input.signal?.aborted});
+  ev("hypothesised",hypotheses.status==="generated"?"ok":hypotheses.status==="failed"?"failed":"skipped",hypotheses.status==="generated"?`${hypotheses.items.length} unvalidated hypotheses proposed from ${findings.length} agreed findings; ${hypotheses.items.filter(h=>h.challenge).length} challenged by the second model.`:(hypotheses.reason??hypotheses.status));
+ }
  const byContext=Object.fromEntries(s.contexts.map(c=>[c.key,{label:c.label,records:records.filter(r=>(r as any).__ctx===c.key).length,
   supporting:candidates.filter(x=>x.contexts.includes(c.key)&&x.polarity==="supporting").map(x=>x.id),
   opposing:candidates.filter(x=>x.contexts.includes(c.key)&&x.polarity==="opposing").map(x=>x.id),
@@ -158,10 +168,10 @@ export async function runLiveInvestigation(input:LiveRunInput){
   ...(verification.status==="not_configured"?["Supporting and opposing directions were not assessed. A dedicated search for opposing evidence was not run."]:[]),
   ...(verification.status==="not_configured"?["The independent model challenge did not run, so no claim direction is assessed."]:[]),
   "Abstract-level evidence only: no full text, passage rights or retraction status beyond provider flags were checked.",
-  "Mechanistic interpretation and testable hypotheses are not generated in this version."
+  "Hypotheses are model proposals, unvalidated and unreviewed. They are not findings and not recommendations.",
  ];
  const body={schemaVersion:"hsi-live-investigation-1" as const,mode:"live" as const,scenarioId:s.id,question:s.question,version:1,
-  entities:s.entities.map(e=>e.label),searches,records:records.map(r=>{const {__ctx,abstract,...rest}=r as any;/* Abstracts are used for extraction only and are not redistributed in the brief; licence not assessed. */return {...rest,hasAbstract:!!abstract}}),targets,candidates,byContext,verification,gaps,
+  entities:s.entities.map(e=>e.label),searches,records:records.map(r=>{const {__ctx,abstract,...rest}=r as any;/* Abstracts are used for extraction only and are not redistributed in the brief; licence not assessed. */return {...rest,hasAbstract:!!abstract}}),targets,candidates,byContext,verification,hypotheses,gaps,
   budget:input.budget?.usage()??null,
   flags:{scientificApproval:false as const,graphPromotable:false as const,consensusEstablished:false as const,humanReview:"required" as const,clinicalAdvice:false as const,containsPhi:false as const}};
  ev("brief","ok",`Brief assembled: ${candidates.length} candidates, ${gaps.length} stated gaps.`);

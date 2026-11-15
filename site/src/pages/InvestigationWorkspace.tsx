@@ -14,7 +14,7 @@ function download(name:string,text:string,type:string){const u=URL.createObjectU
 
 function Rail({run,running}:{run:Run|null;running:boolean}){
  return <ol className="ws-rail" aria-label="Investigation stages, as recorded by the run">{stageRail(run,running).map((s,i)=>(
-  <li key={s.key} data-state={s.state} title={s.detail}><span className="ws-dot" aria-hidden="true">{s.state==="done"?<Icon name="check" size={14}/>:s.state==="failed"?<Icon name="x" size={14}/>:i+1}</span><b>{s.label}</b><small>{({pending:"Not run",running:"Running",done:"Done",partial:"Partial",failed:"Failed",skipped:"Skipped"})[s.state]}</small></li>))}</ol>;
+  <li key={s.key} data-state={s.state} title={s.detail}><span className="ws-dot" aria-hidden="true">{s.state==="done"?<Icon name="check" size={14}/>:s.state==="failed"?<Icon name="x" size={14}/>:i+1}</span><span className="ws-st"><b>{s.label}</b><small>{({pending:"Not run",running:"Running",done:"Done",partial:"Partial",failed:"Failed",skipped:"Skipped"})[s.state]}</small></span></li>))}</ol>;
 }
 
 function GraphView({run,pair,onPair}:{run:Run;pair:string|null;onPair:(p:string|null)=>void}){
@@ -120,7 +120,16 @@ export function InvestigationWorkspacePage(){
        </div>
        <details className="ws-acc" open><summary><Icon name="check" size={16}/>Evidence <b>{supporting.length}</b></summary><p>Claims both checks agreed on as positive. {supporting.length===0&&"None in this run."}</p><ul>{supporting.map(x=><li key={x.id}><button type="button" onClick={()=>setSel(x.id)}>{x.subject} ~ {x.object}</button></li>)}</ul></details>
        <details className="ws-acc"><summary><Icon name="x" size={16}/>Contradictions <b>{opposing.length}</b></summary><p>{run.verification.status==="not_configured"?"Not assessed: the model check did not run.":opposing.length===0?"None found in these sources. This does not establish consensus.":"Opposing or disputed claims."}</p><ul>{opposing.map(x=><li key={x.id}><button type="button" onClick={()=>setSel(x.id)}>{x.subject} ~ {x.object}</button></li>)}</ul></details>
-       <details className="ws-acc"><summary><Icon name="flask" size={16}/>Hypotheses <b>0</b></summary><p>Not generated in this version. Proposing testable hypotheses from checked findings is the next step.</p></details>
+       <details className="ws-acc" open={run.hypotheses.items.length>0}><summary><Icon name="flask" size={16}/>Hypotheses <b>{run.hypotheses.items.length}</b></summary>
+        {run.hypotheses.items.length===0?<p>{run.hypotheses.reason??"None proposed."}</p>:<>
+         <p className="ws-warn">Unvalidated model proposals from {run.hypotheses.basis.findings} agreed findings. Not findings, not recommendations, not reviewed.</p>
+         <ul className="ws-hyps">{run.hypotheses.items.map(hy=>(
+          <li key={hy.id}><span className="ws-tagline">Unvalidated hypothesis</span><b>{hy.statement}</b>
+           <div className="ws-cites" role="group" aria-label={`Findings behind ${hy.id}`}>{hy.citedClaimIds.map(id=>{const cc=run.candidates.find(x=>x.id===id);return cc?<button key={id} type="button" onClick={()=>setSel(id)}>{cc.subject} ~ {cc.object}</button>:null})}</div>
+           <p className="ws-chal" data-v={hy.challenge?.verdict??"none"}>{hy.challenge?`Second model: ${hy.challenge.verdict}. ${hy.challenge.reason}`:hy.challengeNote??"Not challenged."}</p>
+           <details><summary>Rationale, prediction, experiment, falsifier</summary>
+            <dl><dt>Why</dt><dd>{hy.rationale}</dd><dt>Prediction if true</dt><dd>{hy.prediction}</dd><dt>Experiment</dt><dd>{hy.experiment}</dd><dt>Would be falsified by</dt><dd>{hy.falsifier}</dd><dt>Limits</dt><dd>{hy.limits}</dd><dt>Proposed by</dt><dd>{hy.generatedBy.verifier} ({hy.generatedBy.model})</dd></dl></details></li>))}</ul></>}
+       </details>
        <details className="ws-acc"><summary><Icon name="book" size={16}/>Research brief</summary><p>An evidence-linked record of this run with its limits. Abstracts are not included.</p></details>
        <button type="button" className="ws-run ws-wide" onClick={()=>setBrief(b=>!b)} aria-expanded={brief}>{brief?"Hide research brief":"Open research brief"} <Icon name="arrow" size={16}/></button>
        {brief&&<pre className="ws-brief" tabIndex={0} aria-label="Research brief text">{renderLiveBriefMarkdown(run)}</pre>}
