@@ -101,6 +101,10 @@
   ],
   "rewrites": [
     {
+      "source": "/demo",
+      "destination": "/_pages/demo.html"
+    },
+    {
       "source": "/research/capabilities",
       "destination": "/_pages/research--capabilities.html"
     },
