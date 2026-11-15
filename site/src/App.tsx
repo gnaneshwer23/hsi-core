@@ -64,10 +64,12 @@ const SyntheticValidationWorkbench=lazy(()=>import("./pages/SyntheticValidationW
 const ClaimKnowledgeGraph=lazy(()=>import("./pages/ClaimKnowledgeGraph").then(m=>({default:m.ClaimKnowledgeGraph})));
 
 const CapabilityLab=lazy(()=>import("./pages/CapabilityLab").then(m=>({default:m.CapabilityLab})));
+const InvestorWorkspace=lazy(()=>import('./pages/demo/InvestorWorkspace').then(m=>({default:m.InvestorWorkspace})));
 
 export default function App() {
   return (
     <Routes>
+      <Route path="demo" element={<Suspense fallback={<p>Loading discovery workspace…</p>}><InvestorWorkspace/></Suspense>}/>
       <Route element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="research" element={<ResearchPublicPage/>}/>
