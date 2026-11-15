@@ -13,7 +13,7 @@ export function Layout() {
   const isAccountPage = isAccountPath(pathname);
   const isHome = pathname === "/";
   // The researcher home is an app shell with its own header and navigation.
-  const isApp = pathname === "/research/home" || pathname === "/research/workspace" || pathname === "/research/gaps" || pathname === "/research/ledger" || pathname === "/research/cohort" || pathname === "/research/targets" || pathname === "/research/prescreen" || pathname === "/research/journey" || pathname === "/research/evaluation" || pathname === "/research/methods" || pathname === "/welcome";
+  const isApp = pathname === "/research/home" || pathname === "/research/workspace" || pathname === "/research/gaps" || pathname === "/research/ledger" || pathname === "/research/cohort" || pathname === "/research/targets" || pathname === "/research/prescreen" || pathname === "/research/journey" || pathname === "/research/evaluation" || pathname === "/research/methods" || pathname === "/welcome" || pathname === "/research/knowledge-graph";
 
   useEffect(() => {
     // React Router does not scroll cross-page fragment links by itself.
@@ -48,7 +48,7 @@ export function Layout() {
       </a>
       {!isApp&&<Nav />}
       <main className="site-main" id="main-content" tabIndex={-1}>
-        {(["/research/capabilities","/research/knowledge-graph","/research/governance","/research/scientific-workbench","/research/mechanism-workflow","/research/decision-workbench","/research/scientific-review","/research/evidence-readiness","/science/graph","/science/clinical-trials"].includes(pathname))&&<ResearchNavigation/>}
+        {(["/research/capabilities","/research/governance","/research/scientific-workbench","/research/mechanism-workflow","/research/decision-workbench","/research/scientific-review","/research/evidence-readiness","/science/graph","/science/clinical-trials"].includes(pathname))&&<ResearchNavigation/>}
         <Suspense fallback={<p role="status" style={{padding:"3rem 1.5rem"}}>Loading research tools…</p>}><Outlet /></Suspense>
       </main>
       {!isApp&&<Footer />}
