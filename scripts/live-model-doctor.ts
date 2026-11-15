@@ -3,6 +3,7 @@
  * NEVER prints a key or any value other than model ids. Makes one free request (list models) and no model calls, so it costs nothing.
  * Usage: bun scripts/live-model-doctor.ts
  */
+export {}; // makes this file a module so top-level await is valid
 type Check={name:string;ok:boolean;detail:string};
 const env=process.env,checks:Check[]=[];
 const add=(name:string,ok:boolean,detail:string)=>checks.push({name,ok,detail});
