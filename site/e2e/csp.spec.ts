@@ -18,11 +18,16 @@ for(const route of ROUTES){
  test("no policy violations on "+route,async({page})=>{
   const issues:string[]=[];
   await page.route("**/*",async r=>{
+   // This checks the browser policy, not Europe PMC availability. Keep the
+   // allowed-origin request so CSP still applies, but make its response local.
+   const url=new URL(r.request().url());
+   if(url.origin==="https://www.ebi.ac.uk"&&url.pathname==="/europepmc/webservices/rest/search")return r.fulfill({json:{hitCount:0,resultList:{result:[]}},headers:{"access-control-allow-origin":"*"}});
    if(r.request().resourceType()!=="document")return r.continue();
    const resp=await r.fetch();return r.fulfill({response:resp,headers:{...resp.headers(),"content-security-policy":csp}});
   });
   page.on("console",m=>{if(/Content Security Policy|Refused to/i.test(m.text()))issues.push(m.text().slice(0,160))});
   await page.goto(route,{waitUntil:"networkidle"});await page.waitForTimeout(300);
+  if(route==="/science/literature")await expect(page.getByRole("status")).toHaveText("0 matching records · 0 displayed");
   expect(issues).toEqual([]);
  });
 }
