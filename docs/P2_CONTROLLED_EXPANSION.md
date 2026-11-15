@@ -1,5 +1,11 @@
 # P2 — Broaden only after reliable pilot evidence
 
+### Graph context-brief read/export guard (engineering only)
+
+`src/expansion/graphBriefRereviewGuard.ts` connects the P1 curator brief to the existing versioned-source re-review authority. Its server-only reader is disabled by default. A protected loader supplies the saved brief and complete archived source/version/clearance dependencies; independent scope authorization must prove current tenant and investigation access. Neither a browser-supplied artifact nor a role name grants access. The reader checks the exact brief hash/version/dependencies and requests current `display` or `export` permission on every call. Historical source invalidation therefore blocks both actions even after acknowledgement or supersession. A new replacement requires its own cleared artifact and scoped review. Storage/authority failures return a generic denial without source content.
+
+Tests exercise the actual local operations queue with synthetic artifacts, including retraction, acknowledged re-review, wrong scope and incomplete dependencies. This does not establish accepted deployment, real ownership/isolation, independent source rights or scientific review. No HTTP route, store activation, migration or P2 rollout is added. The draft depends on the P1 context-brief implementation; merge/release acceptance remains separate.
+
 **Status: preparation only; P2 is disabled.** Merged P0/P1 engineering and green tests are not P1-C acceptance. The current operating profile still lacks accepted live prerequisites, a verified 14-day soak, full restore/rollback evidence, signed release keys and real on-call delivery. No source pack, reviewer grant, planner, community feature, trial eligibility decision or clinical/PHI integration is activated here. Dr. Gnaneshwer Jadav's scientific-release-owner designation is not universal immunology reviewer authority.
 
 ## Dependency and human critical path
