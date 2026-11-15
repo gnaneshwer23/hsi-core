@@ -16,6 +16,7 @@ import "./styles/clinical-landing.css";
 import "./styles/marketing-page.css";
 import "./styles/research-public.css";
 import "./styles/public-system.css";
+import "./styles/premium-hsi.css";
 import "./styles/collective-system.css";
 
 const root=document.getElementById("root")!;

@@ -1,8 +1,7 @@
 import {Link} from "react-router-dom";
 import {JourneySteps} from "../components/home/JourneySteps";
-import "../styles/scientific-public.css";
-import "../styles/home-story.css";
 import "../styles/research-home.css";
+import "../styles/premium-public.css";
 
 const RUNS:[string,string][]=[
  ["Evidence services","Europe PMC, OpenAlex and Open Targets are queried when you ask. Nothing is stored or logged with your question."],
@@ -16,35 +15,36 @@ const GATES=["Approval of the two-plane architecture decision (done)","An indepe
 
 export function HowItWorksPage(){
  return (
-  <div className="sp-page fg-page hl-page">
-   <header className="fg-hook"><h1>How HSI works: one loop, eight steps.</h1><div><p className="fg-lead">Each step is a working screen. Each says what it shows, what it does not, and whether it uses live public sources, published graph data, synthetic data or your own records.</p>
-    <div className="sp-actions"><Link className="sp-button" to="/welcome">Set up your research home <span aria-hidden="true">→</span></Link><Link to="/research/journey">Open the guided walkthrough in the app →</Link></div></div></header>
+  <div className="pg-page pg-sub">
+   <header className="pg-phero">
+    <h1>How HSI works: one loop, eight steps.</h1>
+    <div><p className="pg-lead">Each step is a working screen. Each says what it shows, what it does not, and whether it uses live public sources, published graph data, synthetic data or your own records.</p>
+    <div className="pg-cta"><Link className="pg-btn" to="/welcome">Set up your research home <span aria-hidden="true">→</span></Link><Link className="pg-link" to="/research/journey">Open the guided walkthrough in the app <span aria-hidden="true">→</span></Link></div></div>
+   </header>
 
-   <section className="hl-section" aria-labelledby="hw-steps-h"><div className="hl-inner">
-    <h2 id="hw-steps-h" className="vh">The eight steps</h2>
+   <section className="pg-block" aria-labelledby="hw-steps-h">
+    <h2 id="hw-steps-h" className="pg-vh">The eight steps</h2>
     <JourneySteps headingLevel={3}/>
-   </div></section>
+   </section>
 
-   <section className="hl-section" aria-labelledby="hw-runs-h"><div className="hl-inner">
-    <h2 id="hw-runs-h">What runs where.</h2>
-    <div className="ps-tablewrap" tabIndex={0} role="region" aria-label="What runs where, scrollable"><table className="hl-table"><caption className="vh">What each part of HSI does and its status</caption><thead><tr><th scope="col">Part</th><th scope="col">Today</th></tr></thead><tbody>{RUNS.map(([a,b])=><tr key={a}><th scope="row">{a}</th><td>{b}</td></tr>)}</tbody></table></div>
-   </div></section>
+   <section className="pg-block pg-two" aria-labelledby="hw-runs-h">
+    <div><h2 id="hw-runs-h">What runs where.</h2><p className="pg-sub-p">Each part, and its status today.</p></div>
+    <div className="pg-tablewrap" tabIndex={0} role="region" aria-label="What runs where, scrollable"><table className="pg-table"><caption className="pg-vh">What each part of HSI does and its status</caption><thead><tr><th scope="col">Part</th><th scope="col">Today</th></tr></thead><tbody>{RUNS.map(([a,b])=><tr key={a}><th scope="row">{a}</th><td>{b}</td></tr>)}</tbody></table></div>
+   </section>
 
-   <section className="hl-section" aria-labelledby="hw-gate-h"><div className="hl-inner">
-    <h2 id="hw-gate-h">Before any real patient data.</h2>
-    <p className="ps-sub">These are not all in place. Until they are, patient steps stay synthetic and the gate refuses anything else.</p>
-    <ul className="hl-honest">{GATES.map(g=><li key={g}>{g}</li>)}</ul>
-    <p><Link className="ps-link" to="/trust">Read the governance and privacy information →</Link></p>
-   </div></section>
+   <section className="pg-block pg-two" aria-labelledby="hw-gate-h">
+    <div><h2 id="hw-gate-h">Before any real patient data.</h2><p className="pg-sub-p">These are not all in place. Until they are, patient steps stay synthetic and the gate refuses anything else.</p><p><Link className="pg-link" to="/trust">Read the governance and privacy information <span aria-hidden="true">→</span></Link></p></div>
+    <ul className="pg-gates">{GATES.map((g,i)=><li key={g} data-tone={["mint","lav","peach","sky"][i%4]}>{g}</li>)}</ul>
+   </section>
 
-   <section className="hl-section" aria-labelledby="hw-deeper-h"><div className="hl-inner">
-    <h2 id="hw-deeper-h">Go deeper in the app.</h2>
-    <ul className="hl-honest">
-     <li><Link to="/evidence-intelligence">Evidence intelligence</Link>: inspect source, passage, context and what is missing before comparing.</li>
-     <li><Link to="/context-conflict-audit">Context-Conflict Audit</Link>: see whether apparently conflicting findings share a biological and experimental context.</li>
-     <li><Link to="/research/knowledge-graph">Claim-level knowledge graph</Link>: each relationship with its publication, passage and what is missing.</li>
+   <section className="pg-block pg-two" aria-labelledby="hw-deeper-h">
+    <div><h2 id="hw-deeper-h">Go deeper in the app.</h2></div>
+    <ul className="pg-gates">
+     <li data-tone="mint"><Link to="/evidence-intelligence">Evidence intelligence</Link>: inspect source, passage, context and what is missing before comparing.</li>
+     <li data-tone="lav"><Link to="/context-conflict-audit">Context-Conflict Audit</Link>: see whether apparently conflicting findings share a biological and experimental context.</li>
+     <li data-tone="peach"><Link to="/research/knowledge-graph">Claim-level knowledge graph</Link>: each relationship with its publication, passage and what is missing.</li>
     </ul>
-   </div></section>
+   </section>
   </div>
  );
 }

@@ -7,6 +7,7 @@ import {ACCENTS,DEFAULT_APPEARANCE,loadAppearance,saveAppearance,type Appearance
 import {CADENCES,EMPTY_PROFILE,GOALS,loadProfile,parseOrcid,parsePaperIds,ROLES,saveProfile,STAGES,type Profile} from "../lib/researchHome";
 import "../styles/research-home.css";
 import "../styles/welcome.css";
+import "../styles/premium-app.css";
 
 const STEPS=["About you","Your research","Your work","Preferences"] as const;
 const CAD:Record<string,string>={off:"Off",weekly:"Weekly",daily:"Daily"};
@@ -31,11 +32,21 @@ export function WelcomePage(){
  return (
   <div className="rh-app wl" data-theme={ap.theme} data-accent={ap.accent}>
    <header className="wl-top"><Link to="/" className="rh-brand" aria-label="Human Super Intelligence, public site"><HsiIdentity/></Link><button type="button" className="rh-ghost" onClick={()=>finish(true)}>Skip setup</button></header>
-   <main className="wl-main" id="main-content" tabIndex={-1}>
-    <p className="wl-kicker">Set up your research home</p>
-    <h1>Tell us what you work on, so your home starts useful.</h1>
-    <p className="wl-lead">Two minutes, all optional. We use it to find new papers, spot gaps and suggest concepts for your area. It stays on this device. No health information is asked for.</p>
-    <ol className="rh-steps wl-steps" aria-label="Setup steps">{STEPS.map((t,i)=><li key={t} aria-current={i===step?"step":undefined} data-done={i<step}><span>{i<step?<Icon name="check" size={14}/>:i+1}</span>{t}</li>)}</ol>
+   <main className="wl-main wl-split" id="main-content" tabIndex={-1}>
+    <aside className="wl-aside" aria-label="Your research home, as set up so far">
+     <h1>Tell us what you work on, so your home starts useful.</h1>
+     <p className="wl-lead">Two minutes, all optional. We use it to find new papers, spot gaps and suggest concepts for your area. It stays on this device. No health information is asked for.</p>
+     <ol className="rh-steps wl-steps" aria-label="Setup steps">{STEPS.map((t,i)=><li key={t} aria-current={i===step?"step":undefined} data-done={i<step}><span>{i<step?<Icon name="check" size={14}/>:i+1}</span>{t}</li>)}</ol>
+     <div className="wl-preview" aria-live="polite">
+      <b>Your home will start with</b>
+      <ul>
+       <li>{p.interests.length?`A radar for ${p.interests.slice(0,3).map(i=>departments.find(d=>d.slug===i)?.name??i).join(", ")}${p.interests.length>3?` and ${p.interests.length-3} more`:""}`:"A radar once you add a topic"}</li>
+       <li>{p.goals.length?`Suggestions tuned to ${p.goals.length} goal${p.goals.length===1?"":"s"}`:"General suggestions from the published graph"}</li>
+       <li>{orc?"Your own papers from public sources":"Your own papers, if you add an ORCID iD"}</li>
+      </ul>
+     </div>
+    </aside>
+    <div className="wl-formcol">
     <section className="wl-card" aria-labelledby="wl-step">
      <h2 id="wl-step">{STEPS[step]}</h2>
      {step===0&&<>
@@ -75,6 +86,7 @@ export function WelcomePage(){
       {step<3&&<button type="button" className="rh-ghost" onClick={()=>setStep(step+1)} disabled={step===2&&orcBad}>Skip this step</button>}
      </div>
     </section>
+    </div>
    </main>
   </div>
  );

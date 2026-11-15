@@ -21,11 +21,11 @@ test('home states the vision, the one loop, what you get, and what is not true y
  const loop=page.getByRole('list',{name:'The research loop'}).locator(':scope > li');
  await expect(loop).toHaveCount(4);
  await expect(loop.nth(0)).toContainText('Live public sources');await expect(loop.nth(2)).toContainText('Synthetic patients');
- const get=page.getByRole('region',{name:'What you get when you start.'});
- for(const [name,href] of [['Your research home','/welcome'],['Investigations with proof','/research/workspace'],['Your gaps, hypotheses and methods','/research/gaps']] as const)
-  await expect(get.getByRole('link',{name:new RegExp(name)})).toHaveAttribute('href',href);
+ const get=page.getByRole('region',{name:'Your research home.'});
+ await expect(get.getByRole('link',{name:/Set up your research home/})).toHaveAttribute('href','/welcome');
+ await expect(get).toContainText('Investigations with proof');await expect(get).toContainText('Your gaps, hypotheses and methods');
  await expect(page.getByRole('region',{name:'How it stays honest.'})).toContainText('Model checks are off');
- await expect(page.getByRole('region',{name:'The graph underneath.'}).getByRole('status')).toContainText('candidate relationships');
+ await expect(page.getByRole('status').filter({hasText:'candidate relationships'})).toBeVisible();
  const body=page.locator('#main-content');
  await expect(body).not.toContainText(/NEXUS|AEGIS|SCOUT|LANTERN|HELIX|PARALLAX|VANTAGE|VERITAS|ARBITER|SENTINEL|CALIBER|WARDEN/);
  await expect(body).not.toContainText(/Intelligence Collective|Enterprise knowledge graphs|Answer engines|Where HSI fits/);

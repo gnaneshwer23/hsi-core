@@ -4,6 +4,7 @@ import "../styles/knowledge-graph-public.css";
 import "../styles/home-redesign.css";
 import {ProductTour} from "../components/home/ProductStory";
 import "../styles/home-story.css";
+import "../styles/premium-public.css";
 import {useGraphSnapshot,GraphSnapshotProvider} from "../components/home/useGraphSnapshot";
 import {HomeResearchGraph as Explorer} from "../components/HomeResearchGraph";
 import {NeighbourhoodDiagram,ChartsPair} from "../components/graph/GraphCharts";
@@ -115,24 +116,24 @@ function FaqList(){
 
 export function KnowledgeGraphPublicPage() {
   return (
-    <GraphSnapshotProvider><div className="sp-page fg-page kg-page">
-      <header className="fg-hook">
+    <GraphSnapshotProvider><div className="sp-page fg-page kg-page pg-page pg-sub">
+      <header className="pg-phero kg-phero">
         <h1>Relationships between biological entities, with the evidence attached.</h1>
         <div>
-          <p className="fg-lead">A graph of what research reports about cells, molecules, tissues and conditions, with every connection tied to its source, context and review status.</p>
-          <div className="sp-actions">
-            <Link className="sp-button" to="#home-knowledge-graph">Explore the graph <span aria-hidden="true">→</span></Link>
-            <Link to="/evidence-intelligence">Inspect the evidence →</Link>
+          <p className="pg-lead">A graph of what research reports about cells, molecules, tissues and conditions, with every connection tied to its source, context and review status. Search it, follow a connection, open its source.</p>
+          <div className="pg-cta">
+            <Link className="pg-btn" to="#home-knowledge-graph">Explore the graph <span aria-hidden="true">→</span></Link>
+            <Link className="pg-link" to="/evidence-intelligence">Inspect the evidence <span aria-hidden="true">→</span></Link>
           </div>
-          <p className="fg-status">Published snapshot · candidate-only · unreviewed</p>
+          <p className="pg-micro">Published snapshot · candidate-only · unreviewed</p>
         </div>
       </header>
+
+      <Explorer />
 
       <NeighbourhoodFigure />
       <WalkFigure />
       <ChartsFigure />
-
-      <Explorer />
 
       <ProductTour heading="Your own area of the graph."/>
 

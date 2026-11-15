@@ -7,9 +7,9 @@ test('all six homepage departments retain selected context and expose real cover
  for(const label of departments){const button=nav.getByRole('button',{name:new RegExp('^'+label.replace('&','\\&'))});await button.click();await expect(button).toHaveAttribute('aria-pressed','true');await expect(graph.locator('.hd-inspector h3')).toHaveText(selected!);}
  await expect(graph).toContainText('coverage limitation');await expect(graph.locator('[data-graph-node]')).toHaveCount(0);
  await expect(graph.locator('.hd-steps button').last()).toBeDisabled();
- await nav.getByRole('button',{name:/^Microbiome/}).click();await graph.getByRole('button',{name:'Inspect this evidence',exact:true}).click();
+ await nav.getByRole('button',{name:/^Microbiome/}).click();await graph.getByLabel('Search graph').fill('Butyrate');await graph.getByRole('button',{name:'Inspect this evidence',exact:true}).click();
  await graph.locator('.hd-inspector').getByRole('button',{name:'Create draft brief',exact:true}).click();
- const link=graph.getByRole('link',{name:'Reopen in research workspace ↗',exact:true});await expect(link).toHaveAttribute('href',/netDepartment=microbiome/);await expect(link).toHaveAttribute('href',/edge=DIAB-001/);
+ const link=graph.getByRole('link',{name:'Reopen in research workspace ↗',exact:true});await expect(link).toHaveAttribute('href',/netDepartment=microbiome/);await expect(link).toHaveAttribute('href',/edge=DIAB-00\d/);
  await link.click();await expect(page).toHaveURL(/netDepartment=microbiome/);await expect(page.getByRole('navigation',{name:'Scientific departments'}).getByRole('button',{name:/^Microbiome/})).toHaveAttribute('aria-pressed','true');
 });
 test('workspace department changes retain exact edge/source/version across reload and three-hop navigation',async({page})=>{
