@@ -1,3 +1,4 @@
+import {graphEvidenceReadiness} from "../../../src/knowledgeGraph/evidenceReadiness";
 import {useEffect,useMemo,useState} from "react";
 import type {DomainBundle} from "../../../src/knowledgeGraph/domainGraph";
 import {buildInvestigationRecord,buildSelectionContext,investigateSelection,proposeFromFinding,verifyInvestigationRecord,type AgentName,type AgentProposal,type AgentResponse,type Finding} from "../../../src/knowledgeGraph/graphAgents";
@@ -53,6 +54,7 @@ export function GraphInvestigation({bundle,nodeIds,edgeIds,department,onRemoveNo
  // Results belong to the selection that produced them: a changed selection or question clears them.
  const key=built.ctx?JSON.stringify([built.ctx.nodeIds,built.ctx.edgeIds,built.ctx.question,built.ctx.department]):"";
  const [lastKey,setLastKey]=useState(key);if(key!==lastKey){setLastKey(key);if(responses.length)setResponses([]);if(proposal)setProposal(null)}
+ const readiness=useMemo(()=>graphEvidenceReadiness(bundle,edgeIds),[bundle,edgeIds]);
  const empty=nodeIds.length===0&&edgeIds.length===0;
  const record=built.ctx&&responses.length?buildInvestigationRecord(bundle,built.ctx,responses.map(r=>r.agent)):null;
  const problems=record?verifyInvestigationRecord(bundle,record):[];
@@ -63,6 +65,7 @@ export function GraphInvestigation({bundle,nodeIds,edgeIds,department,onRemoveNo
    <div><h3>Concepts ({nodeIds.length})</h3>{nodeIds.length?<ul>{nodeIds.map(id=><li key={id}>{name(id)} <button className="gi-x" onClick={()=>onRemoveNode(id)} aria-label={`Remove ${name(id)} from the investigation`}>Remove</button></li>)}</ul>:<p>None yet. Use “Add to investigation” on a concept.</p>}</div>
    <div><h3>Relationships ({edgeIds.length})</h3>{edgeIds.length?<ul>{edgeIds.map(id=><li key={id}>{id} <button className="gi-x" onClick={()=>onRemoveEdge(id)} aria-label={`Remove relationship ${id} from the investigation`}>Remove</button></li>)}</ul>:<p>None yet. Use “Add to investigation” on a relationship.</p>}</div>
   </div>
+  {edgeIds.length>0&&<section className="gi-card" aria-label="Evidence preparation requirements"><h3>Evidence preparation requirements</h3><p>These are unverified graph annotations. Source text alone does not establish a passage binding, permission or scientific review.</p><ul>{readiness.records.map(r=><li key={r.edgeId}><strong>{r.edgeId}</strong>: {r.kind==='research_gap'?'An open question, not supporting evidence.':`Missing recorded context: ${r.missingContext.join(', ')||'none'}. Exact passages, current source permissions and independent review still required.`}</li>)}</ul><p>Dose, cell state, sample size, controls and estimand require detailed passage-linked curation.</p><button className="gi-btn" onClick={()=>download(readiness,'hsi-evidence-preparation-requirements.json')}>Download preparation requirements</button></section>}
   <label className="gi-field">Research question<textarea rows={2} maxLength={500} value={question} onChange={e=>setQuestion(e.target.value)}/></label>
   {built.err&&!empty&&<p className="gi-error" role="alert">{built.err}</p>}
   <div className="gi-actions" role="group" aria-label="Choose an agent">
