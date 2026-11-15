@@ -55,7 +55,7 @@ const AuthenticatedInterrogativeWorkbench=lazy(()=>import("./pages/Authenticated
 const ResearchMechanismWorkflowPage=lazy(()=>import("./pages/ResearchMechanismWorkflow").then(m=>({default:m.ResearchMechanismWorkflowPage})));
 const ScientificDiscoveryExperience=lazy(()=>import("./pages/ScientificDiscoveryExperience").then(m=>({default:m.ScientificDiscoveryExperience})));
 const ScientificInvestigationPage=lazy(()=>import("./pages/ScientificInvestigation").then(m=>({default:m.ScientificInvestigationPage})));
-const ResearcherHomePage=lazy(()=>import("./pages/ResearcherHome").then(m=>({default:m.ResearcherHome})));
+const ResearcherHomePage=lazy(()=>import("./pages/ResearchHome").then(m=>({default:m.ResearchHome})));
 const ResearchCommunityFeedPage=lazy(()=>import("./pages/ResearchCommunityFeed").then(m=>({default:m.ResearchCommunityFeed})));
 
 const OntologyMappingReview=lazy(()=>import("./pages/OntologyMappingReview").then(m=>({default:m.OntologyMappingReview})));

@@ -1,6 +1,7 @@
 import {Link,useLocation} from "react-router-dom";
 /** Investigation deep-links require `?investigation=hsi-interrogative-…` — bare workbench is a dead end. */
 export const RESEARCH_NAV_ITEMS=[
+ {to:"/research/home",label:"Home"},
  {to:"/research/dashboard",label:"Dashboard"},
  {to:"/research/dashboard#dashboard-workspace",label:"Investigation"},
  {to:"/research/mechanism-workflow",label:"Connected path"},
