@@ -60,12 +60,14 @@ export function buildGapRegister(bundle:DomainBundle):GapRegisterEntry[]{
 export type GapEvent={at:string;status:GapStatus;graphVersion:string;touchingCount:number;note?:string};
 export type GapTracking=Record<string,{status:GapStatus;history:GapEvent[]}>;
 export const MAX_NOTE=300,MAX_HISTORY=50;
-export function recordStatus(t:GapTracking,entry:GapRegisterEntry,status:GapStatus,at:string,note?:string):GapTracking{
- if(!GAP_STATUSES.includes(status))return t;
- const prev=t[entry.id],clean=note?.trim().slice(0,MAX_NOTE)||undefined;
- const ev:GapEvent={at,status,graphVersion:entry.graphVersion,touchingCount:entry.touching.length+entry.opposing.length,...(clean?{note:clean}:{})};
- return {...t,[entry.id]:{status,history:[...(prev?.history??[]),ev].slice(-MAX_HISTORY)}};
+/** Generic form: `version` is the graph version or run hash the status was set against; `count` the evidence count then. */
+export function recordTracked(t:GapTracking,id:string,version:string,count:number,status:GapStatus,at:string,note?:string):GapTracking{
+ if(!GAP_STATUSES.includes(status)||id.length>220)return t;
+ const prev=t[id],clean=note?.trim().slice(0,MAX_NOTE)||undefined;
+ const ev:GapEvent={at,status,graphVersion:version,touchingCount:count,...(clean?{note:clean}:{})};
+ return {...t,[id]:{status,history:[...(prev?.history??[]),ev].slice(-MAX_HISTORY)}};
 }
+export const recordStatus=(t:GapTracking,entry:GapRegisterEntry,status:GapStatus,at:string,note?:string):GapTracking=>recordTracked(t,entry.id,entry.graphVersion,entry.touching.length+entry.opposing.length,status,at,note);
 /** True when the graph now records a different amount of touching evidence than when the researcher last set a status. */
 export function evidenceChangedSince(t:GapTracking,entry:GapRegisterEntry):{changed:boolean;from?:number;to:number;sinceVersion?:string}{
  const last=t[entry.id]?.history.at(-1),to=entry.touching.length+entry.opposing.length;

@@ -58,6 +58,13 @@ const ScientificInvestigationPage=lazy(()=>import("./pages/ScientificInvestigati
 const InvestigationWorkspaceRoute=lazy(()=>import("./pages/InvestigationWorkspace").then(m=>({default:m.InvestigationWorkspacePage})));
 const WelcomeRoute=lazy(()=>import("./pages/Welcome").then(m=>({default:m.WelcomePage})));
 const GapRegisterRoute=lazy(()=>import("./pages/GapRegister").then(m=>({default:m.GapRegisterPage})));
+const HypothesisLedgerRoute=lazy(()=>import("./pages/HypothesisLedger").then(m=>({default:m.HypothesisLedgerPage})));
+const CohortPlaneRoute=lazy(()=>import("./pages/CohortPlane").then(m=>({default:m.CohortPlanePage})));
+const TargetWorkflowRoute=lazy(()=>import("./pages/TargetWorkflow").then(m=>({default:m.TargetWorkflowPage})));
+const TrialPrescreenRoute=lazy(()=>import("./pages/TrialPrescreen").then(m=>({default:m.TrialPrescreenPage})));
+const ResearchJourneyRoute=lazy(()=>import("./pages/ResearchJourney").then(m=>({default:m.ResearchJourneyPage})));
+const MethodsSharingRoute=lazy(()=>import("./pages/MethodsSharing").then(m=>({default:m.MethodsSharingPage})));
+const EvaluationSetRoute=lazy(()=>import("./pages/EvaluationSet").then(m=>({default:m.EvaluationSetPage})));
 const ResearcherHomePage=lazy(()=>import("./pages/ResearchHome").then(m=>({default:m.ResearchHome})));
 const ResearchCommunityFeedPage=lazy(()=>import("./pages/ResearchCommunityFeed").then(m=>({default:m.ResearchCommunityFeed})));
 
@@ -147,6 +154,13 @@ export default function App() {
         <Route path="research/workspace" element={<Suspense fallback={<p role="status">Loading workspace…</p>}><InvestigationWorkspaceRoute/></Suspense>} />
         <Route path="welcome" element={<Suspense fallback={<p role="status">Loading…</p>}><WelcomeRoute/></Suspense>} />
         <Route path="research/gaps" element={<Suspense fallback={<p role="status">Loading gap register…</p>}><GapRegisterRoute/></Suspense>} />
+        <Route path="research/ledger" element={<Suspense fallback={<p role="status">Loading ledger…</p>}><HypothesisLedgerRoute/></Suspense>} />
+        <Route path="research/cohort" element={<Suspense fallback={<p role="status">Loading cohort…</p>}><CohortPlaneRoute/></Suspense>} />
+        <Route path="research/targets" element={<Suspense fallback={<p role="status">Loading targets…</p>}><TargetWorkflowRoute/></Suspense>} />
+        <Route path="research/prescreen" element={<Suspense fallback={<p role="status">Loading pre-screening…</p>}><TrialPrescreenRoute/></Suspense>} />
+        <Route path="research/journey" element={<Suspense fallback={<p role="status">Loading walkthrough…</p>}><ResearchJourneyRoute/></Suspense>} />
+        <Route path="research/methods" element={<Suspense fallback={<p role="status">Loading methods…</p>}><MethodsSharingRoute/></Suspense>} />
+        <Route path="research/evaluation" element={<Suspense fallback={<p role="status">Loading evaluation…</p>}><EvaluationSetRoute/></Suspense>} />
         <Route path="research/home" element={<Suspense fallback={<p role="status">Loading workspace…</p>}><ResearcherHomePage/></Suspense>} />
         <Route path="research/community-feed" element={<Suspense fallback={<p role="status">Loading community…</p>}><ResearchCommunityFeedPage/></Suspense>} />
         <Route path="science/clinical-trials" element={<ScienceClinicalTrials />} />

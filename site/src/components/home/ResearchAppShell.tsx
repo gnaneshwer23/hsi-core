@@ -6,7 +6,7 @@ import {DEPT_ICON,Icon} from "./AppIcons";
 import {ACCENTS,DEFAULT_APPEARANCE,loadAppearance,saveAppearance,type Appearance} from "../../lib/appearance";
 import "../../styles/research-home.css";
 
-export type ShellNav="home"|"investigations"|"gaps"|"graph"|"evidence"|"library"|"updates";
+export type ShellNav="home"|"investigations"|"gaps"|"ledger"|"targets"|"cohort"|"prescreen"|"journey"|"methods"|"evaluation"|"graph"|"evidence"|"library"|"updates";
 const deptIcon=(slug:string)=>DEPT_ICON[slug]??"graph";
 function AppearanceMenu({ap,set}:{ap:Appearance;set:(a:Appearance)=>void}){
  const [open,setOpen]=useState(false);
@@ -47,8 +47,15 @@ export function ResearchAppShell({where,whereIcon="home",active,onSearch,childre
     <aside className="rh-nav" id="rh-nav" data-open={menu} aria-label="Research navigation">
      <nav aria-label="Primary"><ul>
       <li><Link to="/research/home" aria-current={cur("home")}><Icon name="home"/>Home</Link></li>
+      <li><Link to="/research/journey" aria-current={cur("journey")}><Icon name="spark"/>Guided walkthrough</Link></li>
       <li><Link to="/research/workspace" aria-current={cur("investigations")}><Icon name="flask"/>Investigations</Link></li>
+      <li><Link to="/research/methods" aria-current={cur("methods")}><Icon name="flask"/>Research methods</Link></li>
+      <li><Link to="/research/evaluation" aria-current={cur("evaluation")}><Icon name="shield"/>Evaluation set</Link></li>
       <li><Link to="/research/gaps" aria-current={cur("gaps")}><Icon name="layers"/>Gap Register</Link></li>
+      <li><Link to="/research/ledger" aria-current={cur("ledger")}><Icon name="flask"/>Hypothesis Ledger</Link></li>
+      <li><Link to="/research/targets" aria-current={cur("targets")}><Icon name="flask"/>Candidate targets</Link></li>
+      <li><Link to="/research/prescreen" aria-current={cur("prescreen")}><Icon name="shield"/>Trial pre-screening</Link></li>
+      <li><Link to="/research/cohort" aria-current={cur("cohort")}><Icon name="shield"/>Cohort (synthetic)</Link></li>
       <li><Link to="/research/knowledge-graph" aria-current={cur("graph")}><Icon name="graph"/>Knowledge Graph</Link></li>
       <li><Link to="/evidence-intelligence" aria-current={cur("evidence")}><Icon name="layers"/>Evidence Intelligence</Link></li>
       <li><Link to="/research/home#rh-library"><Icon name="book"/>Research Library</Link></li>

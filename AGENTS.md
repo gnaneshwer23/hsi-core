@@ -40,6 +40,8 @@ Substrate, seeds, maps, exports, docs, and curator checklists (markdown under `d
 
 ~590 skills under `~/.cursor/skills/` — **do not** always-load them. Task→skill map: [`docs/AGENT_SKILLS.md`](docs/AGENT_SKILLS.md). Thin Cursor rules in `.cursor/rules/`. Do not wire browse-adjacent tools (PentAGI, RAG-Anything, Anime.js, MediSearch, Hippocratic, Nabla) into this repo.
 
-## CDS / PHI (binding non-goal)
+## CDS / PHI (binding boundary, amended by ADR-0010)
 
-**No live CDS and no PHI in HSI.** Do not wire Aksh/Akeno clinic engines, patient stores, EHR write-back, or PHI→LLM into this repo. Lift only governance / reject helpers / honesty asserts — see [`docs/CDS_PHI_BOUNDARY.md`](docs/CDS_PHI_BOUNDARY.md) and `src/cdsPhiBoundary.ts`. Aksh product CDS/PHI stays out-of-scope on purpose.
+**No PHI and no live CDS in `hsi-core`, the scientific plane.** Do not wire Aksh/Akeno clinic engines, patient stores, EHR write-back, or PHI→LLM into this repo. Lift only governance / reject helpers / honesty asserts — see [`docs/CDS_PHI_BOUNDARY.md`](docs/CDS_PHI_BOUNDARY.md) and `src/cdsPhiBoundary.ts`. Aksh product CDS/PHI stays out-of-scope on purpose.
+
+**Patient and clinical intelligence is a separate clinical plane** ([`docs/architecture/ADR-0010-TWO-PLANE-CLINICAL-ARCHITECTURE.md`](docs/architecture/ADR-0010-TWO-PLANE-CLINICAL-ARCHITECTURE.md), accepted 15 November 2026). In this repo it exists only as synthetic-data, lift-ready code under `src/clinicalPlane/` and the pages that demonstrate it. The release gate refuses non-synthetic data in code. Real patient data, identifiers or records never enter this repository, its database, logs, tests or prompts, and enabling real data needs the owner's explicit written approval after every gate in the ADR is closed. Interim role entries in the ADR do not close those gates.

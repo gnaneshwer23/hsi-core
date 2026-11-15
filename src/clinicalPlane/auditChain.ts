@@ -1,10 +1,10 @@
 /** Append-only, hash-chained audit log for the clinical plane (21 CFR Part 11 / ALCOA+ posture: attributable, contemporaneous, tamper-evident). Pure and immutable: append returns a new log. */
-import {createHash} from "node:crypto";
+import {sha256Hex} from "./sha256";
 export type AuditEntry={seq:number;at:string;actor:string;action:string;subject:string;detail:string;prevHash:string;hash:string};
 export type AuditLog={readonly entries:readonly AuditEntry[]};
 export const GENESIS="0".repeat(64);
 export const canonical=(v:unknown):string=>Array.isArray(v)?"["+v.map(canonical).join(",")+"]":v&&typeof v==="object"?"{"+Object.keys(v as object).sort().map(k=>JSON.stringify(k)+":"+canonical((v as Record<string,unknown>)[k])).join(",")+"}":JSON.stringify(v);
-export const sha256=(v:unknown)=>createHash("sha256").update(typeof v==="string"?v:canonical(v)).digest("hex");
+export const sha256=(v:unknown)=>sha256Hex(typeof v==="string"?v:canonical(v));
 const body=(e:Omit<AuditEntry,"hash">)=>sha256({seq:e.seq,at:e.at,actor:e.actor,action:e.action,subject:e.subject,detail:e.detail,prevHash:e.prevHash});
 export const emptyAudit=():AuditLog=>({entries:[]});
 export function appendAudit(log:AuditLog,e:{at:string;actor:string;action:string;subject:string;detail:string}):AuditLog{

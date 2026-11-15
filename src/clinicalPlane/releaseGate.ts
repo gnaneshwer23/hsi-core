@@ -15,7 +15,7 @@ export type RefusalReason="invalid_request"|"real_data_not_enabled"|"row_level_p
 export const RELEASE_ROLES=["release_reviewer"] as const;
 
 const KEYS=/^(patient_?ids?|ids?|matched_?ids?|rows?|records?|nhs_?number|mrn|name|dob|date_?of_?birth|address|postcode|email|phone)$/i;
-const IDLIKE=/SYN-P-\d+|\b\d{10}\b|[\w.+-]+@[\w-]+\.[\w.]+/;
+const IDLIKE=/SYN-[A-Z]-\d+|\b\d{10}\b|[\w.+-]+@[\w-]+\.[\w.]+/;
 /** Deep scan for keys or values that identify a person or carry a record. */
 export function findRowLevel(v:unknown,path="$"):string|null{
  if(typeof v==="string")return IDLIKE.test(v)?path:null;
@@ -26,14 +26,15 @@ export function findRowLevel(v:unknown,path="$"):string|null{
 const small=(n:number,k:number)=>n>0&&n<k;
 /**
  * Suppress a partition whose total is disclosed elsewhere. Cells with 0 < n < k are suppressed. Because the total is known, a
- * single suppressed cell would be recovered by subtraction, so the smallest remaining non-zero cells are also suppressed until
- * the hidden values together sum to at least k (complementary suppression). Zero cells are released.
+ * single suppressed cell would be recovered by subtraction, so the largest remaining non-zero cells are also suppressed until
+ * the hidden values together sum to at least k (complementary suppression), choosing the largest remaining cells first. Zero cells are released.
  */
 export function suppressPartition(cells:Record<string,number>,k=SMALL_CELL_THRESHOLD):{cells:Record<string,number|null>;suppressed:number;complementary:number}{
  const hidden=new Set(Object.entries(cells).filter(([,n])=>small(n,k)).map(([key])=>key)),primary=hidden.size;
  if(primary>0){
   const sum=()=>[...hidden].reduce((t,key)=>t+cells[key]!,0);
-  const rest=Object.entries(cells).filter(([key,n])=>!hidden.has(key)&&n>0).sort((x,y)=>x[1]-y[1]);
+  // The largest remaining cell is hidden, not the smallest: it protects the small cell just as well (the attacker still cannot split the hidden sum) and keeps the small, informative counts visible.
+  const rest=Object.entries(cells).filter(([key,n])=>!hidden.has(key)&&n>0).sort((x,y)=>y[1]-x[1]);
   while(sum()<k&&rest.length>0)hidden.add(rest.shift()![0]);
  }
  const out:Record<string,number|null>={};for(const [key,n] of Object.entries(cells))out[key]=hidden.has(key)?null:n;
