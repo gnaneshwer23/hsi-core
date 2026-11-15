@@ -58,9 +58,16 @@ export function HomeLanding(){
       </ul>
       <div className="pg-cta"><Link className="pg-btn" to="/welcome">Set up your research home <span aria-hidden="true">→</span></Link></div>
      </div>
-     <figure className="pg-shot">
-      <img src="/images/product/dashboard.jpg" width={1440} height={900} alt="The HSI research home: a glass sidebar, a search box, and four overview tiles for concepts, recorded relationships, gaps and your loop progress." loading="lazy" decoding="async"/>
-     </figure>
+     <div className="pg-shots">
+      <figure className="pg-shot">
+       <img src="/images/product/dashboard-v2.webp" width={1440} height={1120} alt="The researcher home: four numbers for your own research area, then your knowledge graph with a panel listing the recorded relationships of the selected concept, each with its source." loading="lazy" decoding="async"/>
+       <figcaption><b>Your home.</b> Built from your own topics: the numbers, the graph around them and the evidence behind each line.</figcaption>
+      </figure>
+      <figure className="pg-shot">
+       <img src="/images/product/explorer-v2.webp" width={1440} height={900} alt="The knowledge graph explorer: a dark live network coloured by department with amber markers for research gaps, and a panel showing evidence by model and a research gap with its status." loading="lazy" decoding="async"/>
+       <figcaption><b>The explorer.</b> Filter, select, trace a route between concepts and open any research gap with its evidence.</figcaption>
+      </figure>
+     </div>
     </section>
 
     <section className="pg-honest" aria-labelledby="pg-honest-h">

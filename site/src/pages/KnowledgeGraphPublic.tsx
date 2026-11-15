@@ -2,12 +2,12 @@ import {Link} from "react-router-dom";
 import "../styles/scientific-public.css";
 import "../styles/knowledge-graph-public.css";
 import "../styles/home-redesign.css";
-import {ProductTour} from "../components/home/ProductStory";
+import {LiveGraphHero} from "../components/home/LiveGraphHero";
 import "../styles/home-story.css";
 import "../styles/premium-public.css";
 import {useGraphSnapshot,GraphSnapshotProvider} from "../components/home/useGraphSnapshot";
 import {HomeResearchGraph as Explorer} from "../components/HomeResearchGraph";
-import {NeighbourhoodDiagram,ChartsPair} from "../components/graph/GraphCharts";
+import {ChartsPair} from "../components/graph/GraphCharts";
 
 /** Public entry to the HSI knowledge graph. It links only to surfaces that exist and states what each one is. */
 const ways = [
@@ -71,17 +71,7 @@ function WalkFigure(){
           {e?<><p>Model: {e.model}. Design: {e.design}.{e.tissue?` Tissue: ${e.tissue}.`:""}</p><p>{e.limits}</p>{e.warnings.map(w=><p key={w}>{w}</p>)}</>:<p className="fg-wait">{failed?"Unavailable.":"Verifying snapshot…"}</p>}
         </section>
       </div>
-      <figcaption id="kg-walk-cap" className="fg-cap"><b>Figure 2.</b> One relationship from the published snapshot{s?` (${s.version})`:""}, followed back to its source. It is a candidate and unreviewed. The assertion is an editorial annotation pending source verification, and the source is a bibliographic record whose passage has not been retrieved.</figcaption>
-    </figure>
-  );
-}
-
-/** Figure 1: a real neighbourhood of the snapshot. */
-function NeighbourhoodFigure(){
-  return (
-    <figure className="fg kg-fig" aria-labelledby="kg-f1">
-      <div className="kg-fig-body"><NeighbourhoodDiagram/></div>
-      <figcaption id="kg-f1" className="fg-cap"><b>Figure 1.</b> A neighbourhood of the published snapshot: one concept and the concepts it is recorded as connected to. Layout and distance are not biology. Every relationship is a candidate and unreviewed.</figcaption>
+      <figcaption id="kg-walk-cap" className="fg-cap"><b>Figure 1.</b> One relationship from the published snapshot{s?` (${s.version})`:""}, followed back to its source. It is a candidate and unreviewed. The assertion is an editorial annotation pending source verification, and the source is a bibliographic record whose passage has not been retrieved.</figcaption>
     </figure>
   );
 }
@@ -91,17 +81,14 @@ function ChartsFigure(){
   return (
     <figure className="fg kg-fig" aria-labelledby="kg-f3">
       <div className="kg-fig-body"><ChartsPair/></div>
-      <figcaption id="kg-f3" className="fg-cap"><b>Figure 3.</b> What the snapshot covers and how it describes relationships. Counts are read from the published snapshot and the department tags, and they will change as the graph is extended.</figcaption>
+      <figcaption id="kg-f3" className="fg-cap"><b>Figure 2.</b> What the snapshot covers and how it describes relationships. Counts are read from the published snapshot and the department tags, and they will change as the graph is extended.</figcaption>
     </figure>
   );
 }
 
 const faq:[string,string][]=[
   ["Does a line prove causation?","No. A line is a recorded connection. Study design, species and context still decide what it can support."],
-  ["Does more than one source mean more certainty?","No. Several records can come from one study, and source count supports navigation, not conclusions."],
   ["Has anything been reviewed?","Nothing here has scientific approval. The graph holds candidates for independent review, and graph promotion is a separate decision."],
-  ["Is the layout meaningful?","No. Layout and distance on screen are not biology, and coverage is unequal across systems."],
-  ["Does it use patient data or give clinical advice?","No. No patient data enters the research graph, and nothing here is clinical advice."],
 ];
 function FaqList(){
   return (
@@ -117,25 +104,28 @@ function FaqList(){
 export function KnowledgeGraphPublicPage() {
   return (
     <GraphSnapshotProvider><div className="sp-page fg-page kg-page pg-page pg-sub">
-      <header className="pg-phero kg-phero">
-        <h1>Relationships between biological entities, with the evidence attached.</h1>
-        <div>
-          <p className="pg-lead">A graph of what research reports about cells, molecules, tissues and conditions, with every connection tied to its source, context and review status. Search it, follow a connection, open its source.</p>
+      <section className="pg-hero pg-hero-dark kg-phero" aria-labelledby="kg-title">
+        <div className="pg-hero-copy">
+          <h1 id="kg-title">Relationships between biological entities, with the evidence attached.</h1>
+          <p className="pg-lead">A graph of what research reports about cells, molecules, tissues and conditions, with every connection tied to its source, context and review status. Drag it, follow a connection, open its source.</p>
           <div className="pg-cta">
-            <Link className="pg-btn" to="#home-knowledge-graph">Explore the graph <span aria-hidden="true">→</span></Link>
-            <Link className="pg-link" to="/evidence-intelligence">Inspect the evidence <span aria-hidden="true">→</span></Link>
+            <Link className="pg-btn pg-btn-light" to="#home-knowledge-graph">Explore the graph <span aria-hidden="true">→</span></Link>
+            <Link className="pg-link pg-link-light" to="/research/knowledge-graph">Open the full explorer <span aria-hidden="true">→</span></Link>
           </div>
           <p className="pg-micro">Published snapshot · candidate-only · unreviewed</p>
         </div>
-      </header>
+        <LiveGraphHero/>
+      </section>
+
+      <section className="kg-section kg-intro" aria-labelledby="kg-walk-h">
+        <h2 id="kg-walk-h">Follow a connection to its source.</h2>
+        <p>Choose a department, pick a relationship, and read the study behind it: its model, design, limits and what is missing.</p>
+      </section>
 
       <Explorer />
 
-      <NeighbourhoodFigure />
       <WalkFigure />
       <ChartsFigure />
-
-      <ProductTour heading="Your own area of the graph."/>
 
       <section className="kg-section" aria-labelledby="kg-ways">
         <h2 id="kg-ways">Choose how deep to go.</h2>

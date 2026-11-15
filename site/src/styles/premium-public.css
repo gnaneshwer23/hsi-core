@@ -152,3 +152,26 @@
 .lg-wait{display:grid;place-items:center;min-height:380px;border-radius:26px;border:1px dashed #3a4580}
 .og-showcase .og-tools button{min-height:44px}
 @media(max-width:980px){.pg-page .pg-hero.pg-hero-dark{grid-template-columns:1fr;border-radius:28px;margin-inline:12px}}
+
+/* Product proof: real captures, large enough to read */
+.pg-page .pg-product{grid-template-columns:1fr}
+.pg-page .pg-product .pg-product-copy{max-width:760px}
+.pg-shots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:start;margin-top:8px}
+.pg-shots .pg-shot{margin:0;display:grid;gap:12px}
+.pg-shots .pg-shot img{width:100%;height:auto;border-radius:20px;border:1px solid rgba(53,45,110,.14);box-shadow:0 30px 70px rgba(53,45,110,.14);display:block}
+.pg-shots figcaption{font-size:15px;line-height:1.55;color:#38455a;padding:0 4px}
+@media(max-width:900px){.pg-shots{grid-template-columns:1fr}}
+
+/* Page headers share the landing hero: one dark, confident header across the public site. */
+.pg-sub .pg-phero.pg-phero,.hsi-public .hsi-page-hero.hsi-page-hero{background-color:#11143a;background-image:linear-gradient(135deg,#0b1020 0%,#161a45 62%,#231f63 100%);color:#e9ecf8;border:0;box-shadow:0 40px 90px rgba(18,20,60,.24)}
+.pg-sub .pg-phero.pg-phero h1,.hsi-public .hsi-page-hero.hsi-page-hero h1{color:#fff}
+.pg-sub .pg-phero.pg-phero .pg-lead,.hsi-public .hsi-page-hero.hsi-page-hero .hsi-lead,.pg-sub .pg-phero.pg-phero p,.hsi-public .hsi-page-hero.hsi-page-hero p{color:#c9d0ea}
+.pg-sub .pg-phero .pg-micro{color:#9fa9cc}
+.pg-sub .pg-phero .pg-btn,.hsi-public .hsi-page-hero.hsi-page-hero .hsi-action:not(.hsi-action-secondary){background:#fff;color:#11143a!important;border-color:#fff}
+.pg-sub .pg-phero .pg-btn:hover,.hsi-public .hsi-page-hero .hsi-action:not(.hsi-action-secondary):hover{background:#ebe7fb}
+.pg-sub .pg-phero .pg-link,.hsi-public .hsi-page-hero.hsi-page-hero .hsi-action-secondary,.pg-sub .pg-phero a:not(.pg-btn){color:#dcd7ff!important;border-color:rgba(220,215,255,.5);background:transparent}
+.pg-sub .pg-phero a:focus-visible,.hsi-public .hsi-page-hero a:focus-visible{outline:3px solid #fff;outline-offset:3px}
+
+/* Cards: neutral surfaces, with colour kept for meaning (status chips), not decoration. */
+.pg-sub .pg-block li[data-tone],.hsi-public .hsi-card,.hsi-public [class*="hsi-step"]{background:#fff}
+.hsi-public .hsi-card{border:1px solid #e1e5f0}
