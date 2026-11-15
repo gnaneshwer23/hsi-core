@@ -257,6 +257,10 @@
       "destination": "/_pages/research--prescreen.html"
     },
     {
+      "source": "/research/journey",
+      "destination": "/_pages/research--journey.html"
+    },
+    {
       "source": "/research/workspace",
       "destination": "/_pages/research--workspace.html"
     },

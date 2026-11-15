@@ -6,7 +6,7 @@ import {DEPT_ICON,Icon} from "./AppIcons";
 import {ACCENTS,DEFAULT_APPEARANCE,loadAppearance,saveAppearance,type Appearance} from "../../lib/appearance";
 import "../../styles/research-home.css";
 
-export type ShellNav="home"|"investigations"|"gaps"|"ledger"|"targets"|"cohort"|"prescreen"|"graph"|"evidence"|"library"|"updates";
+export type ShellNav="home"|"investigations"|"gaps"|"ledger"|"targets"|"cohort"|"prescreen"|"journey"|"graph"|"evidence"|"library"|"updates";
 const deptIcon=(slug:string)=>DEPT_ICON[slug]??"graph";
 function AppearanceMenu({ap,set}:{ap:Appearance;set:(a:Appearance)=>void}){
  const [open,setOpen]=useState(false);
@@ -47,6 +47,7 @@ export function ResearchAppShell({where,whereIcon="home",active,onSearch,childre
     <aside className="rh-nav" id="rh-nav" data-open={menu} aria-label="Research navigation">
      <nav aria-label="Primary"><ul>
       <li><Link to="/research/home" aria-current={cur("home")}><Icon name="home"/>Home</Link></li>
+      <li><Link to="/research/journey" aria-current={cur("journey")}><Icon name="spark"/>Guided walkthrough</Link></li>
       <li><Link to="/research/workspace" aria-current={cur("investigations")}><Icon name="flask"/>Investigations</Link></li>
       <li><Link to="/research/gaps" aria-current={cur("gaps")}><Icon name="layers"/>Gap Register</Link></li>
       <li><Link to="/research/ledger" aria-current={cur("ledger")}><Icon name="flask"/>Hypothesis Ledger</Link></li>
