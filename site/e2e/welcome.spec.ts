@@ -81,3 +81,19 @@ test('welcome page: axe clean and no horizontal scroll at 390px',async({page})=>
  expect((await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze()).violations.map(v=>v.id+': '+v.nodes.length)).toEqual([]);
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+1)).toBe(true);
 });
+
+test('uploaded documents are read in the browser, add DOIs and concept chips, and satisfy the work step',async({page})=>{
+ await noApi(page);
+ const sent:string[]=[];page.on('request',r=>{if(r.method()==='POST')sent.push(r.url())});
+ await page.goto('/welcome');
+ await page.getByRole('button',{name:'Fill in an example'}).click();
+ await page.getByRole('button',{name:'Next'}).click();
+ await page.getByRole('button',{name:'Next'}).click();
+ await page.locator('#wl-papers').fill('');
+ await expect(page.getByRole('button',{name:'Next'})).toBeDisabled();
+ await page.locator('#wl-files').setInputFiles(['e2e/fixtures/cv.docx','e2e/fixtures/p.pdf']);
+ await expect(page.getByText(/characters read/).first()).toBeVisible();
+ await expect(page.locator('#wl-papers')).toHaveValue(/10\.1186\/s13075-015-0660-z/);
+ await expect(page.getByRole('button',{name:'Next'})).toBeEnabled();
+ expect(sent.filter(u=>/upload|evidence|file/i.test(u))).toEqual([]);
+});

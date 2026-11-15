@@ -4,15 +4,15 @@ import type {DomainBundle} from "../../../src/knowledgeGraph/domainGraph";
 import {matchScenario} from "../../../src/investigation/scenarios";
 import {loadDomainGraph} from "../lib/claimGraphClient";
 import {departments} from "../lib/departments";
-import {NetworkView} from "../components/graph/GraphCharts";
 import {ResearchAppShell} from "../components/home/ResearchAppShell";
 import {RadarCard} from "../components/home/RadarCard";
 import {GapCard} from "../components/home/GapCard";
 import {AskCard} from "../components/home/AskCard";
 import {Overview} from "../components/home/Overview";
 import {Program} from "../components/home/Program";
-import {DEPT_ICON,HeroNetwork,Icon} from "../components/home/AppIcons";
-import {EMPTY_PROFILE,LIVE_RUN_KEY,summariseSavedLiveRun,type SavedLiveRun,classifyIntent,focusNetwork,GOALS,INVESTIGATION_STATUS,loadProfile,looksLikeTrialId,recommend,resetProfile,ROLES,saveProfile,searchEntities,type Profile} from "../lib/researchHome";
+import {programView} from "../lib/program";
+import {DEPT_ICON,Icon} from "../components/home/AppIcons";
+import {EMPTY_PROFILE,LIVE_RUN_KEY,summariseSavedLiveRun,type SavedLiveRun,classifyIntent,GOALS,INVESTIGATION_STATUS,loadProfile,looksLikeTrialId,recommend,resetProfile,ROLES,saveProfile,searchEntities,type Profile} from "../lib/researchHome";
 import "../styles/research-home.css";
 
 type Saved={id:string;question:string;createdAt:string;state:string};
@@ -72,17 +72,16 @@ function SearchHero({bundle,profile,follow,inputRef,ready}:{bundle:DomainBundle|
  const followed=new Set(profile.followed.map(f=>f.id)),live=matchScenario(q);
  return (
   <section className="rh-hero" aria-labelledby="rh-search-h">
-   <HeroNetwork/>
    <div className="rh-hero-copy">
-    <h1 id="rh-title">{profile.onboarded&&(profile.interests.length||profile.followed.length)?"Welcome back. What would you like to investigate?":"What would you like to investigate?"}</h1>
+    <h1 id="rh-title">{profile.onboarded&&(profile.interests.length||profile.followed.length)?"Your research":"What would you like to investigate?"}</h1>
     <h2 id="rh-search-h" className="rh-vh">Search and investigate</h2>
     <label htmlFor="rh-q" className="rh-vh">Investigate a gene, pathway, disease, mechanism or research question</label>
     <div className="rh-searchbar">
      <Icon name="search" size={22}/>
      <input id="rh-q" ref={inputRef} type="search" value={q} maxLength={500} autoComplete="off" onChange={e=>setQ(e.target.value)} placeholder="Investigate a gene, pathway, disease, biological mechanism or research question…" aria-describedby="rh-q-help"/>
-     <button type="button" className="rh-go" onClick={()=>{const t=q.trim();if(!t){inputRef.current?.focus();return}nav(live?"/research/workspace":investigateHref(intent==="investigation"?t:`What does the evidence say about ${t}?`))}}><Icon name="spark" size={18}/> Investigate</button>
+     <button type="button" className="rh-go" onClick={()=>{const t=q.trim();if(!t){inputRef.current?.focus();return}nav(live?"/research/workspace":investigateHref(intent==="investigation"?t:`What does the evidence say about ${t}?`))}}>Investigate <Icon name="arrow" size={16}/></button>
     </div>
-    {ready&&!profile.question&&!profile.orcid&&<p className="rh-note"><Link to="/welcome">Tell us about your research</Link> (2 minutes, optional) so suggestions fit your area.</p>}
+    {ready&&!profile.onboarded&&<p className="rh-note"><Link to="/welcome">Tell us about your research</Link> (2 minutes) so your home is built around your area.</p>}
     <p id="rh-q-help" className="rh-note">{bundle?`Searching ${n(bundle.nodes.length)} concepts in the published graph (candidates, unreviewed). Entities outside it are not searched yet.`:"Verifying the published graph…"}</p>
     <div role="status" aria-live="polite" className="rh-results">
      {intent!=="empty"&&<div className="rh-panel">
@@ -94,7 +93,7 @@ function SearchHero({bundle,profile,follow,inputRef,ready}:{bundle:DomainBundle|
        <p>{intent==="investigation"?"This reads as a research question. Choose how to work on it:":"You can also treat this as a question:"}</p>
        <div className="rh-row">
         <Link className="rh-ghost" to={graphHref(q.trim())}>Quick Explore in the graph</Link>
-        {live&&<Link className="rh-primary" to="/research/workspace"><Icon name="spark" size={16}/> Deep Investigate: run live</Link>}
+        {live&&<Link className="rh-primary" to="/research/workspace">Deep Investigate: run live</Link>}
         <Link className={live?"rh-ghost":"rh-primary"} to={investigateHref(intent==="investigation"?q.trim():`What does the evidence say about ${q.trim()}?`)}>{live?"Save question for review":"Deep Investigate (saved question)"}</Link>
        </div>
        <p className="rh-note">{live?"This matches a curated scenario, so a live run is available: it searches Europe PMC, OpenAlex and Open Targets now, then two models check the direction of the best claims. Nothing starts until you press Run on the next page.":"Live runs cover curated scenarios only (currently IL-21 across autoimmune diseases). Your question can be saved for scientific review, which needs a research account."} Quick Explore reads the published graph.</p>
@@ -117,13 +116,11 @@ export function ResearchHome(){
  const update=(fn:(p:Profile)=>Profile)=>setProfile(p=>fn(p));
  const follow=(id:string,name:string)=>update(p=>p.followed.some(f=>f.id===id)?{...p,followed:p.followed.filter(f=>f.id!==id)}:{...p,followed:[...p.followed,{id,name}].slice(-50)});
  const recs=useMemo(()=>bundle?recommend(profile,bundle):[],[bundle,profile]);
- const centre=profile.followed[0]?.id??recs[0]?.id??null;
- const net=useMemo(()=>bundle&&centre?focusNetwork(bundle,centre):null,[bundle,centre]);
  const toggleInterest=(slug:string)=>update(p=>({...p,interests:p.interests.includes(slug)?p.interests.filter(x=>x!==slug):[...p.interests,slug]}));
  const addTopic=()=>{const t=topic.trim().slice(0,80);if(t)update(p=>p.interests.includes(t)?p:{...p,interests:[...p.interests,t].slice(0,20)});setTopic("");setAdding(false)};
  const custom=profile.interests.filter(i=>!departments.some(d=>d.slug===i));
+ const myView=useMemo(()=>{const v=bundle&&profile.onboarded?programView(profile,bundle,1):null;return v&&v.anchors.length?v:null},[bundle,profile]);
  const savedItems=saved.kind==="ok"?saved.items:[];
- const edges=bundle?bundle.edges.filter(e=>e.kind==="source_candidate").length:0;
  return (
   <ResearchAppShell where="Research Home" active="home" onSearch={()=>inputRef.current?.focus()}>
     <main className="rh-main" id="rh-main" tabIndex={-1}>
@@ -132,9 +129,7 @@ export function ResearchHome(){
      {noStore&&<p className="rh-err" role="status">This browser blocked local storage, so preferences will not be kept.</p>}
      {ready&&!profile.onboarded&&<Onboarding profile={profile} onDone={p=>setProfile(p)}/>}
 
-     {ready&&<Program profile={profile} bundle={bundle} onProfile={setProfile}/>}
-     <Overview bundle={bundle}/>
-     <AskCard/>
+     <Overview bundle={bundle} view={myView} profile={profile}>{ready&&<Program profile={profile} bundle={bundle} onProfile={setProfile}/>}</Overview>
      <RadarCard profile={profile} ready={ready}/>
      {ready&&<GapCard profile={profile} bundle={bundle}/>}
 
@@ -171,29 +166,14 @@ export function ResearchHome(){
        {recs.length>0&&<p className="rh-strip"><Icon name="trend" size={16}/>Personalised for your interests</p>}
       </section>
 
-      <section className="rh-card" id="rh-updates" aria-labelledby="rh-upd-h">
-       <header className="rh-card-top"><span className="rh-tile rh-t-blue"><Icon name="bell" size={22}/></span><div><h2 id="rh-upd-h">Scientific updates</h2><p className="rh-sub">New evidence for topics you follow.</p></div></header>
-       <p className="rh-empty">No update feed is connected, so there is nothing to show. New publications, corrections and retractions for followed topics need a monitored source feed, which is not enabled. Nothing is simulated here.</p>
-       <p className="rh-strip rh-strip-muted">Feed not connected</p>
-      </section>
-
-      <section className="rh-card" aria-labelledby="rh-kg-h">
-       <header className="rh-card-top"><span className="rh-tile rh-t-teal"><Icon name="graph" size={22}/></span><div><h2 id="rh-kg-h">Knowledge Graph Explorer</h2><p className="rh-sub">Biological entities and relationships, each with its source.</p></div><Link className="rh-arrow" to="/research/knowledge-graph" aria-label="Open the knowledge graph"><Icon name="chevron" size={18}/></Link></header>
-       {bundle?<dl className="rh-facts"><div><dt>Concepts</dt><dd>{n(bundle.nodes.length)}</dd></div><div><dt>Recorded relationships</dt><dd>{n(edges)}</dd></div><div><dt>Scientifically reviewed</dt><dd>{n(bundle.edges.filter(e=>(e.reviewStatus as string)!=="unreviewed").length)}</dd></div></dl>:<div className="rh-skel" aria-hidden="true"/>}
-       <p className="rh-strip"><Link to="/research/knowledge-graph"><Icon name="graph" size={16}/>Explore the published graph</Link></p>
-      </section>
      </div>
-
-     <section className="rh-card rh-wide" aria-labelledby="rh-prev-h">
-      <header className="rh-card-top"><span className="rh-tile rh-t-violet"><Icon name="graph" size={22}/></span><div><h2 id="rh-prev-h">Knowledge graph preview</h2><p className="rh-sub">{net?"A neighbourhood of a concept you follow or a suggestion.":"Follow a concept or choose an interest to see its neighbourhood."}</p></div><Link className="rh-arrow" to={centre&&bundle?graphHref(bundle.nodes.find(x=>x.id===centre)?.name??""):"/research/knowledge-graph"} aria-label="Open full graph"><Icon name="chevron" size={18}/></Link></header>
-      {net?<NetworkView n={net} uid="rh"/>:<p className="rh-empty">{bundle?"Nothing selected yet.":failed?"Graph unavailable.":"Verifying published graph…"}</p>}
-     </section>
 
      <section className="rh-card rh-wide" id="rh-library" aria-labelledby="rh-lib-h">
       <header className="rh-card-top"><span className="rh-tile rh-t-blue"><Icon name="book" size={22}/></span><div><h2 id="rh-lib-h">Research library</h2><p className="rh-sub">Followed concepts are stored on this device.</p></div></header>
       {profile.followed.length===0?<p className="rh-empty">Concepts you follow appear here.</p>:<ul className="rh-follows">{profile.followed.map(f=><li key={f.id}><Link to={graphHref(f.name)}>{f.name}</Link><button type="button" className="rh-ghost" onClick={()=>follow(f.id,f.name)}>Unfollow</button></li>)}</ul>}
       <p className="rh-note"><Link to="/research/dashboard?view=briefs">Research briefs</Link> · <Link to="/research/dashboard#dashboard-workspace">Saved investigations</Link></p>
      </section>
+     <AskCard/>
     </main>
   </ResearchAppShell>
  );

@@ -16,6 +16,8 @@ import {
   sharedInvestigationConnections,
 } from '../../../src/knowledgeGraph/investigationProjection';
 import { loadDomainGraph } from '../lib/claimGraphClient';
+import { anchorsFor } from '../lib/program';
+import { loadProfile } from '../lib/researchHome';
 import { GraphVisual, type CanvasGraph } from '../features/science/GraphVisual';
 import '../styles/investigation-graph.css';
 import {ResearchNetworkExplorer} from './ResearchNetworkExplorer';
@@ -207,13 +209,15 @@ export function InvestigationGraphExperience({ embedded = false }: { embedded?: 
   }, [version, retry]);
   const questionId = params.get('investigation') ?? 'gut-immune';
   const question = bundle?.questions.find((q) => q.id === questionId);
-  /* With no explicit question, open on the published IL-21 to systemic sclerosis neighbourhood rather than a gut-metabolite template. */
+  /* With no explicit question, open on the researcher's own program (their anchors from the profile); only without a profile fall back to the IL-21 to systemic sclerosis example. */
   const nodeId = (name: string) => bundle?.nodes.find((n) => n.name === name)?.id;
-  const il21 = nodeId('IL-21'),
-    ssc = nodeId('Systemic sclerosis'),
+  const mine = useMemo(() => anchorsFor(loadProfile(), bundle), [bundle]);
+  const personal = !!bundle && mine.length > 0 && loadProfile().onboarded;
+  const il21 = personal ? mine[0]!.id : nodeId('IL-21'),
+    ssc = personal ? (mine[1]?.id ?? bundle!.edges.filter((e) => e.kind === 'source_candidate' && (e.subjectId === mine[0]!.id || e.objectId === mine[0]!.id)).map((e) => (e.subjectId === mine[0]!.id ? e.objectId : e.subjectId))[0]) : nodeId('Systemic sclerosis'),
     useFlagship = !params.has('investigation') && !!il21 && !!ssc;
   const shownGaps = !bundle || !question ? [] : useFlagship
-    ? bundle.gaps.filter((g) => [g.subjectId, g.objectId].some((id) => id === params.get('from') || id === params.get('target') || id === il21 || id === ssc))
+    ? bundle.gaps.filter((g) => [g.subjectId, g.objectId].some((id) => id === params.get('from') || id === params.get('target') || id === il21 || id === ssc || mine.some((m) => m.id === id)))
     : bundle.gaps.filter((g) => question.gapIds.includes(g.id));
   const from = params.get('from') ?? (useFlagship ? il21 : question?.fromId) ?? '',
     target = params.get('target') ?? (useFlagship ? ssc : question?.toId) ?? '';
@@ -939,7 +943,7 @@ export function InvestigationGraphExperience({ embedded = false }: { embedded?: 
         <h2>What would we need to learn next?</h2>
         <p>
           {useFlagship
-            ? 'Gaps recorded in the published graph that touch this selection, not a fresh literature search.'
+            ? (personal ? `Opened on your research focus (${mine.map((m) => m.name).join(', ')}). Gaps recorded in the published graph that touch it, not a fresh literature search.` : 'Gaps recorded in the published graph that touch this selection, not a fresh literature search.')
             : 'Recorded gaps for the selected question template, not a fresh literature search. Changing endpoints does not create new gap findings.'}
         </p>
         {shownGaps.length === 0 && (

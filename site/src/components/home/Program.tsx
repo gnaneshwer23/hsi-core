@@ -3,14 +3,14 @@ import {Link} from "react-router-dom";
 import type {DomainBundle} from "../../../../src/knowledgeGraph/domainGraph";
 import type {Profile} from "../../lib/researchHome";
 import {answerFromGraph,programNetwork,programView,DEMO_PROFILE,type Reply} from "../../lib/program";
-import {ASSISTANTS,DEMO_NOTE,demoDigest,demoEvents,demoOrgs} from "../../lib/demoProgram";
+import {DEMO_NOTE,demoDigest,demoEvents,demoOrgs} from "../../lib/demoProgram";
 import {NetworkView} from "../graph/GraphCharts";
 import {Icon} from "./AppIcons";
 
-type Tab="graph"|"focus"|"ask"|"landscape"|"updates"|"assistants";
+type Tab="graph"|"focus"|"ask"|"landscape"|"updates";
 const TABS:{id:Tab;label:string;icon:string}[]=[
- {id:"graph",label:"My graph",icon:"graph"},{id:"focus",label:"What to focus on",icon:"target"},{id:"ask",label:"Ask about my topic",icon:"spark"},
- {id:"landscape",label:"Who is working on it",icon:"users"},{id:"updates",label:"Updates",icon:"bell"},{id:"assistants",label:"Assistants",icon:"compass"},
+ {id:"graph",label:"Knowledge graph",icon:"graph"},{id:"focus",label:"Gaps and methods",icon:"target"},{id:"ask",label:"Ask the graph",icon:"search"},
+ {id:"landscape",label:"Landscape",icon:"users"},{id:"updates",label:"Updates",icon:"bell"},
 ];
 const graphHref=(q:string)=>"/research/knowledge-graph?netQuery="+encodeURIComponent(q);
 const Demo=()=><span className="pr-demo">Demo</span>;
@@ -20,32 +20,22 @@ const SUGGEST=(a:string[])=>[a[0]?`What is ${a[0]} connected to?`:"",a.length>1?
 export function Program({profile,bundle,onProfile}:{profile:Profile;bundle:DomainBundle|null;onProfile:(p:Profile)=>void}){
  const [tab,setTab]=useState<Tab>("graph"),[depth,setDepth]=useState<1|2|3>(1),[cohort,setCohort]=useState(false);
  const [q,setQ]=useState(""),[reply,setReply]=useState<{q:string;r:Reply}|null>(null);
- const [on,setOn]=useState<Record<string,boolean>>({watch:true,map:true,challenge:true,brief:true}),[ran,setRan]=useState<string|null>(null);
  const view=useMemo(()=>bundle?programView(profile,bundle,depth):null,[bundle,profile,depth]);
  const net=useMemo(()=>bundle&&view?programNetwork(bundle,view):null,[bundle,view]);
  const names=view?.anchors.map(a=>a.name)??[];
- const nameOf=useMemo(()=>new Map((bundle?.nodes??[]).map(n=>[n.id,n.name])),[bundle]);
- if(!bundle)return <section className="pm-card pr" aria-labelledby="pr-h"><h2 id="pr-h">Your research program</h2><p className="rh-empty">Verifying the published graph…</p></section>;
+ if(!bundle)return <section className="pm-card pr" aria-labelledby="pr-h"><h2 id="pr-h">Your knowledge graph</h2><p className="rh-empty">Verifying the published graph…</p></section>;
  if(!view||!view.anchors.length)return (
   <section className="pm-card pr" aria-labelledby="pr-h">
-   <header><h2 id="pr-h">Your research program</h2></header>
+   <header><h2 id="pr-h">Your knowledge graph</h2></header>
    <p className="rh-empty">Add a topic, or follow a concept, and this section becomes yours: your own graph, the gaps and methods around it, a way to ask about it, and updates. To see how it works, load an example autoimmune researcher.</p>
    <div className="rh-row"><Link className="rh-primary" to="/welcome">Set up my program</Link><button type="button" className="rh-ghost" onClick={()=>onProfile(DEMO_PROFILE)}>Load a demo autoimmune profile <Demo/></button></div>
   </section>
  );
  const ask=(text:string)=>{const t=text.trim();if(t)setReply({q:t,r:answerFromGraph(bundle,t)})};
- const beyond=(()=>{if(!view)return [];const d2=programView(profile,bundle,Math.min(3,depth+1) as 1|2|3);return [...d2.hop].filter(([id,h])=>h===depth+1&&!view.hop.has(id)).map(([id])=>nameOf.get(id)??id).slice(0,8)})();
- const run=(id:string)=>setRan(id);
- const out=(id:string):string[]=>{
-  if(id==="map")return beyond.length?[`${beyond.length} concepts one step beyond depth ${depth}: ${beyond.join(", ")}.`,"Candidates to explore, not findings."]:["Nothing further out at this depth. Raise the depth to look further."];
-  if(id==="challenge")return view.opposing.length?view.opposing.slice(0,5).map(e=>`${nameOf.get(e.subjectId)} → ${nameOf.get(e.objectId)} reported not to ${e.predicate.replaceAll("_"," ")} · ${e.model.replaceAll("_"," ")} · ${e.sourceId??"no source"}`):["No negated relationship in your neighbourhood. That reflects coverage, not agreement."];
-  if(id==="brief")return [`Your program covers ${view.hop.size} concepts and ${view.edges.length} recorded relationships within ${depth} hop${depth===1?"":"s"} of ${names.join(", ")}.`,`${view.human} involve human evidence; ${view.gaps.length} recorded gap${view.gaps.length===1?"":"s"} touch it; none are scientifically reviewed.`];
-  return ["Demo: the scan would run on a schedule against papers, trials and corrections. No live feed is connected, so see the Updates tab for an illustration."];
- };
- const topic=names[0]??"your topic";
+  const topic=names[0]??"your topic";
  return (
   <section className="pm-card pr" aria-labelledby="pr-h">
-   <header><div><h2 id="pr-h">Your research program</h2><p className="pm-note">Built from {view.anchors.length} anchor{view.anchors.length===1?"":"s"}: {view.anchors.map(a=><span key={a.id} className="pr-chip" title={a.why}>{a.name}</span>)}</p></div>
+   <header><div><h2 id="pr-h">Your knowledge graph</h2><p className="pm-note">Built from {view.anchors.length} anchor{view.anchors.length===1?"":"s"}: {view.anchors.map(a=><span key={a.id} className="pr-chip" title={a.why}>{a.name}</span>)}</p></div>
     <div className="pr-depth" role="group" aria-label="How far to expand from your anchors">{([1,2,3] as const).map(d=><button key={d} type="button" aria-pressed={depth===d} onClick={()=>setDepth(d)}>{d} hop{d===1?"":"s"}</button>)}</div>
    </header>
    <p className="pr-sum"><b>{view.hop.size}</b> concepts · <b>{view.edges.length}</b> recorded relationships · <b>{view.gaps.length}</b> gaps touch your area · <b>{view.human}</b> with human evidence. Candidates, none reviewed.</p>
@@ -69,7 +59,7 @@ export function Program({profile,bundle,onProfile}:{profile:Profile;bundle:Domai
    </div>}
 
    {tab==="ask"&&<div className="pr-pane">
-    <p className="pr-box">Answers are assembled from the published graph, with each relationship's model and source. There is no language model, so nothing is made up. A model-backed version would add reading of papers; it is not connected. <Demo/></p>
+    <p className="pr-box">Answers are read directly from the published graph, with each relationship's model and source. Nothing is generated, so a question outside the graph gets "no match".</p>
     <form className="pr-ask" onSubmit={e=>{e.preventDefault();ask(q)}}><label htmlFor="pr-q" className="rh-vh">Ask about your topic</label><input id="pr-q" value={q} maxLength={200} onChange={e=>setQ(e.target.value)} placeholder={`e.g. How are ${names[0]??"A"} and ${names[1]??"B"} connected?`}/><button className="rh-primary" type="submit">Ask</button></form>
     <div className="pr-sug">{SUGGEST(names).map(s=><button key={s} type="button" className="rh-ghost" onClick={()=>{setQ(s);ask(s)}}>{s}</button>)}</div>
     <div role="status" aria-live="polite">{reply&&<div className="pr-reply"><p className="pr-you">{reply.q}</p><p>{reply.r.text}</p>{reply.r.lines.length>0&&<ul>{reply.r.lines.map((l,i)=><li key={i}>{l}</li>)}</ul>}<div className="rh-row">{reply.r.links.map(l=><Link key={l.to} to={l.to}>{l.label}</Link>)}</div></div>}</div>
@@ -87,13 +77,6 @@ export function Program({profile,bundle,onProfile}:{profile:Profile;bundle:Domai
     <div className="pr-depth" role="group" aria-label="Digest cadence">{(["off","weekly","daily"] as const).map(c=><button key={c} type="button" aria-pressed={profile.cadence===c} onClick={()=>onProfile({...profile,cadence:c})}>{c==="off"?"Off":c==="weekly"?"Weekly":"Daily"}</button>)}</div>
    </div>}
 
-   {tab==="assistants"&&<div className="pr-pane">
-    <p className="pr-box">Assistants work only on your program. Every output is a candidate, unreviewed, and nothing enters your ledger unless you add it. Run them yourself here; scheduled runs need an account.</p>
-    <ul className="pr-list pr-assist">{ASSISTANTS.map(a=><li key={a.id}><div><b>{a.name}</b>{!a.real&&<Demo/>}<span>{a.does}</span></div>
-     <label className="pr-check"><input type="checkbox" checked={on[a.id]} onChange={e=>setOn(s=>({...s,[a.id]:e.target.checked}))}/> On</label>
-     <button type="button" className="rh-ghost" disabled={!on[a.id]} onClick={()=>run(a.id)}>Run now</button>
-     {ran===a.id&&<div className="pr-out" role="status"><ul>{out(a.id).map((l,i)=><li key={i}>{l}</li>)}<li><small>Source: the published graph. Unreviewed.</small></li></ul></div>}</li>)}</ul>
-   </div>}
   </section>
  );
 }
