@@ -6,6 +6,8 @@ import "../styles/platform-diagrams.css";
 import {intelligenceCapabilities,intelligenceLayers} from "../lib/intelligenceCollective";
 import {AGENT_STATE,agentSummary} from "../lib/agentDashboard";
 import {connectedCapabilities,STATUS_TEXT} from "../lib/connectedIntelligence";
+import {ProductTour} from "../components/home/ProductStory";
+import "../styles/home-story.css";
 import {GraphSnapshotProvider,useGraphSnapshot} from "../components/home/useGraphSnapshot";
 
 const outputs:[string,string][]=[["Evidence record","/evidence-intelligence"],["Context comparison","/context-conflict-audit"],["Gap register","/research/knowledge-graph"],["Draft brief","/research-briefs"]];
@@ -110,6 +112,7 @@ export function PlatformPublicPage(){
             <p className="fg-status">Architecture as designed · status read from the capability records</p>
           </div>
         </section>
+        <ProductTour heading="What is built and running today."/>
         <Stack/>
         <Boundaries/>
         <section className="hv-close"><div className="hv-inner"><h2>Three core roles. One accountable investigation.</h2><p className="hv-sub">An orchestrator scopes the work, an evidence and context investigator gathers and compares, and a scientific verifier checks support and uncertainty. More agents are not a substitute for better evidence.</p><div className="sp-actions"><Link className="sp-button" to="/intelligence">Meet the Intelligence Collective <span aria-hidden="true">→</span></Link><Link to="/applications">Explore applications →</Link></div></div></section>

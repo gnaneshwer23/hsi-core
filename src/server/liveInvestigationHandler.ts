@@ -11,7 +11,11 @@ import type {FetchLike} from "../fetchLike";
 
 type Env=Readonly<Record<string,string|undefined>>;
 const hits=new Map<string,number[]>();
-export const resetLiveInvestigationLimiter=()=>hits.clear();
+/** Model-checked runs started on this instance today (UTC). Per instance, so it is a safety net and NOT a shared or exact spend cap: the provider console limit is the real cap. */
+const daily={day:"",count:0};
+export const DEFAULT_DAILY_MODEL_RUNS=50;
+export const resetLiveInvestigationLimiter=()=>{hits.clear();daily.day="";daily.count=0};
+const dailyCap=(env:Env)=>{const n=Number(env.HSI_LIVE_MODEL_DAILY_RUNS);return Number.isInteger(n)&&n>=0&&n<=10000?n:DEFAULT_DAILY_MODEL_RUNS};
 const json=(b:unknown,status=200,extra:Record<string,string>={})=>new Response(JSON.stringify(b),{status,headers:{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store","X-Content-Type-Options":"nosniff",...extra}});
 
 export async function handleLiveInvestigation(request:Request,env:Env,deps:{fetcher?:FetchLike;now?:()=>number}={}):Promise<Response>{
@@ -44,9 +48,16 @@ export async function handleLiveInvestigation(request:Request,env:Env,deps:{fetc
    verifiers=[{verifierId:"openai-a",providerId:"openai",modelId:st[0]!.model!,runner:createOpenAiRunner({env,budget,fetcher:deps.fetcher})},{verifierId:"openai-b",providerId:"openai",modelId:second,runner:createOpenAiRunner({env,budget,fetcher:deps.fetcher},"second")}];
   }else verifierReason="Two verifiers are required: either OpenAI and Anthropic, or OpenAI with a different HSI_OPENAI_MODEL_2. Not configured: "+st.filter(p=>!p.configured).map(p=>p.provider+" ("+p.reason+")").join("; ")+".";
  }
- const ac=new AbortController();const timer=setTimeout(()=>ac.abort(),25_000);
+ const today=new Date(now()).toISOString().slice(0,10);
+ if(verifiers){
+  if(daily.day!==today){daily.day=today;daily.count=0}
+  if(daily.count>=dailyCap(env)){verifiers=null;verifierReason="The daily limit for model-checked runs was reached on this deployment. Retrieval still ran."}
+  else daily.count++;
+ }
+ const t0=Date.now(),ac=new AbortController();const timer=setTimeout(()=>ac.abort(),25_000);
  try{
   const result=await runLiveInvestigation({scenario,fetcher:deps.fetcher,mailto:env.HSI_OPENALEX_CONTACT,verifiers,verifierReason,budget,maxVerified:4,signal:ac.signal});
+  console.log(JSON.stringify({event:"live_investigation",scenario:scenario.id,modelChecked:!!verifiers,calls:budget.usage().calls,inputTokens:budget.usage().inputTokens,outputTokens:budget.usage().outputTokens,refused:budget.usage().refused,ms:Date.now()-t0}));
   return json(result);
  }catch{return json({error:"Investigation could not run. No findings were generated."},502)}
  finally{clearTimeout(timer)}

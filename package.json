@@ -101,6 +101,7 @@
     "sources:init": "bun src/cli/source-registry.ts init",
     "sources:import": "bun src/cli/source-registry.ts import",
     "test": "bun test ./test",
+    "live:doctor": "bun scripts/live-model-doctor.ts",
     "validate": "bun run src/cli/validate.ts",
     "export:isi": "bun run src/cli/export-isi.ts",
     "export:isi-map": "bun run src/cli/export-isi-map.ts",
