@@ -12,7 +12,7 @@ test("public pages have a single main/title, working navigation and no narrow-sc
  }
 });
 test("home opens the existing versioned graph and preserves selected context",async({page})=>{
- await page.goto('/');await expect(page.getByRole('heading',{level:1})).toContainText('Biological research,');
+ await page.goto('/');await expect(page.getByRole('heading',{level:1})).toContainText('Know what the evidence says');
  await expect(page.locator('#home-knowledge-graph')).toContainText('Public research snapshot');
  await page.locator('#home-knowledge-graph [data-graph-edge]').first().press('Enter');
  await expect(page.locator('.hd-inspector')).toContainText('Unreviewed source candidate');
