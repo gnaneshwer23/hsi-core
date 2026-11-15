@@ -1,8 +1,11 @@
-import {useEffect,useState} from "react";
+import {useEffect,useMemo,useState} from "react";
 import {Link,useNavigate} from "react-router-dom";
 import {HsiIdentity} from "../components/HsiIdentity";
 import {Icon} from "../components/home/AppIcons";
 import {departments} from "../lib/departments";
+import {loadDomainGraph} from "../lib/claimGraphClient";
+import {DEMO_PROFILE,detectTopics} from "../lib/program";
+import type {DomainBundle} from "../../../src/knowledgeGraph/domainGraph";
 import {ACCENTS,DEFAULT_APPEARANCE,loadAppearance,saveAppearance,type Appearance} from "../lib/appearance";
 import {CADENCES,EMPTY_PROFILE,GOALS,loadProfile,parseOrcid,parsePaperIds,ROLES,saveProfile,STAGES,type Profile} from "../lib/researchHome";
 import "../styles/research-home.css";
@@ -11,31 +14,49 @@ import "../styles/premium-app.css";
 
 const STEPS=["About you","Your research","Your work","Preferences"] as const;
 const CAD:Record<string,string>={off:"Off",weekly:"Weekly",daily:"Daily"};
-/** First-run flow after sign-up. Every question is optional. Everything is saved on this device only. */
+/** First-run flow. Role, a short background and one research focus are required: they are what the personal program is built from. The rest is optional. Saved on this device only. */
+const BG_MIN=20,MAX_TOPICS=5,MAX_AREAS=2,MAX_GOALS=3;
+const orcBad0=(o:string)=>!!o.trim()&&!parseOrcid(o);
 export function WelcomePage(){
  const nav=useNavigate();
  const [step,setStep]=useState(0),[p,setP]=useState<Profile>(EMPTY_PROFILE),[ap,setAp]=useState<Appearance>(DEFAULT_APPEARANCE);
  const [topic,setTopic]=useState(""),[orcid,setOrcid]=useState(""),[papers,setPapers]=useState(""),[note,setNote]=useState("");
+ const [bundle,setBundle]=useState<DomainBundle|null>(null);
+ useEffect(()=>{const c=new AbortController(),t=setTimeout(()=>c.abort(),12000);loadDomainGraph(null,c.signal).then(setBundle).catch(()=>{}).finally(()=>clearTimeout(t));return()=>{c.abort();clearTimeout(t)}},[]);
  useEffect(()=>{const x=loadProfile();setP(x);setOrcid(x.orcid??"");setPapers(x.papers.map(i=>i.replace(/^(doi|pmid):/,"")).join("\n"));setAp(loadAppearance())},[]);
  const set=<K extends keyof Profile>(k:K,v:Profile[K])=>setP(x=>({...x,[k]:v}));
- const toggle=(k:"goals"|"interests",v:string)=>setP(x=>({...x,[k]:x[k].includes(v)?x[k].filter(y=>y!==v):[...x[k],v].slice(0,12)}));
- const addTopic=()=>{const t=topic.trim().slice(0,80);if(t&&!p.interests.includes(t))set("interests",[...p.interests,t].slice(0,12));setTopic("")};
- const custom=p.interests.filter(i=>!departments.some(d=>d.slug===i));
+ const isArea=(i:string)=>departments.some(d=>d.slug===i);
+ const custom=p.interests.filter(i=>!isArea(i)),areas=p.interests.filter(isArea);
+ /** Small caps keep the profile focused: a few specific topics, two broad areas, three goals. */
+ const toggle=(k:"goals"|"interests",v:string)=>setP(x=>{
+  if(x[k].includes(v))return {...x,[k]:x[k].filter(y=>y!==v)};
+  if(k==="goals")return x.goals.length>=MAX_GOALS?x:{...x,goals:[...x.goals,v]};
+  const group=x.interests.filter(i=>isArea(i)===isArea(v)).length;
+  return group>=(isArea(v)?MAX_AREAS:MAX_TOPICS)?x:{...x,interests:[...x.interests,v]};
+ });
+ /** One topic per entry: "IL-2, T cells and cytomegalovirus" becomes three topics. */
+ const addTopic=()=>{
+  const parts=topic.split(/,|;|\band\b/i).map(t=>t.trim().slice(0,80)).filter(Boolean);
+  setP(x=>{const next=[...x.interests];for(const t of parts)if(!next.some(i=>i.toLowerCase()===t.toLowerCase())&&next.filter(i=>!isArea(i)).length<MAX_TOPICS)next.push(t);return {...x,interests:next}});
+  setTopic("");
+ };
  const orc=orcid.trim()?parseOrcid(orcid):null,orcBad=!!orcid.trim()&&!orc;
  const pp=parsePaperIds(papers);
- function finish(skip:boolean){
-  const next:Profile=skip?{...p,onboarded:true}:{...p,orcid:orc,papers:pp.ids,onboarded:true};
+ const found=useMemo(()=>bundle?detectTopics(bundle.nodes,p.background+" "+p.question):[],[bundle,p.background,p.question]);
+ const ok0=!!p.role&&p.background.trim().length>=BG_MIN,ok1=custom.length>0,ok2=(!!orc||pp.ids.length>0)&&!orcBad0(orcid),ok3=p.goals.length>0,can=[ok0,ok1,ok2,ok3][step]!;
+ function finish(){
+  const next:Profile={...p,orcid:orc,papers:pp.ids,onboarded:true};
   if(!saveProfile(next)){setNote("This browser blocked local storage, so your answers will not be kept.");return}
   nav("/research/home");
  }
  const changeAp=(a:Appearance)=>{setAp(a);saveAppearance(a)};
  return (
   <div className="rh-app wl" data-theme={ap.theme} data-accent={ap.accent}>
-   <header className="wl-top"><Link to="/" className="rh-brand" aria-label="Human Super Intelligence, public site"><HsiIdentity/></Link><button type="button" className="rh-ghost" onClick={()=>finish(true)}>Skip setup</button></header>
+   <header className="wl-top"><Link to="/" className="rh-brand" aria-label="Human Super Intelligence, public site"><HsiIdentity/></Link><button type="button" className="rh-ghost" onClick={()=>{setP(x=>({...x,...DEMO_PROFILE,onboarded:false,interests:["IL-21","Systemic sclerosis"],background:"Immunologist studying T follicular helper cells and IL-21 in autoimmune disease.",orcid:null,papers:["doi:10.1186/s13075-015-0660-z"]}));setPapers("10.1186/s13075-015-0660-z")}}>Fill in an example</button></header>
    <main className="wl-main wl-split" id="main-content" tabIndex={-1}>
     <aside className="wl-aside" aria-label="Your research home, as set up so far">
      <h1>Tell us what you work on, so your home starts useful.</h1>
-     <p className="wl-lead">Two minutes, all optional. We use it to find new papers, spot gaps and suggest concepts for your area. It stays on this device. No health information is asked for.</p>
+     <p className="wl-lead">Two minutes. Every step is needed: together they build your own graph, gaps and updates. It stays on this device. No health information is asked for.</p>
      <ol className="rh-steps wl-steps" aria-label="Setup steps">{STEPS.map((t,i)=><li key={t} aria-current={i===step?"step":undefined} data-done={i<step}><span>{i<step?<Icon name="check" size={14}/>:i+1}</span>{t}</li>)}</ol>
      <div className="wl-preview" aria-live="polite">
       <b>Your home will start with</b>
@@ -50,21 +71,23 @@ export function WelcomePage(){
     <section className="wl-card" aria-labelledby="wl-step">
      <h2 id="wl-step">{STEPS[step]}</h2>
      {step===0&&<>
-      <fieldset><legend>What best describes your work?</legend><div className="rh-chips2">{ROLES.map(r=><button key={r} type="button" aria-pressed={p.role===r} onClick={()=>set("role",p.role===r?null:r)}>{r}</button>)}</div></fieldset>
+      <fieldset><legend>What best describes your work? <small>Required.</small></legend><div className="rh-chips2">{ROLES.map(r=><button key={r} type="button" aria-pressed={p.role===r} onClick={()=>set("role",p.role===r?null:r)}>{r}</button>)}</div></fieldset>
       <fieldset><legend>Career stage</legend><div className="rh-chips2">{STAGES.map(r=><button key={r} type="button" aria-pressed={p.stage===r} onClick={()=>set("stage",p.stage===r?null:r)}>{r}</button>)}</div></fieldset>
-      <label className="wl-f" htmlFor="wl-bg">A short background <small>Optional. Field, training, current focus.</small></label>
-      <textarea id="wl-bg" rows={4} maxLength={600} value={p.background} onChange={e=>set("background",e.target.value)} placeholder="For example: immunologist studying T follicular helper cells in autoimmune disease."/>
+      <label className="wl-f" htmlFor="wl-bg">A short background <small>Required. Field, training, current focus (at least 20 characters).</small></label>
+      <textarea id="wl-bg" required aria-required="true" rows={4} maxLength={600} value={p.background} onChange={e=>set("background",e.target.value)} placeholder="For example: immunologist studying T follicular helper cells in autoimmune disease."/>
+      {found.length>0&&<p className="wl-note" role="status">We recognise in your description: {found.map(f=>f.name).join(", ")}. You can add them to your research focus next.</p>}
      </>}
      {step===1&&<>
+      {found.length>0&&<fieldset><legend>Found in what you wrote <small>Select to add to your focus.</small></legend><div className="rh-chips2">{found.map(f=><button key={f.id} type="button" aria-pressed={p.interests.includes(f.name)} disabled={!p.interests.includes(f.name)&&custom.length>=MAX_TOPICS} onClick={()=>toggle("interests",f.name)}>{f.name}</button>)}</div></fieldset>}
       <label className="wl-f" htmlFor="wl-q">What are you researching, or trying to answer? <small>One or two sentences.</small></label>
       <textarea id="wl-q" rows={3} maxLength={600} value={p.question} onChange={e=>set("question",e.target.value)} placeholder="For example: why does IL-21 signalling differ between lupus and systemic sclerosis?"/>
-      <fieldset><legend>Topics, genes, pathways or diseases <small>Up to 12. Press Enter to add.</small></legend>
+      <fieldset><legend>Topics, genes, pathways or diseases <small>Required. {custom.length} of {MAX_TOPICS}. Separate with commas or press Enter.</small></legend>
        <div className="wl-add"><label className="rh-vh" htmlFor="wl-topic">Add a topic</label><input id="wl-topic" value={topic} maxLength={80} onChange={e=>setTopic(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"){e.preventDefault();addTopic()}}} placeholder="e.g. IL-21, Tfh cells, systemic sclerosis"/><button type="button" className="rh-primary" onClick={addTopic}>Add</button></div>
        <div className="rh-chips2">{custom.map(c=><button key={c} type="button" aria-pressed="true" aria-label={`Remove ${c}`} onClick={()=>toggle("interests",c)}>{c} <Icon name="x" size={14}/></button>)}</div></fieldset>
-      <fieldset><legend>Broad areas</legend><div className="rh-chips2">{departments.map(d=><button key={d.slug} type="button" aria-pressed={p.interests.includes(d.slug)} onClick={()=>toggle("interests",d.slug)}>{d.name}</button>)}</div></fieldset>
+      <fieldset><legend>Broad areas <small>Optional, up to {MAX_AREAS}. {areas.length} chosen.</small></legend><div className="rh-chips2">{departments.map(d=><button key={d.slug} type="button" aria-pressed={p.interests.includes(d.slug)} disabled={!p.interests.includes(d.slug)&&areas.length>=MAX_AREAS} onClick={()=>toggle("interests",d.slug)}>{d.name}</button>)}</div></fieldset>
      </>}
      {step===2&&<>
-      <p className="wl-note">Optional. This lets HSI find your own papers and suggest what is new around them. Your ORCID iD and paper IDs are used only to query public sources (OpenAlex, Europe PMC) and are not stored on our servers.</p>
+      <p className="wl-note">Required: an ORCID iD or at least one paper. This lets HSI find your own papers and suggest what is new around them. Your ORCID iD and paper IDs are used only to query public sources (OpenAlex, Europe PMC) and are not stored on our servers.</p>
       <label className="wl-f" htmlFor="wl-orcid">ORCID iD</label>
       <input id="wl-orcid" className="wl-in" value={orcid} maxLength={40} onChange={e=>setOrcid(e.target.value)} placeholder="0000-0000-0000-0000" aria-invalid={orcBad} aria-describedby="wl-orcid-h"/>
       <p id="wl-orcid-h" className={orcBad?"wl-bad":"wl-note"} role={orcBad?"alert":undefined}>{orcBad?"That is not a valid ORCID iD (check the digits).":orc?"Valid ORCID iD.":"Find yours at orcid.org."}</p>
@@ -73,7 +96,7 @@ export function WelcomePage(){
       <p className="wl-note" role="status">{pp.ids.length?`${pp.ids.length} paper${pp.ids.length===1?"":"s"} recognised.`:""}{pp.rejected.length?` Not recognised: ${pp.rejected.join(", ")}.`:""}</p>
      </>}
      {step===3&&<>
-      <fieldset><legend>What do you want from HSI?</legend><div className="rh-chips2">{GOALS.map(g=><button key={g} type="button" aria-pressed={p.goals.includes(g)} onClick={()=>toggle("goals",g)}>{g}</button>)}</div></fieldset>
+      <fieldset><legend>What do you want from HSI? <small>Required. Choose up to {MAX_GOALS}; {p.goals.length} chosen.</small></legend><div className="rh-chips2">{GOALS.map(g=><button key={g} type="button" aria-pressed={p.goals.includes(g)} disabled={!p.goals.includes(g)&&p.goals.length>=MAX_GOALS} onClick={()=>toggle("goals",g)}>{g}</button>)}</div></fieldset>
       <fieldset><legend>Research updates <small>How often your Radar should refresh.</small></legend><div className="rh-chips2">{CADENCES.map(c=><button key={c} type="button" aria-pressed={p.cadence===c} onClick={()=>set("cadence",c)}>{CAD[c]}</button>)}</div>
        <p className="wl-note">Your Radar updates when you open HSI. Email delivery is not available yet, so this records your preference for when it is.</p></fieldset>
       <fieldset><legend>Look</legend><div className="rh-seg wl-seg">{(["light","dark"] as const).map(t=><button key={t} type="button" aria-pressed={ap.theme===t} onClick={()=>changeAp({...ap,theme:t})}>{t==="light"?"Light":"Dark"}</button>)}</div>
@@ -82,8 +105,8 @@ export function WelcomePage(){
      {note&&<p className="wl-bad" role="alert">{note}</p>}
      <div className="rh-row wl-actions">
       {step>0&&<button type="button" className="rh-ghost" onClick={()=>setStep(step-1)}>Back</button>}
-      {step<3?<button type="button" className="rh-primary" onClick={()=>setStep(step+1)} disabled={step===2&&orcBad}>Next <Icon name="arrow" size={16}/></button>:<button type="button" className="rh-primary" onClick={()=>finish(false)}>Finish and open my home <Icon name="arrow" size={16}/></button>}
-      {step<3&&<button type="button" className="rh-ghost" onClick={()=>setStep(step+1)} disabled={step===2&&orcBad}>Skip this step</button>}
+      {step<3?<button type="button" className="rh-primary" onClick={()=>setStep(step+1)} disabled={!can}>Next <Icon name="arrow" size={16}/></button>:<button type="button" className="rh-primary" onClick={()=>finish()} disabled={!can}>Finish and open my home <Icon name="arrow" size={16}/></button>}
+            {!can&&<span className="wl-note" role="status">{[ "Choose your role and write a short background to continue.","Add at least one specific topic, gene or disease to continue.","Add a valid ORCID iD or at least one paper to continue.","Choose at least one goal to continue."][step]}</span>}
      </div>
     </section>
     </div>
