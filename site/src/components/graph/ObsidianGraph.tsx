@@ -13,7 +13,7 @@ const hash=(s:string)=>[...s].reduce((a,c)=>(a*31+c.charCodeAt(0))>>>0,17);
 
 /** An Obsidian-style graph: live force simulation, drag nodes, pan and zoom, hover to isolate a neighbourhood, labels that appear as you zoom.
  *  Colour is a scientific choice (department, concept type or evidence model); dashed lines are findings recorded as not holding. */
-export function ObsidianGraph({nodes,edges,selected,highlight,onSelect,onSelectEdge,caption,exportName="hsi-graph",gaps=[],gapSel=null,onGap,focusIds,focusTick=0}:{nodes:OGNode[];edges:OGEdge[];selected:string;highlight?:ReadonlySet<string>;onSelect:(id:string)=>void;onSelectEdge:(id:string)=>void;caption:string;exportName?:string;gaps?:OGGap[];gapSel?:string|null;onGap?:(id:string)=>void;focusIds?:string[];focusTick?:number}){
+export function ObsidianGraph({nodes,edges,selected,highlight,onSelect,onSelectEdge,caption,exportName="hsi-graph",gaps=[],gapSel=null,onGap,focusIds,focusTick=0,picked=[],onPick,pathEdges}:{nodes:OGNode[];edges:OGEdge[];selected:string;highlight?:ReadonlySet<string>;onSelect:(id:string)=>void;onSelectEdge:(id:string)=>void;caption:string;exportName?:string;gaps?:OGGap[];gapSel?:string|null;onGap?:(id:string)=>void;focusIds?:string[];focusTick?:number;picked?:string[];onPick?:(ids:string[])=>void;pathEdges?:ReadonlySet<string>}){
  const wrap=useRef<HTMLDivElement|null>(null),cv=useRef<HTMLCanvasElement|null>(null);
  const [cfg,setCfg]=useState<Settings>(DEFAULTS),[panel,setPanel]=useState(false),[hidden,setHidden]=useState<string[]>([]),[paused,setPaused]=useState(false),[zoomPct,setZoomPct]=useState(100),[msg,setMsg]=useState("");
  const cfgRef=useRef(cfg);cfgRef.current=cfg;
@@ -27,10 +27,10 @@ export function ObsidianGraph({nodes,edges,selected,highlight,onSelect,onSelectE
  const deg=useMemo(()=>{const d=new Map<string,number>();for(const e of links){d.set(e.s,(d.get(e.s)??0)+1);d.set(e.o,(d.get(e.o)??0)+1)}return d},[links]);
  const idx=useMemo(()=>new Map(shown.map((n,i)=>[n.id,i])),[shown]);
  const sig=shown.map(n=>n.id).join("|")+";"+links.length;
- const st=useRef({sim:null as Sim|null,k:1,tx:0,ty:0,w:900,h:640,dpr:1,hover:-1,touched:false,drag:null as null|{mode:"node"|"pan";i:number;sx:number;sy:number;tx:number;ty:number;moved:boolean},raf:0,dirty:true,running:false,fitFor:""});
+ const st=useRef({sim:null as Sim|null,k:1,tx:0,ty:0,w:900,h:640,dpr:1,hover:-1,box:null as null|[number,number,number,number],touched:false,drag:null as null|{mode:"node"|"pan"|"box";i:number;sx:number;sy:number;tx:number;ty:number;moved:boolean;multi?:boolean},raf:0,dirty:true,running:false,fitFor:""});
  const gapsShown=useMemo(()=>gaps.filter(g=>idx.has(g.a)&&idx.has(g.b)),[gaps,idx]);
- const data=useRef({shown,links,deg,idx,colour,groupOf,selected,highlight,cfg,gaps:gapsShown,gapSel,hoverGap:-1});
- data.current={...data.current,shown,links,deg,idx,colour,groupOf,selected,highlight,cfg,gaps:gapsShown,gapSel};
+ const data=useRef({shown,links,deg,idx,colour,groupOf,selected,highlight,cfg,gaps:gapsShown,gapSel,hoverGap:-1,picked,pathEdges,box:null as null|[number,number,number,number]});
+ data.current={...data.current,shown,links,deg,idx,colour,groupOf,selected,highlight,cfg,gaps:gapsShown,gapSel,picked,pathEdges};
  const radius=(i:number)=>{const d=data.current;return (3+Math.sqrt(d.deg.get(d.shown[i]!.id)??0)*1.6)*d.cfg.size};
 
  const fit=useCallback(()=>{
@@ -81,8 +81,9 @@ export function ObsidianGraph({nodes,edges,selected,highlight,onSelect,onSelectE
   for(const e of d.links){
    const i=d.idx.get(e.s)!,j=d.idx.get(e.o)!,on=focus>=0&&(i===focus||j===focus),dim=(hoverOn&&!on)||(hl&&!(hl.has(e.s)&&hl.has(e.o)));
    ctx.beginPath();ctx.moveTo(X(i),Y(i));ctx.lineTo(X(j),Y(j));
-   ctx.strokeStyle=on?"rgba(190,175,255,.95)":e.negated?"rgba(240,150,150,.5)":"rgba(150,160,185,.30)";
-   if(dim)ctx.globalAlpha=.12;ctx.lineWidth=(on?1.8:.9)*d.cfg.link;ctx.setLineDash(e.negated?[6,4]:e.contextual?[1.5,4]:[]);ctx.stroke();ctx.globalAlpha=1;ctx.setLineDash([]);
+   const path=!!d.pathEdges?.has(e.id);
+   ctx.strokeStyle=path?"#7DF0C8":on?"rgba(190,175,255,.95)":e.negated?"rgba(240,150,150,.5)":"rgba(150,160,185,.30)";
+   if(dim&&!path)ctx.globalAlpha=.12;ctx.lineWidth=(path?3.4:on?1.8:.9)*d.cfg.link;ctx.setLineDash(e.negated?[6,4]:e.contextual?[1.5,4]:[]);ctx.stroke();ctx.globalAlpha=1;ctx.setLineDash([]);
    if(d.cfg.arrows&&!dim){const x1=X(i),y1=Y(i),x2=X(j),y2=Y(j),ang=Math.atan2(y2-y1,x2-x1),r=radius(j)*s.k+3;const ax=x2-Math.cos(ang)*r,ay=y2-Math.sin(ang)*r;ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(ax-Math.cos(ang-.45)*7,ay-Math.sin(ang-.45)*7);ctx.lineTo(ax-Math.cos(ang+.45)*7,ay-Math.sin(ang+.45)*7);ctx.closePath();ctx.fillStyle=ctx.strokeStyle as string;ctx.fill()}
   }
   // research gaps: amber dashed arcs with a marker; endpoints of the selected gap are ringed
@@ -101,8 +102,10 @@ export function ObsidianGraph({nodes,edges,selected,highlight,onSelect,onSelectE
    if(hl?.has(n.id)){ctx.beginPath();ctx.arc(X(i),Y(i),r+6,0,7);ctx.fillStyle="rgba(255,255,255,.14)";ctx.fill()}
    ctx.beginPath();ctx.arc(X(i),Y(i),r,0,7);ctx.fillStyle=d.colour.get(d.groupOf(n))??"#9AA5B8";ctx.fill();
    if(sel||i===s.hover){ctx.lineWidth=2.4;ctx.strokeStyle="#ffffff";ctx.stroke()}
+   if(d.picked.includes(n.id)){ctx.globalAlpha=1;ctx.beginPath();ctx.arc(X(i),Y(i),r+5,0,7);ctx.strokeStyle="#7DF0C8";ctx.lineWidth=2.4;ctx.setLineDash([4,3]);ctx.stroke();ctx.setLineDash([])}
    ctx.globalAlpha=1;
   }
+  if(s.box){const [a,b,c,e]=s.box;ctx.fillStyle="rgba(125,240,200,.10)";ctx.strokeStyle="rgba(125,240,200,.9)";ctx.lineWidth=1.2;ctx.fillRect(a,b,c-a,e-b);ctx.strokeRect(a,b,c-a,e-b)}
   // labels, greedy collision avoidance, most important first
   const fade=Math.min(1,Math.max(0,(s.k+d.cfg.text*1.4-1.2)/.7));
   ctx.font="600 12px 'Host Grotesk Variable',system-ui,sans-serif";ctx.textAlign="center";ctx.textBaseline="top";ctx.lineJoin="round";
@@ -141,7 +144,7 @@ export function ObsidianGraph({nodes,edges,selected,highlight,onSelect,onSelectE
  const idxPrev=useRef(idx);
 
  useEffect(()=>{st.current.dirty=true;draw()},[selected,highlight,cfg.size,cfg.link,cfg.text,cfg.arrows,cfg.groupBy,hidden]); // eslint-disable-line react-hooks/exhaustive-deps
-useEffect(()=>{st.current.dirty=true;draw()},[gapSel,gapsShown,cfg.gaps]); // eslint-disable-line react-hooks/exhaustive-deps
+useEffect(()=>{st.current.dirty=true;draw()},[gapSel,gapsShown,cfg.gaps,picked,pathEdges]); // eslint-disable-line react-hooks/exhaustive-deps
  useEffect(()=>{
   const s=st.current,sim=s.sim;if(!focusTick||!focusIds?.length||!sim)return;
   const pts=focusIds.map(id=>idx.get(id)).filter((i):i is number=>i!==undefined).map(i=>[sim.x[i]!,sim.y[i]!]);if(!pts.length)return;
@@ -183,19 +186,22 @@ useEffect(()=>{st.current.dirty=true;draw()},[gapSel,gapsShown,cfg.gaps]); // es
  function down(e:React.PointerEvent<HTMLCanvasElement>){
   if(e.button!==0)return;const p=local(e),gi=pickGap(p.x,p.y),i=gi>=0?-1:pick(p.x,p.y),s=st.current;
   if(gi>=0){onGap?.(data.current.gaps[gi]!.id);return}
-  s.drag={mode:i>=0?"node":"pan",i,sx:p.x,sy:p.y,tx:s.tx,ty:s.ty,moved:false};e.currentTarget.setPointerCapture(e.pointerId);
+  const multi=e.shiftKey||e.ctrlKey||e.metaKey;
+  s.drag={mode:i>=0?"node":multi?"box":"pan",i,sx:p.x,sy:p.y,tx:s.tx,ty:s.ty,moved:false,multi};e.currentTarget.setPointerCapture(e.pointerId);
  }
  function move(e:React.PointerEvent<HTMLCanvasElement>){
   const s=st.current,p=local(e),dr=s.drag,sim=s.sim;
   if(!dr){const gi=pickGap(p.x,p.y),i=gi>=0?-1:pick(p.x,p.y);if(i!==s.hover||gi!==data.current.hoverGap){s.hover=i;data.current.hoverGap=gi;cv.current!.style.cursor=i>=0||gi>=0?"pointer":"grab";s.dirty=true;if(!s.running)draw()}return}
   if(Math.hypot(p.x-dr.sx,p.y-dr.sy)>4)dr.moved=true;
   if(dr.mode==="node"&&sim&&dr.moved){sim.x[dr.i]=(p.x-s.tx)/s.k;sim.y[dr.i]=(p.y-s.ty)/s.k;sim.pin[dr.i]=1;sim.vx[dr.i]=0;sim.vy[dr.i]=0;kick(.35);s.dirty=true;if(!s.running)draw()}
+  else if(dr.mode==="box"){s.box=[Math.min(dr.sx,p.x),Math.min(dr.sy,p.y),Math.max(dr.sx,p.x),Math.max(dr.sy,p.y)];s.dirty=true;draw()}
   else if(dr.mode==="pan"){s.touched=true;s.tx=dr.tx+(p.x-dr.sx);s.ty=dr.ty+(p.y-dr.sy);s.dirty=true;draw()}
  }
  function up(e:React.PointerEvent<HTMLCanvasElement>){
   const s=st.current,dr=s.drag,p=local(e);s.drag=null;if(e.currentTarget.hasPointerCapture(e.pointerId))e.currentTarget.releasePointerCapture(e.pointerId);
   if(!dr)return;
-  if(dr.mode==="node"){if(s.sim)s.sim.pin[dr.i]=0;if(!dr.moved)onSelect(data.current.shown[dr.i]!.id)}
+  if(dr.mode==="box"){const b=s.box;s.box=null;s.dirty=true;if(b&&dr.moved&&s.sim){const ids=data.current.shown.filter((_,i)=>{const x=s.sim!.x[i]!*s.k+s.tx,y=s.sim!.y[i]!*s.k+s.ty;return x>=b[0]&&x<=b[2]&&y>=b[1]&&y<=b[3]}).map(n=>n.id);onPick?.([...new Set([...data.current.picked,...ids])])}draw();return}
+  if(dr.mode==="node"){if(s.sim)s.sim.pin[dr.i]=0;if(!dr.moved){const id=data.current.shown[dr.i]!.id;if(dr.multi){const cur=data.current.picked;onPick?.(cur.includes(id)?cur.filter(x=>x!==id):[...cur,id])}else onSelect(id)}}
   else if(!dr.moved){const ed=pickEdge(p.x,p.y);if(ed)onSelectEdge(ed)}
  }
  function key(e:React.KeyboardEvent<HTMLCanvasElement>){
@@ -212,7 +218,7 @@ useEffect(()=>{st.current.dirty=true;draw()},[gapSel,gapsShown,cfg.gaps]); // es
  if(nodes.length>MAX_NODES)return <p role="status">This view supports up to {MAX_NODES} concepts. Narrow the filters to draw it; use the relationship list to inspect connections.</p>;
  return (
   <div className="og-wrap"><div className="og" ref={wrap}>
-   <canvas ref={cv} role="group" tabIndex={0} aria-label="Interactive graph of biological entities" aria-description={`${shown.length} concepts and ${links.length} recorded relationships. Drag a concept to move it, drag the background to pan, scroll to zoom, arrow keys pan, plus and minus zoom. Every concept is also in the concept list.`} onKeyDown={key} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerLeave={()=>{const s=st.current;if(!s.drag&&s.hover>=0){s.hover=-1;s.dirty=true;draw()}}} onDoubleClick={fit}/>
+   <canvas ref={cv} role="group" tabIndex={0} aria-label="Interactive graph of biological entities" aria-description={`${shown.length} concepts and ${links.length} recorded relationships. Drag a concept to move it, drag the background to pan, scroll to zoom, arrow keys pan, plus and minus zoom. Shift-click a concept or shift-drag the background to select several. Every concept is also in the concept list.`} onKeyDown={key} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerLeave={()=>{const s=st.current;if(!s.drag&&s.hover>=0){s.hover=-1;s.dirty=true;draw()}}} onDoubleClick={fit}/>
    <ul className="og-sr" aria-label="Concepts in the graph">{shown.map((n,i)=><li key={n.id}><button type="button" data-graph-node={n.id} aria-pressed={n.id===selected} onFocus={()=>{st.current.hover=i;st.current.dirty=true;draw()}} onBlur={()=>{st.current.hover=-1;st.current.dirty=true;draw()}} onClick={()=>onSelect(n.id)}>Select {n.label}</button></li>)}</ul>
    <div className="og-tools" role="group" aria-label="Graph view controls">
     <button type="button" aria-label="Zoom in graph" onClick={()=>{const s=st.current;zoomAt(s.w/2,s.h/2,1.25)}}>+</button>

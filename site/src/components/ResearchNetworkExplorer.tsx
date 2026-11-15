@@ -6,6 +6,7 @@ import type { DomainBundle } from '../../../src/knowledgeGraph/domainGraph';
 import { networkProjection, connectionGroups } from '../../../src/knowledgeGraph/networkExplorer';
 import { ObsidianGraph } from './graph/ObsidianGraph';
 import { GapCard } from './GapCard';
+import { SelectionTray } from './SelectionTray';
 import { useGapIndex } from './NodeIntelligence';
 import '../styles/gap-intelligence.css';
 import '../styles/obsidian-graph.css';
@@ -39,6 +40,7 @@ export function ResearchNetworkExplorer({
 }) {
   const filterPanelId=useId();
   const [filtersOpen,setFiltersOpen]=useState(false);
+  const [picked,setPicked]=useState<string[]>([]),[pathEdges,setPathEdges]=useState<ReadonlySet<string>>(new Set());
   const [gapId,setGapId]=useState<string|null>(null),[focus,setFocus]=useState({ids:[] as string[],tick:0});
   const [history, setHistory] = useState({ ids: [selected], index: 0 }),
     [list, setList] = useState(false);
@@ -92,7 +94,8 @@ export function ResearchNetworkExplorer({
   const modelCounts = useMemo(() => { const m = new Map<string, number>(); for (const e of bundle.edges) if (e.kind === 'source_candidate') m.set(e.model, (m.get(e.model) ?? 0) + 1); return [...m].sort((a, b) => b[1] - a[1]); }, [bundle]);
   const activeCount = [f.department, f.conditions[0], f.kind, f.model, f.polarity, f.tissue, f.evidenceKind, f.gaps ? '' : 'x', f.orphans ? 'x' : '', f.query].filter(Boolean).length;
   const gapIdx = useGapIndex(bundle);
-  const inSlice = new Set(slice.nodes.map((n) => n.id));
+  const inSlice = useMemo(() => new Set(slice.nodes.map((n) => n.id)), [slice]);
+  const pickedIn = useMemo(() => picked.filter((id) => inSlice.has(id)), [picked, inSlice]);
   const gaps = useMemo(() => [...gapIdx.gaps].sort((a, b) => Number(b.entityIds.includes(selected)) - Number(a.entityIds.includes(selected)) || b.priorityScore - a.priorityScore || a.id.localeCompare(b.id)), [gapIdx.gaps, selected]);
   const gap = gaps.find((g) => g.id === gapId) ?? null;
   const gapHidden = gap ? !gap.entityIds.every((id) => inSlice.has(id)) : false;
@@ -243,7 +246,11 @@ export function ResearchNetworkExplorer({
                   onGap={chooseGap}
                   focusIds={focus.ids}
                   focusTick={focus.tick}
+                  picked={pickedIn}
+                  onPick={setPicked}
+                  pathEdges={pathEdges}
                 />
+                <SelectionTray bundle={bundle} picked={pickedIn} setPicked={setPicked} current={selected} edges={ogEdges} gaps={gapIdx.gaps} depth={f.depth} onExpand={(id, d) => update({ node: id, netDepth: String(d), netScope: 'local' })} onInspectEdge={inspectEdge} onPath={setPathEdges} />
               </div>
               {list && (
                 <ul className="rn-edge-list" aria-label="Visible network relationships">
