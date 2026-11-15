@@ -1,6 +1,7 @@
 import {useCallback,useEffect,useState} from "react";
 import {parseTracking,recordTracked,type GapStatus,type GapTracking} from "../../../src/knowledgeGraph/gapRegister";
-export const RUN_GAPS_KEY="hsi-run-gaps-v1";
+import {RUN_GAPS_KEY} from "./storageKeys";
+export {RUN_GAPS_KEY};
 /** Status and notes for gaps derived from live runs. This browser only; keyed by scenario and gap kind so it survives a re-run. */
 export function useRunGapTracking(version:string){
  const [track,setTrack]=useState<GapTracking>({}),[blocked,setBlocked]=useState(false);

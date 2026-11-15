@@ -7,13 +7,14 @@ import {deriveRunGaps} from "../../../src/investigation/runGaps";
 import {RunGapList} from "../components/home/RunGapList";
 import {useRunGapTracking} from "../lib/useRunGapTracking";
 import {useLedger} from "../lib/useLedger";
+import {GAP_REGISTER_KEY} from "../lib/storageKeys";
 import {LIVE_RUN_KEY} from "../lib/researchHome";
 import type {Run} from "../lib/workspaceView";
 import {ResearchAppShell} from "../components/home/ResearchAppShell";
 import {Icon} from "../components/home/AppIcons";
 import "../styles/research-home.css";
 
-const KEY="hsi-gap-register-v1";
+const KEY=GAP_REGISTER_KEY;
 const LABEL:Record<GapStatus,string>={open:"Open",investigating:"Investigating",resolved:"Resolved",deferred:"Deferred"};
 function load():GapTracking{try{return parseTracking(localStorage.getItem(KEY))}catch{return {}}}
 

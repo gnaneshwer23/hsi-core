@@ -1,9 +1,8 @@
 import {parseLedger} from "../../../src/investigation/hypothesisLedger";
 import {parseTracking} from "../../../src/knowledgeGraph/gapRegister";
 import {LIVE_RUN_KEY} from "./researchHome";
-import {RUN_GAPS_KEY} from "./useRunGapTracking";
-import {LEDGER_KEY} from "./useLedger";
-export const GAP_REGISTER_KEY="hsi-gap-register-v1";
+import {GAP_REGISTER_KEY,LEDGER_KEY,RUN_GAPS_KEY} from "./storageKeys";
+export {GAP_REGISTER_KEY};
 
 export type StatusKind="live"|"published"|"synthetic"|"derived"|"manual"|"local";
 export type JourneyStep={n:number;id:string;title:string;question:string;to:string;cta:string;status:{label:string;kind:StatusKind};proves:string;doesNot:string};

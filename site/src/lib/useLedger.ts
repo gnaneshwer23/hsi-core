@@ -1,6 +1,7 @@
 import {useCallback,useEffect,useRef,useState} from "react";
 import {addEntry,parseLedger,type Ledger,type LedgerEntry} from "../../../src/investigation/hypothesisLedger";
-export const LEDGER_KEY="hsi-hypothesis-ledger-v1";
+import {LEDGER_KEY} from "./storageKeys";
+export {LEDGER_KEY};
 /** The hypothesis ledger for this browser. Not stored on a server. The ref mirrors state so add() can answer synchronously. */
 export function useLedger(){
  const [ledger,setLedger]=useState<Ledger>({}),[blocked,setBlocked]=useState(false),[ready,setReady]=useState(false),ref=useRef<Ledger>({});
