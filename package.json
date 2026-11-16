@@ -165,6 +165,7 @@
     "graph:check": "bun --no-env-file scripts/build-claim-graph.ts --check",
     "scenarios:generate": "bun --no-env-file scripts/generate-longitudinal-scenarios.ts",
     "domain-graph:build": "bun --no-env-file scripts/build-domain-graph.ts",
+    "ontology:types": "bun --no-env-file scripts/propose-concept-types.ts",
     "ontology:check": "bun --no-env-file scripts/check-ontology-mappings.ts",
     "domain-graph:check": "bun --no-env-file scripts/build-domain-graph.ts --check",
     "n1:verify": "bun --no-env-file scripts/n1-verify-candidates.ts",

@@ -1,0 +1,1385 @@
+{
+  "schemaVersion": "hsi-concept-typing-1",
+  "mappedAgainst": "e06d43438e382a6d1f52c932420bd189014d8449b09c2d3113b5a34fde076d03",
+  "rulesVersion": "rules-1",
+  "proposals": [
+    {
+      "conceptId": "concept:-7-nachr-jak2-stat3-macrophage-programme-cf54f78",
+      "name": "α7 nAChR–Jak2–STAT3 macrophage programme",
+      "currentKind": "biological concept",
+      "proposedType": "biological_process",
+      "ruleId": "R07",
+      "reason": "Names a process rather than an entity",
+      "alternatives": [
+        {
+          "type": "receptor",
+          "ruleId": "R08"
+        },
+        {
+          "type": "cell_type",
+          "ruleId": "R09"
+        }
+      ],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:acetylcholine-synthesizing-memory-t-cells-58096d9",
+      "name": "Acetylcholine-synthesizing memory T cells",
+      "currentKind": "biological concept",
+      "proposedType": "cell_type",
+      "ruleId": "R09",
+      "reason": "Names a cell population",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:anti-ccp-antibodies-8eae71e",
+      "name": "Anti-CCP antibodies",
+      "currentKind": "biological concept",
+      "proposedType": "autoantibody_or_antibody",
+      "ruleId": "R03",
+      "reason": "Names an antibody or autoantibody",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:anti-drug-antibodies-to-anti-tnf-ada--4cc4410",
+      "name": "Anti-drug antibodies to anti-TNF (ADA)",
+      "currentKind": "biological concept",
+      "proposedType": "autoantibody_or_antibody",
+      "ruleId": "R03",
+      "reason": "Names an antibody or autoantibody",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:anti-tnf-immunogenicity-bioavailability-monitoring-7fe7ca0",
+      "name": "Anti-TNF immunogenicity / bioavailability monitoring",
+      "currentKind": "biological concept",
+      "proposedType": "clinical_measurement",
+      "ruleId": "R02",
+      "reason": "Names a laboratory or monitoring measurement",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:anti-tnf-refractory-ra-phenotype-3df0409",
+      "name": "Anti-TNF refractory RA phenotype",
+      "currentKind": "biological concept",
+      "proposedType": "phenotype_or_state",
+      "ruleId": "R16",
+      "reason": "Names a phenotype, clinical state or response",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:anti-tnf-response-heterogeneity-41bd793",
+      "name": "Anti-TNF response heterogeneity",
+      "currentKind": "biological concept",
+      "proposedType": "phenotype_or_state",
+      "ruleId": "R16",
+      "reason": "Names a phenotype, clinical state or response",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:anti-tnf-therapy-139914b",
+      "name": "Anti-TNF therapy",
+      "currentKind": "biological concept",
+      "proposedType": "drug_or_therapy",
+      "ruleId": "R05",
+      "reason": "Names a drug, drug class or therapy",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:anti-tnf-treatment-response-9be5939",
+      "name": "Anti-TNF treatment response",
+      "currentKind": "biological concept",
+      "proposedType": "phenotype_or_state",
+      "ruleId": "R16",
+      "reason": "Names a phenotype, clinical state or response",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:antinuclear-antibodies-ana--382388b",
+      "name": "Antinuclear antibodies (ANA)",
+      "currentKind": "biological concept",
+      "proposedType": "autoantibody_or_antibody",
+      "ruleId": "R03",
+      "reason": "Names an antibody or autoantibody",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:autoimmune-metabolic-comorbidity-8d426ca",
+      "name": "Autoimmune–metabolic comorbidity",
+      "currentKind": "biological concept",
+      "proposedType": "phenotype_or_state",
+      "ruleId": "R16",
+      "reason": "Names a phenotype, clinical state or response",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:autoimmune-t-cell-responses-622b4e6",
+      "name": "Autoimmune T-cell responses",
+      "currentKind": "biological concept",
+      "proposedType": "biological_process",
+      "ruleId": "R07",
+      "reason": "Names a process rather than an entity",
+      "alternatives": [
+        {
+          "type": "cell_type",
+          "ruleId": "R09"
+        }
+      ],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:autoreactive-cd8-t-cells-4135353",
+      "name": "Autoreactive CD8 T cells",
+      "currentKind": "biological concept",
+      "proposedType": "cell_type",
+      "ruleId": "R09",
+      "reason": "Names a cell population",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:b-cell-11311d8",
+      "name": "B cell",
+      "currentKind": "biological concept",
+      "proposedType": "cell_type",
+      "ruleId": "R09",
+      "reason": "Names a cell population",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:baff-antagonist-experimental--d0ecbbc",
+      "name": "BAFF antagonist (experimental)",
+      "currentKind": "biological concept",
+      "proposedType": "drug_or_therapy",
+      "ruleId": "R05",
+      "reason": "Names a drug, drug class or therapy",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:baff-b-cell-activating-factor--455a5c5",
+      "name": "BAFF (B-cell activating factor)",
+      "currentKind": "biological concept",
+      "proposedType": "cytokine_or_mediator",
+      "ruleId": "R10",
+      "reason": "Names a cytokine, chemokine or soluble mediator",
+      "alternatives": [
+        {
+          "type": "cell_type",
+          "ruleId": "R09"
+        }
+      ],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:beta-cell-injury-74547c6",
+      "name": "Beta-cell injury",
+      "currentKind": "biological concept",
+      "proposedType": "phenotype_or_state",
+      "ruleId": "R16",
+      "reason": "Names a phenotype, clinical state or response",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:blood-brain-barrier-39d59f6",
+      "name": "Blood–brain barrier",
+      "currentKind": "biological concept",
+      "proposedType": "anatomical_structure",
+      "ruleId": "R13",
+      "reason": "Names an anatomical structure",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:blood-brain-barrier-neuroimmune-interface--5e837ae",
+      "name": "Blood–brain barrier (neuroimmune interface)",
+      "currentKind": "biological concept",
+      "proposedType": "anatomical_structure",
+      "ruleId": "R13",
+      "reason": "Names an anatomical structure",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:brain-parenchyma-immune-surveillance-ff492d6",
+      "name": "Brain parenchyma immune surveillance",
+      "currentKind": "biological concept",
+      "proposedType": "biological_process",
+      "ruleId": "R07",
+      "reason": "Names a process rather than an entity",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:cerebral-microglia-6b4fb28",
+      "name": "Cerebral microglia",
+      "currentKind": "biological concept",
+      "proposedType": "cell_type",
+      "ruleId": "R09",
+      "reason": "Names a cell population",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:cgm-time-in-range-e61cf99",
+      "name": "CGM time-in-range",
+      "currentKind": "biological concept",
+      "proposedType": "clinical_measurement",
+      "ruleId": "R02",
+      "reason": "Names a laboratory or monitoring measurement",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:cholinergic-anti-inflammatory-pathway-0a7dc97",
+      "name": "Cholinergic anti-inflammatory pathway",
+      "currentKind": "biological concept",
+      "proposedType": "pathway",
+      "ruleId": "R06",
+      "reason": "Names a signalling pathway, reflex or axis",
+      "alternatives": [
+        {
+          "type": "phenotype_or_state",
+          "ruleId": "R16"
+        }
+      ],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:cholinergic-neural-signals-to-the-spleen-959eefc",
+      "name": "Cholinergic neural signals to the spleen",
+      "currentKind": "biological concept",
+      "proposedType": "unclassified",
+      "ruleId": null,
+      "reason": "No rule matched this name",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:circulating-interleukin-1--5a2989a",
+      "name": "Circulating interleukin-1α",
+      "currentKind": "biological concept",
+      "proposedType": "cytokine_or_mediator",
+      "ruleId": "R10",
+      "reason": "Names a cytokine, chemokine or soluble mediator",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:circulating-tfh-cells-dfe74c0",
+      "name": "circulating Tfh cells",
+      "currentKind": "biological concept",
+      "proposedType": "cell_type",
+      "ruleId": "R09",
+      "reason": "Names a cell population",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:circulating-tfh1-subset-c3af0f9",
+      "name": "circulating Tfh1 subset",
+      "currentKind": "biological concept",
+      "proposedType": "cell_type",
+      "ruleId": "R09",
+      "reason": "Names a cell population",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:clostridium-clusters-iv-xiva-gut--ce3795e",
+      "name": "Clostridium clusters IV / XIVa (gut)",
+      "currentKind": "biological concept",
+      "proposedType": "microorganism",
+      "ruleId": "R12",
+      "reason": "Names a microorganism or microbial community",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:cns-inflammatory-neurodegenerative-tone-939f891",
+      "name": "CNS inflammatory / neurodegenerative tone",
+      "currentKind": "biological concept",
+      "proposedType": "phenotype_or_state",
+      "ruleId": "R16",
+      "reason": "Names a phenotype, clinical state or response",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:colonic-inflammation-tone-b58a1c3",
+      "name": "Colonic inflammation tone",
+      "currentKind": "biological concept",
+      "proposedType": "phenotype_or_state",
+      "ruleId": "R16",
+      "reason": "Names a phenotype, clinical state or response",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:commensal-bacterial-metabolites-scfa-neighbourhood--6bed04a",
+      "name": "Commensal bacterial metabolites (SCFA neighbourhood)",
+      "currentKind": "biological concept",
+      "proposedType": "microbial_metabolite",
+      "ruleId": "R11",
+      "reason": "Names microbial metabolites",
+      "alternatives": [
+        {
+          "type": "microorganism",
+          "ruleId": "R12"
+        }
+      ],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:cxcl13-tfh-like-t-cells-ssc-skin--5256845",
+      "name": "CXCL13+ Tfh-like T cells (SSc skin)",
+      "currentKind": "biological concept",
+      "proposedType": "cell_type",
+      "ruleId": "R09",
+      "reason": "Names a cell population",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:cxcl4-pf4--e580b6f",
+      "name": "CXCL4 (PF4)",
+      "currentKind": "biological concept",
+      "proposedType": "cytokine_or_mediator",
+      "ruleId": "R10",
+      "reason": "Names a cytokine, chemokine or soluble mediator",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:dermal-fibrosis-1f478c1",
+      "name": "dermal fibrosis",
+      "currentKind": "biological concept",
+      "proposedType": "phenotype_or_state",
+      "ruleId": "R16",
+      "reason": "Names a phenotype, clinical state or response",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:efferent-vagus-nerve-stimulation-e06c196",
+      "name": "Efferent vagus nerve stimulation",
+      "currentKind": "biological concept",
+      "proposedType": "intervention_procedure",
+      "ruleId": "R04",
+      "reason": "Names a stimulation intervention",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:endotoxin-exposure-7ec78bf",
+      "name": "Endotoxin exposure",
+      "currentKind": "biological concept",
+      "proposedType": "exposure",
+      "ruleId": "R14",
+      "reason": "Names an exposure",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:epstein-barr-virus-ebv--cf0a9d6",
+      "name": "Epstein-Barr virus (EBV)",
+      "currentKind": "biological concept",
+      "proposedType": "microorganism",
+      "ruleId": "R12",
+      "reason": "Names a microorganism or microbial community",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:fasting-plasma-glucose-897a5f4",
+      "name": "Fasting plasma glucose",
+      "currentKind": "biological concept",
+      "proposedType": "clinical_measurement",
+      "ruleId": "R02",
+      "reason": "Names a laboratory or monitoring measurement",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:fibre-responsive-gut-bacteria-ab26ae7",
+      "name": "Fibre-responsive gut bacteria",
+      "currentKind": "biological concept",
+      "proposedType": "microorganism",
+      "ruleId": "R12",
+      "reason": "Names a microorganism or microbial community",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:glp-1-receptor-agonists-a739770",
+      "name": "GLP-1 receptor agonists",
+      "currentKind": "biological concept",
+      "proposedType": "drug_or_therapy",
+      "ruleId": "R05",
+      "reason": "Names a drug, drug class or therapy",
+      "alternatives": [
+        {
+          "type": "receptor",
+          "ruleId": "R08"
+        }
+      ],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:gpr109a-hcar2-butyrate-niacin-receptor-c67d9fd",
+      "name": "GPR109A (HCAR2) — butyrate / niacin receptor",
+      "currentKind": "biological concept",
+      "proposedType": "receptor",
+      "ruleId": "R08",
+      "reason": "Names a receptor",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:hba1c-edb1995",
+      "name": "HbA1c",
+      "currentKind": "biological concept",
+      "proposedType": "clinical_measurement",
+      "ruleId": "R02",
+      "reason": "Names a laboratory or monitoring measurement",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:hs-crp-dec08db",
+      "name": "hs-CRP",
+      "currentKind": "biological concept",
+      "proposedType": "clinical_measurement",
+      "ruleId": "R02",
+      "reason": "Names a laboratory or monitoring measurement",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:human-dendritic-cell-conditioning-3b26e7b",
+      "name": "Human dendritic-cell conditioning",
+      "currentKind": "biological concept",
+      "proposedType": "biological_process",
+      "ruleId": "R07",
+      "reason": "Names a process rather than an entity",
+      "alternatives": [
+        {
+          "type": "cell_type",
+          "ruleId": "R09"
+        }
+      ],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:human-microbiota-clostridia-mix-17-strain-class--2c89ed6",
+      "name": "Human microbiota Clostridia mix (17-strain class)",
+      "currentKind": "biological concept",
+      "proposedType": "microorganism",
+      "ruleId": "R12",
+      "reason": "Names a microorganism or microbial community",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:hyperglycemia-8cde24e",
+      "name": "Hyperglycemia",
+      "currentKind": "biological concept",
+      "proposedType": "phenotype_or_state",
+      "ruleId": "R16",
+      "reason": "Names a phenotype, clinical state or response",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:icos-tfh-like-cells-29d292b",
+      "name": "ICOS+ Tfh-like cells",
+      "currentKind": "biological concept",
+      "proposedType": "cell_type",
+      "ruleId": "R09",
+      "reason": "Names a cell population",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:icos-tfh-like-cells-il-21-77c4827",
+      "name": "ICOS+ Tfh-like cells / IL-21",
+      "currentKind": "biological concept",
+      "proposedType": "cell_type",
+      "ruleId": "R09",
+      "reason": "Names a cell population",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:il-1-pathway-blockade-787dcc0",
+      "name": "IL-1 pathway blockade",
+      "currentKind": "biological concept",
+      "proposedType": "drug_or_therapy",
+      "ruleId": "R05",
+      "reason": "Names a drug, drug class or therapy",
+      "alternatives": [
+        {
+          "type": "pathway",
+          "ruleId": "R06"
+        }
+      ],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:il-10-type-1-regulatory-t-cells-tr1-like--cd5f9c9",
+      "name": "IL-10+ type-1 regulatory T cells (Tr1-like)",
+      "currentKind": "biological concept",
+      "proposedType": "cell_type",
+      "ruleId": "R09",
+      "reason": "Names a cell population",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:il-17-pathway-50a2203",
+      "name": "IL-17 pathway",
+      "currentKind": "biological concept",
+      "proposedType": "pathway",
+      "ruleId": "R06",
+      "reason": "Names a signalling pathway, reflex or axis",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:il-21-9b74211",
+      "name": "IL-21",
+      "currentKind": "biological concept",
+      "proposedType": "cytokine_or_mediator",
+      "ruleId": "R10",
+      "reason": "Names a cytokine, chemokine or soluble mediator",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:il-21-dependent-plasmablast-differentiation-8e9dc00",
+      "name": "IL-21-dependent plasmablast differentiation",
+      "currentKind": "biological concept",
+      "proposedType": "biological_process",
+      "ruleId": "R07",
+      "reason": "Names a process rather than an entity",
+      "alternatives": [
+        {
+          "type": "cell_type",
+          "ruleId": "R09"
+        }
+      ],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:il-23-pathway-105f13a",
+      "name": "IL-23 pathway",
+      "currentKind": "biological concept",
+      "proposedType": "pathway",
+      "ruleId": "R06",
+      "reason": "Names a signalling pathway, reflex or axis",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:il-6-pathway-axis-e32d873",
+      "name": "IL-6 pathway axis",
+      "currentKind": "biological concept",
+      "proposedType": "pathway",
+      "ruleId": "R06",
+      "reason": "Names a signalling pathway, reflex or axis",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:il-6-pathway-blockade-tocilizumab-class--64403dd",
+      "name": "IL-6 pathway blockade (tocilizumab class)",
+      "currentKind": "biological concept",
+      "proposedType": "drug_or_therapy",
+      "ruleId": "R05",
+      "reason": "Names a drug, drug class or therapy",
+      "alternatives": [
+        {
+          "type": "pathway",
+          "ruleId": "R06"
+        }
+      ],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:immune-checkpoint-therapy-f09182c",
+      "name": "Immune checkpoint therapy",
+      "currentKind": "biological concept",
+      "proposedType": "drug_or_therapy",
+      "ruleId": "R05",
+      "reason": "Names a drug, drug class or therapy",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:immune-related-adverse-events-34312cf",
+      "name": "Immune-related adverse events",
+      "currentKind": "biological concept",
+      "proposedType": "phenotype_or_state",
+      "ruleId": "R16",
+      "reason": "Names a phenotype, clinical state or response",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:implantable-vagus-nerve-stimulator-experimental--27b5f4f",
+      "name": "Implantable vagus nerve stimulator (experimental)",
+      "currentKind": "biological concept",
+      "proposedType": "intervention_procedure",
+      "ruleId": "R04",
+      "reason": "Names a stimulation intervention",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:infection-susceptibility-480bf88",
+      "name": "Infection susceptibility",
+      "currentKind": "biological concept",
+      "proposedType": "phenotype_or_state",
+      "ruleId": "R16",
+      "reason": "Names a phenotype, clinical state or response",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:inflammatory-bowel-disease-54fdad6",
+      "name": "Inflammatory bowel disease",
+      "currentKind": "biological concept",
+      "proposedType": "disease",
+      "ruleId": "R15",
+      "reason": "Names a disease",
+      "alternatives": [
+        {
+          "type": "phenotype_or_state",
+          "ruleId": "R16"
+        }
+      ],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:inflammatory-reflex-70557c1",
+      "name": "Inflammatory reflex",
+      "currentKind": "biological concept",
+      "proposedType": "pathway",
+      "ruleId": "R06",
+      "reason": "Names a signalling pathway, reflex or axis",
+      "alternatives": [
+        {
+          "type": "phenotype_or_state",
+          "ruleId": "R16"
+        }
+      ],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:inflammatory-reflex-cholinergic-axis--f501cba",
+      "name": "Inflammatory reflex (cholinergic axis)",
+      "currentKind": "biological concept",
+      "proposedType": "pathway",
+      "ruleId": "R06",
+      "reason": "Names a signalling pathway, reflex or axis",
+      "alternatives": [
+        {
+          "type": "phenotype_or_state",
+          "ruleId": "R16"
+        }
+      ],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:innate-immune-dysfunction-5b7692e",
+      "name": "Innate immune dysfunction",
+      "currentKind": "biological concept",
+      "proposedType": "phenotype_or_state",
+      "ruleId": "R16",
+      "reason": "Names a phenotype, clinical state or response",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:intestinal-epithelial-barrier-tight-junctions-9125cbb",
+      "name": "Intestinal epithelial barrier / tight junctions",
+      "currentKind": "biological concept",
+      "proposedType": "anatomical_structure",
+      "ruleId": "R13",
+      "reason": "Names an anatomical structure",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:intestinal-epithelial-hif-supported-barrier-function-5a19f26",
+      "name": "Intestinal epithelial HIF-supported barrier function",
+      "currentKind": "biological concept",
+      "proposedType": "biological_process",
+      "ruleId": "R07",
+      "reason": "Names a process rather than an entity",
+      "alternatives": [
+        {
+          "type": "anatomical_structure",
+          "ruleId": "R13"
+        }
+      ],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:intestinal-macrophage-hdac-activity-inflammatory-tone-fc020ff",
+      "name": "Intestinal macrophage HDAC activity / inflammatory tone",
+      "currentKind": "biological concept",
+      "proposedType": "biological_process",
+      "ruleId": "R07",
+      "reason": "Names a process rather than an entity",
+      "alternatives": [
+        {
+          "type": "cell_type",
+          "ruleId": "R09"
+        },
+        {
+          "type": "phenotype_or_state",
+          "ruleId": "R16"
+        }
+      ],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:ischemia-reperfusion-tnf-response-0f01359",
+      "name": "Ischemia–reperfusion TNF response",
+      "currentKind": "biological concept",
+      "proposedType": "biological_process",
+      "ruleId": "R07",
+      "reason": "Names a process rather than an entity",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:islet-autoantibodies-5e2bdcb",
+      "name": "Islet autoantibodies",
+      "currentKind": "biological concept",
+      "proposedType": "autoantibody_or_antibody",
+      "ruleId": "R03",
+      "reason": "Names an antibody or autoantibody",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:lada-latent-autoimmune-diabetes-8a43cd2",
+      "name": "LADA / latent autoimmune diabetes",
+      "currentKind": "biological concept",
+      "proposedType": "disease",
+      "ruleId": "R15",
+      "reason": "Names a disease",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:leukocyte-trafficking-via-cd11b-909d19b",
+      "name": "Leukocyte trafficking via CD11b",
+      "currentKind": "biological concept",
+      "proposedType": "biological_process",
+      "ruleId": "R07",
+      "reason": "Names a process rather than an entity",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:low-grade-chronic-inflammation-6c0133c",
+      "name": "Low-grade chronic inflammation",
+      "currentKind": "biological concept",
+      "proposedType": "phenotype_or_state",
+      "ruleId": "R16",
+      "reason": "Names a phenotype, clinical state or response",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:macrophage-tnf-release-5d462bc",
+      "name": "Macrophage TNF release",
+      "currentKind": "biological concept",
+      "proposedType": "biological_process",
+      "ruleId": "R07",
+      "reason": "Names a process rather than an entity",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:macrophage-tnf-synthesis-release-f701603",
+      "name": "Macrophage TNF synthesis / release",
+      "currentKind": "biological concept",
+      "proposedType": "biological_process",
+      "ruleId": "R07",
+      "reason": "Names a process rather than an entity",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:metabolic-inflammation-1d9030c",
+      "name": "Metabolic inflammation",
+      "currentKind": "biological concept",
+      "proposedType": "phenotype_or_state",
+      "ruleId": "R16",
+      "reason": "Names a phenotype, clinical state or response",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:methotrexate-anti-tnf-combination-therapy-7ff456a",
+      "name": "Methotrexate + anti-TNF combination therapy",
+      "currentKind": "biological concept",
+      "proposedType": "drug_or_therapy",
+      "ruleId": "R05",
+      "reason": "Names a drug, drug class or therapy",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:microbial-bcaa-biosynthesis-91233db",
+      "name": "Microbial BCAA biosynthesis",
+      "currentKind": "biological concept",
+      "proposedType": "biological_process",
+      "ruleId": "R07",
+      "reason": "Names a process rather than an entity",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:microbiota-tryptophan-catabolites-ahr-ligands--0a8d9c1",
+      "name": "Microbiota tryptophan catabolites (AhR ligands)",
+      "currentKind": "biological concept",
+      "proposedType": "microbial_metabolite",
+      "ruleId": "R11",
+      "reason": "Names microbial metabolites",
+      "alternatives": [
+        {
+          "type": "microorganism",
+          "ruleId": "R12"
+        }
+      ],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:monocyte-recruitment-into-brain-e98204c",
+      "name": "Monocyte recruitment into brain",
+      "currentKind": "biological concept",
+      "proposedType": "biological_process",
+      "ruleId": "R07",
+      "reason": "Names a process rather than an entity",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:mtorc1-insulin-signalling-pathway-fba9add",
+      "name": "mTORC1 insulin-signalling pathway",
+      "currentKind": "biological concept",
+      "proposedType": "pathway",
+      "ruleId": "R06",
+      "reason": "Names a signalling pathway, reflex or axis",
+      "alternatives": [
+        {
+          "type": "biological_process",
+          "ruleId": "R07"
+        }
+      ],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:mucosal-il-22-reactivity-balance-2163840",
+      "name": "Mucosal IL-22 / reactivity balance",
+      "currentKind": "biological concept",
+      "proposedType": "biological_process",
+      "ruleId": "R07",
+      "reason": "Names a process rather than an entity",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:nicotinic-ach-receptor-7-subunit-macrophage--cc70e7b",
+      "name": "Nicotinic ACh receptor α7 subunit (macrophage)",
+      "currentKind": "biological concept",
+      "proposedType": "receptor",
+      "ruleId": "R08",
+      "reason": "Names a receptor",
+      "alternatives": [
+        {
+          "type": "cell_type",
+          "ruleId": "R09"
+        }
+      ],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:pancreatic-cell-dysfunction-d3ac2d4",
+      "name": "Pancreatic β-cell dysfunction",
+      "currentKind": "biological concept",
+      "proposedType": "phenotype_or_state",
+      "ruleId": "R16",
+      "reason": "Names a phenotype, clinical state or response",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:pd-1-46233b0",
+      "name": "PD-1",
+      "currentKind": "biological concept",
+      "proposedType": "receptor",
+      "ruleId": "R08",
+      "reason": "Names a receptor",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:peripheral-immune-cns-communication-axis-ba2f15c",
+      "name": "Peripheral immune ↔ CNS communication axis",
+      "currentKind": "biological concept",
+      "proposedType": "pathway",
+      "ruleId": "R06",
+      "reason": "Names a signalling pathway, reflex or axis",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:peripheral-systemic-tnf-inflammatory-tone-2b6d2c9",
+      "name": "Peripheral / systemic TNF inflammatory tone",
+      "currentKind": "biological concept",
+      "proposedType": "phenotype_or_state",
+      "ruleId": "R16",
+      "reason": "Names a phenotype, clinical state or response",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:pharmacologic-cholinergic-anti-inflammatory-stimulation-8646711",
+      "name": "Pharmacologic cholinergic anti-inflammatory stimulation",
+      "currentKind": "biological concept",
+      "proposedType": "intervention_procedure",
+      "ruleId": "R04",
+      "reason": "Names a stimulation intervention",
+      "alternatives": [
+        {
+          "type": "phenotype_or_state",
+          "ruleId": "R16"
+        }
+      ],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:plasmablast-907cb01",
+      "name": "Plasmablast",
+      "currentKind": "biological concept",
+      "proposedType": "cell_type",
+      "ruleId": "R09",
+      "reason": "Names a cell population",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:psoriasis-psoriatic-disease-bb7ad40",
+      "name": "Psoriasis / psoriatic disease",
+      "currentKind": "biological concept",
+      "proposedType": "disease",
+      "ruleId": "R15",
+      "reason": "Names a disease",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:resting-surveying-microglia-1b0204f",
+      "name": "Resting / surveying microglia",
+      "currentKind": "biological concept",
+      "proposedType": "cell_type",
+      "ruleId": "R09",
+      "reason": "Names a cell population",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:rf-acpa-seropositive-ra-phenotype-aaf4649",
+      "name": "RF/ACPA seropositive RA phenotype",
+      "currentKind": "biological concept",
+      "proposedType": "phenotype_or_state",
+      "ruleId": "R16",
+      "reason": "Names a phenotype, clinical state or response",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:rheumatoid-factor-ac0f1e7",
+      "name": "Rheumatoid factor",
+      "currentKind": "biological concept",
+      "proposedType": "autoantibody_or_antibody",
+      "ruleId": "R03",
+      "reason": "Names an antibody or autoantibody",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:rituximab-b-cell-depletion-experimental-in-ssc--0f5ddd9",
+      "name": "Rituximab B-cell depletion (experimental in SSc)",
+      "currentKind": "biological concept",
+      "proposedType": "drug_or_therapy",
+      "ruleId": "R05",
+      "reason": "Names a drug, drug class or therapy",
+      "alternatives": [
+        {
+          "type": "cell_type",
+          "ruleId": "R09"
+        }
+      ],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:segmented-filamentous-bacteria-sfb--a0cda1b",
+      "name": "Segmented filamentous bacteria (SFB)",
+      "currentKind": "biological concept",
+      "proposedType": "microorganism",
+      "ruleId": "R12",
+      "reason": "Names a microorganism or microbial community",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:sglt2-inhibitors-d4fdd6f",
+      "name": "SGLT2 inhibitors",
+      "currentKind": "biological concept",
+      "proposedType": "drug_or_therapy",
+      "ruleId": "R05",
+      "reason": "Names a drug, drug class or therapy",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:skin-fibrosis-2366785",
+      "name": "Skin fibrosis",
+      "currentKind": "biological concept",
+      "proposedType": "phenotype_or_state",
+      "ruleId": "R16",
+      "reason": "Names a phenotype, clinical state or response",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:spleen-innate-cytokine-reservoir--69a2683",
+      "name": "Spleen (innate cytokine reservoir)",
+      "currentKind": "biological concept",
+      "proposedType": "anatomical_structure",
+      "ruleId": "R13",
+      "reason": "Names an anatomical structure",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:splenic-nerve-catecholaminergic--eb1a1d9",
+      "name": "Splenic nerve (catecholaminergic)",
+      "currentKind": "biological concept",
+      "proposedType": "anatomical_structure",
+      "ruleId": "R13",
+      "reason": "Names an anatomical structure",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:ssc-circulating-tfh-cells-e2491dc",
+      "name": "SSc circulating Tfh cells",
+      "currentKind": "biological concept",
+      "proposedType": "cell_type",
+      "ruleId": "R09",
+      "reason": "Names a cell population",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:ssc-cohort-b1d52a8",
+      "name": "SSc cohort",
+      "currentKind": "biological concept",
+      "proposedType": "study_context",
+      "ruleId": "R01",
+      "reason": "Names a study cohort, not a biological entity",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:ssc-cohort-versus-healthy-controls-faf9aad",
+      "name": "SSc cohort versus healthy controls",
+      "currentKind": "biological concept",
+      "proposedType": "study_context",
+      "ruleId": "R01",
+      "reason": "Names a study cohort, not a biological entity",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:ssc-dermal-fibrosis-2ebbae7",
+      "name": "SSc dermal fibrosis",
+      "currentKind": "biological concept",
+      "proposedType": "phenotype_or_state",
+      "ruleId": "R16",
+      "reason": "Names a phenotype, clinical state or response",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:ssc-fibroblast-tgf-fibrotic-programme-309501e",
+      "name": "SSc fibroblast / TGF-β fibrotic programme",
+      "currentKind": "biological concept",
+      "proposedType": "biological_process",
+      "ruleId": "R07",
+      "reason": "Names a process rather than an entity",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:ssc-vasculopathy-endothelial-injury-cb0607d",
+      "name": "SSc vasculopathy / endothelial injury",
+      "currentKind": "biological concept",
+      "proposedType": "phenotype_or_state",
+      "ruleId": "R16",
+      "reason": "Names a phenotype, clinical state or response",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:systemic-glucocorticoids-0d278f1",
+      "name": "Systemic glucocorticoids",
+      "currentKind": "biological concept",
+      "proposedType": "drug_or_therapy",
+      "ruleId": "R05",
+      "reason": "Names a drug, drug class or therapy",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:systemic-infection-peripheral-inflammation-4ac39b1",
+      "name": "Systemic infection / peripheral inflammation",
+      "currentKind": "biological concept",
+      "proposedType": "exposure",
+      "ruleId": "R14",
+      "reason": "Names an exposure",
+      "alternatives": [
+        {
+          "type": "phenotype_or_state",
+          "ruleId": "R16"
+        }
+      ],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:systemic-sclerosis-694222f",
+      "name": "Systemic sclerosis",
+      "currentKind": "biological concept",
+      "proposedType": "disease",
+      "ruleId": "R15",
+      "reason": "Names a disease",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:t-cell-exhaustion-d697e97",
+      "name": "T-cell exhaustion",
+      "currentKind": "biological concept",
+      "proposedType": "biological_process",
+      "ruleId": "R07",
+      "reason": "Names a process rather than an entity",
+      "alternatives": [
+        {
+          "type": "cell_type",
+          "ruleId": "R09"
+        }
+      ],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:t-follicular-helper-tfh-cells-15bf43d",
+      "name": "T follicular helper (Tfh) cells",
+      "currentKind": "biological concept",
+      "proposedType": "cell_type",
+      "ruleId": "R09",
+      "reason": "Names a cell population",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:teplizumab-6d96cad",
+      "name": "Teplizumab",
+      "currentKind": "biological concept",
+      "proposedType": "drug_or_therapy",
+      "ruleId": "R05",
+      "reason": "Names a drug, drug class or therapy",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:tfh1-skewed-follicular-helper-cells-8088be3",
+      "name": "Tfh1-skewed follicular helper cells",
+      "currentKind": "biological concept",
+      "proposedType": "cell_type",
+      "ruleId": "R09",
+      "reason": "Names a cell population",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:tgf-pathway-activation-in-dermal-fibroblasts-b4ec1ce",
+      "name": "TGF-β pathway activation in dermal fibroblasts",
+      "currentKind": "biological concept",
+      "proposedType": "pathway",
+      "ruleId": "R06",
+      "reason": "Names a signalling pathway, reflex or axis",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:type-1-diabetes-progression-c0a34f7",
+      "name": "Type 1 diabetes progression",
+      "currentKind": "biological concept",
+      "proposedType": "disease",
+      "ruleId": "R15",
+      "reason": "Names a disease",
+      "alternatives": [
+        {
+          "type": "phenotype_or_state",
+          "ruleId": "R16"
+        }
+      ],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    },
+    {
+      "conceptId": "concept:type-i-interferon-pathway-fd8a109",
+      "name": "Type I interferon pathway",
+      "currentKind": "biological concept",
+      "proposedType": "pathway",
+      "ruleId": "R06",
+      "reason": "Names a signalling pathway, reflex or axis",
+      "alternatives": [],
+      "confidence": "uncalibrated",
+      "status": "proposed"
+    }
+  ],
+  "digest": "3510b1083dc8cde0e64f44a79f0611aad9399b7d91861e8d6fd6eed8d53b618c"
+}

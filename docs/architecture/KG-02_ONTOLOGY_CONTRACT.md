@@ -18,3 +18,6 @@ It does not decide whether a mapping is scientifically right, call any external 
 
 ## Next
 Slice 2 types the 114 concepts that are only "biological concept". Slice 3 generates candidates from the EBI Ontology Lookup Service and UniProt for the immunology and systemic sclerosis neighbourhood, for owner review, labelled as non-independent until an external immunologist signs off.
+
+## Slice 2 (this change)
+`src/knowledgeGraph/conceptTyping.ts` proposes an entity type for the 114 concepts the graph only calls "biological concept", using sixteen ordered name rules (the first match decides; other matching types are recorded as alternatives; no match stays `unclassified`). The proposals are in `research/ontology/concept-types.v1.json` (regenerate with `bun run ontology:types`; structure is checked by `bun run ontology:check`) and a human review sheet is in `KG-02_CONCEPT_TYPE_REVIEW.md`. **They are not applied to the graph, not calibrated, and every one is "proposed" until the owner accepts, changes or rejects it.** At generation, 114 proposals: 25 need particular care (ambiguous or unmatched) and 1 is unclassified.
