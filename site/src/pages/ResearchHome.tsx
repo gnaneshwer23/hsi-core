@@ -16,12 +16,12 @@ import {EMPTY_PROFILE,LIVE_RUN_KEY,summariseSavedLiveRun,type SavedLiveRun,class
 import "../styles/research-home.css";
 
 
-const SETUP_IDS=["rh-setup","rh-interests","rh-library"];
-/** Interests and followed concepts: setup, not the day's work. Collapsed by default; opens for any link that targets it. */
-function MySetup({children,count}:{children:React.ReactNode;count:number}){
- const {hash}=useLocation(),id=hash.slice(1),wanted=SETUP_IDS.includes(id),[open,setOpen]=useState(wanted);
- useEffect(()=>{if(wanted){setOpen(true);requestAnimationFrame(()=>document.getElementById(id)?.scrollIntoView({block:"start"}))}},[wanted,id]);
- return <details className="rh-setup" id="rh-setup" open={open} onToggle={e=>setOpen((e.currentTarget as HTMLDetailsElement).open)}><summary><span><b>My setup</b> <small>Interests and followed concepts{count>0?` · ${count} followed`:""}</small></span></summary>{children}</details>;
+/** A collapsed region that opens for any link or anchor that targets it. */
+function Fold({id,ids,title,sub,force=false,children}:{id:string;ids:string[];title:string;sub:string;force?:boolean;children:React.ReactNode}){
+ const {hash}=useLocation(),h=hash.slice(1),wanted=h===id||ids.includes(h),[open,setOpen]=useState(wanted);
+ useEffect(()=>{if(force)setOpen(true)},[force]);
+ useEffect(()=>{if(wanted){setOpen(true);requestAnimationFrame(()=>document.getElementById(h)?.scrollIntoView({block:"start"}))}},[wanted,h]);
+ return <details className="rh-setup" id={id} open={open} onToggle={e=>setOpen((e.currentTarget as HTMLDetailsElement).open)}><summary><span><b>{title}</b> <small>{sub}</small></span></summary>{children}</details>;
 }
 
 type Saved={id:string;question:string;createdAt:string;state:string};
@@ -143,6 +143,7 @@ export function ResearchHome(){
      <RadarCard profile={profile} ready={ready}/>
      {ready&&<GapCard profile={profile} bundle={bundle}/>}
 
+     <Fold id="rh-more" force={saved.kind==="error"} ids={["rh-cont-h","rh-rec-h","rh-ask"]} title="More from your research" sub="Saved work, recommendations and asking the graph">
      <div className="rh-grid">
       <section className="rh-card" aria-labelledby="rh-cont-h">
        <header className="rh-card-top"><span className="rh-tile rh-t-teal"><Icon name="layers" size={22}/></span><div><h2 id="rh-cont-h">Continue researching</h2><p className="rh-sub">Pick up where you left off.</p></div><Link className="rh-arrow" to="/research/dashboard#dashboard-workspace" aria-label="All investigations"><Icon name="chevron" size={18}/></Link></header>
@@ -168,7 +169,9 @@ export function ResearchHome(){
 
      </div>
 
-     <MySetup count={profile.followed.length}>
+      <AskCard/>
+     </Fold>
+     <Fold id="rh-setup" ids={["rh-interests","rh-library"]} title="My setup" sub={`Interests and followed concepts${profile.followed.length>0?` · ${profile.followed.length} followed`:""}`}>
      <section className="rh-interests" id="rh-interests" aria-labelledby="rh-int-h">
       <div className="rh-line"><h2 id="rh-int-h">Research interests</h2><span className="rh-note">On this device only</span></div>
       <div className="rh-pills">
@@ -184,8 +187,7 @@ export function ResearchHome(){
       {profile.followed.length===0?<p className="rh-empty">Concepts you follow appear here.</p>:<ul className="rh-follows">{profile.followed.map(f=><li key={f.id}><Link to={graphHref(f.name)}>{f.name}</Link><button type="button" className="rh-ghost" onClick={()=>follow(f.id,f.name)}>Unfollow</button></li>)}</ul>}
       <p className="rh-note"><Link to="/research/dashboard?view=briefs">Research briefs</Link> · <Link to="/research/dashboard#dashboard-workspace">Saved investigations</Link></p>
      </section>
-     </MySetup>
-     <AskCard/>
+     </Fold>
     </main>
   </ResearchAppShell>
  );

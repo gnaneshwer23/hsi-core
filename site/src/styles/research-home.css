@@ -233,3 +233,4 @@
 .rh-gov>summary::after{content:"+";margin-left:auto;padding-right:10px;color:inherit;opacity:.7}
 .rh-gov[open]>summary::after{content:"\2212"}
 .rh-gov>summary:focus-visible{outline:3px solid #5240bd;outline-offset:2px;border-radius:8px}
+.rh-setup>.rh-grid{padding:16px;gap:16px}

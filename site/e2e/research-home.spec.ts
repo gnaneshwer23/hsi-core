@@ -12,12 +12,14 @@ test('first-time researcher: onboarding, interests persist, grounded recommendat
  await page.getByRole('button',{name:'Next'}).click();
  await page.getByRole('button',{name:'Save and continue'}).click();
  await expect(page.getByRole('heading',{name:'Tailor your research home'})).toHaveCount(0);
+ await page.locator('#rh-more > summary').click();
  const rec=page.getByRole('region',{name:'Recommended research'});
  await expect(rec).toContainText('Matches your interest in Immunology');
  await expect(page.getByText('Sign in with a verified research account')).toBeVisible();
  await page.reload();
  await expect(page.getByRole('heading',{name:'Tailor your research home'})).toHaveCount(0);
 await page.locator('#rh-setup > summary').click();
+ await page.locator('#rh-more > summary').click();
  await expect(page.getByRole('region',{name:'Research interests'}).getByRole('button',{name:'Immunology'})).toHaveAttribute('aria-pressed','true');
  await expect(rec).toContainText('Matches your interest in Immunology');
  await page.getByRole('region',{name:'Research interests'}).getByRole('button',{name:'Reset personalisation'}).click();
@@ -62,6 +64,7 @@ test('a complex question offers Quick Explore and a saved Deep Investigate that 
 test('returning researcher sees saved investigations with an honest status and a resume link',async({page})=>{
  await saved(page,200,{items:[item],nextCursor:null,releases:[],writesEnabled:false,canCreate:false});
  await page.goto('/research/home');
+ await page.locator('#rh-more > summary').click();
  const cont=page.getByRole('region',{name:'Continue researching'});
  await expect(cont).toContainText(item.question);
  await expect(cont).toContainText('Awaiting scientific review');
@@ -93,6 +96,7 @@ await page.locator('#rh-setup > summary').click();
  await page.getByRole('button',{name:'Add interest'}).click();
  await page.getByLabel('New research topic').fill('systemic sclerosis');
  await page.getByRole('button',{name:'Add',exact:true}).click();
+ await page.locator('#rh-more > summary').click();
  await expect(page.getByRole('region',{name:'Recommended research'})).toContainText('Matches your topic');
  await page.locator('#rh-q').blur();
  await page.keyboard.press('Control+k');
