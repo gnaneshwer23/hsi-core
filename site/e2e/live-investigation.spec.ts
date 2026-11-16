@@ -102,6 +102,7 @@ test('Home to workspace to saved run: a matching question needs a click to run, 
  await expect(page.getByLabel('Run totals')).toContainText('Key findings');
  await page.getByRole('button',{name:'Save in this browser'}).click();
  await page.goto('/research/home');
+ await page.locator('#rh-more > summary').click();
  const cont=page.getByRole('region',{name:'Continue researching'});
  await expect(cont).toContainText('Live investigation · saved in this browser');
  await expect(cont).toContainText('1 supporting');

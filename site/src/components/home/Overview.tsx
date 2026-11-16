@@ -100,8 +100,8 @@ export function Overview({bundle,view=null,profile,children}:{bundle:DomainBundl
      </Link>
     ))}
    </section>
+   <div className="pm-pair"><NextMoves list={moves(profile,view,rec)}/><Loop rec={rec}/></div>
    {children}
-   <div className="pm-pair"><Loop rec={rec}/><NextMoves list={moves(profile,view,rec)}/></div>
   </>
  );
 }
