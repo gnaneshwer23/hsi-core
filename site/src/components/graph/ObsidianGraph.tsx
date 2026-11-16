@@ -110,17 +110,18 @@ export function ObsidianGraph({nodes,edges,selected,highlight,onSelect,onSelectE
   // labels, greedy collision avoidance, most important first
   const fade=Math.min(1,Math.max(0,(s.k+d.cfg.text*1.4-1.2)/.7));
   ctx.font="600 12px 'Host Grotesk Variable',system-ui,sans-serif";ctx.textAlign="center";ctx.textBaseline="top";ctx.lineJoin="round";
-  const placed:[number,number,number,number][]=[];
+  const placed:[number,number,number,number][]=[];let shownLabels=0;const cap=showcase&&s.k<1.5?16:1e9;
   const pri=d.shown.map((n,i)=>({i,p:(n.id===d.selected?1e6:0)+(i===s.hover?1e6:0)+(near.has(i)?1e4:0)+(hl?.has(n.id)?5e3:0)+(d.deg.get(n.id)??0)}))
    .sort((a,b)=>b.p-a.p);
   for(const {i,p} of pri){
    const forced=p>=1e4,alpha=forced?1:Math.min(1,fade+Math.min(.5,(d.deg.get(d.shown[i]!.id)??0)*.05));
    if(alpha<.08||(hoverOn&&!near.has(i)))continue;
+   if(!forced&&shownLabels>=cap)continue;
    const label=d.shown[i]!.label.length>34?d.shown[i]!.label.slice(0,33)+"…":d.shown[i]!.label,w=ctx.measureText(label).width+6,x=X(i),y=Y(i)+Math.max(2.5,radius(i)*Math.sqrt(s.k))+4;
    if(x<-60||x>s.w+60||y<-20||y>s.h+20)continue;
    const box:[number,number,number,number]=[x-w/2,y,x+w/2,y+16];
    if(!forced&&placed.some(b=>box[0]<b[2]&&box[2]>b[0]&&box[1]<b[3]&&box[3]>b[1]))continue;
-   placed.push(box);ctx.globalAlpha=alpha;ctx.lineWidth=4;ctx.strokeStyle="rgba(14,17,24,.92)";ctx.strokeText(label,x,y);ctx.fillStyle=p>=1e6?"#ffffff":"#dfe6f3";ctx.fillText(label,x,y);ctx.globalAlpha=1;
+   placed.push(box);if(!forced)shownLabels++;ctx.globalAlpha=alpha;ctx.lineWidth=4;ctx.strokeStyle="rgba(14,17,24,.92)";ctx.strokeText(label,x,y);ctx.fillStyle=p>=1e6?"#ffffff":"#dfe6f3";ctx.fillText(label,x,y);ctx.globalAlpha=1;
   }
  }
 
@@ -162,7 +163,7 @@ useEffect(()=>{st.current.dirty=true;draw()},[gapSel,gapsShown,cfg.gaps,picked,p
   const el=wrap.current,canvas=cv.current;if(!el||!canvas)return;
   const size=()=>{const s=st.current,r=el.getBoundingClientRect();s.w=Math.max(280,r.width);s.h=r.height;if(!s.touched&&s.sim)fit();s.dpr=Math.min(2,window.devicePixelRatio||1);canvas.width=Math.round(s.w*s.dpr);canvas.height=Math.round(s.h*s.dpr);s.dirty=true;draw()};
   size();const ro=new ResizeObserver(size);ro.observe(el);
-  const wheel=(e:WheelEvent)=>{e.preventDefault();zoomAt(e.clientX-canvas.getBoundingClientRect().left,e.clientY-canvas.getBoundingClientRect().top,e.deltaY<0?1.12:1/1.12)};
+  const wheel=(e:WheelEvent)=>{if(showcase&&!e.ctrlKey&&!e.metaKey)return;e.preventDefault();zoomAt(e.clientX-canvas.getBoundingClientRect().left,e.clientY-canvas.getBoundingClientRect().top,e.deltaY<0?1.12:1/1.12)};
   canvas.addEventListener("wheel",wheel,{passive:false});
   return()=>{ro.disconnect();canvas.removeEventListener("wheel",wheel)};
  },[]); // eslint-disable-line react-hooks/exhaustive-deps

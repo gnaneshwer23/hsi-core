@@ -2,6 +2,7 @@ import {Link} from "react-router-dom";
 import {GraphSnapshotProvider,useGraphSnapshot} from "../components/home/useGraphSnapshot";
 import {LiveGraphHero} from "../components/home/LiveGraphHero";
 import {OpenQuestions} from "../components/home/OpenQuestions";
+import {ClaimAnatomy} from "../components/home/ClaimAnatomy";
 import "../styles/premium-public.css";
 
 const PILLARS=[
@@ -34,7 +35,7 @@ export function HomeLanding(){
  return (
   <div className="pg-page">
    <GraphSnapshotProvider>
-    <section className="pg-hero pg-hero-dark" aria-labelledby="home-title">
+    <section className="pg-hero pg-hero-dark pg-hero-console" aria-labelledby="home-title">
      <div className="pg-hero-copy">
       <h1 id="home-title">Human biology as a living knowledge graph that shows where the evidence stops.</h1>
       <p className="pg-lead">Findings are scattered across papers, models and experimental contexts. HSI connects them in one graph, keeps each claim's source, context and review status, and marks what conflicts and what is missing, so the next experiment is a decision, not a guess.</p>
@@ -46,11 +47,14 @@ export function HomeLanding(){
     <div className="pg-strip"><Status/></div>
 
     <section className="pg-pillars" aria-labelledby="pg-pillars-h">
-     <h2 id="pg-pillars-h">What makes it different from a literature search.</h2>
-     <p className="pg-sec-lead">A search returns papers. HSI keeps the structure of what the papers claim, and what they leave out.</p>
-     <ol>{PILLARS.map(p=>(
-      <li key={p.n}><span className="pg-pn" aria-hidden="true">{p.n}</span><h3>{p.title}</h3><p>{p.text}</p><Link className="pg-link" to={p.to}>{p.cta} <span aria-hidden="true">→</span></Link></li>
-     ))}</ol>
+     <div className="pg-pillars-copy">
+      <h2 id="pg-pillars-h">What makes it different from a literature search.</h2>
+      <p className="pg-sec-lead">A search returns papers. HSI keeps the structure of what the papers claim, and what they leave out.</p>
+      <ol>{PILLARS.map(p=>(
+       <li key={p.n}><span className="pg-pn" aria-hidden="true">{p.n}</span><div><h3>{p.title}</h3><p>{p.text}</p><Link className="pg-link" to={p.to}>{p.cta} <span aria-hidden="true">→</span></Link></div></li>
+      ))}</ol>
+     </div>
+     <ClaimAnatomy/>
     </section>
 
     <section className="pg-open" aria-labelledby="pg-open-h">
