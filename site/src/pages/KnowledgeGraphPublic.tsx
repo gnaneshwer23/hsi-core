@@ -2,10 +2,9 @@ import {Link} from "react-router-dom";
 import "../styles/scientific-public.css";
 import "../styles/knowledge-graph-public.css";
 import "../styles/home-redesign.css";
-import {LiveGraphHero} from "../components/home/LiveGraphHero";
 import "../styles/home-story.css";
 import "../styles/premium-public.css";
-import {useGraphSnapshot,GraphSnapshotProvider} from "../components/home/useGraphSnapshot";
+import {GraphSnapshotProvider} from "../components/home/useGraphSnapshot";
 import {HomeResearchGraph as Explorer} from "../components/HomeResearchGraph";
 import {ChartsPair} from "../components/graph/GraphCharts";
 
@@ -39,49 +38,13 @@ const ways = [
 
 
 
-const fmt=(n:number)=>n.toLocaleString("en-GB");
-
-/** Figure 2: one relationship from the published snapshot, followed from the wider graph back to its source. */
-function WalkFigure(){
-  const {snapshot:s,failed}=useGraphSnapshot();
-  const e=s?.examples[0];
-  return (
-    <figure className="fg kg-walk" aria-labelledby="kg-walk-cap">
-      <div className="fg-panels kg-walk-panels">
-        <section aria-labelledby="kw-a">
-          <span className="fg-letter" aria-hidden="true">A</span>
-          <h2 id="kw-a">The wider picture</h2>
-          {s?<p className="fg-big"><b>{fmt(s.concepts)}</b> concepts, <b>{fmt(s.relationships)}</b> candidate relationships</p>:<p className="fg-wait">{failed?"Snapshot unavailable. No substitute figures are shown.":"Verifying snapshot…"}</p>}
-          <p>Every line is a recorded connection between two concepts. Select one in the explorer to open the rest of this chain.</p>
-          <Link to="#home-knowledge-graph">Open the explorer →</Link>
-        </section>
-        <section aria-labelledby="kw-b">
-          <span className="fg-letter" aria-hidden="true">B</span>
-          <h2 id="kw-b">One relationship</h2>
-          {e?<><p className="fg-big">{e.subject} <span className="kg-pred">{e.predicate}</span> {e.object}</p><p>{e.assertion}</p></>:<p className="fg-wait">{failed?"Unavailable.":"Verifying snapshot…"}</p>}
-        </section>
-        <section aria-labelledby="kw-c">
-          <span className="fg-letter" aria-hidden="true">C</span>
-          <h2 id="kw-c">Its source</h2>
-          {e?.source?<><p className="fg-big kg-title">{e.source.title}</p><p>{e.source.pmid?`PubMed ${e.source.pmid}. `:""}Status: {e.source.identity}.{e.source.locator?` ${e.source.locator}.`:""}</p></>:<p className="fg-wait">{failed?"Unavailable.":"Verifying snapshot…"}</p>}
-        </section>
-        <section aria-labelledby="kw-d">
-          <span className="fg-letter" aria-hidden="true">D</span>
-          <h2 id="kw-d">Context and limits</h2>
-          {e?<><p>Model: {e.model}. Design: {e.design}.{e.tissue?` Tissue: ${e.tissue}.`:""}</p><p>{e.limits}</p>{e.warnings.map(w=><p key={w}>{w}</p>)}</>:<p className="fg-wait">{failed?"Unavailable.":"Verifying snapshot…"}</p>}
-        </section>
-      </div>
-      <figcaption id="kg-walk-cap" className="fg-cap"><b>Figure 1.</b> One relationship from the published snapshot{s?` (${s.version})`:""}, followed back to its source. It is a candidate and unreviewed. The assertion is an editorial annotation pending source verification, and the source is a bibliographic record whose passage has not been retrieved.</figcaption>
-    </figure>
-  );
-}
 
 /** Figure 3: coverage and vocabulary of the snapshot. */
 function ChartsFigure(){
   return (
     <figure className="fg kg-fig" aria-labelledby="kg-f3">
       <div className="kg-fig-body"><ChartsPair/></div>
-      <figcaption id="kg-f3" className="fg-cap"><b>Figure 2.</b> What the snapshot covers and how it describes relationships. Counts are read from the published snapshot and the department tags, and they will change as the graph is extended.</figcaption>
+      <figcaption id="kg-f3" className="fg-cap"><b>Figure 1.</b> What the snapshot covers and how it describes relationships. Counts are read from the published snapshot and the department tags, and they will change as the graph is extended.</figcaption>
     </figure>
   );
 }
@@ -104,17 +67,16 @@ function FaqList(){
 export function KnowledgeGraphPublicPage() {
   return (
     <GraphSnapshotProvider><div className="sp-page fg-page kg-page pg-page pg-sub">
-      <section className="pg-hero pg-hero-dark kg-phero" aria-labelledby="kg-title">
+      <section className="pg-hero pg-hero-dark pg-hero-text kg-phero" aria-labelledby="kg-title">
         <div className="pg-hero-copy">
           <h1 id="kg-title">Relationships between biological entities, with the evidence attached.</h1>
-          <p className="pg-lead">A graph of what research reports about cells, molecules, tissues and conditions, with every connection tied to its source, context and review status. Drag it, follow a connection, open its source.</p>
+          <p className="pg-lead">A graph of what research reports about cells, molecules, tissues and conditions, with every connection tied to its source, context and review status. Pick a department, follow a connection, open its source.</p>
           <div className="pg-cta">
             <Link className="pg-btn pg-btn-light" to="#home-knowledge-graph">Explore the graph <span aria-hidden="true">→</span></Link>
             <Link className="pg-link pg-link-light" to="/research/knowledge-graph">Open the full explorer <span aria-hidden="true">→</span></Link>
           </div>
           <p className="pg-micro">Published snapshot · candidate-only · unreviewed</p>
         </div>
-        <LiveGraphHero/>
       </section>
 
       <section className="kg-section kg-intro" aria-labelledby="kg-walk-h">
@@ -124,7 +86,6 @@ export function KnowledgeGraphPublicPage() {
 
       <Explorer />
 
-      <WalkFigure />
       <ChartsFigure />
 
       <section className="kg-section" aria-labelledby="kg-ways">
