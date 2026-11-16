@@ -1,7 +1,6 @@
-import {lazy,Suspense,useEffect,useId,useMemo,useState} from "react";
+import {lazy,Suspense,useId,useMemo,useState} from "react";
 import {Link} from "react-router-dom";
-import type {DomainBundle} from "../../../../src/knowledgeGraph/domainGraph";
-import {loadDomainGraph} from "../../lib/claimGraphClient";
+import {useSharedBundle} from "../../lib/useSharedBundle";
 import {OG_PALETTE} from "../graph/palette";
 import "../../styles/obsidian-graph.css";
 
@@ -10,10 +9,9 @@ const Canvas=lazy(()=>import("../graph/ObsidianGraph").then(m=>({default:m.Obsid
 const HUMAN=/^human/,pretty=(s:string)=>s.replaceAll("_"," ");
 /** The published graph, live, with filters and a selection panel on the page. Read-only: nothing is saved, nothing is preselected. */
 export function LiveGraphHero(){
- const [b,setB]=useState<DomainBundle|null>(null),[failed,setFailed]=useState(false);
+ const {bundle:b,failed}=useSharedBundle();
  const [dept,setDept]=useState<string[]>([]),[humanOnly,setHumanOnly]=useState(false),[neg,setNeg]=useState(true),[q,setQ]=useState(""),[sel,setSel]=useState<string|null>(null);
  const qid=useId();
- useEffect(()=>{const c=new AbortController(),t=setTimeout(()=>c.abort(),15000);loadDomainGraph(null,c.signal).then(setB).catch(()=>{if(!c.signal.aborted)setFailed(true)}).finally(()=>clearTimeout(t));return()=>{c.abort();clearTimeout(t)}},[]);
  const all=useMemo(()=>{
   if(!b)return null;
   const cand=b.edges.filter(e=>e.kind==="source_candidate"),linked=new Set(cand.flatMap(e=>[e.subjectId,e.objectId]));
@@ -40,6 +38,10 @@ export function LiveGraphHero(){
  if(!all||!view)return <div className="lg-wait" role="status">Verifying the published snapshot…</div>;
  return (
   <figure className="lg">
+   {view.nodes.length===0?<div className="lg-wait" role="status">No relationships match these filters. That is a filter result, not evidence of absence.</div>:
+   <Suspense fallback={<div className="lg-wait" role="status">Loading the graph…</div>}>
+    <Canvas showcase preset={PRESET} groupColors={all.colors} nodes={view.nodes} edges={view.edges} selected={sel??""} highlight={match} onSelect={id=>setSel(s=>s===id?null:id)} onSelectEdge={()=>{}} caption={`Live from the published snapshot (version ${b!.version.slice(0,7)}): showing ${view.nodes.length} of ${b!.nodes.length} concepts and ${view.edges.length} of ${all.cand.length} candidate relationships. Drag a concept, scroll to zoom, click to select. Every line is a candidate and unreviewed.`} exportName="hsi-landing-graph"/>
+   </Suspense>}
    <div className="lg-filters">
     <div className="lg-search">
      <label htmlFor={qid}>Find a concept</label>
@@ -53,10 +55,6 @@ export function LiveGraphHero(){
      {(filtered||sel)&&<li><button type="button" className="lg-reset" onClick={()=>{setDept([]);setHumanOnly(false);setNeg(true);setSel(null);setQ("")}}>Reset</button></li>}
     </ul>
    </div>
-   {view.nodes.length===0?<div className="lg-wait" role="status">No relationships match these filters. That is a filter result, not evidence of absence.</div>:
-   <Suspense fallback={<div className="lg-wait" role="status">Loading the graph…</div>}>
-    <Canvas showcase preset={PRESET} groupColors={all.colors} nodes={view.nodes} edges={view.edges} selected={sel??""} highlight={match} onSelect={id=>setSel(s=>s===id?null:id)} onSelectEdge={()=>{}} caption={`Live from the published snapshot (version ${b!.version.slice(0,7)}): showing ${view.nodes.length} of ${b!.nodes.length} concepts and ${view.edges.length} of ${all.cand.length} candidate relationships. Drag a concept, scroll to zoom, click to select. Every line is a candidate and unreviewed.`} exportName="hsi-landing-graph"/>
-   </Suspense>}
    <aside className="lg-panel" aria-label="Selected concept" aria-live="polite">
     {node?<>
      <h3>{node.name}</h3>
