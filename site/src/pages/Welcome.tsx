@@ -1,5 +1,5 @@
-import {useEffect,useMemo,useState} from "react";
-import {Link,useNavigate} from "react-router-dom";
+import {useEffect,useMemo,useRef,useState} from "react";
+import {Link,useNavigate,useSearchParams} from "react-router-dom";
 import {HsiIdentity} from "../components/HsiIdentity";
 import {Icon} from "../components/home/AppIcons";
 import {departments} from "../lib/departments";
@@ -9,6 +9,7 @@ import {ACCEPT,MAX_FILES,readEvidenceFile,refsFrom,type EvidenceFile} from "../l
 import type {DomainBundle} from "../../../src/knowledgeGraph/domainGraph";
 import {ACCENTS,DEFAULT_APPEARANCE,loadAppearance,saveAppearance,type Appearance} from "../lib/appearance";
 import {CADENCES,EMPTY_PROFILE,GOALS,loadProfile,parseOrcid,parsePaperIds,ROLES,saveProfile,STAGES,type Profile} from "../lib/researchHome";
+import {beginRun,finishRun,loadFunnel,reach,saveFunnel,summarize,type Funnel} from "../lib/onboardingFunnel";
 import "../styles/research-home.css";
 import "../styles/welcome.css";
 import "../styles/premium-app.css";
@@ -20,6 +21,8 @@ const BG_MIN=20,MAX_TOPICS=5,MAX_AREAS=2,MAX_GOALS=3;
 const orcBad0=(o:string)=>!!o.trim()&&!parseOrcid(o);
 export function WelcomePage(){
  const nav=useNavigate();
+ const funnel=useRef<{f:Funnel;i:number}|null>(null),[params]=useSearchParams(),showFunnel=params.get("funnel")==="1",[stats,setStats]=useState<ReturnType<typeof summarize>|null>(null);
+ useEffect(()=>{const b=beginRun(loadFunnel(),new Date().toISOString().slice(0,10));funnel.current={f:b.funnel,i:b.index};saveFunnel(b.funnel);if(showFunnel)setStats(summarize(b.funnel))},[showFunnel]);
  const [step,setStep]=useState(0),[p,setP]=useState<Profile>(EMPTY_PROFILE),[ap,setAp]=useState<Appearance>(DEFAULT_APPEARANCE);
  const [topic,setTopic]=useState(""),[orcid,setOrcid]=useState(""),[papers,setPapers]=useState(""),[note,setNote]=useState("");
  const [files,setFiles]=useState<EvidenceFile[]>([]),[linked,setLinked]=useState(""),[busy,setBusy]=useState(false);
@@ -48,9 +51,11 @@ export function WelcomePage(){
  const docText=files.map(f=>f.text).join("\n")+"\n"+linked;
  const foundDocs=useMemo(()=>bundle?detectTopics(bundle.nodes,docText,8).filter(f=>!found.some(g=>g.id===f.id)):[],[bundle,docText,found]);
  const ok0=!!p.role&&p.background.trim().length>=BG_MIN,ok1=custom.length>0,evChars=files.reduce((a,f)=>a+f.chars,0)+linked.trim().length,ok2=(!!orc||pp.ids.length>0||evChars>=200)&&!orcBad0(orcid),ok3=p.goals.length>0,can=[ok0,ok1,ok2,ok3][step]!;
+ useEffect(()=>{const c=funnel.current;if(!c)return;c.f=reach(c.f,c.i,step+1);saveFunnel(c.f);if(showFunnel)setStats(summarize(c.f))},[step,showFunnel]);
  function finish(){
   const next:Profile={...p,orcid:orc,papers:pp.ids,onboarded:true};
   if(!saveProfile(next)){setNote("This browser blocked local storage, so your answers will not be kept.");return}
+  if(funnel.current){funnel.current.f=finishRun(funnel.current.f,funnel.current.i);saveFunnel(funnel.current.f)}
   nav("/research/home");
  }
  async function addFiles(list:FileList|null){
@@ -131,6 +136,11 @@ export function WelcomePage(){
      </div>
     </section>
     </div>
+    {showFunnel&&stats&&<aside className="wl-funnel" aria-label="Setup runs on this browser">
+     <h2>Setup runs on this browser</h2>
+     <p>Kept only here: the day and the furthest step. No answers, no identifiers. {stats.runs} run{stats.runs===1?"":"s"}, {stats.done} finished.</p>
+     <ol>{stats.byStep.map((n,i)=><li key={i}>Reached step {i+1}: <b>{n}</b></li>)}</ol>
+    </aside>}
    </main>
   </div>
  );
