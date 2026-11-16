@@ -29,7 +29,11 @@ export function LiveGraphHero(){
   const nodes=all.nodes.filter(n=>linked.has(n.id)&&okNode(n.id));
   return {nodes:nodes.map(n=>({id:n.id,label:n.name,kind:n.kind,domain:n.domains[0]??""})),edges:edges.map(e=>({id:e.id,s:e.subjectId,o:e.objectId,predicate:e.predicate,negated:e.negated,contextual:false,model:e.model}))};
  },[all,dept,humanOnly,neg]);
- const hits=useMemo(()=>{const t=q.trim().toLowerCase();return all&&t.length>1?all.nodes.filter(n=>[n.name,...n.aliases].some(x=>x.toLowerCase().includes(t))).slice(0,6):[]},[all,q]);
+ const hits=useMemo(()=>{
+  const t=q.trim().toLowerCase();if(!all||t.length<2)return [];
+  const rank=(n:{name:string;aliases:string[]})=>{const names=[n.name,...n.aliases].map(x=>x.toLowerCase());return names.some(x=>x===t)?0:names.some(x=>x.startsWith(t))?1:names.some(x=>x.split(/[\s/()-]+/).some(w=>w===t))?2:3};
+  return all.nodes.filter(n=>[n.name,...n.aliases].some(x=>x.toLowerCase().includes(t))).sort((a,b)=>rank(a)-rank(b)||a.name.length-b.name.length||a.name.localeCompare(b.name)).slice(0,6);
+ },[all,q]);
  const match=useMemo(()=>q.trim().length>1&&view?new Set(view.nodes.filter(n=>n.label.toLowerCase().includes(q.trim().toLowerCase())).map(n=>n.id)):undefined,[view,q]);
  const node=sel&&b?b.nodes.find(n=>n.id===sel):null;
  const rels=node&&all?all.cand.filter(e=>e.subjectId===node.id||e.objectId===node.id):[];
