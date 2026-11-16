@@ -10,15 +10,15 @@ export function TrustPublicPage() {
   return (
     <div className="hsi-public">
       <PublicHero
-        title="No silent promotion."
-        description="An extracted statement is not an approved fact. An AI-generated relationship is not a validated mechanism."
+        title="How HSI separates evidence from approval."
+        description="A statement extracted from a paper is not an approved fact, and a relationship proposed by a model is not a validated mechanism. Each moves through separate, recorded steps."
       >
-        <PublicAction to="/trust#scientific-governance">Understand Our Approach</PublicAction>
+        <PublicAction to="/trust#scientific-governance">Read the governance model</PublicAction>
       </PublicHero>
       <PublicSection
         id="scientific-governance"
-        title="Every change in certainty needs a reason."
-        description="Evidence, computational inference, unvalidated hypothesis, independent assessment and publication approval are different states."
+        title="Five states, each change recorded with a reason."
+        description="Study observation, computational interpretation, independent verification, scientific review and publication are different states. Nothing moves between them without a recorded decision."
       >
         <GovernanceChain />
         <div className="hsi-trust-statements">
@@ -28,22 +28,22 @@ export function TrustPublicPage() {
         </div>
       </PublicSection>
       <PublicSection
-        title="Permission and provenance are part of the science."
-        description="A source title, a model response or a merged change is not a substitute for current, independently verified evidence."
+        title="Source permissions and provenance."
+        description="A source title, a model answer or a merged change does not replace current, independently verified evidence."
       >
         <div className="hsi-principles">
           {[
             {
               title: "Source use",
-              text: "Bind permitted actions, attribution and current identity/retraction state to the exact passage and version. Unknown or revoked clearance blocks the relevant use.",
+              text: "Each use is tied to the exact passage and version, with attribution and the current identity and retraction status. Unknown or revoked clearance blocks that use.",
             },
             {
               title: "Scoped review",
-              text: "Independent reviewers assess immutable versions within explicit expertise and authority. Self-review and wrong-scope decisions are denied.",
+              text: "Independent reviewers assess a fixed version within a stated scope of expertise. Self-review and decisions outside that scope are refused.",
             },
             {
               title: "Honest uncertainty",
-              text: "Preserve missing context, failed/empty searches and unsupported causal bridges. Do not report a bounded demonstration as cross-domain readiness.",
+              text: "Missing context, failed or empty searches and unsupported causal steps stay visible. A bounded demonstration is not reported as cross-domain readiness.",
             },
           ].map((s) => (
             <article key={s.title}>
@@ -78,14 +78,14 @@ export function AboutPublicPage() {
   return (
     <div className="hsi-public">
       <PublicHero
-        title="Building a more connected understanding of human health."
-        description="Connect scientific evidence, biological context and human judgement so researchers can understand what is known, what conflicts and what to investigate next."
+        title="What HSI is for."
+        description="HSI helps researchers see what is known, what conflicts and what to investigate next across published biomedical evidence, keeping the experimental context and uncertainty of each finding."
       >
-        <PublicAction to="/about#collaboration">Connect With HSI</PublicAction>
+        <PublicAction to="/about#collaboration">Contact HSI</PublicAction>
       </PublicHero>
       <PublicSection
-        title="Biology crosses disciplines. Research should be able to follow."
-        description="HSI exists to help investigators connect fragmented publications, experiments and biological relationships without losing context or uncertainty."
+        title="Why it exists."
+        description="Publications, experiments and biological relationships are spread across disciplines. HSI connects them and keeps each finding's source, context and review status."
       >
         <p>
           The long-term vision spans human biology, biomedical discovery, clinical research and translational
@@ -99,7 +99,7 @@ export function AboutPublicPage() {
         <CandidateMechanism />
       </PublicSection>
       <PublicSection
-        title="Evidence first. Human scientific responsibility."
+        title="Who is responsible."
         description="Scientific ownership is identified as Dr. Gnaneshwer Jadav. Independent domain reviewers, security and operational release authorities remain distinct roles."
       >
         <p>
@@ -107,16 +107,16 @@ export function AboutPublicPage() {
           claimed without evidence. Public demonstrations are not completed source-cleared investigations.
         </p>
         <div className="hsi-actions">
-          <PublicAction to="/trust">Our Scientific Principles</PublicAction>
+          <PublicAction to="/trust">Scientific principles</PublicAction>
           <PublicAction to="/how-it-works" secondary>
-            Research Applications
+            What runs today
           </PublicAction>
         </div>
       </PublicSection>
       <PublicSection
         id="collaboration"
-        title="Build the evidence with us."
-        description="We are preparing independent expert review across immunology, disease mechanisms, experimental context and evidence methodology."
+        title="Collaboration and expert review."
+        description="Independent expert review is being arranged across immunology, disease mechanisms, experimental context and evidence methodology."
         dark
       >
         <p>
@@ -129,7 +129,7 @@ export function AboutPublicPage() {
           demonstration.
         </p>
         <div className="hsi-actions">
-          <PublicAction to="/contact">Connect With HSI</PublicAction>
+          <PublicAction to="/contact">Contact HSI</PublicAction>
           <PublicAction to="/how-it-works">See how HSI works</PublicAction>
         </div>
         <p>The contact page prepares a local browser draft; no message or access request is delivered.</p>

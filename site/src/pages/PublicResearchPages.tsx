@@ -10,7 +10,7 @@ export function ContextConflictAuditPage() {
   return (
     <div className="hsi-public">
       <PublicHero
-        title="Different findings. Deeper understanding."
+        title="When findings differ, check whether the context differs."
         description="Investigate whether research findings genuinely contradict each other, differ by context or remain unresolved."
       >
         <div className="hsi-actions">
@@ -28,7 +28,7 @@ export function ContextConflictAuditPage() {
         <ContextAuditInstrument id="flagship-audit" />
       </PublicSection>
       <PublicSection
-        title="Five teaching outcomes. One obligation to preserve uncertainty."
+        title="Five outcomes a comparison can reach."
         description="The labels below describe possible research interpretations. They are not an automated validation service."
       >
         <div className="hsi-outcome-list">

@@ -34,9 +34,9 @@ test('public pages load the existing typefaces locally without third-party font 
  expect(await page.evaluate(()=>[...document.fonts].some(f=>f.family==='Host Grotesk Variable'&&f.status==='loaded'))).toBe(true);expect(fonts).toEqual([]);
 });
 
-test('mobile hero leads with the vision and one clear action',async({page})=>{
+test('mobile hero states what the product is and offers one clear action',async({page})=>{
  await page.setViewportSize({width:390,height:844});await page.goto('/');
- await expect(page.getByRole('heading',{level:1})).toContainText('Connect biology. Find the gaps.');
+ await expect(page.getByRole('heading',{level:1})).toContainText('A knowledge graph for biomedical research');
  await expect(page.getByRole('link',{name:/Set up your research home/}).first()).toBeVisible();
  await expect(page.getByRole('list',{name:'The research loop'})).toBeAttached();
 });
