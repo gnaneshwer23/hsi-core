@@ -106,7 +106,7 @@
 .pg-page .jr-step{border:0;border-radius:28px;background:#fff;padding:28px;box-shadow:0 1px 2px rgba(53,45,110,.04),0 16px 40px rgba(53,45,110,.07);gap:14px}
 .pg-page .jr-step header{grid-template-columns:auto 1fr;align-items:start}
 .pg-page .jr-n{width:46px;height:46px;border:0;background:var(--lav);color:var(--lav-ink);font-size:20px}
-.pg-page .jr-step:nth-child(4n+2) .jr-n{background:var(--peach);color:var(--peach-ink)}.pg-page .jr-step:nth-child(4n+3) .jr-n{background:var(--mint);color:var(--mint-ink)}.pg-page .jr-step:nth-child(4n+4) .jr-n{background:var(--sky);color:var(--sky-ink)}
+.pg-page .jr-step:nth-child(4n+2) .jr-n{background:#ebe7fb;color:#43378f}.pg-page .jr-step:nth-child(4n+3) .jr-n{background:#ebe7fb;color:#43378f;--x:var(--mint);color:var(--mint-ink)}.pg-page .jr-step:nth-child(4n+4) .jr-n{background:var(--sky);color:var(--sky-ink)}
 .pg-page .jr-step h3{margin:0;font-size:24px;letter-spacing:-.02em;line-height:1.15}
 .pg-page .jr-kind{grid-column:1/-1;justify-self:start;border:0;background:var(--lav);color:var(--lav-ink);font-weight:650}
 .pg-page .rh-sub,.pg-page .rh-note{color:var(--muted);font-size:15px;line-height:1.55}
@@ -228,3 +228,14 @@
 .pg-page .pg-hero.pg-hero-dark.pg-hero-text{grid-template-columns:minmax(0,1fr);padding-block:clamp(36px,5vw,64px)}
 .pg-hero-text h1{max-width:22ch}
 .pg-hero-text .pg-lead{max-width:62ch}
+
+/* How it works: neutral lists; status is stated in words */
+.hw-labels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 20px;margin:16px 0 0}
+.hw-labels div{padding:16px 18px;border-radius:18px;background:#fff;border:1px solid #e1e5f0;display:grid;gap:4px}
+.hw-labels dt{font-weight:700;font-size:15px}.hw-labels dd{margin:0;font-size:15px;line-height:1.55;color:var(--body)}
+.pg-sub .pg-gates li{background:#fff;border:1px solid #e1e5f0;display:grid;gap:4px}
+.hw-state{display:inline-block;width:fit-content;padding:2px 10px;border-radius:999px;font-size:12.5px;font-weight:700;background:#fde9da;color:#7a3a0d}
+.pg-gates li[data-done=true] .hw-state{background:#dff3ea;color:#0b5a45}
+@media(max-width:900px){.hw-labels{grid-template-columns:1fr}}
+.pg-page .jr-step .jr-n{background:#ebe7fb;color:#43378f}
+.pg-sub .pg-gates li:not(:has(.hw-state)){display:block}
