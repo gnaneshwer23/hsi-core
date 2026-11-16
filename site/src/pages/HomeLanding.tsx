@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 import {GraphSnapshotProvider,useGraphSnapshot} from "../components/home/useGraphSnapshot";
-import {HeroGraph} from "../components/home/HeroGraph";
+import {LiveGraphHero} from "../components/home/LiveGraphHero";
 import "../styles/premium-public.css";
 
 const LOOP=[
@@ -25,14 +25,14 @@ export function HomeLanding(){
  return (
   <div className="pg-page">
    <GraphSnapshotProvider>
-    <section className="pg-hero" aria-labelledby="home-title">
+    <section className="pg-hero pg-hero-dark" aria-labelledby="home-title">
      <div className="pg-hero-copy">
       <h1 id="home-title">Connect biology. Find the gaps. Translate evidence into human impact.</h1>
       <p className="pg-lead">HSI links open literature and a verified knowledge graph to what researchers should investigate next, then to patient groups, targets and trials under governance. Every claim keeps its source, context and review status.</p>
-      <div className="pg-cta"><Link className="pg-btn" to="/welcome">Set up your research home <span aria-hidden="true">→</span></Link><Link className="pg-link" to="/how-it-works">See how it works</Link></div>
+      <div className="pg-cta"><Link className="pg-btn pg-btn-light" to="/welcome">Set up your research home <span aria-hidden="true">→</span></Link><Link className="pg-link pg-link-light" to="/how-it-works">See how it works</Link></div>
       <p className="pg-micro">Research preview. Candidate-only: nothing here is scientifically approved. No account is needed to start, public evidence is live, and patient data is synthetic.</p>
      </div>
-     <HeroGraph/>
+     <LiveGraphHero/>
     </section>
     <div className="pg-strip"><Status/></div>
 
@@ -58,9 +58,16 @@ export function HomeLanding(){
       </ul>
       <div className="pg-cta"><Link className="pg-btn" to="/welcome">Set up your research home <span aria-hidden="true">→</span></Link></div>
      </div>
-     <figure className="pg-shot">
-      <img src="/images/product/dashboard.jpg" width={1440} height={900} alt="The HSI research home: a glass sidebar, a search box, and four overview tiles for concepts, recorded relationships, gaps and your loop progress." loading="lazy" decoding="async"/>
-     </figure>
+     <div className="pg-shots">
+      <figure className="pg-shot">
+       <img src="/images/product/dashboard-v2.webp" width={1440} height={1120} alt="The researcher home: four numbers for your own research area, then your knowledge graph with a panel listing the recorded relationships of the selected concept, each with its source." loading="lazy" decoding="async"/>
+       <figcaption><b>Your home.</b> Built from your own topics: the numbers, the graph around them and the evidence behind each line.</figcaption>
+      </figure>
+      <figure className="pg-shot">
+       <img src="/images/product/explorer-v2.webp" width={1440} height={900} alt="The knowledge graph explorer: a dark live network coloured by department with amber markers for research gaps, and a panel showing evidence by model and a research gap with its status." loading="lazy" decoding="async"/>
+       <figcaption><b>The explorer.</b> Filter, select, trace a route between concepts and open any research gap with its evidence.</figcaption>
+      </figure>
+     </div>
     </section>
 
     <section className="pg-honest" aria-labelledby="pg-honest-h">

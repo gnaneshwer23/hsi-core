@@ -13,9 +13,9 @@ const hash=(s:string)=>[...s].reduce((a,c)=>(a*31+c.charCodeAt(0))>>>0,17);
 
 /** An Obsidian-style graph: live force simulation, drag nodes, pan and zoom, hover to isolate a neighbourhood, labels that appear as you zoom.
  *  Colour is a scientific choice (department, concept type or evidence model); dashed lines are findings recorded as not holding. */
-export function ObsidianGraph({nodes,edges,selected,highlight,onSelect,onSelectEdge,caption,exportName="hsi-graph",gaps=[],gapSel=null,onGap,focusIds,focusTick=0,picked=[],onPick,pathEdges}:{nodes:OGNode[];edges:OGEdge[];selected:string;highlight?:ReadonlySet<string>;onSelect:(id:string)=>void;onSelectEdge:(id:string)=>void;caption:string;exportName?:string;gaps?:OGGap[];gapSel?:string|null;onGap?:(id:string)=>void;focusIds?:string[];focusTick?:number;picked?:string[];onPick?:(ids:string[])=>void;pathEdges?:ReadonlySet<string>}){
+export function ObsidianGraph({nodes,edges,selected,highlight,onSelect,onSelectEdge,caption,exportName="hsi-graph",gaps=[],gapSel=null,onGap,focusIds,focusTick=0,picked=[],onPick,pathEdges,showcase=false,preset}:{nodes:OGNode[];edges:OGEdge[];selected:string;highlight?:ReadonlySet<string>;onSelect:(id:string)=>void;onSelectEdge:(id:string)=>void;caption:string;exportName?:string;gaps?:OGGap[];gapSel?:string|null;onGap?:(id:string)=>void;focusIds?:string[];focusTick?:number;picked?:string[];onPick?:(ids:string[])=>void;pathEdges?:ReadonlySet<string>;showcase?:boolean;preset?:Partial<Settings>}){
  const wrap=useRef<HTMLDivElement|null>(null),cv=useRef<HTMLCanvasElement|null>(null);
- const [cfg,setCfg]=useState<Settings>(DEFAULTS),[panel,setPanel]=useState(false),[hidden,setHidden]=useState<string[]>([]),[paused,setPaused]=useState(false),[zoomPct,setZoomPct]=useState(100),[msg,setMsg]=useState("");
+ const [cfg,setCfg]=useState<Settings>({...DEFAULTS,...preset}),[panel,setPanel]=useState(false),[hidden,setHidden]=useState<string[]>([]),[paused,setPaused]=useState(false),[zoomPct,setZoomPct]=useState(100),[msg,setMsg]=useState("");
  const cfgRef=useRef(cfg);cfgRef.current=cfg;
  const nodeModel=useMemo(()=>{const m=new Map<string,Map<string,number>>();for(const e of edges)for(const id of [e.s,e.o]){const c=m.get(id)??new Map<string,number>();c.set(e.model,(c.get(e.model)??0)+1);m.set(id,c)}return new Map([...m].map(([id,c])=>[id,[...c].sort((a,b)=>b[1]-a[1])[0]![0]]))},[edges]);
  const groupOf=useCallback((n:OGNode)=>cfg.groupBy==="domain"?(n.domain||"untagged"):cfg.groupBy==="kind"?n.kind:pretty(nodeModel.get(n.id)??"no relationships"),[cfg.groupBy,nodeModel]);
@@ -27,7 +27,7 @@ export function ObsidianGraph({nodes,edges,selected,highlight,onSelect,onSelectE
  const deg=useMemo(()=>{const d=new Map<string,number>();for(const e of links){d.set(e.s,(d.get(e.s)??0)+1);d.set(e.o,(d.get(e.o)??0)+1)}return d},[links]);
  const idx=useMemo(()=>new Map(shown.map((n,i)=>[n.id,i])),[shown]);
  const sig=shown.map(n=>n.id).join("|")+";"+links.length;
- const st=useRef({sim:null as Sim|null,k:1,tx:0,ty:0,w:900,h:640,dpr:1,hover:-1,box:null as null|[number,number,number,number],touched:false,drag:null as null|{mode:"node"|"pan"|"box";i:number;sx:number;sy:number;tx:number;ty:number;moved:boolean;multi?:boolean},raf:0,dirty:true,running:false,fitFor:""});
+ const st=useRef({sim:null as Sim|null,k:1,tx:0,ty:0,w:900,h:640,dpr:1,hover:-1,box:null as null|[number,number,number,number],touched:false,refit:false,drag:null as null|{mode:"node"|"pan"|"box";i:number;sx:number;sy:number;tx:number;ty:number;moved:boolean;multi?:boolean},raf:0,dirty:true,running:false,fitFor:""});
  const gapsShown=useMemo(()=>gaps.filter(g=>idx.has(g.a)&&idx.has(g.b)),[gaps,idx]);
  const data=useRef({shown,links,deg,idx,colour,groupOf,selected,highlight,cfg,gaps:gapsShown,gapSel,hoverGap:-1,picked,pathEdges,box:null as null|[number,number,number,number]});
  data.current={...data.current,shown,links,deg,idx,colour,groupOf,selected,highlight,cfg,gaps:gapsShown,gapSel,picked,pathEdges};
@@ -63,6 +63,7 @@ export function ObsidianGraph({nodes,edges,selected,highlight,onSelect,onSelectE
   const tick=()=>{
    const sim=s.sim;
    if(sim&&(sim.alpha>.02)&&cfgRef.current.animate){step();step();s.dirty=true}
+   if(sim&&sim.alpha<=.03&&!s.refit&&!s.touched){s.refit=true;fit()}
    if(s.dirty){draw();s.dirty=false}
    if(sim&&sim.alpha>.02&&cfgRef.current.animate)s.raf=requestAnimationFrame(tick);else s.running=false;
   };
@@ -135,7 +136,7 @@ export function ObsidianGraph({nodes,edges,selected,highlight,onSelect,onSelectE
    const g=nd.domain||nd.kind,gi=ring.get(g)??(ring.set(g,ring.size),ring.size-1),a=((hash(g)%360)+(hash(nd.id)%40))*Math.PI/180,rr=90+(hash(nd.id)%140)+gi*6;
    sim.x[i]=Math.cos(a)*rr;sim.y[i]=Math.sin(a)*rr;
   });
-  s.sim=sim;idxPrev.current=idx;
+  s.sim=sim;s.refit=false;idxPrev.current=idx;
   if(reduce()||!cfgRef.current.animate){for(let t=0;t<260;t++)step();sim.alpha=0}
   if(s.fitFor!==sig){s.fitFor=sig;if(!reduce()&&cfgRef.current.animate){for(let t=0;t<60;t++)step()}fit()}
   s.dirty=true;if(!reduce()&&cfgRef.current.animate)loop();else draw();
@@ -217,19 +218,19 @@ useEffect(()=>{st.current.dirty=true;draw()},[gapSel,gapsShown,cfg.gaps,picked,p
   <label className="og-row" key={k}><span>{label}</span><input type="range" min={min} max={max} step={step} value={cfg[k]} onChange={e=>set(k,Number(e.target.value))} aria-label={label}/></label>);
  if(nodes.length>MAX_NODES)return <p role="status">This view supports up to {MAX_NODES} concepts. Narrow the filters to draw it; use the relationship list to inspect connections.</p>;
  return (
-  <div className="og-wrap"><div className="og" ref={wrap}>
+  <div className={"og-wrap"+(showcase?" og-showcase":"")}><div className="og" ref={wrap}>
    <canvas ref={cv} role="group" tabIndex={0} aria-label="Interactive graph of biological entities" aria-description={`${shown.length} concepts and ${links.length} recorded relationships. Drag a concept to move it, drag the background to pan, scroll to zoom, arrow keys pan, plus and minus zoom. Shift-click a concept or shift-drag the background to select several. Every concept is also in the concept list.`} onKeyDown={key} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerLeave={()=>{const s=st.current;if(!s.drag&&s.hover>=0){s.hover=-1;s.dirty=true;draw()}}} onDoubleClick={fit}/>
    <ul className="og-sr" aria-label="Concepts in the graph">{shown.map((n,i)=><li key={n.id}><button type="button" data-graph-node={n.id} aria-pressed={n.id===selected} onFocus={()=>{st.current.hover=i;st.current.dirty=true;draw()}} onBlur={()=>{st.current.hover=-1;st.current.dirty=true;draw()}} onClick={()=>onSelect(n.id)}>Select {n.label}</button></li>)}</ul>
    <div className="og-tools" role="group" aria-label="Graph view controls">
     <button type="button" aria-label="Zoom in graph" onClick={()=>{const s=st.current;zoomAt(s.w/2,s.h/2,1.25)}}>+</button>
     <button type="button" aria-label="Zoom out graph" onClick={()=>{const s=st.current;zoomAt(s.w/2,s.h/2,.8)}}>−</button>
     <button type="button" onClick={()=>{st.current.touched=false;fit()}}>Fit network</button>
-    <button type="button" aria-pressed={paused||!cfg.animate} onClick={()=>setPaused(p=>!p)}>{paused?"Resume":"Freeze"}</button>
+    {!showcase&&<><button type="button" aria-pressed={paused||!cfg.animate} onClick={()=>setPaused(p=>!p)}>{paused?"Resume":"Freeze"}</button>
     <button type="button" aria-expanded={panel} onClick={()=>setPanel(p=>!p)}>Display</button>
-    <button type="button" onClick={exportPng}>PNG</button>
+    <button type="button" onClick={exportPng}>PNG</button></>}
     <span data-testid="graph-zoom-pct">{zoomPct}%</span>
    </div>
-   {panel&&<div className="og-panel" role="group" aria-label="Display and forces">
+   {panel&&!showcase&&<div className="og-panel" role="group" aria-label="Display and forces">
     <h3>Display</h3>
     <label className="og-row"><span>Colour by</span><select value={cfg.groupBy} onChange={e=>{setHidden([]);set("groupBy",e.target.value as GroupBy)}} aria-label="Colour concepts by"><option value="domain">Department</option><option value="kind">Concept type</option><option value="model">Evidence model</option></select></label>
     {slider("text","Labels appear",0,1,.05)}{slider("size","Node size",.5,2.2,.05)}{slider("link","Link thickness",.4,3,.05)}
@@ -240,8 +241,8 @@ useEffect(()=>{st.current.dirty=true;draw()},[gapSel,gapsShown,cfg.gaps,picked,p
     {slider("center","Centre force",0,1,.05)}{slider("repel","Repel force",0,1,.05)}{slider("strength","Link force",0,1,.05)}{slider("dist","Link distance",0,1,.05)}
     <button type="button" className="og-reset" onClick={()=>{setCfg(DEFAULTS);setHidden([])}}>Restore defaults</button>
    </div>}
-   <ul className="og-legend" aria-label="Groups. Select to hide or show">{groups.map(([g,n])=><li key={g}><button type="button" aria-pressed={!hidden.includes(g)} onClick={()=>setHidden(h=>h.includes(g)?h.filter(x=>x!==g):[...h,g])}><i style={{background:colour.get(g)}} aria-hidden="true"/>{pretty(g)} <span>{n}</span></button></li>)}
-    {hidden.map(g=>!groups.some(([x])=>x===g)?<li key={g}><button type="button" aria-pressed="false" onClick={()=>setHidden(h=>h.filter(x=>x!==g))}>{pretty(g)} (hidden)</button></li>:null)}</ul>
+   {!showcase&&<ul className="og-legend" aria-label="Groups. Select to hide or show">{groups.map(([g,n])=><li key={g}><button type="button" aria-pressed={!hidden.includes(g)} onClick={()=>setHidden(h=>h.includes(g)?h.filter(x=>x!==g):[...h,g])}><i style={{background:colour.get(g)}} aria-hidden="true"/>{pretty(g)} <span>{n}</span></button></li>)}
+    {hidden.map(g=>!groups.some(([x])=>x===g)?<li key={g}><button type="button" aria-pressed="false" onClick={()=>setHidden(h=>h.filter(x=>x!==g))}>{pretty(g)} (hidden)</button></li>:null)}</ul>}
   </div>
    <p className="og-cap" role="status">{caption}{msg?` · ${msg}`:""}</p>
   </div>

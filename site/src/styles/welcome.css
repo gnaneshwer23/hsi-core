@@ -44,3 +44,13 @@
 .wl-files{list-style:none;margin:0;padding:0;display:grid;gap:8px}
 .wl-files li{display:grid;grid-template-columns:1fr auto;gap:2px 12px;align-items:center;padding:10px 14px;border-radius:14px;background:#f6f7fb}
 .wl-files span{grid-column:1;color:#566377;font-size:14px}.wl-files button{grid-column:2;grid-row:1/3}
+
+/* Onboarding aside shares the public header look: dark, with the live summary on a light card. */
+.wl .wl-aside{background-color:#11143a;background-image:linear-gradient(160deg,#0b1020 0%,#161a45 62%,#231f63 100%);border:0;color:#e9ecf8;box-shadow:0 40px 90px rgba(18,20,60,.24)}
+.wl .wl-aside h1{color:#fff}
+.wl .wl-aside .wl-lead{color:#c9d0ea}
+.wl .wl-aside .wl-steps li{background:rgba(255,255,255,.09);color:#e9ecf8}
+.wl .wl-aside .wl-steps li[aria-current=step]{background:#fff;color:#11143a}
+.wl .wl-aside .wl-steps li[data-done=true]{color:#c9d0ea}
+.wl .wl-aside .wl-preview{background:#fff;color:#1c2233}
+.wl .wl-aside .wl-preview b,.wl .wl-aside .wl-preview li{color:#1c2233}
