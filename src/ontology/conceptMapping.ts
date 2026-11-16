@@ -7,7 +7,7 @@ import type {OntologyTerm} from "./oboTerms";
 
 export type TermTable={prefix:string;release:string;terms:OntologyTerm[]};
 export type ConceptInput={id:string;name:string;aliases?:string[]};
-export type MappingCandidate={ontology:string;id:string;label:string;matchedOn:"label"|"exact_synonym";matchedText:string};
+export type MappingCandidate={ontology:string;id:string;label:string;matchedOn:"label"|"exact_synonym"|"variant_label"|"variant_synonym";matchedText:string};
 export type ConceptMapping={conceptId:string;conceptName:string;status:"candidate"|"ambiguous"|"obsolete_only"|"unmapped";candidates:MappingCandidate[];obsoleteMatches:MappingCandidate[];reviewStatus:"unreviewed";exactMappingApproved:false};
 
 export const normaliseLabel=(s:string)=>s.normalize("NFKD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/[‐‑–—−]/g,"-").replace(/[^a-z0-9+\- ]+/g," ").replace(/\s+/g," ").trim();
@@ -21,16 +21,34 @@ export function buildIndex(tables:readonly TermTable[]):Map<string,{table:TermTa
  }
  return idx;
 }
-export function mapConcepts(concepts:readonly ConceptInput[],tables:readonly TermTable[]):ConceptMapping[]{
+/** Conservative spelling variants of a name: parenthetical groups removed, and "cells" read as "cell". Never changes meaning. */
+export function nameVariants(text:string):string[]{
+ const base=normaliseLabel(text),noParen=normaliseLabel(text.replace(/\([^)]*\)/g," ")),singular=(t:string)=>t.replace(/\bcells\b/g,"cell");
+ return [...new Set([noParen,singular(base),singular(noParen)].filter(v=>v&&v!==base))];
+}
+export type MapOptions={
+ /** Only these ontology prefixes may produce a candidate for the concept. A concept absent from the map is searched everywhere. An empty list means no imported ontology serves it. */
+ scope?:ReadonlyMap<string,readonly string[]>;
+ /** Also accept the conservative variants above, but only when no exact match exists. */
+ variants?:boolean;
+};
+export function mapConcepts(concepts:readonly ConceptInput[],tables:readonly TermTable[],options:MapOptions={}):ConceptMapping[]{
  const idx=buildIndex(tables);
  return concepts.map(c=>{
-  const seen=new Set<string>(),live:MappingCandidate[]=[],dead:MappingCandidate[]=[];
-  for(const text of [c.name,...(c.aliases??[])]){
-   for(const h of idx.get(normaliseLabel(text))??[]){
-    const key=h.table.prefix+"|"+h.term.id;if(seen.has(key))continue;seen.add(key);
-    const cand:MappingCandidate={ontology:h.table.prefix,id:h.term.id,label:h.term.label,matchedOn:h.on,matchedText:h.text};
+  const seen=new Set<string>(),live:MappingCandidate[]=[],dead:MappingCandidate[]=[],allowed=options.scope?.get(c.id);
+  const take=(keys:readonly string[],variant:boolean)=>{
+   for(const key of keys)for(const h of idx.get(key)??[]){
+    if(allowed&&!allowed.includes(h.table.prefix))continue;
+    const id=h.table.prefix+"|"+h.term.id;if(seen.has(id))continue;seen.add(id);
+    const on=variant?(h.on==="label"?"variant_label":"variant_synonym"):h.on;
+    const cand:MappingCandidate={ontology:h.table.prefix,id:h.term.id,label:h.term.label,matchedOn:on,matchedText:h.text};
     (h.term.obsolete?dead:live).push(cand);
    }
+  };
+  const names=[c.name,...(c.aliases??[])];
+  if(!(allowed&&allowed.length===0)){
+   take(names.map(normaliseLabel),false);
+   if(options.variants&&!live.length&&!dead.length)take(names.flatMap(nameVariants),true);
   }
   live.sort((a,b)=>a.id.localeCompare(b.id));dead.sort((a,b)=>a.id.localeCompare(b.id));
   const status=live.length===1?"candidate":live.length>1?"ambiguous":dead.length?"obsolete_only":"unmapped";
