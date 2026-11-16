@@ -31,3 +31,14 @@ test('research program: demo profile builds a personal graph, answers from the g
  await page.setViewportSize({width:390,height:844});
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth)).toBe(true);
 });
+
+test('home leads with the researcher\'s own question and names the focus; onboarding summary reflects topics and papers',async({page})=>{
+ await page.route('**/api/research/investigations',r=>r.fulfill({status:401,json:{}}));
+ await page.addInitScript(()=>localStorage.setItem('hsi-research-profile-v1',JSON.stringify({v:1,role:'Research scientist',stage:null,background:'Immunologist studying Tfh cells',question:'Why does IL-21 signalling differ between lupus and systemic sclerosis?',orcid:null,papers:['doi:10.1186/s13075-015-0660-z'],cadence:'weekly',goals:['Generate hypotheses'],interests:['IL-21','Systemic sclerosis'],followed:[],dismissed:[],onboarded:true})));
+ await page.goto('/research/home');
+ await expect(page.getByRole('heading',{level:1})).toHaveText('Why does IL-21 signalling differ between lupus and systemic sclerosis?');
+ await expect(page.getByText(/focus on IL-21, Systemic sclerosis/)).toBeVisible();
+ await page.goto('/welcome');
+ await expect(page.getByText(/A knowledge graph around/)).toBeVisible();
+ await expect(page.getByText(/1 paper/)).toBeVisible();
+});
