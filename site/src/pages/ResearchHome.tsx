@@ -73,7 +73,8 @@ function SearchHero({bundle,profile,follow,inputRef,ready}:{bundle:DomainBundle|
  return (
   <section className="rh-hero" aria-labelledby="rh-search-h">
    <div className="rh-hero-copy">
-    <h1 id="rh-title">{profile.onboarded&&(profile.interests.length||profile.followed.length)?"Your research":"What would you like to investigate?"}</h1>
+    <h1 id="rh-title">{profile.onboarded&&profile.question.trim()?profile.question.trim().slice(0,160):profile.onboarded&&(profile.interests.length||profile.followed.length)?"Your research":"What would you like to investigate?"}</h1>
+    {profile.onboarded&&profile.question.trim()&&<p className="rh-focus">Your research question{profile.interests.filter(i=>!departments.some(d=>d.slug===i)).length>0?<> · focus on {profile.interests.filter(i=>!departments.some(d=>d.slug===i)).slice(0,4).join(", ")}</>:null}</p>}
     <h2 id="rh-search-h" className="rh-vh">Search and investigate</h2>
     <label htmlFor="rh-q" className="rh-vh">Investigate a gene, pathway, disease, mechanism or research question</label>
     <div className="rh-searchbar">

@@ -75,7 +75,8 @@ export function WelcomePage(){
       <ul>
        <li>{p.interests.length?`A radar for ${p.interests.slice(0,3).map(i=>departments.find(d=>d.slug===i)?.name??i).join(", ")}${p.interests.length>3?` and ${p.interests.length-3} more`:""}`:"A radar once you add a topic"}</li>
        <li>{p.goals.length?`Suggestions tuned to ${p.goals.length} goal${p.goals.length===1?"":"s"}`:"General suggestions from the published graph"}</li>
-       <li>{orc?"Your own papers from public sources":"Your own papers, if you add an ORCID iD"}</li>
+       <li>{custom.length?`A knowledge graph around ${custom.slice(0,3).join(", ")}${custom.length>3?` and ${custom.length-3} more`:""}`:"A knowledge graph around the topics you add"}</li>
+       <li>{orc||pp.ids.length||files.length?`Your own work${orc?" from your ORCID iD":""}${pp.ids.length?`, ${pp.ids.length} paper${pp.ids.length===1?"":"s"}`:""}${files.length?`, ${files.length} document${files.length===1?"":"s"} read on this device`:""}`:"Your own papers, once you add an ORCID iD, a paper or a document"}</li>
       </ul>
      </div>
     </aside>
