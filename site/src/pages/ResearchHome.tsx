@@ -17,8 +17,8 @@ import "../styles/research-home.css";
 
 
 /** A collapsed region that opens for any link or anchor that targets it. */
-function Fold({id,ids,title,sub,force=false,children}:{id:string;ids:string[];title:string;sub:string;force?:boolean;children:React.ReactNode}){
- const {hash}=useLocation(),h=hash.slice(1),wanted=h===id||ids.includes(h),[open,setOpen]=useState(wanted);
+function Fold({id,ids,title,sub,force=false,initial=false,children}:{id:string;ids:string[];title:string;sub:string;force?:boolean;initial?:boolean;children:React.ReactNode}){
+ const {hash}=useLocation(),h=hash.slice(1),wanted=h===id||ids.includes(h),[open,setOpen]=useState(wanted||initial);
  useEffect(()=>{if(force)setOpen(true)},[force]);
  useEffect(()=>{if(wanted){setOpen(true);requestAnimationFrame(()=>document.getElementById(h)?.scrollIntoView({block:"start"}))}},[wanted,h]);
  return <details className="rh-setup" id={id} open={open} onToggle={e=>setOpen((e.currentTarget as HTMLDetailsElement).open)}><summary><span><b>{title}</b> <small>{sub}</small></span></summary>{children}</details>;
@@ -119,6 +119,9 @@ export function ResearchHome(){
  const [profile,setProfile]=useState<Profile>(EMPTY_PROFILE),[ready,setReady]=useState(false),[noStore,setNoStore]=useState(false),[adding,setAdding]=useState(false),[topic,setTopic]=useState("");
  const {bundle,failed}=useBundle(),saved=useSaved(),inputRef=useRef<HTMLInputElement|null>(null);
  const [liveRun,setLiveRun]=useState<SavedLiveRun|null>(null);
+ const loc=useLocation(),goto=useNavigate(),fresh=(loc.state as {fresh?:boolean}|null)?.fresh===true;
+ /** Only the first view after setup shows recommendations open; a reload or later visit starts folded again. */
+ useEffect(()=>{if(fresh)goto(loc.pathname+loc.search+loc.hash,{replace:true,state:null})},[fresh]); // eslint-disable-line react-hooks/exhaustive-deps
  // Read device storage after mount so server and client render the same first frame.
  useEffect(()=>{setProfile(loadProfile());setReady(true);try{setLiveRun(summariseSavedLiveRun(localStorage.getItem(LIVE_RUN_KEY)))}catch{setLiveRun(null)}},[]);
  useEffect(()=>{if(!ready)return;if(!saveProfile(profile))setNoStore(true)},[profile,ready]);
@@ -143,7 +146,7 @@ export function ResearchHome(){
      <RadarCard profile={profile} ready={ready}/>
      {ready&&<GapCard profile={profile} bundle={bundle}/>}
 
-     <Fold id="rh-more" force={saved.kind==="error"} ids={["rh-cont-h","rh-rec-h","rh-ask"]} title="More from your research" sub="Saved work, recommendations and asking the graph">
+     <Fold id="rh-more" force={saved.kind==="error"} initial={fresh} ids={["rh-cont-h","rh-rec-h","rh-ask"]} title="More from your research" sub="Saved work, recommendations and asking the graph">
      <div className="rh-grid">
       <section className="rh-card" aria-labelledby="rh-cont-h">
        <header className="rh-card-top"><span className="rh-tile rh-t-teal"><Icon name="layers" size={22}/></span><div><h2 id="rh-cont-h">Continue researching</h2><p className="rh-sub">Pick up where you left off.</p></div><Link className="rh-arrow" to="/research/dashboard#dashboard-workspace" aria-label="All investigations"><Icon name="chevron" size={18}/></Link></header>

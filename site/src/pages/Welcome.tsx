@@ -56,7 +56,7 @@ export function WelcomePage(){
   const next:Profile={...p,orcid:orc,papers:pp.ids,onboarded:true};
   if(!saveProfile(next)){setNote("This browser blocked local storage, so your answers will not be kept.");return}
   if(funnel.current){funnel.current.f=finishRun(funnel.current.f,funnel.current.i);saveFunnel(funnel.current.f)}
-  nav("/research/home");
+  nav("/research/home",{state:{fresh:true}});
  }
  async function addFiles(list:FileList|null){
   if(!list)return;setBusy(true);
