@@ -12,7 +12,8 @@ test('landing graph: nothing preselected, filters and search narrow it in place,
  await hero.getByRole('button',{name:'Human evidence only'}).click();await expect(hero.getByRole('button',{name:'Human evidence only'})).toHaveAttribute('aria-pressed','true');
  await hero.getByRole('button',{name:'Reset'}).click();await expect(caption).toHaveText(before);
  await hero.getByLabel('Find a concept').fill('IL-21');
- await hero.getByRole('list',{name:'Matching concepts'}).getByRole('button',{name:'IL-21'}).first().click();
+ const firstHit=hero.getByRole('list',{name:'Matching concepts'}).getByRole('button').first();
+ await expect(firstHit).toHaveText('IL-21');await firstHit.click();
  const panel=hero.getByRole('complementary',{name:'Selected concept'});
  await expect(panel.getByRole('heading',{name:'IL-21'})).toBeVisible();await expect(panel).toContainText('unreviewed');
  await expect(panel.getByRole('link',{name:'Open in the explorer'})).toHaveAttribute('href',/node=/);
