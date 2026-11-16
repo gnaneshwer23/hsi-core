@@ -175,3 +175,27 @@
 /* Cards: neutral surfaces, with colour kept for meaning (status chips), not decoration. */
 .pg-sub .pg-block li[data-tone],.hsi-public .hsi-card,.hsi-public [class*="hsi-step"]{background:#fff}
 .hsi-public .hsi-card{border:1px solid #e1e5f0}
+
+/* Landing graph: filters and a selection panel next to the canvas */
+.lg-filters{display:grid;gap:10px;margin-bottom:12px}
+.lg-search{position:relative;display:grid;gap:4px}
+.lg-search label{font-size:13.5px;font-weight:600;color:#c9d0ea}
+.lg-search input{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid #39428a;background:#0d1236;color:#fff;font:inherit}
+.lg-search input::placeholder{color:#8f99c4}
+.lg-hits{position:absolute;z-index:6;left:0;right:0;top:100%;margin:4px 0 0;padding:6px;list-style:none;background:#10153d;border:1px solid #39428a;border-radius:14px;display:grid;gap:2px}
+.lg-hits button{width:100%;min-height:44px;text-align:left;padding:0 12px;border-radius:10px;border:0;background:transparent;color:#e9ecf8;font:inherit;cursor:pointer}
+.lg-hits button:hover{background:#232a66}
+.lg-chips{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
+.lg-chips button{min-height:44px;padding:0 14px;border-radius:999px;border:1px solid #39428a;background:rgba(255,255,255,.06);color:#e9ecf8;font:inherit;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.lg-chips button[aria-pressed=true]{background:#fff;color:#11143a;border-color:#fff}
+.lg-chips i{width:11px;height:11px;border-radius:50%;display:inline-block}
+.lg-chips span{opacity:.75}
+.lg-reset{border-style:dashed!important}
+.lg-panel{margin-top:12px;padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.07);border:1px solid #2b3470;color:#e9ecf8;display:grid;gap:8px}
+.lg-panel h3{margin:0;color:#fff;font-size:18px}
+.lg-meta{margin:0;color:#b6bfe0;font-size:14px;line-height:1.5}
+.lg-panel ul{margin:0;padding:0;list-style:none;display:grid;gap:6px}
+.lg-panel li{display:grid;gap:2px;font-size:14.5px}
+.lg-panel small{color:#a1abd2}
+.lg-panel a{color:#dcd7ff;font-weight:600;min-height:44px;display:inline-flex;align-items:center}
+.lg .og{height:clamp(340px,46vh,500px)}
