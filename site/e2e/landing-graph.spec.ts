@@ -1,6 +1,23 @@
 import {test,expect} from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
+test('landing graph: nothing preselected, filters and search narrow it in place, selecting shows relationships on the page; axe clean at both sizes',async({page})=>{
+ await page.goto('/');
+ const hero=page.locator('.pg-hero');
+ await expect(hero.getByRole('complementary',{name:'Selected concept'})).toContainText('Select a concept');
+ const caption=hero.locator('.og-cap');await expect(caption).toContainText(/showing \d+ of 153 concepts/);
+ const before=await caption.innerText();
+ await hero.getByRole('list',{name:'Filter by department'}).getByRole('button').first().click();
+ await expect(caption).not.toHaveText(before);
+ await hero.getByRole('button',{name:'Human evidence only'}).click();await expect(hero.getByRole('button',{name:'Human evidence only'})).toHaveAttribute('aria-pressed','true');
+ await hero.getByRole('button',{name:'Reset'}).click();await expect(caption).toHaveText(before);
+ await hero.getByLabel('Find a concept').fill('IL-21');
+ await hero.getByRole('list',{name:'Matching concepts'}).getByRole('button',{name:'IL-21'}).first().click();
+ const panel=hero.getByRole('complementary',{name:'Selected concept'});
+ await expect(panel.getByRole('heading',{name:'IL-21'})).toBeVisible();await expect(panel).toContainText('unreviewed');
+ await expect(panel.getByRole('link',{name:'Open in the explorer'})).toHaveAttribute('href',/node=/);
+});
+
 test('landing hero shows the live published graph with honest labels, zoom controls and no editing chrome; axe clean at both sizes',async({page})=>{
  for(const width of [1440,390]){
   await page.setViewportSize({width,height:900});await page.goto('/');

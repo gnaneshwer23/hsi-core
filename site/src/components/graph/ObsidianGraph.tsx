@@ -6,21 +6,21 @@ export type OGEdge={id:string;s:string;o:string;predicate:string;negated:boolean
 type GroupBy="domain"|"kind"|"model";
 type Settings={text:number;size:number;link:number;center:number;repel:number;strength:number;dist:number;arrows:boolean;animate:boolean;groupBy:GroupBy;gaps:boolean};
 const DEFAULTS:Settings={text:.5,size:1,link:1,center:.55,repel:.45,strength:.5,dist:.45,arrows:false,animate:true,groupBy:"domain",gaps:true};
-const PALETTE=["#65CEE6","#A4A1EE","#E8A0B0","#D4B376","#8FD9A8","#F2A65A","#7FB2F0","#C9A0DC","#9AA5B8"];
+import {OG_PALETTE} from "./palette";
 const MAX_NODES=500,pretty=(s:string)=>s.replaceAll("_"," ");
 type Sim={x:Float64Array;y:Float64Array;vx:Float64Array;vy:Float64Array;pin:Uint8Array;alpha:number};
 const hash=(s:string)=>[...s].reduce((a,c)=>(a*31+c.charCodeAt(0))>>>0,17);
 
 /** An Obsidian-style graph: live force simulation, drag nodes, pan and zoom, hover to isolate a neighbourhood, labels that appear as you zoom.
  *  Colour is a scientific choice (department, concept type or evidence model); dashed lines are findings recorded as not holding. */
-export function ObsidianGraph({nodes,edges,selected,highlight,onSelect,onSelectEdge,caption,exportName="hsi-graph",gaps=[],gapSel=null,onGap,focusIds,focusTick=0,picked=[],onPick,pathEdges,showcase=false,preset}:{nodes:OGNode[];edges:OGEdge[];selected:string;highlight?:ReadonlySet<string>;onSelect:(id:string)=>void;onSelectEdge:(id:string)=>void;caption:string;exportName?:string;gaps?:OGGap[];gapSel?:string|null;onGap?:(id:string)=>void;focusIds?:string[];focusTick?:number;picked?:string[];onPick?:(ids:string[])=>void;pathEdges?:ReadonlySet<string>;showcase?:boolean;preset?:Partial<Settings>}){
+export function ObsidianGraph({nodes,edges,selected,highlight,onSelect,onSelectEdge,caption,exportName="hsi-graph",gaps=[],gapSel=null,onGap,focusIds,focusTick=0,picked=[],onPick,pathEdges,showcase=false,preset,groupColors}:{nodes:OGNode[];edges:OGEdge[];selected:string;highlight?:ReadonlySet<string>;onSelect:(id:string)=>void;onSelectEdge:(id:string)=>void;caption:string;exportName?:string;gaps?:OGGap[];gapSel?:string|null;onGap?:(id:string)=>void;focusIds?:string[];focusTick?:number;picked?:string[];onPick?:(ids:string[])=>void;pathEdges?:ReadonlySet<string>;showcase?:boolean;preset?:Partial<Settings>;groupColors?:Record<string,string>}){
  const wrap=useRef<HTMLDivElement|null>(null),cv=useRef<HTMLCanvasElement|null>(null);
  const [cfg,setCfg]=useState<Settings>({...DEFAULTS,...preset}),[panel,setPanel]=useState(false),[hidden,setHidden]=useState<string[]>([]),[paused,setPaused]=useState(false),[zoomPct,setZoomPct]=useState(100),[msg,setMsg]=useState("");
  const cfgRef=useRef(cfg);cfgRef.current=cfg;
  const nodeModel=useMemo(()=>{const m=new Map<string,Map<string,number>>();for(const e of edges)for(const id of [e.s,e.o]){const c=m.get(id)??new Map<string,number>();c.set(e.model,(c.get(e.model)??0)+1);m.set(id,c)}return new Map([...m].map(([id,c])=>[id,[...c].sort((a,b)=>b[1]-a[1])[0]![0]]))},[edges]);
  const groupOf=useCallback((n:OGNode)=>cfg.groupBy==="domain"?(n.domain||"untagged"):cfg.groupBy==="kind"?n.kind:pretty(nodeModel.get(n.id)??"no relationships"),[cfg.groupBy,nodeModel]);
  const groups=useMemo(()=>{const c=new Map<string,number>();for(const n of nodes)c.set(groupOf(n),(c.get(groupOf(n))??0)+1);return [...c].sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]))},[nodes,groupOf]);
- const colour=useMemo(()=>new Map(groups.map(([g],i)=>[g,PALETTE[i%PALETTE.length]!])),[groups]);
+ const colour=useMemo(()=>new Map(groups.map(([g],i)=>[g,groupColors?.[g]??OG_PALETTE[i%OG_PALETTE.length]!])),[groups,groupColors]);
  const shown=useMemo(()=>nodes.filter(n=>!hidden.includes(groupOf(n))),[nodes,hidden,groupOf]);
  const shownIds=useMemo(()=>new Set(shown.map(n=>n.id)),[shown]);
  const links=useMemo(()=>edges.filter(e=>shownIds.has(e.s)&&shownIds.has(e.o)),[edges,shownIds]);
