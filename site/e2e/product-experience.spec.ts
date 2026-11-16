@@ -14,7 +14,7 @@ test("public pages have a single main/title, working navigation and no narrow-sc
 test("the knowledge graph page opens the existing versioned graph and preserves selected context",async({page})=>{
  await page.goto('/knowledge-graph');await expect(page.getByRole('heading',{level:1})).toContainText('Relationships between biological entities');
  await expect(page.locator('#home-knowledge-graph')).toContainText('Public research snapshot');
- await page.locator('#home-knowledge-graph [data-graph-edge]').first().press('Enter');
+ await page.locator('#home-knowledge-graph').getByRole('button',{name:'Inspect this evidence',exact:true}).click();
  await expect(page.locator('.hd-inspector')).toContainText('Unreviewed source candidate');
  await page.locator('.hd-inspector').getByText('Source passages and permissions',{exact:true}).click();
  await expect(page.locator('.hd-inspector a').first()).toHaveAttribute('href',/^https:/);
