@@ -216,3 +216,20 @@
 .rh-ask-form textarea:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 .rh-ask-out{display:grid;gap:12px}.rh-ask-list{margin:8px 0 0;padding-left:18px}.rh-ask-list li{margin:6px 0}
 .rh-trace{border-top:1px solid var(--line);padding-top:8px}.rh-trace summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:600}.rh-trace ol{margin:4px 0 8px;padding-left:20px;font-size:14px;line-height:1.6;color:var(--muted)}
+
+/* My setup: collapsed by default so the day's work leads */
+.rh-setup{border-radius:22px;background:var(--surface);border:1px solid var(--line);color:var(--ink);overflow:hidden}
+.rh-setup>summary{list-style:none;cursor:pointer;min-height:56px;display:flex;align-items:center;padding:0 22px;font-size:16px}
+.rh-setup>summary::-webkit-details-marker{display:none}
+.rh-setup>summary::after{content:"+";margin-left:auto;font-size:22px;color:var(--muted)}
+.rh-setup[open]>summary::after{content:"\2212"}
+.rh-setup>summary small{color:var(--muted);font-size:14px;margin-left:8px}
+.rh-setup>summary:focus-visible{outline:3px solid #5240bd;outline-offset:-3px}
+.rh-setup[open]>summary{border-bottom:1px solid var(--line)}
+.rh-setup>section{margin:0;padding:22px;border:0;box-shadow:none;border-radius:0;background:transparent}
+.rh-gov>summary{list-style:none;cursor:pointer;min-height:44px;display:flex;align-items:center}
+.rh-gov>summary::-webkit-details-marker{display:none}
+.rh-gov>summary h2{margin:0}
+.rh-gov>summary::after{content:"+";margin-left:auto;padding-right:10px;color:inherit;opacity:.7}
+.rh-gov[open]>summary::after{content:"\2212"}
+.rh-gov>summary:focus-visible{outline:3px solid #5240bd;outline-offset:2px;border-radius:8px}
