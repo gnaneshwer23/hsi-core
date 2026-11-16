@@ -1,6 +1,6 @@
 {
  "schemaVersion": "hsi-ontology-candidate-mappings-1",
- "note": "Unreviewed label-match suggestions only. No mapping is approved; exact mappings need human review (hsiOntologyRegistry).",
+ "note": "Unreviewed label-match suggestions only. Concepts the graph calls \"biological concept\" are searched only in the ontology that serves their proposed type (research/ontology/concept-types.v1.json); conservative spelling variants are used only when no exact match exists. No mapping is approved; exact mappings need human review (hsiOntologyRegistry).",
  "ontologies": [
   {
    "prefix": "MONDO",
@@ -25,10 +25,10 @@
  ],
  "conceptCount": 153,
  "summary": {
-  "candidate": 23,
+  "candidate": 26,
   "ambiguous": 0,
   "obsolete_only": 0,
-  "unmapped": 130
+  "unmapped": 127
  },
  "mappings": [
   {
@@ -281,8 +281,16 @@
   {
    "conceptId": "concept:blood-brain-barrier-neuroimmune-interface--5e837ae",
    "conceptName": "Blood–brain barrier (neuroimmune interface)",
-   "status": "unmapped",
-   "candidates": [],
+   "status": "candidate",
+   "candidates": [
+    {
+     "ontology": "UBERON",
+     "id": "UBERON:0000120",
+     "label": "blood brain barrier",
+     "matchedOn": "variant_synonym",
+     "matchedText": "blood-brain barrier"
+    }
+   ],
    "obsoleteMatches": [],
    "reviewStatus": "unreviewed",
    "exactMappingApproved": false
@@ -1339,8 +1347,16 @@
   {
    "conceptId": "concept:spleen-innate-cytokine-reservoir--69a2683",
    "conceptName": "Spleen (innate cytokine reservoir)",
-   "status": "unmapped",
-   "candidates": [],
+   "status": "candidate",
+   "candidates": [
+    {
+     "ontology": "UBERON",
+     "id": "UBERON:0002106",
+     "label": "spleen",
+     "matchedOn": "variant_label",
+     "matchedText": "spleen"
+    }
+   ],
    "obsoleteMatches": [],
    "reviewStatus": "unreviewed",
    "exactMappingApproved": false
@@ -1481,8 +1497,16 @@
   {
    "conceptId": "concept:t-follicular-helper-tfh-cells-15bf43d",
    "conceptName": "T follicular helper (Tfh) cells",
-   "status": "unmapped",
-   "candidates": [],
+   "status": "candidate",
+   "candidates": [
+    {
+     "ontology": "CL",
+     "id": "CL:0002038",
+     "label": "T follicular helper cell",
+     "matchedOn": "variant_label",
+     "matchedText": "T follicular helper cell"
+    }
+   ],
    "obsoleteMatches": [],
    "reviewStatus": "unreviewed",
    "exactMappingApproved": false

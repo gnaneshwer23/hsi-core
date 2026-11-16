@@ -375,7 +375,7 @@
         "research/ontology/import-manifest.v1.json",
         "research/ontology/candidate-mappings.v1.json"
       ],
-      "gap": "23 of 153 concepts have an unreviewed candidate; none is an approved mapping; term tables live in a gitignored cache; HPO skipped by decision",
+      "gap": "26 of 153 concepts have an unreviewed candidate (scoped by proposed entity type; conservative spelling variants used only without an exact match); none is an approved mapping; term tables live in a gitignored cache; HPO skipped by decision",
       "nextAction": "Curator review of candidates; add ChEBI and NCBITaxon after licence confirmation"
     },
     {
