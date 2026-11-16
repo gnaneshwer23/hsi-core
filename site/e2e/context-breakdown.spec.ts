@@ -23,6 +23,14 @@ test.describe("Evidence by context",()=>{
   await expect(b).not.toContainText("supports");
  });
 
+ test("recorded disagreement is named, never adjudicated, and says when context is missing",async({page})=>{
+  await open(page);await page.getByRole("group",{name:"Choose a department"}).getByRole("button",{name:/Immunology/}).click();await pick(page,"Anti-TNF treatment response");
+  const b=page.getByRole("region",{name:"Evidence by context for Anti-TNF treatment response",exact:true});
+  await expect(b.locator(".cb-conflict").first()).toBeVisible();
+  await expect(b).toContainText("Not adjudicated");
+  await expect(b).not.toContainText("resolved:");
+ });
+
  test("the relationship dossier carries the same breakdown for that pair",async({page})=>{
   await open(page);await pick(page,"Butyrate");
   await page.getByRole("article",{name:"Path 1"}).getByRole("button",{name:/Inspect relationship 1/}).click();
