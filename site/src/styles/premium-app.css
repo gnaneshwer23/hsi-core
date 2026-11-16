@@ -230,3 +230,6 @@
 .rh-app .pm-tile:hover{border-color:var(--line-2)}
 .rh-focus{margin:8px 0 18px;color:var(--muted);font-size:15px}
 .rh-hero h1#rh-title{font-size:clamp(1.7rem,3vw,2.5rem);line-height:1.12;max-width:30ch}
+
+/* The sticky app header is 64px tall: focused and linked content must land clear of it (WCAG 2.2 Focus Not Obscured). */
+html:has(.rh-app){scroll-padding-top:84px}

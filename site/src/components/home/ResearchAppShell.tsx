@@ -53,6 +53,16 @@ export function ResearchAppShell({where,whereIcon="home",active,onSearch,childre
  const [badges,setBadges]=useState<Record<"ledger"|"gaps",number>>({ledger:0,gaps:0});
  const [prof,setProf]=useState<Profile|null>(null);
  useEffect(()=>{setProf(loadProfile());setAp(loadAppearance());try{const r=readBrowserRecord(localStorage);setBadges({ledger:r.ledgerEntries,gaps:r.gapStatuses})}catch{}},[]);
+ /** WCAG 2.2 Focus Not Obscured: the header is sticky, so keep keyboard focus clear of it. */
+ useEffect(()=>{
+  const onFocus=(e:FocusEvent)=>{
+   const el=e.target as Element|null,head=document.querySelector(".rh-top");
+   if(!el||!head||el===document.body||head.contains(el)||el.closest(".rh-nav"))return;
+   const h=head.getBoundingClientRect().height,r=el.getBoundingClientRect();
+   if(r.top<h+8)window.scrollBy({top:r.top-h-16,behavior:"instant" as ScrollBehavior});
+  };
+  document.addEventListener("focusin",onFocus);return()=>document.removeEventListener("focusin",onFocus);
+ },[]);
  const change=(a:Appearance)=>{setAp(a);saveAppearance(a)};
  const theme=ap.theme;
  const isArea=(i:string)=>departments.some(d=>d.slug===i);
