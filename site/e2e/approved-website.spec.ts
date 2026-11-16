@@ -1,6 +1,6 @@
 import {test,expect} from "@playwright/test";
 import {readFile} from "node:fs/promises";
-const pages={"/":"A knowledge graph for biomedical research, with the evidence attached.","/how-it-works":"How HSI works: one loop, eight steps.","/knowledge-graph":"Relationships between biological entities, with the evidence attached.","/context-conflict-audit":"When findings differ, check whether the context differs.","/evidence-intelligence":"Inspect what supports a connection before relying on it.","/trust":"How HSI separates evidence from approval.","/about":"What HSI is for.","/contact":"Contact HSI and start from your research question."};
+const pages={"/":"Human biology as a living knowledge graph that shows where the evidence stops.","/how-it-works":"How HSI works: one loop, eight steps.","/knowledge-graph":"Relationships between biological entities, with the evidence attached.","/context-conflict-audit":"When findings differ, check whether the context differs.","/evidence-intelligence":"Inspect what supports a connection before relying on it.","/trust":"How HSI separates evidence from approval.","/about":"What HSI is for.","/contact":"Contact HSI and start from your research question."};
 for(const [path,title] of Object.entries(pages))test(`approved public page, image and responsive layout ${path}`,async({page},info)=>{
  test.setTimeout(60000);const errors:string[]=[];page.on("pageerror",e=>errors.push(e.message));
  for(const width of [320,390,768,1440]){

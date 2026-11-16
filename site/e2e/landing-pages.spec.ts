@@ -15,12 +15,16 @@ test('the footer leads to the research app, which opens the app shell',async({pa
 
 test('home states the vision, the one loop, what you get, and what is not true yet; names no agents and no competitors',async({page})=>{
  await page.goto('/');
- await expect(page.getByRole('heading',{level:1})).toHaveText('A knowledge graph for biomedical research, with the evidence attached.');
+ await expect(page.getByRole('heading',{level:1})).toHaveText('Human biology as a living knowledge graph that shows where the evidence stops.');
  await expect(page.getByRole('link',{name:/Set up your research home/}).first()).toHaveAttribute('href','/welcome');
  await expect(page.getByRole('link',{name:'See how it works'})).toHaveAttribute('href','/how-it-works');
  const loop=page.getByRole('list',{name:'The research loop'}).locator(':scope > li');
- await expect(loop).toHaveCount(4);
- await expect(loop.nth(0)).toContainText('Live public sources');await expect(loop.nth(2)).toContainText('Synthetic patients');
+ await expect(loop).toHaveCount(6);
+ await expect(loop.nth(1)).toContainText('Live public sources');await expect(loop.nth(4)).toContainText('Kept on your device');
+ await expect(page.getByRole('region',{name:/What makes it different/}).getByRole('listitem')).toHaveCount(3);
+ const open=page.getByRole('region',{name:/Questions the graph is open on/});
+ await expect(open.getByRole('list',{name:/Open research questions/}).getByRole('listitem')).toHaveCount(9);
+ await expect(open).toContainText('candidates for expert review, not findings');
  const get=page.getByRole('region',{name:'Your research home'});
  await expect(get.getByRole('link',{name:/Set up your research home/})).toHaveAttribute('href','/welcome');
  await expect(get).toContainText('Investigations with proof');await expect(get).toContainText('Your gaps, hypotheses and methods');

@@ -1,19 +1,28 @@
 import {Link} from "react-router-dom";
 import {GraphSnapshotProvider,useGraphSnapshot} from "../components/home/useGraphSnapshot";
 import {LiveGraphHero} from "../components/home/LiveGraphHero";
+import {OpenQuestions} from "../components/home/OpenQuestions";
 import "../styles/premium-public.css";
 
-const LOOP=[
- {title:"Investigate",chip:"Live public sources",text:"Ask a question. HSI searches Europe PMC, OpenAlex and Open Targets and shows how the answer was produced, step by step.",to:"/research/workspace",cta:"Open investigations"},
- {title:"Find gaps, form hypotheses",chip:"From the graph and your runs",text:"See what is missing or contested. Carry a hypothesis only with a stated way it could be proved wrong.",to:"/research/gaps",cta:"Open the Gap Register"},
- {title:"Connect to patients",chip:"Synthetic patients",text:"A phenotype is evaluated in a separate, governed plane. Only small-group-protected totals come back, after a different person approves.",to:"/research/cohort",cta:"See the synthetic cohort"},
- {title:"Targets and trials",chip:"Live metadata · synthetic pre-screening",text:"Candidate targets with the evidence that is present and missing. Trial pre-screening that never says someone is eligible.",to:"/research/targets",cta:"See candidate targets"},
+const PILLARS=[
+ {n:"01",title:"Every claim keeps its evidence.",text:"A relationship is stored with its source, the model it was studied in, tissue, population, assay and limitations, and its review status. Findings that did not hold stay in the graph instead of being dropped.",to:"/knowledge-graph",cta:"See how a line is built"},
+ {n:"02",title:"It shows what is missing, and says how sure it is.",text:"A gap is first only a gap in the graph. HSI then counts the literature for it, and only an expert decides whether it is a real gap in knowledge. The three are never mixed up.",to:"/research/gaps",cta:"Open the Gap Register"},
+ {n:"03",title:"It keeps patient data apart.",text:"Patient-level work runs in a separate, governed plane. Here that plane holds synthetic patients only, small groups are suppressed, and trial pre-screening reports what is unknown instead of saying someone is eligible.",to:"/trust",cta:"Read the governance model"},
 ] as const;
 
-const HONEST=[
- {tone:"mint",title:"Evidence, inference and approval stay separate.",text:"Every relationship in the graph is a candidate with its source, experimental context and review status. Nothing is scientifically approved."},
- {tone:"lav",title:"Patient data lives in a separate plane.",text:"Here it is synthetic only, and the release gate refuses anything else. Small groups are suppressed before any total leaves."},
- {tone:"peach",title:"What is not true yet.",text:"Model checks are off, saved work is on your device and not a server, there is no real patient data, and nothing is clinical advice."},
+const FLOW=[
+ {title:"Frame the question",text:"Match the genes, cells, diseases and drugs you name to concepts in the graph.",status:"Live"},
+ {title:"Retrieve evidence",text:"Search Europe PMC, OpenAlex and Open Targets, with a trace of how the answer was produced and which searches failed.",status:"Live public sources"},
+ {title:"Weigh support and conflict",text:"Compare findings by model, tissue, population and assay, so a real conflict can be told from a difference in context.",status:"Published snapshot · unreviewed"},
+ {title:"Find what is missing",text:"Rank graph gaps, count the literature for each, and leave the final call to an expert.",status:"Live counts · expert review separate"},
+ {title:"Form a testable hypothesis",text:"State a prediction and what would prove it wrong, and keep the history of every change.",status:"Kept on your device"},
+ {title:"Review before anything enters the graph",text:"Independent reviewers decide what is promoted. Nothing is promoted automatically, and nothing is reviewed yet.",status:"Workflow built · no claim reviewed"},
+] as const;
+
+const LIMITS=[
+ {title:"Evidence, inference and approval stay separate.",text:"Every relationship in the graph is a candidate with its source, experimental context and review status. Nothing is scientifically approved."},
+ {title:"Patient data lives in a separate plane.",text:"Here it is synthetic only, and the release gate refuses anything else. Small groups are suppressed before any total leaves."},
+ {title:"What is not true yet.",text:"Model checks are off, saved work is on your device and not a server, there is no real patient data, and nothing is clinical advice."},
 ] as const;
 
 function Status(){
@@ -27,8 +36,8 @@ export function HomeLanding(){
    <GraphSnapshotProvider>
     <section className="pg-hero pg-hero-dark" aria-labelledby="home-title">
      <div className="pg-hero-copy">
-      <h1 id="home-title">A knowledge graph for biomedical research, with the evidence attached.</h1>
-      <p className="pg-lead">HSI links published literature to a graph in which every relationship keeps its source, experimental context and review status. See what is established, what conflicts and where evidence is missing.</p>
+      <h1 id="home-title">Human biology as a living knowledge graph that shows where the evidence stops.</h1>
+      <p className="pg-lead">Findings are scattered across papers, models and experimental contexts. HSI connects them in one graph, keeps each claim's source, context and review status, and marks what conflicts and what is missing, so the next experiment is a decision, not a guess.</p>
       <div className="pg-cta"><Link className="pg-btn pg-btn-light" to="/welcome">Set up your research home <span aria-hidden="true">→</span></Link><Link className="pg-link pg-link-light" to="/how-it-works">See how it works</Link></div>
       <p className="pg-micro">Research preview. Candidate-only: nothing here is scientifically approved. No account is needed to start, public evidence is live, and patient data is synthetic.</p>
      </div>
@@ -36,14 +45,31 @@ export function HomeLanding(){
     </section>
     <div className="pg-strip"><Status/></div>
 
+    <section className="pg-pillars" aria-labelledby="pg-pillars-h">
+     <h2 id="pg-pillars-h">What makes it different from a literature search.</h2>
+     <p className="pg-sec-lead">A search returns papers. HSI keeps the structure of what the papers claim, and what they leave out.</p>
+     <ol>{PILLARS.map(p=>(
+      <li key={p.n}><span className="pg-pn" aria-hidden="true">{p.n}</span><h3>{p.title}</h3><p>{p.text}</p><Link className="pg-link" to={p.to}>{p.cta} <span aria-hidden="true">→</span></Link></li>
+     ))}</ol>
+    </section>
+
+    <section className="pg-open" aria-labelledby="pg-open-h">
+     <div className="pg-open-head">
+      <h2 id="pg-open-h">Questions the graph is open on today.</h2>
+      <p>These are the gaps recorded in the published graph. Each opens its concepts, evidence and the next study a researcher could run. They are candidates for expert review, not findings.</p>
+      <Link className="pg-btn pg-btn-light" to="/research/gaps">Open the Gap Register <span aria-hidden="true">→</span></Link>
+     </div>
+     <OpenQuestions/>
+    </section>
+
     <section className="pg-loop" aria-labelledby="pg-loop-h">
      <div className="pg-loop-head">
       <h2 id="pg-loop-h">From a question to a testable next step.</h2>
-      <p>Record what you learn and reassess. The result feeds the next question.</p>
+      <p>Each step says whether it runs on live sources, on the published snapshot, or only on your device.</p>
       <Link className="pg-link" to="/how-it-works">Walk through all eight steps <span aria-hidden="true">→</span></Link>
      </div>
-     <ol className="pg-steps" aria-label="The research loop">{LOOP.map((s,i)=>(
-      <li key={s.title}><span className="pg-num" aria-hidden="true">{i+1}</span><div><h3>{s.title}</h3><span className="pg-chip">{s.chip}</span><p>{s.text}</p><Link className="pg-link" to={s.to}>{s.cta} <span aria-hidden="true">→</span></Link></div></li>
+     <ol className="pg-steps" aria-label="The research loop">{FLOW.map((s,i)=>(
+      <li key={s.title}><span className="pg-num" aria-hidden="true">{i+1}</span><div><h3>{s.title}</h3><span className="pg-chip">{s.status}</span><p>{s.text}</p></div></li>
      ))}</ol>
     </section>
 
@@ -72,7 +98,7 @@ export function HomeLanding(){
 
     <section className="pg-honest" aria-labelledby="pg-honest-h">
      <h2 id="pg-honest-h">Limits, stated up front</h2>
-     <ul>{HONEST.map(h=>(<li key={h.title} data-tone={h.tone}><h3>{h.title}</h3><p>{h.text}</p></li>))}</ul>
+     <ul>{LIMITS.map(h=>(<li key={h.title}><h3>{h.title}</h3><p>{h.text}</p></li>))}</ul>
      <p><Link className="pg-link" to="/trust">Read how evidence, privacy and governance are handled <span aria-hidden="true">→</span></Link></p>
     </section>
 
