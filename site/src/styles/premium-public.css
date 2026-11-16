@@ -19,22 +19,6 @@
 .pg-link-light{color:#fff!important}
 .pg-micro{margin-top:18px;font-size:14px;line-height:1.6;color:var(--muted);max-width:56ch}
 .pg-page :is(a,button):focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:10px}
-/* hero graph */
-.pg-hero-graph{position:relative;padding:18px 18px 14px;border-radius:32px;background:linear-gradient(160deg,#fff 0,#f1eefc 55%,#e3f3ec 130%);border:1px solid #fff;box-shadow:0 2px 4px rgba(53,45,110,.05),0 30px 70px rgba(53,45,110,.14)}
-.pg-hero-graph svg{display:block;width:100%;height:auto;overflow:visible}
-.pg-wait{display:grid;place-items:center;min-height:360px;color:var(--muted)}
-.pg-edge{stroke:#7f72d6;stroke-width:1.6;stroke-opacity:.55;stroke-dasharray:420;stroke-dashoffset:420;animation:pg-draw 1.1s cubic-bezier(.2,.8,.2,1) forwards}
-.pg-neg{stroke:#b5622b;stroke-dasharray:6 6;animation:none;stroke-dashoffset:0}
-.pg-dot{fill:#fff;stroke:var(--accent);stroke-width:2;transition:fill .18s,stroke-width .18s}
-.pg-node[data-tone=mint] .pg-dot{fill:var(--mint)}.pg-node[data-tone=lav] .pg-dot{fill:var(--lav)}.pg-node[data-tone=peach] .pg-dot{fill:var(--peach)}.pg-node[data-tone=sky] .pg-dot{fill:var(--sky)}
-.pg-node[data-c=true] .pg-dot{fill:var(--accent);stroke:#fff;stroke-width:4}
-.pg-node{animation:pg-pop .5s cubic-bezier(.2,.8,.2,1) backwards;transform-box:fill-box;transform-origin:center}
-.pg-node:hover .pg-dot{stroke-width:4}
-.pg-hit{fill:transparent}
-.pg-label{font:600 15px 'Host Grotesk Variable',system-ui,sans-serif;fill:var(--ink);paint-order:stroke;stroke:#f6f4fd;stroke-width:5px;stroke-linejoin:round}
-.pg-label[data-c=true]{fill:#fff;stroke:none;font-size:17px;font-weight:700}
-.pg-cap{margin:6px 8px 4px;font-size:13.5px;line-height:1.55;color:var(--muted)}.pg-cap b{color:var(--ink)}
-@keyframes pg-draw{to{stroke-dashoffset:0}}@keyframes pg-pop{from{opacity:0;transform:scale(.6)}}
 /* status strip */
 .pg-strip{padding:8px 0 56px}
 .pg-status{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;padding:16px 22px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:16px;color:var(--body);width:fit-content;max-width:100%}
@@ -80,7 +64,7 @@
  .pg-steps li{grid-template-columns:48px minmax(0,1fr);gap:14px}.pg-num{font-size:36px}
  .pg-status{border-radius:22px}
 }
-@media(prefers-reduced-motion:reduce){.pg-edge{animation:none;stroke-dashoffset:0}.pg-node{animation:none}.pg-btn{transition:none}}
+@media(prefers-reduced-motion:reduce){.pg-btn{transition:none}}
 /* sub pages (How it works and similar) */
 .pg-vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .pg-sub .pg-phero,.pg-sub .pg-block{width:min(1240px,calc(100% - 64px));margin-inline:auto}
@@ -280,3 +264,24 @@
 .ca-status{display:flex;flex-wrap:wrap;gap:8px}
 .ca-status span{padding:5px 12px;border-radius:999px;background:var(--peach);color:var(--peach-ink);font-size:13px;font-weight:650}
 @media(max-width:1000px){.pg-pillars{grid-template-columns:1fr;gap:32px}.ca,.ca-wait{position:static;padding:20px}.ca dl div{grid-template-columns:96px minmax(0,1fr)}}
+
+/* Lower sections: the loop as a three-column rail, overlapping product captures, limits as a ruled row */
+@media(min-width:1000px){
+ .pg-loop{grid-template-columns:1fr;gap:40px}
+ .pg-loop-head{position:static;grid-template-columns:minmax(0,1fr) minmax(0,.8fr);align-items:end;gap:12px 56px}
+ .pg-loop-head h2{grid-row:1/3}
+ .pg-steps{grid-template-columns:repeat(3,minmax(0,1fr));gap:0 32px}
+ .pg-steps li{grid-template-columns:1fr;gap:14px;padding:26px 0 30px;border-top:2px solid var(--ink);align-content:start}
+ .pg-steps li:first-child{border-top:2px solid var(--ink);padding-top:26px}
+ .pg-steps .pg-num{font-size:40px}
+ .pg-steps h3{font-size:22px}
+ .pg-steps p{font-size:16px;margin-top:10px}
+}
+.pg-shots{display:grid;gap:0;align-content:start}
+.pg-shot:nth-child(2){width:80%;margin:-44px 0 0 auto;position:relative}
+.pg-shot figcaption{padding:12px 16px;font-size:14px;line-height:1.5;color:var(--muted);background:#fff}
+.pg-shot figcaption b{color:var(--ink)}
+.pg-honest ul{gap:0 40px}
+.pg-honest li{padding:22px 0 0;border-radius:0;background:none;border-top:2px solid var(--ink)}
+.pg-honest li[data-tone]{background:none}
+@media(max-width:1000px){.pg-shot:nth-child(2){width:100%;margin-top:16px}.pg-honest li{padding-top:16px}}

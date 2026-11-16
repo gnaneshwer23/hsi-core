@@ -163,7 +163,7 @@ useEffect(()=>{st.current.dirty=true;draw()},[gapSel,gapsShown,cfg.gaps,picked,p
   const el=wrap.current,canvas=cv.current;if(!el||!canvas)return;
   const size=()=>{const s=st.current,r=el.getBoundingClientRect();s.w=Math.max(280,r.width);s.h=r.height;if(!s.touched&&s.sim)fit();s.dpr=Math.min(2,window.devicePixelRatio||1);canvas.width=Math.round(s.w*s.dpr);canvas.height=Math.round(s.h*s.dpr);s.dirty=true;draw()};
   size();const ro=new ResizeObserver(size);ro.observe(el);
-  const wheel=(e:WheelEvent)=>{e.preventDefault();zoomAt(e.clientX-canvas.getBoundingClientRect().left,e.clientY-canvas.getBoundingClientRect().top,e.deltaY<0?1.12:1/1.12)};
+  const wheel=(e:WheelEvent)=>{if(showcase&&!e.ctrlKey&&!e.metaKey)return;e.preventDefault();zoomAt(e.clientX-canvas.getBoundingClientRect().left,e.clientY-canvas.getBoundingClientRect().top,e.deltaY<0?1.12:1/1.12)};
   canvas.addEventListener("wheel",wheel,{passive:false});
   return()=>{ro.disconnect();canvas.removeEventListener("wheel",wheel)};
  },[]); // eslint-disable-line react-hooks/exhaustive-deps
