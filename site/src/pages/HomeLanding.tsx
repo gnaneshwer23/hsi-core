@@ -27,8 +27,8 @@ export function HomeLanding(){
    <GraphSnapshotProvider>
     <section className="pg-hero pg-hero-dark" aria-labelledby="home-title">
      <div className="pg-hero-copy">
-      <h1 id="home-title">Connect biology. Find the gaps. Translate evidence into human impact.</h1>
-      <p className="pg-lead">HSI links open literature and a verified knowledge graph to what researchers should investigate next, then to patient groups, targets and trials under governance. Every claim keeps its source, context and review status.</p>
+      <h1 id="home-title">A knowledge graph for biomedical research, with the evidence attached.</h1>
+      <p className="pg-lead">HSI links published literature to a graph in which every relationship keeps its source, experimental context and review status. See what is established, what conflicts and where evidence is missing.</p>
       <div className="pg-cta"><Link className="pg-btn pg-btn-light" to="/welcome">Set up your research home <span aria-hidden="true">→</span></Link><Link className="pg-link pg-link-light" to="/how-it-works">See how it works</Link></div>
       <p className="pg-micro">Research preview. Candidate-only: nothing here is scientifically approved. No account is needed to start, public evidence is live, and patient data is synthetic.</p>
      </div>
@@ -38,8 +38,8 @@ export function HomeLanding(){
 
     <section className="pg-loop" aria-labelledby="pg-loop-h">
      <div className="pg-loop-head">
-      <h2 id="pg-loop-h">One loop, from a question to patient-relevant opportunities.</h2>
-      <p>Then record what you learned and reassess, which feeds the next question.</p>
+      <h2 id="pg-loop-h">From a question to a testable next step.</h2>
+      <p>Record what you learn and reassess. The result feeds the next question.</p>
       <Link className="pg-link" to="/how-it-works">Walk through all eight steps <span aria-hidden="true">→</span></Link>
      </div>
      <ol className="pg-steps" aria-label="The research loop">{LOOP.map((s,i)=>(
@@ -49,8 +49,8 @@ export function HomeLanding(){
 
     <section className="pg-product" aria-labelledby="pg-product-h">
      <div className="pg-product-copy">
-      <h2 id="pg-product-h">Your research home.</h2>
-      <p>Tell HSI what you work on and get a radar of new papers, a gap finder, a hypothesis ledger and a place to continue. It takes two minutes and every step is optional.</p>
+      <h2 id="pg-product-h">Your research home</h2>
+      <p>Answer a few questions about your area. HSI builds a home with a literature radar, a gap finder, a hypothesis ledger and a knowledge graph around your own topics. Setup takes about two minutes.</p>
       <ul>
        <li><b>Investigations with proof.</b> A failed source is shown as failed, never as nothing found.</li>
        <li><b>Your gaps, hypotheses and methods.</b> Kept on your device today, with a history of every change.</li>
@@ -71,7 +71,7 @@ export function HomeLanding(){
     </section>
 
     <section className="pg-honest" aria-labelledby="pg-honest-h">
-     <h2 id="pg-honest-h">How it stays honest.</h2>
+     <h2 id="pg-honest-h">Limits, stated up front</h2>
      <ul>{HONEST.map(h=>(<li key={h.title} data-tone={h.tone}><h3>{h.title}</h3><p>{h.text}</p></li>))}</ul>
      <p><Link className="pg-link" to="/trust">Read how evidence, privacy and governance are handled <span aria-hidden="true">→</span></Link></p>
     </section>

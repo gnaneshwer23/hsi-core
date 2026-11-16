@@ -128,7 +128,7 @@ export function KnowledgeGraphPublicPage() {
       <ChartsFigure />
 
       <section className="kg-section" aria-labelledby="kg-ways">
-        <h2 id="kg-ways">Choose how deep to go.</h2>
+        <h2 id="kg-ways">Ways in</h2>
         <ul className="kg-index">
           {ways.map((w) => (
             <li key={w.to}>
@@ -141,7 +141,7 @@ export function KnowledgeGraphPublicPage() {
       </section>
 
       <section className="kg-section" aria-labelledby="kg-limits">
-        <h2 id="kg-limits">Plain answers about what a line means.</h2>
+        <h2 id="kg-limits">What a line means</h2>
         <FaqList />
       </section>
 

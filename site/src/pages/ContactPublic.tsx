@@ -17,7 +17,7 @@ export function ContactPublicPage(){
   return (
     <div className="sp-page fg-page ct-page pg-page pg-sub">
       <header className="pg-phero">
-        <h1>Bring your next research question.</h1>
+        <h1>Contact HSI and start from your research question.</h1>
         <div>
           <p className="pg-lead">Create an HSI account if you need one. The question form on this page saves a browser draft only and does not submit an access request or start an investigation. Researcher, source and scientific-review permissions are provisioned independently.</p>
           <div className="pg-cta">
@@ -41,7 +41,7 @@ export function ContactPublicPage(){
       </figure>
 
       <section className="fg-block ct-draft pg-block" aria-labelledby="ct-draft">
-        <h2 id="ct-draft">Keep your question while you sign up.</h2>
+        <h2 id="ct-draft">Keep your question while you sign up</h2>
         <div>
           <AccessIntentPanel />
           <p className="ct-scope" role="note">Browser drafts are optional. Create an account, then an administrator grants research access. Check status on your research account after sign-in.</p>

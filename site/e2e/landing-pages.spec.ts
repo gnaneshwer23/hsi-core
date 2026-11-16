@@ -15,16 +15,16 @@ test('the footer leads to the research app, which opens the app shell',async({pa
 
 test('home states the vision, the one loop, what you get, and what is not true yet; names no agents and no competitors',async({page})=>{
  await page.goto('/');
- await expect(page.getByRole('heading',{level:1})).toHaveText('Connect biology. Find the gaps. Translate evidence into human impact.');
+ await expect(page.getByRole('heading',{level:1})).toHaveText('A knowledge graph for biomedical research, with the evidence attached.');
  await expect(page.getByRole('link',{name:/Set up your research home/}).first()).toHaveAttribute('href','/welcome');
  await expect(page.getByRole('link',{name:'See how it works'})).toHaveAttribute('href','/how-it-works');
  const loop=page.getByRole('list',{name:'The research loop'}).locator(':scope > li');
  await expect(loop).toHaveCount(4);
  await expect(loop.nth(0)).toContainText('Live public sources');await expect(loop.nth(2)).toContainText('Synthetic patients');
- const get=page.getByRole('region',{name:'Your research home.'});
+ const get=page.getByRole('region',{name:'Your research home'});
  await expect(get.getByRole('link',{name:/Set up your research home/})).toHaveAttribute('href','/welcome');
  await expect(get).toContainText('Investigations with proof');await expect(get).toContainText('Your gaps, hypotheses and methods');
- await expect(page.getByRole('region',{name:'How it stays honest.'})).toContainText('Model checks are off');
+ await expect(page.getByRole('region',{name:'Limits, stated up front'})).toContainText('Model checks are off');
  await expect(page.getByRole('status').filter({hasText:'candidate relationships'})).toBeVisible();
  const body=page.locator('#main-content');
  await expect(body).not.toContainText(/NEXUS|AEGIS|SCOUT|LANTERN|HELIX|PARALLAX|VANTAGE|VERITAS|ARBITER|SENTINEL|CALIBER|WARDEN/);
