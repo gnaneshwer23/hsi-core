@@ -40,6 +40,9 @@ test('welcome flow: role, background and a focus are required, later steps optio
  expect(stored).toMatchObject({onboarded:true,role:'Research scientist',stage:'Established researcher',orcid:'0000-0002-1825-0097',cadence:'weekly',papers:['doi:10.1186/s13075-015-0660-z','pmid:26055806']});
  expect(stored.interests).toEqual(expect.arrayContaining(['IL-21','immunology']));
  await expect(page.getByRole('heading',{name:'Tailor your research home'})).toHaveCount(0);
+ await expect(page.getByRole('region',{name:'Recommended research'})).toBeVisible();
+ await page.reload();
+ await expect(page.locator('#rh-more')).not.toHaveAttribute('open','');
 });
 
 test('the example profile fills the required answers and reaches Home with a program',async({page})=>{
