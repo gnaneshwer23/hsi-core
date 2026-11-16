@@ -1,6 +1,6 @@
 # KG-02 slice 2: proposed entity types for review
 
-Generated from graph version e06d4343 by `bun run ontology:types` (rules rules-1). **Proposals only.** Nothing here is applied to the graph, the types are not calibrated, and every row needs a person to accept, change or reject it. A reviewer who is the owner is an interim reviewer, not an independent one.
+Generated from graph version 53a2f1f0 by `bun run ontology:types` (rules rules-1). **Proposals only.** Nothing here is applied to the graph, the types are not calibrated, and every row needs a person to accept, change or reject it. A reviewer who is the owner is an interim reviewer, not an independent one.
 
 114 concepts are typed only as "biological concept" in the graph. 24 need particular care: their name matches rules for more than one type, or no rule.
 

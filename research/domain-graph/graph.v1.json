@@ -1,6 +1,6 @@
 {
   "schemaVersion": "hsi-domain-graph-1",
-  "parentVersion": "709cb9223bfa2c56c8267f1b4c7b32d2a5c66c34af29e16140ee28810863a72c",
+  "parentVersion": "e06d43438e382a6d1f52c932420bd189014d8449b09c2d3113b5a34fde076d03",
   "inputs": [
     {
       "path": "site/public/discovery/hsi-pilot-evidence-pack.json",
@@ -4839,7 +4839,7 @@
       "conditions": [
         "Rheumatoid arthritis"
       ],
-      "model": "unspecified",
+      "model": "human_in_vivo",
       "design": "Meta-analysis of human studies",
       "tissue": null,
       "population": "14 studies; 5561 RA patients (abstract Results)",
@@ -4871,7 +4871,7 @@
       "conditions": [
         "Rheumatoid arthritis"
       ],
-      "model": "unspecified",
+      "model": "human_in_vivo",
       "design": "Meta-analysis of human studies",
       "tissue": null,
       "population": "14 studies; 5561 RA patients (abstract Results)",
@@ -4901,7 +4901,7 @@
       "conditions": [
         "Rheumatoid arthritis"
       ],
-      "model": "unspecified",
+      "model": "human_in_vivo",
       "design": "Meta-analysis of human studies",
       "tissue": null,
       "population": "14 studies; 5561 RA patients (abstract Results)",
@@ -5179,7 +5179,7 @@
       "conditions": [
         "Systemic sclerosis"
       ],
-      "model": "unspecified",
+      "model": "human_in_vivo",
       "design": "human case-control",
       "tissue": null,
       "population": "SSc cohort",
@@ -5209,7 +5209,7 @@
       "conditions": [
         "Systemic sclerosis"
       ],
-      "model": "unspecified",
+      "model": "human_in_vivo",
       "design": "human case-control",
       "tissue": null,
       "population": "SSc cohort",
@@ -9596,5 +9596,5 @@
   "clinicalAdvice": false,
   "graphPromotable": false,
   "scientificApproval": false,
-  "version": "e06d43438e382a6d1f52c932420bd189014d8449b09c2d3113b5a34fde076d03"
+  "version": "53a2f1f08b8b770be2338e951182eb674203f92d46a5d1e74fb0707884561e47"
 }
