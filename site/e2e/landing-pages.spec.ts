@@ -29,7 +29,7 @@ test('home states the vision, the one loop, what you get, and what is not true y
  await expect(get.getByRole('link',{name:/Set up your research home/})).toHaveAttribute('href','/welcome');
  await expect(get).toContainText('Investigations with proof');await expect(get).toContainText('Your gaps, hypotheses and methods');
  await expect(page.getByRole('region',{name:'Limits, stated up front'})).toContainText('Model checks are off');
- await expect(page.getByRole('status').filter({hasText:'candidate relationships'})).toBeVisible();
+ await expect(page.locator('.pg-status')).toContainText('candidate relationships');
  const body=page.locator('#main-content');
  await expect(body).not.toContainText(/NEXUS|AEGIS|SCOUT|LANTERN|HELIX|PARALLAX|VANTAGE|VERITAS|ARBITER|SENTINEL|CALIBER|WARDEN/);
  await expect(body).not.toContainText(/Intelligence Collective|Enterprise knowledge graphs|Answer engines|Where HSI fits/);
@@ -44,6 +44,9 @@ test('how it works shows the eight steps, what runs where, and what is missing b
  const hrefs=await steps.getByRole('link').evaluateAll(els=>els.map(e=>(e as HTMLAnchorElement).getAttribute('href')));
  expect(hrefs).toEqual(['/research/home','/research/knowledge-graph','/research/gaps','/research/cohort','/research/ledger','/research/targets','/research/prescreen','/research/ledger']);
  await expect(page.getByRole('table',{name:'What each part of HSI does and its status'})).toContainText('Clinical plane');
+ await expect(page.getByRole('region',{name:'How to read the labels.'})).toContainText('Synthetic data');
+ await expect(page.getByRole('list',{name:'Gates before real patient data'}).getByRole('listitem')).toHaveCount(5);
+ await expect(page.getByRole('list',{name:'Gates before real patient data'}).getByRole('listitem').first()).toContainText('Done');
  await expect(page.getByRole('region',{name:'Before any real patient data.'})).toContainText('independent security review');
  await expect(page.getByRole('region',{name:'Go deeper in the app.'}).getByRole('link')).toHaveCount(3);
 });
