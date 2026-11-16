@@ -39,11 +39,11 @@ export function LiveGraphHero(){
  const rels=node&&all?all.cand.filter(e=>e.subjectId===node.id||e.objectId===node.id):[];
  const filtered=dept.length>0||humanOnly||!neg;
  if(failed)return <div className="lg-wait" role="status">Snapshot unavailable. No substitute graph is shown.</div>;
- if(!all||!view)return <div className="lg-wait" role="status">Verifying the published snapshot…</div>;
+ if(!all||!view)return <div className="lg-wait lg-load" role="status">Verifying the published snapshot…</div>;
  return (
   <figure className="lg">
    {view.nodes.length===0?<div className="lg-wait" role="status">No relationships match these filters. That is a filter result, not evidence of absence.</div>:
-   <Suspense fallback={<div className="lg-wait" role="status">Loading the graph…</div>}>
+   <Suspense fallback={<div className="lg-wait lg-load" role="status">Loading the graph…</div>}>
     <Canvas showcase preset={PRESET} groupColors={all.colors} nodes={view.nodes} edges={view.edges} selected={sel??""} highlight={match} onSelect={id=>setSel(s=>s===id?null:id)} onSelectEdge={()=>{}} caption={`Live from the published snapshot (version ${b!.version.slice(0,7)}): showing ${view.nodes.length} of ${b!.nodes.length} concepts and ${view.edges.length} of ${all.cand.length} candidate relationships. Drag a concept, scroll to zoom, click to select. Every line is a candidate and unreviewed.`} exportName="hsi-landing-graph"/>
    </Suspense>}
    <div className="lg-filters">
