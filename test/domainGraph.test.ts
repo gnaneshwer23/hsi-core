@@ -65,7 +65,7 @@ test('offline builder is deterministic and retains all cited source inputs',()=>
 });
 test('D-01 KG-01 example entities exist as candidate nodes without inventing mechanism edges',()=>{
  for(const [label,kind] of [['Adipose tissue','tissue'],['Liver','tissue'],['Acetate','metabolite'],['Propionate','metabolite'],['Butyrate','metabolite'],['Short-chain fatty acids','metabolite class'],['TNF-α','cytokine'],['Multiple sclerosis','disease'],['Type 2 diabetes','disease'],['Insulin resistance','phenotype']] as const){
-  const n=graph.nodes.find((x:any)=>x.name===label);expect(n,{label}).toBeTruthy();expect(n!.kind).toBe(kind);
+  const n=graph.nodes.find((x:any)=>x.name===label);expect(n,`missing ${label}`).toBeTruthy();expect(n!.kind).toBe(kind);
  }
  const seeded=new Set([name('Adipose tissue'),name('Liver'),name('Acetate'),name('Propionate')]);
  expect(graph.edges.filter((e:any)=>seeded.has(e.subjectId)||seeded.has(e.objectId))).toHaveLength(0);
