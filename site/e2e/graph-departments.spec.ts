@@ -15,7 +15,7 @@ test.describe("Departments tab on the knowledge graph",()=>{
   await open(page);
   const rail=page.getByRole("group",{name:"Choose a department"});
   await expect(rail.getByRole("button")).toHaveCount(6);
-  await expect(rail.getByRole("button",{name:/Immunology/})).toContainText("127 candidate concepts");
+  await expect(rail.getByRole("button",{name:/Immunology/})).toContainText("130 candidate concepts");
   await expect(rail.getByRole("button",{name:/Genomics/})).toContainText("No graph coverage");
   await rail.getByRole("button",{name:/Human Physiology/}).click();
   await expect(page.getByText("Nothing is shown rather than inferred")).toBeVisible();
