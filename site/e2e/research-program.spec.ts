@@ -3,7 +3,7 @@ import AxeBuilder from '@axe-core/playwright';
 
 test('research program: demo profile builds a personal graph, answers from the graph, labels demo content, axe clean',async({page})=>{
  await page.route('**/api/research/investigations',r=>r.fulfill({status:401,json:{}}));
- await page.goto('/research/home');
+ await page.goto('/research/home?demo=1');
  const sec=page.locator('section.pr');
  await sec.getByRole('button',{name:/Load a demo autoimmune profile/}).click();
  await expect(sec.getByText('Built from 2 anchors')).toBeVisible();
@@ -41,6 +41,17 @@ test('home leads with the researcher\'s own question and names the focus; onboar
  await page.goto('/welcome');
  await expect(page.getByText(/A knowledge graph around/)).toBeVisible();
  await expect(page.getByText(/1 paper/)).toBeVisible();
+});
+
+const PROFILE={v:1,role:'Research scientist',stage:null,background:'Immunologist studying Tfh cells',question:'Why does IL-21 differ?',orcid:null,papers:['doi:10.1186/s13075-015-0660-z'],cadence:'weekly',goals:['Generate hypotheses'],interests:['IL-21','Systemic sclerosis'],followed:[],dismissed:[],onboarded:true};
+test('demo tabs are hidden unless demo mode is switched on, and say so when it is',async({page})=>{
+ await page.route('**/api/research/investigations',r=>r.fulfill({status:401,json:{}}));
+ await page.addInitScript(p=>localStorage.setItem('hsi-research-profile-v1',JSON.stringify(p)),PROFILE);
+ await page.goto('/research/home');
+ const sec=page.locator('section.pr');await expect(sec.getByRole('button',{name:'Knowledge graph',exact:true})).toBeVisible();
+ await expect(sec.getByRole('button',{name:'Landscape',exact:true})).toHaveCount(0);await expect(sec.getByRole('button',{name:'Updates',exact:true})).toHaveCount(0);
+ await page.goto('/research/home?demo=1');
+ await expect(sec.getByRole('button',{name:'Landscape',exact:true})).toBeVisible();await expect(sec.getByRole('note')).toContainText('Demo content is switched on');
 });
 
 test('keyboard focus is never left under the sticky header when tabbing backwards on a phone',async({page})=>{

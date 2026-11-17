@@ -40,6 +40,9 @@ test('welcome flow: role, background and a focus are required, later steps optio
  expect(stored).toMatchObject({onboarded:true,role:'Research scientist',stage:'Established researcher',orcid:'0000-0002-1825-0097',cadence:'weekly',papers:['doi:10.1186/s13075-015-0660-z','pmid:26055806']});
  expect(stored.interests).toEqual(expect.arrayContaining(['IL-21','immunology']));
  await expect(page.getByRole('heading',{name:'Tailor your research home'})).toHaveCount(0);
+ await expect(page.getByRole('region',{name:'Recommended research'})).toBeVisible();
+ await page.reload();
+ await expect(page.locator('#rh-more')).not.toHaveAttribute('open','');
 });
 
 test('the example profile fills the required answers and reaches Home with a program',async({page})=>{
@@ -96,4 +99,21 @@ test('uploaded documents are read in the browser, add DOIs and concept chips, an
  await expect(page.locator('#wl-papers')).toHaveValue(/10\.1186\/s13075-015-0660-z/);
  await expect(page.getByRole('button',{name:'Next'})).toBeEnabled();
  expect(sent.filter(u=>/upload|evidence|file/i.test(u))).toEqual([]);
+});
+
+test('setup runs record only the day and the furthest step, and can be read back',async({page})=>{
+ await noApi(page);
+ await page.goto('/welcome');
+ await page.getByRole('button',{name:'Research scientist'}).click();
+ await page.getByRole('button',{name:'Established researcher'}).click();
+ await page.getByLabel(/^A short background/).fill('Immunologist studying T follicular helper cells and IL-21 in systemic sclerosis.');
+ await page.getByRole('button',{name:'Next'}).click();
+ await expect(page.getByRole('heading',{level:2}).first()).toBeVisible();
+ await page.goto('/welcome?funnel=1');
+ const box=page.getByRole('complementary',{name:'Setup runs on this browser'});
+ await expect(box).toContainText('2 runs, 0 finished');
+ await expect(box).toContainText('Reached step 2: 1');
+ await expect(box).toContainText('Reached step 3: 0');
+ const raw=await page.evaluate(()=>localStorage.getItem('hsi-onboarding-funnel-v1')||'');
+ expect(raw).not.toMatch(/Immunologist|IL-21|Research scientist/);
 });

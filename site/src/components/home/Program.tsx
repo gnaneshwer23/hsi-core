@@ -1,5 +1,5 @@
 import {useMemo,useState} from "react";
-import {Link} from "react-router-dom";
+import {Link,useSearchParams} from "react-router-dom";
 import type {DomainBundle} from "../../../../src/knowledgeGraph/domainGraph";
 import type {Profile} from "../../lib/researchHome";
 import {answerFromGraph,programView,isFiltered,NO_FILTER,DEMO_PROFILE,type GraphFilter,type Reply} from "../../lib/program";
@@ -18,6 +18,7 @@ const SUGGEST=(a:string[])=>[a[0]?`What is ${a[0]} connected to?`:"",a.length>1?
 
 /** The researcher's own program: everything below is computed from their anchors, not from graph-wide totals. */
 export function Program({profile,bundle,onProfile}:{profile:Profile;bundle:DomainBundle|null;onProfile:(p:Profile)=>void}){
+ const [params]=useSearchParams(),demo=params.get("demo")==="1";
  const [tab,setTab]=useState<Tab>("graph"),[depth,setDepth]=useState<1|2|3>(1),[cohort,setCohort]=useState(false);
  const [q,setQ]=useState(""),[reply,setReply]=useState<{q:string;r:Reply}|null>(null);
  const [f,setF]=useState<GraphFilter>(NO_FILTER);
@@ -40,7 +41,8 @@ export function Program({profile,bundle,onProfile}:{profile:Profile;bundle:Domai
     <div className="pr-depth" role="group" aria-label="How far to expand from your anchors">{([1,2,3] as const).map(d=><button key={d} type="button" aria-pressed={depth===d} onClick={()=>setDepth(d)}>{d} hop{d===1?"":"s"}</button>)}</div>
    </header>
    <p className="pr-sum"><b>{view.hop.size}</b> concepts · <b>{view.edges.length}</b> recorded relationships · <b>{view.gaps.length}</b> gaps touch your area · <b>{view.human}</b> with human evidence. Candidates, none reviewed.</p>
-   <div className="pr-tabs" role="group" aria-label="Program sections">{TABS.map(t=><button key={t.id} type="button" aria-pressed={tab===t.id} onClick={()=>setTab(t.id)}><Icon name={t.icon} size={16}/>{t.label}</button>)}</div>
+   {demo&&<p className="pr-box" role="note"><Demo/> Demo content is switched on: the Landscape and Updates tabs show illustrative placeholders, not real organisations, events or publications. <Link to="/research/home">Switch it off</Link></p>}
+   <div className="pr-tabs" role="group" aria-label="Program sections">{TABS.filter(t=>demo||(t.id!=="landscape"&&t.id!=="updates")).map(t=><button key={t.id} type="button" aria-pressed={tab===t.id} onClick={()=>setTab(t.id)}><Icon name={t.icon} size={16}/>{t.label}</button>)}</div>
 
    {tab==="graph"&&<div className="pr-pane">
     {base&&<GraphFilters bundle={bundle} base={base} f={f} setF={setF}/>}
@@ -66,13 +68,13 @@ export function Program({profile,bundle,onProfile}:{profile:Profile;bundle:Domai
     <div role="status" aria-live="polite">{reply&&<div className="pr-reply"><p className="pr-you">{reply.q}</p><p>{reply.r.text}</p>{reply.r.lines.length>0&&<ul>{reply.r.lines.map((l,i)=><li key={i}>{l}</li>)}</ul>}<div className="rh-row">{reply.r.links.map(l=><Link key={l.to} to={l.to}>{l.label}</Link>)}</div></div>}</div>
    </div>}
 
-   {tab==="landscape"&&<div className="pr-pane">
+   {demo&&tab==="landscape"&&<div className="pr-pane">
     <p className="pr-box"><Demo/> {DEMO_NOTE} In a live version these come from public sources such as trial registries and pipeline data, each linked.</p>
     <div className="pr-two"><div><h3>Organisations in {topic}</h3><ul className="pr-list">{demoOrgs(topic).map(o=><li key={o.id}><b>{o.name}</b><span>What: {o.what}</span><span>How: {o.how}</span><small>Learn: {o.learn}</small></li>)}</ul></div>
     <div><h3>Webinars and opportunities</h3><ul className="pr-list">{demoEvents(topic).map(e=><li key={e.id}><b>{e.title}</b><span>{e.kind} · {e.when}</span><small>{e.who}</small></li>)}</ul></div></div>
    </div>}
 
-   {tab==="updates"&&<div className="pr-pane">
+   {demo&&tab==="updates"&&<div className="pr-pane">
     <p className="pr-box"><Demo/> An illustration of a {profile.cadence==="daily"?"daily":"weekly"} digest for {names.slice(0,3).join(", ")}. Your real, live literature scan is the Research radar further down this page.</p>
     <ul className="pr-list">{demoDigest(names).map(d=><li key={d.id}><b>{d.title}</b><span>{d.kind} · {d.why}</span></li>)}</ul>
     <div className="pr-depth" role="group" aria-label="Digest cadence">{(["off","weekly","daily"] as const).map(c=><button key={c} type="button" aria-pressed={profile.cadence===c} onClick={()=>onProfile({...profile,cadence:c})}>{c==="off"?"Off":c==="weekly"?"Weekly":"Daily"}</button>)}</div>

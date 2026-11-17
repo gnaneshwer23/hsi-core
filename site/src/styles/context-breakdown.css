@@ -5,3 +5,8 @@
 .cb-num{font-variant-numeric:tabular-nums}.cb-table small{display:block;color:#3d4d57}.cb-na{color:#5c6b74;font-style:italic}
 .cb-missing,.cb-na-list{font-size:13px;color:#3d4d57;margin:8px 0}.cb-caveats{margin:8px 0;padding-left:20px;font-size:14px;color:#2a3a44}
 .cb .cb-btn{min-height:44px;padding:0 16px;border:1px solid #143b43;border-radius:999px;background:#fff;color:#143b43;font:inherit;font-weight:550;cursor:pointer}.cb .cb-btn:hover{background:#e6f1f0}.cb .cb-btn:focus-visible{outline:3px solid #2f8f88;outline-offset:3px}
+.cb-conflict{margin:0 0 12px;padding:12px 14px;border-radius:12px;border:1px solid #dde3ec;border-left:4px solid #9a4a13;background:#fdf3ea;color:#2a3a44;font-size:15px;line-height:1.55}
+.cb-conflict b{color:#09131d}
+.cb-conflict small{color:#3d4d57}
+.cb-conflict[data-class=same_context_disagreement]{border-left-color:#b42318}
+.cb-conflict[data-class=context_separated_disagreement]{border-left-color:#1f568f}

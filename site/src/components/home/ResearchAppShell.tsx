@@ -11,25 +11,25 @@ import "../../styles/premium-app.css";
 
 export type ShellNav="home"|"investigations"|"gaps"|"ledger"|"targets"|"cohort"|"prescreen"|"journey"|"methods"|"evaluation"|"graph"|"evidence"|"library"|"updates";
 type NavItem={label:string;to:string;icon:string;key?:ShellNav;badge?:"ledger"|"gaps"};
-const GROUPS:{label:string;items:NavItem[]}[]=[
- {label:"Discover",items:[
+const GROUPS:{label:string;items:NavItem[];governed?:boolean}[]=[
+ {label:"Ask",items:[
   {label:"Home",to:"/research/home",icon:"home",key:"home"},
-  {label:"Guided walkthrough",to:"/research/journey",icon:"compass",key:"journey"},
   {label:"Investigations",to:"/research/workspace",icon:"search",key:"investigations"},
+  {label:"Guided walkthrough",to:"/research/journey",icon:"compass",key:"journey"}]},
+ {label:"Explore",items:[
   {label:"Knowledge Graph",to:"/research/knowledge-graph",icon:"graph",key:"graph"},
-  {label:"Evidence Intelligence",to:"/evidence-intelligence",icon:"layers",key:"evidence"}]},
- {label:"Your research",items:[
+  {label:"Evidence Intelligence",to:"/evidence-intelligence",icon:"layers",key:"evidence"},
+  {label:"Research Library",to:"/research/home#rh-library",icon:"book"},
+  {label:"Scientific Updates",to:"/research/home#rh-radar",icon:"bell"}]},
+ {label:"Decide",items:[
   {label:"Gap Register",to:"/research/gaps",icon:"target",key:"gaps",badge:"gaps"},
   {label:"Hypothesis Ledger",to:"/research/ledger",icon:"flask",key:"ledger",badge:"ledger"},
   {label:"Candidate targets",to:"/research/targets",icon:"pill",key:"targets"},
-  {label:"Research methods",to:"/research/methods",icon:"book",key:"methods"},
-  {label:"Evaluation set",to:"/research/evaluation",icon:"chart",key:"evaluation"}]},
- {label:"Patients and trials",items:[
+  {label:"Research methods",to:"/research/methods",icon:"book",key:"methods"}]},
+ {label:"Governed modules (synthetic data)",governed:true,items:[
+  {label:"Evaluation set",to:"/research/evaluation",icon:"chart",key:"evaluation"},
   {label:"Cohort (synthetic)",to:"/research/cohort",icon:"users",key:"cohort"},
   {label:"Trial pre-screening",to:"/research/prescreen",icon:"clipboard",key:"prescreen"}]},
- {label:"Library",items:[
-  {label:"Research Library",to:"/research/home#rh-library",icon:"book"},
-  {label:"Scientific Updates",to:"/research/home#rh-radar",icon:"bell"}]},
 ];
 const deptIcon=(slug:string)=>DEPT_ICON[slug]??"graph";
 function AppearanceMenu({ap,set}:{ap:Appearance;set:(a:Appearance)=>void}){
@@ -89,8 +89,13 @@ export function ResearchAppShell({where,whereIcon="home",active,onSearch,childre
      {mine.length>0&&<nav aria-label="My research"><h2>My research</h2><ul>
       <li><Link to="/research/home#pr-h"><Icon name="target"/><span>My program</span></Link></li>
       {mine.map(t=><li key={t}><Link to={"/research/knowledge-graph?netQuery="+encodeURIComponent(t)}><Icon name="spark"/><span>{t}</span></Link></li>)}</ul></nav>}
-     {GROUPS.map(g=><nav key={g.label} aria-label={g.label}><h2>{g.label}</h2><ul>{g.items.map(i=>(
-      <li key={i.label}><Link to={i.to} aria-current={i.key&&cur(i.key)}><Icon name={i.icon}/><span>{i.label}</span>{i.badge&&badges[i.badge]>0&&<em className="rh-count" aria-hidden="true">{badges[i.badge]}</em>}</Link></li>))}</ul></nav>)}
+     {GROUPS.map(g=>{
+      const list=<ul>{g.items.map(i=>(
+       <li key={i.label}><Link to={i.to} aria-current={i.key&&cur(i.key)}><Icon name={i.icon}/><span>{i.label}</span>{i.badge&&badges[i.badge]>0&&<em className="rh-count" aria-hidden="true">{badges[i.badge]}</em>}</Link></li>))}</ul>;
+      return g.governed
+       ?<nav key={g.label} aria-label={g.label}><details className="rh-gov" open={g.items.some(i=>i.key&&cur(i.key)==="page")}><summary><h2>{g.label}</h2></summary>{list}</details></nav>
+       :<nav key={g.label} aria-label={g.label}><h2>{g.label}</h2>{list}</nav>;
+     })}
      <nav aria-label="Explore science"><h2>{myAreas.length?"My areas":"Explore science"}</h2><ul>{sci.map(d=><li key={d.slug}><Link to={"/research/knowledge-graph?netDepartment="+d.slug}><Icon name={deptIcon(d.slug)}/>{d.name}</Link></li>)}</ul></nav>
      <nav aria-label="Account"><h2>Account</h2><ul><li><Link to="/research/account"><Icon name="user"/>Profile and access</Link></li><li><Link to="/research/home#rh-interests"><Icon name="spark"/>Preferences</Link></li></ul></nav>
      <div className="rh-status"><b>Research preview</b><span>Candidate-only graph. Nothing is scientifically approved. No clinical advice.</span></div>

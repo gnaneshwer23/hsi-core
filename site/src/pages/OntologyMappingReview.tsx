@@ -22,7 +22,7 @@ function Card({m,latest,count,reviewer,onSave}:{m:ConceptMapping;latest:CuratorD
   <fieldset className="mr-candidates"><legend>{m.candidates.length>1?"Candidate terms (choose one)":"Candidate term"}</legend>
    {m.candidates.map(c=><label key={c.id} className="mr-cand">
     <input type="radio" name={"cand-"+m.conceptId} value={c.id} checked={pick===c.id} onChange={()=>setPick(c.id)}/>
-    <span><strong>{c.label}</strong> <code>{c.id}</code><br/><small>{c.ontology} {release(c.ontology)} · {LICENCE[c.ontology]??"licence in audit"} · matched on {c.matchedOn==="label"?"label":"exact synonym"} “{c.matchedText}”</small></span>
+    <span><strong>{c.label}</strong> <code>{c.id}</code><br/><small>{c.ontology} {release(c.ontology)} · {LICENCE[c.ontology]??"licence in audit"} · matched on {c.matchedOn==="label"?"label":c.matchedOn==="exact_synonym"?"exact synonym":"a spelling variant of the "+(c.matchedOn==="variant_label"?"label":"synonym")} “{c.matchedText}”</small></span>
    </label>)}
   </fieldset>
   <label className="mr-field">Reason for your recommendation<textarea rows={2} maxLength={REASON_LIMITS.max} value={reason} onChange={e=>setReason(e.target.value)} aria-describedby={headingId+"-hint"}/></label>

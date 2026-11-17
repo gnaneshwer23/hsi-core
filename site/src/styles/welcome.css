@@ -54,3 +54,7 @@
 .wl .wl-aside .wl-steps li[data-done=true]{color:#c9d0ea}
 .wl .wl-aside .wl-preview{background:#fff;color:#1c2233}
 .wl .wl-aside .wl-preview b,.wl .wl-aside .wl-preview li{color:#1c2233}
+.wl-funnel{grid-column:1/-1;margin:16px 0 0;padding:16px 20px;border-radius:16px;border:1px dashed var(--line-2);background:var(--surface-2);color:var(--body);font-size:14px;line-height:1.5}
+.wl-funnel h2{margin:0 0 4px;font-size:15px;color:var(--ink)}
+.wl-funnel p{margin:0 0 6px}
+.wl-funnel ol{margin:0;padding-left:20px}

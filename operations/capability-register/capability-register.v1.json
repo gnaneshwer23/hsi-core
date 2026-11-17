@@ -375,7 +375,7 @@
         "research/ontology/import-manifest.v1.json",
         "research/ontology/candidate-mappings.v1.json"
       ],
-      "gap": "23 of 153 concepts have an unreviewed candidate; none is an approved mapping; term tables live in a gitignored cache; HPO skipped by decision",
+      "gap": "26 of 153 concepts have an unreviewed candidate (scoped by proposed entity type; conservative spelling variants used only without an exact match); none is an approved mapping; term tables live in a gitignored cache; HPO skipped by decision",
       "nextAction": "Curator review of candidates; add ChEBI and NCBITaxon after licence confirmation"
     },
     {
@@ -389,9 +389,11 @@
       "evidence": [
         "src/knowledgeGraph/contextBreakdown.ts",
         "site/src/components/ContextBreakdownView.tsx",
-        "test/contextBreakdown.test.ts"
+        "test/contextBreakdown.test.ts",
+        "src/knowledgeGraph/contextConflict.ts",
+        "test/contextConflict.test.ts"
       ],
-      "gap": "Strata come from unreviewed candidate records; most state no study system or tissue; effect size, independence of replication, retraction status and study quality are not assessed",
+      "gap": "Strata come from unreviewed candidate records; most state no study system or tissue; effect size, independence of replication, retraction status and study quality are not assessed. Recorded disagreement is sorted by context (same context, across contexts, context not stated) from a negation flag and is not adjudicated; only two pairs disagree on the published graph",
       "nextAction": "Fill context from verified passages (live evidence path); add species, subset and replication fields as they are extracted"
     },
     {
