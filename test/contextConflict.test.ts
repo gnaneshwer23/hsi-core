@@ -41,9 +41,14 @@ describe("context conflict classification",()=>{
   const r=run([{...H,negated:false,sourceId:"a"},{negated:true,sourceId:"b"}]);
   expect(r.classification).toBe("disagreement_context_unknown");
  });
- test("same-context disagreement outranks everything else",()=>{
-  const r=run([{...H,negated:false,sourceId:"a"},{...H,negated:true,sourceId:"b"},{negated:true,sourceId:"c"}]);
+ test("same-context disagreement requires a fully stated mixed stratum",()=>{
+  const r=run([{...H,negated:false,sourceId:"a"},{...H,negated:true,sourceId:"b"},{...M,negated:true,sourceId:"c"}]);
   expect(r.classification).toBe("same_context_disagreement");
+ });
+ test("a mixed stratum with unstated system or design is unknown context, not Same context",()=>{
+  const r=run([{negated:false,sourceId:"a"},{negated:true,sourceId:"b"}]);
+  expect(r.classification).toBe("disagreement_context_unknown");
+  expect(CONFLICT_LABEL[r.classification]).toBe("Unknown context");
  });
  test("never adjudicates, approves or asserts cause",()=>{
   for(const e of [[{...H}],[{...H,negated:true,sourceId:"a"},{...M,sourceId:"b"}]]){const r=run(e);expect(r).toMatchObject({adjudication:"not_performed",scientificApproval:false,causalConclusionAllowed:false});expect(r.limits.length).toBeGreaterThan(0)}

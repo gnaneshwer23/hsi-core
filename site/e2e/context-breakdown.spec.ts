@@ -28,7 +28,7 @@ test.describe("Evidence by context",()=>{
   const b=page.getByRole("region",{name:"Evidence by context for Anti-TNF treatment response",exact:true});
   const conflict=b.locator(".cb-conflict").first();
   await expect(conflict).toBeVisible();
-  await expect(conflict).toContainText(/^(Same context|Across contexts|Unknown context)\./);
+  await expect(conflict.locator("[data-conflict-label]")).toHaveText(/^(Same context|Across contexts|Unknown context)$/);
   await expect(b).toContainText("Not adjudicated");
   await expect(b).toContainText("No side is preferred");
   await expect(b).not.toContainText(/\bresolved\b/i);

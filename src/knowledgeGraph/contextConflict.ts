@@ -38,9 +38,13 @@ export function assessConflict(b:ContextBreakdown):ConflictAssessment{
  if(b.totals.records===0)return {...base,classification:"no_disagreement",statement:"No source-linked candidate records, so nothing can be compared."};
  const disagree=mixed.length>0||(rep.length>0&&neg.length>0);
  if(!disagree)return {...base,classification:"no_disagreement",statement:b.totals.records===1?"One record. Nothing to compare yet.":"The recorded findings point one way. That is not confirmation: they may share a cohort or a context."};
- if(mixed.length>0)return {...base,classification:"same_context_disagreement",statement:`${mixed.length===1?"One context holds":"Contexts hold"} both a reported and a negative finding. This is a candidate for a genuine conflict and needs expert reading of the sources.`};
- const sidesTouched=[...rep,...neg];
- if(sidesTouched.some(i=>unclear(strata[i]!)))return {...base,classification:"disagreement_context_unknown",statement:"Findings differ in direction, but at least one record does not state its study system or design, so a difference in context cannot be told from a real conflict."};
+ const sidesTouched=[...rep,...neg,...mixed];
+ if(sidesTouched.some(i=>unclear(strata[i]!))){
+  return {...base,classification:"disagreement_context_unknown",statement:"Findings differ in direction, but at least one disagreeing context does not state its study system or design, so a difference in context cannot be told from a real conflict."};
+ }
+ if(mixed.length>0){
+  return {...base,classification:"same_context_disagreement",statement:`${mixed.length===1?"One fully stated context holds":`${mixed.length} fully stated contexts each hold`} both a reported and a negative finding. This is a candidate for a genuine conflict and needs expert reading of the sources.`};
+ }
  return {...base,classification:"context_separated_disagreement",statement:"Findings differ in direction only between contexts, and each context is internally consistent. The difference may reflect context. It has not been explained or adjudicated."};
 }
 
@@ -58,7 +62,7 @@ export const CONFLICT_LABEL:Readonly<Record<ConflictClass,string>>=Object.freeze
 /** Longer clarifying phrase kept for export and assistive copy. */
 export const CONFLICT_LABEL_DETAIL:Readonly<Record<ConflictClass,string>>=Object.freeze({
  no_disagreement:"No disagreement recorded among these candidates",
- same_context_disagreement:"Disagreement within the same stated context",
- context_separated_disagreement:"Disagreement only across different stated contexts",
- disagreement_context_unknown:"Disagreement where context is not stated",
+ same_context_disagreement:"Disagreement inside a fully stated context that holds both directions",
+ context_separated_disagreement:"Disagreement only across different fully stated contexts",
+ disagreement_context_unknown:"Disagreement where at least one side lacks a stated study system or design",
 });
