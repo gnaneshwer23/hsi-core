@@ -16,14 +16,23 @@ export const resetLiteratureSearchLimiter=()=>hits.clear();
 export const SSC_LITERATURE_SCOPE='("systemic sclerosis" OR scleroderma) AND ("T follicular helper" OR Tfh OR "IL-21" OR "B cell" OR fibrosis)';
 const json=(b:unknown,status=200,extra:Record<string,string>={})=>new Response(JSON.stringify(b),{status,headers:{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store","X-Content-Type-Options":"nosniff",...extra}});
 
-function refineTerm(raw:string|null):string{
+function refineTerm(raw:string|null):{ok:true;term:string}|{ok:false}{
  const term=(raw??"").trim().slice(0,120).replace(/[()]/g," ");
- return term;
+ if(/[\x00-\x1f]/.test(term))return{ok:false};
+ return{ok:true,term};
+}
+
+function rememberHit(ip:string,at:number):void{
+ hits.set(ip,[...(hits.get(ip)??[]).filter(t=>at-t<600_000),at]);
+ if(hits.size<=2000)return;
+ const oldest=hits.keys().next().value;
+ if(oldest!==undefined)hits.delete(oldest);
 }
 
 export function buildSscLiteratureQuery(term:string):string{
  const refined=refineTerm(term);
- return refined?`(${SSC_LITERATURE_SCOPE}) AND (${refined})`:SSC_LITERATURE_SCOPE;
+ if(!refined.ok||!refined.term)return SSC_LITERATURE_SCOPE;
+ return`(${SSC_LITERATURE_SCOPE}) AND (${refined.term})`;
 }
 
 export async function handleLiteratureSearch(request:Request,env:Env,deps:{fetcher?:FetchLike;now?:()=>Date}={}):Promise<Response>{
@@ -31,14 +40,16 @@ export async function handleLiteratureSearch(request:Request,env:Env,deps:{fetch
  const origin=request.headers.get("origin"),pub=env.HSI_PUBLIC_ORIGIN;
  if(pub&&origin&&origin!==pub)return json({error:"Origin not allowed"},403);
  const url=new URL(request.url);
- const term=refineTerm(url.searchParams.get("term"));
+ const refined=refineTerm(url.searchParams.get("term"));
+ if(!refined.ok)return json({error:"Invalid search term"},400);
+ const term=refined.term;
  let cursorMark:string;
  try{cursorMark=assertValidEuropePmcCursorMark(url.searchParams.get("cursor")??EUROPE_PMC_CURSOR_MARK_START)}
  catch{return json({error:"Invalid cursor"},400)}
  const now=deps.now??(()=>new Date()),ip=(request.headers.get("x-forwarded-for")??"unknown").split(",")[0]!.trim().slice(0,64);
  const recent=(hits.get(ip)??[]).filter(t=>now().getTime()-t<600_000);
  if(recent.length>=20)return json({error:"Rate limit reached. Try again later."},429,{"Retry-After":"600"});
- hits.set(ip,[...recent,now().getTime()]);if(hits.size>2000)hits.clear();
+ rememberHit(ip,now().getTime());
  const query=buildSscLiteratureQuery(term);
  const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),10_000);
  try{

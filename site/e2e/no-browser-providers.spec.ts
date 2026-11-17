@@ -43,7 +43,7 @@ test("scientific workbench biomedical lookup stays same-origin",async({page})=>{
  });
  await page.goto("/research/scientific-workbench",{waitUntil:"networkidle"});
  await page.getByRole("button",{name:"Retrieve public metadata"}).click();
- await expect(page.getByRole("status")).toContainText("Metadata retrieved");
+ await expect(page.locator("#biomedical-metadata-status")).toContainText("Metadata retrieved");
  await expect(page.getByRole("heading",{name:/Protein · P01375/})).toBeVisible();
  expect(metaCalls).toBe(1);
  expect(blocked).toEqual([]);

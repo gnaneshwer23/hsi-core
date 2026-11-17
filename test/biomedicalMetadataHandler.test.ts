@@ -26,4 +26,15 @@ describe("biomedical metadata handler",()=>{
   expect((await handleBiomedicalMetadata(post({accession:"",stableId:""}),{},{fetcher})).status).toBe(400);
   expect(calls).toBe(0);
  });
+
+ test("rejects oversized bodies before provider work",async()=>{
+  let calls=0;const fetcher=(async()=>{calls++;return new Response("x")}) as any;
+  const huge=new Request("https://hsi.example/api/research/biomedical-metadata",{
+   method:"POST",
+   headers:{"content-type":"application/json","content-length":"501"},
+   body:"x".repeat(501),
+  });
+  expect((await handleBiomedicalMetadata(huge,{},{fetcher})).status).toBe(413);
+  expect(calls).toBe(0);
+ });
 });

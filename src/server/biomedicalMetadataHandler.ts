@@ -6,27 +6,43 @@
 import type {FetchLike} from "../fetchLike";
 import {lookupUniProtProtein} from "../evidence/uniProtProteinLookup";
 import {lookupReactomePathway} from "../evidence/reactomePathwayLookup";
+import {boundedRequestText,RequestBodyTooLarge,RequestBodyTimeout} from "./boundedRequestBody";
 
 type Env=Readonly<Record<string,string|undefined>>;
 const hits=new Map<string,number[]>();
 export const resetBiomedicalMetadataLimiter=()=>hits.clear();
+const BODY_LIMIT=500;
 const json=(b:unknown,status=200,extra:Record<string,string>={})=>new Response(JSON.stringify(b),{status,headers:{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store","X-Content-Type-Options":"nosniff",...extra}});
+
+function rememberHit(ip:string,at:number):void{
+ hits.set(ip,[...(hits.get(ip)??[]).filter(t=>at-t<600_000),at]);
+ if(hits.size<=2000)return;
+ const oldest=hits.keys().next().value;
+ if(oldest!==undefined)hits.delete(oldest);
+}
 
 export async function handleBiomedicalMetadata(request:Request,env:Env,deps:{fetcher?:FetchLike;now?:()=>Date}={}):Promise<Response>{
  if(request.method!=="POST")return json({error:"Method not allowed"},405,{Allow:"POST"});
  const origin=request.headers.get("origin"),pub=env.HSI_PUBLIC_ORIGIN;
  if(pub&&origin&&origin!==pub)return json({error:"Origin not allowed"},403);
  if(!/^application\/json/i.test(request.headers.get("content-type")??""))return json({error:"JSON body required"},415);
- const raw=await request.text();
- if(raw.length>500)return json({error:"Request too large"},413);
- let body:any;try{body=JSON.parse(raw)}catch{return json({error:"Invalid JSON"},400)}
- const accession=typeof body?.accession==="string"?body.accession.trim().slice(0,20):"";
- const stableId=typeof body?.stableId==="string"?body.stableId.trim().slice(0,30):"";
+ if(Number(request.headers.get("content-length")??0)>BODY_LIMIT)return json({error:"Request too large"},413);
+ let raw:string;
+ try{raw=await boundedRequestText(request,BODY_LIMIT)}
+ catch(error){
+  if(error instanceof RequestBodyTooLarge)return json({error:"Request too large"},413);
+  if(error instanceof RequestBodyTimeout)return json({error:"Request body timed out"},408);
+  return json({error:"Invalid JSON"},400);
+ }
+ let body:unknown;try{body=JSON.parse(raw)}catch{return json({error:"Invalid JSON"},400)}
+ const record=body&&typeof body==="object"&&!Array.isArray(body)?body as Record<string,unknown>:{};
+ const accession=typeof record.accession==="string"?record.accession.trim().slice(0,20):"";
+ const stableId=typeof record.stableId==="string"?record.stableId.trim().slice(0,30):"";
  if(!accession||!stableId)return json({error:"Provide a UniProt accession and a Reactome stable ID"},400);
  const now=deps.now??(()=>new Date()),ip=(request.headers.get("x-forwarded-for")??"unknown").split(",")[0]!.trim().slice(0,64);
  const recent=(hits.get(ip)??[]).filter(t=>now().getTime()-t<600_000);
  if(recent.length>=15)return json({error:"Rate limit reached. Try again later."},429,{"Retry-After":"600"});
- hits.set(ip,[...recent,now().getTime()]);if(hits.size>2000)hits.clear();
+ rememberHit(ip,now().getTime());
  const [protein,pathway]=await Promise.all([
   lookupUniProtProtein({accession,fetcher:deps.fetcher}),
   lookupReactomePathway({stableId,fetcher:deps.fetcher}),

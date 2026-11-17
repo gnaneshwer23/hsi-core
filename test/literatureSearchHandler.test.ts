@@ -31,4 +31,10 @@ describe("literature search handler",()=>{
   const r=await handleLiteratureSearch(new Request("https://hsi.example/api/research/literature-search"),{},{fetcher});
   expect(r.status).toBe(502);expect(await r.json()).toMatchObject({error:expect.stringContaining("unavailable")});
  });
+
+ test("rejects control characters in the refine term before provider work",async()=>{
+  let calls=0;const fetcher=(async()=>{calls++;return epmc()}) as any;
+  const r=await handleLiteratureSearch(new Request("https://hsi.example/api/research/literature-search?term=foo%0Abar"),{},{fetcher});
+  expect(r.status).toBe(400);expect(await r.json()).toMatchObject({error:"Invalid search term"});expect(calls).toBe(0);
+ });
 });
