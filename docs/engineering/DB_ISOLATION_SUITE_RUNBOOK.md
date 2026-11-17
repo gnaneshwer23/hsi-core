@@ -18,14 +18,20 @@ Two-account isolation probe catalog + orchestrator + CLI over the existing `crea
 
 Community (`023`) remains deferred. Live evidence (`030`) must not apply forgeable `hsi.live_owner_id` policies (ADR-013 / `liveEvidencePolicyGate`).
 
+Write / pooled / concurrency checks are catalogued as **non-HTTP** evidence kinds. Matching a GET response must not be treated as proof of those protections.
+
 ## Live preconditions (owner)
 
 1. Create an **expiring disposable** child of `ep-hsi-production` (placeholder ids; real pins in private env only).
 2. Confirm `assertDisposableRehearsalTarget` would pass (parent = production branch, not default/primary, expires ≤24h).
 3. Supply sessions via env (never commit): `HSI_ISOLATION_SESSION_RESEARCHER_A`, `_B`, `_REVIEWER`, optional `_REVOKED`.
-4. Set `HSI_ISOLATION_ORIGIN` to the approved staging HTTPS origin (not production).
-5. Set `HSI_ISOLATION_SUITE_ENABLED=1` and `HSI_ISOLATION_LIVE_AUTHORIZED=1` only for that run.
-6. Tear down the disposable branch afterwards; confirm production branch untouched.
+4. Set **both** `HSI_ISOLATION_ORIGIN` and `HSI_ISOLATION_APPROVED_ORIGIN` independently to the same reviewed staging HTTPS origin (not production). The CLI refuses when either is missing or they differ.
+5. Set disposable pin env: `HSI_ISOLATION_PROJECT_ID`, `HSI_ISOLATION_DISPOSABLE_BRANCH_ID`, `HSI_ISOLATION_PRODUCTION_BRANCH_ID`, `HSI_ISOLATION_TARGET_EXPIRES_AT`.
+6. Set binding digests: `HSI_ISOLATION_ROUTE_SCHEMA_HASH`, `HSI_ISOLATION_RUNTIME_CONFIG_HASH` (64 hex each).
+7. Set `HSI_ISOLATION_SUITE_ENABLED=1` and `HSI_ISOLATION_LIVE_AUTHORIZED=1` only for that run.
+8. Tear down the disposable branch afterwards; confirm production branch untouched.
+
+Live mode exits nonzero when any observation fails, mismatches, or is left unexecuted.
 
 ## Related
 

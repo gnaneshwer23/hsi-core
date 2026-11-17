@@ -15,6 +15,15 @@ function arg(name:string):string|undefined{
  return i>=0?process.argv[i+1]:undefined;
 }
 
+function requireEnv(name:string):string{
+ const v=process.env[name];
+ if(!v){
+  console.error(JSON.stringify({error:`Missing required env ${name}`}));
+  process.exit(1);
+ }
+ return v;
+}
+
 const check=process.argv.includes("--check");
 const fixture=process.argv.includes("--fixture");
 const live=process.argv.includes("--live");
@@ -48,27 +57,62 @@ if(!/^[a-f0-9]{40}$/.test(commitSha)){
  process.exit(1);
 }
 
+const liveOrigin=live?requireEnv("HSI_ISOLATION_ORIGIN"):process.env.HSI_ISOLATION_ORIGIN;
+const liveApproved=live?requireEnv("HSI_ISOLATION_APPROVED_ORIGIN"):process.env.HSI_ISOLATION_APPROVED_ORIGIN;
+if(live&&liveOrigin!==liveApproved){
+ console.error(JSON.stringify({
+  error:"Origin/approvedOrigin mismatch",
+  hint:"Set HSI_ISOLATION_ORIGIN and HSI_ISOLATION_APPROVED_ORIGIN independently to the same reviewed staging HTTPS host.",
+ }));
+ process.exit(1);
+}
+
 const suite=createStagingIsolationSuite({
  mode,
  scope,
  commitSha,
  enabled:live?true:undefined,
- origin:process.env.HSI_ISOLATION_ORIGIN,
- approvedOrigin:process.env.HSI_ISOLATION_ORIGIN,
+ origin:liveOrigin,
+ approvedOrigin:live?liveApproved:liveApproved??liveOrigin,
  productionOrigins:["https://www.humansuperintelligence.tech","https://humansuperintelligence.tech"],
- authorize:live
-  ?async()=>process.env.HSI_ISOLATION_LIVE_AUTHORIZED==="1"
-  :undefined,
- session:live
-  ?async(actor)=>{
+ ...(live?{
+  target:{
+   projectId:requireEnv("HSI_ISOLATION_PROJECT_ID"),
+   branchId:requireEnv("HSI_ISOLATION_DISPOSABLE_BRANCH_ID"),
+   parentId:requireEnv("HSI_ISOLATION_PRODUCTION_BRANCH_ID"),
+   isDefault:false,
+   isPrimary:false,
+   expiresAt:requireEnv("HSI_ISOLATION_TARGET_EXPIRES_AT"),
+  },
+  pins:{
+   projectId:requireEnv("HSI_ISOLATION_PROJECT_ID"),
+   productionBranchId:requireEnv("HSI_ISOLATION_PRODUCTION_BRANCH_ID"),
+   disposableBranchId:requireEnv("HSI_ISOLATION_DISPOSABLE_BRANCH_ID"),
+  },
+  routeSchemaHash:requireEnv("HSI_ISOLATION_ROUTE_SCHEMA_HASH"),
+  runtimeConfigHash:requireEnv("HSI_ISOLATION_RUNTIME_CONFIG_HASH"),
+  authorize:async()=>process.env.HSI_ISOLATION_LIVE_AUTHORIZED==="1",
+  session:async(actor)=>{
    if(actor==="anonymous")return null;
    if(actor==="revoked_session")return process.env.HSI_ISOLATION_SESSION_REVOKED??null;
    if(actor==="researcher_a")return process.env.HSI_ISOLATION_SESSION_RESEARCHER_A??null;
    if(actor==="researcher_b")return process.env.HSI_ISOLATION_SESSION_RESEARCHER_B??null;
    if(actor==="reviewer")return process.env.HSI_ISOLATION_SESSION_REVIEWER??null;
+   const _exhaustive:never=actor;
+   void _exhaustive;
    return null;
-  }
-  :undefined,
+  },
+  transport:async(request)=>{
+   // Trusted owner CLI transport: refuse redirects; never accept client-supplied transport.
+   return fetch(request.url,{
+    method:request.method,
+    headers:request.headers,
+    body:request.method==="GET"||request.method==="HEAD"?undefined:await request.arrayBuffer(),
+    redirect:"error",
+    signal:request.signal,
+   });
+  },
+ }:{}),
 });
 
 const result=await suite.run();
@@ -81,6 +125,7 @@ console.log(JSON.stringify({
  catalogCovered:coverage.covered.length,
 },null,2));
 
-if(result.coverage.missing.length)process.exit(1);
-if(mode==="fixture"&&result.httpObservations.some(o=>o.outcome!=="matched"))process.exit(1);
+if(coverage.missing.length)process.exit(1);
+if(mode==="fixture"&&(!result.httpObservations.length||result.httpObservations.some(o=>o.outcome!=="matched")))process.exit(1);
+if(mode==="live"&&(!result.httpObservations.length||result.httpObservations.some(o=>o.outcome!=="matched")||result.unexecutedProbeIds.length))process.exit(1);
 process.exit(0);
