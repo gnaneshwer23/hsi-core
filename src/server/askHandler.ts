@@ -2,22 +2,30 @@
  * POST /api/ask {question}. The signed-in front door to model-checked investigations.
  * Requires a provider-verified session with a verified email, the configured public origin, and a per-user hourly limit.
  * The question is routed to a CURATED scenario by named entity and context; nothing free-text reaches a model or the evidence
- * retrieval query. An unroutable question costs nothing and says so. Per-user limits are per instance (a safety net, not a
- * shared quota); the provider console spend limit remains the real cap.
+ * retrieval query. An unroutable question costs nothing on the per-user hourly quota and says so. Process/shared write
+ * admission still applies (SEC-01). Per-user limits are per instance (a safety net, not a shared quota); the provider
+ * console spend limit remains the real cap.
  */
 import type {FetchLike} from "../fetchLike";
 import {gatewayJson,verifiedProviderSession} from "./neonAuthGateway";
-import {handleLiveInvestigation} from "./liveInvestigationHandler";
+import {handleLiveInvestigationCore} from "./liveInvestigationHandler";
 import {LIVE_SCENARIOS,matchScenario} from "../investigation/scenarios";
+import {withResearchRequestControls,type ResearchControls} from "./researchRequestControls";
+import {resolveResearchControls} from "./resolveResearchControls";
 
 type Env=Readonly<Record<string,string|undefined>>;
+export type AskDependencies={transport?:FetchLike;fetcher?:FetchLike;now?:()=>number;controls?:ResearchControls};
 export const ASK_USER_LIMIT_PER_HOUR=10;
 const users=new Map<string,number[]>();
 export const resetAskLimiter=()=>users.clear();
 const httpsOrigin=(v:string|undefined)=>{try{const u=new URL(v?.trim()??"");return u.protocol==="https:"&&!u.username&&!u.password&&!u.search&&!u.hash&&u.pathname==="/"?u.origin:null}catch{return null}};
 const httpsBase=(v:string|undefined)=>{try{const u=new URL(v?.trim()??"");return u.protocol==="https:"&&!u.username&&!u.password&&!u.search&&!u.hash?u.href.replace(/\/+$/,""):null}catch{return null}};
 
-export async function handleAsk(request:Request,env:Env,deps:{transport?:FetchLike;fetcher?:FetchLike;now?:()=>number}={}):Promise<Response>{
+export async function handleAsk(request:Request,env:Env,deps:AskDependencies={}):Promise<Response>{
+ return withResearchRequestControls(request,()=>handleAskCore(request,env,deps),resolveResearchControls(env,deps.controls??{}));
+}
+
+async function handleAskCore(request:Request,env:Env,deps:AskDependencies):Promise<Response>{
  if(request.method!=="POST")return new Response(JSON.stringify({error:"Method not allowed"}),{status:405,headers:{Allow:"POST","Content-Type":"application/json","Cache-Control":"no-store"}});
  const publicOrigin=httpsOrigin(env.HSI_PUBLIC_ORIGIN),authBaseUrl=httpsBase(env.HSI_AUTH_BASE_URL);
  if(!publicOrigin||!authBaseUrl)return gatewayJson({code:"ASK_NOT_CONFIGURED",error:"Ask is not available on this deployment"},503);
@@ -43,8 +51,9 @@ export async function handleAsk(request:Request,env:Env,deps:{transport?:FetchLi
  users.set(identity.user.id,[...recent,now]);
  if(users.size>5000)users.clear();
 
+ // Internal call skips a second withResearchRequestControls wrap; Ask already paid research_write admission.
  const inner=new Request(publicOrigin+"/api/research/live-investigation",{method:"POST",headers:{"content-type":"application/json",origin:publicOrigin,"x-forwarded-for":request.headers.get("x-forwarded-for")??"unknown"},body:JSON.stringify({scenarioId})});
- const res=await handleLiveInvestigation(inner,env,{fetcher:deps.fetcher,now:deps.now});
+ const res=await handleLiveInvestigationCore(inner,env,{fetcher:deps.fetcher,now:deps.now});
  if(!res.ok)return gatewayJson({code:"RUN_FAILED",error:"The investigation could not run. No findings were generated."},res.status===429?429:502);
  const result:any=await res.json();
  return gatewayJson({routed:true,scenarioId,trace:{matchedBy:"named lead entity and disease context",question:"curated scenario, not free text",sources:["Europe PMC","OpenAlex","Open Targets"],modelCheck:result?.verification?.status??"unknown"},result});

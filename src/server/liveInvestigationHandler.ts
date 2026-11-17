@@ -1,15 +1,19 @@
 /**
  * POST /api/research/live-investigation {scenarioId}. Curated scenarios only (no free-text prompts), so a public caller
  * cannot steer model spend. Retrieval uses free public sources. The two-model challenge runs only when the deployment
- * sets HSI_LIVE_MODEL_STEP_ENABLED=true and both providers are configured; otherwise the run says so. Per-instance rate
- * limiting is best-effort and is not a substitute for provider-side spend caps.
+ * sets HSI_LIVE_MODEL_STEP_ENABLED=true and both providers are configured; otherwise the run says so. Process/shared
+ * write admission (SEC-01) wraps the public entry; per-instance IP limiting remains a safety net and is not a substitute
+ * for provider-side spend caps.
  */
 import {LIVE_SCENARIOS} from "../investigation/scenarios";
 import {runLiveInvestigation,type VerifierSlot} from "../investigation/liveRun";
 import {createAnthropicRunner,createBudget,createOpenAiRunner,openAiSecondModel,providerStatus,DEFAULT_BUDGET} from "../modelProviders";
 import type {FetchLike} from "../fetchLike";
+import {withResearchRequestControls,type ResearchControls} from "./researchRequestControls";
+import {resolveResearchControls} from "./resolveResearchControls";
 
 type Env=Readonly<Record<string,string|undefined>>;
+export type LiveInvestigationDependencies={fetcher?:FetchLike;now?:()=>number;controls?:ResearchControls};
 const hits=new Map<string,number[]>();
 /** Model-checked runs started on this instance today (UTC). Per instance, so it is a safety net and NOT a shared or exact spend cap: the provider console limit is the real cap. */
 const daily={day:"",count:0};
@@ -18,7 +22,12 @@ export const resetLiveInvestigationLimiter=()=>{hits.clear();daily.day="";daily.
 const dailyCap=(env:Env)=>{const n=Number(env.HSI_LIVE_MODEL_DAILY_RUNS);return Number.isInteger(n)&&n>=0&&n<=10000?n:DEFAULT_DAILY_MODEL_RUNS};
 const json=(b:unknown,status=200,extra:Record<string,string>={})=>new Response(JSON.stringify(b),{status,headers:{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store","X-Content-Type-Options":"nosniff",...extra}});
 
-export async function handleLiveInvestigation(request:Request,env:Env,deps:{fetcher?:FetchLike;now?:()=>number}={}):Promise<Response>{
+export async function handleLiveInvestigation(request:Request,env:Env,deps:LiveInvestigationDependencies={}):Promise<Response>{
+ return withResearchRequestControls(request,()=>handleLiveInvestigationCore(request,env,deps),resolveResearchControls(env,deps.controls??{}));
+}
+
+/** Core runner without process/shared admission. Used by Ask after Ask has already paid research_write admission. */
+export async function handleLiveInvestigationCore(request:Request,env:Env,deps:LiveInvestigationDependencies={}):Promise<Response>{
  if(request.method==="GET"){
   return json({scenarios:Object.values(LIVE_SCENARIOS).map(s=>({id:s.id,title:s.title,question:s.question})),
    modelStep:{enabled:env.HSI_LIVE_MODEL_STEP_ENABLED==="true",providers:providerStatus(env).map(p=>({provider:p.provider,configured:p.configured}))}});

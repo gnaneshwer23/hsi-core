@@ -7,6 +7,10 @@ import {combineDirections,DIRECTION_INSTRUCTION,runDirectionalChallenge} from ".
 import {matchScenario} from "../src/investigation/scenarios";
 import {parseChallenge,parseHypotheses,proposeHypotheses,CHALLENGE_INSTRUCTION,HYPOTHESIS_INSTRUCTION} from "../src/investigation/hypotheses";
 import {handleLiveInvestigation,resetLiveInvestigationLimiter} from "../src/server/liveInvestigationHandler";
+import {createResearchProcessAdmission} from "../src/server/researchRequestControls";
+
+/** Isolated high budgets so endpoint tests do not contend with the module defaultAdmission singleton. */
+const loose=()=>({processAdmission:createResearchProcessAdmission({budgets:{research_write:10_000,research_read:10_000,other:10_000,health:10_000,auth:10_000,diagnostics:10_000}}),emit:()=>{}});
 
 const SENT="Serum IL-21 was increased in patients with systemic sclerosis and promoted T follicular helper cell expansion.";
 const epmc={resultList:{result:[{id:"111",source:"MED",pmid:"111",doi:"10.1/abc",title:"IL-21 in systemic sclerosis",abstractText:"<p>"+SENT+"</p>",firstPublicationDate:"2020-01-02",pubTypeList:{pubType:["Journal Article"]}}]}};
@@ -107,40 +111,40 @@ describe("live investigation run",()=>{
 describe("live investigation endpoint",()=>{
  const post=(b:unknown,h:Record<string,string>={})=>new Request("https://x.test/api/research/live-investigation",{method:"POST",headers:{"content-type":"application/json","x-forwarded-for":"1.2.3.4",...h},body:JSON.stringify(b)});
  test("GET lists scenarios and reports the model step off by default; no secrets leak",async()=>{
-  const r=await handleLiveInvestigation(new Request("https://x.test/api/research/live-investigation"),{OPENAI_API_KEY:"sk-secret"});
+  const r=await handleLiveInvestigation(new Request("https://x.test/api/research/live-investigation"),{OPENAI_API_KEY:"sk-secret"},{controls:loose()});
   const t=await r.text();expect(t).toContain("il21-autoimmune");expect(t).not.toContain("sk-secret");
  });
  test("rejects unknown scenarios, free-text prompts, foreign origins and bad content types",async()=>{
-  resetLiveInvestigationLimiter();
-  expect((await handleLiveInvestigation(post({scenarioId:"nope"}),{})).status).toBe(404);
-  expect((await handleLiveInvestigation(post({question:"anything"}),{})).status).toBe(404);
-  expect((await handleLiveInvestigation(post({scenarioId:"il21-autoimmune"},{origin:"https://evil.test"}),{HSI_PUBLIC_ORIGIN:"https://x.test"})).status).toBe(403);
-  expect((await handleLiveInvestigation(new Request("https://x.test/a",{method:"POST",body:"x"}),{})).status).toBe(415);
+  resetLiveInvestigationLimiter();const controls=loose();
+  expect((await handleLiveInvestigation(post({scenarioId:"nope"}),{},{controls})).status).toBe(404);
+  expect((await handleLiveInvestigation(post({question:"anything"}),{},{controls})).status).toBe(404);
+  expect((await handleLiveInvestigation(post({scenarioId:"il21-autoimmune"},{origin:"https://evil.test"}),{HSI_PUBLIC_ORIGIN:"https://x.test"},{controls})).status).toBe(403);
+  expect((await handleLiveInvestigation(new Request("https://x.test/a",{method:"POST",body:"x"}),{},{controls})).status).toBe(415);
  });
  test("runs retrieval-only by default and rate limits",async()=>{
-  resetLiveInvestigationLimiter();const {f}=fakeFetch();
-  const r=await handleLiveInvestigation(post({scenarioId:"il21-autoimmune"}),{},{fetcher:f});
+  resetLiveInvestigationLimiter();const {f}=fakeFetch();const controls=loose();
+  const r=await handleLiveInvestigation(post({scenarioId:"il21-autoimmune"}),{},{fetcher:f,controls});
   const b:any=await r.json();expect(r.status).toBe(200);expect(b.verification.status).toBe("not_configured");expect(b.verification.reason).toContain("disabled");
-  for(let i=0;i<4;i++)await handleLiveInvestigation(post({scenarioId:"il21-autoimmune"}),{},{fetcher:f});
-  expect((await handleLiveInvestigation(post({scenarioId:"il21-autoimmune"}),{},{fetcher:f})).status).toBe(429);
+  for(let i=0;i<4;i++)await handleLiveInvestigation(post({scenarioId:"il21-autoimmune"}),{},{fetcher:f,controls});
+  expect((await handleLiveInvestigation(post({scenarioId:"il21-autoimmune"}),{},{fetcher:f,controls})).status).toBe(429);
  });
  test("OpenAI only: two different models run as independent execution, not independent providers",async()=>{
-  resetLiveInvestigationLimiter();
+  resetLiveInvestigationLimiter();const controls=loose();
   const models:string[]=[];
   const f=(async(u:any,init:any)=>{const url=String(u);
    if(url.includes("openai.com")){models.push(JSON.parse(init.body).model);return ok({choices:[{message:{content:JSON.stringify({direction:"positive",reason:"r",evidenceSpan:SENT.slice(0,20)})}}],usage:{prompt_tokens:5,completion_tokens:5}})}
    return (fakeFetch().f as any)(u,init)}) as any;
   const env={HSI_LIVE_MODEL_STEP_ENABLED:"true",OPENAI_API_KEY:"k",HSI_OPENAI_MODEL:"model-a",HSI_OPENAI_MODEL_2:"model-b"};
-  const b:any=await (await handleLiveInvestigation(post({scenarioId:"il21-autoimmune"}),env,{fetcher:f})).json();
+  const b:any=await (await handleLiveInvestigation(post({scenarioId:"il21-autoimmune"}),env,{fetcher:f,controls})).json();
   expect(b.verification.independence).toBe("independent_execution_only");expect(new Set(models)).toEqual(new Set(["model-a","model-b"]));
   expect(b.candidates.some((c:any)=>c.verification==="agree_directional")).toBe(true);
   resetLiveInvestigationLimiter();
-  const same:any=await (await handleLiveInvestigation(post({scenarioId:"il21-autoimmune"}),{...env,HSI_OPENAI_MODEL_2:"model-a"},{fetcher:f})).json();
+  const same:any=await (await handleLiveInvestigation(post({scenarioId:"il21-autoimmune"}),{...env,HSI_OPENAI_MODEL_2:"model-a"},{fetcher:f,controls})).json();
   expect(same.verification.status).toBe("not_configured");
  });
  test("enabled model step with one provider missing says which",async()=>{
   resetLiveInvestigationLimiter();
-  const r=await handleLiveInvestigation(post({scenarioId:"il21-autoimmune"}),{HSI_LIVE_MODEL_STEP_ENABLED:"true",OPENAI_API_KEY:"k",HSI_OPENAI_MODEL:"m"},{fetcher:fakeFetch().f});
+  const r=await handleLiveInvestigation(post({scenarioId:"il21-autoimmune"}),{HSI_LIVE_MODEL_STEP_ENABLED:"true",OPENAI_API_KEY:"k",HSI_OPENAI_MODEL:"m"},{fetcher:fakeFetch().f,controls:loose()});
   const b:any=await r.json();expect(b.verification.reason).toContain("HSI_OPENAI_MODEL_2");
  });
 });
@@ -335,7 +339,7 @@ describe("production guards for the model step",()=>{
  const f=(async(u:any,i:any)=>{const url=String(u);
   if(url.includes("openai.com"))return ok({choices:[{message:{content:JSON.stringify({direction:"insufficient",reason:"r",evidenceSpan:null})}}],usage:{prompt_tokens:10,completion_tokens:5}});
   return (fakeFetch().f as any)(u,i)}) as any;
- const run=(e:any,now?:()=>number,ip="3.3.3.3")=>handleLiveInvestigation(new Request("https://x.test/api/research/live-investigation",{method:"POST",headers:{"content-type":"application/json","x-forwarded-for":ip},body:JSON.stringify({scenarioId:"il21-autoimmune"})}),e,{fetcher:f,now});
+ const run=(e:any,now?:()=>number,ip="3.3.3.3")=>handleLiveInvestigation(new Request("https://x.test/api/research/live-investigation",{method:"POST",headers:{"content-type":"application/json","x-forwarded-for":ip},body:JSON.stringify({scenarioId:"il21-autoimmune"})}),e,{fetcher:f,now,controls:loose()});
  test("a daily ceiling per instance stops model checks but retrieval still runs; a new UTC day resets it",async()=>{
   resetLiveInvestigationLimiter();
   const d1=()=>Date.parse("2026-11-15T10:00:00Z"),d2=()=>Date.parse("2026-11-16T10:00:00Z");
