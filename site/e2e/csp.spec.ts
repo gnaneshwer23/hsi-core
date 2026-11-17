@@ -11,17 +11,18 @@ const ROUTES=["/","/platform","/intelligence","/departments","/connected-intelli
 test("the policy is strict where it matters",()=>{
  expect(csp).toContain("default-src 'self'");expect(csp).toContain("object-src 'none'");expect(csp).toContain("frame-ancestors 'none'");expect(csp).toContain("base-uri 'self'");expect(csp).toContain("form-action 'self'");
  expect(csp).not.toContain("'unsafe-eval'");expect(/script-src[^;]*(\*|'unsafe-inline'|https?:)/.test(csp)).toBe(false);
- expect(csp.match(/connect-src ([^;]*)/)![1]).toBe("'self' https://www.ebi.ac.uk");
+ expect(csp.match(/connect-src ([^;]*)/)![1]).toBe("'self'");
+ expect(csp).not.toContain("ebi.ac.uk");expect(csp).not.toContain("reactome.org");expect(csp).not.toContain("uniprot.org");
 });
 
 for(const route of ROUTES){
  test("no policy violations on "+route,async({page})=>{
   const issues:string[]=[];
   await page.route("**/*",async r=>{
-   // This checks the browser policy, not Europe PMC availability. Keep the
-   // allowed-origin request so CSP still applies, but make its response local.
    const url=new URL(r.request().url());
-   if(url.origin==="https://www.ebi.ac.uk"&&url.pathname==="/europepmc/webservices/rest/search")return r.fulfill({json:{hitCount:0,resultList:{result:[]}},headers:{"access-control-allow-origin":"*"}});
+   // Literature and biomedical metadata go through same-origin APIs (ING-01); stub them locally.
+   if(url.pathname==="/api/research/literature-search")return r.fulfill({json:{hitCount:0,nextCursorMark:null,records:[],note:"stub"},headers:{"content-type":"application/json"}});
+   if(url.pathname==="/api/research/biomedical-metadata")return r.fulfill({json:{ok:true,protein:null,pathway:null},headers:{"content-type":"application/json"}});
    if(r.request().resourceType()!=="document")return r.continue();
    const resp=await r.fetch();return r.fulfill({response:resp,headers:{...resp.headers(),"content-security-policy":csp}});
   });
