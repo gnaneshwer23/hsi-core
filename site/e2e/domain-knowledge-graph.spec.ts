@@ -20,8 +20,12 @@ test('model filters keep human-donor mouse experiments separate from human parti
 });
 test('type 1 research outcomes preserve animal translation gaps and falsifiable proposals',async({page})=>{
  await ready(page);await page.getByRole('button',{name:'Gut metabolites → islet autoimmunity → type 1 diabetes',exact:true}).click();await page.getByRole('tab',{name:'Research outcomes',exact:true}).click();
+ await expect(page.getByRole('region',{name:'Passport evidence table'})).toBeVisible();
+ await expect(page.getByRole('heading',{name:'Evidence table for this investigation',exact:true})).toBeVisible();
+ await expect(page.getByRole('region',{name:'Passport evidence table'})).toContainText('Study system');
+ await expect(page.getByRole('region',{name:'Passport evidence table'})).toContainText('Not stated');
  await expect(page.locator('.dg-path').first()).toContainText('Includes animal or mixed-model evidence');await expect(page.getByRole('tabpanel')).toContainText('Islet autoimmunity');await expect(page.getByRole('tabpanel')).toContainText('What would challenge it?');await expect(page.getByRole('tabpanel')).toContainText('Which antigen-specific immune-cell changes');
- const event=page.waitForEvent('download');await page.getByRole('button',{name:'Export this research brief',exact:true}).click();const brief=JSON.parse(await readFile((await (await event).path())!,'utf8'));expect(brief.scientificApproval).toBe(false);expect(brief.summaryMethod).toBe('editorial_template_not_live_llm');expect(brief.question.id).toBe('gut-t1d');
+ const event=page.waitForEvent('download');await page.getByRole('button',{name:'Export this research brief',exact:true}).click();const brief=JSON.parse(await readFile((await (await event).path())!,'utf8'));expect(brief.scientificApproval).toBe(false);expect(brief.summaryMethod).toBe('editorial_template_not_live_llm');expect(brief.question.id).toBe('gut-t1d');expect(brief.evidenceTable.schemaVersion).toBe('hsi-passport-evidence-table-1');expect(brief.evidenceTable.scientificApproval).toBe(false);expect(brief.evidenceTable.columns.map((c:any)=>c.id)).toContain('studySystem');
 });
 test('a research gap opens as missing evidence rather than a supported biological edge',async({page})=>{
  await ready(page);await page.getByRole('tab',{name:'Research outcomes',exact:true}).click();await expect(page.getByRole('tabpanel')).toContainText('No complete directed source path');
