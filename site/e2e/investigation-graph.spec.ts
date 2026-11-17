@@ -182,6 +182,8 @@ test('all three views preserve mobile/desktop accessibility, keyboard path inspe
       expect(
         await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1),
       ).toBe(true);
+      // Scan from a fixed scroll position: the sticky header covers different targets at different offsets.
+      await page.evaluate(() => window.scrollTo(0, 0));
       const result = await new AxeBuilder({ page })
         .withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'])
         .analyze();
