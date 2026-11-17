@@ -6,7 +6,7 @@ HSI's context-conflict classifier (`src/knowledgeGraph/contextConflict.ts`) labe
 
 ## Status
 
-**Blocked until expert cases exist.** The public repository holds the protocol, the harness and synthetic fixtures only. Expert cases and their labels live in the private vault (`.hsi-private-benchmark/conflict/`, git-ignored) and never enter this repository, because this repository is public.
+**Blocked until expert cases exist.** The public repository holds the protocol, the harness and synthetic fixtures only. Expert cases and their labels live in the private vault (`.hsi-private-benchmark/conflict/`, git-ignored) and never enter this repository, because this repository is public. Initialise the vault layout with `bun run label-vault:init` (VER-05 / [`../label-vault/README.md`](../label-vault/README.md)).
 
 ## Labels
 

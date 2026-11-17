@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "hsi-label-vault-layout-1",
+  "root": ".hsi-private-benchmark",
+  "gitignored": true,
+  "runtimeMayRead": false,
+  "scientificApproval": false,
+  "goldCommittedInGit": false,
+  "tracks": [
+    {
+      "id": "conflict",
+      "path": ".hsi-private-benchmark/conflict",
+      "purpose": "HSI-BENCH-CONFLICT expert cases, labels and private reports",
+      "requiredFiles": ["cases.json", "README.md"]
+    },
+    {
+      "id": "immuno",
+      "path": ".hsi-private-benchmark/immuno",
+      "purpose": "Immunology benchmark private curation drafts (holdout; not public slots)",
+      "requiredFiles": ["README.md"]
+    },
+    {
+      "id": "freezes",
+      "path": ".hsi-private-benchmark/freezes",
+      "purpose": "Hashed label freezes the scoring job may read; runtime DB role must not",
+      "requiredFiles": ["README.md"]
+    },
+    {
+      "id": "manifests",
+      "path": ".hsi-private-benchmark/manifests",
+      "purpose": "Vault inventory and freeze index (ids and digests only)",
+      "requiredFiles": ["vault-manifest.v1.json", "README.md"]
+    }
+  ],
+  "commands": {
+    "init": "bun run label-vault:init",
+    "status": "bun run label-vault:status",
+    "validate": "bun run label-vault:validate",
+    "scaffoldConflict": "bun run label-vault:scaffold-conflict -- --id CB-001 --question \"...\"",
+    "freeze": "bun run label-vault:freeze -- --track conflict"
+  },
+  "note": "Public repo documents the layout only. Expert gold labels never enter git."
+}
