@@ -1,23 +1,11 @@
-.pet{margin:18px 0 8px;padding:16px 18px;border:1px solid #c9d4d9;border-radius:12px;background:#fff;color:#09131d}
-.pet-kicker{margin:0 0 4px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#3d4d57;font-weight:600}
-.pet h3{margin:0 0 8px;color:#09131d;font-size:1.15rem}
-.pet-summary{margin:0 0 12px;font-size:14px;color:#2a3a44;line-height:1.5;max-width:78ch}
-.pet-scroll{overflow:auto;max-width:100%;border:1px solid #e3eaed;border-radius:8px;background:#f8fbfb}
-.pet-table{border-collapse:collapse;min-width:960px;width:100%;font-size:13px}
-.pet-table th,.pet-table td{padding:10px 12px;border-bottom:1px solid #e3eaed;text-align:left;vertical-align:top;line-height:1.4}
-.pet-table thead th{position:sticky;top:0;background:#eef5f4;font-weight:650;color:#09131d;white-space:nowrap;z-index:1}
-.pet-table tbody th{font-weight:600;background:#fff;min-width:7.5rem}
-.pet-finding{min-width:14rem;max-width:22rem}
-.pet-source{min-width:10rem;max-width:16rem;color:#2a3a44}
+.pet-scroll{overflow:auto;border:1px solid #e3eaed;border-radius:6px;margin-top:8px}
+.pet-table{border-collapse:collapse;min-width:900px;width:100%;font-size:12px}
+.pet-table th,.pet-table td{padding:8px;border-bottom:1px solid #e3eaed;text-align:left;vertical-align:top}
+.pet-table thead th{position:sticky;top:0;background:#eef5f4;font-weight:650;white-space:nowrap}
+.pet-table tbody th{font-weight:600}
+.pet-finding{max-width:18rem}.pet-source{max-width:12rem;color:#2a3a44}
 .pet-table td[data-status=reported]{color:#0f5c4c}
-.pet-table td[data-status=not_stated],
-.pet-table td[data-status=not_extracted]{color:#9a4a13;font-style:italic}
-.pet-table td[data-status=not_applicable]{color:#5c6b74;font-style:italic}
-.pet-edge{display:inline;padding:0;border:0;background:none;color:#143b43;font:inherit;font-weight:650;text-decoration:underline;cursor:pointer;min-height:44px}
+.pet-table td[data-status=not_stated],.pet-table td[data-status=not_extracted]{color:#9a4a13;font-style:italic}
+.pet-edge{border:0;background:0;color:#143b43;font:inherit;font-weight:650;text-decoration:underline;cursor:pointer;min-height:44px}
 .pet-edge:focus-visible{outline:3px solid #2f8f88;outline-offset:2px}
-.pet-counts{display:block;margin-top:4px;font-size:11px;font-weight:500;color:#5c6b74}
-.pet-note{margin:12px 0 0;font-size:13px;color:#3d4d57;line-height:1.45;max-width:78ch}
-@media (max-width:700px){
- .pet{padding:14px}
- .pet-table{font-size:12px}
-}
+.pet-counts{display:block;font-size:11px;color:#5c6b74}

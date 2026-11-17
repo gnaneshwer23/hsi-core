@@ -4,6 +4,7 @@ import {
   buildPassportEvidenceTable,
   type PassportEvidenceRow,
 } from "../../../src/knowledgeGraph/passportEvidenceTable";
+import "../styles/evidence-context-passport.css";
 import "../styles/passport-evidence-table.css";
 
 type Props={
@@ -46,10 +47,10 @@ export function PassportEvidenceTable({
 }:Props){
   const table=useMemo(()=>buildPassportEvidenceTable(edges,sources),[edges,sources]);
   return (
-    <section className="pet" aria-labelledby="pet-heading">
-      <p className="pet-kicker">EVIDENCE TABLE · PASSPORT COLUMNS · NOT SCIENTIFICALLY APPROVED</p>
+    <section className="ecp pet" aria-labelledby="pet-heading">
+      <p className="ecp-kicker">EVIDENCE TABLE · PASSPORT COLUMNS · NOT SCIENTIFICALLY APPROVED</p>
       <h3 id="pet-heading">{heading}</h3>
-      <p className="pet-summary">
+      <p className="ecp-summary">
         {table.rowCount} source-candidate row{table.rowCount===1?"":"s"}. Columns match the Evidence Context Passport.
         Passage-linked fields (dose, sample size, …) are not extracted here — open a passport per connection.
       </p>
@@ -76,7 +77,7 @@ export function PassportEvidenceTable({
           </tbody>
         </table>
       </div>
-      <p className="pet-note">{table.note} Unreviewed · confidence not calibrated · graph promotion prohibited.</p>
+      <p className="ecp-note">{table.note} Unreviewed · confidence not calibrated · graph promotion prohibited.</p>
     </section>
   );
 }
