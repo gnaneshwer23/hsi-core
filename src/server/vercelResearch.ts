@@ -1,6 +1,6 @@
-import {createSharedAdmissionClient} from "../operations/pilotOperationsService";
 import type { FetchLike } from "../fetchLike";
-import {withResearchRequestControls,researchOperationalLogger,type ResearchControls} from "./researchRequestControls";
+import {withResearchRequestControls,type ResearchControls} from "./researchRequestControls";
+import {resolveResearchControls} from "./resolveResearchControls";
 /** Vercel Bun Web-handler adapter. No listener, migrations, automatic grants or client identity trust. */
 import {assertHsiNeonDatabaseUrl,stagingBranchPin,stagingHostPin} from "../db/neonGuard";
 import {resolveProviderSessionToken} from "../db/providerSessionToken";
@@ -51,9 +51,7 @@ export type VercelResearchDependencies={
 };
 export async function handleVercelResearch(request:Request,env:Environment,dependencies:VercelResearchDependencies={}):Promise<Response>{
  if(new URL(request.url).pathname==="/api/research/live")return withResearchRequestControls(request,async()=>gatewayJson({live:true,databaseConnectionTested:false,providerTested:false},request.method==="GET"?200:405),{processAdmission:dependencies.controls?.processAdmission,emit:dependencies.controls?.emit});
- let sharedAdmission=dependencies.controls?.sharedAdmission;
- if(!sharedAdmission&&env.HSI_SHARED_ADMISSION_URL){try{sharedAdmission=createSharedAdmissionClient({endpoint:env.HSI_SHARED_ADMISSION_URL,serviceCredential:()=>env.HSI_SHARED_ADMISSION_SERVICE_KEY??""})}catch{sharedAdmission=async()=>{throw Error("Shared admission configuration invalid")}}}
- return withResearchRequestControls(request,()=>handleVercelResearchCore(request,env,dependencies),{...dependencies.controls,sharedAdmission,requireShared:env.HSI_PILOT_REQUIRE_SHARED_LIMITER==="true"||dependencies.controls?.requireShared===true,emit:dependencies.controls?.emit??researchOperationalLogger(env.HSI_OPERATIONAL_LOGGING==="true")});
+ return withResearchRequestControls(request,()=>handleVercelResearchCore(request,env,dependencies),resolveResearchControls(env,dependencies.controls??{}));
 }
 async function handleVercelResearchCore(request:Request,env:Environment,dependencies:VercelResearchDependencies):Promise<Response>{
  const path=new URL(request.url).pathname;
