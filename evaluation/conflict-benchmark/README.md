@@ -6,7 +6,16 @@ HSI's context-conflict classifier (`src/knowledgeGraph/contextConflict.ts`) labe
 
 ## Status
 
-**Blocked until expert cases exist.** The public repository holds the protocol, the harness and synthetic fixtures only. Expert cases and their labels live in the private vault (`.hsi-private-benchmark/conflict/`, git-ignored) and never enter this repository, because this repository is public.
+**Blocked until expert cases exist.** The public repository holds the protocol, the harness and synthetic fixtures only. Expert cases and their labels live in the private vault (`.hsi-private-benchmark/conflict/`, git-ignored) and never enter this repository, because this repository is public. Initialise the vault layout with `bun run label-vault:init` (VER-05 / [`../label-vault/README.md`](../label-vault/README.md)).
+
+## Two paths (do not mix)
+
+| Command | Path | Purpose |
+| --- | --- | --- |
+| `bun run conflict:bench:check` / `:fixture` | `evaluation/conflict-benchmark/fixtures/` | Harness only — CI; never a scientific result |
+| `bun run conflict:bench:expert` (alias `conflict:bench`) | `.hsi-private-benchmark/conflict/` | Expert-curated cases only; reports stay in the vault |
+
+Expert mode refuses synthetic fixture files and refuses `synthetic_fixture` provenance. Fixture paths are unchanged by A4.2.
 
 ## Labels
 
@@ -52,7 +61,13 @@ One JSON array of cases in `.hsi-private-benchmark/conflict/cases.json`:
  "predictions": [{"caseId": "CB-001", "label": "no_answer"}]}
 ```
 
-6. **Score:** `bun run conflict:bench -- --predictions scite.json --predictions elicit.json --predictions chatbot.json`
+6. **Score (expert path):** put comparator JSON under `.hsi-private-benchmark/conflict/predictions/` **or** pass explicit files:
+
+```bash
+bun run conflict:bench:expert -- --predictions .hsi-private-benchmark/conflict/predictions/scite.json
+```
+
+Without `--predictions`, every `*.json` in `predictions/` is loaded automatically.
 
 ## Reading the report
 

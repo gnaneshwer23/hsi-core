@@ -1,0 +1,1080 @@
+{
+  "schemaVersion": "hsi-context-completion-sheet-1",
+  "mappedAgainst": "044eb4d6309c4e395e038f687007e9277638779369ef3af105297676baeca6d1",
+  "slice": "D-01",
+  "note": "Curator sheet for tissue, population and design on D-01 source candidates. Fill proposed fields with a value or not_reported. null leaves the published value unchanged. Import never reviews or promotes edges.",
+  "autoPromotion": false,
+  "scientificApproval": false,
+  "rows": [
+    {
+      "edgeId": "binding:HSI-C-RA-SEROLOGY-COHORT-RESULTS:1d1837035d9c",
+      "subject": "Anti-TNF treatment response",
+      "object": "Rheumatoid arthritis",
+      "predicate": "studied_in",
+      "sourceId": "pmid:18375541",
+      "domains": [
+        "immune"
+      ],
+      "conditions": [
+        "Rheumatoid arthritis"
+      ],
+      "model": "human_in_vivo",
+      "current": {
+        "tissue": "Serum for RF/anti-CCP; genotyping material not specified in abstract",
+        "population": "642 RA patients (abstract Results)",
+        "design": "Human observational cohort"
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "binding:HSI-C-RA-SEROLOGY-COHORT-RESULTS:bb2c4793bf33",
+      "subject": "Rheumatoid factor",
+      "object": "Anti-TNF treatment response",
+      "predicate": "associated_with",
+      "sourceId": "pmid:18375541",
+      "domains": [
+        "immune"
+      ],
+      "conditions": [
+        "Rheumatoid arthritis"
+      ],
+      "model": "human_in_vivo",
+      "current": {
+        "tissue": "Serum for RF/anti-CCP; genotyping material not specified in abstract",
+        "population": "642 RA patients (abstract Results)",
+        "design": "Human observational cohort"
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "binding:HSI-C-RA-SEROLOGY-COHORT-RESULTS:e8c2fa5c3ac5",
+      "subject": "Anti-CCP antibodies",
+      "object": "Anti-TNF treatment response",
+      "predicate": "associated_with",
+      "sourceId": "pmid:18375541",
+      "domains": [
+        "immune"
+      ],
+      "conditions": [
+        "Rheumatoid arthritis"
+      ],
+      "model": "human_in_vivo",
+      "current": {
+        "tissue": "Serum for RF/anti-CCP; genotyping material not specified in abstract",
+        "population": "642 RA patients (abstract Results)",
+        "design": "Human observational cohort"
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "binding:HSI-C-RA-SEROLOGY-META-RESULTS:1d1837035d9c",
+      "subject": "Anti-TNF treatment response",
+      "object": "Rheumatoid arthritis",
+      "predicate": "studied_in",
+      "sourceId": "pmid:24586782",
+      "domains": [
+        "immune"
+      ],
+      "conditions": [
+        "Rheumatoid arthritis"
+      ],
+      "model": "human_in_vivo",
+      "current": {
+        "tissue": null,
+        "population": "14 studies; 5561 RA patients (abstract Results)",
+        "design": "Meta-analysis of human studies"
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "binding:HSI-C-RA-SEROLOGY-META-RESULTS:bb2c4793bf33",
+      "subject": "Rheumatoid factor",
+      "object": "Anti-TNF treatment response",
+      "predicate": "associated_with",
+      "sourceId": "pmid:24586782",
+      "domains": [
+        "immune"
+      ],
+      "conditions": [
+        "Rheumatoid arthritis"
+      ],
+      "model": "human_in_vivo",
+      "current": {
+        "tissue": null,
+        "population": "14 studies; 5561 RA patients (abstract Results)",
+        "design": "Meta-analysis of human studies"
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "binding:HSI-C-RA-SEROLOGY-META-RESULTS:e8c2fa5c3ac5",
+      "subject": "Anti-CCP antibodies",
+      "object": "Anti-TNF treatment response",
+      "predicate": "associated_with",
+      "sourceId": "pmid:24586782",
+      "domains": [
+        "immune"
+      ],
+      "conditions": [
+        "Rheumatoid arthritis"
+      ],
+      "model": "human_in_vivo",
+      "current": {
+        "tissue": null,
+        "population": "14 studies; 5561 RA patients (abstract Results)",
+        "design": "Meta-analysis of human studies"
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "DIAB-001",
+      "subject": "Butyrate",
+      "object": "Insulin sensitivity",
+      "predicate": "investigated_effect_on",
+      "sourceId": "doi:10.2337/db08-1637",
+      "domains": [
+        "gut",
+        "metabolic"
+      ],
+      "conditions": [
+        "Type 2 diabetes",
+        "Obesity"
+      ],
+      "model": "mouse",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "mouse metabolic intervention"
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "DIAB-002",
+      "subject": "Microbial acetate and butyrate",
+      "object": "Autoimmune T-cell responses",
+      "predicate": "investigated_effect_on",
+      "sourceId": "doi:10.1038/ni.3713",
+      "domains": [
+        "gut",
+        "immune"
+      ],
+      "conditions": [
+        "Type 1 diabetes"
+      ],
+      "model": "mouse",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "NOD mouse dietary-metabolite experiments"
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "DIAB-003",
+      "subject": "Microbial acetate and butyrate",
+      "object": "Type 1 diabetes",
+      "predicate": "investigated_effect_on",
+      "sourceId": "doi:10.1038/ni.3713",
+      "domains": [
+        "gut",
+        "immune",
+        "metabolic"
+      ],
+      "conditions": [
+        "Type 1 diabetes"
+      ],
+      "model": "mouse",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "NOD mouse dietary-metabolite experiments"
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "DIAB-004",
+      "subject": "Microbial BCAA biosynthesis",
+      "object": "Insulin resistance",
+      "predicate": "associated_with",
+      "sourceId": "doi:10.1038/nature18646",
+      "domains": [
+        "gut",
+        "metabolic"
+      ],
+      "conditions": [
+        "Type 2 diabetes"
+      ],
+      "model": "mixed",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "human observational metabolomics with preclinical mechanistic follow-up"
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "DIAB-005",
+      "subject": "Gut microbiome composition",
+      "object": "Type 2 diabetes",
+      "predicate": "associated_with",
+      "sourceId": "doi:10.1038/nature11450",
+      "domains": [
+        "gut",
+        "metabolic"
+      ],
+      "conditions": [
+        "Type 2 diabetes"
+      ],
+      "model": "human_in_vivo",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "human observational metagenomic study"
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "DIAB-006",
+      "subject": "Metformin",
+      "object": "Gut microbiome composition",
+      "predicate": "confounds_interpretation_of",
+      "sourceId": "doi:10.1038/nature15766",
+      "domains": [
+        "gut",
+        "metabolic"
+      ],
+      "conditions": [
+        "Type 2 diabetes"
+      ],
+      "model": "human_in_vivo",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "human observational analysis of disease and medication signatures"
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "DIAB-007",
+      "subject": "Dietary fibre intervention",
+      "object": "Fibre-responsive gut bacteria",
+      "predicate": "investigated_effect_on",
+      "sourceId": "doi:10.1126/science.aao5774",
+      "domains": [
+        "gut",
+        "lifestyle",
+        "metabolic"
+      ],
+      "conditions": [
+        "Type 2 diabetes"
+      ],
+      "model": "human_in_vivo",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "human dietary intervention with microbiome analyses"
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "DIAB-008",
+      "subject": "Dietary fibre intervention",
+      "object": "Glycaemic control",
+      "predicate": "investigated_effect_on",
+      "sourceId": "doi:10.1126/science.aao5774",
+      "domains": [
+        "gut",
+        "lifestyle",
+        "metabolic"
+      ],
+      "conditions": [
+        "Type 2 diabetes"
+      ],
+      "model": "human_in_vivo",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "human dietary intervention with microbiome analyses"
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "DIAB-009",
+      "subject": "Imidazole propionate",
+      "object": "mTORC1 insulin-signalling pathway",
+      "predicate": "investigated_effect_on",
+      "sourceId": "doi:10.1016/j.cell.2018.09.055",
+      "domains": [
+        "gut",
+        "metabolic"
+      ],
+      "conditions": [
+        "Type 2 diabetes"
+      ],
+      "model": "mixed",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "human metabolite observations and experimental mechanistic models"
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "DIAB-010",
+      "subject": "Imidazole propionate",
+      "object": "Type 2 diabetes",
+      "predicate": "associated_with",
+      "sourceId": "doi:10.1016/j.cell.2018.09.055",
+      "domains": [
+        "gut",
+        "metabolic"
+      ],
+      "conditions": [
+        "Type 2 diabetes"
+      ],
+      "model": "mixed",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "human metabolite observations and experimental mechanistic models"
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "DIAB-011",
+      "subject": "Adipose tissue macrophages",
+      "object": "Obesity",
+      "predicate": "associated_with",
+      "sourceId": "doi:10.1172/JCI19246",
+      "domains": [
+        "immune",
+        "metabolic"
+      ],
+      "conditions": [
+        "Obesity",
+        "Type 2 diabetes"
+      ],
+      "model": "mixed",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "human and mouse adipose-tissue observations"
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "DIAB-012",
+      "subject": "TNF-α",
+      "object": "Insulin resistance",
+      "predicate": "investigated_effect_on",
+      "sourceId": "doi:10.1126/science.7678183",
+      "domains": [
+        "immune",
+        "metabolic"
+      ],
+      "conditions": [
+        "Obesity",
+        "Type 2 diabetes"
+      ],
+      "model": "rodent",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "preclinical obesity and TNF experiments"
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "DIAB-013",
+      "subject": "NLRP3 inflammasome",
+      "object": "Insulin resistance",
+      "predicate": "investigated_effect_on",
+      "sourceId": "doi:10.1038/nm.2279",
+      "domains": [
+        "immune",
+        "metabolic"
+      ],
+      "conditions": [
+        "Obesity",
+        "Type 2 diabetes"
+      ],
+      "model": "mixed",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "preclinical metabolic-inflammation experiments with human context"
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "DIAB-014",
+      "subject": "Endotoxin exposure",
+      "object": "Insulin resistance",
+      "predicate": "investigated_effect_on",
+      "sourceId": "doi:10.2337/db06-1491",
+      "domains": [
+        "gut",
+        "immune",
+        "metabolic"
+      ],
+      "conditions": [
+        "Obesity",
+        "Type 2 diabetes"
+      ],
+      "model": "mouse",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "mouse endotoxin and metabolic experiments"
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "DIAB-015",
+      "subject": "Gut microbiome composition",
+      "object": "Type 1 diabetes",
+      "predicate": "associated_with",
+      "sourceId": "doi:10.1038/s41586-018-0620-2",
+      "domains": [
+        "gut",
+        "immune",
+        "metabolic"
+      ],
+      "conditions": [
+        "Type 1 diabetes"
+      ],
+      "model": "human_in_vivo",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "human longitudinal childhood microbiome observations"
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "DIAB-016",
+      "subject": "Butyrate",
+      "object": "Human dendritic-cell conditioning",
+      "predicate": "investigated_effect_on",
+      "sourceId": "pmid:29163504",
+      "domains": [
+        "gut",
+        "immune"
+      ],
+      "conditions": [],
+      "model": "human_ex_vivo",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "Human dendritic-cell conditioning and regulatory T-cell priming, ex vivo"
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "DIAB-018",
+      "subject": "Teplizumab",
+      "object": "Type 1 diabetes progression",
+      "predicate": "investigated_effect_on",
+      "sourceId": "pmid:31180194",
+      "domains": [
+        "immune",
+        "metabolic",
+        "trials"
+      ],
+      "conditions": [
+        "Type 1 diabetes"
+      ],
+      "model": "human_in_vivo",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "Randomised trial in relatives at high risk for type 1 diabetes; not established longstanding disease"
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "HSI-C-GUT-003",
+      "subject": "Butyrate",
+      "object": "Colonic / mucosal Foxp3+ Treg",
+      "predicate": "produces_metabolite_sensed_by",
+      "sourceId": "pmid:24226770",
+      "domains": [
+        "gut",
+        "immune"
+      ],
+      "conditions": [],
+      "model": "mouse",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "P1.3 primary SCFA→Treg edge. PMID 24226770 verified. P1.4 first-class edgeType produces_metabolite_sensed_by (was alias→upregulates). Mouse / HDAC–Foxp3 mechanism — not human disease claim. Gate C = human only. Not CDS."
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "HSI-C-GUT-006",
+      "subject": "Butyrate",
+      "object": "Mucosal Th17 cells",
+      "predicate": "inhibits",
+      "sourceId": "pmid:30918945",
+      "domains": [
+        "gut",
+        "immune"
+      ],
+      "conditions": [],
+      "model": "unspecified",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "P1.3 competing Th17-inhibit frame. PMID 30918945 verified. Keep separate from HSI-E-GUT-005 — do not collapse promote vs inhibit. teaching=hypothesized. Gate C = human only. Not CDS."
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "HSI-C-GUT-007",
+      "subject": "Butyrate",
+      "object": "Intestinal epithelial barrier / tight junctions",
+      "predicate": "modulates_immune",
+      "sourceId": "pmid:19625695",
+      "domains": [
+        "gut",
+        "immune"
+      ],
+      "conditions": [],
+      "model": "human_cell_line",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "P1.3 barrier context. PMID 19625695 verified. In vitro Caco-2 — not in-vivo human barrier claim; teaching=associative. Dose-paradox papers exist elsewhere — do not overclaim. Gate C = human only. Not CDS."
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "HSI-C-GUT-009",
+      "subject": "Butyrate",
+      "object": "IL-10+ type-1 regulatory T cells (Tr1-like)",
+      "predicate": "modulates_immune",
+      "sourceId": "pmid:29163504",
+      "domains": [
+        "gut",
+        "immune"
+      ],
+      "conditions": [],
+      "model": "human_ex_vivo",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "Depth deepen: PMID 29163504 verified. In-vitro human DC/Tr1 — teaching=hypothesized; do not invent dosing/CDS. Gate C = human only. Not CDS."
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "HSI-C-GUT-011",
+      "subject": "Butyrate",
+      "object": "Intestinal macrophage HDAC activity / inflammatory tone",
+      "predicate": "modulates_immune",
+      "sourceId": "pmid:24390544",
+      "domains": [
+        "gut",
+        "immune"
+      ],
+      "conditions": [],
+      "model": "mouse",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "Depth deepen: PMID 24390544 verified. Mouse macrophage HDAC frame — teaching=associative; not human dosing. Gate C = human only. Not CDS."
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "HSI-C-NI-001",
+      "subject": "Efferent vagus nerve stimulation",
+      "object": "Peripheral / systemic TNF inflammatory tone",
+      "predicate": "suppresses_peripheral_inflammation",
+      "sourceId": "pmid:10839541",
+      "domains": [
+        "brain",
+        "immune"
+      ],
+      "conditions": [],
+      "model": "rodent",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "P2.1 primary vagus→TNF suppression edge. PMID 10839541 verified. Rodent endotoxaemia + macrophage culture — teaching=associative; hsiGrade uncertain. Do not overclaim human therapeutic cure. Gate C = human only. Not CDS."
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "HSI-C-NI-004",
+      "subject": "Efferent vagus nerve stimulation",
+      "object": "α7 nAChR–Jak2–STAT3 macrophage programme",
+      "predicate": "associates_neuroimmune",
+      "sourceId": "pmid:16025117",
+      "domains": [
+        "brain",
+        "immune"
+      ],
+      "conditions": [],
+      "model": "mouse",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "P2.1 mechanism companion. PMID 16025117 verified. Mouse postoperative ileus / macrophage STAT3 — teaching=associative. Gate C = human only. Not CDS."
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "HSI-C-RA-001",
+      "subject": "TNF-α",
+      "object": "Rheumatoid arthritis",
+      "predicate": "contributes_to",
+      "sourceId": "pmid:11244034",
+      "domains": [
+        "immune"
+      ],
+      "conditions": [
+        "Rheumatoid arthritis"
+      ],
+      "model": "unspecified",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "Scope-locked RA pathway seed (scopeLocked=true; partnerSigned=false; lockedPilot=false). PMID 11244034 verified. Maps toward ISI REL-M001-contributes_to-D001. Gate C handoff pattern mirrors PMID 16382236 (evidence-linked · pending human Neon approve). Not partner-signed."
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "HSI-C-RA-002",
+      "subject": "Anti-CCP antibodies",
+      "object": "Rheumatoid arthritis",
+      "predicate": "biomarker_of",
+      "sourceId": "pmid:10662881",
+      "domains": [
+        "immune"
+      ],
+      "conditions": [
+        "Rheumatoid arthritis"
+      ],
+      "model": "unspecified",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "Scope-locked RA biomarker seed with LOINC 53031-9. PMID 10662881 verified via PubMed. No durable ISI REL-* for anti-CCP→RA yet — marker_only map. Gate C = human Neon approve only. Not CDS."
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "HSI-C-RA-003",
+      "subject": "Anti-TNF therapy",
+      "object": "Rheumatoid arthritis",
+      "predicate": "treats",
+      "sourceId": "pmid:11087881",
+      "domains": [
+        "immune"
+      ],
+      "conditions": [
+        "Rheumatoid arthritis"
+      ],
+      "model": "unspecified",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "Scope-locked RA treatment seed for anti-TNF response question. PMID 11087881 verified. Does not prove uniform response — pairs with RA-004/005 and Phase 3 ADA/serology edges. No invented ISI REL; Gate C = human Neon approve only. Not CDS."
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "HSI-C-RA-004",
+      "subject": "IL-6",
+      "object": "Rheumatoid arthritis",
+      "predicate": "contributes_to",
+      "sourceId": "pmid:18625622",
+      "domains": [
+        "immune"
+      ],
+      "conditions": [
+        "Rheumatoid arthritis"
+      ],
+      "model": "unspecified",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "Scope-locked RA multi-cytokine seed. PMID 18625622 verified. Supports ISI related_axis REL-M003-contributes_to-D001. Same paper underpins anti-TNF-refractory framing (RA-005). Gate C = human Neon approve only."
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "HSI-C-RA-005",
+      "subject": "Anti-TNF refractory RA phenotype",
+      "object": "IL-6 pathway axis",
+      "predicate": "associated_with",
+      "sourceId": "pmid:18625622",
+      "domains": [
+        "immune"
+      ],
+      "conditions": [
+        "Rheumatoid arthritis"
+      ],
+      "model": "unspecified",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "Scope-locked response-heterogeneity seed for the pilot question. PMID 18625622 verified. S-P-O is related_axis (trial population = anti-TNF inadequate responders → IL-6R blockade), not a universal causal map. Curator must re-assess claim_support before Neon Gate C approve — same honesty pattern as PMID 16382236 handoff. Not CDS."
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "HSI-C-RA-006",
+      "subject": "Synovial macrophages",
+      "object": "TNF-α",
+      "predicate": "upregulates",
+      "sourceId": "pmid:2993897",
+      "domains": [
+        "immune"
+      ],
+      "conditions": [
+        "Rheumatoid arthritis"
+      ],
+      "model": "unspecified",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "Scope-locked cell→cytokine seed. PMID 2993897 verified. Supports ISI related_axis REL-C003-produces-M001 (macrophage → TNF); HSI edgeType=upregulates (no produces predicate in Phase 0). Paper is foundational identity, not RA synovial histology — curator must not overclaim tissue specificity at Gate C. Not CDS."
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "HSI-C-RA-007",
+      "subject": "Anti-drug antibodies to anti-TNF (ADA)",
+      "object": "Anti-TNF refractory RA phenotype",
+      "predicate": "associated_with",
+      "sourceId": "pmid:16508927",
+      "domains": [
+        "immune"
+      ],
+      "conditions": [
+        "Rheumatoid arthritis"
+      ],
+      "model": "unspecified",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "Phase 3 partner-scoped depth. PMID 16508927 verified via PubMed/E-utilities. Competing explanation vs cytokine-axis-only narratives — ADA/immunogenicity as a response-heterogeneity mechanism. Infliximab-specific cohort; do not over-generalise to all anti-TNF agents at Gate C. Not CDS; partnerSigned=false."
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "HSI-C-RA-008",
+      "subject": "Anti-drug antibodies to anti-TNF (ADA)",
+      "object": "Anti-TNF immunogenicity / bioavailability monitoring",
+      "predicate": "associated_with",
+      "sourceId": "pmid:17133559",
+      "domains": [
+        "immune"
+      ],
+      "conditions": [
+        "Rheumatoid arthritis"
+      ],
+      "model": "unspecified",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "Phase 3 partner-scoped depth. PMID 17133559 verified via PubMed/E-utilities. Deepens ADA frame (pairs with RA-007); teaching=hypothesized because assay/threshold generalisation to all anti-TNF remains open. No invented ISI REL-*. Gate C = human Neon approve only. Not CDS."
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "HSI-C-RA-009",
+      "subject": "RF/ACPA seropositive RA phenotype",
+      "object": "Anti-TNF response heterogeneity",
+      "predicate": "associated_with",
+      "sourceId": "pmid:18375541",
+      "domains": [
+        "immune"
+      ],
+      "conditions": [
+        "Rheumatoid arthritis"
+      ],
+      "model": "unspecified",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "Phase 3 partner-scoped depth. PMID 18375541 verified via PubMed/E-utilities. Seropositive patients showed smaller mean DAS28 improvement in this cohort — do not invent predictive CDS rules. Competes with RA-010 meta-analysis finding no association. Gate C = human Neon approve only."
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "HSI-C-RA-010",
+      "subject": "RF/ACPA seropositive RA phenotype",
+      "object": "Anti-TNF therapy",
+      "predicate": "associated_with",
+      "sourceId": "pmid:24586782",
+      "domains": [
+        "immune"
+      ],
+      "conditions": [
+        "Rheumatoid arthritis"
+      ],
+      "model": "unspecified",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "Phase 3 partner-scoped depth. PMID 24586782 verified via PubMed/E-utilities. Explicit competing frame vs RA-009 — keep both visible; do not collapse serology into a confident response predictor. Meta-analysis heterogeneity noted in paper. Gate C = human Neon approve only. Not CDS."
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "HSI-C-RA-011",
+      "subject": "Rheumatoid factor",
+      "object": "Rheumatoid arthritis",
+      "predicate": "biomarker_of",
+      "sourceId": "pmid:20699241",
+      "domains": [
+        "immune"
+      ],
+      "conditions": [
+        "Rheumatoid arthritis"
+      ],
+      "model": "unspecified",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "Phase 3 partner-scoped depth. PMID 20699241 verified via PubMed/E-utilities. LOINC 11572-5 on RF marker. Classification/workup context only — do not equate RF positivity with anti-TNF response prediction (see RA-009/010 tension). No invented ISI REL-*. Gate C = human Neon approve only. Not CDS."
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "HSI-C-RA-012",
+      "subject": "Methotrexate + anti-TNF combination therapy",
+      "object": "Rheumatoid arthritis",
+      "predicate": "treats",
+      "sourceId": "pmid:10622295",
+      "domains": [
+        "immune"
+      ],
+      "conditions": [
+        "Rheumatoid arthritis"
+      ],
+      "model": "unspecified",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "Phase 3 partner-scoped depth. PMID 10622295 verified via PubMed/E-utilities. Complements Lipsky 2000 (RA-003) with the earlier ATTRACT combination-therapy frame; not a duplicate of ADA edges. No invented ISI REL-*. Gate C = human Neon approve only. Not CDS."
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    }
+  ],
+  "digest": "0d57f7b2512f9f46f99ab77a0bb0f9e625ab436bc60f3a4f3d8890f6f87913eb"
+}

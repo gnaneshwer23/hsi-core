@@ -30,7 +30,8 @@ __pycache__/
 site/.seo-render/
 .vercel
 
-# Private benchmark authoring/holdout material belongs in an external restricted vault.
+# Private benchmark authoring/holdout material belongs in an external restricted vault (VER-05).
+# Layout docs live in evaluation/label-vault/; never commit gold labels from this directory.
 .hsi-private-benchmark/
 
 # Downloaded ontology releases and extracted term tables (regenerate with scripts/import-ontologies.ts)

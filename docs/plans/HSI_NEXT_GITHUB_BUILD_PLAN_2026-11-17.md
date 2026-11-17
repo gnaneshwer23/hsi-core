@@ -71,8 +71,8 @@ These can land without waiting for SMEs. Sequence matters where noted.
 
 | PR id | Branch suggestion | Scope | Depends on | Done when |
 | --- | --- | --- | --- | --- |
-| **A4.1** | `cursor/ver-label-vault-layout-2f71` | Gitignored label vault layout + authoring CLI stubs (VER-05) | — | Structure exists; no gold in git |
-| **A4.2** | `cursor/bench-conflict-expert-runner-2f71` | Expert-path for `conflict:bench` (private vault only) | #444 already on main | Fixture path unchanged; expert path documented |
+| **A4.1** | `cursor/ver-label-vault-layout-2f71` | Gitignored label vault layout + authoring CLI stubs (VER-05) | — | Structure exists; no gold in git — `evaluation/label-vault/` + `label-vault:*` CLI |
+| **A4.2** | `cursor/bench-conflict-expert-runner-2f71` | Expert-path for `conflict:bench` (private vault only) | #444 already on main | Fixture path unchanged; `conflict:bench:expert` + vault guards documented |
 | **A4.3** | `cursor/bench-immuno-dev-set-tooling-2f71` | Tooling to author founder development set without publishing floors | Owner drafts cases offline | Import validates schema; scoring blocked until floors |
 
 ### Wave A5 — Competitor-inspired UX (only after A2 started)
@@ -80,7 +80,7 @@ These can land without waiting for SMEs. Sequence matters where noted.
 | PR id | Branch suggestion | Scope | Depends on | Done when |
 | --- | --- | --- | --- | --- |
 | **A5.1** | `cursor/ux-related-papers-2f71` | Seed-paper → related works via OpenAlex (Connected Papers–style, rights-safe) | A1.4 | Metadata-only; no invented abstracts |
-| **A5.2** | `cursor/ux-evidence-table-2f71` | Structured evidence table in investigation brief (Elicit-style columns) | A2.1 | Columns = context passport fields |
+| **A5.2** | `cursor/ux-evidence-table-2f71` | Structured evidence table in investigation brief (Elicit-style columns) | A2.1 | Columns = context passport fields — Research outcomes panel + Markdown brief |
 | **A5.3** | `cursor/ux-how-produced-trace-2f71` | “How this was produced” panel from real run record | Live run path | No fake progress; links to STATUS maturity |
 
 ---
