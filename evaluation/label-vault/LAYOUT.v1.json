@@ -9,8 +9,9 @@
     {
       "id": "conflict",
       "path": ".hsi-private-benchmark/conflict",
-      "purpose": "HSI-BENCH-CONFLICT expert cases, labels and private reports",
-      "requiredFiles": ["cases.json", "README.md"]
+      "purpose": "HSI-BENCH-CONFLICT expert cases, labels, optional predictions and private reports",
+      "requiredFiles": ["cases.json", "README.md"],
+      "optionalDirs": ["predictions", "reports"]
     },
     {
       "id": "immuno",

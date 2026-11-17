@@ -118,11 +118,13 @@ function writeIfMissing(path:string,content:string){
 
 const CONFLICT_README=`# Private conflict benchmark vault
 
-Expert cases and labels for HSI-BENCH-CONFLICT.
+Expert cases and labels for HSI-BENCH-CONFLICT (A4.2 expert path).
 
 - Put cases in \`cases.json\` (JSON array). See \`evaluation/conflict-benchmark/README.md\`.
-- Reports from \`bun run conflict:bench\` land under \`reports/\`.
-- Never copy this directory into git, \`site/\`, or public evaluation fixtures.
+- Optional comparator predictions: \`predictions/*.json\`
+- Reports from \`bun run conflict:bench:expert\` land under \`reports/\`
+- Public fixtures stay in \`evaluation/conflict-benchmark/fixtures/\` and are never mixed in
+- Never copy this directory into git, \`site/\`, or public evaluation fixtures
 
 Scientific approval: false. Gold labels stay private.
 `;
@@ -186,6 +188,11 @@ export function initLabelVault(repoRoot:string,now=new Date().toISOString()):{ro
     if(writeIfMissing(path,content))created.push(path.slice(repoRoot.length+1).replaceAll("\\","/"));
   }
   mkdirSync(join(root,"conflict","reports"),{recursive:true});
+  mkdirSync(join(root,"conflict","predictions"),{recursive:true});
+  writeIfMissing(
+    join(root,"conflict","predictions","README.md"),
+    "# Comparator predictions (private)\n\nOne JSON file per hand-run system. Loaded by `bun run conflict:bench:expert`.\n",
+  );
   return {root,created};
 }
 

@@ -10,7 +10,8 @@ Expert gold labels are **not** stored in this public repository. They live in a 
   conflict/
     README.md
     cases.json                   # expert cases + labels (empty array until curated)
-    reports/                     # private conflict:bench output
+    predictions/                 # optional hand-run comparator JSON (A4.2)
+    reports/                     # private conflict:bench:expert output
   immuno/
     README.md                    # holdout drafts; public slots stay in src/
   freezes/
@@ -42,7 +43,7 @@ bun run label-vault:freeze -- --track conflict
 | No gold in git | `.hsi-private-benchmark/` is gitignored; committed files are layout docs only |
 | Runtime cannot read vault | Layout flags `runtimeMayRead: false`; DB role restriction is ADR / ops follow-up |
 | No auto scientific approval | Freeze records set `scientificApproval: false` and `floorsOwnerApproved: false` |
-| Scoring vs fixtures | Public `conflict:bench:fixture` stays on synthetic fixtures; expert path uses the vault (A4.2) |
+| Scoring vs fixtures | Public `conflict:bench:fixture` / `:check` stay on synthetic fixtures; `conflict:bench:expert` uses the vault only (A4.2) |
 
 ## Related
 
