@@ -32,7 +32,7 @@ Any claim in HSI can be traced back to the exact sentence in the exact version o
 | Rights and clearance (AEGIS) | Partial | `src/researchV2/clearancePolicy.ts`, `sourceIntegrityService.ts`; no approved policy, no clearance authority |
 | Retraction checks | Partial | Provider retraction flags read in the live run; not checked against a dedicated retraction source |
 | Re-verification after corrections | Partial | `src/expansion/sourceRereview.ts`; tested on staging coordinator only |
-| Browser-side provider calls | Must remove | `ScienceLiterature.tsx` (Europe PMC), `BiomedicalMetadataPanel.tsx` (Reactome) |
+| Browser-side provider calls | Removed (ING-01) | Same-origin `/api/research/literature-search` and `/api/research/biomedical-metadata`; browser no longer calls Europe PMC / UniProt / Reactome |
 | Current corpus state | Partial | 75 graph sources; 73 rights unverified; 12 bibliographic candidates awaiting verification (N1) |
 
 # 4. Pipeline design
@@ -62,7 +62,7 @@ discover -> resolve identity -> check retraction -> decide rights
 
 | ID | Work | Acceptance criteria |
 | --- | --- | --- |
-| ING-01 | Remove browser-side provider calls (HSI-P0-02b) | No request from the browser to any third-party science API; network test proves it |
+| ING-01 | Remove browser-side provider calls (HSI-P0-02b) | Done: same-origin literature-search and biomedical-metadata routes; CSP `connect-src 'self'`; `site/e2e/no-browser-providers.spec.ts` |
 | ING-02 | N1 source verification queue | All 12 pending candidates have an explicit outcome; mismatched DOI/PMID/title combinations rejected; failures kept as queue outcomes |
 | ING-03 | Rights policy v1 | Written licence allow-list signed by the owner; enforced in code; every one of the 75 sources has a rights decision |
 | ING-04 | Open-access section extraction (HSI-P2-02) | Methods and results parsed from Europe PMC JATS XML; fuzz tests for malformed XML and size limits |
