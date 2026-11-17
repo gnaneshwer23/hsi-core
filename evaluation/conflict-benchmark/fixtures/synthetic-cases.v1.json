@@ -1,0 +1,67 @@
+[
+  {
+    "id": "SYN-01",
+    "question": "SYNTHETIC FIXTURE. Two invented records in the same human context report opposite directions.",
+    "provenance": "synthetic_fixture",
+    "records": [
+      {"sourceId": "syn-a", "citation": "Synthetic record A (not a real study)", "model": "human_in_vivo", "tissue": "serum", "population": "adults", "design": "cohort", "negated": false},
+      {"sourceId": "syn-b", "citation": "Synthetic record B (not a real study)", "model": "human_in_vivo", "tissue": "serum", "population": "adults", "design": "cohort", "negated": true}
+    ],
+    "labels": [{"raterId": "fixture-rater-1", "label": "true_contradiction"}, {"raterId": "fixture-rater-2", "label": "true_contradiction"}],
+    "adjudicated": null
+  },
+  {
+    "id": "SYN-02",
+    "question": "SYNTHETIC FIXTURE. Human and mouse records disagree; each context is fully stated and internally consistent.",
+    "provenance": "synthetic_fixture",
+    "records": [
+      {"sourceId": "syn-c", "citation": "Synthetic record C (not a real study)", "model": "human_in_vivo", "tissue": "synovium", "population": "adults", "design": "cross-sectional", "negated": false},
+      {"sourceId": "syn-d", "citation": "Synthetic record D (not a real study)", "model": "mouse", "tissue": "joint", "population": "knockout strain", "design": "animal model", "negated": true}
+    ],
+    "labels": [{"raterId": "fixture-rater-1", "label": "context_dependent"}, {"raterId": "fixture-rater-2", "label": "context_dependent"}],
+    "adjudicated": null
+  },
+  {
+    "id": "SYN-03",
+    "question": "SYNTHETIC FIXTURE. Records disagree but one does not state its study system or design.",
+    "provenance": "synthetic_fixture",
+    "records": [
+      {"sourceId": "syn-e", "citation": "Synthetic record E (not a real study)", "model": "human_in_vivo", "tissue": "colon", "population": "adults", "design": "cohort", "negated": false},
+      {"sourceId": "syn-f", "citation": "Synthetic record F (not a real study)", "model": "unspecified", "tissue": null, "population": null, "design": null, "negated": true}
+    ],
+    "labels": [{"raterId": "fixture-rater-1", "label": "insufficient_context"}, {"raterId": "fixture-rater-2", "label": "insufficient_context"}],
+    "adjudicated": null
+  },
+  {
+    "id": "SYN-04",
+    "question": "SYNTHETIC FIXTURE. Two records, different contexts, same direction.",
+    "provenance": "synthetic_fixture",
+    "records": [
+      {"sourceId": "syn-g", "citation": "Synthetic record G (not a real study)", "model": "human_in_vivo", "tissue": "adipose tissue", "population": "adults", "design": "cohort", "negated": false},
+      {"sourceId": "syn-h", "citation": "Synthetic record H (not a real study)", "model": "mouse", "tissue": "liver", "population": "diet-induced obesity", "design": "animal model", "negated": false}
+    ],
+    "labels": [{"raterId": "fixture-rater-1", "label": "no_disagreement"}, {"raterId": "fixture-rater-2", "label": "no_disagreement"}],
+    "adjudicated": null
+  },
+  {
+    "id": "SYN-05",
+    "question": "SYNTHETIC FIXTURE. Raters disagreed and an adjudicator decided.",
+    "provenance": "synthetic_fixture",
+    "records": [
+      {"sourceId": "syn-i", "citation": "Synthetic record I (not a real study)", "model": "human_ex_vivo", "tissue": "blood", "population": "adults", "design": "in vitro", "negated": false},
+      {"sourceId": "syn-j", "citation": "Synthetic record J (not a real study)", "model": "human_ex_vivo", "tissue": "blood", "population": "adults", "design": "in vitro", "negated": true}
+    ],
+    "labels": [{"raterId": "fixture-rater-1", "label": "true_contradiction"}, {"raterId": "fixture-rater-2", "label": "context_dependent"}],
+    "adjudicated": "true_contradiction"
+  },
+  {
+    "id": "SYN-06",
+    "question": "SYNTHETIC FIXTURE. Raters disagreed and no adjudication yet; excluded from scoring.",
+    "provenance": "synthetic_fixture",
+    "records": [
+      {"sourceId": "syn-k", "citation": "Synthetic record K (not a real study)", "model": "human_in_vivo", "tissue": "skin", "population": "adults", "design": "cohort", "negated": false}
+    ],
+    "labels": [{"raterId": "fixture-rater-1", "label": "no_disagreement"}, {"raterId": "fixture-rater-2", "label": "insufficient_context"}],
+    "adjudicated": null
+  }
+]
