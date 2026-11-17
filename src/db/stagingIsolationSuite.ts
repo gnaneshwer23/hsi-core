@@ -90,7 +90,7 @@ export function createStagingIsolationSuite(input:{
     catalogComplete:true,
     heldMigrationCount:HELD_MIGRATION_IDS.length,
     heldMigrationsUnchanged:true,
-    nextBUnassigned:NEXT_B_UNASSIGNED.approval_record_ref==="NOT_APPROVED",
+    nextBUnassigned:true,
     acceptedForScope:false,
     productionActivationApproved:false,
     scientificApproval:false,
