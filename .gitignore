@@ -35,3 +35,6 @@ site/.seo-render/
 
 # Downloaded ontology releases and extracted term tables (regenerate with scripts/import-ontologies.ts)
 .ontology-cache/
+
+# Conflict benchmark fixture reports are regenerated locally
+evaluation/conflict-benchmark/reports/
