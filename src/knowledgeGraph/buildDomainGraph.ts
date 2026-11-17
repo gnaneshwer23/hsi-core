@@ -13,7 +13,7 @@ export function repositoryModel(claimId:string,context:string):DomainModel{
  // Human mentions inside a disclaimer or donor description never establish a human study.
  const additional:Record<string,DomainModel>={'HSI-C-GUT-005':'unspecified','HSI-C-GUT-006':'unspecified','HSI-C-GUT-008':'mouse','HSI-C-GUT-012':'unspecified','HSI-C-NI-001':'rodent','HSI-C-NI-002':'unspecified','HSI-C-NI-003':'mouse','HSI-C-NI-004':'mouse','HSI-C-NI-005':'mouse','HSI-C-NI-007':'rodent','HSI-C-NI-008':'rodent','HSI-C-NI-009':'rodent','HSI-C-NI-010':'rodent','HSI-C-NI-011':'rodent','HSI-C-NI-012':'unspecified','HSI-C-NI-013':'unspecified','HSI-C-NI-014':'unspecified','HSI-C-NI-015':'unspecified','HSI-C-NI-016':'mouse'};
  if(additional[claimId])return additional[claimId];
- const mouse=/\b(mouse|mice|murine)\b/i.test(context),human=/^Human (?:observational|clinical|cohort|participants|patients|interventional|randomi)/i.test(context);
+ const mouse=/\b(mouse|mice|murine)\b/i.test(context),human=/^(?:Human (?:observational|clinical|cohort|participants|patients|interventional|randomi|case-control)|Meta-analysis of human studies)/i.test(context);
  if(mouse&&human)return 'mixed';if(mouse)return 'mouse';if(/\brodent\b/i.test(context))return 'rodent';
  if(/^Human.*(?:cell.line|Caco-2)/i.test(context))return 'human_cell_line';if(/^Human.*(?:ex.vivo|in.vitro|cell.culture)/i.test(context))return 'human_ex_vivo';
  return human?'human_in_vivo':'unspecified';

@@ -38,12 +38,11 @@ describe("context conflict classification",()=>{
  test("never adjudicates, approves or asserts cause",()=>{
   for(const e of [[{...H}],[{...H,negated:true,sourceId:"a"},{...M,sourceId:"b"}]]){const r=run(e);expect(r).toMatchObject({adjudication:"not_performed",scientificApproval:false,causalConclusionAllowed:false});expect(r.limits.length).toBeGreaterThan(0)}
  });
- test("on the published graph, the two recorded disagreements cannot be separated from conflict",()=>{
+ test("on the published graph, the two recorded disagreements differ by design between human contexts, unexplained",()=>{
   const res=new Map<string,number>();
   const seen=new Set<string>();
   for(const e of cand){const k=[e.subjectId,e.objectId].sort().join("|");if(seen.has(k))continue;seen.add(k);const c=assessConflict(breakdownForPair(g,e.subjectId,e.objectId)).classification;res.set(c,(res.get(c)??0)+1)}
-  expect(res.get("disagreement_context_unknown")).toBe(2);
+  expect(res.get("context_separated_disagreement")).toBe(2);expect(res.get("disagreement_context_unknown")??0).toBe(0);
   expect(res.get("same_context_disagreement")??0).toBe(0);
-  expect(res.get("context_separated_disagreement")??0).toBe(0);
  });
 });
