@@ -2,6 +2,7 @@ import {useId,useState} from "react";
 import {Link,useNavigate} from "react-router-dom";
 import {ASK_MAX,askLengthOk} from "../../lib/askClient";
 import {useAsk} from "../../lib/useAsk";
+import {HowProducedPanel} from "../HowProducedPanel";
 import {Icon} from "./AppIcons";
 
 const FAIL:Record<string,string>={
@@ -32,11 +33,7 @@ export function AskCard(){
     {outcome?.kind==="routed"&&<div className="rh-panel rh-ask-result">
      <p><b>{outcome.run.question}</b></p>
      <p className="rh-note">{outcome.run.candidates.length} candidate claims from {outcome.run.records.length} sources. All unreviewed; candidates, not findings.{outcome.run.verification.status==="not_configured"?" The model check did not run: "+(outcome.run.verification.reason??"not configured")+".":""}</p>
-     <details className="rh-trace"><summary>How this was produced</summary><ol>
-      <li>Your question was matched to a curated investigation by {outcome.trace.matchedBy}. It was not sent to a model as free text.</li>
-      <li>Evidence was retrieved from {outcome.trace.sources.join(", ")||"public sources"}.</li>
-      <li>Model check: {outcome.trace.modelCheck==="not_configured"?"did not run on this deployment":outcome.trace.modelCheck}.</li>
-      <li>Nothing was saved to a server. Opening the workspace keeps the run in this browser only.</li></ol></details>
+     <HowProducedPanel source={{kind:"ask",trace:outcome.trace,run:outcome.run}}/>
      <div className="rh-row"><button type="button" className="rh-primary" onClick={()=>{if(saveRun())nav("/research/workspace?reopen=1")}}>Open in workspace</button></div>
      {saveNote&&<p className="rh-note">{saveNote}</p>}
     </div>}

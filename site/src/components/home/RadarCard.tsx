@@ -3,6 +3,7 @@ import {Icon} from "./AppIcons";
 import {renderDigestMarkdown,type RadarResult} from "../../../../src/investigation/radar";
 import type {Profile} from "../../lib/researchHome";
 import {useRadar} from "../../lib/useRadar";
+import {HowProducedPanel} from "../HowProducedPanel";
 import {RelatedWorksPanel} from "../RelatedWorksPanel";
 
 function Spark({trend,topic}:{trend:{year:number;count:number}[];topic:string}){
@@ -60,6 +61,7 @@ export function RadarCard({profile,ready}:{profile:Profile;ready:boolean}){
      openalexSourceId={d.own.papers[0].provider==="openalex"?d.own.papers[0].sourceId:null}
     />
    )}
+   {d&&<HowProducedPanel source={{kind:"radar",run:d,fromCache:state.fromCache}}/>}
    {d&&<p className="rh-note">{d.note} Cadence: {profile.cadence==="off"?"manual":profile.cadence}; the radar refreshes when you open HSI. Email delivery is not available yet.</p>}
   </section>
  );
