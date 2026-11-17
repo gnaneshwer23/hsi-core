@@ -295,6 +295,35 @@ export function assertValidPmid(pmid: string): string {
   return id;
 }
 
+const EUROPE_PMC_RESPONSE_MAX_BYTES = 400_000;
+
+async function readBoundedEuropePmcText(response: Response, maxBytes: number): Promise<{ok: true; text: string} | {ok: false; detail: string}> {
+  const declared = Number(response.headers.get("content-length") ?? "0");
+  if (Number.isFinite(declared) && declared > maxBytes) {
+    return {ok: false, detail: "Oversized provider response"};
+  }
+  const reader = response.body?.getReader();
+  if (!reader) return {ok: true, text: ""};
+  const decoder = new TextDecoder();
+  let total = 0;
+  let text = "";
+  try {
+    for (;;) {
+      const {done, value} = await reader.read();
+      if (done) break;
+      total += value.byteLength;
+      if (total > maxBytes) {
+        await reader.cancel().catch(() => undefined);
+        return {ok: false, detail: "Oversized provider response"};
+      }
+      text += decoder.decode(value, {stream: true});
+    }
+    return {ok: true, text: text + decoder.decode()};
+  } finally {
+    reader.releaseLock();
+  }
+}
+
 async function lookupEuropePmc(input: {
   query: string;
   pageSize: number;
@@ -318,10 +347,21 @@ async function lookupEuropePmc(input: {
       headers: {Accept: "application/json"},
       signal: input.signal,
     });
-    const bodyText = await response.text();
+    const bounded = await readBoundedEuropePmcText(response, EUROPE_PMC_RESPONSE_MAX_BYTES);
+    if (!bounded.ok) {
+      return {
+        ok: false,
+        provider: "europe_pmc",
+        query: input.query,
+        retrievedAt,
+        outcome: "oversized_response",
+        httpStatus: response.status,
+        detail: bounded.detail,
+      };
+    }
     return parseEuropePmcBibliographicPayload({
       query: input.query,
-      bodyText,
+      bodyText: bounded.text,
       httpStatus: response.status,
       retrievedAt,
       pageSize,
