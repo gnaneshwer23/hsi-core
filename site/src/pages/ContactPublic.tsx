@@ -19,7 +19,7 @@ export function ContactPublicPage(){
       <header className="pg-phero">
         <h1>Contact HSI and start from your research question.</h1>
         <div>
-          <p className="pg-lead">Create an HSI account if you need one. You can keep a browser draft of your question, and — only when this deployment has delivery configured — send an access request to the HSI operator. The page never claims a request was sent unless the server confirms delivery. Researcher, source and scientific-review permissions are provisioned independently.</p>
+          <p className="pg-lead">Create an HSI account if you need one. You can keep a browser draft of your question, and — only when this deployment has delivery configured — send an access request through the configured notification provider. The page never claims operator receipt unless the server reports provider acceptance, and grants remain administrator-provisioned. Researcher, source and scientific-review permissions are provisioned independently.</p>
           <div className="pg-cta">
             <Link className="pg-btn" to={signUpHref()}>Create an account <span aria-hidden="true">→</span></Link>
             <Link className="pg-link" to={signInHref()}>Sign in <span aria-hidden="true">→</span></Link>

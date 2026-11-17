@@ -35,7 +35,7 @@ test("public access paths lead to the real account process without a pretend sub
  });
  await page.goto("/pricing");await expect(page).toHaveURL(/contact$/);
  await expect(page.getByRole("main")).toContainText("permissions are provisioned independently");
- await expect(page.getByRole("main")).toContainText("never claims a request was sent unless the server confirms delivery");
+ await expect(page.getByRole("main")).toContainText("never claims operator receipt unless the server reports provider acceptance");
  await expect(page.getByRole("heading",{name:/Keep a browser draft of your question/i})).toHaveCount(1);
  await page.getByLabel(/Research question or investigation focus/i).fill("How might cytokine signalling vary across tissues in research models?");
  await page.getByRole("button",{name:/Save browser draft/i}).first().click();
@@ -48,13 +48,13 @@ test("configured access request delivery posts once and only claims success afte
  await page.route("**/api/access-requests",async r=>{
   if(r.request().method()==="GET")return r.fulfill({json:{deliveryConfigured:true}});
   posts.push(r.request().url());
-  return r.fulfill({json:{ok:true,delivered:true,note:"Delivered to the HSI operator channel. This does not grant research access or enable writes."}});
+  return r.fulfill({json:{ok:true,providerAccepted:true,delivered:true,note:"Accepted by the configured notification provider. Operator inbox receipt is not confirmed by this response. This does not grant research access or enable writes."}});
  });
  await page.goto("/contact");
  await expect(page.getByRole("heading",{name:/Request research access/i})).toHaveCount(1);
  await page.getByLabel(/Research question or investigation focus/i).fill("How might cytokine signalling vary across tissues in research models?");
  await page.getByRole("button",{name:/Send access request/i}).click();
- await expect(page.getByRole("status")).toContainText("Delivered to the HSI operator channel");
+ await expect(page.getByRole("status")).toContainText("Accepted by the configured notification provider");
  expect(posts).toHaveLength(1);
 });
 test("research dashboard shows backend-controlled empty and denied states without fake activity",async({page})=>{
