@@ -12,14 +12,14 @@ const path=[
   ["Check what you can open","After you sign in, the research account page shows permissions an administrator has provisioned. This page does not start an investigation, and research writes stay closed until an administrator enables them."],
 ] as const;
 
-/** Contact: research access. A browser draft only; it never submits a request. */
+/** Contact: research access. Browser draft always; server delivery only when the deployment is configured. */
 export function ContactPublicPage(){
   return (
     <div className="sp-page fg-page ct-page pg-page pg-sub">
       <header className="pg-phero">
         <h1>Contact HSI and start from your research question.</h1>
         <div>
-          <p className="pg-lead">Create an HSI account if you need one. The question form on this page saves a browser draft only and does not submit an access request or start an investigation. Researcher, source and scientific-review permissions are provisioned independently.</p>
+          <p className="pg-lead">Create an HSI account if you need one. You can keep a browser draft of your question, and — only when this deployment has delivery configured — send an access request through the configured notification provider. The page never claims operator receipt unless the server reports provider acceptance, and grants remain administrator-provisioned. Researcher, source and scientific-review permissions are provisioned independently.</p>
           <div className="pg-cta">
             <Link className="pg-btn" to={signUpHref()}>Create an account <span aria-hidden="true">→</span></Link>
             <Link className="pg-link" to={signInHref()}>Sign in <span aria-hidden="true">→</span></Link>
@@ -37,7 +37,7 @@ export function ContactPublicPage(){
             </li>
           ))}
         </ol>
-        <figcaption id="ct-cap" className="fg-cap"><b>Figure 5.</b> The access path. Each step is separate: an account does not grant research access, and an administrator's grant does not enable research writes. This page does not write an access request to HSI servers.</figcaption>
+        <figcaption id="ct-cap" className="fg-cap"><b>Figure 5.</b> The access path. Each step is separate: an account does not grant research access, and an administrator's grant does not enable research writes. An access request, when delivery is configured, notifies the operator only — it does not provision permissions.</figcaption>
       </figure>
 
       <section className="fg-block ct-draft pg-block" aria-labelledby="ct-draft">
