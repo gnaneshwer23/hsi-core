@@ -53,3 +53,19 @@ test('demo tabs are hidden unless demo mode is switched on, and say so when it i
  await page.goto('/research/home?demo=1');
  await expect(sec.getByRole('button',{name:'Landscape',exact:true})).toBeVisible();await expect(sec.getByRole('note')).toContainText('Demo content is switched on');
 });
+
+test('keyboard focus is never left under the sticky header when tabbing backwards on a phone',async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await page.route('**/api/research/investigations',r=>r.fulfill({status:401,json:{}}));
+ await page.addInitScript(p=>localStorage.setItem('hsi-research-profile-v1',JSON.stringify(p)),{v:1,role:'Research scientist',stage:null,background:'x',question:'Q?',orcid:null,papers:['doi:10.1186/s13075-015-0660-z'],cadence:'weekly',goals:['Generate hypotheses'],interests:['IL-21','Systemic sclerosis'],followed:[],dismissed:[],onboarded:true});
+ await page.goto('/research/home');await expect(page.locator('section.pr')).toBeVisible();await page.waitForTimeout(7000);
+ await page.evaluate(()=>{const els=[...document.querySelectorAll('main a,main button,main input,main select,main textarea,main summary')].filter(e=>(e as HTMLElement).offsetParent&&!e.closest('.rh-top'));(els[els.length-1] as HTMLElement).focus()});
+ const under:number[]=[];let checked=0;
+ for(let i=0;i<80;i++){
+  await page.keyboard.press('Shift+Tab');await page.waitForTimeout(40);
+  const top=await page.evaluate(()=>{const e=document.activeElement as HTMLElement|null;if(!e||e===document.body||e.closest('.rh-top')||e.closest('.rh-nav'))return null;return Math.round(e.getBoundingClientRect().top)});
+  if(top!==null){checked++;if(top<64)under.push(top)}
+ }
+ expect(checked).toBeGreaterThan(30);
+ expect(under).toEqual([]);
+});
