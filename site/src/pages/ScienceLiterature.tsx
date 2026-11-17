@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { RelatedWorksPanel } from "../components/RelatedWorksPanel";
 import "../styles/science-body.css";
 
 type Publication = {
@@ -86,6 +87,7 @@ export function ScienceLiterature(){
     <p>This page returns identifiers and citation fields only. Open the publication record for the abstract and full text. Abstracts are not proxied through the browser.</p>
     {selectedRecord.url&&<p><a href={selectedRecord.url} target="_blank" rel="noreferrer">Open publication record ↗</a></p>}
     <h3>Assessment status</h3><p>Identifier: metadata retrieved, not independently verified. Claim support: unassessed. Contradiction status: not adjudicated. Human review: pending. Graph promotion: prohibited.</p>
+    {(selectedRecord.doi||selectedRecord.pmid)&&<RelatedWorksPanel doi={selectedRecord.doi} pmid={selectedRecord.pmid} autoLoad/>}
    </section>}
    {next&&!loading&&!error&&<button type="button" onClick={()=>{setSearch((prev)=>({...prev,cursor:next}));setSelected(null);}}>Next 20 publications</button>}
    <h2 style={{marginTop:"3rem"}}>Existing SSc curation candidates</h2>
