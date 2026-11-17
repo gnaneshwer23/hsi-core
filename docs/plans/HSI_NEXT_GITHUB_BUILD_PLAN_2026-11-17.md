@@ -5,6 +5,10 @@
 **Governs against:** `docs/strategy/HSI_VISION.md`, Engineering Pack v1.1 (`docs/engineering-pack/`), `docs/STATUS.md`, `docs/audits/HSI_IMPLEMENTATION_TRUTH_AND_NEXT_PRS.md`  
 **Does not authorise:** Gate C auto-approve, production write enablement, applying held migrations without independent DB review, live CDS/PHI, or claiming scientific accuracy before adjudicated cases exist.
 
+## CI note (17 Nov 2026)
+
+`bun audit` fails on transitive `picomatch@4.0.7` (GHSA-fc5q-39xc-vjpf / CVE-2026-112366) with no published patched version. `scripts/ci-bun-audit.ts` temporarily allows that single advisory so Track A PRs can merge; remove the allow-list when npm ships a fixed picomatch and bump the lockfile.
+
 ## Goal
 
 Keep shipping small, mergeable PRs to `main` that finish and prove what already exists — not restart the stack, not equal-depth six domains, not a new agent fleet.

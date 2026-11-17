@@ -37,7 +37,8 @@ jobs:
         with:
           bun-version: '1.3.14'
       - run: bun install --frozen-lockfile
-      - run: bun audit --json
+      # Wrapper allows only the known unpatched picomatch ReDoS advisory until a release exists.
+      - run: bun --no-env-file scripts/ci-bun-audit.ts
       - run: bun run check
       - name: Generate local engineering evidence (not live acceptance)
         run: bun --no-env-file run pilot:check --out /tmp/hsi-pilot-engineering-report.json
@@ -59,7 +60,7 @@ jobs:
       - run: bun install --frozen-lockfile
         working-directory: site
       - run: bunx --no-install tsc -p site/tsconfig.json
-      - run: bun audit --json
+      - run: bun --no-env-file ../scripts/ci-bun-audit.ts
         working-directory: site
       - run: bun run site:build
       - name: Check public benchmark artifacts after build
