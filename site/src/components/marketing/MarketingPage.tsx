@@ -216,7 +216,7 @@ export const JOURNEY_BY_PATH: Record<string, JourneyLink[]> = {
     { to: "/evidence-safety", label: "Evidence & safety", note: "Integrity" },
     { to: "/science", label: "Science", note: "Biology context" },
     { to: "/platform", label: "Platform", note: "Shared technology" },
-    { to: "/contact", label: "Research access", note: "Browser draft only" },
+    { to: "/contact", label: "Research access", note: "Draft + optional operator notify" },
   ],
   "/modules": [
     { to: "/platform", label: "Platform", note: "Shared foundation" },

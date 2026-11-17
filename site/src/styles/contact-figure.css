@@ -17,7 +17,9 @@
 .ct-page .ct-draft .xp-actions{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center;margin:10px 0}
 .ct-page .ct-draft .xp-button{display:inline-flex;align-items:center;min-height:48px;padding:0 22px;border-radius:6px!important;background:#292d42!important;color:#fff!important;border:1px solid #292d42!important;font:550 15px 'Host Grotesk Variable',system-ui,sans-serif;cursor:pointer}
 .ct-page .ct-draft .xp-button:hover{background:#49405e!important;border-color:#49405e!important}
-.ct-page .ct-draft .xp-button-secondary{background:#fff!important;color:#292d42!important}
+/* Beat `.pg-page.ct-page .ct-draft .xp-button` ink override so secondary stays readable on the white card. */
+.pg-page.ct-page .ct-draft .xp-button.xp-button-secondary{background:#fff!important;color:#1a1f36!important;border:1px solid #1a1f36!important}
+.pg-page.ct-page .ct-draft .xp-button.xp-button-secondary:hover{background:#eef1f7!important;color:#1a1f36!important;border-color:#1a1f36!important}
 .ct-page .ct-draft .xp-actions a{display:inline-flex;align-items:center;min-height:44px;font-weight:550}
 .ct-page .ct-draft code{font-size:14px}
 @media(max-width:1000px){.ct-path{grid-template-columns:1fr}.ct-path li{border-left:0;border-top:1px solid var(--fg-line)}.ct-path li:first-child{border-top:0}}

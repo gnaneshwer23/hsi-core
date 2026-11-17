@@ -6,10 +6,11 @@ export function PublicNotices() {
         <div id="privacy">
           <h3>Privacy information</h3>
           <p>
-            The contact page prepares a browser-only draft; it does not send an access request. Account
-            authentication uses the configured identity service. Do not enter patient identifiers,
-            confidential study material or private benchmark content in public demonstrations. Contact HSI
-            before sharing research data or agreeing any data-handling terms.
+            The contact page keeps a browser draft and, only when delivery is configured on the deployment,
+            can notify the HSI operator of an access request. It never claims a request was sent without
+            server confirmation. Account authentication uses the configured identity service. Do not enter
+            patient identifiers, confidential study material or private benchmark content in public
+            demonstrations. Contact HSI before sharing research data or agreeing any data-handling terms.
           </p>
         </div>
         <div id="terms">
@@ -25,8 +26,9 @@ export function PublicNotices() {
           <h3>Accessibility</h3>
           <p>
             The public experience supports keyboard navigation, visible focus and reduced motion. Scientific
-            diagrams have text explanations. If you encounter a barrier, use the contact page to prepare a
-            description of the affected route and interaction; that draft is not automatically delivered.
+            diagrams have text explanations. If you encounter a barrier, use the contact page to describe
+            the affected route and interaction. Delivery to the operator happens only when that channel is
+            configured and the server confirms it.
           </p>
         </div>
         <div id="security">
