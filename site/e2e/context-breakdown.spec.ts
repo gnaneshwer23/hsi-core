@@ -38,6 +38,8 @@ test.describe("Evidence by context",()=>{
   await open(page);await pick(page,"Butyrate");
   await page.getByRole("article",{name:"Path 1"}).getByRole("button",{name:/Inspect relationship 1/}).click();
   const d=page.getByRole("region",{name:"Relationship dossier"});
+  await expect(d.getByRole("heading",{name:/Evidence context passport for this relationship/i})).toBeVisible();
+  await expect(d).toContainText("Explicitly missing");
   await expect(d.getByRole("region",{name:"Evidence by context for this pair",exact:true})).toBeVisible();
   await expect(d.getByRole("region",{name:"Evidence by context for this pair",exact:true})).toContainText(/sources? in \d+ contexts?|No source-linked candidate records/);
  });

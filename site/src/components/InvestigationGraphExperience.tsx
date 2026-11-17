@@ -23,6 +23,7 @@ import { loadProfile } from '../lib/researchHome';
 import { GraphVisual, type CanvasGraph } from '../features/science/GraphVisual';
 import '../styles/investigation-graph.css';
 import {ResearchNetworkExplorer} from './ResearchNetworkExplorer';
+import {EvidenceContextPassportView} from './EvidenceContextPassport';
 
 const pretty = (value: string) => value.replaceAll('_', ' ');
 const models: Record<string, string> = {
@@ -844,44 +845,9 @@ export function InvestigationGraphExperience({ embedded = false }: { embedded?: 
                   ? 'Negative finding. Do not turn it into positive support.'
                   : 'Candidate assertion; not an approved mechanism.'}
               </p>
-              <dl>
-                <dt>Direction and meaning</dt>
-                <dd>{edgeLabel(edge)}</dd>
-                <dt>Study model</dt>
-                <dd>{models[edge.model]}</dd>
-                <dt>Study design</dt>
-                <dd>{edge.design}</dd>
-                {(
-                  ['tissue', 'population', 'assay', 'timepoint', 'intervention', 'outcome'] as const
-                ).map((k) => (
-                  <div key={k}>
-                    <dt>{k}</dt>
-                    <dd>{missing(edge[k])}</dd>
-                  </div>
-                ))}
-                <dt>Dose / units</dt>
-                <dd>Not extracted in this snapshot</dd>
-                <dt>Cell type / state context</dt>
-                <dd>
-                  Not extracted as structured study context; graph entity labels do not supply it.
-                </dd>
-                <dt>Phenotype / disease stage</dt>
-                <dd>Not extracted in this snapshot</dd>
-                <dt>Sample size / cohort size</dt>
-                <dd>Not extracted in this snapshot</dd>
-                <dt>Controls</dt>
-                <dd>Not extracted in this snapshot</dd>
-                <dt>Quantitative uncertainty</dt>
-                <dd>
-                  Not extracted; no effect estimate, interval or calibrated confidence is inferred.
-                </dd>
-                <dt>Annotation basis</dt>
-                <dd>{pretty(edge.contextStatus)}</dd>
-                <dt>Limits</dt>
-                <dd>{edge.limitations}</dd>
-                <dt>Review</dt>
-                <dd>Unreviewed · confidence not calibrated</dd>
-              </dl>
+              <p>Direction and meaning: {edgeLabel(edge)}</p>
+              <EvidenceContextPassportView edge={edge} heading="Evidence context passport" headingLevel={3}/>
+              <p>Review: Unreviewed · confidence not calibrated</p>
               {edge.scopeWarnings.map((w) => (
                 <p className="ig-warning" key={w}>
                   {w}
