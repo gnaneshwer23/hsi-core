@@ -19,7 +19,7 @@ describe("isolation probe catalog (A3.2)",()=>{
   const{missing,covered,httpExcluded}=catalogCoverage();
   expect(missing).toEqual([]);
   expect(covered.length).toBe(PERSISTENCE_SECURITY_CHECKS.length);
-  expect(new Set(httpExcluded)).toEqual(HTTP_EXCLUDED_CHECKS);
+  expect([...httpExcluded].sort()).toEqual([...HTTP_EXCLUDED_CHECKS].sort());
   for(const check of httpExcluded)expect(evidenceKindForCheck(check)).not.toBe("authenticated_http");
  });
 
