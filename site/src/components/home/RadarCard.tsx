@@ -3,6 +3,7 @@ import {Icon} from "./AppIcons";
 import {renderDigestMarkdown,type RadarResult} from "../../../../src/investigation/radar";
 import type {Profile} from "../../lib/researchHome";
 import {useRadar} from "../../lib/useRadar";
+import {RelatedWorksPanel} from "../RelatedWorksPanel";
 
 function Spark({trend,topic}:{trend:{year:number;count:number}[];topic:string}){
  const w=160,h=44,max=Math.max(...trend.map(t=>t.count),1),pts=trend.map((t,i)=>[i*(w-8)/(trend.length-1)+4,h-4-(t.count/max)*(h-10)] as const);
@@ -52,6 +53,13 @@ export function RadarCard({profile,ready}:{profile:Profile;ready:boolean}){
        {d.own.unresolved.length>0&&<p className="rh-note">Not resolved: {d.own.unresolved.join(", ")}</p>}</details></>}
     </article>}
    </div>}
+   {d&&d.own.papers[0]&&(
+    <RelatedWorksPanel
+     doi={d.own.papers[0].doi}
+     pmid={d.own.papers[0].pmid}
+     openalexSourceId={d.own.papers[0].provider==="openalex"?d.own.papers[0].sourceId:null}
+    />
+   )}
    {d&&<p className="rh-note">{d.note} Cadence: {profile.cadence==="off"?"manual":profile.cadence}; the radar refreshes when you open HSI. Email delivery is not available yet.</p>}
   </section>
  );
