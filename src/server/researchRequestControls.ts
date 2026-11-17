@@ -9,6 +9,8 @@ export function researchRouteGroup(request:Request):ResearchRouteGroup{
  if(["/api/research/health","/api/research/live","/api/research/configuration","/api/research/ready"].includes(p))return "health";
  if(p==="/api/auth/diagnostics"||p==="/api/research/session-diagnostics")return "diagnostics";
  if(p.startsWith("/api/auth/"))return "auth";
+ // Ask is a spend surface: share the research_write process/shared budget with live-investigation and other writes.
+ if(p==="/api/ask")return "research_write";
  if(p.startsWith("/api/research/"))return request.method==="GET"?"research_read":"research_write";
  return "other";
 }
