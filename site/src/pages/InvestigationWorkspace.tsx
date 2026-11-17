@@ -9,6 +9,7 @@ import {useRunGapTracking} from "../lib/useRunGapTracking";
 import {useLedger} from "../lib/useLedger";
 import {fromRunHypothesis} from "../../../src/investigation/hypothesisLedger";
 import {useLiveRun} from "../lib/useLiveRun";
+import {HowProducedPanel} from "../components/HowProducedPanel";
 import {BUCKET_LABEL,bucketOf,buildGraph,counts,filterCandidates,headline,stageRail,yearOf,type Bucket,type Cand,type EdgeState,type Run} from "../lib/workspaceView";
 import "../styles/investigation-workspace-app.css";
 
@@ -86,6 +87,10 @@ export function InvestigationWorkspacePage(){
      </dl>
     </header>
     <Rail run={state==="running"?null:run} running={state==="running"}/>
+    <HowProducedPanel
+     className="rh-trace ws-produced"
+     source={state==="running"?{kind:"running"}:run?{kind:"live",run}:null}
+    />
 
     <div className="ws-cols">
      <section className="ws-card" aria-labelledby="ws-ev-h">

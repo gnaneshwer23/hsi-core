@@ -1,17 +1,14 @@
 import {useEffect,useState} from "react";
+import {HowProducedPanel} from "./HowProducedPanel";
+import type {RelatedWorksResult} from "../../../src/evidence/openAlexRelatedWorks";
 
-type RelatedRow={
- title:string;sourceId:string;url:string;doi:string|null;pmid:string|null;
- date:string|null;journal:string|null;citedBy:number|null;
- retraction:"flagged"|"not_flagged_by_provider"|"unknown";preprint:boolean;
-};
 type RelatedPayload={
- status:"ok"|"seed_not_found"|"failed";
+ status:RelatedWorksResult["status"];
  error:string|null;
- seed:{title:string;sourceId:string;url:string;doi:string|null;pmid:string|null}|null;
- related:RelatedRow[];
- unresolvedRelatedIds?:string[];
  note:string;
+ seed:{title:string;sourceId:string;url:string;doi:string|null;pmid:string|null}|null;
+ related:RelatedWorksResult["related"];
+ unresolvedRelatedIds?:string[];
 };
 
 function seedFromIds(doi?:string|null,pmid?:string|null,openalexSourceId?:string|null):string|null{
@@ -109,6 +106,22 @@ export function RelatedWorksPanel({
    )}
    {data&&data.related.length===0&&!loading&&!error&&<p className="rh-note">OpenAlex listed no resolvable related works for this seed.</p>}
    {data?.note&&<p className="rh-note">{data.note}</p>}
+   {data&&(
+    <HowProducedPanel
+     source={{
+      kind:"related-works",
+      run:{
+       schemaVersion:"hsi-related-works-1",
+       status:data.status,
+       error:data.error,
+       seed:data.seed?{...data.seed,date:null,journal:null,citedBy:null,retraction:"unknown",preprint:false,relatedWorkIds:[]}:null,
+       related:data.related.map(r=>({...r,relation:"openalex_related_works" as const})),
+       unresolvedRelatedIds:data.unresolvedRelatedIds??[],
+       note:data.note,
+      },
+     }}
+    />
+   )}
   </section>
  );
 }
