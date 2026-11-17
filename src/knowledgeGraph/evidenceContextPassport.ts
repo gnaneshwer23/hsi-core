@@ -75,7 +75,7 @@ const MODEL_LABEL:Record<DomainModel,string>={
  unspecified:"Not stated",
 };
 
-const EDGE_LABELS:Record<EdgePassportField,string>={
+export const EDGE_LABELS:Record<EdgePassportField,string>={
  studySystem:"Study system",
  design:"Study design",
  tissue:"Tissue",
