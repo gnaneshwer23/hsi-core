@@ -1,0 +1,21 @@
+.ecp{margin:16px 0;padding:14px 16px;border:1px solid #c9d4d9;border-radius:12px;background:#fff;color:#09131d}
+.ecp-kicker{margin:0 0 4px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#3d4d57;font-weight:600}
+.ecp h3,.ecp h4{margin:0 0 8px;color:#09131d}
+.ecp-summary{margin:0 0 12px;font-size:14px;color:#2a3a44;line-height:1.5}
+.ecp-list{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.ecp-row{display:grid;grid-template-columns:minmax(8rem,12rem) minmax(5rem,7rem) 1fr;gap:10px;align-items:start;padding:8px 10px;border:1px solid #e3eaed;border-radius:8px;background:#f8fbfb}
+.ecp-label{font-weight:600;color:#09131d}
+.ecp-status{font-size:12px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:#3d4d57}
+.ecp-status[data-status=reported]{color:#0f5c4c}
+.ecp-status[data-status=not_stated],.ecp-status[data-status=not_extracted]{color:#9a4a13}
+.ecp-status[data-status=not_applicable]{color:#5c6b74}
+.ecp-value{font-size:14px;color:#2a3a44;line-height:1.45}
+.ecp-value[data-missing=true]{color:#5c6b74;font-style:italic}
+.ecp-missing{margin:12px 0 0;font-size:13px;color:#3d4d57}
+.ecp-note{margin:10px 0 0;font-size:13px;color:#3d4d57}
+.ecp-btn{margin-top:12px;min-height:44px;padding:0 16px;border:1px solid #143b43;border-radius:999px;background:#fff;color:#143b43;font:inherit;font-weight:550;cursor:pointer}
+.ecp-btn:hover{background:#e6f1f0}
+.ecp-btn:focus-visible{outline:3px solid #2f8f88;outline-offset:3px}
+@media (max-width:640px){
+ .ecp-row{grid-template-columns:1fr;gap:4px}
+}

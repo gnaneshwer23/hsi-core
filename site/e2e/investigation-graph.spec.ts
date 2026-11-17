@@ -61,7 +61,7 @@ test('path step exposes actual source, context, missingness and exports a pinned
   const edge = bundle.edges.find((e: any) => e.id === id);
   const inspector = page.getByRole('complementary', { name: 'Investigation evidence inspector' });
   await expect(inspector).toContainText(edge.assertion);
-  await expect(inspector).toContainText('Not extracted in this snapshot');
+  await expect(inspector).toContainText('Not extracted in this graph snapshot');
   await expect(inspector).toContainText('Unreviewed');
   await expect(inspector).toContainText('No current clearance receipt');
   const source = bundle.sources.find((s: any) => s.id === edge.sourceId);

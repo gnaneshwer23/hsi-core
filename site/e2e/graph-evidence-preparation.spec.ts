@@ -4,6 +4,9 @@ test('research inspector and export preserve selected evidence-preparation block
  await page.goto('/research/knowledge-graph?edge=DIAB-001');
  await expect(page.locator('h1')).toHaveText('Investigate a biological connection.');
  const assertion=page.getByRole('region',{name:'Selected assertion evidence'});
+ await expect(assertion.getByRole('heading',{name:/Evidence context passport/i})).toBeVisible();
+ await expect(assertion).toContainText('Explicitly missing');
+ await expect(assertion).toContainText('Not extracted');
  await assertion.getByText('Evidence preparation requirements',{exact:true}).click();
  await expect(assertion).toContainText('current permitted use');
  await expect(assertion).toContainText('controls and estimand require passage-linked curation');

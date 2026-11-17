@@ -4,6 +4,7 @@ import {DEPARTMENT_SLUGS,crossDepartmentPaths,departmentCoverage,projectDepartme
 import {departmentBySlug} from "../lib/departments";
 import {GraphInvestigation} from "./GraphInvestigation";
 import {ContextBreakdownView} from "./ContextBreakdownView";
+import {EvidenceContextPassportView} from "./EvidenceContextPassport";
 import "../styles/department-lens.css";
 import "../styles/graph-investigation.css";
 import "../styles/context-breakdown.css";
@@ -22,15 +23,8 @@ function Dossier({bundle,edge,onClose,onAdd,added}:{bundle:DomainBundle;edge:Dom
   <dl className="dl-facts">
    <div><dt>Recorded as</dt><dd>{edge.kind==="research_gap"?"Unresolved research connection (a question, not evidence)":"Source-linked candidate"}</dd></div>
    <div><dt>Predicate</dt><dd>{pretty(edge.predicate)}{edge.negated?" (negative finding)":""}</dd></div>
-   <div><dt>Study model</dt><dd>{MODEL_LABEL[edge.model]??edge.model}</dd></div>
-   <div><dt>Design</dt><dd>{edge.design}</dd></div>
-   <div><dt>Tissue</dt><dd>{edge.tissue??"Not reported"}</dd></div>
-   <div><dt>Population</dt><dd>{edge.population??"Not reported"}</dd></div>
-   <div><dt>Assay</dt><dd>{edge.assay??"Not reported"}</dd></div>
-   <div><dt>Intervention and outcome</dt><dd>{[edge.intervention,edge.outcome].filter(Boolean).join(" → ")||"Not reported"}</dd></div>
-   <div><dt>Disease contexts</dt><dd>{edge.conditions.length?edge.conditions.join(", "):"None recorded"}</dd></div>
-   <div><dt>Limitations</dt><dd>{edge.limitations||"None recorded"}</dd></div>
   </dl>
+  <EvidenceContextPassportView edge={edge} heading="Evidence context passport for this relationship"/>
   {edge.scopeWarnings.length>0&&<><h4>Scope warnings</h4><ul>{edge.scopeWarnings.map(w=><li key={w}>{w}</li>)}</ul></>}
   <h4>Source</h4>
   {source?<p><a href={source.url} target="_blank" rel="noopener noreferrer">{source.title}</a><br/>{source.pmid?`PMID ${source.pmid}`:source.doi} · {pretty(source.identityStatus)} · rights {pretty(source.rights)}</p>:<p>No source record is attached. This is a recorded question, not a finding.</p>}
