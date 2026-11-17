@@ -98,6 +98,7 @@
     "status:write": "bun scripts/generate-status.ts",
     "status:check": "bun scripts/generate-status.ts --check",
     "copy:check": "bun scripts/check-public-copy.ts",
+    "audit:ci": "bun --no-env-file scripts/ci-bun-audit.ts",
     "sources:init": "bun src/cli/source-registry.ts init",
     "sources:import": "bun src/cli/source-registry.ts import",
     "test": "bun test ./test",
