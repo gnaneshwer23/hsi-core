@@ -10,7 +10,7 @@ const g=parseDomainBundle(JSON.parse(readFileSync(resolve("research/domain-graph
 describe("departments are projections of one graph",()=>{
  test("coverage equals the real graph and the public department pages (one source of truth)",()=>{
   const c=departmentCoverage(g);
-  expect(c.departments.map(d=>[d.department,d.concepts])).toEqual([["immunology",127],["neuroscience",35],["microbiome",38],["metabolism",47],["genomics-multi-omics",0],["human-physiology",0]]);
+  expect(c.departments.map(d=>[d.department,d.concepts])).toEqual([["immunology",130],["neuroscience",35],["microbiome",42],["metabolism",51],["genomics-multi-omics",0],["human-physiology",0]]);
   for(const d of departments)expect(d.graphConcepts,d.slug).toBe(c.departments.find(x=>x.department===d.slug)!.concepts);
   expect(departments.every(d=>d.graphTags===DEPARTMENT_TAGS[d.slug as keyof typeof DEPARTMENT_TAGS])).toBe(true);
  });
