@@ -28,15 +28,34 @@ test("mobile menu opens, closes with Escape and connects public destinations",as
  await expect(page.getByRole("heading",{level:1})).toContainText("How HSI works");
 });
 test("public access paths lead to the real account process without a pretend submission",async({page})=>{
- const posts:string[]=[];page.on("request",r=>{if(r.method()==="POST")posts.push(r.url())});await page.goto("/pricing");await expect(page).toHaveURL(/contact$/);
+ const posts:string[]=[];page.on("request",r=>{if(r.method()==="POST")posts.push(r.url())});
+ await page.route("**/api/access-requests",async r=>{
+  if(r.request().method()==="GET")return r.fulfill({json:{deliveryConfigured:false,note:"stub"}});
+  return r.fulfill({status:503,json:{code:"ACCESS_REQUEST_NOT_CONFIGURED",error:"not configured"}});
+ });
+ await page.goto("/pricing");await expect(page).toHaveURL(/contact$/);
  await expect(page.getByRole("main")).toContainText("permissions are provisioned independently");
- await expect(page.getByRole("main")).toContainText("does not write an access request");
+ await expect(page.getByRole("main")).toContainText("never claims operator receipt unless the server reports provider acceptance");
  await expect(page.getByRole("heading",{name:/Keep a browser draft of your question/i})).toHaveCount(1);
  await page.getByLabel(/Research question or investigation focus/i).fill("How might cytokine signalling vary across tissues in research models?");
- await page.getByRole("button",{name:/Save browser draft/i}).click();
+ await page.getByRole("button",{name:/Save browser draft/i}).first().click();
  await expect(page.getByRole("status")).toContainText("Saved in this browser only");
  expect(posts).toEqual([]);
  await page.getByRole("link",{name:"Create an account",exact:true}).first().click();await expect(page).toHaveURL(/sign-up/);expect(posts).toEqual([]);
+});
+test("configured access request delivery posts once and only claims success after the server confirms",async({page})=>{
+ const posts:string[]=[];
+ await page.route("**/api/access-requests",async r=>{
+  if(r.request().method()==="GET")return r.fulfill({json:{deliveryConfigured:true}});
+  posts.push(r.request().url());
+  return r.fulfill({json:{ok:true,providerAccepted:true,delivered:true,note:"Accepted by the configured notification provider. Operator inbox receipt is not confirmed by this response. This does not grant research access or enable writes."}});
+ });
+ await page.goto("/contact");
+ await expect(page.getByRole("heading",{name:/Request research access/i})).toHaveCount(1);
+ await page.getByLabel(/Research question or investigation focus/i).fill("How might cytokine signalling vary across tissues in research models?");
+ await page.getByRole("button",{name:/Send access request/i}).click();
+ await expect(page.getByRole("status")).toContainText("Accepted by the configured notification provider");
+ expect(posts).toHaveLength(1);
 });
 test("research dashboard shows backend-controlled empty and denied states without fake activity",async({page})=>{
  await page.route("**/api/research/investigations",r=>r.fulfill({json:{items:[],releases:[],nextCursor:null,writesEnabled:false,canCreate:false}}));await page.goto("/research/dashboard");await expect(page.getByRole("heading",{name:"Your saved investigations",exact:true})).toBeVisible();await expect(page.getByRole("button",{name:"Create and save investigation",exact:true})).toBeDisabled();await expect(page.getByRole("main")).toContainText("New investigations are not enabled");
