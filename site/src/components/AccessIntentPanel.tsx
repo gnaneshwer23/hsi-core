@@ -1,4 +1,4 @@
-import {useEffect,useState,type FormEvent} from "react";
+import {useEffect,useRef,useState,type FormEvent} from "react";
 import {Link,useSearchParams} from "react-router-dom";
 import {
   clearAccessIntent,
@@ -10,9 +10,11 @@ import {
   type AccessIntentDraft,
 } from "../lib/researchContext";
 
+type DeliveryStatus="loading"|"configured"|"unavailable"|"unknown";
+
 /**
- * Research access intent — browser draft only.
- * Server-side access-request persistence is BLOCKED (grants are admin-provisioned).
+ * Research access intent: browser draft always available; optional server delivery when configured.
+ * Success copy only after the server reports provider acceptance. Grants remain admin-provisioned.
  */
 export function AccessIntentPanel(){
   const [params]=useSearchParams();
@@ -20,8 +22,12 @@ export function AccessIntentPanel(){
   const scenario=params.get(RESEARCH_CONTEXT_KEYS.scenario)??"";
   const [question,setQuestion]=useState("");
   const [emailHint,setEmailHint]=useState("");
+  const [honeypot,setHoneypot]=useState("");
   const [draft,setDraft]=useState<AccessIntentDraft|null>(null);
   const [status,setStatus]=useState("");
+  const [deliveryStatus,setDeliveryStatus]=useState<DeliveryStatus>("loading");
+  const [busy,setBusy]=useState(false);
+  const statusAttempts=useRef(0);
 
   useEffect(()=>{
     const existing=readAccessIntent();
@@ -32,21 +38,105 @@ export function AccessIntentPanel(){
     }
   },[]);
 
-  function save(e:FormEvent){
-    e.preventDefault();
+  useEffect(()=>{
+    const controller=new AbortController();
+    void (async()=>{
+      try{
+        const r=await fetch("/api/access-requests",{signal:controller.signal});
+        const b:unknown=await r.json();
+        if(controller.signal.aborted)return;
+        const record=b&&typeof b==="object"&&!Array.isArray(b)?b as Record<string,unknown>:{};
+        if(r.ok&&record.deliveryConfigured===true)setDeliveryStatus("configured");
+        else if(r.ok)setDeliveryStatus("unavailable");
+        else setDeliveryStatus("unknown");
+      }catch{
+        if(controller.signal.aborted)return;
+        // Fail closed to draft-only so the contact page stays usable without a second identical Save control.
+        statusAttempts.current+=1;
+        setDeliveryStatus("unavailable");
+      }
+    })();
+    return ()=>controller.abort();
+  },[]);
+
+  const deliveryConfigured=deliveryStatus==="configured";
+
+  function saveDraft(e?:FormEvent){
+    e?.preventDefault();
     const trimmed=question.trim();
     if(trimmed.length<12){
       setStatus("Describe your research question in at least 12 characters.");
       return;
     }
-    const saved=writeAccessIntent({
-      question:trimmed,
-      domain:domain||undefined,
-      scenarioId:scenario||undefined,
-      emailHint:emailHint||undefined,
-    });
-    setDraft(saved);
-    setStatus("Saved in this browser only. No access request was sent to HSI servers.");
+    try{
+      const saved=writeAccessIntent({
+        question:trimmed,
+        domain:domain||undefined,
+        scenarioId:scenario||undefined,
+        emailHint:emailHint||undefined,
+      });
+      setDraft(saved);
+      setStatus("Saved in this browser only. No access request was sent to HSI servers.");
+    }catch{
+      setStatus("Could not save a browser draft in this session. Your question was not sent.");
+    }
+  }
+
+  async function sendRequest(e:FormEvent){
+    e.preventDefault();
+    const trimmed=question.trim();
+    const emailSnapshot=emailHint;
+    const honeypotSnapshot=honeypot;
+    if(trimmed.length<12){
+      setStatus("Describe your research question in at least 12 characters.");
+      return;
+    }
+    if(!deliveryConfigured){
+      saveDraft();
+      return;
+    }
+    setBusy(true);
+    try{
+      const response=await fetch("/api/access-requests",{
+        method:"POST",
+        headers:{"content-type":"application/json"},
+        body:JSON.stringify({
+          question:trimmed,
+          email:emailSnapshot||undefined,
+          domain:domain||undefined,
+          scenarioId:scenario||undefined,
+          company_website:honeypotSnapshot,
+        }),
+      });
+      const data:unknown=await response.json().catch(()=>({}));
+      const record=data&&typeof data==="object"&&!Array.isArray(data)?data as Record<string,unknown>:{};
+      if(response.ok&&(record.providerAccepted===true||record.delivered===true)){
+        try{
+          writeAccessIntent({
+            question:trimmed,
+            domain:domain||undefined,
+            scenarioId:scenario||undefined,
+            emailHint:emailSnapshot||undefined,
+          });
+          setDraft(readAccessIntent());
+        }catch{
+          // Browser draft is optional after provider acceptance.
+        }
+        setQuestion(trimmed);
+        setEmailHint(emailSnapshot);
+        setStatus(typeof record.note==="string"?record.note:"Accepted by the notification provider. Operator receipt is not confirmed. This does not grant research access.");
+        return;
+      }
+      if(response.status===503||record.code==="ACCESS_REQUEST_NOT_CONFIGURED"){
+        setDeliveryStatus("unavailable");
+        saveDraft();
+        setStatus("Delivery is not configured on this deployment. Saved a browser draft instead; nothing was sent.");
+        return;
+      }
+      setStatus(typeof record.error==="string"?record.error:"The access request could not be accepted by the notification provider. Nothing was claimed as delivered.");
+    }catch{
+      setStatus("The access request could not be accepted by the notification provider. Nothing was claimed as delivered.");
+    }finally{setBusy(false)}
   }
 
   function clear(){
@@ -57,6 +147,20 @@ export function AccessIntentPanel(){
     setStatus("Browser draft cleared.");
   }
 
+  async function retryStatus(){
+    setDeliveryStatus("loading");
+    try{
+      const r=await fetch("/api/access-requests");
+      const b:unknown=await r.json();
+      const record=b&&typeof b==="object"&&!Array.isArray(b)?b as Record<string,unknown>:{};
+      if(r.ok&&record.deliveryConfigured===true)setDeliveryStatus("configured");
+      else if(r.ok)setDeliveryStatus("unavailable");
+      else setDeliveryStatus("unknown");
+    }catch{
+      setDeliveryStatus("unknown");
+    }
+  }
+
   const continueSignUp=signUpHref({
     next:"/research/account",
     domain:domain||draft?.domain,
@@ -64,14 +168,26 @@ export function AccessIntentPanel(){
   });
   const continueSignIn=signInHref("/research/account");
 
+  const heading=
+    deliveryStatus==="loading"?"Checking access-request delivery…":
+    deliveryConfigured?"Request research access":
+    deliveryStatus==="unknown"?"Access request status unavailable":
+    "Keep a browser draft of your question";
+
   return <section className="xp-access-intent" aria-labelledby="access-intent-heading">
-    <h3 id="access-intent-heading">Keep a browser draft of your question</h3>
+    <h3 id="access-intent-heading">{heading}</h3>
     <p className="ed-scope-line" role="note">
-      Server-side access-request storage is not available on the public site.
-      Grants in <code>hsi_research_access</code> are provisioned by an administrator after you create a verified account.
-      This form keeps a browser-only draft so you do not lose your question across sign-up.
+      {deliveryStatus==="loading"
+        ?"Checking whether this deployment can accept access requests through a notification provider."
+        :deliveryConfigured
+        ?"When delivery is configured, sending asks the notification provider to accept the enquiry. Operator inbox receipt is not confirmed here. Grants in hsi_research_access are still provisioned by an administrator after you create a verified account."
+        :deliveryStatus==="unknown"
+        ?"Could not confirm whether server delivery is configured. You can still save a browser-only draft, or retry the status check."
+        :"Server delivery is not configured on this deployment. This form keeps a browser-only draft so you do not lose your question across sign-up. Nothing is emailed until an operator enables delivery."}
+      {" "}Grants in <code>hsi_research_access</code> are provisioned by an administrator after you create a verified account.
     </p>
-    <form className="xp-form" onSubmit={save} noValidate>
+    {deliveryStatus==="unknown"?<p><button className="xp-button" type="button" onClick={()=>void retryStatus()}>Retry delivery status</button></p>:null}
+    <form className="xp-form" onSubmit={deliveryConfigured?sendRequest:saveDraft} noValidate>
       <label htmlFor="access-intent-question">Research question or investigation focus</label>
       <textarea
         id="access-intent-question"
@@ -81,6 +197,7 @@ export function AccessIntentPanel(){
         rows={4}
         value={question}
         onChange={e=>setQuestion(e.target.value)}
+        disabled={busy}
         aria-describedby="access-intent-hint"
         aria-invalid={status.includes("at least 12")?true:undefined}
       />
@@ -88,7 +205,7 @@ export function AccessIntentPanel(){
         Optional context carried from the site: domain={domain||"none"} · scenario={scenario||"none"}.
         No personal health information.
       </p>
-      <label htmlFor="access-intent-email">Email (optional, stored only in this browser)</label>
+      <label htmlFor="access-intent-email">Email (optional{deliveryConfigured?", included if you send a request":", stored only in this browser"})</label>
       <input
         id="access-intent-email"
         type="email"
@@ -96,10 +213,27 @@ export function AccessIntentPanel(){
         value={emailHint}
         onChange={e=>setEmailHint(e.target.value)}
         autoComplete="email"
+        disabled={busy}
+      />
+      {/* Honeypot for bots; visually hidden. */}
+      <label className="xp-honeypot" htmlFor="access-intent-company" style={{position:"absolute",left:"-10000px",width:1,height:1,overflow:"hidden"}}>Company website</label>
+      <input
+        id="access-intent-company"
+        name="company_website"
+        tabIndex={-1}
+        autoComplete="off"
+        value={honeypot}
+        onChange={e=>setHoneypot(e.target.value)}
+        style={{position:"absolute",left:"-10000px",width:1,height:1,overflow:"hidden"}}
       />
       <div className="xp-actions">
-        <button className="xp-button" type="submit">Save browser draft</button>
-        {draft?<button className="xp-button xp-button-secondary" type="button" onClick={clear}>Clear draft</button>:null}
+        {deliveryConfigured
+          ?<>
+            <button className="xp-button" type="submit" disabled={busy}>{busy?"Sending…":"Send access request"}</button>
+            <button className="xp-button xp-button-secondary" type="button" onClick={()=>saveDraft()} disabled={busy}>Save browser draft</button>
+          </>
+          :<button className="xp-button" type="submit" disabled={busy||deliveryStatus==="loading"}>Save browser draft</button>}
+        {draft?<button className="xp-button xp-button-secondary" type="button" onClick={clear} disabled={busy}>Clear draft</button>:null}
       </div>
     </form>
     {status?<p role="status">{status}</p>:null}
