@@ -1,6 +1,7 @@
 # HSI next GitHub build plan
 
 **Date:** 17 November 2026 (Europe/London)  
+**Updated:** 17 November 2026 22:10 Europe/London — Wave A progress + next queue  
 **Status:** operating plan for continuous PR delivery  
 **Governs against:** `docs/strategy/HSI_VISION.md`, Engineering Pack v1.1 (`docs/engineering-pack/`), `docs/STATUS.md`, `docs/audits/HSI_IMPLEMENTATION_TRUTH_AND_NEXT_PRS.md`  
 **Does not authorise:** Gate C auto-approve, production write enablement, applying held migrations without independent DB review, live CDS/PHI, or claiming scientific accuracy before adjudicated cases exist.
@@ -25,63 +26,109 @@ Keep shipping small, mergeable PRs to `main` that finish and prove what already 
 
 ---
 
-## Track 0 — Land what is already open (this week)
+## Landed on `main` (17 Nov 2026)
+
+| Id | PR | Notes |
+| --- | --- | --- |
+| Track 0.1 | [#440](https://github.com/gnaneshwer23/hsi-core/pull/440) | KG-03 slice 2 |
+| Track 0.2 | [#430](https://github.com/gnaneshwer23/hsi-core/pull/430) | Sticky-header a11y |
+| Conflict bench harness | [#444](https://github.com/gnaneshwer23/hsi-core/pull/444) | Fixture path |
+| **A1.1** | [#446](https://github.com/gnaneshwer23/hsi-core/pull/446) | Shared Ask / live-investigation rate limiter |
+| **A1.4** | [#447](https://github.com/gnaneshwer23/hsi-core/pull/447) | No browser-side providers (ING-01) |
+| **A1.5** | [#448](https://github.com/gnaneshwer23/hsi-core/pull/448) | Access request with honest delivery |
+| **A2.1** | [#449](https://github.com/gnaneshwer23/hsi-core/pull/449) | Evidence Context Passport UI |
+| **A2.2** | [#450](https://github.com/gnaneshwer23/hsi-core/pull/450) | Same / Across / Unknown conflict labels |
+| **A2.3** | [#451](https://github.com/gnaneshwer23/hsi-core/pull/451) | D-01 slice entity audit |
+| **A2.4** | [#452](https://github.com/gnaneshwer23/hsi-core/pull/452) | Curator context completion sheet |
+| **A4.1** | [#454](https://github.com/gnaneshwer23/hsi-core/pull/454) | Label vault layout + CLI |
+| **A4.2** | [#456](https://github.com/gnaneshwer23/hsi-core/pull/456) | `conflict:bench:expert` vault path |
+| **A5.2** | [#455](https://github.com/gnaneshwer23/hsi-core/pull/455) | Passport-column evidence table |
+
+**In flight (merge when CI green):** [#457](https://github.com/gnaneshwer23/hsi-core/pull/457) A5.1 related papers; [#453](https://github.com/gnaneshwer23/hsi-core/pull/453) A3.1 ADR-011–014 as **Proposed** (not Accepted).
+
+**Still owner-only open:** [#442](https://github.com/gnaneshwer23/hsi-core/pull/442) source clearance; [#371](https://github.com/gnaneshwer23/hsi-core/pull/371) editorial redesign.
+
+---
+
+## Next builds (ordered)
+
+Agent-shippable next, once A5.1 + A3.1 are on `main`:
+
+| Order | Id | Branch | Scope | Depends on | Done when |
+| --- | --- | --- | --- | --- | --- |
+| 1 | **A5.3** | `cursor/ux-how-produced-trace-2f71` | “How this was produced” panel from real run / radar / related-works records | Live run + A5.1/A5.2 on main | No fake progress; links STATUS maturity; fail-closed when no run |
+| 2 | **A3.2** | `cursor/db-isolation-suite-2f71` | Two-account isolation harness on disposable Neon branch | A3.1 Proposed on main | Suite green on rehearsal; production untouched; no hold lifts |
+| 3 | **A3.3** | `cursor/db-graph-workspace-adapter-wire-2f71` | Graph-workspace store behind feature flag (default off) | A3.2 | Flag off = localStorage; flag on = staging server path only |
+| 4 | **A4.3** | `cursor/bench-immuno-dev-set-tooling-2f71` | Import/validate founder immuno development set into vault | Owner drafts cases offline | Schema validates; scoring blocked until B4 floors |
+| 5 | **A1.3** | `cursor/ops-error-alerts-2f71` | Error tracking + four alerts docs / dry-run notes | A1.2 optional | Documented; no invented on-call delivery |
+
+**Blocked on Track B (do not invent):**
+
+| Id | Blocker | Unblocks |
+| --- | --- | --- |
+| **A1.2** | B5 numeric spend caps + model deployment choices | Kill switch + recorded caps |
+| **C1–C6** | B3 reviewers + filled A2.4 sheet | First reviewed slice |
+| Production writes / held migrations | B1 + B2 | Live passages; Neon apply |
+
+### Why this order
+
+- **A5.3** finishes Wave A5 honesty UX while the live surfaces are hot (radar, related works, evidence table).
+- **A3.2 → A3.3** continues persistence prep without applying held SQL.
+- **A4.3** only after founder has offline cases; otherwise skip.
+- **A1.2** waits for owner caps; **A1.3** can soft-land docs-only if needed.
+
+---
+
+## Track 0 — remaining open
 
 | Order | PR | Action | Exit |
 | --- | --- | --- | --- |
-| 0.1 | [#440](https://github.com/gnaneshwer23/hsi-core/pull/440) KG-03 slice 2 | Merge when checks green | Study-system rule + graph version on `main` |
-| 0.2 | [#430](https://github.com/gnaneshwer23/hsi-core/pull/430) sticky-header a11y | Merge when checks green | WCAG focus guard on research shell |
 | 0.3 | [#442](https://github.com/gnaneshwer23/hsi-core/pull/442) source clearance draft | Owner decision only — do not “implement around” it | Signed policy or explicit defer note |
 | 0.4 | [#371](https://github.com/gnaneshwer23/hsi-core/pull/371) editorial redesign | Leave draft until owner screenshot review | No merge without explicit OK |
 
 ---
 
-## Track A — Agent-shippable engineering PRs (continuous)
-
-These can land without waiting for SMEs. Sequence matters where noted.
+## Track A — full map (status)
 
 ### Wave A1 — Trustworthy live surface (Pack Phase 0)
 
-| PR id | Branch suggestion | Scope | Depends on | Done when |
-| --- | --- | --- | --- | --- |
-| **A1.1** | `cursor/sec-rate-limit-ask-2f71` | Shared rate limiter for Ask / research routes (SEC-01) | — | Routes share limits; tests for burst + cross-route |
-| **A1.2** | `cursor/sec-kill-switch-caps-2f71` | Kill switch + recorded provider spend caps (SEC-02) | Owner sets numeric caps | Config + fail-closed when tripped |
-| **A1.3** | `cursor/ops-error-alerts-2f71` | Error tracking + four alerts (OPS-01/02) | A1.2 optional | Alerts documented; dry-run in staging notes |
-| **A1.4** | `cursor/ing-no-browser-providers-2f71` | Remove browser-side provider calls (ING-01) | — | No client keys; server-only |
-| **A1.5** | `cursor/ux-access-request-2f71` | Working access request (UX-02 / API-06) | — | Owner receives request; page does not claim undelivered mail |
+| PR id | Branch suggestion | Scope | Status |
+| --- | --- | --- | --- |
+| **A1.1** | `cursor/sec-rate-limit-ask-2f71` | Shared rate limiter (SEC-01) | Landed #446 |
+| **A1.2** | `cursor/sec-kill-switch-caps-2f71` | Kill switch + spend caps (SEC-02) | Blocked on B5 |
+| **A1.3** | `cursor/ops-error-alerts-2f71` | Error tracking + four alerts (OPS-01/02) | Next (soft) |
+| **A1.4** | `cursor/ing-no-browser-providers-2f71` | No browser-side providers (ING-01) | Landed #447 |
+| **A1.5** | `cursor/ux-access-request-2f71` | Working access request (UX-02 / API-06) | Landed #448 |
 
-### Wave A2 — Context productization (no rebuild)
+### Wave A2 — Context productization
 
-| PR id | Branch suggestion | Scope | Depends on | Done when |
-| --- | --- | --- | --- | --- |
-| **A2.1** | `cursor/kg-context-passport-ui-2f71` | “Evidence Context Passport” UI over existing passage-linked / edge context fields | #440 preferred | One inspectable passport per claim/edge; missing fields explicit |
-| **A2.2** | `cursor/kg-conflict-labels-copy-2f71` | Plain-language conflict labels everywhere Evidence-by-context shows | A2.1 or parallel | Same / across / unknown — never “resolved” |
-| **A2.3** | `cursor/kg-slice-entity-audit-2f71` | Audit D-01 slice entities vs published graph; add missing candidate nodes only | — | Checklist + PR adding only agreed nodes |
-| **A2.4** | `cursor/kg-context-completion-sheet-2f71` | Curator CSV/JSON sheet for tissue/population/design on D-01 candidates | A2.3 | Importable sheet; no auto-promotion |
+| PR id | Status |
+| --- | --- |
+| **A2.1–A2.4** | Landed #449–#452 |
 
 ### Wave A3 — Persistence prep (code only; apply later)
 
-| PR id | Branch suggestion | Scope | Depends on | Done when |
-| --- | --- | --- | --- | --- |
-| **A3.1** | `cursor/arch-adr-011-014-2f71` | Draft ADR-011–014 (identity, consolidation, isolation, promotion constraint) | Owner sign-off to merge | ADRs merged as accepted or proposed |
-| **A3.2** | `cursor/db-isolation-suite-2f71` | Two-account isolation test harness against disposable branch | A3.1 | Suite green on rehearsal branch; production untouched |
-| **A3.3** | `cursor/db-graph-workspace-adapter-wire-2f71` | Wire graph-workspace store behind feature flag (fail-closed default) | A3.2 | Flag off = localStorage path; flag on = server path in staging only |
+| PR id | Branch suggestion | Status |
+| --- | --- | --- |
+| **A3.1** | `cursor/arch-adr-011-014-2f71` | #453 Proposed ADRs — merge as Proposed; Accepted needs owner |
+| **A3.2** | `cursor/db-isolation-suite-2f71` | Next after A3.1 |
+| **A3.3** | `cursor/db-graph-workspace-adapter-wire-2f71` | After A3.2 |
 
 ### Wave A4 — Verification & benchmark scaffolding
 
-| PR id | Branch suggestion | Scope | Depends on | Done when |
-| --- | --- | --- | --- | --- |
-| **A4.1** | `cursor/ver-label-vault-layout-2f71` | Gitignored label vault layout + authoring CLI stubs (VER-05) | — | Structure exists; no gold in git — `evaluation/label-vault/` + `label-vault:*` CLI |
-| **A4.2** | `cursor/bench-conflict-expert-runner-2f71` | Expert-path for `conflict:bench` (private vault only) | #444 already on main | Fixture path unchanged; `conflict:bench:expert` + vault guards documented |
-| **A4.3** | `cursor/bench-immuno-dev-set-tooling-2f71` | Tooling to author founder development set without publishing floors | Owner drafts cases offline | Import validates schema; scoring blocked until floors |
+| PR id | Status |
+| --- | --- |
+| **A4.1** | Landed #454 |
+| **A4.2** | Landed #456 |
+| **A4.3** | Queued; needs owner offline cases |
 
-### Wave A5 — Competitor-inspired UX (only after A2 started)
+### Wave A5 — Competitor-inspired UX
 
-| PR id | Branch suggestion | Scope | Depends on | Done when |
-| --- | --- | --- | --- | --- |
-| **A5.1** | `cursor/ux-related-papers-2f71` | Seed-paper → related works via OpenAlex (Connected Papers–style, rights-safe) | A1.4 | Metadata-only; no invented abstracts |
-| **A5.2** | `cursor/ux-evidence-table-2f71` | Structured evidence table in investigation brief (Elicit-style columns) | A2.1 | Columns = context passport fields — Research outcomes panel + Markdown brief |
-| **A5.3** | `cursor/ux-how-produced-trace-2f71` | “How this was produced” panel from real run record | Live run path | No fake progress; links to STATUS maturity |
+| PR id | Status |
+| --- | --- |
+| **A5.1** | #457 related papers — merge when CI green after rebase |
+| **A5.2** | Landed #455 |
+| **A5.3** | **Next agent build** after A5.1 |
 
 ---
 
@@ -95,13 +142,13 @@ These can land without waiting for SMEs. Sequence matters where noted.
 | **B4** | Approve benchmark floors before scoring | Public `/benchmark` numbers |
 | **B5** | Set provider spend caps + model deployment choices | A1.2 / live verifier |
 
-Without B1–B3, keep shipping Track A; do not claim pilot readiness.
+Without B1–B3, keep shipping Track A; do not claim pilot readiness. Production remains **LIMITED GO** (public site + fail-closed shell), not full scientific platform GO.
 
 ---
 
 ## Track C — First reviewed slice (science + product)
 
-Ship as a series of PRs once A2.4 sheet is filling:
+Ship once A2.4 sheet is filling and B3 reviewers exist:
 
 | PR id | Scope |
 | --- | --- |
@@ -118,11 +165,10 @@ Ship as a series of PRs once A2.4 sheet is filling:
 
 | Week | Merge focus | Parallel owner work |
 | --- | --- | --- |
-| **W1** | Track 0 + A1.1–A1.3 | Caps, #442 decision |
-| **W2** | A1.4–A1.5 + A2.1–A2.2 | Recruit reviewers |
-| **W3** | A2.3–A2.4 + A3.1 | DB reviewer named |
-| **W4** | A3.2 + A4.1–A4.2 | Start context sheet fill |
-| **W5+** | A5.* as capacity; begin C2 when reviewers ready | Calibration / gold authoring |
+| **W1** (done) | Track 0 + A1.1 / A1.4–A1.5 + A2.* + A4.1–A4.2 + A5.1–A5.2 | Caps, #442 decision |
+| **W2** (now) | A5.3 + A3.1–A3.2 | Recruit reviewers; fill context sheet |
+| **W3** | A3.3 + A4.3 (if cases) + A1.3 | DB reviewer named; B5 caps |
+| **W4+** | Begin C2 when reviewers ready | Calibration / gold authoring |
 
 Target: **≥3 merged engineering PRs per week** on Track A while Track B is in flight.
 
@@ -142,8 +188,8 @@ Target: **≥3 merged engineering PRs per week** on Track A while Track B is in 
 
 ## How agents should pick the next PR
 
-1. If an open Track 0 PR is green and approved → merge.  
-2. Else take the lowest unfinished **A\*** id whose dependencies are met.  
+1. If an open in-flight PR is green → merge.  
+2. Else take the lowest unfinished **Next builds** row whose dependencies are met.  
 3. If blocked only on Track B → continue the next parallel **A\*** item; record the blocker in the PR body.  
 4. Never open a PR that invents reviewer identities, MoUs, or production Neon application.
 
