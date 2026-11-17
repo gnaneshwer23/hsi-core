@@ -49,7 +49,7 @@ test.describe("Departments tab on the knowledge graph",()=>{
   await page.getByRole("article",{name:"Path 1"}).getByRole("button",{name:/Inspect relationship 1/}).click();
   const d=page.getByRole("region",{name:"Relationship dossier"});
   await expect(d).toBeVisible();
-  for(const t of ["Study model","Tissue","Limitations","Review status: Unreviewed","Confidence: Not calibrated","Scientific claim: Not allowed","Other records for this pair"])await expect(d).toContainText(t);
+  for(const t of ["Study system","Tissue","Limitations","Review status: Unreviewed","Confidence: Not calibrated","Scientific claim: Not allowed","Other records for this pair"])await expect(d).toContainText(t);
   await d.getByRole("button",{name:"Close dossier"}).click();await expect(d).toHaveCount(0);
  });
 
