@@ -72,7 +72,7 @@ These can land without waiting for SMEs. Sequence matters where noted.
 | PR id | Branch suggestion | Scope | Depends on | Done when |
 | --- | --- | --- | --- | --- |
 | **A4.1** | `cursor/ver-label-vault-layout-2f71` | Gitignored label vault layout + authoring CLI stubs (VER-05) | — | Structure exists; no gold in git — `evaluation/label-vault/` + `label-vault:*` CLI |
-| **A4.2** | `cursor/bench-conflict-expert-runner-2f71` | Expert-path for `conflict:bench` (private vault only) | #444 already on main | Fixture path unchanged; expert path documented |
+| **A4.2** | `cursor/bench-conflict-expert-runner-2f71` | Expert-path for `conflict:bench` (private vault only) | #444 already on main | Fixture path unchanged; `conflict:bench:expert` + vault guards documented |
 | **A4.3** | `cursor/bench-immuno-dev-set-tooling-2f71` | Tooling to author founder development set without publishing floors | Owner drafts cases offline | Import validates schema; scoring blocked until floors |
 
 ### Wave A5 — Competitor-inspired UX (only after A2 started)
