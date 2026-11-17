@@ -1,7 +1,7 @@
 import {useMemo} from "react";
 import type {DomainBundle} from "../../../src/knowledgeGraph/domainGraph";
 import {breakdownForConcept,breakdownForPair,CONTEXT_FIELDS,exportBreakdown} from "../../../src/knowledgeGraph/contextBreakdown";
-import {assessConflict,CONFLICT_LABEL} from "../../../src/knowledgeGraph/contextConflict";
+import {assessConflict,CONFLICT_LABEL,CONFLICT_LABEL_DETAIL} from "../../../src/knowledgeGraph/contextConflict";
 
 const MODEL:Record<string,string>={human_in_vivo:"Human participants",human_ex_vivo:"Human cells (ex vivo)",human_cell_line:"Human cell line",mouse:"Mouse",rodent:"Rodent",mixed:"Mixed systems",unspecified:"Not stated"};
 const DIRECTION:Record<string,string>={reported:"Finding reported",negative:"Negative finding",mixed:"Mixed (reported and negative)"};
@@ -16,7 +16,7 @@ export function ContextBreakdownView({bundle,scope,heading,headingLevel=4}:{bund
  return <section className="cb" aria-labelledby={id}>
   <H id={id}>{heading}</H>
   <p className="cb-summary"><strong>{b.summary}</strong></p>
-  {c.classification!=="no_disagreement"&&<p className="cb-conflict" data-class={c.classification}><b>{CONFLICT_LABEL[c.classification]}.</b> {c.statement} <small>Not adjudicated.</small></p>}
+  {c.classification!=="no_disagreement"&&<p className="cb-conflict" data-class={c.classification} role="status"><b>{CONFLICT_LABEL[c.classification]}.</b> {CONFLICT_LABEL_DETAIL[c.classification]}. {c.statement} <small>Not adjudicated. No side is preferred.</small></p>}
   {b.strata.length>0&&<div className="cb-scroll" tabIndex={0} role="region" aria-label={heading+" table"}><table className="cb-table">
    <caption>Source-linked candidate records grouped by the context each one states. Counts are distinct sources, not independent studies.</caption>
    <thead><tr><th scope="col">Study system</th><th scope="col">Tissue</th><th scope="col">Population</th><th scope="col">Design</th><th scope="col">Sources</th><th scope="col">Direction</th><th scope="col">Not stated</th></tr></thead>
