@@ -51,8 +51,9 @@ export function AccessIntentPanel(){
         else setDeliveryStatus("unknown");
       }catch{
         if(controller.signal.aborted)return;
+        // Fail closed to draft-only so the contact page stays usable without a second identical Save control.
         statusAttempts.current+=1;
-        setDeliveryStatus(statusAttempts.current>=2?"unavailable":"unknown");
+        setDeliveryStatus("unavailable");
       }
     })();
     return ()=>controller.abort();
@@ -185,7 +186,7 @@ export function AccessIntentPanel(){
         :"Server delivery is not configured on this deployment. This form keeps a browser-only draft so you do not lose your question across sign-up. Nothing is emailed until an operator enables delivery."}
       {" "}Grants in <code>hsi_research_access</code> are provisioned by an administrator after you create a verified account.
     </p>
-    {deliveryStatus==="unknown"?<p><button className="xp-button xp-button-secondary" type="button" onClick={()=>void retryStatus()}>Retry delivery status</button></p>:null}
+    {deliveryStatus==="unknown"?<p><button className="xp-button" type="button" onClick={()=>void retryStatus()}>Retry delivery status</button></p>:null}
     <form className="xp-form" onSubmit={deliveryConfigured?sendRequest:saveDraft} noValidate>
       <label htmlFor="access-intent-question">Research question or investigation focus</label>
       <textarea
@@ -227,9 +228,11 @@ export function AccessIntentPanel(){
       />
       <div className="xp-actions">
         {deliveryConfigured
-          ?<button className="xp-button" type="submit" disabled={busy}>{busy?"Sending…":"Send access request"}</button>
+          ?<>
+            <button className="xp-button" type="submit" disabled={busy}>{busy?"Sending…":"Send access request"}</button>
+            <button className="xp-button xp-button-secondary" type="button" onClick={()=>saveDraft()} disabled={busy}>Save browser draft</button>
+          </>
           :<button className="xp-button" type="submit" disabled={busy||deliveryStatus==="loading"}>Save browser draft</button>}
-        <button className="xp-button xp-button-secondary" type="button" onClick={()=>saveDraft()} disabled={busy}>Save browser draft</button>
         {draft?<button className="xp-button xp-button-secondary" type="button" onClick={clear} disabled={busy}>Clear draft</button>:null}
       </div>
     </form>
