@@ -2,7 +2,7 @@ import {describe,expect,test} from "bun:test";
 import {readFileSync} from "node:fs";
 import {parseDomainBundle,type DomainBundle,type DomainEdge} from "../src/knowledgeGraph/domainGraph";
 import {breakdownForPair} from "../src/knowledgeGraph/contextBreakdown";
-import {assessConflict} from "../src/knowledgeGraph/contextConflict";
+import {assessConflict,CONFLICT_LABEL,CONFLICT_LABEL_DETAIL} from "../src/knowledgeGraph/contextConflict";
 
 const g=parseDomainBundle(JSON.parse(readFileSync("research/domain-graph/graph.v1.json","utf8")));
 const cand=g.edges.filter(e=>e.kind==="source_candidate");
@@ -25,15 +25,30 @@ describe("context conflict classification",()=>{
  });
  test("directions that differ only across fully stated contexts are context-separated, never resolved",()=>{
   const r=run([{...H,negated:false,sourceId:"a"},{...M,negated:true,sourceId:"b"}]);
-  expect(r.classification).toBe("context_separated_disagreement");expect(r.statement).toContain("has not been explained or resolved");
+  expect(r.classification).toBe("context_separated_disagreement");
+  expect(r.statement).toContain("has not been explained or adjudicated");
+  expect(r.statement.toLowerCase()).not.toContain("resolved");
+ });
+ test("plain-language labels stay Same / Across / Unknown and never say resolved",()=>{
+  expect(CONFLICT_LABEL.same_context_disagreement).toBe("Same context");
+  expect(CONFLICT_LABEL.context_separated_disagreement).toBe("Across contexts");
+  expect(CONFLICT_LABEL.disagreement_context_unknown).toBe("Unknown context");
+  for(const text of [...Object.values(CONFLICT_LABEL),...Object.values(CONFLICT_LABEL_DETAIL)]){
+   expect(text.toLowerCase()).not.toContain("resolved");
+  }
  });
  test("a disagreeing record without a stated system or design is context unknown",()=>{
   const r=run([{...H,negated:false,sourceId:"a"},{negated:true,sourceId:"b"}]);
   expect(r.classification).toBe("disagreement_context_unknown");
  });
- test("same-context disagreement outranks everything else",()=>{
-  const r=run([{...H,negated:false,sourceId:"a"},{...H,negated:true,sourceId:"b"},{negated:true,sourceId:"c"}]);
+ test("same-context disagreement requires a fully stated mixed stratum",()=>{
+  const r=run([{...H,negated:false,sourceId:"a"},{...H,negated:true,sourceId:"b"},{...M,negated:true,sourceId:"c"}]);
   expect(r.classification).toBe("same_context_disagreement");
+ });
+ test("a mixed stratum with unstated system or design is unknown context, not Same context",()=>{
+  const r=run([{negated:false,sourceId:"a"},{negated:true,sourceId:"b"}]);
+  expect(r.classification).toBe("disagreement_context_unknown");
+  expect(CONFLICT_LABEL[r.classification]).toBe("Unknown context");
  });
  test("never adjudicates, approves or asserts cause",()=>{
   for(const e of [[{...H}],[{...H,negated:true,sourceId:"a"},{...M,sourceId:"b"}]]){const r=run(e);expect(r).toMatchObject({adjudication:"not_performed",scientificApproval:false,causalConclusionAllowed:false});expect(r.limits.length).toBeGreaterThan(0)}
