@@ -1,6 +1,6 @@
 {
   "schemaVersion": "hsi-domain-graph-1",
-  "parentVersion": "e06d43438e382a6d1f52c932420bd189014d8449b09c2d3113b5a34fde076d03",
+  "parentVersion": "53a2f1f08b8b770be2338e951182eb674203f92d46a5d1e74fb0707884561e47",
   "inputs": [
     {
       "path": "site/public/discovery/hsi-pilot-evidence-pack.json",
@@ -12,7 +12,7 @@
     },
     {
       "path": "research/domain-graph/expansion.v1.json",
-      "sha256": "b62e09ed4fa3ffe7ac18278bd6c6a8d522a2fa7e101c7c7d46752bd67b479ec3"
+      "sha256": "40244415ae4853839853bbe81780bd3014a9eee9fe7836435ca4f325df8687da"
     },
     {
       "path": "research/validation/v0.1/input/hsi_synthetic_patients.json",
@@ -39,6 +39,20 @@
       ]
     },
     {
+      "id": "concept:acetate-d004c9c",
+      "name": "Acetate",
+      "kind": "metabolite",
+      "aliases": [
+        "Acetic acid",
+        "Microbial acetate"
+      ],
+      "domains": [
+        "gut",
+        "immune",
+        "metabolic"
+      ]
+    },
+    {
       "id": "concept:acetylcholine-synthesizing-memory-t-cells-58096d9",
       "name": "Acetylcholine-synthesizing memory T cells",
       "kind": "biological concept",
@@ -46,6 +60,20 @@
       "domains": [
         "brain",
         "immune"
+      ]
+    },
+    {
+      "id": "concept:adipose-tissue-423a6f1",
+      "name": "Adipose tissue",
+      "kind": "tissue",
+      "aliases": [
+        "Adipose",
+        "Fat tissue"
+      ],
+      "domains": [
+        "gut",
+        "immune",
+        "metabolic"
       ]
     },
     {
@@ -898,6 +926,18 @@
       ]
     },
     {
+      "id": "concept:liver-f4ed8b7",
+      "name": "Liver",
+      "kind": "tissue",
+      "aliases": [
+        "Hepatic tissue"
+      ],
+      "domains": [
+        "gut",
+        "metabolic"
+      ]
+    },
+    {
       "id": "concept:long-covid-46c3d30",
       "name": "Long COVID",
       "kind": "disease",
@@ -1187,6 +1227,20 @@
       "kind": "disease",
       "aliases": [],
       "domains": [
+        "metabolic"
+      ]
+    },
+    {
+      "id": "concept:propionate-542f650",
+      "name": "Propionate",
+      "kind": "metabolite",
+      "aliases": [
+        "Microbial propionate",
+        "Propionic acid"
+      ],
+      "domains": [
+        "gut",
+        "immune",
         "metabolic"
       ]
     },
@@ -9596,5 +9650,5 @@
   "clinicalAdvice": false,
   "graphPromotable": false,
   "scientificApproval": false,
-  "version": "53a2f1f08b8b770be2338e951182eb674203f92d46a5d1e74fb0707884561e47"
+  "version": "044eb4d6309c4e395e038f687007e9277638779369ef3af105297676baeca6d1"
 }
