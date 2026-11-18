@@ -38,8 +38,8 @@ export function HomeLanding(){
     <section className="pg-hero pg-hero-dark pg-hero-console" aria-labelledby="home-title">
      <div className="pg-hero-copy">
       <h1 id="home-title"><span className="pg-brand">Human Super Intelligence</span> Connect the biology. Challenge the evidence.</h1>
-      <p className="pg-lead">Investigate scientific mechanisms across six domains of human biology. Compare findings in context, trace their supporting evidence and understand what remains uncertain.</p>
-      <div className="pg-cta"><Link className="pg-btn pg-btn-light" to="/welcome">Join research preview <span aria-hidden="true">→</span></Link><Link className="pg-link pg-link-light" to="/how-it-works">Explore the platform</Link></div>
+      <p className="pg-lead">Compare findings in experimental context, trace supporting evidence and mark what remains uncertain. Domain coverage is unequal today; systemic sclerosis is the validation case, not a claim of uniform depth.</p>
+      <div className="pg-cta"><Link className="pg-btn pg-btn-light" to="/welcome">Join research preview <span aria-hidden="true">→</span></Link><Link className="pg-link pg-link-light" to="/how-it-works">See how it works</Link></div>
       <p className="pg-micro">Research preview. Candidate-only: nothing here is scientifically approved. No account is needed to start, public evidence is live, and patient data is synthetic.</p>
      </div>
      <LiveGraphHero/>

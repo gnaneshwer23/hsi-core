@@ -59,10 +59,10 @@ Retain the six-domain architecture. Test a sharper hero that states problem and 
 
 - **Brand:** Human Super Intelligence  
 - **Proposition:** Connect the biology. Challenge the evidence.  
-- **Support:** Investigate scientific mechanisms across six domains of human biology. Compare findings in context, trace supporting evidence and mark what remains uncertain.  
+- **Support:** Compare findings in experimental context, trace supporting evidence and mark uncertainty — with honest unequal coverage and SSc as the validation case.  
 - **Primary proof:** one concrete investigation (sources, context, conflict, uncertainty) — stronger than a capability list.
 
-Live CTAs must stay delivered paths (`/welcome` research preview, `/how-it-works` for “Explore the platform”). Do not invent undelivered “beta mail”, retired `/platform` destinations, or clinical claims.
+Live CTAs must stay delivered paths (`/welcome` research preview, `/how-it-works` for “See how it works”). Do not invent undelivered “beta mail”, retired `/platform` destinations, or clinical claims.
 
 ---
 
@@ -81,7 +81,7 @@ Six domains explain the long-term platform. The initial validated workflow expla
 
 ## 6. Recommendation
 
-Add **Undermind, Output Labs, Parallel Bio, Anto Biosciences and CellType** to high-priority competitor research.
+Treat the full §1 table as high-priority competitor research: **Undermind, Anto Biosciences, Parallel Bio, Tamarind Bio, 10x Science, CellType and Output Labs**.
 
 Do **not** copy their full product strategies. Use them to sharpen HSI’s differentiation:
 
