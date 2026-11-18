@@ -2,6 +2,7 @@ import {test,expect} from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import {readFile} from 'node:fs/promises';
 const cand=(o:any)=>({id:'c1',relationId:'il21-tfh',subject:'IL-21',object:'T follicular helper cells',contexts:['ssc'],species:'human',sourceId:'s1',sourceUrl:'https://europepmc.org/article/MED/1',sentence:'IL-21 was increased and Tfh cells expanded in patients with systemic sclerosis.',state:'extracted_candidate',lexicalPolarity:'supporting',polarityBasis:'not_assessed',direction:'not_assessed',polarity:'uncertain',priority:{score:7,reasons:['States an effect or direction']},verification:'not_run',verdicts:[],retraction:'not_flagged_by_provider',...o});
+const emptyComparison={schemaVersion:'hsi-live-structured-comparison-1',method:'hsi.structured_evidence_comparison.v1',version:'0.3.0',pairCount:0,summary:{consistent:0,potentialContradiction:0,contextDependent:0,methodologicalDifference:0,insufficientComparability:0,insufficientEvidence:0},items:[],honesty:{metadataOrDeclaredContextOnly:true,associationScoreIsNotCausation:true,potentialContradictionIsNotProvenContradiction:true,verificationBoundBeforeContradictionLanguage:true,scientificApproval:false,graphPromotable:false,claimSupport:'not_assessed',gateCAutoApprove:false,cdsPhi:false,neonContradictionLedger:false}};
 const base={schemaVersion:'hsi-live-investigation-1',mode:'live',scenarioId:'il21-autoimmune',question:'Why might IL-21 signalling have different biological consequences across autoimmune disease contexts?',version:1,briefHash:'a'.repeat(64),
  entities:['IL-21','T follicular helper cells','B-cell responses'],
  searches:[{provider:'europe-pmc',context:'ssc',status:'ok',count:1,error:null,query:'q'},{provider:'openalex',context:'ssc',status:'failed',count:0,error:'HTTP 500',query:'q'}],
@@ -9,13 +10,15 @@ const base={schemaVersion:'hsi-live-investigation-1',mode:'live',scenarioId:'il2
  targets:[],byContext:{ssc:{label:'Systemic sclerosis',records:1,supporting:[],opposing:[],uncertain:['c1']}},
  verification:{status:'not_configured',reason:'The model step is disabled on this deployment.',checked:0,independence:null},
  hypotheses:{status:'not_configured',reason:'Hypotheses need the two-model check, which did not run.',items:[],dropped:0,basis:{findings:0}},
+ structuredComparison:emptyComparison,
  gaps:['Search failed: openalex for ssc (HTTP 500). Absence of results there is not evidence of absence.'],budget:null,
  flags:{scientificApproval:false,graphPromotable:false,consensusEstablished:false,humanReview:'required',clinicalAdvice:false,containsPhi:false},
  events:[{stage:'scoped',at:'t',status:'ok',detail:'scoped'},{stage:'searched',at:'t',status:'partial',detail:'1 of 2 searches returned; 1 failed.'},{stage:'retrieved',at:'t',status:'ok',detail:'1 record'},{stage:'mapped',at:'t',status:'ok',detail:'mapped'},{stage:'compared',at:'t',status:'ok',detail:'1 candidate'},{stage:'challenged',at:'t',status:'skipped',detail:'The model step is disabled on this deployment.'},{stage:'brief',at:'t',status:'ok',detail:'brief'}]};
 const unchecked={...base,candidates:[cand({})]};
-const checked={...base,hypotheses:{status:'generated',reason:null,dropped:0,basis:{findings:2},items:[{id:'h1',statement:'Blocking IL-21 reduces Tfh expansion in systemic sclerosis cells.',rationale:'The cited finding links IL-21 to Tfh expansion.',citedClaimIds:['c1'],prediction:'Fewer Tfh cells with blockade.',experiment:'Culture cells with an IL-21 blocking antibody.',falsifier:'No change in Tfh numbers.',limits:'Human systemic sclerosis, association only.',state:'unvalidated_hypothesis',generatedBy:{verifier:'openai-a',model:'m1'},challenge:{verifier:'openai-b',model:'m2',verdict:'overreach',reason:'Blockade is not in the findings.'},challengeNote:null}]},verification:{status:'completed',reason:null,checked:1,independence:'independent_execution_only'},
+const checkedComparison={...emptyComparison,pairCount:1,summary:{...emptyComparison.summary,contextDependent:1},items:[{leftId:'c1',rightId:'c2b',leftLabel:'IL-21 ~ T follicular helper cells',rightLabel:'IL-21 ~ T follicular helper cells',leftContexts:['Systemic sclerosis'],rightContexts:['Rheumatoid arthritis'],engineOutcome:'context_dependent',outcome:'context_dependent',rationale:'Disease context differs; not treated as proven contradiction.',verificationBindNote:null,verificationLeft:'both checks agree on direction',verificationRight:'both checks agree on direction',sharedSubjectObject:true,contextDepth:'coarse_metadata_only',needsHumanReview:true,potentialContradictionIsNotProven:true}]};
+const checked={...base,structuredComparison:checkedComparison,hypotheses:{status:'generated',reason:null,dropped:0,basis:{findings:2},items:[{id:'h1',statement:'Blocking IL-21 reduces Tfh expansion in systemic sclerosis cells.',rationale:'The cited finding links IL-21 to Tfh expansion.',citedClaimIds:['c1'],prediction:'Fewer Tfh cells with blockade.',experiment:'Culture cells with an IL-21 blocking antibody.',falsifier:'No change in Tfh numbers.',limits:'Human systemic sclerosis, association only.',state:'unvalidated_hypothesis',generatedBy:{verifier:'openai-a',model:'m1'},challenge:{verifier:'openai-b',model:'m2',verdict:'overreach',reason:'Blockade is not in the findings.'},challengeNote:null}]},verification:{status:'completed',reason:null,checked:1,independence:'independent_execution_only'},
  byContext:{ssc:{label:'Systemic sclerosis',records:1,supporting:['c1'],opposing:[],uncertain:[]}},
- candidates:[cand({direction:'positive',polarity:'supporting',polarityBasis:'two_model_challenge',verification:'agree_directional',verdicts:[{verifier:'openai-a',model:'m1',direction:'positive',evidenceSpan:'IL-21 was increased',reason:'States an increase.'},{verifier:'openai-b',model:'m2',direction:'positive',evidenceSpan:'IL-21 was increased',reason:'States an increase.'}]}),cand({id:'c2',object:'B-cell responses',sentence:'IL-21 is linked to B cells in lupus.',contexts:['sle']})]};
+ candidates:[cand({direction:'positive',polarity:'supporting',polarityBasis:'two_model_challenge',verification:'agree_directional',verdicts:[{verifier:'openai-a',model:'m1',direction:'positive',evidenceSpan:'IL-21 was increased',reason:'States an increase.'},{verifier:'openai-b',model:'m2',direction:'positive',evidenceSpan:'IL-21 was increased',reason:'States an increase.'}]}),cand({id:'c2',object:'B-cell responses',relationId:'il21-bcell',sentence:'IL-21 is linked to B cells in lupus.',contexts:['sle']}),cand({id:'c2b',relationId:'il21-tfh',contexts:['ra'],species:'mouse',sourceId:'s2',sourceUrl:'https://europepmc.org/article/MED/2',sentence:'In murine arthritis IL-21 signalling reduced Tfh expansion.',direction:'negative',polarity:'opposing',polarityBasis:'two_model_challenge',verification:'agree_directional',verdicts:[]})]};
 const mock=(page:any,body:unknown,status=200)=>page.route('**/api/research/live-investigation',(r:any)=>r.fulfill({status,json:body}));
 
 test('workspace before a run states that nothing has started and shows no figures',async({page})=>{
@@ -61,7 +64,7 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  const ev=page.getByRole('region',{name:/^Evidence \(/});
  await ev.getByRole('button',{name:'Supporting (1)'}).click();
  await expect(ev.getByRole('list').first()).not.toContainText('B cells in lupus');
- await ev.getByRole('button',{name:'All (2)'}).click();
+ await ev.getByRole('button',{name:'All (3)'}).click();
  await page.getByRole('group',{name:'Relationships found'}).getByRole('button',{name:/B-cell responses/}).click();
  await expect(ev).toContainText('Showing IL-21 → B-cell responses');
  await expect(ev).not.toContainText('Tfh cells expanded');
@@ -77,7 +80,14 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await expect(brief).toContainText('Supporting (both checks agree) (1)');
  await expect(brief).toContainText('Claim verification status');
  await expect(brief).toContainText('Evidence table (context passport columns)');
+ await expect(brief).toContainText('Structured evidence comparison (candidate)');
+ await expect(brief).toContainText('potential_contradiction is not a proven contradiction');
  await expect(brief).toContainText('Scientific approval: false');
+ const vf=page.getByRole('region',{name:'Scientific verification'});
+ await expect(vf.getByText('Opposing / disputed checks')).toBeVisible();
+ await expect(vf.getByText(/Structured comparison/)).toBeVisible();
+ await expect(vf).toContainText('Context-dependent difference');
+ await expect(vf).toContainText('Potential contradiction is not proven contradiction');
  const axe=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();
  expect(axe.violations.map(v=>v.id+': '+v.nodes.length)).toEqual([]);
 });
