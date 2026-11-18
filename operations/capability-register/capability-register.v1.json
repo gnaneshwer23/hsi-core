@@ -433,9 +433,12 @@
         "site/src/components/ResearchOutcomePanel.tsx",
         "src/evidence/passageLinkedContext.ts",
         "src/evidence/contextConflictAudit.ts",
-        "test/passageLinkedContext.test.ts"
+        "src/investigation/liveRunComparison.ts",
+        "src/investigation/liveBriefComparison.ts",
+        "test/passageLinkedContext.test.ts",
+        "test/liveBriefComparison.test.ts"
       ],
-      "gap": "Seventeen passage-linked context fields, estimand/comparability gates and five-class reporting are implemented. Scientist-reviewed gold and full SSc plus RA/SLE staging journeys remain unaccepted.",
+      "gap": "Seventeen passage-linked context fields, estimand/comparability gates and five-class reporting are implemented. Live investigation now attaches structured comparison (verification-bound before contradiction language) to the workspace and brief; Neon contradiction migrations remain held. Scientist-reviewed gold and full SSc plus RA/SLE staging journeys remain unaccepted.",
       "nextAction": "Run authorised reviewed staging audits and the locked immunology benchmark; missing context must remain explicit.",
       "acceptance": {
         "deployment": "not_verified",
