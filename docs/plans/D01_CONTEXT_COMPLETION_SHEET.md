@@ -30,3 +30,4 @@ Open `/research/context-completion` for sealed-sheet fill counts. The page does 
 - Apply never sets `reviewStatus`, never raises `confidence`, and never sets `scientificClaimAllowed`.
 - `autoPromotion` and `scientificApproval` on the sheet are always `false`.
 - Filling the sheet does not review or promote edges (Track C starts after curators fill values).
+- Local edge-review soft-land (recommendations only): [`D01_EDGE_REVIEW_QUEUE.md`](./D01_EDGE_REVIEW_QUEUE.md) · `/research/d01-edge-review`
