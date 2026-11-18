@@ -111,6 +111,7 @@ Ship as a series of PRs once A2.4 sheet is filling:
 | **C3** | Dual-reviewer decisions for 40–60 edges; immutable records |
 | **C4** | Graph release: reviewed vs candidate styling + version bump |
 | **C5** | Homepage worked conflict from a **reviewed** disagreement — soft-land: sealed candidate pair (`DIAB-003`/`DIAB-015`) with unreviewed honesty until C3 |
+| **C4** | Graph release: reviewed vs candidate styling + version bump — soft-land: legend + reserved reviewed stroke on `/research/knowledge-graph` (`edgeReviewPresentation.ts`); version bump still waits on dual review |
 | **C6** | Brief v2 export (Markdown / JSON / print) with graph version + review states — domain soft-land (`briefV2.ts`) + live-path envelope (`hsi-live-research-brief-2`) |
 
 ---
