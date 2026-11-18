@@ -4,10 +4,11 @@ import type {DomainBundle} from "../../../../src/knowledgeGraph/domainGraph";
 import type {Profile} from "../../lib/researchHome";
 import {useGaps} from "../../lib/useGaps";
 import type {Signal} from "../../lib/gapFinder";
+import {LIVE_INVESTIGATION_PATH} from "../../lib/workbenchPrimary";
 
 const SIG:Record<Signal,string>={under_explored:"Under-explored intersection",well_covered:"Well covered",low_volume:"Too little literature to judge",unavailable:"Count unavailable"};
 const n=(x:number|null)=>x===null?"n/a":x.toLocaleString("en-GB");
-const ask=(a:string,b:string)=>"/research/dashboard?q="+encodeURIComponent(`What does the evidence say about the relationship between ${a} and ${b}, and in which contexts?`)+"#dashboard-workspace";
+const ask=(_a:string,_b:string)=>LIVE_INVESTIGATION_PATH;
 const graph=(q:string)=>"/research/knowledge-graph?netQuery="+encodeURIComponent(q);
 
 /** Gap finder: gaps recorded in the published graph, and an under-explored-intersection heuristic from literature counts. The two are kept apart. */
