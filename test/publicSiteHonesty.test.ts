@@ -42,7 +42,7 @@ describe("Public HSI site honesty", () => {
     expect(app).toContain('path="gateway"');
 
     const primaryNav = site("src/lib/primaryNav.ts");
-    for(const route of ["/how-it-works","/knowledge-graph","/trust","/about","/contact"])expect(primaryNav).toContain(route);
+    for(const route of ["/how-it-works","/knowledge-graph","/researchers","/biotech","/validation","/trust","/about","/contact"])expect(primaryNav).toContain(route);
     for(const route of ["/platform","/science","/applications","/intelligence","/departments","/connected-intelligence"])expect(primaryNav).not.toContain(route); // retired; they redirect
     for(const route of ["/technology","/solutions","/pricing","/evidence-safety"])expect(primaryNav).not.toContain(route); // retired; they redirect
     expect(primaryNav).not.toContain("/modules"); // the product pages now redirect to /connected-intelligence

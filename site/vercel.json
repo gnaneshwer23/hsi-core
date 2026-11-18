@@ -409,6 +409,18 @@
       "destination": "/_pages/trust.html"
     },
     {
+      "source": "/researchers",
+      "destination": "/_pages/researchers.html"
+    },
+    {
+      "source": "/biotech",
+      "destination": "/_pages/biotech.html"
+    },
+    {
+      "source": "/validation",
+      "destination": "/_pages/validation.html"
+    },
+    {
       "source": "/about",
       "destination": "/_pages/about.html"
     },

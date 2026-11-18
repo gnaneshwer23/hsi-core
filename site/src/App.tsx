@@ -7,6 +7,7 @@ const GovernanceDashboard=lazy(()=>import("./pages/GovernanceDashboard").then(m=
 const ResearchDashboard=lazy(()=>import("./pages/ResearchDashboard").then(m=>({default:m.ResearchDashboard})));
 import {ContextConflictAuditPage} from "./pages/PublicResearchPages";
 import {TrustPublicPage,AboutPublicPage} from "./pages/PublicFoundationPages";
+import {ResearchersPublicPage,BiotechPublicPage,ValidationPublicPage} from "./pages/AudiencePublicPages";
 import {HomeLanding as Home} from "./pages/HomeLanding";
 import {HowItWorksPage as HowItWorks} from "./pages/HowItWorksPage";
 import {ScientificEvidence as EvidenceIntelligencePage} from "./pages/ScientificPublic";
@@ -121,6 +122,9 @@ export default function App() {
         <Route path="knowledge-graph" element={<KnowledgeGraphPublicPage />} />
         <Route path="trust" element={<TrustPublicPage />} />
         <Route path="about" element={<AboutPublicPage />} />
+        <Route path="researchers" element={<ResearchersPublicPage />} />
+        <Route path="biotech" element={<BiotechPublicPage />} />
+        <Route path="validation" element={<ValidationPublicPage />} />
         <Route path="technology" element={<Navigate to="/how-it-works" replace />} />
         <Route path="how-it-works" element={<HowItWorks />} />
         <Route path="explore" element={<Explore />} />

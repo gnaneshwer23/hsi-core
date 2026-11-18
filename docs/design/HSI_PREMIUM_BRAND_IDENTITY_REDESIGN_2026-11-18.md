@@ -77,9 +77,9 @@ Preserve product architecture; organise the **public** site around researcher va
 | `/` | Vision + product value | Join Research Beta → `/welcome` | Live (`HomeLanding`) |
 | `/platform` | Connected investigation workflow | Explore Platform | **Retired** → `/how-it-works` until a new page is approved |
 | `/science` | Six biological domains | Explore Domains | Top-level retired → `/knowledge-graph`. Department URLs (e.g. `/departments/immunology`) **redirect** to `/research/knowledge-graph?department=…` filtered views — not standalone public department sites. Stage 1 comps may prototype domain cards; production standalone department pages are **out of scope** until approved |
-| `/researchers` | Research use cases | Apply for Beta | **Missing** — Stage 1 prototype only until routed |
-| `/biotech` | R&D evidence assessment | Discuss a Pilot | **Missing** — Stage 1 prototype only |
-| `/validation` | Evidence quality / evaluation | View Methodology | **No production `/validation` route.** Interim destination for methodology/governance: live **`/trust`**. Do **not** use `/research/validation` (synthetic lab). Stage 1 may prototype `/validation` comps that map content from `/trust` |
+| `/researchers` | Research use cases | Apply for Beta → `/welcome` | **Live** (PR-E2E-09) — honesty: preview limits, no write grant |
+| `/biotech` | R&D evidence assessment | Discuss a Pilot → `/contact` | **Live** (PR-E2E-09) — no invented MoU or performance claims |
+| `/validation` | Evidence quality / evaluation | View Methodology | **Live** public methodology page (PR-E2E-09). Distinct from `/research/validation` (synthetic lab). Deeper governance remains on `/trust` |
 | `/about` | Mission, principles, verified team | Contact | Live |
 | `/contact` | Genuine enquiries | Submit Enquiry | Live public route (honesty: no invent undelivered mail) — **not** in primary header nav |
 
@@ -87,7 +87,7 @@ Preserve product architecture; organise the **public** site around researcher va
 **Authenticated workbench:** lighter, denser canvas; dark sidebar; clear scientific status indicators.
 
 **Live primary header nav** ([`PRIMARY_NAV_LINKS`](../../site/src/lib/primaryNav.ts)): `/`, `/how-it-works`, `/knowledge-graph`, `/trust`, `/about`.  
-**Also indexed public routes** ([`PUBLIC_MARKETING_PATHS`](../../site/src/lib/primaryNav.ts)): the above **plus** `/contact` (footer / CTA destinations, not a primary-nav item).
+**Also indexed public routes** ([`PUBLIC_MARKETING_PATHS`](../../site/src/lib/primaryNav.ts)): the above **plus** `/contact`, `/researchers`, `/biotech`, `/validation` (footer / CTA destinations; not required in the primary header).
 
 ---
 
