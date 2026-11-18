@@ -45,7 +45,7 @@ These can land without waiting for SMEs. Sequence matters where noted.
 | PR id | Branch suggestion | Scope | Depends on | Done when |
 | --- | --- | --- | --- | --- |
 | **A1.1** | `cursor/sec-rate-limit-ask-2f71` | Shared rate limiter for Ask / research routes (SEC-01) | — | Routes share limits; tests for burst + cross-route |
-| **A1.2** | `cursor/sec-kill-switch-caps-2f71` | Kill switch + recorded provider spend caps (SEC-02) | Owner sets numeric caps | Config + fail-closed when tripped |
+| **A1.2** | `cursor/sec-kill-switch-caps-2f71` | Kill switch + recorded provider spend caps (SEC-02) | Owner sets numeric caps | Config + fail-closed when tripped — soft-land: `docs/engineering/A1_2_SEC02_KILL_SWITCH_SOFT_LAND.md` + `src/operations/sec02KillSwitchCatalog.ts` (no invented numeric caps) |
 | **A1.3** | `cursor/ops-error-alerts-2f71` | Error tracking + four alerts (OPS-01/02) | A1.2 optional | Alerts documented; dry-run in staging notes — soft-land: `docs/engineering/A1_3_OPS_ERROR_ALERTS_SOFT_LAND.md` + `src/operations/opsAlertCatalog.ts` (no invented on-call) |
 | **A1.4** | `cursor/ing-no-browser-providers-2f71` | Remove browser-side provider calls (ING-01) | — | No client keys; server-only |
 | **A1.5** | `cursor/ux-access-request-2f71` | Working access request (UX-02 / API-06) | — | Owner receives request; page does not claim undelivered mail |
