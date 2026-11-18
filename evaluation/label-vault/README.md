@@ -14,6 +14,9 @@ Expert gold labels are **not** stored in this public repository. They live in a 
     reports/                     # private conflict:bench:expert output
   immuno/
     README.md                    # holdout drafts; public slots stay in src/
+    dev-set/
+      README.md
+      cases.json                 # founder development set (A4.3); slotId always null
   freezes/
     README.md
     conflict-<sha12>.json        # hashed freeze records (ids + digests only)
@@ -31,10 +34,16 @@ bun run label-vault:init
 bun run label-vault:status
 bun run label-vault:validate
 bun run label-vault:scaffold-conflict -- --id CB-001 --question "Does … ?"
+bun run label-vault:scaffold-immuno-dev -- --id DEV-001 --layer core --domain innate_adaptive_cells --question "…"
+bun run label-vault:import-immuno-dev -- --from /path/to/dev-set.json
+bun run label-vault:validate-immuno-dev
+bun run label-vault:score-immuno-dev   # always refused until floors
 bun run label-vault:freeze -- --track conflict
 ```
 
 `scaffold-conflict` writes an **unlabelled** case shell (`labels: []`, `adjudicated: null`). Curators fill labels privately. Freeze refuses until at least one case has labels or an adjudicated value.
+
+`scaffold-immuno-dev` / `import-immuno-dev` author the founder **development** partition only (`slotId: null`). Scoring stays blocked (`numericFloors: null`, `floorsOwnerApproved: false`) — see [`docs/engineering/IMMUNO_DEV_SET_TOOLING.md`](../../docs/engineering/IMMUNO_DEV_SET_TOOLING.md).
 
 ## Boundaries
 
