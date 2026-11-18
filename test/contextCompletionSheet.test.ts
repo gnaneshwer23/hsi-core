@@ -13,6 +13,7 @@ import {
   parseContextCompletionSheet,
   sealContextCompletionSheet,
   sheetToCsv,
+  summarizeContextCompletionProgress,
 } from "../src/knowledgeGraph/contextCompletionSheet";
 
 const digest=async(s:string)=>createHash("sha256").update(s).digest("hex");
@@ -36,6 +37,13 @@ describe("context completion sheet",()=>{
       expect(row.current.design).toBe(edge.design);
     }
     expect(parseContextCompletionSheet(sheet,graph)).toEqual(sheet);
+    const progress=summarizeContextCompletionProgress(sheet);
+    expect(progress.rowCount).toBe(sheet.rows.length);
+    expect(progress.rowsUntouched).toBe(sheet.rows.length);
+    expect(progress.rowsWithAnyProposal).toBe(0);
+    expect(progress.tissueProposed).toBe(0);
+    expect(progress.autoPromotion).toBe(false);
+    expect(progress.scientificApproval).toBe(false);
   });
 
   test("rejects promotion flags, digest tampering and version mismatch",()=>{
