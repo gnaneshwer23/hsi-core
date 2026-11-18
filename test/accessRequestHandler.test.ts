@@ -46,6 +46,15 @@ describe("access request handler",()=>{
   let calls=0;const fetcher=(async()=>{calls++;return new Response(null,{status:200})}) as any;
   const r=await handleAccessRequest(post({question:Q,company_website:"https://spam.example"}),{HSI_PUBLIC_ORIGIN:"https://hsi.example",HSI_ACCESS_REQUEST_WEBHOOK_URL:"https://hooks.example/x"},{fetcher});
   expect(r.status).toBe(202);expect(calls).toBe(0);
+  expect(await r.json()).toMatchObject({ok:true,providerAccepted:false,delivered:false,honeypot:true});
+ });
+
+ test("honeypot does not reveal deliveryConfigured when delivery is unset",async()=>{
+  const r=await handleAccessRequest(post({question:Q,company_website:"https://spam.example"}),{HSI_PUBLIC_ORIGIN:"https://hsi.example"});
+  expect(r.status).toBe(202);
+  const body=await r.json() as Record<string,unknown>;
+  expect(body.code).toBeUndefined();
+  expect(body).toMatchObject({ok:true,providerAccepted:false,delivered:false});
  });
 
  test("rejects oversized bodies before provider work",async()=>{
