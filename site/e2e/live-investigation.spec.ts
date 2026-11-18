@@ -69,7 +69,8 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await expect(ev).toContainText('Showing IL-21 → B-cell responses');
  await expect(ev).not.toContainText('Tfh cells expanded');
  await ev.getByRole('button',{name:'Clear'}).click();
- await ev.getByRole('button',{name:/IL-21 ~ T follicular helper cells/}).click();
+ // Two same-relation claims exist for structured comparison; select the supporting one explicitly.
+ await ev.getByRole('button',{name:/IL-21 ~ T follicular helper cells.*IL-21 was increased/}).click();
  const insp=page.getByLabel('Selected claim');
  await expect(insp).toContainText('openai-a');await expect(insp).toContainText('Quoted: “IL-21 was increased”');
  await expect(page.getByRole('heading',{name:'Evidence table for this live brief'})).toBeVisible();
