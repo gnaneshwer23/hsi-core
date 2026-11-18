@@ -90,6 +90,19 @@ describe("Public HSI site honesty", () => {
     expect(footer).not.toContain('to: "/docs"');
     expect(footer).toContain('/contact');
     expect(footer).toContain("For research and education");
+
+    const cta = site("src/lib/ctaPolicy.ts");
+    expect(cta).toContain('to:"/how-it-works"');
+    expect(cta).toContain('to:"/knowledge-graph"');
+    expect(cta).not.toMatch(/PUBLIC_PLATFORM_CTA[\s\S]*to:"\/platform"/);
+    expect(cta).not.toMatch(/PUBLIC_SCIENCE_CTA[\s\S]*to:"\/science"/);
+    expect(experience).not.toContain('to:"/science",label:"Science"');
+    expect(site("src/pages/SignIn.tsx")).toContain('to="/knowledge-graph"');
+    expect(site("src/pages/ResearchAccount.tsx")).toContain('to="/knowledge-graph"');
+    expect(site("src/pages/HowItWorksPage.tsx")).toContain('Former “Platform”');
+    expect(site("src/pages/KnowledgeGraphPublic.tsx")).toContain('Former “Science”');
+    expect(site("src/lib/retiredMarketingPaths.ts")).toContain('"/platform": "/how-it-works"');
+    expect(site("src/lib/retiredMarketingPaths.ts")).toContain('"/science": "/knowledge-graph"');
   });
 
   it("wires Clinical timeline + Trials five-state + Gateway thin demos with honesty labels", () => {

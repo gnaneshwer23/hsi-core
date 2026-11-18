@@ -1,7 +1,7 @@
 import {useState,type ReactNode,type CSSProperties} from "react";
 import {Link} from "react-router-dom";
 import {EXPERIENCE_DOMAINS,EXPERIENCE_STEPS,EVIDENCE_STATES} from "../features/experience/content";
-import {PUBLIC_PLATFORM_CTA,PUBLIC_PRIMARY_CTA,PUBLIC_SECONDARY_CTA} from "../lib/ctaPolicy";
+import {PUBLIC_GRAPH_CTA,PUBLIC_PLATFORM_CTA,PUBLIC_PRIMARY_CTA,PUBLIC_SCIENCE_CTA,PUBLIC_SECONDARY_CTA} from "../lib/ctaPolicy";
 import {MarketingCTA,MarketingHero,MarketingJourney,type JourneyLink} from "./marketing/MarketingPage";
 export function ExperienceLink({to,children,secondary=false}:{to:string;children:ReactNode;secondary?:boolean}){return <Link className={"xp-button"+(secondary?" xp-button-secondary":"")} to={to}>{children}<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 13 13 3M3 3h10v10" stroke="currentColor" strokeWidth="1.5"/></svg></Link>}
 export function ExperienceHero({eyebrow,title,emphasis,description,children,visual}:{eyebrow:string;title:string;emphasis?:string;description:string;children?:ReactNode;visual?:ReactNode}){
@@ -9,10 +9,10 @@ export function ExperienceHero({eyebrow,title,emphasis,description,children,visu
 }
 export function ExperienceCTA({journey}:{journey?:readonly JourneyLink[]}){
  return <><MarketingCTA/><MarketingJourney links={journey??[
-  {to:PUBLIC_PLATFORM_CTA.to,label:PUBLIC_PLATFORM_CTA.label,note:"Shared technology"},
+  {to:PUBLIC_PLATFORM_CTA.to,label:PUBLIC_PLATFORM_CTA.label,note:"One loop, eight steps"},
+  {to:PUBLIC_SCIENCE_CTA.to,label:PUBLIC_SCIENCE_CTA.label,note:"Candidate relationships"},
+  {to:PUBLIC_GRAPH_CTA.to,label:PUBLIC_GRAPH_CTA.label,note:"Claim-linked sources"},
   {to:PUBLIC_SECONDARY_CTA.to,label:PUBLIC_SECONDARY_CTA.label,note:"Workflow"},
-  {to:"/science",label:"Science",note:"Biology entry"},
-  {to:"/connected-intelligence",label:"Connected intelligence",note:"Wider vision"},
   {to:PUBLIC_PRIMARY_CTA.to,label:PUBLIC_PRIMARY_CTA.label,note:"Browser draft, then an administrator grant"},
  ]}/></>;
 }

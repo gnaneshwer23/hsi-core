@@ -118,6 +118,6 @@ export function ResearchAccount(){
   <div className="hsi-account-actions"><button className="hsi-auth-signout" type="button" disabled={checking||signingOut||verifyingCode||sendingVerification} onClick={()=>setAttempt(n=>n+1)}>{checking?"Checking access…":"Refresh access"}</button>
    {session&&<button className="hsi-auth-signout" type="button" disabled={signingOut||verifyingCode||sendingVerification} onClick={signOut}>{signingOut?"Signing out…":"Sign out"}</button>}
   </div>
-  <p className="hsi-sign-in-footnote"><Link to="/science">Return to public science</Link></p>
+  <p className="hsi-sign-in-footnote"><Link to="/knowledge-graph">Return to the knowledge graph</Link></p>
  </div></section>
 }

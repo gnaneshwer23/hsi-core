@@ -48,7 +48,7 @@ export const ECOSYSTEM_PRODUCTS: readonly EcosystemProduct[] = [
     oneLine: "Longitudinal clinical intelligence across authorised records.",
     chip: "in_development",
     chipDetail: "In development — longitudinal review for authorised care teams.",
-    primaryCta: { label: "See clinical in the platform", href: "/platform" },
+    primaryCta: { label: "See how HSI works", href: "/how-it-works" },
     secondaryCta: { label: "How it works", href: "/how-it-works" },
     mustNot: [
       "Not a live hospital connector",

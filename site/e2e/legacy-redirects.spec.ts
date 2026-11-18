@@ -7,6 +7,14 @@ for(const [from,to] of retired){
   await expect(page.getByRole('heading',{level:1}).first()).toBeVisible();
  });
 }
+test('platform and science redirects land on honest destination copy',async({page})=>{
+ await page.goto('/platform');
+ await expect(page).toHaveURL(/\/how-it-works$/);
+ await expect(page.getByRole('note').filter({hasText:/Former “Platform”/})).toBeVisible();
+ await page.goto('/science');
+ await expect(page).toHaveURL(/\/knowledge-graph$/);
+ await expect(page.getByRole('note').filter({hasText:/Former “Science”/})).toBeVisible();
+});
 test('retired pages are permanent redirects at the host and absent from the sitemap',async({request})=>{
  const config=JSON.parse(await readFile(new URL('../vercel.json',import.meta.url),'utf8')) as {redirects:{source:string;destination:string;permanent:boolean}[]};
  for(const [from,to] of retired.filter(([f])=>f!=='/intelligence/nexus'))expect(config.redirects.find(r=>r.source===from)).toMatchObject({destination:to,permanent:true});
