@@ -1,24 +1,38 @@
-import { describe, expect, it } from "bun:test";
+import {describe,expect,test} from "bun:test";
 import {
   AUTHORISED_INVESTIGATION_PATH,
+  authorisedInvestigationHref,
+  LEGACY_WORKBENCH_REDIRECTS,
   LIVE_INVESTIGATION_PATH,
   RESEARCH_HOME_PATH,
-  authorisedInvestigationHref,
   liveInvestigationHref,
 } from "../site/src/lib/workbenchPrimary";
+import {RESEARCH_NAV_ITEMS} from "../site/src/lib/researchNavItems";
 
-describe("workbenchPrimary", () => {
-  it("keeps the live investigation path as the primary workspace", () => {
+describe("workbench primary reconnect",()=>{
+  test("live investigation is the canonical path",()=>{
     expect(LIVE_INVESTIGATION_PATH).toBe("/research/workspace");
     expect(RESEARCH_HOME_PATH).toBe("/research/home");
     expect(liveInvestigationHref()).toBe("/research/workspace");
-    expect(liveInvestigationHref({ reopen: true })).toBe("/research/workspace?reopen=1");
+    expect(liveInvestigationHref({reopen:true})).toBe("/research/workspace?reopen=1");
+    expect(authorisedInvestigationHref("hsi-interrogative-demo-12345678")).toBe(
+      `${AUTHORISED_INVESTIGATION_PATH}?investigation=hsi-interrogative-demo-12345678`,
+    );
   });
 
-  it("builds authorised investigation deep links without inventing ids", () => {
-    expect(AUTHORISED_INVESTIGATION_PATH).toBe("/research/decision-workbench");
-    expect(authorisedInvestigationHref("hsi-interrogative-abc")).toBe(
-      "/research/decision-workbench?investigation=hsi-interrogative-abc",
-    );
+  test("legacy discovery experience redirects to live workspace",()=>{
+    expect(LEGACY_WORKBENCH_REDIRECTS).toContainEqual({
+      from:"/research/discovery-experience",
+      to:LIVE_INVESTIGATION_PATH,
+    });
+  });
+
+  test("legacy research nav leads with live investigation, not mechanism-workflow",()=>{
+    const targets=RESEARCH_NAV_ITEMS.map(i=>i.to);
+    expect(RESEARCH_NAV_ITEMS[0]?.to).toBe("/research/home");
+    expect(targets).toContain(LIVE_INVESTIGATION_PATH);
+    expect(RESEARCH_NAV_ITEMS.find(i=>i.to===LIVE_INVESTIGATION_PATH)?.label).toBe("Live investigation");
+    expect(targets).not.toContain("/research/mechanism-workflow");
+    expect(targets).not.toContain("/research/dashboard#dashboard-workspace");
   });
 });
