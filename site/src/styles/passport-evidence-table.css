@@ -1,5 +1,6 @@
-.pet-scroll{overflow:auto;border:1px solid #e3eaed;border-radius:6px;margin-top:8px}
-.pet-table{border-collapse:collapse;min-width:900px;width:100%;font-size:12px}
+.pet{max-width:100%;min-width:0}
+.pet-scroll{overflow:auto;max-width:100%;border:1px solid #e3eaed;border-radius:6px;margin-top:8px;-webkit-overflow-scrolling:touch}
+.pet-table{border-collapse:collapse;min-width:900px;width:max-content;max-width:none;font-size:12px}
 .pet-table th,.pet-table td{padding:8px;border-bottom:1px solid #e3eaed;text-align:left;vertical-align:top}
 .pet-table thead th{position:sticky;top:0;background:#eef5f4;font-weight:650;white-space:nowrap}
 .pet-table tbody th{font-weight:600}
