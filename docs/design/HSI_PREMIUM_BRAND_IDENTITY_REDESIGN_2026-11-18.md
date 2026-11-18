@@ -123,7 +123,7 @@ These rename **how we talk** about existing concepts — not rebuild services.
 
 - Logo system, design tokens, homepage, eight public page comps, responsive components in **Lovable** (or equivalent prototype).  
 - Realistic scientific examples; label illustrative vs verified.  
-- **In-repo:** this doctrine + [`hsi-brand-tokens.v1.json`](./hsi-brand-tokens.v1.json). No production route explosion until comps are approved.
+- **In-repo:** this doctrine + [`hsi-brand-tokens.v1.json`](./hsi-brand-tokens.v1.json). Audience routes `/researchers`, `/biotech`, `/validation` are live (PR-E2E-09); further page explosion and full Stage-1 token cutover still wait on approved comps.
 
 ### Stage 2 — Product interface alignment
 
