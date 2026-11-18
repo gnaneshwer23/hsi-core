@@ -12,7 +12,9 @@ import {fromRunHypothesis} from "../../../src/investigation/hypothesisLedger";
 import {useLiveRun} from "../lib/useLiveRun";
 import {HowProducedPanel} from "../components/HowProducedPanel";
 import {EvidenceContextPassportView} from "../components/EvidenceContextPassport";
+import {PassportEvidenceTable} from "../components/PassportEvidenceTable";
 import {liveClaimToPassportEdge} from "../../../src/investigation/liveClaimPassportEdge";
+import {liveInvestigationPassportEdges,liveInvestigationPassportSources} from "../../../src/investigation/liveBriefPassport";
 import {BUCKET_LABEL,bucketOf,buildGraph,counts,filterCandidates,headline,stageRail,yearOf,type Bucket,type Cand,type EdgeState,type Run} from "../lib/workspaceView";
 import "../styles/investigation-workspace-app.css";
 
@@ -69,6 +71,8 @@ export function InvestigationWorkspacePage(){
    contextLabels:picked.contexts.map(ctxLabel),
   })
   :null;
+ const passportEdges=useMemo(()=>run?liveInvestigationPassportEdges(run):[],[run]);
+ const passportSources=useMemo(()=>run?liveInvestigationPassportSources(run):[],[run]);
  return (
   <ResearchAppShell where="Investigation workspace" whereIcon="flask" active="investigations">
    <main className="ws" id="rh-main" tabIndex={-1}>
@@ -160,7 +164,16 @@ export function InvestigationWorkspacePage(){
            <details><summary>Rationale, prediction, experiment, falsifier</summary>
             <dl><dt>Why</dt><dd>{hy.rationale}</dd><dt>Prediction if true</dt><dd>{hy.prediction}</dd><dt>Experiment</dt><dd>{hy.experiment}</dd><dt>Would be falsified by</dt><dd>{hy.falsifier}</dd><dt>Limits</dt><dd>{hy.limits}</dd><dt>Proposed by</dt><dd>{hy.generatedBy.verifier} ({hy.generatedBy.model})</dd></dl></details></li>))}</ul></>}
        </details>
-       <details className="ws-acc"><summary><Icon name="book" size={16}/>Research brief</summary><p>An evidence-linked record of this run with its limits. Abstracts are not included.</p></details>
+       <PassportEvidenceTable
+        edges={passportEdges}
+        sources={passportSources}
+        heading="Evidence table for this live brief"
+        onInspect={(edgeId)=>{
+         const id=edgeId.startsWith("live-claim:")?edgeId.slice("live-claim:".length):edgeId;
+         setSel(id);
+        }}
+       />
+       <details className="ws-acc"><summary><Icon name="book" size={16}/>Research brief</summary><p>An evidence-linked record of this run with passport columns, verification status and limits. Abstracts are not included.</p></details>
        <button type="button" className="ws-run ws-wide" onClick={()=>setBrief(b=>!b)} aria-expanded={brief}>{brief?"Hide research brief":"Open research brief"} <Icon name="arrow" size={16}/></button>
        {brief&&<pre className="ws-brief" tabIndex={0} aria-label="Research brief text">{renderLiveBriefMarkdown(run)}</pre>}
        <div className="ws-export">
