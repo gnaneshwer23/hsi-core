@@ -97,7 +97,7 @@ describe("Public HSI site honesty", () => {
     expect(cta).not.toMatch(/PUBLIC_PLATFORM_CTA[\s\S]*to:"\/platform"/);
     expect(cta).not.toMatch(/PUBLIC_SCIENCE_CTA[\s\S]*to:"\/science"/);
     expect(experience).not.toContain('to:"/science",label:"Science"');
-    expect(site("src/pages/SignIn.tsx")).toContain('to="/knowledge-graph"');
+    expect(site("src/pages/SignIn.tsx")).toContain('to="/science"');
     expect(site("src/pages/ResearchAccount.tsx")).toContain('to="/knowledge-graph"');
     expect(site("src/pages/HowItWorksPage.tsx")).toContain('Former “Platform”');
     expect(site("src/pages/KnowledgeGraphPublic.tsx")).toContain('Former “Science”');
