@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "hsi-sec02-caps-dry-run-1",
+  "purpose": "sec02_kill_switch_spend_caps_soft_land",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "ownerCapsClaimed": false,
+  "providerConsoleCapsClaimed": false,
+  "scientificApproval": false,
+  "honesty": {
+    "noInventedNumericCaps": true,
+    "noInventedOnCallDestination": true,
+    "modelStepOptInOnly": true,
+    "providerConsoleCapsAreAuthoritative": true
+  },
+  "controls": [
+    {
+      "kind": "live_model_step_enable",
+      "killExercised": false,
+      "disabledWithinOneMinute": null,
+      "recordedAt": null
+    },
+    {
+      "kind": "live_model_daily_runs",
+      "ownerCeilingSet": false,
+      "ceilingValue": null,
+      "recordedAt": null
+    },
+    {
+      "kind": "provider_console_spend_cap",
+      "openaiConsoleCapSet": false,
+      "anthropicConsoleCapSet": false,
+      "ackRef": null,
+      "recordedAt": null
+    }
+  ],
+  "blockedUntil": [
+    "Owner records provider-console spend caps privately (B5)",
+    "Owner chooses and sets HSI_LIVE_MODEL_DAILY_RUNS on the target deployment",
+    "Kill-switch drill: HSI_LIVE_MODEL_STEP_ENABLED cleared and redeployed"
+  ]
+}
