@@ -95,8 +95,13 @@ export function buildPassportEvidenceTable(
   };
 }
 
+/** Neutralise markup in provider-controlled cell text (titles, assertions, limits). */
 function mdCell(value:string):string{
-  return value.replaceAll("|","\\|").replaceAll("\n"," ").trim()||"—";
+  const escaped=value
+    .replace(/[<>&`*_\[\]#|]/g,c=>"&#"+c.charCodeAt(0)+";")
+    .replace(/[\r\n]+/g," ")
+    .trim();
+  return escaped||"—";
 }
 
 /** Markdown table for research brief export. */
