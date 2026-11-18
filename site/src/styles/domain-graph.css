@@ -32,7 +32,6 @@
 .dg-leg-reviewed{border-top-color:#23775f!important;border-top-width:3px!important}
 .dg-leg-gap{border-top-style:dotted!important;border-top-color:#8eb0a8!important}
 .dg-leg-neg{border-top-style:dashed!important;border-top-color:#f3ad9c!important}
-.dg-review-honesty{margin:10px 0 0;padding:10px 12px;border-radius:6px;background:#eef5ef;border:1px solid #d0dfd4;font-size:.72rem;line-height:1.7;color:#35584a;max-width:85ch}
 .dg-inspect-prompt{display:grid;gap:8px;margin-top:8px;padding:14px;border-radius:8px;background:#eef5ef;border:1px solid #d0dfd4}
 .dg-inspect-prompt>p{margin:0;font-size:.78rem;line-height:1.7;color:#35584a}
 @keyframes dg-shimmer{0%{background-position:100% 0}100%{background-position:-100% 0}}
