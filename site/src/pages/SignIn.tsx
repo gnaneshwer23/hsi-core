@@ -29,7 +29,11 @@ export function SignIn() {
   hsiAuth.session().then(result=>{
    if(!active)return;
    setChecking(false);
-   if(result.error){setError(result.error.message);return}
+   if(result.error){
+    // Expired cookie ≠ auth outage; keep the form usable so the researcher can sign in again.
+    setError(result.error.message);
+    return;
+   }
    if(result.data?.user?.id)navigate(afterAuth,{replace:true});
   }).catch(()=>{
    if(!active)return;
@@ -78,13 +82,14 @@ export function SignIn() {
  return <section className="hsi-sign-in" aria-labelledby="sign-in-heading"><div className="hsi-sign-in-card">
   <p className="hsi-sign-in-eyebrow">HSI / SECURE RESEARCH ACCESS</p>
   <h1 id="sign-in-heading">Researcher sign in</h1>
-  <p className="hsi-sign-in-description">Sign in to your HSI account. Governed research access requires separate administrator approval.</p>
+  <p className="hsi-sign-in-description">Sign in to your HSI account. A Neon Auth session is not a research or reviewer grant — an administrator provisions those separately after approval. An expired session is not an authentication outage: sign in again.</p>
   {authBaseUrl?<form onSubmit={submit} className="hsi-auth-form">
     <label htmlFor="hsi-email">Email address</label>
     <input id="hsi-email" type="email" autoComplete="username" required maxLength={254} value={email} onChange={e=>setEmail(e.target.value)} disabled={pending||checking||verifyingCode||resending}/>
     <label htmlFor="hsi-password">Password</label>
     <input id="hsi-password" type="password" autoComplete="current-password" required value={password} onChange={e=>setPassword(e.target.value)} disabled={pending||checking||verifyingCode||resending}/>
     {error&&<p role="alert" className="hsi-auth-error">{error}</p>}
+    {error===AUTH_ERROR_MESSAGES.AUTH_SESSION_EXPIRED&&<p className="hsi-auth-hint">Use your email and password below to continue. Signing in again does not create a research grant or enable writes.</p>}
     {error===AUTH_ERROR_MESSAGES.INVALID_EMAIL_OR_PASSWORD&&<p className="hsi-auth-hint">If you have not registered on this authentication service yet, <Link to={signUpHref({next:afterAuth})}>create an account</Link>. Password reset only works for accounts that already exist here.</p>}
     {needsVerification&&<>
      <p className="hsi-auth-hint">Verify the email for this account before signing in. Use the code or link from your inbox, or request another email.</p>
@@ -102,7 +107,7 @@ export function SignIn() {
    </form>:<div className="hsi-sign-in-status" role="status"><strong>Research sign-in is not enabled on this deployment.</strong><p>The authentication endpoint must be approved and configured before credentials can be accepted. Please contact the HSI administrator.</p></div>}
   <p className="hsi-auth-switch"><Link to="/forgot-password">Forgot your password?</Link></p>
   <p className="hsi-auth-switch">New to HSI? <Link to={signUpHref({next:afterAuth})}>Create an account</Link></p>
-  <Link className="hsi-sign-in-back" to="/knowledge-graph">Explore the knowledge graph <span aria-hidden="true">↗</span></Link>
-  <p className="hsi-sign-in-footnote">Signing in does not grant access to private research or clinical records.</p>
+  <Link className="hsi-sign-in-back" to="/science">Explore public science <span aria-hidden="true">↗</span></Link>
+  <p className="hsi-sign-in-footnote">Signing in does not grant research workspace access, reviewer authority, or research writes. Request access via <Link to="/contact">Research access</Link> if you need an administrator grant.</p>
  </div></section>;
 }
