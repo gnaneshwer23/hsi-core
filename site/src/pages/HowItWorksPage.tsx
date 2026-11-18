@@ -27,6 +27,7 @@ export function HowItWorksPage(){
    <header className="pg-phero">
     <h1>How HSI works: one loop, eight steps.</h1>
     <div><p className="pg-lead">Each step is a working screen. Each says what it shows, what it does not, and whether it uses live public sources, published graph data, synthetic data or your own records.</p>
+    <p className="pg-micro" role="note">Former “Platform” and related marketing URLs redirect here. HSI is one scientific intelligence product — not a separate Platform landing.</p>
     <div className="pg-cta"><Link className="pg-btn" to="/welcome">Set up your research home <span aria-hidden="true">→</span></Link><Link className="pg-link" to="/research/journey">Open the guided walkthrough in the app <span aria-hidden="true">→</span></Link></div></div>
    </header>
 
