@@ -15,8 +15,7 @@ test('the footer leads to the research app, which opens the app shell',async({pa
 
 test('home states the vision, the one loop, what you get, and what is not true yet; names no agents and no competitors',async({page})=>{
  await page.goto('/');
- await expect(page.getByRole('heading',{level:1})).toHaveText('Connect the biology. Challenge the evidence.');
- await expect(page.getByText('Human Super Intelligence',{exact:true}).first()).toBeVisible();
+ await expect(page.getByRole('heading',{level:1})).toHaveText('Human Super Intelligence Connect the biology. Challenge the evidence.');
  await expect(page.getByRole('link',{name:/Join research preview/}).first()).toHaveAttribute('href','/welcome');
  await expect(page.getByRole('link',{name:/Explore the platform/}).first()).toHaveAttribute('href','/platform');
  await expect(page.getByRole('link',{name:/Walk through all eight steps/})).toHaveAttribute('href','/how-it-works');

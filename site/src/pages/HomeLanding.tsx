@@ -37,8 +37,7 @@ export function HomeLanding(){
    <GraphSnapshotProvider>
     <section className="pg-hero pg-hero-dark pg-hero-console" aria-labelledby="home-title">
      <div className="pg-hero-copy">
-      <p className="pg-brand">Human Super Intelligence</p>
-      <h1 id="home-title">Connect the biology. Challenge the evidence.</h1>
+      <h1 id="home-title"><span className="pg-brand">Human Super Intelligence</span> Connect the biology. Challenge the evidence.</h1>
       <p className="pg-lead">Investigate scientific mechanisms across six domains of human biology. Compare findings in context, trace their supporting evidence and understand what remains uncertain.</p>
       <div className="pg-cta"><Link className="pg-btn pg-btn-light" to="/welcome">Join research preview <span aria-hidden="true">→</span></Link><Link className="pg-link pg-link-light" to="/platform">Explore the platform</Link></div>
       <p className="pg-micro">Research preview. Candidate-only: nothing here is scientifically approved. No account is needed to start, public evidence is live, and patient data is synthetic.</p>
