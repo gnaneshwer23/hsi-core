@@ -5,6 +5,16 @@ export type AuthError={message:string;code?:string};
 export type AuthResult<T>={data:T|null;error:AuthError|null};
 export type HsiAuthSession={session:{id:string;expiresAt:string;userId?:string};user:{id:string;name?:string;email:string;emailVerified:boolean}};
 export type HsiRegistration={user:{id:string;email:string;emailVerified:boolean};verificationEmailRequested?:boolean};
+export type AuthSessionParseCode="auth_session_expired"|"auth_invalid_response";
+/** Distinguishes an expired cookie/session from a malformed provider payload. */
+export class AuthSessionParseError extends Error{
+ readonly code:AuthSessionParseCode;
+ constructor(code:AuthSessionParseCode,message:string){
+  super(message);
+  this.name="AuthSessionParseError";
+  this.code=code;
+ }
+}
 function record(v:unknown):v is Record<string,unknown>{return !!v&&typeof v==="object"&&!Array.isArray(v);}
 export function parseAuthBaseUrl(value:unknown):string|null {
  if(typeof value!=="string"||!value.trim())return null;
@@ -12,9 +22,16 @@ export function parseAuthBaseUrl(value:unknown):string|null {
 }
 export function parseAuthSession(value:unknown,now=Date.now()):HsiAuthSession|null {
  if(value===null)return null;
- if(!record(value)||!record(value.session)||!record(value.user))throw Error("Invalid authentication session response");
+ if(!record(value)||!record(value.session)||!record(value.user)){
+  throw new AuthSessionParseError("auth_invalid_response","Invalid authentication session response");
+ }
  const s=value.session,u=value.user;
- if(typeof s.id!=="string"||!s.id.trim()||s.id.length>256||typeof s.expiresAt!=="string"||!Number.isFinite(Date.parse(s.expiresAt))||Date.parse(s.expiresAt)<=now||typeof u.id!=="string"||!u.id.trim()||u.id.length>256||typeof u.email!=="string"||!u.email.trim()||u.email.length>254||typeof u.emailVerified!=="boolean"||(s.userId!==undefined&&s.userId!==u.id))throw Error("Invalid or expired authentication session");
+ if(typeof s.id!=="string"||!s.id.trim()||s.id.length>256||typeof s.expiresAt!=="string"||!Number.isFinite(Date.parse(s.expiresAt))||typeof u.id!=="string"||!u.id.trim()||u.id.length>256||typeof u.email!=="string"||!u.email.trim()||u.email.length>254||typeof u.emailVerified!=="boolean"||(s.userId!==undefined&&s.userId!==u.id)){
+  throw new AuthSessionParseError("auth_invalid_response","Invalid authentication session response");
+ }
+ if(Date.parse(s.expiresAt)<=now){
+  throw new AuthSessionParseError("auth_session_expired",AUTH_ERROR_MESSAGES.AUTH_SESSION_EXPIRED);
+ }
  return {session:{id:s.id,expiresAt:s.expiresAt,...(typeof s.userId==="string"?{userId:s.userId}:{})},user:{id:u.id,email:u.email,emailVerified:u.emailVerified,...(typeof u.name==="string"?{name:u.name}:{})}};
 }
 export function parseAuthRegistration(value:unknown,submittedEmail:string):HsiRegistration {
@@ -40,7 +57,13 @@ export function createHsiAuthClient(configured:unknown,request:FetchLike=fetch,t
 
      return{data:null,error:{message:code==="AUTH_PROVIDER_REJECTED"?`The authentication provider rejected the request (HTTP ${response.status}). Contact the HSI administrator with this status.`:AUTH_ERROR_MESSAGES[code]??(response.status===429?"Too many authentication attempts. Please try again later.":`Authentication failed (HTTP ${response.status}). Contact the HSI administrator with this status.`),code:AUTH_ERROR_MESSAGES[code]?code:"auth_denied"}};
     }
-    try{return{data:parse(value),error:null};}catch{return{data:null,error:{message:"Authentication service returned an invalid response. The operation could not be confirmed.",code:"auth_invalid_response"}};}
+    try{return{data:parse(value),error:null};}
+    catch(error){
+     if(error instanceof AuthSessionParseError){
+      return{data:null,error:{message:error.message,code:error.code}};
+     }
+     return{data:null,error:{message:"Authentication service returned an invalid response. The operation could not be confirmed.",code:"auth_invalid_response"}};
+    }
    })();
    // An abort-aware fetch normally rejects promptly. The race also covers a stalled body reader.
    const timeout=new Promise<AuthResult<T>>(resolve=>{controller.signal.addEventListener("abort",()=>resolve({data:null,error:{message:"Authentication request timed out. Please try again.",code:"auth_timeout"}}),{once:true});});
