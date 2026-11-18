@@ -49,7 +49,6 @@ const ScienceConnections=lazy(()=>import("./pages/ScienceExplorer").then(m=>({de
 import { NotFound } from "./pages/NotFound";
 const AuthenticatedInterrogativeWorkbench=lazy(()=>import("./pages/AuthenticatedInterrogativeWorkbench").then(m=>({default:m.AuthenticatedInterrogativeWorkbench})));
 const ResearchMechanismWorkflowPage=lazy(()=>import("./pages/ResearchMechanismWorkflow").then(m=>({default:m.ResearchMechanismWorkflowPage})));
-const ScientificDiscoveryExperience=lazy(()=>import("./pages/ScientificDiscoveryExperience").then(m=>({default:m.ScientificDiscoveryExperience})));
 const ScientificInvestigationPage=lazy(()=>import("./pages/ScientificInvestigation").then(m=>({default:m.ScientificInvestigationPage})));
 const InvestigationWorkspaceRoute=lazy(()=>import("./pages/InvestigationWorkspace").then(m=>({default:m.InvestigationWorkspacePage})));
 const WelcomeRoute=lazy(()=>import("./pages/Welcome").then(m=>({default:m.WelcomePage})));
@@ -146,7 +145,7 @@ export default function App() {
         <Route path="science/contradictions" element={<ScienceContradictions />} />
         <Route path="research/decision-workbench" element={<AuthenticatedInterrogativeWorkbench />} />
         <Route path="research/mechanism-workflow" element={<Suspense fallback={<p role="status">Loading mechanism workflow…</p>}><ResearchMechanismWorkflowPage/></Suspense>} />
-        <Route path="research/discovery-experience" element={<ScientificDiscoveryExperience/>} />
+        <Route path="research/discovery-experience" element={<Navigate to="/research/workspace" replace />} />
         <Route path="research/investigate" element={<Suspense fallback={<p role="status">Loading investigation…</p>}><ScientificInvestigationPage/></Suspense>} />
         <Route path="research/workspace" element={<Suspense fallback={<p role="status">Loading workspace…</p>}><InvestigationWorkspaceRoute/></Suspense>} />
         <Route path="welcome" element={<Suspense fallback={<p role="status">Loading…</p>}><WelcomeRoute/></Suspense>} />
