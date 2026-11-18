@@ -57,13 +57,14 @@ await page.locator('#rh-setup > summary').click();
  await expect(page.getByText('No concept in the published graph matches')).toBeVisible();
 });
 
-test('a complex question offers Quick Explore and a saved Deep Investigate that prefills the workspace',async({page})=>{
+test('a complex question offers live investigation as primary and save-for-review as secondary',async({page})=>{
  await saved(page,200,{items:[],nextCursor:null,releases:[{id:'rel-1',version:'1.0.0',manifestHash:'a'.repeat(64)}],writesEnabled:false,canCreate:false});
  await page.goto('/research/home');
  await page.getByRole('button',{name:'Skip for now'}).click();
  await page.locator('#rh-q').fill('How do microbial metabolites influence immune signalling and brain inflammation?');
  await expect(page.getByText('This reads as a research question')).toBeVisible();
- await page.getByRole('link',{name:/Deep Investigate/}).click();
+ await expect(page.getByRole('link',{name:/Open live investigation|Deep Investigate: run live/})).toHaveAttribute('href','/research/workspace');
+ await page.getByRole('link',{name:'Save question for review'}).click();
  await expect(page).toHaveURL(/\/research\/dashboard\?q=/);
  await expect(page.locator('#research-question')).toHaveValue(/microbial metabolites/);
 });
