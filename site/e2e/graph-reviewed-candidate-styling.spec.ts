@@ -9,8 +9,8 @@ test("domain graph legend distinguishes reviewed vs candidate without claiming r
   await expect(legend.getByText("Evidence gap")).toBeVisible();
   const honesty = page.getByLabel("Review styling honesty");
   await expect(honesty).toContainText("Reviewed relationships: 0");
-  await expect(honesty).toContainText("remain unreviewed");
-  await expect(honesty).toContainText("not promoted");
+  await expect(honesty).toContainText("source candidates remain unreviewed");
+  await expect(honesty).toContainText("nothing here is promoted");
   await expect(page.getByText(/Solid teal: unreviewed source candidates/i)).toBeVisible();
   // Live edges carry the candidate lane attribute, never a forged reviewed paint.
   await expect(page.locator("[data-graph-edge]").first()).toHaveAttribute(
