@@ -15,9 +15,11 @@ test('the footer leads to the research app, which opens the app shell',async({pa
 
 test('home states the vision, the one loop, what you get, and what is not true yet; names no agents and no competitors',async({page})=>{
  await page.goto('/');
- await expect(page.getByRole('heading',{level:1})).toHaveText('Human biology as a living knowledge graph that shows where the evidence stops.');
- await expect(page.getByRole('link',{name:/Set up your research home/}).first()).toHaveAttribute('href','/welcome');
- await expect(page.getByRole('link',{name:'See how it works'})).toHaveAttribute('href','/how-it-works');
+ await expect(page.getByRole('heading',{level:1})).toHaveText('Connect the biology. Challenge the evidence.');
+ await expect(page.getByText('Human Super Intelligence',{exact:true}).first()).toBeVisible();
+ await expect(page.getByRole('link',{name:/Join research preview/}).first()).toHaveAttribute('href','/welcome');
+ await expect(page.getByRole('link',{name:/Explore the platform/}).first()).toHaveAttribute('href','/platform');
+ await expect(page.getByRole('link',{name:/Walk through all eight steps/})).toHaveAttribute('href','/how-it-works');
  const loop=page.getByRole('list',{name:'The research loop'}).locator(':scope > li');
  await expect(loop).toHaveCount(6);
  await expect(loop.nth(1)).toContainText('Live public sources');await expect(loop.nth(4)).toContainText('Kept on your device');

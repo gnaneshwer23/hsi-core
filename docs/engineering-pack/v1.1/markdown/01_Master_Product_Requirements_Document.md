@@ -58,7 +58,13 @@ The AI-for-science market moved fast in 2026. Assume every large competitor can 
 | **BenchSci (ASCEND, EMET)** | Experiment-focused evidence for preclinical biology; large pharma customers | Pharma enterprise focus; reagent and experiment orientation |
 | **Phylo (Biomni Lab)** | 300+ tools and databases in one agent environment; open-source roots; a16z-backed | Executes analyses; does not curate a reviewed mechanism graph |
 | **Elicit, Undermind, Consensus** | Literature search and extraction at scale; Elicit has an MCP server and research agent | Paper-level answers; no biological context model or graph |
+| **Parallel Bio** | Human-relevant biological data for earlier disease-biology decisions | HSI must label human vs animal vs computational evidence explicitly |
+| **Anto Biosciences** | Microbial-community foundation models and drug-response applications | Connect microbiome evidence into cross-domain context; do not race a new foundation model |
+| **Output Labs, CellType** | Mechanistic reasoning and agentic drug-discovery investigation | Keep investigation review-bound; expose conflict and uncertainty |
+| **Tamarind Bio, 10x Science** | Computational biology APIs; automated protein characterisation | Win upstream with evidence investigation; copy their narrow-workflow focus, not their whole stack |
 | **Claude Science, GPT-Rosalind** | General workbenches and models from frontier labs | Partners as much as competitors: Anthropic's stated position is that specialised science stays with partners |
+
+YC directory snapshot and application notes: [`docs/strategy/HSI_YC_COMPETITIVE_LANDSCAPE_2026-11-18.md`](../../../strategy/HSI_YC_COMPETITIVE_LANDSCAPE_2026-11-18.md).
 
 **Positioning statement (use on the website once true):** *The only biomedical graph that shows you where a claim holds, where it fails, and who checked it.* It becomes true when the first reviewed slice (requirement PRD-03) ships.
 

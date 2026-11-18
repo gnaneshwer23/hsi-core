@@ -37,9 +37,10 @@ export function HomeLanding(){
    <GraphSnapshotProvider>
     <section className="pg-hero pg-hero-dark pg-hero-console" aria-labelledby="home-title">
      <div className="pg-hero-copy">
-      <h1 id="home-title">Human biology as a living knowledge graph that shows where the evidence stops.</h1>
-      <p className="pg-lead">Findings are scattered across papers, models and experimental contexts. HSI connects them in one graph, keeps each claim's source, context and review status, and marks what conflicts and what is missing, so the next experiment is a decision, not a guess.</p>
-      <div className="pg-cta"><Link className="pg-btn pg-btn-light" to="/welcome">Set up your research home <span aria-hidden="true">→</span></Link><Link className="pg-link pg-link-light" to="/how-it-works">See how it works</Link></div>
+      <p className="pg-brand">Human Super Intelligence</p>
+      <h1 id="home-title">Connect the biology. Challenge the evidence.</h1>
+      <p className="pg-lead">Investigate scientific mechanisms across six domains of human biology. Compare findings in context, trace their supporting evidence and understand what remains uncertain.</p>
+      <div className="pg-cta"><Link className="pg-btn pg-btn-light" to="/welcome">Join research preview <span aria-hidden="true">→</span></Link><Link className="pg-link pg-link-light" to="/platform">Explore the platform</Link></div>
       <p className="pg-micro">Research preview. Candidate-only: nothing here is scientifically approved. No account is needed to start, public evidence is live, and patient data is synthetic.</p>
      </div>
      <LiveGraphHero/>
@@ -49,7 +50,7 @@ export function HomeLanding(){
     <section className="pg-pillars" aria-labelledby="pg-pillars-h">
      <div className="pg-pillars-copy">
       <h2 id="pg-pillars-h">What makes it different from a literature search.</h2>
-      <p className="pg-sec-lead">A search returns papers. HSI keeps the structure of what the papers claim, and what they leave out.</p>
+      <p className="pg-sec-lead">Search is getting smarter. HSI still has to go further: keep the structure of what papers claim, under which experimental conditions, and what they leave out.</p>
       <ol>{PILLARS.map(p=>(
        <li key={p.n}><span className="pg-pn" aria-hidden="true">{p.n}</span><div><h3>{p.title}</h3><p>{p.text}</p><Link className="pg-link" to={p.to}>{p.cta} <span aria-hidden="true">→</span></Link></div></li>
       ))}</ol>
