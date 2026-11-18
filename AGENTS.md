@@ -8,7 +8,9 @@ Present HSI as one scientific intelligence technology built around the Living Kn
 
 ## Governing product vision (binding doctrine)
 
-Treat [`docs/strategy/HSI_VISION.md`](docs/strategy/HSI_VISION.md) as the guiding vision for landing pages, backend services, knowledge-graph relationships, AI agents and product decisions. It is **ambition doctrine**, not a claim that every capability is production-ready — preserve honesty labels, capability-status, fail-closed writes, cross-domain scope (SSc = validation case), four-product boundaries, and no live CDS/PHI in this repo.
+**North star (frozen 18 November 2026):** [`docs/strategy/HSI_DEFINITIVE_PRODUCT_VISION.md`](docs/strategy/HSI_DEFINITIVE_PRODUCT_VISION.md) — building the intelligence layer for understanding human biology; product promise *Understand the mechanism. Preserve the evidence. Explain the uncertainty. Inform the next decision.* Evaluate features against that decision filter.
+
+Treat [`docs/strategy/HSI_VISION.md`](docs/strategy/HSI_VISION.md) as the operational doctrine wrapper for landing pages, backend services, knowledge-graph relationships, AI agents and product decisions. It is **ambition doctrine**, not a claim that every capability is production-ready — preserve honesty labels, capability-status, fail-closed writes, cross-domain scope (SSc = validation case), four-product **ownership** boundaries (not public portfolio marketing), and no live CDS/PHI in this repo.
 
 ## Neon isolation (binding)
 
