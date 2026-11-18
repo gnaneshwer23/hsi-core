@@ -46,6 +46,14 @@ test("wrong public origin and arbitrary routes fail closed before any provider c
  expect((await handleVercelResearch(req("/api/research/arbitrary"),env,{transport:noCalls})).status).toBe(404);
  expect((await handleVercelResearch(req("/api/auth/admin/grant"),env,{transport:noCalls})).status).toBe(404);
 });
+test("graph-workspace status is fail-closed by default and never requires provider calls",async()=>{
+ const response=await handleVercelResearch(req("/api/research/graph-workspace/status"),env,{transport:noCalls});
+ expect(response.status).toBe(200);
+ const body=await response.json() as {enabled:boolean;path:string;acceptedForScope:boolean};
+ expect(body.enabled).toBe(false);
+ expect(body.path).toBe("localStorage");
+ expect(body.acceptedForScope).toBe(false);
+});
 test("auth writes require exact origin and JSON before forwarding credentials",async()=>{
  expect((await handleVercelResearch(req("/api/auth/sign-in/email",{method:"POST",headers:{origin:"https://attacker.example","content-type":"application/json"},body:"{}"}),env,{transport:noCalls})).status).toBe(403);
  expect((await handleVercelResearch(req("/api/auth/sign-in/email",{method:"POST",headers:{origin,"content-type":"text/plain"},body:"{}"}),env,{transport:noCalls})).status).toBe(415);

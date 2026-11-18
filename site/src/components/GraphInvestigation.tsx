@@ -2,8 +2,16 @@ import {graphEvidenceReadiness} from "../../../src/knowledgeGraph/evidenceReadin
 import {useEffect,useMemo,useState} from "react";
 import type {DomainBundle} from "../../../src/knowledgeGraph/domainGraph";
 import {buildInvestigationRecord,buildSelectionContext,investigateSelection,proposeFromFinding,verifyInvestigationRecord,type AgentName,type AgentProposal,type AgentResponse,type Finding} from "../../../src/knowledgeGraph/graphAgents";
-import {browserStore,listInvestigations,loadInvestigation,saveInvestigation,type LoadResult} from "../../../src/knowledgeGraph/investigationStore";
+import type {LoadResult} from "../../../src/knowledgeGraph/investigationStore";
 import type {DepartmentSlug} from "../../../src/knowledgeGraph/departments";
+import {
+ listGraphInvestigations,
+ loadGraphInvestigation,
+ resolveGraphWorkspaceMode,
+ saveGraphInvestigation,
+ type GraphWorkspaceClientMode,
+ type InvestigationSummary,
+} from "../lib/graphWorkspaceClient";
 
 const ROLE:Record<AgentName,{label:string;action:string;blurb:string}>={
  PARALLAX:{label:"PARALLAX · context and contradiction",action:"Compare evidence",blurb:"Tests whether two findings are comparable before treating a difference as disagreement."},
@@ -31,15 +39,37 @@ function ResponseCard({r,onPropose}:{r:AgentResponse;onPropose:(r:AgentResponse,
 
 export function GraphInvestigation({bundle,nodeIds,edgeIds,department,onRemoveNode,onRemoveEdge,onRestore}:{bundle:DomainBundle;nodeIds:string[];edgeIds:string[];department:DepartmentSlug|null;onRemoveNode:(id:string)=>void;onRemoveEdge:(id:string)=>void;onRestore:(nodeIds:string[],edgeIds:string[])=>void}){
  const [question,setQuestion]=useState("What does the graph record about this selection?"),[responses,setResponses]=useState<AgentResponse[]>([]),[error,setError]=useState(""),[proposal,setProposal]=useState<AgentProposal|null>(null);
- const store=useMemo(()=>browserStore(),[]),[saved,setSaved]=useState(()=>store?listInvestigations(store):[]),[saveMsg,setSaveMsg]=useState(""),[opened,setOpened]=useState<LoadResult|null>(null);
- const refresh=()=>setSaved(store?listInvestigations(store):[]);
- useEffect(()=>{refresh()},[store]);
- async function save(rec:NonNullable<typeof record>){
-  if(!store){setSaveMsg("This browser is blocking local storage, so nothing can be saved here. Export the record instead.");return}
-  try{const r=await saveInvestigation(bundle,store,rec);setSaveMsg(r.status==="unchanged"?`Already saved as revision ${r.saved.revision}.`:`Saved as revision ${r.saved.revision} on this device only.`);refresh()}
-  catch(e){setSaveMsg(e instanceof Error?e.message:"Could not save")}
+ const [mode,setMode]=useState<GraphWorkspaceClientMode>("local");
+ const [saved,setSaved]=useState<InvestigationSummary[]>([]);
+ const [saveMsg,setSaveMsg]=useState(""),[opened,setOpened]=useState<LoadResult|null>(null);
+ const [storageReady,setStorageReady]=useState(false);
+ async function refresh(next:GraphWorkspaceClientMode=mode){
+  try{setSaved(await listGraphInvestigations(next))}
+  catch{setSaved([])}
  }
- async function open(id:string,rev:number){if(store)setOpened(await loadInvestigation(store,id,rev,bundle))}
+ useEffect(()=>{
+  let cancelled=false;
+  void(async()=>{
+   const resolved=await resolveGraphWorkspaceMode();
+   if(cancelled)return;
+   setMode(resolved.mode);
+   setStorageReady(true);
+   await refresh(resolved.mode);
+  })();
+  return()=>{cancelled=true};
+ },[]);
+ async function save(rec:NonNullable<typeof record>){
+  try{
+   const r=await saveGraphInvestigation(mode,bundle,rec);
+   const where=r.path==="server"?"on the staging server store (unreviewed)":"on this device only";
+   setSaveMsg(r.status==="unchanged"?`Already saved as revision ${r.saved.revision}.`:`Saved as revision ${r.saved.revision} ${where}.`);
+   await refresh(mode);
+  }catch(e){setSaveMsg(e instanceof Error?e.message:"Could not save")}
+ }
+ async function open(id:string,rev:number){
+  try{setOpened(await loadGraphInvestigation(mode,id,rev,bundle))}
+  catch(e){setSaveMsg(e instanceof Error?e.message:"Could not open")}
+ }
  const name=(id:string)=>bundle.nodes.find(n=>n.id===id)?.name??id;
  const built=useMemo(()=>{
   try{return {ctx:buildSelectionContext(bundle,{investigationId:`inv-${bundle.version.slice(0,8)}-${nodeIds.length}n${edgeIds.length}e`,graphVersion:bundle.version,question,department,nodeIds,edgeIds}),err:""}}
@@ -77,11 +107,13 @@ export function GraphInvestigation({bundle,nodeIds,edgeIds,department,onRemoveNo
   <div aria-live="polite">{responses.map(r=><ResponseCard key={r.agent} r={r} onPropose={(resp,f)=>setProposal(proposeFromFinding(resp,f))}/>)}</div>
   {proposal&&<section className="gi-proposal" aria-label="Agent proposal"><h3>Proposal (unreviewed)</h3><p>{proposal.summary}</p><p>Proposed by {proposal.proposedBy}. Status: <strong>proposed, unreviewed</strong>. It requires independent human review and cannot be applied to the graph from here.</p></section>}
   {record&&<footer className="gi-export"><p className={problems.length?"gi-error":"gi-verified"}>{problems.length?`Record does not reproduce: ${problems.join("; ")}`:`This record reproduces from graph version ${bundle.version.slice(0,8)}.`}</p>
-   <div className="gi-actions"><button className="gi-btn" onClick={()=>save(record)}>Save on this device</button><button className="gi-btn" onClick={()=>download(record,`hsi-investigation-${record.context.investigationId}.json`)}>Export investigation</button></div></footer>}
+   <div className="gi-actions"><button className="gi-btn" onClick={()=>save(record)}>{mode==="server"?"Save to staging store":"Save on this device"}</button><button className="gi-btn" onClick={()=>download(record,`hsi-investigation-${record.context.investigationId}.json`)}>Export investigation</button></div></footer>}
   {saveMsg&&<p className="gi-note" role="status">{saveMsg}</p>}
   <section className="gi-saved" aria-labelledby="gi-saved-h"><h3 id="gi-saved-h">Saved investigations</h3>
-   <p className="gi-note">Saved on this device only, unreviewed, append-only. Saving does not approve anything, and clearing browser data removes them.</p>
-   {!store?<p className="gi-note">Local storage is not available in this browser.</p>:saved.length===0?<p className="gi-note">Nothing saved yet.</p>:<ul>{saved.map(x=><li key={x.investigationId}><span>{x.question} <small>· revision {x.latestRevision} · {x.savedAt.slice(0,10)} · graph {x.graphVersion.slice(0,8)}</small></span> <button className="gi-btn" onClick={()=>open(x.investigationId,x.latestRevision)} aria-label={`Open saved investigation ${x.investigationId}`}>Open</button></li>)}</ul>}
+   <p className="gi-note">{mode==="server"
+    ?"Staging server store is enabled for this deployment only. Records stay unreviewed and append-only; saving does not approve or publish."
+    :"Saved on this device only, unreviewed, append-only. Saving does not approve anything, and clearing browser data removes them. Server store stays off unless an owner enables the staging flag."}</p>
+   {!storageReady?<p className="gi-note">Checking storage path…</p>:saved.length===0?<p className="gi-note">Nothing saved yet.</p>:<ul>{saved.map(x=><li key={x.investigationId}><span>{x.question} <small>· revision {x.latestRevision} · {x.savedAt.slice(0,10)} · graph {x.graphVersion.slice(0,8)}</small></span> <button className="gi-btn" onClick={()=>open(x.investigationId,x.latestRevision)} aria-label={`Open saved investigation ${x.investigationId}`}>Open</button></li>)}</ul>}
    {opened&&<div className="gi-card" role="region" aria-label="Opened saved investigation">
     <h4>{opened.saved.record.context.question}</h4>
     <p className="gi-scope">Revision {opened.saved.revision} · graph version {opened.saved.record.graphVersion.slice(0,8)} · {opened.saved.record.context.nodeIds.length} concepts · {opened.saved.record.context.edgeIds.length} relationships</p>
