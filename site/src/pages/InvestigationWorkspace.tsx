@@ -15,6 +15,7 @@ import {EvidenceContextPassportView} from "../components/EvidenceContextPassport
 import {PassportEvidenceTable} from "../components/PassportEvidenceTable";
 import {liveClaimToPassportEdge} from "../../../src/investigation/liveClaimPassportEdge";
 import {liveInvestigationPassportEdges,liveInvestigationPassportSources} from "../../../src/investigation/liveBriefPassport";
+import {COMPARISON_OUTCOME_LABEL} from "../../../src/investigation/liveBriefComparison";
 import {BUCKET_LABEL,bucketOf,buildGraph,counts,filterCandidates,headline,stageRail,yearOf,type Bucket,type Cand,type EdgeState,type Run} from "../lib/workspaceView";
 import "../styles/investigation-workspace-app.css";
 
@@ -64,6 +65,7 @@ export function InvestigationWorkspacePage(){
  const picked:Cand|null=run?.candidates.find(x=>x.id===sel)??null;
  const rec=picked?run?.records.find(r=>r.sourceId===picked.sourceId)??null:null;
  const supporting=run?.candidates.filter(x=>bucketOf(x)==="supporting")??[],opposing=run?.candidates.filter(x=>bucketOf(x)==="opposing"||x.verification==="disputed")??[];
+ const comparison=run?.structuredComparison;
  const ctxLabel=(k:string)=>run?.byContext[k]?.label??k;
  const passportEdge=picked
   ?liveClaimToPassportEdge({
@@ -151,7 +153,24 @@ export function InvestigationWorkspacePage(){
         </div>
        )}
        <details className="ws-acc" open><summary><Icon name="check" size={16}/>Evidence <b>{supporting.length}</b></summary><p>Claims both checks agreed on as positive. {supporting.length===0&&"None in this run."}</p><ul>{supporting.map(x=><li key={x.id}><button type="button" onClick={()=>setSel(x.id)}>{x.subject} ~ {x.object}</button></li>)}</ul></details>
-       <details className="ws-acc"><summary><Icon name="x" size={16}/>Contradictions <b>{opposing.length}</b></summary><p>{run.verification.status==="not_configured"?"Not assessed: the model check did not run.":opposing.length===0?"None found in these sources. This does not establish consensus.":"Opposing or disputed claims."}</p><ul>{opposing.map(x=><li key={x.id}><button type="button" onClick={()=>setSel(x.id)}>{x.subject} ~ {x.object}</button></li>)}</ul></details>
+       <details className="ws-acc"><summary><Icon name="x" size={16}/>Opposing / disputed checks <b>{opposing.length}</b></summary><p>{run.verification.status==="not_configured"?"Not assessed: the model check did not run.":opposing.length===0?"None found in these sources. This does not establish consensus.":"Opposing polarity or disputed model checks — not structured contradiction classes."}</p><ul>{opposing.map(x=><li key={x.id}><button type="button" onClick={()=>setSel(x.id)}>{x.subject} ~ {x.object}</button></li>)}</ul></details>
+       <details className="ws-acc" open={(comparison?.pairCount??0)>0}><summary><Icon name="layers" size={16}/>Structured comparison <b>{comparison?.pairCount??0}</b></summary>
+        <p>Pairwise comparison of claims that share a subject–object relation. Verification is bound before contradiction language. Potential contradiction is not proven contradiction.</p>
+        {!comparison||comparison.pairCount===0?<p className="ws-muted">No comparable pairs in this run (need at least two candidates on the same relation).</p>:<>
+         <p className="ws-muted">Consistent {comparison.summary.consistent} · Context-dependent {comparison.summary.contextDependent} · Method difference {comparison.summary.methodologicalDifference} · Insufficient comparability {comparison.summary.insufficientComparability} · Insufficient evidence {comparison.summary.insufficientEvidence} · Potential contradiction (candidate) {comparison.summary.potentialContradiction}</p>
+         <ul>{comparison.items.map(item=>(
+          <li key={`${item.leftId}:${item.rightId}`}>
+           <b>{COMPARISON_OUTCOME_LABEL[item.outcome]}</b>
+           <span className="ws-muted"> — {item.leftLabel} vs {item.rightLabel}</span>
+           <div className="ws-row-actions">
+            <button type="button" onClick={()=>setSel(item.leftId)}>Open left claim</button>
+            <button type="button" onClick={()=>setSel(item.rightId)}>Open right claim</button>
+           </div>
+           {item.verificationBindNote&&<p className="ws-warn">{item.verificationBindNote}</p>}
+          </li>
+         ))}</ul>
+        </>}
+       </details>
        <details className="ws-acc" open={run.hypotheses.items.length>0}><summary><Icon name="flask" size={16}/>Hypotheses <b>{run.hypotheses.items.length}</b></summary>
         {run.hypotheses.items.length===0?<p>{run.hypotheses.reason??"None proposed."}</p>:<>
          <p className="ws-warn">Unvalidated model proposals from {run.hypotheses.basis.findings} agreed findings. Not findings, not recommendations, not reviewed.</p>
