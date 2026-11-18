@@ -5,6 +5,11 @@ const saved=(page:any,status:number,body:unknown)=>page.route('**/api/research/i
 
 test('first-time researcher: onboarding, interests persist, grounded recommendations, no sign-in needed',async({page})=>{
  await saved(page,401,{code:'BACKEND_PROVIDER_SESSION_REQUIRED'});
+ await page.route('**/api/research/onboarding-profile/status',(r)=>r.fulfill({status:200,json:{
+  enabled:false,path:'localStorage',reason:'HSI_ONBOARDING_PROFILE_STORE_ENABLED is not true',
+  holdsUnchanged:true,schemaApplied:false,acceptedForScope:false,scientificApproval:false,
+  note:'Default path is device-local localStorage.',
+ }}));
  await page.goto('/research/home');
  await expect(page.getByRole('heading',{name:'Tailor your research home'})).toBeVisible();
  await page.getByRole('button',{name:'Next'}).click();
@@ -16,6 +21,8 @@ test('first-time researcher: onboarding, interests persist, grounded recommendat
  const rec=page.getByRole('region',{name:'Recommended research'});
  await expect(rec).toContainText('Matches your interest in Immunology');
  await expect(page.getByText('Sign in with a verified research account')).toBeVisible();
+ await page.locator('#rh-setup > summary').click();
+ await expect(page.getByText(/Preferences stay on this device only/)).toBeVisible();
  await page.reload();
  await expect(page.getByRole('heading',{name:'Tailor your research home'})).toHaveCount(0);
 await page.locator('#rh-setup > summary').click();
