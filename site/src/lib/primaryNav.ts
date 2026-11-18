@@ -10,7 +10,7 @@ export const RESEARCH_NAV_LINKS=[
 ] as const;
 /** The only public (indexed) pages. */
 export const PUBLIC_MARKETING_PATHS=[
- "/","/how-it-works","/knowledge-graph","/trust","/about","/contact"
+ "/","/how-it-works","/knowledge-graph","/researchers","/biotech","/validation","/trust","/about","/contact"
 ] as const;
 /** Destination explains browser-only drafting; this CTA does not claim that a request was delivered. */
 export const PRIMARY_NAV_CTA={ to: "/sign-up", label: "Sign up"} as const;
