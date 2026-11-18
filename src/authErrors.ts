@@ -17,6 +17,8 @@ export const AUTH_ERROR_MESSAGES:Record<string,string>={
  FAILED_TO_CREATE_USER:"The authentication service could not create the account. Please try again or contact the HSI administrator.",
  AUTH_UNAVAILABLE:"Authentication service unavailable. Please retry or contact the HSI administrator.",
  AUTH_INVALID_RESPONSE:"Authentication service returned an unexpected response. Contact the HSI administrator.",
+ AUTH_SESSION_EXPIRED:"Your sign-in session has expired. Sign in again. An expired session is not an authentication outage, and signing in again does not grant research access.",
+ SESSION_EXPIRED:"Your sign-in session has expired. Sign in again. An expired session is not an authentication outage, and signing in again does not grant research access.",
  AUTH_GATEWAY_NOT_CONFIGURED:"Authentication gateway configuration is incomplete. The HSI administrator must check the deployment settings.",
  DEPLOYMENT_ORIGIN_MISMATCH:"This website address does not match HSI_PUBLIC_ORIGIN in Vercel. Use the configured website address or ask the HSI administrator to correct it and redeploy.",
  INVALID_CALLBACK_URL:"The authentication service has not approved the verification callback address. The HSI administrator must check the site's trusted origins.",
