@@ -17,7 +17,7 @@ test('home states the vision, the one loop, what you get, and what is not true y
  await page.goto('/');
  await expect(page.getByRole('heading',{level:1})).toHaveText('Human Super Intelligence Connect the biology. Challenge the evidence.');
  await expect(page.getByRole('link',{name:/Join research preview/}).first()).toHaveAttribute('href','/welcome');
- await expect(page.getByRole('link',{name:/Explore the platform/}).first()).toHaveAttribute('href','/platform');
+ await expect(page.getByRole('link',{name:/Explore the platform/}).first()).toHaveAttribute('href','/how-it-works');
  await expect(page.getByRole('link',{name:/Walk through all eight steps/})).toHaveAttribute('href','/how-it-works');
  const loop=page.getByRole('list',{name:'The research loop'}).locator(':scope > li');
  await expect(loop).toHaveCount(6);

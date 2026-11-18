@@ -62,7 +62,7 @@ Retain the six-domain architecture. Test a sharper hero that states problem and 
 - **Support:** Investigate scientific mechanisms across six domains of human biology. Compare findings in context, trace supporting evidence and mark what remains uncertain.  
 - **Primary proof:** one concrete investigation (sources, context, conflict, uncertainty) — stronger than a capability list.
 
-Live CTAs must stay delivered paths (research home / how-it-works / platform). Do not invent undelivered “beta mail” or clinical claims.
+Live CTAs must stay delivered paths (`/welcome` research preview, `/how-it-works` for “Explore the platform”). Do not invent undelivered “beta mail”, retired `/platform` destinations, or clinical claims.
 
 ---
 
