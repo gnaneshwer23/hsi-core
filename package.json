@@ -296,6 +296,10 @@
     "label-vault:status": "bun --no-env-file scripts/label-vault.ts status",
     "label-vault:validate": "bun --no-env-file scripts/label-vault.ts validate",
     "label-vault:scaffold-conflict": "bun --no-env-file scripts/label-vault.ts scaffold-conflict",
+    "label-vault:scaffold-immuno-dev": "bun --no-env-file scripts/label-vault.ts scaffold-immuno-dev",
+    "label-vault:import-immuno-dev": "bun --no-env-file scripts/label-vault.ts import-immuno-dev",
+    "label-vault:validate-immuno-dev": "bun --no-env-file scripts/label-vault.ts validate-immuno-dev",
+    "label-vault:score-immuno-dev": "bun --no-env-file scripts/label-vault.ts score-immuno-dev",
     "label-vault:freeze": "bun --no-env-file scripts/label-vault.ts freeze",
     "graph:evidence:readiness": "bun scripts/graph-evidence-readiness.ts",
     "graph:evidence:packet": "bun scripts/graph-evidence-readiness.ts --packet"

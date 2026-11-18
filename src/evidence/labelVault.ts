@@ -7,8 +7,21 @@
  * never claims scientific approval.
  */
 import {createHash} from "node:crypto";
-import {existsSync,mkdirSync,readFileSync,readdirSync,statSync,writeFileSync} from "node:fs";
-import {join,resolve,sep} from "node:path";
+import {
+  closeSync,
+  existsSync,
+  lstatSync,
+  mkdirSync,
+  openSync,
+  readFileSync,
+  readdirSync,
+  realpathSync,
+  renameSync,
+  statSync,
+  unlinkSync,
+  writeFileSync,
+} from "node:fs";
+import {dirname,join,resolve,sep} from "node:path";
 
 export const LABEL_VAULT_SCHEMA="hsi-label-vault-layout-1" as const;
 export const LABEL_VAULT_DIRNAME=".hsi-private-benchmark" as const;
@@ -43,8 +56,8 @@ export const LABEL_VAULT_LAYOUT:LabelVaultLayout=Object.freeze({
     Object.freeze({
       id:"immuno" as const,
       path:`${LABEL_VAULT_DIRNAME}/immuno`,
-      purpose:"Immunology benchmark private curation drafts (holdout; not public slots)",
-      requiredFiles:["README.md"],
+      purpose:"Immunology benchmark private curation: founder development set + holdout drafts (not public slots)",
+      requiredFiles:["README.md","dev-set/cases.json","dev-set/README.md"],
     }),
     Object.freeze({
       id:"freezes" as const,
@@ -109,10 +122,43 @@ export function refusePublicWrite(target:string,repoRoot:string){
   }
 }
 
+/** Refuse symlinks and resolved targets outside the private vault tree. */
+export function assertSafeVaultWritePath(repoRoot:string,target:string){
+  refusePublicWrite(target,repoRoot);
+  const abs=resolve(target);
+  const vault=resolve(repoRoot,LABEL_VAULT_DIRNAME);
+  let cur=abs;
+  for(;;){
+    if(existsSync(cur)&&lstatSync(cur).isSymbolicLink()){
+      throw Error("Label vault path must not be a symlink");
+    }
+    const parent=dirname(cur);
+    if(parent===cur||!parent.startsWith(resolve(repoRoot)))break;
+    cur=parent;
+  }
+  if(existsSync(abs)){
+    const real=realpathSync(abs);
+    refusePublicWrite(real,repoRoot);
+    if(real!==vault&&!real.startsWith(vault+sep)){
+      throw Error("Resolved vault path escapes .hsi-private-benchmark/");
+    }
+  }
+}
+
+/** Write JSON via temp file + rename so a crash cannot leave a truncated document. */
+export function atomicWriteJson(path:string,value:unknown){
+  mkdirSync(dirname(path),{recursive:true});
+  const tmp=`${path}.${process.pid}.${Date.now()}.tmp`;
+  writeFileSync(tmp,`${JSON.stringify(value,null,2)}\n`,{flag:"wx"});
+  renameSync(tmp,path);
+}
+
 function writeIfMissing(path:string,content:string){
   if(existsSync(path))return false;
   mkdirSync(resolve(path,".."),{recursive:true});
-  writeFileSync(path,content);
+  const tmp=`${path}.${process.pid}.${Date.now()}.tmp`;
+  writeFileSync(tmp,content,{flag:"wx"});
+  renameSync(tmp,path);
   return true;
 }
 
@@ -131,12 +177,25 @@ Scientific approval: false. Gold labels stay private.
 
 const IMMUNO_README=`# Private immuno benchmark vault
 
-Holdout drafts and curation records for the immunology benchmark.
+- \`dev-set/\` — founder development set (A4.3); \`slotId\` always null; scoring blocked until floors
+- Holdout drafts for the 120 public slots stay separate; never mix partitions
 
 Public repository holds authoring *slots* only (\`src/evidence/immunoBenchmark.ts\`).
 Real questions, gold labels and reviewer identities belong here, never in git.
 
-Scientific approval: false.
+Scientific approval: false. floorsOwnerApproved: false. numericFloors: null.
+`;
+
+const IMMUNO_DEV_SET_README=`# Founder immuno development set (A4.3)
+
+Separately authored from the 120 holdout slots. \`slotId\` must stay null.
+Import with \`bun run label-vault:import-immuno-dev -- --from <file.json>\`.
+Scaffold with \`bun run label-vault:scaffold-immuno-dev -- --id DEV-001 --layer core --domain innate_adaptive_cells --question "..."\`.
+
+Scoring refuses until an independent owner approves numeric floors.
+Never copy into git, \`site/\`, or public evaluation fixtures.
+
+Scientific approval: false. floorsOwnerApproved: false. numericFloors: null.
 `;
 
 const FREEZES_README=`# Label freezes (VER-05)
@@ -180,6 +239,17 @@ export function initLabelVault(repoRoot:string,now=new Date().toISOString()):{ro
     [join(root,"conflict","README.md"),CONFLICT_README],
     [join(root,"conflict","cases.json"),emptyConflictCases()],
     [join(root,"immuno","README.md"),IMMUNO_README],
+    [join(root,"immuno","dev-set","README.md"),IMMUNO_DEV_SET_README],
+    [join(root,"immuno","dev-set","cases.json"),`${JSON.stringify({
+      schemaVersion:"hsi-immuno-dev-set-1",
+      purpose:"founder_development_set",
+      scientificApproval:false,
+      floorsOwnerApproved:false,
+      numericFloors:null,
+      scoringBlocked:true,
+      heldOutSlotsForbidden:true,
+      cases:[],
+    },null,2)}\n`],
     [join(root,"freezes","README.md"),FREEZES_README],
     [join(root,"manifests","README.md"),MANIFEST_README],
     [join(root,"manifests","vault-manifest.v1.json"),`${JSON.stringify(emptyManifest(now),null,2)}\n`],
@@ -212,6 +282,12 @@ function countConflictCases(casesPath:string):number{
   return Array.isArray(raw)?raw.length:0;
 }
 
+function countImmunoDevCases(casesPath:string):number{
+  if(!existsSync(casesPath))return 0;
+  const raw=JSON.parse(readFileSync(casesPath,"utf8")) as {cases?:unknown};
+  return Array.isArray(raw.cases)?raw.cases.length:0;
+}
+
 export function labelVaultStatus(repoRoot:string):VaultStatus{
   const root=vaultRoot(repoRoot);
   const missing:string[]=[];
@@ -236,7 +312,7 @@ export function labelVaultStatus(repoRoot:string):VaultStatus{
     missing,
     caseCounts:{
       conflict:countConflictCases(join(root,"conflict","cases.json")),
-      immuno:existsSync(join(root,"immuno"))?readdirSync(join(root,"immuno")).filter(f=>f.endsWith(".json")).length:0,
+      immuno:countImmunoDevCases(join(root,"immuno","dev-set","cases.json")),
     },
     freezeCount,
     scientificApproval:false,
@@ -326,23 +402,64 @@ export function freezeConflictLabels(repoRoot:string,now=new Date().toISOString(
   return record;
 }
 
-function refreshManifest(repoRoot:string,now:string){
+function conflictHasGoldLabels(casesPath:string):boolean{
+  if(!existsSync(casesPath))return false;
+  const raw=JSON.parse(readFileSync(casesPath,"utf8"));
+  if(!Array.isArray(raw))return false;
+  return raw.some((c:any)=>Array.isArray(c?.labels)&&c.labels.length>0||c?.adjudicated!=null);
+}
+
+function immunoDevHasGoldLabels(casesPath:string):boolean{
+  if(!existsSync(casesPath))return false;
+  const raw=JSON.parse(readFileSync(casesPath,"utf8")) as {cases?:unknown};
+  if(!Array.isArray(raw.cases))return false;
+  return raw.cases.some((c:any)=>c&&c.gold!=null&&typeof c.gold==="object");
+}
+
+export function refreshLabelVaultManifest(repoRoot:string,now=new Date().toISOString()){
   const root=rootSafe(repoRoot);
   const freezeDir=join(root,"freezes");
   const freezes=existsSync(freezeDir)
     ?readdirSync(freezeDir).filter(f=>f.endsWith(".json")).sort()
     :[];
+  const conflictPath=join(root,"conflict","cases.json");
+  const immunoPath=join(root,"immuno","dev-set","cases.json");
   const manifest:VaultManifest={
     schemaVersion:"hsi-label-vault-manifest-1",
     createdAt:now,
     tracks:[...LABEL_VAULT_TRACKS],
     caseCounts:{
-      conflict:countConflictCases(join(root,"conflict","cases.json")),
-      immuno:0,
+      conflict:countConflictCases(conflictPath),
+      immuno:countImmunoDevCases(immunoPath),
     },
     freezes,
     scientificApproval:false,
-    containsGoldLabels:freezes.length>0||countConflictCases(join(root,"conflict","cases.json"))>0,
+    containsGoldLabels:freezes.length>0||conflictHasGoldLabels(conflictPath)||immunoDevHasGoldLabels(immunoPath),
   };
-  writeFileSync(join(root,"manifests","vault-manifest.v1.json"),`${JSON.stringify(manifest,null,2)}\n`);
+  assertSafeVaultWritePath(repoRoot,join(root,"manifests","vault-manifest.v1.json"));
+  atomicWriteJson(join(root,"manifests","vault-manifest.v1.json"),manifest);
+}
+
+function refreshManifest(repoRoot:string,now:string){
+  refreshLabelVaultManifest(repoRoot,now);
+}
+
+/** Exclusive lock for immuno/conflict vault mutations (single-host authoring). */
+export function withLabelVaultLock<T>(repoRoot:string,lockName:string,fn:()=>T):T{
+  const lockDir=join(vaultRoot(repoRoot),".locks");
+  mkdirSync(lockDir,{recursive:true});
+  const lockPath=join(lockDir,`${lockName}.lock`);
+  assertSafeVaultWritePath(repoRoot,lockPath);
+  let fd:number;
+  try{
+    fd=openSync(lockPath,"wx");
+  }catch{
+    throw Error(`Label vault is locked (${lockName}); retry after the other authoring process exits`);
+  }
+  try{
+    return fn();
+  }finally{
+    closeSync(fd);
+    try{unlinkSync(lockPath)}catch{/* ignore */}
+  }
 }
