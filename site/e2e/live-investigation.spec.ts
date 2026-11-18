@@ -30,7 +30,7 @@ test('an unchecked run keeps direction unassessed, shows the failed search and l
  await mock(page,unchecked);
  await page.goto('/research/workspace');
  await page.getByRole('button',{name:'Run live investigation'}).click();
- const ev=page.getByRole('region',{name:/Evidence/});
+ const ev=page.getByRole('region',{name:/^Evidence \(/});
  await expect(ev).toContainText('Not checked (1)');
  await expect(page.getByRole('list',{name:/Investigation stages/})).toContainText('Partial');
  await expect(page.getByRole('list',{name:/Investigation stages/})).toContainText('Skipped');
@@ -58,7 +58,7 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await page.goto('/research/workspace');
  await page.getByRole('button',{name:'Run live investigation'}).click();
  await expect(page.getByLabel('Run totals')).toContainText('Key findings');
- const ev=page.getByRole('region',{name:/Evidence/});
+ const ev=page.getByRole('region',{name:/^Evidence \(/});
  await ev.getByRole('button',{name:'Supporting (1)'}).click();
  await expect(ev.getByRole('list').first()).not.toContainText('B cells in lupus');
  await ev.getByRole('button',{name:'All (2)'}).click();
@@ -69,8 +69,15 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await ev.getByRole('button',{name:/IL-21 ~ T follicular helper cells/}).click();
  const insp=page.getByLabel('Selected claim');
  await expect(insp).toContainText('openai-a');await expect(insp).toContainText('Quoted: “IL-21 was increased”');
+ await expect(page.getByRole('heading',{name:'Evidence table for this live brief'})).toBeVisible();
+ await expect(page.getByText('EVIDENCE TABLE · PASSPORT COLUMNS · NOT SCIENTIFICALLY APPROVED')).toBeVisible();
+ await expect(page.getByRole('region',{name:'Passport evidence table'})).toContainText('Not stated');
  await page.getByRole('button',{name:'Open research brief'}).click();
- await expect(page.getByLabel('Research brief text')).toContainText('Supporting (both checks agree) (1)');
+ const brief=page.getByLabel('Research brief text');
+ await expect(brief).toContainText('Supporting (both checks agree) (1)');
+ await expect(brief).toContainText('Claim verification status');
+ await expect(brief).toContainText('Evidence table (context passport columns)');
+ await expect(brief).toContainText('Scientific approval: false');
  const axe=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();
  expect(axe.violations.map(v=>v.id+': '+v.nodes.length)).toEqual([]);
 });
@@ -164,7 +171,22 @@ test('mobile: the workspace stacks without horizontal scroll',async({page})=>{
  await page.getByRole('button',{name:'Run live investigation'}).click();
  await expect(page.getByLabel('Run totals')).toContainText('Key findings');
  await page.evaluate(()=>document.fonts.ready);await page.waitForTimeout(300); // settle fonts and transitions before measuring
- const wide=await page.evaluate(()=>[...document.querySelectorAll('body *')].filter(e=>e.getBoundingClientRect().right>window.innerWidth+1).slice(0,6).map(e=>e.tagName+'.'+String(e.className).slice(0,40)));
+ // Passport evidence table scrolls inside .pet-scroll; only page-level overflow fails this check.
+ const wide=await page.evaluate(()=>{
+  const inScroll=(el:Element)=>{
+   let n:Element|null=el;
+   while(n&&n!==document.body){
+    const s=getComputedStyle(n);
+    if((s.overflowX==="auto"||s.overflowX==="scroll")&&(n as HTMLElement).scrollWidth>(n as HTMLElement).clientWidth+1)return true;
+    n=n.parentElement;
+   }
+   return false;
+  };
+  return [...document.querySelectorAll("body *")]
+   .filter(e=>e.getBoundingClientRect().right>window.innerWidth+1&&!inScroll(e))
+   .slice(0,6)
+   .map(e=>e.tagName+"."+String(e.className).slice(0,40));
+ });
  expect(wide).toEqual([]);
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+1)).toBe(true);
 });
