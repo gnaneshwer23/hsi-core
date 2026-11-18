@@ -149,6 +149,10 @@
       "destination": "/_pages/research--ontology-review.html"
     },
     {
+      "source": "/research/d01-edge-review",
+      "destination": "/_pages/research--d01-edge-review.html"
+    },
+    {
       "source": "/research/validation",
       "destination": "/_pages/research--validation.html"
     },
