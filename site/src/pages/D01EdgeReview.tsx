@@ -280,9 +280,13 @@ export function D01EdgeReviewPage() {
           ))
         )}
         <p className="mr-foot">
-          <Link to="/research/knowledge-graph">Back to the knowledge graph</Link>
+          <Link to="/research/context-completion">Context completion fill progress</Link>
           {" · "}
           <Link to="/research/ontology-review">Ontology mapping review</Link>
+          {" · "}
+          <Link to="/curator">Curator workspace</Link>
+          {" · "}
+          <Link to="/research/knowledge-graph">Knowledge graph</Link>
         </p>
       </div>
     </div>
