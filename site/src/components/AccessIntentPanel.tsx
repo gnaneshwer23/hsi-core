@@ -110,6 +110,13 @@ export function AccessIntentPanel(){
       });
       const data:unknown=await response.json().catch(()=>({}));
       const record=data&&typeof data==="object"&&!Array.isArray(data)?data as Record<string,unknown>:{};
+      if(response.status===202&&record.ok===true&&record.providerAccepted!==true&&record.delivered!==true){
+        // Honeypot / quiet accept: do not claim provider delivery and do not show a failure.
+        setQuestion(trimmed);
+        setEmailHint(emailSnapshot);
+        setStatus("Request recorded. Nothing was claimed as delivered to the operator.");
+        return;
+      }
       if(response.ok&&(record.providerAccepted===true||record.delivered===true)){
         try{
           writeAccessIntent({

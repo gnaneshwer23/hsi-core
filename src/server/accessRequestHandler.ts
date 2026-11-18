@@ -68,9 +68,6 @@ export async function handleAccessRequest(request:Request,env:Env,deps:{fetcher?
  const origin=request.headers.get("origin"),pub=env.HSI_PUBLIC_ORIGIN;
  if(pub&&origin&&origin!==pub)return json({code:"ORIGIN_NOT_ALLOWED",error:"Origin not allowed"},403);
  if(!/^application\/json/i.test(request.headers.get("content-type")??""))return json({error:"JSON body required"},415);
- if(!accessRequestDeliveryConfigured(env)){
-  return json({code:"ACCESS_REQUEST_NOT_CONFIGURED",error:"Access-request delivery is not configured on this deployment. Nothing was sent. Save a browser draft instead."},503);
- }
  if(Number(request.headers.get("content-length")??0)>BODY_LIMIT)return json({error:"Request too large"},413);
  let raw:string;
  try{raw=await boundedRequestText(request,BODY_LIMIT)}
@@ -81,9 +78,12 @@ export async function handleAccessRequest(request:Request,env:Env,deps:{fetcher?
  }
  let body:unknown;try{body=JSON.parse(raw)}catch{return json({error:"Invalid JSON"},400)}
  const record=body&&typeof body==="object"&&!Array.isArray(body)?body as Record<string,unknown>:{};
- // Honeypot: bots fill hidden fields; humans leave company_website empty.
+ // Honeypot first: never reveal deliveryConfigured via 503 when the trap field is filled.
  if(typeof record.company_website==="string"&&record.company_website.trim()){
-  return json({ok:true,providerAccepted:false,delivered:false,note:"Accepted."},202);
+  return json({ok:true,providerAccepted:false,delivered:false,note:"Accepted.",honeypot:true},202);
+ }
+ if(!accessRequestDeliveryConfigured(env)){
+  return json({code:"ACCESS_REQUEST_NOT_CONFIGURED",error:"Access-request delivery is not configured on this deployment. Nothing was sent. Save a browser draft instead."},503);
  }
  const question=typeof record.question==="string"?record.question.trim():"";
  if(question.length<12||question.length>1000)return json({code:"INVALID_QUESTION",error:"Describe your research question in 12 to 1000 characters."},400);
@@ -96,7 +96,8 @@ export async function handleAccessRequest(request:Request,env:Env,deps:{fetcher?
   return json({code:"PHI_REFUSED",error:"Do not include patient identifiers or clinical records. Rephrase as a research question only."},400);
  }
  const now=deps.now??Date.now;
- const ip=(request.headers.get("x-forwarded-for")??"unknown").split(",")[0]!.trim().slice(0,64);
+ // Prefer platform client IP when present; X-Forwarded-For alone is not a trusted abuse control.
+ const ip=(request.headers.get("x-vercel-forwarded-for")??request.headers.get("x-real-ip")??request.headers.get("x-forwarded-for")??"unknown").split(",")[0]!.trim().slice(0,64);
  const recent=(hits.get(ip)??[]).filter(t=>now()-t<3_600_000);
  if(recent.length>=5)return json({code:"RATE_LIMITED",error:"Hourly limit reached. Try again later."},429,{"Retry-After":"3600"});
  const fingerprint=requestFingerprint([question.toLowerCase(),email.toLowerCase(),domain.toLowerCase(),scenarioId.toLowerCase()]);
