@@ -76,9 +76,15 @@ describe("graph workspace adapter",()=>{
   db.recs[0].reason="Edited after recording by hand.";await expect(w.recommendations.list(file)).rejects.toThrow("digest");
   db.recs[0].reason=input.reason;db.recs[1].previousDigest="0".repeat(64);await expect(w.recommendations.list(file)).rejects.toThrow("digest");
  });
- test("the module is not imported by any runtime entry point",()=>{
+ test("the adapter is only imported by the gated API and local verify script",()=>{
   const {execSync}=require("node:child_process") as typeof import("node:child_process");
   const hits=execSync("grep -rl graphWorkspaceStore src site/src site/api scripts --include=*.ts --include=*.tsx || true",{encoding:"utf8"}).split("\n").filter(Boolean);
-  expect(hits.sort()).toEqual(["scripts/verify-graph-workspace-local.ts"]);
+  expect(hits.sort()).toEqual([
+   "scripts/verify-graph-workspace-local.ts",
+   "src/server/graphWorkspaceApi.ts",
+  ]);
+  // Browser UI must not import the Neon adapter.
+  const browserHits=execSync("grep -rl graphWorkspaceStore site/src --include=*.ts --include=*.tsx || true",{encoding:"utf8"}).split("\n").filter(Boolean);
+  expect(browserHits).toEqual([]);
  });
 });

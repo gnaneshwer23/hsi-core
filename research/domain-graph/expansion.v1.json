@@ -965,5 +965,35 @@
       "evaluation": "Privacy threat modelling, access-control tests and approved prospective protocols before any real-data use."
     }
   ],
-  "annotationNote": "Bibliographic pointers and editorial candidate paraphrases only. New DOI metadata, model annotations, rights and exact passages await online verification and independent review. No generated quotation or scientific approval."
+  "entities": [
+    {
+      "name": "Adipose tissue",
+      "kind": "tissue",
+      "aliases": ["Adipose", "Fat tissue"],
+      "domains": ["metabolic", "immune", "gut"],
+      "sliceRole": "D-01 tissue context for metabolic inflammation and macrophage neighbourhoods"
+    },
+    {
+      "name": "Liver",
+      "kind": "tissue",
+      "aliases": ["Hepatic tissue"],
+      "domains": ["metabolic", "gut"],
+      "sliceRole": "D-01 tissue context for insulin signalling and microbial metabolite exposure"
+    },
+    {
+      "name": "Acetate",
+      "kind": "metabolite",
+      "aliases": ["Acetic acid", "Microbial acetate"],
+      "domains": ["gut", "metabolic", "immune"],
+      "sliceRole": "D-01 short-chain fatty acid distinct from the acetate+butyrate mixture node"
+    },
+    {
+      "name": "Propionate",
+      "kind": "metabolite",
+      "aliases": ["Propionic acid", "Microbial propionate"],
+      "domains": ["gut", "metabolic", "immune"],
+      "sliceRole": "D-01 short-chain fatty acid distinct from imidazole propionate"
+    }
+  ],
+  "annotationNote": "Bibliographic pointers and editorial candidate paraphrases only. New DOI metadata, model annotations, rights and exact passages await online verification and independent review. No generated quotation or scientific approval. entities[] seeds D-01 candidate concepts without inventing mechanism edges."
 }

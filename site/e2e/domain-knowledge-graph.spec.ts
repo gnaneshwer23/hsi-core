@@ -7,9 +7,9 @@ const retiredAdapterVersion='ee23b6545a0d3dfdc3eab81002655d47b39dddb1b94a1b89a5d
 async function ready(page:any){await page.goto('/research/knowledge-graph?experience=advanced');await expect(page.getByRole('heading',{name:'Connected research network',exact:true})).toBeVisible()}
 const trial={protocolSection:{identificationModule:{nctId:'NCT01030861',briefTitle:'Browser test registry record, not independently verified'},conditionsModule:{conditions:['Diabetes Mellitus, Type 1']},statusModule:{overallStatus:'COMPLETED',lastUpdatePostDateStruct:{date:'2020-01-01'}},eligibilityModule:{minimumAge:'8 Years',maximumAge:'45 Years',eligibilityCriteria:'Test-only unparsed criteria. Investigator assessment required.'}}};
 test('the advanced domain graph preserves connected domains and the original source-corpus entry',async({page})=>{
- await ready(page);await expect(page.getByRole('complementary',{name:'Research navigation'}).getByRole('link',{name:'Knowledge Graph',exact:true})).toHaveAttribute('aria-current','page');await expect(page.getByRole('complementary',{name:'Research snapshot scope'})).toContainText('153 concepts');await expect(page.getByRole('complementary',{name:'Research snapshot scope'})).toContainText('0 independently approved');
+ await ready(page);await expect(page.getByRole('complementary',{name:'Research navigation'}).getByRole('link',{name:'Knowledge Graph',exact:true})).toHaveAttribute('aria-current','page');await expect(page.getByRole('complementary',{name:'Research snapshot scope'})).toContainText('157 concepts');await expect(page.getByRole('complementary',{name:'Research snapshot scope'})).toContainText('0 independently approved');
  await expect(page.getByLabel('Investigation path')).toBeVisible();await expect(page.getByLabel('Graph legend')).toBeVisible();await expect(page.getByRole('button',{name:'Fit network',exact:true})).toBeVisible();
- await page.getByRole('button',{name:'All domains',exact:true}).click();await expect(page.locator('.kg-stage-head')).toContainText('153 concepts');
+ await page.getByRole('button',{name:'All domains',exact:true}).click();await expect(page.locator('.kg-stage-head')).toContainText('157 concepts');
  await page.getByRole('link',{name:'RA/SSc source corpus',exact:true}).click();await expect(page.getByRole('heading',{name:'Claim-linked network',exact:true})).toBeVisible();
 });
 test('model filters keep human-donor mouse experiments separate from human participant evidence',async({page})=>{
@@ -20,8 +20,12 @@ test('model filters keep human-donor mouse experiments separate from human parti
 });
 test('type 1 research outcomes preserve animal translation gaps and falsifiable proposals',async({page})=>{
  await ready(page);await page.getByRole('button',{name:'Gut metabolites → islet autoimmunity → type 1 diabetes',exact:true}).click();await page.getByRole('tab',{name:'Research outcomes',exact:true}).click();
+ await expect(page.getByRole('region',{name:'Passport evidence table'})).toBeVisible();
+ await expect(page.getByRole('heading',{name:'Evidence table for this investigation',exact:true})).toBeVisible();
+ await expect(page.getByRole('region',{name:'Passport evidence table'})).toContainText('Study system');
+ await expect(page.getByRole('region',{name:'Passport evidence table'})).toContainText('Not stated');
  await expect(page.locator('.dg-path').first()).toContainText('Includes animal or mixed-model evidence');await expect(page.getByRole('tabpanel')).toContainText('Islet autoimmunity');await expect(page.getByRole('tabpanel')).toContainText('What would challenge it?');await expect(page.getByRole('tabpanel')).toContainText('Which antigen-specific immune-cell changes');
- const event=page.waitForEvent('download');await page.getByRole('button',{name:'Export this research brief',exact:true}).click();const brief=JSON.parse(await readFile((await (await event).path())!,'utf8'));expect(brief.scientificApproval).toBe(false);expect(brief.summaryMethod).toBe('editorial_template_not_live_llm');expect(brief.question.id).toBe('gut-t1d');
+ const event=page.waitForEvent('download');await page.getByRole('button',{name:'Export this research brief',exact:true}).click();const brief=JSON.parse(await readFile((await (await event).path())!,'utf8'));expect(brief.schemaVersion).toBe('hsi-domain-research-brief-2');expect(brief.scientificApproval).toBe(false);expect(brief.graphPromotable).toBe(false);expect(brief.summaryMethod).toBe('editorial_template_not_live_llm');expect(brief.question.id).toBe('gut-t1d');expect(brief.graphReleaseId).toBe(brief.graphVersion);expect(brief.reviewStates.reviewedEdgeCount).toBe(0);expect(brief.evidenceTable.schemaVersion).toBe('hsi-passport-evidence-table-1');expect(brief.evidenceTable.scientificApproval).toBe(false);expect(brief.evidenceTable.columns.map((c:any)=>c.id)).toContain('studySystem');
 });
 test('a research gap opens as missing evidence rather than a supported biological edge',async({page})=>{
  await ready(page);await page.getByRole('tab',{name:'Research outcomes',exact:true}).click();await expect(page.getByRole('tabpanel')).toContainText('No complete directed source path');
@@ -65,7 +69,7 @@ test('pinned views restore model filters and Markdown briefs preserve source sta
  await page.getByLabel('Export and pin options',{exact:true}).click();
  const pinned=await page.getByRole('link',{name:'Pinned investigation',exact:true}).getAttribute('href');await page.goto(pinned!);await expect(page.getByRole('heading',{name:'Connected research network',exact:true})).toBeVisible();await expect(page.getByLabel('Study model',{exact:true})).toHaveValue('human_in_vivo');
  await page.getByLabel('Export and pin options',{exact:true}).click();
- const event=page.waitForEvent('download');await page.getByRole('button',{name:'Download Markdown brief',exact:true}).click();const text=await readFile((await (await event).path())!,'utf8');expect(text).toContain('# HSI Research Brief');expect(text).toContain(bundle.version);expect(text).toContain('bibliographic_candidate_not_retrieved');expect(text).toContain('Falsification:');
+ const event=page.waitForEvent('download');await page.getByRole('button',{name:'Download Markdown brief v2',exact:true}).click();const text=await readFile((await (await event).path())!,'utf8');expect(text).toContain('# HSI Research Brief v2');expect(text).toContain(bundle.version);expect(text).toContain('hsi-domain-research-brief-2');expect(text).toContain('bibliographic_candidate_not_retrieved');expect(text).toContain('review: unreviewed');expect(text).toContain('Falsification:');expect(text).toContain('Reviewed edges in this brief: 0');
  await page.getByRole('tab',{name:'Research outcomes',exact:true}).click();await expect(page.getByRole('region',{name:'Evidence context comparison'})).toContainText('no pooled effect or confirmed contradiction');
 });
 

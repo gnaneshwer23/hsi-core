@@ -63,6 +63,13 @@ test('offline builder is deterministic and retains all cited source inputs',()=>
  const paths=graph.inputs.map((i:any)=>i.path),raw=paths.map((p:string)=>readFileSync(p,'utf8')),values=raw.map((s:string)=>JSON.parse(s));
  const input={pack:values[0],legacy:values[1],expansion:values[2],patients:values[3],labs:values[4],medications:values[5],inputs:graph.inputs,parentVersion:graph.parentVersion};expect(buildDomainGraph(input)).toEqual(graph);
 });
+test('D-01 KG-01 example entities exist as candidate nodes without inventing mechanism edges',()=>{
+ for(const [label,kind] of [['Adipose tissue','tissue'],['Liver','tissue'],['Acetate','metabolite'],['Propionate','metabolite'],['Butyrate','metabolite'],['Short-chain fatty acids','metabolite class'],['TNF-α','cytokine'],['Multiple sclerosis','disease'],['Type 2 diabetes','disease'],['Insulin resistance','phenotype']] as const){
+  const n=graph.nodes.find((x:any)=>x.name===label);expect(n,`missing ${label}`).toBeTruthy();expect(n!.kind).toBe(kind);
+ }
+ const seeded=new Set([name('Adipose tissue'),name('Liver'),name('Acetate'),name('Propionate')]);
+ expect(graph.edges.filter((e:any)=>seeded.has(e.subjectId)||seeded.has(e.objectId))).toHaveLength(0);
+});
 
 test('context comparisons expose species, compounds and missing assays without declaring contradiction',()=>{
  const c=compareDomainEvidence(graph,'DIAB-003','DIAB-015')!;expect(c.differences.some(x=>x.dimension==='model')).toBe(true);expect(c.sameEntityPair).toBe(false);expect(c.confirmedContradiction).toBe(false);expect(c.pooledEffectAllowed).toBe(false);expect(c.missingContext).toContain('dose');

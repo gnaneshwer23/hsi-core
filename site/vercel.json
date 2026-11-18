@@ -32,7 +32,7 @@
         },
         {
           "key": "Content-Security-Policy-Report-Only",
-          "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://www.ebi.ac.uk; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; report-uri /api/csp-report"
+          "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; report-uri /api/csp-report"
         }
       ]
     },
@@ -149,6 +149,10 @@
       "destination": "/_pages/research--ontology-review.html"
     },
     {
+      "source": "/research/d01-edge-review",
+      "destination": "/_pages/research--d01-edge-review.html"
+    },
+    {
       "source": "/research/validation",
       "destination": "/_pages/research--validation.html"
     },
@@ -159,6 +163,10 @@
     {
       "source": "/research/evidence-readiness",
       "destination": "/_pages/research--evidence-readiness.html"
+    },
+    {
+      "source": "/research/context-completion",
+      "destination": "/_pages/research--context-completion.html"
     },
     {
       "source": "/research/scientific-workbench",

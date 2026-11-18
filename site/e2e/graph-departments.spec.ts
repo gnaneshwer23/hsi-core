@@ -15,7 +15,7 @@ test.describe("Departments tab on the knowledge graph",()=>{
   await open(page);
   const rail=page.getByRole("group",{name:"Choose a department"});
   await expect(rail.getByRole("button")).toHaveCount(6);
-  await expect(rail.getByRole("button",{name:/Immunology/})).toContainText("127 candidate concepts");
+  await expect(rail.getByRole("button",{name:/Immunology/})).toContainText("130 candidate concepts");
   await expect(rail.getByRole("button",{name:/Genomics/})).toContainText("No graph coverage");
   await rail.getByRole("button",{name:/Human Physiology/}).click();
   await expect(page.getByText("Nothing is shown rather than inferred")).toBeVisible();
@@ -49,7 +49,7 @@ test.describe("Departments tab on the knowledge graph",()=>{
   await page.getByRole("article",{name:"Path 1"}).getByRole("button",{name:/Inspect relationship 1/}).click();
   const d=page.getByRole("region",{name:"Relationship dossier"});
   await expect(d).toBeVisible();
-  for(const t of ["Study model","Tissue","Limitations","Review status: Unreviewed","Confidence: Not calibrated","Scientific claim: Not allowed","Other records for this pair"])await expect(d).toContainText(t);
+  for(const t of ["Study system","Tissue","Interpretation limits","Review status: Unreviewed","Confidence: Not calibrated","Scientific claim: Not allowed","Other records for this pair"])await expect(d).toContainText(t);
   await d.getByRole("button",{name:"Close dossier"}).click();await expect(d).toHaveCount(0);
  });
 

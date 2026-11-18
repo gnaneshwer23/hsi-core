@@ -1,0 +1,11 @@
+.pet-scroll{overflow:auto;border:1px solid #e3eaed;border-radius:6px;margin-top:8px}
+.pet-table{border-collapse:collapse;min-width:900px;width:100%;font-size:12px}
+.pet-table th,.pet-table td{padding:8px;border-bottom:1px solid #e3eaed;text-align:left;vertical-align:top}
+.pet-table thead th{position:sticky;top:0;background:#eef5f4;font-weight:650;white-space:nowrap}
+.pet-table tbody th{font-weight:600}
+.pet-finding{max-width:18rem}.pet-source{max-width:12rem;color:#2a3a44}
+.pet-table td[data-status=reported]{color:#0f5c4c}
+.pet-table td[data-status=not_stated],.pet-table td[data-status=not_extracted]{color:#9a4a13;font-style:italic}
+.pet-edge{border:0;background:0;color:#143b43;font:inherit;font-weight:650;text-decoration:underline;cursor:pointer;min-height:44px}
+.pet-edge:focus-visible{outline:3px solid #2f8f88;outline-offset:2px}
+.pet-counts{display:block;font-size:11px;color:#5c6b74}

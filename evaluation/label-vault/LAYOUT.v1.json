@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "hsi-label-vault-layout-1",
+  "root": ".hsi-private-benchmark",
+  "gitignored": true,
+  "runtimeMayRead": false,
+  "scientificApproval": false,
+  "goldCommittedInGit": false,
+  "tracks": [
+    {
+      "id": "conflict",
+      "path": ".hsi-private-benchmark/conflict",
+      "purpose": "HSI-BENCH-CONFLICT expert cases, labels, optional predictions and private reports",
+      "requiredFiles": ["cases.json", "README.md"],
+      "optionalDirs": ["predictions", "reports"]
+    },
+    {
+      "id": "immuno",
+      "path": ".hsi-private-benchmark/immuno",
+      "purpose": "Immunology benchmark private curation: founder development set + holdout drafts (not public slots)",
+      "requiredFiles": ["README.md", "dev-set/cases.json", "dev-set/README.md"],
+      "optionalDirs": ["dev-set"]
+    },
+    {
+      "id": "freezes",
+      "path": ".hsi-private-benchmark/freezes",
+      "purpose": "Hashed label freezes the scoring job may read; runtime DB role must not",
+      "requiredFiles": ["README.md"]
+    },
+    {
+      "id": "manifests",
+      "path": ".hsi-private-benchmark/manifests",
+      "purpose": "Vault inventory and freeze index (ids and digests only)",
+      "requiredFiles": ["vault-manifest.v1.json", "README.md"]
+    }
+  ],
+  "commands": {
+    "init": "bun run label-vault:init",
+    "status": "bun run label-vault:status",
+    "validate": "bun run label-vault:validate",
+    "scaffoldConflict": "bun run label-vault:scaffold-conflict -- --id CB-001 --question \"...\"",
+    "scaffoldImmunoDev": "bun run label-vault:scaffold-immuno-dev -- --id DEV-001 --layer core --domain innate_adaptive_cells --question \"...\"",
+    "importImmunoDev": "bun run label-vault:import-immuno-dev -- --from /path/to/dev-set.json",
+    "validateImmunoDev": "bun run label-vault:validate-immuno-dev",
+    "scoreImmunoDev": "bun run label-vault:score-immuno-dev",
+    "freeze": "bun run label-vault:freeze -- --track conflict"
+  },
+  "note": "Public repo documents the layout only. Expert gold labels never enter git. Immuno development-set scoring stays blocked until owner-approved floors."
+}

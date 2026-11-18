@@ -5,7 +5,7 @@ test('landing graph: nothing preselected, filters and search narrow it in place,
  await page.goto('/');
  const hero=page.locator('.pg-hero');
  await expect(hero.getByRole('complementary',{name:'Selected concept'})).toContainText('Select a concept');
- const caption=hero.locator('.og-cap');await expect(caption).toContainText(/showing \d+ of 153 concepts/);
+ const caption=hero.locator('.og-cap');await expect(caption).toContainText(/showing \d+ of 157 concepts/);
  const before=await caption.innerText();
  await hero.getByRole('list',{name:'Filter by department'}).getByRole('button').first().click();
  await expect(caption).not.toHaveText(before);

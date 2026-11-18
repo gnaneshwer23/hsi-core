@@ -23,18 +23,23 @@ test.describe("Evidence by context",()=>{
   await expect(b).not.toContainText("supports");
  });
 
- test("recorded disagreement is named, never adjudicated, and says when context is missing",async({page})=>{
+ test("recorded disagreement is named in plain language, never adjudicated, and never called resolved",async({page})=>{
   await open(page);await page.getByRole("group",{name:"Choose a department"}).getByRole("button",{name:/Immunology/}).click();await pick(page,"Anti-TNF treatment response");
   const b=page.getByRole("region",{name:"Evidence by context for Anti-TNF treatment response",exact:true});
-  await expect(b.locator(".cb-conflict").first()).toBeVisible();
+  const conflict=b.locator(".cb-conflict").first();
+  await expect(conflict).toBeVisible();
+  await expect(conflict.locator("[data-conflict-label]")).toHaveText(/^(Same context|Across contexts|Unknown context)$/);
   await expect(b).toContainText("Not adjudicated");
-  await expect(b).not.toContainText("resolved:");
+  await expect(b).toContainText("No side is preferred");
+  await expect(b).not.toContainText(/\bresolved\b/i);
  });
 
  test("the relationship dossier carries the same breakdown for that pair",async({page})=>{
   await open(page);await pick(page,"Butyrate");
   await page.getByRole("article",{name:"Path 1"}).getByRole("button",{name:/Inspect relationship 1/}).click();
   const d=page.getByRole("region",{name:"Relationship dossier"});
+  await expect(d.getByRole("heading",{name:/Evidence context passport for this relationship/i})).toBeVisible();
+  await expect(d).toContainText("Explicitly missing");
   await expect(d.getByRole("region",{name:"Evidence by context for this pair",exact:true})).toBeVisible();
   await expect(d.getByRole("region",{name:"Evidence by context for this pair",exact:true})).toContainText(/sources? in \d+ contexts?|No source-linked candidate records/);
  });

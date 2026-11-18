@@ -1,6 +1,6 @@
-import {createSharedAdmissionClient} from "../operations/pilotOperationsService";
 import type { FetchLike } from "../fetchLike";
-import {withResearchRequestControls,researchOperationalLogger,type ResearchControls} from "./researchRequestControls";
+import {withResearchRequestControls,type ResearchControls} from "./researchRequestControls";
+import {resolveResearchControls} from "./resolveResearchControls";
 /** Vercel Bun Web-handler adapter. No listener, migrations, automatic grants or client identity trust. */
 import {assertHsiNeonDatabaseUrl,stagingBranchPin,stagingHostPin} from "../db/neonGuard";
 import {resolveProviderSessionToken} from "../db/providerSessionToken";
@@ -8,7 +8,9 @@ import {inspectProviderDatabaseSession} from "../db/providerSessionDiagnostics";
 import {createNeonInterrogativeApiServices,handleInterrogativeApi} from "./interrogativeApi";
 import {gatewayJson,handleAuthGateway,verifiedProviderSession,diagnoseAuthProvider} from "./neonAuthGateway";
 import {handleResearcherWorkspaceApi} from "./researcherWorkspaceApi";
+import {handleGraphWorkspaceApi} from "./graphWorkspaceApi";
 type Environment=Record<string,string|undefined>;
+const GRAPH_WORKSPACE_PATH=/^\/api\/research\/graph-workspace(?:\/(?:status|investigations(?:\/[A-Za-z0-9][A-Za-z0-9:_-]{2,80})?|recommendations))?$/;
 function httpsUrl(value:string|undefined,originOnly=false):string|null{
  try{const u=new URL(value?.trim()??"");if(u.protocol!=="https:"||u.username||u.password||u.search||u.hash||(originOnly&&u.pathname!=="/"))return null;return originOnly?u.origin:u.href.replace(/\/+$/,"")}catch{return null}
 }
@@ -51,15 +53,21 @@ export type VercelResearchDependencies={
 };
 export async function handleVercelResearch(request:Request,env:Environment,dependencies:VercelResearchDependencies={}):Promise<Response>{
  if(new URL(request.url).pathname==="/api/research/live")return withResearchRequestControls(request,async()=>gatewayJson({live:true,databaseConnectionTested:false,providerTested:false},request.method==="GET"?200:405),{processAdmission:dependencies.controls?.processAdmission,emit:dependencies.controls?.emit});
- let sharedAdmission=dependencies.controls?.sharedAdmission;
- if(!sharedAdmission&&env.HSI_SHARED_ADMISSION_URL){try{sharedAdmission=createSharedAdmissionClient({endpoint:env.HSI_SHARED_ADMISSION_URL,serviceCredential:()=>env.HSI_SHARED_ADMISSION_SERVICE_KEY??""})}catch{sharedAdmission=async()=>{throw Error("Shared admission configuration invalid")}}}
- return withResearchRequestControls(request,()=>handleVercelResearchCore(request,env,dependencies),{...dependencies.controls,sharedAdmission,requireShared:env.HSI_PILOT_REQUIRE_SHARED_LIMITER==="true"||dependencies.controls?.requireShared===true,emit:dependencies.controls?.emit??researchOperationalLogger(env.HSI_OPERATIONAL_LOGGING==="true")});
+ return withResearchRequestControls(request,()=>handleVercelResearchCore(request,env,dependencies),resolveResearchControls(env,dependencies.controls??{}));
 }
 async function handleVercelResearchCore(request:Request,env:Environment,dependencies:VercelResearchDependencies):Promise<Response>{
  const path=new URL(request.url).pathname;
  const config=readResearchDeploymentConfig(env);
  const workspaceResponse=handleResearcherWorkspaceApi(request,{writesEnabled:config.ok&&config.writesEnabled});
  if(workspaceResponse)return workspaceResponse;
+ if(path==="/api/research/graph-workspace/status"){
+  return await handleGraphWorkspaceApi(request,{
+   storeEnabled:env.HSI_GRAPH_WORKSPACE_STORE_ENABLED==="true",
+   writesEnabled:config.ok&&config.writesEnabled,
+   databaseUrl:config.ok?config.databaseUrl:"",
+   neonProjectId:config.ok?config.neonProjectId:env.HSI_NEON_PROJECT_ID,
+  })??gatewayJson({error:"Not found"},404);
+ }
  if(path==="/api/research/health"){
   if(request.method!=="GET")return gatewayJson({error:"Method not allowed"},405);
   const requestOrigin=new URL(request.url).origin;
@@ -68,7 +76,7 @@ async function handleVercelResearchCore(request:Request,env:Environment,dependen
   return gatewayJson({service:"hsi-research",status:!config.ok?"configuration_required":originMatches?(maintenance?"maintenance":"configuration_validated"):"origin_mismatch",...(config.ok?{writesEnabled:config.writesEnabled,publicOrigin:config.publicOrigin,requestOrigin,originMatches}:{missing:config.missing}),authUrlsMatch:config.authUrlsMatch,endpointPrefixesMatch:config.endpointPrefixesMatch,maintenance,databaseConnectionTested:false},config.ok&&originMatches&&!maintenance?200:503);
  }
  if(!path.startsWith("/api/auth/")&&!path.startsWith("/api/research/"))return gatewayJson({error:"Not found"},404);
- if(path.startsWith("/api/research/")&&!(dependencies.pilotJobApi&&/^\/api\/research\/jobs(?:\/job-[a-f0-9-]{36})?$/.test(path))&&!(dependencies.pilotHealth&&["/api/research/configuration","/api/research/ready"].includes(path))&&path!=="/api/research/investigations"&&path!=="/api/research/account"&&path!=="/api/research/session-diagnostics"&&path!=="/api/research/scientific-review/queue"&&path!=="/api/research/scientific-review/history"&&path!=="/api/research/graph/ssc"&&path!=="/api/research/discovery/ssc"&&!/^\/api\/research\/interrogative\/hsi-interrogative-[a-zA-Z0-9-]{8,100}(?:\/(?:submit-review|decision|graph-context|review-package|brief|revision|outcome|outcome-receipt|context-audit|context-audit-review))?$/.test(path))return gatewayJson({error:"Not found"},404);
+ if(path.startsWith("/api/research/")&&!(dependencies.pilotJobApi&&/^\/api\/research\/jobs(?:\/job-[a-f0-9-]{36})?$/.test(path))&&!(dependencies.pilotHealth&&["/api/research/configuration","/api/research/ready"].includes(path))&&path!=="/api/research/investigations"&&path!=="/api/research/account"&&path!=="/api/research/session-diagnostics"&&path!=="/api/research/scientific-review/queue"&&path!=="/api/research/scientific-review/history"&&path!=="/api/research/graph/ssc"&&path!=="/api/research/discovery/ssc"&&!GRAPH_WORKSPACE_PATH.test(path)&&!/^\/api\/research\/interrogative\/hsi-interrogative-[a-zA-Z0-9-]{8,100}(?:\/(?:submit-review|decision|graph-context|review-package|brief|revision|outcome|outcome-receipt|context-audit|context-audit-review))?$/.test(path))return gatewayJson({error:"Not found"},404);
  if(!config.ok)return gatewayJson({code:"AUTH_GATEWAY_NOT_CONFIGURED",error:"Research service requires deployment configuration"},503);
  if(new URL(request.url).origin!==config.publicOrigin)return gatewayJson({code:"DEPLOYMENT_ORIGIN_MISMATCH",error:"Deployment origin mismatch"},403);
  if(dependencies.pilotHealth&&["/api/research/configuration","/api/research/ready"].includes(path))return dependencies.pilotHealth(request);
@@ -90,6 +98,15 @@ async function handleVercelResearchCore(request:Request,env:Environment,dependen
   if(!token)return gatewayJson({code:"BACKEND_DATABASE_SESSION_REQUIRED",error:"Provider session could not be resolved in the configured HSI database"},401);
   const headers=new Headers(request.headers);headers.delete("cookie");
   headers.set("cookie","__Secure-better-auth.session_token="+encodeURIComponent(token));
-  return handleInterrogativeApi(new Request(request,{headers}),dependencies.services??createNeonInterrogativeApiServices(config));
+  const authed=new Request(request,{headers});
+  if(GRAPH_WORKSPACE_PATH.test(path)&&path!=="/api/research/graph-workspace/status"){
+   return await handleGraphWorkspaceApi(authed,{
+    storeEnabled:env.HSI_GRAPH_WORKSPACE_STORE_ENABLED==="true",
+    writesEnabled:config.writesEnabled,
+    databaseUrl:config.databaseUrl,
+    neonProjectId:config.neonProjectId,
+   })??gatewayJson({error:"Not found"},404);
+  }
+  return handleInterrogativeApi(authed,dependencies.services??createNeonInterrogativeApiServices(config));
  }catch{return gatewayJson({error:"Research session verification unavailable"},503)}
 }

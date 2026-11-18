@@ -1,0 +1,11 @@
+{
+  "system": "Synthetic comparator (fixture)",
+  "method": "SYNTHETIC FIXTURE. Invented answers to test comparator scoring; not output from any real tool.",
+  "predictions": [
+    {"caseId": "SYN-01", "label": "true_contradiction"},
+    {"caseId": "SYN-02", "label": "true_contradiction"},
+    {"caseId": "SYN-03", "label": "true_contradiction"},
+    {"caseId": "SYN-04", "label": "no_disagreement"},
+    {"caseId": "SYN-05", "label": "no_answer"}
+  ]
+}
