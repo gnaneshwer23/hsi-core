@@ -18,8 +18,10 @@ Staging worksheet: [`operations/staging/access-request-dry-run.pending.json`](..
 | `delivered: true` in API | Means the **notification provider accepted** the payload — not that a human opened an inbox. |
 | Operator receipt | **Not confirmed** by GET status or POST success note. |
 | Research grant / writes | **Never** implied. Grants stay administrator-provisioned; writes stay fail-closed. |
-| Fake success | Forbidden — never claim delivery without provider acceptance. Honeypot returns a quiet 202 without calling a provider; misconfiguration returns 503. |
+| Fake success | Forbidden — never claim delivery without provider acceptance. Honeypot returns HTTP 202 without calling a provider (UI shows a neutral “nothing claimed delivered” note, not a provider success). Misconfiguration returns 503. |
 | Secrets in git | Forbidden. No webhook URL, token, or Resend key in tracked files. |
+| Rate limit / dedup | **Best-effort, process-local** Maps on the serverless instance. They are not shared across instances/restarts and are not an atomic reservation before provider calls. Do not treat them as a hard global abuse guarantee. |
+| Client IP key | Prefers `x-vercel-forwarded-for` / `x-real-ip`, then leftmost `x-forwarded-for`. Caller-spoofed `X-Forwarded-For` remains a residual risk if ingress does not overwrite the header. |
 
 ## Configuration (staging or local only)
 
@@ -64,11 +66,11 @@ Placeholders live in [`.env.example`](../../.env.example) (commented). Prefer we
 | Guard | Behaviour |
 | --- | --- |
 | Origin | When `HSI_PUBLIC_ORIGIN` is set, foreign `Origin` → 403 |
-| Honeypot | Non-empty `company_website` → quiet 202, no provider call |
+| Honeypot | Non-empty `company_website` → HTTP 202 before delivery-config check (does not reveal whether delivery is configured); no provider call |
 | PHI refuse | Patient-shaped blobs → 400 `PHI_REFUSED` |
-| Rate limit | ≈5 POSTs / IP / hour → 429 |
-| Dedup | Same fingerprint within 1 hour returns prior acceptance note without re-sending |
-| Body size | >4 KiB → 413 |
+| Rate limit | ≈5 POSTs / key / hour → 429 on **this instance only** (see honesty table) |
+| Dedup | Same fingerprint within 1 hour returns prior acceptance note without re-sending on **this instance only** |
+| Body size | Bodies over **4000 bytes** → 413 |
 
 Offline proof: `bun test test/accessRequestHandler.test.ts`.
 
@@ -86,7 +88,8 @@ Complete privately. Leave git worksheet fields null / false until true. Do **not
 ### D1 — Status honesty (unset)
 
 - [ ] With delivery env **unset**: `GET /api/access-requests` → `deliveryConfigured: false`
-- [ ] POST returns `ACCESS_REQUEST_NOT_CONFIGURED` (503); UI offers draft, never “sent”
+- [ ] POST without honeypot returns `ACCESS_REQUEST_NOT_CONFIGURED` (503); UI offers draft, never “sent”
+- [ ] POST with non-empty `company_website` still returns 202 (does not leak 503)
 
 ### D2 — Configure staging channel
 
@@ -104,8 +107,11 @@ Complete privately. Leave git worksheet fields null / false until true. Do **not
 
 ### D4 — Failure paths
 
-- [ ] Break the webhook URL or revoke Resend key temporarily → POST `DELIVERY_FAILED` (502)
+To observe `DELIVERY_FAILED` (502), keep the channel **still configured** (valid HTTPS webhook URL or Resend env that passes `accessRequestDeliveryConfigured`) but make the **provider call** fail — e.g. point the webhook at an HTTPS URL that returns 500, or use a Resend key the provider rejects. Use a **fresh** question/email fingerprint (do not reuse D3’s enquiry within the hour, or you will get the cached acceptance note without a provider call).
+
+- [ ] With a still-configured but failing provider + fresh fingerprint → POST `DELIVERY_FAILED` (502)
 - [ ] Confirm UI / API do **not** set success copy
+- [ ] Note: clearing the URL entirely (invalid/empty) yields `ACCESS_REQUEST_NOT_CONFIGURED` (503), not 502 — that is expected
 - [ ] Restore the channel; leave production unset until owner accepts
 
 ### D5 — Close-out
@@ -120,7 +126,8 @@ Complete privately. Leave git worksheet fields null / false until true. Do **not
 - Committing delivery secrets or live destination URLs
 - Auto-provisioning researcher grants or enabling Neon writes from an enquiry
 - Gate C auto-approve, MoU invention, shared Neon with immunecity, live CDS/PHI
-- Treating honeypot 202 as a real delivery
+- Treating honeypot 202 as a real provider delivery
+- Claiming global shared rate-limit / atomic dedup across serverless instances (out of scope for this soft-land)
 
 ## Verify (offline)
 

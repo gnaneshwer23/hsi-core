@@ -16,6 +16,9 @@ describe("PR-E2E-01c access-request delivery runbook", () => {
     expect(doc).toContain("DELIVERY_FAILED");
     expect(doc).toContain("operatorReceiptClaimed");
     expect(doc).toContain("Gate C auto-approve");
+    expect(doc).toContain("4000 bytes");
+    expect(doc).toContain("process-local");
+    expect(doc).toContain("fresh");
     expect(doc).not.toMatch(/production delivery (is |was )?live/i);
   });
 
