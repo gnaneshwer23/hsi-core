@@ -33,11 +33,11 @@ import {
 } from "../src/evidence/immunoDevSet";
 import {IMMUNO_ALLOCATIONS,type ImmunoDomain,type ImmunoLayer} from "../src/evidence/immunoBenchmark";
 
-const root=resolve(import.meta.dir,"..");
 const args=process.argv.slice(2);
 const cmd=args[0]??"status";
 const flag=(name:string)=>args.includes(name);
 const value=(name:string)=>{const i=args.indexOf(name);return i>=0&&args[i+1]?args[i+1]!:undefined};
+const root=resolve(value("--root")??resolve(import.meta.dir,".."));
 
 if(cmd==="layout"){
   console.log(JSON.stringify(LABEL_VAULT_LAYOUT,null,2));
@@ -116,8 +116,9 @@ if(cmd==="import-immuno-dev"){
   const result=importImmunoDevSet(root,resolve(from));
   console.log(JSON.stringify({
     imported:result.path,
+    merged:result.merged,
     ...result.summary,
-    note:"Scoring remains blocked until owner-approved floors",
+    note:"Scoring remains blocked until owner-approved floors; existing case ids are never overwritten",
   },null,2));
   process.exit(0);
 }
