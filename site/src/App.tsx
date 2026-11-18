@@ -34,6 +34,7 @@ const Sources=lazy(()=>import("./pages/Sources").then(m=>({default:m.Sources})))
 const ScienceLiterature=lazy(()=>import("./pages/ScienceLiterature").then(m=>({default:m.ScienceLiterature})));
 const ResearchCoverage=lazy(()=>import("./pages/ResearchCoverage").then(m=>({default:m.ResearchCoverage})));
 const ResearchEvidenceCatalogue=lazy(()=>import("./pages/ResearchEvidenceCatalogue").then(m=>({default:m.ResearchEvidenceCatalogue})));
+const ContextCompletionStatusRoute=lazy(()=>import("./pages/ContextCompletionStatus").then(m=>({default:m.ContextCompletionStatusPage})));
 const ScientificResearchWorkbench=lazy(()=>import("./pages/ScientificResearchWorkbench").then(m=>({default:m.ScientificResearchWorkbench})));
 const ScienceStudyComparison=lazy(()=>import("./pages/ScienceStudyComparison").then(m=>({default:m.ScienceStudyComparison})));
 const ScienceReviewPreparation=lazy(()=>import("./pages/ScienceReviewPreparation").then(m=>({default:m.ScienceReviewPreparation})));
@@ -65,6 +66,7 @@ const ResearcherHomePage=lazy(()=>import("./pages/ResearchHome").then(m=>({defau
 const ResearchCommunityFeedPage=lazy(()=>import("./pages/ResearchCommunityFeed").then(m=>({default:m.ResearchCommunityFeed})));
 
 const OntologyMappingReview=lazy(()=>import("./pages/OntologyMappingReview").then(m=>({default:m.OntologyMappingReview})));
+const D01EdgeReviewRoute=lazy(()=>import("./pages/D01EdgeReview").then(m=>({default:m.D01EdgeReviewPage})));
 const SyntheticValidationWorkbench=lazy(()=>import("./pages/SyntheticValidationWorkbench").then(m=>({default:m.SyntheticValidationWorkbench})));
 
 const ClaimKnowledgeGraph=lazy(()=>import("./pages/ClaimKnowledgeGraph").then(m=>({default:m.ClaimKnowledgeGraph})));
@@ -132,9 +134,11 @@ export default function App() {
         <Route path="science/literature" element={<ScienceLiterature />} />
         <Route path="research/scientific-workbench" element={<ScientificResearchWorkbench />} />
         <Route path="research/ontology-review" element={<Suspense fallback={<p role="status">Loading mapping review…</p>}><OntologyMappingReview/></Suspense>} />
+        <Route path="research/d01-edge-review" element={<Suspense fallback={<p role="status">Loading D-01 edge review…</p>}><D01EdgeReviewRoute/></Suspense>} />
         <Route path="research/validation" element={<Suspense fallback={<p role="status">Loading validation workspace…</p>}><SyntheticValidationWorkbench/></Suspense>} />
         <Route path="research/coverage" element={<ResearchCoverage />} />
         <Route path="research/evidence-readiness" element={<ResearchEvidenceCatalogue />} />
+        <Route path="research/context-completion" element={<Suspense fallback={<p role="status">Loading context completion sheet…</p>}><ContextCompletionStatusRoute/></Suspense>} />
         <Route path="science/study-comparison" element={<ScienceStudyComparison />} />
         <Route path="science/review-preparation" element={<ScienceReviewPreparation />} />
         <Route path="research/scientific-review" element={<ScientificReviewerDecision />} />
@@ -167,12 +171,12 @@ export default function App() {
         <Route path="science/disease" element={<ScienceDisease />} />
         <Route path="discovery-engine" element={<DiscoveryEngine />} />
         <Route path="demo" element={<Navigate to="/research/journey" replace />} />
-        <Route path="modules" element={<Navigate to="/connected-intelligence" replace />} />
-        <Route path="modules/aksh-health" element={<Navigate to="/connected-intelligence" replace />} />
-        <Route path="modules/clinical" element={<Navigate to="/connected-intelligence" replace />} />
-        <Route path="modules/isi" element={<Navigate to="/connected-intelligence" replace />} />
-        <Route path="modules/trials" element={<Navigate to="/connected-intelligence" replace />} />
-        <Route path="products" element={<Navigate to="/connected-intelligence" replace />} />
+        <Route path="modules" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="modules/aksh-health" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="modules/clinical" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="modules/isi" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="modules/trials" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="products" element={<Navigate to="/how-it-works" replace />} />
         <Route path="status" element={<Status />} />
         <Route path="sources" element={<Sources />} />
         <Route path="clinical-timeline" element={<ClinicalTimeline />} />
@@ -182,11 +186,11 @@ export default function App() {
         <Route path="evidence" element={<Evidence />} />
         <Route path="discovery" element={<DiscoveryCentre />} />
         <Route path="curator" element={<Curator />} />
-        <Route path="akeno" element={<Navigate to="/connected-intelligence" replace />} />
-        <Route path="aksh-agents" element={<Navigate to="/connected-intelligence" replace />} />
-        <Route path="for-isi" element={<Navigate to="/connected-intelligence" replace />} />
-        <Route path="for-aksh" element={<Navigate to="/connected-intelligence" replace />} />
-        <Route path="for-trials" element={<Navigate to="/connected-intelligence" replace />} />
+        <Route path="akeno" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="aksh-agents" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="for-isi" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="for-aksh" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="for-trials" element={<Navigate to="/how-it-works" replace />} />
         <Route path="roadmap" element={<Roadmap />} />
         <Route path="alignment" element={<Alignment />} />
         <Route path="docs" element={<Docs />} />
