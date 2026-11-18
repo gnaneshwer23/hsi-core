@@ -76,6 +76,7 @@ export function KnowledgeGraphPublicPage() {
             <Link className="pg-link pg-link-light" to="/research/knowledge-graph">Open the full explorer <span aria-hidden="true">→</span></Link>
           </div>
           <p className="pg-micro">Published snapshot · candidate-only · unreviewed</p>
+          <p className="pg-micro" role="note">Former “Science” marketing URLs redirect here. Educational topic maps stay under <Link className="pg-link pg-link-light" to="/science/graph">/science/graph</Link>; they are not a separate Science product home.</p>
         </div>
       </section>
 
