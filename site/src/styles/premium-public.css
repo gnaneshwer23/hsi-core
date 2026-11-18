@@ -5,7 +5,24 @@
 .pg-page :where(h1,h2,h3,p,ul,ol){margin:0}
 .pg-page :where(ul,ol){padding:0;list-style:none}
 .pg-page a{color:inherit}
-.pg-hero,.pg-strip,.pg-loop,.pg-product,.pg-honest,.pg-close,.pg-pillars,.pg-open{width:min(1240px,calc(100% - 64px));margin-inline:auto}
+.pg-hero,.pg-strip,.pg-loop,.pg-product,.pg-honest,.pg-close,.pg-pillars,.pg-open,.pg-conflict{width:min(1240px,calc(100% - 64px));margin-inline:auto}
+/* UX-01 soft-land: one worked conflict from sealed domain-graph candidates */
+.pg-conflict{padding:24px 0 72px;display:grid;gap:28px;border-top:1px solid var(--line)}
+.pg-conflict-head{display:grid;gap:14px;max-width:62ch}
+.pg-conflict-honesty{font-size:14px;line-height:1.55;color:var(--muted)}
+.pg-conflict-pair{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.pg-conflict-pair article{padding:28px 0 0;border-top:2px solid var(--ink);display:grid;gap:12px;align-content:start}
+.pg-conflict-pair h3{font-size:22px;line-height:1.2;letter-spacing:-.02em;font-weight:650}
+.pg-conflict-pair p{font-size:16.5px;line-height:1.65;color:var(--body)}
+.pg-conflict-src{font-size:14px!important;color:var(--muted)!important}
+.pg-conflict-src a{color:var(--accent-ink)!important;font-weight:650;text-decoration:none}
+.pg-conflict-src a:hover{text-decoration:underline;text-underline-offset:3px}
+.pg-conflict-diff{display:grid;gap:12px;padding-top:8px}
+.pg-conflict-diff h3{font-size:20px;font-weight:650;letter-spacing:-.015em}
+.pg-conflict-diff ul{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.pg-conflict-diff li{font-size:16px;line-height:1.55;color:var(--body)}
+.pg-conflict-diff li b{color:var(--ink);text-transform:capitalize}
+@media(max-width:900px){.pg-conflict-pair{grid-template-columns:1fr}}
 /* hero */
 .pg-hero{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:56px;align-items:center;padding:72px 0 36px}
 .pg-hero h1{font-size:clamp(40px,5.2vw,68px);line-height:1.02;letter-spacing:-.035em;font-weight:650;text-wrap:balance;max-width:15ch}
@@ -56,7 +73,7 @@
 .pg-close p{margin-top:14px;font-size:17px;line-height:1.6;color:#cfd6ea;max-width:52ch}
 .pg-close .pg-cta{margin-top:0}
 @media(max-width:1000px){
- .pg-hero,.pg-strip,.pg-loop,.pg-product,.pg-honest,.pg-close{width:calc(100% - 40px)}
+ .pg-hero,.pg-strip,.pg-loop,.pg-product,.pg-honest,.pg-close,.pg-conflict{width:calc(100% - 40px)}
  .pg-hero{grid-template-columns:1fr;gap:32px;padding:40px 0 24px}
  .pg-loop{grid-template-columns:1fr;gap:32px;padding:48px 0}.pg-loop-head{position:static}
  .pg-product{grid-template-columns:1fr;padding:28px;border-radius:28px;gap:28px}
