@@ -31,7 +31,9 @@ export function ContextCompletionStatusPage() {
             never reviews edges, and never promotes relationships to the graph.
           </p>
           <div className="science-body-actions">
+            <Link to="/research/d01-edge-review">D-01 edge review</Link>
             <Link to="/research/knowledge-graph">Claim-linked graph</Link>
+            <Link to="/curator">Curator workspace</Link>
             <Link to="/research/evidence-readiness">Evidence catalogue</Link>
           </div>
         </div>
