@@ -149,6 +149,10 @@
       "destination": "/_pages/research--ontology-review.html"
     },
     {
+      "source": "/research/d01-edge-review",
+      "destination": "/_pages/research--d01-edge-review.html"
+    },
+    {
       "source": "/research/validation",
       "destination": "/_pages/research--validation.html"
     },
@@ -159,6 +163,10 @@
     {
       "source": "/research/evidence-readiness",
       "destination": "/_pages/research--evidence-readiness.html"
+    },
+    {
+      "source": "/research/context-completion",
+      "destination": "/_pages/research--context-completion.html"
     },
     {
       "source": "/research/scientific-workbench",

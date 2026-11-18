@@ -123,6 +123,44 @@ export function Curator() {
         lede="Richer gap buckets and Gate C queue from published packs. Human decisions stay on ISI autumn-snow. Empty import = awaiting partner session; hypothetical fixtures stay labelled not production-approved — never fabricates Apolo approvals or flips grades."
       />
 
+      <section className="section section-bone" aria-label="D-01 curator sheets">
+        <div className="container">
+          <div className="section-head">
+            <span className="section-num">D-01</span>
+            <h2 className="display display-md">Curator sheets</h2>
+          </div>
+          <p className="lede">
+            Fill-progress and local edge recommendations for the D-01 slice. These surfaces never
+            promote relationships or set scientific approval.
+          </p>
+          <p className="muted" role="note">
+            Recommendations and sheet fill only · autoPromotion=false · graphPromotion=false
+          </p>
+          <ul className="tag-row" style={{ marginTop: "1.25rem", listStyle: "none", padding: 0 }}>
+            <li>
+              <Link className="tag" to="/research/context-completion">
+                Context completion fill progress
+              </Link>
+            </li>
+            <li>
+              <Link className="tag" to="/research/d01-edge-review">
+                D-01 edge review queue
+              </Link>
+            </li>
+            <li>
+              <Link className="tag" to="/research/ontology-review">
+                Ontology mapping review
+              </Link>
+            </li>
+            <li>
+              <Link className="tag" to="/research/knowledge-graph?experience=advanced">
+                Claim-linked graph
+              </Link>
+            </li>
+          </ul>
+        </div>
+      </section>
+
       <section className="section section-ink">
         <div className="container">
           <div className="section-head">
