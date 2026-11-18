@@ -154,12 +154,21 @@ export function e2eIsolationAcceptancePacket(): E2eIsolationPacket {
 }
 
 export function e2eIsolationScopeById(scope: E2eIsolationScopeId): E2eIsolationScopeRow {
-  const row = SCOPES.find((s) => s.scope === scope);
-  if (!row) {
-    const _exhaustive: never = scope;
-    throw new Error(`Unknown isolation scope: ${String(_exhaustive)}`);
+  switch (scope) {
+    case "interrogative_workspace":
+    case "scientific_records":
+    case "contradiction_ledger":
+    case "live_evidence":
+    case "graph_workspace": {
+      const row = SCOPES.find((s) => s.scope === scope);
+      if (!row) throw new Error(`Missing isolation scope row: ${scope}`);
+      return row;
+    }
+    default: {
+      const _exhaustive: never = scope;
+      throw new Error(`Unknown isolation scope: ${String(_exhaustive)}`);
+    }
   }
-  return row;
 }
 
 export function assessE2eIsolationMode(mode: E2eIsolationSuiteMode): E2eIsolationAssessment {
