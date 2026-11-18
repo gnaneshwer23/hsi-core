@@ -48,7 +48,7 @@ export function Layout() {
       </a>
       {!isApp&&<Nav />}
       <main className="site-main" id="main-content" tabIndex={-1}>
-        {(["/research/capabilities","/research/governance","/research/scientific-workbench","/research/mechanism-workflow","/research/decision-workbench","/research/scientific-review","/research/evidence-readiness","/science/graph","/science/clinical-trials"].includes(pathname))&&<ResearchNavigation/>}
+        {(["/research/capabilities","/research/governance","/research/scientific-workbench","/research/mechanism-workflow","/research/decision-workbench","/research/scientific-review","/research/evidence-readiness","/research/context-completion","/research/d01-edge-review","/research/ontology-review","/science/graph","/science/clinical-trials"].includes(pathname))&&<ResearchNavigation/>}
         <Suspense fallback={<p role="status" style={{padding:"3rem 1.5rem"}}>Loading research tools…</p>}><Outlet /></Suspense>
       </main>
       {!isApp&&<Footer />}
