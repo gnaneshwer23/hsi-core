@@ -14,7 +14,7 @@ type NavItem={label:string;to:string;icon:string;key?:ShellNav;badge?:"ledger"|"
 const GROUPS:{label:string;items:NavItem[];governed?:boolean}[]=[
  {label:"Ask",items:[
   {label:"Home",to:"/research/home",icon:"home",key:"home"},
-  {label:"Investigations",to:"/research/workspace",icon:"search",key:"investigations"},
+  {label:"Live investigation",to:"/research/workspace",icon:"search",key:"investigations"},
   {label:"Guided walkthrough",to:"/research/journey",icon:"compass",key:"journey"}]},
  {label:"Explore",items:[
   {label:"Knowledge Graph",to:"/research/knowledge-graph",icon:"graph",key:"graph"},

@@ -13,6 +13,7 @@ import {Program} from "../components/home/Program";
 import {programView} from "../lib/program";
 import {DEPT_ICON,Icon} from "../components/home/AppIcons";
 import {EMPTY_PROFILE,LIVE_RUN_KEY,summariseSavedLiveRun,type SavedLiveRun,classifyIntent,GOALS,INVESTIGATION_STATUS,loadProfile,looksLikeTrialId,recommend,resetProfile,ROLES,saveProfile,searchEntities,type Profile} from "../lib/researchHome";
+import {LIVE_INVESTIGATION_PATH,liveInvestigationHref} from "../lib/workbenchPrimary";
 import "../styles/research-home.css";
 
 
@@ -27,7 +28,8 @@ function Fold({id,ids,title,sub,force=false,initial=false,children}:{id:string;i
 type Saved={id:string;question:string;createdAt:string;state:string};
 type SavedState={kind:"loading"}|{kind:"ok";items:Saved[]}|{kind:"blocked";message:string}|{kind:"error"};
 const graphHref=(q:string)=>"/research/knowledge-graph?netQuery="+encodeURIComponent(q);
-const investigateHref=(q:string)=>"/research/dashboard?q="+encodeURIComponent(q.slice(0,500))+"#dashboard-workspace";
+/** Auth/dashboard path for saving a question for review — not the primary live investigate path. */
+const saveQuestionHref=(q:string)=>"/research/dashboard?q="+encodeURIComponent(q.slice(0,500))+"#dashboard-workspace";
 const deptIcon=(slug:string)=>DEPT_ICON[slug]??"graph";
 const n=(x:number)=>x.toLocaleString("en-GB");
 
@@ -89,7 +91,7 @@ function SearchHero({bundle,profile,follow,inputRef,ready}:{bundle:DomainBundle|
     <div className="rh-searchbar">
      <Icon name="search" size={22}/>
      <input id="rh-q" ref={inputRef} type="search" value={q} maxLength={500} autoComplete="off" onChange={e=>setQ(e.target.value)} placeholder="Investigate a gene, pathway, disease, biological mechanism or research question…" aria-describedby="rh-q-help"/>
-     <button type="button" className="rh-go" onClick={()=>{const t=q.trim();if(!t){inputRef.current?.focus();return}nav(live?"/research/workspace":investigateHref(intent==="investigation"?t:`What does the evidence say about ${t}?`))}}>Investigate <Icon name="arrow" size={16}/></button>
+     <button type="button" className="rh-go" onClick={()=>{const t=q.trim();if(!t){inputRef.current?.focus();return}nav(LIVE_INVESTIGATION_PATH)}}>Investigate <Icon name="arrow" size={16}/></button>
     </div>
     {ready&&!profile.onboarded&&<p className="rh-note"><Link to="/welcome">Tell us about your research</Link> (2 minutes) so your home is built around your area.</p>}
     <p id="rh-q-help" className="rh-note">{bundle?`Searching ${n(bundle.nodes.length)} concepts in the published graph (candidates, unreviewed). Entities outside it are not searched yet.`:"Verifying the published graph…"}</p>
@@ -97,14 +99,14 @@ function SearchHero({bundle,profile,follow,inputRef,ready}:{bundle:DomainBundle|
      {intent!=="empty"&&<div className="rh-panel">
       {hits.length>0&&<ul className="rh-hits" aria-label="Matching concepts">{hits.map(h=>(
        <li key={h.id}><span className="rh-ico-tile" aria-hidden="true"><Icon name="graph" size={18}/></span><div><b>{h.name}</b><span>{h.kind}{h.matchedOn!==h.name?` · matched “${h.matchedOn}”`:""}</span><small>Graph concept {h.id.replace(/^concept:/,"").slice(0,40)}</small></div>
-        <div className="rh-row"><Link to={graphHref(h.name)}>Open in graph</Link><button type="button" className="rh-ghost" aria-pressed={followed.has(h.id)} onClick={()=>follow(h.id,h.name)}>{followed.has(h.id)?"Following":"Follow"}</button><Link to={investigateHref(`What does the evidence say about ${h.name}, and in which contexts?`)}>Investigate</Link></div></li>))}</ul>}
+        <div className="rh-row"><Link to={graphHref(h.name)}>Open in graph</Link><button type="button" className="rh-ghost" aria-pressed={followed.has(h.id)} onClick={()=>follow(h.id,h.name)}>{followed.has(h.id)?"Following":"Follow"}</button><Link to={LIVE_INVESTIGATION_PATH}>Investigate</Link></div></li>))}</ul>}
       {hits.length===0&&bundle&&<p>No concept in the published graph matches “{q.trim()}”. {trial?"This looks like a clinical trial identifier; trial records are not searched from here yet. ":""}Try a broader term or an alternative name, or start an investigation from it.</p>}
       <div className="rh-intent">
        <p>{intent==="investigation"?"This reads as a research question. Choose how to work on it:":"You can also treat this as a question:"}</p>
        <div className="rh-row">
         <Link className="rh-ghost" to={graphHref(q.trim())}>Quick Explore in the graph</Link>
-        {live&&<Link className="rh-primary" to="/research/workspace">Deep Investigate: run live</Link>}
-        <Link className={live?"rh-ghost":"rh-primary"} to={investigateHref(intent==="investigation"?q.trim():`What does the evidence say about ${q.trim()}?`)}>{live?"Save question for review":"Deep Investigate (saved question)"}</Link>
+        <Link className="rh-primary" to={LIVE_INVESTIGATION_PATH}>{live?"Deep Investigate: run live":"Open live investigation"}</Link>
+        <Link className="rh-ghost" to={saveQuestionHref(intent==="investigation"?q.trim():`What does the evidence say about ${q.trim()}?`)}>Save question for review</Link>
        </div>
        <p className="rh-note">{live?"This matches a curated scenario, so a live run is available: it searches Europe PMC, OpenAlex and Open Targets now, then two models check the direction of the best claims. Nothing starts until you press Run on the next page.":"Live runs cover curated scenarios only (currently IL-21 across autoimmune diseases). Your question can be saved for scientific review, which needs a research account."} Quick Explore reads the published graph.</p>
       </div>
@@ -149,8 +151,8 @@ export function ResearchHome(){
      <Fold id="rh-more" force={saved.kind==="error"} initial={fresh} ids={["rh-cont-h","rh-rec-h","rh-ask"]} title="More from your research" sub="Saved work, recommendations and asking the graph">
      <div className="rh-grid">
       <section className="rh-card" aria-labelledby="rh-cont-h">
-       <header className="rh-card-top"><span className="rh-tile rh-t-teal"><Icon name="layers" size={22}/></span><div><h2 id="rh-cont-h">Continue researching</h2><p className="rh-sub">Pick up where you left off.</p></div><Link className="rh-arrow" to="/research/dashboard#dashboard-workspace" aria-label="All investigations"><Icon name="chevron" size={18}/></Link></header>
-       {liveRun&&<ul className="rh-rows rh-live"><li><div><b>{liveRun.question}</b><span>Live investigation · saved in this browser</span><small>{liveRun.checked} claims checked by two models · {liveRun.supporting} supporting · {liveRun.opposing} opposing · {liveRun.candidates} candidates, all unreviewed</small></div><Link to="/research/workspace?reopen=1">Reopen</Link></li></ul>}
+       <header className="rh-card-top"><span className="rh-tile rh-t-teal"><Icon name="layers" size={22}/></span><div><h2 id="rh-cont-h">Continue researching</h2><p className="rh-sub">Pick up where you left off.</p></div><Link className="rh-arrow" to={LIVE_INVESTIGATION_PATH} aria-label="Open live investigation"><Icon name="chevron" size={18}/></Link></header>
+       {liveRun&&<ul className="rh-rows rh-live"><li><div><b>{liveRun.question}</b><span>Live investigation · saved in this browser</span><small>{liveRun.checked} claims checked by two models · {liveRun.supporting} supporting · {liveRun.opposing} opposing · {liveRun.candidates} candidates, all unreviewed</small></div><Link to={liveInvestigationHref({reopen:true})}>Reopen</Link></li></ul>}
        {saved.kind==="loading"&&<div className="rh-skel" aria-hidden="true"/>}
        {saved.kind==="blocked"&&<p className="rh-empty">{saved.message} <Link to="/sign-in">Sign in</Link></p>}
        {saved.kind==="error"&&<p className="rh-empty">Saved investigations are temporarily unavailable.</p>}

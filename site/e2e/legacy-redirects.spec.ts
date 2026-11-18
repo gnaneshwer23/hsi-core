@@ -32,6 +32,17 @@ test('a retired department page lands on that department in the graph',async({pa
  await expect(page).toHaveURL(/\/research\/knowledge-graph\?netDepartment=immunology/);
 });
 
+test('legacy discovery experience reconnects to the live investigation workspace',async({page})=>{
+ await page.goto('/research/discovery-experience');
+ await expect(page).toHaveURL(/\/research\/workspace$/);
+ await expect(page.getByRole('heading',{level:1}).first()).toBeVisible();
+});
+
+test('bare decision-workbench redirects to live investigation',async({page})=>{
+ await page.goto('/research/decision-workbench');
+ await expect(page).toHaveURL(/\/research\/workspace$/);
+});
+
 test('module and product aliases one-hop to how-it-works',async({page})=>{
  for(const from of ['/modules','/products','/akeno','/for-trials']){
   await page.goto(from);
