@@ -54,7 +54,9 @@
   ],
   "productionRouteNotes": {
     "/platform": "retired_redirect_how_it_works",
-    "/science": "top_level_retired_use_knowledge_graph_and_departments",
-    "/validation": "do_not_confuse_with_research_validation_lab"
-  }
+    "/science": "top_level_retired_use_knowledge_graph;_department_urls_redirect_to_filtered_graph",
+    "/validation": "no_live_route_interim_use_trust;_not_research_validation_lab",
+    "/contact": "public_indexed_not_primary_nav"
+  },
+  "visionFreeze": "docs/strategy/HSI_DEFINITIVE_PRODUCT_VISION.md"
 }

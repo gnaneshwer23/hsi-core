@@ -33,6 +33,19 @@ describe("hsi brand tokens v1",()=>{
   expect(doc).toContain("Lovable");
   expect(doc).toContain("Do **not** adopt yet");
   expect(doc).toContain("legally unverified expansion");
+  expect(doc).toContain("PRIMARY_NAV_LINKS");
+  expect(doc).toContain("No production `/validation` route");
+  expect(doc).toContain("not** in primary header nav");
+ });
+
+ test("definitive product vision freeze is present",()=>{
+  const vision=readFileSync(join(import.meta.dir,"../docs/strategy/HSI_DEFINITIVE_PRODUCT_VISION.md"),"utf8");
+  expect(vision).toContain("Building the intelligence layer for understanding human biology");
+  expect(vision).toContain("Context-aware scientific evidence and mechanism intelligence");
+  expect(vision).toContain("HSI 1.0");
+  expect(vision).toContain("Inform the next decision");
+  const wrapper=readFileSync(join(import.meta.dir,"../docs/strategy/HSI_VISION.md"),"utf8");
+  expect(wrapper).toContain("HSI_DEFINITIVE_PRODUCT_VISION.md");
  });
 });
 

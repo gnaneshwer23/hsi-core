@@ -1,28 +1,28 @@
 # HSI Homepage Design System
 
-**Status:** Skeleton (PR1) — tokens and section map; visual implementation follows in PR2–PR4.  
-**Stage-1 premium direction (18 Nov 2026):** [`HSI_PREMIUM_BRAND_IDENTITY_REDESIGN_2026-11-18.md`](./HSI_PREMIUM_BRAND_IDENTITY_REDESIGN_2026-11-18.md) + [`hsi-brand-tokens.v1.json`](./hsi-brand-tokens.v1.json) supersede the ivory/burgundy exploration for new marketing comps. Keep Host Grotesk in production until the font-migration ticket lands.  
-**Production:** https://www.humansuperintelligence.tech/  
-**Governing vision:** [`../strategy/HSI_VISION.md`](../strategy/HSI_VISION.md)  
-**Companion:** [`HSI_HOMEPAGE_COMPONENT_MAP.md`](./HSI_HOMEPAGE_COMPONENT_MAP.md) · Public IA: [`HSI_PUBLIC_SITE_IA_AND_PAGE_SYSTEM.md`](./HSI_PUBLIC_SITE_IA_AND_PAGE_SYSTEM.md)
+**Status:** **SUPERSEDED for Stage 1 marketing comps** (18 Nov 2026).  
+**Use instead:** [`HSI_PREMIUM_BRAND_IDENTITY_REDESIGN_2026-11-18.md`](./HSI_PREMIUM_BRAND_IDENTITY_REDESIGN_2026-11-18.md) + [`hsi-brand-tokens.v1.json`](./hsi-brand-tokens.v1.json) (Midnight `#0B1720`, Deep teal `#15343B`, Signal mint `#58C6B6`, Cloud `#F5F8F7`, Coral `#E47B72`).  
+**Production interim:** Live site may still show Host Grotesk + older skins until Stage 3 cutover — do **not** design new Lovable comps from the ivory/burgundy table below.  
+**Governing vision:** [`../strategy/HSI_DEFINITIVE_PRODUCT_VISION.md`](../strategy/HSI_DEFINITIVE_PRODUCT_VISION.md) · [`../strategy/HSI_VISION.md`](../strategy/HSI_VISION.md)  
+**Companion:** [`HSI_HOMEPAGE_COMPONENT_MAP.md`](./HSI_HOMEPAGE_COMPONENT_MAP.md) · Public IA (historical): [`HSI_PUBLIC_SITE_IA_AND_PAGE_SYSTEM.md`](./HSI_PUBLIC_SITE_IA_AND_PAGE_SYSTEM.md)
 
 ## Principle
 
-Premium biomedical research instrument — warm ivory surfaces, restrained burgundy selection, Host Grotesk Variable. Not purple-glow AI cliché, not newspaper broadsheet, not fabricated metrics.
+Premium biomedical research instrument — precise, calm, evidence-first. Not purple-glow AI cliché, not newspaper broadsheet, not fabricated metrics.
 
-## Palette
+## Palette (archived — do not use for Stage 1 comps)
 
-| Role | Token | Hex |
-|------|-------|-----|
-| Ivory page | `--hsi-ivory` / `--hsi-page` | `#FAF8F5` |
-| Soft cream | `--hsi-cream` | `#FAECDD` |
-| Light lavender | `--hsi-lavender` | `#E8D8E8` |
-| Biomedical burgundy | `--hsi-burgundy-deep` | `#5E0808` |
-| Scientific red | `--hsi-burgundy` | `#BD1C1D` |
-| Deep ink | `--hsi-ink` | `#162331` |
-| White surface | `--hsi-surface` | `#FFFFFF` |
+| Role | Token | Hex | Note |
+|------|-------|-----|------|
+| Ivory page | `--hsi-ivory` / `--hsi-page` | `#FAF8F5` | Archived |
+| Soft cream | `--hsi-cream` | `#FAECDD` | Archived |
+| Light lavender | `--hsi-lavender` | `#E8D8E8` | Archived |
+| Biomedical burgundy | `--hsi-burgundy-deep` | `#5E0808` | Archived |
+| Scientific red | `--hsi-burgundy` | `#BD1C1D` | Archived |
+| Deep ink | `--hsi-ink` | `#162331` | Archived |
+| White surface | `--hsi-surface` | `#FFFFFF` | Archived |
 
-Burgundy/red: primary actions, selected domains, active connections — never alone for error or clinical risk. Evidence status colours remain a separate semantic system.
+**Stage 1 chrome:** Midnight / Deep teal surfaces, Cloud reading panels, Signal mint actions, Coral for conflict/uncertainty only — see brand tokens JSON.
 
 ## Typography
 
