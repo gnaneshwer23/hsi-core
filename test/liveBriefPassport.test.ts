@@ -5,6 +5,7 @@ import {
   renderLiveBriefPassportSections,
 } from "../src/investigation/liveBriefPassport";
 import {EDGE_PASSPORT_FIELDS} from "../src/knowledgeGraph/evidenceContextPassport";
+import {emptyLiveStructuredComparison} from "../src/investigation/liveBriefComparison";
 import type {LiveInvestigation} from "../src/investigation/liveRun";
 
 const cand=(o:Partial<LiveInvestigation["candidates"][number]>={}):LiveInvestigation["candidates"][number]=>({
@@ -28,6 +29,7 @@ const run:LiveInvestigation={
   byContext:{ssc:{label:"Systemic sclerosis",records:1,supporting:["c1"],opposing:[],uncertain:[]}},
   verification:{status:"completed",reason:null,checked:1,independence:"independent_execution_only"},
   hypotheses:{status:"not_configured",reason:"none",items:[],dropped:0,basis:{findings:0}},
+  structuredComparison:emptyLiveStructuredComparison(),
   gaps:["No opposing finding was identified."],budget:null,
   flags:{scientificApproval:false,graphPromotable:false,consensusEstablished:false,humanReview:"required",clinicalAdvice:false,containsPhi:false},
   events:[],
