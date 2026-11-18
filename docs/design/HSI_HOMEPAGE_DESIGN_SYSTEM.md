@@ -1,6 +1,7 @@
 # HSI Homepage Design System
 
 **Status:** Skeleton (PR1) — tokens and section map; visual implementation follows in PR2–PR4.  
+**Stage-1 premium direction (18 Nov 2026):** [`HSI_PREMIUM_BRAND_IDENTITY_REDESIGN_2026-11-18.md`](./HSI_PREMIUM_BRAND_IDENTITY_REDESIGN_2026-11-18.md) + [`hsi-brand-tokens.v1.json`](./hsi-brand-tokens.v1.json) supersede the ivory/burgundy exploration for new marketing comps. Keep Host Grotesk in production until the font-migration ticket lands.  
 **Production:** https://www.humansuperintelligence.tech/  
 **Governing vision:** [`../strategy/HSI_VISION.md`](../strategy/HSI_VISION.md)  
 **Companion:** [`HSI_HOMEPAGE_COMPONENT_MAP.md`](./HSI_HOMEPAGE_COMPONENT_MAP.md) · Public IA: [`HSI_PUBLIC_SITE_IA_AND_PAGE_SYSTEM.md`](./HSI_PUBLIC_SITE_IA_AND_PAGE_SYSTEM.md)

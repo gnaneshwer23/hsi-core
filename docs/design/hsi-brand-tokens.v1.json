@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "hsi-brand-tokens-1",
+  "status": "stage1_proposed",
+  "scientificApproval": false,
+  "productionWired": false,
+  "formalName": "Human Super Intelligence",
+  "masterBrand": "HSI",
+  "descriptor": "Scientific Intelligence for Human Biology",
+  "forbiddenExpansions": ["Human Systems Intelligence"],
+  "promise": "Understand the mechanism. Preserve the evidence. Explain the uncertainty.",
+  "tagline": "Biology is connected. Understanding should be too.",
+  "palette": {
+    "midnight": { "hex": "#0B1720", "role": "primary_surface" },
+    "deepTeal": { "hex": "#15343B", "role": "secondary_surface" },
+    "signalMint": { "hex": "#58C6B6", "role": "action_nav" },
+    "cloud": { "hex": "#F5F8F7", "role": "page_reading" },
+    "coral": { "hex": "#E47B72", "role": "conflict_caution_sparse" }
+  },
+  "typography": {
+    "marketingDisplay": "Instrument Serif",
+    "interfacePreferred": "Geist",
+    "productionInterim": "Host Grotesk Variable",
+    "mono": "JetBrains Mono Variable",
+    "avoidDefaultStacks": ["Inter", "Roboto", "Arial", "system-ui"]
+  },
+  "logo": {
+    "concept": "Custom HSI wordmark with restrained connected-node symbol",
+    "avoid": ["DNA helix", "brain", "robot", "glowing network sphere"]
+  },
+  "domainsPresentation": [
+    "Immunology & Inflammation",
+    "Neuroscience",
+    "Microbiome & Metabolism",
+    "Genomics & Multi-omics",
+    "Organ & Tissue Biology",
+    "Disease Mechanisms"
+  ],
+  "domainMigration": "presentation_only_until_adr",
+  "capabilityLabels": [
+    "Research Workbench",
+    "Evidence Intelligence",
+    "Mechanism Explorer",
+    "Scientific Verification"
+  ],
+  "targetPublicPages": [
+    "/",
+    "/platform",
+    "/science",
+    "/researchers",
+    "/biotech",
+    "/validation",
+    "/about",
+    "/contact"
+  ],
+  "productionRouteNotes": {
+    "/platform": "retired_redirect_how_it_works",
+    "/science": "top_level_retired_use_knowledge_graph_and_departments",
+    "/validation": "do_not_confuse_with_research_validation_lab"
+  }
+}

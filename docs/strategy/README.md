@@ -28,6 +28,7 @@ Strategic product reset: audit, architecture, and roadmap. **No feature implemen
 | [HSI_DOC02_03_RECONCILIATION.md](./HSI_DOC02_03_RECONCILIATION.md) | Open/Proposed (companions 02/03/04) vs Observed (Phase 0 audits) — do not upgrade Missing |
 
 **Governing vision doctrine:** [HSI_VISION.md](./HSI_VISION.md) (9 Nov 2026 — landing pages, backends, KG, agents, product decisions; ambition ≠ production-ready).  
+**Premium brand redesign (Stage 0 doctrine, 18 Nov 2026):** [HSI_PREMIUM_BRAND_IDENTITY_REDESIGN_2026-11-18.md](../design/HSI_PREMIUM_BRAND_IDENTITY_REDESIGN_2026-11-18.md) · tokens [hsi-brand-tokens.v1.json](../design/hsi-brand-tokens.v1.json) — Lovable prototype before production skin cutover; no “Human Systems Intelligence”, no repo/DB/auth rebuild.  
 **Detailed vision elaboration:** [HSI_MASTER_VISION.md](./HSI_MASTER_VISION.md) (§2; defers to `HSI_VISION.md` on conflict).  
 **Authoritative product architecture:** Document 02 companion above + [HSI_FOUR_PRODUCT_ECOSYSTEM.md](./HSI_FOUR_PRODUCT_ECOSYSTEM.md) (§3 — ownership, APIs, journeys, anti-duplication).  
 **Authoritative LHK-G:** [HSI_LIVING_HEALTH_KNOWLEDGE_GRAPH.md](./HSI_LIVING_HEALTH_KNOWLEDGE_GRAPH.md) (§4).  
