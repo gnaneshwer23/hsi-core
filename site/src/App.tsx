@@ -163,12 +163,12 @@ export default function App() {
         <Route path="science/disease" element={<ScienceDisease />} />
         <Route path="discovery-engine" element={<DiscoveryEngine />} />
         <Route path="demo" element={<Navigate to="/research/journey" replace />} />
-        <Route path="modules" element={<Navigate to="/connected-intelligence" replace />} />
-        <Route path="modules/aksh-health" element={<Navigate to="/connected-intelligence" replace />} />
-        <Route path="modules/clinical" element={<Navigate to="/connected-intelligence" replace />} />
-        <Route path="modules/isi" element={<Navigate to="/connected-intelligence" replace />} />
-        <Route path="modules/trials" element={<Navigate to="/connected-intelligence" replace />} />
-        <Route path="products" element={<Navigate to="/connected-intelligence" replace />} />
+        <Route path="modules" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="modules/aksh-health" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="modules/clinical" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="modules/isi" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="modules/trials" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="products" element={<Navigate to="/how-it-works" replace />} />
         <Route path="status" element={<Status />} />
         <Route path="sources" element={<Sources />} />
         <Route path="clinical-timeline" element={<ClinicalTimeline />} />
@@ -178,11 +178,11 @@ export default function App() {
         <Route path="evidence" element={<Evidence />} />
         <Route path="discovery" element={<DiscoveryCentre />} />
         <Route path="curator" element={<Curator />} />
-        <Route path="akeno" element={<Navigate to="/connected-intelligence" replace />} />
-        <Route path="aksh-agents" element={<Navigate to="/connected-intelligence" replace />} />
-        <Route path="for-isi" element={<Navigate to="/connected-intelligence" replace />} />
-        <Route path="for-aksh" element={<Navigate to="/connected-intelligence" replace />} />
-        <Route path="for-trials" element={<Navigate to="/connected-intelligence" replace />} />
+        <Route path="akeno" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="aksh-agents" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="for-isi" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="for-aksh" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="for-trials" element={<Navigate to="/how-it-works" replace />} />
         <Route path="roadmap" element={<Roadmap />} />
         <Route path="alignment" element={<Alignment />} />
         <Route path="docs" element={<Docs />} />
