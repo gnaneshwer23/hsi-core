@@ -107,7 +107,7 @@ Ship as a series of PRs once A2.4 sheet is filling:
 | PR id | Scope |
 | --- | --- |
 | **C1** | Import completed context for D-01 candidates (still `unreviewed`) |
-| **C2** | Reviewer queue MVP (accept / reject / revise / insufficient) — API + UI, fail-closed — soft-land: `/research/d01-edge-review` + `src/knowledgeGraph/d01EdgeReview.ts` (device-local; no graph write) |
+| **C2** | Reviewer queue MVP (accept / reject / revise / insufficient) — API + UI, fail-closed — soft-land: `/research/d01-edge-review` + `src/knowledgeGraph/d01EdgeReview.ts` (device-local; no graph write); curator nav soft-land links sheets from `/curator` |
 | **C3** | Dual-reviewer decisions for 40–60 edges; immutable records |
 | **C4** | Graph release: reviewed vs candidate styling + version bump — soft-land: legend + reserved reviewed stroke on `/research/knowledge-graph` (`edgeReviewPresentation.ts`); version bump still waits on dual review |
 | **C5** | Homepage worked conflict from a **reviewed** disagreement |
