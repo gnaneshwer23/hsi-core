@@ -1,0 +1,226 @@
+{
+  "schemaVersion": "hsi-ten-systems-capability-map-1",
+  "frozenAt": "2026-11-18",
+  "vision": "docs/strategy/HSI_DEFINITIVE_PRODUCT_VISION.md",
+  "architecture": "docs/architecture/HSI_TECHNOLOGY_ARCHITECTURE_TEN_SYSTEMS.md",
+  "honesty": {
+    "logicalCapabilitiesNotMicroservices": true,
+    "contractsAreNotProductionReady": true,
+    "noSeparateGraphOrVectorDbUntilEvidenced": true,
+    "writesEnabledProduction": false,
+    "gateCAutoApprove": false
+  },
+  "statusVocabulary": ["shipped", "partial", "contract_only", "later"],
+  "buildStages": ["A", "B", "C", "D"],
+  "priorityDifferentiator": "03",
+  "systems": [
+    {
+      "id": "01",
+      "name": "Biomedical Data & Evidence Ingestion",
+      "band": "foundation",
+      "status": "partial",
+      "stageFit": ["A", "B"],
+      "anchors": [
+        "src/evidence/liveSources.ts",
+        "src/evidence/europePmcBibliographicLookup.ts",
+        "src/evidenceIngestion.ts",
+        "src/sourceRegistry.ts",
+        "src/server/literatureSearchHandler.ts",
+        "site/api/research/literature-search.ts"
+      ],
+      "hsi1Gaps": [
+        "Rights-cleared passage store (human queue #2)",
+        "Approved clearance policy + authority",
+        "Retraction source + scheduled refresh",
+        "Missing live adapters for several ontology DBs"
+      ]
+    },
+    {
+      "id": "02",
+      "name": "Biomedical Ontology & Knowledge Graph",
+      "band": "foundation",
+      "status": "partial",
+      "stageFit": ["B", "C"],
+      "anchors": [
+        "src/knowledgeGraph/domainGraph.ts",
+        "src/knowledgeGraph/claimGraph.ts",
+        "src/livingHealthKnowledgeGraph.ts",
+        "src/hsiOntologyRegistry.ts",
+        "src/hsiScienceGraphAdapter.ts",
+        "src/db/graphWorkspaceStore.ts"
+      ],
+      "hsi1Gaps": [
+        "Reviewed edge volume still thin",
+        "Ontology mapping review incomplete",
+        "Server graph workspace fail-closed / held migrations"
+      ]
+    },
+    {
+      "id": "03",
+      "name": "Biological Context Intelligence",
+      "band": "core_usp",
+      "status": "partial",
+      "stageFit": ["B", "C"],
+      "anchors": [
+        "src/knowledgeGraph/evidenceContextPassport.ts",
+        "src/knowledgeGraph/passportEvidenceTable.ts",
+        "src/evidence/passageLinkedContext.ts",
+        "src/contextualEvidenceExtraction.ts",
+        "site/src/components/EvidenceContextPassport.tsx"
+      ],
+      "hsi1Gaps": [
+        "Many candidate edges missing tissue/population/design",
+        "Passage-linked fields blocked on rights",
+        "Passport not yet universal on live investigation path"
+      ]
+    },
+    {
+      "id": "04",
+      "name": "Scientific Verification Engine",
+      "band": "core_usp",
+      "status": "partial",
+      "stageFit": ["A", "C"],
+      "anchors": [
+        "src/evidence/entailmentVerifier.ts",
+        "src/researchV2/scientificVerification.ts",
+        "src/researchV2/dualModelChallenge.ts",
+        "src/db/scientificReviewStore.ts",
+        "evaluation/independent-evaluation/",
+        "evaluation/gold-evaluation-suite/"
+      ],
+      "hsi1Gaps": [
+        "Two live verifier providers not production-configured",
+        "Zero adjudicated immuno gold cases (SME queue #4)",
+        "Quote-validated live path largely mocked"
+      ]
+    },
+    {
+      "id": "05",
+      "name": "Mechanism Investigation Engine",
+      "band": "core",
+      "status": "partial",
+      "stageFit": ["C", "D"],
+      "anchors": [
+        "src/immuneMechanismInvestigation.ts",
+        "src/helixMechanism.ts",
+        "src/researchMechanismWorkflow.ts",
+        "src/evidence/proteinPathwayMechanismCandidates.ts",
+        "site/src/features/science/mechanismTrace.ts"
+      ],
+      "hsi1Gaps": [
+        "Model-backed HELIX not enabled in production",
+        "Live Ask→mechanism→brief blocked on writes (#5)",
+        "Coverage thin beyond SSc/RA starters"
+      ]
+    },
+    {
+      "id": "06",
+      "name": "Contradiction & Research Gap Intelligence",
+      "band": "core_usp",
+      "status": "partial",
+      "stageFit": ["B", "C"],
+      "anchors": [
+        "src/knowledgeGraph/gapIndex.ts",
+        "src/knowledgeGraph/contextConflict.ts",
+        "src/evidence/gapVerification.ts",
+        "src/evidence/opposingEvidenceSearch.ts",
+        "src/db/scientificContradictionLedger.ts"
+      ],
+      "hsi1Gaps": [
+        "Live support/oppose + scientist adjudication unaccepted",
+        "Contradiction Neon migrations held",
+        "Eng gap classes ≠ SME-ranked gaps"
+      ]
+    },
+    {
+      "id": "07",
+      "name": "Scientific Investigation Orchestration",
+      "band": "core",
+      "status": "partial",
+      "stageFit": ["B", "C"],
+      "anchors": [
+        "src/hsiAgentOrchestrator.ts",
+        "src/hsiAgentDurableCheckpoint.ts",
+        "src/investigationRunner.ts",
+        "src/server/liveInvestigationHandler.ts",
+        "site/api/research/live-investigation.ts"
+      ],
+      "hsi1Gaps": [
+        "Production Ask is largely one-request; durable checkpoints not driving live path",
+        "Production writes fail-closed",
+        "Multi-provider composition not accepted"
+      ]
+    },
+    {
+      "id": "08",
+      "name": "Scientific Decision Memory",
+      "band": "core",
+      "status": "contract_only",
+      "stageFit": ["C"],
+      "anchors": [
+        "src/researchOutcome.ts",
+        "src/correctionProvenance.ts",
+        "src/db/evidenceLedgerStore.ts",
+        "src/db/scientificReviewHistory.ts",
+        "src/scientificKnowledgeEvolutionContracts.ts"
+      ],
+      "hsi1Gaps": [
+        "No production longitudinal decision memory",
+        "Investigation-record migration held (022)",
+        "HSI 1.0 needs immutable outcome versions + reopen/export; deep evolution is 2.0"
+      ]
+    },
+    {
+      "id": "09",
+      "name": "Hypothesis & Experimental Intelligence",
+      "band": "later",
+      "status": "later",
+      "stageFit": ["D"],
+      "anchors": [
+        "src/evidence/hypothesisRegistry.ts",
+        "src/evidence/falsifiableExperimentProposals.ts",
+        "src/investigation/hypothesisLedger.ts",
+        "src/db/experimentLedgerStore.ts"
+      ],
+      "hsi1Gaps": [
+        "Not an HSI 1.0 must-ship beyond falsifiers in briefs",
+        "Server-persisted ledger + scientific validation of proposals still open"
+      ]
+    },
+    {
+      "id": "10",
+      "name": "Unified Scientific Research Workbench",
+      "band": "ux",
+      "status": "partial",
+      "stageFit": ["C"],
+      "anchors": [
+        "site/src/pages/ScientificResearchWorkbench.tsx",
+        "src/researchWorkbench.ts",
+        "src/hsiResearchGraphWorkbench.ts",
+        "site/src/components/InvestigationWorkspace.tsx",
+        "src/server/researcherWorkspaceApi.ts"
+      ],
+      "hsi1Gaps": [
+        "Parallel workbench entry points — reconnect nav, do not rebuild",
+        "Authenticated production journey not currently available (writes off)",
+        "Device-local saves still default for some ledgers"
+      ]
+    }
+  ],
+  "sharedInfrastructure": {
+    "database": ["docs/NEON_PROJECT_MAP.md", "src/db/neonGuard.ts", "src/db/migrationHolds.ts"],
+    "deploy": ["site/api/research/[...path].ts", "src/server/vercelResearch.ts"],
+    "auth": ["src/server/neonAuthGateway.ts", "site/api/auth/[...path].ts"],
+    "aiProviders": ["src/modelProviders/index.ts", "src/liveModels.ts"],
+    "ci": [".github/workflows/research-foundation.yml", ".github/workflows/production-probe.yml"],
+    "monitoring": ["src/operations/opsAlertCatalog.ts"],
+    "evaluation": ["evaluation/", "src/goldEvaluationSuite.ts"]
+  },
+  "hsi1CriticalPath": [
+    "Close rights (#2)",
+    "Staging writes (#5) under fail-closed gates",
+    "Passport-complete reviewed slice",
+    "Dual-verifier with SME gold (#4)",
+    "One authenticated workbench Ask→brief→export"
+  ]
+}
