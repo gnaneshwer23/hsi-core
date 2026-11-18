@@ -108,7 +108,7 @@ Ship as a series of PRs once A2.4 sheet is filling:
 | **C1** | Import completed context for D-01 candidates (still `unreviewed`) |
 | **C2** | Reviewer queue MVP (accept / reject / revise / insufficient) — API + UI, fail-closed |
 | **C3** | Dual-reviewer decisions for 40–60 edges; immutable records |
-| **C4** | Graph release: reviewed vs candidate styling + version bump |
+| **C4** | Graph release: reviewed vs candidate styling + version bump — soft-land: legend + reserved reviewed stroke on `/research/knowledge-graph` (`edgeReviewPresentation.ts`); version bump still waits on dual review |
 | **C5** | Homepage worked conflict from a **reviewed** disagreement |
 | **C6** | Brief v2 export (Markdown / JSON / print) with graph version + review states |
 
