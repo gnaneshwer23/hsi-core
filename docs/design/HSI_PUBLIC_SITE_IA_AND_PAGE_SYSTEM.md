@@ -1,14 +1,16 @@
 # HSI public site — IA and page system
 
-**Status:** Active plan for connecting public marketing/science pages to the premium homepage system.  
+**Status:** **HISTORICAL / SUPERSEDED for production route mapping** (18 Nov 2026).  
+**Authoritative Stage 1 IA + live route map:** [`HSI_PREMIUM_BRAND_IDENTITY_REDESIGN_2026-11-18.md`](./HSI_PREMIUM_BRAND_IDENTITY_REDESIGN_2026-11-18.md).  
+**Vision freeze:** [`../strategy/HSI_DEFINITIVE_PRODUCT_VISION.md`](../strategy/HSI_DEFINITIVE_PRODUCT_VISION.md).  
+**Do not** treat tables below that mark `/platform`, `/modules`, `/research`, or `/science` as “Marketing live” as current production truth — those paths redirect or are retired in `App.tsx`.  
 **Production:** https://www.humansuperintelligence.tech/  
-**Vision:** [`../strategy/HSI_VISION.md`](../strategy/HSI_VISION.md)  
-**Visual system:** [`HSI_HOMEPAGE_DESIGN_SYSTEM.md`](./HSI_HOMEPAGE_DESIGN_SYSTEM.md)  
+**Visual system (Stage 1):** [`hsi-brand-tokens.v1.json`](./hsi-brand-tokens.v1.json) — not ivory/burgundy.  
 **CTAs:** `site/src/lib/ctaPolicy.ts` · Nav: `site/src/lib/primaryNav.ts`
 
 ## Principle
 
-One coherent journey. Every public page shares ivory/burgundy Host Grotesk chrome, section rhythm, honesty labels, and real destinations. Do not invent capabilities, metrics, certs, Gate C auto-approve, live CDS, or PHI surfaces.
+One coherent journey. Honesty labels and real destinations only. Do not invent capabilities, metrics, certs, Gate C auto-approve, live CDS, or PHI surfaces.
 
 ## Primary journey (header)
 
