@@ -1,5 +1,6 @@
 import {useEffect,useState,type FormEvent} from "react";
 import {Link,useNavigate} from "react-router-dom";
+import {AUTH_ERROR_MESSAGES} from "../../../src/authErrors";
 import {authBaseUrl,hsiAuth,type HsiAuthSession} from "../lib/hsiAuth";
 import {checkResearchAccount,type AccountCheck} from "../lib/researchAccountClient";
 import "../styles/sign-in.css";
@@ -8,6 +9,7 @@ export function ResearchAccount(){
  const navigate=useNavigate();
  const [session,setSession]=useState<HsiAuthSession|null>(null);
  const [status,setStatus]=useState("Checking your session…");
+ const [sessionExpired,setSessionExpired]=useState(false);
  const [access,setAccess]=useState<AccountCheck|null>(null);
  const [checking,setChecking]=useState(true);
  const [attempt,setAttempt]=useState(0);
@@ -21,12 +23,18 @@ export function ResearchAccount(){
  const [codeError,setCodeError]=useState("");
  useEffect(()=>{
   let active=true;
-  setChecking(true);setAccess(null);setStatus("Checking your session…");setVerificationMessage("");
+  setChecking(true);setAccess(null);setSessionExpired(false);setStatus("Checking your session…");setVerificationMessage("");
   async function check(){
    try{
     if(!authBaseUrl){if(active)setStatus("Authentication is not configured.");return}
     const result=await hsiAuth.session();if(!active)return;
-    if(result.error){setSession(null);setStatus(result.error.message);return}
+    if(result.error){
+     setSession(null);
+     setSessionExpired(result.error.code==="auth_session_expired");
+     // auth_session_expired keeps a dedicated message (not “auth unavailable”).
+     setStatus(result.error.message);
+     return;
+    }
     if(!result.data){navigate("/sign-in",{replace:true});return}
     setSession(result.data);setStatus("Checking research permissions with the HSI backend…");
     const account=await checkResearchAccount(result.data.user.id);
@@ -92,7 +100,7 @@ export function ResearchAccount(){
    </>}
   </div>}
   {verificationMessage&&<p role="status" aria-live="polite">{verificationMessage}</p>}
-  {account&&!authorised&&<div className="hsi-sign-in-status" role="status"><strong>Research access requires approval</strong><p>The HSI backend verified your account but found no active research or scientific reviewer grant. Contact the research administrator to request researcher access.</p><p>Scientific reviewer access requires separate approval and an independent reviewer identity.</p></div>}
+  {account&&!authorised&&<div className="hsi-sign-in-status" role="status"><strong>Research access requires approval</strong><p>Your Neon Auth account is verified, but that is not a research grant. The HSI backend found no active researcher or scientific-reviewer grant for this principal. An administrator must provision access separately — signing in again will not create it.</p><p>Scientific reviewer access requires separate approval and an independent reviewer identity. You can notify the operator via <Link to="/contact">Research access</Link>; that enquiry does not provision permissions or enable writes.</p></div>}
   {authorised&&<section className="hsi-account-workspace" aria-labelledby="workspace-heading">
    <h2 id="workspace-heading">Your research workspace</h2>
    <p role="status">{account.researcher?"Researcher access confirmed.":""} {account.scientificReviewer?"Scientific reviewer access confirmed for systemic sclerosis.":""}</p>
@@ -115,8 +123,10 @@ export function ResearchAccount(){
    </section>}
    <p className="hsi-auth-hint">Showing up to 50 recent accessible investigations. Access does not approve evidence or publish knowledge graph relationships.</p>
   </section>}
+  {!session&&sessionExpired&&<p className="hsi-auth-hint" role="status">{AUTH_ERROR_MESSAGES.AUTH_SESSION_EXPIRED} <Link to="/sign-in">Sign in again</Link> — grant status is unchanged by expiry alone.</p>}
   <div className="hsi-account-actions"><button className="hsi-auth-signout" type="button" disabled={checking||signingOut||verifyingCode||sendingVerification} onClick={()=>setAttempt(n=>n+1)}>{checking?"Checking access…":"Refresh access"}</button>
    {session&&<button className="hsi-auth-signout" type="button" disabled={signingOut||verifyingCode||sendingVerification} onClick={signOut}>{signingOut?"Signing out…":"Sign out"}</button>}
+   {!session&&!checking&&<Link className="hsi-sign-in-back" to="/sign-in">Go to sign in →</Link>}
   </div>
   <p className="hsi-sign-in-footnote"><Link to="/science">Return to public science</Link></p>
  </div></section>
