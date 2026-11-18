@@ -23,3 +23,7 @@ Markdown, JSON and print export for domain-graph research briefs with graph rele
 - Saved-record round-trip (`reproducibleFromSavedRecord` remains `false`)
 - Adjudicated conflict classes from reviewed edges (Track C5)
 - Graph promotion or review-status mutation
+
+## CI note
+
+Research foundation + P0 hygiene must run on the PR head before merge.
