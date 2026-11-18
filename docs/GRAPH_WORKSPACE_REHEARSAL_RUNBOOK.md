@@ -9,7 +9,7 @@
 | Creating a disposable Neon child branch | Approved and used (14 Nov 2026) |
 | Applying 031 to 033 to the production branch | Not approved |
 | Removing 031 to 033 from `HELD_MIGRATION_IDS` | Not approved; only after an accepted rehearsal |
-| Wiring `src/db/graphWorkspaceStore.ts` into any route | Not approved; a later change |
+| Wiring `src/db/graphWorkspaceStore.ts` into any route | A3.3: gated behind `HSI_GRAPH_WORKSPACE_STORE_ENABLED` (default off) + staging writes pins; schema still held |
 
 ## Role design
 - `db/roles/hsi_graph_roles.sql` creates five roles, idempotently, with **no passwords**. None is a superuser, none has `BYPASSRLS`, none can create roles or databases.
