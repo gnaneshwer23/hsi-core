@@ -60,6 +60,8 @@ describe("Brief v2 soft-land", () => {
     expect(md).toContain("Reviewed edges in this brief: 0");
     expect(md).toContain("context_comparison_required");
     expect(md).toContain("Falsification:");
+    expect(md).toContain("bibliographic_candidate_not_retrieved");
+    expect(md).toContain("review: unreviewed");
     expect(md).not.toContain("scientific approval granted");
     const html = renderBriefV2PrintHtml(brief);
     expect(html).toContain("not scientific approval");

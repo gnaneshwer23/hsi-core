@@ -188,6 +188,11 @@ function escapeMd(value: string): string {
   return value.replace(/[<>&`*_\[\]#|]/g, (c) => "&#" + c.charCodeAt(0) + ";").replace(/[\r\n]+/g, " ");
 }
 
+/** Preserve machine codes (identityStatus, reviewStatus) as searchable plaintext. */
+function escapeCode(value: string): string {
+  return value.replace(/[<>&]/g, (c) => "&#" + c.charCodeAt(0) + ";").replace(/[\r\n]+/g, " ");
+}
+
 export function renderBriefV2Markdown(brief: BriefV2): string {
   if (brief.schemaVersion !== BRIEF_V2_SCHEMA || brief.briefVersion !== 2) {
     throw new Error("Invalid Brief v2 document");
@@ -234,13 +239,13 @@ export function renderBriefV2Markdown(brief: BriefV2): string {
     "## Source-candidate relationships",
     ...brief.evidence.map(
       (e) =>
-        `- **${escapeMd(e.id)}** — ${escapeMd(e.assertion)}\n  - Model: ${escapeMd(e.model)}; ${escapeMd(e.design)}\n  - Source: ${escapeMd(e.sourceId ?? "none")}; review: ${e.reviewStatus}; confidence: ${e.confidence}\n  - Limits: ${escapeMd(e.limitations)}`,
+        `- **${escapeMd(e.id)}** — ${escapeMd(e.assertion)}\n  - Model: ${escapeCode(e.model)}; ${escapeMd(e.design)}\n  - Source: ${escapeCode(e.sourceId ?? "none")}; review: ${escapeCode(e.reviewStatus)}; confidence: ${escapeCode(e.confidence)}\n  - Limits: ${escapeMd(e.limitations)}`,
     ),
     "",
     "## Source records",
     ...brief.sources.map(
       (s) =>
-        `- ${escapeMd(s.title)} — ${s.url}\n  - ${escapeMd(s.identityStatus)}; rights: ${escapeMd(s.rights)}; exact text ${s.passages.some((p) => p.text) ? "available in the source corpus" : "not imported"}`,
+        `- ${escapeMd(s.title)} — ${s.url}\n  - ${escapeCode(s.identityStatus)}; rights: ${escapeCode(s.rights)}; exact text ${s.passages.some((p) => p.text) ? "available in the source corpus" : "not imported"}`,
     ),
     "",
     "## Missing evidence",
