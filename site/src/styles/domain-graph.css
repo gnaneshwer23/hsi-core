@@ -28,8 +28,6 @@
 .dg-canvas-legend{display:flex;flex-wrap:wrap;gap:10px 14px;margin:0;padding:0;list-style:none;font-size:.65rem;color:#9fb3b9}
 .dg-canvas-legend li{display:inline-flex;align-items:center;gap:6px}
 .dg-canvas-legend i{display:inline-block;width:18px;height:0;border-top:2px solid #b7e4d8}
-.dg-leg-source{border-top-color:#6f958c!important}
-.dg-leg-reviewed{border-top-color:#23775f!important;border-top-width:3px!important}
 .dg-leg-gap{border-top-style:dotted!important;border-top-color:#8eb0a8!important}
 .dg-leg-neg{border-top-style:dashed!important;border-top-color:#f3ad9c!important}
 .dg-inspect-prompt{display:grid;gap:8px;margin-top:8px;padding:14px;border-radius:8px;background:#eef5ef;border:1px solid #d0dfd4}
