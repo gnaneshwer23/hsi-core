@@ -1,14 +1,18 @@
 import {Link,useLocation} from "react-router-dom";
-/** Investigation deep-links require `?investigation=hsi-interrogative-…` — bare workbench is a dead end. */
+import {LIVE_INVESTIGATION_PATH,RESEARCH_HOME_PATH} from "../lib/workbenchPrimary";
+/** Primary investigate path is the live workspace. Auth package viewer still needs `?investigation=`. */
 export const RESEARCH_NAV_ITEMS=[
- {to:"/research/home",label:"Home"},
- {to:"/research/dashboard",label:"Dashboard"},
- {to:"/research/dashboard#dashboard-workspace",label:"Investigation"},
- {to:"/research/mechanism-workflow",label:"Connected path"},
- {to:"/research/scientific-workbench",label:"Saved list"},
- {to:"/science/graph",label:"Topic map"},{to:"/research/knowledge-graph",label:"Knowledge graph"},{to:"/research/evidence-readiness",label:"Evidence"},
- {to:"/science/clinical-trials",label:"Trials"},{to:"/research/dashboard?view=briefs",label:"Briefs"},
- {to:"/research/governance",label:"Governance"},{to:"/community",label:"Discussions"},{to:"/research/capabilities",label:"Capability lab"}
+ {to:RESEARCH_HOME_PATH,label:"Home"},
+ {to:LIVE_INVESTIGATION_PATH,label:"Live investigation"},
+ {to:"/research/dashboard",label:"Saved & account list"},
+ {to:"/research/knowledge-graph",label:"Knowledge graph"},
+ {to:"/research/evidence-readiness",label:"Evidence"},
+ {to:"/research/dashboard?view=briefs",label:"Briefs"},
+ {to:"/research/governance",label:"Governance"},
+ {to:"/science/graph",label:"Topic map"},
+ {to:"/science/clinical-trials",label:"Trials"},
+ {to:"/community",label:"Discussions"},
+ {to:"/research/capabilities",label:"Capability lab"},
 ];
 export function ResearchNavigation(){
  const location=useLocation();

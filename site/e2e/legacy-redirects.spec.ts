@@ -20,3 +20,14 @@ test('a retired department page lands on that department in the graph',async({pa
  await page.goto('/departments/immunology');
  await expect(page).toHaveURL(/\/research\/knowledge-graph\?netDepartment=immunology/);
 });
+
+test('legacy discovery experience reconnects to the live investigation workspace',async({page})=>{
+ await page.goto('/research/discovery-experience');
+ await expect(page).toHaveURL(/\/research\/workspace$/);
+ await expect(page.getByRole('heading',{level:1}).first()).toBeVisible();
+});
+
+test('bare decision-workbench redirects to live investigation',async({page})=>{
+ await page.goto('/research/decision-workbench');
+ await expect(page).toHaveURL(/\/research\/workspace$/);
+});
