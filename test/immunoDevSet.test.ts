@@ -77,19 +77,21 @@ describe("immuno founder development set (A4.3)",()=>{
    expect(imported.summary.caseCount).toBe(1);
    expect(imported.summary.scoringBlocked).toBe(true);
 
-   const holdout=emptyImmunoDevSet();
    const slot=buildImmunoProtocol().slots[0]!;
-   holdout.cases.push({
-    ...scaffoldImmunoDevCase({
-     caseId:"BAD-HOLD",
-     layer:slot.layer,
-     domain:slot.domain,
-     question:"Must not use a holdout slot id.",
-    }),
-    slotId:slot.slotId,
-   });
+   const holdoutPayload={
+    ...emptyImmunoDevSet(),
+    cases:[{
+     ...scaffoldImmunoDevCase({
+      caseId:"BAD-HOLD",
+      layer:slot.layer,
+      domain:slot.domain,
+      question:"Must not use a holdout slot id.",
+     }),
+     slotId:slot.slotId,
+    }],
+   };
    const badSource=join(root,"bad-holdout.json");
-   writeFileSync(badSource,`${JSON.stringify(holdout,null,2)}\n`);
+   writeFileSync(badSource,`${JSON.stringify(holdoutPayload,null,2)}\n`);
    expect(()=>importImmunoDevSet(root,badSource)).toThrow(/Holdout slot|slotId/);
 
    const publicPath=join(root,"evaluation","leaked.json");
