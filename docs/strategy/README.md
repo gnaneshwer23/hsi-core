@@ -1,5 +1,7 @@
 # HSI Strategy Pack (2026-11-02)
 
+**Master E2E product build (18 Nov 2026):** [HSI_MASTER_E2E_PRODUCT_BUILD_SPEC.md](../implementation/HSI_MASTER_E2E_PRODUCT_BUILD_SPEC.md) · Phase 0 audit [00-current-state.md](../implementation/00-current-state.md) · [01-gap-matrix.md](../implementation/01-gap-matrix.md) · [02-prioritised-backlog.md](../implementation/02-prioritised-backlog.md). Scientific investigation workflow is the product centre (homepage is P2). Open doctrine PRs: #465 vision/brand · #466 ten-system technology map.
+
 **Current execution roadmap (13 November 2026):** [Audited next implementation phases, product gates and reviewable PR slices](HSI_NEXT_IMPLEMENTATION_PHASES_2026-11-13.md) — reconciles the latest production/graph/research audit with the cross-domain HSI vision; proposals are not runtime or scientific acceptance.
 
 **Current build assessment — 5 November 2026:** [Implemented work, verification limits and remaining gaps](../audits/HSI_BUILD_AUDIT_2026-11-05.md) · [Delivery phases A–H and first implementation package](HSI_PHASED_BUILD_PLAN.md).
