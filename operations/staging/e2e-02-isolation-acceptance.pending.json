@@ -1,0 +1,76 @@
+{
+  "schemaVersion": "hsi-e2e-02-isolation-acceptance-pending-1",
+  "purpose": "pr_e2e_02_isolation_acceptance_soft_land",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "liveExecutionAuthorized": false,
+  "productionActivationApproved": false,
+  "acceptedForScope": false,
+  "signedPacketClaimed": false,
+  "migrationHoldsChanged": false,
+  "scientificApproval": false,
+  "honesty": {
+    "noInventedSigner": true,
+    "noInventedStagingUrl": true,
+    "noInventedSessions": true,
+    "noHoldRemoval": true,
+    "fixtureIsNotLiveEvidence": true
+  },
+  "ciSafeModes": {
+    "check": {
+      "command": "bun run staging:isolation:check",
+      "lastRunAt": null,
+      "passed": null
+    },
+    "fixture": {
+      "command": "bun run staging:isolation:fixture",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "liveMode": {
+    "command": "bun run staging:isolation:live -- --scope <scope>",
+    "authorized": false,
+    "lastRunAt": null,
+    "disposableBranchTornDown": null
+  },
+  "scopes": {
+    "interrogative_workspace": {
+      "status": "NOT_ACCEPTED",
+      "evidenceRefs": [],
+      "signedPacketRef": null
+    },
+    "scientific_records": {
+      "status": "NOT_ACCEPTED",
+      "evidenceRefs": [],
+      "signedPacketRef": null
+    },
+    "contradiction_ledger": {
+      "status": "NOT_ACCEPTED",
+      "evidenceRefs": [],
+      "signedPacketRef": null
+    },
+    "live_evidence": {
+      "status": "NOT_ACCEPTED",
+      "evidenceRefs": [],
+      "signedPacketRef": null
+    },
+    "graph_workspace": {
+      "status": "NOT_ACCEPTED",
+      "evidenceRefs": [],
+      "signedPacketRef": null
+    }
+  },
+  "references": {
+    "staging_target_ref": "NOT_APPROVED",
+    "private_config_ref": "UNASSIGNED",
+    "researcher_a_ref": "UNASSIGNED",
+    "researcher_b_ref": "UNASSIGNED",
+    "reviewer_ref": "UNASSIGNED",
+    "security_signer_ref": "UNASSIGNED",
+    "approval_record_ref": "NOT_APPROVED",
+    "next_b_pending_path": "operations/staging/next-b-acceptance.pending.json",
+    "runbook_path": "docs/engineering/DB_ISOLATION_SUITE_RUNBOOK.md"
+  },
+  "communityWrites": "DEFERRED"
+}
