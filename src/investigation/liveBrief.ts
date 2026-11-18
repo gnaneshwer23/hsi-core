@@ -1,5 +1,6 @@
 /** Browser-safe brief renderer (no Node imports). Pure text; it grants no source-use permission and shows no abstracts. */
 import type {LiveInvestigation} from "./liveRun";
+import {renderLiveBriefComparisonSections} from "./liveBriefComparison";
 import {renderLiveBriefPassportSections} from "./liveBriefPassport";
 const safe=(s:string)=>s.replace(/[<>&`*_\[\]#|]/g,c=>"&#"+c.charCodeAt(0)+";").replace(/[\r\n]+/g," ");
 const DIR:Record<string,string>={positive:"positive (rise or act together, or promotes)",negative:"negative (inverse, or suppresses)",none:"no relationship stated",association_only:"linked, direction not stated",unresolved:"unresolved (the checks disagreed or could not tell)",not_assessed:"not assessed"};
@@ -39,6 +40,7 @@ export function renderLiveBriefMarkdown(b:LiveInvestigation):string{
   ...part("Opposing (both checks agree)",checked.filter(c=>c.polarity==="opposing"),v.status==="not_configured"?"Not assessed: the model challenge did not run.":"None found in these sources. This does not establish consensus."),"",
   ...part("Checked, no direction established",checked.filter(c=>c.polarity==="uncertain"),"None."),"",
   renderLiveBriefPassportSections(b).trimEnd(),"",
+  renderLiveBriefComparisonSections(b.structuredComparison).trimEnd(),"",
   `## Hypotheses (unvalidated model proposals) (${b.hypotheses.items.length})`,
   ...(b.hypotheses.items.length?["Proposed from findings both checks agreed on. They are not findings, not recommendations and have not been reviewed.",...b.hypotheses.items.flatMap(h=>[
    `- **${safe(h.statement)}**`,
@@ -51,6 +53,7 @@ export function renderLiveBriefMarkdown(b:LiveInvestigation):string{
   "- Abstracts are not included in this export; licence for redistribution was not assessed.",
   "- Current source permissions must be rechecked before this brief is shared or cited.",
   "- Passport columns that are Not stated / Not extracted are explicit gaps — they are not invented or implied.",
+  "- Structured comparison classes are candidates only; potential_contradiction is not proven contradiction.",
   "- Model agreement is not scientific proof; graph promotion remains prohibited until human review.",""
  ].join("\n");
 }
