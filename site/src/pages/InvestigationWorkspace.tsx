@@ -1,6 +1,7 @@
 import {useEffect,useMemo,useRef,useState} from "react";
 import {Link,useLocation} from "react-router-dom";
 import {renderLiveBriefMarkdown} from "../../../src/investigation/liveBrief";
+import {exportLiveBriefV2,renderLiveBriefV2Markdown} from "../../../src/investigation/liveBriefV2";
 import {ResearchAppShell} from "../components/home/ResearchAppShell";
 import {Icon} from "../components/home/AppIcons";
 import {deriveRunGaps} from "../../../src/investigation/runGaps";
@@ -146,7 +147,13 @@ export function InvestigationWorkspacePage(){
        <details className="ws-acc"><summary><Icon name="book" size={16}/>Research brief</summary><p>An evidence-linked record of this run with its limits. Abstracts are not included.</p></details>
        <button type="button" className="ws-run ws-wide" onClick={()=>setBrief(b=>!b)} aria-expanded={brief}>{brief?"Hide research brief":"Open research brief"} <Icon name="arrow" size={16}/></button>
        {brief&&<pre className="ws-brief" tabIndex={0} aria-label="Research brief text">{renderLiveBriefMarkdown(run)}</pre>}
-       <div className="ws-export"><button type="button" className="ws-btn" onClick={()=>download("hsi-live-brief.md",renderLiveBriefMarkdown(run),"text/markdown")}>Export brief (Markdown)</button><button type="button" className="ws-btn" onClick={()=>download("hsi-live-investigation.json",JSON.stringify(run,null,2),"application/json")}>Export JSON</button><button type="button" className="ws-btn" onClick={()=>{lr.save();setSaved(true)}}>Save in this browser</button></div>
+       <div className="ws-export">
+        <button type="button" className="ws-btn" onClick={()=>download("hsi-live-brief.md",renderLiveBriefMarkdown(run),"text/markdown")}>Export brief (Markdown)</button>
+        <button type="button" className="ws-btn" onClick={()=>download("hsi-live-investigation.json",JSON.stringify(run,null,2),"application/json")}>Export JSON</button>
+        <button type="button" className="ws-btn" onClick={()=>{const brief=exportLiveBriefV2(run);download("hsi-live-brief-v2.json",JSON.stringify(brief,null,2),"application/json")}}>Export Brief v2 (JSON)</button>
+        <button type="button" className="ws-btn" onClick={()=>{const brief=exportLiveBriefV2(run);download("hsi-live-brief-v2.md",renderLiveBriefV2Markdown(brief),"text/markdown")}}>Export Brief v2 (Markdown)</button>
+        <button type="button" className="ws-btn" onClick={()=>{lr.save();setSaved(true)}}>Save in this browser</button>
+       </div>
        {lr.note&&<p className="ws-muted" role="status">{lr.note}</p>}
        <p className="ws-muted">Model agreement is not scientific proof. {run.verification.independence==="independent_execution_only"?"Both checks ran on one provider (independent execution only).":""}</p>
       </>}
