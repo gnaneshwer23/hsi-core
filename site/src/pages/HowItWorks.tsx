@@ -41,11 +41,11 @@ export function HowItWorks() {
               causation; human review is not optional.
             </p>
             <div className="xp-actions">
-              <ExperienceLink to="/evidence-safety" secondary>
+              <ExperienceLink to="/trust" secondary>
                 Evidence &amp; safety
               </ExperienceLink>
-              <ExperienceLink to="/platform" secondary>
-                Explore the platform
+              <ExperienceLink to="/knowledge-graph" secondary>
+                Open knowledge graph
               </ExperienceLink>
             </div>
           </div>
