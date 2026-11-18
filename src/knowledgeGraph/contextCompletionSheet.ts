@@ -249,3 +249,42 @@ export function mergeCsvProposalsIntoSheet(sheet:ContextCompletionSheet,csv:stri
  });
  return sealContextCompletionSheet({...sheet,rows,autoPromotion:false,scientificApproval:false});
 }
+
+export type ContextCompletionProgress={
+ rowCount:number;
+ tissueProposed:number;
+ populationProposed:number;
+ designProposed:number;
+ rowsWithAnyProposal:number;
+ rowsUntouched:number;
+ autoPromotion:false;
+ scientificApproval:false;
+ mappedAgainst:string;
+ slice:"D-01";
+};
+
+/** Read-only fill progress for curator honesty. Never implies review or promotion. */
+export function summarizeContextCompletionProgress(sheet:ContextCompletionSheet):ContextCompletionProgress{
+ let tissueProposed=0,populationProposed=0,designProposed=0,rowsWithAnyProposal=0;
+ for(const row of sheet.rows){
+  const t=row.proposed.tissue!==null;
+  const p=row.proposed.population!==null;
+  const d=row.proposed.design!==null;
+  if(t)tissueProposed+=1;
+  if(p)populationProposed+=1;
+  if(d)designProposed+=1;
+  if(t||p||d)rowsWithAnyProposal+=1;
+ }
+ return {
+  rowCount:sheet.rows.length,
+  tissueProposed,
+  populationProposed,
+  designProposed,
+  rowsWithAnyProposal,
+  rowsUntouched:sheet.rows.length-rowsWithAnyProposal,
+  autoPromotion:false,
+  scientificApproval:false,
+  mappedAgainst:sheet.mappedAgainst,
+  slice:"D-01",
+ };
+}
