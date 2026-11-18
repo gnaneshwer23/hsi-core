@@ -10,6 +10,7 @@ Importable curator sheet for **tissue**, **population**, and **design** on D-01 
 | `research/domain-graph/context-completions.v1.csv` | Same rows for spreadsheet edit |
 | `src/knowledgeGraph/contextCompletionSheet.ts` | Export / parse / CSV merge / apply |
 | `scripts/context-completion-sheet.ts` | CLI |
+| `/research/context-completion` | Read-only fill-progress UI (never applies or promotes) |
 
 ## Commands
 
@@ -19,6 +20,8 @@ bun run context-sheet:validate    # digest + version + edge id checks
 bun run context-sheet:merge-csv -- path/to/edits.csv
 bun run context-sheet:apply       # opt-in overlay; refuses if no proposals
 ```
+
+Open `/research/context-completion` for sealed-sheet fill counts. The page does not write the graph.
 
 ## Rules
 

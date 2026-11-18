@@ -165,6 +165,10 @@
       "destination": "/_pages/research--evidence-readiness.html"
     },
     {
+      "source": "/research/context-completion",
+      "destination": "/_pages/research--context-completion.html"
+    },
+    {
       "source": "/research/scientific-workbench",
       "destination": "/_pages/research--scientific-workbench.html"
     },
