@@ -7,8 +7,9 @@ The supplied clinical-dashboard references informed the compact toolbar, soft ca
 ## Connected behavior
 
 - The compact toolbar opens investigations, validation profiles, the knowledge graph, independent review and the existing research-account page.
-- New investigation opens the existing create/list/reopen workspace on the same page. If creation is not confirmed by the backend, the entry is labelled Open workspace instead.
-- `InvestigationWorkspace` exposes an optional read-only UI snapshot callback. Its API transport, trusted parser, save/idempotency logic and backend permission checks remain unchanged. The dashboard derives loaded-investigation counts, recent rows and awaiting-review counts from that same response; it makes no duplicate private-data request.
+- Primary CTA is **Live investigation** (`/research/workspace`). The on-page create/list panel remains the authorised saved-investigations list (writes stay fail-closed).
+- Access honesty uses `classifyDashboardAccess`: signed-out (401), grant denied (403), generic unavailable, connected with writes off, connected without create grant, authorised empty list, and connected with items stay distinct. Sign-in ≠ grant ≠ writes.
+- `InvestigationWorkspace` exposes an optional read-only UI snapshot callback (including `httpStatus`). Its API transport, trusted parser, save/idempotency logic and backend permission checks remain unchanged. The dashboard derives loaded-investigation counts, recent rows and awaiting-review counts from that same response; it makes no duplicate private-data request.
 - Private summary counts are unavailable (`—`) while loading, denied or errored. Zero is shown only after an authorised empty response. Counts describe the loaded list, not the entire platform or an independently authorised reviewer queue.
 - Public validation counts and profile/domain lists load through the existing pinned SHA-256/bounded fixture client. No unverified counts are substituted after a failed load.
 - The condition and text filters operate on the verified 200-profile catalogue. Five-row pagination and direct profile links use canonical fixture IDs.
