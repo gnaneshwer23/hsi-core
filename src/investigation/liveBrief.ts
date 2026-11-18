@@ -1,16 +1,27 @@
 /** Browser-safe brief renderer (no Node imports). Pure text; it grants no source-use permission and shows no abstracts. */
 import type {LiveInvestigation} from "./liveRun";
+import {renderLiveBriefPassportSections} from "./liveBriefPassport";
 const safe=(s:string)=>s.replace(/[<>&`*_\[\]#|]/g,c=>"&#"+c.charCodeAt(0)+";").replace(/[\r\n]+/g," ");
 const DIR:Record<string,string>={positive:"positive (rise or act together, or promotes)",negative:"negative (inverse, or suppresses)",none:"no relationship stated",association_only:"linked, direction not stated",unresolved:"unresolved (the checks disagreed or could not tell)",not_assessed:"not assessed"};
+const VERIFY:Record<LiveInvestigation["candidates"][number]["verification"],string>={
+  not_run:"not checked (ranked lower)",
+  agree_directional:"both checks agree on direction",
+  agree_association_only:"both checks agree association only",
+  disputed:"checks disagreed",
+  insufficient_abstain:"checks abstained / insufficient",
+  check_failed:"model check failed",
+};
 export function renderLiveBriefMarkdown(b:LiveInvestigation):string{
  const rec=new Map(b.records.map(r=>[r.sourceId,r]));
  const ctx=(k:string)=>b.byContext[k]?.label??k;
  const item=(c:LiveInvestigation["candidates"][number])=>{
   const r=rec.get(c.sourceId);
   return [`- **${safe(c.subject)} ~ ${safe(c.object)}** (${c.contexts.map(ctx).map(safe).join(", ")||"disease context not stated"}${c.species?`; ${c.species}`:""})`,
+   `  - Verification: ${VERIFY[c.verification]} · polarity ${c.polarity} · basis ${c.polarityBasis.replaceAll("_"," ")}`,
    `  - Direction: ${DIR[c.direction]??c.direction}`,
    `  - Passage: "${safe(c.sentence)}"`,
    `  - Source: ${safe(r?.title??c.sourceId)} · ${r?.doi?`DOI ${safe(r.doi)} · `:""}${r?.pmid?`PMID ${safe(r.pmid)} · `:""}${c.sourceUrl} · retrieved ${r?.retrievedAt??"unknown"} · retraction: ${(r?.retraction??"unknown").replaceAll("_"," ")} · licence not assessed`,
+   `  - Limitations: abstract-only live candidate; licence/reuse not assessed; not graph-promotable; human review required.`,
    ...c.verdicts.map(v=>`  - ${safe(v.verifier)} (${safe(v.model)}): ${v.direction.replaceAll("_"," ")}. ${safe(v.reason)}${v.evidenceSpan?` Quoted: "${safe(v.evidenceSpan)}"`:""}`)].join("\n");
  };
  const checked=b.candidates.filter(c=>c.verification!=="not_run");
@@ -27,6 +38,7 @@ export function renderLiveBriefMarkdown(b:LiveInvestigation):string{
   ...part("Supporting (both checks agree)",checked.filter(c=>c.polarity==="supporting"),"None."),"",
   ...part("Opposing (both checks agree)",checked.filter(c=>c.polarity==="opposing"),v.status==="not_configured"?"Not assessed: the model challenge did not run.":"None found in these sources. This does not establish consensus."),"",
   ...part("Checked, no direction established",checked.filter(c=>c.polarity==="uncertain"),"None."),"",
+  renderLiveBriefPassportSections(b).trimEnd(),"",
   `## Hypotheses (unvalidated model proposals) (${b.hypotheses.items.length})`,
   ...(b.hypotheses.items.length?["Proposed from findings both checks agreed on. They are not findings, not recommendations and have not been reviewed.",...b.hypotheses.items.flatMap(h=>[
    `- **${safe(h.statement)}**`,
@@ -37,6 +49,8 @@ export function renderLiveBriefMarkdown(b:LiveInvestigation):string{
   ...b.candidates.filter(c=>c.verification==="not_run").map(c=>`- ${safe(c.subject)} ~ ${safe(c.object)} (${c.contexts.map(ctx).map(safe).join(", ")||"context not stated"}): "${safe(c.sentence)}" ${c.sourceUrl}`),"",
   "## Missing evidence and limits",...b.gaps.map(g=>"- "+safe(g)),
   "- Abstracts are not included in this export; licence for redistribution was not assessed.",
-  "- Current source permissions must be rechecked before this brief is shared or cited.",""
+  "- Current source permissions must be rechecked before this brief is shared or cited.",
+  "- Passport columns that are Not stated / Not extracted are explicit gaps — they are not invented or implied.",
+  "- Model agreement is not scientific proof; graph promotion remains prohibited until human review.",""
  ].join("\n");
 }
