@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "hsi-ops-alerts-dry-run-1",
+  "purpose": "ops_error_alerts_soft_land",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "onCallDeliveryClaimed": false,
+  "errorTrackingVendorProvisioned": false,
+  "logDrainProvisioned": false,
+  "scientificApproval": false,
+  "honesty": {
+    "noInventedOnCallDestination": true,
+    "noSentryDsnInGit": true,
+    "noPhiInForcedErrors": true,
+    "pilotMockAlertsAreNotOps02": true,
+    "a12CapsOptional": true
+  },
+  "alerts": [
+    {
+      "kind": "error_spike",
+      "dryRunForced": false,
+      "visibleWithinOneMinute": null,
+      "destinationAckRef": null,
+      "recordedAt": null
+    },
+    {
+      "kind": "run_failure_rate",
+      "dryRunForced": false,
+      "failureRateObserved": null,
+      "wouldFire": null,
+      "destinationAckRef": null,
+      "recordedAt": null
+    },
+    {
+      "kind": "model_spend_cap",
+      "ownerCapsConfirmed": false,
+      "dryRunForced": false,
+      "killSwitchExercised": false,
+      "destinationAckRef": null,
+      "recordedAt": null
+    },
+    {
+      "kind": "probe_failure",
+      "productionProbeWorkflowKnown": true,
+      "stagingProbeForcedFail": false,
+      "actionsFailureVisible": null,
+      "destinationAckRef": null,
+      "recordedAt": null
+    }
+  ],
+  "references": {
+    "softLandDoc": "docs/engineering/A1_3_OPS_ERROR_ALERTS_SOFT_LAND.md",
+    "catalogModule": "src/operations/opsAlertCatalog.ts",
+    "packDoc": "docs/engineering-pack/v1.1/markdown/13_Infrastructure_DevOps_and_Deployment.md",
+    "productionProbeWorkflow": ".github/workflows/production-probe.yml",
+    "privateReceiptUri": null
+  },
+  "summary": {
+    "alertsDocumented": 4,
+    "alertsDryRunComplete": 0,
+    "onCallDelivery": "not_invented"
+  }
+}

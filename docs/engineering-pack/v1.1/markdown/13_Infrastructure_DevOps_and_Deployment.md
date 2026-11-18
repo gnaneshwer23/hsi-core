@@ -23,7 +23,7 @@ subtitle: "HSI Engineering Specification Pack v1.1"
 | CI: production probe | Built | `.github/workflows/production-probe.yml`: every 30 minutes and after push to main |
 | Staging | Partial | Staging URLs and branch pins exist; no accepted two-account staging evidence |
 | Worker host | Not started | Same-host reference worker only |
-| Observability | Not started | None |
+| Observability | Partial (A1.3 soft-land) | Four alerts documented + staging dry-run worksheet; live Sentry/log drain/on-call delivery still pending (D-120/D-122) |
 | Backups and restore | Partial | Neon PITR available by plan; no rehearsed restore |
 | Runbooks | Partial | Scattered across `docs/`; see document 16 |
 
