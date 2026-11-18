@@ -86,9 +86,10 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await expect(brief).toContainText('Scientific approval: false');
  const vf=page.getByRole('region',{name:'Scientific verification'});
  await expect(vf.getByText('Opposing / disputed checks')).toBeVisible();
- await expect(vf.getByText(/Structured comparison/)).toBeVisible();
- await expect(vf).toContainText('Context-dependent difference');
- await expect(vf).toContainText('Potential contradiction is not proven contradiction');
+ // Prefer the comparison <summary>; the opened brief also mentions structured comparison.
+ await expect(vf.locator('summary').filter({hasText:/Structured comparison/})).toBeVisible();
+ await expect(vf.locator('details').filter({has:page.locator('summary',{hasText:/Structured comparison/})})).toContainText('Context-dependent difference');
+ await expect(vf.locator('details').filter({has:page.locator('summary',{hasText:/Structured comparison/})})).toContainText('Potential contradiction is not proven contradiction');
  const axe=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();
  expect(axe.violations.map(v=>v.id+': '+v.nodes.length)).toEqual([]);
 });
