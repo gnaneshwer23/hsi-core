@@ -174,12 +174,14 @@ export function D01EdgeReviewPage() {
     );
   }
 
-  const shown = sheet.rows.filter((r) => filter === "all" || (filter === "decided") === latest.has(r.edgeId));
+  // Narrow for nested handlers — closures do not keep the early-return type guard.
+  const sealed: D01EdgeReviewSheet = sheet;
+  const shown = sealed.rows.filter((r) => filter === "all" || (filter === "decided") === latest.has(r.edgeId));
 
   async function save(row: D01EdgeReviewRow, decision: D01EdgeReviewDecision, reason: string) {
     if (!store) return "This browser is blocking local storage, so decisions cannot be recorded here.";
     try {
-      const r = await recordDecision(sheet, store, {edgeId: row.edgeId, decision, reason, reviewerLabel: reviewer});
+      const r = await recordDecision(sealed, store, {edgeId: row.edgeId, decision, reason, reviewerLabel: reviewer});
       setTick((t) => t + 1);
       setNotice(
         `${row.subject} → ${row.object}: ${
@@ -197,7 +199,7 @@ export function D01EdgeReviewPage() {
   async function exportAll() {
     if (!store) return;
     try {
-      const out = await exportDecisions(sheet, store);
+      const out = await exportDecisions(sealed, store);
       download(out, "hsi-d01-edge-decisions.json");
       setExportMsg(`Exported ${out.decisions.length} recorded decisions (${out.counts.decided} edges).`);
     } catch (e) {
