@@ -64,7 +64,7 @@ These can land without waiting for SMEs. Sequence matters where noted.
 | PR id | Branch suggestion | Scope | Depends on | Done when |
 | --- | --- | --- | --- | --- |
 | **A3.1** | `cursor/arch-adr-011-014-2f71` | Draft ADR-011–014 (jobs, investigation store, identity binding, scope registry; isolation + promotion constraints recorded) | Owner sign-off to merge | ADRs merged as accepted or proposed — drafts in `docs/architecture/ADR-011`…`014` |
-| **A3.2** | `cursor/db-isolation-suite-2f71` | Two-account isolation test harness against disposable branch | A3.1 | Suite green on rehearsal branch; production untouched |
+| **A3.2** | `cursor/db-isolation-suite-2f71` | Two-account isolation test harness against disposable branch | A3.1 | Catalog + `staging:isolation:*` CLI; fixture/`--check` CI-safe; live owner-gated; holds unchanged |
 | **A3.3** | `cursor/db-graph-workspace-adapter-wire-2f71` | Wire graph-workspace store behind feature flag (fail-closed default) | A3.2 | Flag off = localStorage path; flag on = server path in staging only |
 
 ### Wave A4 — Verification & benchmark scaffolding
