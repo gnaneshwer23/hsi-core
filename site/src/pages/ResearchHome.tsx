@@ -12,7 +12,7 @@ import {Overview} from "../components/home/Overview";
 import {Program} from "../components/home/Program";
 import {programView} from "../lib/program";
 import {DEPT_ICON,Icon} from "../components/home/AppIcons";
-import {EMPTY_PROFILE,LIVE_RUN_KEY,summariseSavedLiveRun,type SavedLiveRun,classifyIntent,GOALS,INVESTIGATION_STATUS,loadProfile,looksLikeTrialId,recommend,resetProfile,ROLES,saveProfile,searchEntities,type Profile} from "../lib/researchHome";
+import {EMPTY_PROFILE,LIVE_RUN_KEY,summariseSavedLiveRun,type SavedLiveRun,classifyIntent,GOALS,INVESTIGATION_STATUS,looksLikeTrialId,recommend,resetProfile,ROLES,searchEntities,type Profile} from "../lib/researchHome";
 import {loadOnboardingProfile,pathHonestyLabel,resolveOnboardingProfileMode,saveOnboardingProfile,type OnboardingProfileClientMode,type OnboardingProfileStatus} from "../lib/onboardingProfileClient";
 import "../styles/research-home.css";
 
