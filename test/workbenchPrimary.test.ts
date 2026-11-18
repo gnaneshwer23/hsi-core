@@ -6,7 +6,7 @@ import {
   LIVE_INVESTIGATION_PATH,
   liveInvestigationHref,
 } from "../site/src/lib/workbenchPrimary";
-import {RESEARCH_NAV_ITEMS} from "../site/src/components/ResearchNavigation";
+import {RESEARCH_NAV_ITEMS} from "../site/src/lib/researchNavItems";
 
 describe("workbench primary reconnect",()=>{
   test("live investigation is the canonical path",()=>{
