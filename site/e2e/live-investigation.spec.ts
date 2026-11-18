@@ -1,5 +1,6 @@
 import {test,expect} from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import {readFile} from 'node:fs/promises';
 const cand=(o:any)=>({id:'c1',relationId:'il21-tfh',subject:'IL-21',object:'T follicular helper cells',contexts:['ssc'],species:'human',sourceId:'s1',sourceUrl:'https://europepmc.org/article/MED/1',sentence:'IL-21 was increased and Tfh cells expanded in patients with systemic sclerosis.',state:'extracted_candidate',lexicalPolarity:'supporting',polarityBasis:'not_assessed',direction:'not_assessed',polarity:'uncertain',priority:{score:7,reasons:['States an effect or direction']},verification:'not_run',verdicts:[],retraction:'not_flagged_by_provider',...o});
 const base={schemaVersion:'hsi-live-investigation-1',mode:'live',scenarioId:'il21-autoimmune',question:'Why might IL-21 signalling have different biological consequences across autoimmune disease contexts?',version:1,briefHash:'a'.repeat(64),
  entities:['IL-21','T follicular helper cells','B-cell responses'],
@@ -74,7 +75,31 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  expect(axe.violations.map(v=>v.id+': '+v.nodes.length)).toEqual([]);
 });
 
+test('Brief v2 JSON export carries null graph release, unreviewed counts and no approval',async({page})=>{
+ await mock(page,checked);
+ await page.goto('/research/workspace');
+ await page.getByRole('button',{name:'Run live investigation'}).click();
+ const event=page.waitForEvent('download');
+ await page.getByRole('button',{name:'Export Brief v2 (JSON)',exact:true}).click();
+ const download=await event;
+ expect(download.suggestedFilename()).toBe('hsi-live-brief-v2.json');
+ const brief=JSON.parse(await readFile((await download.path())!,'utf8'));
+ expect(brief.schemaVersion).toBe('hsi-live-research-brief-2');
+ expect(brief.briefVersion).toBe(2);
+ expect(brief.graphReleaseId).toBeNull();
+ expect(brief.runIds).toEqual([checked.briefHash]);
+ expect(brief.reviewStates.reviewedEdgeCount).toBe(0);
+ expect(brief.reviewStates.reviewed).toBe(0);
+ expect(brief.scientificApproval).toBe(false);
+ expect(brief.graphPromotable).toBe(false);
+ expect(brief.containsPhi).toBe(false);
+ expect(brief.clinicalAdvice).toBe(false);
+ expect(brief.reproducibleFromSavedRecord).toBe(false);
+ expect(brief.conflictClasses.every((c:any)=>c.confirmedContradiction===false)).toBe(true);
+});
+
 test('hypotheses are labelled unvalidated, cite findings, show the second model challenge and appear in the brief',async({page})=>{
+
  await mock(page,checked);
  await page.goto('/research/workspace');
  await page.getByRole('button',{name:'Run live investigation'}).click();
