@@ -1,7 +1,7 @@
 import {test,expect} from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-const PUBLIC=['/','/how-it-works','/knowledge-graph','/trust','/about','/contact'];
+const PUBLIC=['/','/how-it-works','/knowledge-graph','/researchers','/biotech','/validation','/trust','/about','/contact'];
 
 test('the footer leads to the research app, which opens the app shell',async({page})=>{
  await page.route('**/api/research/investigations',r=>r.fulfill({status:401,json:{}}));

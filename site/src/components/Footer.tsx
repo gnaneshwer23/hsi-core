@@ -9,6 +9,8 @@ const groups = [
       { to: "/research/home", label: "Research app" },
       { to: "/how-it-works", label: "How it works" },
       { to: "/knowledge-graph", label: "Knowledge graph" },
+      { to: "/researchers", label: "For researchers" },
+      { to: "/biotech", label: "For biotech" },
     ],
   },
   {
@@ -23,6 +25,7 @@ const groups = [
     name: "Trust",
     links: [
       { to: "/trust", label: "Governance" },
+      { to: "/validation", label: "Validation methodology" },
       { to: "/trust#privacy", label: "Privacy information" },
       { to: "/trust#terms", label: "Research use information" },
       { to: "/trust#accessibility", label: "Accessibility" },
