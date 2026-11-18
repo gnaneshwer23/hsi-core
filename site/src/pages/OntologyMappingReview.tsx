@@ -68,6 +68,6 @@ export function OntologyMappingReview(){
    <p className="mr-hint">Ontologies: {file.ontologies.map(o=>`${o.prefix} ${o.release}`).join(" · ")}. Terms are used unaltered; see the attribution note in the repository.</p>
    {shown.length===0?<p className="mr-empty">Nothing in this view.</p>:shown.map(m=><Card key={m.conceptId} m={m} latest={latest.get(m.conceptId)} count={store?history(store,m.conceptId).length:0} reviewer={reviewer} onSave={save}/>)}
    <details className="mr-unmapped"><summary>{unmapped.length} concepts with no exact match</summary><p className="mr-hint">Mostly composite or study-specific concepts. No match is not evidence that no ontology term exists; a curator may map them by hand.</p><ul>{unmapped.map(m=><li key={m.conceptId}>{m.conceptName}</li>)}</ul></details>
-   <p className="mr-foot"><Link to="/research/knowledge-graph">Back to the knowledge graph</Link></p>
+   <p className="mr-foot"><Link to="/research/knowledge-graph">Back to the knowledge graph</Link>{" · "}<Link to="/research/d01-edge-review">D-01 edge review</Link>{" · "}<Link to="/research/context-completion">Context completion</Link>{" · "}<Link to="/curator">Curator workspace</Link></p>
   </div></div>;
 }

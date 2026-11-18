@@ -249,3 +249,6 @@ export function mergeCsvProposalsIntoSheet(sheet:ContextCompletionSheet,csv:stri
  });
  return sealContextCompletionSheet({...sheet,rows,autoPromotion:false,scientificApproval:false});
 }
+
+export type {ContextCompletionProgress,ContextCompletionProgressInput} from "./contextCompletionProgress";
+export {summarizeContextCompletionProgress,acceptSealedSheetForUi} from "./contextCompletionProgress";

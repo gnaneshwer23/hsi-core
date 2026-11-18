@@ -45,7 +45,7 @@ These can land without waiting for SMEs. Sequence matters where noted.
 | PR id | Branch suggestion | Scope | Depends on | Done when |
 | --- | --- | --- | --- | --- |
 | **A1.1** | `cursor/sec-rate-limit-ask-2f71` | Shared rate limiter for Ask / research routes (SEC-01) | — | Routes share limits; tests for burst + cross-route |
-| **A1.2** | `cursor/sec-kill-switch-caps-2f71` | Kill switch + recorded provider spend caps (SEC-02) | Owner sets numeric caps | Config + fail-closed when tripped |
+| **A1.2** | `cursor/sec-kill-switch-caps-2f71` | Kill switch + recorded provider spend caps (SEC-02) | Owner sets numeric caps | Config + fail-closed when tripped — soft-land: `docs/engineering/A1_2_SEC02_KILL_SWITCH_SOFT_LAND.md` + `src/operations/sec02KillSwitchCatalog.ts` (no invented numeric caps) |
 | **A1.3** | `cursor/ops-error-alerts-2f71` | Error tracking + four alerts (OPS-01/02) | A1.2 optional | Alerts documented; dry-run in staging notes — soft-land: `docs/engineering/A1_3_OPS_ERROR_ALERTS_SOFT_LAND.md` + `src/operations/opsAlertCatalog.ts` (no invented on-call) |
 | **A1.4** | `cursor/ing-no-browser-providers-2f71` | Remove browser-side provider calls (ING-01) | — | No client keys; server-only |
 | **A1.5** | `cursor/ux-access-request-2f71` | Working access request (UX-02 / API-06) | — | Owner receives request; page does not claim undelivered mail |
@@ -82,6 +82,7 @@ These can land without waiting for SMEs. Sequence matters where noted.
 | **A5.1** | `cursor/ux-related-papers-2f71` | Seed-paper → related works via OpenAlex (Connected Papers–style, rights-safe) | A1.4 | Metadata-only; no invented abstracts — `/api/research/related-works` + literature dossier / radar panel |
 | **A5.2** | `cursor/ux-evidence-table-2f71` | Structured evidence table in investigation brief (Elicit-style columns) | A2.1 | Columns = context passport fields — Research outcomes panel + Markdown brief |
 | **A5.3** | `cursor/ux-how-produced-trace-2f71` | “How this was produced” panel from real run record | Live run path | No fake progress; links `/status` — Ask / workspace / radar / related-works |
+| **A5.4** | `cursor/wb-07-route-catalog-2f71` | WB-07 / UX-05 route catalog soft-land | — | Typed inventory + honesty flags; one-hop retired aliases; no route-count claim — `site/src/lib/siteRouteCatalog.ts` |
 
 ---
 
@@ -106,11 +107,11 @@ Ship as a series of PRs once A2.4 sheet is filling:
 | PR id | Scope |
 | --- | --- |
 | **C1** | Import completed context for D-01 candidates (still `unreviewed`) |
-| **C2** | Reviewer queue MVP (accept / reject / revise / insufficient) — API + UI, fail-closed |
+| **C2** | Reviewer queue MVP (accept / reject / revise / insufficient) — API + UI, fail-closed — soft-land: `/research/d01-edge-review` + `src/knowledgeGraph/d01EdgeReview.ts` (device-local; no graph write); curator nav soft-land links sheets from `/curator` |
 | **C3** | Dual-reviewer decisions for 40–60 edges; immutable records |
-| **C4** | Graph release: reviewed vs candidate styling + version bump |
-| **C5** | Homepage worked conflict from a **reviewed** disagreement |
-| **C6** | Brief v2 export (Markdown / JSON / print) with graph version + review states |
+| **C4** | Graph release: reviewed vs candidate styling + version bump — soft-land: legend + reserved reviewed stroke on `/research/knowledge-graph` (`edgeReviewPresentation.ts`); version bump still waits on dual review |
+| **C5** | Homepage worked conflict from a **reviewed** disagreement — soft-land: sealed candidate pair (`DIAB-003`/`DIAB-015`) with unreviewed honesty until C3 |
+| **C6** | Brief v2 export (Markdown / JSON / print) with graph version + review states — domain soft-land (`briefV2.ts`) + live-path envelope (`hsi-live-research-brief-2`) |
 
 ---
 

@@ -10,6 +10,7 @@ Importable curator sheet for **tissue**, **population**, and **design** on D-01 
 | `research/domain-graph/context-completions.v1.csv` | Same rows for spreadsheet edit |
 | `src/knowledgeGraph/contextCompletionSheet.ts` | Export / parse / CSV merge / apply |
 | `scripts/context-completion-sheet.ts` | CLI |
+| `/research/context-completion` | Read-only fill-progress UI (never applies or promotes) |
 
 ## Commands
 
@@ -20,6 +21,8 @@ bun run context-sheet:merge-csv -- path/to/edits.csv
 bun run context-sheet:apply       # opt-in overlay; refuses if no proposals
 ```
 
+Open `/research/context-completion` for sealed-sheet fill counts. The page does not write the graph.
+
 ## Rules
 
 - Proposed `null` leaves the published value unchanged.
@@ -27,3 +30,4 @@ bun run context-sheet:apply       # opt-in overlay; refuses if no proposals
 - Apply never sets `reviewStatus`, never raises `confidence`, and never sets `scientificClaimAllowed`.
 - `autoPromotion` and `scientificApproval` on the sheet are always `false`.
 - Filling the sheet does not review or promote edges (Track C starts after curators fill values).
+- Local edge-review soft-land (recommendations only): [`D01_EDGE_REVIEW_QUEUE.md`](./D01_EDGE_REVIEW_QUEUE.md) · `/research/d01-edge-review`
