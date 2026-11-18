@@ -234,9 +234,13 @@ describe("brief export",()=>{
   expect(JSON.stringify(r)).not.toContain("never be exported");   // abstract text beyond the quoted candidate sentence is not redistributed
   expect(r.records.every((x:any)=>!("abstract" in x)&&typeof x.hasAbstract==="boolean")).toBe(true);
   const md=renderLiveBriefMarkdown(r);
-  for(const h of ["## Execution","## Searches","## Supporting (both checks agree)","## Opposing (both checks agree)","## Checked, no direction established","## Not checked","## Missing evidence and limits"])expect(md).toContain(h);
+  for(const h of ["## Execution","## Searches","## Supporting (both checks agree)","## Opposing (both checks agree)","## Checked, no direction established","## Claim verification status","## Evidence table (context passport columns)","## Not checked","## Missing evidence and limits"])expect(md).toContain(h);
   expect(md).toContain("independence unverified");expect(md).toContain("licence not assessed");expect(md).toContain("openai (openai-model): positive");expect(md).toContain("Quoted:");
   expect(md).toContain("Abstracts are not included");
+  expect(md).toContain("Verification:");expect(md).toContain("Limitations: abstract-only");
+  expect(md).toContain("Study system");expect(md).toContain("Scientific approval: false");
+  expect(md).toContain("Passport columns that are Not stated");
+  expect(md.toLowerCase()).not.toContain("scientifically approved");
  });
  test("Markdown neutralises markup in provider-controlled text",async()=>{
   const evil={resultList:{result:[{id:"9",source:"MED",title:"IL-21 in systemic sclerosis [click](javascript:alert(1)) <script>",abstractText:"IL-21 increased Tfh cells in patients with systemic sclerosis [x](http://evil) <b>bold</b>.",pubTypeList:{pubType:[]}}]}};
