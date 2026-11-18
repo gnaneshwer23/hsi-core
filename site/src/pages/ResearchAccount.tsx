@@ -128,6 +128,6 @@ export function ResearchAccount(){
    {session&&<button className="hsi-auth-signout" type="button" disabled={signingOut||verifyingCode||sendingVerification} onClick={signOut}>{signingOut?"Signing out…":"Sign out"}</button>}
    {!session&&!checking&&<Link className="hsi-sign-in-back" to="/sign-in">Go to sign in →</Link>}
   </div>
-  <p className="hsi-sign-in-footnote"><Link to="/science">Return to public science</Link></p>
+  <p className="hsi-sign-in-footnote"><Link to="/knowledge-graph">Return to the knowledge graph</Link></p>
  </div></section>
 }
