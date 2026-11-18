@@ -12,6 +12,7 @@ import {openTargetsAdapter} from "../researchV2/sourceAdapters";
 import {combineDirections,runDirectionalChallenge,type DirectionalVerdict} from "./directionalChallenge";
 import type {Budget,ModelRunner} from "../modelProviders";
 import {findingsFor,proposeHypotheses,type HypothesisOutcome} from "./hypotheses";
+import {buildLiveStructuredComparison} from "./liveRunComparison";
 
 export type LiveScenario={schemaVersion:"hsi-live-scenario-1";id:string;title:string;question:string;
  entities:{key:string;label:string;terms:string[]}[];relations:{id:string;subject:string;object:string}[];
@@ -161,6 +162,8 @@ export async function runLiveInvestigation(input:LiveRunInput){
   supporting:candidates.filter(x=>x.contexts.includes(c.key)&&x.polarity==="supporting").map(x=>x.id),
   opposing:candidates.filter(x=>x.contexts.includes(c.key)&&x.polarity==="opposing").map(x=>x.id),
   uncertain:candidates.filter(x=>x.contexts.includes(c.key)&&x.polarity==="uncertain").map(x=>x.id)}]));
+ const contextLabels=Object.fromEntries(s.contexts.map(c=>[c.key,c.label]));
+ const structuredComparison=buildLiveStructuredComparison({candidates,contextLabels});
  const gaps=[
   ...searches.filter(x=>x.status==="failed").map(x=>`Search failed: ${x.provider} for ${x.context} (${x.error}). Absence of results there is not evidence of absence.`),
   ...s.contexts.filter(c=>!candidates.some(x=>x.contexts.includes(c.key))).map(c=>`No candidate sentence was found for ${c.label} in the retrieved abstracts. This is a limit of this retrieval, not a finding.`),
@@ -169,12 +172,13 @@ export async function runLiveInvestigation(input:LiveRunInput){
   ...(verification.status==="not_configured"?["The independent model challenge did not run, so no claim direction is assessed."]:[]),
   "Abstract-level evidence only: no full text, passage rights or retraction status beyond provider flags were checked.",
   "Hypotheses are model proposals, unvalidated and unreviewed. They are not findings and not recommendations.",
+  "Structured comparison uses coarse declared context only; potential_contradiction is not a proven contradiction and requires human review.",
  ];
  const body={schemaVersion:"hsi-live-investigation-1" as const,mode:"live" as const,scenarioId:s.id,question:s.question,version:1,
-  entities:s.entities.map(e=>e.label),searches,records:records.map(r=>{const {__ctx,abstract,...rest}=r as any;/* Abstracts are used for extraction only and are not redistributed in the brief; licence not assessed. */return {...rest,hasAbstract:!!abstract}}),targets,candidates,byContext,verification,hypotheses,gaps,
+  entities:s.entities.map(e=>e.label),searches,records:records.map(r=>{const {__ctx,abstract,...rest}=r as any;/* Abstracts are used for extraction only and are not redistributed in the brief; licence not assessed. */return {...rest,hasAbstract:!!abstract}}),targets,candidates,byContext,verification,hypotheses,structuredComparison,gaps,
   budget:input.budget?.usage()??null,
   flags:{scientificApproval:false as const,graphPromotable:false as const,consensusEstablished:false as const,humanReview:"required" as const,clinicalAdvice:false as const,containsPhi:false as const}};
- ev("brief","ok",`Brief assembled: ${candidates.length} candidates, ${gaps.length} stated gaps.`);
+ ev("brief","ok",`Brief assembled: ${candidates.length} candidates, ${structuredComparison.pairCount} structured comparison pairs, ${gaps.length} stated gaps.`);
  const brief={...body,events};
  return {...brief,briefHash:digest({...body,events:events.map(e=>[e.stage,e.status])})};
 }
