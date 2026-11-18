@@ -3,6 +3,7 @@
  * Default: device-local localStorage. Server path only when /status reports enabled.
  * Never imports the Neon adapter into the browser bundle.
  */
+import type {FetchLike} from "../../../src/fetchLike";
 import type {DomainBundle} from "../../../src/knowledgeGraph/domainGraph";
 import {verifyInvestigationRecord,type InvestigationRecord} from "../../../src/knowledgeGraph/graphAgents";
 import {
@@ -31,7 +32,7 @@ const STATUS_URL="/api/research/graph-workspace/status";
 
 /** Resolves mode; any failure or disabled gate keeps localStorage. */
 export async function resolveGraphWorkspaceMode(
- fetchImpl:typeof fetch=fetch,
+ fetchImpl:FetchLike=fetch,
 ):Promise<{mode:GraphWorkspaceClientMode;status:GraphWorkspaceStatus|null}>{
  try{
   const response=await fetchImpl(STATUS_URL,{method:"GET",credentials:"same-origin",cache:"no-store"});
@@ -76,7 +77,7 @@ export type InvestigationSummary={
 
 export async function listGraphInvestigations(
  mode:GraphWorkspaceClientMode,
- fetchImpl:typeof fetch=fetch,
+ fetchImpl:FetchLike=fetch,
 ):Promise<InvestigationSummary[]>{
  if(mode==="local"){
   const store=browserStore();
@@ -94,7 +95,7 @@ export async function saveGraphInvestigation(
  mode:GraphWorkspaceClientMode,
  bundle:DomainBundle,
  record:InvestigationRecord,
- fetchImpl:typeof fetch=fetch,
+ fetchImpl:FetchLike=fetch,
 ):Promise<SaveResult&{path:GraphWorkspaceClientMode}>{
  if(mode==="local"){
   const store=browserStore();
@@ -121,7 +122,7 @@ export async function loadGraphInvestigation(
  id:string,
  revision:number,
  bundle:DomainBundle,
- fetchImpl:typeof fetch=fetch,
+ fetchImpl:FetchLike=fetch,
 ):Promise<LoadResult|null>{
  if(mode==="local"){
   const store=browserStore();
