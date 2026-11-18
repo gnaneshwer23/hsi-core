@@ -129,6 +129,16 @@ Target: **≥3 merged engineering PRs per week** on Track A while Track B is in 
 
 ---
 
+## Phase 0 E2E soft-lands (post Track A)
+
+| ID | Soft-land | Honesty |
+| --- | --- | --- |
+| **PR-E2E-02** | Staging isolation acceptance packet — `src/operations/e2eIsolationAcceptancePacket.ts` + `docs/engineering/E2E_02_ISOLATION_ACCEPTANCE_PACKET_SOFT_LAND.md` | CI-safe check/fixture only; live owner-gated; never invents signer or sets `acceptedForScope` |
+
+Open implementation PRs for passport / workbench / brief columns remain separate; merge when up to date with `main` and verify is green.
+
+---
+
 ## Explicitly out of the next shipping queue
 
 - Six domains at equal reviewed depth  
