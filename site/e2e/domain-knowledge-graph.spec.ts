@@ -69,7 +69,7 @@ test('pinned views restore model filters and Markdown briefs preserve source sta
  await page.getByLabel('Export and pin options',{exact:true}).click();
  const pinned=await page.getByRole('link',{name:'Pinned investigation',exact:true}).getAttribute('href');await page.goto(pinned!);await expect(page.getByRole('heading',{name:'Connected research network',exact:true})).toBeVisible();await expect(page.getByLabel('Study model',{exact:true})).toHaveValue('human_in_vivo');
  await page.getByLabel('Export and pin options',{exact:true}).click();
- const event=page.waitForEvent('download');await page.getByRole('button',{name:'Download Markdown brief',exact:true}).click();const text=await readFile((await (await event).path())!,'utf8');expect(text).toContain('# HSI Research Brief');expect(text).toContain(bundle.version);expect(text).toContain('bibliographic_candidate_not_retrieved');expect(text).toContain('Falsification:');
+ const event=page.waitForEvent('download');await page.getByRole('button',{name:'Download Markdown brief v2',exact:true}).click();const text=await readFile((await (await event).path())!,'utf8');expect(text).toContain('# HSI Research Brief v2');expect(text).toContain(bundle.version);expect(text).toContain('bibliographic_candidate_not_retrieved');expect(text).toContain('Falsification:');expect(text).toContain('Reviewed edges in this brief: 0');
  await page.getByRole('tab',{name:'Research outcomes',exact:true}).click();await expect(page.getByRole('region',{name:'Evidence context comparison'})).toContainText('no pooled effect or confirmed contradiction');
 });
 
