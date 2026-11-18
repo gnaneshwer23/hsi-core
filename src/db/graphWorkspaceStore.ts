@@ -3,7 +3,8 @@
  * procedures, passing the caller's session token, which the database validates inside the transaction. It never reads
  * or writes the tables directly and trusts no owner or principal supplied by the browser.
  *
- * NOT ACTIVE: the migrations are held and unapplied, nothing imports this module, and no environment enables it.
+ * A3.3: wired behind `HSI_GRAPH_WORKSPACE_STORE_ENABLED` (fail-closed default) via `graphWorkspaceApi` /
+ * `graphWorkspaceWriteGate`. Migrations 031–033 remain held; enabling the flag does not apply schema or accept scope.
  * Digests are recomputed on every read; a stored record that fails its digest, chain or reproducibility check is
  * refused rather than shown.
  */
@@ -101,7 +102,7 @@ export function createGraphWorkspace(sql:UnsafeSql,sessionToken:string){
 }
 async function shaOf(x:unknown){const h=await globalThis.crypto.subtle.digest("SHA-256",new TextEncoder().encode(canonicalEvidenceJson(x)));return [...new Uint8Array(h)].map(b=>b.toString(16).padStart(2,"0")).join("")}
 
-/** Opens a guarded connection to the HSI Neon project only (never ISI, Akeno or another product). Not wired anywhere. */
+/** Opens a guarded connection to the HSI Neon project only (never ISI, Akeno or another product). Used by local verify + gated API. */
 export async function connectGraphWorkspace(input:{databaseUrl:string;neonProjectId?:string|null;sessionToken:string}){
  const guard=assertHsiNeonDatabaseUrl(input.databaseUrl,{neonProjectId:input.neonProjectId});
  if(!guard.ok)throw Error("HSI database guard: "+guard.reason);
