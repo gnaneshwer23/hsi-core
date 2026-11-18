@@ -53,6 +53,7 @@ Strategic product reset: audit, architecture, and roadmap. **No feature implemen
 | [HSI_CURRENT_STATE_INTELLIGENCE_REPORT.md](./HSI_CURRENT_STATE_INTELLIGENCE_REPORT.md) | Integrated current-state intelligence + first milestone |
 | [HSI_EXECUTIVE_SUMMARY.md](./HSI_EXECUTIVE_SUMMARY.md) | Concise findings + founder decisions |
 | [HSI_COMPETITOR_ANALYSIS_2026-11.md](./HSI_COMPETITOR_ANALYSIS_2026-11.md) | Competitive landscape (Owkin/BenchSci/Function/Tempus); ISI-first entry |
+| [HSI_YC_COMPETITIVE_LANDSCAPE_2026-11-18.md](./HSI_YC_COMPETITIVE_LANDSCAPE_2026-11-18.md) | YC biotech / scientific AI directory notes; Undermind–Parallel Bio–Anto–Output Labs–CellType priority set; landing + YC-application implications |
 | [HSI_AKSH_ISI_COMPETITOR_ANALYSIS.md](./HSI_AKSH_ISI_COMPETITOR_ANALYSIS.md) | Founder UK-workflow competitor PDF (Aksh diabetes + ISI literature); RA synovium mismatch wedge; honesty-stamped |
 | [HSI_ROADMAP.md](./HSI_ROADMAP.md) | Founder trusted-evidence-loop roadmap (multi-year); merge note vs BUILD_STATUS + product phases; metrics = targets |
 | [HSI_IMMUNOLOGY_SI_BUILD_PATH.md](./HSI_IMMUNOLOGY_SI_BUILD_PATH.md) | Founder immunology-SI plan → adopt/reshape/defer; melanoma 30-day map; metrics = targets |

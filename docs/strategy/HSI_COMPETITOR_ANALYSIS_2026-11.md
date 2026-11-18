@@ -11,6 +11,8 @@ Health Super Intelligence (HSI) competes across several markets, not just one. A
 
 **Most important finding:** Owkin and BenchSci are particularly close to the scientific intelligence vision; Function Health is a major competitor to the broader connected-health ambition.
 
+**YC scientific AI cohort (18 Nov 2026):** Undermind, Parallel Bio, Anto Biosciences, Output Labs, CellType, Tamarind Bio and 10x Science are high-priority reference points for search, human-relevant biology, microbiome models, mechanistic reasoning, autonomous investigation, computational biology APIs and narrow lab workflows. Dated memo: [`HSI_YC_COMPETITIVE_LANDSCAPE_2026-11-18.md`](./HSI_YC_COMPETITIVE_LANDSCAPE_2026-11-18.md) (YC directory profiles only — not independent performance assessments).
+
 **Do not position HSI as the first company connecting biology, medical data, and AI.** Several well-established companies already pursue substantial parts of that vision.
 
 ---
@@ -99,6 +101,10 @@ Proposed differentiators — **not** established competitive advantages:
 | 4 | Function Health | Connected personal health experience and onboarding |
 | 5 | OpenEvidence | Clinician adoption through fast, source-linked answers |
 | 6 | TriNetX | Research cohort discovery and clinical trial feasibility |
+| 7 | Undermind | Adaptive literature exploration — HSI must go past search into context and conflict |
+| 8 | Parallel Bio / Anto Biosciences | Human-relevant and microbiome biology as evidence context, not a new foundation model race |
+| 9 | Output Labs / CellType | Mechanistic and agentic investigation UX — keep HSI review- and uncertainty-bound |
+| 10 | Tamarind Bio / 10x Science | Narrow, evaluable scientific workflows before general-purpose “do everything” agents |
 
 ### Recommendation
 
@@ -108,7 +114,11 @@ Do **not** initially compete against all six across their entire portfolios.
 
 Use that to establish scientific credibility, validate the knowledge graph and reasoning workflows, and attract research collaborators. Expand selectively into clinical intelligence, Aksh Health, and trials as data access, partnerships, and regulatory readiness permit.
 
-**Positioning to test:**
+**Positioning to test (public scientific surface):**
+
+> Human Super Intelligence — connect the biology; challenge the evidence. A connected scientific evidence and reasoning system that helps researchers determine what biological findings actually establish, under which conditions, and with what uncertainty.
+
+**Historical portfolio framing (not for public marketing):**
 
 > Health Super Intelligence connects biological mechanisms, scientific evidence and authorised health data to help researchers and healthcare professionals understand complex health questions—with traceable reasoning and human oversight.
 

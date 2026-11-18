@@ -126,6 +126,7 @@
 /* Landing hero: the live graph is the product, so it leads. */
 .pg-page .pg-hero.pg-hero-dark{margin:20px auto 0;max-width:1320px;padding:clamp(28px,4vw,56px);border-radius:36px;background-color:#11143a;background-image:linear-gradient(135deg,#0b1020 0%,#161a45 62%,#231f63 100%);color:#e9ecf8;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(20px,3vw,48px);align-items:center;box-shadow:0 40px 90px rgba(18,20,60,.28)}
 .pg-hero-dark h1{color:#fff;font-size:clamp(1.9rem,3.1vw,3rem)}
+.pg-hero-dark h1 .pg-brand{display:block;margin:0 0 .2em;font-size:.62em;letter-spacing:-.02em}
 .pg-hero-dark .pg-lead{color:#c9d0ea}
 .pg-hero-dark .pg-micro{color:#9fa9cc}
 .pg-hero-dark .pg-link-light{color:#dcd7ff}
@@ -233,7 +234,7 @@
 @media(min-width:1100px){
  .pg-page .pg-hero.pg-hero-dark.pg-hero-console{grid-template-columns:minmax(0,1fr);gap:36px;max-width:1380px}
  .pg-hero-console .pg-hero-copy{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:8px 56px;align-items:end}
- .pg-hero-console h1{grid-column:1;grid-row:1/4;max-width:16ch;font-size:clamp(2.4rem,4.2vw,3.6rem)}
+ .pg-hero-console h1{grid-column:1;grid-row:1/4;max-width:16ch;font-size:clamp(2.2rem,3.8vw,3.2rem)}
  .pg-hero-console .pg-lead{grid-column:2;margin-top:0}
  .pg-hero-console .pg-cta{grid-column:2;margin-top:6px}
  .pg-hero-console .pg-micro{grid-column:2;margin-top:0}
