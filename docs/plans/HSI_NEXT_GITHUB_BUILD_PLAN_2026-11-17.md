@@ -2,8 +2,9 @@
 
 **Date:** 17 November 2026 (Europe/London)  
 **Status:** operating plan for continuous PR delivery  
-**Governs against:** `docs/strategy/HSI_VISION.md`, Engineering Pack v1.1 (`docs/engineering-pack/`), `docs/STATUS.md`, `docs/audits/HSI_IMPLEMENTATION_TRUTH_AND_NEXT_PRS.md`  
-**Does not authorise:** Gate C auto-approve, production write enablement, applying held migrations without independent DB review, live CDS/PHI, or claiming scientific accuracy before adjudicated cases exist.
+**Governs against:** `docs/strategy/HSI_DEFINITIVE_PRODUCT_VISION.md`, `docs/strategy/HSI_VISION.md`, `docs/architecture/HSI_TECHNOLOGY_ARCHITECTURE_TEN_SYSTEMS.md` (+ `hsi-ten-systems-capability-map.v1.json`), Engineering Pack v1.1 (`docs/engineering-pack/`), `docs/STATUS.md`, `docs/audits/HSI_IMPLEMENTATION_TRUTH_AND_NEXT_PRS.md`  
+**Technology stages A–D** (foundation → context/mechanism → workbench → hypothesis): see ten-systems architecture. Prefer closing mapped gaps over new subsystems.  
+**Does not authorise:** Gate C auto-approve, production write enablement, applying held migrations without independent DB review, live CDS/PHI, claiming scientific accuracy before adjudicated cases exist, or a greenfield graph/vector/K8s redesign without evidenced need.
 
 ## CI note (17 Nov 2026)
 
