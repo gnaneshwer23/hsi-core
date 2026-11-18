@@ -12,7 +12,8 @@ import {Overview} from "../components/home/Overview";
 import {Program} from "../components/home/Program";
 import {programView} from "../lib/program";
 import {DEPT_ICON,Icon} from "../components/home/AppIcons";
-import {EMPTY_PROFILE,LIVE_RUN_KEY,summariseSavedLiveRun,type SavedLiveRun,classifyIntent,GOALS,INVESTIGATION_STATUS,loadProfile,looksLikeTrialId,recommend,resetProfile,ROLES,saveProfile,searchEntities,type Profile} from "../lib/researchHome";
+import {EMPTY_PROFILE,LIVE_RUN_KEY,summariseSavedLiveRun,type SavedLiveRun,classifyIntent,GOALS,INVESTIGATION_STATUS,looksLikeTrialId,recommend,resetProfile,ROLES,searchEntities,type Profile} from "../lib/researchHome";
+import {loadOnboardingProfile,pathHonestyLabel,resolveOnboardingProfileMode,saveOnboardingProfile,type OnboardingProfileClientMode,type OnboardingProfileStatus} from "../lib/onboardingProfileClient";
 import {LIVE_INVESTIGATION_PATH,liveInvestigationHref} from "../lib/workbenchPrimary";
 import "../styles/research-home.css";
 
@@ -119,14 +120,40 @@ function SearchHero({bundle,profile,follow,inputRef,ready}:{bundle:DomainBundle|
 
 export function ResearchHome(){
  const [profile,setProfile]=useState<Profile>(EMPTY_PROFILE),[ready,setReady]=useState(false),[noStore,setNoStore]=useState(false),[adding,setAdding]=useState(false),[topic,setTopic]=useState("");
+ const [profileMode,setProfileMode]=useState<OnboardingProfileClientMode>("local");
+ const [profileStatus,setProfileStatus]=useState<OnboardingProfileStatus|null>(null);
+ const [profileSyncNote,setProfileSyncNote]=useState("");
  const {bundle,failed}=useBundle(),saved=useSaved(),inputRef=useRef<HTMLInputElement|null>(null);
  const [liveRun,setLiveRun]=useState<SavedLiveRun|null>(null);
  const loc=useLocation(),goto=useNavigate(),fresh=(loc.state as {fresh?:boolean}|null)?.fresh===true;
  /** Only the first view after setup shows recommendations open; a reload or later visit starts folded again. */
  useEffect(()=>{if(fresh)goto(loc.pathname+loc.search+loc.hash,{replace:true,state:null})},[fresh]); // eslint-disable-line react-hooks/exhaustive-deps
  // Read device storage after mount so server and client render the same first frame.
- useEffect(()=>{setProfile(loadProfile());setReady(true);try{setLiveRun(summariseSavedLiveRun(localStorage.getItem(LIVE_RUN_KEY)))}catch{setLiveRun(null)}},[]);
- useEffect(()=>{if(!ready)return;if(!saveProfile(profile))setNoStore(true)},[profile,ready]);
+ useEffect(()=>{
+  let cancelled=false;
+  (async()=>{
+   const resolved=await resolveOnboardingProfileMode();
+   if(cancelled)return;
+   setProfileMode(resolved.mode);
+   setProfileStatus(resolved.status);
+   const loaded=await loadOnboardingProfile(resolved.mode);
+   if(cancelled)return;
+   setProfile(loaded.profile);
+   setProfileSyncNote(pathHonestyLabel(resolved.mode,resolved.status));
+   setReady(true);
+   try{setLiveRun(summariseSavedLiveRun(localStorage.getItem(LIVE_RUN_KEY)))}catch{setLiveRun(null)}
+  })();
+  return()=>{cancelled=true};
+ },[]);
+ useEffect(()=>{
+  if(!ready)return;
+  void(async()=>{
+   const result=await saveOnboardingProfile(profileMode,profile);
+   if(!result.ok)setNoStore(true);
+   if(result.error)setProfileSyncNote(result.error);
+   else setProfileSyncNote(pathHonestyLabel(result.path,profileStatus));
+  })();
+ },[profile,ready,profileMode,profileStatus]);
  useEffect(()=>{const k=(e:KeyboardEvent)=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==="k"){e.preventDefault();inputRef.current?.focus()}};window.addEventListener("keydown",k);return()=>window.removeEventListener("keydown",k)},[]);
  const update=(fn:(p:Profile)=>Profile)=>setProfile(p=>fn(p));
  const follow=(id:string,name:string)=>update(p=>p.followed.some(f=>f.id===id)?{...p,followed:p.followed.filter(f=>f.id!==id)}:{...p,followed:[...p.followed,{id,name}].slice(-50)});
@@ -185,6 +212,7 @@ export function ResearchHome(){
        {adding?<form className="rh-add" onSubmit={e=>{e.preventDefault();addTopic()}}><label className="rh-vh" htmlFor="rh-topic">New research topic</label><input id="rh-topic" autoFocus value={topic} maxLength={80} onChange={e=>setTopic(e.target.value)} placeholder="Gene, pathway, disease…"/><button type="submit" className="rh-primary">Add</button><button type="button" className="rh-ghost" onClick={()=>{setAdding(false);setTopic("")}}>Cancel</button></form>:<button type="button" className="rh-addbtn" onClick={()=>setAdding(true)}><Icon name="plus" size={16}/>Add interest</button>}
       </div>
       <p className="rh-note">Interests only tune suggestions. Every area stays searchable. {profile.onboarded&&<button type="button" className="rh-link" onClick={()=>setProfile(resetProfile())}>Reset personalisation</button>}</p>
+      {ready&&profileSyncNote&&<p className="rh-note" role="status" data-profile-path={profileMode}>{profileSyncNote}</p>}
      </section>
 
      <section className="rh-card rh-wide" id="rh-library" aria-labelledby="rh-lib-h">
