@@ -6,22 +6,17 @@
 .pg-page :where(ul,ol){padding:0;list-style:none}
 .pg-page a{color:inherit}
 .pg-hero,.pg-strip,.pg-loop,.pg-product,.pg-honest,.pg-close,.pg-pillars,.pg-open,.pg-conflict{width:min(1240px,calc(100% - 64px));margin-inline:auto}
-/* UX-01 soft-land: one worked conflict from sealed domain-graph candidates */
-.pg-conflict{padding:24px 0 72px;display:grid;gap:28px;border-top:1px solid var(--line)}
-.pg-conflict-head{display:grid;gap:14px;max-width:62ch}
-.pg-conflict-honesty{font-size:14px;line-height:1.55;color:var(--muted)}
-.pg-conflict-pair{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.pg-conflict-pair article{padding:28px 0 0;border-top:2px solid var(--ink);display:grid;gap:12px;align-content:start}
-.pg-conflict-pair h3{font-size:22px;line-height:1.2;letter-spacing:-.02em;font-weight:650}
-.pg-conflict-pair p{font-size:16.5px;line-height:1.65;color:var(--body)}
-.pg-conflict-src{font-size:14px!important;color:var(--muted)!important}
-.pg-conflict-src a{color:var(--accent-ink)!important;font-weight:650;text-decoration:none}
-.pg-conflict-src a:hover{text-decoration:underline;text-underline-offset:3px}
-.pg-conflict-diff{display:grid;gap:12px;padding-top:8px}
-.pg-conflict-diff h3{font-size:20px;font-weight:650;letter-spacing:-.015em}
-.pg-conflict-diff ul{display:grid;gap:8px;margin:0;padding:0;list-style:none}
-.pg-conflict-diff li{font-size:16px;line-height:1.55;color:var(--body)}
-.pg-conflict-diff li b{color:var(--ink);text-transform:capitalize}
+/* UX-01 soft-land */
+.pg-conflict{padding:20px 0 56px;display:grid;gap:18px;border-top:1px solid var(--line)}
+.pg-conflict-head{display:grid;gap:10px;max-width:60ch}
+.pg-conflict-honesty{font-size:14px;color:var(--muted)}
+.pg-conflict-pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pg-conflict-pair article{padding-top:20px;border-top:2px solid var(--ink);display:grid;gap:8px}
+.pg-conflict-pair h3{font-size:20px;font-weight:650}
+.pg-conflict-pair p,.pg-conflict-diff li{font-size:16px;line-height:1.55;color:var(--body)}
+.pg-conflict-src{font-size:14px;color:var(--muted)}.pg-conflict-src a{color:var(--accent-ink);font-weight:650}
+.pg-conflict-diff{display:grid;gap:8px}.pg-conflict-diff h3{font-size:18px;font-weight:650}
+.pg-conflict-diff ul{display:grid;gap:4px}.pg-conflict-diff li b{color:var(--ink);text-transform:capitalize}
 @media(max-width:900px){.pg-conflict-pair{grid-template-columns:1fr}}
 /* hero */
 .pg-hero{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:56px;align-items:center;padding:72px 0 36px}
