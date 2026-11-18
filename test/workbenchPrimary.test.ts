@@ -4,6 +4,7 @@ import {
   authorisedInvestigationHref,
   LEGACY_WORKBENCH_REDIRECTS,
   LIVE_INVESTIGATION_PATH,
+  RESEARCH_HOME_PATH,
   liveInvestigationHref,
 } from "../site/src/lib/workbenchPrimary";
 import {RESEARCH_NAV_ITEMS} from "../site/src/lib/researchNavItems";
@@ -11,6 +12,7 @@ import {RESEARCH_NAV_ITEMS} from "../site/src/lib/researchNavItems";
 describe("workbench primary reconnect",()=>{
   test("live investigation is the canonical path",()=>{
     expect(LIVE_INVESTIGATION_PATH).toBe("/research/workspace");
+    expect(RESEARCH_HOME_PATH).toBe("/research/home");
     expect(liveInvestigationHref()).toBe("/research/workspace");
     expect(liveInvestigationHref({reopen:true})).toBe("/research/workspace?reopen=1");
     expect(authorisedInvestigationHref("hsi-interrogative-demo-12345678")).toBe(
