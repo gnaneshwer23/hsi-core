@@ -10,6 +10,8 @@ import {useLedger} from "../lib/useLedger";
 import {fromRunHypothesis} from "../../../src/investigation/hypothesisLedger";
 import {useLiveRun} from "../lib/useLiveRun";
 import {HowProducedPanel} from "../components/HowProducedPanel";
+import {EvidenceContextPassportView} from "../components/EvidenceContextPassport";
+import {liveClaimToPassportEdge} from "../../../src/investigation/liveClaimPassportEdge";
 import {BUCKET_LABEL,bucketOf,buildGraph,counts,filterCandidates,headline,stageRail,yearOf,type Bucket,type Cand,type EdgeState,type Run} from "../lib/workspaceView";
 import "../styles/investigation-workspace-app.css";
 
@@ -60,6 +62,12 @@ export function InvestigationWorkspacePage(){
  const rec=picked?run?.records.find(r=>r.sourceId===picked.sourceId)??null:null;
  const supporting=run?.candidates.filter(x=>bucketOf(x)==="supporting")??[],opposing=run?.candidates.filter(x=>bucketOf(x)==="opposing"||x.verification==="disputed")??[];
  const ctxLabel=(k:string)=>run?.byContext[k]?.label??k;
+ const passportEdge=picked
+  ?liveClaimToPassportEdge({
+   candidate:picked,
+   contextLabels:picked.contexts.map(ctxLabel),
+  })
+  :null;
  return (
   <ResearchAppShell where="Investigation workspace" whereIcon="flask" active="investigations">
    <main className="ws" id="rh-main" tabIndex={-1}>
@@ -127,8 +135,16 @@ export function InvestigationWorkspacePage(){
           <dt>Why it was ranked</dt><dd>{picked.priority.reasons.join("; ")||"Not ranked"}</dd>
           <dt>Source</dt><dd><a href={picked.sourceUrl} target="_blank" rel="noreferrer noopener">{rec?.title??picked.sourceId}</a>{rec&&<><br/>{rec.provider} · {rec.doi?`DOI ${rec.doi} · `:""}{rec.pmid?`PMID ${rec.pmid} · `:""}retrieved {rec.retrievedAt} · retraction: {rec.retraction.replaceAll("_"," ")} · licence not assessed</>}</dd></dl>
          {picked.verdicts.map(v=><p key={v.verifier} className="ws-verdict"><b>{v.verifier}</b> ({v.model}): {v.direction.replaceAll("_"," ")}. {v.reason}{v.evidenceSpan&&<><br/>Quoted: “{v.evidenceSpan}”</>}</p>)}
-         <p className="ws-state">Candidate · unreviewed · not promotable to the graph</p></>}
+         <p className="ws-state">Candidate · unreviewed · not promotable to the graph</p>
+         {passportEdge&&<EvidenceContextPassportView edge={passportEdge} heading="Evidence context passport" headingLevel={3}/>}
+        </>}
        </div>
+       {run&&!picked&&(
+        <div className="ws-passport-empty" role="status">
+         <p className="ecp-kicker">EVIDENCE CONTEXT PASSPORT · NOT SCIENTIFICALLY APPROVED</p>
+         <p className="ws-muted">Select a claim to open its Evidence Context Passport. Missing biological and experimental fields stay explicit — they are not invented.</p>
+        </div>
+       )}
        <details className="ws-acc" open><summary><Icon name="check" size={16}/>Evidence <b>{supporting.length}</b></summary><p>Claims both checks agreed on as positive. {supporting.length===0&&"None in this run."}</p><ul>{supporting.map(x=><li key={x.id}><button type="button" onClick={()=>setSel(x.id)}>{x.subject} ~ {x.object}</button></li>)}</ul></details>
        <details className="ws-acc"><summary><Icon name="x" size={16}/>Contradictions <b>{opposing.length}</b></summary><p>{run.verification.status==="not_configured"?"Not assessed: the model check did not run.":opposing.length===0?"None found in these sources. This does not establish consensus.":"Opposing or disputed claims."}</p><ul>{opposing.map(x=><li key={x.id}><button type="button" onClick={()=>setSel(x.id)}>{x.subject} ~ {x.object}</button></li>)}</ul></details>
        <details className="ws-acc" open={run.hypotheses.items.length>0}><summary><Icon name="flask" size={16}/>Hypotheses <b>{run.hypotheses.items.length}</b></summary>

@@ -37,7 +37,19 @@ test('an unchecked run keeps direction unassessed, shows the failed search and l
  const insp=page.getByLabel('Selected claim');
  await expect(insp).toContainText('Candidate · unreviewed · not promotable to the graph');
  await expect(insp).toContainText('Not assessed');await expect(insp).toContainText('licence not assessed');
+ await expect(page.getByRole('heading',{name:'Evidence context passport'})).toBeVisible();
+ await expect(page.getByText('EVIDENCE CONTEXT PASSPORT · NOT SCIENTIFICALLY APPROVED')).toBeVisible();
+ await expect(page.getByText(/Explicitly missing:/)).toBeVisible();
+ await expect(page.getByText(/dose/i).first()).toBeVisible();
  await expect(page.getByRole('region',{name:'Scientific verification'})).toContainText('Not assessed: the model check did not run.');
+});
+
+test('after a run, passport empty-state prompts claim selection before inventing context',async({page})=>{
+ await mock(page,unchecked);
+ await page.goto('/research/workspace');
+ await page.getByRole('button',{name:'Run live investigation'}).click();
+ await expect(page.getByText('Select a claim to open its Evidence Context Passport')).toBeVisible();
+ await expect(page.getByRole('heading',{name:'Evidence context passport'})).toHaveCount(0);
 });
 
 test('a checked run shows findings, a relationship map that filters evidence, verifier quotes and the brief; axe is clean',async({page})=>{
