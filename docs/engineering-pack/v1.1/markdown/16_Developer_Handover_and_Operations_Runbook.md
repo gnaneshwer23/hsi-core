@@ -136,7 +136,7 @@ Never put a secret in a `VITE_` variable: those are compiled into the browser bu
 | Neon project access (main, staging, branch creation) | |
 | Neon Auth admin | |
 | Model provider consoles and spend caps | |
-| Error tracking and log drain (once OPS-01 lands) | |
+| Error tracking and log drain (OPS-01/02 soft-land: docs + dry-run notes; live D-120/D-122 pending) | |
 | Domain and DNS for humansuperintelligence.tech | |
 | Password manager entry for every credential; no credentials in chat or email | |
 | Read: this pack, `AGENTS.md`, `docs/STATUS.md`, ADR-009, ADR-0010 | |
