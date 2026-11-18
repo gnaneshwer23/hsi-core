@@ -82,6 +82,7 @@ These can land without waiting for SMEs. Sequence matters where noted.
 | **A5.1** | `cursor/ux-related-papers-2f71` | Seed-paper → related works via OpenAlex (Connected Papers–style, rights-safe) | A1.4 | Metadata-only; no invented abstracts — `/api/research/related-works` + literature dossier / radar panel |
 | **A5.2** | `cursor/ux-evidence-table-2f71` | Structured evidence table in investigation brief (Elicit-style columns) | A2.1 | Columns = context passport fields — Research outcomes panel + Markdown brief |
 | **A5.3** | `cursor/ux-how-produced-trace-2f71` | “How this was produced” panel from real run record | Live run path | No fake progress; links `/status` — Ask / workspace / radar / related-works |
+| **A5.4** | `cursor/wb-07-route-catalog-2f71` | WB-07 / UX-05 route catalog soft-land | — | Typed inventory + honesty flags; one-hop retired aliases; no route-count claim — `site/src/lib/siteRouteCatalog.ts` |
 
 ---
 
