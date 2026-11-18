@@ -33,6 +33,7 @@ const Sources=lazy(()=>import("./pages/Sources").then(m=>({default:m.Sources})))
 const ScienceLiterature=lazy(()=>import("./pages/ScienceLiterature").then(m=>({default:m.ScienceLiterature})));
 const ResearchCoverage=lazy(()=>import("./pages/ResearchCoverage").then(m=>({default:m.ResearchCoverage})));
 const ResearchEvidenceCatalogue=lazy(()=>import("./pages/ResearchEvidenceCatalogue").then(m=>({default:m.ResearchEvidenceCatalogue})));
+const ContextCompletionStatusRoute=lazy(()=>import("./pages/ContextCompletionStatus").then(m=>({default:m.ContextCompletionStatusPage})));
 const ScientificResearchWorkbench=lazy(()=>import("./pages/ScientificResearchWorkbench").then(m=>({default:m.ScientificResearchWorkbench})));
 const ScienceStudyComparison=lazy(()=>import("./pages/ScienceStudyComparison").then(m=>({default:m.ScienceStudyComparison})));
 const ScienceReviewPreparation=lazy(()=>import("./pages/ScienceReviewPreparation").then(m=>({default:m.ScienceReviewPreparation})));
@@ -133,6 +134,7 @@ export default function App() {
         <Route path="research/validation" element={<Suspense fallback={<p role="status">Loading validation workspace…</p>}><SyntheticValidationWorkbench/></Suspense>} />
         <Route path="research/coverage" element={<ResearchCoverage />} />
         <Route path="research/evidence-readiness" element={<ResearchEvidenceCatalogue />} />
+        <Route path="research/context-completion" element={<Suspense fallback={<p role="status">Loading context completion sheet…</p>}><ContextCompletionStatusRoute/></Suspense>} />
         <Route path="science/study-comparison" element={<ScienceStudyComparison />} />
         <Route path="science/review-preparation" element={<ScienceReviewPreparation />} />
         <Route path="research/scientific-review" element={<ScientificReviewerDecision />} />
