@@ -1,21 +1,17 @@
 import {Link} from "react-router-dom";
 import sheetJson from "../../../research/domain-graph/context-completions.v1.json";
 import {
-  parseContextCompletionSheet,
+  acceptSealedSheetForUi,
   summarizeContextCompletionProgress,
-  type ContextCompletionSheet,
-} from "../../../src/knowledgeGraph/contextCompletionSheet";
+} from "../../../src/knowledgeGraph/contextCompletionProgress";
 import "../styles/science-body.css";
-
-function loadSheet(): ContextCompletionSheet {
-  return parseContextCompletionSheet(sheetJson);
-}
 
 export function ContextCompletionStatusPage() {
   let progress = null as ReturnType<typeof summarizeContextCompletionProgress> | null;
   let error = "";
   try {
-    progress = summarizeContextCompletionProgress(loadSheet());
+    // Browser-safe accept only — digest sealing stays on CLI/Node (node:crypto).
+    progress = summarizeContextCompletionProgress(acceptSealedSheetForUi(sheetJson));
   } catch {
     error = "The sealed D-01 context completion sheet could not be verified. No fill progress is shown.";
   }
