@@ -3,6 +3,7 @@ import {GraphSnapshotProvider,useGraphSnapshot} from "../components/home/useGrap
 import {LiveGraphHero} from "../components/home/LiveGraphHero";
 import {OpenQuestions} from "../components/home/OpenQuestions";
 import {ClaimAnatomy} from "../components/home/ClaimAnatomy";
+import {HomepageWorkedConflict} from "../components/home/HomepageWorkedConflict";
 import "../styles/premium-public.css";
 
 const PILLARS=[
@@ -45,6 +46,8 @@ export function HomeLanding(){
      <LiveGraphHero/>
     </section>
     <div className="pg-strip"><Status/></div>
+
+    <HomepageWorkedConflict/>
 
     <section className="pg-pillars" aria-labelledby="pg-pillars-h">
      <div className="pg-pillars-copy">

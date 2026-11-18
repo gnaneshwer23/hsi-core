@@ -1,6 +1,9 @@
 import {test,expect} from '@playwright/test';
 import {readFile} from 'node:fs/promises';
-const retired:[string,string][]=[['/technology','/how-it-works'],['/solutions','/how-it-works'],['/platform','/how-it-works'],['/applications','/how-it-works'],['/research','/how-it-works'],['/connected-intelligence','/how-it-works'],['/intelligence','/how-it-works'],['/intelligence/nexus','/how-it-works'],['/science','/knowledge-graph'],['/science/body','/knowledge-graph'],['/departments','/knowledge-graph'],['/community','/research/home'],['/demo','/research/journey'],['/pricing','/contact'],['/evidence-safety','/trust']];
+import {RETIRED_MARKETING_REDIRECTS} from '../src/lib/siteRouteCatalog';
+
+const retired:[string,string][]=RETIRED_MARKETING_REDIRECTS.map(([from,to])=>[from,to]);
+
 for(const [from,to] of retired){
  test(`retired page ${from} redirects to ${to}`,async({page})=>{
   await page.goto(from);await expect(page).toHaveURL(new RegExp(to.replace(/\//g,'\\/')+'$'));
@@ -27,4 +30,11 @@ test('retired pages are permanent redirects at the host and absent from the site
 test('a retired department page lands on that department in the graph',async({page})=>{
  await page.goto('/departments/immunology');
  await expect(page).toHaveURL(/\/research\/knowledge-graph\?netDepartment=immunology/);
+});
+
+test('module and product aliases one-hop to how-it-works',async({page})=>{
+ for(const from of ['/modules','/products','/akeno','/for-trials']){
+  await page.goto(from);
+  await expect(page).toHaveURL(/\/how-it-works$/);
+ }
 });
