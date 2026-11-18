@@ -3,32 +3,36 @@ import {Link,useNavigate} from "react-router-dom";
 import {parseInvestigationWorkspace,type InvestigationWorkspace as Workspace,type InvestigationCursor,type InvestigationSummary} from "../../../src/interrogativeWorkspace";
 import "../styles/investigation-workspace.css";
 
-class WorkspaceUiError extends Error{}
+class WorkspaceUiError extends Error{
+ constructor(message:string,readonly httpStatus:number|null=null){super(message)}
+}
 
-export type WorkspaceSnapshot={workspace:Workspace|null;items:InvestigationSummary[];loading:boolean;error:string};
+export type WorkspaceSnapshot={workspace:Workspace|null;items:InvestigationSummary[];loading:boolean;error:string;httpStatus:number|null};
 export function InvestigationWorkspace({onSnapshot}:{onSnapshot?:(value:WorkspaceSnapshot)=>void}={}){
  const navigate=useNavigate();
  const [workspace,setWorkspace]=useState<Workspace|null>(null),[items,setItems]=useState<InvestigationSummary[]>([]);
  const [loading,setLoading]=useState(true),[saving,setSaving]=useState(false),[error,setError]=useState("");
+ const [httpStatus,setHttpStatus]=useState<number|null>(null);
  const [question,setQuestion]=useState(()=>{try{return (new URLSearchParams(window.location.search).get("q")??"").slice(0,500)}catch{return ""}}),[releaseId,setReleaseId]=useState("");
  const [saveError,setSaveError]=useState("");
  const requestKey=useRef<{question:string;releaseId:string;id:string}|null>(null);
  const controller=useRef<AbortController|null>(null),saveController=useRef<AbortController|null>(null);
  const savingRef=useRef(false);
- useEffect(()=>{onSnapshot?.({workspace,items,loading,error})},[workspace,items,loading,error,onSnapshot]);
+ useEffect(()=>{onSnapshot?.({workspace,items,loading,error,httpStatus})},[workspace,items,loading,error,httpStatus,onSnapshot]);
  async function load(cursor:InvestigationCursor|null=null){
   controller.current?.abort();const c=new AbortController();controller.current=c;
-  setLoading(true);setError("");
+  setLoading(true);setError("");if(!cursor)setHttpStatus(null);
   const timer=setTimeout(()=>c.abort(),10000);
   try{
    const suffix=cursor?"?"+new URLSearchParams({cursor:JSON.stringify(cursor)}):"";
    const response=await fetch("/api/research/investigations"+suffix,{credentials:"same-origin",cache:"no-store",redirect:"error",signal:c.signal,headers:{Accept:"application/json"}});
-   if(!response.ok)throw new WorkspaceUiError(response.status===401?"Sign in with a verified research account to open your investigations.":response.status===403?"Research access has not been confirmed. Check your research account or contact the research administrator.":"Your investigations could not be loaded. Please retry.");
+   if(!response.ok)throw new WorkspaceUiError(response.status===401?"Sign in with a verified research account to open your investigations.":response.status===403?"Research access has not been confirmed. Check your research account or contact the research administrator.":"Your investigations could not be loaded. Please retry.",response.status);
    const value=parseInvestigationWorkspace(await response.json());
    if(c.signal.aborted)return;
    setWorkspace(value);setItems(previous=>cursor?[...previous,...value.items.filter(i=>!previous.some(p=>p.id===i.id))]:value.items);
+   setHttpStatus(response.status);
    setReleaseId(previous=>value.releases.some(r=>r.id===previous)?previous:value.releases[0]?.id??"");
-  }catch(e){if(controller.current===c){if(!cursor){setWorkspace(null);setItems([])}setError(c.signal.aborted?"The investigation request timed out. Please retry.":e instanceof WorkspaceUiError?e.message:"Your investigations could not be loaded. Please retry.")}}
+  }catch(e){if(controller.current===c){if(!cursor){setWorkspace(null);setItems([])}setHttpStatus(e instanceof WorkspaceUiError?e.httpStatus:null);setError(c.signal.aborted?"The investigation request timed out. Please retry.":e instanceof WorkspaceUiError?e.message:"Your investigations could not be loaded. Please retry.")}}
   finally{clearTimeout(timer);if(controller.current===c)setLoading(false)}
  }
  useEffect(()=>{void load();return()=>{controller.current?.abort();controller.current=null;saveController.current?.abort();saveController.current=null}},[]);
