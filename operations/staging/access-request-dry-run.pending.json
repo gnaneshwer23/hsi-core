@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "hsi-access-request-dry-run-1",
+  "purpose": "pr_e2e_01c_access_request_delivery",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "deliveryConfiguredOnStaging": false,
+  "operatorReceiptClaimed": false,
+  "productionDeliveryClaimed": false,
+  "grantsOrWritesImplied": false,
+  "scientificApproval": false,
+  "honesty": {
+    "noFakeDeliverySuccess": true,
+    "noSecretsInGit": true,
+    "providerAcceptedIsNotInboxReceipt": true,
+    "enquiryDoesNotGrantAccess": true,
+    "enquiryDoesNotEnableWrites": true,
+    "honeypotIsNotDelivery": true
+  },
+  "channels": {
+    "webhook": {
+      "configured": false,
+      "dryRunForced": false,
+      "providerAccepted": null,
+      "destinationAckRef": null,
+      "recordedAt": null
+    },
+    "resend": {
+      "configured": false,
+      "dryRunForced": false,
+      "providerAccepted": null,
+      "destinationAckRef": null,
+      "recordedAt": null
+    }
+  },
+  "checks": {
+    "unsetReturnsNotConfigured": null,
+    "configuredGetReportsTrue": null,
+    "misconfigReturnsDeliveryFailed": null,
+    "phiRefused": null,
+    "contactUiDraftOnlyWhenUnset": null
+  },
+  "references": {
+    "runbookDoc": "docs/engineering/ACCESS_REQUEST_DELIVERY_RUNBOOK.md",
+    "handlerModule": "src/server/accessRequestHandler.ts",
+    "apiRoute": "site/api/access-requests.ts",
+    "envExample": ".env.example",
+    "handlerTests": "test/accessRequestHandler.test.ts",
+    "privateReceiptUri": null
+  },
+  "summary": {
+    "documentationComplete": true,
+    "stagingDryRunComplete": false,
+    "productionDelivery": "not_invented"
+  }
+}
