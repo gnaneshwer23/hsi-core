@@ -110,7 +110,7 @@ Ship as a series of PRs once A2.4 sheet is filling:
 | **C3** | Dual-reviewer decisions for 40–60 edges; immutable records |
 | **C4** | Graph release: reviewed vs candidate styling + version bump |
 | **C5** | Homepage worked conflict from a **reviewed** disagreement — soft-land: sealed candidate pair (`DIAB-003`/`DIAB-015`) with unreviewed honesty until C3 |
-| **C6** | Brief v2 export (Markdown / JSON / print) with graph version + review states |
+| **C6** | Brief v2 export (Markdown / JSON / print) with graph version + review states — soft-land: `src/knowledgeGraph/briefV2.ts` + advanced graph export / print (0 reviewed; no saved-record claim) |
 
 ---
 
