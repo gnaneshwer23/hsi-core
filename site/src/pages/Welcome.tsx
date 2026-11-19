@@ -10,6 +10,8 @@ import type {DomainBundle} from "../../../src/knowledgeGraph/domainGraph";
 import {ACCENTS,DEFAULT_APPEARANCE,loadAppearance,saveAppearance,type Appearance} from "../lib/appearance";
 import {CADENCES,EMPTY_PROFILE,GOALS,loadProfile,parseOrcid,parsePaperIds,ROLES,saveProfile,STAGES,type Profile} from "../lib/researchHome";
 import {beginRun,finishRun,loadFunnel,reach,saveFunnel,summarize,type Funnel} from "../lib/onboardingFunnel";
+import {matchScenario} from "../../../src/investigation/scenarios";
+import {buildProfileWorkspaceHandoff} from "../../../src/investigation/profileWorkspaceHandoff";
 import "../styles/research-home.css";
 import "../styles/welcome.css";
 import "../styles/premium-app.css";
@@ -52,12 +54,25 @@ export function WelcomePage(){
  const foundDocs=useMemo(()=>bundle?detectTopics(bundle.nodes,docText,8).filter(f=>!found.some(g=>g.id===f.id)):[],[bundle,docText,found]);
  const ok0=!!p.role&&p.background.trim().length>=BG_MIN,ok1=custom.length>0,evChars=files.reduce((a,f)=>a+f.chars,0)+linked.trim().length,ok2=(!!orc||pp.ids.length>0||evChars>=200)&&!orcBad0(orcid),ok3=p.goals.length>0,can=[ok0,ok1,ok2,ok3][step]!;
  useEffect(()=>{const c=funnel.current;if(!c)return;c.f=reach(c.f,c.i,step+1);saveFunnel(c.f);if(showFunnel)setStats(summarize(c.f))},[step,showFunnel]);
- function finish(){
+ function finish(dest:"home"|"workspace"="home"){
   const next:Profile={...p,orcid:orc,papers:pp.ids,onboarded:true};
   if(!saveProfile(next)){setNote("This browser blocked local storage, so your answers will not be kept.");return}
   if(funnel.current){funnel.current.f=finishRun(funnel.current.f,funnel.current.i);saveFunnel(funnel.current.f)}
+  if(dest==="workspace"){
+   const handoff=buildProfileWorkspaceHandoff({
+    onboarded:true,
+    question:next.question,
+    interests:next.interests,
+    role:next.role,
+    cadence:next.cadence,
+    matchedScenarioId:next.question.trim()?matchScenario(next.question):null,
+   });
+   nav(handoff.workspaceHref);
+   return;
+  }
   nav("/research/home",{state:{fresh:true}});
  }
+ const canFinishInvestigate=ok0&&ok1&&ok2&&ok3;
  async function addFiles(list:FileList|null){
   if(!list)return;setBusy(true);
   const read:EvidenceFile[]=[];for(const f of [...list].slice(0,MAX_FILES-files.length))read.push(await readEvidenceFile(f));
@@ -69,7 +84,7 @@ export function WelcomePage(){
  const changeAp=(a:Appearance)=>{setAp(a);saveAppearance(a)};
  return (
   <div className="rh-app wl" data-theme={ap.theme} data-accent={ap.accent}>
-   <header className="wl-top"><Link to="/" className="rh-brand" aria-label="Human Super Intelligence, public site"><HsiIdentity/></Link><button type="button" className="rh-ghost" onClick={()=>{setP(x=>({...x,...DEMO_PROFILE,onboarded:false,interests:["IL-21","Systemic sclerosis"],background:"Immunologist studying T follicular helper cells and IL-21 in autoimmune disease.",orcid:null,papers:["doi:10.1186/s13075-015-0660-z"]}));setPapers("10.1186/s13075-015-0660-z")}}>Fill in an example</button></header>
+   <header className="wl-top"><Link to="/" className="rh-brand" aria-label="Human Super Intelligence, public site"><HsiIdentity/></Link><button type="button" className="rh-ghost" onClick={()=>{setP(x=>({...x,...DEMO_PROFILE,onboarded:false,question:"Why might IL-21 signalling have different biological consequences across autoimmune disease contexts?",interests:["IL-21","Systemic sclerosis"],background:"Immunologist studying T follicular helper cells and IL-21 in autoimmune disease.",orcid:null,papers:["doi:10.1186/s13075-015-0660-z"]}));setPapers("10.1186/s13075-015-0660-z")}}>Fill in an example</button></header>
    <main className="wl-main wl-split" id="main-content" tabIndex={-1}>
     <aside className="wl-aside" aria-label="Your research home, as set up so far">
      <h1>Tell us what you work on, so your home starts useful.</h1>
@@ -131,8 +146,12 @@ export function WelcomePage(){
      {note&&<p className="wl-bad" role="alert">{note}</p>}
      <div className="rh-row wl-actions">
       {step>0&&<button type="button" className="rh-ghost" onClick={()=>setStep(step-1)}>Back</button>}
-      {step<3?<button type="button" className="rh-primary" onClick={()=>setStep(step+1)} disabled={!can}>Next <Icon name="arrow" size={16}/></button>:<button type="button" className="rh-primary" onClick={()=>finish()} disabled={!can}>Finish and open my home <Icon name="arrow" size={16}/></button>}
+      {step<3?<button type="button" className="rh-primary" onClick={()=>setStep(step+1)} disabled={!can}>Next <Icon name="arrow" size={16}/></button>:<>
+        <button type="button" className="rh-primary" onClick={()=>finish("home")} disabled={!can}>Finish and open my home <Icon name="arrow" size={16}/></button>
+        <button type="button" className="rh-ghost" onClick={()=>finish("workspace")} disabled={!canFinishInvestigate}>Finish and open live investigation</button>
+      </>}
             {!can&&<span className="wl-note" role="status">{[ "Choose your role and write a short background to continue.","Add at least one specific topic, gene or disease to continue.","Add an ORCID iD, a paper ID, or upload a document to continue.","Choose at least one goal to continue."][step]}</span>}
+            {step===3&&can&&<span className="wl-note" role="status">Profile stays on this device. Durable server profile is not claimed. Live investigation does not auto-run.</span>}
      </div>
     </section>
     </div>

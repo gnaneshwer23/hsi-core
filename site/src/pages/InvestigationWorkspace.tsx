@@ -37,6 +37,11 @@ import {
   buildCuratedDisagreementPack,
   type CuratedDisagreementCaseId,
 } from "../../../src/investigation/curatedDisagreementPack";
+import {
+  buildProfileWorkspaceHandoff,
+  markHandoffOnWorkspace,
+} from "../../../src/investigation/profileWorkspaceHandoff";
+import {matchScenario} from "../../../src/investigation/scenarios";
 import type {DomainBundle} from "../../../src/knowledgeGraph/domainGraph";
 import type {DepartmentSlug} from "../../../src/knowledgeGraph/departments";
 import {UspADisagreementTrail} from "../components/workspace/UspADisagreementTrail";
@@ -134,6 +139,18 @@ export function InvestigationWorkspacePage(){
  const passportEdges=useMemo(()=>run?liveInvestigationPassportEdges(run):[],[run]);
  const passportSources=useMemo(()=>run?liveInvestigationPassportSources(run):[],[run]);
  const curatedPack=useMemo(()=>bundle?buildCuratedDisagreementPack(bundle):null,[bundle]);
+ const fromProfile=new URLSearchParams(loc.search).get("from")==="profile";
+ const profileHandoff=useMemo(()=>{
+  const base=buildProfileWorkspaceHandoff({
+   onboarded:profile.onboarded,
+   question:profile.question,
+   interests:profile.interests,
+   role:profile.role,
+   cadence:profile.cadence,
+   matchedScenarioId:profile.question.trim()?matchScenario(profile.question):null,
+  });
+  return fromProfile||base.ready?markHandoffOnWorkspace(base):base;
+ },[profile,fromProfile]);
  const briefPreview=useMemo(()=>run?buildLiveBriefPreview(run,passportEdges.length):null,[run,passportEdges.length]);
  const uspTrail=useMemo(()=>buildUspADisagreementTrail({
   hasRun:Boolean(run),
@@ -253,8 +270,28 @@ export function InvestigationWorkspacePage(){
       Start from Research Home Ask, or run the default IL-21 cross-context question here.
       Disease chips below are demonstration scenarios — HSI is disease-agnostic.
      </p>
+     {profileHandoff.ready?(
+      <div className="ws-ask-handoff" role="status">
+       <p className="ws-muted">
+        Profile handoff · device-local · durable server profile claimed:{" "}
+        {String(profileHandoff.honesty.serverProfileDurableClaimed)} · production writes:{" "}
+        {String(profileHandoff.honesty.productionWritesEnabled)}
+       </p>
+       {profileHandoff.question?<p><b>{profileHandoff.question}</b></p>:null}
+       {profileHandoff.interestLabels.length>0?(
+        <p className="ws-muted">Focus: {profileHandoff.interestLabels.join(", ")}</p>
+       ):null}
+       <p className="ws-muted">{profileHandoff.note}</p>
+      </div>
+     ):(
+      <p className="ws-muted">
+       No onboarded profile yet. <Link to="/welcome">Tell us what you work on</Link> so interests
+       hand off into this workspace.
+      </p>
+     )}
      <div className="ws-actions">
       <Link className="ws-btn" to="/research/home">Open Ask on Research Home</Link>
+      <Link className="ws-btn" to="/welcome">Edit profile setup</Link>
       {saved&&<button type="button" className="ws-btn" onClick={()=>lr.reopen()}>Reopen browser-saved run</button>}
      </div>
     </section>
