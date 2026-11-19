@@ -157,6 +157,15 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await expect(useful).toContainText(/Saved locally for briefHash/i);
  await expect(useful).toContainText('Useful');
  await expect(useful).toContainText('willingness Maybe');
+ const testable=page.getByRole('region',{name:/Testable next questions/i});
+ await expect(testable).toContainText('invents experiments: false');
+ await expect(testable).toContainText('recommends action: false');
+ await expect(testable).toContainText('scientific approval: false');
+ await expect(testable).toContainText('journey complete claimed: false');
+ await expect(testable).toContainText('Unvalidated AI hypothesis (demoted)');
+ await expect(testable).toContainText('Blocking IL-21 reduces Tfh expansion');
+ await expect(testable).toContainText('Would be falsified by');
+ await expect(testable).toContainText('No change in Tfh numbers');
  const axe=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();
  expect(axe.violations.map(v=>v.id+': '+v.nodes.length)).toEqual([]);
 });

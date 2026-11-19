@@ -45,6 +45,7 @@ import {
   buildProfileWorkspaceHandoff,
   markHandoffOnWorkspace,
 } from "../../../src/investigation/profileWorkspaceHandoff";
+import {buildTestableNextQuestions} from "../../../src/investigation/testableNextQuestions";
 import {matchScenario} from "../../../src/investigation/scenarios";
 import type {DomainBundle} from "../../../src/knowledgeGraph/domainGraph";
 import type {DepartmentSlug} from "../../../src/knowledgeGraph/departments";
@@ -58,6 +59,7 @@ import {UspCConnectedPanel} from "../components/workspace/UspCConnectedPanel";
 import {UnifiedJourneyTrail} from "../components/workspace/UnifiedJourneyTrail";
 import {LiveBriefDecisionPanel} from "../components/workspace/LiveBriefDecisionPanel";
 import {ResearcherUsefulnessPanel} from "../components/workspace/ResearcherUsefulnessPanel";
+import {TestableNextQuestionsPanel} from "../components/workspace/TestableNextQuestionsPanel";
 import {loadDomainGraph} from "../lib/claimGraphClient";
 import {EMPTY_PROFILE,loadProfile,type Profile} from "../lib/researchHome";
 import {BUCKET_LABEL,bucketOf,buildGraph,counts,filterCandidates,headline,stageRail,yearOf,type Bucket,type Cand,type EdgeState,type Run} from "../lib/workspaceView";
@@ -225,6 +227,11 @@ export function InvestigationWorkspacePage(){
   libraryCount:lr.library.entries.length,
   savedThisSession:lr.savedThisSession,
  }),[run,sel,cmpKey,comparison,crossPaths.paths.length,bundle,runGaps.length,brief,lr.library.entries.length,lr.savedThisSession]);
+ const testableQuestions=useMemo(()=>buildTestableNextQuestions({
+  gaps:runGaps,
+  hypotheses:run?.hypotheses.items??[],
+  hypothesesStatus:run?.hypotheses.status??"not_configured",
+ }),[runGaps,run]);
  const onUnifiedTrailSelect=(id:UnifiedJourneyStepId)=>{
   if(id==="ask"){document.getElementById("ws-ask-strip")?.scrollIntoView({behavior:"smooth",block:"start"});return}
   if(id==="evidence"||id==="passport"){document.getElementById("ws-ev-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
@@ -504,6 +511,12 @@ export function InvestigationWorkspacePage(){
       {gapTrack.blocked&&<p className="ws-err" role="status">This browser blocked local storage, so your status was not kept.</p>}
       <p className="ws-muted">Status is kept in this browser only. <a href="/research/gaps">Open the Gap Register</a></p></>}
     </section>
+
+    <TestableNextQuestionsPanel
+     pack={testableQuestions}
+     onInspectClaim={(id)=>setSel(id)}
+     onOpenGaps={()=>document.getElementById("ws-gp-h")?.scrollIntoView({behavior:"smooth",block:"start"})}
+    />
    </main>
   </ResearchAppShell>
  );
