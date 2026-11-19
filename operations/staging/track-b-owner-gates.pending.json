@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "hsi-track-b-owner-gates-pending-1",
+  "purpose": "track_b_owner_gates_soft_land",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "pilotReadinessClaimed": false,
+  "scientificApproval": false,
+  "acceptedForScope": false,
+  "signedPacketClaimed": false,
+  "inventedSigner": false,
+  "inventedReviewerIdentities": false,
+  "inventedNumericCaps": false,
+  "inventedMoU": false,
+  "gateCAutoApprove": false,
+  "honesty": {
+    "noInventedSigner": true,
+    "noInventedReviewers": true,
+    "noInventedCaps": true,
+    "noInventedMoU": true,
+    "noPilotReadinessClaim": true,
+    "fixtureIsNotOwnerAcceptance": true
+  },
+  "ciSafeModes": {
+    "check": {
+      "command": "bun test test/trackBOwnerGates.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    },
+    "fixture": {
+      "command": "bun test test/e2e03SourceClearanceComposition.test.ts test/e2eIsolationAcceptancePacket.test.ts test/sec02KillSwitchCatalog.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "references": {
+    "b1_policy_signer_ref": "UNASSIGNED",
+    "b2_db_reviewer_ref": "UNASSIGNED",
+    "b3_immunology_reviewer_ref": "UNASSIGNED",
+    "b3_metabolism_reviewer_ref": "UNASSIGNED",
+    "b3_gut_microbiome_reviewer_ref": "UNASSIGNED",
+    "b4_benchmark_floors_ref": "NOT_APPROVED",
+    "b5_spend_cap_ref": "UNASSIGNED",
+    "b5_provider_deployments_ref": "UNASSIGNED"
+  },
+  "gates": {
+    "B1": { "status": "OWNER_GATED", "accepted": false },
+    "B2": { "status": "OWNER_GATED", "accepted": false },
+    "B3": { "status": "OWNER_GATED", "accepted": false },
+    "B4": { "status": "OWNER_GATED", "accepted": false },
+    "B5": { "status": "OWNER_GATED", "accepted": false }
+  },
+  "notes": "Fill private refs only after real humans and private console values exist. Soft-land never invents signers, reviewers, caps, or MoUs."
+}
