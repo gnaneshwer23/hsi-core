@@ -35,8 +35,10 @@ test('workspace before a run states that nothing has started and shows no figure
  await expect(journey).toContainText('scientific approval: false');
  await expect(journey).toContainText('production writes: false');
  const stage2Exit=page.locator('#ws-stage2-exit');
+ await expect(stage2Exit.locator('> summary')).toContainText('local checklist 0/');
  await expect(stage2Exit.locator('> summary')).toContainText('journey complete claimed: false');
  await expect(stage2Exit.locator('> summary')).toContainText('org sharing: false');
+ await expect(stage2Exit.locator('> summary')).toContainText('not scientific approval');
  expect(await stage2Exit.getAttribute('open')).toBeNull();
  await stage2Exit.locator('> summary').click();
  await expect.poll(async()=>stage2Exit.getAttribute('open')).not.toBeNull();
@@ -229,6 +231,8 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await page.getByRole('button',{name:'Run live investigation'}).click();
  const stage2Exit=page.locator('#ws-stage2-exit');
  expect(await stage2Exit.getAttribute('open')).toBeNull();
+ await expect(stage2Exit.locator('> summary')).toContainText(/local checklist [1-7]\/7/);
+ await expect(stage2Exit.locator('> summary')).toContainText('journey complete claimed: false');
  await stage2Exit.locator('> summary').click();
  await expect.poll(async()=>stage2Exit.getAttribute('open')).not.toBeNull();
  const stage2=stage2Exit.getByRole('region',{name:/Stage 2 investigation progress/i});

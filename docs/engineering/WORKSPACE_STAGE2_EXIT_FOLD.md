@@ -18,11 +18,12 @@ Surfaces local Stage 2 exit progress and the org-sharing / re-evaluation boundar
 - `Stage2CompletionChecklistPanel`
 - `BlockedJourneyStepsPanel`
 
-## Implemented (this increment)
+## Implemented
 
 - `#ws-stage2-exit` fold after the unified trail
-- Honesty subtitle: journey complete claimed false · org sharing false · not scientific approval
-- Playwright asserts the fold starts closed, then opens before checklist / blocked asserts
+- Dynamic subtitle: `local checklist N/7` from Stage 2 checklist doneCount (never journey complete)
+- Honesty: journey complete claimed false · org sharing false · not scientific approval
+- Playwright asserts `0/` before a run and `[1-7]/7` after a useful checked path; regions scoped through the fold
 
 ## Still mocked / partial / blocked
 

@@ -410,7 +410,7 @@ export function InvestigationWorkspacePage(){
     <UnifiedJourneyTrail steps={unifiedTrail.steps} onSelect={onUnifiedTrailSelect}/>
     <details className="ws-usp-focus" id="ws-stage2-exit">
      <summary>
-      Stage 2 exit · checklist &amp; blocked 12–13 — journey complete claimed: false · org sharing: false · not scientific approval
+      Stage 2 exit · local checklist {stage2Checklist.doneCount}/{stage2Checklist.totalCount} · blocked 12–13 — journey complete claimed: false · org sharing: false · not scientific approval
      </summary>
      <Stage2CompletionChecklistPanel checklist={stage2Checklist} onSelectItem={onStage2ChecklistSelect}/>
      <BlockedJourneyStepsPanel
