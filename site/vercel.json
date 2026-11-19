@@ -125,6 +125,22 @@
       "destination": "/_pages/research--dashboard.html"
     },
     {
+      "source": "/academic",
+      "destination": "/_pages/academic.html"
+    },
+    {
+      "source": "/enterprise",
+      "destination": "/_pages/enterprise.html"
+    },
+    {
+      "source": "/enterprise/professor",
+      "destination": "/_pages/enterprise--professor.html"
+    },
+    {
+      "source": "/enterprise/student",
+      "destination": "/_pages/enterprise--student.html"
+    },
+    {
       "source": "/contact",
       "destination": "/_pages/contact.html"
     },
