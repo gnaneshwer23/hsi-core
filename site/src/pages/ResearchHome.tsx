@@ -14,6 +14,7 @@ import {ProfileWorkspaceHandoffCard} from "../components/home/ProfileWorkspaceHa
 import {AlertPreferenceCard} from "../components/home/AlertPreferenceCard";
 import {FirstUsefulInvestigationCard} from "../components/home/FirstUsefulInvestigationCard";
 import {RepeatUsageMilestoneCard} from "../components/home/RepeatUsageMilestoneCard";
+import {WillingnessToPayMilestoneCard} from "../components/home/WillingnessToPayMilestoneCard";
 import {programView} from "../lib/program";
 import {DEPT_ICON,Icon} from "../components/home/AppIcons";
 import {EMPTY_PROFILE,LIVE_RUN_KEY,summariseSavedLiveRun,type SavedLiveRun,classifyIntent,GOALS,INVESTIGATION_STATUS,looksLikeTrialId,recommend,resetProfile,ROLES,searchEntities,type Profile} from "../lib/researchHome";
@@ -205,6 +206,7 @@ export function ResearchHome(){
      )}
      {ready&&<FirstUsefulInvestigationCard/>}
      {ready&&<RepeatUsageMilestoneCard/>}
+     {ready&&<WillingnessToPayMilestoneCard/>}
 
      <Overview bundle={bundle} view={myView} profile={profile}>{ready&&<Program profile={profile} bundle={bundle} onProfile={setProfile}/>}</Overview>
      <RadarCard profile={profile} ready={ready}/>
