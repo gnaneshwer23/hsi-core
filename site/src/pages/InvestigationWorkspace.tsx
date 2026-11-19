@@ -57,6 +57,7 @@ import {UspCConnectedTrail} from "../components/workspace/UspCConnectedTrail";
 import {UspCConnectedPanel} from "../components/workspace/UspCConnectedPanel";
 import {UnifiedJourneyTrail} from "../components/workspace/UnifiedJourneyTrail";
 import {LiveBriefDecisionPanel} from "../components/workspace/LiveBriefDecisionPanel";
+import {ResearcherUsefulnessPanel} from "../components/workspace/ResearcherUsefulnessPanel";
 import {loadDomainGraph} from "../lib/claimGraphClient";
 import {EMPTY_PROFILE,loadProfile,type Profile} from "../lib/researchHome";
 import {BUCKET_LABEL,bucketOf,buildGraph,counts,filterCandidates,headline,stageRail,yearOf,type Bucket,type Cand,type EdgeState,type Run} from "../lib/workspaceView";
@@ -490,6 +491,11 @@ export function InvestigationWorkspacePage(){
       onSave={()=>{lr.save();setSaved(lr.hasSaved())}}
      />
     ):null}
+
+    <ResearcherUsefulnessPanel
+     briefHash={run?.briefHash??null}
+     question={run?.question??QUESTION}
+    />
 
     <section className="ws-card ws-gaps" aria-labelledby="ws-gp-h">
      <header><h2 id="ws-gp-h"><Icon name="layers" size={18}/>Gaps in this run <small>({run?runGaps.length:"none yet"})</small></h2></header>

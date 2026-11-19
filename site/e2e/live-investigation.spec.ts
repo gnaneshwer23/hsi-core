@@ -34,6 +34,7 @@ test('workspace before a run states that nothing has started and shows no figure
  await expect(journey).toContainText('journey complete claimed: false');
  await expect(journey).toContainText('scientific approval: false');
  await expect(journey).toContainText('production writes: false');
+ await expect(page.getByRole('region',{name:/Researcher usefulness \(this device\)/i})).toContainText('Run a live investigation');
  await page.getByText('USP focus trails (A · B · C)').click();
  await expect(page.getByRole('navigation',{name:/USP B cross-domain journey/i})).toBeVisible();
  await expect(page.getByRole('navigation',{name:/USP C connected research journey/i})).toBeVisible();
@@ -145,6 +146,17 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await connected.getByRole('button',{name:'Save to browser library',exact:true}).click();
  await expect(connected).toContainText(/Saved to browser library|Saved in this browser library/i);
  await expect(connected.getByRole('button',{name:'Reopen'}).first()).toBeVisible();
+ const useful=page.getByRole('region',{name:/Researcher usefulness \(this device\)/i});
+ await expect(useful).toContainText('journey complete claimed: false');
+ await expect(useful).toContainText('invents aggregate conversion: false');
+ await expect(useful).toContainText('pilot conversion claimed: false');
+ await expect(useful).toContainText('production writes: false');
+ await useful.getByRole('button',{name:'Useful',exact:true}).click();
+ await useful.getByRole('button',{name:'Maybe',exact:true}).click();
+ await useful.getByRole('button',{name:'Save rating in this browser'}).click();
+ await expect(useful).toContainText(/Saved locally for briefHash/i);
+ await expect(useful).toContainText('Useful');
+ await expect(useful).toContainText('willingness Maybe');
  const axe=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();
  expect(axe.violations.map(v=>v.id+': '+v.nodes.length)).toEqual([]);
 });
