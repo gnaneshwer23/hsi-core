@@ -2,14 +2,14 @@
 
 **Date:** 19 November 2026 (Europe/London)  
 **Governing audit:** [HSI_BUSINESS_VISION_EXECUTION_AUDIT_2026-11-19.md](https://github.com/gnaneshwer23/hsi-core/blob/cursor/business-vision-execution-audit-2f71/docs/strategy/HSI_BUSINESS_VISION_EXECUTION_AUDIT_2026-11-19.md) (PR [#515](https://github.com/gnaneshwer23/hsi-core/pull/515) — parallel to this journey stack; lands on `main` separately)  
-**Stack tip (this branch):** `cursor/journey-stack-status-gaps-fold-2f71`  
+**Stack tip (this branch):** `cursor/stage2-blocked-fold-2f71`  
 **Honesty:** `journeyCompleteClaimed=false` · `writesEnabledClaimed=false` · `pilotReadyClaimed=false` · `scientificallyValidatedClaimed=false` · soft-land merge queue **paused** · no auto-merge
 
 ---
 
 ## Executive status
 
-Agent-shippable **Stage 2 journey productization + §H device-local metrics + Home/Workspace fragmentation folds** are largely complete on the open stack (#516→tip). What remains is mostly **owner-gated** (staging grants, write packet, source clearance, SME gold, soft-land merges, real pilot invite) — not another dashboard shell.
+Agent-shippable **Stage 2 journey productization + §H device-local metrics + Home/Workspace fragmentation folds** are complete on the open stack (#516→tip), including Stage 2 exit fold. What remains is mostly **owner-gated** (staging grants, write packet, source clearance, SME gold, soft-land merges, real pilot invite) — not another dashboard shell.
 
 ---
 
@@ -36,8 +36,9 @@ Agent-shippable **Stage 2 journey productization + §H device-local metrics + Ho
 | #533 | Home: fold local journey metrics | UX cohesion |
 | #534 | Pilot readiness honesty (local vs owner gates) | §I prep |
 | #535 | Workspace: fold USP A/B/curated panels; USP C open | UX cohesion |
+| #536 | Stack status audit + Gaps & testable fold | UX + audit |
 
-**Also on tip (this PR):** stack status doc + fold Gaps & testable questions.
+**Also on tip (this PR):** fold Stage 2 checklist + blocked 12–13 under `#ws-stage2-exit`.
 
 ---
 
@@ -78,10 +79,10 @@ Agent-shippable **Stage 2 journey productization + §H device-local metrics + Ho
 
 ### Agent-shippable now (no owner gate)
 
-1. **This PR** — status doc + Gaps/testable fold (workspace clutter).  
-2. Optional: fold Stage 2 checklist + blocked 12–13 under one honesty details (keep unified trail primary).  
-3. Optional: dynamic Home `#rh-metrics` summary counts in the fold subtitle.  
-4. Docs-only: refresh audit §D/§E “next five” as “shipped five + metrics” pointer to this status file.
+1. **This PR** — Stage 2 exit fold (checklist + blocked 12–13).  
+2. Optional: dynamic Home `#rh-metrics` summary counts in the fold subtitle (local milestones only; never invent conversion).  
+3. Docs-only: when #515 merges, retarget the governing-audit link to the in-tree `docs/strategy/` path.  
+4. **Stop building dashboards** — further agent increments should be honesty/docs/e2e hardening unless the owner names a new Stage 2 gap.
 
 ### Owner-gated next (do not code as “done”)
 
@@ -97,7 +98,7 @@ Agent-shippable **Stage 2 journey productization + §H device-local metrics + Ho
 
 | Surface | Role |
 | --- | --- |
-| `/research/workspace` | Stage 2 spine + USP C save; A/B panels folded |
+| `/research/workspace` | Unified trail primary; Stage 2 exit / USP A–B / gaps+testable folded; USP C save open |
 | `/research/home` | Profile handoff + folded §H metrics + pilot readiness honesty |
 | Enterprise / multi-workspace demos | Stage 4 preview only — not next build centre |
 

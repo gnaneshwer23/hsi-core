@@ -408,7 +408,16 @@ export function InvestigationWorkspacePage(){
      </div>
     </section>
     <UnifiedJourneyTrail steps={unifiedTrail.steps} onSelect={onUnifiedTrailSelect}/>
-    <Stage2CompletionChecklistPanel checklist={stage2Checklist} onSelectItem={onStage2ChecklistSelect}/>
+    <details className="ws-usp-focus" id="ws-stage2-exit">
+     <summary>
+      Stage 2 exit · checklist &amp; blocked 12–13 — journey complete claimed: false · org sharing: false · not scientific approval
+     </summary>
+     <Stage2CompletionChecklistPanel checklist={stage2Checklist} onSelectItem={onStage2ChecklistSelect}/>
+     <BlockedJourneyStepsPanel
+      pack={blockedJourneySteps}
+      onOpenLibrary={()=>document.getElementById("ws-conn-h")?.scrollIntoView({behavior:"smooth",block:"start"})}
+     />
+    </details>
     <details className="ws-usp-focus">
      <summary>USP focus trails (A · B · C)</summary>
      <UspADisagreementTrail steps={uspTrail.steps} onSelect={onTrailSelect}/>
@@ -610,11 +619,6 @@ export function InvestigationWorkspacePage(){
       }}
      />
     </details>
-
-    <BlockedJourneyStepsPanel
-     pack={blockedJourneySteps}
-     onOpenLibrary={()=>document.getElementById("ws-conn-h")?.scrollIntoView({behavior:"smooth",block:"start"})}
-    />
    </main>
   </ResearchAppShell>
  );

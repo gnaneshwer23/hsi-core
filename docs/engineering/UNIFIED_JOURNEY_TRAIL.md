@@ -24,6 +24,8 @@ Stage 2 journey cohesion across **USP A**, **USP B**, and personal **USP C** sav
 - Primary workspace nav above the USP focus trails
 - USP A/B/C trails folded under “USP focus trails” so the spine stays primary
 - Follow-on: USP A/B/curated **panels** folded under `#ws-usp-panels` (USP C save panel stays open) — see `WORKSPACE_USP_PANELS_FOLD.md`
+- Follow-on: Gaps + testable questions under `#ws-gaps-testable` — see `WORKSPACE_GAPS_TESTABLE_FOLD.md`
+- Follow-on: Stage 2 checklist + blocked 12–13 under `#ws-stage2-exit` — see `WORKSPACE_STAGE2_EXIT_FOLD.md`
 - Unit + Playwright honesty asserts (`researcherJourneyCompleteClaimed: false`)
 
 ## Still mocked / partial / blocked
