@@ -26,3 +26,11 @@ export {
   COMPARATIVE_DISEASE_MECHANISMS_BUNDLE,
 } from "./fixtures/phase2Scenarios";
 export { SHARED_NODES, SHARED_PUBLICATIONS } from "./fixtures/sharedCatalog";
+export {
+  listDemoScenarioSummaries,
+  buildDemoComparisonView,
+  provenanceLabel,
+  type DemoScenarioSummary,
+  type DemoComparisonView,
+  type DemoComparisonSide,
+} from "./presentation";

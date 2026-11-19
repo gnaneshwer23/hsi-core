@@ -17,6 +17,7 @@ const WorkspaceDashboardPage=lazy(()=>import("./pages/WorkspaceDashboard").then(
 const ParticipantDashboard=lazy(()=>import("./pages/ParticipantDashboard").then(m=>({default:m.ParticipantDashboard})));
 const FundingCareersDashboard=lazy(()=>import("./pages/FundingCareersDashboard").then(m=>({default:m.FundingCareersDashboard})));
 const FirstPilotDashboard=lazy(()=>import("./pages/FirstPilotDashboard").then(m=>({default:m.FirstPilotDashboard})));
+const DemoUniversePage=lazy(()=>import("./pages/DemoUniversePage").then(m=>({default:m.DemoUniversePage})));
 import {ContextConflictAuditPage} from "./pages/PublicResearchPages";
 import {TrustPublicPage,AboutPublicPage} from "./pages/PublicFoundationPages";
 import {
@@ -211,6 +212,7 @@ export default function App() {
         <Route path="science/connections" element={<ScienceConnections />} />
         <Route path="science/disease" element={<ScienceDisease />} />
         <Route path="discovery-engine" element={<DiscoveryEngine />} />
+        <Route path="demo/universe" element={<Suspense fallback={<p role="status">Loading demo research universe…</p>}><DemoUniversePage/></Suspense>} />
         <Route path="demo" element={<Navigate to="/research/journey" replace />} />
         <Route path="modules" element={<Navigate to="/how-it-works" replace />} />
         <Route path="modules/aksh-health" element={<Navigate to="/how-it-works" replace />} />

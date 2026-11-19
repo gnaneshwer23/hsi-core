@@ -1,0 +1,181 @@
+/* Demo Research Universe — comparison + brief (PR3). Extends enterprise-dashboard tokens. */
+
+.du-shell .ent-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.du-scenario-list {
+  display: grid;
+  gap: 0.5rem;
+}
+
+@media (min-width: 900px) {
+  .du-scenario-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.du-scenario-list button {
+  text-align: left;
+  border: 1px solid var(--ent-border, #c5cdd6);
+  background: var(--ent-panel, #fff);
+  border-radius: 0.5rem;
+  padding: 0.75rem 0.9rem;
+  cursor: pointer;
+}
+
+.du-scenario-list button[aria-pressed="true"] {
+  border-color: var(--ent-ink, #101d2a);
+  box-shadow: inset 0 0 0 1px var(--ent-ink, #101d2a);
+}
+
+.du-scenario-list strong {
+  display: block;
+  font-size: 0.95rem;
+}
+
+.du-scenario-list span {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--ent-muted, #5a6570);
+  margin-top: 0.2rem;
+}
+
+.du-journey {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.du-journey li {
+  margin: 0;
+}
+
+.du-journey button {
+  border: 1px solid var(--ent-border, #c5cdd6);
+  border-radius: 999px;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.75rem;
+  background: transparent;
+  cursor: pointer;
+  color: inherit;
+}
+
+.du-journey li[data-active="true"] button {
+  background: var(--ent-ink, #101d2a);
+  color: #f7f4ef;
+  border-color: transparent;
+}
+
+.du-compare {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 900px) {
+  .du-compare {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.du-side {
+  border: 1px solid var(--ent-border, #c5cdd6);
+  border-radius: 0.65rem;
+  padding: 1rem;
+  background: var(--ent-panel, #fff);
+}
+
+.du-side h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+}
+
+.du-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0 0 0.75rem;
+}
+
+.du-chip {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  border-radius: 0.25rem;
+  padding: 0.15rem 0.4rem;
+  background: #eef2f5;
+  color: #2a3a48;
+}
+
+.du-chip[data-kind="synthetic"] {
+  background: #f3ebe4;
+  color: #6a3a28;
+}
+
+.du-chip[data-kind="curated"] {
+  background: #e8eef4;
+  color: #2a4558;
+}
+
+.du-chip[data-kind="verified"] {
+  background: #e7f0ec;
+  color: #2a5553;
+}
+
+.du-dl {
+  margin: 0;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.du-dl div {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.du-dl dt {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ent-muted, #5a6570);
+}
+
+.du-dl dd {
+  margin: 0;
+  font-size: 0.88rem;
+}
+
+.du-abstention {
+  border-left: 3px solid #963e56;
+  padding: 0.65rem 0.85rem;
+  background: #faf6f7;
+}
+
+.du-brief-limitations,
+.du-brief-next,
+.du-gaps {
+  margin: 0.35rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.du-graph {
+  display: grid;
+  gap: 0.75rem;
+}
+
+@media (min-width: 800px) {
+  .du-graph {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.du-graph ul {
+  margin: 0.35rem 0 0;
+  padding-left: 1.1rem;
+}
