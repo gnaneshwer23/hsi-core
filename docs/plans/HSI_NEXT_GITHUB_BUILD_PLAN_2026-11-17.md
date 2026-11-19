@@ -97,6 +97,8 @@ These can land without waiting for SMEs. Sequence matters where noted.
 | **B4** | Approve benchmark floors before scoring | Public `/benchmark` numbers |
 | **B5** | Set provider spend caps + model deployment choices | A1.2 / live verifier |
 
+Soft-land (catalog only): `src/operations/trackBOwnerGates.ts` + `docs/engineering/TRACK_B_OWNER_GATES_SOFT_LAND.md` — never invents signers, reviewers, caps, MoUs, or pilot readiness.
+
 Without B1–B3, keep shipping Track A; do not claim pilot readiness.
 
 ---
