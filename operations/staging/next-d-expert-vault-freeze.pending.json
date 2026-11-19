@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "hsi-next-d-expert-vault-freeze-pending-1",
+  "purpose": "next_d_expert_vault_freeze_soft_land",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "priority": "P1",
+  "smeGoldFilled": false,
+  "frozenHeldOut": false,
+  "signedFreezeClaimed": false,
+  "scientificApproval": false,
+  "acceptedForScope": false,
+  "signedPacketClaimed": false,
+  "independentlyLabelledCases": 0,
+  "adjudicatedCases": 0,
+  "resolvedFinalCaseTarget": 120,
+  "inventedExpertIds": false,
+  "inventedScores": false,
+  "inventedMethodologySignature": false,
+  "dependsOn": ["PR-E2E-10"],
+  "humanWorkStartsInParallel": true,
+  "honesty": {
+    "e2e10IsPrerequisiteCatalog": true,
+    "noInventedExpertIds": true,
+    "noInventedScores": true,
+    "noSignedFreezeWithoutExperts": true,
+    "draftBankIsNotGold": true,
+    "fixtureIsNotFreeze": true,
+    "tuningBlockedUntilRubricAndFloors": true
+  },
+  "ciSafeModes": {
+    "check": {
+      "command": "bun test test/nextDExpertVaultFreezeSoftLand.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    },
+    "fixture": {
+      "command": "bun test test/e2e10SmeGoldVault.test.ts && bun run r2:check && bun run gold:check",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "references": {
+    "expert_a_ref": "UNASSIGNED",
+    "expert_b_ref": "UNASSIGNED",
+    "adjudicator_ref": "UNASSIGNED",
+    "methodology_signature_ref": "NOT_STARTED",
+    "private_vault_root_ref": ".hsi-private-benchmark",
+    "e2e10_soft_land_ref": "docs/engineering/E2E_10_SME_GOLD_VAULT_SOFT_LAND.md"
+  },
+  "surfaces": {
+    "e2e10_vault_reuse": { "status": "REUSE", "smeGoldFilled": false },
+    "dual_expert_authoring_slots": { "status": "OWNER_HUMAN", "smeGoldFilled": false },
+    "adjudication_workflow": { "status": "REUSE_SCAFFOLD", "smeGoldFilled": false },
+    "contamination_and_restricted_answers": { "status": "REUSE_SCAFFOLD", "smeGoldFilled": false },
+    "family_splits_and_held_out": { "status": "REUSE_SCAFFOLD", "smeGoldFilled": false },
+    "methodology_rubric_policy": { "status": "OWNER_HUMAN", "smeGoldFilled": false },
+    "signed_freeze_120_cases": { "status": "BLOCKED", "smeGoldFilled": false }
+  },
+  "notes": "Fill expert/adjudicator refs only after real humans are recruited. Soft-land never invents scores, freezes, or methodology signatures."
+}
