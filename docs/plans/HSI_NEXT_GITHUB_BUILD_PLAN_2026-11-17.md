@@ -138,6 +138,7 @@ Target: **≥3 merged engineering PRs per week** on Track A while Track B is in 
 | **PR-E2E-03** | Source clearance composition soft-land — `src/operations/e2e03SourceClearanceComposition.ts` + `docs/engineering/E2E_03_SOURCE_CLEARANCE_COMPOSITION_SOFT_LAND.md` | Catalogs gate vs metadata surfaces; DRAFT policy stays DRAFT; never invents signer/authority/approval; abstract API honesty fields fail-closed on reuse |
 | **PR-E2E-05** | Staging investigation save/resume soft-land — `src/operations/e2e05StagingSaveResume.ts` + `docs/engineering/E2E_05_STAGING_SAVE_RESUME_SOFT_LAND.md` | Catalogs fail-closed persistence paths; never enables production writes or removes migration holds |
 | **PR-E2E-06** | Dual-provider verification soft-land — `src/operations/e2e06DualProviderVerification.ts` + `docs/engineering/E2E_06_DUAL_PROVIDER_VERIFICATION_SOFT_LAND.md` | Reuses dual-model harness; never invents deployments/credentials or claims gate pass / independence |
+| **PR-E2E-10** | SME gold authoring/vault soft-land — `src/operations/e2e10SmeGoldVault.ts` + `docs/engineering/E2E_10_SME_GOLD_VAULT_SOFT_LAND.md` | Catalogues vault + R2 worksheets toward 60→120; never invents labels/adjudications; `smeGoldFilled` stays false |
 
 Open implementation PRs for passport / workbench / brief columns remain separate; merge when up to date with `main` and verify is green.
 
