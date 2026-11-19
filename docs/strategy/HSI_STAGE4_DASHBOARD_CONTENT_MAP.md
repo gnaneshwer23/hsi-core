@@ -145,7 +145,7 @@
 
 **Visual reference pattern:** feed + projects + events + pinned resources — collaboration shell over shared evidence reviews, not a second graph.
 
-**Status:** Proposed · feed demos only; Circles durable store held.
+**Status:** Soft-land Research Community shell on `/enterprise/community` (demo-labelled; Circles durable store held; shared ≠ public; no automatic IP bleed; deep-links to feed examples, gaps, governance, workspace).
 
 ---
 

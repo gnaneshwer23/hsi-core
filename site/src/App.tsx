@@ -11,6 +11,7 @@ const EnterpriseStudentDashboard=lazy(()=>import("./pages/EnterpriseStudentDashb
 const BiotechPharmaDashboard=lazy(()=>import("./pages/BiotechPharmaDashboard").then(m=>({default:m.BiotechPharmaDashboard})));
 const ClinicalResearchDashboard=lazy(()=>import("./pages/ClinicalResearchDashboard").then(m=>({default:m.ClinicalResearchDashboard})));
 const LabOmicsDashboard=lazy(()=>import("./pages/LabOmicsDashboard").then(m=>({default:m.LabOmicsDashboard})));
+const CommunityDashboard=lazy(()=>import("./pages/CommunityDashboard").then(m=>({default:m.CommunityDashboard})));
 import {ContextConflictAuditPage} from "./pages/PublicResearchPages";
 import {TrustPublicPage,AboutPublicPage} from "./pages/PublicFoundationPages";
 import {ResearchersPublicPage,BiotechPublicPage,ValidationPublicPage} from "./pages/AudiencePublicPages";
@@ -97,6 +98,7 @@ export default function App() {
         <Route path="enterprise/biotech" element={<Suspense fallback={<p role="status">Loading biotech research preview…</p>}><BiotechPharmaDashboard/></Suspense>}/>
         <Route path="enterprise/clinical" element={<Suspense fallback={<p role="status">Loading clinical research preview…</p>}><ClinicalResearchDashboard/></Suspense>}/>
         <Route path="enterprise/lab" element={<Suspense fallback={<p role="status">Loading laboratory and omics preview…</p>}><LabOmicsDashboard/></Suspense>}/>
+        <Route path="enterprise/community" element={<Suspense fallback={<p role="status">Loading research community preview…</p>}><CommunityDashboard/></Suspense>}/>
         <Route path="research/governance" element={<GovernanceDashboard/>}/>
         <Route path="sign-in" element={<SignIn />} />
         <Route path="forgot-password" element={<PasswordRecovery key="request" mode="request" />} />

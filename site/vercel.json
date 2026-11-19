@@ -153,6 +153,10 @@
       "destination": "/_pages/enterprise--lab.html"
     },
     {
+      "source": "/enterprise/community",
+      "destination": "/_pages/enterprise--community.html"
+    },
+    {
       "source": "/contact",
       "destination": "/_pages/contact.html"
     },

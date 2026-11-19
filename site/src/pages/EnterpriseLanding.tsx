@@ -54,18 +54,21 @@ export function EnterpriseLandingPage() {
           <Link className="ent-btn ent-btn-secondary" to="/enterprise/lab">
             Lab / Omics shell
           </Link>
+          <Link className="ent-btn ent-btn-secondary" to="/enterprise/community">
+            Community shell
+          </Link>
         </div>
         <section className="ent-panel" aria-labelledby="ent-workspaces-heading">
           <h2 id="ent-workspaces-heading" style={{ margin: 0, fontSize: "1.05rem" }}>
             Five Stage 4 shells (same engine)
           </h2>
           <p className="ent-lead">
-            Academic, Biotech/Pharma, Clinical research and Laboratory/omics shells
-            preview audience chrome on the shared substrate. Research community stays
-            proposed — they must reuse the shared scientific engine, not fork it.
-            Content contracts:{" "}
+            All five Stage 4 audience shells preview chrome on the shared substrate —
+            they must reuse the shared scientific engine, not fork it. Content
+            contracts:{" "}
             <code>docs/strategy/HSI_STAGE4_DASHBOARD_CONTENT_MAP.md</code>. Clinical
             research is not CDS; patient participation stays a future governed path.
+            Circles durable store remains held.
           </p>
           <ul>
             <li>Academic research — this preview</li>
@@ -82,7 +85,10 @@ export function EnterpriseLandingPage() {
               Laboratory &amp; omics —{" "}
               <Link to="/enterprise/lab">demonstration shell</Link>
             </li>
-            <li>Research community — proposed</li>
+            <li>
+              Research community —{" "}
+              <Link to="/enterprise/community">demonstration shell</Link>
+            </li>
           </ul>
         </section>
       </div>
