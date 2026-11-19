@@ -403,7 +403,7 @@ export function InvestigationWorkspacePage(){
        <button type="button" className="ws-btn" onClick={()=>download("hsi-live-investigation.json",JSON.stringify(run,null,2),"application/json")}>Export JSON</button>
        <button type="button" className="ws-btn" onClick={()=>{const b=exportLiveBriefV2(run);download("hsi-live-brief-v2.json",JSON.stringify(b,null,2),"application/json")}}>Export Brief v2 (JSON)</button>
        <button type="button" className="ws-btn" onClick={()=>{const b=exportLiveBriefV2(run);download("hsi-live-brief-v2.md",renderLiveBriefV2Markdown(b),"text/markdown")}}>Export Brief v2 (Markdown)</button>
-       <button type="button" className="ws-btn" onClick={()=>{lr.save();setSaved(lr.hasSaved())}}>Save in this browser</button>
+       <button type="button" className="ws-btn" onClick={()=>{lr.save();setSaved(lr.hasSaved())}}>Save to browser library</button>
       </div>
      </section>
     )}

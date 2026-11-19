@@ -122,7 +122,7 @@ export function buildUspCConnectedTrail(input: UspCTrailInput): {
       input.libraryCount > 0
         ? `${input.libraryCount} browser-saved run(s) — not a server store`
         : input.hasRun
-          ? "Save in this browser only (production writes off)"
+          ? "Browser library only (production writes off)"
           : "Available after a run",
     ),
     step(
