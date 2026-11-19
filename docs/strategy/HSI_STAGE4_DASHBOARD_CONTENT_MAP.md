@@ -1,7 +1,7 @@
 # Stage 4 — research dashboards + multi-workspace hub (content map)
 
 **Date:** 19 November 2026 (Europe/London)  
-**Status:** Soft-landed Stage 4 interfaces (A–H) — **not** the current build centre  
+**Status:** Soft-landed Stage 4 interfaces (A–I) — **not** the current build centre  
 **Doctrine:** [`HSI_BUSINESS_VISION_EXECUTION_AUDIT_2026-11-19.md`](./HSI_BUSINESS_VISION_EXECUTION_AUDIT_2026-11-19.md) · journey over dashboards · one scientific engine · many shells  
 **Related:** Soft-landed academic / audience shells on `/enterprise/*`; multi-workspace hub F on `/workspaces` (concept from [#514](https://github.com/gnaneshwer23/hsi-core/pull/514))
 
@@ -207,6 +207,23 @@
 
 ---
 
+## 9. First researcher pilot design (shell I)
+
+**Audience:** Owner + invited researchers preparing the §I pilot  
+
+**Hard boundary:** `pilotReadyClaimed` always false · no invented users/testimonials/conversion · Stage 2 journey remains the build centre · org dashboards A–H are demos, not the pilot centre.
+
+| Must contain | Maps to shared / existing | Notes |
+| --- | --- | --- |
+| Pilot proposal | Audit §I copy | Size 3–5; disease-agnostic questions |
+| Owner-gated prerequisites | Grants · writes · source · spend · invite | All blocked in demo |
+| Success signals | §H device-local metrics | Measure; do not invent |
+| Out of scope | Org dashboards · cohorts · Circles · checkout | Explicit |
+
+**Status:** Soft-land First pilot design on `/enterprise/pilot`. Gap matrix: [`../engineering/FIRST_PILOT_DASHBOARD_GAP_MATRIX.md`](../engineering/FIRST_PILOT_DASHBOARD_GAP_MATRIX.md). Device-local honesty remains on `/research/home`.
+
+---
+
 ## Shared UI component kit (shell-level)
 
 Reuse across dashboards; swap widget **content**, not engines:
@@ -229,7 +246,7 @@ Reuse across dashboards; swap widget **content**, not engines:
 
 1. **Now:** Stage 2 journey + §H honesty on `main` (landed #538/#539+)  
 2. **Owner-gated:** staging grants, write packet, source clearance, SME gold, soft-lands (#511/#512)  
-3. **Then Stage 4 shells:** Academic → Biotech → Clinical research → Lab → Community → Multi-workspace hub → Participant contribution → Funding & careers (A–H soft-landed as demos; flesh beyond demo only after usefulness; participant path stays clinical-plane gated)
+3. **Then Stage 4 shells:** Academic → Biotech → Clinical research → Lab → Community → Multi-workspace hub → Participant contribution → Funding & careers → First pilot design (A–I soft-landed as demos; Stage 2 journey remains build centre; pilot ready always false)
 
 Do **not** treat founder UI references as permission to invent metrics, patients, competitor pipelines or scientific approval.
 

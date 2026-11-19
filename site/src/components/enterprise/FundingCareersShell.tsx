@@ -9,6 +9,7 @@ const NAV = [
   { to: "/enterprise/biotech", label: "Biotech shell", end: true },
   { to: "/academic", label: "Academic shells", end: true },
   { to: "/workspaces", label: "Multi-workspace hub", end: true },
+  { to: "/enterprise/pilot", label: "Pilot design", end: true },
 ] as const;
 
 /** Shared-engine chrome for Funding & Careers Stage 4 shell H. */
