@@ -147,10 +147,15 @@
         "site/src/pages/ResearchDashboard.tsx",
         "site/src/pages/ScientificResearchWorkbench.tsx",
         "site/src/pages/AuthenticatedInterrogativeWorkbench.tsx",
-        "site/src/pages/ResearchMechanismWorkflow.tsx"
+        "site/src/pages/ResearchMechanismWorkflow.tsx",
+        "site/src/pages/EnterpriseProfessorDashboard.tsx",
+        "site/src/pages/EnterpriseStudentDashboard.tsx",
+        "site/src/pages/WorkspaceHub.tsx",
+        "site/src/pages/WorkspaceDashboard.tsx",
+        "docs/engineering/ENTERPRISE_DASHBOARD_GAP_MATRIX.md"
       ],
-      "gap": "Specialist pages remain; synthetic profiles demoted from hero",
-      "nextAction": "Keep specialist views; primary path is decision-workbench + mechanism-workflow"
+      "gap": "Specialist pages remain; multi-workspace concept (`/workspaces/*`) and enterprise professor/student shells (`/enterprise/*`) are demonstration UI only — no durable org persistence or PHI; clinical cohorts disabled",
+      "nextAction": "Keep specialist views; primary path is workspace; connect live services behind access controls before organisational sharing"
     },
     {
       "id": "F-07",
