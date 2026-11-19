@@ -231,7 +231,9 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await page.getByRole('button',{name:'Run live investigation'}).click();
  const stage2Exit=page.locator('#ws-stage2-exit');
  expect(await stage2Exit.getAttribute('open')).toBeNull();
- await expect(stage2Exit.locator('> summary')).toContainText(/local checklist [1-7]\/7/);
+ // After useful path + re-run (clears claim/comparison selection): ask, evidence, gaps,
+ // brief, save (same briefHash in library), usefulness — passport item stays open → 6/7.
+ await expect(stage2Exit.locator('> summary')).toContainText('local checklist 6/7');
  await expect(stage2Exit.locator('> summary')).toContainText('journey complete claimed: false');
  await stage2Exit.locator('> summary').click();
  await expect.poll(async()=>stage2Exit.getAttribute('open')).not.toBeNull();

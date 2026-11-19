@@ -88,4 +88,4 @@ Agent-shippable **Stage 2 journey productization + §H device-local metrics + Ho
 
 ## Gates (binding)
 
-No PHI · no Gate C auto-approve · no invented MoU · no production write enablement · no held-migration lifts · CI green ≠ production acceptance.
+No PHI · no Gate C auto-approve · no invented MoU · no production write enablement · no held-migration lifts · CI green ≠ production acceptance · no auto-merge while soft-land queue paused.

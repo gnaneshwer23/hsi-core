@@ -246,16 +246,23 @@ export function InvestigationWorkspacePage(){
   const store=loadResearcherUsefulnessStore(typeof localStorage!=="undefined"?localStorage:null);
   return Boolean(getUsefulnessForBrief(store,run.briefHash));
  },[run?.briefHash,usefulnessTick]);
+ const activeBriefHash=run?.briefHash??null;
+ const libraryHasActiveBrief=Boolean(
+  activeBriefHash&&
+  lr.library.entries.some((e)=>e.briefHash===activeBriefHash),
+ );
  const stage2Checklist=useMemo(()=>buildStage2CompletionChecklist({
-  briefHash:run?.briefHash??null,
+  briefHash:activeBriefHash,
   hasRun:Boolean(run),
   candidateCount:run?.candidates.length??0,
   hasPassportOrDisagreement:Boolean(sel)||Boolean(cmpKey),
   hasGapsOrTestable:runGaps.length>0||testableQuestions.items.length>0,
   briefAvailable:Boolean(briefPreview),
-  savedOrReopened:lr.savedThisSession||lr.reopenedThisSession||lr.library.entries.length>0,
+  // Count Save/reopen only for this briefHash — not any unrelated library entry.
+  savedOrReopened:lr.savedThisSession||lr.reopenedThisSession||libraryHasActiveBrief,
   usefulnessRated,
- }),[run,sel,cmpKey,runGaps.length,testableQuestions.items.length,briefPreview,lr.savedThisSession,lr.reopenedThisSession,lr.library.entries.length,usefulnessRated]);
+ }),[run,activeBriefHash,sel,cmpKey,runGaps.length,testableQuestions.items.length,briefPreview,lr.savedThisSession,lr.reopenedThisSession,libraryHasActiveBrief,usefulnessRated]);
+ const clearRunSelections=()=>{setSel(null);setPair(null);setCmpKey(null);setBucket("all")};
  const blockedJourneySteps=useMemo(()=>buildBlockedJourneySteps({
   briefHash:run?.briefHash??null,
   libraryCount:lr.library.entries.length,
@@ -368,8 +375,8 @@ export function InvestigationWorkspacePage(){
        {state==="error"&&<p className="ws-err" role="alert">{lr.error} No findings were generated.</p>}
       </div>
        <div className="ws-actions">
-       <button type="button" className="ws-run" onClick={()=>{setSel(null);setPair(null);setCmpKey(null);setBucket("all");void lr.start()}} disabled={state==="running"}><Icon name="spark" size={16}/>{state==="running"?"Running…":run?"Run again":"Run live investigation"}</button>
-       {!run&&saved&&<button type="button" className="ws-btn" onClick={()=>lr.reopen()}>Reopen saved run</button>}
+       <button type="button" className="ws-run" onClick={()=>{clearRunSelections();void lr.start()}} disabled={state==="running"}><Icon name="spark" size={16}/>{state==="running"?"Running…":run?"Run again":"Run live investigation"}</button>
+       {!run&&saved&&<button type="button" className="ws-btn" onClick={()=>{clearRunSelections();lr.reopen()}}>Reopen saved run</button>}
       </div>
      </section>
      <dl className="ws-stats" aria-label="Run totals">
@@ -404,7 +411,7 @@ export function InvestigationWorkspacePage(){
      <div className="ws-actions">
       <Link className="ws-btn" to="/research/home">Open Ask on Research Home</Link>
       <Link className="ws-btn" to="/welcome">Edit profile setup</Link>
-      {saved&&<button type="button" className="ws-btn" onClick={()=>lr.reopen()}>Reopen browser-saved run</button>}
+      {saved&&<button type="button" className="ws-btn" onClick={()=>{clearRunSelections();lr.reopen()}}>Reopen browser-saved run</button>}
      </div>
     </section>
     <UnifiedJourneyTrail steps={unifiedTrail.steps} onSelect={onUnifiedTrailSelect}/>
@@ -571,7 +578,7 @@ export function InvestigationWorkspacePage(){
      reopenedThisSession={lr.reopenedThisSession}
      hasRun={Boolean(run)}
      onSave={()=>{lr.save();setSaved(lr.hasSaved())}}
-     onReopen={(id)=>{lr.reopenFromLibrary(id);setSaved(lr.hasSaved())}}
+     onReopen={(id)=>{clearRunSelections();lr.reopenFromLibrary(id);setSaved(lr.hasSaved())}}
      onOpenBrief={()=>{setBrief(true);document.getElementById("ws-brief-panel")?.scrollIntoView({behavior:"smooth",block:"start"})}}
     />
 
