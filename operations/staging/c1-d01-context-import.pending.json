@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "hsi-c1-d01-context-import-pending-1",
+  "purpose": "track_c1_d01_context_import_soft_land",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "slice": "D-01",
+  "graphPromotion": false,
+  "autoPromotion": false,
+  "scientificApproval": false,
+  "inventedCuratorProposals": false,
+  "sealedProposedFillCount": 0,
+  "acceptedForScope": false,
+  "signedPacketClaimed": false,
+  "honesty": {
+    "emptyProposalsLeaveGraphUnchanged": true,
+    "applyKeepsUnreviewed": true,
+    "applyKeepsScientificClaimFalse": true,
+    "applyKeepsConfidenceNotCalibrated": true,
+    "noInventedCuratorFills": true,
+    "fixtureIsNotGraphRelease": true
+  },
+  "ciSafeModes": {
+    "check": {
+      "command": "bun test test/c1D01ContextImport.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    },
+    "fixture": {
+      "command": "bun test test/contextCompletionSheet.test.ts && bun run context-sheet:validate",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "references": {
+    "curator_fill_owner_ref": "UNASSIGNED",
+    "filled_csv_artifact_ref": "NOT_STARTED",
+    "apply_receipt_ref": "NOT_STARTED"
+  },
+  "surfaces": {
+    "sealed_completion_sheet": { "status": "REUSE", "promotion": false },
+    "csv_merge_proposals": { "status": "REUSE", "promotion": false },
+    "apply_overlay_cli": { "status": "REUSE", "promotion": false },
+    "fill_progress_ui": { "status": "REUSE", "promotion": false },
+    "edge_review_candidate_list": { "status": "REUSE_C2", "promotion": false },
+    "empty_proposal_refuse": { "status": "BLOCKED_UNTIL_FILL", "promotion": false },
+    "post_apply_unreviewed_honesty": { "status": "HONESTY_REQUIRED", "promotion": false }
+  },
+  "notes": "Curators must fill proposals before apply changes the graph overlay. Soft-land never invents fills or promotions."
+}
