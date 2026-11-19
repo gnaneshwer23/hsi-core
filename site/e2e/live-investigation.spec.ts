@@ -79,8 +79,9 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  const insp=page.getByLabel('Selected claim');
  await expect(insp).toContainText('openai-a');await expect(insp).toContainText('Quoted: “IL-21 was increased”');
  await expect(page.getByRole('heading',{name:'Evidence table for this live brief'})).toBeVisible();
- await expect(page.getByText('EVIDENCE TABLE · PASSPORT COLUMNS · NOT SCIENTIFICALLY APPROVED')).toBeVisible();
- await expect(page.getByRole('region',{name:'Passport evidence table'})).toContainText('Not stated');
+ // Evidence section + always-visible brief panel both render passport tables — scope each.
+ await expect(ev.getByText('EVIDENCE TABLE · PASSPORT COLUMNS · NOT SCIENTIFICALLY APPROVED')).toBeVisible();
+ await expect(ev.getByRole('region',{name:'Passport evidence table'})).toContainText('Not stated');
  // Decision brief: limitations + passport columns always visible; markdown is optional preview.
  const briefPanel=page.getByRole('region',{name:/Research decision brief/i});
  await expect(briefPanel).toContainText('briefAccepted: false');
@@ -88,6 +89,7 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await expect(briefPanel.getByRole('heading',{name:/Limitations \(always visible\)/i})).toBeVisible();
  await expect(briefPanel).toContainText('Candidate-only live brief');
  await expect(briefPanel.getByRole('heading',{name:/Passport columns for this brief/i})).toBeVisible();
+ await expect(briefPanel.getByText('EVIDENCE TABLE · PASSPORT COLUMNS · NOT SCIENTIFICALLY APPROVED')).toBeVisible();
  const briefToggle=page.getByRole('button',{name:/markdown preview/i});
  await expect(briefToggle).toBeVisible();
  if(await page.getByRole('button',{name:'Open markdown preview'}).count()){
