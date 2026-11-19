@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "hsi-e2e-08-onboarding-profile-pending-1",
+  "purpose": "pr_e2e_08_onboarding_profile_soft_land",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "priority": "P2",
+  "schemaApplied": false,
+  "acceptedForScope": false,
+  "scientificApproval": false,
+  "signedPacketClaimed": false,
+  "productionWritesEnabled": false,
+  "migration023Lifted": false,
+  "multiDeviceDurableClaimed": false,
+  "honesty": {
+    "defaultIsLocalStorage": true,
+    "no023HoldRemoval": true,
+    "noProductionWrites": true,
+    "memoryStoreIsNotDurableSync": true,
+    "fixtureIsNotSchemaApplied": true
+  },
+  "ciSafeModes": {
+    "check": {
+      "command": "bun test test/e2e08OnboardingProfileSoftLand.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    },
+    "fixture": {
+      "command": "bun test test/onboardingProfileStore.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "references": {
+    "implementation_pr_ref": "#473",
+    "staging_enable_ref": "NOT_STARTED",
+    "runbook_ref": "docs/engineering/ONBOARDING_PROFILE_STORE_RUNBOOK.md"
+  },
+  "surfaces": {
+    "device_local_default": { "status": "REUSE", "schemaApplied": false },
+    "write_gate_fail_closed": { "status": "REUSE", "schemaApplied": false },
+    "onboarding_profile_api": { "status": "REUSE", "schemaApplied": false },
+    "memory_rehearsal_store": { "status": "REUSE", "schemaApplied": false },
+    "migration_023_hold": { "status": "HOLD", "schemaApplied": false },
+    "client_profile_sync": { "status": "REUSE", "schemaApplied": false },
+    "staging_owner_enable": { "status": "OWNER_GATED", "schemaApplied": false }
+  },
+  "notes": "Implementation wiring landed in #473. Soft-land never lifts 023, enables production, or claims durable multi-device sync."
+}
