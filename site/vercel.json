@@ -513,6 +513,10 @@
       "destination": "/_pages/laboratories.html"
     },
     {
+      "source": "/research-community",
+      "destination": "/_pages/research-community.html"
+    },
+    {
       "source": "/validation",
       "destination": "/_pages/validation.html"
     },

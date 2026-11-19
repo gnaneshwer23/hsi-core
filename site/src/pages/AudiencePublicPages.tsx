@@ -3,11 +3,6 @@
  * Honesty: no fake metrics, no live CDS, no invented pilots or gold-standard claims.
  */
 import { Link } from "react-router-dom";
-import {
-  PublicAction,
-  PublicHero,
-  PublicSection,
-} from "../components/public/ResearchPublic";
 import { PublicNotices } from "../components/public/PublicNotices";
 import {
   LandingEvidenceCard,
@@ -336,68 +331,131 @@ export function LaboratoriesPublicPage() {
   );
 }
 
+export function CommunityPublicPage() {
+  return (
+    <LandingPage>
+      <LandingHero
+        eyebrow="Research Community"
+        title="Evidence-grounded discussion — without automatic IP bleed."
+        description="HSI is built for scientific conversation that keeps source, context and uncertainty attached. Public posting, Circles durable store and automatic sharing of private drafts are not enabled in this preview."
+      >
+        <LandingPrimaryCta to="/contact">Discuss community access</LandingPrimaryCta>
+        <LandingSecondaryCta to="/enterprise/community">Open community demo shell</LandingSecondaryCta>
+      </LandingHero>
+
+      <LandingSection
+        title="What community collaboration means here."
+        description="Same scientific engine as individual investigation. Collaboration features stay demonstration-labelled until Gate C and sharing contracts are accepted."
+      >
+        <div className="s2-card-grid">
+          <LandingEvidenceCard
+            maturity="available"
+            title="Shared investigation vocabulary"
+            body="Questions, evidence, gaps and briefs stay on one path so discussion can point at inspectable artefacts."
+          />
+          <LandingEvidenceCard
+            maturity="demonstration"
+            title="Community dashboard shell"
+            body="Demonstration chrome for network orientation. Shared challenges are not public by default."
+          />
+          <LandingEvidenceCard
+            maturity="planned"
+            title="Circles and durable collaboration"
+            body="Durable Circles store remains held. Human Gate C is required for collaborative reviews — nothing auto-publishes."
+          />
+          <LandingEvidenceCard
+            maturity="planned"
+            title="Verified participant identity"
+            body="Public posting and participant identity verification are not enabled on the retired /community redirect path."
+          />
+        </div>
+        <p className="s2-section-note" role="note">
+          The path <code>/community</code> still redirects to the research home. This marketing page is the public
+          Community entry — not a revival of that redirect as a discussion product.
+        </p>
+      </LandingSection>
+
+      <LandingSection
+        title="Boundaries that stay in place."
+        description="Community marketing must not invent testimonials, member counts or open IP sharing."
+      >
+        <ul className="s2-boundary-list">
+          <li>No automatic IP bleed between collaborators.</li>
+          <li>No invented testimonials, member counts or engagement metrics.</li>
+          <li>No PHI and no live clinical decision support.</li>
+          <li>Gate C remains human for collaborative scientific reviews.</li>
+        </ul>
+        <div className="s2-cta-row">
+          <LandingPrimaryCta to="/contact">Get Access</LandingPrimaryCta>
+          <LandingSecondaryCta to="/enterprise">Research Groups landing</LandingSecondaryCta>
+        </div>
+      </LandingSection>
+
+      <PublicNotices />
+    </LandingPage>
+  );
+}
+
 export function ValidationPublicPage() {
   return (
-    <div className="hsi-public">
-      <PublicHero
+    <LandingPage>
+      <LandingHero
+        eyebrow="Scientific Validation"
         title="How evidence quality is separated from approval."
         description="Validation here means methodology and governance: how HSI keeps observation, interpretation, verification and publication apart. It is not a claim that HSI outperforms peers or that gold standards are complete."
       >
-        <PublicAction to="/validation#methodology">View methodology</PublicAction>
-        <PublicAction to="/trust" secondary>
-          Full trust and governance
-        </PublicAction>
-      </PublicHero>
-      <PublicSection
+        <LandingPrimaryCta to="/validation#methodology">View methodology</LandingPrimaryCta>
+        <LandingSecondaryCta to="/trust">Full trust and governance</LandingSecondaryCta>
+      </LandingHero>
+
+      <LandingSection
         id="methodology"
         title="Methodology, not scoreboard."
         description="Benchmarks, conflict labels and evaluation harnesses exist as frameworks. Public pages never invent accuracy percentages or adjudicated case counts."
       >
-        <div className="hsi-principles">
-          {[
-            {
-              title: "States stay separate",
-              text: "Study observation, computational interpretation, independent verification, scientific review and publication are different states with recorded transitions.",
-            },
-            {
-              title: "Context before contradiction",
-              text: "Opposite findings under different tissue, species or assay are not collapsed into proven contradiction without human review.",
-            },
-            {
-              title: "Gold sets are human-gated",
-              text: "Expert-adjudicated cases require recruited reviewers and private vaults. A protocol is not 120 completed scientific results.",
-            },
-          ].map((s) => (
-            <article key={s.title}>
-              <h3>{s.title}</h3>
-              <p>{s.text}</p>
-            </article>
-          ))}
+        <div className="s2-card-grid">
+          <LandingEvidenceCard
+            maturity="available"
+            title="States stay separate"
+            body="Study observation, computational interpretation, independent verification, scientific review and publication are different states with recorded transitions."
+          />
+          <LandingEvidenceCard
+            maturity="available"
+            title="Context before contradiction"
+            body="Opposite findings under different tissue, species or assay are not collapsed into proven contradiction without human review."
+          />
+          <LandingEvidenceCard
+            maturity="restricted"
+            title="Gold sets are human-gated"
+            body="Expert-adjudicated cases require recruited reviewers and private vaults. A protocol is not 120 completed scientific results."
+          />
+          <LandingEvidenceCard
+            maturity="available"
+            title="Provenance on every candidate"
+            body="Source, experimental context and review status stay attached. Candidate relationships are not scientifically approved by default."
+          />
         </div>
-        <div className="hsi-actions">
-          <PublicAction to="/how-it-works">See what runs today</PublicAction>
-          <PublicAction to="/context-conflict-audit" secondary>
-            Open Context-Conflict Audit
-          </PublicAction>
+        <div className="s2-cta-row">
+          <LandingPrimaryCta to="/how-it-works">See what runs today</LandingPrimaryCta>
+          <LandingSecondaryCta to="/context-conflict-audit">Open Context-Conflict Audit</LandingSecondaryCta>
         </div>
-      </PublicSection>
-      <PublicSection
+      </LandingSection>
+
+      <LandingSection
         title="Synthetic lab is a different surface."
         description="The research tool at /research/validation holds synthetic patient fixtures for workflow rehearsal. It is not this public methodology page and not clinical validation."
-        dark
       >
-        <p>
+        <p className="s2-prose">
           Small-group suppression, synthetic-only gates and audit trails there demonstrate controls — they do not
           enrol real people or establish disease prevalence.
         </p>
-        <div className="hsi-actions">
-          <PublicAction to="/trust">Governance model</PublicAction>
-          <PublicAction to="/contact" secondary>
-            Ask about evaluation scope
-          </PublicAction>
+        <div className="s2-cta-row">
+          <LandingPrimaryCta to="/trust">Governance model</LandingPrimaryCta>
+          <LandingSecondaryCta to="/contact">Ask about evaluation scope</LandingSecondaryCta>
         </div>
-      </PublicSection>
+      </LandingSection>
+
       <PublicNotices />
-    </div>
+    </LandingPage>
   );
 }

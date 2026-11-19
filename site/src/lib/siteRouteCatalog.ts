@@ -61,6 +61,7 @@ const PUBLIC_MARKETING = new Set([
   "/biotech",
   "/clinical",
   "/laboratories",
+  "/research-community",
   "/validation",
   "/trust",
   "/about",

@@ -46,7 +46,7 @@ const AUDIENCES = [
   { label: "Biotech & pharma", to: "/biotech" },
   { label: "Clinical research", to: "/clinical" },
   { label: "Laboratories", to: "/laboratories" },
-  { label: "Community", to: "/enterprise/community" },
+  { label: "Community", to: "/research-community" },
 ] as const;
 
 const FLOW = [

@@ -61,3 +61,23 @@ test('validation methodology page is distinct from synthetic lab',async({page})=
  const axe=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa']).analyze();
  expect(axe.violations.map(v=>v.id+': '+v.nodes.length)).toEqual([]);
 });
+
+test('research community landing keeps Circles held and /community redirect honest',async({page})=>{
+ await page.goto('/research-community');
+ await expect(page.getByRole('heading',{level:1})).toContainText('without automatic IP bleed');
+ await expect(page.getByRole('link',{name:/Discuss community access/})).toHaveAttribute('href','/contact');
+ await expect(page.getByRole('link',{name:/Open community demo shell/})).toHaveAttribute('href','/enterprise/community');
+ await expect(page.locator('#main-content')).toContainText('/community');
+ await expect(page.locator('#main-content')).toContainText('Circles');
+ await expect(page.locator('#main-content')).not.toContainText(/testimonial|members worldwide|join thousands/i);
+});
+
+test('pricing and access page lists planned tiers without inventing prices',async({page})=>{
+ await page.goto('/contact');
+ await expect(page.getByRole('heading',{level:1})).toContainText('Contact HSI');
+ await expect(page.getByRole('heading',{name:'Access shapes (planned labels only).'})).toBeVisible();
+ await expect(page.locator('#main-content')).toContainText('No prices');
+ await expect(page.locator('#main-content')).toContainText('Individual researcher');
+ await expect(page.locator('#main-content')).toContainText('Research group');
+ await expect(page.locator('#main-content')).not.toContainText(/\$\d|£\d|per seat|subscribe now/i);
+});

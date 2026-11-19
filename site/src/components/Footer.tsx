@@ -22,7 +22,7 @@ const groups = [
       { to: "/biotech", label: "Biotech & Pharma" },
       { to: "/clinical", label: "Clinical Research" },
       { to: "/laboratories", label: "Laboratories" },
-      { to: "/enterprise/community", label: "Research Community" },
+      { to: "/research-community", label: "Research Community" },
     ],
   },
   {

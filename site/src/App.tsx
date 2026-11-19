@@ -24,6 +24,7 @@ import {
   BiotechPublicPage,
   ClinicalPublicPage,
   LaboratoriesPublicPage,
+  CommunityPublicPage,
   ValidationPublicPage,
 } from "./pages/AudiencePublicPages";
 import {HomeLanding as Home} from "./pages/HomeLanding";
@@ -165,6 +166,7 @@ export default function App() {
         <Route path="biotech" element={<BiotechPublicPage />} />
         <Route path="clinical" element={<ClinicalPublicPage />} />
         <Route path="laboratories" element={<LaboratoriesPublicPage />} />
+        <Route path="research-community" element={<CommunityPublicPage />} />
         <Route path="validation" element={<ValidationPublicPage />} />
         <Route path="technology" element={<Navigate to="/how-it-works" replace />} />
         <Route path="how-it-works" element={<HowItWorks />} />

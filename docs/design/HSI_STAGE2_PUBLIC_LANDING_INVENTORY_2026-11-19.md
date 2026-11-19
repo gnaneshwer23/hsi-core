@@ -20,9 +20,9 @@
 | Biotech & Pharma | Mechanism / translational R&D | `/biotech` (+ `/enterprise/biotech` demo) | Marketing deepened in PR4 (`cursor/stage2-biotech-clinical-lab-2f71`) |
 | Clinical Research | Evidence-grounded translational research | `/clinical` (+ `/enterprise/clinical` demo) | Marketing page in PR4; demo shell retained |
 | Laboratories & Omics | Experimental data + biological evidence | `/laboratories` (+ `/enterprise/lab` demo) | Marketing page in PR4; demo shell retained |
-| Community | Scientific discussion / collaboration | `/enterprise/community`; `/community` redirects to `/research/home` | Demo shell; keep `/community` redirect; marketing page in PR5 |
-| Scientific Validation | Provenance, uncertainty, reliability | `/validation` (+ `/trust` governance) | Live methodology page — deepen in PR5 |
-| Pricing & Access | Individual / group / organisational access | `/contact` (access draft); `/pricing` **redirects** to `/contact` | No priced tiers — planned labels only in PR5 |
+| Community | Scientific discussion / collaboration | `/research-community` (+ `/enterprise/community` demo); `/community` → `/research/home` | Marketing in PR5 (`cursor/stage2-community-validation-pricing-2f71`) |
+| Scientific Validation | Provenance, uncertainty, reliability | `/validation` (+ `/trust` governance) | Deepened in PR5 |
+| Pricing & Access | Individual / group / organisational access | `/contact` (access draft); `/pricing` **redirects** to `/contact` | Planned labels only in PR5 — no invented prices |
 
 **Also indexed public:** `/knowledge-graph`, `/trust`, `/about`, `/contact`.  
 **Auth:** `/sign-in`, `/sign-up`, password recovery, `/research/account`.  
@@ -79,7 +79,7 @@
 | Audiences ▾ Biotech & Pharma | `/biotech` | |
 | Audiences ▾ Clinical Research | `/clinical` | Demo remains at `/enterprise/clinical` |
 | Audiences ▾ Laboratories | `/laboratories` | Demo remains at `/enterprise/lab` |
-| Audiences ▾ Research Community | `/enterprise/community` | Do **not** revive `/community` as marketing (redirects to research home) |
+| Audiences ▾ Research Community | `/research-community` | Do **not** revive `/community` as marketing (redirects to research home); demo at `/enterprise/community` |
 | Scientific Validation | `/validation` | |
 | Resources | `/knowledge-graph` | Trust remains linked from footer / page body |
 | Pricing & Access | `/contact` | Keep `/pricing` → `/contact`; **never** put retired path strings in `primaryNav.ts` |
@@ -98,7 +98,7 @@
 | **2** | Homepage + Platform (`/how-it-works`) Stage 2 story, USPs, workflow preview — branch `cursor/stage2-homepage-platform-2f71` | Billing; fake metrics |
 | **3** | Researchers + Research Groups marketing pages + truthful previews — branch `cursor/stage2-researchers-groups-2f71` | Org writes; supervisor auto-access to private student work |
 | **4** | Biotech, Clinical Research, Laboratories landings + governance copy — branch `cursor/stage2-biotech-clinical-lab-2f71` | PHI, CDS, live instruments/datasets claims |
-| **5** | Community, Validation deepen, Pricing & Access (Planned tiers), CTAs | Invented prices/subscriptions; fake testimonials |
+| **5** | Community, Validation deepen, Pricing & Access (Planned tiers), CTAs — branch `cursor/stage2-community-validation-pricing-2f71` | Invented prices/subscriptions; fake testimonials |
 | **6** | Integrated QA: a11y, SEO, responsive, copy audit, owner visual review | Deploy/merge without approval |
 
 ---

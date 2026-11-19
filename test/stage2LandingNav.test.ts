@@ -40,7 +40,7 @@ describe("Stage 2 landing design system + nav", () => {
       "/biotech",
       "/clinical",
       "/laboratories",
-      "/enterprise/community",
+      "/research-community",
     ]);
     const primaryNav = root("site/src/lib/primaryNav.ts");
     for (const retired of ["/platform", "/solutions", "/pricing", "/science", "/technology"]) {

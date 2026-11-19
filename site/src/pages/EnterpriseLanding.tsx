@@ -100,6 +100,8 @@ export function EnterpriseLandingPage() {
           {" · "}
           <Link to="/laboratories">Laboratories landing</Link>
           {" · "}
+          <Link to="/research-community">Community landing</Link>
+          {" · "}
           <Link to="/enterprise/community">Community shell</Link>
           {" · "}
           <Link to="/workspaces">Multi-workspace hub</Link>
