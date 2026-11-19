@@ -31,6 +31,7 @@ test('workspace before a run states that nothing has started and shows no figure
  await expect(page.getByRole('list',{name:/Investigation stages/})).toContainText('Not run');
  await expect(page.getByLabel('Run totals')).toContainText('—');
  await expect(page.getByRole('navigation',{name:/USP B cross-domain journey/i})).toBeVisible();
+ await expect(page.getByRole('navigation',{name:/USP C connected research journey/i})).toBeVisible();
 });
 
 test('an unchecked run keeps direction unassessed, shows the failed search and labels claims as candidates',async({page})=>{
@@ -110,6 +111,14 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await expect(cross.getByRole('list',{name:/Department coverage/i})).toContainText('No graph coverage yet');
  await expect(cross).toContainText(/No path of four hops|Target department has no concept|candidate path/i);
  await expect(cross).toContainText('Unvalidated AI hypotheses (demoted)');
+ await expect(page.getByRole('navigation',{name:/USP C connected research journey/i})).toBeVisible();
+ const connected=page.getByRole('region',{name:/Connected research \(personal\)/i});
+ await expect(connected).toContainText('Production writes: false');
+ await expect(connected).toContainText('Org sharing');
+ await expect(connected).toContainText('blocked');
+ await connected.getByRole('button',{name:/Save in this browser/i}).click();
+ await expect(connected).toContainText('Saved in this browser');
+ await expect(connected.getByRole('button',{name:'Reopen'}).first()).toBeVisible();
  const axe=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();
  expect(axe.violations.map(v=>v.id+': '+v.nodes.length)).toEqual([]);
 });
