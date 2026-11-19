@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { EnterpriseShell } from "../components/enterprise/EnterpriseShell";
+import { DemoUniverseRolePanel } from "../components/demo/DemoUniverseRolePanel";
 import { enterpriseStudentDemo } from "@hsi/enterprise/enterpriseDashboardDemo";
 
 const FEED_KIND_LABEL = {
@@ -171,6 +172,8 @@ export function EnterpriseStudentDashboard() {
           </button>
         </div>
       </section>
+
+      <DemoUniverseRolePanel roleId="student" />
     </EnterpriseShell>
   );
 }

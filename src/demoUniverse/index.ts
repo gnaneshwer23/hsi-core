@@ -34,3 +34,11 @@ export {
   type DemoComparisonView,
   type DemoComparisonSide,
 } from "./presentation";
+export {
+  DEMO_ROLE_ADAPTER_SCHEMA,
+  demoUniverseSliceForRole,
+  listDemoDashboardRoleIds,
+  type DemoDashboardRoleId,
+  type DemoRoleUniverseSlice,
+  type DemoRoleScenarioCard,
+} from "./roleAdapters";

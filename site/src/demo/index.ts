@@ -10,7 +10,12 @@ export {
   buildDemoComparisonView,
   provenanceLabel,
   demoUniverseAllowsProductionWrite,
+  demoUniverseSliceForRole,
+  listDemoDashboardRoleIds,
+  DEMO_ROLE_ADAPTER_SCHEMA,
   type DemoScenarioSummary,
   type DemoComparisonView,
   type DemoComparisonSide,
+  type DemoDashboardRoleId,
+  type DemoRoleUniverseSlice,
 } from "@hsi/demoUniverse";

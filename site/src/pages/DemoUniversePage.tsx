@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { DemoUniverseShell } from "../components/demo/DemoUniverseShell";
 import {
   buildDemoComparisonView,
@@ -210,8 +210,20 @@ function ComparisonBriefPanel({ view }: { view: DemoComparisonView }) {
 /** Interactive evidence comparison + brief over Demo Research Universe scenarios. */
 export function DemoUniversePage() {
   const scenarios = useMemo(() => listDemoScenarioSummaries(), []);
-  const [selectedId, setSelectedId] = useState(scenarios[0]?.scenarioId ?? "gut-immune-metabolic");
-  const view = useMemo(() => buildDemoComparisonView(selectedId), [selectedId]);
+  const [params, setParams] = useSearchParams();
+  const fromQuery = params.get("scenario");
+  const initialId =
+    fromQuery && scenarios.some((s) => s.scenarioId === fromQuery)
+      ? fromQuery
+      : (scenarios[0]?.scenarioId ?? "gut-immune-metabolic");
+  const [selectedId, setSelectedIdState] = useState(initialId);
+  const selectedIdResolved =
+    fromQuery && scenarios.some((s) => s.scenarioId === fromQuery) ? fromQuery : selectedId;
+  const setSelectedId = (id: string) => {
+    setSelectedIdState(id);
+    setParams(id === scenarios[0]?.scenarioId ? {} : { scenario: id }, { replace: true });
+  };
+  const view = useMemo(() => buildDemoComparisonView(selectedIdResolved), [selectedIdResolved]);
 
   return (
     <DemoUniverseShell
@@ -236,7 +248,7 @@ export function DemoUniversePage() {
               key={s.scenarioId}
               type="button"
               role="listitem"
-              aria-pressed={selectedId === s.scenarioId}
+              aria-pressed={selectedIdResolved === s.scenarioId}
               onClick={() => setSelectedId(s.scenarioId)}
             >
               <strong>{s.title}</strong>

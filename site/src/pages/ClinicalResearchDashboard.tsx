@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ClinicalResearchShell } from "../components/enterprise/ClinicalResearchShell";
+import { DemoUniverseRolePanel } from "../components/demo/DemoUniverseRolePanel";
 import {
   clinicalResearchDashboardDemo,
   type ClinicalAssociation,
@@ -225,6 +226,8 @@ export function ClinicalResearchDashboard() {
           ))}
         </ul>
       </section>
+
+      <DemoUniverseRolePanel roleId="clinical" />
     </ClinicalResearchShell>
   );
 }

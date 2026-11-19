@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { CommunityShell } from "../components/enterprise/CommunityShell";
+import { DemoUniverseRolePanel } from "../components/demo/DemoUniverseRolePanel";
 import {
   communityDashboardDemo,
   type CommunityChallenge,
@@ -204,6 +205,8 @@ export function CommunityDashboard() {
           ))}
         </ul>
       </section>
+
+      <DemoUniverseRolePanel roleId="community" />
     </CommunityShell>
   );
 }

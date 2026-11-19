@@ -1,8 +1,8 @@
 # HSI Demo Research Universe — reuse inventory & Phase 1–2
 
 **Date:** 19 November 2026 (Europe/London)  
-**Branch:** `cursor/demo-universe-comparison-brief-ui-2f71` (stacks on Demo PR2 / `#562`)  
-**Code:** [`src/demoUniverse/`](../../src/demoUniverse/) · UI [`/demo/universe`](../../site/src/pages/DemoUniversePage.tsx)  
+**Branch:** `cursor/demo-universe-role-adapters-2f71` (stacks on Demo PR3 / `#564`)  
+**Code:** [`src/demoUniverse/`](../../src/demoUniverse/) · UI [`/demo/universe`](../../site/src/pages/DemoUniversePage.tsx) · role panels on enterprise shells  
 **Honesty:** Synthetic users/orgs + verified public bibliographic metadata + labelled simulated findings. Not scientific approval. No production graph writes. No PHI to external AI.
 
 ---
@@ -79,11 +79,20 @@ Interactive evidence comparison + reviewable brief UI at **`/demo/universe`**.
 | Shell | `site/src/components/demo/DemoUniverseShell.tsx` |
 | Tests | `test/demoUniversePresentation.test.ts` · `site/e2e/demo-universe.spec.ts` |
 
+## Phase 4 delivered (this PR)
+
+Role dashboard adapters — `demoUniverseSliceForRole` maps professor / student / biotech / clinical / lab / community onto seeded scenarios without duplicating catalogs. Shared `DemoUniverseRolePanel` on six enterprise shells; deep-links use `/demo/universe?scenario=…`.
+
+| Layer | Path |
+| --- | --- |
+| Adapters | `src/demoUniverse/roleAdapters.ts` |
+| Panel | `site/src/components/demo/DemoUniverseRolePanel.tsx` |
+| Tests | `test/demoUniverseRoleAdapters.test.ts` · `site/e2e/demo-universe-roles.spec.ts` |
+
 ## Planned expansion (later PRs)
 
 | PR | Scope |
 | --- | --- |
-| 4 | Role dashboard adapters over shared records |
 | 5 | Omics / assays / synthetic cohorts |
 | 6 | Landing-page product previews + e2e |
 

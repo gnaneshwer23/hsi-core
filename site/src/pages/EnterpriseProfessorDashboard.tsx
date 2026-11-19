@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { EnterpriseShell } from "../components/enterprise/EnterpriseShell";
+import { DemoUniverseRolePanel } from "../components/demo/DemoUniverseRolePanel";
 import {
   enterpriseProfessorDemo,
   type EnterpriseTreeNode,
@@ -231,6 +232,8 @@ export function EnterpriseProfessorDashboard() {
           </Link>
         </div>
       </section>
+
+      <DemoUniverseRolePanel roleId="professor" />
     </EnterpriseShell>
   );
 }
