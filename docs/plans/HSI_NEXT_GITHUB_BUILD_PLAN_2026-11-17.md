@@ -137,6 +137,7 @@ Target: **≥3 merged engineering PRs per week** on Track A while Track B is in 
 | **PR-E2E-02** | Staging isolation acceptance packet — `src/operations/e2eIsolationAcceptancePacket.ts` + `docs/engineering/E2E_02_ISOLATION_ACCEPTANCE_PACKET_SOFT_LAND.md` | CI-safe check/fixture only; live owner-gated; never invents signer or sets `acceptedForScope` |
 | **PR-E2E-03** | Source clearance composition soft-land — `src/operations/e2e03SourceClearanceComposition.ts` + `docs/engineering/E2E_03_SOURCE_CLEARANCE_COMPOSITION_SOFT_LAND.md` | Catalogs gate vs metadata surfaces; DRAFT policy stays DRAFT; never invents signer/authority/approval; abstract API honesty fields fail-closed on reuse |
 | **PR-E2E-05** | Staging investigation save/resume soft-land — `src/operations/e2e05StagingSaveResume.ts` + `docs/engineering/E2E_05_STAGING_SAVE_RESUME_SOFT_LAND.md` | Catalogs fail-closed persistence paths; never enables production writes or removes migration holds |
+| **PR-E2E-06** | Dual-provider verification soft-land — `src/operations/e2e06DualProviderVerification.ts` + `docs/engineering/E2E_06_DUAL_PROVIDER_VERIFICATION_SOFT_LAND.md` | Reuses dual-model harness; never invents deployments/credentials or claims gate pass / independence |
 
 Open implementation PRs for passport / workbench / brief columns remain separate; merge when up to date with `main` and verify is green.
 

@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "hsi-e2e-06-dual-provider-verification-pending-1",
+  "purpose": "pr_e2e_06_dual_provider_verification_soft_land",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "liveProviderBindAuthorized": false,
+  "reliabilityGatePassClaimed": false,
+  "modelIndependenceVerified": false,
+  "scientificAccuracyCalibrated": false,
+  "scientificApproval": false,
+  "productionActivationApproved": false,
+  "acceptedForScope": false,
+  "signedPacketClaimed": false,
+  "inventedProviderCredentials": false,
+  "inventedApprovedDeployments": false,
+  "honesty": {
+    "noInventedCredentials": true,
+    "noInventedDeployments": true,
+    "noGatePassClaim": true,
+    "independenceUnproven": true,
+    "abstentionRequiredWhenInsufficient": true,
+    "fixtureIsNotLiveBind": true
+  },
+  "ciSafeModes": {
+    "check": {
+      "command": "bun test test/e2e06DualProviderVerification.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    },
+    "fixture": {
+      "command": "bun test test/reliabilityEvaluationHarnessB044.test.ts test/scientificReliabilityGateB044.test.ts test/providerReliability.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "references": {
+    "provider_a_deployment_ref": "UNASSIGNED",
+    "provider_b_deployment_ref": "UNASSIGNED",
+    "staging_origin_ref": "NOT_APPROVED",
+    "sme_gold_packet_ref": "NOT_STARTED"
+  },
+  "surfaces": {
+    "dual_model_challenge": { "status": "REUSE", "gatePass": false },
+    "provider_reliability_boundary": { "status": "REUSE", "gatePass": false },
+    "reliability_evaluation_harness": { "status": "REUSE", "gatePass": false },
+    "scientific_reliability_gate": { "status": "REUSE_FAIL_CLOSED", "gatePass": false },
+    "investigation_workspace_verification_ui": { "status": "HONESTY_REQUIRED", "gatePass": false },
+    "staging_provider_bind": { "status": "OWNER_GATED", "gatePass": false },
+    "sme_gold_adjudication": { "status": "BLOCKED", "gatePass": false }
+  },
+  "notes": "Fill private deployment refs only after two approved staging providers exist. Soft-land never invents credentials or gate pass."
+}
