@@ -606,8 +606,8 @@ export function InvestigationWorkspacePage(){
 
     <details className="ws-usp-focus" id="ws-gaps-testable">
      <summary>
-      Gaps & testable questions — invents experiments: false · recommends action: false · not
-      scientific approval
+      Gaps & testable questions · {runGaps.length} gaps · {testableQuestions.items.length} next
+      questions — invents experiments: false · recommends action: false · not scientific approval
      </summary>
      <section className="ws-card ws-gaps" aria-labelledby="ws-gp-h">
       <header><h2 id="ws-gp-h"><Icon name="layers" size={18}/>Gaps in this run <small>({run?runGaps.length:"none yet"})</small></h2></header>

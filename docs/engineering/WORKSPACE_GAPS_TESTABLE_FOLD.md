@@ -20,8 +20,8 @@ Keeps Stage 2 uncertainty → next-question flow available without always-open v
 
 ## Implemented (this increment)
 
-- `#ws-gaps-testable` fold with honesty subtitle
-- Playwright expands before testable asserts
+- `#ws-gaps-testable` fold with honesty subtitle including live **`N gaps · M next questions`** counts (derived only; never invents experiments; “next questions” not “testable” so retrieval/assessment gap next-steps are not oversold)
+- Playwright asserts `0 gaps · 0 next questions` before a run and exact counts after the checked fixture
 - Stack status companion: `BUSINESS_VISION_JOURNEY_STACK_STATUS_2026-11-19.md`
 
 ## Still mocked / partial / blocked
