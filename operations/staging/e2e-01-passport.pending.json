@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "hsi-e2e-01-passport-pending-1",
+  "purpose": "pr_e2e_01_passport_soft_land",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "priority": "P1",
+  "inventedContext": false,
+  "scientificApproval": false,
+  "productionWritesEnabled": false,
+  "acceptedForScope": false,
+  "signedPacketClaimed": false,
+  "journeyAcceptanceClaimed": false,
+  "honesty": {
+    "missingFieldsStayExplicit": true,
+    "noInventedContext": true,
+    "noScientificApproval": true,
+    "noProductionWrites": true,
+    "fixtureIsNotJourneyAcceptance": true
+  },
+  "ciSafeModes": {
+    "check": {
+      "command": "bun test test/e2e01PassportSoftLand.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    },
+    "fixture": {
+      "command": "bun test test/evidenceContextPassport.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "references": {
+    "implementation_pr_ref": "#469",
+    "a21_passport_ui_pr_ref": "#449",
+    "journey_acceptance_ref": "NOT_STARTED"
+  },
+  "surfaces": {
+    "passport_builder": { "status": "REUSE", "inventedContext": false },
+    "passport_ui_panel": { "status": "REUSE", "inventedContext": false },
+    "investigation_workspace_default": { "status": "REUSE", "inventedContext": false },
+    "graph_edge_selection": { "status": "REUSE", "inventedContext": false },
+    "missing_field_honesty": { "status": "HONESTY", "inventedContext": false },
+    "live_brief_passport_columns": { "status": "REUSE", "inventedContext": false },
+    "playwright_heading_assert": { "status": "REUSE", "inventedContext": false }
+  },
+  "notes": "Implementation wiring landed in #469. Soft-land never invents context, enables production writes, or claims journey acceptance."
+}

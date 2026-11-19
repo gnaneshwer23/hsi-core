@@ -136,6 +136,7 @@ Target: **≥3 merged engineering PRs per week** on Track A while Track B is in 
 
 | ID | Soft-land | Honesty |
 | --- | --- | --- |
+| **PR-E2E-01** | Context Passport soft-land — `src/operations/e2e01PassportSoftLand.ts` + `docs/engineering/E2E_01_PASSPORT_SOFT_LAND.md` | Reuses `#469`/`#449` passport path; never invents context or claims journey acceptance |
 | **PR-E2E-02** | Staging isolation acceptance packet — `src/operations/e2eIsolationAcceptancePacket.ts` + `docs/engineering/E2E_02_ISOLATION_ACCEPTANCE_PACKET_SOFT_LAND.md` | CI-safe check/fixture only; live owner-gated; never invents signer or sets `acceptedForScope` |
 | **PR-E2E-03** | Source clearance composition soft-land — `src/operations/e2e03SourceClearanceComposition.ts` + `docs/engineering/E2E_03_SOURCE_CLEARANCE_COMPOSITION_SOFT_LAND.md` | Catalogs gate vs metadata surfaces; DRAFT policy stays DRAFT; never invents signer/authority/approval; abstract API honesty fields fail-closed on reuse |
 | **PR-E2E-05** | Staging investigation save/resume soft-land — `src/operations/e2e05StagingSaveResume.ts` + `docs/engineering/E2E_05_STAGING_SAVE_RESUME_SOFT_LAND.md` | Catalogs fail-closed persistence paths; never enables production writes or removes migration holds |
