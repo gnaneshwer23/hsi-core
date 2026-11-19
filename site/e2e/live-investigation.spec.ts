@@ -49,6 +49,7 @@ test('workspace before a run states that nothing has started and shows no figure
  await expect(stage2).toContainText('pilot accepted: false');
  await expect(stage2).toContainText('Progress: 0/');
  await expect(stage2Exit.getByRole('region',{name:/Steps 12–13 \(blocked\)/i})).toContainText('org sharing: false');
+ await expect(page.locator('#ws-gaps-testable > summary')).toContainText('Gaps & testable questions · 0 gaps · 0 testable');
  await expect(page.getByRole('region',{name:/Researcher usefulness \(this device\)/i})).toContainText('Run a live investigation');
  await page.getByText('USP focus trails (A · B · C)').click();
  await expect(page.getByRole('navigation',{name:/USP B cross-domain journey/i})).toBeVisible();
@@ -243,7 +244,8 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await expect(stage2).toContainText('Local usefulness rating saved for this briefHash');
  await expect(stage2).toContainText('journey complete claimed: false');
  const gapsTestable=page.locator('#ws-gaps-testable');
- await expect(gapsTestable.locator('> summary')).toContainText('Gaps & testable questions');
+ // Checked fixture → 2 derived gaps + 3 testable (2 from gaps, 1 demoted hyp).
+ await expect(gapsTestable.locator('> summary')).toContainText('Gaps & testable questions · 2 gaps · 3 testable');
  await expect(gapsTestable.locator('> summary')).toContainText('invents experiments: false');
  // Closed ⇔ open attribute null; trail “Gaps” must open the fold without summary click.
  expect(await gapsTestable.getAttribute('open')).toBeNull();

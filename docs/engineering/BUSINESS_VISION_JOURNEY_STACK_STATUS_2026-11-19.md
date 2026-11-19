@@ -2,8 +2,8 @@
 
 **Date:** 19 November 2026 (Europe/London)  
 **Governing audit:** [`HSI_BUSINESS_VISION_EXECUTION_AUDIT_2026-11-19.md`](../strategy/HSI_BUSINESS_VISION_EXECUTION_AUDIT_2026-11-19.md) (merged via [#515](https://github.com/gnaneshwer23/hsi-core/pull/515))  
-**Landed on `main`:** [#538](https://github.com/gnaneshwer23/hsi-core/pull/538) (USP A→Stage 2 exit fold) · [#539](https://github.com/gnaneshwer23/hsi-core/pull/539) (Home `#rh-metrics` subtitle counts)  
-**Follow-on tip:** `cursor/stage2-exit-subtitle-counts-2f71`  
+**Landed on `main`:** [#538](https://github.com/gnaneshwer23/hsi-core/pull/538) · [#539](https://github.com/gnaneshwer23/hsi-core/pull/539) · [#540](https://github.com/gnaneshwer23/hsi-core/pull/540) · [#541](https://github.com/gnaneshwer23/hsi-core/pull/541) (Stage 4 content map)  
+**Follow-on tip:** `cursor/gaps-fold-subtitle-counts-2f71`  
 **Honesty:** `journeyCompleteClaimed=false` · `writesEnabledClaimed=false` · `pilotReadyClaimed=false` · `scientificallyValidatedClaimed=false`
 
 ---
@@ -21,8 +21,10 @@ Agent-shippable **Stage 2 journey productization + §H device-local metrics + Ho
 | #515 | Business vision execution audit | Doctrine |
 | #538 | Journey stack land (USP A→Stage 2 exit fold; was #516–#537) | Stage 2–3 · §H |
 | #539 | Home `#rh-metrics` dynamic local milestone counts | §H UX |
+| #540 | Stage 2 exit `#ws-stage2-exit` local checklist N/7 | §H UX |
+| #541 | Stage 4 five-dashboard content map (docs only) | Stage 4 contracts |
 
-**This PR:** `#ws-stage2-exit` subtitle shows `local checklist N/7` (never journey complete).
+**This PR:** `#ws-gaps-testable` summary shows live `N gaps · M testable` — invents experiments: false.
 
 ---
 
@@ -63,7 +65,7 @@ Agent-shippable **Stage 2 journey productization + §H device-local metrics + Ho
 
 ### Agent-shippable now (no owner gate)
 
-1. **This PR** — Stage 2 exit fold subtitle counts (`N/7` local checklist).  
+1. **This PR** — Gaps & testable fold subtitle counts (`N gaps · M testable`).  
 2. **Stop building dashboards** — further agent work = honesty/docs/e2e hardening or owner-named Stage 2 gaps only.
 
 ### Owner-gated next (do not code as “done”)
