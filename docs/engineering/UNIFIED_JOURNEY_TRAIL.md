@@ -23,6 +23,7 @@ Stage 2 journey cohesion across **USP A**, **USP B**, and personal **USP C** sav
 - Eight-step unified trail: `src/investigation/unifiedJourneyTrail.ts`
 - Primary workspace nav above the USP focus trails
 - USP A/B/C trails folded under “USP focus trails” so the spine stays primary
+- Follow-on: USP A/B/curated **panels** folded under `#ws-usp-panels` (USP C save panel stays open) — see `WORKSPACE_USP_PANELS_FOLD.md`
 - Unit + Playwright honesty asserts (`researcherJourneyCompleteClaimed: false`)
 
 ## Still mocked / partial / blocked
