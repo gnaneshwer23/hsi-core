@@ -99,7 +99,7 @@
 | **3** | Researchers + Research Groups marketing pages + truthful previews — branch `cursor/stage2-researchers-groups-2f71` | Org writes; supervisor auto-access to private student work |
 | **4** | Biotech, Clinical Research, Laboratories landings + governance copy — branch `cursor/stage2-biotech-clinical-lab-2f71` | PHI, CDS, live instruments/datasets claims |
 | **5** | Community, Validation deepen, Pricing & Access (Planned tiers), CTAs — branch `cursor/stage2-community-validation-pricing-2f71` | Invented prices/subscriptions; fake testimonials |
-| **6** | Integrated QA: a11y, SEO, responsive, copy audit, owner visual review | Deploy/merge without approval |
+| **6** | Integrated QA: a11y, SEO, responsive, copy audit, owner visual review — branch `cursor/stage2-integrated-qa-2f71`; see `HSI_STAGE2_INTEGRATED_QA_2026-11-19.md` | Deploy/merge without approval |
 
 ---
 

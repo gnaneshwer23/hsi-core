@@ -117,14 +117,28 @@
   color: #fff;
 }
 
-.s2-landing .s2-btn-secondary {
+/* Light-section secondary buttons (not on the navy hero). */
+.s2-landing .s2-section .s2-btn-secondary,
+.s2-landing > .s2-cta-row .s2-btn-secondary {
   color: var(--s2-ink);
   border-color: #9aabbc;
 }
 
-.s2-landing .s2-btn-secondary:hover {
+.s2-landing .s2-section .s2-btn-secondary:hover,
+.s2-landing > .s2-cta-row .s2-btn-secondary:hover {
   background: #e8eef3;
   color: var(--s2-bg);
+}
+
+/* Hero secondary CTAs must stay light on navy. */
+.s2-hero .s2-btn-secondary {
+  color: var(--s2-offwhite);
+  border-color: #8a9aab;
+}
+
+.s2-hero .s2-btn-secondary:hover {
+  background: rgba(247, 247, 248, 0.1);
+  color: #fff;
 }
 
 .s2-card-evidence {
