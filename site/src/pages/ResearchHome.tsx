@@ -14,6 +14,7 @@ import {ProfileWorkspaceHandoffCard} from "../components/home/ProfileWorkspaceHa
 import {AlertPreferenceCard} from "../components/home/AlertPreferenceCard";
 import {ActivationMilestoneCard} from "../components/home/ActivationMilestoneCard";
 import {FirstUsefulInvestigationCard} from "../components/home/FirstUsefulInvestigationCard";
+import {PilotReadinessHonestyCard} from "../components/home/PilotReadinessHonestyCard";
 import {RepeatUsageMilestoneCard} from "../components/home/RepeatUsageMilestoneCard";
 import {WillingnessToPayMilestoneCard} from "../components/home/WillingnessToPayMilestoneCard";
 import {programView} from "../lib/program";
@@ -205,10 +206,11 @@ export function ResearchHome(){
      {ready&&(
       <Fold
        id="rh-metrics"
-       ids={["rh-alert-h","rh-act-h","rh-fu-h","rh-ru-h","rh-wtp-h"]}
+       ids={["rh-pilot-h","rh-alert-h","rh-act-h","rh-fu-h","rh-ru-h","rh-wtp-h"]}
        title="Local journey metrics"
        sub="Browser-only activation · usefulness · reopen · willingness · alert preference — not conversion, not pilot claims"
       >
+       <PilotReadinessHonestyCard/>
        <AlertPreferenceCard profile={profile} onProfile={setProfile}/>
        <ActivationMilestoneCard/>
        <FirstUsefulInvestigationCard/>

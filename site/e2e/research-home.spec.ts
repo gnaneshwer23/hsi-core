@@ -146,6 +146,25 @@ test('local journey metrics fold keeps conversion claims off by default',async({
  await expect(page.getByRole('region',{name:/Activation \(this device\)/i})).toBeVisible();
 });
 
+test('pilot readiness honesty stays unready and lists blocked owner gates',async({page})=>{
+ await saved(page,401,{});
+ await page.addInitScript(()=>localStorage.setItem('hsi-research-profile-v1',JSON.stringify({
+  v:1,role:'Research scientist',stage:null,background:'x',question:'Why does IL-21 differ?',
+  orcid:null,papers:[],cadence:'off',goals:[],interests:['Immunology'],followed:[],dismissed:[],onboarded:true,
+ })));
+ await page.goto('/research/home');
+ await openLocalMetrics(page);
+ const pilot=page.getByRole('region',{name:/Pilot readiness \(honesty\)/i});
+ await expect(pilot).toContainText('invents pilot ready: false');
+ await expect(pilot).toContainText('invents pilot conversion: false');
+ await expect(pilot).toContainText('journey complete claimed: false');
+ await expect(pilot).toContainText('pilot ready claimed: false');
+ await expect(pilot).toContainText('Local signals 0/4');
+ await expect(pilot.getByRole('list',{name:/Local pilot-prep signals/i})).toContainText('Activation');
+ await expect(pilot.getByRole('list',{name:/Blocked pilot gates/i})).toContainText('Staging researcher grants');
+ await expect(pilot.getByRole('list',{name:/Blocked pilot gates/i})).toContainText('Production writes');
+});
+
 test('cross-domain search returns typed graph concepts, follows, previews and opens the graph',async({page})=>{
  await saved(page,401,{});
  await page.goto('/research/home');
