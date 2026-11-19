@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "hsi-c3-dual-reviewer-decisions-pending-1",
+  "purpose": "track_c3_dual_reviewer_decisions_soft_land",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "slice": "D-01",
+  "dualReviewComplete": false,
+  "dualReviewedEdgeCount": 0,
+  "targetEdgeFloor": 40,
+  "targetEdgeCeiling": 60,
+  "graphPromotion": false,
+  "autoPromotion": false,
+  "scientificApproval": false,
+  "inventedReviewerIdentities": false,
+  "acceptedForScope": false,
+  "signedPacketClaimed": false,
+  "honesty": {
+    "c2IsNotDualRelease": true,
+    "noInventedReviewers": true,
+    "noInventedDecisions": true,
+    "reviewedLaneReserved": true,
+    "versionBumpBlockedUntilDual": true,
+    "fixtureIsNotRelease": true
+  },
+  "ciSafeModes": {
+    "check": {
+      "command": "bun test test/c3DualReviewerDecisions.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    },
+    "fixture": {
+      "command": "bun test test/d01EdgeReview.test.ts test/edgeReviewPresentation.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "references": {
+    "reviewer_a_ref": "UNASSIGNED",
+    "reviewer_b_ref": "UNASSIGNED",
+    "immutable_dual_packet_ref": "NOT_STARTED",
+    "graph_version_bump_ref": "BLOCKED"
+  },
+  "surfaces": {
+    "c2_local_recommendations": { "status": "REUSE", "dualComplete": false },
+    "recommendation_digest_chain": { "status": "REUSE", "dualComplete": false },
+    "dual_independent_reviewers": { "status": "OWNER_HUMAN", "dualComplete": false },
+    "immutable_decision_records": { "status": "BLOCKED", "dualComplete": false },
+    "target_band_40_60": { "status": "OWNER_HUMAN", "dualComplete": false },
+    "reviewed_lane_reserved": { "status": "HONESTY_REQUIRED", "dualComplete": false },
+    "graph_version_bump_blocked": { "status": "BLOCKED", "dualComplete": false }
+  },
+  "notes": "Fill reviewer refs only after real independent humans are recruited. Soft-land never invents dual decisions or version bumps."
+}
