@@ -115,7 +115,7 @@ export function UspCConnectedPanel({
               onClick={onSave}
               disabled={!hasRun}
             >
-              {savedThisSession ? "Saved in this browser" : "Save in this browser"}
+              {savedThisSession ? "Saved to browser library" : "Save to browser library"}
             </button>
             <Link className="ws-btn" to={liveInvestigationHref({ reopen: true })}>
               Reopen current slot

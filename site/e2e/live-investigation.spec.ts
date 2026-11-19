@@ -116,8 +116,8 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await expect(connected).toContainText('Production writes: false');
  await expect(connected).toContainText('Org sharing');
  await expect(connected).toContainText('blocked');
- await connected.getByRole('button',{name:/Save in this browser/i}).click();
- await expect(connected).toContainText('Saved in this browser');
+ await connected.getByRole('button',{name:'Save to browser library',exact:true}).click();
+ await expect(connected).toContainText(/Saved to browser library|Saved in this browser library/i);
  await expect(connected.getByRole('button',{name:'Reopen'}).first()).toBeVisible();
  const axe=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();
  expect(axe.violations.map(v=>v.id+': '+v.nodes.length)).toEqual([]);
@@ -187,11 +187,11 @@ test('Home to workspace to saved run: a matching question needs a click to run, 
  expect(calls).toBe(0);
  await page.getByRole('button',{name:'Run live investigation'}).click();
  await expect(page.getByLabel('Run totals')).toContainText('Key findings');
- await page.getByRole('button',{name:'Save in this browser'}).click();
+ await page.getByRole('region',{name:/Connected research \(personal\)/i}).getByRole('button',{name:'Save to browser library',exact:true}).click();
  await page.goto('/research/home');
  await page.locator('#rh-more > summary').click();
  const cont=page.getByRole('region',{name:'Continue researching'});
- await expect(cont).toContainText('Live investigation · saved in this browser');
+ await expect(cont).toContainText(/Live investigation · (browser library \(not a server store\)|saved in this browser)/);
  await expect(cont).toContainText('1 supporting');
  await cont.getByRole('link',{name:'Reopen'}).click();
  await expect(page.getByLabel('Run totals')).toContainText('Key findings');
