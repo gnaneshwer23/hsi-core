@@ -9,6 +9,7 @@ const NAV = [
   { to: "/research/knowledge-graph", label: "Knowledge graph", end: true },
   { to: "/research/gaps", label: "Gaps", end: true },
   { to: "/enterprise/clinical", label: "Clinical shell", end: true },
+  { to: "/enterprise/lab", label: "Lab / Omics shell", end: true },
   { to: "/academic", label: "Academic shells", end: true },
   { to: "/biotech", label: "Public biotech page", end: true },
 ] as const;

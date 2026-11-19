@@ -149,6 +149,10 @@
       "destination": "/_pages/enterprise--clinical.html"
     },
     {
+      "source": "/enterprise/lab",
+      "destination": "/_pages/enterprise--lab.html"
+    },
+    {
       "source": "/contact",
       "destination": "/_pages/contact.html"
     },
