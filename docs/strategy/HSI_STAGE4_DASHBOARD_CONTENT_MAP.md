@@ -1,9 +1,9 @@
-# Stage 4 — five research dashboards (content map)
+# Stage 4 — research dashboards + multi-workspace hub (content map)
 
 **Date:** 19 November 2026 (Europe/London)  
-**Status:** Proposed Stage 4 interfaces — **not** the current build centre  
+**Status:** Soft-landed Stage 4 interfaces (A–F) — **not** the current build centre  
 **Doctrine:** [`HSI_BUSINESS_VISION_EXECUTION_AUDIT_2026-11-19.md`](./HSI_BUSINESS_VISION_EXECUTION_AUDIT_2026-11-19.md) · journey over dashboards · one scientific engine · many shells  
-**Related:** Architecture §7 (multi-stakeholder workspaces) on open [#513](https://github.com/gnaneshwer23/hsi-core/pull/513); demo shells [#513](https://github.com/gnaneshwer23/hsi-core/pull/513) / [#514](https://github.com/gnaneshwer23/hsi-core/pull/514)
+**Related:** Soft-landed academic / audience shells on `/enterprise/*`; multi-workspace hub F on `/workspaces` (concept from [#514](https://github.com/gnaneshwer23/hsi-core/pull/514))
 
 ---
 
@@ -47,6 +47,8 @@
    Academic            Biotech/Pharma        Clinical*
         ▼                   ▼                   ▼
    Laboratory/Omics              Research Community
+                            │
+                    Multi-workspace hub (F)
                             │
                     * research cohorts only — not CDS; no PHI
 ```
@@ -149,6 +151,24 @@
 
 ---
 
+## 6. Multi-workspace hub (shell F)
+
+**Audience:** Anyone choosing a role view — individual researcher, academic, biotech, clinical research, lab, community, or enterprise admin  
+
+| Must contain | Maps to shared / existing | Notes |
+| --- | --- | --- |
+| Workspace selector | `/workspaces` hub | Demo-labelled concept |
+| Eight role concept pages | `/workspaces/:id` | Reuses shared panels; not per-role science forks |
+| Deep-links to A–E shells | `stage4ShellPath` → `/enterprise/*` | Professor/student/biotech/clinical/lab/community |
+| Individual researcher | `/workspaces/researcher` | Personal continuity → Stage 2 workspace |
+| Enterprise admin | `/workspaces/enterprise` | Roles ≠ subscriptions; no confidential auto-unlock |
+
+**Visual reference pattern:** Role picker + reusable navigation / domain map / evidence / AI panels — hub chrome over the same investigation engine.
+
+**Status:** Soft-land Multi-workspace hub on `/workspaces` (+ eight role concept routes). Gap matrix: [`../engineering/MULTI_WORKSPACE_HUB_GAP_MATRIX.md`](../engineering/MULTI_WORKSPACE_HUB_GAP_MATRIX.md).
+
+---
+
 ## Shared UI component kit (shell-level)
 
 Reuse across dashboards; swap widget **content**, not engines:
@@ -171,7 +191,7 @@ Reuse across dashboards; swap widget **content**, not engines:
 
 1. **Now:** Stage 2 journey + §H honesty on `main` (landed #538/#539+)  
 2. **Owner-gated:** staging grants, write packet, source clearance, SME gold, soft-lands (#511/#512)  
-3. **Then Stage 4 shells:** flesh Academic (beyond demo) → Biotech → Lab → Community → Clinical research last (PHI gates)
+3. **Then Stage 4 shells:** Academic → Biotech → Clinical research → Lab → Community → Multi-workspace hub (A–F soft-landed as demos; flesh beyond demo only after usefulness)
 
 Do **not** treat founder UI references as permission to invent metrics, patients, competitor pipelines or scientific approval.
 
