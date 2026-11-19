@@ -183,8 +183,8 @@ export const DEMO_UNIVERSE_MANIFEST = {
     "PR1 registry + schemas + provenance + Phase 1 core investigation",
     "PR2 six-domain scenarios + shared nodes",
     "PR3 evidence comparison UI + briefs — /demo/universe",
-    "PR4 role dashboard adapters (this PR) — demoUniverseSliceForRole + role panels",
-    "PR5 omics / lab / synthetic cohorts",
+    "PR4 role dashboard adapters — demoUniverseSliceForRole + role panels",
+    "PR5 omics / lab / synthetic cohorts (this PR) — getDemoOmicsCohortPack",
     "PR6 landing-page integration + e2e",
   ] as const,
 } as const;

@@ -42,3 +42,17 @@ export {
   type DemoRoleUniverseSlice,
   type DemoRoleScenarioCard,
 } from "./roleAdapters";
+export {
+  DEMO_OMICS_COHORT_SCHEMA,
+  getDemoOmicsCohortPack,
+  presentDemoCohortCounts,
+  listDemoAssaysForScenario,
+  listDemoOmicsForScenario,
+  listDemoCohortsForScenario,
+  demoOmicsAllowsRealData,
+  type DemoOmicsCohortPack,
+  type DemoAssaySketch,
+  type DemoOmicsCandidate,
+  type DemoSyntheticCohortSketch,
+  type DemoCohortPresentedCounts,
+} from "./omicsCohorts";

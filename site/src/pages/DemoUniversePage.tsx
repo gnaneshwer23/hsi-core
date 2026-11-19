@@ -1,8 +1,10 @@
 import { useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { DemoUniverseShell } from "../components/demo/DemoUniverseShell";
+import { DemoOmicsCohortPanel } from "../components/demo/DemoOmicsCohortPanel";
 import {
   buildDemoComparisonView,
+  demoOmicsAllowsRealData,
   demoUniverseAllowsProductionWrite,
   listDemoScenarioSummaries,
   provenanceLabel,
@@ -228,12 +230,13 @@ export function DemoUniversePage() {
   return (
     <DemoUniverseShell
       title={view.title}
-      subtitle="Evidence comparison and reviewable brief · six seeded scenarios"
+      subtitle="Comparison, brief, omics assays and synthetic cohorts · six scenarios"
     >
       <p className="ent-banner" role="status">
-        Demo Research Universe PR3. Production write allowed:{" "}
-        {String(demoUniverseAllowsProductionWrite())}. Select a scenario, inspect the
-        conflict pair, then read the brief limitations.
+        Demo Research Universe PR5. Production write:{" "}
+        {String(demoUniverseAllowsProductionWrite())} · real cohort data:{" "}
+        {String(demoOmicsAllowsRealData())}. Select a scenario, inspect the conflict
+        pair, then review brief limitations and linked assay/cohort sketches.
       </p>
 
       <section className="ent-panel" aria-labelledby="du-scenarios">
@@ -261,6 +264,7 @@ export function DemoUniversePage() {
       </section>
 
       <ComparisonBriefPanel key={view.investigationId} view={view} />
+      <DemoOmicsCohortPanel key={`omics-${view.scenarioId}`} scenarioId={view.scenarioId} />
     </DemoUniverseShell>
   );
 }

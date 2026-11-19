@@ -1,9 +1,9 @@
 # HSI Demo Research Universe — reuse inventory & Phase 1–2
 
 **Date:** 19 November 2026 (Europe/London)  
-**Branch:** `cursor/demo-universe-role-adapters-2f71` (stacks on Demo PR3 / `#564`)  
-**Code:** [`src/demoUniverse/`](../../src/demoUniverse/) · UI [`/demo/universe`](../../site/src/pages/DemoUniversePage.tsx) · role panels on enterprise shells  
-**Honesty:** Synthetic users/orgs + verified public bibliographic metadata + labelled simulated findings. Not scientific approval. No production graph writes. No PHI to external AI.
+**Branch:** `cursor/demo-universe-omics-cohorts-2f71` (stacks on Demo PR4 / `#565`)  
+**Code:** [`src/demoUniverse/`](../../src/demoUniverse/) · UI [`/demo/universe`](../../site/src/pages/DemoUniversePage.tsx) · role + omics panels  
+**Honesty:** Synthetic users/orgs + verified public bibliographic metadata + labelled simulated findings. Not scientific approval. No production graph writes. No PHI to external AI. Real cohort data remains disabled.
 
 ---
 
@@ -89,11 +89,20 @@ Role dashboard adapters — `demoUniverseSliceForRole` maps professor / student 
 | Panel | `site/src/components/demo/DemoUniverseRolePanel.tsx` |
 | Tests | `test/demoUniverseRoleAdapters.test.ts` · `site/e2e/demo-universe-roles.spec.ts` |
 
+## Phase 5 delivered (this PR)
+
+Omics assay sketches, unreviewed omics candidates, and **synthetic-only** cohort aggregates with small-cell withholding. Does **not** load clinical-plane patient shards or enable real data.
+
+| Layer | Path |
+| --- | --- |
+| Pack | `src/demoUniverse/omicsCohorts.ts` |
+| Panel | `site/src/components/demo/DemoOmicsCohortPanel.tsx` |
+| Tests | `test/demoUniverseOmicsCohorts.test.ts` · `site/e2e/demo-universe-omics.spec.ts` |
+
 ## Planned expansion (later PRs)
 
 | PR | Scope |
 | --- | --- |
-| 5 | Omics / assays / synthetic cohorts |
 | 6 | Landing-page product previews + e2e |
 
 ---
