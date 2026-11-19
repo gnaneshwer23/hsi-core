@@ -1,7 +1,7 @@
 # Stage 4 — research dashboards + multi-workspace hub (content map)
 
 **Date:** 19 November 2026 (Europe/London)  
-**Status:** Soft-landed Stage 4 interfaces (A–G) — **not** the current build centre  
+**Status:** Soft-landed Stage 4 interfaces (A–H) — **not** the current build centre  
 **Doctrine:** [`HSI_BUSINESS_VISION_EXECUTION_AUDIT_2026-11-19.md`](./HSI_BUSINESS_VISION_EXECUTION_AUDIT_2026-11-19.md) · journey over dashboards · one scientific engine · many shells  
 **Related:** Soft-landed academic / audience shells on `/enterprise/*`; multi-workspace hub F on `/workspaces` (concept from [#514](https://github.com/gnaneshwer23/hsi-core/pull/514))
 
@@ -68,7 +68,7 @@
 | Cross-domain discoveries | USP B paths · domain KG | Candidate / unreviewed honesty |
 | Evidence gaps | Gaps register · testable questions | SME ranking still blocked |
 | Publications | Evidence catalogue · related works · brief citations | No invented papers / impact metrics |
-| Funding and supervision | **Proposed** org widgets | Demo-labelled until durable org store |
+| Funding and supervision | **Demo shell H** + org widgets | Soft-land `/enterprise/funding`; durable store held |
 
 **Visual reference pattern (founder-supplied):** group lab / feed / projects / pinned resources (community-lab style) — adapt as **academic group** chrome over shared investigation links.
 
@@ -190,6 +190,23 @@
 
 ---
 
+## 8. Funding & Careers (shell H)
+
+**Audience:** Researchers seeking funding sketches, career pathways and permission-aware collaborators  
+
+| Must contain | Maps to shared / existing | Notes |
+| --- | --- | --- |
+| Funding sketches | Gaps + academic/biotech deep-links | No invented award rates / conversion % |
+| Career pathways | Welcome · student shell | Proposed; durable store held |
+| Collaborator discovery | Community · biotech · lab | Permission-aware; no IP bleed |
+| Candidate questions | Opportunity lists | Unreviewed; funding fit ≠ scientific approval |
+
+**Visual reference pattern:** Calls + pathways + collaborator cards — collaboration chrome, not a funder marketplace.
+
+**Status:** Soft-land Funding & Careers shell on `/enterprise/funding` (demo-labelled; funding store held). Gap matrix: [`../engineering/FUNDING_CAREERS_DASHBOARD_GAP_MATRIX.md`](../engineering/FUNDING_CAREERS_DASHBOARD_GAP_MATRIX.md).
+
+---
+
 ## Shared UI component kit (shell-level)
 
 Reuse across dashboards; swap widget **content**, not engines:
@@ -212,7 +229,7 @@ Reuse across dashboards; swap widget **content**, not engines:
 
 1. **Now:** Stage 2 journey + §H honesty on `main` (landed #538/#539+)  
 2. **Owner-gated:** staging grants, write packet, source clearance, SME gold, soft-lands (#511/#512)  
-3. **Then Stage 4 shells:** Academic → Biotech → Clinical research → Lab → Community → Multi-workspace hub → Participant contribution (A–G soft-landed as demos; flesh beyond demo only after usefulness; participant path stays clinical-plane gated)
+3. **Then Stage 4 shells:** Academic → Biotech → Clinical research → Lab → Community → Multi-workspace hub → Participant contribution → Funding & careers (A–H soft-landed as demos; flesh beyond demo only after usefulness; participant path stays clinical-plane gated)
 
 Do **not** treat founder UI references as permission to invent metrics, patients, competitor pipelines or scientific approval.
 

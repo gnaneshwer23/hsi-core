@@ -63,10 +63,13 @@ export function EnterpriseLandingPage() {
           <Link className="ent-btn ent-btn-secondary" to="/enterprise/participant">
             Participant shell (G)
           </Link>
+          <Link className="ent-btn ent-btn-secondary" to="/enterprise/funding">
+            Funding shell (H)
+          </Link>
         </div>
         <section className="ent-panel" aria-labelledby="ent-workspaces-heading">
           <h2 id="ent-workspaces-heading" style={{ margin: 0, fontSize: "1.05rem" }}>
-            Stage 4 shells A–G (same engine)
+            Stage 4 shells A–H (same engine)
           </h2>
           <p className="ent-lead">
             Audience shells A–E and the multi-workspace hub (F) preview chrome on the
@@ -104,6 +107,11 @@ export function EnterpriseLandingPage() {
               Research participant contribution —{" "}
               <Link to="/enterprise/participant">demonstration shell</Link> (not a
               scientific dashboard; not CDS; no PHI)
+            </li>
+            <li>
+              Funding &amp; careers —{" "}
+              <Link to="/enterprise/funding">demonstration shell</Link> (no invented
+              award rates; funding store held)
             </li>
           </ul>
         </section>
