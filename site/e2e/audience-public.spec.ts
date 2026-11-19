@@ -69,7 +69,8 @@ test('research community landing keeps Circles held and /community redirect hone
  await expect(page.getByRole('link',{name:/Open community demo shell/})).toHaveAttribute('href','/enterprise/community');
  await expect(page.locator('#main-content')).toContainText('/community');
  await expect(page.locator('#main-content')).toContainText('Circles');
- await expect(page.locator('#main-content')).not.toContainText(/testimonial|members worldwide|join thousands/i);
+ // Honesty copy may say "No invented testimonials" — forbid promotional member claims only.
+ await expect(page.locator('#main-content')).not.toContainText(/members worldwide|join thousands|customer testimonials|read our testimonials/i);
 });
 
 test('pricing and access page lists planned tiers without inventing prices',async({page})=>{
