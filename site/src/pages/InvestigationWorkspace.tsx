@@ -21,8 +21,22 @@ import {
   comparisonPairKey,
   type UspATrailStepId,
 } from "../../../src/investigation/uspADisagreementTrail";
+import {
+  buildUspBCrossDomainTrail,
+  buildUspBPathViews,
+  defaultTargetDepartment,
+  matchRunLabelsToGraphNodes,
+  suggestCrossDomainStarts,
+  summarizeDepartments,
+  type UspBTrailStepId,
+} from "../../../src/investigation/uspBCrossDomainTrail";
+import type {DomainBundle} from "../../../src/knowledgeGraph/domainGraph";
+import type {DepartmentSlug} from "../../../src/knowledgeGraph/departments";
 import {UspADisagreementTrail} from "../components/workspace/UspADisagreementTrail";
 import {UspADisagreementPanel} from "../components/workspace/UspADisagreementPanel";
+import {UspBCrossDomainTrail} from "../components/workspace/UspBCrossDomainTrail";
+import {UspBCrossDomainPanel} from "../components/workspace/UspBCrossDomainPanel";
+import {loadDomainGraph} from "../lib/claimGraphClient";
 import {BUCKET_LABEL,bucketOf,buildGraph,counts,filterCandidates,headline,stageRail,yearOf,type Bucket,type Cand,type EdgeState,type Run} from "../lib/workspaceView";
 import "../styles/investigation-workspace-app.css";
 
@@ -65,9 +79,23 @@ export function InvestigationWorkspacePage(){
  const lr=useLiveRun(),{run,state}=lr,loc=useLocation();
  const [bucket,setBucket]=useState<Bucket|"all">("all"),[pair,setPair]=useState<string|null>(null),[sel,setSel]=useState<string|null>(null),[brief,setBrief]=useState(false),[sources,setSources]=useState(false),[saved,setSaved]=useState(false);
  const [cmpKey,setCmpKey]=useState<string|null>(null);
+ const [bundle,setBundle]=useState<DomainBundle|null>(null);
+ const [graphError,setGraphError]=useState<string|null>(null);
+ const [crossStart,setCrossStart]=useState<string|null>(null);
+ const [crossTarget,setCrossTarget]=useState<DepartmentSlug>("neuroscience");
+ const [crossPathIndex,setCrossPathIndex]=useState<number|null>(null);
  const first=useRef(true);
  useEffect(()=>{setSaved(lr.hasSaved());if(first.current){first.current=false;if(new URLSearchParams(loc.search).get("reopen")==="1")lr.reopen()}},[]); // eslint-disable-line react-hooks/exhaustive-deps
  useEffect(()=>{if(run&&(run.structuredComparison?.pairCount??0)>0)setBrief(true)},[run?.briefHash]); // eslint-disable-line react-hooks/exhaustive-deps
+ useEffect(()=>{
+  const c=new AbortController(),t=setTimeout(()=>c.abort(),12000);
+  setGraphError(null);
+  loadDomainGraph(null,c.signal)
+   .then((g)=>{setBundle(g);setGraphError(null)})
+   .catch(()=>{if(!c.signal.aborted){setBundle(null);setGraphError("The cross-domain snapshot could not be verified.")}})
+   .finally(()=>clearTimeout(t));
+  return()=>{c.abort();clearTimeout(t)};
+ },[]);
  const c=run?counts(run):null,h=run?headline(run):null;
  const runGaps=useMemo(()=>run?deriveRunGaps(run):[],[run]),gapTrack=useRunGapTracking(run?.briefHash??""),ledger=useLedger(),[ledgerMsg,setLedgerMsg]=useState("");
  const list=useMemo(()=>run?filterCandidates(run.candidates,{bucket,pair}):[],[run,bucket,pair]);
@@ -92,6 +120,41 @@ export function InvestigationWorkspacePage(){
   comparison:comparison??null,
   briefOpen:brief,
  }),[run,sel,cmpKey,comparison,brief]);
+ const runLabels=useMemo(()=>{
+  if(!run)return [] as string[];
+  const labels=new Set<string>();
+  for(const cand of run.candidates){labels.add(cand.subject);labels.add(cand.object)}
+  return [...labels];
+ },[run]);
+ const crossMatches=useMemo(()=>{
+  if(!bundle)return [];
+  return suggestCrossDomainStarts(matchRunLabelsToGraphNodes(bundle,runLabels));
+ },[bundle,runLabels]);
+ useEffect(()=>{
+  if(!crossMatches.length){setCrossStart(null);setCrossPathIndex(null);return}
+  const preferred=crossMatches.find(m=>m.departments.length>1)??crossMatches[0]!;
+  setCrossStart(preferred.nodeId);
+  setCrossTarget(defaultTargetDepartment(preferred));
+  setCrossPathIndex(null);
+ },[crossMatches.map(m=>m.nodeId).join("|")]); // eslint-disable-line react-hooks/exhaustive-deps
+ const crossCoverage=useMemo(()=>bundle?summarizeDepartments(bundle).departments:[],[bundle]);
+ const crossPaths=useMemo(()=>{
+  if(!bundle||!crossStart)return {result:null,paths:[] as ReturnType<typeof buildUspBPathViews>["paths"]};
+  return buildUspBPathViews(bundle,crossStart,crossTarget);
+ },[bundle,crossStart,crossTarget]);
+ useEffect(()=>{setCrossPathIndex(null)},[crossStart,crossTarget]);
+ const uspBTrail=useMemo(()=>buildUspBCrossDomainTrail({
+  hasRun:Boolean(run),
+  graphLoaded:Boolean(bundle),
+  matchedNodeCount:crossMatches.length,
+  selectedStartId:crossStart,
+  selectedTargetDepartment:crossTarget,
+  pathCount:crossPaths.paths.length,
+  selectedPathIndex:crossPathIndex,
+  gapCount:runGaps.length,
+  hypothesisCount:run?.hypotheses.items.length??0,
+  briefOpen:brief,
+ }),[run,bundle,crossMatches.length,crossStart,crossTarget,crossPaths.paths.length,crossPathIndex,runGaps.length,brief]);
  const onTrailSelect=(id:UspATrailStepId)=>{
   if(id==="ask"){document.getElementById("ws-ask-strip")?.scrollIntoView({behavior:"smooth",block:"start"});return}
   if(id==="evidence"){document.getElementById("ws-ev-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
@@ -104,13 +167,24 @@ export function InvestigationWorkspacePage(){
   setBrief(true);
   document.getElementById("ws-brief-panel")?.scrollIntoView({behavior:"smooth",block:"start"});
  };
+ const onUspBTrailSelect=(id:UspBTrailStepId)=>{
+  if(id==="ask"){document.getElementById("ws-ask-strip")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  if(id==="domains"||id==="pathways"){
+   document.getElementById("ws-cross-h")?.scrollIntoView({behavior:"smooth",block:"start"});
+   if(id==="pathways"&&crossPathIndex===null&&crossPaths.paths[0])setCrossPathIndex(0);
+   return;
+  }
+  if(id==="gaps"){document.getElementById("ws-gp-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  setBrief(true);
+  document.getElementById("ws-brief-panel")?.scrollIntoView({behavior:"smooth",block:"start"});
+ };
  return (
   <ResearchAppShell where="Investigation workspace" whereIcon="flask" active="investigations">
    <main className="ws" id="rh-main" tabIndex={-1}>
     <nav className="ws-crumb" aria-label="Breadcrumb"><Link to="/research/home">Research Home</Link><span aria-hidden="true">/</span><span>Live investigation</span></nav>
     <header className="ws-head">
      <div className="ws-title">
-      <span className="ws-tag">USP A · Research investigation · live sources</span>
+      <span className="ws-tag">USP A · USP B · Research investigation · live sources</span>
       <h1>{run?.question??QUESTION}</h1>
       <div className="ws-chips" aria-label="Disease contexts">{run?Object.values(run.byContext).map(b=><span key={b.label}>{b.label}</span>):<span>Rheumatoid arthritis</span>}{!run&&<><span>Systemic lupus erythematosus</span><span>Systemic sclerosis</span></>}</div>
      </div>
@@ -142,6 +216,7 @@ export function InvestigationWorkspacePage(){
      </div>
     </section>
     <UspADisagreementTrail steps={uspTrail.steps} onSelect={onTrailSelect}/>
+    <UspBCrossDomainTrail steps={uspBTrail.steps} onSelect={onUspBTrailSelect}/>
     <Rail run={state==="running"?null:run} running={state==="running"}/>
     <HowProducedPanel
      className="rh-trace ws-produced"
@@ -249,6 +324,25 @@ export function InvestigationWorkspacePage(){
       <p className="ws-muted">Structured comparison will appear when this run has at least two candidates on the same relation.</p>
      </section>
     ):null}
+
+    <UspBCrossDomainPanel
+     bundle={bundle}
+     coverage={crossCoverage}
+     matches={crossMatches}
+     startId={crossStart}
+     targetDepartment={crossTarget}
+     pathStatus={crossPaths.result?.status??null}
+     paths={crossPaths.paths}
+     selectedPathIndex={crossPathIndex}
+     gapCount={runGaps.length}
+     hypothesisCount={run?.hypotheses.items.length??0}
+     graphError={graphError}
+     onSelectStart={(id)=>{setCrossStart(id);setCrossPathIndex(null)}}
+     onSelectTarget={(slug)=>{setCrossTarget(slug);setCrossPathIndex(null)}}
+     onSelectPath={setCrossPathIndex}
+     onOpenGaps={()=>document.getElementById("ws-gp-h")?.scrollIntoView({behavior:"smooth",block:"start"})}
+     onOpenBrief={()=>{setBrief(true);document.getElementById("ws-brief-panel")?.scrollIntoView({behavior:"smooth",block:"start"})}}
+    />
 
     {run&&(
      <section className="ws-card" id="ws-brief-panel" aria-labelledby="ws-brief-h">
