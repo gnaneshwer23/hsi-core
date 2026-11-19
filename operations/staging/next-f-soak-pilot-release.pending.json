@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "hsi-next-f-soak-pilot-release-pending-1",
+  "purpose": "next_f_soak_pilot_release_soft_land",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "priority": "P1",
+  "soakAccepted": false,
+  "pilotReleaseSigned": false,
+  "scientificApproval": false,
+  "acceptedForScope": false,
+  "signedPacketClaimed": false,
+  "inventedOnCallOwners": false,
+  "inventedAlertDestinations": false,
+  "inventedFourteenDayEvidence": false,
+  "autoGraphPromotion": false,
+  "dependsOn": ["NEXT-E"],
+  "alsoRequires": "all_p0_p1_acceptance",
+  "honesty": {
+    "catalogsExistPilotBlocked": true,
+    "noInventedOnCall": true,
+    "noInventedAlertDestinations": true,
+    "noInventedSoakEvidence": true,
+    "noAutoGraphPromotion": true,
+    "nextEAndP0P1Required": true,
+    "fixtureIsNotPilotRelease": true
+  },
+  "ciSafeModes": {
+    "check": {
+      "command": "bun test test/nextFSoakPilotReleaseSoftLand.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    },
+    "fixture": {
+      "command": "bun test test/opsAlertCatalog.test.ts test/sec02KillSwitchCatalog.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "references": {
+    "next_e_acceptance_ref": "NOT_STARTED",
+    "on_call_owner_ref": "UNASSIGNED",
+    "security_owner_ref": "UNASSIGNED",
+    "alert_destination_ref": "UNASSIGNED",
+    "load_cap_cohort_policy_ref": "NOT_STARTED",
+    "fourteen_day_soak_ref": "NOT_STARTED",
+    "rpo_rto_drill_ref": "NOT_STARTED",
+    "signed_pilot_packet_ref": "NOT_STARTED"
+  },
+  "surfaces": {
+    "ops_alert_catalog": { "status": "REUSE", "live": false },
+    "kill_switch_spend_caps": { "status": "REUSE", "live": false },
+    "pilot_operations_store": { "status": "REUSE", "live": false },
+    "restore_rollback_drills": { "status": "OWNER_GATED", "live": false },
+    "fourteen_day_soak_evidence": { "status": "BLOCKED", "live": false },
+    "on_call_acknowledgement": { "status": "OWNER_GATED", "live": false },
+    "signed_invite_only_pilot": { "status": "BLOCKED", "live": false }
+  },
+  "notes": "Accept NEXT-E and all P0/P1 first. Soft-land never invents on-call, destinations, soak evidence, or signed pilot release."
+}
