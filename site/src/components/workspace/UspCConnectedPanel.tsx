@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import {
   USP_C_TRAIL_HONESTY,
 } from "@hsi/investigation/uspCConnectedTrail";
+import { ALERT_PREFERENCE_HONESTY } from "@hsi/investigation/alertPreferenceHonesty";
 import type { LiveRunLibraryEntry } from "@hsi/investigation/liveRunLibrary";
 import type { Profile } from "../../lib/researchHome";
 import { departmentBySlug } from "../../lib/departments";
@@ -40,7 +41,10 @@ export function UspCConnectedPanel({
         USP C personal path: profile → live workspace → browser save/reopen → brief continuity.
         Production writes: {String(USP_C_TRAIL_HONESTY.productionWritesEnabled)}. Durable server
         profile claimed: {String(USP_C_TRAIL_HONESTY.serverProfileDurableClaimed)}. Org sharing:{" "}
-        blocked. Alerts are preferences, not live delivery.
+        blocked. Alert preference only: {String(ALERT_PREFERENCE_HONESTY.preferenceOnly)}. Live
+        alert delivery: {String(ALERT_PREFERENCE_HONESTY.liveDeliveryEnabled)}. Email delivery
+        claimed: {String(ALERT_PREFERENCE_HONESTY.emailDeliveryClaimed)}. Invents open rates:{" "}
+        {String(ALERT_PREFERENCE_HONESTY.inventsOpenRates)}.
       </p>
 
       <div className="ws-conn-grid">
@@ -63,8 +67,9 @@ export function UspCConnectedPanel({
                 {profile.role ? ` · ${profile.role}` : ""}
               </p>
               <p className="ws-warn" role="status">
-                Update cadence: {profile.cadence}. This is a preference only — live alert delivery
-                is not enabled.
+                Update cadence: {profile.cadence}. Preference only — live delivery{" "}
+                {String(ALERT_PREFERENCE_HONESTY.liveDeliveryEnabled)}; set cadence on{" "}
+                <Link to="/research/home">Research Home</Link>.
               </p>
               <div className="ws-row-actions">
                 <Link className="ws-btn" to="/research/home">

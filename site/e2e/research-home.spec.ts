@@ -41,6 +41,25 @@ test('onboarding can be skipped and the page stays usable',async({page})=>{
  await expect(page.locator('#rh-q')).toBeVisible();
 });
 
+test('alert preference card keeps live delivery off and records local cadence changes',async({page})=>{
+ await saved(page,401,{});
+ await page.addInitScript(()=>localStorage.setItem('hsi-research-profile-v1',JSON.stringify({
+  v:1,role:'Research scientist',stage:null,background:'x',question:'Why does IL-21 differ?',
+  orcid:null,papers:[],cadence:'off',goals:[],interests:['Immunology'],followed:[],dismissed:[],onboarded:true,
+ })));
+ await page.goto('/research/home');
+ const alerts=page.getByRole('region',{name:/Research update preference/i});
+ await expect(alerts).toContainText('preference only: true');
+ await expect(alerts).toContainText('live delivery: false');
+ await expect(alerts).toContainText('email claimed: false');
+ await expect(alerts).toContainText('invents open rates: false');
+ await expect(alerts).toContainText('production writes: false');
+ await alerts.getByRole('button',{name:'Weekly',exact:true}).click();
+ await expect(alerts).toContainText('Cadence preference: weekly');
+ await expect(alerts).toContainText('Preference engagement (this browser): 1 change');
+ await expect(alerts).toContainText('Not an email open-rate metric');
+});
+
 test('cross-domain search returns typed graph concepts, follows, previews and opens the graph',async({page})=>{
  await saved(page,401,{});
  await page.goto('/research/home');

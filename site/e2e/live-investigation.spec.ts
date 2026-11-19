@@ -143,6 +143,10 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await expect(connected).toContainText('Production writes: false');
  await expect(connected).toContainText('Org sharing');
  await expect(connected).toContainText('blocked');
+ await expect(connected).toContainText('Alert preference only: true');
+ await expect(connected).toContainText('Live alert delivery: false');
+ await expect(connected).toContainText('Email delivery claimed: false');
+ await expect(connected).toContainText('Invents open rates: false');
  await connected.getByRole('button',{name:'Save to browser library',exact:true}).click();
  await expect(connected).toContainText(/Saved to browser library|Saved in this browser library/i);
  await expect(connected.getByRole('button',{name:'Reopen'}).first()).toBeVisible();
