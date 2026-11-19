@@ -1,16 +1,28 @@
-import {HsiIdentity} from "./HsiIdentity";
+import { HsiIdentity } from "./HsiIdentity";
 import { Link } from "react-router-dom";
 import "../styles/chrome-redesign.css";
+
 const groups = [
   {
     name: "Product",
     links: [
       { to: "/welcome", label: "Set up your research home" },
       { to: "/research/home", label: "Research app" },
-      { to: "/how-it-works", label: "How it works" },
+      { to: "/how-it-works", label: "Platform" },
       { to: "/knowledge-graph", label: "Knowledge graph" },
-      { to: "/researchers", label: "For researchers" },
-      { to: "/biotech", label: "For biotech" },
+      { to: "/validation", label: "Scientific Validation" },
+      { to: "/contact", label: "Pricing & Access" },
+    ],
+  },
+  {
+    name: "Audiences",
+    links: [
+      { to: "/researchers", label: "Researchers" },
+      { to: "/enterprise", label: "Research Groups" },
+      { to: "/biotech", label: "Biotech & Pharma" },
+      { to: "/enterprise/clinical", label: "Clinical Research" },
+      { to: "/enterprise/lab", label: "Laboratories" },
+      { to: "/enterprise/community", label: "Research Community" },
     ],
   },
   {
@@ -33,6 +45,7 @@ const groups = [
     ],
   },
 ];
+
 export function Footer() {
   return (
     <footer className="hsi-footer" aria-label="Site footer">
@@ -44,7 +57,7 @@ export function Footer() {
       <div className="hsi-footer-grid">
         <div className="hsi-footer-brand">
           <Link className="hsi-wordmark" to="/">
-            <HsiIdentity/>
+            <HsiIdentity />
           </Link>
           <p>Connecting human biology through evidence, context and independent scientific judgement.</p>
           <Link className="hsi-text-link" to="/contact">
@@ -56,7 +69,7 @@ export function Footer() {
             <h2>{g.name}</h2>
             <ul>
               {g.links.map((l) => (
-                <li key={l.to}>
+                <li key={`${g.name}-${l.to}`}>
                   <Link to={l.to}>{l.label}</Link>
                 </li>
               ))}

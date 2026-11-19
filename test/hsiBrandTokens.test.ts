@@ -34,8 +34,9 @@ describe("hsi brand tokens v1",()=>{
   expect(doc).toContain("Do **not** adopt yet");
   expect(doc).toContain("legally unverified expansion");
   expect(doc).toContain("PRIMARY_NAV_LINKS");
-  expect(doc).toContain("No production `/validation` route");
-  expect(doc).toContain("not** in primary header nav");
+  expect(doc).toContain("Live** public methodology page");
+  expect(doc).toContain("Get Access");
+  expect(doc).toContain("AUDIENCE_NAV_LINKS");
  });
 
  test("definitive product vision freeze is present",()=>{

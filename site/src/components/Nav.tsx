@@ -1,24 +1,35 @@
-import {HsiIdentity} from "./HsiIdentity";
-import { useEffect, useRef, useState } from "react";
+import { HsiIdentity } from "./HsiIdentity";
+import { useEffect, useId, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { authBaseUrl, hsiAuth } from "../lib/hsiAuth";
 import {
   PRIMARY_NAV_LINKS,
   PRIMARY_NAV_CTA,
+  AUDIENCE_NAV_LINKS,
   isPublicMarketingPath,
   isAccountPath,
+  isAudienceNavActive,
 } from "../lib/primaryNav";
+
 export function Nav() {
   const [open, setOpen] = useState(false),
     [scrolled, setScrolled] = useState(false),
-    [signedIn, setSignedIn] = useState(false);
+    [signedIn, setSignedIn] = useState(false),
+    [audienceOpen, setAudienceOpen] = useState(false);
   const toggle = useRef<HTMLButtonElement>(null),
-    drawer = useRef<HTMLDivElement>(null);
+    drawer = useRef<HTMLDivElement>(null),
+    audienceBtn = useRef<HTMLButtonElement>(null),
+    audiencePanel = useRef<HTMLDivElement>(null);
+  const audienceMenuId = useId();
   const { pathname } = useLocation();
   const workspace = !isPublicMarketingPath(pathname) && !isAccountPath(pathname);
+  const audienceActive = isAudienceNavActive(pathname);
+
   useEffect(() => {
     setOpen(false);
+    setAudienceOpen(false);
   }, [pathname]);
+
   useEffect(() => {
     let active = true;
     if (authBaseUrl)
@@ -34,12 +45,14 @@ export function Nav() {
       active = false;
     };
   }, [pathname]);
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
   useEffect(() => {
     if (!open) return;
     const previous = document.body.style.overflow;
@@ -80,6 +93,7 @@ export function Nav() {
       document.removeEventListener("keydown", key);
     };
   }, [open]);
+
   useEffect(() => {
     const media = window.matchMedia("(min-width:1151px)");
     const close = () => {
@@ -88,14 +102,76 @@ export function Nav() {
     media.addEventListener("change", close);
     return () => media.removeEventListener("change", close);
   }, []);
+
+  useEffect(() => {
+    if (!audienceOpen) return;
+    const onPointer = (e: MouseEvent) => {
+      const t = e.target as Node;
+      if (audiencePanel.current?.contains(t) || audienceBtn.current?.contains(t)) return;
+      setAudienceOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setAudienceOpen(false);
+        audienceBtn.current?.focus();
+      }
+    };
+    document.addEventListener("mousedown", onPointer);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onPointer);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [audienceOpen]);
+
+  const beforeAudience = PRIMARY_NAV_LINKS.filter((l) => l.to === "/" || l.to === "/how-it-works");
+  const afterAudience = PRIMARY_NAV_LINKS.filter((l) => l.to !== "/" && l.to !== "/how-it-works");
+
   return (
     <header className={`hsi-nav${scrolled ? " is-scrolled" : ""}${workspace ? " hsi-nav-workspace" : ""}`}>
       <div className="hsi-nav-inner">
         <Link to="/" className="hsi-wordmark" aria-label="Human Super Intelligence home">
-          <HsiIdentity/>
+          <HsiIdentity />
         </Link>
         <nav aria-label="Primary" className="hsi-desktop-nav">
-          {PRIMARY_NAV_LINKS.map(l=><NavLink key={l.to} to={l.to} end={l.to==='/'}>{l.label}</NavLink>)}
+          {beforeAudience.map((l) => (
+            <NavLink key={l.to} to={l.to} end={l.to === "/"}>
+              {l.label}
+            </NavLink>
+          ))}
+          <div className="hsi-audience-menu">
+            <button
+              type="button"
+              ref={audienceBtn}
+              className={audienceActive ? "active" : undefined}
+              aria-expanded={audienceOpen}
+              aria-controls={audienceMenuId}
+              onClick={() => setAudienceOpen((v) => !v)}
+            >
+              Audiences
+            </button>
+            <div
+              id={audienceMenuId}
+              ref={audiencePanel}
+              hidden={!audienceOpen}
+              role="menu"
+              aria-label="Audience pages"
+            >
+              <div id="audience-pages" hidden={!audienceOpen}>
+                {AUDIENCE_NAV_LINKS.map((l) => (
+                  <NavLink key={l.to} to={l.to} role="menuitem" onClick={() => setAudienceOpen(false)}>
+                    {l.label}
+                    <small>{l.note}</small>
+                  </NavLink>
+                ))}
+              </div>
+            </div>
+          </div>
+          {afterAudience.map((l) => (
+            <NavLink key={l.to} to={l.to}>
+              {l.label}
+            </NavLink>
+          ))}
         </nav>
         <div className="hsi-header-actions">
           <Link className="hsi-signin" to={signedIn ? "/research/account" : "/sign-in"}>
@@ -141,7 +217,20 @@ export function Nav() {
             </button>
           </div>
           <nav aria-label="Mobile navigation">
-            {PRIMARY_NAV_LINKS.map((l) => (
+            {beforeAudience.map((l) => (
+              <NavLink key={l.to} to={l.to}>
+                {l.label}
+              </NavLink>
+            ))}
+            <div className="hsi-mobile-audience">
+              <span>Audiences</span>
+              {AUDIENCE_NAV_LINKS.map((l) => (
+                <NavLink key={l.to} to={l.to}>
+                  {l.label}
+                </NavLink>
+              ))}
+            </div>
+            {afterAudience.map((l) => (
               <NavLink key={l.to} to={l.to}>
                 {l.label}
               </NavLink>
@@ -149,7 +238,7 @@ export function Nav() {
             <NavLink to={signedIn ? "/research/account" : "/sign-in"}>
               {signedIn ? "Account" : "Sign in"}
             </NavLink>
-            <Link to="/sign-up">Sign up</Link>
+            <Link to={PRIMARY_NAV_CTA.to}>{PRIMARY_NAV_CTA.label}</Link>
           </nav>
         </div>
       )}

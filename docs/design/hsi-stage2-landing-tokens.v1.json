@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "hsi-stage2-landing-tokens-1",
+  "status": "stage2_proposed",
+  "scientificApproval": false,
+  "productionWired": false,
+  "formalName": "Human Super Intelligence",
+  "masterBrand": "HSI",
+  "descriptor": "Scientific Intelligence for Human Biology",
+  "vision": "Building the intelligence layer for understanding human biology.",
+  "promise": "Understand the mechanism. Preserve the evidence. Explain the uncertainty. Inform the next decision.",
+  "marketingHeadline": "Connect the Science. Challenge the Evidence. Advance Discovery.",
+  "usps": [
+    "Context-aware scientific disagreement analysis",
+    "Cross-domain biological mechanism investigation",
+    "Connected, evidence-grounded research collaboration"
+  ],
+  "forbiddenExpansions": ["Human Systems Intelligence"],
+  "palette": {
+    "primaryBackground": { "hex": "#101D2A", "role": "hero_and_chrome" },
+    "deeperBackground": { "hex": "#08121E", "role": "depth_bands" },
+    "burgundy": { "hex": "#963E56", "role": "emphasis_selection" },
+    "roseAccent": { "hex": "#C45267", "role": "sparse_accent" },
+    "mutedTeal": { "hex": "#427B79", "role": "scientific_secondary" },
+    "offWhite": { "hex": "#F7F7F8", "role": "page_reading" },
+    "secondaryText": { "hex": "#AEBBC9", "role": "muted_on_dark" }
+  },
+  "typography": {
+    "productionInterface": "Host Grotesk Variable",
+    "productionDisplay": "Red Hat Display Variable",
+    "optionalMarketingDisplay": "Instrument Serif — only if integrated without bundle regression",
+    "mono": "JetBrains Mono Variable",
+    "avoidDefaultStacks": ["Inter", "Roboto", "Arial"]
+  },
+  "cssEntry": "site/src/styles/stage2-landing.css",
+  "stage1TokensRemainAuthoritativeFor": "docs/design/hsi-brand-tokens.v1.json midnight/mint suite until owner retires Stage 1 comps",
+  "notes": [
+    "One HSI scientific intelligence platform — not a marketed product portfolio.",
+    "Demo/preview maturity labels required on illustrative surfaces.",
+    "No invented benchmarks, customers, prices, or clinical capabilities."
+  ]
+}
