@@ -184,6 +184,12 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await expect(firstUseful).toContainText('pilot conversion claimed: false');
  await expect(firstUseful).toContainText('First useful investigation recorded on this device');
  await expect(firstUseful).toContainText('not a conversion rate');
+ const wtp=page.getByRole('region',{name:/Willingness to pay \(this device\)/i});
+ await expect(wtp).toContainText('invents revenue: false');
+ await expect(wtp).toContainText('checkout enabled: false');
+ await expect(wtp).toContainText('pilot conversion claimed: false');
+ await expect(wtp).toContainText('First willingness-to-pay signal recorded on this device');
+ await expect(wtp).toContainText('Answered Maybe');
  await page.goto('/research/workspace');
  await page.getByRole('button',{name:'Run live investigation'}).click();
  const stage2=page.getByRole('region',{name:/Stage 2 investigation progress/i});
