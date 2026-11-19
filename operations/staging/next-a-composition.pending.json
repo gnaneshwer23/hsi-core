@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "hsi-next-a-composition-pending-1",
+  "purpose": "next_a_source_provider_receipt_composition_soft_land",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "priority": "P0",
+  "liveCompositionAuthorized": false,
+  "scientificApproval": false,
+  "acceptedForScope": false,
+  "signedPacketClaimed": false,
+  "inventedSignedClearance": false,
+  "inventedProviderCredentials": false,
+  "inventedApprovedDeployments": false,
+  "inventedRedactedReceipts": false,
+  "dependsOnTrackB": ["B1", "B5"],
+  "honesty": {
+    "adaptersExistCompositionBlocked": true,
+    "noInventedReceipts": true,
+    "noInventedCredentials": true,
+    "noInventedDeployments": true,
+    "b1AndB5Required": true,
+    "fixtureIsNotLiveComposition": true
+  },
+  "ciSafeModes": {
+    "check": {
+      "command": "bun test test/nextACompositionSoftLand.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    },
+    "fixture": {
+      "command": "bun test test/e2e03SourceClearanceComposition.test.ts test/e2e06DualProviderVerification.test.ts test/providerReliability.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "references": {
+    "b1_clearance_ref": "UNASSIGNED",
+    "b5_provider_a_ref": "UNASSIGNED",
+    "b5_provider_b_ref": "UNASSIGNED",
+    "redacted_receipt_packet_ref": "NOT_STARTED",
+    "chosen_runtime_fault_test_ref": "NOT_STARTED"
+  },
+  "surfaces": {
+    "source_clearance_receipts": { "status": "REUSE", "live": false },
+    "operational_source_clearance": { "status": "REUSE", "live": false },
+    "e2e03_clearance_composition": { "status": "REUSE_SOFT_LAND", "live": false },
+    "pinned_provider_transport": { "status": "REUSE", "live": false },
+    "staging_provider_operations": { "status": "REUSE", "live": false },
+    "dual_provider_harness": { "status": "REUSE_SOFT_LAND", "live": false },
+    "redacted_live_receipts": { "status": "BLOCKED", "live": false }
+  },
+  "notes": "Compose only after B1 + B5. Soft-land never invents clearance signatures, credentials, deployments, or redacted receipts."
+}
