@@ -16,6 +16,13 @@ import {PassportEvidenceTable} from "../components/PassportEvidenceTable";
 import {liveClaimToPassportEdge} from "../../../src/investigation/liveClaimPassportEdge";
 import {liveInvestigationPassportEdges,liveInvestigationPassportSources} from "../../../src/investigation/liveBriefPassport";
 import {COMPARISON_OUTCOME_LABEL} from "../../../src/investigation/liveBriefComparison";
+import {
+  buildUspADisagreementTrail,
+  comparisonPairKey,
+  type UspATrailStepId,
+} from "../../../src/investigation/uspADisagreementTrail";
+import {UspADisagreementTrail} from "../components/workspace/UspADisagreementTrail";
+import {UspADisagreementPanel} from "../components/workspace/UspADisagreementPanel";
 import {BUCKET_LABEL,bucketOf,buildGraph,counts,filterCandidates,headline,stageRail,yearOf,type Bucket,type Cand,type EdgeState,type Run} from "../lib/workspaceView";
 import "../styles/investigation-workspace-app.css";
 
@@ -57,8 +64,10 @@ function GraphView({run,pair,onPair}:{run:Run;pair:string|null;onPair:(p:string|
 export function InvestigationWorkspacePage(){
  const lr=useLiveRun(),{run,state}=lr,loc=useLocation();
  const [bucket,setBucket]=useState<Bucket|"all">("all"),[pair,setPair]=useState<string|null>(null),[sel,setSel]=useState<string|null>(null),[brief,setBrief]=useState(false),[sources,setSources]=useState(false),[saved,setSaved]=useState(false);
+ const [cmpKey,setCmpKey]=useState<string|null>(null);
  const first=useRef(true);
  useEffect(()=>{setSaved(lr.hasSaved());if(first.current){first.current=false;if(new URLSearchParams(loc.search).get("reopen")==="1")lr.reopen()}},[]); // eslint-disable-line react-hooks/exhaustive-deps
+ useEffect(()=>{if(run&&(run.structuredComparison?.pairCount??0)>0)setBrief(true)},[run?.briefHash]); // eslint-disable-line react-hooks/exhaustive-deps
  const c=run?counts(run):null,h=run?headline(run):null;
  const runGaps=useMemo(()=>run?deriveRunGaps(run):[],[run]),gapTrack=useRunGapTracking(run?.briefHash??""),ledger=useLedger(),[ledgerMsg,setLedgerMsg]=useState("");
  const list=useMemo(()=>run?filterCandidates(run.candidates,{bucket,pair}):[],[run,bucket,pair]);
@@ -75,13 +84,33 @@ export function InvestigationWorkspacePage(){
   :null;
  const passportEdges=useMemo(()=>run?liveInvestigationPassportEdges(run):[],[run]);
  const passportSources=useMemo(()=>run?liveInvestigationPassportSources(run):[],[run]);
+ const uspTrail=useMemo(()=>buildUspADisagreementTrail({
+  hasRun:Boolean(run),
+  candidateCount:run?.candidates.length??0,
+  selectedClaimId:sel,
+  selectedComparisonKey:cmpKey,
+  comparison:comparison??null,
+  briefOpen:brief,
+ }),[run,sel,cmpKey,comparison,brief]);
+ const onTrailSelect=(id:UspATrailStepId)=>{
+  if(id==="ask"){document.getElementById("ws-ask-strip")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  if(id==="evidence"){document.getElementById("ws-ev-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  if(id==="passport"){document.getElementById("ws-vf-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  if(id==="disagreement"){
+   document.getElementById("ws-disagree-h")?.scrollIntoView({behavior:"smooth",block:"start"});
+   if(!cmpKey&&comparison&&comparison.items[0])setCmpKey(comparisonPairKey(comparison.items[0]));
+   return;
+  }
+  setBrief(true);
+  document.getElementById("ws-brief-panel")?.scrollIntoView({behavior:"smooth",block:"start"});
+ };
  return (
   <ResearchAppShell where="Investigation workspace" whereIcon="flask" active="investigations">
    <main className="ws" id="rh-main" tabIndex={-1}>
     <nav className="ws-crumb" aria-label="Breadcrumb"><Link to="/research/home">Research Home</Link><span aria-hidden="true">/</span><span>Live investigation</span></nav>
     <header className="ws-head">
      <div className="ws-title">
-      <span className="ws-tag">Research investigation · live sources</span>
+      <span className="ws-tag">USP A · Research investigation · live sources</span>
       <h1>{run?.question??QUESTION}</h1>
       <div className="ws-chips" aria-label="Disease contexts">{run?Object.values(run.byContext).map(b=><span key={b.label}>{b.label}</span>):<span>Rheumatoid arthritis</span>}{!run&&<><span>Systemic lupus erythematosus</span><span>Systemic sclerosis</span></>}</div>
      </div>
@@ -92,8 +121,8 @@ export function InvestigationWorkspacePage(){
        {state==="idle"&&run&&<><b>Run complete</b><p>{run.verification.status==="not_configured"?"The model check did not run: "+(run.verification.reason??""):`${h!.checked} of ${h!.candidates} candidates checked by two models. Candidate-only, unreviewed.`}</p></>}
        {state==="error"&&<p className="ws-err" role="alert">{lr.error} No findings were generated.</p>}
       </div>
-      <div className="ws-actions">
-       <button type="button" className="ws-run" onClick={()=>{setSel(null);setPair(null);setBucket("all");void lr.start()}} disabled={state==="running"}><Icon name="spark" size={16}/>{state==="running"?"Running…":run?"Run again":"Run live investigation"}</button>
+       <div className="ws-actions">
+       <button type="button" className="ws-run" onClick={()=>{setSel(null);setPair(null);setCmpKey(null);setBucket("all");void lr.start()}} disabled={state==="running"}><Icon name="spark" size={16}/>{state==="running"?"Running…":run?"Run again":"Run live investigation"}</button>
        {!run&&saved&&<button type="button" className="ws-btn" onClick={()=>lr.reopen()}>Reopen saved run</button>}
       </div>
      </section>
@@ -101,6 +130,18 @@ export function InvestigationWorkspacePage(){
       <div><dt>Sources</dt><dd>{h?h.sources:"—"}</dd></div><div><dt>Candidates</dt><dd>{h?h.candidates:"—"}</dd></div><div><dt>Key findings</dt><dd>{h?h.findings:"—"}</dd></div>
      </dl>
     </header>
+    <section className="ws-ask-strip" id="ws-ask-strip" aria-labelledby="ws-ask-h">
+     <h2 id="ws-ask-h">Ask</h2>
+     <p className="ws-muted">
+      Start from Research Home Ask, or run the default IL-21 cross-context question here.
+      Disease chips below are demonstration scenarios — HSI is disease-agnostic.
+     </p>
+     <div className="ws-actions">
+      <Link className="ws-btn" to="/research/home">Open Ask on Research Home</Link>
+      {saved&&<button type="button" className="ws-btn" onClick={()=>lr.reopen()}>Reopen browser-saved run</button>}
+     </div>
+    </section>
+    <UspADisagreementTrail steps={uspTrail.steps} onSelect={onTrailSelect}/>
     <Rail run={state==="running"?null:run} running={state==="running"}/>
     <HowProducedPanel
      className="rh-trace ws-produced"
@@ -154,23 +195,18 @@ export function InvestigationWorkspacePage(){
        )}
        <details className="ws-acc" open><summary><Icon name="check" size={16}/>Evidence <b>{supporting.length}</b></summary><p>Claims both checks agreed on as positive. {supporting.length===0&&"None in this run."}</p><ul>{supporting.map(x=><li key={x.id}><button type="button" onClick={()=>setSel(x.id)}>{x.subject} ~ {x.object}</button></li>)}</ul></details>
        <details className="ws-acc"><summary><Icon name="x" size={16}/>Opposing / disputed checks <b>{opposing.length}</b></summary><p>{run.verification.status==="not_configured"?"Not assessed: the model check did not run.":opposing.length===0?"None found in these sources. This does not establish consensus.":"Opposing polarity or disputed model checks — not structured contradiction classes."}</p><ul>{opposing.map(x=><li key={x.id}><button type="button" onClick={()=>setSel(x.id)}>{x.subject} ~ {x.object}</button></li>)}</ul></details>
-       <details className="ws-acc" open={(comparison?.pairCount??0)>0}><summary><Icon name="layers" size={16}/>Structured comparison <b>{comparison?.pairCount??0}</b></summary>
-        <p>Pairwise comparison of claims that share a subject–object relation. Verification is bound before contradiction language. Potential contradiction is not proven contradiction.</p>
-        {!comparison||comparison.pairCount===0?<p className="ws-muted">No comparable pairs in this run (need at least two candidates on the same relation).</p>:<>
-         <p className="ws-muted">Consistent {comparison.summary.consistent} · Context-dependent {comparison.summary.contextDependent} · Method difference {comparison.summary.methodologicalDifference} · Insufficient comparability {comparison.summary.insufficientComparability} · Insufficient evidence {comparison.summary.insufficientEvidence} · Potential contradiction (candidate) {comparison.summary.potentialContradiction}</p>
-         <ul>{comparison.items.map(item=>(
-          <li key={`${item.leftId}:${item.rightId}`}>
-           <b>{COMPARISON_OUTCOME_LABEL[item.outcome]}</b>
-           <span className="ws-muted"> — {item.leftLabel} vs {item.rightLabel}</span>
-           <div className="ws-row-actions">
-            <button type="button" onClick={()=>setSel(item.leftId)}>Open left claim</button>
-            <button type="button" onClick={()=>setSel(item.rightId)}>Open right claim</button>
-           </div>
-           {item.verificationBindNote&&<p className="ws-warn">{item.verificationBindNote}</p>}
-          </li>
-         ))}</ul>
-        </>}
-       </details>
+       <div className="ws-acc ws-acc-static" role="note">
+        <p><Icon name="layers" size={16}/> Structured comparison <b>{comparison?.pairCount??0}</b></p>
+        <p className="ws-muted">Pairwise outcomes live in the USP A panel below. Verification is bound before contradiction language.</p>
+        {(comparison?.pairCount??0)>0&&(
+         <button type="button" className="ws-btn" onClick={()=>onTrailSelect("disagreement")}>
+          Open why-findings-differ
+         </button>
+        )}
+        {comparison&&comparison.items[0]&&(
+         <p className="ws-muted">Example: {COMPARISON_OUTCOME_LABEL[comparison.items[0].outcome]} — {comparison.items[0].leftLabel} vs {comparison.items[0].rightLabel}</p>
+        )}
+       </div>
        <details className="ws-acc" open={run.hypotheses.items.length>0}><summary><Icon name="flask" size={16}/>Hypotheses <b>{run.hypotheses.items.length}</b></summary>
         {run.hypotheses.items.length===0?<p>{run.hypotheses.reason??"None proposed."}</p>:<>
          <p className="ws-warn">Unvalidated model proposals from {run.hypotheses.basis.findings} agreed findings. Not findings, not recommendations, not reviewed.</p>
@@ -192,21 +228,44 @@ export function InvestigationWorkspacePage(){
          setSel(id);
         }}
        />
-       <details className="ws-acc"><summary><Icon name="book" size={16}/>Research brief</summary><p>An evidence-linked record of this run with passport columns, verification status and limits. Abstracts are not included.</p></details>
-       <button type="button" className="ws-run ws-wide" onClick={()=>setBrief(b=>!b)} aria-expanded={brief}>{brief?"Hide research brief":"Open research brief"} <Icon name="arrow" size={16}/></button>
-       {brief&&<pre className="ws-brief" tabIndex={0} aria-label="Research brief text">{renderLiveBriefMarkdown(run)}</pre>}
-       <div className="ws-export">
-        <button type="button" className="ws-btn" onClick={()=>download("hsi-live-brief.md",renderLiveBriefMarkdown(run),"text/markdown")}>Export brief (Markdown)</button>
-        <button type="button" className="ws-btn" onClick={()=>download("hsi-live-investigation.json",JSON.stringify(run,null,2),"application/json")}>Export JSON</button>
-        <button type="button" className="ws-btn" onClick={()=>{const brief=exportLiveBriefV2(run);download("hsi-live-brief-v2.json",JSON.stringify(brief,null,2),"application/json")}}>Export Brief v2 (JSON)</button>
-        <button type="button" className="ws-btn" onClick={()=>{const brief=exportLiveBriefV2(run);download("hsi-live-brief-v2.md",renderLiveBriefV2Markdown(brief),"text/markdown")}}>Export Brief v2 (Markdown)</button>
-        <button type="button" className="ws-btn" onClick={()=>{lr.save();setSaved(true)}}>Save in this browser</button>
-       </div>
        {lr.note&&<p className="ws-muted" role="status">{lr.note}</p>}
        <p className="ws-muted">Model agreement is not scientific proof. {run.verification.independence==="independent_execution_only"?"Both checks ran on one provider (independent execution only).":""}</p>
       </>}
      </section>
     </div>
+
+    {run&&comparison?(
+     <UspADisagreementPanel
+      run={run}
+      comparison={comparison}
+      selectedKey={cmpKey}
+      onSelectPair={(key)=>{setCmpKey(key);if(key){const item=comparison.items.find(i=>comparisonPairKey(i)===key);if(item)setSel(item.leftId)}}}
+      onSelectClaim={setSel}
+      ctxLabel={ctxLabel}
+     />
+    ):run?(
+     <section className="ws-card ws-disagree" aria-labelledby="ws-disagree-h">
+      <header><h2 id="ws-disagree-h">Why findings may differ</h2></header>
+      <p className="ws-muted">Structured comparison will appear when this run has at least two candidates on the same relation.</p>
+     </section>
+    ):null}
+
+    {run&&(
+     <section className="ws-card" id="ws-brief-panel" aria-labelledby="ws-brief-h">
+      <header><h2 id="ws-brief-h"><Icon name="book" size={18}/>Research decision brief</h2></header>
+      <p className="ws-muted">Evidence-linked record with passport columns, verification status and limits. Abstracts are not included. Not scientific gold; not Gate C approval.</p>
+      <button type="button" className="ws-run ws-wide" onClick={()=>setBrief(b=>!b)} aria-expanded={brief}>{brief?"Hide research brief":"Open research brief"} <Icon name="arrow" size={16}/></button>
+      {brief&&<pre className="ws-brief" tabIndex={0} aria-label="Research brief text">{renderLiveBriefMarkdown(run)}</pre>}
+      <div className="ws-export">
+       <button type="button" className="ws-btn" onClick={()=>download("hsi-live-brief.md",renderLiveBriefMarkdown(run),"text/markdown")}>Export brief (Markdown)</button>
+       <button type="button" className="ws-btn" onClick={()=>download("hsi-live-investigation.json",JSON.stringify(run,null,2),"application/json")}>Export JSON</button>
+       <button type="button" className="ws-btn" onClick={()=>{const b=exportLiveBriefV2(run);download("hsi-live-brief-v2.json",JSON.stringify(b,null,2),"application/json")}}>Export Brief v2 (JSON)</button>
+       <button type="button" className="ws-btn" onClick={()=>{const b=exportLiveBriefV2(run);download("hsi-live-brief-v2.md",renderLiveBriefV2Markdown(b),"text/markdown")}}>Export Brief v2 (Markdown)</button>
+       <button type="button" className="ws-btn" onClick={()=>{lr.save();setSaved(true)}}>Save in this browser</button>
+      </div>
+     </section>
+    )}
+
     <section className="ws-card ws-gaps" aria-labelledby="ws-gp-h">
      <header><h2 id="ws-gp-h"><Icon name="layers" size={18}/>Gaps in this run <small>({run?runGaps.length:"none yet"})</small></h2></header>
      {!run?<p className="ws-muted">Gaps appear after a run. They are derived from the run itself, not generated, and a limit of the search is shown apart from a gap in the science.</p>:<>

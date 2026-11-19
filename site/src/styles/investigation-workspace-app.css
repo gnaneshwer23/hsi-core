@@ -70,6 +70,32 @@
 @media(max-width:900px){.ws{padding:18px 16px 56px}.ws-head{grid-template-columns:1fr}.ws-cols{grid-template-columns:1fr}.ws-rail{grid-template-columns:repeat(3,1fr)}.ws-rail li+li::before{display:none}.ws-stats div{flex:1}}
 @media(prefers-reduced-motion:reduce){.ws-spin,.ws-rail li[data-state=running] .ws-dot{animation:none}}
 .ws-warn{padding:8px 10px;border-radius:10px;background:var(--tag-bg);color:var(--tag-fg)!important;font-size:13px!important}
+
+/* USP A disagreement journey */
+.ws-ask-strip{padding:14px 16px;border:1px solid var(--line);border-radius:16px;background:var(--surface-2);display:grid;gap:10px}
+.ws-ask-strip h2{margin:0;font-size:17px}
+.ws-usp-trail{display:grid;gap:10px;padding:14px 16px;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
+.ws-usp-trail-kicker{margin:0;font:700 11.5px/1.4 'Host Grotesk Variable',system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--tag-fg)}
+.ws-usp-trail-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.ws-usp-trail-list li{display:flex;align-items:stretch;gap:6px;min-width:0}
+.ws-usp-trail-join{flex:0 0 10px;align-self:center;height:2px;background:var(--line)}
+.ws-usp-trail-step{flex:1;min-width:0;min-height:64px;display:flex;gap:8px;align-items:flex-start;text-align:left;padding:10px;border-radius:12px;border:1px solid var(--line-2);background:var(--surface-2);color:var(--ink);cursor:pointer;font:inherit}
+.ws-usp-trail-step[aria-current=step]{border-color:var(--accent-link);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent-link) 35%,transparent)}
+.ws-usp-trail-list li[data-state=complete] .ws-usp-trail-num{background:var(--good);border-color:var(--good);color:#fff}
+.ws-usp-trail-num{flex:none;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;border:2px solid var(--line-2);font-size:12px;font-weight:700;color:var(--muted)}
+.ws-usp-trail-copy{min-width:0}.ws-usp-trail-copy b{display:block;font-size:13.5px}.ws-usp-trail-copy small{display:block;font-size:11.5px;color:var(--muted);line-height:1.35}
+.ws-disagree{scroll-margin-top:24px}
+.ws-disagree-list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.ws-disagree-row{width:100%;text-align:left;display:grid;gap:6px;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);cursor:pointer;font:inherit}
+.ws-disagree-row[aria-pressed=true]{border-color:var(--accent-link);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent-link) 35%,transparent)}
+.ws-dual-passports{display:grid;gap:12px;margin-top:8px}
+.ws-dual-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.ws-acc-static{padding:12px 14px;display:grid;gap:8px}
+.ws-acc-static p{margin:0;display:flex;align-items:center;gap:8px;font-weight:650}
+.ws-acc-static .ws-muted{font-weight:400}
+#ws-brief-panel{scroll-margin-top:24px}
+@media(max-width:1100px){.ws-usp-trail-list{grid-template-columns:1fr 1fr}.ws-usp-trail-join{display:none}.ws-dual-grid{grid-template-columns:1fr}}
+@media(max-width:700px){.ws-usp-trail-list{grid-template-columns:1fr}}
 .ws-hyps{list-style:none;margin:0 0 12px;padding:0;display:grid;gap:10px}
 .ws-hyps>li{display:grid;gap:8px;padding:12px;border:1px solid var(--line-2);border-radius:12px;background:var(--surface-2)}
 .ws-tagline{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--tag-fg)}

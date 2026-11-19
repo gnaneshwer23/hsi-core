@@ -76,7 +76,12 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await expect(page.getByRole('heading',{name:'Evidence table for this live brief'})).toBeVisible();
  await expect(page.getByText('EVIDENCE TABLE · PASSPORT COLUMNS · NOT SCIENTIFICALLY APPROVED')).toBeVisible();
  await expect(page.getByRole('region',{name:'Passport evidence table'})).toContainText('Not stated');
- await page.getByRole('button',{name:'Open research brief'}).click();
+ // Brief auto-opens when structured comparison pairs exist (USP A trail).
+ const briefToggle=page.getByRole('button',{name:/research brief/i});
+ await expect(briefToggle).toBeVisible();
+ if(await page.getByRole('button',{name:'Open research brief'}).count()){
+  await page.getByRole('button',{name:'Open research brief'}).click();
+ }
  const brief=page.getByLabel('Research brief text');
  await expect(brief).toContainText('Supporting (both checks agree) (1)');
  await expect(brief).toContainText('Claim verification status');
@@ -86,10 +91,13 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await expect(brief).toContainText('Scientific approval: false');
  const vf=page.getByRole('region',{name:'Scientific verification'});
  await expect(vf.getByText('Opposing / disputed checks')).toBeVisible();
- // Prefer the comparison <summary>; the opened brief also mentions structured comparison.
- await expect(vf.locator('summary').filter({hasText:/Structured comparison/})).toBeVisible();
- await expect(vf.locator('details').filter({has:page.locator('summary',{hasText:/Structured comparison/})})).toContainText('Context-dependent difference');
- await expect(vf.locator('details').filter({has:page.locator('summary',{hasText:/Structured comparison/})})).toContainText('Potential contradiction is not proven contradiction');
+ await expect(page.getByRole('navigation',{name:/USP A disagreement journey/i})).toBeVisible();
+ const disagree=page.getByRole('region',{name:/Why findings may differ/i});
+ await expect(disagree).toContainText('Context-dependent difference');
+ await expect(disagree).toContainText('Potential contradiction is not');
+ await disagree.getByRole('button',{name:/Context-dependent difference/}).click();
+ await expect(page.getByRole('heading',{name:/Left claim · Evidence Context Passport/})).toBeVisible();
+ await expect(page.getByRole('heading',{name:/Right claim · Evidence Context Passport/})).toBeVisible();
  const axe=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();
  expect(axe.violations.map(v=>v.id+': '+v.nodes.length)).toEqual([]);
 });
@@ -131,7 +139,9 @@ test('hypotheses are labelled unvalidated, cite findings, show the second model 
  await expect(page.getByLabel('Selected claim')).toContainText('openai-a');
  await vf.getByText('Rationale, prediction, experiment, falsifier').click();
  await expect(vf).toContainText('Would be falsified by');
- await page.getByRole('button',{name:'Open research brief'}).click();
+ if(await page.getByRole('button',{name:'Open research brief'}).count()){
+  await page.getByRole('button',{name:'Open research brief'}).click();
+ }
  await expect(page.getByLabel('Research brief text')).toContainText('Hypotheses (unvalidated model proposals) (1)');
 });
 
