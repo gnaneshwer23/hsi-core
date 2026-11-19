@@ -127,7 +127,7 @@ export function buildUspADisagreementTrail(input: UspATrailInput): {
       input.hasRun && input.candidateCount > 0,
       hasPassport
         ? "Inspect experimental context; missing fields stay explicit"
-        : "Select a claim to open its Evidence Context Passport",
+        : "Pick a claim for the passport sheet",
     ),
     step(
       "disagreement",

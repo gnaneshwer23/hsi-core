@@ -52,7 +52,7 @@ test('after a run, passport empty-state prompts claim selection before inventing
  await mock(page,unchecked);
  await page.goto('/research/workspace');
  await page.getByRole('button',{name:'Run live investigation'}).click();
- await expect(page.getByText('Select a claim to open its Evidence Context Passport')).toBeVisible();
+ await expect(page.locator('.ws-passport-empty')).toContainText('Select a claim to open its Evidence Context Passport');
  await expect(page.getByRole('heading',{name:'Evidence context passport'})).toHaveCount(0);
 });
 
