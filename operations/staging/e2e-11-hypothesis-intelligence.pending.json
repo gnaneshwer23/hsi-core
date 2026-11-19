@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "hsi-e2e-11-hypothesis-intelligence-pending-1",
+  "purpose": "pr_e2e_11_hypothesis_intelligence_soft_land",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "priority": "P3",
+  "labelledLater": true,
+  "experimentallyValidated": false,
+  "mustShipForHsi10": false,
+  "scientificApproval": false,
+  "graphPromotable": false,
+  "gateCAutoApprove": false,
+  "inventedWetLabOutcomes": false,
+  "inventedNumericConfidence": false,
+  "acceptedForScope": false,
+  "signedPacketClaimed": false,
+  "honesty": {
+    "reviewIsNotExperimentalValidation": true,
+    "ledgerUnvalidatedAlways": true,
+    "labelledLaterNotMustShip": true,
+    "noInventedWetLabOutcomes": true,
+    "noNumericLlmConfidence": true,
+    "fixtureIsNotValidation": true
+  },
+  "ciSafeModes": {
+    "check": {
+      "command": "bun test test/e2e11HypothesisIntelligence.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    },
+    "fixture": {
+      "command": "bun test test/hypothesisRegistry.test.ts test/hypothesisLedger.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "references": {
+    "hsi10_e2e_acceptance_ref": "NOT_STARTED",
+    "planner_comparison_receipt_ref": "UNASSIGNED",
+    "wet_lab_observation_authority_ref": "UNASSIGNED"
+  },
+  "surfaces": {
+    "hypothesis_registry": { "status": "REUSE", "validated": false },
+    "hypothesis_ledger_device_local": { "status": "REUSE", "validated": false },
+    "falsifiable_experiment_proposals": { "status": "REUSE", "validated": false },
+    "interrogative_falsification_engine": { "status": "REUSE", "validated": false },
+    "research_outcome_hypotheses": { "status": "REUSE", "validated": false },
+    "collaboration_hypothesis_stubs": { "status": "STUB_LATER", "validated": false },
+    "optional_planner_comparison": { "status": "VALIDATION_GATED", "validated": false }
+  },
+  "notes": "Keep labelled later until HSI 1.0 E2E acceptance exists. Soft-land never invents wet-lab outcomes, numeric confidence, or must-ship status."
+}
