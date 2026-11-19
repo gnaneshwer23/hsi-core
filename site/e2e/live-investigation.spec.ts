@@ -40,12 +40,13 @@ test('workspace before a run states that nothing has started and shows no figure
  expect(await stage2Exit.getAttribute('open')).toBeNull();
  await stage2Exit.locator('> summary').click();
  await expect.poll(async()=>stage2Exit.getAttribute('open')).not.toBeNull();
- const stage2=page.getByRole('region',{name:/Stage 2 investigation progress/i});
+ // Scope through the fold so panels outside #ws-stage2-exit would fail.
+ const stage2=stage2Exit.getByRole('region',{name:/Stage 2 investigation progress/i});
  await expect(stage2).toContainText('journey complete claimed: false');
  await expect(stage2).toContainText('local progress only: true');
  await expect(stage2).toContainText('pilot accepted: false');
  await expect(stage2).toContainText('Progress: 0/');
- await expect(page.getByRole('region',{name:/Steps 12–13 \(blocked\)/i})).toContainText('org sharing: false');
+ await expect(stage2Exit.getByRole('region',{name:/Steps 12–13 \(blocked\)/i})).toContainText('org sharing: false');
  await expect(page.getByRole('region',{name:/Researcher usefulness \(this device\)/i})).toContainText('Run a live investigation');
  await page.getByText('USP focus trails (A · B · C)').click();
  await expect(page.getByRole('navigation',{name:/USP B cross-domain journey/i})).toBeVisible();
@@ -228,7 +229,7 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  expect(await stage2Exit.getAttribute('open')).toBeNull();
  await stage2Exit.locator('> summary').click();
  await expect.poll(async()=>stage2Exit.getAttribute('open')).not.toBeNull();
- const stage2=page.getByRole('region',{name:/Stage 2 investigation progress/i});
+ const stage2=stage2Exit.getByRole('region',{name:/Stage 2 investigation progress/i});
  await expect(stage2).toContainText('journey complete claimed: false');
  await expect(stage2).toContainText('pilot accepted: false');
  await expect(stage2).toContainText('Local usefulness rating saved for this briefHash');
@@ -249,7 +250,7 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await expect(testable).toContainText('Blocking IL-21 reduces Tfh expansion');
  await expect(testable).toContainText('Would be falsified by');
  await expect(testable).toContainText('No change in Tfh numbers');
- const blocked=page.getByRole('region',{name:/Steps 12–13 \(blocked\)/i});
+ const blocked=stage2Exit.getByRole('region',{name:/Steps 12–13 \(blocked\)/i});
  await expect(blocked).toContainText('org sharing: false');
  await expect(blocked).toContainText('collaborator links: false');
  await expect(blocked).toContainText('live source refresh accepted: false');
