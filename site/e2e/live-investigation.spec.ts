@@ -81,11 +81,17 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await expect(page.getByRole('heading',{name:'Evidence table for this live brief'})).toBeVisible();
  await expect(page.getByText('EVIDENCE TABLE · PASSPORT COLUMNS · NOT SCIENTIFICALLY APPROVED')).toBeVisible();
  await expect(page.getByRole('region',{name:'Passport evidence table'})).toContainText('Not stated');
- // Brief auto-opens when structured comparison pairs exist (USP A trail).
- const briefToggle=page.getByRole('button',{name:/research brief/i});
+ // Decision brief: limitations + passport columns always visible; markdown is optional preview.
+ const briefPanel=page.getByRole('region',{name:/Research decision brief/i});
+ await expect(briefPanel).toContainText('briefAccepted: false');
+ await expect(briefPanel).toContainText('Scientific approval: false');
+ await expect(briefPanel.getByRole('heading',{name:/Limitations \(always visible\)/i})).toBeVisible();
+ await expect(briefPanel).toContainText('Candidate-only live brief');
+ await expect(briefPanel.getByRole('heading',{name:/Passport columns for this brief/i})).toBeVisible();
+ const briefToggle=page.getByRole('button',{name:/markdown preview/i});
  await expect(briefToggle).toBeVisible();
- if(await page.getByRole('button',{name:'Open research brief'}).count()){
-  await page.getByRole('button',{name:'Open research brief'}).click();
+ if(await page.getByRole('button',{name:'Open markdown preview'}).count()){
+  await page.getByRole('button',{name:'Open markdown preview'}).click();
  }
  const brief=page.getByLabel('Research brief text');
  await expect(brief).toContainText('Supporting (both checks agree) (1)');
@@ -160,8 +166,8 @@ test('hypotheses are labelled unvalidated, cite findings, show the second model 
  await expect(page.getByLabel('Selected claim')).toContainText('openai-a');
  await vf.getByText('Rationale, prediction, experiment, falsifier').click();
  await expect(vf).toContainText('Would be falsified by');
- if(await page.getByRole('button',{name:'Open research brief'}).count()){
-  await page.getByRole('button',{name:'Open research brief'}).click();
+ if(await page.getByRole('button',{name:'Open markdown preview'}).count()){
+  await page.getByRole('button',{name:'Open markdown preview'}).click();
  }
  await expect(page.getByLabel('Research brief text')).toContainText('Hypotheses (unvalidated model proposals) (1)');
 });

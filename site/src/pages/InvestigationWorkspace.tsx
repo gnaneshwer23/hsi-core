@@ -1,7 +1,5 @@
 import {useEffect,useMemo,useRef,useState} from "react";
 import {Link,useLocation} from "react-router-dom";
-import {renderLiveBriefMarkdown} from "../../../src/investigation/liveBrief";
-import {exportLiveBriefV2,renderLiveBriefV2Markdown} from "../../../src/investigation/liveBriefV2";
 import {ResearchAppShell} from "../components/home/ResearchAppShell";
 import {Icon} from "../components/home/AppIcons";
 import {deriveRunGaps} from "../../../src/investigation/runGaps";
@@ -16,6 +14,7 @@ import {PassportEvidenceTable} from "../components/PassportEvidenceTable";
 import {liveClaimToPassportEdge} from "../../../src/investigation/liveClaimPassportEdge";
 import {liveInvestigationPassportEdges,liveInvestigationPassportSources} from "../../../src/investigation/liveBriefPassport";
 import {COMPARISON_OUTCOME_LABEL} from "../../../src/investigation/liveBriefComparison";
+import {buildLiveBriefPreview} from "../../../src/investigation/liveBriefPreview";
 import {
   buildUspADisagreementTrail,
   comparisonPairKey,
@@ -42,6 +41,7 @@ import {UspBCrossDomainTrail} from "../components/workspace/UspBCrossDomainTrail
 import {UspBCrossDomainPanel} from "../components/workspace/UspBCrossDomainPanel";
 import {UspCConnectedTrail} from "../components/workspace/UspCConnectedTrail";
 import {UspCConnectedPanel} from "../components/workspace/UspCConnectedPanel";
+import {LiveBriefDecisionPanel} from "../components/workspace/LiveBriefDecisionPanel";
 import {loadDomainGraph} from "../lib/claimGraphClient";
 import {EMPTY_PROFILE,loadProfile,type Profile} from "../lib/researchHome";
 import {BUCKET_LABEL,bucketOf,buildGraph,counts,filterCandidates,headline,stageRail,yearOf,type Bucket,type Cand,type EdgeState,type Run} from "../lib/workspaceView";
@@ -50,7 +50,6 @@ import "../styles/investigation-workspace-app.css";
 const QUESTION="Why might IL-21 signalling have different biological consequences across autoimmune disease contexts?";
 const DIR:Record<string,string>={positive:"Positive",negative:"Negative",none:"No relationship",association_only:"Linked, direction not stated",unresolved:"Unresolved",not_assessed:"Not assessed"};
 const EDGE:Record<EdgeState,string>={supporting:"Supporting",opposing:"Opposing",disputed:"Disputed",unassessed:"Not assessed"};
-function download(name:string,text:string,type:string){const u=URL.createObjectURL(new Blob([text],{type}));const a=document.createElement("a");a.href=u;a.download=name;a.click();URL.revokeObjectURL(u)}
 
 function Rail({run,running}:{run:Run|null;running:boolean}){
  return <ol className="ws-rail" aria-label="Investigation stages, as recorded by the run">{stageRail(run,running).map((s,i)=>(
@@ -128,6 +127,7 @@ export function InvestigationWorkspacePage(){
   :null;
  const passportEdges=useMemo(()=>run?liveInvestigationPassportEdges(run):[],[run]);
  const passportSources=useMemo(()=>run?liveInvestigationPassportSources(run):[],[run]);
+ const briefPreview=useMemo(()=>run?buildLiveBriefPreview(run,passportEdges.length):null,[run,passportEdges.length]);
  const uspTrail=useMemo(()=>buildUspADisagreementTrail({
   hasRun:Boolean(run),
   candidateCount:run?.candidates.length??0,
@@ -392,21 +392,21 @@ export function InvestigationWorkspacePage(){
      onOpenBrief={()=>{setBrief(true);document.getElementById("ws-brief-panel")?.scrollIntoView({behavior:"smooth",block:"start"})}}
     />
 
-    {run&&(
-     <section className="ws-card" id="ws-brief-panel" aria-labelledby="ws-brief-h">
-      <header><h2 id="ws-brief-h"><Icon name="book" size={18}/>Research decision brief</h2></header>
-      <p className="ws-muted">Evidence-linked record with passport columns, verification status and limits. Abstracts are not included. Not scientific gold; not Gate C approval.</p>
-      <button type="button" className="ws-run ws-wide" onClick={()=>setBrief(b=>!b)} aria-expanded={brief}>{brief?"Hide research brief":"Open research brief"} <Icon name="arrow" size={16}/></button>
-      {brief&&<pre className="ws-brief" tabIndex={0} aria-label="Research brief text">{renderLiveBriefMarkdown(run)}</pre>}
-      <div className="ws-export">
-       <button type="button" className="ws-btn" onClick={()=>download("hsi-live-brief.md",renderLiveBriefMarkdown(run),"text/markdown")}>Export brief (Markdown)</button>
-       <button type="button" className="ws-btn" onClick={()=>download("hsi-live-investigation.json",JSON.stringify(run,null,2),"application/json")}>Export JSON</button>
-       <button type="button" className="ws-btn" onClick={()=>{const b=exportLiveBriefV2(run);download("hsi-live-brief-v2.json",JSON.stringify(b,null,2),"application/json")}}>Export Brief v2 (JSON)</button>
-       <button type="button" className="ws-btn" onClick={()=>{const b=exportLiveBriefV2(run);download("hsi-live-brief-v2.md",renderLiveBriefV2Markdown(b),"text/markdown")}}>Export Brief v2 (Markdown)</button>
-       <button type="button" className="ws-btn" onClick={()=>{lr.save();setSaved(lr.hasSaved())}}>Save to browser library</button>
-      </div>
-     </section>
-    )}
+    {run&&briefPreview?(
+     <LiveBriefDecisionPanel
+      run={run}
+      preview={briefPreview}
+      passportEdges={passportEdges}
+      passportSources={passportSources}
+      markdownOpen={brief}
+      onToggleMarkdown={()=>setBrief(b=>!b)}
+      onInspectEdge={(edgeId)=>{
+       const id=edgeId.startsWith("live-claim:")?edgeId.slice("live-claim:".length):edgeId;
+       setSel(id);
+      }}
+      onSave={()=>{lr.save();setSaved(lr.hasSaved())}}
+     />
+    ):null}
 
     <section className="ws-card ws-gaps" aria-labelledby="ws-gp-h">
      <header><h2 id="ws-gp-h"><Icon name="layers" size={18}/>Gaps in this run <small>({run?runGaps.length:"none yet"})</small></h2></header>
