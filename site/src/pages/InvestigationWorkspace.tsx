@@ -273,11 +273,23 @@ export function InvestigationWorkspacePage(){
   setBrief(true);
   document.getElementById("ws-brief-panel")?.scrollIntoView({behavior:"smooth",block:"start"});
  };
+ const openUspPanelsFold=()=>{
+  const el=document.getElementById("ws-usp-panels") as HTMLDetailsElement|null;
+  if(el&&!el.open)el.open=true;
+ };
  const onUnifiedTrailSelect=(id:UnifiedJourneyStepId)=>{
   if(id==="ask"){document.getElementById("ws-ask-strip")?.scrollIntoView({behavior:"smooth",block:"start"});return}
   if(id==="evidence"||id==="passport"){document.getElementById("ws-ev-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
-  if(id==="disagreement"){document.getElementById("ws-disagree-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
-  if(id==="crossDomain"){document.getElementById("ws-cross-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  if(id==="disagreement"){
+   openUspPanelsFold();
+   document.getElementById("ws-disagree-h")?.scrollIntoView({behavior:"smooth",block:"start"});
+   return;
+  }
+  if(id==="crossDomain"){
+   openUspPanelsFold();
+   document.getElementById("ws-cross-h")?.scrollIntoView({behavior:"smooth",block:"start"});
+   return;
+  }
   if(id==="gaps"){document.getElementById("ws-gp-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
   if(id==="save"){document.getElementById("ws-conn-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
   setBrief(true);
@@ -288,6 +300,7 @@ export function InvestigationWorkspacePage(){
   if(id==="evidence"){document.getElementById("ws-ev-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
   if(id==="passport"){document.getElementById("ws-vf-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
   if(id==="disagreement"){
+   openUspPanelsFold();
    document.getElementById("ws-disagree-h")?.scrollIntoView({behavior:"smooth",block:"start"});
    if(!cmpKey&&comparison&&comparison.items[0])setCmpKey(comparisonPairKey(comparison.items[0]));
    return;
@@ -298,6 +311,7 @@ export function InvestigationWorkspacePage(){
  const onUspBTrailSelect=(id:UspBTrailStepId)=>{
   if(id==="ask"){document.getElementById("ws-ask-strip")?.scrollIntoView({behavior:"smooth",block:"start"});return}
   if(id==="domains"||id==="pathways"){
+   openUspPanelsFold();
    document.getElementById("ws-cross-h")?.scrollIntoView({behavior:"smooth",block:"start"});
    if(id==="pathways"&&crossPathIndex===null&&crossPaths.paths[0])setCrossPathIndex(0);
    return;
@@ -472,47 +486,50 @@ export function InvestigationWorkspacePage(){
      </section>
     </div>
 
-    {run&&comparison?(
-     <UspADisagreementPanel
-      run={run}
-      comparison={comparison}
-      selectedKey={cmpKey}
-      onSelectPair={(key)=>{setCmpKey(key);if(key){const item=comparison.items.find(i=>comparisonPairKey(i)===key);if(item)setSel(item.leftId)}}}
-      onSelectClaim={setSel}
-      ctxLabel={ctxLabel}
+    <details className="ws-usp-focus" id="ws-usp-panels">
+     <summary>USP focus panels (A · B · curated) — not journey complete · not scientific approval</summary>
+     {run&&comparison?(
+      <UspADisagreementPanel
+       run={run}
+       comparison={comparison}
+       selectedKey={cmpKey}
+       onSelectPair={(key)=>{setCmpKey(key);if(key){const item=comparison.items.find(i=>comparisonPairKey(i)===key);if(item)setSel(item.leftId)}}}
+       onSelectClaim={setSel}
+       ctxLabel={ctxLabel}
+      />
+     ):run?(
+      <section className="ws-card ws-disagree" aria-labelledby="ws-disagree-h">
+       <header><h2 id="ws-disagree-h">Why findings may differ</h2></header>
+       <p className="ws-muted">Structured comparison will appear when this run has at least two candidates on the same relation.</p>
+      </section>
+     ):null}
+
+     <CuratedDisagreementPackPanel
+      pack={curatedPack}
+      selectedId={curatedCaseId}
+      onSelect={setCuratedCaseId}
+      graphError={graphError}
      />
-    ):run?(
-     <section className="ws-card ws-disagree" aria-labelledby="ws-disagree-h">
-      <header><h2 id="ws-disagree-h">Why findings may differ</h2></header>
-      <p className="ws-muted">Structured comparison will appear when this run has at least two candidates on the same relation.</p>
-     </section>
-    ):null}
 
-    <CuratedDisagreementPackPanel
-     pack={curatedPack}
-     selectedId={curatedCaseId}
-     onSelect={setCuratedCaseId}
-     graphError={graphError}
-    />
-
-    <UspBCrossDomainPanel
-     bundle={bundle}
-     coverage={crossCoverage}
-     matches={crossMatches}
-     startId={crossStart}
-     targetDepartment={crossTarget}
-     pathStatus={crossPaths.result?.status??null}
-     paths={crossPaths.paths}
-     selectedPathIndex={crossPathIndex}
-     gapCount={runGaps.length}
-     hypothesisCount={run?.hypotheses.items.length??0}
-     graphError={graphError}
-     onSelectStart={(id)=>{setCrossStart(id);setCrossPathIndex(null)}}
-     onSelectTarget={(slug)=>{setCrossTarget(slug);setCrossPathIndex(null)}}
-     onSelectPath={setCrossPathIndex}
-     onOpenGaps={()=>document.getElementById("ws-gp-h")?.scrollIntoView({behavior:"smooth",block:"start"})}
-     onOpenBrief={()=>{setBrief(true);document.getElementById("ws-brief-panel")?.scrollIntoView({behavior:"smooth",block:"start"})}}
-    />
+     <UspBCrossDomainPanel
+      bundle={bundle}
+      coverage={crossCoverage}
+      matches={crossMatches}
+      startId={crossStart}
+      targetDepartment={crossTarget}
+      pathStatus={crossPaths.result?.status??null}
+      paths={crossPaths.paths}
+      selectedPathIndex={crossPathIndex}
+      gapCount={runGaps.length}
+      hypothesisCount={run?.hypotheses.items.length??0}
+      graphError={graphError}
+      onSelectStart={(id)=>{setCrossStart(id);setCrossPathIndex(null)}}
+      onSelectTarget={(slug)=>{setCrossTarget(slug);setCrossPathIndex(null)}}
+      onSelectPath={setCrossPathIndex}
+      onOpenGaps={()=>document.getElementById("ws-gp-h")?.scrollIntoView({behavior:"smooth",block:"start"})}
+      onOpenBrief={()=>{setBrief(true);document.getElementById("ws-brief-panel")?.scrollIntoView({behavior:"smooth",block:"start"})}}
+     />
+    </details>
 
     <UspCConnectedPanel
      profile={profile}

@@ -122,6 +122,11 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await expect(journey).toContainText('Save');
  await page.getByText('USP focus trails (A · B · C)').click();
  await expect(page.getByRole('navigation',{name:/USP A disagreement journey/i})).toBeVisible();
+ const uspPanels=page.locator('#ws-usp-panels');
+ await expect(uspPanels.locator('> summary')).toContainText('USP focus panels');
+ await expect(uspPanels.locator('> summary')).toContainText('not journey complete');
+ if(!(await uspPanels.getAttribute('open')))await uspPanels.locator('> summary').click();
+ await expect(uspPanels).toHaveAttribute('open','');
  const disagree=page.getByRole('region',{name:/Why findings may differ/i});
  await expect(disagree).toContainText('Context-dependent difference');
  await expect(disagree).toContainText('Potential contradiction is not');
