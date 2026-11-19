@@ -10,6 +10,7 @@ import {GapCard} from "../components/home/GapCard";
 import {AskCard} from "../components/home/AskCard";
 import {Overview} from "../components/home/Overview";
 import {Program} from "../components/home/Program";
+import {ProfileWorkspaceHandoffCard} from "../components/home/ProfileWorkspaceHandoffCard";
 import {programView} from "../lib/program";
 import {DEPT_ICON,Icon} from "../components/home/AppIcons";
 import {EMPTY_PROFILE,LIVE_RUN_KEY,summariseSavedLiveRun,type SavedLiveRun,classifyIntent,GOALS,INVESTIGATION_STATUS,looksLikeTrialId,recommend,resetProfile,ROLES,searchEntities,type Profile} from "../lib/researchHome";
@@ -19,6 +20,7 @@ import {
   reopenLiveRunFromLibrary,
   type LiveRunLibraryEntry,
 } from "../../../src/investigation/liveRunLibrary";
+import {buildProfileWorkspaceHandoff} from "../../../src/investigation/profileWorkspaceHandoff";
 import {loadOnboardingProfile,pathHonestyLabel,resolveOnboardingProfileMode,saveOnboardingProfile,type OnboardingProfileClientMode,type OnboardingProfileStatus} from "../lib/onboardingProfileClient";
 import {LIVE_INVESTIGATION_PATH,liveInvestigationHref} from "../lib/workbenchPrimary";
 import "../styles/research-home.css";
@@ -177,6 +179,14 @@ export function ResearchHome(){
  const custom=profile.interests.filter(i=>!departments.some(d=>d.slug===i));
  const myView=useMemo(()=>{const v=bundle&&profile.onboarded?programView(profile,bundle,1):null;return v&&v.anchors.length?v:null},[bundle,profile]);
  const savedItems=saved.kind==="ok"?saved.items:[];
+ const profileHandoff=useMemo(()=>buildProfileWorkspaceHandoff({
+  onboarded:profile.onboarded,
+  question:profile.question,
+  interests:profile.interests,
+  role:profile.role,
+  cadence:profile.cadence,
+  matchedScenarioId:profile.question.trim()?matchScenario(profile.question):null,
+ }),[profile]);
  return (
   <ResearchAppShell where="Research Home" active="home" onSearch={()=>inputRef.current?.focus()}>
     <main className="rh-main" id="rh-main" tabIndex={-1}>
@@ -184,6 +194,9 @@ export function ResearchHome(){
      {failed&&<p className="rh-err" role="alert">The published graph could not be loaded, so concept search and suggestions are unavailable. No substitute results are shown.</p>}
      {noStore&&<p className="rh-err" role="status">This browser blocked local storage, so preferences will not be kept.</p>}
      {ready&&!profile.onboarded&&<Onboarding profile={profile} onDone={p=>setProfile(p)}/>}
+     {ready&&profileHandoff.ready&&(
+      <ProfileWorkspaceHandoffCard handoff={profileHandoff} highlight={fresh}/>
+     )}
 
      <Overview bundle={bundle} view={myView} profile={profile}>{ready&&<Program profile={profile} bundle={bundle} onProfile={setProfile}/>}</Overview>
      <RadarCard profile={profile} ready={ready}/>

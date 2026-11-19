@@ -90,6 +90,8 @@
 .ws-disagree-row[aria-pressed=true]{border-color:var(--accent-link);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent-link) 35%,transparent)}
 .ws-dual-passports{display:grid;gap:12px;margin-top:8px}
 .ws-dual-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.ws-ask-handoff{display:grid;gap:6px;padding:12px 14px;border:1px solid var(--line-2);border-radius:12px;background:var(--surface-2)}
+.ws-ask-handoff p{margin:0}
 .ws-curated-disagree{scroll-margin-top:24px;display:grid;gap:12px}
 .ws-curated-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
 .ws-curated-case{width:100%;text-align:left;display:grid;gap:4px;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);cursor:pointer;font:inherit}

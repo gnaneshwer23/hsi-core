@@ -70,6 +70,9 @@ export function UspCConnectedPanel({
                 <Link className="ws-btn" to="/research/home">
                   Open Research Home
                 </Link>
+                <Link className="ws-btn" to="/research/workspace?from=profile">
+                  Reopen with profile handoff
+                </Link>
                 <Link className="ws-btn" to="/welcome">
                   Edit setup
                 </Link>
