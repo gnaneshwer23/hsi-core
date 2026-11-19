@@ -1,7 +1,7 @@
 # Stage 4 — research dashboards + multi-workspace hub (content map)
 
 **Date:** 19 November 2026 (Europe/London)  
-**Status:** Soft-landed Stage 4 interfaces (A–F) — **not** the current build centre  
+**Status:** Soft-landed Stage 4 interfaces (A–G) — **not** the current build centre  
 **Doctrine:** [`HSI_BUSINESS_VISION_EXECUTION_AUDIT_2026-11-19.md`](./HSI_BUSINESS_VISION_EXECUTION_AUDIT_2026-11-19.md) · journey over dashboards · one scientific engine · many shells  
 **Related:** Soft-landed academic / audience shells on `/enterprise/*`; multi-workspace hub F on `/workspaces` (concept from [#514](https://github.com/gnaneshwer23/hsi-core/pull/514))
 
@@ -50,7 +50,9 @@
                             │
                     Multi-workspace hub (F)
                             │
-                    * research cohorts only — not CDS; no PHI
+              Participant contribution (G)*
+                            │
+                    * research cohorts / participants only — not CDS; no PHI
 ```
 
 ---
@@ -169,6 +171,25 @@
 
 ---
 
+## 7. Research Participant contribution (shell G)
+
+**Audience:** Research participants / study contributors (future governed path)
+
+**Hard boundary:** **Not** a scientific dashboard · **not** CDS · **no PHI** in `hsi-core` · synthetic / disabled only until ADR-0010 clinical-plane gates close.
+
+| Must contain | Maps to shared / existing | Notes |
+| --- | --- | --- |
+| Consent sketches | Disabled demo slots | No identifiers or signatures stored here |
+| Contribution channels | Deep-link only | Questionnaires / logistics / updates — all off |
+| Study update sketches | Proposed copy | No invented enrollment / conversion / safety % |
+| Plane boundary | Clinical shell · workspace · docs | Real path stays on clinical plane |
+
+**Visual reference pattern:** Consent / contribution / updates chrome — separate from researcher investigation UI.
+
+**Status:** Soft-land Participant contribution preview on `/enterprise/participant` (demo-labelled; channels disabled; PHI always zero). Gap matrix: [`../engineering/PARTICIPANT_DASHBOARD_GAP_MATRIX.md`](../engineering/PARTICIPANT_DASHBOARD_GAP_MATRIX.md).
+
+---
+
 ## Shared UI component kit (shell-level)
 
 Reuse across dashboards; swap widget **content**, not engines:
@@ -191,7 +212,7 @@ Reuse across dashboards; swap widget **content**, not engines:
 
 1. **Now:** Stage 2 journey + §H honesty on `main` (landed #538/#539+)  
 2. **Owner-gated:** staging grants, write packet, source clearance, SME gold, soft-lands (#511/#512)  
-3. **Then Stage 4 shells:** Academic → Biotech → Clinical research → Lab → Community → Multi-workspace hub (A–F soft-landed as demos; flesh beyond demo only after usefulness)
+3. **Then Stage 4 shells:** Academic → Biotech → Clinical research → Lab → Community → Multi-workspace hub → Participant contribution (A–G soft-landed as demos; flesh beyond demo only after usefulness; participant path stays clinical-plane gated)
 
 Do **not** treat founder UI references as permission to invent metrics, patients, competitor pipelines or scientific approval.
 

@@ -88,6 +88,9 @@ export function WorkspaceHubPage() {
           <Link className="ent-btn ent-btn-secondary" to="/enterprise/community">
             Community shell (E)
           </Link>
+          <Link className="ent-btn ent-btn-secondary" to="/enterprise/participant">
+            Participant shell (G)
+          </Link>
         </div>
       </div>
     </div>

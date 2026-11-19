@@ -11,6 +11,7 @@ const NAV = [
   { to: "/enterprise/biotech", label: "Biotech shell", end: true },
   { to: "/enterprise/lab", label: "Lab / Omics shell", end: true },
   { to: "/enterprise/community", label: "Community shell", end: true },
+  { to: "/enterprise/participant", label: "Participant shell", end: true },
   { to: "/academic", label: "Academic shells", end: true },
 ] as const;
 
