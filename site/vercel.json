@@ -505,6 +505,14 @@
       "destination": "/_pages/biotech.html"
     },
     {
+      "source": "/clinical",
+      "destination": "/_pages/clinical.html"
+    },
+    {
+      "source": "/laboratories",
+      "destination": "/_pages/laboratories.html"
+    },
+    {
       "source": "/validation",
       "destination": "/_pages/validation.html"
     },

@@ -44,8 +44,8 @@ const AUDIENCES = [
   { label: "Researchers", to: "/researchers" },
   { label: "Research groups", to: "/enterprise" },
   { label: "Biotech & pharma", to: "/biotech" },
-  { label: "Clinical research", to: "/enterprise/clinical" },
-  { label: "Laboratories", to: "/enterprise/lab" },
+  { label: "Clinical research", to: "/clinical" },
+  { label: "Laboratories", to: "/laboratories" },
   { label: "Community", to: "/enterprise/community" },
 ] as const;
 

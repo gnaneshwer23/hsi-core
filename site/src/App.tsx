@@ -19,7 +19,13 @@ const FundingCareersDashboard=lazy(()=>import("./pages/FundingCareersDashboard")
 const FirstPilotDashboard=lazy(()=>import("./pages/FirstPilotDashboard").then(m=>({default:m.FirstPilotDashboard})));
 import {ContextConflictAuditPage} from "./pages/PublicResearchPages";
 import {TrustPublicPage,AboutPublicPage} from "./pages/PublicFoundationPages";
-import {ResearchersPublicPage,BiotechPublicPage,ValidationPublicPage} from "./pages/AudiencePublicPages";
+import {
+  ResearchersPublicPage,
+  BiotechPublicPage,
+  ClinicalPublicPage,
+  LaboratoriesPublicPage,
+  ValidationPublicPage,
+} from "./pages/AudiencePublicPages";
 import {HomeLanding as Home} from "./pages/HomeLanding";
 import {HowItWorksPage as HowItWorks} from "./pages/HowItWorksPage";
 import {ScientificEvidence as EvidenceIntelligencePage} from "./pages/ScientificPublic";
@@ -157,6 +163,8 @@ export default function App() {
         <Route path="about" element={<AboutPublicPage />} />
         <Route path="researchers" element={<ResearchersPublicPage />} />
         <Route path="biotech" element={<BiotechPublicPage />} />
+        <Route path="clinical" element={<ClinicalPublicPage />} />
+        <Route path="laboratories" element={<LaboratoriesPublicPage />} />
         <Route path="validation" element={<ValidationPublicPage />} />
         <Route path="technology" element={<Navigate to="/how-it-works" replace />} />
         <Route path="how-it-works" element={<HowItWorks />} />

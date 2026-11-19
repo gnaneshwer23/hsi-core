@@ -1,5 +1,5 @@
 /**
- * Public audience pages: Researchers (Stage 2 PR3), Biotech, Validation.
+ * Public audience pages: Researchers (PR3), Biotech / Clinical / Laboratories (PR4), Validation.
  * Honesty: no fake metrics, no live CDS, no invented pilots or gold-standard claims.
  */
 import { Link } from "react-router-dom";
@@ -137,63 +137,202 @@ export function ResearchersPublicPage() {
 
 export function BiotechPublicPage() {
   return (
-    <div className="hsi-public">
-      <PublicHero
+    <LandingPage>
+      <LandingHero
+        eyebrow="Biotech & Pharma"
         title="Assess R&D evidence with provenance you can inspect."
         description="For biotech and translational teams, HSI keeps source, experimental context and review status attached to each candidate relationship — so disagreement can be checked before it becomes a decision narrative."
       >
-        <PublicAction to="/contact">Discuss a research pilot</PublicAction>
-        <PublicAction to="/evidence-intelligence" secondary>
-          Inspect Evidence Intelligence
-        </PublicAction>
-        <PublicAction to="/enterprise/biotech" secondary>
-          Open R&D dashboard preview
-        </PublicAction>
-      </PublicHero>
-      <PublicSection
+        <LandingPrimaryCta to="/contact">Discuss a research pilot</LandingPrimaryCta>
+        <LandingSecondaryCta to="/evidence-intelligence">Inspect Evidence Intelligence</LandingSecondaryCta>
+      </LandingHero>
+
+      <LandingSection
         title="Where HSI helps an R&D workflow."
-        description="Presentation labels for capabilities that already exist as research surfaces — not separate products or guaranteed outcomes."
+        description="Capabilities that already exist as research surfaces — not separate products or guaranteed outcomes."
       >
-        <div className="hsi-principles">
-          {[
-            {
-              title: "Evidence Intelligence",
-              text: "Inspect source provenance, passage-linked context and missing fields before interpreting a claim.",
-            },
-            {
-              title: "Mechanism Explorer",
-              text: "Traverse candidate graph relationships with disease and department filters. Approved edges remain rare by design.",
-            },
-            {
-              title: "Scientific Verification",
-              text: "Directional checks and review queues stay separate from graph publication. No auto-approve path.",
-            },
-          ].map((s) => (
-            <article key={s.title}>
-              <h3>{s.title}</h3>
-              <p>{s.text}</p>
-            </article>
-          ))}
+        <div className="s2-card-grid">
+          <LandingEvidenceCard
+            maturity="available"
+            title="Evidence Intelligence"
+            body="Inspect source provenance, passage-linked context and missing fields before interpreting a claim."
+          />
+          <LandingEvidenceCard
+            maturity="available"
+            title="Mechanism Explorer"
+            body="Traverse candidate graph relationships with disease and department filters. Approved edges remain rare by design."
+          />
+          <LandingEvidenceCard
+            maturity="restricted"
+            title="Scientific Verification"
+            body="Directional checks and review queues stay separate from graph publication. No auto-approve path."
+          />
+          <LandingEvidenceCard
+            maturity="demonstration"
+            title="R&D dashboard shell"
+            body="A labelled demonstration chrome for portfolio orientation. Demo metrics are not pipeline truth."
+          />
         </div>
-      </PublicSection>
-      <PublicSection
+        <div className="s2-cta-row">
+          <LandingPrimaryCta to="/enterprise/biotech">Open R&D dashboard preview</LandingPrimaryCta>
+          <LandingSecondaryCta to="/context-conflict-audit">Context-Conflict Audit</LandingSecondaryCta>
+        </div>
+      </LandingSection>
+
+      <LandingSection
         title="Pilot discussions stay honest."
         description="Contact prepares a browser draft and, when configured, can notify the HSI operator. No MoU, partnership or performance claim is implied by this page."
-        dark
       >
-        <p>
+        <p className="s2-prose">
           Do not send patient data, unpublished case material or credentials through a public form. Pilot scope,
           data-sharing and review authority are agreed separately.
         </p>
-        <div className="hsi-actions">
-          <PublicAction to="/contact">Contact HSI</PublicAction>
-          <PublicAction to="/validation" secondary>
-            Read validation methodology
-          </PublicAction>
+        <div className="s2-cta-row">
+          <LandingPrimaryCta to="/contact">Contact HSI</LandingPrimaryCta>
+          <LandingSecondaryCta to="/validation">Read validation methodology</LandingSecondaryCta>
         </div>
-      </PublicSection>
+      </LandingSection>
+
       <PublicNotices />
-    </div>
+    </LandingPage>
+  );
+}
+
+export function ClinicalPublicPage() {
+  return (
+    <LandingPage>
+      <LandingHero
+        eyebrow="Clinical Research"
+        title="Evidence-grounded translational research — not clinical decision support."
+        description="HSI supports literature-linked mechanism investigation for clinical research programmes. Patient-level work stays on a separate governed plane. This preview uses synthetic patients only; nothing here is live CDS or clinical advice."
+      >
+        <LandingPrimaryCta to="/contact">Discuss clinical research access</LandingPrimaryCta>
+        <LandingSecondaryCta to="/trust">Read governance boundaries</LandingSecondaryCta>
+      </LandingHero>
+
+      <LandingSection
+        title="What this landing covers."
+        description="Translational evidence inspection on the scientific plane — with clinical-plane boundaries stated up front."
+      >
+        <div className="s2-card-grid">
+          <LandingEvidenceCard
+            maturity="available"
+            title="Literature and mechanism context"
+            body="Retrieve permitted public evidence and inspect experimental context before interpreting disagreement."
+          />
+          <LandingEvidenceCard
+            maturity="demonstration"
+            title="Clinical research shell"
+            body="Synthetic demonstration chrome for cohort and trial-oriented workflows. Not a clinical decision-making tool."
+          />
+          <LandingEvidenceCard
+            maturity="restricted"
+            title="Two-plane architecture"
+            body="Patient identifiers and records never enter this scientific repository. Enabling real clinical data requires closed gates and explicit owner approval."
+          />
+          <LandingEvidenceCard
+            maturity="planned"
+            title="Governed clinical integration"
+            body="EHR write-back, live CDS and PHI→LLM paths are out of scope for hsi-core. They are not implied by this page."
+          />
+        </div>
+        <div className="s2-cta-row">
+          <LandingPrimaryCta to="/enterprise/clinical">Open clinical demo shell</LandingPrimaryCta>
+          <LandingSecondaryCta to="/how-it-works">Explore Platform</LandingSecondaryCta>
+        </div>
+      </LandingSection>
+
+      <LandingSection
+        title="Governance copy that stays visible."
+        description="These constraints are product doctrine, not marketing fine print."
+      >
+        <ul className="s2-boundary-list">
+          <li>No PHI and no live clinical decision support on this scientific plane.</li>
+          <li>Synthetic patients only in this preview; the release gate refuses non-synthetic clinical data.</li>
+          <li>No eligibility claims that hide unknowns; pre-screen surfaces report what is missing.</li>
+          <li>Do not submit patient data, case material or credentials through a public form.</li>
+        </ul>
+        <p className="s2-section-note">
+          Related:{" "}
+          <Link to="/trust">Trust and governance</Link>
+          {" · "}
+          <Link to="/validation">Validation methodology</Link>
+          {" · "}
+          <Link to="/research/prescreen">Trial pre-screen (synthetic)</Link>
+        </p>
+        <div className="s2-cta-row">
+          <LandingPrimaryCta to="/contact">Request a conversation</LandingPrimaryCta>
+          <LandingSecondaryCta to="/biotech">Biotech & Pharma landing</LandingSecondaryCta>
+        </div>
+      </LandingSection>
+
+      <PublicNotices />
+    </LandingPage>
+  );
+}
+
+export function LaboratoriesPublicPage() {
+  return (
+    <LandingPage>
+      <LandingHero
+        eyebrow="Laboratories & Omics"
+        title="Connect experimental readouts to biological evidence — without inventing QC scores."
+        description="HSI helps laboratory and multi-omics teams inspect how assay context, literature and candidate mechanisms relate. Live instruments, private datasets and invented feature counts are not claimed on this page."
+      >
+        <LandingPrimaryCta to="/contact">Discuss laboratory access</LandingPrimaryCta>
+        <LandingSecondaryCta to="/knowledge-graph">Explore the knowledge graph</LandingSecondaryCta>
+      </LandingHero>
+
+      <LandingSection
+        title="How laboratory work meets the scientific path."
+        description="Same investigation spine as other audiences. Omics-specific chrome remains demonstration-labelled."
+      >
+        <div className="s2-card-grid">
+          <LandingEvidenceCard
+            maturity="available"
+            title="Evidence with assay context"
+            body="Keep model, tissue, assay and endpoint fields visible — including Not stated / Not extracted — before interpreting a finding."
+          />
+          <LandingEvidenceCard
+            maturity="available"
+            title="Cross-domain mechanism links"
+            body="Follow candidate relationships across immunology, metabolism, genomics and tissue biology on the published graph."
+          />
+          <LandingEvidenceCard
+            maturity="demonstration"
+            title="Lab / omics dashboard shell"
+            body="Demonstration chrome for assay metadata and multi-omics orientation. Demo panels are not live instrument feeds."
+          />
+          <LandingEvidenceCard
+            maturity="planned"
+            title="Private dataset integration"
+            body="Durable private assay stores and live instrument connectors are not enabled. Nothing here claims real-time QC telemetry."
+          />
+        </div>
+        <div className="s2-cta-row">
+          <LandingPrimaryCta to="/enterprise/lab">Open lab demo shell</LandingPrimaryCta>
+          <LandingSecondaryCta to="/evidence-intelligence">Evidence intelligence</LandingSecondaryCta>
+        </div>
+      </LandingSection>
+
+      <LandingSection
+        title="What this page does not claim."
+        description="Laboratory marketing must stay honest about instruments, datasets and scores."
+      >
+        <ul className="s2-boundary-list">
+          <li>No live instrument connections or real-time QC dashboards in this preview.</li>
+          <li>No invented accuracy percentages, feature counts or validated assay performance claims.</li>
+          <li>No automatic promotion of omics candidates into the governed graph.</li>
+          <li>Private human samples and PHI remain out of this scientific plane.</li>
+        </ul>
+        <div className="s2-cta-row">
+          <LandingPrimaryCta to="/contact">Get Access</LandingPrimaryCta>
+          <LandingSecondaryCta to="/clinical">Clinical Research landing</LandingSecondaryCta>
+        </div>
+      </LandingSection>
+
+      <PublicNotices />
+    </LandingPage>
   );
 }
 

@@ -28,6 +28,27 @@ test('biotech page discusses pilots without inventing MoUs',async({page})=>{
  await expect(page.getByRole('link',{name:/Discuss a research pilot/})).toHaveAttribute('href','/contact');
  await expect(page.getByRole('heading',{name:'Pilot discussions stay honest.'})).toBeVisible();
  await expect(page.locator('#main-content')).toContainText('No MoU');
+ await expect(page.getByRole('link',{name:/Open R&D dashboard preview/})).toHaveAttribute('href','/enterprise/biotech');
+});
+
+test('clinical research landing forbids CDS and PHI claims',async({page})=>{
+ await page.goto('/clinical');
+ await expect(page.getByRole('heading',{level:1})).toContainText('not clinical decision support');
+ await expect(page.getByRole('link',{name:/Discuss clinical research access/})).toHaveAttribute('href','/contact');
+ await expect(page.getByRole('link',{name:/Open clinical demo shell/})).toHaveAttribute('href','/enterprise/clinical');
+ await expect(page.locator('#main-content')).toContainText('No PHI');
+ await expect(page.locator('#main-content')).toContainText('Synthetic patients only');
+ await expect(page.locator('#main-content')).not.toContainText(/clinically validated|outperforms|better than/i);
+ await expect(page.getByRole('navigation',{name:'Primary'})).toBeVisible();
+});
+
+test('laboratories landing forbids live instruments and invented QC',async({page})=>{
+ await page.goto('/laboratories');
+ await expect(page.getByRole('heading',{level:1})).toContainText('without inventing QC scores');
+ await expect(page.getByRole('link',{name:/Discuss laboratory access/})).toHaveAttribute('href','/contact');
+ await expect(page.getByRole('link',{name:/Open lab demo shell/})).toHaveAttribute('href','/enterprise/lab');
+ await expect(page.locator('#main-content')).toContainText('No live instrument');
+ await expect(page.locator('#main-content')).not.toContainText(/clinically validated|outperforms|better than/i);
 });
 
 test('validation methodology page is distinct from synthetic lab',async({page})=>{

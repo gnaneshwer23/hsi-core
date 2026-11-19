@@ -94,11 +94,11 @@ export function EnterpriseLandingPage() {
         </ul>
         <p className="s2-section-note">
           Related:{" "}
-          <Link to="/enterprise/biotech">Biotech shell</Link>
+          <Link to="/biotech">Biotech landing</Link>
           {" · "}
-          <Link to="/enterprise/clinical">Clinical shell</Link>
+          <Link to="/clinical">Clinical landing</Link>
           {" · "}
-          <Link to="/enterprise/lab">Lab shell</Link>
+          <Link to="/laboratories">Laboratories landing</Link>
           {" · "}
           <Link to="/enterprise/community">Community shell</Link>
           {" · "}

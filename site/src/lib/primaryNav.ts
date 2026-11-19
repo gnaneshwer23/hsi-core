@@ -18,8 +18,8 @@ export const AUDIENCE_NAV_LINKS = [
   { to: "/researchers", label: "Researchers", note: "Audience page" },
   { to: "/enterprise", label: "Research Groups", note: "Audience page" },
   { to: "/biotech", label: "Biotech & Pharma", note: "Audience page" },
-  { to: "/enterprise/clinical", label: "Clinical Research", note: "Demo workspace preview" },
-  { to: "/enterprise/lab", label: "Laboratories", note: "Demo workspace preview" },
+  { to: "/clinical", label: "Clinical Research", note: "Audience page" },
+  { to: "/laboratories", label: "Laboratories", note: "Audience page" },
   { to: "/enterprise/community", label: "Research Community", note: "Demo workspace preview" },
 ] as const;
 
@@ -37,6 +37,8 @@ export const PUBLIC_MARKETING_PATHS = [
   "/researchers",
   "/enterprise",
   "/biotech",
+  "/clinical",
+  "/laboratories",
   "/validation",
   "/trust",
   "/about",
