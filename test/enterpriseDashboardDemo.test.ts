@@ -5,6 +5,7 @@ import { communityDashboardDemo } from "../src/enterprise/communityDashboardDemo
 import { labOmicsDashboardDemo } from "../src/enterprise/labOmicsDashboardDemo";
 import { participantDashboardDemo } from "../src/enterprise/participantDashboardDemo";
 import { fundingCareersDashboardDemo } from "../src/enterprise/fundingCareersDashboardDemo";
+import { firstPilotDashboardDemo } from "../src/enterprise/firstPilotDashboardDemo";
 import {
   assertEnterpriseDemoHonesty,
   enterpriseProfessorDemo,
@@ -168,5 +169,27 @@ describe("enterprise dashboard demonstration fixtures", () => {
       demo.opportunities.every((o) => o.reviewStatus === "candidate_unreviewed"),
     ).toBe(true);
     expect(demo.governanceNote.toLowerCase()).toContain("award");
+  });
+
+  test("first pilot demo never claims ready or invents conversion/users", () => {
+    const demo = firstPilotDashboardDemo();
+    assertEnterpriseDemoHonesty(demo.honesty);
+    expect(demo.summary.labelsAreDemonstration).toBe(true);
+    expect(demo.summary.pilotReadyClaimed).toBe(false);
+    expect(demo.summary.inventsPilotConversion).toBe(false);
+    expect(demo.summary.inventsUsersOrTestimonials).toBe(false);
+    expect(demo.summary.stage2JourneyIsBuildCentre).toBe(true);
+    expect(demo.summary.proposedResearcherCount).toBe("3-5");
+    expect(
+      demo.prerequisites.every((p) => p.status === "owner_gated_blocked"),
+    ).toBe(true);
+    expect(demo.prerequisites.every((p) => p.inventsReady === false)).toBe(true);
+    expect(demo.successSignals.every((s) => s.inventsConversion === false)).toBe(
+      true,
+    );
+    expect(demo.outOfScope.some((o) => o.id === "oos-org")).toBe(true);
+    expect(demo.outOfScope.some((o) => o.id === "oos-checkout")).toBe(true);
+    expect(demo.governanceNote.toLowerCase()).toContain("pilot ready");
+    expect(demo.governanceNote.toLowerCase()).toContain("stage 2");
   });
 });

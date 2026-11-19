@@ -165,6 +165,10 @@
       "destination": "/_pages/enterprise--funding.html"
     },
     {
+      "source": "/enterprise/pilot",
+      "destination": "/_pages/enterprise--pilot.html"
+    },
+    {
       "source": "/workspaces",
       "destination": "/_pages/workspaces.html"
     },
