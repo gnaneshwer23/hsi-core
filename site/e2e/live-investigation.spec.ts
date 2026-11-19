@@ -103,7 +103,6 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await expect(brief).toContainText('Structured evidence comparison (candidate)');
  await expect(brief).toContainText('potential_contradiction is not a proven contradiction');
  await expect(brief).toContainText('Scientific approval: false');
- const vf=page.getByRole('region',{name:'Scientific verification'});
  await expect(vf.getByText('Opposing / disputed checks')).toBeVisible();
  await expect(page.getByRole('navigation',{name:/USP A disagreement journey/i})).toBeVisible();
  const disagree=page.getByRole('region',{name:/Why findings may differ/i});
