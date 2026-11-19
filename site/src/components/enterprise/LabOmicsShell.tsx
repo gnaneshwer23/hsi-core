@@ -10,6 +10,7 @@ const NAV = [
   { to: "/research/workspace", label: "Investigations", end: true },
   { to: "/research/knowledge-graph", label: "Knowledge graph", end: true },
   { to: "/enterprise/clinical", label: "Clinical shell", end: true },
+  { to: "/enterprise/community", label: "Community shell", end: true },
   { to: "/academic", label: "Academic shells", end: true },
 ] as const;
 

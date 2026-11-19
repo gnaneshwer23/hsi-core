@@ -1,6 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { biotechDashboardDemo } from "../src/enterprise/biotechDashboardDemo";
 import { clinicalResearchDashboardDemo } from "../src/enterprise/clinicalResearchDashboardDemo";
+import { communityDashboardDemo } from "../src/enterprise/communityDashboardDemo";
 import { labOmicsDashboardDemo } from "../src/enterprise/labOmicsDashboardDemo";
 import {
   assertEnterpriseDemoHonesty,
@@ -102,5 +103,21 @@ describe("enterprise dashboard demonstration fixtures", () => {
       ),
     ).toBe(true);
     expect(demo.governanceNote.toLowerCase()).toContain("qc");
+  });
+
+  test("community demo keeps Circles held, no IP bleed, Gate C human-only", () => {
+    const demo = communityDashboardDemo();
+    assertEnterpriseDemoHonesty(demo.honesty);
+    expect(demo.summary.labelsAreDemonstration).toBe(true);
+    expect(demo.summary.circlesDurableStore).toBe("held");
+    expect(demo.summary.autoIpBleed).toBe(false);
+    expect(demo.circles.every((c) => c.durableStore === "held")).toBe(true);
+    expect(demo.circles.every((c) => c.autoIpBleed === false)).toBe(true);
+    expect(demo.evidenceReviews.every((r) => r.gateC === "human_only")).toBe(true);
+    expect(demo.discussions.every((d) => d.vanityFeed === false)).toBe(true);
+    expect(demo.discussions.every((d) => d.status === "proposed_not_enabled")).toBe(true);
+    expect(demo.challenges.every((c) => c.sharedDefault === "not_public")).toBe(true);
+    expect(demo.researchers.every((r) => r.grantScoped === true)).toBe(true);
+    expect(demo.governanceNote.toLowerCase()).toContain("circles");
   });
 });

@@ -13,7 +13,7 @@ export function Layout() {
   const isAccountPage = isAccountPath(pathname);
   const isHome = pathname === "/";
   // The researcher home is an app shell with its own header and navigation.
-  const isApp = pathname === "/research/home" || pathname === "/research/workspace" || pathname === "/research/gaps" || pathname === "/research/ledger" || pathname === "/research/cohort" || pathname === "/research/targets" || pathname === "/research/prescreen" || pathname === "/research/journey" || pathname === "/research/evaluation" || pathname === "/research/methods" || pathname === "/welcome" || pathname === "/research/knowledge-graph" || pathname === "/academic" || pathname === "/enterprise" || pathname === "/enterprise/professor" || pathname === "/enterprise/student" || pathname === "/enterprise/biotech" || pathname === "/enterprise/clinical" || pathname === "/enterprise/lab";
+  const isApp = pathname === "/research/home" || pathname === "/research/workspace" || pathname === "/research/gaps" || pathname === "/research/ledger" || pathname === "/research/cohort" || pathname === "/research/targets" || pathname === "/research/prescreen" || pathname === "/research/journey" || pathname === "/research/evaluation" || pathname === "/research/methods" || pathname === "/welcome" || pathname === "/research/knowledge-graph" || pathname === "/academic" || pathname === "/enterprise" || pathname === "/enterprise/professor" || pathname === "/enterprise/student" || pathname === "/enterprise/biotech" || pathname === "/enterprise/clinical" || pathname === "/enterprise/lab" || pathname === "/enterprise/community";
 
   useEffect(() => {
     // React Router does not scroll cross-page fragment links by itself.
