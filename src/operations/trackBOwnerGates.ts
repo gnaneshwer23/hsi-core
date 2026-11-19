@@ -121,8 +121,8 @@ const GATES: readonly TrackBGateRow[] = [
     inventedAuthority: false,
     unblocks: "First reviewed slice + calibration",
     pathHints: [
-      "docs/plans/D01_EDGE_REVIEW_QUEUE.md",
-      "docs/plans/HSI_NEXT_GITHUB_BUILD_PLAN_2026-11-17.md",
+      "docs/engineering/C3_DUAL_REVIEWER_DECISIONS_SOFT_LAND.md",
+      "operations/staging/c3-dual-reviewer-decisions.pending.json",
       "docs/engineering/E2E_10_SME_GOLD_VAULT_SOFT_LAND.md",
     ],
     notes: "Immunology / metabolism / gut microbiome reviewers — never invent identities in git.",
@@ -173,7 +173,7 @@ const REUSE_MODULES: readonly string[] = [
   "docs/engineering/A1_2_SEC02_KILL_SWITCH_SOFT_LAND.md",
   "docs/engineering/E2E_06_DUAL_PROVIDER_VERIFICATION_SOFT_LAND.md",
   "docs/engineering/E2E_10_SME_GOLD_VAULT_SOFT_LAND.md",
-  "docs/plans/D01_EDGE_REVIEW_QUEUE.md",
+  "docs/engineering/C3_DUAL_REVIEWER_DECISIONS_SOFT_LAND.md",
 ];
 
 export function trackBOwnerGatesPacket(): TrackBOwnerGatesPacket {
