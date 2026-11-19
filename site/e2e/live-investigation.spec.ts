@@ -225,8 +225,10 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  const gapsTestable=page.locator('#ws-gaps-testable');
  await expect(gapsTestable.locator('> summary')).toContainText('Gaps & testable questions');
  await expect(gapsTestable.locator('> summary')).toContainText('invents experiments: false');
- if(!(await gapsTestable.getAttribute('open')))await gapsTestable.locator('> summary').click();
- await expect(gapsTestable).toHaveAttribute('open','');
+ // Closed ⇔ open attribute null; trail “Gaps” must open the fold without summary click.
+ expect(await gapsTestable.getAttribute('open')).toBeNull();
+ await page.getByRole('navigation',{name:/Scientific investigation journey/i}).getByRole('button',{name:/Gaps/i}).click();
+ await expect.poll(async()=>gapsTestable.getAttribute('open')).not.toBeNull();
  const testable=page.getByRole('region',{name:/Testable next questions/i});
  await expect(testable).toContainText('invents experiments: false');
  await expect(testable).toContainText('recommends action: false');
