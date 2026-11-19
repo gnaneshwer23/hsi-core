@@ -14,6 +14,7 @@ const NAV: Record<
     { to: "/research/workspace", label: "Investigations", end: true },
     { to: "/research/governance", label: "Review hand-off", end: true },
     { to: "/enterprise/biotech", label: "Biotech shell", end: true },
+    { to: "/enterprise/clinical", label: "Clinical shell", end: true },
     { to: "/academic", label: "Academic home", end: true },
   ],
   student: [
@@ -22,6 +23,7 @@ const NAV: Record<
     { to: "/research/home", label: "Research home", end: true },
     { to: "/research/gaps", label: "Gaps", end: true },
     { to: "/enterprise/biotech", label: "Biotech shell", end: true },
+    { to: "/enterprise/clinical", label: "Clinical shell", end: true },
     { to: "/academic", label: "Academic home", end: true },
   ],
 };

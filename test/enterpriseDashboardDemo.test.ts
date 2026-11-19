@@ -1,5 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import { biotechDashboardDemo } from "../src/enterprise/biotechDashboardDemo";
+import { clinicalResearchDashboardDemo } from "../src/enterprise/clinicalResearchDashboardDemo";
 import {
   assertEnterpriseDemoHonesty,
   enterpriseProfessorDemo,
@@ -58,5 +59,28 @@ describe("enterprise dashboard demonstration fixtures", () => {
       expect(gap.supportingEvidence.toLowerCase()).not.toContain("doi.org");
     }
     expect(demo.governanceNote.toLowerCase()).toContain("confidential");
+  });
+
+  test("clinical research demo stays synthetic, not CDS, association ≠ causation", () => {
+    const demo = clinicalResearchDashboardDemo();
+    const honesty = assertEnterpriseDemoHonesty(demo.honesty);
+    expect(honesty.liveEvidence).toBe(false);
+    expect(honesty.phiEnabled).toBe(false);
+    expect(demo.summary.cdsEnabled).toBe(false);
+    expect(demo.summary.phiEnabled).toBe(false);
+    expect(demo.summary.labelsAreDemonstration).toBe(true);
+    expect(demo.cohorts.every((c) => c.enabled === false)).toBe(true);
+    expect(demo.cohorts.every((c) => c.dataClass === "synthetic_demonstration")).toBe(
+      true,
+    );
+    expect(
+      demo.trials.every((t) => t.eligibilityHonesty === "research_planning_not_bedside_cds"),
+    ).toBe(true);
+    expect(demo.associations.every((a) => a.associationNotCausation === true)).toBe(true);
+    expect(demo.opsCharts.every((c) => c.dataClass === "synthetic_demonstration")).toBe(
+      true,
+    );
+    expect(demo.boundaryNote.toLowerCase()).toContain("not a clinical decision");
+    expect(demo.boundaryNote.toLowerCase()).toContain("phi");
   });
 });

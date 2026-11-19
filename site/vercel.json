@@ -145,6 +145,10 @@
       "destination": "/_pages/enterprise--biotech.html"
     },
     {
+      "source": "/enterprise/clinical",
+      "destination": "/_pages/enterprise--clinical.html"
+    },
+    {
       "source": "/contact",
       "destination": "/_pages/contact.html"
     },
