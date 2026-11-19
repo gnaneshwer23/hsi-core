@@ -204,7 +204,7 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  const pilot=page.getByRole('region',{name:/Pilot readiness \(honesty\)/i});
  await expect(pilot).toContainText('invents pilot ready: false');
  await expect(pilot).toContainText('pilot ready claimed: false');
- await expect(pilot).toContainText('Local signals 4/4');
+ await expect(pilot).toContainText('Local signals 4 done · 4 readable of 4');
  await expect(pilot).toContainText('pilot ready claimed: false');
  await expect(pilot.getByRole('list',{name:/Blocked pilot gates/i})).toContainText('Staging researcher grants');
  await page.goto('/research/workspace');

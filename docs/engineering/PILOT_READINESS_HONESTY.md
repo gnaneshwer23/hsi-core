@@ -22,6 +22,8 @@ Personal Stage 2–3 prep toward an invite-only pilot — honesty only.
 
 - `src/investigation/pilotReadinessHonesty.ts` — local signals + fixed blocked gates
 - `PilotReadinessHonestyCard` at the top of `#rh-metrics`
+- Signal states: `done` · `open` · `unknown` (storage unavailable ≠ incomplete)
+- First useful / willingness also derived from usefulness feedback entries (milestone write may fail after feedback save)
 - Unit + Playwright
 
 ## Still mocked / partial / blocked
@@ -42,4 +44,4 @@ No PHI · invents pilot ready false · invents pilot conversion false · journey
 
 ## Success outcome
 
-Opening Local journey metrics shows a checklist of local pilot-prep signals and explicitly blocked owner gates — never “pilot ready”.
+Opening Local journey metrics shows a checklist of local pilot-prep signals and explicitly blocked owner gates — never “pilot ready”. Unreadable storage shows unknown, not a false incomplete score.

@@ -4,6 +4,8 @@ import {
   PILOT_READINESS_SCHEMA,
   assertPilotReadinessHonesty,
   buildPilotReadinessChecklist,
+  deriveFirstUsefulState,
+  deriveWillingnessState,
 } from "../src/investigation/pilotReadinessHonesty";
 
 describe("pilot readiness honesty", () => {
@@ -21,13 +23,15 @@ describe("pilot readiness honesty", () => {
 
   test("reports open local signals without claiming pilot ready", () => {
     const checklist = buildPilotReadinessChecklist({
-      activationReached: false,
-      firstUsefulReached: false,
-      repeatReopenReached: false,
-      willingnessStated: false,
+      storageAvailable: true,
+      activation: "open",
+      firstUseful: "open",
+      repeatReopen: "open",
+      willingness: "open",
     });
     expect(checklist.schemaVersion).toBe(PILOT_READINESS_SCHEMA);
     expect(checklist.localDoneCount).toBe(0);
+    expect(checklist.localKnownCount).toBe(4);
     expect(checklist.localTotalCount).toBe(4);
     expect(checklist.allLocalSignalsDone).toBe(false);
     expect(checklist.pilotReadyClaimed).toBe(false);
@@ -35,12 +39,29 @@ describe("pilot readiness honesty", () => {
     expect(checklist.note).toContain("not pilot conversion");
   });
 
+  test("marks all signals unknown when storage is unavailable", () => {
+    const checklist = buildPilotReadinessChecklist({
+      storageAvailable: false,
+      activation: "done",
+      firstUseful: "done",
+      repeatReopen: "open",
+      willingness: "open",
+    });
+    expect(checklist.localDoneCount).toBe(0);
+    expect(checklist.localKnownCount).toBe(0);
+    expect(checklist.allLocalSignalsDone).toBe(false);
+    expect(checklist.pilotReadyClaimed).toBe(false);
+    expect(checklist.localSignals.every((s) => s.state === "unknown")).toBe(true);
+    expect(checklist.note).toContain("progress unknown");
+  });
+
   test("keeps pilotReadyClaimed false even when every local signal is done", () => {
     const checklist = buildPilotReadinessChecklist({
-      activationReached: true,
-      firstUsefulReached: true,
-      repeatReopenReached: true,
-      willingnessStated: true,
+      storageAvailable: true,
+      activation: "done",
+      firstUseful: "done",
+      repeatReopen: "done",
+      willingness: "done",
     });
     expect(checklist.allLocalSignalsDone).toBe(true);
     expect(checklist.localDoneCount).toBe(4);
@@ -50,5 +71,17 @@ describe("pilot readiness honesty", () => {
     expect(checklist.blockedGates).toHaveLength(7);
     expect(checklist.blockedGates.some((g) => g.id === "staging_grants")).toBe(true);
     expect(checklist.blockedGates.some((g) => g.id === "production_writes")).toBe(true);
+  });
+
+  test("derives useful and willingness from feedback when milestone write is missing", () => {
+    expect(
+      deriveFirstUsefulState({ milestoneReached: false, feedbackHasUseful: true }),
+    ).toBe("done");
+    expect(
+      deriveWillingnessState({ milestoneReached: false, feedbackHasWillingness: true }),
+    ).toBe("done");
+    expect(
+      deriveFirstUsefulState({ milestoneReached: false, feedbackHasUseful: false }),
+    ).toBe("open");
   });
 });
