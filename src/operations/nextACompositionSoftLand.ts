@@ -176,6 +176,7 @@ const REUSE_MODULES: readonly string[] = [
   "src/researchV2/stagingProviderOperations.ts",
   "src/operations/e2e03SourceClearanceComposition.ts",
   "src/operations/e2e06DualProviderVerification.ts",
+  "docs/engineering/TRACK_B_OWNER_GATES_SOFT_LAND.md",
   "docs/audits/HSI_IMPLEMENTATION_TRUTH_AND_NEXT_PRS.md",
 ];
 
