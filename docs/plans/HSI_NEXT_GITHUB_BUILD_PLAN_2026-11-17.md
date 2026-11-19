@@ -135,6 +135,7 @@ Target: **≥3 merged engineering PRs per week** on Track A while Track B is in 
 | ID | Soft-land | Honesty |
 | --- | --- | --- |
 | **PR-E2E-02** | Staging isolation acceptance packet — `src/operations/e2eIsolationAcceptancePacket.ts` + `docs/engineering/E2E_02_ISOLATION_ACCEPTANCE_PACKET_SOFT_LAND.md` | CI-safe check/fixture only; live owner-gated; never invents signer or sets `acceptedForScope` |
+| **PR-E2E-05** | Staging investigation save/resume soft-land — `src/operations/e2e05StagingSaveResume.ts` + `docs/engineering/E2E_05_STAGING_SAVE_RESUME_SOFT_LAND.md` | Catalogs fail-closed persistence paths; never enables production writes or removes migration holds |
 
 Open implementation PRs for passport / workbench / brief columns remain separate; merge when up to date with `main` and verify is green.
 

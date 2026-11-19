@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "hsi-e2e-05-staging-save-resume-pending-1",
+  "purpose": "pr_e2e_05_staging_save_resume_soft_land",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "liveExecutionAuthorized": false,
+  "productionWritesEnabled": false,
+  "productionActivationApproved": false,
+  "acceptedForScope": false,
+  "signedPacketClaimed": false,
+  "migrationHoldsChanged": false,
+  "scientificApproval": false,
+  "honesty": {
+    "noInventedSigner": true,
+    "noInventedStagingUrl": true,
+    "noHoldRemoval": true,
+    "noProductionWrites": true,
+    "fixtureIsNotLivePersistence": true
+  },
+  "ciSafeModes": {
+    "check": {
+      "command": "bun test test/e2e05StagingSaveResume.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    },
+    "fixture": {
+      "command": "bun test test/graphWorkspaceWriteGate.test.ts test/investigationStore.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "references": {
+    "staging_target_ref": "NOT_APPROVED",
+    "security_signer_ref": "UNASSIGNED",
+    "granted_researcher_session_ref": "UNASSIGNED"
+  },
+  "paths": {
+    "device_local_default": { "status": "DEFAULT", "liveEvidence": false },
+    "graph_workspace_server": { "status": "OWNER_GATED", "liveEvidence": false },
+    "investigation_compose": { "status": "OWNER_GATED", "liveEvidence": false },
+    "dashboard_owned_list": { "status": "OWNER_GATED", "liveEvidence": false },
+    "production_writes": { "status": "REFUSED", "liveEvidence": false }
+  },
+  "notes": "Fill private refs only after staging flags are owner-set on disposable HSI Neon. Soft-land never invents acceptance."
+}
