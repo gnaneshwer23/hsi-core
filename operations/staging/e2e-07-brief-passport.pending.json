@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "hsi-e2e-07-brief-passport-pending-1",
+  "purpose": "pr_e2e_07_brief_passport_soft_land",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "priority": "P1",
+  "briefAccepted": false,
+  "verificationGatePassed": false,
+  "scientificApproval": false,
+  "acceptedForScope": false,
+  "signedPacketClaimed": false,
+  "inventedBiologicalContext": false,
+  "dependsOn": ["PR-E2E-01", "PR-E2E-05", "PR-E2E-06"],
+  "honesty": {
+    "passportColumnsNotProof": true,
+    "noInventedBiologicalContext": true,
+    "noVerificationGatePassClaim": true,
+    "limitationsAlwaysPresent": true,
+    "fixtureIsNotBriefAcceptance": true
+  },
+  "ciSafeModes": {
+    "check": {
+      "command": "bun test test/e2e07BriefPassportSoftLand.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    },
+    "fixture": {
+      "command": "bun test test/liveBriefPassport.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "references": {
+    "implementation_pr_ref": "#471",
+    "brief_acceptance_ref": "NOT_STARTED",
+    "passport_table_ref": "src/knowledgeGraph/passportEvidenceTable.ts"
+  },
+  "surfaces": {
+    "live_brief_passport_rows": { "status": "REUSE", "briefAccepted": false },
+    "passport_evidence_table": { "status": "REUSE", "briefAccepted": false },
+    "verification_status_labels": { "status": "REUSE", "briefAccepted": false },
+    "limitations_honesty": { "status": "REUSE", "briefAccepted": false },
+    "live_brief_v2_export": { "status": "REUSE", "briefAccepted": false },
+    "research_brief_markdown": { "status": "REUSE", "briefAccepted": false },
+    "exportable_source_linked_brief": { "status": "OWNER_GATED", "briefAccepted": false }
+  },
+  "notes": "Implementation wiring landed in #471. Soft-land never claims brief acceptance, gate pass, or invented context."
+}
