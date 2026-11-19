@@ -85,6 +85,7 @@ const INVESTIGATION_LOOP = new Set([
   "/enterprise",
   "/enterprise/professor",
   "/enterprise/student",
+  "/enterprise/biotech",
 ]);
 
 /** Reviewer / curator tools — never auto-redirect in this soft-land. */

@@ -85,6 +85,9 @@ export function BiotechPublicPage() {
         <PublicAction to="/evidence-intelligence" secondary>
           Inspect Evidence Intelligence
         </PublicAction>
+        <PublicAction to="/enterprise/biotech" secondary>
+          Open R&D dashboard preview
+        </PublicAction>
       </PublicHero>
       <PublicSection
         title="Where HSI helps an R&D workflow."

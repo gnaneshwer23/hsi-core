@@ -45,21 +45,28 @@ export function EnterpriseLandingPage() {
           <Link className="ent-btn ent-btn-secondary" to="/research/gaps">
             Gap register
           </Link>
+          <Link className="ent-btn ent-btn-secondary" to="/enterprise/biotech">
+            Biotech / Pharma shell
+          </Link>
         </div>
         <section className="ent-panel" aria-labelledby="ent-workspaces-heading">
           <h2 id="ent-workspaces-heading" style={{ margin: 0, fontSize: "1.05rem" }}>
             Five Stage 4 shells (same engine)
           </h2>
           <p className="ent-lead">
-            Academic is the first audience shell. Biotech/pharma, clinical research,
-            laboratory/omics and research community stay proposed — they must reuse
-            the shared scientific engine, not fork it. Content contracts:{" "}
+            Academic and Biotech/Pharma shells preview audience chrome on the shared
+            substrate. Clinical research, laboratory/omics and research community stay
+            proposed — they must reuse the shared scientific engine, not fork it.
+            Content contracts:{" "}
             <code>docs/strategy/HSI_STAGE4_DASHBOARD_CONTENT_MAP.md</code>. Clinical
             research is not CDS; patient participation stays a future governed path.
           </p>
           <ul>
             <li>Academic research — this preview</li>
-            <li>Biotech / pharma R&amp;D — proposed</li>
+            <li>
+              Biotech / pharma R&amp;D —{" "}
+              <Link to="/enterprise/biotech">demonstration shell</Link>
+            </li>
             <li>Clinical research — proposed (not CDS; PHI gated)</li>
             <li>Laboratory &amp; omics — proposed</li>
             <li>Research community — proposed</li>

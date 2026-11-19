@@ -141,6 +141,10 @@
       "destination": "/_pages/enterprise--student.html"
     },
     {
+      "source": "/enterprise/biotech",
+      "destination": "/_pages/enterprise--biotech.html"
+    },
+    {
       "source": "/contact",
       "destination": "/_pages/contact.html"
     },
