@@ -47,6 +47,7 @@ import {
 } from "../../../src/investigation/profileWorkspaceHandoff";
 import {buildTestableNextQuestions} from "../../../src/investigation/testableNextQuestions";
 import {buildStage2CompletionChecklist} from "../../../src/investigation/stage2CompletionChecklist";
+import {buildBlockedJourneySteps} from "../../../src/investigation/blockedJourneyStepsHonesty";
 import {
   getUsefulnessForBrief,
   loadResearcherUsefulnessStore,
@@ -66,6 +67,7 @@ import {LiveBriefDecisionPanel} from "../components/workspace/LiveBriefDecisionP
 import {ResearcherUsefulnessPanel} from "../components/workspace/ResearcherUsefulnessPanel";
 import {TestableNextQuestionsPanel} from "../components/workspace/TestableNextQuestionsPanel";
 import {Stage2CompletionChecklistPanel} from "../components/workspace/Stage2CompletionChecklistPanel";
+import {BlockedJourneyStepsPanel} from "../components/workspace/BlockedJourneyStepsPanel";
 import {loadDomainGraph} from "../lib/claimGraphClient";
 import {EMPTY_PROFILE,loadProfile,type Profile} from "../lib/researchHome";
 import {BUCKET_LABEL,bucketOf,buildGraph,counts,filterCandidates,headline,stageRail,yearOf,type Bucket,type Cand,type EdgeState,type Run} from "../lib/workspaceView";
@@ -254,6 +256,11 @@ export function InvestigationWorkspacePage(){
   savedOrReopened:lr.savedThisSession||lr.reopenedThisSession||lr.library.entries.length>0,
   usefulnessRated,
  }),[run,sel,cmpKey,runGaps.length,testableQuestions.items.length,briefPreview,lr.savedThisSession,lr.reopenedThisSession,lr.library.entries.length,usefulnessRated]);
+ const blockedJourneySteps=useMemo(()=>buildBlockedJourneySteps({
+  briefHash:run?.briefHash??null,
+  libraryCount:lr.library.entries.length,
+  reopenedThisSession:lr.reopenedThisSession,
+ }),[run?.briefHash,lr.library.entries.length,lr.reopenedThisSession]);
  const onStage2ChecklistSelect=(id:typeof stage2Checklist.items[number]["id"])=>{
   if(id==="ask_run"){document.getElementById("ws-ask-strip")?.scrollIntoView({behavior:"smooth",block:"start"});return}
   if(id==="evidence"||id==="passport_or_disagreement"){
@@ -552,6 +559,11 @@ export function InvestigationWorkspacePage(){
      pack={testableQuestions}
      onInspectClaim={(id)=>setSel(id)}
      onOpenGaps={()=>document.getElementById("ws-gp-h")?.scrollIntoView({behavior:"smooth",block:"start"})}
+    />
+
+    <BlockedJourneyStepsPanel
+     pack={blockedJourneySteps}
+     onOpenLibrary={()=>document.getElementById("ws-conn-h")?.scrollIntoView({behavior:"smooth",block:"start"})}
     />
    </main>
   </ResearchAppShell>
