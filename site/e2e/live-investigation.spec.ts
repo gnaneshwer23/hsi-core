@@ -78,10 +78,11 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await ev.getByRole('button',{name:/IL-21 ~ T follicular helper cells.*IL-21 was increased/}).click();
  const insp=page.getByLabel('Selected claim');
  await expect(insp).toContainText('openai-a');await expect(insp).toContainText('Quoted: “IL-21 was increased”');
- await expect(page.getByRole('heading',{name:'Evidence table for this live brief'})).toBeVisible();
- // Evidence section + always-visible brief panel both render passport tables — scope each.
- await expect(ev.getByText('EVIDENCE TABLE · PASSPORT COLUMNS · NOT SCIENTIFICALLY APPROVED')).toBeVisible();
- await expect(ev.getByRole('region',{name:'Passport evidence table'})).toContainText('Not stated');
+ // Live passport table lives under Scientific verification; brief panel has a second copy.
+ const vf=page.getByRole('region',{name:'Scientific verification'});
+ await expect(vf.getByRole('heading',{name:'Evidence table for this live brief'})).toBeVisible();
+ await expect(vf.getByText('EVIDENCE TABLE · PASSPORT COLUMNS · NOT SCIENTIFICALLY APPROVED')).toBeVisible();
+ await expect(vf.getByRole('region',{name:'Passport evidence table'})).toContainText('Not stated');
  // Decision brief: limitations + passport columns always visible; markdown is optional preview.
  const briefPanel=page.getByRole('region',{name:/Research decision brief/i});
  await expect(briefPanel).toContainText('briefAccepted: false');
