@@ -71,7 +71,7 @@ Agent-shippable **Stage 2 journey productization + §H device-local metrics + Ho
 | Human #8 ops / soak | Pilot release |
 | Held migrations 022–033 | Org / durable stores |
 | Production `writesEnabled=false` | Full prod E2E |
-| Stage 4 org dashboards (#513/#514) | Deferred until usefulness proven |
+| Stage 4 org dashboards (#513/#514) | Deferred until usefulness proven · content map [`HSI_STAGE4_DASHBOARD_CONTENT_MAP.md`](../strategy/HSI_STAGE4_DASHBOARD_CONTENT_MAP.md) |
 | NEXT-A / NEXT-B soft-lands | Owner composition / isolation |
 
 ---
