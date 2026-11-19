@@ -12,6 +12,7 @@ import {Overview} from "../components/home/Overview";
 import {Program} from "../components/home/Program";
 import {ProfileWorkspaceHandoffCard} from "../components/home/ProfileWorkspaceHandoffCard";
 import {AlertPreferenceCard} from "../components/home/AlertPreferenceCard";
+import {ActivationMilestoneCard} from "../components/home/ActivationMilestoneCard";
 import {FirstUsefulInvestigationCard} from "../components/home/FirstUsefulInvestigationCard";
 import {RepeatUsageMilestoneCard} from "../components/home/RepeatUsageMilestoneCard";
 import {WillingnessToPayMilestoneCard} from "../components/home/WillingnessToPayMilestoneCard";
@@ -204,6 +205,7 @@ export function ResearchHome(){
      {ready&&(
       <AlertPreferenceCard profile={profile} onProfile={setProfile}/>
      )}
+     {ready&&<ActivationMilestoneCard/>}
      {ready&&<FirstUsefulInvestigationCard/>}
      {ready&&<RepeatUsageMilestoneCard/>}
      {ready&&<WillingnessToPayMilestoneCard/>}

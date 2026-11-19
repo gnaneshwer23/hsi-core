@@ -7,6 +7,7 @@ import {
   type LiveRunLibrary,
   type LiveRunLibraryEntry,
 } from "../../../src/investigation/liveRunLibrary";
+import {recordActivation} from "../../../src/investigation/activationMilestone";
 import {recordRepeatUsageReopen} from "../../../src/investigation/repeatUsageMilestone";
 import type {Run} from "./workspaceView";
 
@@ -35,7 +36,12 @@ export function useLiveRun(){
   try{
    const res=await fetch("/api/research/live-investigation",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({scenarioId:LIVE_SCENARIO_ID})});
    if(!res.ok){const b=await res.json().catch(()=>null) as {error?:string}|null;throw Error(b?.error??"The investigation could not run (HTTP "+res.status+").")}
-   setRun(await res.json() as Run);setState("idle");
+   const run=await res.json() as Run;
+   setRun(run);setState("idle");
+   recordActivation(browserStore(),{
+    briefHash:run.briefHash??"",
+    question:run.question??"",
+   });
   }catch(e){setError(e instanceof Error?e.message:"The investigation could not run.");setState("error")}
  },[]);
 
