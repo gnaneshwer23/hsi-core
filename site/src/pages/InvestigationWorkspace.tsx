@@ -265,6 +265,10 @@ export function InvestigationWorkspacePage(){
   const el=document.getElementById("ws-usp-panels") as HTMLDetailsElement|null;
   if(el&&!el.open)el.open=true;
  };
+ const openGapsTestableFold=()=>{
+  const el=document.getElementById("ws-gaps-testable") as HTMLDetailsElement|null;
+  if(el&&!el.open)el.open=true;
+ };
  const onStage2ChecklistSelect=(id:typeof stage2Checklist.items[number]["id"])=>{
   if(id==="ask_run"){document.getElementById("ws-ask-strip")?.scrollIntoView({behavior:"smooth",block:"start"});return}
   if(id==="evidence"||id==="passport_or_disagreement"){
@@ -276,7 +280,11 @@ export function InvestigationWorkspacePage(){
    document.getElementById("ws-ev-h")?.scrollIntoView({behavior:"smooth",block:"start"});
    return;
   }
-  if(id==="gaps_or_testable"){document.getElementById("ws-tq-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  if(id==="gaps_or_testable"){
+   openGapsTestableFold();
+   document.getElementById("ws-tq-h")?.scrollIntoView({behavior:"smooth",block:"start"});
+   return;
+  }
   if(id==="save_or_reopen"){document.getElementById("ws-conn-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
   if(id==="usefulness"){document.getElementById("ws-useful-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
   setBrief(true);
@@ -295,7 +303,11 @@ export function InvestigationWorkspacePage(){
    document.getElementById("ws-cross-h")?.scrollIntoView({behavior:"smooth",block:"start"});
    return;
   }
-  if(id==="gaps"){document.getElementById("ws-gp-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  if(id==="gaps"){
+   openGapsTestableFold();
+   document.getElementById("ws-gp-h")?.scrollIntoView({behavior:"smooth",block:"start"});
+   return;
+  }
   if(id==="save"){document.getElementById("ws-conn-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
   setBrief(true);
   document.getElementById("ws-brief-panel")?.scrollIntoView({behavior:"smooth",block:"start"});
@@ -321,7 +333,11 @@ export function InvestigationWorkspacePage(){
    if(id==="pathways"&&crossPathIndex===null&&crossPaths.paths[0])setCrossPathIndex(0);
    return;
   }
-  if(id==="gaps"){document.getElementById("ws-gp-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  if(id==="gaps"){
+   openGapsTestableFold();
+   document.getElementById("ws-gp-h")?.scrollIntoView({behavior:"smooth",block:"start"});
+   return;
+  }
   setBrief(true);
   document.getElementById("ws-brief-panel")?.scrollIntoView({behavior:"smooth",block:"start"});
  };
@@ -531,7 +547,10 @@ export function InvestigationWorkspacePage(){
       onSelectStart={(id)=>{setCrossStart(id);setCrossPathIndex(null)}}
       onSelectTarget={(slug)=>{setCrossTarget(slug);setCrossPathIndex(null)}}
       onSelectPath={setCrossPathIndex}
-      onOpenGaps={()=>document.getElementById("ws-gp-h")?.scrollIntoView({behavior:"smooth",block:"start"})}
+      onOpenGaps={()=>{
+       openGapsTestableFold();
+       document.getElementById("ws-gp-h")?.scrollIntoView({behavior:"smooth",block:"start"});
+      }}
       onOpenBrief={()=>{setBrief(true);document.getElementById("ws-brief-panel")?.scrollIntoView({behavior:"smooth",block:"start"})}}
      />
     </details>
@@ -569,19 +588,28 @@ export function InvestigationWorkspacePage(){
      onRated={()=>setUsefulnessTick((n)=>n+1)}
     />
 
-    <section className="ws-card ws-gaps" aria-labelledby="ws-gp-h">
-     <header><h2 id="ws-gp-h"><Icon name="layers" size={18}/>Gaps in this run <small>({run?runGaps.length:"none yet"})</small></h2></header>
-     {!run?<p className="ws-muted">Gaps appear after a run. They are derived from the run itself, not generated, and a limit of the search is shown apart from a gap in the science.</p>:<>
-      <RunGapList gaps={runGaps} track={gapTrack.track} onSet={(id,s,n)=>gapTrack.set(id,s,n,runGaps.find(g=>g.id===id)?.candidateIds.length??0)}/>
-      {gapTrack.blocked&&<p className="ws-err" role="status">This browser blocked local storage, so your status was not kept.</p>}
-      <p className="ws-muted">Status is kept in this browser only. <a href="/research/gaps">Open the Gap Register</a></p></>}
-    </section>
+    <details className="ws-usp-focus" id="ws-gaps-testable">
+     <summary>
+      Gaps & testable questions — invents experiments: false · recommends action: false · not
+      scientific approval
+     </summary>
+     <section className="ws-card ws-gaps" aria-labelledby="ws-gp-h">
+      <header><h2 id="ws-gp-h"><Icon name="layers" size={18}/>Gaps in this run <small>({run?runGaps.length:"none yet"})</small></h2></header>
+      {!run?<p className="ws-muted">Gaps appear after a run. They are derived from the run itself, not generated, and a limit of the search is shown apart from a gap in the science.</p>:<>
+       <RunGapList gaps={runGaps} track={gapTrack.track} onSet={(id,s,n)=>gapTrack.set(id,s,n,runGaps.find(g=>g.id===id)?.candidateIds.length??0)}/>
+       {gapTrack.blocked&&<p className="ws-err" role="status">This browser blocked local storage, so your status was not kept.</p>}
+       <p className="ws-muted">Status is kept in this browser only. <a href="/research/gaps">Open the Gap Register</a></p></>}
+     </section>
 
-    <TestableNextQuestionsPanel
-     pack={testableQuestions}
-     onInspectClaim={(id)=>setSel(id)}
-     onOpenGaps={()=>document.getElementById("ws-gp-h")?.scrollIntoView({behavior:"smooth",block:"start"})}
-    />
+     <TestableNextQuestionsPanel
+      pack={testableQuestions}
+      onInspectClaim={(id)=>setSel(id)}
+      onOpenGaps={()=>{
+       openGapsTestableFold();
+       document.getElementById("ws-gp-h")?.scrollIntoView({behavior:"smooth",block:"start"});
+      }}
+     />
+    </details>
 
     <BlockedJourneyStepsPanel
      pack={blockedJourneySteps}

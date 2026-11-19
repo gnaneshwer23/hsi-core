@@ -222,6 +222,11 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await expect(stage2).toContainText('pilot accepted: false');
  await expect(stage2).toContainText('Local usefulness rating saved for this briefHash');
  await expect(stage2).toContainText('journey complete claimed: false');
+ const gapsTestable=page.locator('#ws-gaps-testable');
+ await expect(gapsTestable.locator('> summary')).toContainText('Gaps & testable questions');
+ await expect(gapsTestable.locator('> summary')).toContainText('invents experiments: false');
+ if(!(await gapsTestable.getAttribute('open')))await gapsTestable.locator('> summary').click();
+ await expect(gapsTestable).toHaveAttribute('open','');
  const testable=page.getByRole('region',{name:/Testable next questions/i});
  await expect(testable).toContainText('invents experiments: false');
  await expect(testable).toContainText('recommends action: false');
