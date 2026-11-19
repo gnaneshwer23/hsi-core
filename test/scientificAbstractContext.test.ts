@@ -13,12 +13,19 @@ describe("v2.3 source-bound abstract context",()=>{
   expect(result.pmid).toBe("12345");
   expect(result.candidates.some(x=>x.label==="IL-21")).toBe(true);
   expect(result.abstractText).toContain("measured");
+  expect(result.clearance.sourceClearanceVerified).toBe(false);
+  expect(result.clearance.passageReuseAuthorized).toBe(false);
+  expect(result.clearance.policySigned).toBe(false);
+  expect(result.clearance.policyDraftStatus).toBe("DRAFT");
+  expect(result.clearance.mayReturnPassageOrAbstractWithoutReceipt).toBe(false);
+  expect(result.limitations.some((l)=>l.includes("not source clearance"))).toBe(true);
  });
  it("does not invent findings when an abstract is absent",async()=>{
   const mock=(async()=>new Response(JSON.stringify({resultList:{result:[{id:"12345",source:"MED",title:"A study"}]}}))) as unknown as typeof fetch;
   const result=await retrieveAbstractContext("12345",mock);
   expect(result.availability).toBe("abstract_unavailable");
   expect(result.candidates).toEqual([]);
+  expect(result.clearance.passageReuseAuthorized).toBe(false);
  });
  it("rejects malformed identifiers and upstream failures",async()=>{
   await expect(retrieveAbstractContext("123x")).rejects.toThrow();

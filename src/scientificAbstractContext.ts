@@ -1,9 +1,32 @@
 /**
  * v2.3: source-grounded abstract inspection. This does NOT extract validated claims.
  * Europe PMC returns source abstracts, and lexical annotations are explicitly candidates.
+ * PR-E2E-03 soft-land: response carries fail-closed clearance honesty; abstract body is
+ * bibliographic inspection only — never rights clearance or passage reuse authorization.
  */
+import {assessPassageAbstractEgress} from "./operations/e2e03SourceClearanceComposition";
 export type ContextCandidate={label:string;category:"disease"|"cell"|"cytokine"|"phenotype"|"tissue";matchedText:string;status:"lexical_mention_only"};
-export type AbstractContext={pmid:string;source:"Europe PMC";sourceUrl:string;retrievedAt:string;title:string;abstractText:string|null;availability:"abstract_available"|"abstract_unavailable";candidates:ContextCandidate[];reviewStatus:"unreviewed";limitations:string[]};
+export type AbstractClearanceHonesty={
+  sourceClearanceVerified:false;
+  passageReuseAuthorized:false;
+  policyDraftStatus:"DRAFT";
+  policySigned:false;
+  mayReturnPassageOrAbstractWithoutReceipt:false;
+  reasons:string[];
+};
+export type AbstractContext={
+  pmid:string;
+  source:"Europe PMC";
+  sourceUrl:string;
+  retrievedAt:string;
+  title:string;
+  abstractText:string|null;
+  availability:"abstract_available"|"abstract_unavailable";
+  candidates:ContextCandidate[];
+  reviewStatus:"unreviewed";
+  limitations:string[];
+  clearance:AbstractClearanceHonesty;
+};
 const TERMS:{label:string;category:ContextCandidate["category"];pattern:RegExp}[]=[
  {label:"Systemic sclerosis",category:"disease",pattern:/\b(systemic sclerosis|scleroderma)\b/i},
  {label:"T follicular helper cells",category:"cell",pattern:/\b(Tfh(?: cells?)?|T follicular helper(?: cells?)?)\b/i},
@@ -29,5 +52,32 @@ export async function retrieveAbstractContext(pmid:string,fetcher:typeof fetch=f
  const abstractText=typeof item.abstractText==="string"&&item.abstractText.trim()?item.abstractText.trim():null;
  // Lexical matches from abstract only; title must not imply evidence.
  const candidates=abstractText?annotateAbstract(abstractText):[];
- return {pmid,source:"Europe PMC",sourceUrl:"https://europepmc.org/article/MED/"+pmid,retrievedAt:new Date().toISOString(),title,abstractText,availability:abstractText?"abstract_available":"abstract_unavailable",candidates,reviewStatus:"unreviewed",limitations:["Lexical mentions do not establish direction, causality, tissue specificity or experimental support.","The abstract is incomplete evidence; verify full text, cohort, assay, species, outcomes and limitations.","No graph facts or reviewer approvals were created."]};
+ const egress=assessPassageAbstractEgress();
+ const clearance:AbstractClearanceHonesty={
+  sourceClearanceVerified:false,
+  passageReuseAuthorized:false,
+  policyDraftStatus:"DRAFT",
+  policySigned:false,
+  mayReturnPassageOrAbstractWithoutReceipt:false,
+  reasons:[...egress.reasons],
+ };
+ return {
+  pmid,
+  source:"Europe PMC",
+  sourceUrl:"https://europepmc.org/article/MED/"+pmid,
+  retrievedAt:new Date().toISOString(),
+  title,
+  abstractText,
+  availability:abstractText?"abstract_available":"abstract_unavailable",
+  candidates,
+  reviewStatus:"unreviewed",
+  limitations:[
+   "Lexical mentions do not establish direction, causality, tissue specificity or experimental support.",
+   "The abstract is incomplete evidence; verify full text, cohort, assay, species, outcomes and limitations.",
+   "No graph facts or reviewer approvals were created.",
+   "Abstract inspection is not source clearance; passage reuse stays unauthorized until a signed clearance receipt exists.",
+   ...egress.reasons,
+  ],
+  clearance,
+ };
 }
