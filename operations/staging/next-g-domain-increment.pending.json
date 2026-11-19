@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "hsi-next-g-domain-increment-pending-1",
+  "purpose": "next_g_domain_increment_soft_land",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "priority": "P2",
+  "domainIncrementAccepted": false,
+  "plannerEnabled": false,
+  "communityLaunched": false,
+  "clinicalPhiEnabled": false,
+  "scientificApproval": false,
+  "acceptedForScope": false,
+  "signedPacketClaimed": false,
+  "inventedSourcePacks": false,
+  "inventedScopedReviewers": false,
+  "inventedFailureLedgerClose": false,
+  "dependsOn": ["NEXT-C"],
+  "alsoRequires": "independently_closed_observed_failure_ledger",
+  "honesty": {
+    "adaptersExistIncrementBlocked": true,
+    "noInventedSourcePacks": true,
+    "noInventedScopedReviewers": true,
+    "plannerStaysDeterministicByDefault": true,
+    "communityDeferredUntilModerationOwnership": true,
+    "clinicalPhiRemainsSeparate": true,
+    "fixtureIsNotDomainIncrement": true
+  },
+  "ciSafeModes": {
+    "check": {
+      "command": "bun test test/nextGDomainIncrementSoftLand.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    },
+    "fixture": {
+      "command": "bun test test/e2e11HypothesisIntelligence.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "references": {
+    "next_c_acceptance_ref": "NOT_STARTED",
+    "failure_ledger_close_ref": "NOT_STARTED",
+    "source_pack_ref": "UNASSIGNED",
+    "scoped_reviewer_ref": "UNASSIGNED",
+    "planner_comparison_ref": "NOT_STARTED",
+    "community_moderation_ref": "DEFERRED"
+  },
+  "surfaces": {
+    "controlled_expansion_candidate": { "status": "REUSE", "live": false },
+    "source_pack_and_scoped_reviewers": { "status": "REUSE", "live": false },
+    "source_refresh_rereview": { "status": "REUSE", "live": false },
+    "observed_failure_ledger": { "status": "BLOCKED", "live": false },
+    "optional_planner_comparison": { "status": "REUSE", "live": false },
+    "community_moderation_gate": { "status": "DEFERRED", "live": false },
+    "clinical_phi_boundary": { "status": "DEFERRED", "live": false }
+  },
+  "notes": "Accept NEXT-C and close the failure ledger first. Soft-land never invents packs, reviewers, planner enablement, community, or PHI."
+}
