@@ -13,20 +13,28 @@ describe("homepage cross-domain research scenarios", () => {
     expect(HOME_RESEARCH_SCENARIOS.some((s) => s.disease === null)).toBe(true);
   });
 
-  it("marks every homepage scenario as illustrative with live_backend false", () => {
+  it("keeps live_backend false and wires Demo Universe where mapped", () => {
     for (const s of HOME_RESEARCH_SCENARIOS) {
       expect(s.live_backend).toBe(false);
-      expect(s.coverage).toBe("illustrative");
       expect(s.review_status).toBe("not_reviewed");
       expect(s.question.length).toBeGreaterThan(10);
       expect(s.mechanism_path.length).toBeGreaterThanOrEqual(4);
       expect(s.domains.length).toBeGreaterThan(0);
+      expect(["illustrative", "pack_backed", "staging_verified"]).toContain(s.coverage);
+      if (s.coverage === "pack_backed") {
+        expect(s.demo_universe_scenario_id).toBeTruthy();
+        expect(s.demo_universe_href).toMatch(/^\/demo\/universe\?scenario=/);
+      }
     }
+    expect(getHomeScenario("ssc_fibrosis").coverage).toBe("pack_backed");
+    expect(getHomeScenario("tumour_immune").coverage).toBe("illustrative");
   });
 
   it("includes a disease-independent cytokine scenario", () => {
     const cytokine = getHomeScenario("cytokine_cross_tissue");
     expect(cytokine.disease).toBeNull();
     expect(cytokine.demonstration_id).toBe("demo_cytokine_cross_tissue_001");
+    expect(cytokine.coverage).toBe("pack_backed");
+    expect(cytokine.demo_universe_scenario_id).toBe("immune-inflammation");
   });
 });

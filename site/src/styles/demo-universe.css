@@ -253,3 +253,121 @@
   margin: 0.35rem 0 0;
   padding-left: 1rem;
 }
+
+/* PR6 — public landing product previews */
+.hsi-demo-landing-preview {
+  background: var(--hsi-ivory, #f4f7f5);
+  color: var(--hsi-ink, #182d38);
+  padding: 28px;
+  margin: 28px 0 8px;
+  border-radius: 4px;
+}
+
+.hsi-public .hsi-demo-landing-preview p {
+  color: var(--hsi-muted, #5a6b70);
+  font-size: 0.88rem;
+}
+
+.hsi-demo-landing-note {
+  margin: 0 0 18px !important;
+}
+
+.hsi-demo-landing-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.hsi-demo-landing-tabs button {
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid #8aa6a1;
+  border-radius: 3px;
+  background: transparent;
+  color: var(--hsi-ink, #182d38);
+  cursor: pointer;
+  font-size: 0.75rem;
+}
+
+.hsi-demo-landing-tabs button[aria-selected="true"] {
+  background: var(--hsi-navy, #101d2a);
+  color: #fff;
+  border-color: var(--hsi-navy, #101d2a);
+}
+
+.hsi-demo-landing-card {
+  background: #fff;
+  border: 1px solid var(--hsi-line, #d0dbd4);
+  padding: 22px;
+}
+
+.hsi-demo-landing-card h3 {
+  font-size: 1.35rem;
+  margin: 8px 0 12px;
+  color: var(--hsi-ink, #182d38);
+}
+
+.hsi-demo-landing-card > p {
+  max-width: 70ch;
+}
+
+.hsi-demo-landing-sides {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.hsi-demo-landing-sides > div {
+  border-top: 1px solid var(--hsi-line, #d0dbd4);
+  padding-top: 14px;
+}
+
+.hsi-kicker {
+  font-size: 0.7rem !important;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 0 0 8px !important;
+}
+
+.hsi-demo-landing-abstention {
+  background: #e2ebe5;
+  border-left: 3px solid var(--hsi-teal, #297e80);
+  padding: 14px 16px;
+  margin: 0 0 18px !important;
+}
+
+.hsi-demo-landing-counts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 0 0 8px;
+}
+
+.hsi-demo-landing-counts div {
+  border-top: 1px solid var(--hsi-line, #d0dbd4);
+  padding-top: 10px;
+}
+
+.hsi-demo-landing-counts dt {
+  font-size: 0.7rem;
+  color: var(--hsi-muted, #5a6b70);
+}
+
+.hsi-demo-landing-counts dd {
+  margin: 4px 0 0;
+  font-size: 1.1rem;
+  color: var(--hsi-ink, #182d38);
+}
+
+@media (max-width: 700px) {
+  .hsi-demo-landing-sides,
+  .hsi-demo-landing-counts {
+    grid-template-columns: 1fr 1fr;
+  }
+  .hsi-demo-landing-preview {
+    padding: 18px;
+  }
+}

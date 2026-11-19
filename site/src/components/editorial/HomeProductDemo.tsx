@@ -128,7 +128,16 @@ export function HomeProductDemo({scenarioId,onScenarioChange}:HomeProductDemoPro
       <p className="ed-kicker">Illustrative research workspace</p>
       <h2 id="product-demo-heading">Question, evidence, mechanism, brief — one desk.</h2>
       <p>Illustrative desk across domains. Disease context is optional; coverage is unequal.</p>
-      <p className="ed-demo-banner" role="note">Illustrative research demonstration · Not a live investigation · live_backend={String(demo.live_backend)} · coverage={demo.coverage}</p>
+      <p className="ed-demo-banner" role="note">
+        {demo.coverage === "pack_backed" ? "Pack-backed Demo Universe preview" : "Illustrative research demonstration"}
+        {" · "}Not a live investigation · live_backend={String(demo.live_backend)} · coverage={demo.coverage}
+        {demo.demo_universe_href ? (
+          <>
+            {" · "}
+            <Link to={demo.demo_universe_href}>Open Demo Universe desk</Link>
+          </>
+        ) : null}
+      </p>
     </div>
     <div className="ed-demo-shell ed-demo-desk">
       <div className="ed-scenario-toolbar" role="tablist" aria-label="Research scenario">

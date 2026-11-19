@@ -230,13 +230,14 @@ export function DemoUniversePage() {
   return (
     <DemoUniverseShell
       title={view.title}
-      subtitle="Comparison, brief, omics assays and synthetic cohorts · six scenarios"
+      subtitle="Comparison, brief, omics, cohorts and landing previews · six scenarios"
     >
       <p className="ent-banner" role="status">
-        Demo Research Universe PR5. Production write:{" "}
+        Demo Research Universe PR6. Production write:{" "}
         {String(demoUniverseAllowsProductionWrite())} · real cohort data:{" "}
         {String(demoOmicsAllowsRealData())}. Select a scenario, inspect the conflict
-        pair, then review brief limitations and linked assay/cohort sketches.
+        pair, then review brief limitations and linked assay/cohort sketches. Homepage
+        product previews deep-link here.
       </p>
 
       <section className="ent-panel" aria-labelledby="du-scenarios">
