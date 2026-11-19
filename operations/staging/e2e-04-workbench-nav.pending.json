@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "hsi-e2e-04-workbench-nav-pending-1",
+  "purpose": "pr_e2e_04_workbench_nav_soft_land",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "priority": "P1",
+  "journeyAccepted": false,
+  "scientificApproval": false,
+  "acceptedForScope": false,
+  "signedPacketClaimed": false,
+  "rebuiltWorkbenches": false,
+  "inventedRouteCount": false,
+  "primaryLivePath": "/research/workspace",
+  "honesty": {
+    "singlePrimaryPath": true,
+    "noWorkbenchRebuild": true,
+    "noInventedRouteCount": true,
+    "legacyRedirectsNotPrimary": true,
+    "fixtureIsNotJourneyAcceptance": true
+  },
+  "ciSafeModes": {
+    "check": {
+      "command": "bun test test/e2e04WorkbenchNavSoftLand.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    },
+    "fixture": {
+      "command": "bun test test/siteRouteCatalog.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "references": {
+    "implementation_pr_ref": "#470",
+    "journey_acceptance_ref": "NOT_STARTED",
+    "primary_live_path_ref": "/research/workspace"
+  },
+  "surfaces": {
+    "live_investigation_primary": { "status": "REUSE", "journeyAccepted": false },
+    "research_home_entry": { "status": "REUSE", "journeyAccepted": false },
+    "legacy_workbench_redirects": { "status": "REUSE", "journeyAccepted": false },
+    "research_nav_items": { "status": "REUSE", "journeyAccepted": false },
+    "site_route_catalog": { "status": "REUSE", "journeyAccepted": false },
+    "authorised_decision_workbench": { "status": "REUSE", "journeyAccepted": false },
+    "primary_journey_honesty": { "status": "OWNER_GATED", "journeyAccepted": false }
+  },
+  "notes": "Implementation wiring landed in #470. Soft-land never claims 1.0 journey acceptance or invents route counts."
+}
