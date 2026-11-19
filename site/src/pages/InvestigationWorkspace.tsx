@@ -46,6 +46,11 @@ import {
   markHandoffOnWorkspace,
 } from "../../../src/investigation/profileWorkspaceHandoff";
 import {buildTestableNextQuestions} from "../../../src/investigation/testableNextQuestions";
+import {buildStage2CompletionChecklist} from "../../../src/investigation/stage2CompletionChecklist";
+import {
+  getUsefulnessForBrief,
+  loadResearcherUsefulnessStore,
+} from "../../../src/investigation/researcherUsefulnessFeedback";
 import {matchScenario} from "../../../src/investigation/scenarios";
 import type {DomainBundle} from "../../../src/knowledgeGraph/domainGraph";
 import type {DepartmentSlug} from "../../../src/knowledgeGraph/departments";
@@ -60,6 +65,7 @@ import {UnifiedJourneyTrail} from "../components/workspace/UnifiedJourneyTrail";
 import {LiveBriefDecisionPanel} from "../components/workspace/LiveBriefDecisionPanel";
 import {ResearcherUsefulnessPanel} from "../components/workspace/ResearcherUsefulnessPanel";
 import {TestableNextQuestionsPanel} from "../components/workspace/TestableNextQuestionsPanel";
+import {Stage2CompletionChecklistPanel} from "../components/workspace/Stage2CompletionChecklistPanel";
 import {loadDomainGraph} from "../lib/claimGraphClient";
 import {EMPTY_PROFILE,loadProfile,type Profile} from "../lib/researchHome";
 import {BUCKET_LABEL,bucketOf,buildGraph,counts,filterCandidates,headline,stageRail,yearOf,type Bucket,type Cand,type EdgeState,type Run} from "../lib/workspaceView";
@@ -102,6 +108,7 @@ function GraphView({run,pair,onPair}:{run:Run;pair:string|null;onPair:(p:string|
 export function InvestigationWorkspacePage(){
  const lr=useLiveRun(),{run,state}=lr,loc=useLocation();
  const [bucket,setBucket]=useState<Bucket|"all">("all"),[pair,setPair]=useState<string|null>(null),[sel,setSel]=useState<string|null>(null),[brief,setBrief]=useState(false),[sources,setSources]=useState(false),[saved,setSaved]=useState(false);
+ const [usefulnessTick,setUsefulnessTick]=useState(0);
  const [cmpKey,setCmpKey]=useState<string|null>(null);
  const [bundle,setBundle]=useState<DomainBundle|null>(null);
  const [graphError,setGraphError]=useState<string|null>(null);
@@ -232,6 +239,33 @@ export function InvestigationWorkspacePage(){
   hypotheses:run?.hypotheses.items??[],
   hypothesesStatus:run?.hypotheses.status??"not_configured",
  }),[runGaps,run]);
+ const usefulnessRated=useMemo(()=>{
+  if(!run?.briefHash)return false;
+  const store=loadResearcherUsefulnessStore(typeof localStorage!=="undefined"?localStorage:null);
+  return Boolean(getUsefulnessForBrief(store,run.briefHash));
+ },[run?.briefHash,usefulnessTick]);
+ const stage2Checklist=useMemo(()=>buildStage2CompletionChecklist({
+  briefHash:run?.briefHash??null,
+  hasRun:Boolean(run),
+  candidateCount:run?.candidates.length??0,
+  hasPassportOrDisagreement:Boolean(sel)||Boolean(cmpKey),
+  hasGapsOrTestable:runGaps.length>0||testableQuestions.items.length>0,
+  briefAvailable:Boolean(briefPreview),
+  savedOrReopened:lr.savedThisSession||lr.reopenedThisSession||lr.library.entries.length>0,
+  usefulnessRated,
+ }),[run,sel,cmpKey,runGaps.length,testableQuestions.items.length,briefPreview,lr.savedThisSession,lr.reopenedThisSession,lr.library.entries.length,usefulnessRated]);
+ const onStage2ChecklistSelect=(id:typeof stage2Checklist.items[number]["id"])=>{
+  if(id==="ask_run"){document.getElementById("ws-ask-strip")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  if(id==="evidence"||id==="passport_or_disagreement"){
+   document.getElementById(id==="passport_or_disagreement"&&cmpKey?"ws-disagree-h":"ws-ev-h")?.scrollIntoView({behavior:"smooth",block:"start"});
+   return;
+  }
+  if(id==="gaps_or_testable"){document.getElementById("ws-tq-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  if(id==="save_or_reopen"){document.getElementById("ws-conn-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  if(id==="usefulness"){document.getElementById("ws-useful-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  setBrief(true);
+  document.getElementById("ws-brief-panel")?.scrollIntoView({behavior:"smooth",block:"start"});
+ };
  const onUnifiedTrailSelect=(id:UnifiedJourneyStepId)=>{
   if(id==="ask"){document.getElementById("ws-ask-strip")?.scrollIntoView({behavior:"smooth",block:"start"});return}
   if(id==="evidence"||id==="passport"){document.getElementById("ws-ev-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
@@ -332,6 +366,7 @@ export function InvestigationWorkspacePage(){
      </div>
     </section>
     <UnifiedJourneyTrail steps={unifiedTrail.steps} onSelect={onUnifiedTrailSelect}/>
+    <Stage2CompletionChecklistPanel checklist={stage2Checklist} onSelectItem={onStage2ChecklistSelect}/>
     <details className="ws-usp-focus">
      <summary>USP focus trails (A · B · C)</summary>
      <UspADisagreementTrail steps={uspTrail.steps} onSelect={onTrailSelect}/>
@@ -502,6 +537,7 @@ export function InvestigationWorkspacePage(){
     <ResearcherUsefulnessPanel
      briefHash={run?.briefHash??null}
      question={run?.question??QUESTION}
+     onRated={()=>setUsefulnessTick((n)=>n+1)}
     />
 
     <section className="ws-card ws-gaps" aria-labelledby="ws-gp-h">

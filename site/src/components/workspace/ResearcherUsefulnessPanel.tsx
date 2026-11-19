@@ -25,9 +25,11 @@ const WILLINGNESS_LABEL: Record<WillingnessSignal, string> = {
 export function ResearcherUsefulnessPanel({
   briefHash,
   question,
+  onRated,
 }: {
   briefHash: string | null;
   question: string;
+  onRated?: () => void;
 }) {
   const [store, setStore] = useState<ResearcherUsefulnessStore>(() =>
     loadResearcherUsefulnessStore(typeof localStorage !== "undefined" ? localStorage : null),
@@ -75,6 +77,7 @@ export function ResearcherUsefulnessPanel({
     }
     setError(null);
     setJustSaved(true);
+    onRated?.();
   };
 
   return (
