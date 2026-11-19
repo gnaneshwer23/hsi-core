@@ -60,7 +60,9 @@ export function FirstUsefulInvestigationCard() {
       ) : null}
       <div className="rh-row">
         <Link className="rh-primary" to={liveInvestigationHref()}>
-          {milestone.reached ? "Continue in workspace" : "Open live investigation"}{" "}
+          {milestone.reached
+            ? "Reopen workspace from this milestone"
+            : "Rate usefulness in the workspace"}{" "}
           <Icon name="arrow" size={16} />
         </Link>
       </div>
