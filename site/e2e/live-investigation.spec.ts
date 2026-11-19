@@ -30,6 +30,11 @@ test('workspace before a run states that nothing has started and shows no figure
  await expect(page.getByText('Nothing starts until you press Run')).toBeVisible();
  await expect(page.getByRole('list',{name:/Investigation stages/})).toContainText('Not run');
  await expect(page.getByLabel('Run totals')).toContainText('—');
+ const journey=page.getByRole('navigation',{name:/Scientific investigation journey/i});
+ await expect(journey).toContainText('journey complete claimed: false');
+ await expect(journey).toContainText('scientific approval: false');
+ await expect(journey).toContainText('production writes: false');
+ await page.getByText('USP focus trails (A · B · C)').click();
  await expect(page.getByRole('navigation',{name:/USP B cross-domain journey/i})).toBeVisible();
  await expect(page.getByRole('navigation',{name:/USP C connected research journey/i})).toBeVisible();
 });
@@ -104,6 +109,12 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await expect(brief).toContainText('potential_contradiction is not a proven contradiction');
  await expect(brief).toContainText('Scientific approval: false');
  await expect(vf.getByText('Opposing / disputed checks')).toBeVisible();
+ const journey=page.getByRole('navigation',{name:/Scientific investigation journey/i});
+ await expect(journey).toContainText('journey complete claimed: false');
+ await expect(journey).toContainText('Ask');
+ await expect(journey).toContainText('Why differ');
+ await expect(journey).toContainText('Save');
+ await page.getByText('USP focus trails (A · B · C)').click();
  await expect(page.getByRole('navigation',{name:/USP A disagreement journey/i})).toBeVisible();
  const disagree=page.getByRole('region',{name:/Why findings may differ/i});
  await expect(disagree).toContainText('Context-dependent difference');

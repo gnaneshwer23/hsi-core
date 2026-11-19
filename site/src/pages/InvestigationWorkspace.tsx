@@ -34,6 +34,10 @@ import {
   type UspCTrailStepId,
 } from "../../../src/investigation/uspCConnectedTrail";
 import {
+  buildUnifiedJourneyTrail,
+  type UnifiedJourneyStepId,
+} from "../../../src/investigation/unifiedJourneyTrail";
+import {
   buildCuratedDisagreementPack,
   type CuratedDisagreementCaseId,
 } from "../../../src/investigation/curatedDisagreementPack";
@@ -51,6 +55,7 @@ import {UspBCrossDomainTrail} from "../components/workspace/UspBCrossDomainTrail
 import {UspBCrossDomainPanel} from "../components/workspace/UspBCrossDomainPanel";
 import {UspCConnectedTrail} from "../components/workspace/UspCConnectedTrail";
 import {UspCConnectedPanel} from "../components/workspace/UspCConnectedPanel";
+import {UnifiedJourneyTrail} from "../components/workspace/UnifiedJourneyTrail";
 import {LiveBriefDecisionPanel} from "../components/workspace/LiveBriefDecisionPanel";
 import {loadDomainGraph} from "../lib/claimGraphClient";
 import {EMPTY_PROFILE,loadProfile,type Profile} from "../lib/researchHome";
@@ -206,6 +211,29 @@ export function InvestigationWorkspacePage(){
   reopenedThisSession:lr.reopenedThisSession,
   briefOpen:brief,
  }),[profile,run,lr.library.entries.length,lr.savedThisSession,lr.reopenedThisSession,brief]);
+ const unifiedTrail=useMemo(()=>buildUnifiedJourneyTrail({
+  hasRun:Boolean(run),
+  candidateCount:run?.candidates.length??0,
+  selectedClaimId:sel,
+  selectedComparisonKey:cmpKey,
+  comparisonPairCount:comparison?.pairCount??0,
+  crossDomainPathCount:crossPaths.paths.length,
+  graphLoaded:Boolean(bundle),
+  gapCount:runGaps.length,
+  briefOpen:brief,
+  libraryCount:lr.library.entries.length,
+  savedThisSession:lr.savedThisSession,
+ }),[run,sel,cmpKey,comparison,crossPaths.paths.length,bundle,runGaps.length,brief,lr.library.entries.length,lr.savedThisSession]);
+ const onUnifiedTrailSelect=(id:UnifiedJourneyStepId)=>{
+  if(id==="ask"){document.getElementById("ws-ask-strip")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  if(id==="evidence"||id==="passport"){document.getElementById("ws-ev-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  if(id==="disagreement"){document.getElementById("ws-disagree-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  if(id==="crossDomain"){document.getElementById("ws-cross-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  if(id==="gaps"){document.getElementById("ws-gp-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  if(id==="save"){document.getElementById("ws-conn-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  setBrief(true);
+  document.getElementById("ws-brief-panel")?.scrollIntoView({behavior:"smooth",block:"start"});
+ };
  const onTrailSelect=(id:UspATrailStepId)=>{
   if(id==="ask"){document.getElementById("ws-ask-strip")?.scrollIntoView({behavior:"smooth",block:"start"});return}
   if(id==="evidence"){document.getElementById("ws-ev-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
@@ -295,9 +323,13 @@ export function InvestigationWorkspacePage(){
       {saved&&<button type="button" className="ws-btn" onClick={()=>lr.reopen()}>Reopen browser-saved run</button>}
      </div>
     </section>
-    <UspADisagreementTrail steps={uspTrail.steps} onSelect={onTrailSelect}/>
-    <UspBCrossDomainTrail steps={uspBTrail.steps} onSelect={onUspBTrailSelect}/>
-    <UspCConnectedTrail steps={uspCTrail.steps} onSelect={onUspCTrailSelect}/>
+    <UnifiedJourneyTrail steps={unifiedTrail.steps} onSelect={onUnifiedTrailSelect}/>
+    <details className="ws-usp-focus">
+     <summary>USP focus trails (A · B · C)</summary>
+     <UspADisagreementTrail steps={uspTrail.steps} onSelect={onTrailSelect}/>
+     <UspBCrossDomainTrail steps={uspBTrail.steps} onSelect={onUspBTrailSelect}/>
+     <UspCConnectedTrail steps={uspCTrail.steps} onSelect={onUspCTrailSelect}/>
+    </details>
     <Rail run={state==="running"?null:run} running={state==="running"}/>
     <HowProducedPanel
      className="rh-trace ws-produced"
