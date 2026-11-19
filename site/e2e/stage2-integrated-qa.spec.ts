@@ -12,7 +12,8 @@ test("Stage 2 public pages: one h1, Get Access chrome, honesty, no overflow at 3
   for (const path of PUBLIC_MARKETING_PATHS) {
     await page.goto(path);
     await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
-    await expect(page.getByRole("navigation", { name: "Primary" })).toBeVisible();
+    // Desktop Primary nav is display:none below 1151px; assert mobile chrome instead.
+    await expect(page.getByRole("button", { name: "Open menu" })).toBeVisible();
     await expect(page.getByRole("link", { name: "Get Access", exact: true }).first()).toHaveAttribute(
       "href",
       "/contact",
@@ -40,6 +41,10 @@ test("Stage 2 audience menu lists the six indexed destinations", async ({ page }
     ["/laboratories", "Laboratories"],
     ["/research-community", "Research Community"],
   ] as const) {
-    await expect(menu.getByRole("link", { name, exact: true })).toHaveAttribute("href", href);
+    // Links include a <small> note, so accessible name is not exact label-only.
+    await expect(menu.getByRole("link", { name: new RegExp(`^${name}`) })).toHaveAttribute(
+      "href",
+      href,
+    );
   }
 });
