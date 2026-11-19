@@ -1,6 +1,6 @@
 {
-  "note": "Gzip bytes. Measured 14 Nov 2026: entry 200474, CSS 102555, largest lazy chunk 39070. Budgets are about 10 percent above that. Raising one is a deliberate change that needs a reason in the PR. 15 Nov 2026: CSS budget raised 115000 to 125000 for the researcher app shell (theme and accent variables, Home, workspace, welcome, radar); consolidating the 60+ stylesheets is the follow-up. 18 Nov 2026: CSS budget raised 125000 to 126000 for UX-01 homepage worked-conflict soft-land plus PR-E2E-01 Evidence Context Passport styles on the live investigation workspace.",
+  "note": "Gzip bytes. Measured 14 Nov 2026: entry 200474, CSS 102555, largest lazy chunk 39070. Budgets are about 10 percent above that. Raising one is a deliberate change that needs a reason in the PR. 15 Nov 2026: CSS budget raised 115000 to 125000 for the researcher app shell (theme and accent variables, Home, workspace, welcome, radar); consolidating the 60+ stylesheets is the follow-up. 18 Nov 2026: CSS budget raised 125000 to 126000 for UX-01 homepage worked-conflict soft-land plus PR-E2E-01 Evidence Context Passport styles on the live investigation workspace. 19 Nov 2026: CSS budget raised 126000 to 128500 for scoped enterprise dashboard shells (`enterprise-dashboard.css`); follow-up is token consolidation with premium-app.",
   "entryJsGzipBytes": 220000,
-  "totalCssGzipBytes": 126000,
+  "totalCssGzipBytes": 128500,
   "largestLazyChunkGzipBytes": 45000
 }

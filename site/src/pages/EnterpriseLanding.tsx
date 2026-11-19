@@ -41,6 +41,27 @@ export function EnterpriseLandingPage() {
             Existing research dashboard
           </Link>
         </div>
+        <section className="ent-panel" aria-labelledby="ent-workspaces-heading">
+          <h2 id="ent-workspaces-heading" style={{ margin: 0, fontSize: "1.05rem" }}>
+            Planned workspace types (same engine)
+          </h2>
+          <p className="ent-lead">
+            Academic group shells are previewed here. Biotech/pharma, clinical research,
+            laboratory/omics and research-network workspaces are proposed interfaces that
+            must reuse the shared scientific engine — not separate products. Patient
+            participation stays a future governed path, not this research dashboard.
+            Roles ≠ subscriptions; enterprise contracts do not auto-unlock confidential
+            science.
+          </p>
+          <ul>
+            <li>Individual research — existing `/research/*` tools</li>
+            <li>Academic &amp; research group — this preview</li>
+            <li>Biotech / pharma R&amp;D — proposed</li>
+            <li>Clinical research — proposed (not CDS; PHI gated)</li>
+            <li>Laboratory &amp; omics — proposed</li>
+            <li>Research network — proposed</li>
+          </ul>
+        </section>
       </div>
     </div>
   );

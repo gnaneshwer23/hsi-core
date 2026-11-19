@@ -4,6 +4,8 @@
 
 **End-to-end architecture + disease-agnostic correction — 19 November 2026:** See [`HSI_END_TO_END_VISION_AND_TECHNOLOGY_ARCHITECTURE.md`](./HSI_END_TO_END_VISION_AND_TECHNOLOGY_ARCHITECTURE.md). HSI is a **disease-agnostic**, cross-domain scientific intelligence ecosystem. Systemic sclerosis, CD4+ examples and any illustrative professor laboratory are **demonstration scenarios only** — not product boundaries. Mermaid diagrams there are ambition doctrine, not shipped-status claims.
 
+**Multi-stakeholder workspaces — 19 November 2026:** Same doc §7 — one scientific engine; six proposed workspace types (individual, academic group, biotech/pharma, clinical research, laboratory/omics, research network) plus a future separate patient/participant path. Roles ≠ subscriptions. Market sequence is delivery priority, not domain restriction.
+
 **Public positioning correction — 13 November 2026 (explicit user direction):** HSI is one scientific intelligence technology. Do not market it as a portfolio, four-product ecosystem or collection of named product modules. The homepage, platform, navigation, public diagrams and search metadata must present the Living Knowledge Graph, evidence, context and scientific investigation under HSI alone. Older product-naming sections below are historical architectural **ownership** context and do not authorise public promotion. Existing data isolation, source permissions, no-PHI/no-CDS and independent human-review boundaries remain binding.
 
 **Document status:** Canonical governing product doctrine (operational wrapper)  

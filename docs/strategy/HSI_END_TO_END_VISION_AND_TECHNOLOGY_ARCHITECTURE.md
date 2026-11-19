@@ -268,6 +268,65 @@ Proposed delivery sequence — **not** a claim that each phase is complete or th
 
 ---
 
+## 7. Multi-stakeholder workspaces (one engine, many shells)
+
+HSI is **not** only for professors, PhD students or universities. It should serve the wider biomedical research ecosystem. The **scientific intelligence engine stays shared**; dashboards, permissions and workflows vary by stakeholder.
+
+### Proposed workspace architecture
+
+```mermaid
+flowchart TD
+    H["HSI Scientific Intelligence Platform"]
+    H --> AUTH["Identity / Organisation / Permissions"]
+    AUTH --> A["Individual Research Workspace"]
+    AUTH --> B["Academic and Research Group Workspace"]
+    AUTH --> C["Biotech / Pharma R and D Workspace"]
+    AUTH --> D["Clinical Research Workspace"]
+    AUTH --> E["Laboratory and Omics Workspace"]
+    AUTH --> F["Research Network Workspace"]
+    A --> CORE["Shared Scientific Intelligence Engine"]
+    B --> CORE
+    C --> CORE
+    D --> CORE
+    E --> CORE
+    F --> CORE
+    CORE --> KG["Biomedical Knowledge Graph"]
+    CORE --> EV["Evidence and Verification"]
+    CORE --> CROSS["Cross-Domain Investigation"]
+    CORE --> GAP["Research Gaps and Hypotheses"]
+    CORE --> COL["Collaboration and Research Decisions"]
+```
+
+| Workspace | Primary users | Focus (proposed) | Status |
+| --- | --- | --- | --- |
+| Individual research | Independent / early researchers | Profile, investigations, alerts | Partial (`/research/*`) |
+| Academic & research group | PI, postdocs, PhD, MSc, admins | Team tree, supervision, shared projects | PR1 demo shells `/enterprise/*` |
+| Biotech / pharma R&D | Discovery, translational, medical affairs | Targets, mechanisms, landscape, portfolio | **Proposed** |
+| Clinical research | Clinician-scientists, CROs | Approved cohorts, phenotypes, trials research | **Proposed** — not CDS; PHI gated |
+| Laboratory & omics | Core facilities, bioinformaticians | Assays, omics interpretation, reproducibility | **Proposed** |
+| Research network | Societies, consortia | Circles, shared reviews, challenges | **Proposed** |
+| Patients / participants | Research participants | Consent, contribution, updates | **Future separate governed experience** — not the scientific dashboard |
+
+### Roles vs subscriptions
+
+- **Role** = what a user is authorised to do (server-side grants, tenant membership, project sharing).
+- **Subscription** = commercial capability / usage limits.
+
+An institutional subscription must **not** automatically unlock confidential scientific data for every university administrator. Patient/PHI paths remain separately governed (`CDS_PHI_BOUNDARY`).
+
+### Market sequence (proposed, not domain restriction)
+
+1. Individual researchers and small academic groups  
+2. Biotech discovery / translational teams  
+3. University departments / institutes  
+4. Laboratory and omics teams  
+5. Clinical research organisations  
+6. Patients / research participants (separate regulated path)
+
+Collaboration across organisations must stay permission-aware: no automatic exposure of confidential company data, unpublished university results or patient records.
+
+---
+
 ## One-sentence vision
 
 HSI connects people, biological mechanisms, scientific evidence and governed research data into one collaborative intelligence system that helps scientists discover opportunities, evaluate uncertainty, design better investigations and produce more rigorous research.
