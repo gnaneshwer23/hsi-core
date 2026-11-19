@@ -261,10 +261,19 @@ export function InvestigationWorkspacePage(){
   libraryCount:lr.library.entries.length,
   reopenedThisSession:lr.reopenedThisSession,
  }),[run?.briefHash,lr.library.entries.length,lr.reopenedThisSession]);
+ const openUspPanelsFold=()=>{
+  const el=document.getElementById("ws-usp-panels") as HTMLDetailsElement|null;
+  if(el&&!el.open)el.open=true;
+ };
  const onStage2ChecklistSelect=(id:typeof stage2Checklist.items[number]["id"])=>{
   if(id==="ask_run"){document.getElementById("ws-ask-strip")?.scrollIntoView({behavior:"smooth",block:"start"});return}
   if(id==="evidence"||id==="passport_or_disagreement"){
-   document.getElementById(id==="passport_or_disagreement"&&cmpKey?"ws-disagree-h":"ws-ev-h")?.scrollIntoView({behavior:"smooth",block:"start"});
+   if(id==="passport_or_disagreement"&&cmpKey){
+    openUspPanelsFold();
+    document.getElementById("ws-disagree-h")?.scrollIntoView({behavior:"smooth",block:"start"});
+    return;
+   }
+   document.getElementById("ws-ev-h")?.scrollIntoView({behavior:"smooth",block:"start"});
    return;
   }
   if(id==="gaps_or_testable"){document.getElementById("ws-tq-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
@@ -272,10 +281,6 @@ export function InvestigationWorkspacePage(){
   if(id==="usefulness"){document.getElementById("ws-useful-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
   setBrief(true);
   document.getElementById("ws-brief-panel")?.scrollIntoView({behavior:"smooth",block:"start"});
- };
- const openUspPanelsFold=()=>{
-  const el=document.getElementById("ws-usp-panels") as HTMLDetailsElement|null;
-  if(el&&!el.open)el.open=true;
  };
  const onUnifiedTrailSelect=(id:UnifiedJourneyStepId)=>{
   if(id==="ask"){document.getElementById("ws-ask-strip")?.scrollIntoView({behavior:"smooth",block:"start"});return}

@@ -125,8 +125,11 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  const uspPanels=page.locator('#ws-usp-panels');
  await expect(uspPanels.locator('> summary')).toContainText('USP focus panels');
  await expect(uspPanels.locator('> summary')).toContainText('not journey complete');
- if(!(await uspPanels.getAttribute('open')))await uspPanels.locator('> summary').click();
- await expect(uspPanels).toHaveAttribute('open','');
+ // HTMLDetailsElement: closed ⇔ open attribute absent (null). Empty string "" means open.
+ expect(await uspPanels.getAttribute('open')).toBeNull();
+ // Trail select must open the fold — do not click summary (would hide a broken handler).
+ await page.getByRole('navigation',{name:/Scientific investigation journey/i}).getByRole('button',{name:/Why differ/i}).click();
+ await expect.poll(async()=>uspPanels.getAttribute('open')).not.toBeNull();
  const disagree=page.getByRole('region',{name:/Why findings may differ/i});
  await expect(disagree).toContainText('Context-dependent difference');
  await expect(disagree).toContainText('Potential contradiction is not');
@@ -164,8 +167,8 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await expect(connected).toContainText(/Reopened the same version|Reopened/i);
  await page.goto('/research/home');
  const metrics=page.locator('#rh-metrics');
- if(!(await metrics.getAttribute('open')))await metrics.locator('> summary').click();
- await expect(metrics).toHaveAttribute('open','');
+ if((await metrics.getAttribute('open'))===null)await metrics.locator('> summary').click();
+ await expect.poll(async()=>metrics.getAttribute('open')).not.toBeNull();
  await expect(metrics.locator('> summary')).toContainText('not conversion');
  const activation=page.getByRole('region',{name:/Activation \(this device\)/i});
  await expect(activation).toContainText('invents activation funnel: false');
@@ -193,8 +196,8 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await expect(useful).toContainText('willingness Maybe');
  await page.goto('/research/home');
  const metricsAfter=page.locator('#rh-metrics');
- if(!(await metricsAfter.getAttribute('open')))await metricsAfter.locator('> summary').click();
- await expect(metricsAfter).toHaveAttribute('open','');
+ if((await metricsAfter.getAttribute('open'))===null)await metricsAfter.locator('> summary').click();
+ await expect.poll(async()=>metricsAfter.getAttribute('open')).not.toBeNull();
  const firstUseful=page.getByRole('region',{name:/First useful investigation/i});
  await expect(firstUseful).toContainText('invents aggregate conversion: false');
  await expect(firstUseful).toContainText('pilot conversion claimed: false');
