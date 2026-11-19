@@ -180,6 +180,17 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await expect(testable).toContainText('Blocking IL-21 reduces Tfh expansion');
  await expect(testable).toContainText('Would be falsified by');
  await expect(testable).toContainText('No change in Tfh numbers');
+ const blocked=page.getByRole('region',{name:/Steps 12–13 \(blocked\)/i});
+ await expect(blocked).toContainText('org sharing: false');
+ await expect(blocked).toContainText('collaborator links: false');
+ await expect(blocked).toContainText('live source refresh accepted: false');
+ await expect(blocked).toContainText('prior approvals transfer: false');
+ await expect(blocked).toContainText('invents sharing authority: false');
+ await expect(blocked).toContainText('journey complete claimed: false');
+ await expect(blocked).toContainText('Share with a collaborator');
+ await expect(blocked).toContainText('Versioned re-evaluation');
+ await expect(blocked).toContainText('does not create a share link');
+ await expect(blocked).toContainText('same briefHash');
  const axe=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();
  expect(axe.violations.map(v=>v.id+': '+v.nodes.length)).toEqual([]);
 });
