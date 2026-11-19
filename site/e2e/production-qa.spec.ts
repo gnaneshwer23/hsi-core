@@ -36,7 +36,7 @@ test('public pages load the existing typefaces locally without third-party font 
 
 test('mobile hero states what the product is and offers one clear action',async({page})=>{
  await page.setViewportSize({width:390,height:844});await page.goto('/');
- await expect(page.getByRole('heading',{level:1})).toContainText('Connect the biology. Challenge the evidence.');
+ await expect(page.getByRole('heading',{level:1})).toContainText('Connect the Science. Challenge the Evidence. Advance Discovery.');
  await expect(page.getByRole('link',{name:/Set up your research home/}).first()).toBeVisible();
  await expect(page.getByRole('list',{name:'The research loop'})).toBeAttached();
 });
