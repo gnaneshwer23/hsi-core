@@ -147,6 +147,7 @@ Target: **≥3 merged engineering PRs per week** on Track A while Track B is in 
 | **NEXT-B** | Staging isolation acceptance soft-land — `src/operations/nextBIsolationSoftLand.ts` + `docs/engineering/NEXT_B_ISOLATION_SOFT_LAND.md` | Reuses isolation suite + E2E-02; blocked on Track B2; never invents accounts/signers or removes holds |
 | **NEXT-C** | Durable audit / saved journey soft-land — `src/operations/nextCDurableAuditSoftLand.ts` + `docs/engineering/NEXT_C_DURABLE_AUDIT_SOFT_LAND.md` | Reuses delivery/review/archive adapters; blocked on NEXT-A/B acceptance; never invents audit hashes, domain packs, or live journey acceptance |
 | **NEXT-D** | Expert vault / signed freeze soft-land — `src/operations/nextDExpertVaultFreezeSoftLand.ts` + `docs/engineering/NEXT_D_EXPERT_VAULT_FREEZE_SOFT_LAND.md` | Extends E2E-10 toward 120 dual-expert cases; never invents expert IDs/scores or claims signed freeze |
+| **NEXT-E** | Durable worker / equal-budget benchmark soft-land — `src/operations/nextEDurableWorkerBenchmarkSoftLand.ts` + `docs/engineering/NEXT_E_DURABLE_WORKER_BENCHMARK_SOFT_LAND.md` | Reuses checkpoint/worker/provider adapters; blocked on NEXT-A–D; never invents caps/bindings or claims locked run |
 
 Open implementation PRs for passport / workbench / brief columns remain separate; merge when up to date with `main` and verify is green.
 

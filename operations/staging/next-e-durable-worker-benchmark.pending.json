@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "hsi-next-e-durable-worker-benchmark-pending-1",
+  "purpose": "next_e_durable_worker_benchmark_soft_land",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "priority": "P1",
+  "liveBenchmarkAccepted": false,
+  "equalBudgetLocked": false,
+  "scientificApproval": false,
+  "acceptedForScope": false,
+  "signedPacketClaimed": false,
+  "inventedCaps": false,
+  "inventedModelBindings": false,
+  "inventedAcceptedArtifact": false,
+  "autoPromotion": false,
+  "dependsOn": ["NEXT-A", "NEXT-B", "NEXT-C", "NEXT-D"],
+  "honesty": {
+    "adaptersExistExecutionBlocked": true,
+    "noInventedCaps": true,
+    "noInventedModelBindings": true,
+    "noAutoPromotion": true,
+    "nextAThroughDRequired": true,
+    "fixtureIsNotLockedBenchmark": true,
+    "mustPreserveAllFailures": true
+  },
+  "ciSafeModes": {
+    "check": {
+      "command": "bun test test/nextEDurableWorkerBenchmarkSoftLand.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    },
+    "fixture": {
+      "command": "bun test test/e2e06DualProviderVerification.test.ts test/nextACompositionSoftLand.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "references": {
+    "next_a_acceptance_ref": "NOT_STARTED",
+    "next_b_acceptance_ref": "NOT_STARTED",
+    "next_c_acceptance_ref": "NOT_STARTED",
+    "next_d_acceptance_ref": "NOT_STARTED",
+    "equal_budget_cap_ref": "UNASSIGNED",
+    "model_binding_ref": "UNASSIGNED",
+    "accepted_artifact_ref": "NOT_STARTED"
+  },
+  "surfaces": {
+    "durable_checkpoint_contract": { "status": "REUSE", "live": false },
+    "checkpoint_recovery_store": { "status": "REUSE", "live": false },
+    "immuno_worker_plan": { "status": "REUSE", "live": false },
+    "locked_equal_budget_acceptance": { "status": "REUSE", "live": false },
+    "dual_provider_harness": { "status": "REUSE", "live": false },
+    "failure_preserving_redacted_metrics": { "status": "OWNER_GATED", "live": false },
+    "locked_benchmark_execution": { "status": "BLOCKED", "live": false }
+  },
+  "notes": "Accept NEXT-A through NEXT-D first. Soft-land never invents caps, model bindings, or locked benchmark acceptance."
+}
