@@ -60,6 +60,21 @@ test('alert preference card keeps live delivery off and records local cadence ch
  await expect(alerts).toContainText('Not an email open-rate metric');
 });
 
+test('first useful investigation card stays unreached without inventing conversion',async({page})=>{
+ await saved(page,401,{});
+ await page.addInitScript(()=>localStorage.setItem('hsi-research-profile-v1',JSON.stringify({
+  v:1,role:'Research scientist',stage:null,background:'x',question:'Why does IL-21 differ?',
+  orcid:null,papers:[],cadence:'off',goals:[],interests:['Immunology'],followed:[],dismissed:[],onboarded:true,
+ })));
+ await page.goto('/research/home');
+ const first=page.getByRole('region',{name:/First useful investigation/i});
+ await expect(first).toContainText('invents aggregate conversion: false');
+ await expect(first).toContainText('invents activation funnel: false');
+ await expect(first).toContainText('journey complete claimed: false');
+ await expect(first).toContainText('pilot conversion claimed: false');
+ await expect(first).toContainText('Rate an investigation as Useful');
+});
+
 test('cross-domain search returns typed graph concepts, follows, previews and opens the graph',async({page})=>{
  await saved(page,401,{});
  await page.goto('/research/home');

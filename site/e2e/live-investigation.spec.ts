@@ -166,6 +166,14 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await expect(useful).toContainText(/Saved locally for briefHash/i);
  await expect(useful).toContainText('Useful');
  await expect(useful).toContainText('willingness Maybe');
+ await page.goto('/research/home');
+ const firstUseful=page.getByRole('region',{name:/First useful investigation/i});
+ await expect(firstUseful).toContainText('invents aggregate conversion: false');
+ await expect(firstUseful).toContainText('pilot conversion claimed: false');
+ await expect(firstUseful).toContainText('First useful investigation recorded on this device');
+ await expect(firstUseful).toContainText('not a conversion rate');
+ await page.goto('/research/workspace');
+ await page.getByRole('button',{name:'Run live investigation'}).click();
  const stage2=page.getByRole('region',{name:/Stage 2 investigation progress/i});
  await expect(stage2).toContainText('journey complete claimed: false');
  await expect(stage2).toContainText('pilot accepted: false');
