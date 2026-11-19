@@ -90,6 +90,15 @@
 .ws-disagree-row[aria-pressed=true]{border-color:var(--accent-link);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent-link) 35%,transparent)}
 .ws-dual-passports{display:grid;gap:12px;margin-top:8px}
 .ws-dual-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.ws-curated-disagree{scroll-margin-top:24px;display:grid;gap:12px}
+.ws-curated-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.ws-curated-case{width:100%;text-align:left;display:grid;gap:4px;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);cursor:pointer;font:inherit}
+.ws-curated-case[aria-pressed=true]{border-color:var(--accent-link);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent-link) 35%,transparent)}
+.ws-curated-case b{font-size:14px}
+.ws-curated-case small{color:var(--muted);font-size:12px}
+.ws-curated-detail{display:grid;gap:12px;padding:12px;border:1px solid var(--line-2);border-radius:12px;background:var(--surface-2)}
+.ws-disagree-diffs{margin:0;padding-left:18px;display:grid;gap:4px}
+.ws-disagree-passports{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
 .ws-usp-b-trail,.ws-usp-c-trail{margin-top:4px}
 .ws-cross{scroll-margin-top:24px;display:grid;gap:12px}
 .ws-connected{scroll-margin-top:24px;display:grid;gap:12px}
@@ -124,7 +133,7 @@
 .ws-brief-limits h3{margin:0;font-size:15px}
 .ws-brief-limits ul{margin:0;padding-left:18px;display:grid;gap:4px}
 .ws-brief-passport{display:grid;gap:8px}
-@media(max-width:1100px){.ws-usp-trail-list{grid-template-columns:1fr 1fr}.ws-usp-trail-join{display:none}.ws-dual-grid{grid-template-columns:1fr}.ws-dept-rail{grid-template-columns:1fr 1fr 1fr}.ws-cross-controls{grid-template-columns:1fr}.ws-conn-grid{grid-template-columns:1fr}}
+@media(max-width:1100px){.ws-usp-trail-list{grid-template-columns:1fr 1fr}.ws-usp-trail-join{display:none}.ws-dual-grid{grid-template-columns:1fr}.ws-disagree-passports{grid-template-columns:1fr}.ws-dept-rail{grid-template-columns:1fr 1fr 1fr}.ws-cross-controls{grid-template-columns:1fr}.ws-conn-grid{grid-template-columns:1fr}}
 @media(max-width:700px){.ws-usp-trail-list{grid-template-columns:1fr}.ws-dept-rail{grid-template-columns:1fr 1fr}}
 .ws-hyps{list-style:none;margin:0 0 12px;padding:0;display:grid;gap:10px}
 .ws-hyps>li{display:grid;gap:8px;padding:12px;border:1px solid var(--line-2);border-radius:12px;background:var(--surface-2)}

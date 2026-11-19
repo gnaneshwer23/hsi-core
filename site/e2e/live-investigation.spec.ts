@@ -111,6 +111,13 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await disagree.getByRole('button',{name:/Context-dependent difference/}).click();
  await expect(page.getByRole('heading',{name:/Left claim · Evidence Context Passport/})).toBeVisible();
  await expect(page.getByRole('heading',{name:/Right claim · Evidence Context Passport/})).toBeVisible();
+ const curated=page.getByRole('region',{name:/Curated disagreement demonstrations/i});
+ await expect(curated).toContainText('Demonstration only');
+ await expect(curated).toContainText('Scientific approval: false');
+ await expect(curated).toContainText('Confirmed contradiction: false');
+ await curated.getByRole('button',{name:/Microbial metabolites \(mouse\) vs childhood microbiome/i}).click();
+ await expect(curated.getByRole('heading',{name:/Left · DIAB-003/})).toBeVisible();
+ await expect(curated.getByRole('heading',{name:/Right · DIAB-015/})).toBeVisible();
  await expect(page.getByRole('navigation',{name:/USP B cross-domain journey/i})).toBeVisible();
  const cross=page.getByRole('region',{name:/Cross-domain mechanisms/i});
  await expect(cross).toContainText('Causal conclusion allowed: false');

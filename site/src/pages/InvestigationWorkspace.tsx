@@ -33,10 +33,15 @@ import {
   buildUspCConnectedTrail,
   type UspCTrailStepId,
 } from "../../../src/investigation/uspCConnectedTrail";
+import {
+  buildCuratedDisagreementPack,
+  type CuratedDisagreementCaseId,
+} from "../../../src/investigation/curatedDisagreementPack";
 import type {DomainBundle} from "../../../src/knowledgeGraph/domainGraph";
 import type {DepartmentSlug} from "../../../src/knowledgeGraph/departments";
 import {UspADisagreementTrail} from "../components/workspace/UspADisagreementTrail";
 import {UspADisagreementPanel} from "../components/workspace/UspADisagreementPanel";
+import {CuratedDisagreementPackPanel} from "../components/workspace/CuratedDisagreementPackPanel";
 import {UspBCrossDomainTrail} from "../components/workspace/UspBCrossDomainTrail";
 import {UspBCrossDomainPanel} from "../components/workspace/UspBCrossDomainPanel";
 import {UspCConnectedTrail} from "../components/workspace/UspCConnectedTrail";
@@ -90,6 +95,7 @@ export function InvestigationWorkspacePage(){
  const [crossStart,setCrossStart]=useState<string|null>(null);
  const [crossTarget,setCrossTarget]=useState<DepartmentSlug>("neuroscience");
  const [crossPathIndex,setCrossPathIndex]=useState<number|null>(null);
+ const [curatedCaseId,setCuratedCaseId]=useState<CuratedDisagreementCaseId|null>(null);
  const [profile,setProfile]=useState<Profile>(EMPTY_PROFILE);
  const first=useRef(true);
  useEffect(()=>{
@@ -127,6 +133,7 @@ export function InvestigationWorkspacePage(){
   :null;
  const passportEdges=useMemo(()=>run?liveInvestigationPassportEdges(run):[],[run]);
  const passportSources=useMemo(()=>run?liveInvestigationPassportSources(run):[],[run]);
+ const curatedPack=useMemo(()=>bundle?buildCuratedDisagreementPack(bundle):null,[bundle]);
  const briefPreview=useMemo(()=>run?buildLiveBriefPreview(run,passportEdges.length):null,[run,passportEdges.length]);
  const uspTrail=useMemo(()=>buildUspADisagreementTrail({
   hasRun:Boolean(run),
@@ -361,6 +368,13 @@ export function InvestigationWorkspacePage(){
       <p className="ws-muted">Structured comparison will appear when this run has at least two candidates on the same relation.</p>
      </section>
     ):null}
+
+    <CuratedDisagreementPackPanel
+     pack={curatedPack}
+     selectedId={curatedCaseId}
+     onSelect={setCuratedCaseId}
+     graphError={graphError}
+    />
 
     <UspBCrossDomainPanel
      bundle={bundle}
