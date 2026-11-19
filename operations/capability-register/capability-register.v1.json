@@ -147,10 +147,13 @@
         "site/src/pages/ResearchDashboard.tsx",
         "site/src/pages/ScientificResearchWorkbench.tsx",
         "site/src/pages/AuthenticatedInterrogativeWorkbench.tsx",
-        "site/src/pages/ResearchMechanismWorkflow.tsx"
+        "site/src/pages/ResearchMechanismWorkflow.tsx",
+        "site/src/pages/EnterpriseProfessorDashboard.tsx",
+        "site/src/pages/EnterpriseStudentDashboard.tsx",
+        "docs/engineering/ENTERPRISE_DASHBOARD_GAP_MATRIX.md"
       ],
-      "gap": "Specialist pages remain; synthetic profiles demoted from hero",
-      "nextAction": "Keep specialist views; primary path is decision-workbench + mechanism-workflow"
+      "gap": "Specialist pages remain; enterprise professor/student shells are demonstration UI only (`/enterprise/*`) — no durable org persistence or PHI",
+      "nextAction": "Keep specialist views; primary path is workspace; enterprise PR2+ needs profiles/membership without lifting held migrations"
     },
     {
       "id": "F-07",
