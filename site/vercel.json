@@ -137,6 +137,42 @@
       "destination": "/_pages/enterprise--student.html"
     },
     {
+      "source": "/workspaces",
+      "destination": "/_pages/workspaces.html"
+    },
+    {
+      "source": "/workspaces/researcher",
+      "destination": "/_pages/workspaces--researcher.html"
+    },
+    {
+      "source": "/workspaces/professor",
+      "destination": "/_pages/workspaces--professor.html"
+    },
+    {
+      "source": "/workspaces/student",
+      "destination": "/_pages/workspaces--student.html"
+    },
+    {
+      "source": "/workspaces/biotech",
+      "destination": "/_pages/workspaces--biotech.html"
+    },
+    {
+      "source": "/workspaces/clinical",
+      "destination": "/_pages/workspaces--clinical.html"
+    },
+    {
+      "source": "/workspaces/laboratory",
+      "destination": "/_pages/workspaces--laboratory.html"
+    },
+    {
+      "source": "/workspaces/community",
+      "destination": "/_pages/workspaces--community.html"
+    },
+    {
+      "source": "/workspaces/enterprise",
+      "destination": "/_pages/workspaces--enterprise.html"
+    },
+    {
       "source": "/contact",
       "destination": "/_pages/contact.html"
     },

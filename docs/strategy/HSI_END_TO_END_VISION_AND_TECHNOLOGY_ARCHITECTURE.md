@@ -299,13 +299,16 @@ flowchart TD
 
 | Workspace | Primary users | Focus (proposed) | Status |
 | --- | --- | --- | --- |
-| Individual research | Independent / early researchers | Profile, investigations, alerts | Partial (`/research/*`) |
-| Academic & research group | PI, postdocs, PhD, MSc, admins | Team tree, supervision, shared projects | PR1 demo shells `/enterprise/*` |
-| Biotech / pharma R&D | Discovery, translational, medical affairs | Targets, mechanisms, landscape, portfolio | **Proposed** |
-| Clinical research | Clinician-scientists, CROs | Approved cohorts, phenotypes, trials research | **Proposed** — not CDS; PHI gated |
-| Laboratory & omics | Core facilities, bioinformaticians | Assays, omics interpretation, reproducibility | **Proposed** |
-| Research network | Societies, consortia | Circles, shared reviews, challenges | **Proposed** |
+| Individual research | Independent / early researchers | Profile, investigations, alerts | Demo shell `/workspaces/researcher` + `/research/*` |
+| Academic & research group | PI, postdocs, PhD, MSc | Team tree, supervision, shared projects | Demo `/workspaces/professor` · `/workspaces/student` (+ PR1 `/enterprise/*`) |
+| Biotech / pharma R&D | Discovery, translational, medical affairs | Targets, mechanisms, landscape, portfolio | Demo shell `/workspaces/biotech` |
+| Clinical research | Clinician-scientists, CROs | Approved cohorts, phenotypes, trials research | Demo `/workspaces/clinical` — cohorts **disabled**; not CDS; PHI gated |
+| Laboratory & omics | Core facilities, bioinformaticians | Assays, omics interpretation, reproducibility | Demo shell `/workspaces/laboratory` |
+| Research network | Societies, consortia | Circles, shared reviews, challenges | Demo shell `/workspaces/community` |
+| University / enterprise admin | Research administrators | Departments, roles, subscriptions | Demo shell `/workspaces/enterprise` (roles ≠ seats) |
 | Patients / participants | Research participants | Consent, contribution, updates | **Future separate governed experience** — not the scientific dashboard |
+
+Interactive concept hub: `/workspaces` (shared navigation, domain map, evidence cards, AI panels).
 
 ### Roles vs subscriptions
 

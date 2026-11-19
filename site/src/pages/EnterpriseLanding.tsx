@@ -34,6 +34,9 @@ export function EnterpriseLandingPage() {
           </Link>
         </div>
         <div className="ent-actions">
+          <Link className="ent-btn" to="/workspaces">
+            Open multi-workspace concept
+          </Link>
           <Link className="ent-btn ent-btn-secondary" to="/research/workspace">
             Open live investigation
           </Link>
@@ -43,24 +46,15 @@ export function EnterpriseLandingPage() {
         </div>
         <section className="ent-panel" aria-labelledby="ent-workspaces-heading">
           <h2 id="ent-workspaces-heading" style={{ margin: 0, fontSize: "1.05rem" }}>
-            Planned workspace types (same engine)
+            Connected workspaces (same engine)
           </h2>
           <p className="ent-lead">
-            Academic group shells are previewed here. Biotech/pharma, clinical research,
-            laboratory/omics and research-network workspaces are proposed interfaces that
-            must reuse the shared scientific engine — not separate products. Patient
-            participation stays a future governed path, not this research dashboard.
-            Roles ≠ subscriptions; enterprise contracts do not auto-unlock confidential
-            science.
+            Professor and student shells remain here for PR1 review. The interactive
+            multi-workspace concept at `/workspaces` adds researcher, biotech, clinical
+            (cohorts disabled), laboratory, community and enterprise admin views on the
+            same substrate. Patient participation stays a future governed path. Roles ≠
+            subscriptions.
           </p>
-          <ul>
-            <li>Individual research — existing `/research/*` tools</li>
-            <li>Academic &amp; research group — this preview</li>
-            <li>Biotech / pharma R&amp;D — proposed</li>
-            <li>Clinical research — proposed (not CDS; PHI gated)</li>
-            <li>Laboratory &amp; omics — proposed</li>
-            <li>Research network — proposed</li>
-          </ul>
         </section>
       </div>
     </div>

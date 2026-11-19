@@ -84,6 +84,15 @@ const INVESTIGATION_LOOP = new Set([
   "/enterprise",
   "/enterprise/professor",
   "/enterprise/student",
+  "/workspaces",
+  "/workspaces/researcher",
+  "/workspaces/professor",
+  "/workspaces/student",
+  "/workspaces/biotech",
+  "/workspaces/clinical",
+  "/workspaces/laboratory",
+  "/workspaces/community",
+  "/workspaces/enterprise",
 ]);
 
 /** Reviewer / curator tools — never auto-redirect in this soft-land. */

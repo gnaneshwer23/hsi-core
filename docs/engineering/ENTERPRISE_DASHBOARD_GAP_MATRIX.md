@@ -6,7 +6,7 @@
 
 **Disease scope:** HSI is **disease-agnostic**. Any autoimmune / SSc / CD40 demo copy in PR1 shells is a **labelled demonstration scenario**, not the platform boundary. Doctrine: [`../strategy/HSI_END_TO_END_VISION_AND_TECHNOLOGY_ARCHITECTURE.md`](../strategy/HSI_END_TO_END_VISION_AND_TECHNOLOGY_ARCHITECTURE.md).
 
-**Stakeholder scope:** Academic professor/student shells are **one** of six proposed workspace types on a shared scientific engine (individual, academic group, biotech/pharma, clinical research, laboratory/omics, research network). Biotech/clinical/lab/network dashboards remain **proposed**. Patient participation is a future separate governed path. Roles ≠ subscriptions — see architecture doc §7.
+**Stakeholder scope:** Eight connected demo views on one engine via `/workspaces` (researcher, professor, student, biotech, clinical, laboratory, community, enterprise admin). Clinical cohorts stay disabled. Patient participation remains a future separate governed path. Roles ≠ subscriptions — see architecture doc §7.
 
 ## Gap matrix
 
