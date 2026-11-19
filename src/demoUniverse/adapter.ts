@@ -3,6 +3,7 @@
  * Supplies connected fixtures to UI/tests. Never writes to production research storage.
  */
 import { GUT_IMMUNE_METABOLIC_BUNDLE } from "./fixtures/gutImmuneMetabolic";
+import { PHASE2_BUNDLES } from "./fixtures/phase2Scenarios";
 import { assertValidDemoUniverseBundle } from "./schema";
 import type {
   DemoEvidenceClaim,
@@ -14,10 +15,16 @@ import type {
 } from "./types";
 import { DEMO_HONESTY } from "./types";
 
-const BUNDLES: Record<string, DemoUniverseBundle> = {
-  [GUT_IMMUNE_METABOLIC_BUNDLE.scenario.id]: GUT_IMMUNE_METABOLIC_BUNDLE,
-  [GUT_IMMUNE_METABOLIC_BUNDLE.investigation.id]: GUT_IMMUNE_METABOLIC_BUNDLE,
-};
+const SEEDED_BUNDLES: readonly DemoUniverseBundle[] = [
+  GUT_IMMUNE_METABOLIC_BUNDLE,
+  ...PHASE2_BUNDLES,
+];
+
+const BUNDLES: Record<string, DemoUniverseBundle> = {};
+for (const bundle of SEEDED_BUNDLES) {
+  BUNDLES[bundle.scenario.id] = bundle;
+  BUNDLES[bundle.investigation.id] = bundle;
+}
 
 export type DemoInvestigationJourneyStep = {
   id: string;
@@ -44,9 +51,9 @@ function bundleFor(id: string): DemoUniverseBundle {
   return bundle;
 }
 
-/** List seeded scenario ids (Phase 1: one complete scenario). */
+/** List seeded scenario ids (Phase 1–2: six complete scenarios). */
 export function listDemoScenarioIds(): readonly string[] {
-  return [GUT_IMMUNE_METABOLIC_BUNDLE.scenario.id];
+  return SEEDED_BUNDLES.map((b) => b.scenario.id);
 }
 
 export function getDemoUniverseBundle(scenarioOrInvestigationId: string): DemoUniverseBundle {

@@ -6,6 +6,8 @@ import {
   DEMO_UNIVERSE_MANIFEST,
   DEMO_UNIVERSE_SCHEMA,
   GUT_IMMUNE_METABOLIC_BUNDLE,
+  PHASE2_BUNDLES,
+  SHARED_NODES,
   assertValidDemoUniverseBundle,
   demoUniverseAllowsProductionWrite,
   getDemoInvestigationJourney,
@@ -14,11 +16,43 @@ import {
   validateDemoUniverseBundle,
 } from "../src/demoUniverse";
 
+const PHASE2_SCENARIO_IDS = [
+  "immune-inflammation",
+  "neuroimmune-signalling",
+  "single-cell-omics",
+  "tissue-remodelling",
+  "comparative-disease-mechanisms",
+] as const;
+
 describe("Demo Research Universe integrity", () => {
   it("validates the Phase 1 gut-immune-metabolic bundle with zero issues", () => {
     expect(validateDemoUniverseBundle(GUT_IMMUNE_METABOLIC_BUNDLE)).toEqual([]);
     assertValidDemoUniverseBundle(GUT_IMMUNE_METABOLIC_BUNDLE);
     expect(GUT_IMMUNE_METABOLIC_BUNDLE.schemaVersion).toBe(DEMO_UNIVERSE_SCHEMA);
+  });
+
+  it("validates all Phase 2 scenario bundles and shared-node references", () => {
+    expect(PHASE2_BUNDLES).toHaveLength(5);
+    const sharedIds = new Set(SHARED_NODES.map((n) => n.id));
+    for (const bundle of PHASE2_BUNDLES) {
+      expect(validateDemoUniverseBundle(bundle)).toEqual([]);
+      assertValidDemoUniverseBundle(bundle);
+      expect(bundle.honesty.scientificApproval).toBe(false);
+      expect(bundle.honesty.canWriteToProductionGraph).toBe(false);
+      for (const nodeId of bundle.scenario.sharedNodeIds) {
+        expect(sharedIds.has(nodeId)).toBe(true);
+      }
+      const synthetic = bundle.claims.filter((c) => c.provenance === "fully_synthetic_fixture");
+      expect(synthetic.length).toBeGreaterThanOrEqual(2);
+      for (const c of synthetic) {
+        expect(c.publicationId).toBeUndefined();
+      }
+      const curated = bundle.claims.filter((c) => c.provenance === "curated_demonstration_interpretation");
+      expect(curated.length).toBeGreaterThanOrEqual(1);
+      const insufficient = bundle.claims.find((c) => c.polarity === "insufficient");
+      expect(insufficient).toBeDefined();
+      expect(bundle.briefs[0]!.limitations.length).toBeGreaterThanOrEqual(4);
+    }
   });
 
   it("exposes the complete investigation journey without claiming scientific approval", () => {
@@ -41,6 +75,16 @@ describe("Demo Research Universe integrity", () => {
     expect(demoUniverseAllowsProductionWrite()).toBe(false);
   });
 
+  it("exposes journeys for every Phase 2 investigation id", () => {
+    for (const bundle of PHASE2_BUNDLES) {
+      const journey = getDemoInvestigationJourney(bundle.investigation.id);
+      expect(journey.steps).toHaveLength(7);
+      expect(journey.honesty.scientificApproval).toBe(false);
+      expect(journey.comparison.leftClaimId).toBe(bundle.comparisons[0]!.leftClaimId);
+      expect(getDemoUniverseBundle(bundle.scenario.id).investigation.id).toBe(bundle.investigation.id);
+    }
+  });
+
   it("keeps provenance classes honest: real PMIDs only on verified sources; synthetic lacks identifiers", () => {
     const bundle = getDemoUniverseBundle("gut-immune-metabolic");
     const verified = bundle.publications.filter((p) => p.provenance === "verified_public_source");
@@ -58,9 +102,18 @@ describe("Demo Research Universe integrity", () => {
     expect(insufficient?.polarity).toBe("insufficient");
   });
 
-  it("registers reuse pointers and does not embed sealed graph JSON", () => {
-    expect(listDemoScenarioIds()).toEqual(["gut-immune-metabolic"]);
-    expect(DEMO_UNIVERSE_MANIFEST.seededScenarioIds).toContain("gut-immune-metabolic");
+  it("registers six seeded scenarios and empty planned list after Phase 2", () => {
+    expect(listDemoScenarioIds()).toEqual([
+      "gut-immune-metabolic",
+      ...PHASE2_SCENARIO_IDS,
+    ]);
+    expect(DEMO_UNIVERSE_MANIFEST.phase).toBe(2);
+    expect(DEMO_UNIVERSE_MANIFEST.seededScenarioIds).toEqual([
+      "gut-immune-metabolic",
+      ...PHASE2_SCENARIO_IDS,
+    ]);
+    expect(DEMO_UNIVERSE_MANIFEST.plannedScenarioIds).toEqual([]);
+    expect(DEMO_UNIVERSE_MANIFEST.entries.some((e) => e.id === "shared-catalog")).toBe(true);
     expect(DEMO_UNIVERSE_MANIFEST.entries.some((e) => e.id === "do-not-touch-sealed-graph")).toBe(true);
     const fixture = readFileSync(
       resolve(import.meta.dir, "../src/demoUniverse/fixtures/gutImmuneMetabolic.ts"),
