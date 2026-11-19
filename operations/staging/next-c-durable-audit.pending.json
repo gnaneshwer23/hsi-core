@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "hsi-next-c-durable-audit-pending-1",
+  "purpose": "next_c_durable_audit_soft_land",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "priority": "P1",
+  "liveJourneyAccepted": false,
+  "scientificApproval": false,
+  "graphPromotion": false,
+  "acceptedForScope": false,
+  "signedPacketClaimed": false,
+  "legacyBriefTransfersApproval": false,
+  "inventedPrimaryDomainPacks": false,
+  "inventedAuditHashes": false,
+  "dependsOn": ["NEXT-A", "NEXT-B"],
+  "honesty": {
+    "adaptersExistJourneyBlocked": true,
+    "noLegacyBriefTransfer": true,
+    "noInventedAuditHashes": true,
+    "noGraphPromotion": true,
+    "nextAAndBRequired": true,
+    "fixtureIsNotLiveJourney": true
+  },
+  "ciSafeModes": {
+    "check": {
+      "command": "bun test test/nextCDurableAuditSoftLand.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    },
+    "fixture": {
+      "command": "bun test test/nextACompositionSoftLand.test.ts test/nextBIsolationSoftLand.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "references": {
+    "next_a_acceptance_ref": "NOT_STARTED",
+    "next_b_acceptance_ref": "NOT_STARTED",
+    "primary_domain_pack_ref": "UNASSIGNED",
+    "immutable_journey_packet_ref": "NOT_STARTED",
+    "independent_reviewer_ref": "UNASSIGNED"
+  },
+  "surfaces": {
+    "investigation_delivery": { "status": "REUSE", "live": false },
+    "bound_outcome_attachments": { "status": "REUSE", "live": false },
+    "authenticated_scientific_review": { "status": "REUSE", "live": false },
+    "immutable_review_decisions": { "status": "REUSE", "live": false },
+    "context_audit_archive": { "status": "REUSE", "live": false },
+    "rereview_outcome_guard": { "status": "REUSE", "live": false },
+    "ssc_ra_sle_saved_journey": { "status": "BLOCKED", "live": false }
+  },
+  "notes": "Accept NEXT-A/B first. Soft-land never invents domain packs, audit hashes, or live journey acceptance."
+}
