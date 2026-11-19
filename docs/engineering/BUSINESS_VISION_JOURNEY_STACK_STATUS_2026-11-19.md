@@ -24,7 +24,7 @@ Agent-shippable **Stage 2 journey productization + §H device-local metrics + Ho
 | #540 | Stage 2 exit `#ws-stage2-exit` local checklist N/7 | §H UX |
 | #541 | Stage 4 five-dashboard content map (docs only) | Stage 4 contracts |
 
-**This PR:** `#ws-gaps-testable` summary shows live `N gaps · M testable` — invents experiments: false.
+**This PR:** `#ws-gaps-testable` summary shows live `N gaps · M next questions` — invents experiments: false (not labelled “testable” so gap next-steps are not oversold).
 
 ---
 
@@ -65,7 +65,7 @@ Agent-shippable **Stage 2 journey productization + §H device-local metrics + Ho
 
 ### Agent-shippable now (no owner gate)
 
-1. **This PR** — Gaps & testable fold subtitle counts (`N gaps · M testable`).  
+1. **This PR** — Gaps & testable fold subtitle counts (`N gaps · M next questions`).  
 2. **Stop building dashboards** — further agent work = honesty/docs/e2e hardening or owner-named Stage 2 gaps only.
 
 ### Owner-gated next (do not code as “done”)
