@@ -158,6 +158,10 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await connected.getByRole('button',{name:'Reopen'}).first().click();
  await expect(connected).toContainText(/Reopened the same version|Reopened/i);
  await page.goto('/research/home');
+ const metrics=page.locator('#rh-metrics');
+ if(!(await metrics.getAttribute('open')))await metrics.locator('> summary').click();
+ await expect(metrics).toHaveAttribute('open','');
+ await expect(metrics.locator('> summary')).toContainText('not conversion');
  const activation=page.getByRole('region',{name:/Activation \(this device\)/i});
  await expect(activation).toContainText('invents activation funnel: false');
  await expect(activation).toContainText('First live investigation recorded on this device');
@@ -183,6 +187,9 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await expect(useful).toContainText('Useful');
  await expect(useful).toContainText('willingness Maybe');
  await page.goto('/research/home');
+ const metricsAfter=page.locator('#rh-metrics');
+ if(!(await metricsAfter.getAttribute('open')))await metricsAfter.locator('> summary').click();
+ await expect(metricsAfter).toHaveAttribute('open','');
  const firstUseful=page.getByRole('region',{name:/First useful investigation/i});
  await expect(firstUseful).toContainText('invents aggregate conversion: false');
  await expect(firstUseful).toContainText('pilot conversion claimed: false');

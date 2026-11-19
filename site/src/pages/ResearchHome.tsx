@@ -203,12 +203,19 @@ export function ResearchHome(){
       <ProfileWorkspaceHandoffCard handoff={profileHandoff} highlight={fresh}/>
      )}
      {ready&&(
-      <AlertPreferenceCard profile={profile} onProfile={setProfile}/>
+      <Fold
+       id="rh-metrics"
+       ids={["rh-alert-h","rh-act-h","rh-fu-h","rh-ru-h","rh-wtp-h"]}
+       title="Local journey metrics"
+       sub="Browser-only activation · usefulness · reopen · willingness · alert preference — not conversion, not pilot claims"
+      >
+       <AlertPreferenceCard profile={profile} onProfile={setProfile}/>
+       <ActivationMilestoneCard/>
+       <FirstUsefulInvestigationCard/>
+       <RepeatUsageMilestoneCard/>
+       <WillingnessToPayMilestoneCard/>
+      </Fold>
      )}
-     {ready&&<ActivationMilestoneCard/>}
-     {ready&&<FirstUsefulInvestigationCard/>}
-     {ready&&<RepeatUsageMilestoneCard/>}
-     {ready&&<WillingnessToPayMilestoneCard/>}
 
      <Overview bundle={bundle} view={myView} profile={profile}>{ready&&<Program profile={profile} bundle={bundle} onProfile={setProfile}/>}</Overview>
      <RadarCard profile={profile} ready={ready}/>
