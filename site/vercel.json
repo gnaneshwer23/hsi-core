@@ -157,6 +157,10 @@
       "destination": "/_pages/enterprise--community.html"
     },
     {
+      "source": "/enterprise/participant",
+      "destination": "/_pages/enterprise--participant.html"
+    },
+    {
       "source": "/workspaces",
       "destination": "/_pages/workspaces.html"
     },

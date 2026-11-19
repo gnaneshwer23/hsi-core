@@ -3,6 +3,7 @@ import { biotechDashboardDemo } from "../src/enterprise/biotechDashboardDemo";
 import { clinicalResearchDashboardDemo } from "../src/enterprise/clinicalResearchDashboardDemo";
 import { communityDashboardDemo } from "../src/enterprise/communityDashboardDemo";
 import { labOmicsDashboardDemo } from "../src/enterprise/labOmicsDashboardDemo";
+import { participantDashboardDemo } from "../src/enterprise/participantDashboardDemo";
 import {
   assertEnterpriseDemoHonesty,
   enterpriseProfessorDemo,
@@ -119,5 +120,29 @@ describe("enterprise dashboard demonstration fixtures", () => {
     expect(demo.challenges.every((c) => c.sharedDefault === "not_public")).toBe(true);
     expect(demo.researchers.every((r) => r.grantScoped === true)).toBe(true);
     expect(demo.governanceNote.toLowerCase()).toContain("circles");
+  });
+
+  test("participant demo stays non-scientific, not CDS, no PHI, no invented enrollment", () => {
+    const demo = participantDashboardDemo();
+    assertEnterpriseDemoHonesty(demo.honesty);
+    expect(demo.summary.labelsAreDemonstration).toBe(true);
+    expect(demo.summary.phiEnabled).toBe(false);
+    expect(demo.summary.cdsEnabled).toBe(false);
+    expect(demo.summary.scientificDashboard).toBe(false);
+    expect(demo.summary.realParticipantPath).toBe("blocked_adr0010");
+    expect(demo.consentSlots.every((c) => c.phiCollected === false)).toBe(true);
+    expect(demo.consentSlots.every((c) => c.status === "disabled_until_governance")).toBe(
+      true,
+    );
+    expect(demo.contributionChannels.every((c) => c.enabled === false)).toBe(true);
+    expect(demo.contributionChannels.every((c) => c.cdsEnabled === false)).toBe(true);
+    expect(demo.contributionChannels.every((c) => c.scientificDashboard === false)).toBe(
+      true,
+    );
+    expect(
+      demo.updateSketches.every((u) => u.inventedEnrollmentPercent === false),
+    ).toBe(true);
+    expect(demo.governanceNote.toLowerCase()).toContain("phi");
+    expect(demo.governanceNote.toLowerCase()).toContain("not a scientific dashboard");
   });
 });
