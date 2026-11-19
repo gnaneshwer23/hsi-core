@@ -4,6 +4,8 @@
 **Scope:** Professor + Student research-intelligence dashboards (PR sequence).  
 **References:** Written brief (navy / burgundy / teal / off-white). Supplied professor/student infographic image files were **not present** in this agent workspace; PR1 follows the written palette and reuses HSI tokens.
 
+**Disease scope:** HSI is **disease-agnostic**. Any autoimmune / SSc / CD40 demo copy in PR1 shells is a **labelled demonstration scenario**, not the platform boundary. Doctrine: [`../strategy/HSI_END_TO_END_VISION_AND_TECHNOLOGY_ARCHITECTURE.md`](../strategy/HSI_END_TO_END_VISION_AND_TECHNOLOGY_ARCHITECTURE.md).
+
 ## Gap matrix
 
 | Capability | Status | Notes |

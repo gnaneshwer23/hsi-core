@@ -4,6 +4,9 @@
  * All rows are illustrative. Never treat counts, names, or opportunity text as
  * live evidence, institutional truth, or scientific approval. Persistence and
  * production writes are out of scope for these fixtures.
+ *
+ * Disease-agnostic: SSc / CD40 / autoimmune unit names are a demonstration
+ * scenario only — not HSI’s scientific scope or product boundary.
  */
 
 export const ENTERPRISE_DASHBOARD_DEMO_SCHEMA =
@@ -18,6 +21,9 @@ export type EnterpriseHonesty = {
   productionWritesEnabled: false;
   phiEnabled: false;
   privateNotesAccessibleToProfessor: false;
+  /** Fixture disease focus is not the product boundary. */
+  diseaseAgnosticPlatform: true;
+  demonstrationScenarioOnly: true;
 };
 
 export const ENTERPRISE_HONESTY: EnterpriseHonesty = {
@@ -27,6 +33,8 @@ export const ENTERPRISE_HONESTY: EnterpriseHonesty = {
   productionWritesEnabled: false,
   phiEnabled: false,
   privateNotesAccessibleToProfessor: false,
+  diseaseAgnosticPlatform: true,
+  demonstrationScenarioOnly: true,
 };
 
 export type EnterpriseMemberRole =
@@ -419,6 +427,12 @@ export function assertEnterpriseDemoHonesty(
     honesty.privateNotesAccessibleToProfessor !== false
   ) {
     throw new Error("enterprise demo must keep fail-closed honesty flags");
+  }
+  if (
+    honesty.diseaseAgnosticPlatform !== true ||
+    honesty.demonstrationScenarioOnly !== true
+  ) {
+    throw new Error("enterprise demo must keep disease-agnostic / scenario-only flags");
   }
   return honesty;
 }

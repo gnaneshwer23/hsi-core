@@ -13,6 +13,8 @@ describe("enterprise dashboard demonstration fixtures", () => {
     expect(honesty.phiEnabled).toBe(false);
     expect(honesty.privateNotesAccessibleToProfessor).toBe(false);
     expect(honesty.productionWritesEnabled).toBe(false);
+    expect(honesty.diseaseAgnosticPlatform).toBe(true);
+    expect(honesty.demonstrationScenarioOnly).toBe(true);
     expect(demo.summary.labelsAreDemonstration).toBe(true);
     expect(demo.members).toHaveLength(7);
     expect(demo.treeNodes.length).toBeGreaterThanOrEqual(10);

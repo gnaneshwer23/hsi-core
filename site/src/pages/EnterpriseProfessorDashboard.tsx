@@ -33,9 +33,10 @@ export function EnterpriseProfessorDashboard() {
       subtitle={`Group lead (demonstration): ${demo.groupLead}`}
     >
       <p className="ent-banner" role="status">
-        Demonstration summary cards. Do not treat researcher counts or opportunity
-        totals as live institutional metrics. Private student notes and unpublished
-        findings are not accessible here.
+        Demonstration scenario (autoimmune / SSc unit) — not HSI’s disease scope.
+        Do not treat researcher counts or opportunity totals as live institutional
+        metrics. Private student notes and unpublished findings are not accessible
+        here.
       </p>
 
       <section className="ent-stats" aria-label="Group summary demonstration">

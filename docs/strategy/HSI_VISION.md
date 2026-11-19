@@ -2,6 +2,8 @@
 
 **Definitive product vision frozen — 18 November 2026:** See [`HSI_DEFINITIVE_PRODUCT_VISION.md`](./HSI_DEFINITIVE_PRODUCT_VISION.md). That freeze is the north star for product, scientific and engineering decisions: *Building the intelligence layer for understanding human biology.* Product promise: *Understand the mechanism. Preserve the evidence. Explain the uncertainty. Inform the next decision.* Where purpose/USP/maturity wording conflicts with older sections below, **the freeze wins**.
 
+**End-to-end architecture + disease-agnostic correction — 19 November 2026:** See [`HSI_END_TO_END_VISION_AND_TECHNOLOGY_ARCHITECTURE.md`](./HSI_END_TO_END_VISION_AND_TECHNOLOGY_ARCHITECTURE.md). HSI is a **disease-agnostic**, cross-domain scientific intelligence ecosystem. Systemic sclerosis, CD4+ examples and any illustrative professor laboratory are **demonstration scenarios only** — not product boundaries. Mermaid diagrams there are ambition doctrine, not shipped-status claims.
+
 **Public positioning correction — 13 November 2026 (explicit user direction):** HSI is one scientific intelligence technology. Do not market it as a portfolio, four-product ecosystem or collection of named product modules. The homepage, platform, navigation, public diagrams and search metadata must present the Living Knowledge Graph, evidence, context and scientific investigation under HSI alone. Older product-naming sections below are historical architectural **ownership** context and do not authorise public promotion. Existing data isolation, source permissions, no-PHI/no-CDS and independent human-review boundaries remain binding.
 
 **Document status:** Canonical governing product doctrine (operational wrapper)  
