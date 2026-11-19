@@ -97,7 +97,7 @@ test('a complex question offers live investigation as primary and save-for-revie
  await page.getByRole('button',{name:'Skip for now'}).click();
  await page.locator('#rh-q').fill('How do microbial metabolites influence immune signalling and brain inflammation?');
  await expect(page.getByText('This reads as a research question')).toBeVisible();
- await expect(page.getByRole('link',{name:/Open live investigation|Deep Investigate: run live/})).toHaveAttribute('href','/research/workspace');
+ await expect(page.getByRole('link',{name:/Deep Investigate: run live|Open live investigation/}).first()).toHaveAttribute('href','/research/workspace');
  await page.getByRole('link',{name:'Save question for review'}).click();
  await expect(page).toHaveURL(/\/research\/dashboard\?q=/);
  await expect(page.locator('#research-question')).toHaveValue(/microbial metabolites/);
