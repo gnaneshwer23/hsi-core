@@ -1,76 +1,137 @@
 /**
- * Public audience pages for the Stage 1 IA (PR-E2E-09): Researchers, Biotech, Validation.
+ * Public audience pages: Researchers (Stage 2 PR3), Biotech, Validation.
  * Honesty: no fake metrics, no live CDS, no invented pilots or gold-standard claims.
  */
+import { Link } from "react-router-dom";
 import {
   PublicAction,
   PublicHero,
   PublicSection,
 } from "../components/public/ResearchPublic";
 import { PublicNotices } from "../components/public/PublicNotices";
+import {
+  LandingEvidenceCard,
+  LandingHero,
+  LandingPage,
+  LandingPrimaryCta,
+  LandingSecondaryCta,
+  LandingSection,
+} from "../components/landing/LandingPrimitives";
+import "../styles/stage2-landing.css";
+
+const RESEARCHER_CAPABILITIES = [
+  {
+    title: "Live public literature retrieval",
+    body: "Europe PMC, OpenAlex and Open Targets can be queried for curated scenarios. Abstracts are not redistributed; licence and reuse stay unassessed until checked.",
+    maturity: "available" as const,
+  },
+  {
+    title: "Evidence Context Passport",
+    body: "Tissue, dose, species and assay fields stay Not stated or Not extracted when the abstract does not carry them. Absence is not invented.",
+    maturity: "available" as const,
+  },
+  {
+    title: "Context-aware disagreement",
+    body: "Compare findings by experimental context before treating them as contradiction. Incompatible contexts produce an abstention, not a forced narrative.",
+    maturity: "available" as const,
+  },
+  {
+    title: "Two-model directional checks",
+    body: "When configured, two models challenge direction on a passage. Agreement is not scientific proof; unverified independence is stated.",
+    maturity: "restricted" as const,
+  },
+  {
+    title: "Reviewable research brief",
+    body: "Export a structured brief that preserves limitations. Briefs are not auto-approved graph updates.",
+    maturity: "available" as const,
+  },
+  {
+    title: "On-device hypotheses and gaps",
+    body: "Many personal ledgers stay in this browser until a server store is enabled under fail-closed gates.",
+    maturity: "restricted" as const,
+  },
+] as const;
 
 export function ResearchersPublicPage() {
   return (
-    <div className="hsi-public">
-      <PublicHero
-        title="Built for researchers who need context, not just citations."
+    <LandingPage>
+      <LandingHero
+        eyebrow="Researchers"
+        title="Personal scientific intelligence — with context, not just citations."
         description="HSI connects published evidence to experimental context and uncertainty so you can see what is known, what conflicts, and what to investigate next — without treating a model answer as approved biology."
       >
-        <PublicAction to="/welcome">Apply for the research preview</PublicAction>
-        <PublicAction to="/how-it-works" secondary>
-          See how it works
-        </PublicAction>
-      </PublicHero>
-      <PublicSection
+        <LandingPrimaryCta to="/welcome">Apply for the research preview</LandingPrimaryCta>
+        <LandingSecondaryCta to="/how-it-works">Explore Platform</LandingSecondaryCta>
+      </LandingHero>
+
+      <LandingSection
         title="What a research investigation looks like."
-        description="One path from a question through evidence, relationships, verification and a brief — with missing context kept explicit."
+        description="One path from a question through evidence, relationships and a brief — with missing context kept explicit."
       >
-        <div className="hsi-principles">
-          {[
-            {
-              title: "Ask with live public sources",
-              text: "Europe PMC, OpenAlex and Open Targets can be queried for curated scenarios. Abstracts are not redistributed; licence and reuse stay unassessed until checked.",
-            },
-            {
-              title: "Evidence Context Passport",
-              text: "Tissue, dose, species and other experimental fields stay Not stated or Not extracted when the abstract does not carry them. Absence is not invented.",
-            },
-            {
-              title: "Two-model checks, labelled honestly",
-              text: "When configured, two models challenge direction on a passage. Agreement is not scientific proof; unverified independence is stated.",
-            },
-          ].map((s) => (
-            <article key={s.title}>
-              <h3>{s.title}</h3>
-              <p>{s.text}</p>
-            </article>
+        <ol className="s2-flow-list" aria-label="Researcher investigation path">
+          <li>
+            <h3>Frame the question</h3>
+            <p>Match genes, cells, diseases and interventions to concepts on the published graph.</p>
+          </li>
+          <li>
+            <h3>Retrieve permitted evidence</h3>
+            <p>Query configured public sources with a trace of what ran and what failed.</p>
+          </li>
+          <li>
+            <h3>Compare experimental context</h3>
+            <p>Separate genuine disagreement from differences in model, tissue, dose or endpoint.</p>
+          </li>
+          <li>
+            <h3>Leave a reviewable brief</h3>
+            <p>State what is supported, what is missing and what a human reviewer must still decide.</p>
+          </li>
+        </ol>
+        <div className="s2-cta-row">
+          <LandingPrimaryCta to="/research/workspace">Open the investigation workspace</LandingPrimaryCta>
+          <LandingSecondaryCta to="/knowledge-graph">Explore the knowledge graph</LandingSecondaryCta>
+        </div>
+      </LandingSection>
+
+      <LandingSection
+        title="Capabilities you can inspect today."
+        description="Each item links to a real surface. Maturity labels distinguish available tools from restricted or demonstration features."
+      >
+        <div className="s2-card-grid">
+          {RESEARCHER_CAPABILITIES.map((c) => (
+            <LandingEvidenceCard
+              key={c.title}
+              title={c.title}
+              body={c.body}
+              maturity={c.maturity}
+            />
           ))}
         </div>
-        <div className="hsi-actions">
-          <PublicAction to="/research/workspace">Open the investigation workspace</PublicAction>
-          <PublicAction to="/knowledge-graph" secondary>
-            Explore the knowledge graph
-          </PublicAction>
-        </div>
-      </PublicSection>
-      <PublicSection
+        <p className="s2-section-note">
+          Related tools:{" "}
+          <Link to="/context-conflict-audit">Context-Conflict Audit</Link>
+          {" · "}
+          <Link to="/evidence-intelligence">Evidence intelligence</Link>
+          {" · "}
+          <Link to="/research/gaps">Gap Register</Link>
+        </p>
+      </LandingSection>
+
+      <LandingSection
         title="What this preview is not."
         description="Registration does not grant research writes. Graph edges remain candidates until human review. Nothing here is clinical advice."
-        dark
       >
-        <p>
+        <p className="s2-prose">
           Preferences and many saved runs stay on this device until a server store is enabled under fail-closed
           gates. Dual-provider verification and adjudicated gold sets require separate acceptance.
         </p>
-        <div className="hsi-actions">
-          <PublicAction to="/contact">Request research access</PublicAction>
-          <PublicAction to="/trust" secondary>
-            Read governance boundaries
-          </PublicAction>
+        <div className="s2-cta-row">
+          <LandingPrimaryCta to="/contact">Request research access</LandingPrimaryCta>
+          <LandingSecondaryCta to="/trust">Read governance boundaries</LandingSecondaryCta>
         </div>
-      </PublicSection>
+      </LandingSection>
+
       <PublicNotices />
-    </div>
+    </LandingPage>
   );
 }
 

@@ -6,8 +6,20 @@ test('researchers page states preview limits and real CTAs',async({page})=>{
  await expect(page.getByRole('heading',{level:1})).toContainText('context, not just citations');
  await expect(page.getByRole('link',{name:/Apply for the research preview/})).toHaveAttribute('href','/welcome');
  await expect(page.getByRole('heading',{name:'What this preview is not.'})).toBeVisible();
+ await expect(page.getByRole('heading',{name:'Capabilities you can inspect today.'})).toBeVisible();
  await expect(page.locator('#main-content')).toContainText('not grant research writes');
  await expect(page.locator('#main-content')).not.toContainText(/clinically validated|outperforms|better than/i);
+});
+
+test('research groups page is marketing with labelled demo shells',async({page})=>{
+ await page.goto('/enterprise');
+ await expect(page.getByRole('heading',{level:1})).toContainText('Connected research for principal investigators');
+ await expect(page.getByRole('link',{name:/Get Access/}).first()).toHaveAttribute('href','/contact');
+ await expect(page.getByRole('link',{name:/Professor \/ PI workspace/})).toHaveAttribute('href','/enterprise/professor');
+ await expect(page.getByRole('link',{name:/Student \/ researcher workspace/})).toHaveAttribute('href','/enterprise/student');
+ await expect(page.locator('#main-content')).toContainText('do not receive automatic access to private student work');
+ await expect(page.locator('#main-content')).not.toContainText(/clinically validated|outperforms|better than/i);
+ await expect(page.getByRole('navigation',{name:'Primary'})).toBeVisible();
 });
 
 test('biotech page discusses pilots without inventing MoUs',async({page})=>{

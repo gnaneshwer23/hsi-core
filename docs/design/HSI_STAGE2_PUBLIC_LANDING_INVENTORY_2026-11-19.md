@@ -16,7 +16,7 @@
 | Homepage | Connect science, challenge evidence, advance discovery | `/` (`Home` / editorial + research-public layers) | Live — needs Stage 2 hero/sections upgrade (PR2) |
 | Platform | Question → evidence-grounded decision | `/how-it-works` (`HowItWorks`); `/platform` **redirects** here | Live narrative — upgrade in PR2; keep redirect |
 | Researchers | Personal scientific intelligence | `/researchers` (`ResearchersPublicPage`) | Live thin audience page — deepen in PR3 |
-| Research Groups | Connected research for PIs/teams | `/enterprise` (+ professor/student shells) | Demo shells only — dedicated marketing page in PR3 |
+| Research Groups | Connected research for PIs/teams | `/enterprise` (+ professor/student shells) | Marketing page in PR3 (`cursor/stage2-researchers-groups-2f71`); shells remain demo |
 | Biotech & Pharma | Mechanism / translational R&D | `/biotech` (+ `/enterprise/biotech` demo) | Live thin audience page — deepen in PR4 |
 | Clinical Research | Evidence-grounded translational research | `/enterprise/clinical` demo shell | No dedicated marketing landing yet — PR4 |
 | Laboratories & Omics | Experimental data + biological evidence | `/enterprise/lab` demo shell | No dedicated marketing landing yet — PR4 |
@@ -96,7 +96,7 @@
 | --- | --- | --- |
 | **1** | Shared Stage 2 tokens CSS, landing primitives, Nav (audience menu), Footer, `primaryNav`, honesty/brand-doc sync | Homepage/platform rewrite; new audience pages |
 | **2** | Homepage + Platform (`/how-it-works`) Stage 2 story, USPs, workflow preview — branch `cursor/stage2-homepage-platform-2f71` | Billing; fake metrics |
-| **3** | Researchers + Research Groups marketing pages + truthful previews | Org writes; supervisor auto-access to private student work |
+| **3** | Researchers + Research Groups marketing pages + truthful previews — branch `cursor/stage2-researchers-groups-2f71` | Org writes; supervisor auto-access to private student work |
 | **4** | Biotech, Clinical Research, Laboratories landings + governance copy | PHI, CDS, live instruments/datasets claims |
 | **5** | Community, Validation deepen, Pricing & Access (Planned tiers), CTAs | Invented prices/subscriptions; fake testimonials |
 | **6** | Integrated QA: a11y, SEO, responsive, copy audit, owner visual review | Deploy/merge without approval |

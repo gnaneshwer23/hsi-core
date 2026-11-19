@@ -3,9 +3,9 @@ import {lazy,Suspense} from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import {ContactPublicPage as Contact} from "./pages/ContactPublic";
+import {EnterpriseLandingPage} from "./pages/EnterpriseLanding";
 const GovernanceDashboard=lazy(()=>import("./pages/GovernanceDashboard").then(m=>({default:m.GovernanceDashboard})));
 const ResearchDashboard=lazy(()=>import("./pages/ResearchDashboard").then(m=>({default:m.ResearchDashboard})));
-const EnterpriseLandingPage=lazy(()=>import("./pages/EnterpriseLanding").then(m=>({default:m.EnterpriseLandingPage})));
 const EnterpriseProfessorDashboard=lazy(()=>import("./pages/EnterpriseProfessorDashboard").then(m=>({default:m.EnterpriseProfessorDashboard})));
 const EnterpriseStudentDashboard=lazy(()=>import("./pages/EnterpriseStudentDashboard").then(m=>({default:m.EnterpriseStudentDashboard})));
 const BiotechPharmaDashboard=lazy(()=>import("./pages/BiotechPharmaDashboard").then(m=>({default:m.BiotechPharmaDashboard})));
@@ -96,8 +96,8 @@ export default function App() {
         <Route path="pricing" element={<Navigate to="/contact" replace />} />
         <Route path="contact" element={<Contact/>}/>
         <Route path="research/dashboard" element={<ResearchDashboard/>}/>
-        <Route path="academic" element={<Suspense fallback={<p role="status">Loading academic research preview…</p>}><EnterpriseLandingPage/></Suspense>}/>
-        <Route path="enterprise" element={<Suspense fallback={<p role="status">Loading academic research preview…</p>}><EnterpriseLandingPage/></Suspense>}/>
+        <Route path="academic" element={<EnterpriseLandingPage/>}/>
+        <Route path="enterprise" element={<EnterpriseLandingPage/>}/>
         <Route path="enterprise/professor" element={<Suspense fallback={<p role="status">Loading professor workspace…</p>}><EnterpriseProfessorDashboard/></Suspense>}/>
         <Route path="enterprise/student" element={<Suspense fallback={<p role="status">Loading student workspace…</p>}><EnterpriseStudentDashboard/></Suspense>}/>
         <Route path="enterprise/biotech" element={<Suspense fallback={<p role="status">Loading biotech research preview…</p>}><BiotechPharmaDashboard/></Suspense>}/>

@@ -16,7 +16,7 @@ export const PRIMARY_NAV_LINKS = [
  */
 export const AUDIENCE_NAV_LINKS = [
   { to: "/researchers", label: "Researchers", note: "Audience page" },
-  { to: "/enterprise", label: "Research Groups", note: "Demo workspace preview" },
+  { to: "/enterprise", label: "Research Groups", note: "Audience page" },
   { to: "/biotech", label: "Biotech & Pharma", note: "Audience page" },
   { to: "/enterprise/clinical", label: "Clinical Research", note: "Demo workspace preview" },
   { to: "/enterprise/lab", label: "Laboratories", note: "Demo workspace preview" },
@@ -35,6 +35,7 @@ export const PUBLIC_MARKETING_PATHS = [
   "/how-it-works",
   "/knowledge-graph",
   "/researchers",
+  "/enterprise",
   "/biotech",
   "/validation",
   "/trust",
