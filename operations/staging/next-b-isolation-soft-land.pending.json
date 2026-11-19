@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "hsi-next-b-isolation-soft-land-pending-1",
+  "purpose": "next_b_isolation_acceptance_soft_land",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "priority": "P0",
+  "liveExecutionAuthorized": false,
+  "productionActivationApproved": false,
+  "acceptedForScope": false,
+  "signedPacketClaimed": false,
+  "inventedStagingTarget": false,
+  "inventedResearcherIdentities": false,
+  "inventedSecuritySigner": false,
+  "migrationHoldsChanged": false,
+  "communityWrites": "DEFERRED",
+  "dependsOnTrackB": ["B2"],
+  "honesty": {
+    "checkFixtureNeverAcceptance": true,
+    "liveOwnerGatedOnly": true,
+    "noInventedSigner": true,
+    "noInventedAccounts": true,
+    "noHoldRemoval": true,
+    "fixtureIsNotLiveAcceptance": true
+  },
+  "ciSafeModes": {
+    "check": {
+      "command": "bun test test/nextBIsolationSoftLand.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    },
+    "fixture": {
+      "command": "bun test test/e2eIsolationAcceptancePacket.test.ts test/isolationProbeCatalog.test.ts && bun run staging:isolation:check",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "canonicalPendingPath": "operations/staging/next-b-acceptance.pending.json",
+  "notes": "Canonical next-b worksheet stays BLOCKED with UNASSIGNED refs. Soft-land never invents accounts, signers, or hold removals."
+}
