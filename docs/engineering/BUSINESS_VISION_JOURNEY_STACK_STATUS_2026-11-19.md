@@ -2,7 +2,8 @@
 
 **Date:** 19 November 2026 (Europe/London)  
 **Governing audit:** [`HSI_BUSINESS_VISION_EXECUTION_AUDIT_2026-11-19.md`](../strategy/HSI_BUSINESS_VISION_EXECUTION_AUDIT_2026-11-19.md) (merged via [#515](https://github.com/gnaneshwer23/hsi-core/pull/515))  
-**Land branch:** `cursor/journey-stack-land-2f71` (USP A→Stage 2 exit fold onto `main`)  
+**Landed on `main`:** [#538](https://github.com/gnaneshwer23/hsi-core/pull/538) (USP A→Stage 2 exit fold)  
+**Follow-on tip:** `cursor/home-metrics-subtitle-counts-2f71`  
 **Honesty:** `journeyCompleteClaimed=false` · `writesEnabledClaimed=false` · `pilotReadyClaimed=false` · `scientificallyValidatedClaimed=false`
 
 ---
@@ -79,10 +80,8 @@ Agent-shippable **Stage 2 journey productization + §H device-local metrics + Ho
 
 ### Agent-shippable now (no owner gate)
 
-1. **This PR** — Stage 2 exit fold (checklist + blocked 12–13).  
-2. Optional: dynamic Home `#rh-metrics` summary counts in the fold subtitle (local milestones only; never invent conversion).  
-3. Docs-only: when #515 merges, retarget the governing-audit link to the in-tree `docs/strategy/` path.  
-4. **Stop building dashboards** — further agent increments should be honesty/docs/e2e hardening unless the owner names a new Stage 2 gap.
+1. **This PR** — dynamic Home `#rh-metrics` subtitle counts (local milestones only; never invent conversion).  
+2. **Stop building dashboards** — further agent increments should be honesty/docs/e2e hardening unless the owner names a new Stage 2 gap.
 
 ### Owner-gated next (do not code as “done”)
 

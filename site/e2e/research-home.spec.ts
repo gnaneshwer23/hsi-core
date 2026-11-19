@@ -4,8 +4,9 @@ const item={id:'hsi-interrogative-abcdef123456',question:'Which cytokines recur 
 const saved=(page:any,status:number,body:unknown)=>page.route('**/api/research/investigations',(r:any)=>r.fulfill({status,json:body}));
 const openLocalMetrics=async(page:any)=>{
  const fold=page.locator('#rh-metrics');
- if(!(await fold.getAttribute('open')))await fold.locator('> summary').click();
- await expect(fold).toHaveAttribute('open','');
+ // HTMLDetailsElement: closed ⇔ open attribute absent (null). Empty string "" means open.
+ if((await fold.getAttribute('open'))===null)await fold.locator('> summary').click();
+ await expect.poll(async()=>fold.getAttribute('open')).not.toBeNull();
 };
 
 test('first-time researcher: onboarding, interests persist, grounded recommendations, no sign-in needed',async({page})=>{
@@ -140,8 +141,11 @@ test('local journey metrics fold keeps conversion claims off by default',async({
  await page.goto('/research/home');
  const fold=page.locator('#rh-metrics');
  await expect(fold.locator('> summary')).toContainText('Local journey metrics');
+ await expect(fold.locator('> summary')).toContainText('Local milestones 0/4 done');
+ await expect(fold.locator('> summary')).toContainText('alert preference unset');
  await expect(fold.locator('> summary')).toContainText('not conversion');
- await expect(fold).not.toHaveAttribute('open','');
+ await expect(fold.locator('> summary')).toContainText('not pilot claims');
+ expect(await fold.getAttribute('open')).toBeNull();
  await openLocalMetrics(page);
  await expect(page.getByRole('region',{name:/Activation \(this device\)/i})).toBeVisible();
 });

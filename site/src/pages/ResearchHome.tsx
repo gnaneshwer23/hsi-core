@@ -27,6 +27,7 @@ import {
   type LiveRunLibraryEntry,
 } from "../../../src/investigation/liveRunLibrary";
 import {buildProfileWorkspaceHandoff} from "../../../src/investigation/profileWorkspaceHandoff";
+import {buildHomeLocalMetricsSummary} from "../../../src/investigation/homeLocalMetricsSummary";
 import {loadOnboardingProfile,pathHonestyLabel,resolveOnboardingProfileMode,saveOnboardingProfile,type OnboardingProfileClientMode,type OnboardingProfileStatus} from "../lib/onboardingProfileClient";
 import {LIVE_INVESTIGATION_PATH,liveInvestigationHref} from "../lib/workbenchPrimary";
 import "../styles/research-home.css";
@@ -132,11 +133,12 @@ function SearchHero({bundle,profile,follow,inputRef,ready}:{bundle:DomainBundle|
  );
 }
 
-export function ResearchHome(){
+ export function ResearchHome(){
  const [profile,setProfile]=useState<Profile>(EMPTY_PROFILE),[ready,setReady]=useState(false),[noStore,setNoStore]=useState(false),[adding,setAdding]=useState(false),[topic,setTopic]=useState("");
  const [profileMode,setProfileMode]=useState<OnboardingProfileClientMode>("local");
  const [profileStatus,setProfileStatus]=useState<OnboardingProfileStatus|null>(null);
  const [profileSyncNote,setProfileSyncNote]=useState("");
+ const [metricsTick,setMetricsTick]=useState(0);
  const {bundle,failed}=useBundle(),saved=useSaved(),inputRef=useRef<HTMLInputElement|null>(null);
  const [liveRun,setLiveRun]=useState<SavedLiveRun|null>(null);
  const [liveLibrary,setLiveLibrary]=useState<readonly LiveRunLibraryEntry[]>([]);
@@ -177,6 +179,11 @@ export function ResearchHome(){
   })();
  },[profile,ready,profileMode,profileStatus]);
  useEffect(()=>{const k=(e:KeyboardEvent)=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==="k"){e.preventDefault();inputRef.current?.focus()}};window.addEventListener("keydown",k);return()=>window.removeEventListener("keydown",k)},[]);
+ useEffect(()=>{
+  const onFocus=()=>setMetricsTick(n=>n+1);
+  window.addEventListener("focus",onFocus);
+  return()=>window.removeEventListener("focus",onFocus);
+ },[]);
  const update=(fn:(p:Profile)=>Profile)=>setProfile(p=>fn(p));
  const follow=(id:string,name:string)=>update(p=>p.followed.some(f=>f.id===id)?{...p,followed:p.followed.filter(f=>f.id!==id)}:{...p,followed:[...p.followed,{id,name}].slice(-50)});
  const recs=useMemo(()=>bundle?recommend(profile,bundle):[],[bundle,profile]);
@@ -193,6 +200,12 @@ export function ResearchHome(){
   cadence:profile.cadence,
   matchedScenarioId:profile.question.trim()?matchScenario(profile.question):null,
  }),[profile]);
+ const metricsSummary=useMemo(()=>{
+  void metricsTick;
+  let storage:Storage|null=null;
+  try{storage=typeof localStorage==="undefined"?null:localStorage}catch{storage=null}
+  return buildHomeLocalMetricsSummary({storage,cadence:profile.cadence});
+ },[profile.cadence,metricsTick,ready]);
  return (
   <ResearchAppShell where="Research Home" active="home" onSearch={()=>inputRef.current?.focus()}>
     <main className="rh-main" id="rh-main" tabIndex={-1}>
@@ -208,7 +221,7 @@ export function ResearchHome(){
        id="rh-metrics"
        ids={["rh-pilot-h","rh-alert-h","rh-act-h","rh-fu-h","rh-ru-h","rh-wtp-h"]}
        title="Local journey metrics"
-       sub="Browser-only activation · usefulness · reopen · willingness · alert preference — not conversion, not pilot claims"
+       sub={metricsSummary.subtitle}
       >
        <PilotReadinessHonestyCard/>
        <AlertPreferenceCard profile={profile} onProfile={setProfile}/>
