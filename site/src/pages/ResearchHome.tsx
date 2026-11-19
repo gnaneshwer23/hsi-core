@@ -13,6 +13,12 @@ import {Program} from "../components/home/Program";
 import {programView} from "../lib/program";
 import {DEPT_ICON,Icon} from "../components/home/AppIcons";
 import {EMPTY_PROFILE,LIVE_RUN_KEY,summariseSavedLiveRun,type SavedLiveRun,classifyIntent,GOALS,INVESTIGATION_STATUS,looksLikeTrialId,recommend,resetProfile,ROLES,searchEntities,type Profile} from "../lib/researchHome";
+import {
+  loadLiveRunLibrary,
+  migrateLegacyLiveRunIntoLibrary,
+  reopenLiveRunFromLibrary,
+  type LiveRunLibraryEntry,
+} from "../../../src/investigation/liveRunLibrary";
 import {loadOnboardingProfile,pathHonestyLabel,resolveOnboardingProfileMode,saveOnboardingProfile,type OnboardingProfileClientMode,type OnboardingProfileStatus} from "../lib/onboardingProfileClient";
 import {LIVE_INVESTIGATION_PATH,liveInvestigationHref} from "../lib/workbenchPrimary";
 import "../styles/research-home.css";
@@ -125,6 +131,7 @@ export function ResearchHome(){
  const [profileSyncNote,setProfileSyncNote]=useState("");
  const {bundle,failed}=useBundle(),saved=useSaved(),inputRef=useRef<HTMLInputElement|null>(null);
  const [liveRun,setLiveRun]=useState<SavedLiveRun|null>(null);
+ const [liveLibrary,setLiveLibrary]=useState<readonly LiveRunLibraryEntry[]>([]);
  const loc=useLocation(),goto=useNavigate(),fresh=(loc.state as {fresh?:boolean}|null)?.fresh===true;
  /** Only the first view after setup shows recommendations open; a reload or later visit starts folded again. */
  useEffect(()=>{if(fresh)goto(loc.pathname+loc.search+loc.hash,{replace:true,state:null})},[fresh]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -141,7 +148,14 @@ export function ResearchHome(){
    setProfile(loaded.profile);
    setProfileSyncNote(pathHonestyLabel(resolved.mode,resolved.status));
    setReady(true);
-   try{setLiveRun(summariseSavedLiveRun(localStorage.getItem(LIVE_RUN_KEY)))}catch{setLiveRun(null)}
+   try{
+    setLiveRun(summariseSavedLiveRun(localStorage.getItem(LIVE_RUN_KEY)));
+    const lib=migrateLegacyLiveRunIntoLibrary(localStorage);
+    setLiveLibrary(lib.entries);
+   }catch{
+    setLiveRun(null);
+    setLiveLibrary(loadLiveRunLibrary(null).entries);
+   }
   })();
   return()=>{cancelled=true};
  },[]);
@@ -179,14 +193,29 @@ export function ResearchHome(){
      <div className="rh-grid">
       <section className="rh-card" aria-labelledby="rh-cont-h">
        <header className="rh-card-top"><span className="rh-tile rh-t-teal"><Icon name="layers" size={22}/></span><div><h2 id="rh-cont-h">Continue researching</h2><p className="rh-sub">Pick up where you left off.</p></div><Link className="rh-arrow" to={LIVE_INVESTIGATION_PATH} aria-label="Open live investigation"><Icon name="chevron" size={18}/></Link></header>
-       {liveRun&&<ul className="rh-rows rh-live"><li><div><b>{liveRun.question}</b><span>Live investigation · saved in this browser</span><small>{liveRun.checked} claims checked by two models · {liveRun.supporting} supporting · {liveRun.opposing} opposing · {liveRun.candidates} candidates, all unreviewed</small></div><Link to={liveInvestigationHref({reopen:true})}>Reopen</Link></li></ul>}
+       {liveLibrary.length>0?(
+        <ul className="rh-rows rh-live" aria-label="Browser-saved live investigations">
+         {liveLibrary.slice(0,4).map((entry)=>(
+          <li key={entry.id}>
+           <div>
+            <b>{entry.question}</b>
+            <span>Live investigation · browser library (not a server store)</span>
+            <small>{entry.checked} checked · {entry.supporting} supporting · {entry.opposing} opposing · {entry.candidateCount} candidates, unreviewed · scientific approval false</small>
+           </div>
+           <Link to={liveInvestigationHref({reopen:true})} onClick={()=>{reopenLiveRunFromLibrary(localStorage,entry.id)}}>Reopen</Link>
+          </li>
+         ))}
+        </ul>
+       ):liveRun?(
+        <ul className="rh-rows rh-live"><li><div><b>{liveRun.question}</b><span>Live investigation · saved in this browser</span><small>{liveRun.checked} claims checked by two models · {liveRun.supporting} supporting · {liveRun.opposing} opposing · {liveRun.candidates} candidates, all unreviewed</small></div><Link to={liveInvestigationHref({reopen:true})}>Reopen</Link></li></ul>
+       ):null}
        {saved.kind==="loading"&&<div className="rh-skel" aria-hidden="true"/>}
        {saved.kind==="blocked"&&<p className="rh-empty">{saved.message} <Link to="/sign-in">Sign in</Link></p>}
        {saved.kind==="error"&&<p className="rh-empty">Saved investigations are temporarily unavailable.</p>}
-       {saved.kind==="ok"&&savedItems.length===0&&!liveRun&&<p className="rh-empty">No saved investigations yet. Start with a question above.</p>}
+       {saved.kind==="ok"&&savedItems.length===0&&!liveRun&&liveLibrary.length===0&&<p className="rh-empty">No saved investigations yet. Start with a question above.</p>}
        {savedItems.length>0&&<ul className="rh-rows">{savedItems.slice(0,4).map(i=>(
         <li key={i.id}><div><b>{i.question}</b><span>{INVESTIGATION_STATUS[i.state]??i.state}</span><small>Created {new Date(i.createdAt).toLocaleDateString("en-GB")}</small></div><Link to={"/research/decision-workbench?investigation="+encodeURIComponent(i.id)}>Resume</Link></li>))}</ul>}
-       {saved.kind==="ok"&&<p className="rh-strip"><Icon name="check" size={16}/>{savedItems.length} saved in your account{liveRun?" · 1 live run in this browser":""}</p>}
+       {saved.kind==="ok"&&<p className="rh-strip"><Icon name="check" size={16}/>{savedItems.length} saved in your account{liveLibrary.length?` · ${liveLibrary.length} live run(s) in this browser`:liveRun?" · 1 live run in this browser":""} · org sharing blocked</p>}
       </section>
 
       <section className="rh-card" aria-labelledby="rh-rec-h">

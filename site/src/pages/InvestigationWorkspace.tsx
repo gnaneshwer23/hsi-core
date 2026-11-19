@@ -30,13 +30,20 @@ import {
   summarizeDepartments,
   type UspBTrailStepId,
 } from "../../../src/investigation/uspBCrossDomainTrail";
+import {
+  buildUspCConnectedTrail,
+  type UspCTrailStepId,
+} from "../../../src/investigation/uspCConnectedTrail";
 import type {DomainBundle} from "../../../src/knowledgeGraph/domainGraph";
 import type {DepartmentSlug} from "../../../src/knowledgeGraph/departments";
 import {UspADisagreementTrail} from "../components/workspace/UspADisagreementTrail";
 import {UspADisagreementPanel} from "../components/workspace/UspADisagreementPanel";
 import {UspBCrossDomainTrail} from "../components/workspace/UspBCrossDomainTrail";
 import {UspBCrossDomainPanel} from "../components/workspace/UspBCrossDomainPanel";
+import {UspCConnectedTrail} from "../components/workspace/UspCConnectedTrail";
+import {UspCConnectedPanel} from "../components/workspace/UspCConnectedPanel";
 import {loadDomainGraph} from "../lib/claimGraphClient";
+import {EMPTY_PROFILE,loadProfile,type Profile} from "../lib/researchHome";
 import {BUCKET_LABEL,bucketOf,buildGraph,counts,filterCandidates,headline,stageRail,yearOf,type Bucket,type Cand,type EdgeState,type Run} from "../lib/workspaceView";
 import "../styles/investigation-workspace-app.css";
 
@@ -84,8 +91,17 @@ export function InvestigationWorkspacePage(){
  const [crossStart,setCrossStart]=useState<string|null>(null);
  const [crossTarget,setCrossTarget]=useState<DepartmentSlug>("neuroscience");
  const [crossPathIndex,setCrossPathIndex]=useState<number|null>(null);
+ const [profile,setProfile]=useState<Profile>(EMPTY_PROFILE);
  const first=useRef(true);
- useEffect(()=>{setSaved(lr.hasSaved());if(first.current){first.current=false;if(new URLSearchParams(loc.search).get("reopen")==="1")lr.reopen()}},[]); // eslint-disable-line react-hooks/exhaustive-deps
+ useEffect(()=>{
+  setSaved(lr.hasSaved());
+  lr.refreshLibrary();
+  setProfile(loadProfile());
+  if(first.current){
+   first.current=false;
+   if(new URLSearchParams(loc.search).get("reopen")==="1")lr.reopen();
+  }
+ },[]); // eslint-disable-line react-hooks/exhaustive-deps
  useEffect(()=>{if(run&&(run.structuredComparison?.pairCount??0)>0)setBrief(true)},[run?.briefHash]); // eslint-disable-line react-hooks/exhaustive-deps
  useEffect(()=>{
   const c=new AbortController(),t=setTimeout(()=>c.abort(),12000);
@@ -155,6 +171,17 @@ export function InvestigationWorkspacePage(){
   hypothesisCount:run?.hypotheses.items.length??0,
   briefOpen:brief,
  }),[run,bundle,crossMatches.length,crossStart,crossTarget,crossPaths.paths.length,crossPathIndex,runGaps.length,brief]);
+ const uspCTrail=useMemo(()=>buildUspCConnectedTrail({
+  profileOnboarded:profile.onboarded,
+  hasResearchQuestion:Boolean(profile.question.trim()),
+  interestCount:profile.interests.length,
+  alertCadence:profile.cadence,
+  hasRun:Boolean(run),
+  libraryCount:lr.library.entries.length,
+  savedThisSession:lr.savedThisSession,
+  reopenedThisSession:lr.reopenedThisSession,
+  briefOpen:brief,
+ }),[profile,run,lr.library.entries.length,lr.savedThisSession,lr.reopenedThisSession,brief]);
  const onTrailSelect=(id:UspATrailStepId)=>{
   if(id==="ask"){document.getElementById("ws-ask-strip")?.scrollIntoView({behavior:"smooth",block:"start"});return}
   if(id==="evidence"){document.getElementById("ws-ev-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
@@ -178,13 +205,22 @@ export function InvestigationWorkspacePage(){
   setBrief(true);
   document.getElementById("ws-brief-panel")?.scrollIntoView({behavior:"smooth",block:"start"});
  };
+ const onUspCTrailSelect=(id:UspCTrailStepId)=>{
+  if(id==="profile"||id==="save"||id==="reopen"){
+   document.getElementById("ws-conn-h")?.scrollIntoView({behavior:"smooth",block:"start"});
+   return;
+  }
+  if(id==="workspace"){document.getElementById("ws-ev-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  setBrief(true);
+  document.getElementById("ws-brief-panel")?.scrollIntoView({behavior:"smooth",block:"start"});
+ };
  return (
   <ResearchAppShell where="Investigation workspace" whereIcon="flask" active="investigations">
    <main className="ws" id="rh-main" tabIndex={-1}>
     <nav className="ws-crumb" aria-label="Breadcrumb"><Link to="/research/home">Research Home</Link><span aria-hidden="true">/</span><span>Live investigation</span></nav>
     <header className="ws-head">
      <div className="ws-title">
-      <span className="ws-tag">USP A · USP B · Research investigation · live sources</span>
+      <span className="ws-tag">USP A · USP B · USP C · Research investigation · live sources</span>
       <h1>{run?.question??QUESTION}</h1>
       <div className="ws-chips" aria-label="Disease contexts">{run?Object.values(run.byContext).map(b=><span key={b.label}>{b.label}</span>):<span>Rheumatoid arthritis</span>}{!run&&<><span>Systemic lupus erythematosus</span><span>Systemic sclerosis</span></>}</div>
      </div>
@@ -217,6 +253,7 @@ export function InvestigationWorkspacePage(){
     </section>
     <UspADisagreementTrail steps={uspTrail.steps} onSelect={onTrailSelect}/>
     <UspBCrossDomainTrail steps={uspBTrail.steps} onSelect={onUspBTrailSelect}/>
+    <UspCConnectedTrail steps={uspCTrail.steps} onSelect={onUspCTrailSelect}/>
     <Rail run={state==="running"?null:run} running={state==="running"}/>
     <HowProducedPanel
      className="rh-trace ws-produced"
@@ -344,6 +381,17 @@ export function InvestigationWorkspacePage(){
      onOpenBrief={()=>{setBrief(true);document.getElementById("ws-brief-panel")?.scrollIntoView({behavior:"smooth",block:"start"})}}
     />
 
+    <UspCConnectedPanel
+     profile={profile}
+     library={lr.library.entries}
+     savedThisSession={lr.savedThisSession}
+     reopenedThisSession={lr.reopenedThisSession}
+     hasRun={Boolean(run)}
+     onSave={()=>{lr.save();setSaved(lr.hasSaved())}}
+     onReopen={(id)=>{lr.reopenFromLibrary(id);setSaved(lr.hasSaved())}}
+     onOpenBrief={()=>{setBrief(true);document.getElementById("ws-brief-panel")?.scrollIntoView({behavior:"smooth",block:"start"})}}
+    />
+
     {run&&(
      <section className="ws-card" id="ws-brief-panel" aria-labelledby="ws-brief-h">
       <header><h2 id="ws-brief-h"><Icon name="book" size={18}/>Research decision brief</h2></header>
@@ -355,7 +403,7 @@ export function InvestigationWorkspacePage(){
        <button type="button" className="ws-btn" onClick={()=>download("hsi-live-investigation.json",JSON.stringify(run,null,2),"application/json")}>Export JSON</button>
        <button type="button" className="ws-btn" onClick={()=>{const b=exportLiveBriefV2(run);download("hsi-live-brief-v2.json",JSON.stringify(b,null,2),"application/json")}}>Export Brief v2 (JSON)</button>
        <button type="button" className="ws-btn" onClick={()=>{const b=exportLiveBriefV2(run);download("hsi-live-brief-v2.md",renderLiveBriefV2Markdown(b),"text/markdown")}}>Export Brief v2 (Markdown)</button>
-       <button type="button" className="ws-btn" onClick={()=>{lr.save();setSaved(true)}}>Save in this browser</button>
+       <button type="button" className="ws-btn" onClick={()=>{lr.save();setSaved(lr.hasSaved())}}>Save in this browser</button>
       </div>
      </section>
     )}
