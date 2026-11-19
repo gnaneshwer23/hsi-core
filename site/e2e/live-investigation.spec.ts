@@ -158,6 +158,10 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await connected.getByRole('button',{name:'Reopen'}).first().click();
  await expect(connected).toContainText(/Reopened the same version|Reopened/i);
  await page.goto('/research/home');
+ const activation=page.getByRole('region',{name:/Activation \(this device\)/i});
+ await expect(activation).toContainText('invents activation funnel: false');
+ await expect(activation).toContainText('First live investigation recorded on this device');
+ await expect(activation).toContainText('not an activation funnel');
  const repeat=page.getByRole('region',{name:/Repeat usage \(this device\)/i});
  await expect(repeat).toContainText('invents retention metrics: false');
  await expect(repeat).toContainText('invents aggregate conversion: false');

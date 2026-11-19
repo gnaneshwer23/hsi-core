@@ -106,6 +106,21 @@ test('willingness to pay card stays unreached without inventing revenue or check
  await expect(wtp).toContainText('State Yes / No / Maybe');
 });
 
+test('activation card stays unreached without inventing an activation funnel',async({page})=>{
+ await saved(page,401,{});
+ await page.addInitScript(()=>localStorage.setItem('hsi-research-profile-v1',JSON.stringify({
+  v:1,role:'Research scientist',stage:null,background:'x',question:'Why does IL-21 differ?',
+  orcid:null,papers:[],cadence:'off',goals:[],interests:['Immunology'],followed:[],dismissed:[],onboarded:true,
+ })));
+ await page.goto('/research/home');
+ const activation=page.getByRole('region',{name:/Activation \(this device\)/i});
+ await expect(activation).toContainText('invents activation funnel: false');
+ await expect(activation).toContainText('invents aggregate conversion: false');
+ await expect(activation).toContainText('journey complete claimed: false');
+ await expect(activation).toContainText('pilot conversion claimed: false');
+ await expect(activation).toContainText('Run a live investigation to mark the first activation');
+});
+
 test('cross-domain search returns typed graph concepts, follows, previews and opens the graph',async({page})=>{
  await saved(page,401,{});
  await page.goto('/research/home');
