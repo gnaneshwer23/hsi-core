@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "hsi-e2e-03-source-clearance-pending-1",
+  "purpose": "pr_e2e_03_source_clearance_composition_soft_land",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "policyDraftStatus": "DRAFT",
+  "policySigned": false,
+  "policyApprovalRef": null,
+  "livePassageRetrievalAuthorized": false,
+  "productionActivationApproved": false,
+  "scientificApproval": false,
+  "inventedSigner": false,
+  "inventedAuthority": false,
+  "honesty": {
+    "noInventedSigner": true,
+    "noInventedAuthority": true,
+    "noInventedPolicyApproval": true,
+    "draftPolicyRemainsDraft": true,
+    "fixtureIsNotLiveClearance": true
+  },
+  "ciSafeModes": {
+    "check": {
+      "command": "bun test test/e2e03SourceClearanceComposition.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    },
+    "fixture": {
+      "command": "bun test test/sourceClearanceReceipt.test.ts test/clearanceAuthority.test.ts test/liveWiring.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "references": {
+    "policy_approver_ref": "UNASSIGNED",
+    "clearance_authority_ref": "UNASSIGNED",
+    "managed_signer_ref": "UNASSIGNED",
+    "first_scope_evidence_ref": "NOT_RUN"
+  },
+  "surfaces": {
+    "scientific_abstract_api": { "status": "GATE_DOCUMENTED", "clearanceComposed": false },
+    "live_sources_abstracts": { "status": "GATE_DOCUMENTED", "clearanceComposed": false },
+    "investigation_live_run": { "status": "GATE_DOCUMENTED", "clearanceComposed": false },
+    "open_access_sections": { "status": "GATE_DOCUMENTED", "clearanceComposed": false },
+    "literature_search_metadata": { "status": "METADATA_ONLY", "clearanceComposed": false },
+    "scientific_pubmed": { "status": "METADATA_ONLY", "clearanceComposed": false },
+    "investigation_trace": { "status": "METADATA_ONLY", "clearanceComposed": false },
+    "dynamic_evidence_metadata": { "status": "METADATA_ONLY", "clearanceComposed": false },
+    "live_search_cleared_path": { "status": "ALREADY_COMPOSED_BLOCKED_ON_B1", "clearanceComposed": false }
+  },
+  "notes": "Fill private refs only after SOURCE_CLEARANCE_POLICY_DRAFT is signed or explicitly deferred. Soft-land never invents approval."
+}
