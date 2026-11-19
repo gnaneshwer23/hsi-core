@@ -41,17 +41,18 @@
   padding: 0 10px;
   border: 1px solid var(--s2-line);
   border-radius: 4px;
-  font: 650 11px/1 var(--s2-font);
+  /* 12px / 700 keeps AA contrast on light chip grounds (≥4.5:1). */
+  font: 700 12px/1.2 var(--s2-font);
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--s2-teal);
-  background: #eef4f3;
+  color: #2a5553;
+  background: #e8f0ef;
 }
 
 .s2-maturity[data-level="demonstration"],
 .s2-maturity[data-level="planned"] {
-  color: var(--s2-burgundy);
-  background: #f7eef1;
+  color: #7a2f43;
+  background: #f4e8ec;
 }
 
 .s2-hero {
