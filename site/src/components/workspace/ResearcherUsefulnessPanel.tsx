@@ -8,6 +8,7 @@ import {
   type UsefulnessRating,
   type WillingnessSignal,
 } from "@hsi/investigation/researcherUsefulnessFeedback";
+import { recordFirstUsefulInvestigation } from "@hsi/investigation/firstUsefulInvestigation";
 
 const RATING_LABEL: Record<UsefulnessRating, string> = {
   useful: "Useful",
@@ -77,6 +78,10 @@ export function ResearcherUsefulnessPanel({
     }
     setError(null);
     setJustSaved(true);
+    recordFirstUsefulInvestigation(
+      typeof localStorage !== "undefined" ? localStorage : null,
+      { briefHash, question, rating },
+    );
     onRated?.();
   };
 
