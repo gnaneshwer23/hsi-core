@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "hsi-e2e-10-sme-gold-vault-pending-1",
+  "purpose": "pr_e2e_10_sme_gold_vault_soft_land",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "smeGoldFilled": false,
+  "frozenHeldOut": false,
+  "independentlyLabelledCases": 0,
+  "adjudicatedCases": 0,
+  "draftBankCaseCount": 50,
+  "targetCaseFloor": 60,
+  "targetCaseCeiling": 120,
+  "scientificApproval": false,
+  "goldCommittedInGit": false,
+  "runtimeMayReadVault": false,
+  "inventedSmeLabels": false,
+  "inventedAdjudications": false,
+  "acceptedForScope": false,
+  "signedPacketClaimed": false,
+  "honesty": {
+    "draftBankIsNotGold": true,
+    "noInventedLabels": true,
+    "noInventedAdjudications": true,
+    "noScientificApproval": true,
+    "vaultStaysGitignored": true,
+    "fixtureIsNotAdjudication": true
+  },
+  "ciSafeModes": {
+    "check": {
+      "command": "bun test test/e2e10SmeGoldVault.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    },
+    "fixture": {
+      "command": "bun test test/labelVault.test.ts && bun run r2:check && bun run gold:check",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "references": {
+    "sme_a_ref": "UNASSIGNED",
+    "sme_b_ref": "UNASSIGNED",
+    "adjudicator_ref": "UNASSIGNED",
+    "private_vault_root_ref": ".hsi-private-benchmark",
+    "rights_packet_bind_ref": "PARKED_QUEUE_2"
+  },
+  "surfaces": {
+    "label_vault_layout": { "status": "REUSE", "smeGoldFilled": false },
+    "immuno_dev_set_authoring": { "status": "REUSE", "smeGoldFilled": false },
+    "conflict_benchmark_expert_path": { "status": "REUSE_SCAFFOLD", "smeGoldFilled": false },
+    "r2_sme_worksheets": { "status": "REUSE_SCAFFOLD", "smeGoldFilled": false },
+    "gold_evaluation_suite_v1": { "status": "REUSE_SCAFFOLD", "smeGoldFilled": false },
+    "scientific_benchmark_sme_slots": { "status": "OWNER_HUMAN", "smeGoldFilled": false },
+    "freeze_and_manifest_gates": { "status": "BLOCKED", "smeGoldFilled": false }
+  },
+  "notes": "Fill SME/adjudicator refs only after real humans are recruited. Soft-land never invents labels, adjudications, or scientific acceptance."
+}
