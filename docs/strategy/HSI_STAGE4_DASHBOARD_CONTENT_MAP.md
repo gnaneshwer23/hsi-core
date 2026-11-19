@@ -88,7 +88,7 @@
 
 **Visual reference pattern:** target-centric graph + drug/trial side rails (biotech intelligence UIs) — compose from KG + brief + gaps, not a new science stack.
 
-**Status:** Proposed (demo concept paths under [#514](https://github.com/gnaneshwer23/hsi-core/pull/514) `/workspaces`).
+**Status:** Soft-land Biotech/Pharma shell on `/enterprise/biotech` (demo-labelled; deep-links to live investigation, targets, KG, gaps). Public marketing page `/biotech` unchanged. Full multi-workspace hub remains under [#514](https://github.com/gnaneshwer23/hsi-core/pull/514).
 
 ---
 

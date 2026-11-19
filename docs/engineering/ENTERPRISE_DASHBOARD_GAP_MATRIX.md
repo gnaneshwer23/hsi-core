@@ -7,7 +7,7 @@
 
 **Disease scope:** HSI is **disease-agnostic**. Any autoimmune / SSc / CD40 demo copy in these shells is a **labelled demonstration scenario**, not the platform boundary.
 
-**Stakeholder scope:** Academic is the first of five Stage 4 audience shells (Academic, Biotech/Pharma, Clinical research, Lab/Omics, Community). Others remain proposed. Clinical research ≠ CDS; no PHI.
+**Stakeholder scope:** Academic is the first of five Stage 4 audience shells (Academic, Biotech/Pharma, Clinical research, Lab/Omics, Community). Biotech/Pharma soft-land: [`BIOTECH_DASHBOARD_GAP_MATRIX.md`](BIOTECH_DASHBOARD_GAP_MATRIX.md). Clinical research ≠ CDS; no PHI.
 
 ## Must-contain → status
 
@@ -35,5 +35,5 @@ Does **not** rewrite `/research/workspace` as the primary investigation path. So
 - Production writes or lifting migrations 022–033  
 - PHI / identifiable patient uploads / live CDS  
 - Invented papers, confidence %, conversion, funding totals as truth  
-- Biotech / clinical / lab / community shells in this increment  
+- Clinical / lab / community shells in this Academic increment (Biotech: see biotech gap matrix)  
 - Replacing the Stage 2 journey as the build centre  
