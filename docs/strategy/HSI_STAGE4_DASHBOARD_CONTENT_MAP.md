@@ -108,7 +108,7 @@
 
 **Visual reference pattern:** enrollment / site / status charts are **ops analytics** for trials research — if shown, use synthetic labelled data; never invent conversion or safety claims.
 
-**Status:** Proposed · PHI/CDS blocked by [`CDS_PHI_BOUNDARY.md`](../CDS_PHI_BOUNDARY.md) and ADR-0010.
+**Status:** Soft-land Clinical Research shell on `/enterprise/clinical` (synthetic demo-labelled; deep-links to cohort / pre-screen / workspace). PHI/CDS remain blocked by [`CDS_PHI_BOUNDARY.md`](../CDS_PHI_BOUNDARY.md) and ADR-0010 — real cohorts stay disabled.
 
 ---
 
