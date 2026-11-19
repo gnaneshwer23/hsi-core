@@ -13,6 +13,7 @@ import {Program} from "../components/home/Program";
 import {ProfileWorkspaceHandoffCard} from "../components/home/ProfileWorkspaceHandoffCard";
 import {AlertPreferenceCard} from "../components/home/AlertPreferenceCard";
 import {FirstUsefulInvestigationCard} from "../components/home/FirstUsefulInvestigationCard";
+import {RepeatUsageMilestoneCard} from "../components/home/RepeatUsageMilestoneCard";
 import {programView} from "../lib/program";
 import {DEPT_ICON,Icon} from "../components/home/AppIcons";
 import {EMPTY_PROFILE,LIVE_RUN_KEY,summariseSavedLiveRun,type SavedLiveRun,classifyIntent,GOALS,INVESTIGATION_STATUS,looksLikeTrialId,recommend,resetProfile,ROLES,searchEntities,type Profile} from "../lib/researchHome";
@@ -203,6 +204,7 @@ export function ResearchHome(){
       <AlertPreferenceCard profile={profile} onProfile={setProfile}/>
      )}
      {ready&&<FirstUsefulInvestigationCard/>}
+     {ready&&<RepeatUsageMilestoneCard/>}
 
      <Overview bundle={bundle} view={myView} profile={profile}>{ready&&<Program profile={profile} bundle={bundle} onProfile={setProfile}/>}</Overview>
      <RadarCard profile={profile} ready={ready}/>

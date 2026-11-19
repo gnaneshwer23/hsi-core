@@ -75,6 +75,21 @@ test('first useful investigation card stays unreached without inventing conversi
  await expect(first).toContainText('Rate an investigation as Useful');
 });
 
+test('repeat usage card stays unreached without inventing retention metrics',async({page})=>{
+ await saved(page,401,{});
+ await page.addInitScript(()=>localStorage.setItem('hsi-research-profile-v1',JSON.stringify({
+  v:1,role:'Research scientist',stage:null,background:'x',question:'Why does IL-21 differ?',
+  orcid:null,papers:[],cadence:'off',goals:[],interests:['Immunology'],followed:[],dismissed:[],onboarded:true,
+ })));
+ await page.goto('/research/home');
+ const repeat=page.getByRole('region',{name:/Repeat usage \(this device\)/i});
+ await expect(repeat).toContainText('invents retention metrics: false');
+ await expect(repeat).toContainText('invents aggregate conversion: false');
+ await expect(repeat).toContainText('journey complete claimed: false');
+ await expect(repeat).toContainText('pilot conversion claimed: false');
+ await expect(repeat).toContainText('Reopen a browser-saved investigation');
+});
+
 test('cross-domain search returns typed graph concepts, follows, previews and opens the graph',async({page})=>{
  await saved(page,401,{});
  await page.goto('/research/home');

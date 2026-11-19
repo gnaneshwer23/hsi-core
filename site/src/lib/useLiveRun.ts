@@ -7,6 +7,7 @@ import {
   type LiveRunLibrary,
   type LiveRunLibraryEntry,
 } from "../../../src/investigation/liveRunLibrary";
+import {recordRepeatUsageReopen} from "../../../src/investigation/repeatUsageMilestone";
 import type {Run} from "./workspaceView";
 
 export const LIVE_SCENARIO_ID="il21-autoimmune";
@@ -52,9 +53,14 @@ export function useLiveRun(){
   try{
    const t=localStorage.getItem(LIVE_RUN_KEY);
    if(t){
-    setRun(JSON.parse(t) as Run);
+    const run=JSON.parse(t) as Run;
+    setRun(run);
     setNote("Reopened the current browser-saved run.");
     setReopenedThisSession(true);
+    recordRepeatUsageReopen(browserStore(),{
+     briefHash:run.briefHash??"",
+     question:run.question??"",
+    });
     refreshLibrary();
     return true;
    }
@@ -65,9 +71,14 @@ export function useLiveRun(){
  const reopenFromLibrary=useCallback((id:string)=>{
   const result=reopenLiveRunFromLibrary(browserStore(),id);
   if(!result.ok||!result.run){setNote(result.error??"Could not reopen that saved run.");return false}
-  setRun(result.run as Run);
+  const run=result.run as Run;
+  setRun(run);
   setReopenedThisSession(true);
   setNote("Reopened the same version from this browser’s library.");
+  recordRepeatUsageReopen(browserStore(),{
+   briefHash:run.briefHash??"",
+   question:run.question??"",
+  });
   refreshLibrary();
   return true;
  },[refreshLibrary]);

@@ -155,6 +155,18 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await connected.getByRole('button',{name:'Save to browser library',exact:true}).click();
  await expect(connected).toContainText(/Saved to browser library|Saved in this browser library/i);
  await expect(connected.getByRole('button',{name:'Reopen'}).first()).toBeVisible();
+ await connected.getByRole('button',{name:'Reopen'}).first().click();
+ await expect(connected).toContainText(/Reopened the same version|Reopened/i);
+ await page.goto('/research/home');
+ const repeat=page.getByRole('region',{name:/Repeat usage \(this device\)/i});
+ await expect(repeat).toContainText('invents retention metrics: false');
+ await expect(repeat).toContainText('invents aggregate conversion: false');
+ await expect(repeat).toContainText('First reopen recorded on this device');
+ await expect(repeat).toContainText('not a retention rate');
+ await page.goto('/research/workspace');
+ await page.getByRole('button',{name:'Run live investigation'}).click();
+ const connectedAfter=page.getByRole('region',{name:/Connected research \(personal\)/i});
+ await expect(connectedAfter).toContainText('Alert preference only: true');
  const useful=page.getByRole('region',{name:/Researcher usefulness \(this device\)/i});
  await expect(useful).toContainText('journey complete claimed: false');
  await expect(useful).toContainText('invents aggregate conversion: false');
