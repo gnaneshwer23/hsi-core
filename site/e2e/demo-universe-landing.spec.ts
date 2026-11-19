@@ -3,8 +3,12 @@ import { test, expect } from "@playwright/test";
 test("homepage Demo Universe landing preview shows six pack-backed scenarios", async ({
   page,
 }) => {
-  await page.goto("/#product-demo");
-  const preview = page.locator(".hsi-demo-landing-preview");
+  await page.goto("/");
+  const section = page.locator("#product-demo");
+  await expect(
+    section.getByRole("heading", { name: /Demo Research Universe product previews/i }),
+  ).toBeVisible();
+  const preview = section.locator(".hsi-demo-landing-preview");
   await expect(preview).toBeVisible();
   await expect(preview.getByRole("status")).toContainText(/Pack-backed conflict pairs/i);
   await expect(preview.getByRole("status")).toContainText(/production write:\s*false/i);

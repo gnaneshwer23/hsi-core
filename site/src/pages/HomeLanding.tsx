@@ -1,4 +1,5 @@
 import {Link} from "react-router-dom";
+import {DemoLandingPreviewPanel} from "../components/demo/DemoLandingPreviewPanel";
 import {GraphSnapshotProvider,useGraphSnapshot} from "../components/home/useGraphSnapshot";
 import {LiveGraphHero} from "../components/home/LiveGraphHero";
 import {OpenQuestions} from "../components/home/OpenQuestions";
@@ -134,6 +135,14 @@ export function HomeLanding(){
     </section>
 
     <ScientificIntelligenceJourney/>
+
+    <section className="pg-demo-universe" id="product-demo" aria-labelledby="pg-demo-universe-h">
+     <div className="pg-open-head">
+      <h2 id="pg-demo-universe-h">Demo Research Universe product previews</h2>
+      <p>Pack-backed conflict pairs from seeded Demo Universe scenarios. Not scientific approval. Open the full comparison desk for briefs, abstention and assay sketches.</p>
+     </div>
+     <DemoLandingPreviewPanel/>
+    </section>
 
     <section className="pg-pillars" aria-labelledby="pg-pillars-h">
      <div className="pg-pillars-copy">

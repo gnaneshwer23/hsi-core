@@ -106,7 +106,7 @@ Landing-page product previews: pack-backed conflict cards on the public homepage
 | Layer | Path |
 | --- | --- |
 | Adapter | `src/demoUniverse/landingPreviews.ts` — `listDemoLandingPreviews`, `HOME_SKETCH_TO_DEMO_SCENARIO` |
-| Panel | `site/src/components/demo/DemoLandingPreviewPanel.tsx` on `Home` `#product-demo` |
+| Panel | `site/src/components/demo/DemoLandingPreviewPanel.tsx` on `HomeLanding` `#product-demo` |
 | Home sketches | `site/src/components/editorial/homeResearchScenarios.ts` — pack_backed where mapped |
 | Tests | `test/demoUniverseLandingPreviews.test.ts` · `site/e2e/demo-universe-landing.spec.ts` |
 

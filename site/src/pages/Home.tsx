@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { DemoLandingPreviewPanel } from "../components/demo/DemoLandingPreviewPanel";
 import { HomeIntelligenceCollective } from "../components/editorial/HomeIntelligenceCollective";
 import { withResearchContext } from "../lib/researchContext";
 import {
@@ -123,7 +122,6 @@ export function Home() {
           identify what remains unresolved.
         </p>
         <ContextAuditInstrument id="home-audit" />
-        <DemoLandingPreviewPanel />
         <PublicAction to="/context-conflict-audit" secondary>
           Explore the Audit
         </PublicAction>
