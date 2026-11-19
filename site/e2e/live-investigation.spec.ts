@@ -34,6 +34,11 @@ test('workspace before a run states that nothing has started and shows no figure
  await expect(journey).toContainText('journey complete claimed: false');
  await expect(journey).toContainText('scientific approval: false');
  await expect(journey).toContainText('production writes: false');
+ const stage2=page.getByRole('region',{name:/Stage 2 investigation progress/i});
+ await expect(stage2).toContainText('journey complete claimed: false');
+ await expect(stage2).toContainText('local progress only: true');
+ await expect(stage2).toContainText('pilot accepted: false');
+ await expect(stage2).toContainText('Progress: 0/');
  await expect(page.getByRole('region',{name:/Researcher usefulness \(this device\)/i})).toContainText('Run a live investigation');
  await page.getByText('USP focus trails (A · B · C)').click();
  await expect(page.getByRole('navigation',{name:/USP B cross-domain journey/i})).toBeVisible();
@@ -161,6 +166,11 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await expect(useful).toContainText(/Saved locally for briefHash/i);
  await expect(useful).toContainText('Useful');
  await expect(useful).toContainText('willingness Maybe');
+ const stage2=page.getByRole('region',{name:/Stage 2 investigation progress/i});
+ await expect(stage2).toContainText('journey complete claimed: false');
+ await expect(stage2).toContainText('pilot accepted: false');
+ await expect(stage2).toContainText('Local usefulness rating saved for this briefHash');
+ await expect(stage2).toContainText('journey complete claimed: false');
  const testable=page.getByRole('region',{name:/Testable next questions/i});
  await expect(testable).toContainText('invents experiments: false');
  await expect(testable).toContainText('recommends action: false');
