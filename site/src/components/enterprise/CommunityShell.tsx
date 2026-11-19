@@ -9,6 +9,7 @@ const NAV = [
   { to: "/research/governance", label: "Review hand-off", end: true },
   { to: "/research/workspace", label: "Investigations", end: true },
   { to: "/enterprise/lab", label: "Lab / Omics shell", end: true },
+  { to: "/enterprise/funding", label: "Funding shell", end: true },
   { to: "/academic", label: "Academic shells", end: true },
 ] as const;
 

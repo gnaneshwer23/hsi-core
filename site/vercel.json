@@ -161,6 +161,10 @@
       "destination": "/_pages/enterprise--participant.html"
     },
     {
+      "source": "/enterprise/funding",
+      "destination": "/_pages/enterprise--funding.html"
+    },
+    {
       "source": "/workspaces",
       "destination": "/_pages/workspaces.html"
     },

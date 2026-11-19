@@ -90,6 +90,7 @@ const INVESTIGATION_LOOP = new Set([
   "/enterprise/lab",
   "/enterprise/community",
   "/enterprise/participant",
+  "/enterprise/funding",
   "/workspaces",
   "/workspaces/researcher",
   "/workspaces/professor",

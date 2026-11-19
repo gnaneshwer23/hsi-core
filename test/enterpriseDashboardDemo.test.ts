@@ -4,6 +4,7 @@ import { clinicalResearchDashboardDemo } from "../src/enterprise/clinicalResearc
 import { communityDashboardDemo } from "../src/enterprise/communityDashboardDemo";
 import { labOmicsDashboardDemo } from "../src/enterprise/labOmicsDashboardDemo";
 import { participantDashboardDemo } from "../src/enterprise/participantDashboardDemo";
+import { fundingCareersDashboardDemo } from "../src/enterprise/fundingCareersDashboardDemo";
 import {
   assertEnterpriseDemoHonesty,
   enterpriseProfessorDemo,
@@ -144,5 +145,28 @@ describe("enterprise dashboard demonstration fixtures", () => {
     ).toBe(true);
     expect(demo.governanceNote.toLowerCase()).toContain("phi");
     expect(demo.governanceNote.toLowerCase()).toContain("not a scientific dashboard");
+  });
+
+  test("funding careers demo forbids invented award rates and keeps store held", () => {
+    const demo = fundingCareersDashboardDemo();
+    assertEnterpriseDemoHonesty(demo.honesty);
+    expect(demo.summary.labelsAreDemonstration).toBe(true);
+    expect(demo.summary.durableFundingStore).toBe("held");
+    expect(demo.summary.inventedAwardRate).toBe(false);
+    expect(demo.summary.inventedConversionPercent).toBe(false);
+    expect(demo.fundingSketches.every((f) => f.status === "illustrative_only")).toBe(
+      true,
+    );
+    expect(demo.fundingSketches.every((f) => f.inventedAwardRate === false)).toBe(true);
+    expect(
+      demo.fundingSketches.every((f) => f.inventedConversionPercent === false),
+    ).toBe(true);
+    expect(demo.careerPathways.every((c) => c.durableStore === "held")).toBe(true);
+    expect(demo.collaborators.every((c) => c.permissionAware === true)).toBe(true);
+    expect(demo.collaborators.every((c) => c.autoIpBleed === false)).toBe(true);
+    expect(
+      demo.opportunities.every((o) => o.reviewStatus === "candidate_unreviewed"),
+    ).toBe(true);
+    expect(demo.governanceNote.toLowerCase()).toContain("award");
   });
 });
