@@ -5,7 +5,7 @@
 .pg-page :where(h1,h2,h3,p,ul,ol){margin:0}
 .pg-page :where(ul,ol){padding:0;list-style:none}
 .pg-page a{color:inherit}
-.pg-hero,.pg-strip,.pg-loop,.pg-product,.pg-honest,.pg-close,.pg-pillars,.pg-open,.pg-conflict,.pg-story,.pg-journey,.pg-domains{width:min(1240px,calc(100% - 64px));margin-inline:auto}
+.pg-hero,.pg-strip,.pg-loop,.pg-product,.pg-honest,.pg-close,.pg-pillars,.pg-open,.pg-conflict,.pg-story,.pg-journey,.pg-domains,.pg-demo-universe{width:min(1240px,calc(100% - 64px));margin-inline:auto}
 /* Platform narrative: challenge → vision */
 .pg-story{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px 64px;padding:56px 0 24px;border-top:1px solid var(--line)}
 .pg-story-block{display:grid;gap:14px;align-content:start}
@@ -54,7 +54,10 @@
 .pg-conflict-diff{display:grid;gap:8px}.pg-conflict-diff h3{font-size:18px;font-weight:650}
 .pg-conflict-diff ul{display:grid;gap:4px}.pg-conflict-diff li b{color:var(--ink);text-transform:capitalize}
 @media(max-width:900px){.pg-conflict-pair{grid-template-columns:1fr}}
-/* Demo Universe PR6 landing previews */
+/* Demo Universe PR6 landing previews (separate from .pg-conflict so worked-conflict e2e stays unique) */
+.pg-demo-universe{padding:20px 0 56px;display:grid;gap:18px;border-top:1px solid var(--line)}
+.pg-demo-universe-head{display:grid;gap:10px;max-width:60ch}
+.pg-demo-universe-head p{font-size:16px;line-height:1.55;color:var(--body)}
 .pg-demo-preview{display:grid;gap:16px}
 .pg-demo-tabs{display:flex;flex-wrap:wrap;gap:8px}
 .pg-demo-tabs button{min-height:44px;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--ink);font-size:14px;font-weight:650;cursor:pointer}
@@ -116,7 +119,7 @@
 .pg-close p{margin-top:14px;font-size:17px;line-height:1.6;color:#cfd6ea;max-width:52ch}
 .pg-close .pg-cta{margin-top:0}
 @media(max-width:1000px){
- .pg-hero,.pg-strip,.pg-loop,.pg-product,.pg-honest,.pg-close,.pg-conflict,.pg-story,.pg-journey,.pg-domains{width:calc(100% - 40px)}
+ .pg-hero,.pg-strip,.pg-loop,.pg-product,.pg-honest,.pg-close,.pg-conflict,.pg-story,.pg-journey,.pg-domains,.pg-demo-universe{width:calc(100% - 40px)}
  .pg-hero{grid-template-columns:1fr;gap:32px;padding:40px 0 24px}
  .pg-loop{grid-template-columns:1fr;gap:32px;padding:48px 0}.pg-loop-head{position:static}
  .pg-product{grid-template-columns:1fr;padding:28px;border-radius:28px;gap:28px}

@@ -136,8 +136,8 @@ export function HomeLanding(){
 
     <ScientificIntelligenceJourney/>
 
-    <section className="pg-conflict pg-demo-universe" id="product-demo" aria-labelledby="pg-demo-universe-h">
-     <div className="pg-conflict-head">
+    <section className="pg-demo-universe" id="product-demo" aria-labelledby="pg-demo-universe-h">
+     <div className="pg-demo-universe-head">
       <h2 id="pg-demo-universe-h">Demo Research Universe product previews</h2>
       <p>Pack-backed conflict pairs from seeded Demo Universe scenarios. Not scientific approval. Open the full comparison desk for briefs, abstention and assay sketches.</p>
      </div>
