@@ -89,8 +89,8 @@ const PATHS: readonly E2e05PersistencePathRow[] = [
     notes: "HSI_GRAPH_WORKSPACE_STORE_ENABLED + staging writes pins; migrations 031–033 stay held in repo.",
     pathHints: [
       "src/db/graphWorkspaceWriteGate.ts",
-      "src/db/graphWorkspaceStore.ts",
       "src/server/graphWorkspaceApi.ts",
+      "docs/engineering/GRAPH_WORKSPACE_FLAG_RUNBOOK.md",
     ],
   },
   {
@@ -136,10 +136,10 @@ const OWNER_PRECONDITIONS: readonly string[] = [
 
 const REUSE_MODULES: readonly string[] = [
   "src/db/graphWorkspaceWriteGate.ts",
-  "src/db/graphWorkspaceStore.ts",
   "src/knowledgeGraph/investigationStore.ts",
   "src/server/graphWorkspaceApi.ts",
   "site/src/lib/dashboardAccessState.ts",
+  "docs/engineering/GRAPH_WORKSPACE_FLAG_RUNBOOK.md",
 ];
 
 export function e2e05StagingSaveResumePacket(): E2e05StagingSaveResumePacket {

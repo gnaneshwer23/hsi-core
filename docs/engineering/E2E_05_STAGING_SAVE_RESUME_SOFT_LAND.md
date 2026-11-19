@@ -29,7 +29,7 @@ Pending worksheet: [`operations/staging/e2e-05-staging-save-resume.pending.json`
 ## Reuse (do not rebuild)
 
 - `src/db/graphWorkspaceWriteGate.ts`  
-- `src/db/graphWorkspaceStore.ts` / `src/server/graphWorkspaceApi.ts`  
+- `src/server/graphWorkspaceApi.ts` (gated Neon adapter entry)  
 - `src/knowledgeGraph/investigationStore.ts`  
 - Dashboard access-state honesty (`site/src/lib/dashboardAccessState.ts`)
 
