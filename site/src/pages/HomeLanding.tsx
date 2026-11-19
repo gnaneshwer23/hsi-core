@@ -125,6 +125,7 @@ export function HomeLanding() {
           <div className="pg-hero-copy">
             <h1 id="home-title">
               <span className="pg-brand">Human Super Intelligence</span>
+              {" "}
               Connect the Science. Challenge the Evidence. Advance Discovery.
             </h1>
             <p className="pg-lead">
