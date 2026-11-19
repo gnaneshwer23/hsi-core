@@ -15,6 +15,7 @@ const NAV: Record<
     { to: "/research/governance", label: "Review hand-off", end: true },
     { to: "/enterprise/biotech", label: "Biotech shell", end: true },
     { to: "/enterprise/clinical", label: "Clinical shell", end: true },
+    { to: "/enterprise/lab", label: "Lab / Omics shell", end: true },
     { to: "/academic", label: "Academic home", end: true },
   ],
   student: [
@@ -24,6 +25,7 @@ const NAV: Record<
     { to: "/research/gaps", label: "Gaps", end: true },
     { to: "/enterprise/biotech", label: "Biotech shell", end: true },
     { to: "/enterprise/clinical", label: "Clinical shell", end: true },
+    { to: "/enterprise/lab", label: "Lab / Omics shell", end: true },
     { to: "/academic", label: "Academic home", end: true },
   ],
 };

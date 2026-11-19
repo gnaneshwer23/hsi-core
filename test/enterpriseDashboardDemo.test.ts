@@ -1,6 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { biotechDashboardDemo } from "../src/enterprise/biotechDashboardDemo";
 import { clinicalResearchDashboardDemo } from "../src/enterprise/clinicalResearchDashboardDemo";
+import { labOmicsDashboardDemo } from "../src/enterprise/labOmicsDashboardDemo";
 import {
   assertEnterpriseDemoHonesty,
   enterpriseProfessorDemo,
@@ -82,5 +83,24 @@ describe("enterprise dashboard demonstration fixtures", () => {
     );
     expect(demo.boundaryNote.toLowerCase()).toContain("not a clinical decision");
     expect(demo.boundaryNote.toLowerCase()).toContain("phi");
+  });
+
+  test("lab omics demo keeps missing fields explicit and forbids fake QC", () => {
+    const demo = labOmicsDashboardDemo();
+    assertEnterpriseDemoHonesty(demo.honesty);
+    expect(demo.summary.labelsAreDemonstration).toBe(true);
+    expect(demo.summary.fakeQcScores).toBe(false);
+    expect(demo.assays.some((a) => a.fields.some((f) => f.missingExplicit))).toBe(true);
+    expect(demo.comparisons.every((c) => c.verificationBound === true)).toBe(true);
+    expect(
+      demo.omicsCandidates.every((o) => o.reviewStatus === "candidate_unreviewed"),
+    ).toBe(true);
+    expect(demo.reproducibility.every((r) => r.fakeQcScore === false)).toBe(true);
+    expect(
+      demo.evidenceIntegration.every(
+        (e) => e.integrationQualityPercent === null && e.inventedFeatureCount === false,
+      ),
+    ).toBe(true);
+    expect(demo.governanceNote.toLowerCase()).toContain("qc");
   });
 });

@@ -127,7 +127,7 @@
 
 **Visual reference pattern:** UMAP / heatmap / gene tables / multi-omics widgets are **lab chrome**; integration quality % and invented feature counts are forbidden unless measured and labelled.
 
-**Status:** Proposed · partial science pages exist; no dedicated omics shell on `main`.
+**Status:** Soft-land Laboratory & Omics shell on `/enterprise/lab` (demo-labelled; deep-links to methods, study comparison, pathways, workspace, KG). No fake QC scores or invented feature counts.
 
 ---
 
