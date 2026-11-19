@@ -142,6 +142,7 @@ Target: **≥3 merged engineering PRs per week** on Track A while Track B is in 
 | **PR-E2E-06** | Dual-provider verification soft-land — `src/operations/e2e06DualProviderVerification.ts` + `docs/engineering/E2E_06_DUAL_PROVIDER_VERIFICATION_SOFT_LAND.md` | Reuses dual-model harness; never invents deployments/credentials or claims gate pass / independence |
 | **PR-E2E-10** | SME gold authoring/vault soft-land — `src/operations/e2e10SmeGoldVault.ts` + `docs/engineering/E2E_10_SME_GOLD_VAULT_SOFT_LAND.md` | Catalogues vault + R2 worksheets toward 60→120; never invents labels/adjudications; `smeGoldFilled` stays false |
 | **PR-E2E-11** | Hypothesis intelligence soft-land — `src/operations/e2e11HypothesisIntelligence.ts` + `docs/engineering/E2E_11_HYPOTHESIS_INTELLIGENCE_SOFT_LAND.md` | P3 labelled later; reuses registry/ledger/falsifiers; never claims validation or 1.0 must-ship |
+| **NEXT-A** | Source/provider/receipt composition soft-land — `src/operations/nextACompositionSoftLand.ts` + `docs/engineering/NEXT_A_COMPOSITION_SOFT_LAND.md` | Reuses hardened adapters + E2E-03/06; blocked on Track B1+B5; never invents receipts/credentials/deployments |
 | **NEXT-B** | Staging isolation acceptance soft-land — `src/operations/nextBIsolationSoftLand.ts` + `docs/engineering/NEXT_B_ISOLATION_SOFT_LAND.md` | Reuses isolation suite + E2E-02; blocked on Track B2; never invents accounts/signers or removes holds |
 
 Open implementation PRs for passport / workbench / brief columns remain separate; merge when up to date with `main` and verify is green.
