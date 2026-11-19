@@ -14,7 +14,7 @@ HSI already has **substantial scientific substrate** (investigation workspace, C
 **Single highest-value next engineering task:**  
 **Unify the primary `/research/workspace` path so Ask → permitted evidence → Context Passport → supporting/conflicting comparison → cross-domain candidates → gaps/hypotheses (labelled) → evidence-linked brief → save/reopen (fail-closed) is one continuous UI with no invented context and no production write enablement.**
 
-Dashboard concepts (`/enterprise/*`, `/workspaces/*`) stay **demonstration / later Stage 4**, not the next build centre.
+Dashboard concepts (`/enterprise/*`, `/workspaces/*`) stay **demonstration / later Stage 4**, not the next build centre. Content contracts for the five proposed shells (Academic, Biotech/Pharma, Clinical research, Lab/Omics, Community) live in [`HSI_STAGE4_DASHBOARD_CONTENT_MAP.md`](./HSI_STAGE4_DASHBOARD_CONTENT_MAP.md) — one shared science engine, audience-specific chrome.
 
 ---
 
