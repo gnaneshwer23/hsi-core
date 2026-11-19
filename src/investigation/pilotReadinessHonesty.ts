@@ -22,6 +22,9 @@ export type PilotBlockedGateId =
   | "live_rereview_step_13"
   | "production_writes";
 
+/** done = recorded · open = readable and not recorded · unknown = storage unreadable */
+export type PilotSignalState = "done" | "open" | "unknown";
+
 export type PilotReadinessHonesty = {
   browserLocalOnly: true;
   productionWritesEnabled: false;
@@ -47,7 +50,7 @@ export const PILOT_READINESS_HONESTY: PilotReadinessHonesty = {
 export type PilotLocalSignal = {
   id: PilotLocalSignalId;
   label: string;
-  done: boolean;
+  state: PilotSignalState;
   detail: string;
 };
 
@@ -59,10 +62,12 @@ export type PilotBlockedGate = {
 };
 
 export type PilotReadinessInput = {
-  activationReached: boolean;
-  firstUsefulReached: boolean;
-  repeatReopenReached: boolean;
-  willingnessStated: boolean;
+  /** False when localStorage is unavailable — all signals become unknown. */
+  storageAvailable: boolean;
+  activation: PilotSignalState;
+  firstUseful: PilotSignalState;
+  repeatReopen: PilotSignalState;
+  willingness: PilotSignalState;
 };
 
 export type PilotReadinessChecklist = {
@@ -71,8 +76,10 @@ export type PilotReadinessChecklist = {
   localSignals: readonly PilotLocalSignal[];
   blockedGates: readonly PilotBlockedGate[];
   localDoneCount: number;
+  localKnownCount: number;
   localTotalCount: number;
   allLocalSignalsDone: boolean;
+  storageAvailable: boolean;
   pilotReadyClaimed: false;
   note: string;
 };
@@ -144,59 +151,132 @@ const BLOCKED_GATES: readonly PilotBlockedGate[] = [
   },
 ];
 
+function resolveState(
+  storageAvailable: boolean,
+  state: PilotSignalState,
+): PilotSignalState {
+  if (!storageAvailable) return "unknown";
+  return state;
+}
+
+function signalDetail(
+  id: PilotLocalSignalId,
+  state: PilotSignalState,
+): { label: string; detail: string } {
+  switch (id) {
+    case "activation":
+      return {
+        label: "Activation",
+        detail:
+          state === "done"
+            ? "First live investigation recorded on this device"
+            : state === "unknown"
+              ? "Browser storage unavailable — activation state unknown"
+              : "Run a live investigation once",
+      };
+    case "first_useful":
+      return {
+        label: "First useful",
+        detail:
+          state === "done"
+            ? "Useful rating present in feedback or milestone store"
+            : state === "unknown"
+              ? "Browser storage unavailable — usefulness state unknown"
+              : "Rate an investigation as Useful after the brief",
+      };
+    case "repeat_reopen":
+      return {
+        label: "Repeat reopen",
+        detail:
+          state === "done"
+            ? "First browser reopen recorded on this device"
+            : state === "unknown"
+              ? "Browser storage unavailable — reopen state unknown"
+              : "Save and reopen a browser-library investigation",
+      };
+    case "willingness_stated":
+      return {
+        label: "Willingness stated",
+        detail:
+          state === "done"
+            ? "Yes/No/Maybe present in feedback or milestone store"
+            : state === "unknown"
+              ? "Browser storage unavailable — willingness state unknown"
+              : "State Yes / No / Maybe after a brief (optional)",
+      };
+    default: {
+      const _exhaustive: never = id;
+      return _exhaustive;
+    }
+  }
+}
+
 /** Build pilot prep honesty — local signals ≠ pilot ready. */
 export function buildPilotReadinessChecklist(
   input: PilotReadinessInput,
 ): PilotReadinessChecklist {
   const honesty = assertPilotReadinessHonesty(PILOT_READINESS_HONESTY);
-  const localSignals: PilotLocalSignal[] = [
-    {
-      id: "activation",
-      label: "Activation",
-      done: input.activationReached,
-      detail: input.activationReached
-        ? "First live investigation recorded on this device"
-        : "Run a live investigation once",
-    },
-    {
-      id: "first_useful",
-      label: "First useful",
-      done: input.firstUsefulReached,
-      detail: input.firstUsefulReached
-        ? "First Useful rating recorded on this device"
-        : "Rate an investigation as Useful after the brief",
-    },
-    {
-      id: "repeat_reopen",
-      label: "Repeat reopen",
-      done: input.repeatReopenReached,
-      detail: input.repeatReopenReached
-        ? "First browser reopen recorded on this device"
-        : "Save and reopen a browser-library investigation",
-    },
-    {
-      id: "willingness_stated",
-      label: "Willingness stated",
-      done: input.willingnessStated,
-      detail: input.willingnessStated
-        ? "First Yes/No/Maybe willingness signal recorded locally"
-        : "State Yes / No / Maybe after a brief (optional)",
-    },
+  const ids: PilotLocalSignalId[] = [
+    "activation",
+    "first_useful",
+    "repeat_reopen",
+    "willingness_stated",
   ];
-  const localDoneCount = localSignals.filter((s) => s.done).length;
+  const states: Record<PilotLocalSignalId, PilotSignalState> = {
+    activation: resolveState(input.storageAvailable, input.activation),
+    first_useful: resolveState(input.storageAvailable, input.firstUseful),
+    repeat_reopen: resolveState(input.storageAvailable, input.repeatReopen),
+    willingness_stated: resolveState(input.storageAvailable, input.willingness),
+  };
+  const localSignals: PilotLocalSignal[] = ids.map((id) => {
+    const state = states[id];
+    const meta = signalDetail(id, state);
+    return { id, label: meta.label, state, detail: meta.detail };
+  });
+  const localDoneCount = localSignals.filter((s) => s.state === "done").length;
+  const localKnownCount = localSignals.filter((s) => s.state !== "unknown").length;
   const localTotalCount = localSignals.length;
-  const allLocalSignalsDone = localDoneCount === localTotalCount;
+  const unknownCount = localTotalCount - localKnownCount;
+  const allLocalSignalsDone =
+    localKnownCount === localTotalCount && localDoneCount === localTotalCount;
+  let note: string;
+  if (!input.storageAvailable || unknownCount === localTotalCount) {
+    note =
+      "Browser storage unavailable — local pilot-prep progress unknown. Pilot ready claimed: false.";
+  } else if (unknownCount > 0) {
+    note = `Local pilot-prep signals ${localDoneCount} done · ${localKnownCount} readable of ${localTotalCount} — ${unknownCount} unknown; not pilot ready.`;
+  } else if (allLocalSignalsDone) {
+    note = `All ${localTotalCount} local pilot-prep signals done on this device — pilot ready claimed: false (owner gates still blocked).`;
+  } else {
+    note = `Local pilot-prep signals ${localDoneCount}/${localTotalCount} — not pilot conversion and not pilot ready.`;
+  }
   return {
     schemaVersion: PILOT_READINESS_SCHEMA,
     honesty,
     localSignals,
     blockedGates: BLOCKED_GATES,
     localDoneCount,
+    localKnownCount,
     localTotalCount,
     allLocalSignalsDone,
+    storageAvailable: input.storageAvailable,
     pilotReadyClaimed: false,
-    note: allLocalSignalsDone
-      ? `All ${localTotalCount} local pilot-prep signals done on this device — pilot ready claimed: false (owner gates still blocked).`
-      : `Local pilot-prep signals ${localDoneCount}/${localTotalCount} — not pilot conversion and not pilot ready.`,
+    note,
   };
+}
+
+/** Prefer milestone store; fall back to usefulness feedback so a saved rating still counts. */
+export function deriveFirstUsefulState(input: {
+  milestoneReached: boolean;
+  feedbackHasUseful: boolean;
+}): PilotSignalState {
+  return input.milestoneReached || input.feedbackHasUseful ? "done" : "open";
+}
+
+/** Prefer milestone store; fall back to usefulness feedback willingness. */
+export function deriveWillingnessState(input: {
+  milestoneReached: boolean;
+  feedbackHasWillingness: boolean;
+}): PilotSignalState {
+  return input.milestoneReached || input.feedbackHasWillingness ? "done" : "open";
 }

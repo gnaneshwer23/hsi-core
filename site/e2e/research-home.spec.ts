@@ -159,7 +159,8 @@ test('pilot readiness honesty stays unready and lists blocked owner gates',async
  await expect(pilot).toContainText('invents pilot conversion: false');
  await expect(pilot).toContainText('journey complete claimed: false');
  await expect(pilot).toContainText('pilot ready claimed: false');
- await expect(pilot).toContainText('Local signals 0/4');
+ await expect(pilot).toContainText('storage available: true');
+ await expect(pilot).toContainText('Local signals 0 done · 4 readable of 4');
  await expect(pilot.getByRole('list',{name:/Local pilot-prep signals/i})).toContainText('Activation');
  await expect(pilot.getByRole('list',{name:/Blocked pilot gates/i})).toContainText('Staging researcher grants');
  await expect(pilot.getByRole('list',{name:/Blocked pilot gates/i})).toContainText('Production writes');

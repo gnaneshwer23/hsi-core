@@ -5,8 +5,12 @@ import { loadFirstUsefulStore } from "@hsi/investigation/firstUsefulInvestigatio
 import {
   PILOT_READINESS_HONESTY,
   buildPilotReadinessChecklist,
+  deriveFirstUsefulState,
+  deriveWillingnessState,
+  type PilotSignalState,
 } from "@hsi/investigation/pilotReadinessHonesty";
 import { loadRepeatUsageStore } from "@hsi/investigation/repeatUsageMilestone";
+import { loadResearcherUsefulnessStore } from "@hsi/investigation/researcherUsefulnessFeedback";
 import { loadWillingnessToPayStore } from "@hsi/investigation/willingnessToPayMilestone";
 import { liveInvestigationHref } from "../../lib/workbenchPrimary";
 import { Icon } from "./AppIcons";
@@ -19,6 +23,12 @@ function browserStorage(): Storage | null {
   }
 }
 
+const STATE_LABEL: Record<PilotSignalState, string> = {
+  done: "Done",
+  open: "Open",
+  unknown: "Unknown",
+};
+
 /** Audit §I pilot prep — local signals vs owner-gated blockers. */
 export function PilotReadinessHonestyCard() {
   const [tick, setTick] = useState(0);
@@ -29,13 +39,25 @@ export function PilotReadinessHonestyCard() {
     return () => window.removeEventListener("focus", onFocus);
   }, []);
 
-  const storage = browserStorage();
   void tick;
+  const storage = browserStorage();
+  const storageAvailable = Boolean(storage);
+  const feedback = loadResearcherUsefulnessStore(storage);
+  const feedbackHasUseful = feedback.entries.some((e) => e.rating === "useful");
+  const feedbackHasWillingness = feedback.entries.some((e) => e.willingness !== null);
+
   const checklist = buildPilotReadinessChecklist({
-    activationReached: Boolean(loadActivationStore(storage).first),
-    firstUsefulReached: Boolean(loadFirstUsefulStore(storage).first),
-    repeatReopenReached: Boolean(loadRepeatUsageStore(storage).firstReopen),
-    willingnessStated: Boolean(loadWillingnessToPayStore(storage).first),
+    storageAvailable,
+    activation: loadActivationStore(storage).first ? "done" : "open",
+    firstUseful: deriveFirstUsefulState({
+      milestoneReached: Boolean(loadFirstUsefulStore(storage).first),
+      feedbackHasUseful,
+    }),
+    repeatReopen: loadRepeatUsageStore(storage).firstReopen ? "done" : "open",
+    willingness: deriveWillingnessState({
+      milestoneReached: Boolean(loadWillingnessToPayStore(storage).first),
+      feedbackHasWillingness,
+    }),
   });
 
   return (
@@ -53,7 +75,8 @@ export function PilotReadinessHonestyCard() {
             aggregate conversion: {String(PILOT_READINESS_HONESTY.inventsAggregateConversion)} ·
             journey complete claimed: {String(PILOT_READINESS_HONESTY.journeyCompleteClaimed)} ·
             scientific approval: {String(PILOT_READINESS_HONESTY.scientificApproval)} · pilot ready
-            claimed: {String(checklist.pilotReadyClaimed)}
+            claimed: {String(checklist.pilotReadyClaimed)} · storage available:{" "}
+            {String(checklist.storageAvailable)}
           </p>
         </div>
       </header>
@@ -61,14 +84,15 @@ export function PilotReadinessHonestyCard() {
         {checklist.note}
       </p>
       <p className="rh-note">
-        Local signals {checklist.localDoneCount}/{checklist.localTotalCount}
+        Local signals {checklist.localDoneCount} done · {checklist.localKnownCount} readable of{" "}
+        {checklist.localTotalCount}
       </p>
       <ul className="rh-rows" aria-label="Local pilot-prep signals">
         {checklist.localSignals.map((s) => (
           <li key={s.id}>
             <div>
               <b>
-                {s.done ? "Done" : "Open"} · {s.label}
+                {STATE_LABEL[s.state]} · {s.label}
               </b>
               <span>{s.detail}</span>
             </div>
