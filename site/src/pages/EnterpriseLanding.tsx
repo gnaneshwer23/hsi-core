@@ -57,15 +57,18 @@ export function EnterpriseLandingPage() {
           <Link className="ent-btn ent-btn-secondary" to="/enterprise/community">
             Community shell
           </Link>
+          <Link className="ent-btn ent-btn-secondary" to="/workspaces">
+            Multi-workspace hub (F)
+          </Link>
         </div>
         <section className="ent-panel" aria-labelledby="ent-workspaces-heading">
           <h2 id="ent-workspaces-heading" style={{ margin: 0, fontSize: "1.05rem" }}>
-            Five Stage 4 shells (same engine)
+            Stage 4 shells A–E + hub F (same engine)
           </h2>
           <p className="ent-lead">
-            All five Stage 4 audience shells preview chrome on the shared substrate —
-            they must reuse the shared scientific engine, not fork it. Content
-            contracts:{" "}
+            Audience shells A–E and the multi-workspace hub (F) preview chrome on the
+            shared substrate — they must reuse the shared scientific engine, not fork
+            it. Content contracts:{" "}
             <code>docs/strategy/HSI_STAGE4_DASHBOARD_CONTENT_MAP.md</code>. Clinical
             research is not CDS; patient participation stays a future governed path.
             Circles durable store remains held.
@@ -88,6 +91,11 @@ export function EnterpriseLandingPage() {
             <li>
               Research community —{" "}
               <Link to="/enterprise/community">demonstration shell</Link>
+            </li>
+            <li>
+              Multi-workspace hub —{" "}
+              <Link to="/workspaces">eight-role concept</Link> (researcher +
+              enterprise admin + deep-links to A–E)
             </li>
           </ul>
         </section>

@@ -12,6 +12,8 @@ const BiotechPharmaDashboard=lazy(()=>import("./pages/BiotechPharmaDashboard").t
 const ClinicalResearchDashboard=lazy(()=>import("./pages/ClinicalResearchDashboard").then(m=>({default:m.ClinicalResearchDashboard})));
 const LabOmicsDashboard=lazy(()=>import("./pages/LabOmicsDashboard").then(m=>({default:m.LabOmicsDashboard})));
 const CommunityDashboard=lazy(()=>import("./pages/CommunityDashboard").then(m=>({default:m.CommunityDashboard})));
+const WorkspaceHubPage=lazy(()=>import("./pages/WorkspaceHub").then(m=>({default:m.WorkspaceHubPage})));
+const WorkspaceDashboardPage=lazy(()=>import("./pages/WorkspaceDashboard").then(m=>({default:m.WorkspaceDashboardPage})));
 import {ContextConflictAuditPage} from "./pages/PublicResearchPages";
 import {TrustPublicPage,AboutPublicPage} from "./pages/PublicFoundationPages";
 import {ResearchersPublicPage,BiotechPublicPage,ValidationPublicPage} from "./pages/AudiencePublicPages";
@@ -99,6 +101,15 @@ export default function App() {
         <Route path="enterprise/clinical" element={<Suspense fallback={<p role="status">Loading clinical research preview…</p>}><ClinicalResearchDashboard/></Suspense>}/>
         <Route path="enterprise/lab" element={<Suspense fallback={<p role="status">Loading laboratory and omics preview…</p>}><LabOmicsDashboard/></Suspense>}/>
         <Route path="enterprise/community" element={<Suspense fallback={<p role="status">Loading research community preview…</p>}><CommunityDashboard/></Suspense>}/>
+        <Route path="workspaces" element={<Suspense fallback={<p role="status">Loading workspaces…</p>}><WorkspaceHubPage/></Suspense>}/>
+        <Route path="workspaces/researcher" element={<Suspense fallback={<p role="status">Loading researcher workspace…</p>}><WorkspaceDashboardPage/></Suspense>}/>
+        <Route path="workspaces/professor" element={<Suspense fallback={<p role="status">Loading professor workspace…</p>}><WorkspaceDashboardPage/></Suspense>}/>
+        <Route path="workspaces/student" element={<Suspense fallback={<p role="status">Loading student workspace…</p>}><WorkspaceDashboardPage/></Suspense>}/>
+        <Route path="workspaces/biotech" element={<Suspense fallback={<p role="status">Loading biotech workspace…</p>}><WorkspaceDashboardPage/></Suspense>}/>
+        <Route path="workspaces/clinical" element={<Suspense fallback={<p role="status">Loading clinical workspace…</p>}><WorkspaceDashboardPage/></Suspense>}/>
+        <Route path="workspaces/laboratory" element={<Suspense fallback={<p role="status">Loading laboratory workspace…</p>}><WorkspaceDashboardPage/></Suspense>}/>
+        <Route path="workspaces/community" element={<Suspense fallback={<p role="status">Loading community workspace…</p>}><WorkspaceDashboardPage/></Suspense>}/>
+        <Route path="workspaces/enterprise" element={<Suspense fallback={<p role="status">Loading enterprise workspace…</p>}><WorkspaceDashboardPage/></Suspense>}/>
         <Route path="research/governance" element={<GovernanceDashboard/>}/>
         <Route path="sign-in" element={<SignIn />} />
         <Route path="forgot-password" element={<PasswordRecovery key="request" mode="request" />} />

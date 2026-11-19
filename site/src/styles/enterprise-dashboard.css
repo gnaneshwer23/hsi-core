@@ -456,3 +456,104 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Multi-workspace concept shell — shared with enterprise tokens (Stage 4 shell F) */
+.ws-switcher-label,
+.ws-hub-kicker,
+.ws-hub-select {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #9db0c2;
+}
+
+.ws-hub-kicker,
+.ws-hub-select {
+  color: var(--ent-slate);
+  margin: 0.35rem 0 0.75rem;
+}
+
+.ws-hub h1 {
+  margin-bottom: 0;
+}
+
+.ws-switcher-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.ws-switcher-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0.35rem 0.65rem;
+  border-radius: 8px;
+  border: 1px solid #2a3b4c;
+  color: #d5e0ea;
+  text-decoration: none;
+  font-size: 0.78rem;
+}
+
+.ws-switcher-chip:hover,
+.ws-switcher-chip.is-active,
+.ws-switcher-chip[aria-current="page"] {
+  background: color-mix(in srgb, var(--ent-burgundy) 78%, #000);
+  border-color: transparent;
+  color: #fff;
+}
+
+.ws-modules {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding: 0.75rem 1.5rem 0;
+  border-bottom: 1px solid var(--ent-line);
+  background: var(--ent-surface);
+}
+
+.ws-module-tab {
+  min-height: 40px;
+  padding: 0.4rem 0.85rem;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--ent-slate);
+  font: inherit;
+  cursor: pointer;
+}
+
+.ws-module-tab.is-active {
+  color: var(--ent-burgundy);
+  border-bottom-color: var(--ent-burgundy);
+  font-weight: 600;
+}
+
+.ws-ai-list,
+.ws-opp-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.ws-ai-list li,
+.ws-opp-list li {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--ent-line);
+}
+
+.ws-ai-kind {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ent-teal);
+}
+
+.ws-hub-cards {
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
