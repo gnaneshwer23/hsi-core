@@ -81,6 +81,10 @@ const INVESTIGATION_LOOP = new Set([
   "/research/dashboard",
   "/research/governance",
   "/evidence-intelligence",
+  "/academic",
+  "/enterprise",
+  "/enterprise/professor",
+  "/enterprise/student",
 ]);
 
 /** Reviewer / curator tools — never auto-redirect in this soft-land. */

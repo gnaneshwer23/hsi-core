@@ -68,7 +68,7 @@
 
 **Visual reference pattern (founder-supplied):** group lab / feed / projects / pinned resources (community-lab style) — adapt as **academic group** chrome over shared investigation links.
 
-**Status:** Partial demo via `/enterprise/professor` + `/enterprise/student` ([#513](https://github.com/gnaneshwer23/hsi-core/pull/513)).
+**Status:** Soft-land Academic shells on `/academic` · `/enterprise/professor` · `/enterprise/student` (demo-labelled; deep-links to live investigation).
 
 ---
 
