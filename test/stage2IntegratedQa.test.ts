@@ -24,7 +24,7 @@ const FORBIDDEN =
 
 describe("Stage 2 integrated QA locks", () => {
   it("keeps PUBLIC_MARKETING_PATHS identical to indexed SEO_PAGES", () => {
-    const marketing = [...PUBLIC_MARKETING_PATHS].sort();
+    const marketing = ([...PUBLIC_MARKETING_PATHS] as string[]).sort();
     const seo = Object.keys(SEO_PAGES).sort();
     expect(marketing).toEqual(seo);
     expect(marketing).toHaveLength(13);
@@ -46,8 +46,8 @@ describe("Stage 2 integrated QA locks", () => {
       expect(PUBLIC_MARKETING_PATHS).toContain(link.to);
       expect(Object.hasOwn(SEO_PAGES, link.to)).toBe(true);
       expect(footer).toContain(`"${link.to}"`);
-      const routePath = link.to === "/" ? "" : link.to.slice(1);
-      expect(app).toContain(`path="${routePath}"`);
+      // Audience destinations are never the site root.
+      expect(app).toContain(`path="${link.to.slice(1)}"`);
     }
   });
 
