@@ -1,7 +1,7 @@
 # Business vision journey stack — built vs next
 
 **Date:** 19 November 2026 (Europe/London)  
-**Governing audit:** [`HSI_BUSINESS_VISION_EXECUTION_AUDIT_2026-11-19.md`](../strategy/HSI_BUSINESS_VISION_EXECUTION_AUDIT_2026-11-19.md) (PR #515)  
+**Governing audit:** [HSI_BUSINESS_VISION_EXECUTION_AUDIT_2026-11-19.md](https://github.com/gnaneshwer23/hsi-core/blob/cursor/business-vision-execution-audit-2f71/docs/strategy/HSI_BUSINESS_VISION_EXECUTION_AUDIT_2026-11-19.md) (PR [#515](https://github.com/gnaneshwer23/hsi-core/pull/515) — parallel to this journey stack; lands on `main` separately)  
 **Stack tip (this branch):** `cursor/journey-stack-status-gaps-fold-2f71`  
 **Honesty:** `journeyCompleteClaimed=false` · `writesEnabledClaimed=false` · `pilotReadyClaimed=false` · `scientificallyValidatedClaimed=false` · soft-land merge queue **paused** · no auto-merge
 

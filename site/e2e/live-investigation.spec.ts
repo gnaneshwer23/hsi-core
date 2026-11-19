@@ -368,6 +368,9 @@ test('gaps in a run: search limits and unrun checks are kept apart from scientif
  await mock(page,unchecked);
  await page.goto('/research/workspace');
  await page.getByRole('button',{name:/Run/}).first().click();
+ const gapsFold=page.locator('#ws-gaps-testable');
+ if((await gapsFold.getAttribute('open'))===null)await gapsFold.locator('> summary').click();
+ await expect.poll(async()=>gapsFold.getAttribute('open')).not.toBeNull();
  const gaps=page.getByRole('region',{name:/Gaps in this run|Gaps in this run/}).or(page.locator('.ws-gaps'));
  await expect(gaps.getByRole('region',{name:'Limits of this search'})).toContainText('Search failed: openalex');
  await expect(gaps.getByRole('region',{name:'Checks that did not run'})).toContainText('not assessed');
@@ -378,6 +381,9 @@ test('gaps in a run: search limits and unrun checks are kept apart from scientif
  await page.reload();
  await mock(page,unchecked);
  await page.getByRole('button',{name:/Run/}).first().click();
+ const gapsFoldAfter=page.locator('#ws-gaps-testable');
+ if((await gapsFoldAfter.getAttribute('open'))===null)await gapsFoldAfter.locator('> summary').click();
+ await expect.poll(async()=>gapsFoldAfter.getAttribute('open')).not.toBeNull();
  await expect(page.getByRole('group',{name:/Status for: Search failed/}).getByRole('button',{name:'Investigating'})).toHaveAttribute('aria-pressed','true');
  const r=await new AxeBuilder({page}).analyze();
  expect(r.violations.filter(v=>['serious','critical'].includes(v.impact??''))).toEqual([]);
